@@ -1,19 +1,21 @@
 package ged.ejb.core;
 
+import java.io.Serializable;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Version;
 
 @MappedSuperclass
-public class AbstractEntity {
-	
+public abstract class AbstractEntity implements Serializable {
+
 	@Id
 	@GeneratedValue
-	private long id;
-	
+	protected long id;
+
 	@Version
-	private long version;
+	protected long version;
 
 	public long getId() {
 		return id;
@@ -30,7 +32,5 @@ public class AbstractEntity {
 	public void setVersion(long version) {
 		this.version = version;
 	}
-	
-	
 
 }
