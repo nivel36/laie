@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	template="/WEB-INF/templates/default.xhtml">
+
+	<ui:define name="title">
+		<title>LEGION</title>
+	</ui:define>
+
+	<ui:param name="selectedMenu" value="config" />
+
+	<ui:define name="content">
+		<h:form>
+			<h:graphicImage value="/resources/img/s.gif" styleClass="headerIcon" />
+			<h1 class="header">#{i18n['config.config']}</h1>
+			<h:panelGroup layout="block" styleClass="panel">
+				<h1>#{i18n['config.user_data']}</h1>
+
+				<h:outputLabel value="#{i18n['config.username']}"
+					styleClass="required">
+					<h:inputText id="username" value="#{configBean.user.username}"
+						label="#{i18n['config.username']}" required="true"
+						styleClass="#{not component.valid ? 'inputError' : ''}" />
+					<h:message for="username" errorClass="error" />
+				</h:outputLabel>
+
+				<h:outputLabel value="#{i18n['config.name']}" styleClass="required">
+					<h:inputText id="name" value="#{configBean.user.name}"
+						label="#{i18n['config.name']}" required="true"
+						styleClass="#{not component.valid ? 'inputError' : ''}" />
+					<h:message for="name" errorClass="error" />
+				</h:outputLabel>
+				<h:outputLabel value="#{i18n['config.surename']}"
+					styleClass="required">
+					<h:inputText id="surename" value="#{configBean.user.surename}"
+						label="#{i18n['config.surename']}" required="true"
+						styleClass="#{not component.valid ? 'inputError' : ''}" />
+					<h:message for="surename" errorClass="error" />
+				</h:outputLabel>
+				<h:outputLabel value="#{i18n['config.email']}"
+					styleClass="large required">
+					<h:inputText id="email" value="#{configBean.user.email}"
+						label="#{i18n['config.email']}" required="true"
+						styleClass="#{not component.valid ? 'inputError' : ''}" />
+					<h:message for="email" errorClass="error" />
+				</h:outputLabel>
+				<h:panelGroup layout="block" class="buttonGroup">
+					<h:commandButton value="#{i18n['action.save']}"
+						action="#{configBean.save}" />
+				</h:panelGroup>
+			</h:panelGroup>
+
+			<h:panelGroup layout="block" styleClass="panel">
+				<h1>#{i18n['config.preferences']}</h1>
+				<h:outputLabel value="#{i18n['config.rows_per_page']}"
+					styleClass="small">
+					<h:selectOneMenu value="#{configBean.user.rowsPerPage}">
+						<f:selectItem itemValue="5" itemLabel="5" />
+						<f:selectItem itemValue="10" itemLabel="10" />
+						<f:selectItem itemValue="25" itemLabel="25" />
+					</h:selectOneMenu>
+				</h:outputLabel>
+
+				<h:outputLabel value="#{i18n['config.language']}"
+					styleClass="medium">
+					<h:selectOneMenu id="language" value="#{configBean.user.language}"
+						style="text-transform: capitalize">
+						<f:selectItems var="locale" value="#{applicationBean.locales}"
+							itemValue="#{locale.language}"
+							itemLabel="#{locale.displayLanguage}" />
+					</h:selectOneMenu>
+				</h:outputLabel>
+				<h:panelGroup layout="block" class="buttonGroup">
+					<h:commandButton value="#{i18n['action.save']}"
+						action="#{configBean.save}" />
+				</h:panelGroup>
+			</h:panelGroup>
+		</h:form>
+	</ui:define>
+</ui:composition>

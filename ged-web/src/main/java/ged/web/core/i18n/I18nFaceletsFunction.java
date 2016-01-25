@@ -2,7 +2,7 @@ package ged.web.core.i18n;
 
 import javax.faces.context.FacesContext;
 
-import afersa.core.view.SessionBean;
+import ged.web.core.view.SessionBean;
 
 public final class I18nFaceletsFunction {
 

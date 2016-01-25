@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	template="/WEB-INF/templates/default.xhtml">
+
+	<ui:define name="title">
+		<title>#{i18n['job.job_offer']}</title>
+	</ui:define>
+
+	<ui:param name="selectedMenu" value="offers" />
+
+	<ui:define name="content">
+		<h:form id="form">
+			<h:graphicImage value="/resources/img/s.gif" styleClass="headerIcon" />
+			<h1 class="header">#{i18n['job.job_offers']}</h1>
+			<h:panelGroup layout="block" styleClass="panel">
+				<h1>#{i18n['job.search']}</h1>
+				<h:outputLabel for="name" value="#{i18n['job.name']}">
+					<h:inputText id="name" value="#{jobOfferSearchBean.name}"
+						label="#{i18n['job.name']}" />
+				</h:outputLabel>
+
+				<h:panelGroup layout="block" class="buttonGroup">
+					<h:commandButton value="#{i18n['action.clean']}"
+						action="#{jobOfferSearchBean.clean}" />
+					<h:commandButton value="#{i18n['action.search']}"
+						action="#{jobOfferSearchBean.search}" />
+				</h:panelGroup>
+			</h:panelGroup>
+
+			<h:panelGroup layout="block" styleClass="panel" id="resultados">
+				<h1>#{i18n['job.search_results']}</h1>
+
+				<h:outputText value="#{i18n['job.no_jobs_found']}"
+					rendered="#{empty jobOfferSearchBean.dataList}" />
+
+				<h:dataTable var="jobOffer" id="jobOffer"
+					value="#{jobOfferSearchBean.dataList}"
+					rendered="#{not empty jobOfferSearchBean.dataList}"
+					styleClass="dataTable">
+					<h:column>
+						<f:facet name="header">
+							<h:selectBooleanCheckbox />
+						</f:facet>
+						<h:selectBooleanCheckbox />
+					</h:column>
+
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="#{i18n['job.name']}" />
+						</f:facet>
+						<h:outputText value="#{jobOffer.jobName}" />
+					</h:column>
+
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Action" />
+						</f:facet>
+						<h:link value="Ver" outcome="jobOfferView">
+							<f:param name="jobOfferId" value="#{jobOffer.id}" />
+						</h:link>
+						|
+						<h:commandLink action="#{jobOfferSearchBean.edit(jobOffer)}"
+							value="#{i18n['action.edit']}" />
+						|
+						<h:commandLink action="#{jobOfferSearchBean.remove(jobOffer)}"
+							value="#{i18n['action.remove']}">
+							<f:ajax execute="@form" render="@form" />
+						</h:commandLink>
+					</h:column>
+				</h:dataTable>
+				<h:panelGroup layout="block" styleClass="paginator" id="paginator"
+					rendered="#{not empty jobOfferSearchBean.dataList}">
+					<h:commandButton disabled="#{jobOfferSearchBean.currentPage eq 0}"
+						value="#{i18n['paginator.first']}"
+						action="#{jobOfferSearchBean.firstPage}">
+						<f:ajax render=":form:resultados" />
+					</h:commandButton>
+					<h:commandButton disabled="#{jobOfferSearchBean.currentPage eq 0}"
+						value="#{i18n['paginator.previous']}"
+						action="#{jobOfferSearchBean.previousPage}">
+						<f:ajax render=":form:resultados" />
+					</h:commandButton>
+					<ui:repeat value="#{jobOfferSearchBean.pages}" varStatus="page">
+						<h:commandButton value="#{page.index+1}"
+							action="#{jobOfferSearchBean.gotoPage(page.index)}"
+							disabled="#{jobOfferSearchBean.currentPage eq page.index}">
+							<f:ajax render=":form:resultados" />
+						</h:commandButton>
+					</ui:repeat>
+					<h:commandButton value="#{i18n['paginator.next']}"
+						disabled="#{jobOfferSearchBean.currentPage eq jobOfferSearchBean.pagesSize-1}"
+						action="#{jobOfferSearchBean.nextPage}">
+						<f:ajax render=":form:resultados" />
+					</h:commandButton>
+					<h:commandButton value="#{i18n['paginator.last']}"
+						disabled="#{jobOfferSearchBean.currentPage eq jobOfferSearchBean.pagesSize-1}"
+						action="#{jobOfferSearchBean.lastPage}">
+						<f:ajax render=":form:resultados" />
+					</h:commandButton>
+					<h:outputLabel value="#{i18n['paginator.show']}">
+						<h:selectOneMenu value="#{jobOfferSearchBean.rowsPerPage}">
+							<f:selectItem itemValue="5" itemLabel="5" />
+							<f:selectItem itemValue="10" itemLabel="10" />
+							<f:selectItem itemValue="25" itemLabel="25" />
+							<f:ajax listener="#{jobOfferSearchBean.rowsPerPageChange}"
+								render=":form:resultados" execute=":form:paginator" />
+						</h:selectOneMenu>
+					</h:outputLabel>
+				</h:panelGroup>
+				<h:panelGroup layout="block" styleClass="buttonGroup">
+					<h:commandButton value="#{i18n['action.new']}"
+						action="#{jobOfferSearchBean.newJobOffer}" immediate="true" />
+				</h:panelGroup>
+			</h:panelGroup>
+		</h:form>
+	</ui:define>
+</ui:composition>

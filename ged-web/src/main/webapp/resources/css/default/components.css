@@ -1,0 +1,438 @@
+table {
+	margin: 1em 1em 1em 1em;
+	box-sizing: border-box;
+	width: 90%;
+	border-radius: 3px;
+	background-color: #aaa;
+}
+
+th {
+	background-color: #ccc;
+	height: 2.5em;
+	border-right: 1px solid black;
+	border-left: 1px solid white;
+	border-bottom: 1px solid black;
+	border-up: 1px solid white;
+}
+
+.inputBlock {
+	float: left;
+	margin-bottom: 1em;
+	min-height: 2em;
+	padding-right: 1em;
+}
+
+input[type="text"], select {
+	margin: 0;
+	outline: medium none;
+	padding: 3px;
+	border-radius: 3px;
+	box-shadow: inset 0 1px 1px #8f8f8f;
+	box-sizing: border-box;
+	background-color: white;
+	font-size: 1.1em;
+	border: 2px inset;
+}
+
+.inputFile {
+	float: left;
+	height: 38px;
+	width: 66%;
+}
+
+.inputBlock input[type="text"] {
+	width: 132px;
+	vertical-align: text-bottom;
+}
+
+.inputBlock input[type="checkbox"] {
+	height: 2em;
+}
+
+.error {
+	color: white;
+	font-weight: bold;
+}
+
+.dateBlock {
+	float: left;
+	overflow: auto;
+}
+
+.outputBlock {
+	padding: 1em;
+	background: white;
+	border-radius: 10px;
+}
+
+.editor {
+	display: inline-block;
+	width: 771px ! important;
+	margin-left: 1em;
+}
+
+.half {
+	width: 50% !important;
+	box-sizing: border-box;
+}
+
+.outputBlock p {
+	padding: 0 0 0.6em 0;
+}
+
+.inputBlock input[type="submit"] {
+	font-weight: bold;
+	font-size: 1.2em;
+	cursor: pointer;
+	text-shadow: 0 1px rgba(255, 255, 255, .75);
+	background: #ddd linear-gradient(to bottom, rgba(255, 255, 255, .3) 0%,
+		rgba(0, 0, 0, .3) 100%);
+}
+
+#aside input[type="submit"] {
+	font-family: "Roboto", sans-serif;
+	font-size: 0.9em;
+	font-weight: bold;
+	width: 72px;
+	margin-top: 0.5em;
+	margin-left: 1em;
+	margin-bottom: 1em;
+	cursor: pointer;
+	text-shadow: 0 1px rgba(255, 255, 255, .75);
+	background: #ddd linear-gradient(to bottom, rgba(255, 255, 255, .3) 0%,
+		rgba(0, 0, 0, .3) 100%);
+}
+
+.breadcrumb {
+	font: 1em "Roboto", sans-serif;
+	position: relative;
+	background: #839aae;
+	height: 23px;
+}
+
+.breadcrumb a {
+	text-transform: capitalize;
+	display: block;
+	font-weight: bold;
+	text-decoration: none;
+	padding: 4px 2px;
+	color: #fff;
+	text-shadow: 0 1px rgba(64, 64, 64, 1);
+}
+
+.breadcrumb a:before {
+	content: "> ";
+}
+
+.breadcrumb li {
+	float: left;
+}
+
+.table {
+	margin: 1em;
+	width: calc(100% - 2em);
+	border-collapse: collapse;
+}
+
+.table thead {
+	background: #485563;
+	height: 23px;
+	border-bottom: 1px solid #000000;
+	text-transform: capitalize;
+}
+
+.table th {
+	font: 1em "Roboto", sans-serif;
+	font-weight: bold;
+	padding: 4px 10px;
+	color: #fff;
+	text-shadow: 0 1px rgba(64, 64, 64, 1);
+	border-right: 1px solid rgba(64, 64, 64, 0.8);
+	border: 1px solid #34393d;
+}
+
+.table input {
+	margin-bottom: 0em;
+}
+
+.table th:hover {
+	background: rgba(200, 200, 200, 0.2);
+}
+
+.table td {
+	text-align: left;
+	padding: 0.4em;
+	padding-left: 1em;
+	border-right: 1px solid rgba(64, 64, 64, 0.3);
+}
+
+.table tbody {
+	text-align: center;
+	background: #839aae;
+	border-bottom: 1px solid #222;
+	padding: 0.2em;
+}
+
+.table tbody tr {
+	color: #222;
+	border-bottom: 1px solid #222;
+}
+
+.table tbody tr:hover {
+	background: rgba(64, 64, 64, 0.08);
+}
+
+.table input {
+	color: #c2d3e6;
+	font: 0.9em "Droid Sans Mono", sans-serif;
+	background: linear-gradient(to bottom, #8d97a1 0%, #687683 3%, #455260 75%);
+	border: 1px solid #34393d;
+	border-radius: 2px;
+	margin-left: 2px;
+	cursor: pointer;
+}
+
+.icon {
+	font-family: "Roboto", sans-serif;
+	font-size: 1.2em;
+	font-weight: bold;
+	margin-top: 0.5em;
+	margin-right: 1em;
+	margin-bottom: 1em;
+	cursor: pointer;
+	text-shadow: 0 1px rgba(255, 255, 255, .75);
+	background: #ddd linear-gradient(to bottom, rgba(255, 255, 255, .3) 0%,
+		rgba(0, 0, 0, .3) 100%);
+}
+
+.menu {
+	font: 1em "Roboto", sans-serif;
+	position: relative;
+	background: #839aae;
+	height: 2em;
+	padding-top: 0.2em;
+	border-radius: 0 0 8px 8px;
+}
+
+.menu a {
+	display: block;
+	font-weight: bold;
+	text-decoration: none;
+	padding: 4px 10px;
+	color: #fff;
+	text-shadow: 0 1px rgba(64, 64, 64, 1);
+}
+
+.menu li {
+	float: left;
+}
+
+.menu li:hover {
+	background: rgba(64, 64, 64, 0.08);
+}
+
+.repeatePanel {
+	padding-bottom: 1em;
+	overflow: hidden;
+	border-bottom: 1px dashed #839aae;
+	padding-top: 1em;
+}
+
+.smallRepeatePanel {
+	overflow: hidden;
+	width: 50%;
+	float: left;
+}
+
+.panel {
+	border-radius: 5px;
+	margin-top: 1em;
+	background: #485563;
+	width: 100%;
+	float: left;
+	position: relative;
+}
+
+.readPanel {
+	border-radius: 5px;
+	background: #8895A3;
+	border: 0.6em solid #485563;
+	padding: 0.7em;
+	float: left;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+.readPanel>h1 {
+	text-transform: uppercase;
+	font-size: 1.4em;
+	font-weight: bold;
+	display: inline-block;
+	color: #eaebeb;
+	text-shadow: 0 1px rgba(64, 64, 64, 1);
+	margin-bottom: 1em;
+	width: 100%;
+}
+
+.compact {
+	display: inline !important;
+}
+
+.readPanel>h2 {
+	font-size: 1.2em;
+	font-weight: bold;
+	border-bottom: 1px solid white;
+	display: inline-block;
+	color: #eaebeb;
+	margin-bottom: 0.5em;
+	width: 100%;
+}
+
+.text {
+	color: #bcc6d0;
+	font-weight: bold;
+}
+
+#aside .panel input {
+	margin: 1em 0 1em 1em;
+}
+
+.panel>h1 {
+	text-transform: uppercase;
+	font-weight: bold;
+	background: #839aae;
+	color: #eaebeb;
+	text-shadow: 0 1px rgba(64, 64, 64, 1);
+	padding-bottom: 0.5em;
+	padding-top: 0.7em;
+	margin-bottom: 1em;
+	text-indent: 1.5em;
+	width: 100%;
+	float: left;
+	border-radius: 5px 5px 0 0;
+}
+
+.panel>h2 {
+	font-weight: bold;
+	font-size: 1.2em;
+	border-bottom: 1px solid #839aae;
+	color: #eaebeb;
+	padding-bottom: 0.2em;
+	padding-top: 1.2em;
+	margin-bottom: 1em;
+	text-indent: 1.5em;
+	overflow: hidden;
+	clear: left;
+}
+
+.cover {
+	width: 30%;
+	margin: 1em;
+	border: 1px solid black;
+	float: right;
+}
+
+.errorMessages {
+	background: #485563;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	z-index: 2;
+	border-top: 1px solid black;
+}
+
+.errorMessages li {
+	color: red;
+	padding: 0.4em;
+	float: left;
+}
+
+.panel .botonera {
+	position: absolute;
+	top: 0px;
+	right: 0px;
+}
+
+.botonera>input {
+	font-family: "Roboto", sans-serif;
+	font-size: 0.9em;
+	font-weight: bold;
+	padding: 0.1em 0.3em 0.1em 0.3em;
+	min-width: 64px;
+	margin: 0.4em;
+	cursor: pointer;
+	text-shadow: 0 1px rgba(255, 255, 255, .75);
+	background: #ddd linear-gradient(to bottom, rgba(255, 255, 255, .3) 0%,
+		rgba(0, 0, 0, .3) 100%);
+}
+
+.botonera input:focus {
+	outline: 0;
+}
+
+.panel label:hover {
+	text-shadow: 0 1px rgba(64, 64, 64, 1);
+}
+
+.panel .selectOneMenu label {
+	
+}
+
+.required>input {
+	border-left: 2px solid red;
+}
+
+.panel label {
+	font-weight: bold;
+	display: inline-block;
+	width: 380px;
+	color: #bcc6d0;
+	text-align: right;
+	box-sizing: border-box;
+	padding: 0 2em 1em 2em;
+}
+
+.small {
+	width: 300px !important;
+}
+
+.small input {
+	width: 82px !important;
+}
+
+.large {
+	width: 495px !important;
+}
+
+.large input {
+	width: 276px !important;
+}
+
+.very_large {
+	width: 600px !important;
+}
+
+.very_large input {
+	width: 381px !important;
+}
+
+.largest {
+	width: 990px !important;
+}
+
+.largest input {
+	width: 371px !important;
+}
+
+.panel label input, .panel label select {
+	margin-left: 1em;
+}
+
+.number {
+	text-align: right;
+}
+
+.with_margin {
+	margin: 1em !important;
+}

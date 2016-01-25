@@ -13,9 +13,9 @@ import javax.faces.application.Application;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import afersa.core.service.MaintenanceService;
-import afersa.core.view.AbstractBean;
+import ged.ejb.core.MaintenanceService;
 import ged.ejb.core.i18n.I18nString;
+import ged.web.core.view.AbstractBean;
 
 @Named
 @ApplicationScoped

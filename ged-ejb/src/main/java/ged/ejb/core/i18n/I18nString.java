@@ -6,7 +6,7 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
-import ged.ejb.core.AbstractEntity;
+import ged.ejb.core.model.AbstractEntity;
 
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = { "key", "locale" }))

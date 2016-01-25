@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:i18n="http://legion.com/i18n"
+	template="/WEB-INF/templates/default.xhtml">
+
+	<ui:define name="title">
+		<title>#{i18n['job.job_offer']}</title>
+	</ui:define>
+
+	<ui:param name="selectedMenu" value="offers" />
+
+	<ui:define name="content">
+		<h:form id="form">
+			<input type="hidden" id="jobOfferId"
+				value="#{jobOfferEditBean.jobOffer.id}" />
+
+			<h:graphicImage value="/resources/img/s.gif" styleClass="headerIcon" />
+
+			<h:panelGroup rendered="#{jobOfferEditBean.jobOffer.id == 0}">
+				<h1 class="header">#{i18n['job.new_job_offer']}</h1>
+			</h:panelGroup>
+
+			<h:panelGroup rendered="#{jobOfferEditBean.jobOffer.id != 0}">
+				<h1 class="header">#{jobOfferEditBean.jobOffer.jobName}</h1>
+			</h:panelGroup>
+
+			<h:panelGroup layout="block" styleClass="panel">
+				<h1>#{i18n['job.job_offer']}</h1>
+
+				<h2>#{i18n['job.detail']}</h2>
+
+				<h:outputLabel for="name" value="#{i18n['job.name']}"
+					styleClass="very_large required">
+					<h:inputText id="name" value="#{jobOfferEditBean.jobOffer.jobName}"
+						label="#{i18n['job.name']}" required="true"
+						styleClass="#{not component.valid ? 'inputError' : ''}" />
+					<h:message for="name" errorClass="error" />
+				</h:outputLabel>
+
+				<h:outputLabel for="places" value="#{i18n['job.places']}"
+					styleClass="small">
+					<h:inputText id="places"
+						value="#{jobOfferEditBean.jobOffer.jobPlaces}"
+						label="#{i18n['job.places']}"
+						styleClass="#{not component.valid ? 'number inputError' : 'number'}" />
+					<h:message for="places" errorClass="error" />
+				</h:outputLabel>
+
+				<h:outputLabel for="dateOpened" value="#{i18n['job.date_opened']}"
+					styleClass="small">
+					<h:inputText id="dateOpened"
+						value="#{jobOfferEditBean.jobOffer.dateOpened}"
+						label="#{i18n['job.date_opened']}"
+						styleClass="#{not component.valid ? 'inputError' : ''}">
+						<f:convertDateTime pattern="MM / yyyy" />
+					</h:inputText>
+					<h:message for="dateOpened" errorClass="error" />
+				</h:outputLabel>
+
+				<h:outputLabel for="dateClosed" value="#{i18n['job.date_closed']}"
+					styleClass="small required">
+					<h:inputText id="dateClosed"
+						value="#{jobOfferEditBean.jobOffer.dateClosed}"
+						label="#{i18n['job.date_closed']}"
+						styleClass="#{not component.valid ? 'inputError' : ''}"
+						required="true">
+						<f:convertDateTime pattern="MM / yyyy" />
+					</h:inputText>
+					<h:message for="dateClosed" errorClass="error" />
+				</h:outputLabel>
+
+				<h:outputLabel for="description" value="#{i18n['job.description']}"
+					styleClass="largest">
+					<h:inputTextarea id="description"
+						value="#{jobOfferEditBean.jobOffer.description}"
+						label="#{i18n['job.description']}"
+						styleClass="#{not component.valid ? 'inputError' : ''}" />
+					<h:message for="description" errorClass="error" />
+				</h:outputLabel>
+
+				<h2>#{i18n['job.contract']}</h2>
+
+				<h:outputLabel for="contractType"
+					value="#{i18n['job.contract_type']}">
+					<h:selectOneMenu id="contractType"
+						value="#{jobOfferEditBean.jobOffer.contractType}"
+						label="#{i18n['job.contract_type']}">
+						<f:selectItems var="contractType" itemValue="#{contractType.name}"
+							value="#{applicationBean.contractTypes}"
+							itemLabel="#{i18n:translate(contractType.name)}" />
+					</h:selectOneMenu>
+				</h:outputLabel>
+
+				<h:outputLabel for="contractDuration"
+					value="#{i18n['job.duration_of_contract']}">
+					<h:selectOneMenu id="contractDuration"
+						value="#{jobOfferEditBean.jobOffer.contractDuration}"
+						label="#{i18n['job.duration_of_contract']}">
+						<f:selectItems var="contractDuration"
+							itemValue="#{contractDuration.name}"
+							value="#{applicationBean.contractDurations}"
+							itemLabel="#{i18n:translate(contractDuration.name)}" />
+					</h:selectOneMenu>
+				</h:outputLabel>
+
+				<h2>#{i18n['job.place']}</h2>
+
+				<h:outputLabel for="city" value="#{i18n['address.city']}:">
+					<h:inputText id="city" value="#{jobOfferEditBean.jobOffer.city}"
+						label="#{i18n['address.city']}"
+						styleClass="#{not component.valid ? 'inputError' : ''}" />
+					<h:message for="city" errorClass="error" />
+				</h:outputLabel>
+
+				<h:outputLabel for="state" value="#{i18n['address.state']}:">
+					<h:inputText id="state" value="#{jobOfferEditBean.jobOffer.state}"
+						label="#{i18n['address.state']}"
+						styleClass="#{not component.valid ? 'inputError' : ''}" />
+					<h:message for="state" errorClass="error" />
+				</h:outputLabel>
+
+				<h:outputLabel for="country" value="#{i18n['address.country']}:">
+					<h:inputText id="country"
+						value="#{jobOfferEditBean.jobOffer.country}"
+						label="#{i18n['address.country']}"
+						styleClass="#{not component.valid ? 'inputError' : ''}" />
+					<h:message for="country" errorClass="error" />
+				</h:outputLabel>
+
+				<h:panelGroup layout="block" class="buttonGroup">
+					<h:commandButton value="#{i18n['action.save']}"
+						action="#{jobOfferEditBean.save}">
+					</h:commandButton>
+					<h:commandButton value="#{i18n['action.cancel']}"
+						action="#{jobOfferEditBean.cancel}" immediate="true" />
+				</h:panelGroup>
+
+				<h:panelGroup layout="block" class="secondaryButtonGroup">
+					<h:commandButton value="#{i18n['action.save']}"
+						action="#{jobOfferEditBean.save}">
+					</h:commandButton>
+					<h:commandButton value="#{i18n['action.cancel']}"
+						action="#{jobOfferEditBean.cancel}" immediate="true" />
+				</h:panelGroup>
+			</h:panelGroup>
+		</h:form>
+	</ui:define>
+</ui:composition>

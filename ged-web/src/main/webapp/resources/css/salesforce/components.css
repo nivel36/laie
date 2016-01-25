@@ -1,0 +1,640 @@
+h1 {
+	color: black;
+	font-size: 1.3em;
+	font-weight: bold;
+	padding: 5px 0;
+}
+
+h2 {
+	color: black;
+	font-size: 1.15em;
+	font-weight: bold;
+	border-bottom: 1px solid #535993;
+	clear: left;
+	margin: 15px 0 8px 0;
+}
+
+h3 {
+	
+}
+
+h4 {
+	display: block;
+	float: left;
+	margin-left: 1em;
+	font-weight: bold;
+	margin: 0.2em 1em 0.2em 1em;
+	text-align: right;
+	min-height: 2.3em;
+	display: inline-block;
+	box-sizing: border-box;
+	position: relative;
+	clear: left;
+}
+
+label {
+	font-weight: bold;
+	width: 332px;
+	margin: 0.2em 1em 0.2em 1em;
+	text-align: right;
+	min-height: 2.3em;
+	display: inline-block;
+	box-sizing: border-box;
+	position: relative;
+}
+
+label input, label textarea, label select {
+	margin-left: 1em;
+}
+
+/************************************
+ *  PANEL
+ ************************************/
+.panel {
+	position: relative;
+	box-sizing: border-box;
+	border-radius: 4px;
+	padding: 10px 8px;
+	width: 100%;
+	margin: 10px 0 10px 0;
+	background: #F4F5F9;
+}
+
+#content .panel {
+	border-top: 2px solid #535993;
+	border-left: 1px solid #ACAFD0;
+	border-right: 1px solid #ACAFD0;
+	border-bottom: 1px solid #ACAFD0;
+}
+
+aside .panel {
+	background: #FFF1CC;
+	margin-top: 32px;
+}
+
+aside .panel h1 {
+	padding-left: 5px; font-size : 1em;
+	background: #D4B86A;
+	border-radius: 4px;
+	box-sizing: border-box;
+	position: absolute;
+	top: -28px;
+	left: 0;
+	width: 100%;
+	font-size: 1em;
+}
+
+#content .panel>.secondaryButtonGroup {
+	position: absolute;
+	top: 13px;
+	right: 10px;
+}
+
+#content .panel>.buttonGroup {
+	text-align: right;
+}
+
+
+/************************************
+ *  HEADER
+ ************************************/
+#logo {
+	height: 70px;
+	width: 100%;
+	border-radius: 0 0 5px 5px;
+	background: #535993;
+	margin: 0 0 1em 0;
+}
+
+.menu {
+	position: relative;
+	background: linear-gradient(#F4F5F9, #ACAFD0);
+	border-radius: 5px 5px 0 0;
+	overflow: auto;
+	padding-top: 2px;
+	border-bottom: 2px solid #7D82B0;
+}
+
+.menu li a {
+	display: block;
+	font-weight: bold;
+	font-size: 1.1em;
+	text-decoration: none;
+	color: #000;
+	padding: 0 5px 0 5px;
+}
+
+.menu li {
+	line-height: 2.3em;
+	padding: 0 1.3em;
+	float: left;
+}
+
+.menu li .selected {
+	background: linear-gradient(to bottom, rgba(172, 175, 208, 1) 0%,
+		rgba(83, 89, 147, 1) 36%, rgba(83, 89, 147, 1) 100%);
+	border-radius: 7px 7px 0 0;
+	color: #fff;
+}
+
+.menu li:hover .selected {
+	color: #fff;
+}
+
+.menu li:hover a {
+	color: #535993;
+}
+
+/************************************
+ *  ASIDE
+ ************************************/
+#searchInput {
+	margin-right: 0;
+	border-radius: 12px 0 0 12px;
+	vertical-align: top;
+	padding-left: 8px;
+	width: 142px;
+}
+
+#searchButton {
+	margin-left: 0;
+	border-radius: 0 12px 12px 0;
+	height: 24px;
+	vertical-align: top;
+	width: 36px;
+}
+
+#searchLink {
+	color: #000;
+	line-height: 1.4em;
+}
+
+aside input[disabled] {
+	color: #FFE8AA !important;
+}
+
+aside input[disabled]:hover {
+	background: linear-gradient(#FFFDF9, #FFF8E7) !important;
+}
+
+aside input[type="text"], select, textarea {
+	border: 1px solid #FFE8AA;
+}
+
+aside input[type="submit"] {
+	background: linear-gradient(#FFFDF9, #FFF8E7);
+	border: 1px solid #FFE8AA;
+	border-right: 1px solid #D4B86A;
+	border-bottom: 1px solid #D4B86A;
+}
+
+aside input[type="submit"]:hover {
+	background: linear-gradient(#FFFDF9, #FFF1CC);
+}
+
+/************************************
+ *  CONTENT
+ ************************************/
+
+
+/************************************
+ *  INPUT
+ ************************************/
+.inputSelectable>input[type="text"] {
+	border: 1px solid transparent;
+	background: transparent;
+}
+
+.inputSelectable>input[type="text"]:hover {
+	border: 1px solid #7D82B0 !important;
+	transition-property: border;
+	transition-duration: 0.5s;
+	transition-timing-function: linear;
+	transition-delay: 0.1s;
+}
+
+input, select, textarea {
+	margin: 4px;
+	box-sizing: border-box;
+}
+
+.inputError {
+	border: 1px solid red !important;
+}
+
+input[disabled] {
+	color: #7D82B0 !important;
+}
+
+input[disabled]:hover {
+	background: linear-gradient(#F4F5F9, #D5D7E8) !important;
+}
+
+input[type="checkbox"] {
+	margin: 6px 2 5px 2;
+}
+
+input[type="text"], select, textarea, input[type="email"], input[type="date"]
+	{
+	outline: medium none;
+	padding: 3px;
+	border-radius: 3px;
+	box-sizing: border-box;
+	background-color: white;
+	font-size: 1.1em;
+	border: 1px solid #7D82B0;
+	width: 158px;
+}
+
+input[type="submit"] {
+	background: linear-gradient(#F4F5F9, #D5D7E8);
+	color: #333;
+	font-weight: bold;
+	font-size: .9em;
+	border: 1px solid #7D82B0;
+	border-right: 1px solid #535993;
+	border-bottom: 1px solid #535993;
+	border-radius: 3px;
+	cursor: pointer;
+	display: inline;
+	box-sizing: border-box;
+	padding: 2px;
+}
+
+input[type="submit"]:hover {
+	background: linear-gradient(#F4F5F9, #ACAFD0);
+}
+
+textarea {
+	height: 8em;
+}
+
+/************************************
+ * CV
+ ************************************/
+.card {
+	position: relative;
+	float: left;
+	width: 216px;
+	box-sizing: border-box;
+	padding: 0 10px 8px 0;
+	vertical-align: top;
+}
+
+.card .photo {
+	border: 1px solid grey;
+	width: 55px;
+	margin-right: 10px;
+	float: left;
+}
+
+.card h4 {
+	color: #535993;
+	font-weight: bold;
+	font-size: 1em;
+}
+
+.card .jobPosition {
+	font-weight: bold;
+	font-size: 1em;
+}
+
+.curriculumVitae {
+	border-top: 2px solid #535993;
+	border-left: 1px solid #ACAFD0;
+	border-right: 1px solid #ACAFD0;
+	border-bottom: 1px solid #ACAFD0;
+	border-radius: 4px;
+	background: #F4F5F9;
+	margin: 10px 0 10px 0;
+	position: relative;
+	overflow: auto;
+	box-sizing: border-box;
+	padding: 10px;
+	clear: left;
+	font-size: 1.3em;
+}
+
+.curriculumVitae .photo {
+	border: 1px solid grey;
+	float: right;
+}
+
+.curriculumVitae>h1 {
+	display: block;
+	font-size: 2em;
+	color: #7D82B0;
+}
+
+.curriculumVitae>h2 {
+	font-size: 1.3em;
+	padding: 0px 0 5px 0;
+	font-weight: bold;
+	color: #535993;
+}
+
+.curriculumVitae>h3 {
+	font-size: 1.1em;
+	padding: 20px 0 5px 0;
+	font-weight: bold;
+	color: #535993;
+}
+
+.curriculumVitae>h4 {
+	font-size: 1.1em;
+	font-weight: bold;
+	padding: 20px 0 5px 0;
+}
+
+.curriculumVitae>h5 {
+	font-size: 1.1em;
+}
+
+
+/************************************
+ *  TABLE
+ ************************************/
+.dataTable {
+	margin: 1em 0em 1em 0em;
+	width: 100%;
+	box-sizing: border-box;
+	border-radius: 3px;
+	background-color: #F4F5F9;
+	box-sizing: border-box;
+}
+
+.dataTable tr {
+	padding: 8px 0;
+	color: #000;
+	background: white;
+}
+
+.dataTable tr:hover {
+	background: #F4F5F9;
+}
+
+.dataTable thead {
+	font-size: .9em;
+}
+
+.dataTable th {
+	border: 1px solid #7D82B0;
+	background: #D5D7E8;
+	color: #000000;
+	font-weight: bold;
+	padding: 3px 2px 4px 5px;
+	text-align: left;
+	vertical-align: bottom;
+}
+
+.dataTable td {
+	border: 1px solid #7D82B0;
+	padding: 3px 2px 4px 5px;
+	text-align: left;
+	vertical-align: bottom;
+	cursor: default;
+}
+
+.dataTable input[type="checkbox"] {
+	margin: 0 !important;
+}
+
+.dataTable a {
+	color: #535993;
+	text-decoration: none;
+	font-weight: normal;
+}
+
+.dataTable a:hover {
+	text-decoration: underline;
+}
+
+.panelGrid {
+	width: 100%;
+}
+
+.panelGrid tr td {
+	padding-left: 3px;
+	width: 50%;
+}
+
+.paginator {
+	float: left;
+	text-align: center;
+	width: 100%;
+	overflow: auto;
+	position: relative;
+}
+
+.paginator label {
+	margin: 2px;
+	padding: 2px 3px;
+	display: inline-block;
+	height: 20px;
+	font-size: .9em;
+}
+
+.paginator select {
+	width: 4em;
+	padding: 1px;
+	font-size: 1em;
+}
+
+.paginator input[type="submit"] {
+	min-width: 2em;
+}
+
+.contentPanel {
+	position: relative;
+	float: left;
+}
+
+.buttonGroup {
+	text-align: right;
+}
+
+.required>input, .required>textarea {
+	border-left: 2px solid red;
+}
+
+.dateBlock {
+	float: left;
+	overflow: auto;
+}
+
+.outputBlock {
+	padding: 1em;
+	background: white;
+}
+
+.editor {
+	display: inline-block;
+	width: 771px ! important;
+	margin-left: 1em;
+}
+
+.half {
+	width: 50% !important;
+	float: left;
+}
+
+.outputBlock p {
+	padding: 0 0 0.6em 0;
+}
+
+.icon {
+	font-family: "Roboto", sans-serif;
+	font-size: 1.2em;
+	font-weight: bold;
+	margin-top: 0.5em;
+	margin-right: 1em;
+	margin-bottom: 1em;
+	cursor: pointer;
+	text-shadow: 0 1px rgba(255, 255, 255, .75);
+	background: #ddd linear-gradient(to bottom, rgba(255, 255, 255, .3) 0%,
+		rgba(0, 0, 0, .3) 100%);
+}
+
+.repeatedPanel {
+	padding-bottom: 1em;
+	overflow: auto;
+	position: relative;
+	border-bottom: 1px dashed #839aae;
+	padding-top: 1em;
+	width: 100%;
+}
+
+.smallRepeatedPanel {
+	padding-bottom: 1em;
+	overflow: auto;
+	position: relative;
+	padding-top: 1em;
+	float: left;
+}
+
+.compactPanel label {
+	display: inline !important;
+}
+
+.text {
+	color: #bcc6d0;
+	font-weight: bold;
+}
+
+.compact {
+	display: inline !important;
+}
+
+.small {
+	width: 257px !important;
+}
+
+.small input, .small select {
+	width: 82px !important;
+}
+
+.large {
+	width: 450px !important;
+}
+
+.largeInput, .large input, .large textarea, .large select {
+	width: 276px !important;
+}
+
+.very_large {
+	width: 538px !important;
+}
+
+.very_large input, .very_large textarea {
+	width: 363px !important;
+}
+
+.extra_large {
+	width: 688px !important;
+}
+
+.extra_large input, .extra_large textarea {
+	width: 513px !important;
+}
+
+.largest {
+	width: 819px !important;
+}
+
+.largest input, .largest textarea {
+	width: 645px !important;
+}
+
+.number {
+	text-align: right;
+}
+
+.with_margin {
+	margin: 1em !important;
+}
+
+.error {
+	color: red;
+	float: left;
+	margin-left: 172px;
+	font-weight: normal;
+	font-size: 0.9em;
+	white-space: nowrap;
+}
+
+.number {
+	text-align: right;
+}
+
+.header {
+	font-size: 2em;
+	margin-left: 45px;
+	line-height: 25px;
+}
+
+.subheader {
+	margin-left: 52px;
+	width: 100%;
+	font-weight: bold;
+	font-size: 1.2em;
+}
+
+.pictureIcon {
+	width: 64px;
+	height: auto;
+	background-size: contain;
+	display: inline;
+	float: left;
+	margin-bottom: 15px;
+}
+
+.headerIcon {
+	width: 32px;
+	height: auto;
+	background-size: contain;
+	display: inline;
+	float: left;
+	margin-left: 15px;
+}
+
+.candidatesIcon {
+	background-image:
+		url("#{resource['img/salesforce/user-group-icon.png']}");
+}
+
+.candidateIcon {
+	background-image: url("#{resource['img/salesforce/user-icon.png']}");
+}
+
+.homeIcon {
+	background-image: url("#{resource['img/salesforce/home-icon.png']}");
+}
+
+.aboutIcon {
+	background-image: url("#{resource['img/salesforce/about-icon.png']}");
+}
+
+.pieChartIcon {
+	background-image:
+		url("#{resource['img/salesforce/pie-chart-icon.png']}");
+}

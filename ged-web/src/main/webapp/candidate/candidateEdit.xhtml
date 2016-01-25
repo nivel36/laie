@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+	template="/WEB-INF/templates/default.xhtml">
+
+	<ui:define name="title">
+		<title>#{i18n['candidate.candidate']}</title>
+	</ui:define>
+
+	<ui:param name="selectedMenu" value="candidates" />
+
+	<ui:define name="content">
+		<h:form id="form">
+			<input type="hidden" id="candidateId"
+				value="#{candidateEditBean.candidate.id}" />
+
+			<h:graphicImage value="/resources/img/s.gif"
+				styleClass="headerIcon candidateIcon" />
+
+			<h:panelGroup rendered="#{candidateEditBean.candidate.id == 0}">
+				<h1 class="header">#{i18n['candidate.new_candidate']}</h1>
+			</h:panelGroup>
+
+			<h:panelGroup rendered="#{candidateEditBean.candidate.id != 0}">
+				<h1 class="header">#{candidateEditBean.candidate}</h1>
+			</h:panelGroup>
+
+			<h:panelGroup layout="block" styleClass="panel">
+				<h1>#{i18n['candidate.candidate']}</h1>
+
+				<h2>#{i18n['candidate.detail']}</h2>
+
+				<h:outputLabel value="#{i18n['candidate.name']}"
+					styleClass="required">
+					<h:inputText id="name" value="#{candidateEditBean.candidate.name}"
+						label="#{i18n['candidate.name']}" required="true"
+						styleClass="#{not component.valid ? 'inputError' : ''}" />
+					<h:message for="name" errorClass="error" />
+				</h:outputLabel>
+
+				<h:outputLabel value="#{i18n['candidate.firstSurename']}"
+					styleClass="required">
+					<h:inputText id="firstSurename"
+						value="#{candidateEditBean.candidate.firstSurename}"
+						label="#{i18n['candidate.firstSurename']}" required="true"
+						styleClass="#{not component.valid ? 'inputError' : ''}" />
+					<h:message for="firstSurename" errorClass="error" />
+				</h:outputLabel>
+
+				<h:outputLabel value="#{i18n['candidate.secondSurename']}">
+					<h:inputText id="secondSurename"
+						value="#{candidateEditBean.candidate.secondSurename}"
+						label="#{i18n['candidate.secondSurename']}"
+						styleClass="#{not component.valid ? 'inputError' : ''}" />
+					<h:message for="secondSurename" errorClass="error" />
+				</h:outputLabel>
+
+				<h2>#{i18n['candidate.contact']}</h2>
+
+				<h:outputLabel value="#{i18n['candidate.phone_number']} 1"
+					styleClass="required">
+					<h:inputText id="phoneNumber1"
+						value="#{candidateEditBean.candidate.phoneNumber1}"
+						required="true" label="#{i18n['candidate.phone_number']}1"
+						styleClass="#{ not component.valid ? 'inputError' : ''}" />
+					<h:message for="phoneNumber1" errorClass="error" />
+				</h:outputLabel>
+
+				<h:outputLabel value="#{i18n['candidate.phone_number']} 2">
+					<h:inputText id="phoneNumber2"
+						value="#{candidateEditBean.candidate.phoneNumber2}"
+						label="#{i18n['candidate.phone_number']}2"
+						styleClass="#{ not component.valid ? 'inputError' : ''}" />
+					<h:message for="phoneNumber2" errorClass="error" />
+				</h:outputLabel>
+
+
+				<h:outputLabel value="#{i18n['candidate.email']}"
+					styleClass="large required">
+					<h:inputText id="email" p:type="email"
+						value="#{candidateEditBean.candidate.email}" required="true"
+						label="#{i18n['candidate.email']}"
+						styleClass="#{ not component.valid ? 'inputError' : ''}" />
+					<h:message for="email" errorClass="error" />
+				</h:outputLabel>
+
+
+				<h2>#{i18n['address.address']}</h2>
+
+				<h:outputLabel value="#{i18n['address.street_name']}"
+					styleClass="very_large">
+					<h:inputText id="streetName"
+						value="#{candidateEditBean.candidate.address.street}"
+						label="#{i18n['address.street_name']}"
+						styleClass="#{ not component.valid ? 'inputError' : ''}" />
+					<h:message for="streetName" errorClass="error" />
+				</h:outputLabel>
+
+				<h:outputLabel value="#{i18n['address.house_number']}"
+					styleClass="small">
+					<h:inputText id="houseNumber"
+						value="#{candidateEditBean.candidate.address.number}"
+						label="#{i18n['address.house_number']}"
+						styleClass="#{ not component.valid ? 'inputError' : ''}" />
+					<h:message for="houseNumber" errorClass="error" />
+				</h:outputLabel>
+
+				<h:outputLabel value="#{i18n['address.storey']}" styleClass="small">
+					<h:inputText id="storey"
+						value="#{candidateEditBean.candidate.address.storey}"
+						label="#{i18n['address.storey']}"
+						styleClass="#{ not component.valid ? 'inputError' : ''}" />
+					<h:message for="storey" errorClass="error" />
+				</h:outputLabel>
+
+				<h:outputLabel value="#{i18n['address.door']}" styleClass="small">
+					<h:inputText id="door"
+						value="#{candidateEditBean.candidate.address.door}"
+						label="#{i18n['address.door']}"
+						styleClass="#{ not component.valid ? 'inputError' : ''}" />
+					<h:message for="storey" errorClass="error" />
+				</h:outputLabel>
+
+				<h:outputLabel value="#{i18n['address.zip_code']}"
+					styleClass="small">
+					<h:inputText id="zipCode"
+						value="#{candidateEditBean.candidate.address.zipCode}"
+						label="#{i18n['address.zip_code']}"
+						styleClass="#{ not component.valid ? 'inputError' : ''}" />
+				</h:outputLabel>
+
+				<h:outputLabel value="#{i18n['address.city']}">
+					<h:inputText id="city"
+						value="#{candidateEditBean.candidate.address.city}"
+						label="#{i18n['address.city']}"
+						styleClass="#{ not component.valid ? 'inputError' : ''}" />
+				</h:outputLabel>
+
+				<h:outputLabel value="#{i18n['address.state']}">
+					<h:inputText id="state"
+						value="#{candidateEditBean.candidate.address.state}"
+						label="#{i18n['address.state']}"
+						styleClass="#{ not component.valid ? 'inputError' : ''}" />
+				</h:outputLabel>
+
+				<h:outputLabel value="#{i18n['address.country']}">
+					<h:inputText id="country"
+						value="#{candidateEditBean.candidate.address.country}"
+						label="#{i18n['address.country']}"
+						styleClass="#{ not component.valid ? 'inputError' : ''}" />
+				</h:outputLabel>
+
+				<h:panelGroup layout="block" styleClass="buttonGroup">
+					<h:commandButton value="#{i18n['action.save']}"
+						action="#{candidateEditBean.save}" />
+					<h:commandButton value="#{i18n['action.edit_curriculum']}"
+						action="#{candidateEditBean.editCurriculum}" />
+					<h:commandButton value="#{i18n['action.cancel']}"
+						action="#{candidateEditBean.cancel}" immediate="true" />
+				</h:panelGroup>
+
+				<h:panelGroup layout="block" styleClass="secondaryButtonGroup">
+					<h:commandButton value="#{i18n['action.save']}"
+						action="#{candidateEditBean.save}" />
+					<h:commandButton value="#{i18n['action.edit_curriculum']}"
+						action="#{candidateEditBean.editCurriculum}" />
+					<h:commandButton value="#{i18n['action.cancel']}"
+						action="#{candidateEditBean.cancel}" immediate="true" />
+				</h:panelGroup>
+			</h:panelGroup>
+		</h:form>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:i18n="http://legion.com/i18n"
+	template="/WEB-INF/templates/default.xhtml">
+
+	<ui:define name="title">
+		<title>#{i18n['maintenance.maintenance']}</title>
+	</ui:define>
+
+	<ui:param name="selectedMenu" value="maintenace" />
+
+	<ui:define name="content">
+		<h:form id="form">
+			<h:graphicImage value="/resources/img/s.gif"
+				styleClass="headerIcon candidatesIcon" />
+
+			<h1 class="header">#{i18n['maintenance.maintenance']}</h1>
+
+			<h:panelGroup layout="block" styleClass="panel" id="resultados">
+
+				<h1>#{i18n['candidate.search_results']}</h1>
+
+				<h:panelGroup layout="block" styleClass="buttonGroup">
+					<h:commandButton value="#{i18n['action.new']}"
+						action="#{candidateSearchBean.newCandidate}" immediate="true" />
+				</h:panelGroup>
+
+				<h:dataTable var="maintenance" id="maintenances"
+					value="#{applicationBean.contractTypes}" styleClass="dataTable">
+
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="#{i18n['maintenance.value']}" />
+						</f:facet>
+						<h:outputText value="#{i18n:translate(maintenance.name)}" />
+					</h:column>
+
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="#{i18n['maintenance.description']}" />
+						</f:facet>
+						<h:outputText value="#{i18n:translate(maintenance.description)}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Action" />
+						</f:facet>
+						<h:link value="#{i18n['action.select']}" action="#{candidateSearchBean.remove(candidate)}">
+							<f:param name="candidateId" value="#{candidate.id}" />
+						</h:link>
+						|
+						<h:commandLink action="#{candidateSearchBean.remove(candidate)}"
+							value="#{i18n['action.remove']}">
+							<f:ajax execute="@form" render="@form" />
+						</h:commandLink>
+					</h:column>
+				</h:dataTable>
+
+				<h:panelGroup layout="block" styleClass="paginator" id="paginator"
+					rendered="#{not empty candidateSearchBean.dataList}">
+					<h:commandButton disabled="#{candidateSearchBean.currentPage eq 0}"
+						value="#{i18n['paginator.first']}"
+						action="#{candidateSearchBean.firstPage}">
+						<f:ajax render=":form:resultados" />
+					</h:commandButton>
+					<h:commandButton disabled="#{candidateSearchBean.currentPage eq 0}"
+						value="#{i18n['paginator.previous']}"
+						action="#{candidateSearchBean.previousPage}">
+						<f:ajax render=":form:resultados" />
+					</h:commandButton>
+					<ui:repeat value="#{candidateSearchBean.pages}" var="page">
+						<h:commandButton value="#{page+1}"
+							action="#{candidateSearchBean.gotoPage(page)}"
+							disabled="#{candidateSearchBean.currentPage eq page}">
+							<f:ajax render=":form:resultados" />
+						</h:commandButton>
+					</ui:repeat>
+					<h:commandButton value="#{i18n['paginator.next']}"
+						disabled="#{candidateSearchBean.currentPage eq candidateSearchBean.pagesSize-1}"
+						action="#{candidateSearchBean.nextPage}">
+						<f:ajax render=":form:resultados" />
+					</h:commandButton>
+					<h:commandButton value="#{i18n['paginator.last']}"
+						disabled="#{candidateSearchBean.currentPage eq candidateSearchBean.pagesSize-1}"
+						action="#{candidateSearchBean.lastPage}">
+						<f:ajax render=":form:resultados" />
+					</h:commandButton>
+					<h:outputLabel value="#{i18n['paginator.show']}">
+						<h:selectOneMenu value="#{candidateSearchBean.rowsPerPage}">
+							<f:selectItem itemValue="5" itemLabel="5" />
+							<f:selectItem itemValue="10" itemLabel="10" />
+							<f:selectItem itemValue="25" itemLabel="25" />
+							<f:ajax listener="#{candidateSearchBean.rowsPerPageChange}"
+								render=":form:resultados" execute=":form:paginator" />
+						</h:selectOneMenu>
+					</h:outputLabel>
+				</h:panelGroup>
+			</h:panelGroup>
+
+			<h:panelGroup layout="block" styleClass="panel" id="detail">
+				<h1>#{i18n['maintenance.detail']}</h1>
+
+				<h:outputLabel value="#{i18n['maintenance.key']}"
+					styleClass="required">
+					<h:inputText id="key"
+						value="#{maintenanceEditBean.key}"
+						label="#{i18n['maintenance.key']}" required="true"
+						styleClass="#{not component.valid ? 'inputError' : ''}" />
+					<h:message for="key" errorClass="error" />
+				</h:outputLabel>
+
+				<h:outputLabel value="#{i18n['maintenance.value']}"
+					styleClass="required">
+					<h:inputText id="value"
+						value="#{maintenanceEditBean.value}"
+						label="#{i18n['maintenance.value']}" required="true"
+						styleClass="#{not component.valid ? 'inputError' : ''}" />
+					<h:message for="value" errorClass="error" />
+				</h:outputLabel>
+
+				<h:outputLabel value="#{i18n['maintenance.description']}"
+					styleClass="extra_large">
+					<h:inputText id="description"
+						value="#{maintenanceEditBean.description}"
+						label="#{i18n['maintenance.value']}"
+						styleClass="#{not component.valid ? 'inputError' : ''}" />
+					<h:message for="description" errorClass="error" />
+				</h:outputLabel>
+
+				<h:panelGroup layout="block" styleClass="buttonGroup">
+					<h:commandButton value="#{i18n['action.save']}"
+						action="#{candidateEditBean.save}" />
+					<h:commandButton value="#{i18n['action.delete']}"
+						action="#{candidateEditBean.editCurriculum}" />
+				</h:panelGroup>
+			</h:panelGroup>
+		</h:form>
+	</ui:define>
+</ui:composition>

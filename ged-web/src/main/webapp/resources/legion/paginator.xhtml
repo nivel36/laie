@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:cc="http://java.sun.com/jsf/composite">
+
+<cc:interface componentType="paginator">
+	<cc:attribute name="firstRow" type="java.lang.Integer" />
+	<cc:attribute name="rowCount" type="java.lang.Integer" default="10" />
+	<cc:attribute name="maxRow" type="java.lang.Integer" />
+</cc:interface>
+
+<cc:implementation>
+	<h:panelGroup layout="block">
+		<h:commandButton disabled="#{cc.attrs.firstRow == 0}"
+			value="#{i18n['paginator.first']}" action="#{cc.firstPage}" />
+		<h:commandButton disabled="#{cc.attrs.firstRow == 0}"
+			value="#{i18n['paginator.previous']}" action="#{cc.previousPage}" />
+		<ui:repeat>
+			<ui:repeat value="#{cc.pageNumnbers}" varStatus="page">
+				<h:commandButton value="#{page.index}" />
+			</ui:repeat>
+		</ui:repeat>
+		<h:commandButton
+			disabled="#{cc.attrs.firstRow*cc.attrs.rowCount >= cc.attrs.maxRow}"
+			value="#{i18n['paginator.next']}" action="#{cc.nextPage}" />
+		<h:commandButton
+			disabled="#{cc.attrs.firstRow*cc.attrs.rowCount >= cc.attrs.maxRow}"
+			value="#{i18n['paginator.last']}" action="#{cc.lastPage}" />
+	</h:panelGroup>
+</cc:implementation>
+</html>

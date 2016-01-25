@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<f:view contentType="text/html" locale="#{sessionBean.locale}">
+	<h:head>
+		<ui:insert name="title">
+			<title>Legion</title>
+		</ui:insert>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<h:outputStylesheet name="css/reset.css" />
+		<h:outputStylesheet name="css/salesforce/layout.css" />
+		<h:outputStylesheet name="css/salesforce/components.css" />
+	</h:head>
+	<h:body>
+		<header>
+			<ui:insert name="header">
+				<ui:decorate template="header.xhtml" />
+			</ui:insert>
+		</header>
+		<aside>
+			<ui:insert name="aside">
+				<ui:include src="aside.xhtml" />
+			</ui:insert>
+		</aside>
+		<div id="content">
+			<ui:insert name="content" />
+		</div>
+		<footer>
+			<ui:insert name="footer">
+				<ui:include src="footer.xhtml" />
+			</ui:insert>
+		</footer>
+	</h:body>
+</f:view>
+</html>

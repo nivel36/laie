@@ -23,6 +23,8 @@
 		<maven.ear.plugin.version>2.10</maven.ear.plugin.version>
 		<maven.war.plugin.version>2.6</maven.war.plugin.version>
 		<maven.ejb.plugin.version>2.5</maven.ejb.plugin.version>
+		<version.pdfbox>1.8.6</version.pdfbox>
+		<version.commons-fileupload>1.3</version.commons-fileupload>
 	</properties>
 
 	<dependencyManagement>
@@ -54,6 +56,18 @@
 				<groupId>javax</groupId>
 				<artifactId>javaee-api</artifactId>
 				<version>${javaee-api.version}</version>
+			</dependency>
+			
+			<dependency>
+			<groupId>org.apache.pdfbox</groupId>
+			<artifactId>pdfbox</artifactId>
+			<version>${version.pdfbox}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>${version.commons-fileupload}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

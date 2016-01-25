@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:i18n="http://legion.com/i18n"
+	template="/WEB-INF/templates/default.xhtml">
+
+	<ui:define name="title">
+		<title>#{i18n['maintenance.maintenances']}</title>
+	</ui:define>
+
+	<ui:param name="selectedMenu" value="maintenances" />
+
+	<ui:define name="content">
+		<h:graphicImage value="/resources/img/s.gif" styleClass="headerIcon" />
+		<h1 class="header">#{i18n['maintenance.maintenances']}</h1>
+		<h:panelGrid styleClass="panelGrid" columns="2" cellpadding="10px">
+			<h:panelGroup layout="block" styleClass="panel">
+				<h1>#{i18n['maintenance.contract_type']}</h1>
+				<h:form>
+					<h:selectOneMenu id="contractType"
+						label="#{i18n['job.contract_type']}"
+						value="#{jobOfferEditBean.jobOffer.contractType}"
+						styleClass="largeInput">
+						<f:selectItems var="contractType" itemValue="#{contractType.name}"
+							value="#{applicationBean.contractTypes}"
+							itemLabel="#{i18n:translate(contractType.name)}" />
+					</h:selectOneMenu>
+					<h:commandButton value="#{i18n['action.modify']}"
+						action="#{maintenanceIndexBean.modifyContractType}" />
+					<h:commandButton value="#{i18n['action.new']}"
+						action="#{maintenanceIndexBean.newContractType}" />
+				</h:form>
+			</h:panelGroup>
+
+			<h:panelGroup layout="block" styleClass="panel">
+				<h1>#{i18n['maintenance.contract_duration']}</h1>
+				<h:form>
+					<h:selectOneMenu id="contractDuration"
+						value="#{jobOfferEditBean.jobOffer.contractDuration}"
+						label="#{i18n['job.duration_of_contract']}"
+						styleClass="largeInput">
+						<f:selectItems var="contractDuration"
+							itemValue="#{contractDuration}"
+							value="#{applicationBean.contractDurations}"
+							itemLabel="#{i18n:translate(contractDuration.name)}" />
+					</h:selectOneMenu>
+					<h:commandButton value="#{i18n['action.modify']}" />
+					<h:commandButton value="#{i18n['action.new']}" />
+				</h:form>
+			</h:panelGroup>
+
+			<h:panelGroup layout="block" styleClass="panel">
+				<h1>#{i18n['maintenance.skill_knowdeleges']}</h1>
+				<h:form>
+					<h:selectOneMenu id="skillKnowdelege"
+						label="#{i18n['skill.level']}" styleClass="largeInput">
+						<f:selectItems var="skillLevel" itemValue="#{skillLevel.name}"
+							value="#{applicationBean.skillLevels}"
+							itemLabel="#{i18n:translate(skillLevel.name)}" />
+					</h:selectOneMenu>
+					<h:commandButton value="#{i18n['action.modify']}" />
+					<h:commandButton value="#{i18n['action.new']}" />
+				</h:form>
+			</h:panelGroup>
+
+			<h:panelGroup layout="block" styleClass="panel">
+				<h1>#{i18n['maintenance.language_knowdeleges']}</h1>
+				<h:form>
+					<h:selectOneMenu id="languageKnowdelege"
+						label="#{i18n['language.level']}" styleClass="largeInput">
+						<f:selectItems var="languageLevel"
+							itemValue="#{languageLevel.name}"
+							value="#{applicationBean.languageLevels}"
+							itemLabel="#{i18n:translate(languageLevel.name)}" />
+					</h:selectOneMenu>
+					<h:commandButton value="#{i18n['action.modify']}" />
+					<h:commandButton value="#{i18n['action.new']}" />
+				</h:form>
+			</h:panelGroup>
+		</h:panelGrid>
+	</ui:define>
+</ui:composition>

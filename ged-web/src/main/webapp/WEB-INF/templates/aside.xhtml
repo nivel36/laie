@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<h:form id="asideForm" prependId="false">
+		<h:panelGroup layout="block" styleClass="panel">
+			<h1>#{i18n['aside.search']}</h1>
+			<h:inputText id="searchInput" />
+			<h:commandButton id="searchButton" />
+			<h:commandLink id="searchLink" value="Búsqueda avanzada" />
+		</h:panelGroup>
+
+		<h:panelGroup layout="block" styleClass="panel">
+			<h1>#{i18n['aside.saved_searchs']}</h1>
+			<h:outputText value="#{i18n['message.saved_searchs.empty']}"
+				styleClass="text" rendered="#{empty savedSearches}" />
+			<h:commandButton value="#{i18n['action.clean']}" />
+			<h:commandButton value="#{i18n['action.add']}" />
+		</h:panelGroup>
+
+		<h:panelGroup layout="block" styleClass="panel">
+			<h1>#{i18n['aside.favourites']}</h1>
+			<h:outputText value="#{i18n['message.favourites.empty']}"
+				styleClass="text" rendered="#{empty bookmarks}" />
+			<h:commandButton value="#{i18n['action.clean']}" />
+			<h:commandButton value="#{i18n['action.add']}" />
+
+		</h:panelGroup>
+
+		<h:panelGroup layout="block" styleClass="panel">
+			<h1>#{i18n['aside.last_actions']}</h1>
+			<h:outputText value="#{i18n['message.actions.empty']}"
+				styleClass="text" rendered="#{empty actions}" />
+			<h:commandButton value="#{i18n['action.clean']}" />
+			<h:commandButton value="#{i18n['action.add']}" />
+		</h:panelGroup>
+	</h:form>
+
+</ui:composition>

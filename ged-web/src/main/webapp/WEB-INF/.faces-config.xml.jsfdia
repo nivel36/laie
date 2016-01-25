@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS model-entity="JSFProcess">
+ <PROCESS-ITEM NAME="rules:#app#candidate#candidates.xhtml"
+  PATH="/app/candidate/candidates.xhtml" SHAPE="368,232,0,0"
+  model-entity="JSFProcessGroup" persistent="true"/>
+</PROCESS>
