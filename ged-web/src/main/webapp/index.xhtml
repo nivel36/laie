@@ -51,8 +51,9 @@
 						<h:panelGroup styleClass="card" layout="block">
 							<h:graphicImage value="/resources/img/salesforce/no-photo.png"
 								styleClass="photo" />
-							<h4>${candidate.name} ${candidate.firstSurename} ${candidate.secondSurename} </h4>
-							<p>Arquitecto de software en GFI </p>
+							<h:outputText styleClass="name" value="${candidate.name} ${candidate.firstSurename} ${candidate.secondSurename}" />
+							<br/>
+							<h:outputText value="Arquitecto de software en GFI"  />
 						</h:panelGroup>
 					</ui:repeat>
 

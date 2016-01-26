@@ -58,6 +58,7 @@ label input, label textarea, label select {
 	width: 100%;
 	margin: 10px 0 10px 0;
 	background: #F4F5F9;
+	overflow: auto;
 }
 
 #content .panel {
@@ -288,7 +289,7 @@ textarea {
 	float: left;
 }
 
-.card h4 {
+.card .name {
 	color: #535993;
 	font-weight: bold;
 	font-size: 1em;
