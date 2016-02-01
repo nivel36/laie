@@ -2,16 +2,16 @@ h1 {
 	color: black;
 	font-size: 1.3em;
 	font-weight: bold;
-	padding: 5px 0;
+	padding: 5px 0px;
 }
 
 h2 {
 	color: black;
-	font-size: 1.15em;
+	font-size: 1em;
 	font-weight: bold;
 	border-bottom: 1px solid #535993;
 	clear: left;
-	margin: 15px 0 8px 0;
+	margin: 10px 0 8px 0;
 }
 
 h3 {
@@ -34,6 +34,7 @@ h4 {
 
 label {
 	font-weight: bold;
+	font-size: 0.9em;
 	width: 332px;
 	margin: 0.2em 1em 0.2em 1em;
 	text-align: right;
@@ -41,6 +42,7 @@ label {
 	display: inline-block;
 	box-sizing: border-box;
 	position: relative;
+	color: #444;
 }
 
 label input, label textarea, label select {
@@ -74,7 +76,8 @@ aside .panel {
 }
 
 aside .panel h1 {
-	padding-left: 5px; font-size : 1em;
+	padding-left: 5px;
+	font-size: 1em;
 	background: #D4B86A;
 	border-radius: 4px;
 	box-sizing: border-box;
@@ -94,7 +97,6 @@ aside .panel h1 {
 #content .panel>.buttonGroup {
 	text-align: right;
 }
-
 
 /************************************
  *  HEADER
@@ -197,7 +199,6 @@ aside input[type="submit"]:hover {
  *  CONTENT
  ************************************/
 
-
 /************************************
  *  INPUT
  ************************************/
@@ -223,16 +224,23 @@ input, select, textarea {
 	border: 1px solid red !important;
 }
 
-input[disabled] {
+input[type="submit"]:disabled {
 	color: #7D82B0 !important;
 }
 
-input[disabled]:hover {
+input[type="submit"]:disabled:hover {
 	background: linear-gradient(#F4F5F9, #D5D7E8) !important;
 }
 
 input[type="checkbox"] {
 	margin: 6px 2 5px 2;
+}
+
+input[type="text"]:disabled, input[type="email"]:disabled {
+	border: 0px;
+	background: transparent;
+	color:black;
+	margin-left: 5px;
 }
 
 input[type="text"], select, textarea, input[type="email"], input[type="date"]
@@ -350,7 +358,6 @@ textarea {
 .curriculumVitae>h5 {
 	font-size: 1.1em;
 }
-
 
 /************************************
  *  TABLE

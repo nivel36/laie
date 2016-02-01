@@ -14,7 +14,7 @@ import javax.inject.Inject;
 public class AbstractBean implements Serializable {
 
 	private static final long serialVersionUID = -2545624640193642401L;
-
+	
 	@Inject
 	protected FacesContext facesContext;
 

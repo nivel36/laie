@@ -13,7 +13,7 @@
 	<ui:param name="selectedMenu" value="candidates" />
 
 	<ui:define name="content">
-		<h:form id="form">
+		<h:form id="form" prependId="false">
 			<input type="hidden" id="candidateId"
 				value="#{candidateEditBean.candidate.id}" />
 
@@ -58,6 +58,13 @@
 					<h:message for="secondSurename" errorClass="error" />
 				</h:outputLabel>
 
+				<h:outputLabel value="#{i18n['candidate.age']}" styleClass="small">
+					<h:inputText id="age" value="#{candidateEditBean.candidate.age}"
+						label="#{i18n['candidate.age']}"
+						styleClass="#{not component.valid ? 'inputError' : ''}" />
+					<h:message for="age" errorClass="error" />
+				</h:outputLabel>
+
 				<h2>#{i18n['candidate.contact']}</h2>
 
 				<h:outputLabel value="#{i18n['candidate.phone_number']} 1"
@@ -87,50 +94,34 @@
 					<h:message for="email" errorClass="error" />
 				</h:outputLabel>
 
+				<h2>#{i18n['candidate.work_data']}</h2>
+
+				<h:outputLabel value="#{i18n['candidate.position']}"
+					styleClass="required">
+					<h:inputText id="position"
+						value="#{candidateEditBean.candidate.position}" required="true"
+						label="#{i18n['candidate.position']}"
+						styleClass="#{ not component.valid ? 'inputError' : ''}" />
+					<h:message for="position" errorClass="error" />
+				</h:outputLabel>
+
+				<h:outputLabel value="#{i18n['candidate.salary']}">
+					<h:inputText id="salary"
+						value="#{candidateEditBean.candidate.salary}"
+						label="#{i18n['candidate.salary']}"
+						styleClass="#{ not component.valid ? 'inputError' : ''}" />
+					<h:message for="salary" errorClass="error" />
+				</h:outputLabel>
+
+				<h:outputLabel value="#{i18n['candidate.expected_salary']}">
+					<h:inputText id="expected_salary"
+						value="#{candidateEditBean.candidate.expectedSalary}"
+						label="#{i18n['candidate.expected_salary']}"
+						styleClass="#{ not component.valid ? 'inputError' : ''}" />
+					<h:message for="expected_salary" errorClass="error" />
+				</h:outputLabel>
 
 				<h2>#{i18n['address.address']}</h2>
-
-				<h:outputLabel value="#{i18n['address.street_name']}"
-					styleClass="very_large">
-					<h:inputText id="streetName"
-						value="#{candidateEditBean.candidate.address.street}"
-						label="#{i18n['address.street_name']}"
-						styleClass="#{ not component.valid ? 'inputError' : ''}" />
-					<h:message for="streetName" errorClass="error" />
-				</h:outputLabel>
-
-				<h:outputLabel value="#{i18n['address.house_number']}"
-					styleClass="small">
-					<h:inputText id="houseNumber"
-						value="#{candidateEditBean.candidate.address.number}"
-						label="#{i18n['address.house_number']}"
-						styleClass="#{ not component.valid ? 'inputError' : ''}" />
-					<h:message for="houseNumber" errorClass="error" />
-				</h:outputLabel>
-
-				<h:outputLabel value="#{i18n['address.storey']}" styleClass="small">
-					<h:inputText id="storey"
-						value="#{candidateEditBean.candidate.address.storey}"
-						label="#{i18n['address.storey']}"
-						styleClass="#{ not component.valid ? 'inputError' : ''}" />
-					<h:message for="storey" errorClass="error" />
-				</h:outputLabel>
-
-				<h:outputLabel value="#{i18n['address.door']}" styleClass="small">
-					<h:inputText id="door"
-						value="#{candidateEditBean.candidate.address.door}"
-						label="#{i18n['address.door']}"
-						styleClass="#{ not component.valid ? 'inputError' : ''}" />
-					<h:message for="storey" errorClass="error" />
-				</h:outputLabel>
-
-				<h:outputLabel value="#{i18n['address.zip_code']}"
-					styleClass="small">
-					<h:inputText id="zipCode"
-						value="#{candidateEditBean.candidate.address.zipCode}"
-						label="#{i18n['address.zip_code']}"
-						styleClass="#{ not component.valid ? 'inputError' : ''}" />
-				</h:outputLabel>
 
 				<h:outputLabel value="#{i18n['address.city']}">
 					<h:inputText id="city"
@@ -152,7 +143,6 @@
 						label="#{i18n['address.country']}"
 						styleClass="#{ not component.valid ? 'inputError' : ''}" />
 				</h:outputLabel>
-
 				<h:panelGroup layout="block" styleClass="buttonGroup">
 					<h:commandButton value="#{i18n['action.save']}"
 						action="#{candidateEditBean.save}" />

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Properties;
+import java.util.logging.Level;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
@@ -11,38 +13,55 @@ import javax.faces.application.Application;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import ged.ejb.core.MaintenanceService;
+import ged.ejb.core.Cache;
 import ged.ejb.service.curriculum.LanguageLevel;
 import ged.ejb.service.curriculum.SkillLevel;
 import ged.ejb.service.job.ContractDuration;
 import ged.ejb.service.job.ContractType;
 
-@Named
 @ApplicationScoped
+@Named
 public class ApplicationBean extends AbstractBean {
 
-	private static final long serialVersionUID = -8778037668334921574L;
-
-	private List<ContractType> contractTypes;
-
-	private List<ContractDuration> contractDurations;
-
-	private List<LanguageLevel> languageLevels;
-
-	private List<SkillLevel> skillLevels;
-
-	private List<Locale> locales = new ArrayList<Locale>();
+	private static final long serialVersionUID = 6394915115616408285L;
 	
 	@Inject
-	private MaintenanceService maintenanceService;
+	private Cache cache;
+
+	private List<Locale> locales = new ArrayList<Locale>();
+
+	private Properties properties;
+
+	public List<ContractDuration> getContractDurations() {
+		return cache.getContractDurations();
+	}
+
+	public List<ContractType> getContractTypes() {
+		return cache.getContractTypes();
+	}
+
+	public List<LanguageLevel> getLanguageLevels() {
+		return cache.getLanguageLevels();
+	}
+
+	public Properties getProperties() {
+		return properties;
+	}
+
+	public List<SkillLevel> getSkillLevels() {
+		return cache.getSkillLevels();
+	}
 
 	@PostConstruct
 	public void init() {
-		contractTypes = maintenanceService.getAll(ContractType.class);
-		contractDurations = maintenanceService.getAll(ContractDuration.class);
-		skillLevels = maintenanceService.getAll(SkillLevel.class);
-		languageLevels = maintenanceService.getAll(LanguageLevel.class);
 		loadLocales();
+		properties = new Properties();
+		try {
+			properties.load(ApplicationBean.class
+					.getResourceAsStream("/ged/config.properties"));
+		} catch (Exception e) {
+			logger.log(Level.SEVERE, "Could not load properties");
+		}
 	}
 
 	private void loadLocales() {
@@ -53,25 +72,5 @@ public class ApplicationBean extends AbstractBean {
 		}
 		Locale defaultLocale = app.getDefaultLocale();
 		locales.add(defaultLocale);
-	}
-
-	public List<ContractType> getContractTypes() {
-		return contractTypes;
-	}
-
-	public List<ContractDuration> getContractDurations() {
-		return contractDurations;
-	}
-
-	public List<LanguageLevel> getLanguageLevels() {
-		return languageLevels;
-	}
-
-	public List<SkillLevel> getSkillLevels() {
-		return skillLevels;
-	}
-
-	public List<Locale> getLocales() {
-		return locales;
 	}
 }

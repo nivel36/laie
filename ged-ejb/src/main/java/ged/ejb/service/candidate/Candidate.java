@@ -25,13 +25,16 @@ import ged.ejb.service.job.JobCandidature;
 import ged.ejb.service.tag.Tag;
 
 @Entity
-@NamedQueries({ @NamedQuery(name = "Candidate.getById", query = "SELECT c FROM Candidate c LEFT JOIN FETCH c.curriculum LEFT JOIN FETCH c.curriculum.education LEFT JOIN FETCH c.curriculum.jobExperiences LEFT JOIN FETCH c.curriculum.languages LEFT JOIN FETCH c.curriculum.skills   WHERE c.id = :id") })
+@NamedQueries({
+		@NamedQuery(name = "Candidate.getById", query = "SELECT c FROM Candidate c LEFT JOIN FETCH c.curriculum LEFT JOIN FETCH c.curriculum.education LEFT JOIN FETCH c.curriculum.jobExperiences LEFT JOIN FETCH c.curriculum.languages LEFT JOIN FETCH c.curriculum.skills  LEFT JOIN FETCH c.files  WHERE c.id = :id") })
 public class Candidate extends AuditedEntity {
 
 	private static final long serialVersionUID = 1305321530927456159L;
 
 	@Embedded
 	private Address address;
+
+	private Integer age;
 
 	@Temporal(TemporalType.DATE)
 	private Date bornDate;
@@ -44,6 +47,11 @@ public class Candidate extends AuditedEntity {
 	@NotNull
 	@Column(length = 64, unique = true, nullable = false)
 	private String email;
+
+	private Integer expectedSalary;
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "candidate", orphanRemoval = true)
+	private List<File> files;
 
 	@NotNull
 	@Column(length = 32, nullable = false)
@@ -65,6 +73,10 @@ public class Candidate extends AuditedEntity {
 	@Column(length = 12)
 	private String phoneNumber2;
 
+	private String position;
+
+	private Integer salary;
+
 	@Column(length = 32)
 	private String secondSurename;
 
@@ -75,8 +87,24 @@ public class Candidate extends AuditedEntity {
 		this.address = new Address();
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Candidate other = (Candidate) obj;
+		return id == other.id;
+	}
+
 	public Address getAddress() {
 		return address;
+	}
+
+	public Integer getAge() {
+		return age;
 	}
 
 	public Date getBornDate() {
@@ -89,6 +117,14 @@ public class Candidate extends AuditedEntity {
 
 	public String getEmail() {
 		return email;
+	}
+
+	public Integer getExpectedSalary() {
+		return expectedSalary;
+	}
+
+	public List<File> getFiles() {
+		return files;
 	}
 
 	public String getFirstSurename() {
@@ -111,6 +147,14 @@ public class Candidate extends AuditedEntity {
 		return phoneNumber2;
 	}
 
+	public String getPosition() {
+		return position;
+	}
+
+	public Integer getSalary() {
+		return salary;
+	}
+
 	public String getSecondSurename() {
 		return secondSurename;
 	}
@@ -119,8 +163,20 @@ public class Candidate extends AuditedEntity {
 		return tags;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + (int) id;
+		return result;
+	}
+
 	public void setAddress(Address address) {
 		this.address = address;
+	}
+
+	public void setAge(Integer age) {
+		this.age = age;
 	}
 
 	public void setBornDate(Date bornDate) {
@@ -133,6 +189,14 @@ public class Candidate extends AuditedEntity {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public void setExpectedSalary(Integer expectedSalary) {
+		this.expectedSalary = expectedSalary;
+	}
+
+	public void setFiles(List<File> files) {
+		this.files = files;
 	}
 
 	public void setFirstSurename(String firstSurename) {
@@ -155,32 +219,20 @@ public class Candidate extends AuditedEntity {
 		this.phoneNumber2 = phoneNumber2;
 	}
 
+	public void setPosition(String position) {
+		this.position = position;
+	}
+
+	public void setSalary(Integer salary) {
+		this.salary = salary;
+	}
+
 	public void setSecondSurename(String secondSurename) {
 		this.secondSurename = secondSurename;
 	}
 
 	public void setTags(List<Tag> tags) {
 		this.tags = tags;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (!super.equals(obj))
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Candidate other = (Candidate) obj;
-		return id == other.id;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result + (int) id;
-		return result;
 	}
 
 	@Override
