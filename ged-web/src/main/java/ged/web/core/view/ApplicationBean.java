@@ -28,6 +28,22 @@ public class ApplicationBean extends AbstractBean {
 	@Inject
 	private Cache cache;
 
+	public Cache getCache() {
+		return cache;
+	}
+
+	public void setCache(Cache cache) {
+		this.cache = cache;
+	}
+
+	public List<Locale> getLocales() {
+		return locales;
+	}
+
+	public void setLocales(List<Locale> locales) {
+		this.locales = locales;
+	}
+
 	private List<Locale> locales = new ArrayList<Locale>();
 
 	private Properties properties;
