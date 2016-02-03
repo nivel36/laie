@@ -79,6 +79,21 @@
 					<h:commandButton value="#{i18n['action.new']}" />
 				</h:form>
 			</h:panelGroup>
+			
+			<h:panelGroup layout="block" styleClass="panel">
+				<h1>#{i18n['maintenance.file_types']}</h1>
+				<h:form>
+					<h:selectOneMenu id="fileTypes"
+						label="#{i18n['file.type']}" styleClass="largeInput">
+						<f:selectItems var="fileType"
+							itemValue="#{fileType.name}"
+							value="#{applicationBean.fileTypes}"
+							itemLabel="#{i18n:translate(fileType.name)}" />
+					</h:selectOneMenu>
+					<h:commandButton value="#{i18n['action.modify']}" />
+					<h:commandButton value="#{i18n['action.new']}" />
+				</h:form>
+			</h:panelGroup>
 		</h:panelGrid>
 	</ui:define>
 </ui:composition>

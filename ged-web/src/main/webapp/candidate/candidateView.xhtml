@@ -4,6 +4,7 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:i18n="http://legion.com/i18n"
 	template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
@@ -194,7 +195,7 @@
 							<f:facet name="header">
 								<h:outputText value="#{i18n['file.type']}" />
 							</f:facet>
-							<h:outputText value="#{file.type}" />
+							<h:outputText value="#{file.fileType}" />
 						</h:column>
 
 						<h:column>
@@ -208,7 +209,7 @@
 							<f:facet name="header">
 								<h:outputText value="Action" />
 							</f:facet>
-							<h:link value="#{i18n['action.open']}"  />
+							<h:link value="#{i18n['action.open']}" />
 									|
 						<h:commandLink action="#{candidateViewBean.removeFile(file)}"
 								value="#{i18n['action.remove']}">
@@ -231,10 +232,9 @@
 						styleClass="#{not component.valid ? 'inputError' : ''}" />
 					<h:message for="uploadFile" errorClass="error" />
 
-					<h:commandButton value="#{i18n['action.upload']}"
-						action="#{candidateViewBean.upload}" />
-
 					<h:panelGroup layout="block" styleClass="buttonGroup">
+						<h:commandButton value="#{i18n['action.upload']}"
+							action="#{candidateViewBean.upload}" />
 						<h:commandButton value="#{i18n['action.cancel']}"
 							action="#{candidateViewBean.cancelAddFile}" immediate="true" />
 					</h:panelGroup>
@@ -243,17 +243,36 @@
 				<h:panelGroup layout="block"
 					rendered="#{candidateViewBean.editingFile}">
 
-					<h:outputLabel value="#{i18n['file.name']}" styleClass="required">
+					<h:outputLabel value="#{i18n['file.name']}"
+						styleClass="large required">
 						<h:inputText id="fileName" value="#{candidateViewBean.file.name}"
 							label="#{i18n['file.name']}" required="true"
 							styleClass="#{not component.valid ? 'inputError' : ''}" />
 						<h:message for="fileName" errorClass="error" />
 					</h:outputLabel>
 
-					<h:commandButton value="#{i18n['action.save']}"
-						action="#{candidateViewBean.saveFile}" />
+					<h:outputLabel value="#{i18n['file.type']}" styleClass="required">
+						<h:selectOneMenu id="fileType" value="#{candidateViewBean.file.fileType}">
+							<f:selectItems var="fileType" itemValue="#{fileType.name}"
+								value="#{applicationBean.fileTypes}"
+								itemLabel="#{i18n:translate(fileType.name)}"
+								styleClass="#{not component.valid ? 'inputError' : ''}" />
+						</h:selectOneMenu>
+						<h:message for="fileType" errorClass="error" />
+					</h:outputLabel>
+
+					<h:outputLabel value="#{i18n['file.description']}"
+						styleClass="large">
+						<h:inputText id="description"
+							value="#{candidateViewBean.file.description}"
+							label="#{i18n['file.description']}"
+							styleClass="#{not component.valid ? 'inputError' : ''}" />
+						<h:message for="description" errorClass="error" />
+					</h:outputLabel>
 
 					<h:panelGroup layout="block" styleClass="buttonGroup">
+						<h:commandButton value="#{i18n['action.save']}"
+							action="#{candidateViewBean.saveFile}" />
 						<h:commandButton value="#{i18n['action.cancel']}"
 							action="#{candidateViewBean.cancelAddFile}" immediate="true" />
 					</h:panelGroup>

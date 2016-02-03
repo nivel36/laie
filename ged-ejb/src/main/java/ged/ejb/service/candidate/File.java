@@ -8,6 +8,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
+import ged.ejb.core.i18n.I18n;
 import ged.ejb.core.model.AbstractEntity;
 
 @Entity
@@ -24,9 +25,8 @@ public class File extends AbstractEntity {
 	private String description;
 
 	@NotNull
-	@ManyToOne
-	@JoinColumn(name = "fileTypeId", updatable = false, nullable = false)
-	private FileType fileType;
+	@I18n
+	private String fileType;
 
 	@NotNull
 	@Column(nullable = false)
@@ -44,7 +44,7 @@ public class File extends AbstractEntity {
 		return description;
 	}
 
-	public FileType getFileType() {
+	public String getFileType() {
 		return fileType;
 	}
 
@@ -64,7 +64,7 @@ public class File extends AbstractEntity {
 		this.description = description;
 	}
 
-	public void setFileType(FileType fileType) {
+	public void setFileType(String fileType) {
 		this.fileType = fileType;
 	}
 

@@ -14,6 +14,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import ged.ejb.core.Cache;
+import ged.ejb.service.candidate.FileType;
 import ged.ejb.service.curriculum.LanguageLevel;
 import ged.ejb.service.curriculum.SkillLevel;
 import ged.ejb.service.job.ContractDuration;
@@ -27,26 +28,18 @@ public class ApplicationBean extends AbstractBean {
 	
 	@Inject
 	private Cache cache;
+	
+	private List<Locale> locales = new ArrayList<Locale>();
+
+	private Properties properties;
 
 	public Cache getCache() {
 		return cache;
 	}
-
-	public void setCache(Cache cache) {
-		this.cache = cache;
+	
+	public List<FileType> getFileTypes() {
+		return cache.getFileTypes();
 	}
-
-	public List<Locale> getLocales() {
-		return locales;
-	}
-
-	public void setLocales(List<Locale> locales) {
-		this.locales = locales;
-	}
-
-	private List<Locale> locales = new ArrayList<Locale>();
-
-	private Properties properties;
 
 	public List<ContractDuration> getContractDurations() {
 		return cache.getContractDurations();
@@ -58,6 +51,10 @@ public class ApplicationBean extends AbstractBean {
 
 	public List<LanguageLevel> getLanguageLevels() {
 		return cache.getLanguageLevels();
+	}
+
+	public List<Locale> getLocales() {
+		return locales;
 	}
 
 	public Properties getProperties() {
@@ -88,5 +85,13 @@ public class ApplicationBean extends AbstractBean {
 		}
 		Locale defaultLocale = app.getDefaultLocale();
 		locales.add(defaultLocale);
+	}
+
+	public void setCache(Cache cache) {
+		this.cache = cache;
+	}
+
+	public void setLocales(List<Locale> locales) {
+		this.locales = locales;
 	}
 }

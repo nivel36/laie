@@ -12,6 +12,11 @@ insert into LANGUAGELEVEL( id, version, name, description ) values ( 121, 0, 'me
 insert into LANGUAGELEVEL( id, version, name, description ) values ( 122, 0, 'low', 'low.description');
 insert into LANGUAGELEVEL( id, version, name, description ) values ( 123, 0, 'native', 'native.description');
 
+insert into FILETYPE( id, version, name, description ) values ( 130, 0, 'curriculum', 'curriculum.description');
+insert into FILETYPE( id, version, name, description ) values ( 131, 0, 'lopd', 'lopd.description');
+insert into FILETYPE( id, version, name, description ) values ( 132, 0, 'edited_curriculum', 'edited_curriculum.description');
+insert into FILETYPE( id, version, name, description ) values ( 133, 0, 'other', 'other.description');
+
 insert into CURRICULUM( id, version, perfilProfesional ) values (301, 0, 'Arquitecto JEE');
 
 insert into EDUCATION( id, version, curriculumId, degree, description,  fromDate, school, stillStudying, toDate) values( 401, 0, 301, 'Licenciado en Matemáticas', 'Licenciado en Matemáticas por la universidad de Barcelona',  DATE '2000-10-01', 'Universitat de Barcelona', false, DATE '2012-12-01');
@@ -54,6 +59,15 @@ insert into I18NSTRING( id, version, locale, key, text ) values( 835, 0, 'es', '
 insert into I18NSTRING( id, version, locale, key, text ) values( 836, 0, 'ca', 'contrato_indefinido_fijos_discontinuos', 'Contrato indefinido de fijos discontinuos' );
 insert into I18NSTRING( id, version, locale, key, text ) values( 840, 0, 'es', 'contrato_indefinido_fijos_discontinuos.description', 'Es el que se concierta para realizar trabajos que tengan el carácter de fijos discontinuos y no se repitan en fechas ciertas, dentro del volumen normal de actividad de la empresa.A efectos de prestaciones por desempleo, también se consideran trabajadores fijos discontinuos los que desarrollen trabajos fijos y periódicos que se repiten en fechas ciertas.' );
 insert into I18NSTRING( id, version, locale, key, text ) values( 841, 0, 'ca', 'contrato_indefinido_fijos_discontinuos.description', 'Es el que se concierta para realizar trabajos que tengan el carácter de fijos discontinuos y no se repitan en fechas ciertas, dentro del volumen normal de actividad de la empresa.A efectos de prestaciones por desempleo, también se consideran trabajadores fijos discontinuos los que desarrollen trabajos fijos y periódicos que se repiten en fechas ciertas.' );
+
+insert into I18NSTRING( id, version, locale, key, text ) values( 851, 0, 'es', 'curriculum', 'Curriculum vitae' );
+insert into I18NSTRING( id, version, locale, key, text ) values( 852, 0, 'ca', 'curriculum', 'Curriculum vitae' );
+insert into I18NSTRING( id, version, locale, key, text ) values( 853, 0, 'es', 'lopd', 'LOPD' );
+insert into I18NSTRING( id, version, locale, key, text ) values( 854, 0, 'ca', 'lopd', 'LOPD' );
+insert into I18NSTRING( id, version, locale, key, text ) values( 855, 0, 'es', 'edited_curriculum', 'Curriculum editado' );
+insert into I18NSTRING( id, version, locale, key, text ) values( 856, 0, 'ca', 'edited_curriculum', 'Curriculum editat' );
+insert into I18NSTRING( id, version, locale, key, text ) values( 857, 0, 'es', 'other', 'Otro' );
+insert into I18NSTRING( id, version, locale, key, text ) values( 858, 0, 'ca', 'other', 'Altre' );
 
 insert into CANDIDATE( id, version, name, firstSurename, secondSurename, phoneNumber1, email, city, country, door, number, state, storey, street, zipCode, curriculumId) values ( 201, 0, 'Abel', 'Ferrer', 'Jiménez','685555276', 'abel.ferrer.jimenez@gmail.com', 'Barcelona', 'España','1','85', 'Barcelona', 'Principal', 'Bailén', '08809', 301);
 insert into CANDIDATE( id, version, name, firstSurename, secondSurename, phoneNumber1, email, city, country, door, number, state, storey, street, zipCode, curriculumId) values ( 202, 0, 'Luís', 'González', 'Sánchez','685555277', 'lgonzalez@gmail.com', 'Madrid', 'España','2','85', 'Madrid', '2', 'Miraflores', '80809', NULL);

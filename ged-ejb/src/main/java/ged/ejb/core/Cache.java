@@ -9,6 +9,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import ged.ejb.service.candidate.FileType;
 import ged.ejb.service.curriculum.LanguageLevel;
 import ged.ejb.service.curriculum.SkillLevel;
 import ged.ejb.service.job.ContractDuration;
@@ -16,7 +17,7 @@ import ged.ejb.service.job.ContractType;
 
 @Named
 @ApplicationScoped
-public class Cache  implements Serializable{
+public class Cache implements Serializable {
 
 	private static final long serialVersionUID = -8778037668334921574L;
 
@@ -27,10 +28,11 @@ public class Cache  implements Serializable{
 	private List<LanguageLevel> languageLevels;
 
 	private List<SkillLevel> skillLevels;
-	
+
+	private List<FileType> fileTypes;
+
 	@Inject
 	protected Logger logger;
-	
 
 	public void setLogger(Logger logger) {
 		this.logger = logger;
@@ -45,6 +47,7 @@ public class Cache  implements Serializable{
 		contractDurations = maintenanceService.getAll(ContractDuration.class);
 		skillLevels = maintenanceService.getAll(SkillLevel.class);
 		languageLevels = maintenanceService.getAll(LanguageLevel.class);
+		fileTypes = maintenanceService.getAll(FileType.class);
 	}
 
 	public List<ContractType> getContractTypes() {
@@ -53,6 +56,10 @@ public class Cache  implements Serializable{
 
 	public List<ContractDuration> getContractDurations() {
 		return contractDurations;
+	}
+
+	public List<FileType> getFileTypes() {
+		return fileTypes;
 	}
 
 	public List<LanguageLevel> getLanguageLevels() {
