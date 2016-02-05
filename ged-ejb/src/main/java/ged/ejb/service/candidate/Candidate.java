@@ -26,7 +26,7 @@ import ged.ejb.service.tag.Tag;
 
 @Entity
 @NamedQueries({
-		@NamedQuery(name = "Candidate.getById", query = "SELECT c FROM Candidate c LEFT JOIN FETCH c.curriculum LEFT JOIN FETCH c.curriculum.education LEFT JOIN FETCH c.curriculum.jobExperiences LEFT JOIN FETCH c.curriculum.languages LEFT JOIN FETCH c.curriculum.skills  LEFT JOIN FETCH c.files  WHERE c.id = :id") })
+		@NamedQuery(name = "Candidate.getById", query = "SELECT c FROM Candidate c LEFT JOIN FETCH c.files WHERE c.id = :id") })
 public class Candidate extends AuditedEntity {
 
 	private static final long serialVersionUID = 1305321530927456159L;
@@ -51,7 +51,7 @@ public class Candidate extends AuditedEntity {
 	private Integer expectedSalary;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "candidate", orphanRemoval = true)
-	private List<File> files;
+	private List<FileSys> files;
 
 	@NotNull
 	@Column(length = 32, nullable = false)
@@ -69,7 +69,7 @@ public class Candidate extends AuditedEntity {
 	@Column(length = 12, nullable = false)
 	private String phoneNumber1;
 
-	// TODO: Añadir el pattern cunado se arregle el envío de null
+	@Pattern(regexp = "(?:[+]?(?:[0-9]{1,5}|\\x28[0-9]{1,5}\\x29)[ ]?)?[0-9]{2}(?:[0-9][ ]?){6}[0-9]")
 	@Column(length = 12)
 	private String phoneNumber2;
 
@@ -123,7 +123,7 @@ public class Candidate extends AuditedEntity {
 		return expectedSalary;
 	}
 
-	public List<File> getFiles() {
+	public List<FileSys> getFiles() {
 		return files;
 	}
 
@@ -195,7 +195,7 @@ public class Candidate extends AuditedEntity {
 		this.expectedSalary = expectedSalary;
 	}
 
-	public void setFiles(List<File> files) {
+	public void setFiles(List<FileSys> files) {
 		this.files = files;
 	}
 

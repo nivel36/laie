@@ -12,7 +12,7 @@ import ged.ejb.core.i18n.I18n;
 import ged.ejb.core.model.AbstractEntity;
 
 @Entity
-public class File extends AbstractEntity {
+public class FileSys extends AbstractEntity {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -23,6 +23,8 @@ public class File extends AbstractEntity {
 	private Date date;
 	
 	private String description;
+	
+	private String uuid;
 
 	@NotNull
 	@I18n
@@ -70,6 +72,14 @@ public class File extends AbstractEntity {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getUuid() {
+		return uuid;
+	}
+
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
 	}
 
 }

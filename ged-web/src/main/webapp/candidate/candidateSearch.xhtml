@@ -53,10 +53,6 @@
 
 			<h:panelGroup layout="block" styleClass="panel" id="resultados">
 				<h1>#{i18n['candidate.search_results']}</h1>
-				<h:panelGroup layout="block" styleClass="buttonGroup">
-					<h:commandButton value="#{i18n['action.new']}"
-						action="#{candidateSearchBean.newCandidate}" immediate="true" />
-				</h:panelGroup>
 
 				<h:outputText value="#{i18n['candidate.no_candidates_found']}"
 					rendered="#{empty candidateSearchBean.dataList}" />
@@ -155,6 +151,12 @@
 						</h:selectOneMenu>
 					</h:outputLabel>
 				</h:panelGroup>
+				
+				<h:panelGroup layout="block" styleClass="buttonGroup">
+					<h:commandButton value="#{i18n['action.new']}"
+						action="#{candidateSearchBean.newCandidate}" immediate="true" />
+				</h:panelGroup>
+
 			</h:panelGroup>
 		</h:form>
 	</ui:define>

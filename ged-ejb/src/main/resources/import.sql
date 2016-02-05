@@ -80,4 +80,4 @@ insert into CANDIDATE( id, version, name, firstSurename, secondSurename, phoneNu
 
 insert into USER( id, version, email, language, name, rowsPerPage, surename, username ) values( 901, 0, 'abel.ferrer.jimenez@gmail.com', 'es', 'Abel', 25, 'Ferrer', 'aferrer' );
 
-ALTER SEQUENCE HIBERNATE_SEQUENCE RESTART with 901;
+ALTER SEQUENCE HIBERNATE_SEQUENCE RESTART with 902;

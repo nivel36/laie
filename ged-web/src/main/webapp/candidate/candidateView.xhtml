@@ -184,6 +184,14 @@
 						value="#{candidateViewBean.candidate.files}"
 						rendered="#{not empty candidateViewBean.candidate.files}"
 						styleClass="dataTable">
+						
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{i18n['file.name']}" />
+							</f:facet>
+							<h:outputText value="#{file.id}" />
+						</h:column>
+						
 						<h:column>
 							<f:facet name="header">
 								<h:outputText value="#{i18n['file.name']}" />
@@ -207,11 +215,17 @@
 
 						<h:column>
 							<f:facet name="header">
-								<h:outputText value="Action" />
+								<h:outputText value="#{i18n['action.action']}" />
 							</f:facet>
-							<h:link value="#{i18n['action.open']}" />
+							<h:commandLink action="#{candidateViewBean.openFile(file)}"
+								value="#{i18n['action.open']}" />
+								|
+							<h:commandLink action="#{candidateViewBean.editFile(file)}"
+								value="#{i18n['action.edit']}">
+								<f:ajax execute="@form" render="@form" />
+							</h:commandLink>
 									|
-						<h:commandLink action="#{candidateViewBean.removeFile(file)}"
+							<h:commandLink action="#{candidateViewBean.removeFile(file)}"
 								value="#{i18n['action.remove']}">
 								<f:ajax execute="@form" render="@form" />
 							</h:commandLink>
@@ -236,7 +250,9 @@
 						<h:commandButton value="#{i18n['action.upload']}"
 							action="#{candidateViewBean.upload}" />
 						<h:commandButton value="#{i18n['action.cancel']}"
-							action="#{candidateViewBean.cancelAddFile}" immediate="true" />
+							action="#{candidateViewBean.cancelAddFile}" immediate="true">
+							<f:ajax execute="@form" render="@form" />
+						</h:commandButton>
 					</h:panelGroup>
 				</h:panelGroup>
 
@@ -252,7 +268,8 @@
 					</h:outputLabel>
 
 					<h:outputLabel value="#{i18n['file.type']}" styleClass="required">
-						<h:selectOneMenu id="fileType" value="#{candidateViewBean.file.fileType}">
+						<h:selectOneMenu id="fileType"
+							value="#{candidateViewBean.file.fileType}">
 							<f:selectItems var="fileType" itemValue="#{fileType.name}"
 								value="#{applicationBean.fileTypes}"
 								itemLabel="#{i18n:translate(fileType.name)}"

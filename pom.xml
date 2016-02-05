@@ -24,11 +24,17 @@
 		<maven.war.plugin.version>2.6</maven.war.plugin.version>
 		<maven.ejb.plugin.version>2.5</maven.ejb.plugin.version>
 		<version.pdfbox>1.8.6</version.pdfbox>
+		<version.omnifaces>2.2</version.omnifaces>
 		<version.commons-fileupload>1.3</version.commons-fileupload>
 	</properties>
 
 	<dependencyManagement>
 		<dependencies>
+			<dependency>
+				<groupId>org.omnifaces</groupId>
+				<artifactId>omnifaces</artifactId>
+				<version>2.2</version>
+			</dependency>
 			<dependency>
 				<groupId>igochan</groupId>
 				<artifactId>ged-ejb</artifactId>
@@ -57,17 +63,17 @@
 				<artifactId>javaee-api</artifactId>
 				<version>${javaee-api.version}</version>
 			</dependency>
-			
+
 			<dependency>
-			<groupId>org.apache.pdfbox</groupId>
-			<artifactId>pdfbox</artifactId>
-			<version>${version.pdfbox}</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>commons-fileupload</groupId>
-			<artifactId>commons-fileupload</artifactId>
-			<version>${version.commons-fileupload}</version>
+				<groupId>org.apache.pdfbox</groupId>
+				<artifactId>pdfbox</artifactId>
+				<version>${version.pdfbox}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>commons-fileupload</groupId>
+				<artifactId>commons-fileupload</artifactId>
+				<version>${version.commons-fileupload}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
