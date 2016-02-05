@@ -10,8 +10,6 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
@@ -25,8 +23,6 @@ import ged.ejb.service.job.JobCandidature;
 import ged.ejb.service.tag.Tag;
 
 @Entity
-@NamedQueries({
-		@NamedQuery(name = "Candidate.getById", query = "SELECT c FROM Candidate c LEFT JOIN FETCH c.files WHERE c.id = :id") })
 public class Candidate extends AuditedEntity {
 
 	private static final long serialVersionUID = 1305321530927456159L;
