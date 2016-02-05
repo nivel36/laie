@@ -627,22 +627,22 @@ textarea {
 
 .candidatesIcon {
 	background-image:
-		url("#{resource['img/salesforce/user-group-icon.png']}");
+		url("#{resource['img/classic-blue/user-group-icon.png']}");
 }
 
 .candidateIcon {
-	background-image: url("#{resource['img/salesforce/user-icon.png']}");
+	background-image: url("#{resource['img/classic-blue/user-icon.png']}");
 }
 
 .homeIcon {
-	background-image: url("#{resource['img/salesforce/home-icon.png']}");
+	background-image: url("#{resource['img/classic-blue/home-icon.png']}");
 }
 
 .aboutIcon {
-	background-image: url("#{resource['img/salesforce/about-icon.png']}");
+	background-image: url("#{resource['img/classic-blue/about-icon.png']}");
 }
 
 .pieChartIcon {
 	background-image:
-		url("#{resource['img/salesforce/pie-chart-icon.png']}");
+		url("#{resource['img/classic-blue/pie-chart-icon.png']}");
 }
