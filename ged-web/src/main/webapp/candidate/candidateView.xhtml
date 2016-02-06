@@ -172,7 +172,10 @@
 		</h:form>
 
 		<h:form id="file_form" prependId="false" enctype="multipart/form-data">
-			<h:panelGroup layout="block" styleClass="panel">
+			<h:panelGroup layout="block" styleClass="modalPanel"
+				rendered="#{candidateViewBean.addingFile or candidateViewBean.editingFile}">
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="panel" style="#{candidateViewBean.style}" >
 				<h1>#{i18n['file.files']}</h1>
 
 				<h:panelGroup layout="block"
@@ -184,14 +187,14 @@
 						value="#{candidateViewBean.candidate.files}"
 						rendered="#{not empty candidateViewBean.candidate.files}"
 						styleClass="dataTable">
-						
+
 						<h:column>
 							<f:facet name="header">
 								<h:outputText value="#{i18n['file.name']}" />
 							</f:facet>
 							<h:outputText value="#{file.id}" />
 						</h:column>
-						
+
 						<h:column>
 							<f:facet name="header">
 								<h:outputText value="#{i18n['file.name']}" />
