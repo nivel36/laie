@@ -32,7 +32,7 @@ public class CandidateViewBean extends AbstractBean {
 	private Candidate candidate;
 
 	private String candidateId;
-	
+
 	@Inject
 	private CandidateService candidateService;
 
@@ -130,9 +130,9 @@ public class CandidateViewBean extends AbstractBean {
 	public void setPart(Part part) {
 		this.part = part;
 	}
-	
+
 	public String getStyle() {
-		if(isAddingFile() || isEditingFile() ) {
+		if (isAddingFile() || isEditingFile()) {
 			return "z-index: 10";
 		}
 		return "";
@@ -173,7 +173,7 @@ public class CandidateViewBean extends AbstractBean {
 		try {
 			addingFile = false;
 			editingFile = false;
-			if (file.getUuid() != null && file.getId() == 0) {
+			if (file != null && file.getUuid() != null && file.getId() == 0) {
 				removeFileFromFileSystem(file.getUuid());
 			}
 		} catch (IOException e) {
