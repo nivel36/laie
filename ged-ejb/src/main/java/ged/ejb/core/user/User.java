@@ -37,8 +37,8 @@ public class User extends AbstractEntity {
 	@Column(length = 64, nullable = false)
 	private String name;
 
-	@Transient
-	private transient String password;
+	@NotNull
+	private String password;
 
 	@NotNull
 	@Column(nullable = false)

@@ -77,7 +77,7 @@ insert into CANDIDATE( id, version, name, firstSurename, secondSurename, phoneNu
 insert into CANDIDATE( id, version, name, firstSurename, secondSurename, phoneNumber1, email, city, country, door, number, state, storey, street, zipCode, curriculumId) values ( 206, 0, 'Antonio', 'García', 'Collado','685555281', 'agc2@gmail.com', 'Pontevedra', 'España','2','85', '2', 'Principal', 'Luguense', '01809', NULL);
 insert into CANDIDATE( id, version, name, firstSurename, secondSurename, phoneNumber1, email, city, country, door, number, state, storey, street, zipCode, curriculumId) values ( 207, 0, 'Isabel', 'Vallejo', 'Medina','685555282', 'isabel.vallejo.medina@gmail.com', 'Barcelona', 'España','1','85', 'Barcelona', 'Principal', 'Bailén', '08809', NULL);
 
+insert into USER( id, version, email, language, name, rowsPerPage, surename, username, password ) values( 901, 0, 'abel.ferrer.jimenez@gmail.com', 'es', 'Abel', 25, 'Ferrer', 'aferrer', 'jGl25bVBBBW96Qi9Te4V37Fnqchz/Eu4qB9vKrRIqRg=');
+insert into ROLE( id, version, name, username ) values( 911, 0, 'ADMIN', 'aferrer');
 
-insert into USER( id, version, email, language, name, rowsPerPage, surename, username ) values( 901, 0, 'abel.ferrer.jimenez@gmail.com', 'es', 'Abel', 25, 'Ferrer', 'aferrer' );
-
-ALTER SEQUENCE HIBERNATE_SEQUENCE RESTART with 902;
+ALTER SEQUENCE HIBERNATE_SEQUENCE RESTART with 1000;

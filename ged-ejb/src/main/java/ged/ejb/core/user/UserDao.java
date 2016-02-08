@@ -17,9 +17,12 @@ public class UserDao {
 	@Inject
 	private GenericDao genericDao;
 
+	public User findByName(String user) {
+		return genericDao.getByTypedQuerySingleResult(User.class, "User.findByName");
+	}
+
 	public void insertBookmark(Bookmark bookmark) throws IllegalUserAction {
-		Bookmark b = findBookmark(bookmark.getAuditedId(),
-				bookmark.getEntity(), bookmark.getUser());
+		Bookmark b = findBookmark(bookmark.getAuditedId(), bookmark.getEntity(), bookmark.getUser());
 		if (b != null) {
 			throw new IllegalUserAction("Bookmark alredy exists");
 		}
@@ -36,14 +39,12 @@ public class UserDao {
 
 	public Bookmark findBookmark(Long auditedId, String entity, User user) {
 		Map<String, Object> parameters = makeParameters(auditedId, entity, user);
-		Bookmark b = genericDao.getByTypedQuerySingleResult(Bookmark.class,
-				"Bookmark.findByValues", parameters);
+		Bookmark b = genericDao.getByTypedQuerySingleResult(Bookmark.class, "Bookmark.findByValues", parameters);
 		return b;
 	}
 
 	public void insertAction(Action action) throws IllegalUserAction {
-		Action a = findAction(action.getAuditedId(), action.getEntity(),
-				action.getUser());
+		Action a = findAction(action.getAuditedId(), action.getEntity(), action.getUser());
 		if (a != null) {
 			throw new IllegalUserAction("Action alredy exist");
 		}
@@ -52,13 +53,11 @@ public class UserDao {
 
 	public Action findAction(Long auditedId, String entity, User user) {
 		Map<String, Object> parameters = makeParameters(auditedId, entity, user);
-		Action a = genericDao.getByTypedQuerySingleResult(Action.class,
-				"Action.findByValues", parameters);
+		Action a = genericDao.getByTypedQuerySingleResult(Action.class, "Action.findByValues", parameters);
 		return a;
 	}
 
-	private Map<String, Object> makeParameters(Long auditedId, String entity,
-			User user) {
+	private Map<String, Object> makeParameters(Long auditedId, String entity, User user) {
 		Map<String, Object> parameters = new HashMap<String, Object>(3);
 		parameters.put("auditedId", auditedId);
 		parameters.put("entity", entity);
