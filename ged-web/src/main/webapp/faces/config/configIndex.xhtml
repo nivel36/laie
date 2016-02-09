@@ -6,7 +6,7 @@
 	template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
-		<title>LEGION</title>
+		<title>#{i18n['config.config']}</title>
 	</ui:define>
 
 	<ui:param name="selectedMenu" value="config" />
@@ -51,7 +51,42 @@
 						action="#{configBean.save}" />
 				</h:panelGroup>
 			</h:panelGroup>
+		</h:form>
+		<h:form>
+			<h:panelGroup layout="block" styleClass="panel">
+				<h1>#{i18n['config.change_password']}</h1>
 
+				<h:outputLabel value="#{i18n['config.password']}"
+					styleClass="password required">
+					<h:inputSecret id="password" value="#{configBean.password}"
+						label="#{i18n['config.password']}" required="true"
+						styleClass="#{not component.valid ? 'inputError' : ''}" />
+					<h:message for="password" errorClass="error" />
+				</h:outputLabel>
+
+				<h:outputLabel value="#{i18n['config.new_password']}"
+					styleClass="password required">
+					<h:inputSecret id="newPassword" value="#{configBean.newPassword}"
+						label="#{i18n['config.new_password']}" required="true"
+						styleClass="#{not component.valid ? 'inputError' : ''}" />
+					<h:message for="newPassword" errorClass="error" />
+				</h:outputLabel>
+
+				<h:outputLabel value="#{i18n['config.repeat_password']}"
+					styleClass="password required">
+					<h:inputSecret id="repeatPassword" value="#{configBean.repeatPassword}"
+						label="#{i18n['config.repeat_password']}" required="true"
+						styleClass="#{not component.valid ? 'inputError' : ''}" />
+					<h:message for="repeatPassword" errorClass="error" />
+				</h:outputLabel>
+
+				<h:panelGroup layout="block" class="buttonGroup">
+					<h:commandButton value="#{i18n['action.change']}"
+						action="#{configBean.change}" />
+				</h:panelGroup>
+			</h:panelGroup>
+		</h:form>
+		<h:form>
 			<h:panelGroup layout="block" styleClass="panel">
 				<h1>#{i18n['config.preferences']}</h1>
 				<h:outputLabel value="#{i18n['config.rows_per_page']}"

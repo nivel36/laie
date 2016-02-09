@@ -49,6 +49,11 @@ label input, label textarea, label select {
 	margin-left: 1em;
 }
 
+.password {
+	clear: left;
+	float: left;
+}
+
 /************************************
  *  PANEL
  ************************************/
@@ -243,7 +248,7 @@ input[type="text"]:disabled, input[type="email"]:disabled {
 	margin-left: 5px;
 }
 
-input[type="text"], select, textarea, input[type="email"], input[type="date"]
+input[type="text"], select, textarea, input[type="email"], input[type="date"], input[type="password"]
 	{
 	outline: medium none;
 	padding: 3px;
