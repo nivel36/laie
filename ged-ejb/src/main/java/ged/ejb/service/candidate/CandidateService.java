@@ -19,7 +19,7 @@ public class CandidateService extends GenericServiceImpl {
 		Map<String, Object> properties = new HashMap<String, Object>();
 		properties.put("id", id);
 		Candidate candidate = getByTypedQuerySingleResult(Candidate.class,
-				"Candidate.getById", properties);
+				"Candidate.selectById", properties);
 		return candidate;
 	}
 
