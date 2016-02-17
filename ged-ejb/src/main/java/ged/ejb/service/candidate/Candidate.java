@@ -49,10 +49,6 @@ public class Candidate extends AuditedEntity {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "candidate", orphanRemoval = true)
 	private List<FileSys> files;
 
-	@NotNull
-	@Column(length = 32, nullable = false)
-	private String firstSurename;
-
 	@OneToMany(mappedBy = "candidate", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<JobCandidature> jobCandidature;
 
@@ -73,8 +69,9 @@ public class Candidate extends AuditedEntity {
 
 	private Integer salary;
 
-	@Column(length = 32)
-	private String secondSurename;
+	@NotNull
+	@Column(length = 64, nullable = false)
+	private String surename;
 
 	@OneToMany
 	private List<Tag> tags = new ArrayList<Tag>();
@@ -85,12 +82,15 @@ public class Candidate extends AuditedEntity {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (!super.equals(obj))
+		}
+		if (!super.equals(obj)) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		Candidate other = (Candidate) obj;
 		return id == other.id;
 	}
@@ -123,10 +123,6 @@ public class Candidate extends AuditedEntity {
 		return files;
 	}
 
-	public String getFirstSurename() {
-		return firstSurename;
-	}
-
 	public List<JobCandidature> getJobCandidature() {
 		return jobCandidature;
 	}
@@ -151,8 +147,8 @@ public class Candidate extends AuditedEntity {
 		return salary;
 	}
 
-	public String getSecondSurename() {
-		return secondSurename;
+	public String getSurename() {
+		return surename;
 	}
 
 	public List<Tag> getTags() {
@@ -195,10 +191,6 @@ public class Candidate extends AuditedEntity {
 		this.files = files;
 	}
 
-	public void setFirstSurename(String firstSurename) {
-		this.firstSurename = firstSurename;
-	}
-
 	public void setJobCandidature(List<JobCandidature> jobCandidature) {
 		this.jobCandidature = jobCandidature;
 	}
@@ -223,8 +215,8 @@ public class Candidate extends AuditedEntity {
 		this.salary = salary;
 	}
 
-	public void setSecondSurename(String secondSurename) {
-		this.secondSurename = secondSurename;
+	public void setSurename(String surename) {
+		this.surename = surename;
 	}
 
 	public void setTags(List<Tag> tags) {
@@ -233,11 +225,6 @@ public class Candidate extends AuditedEntity {
 
 	@Override
 	public String toString() {
-		StringBuilder sb = new StringBuilder(name);
-		sb.append(" ").append(firstSurename);
-		if (secondSurename != null || !secondSurename.trim().equals("")) {
-			sb.append(" ").append(secondSurename);
-		}
-		return sb.toString();
+		return name + " " + surename;
 	}
 }

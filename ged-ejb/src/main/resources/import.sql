@@ -69,15 +69,20 @@ insert into I18NSTRING( id, version, locale, key, text ) values( 856, 0, 'ca', '
 insert into I18NSTRING( id, version, locale, key, text ) values( 857, 0, 'es', 'other', 'Otro' );
 insert into I18NSTRING( id, version, locale, key, text ) values( 858, 0, 'ca', 'other', 'Altre' );
 
-insert into CANDIDATE( id, version, name, firstSurename, secondSurename, phoneNumber1, email, city, country, door, number, state, storey, street, zipCode, curriculumId) values ( 201, 0, 'Abel', 'Ferrer', 'Jiménez','685555276', 'abel.ferrer.jimenez@gmail.com', 'Barcelona', 'España','1','85', 'Barcelona', 'Principal', 'Bailén', '08809', 301);
-insert into CANDIDATE( id, version, name, firstSurename, secondSurename, phoneNumber1, email, city, country, door, number, state, storey, street, zipCode, curriculumId) values ( 202, 0, 'Luís', 'González', 'Sánchez','685555277', 'lgonzalez@gmail.com', 'Madrid', 'España','2','85', 'Madrid', '2', 'Miraflores', '80809', NULL);
-insert into CANDIDATE( id, version, name, firstSurename, secondSurename, phoneNumber1, email, city, country, door, number, state, storey, street, zipCode, curriculumId) values ( 203, 0, 'Juan', 'Ayuso', 'Pérez','685555278', 'ayuson32@gmail.com', 'Valencia', 'España','2','85', 'Valencia', '1', 'Horchata', '02809', NULL);
-insert into CANDIDATE( id, version, name, firstSurename, secondSurename, phoneNumber1, email, city, country, door, number, state, storey, street, zipCode, curriculumId) values ( 204, 0, 'Pedro', 'Gallardo', 'Navarro','685555279', 'pedrito@gmail.com', 'Masnou', 'España','3','85', 'Barcelona', '3', 'Plaça Catalunya', '08328', NULL);
-insert into CANDIDATE( id, version, name, firstSurename, secondSurename, phoneNumber1, email, city, country, door, number, state, storey, street, zipCode, curriculumId) values ( 205, 0, 'Gonzalo', 'León', 'Cuellar','685555280', 'gonzo73@gmail.com', 'Lugo', 'España','1','85', 'Lugo', '3', 'España', '02809', NULL);
-insert into CANDIDATE( id, version, name, firstSurename, secondSurename, phoneNumber1, email, city, country, door, number, state, storey, street, zipCode, curriculumId) values ( 206, 0, 'Antonio', 'García', 'Collado','685555281', 'agc2@gmail.com', 'Pontevedra', 'España','2','85', '2', 'Principal', 'Luguense', '01809', NULL);
-insert into CANDIDATE( id, version, name, firstSurename, secondSurename, phoneNumber1, email, city, country, door, number, state, storey, street, zipCode, curriculumId) values ( 207, 0, 'Isabel', 'Vallejo', 'Medina','685555282', 'isabel.vallejo.medina@gmail.com', 'Barcelona', 'España','1','85', 'Barcelona', 'Principal', 'Bailén', '08809', NULL);
+insert into CANDIDATE( id, version, name, surename, phoneNumber1, email, city, country, door, number, state, storey, street, zipCode, curriculumId) values ( 201, 0, 'Abel', 'Ferrer Jiménez','685555276', 'abel.ferrer.jimenez@gmail.com', 'Barcelona', 'España','1','85', 'Barcelona', 'Principal', 'Bailén', '08809', 301);
+insert into CANDIDATE( id, version, name, surename, phoneNumber1, email, city, country, door, number, state, storey, street, zipCode, curriculumId) values ( 202, 0, 'Luís', 'González Sánchez','685555277', 'lgonzalez@gmail.com', 'Madrid', 'España','2','85', 'Madrid', '2', 'Miraflores', '80809', NULL);
+insert into CANDIDATE( id, version, name, surename, phoneNumber1, email, city, country, door, number, state, storey, street, zipCode, curriculumId) values ( 203, 0, 'Juan', 'Ayuso Pérez','685555278', 'ayuson32@gmail.com', 'Valencia', 'España','2','85', 'Valencia', '1', 'Horchata', '02809', NULL);
+insert into CANDIDATE( id, version, name, surename, phoneNumber1, email, city, country, door, number, state, storey, street, zipCode, curriculumId) values ( 204, 0, 'Pedro', 'Gallardo Navarro','685555279', 'pedrito@gmail.com', 'Masnou', 'España','3','85', 'Barcelona', '3', 'Plaça Catalunya', '08328', NULL);
+insert into CANDIDATE( id, version, name, surename, phoneNumber1, email, city, country, door, number, state, storey, street, zipCode, curriculumId) values ( 205, 0, 'Gonzalo', 'León Cuellar','685555280', 'gonzo73@gmail.com', 'Lugo', 'España','1','85', 'Lugo', '3', 'España', '02809', NULL);
+insert into CANDIDATE( id, version, name, surename, phoneNumber1, email, city, country, door, number, state, storey, street, zipCode, curriculumId) values ( 206, 0, 'Antonio', 'García Collado','685555281', 'agc2@gmail.com', 'Pontevedra', 'España','2','85', '2', 'Principal', 'Luguense', '01809', NULL);
 
-insert into USER( id, version, email, language, name, rowsPerPage, surename, username, password ) values( 901, 0, 'abel.ferrer.jimenez@gmail.com', 'es', 'Abel', 25, 'Ferrer', 'aferrer', 'jGl25bVBBBW96Qi9Te4V37Fnqchz/Eu4qB9vKrRIqRg=');
-insert into ROLE( id, version, name, username ) values( 911, 0, 'ADMIN', 'aferrer');
+insert into ROLE( id, version, name ) values( 911, 0, 'ADMIN');
+insert into ROLE( id, version, name ) values( 912, 0, 'RECRUITER');
+insert into ROLE( id, version, name ) values( 913, 0, 'RECRUITER_ADMIN');
+insert into ROLE( id, version, name ) values( 914, 0, 'TECHNIC');
+insert into ROLE( id, version, name ) values( 915, 0, 'TECHNIC_ADMIN');
+insert into ROLE( id, version, name ) values( 916, 0, 'ADMIN');
+
+insert into USER( id, version, email, language, name, rowsPerPage, surename, username, password, roleId ) values( 901, 0, 'abel.ferrer.jimenez@gmail.com', 'es', 'Abel', 25, 'Ferrer', 'aferrer', 'jGl25bVBBBW96Qi9Te4V37Fnqchz/Eu4qB9vKrRIqRg=', 911);
 
 ALTER SEQUENCE HIBERNATE_SEQUENCE RESTART with 1000;

@@ -6,8 +6,9 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import ged.ejb.core.bookmark.Bookmark;
@@ -33,6 +34,10 @@ public class User extends AbstractEntity {
 	@Column(length = 2, nullable = false)
 	private String language;
 
+	@ManyToOne
+	@JoinColumn(name = "managerId", nullable = true, updatable = false)
+	private User manager;
+
 	@NotNull
 	@Column(length = 64, nullable = false)
 	private String name;
@@ -41,12 +46,20 @@ public class User extends AbstractEntity {
 	private String password;
 
 	@NotNull
+	@ManyToOne
+	@JoinColumn(name = "roleId", nullable = false, updatable = false)
+	private Role role;
+
+	@NotNull
 	@Column(nullable = false)
 	private Integer rowsPerPage;
 
 	@NotNull
 	@Column(length = 64, nullable = false)
 	private String surename;
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "manager", orphanRemoval = false)
+	private List<User> team;
 
 	@NotNull
 	@Column(length = 12, nullable = false, unique = true)
@@ -98,6 +111,10 @@ public class User extends AbstractEntity {
 		return language;
 	}
 
+	public User getManager() {
+		return manager;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -106,12 +123,20 @@ public class User extends AbstractEntity {
 		return password;
 	}
 
+	public Role getRole() {
+		return role;
+	}
+
 	public int getRowsPerPage() {
 		return rowsPerPage;
 	}
 
 	public String getSurename() {
 		return surename;
+	}
+
+	public List<User> getTeam() {
+		return team;
 	}
 
 	public String getUsername() {
@@ -156,6 +181,10 @@ public class User extends AbstractEntity {
 		this.language = language;
 	}
 
+	public void setManager(User manager) {
+		this.manager = manager;
+	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -164,12 +193,20 @@ public class User extends AbstractEntity {
 		this.password = password;
 	}
 
+	public void setRole(Role role) {
+		this.role = role;
+	}
+
 	public void setRowsPerPage(int rowsPerPage) {
 		this.rowsPerPage = rowsPerPage;
 	}
 
 	public void setSurename(String surename) {
 		this.surename = surename;
+	}
+
+	public void setTeam(List<User> team) {
+		this.team = team;
 	}
 
 	public void setUsername(String username) {

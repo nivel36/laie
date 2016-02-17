@@ -6,6 +6,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Locale;
 
 import javax.annotation.PostConstruct;
+import javax.faces.component.UIComponent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -20,6 +21,25 @@ import ged.web.core.view.AbstractBean;
 public class ConfigBean extends AbstractBean {
 
 	private static final long serialVersionUID = -2789492893353263506L;
+
+	private UIComponent passwordComponent;
+	private UIComponent newPasswordComponent;
+
+	public UIComponent getPasswordComponent() {
+		return passwordComponent;
+	}
+
+	public void setPasswordComponent(UIComponent passwordComponent) {
+		this.passwordComponent = passwordComponent;
+	}
+
+	public UIComponent getNewPasswordComponent() {
+		return newPasswordComponent;
+	}
+
+	public void setNewPasswordComponent(UIComponent newPasswordComponent) {
+		this.newPasswordComponent = newPasswordComponent;
+	}
 
 	private User user;
 
@@ -82,20 +102,18 @@ public class ConfigBean extends AbstractBean {
 
 	public void change() {
 		String output = hashPassword(password);
-		if(user.getPassword().equals(output)) {
-			if(newPassword.equals(repeatPassword)){
+		if (user.getPassword().equals(output)) {
+			if (newPassword.equals(repeatPassword)) {
 				user.setPassword(hashPassword(newPassword));
+			} else {
+				addErrorToField(passwordComponent, "login.error.bad_password");
 			}
-			else {
-				//TODO: Faces Message
-			}
-		}
-		else {
-			//TODO: Faces Message
+		} else {
+			addErrorToField(newPasswordComponent, "login.error.password_not_equals");
 		}
 		cleanPasswordFields();
 	}
-	
+
 	private void cleanPasswordFields() {
 		password = null;
 		repeatPassword = null;

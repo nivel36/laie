@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+	template="/WEB-INF/templates/default.xhtml">
+
+	<ui:define name="title">
+		<title>#{i18n['user.user']}</title>
+	</ui:define>
+
+	<ui:param name="selectedMenu" value="user" />
+
+	<ui:define name="content">
+		<h:form id="form">
+			<input type="hidden" id="userId"
+				value="#{userEditBean.user.id}" />
+
+			<h:graphicImage value="/resources/img/s.gif"
+				styleClass="headerIcon userIcon" />
+
+			<h:panelGroup rendered="#{userEditBean.user.id == 0}">
+				<h1 class="header">#{i18n['user.new_user']}</h1>
+			</h:panelGroup>
+
+			<h:panelGroup rendered="#{userEditBean.user.id != 0}">
+				<h1 class="header">#{userEditBean.user}</h1>
+			</h:panelGroup>
+
+			<h:panelGroup layout="block" styleClass="panel">
+				<h1>#{i18n['user.user']}</h1>
+
+				<h2>#{i18n['user.detail']}</h2>
+
+				<h:outputLabel value="#{i18n['user.name']}"
+					styleClass="required">
+					<h:inputText id="name" value="#{userEditBean.user.name}"
+						label="#{i18n['user.name']}" required="true"
+						styleClass="#{not component.valid ? 'inputError' : ''}" />
+					<h:message for="name" errorClass="error" />
+				</h:outputLabel>
+
+				<h:outputLabel value="#{i18n['user.surename']}"
+					styleClass="required">
+					<h:inputText id="surename"
+						value="#{userEditBean.user.surename}"
+						label="#{i18n['user.surename']}" required="true"
+						styleClass="#{not component.valid ? 'inputError' : ''}" />
+					<h:message for="surename" errorClass="error" />
+				</h:outputLabel>
+				
+				<h:outputLabel value="#{i18n['user.email']}"
+					styleClass="large required">
+					<h:inputText id="user" p:type="email"
+						value="#{userEditBean.user.email}" required="true"
+						label="#{i18n['user.email']}"
+						styleClass="#{ not component.valid ? 'inputError' : ''}" />
+					<h:message for="user" errorClass="error" />
+				</h:outputLabel>
+
+				<h:outputLabel value="#{i18n['user.role']}"
+					styleClass="required">
+					<h:inputText id="role"
+						value="#{userEditBean.user.role}"
+						required="true" label="#{i18n['user.role']}"
+						styleClass="#{ not component.valid ? 'inputError' : ''}" />
+					<h:message for="rrole" errorClass="error" />
+				</h:outputLabel>
+
+				<h:outputLabel value="#{i18n['user.manager']}"
+					styleClass="required">
+					<h:inputText id="manager"
+						value="#{userEditBean.user.manager}" required="true"
+						label="#{i18n['user.manager']}"
+						styleClass="#{ not component.valid ? 'inputError' : ''}" />
+					<h:message for="manager" errorClass="error" />
+				</h:outputLabel>
+				
+				<h:panelGroup layout="block" styleClass="buttonGroup">
+					<h:commandButton value="#{i18n['action.save']}"
+						action="#{userEditBean.save}" />
+					<h:commandButton value="#{i18n['action.edit_curriculum']}"
+						action="#{userEditBean.editCurriculum}" />
+					<h:commandButton value="#{i18n['action.cancel']}"
+						action="#{userEditBean.cancel}" immediate="true" />
+				</h:panelGroup>
+
+				<h:panelGroup layout="block" styleClass="secondaryButtonGroup">
+					<h:commandButton value="#{i18n['action.save']}"
+						action="#{userEditBean.save}" />
+					<h:commandButton value="#{i18n['action.edit_curriculum']}"
+						action="#{userEditBean.editCurriculum}" />
+					<h:commandButton value="#{i18n['action.cancel']}"
+						action="#{userEditBean.cancel}" immediate="true" />
+				</h:panelGroup>
+			</h:panelGroup>
+		</h:form>
+	</ui:define>
+</ui:composition>

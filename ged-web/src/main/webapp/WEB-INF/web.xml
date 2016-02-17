@@ -24,7 +24,7 @@
 			<role-name>TECHNIC</role-name>
 			<role-name>TECHNIC_ADMIN</role-name>
 			<role-name>ADMIN</role-name>
-		</auth-constraint>	
+		</auth-constraint>
 	</security-constraint>
 	<security-role>
 		<role-name>ADMIN</role-name>

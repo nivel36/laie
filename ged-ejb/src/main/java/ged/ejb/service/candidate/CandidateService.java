@@ -19,16 +19,16 @@ public class CandidateService extends GenericServiceImpl {
 		Map<String, Object> properties = new HashMap<String, Object>();
 		properties.put("id", id);
 		Candidate candidate = getByTypedQuerySingleResult(Candidate.class,
-				"Candidate.selectById", properties);
+				"Candidate.findById", properties);
 		return candidate;
 	}
 
 	public List<Candidate> searchByProperties(String name,
-			String firstSurename, String email, String phoneNumber) {
+			String surename, String email, String phoneNumber) {
 		List<Candidate> candidates = null;
 		Map<String, Object> properties = new HashMap<String, Object>();
 		addSearchProperty("name", name, properties);
-		addSearchProperty("firstSurename", firstSurename, properties);
+		addSearchProperty("surename", surename, properties);
 		addSearchProperty("email", email, properties);
 		addSearchProperty("phoneNumber", phoneNumber, properties);
 		candidates = getByProperties(Candidate.class, properties, 10, 0);

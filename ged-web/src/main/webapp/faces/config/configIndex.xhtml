@@ -60,7 +60,8 @@
 					styleClass="password required">
 					<h:inputSecret id="password" value="#{configBean.password}"
 						label="#{i18n['config.password']}" required="true"
-						styleClass="#{not component.valid ? 'inputError' : ''}" />
+						styleClass="#{not component.valid ? 'inputError' : ''}"
+						binding="#{configBean.passwordComponent}" />
 					<h:message for="password" errorClass="error" />
 				</h:outputLabel>
 
@@ -68,13 +69,15 @@
 					styleClass="password required">
 					<h:inputSecret id="newPassword" value="#{configBean.newPassword}"
 						label="#{i18n['config.new_password']}" required="true"
-						styleClass="#{not component.valid ? 'inputError' : ''}" />
+						styleClass="#{not component.valid ? 'inputError' : ''}"
+						binding="#{configBean.newPasswordComponent}" />
 					<h:message for="newPassword" errorClass="error" />
 				</h:outputLabel>
 
 				<h:outputLabel value="#{i18n['config.repeat_password']}"
 					styleClass="password required">
-					<h:inputSecret id="repeatPassword" value="#{configBean.repeatPassword}"
+					<h:inputSecret id="repeatPassword"
+						value="#{configBean.repeatPassword}"
 						label="#{i18n['config.repeat_password']}" required="true"
 						styleClass="#{not component.valid ? 'inputError' : ''}" />
 					<h:message for="repeatPassword" errorClass="error" />

@@ -7,7 +7,7 @@
 	template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
-		<title>#{i18n['users.users']}</title>
+		<title>#{i18n['user.users']}</title>
 	</ui:define>
 
 	<ui:param name="selectedMenu" value="users" />
@@ -16,7 +16,7 @@
 		<h:form id="form" prependId="false">
 			<h:graphicImage value="/resources/img/s.gif"
 				styleClass="headerIcon candidatesIcon" />
-			<h1 class="header">#{i18n['users.users']}</h1>
+			<h1 class="header">#{i18n['user.user']}</h1>
 			<h:panelGroup layout="block" styleClass="panel">
 				<h1>#{i18n['candidate.search']}</h1>
 				<h:outputLabel for="name" value="#{i18n['users.name']}">

@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.application.FacesMessage.Severity;
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
 import javax.inject.Inject;
@@ -37,6 +38,11 @@ public class AbstractBean implements Serializable {
 		FacesMessage facesMessage = new FacesMessage(severity, translatedTitle,
 				translatedMessage);
 		facesContext.addMessage(null, facesMessage);
+	}
+	
+	protected void addErrorToField(UIComponent component, String message) {
+		String translatedMessage = translate(message);
+		facesContext.addMessage(component.getClientId(), new FacesMessage(translatedMessage));
 	}
 
 	private String translate(String message) {

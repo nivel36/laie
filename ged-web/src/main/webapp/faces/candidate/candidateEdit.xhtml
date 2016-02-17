@@ -13,7 +13,7 @@
 	<ui:param name="selectedMenu" value="candidates" />
 
 	<ui:define name="content">
-		<h:form id="form" prependId="false">
+		<h:form id="form">
 			<input type="hidden" id="candidateId"
 				value="#{candidateEditBean.candidate.id}" />
 
@@ -41,21 +41,13 @@
 					<h:message for="name" errorClass="error" />
 				</h:outputLabel>
 
-				<h:outputLabel value="#{i18n['candidate.firstSurename']}"
+				<h:outputLabel value="#{i18n['candidate.surename']}"
 					styleClass="required">
-					<h:inputText id="firstSurename"
-						value="#{candidateEditBean.candidate.firstSurename}"
-						label="#{i18n['candidate.firstSurename']}" required="true"
+					<h:inputText id="surename"
+						value="#{candidateEditBean.candidate.surename}"
+						label="#{i18n['candidate.surename']}" required="true"
 						styleClass="#{not component.valid ? 'inputError' : ''}" />
-					<h:message for="firstSurename" errorClass="error" />
-				</h:outputLabel>
-
-				<h:outputLabel value="#{i18n['candidate.secondSurename']}">
-					<h:inputText id="secondSurename"
-						value="#{candidateEditBean.candidate.secondSurename}"
-						label="#{i18n['candidate.secondSurename']}"
-						styleClass="#{not component.valid ? 'inputError' : ''}" />
-					<h:message for="secondSurename" errorClass="error" />
+					<h:message for="surename" errorClass="error" />
 				</h:outputLabel>
 
 				<h:outputLabel value="#{i18n['candidate.age']}" styleClass="small">

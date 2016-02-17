@@ -24,7 +24,7 @@ public class CandidateSearchBean extends AbstractBean {
 
 	private String email;
 
-	private String firstSurename;
+	private String surename;
 
 	private String name;
 
@@ -79,8 +79,8 @@ public class CandidateSearchBean extends AbstractBean {
 		return email;
 	}
 
-	public String getFirstSurename() {
-		return firstSurename;
+	public String getSurename() {
+		return surename;
 	}
 
 	public String getName() {
@@ -95,8 +95,8 @@ public class CandidateSearchBean extends AbstractBean {
 		this.email = email;
 	}
 
-	public void setFirstSurename(String firstSurename) {
-		this.firstSurename = firstSurename;
+	public void setSurename(String surename) {
+		this.surename = surename;
 	}
 
 	public void setName(String name) {
@@ -127,7 +127,7 @@ public class CandidateSearchBean extends AbstractBean {
 
 	public void clean() {
 		email = null;
-		firstSurename = null;
+		surename = null;
 		name = null;
 		phoneNumber = null;
 		search();
@@ -145,7 +145,7 @@ public class CandidateSearchBean extends AbstractBean {
 	@Log
 	public void search() {
 		logger.fine("Searching for candidates");
-		candidates = candidateService.searchByProperties(name, firstSurename, email,
+		candidates = candidateService.searchByProperties(name, surename, email,
 				phoneNumber);
 		trimList();
 		setPaginationSize();
