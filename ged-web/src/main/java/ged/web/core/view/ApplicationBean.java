@@ -14,6 +14,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import ged.ejb.core.Cache;
+import ged.ejb.core.user.Role;
 import ged.ejb.service.candidate.FileType;
 import ged.ejb.service.curriculum.LanguageLevel;
 import ged.ejb.service.curriculum.SkillLevel;
@@ -25,10 +26,10 @@ import ged.ejb.service.job.ContractType;
 public class ApplicationBean extends AbstractBean {
 
 	private static final long serialVersionUID = 6394915115616408285L;
-	
+
 	@Inject
 	private Cache cache;
-	
+
 	private List<Locale> locales = new ArrayList<Locale>();
 
 	private Properties properties;
@@ -36,7 +37,7 @@ public class ApplicationBean extends AbstractBean {
 	public Cache getCache() {
 		return cache;
 	}
-	
+
 	public List<FileType> getFileTypes() {
 		return cache.getFileTypes();
 	}
@@ -65,13 +66,16 @@ public class ApplicationBean extends AbstractBean {
 		return cache.getSkillLevels();
 	}
 
+	public List<Role> getRoles() {
+		return cache.getRoles();
+	}
+
 	@PostConstruct
 	public void init() {
 		loadLocales();
 		properties = new Properties();
 		try {
-			properties.load(ApplicationBean.class
-					.getResourceAsStream("/ged/config.properties"));
+			properties.load(ApplicationBean.class.getResourceAsStream("/ged/config.properties"));
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, "Could not load properties");
 		}

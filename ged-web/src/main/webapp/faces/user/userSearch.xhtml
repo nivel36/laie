@@ -15,36 +15,42 @@
 	<ui:define name="content">
 		<h:form id="form" prependId="false">
 			<h:graphicImage value="/resources/img/s.gif"
-				styleClass="headerIcon candidatesIcon" />
+				styleClass="headerIcon usersIcon" />
+
 			<h1 class="header">#{i18n['user.user']}</h1>
+
 			<h:panelGroup layout="block" styleClass="panel">
-				<h1>#{i18n['candidate.search']}</h1>
-				<h:outputLabel for="name" value="#{i18n['users.name']}">
-					<h:inputText id="name" value="#{candidateSearchBean.name}"
-						label="#{i18n['candidate.name']}" />
+				<h1>#{i18n['user.search']}</h1>
+				<h:outputLabel for="name" value="#{i18n['user.name']}">
+					<h:inputText id="name" value="#{userSearchBean.name}"
+						label="#{i18n['user.name']}" />
+				</h:outputLabel>
+
+				<h:outputLabel for="surename" value="#{i18n['user.surename']}">
+					<h:inputText id="surename" value="#{userSearchBean.surename}"
+						label="#{i18n['user.surename']}" />
 				</h:outputLabel>
 
 				<h:panelGroup layout="block" styleClass="buttonGroup">
 					<h:commandButton value="#{i18n['action.clean']}"
-						action="#{candidateSearchBean.clean}" />
+						action="#{userSearchBean.clean}" />
 					<h:commandButton value="#{i18n['action.search']}"
-						action="#{candidateSearchBean.search}" />
+						action="#{userSearchBean.search}" />
 				</h:panelGroup>
 			</h:panelGroup>
 
 			<h:panelGroup layout="block" styleClass="panel" id="resultados">
-				<h1>#{i18n['candidate.search_results']}</h1>
+				<h1>#{i18n['user.search_results']}</h1>
 				<h:panelGroup layout="block" styleClass="buttonGroup">
 					<h:commandButton value="#{i18n['action.new']}"
-						action="#{candidateSearchBean.newCandidate}" immediate="true" />
+						action="#{userSearchBean.newUser}" immediate="true" />
 				</h:panelGroup>
 
-				<h:outputText value="#{i18n['candidate.no_candidates_found']}"
-					rendered="#{empty candidateSearchBean.dataList}" />
+				<h:outputText value="#{i18n['user.no_users_found']}"
+					rendered="#{empty userSearchBean.dataList}" />
 
-				<h:dataTable var="candidate" id="candidate"
-					value="#{candidateSearchBean.dataList}"
-					rendered="#{not empty candidateSearchBean.dataList}"
+				<h:dataTable var="user" id="user" value="#{userSearchBean.dataList}"
+					rendered="#{not empty userSearchBean.dataList}"
 					styleClass="dataTable">
 					<h:column>
 						<f:facet name="header">
@@ -55,83 +61,76 @@
 
 					<h:column>
 						<f:facet name="header">
-							<h:outputText value="#{i18n['candidate.name']}" />
+							<h:outputText value="#{i18n['user.name']}" />
 						</f:facet>
-						<h:outputText value="#{candidate}" />
+						<h:outputText value="#{user}" />
 					</h:column>
 
 					<h:column>
 						<f:facet name="header">
-							<h:outputText value="#{i18n['candidate.email']}" />
+							<h:outputText value="#{i18n['user.email']}" />
 						</f:facet>
-						<h:outputText value="#{candidate.email}" />
+						<h:outputText value="#{user.email}" />
 					</h:column>
 
 					<h:column>
 						<f:facet name="header">
-							<h:outputText value="#{i18n['candidate.phone_number']} 1" />
+							<h:outputText value="#{i18n['user.role']}" />
 						</f:facet>
-						<h:outputText value="#{candidate.phoneNumber1}" />
-					</h:column>
-
-					<h:column>
-						<f:facet name="header">
-							<h:outputText value="#{i18n['candidate.phone_number']} 2" />
-						</f:facet>
-						<h:outputText value="#{candidate.phoneNumber2}" />
+						<h:outputText value="#{user.role}" />
 					</h:column>
 					<h:column>
 						<f:facet name="header">
 							<h:outputText value="Action" />
 						</f:facet>
-						<h:link value="#{i18n['action.view']}" outcome="candidateView">
-							<f:param name="candidateId" value="#{candidate.id}" />
+						<h:link value="#{i18n['action.view']}" outcome="userView">
+							<f:param name="userId" value="#{user.id}" />
 						</h:link>
 						|
-						<h:commandLink action="#{candidateSearchBean.edit(candidate)}"
+						<h:commandLink action="#{userSearchBean.edit(user)}"
 							value="#{i18n['action.edit']}" />
 						|
-						<h:commandLink action="#{candidateSearchBean.remove(candidate)}"
+						<h:commandLink action="#{userSearchBean.remove(user)}"
 							value="#{i18n['action.remove']}">
 							<f:ajax execute="@form" render="@form" />
 						</h:commandLink>
 					</h:column>
 				</h:dataTable>
 				<h:panelGroup layout="block" styleClass="paginator" id="paginator"
-					rendered="#{not empty candidateSearchBean.dataList}">
-					<h:commandButton disabled="#{candidateSearchBean.currentPage eq 0}"
+					rendered="#{not empty userSearchBean.dataList}">
+					<h:commandButton disabled="#{userSearchBean.currentPage eq 0}"
 						value="#{i18n['paginator.first']}"
-						action="#{candidateSearchBean.firstPage}">
+						action="#{userSearchBean.firstPage}">
 						<f:ajax render=":form:resultados" />
 					</h:commandButton>
-					<h:commandButton disabled="#{candidateSearchBean.currentPage eq 0}"
+					<h:commandButton disabled="#{userSearchBean.currentPage eq 0}"
 						value="#{i18n['paginator.previous']}"
-						action="#{candidateSearchBean.previousPage}">
+						action="#{userSearchBean.previousPage}">
 						<f:ajax render=":form:resultados" />
 					</h:commandButton>
-					<ui:repeat value="#{candidateSearchBean.pages}" var="page">
+					<ui:repeat value="#{userSearchBean.pages}" var="page">
 						<h:commandButton value="#{page+1}"
-							action="#{candidateSearchBean.gotoPage(page)}"
-							disabled="#{candidateSearchBean.currentPage eq page}">
+							action="#{userSearchBean.gotoPage(page)}"
+							disabled="#{userSearchBean.currentPage eq page}">
 							<f:ajax render=":form:resultados" />
 						</h:commandButton>
 					</ui:repeat>
 					<h:commandButton value="#{i18n['paginator.next']}"
-						disabled="#{candidateSearchBean.currentPage eq candidateSearchBean.pagesSize-1}"
-						action="#{candidateSearchBean.nextPage}">
+						disabled="#{userSearchBean.currentPage eq userSearchBean.pagesSize-1}"
+						action="#{userSearchBean.nextPage}">
 						<f:ajax render=":form:resultados" />
 					</h:commandButton>
 					<h:commandButton value="#{i18n['paginator.last']}"
-						disabled="#{candidateSearchBean.currentPage eq candidateSearchBean.pagesSize-1}"
-						action="#{candidateSearchBean.lastPage}">
+						disabled="#{userSearchBean.currentPage eq userSearchBean.pagesSize-1}"
+						action="#{userSearchBean.lastPage}">
 						<f:ajax render=":form:resultados" />
 					</h:commandButton>
 					<h:outputLabel value="#{i18n['paginator.show']}">
-						<h:selectOneMenu value="#{candidateSearchBean.rowsPerPage}">
+						<h:selectOneMenu value="#{userSearchBean.rowsPerPage}">
 							<f:selectItem itemValue="5" itemLabel="5" />
 							<f:selectItem itemValue="10" itemLabel="10" />
 							<f:selectItem itemValue="25" itemLabel="25" />
-							<f:ajax listener="#{candidateSearchBean.rowsPerPageChange}"
+							<f:ajax listener="#{userSearchBean.rowsPerPageChange}"
 								render=":form:resultados" execute=":form:paginator" />
 						</h:selectOneMenu>
 					</h:outputLabel>

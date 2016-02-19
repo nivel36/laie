@@ -2,6 +2,7 @@ package ged.ejb.core.user;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -13,6 +14,14 @@ public class UserService extends GenericServiceImpl {
 
 	@Inject
 	private UserDao userDao;
+	
+	public List<User> findUsers(String name, String surenames) {
+		return userDao.findUsers(name, surenames);
+	}
+	
+	public List<User> findAll() {
+		return userDao.findAll();
+	}
 
 	public boolean checkPassword(String userString, String password) throws NoSuchAlgorithmException {
 		User user = userDao.findByName(userString);

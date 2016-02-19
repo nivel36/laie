@@ -141,7 +141,10 @@
 					<h:commandButton value="#{i18n['action.edit_curriculum']}"
 						action="#{candidateEditBean.editCurriculum}" />
 					<h:commandButton value="#{i18n['action.cancel']}"
-						action="#{candidateEditBean.cancel}" immediate="true" />
+						action="#{candidateEditBean.cancel}" immediate="true">
+						<f:param name="candidateId"
+							value="#{candidateEditBean.candidate.id}" />
+					</h:commandButton>
 				</h:panelGroup>
 
 				<h:panelGroup layout="block" styleClass="secondaryButtonGroup">

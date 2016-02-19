@@ -1,42 +1,39 @@
-package ged.web.view.candidate;
+package ged.web.view.user;
 
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import ged.ejb.core.user.User;
+import ged.ejb.core.user.UserService;
 import ged.ejb.core.util.Log;
-import ged.ejb.service.candidate.Candidate;
-import ged.ejb.service.candidate.CandidateService;
 import ged.web.core.view.AbstractSearchBean;
 
 @Named
 @ViewScoped
-public class CandidateSearchBean extends AbstractSearchBean<Candidate> {
+public class UserSearchBean extends AbstractSearchBean<User> {
 
 	private static final long serialVersionUID = 2434819723782902618L;
-
-	@Inject
-	private CandidateService candidateService;
 
 	private String email;
 
 	private String name;
 
-	private String phoneNumber;
-
 	private String surename;
+
+	@Inject
+	private UserService userService;
 
 	public void clean() {
 		email = null;
 		surename = null;
 		name = null;
-		phoneNumber = null;
 		search();
 	}
 
-	public String edit(Candidate candidate) {
-		flash.put("candidate", candidate);
-		return "candidateEdit?faces-redirect=true";
+	public String edit(User user) {
+		flash.put("user", user);
+		return "userEdit?faces-redirect=true";
 	}
 
 	public String getEmail() {
@@ -47,29 +44,28 @@ public class CandidateSearchBean extends AbstractSearchBean<Candidate> {
 		return name;
 	}
 
-	public String getPhoneNumber() {
-		return phoneNumber;
-	}
-
 	public String getSurename() {
 		return surename;
 	}
 
-	public String newCandidate() {
-		return "candidateEdit?faces-redirect=true";
+	public String newUser() {
+		return "userEdit?faces-redirect=true";
 	}
 
-	public void remove(Candidate candidate) {
-		candidateService.delete(candidate);
+	public void remove(User user) {
+		userService.delete(user);
 		search();
 	}
 
 	@Log
 	@Override
 	public void search() {
-		logger.fine("Searching for candidates");
-		entities = candidateService.searchByProperties(name, surename, email,
-				phoneNumber);
+		logger.fine("Searching for Users");
+		if (name != null || surename != null) {
+			entities = userService.findUsers(name, surename);
+		} else {
+			entities = userService.findAll();
+		}
 		trimList();
 		setPaginationSize();
 	}
@@ -80,10 +76,6 @@ public class CandidateSearchBean extends AbstractSearchBean<Candidate> {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
 	}
 
 	public void setSurename(String surename) {

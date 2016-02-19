@@ -1,6 +1,7 @@
 package ged.ejb.core.user;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.ejb.Stateless;
@@ -28,6 +29,10 @@ public class UserDao {
 		}
 		genericDao.insert(bookmark);
 	}
+	
+	public List<User> findAll(){
+		return genericDao.getAll(User.class);
+	}
 
 	public void deleteBookmark(Bookmark bookmark) {
 		genericDao.delete(bookmark);
@@ -35,6 +40,13 @@ public class UserDao {
 
 	public void deleteAction(Action action) {
 		genericDao.delete(action);
+	}
+
+	public List<User> findUsers(String name, String surename) {
+		Map<String, Object> parameters = new HashMap<>(2);
+		parameters.put("name", name);
+		parameters.put("surename", surename);
+		return genericDao.getByTypedQuery(User.class, "User.findByNameAndSurename", parameters);
 	}
 
 	public Bookmark findBookmark(Long auditedId, String entity, User user) {

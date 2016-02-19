@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <entity-mappings xmlns="http://xmlns.jcp.org/xml/ns/persistence/orm"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence/orm
-        http://xmlns.jcp.org/xml/ns/persistence/orm_2_1.xsd" version="2.1">
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence/orm
+        http://xmlns.jcp.org/xml/ns/persistence/orm_2_1.xsd"
+	version="2.1">
 
 	<named-query name="User.findByName">
 		<query>SELECT u FROM User u WHERE u.name = :name</query>
 	</named-query>
-	
+
 	<named-query name="Candidate.findById">
 		<query>SELECT c FROM Candidate c LEFT JOIN FETCH c.files WHERE c.id = :id</query>
 	</named-query>
+
+	<named-query name="User.findByNameAndSurename">
+		<query>SELECT u FROM User u WHERE	(:name IS NOT NULL AND u.name = :name)
+									OR 		(:surename IS NOT NULL AND u.surename = :surename)</query>
+	</named-query>
+
 </entity-mappings>

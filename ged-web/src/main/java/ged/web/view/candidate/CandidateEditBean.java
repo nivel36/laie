@@ -21,14 +21,33 @@ public class CandidateEditBean extends AbstractBean {
 	private Candidate candidate;
 
 	@Inject
-	private CurriculumService curriculumService;
-
-	@Inject
 	private CandidateService candidateService;
 
-	// ////////////////////////////////////////////////////////////////////////
-	// INIT
-	// ////////////////////////////////////////////////////////////////////////
+	@Inject
+	private CurriculumService curriculumService;
+	
+	public String cancel() {
+		return "candidateSearch?faces-redirect=true";
+	}
+
+	public String editCurriculum() {
+		candidate = candidateService.insertOrUpdate(candidate);
+		flash.put("curriculum", getCurriculum());
+		return "curriculumEdit?faces-redirect=true";
+	}
+
+	public Candidate getCandidate() {
+		return candidate;
+	}
+
+	private Curriculum getCurriculum() {
+		Curriculum curriculum = curriculumService.getByCandidate(candidate);
+		if (curriculum == null) {
+			curriculum = new Curriculum();
+			curriculum.setCandidate(candidate);
+		}
+		return curriculum;
+	}
 
 	@PostConstruct
 	private void init() {
@@ -43,42 +62,12 @@ public class CandidateEditBean extends AbstractBean {
 		flash.put("candidate", candidate);
 	}
 
-	// ////////////////////////////////////////////////////////////////////////
-	// SET AND GETS
-	// ////////////////////////////////////////////////////////////////////////
-
-	public Candidate getCandidate() {
-		return candidate;
+	public String save() {
+		candidate = candidateService.insertOrUpdate(candidate);
+		return "candidateSearch?faces-redirect=true";
 	}
 
 	public void setCandidate(Candidate candidate) {
 		this.candidate = candidate;
-	}
-
-	// ////////////////////////////////////////////////////////////////////////
-	// ACTIONS
-	// ////////////////////////////////////////////////////////////////////////
-
-	public String editCurriculum() {
-		candidate = candidateService.insertOrUpdate(candidate);
-		flash.put("curriculum", getCurriculum());
-		return "curriculumEdit?faces-redirect=true";
-	}
-
-	private Curriculum getCurriculum() {
-		Curriculum curriculum = curriculumService.getByCandidate(candidate);
-		if (curriculum == null) {
-			curriculum = new Curriculum();
-			curriculum.setCandidate(candidate);
-		}
-		return curriculum;
-	}
-
-	public String cancel() {
-		return "candidateSearch?faces-redirect=true";
-	}
-
-	public void save() {
-		candidateService.insertOrUpdate(candidate);
 	}
 }

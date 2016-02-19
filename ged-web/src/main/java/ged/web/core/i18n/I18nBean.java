@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
@@ -68,6 +69,23 @@ public class I18nBean extends AbstractBean {
 	}
 
 	public String getI18nText(String key, String language) {
-		return i18nTexts.get(language).get(key);
+		if ( i18nTexts.get(language).containsKey(key)) {
+			return i18nTexts.get(language).get(key);	
+		}
+		else {
+			return translate(key); 
+		}
+	}
+	
+	private String translate(String message) {
+		ResourceBundle bundle = getResourceBundle("ged.i18n");
+		String translatedMessage = bundle.getString(message);
+		return translatedMessage;
+	}
+
+	private ResourceBundle getResourceBundle(String filename) {
+		Locale locale = facesContext.getViewRoot().getLocale();
+		ResourceBundle bundle = ResourceBundle.getBundle(filename, locale);
+		return bundle;
 	}
 }

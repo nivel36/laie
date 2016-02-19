@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:i18n="http://legion.com/i18n"
+	template="/WEB-INF/templates/default.xhtml">
+
+	<ui:define name="title">
+		<title>#{i18n['user.user']}</title>
+	</ui:define>
+
+	<ui:param name="selectedMenu" value="users" />
+
+	<ui:define name="content">
+		<f:metadata>
+			<f:viewParam name="userId" value="#{userViewBean.userId}" />
+			<f:viewAction action="#{userViewBean.init}" />
+		</f:metadata>
+
+		<h:form id="form">
+			<input type="hidden" id="userId" value="#{userViewBean.user.id}" />
+
+			<h:graphicImage value="/resources/img/s.gif"
+				styleClass="headerIcon userIcon" />
+
+			<h:panelGroup rendered="#{userViewBean.user.id == 0}">
+				<h1 class="header">#{i18n['user.new_user']}</h1>
+			</h:panelGroup>
+
+			<h:panelGroup rendered="#{userViewBean.user.id != 0}">
+				<h1 class="header">#{userViewBean.user}</h1>
+			</h:panelGroup>
+
+			<h:panelGroup layout="block" styleClass="panel">
+				<h1>#{i18n['user.user']}</h1>
+
+				<h:outputLabel value="#{i18n['user.name']}" styleClass="required">
+					<h:inputText id="name" value="#{userViewBean.user.name}"
+						label="#{i18n['user.name']}" required="true"
+						styleClass="#{not component.valid ? 'inputError' : ''}"
+						disabled="true" />
+					<h:message for="name" errorClass="error" />
+				</h:outputLabel>
+
+				<h:outputLabel value="#{i18n['user.surename']}"
+					styleClass="required">
+					<h:inputText id="surename" value="#{userViewBean.user.surename}"
+						label="#{i18n['user.surename']}" required="true"
+						styleClass="#{not component.valid ? 'inputError' : ''}"
+						disabled="true" />
+					<h:message for="surename" errorClass="error" />
+				</h:outputLabel>
+
+				<h:outputLabel value="#{i18n['user.email']}"
+					styleClass="large required">
+					<h:inputText id="email" p:type="email"
+						value="#{userViewBean.user.email}" required="true"
+						label="#{i18n['user.email']}"
+						styleClass="#{ not component.valid ? 'inputError' : ''}"
+						disabled="true" />
+					<h:message for="email" errorClass="error" />
+				</h:outputLabel>
+
+				<h:outputLabel value="#{i18n['user.role']}" styleClass="required">
+					<h:inputText id="position" value="#{userViewBean.user.role}"
+						required="true" label="#{i18n['user.role']}"
+						styleClass="#{ not component.valid ? 'inputError' : ''}"
+						disabled="true" />
+					<h:message for="role" errorClass="error" />
+				</h:outputLabel>
+				
+				<h:panelGroup layout="block" styleClass="secondaryButtonGroup">
+					<h:commandButton value="#{i18n['action.edit']}"
+						action="#{userViewBean.editUser}" immediate="true" />
+				</h:panelGroup>
+			</h:panelGroup>
+		</h:form>
+	</ui:define>
+</ui:composition>
