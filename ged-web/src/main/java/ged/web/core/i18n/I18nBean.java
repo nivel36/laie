@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 import javax.annotation.PostConstruct;
@@ -60,23 +61,26 @@ public class I18nBean extends AbstractBean {
 		for (String locale : locales) {
 			i18nTexts.put(locale, new HashMap<String, String>());
 		}
-		List<I18nString> allI18nText = maintenanceService
-				.getAll(I18nString.class);
+		List<I18nString> allI18nText = maintenanceService.getAll(I18nString.class);
 		for (I18nString i18nText : allI18nText) {
-			i18nTexts.get(i18nText.getLocale()).put(i18nText.getKey(),
-					i18nText.getText());
+			i18nTexts.get(i18nText.getLocale()).put(i18nText.getKey(), i18nText.getText());
 		}
 	}
 
 	public String getI18nText(String key, String language) {
-		if ( i18nTexts.get(language).containsKey(key)) {
-			return i18nTexts.get(language).get(key);	
+		String translatedText = null;
+		if (i18nTexts.get(language).containsKey(key)) {
+			translatedText = i18nTexts.get(language).get(key);
+		} else {
+			try {
+				translatedText = translate(key);
+			} catch (MissingResourceException e) {
+				translatedText = "?" + key + "?";
+			}
 		}
-		else {
-			return translate(key); 
-		}
+		return translatedText;
 	}
-	
+
 	private String translate(String message) {
 		ResourceBundle bundle = getResourceBundle("ged.i18n");
 		String translatedMessage = bundle.getString(message);
