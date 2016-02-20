@@ -1,6 +1,12 @@
 package ged.ejb.core.user;
 
+import java.util.List;
+
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import ged.ejb.core.model.AbstractEntity;
 
@@ -10,6 +16,13 @@ public class Role extends AbstractEntity {
 	private static final long serialVersionUID = 5722113796215191203L;
 
 	private String name;
+
+	@ManyToOne
+	@JoinColumn(name = "roleManagerId", nullable = true, updatable = false)
+	private Role roleManager;
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "roleManager", orphanRemoval = false)
+	private List<Role> roleTeam;
 
 	public String getName() {
 		return name;
@@ -48,6 +61,5 @@ public class Role extends AbstractEntity {
 	public String toString() {
 		return name;
 	}
-	
-	
+
 }

@@ -76,11 +76,11 @@ insert into CANDIDATE( id, version, name, surename, phoneNumber1, email, city, c
 insert into CANDIDATE( id, version, name, surename, phoneNumber1, email, city, country, door, number, state, storey, street, zipCode, curriculumId) values ( 205, 0, 'Gonzalo', 'León Cuellar','685555280', 'gonzo73@gmail.com', 'Lugo', 'España','1','85', 'Lugo', '3', 'España', '02809', NULL);
 insert into CANDIDATE( id, version, name, surename, phoneNumber1, email, city, country, door, number, state, storey, street, zipCode, curriculumId) values ( 206, 0, 'Antonio', 'García Collado','685555281', 'agc2@gmail.com', 'Pontevedra', 'España','2','85', '2', 'Principal', 'Luguense', '01809', NULL);
 
-insert into ROLE( id, version, name ) values( 911, 0, 'ADMIN');
-insert into ROLE( id, version, name ) values( 912, 0, 'RECRUITER');
-insert into ROLE( id, version, name ) values( 913, 0, 'RECRUITER_ADMIN');
-insert into ROLE( id, version, name ) values( 914, 0, 'TECHNIC');
-insert into ROLE( id, version, name ) values( 915, 0, 'TECHNIC_ADMIN');
+insert into ROLE( id, version, name, roleManagerId ) values( 911, 0, 'ADMIN', null);
+insert into ROLE( id, version, name, roleManagerId ) values( 913, 0, 'RECRUITER_ADMIN', 911);
+insert into ROLE( id, version, name, roleManagerId ) values( 912, 0, 'RECRUITER', 913);
+insert into ROLE( id, version, name, roleManagerId ) values( 915, 0, 'TECHNIC_ADMIN', 911);
+insert into ROLE( id, version, name, roleManagerId ) values( 914, 0, 'TECHNIC', 915);
 
 insert into USER( id, version, email, language, name, rowsPerPage, surename, username, password, roleId ) values( 901, 0, 'abel.ferrer.jimenez@gmail.com', 'es', 'Abel', 25, 'Ferrer', 'aferrer', 'jGl25bVBBBW96Qi9Te4V37Fnqchz/Eu4qB9vKrRIqRg=', 911);
 
