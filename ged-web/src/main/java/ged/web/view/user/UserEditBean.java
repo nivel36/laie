@@ -17,9 +17,9 @@ import ged.web.core.view.AbstractBean;
 public class UserEditBean extends AbstractBean {
 
 	private static final long serialVersionUID = 1923340646020120203L;
-	
+
 	private List<User> managers;
-	
+
 	private User user;
 
 	@Inject
@@ -63,9 +63,9 @@ public class UserEditBean extends AbstractBean {
 	public void setUserService(UserService userService) {
 		this.userService = userService;
 	}
-	
-	public void roleChanged(){
+
+	public void roleChanged() {
 		Role role = user.getRole();
-		
+
 	}
 }

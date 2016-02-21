@@ -54,6 +54,18 @@ label input, label textarea, label select {
 	float: left;
 }
 
+.popup {
+	z-index: 10;
+	position: absolute;
+	margin: 0 auto;
+	top: 150px;
+	overflow: auto;
+	background: #F4F5F9;
+	padding: 15px;
+	border: 1px solid #535993;
+	border-radius: 10px;
+}
+
 /************************************
  *  PANEL
  ************************************/
