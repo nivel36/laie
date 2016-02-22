@@ -34,6 +34,24 @@
 			<h:panelGroup layout="block" styleClass="panel">
 				<h1>#{i18n['user.user']}</h1>
 
+				<h:outputLabel value="#{i18n['user.username']}"
+					styleClass="required">
+					<h:inputText id="username" value="#{userEditBean.user.username}"
+						label="#{i18n['user.username']}" required="true"
+						styleClass="#{not component.valid ? 'inputError' : ''}" />
+					<h:message for="username" errorClass="error" />
+				</h:outputLabel>
+
+				<h:outputLabel value="#{i18n['user.email']}"
+					styleClass="large required">
+					<h:inputText id="user" p:type="email"
+						value="#{userEditBean.user.email}" required="true"
+						label="#{i18n['user.email']}"
+						styleClass="#{ not component.valid ? 'inputError' : ''}" />
+					<h:message for="user" errorClass="error" />
+				</h:outputLabel>
+
+
 				<h:outputLabel value="#{i18n['user.name']}" styleClass="required">
 					<h:inputText id="name" value="#{userEditBean.user.name}"
 						label="#{i18n['user.name']}" required="true"
@@ -49,18 +67,9 @@
 					<h:message for="surename" errorClass="error" />
 				</h:outputLabel>
 
-				<h:outputLabel value="#{i18n['user.email']}"
-					styleClass="large required">
-					<h:inputText id="user" p:type="email"
-						value="#{userEditBean.user.email}" required="true"
-						label="#{i18n['user.email']}"
-						styleClass="#{ not component.valid ? 'inputError' : ''}" />
-					<h:message for="user" errorClass="error" />
-				</h:outputLabel>
-
-				<h:outputLabel value="#{i18n['user.role']}">
+				<h:outputLabel value="#{i18n['user.role']}" styleClass="required">
 					<h:selectOneMenu id="role" value="#{userEditBean.user.role}">
-						<f:selectItems var="role" itemValue="#{role.name}"
+						<f:selectItems var="role" itemValue="#{role}"
 							value="#{applicationBean.roles}"
 							itemLabel="#{i18n:translate(role.name)}" />
 					</h:selectOneMenu>
@@ -68,12 +77,13 @@
 
 				<h:outputLabel value="#{i18n['user.manager']}">
 					<h:inputText id="manager" value="#{userEditBean.user.manager}"
-						label="#{i18n['user.manager']}" readonly="true"/>
+						label="#{i18n['user.manager']}" readonly="true" />
 				</h:outputLabel>
 				<h:commandButton action="#{userSearchPopupBean.open}" value="+"
 					immediate="true">
+					<f:setPropertyActionListener
+						target="#{userSearchPopupBean.inputId}" value="manager" />
 					<f:ajax render=":userSearchPopupForm" />
-					
 				</h:commandButton>
 
 				<h:panelGroup layout="block" styleClass="buttonGroup">

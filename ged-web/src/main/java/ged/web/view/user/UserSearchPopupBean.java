@@ -1,7 +1,5 @@
 package ged.web.view.user;
 
-import java.util.Map;
-
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
 import javax.faces.view.ViewScoped;
@@ -80,16 +78,23 @@ public class UserSearchPopupBean extends AbstractSearchBean<User> {
 		rendered = true;
 	}
 
-	public void select(User user) {
-		Map<String, String> params = facesContext.getExternalContext().getRequestParameterMap();
-		String inputId = params.get("inputId");
-		UIComponent foundComponent = null;
-		for (UIComponent component : facesContext.getViewRoot().getChildren()) {
-			if (component.getId().contains("manager")) {
-				foundComponent = component;
-				break;
+	private <C extends UIComponent> UIComponent findChildrenByName(UIComponent parent) {
+		UIComponent aux = null;
+		for (UIComponent component : parent.getChildren()) {
+			if (component.getId().equals(inputId)) {
+				return component;
+			}
+			aux = findChildrenByName(component);
+			if ( aux != null ) {
+				return aux;				
 			}
 		}
+		return null;
+	}
+
+	public void select(User user) {
+		UIComponent foundComponent = null;
+		foundComponent = findChildrenByName(facesContext.getViewRoot());
 		((UIInput) foundComponent).setValue(user);
 		rendered = false;
 	}

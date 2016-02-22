@@ -1,13 +1,13 @@
 package ged.web.view.user;
 
 import java.util.List;
+import java.util.Locale;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import ged.ejb.core.user.Role;
 import ged.ejb.core.user.User;
 import ged.ejb.core.user.UserService;
 import ged.web.core.view.AbstractBean;
@@ -43,6 +43,11 @@ public class UserEditBean extends AbstractBean {
 			user = (User) flash.get("user");
 		} else {
 			user = new User();
+			int rowsPerPage = sessionBean.getRowsPerPage();
+			user.setRowsPerPage(rowsPerPage);
+			Locale locale = facesContext.getApplication().getDefaultLocale();
+			String language = locale.getLanguage();
+			user.setLanguage(language);
 		}
 		flash.put("user", user);
 	}
@@ -62,10 +67,5 @@ public class UserEditBean extends AbstractBean {
 
 	public void setUserService(UserService userService) {
 		this.userService = userService;
-	}
-
-	public void roleChanged() {
-		Role role = user.getRole();
-
 	}
 }

@@ -161,11 +161,11 @@ public class AuditedFacadeImpl implements AuditedFacade {
 
 	@Override
 	public <T extends AbstractEntity> void insert(T entity) {
-		logger.log(Level.FINE, "Persist {}::{}", new Object[] {
-				entity.getClass().getCanonicalName(), entity.getId() });
 		preInsertEvent.fire(entity);
 		persistenceFacade.insert(entity);
 		postInsertEvent.fire(entity);
+		logger.log(Level.FINE, "Persisted {}::{}", new Object[] {
+				entity.getClass().getCanonicalName(), entity.getId() });
 	}
 
 	@Override

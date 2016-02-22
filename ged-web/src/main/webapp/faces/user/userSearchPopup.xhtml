@@ -3,6 +3,7 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:i18n="http://legion.com/i18n"
 	xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
 
 	<h:form id="userSearchPopupForm">
@@ -72,7 +73,7 @@
 						<f:facet name="header">
 							<h:outputText value="#{i18n['user.role']}" />
 						</f:facet>
-						<h:outputText value="#{user.role}" />
+						<h:outputText value="#{i18n:translate(user.role.name)}" />
 					</h:column>
 					<h:column>
 						<f:facet name="header">
@@ -80,7 +81,7 @@
 						</f:facet>
 						<h:commandLink action="#{userSearchPopupBean.select(user)}"
 							value="#{i18n['action.select']}">
-							<f:ajax render=":userSearchPopupForm :form" />
+							<f:ajax render=":userSearchPopupForm :form:manager" />
 						</h:commandLink>
 					</h:column>
 				</h:dataTable>
