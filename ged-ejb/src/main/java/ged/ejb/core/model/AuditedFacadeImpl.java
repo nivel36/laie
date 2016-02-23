@@ -97,8 +97,7 @@ public class AuditedFacadeImpl implements AuditedFacade {
 	}
 
 	@Override
-	public <T> List<T> getByCriteria(CriteriaQuery<T> cq, int pageSize,
-			int pageNum) {
+	public <T> List<T> getByCriteria(CriteriaQuery<T> cq, int pageSize, int pageNum) {
 		return persistenceFacade.getByCriteria(cq, pageSize, pageNum);
 	}
 
@@ -108,38 +107,30 @@ public class AuditedFacadeImpl implements AuditedFacade {
 	}
 
 	@Override
-	public <T extends AbstractEntity> T getByPrimaryKey(Class<T> entityClass,
-			Long id) {
+	public <T extends AbstractEntity> T getByPrimaryKey(Class<T> entityClass, Long id) {
 		return persistenceFacade.getByPrimaryKey(entityClass, id);
 	}
 
 	@Override
-	public List<?> getByQuery(String nombreQuery,
-			Map<String, Object> parameters, int pageSize, int pageNum) {
-		return persistenceFacade.getByQuery(nombreQuery, parameters, pageSize,
-				pageNum);
+	public List<?> getByQuery(String nombreQuery, Map<String, Object> parameters, int pageSize, int pageNum) {
+		return persistenceFacade.getByQuery(nombreQuery, parameters, pageSize, pageNum);
 	}
 
 	@Override
-	public Object getByQuerySingleResult(String nombreQuery,
-			Map<String, Object> parameters) {
+	public Object getByQuerySingleResult(String nombreQuery, Map<String, Object> parameters) {
 		return getByQuerySingleResult(nombreQuery, parameters);
 	}
 
 	@Override
-	public <T extends AbstractEntity> List<T> getByTypedQuery(
-			Class<T> entityClass, String namedQuery,
+	public <T extends AbstractEntity> List<T> getByTypedQuery(Class<T> entityClass, String namedQuery,
 			Map<String, Object> parameters, int pageSize, int pageNum) {
-		return persistenceFacade.getByTypedQuery(entityClass, namedQuery,
-				parameters, pageSize, pageNum);
+		return persistenceFacade.getByTypedQuery(entityClass, namedQuery, parameters, pageSize, pageNum);
 	}
 
 	@Override
-	public <T extends AbstractEntity> T getByTypedQuerySingleResult(
-			Class<T> entityClass, String namedQuery,
+	public <T extends AbstractEntity> T getByTypedQuerySingleResult(Class<T> entityClass, String namedQuery,
 			Map<String, Object> parameters) {
-		return persistenceFacade.getByTypedQuerySingleResult(entityClass,
-				namedQuery, parameters);
+		return persistenceFacade.getByTypedQuerySingleResult(entityClass, namedQuery, parameters);
 	}
 
 	@Override
@@ -148,29 +139,26 @@ public class AuditedFacadeImpl implements AuditedFacade {
 	}
 
 	@Override
-	public <T extends AbstractEntity> T getReference(Class<T> entityClass,
-			Object primaryKey) {
+	public <T extends AbstractEntity> T getReference(Class<T> entityClass, Object primaryKey) {
 		return persistenceFacade.getReference(entityClass, primaryKey);
 	}
 
 	@Override
-	public <T extends AbstractEntity> void lock(T entity,
-			LockModeType lockModeType, Map<String, Object> properties) {
+	public <T extends AbstractEntity> void lock(T entity, LockModeType lockModeType, Map<String, Object> properties) {
 		persistenceFacade.lock(entity, lockModeType, properties);
 	}
 
 	@Override
 	public <T extends AbstractEntity> void insert(T entity) {
+		logger.log(Level.FINE, "Persis {}", entity.getClass().getCanonicalName());
 		preInsertEvent.fire(entity);
 		persistenceFacade.insert(entity);
 		postInsertEvent.fire(entity);
-		logger.log(Level.FINE, "Persisted {}::{}", new Object[] {
-				entity.getClass().getCanonicalName(), entity.getId() });
 	}
 
 	@Override
-	public <T extends AbstractEntity> void refresh(T entity,
-			LockModeType lockModeType, Map<String, Object> properties) {
+	public <T extends AbstractEntity> void refresh(T entity, LockModeType lockModeType,
+			Map<String, Object> properties) {
 		persistenceFacade.refresh(entity, lockModeType, properties);
 	}
 
@@ -262,15 +250,14 @@ public class AuditedFacadeImpl implements AuditedFacade {
 	}
 
 	@Override
-	public <T extends AbstractEntity> List<T> getByProperties(Class<T> clazz,
-			Map<String, Object> properties, int pageSize, int pageNum) {
-		
+	public <T extends AbstractEntity> List<T> getByProperties(Class<T> clazz, Map<String, Object> properties,
+			int pageSize, int pageNum) {
+
 		return persistenceFacade.getByProperties(clazz, properties, pageSize, pageNum);
 	}
 
 	@Override
-	public <T extends AbstractEntity> T getByProperties(Class<T> clazz,
-			Map<String, Object> properties) {
+	public <T extends AbstractEntity> T getByProperties(Class<T> clazz, Map<String, Object> properties) {
 		return persistenceFacade.getByProperties(clazz, properties);
 	}
 }

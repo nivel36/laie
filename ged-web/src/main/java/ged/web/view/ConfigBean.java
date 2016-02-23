@@ -104,7 +104,8 @@ public class ConfigBean extends AbstractBean {
 		String output = hashPassword(password);
 		if (user.getPassword().equals(output)) {
 			if (newPassword.equals(repeatPassword)) {
-				user.setPassword(hashPassword(newPassword));
+				String hash = hashPassword(newPassword);
+				user.setPassword(hash);
 			} else {
 				addErrorToField(passwordComponent, "login.error.bad_password");
 			}

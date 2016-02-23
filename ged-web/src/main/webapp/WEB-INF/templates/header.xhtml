@@ -4,6 +4,10 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 	<h:panelGroup layout="block" id="logo">
+		<h:form id="userForm">
+			<h:commandLink value="#{i18n['user.logout']}"
+				action="#{loginBean.logout()}" />
+		</h:form>
 	</h:panelGroup>
 	<ui:insert name="menu">
 		<h:form id="nav">

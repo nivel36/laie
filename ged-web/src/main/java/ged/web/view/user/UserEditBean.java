@@ -48,6 +48,7 @@ public class UserEditBean extends AbstractBean {
 			Locale locale = facesContext.getApplication().getDefaultLocale();
 			String language = locale.getLanguage();
 			user.setLanguage(language);
+			user.setPassword("M+SzETkPtT+deVQNIScBEXivvfozSne5QqIqyWICLv0=");
 		}
 		flash.put("user", user);
 	}

@@ -14,23 +14,22 @@
 	</h:head>
 	<h:body>
 		<h:form id="loginForm" prependId="false">
-		<h1>Login</h1>
+			<h1>Login</h1>
 			<h:outputLabel value="#{i18n['login.username']}"
 				styleClass="required">
 				<h:inputText id="j_username" label="#{i18n['login.username']}"
-					required="true"
+					required="true" value="#{loginBean.username}"
 					styleClass="#{not component.valid ? 'inputError' : ''}" />
 				<h:message for="j_username" errorClass="error" />
 			</h:outputLabel>
 			<h:outputLabel value="#{i18n['login.password']}"
 				styleClass="required">
 				<h:inputSecret id="j_password" label="#{i18n['login.password']}"
-					required="true"
+					required="true" value="#{loginBean.password}"
 					styleClass="#{not component.valid ? 'inputError' : ''}" />
 				<h:message for="j_password" errorClass="error" />
 			</h:outputLabel>
-			<h:commandButton
-				onclick="document.getElementById('loginForm').action='j_security_check';"
+			<h:commandButton action="#{loginBean.login}"
 				value="#{i18n['login.enter']}" />
 		</h:form>
 	</h:body>
