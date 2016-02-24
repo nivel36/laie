@@ -27,7 +27,8 @@
 							styleClass="#{selectedMenu eq 'reports' ? 'selected': ''}" /></li>
 					<li><h:commandLink value="#{i18n['menu.users']}"
 							action="/faces/user/userSearch?faces-redirect=true"
-							styleClass="#{selectedMenu eq 'users' ? 'selected': ''}" /></li>
+							styleClass="#{selectedMenu eq 'users' ? 'selected': ''}"
+							rendered="#{request.isUserInRole('ADMIN')}" /></li>
 					<li><h:commandLink value="#{i18n['menu.maintenances']}"
 							action="/faces/maintenance/maintenanceIndex?faces-redirect=true"
 							styleClass="#{selectedMenu eq 'maintenances' ? 'selected': ''}" /></li>

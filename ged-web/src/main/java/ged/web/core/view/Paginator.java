@@ -38,7 +38,7 @@ public class Paginator extends UINamingContainer implements Serializable {
 
 	public List<Integer> getPageNumbers() {
 		List<Integer> numbers = new ArrayList<Integer>();
-		int pages = (int) (maxRow / rowCount);
+		int pages = maxRow / rowCount;
 		for (int i = 0; i < pages; i++) {
 			numbers.add(i);
 		}
@@ -54,7 +54,7 @@ public class Paginator extends UINamingContainer implements Serializable {
 	}
 
 	public void lastPage() {
-		firstRow = (int) (maxRow / rowCount);
+		firstRow = maxRow / rowCount;
 	}
 
 	public void nextPage() {

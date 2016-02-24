@@ -38,6 +38,7 @@ public class SessionBean extends AbstractBean {
 	@Produces
 	private List<SavedSearch> savedSearches = new ArrayList<SavedSearch>();
 
+	@Produces
 	private User user;
 
 	public List<Action> getActions() {

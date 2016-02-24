@@ -62,159 +62,167 @@ public class User extends AbstractEntity {
 	private List<User> team;
 
 	@NotNull
-	@Column(length = 12, nullable = false, unique = true)
+	@Column(length = 16, nullable = false, unique = true)
 	private String username;
 
-	public void addAction(Action action) {
+	public void addAction(final Action action) {
 		if (action == null) {
 			throw new NullPointerException();
 		}
-		actions.add(action);
+		this.actions.add(action);
 	}
 
-	public void addBookmark(Bookmark bookmark) {
+	public void addBookmark(final Bookmark bookmark) {
 		if (bookmark == null) {
 			throw new NullPointerException();
 		}
-		bookmarks.add(bookmark);
+		this.bookmarks.add(bookmark);
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
+	public boolean equals(final Object obj) {
+		if (this == obj) {
 			return true;
-		if (!super.equals(obj))
+		}
+		if (!super.equals(obj)) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
-		User other = (User) obj;
-		if (username == null && other.username != null) {
+		}
+		final User other = (User) obj;
+		if ((this.username == null) && (other.username != null)) {
 			return false;
-		} else if (!username.equals(other.username))
+		} else if (!this.username.equals(other.username)) {
 			return false;
+		}
 		return true;
 	}
 
 	public List<Action> getActions() {
-		return actions;
+		return this.actions;
 	}
 
 	public List<Bookmark> getBookmarks() {
-		return bookmarks;
+		return this.bookmarks;
 	}
 
 	public String getEmail() {
-		return email;
+		return this.email;
 	}
 
 	public String getLanguage() {
-		return language;
+		return this.language;
 	}
 
 	public User getManager() {
-		return manager;
+		return this.manager;
 	}
 
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	public String getPassword() {
-		return password;
+		return this.password;
 	}
 
 	public Role getRole() {
-		return role;
+		return this.role;
 	}
 
 	public int getRowsPerPage() {
-		return rowsPerPage;
+		return this.rowsPerPage;
 	}
 
 	public String getSurename() {
-		return surename;
+		return this.surename;
 	}
 
 	public List<User> getTeam() {
-		return team;
+		return this.team;
 	}
 
 	public String getUsername() {
-		return username;
+		return this.username;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + ((username == null) ? 0 : username.hashCode());
+		result = (prime * result) + ((this.username == null) ? 0 : this.username.hashCode());
 		return result;
 	}
 
-	public void removeAction(Action action) {
+	public boolean hasRole(final String roleName) {
+		return this.role.getName().equals(roleName);
+	}
+
+	public void removeAction(final Action action) {
 		if (action == null) {
 			throw new NullPointerException();
 		}
-		actions.remove(action);
+		this.actions.remove(action);
 	}
 
-	public void removeBookmark(Bookmark bookmark) {
+	public void removeBookmark(final Bookmark bookmark) {
 		if (bookmark == null) {
 			throw new NullPointerException();
 		}
-		bookmarks.remove(bookmark);
+		this.bookmarks.remove(bookmark);
 	}
 
-	public void setActions(List<Action> actions) {
+	public void setActions(final List<Action> actions) {
 		this.actions = actions;
 	}
 
-	public void setBookmarks(List<Bookmark> bookmarks) {
+	public void setBookmarks(final List<Bookmark> bookmarks) {
 		this.bookmarks = bookmarks;
 	}
 
-	public void setEmail(String email) {
+	public void setEmail(final String email) {
 		this.email = email;
 	}
 
-	public void setLanguage(String language) {
+	public void setLanguage(final String language) {
 		this.language = language;
 	}
 
-	public void setManager(User manager) {
+	public void setManager(final User manager) {
 		this.manager = manager;
 	}
 
-	public void setName(String name) {
+	public void setName(final String name) {
 		this.name = name;
 	}
 
-	public void setPassword(String password) {
+	public void setPassword(final String password) {
 		this.password = password;
 	}
 
-	public void setRole(Role role) {
+	public void setRole(final Role role) {
 		this.role = role;
 	}
 
-	public void setRowsPerPage(int rowsPerPage) {
+	public void setRowsPerPage(final int rowsPerPage) {
 		this.rowsPerPage = rowsPerPage;
 	}
 
-	public void setSurename(String surename) {
+	public void setSurename(final String surename) {
 		this.surename = surename;
 	}
 
-	public void setTeam(List<User> team) {
+	public void setTeam(final List<User> team) {
 		this.team = team;
 	}
 
-	public void setUsername(String username) {
+	public void setUsername(final String username) {
 		this.username = username;
 	}
 
 	@Override
 	public String toString() {
-		return name + " " + surename;
+		return this.name + " " + this.surename;
 	}
 }
