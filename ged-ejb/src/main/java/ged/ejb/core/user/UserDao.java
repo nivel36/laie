@@ -18,59 +18,66 @@ public class UserDao {
 	@Inject
 	private GenericDao genericDao;
 
-	public User findByName(String user) {
-		return genericDao.getByTypedQuerySingleResult(User.class, "User.findByName");
+	public void deleteAction(final Action action) {
+		this.genericDao.delete(action);
 	}
 
-	public void insertBookmark(Bookmark bookmark) throws IllegalUserAction {
-		Bookmark b = findBookmark(bookmark.getAuditedId(), bookmark.getEntity(), bookmark.getUser());
-		if (b != null) {
-			throw new IllegalUserAction("Bookmark alredy exists");
-		}
-		genericDao.insert(bookmark);
-	}
-	
-	public List<User> findAll(){
-		return genericDao.getAll(User.class);
+	public void deleteBookmark(final Bookmark bookmark) {
+		this.genericDao.delete(bookmark);
 	}
 
-	public void deleteBookmark(Bookmark bookmark) {
-		genericDao.delete(bookmark);
-	}
-
-	public void deleteAction(Action action) {
-		genericDao.delete(action);
-	}
-
-	public List<User> findUsers(String name, String surename) {
-		Map<String, Object> parameters = new HashMap<>(2);
-		parameters.put("name", name);
-		parameters.put("surename", surename);
-		return genericDao.getByTypedQuery(User.class, "User.findByNameAndSurename", parameters);
-	}
-
-	public Bookmark findBookmark(Long auditedId, String entity, User user) {
-		Map<String, Object> parameters = makeParameters(auditedId, entity, user);
-		Bookmark b = genericDao.getByTypedQuerySingleResult(Bookmark.class, "Bookmark.findByValues", parameters);
-		return b;
-	}
-
-	public void insertAction(Action action) throws IllegalUserAction {
-		Action a = findAction(action.getAuditedId(), action.getEntity(), action.getUser());
-		if (a != null) {
-			throw new IllegalUserAction("Action alredy exist");
-		}
-		genericDao.insert(action);
-	}
-
-	public Action findAction(Long auditedId, String entity, User user) {
-		Map<String, Object> parameters = makeParameters(auditedId, entity, user);
-		Action a = genericDao.getByTypedQuerySingleResult(Action.class, "Action.findByValues", parameters);
+	public Action findAction(final Long auditedId, final String entity, final User user) {
+		final Map<String, Object> parameters = makeParameters(auditedId, entity, user);
+		final Action a = this.genericDao.getByTypedQuerySingleResult(Action.class, "Action.findByValues", parameters);
 		return a;
 	}
 
-	private Map<String, Object> makeParameters(Long auditedId, String entity, User user) {
-		Map<String, Object> parameters = new HashMap<String, Object>(3);
+	public List<User> findAll() {
+		return this.genericDao.getAll(User.class);
+	}
+
+	public Bookmark findBookmark(final Long auditedId, final String entity, final User user) {
+		final Map<String, Object> parameters = makeParameters(auditedId, entity, user);
+		final Bookmark b = this.genericDao.getByTypedQuerySingleResult(Bookmark.class, "Bookmark.findByValues",
+				parameters);
+		return b;
+	}
+
+	public User findById(final Long id) {
+		final Map<String, Object> parameters = new HashMap<>();
+		parameters.put("id", id);
+		return this.genericDao.getByTypedQuerySingleResult(User.class, "User.findById", parameters);
+	}
+
+	public User findByName(final String user) {
+		return this.genericDao.getByTypedQuerySingleResult(User.class, "User.findByName");
+	}
+
+	public List<User> findUsers(final String name, final String surename) {
+		final Map<String, Object> parameters = new HashMap<>(2);
+		parameters.put("name", name);
+		parameters.put("surename", surename);
+		return this.genericDao.getByTypedQuery(User.class, "User.findByNameAndSurename", parameters);
+	}
+
+	public void insertAction(final Action action) throws IllegalUserAction {
+		final Action a = findAction(action.getAuditedId(), action.getEntity(), action.getUser());
+		if (a != null) {
+			throw new IllegalUserAction("Action alredy exist");
+		}
+		this.genericDao.insert(action);
+	}
+
+	public void insertBookmark(final Bookmark bookmark) throws IllegalUserAction {
+		final Bookmark b = findBookmark(bookmark.getAuditedId(), bookmark.getEntity(), bookmark.getUser());
+		if (b != null) {
+			throw new IllegalUserAction("Bookmark alredy exists");
+		}
+		this.genericDao.insert(bookmark);
+	}
+
+	private Map<String, Object> makeParameters(final Long auditedId, final String entity, final User user) {
+		final Map<String, Object> parameters = new HashMap<String, Object>(3);
 		parameters.put("auditedId", auditedId);
 		parameters.put("entity", entity);
 		parameters.put("user", user);

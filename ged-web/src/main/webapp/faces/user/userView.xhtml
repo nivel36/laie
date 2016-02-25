@@ -70,10 +70,38 @@
 						disabled="true" />
 					<h:message for="role" errorClass="error" />
 				</h:outputLabel>
-				
+
 				<h:panelGroup layout="block" styleClass="secondaryButtonGroup">
 					<h:commandButton value="#{i18n['action.edit']}"
 						action="#{userViewBean.editUser}" immediate="true" />
+				</h:panelGroup>
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="panel">
+				<h1>#{i18n['user.team']}</h1>
+
+				<h:panelGroup layout="block" >
+					<h:outputText value="#{i18n['user.no_team']}"
+						rendered="#{empty userViewBean.user.team}" />
+
+					<h:dataTable var="user" id="users"
+						value="#{userViewBean.user.team}"
+						rendered="#{not empty userViewBean.user.team}"
+						styleClass="dataTable">
+
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{i18n['user.name']}" />
+							</f:facet>
+							<h:outputText value="#{user}" />
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{i18n['user.role']}" />
+							</f:facet>
+							<h:outputText value="#{user.role}" />
+						</h:column>
+					</h:dataTable>
 				</h:panelGroup>
 			</h:panelGroup>
 		</h:form>

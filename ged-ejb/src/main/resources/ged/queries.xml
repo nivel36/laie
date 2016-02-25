@@ -18,4 +18,13 @@
 									OR 		(:surename IS NOT NULL AND u.surename = :surename)</query>
 	</named-query>
 
+	<named-query name="User.findUser">
+		<query>SELECT u FROM User u WHERE	(:name IS NOT NULL AND u.name = :name)
+									OR 		(:surename IS NOT NULL AND u.surename = :surename)</query>
+	</named-query>
+
+	<named-query name="User.findById">
+		<query>SELECT u FROM User u LEFT JOIN FETCH u.team WHERE u.id = :id</query>
+	</named-query>
+
 </entity-mappings>

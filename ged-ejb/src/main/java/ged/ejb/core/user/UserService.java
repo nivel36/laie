@@ -12,12 +12,16 @@ public class UserService extends GenericServiceImpl {
 
 	@Inject
 	private UserDao userDao;
-	
-	public List<User> findUsers(String name, String surenames) {
-		return userDao.findUsers(name, surenames);
-	}
-	
+
 	public List<User> findAll() {
-		return userDao.findAll();
+		return this.userDao.findAll();
+	}
+
+	public User findById(final Long id) {
+		return this.userDao.findById(id);
+	}
+
+	public List<User> findUsers(final String name, final String surenames) {
+		return this.userDao.findUsers(name, surenames);
 	}
 }

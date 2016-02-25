@@ -11,10 +11,10 @@ import ged.web.core.view.AbstractBean;
 
 @Named
 @ViewScoped
-public class UserViewBean  extends AbstractBean {
+public class UserViewBean extends AbstractBean {
 
 	private static final long serialVersionUID = -2187385732087309689L;
-	
+
 	private User user;
 
 	private String userId;
@@ -22,19 +22,37 @@ public class UserViewBean  extends AbstractBean {
 	@Inject
 	private UserService userService;
 
+	public String editUser() {
+		this.flash.put("user", this.user);
+		return "userEdit?faces-redirect=true";
+	}
+
+	private void error() {
+		final NavigationHandler navigationHandler = this.facesContext.getApplication().getNavigationHandler();
+		navigationHandler.handleNavigation(this.facesContext, null, "userSearch?faces-redirect=true");
+		this.facesContext.renderResponse();
+	}
+
+	public User getUser() {
+		return this.user;
+	}
+
+	public String getUserId() {
+		return this.userId;
+	}
 
 	/**
 	 * Not using @PostConstruct because the view is a GET based form.
 	 */
 	public void init() {
-		if (userId != null) {
+		if (this.userId != null) {
 			try {
-				Long id = Long.parseLong(userId);
-				user = userService.getByPrimaryKey(User.class, id);
-				if (user == null) {
+				final Long id = Long.parseLong(this.userId);
+				this.user = this.userService.findById(id);
+				if (this.user == null) {
 					error();
 				}
-			} catch (NumberFormatException ex) {
+			} catch (final NumberFormatException ex) {
 				error();
 			}
 		} else {
@@ -42,39 +60,20 @@ public class UserViewBean  extends AbstractBean {
 		}
 	}
 
-	private void error() {
-		NavigationHandler navigationHandler = facesContext.getApplication().getNavigationHandler();
-		navigationHandler.handleNavigation(facesContext, null, "userSearch?faces-redirect=true");
-		facesContext.renderResponse();
+	public String modifyUser() {
+		this.flash.put("user", this.user);
+		return "userEdit?faces-redirect=true";
 	}
 
-	public User getUser() {
-		return user;
-	}
-
-	public String getUserId() {
-		return userId;
-	}
-
-	public void setUser(User user) {
+	public void setUser(final User user) {
 		this.user = user;
 	}
 
-	public void setUserId(String userId) {
+	public void setUserId(final String userId) {
 		this.userId = userId;
 	}
 
-	public void setUserService(UserService userService) {
+	public void setUserService(final UserService userService) {
 		this.userService = userService;
-	}
-
-	public String editUser() {
-		flash.put("user", user);
-		return "userEdit?faces-redirect=true";
-	}
-
-	public String modifyUser() {
-		flash.put("user", user);
-		return "userEdit?faces-redirect=true";
 	}
 }
