@@ -64,11 +64,11 @@
 				</h:outputLabel>
 
 				<h:outputLabel value="#{i18n['user.role']}" styleClass="required">
-					<h:inputText id="position" value="#{userViewBean.user.role}"
-						required="true" label="#{i18n['user.role']}"
-						styleClass="#{ not component.valid ? 'inputError' : ''}"
-						disabled="true" />
-					<h:message for="role" errorClass="error" />
+					<h:selectOneMenu id="role" value="#{userViewBean.user.role}" disabled="true"> 
+						<f:selectItems var="role" itemValue="#{role}"
+							value="#{applicationBean.roles}"
+							itemLabel="#{i18n:translate(role.name)}"  />
+					</h:selectOneMenu>
 				</h:outputLabel>
 
 				<h:panelGroup layout="block" styleClass="secondaryButtonGroup">
@@ -79,7 +79,7 @@
 			<h:panelGroup layout="block" styleClass="panel">
 				<h1>#{i18n['user.team']}</h1>
 
-				<h:panelGroup layout="block" >
+				<h:panelGroup layout="block">
 					<h:outputText value="#{i18n['user.no_team']}"
 						rendered="#{empty userViewBean.user.team}" />
 
@@ -99,7 +99,7 @@
 							<f:facet name="header">
 								<h:outputText value="#{i18n['user.role']}" />
 							</f:facet>
-							<h:outputText value="#{user.role}" />
+							<h:outputText value="#{i18n:translate(user.role.name)}" />
 						</h:column>
 					</h:dataTable>
 				</h:panelGroup>

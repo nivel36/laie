@@ -13,171 +13,153 @@ import javax.persistence.criteria.CriteriaQuery;
 public class GenericDaoImpl implements GenericDao {
 
 	@Inject
-	private Logger logger;
-
-	@Inject
 	protected AuditedFacade auditedFacade;
 
+	@Inject
+	private Logger logger;
+
 	protected void clear() {
-		auditedFacade.clear();
+		this.auditedFacade.clear();
 	}
 
-	protected <T extends AuditedEntity> boolean contains(T entity) {
-		return auditedFacade.contains(entity);
+	protected <T extends AuditedEntity> boolean contains(final T entity) {
+		return this.auditedFacade.contains(entity);
 	}
 
 	@Override
-	public <T extends AbstractEntity> void delete(T entity) {
-		auditedFacade.delete(entity);
+	public <T extends AbstractEntity> void delete(final T entity) {
+		this.auditedFacade.delete(entity);
 	}
 
-	protected <T extends AuditedEntity> void detach(T entity) {
-		auditedFacade.detach(entity);
+	protected <T extends AuditedEntity> void detach(final T entity) {
+		this.auditedFacade.detach(entity);
 	}
 
 	protected void flush() {
-		auditedFacade.flush();
-	}
-
-	protected CriteriaBuilder getCriteriaBuilder() {
-		return auditedFacade.getCriteriaBuilder();
-	}
-
-	protected <T extends AuditedEntity> T getReference(Class<T> entityClass,
-			Object primaryKey) {
-		return auditedFacade.getReference(entityClass, primaryKey);
+		this.auditedFacade.flush();
 	}
 
 	@Override
-	public <T extends AbstractEntity> void insert(T entity) {
-		auditedFacade.insert(entity);
+	public <T extends AbstractEntity> List<T> getAll(final Class<T> clazz) {
+		return this.auditedFacade.getAll(clazz);
 	}
 
-	protected <T extends AuditedEntity> void lock(T entity,
-			LockModeType lockModeType, Map<String, Object> properties) {
-		auditedFacade.lock(entity, lockModeType, properties);
-	}
-
-	@Override
-	public <T extends AbstractEntity> T update(T entity) {
-		return auditedFacade.update(entity);
-	}
-
-	protected void refresh(AuditedEntity entity) {
-		refresh(entity, null, null);
-	}
-
-	protected <T extends AuditedEntity> void refresh(T entity,
-			LockModeType lockModeType, Map<String, Object> properties) {
-		auditedFacade.refresh(entity, lockModeType, properties);
-	}
-
-	protected <T> List<T> getByCriteria(CriteriaQuery<T> cq) {
+	protected <T> List<T> getByCriteria(final CriteriaQuery<T> cq) {
 		return getByCriteria(cq, 0, 0);
 	}
 
-	protected <T> List<T> getByCriteria(CriteriaQuery<T> cq, int pageSize,
-			int pageNum) {
-		return auditedFacade.getByCriteria(cq, pageSize, pageNum);
+	protected <T> List<T> getByCriteria(final CriteriaQuery<T> cq, final int pageSize, final int pageNum) {
+		return this.auditedFacade.getByCriteria(cq, pageSize, pageNum);
 	}
 
-	protected <T> T getByCriteriaSingleResult(CriteriaQuery<T> cq) {
-		return auditedFacade.getByCriteriaSingleResult(cq);
-	}
-
-	@Override
-	public <T extends AbstractEntity> T getByPrimaryKey(Class<T> entityClass,
-			Long id) {
-		return auditedFacade.getByPrimaryKey(entityClass, id);
+	protected <T> T getByCriteriaSingleResult(final CriteriaQuery<T> cq) {
+		return this.auditedFacade.getByCriteriaSingleResult(cq);
 	}
 
 	@Override
-	public List<?> getByQuery(String nombreQuery, Map<String, Object> parameters) {
+	public <T extends AbstractEntity> T getByPrimaryKey(final Class<T> entityClass, final Long id) {
+		return this.auditedFacade.getByPrimaryKey(entityClass, id);
+	}
+
+	@Override
+	public <T extends AbstractEntity> T getByProperties(final Class<T> clazz, final Map<String, Object> properties) {
+		return this.auditedFacade.getByProperties(clazz, properties);
+	}
+
+	@Override
+	public <T extends AbstractEntity> List<T> getByProperties(final Class<T> clazz,
+			final Map<String, Object> properties, final int pageSize, final int pageNum) {
+		return this.auditedFacade.getByProperties(clazz, properties, pageSize, pageNum);
+	}
+
+	@Override
+	public List<?> getByQuery(final String nombreQuery, final Map<String, Object> parameters) {
 		return getByQuery(nombreQuery, parameters, 0, 0);
 	}
 
 	@Override
-	public List<?> getByQuery(String nombreQuery,
-			Map<String, Object> parameters, int pageSize, int pageNum) {
-		return auditedFacade.getByQuery(nombreQuery, parameters, pageSize,
-				pageNum);
+	public List<?> getByQuery(final String nombreQuery, final Map<String, Object> parameters, final int pageSize,
+			final int pageNum) {
+		return this.auditedFacade.getByQuery(nombreQuery, parameters, pageSize, pageNum);
 	}
 
 	@Override
-	public Object getByQuerySingleResult(String nombreQuery) {
+	public Object getByQuerySingleResult(final String nombreQuery) {
 		return getByQuerySingleResult(nombreQuery, null);
 	}
 
 	@Override
-	public Object getByQuerySingleResult(String nombreQuery,
-			Map<String, Object> parameters) {
-		return auditedFacade.getByQuerySingleResult(nombreQuery, parameters);
+	public Object getByQuerySingleResult(final String nombreQuery, final Map<String, Object> parameters) {
+		return this.auditedFacade.getByQuerySingleResult(nombreQuery, parameters);
 	}
 
 	@Override
-	public <T extends AbstractEntity> List<T> getByTypedQuery(
-			Class<T> entityClass, String namedQuery,
-			Map<String, Object> parameters) {
+	public <T extends AbstractEntity> List<T> getByTypedQuery(final Class<T> entityClass, final String namedQuery,
+			final Map<String, Object> parameters) {
 		return getByTypedQuery(entityClass, namedQuery, parameters, 0, 0);
 	}
 
 	@Override
-	public <T extends AbstractEntity> List<T> getByTypedQuery(
-			Class<T> entityClass, String namedQuery,
-			Map<String, Object> parameters, int pageSize, int pageNum) {
-		return auditedFacade.getByTypedQuery(entityClass, namedQuery,
-				parameters, pageSize, pageNum);
+	public <T extends AbstractEntity> List<T> getByTypedQuery(final Class<T> entityClass, final String namedQuery,
+			final Map<String, Object> parameters, final int pageSize, final int pageNum) {
+		return this.auditedFacade.getByTypedQuery(entityClass, namedQuery, parameters, pageSize, pageNum);
 	}
 
 	@Override
-	public <T extends AbstractEntity> T getByTypedQuerySingleResult(
-			Class<T> entityClass, String namedQuery) {
+	public <T extends AbstractEntity> T getByTypedQuerySingleResult(final Class<T> entityClass,
+			final String namedQuery) {
 		return getByTypedQuerySingleResult(entityClass, namedQuery, null);
 	}
 
 	@Override
-	public <T extends AbstractEntity> T getByTypedQuerySingleResult(
-			Class<T> entityClass, String namedQuery,
-			Map<String, Object> parameters) {
-		return auditedFacade.getByTypedQuerySingleResult(entityClass,
-				namedQuery, parameters);
+	public <T extends AbstractEntity> T getByTypedQuerySingleResult(final Class<T> entityClass, final String namedQuery,
+			final Map<String, Object> parameters) {
+		return this.auditedFacade.getByTypedQuerySingleResult(entityClass, namedQuery, parameters);
+	}
+
+	protected CriteriaBuilder getCriteriaBuilder() {
+		return this.auditedFacade.getCriteriaBuilder();
+	}
+
+	protected <T extends AuditedEntity> T getReference(final Class<T> entityClass, final Object primaryKey) {
+		return this.auditedFacade.getReference(entityClass, primaryKey);
 	}
 
 	@Override
-	public <T extends AuditedEntity> void softDelete(T entity) {
-		logger.log(
-				Level.FINE,
-				"Eliminación lógica de la entidad::Clase={}::Id={}",
-				new Object[] { entity.getClass().getCanonicalName(),
-						entity.getId() });
-		auditedFacade.softDelete(entity);
+	public <T extends AbstractEntity> void insert(final T entity) {
+		this.auditedFacade.insert(entity);
+	}
+
+	protected <T extends AuditedEntity> void lock(final T entity, final LockModeType lockModeType,
+			final Map<String, Object> properties) {
+		this.auditedFacade.lock(entity, lockModeType, properties);
+	}
+
+	protected void refresh(final AuditedEntity entity) {
+		refresh(entity, null, null);
+	}
+
+	protected <T extends AuditedEntity> void refresh(final T entity, final LockModeType lockModeType,
+			final Map<String, Object> properties) {
+		this.auditedFacade.refresh(entity, lockModeType, properties);
 	}
 
 	@Override
-	public <T extends AuditedEntity> void undelete(T entity) {
-		logger.log(
-				Level.FINE,
-				"Restaurando la entidad::Clase={}::Id={}",
-				new Object[] { entity.getClass().getCanonicalName(),
-						entity.getId() });
-		auditedFacade.undelete(entity);
+	public <T extends AuditedEntity> void softDelete(final T entity) {
+		this.logger.log(Level.FINE, "Eliminación lógica de la entidad::Clase={}::Id={}",
+				new Object[] { entity.getClass().getCanonicalName(), entity.getId() });
+		this.auditedFacade.softDelete(entity);
 	}
 
 	@Override
-	public <T extends AbstractEntity> List<T> getAll(Class<T> clazz) {
-		return auditedFacade.getAll(clazz);
+	public <T extends AuditedEntity> void undelete(final T entity) {
+		this.logger.log(Level.FINE, "Restaurando la entidad::Clase={}::Id={}",
+				new Object[] { entity.getClass().getCanonicalName(), entity.getId() });
+		this.auditedFacade.undelete(entity);
 	}
 
 	@Override
-	public <T extends AbstractEntity> List<T> getByProperties(Class<T> clazz,
-			Map<String, Object> properties, int pageSize, int pageNum) {
-		return auditedFacade.getByProperties(clazz, properties, pageSize,
-				pageNum);
-	}
-
-	@Override
-	public <T extends AbstractEntity> T getByProperties(Class<T> clazz,
-			Map<String, Object> properties) {
-		return auditedFacade.getByProperties(clazz, properties);
+	public <T extends AbstractEntity> T update(final T entity) {
+		return this.auditedFacade.update(entity);
 	}
 }

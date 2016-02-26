@@ -26,5 +26,9 @@
 	<named-query name="User.findById">
 		<query>SELECT u FROM User u LEFT JOIN FETCH u.team WHERE u.id = :id</query>
 	</named-query>
+	
+	<named-query name="Client.findByName">
+		<query>SELECT c FROM Client c WHERE c.name = :name</query>
+	</named-query>
 
 </entity-mappings>

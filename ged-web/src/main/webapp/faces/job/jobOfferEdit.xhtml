@@ -29,9 +29,7 @@
 
 			<h:panelGroup layout="block" styleClass="panel">
 				<h1>#{i18n['job.job_offer']}</h1>
-
-				<h2>#{i18n['job.detail']}</h2>
-
+				
 				<h:outputLabel for="name" value="#{i18n['job.name']}"
 					styleClass="very_large required">
 					<h:inputText id="name" value="#{jobOfferEditBean.jobOffer.jobName}"
@@ -39,6 +37,16 @@
 						styleClass="#{not component.valid ? 'inputError' : ''}" />
 					<h:message for="name" errorClass="error" />
 				</h:outputLabel>
+				
+				<h:outputLabel for="client" value="#{i18n['job.client']}"
+					styleClass="required">
+					<h:inputText id="client" value="#{jobOfferEditBean.jobOffer.client.name}"
+						label="#{i18n['job.client']}" required="true"
+						styleClass="#{not component.valid ? 'inputError' : ''}" />
+					<h:message for="client" errorClass="error" />
+				</h:outputLabel>
+
+				<h2>#{i18n['job.detail']}</h2>
 
 				<h:outputLabel for="places" value="#{i18n['job.places']}"
 					styleClass="small">
@@ -81,31 +89,6 @@
 					<h:message for="description" errorClass="error" />
 				</h:outputLabel>
 
-				<h2>#{i18n['job.contract']}</h2>
-
-				<h:outputLabel for="contractType"
-					value="#{i18n['job.contract_type']}">
-					<h:selectOneMenu id="contractType"
-						value="#{jobOfferEditBean.jobOffer.contractType}"
-						label="#{i18n['job.contract_type']}">
-						<f:selectItems var="contractType" itemValue="#{contractType.name}"
-							value="#{applicationBean.contractTypes}"
-							itemLabel="#{i18n:translate(contractType.name)}" />
-					</h:selectOneMenu>
-				</h:outputLabel>
-
-				<h:outputLabel for="contractDuration"
-					value="#{i18n['job.duration_of_contract']}">
-					<h:selectOneMenu id="contractDuration"
-						value="#{jobOfferEditBean.jobOffer.contractDuration}"
-						label="#{i18n['job.duration_of_contract']}">
-						<f:selectItems var="contractDuration"
-							itemValue="#{contractDuration.name}"
-							value="#{applicationBean.contractDurations}"
-							itemLabel="#{i18n:translate(contractDuration.name)}" />
-					</h:selectOneMenu>
-				</h:outputLabel>
-
 				<h2>#{i18n['job.place']}</h2>
 
 				<h:outputLabel for="city" value="#{i18n['address.city']}:">
@@ -120,14 +103,6 @@
 						label="#{i18n['address.state']}"
 						styleClass="#{not component.valid ? 'inputError' : ''}" />
 					<h:message for="state" errorClass="error" />
-				</h:outputLabel>
-
-				<h:outputLabel for="country" value="#{i18n['address.country']}:">
-					<h:inputText id="country"
-						value="#{jobOfferEditBean.jobOffer.country}"
-						label="#{i18n['address.country']}"
-						styleClass="#{not component.valid ? 'inputError' : ''}" />
-					<h:message for="country" errorClass="error" />
 				</h:outputLabel>
 
 				<h:panelGroup layout="block" class="buttonGroup">

@@ -1,0 +1,73 @@
+package ged.ejb.service.client;
+
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
+
+import ged.ejb.core.model.AuditedEntity;
+import ged.ejb.service.job.JobOffer;
+
+@Entity
+public class Client extends AuditedEntity {
+
+	private static final long serialVersionUID = -5319357138994738654L;
+
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "client", orphanRemoval = true)
+	private List<JobOffer> jobOffers;
+
+	private String name;
+
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (!super.equals(obj)) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		final Client other = (Client) obj;
+		if (this.name == null) {
+			if (other.name != null) {
+				return false;
+			}
+		} else if (!this.name.equals(other.name)) {
+			return false;
+		}
+		return true;
+	}
+
+	public List<JobOffer> getJobOffers() {
+		return this.jobOffers;
+	}
+
+	public String getName() {
+		return this.name;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = (prime * result) + ((this.name == null) ? 0 : this.name.hashCode());
+		return result;
+	}
+
+	public void setJobOffers(final List<JobOffer> jobOffers) {
+		this.jobOffers = jobOffers;
+	}
+
+	public void setName(final String name) {
+		this.name = name;
+	}
+
+	@Override
+	public String toString() {
+		return "name";
+	}
+}
