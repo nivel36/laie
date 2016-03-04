@@ -100,7 +100,7 @@
 							<h:outputText value="Action" />
 						</f:facet>
 						<h:link value="#{i18n['action.view']}" outcome="candidateView">
-							<f:param name="candidateId" value="#{candidate.id}" />
+							<f:param name="id" value="#{candidate.id}" />
 						</h:link>
 						|
 						<h:commandLink action="#{candidateSearchBean.edit(candidate)}"

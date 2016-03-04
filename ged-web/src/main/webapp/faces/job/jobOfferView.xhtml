@@ -9,10 +9,14 @@
 	<ui:define name="title">
 		<title>#{i18n['job.job_offer']}</title>
 	</ui:define>
+	
+	<ui:param name="selectedMenu" value="offers" />
+	
+	<ui:param name="id" value="#{jobOfferViewBean.jobOfferId}" />
 
 	<ui:define name="content">
 		<f:metadata>
-			<f:viewParam name="jobOfferId" value="#{jobOfferViewBean.jobOfferId}" />
+			<f:viewParam name="id" value="#{jobOfferViewBean.jobOfferId}" />
 			<f:viewAction action="#{jobOfferViewBean.init}" />
 		</f:metadata>
 
@@ -23,67 +27,76 @@
 			<h1 class="header">#{jobOfferViewBean.jobOffer.jobName}</h1>
 
 			<h:panelGroup layout="block" styleClass="panel">
-				<h1>Tipo de empleo</h1>
-				<h2>#{i18n['job.contract']}</h2>
-				<h:panelGroup layout="block" class="dataPanel">
-					<h4>#{i18n['job.contract_type']}:</h4>
-					<h:outputText
-						value="#{i18n:translate(jobOfferViewBean.jobOffer.contractType)}" />
+				<h:outputLabel for="name" value="#{i18n['job.name']}"
+					styleClass="very_large required">
+					<h:inputText id="name" value="#{jobOfferViewBean.jobOffer.jobName}"
+						label="#{i18n['job.name']}" required="true"
+						styleClass="#{not component.valid ? 'inputError' : ''}" disabled="true" />
+					<h:message for="name" errorClass="error" />
+				</h:outputLabel>
+				
+				<h:outputLabel for="client" value="#{i18n['job.client']}"
+					styleClass="required">
+					<h:inputText id="client" value="#{jobOfferViewBean.jobOffer.client.name}"
+						label="#{i18n['job.client']}" required="true"
+						styleClass="#{not component.valid ? 'inputError' : ''}" disabled="true"/>
+					<h:message for="client" errorClass="error" />
+				</h:outputLabel>
 
-					<h4>#{i18n['job.duration_of_contract']}:</h4>
-					<h:outputText
-						value="#{i18n:translate(jobOfferViewBean.jobOffer.contractDuration)}" />
-				</h:panelGroup>
+				<h2>#{i18n['job.detail']}</h2>
 
-				<h:panelGroup layout="block" styleClass="half">
-					<h2>#{i18n['job.detail']}</h2>
-					<h:panelGroup layout="block" class="outputBlock">
+				<h:outputLabel for="places" value="#{i18n['job.places']}"
+					styleClass="small">
+					<h:inputText id="places"
+						value="#{jobOfferViewBean.jobOffer.jobPlaces}"
+						label="#{i18n['job.places']}"
+						styleClass="#{not component.valid ? 'number inputError' : 'number'}" disabled="true"/>
+					<h:message for="places" errorClass="error" />
+				</h:outputLabel>
 
-						<p>
-							<h:outputText value="#{jobOfferViewBean.jobOffer.jobPlaces}" />
-							<h:outputText value="#{i18n['job.places']}" />
-						</p>
+				<h:outputLabel for="dateOpened" value="#{i18n['job.date_opened']}"
+					styleClass="small">
+					<h:inputText id="dateOpened"
+						value="#{jobOfferViewBean.jobOffer.dateOpened}"
+						label="#{i18n['job.date_opened']}"
+						styleClass="#{not component.valid ? 'inputError' : ''}" disabled="true">
+						<f:convertDateTime pattern="MM / yyyy" />
+					</h:inputText>
+					<h:message for="dateOpened" errorClass="error" />
+				</h:outputLabel>
 
-						<p>
-							<h:outputText value="#{i18n['job.date_opened']}:" />
-							<h:outputText value="#{jobOfferViewBean.jobOffer.dateOpened}" />
-						</p>
+				<h:outputLabel for="dateClosed" value="#{i18n['job.date_closed']}"
+					styleClass="small required">
+					<h:inputText id="dateClosed"
+						value="#{jobOfferViewBean.jobOffer.dateClosed}"
+						label="#{i18n['job.date_closed']}"
+						styleClass="#{not component.valid ? 'inputError' : ''}"
+						required="true" disabled="true">
+						<f:convertDateTime pattern="MM / yyyy" />
+					</h:inputText>
+					<h:message for="dateClosed" errorClass="error" />
+				</h:outputLabel>
 
-						<p>
-							<h:outputText value="#{i18n['job.date_closed']}:" />
-							<h:outputText value="#{jobOfferViewBean.jobOffer.dateClosed}" />
-						</p>
-					</h:panelGroup>
-				</h:panelGroup>
-				<h:panelGroup layout="block" styleClass="half">
+				<h2>#{i18n['job.place']}</h2>
 
-					<h2>#{i18n['job.place']}</h2>
+				<h:outputLabel for="city" value="#{i18n['address.city']}:">
+					<h:inputText id="city" value="#{jobOfferViewBean.jobOffer.city}"
+						label="#{i18n['address.city']}"
+						styleClass="#{not component.valid ? 'inputError' : ''}" disabled="true"/>
+					<h:message for="city" errorClass="error" />
+				</h:outputLabel>
 
-					<h:panelGroup layout="block" class="outputBlock">
-						<p>
-							<h:outputText value="#{i18n['address.city']}:" />
-							<h:outputText value="#{jobOfferViewBean.jobOffer.city}" />
-						</p>
+				<h:outputLabel for="state" value="#{i18n['address.state']}:">
+					<h:inputText id="state" value="#{jobOfferViewBean.jobOffer.state}"
+						label="#{i18n['address.state']}"
+						styleClass="#{not component.valid ? 'inputError' : ''}" disabled="true"/>
+					<h:message for="state" errorClass="error" />
+				</h:outputLabel>
 
-						<p>
-							<h:outputText value="#{i18n['address.state']}:" />
-							<h:outputText value="#{jobOfferViewBean.jobOffer.state}" />
-						</p>
-
-						<p>
-							<h:outputText value="#{i18n['address.country']}:" />
-							<h:outputText value="#{jobOfferViewBean.jobOffer.country}" />
-						</p>
-					</h:panelGroup>
-				</h:panelGroup>
-
-				<h:panelGroup layout="block" styleClass="buttonGroup">
-					<h:commandButton value="#{i18n['action.modify']}"
-						action="#{jobOfferViewBean.modify}" />
-				</h:panelGroup>
-				<h:panelGroup layout="block" styleClass="secondaryButtonGroup">
-					<h:commandButton value="#{i18n['action.modify']}"
-						action="#{jobOfferViewBean.modify}" />
+				<h:panelGroup layout="block" class="buttonGroup">
+					<h:commandButton value="#{i18n['action.save']}"
+						action="#{jobOfferViewBean.edit}">
+					</h:commandButton>
 				</h:panelGroup>
 			</h:panelGroup>
 
@@ -95,11 +108,6 @@
 					<h:commandButton value="#{i18n['action.add']}"
 						action="#{jobOfferViewBean.modify}" />
 				</h:panelGroup>
-				<h:panelGroup layout="block" styleClass="secondaryButtonGroup">
-					<h:commandButton value="#{i18n['action.add']}"
-						action="#{jobOfferViewBean.modify}" />
-				</h:panelGroup>
-
 			</h:panelGroup>
 
 			<h:panelGroup layout="block" styleClass="panel">
@@ -117,10 +125,6 @@
 						rendered="#{empty jobOfferViewBean.plannedJobMeetings}" />
 				</h:panelGroup>
 				<h:panelGroup layout="block" styleClass="buttonGroup">
-					<h:commandButton value="#{i18n['action.create']}"
-						action="#{jobOfferViewBean.modify}" />
-				</h:panelGroup>
-				<h:panelGroup layout="block" styleClass="secondaryButtonGroup">
 					<h:commandButton value="#{i18n['action.create']}"
 						action="#{jobOfferViewBean.modify}" />
 				</h:panelGroup>

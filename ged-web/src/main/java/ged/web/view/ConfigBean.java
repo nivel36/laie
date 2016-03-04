@@ -22,111 +22,75 @@ public class ConfigBean extends AbstractBean {
 
 	private static final long serialVersionUID = -2789492893353263506L;
 
-	private UIComponent passwordComponent;
+	private String newPassword;
 	private UIComponent newPasswordComponent;
-
-	public UIComponent getPasswordComponent() {
-		return passwordComponent;
-	}
-
-	public void setPasswordComponent(UIComponent passwordComponent) {
-		this.passwordComponent = passwordComponent;
-	}
-
-	public UIComponent getNewPasswordComponent() {
-		return newPasswordComponent;
-	}
-
-	public void setNewPasswordComponent(UIComponent newPasswordComponent) {
-		this.newPasswordComponent = newPasswordComponent;
-	}
-
-	private User user;
 
 	private String password;
 
-	private String newPassword;
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public String getNewPassword() {
-		return newPassword;
-	}
-
-	public void setNewPassword(String newPassword) {
-		this.newPassword = newPassword;
-	}
-
-	public String getRepeatPassword() {
-		return repeatPassword;
-	}
-
-	public void setRepeatPassword(String repeatPassword) {
-		this.repeatPassword = repeatPassword;
-	}
-
-	public void setUserService(UserService userService) {
-		this.userService = userService;
-	}
+	private UIComponent passwordComponent;
 
 	private String repeatPassword;
+
+	private User user;
 
 	@Inject
 	private UserService userService;
 
-	@PostConstruct
-	public void init() {
-		user = sessionBean.getUser();
-	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-	public void save() {
-		user = userService.update(user);
-		sessionBean.setUser(user);
-		sessionBean.setLocale(new Locale(user.getLanguage()));
-		sessionBean.setRowsPerPage(user.getRowsPerPage());
+	public String cancel() {
+		return null;
 	}
 
 	public void change() {
-		String output = hashPassword(password);
-		if (user.getPassword().equals(output)) {
-			if (newPassword.equals(repeatPassword)) {
-				String hash = hashPassword(newPassword);
-				user.setPassword(hash);
+		final String output = hashPassword(this.password);
+		if (this.user.getPassword().equals(output)) {
+			if (this.newPassword.equals(this.repeatPassword)) {
+				final String hash = hashPassword(this.newPassword);
+				this.user.setPassword(hash);
 			} else {
-				addErrorToField(passwordComponent, "login.error.bad_password");
+				addErrorToField(this.passwordComponent, "login.error.bad_password");
 			}
 		} else {
-			addErrorToField(newPasswordComponent, "login.error.password_not_equals");
+			addErrorToField(this.newPasswordComponent, "login.error.password_not_equals");
 		}
 		cleanPasswordFields();
 	}
 
 	private void cleanPasswordFields() {
-		password = null;
-		repeatPassword = null;
-		newPassword = null;
+		this.password = null;
+		this.repeatPassword = null;
+		this.newPassword = null;
 	}
 
-	private String hashPassword(String plainPassword) {
+	public String getNewPassword() {
+		return this.newPassword;
+	}
+
+	public UIComponent getNewPasswordComponent() {
+		return this.newPasswordComponent;
+	}
+
+	public String getPassword() {
+		return this.password;
+	}
+
+	public UIComponent getPasswordComponent() {
+		return this.passwordComponent;
+	}
+
+	public String getRepeatPassword() {
+		return this.repeatPassword;
+	}
+
+	public User getUser() {
+		return this.user;
+	}
+
+	private String hashPassword(final String plainPassword) {
 		String output = null;
 		try {
-			MessageDigest md = MessageDigest.getInstance("SHA-256");
+			final MessageDigest md = MessageDigest.getInstance("SHA-256");
 			md.update(plainPassword.getBytes("UTF-8"));
-			byte[] digest = md.digest();
+			final byte[] digest = md.digest();
 			output = DatatypeConverter.printBase64Binary(digest);
 		} catch (NoSuchAlgorithmException | UnsupportedEncodingException ex) {
 			// TODO: Faces Message
@@ -135,8 +99,44 @@ public class ConfigBean extends AbstractBean {
 		return output;
 	}
 
-	public String cancel() {
-		return null;
+	@PostConstruct
+	public void init() {
+		this.user = this.sessionBean.getUser();
+	}
+
+	public void save() {
+		this.user = this.userService.update(this.user);
+		this.sessionBean.setUser(this.user);
+		this.sessionBean.setLocale(new Locale(this.user.getLanguage()));
+		this.sessionBean.setRowsPerPage(this.user.getRowsPerPage());
+	}
+
+	public void setNewPassword(final String newPassword) {
+		this.newPassword = newPassword;
+	}
+
+	public void setNewPasswordComponent(final UIComponent newPasswordComponent) {
+		this.newPasswordComponent = newPasswordComponent;
+	}
+
+	public void setPassword(final String password) {
+		this.password = password;
+	}
+
+	public void setPasswordComponent(final UIComponent passwordComponent) {
+		this.passwordComponent = passwordComponent;
+	}
+
+	public void setRepeatPassword(final String repeatPassword) {
+		this.repeatPassword = repeatPassword;
+	}
+
+	public void setUser(final User user) {
+		this.user = user;
+	}
+
+	public void setUserService(final UserService userService) {
+		this.userService = userService;
 	}
 
 }

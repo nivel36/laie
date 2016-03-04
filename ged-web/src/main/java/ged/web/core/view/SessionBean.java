@@ -11,6 +11,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import ged.ejb.core.bookmark.Bookmark;
+import ged.ejb.core.bookmark.BookmarkFullExpcetion;
 import ged.ejb.core.model.Action;
 import ged.ejb.core.model.SavedSearch;
 import ged.ejb.core.user.User;
@@ -21,14 +22,10 @@ import ged.ejb.core.user.UserService;
 public class SessionBean extends AbstractBean {
 
 	private static final long serialVersionUID = -8079836415042166193L;
-	
-	@Inject
-	private UserService userService;
 
 	@Produces
 	private List<Action> actions = new ArrayList<Action>();
 
-	@Produces
 	private List<Bookmark> bookmarks = new ArrayList<Bookmark>();
 
 	private Locale locale;
@@ -41,58 +38,78 @@ public class SessionBean extends AbstractBean {
 	@Produces
 	private User user;
 
+	@Inject
+	private UserService userService;
+
+	public void addBookmark(final Bookmark bookmark) throws BookmarkFullExpcetion {
+		if (this.bookmarks.size() > 9) {
+			throw new BookmarkFullExpcetion();
+		}
+		if (!containsBookmark(bookmark)) {
+			this.bookmarks.add(0, bookmark);
+		}
+	}
+
+	public boolean containsBookmark(final Bookmark bookmark) {
+		return this.bookmarks.contains(bookmark);
+	}
+
 	public List<Action> getActions() {
-		return actions;
+		return this.actions;
 	}
 
 	public List<Bookmark> getBookmarks() {
-		return bookmarks;
+		return this.bookmarks;
 	}
 
 	public Locale getLocale() {
-		return locale;
+		return this.locale;
 	}
 
 	public int getRowsPerPage() {
-		return rowsPerPage;
+		return this.rowsPerPage;
 	}
-	
+
 	public List<SavedSearch> getSavedSearches() {
-		return savedSearches;
+		return this.savedSearches;
 	}
 
 	public User getUser() {
-		return user;
+		return this.user;
 	}
 
 	@PostConstruct
 	public void init() {
-		user = userService.getByPrimaryKey(User.class, 901L);
-		rowsPerPage = user.getRowsPerPage();
-		locale = new Locale(user.getLanguage());
+		this.user = this.userService.getByPrimaryKey(User.class, 901L);
+		this.rowsPerPage = this.user.getRowsPerPage();
+		this.locale = new Locale(this.user.getLanguage());
 	}
 
-	public void setActions(List<Action> actions) {
+	public void removeBookmark(final Bookmark bookmark) {
+		this.bookmarks.remove(bookmark);
+	}
+
+	public void setActions(final List<Action> actions) {
 		this.actions = actions;
 	}
 
-	public void setBookmarks(List<Bookmark> bookmarks) {
+	public void setBookmarks(final List<Bookmark> bookmarks) {
 		this.bookmarks = bookmarks;
 	}
 
-	public void setLocale(Locale locale){
+	public void setLocale(final Locale locale) {
 		this.locale = locale;
 	}
 
-	public void setRowsPerPage(int rowsPerPage) {
+	public void setRowsPerPage(final int rowsPerPage) {
 		this.rowsPerPage = rowsPerPage;
 	}
 
-	public void setSavedSearches(List<SavedSearch> savedSearches) {
+	public void setSavedSearches(final List<SavedSearch> savedSearches) {
 		this.savedSearches = savedSearches;
 	}
 
-	public void setUser(User user) {
+	public void setUser(final User user) {
 		this.user = user;
 	}
 }

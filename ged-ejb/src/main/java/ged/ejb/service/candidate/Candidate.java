@@ -81,7 +81,7 @@ public class Candidate extends AuditedEntity {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(final Object obj) {
 		if (this == obj) {
 			return true;
 		}
@@ -91,140 +91,140 @@ public class Candidate extends AuditedEntity {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		Candidate other = (Candidate) obj;
-		return id == other.id;
+		final Candidate other = (Candidate) obj;
+		return this.id == other.id;
 	}
 
 	public Address getAddress() {
-		return address;
+		return this.address;
 	}
 
 	public Integer getAge() {
-		return age;
+		return this.age;
 	}
 
 	public Date getBornDate() {
-		return bornDate;
+		return this.bornDate;
 	}
 
 	public Curriculum getCurriculum() {
-		return curriculum;
+		return this.curriculum;
 	}
 
 	public String getEmail() {
-		return email;
+		return this.email;
 	}
 
 	public Integer getExpectedSalary() {
-		return expectedSalary;
+		return this.expectedSalary;
 	}
 
 	public List<FileSys> getFiles() {
-		return files;
+		return this.files;
 	}
 
 	public List<JobCandidature> getJobCandidature() {
-		return jobCandidature;
+		return this.jobCandidature;
 	}
 
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	public String getPhoneNumber1() {
-		return phoneNumber1;
+		return this.phoneNumber1;
 	}
 
 	public String getPhoneNumber2() {
-		return phoneNumber2;
+		return this.phoneNumber2;
 	}
 
 	public String getPosition() {
-		return position;
+		return this.position;
 	}
 
 	public Integer getSalary() {
-		return salary;
+		return this.salary;
 	}
 
 	public String getSurename() {
-		return surename;
+		return this.surename;
 	}
 
 	public List<Tag> getTags() {
-		return tags;
+		return this.tags;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + (int) id;
+		result = (prime * result) + (int) this.id;
 		return result;
 	}
 
-	public void setAddress(Address address) {
+	public void setAddress(final Address address) {
 		this.address = address;
 	}
 
-	public void setAge(Integer age) {
+	public void setAge(final Integer age) {
 		this.age = age;
 	}
 
-	public void setBornDate(Date bornDate) {
+	public void setBornDate(final Date bornDate) {
 		this.bornDate = bornDate;
 	}
 
-	public void setCurriculum(Curriculum curriculum) {
+	public void setCurriculum(final Curriculum curriculum) {
 		this.curriculum = curriculum;
 	}
 
-	public void setEmail(String email) {
+	public void setEmail(final String email) {
 		this.email = email;
 	}
 
-	public void setExpectedSalary(Integer expectedSalary) {
+	public void setExpectedSalary(final Integer expectedSalary) {
 		this.expectedSalary = expectedSalary;
 	}
 
-	public void setFiles(List<FileSys> files) {
+	public void setFiles(final List<FileSys> files) {
 		this.files = files;
 	}
 
-	public void setJobCandidature(List<JobCandidature> jobCandidature) {
+	public void setJobCandidature(final List<JobCandidature> jobCandidature) {
 		this.jobCandidature = jobCandidature;
 	}
 
-	public void setName(String name) {
+	public void setName(final String name) {
 		this.name = name;
 	}
 
-	public void setPhoneNumber1(String phoneNumber1) {
+	public void setPhoneNumber1(final String phoneNumber1) {
 		this.phoneNumber1 = phoneNumber1;
 	}
 
-	public void setPhoneNumber2(String phoneNumber2) {
+	public void setPhoneNumber2(final String phoneNumber2) {
 		this.phoneNumber2 = phoneNumber2;
 	}
 
-	public void setPosition(String position) {
+	public void setPosition(final String position) {
 		this.position = position;
 	}
 
-	public void setSalary(Integer salary) {
+	public void setSalary(final Integer salary) {
 		this.salary = salary;
 	}
 
-	public void setSurename(String surename) {
+	public void setSurename(final String surename) {
 		this.surename = surename;
 	}
 
-	public void setTags(List<Tag> tags) {
+	public void setTags(final List<Tag> tags) {
 		this.tags = tags;
 	}
 
 	@Override
 	public String toString() {
-		return name + " " + surename;
+		return this.name + " " + this.surename;
 	}
 }

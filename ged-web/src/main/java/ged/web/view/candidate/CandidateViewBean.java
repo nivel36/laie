@@ -31,8 +31,6 @@ public class CandidateViewBean extends AbstractBean {
 
 	private Candidate candidate;
 
-	private String candidateId;
-
 	@Inject
 	private CandidateService candidateService;
 
@@ -44,91 +42,84 @@ public class CandidateViewBean extends AbstractBean {
 	@ConfigurationProperty(value = "file.directory")
 	private String fileDirectory;
 
+	private String id;
+
 	private Part part;
 
 	// /////////////////////////////////////////////////////////////////////////
 	// INIT
 	// /////////////////////////////////////////////////////////////////////////
 
-	/**
-	 * Not using @PostConstruct because the view is a GET based form.
-	 */
-	public void init() {
-		if (candidateId != null) {
-			try {
-				Long id = Long.parseLong(candidateId);
-				candidate = candidateService.searchCandidateAndCurriculumById(id);
-				if (candidate == null) {
-					error();
-				}
-			} catch (NumberFormatException ex) {
-				error();
-			}
-		} else {
-			error();
-		}
+	public void addFile() {
+		this.addingFile = true;
+		this.editingFile = false;
 	}
 
-	private void error() {
-		NavigationHandler navigationHandler = facesContext.getApplication().getNavigationHandler();
-		navigationHandler.handleNavigation(facesContext, null, "candidateSearch?faces-redirect=true");
-		facesContext.renderResponse();
+	public void cancelAddFile() {
+		try {
+			this.addingFile = false;
+			this.editingFile = false;
+			if ((this.file != null) && (this.file.getUuid() != null) && (this.file.getId() == 0)) {
+				removeFileFromFileSystem(this.file.getUuid());
+			}
+		} catch (final IOException e) {
+			e.printStackTrace();
+			// TODO: faces message
+		}
 	}
 
 	// /////////////////////////////////////////////////////////////////////////
 	// SET AND GET
 	// /////////////////////////////////////////////////////////////////////////
 
-	public Candidate getCandidate() {
-		return candidate;
+	public String editCandidate() {
+		this.flash.put("candidate", this.candidate);
+		return "candidateEdit?faces-redirect=true";
 	}
 
-	public String getCandidateId() {
-		return candidateId;
+	public void editFile() {
+		this.addingFile = false;
+		this.editingFile = true;
+	}
+
+	public void editFile(final FileSys file) {
+		this.file = file;
+		editFile();
+	}
+
+	private void error() {
+		final NavigationHandler navigationHandler = this.facesContext.getApplication().getNavigationHandler();
+		navigationHandler.handleNavigation(this.facesContext, null, "candidateSearch?faces-redirect=true");
+		this.facesContext.renderResponse();
+	}
+
+	public Candidate getCandidate() {
+		return this.candidate;
 	}
 
 	public FileSys getFile() {
-		return file;
+		return this.file;
+	}
+
+	// Extract part name from content-disposition header of part part
+	private String getFileName(final Part part) {
+		final String partHeader = part.getHeader("content-disposition");
+		this.logger.log(Level.FINE, "partHeader: {0}", partHeader);
+		for (final String content : part.getHeader("content-disposition").split(";")) {
+			if (content.trim().startsWith("filename")) {
+				return content.substring(content.indexOf('=') + 1).trim().replace("\"", "").toLowerCase();
+			}
+		}
+		// TODO: throw Exception!
+		return null;
+	}
+
+	public String getId() {
+		return this.id;
 	}
 
 	public Part getPart() {
-		return part;
-	}
-
-	public boolean isAddingFile() {
-		return addingFile;
-	}
-
-	public boolean isEditingFile() {
-		return editingFile;
-	}
-
-	public void setAddingFile(boolean addingFile) {
-		this.addingFile = addingFile;
-	}
-
-	public void setCandidate(Candidate candidate) {
-		this.candidate = candidate;
-	}
-
-	public void setCandidateId(String candidateId) {
-		this.candidateId = candidateId;
-	}
-
-	public void setCandidateService(CandidateService candidateService) {
-		this.candidateService = candidateService;
-	}
-
-	public void setEditingFile(boolean editingFile) {
-		this.editingFile = editingFile;
-	}
-
-	public void setFile(FileSys file) {
-		this.file = file;
-	}
-
-	public void setPart(Part part) {
-		this.part = part;
+		return this.part;
 	}
 
 	public String getStyle() {
@@ -138,112 +129,121 @@ public class CandidateViewBean extends AbstractBean {
 		return "";
 	}
 
+	/**
+	 * Not using @PostConstruct because the view is a GET based form.
+	 */
+	public void init() {
+		if (this.id != null) {
+			try {
+				final Long id = Long.parseLong(this.id);
+				this.candidate = this.candidateService.searchCandidateAndCurriculumById(id);
+				if (this.candidate == null) {
+					error();
+				}
+			} catch (final NumberFormatException ex) {
+				error();
+			}
+		} else {
+			error();
+		}
+	}
+
+	public boolean isAddingFile() {
+		return this.addingFile;
+	}
+
+	public boolean isEditingFile() {
+		return this.editingFile;
+	}
+
+	public String modifyCandidate() {
+		this.flash.put("candidate", this.candidate);
+		return "candidateEdit?faces-redirect=true";
+	}
+
 	// /////////////////////////////////////////////////////////////////////////
 	// ACTIONS
 	// /////////////////////////////////////////////////////////////////////////
 
-	public String editCandidate() {
-		flash.put("candidate", candidate);
-		return "candidateEdit?faces-redirect=true";
+	public void openFile(final FileSys file) {
+		try {
+			final java.io.File downloableFile = new java.io.File(file.getName());
+			new java.io.File(this.fileDirectory, file.getUuid()).renameTo(downloableFile);
+			Faces.sendFile(downloableFile, true);
+		} catch (final IOException e) {
+			e.printStackTrace();
+			// TODO: faces message
+		}
 	}
 
-	public String modifyCandidate() {
-		flash.put("candidate", candidate);
-		return "candidateEdit?faces-redirect=true";
+	public void removeFile(final FileSys file) {
+		try {
+			removeFileFromFileSystem(file.getUuid());
+			this.candidate.getFiles().remove(file);
+			this.candidate = this.candidateService.update(this.candidate);
+		} catch (final IOException e) {
+			e.printStackTrace();
+			// TODO: faces message
+		}
 	}
 
 	// FILE ACTIONS
 
-	public void addFile() {
-		addingFile = true;
-		editingFile = false;
-	}
-
-	public void editFile() {
-		addingFile = false;
-		editingFile = true;
-	}
-
-	public void editFile(FileSys file) {
-		this.file = file;
-		editFile();
-	}
-
-	public void cancelAddFile() {
-		try {
-			addingFile = false;
-			editingFile = false;
-			if (file != null && file.getUuid() != null && file.getId() == 0) {
-				removeFileFromFileSystem(file.getUuid());
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-			// TODO: faces message
-		}
-	}
-
-	public void openFile(FileSys file) {
-		try {
-			java.io.File downloableFile = new java.io.File(file.getName());
-			new java.io.File(fileDirectory, file.getUuid()).renameTo(downloableFile);
-			Faces.sendFile(downloableFile, true);
-		} catch (IOException e) {
-			e.printStackTrace();
-			// TODO: faces message
-		}
-	}
-
-	public void removeFile(FileSys file) {
-		try {
-			removeFileFromFileSystem(file.getUuid());
-			candidate.getFiles().remove(file);
-			candidate = candidateService.update(candidate);
-		} catch (IOException e) {
-			e.printStackTrace();
-			// TODO: faces message
-		}
+	private void removeFileFromFileSystem(final String uuid) throws IOException {
+		Files.deleteIfExists(new java.io.File(this.fileDirectory, uuid).toPath());
 	}
 
 	public void saveFile() {
-		file.setDate(new Date());
-		if (!candidate.getFiles().contains(file)) {
-			candidate.getFiles().add(file);
-			file.setCandidate(candidate);
+		this.file.setDate(new Date());
+		if (!this.candidate.getFiles().contains(this.file)) {
+			this.candidate.getFiles().add(this.file);
+			this.file.setCandidate(this.candidate);
 		}
-		candidate = candidateService.update(candidate);
-		editingFile = false;
+		this.candidate = this.candidateService.update(this.candidate);
+		this.editingFile = false;
+	}
+
+	public void setAddingFile(final boolean addingFile) {
+		this.addingFile = addingFile;
+	}
+
+	public void setCandidate(final Candidate candidate) {
+		this.candidate = candidate;
+	}
+
+	public void setCandidateService(final CandidateService candidateService) {
+		this.candidateService = candidateService;
+	}
+
+	public void setEditingFile(final boolean editingFile) {
+		this.editingFile = editingFile;
+	}
+
+	public void setFile(final FileSys file) {
+		this.file = file;
+	}
+
+	public void setId(final String id) {
+		this.id = id;
+	}
+
+	public void setPart(final Part part) {
+		this.part = part;
 	}
 
 	public void upload() {
-		try (InputStream input = part.getInputStream()) {
-			String fileName = getFileName(part);
-			String uuid = UUID.randomUUID().toString();
-			Files.copy(input, new java.io.File(fileDirectory, uuid).toPath());
-			addingFile = false;
-			editingFile = true;
-			file = new FileSys();
-			file.setUuid(uuid);
-			file.setName(fileName);
-		} catch (IOException ex) {
+		try (InputStream input = this.part.getInputStream()) {
+			final String fileName = getFileName(this.part);
+			final String uuid = UUID.randomUUID().toString();
+			Files.copy(input, new java.io.File(this.fileDirectory, uuid).toPath());
+			this.addingFile = false;
+			this.editingFile = true;
+			this.file = new FileSys();
+			this.file.setUuid(uuid);
+			this.file.setName(fileName);
+		} catch (final IOException ex) {
 			ex.printStackTrace();
 			// TODO: faces message
 		}
-	}
-
-	private void removeFileFromFileSystem(String uuid) throws IOException {
-		Files.deleteIfExists(new java.io.File(fileDirectory, uuid).toPath());
-	}
-
-	// Extract part name from content-disposition header of part part
-	private String getFileName(Part part) {
-		final String partHeader = part.getHeader("content-disposition");
-		logger.log(Level.FINE, "partHeader: {0}", partHeader);
-		for (String content : part.getHeader("content-disposition").split(";")) {
-			if (content.trim().startsWith("filename")) {
-				return content.substring(content.indexOf('=') + 1).trim().replace("\"", "").toLowerCase();
-			}
-		}
-		// TODO: throw Exception!
-		return null;
 	}
 }

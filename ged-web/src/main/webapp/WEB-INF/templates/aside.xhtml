@@ -4,7 +4,7 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
-	<h:form id="asideForm" prependId="false">
+	<h:form id="asideForm">
 		<h:panelGroup layout="block" styleClass="panel">
 			<h1>#{i18n['aside.search']}</h1>
 			<h:inputText id="searchInput" />
@@ -20,13 +20,16 @@
 			<h:commandButton value="#{i18n['action.add']}" />
 		</h:panelGroup>
 
-		<h:panelGroup layout="block" styleClass="panel">
+		<h:panelGroup layout="block" styleClass="panel" id="bookmarks">
 			<h1>#{i18n['aside.favourites']}</h1>
 			<h:outputText value="#{i18n['message.favourites.empty']}"
-				styleClass="text" rendered="#{empty bookmarks}" />
-			<h:commandButton value="#{i18n['action.clean']}" />
-			<h:commandButton value="#{i18n['action.add']}" />
-
+				styleClass="text" rendered="#{empty sessionBean.bookmarks}" />
+			<ui:repeat value="#{sessionBean.bookmarks}" var="bookmark">
+				<h:outputLink value="#{bookmark.url}">
+					<h:outputText value="#{bookmark.text}" />
+				</h:outputLink>
+				<br />
+			</ui:repeat>
 		</h:panelGroup>
 
 		<h:panelGroup layout="block" styleClass="panel">
@@ -37,5 +40,4 @@
 			<h:commandButton value="#{i18n['action.add']}" />
 		</h:panelGroup>
 	</h:form>
-
 </ui:composition>

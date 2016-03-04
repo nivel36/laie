@@ -43,6 +43,12 @@ public class UserDao {
 		return b;
 	}
 
+	public Bookmark findBookmarkByUrl(final String url) {
+		final Map<String, Object> parameters = new HashMap<>();
+		parameters.put("url", url);
+		return this.genericDao.getByTypedQuerySingleResult(Bookmark.class, "Bookmark.findByUrl", parameters);
+	}
+
 	public User findById(final Long id) {
 		final Map<String, Object> parameters = new HashMap<>();
 		parameters.put("id", id);
@@ -68,11 +74,12 @@ public class UserDao {
 		this.genericDao.insert(action);
 	}
 
-	public void insertBookmark(final Bookmark bookmark) throws IllegalUserAction {
-		final Bookmark b = findBookmark(bookmark.getAuditedId(), bookmark.getEntity(), bookmark.getUser());
-		if (b != null) {
-			throw new IllegalUserAction("Bookmark alredy exists");
-		}
+	public void insertBookmark(final Bookmark bookmark) {
+		// final Bookmark b = findBookmark(bookmark.getAuditedId(),
+		// bookmark.getEntity(), bookmark.getUser());
+		// if (b != null) {
+		// throw new IllegalUserAction("Bookmark alredy exists");
+		// }
 		this.genericDao.insert(bookmark);
 	}
 
@@ -82,5 +89,9 @@ public class UserDao {
 		parameters.put("entity", entity);
 		parameters.put("user", user);
 		return parameters;
+	}
+
+	public void removeBookmark(final Bookmark bookmark) {
+		this.genericDao.delete(bookmark);
 	}
 }

@@ -7,15 +7,15 @@ import javax.persistence.MappedSuperclass;
 public abstract class AuditedEntity extends AbstractEntity {
 
 	private static final long serialVersionUID = 6203444960560029390L;
-	
-	@Column(nullable=true)
+
+	@Column(nullable = true)
 	private Boolean deleted;
 
 	public Boolean isDeleted() {
-		return deleted;
+		return this.deleted;
 	}
 
-	public void setDeleted(Boolean deleted) {
+	public void setDeleted(final Boolean deleted) {
 		this.deleted = deleted;
 	}
 }

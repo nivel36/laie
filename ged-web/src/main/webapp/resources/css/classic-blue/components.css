@@ -90,16 +90,17 @@ label input, label textarea, label select {
 aside .panel {
 	background: #FFF1CC;
 	margin-top: 32px;
+	padding-top: 35px;
 }
 
 aside .panel h1 {
-	padding-left: 5px;
+	padding-left: 15px;
 	font-size: 1em;
 	background: #D4B86A;
 	border-radius: 4px;
 	box-sizing: border-box;
 	position: absolute;
-	top: -28px;
+	top: 0px;
 	left: 0;
 	width: 100%;
 	font-size: 1em;
@@ -253,7 +254,7 @@ input[type="checkbox"] {
 	margin: 6px 2 5px 2;
 }
 
-input[type="text"]:disabled, input[type="email"]:disabled {
+input[type="text"]:disabled, input[type="email"]:disabled, textarea:disabled {
 	border: 0px;
 	background: transparent;
 	color:black;

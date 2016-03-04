@@ -85,7 +85,11 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
 	public <T extends AbstractEntity> void delete(final T entity) {
 		this.logger.log(Level.FINE, "Eliminando la entidad::Clase={0}::Id={1}",
 				new Object[] { entity.getClass().getCanonicalName(), entity.getId() });
-		this.em.remove(this.em.merge(entity));
+		if (this.em.contains(entity)) {
+			this.em.remove(entity);
+		} else {
+			this.em.remove(this.em.merge(entity));
+		}
 	}
 
 	/*
