@@ -51,7 +51,6 @@
 					<h:message for="user" errorClass="error" />
 				</h:outputLabel>
 
-
 				<h:outputLabel value="#{i18n['user.name']}" styleClass="required">
 					<h:inputText id="name" value="#{userEditBean.user.name}"
 						label="#{i18n['user.name']}" required="true"
@@ -85,6 +84,9 @@
 						target="#{userSearchPopupBean.inputId}" value="manager" />
 					<f:ajax render=":userSearchPopupForm" />
 				</h:commandButton>
+				
+				<h:commandButton action="#{userEditBean.removeManager}" value="-"
+					rendered="#{not empty userEditBean.user.manager}" immediate="true" />
 
 				<h:panelGroup layout="block" styleClass="buttonGroup">
 					<h:commandButton value="#{i18n['action.save']}"

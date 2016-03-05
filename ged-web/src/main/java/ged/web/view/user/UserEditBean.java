@@ -30,43 +30,47 @@ public class UserEditBean extends AbstractBean {
 	}
 
 	public List<User> getManagers() {
-		return managers;
+		return this.managers;
 	}
 
 	public User getUser() {
-		return user;
+		return this.user;
 	}
 
 	@PostConstruct
 	private void init() {
-		if (flash.containsKey("user")) {
-			user = (User) flash.get("user");
+		if (this.flash.containsKey("user")) {
+			this.user = (User) this.flash.get("user");
 		} else {
-			user = new User();
-			int rowsPerPage = sessionBean.getRowsPerPage();
-			user.setRowsPerPage(rowsPerPage);
-			Locale locale = facesContext.getApplication().getDefaultLocale();
-			String language = locale.getLanguage();
-			user.setLanguage(language);
-			user.setPassword("M+SzETkPtT+deVQNIScBEXivvfozSne5QqIqyWICLv0=");
+			this.user = new User();
+			final int rowsPerPage = this.sessionBean.getRowsPerPage();
+			this.user.setRowsPerPage(rowsPerPage);
+			final Locale locale = this.facesContext.getApplication().getDefaultLocale();
+			final String language = locale.getLanguage();
+			this.user.setLanguage(language);
+			this.user.setPassword("M+SzETkPtT+deVQNIScBEXivvfozSne5QqIqyWICLv0=");
 		}
-		flash.put("user", user);
+		this.flash.put("user", this.user);
+	}
+
+	public void removeManager() {
+		this.user.setManager(null);
 	}
 
 	public String save() {
-		user = userService.insertOrUpdate(user);
+		this.user = this.userService.insertOrUpdate(this.user);
 		return "userSearch?faces-redirect=true";
 	}
 
-	public void setManagers(List<User> managers) {
+	public void setManagers(final List<User> managers) {
 		this.managers = managers;
 	}
 
-	public void setUser(User user) {
+	public void setUser(final User user) {
 		this.user = user;
 	}
 
-	public void setUserService(UserService userService) {
+	public void setUserService(final UserService userService) {
 		this.userService = userService;
 	}
 }
