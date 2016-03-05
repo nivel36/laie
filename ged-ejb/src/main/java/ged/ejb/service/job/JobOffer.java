@@ -236,7 +236,6 @@ public class JobOffer extends AuditedEntity {
 
 	@Override
 	public String toString() {
-		return "JobOffer [dateClosed=" + this.dateClosed + ", dateOpened=" + this.dateOpened + ", jobName="
-				+ this.jobName + ", jobPlaces=" + this.jobPlaces + "]";
+		return this.jobName + "-" + this.client.getName();
 	}
 }
