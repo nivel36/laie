@@ -56,6 +56,31 @@
 
 					<h:column>
 						<f:facet name="header">
+							<h:outputText value="#{i18n['job.client']}" />
+						</f:facet>
+						<h:outputText value="#{jobOffer.client.name}" />
+					</h:column>
+
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="#{i18n['job.date_opened']}" />
+						</f:facet>
+						<h:outputText value="#{jobOffer.dateOpened}">
+							<f:convertDateTime pattern="MM / yyyy" />
+						</h:outputText>
+					</h:column>
+
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="#{i18n['job.date_closed']}" />
+						</f:facet>
+						<h:outputText value="#{jobOffer.dateClosed}">
+							<f:convertDateTime pattern="MM / yyyy" />
+						</h:outputText>
+					</h:column>
+
+					<h:column>
+						<f:facet name="header">
 							<h:outputText value="Action" />
 						</f:facet>
 						<h:link value="Ver" outcome="jobOfferView">
