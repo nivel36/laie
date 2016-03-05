@@ -17,17 +17,9 @@ public class UserSearchPopupBean extends AbstractSearchBean<User> {
 
 	private static final long serialVersionUID = -2701760708389112615L;
 
-	private String inputId;
-
-	public String getInputId() {
-		return inputId;
-	}
-
-	public void setInputId(String inputId) {
-		this.inputId = inputId;
-	}
-
 	private String email;
+
+	private String inputId;
 
 	private String name;
 
@@ -38,84 +30,96 @@ public class UserSearchPopupBean extends AbstractSearchBean<User> {
 	@Inject
 	private UserService userService;
 
+	public void cancel() {
+		this.rendered = false;
+	}
+
 	public void clean() {
-		email = null;
-		surename = null;
-		name = null;
+		this.email = null;
+		this.surename = null;
+		this.name = null;
 		search();
 	}
 
-	public String getEmail() {
-		return email;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public String getSurename() {
-		return surename;
-	}
-
-	public boolean isRendered() {
-		return rendered;
-	}
-
-	@Log
-	@Override
-	public void search() {
-		logger.fine("Searching for Users");
-		if (name != null || surename != null) {
-			entities = userService.findUsers(name, surename);
-		} else {
-			entities = userService.findAll();
-		}
-		trimList();
-		setPaginationSize();
-	}
-
-	public void open() {
-		rendered = true;
-	}
-
-	private <C extends UIComponent> UIComponent findChildrenByName(UIComponent parent) {
+	private <C extends UIComponent> UIComponent findChildrenByName(final UIComponent parent) {
 		UIComponent aux = null;
-		for (UIComponent component : parent.getChildren()) {
-			if (component.getId().equals(inputId)) {
+		for (final UIComponent component : parent.getChildren()) {
+			if (component.getId().equals(this.inputId)) {
 				return component;
 			}
 			aux = findChildrenByName(component);
-			if ( aux != null ) {
-				return aux;				
+			if (aux != null) {
+				return aux;
 			}
 		}
 		return null;
 	}
 
-	public void select(User user) {
-		UIComponent foundComponent = null;
-		foundComponent = findChildrenByName(facesContext.getViewRoot());
-		((UIInput) foundComponent).setValue(user);
-		rendered = false;
+	public String getEmail() {
+		return this.email;
 	}
 
-	public void setEmail(String email) {
+	public String getInputId() {
+		return this.inputId;
+	}
+
+	public String getName() {
+		return this.name;
+	}
+
+	public String getSurename() {
+		return this.surename;
+	}
+
+	public boolean isRendered() {
+		return this.rendered;
+	}
+
+	public void open() {
+		this.rendered = true;
+	}
+
+	@Log
+	@Override
+	public void search() {
+		this.logger.fine("Searching for Users");
+		if ((this.name != null) || (this.surename != null)) {
+			this.entities = this.userService.findUsers(this.name, this.surename);
+		} else {
+			this.entities = this.userService.findAll();
+		}
+		trimList();
+		setPaginationSize();
+	}
+
+	public void select(final User user) {
+		UIComponent foundComponent = null;
+		foundComponent = findChildrenByName(this.facesContext.getViewRoot());
+		((UIInput) foundComponent).setValue(user);
+		this.rendered = false;
+	}
+
+	public void setEmail(final String email) {
 		this.email = email;
 	}
 
-	public void setName(String name) {
+	public void setInputId(final String inputId) {
+		this.inputId = inputId;
+	}
+
+	public void setName(final String name) {
 		this.name = name;
 	}
 
-	public void setRendered(boolean rendered) {
+	public void setRendered(final boolean rendered) {
 		this.rendered = rendered;
 	}
 
-	public void setSurename(String surename) {
+	public void setSurename(final String surename) {
 		this.surename = surename;
 	}
 
-	public void setUserService(UserService userService) {
+	public void setUserService(final UserService userService) {
 		this.userService = userService;
 	}
 }

@@ -126,6 +126,10 @@
 					</h:outputLabel>
 				</h:panelGroup>
 			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="buttonGroup">
+				<h:commandButton value="#{i18n['action.cancel']}"
+					action="#{userSearchPopupBean.cancel}" immediate="true" />
+			</h:panelGroup>
 		</h:panelGroup>
 	</h:form>
 </ui:composition>
