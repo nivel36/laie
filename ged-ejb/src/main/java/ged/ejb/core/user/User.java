@@ -35,7 +35,7 @@ public class User extends AbstractEntity {
 	private String language;
 
 	@ManyToOne
-	@JoinColumn(name = "managerId", nullable = true, updatable = false)
+	@JoinColumn(name = "managerId", nullable = true)
 	private User manager;
 
 	@NotNull
@@ -47,7 +47,7 @@ public class User extends AbstractEntity {
 
 	@NotNull
 	@ManyToOne
-	@JoinColumn(name = "roleId", nullable = false, updatable = false)
+	@JoinColumn(name = "roleId", nullable = false)
 	private Role role;
 
 	@NotNull

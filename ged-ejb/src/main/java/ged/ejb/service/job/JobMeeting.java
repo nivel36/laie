@@ -39,7 +39,7 @@ public class JobMeeting extends AuditedEntity {
 
 	@NotNull
 	@ManyToOne
-	@JoinColumn(name = "jobCandidatureId", nullable = false, updatable = false)
+	@JoinColumn(name = "jobCandidatureId", nullable = false)
 	private JobCandidature jobCandidature;
 
 	@NotNull

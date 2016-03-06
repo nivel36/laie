@@ -34,7 +34,7 @@ public class Action extends AbstractEntity {
 
 	@NotNull
 	@ManyToOne
-	@JoinColumn(name = "userId", nullable = false, updatable = false)
+	@JoinColumn(name = "userId", nullable = false)
 	private User user;
 
 	public Long getAuditedId() {

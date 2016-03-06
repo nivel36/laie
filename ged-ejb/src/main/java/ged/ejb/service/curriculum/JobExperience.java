@@ -20,7 +20,7 @@ public class JobExperience extends AuditedEntity {
 
 	@NotNull
 	@ManyToOne
-	@JoinColumn(name = "curriculumId", nullable = false, updatable = false)
+	@JoinColumn(name = "curriculumId", nullable = false)
 	private Curriculum curriculum;
 
 	@NotNull

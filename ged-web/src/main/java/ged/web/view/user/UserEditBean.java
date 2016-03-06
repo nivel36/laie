@@ -58,7 +58,11 @@ public class UserEditBean extends AbstractBean {
 	}
 
 	public String save() {
-		this.user = this.userService.insertOrUpdate(this.user);
+		if (this.user.getId() != 0) {
+			this.user = this.userService.update(this.user);
+		} else {
+			this.userService.insert(this.user);
+		}
 		return "userSearch?faces-redirect=true";
 	}
 

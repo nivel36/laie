@@ -17,7 +17,7 @@ public class FileSys extends AbstractEntity {
 	private static final long serialVersionUID = 1L;
 	
 	@ManyToOne
-	@JoinColumn(name = "candidateId", updatable = false, nullable = false)
+	@JoinColumn(name = "candidateId", nullable = false)
 	private Candidate candidate;
 
 	private Date date;

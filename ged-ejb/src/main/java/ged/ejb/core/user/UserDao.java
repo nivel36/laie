@@ -83,6 +83,10 @@ public class UserDao {
 		this.genericDao.insert(bookmark);
 	}
 
+	public void insertUser(final User user) {
+		this.genericDao.insert(user);
+	}
+
 	private Map<String, Object> makeParameters(final Long auditedId, final String entity, final User user) {
 		final Map<String, Object> parameters = new HashMap<String, Object>(3);
 		parameters.put("auditedId", auditedId);
@@ -93,5 +97,9 @@ public class UserDao {
 
 	public void removeBookmark(final Bookmark bookmark) {
 		this.genericDao.delete(bookmark);
+	}
+
+	public User updateUser(final User user) {
+		return this.genericDao.update(user);
 	}
 }

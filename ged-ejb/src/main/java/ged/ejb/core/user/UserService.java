@@ -34,7 +34,15 @@ public class UserService extends GenericServiceImpl {
 		this.userDao.insertBookmark(bookmark);
 	}
 
+	public void insertUser(final User user) {
+		this.userDao.insertUser(user);
+	}
+
 	public void removeBookmark(final Bookmark bookmark) {
 		this.userDao.removeBookmark(bookmark);
+	}
+
+	public void updateUser(final User user) {
+		this.userDao.updateUser(user);
 	}
 }

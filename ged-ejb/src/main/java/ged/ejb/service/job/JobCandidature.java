@@ -19,12 +19,12 @@ public class JobCandidature extends AuditedEntity {
 
 	@NotNull
 	@ManyToOne
-	@JoinColumn(name = "jobOfferId", updatable = false, nullable = false)
+	@JoinColumn(name = "jobOfferId", nullable = false)
 	private JobOffer jobOffer;
 
 	@NotNull
 	@ManyToOne
-	@JoinColumn(name = "candidateId", updatable = false, nullable = false)
+	@JoinColumn(name = "candidateId", nullable = false)
 	private Candidate candidate;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "jobCandidature", orphanRemoval = true)

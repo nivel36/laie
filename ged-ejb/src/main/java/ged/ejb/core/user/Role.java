@@ -18,7 +18,7 @@ public class Role extends AbstractEntity {
 	private String name;
 
 	@ManyToOne
-	@JoinColumn(name = "roleManagerId", nullable = true, updatable = false)
+	@JoinColumn(name = "roleManagerId", nullable = true)
 	private Role roleManager;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "roleManager", orphanRemoval = false)

@@ -29,7 +29,7 @@ public class JobOffer extends AuditedEntity {
 	private String city;
 
 	@ManyToOne
-	@JoinColumn(name = "clientId", nullable = true, updatable = false)
+	@JoinColumn(name = "clientId", nullable = true)
 	private Client client;
 
 	@I18n
@@ -63,7 +63,7 @@ public class JobOffer extends AuditedEntity {
 	private Integer jobPlaces = 1;
 
 	@ManyToOne
-	@JoinColumn(name = "recruiterId", nullable = true, updatable = false)
+	@JoinColumn(name = "recruiterId", nullable = true)
 	private User recruiter;
 
 	@Column(length = 64)

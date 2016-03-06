@@ -15,7 +15,7 @@ public class Skill extends AuditedEntity {
 	private static final long serialVersionUID = 6591356212002981267L;;
 
 	@ManyToOne
-	@JoinColumn(name = "curriculumId", nullable = false, updatable = false)
+	@JoinColumn(name = "curriculumId", nullable = false)
 	private Curriculum curriculum;
 
 	@NotNull

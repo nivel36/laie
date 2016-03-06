@@ -22,7 +22,7 @@ public class Bookmark extends AbstractEntity {
 
 	@NotNull
 	@ManyToOne
-	@JoinColumn(name = "userId", nullable = false, updatable = false)
+	@JoinColumn(name = "userId", nullable = false)
 	private User user;
 
 	@Override
