@@ -44,6 +44,11 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	public User findUserByUsername(final String username) {
+		return this.userDao.findUserByUsername(username);
+	}
+
+	@Override
 	public List<User> findUsers(final String name, final String surenames) {
 		return this.userDao.findUsers(name, surenames);
 	}

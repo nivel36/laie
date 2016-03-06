@@ -4,10 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.enterprise.inject.Produces;
-import javax.inject.Inject;
 import javax.inject.Named;
 
 import ged.ejb.core.bookmark.Bookmark;
@@ -15,7 +13,6 @@ import ged.ejb.core.bookmark.BookmarkFullExpcetion;
 import ged.ejb.core.model.Action;
 import ged.ejb.core.model.SavedSearch;
 import ged.ejb.user.User;
-import ged.ejb.user.UserService;
 
 @Named
 @SessionScoped
@@ -28,18 +25,13 @@ public class SessionBean extends AbstractBean {
 
 	private List<Bookmark> bookmarks = new ArrayList<Bookmark>();
 
-	private Locale locale;
-
-	private int rowsPerPage = 10;
+	private Locale locale = new Locale("es", "ES");
 
 	@Produces
 	private List<SavedSearch> savedSearches = new ArrayList<SavedSearch>();
 
 	@Produces
 	private User user;
-
-	@Inject
-	private UserService userService;
 
 	public void addBookmark(final Bookmark bookmark) throws BookmarkFullExpcetion {
 		if (this.bookmarks.size() > 9) {
@@ -67,7 +59,7 @@ public class SessionBean extends AbstractBean {
 	}
 
 	public int getRowsPerPage() {
-		return this.rowsPerPage;
+		return this.user.getRowsPerPage();
 	}
 
 	public List<SavedSearch> getSavedSearches() {
@@ -76,13 +68,6 @@ public class SessionBean extends AbstractBean {
 
 	public User getUser() {
 		return this.user;
-	}
-
-	@PostConstruct
-	public void init() {
-		this.user = this.userService.findById(901L);
-		this.rowsPerPage = this.user.getRowsPerPage();
-		this.locale = new Locale(this.user.getLanguage());
 	}
 
 	public void removeBookmark(final Bookmark bookmark) {
@@ -102,7 +87,7 @@ public class SessionBean extends AbstractBean {
 	}
 
 	public void setRowsPerPage(final int rowsPerPage) {
-		this.rowsPerPage = rowsPerPage;
+		this.user.setRowsPerPage(rowsPerPage);
 	}
 
 	public void setSavedSearches(final List<SavedSearch> savedSearches) {
@@ -111,5 +96,6 @@ public class SessionBean extends AbstractBean {
 
 	public void setUser(final User user) {
 		this.user = user;
+		this.locale = new Locale(this.user.getLanguage());
 	}
 }

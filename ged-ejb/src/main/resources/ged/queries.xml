@@ -41,6 +41,10 @@
 	<named-query name="User.findByName">
 		<query>SELECT u FROM User u WHERE u.name = :name</query>
 	</named-query>
+	
+	<named-query name="User.findByUsername">
+		<query>SELECT u FROM User u WHERE u.username = :username</query>
+	</named-query>
 
 	<named-query name="User.findByNameAndSurename">
 		<query>SELECT u FROM User u WHERE	(:name IS NOT NULL AND u.name = :name)

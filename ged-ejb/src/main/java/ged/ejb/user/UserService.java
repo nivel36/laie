@@ -19,6 +19,8 @@ public interface UserService {
 
 	public User findById(Long id);
 
+	public User findUserByUsername(String username);
+
 	public List<User> findUsers(String name, String surenames);
 
 	public void insertBookmark(Bookmark bookmark);

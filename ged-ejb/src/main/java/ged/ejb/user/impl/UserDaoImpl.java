@@ -77,6 +77,13 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
+	public User findUserByUsername(final String username) {
+		final Map<String, Object> parameters = new HashMap<>();
+		parameters.put("username", username);
+		return this.persistenceFacade.getByTypedQuerySingleResult(User.class, "User.findByUsername", parameters);
+	}
+
+	@Override
 	public List<User> findUsers(final String name, final String surename) {
 		final Map<String, Object> parameters = new HashMap<>(2);
 		parameters.put("name", name);

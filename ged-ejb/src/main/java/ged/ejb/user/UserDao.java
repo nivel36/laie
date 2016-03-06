@@ -29,6 +29,8 @@ public interface UserDao {
 
 	public User findByName(String user);
 
+	public User findUserByUsername(String username);
+
 	public List<User> findUsers(String name, String surename);
 
 	public void insertAction(Action action) throws IllegalUserAction;
