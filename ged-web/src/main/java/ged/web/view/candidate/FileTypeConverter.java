@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.faces.convert.FacesConverter;
 
-import ged.ejb.service.candidate.FileType;
+import ged.ejb.candidate.FileType;
 import ged.web.core.view.AbstractLookupEntityConverter;
 
 @FacesConverter(forClass = FileType.class)

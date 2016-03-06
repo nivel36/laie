@@ -8,8 +8,8 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import ged.ejb.core.user.User;
-import ged.ejb.core.user.UserService;
+import ged.ejb.user.User;
+import ged.ejb.user.UserService;
 import ged.web.core.view.AbstractBean;
 
 @Named
@@ -59,9 +59,9 @@ public class UserEditBean extends AbstractBean {
 
 	public String save() {
 		if (this.user.getId() != 0) {
-			this.user = this.userService.update(this.user);
+			this.user = this.userService.updateUser(this.user);
 		} else {
-			this.userService.insert(this.user);
+			this.userService.insertUser(this.user);
 		}
 		return "userSearch?faces-redirect=true";
 	}

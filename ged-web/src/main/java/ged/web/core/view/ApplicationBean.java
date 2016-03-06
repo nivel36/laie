@@ -13,13 +13,11 @@ import javax.faces.application.Application;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import ged.ejb.candidate.FileType;
 import ged.ejb.core.Cache;
-import ged.ejb.core.user.Role;
-import ged.ejb.service.candidate.FileType;
-import ged.ejb.service.curriculum.LanguageLevel;
-import ged.ejb.service.curriculum.SkillLevel;
-import ged.ejb.service.job.ContractDuration;
-import ged.ejb.service.job.ContractType;
+import ged.ejb.curriculum.LanguageLevel;
+import ged.ejb.curriculum.SkillLevel;
+import ged.ejb.user.Role;
 
 @ApplicationScoped
 @Named
@@ -35,67 +33,59 @@ public class ApplicationBean extends AbstractBean {
 	private Properties properties;
 
 	public Cache getCache() {
-		return cache;
+		return this.cache;
 	}
 
 	public List<FileType> getFileTypes() {
-		return cache.getFileTypes();
-	}
-
-	public List<ContractDuration> getContractDurations() {
-		return cache.getContractDurations();
-	}
-
-	public List<ContractType> getContractTypes() {
-		return cache.getContractTypes();
+		return this.cache.getFileTypes();
 	}
 
 	public List<LanguageLevel> getLanguageLevels() {
-		return cache.getLanguageLevels();
+		return this.cache.getLanguageLevels();
 	}
 
 	public List<Locale> getLocales() {
-		return locales;
+		return this.locales;
 	}
 
 	public Properties getProperties() {
-		return properties;
-	}
-
-	public List<SkillLevel> getSkillLevels() {
-		return cache.getSkillLevels();
+		return this.properties;
 	}
 
 	public List<Role> getRoles() {
-		return cache.getRoles();
+		return this.cache.getRoles();
+	}
+
+	public List<SkillLevel> getSkillLevels() {
+		return this.cache.getSkillLevels();
 	}
 
 	@PostConstruct
 	public void init() {
 		loadLocales();
-		properties = new Properties();
+		this.properties = new Properties();
 		try {
-			properties.load(ApplicationBean.class.getResourceAsStream("/ged/config.properties"));
-		} catch (Exception e) {
-			logger.log(Level.SEVERE, "Could not load properties");
+			this.properties.load(ApplicationBean.class.getResourceAsStream("/ged/config.properties"));
+		} catch (final Exception e) {
+			this.logger.log(Level.SEVERE, "Could not load properties");
 		}
 	}
 
 	private void loadLocales() {
-		Application app = facesContext.getApplication();
-		Iterator<Locale> supportedLocales = app.getSupportedLocales();
+		final Application app = this.facesContext.getApplication();
+		final Iterator<Locale> supportedLocales = app.getSupportedLocales();
 		while (supportedLocales.hasNext()) {
-			locales.add(supportedLocales.next());
+			this.locales.add(supportedLocales.next());
 		}
-		Locale defaultLocale = app.getDefaultLocale();
-		locales.add(defaultLocale);
+		final Locale defaultLocale = app.getDefaultLocale();
+		this.locales.add(defaultLocale);
 	}
 
-	public void setCache(Cache cache) {
+	public void setCache(final Cache cache) {
 		this.cache = cache;
 	}
 
-	public void setLocales(List<Locale> locales) {
+	public void setLocales(final List<Locale> locales) {
 		this.locales = locales;
 	}
 }

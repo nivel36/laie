@@ -14,8 +14,8 @@ import ged.ejb.core.bookmark.Bookmark;
 import ged.ejb.core.bookmark.BookmarkFullExpcetion;
 import ged.ejb.core.model.Action;
 import ged.ejb.core.model.SavedSearch;
-import ged.ejb.core.user.User;
-import ged.ejb.core.user.UserService;
+import ged.ejb.user.User;
+import ged.ejb.user.UserService;
 
 @Named
 @SessionScoped
@@ -80,7 +80,7 @@ public class SessionBean extends AbstractBean {
 
 	@PostConstruct
 	public void init() {
-		this.user = this.userService.getByPrimaryKey(User.class, 901L);
+		this.user = this.userService.findById(901L);
 		this.rowsPerPage = this.user.getRowsPerPage();
 		this.locale = new Locale(this.user.getLanguage());
 	}

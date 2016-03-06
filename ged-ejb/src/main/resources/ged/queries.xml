@@ -5,12 +5,41 @@
         http://xmlns.jcp.org/xml/ns/persistence/orm_2_1.xsd"
 	version="2.1">
 
-	<named-query name="User.findByName">
-		<query>SELECT u FROM User u WHERE u.name = :name</query>
-	</named-query>
-
 	<named-query name="Candidate.findById">
 		<query>SELECT c FROM Candidate c LEFT JOIN FETCH c.files WHERE c.id = :id</query>
+	</named-query>
+	
+	<named-query name="Candidate.findByNameAndSurename">
+		<query>SELECT c FROM Candidate c WHERE	(:name IS NOT NULL AND c.name = :name)
+										  OR	(:surename IS NOT NULL AND c.surename = :surename)</query>
+	</named-query>
+
+	<named-query name="Client.findByName">
+		<query>SELECT c FROM Client c WHERE c.name = :name</query>
+	</named-query>
+
+	<named-query name="Bookmark.findByUrl">
+		<query>SELECT b FROM Bookmark b WHERE b.url = :url</query>
+	</named-query>
+	
+	<named-query name="JobOffer.findByName">
+		<query>SELECT j FROM JobOffer j WHERE j.name = :name</query>
+	</named-query>
+	
+	<named-query name="JobMeeting.findPlannedJobMeetings">
+		<query>SELECT j FROM JobMeeting j WHERE j.jobCandidature.id = :jobCandidatureId</query>
+	</named-query>
+	
+	<named-query name="JobMeeting.findConductedJobMeetings">
+			<query>SELECT j FROM JobMeeting j WHERE j.jobCandidature.id = :jobCandidatureId</query>
+	</named-query>
+	
+	<named-query name="User.findById">
+		<query>SELECT u FROM User u LEFT JOIN FETCH u.team WHERE u.id = :id</query>
+	</named-query>
+	
+	<named-query name="User.findByName">
+		<query>SELECT u FROM User u WHERE u.name = :name</query>
 	</named-query>
 
 	<named-query name="User.findByNameAndSurename">
@@ -21,17 +50,5 @@
 	<named-query name="User.findUser">
 		<query>SELECT u FROM User u WHERE	(:name IS NOT NULL AND u.name = :name)
 									OR 		(:surename IS NOT NULL AND u.surename = :surename)</query>
-	</named-query>
-
-	<named-query name="User.findById">
-		<query>SELECT u FROM User u LEFT JOIN FETCH u.team WHERE u.id = :id</query>
-	</named-query>
-	
-	<named-query name="Client.findByName">
-		<query>SELECT c FROM Client c WHERE c.name = :name</query>
-	</named-query>
-	
-	<named-query name="Bookmark.findByUrl">
-		<query>SELECT b FROM Bookmark b WHERE b.url = :url</query>
 	</named-query>
 </entity-mappings>

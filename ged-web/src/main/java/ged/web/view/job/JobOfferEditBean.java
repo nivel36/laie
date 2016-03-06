@@ -5,9 +5,9 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import ged.ejb.service.client.Client;
-import ged.ejb.service.job.JobOffer;
-import ged.ejb.service.job.JobService;
+import ged.ejb.client.Client;
+import ged.ejb.job.JobOffer;
+import ged.ejb.job.JobService;
 import ged.web.core.view.AbstractBean;
 
 @Named
@@ -41,7 +41,7 @@ public class JobOfferEditBean extends AbstractBean {
 	}
 
 	public String save() {
-		this.jobService.insert(this.jobOffer);
+		this.jobService.insertJobOffer(this.jobOffer);
 		return "jobOfferSearch?faces-redirect=true";
 	}
 

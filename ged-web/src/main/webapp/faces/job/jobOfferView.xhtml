@@ -24,12 +24,12 @@
 			<h:graphicImage value="/resources/img/s.gif"
 				styleClass="headerIcon candidateIcon" />
 
-			<h1 class="header">#{jobOfferViewBean.jobOffer.jobName}</h1>
+			<h1 class="header">#{jobOfferViewBean.jobOffer.name}</h1>
 
 			<h:panelGroup layout="block" styleClass="panel">
 				<h:outputLabel for="name" value="#{i18n['job.name']}"
 					styleClass="very_large required">
-					<h:inputText id="name" value="#{jobOfferViewBean.jobOffer.jobName}"
+					<h:inputText id="name" value="#{jobOfferViewBean.jobOffer.name}"
 						label="#{i18n['job.name']}" required="true"
 						styleClass="#{not component.valid ? 'inputError' : ''}" disabled="true" />
 					<h:message for="name" errorClass="error" />
@@ -48,7 +48,7 @@
 				<h:outputLabel for="places" value="#{i18n['job.places']}"
 					styleClass="small">
 					<h:inputText id="places"
-						value="#{jobOfferViewBean.jobOffer.jobPlaces}"
+						value="#{jobOfferViewBean.jobOffer.places}"
 						label="#{i18n['job.places']}"
 						styleClass="#{not component.valid ? 'number inputError' : 'number'}" disabled="true"/>
 					<h:message for="places" errorClass="error" />

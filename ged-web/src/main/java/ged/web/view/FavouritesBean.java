@@ -8,7 +8,7 @@ import javax.inject.Named;
 import ged.ejb.core.bookmark.Bookmark;
 import ged.ejb.core.bookmark.BookmarkFullExpcetion;
 import ged.ejb.core.model.AuditedEntity;
-import ged.ejb.core.user.UserService;
+import ged.ejb.user.UserService;
 import ged.web.core.view.AbstractBean;
 
 @Named
@@ -61,7 +61,7 @@ public class FavouritesBean extends AbstractBean {
 		final Bookmark bookmark = this.userService.findBookmarkByUrl(url);
 		if (this.sessionBean.containsBookmark(bookmark)) {
 			this.sessionBean.removeBookmark(bookmark);
-			this.userService.removeBookmark(bookmark);
+			this.userService.deleteBookmark(bookmark);
 		}
 	}
 }

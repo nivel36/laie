@@ -5,11 +5,11 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import ged.ejb.service.candidate.Address;
-import ged.ejb.service.candidate.Candidate;
-import ged.ejb.service.candidate.CandidateService;
-import ged.ejb.service.curriculum.Curriculum;
-import ged.ejb.service.curriculum.CurriculumService;
+import ged.ejb.candidate.Address;
+import ged.ejb.candidate.Candidate;
+import ged.ejb.candidate.CandidateService;
+import ged.ejb.curriculum.Curriculum;
+import ged.ejb.curriculum.CurriculumService;
 import ged.web.core.view.AbstractBean;
 
 @Named
@@ -25,49 +25,57 @@ public class CandidateEditBean extends AbstractBean {
 
 	@Inject
 	private CurriculumService curriculumService;
-	
+
 	public String cancel() {
 		return "candidateSearch?faces-redirect=true";
 	}
 
 	public String editCurriculum() {
-		candidate = candidateService.insertOrUpdate(candidate);
-		flash.put("curriculum", getCurriculum());
+		insertOrUpdate(this.candidate);
+		this.flash.put("curriculum", getCurriculum());
 		return "curriculumEdit?faces-redirect=true";
 	}
 
 	public Candidate getCandidate() {
-		return candidate;
+		return this.candidate;
 	}
 
 	private Curriculum getCurriculum() {
-		Curriculum curriculum = curriculumService.getByCandidate(candidate);
+		Curriculum curriculum = this.curriculumService.findByCandidateId(this.candidate.getId());
 		if (curriculum == null) {
 			curriculum = new Curriculum();
-			curriculum.setCandidate(candidate);
+			curriculum.setCandidate(this.candidate);
 		}
 		return curriculum;
 	}
 
 	@PostConstruct
 	private void init() {
-		if (flash.containsKey("candidate")) {
-			candidate = (Candidate) flash.get("candidate");
+		if (this.flash.containsKey("candidate")) {
+			this.candidate = (Candidate) this.flash.get("candidate");
 		} else {
-			candidate = new Candidate();
+			this.candidate = new Candidate();
 		}
-		if (candidate.getAddress() == null) {
-			candidate.setAddress(new Address());
+		if (this.candidate.getAddress() == null) {
+			this.candidate.setAddress(new Address());
 		}
-		flash.put("candidate", candidate);
+		this.flash.put("candidate", this.candidate);
+	}
+
+	public void insertOrUpdate(Candidate candidate) {
+		if (candidate.getId() == 0) {
+			this.candidateService.insertCandidate(candidate);
+		} else {
+			candidate = this.candidateService.updateCandidate(candidate);
+		}
 	}
 
 	public String save() {
-		candidate = candidateService.insertOrUpdate(candidate);
+		insertOrUpdate(this.candidate);
 		return "candidateSearch?faces-redirect=true";
 	}
 
-	public void setCandidate(Candidate candidate) {
+	public void setCandidate(final Candidate candidate) {
 		this.candidate = candidate;
 	}
 }

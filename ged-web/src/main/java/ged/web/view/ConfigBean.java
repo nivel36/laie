@@ -12,8 +12,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.xml.bind.DatatypeConverter;
 
-import ged.ejb.core.user.User;
-import ged.ejb.core.user.UserService;
+import ged.ejb.user.User;
+import ged.ejb.user.UserService;
 import ged.web.core.view.AbstractBean;
 
 @Named
@@ -105,7 +105,7 @@ public class ConfigBean extends AbstractBean {
 	}
 
 	public void save() {
-		this.user = this.userService.update(this.user);
+		this.user = this.userService.updateUser(this.user);
 		this.sessionBean.setUser(this.user);
 		this.sessionBean.setLocale(new Locale(this.user.getLanguage()));
 		this.sessionBean.setRowsPerPage(this.user.getRowsPerPage());

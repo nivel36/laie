@@ -8,9 +8,9 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import ged.ejb.service.job.JobMeeting;
-import ged.ejb.service.job.JobOffer;
-import ged.ejb.service.job.JobService;
+import ged.ejb.job.JobMeeting;
+import ged.ejb.job.JobOffer;
+import ged.ejb.job.JobService;
 import ged.web.core.view.AbstractBean;
 
 @Named
@@ -19,35 +19,53 @@ public class JobOfferViewBean extends AbstractBean {
 
 	private static final long serialVersionUID = -1200840678252895578L;
 
-	private String jobOfferId;
+	private List<JobMeeting> conductedJobMeetings = new ArrayList<JobMeeting>();
 
 	private JobOffer jobOffer;
 
-	private List<JobMeeting> plannedJobMeetings = new ArrayList<JobMeeting>();
-
-	private List<JobMeeting> conductedJobMeetings = new ArrayList<JobMeeting>();
+	private String jobOfferId;
 
 	@Inject
 	private JobService jobService;
 
-	// /////////////////////////////////////////////////////////////////////////
-	// INIT
-	// /////////////////////////////////////////////////////////////////////////
+	private List<JobMeeting> plannedJobMeetings = new ArrayList<JobMeeting>();
+
+	private void error() {
+		final NavigationHandler navigationHandler = this.facesContext.getApplication().getNavigationHandler();
+		navigationHandler.handleNavigation(this.facesContext, null, "jobOfferSearch?faces-redirect=true");
+		this.facesContext.renderResponse();
+	}
+
+	public List<JobMeeting> getConductedJobMeetings() {
+		return this.conductedJobMeetings;
+	}
+
+	public JobOffer getJobOffer() {
+		return this.jobOffer;
+	}
+
+	public String getJobOfferId() {
+		return this.jobOfferId;
+	}
+
+	public List<JobMeeting> getPlannedJobMeetings() {
+		return this.plannedJobMeetings;
+	}
 
 	/**
 	 * Not using @PostConstruct because the view is a GET based form.
 	 */
 	public void init() {
-		if (jobOfferId != null) {
+		if (this.jobOfferId != null) {
 			try {
-				Long id = Long.parseLong(jobOfferId);
-				jobOffer = jobService.searchById(id);
-				if (jobOffer == null) {
+				final Long id = Long.parseLong(this.jobOfferId);
+				this.jobOffer = this.jobService.findJobOfferById(id);
+				if (this.jobOffer == null) {
 					error();
 				} else {
-					populateJobMeetings(jobOffer);
+					populateJobMeetings(this.jobOffer);
 				}
-			} catch (NumberFormatException ex) {
+			} catch (final NumberFormatException ex) {
 				error();
 			}
 		} else {
@@ -55,63 +73,29 @@ public class JobOfferViewBean extends AbstractBean {
 		}
 	}
 
-	private void populateJobMeetings(JobOffer jobOffer) {
-		plannedJobMeetings = jobService
-				.searchPlannedJobMeetingsByJobOffer(jobOffer);
-		conductedJobMeetings = jobService
-				.searchConductedJobMeetingsByJobOffer(jobOffer);
+	public String modify() {
+		this.flash.put("jobOffer", this.jobOffer);
+		return "jobOfferEdit?faces-redirect=true";
 	}
 
-	private void error() {
-		NavigationHandler navigationHandler = facesContext.getApplication()
-				.getNavigationHandler();
-		navigationHandler.handleNavigation(facesContext, null,
-				"jobOfferSearch?faces-redirect=true");
-		facesContext.renderResponse();
+	private void populateJobMeetings(final JobOffer jobOffer) {
+		this.plannedJobMeetings = this.jobService.findPlannedJobMeetingsByJobOffer(jobOffer);
+		this.conductedJobMeetings = this.jobService.findConductedJobMeetingsByJobOffer(jobOffer);
 	}
 
-	// /////////////////////////////////////////////////////////////////////////
-	// SET AND GET
-	// /////////////////////////////////////////////////////////////////////////
-
-	public List<JobMeeting> getPlannedJobMeetings() {
-		return plannedJobMeetings;
-	}
-
-	public void setPlannedJobMeetings(List<JobMeeting> plannedJobMeetings) {
-		this.plannedJobMeetings = plannedJobMeetings;
-	}
-
-	public List<JobMeeting> getConductedJobMeetings() {
-		return conductedJobMeetings;
-	}
-
-	public void setConductedJobMeetings(List<JobMeeting> conductedJobMeetings) {
+	public void setConductedJobMeetings(final List<JobMeeting> conductedJobMeetings) {
 		this.conductedJobMeetings = conductedJobMeetings;
 	}
 
-	public JobOffer getJobOffer() {
-		return jobOffer;
-	}
-
-	public void setJobOffer(JobOffer jobOffer) {
+	public void setJobOffer(final JobOffer jobOffer) {
 		this.jobOffer = jobOffer;
 	}
 
-	public String getJobOfferId() {
-		return jobOfferId;
-	}
-
-	public void setJobOfferId(String jobOfferId) {
+	public void setJobOfferId(final String jobOfferId) {
 		this.jobOfferId = jobOfferId;
 	}
 
-	// /////////////////////////////////////////////////////////////////////////
-	// ACTIONS
-	// /////////////////////////////////////////////////////////////////////////
-
-	public String modify() {
-		flash.put("jobOffer", jobOffer);
-		return "jobOfferEdit?faces-redirect=true";
+	public void setPlannedJobMeetings(final List<JobMeeting> plannedJobMeetings) {
+		this.plannedJobMeetings = plannedJobMeetings;
 	}
 }

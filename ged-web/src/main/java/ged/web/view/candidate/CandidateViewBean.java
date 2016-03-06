@@ -15,10 +15,11 @@ import javax.servlet.http.Part;
 
 import org.omnifaces.util.Faces;
 
+import ged.ejb.candidate.Candidate;
+import ged.ejb.candidate.CandidateService;
+import ged.ejb.candidate.impl.CandidateServiceImpl;
 import ged.ejb.core.util.ConfigurationProperty;
-import ged.ejb.service.candidate.Candidate;
-import ged.ejb.service.candidate.CandidateService;
-import ged.ejb.service.candidate.FileSys;
+import ged.ejb.curriculum.FileSys;
 import ged.web.core.view.AbstractBean;
 
 @Named
@@ -46,10 +47,6 @@ public class CandidateViewBean extends AbstractBean {
 
 	private Part part;
 
-	// /////////////////////////////////////////////////////////////////////////
-	// INIT
-	// /////////////////////////////////////////////////////////////////////////
-
 	public void addFile() {
 		this.addingFile = true;
 		this.editingFile = false;
@@ -67,10 +64,6 @@ public class CandidateViewBean extends AbstractBean {
 			// TODO: faces message
 		}
 	}
-
-	// /////////////////////////////////////////////////////////////////////////
-	// SET AND GET
-	// /////////////////////////////////////////////////////////////////////////
 
 	public String editCandidate() {
 		this.flash.put("candidate", this.candidate);
@@ -136,7 +129,7 @@ public class CandidateViewBean extends AbstractBean {
 		if (this.id != null) {
 			try {
 				final Long id = Long.parseLong(this.id);
-				this.candidate = this.candidateService.searchCandidateAndCurriculumById(id);
+				this.candidate = this.candidateService.findCandidateAndCurriculumById(id);
 				if (this.candidate == null) {
 					error();
 				}
@@ -161,10 +154,6 @@ public class CandidateViewBean extends AbstractBean {
 		return "candidateEdit?faces-redirect=true";
 	}
 
-	// /////////////////////////////////////////////////////////////////////////
-	// ACTIONS
-	// /////////////////////////////////////////////////////////////////////////
-
 	public void openFile(final FileSys file) {
 		try {
 			final java.io.File downloableFile = new java.io.File(file.getName());
@@ -180,14 +169,12 @@ public class CandidateViewBean extends AbstractBean {
 		try {
 			removeFileFromFileSystem(file.getUuid());
 			this.candidate.getFiles().remove(file);
-			this.candidate = this.candidateService.update(this.candidate);
+			this.candidate = this.candidateService.updateCandidate(this.candidate);
 		} catch (final IOException e) {
 			e.printStackTrace();
 			// TODO: faces message
 		}
 	}
-
-	// FILE ACTIONS
 
 	private void removeFileFromFileSystem(final String uuid) throws IOException {
 		Files.deleteIfExists(new java.io.File(this.fileDirectory, uuid).toPath());
@@ -199,7 +186,7 @@ public class CandidateViewBean extends AbstractBean {
 			this.candidate.getFiles().add(this.file);
 			this.file.setCandidate(this.candidate);
 		}
-		this.candidate = this.candidateService.update(this.candidate);
+		this.candidate = this.candidateService.updateCandidate(this.candidate);
 		this.editingFile = false;
 	}
 
@@ -211,7 +198,7 @@ public class CandidateViewBean extends AbstractBean {
 		this.candidate = candidate;
 	}
 
-	public void setCandidateService(final CandidateService candidateService) {
+	public void setCandidateService(final CandidateServiceImpl candidateService) {
 		this.candidateService = candidateService;
 	}
 

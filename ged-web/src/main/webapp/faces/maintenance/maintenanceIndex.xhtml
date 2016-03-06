@@ -17,41 +17,6 @@
 		<h1 class="header">#{i18n['maintenance.maintenances']}</h1>
 		<h:panelGrid styleClass="panelGrid" columns="2" cellpadding="10px">
 			<h:panelGroup layout="block" styleClass="panel">
-				<h1>#{i18n['maintenance.contract_type']}</h1>
-				<h:form>
-					<h:selectOneMenu id="contractType"
-						label="#{i18n['job.contract_type']}"
-						value="#{jobOfferEditBean.jobOffer.contractType}"
-						styleClass="largeInput">
-						<f:selectItems var="contractType" itemValue="#{contractType.name}"
-							value="#{applicationBean.contractTypes}"
-							itemLabel="#{i18n:translate(contractType.name)}" />
-					</h:selectOneMenu>
-					<h:commandButton value="#{i18n['action.modify']}"
-						action="#{maintenanceIndexBean.modifyContractType}" />
-					<h:commandButton value="#{i18n['action.new']}"
-						action="#{maintenanceIndexBean.newContractType}" />
-				</h:form>
-			</h:panelGroup>
-
-			<h:panelGroup layout="block" styleClass="panel">
-				<h1>#{i18n['maintenance.contract_duration']}</h1>
-				<h:form>
-					<h:selectOneMenu id="contractDuration"
-						value="#{jobOfferEditBean.jobOffer.contractDuration}"
-						label="#{i18n['job.duration_of_contract']}"
-						styleClass="largeInput">
-						<f:selectItems var="contractDuration"
-							itemValue="#{contractDuration}"
-							value="#{applicationBean.contractDurations}"
-							itemLabel="#{i18n:translate(contractDuration.name)}" />
-					</h:selectOneMenu>
-					<h:commandButton value="#{i18n['action.modify']}" />
-					<h:commandButton value="#{i18n['action.new']}" />
-				</h:form>
-			</h:panelGroup>
-
-			<h:panelGroup layout="block" styleClass="panel">
 				<h1>#{i18n['maintenance.skill_knowdeleges']}</h1>
 				<h:form>
 					<h:selectOneMenu id="skillKnowdelege"

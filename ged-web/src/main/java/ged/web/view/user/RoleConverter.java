@@ -8,7 +8,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-import ged.ejb.core.user.Role;
+import ged.ejb.user.Role;
 import ged.web.core.view.ApplicationBean;
 
 @FacesConverter(forClass = Role.class)

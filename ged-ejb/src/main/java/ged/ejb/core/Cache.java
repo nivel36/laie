@@ -9,13 +9,13 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import ged.ejb.core.user.Role;
-import ged.ejb.core.user.RoleService;
-import ged.ejb.service.candidate.FileType;
-import ged.ejb.service.curriculum.LanguageLevel;
-import ged.ejb.service.curriculum.SkillLevel;
-import ged.ejb.service.job.ContractDuration;
-import ged.ejb.service.job.ContractType;
+import ged.ejb.candidate.CandidateService;
+import ged.ejb.candidate.FileType;
+import ged.ejb.curriculum.CurriculumService;
+import ged.ejb.curriculum.LanguageLevel;
+import ged.ejb.curriculum.SkillLevel;
+import ged.ejb.user.Role;
+import ged.ejb.user.RoleService;
 
 @Named
 @ApplicationScoped
@@ -23,9 +23,11 @@ public class Cache implements Serializable {
 
 	private static final long serialVersionUID = -8778037668334921574L;
 
-	private List<ContractDuration> contractDurations;
+	@Inject
+	private CandidateService candidateService;
 
-	private List<ContractType> contractTypes;
+	@Inject
+	private CurriculumService curriculumService;
 
 	private List<FileType> fileTypes;
 
@@ -33,9 +35,6 @@ public class Cache implements Serializable {
 
 	@Inject
 	protected Logger logger;
-	
-	@Inject
-	private MaintenanceService maintenanceService;
 
 	private List<Role> roles;
 
@@ -44,42 +43,31 @@ public class Cache implements Serializable {
 
 	private List<SkillLevel> skillLevels;
 
-	public List<ContractDuration> getContractDurations() {
-		return contractDurations;
-	}
-	
-	public List<ContractType> getContractTypes() {
-		return contractTypes;
-	}
-
 	public List<FileType> getFileTypes() {
-		return fileTypes;
+		return this.fileTypes;
 	}
 
 	public List<LanguageLevel> getLanguageLevels() {
-		return languageLevels;
+		return this.languageLevels;
 	}
 
 	public List<Role> getRoles() {
-		return roles;
+		return this.roles;
 	}
 
 	public List<SkillLevel> getSkillLevels() {
-		return skillLevels;
+		return this.skillLevels;
 	}
 
 	@PostConstruct
 	public void init() {
-		contractTypes = maintenanceService.getAll(ContractType.class);
-		contractDurations = maintenanceService.getAll(ContractDuration.class);
-		skillLevels = maintenanceService.getAll(SkillLevel.class);
-		languageLevels = maintenanceService.getAll(LanguageLevel.class);
-		
-		fileTypes = maintenanceService.getAll(FileType.class);
-		roles = roleService.getAll();
+		this.skillLevels = this.curriculumService.findAllSkillLevels();
+		this.languageLevels = this.curriculumService.findAllLanguageLevels();
+		this.fileTypes = this.candidateService.findAllFileTypes();
+		this.roles = this.roleService.findAllRoles();
 	}
 
-	public void setLogger(Logger logger) {
+	public void setLogger(final Logger logger) {
 		this.logger = logger;
 	}
 }

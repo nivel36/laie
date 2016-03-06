@@ -28,36 +28,6 @@
 						action="#{candidateSearchBean.newCandidate}" immediate="true" />
 				</h:panelGroup>
 
-				<h:dataTable var="maintenance" id="maintenances"
-					value="#{applicationBean.contractTypes}" styleClass="dataTable">
-
-					<h:column>
-						<f:facet name="header">
-							<h:outputText value="#{i18n['maintenance.value']}" />
-						</f:facet>
-						<h:outputText value="#{i18n:translate(maintenance.name)}" />
-					</h:column>
-
-					<h:column>
-						<f:facet name="header">
-							<h:outputText value="#{i18n['maintenance.description']}" />
-						</f:facet>
-						<h:outputText value="#{i18n:translate(maintenance.description)}" />
-					</h:column>
-					<h:column>
-						<f:facet name="header">
-							<h:outputText value="Action" />
-						</f:facet>
-						<h:link value="#{i18n['action.select']}" action="#{candidateSearchBean.remove(candidate)}">
-							<f:param name="candidateId" value="#{candidate.id}" />
-						</h:link>
-						|
-						<h:commandLink action="#{candidateSearchBean.remove(candidate)}"
-							value="#{i18n['action.remove']}">
-							<f:ajax execute="@form" render="@form" />
-						</h:commandLink>
-					</h:column>
-				</h:dataTable>
 
 				<h:panelGroup layout="block" styleClass="paginator" id="paginator"
 					rendered="#{not empty candidateSearchBean.dataList}">

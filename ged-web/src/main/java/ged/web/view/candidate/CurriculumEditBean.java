@@ -11,12 +11,12 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import ged.ejb.service.curriculum.Curriculum;
-import ged.ejb.service.curriculum.CurriculumService;
-import ged.ejb.service.curriculum.Education;
-import ged.ejb.service.curriculum.JobExperience;
-import ged.ejb.service.curriculum.Language;
-import ged.ejb.service.curriculum.Skill;
+import ged.ejb.curriculum.Curriculum;
+import ged.ejb.curriculum.CurriculumService;
+import ged.ejb.curriculum.Education;
+import ged.ejb.curriculum.JobExperience;
+import ged.ejb.curriculum.Language;
+import ged.ejb.curriculum.Skill;
 import ged.web.core.view.AbstractBean;
 
 @Named
@@ -27,161 +27,155 @@ public class CurriculumEditBean extends AbstractBean {
 
 	private Curriculum curriculum;
 
-	private List<Education> education = new ArrayList<Education>();
+	@Inject
+	private CurriculumService curriculumService;
 
-	private List<Skill> skills = new ArrayList<Skill>();
+	private List<Education> education = new ArrayList<Education>();
 
 	private List<JobExperience> jobExperiences = new ArrayList<JobExperience>();
 
 	private List<Language> languages = new ArrayList<Language>();
 
-	@Inject
-	private CurriculumService curriculumService;
-
-	// ////////////////////////////////////////////////////////////////////////
-	// INIT
-	// ////////////////////////////////////////////////////////////////////////
-
-	@PostConstruct
-	public void init() {
-		if (flash.containsKey("curriculum")) {
-			curriculum = (Curriculum) flash.get("curriculum");
-		} else {
-			error();
-			return;
-		}
-		if (curriculum.getSkills() == null) {
-			curriculum.setSkills(new HashSet<Skill>());
-		}
-		if (curriculum.getEducation() == null) {
-			curriculum.setEducation(new HashSet<Education>());
-		}
-		if (curriculum.getJobExperiences() == null) {
-			curriculum.setJobExperiences(new HashSet<JobExperience>());
-		}
-		if (curriculum.getLanguages() == null) {
-			curriculum.setLanguages(new HashSet<Language>());
-		}
-
-		skills.addAll(curriculum.getSkills());
-		education.addAll(curriculum.getEducation());
-		jobExperiences.addAll(curriculum.getJobExperiences());
-		languages.addAll(curriculum.getLanguages());
-
-		flash.put("curriculum", curriculum);
-		flash.put("candidate", curriculum.getCandidate());
-	}
-
-	private void error() {
-		NavigationHandler navigationHandler = facesContext.getApplication()
-				.getNavigationHandler();
-		navigationHandler.handleNavigation(facesContext, null,
-				"candidateSearch?faces-redirect=true");
-		facesContext.renderResponse();
-	}
-
-	// ////////////////////////////////////////////////////////////////////////
-	// SET AND GETS
-	// ////////////////////////////////////////////////////////////////////////
-
-	public Curriculum getCurriculum() {
-		return curriculum;
-	}
-
-	public void setCurriculum(Curriculum curriculum) {
-		this.curriculum = curriculum;
-	}
-
-	public List<Skill> getSkills() {
-		return skills;
-	}
-
-	public void setSkills(List<Skill> skills) {
-		this.skills = skills;
-	}
-
-	public List<Education> getEducation() {
-		return education;
-	}
-
-	public void setEducation(List<Education> education) {
-		this.education = education;
-	}
-
-	public List<JobExperience> getJobExperiences() {
-		return jobExperiences;
-	}
-
-	public void setJobExperiences(List<JobExperience> jobExperiences) {
-		this.jobExperiences = jobExperiences;
-	}
-
-	public List<Language> getLanguages() {
-		return languages;
-	}
-
-	public void setLanguages(List<Language> languages) {
-		this.languages = languages;
-	}
-
-	// ////////////////////////////////////////////////////////////////////////
-	// ACTIONS
-	// ////////////////////////////////////////////////////////////////////////
+	private List<Skill> skills = new ArrayList<Skill>();
 
 	public void addEducation() {
-		Education education = new Education();
-		education.setCurriculum(curriculum);
+		final Education education = new Education();
+		education.setCurriculum(this.curriculum);
 		this.education.add(education);
 	}
 
-	public void removeEducation(Education education) {
-		this.education.remove(education);
-	}
-
 	public void addJobExperience() {
-		JobExperience jobExperience = new JobExperience();
-		jobExperience.setCurriculum(curriculum);
+		final JobExperience jobExperience = new JobExperience();
+		jobExperience.setCurriculum(this.curriculum);
 		this.jobExperiences.add(jobExperience);
 	}
 
-	public void removeJobExperience(JobExperience jobExperience) {
-		this.jobExperiences.remove(jobExperience);
-	}
-
 	public void addLanguage() {
-		Language language = new Language();
-		language.setCurriculum(curriculum);
+		final Language language = new Language();
+		language.setCurriculum(this.curriculum);
 		this.languages.add(language);
 	}
 
-	public void removeLanguage(Language language) {
-		this.languages.remove(language);
-	}
-
 	public void addSkill() {
-		Skill skill = new Skill();
-		skill.setCurriculum(curriculum);
-		skills.add(skill);
-	}
-
-	public void removeSkill(Skill skill) {
-		skills.remove(skill);
-	}
-
-	public String save() {
-		curriculum.setEducation(listToSet(education));
-		curriculum.setLanguages(listToSet(languages));
-		curriculum.setJobExperiences(listToSet(jobExperiences));
-		curriculum.setSkills(listToSet(skills));
-		curriculumService.insertOrUpdate(curriculum);
-		return "candidateSearch?faces-redirect=true";
-	}
-
-	private <E> Set<E> listToSet(List<E> list) {
-		return new HashSet<E>(list);
+		final Skill skill = new Skill();
+		skill.setCurriculum(this.curriculum);
+		this.skills.add(skill);
 	}
 
 	public String cancel() {
 		return "candidateSearch?faces-redirect=true";
+	}
+
+	private void error() {
+		final NavigationHandler navigationHandler = this.facesContext.getApplication().getNavigationHandler();
+		navigationHandler.handleNavigation(this.facesContext, null, "candidateSearch?faces-redirect=true");
+		this.facesContext.renderResponse();
+	}
+
+	public Curriculum getCurriculum() {
+		return this.curriculum;
+	}
+
+	public List<Education> getEducation() {
+		return this.education;
+	}
+
+	public List<JobExperience> getJobExperiences() {
+		return this.jobExperiences;
+	}
+
+	public List<Language> getLanguages() {
+		return this.languages;
+	}
+
+	public List<Skill> getSkills() {
+		return this.skills;
+	}
+
+	@PostConstruct
+	public void init() {
+		if (this.flash.containsKey("curriculum")) {
+			this.curriculum = (Curriculum) this.flash.get("curriculum");
+		} else {
+			error();
+			return;
+		}
+		if (this.curriculum.getSkills() == null) {
+			this.curriculum.setSkills(new HashSet<Skill>());
+		}
+		if (this.curriculum.getEducation() == null) {
+			this.curriculum.setEducation(new HashSet<Education>());
+		}
+		if (this.curriculum.getJobExperiences() == null) {
+			this.curriculum.setJobExperiences(new HashSet<JobExperience>());
+		}
+		if (this.curriculum.getLanguages() == null) {
+			this.curriculum.setLanguages(new HashSet<Language>());
+		}
+
+		this.skills.addAll(this.curriculum.getSkills());
+		this.education.addAll(this.curriculum.getEducation());
+		this.jobExperiences.addAll(this.curriculum.getJobExperiences());
+		this.languages.addAll(this.curriculum.getLanguages());
+
+		this.flash.put("curriculum", this.curriculum);
+		this.flash.put("candidate", this.curriculum.getCandidate());
+	}
+
+	private void insertOrUpdate(Curriculum curriculum) {
+		if (curriculum.getId() == 0) {
+			this.curriculumService.insertCurriculum(curriculum);
+		} else {
+			curriculum = this.curriculumService.updateCurriculum(curriculum);
+		}
+	}
+
+	private <E> Set<E> listToSet(final List<E> list) {
+		return new HashSet<E>(list);
+	}
+
+	public void removeEducation(final Education education) {
+		this.education.remove(education);
+	}
+
+	public void removeJobExperience(final JobExperience jobExperience) {
+		this.jobExperiences.remove(jobExperience);
+	}
+
+	public void removeLanguage(final Language language) {
+		this.languages.remove(language);
+	}
+
+	public void removeSkill(final Skill skill) {
+		this.skills.remove(skill);
+	}
+
+	public String save() {
+		this.curriculum.setEducation(listToSet(this.education));
+		this.curriculum.setLanguages(listToSet(this.languages));
+		this.curriculum.setJobExperiences(listToSet(this.jobExperiences));
+		this.curriculum.setSkills(listToSet(this.skills));
+		insertOrUpdate(this.curriculum);
+		return "candidateSearch?faces-redirect=true";
+	}
+
+	public void setCurriculum(final Curriculum curriculum) {
+		this.curriculum = curriculum;
+	}
+
+	public void setEducation(final List<Education> education) {
+		this.education = education;
+	}
+
+	public void setJobExperiences(final List<JobExperience> jobExperiences) {
+		this.jobExperiences = jobExperiences;
+	}
+
+	public void setLanguages(final List<Language> languages) {
+		this.languages = languages;
+	}
+
+	public void setSkills(final List<Skill> skills) {
+		this.skills = skills;
 	}
 }

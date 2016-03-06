@@ -24,7 +24,7 @@
 			</h:panelGroup>
 
 			<h:panelGroup rendered="#{jobOfferEditBean.jobOffer.id != 0}">
-				<h1 class="header">#{jobOfferEditBean.jobOffer.jobName}</h1>
+				<h1 class="header">#{jobOfferEditBean.jobOffer.name}</h1>
 			</h:panelGroup>
 
 			<h:panelGroup layout="block" styleClass="panel">
@@ -32,7 +32,7 @@
 				
 				<h:outputLabel for="name" value="#{i18n['job.name']}"
 					styleClass="very_large required">
-					<h:inputText id="name" value="#{jobOfferEditBean.jobOffer.jobName}"
+					<h:inputText id="name" value="#{jobOfferEditBean.jobOffer.name}"
 						label="#{i18n['job.name']}" required="true"
 						styleClass="#{not component.valid ? 'inputError' : ''}" />
 					<h:message for="name" errorClass="error" />
@@ -51,7 +51,7 @@
 				<h:outputLabel for="places" value="#{i18n['job.places']}"
 					styleClass="small">
 					<h:inputText id="places"
-						value="#{jobOfferEditBean.jobOffer.jobPlaces}"
+						value="#{jobOfferEditBean.jobOffer.places}"
 						label="#{i18n['job.places']}"
 						styleClass="#{not component.valid ? 'number inputError' : 'number'}" />
 					<h:message for="places" errorClass="error" />

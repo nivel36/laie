@@ -4,9 +4,9 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import ged.ejb.core.user.User;
-import ged.ejb.core.user.UserService;
 import ged.ejb.core.util.Log;
+import ged.ejb.user.User;
+import ged.ejb.user.UserService;
 import ged.web.core.view.AbstractSearchBean;
 
 @Named
@@ -25,60 +25,60 @@ public class UserSearchBean extends AbstractSearchBean<User> {
 	private UserService userService;
 
 	public void clean() {
-		email = null;
-		surename = null;
-		name = null;
+		this.email = null;
+		this.surename = null;
+		this.name = null;
 		search();
 	}
 
-	public String edit(User user) {
-		flash.put("user", user);
+	public String edit(final User user) {
+		this.flash.put("user", user);
 		return "userEdit?faces-redirect=true";
 	}
 
 	public String getEmail() {
-		return email;
+		return this.email;
 	}
 
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	public String getSurename() {
-		return surename;
+		return this.surename;
 	}
 
 	public String newUser() {
 		return "userEdit?faces-redirect=true";
 	}
 
-	public void remove(User user) {
-		userService.delete(user);
+	public void remove(final User user) {
+		this.userService.deleteUser(user);
 		search();
 	}
 
 	@Log
 	@Override
 	public void search() {
-		logger.fine("Searching for Users");
-		if (name != null || surename != null) {
-			entities = userService.findUsers(name, surename);
+		this.logger.fine("Searching for Users");
+		if ((this.name != null) || (this.surename != null)) {
+			this.entities = this.userService.findUsers(this.name, this.surename);
 		} else {
-			entities = userService.findAll();
+			this.entities = this.userService.findAll();
 		}
 		trimList();
 		setPaginationSize();
 	}
 
-	public void setEmail(String email) {
+	public void setEmail(final String email) {
 		this.email = email;
 	}
 
-	public void setName(String name) {
+	public void setName(final String name) {
 		this.name = name;
 	}
 
-	public void setSurename(String surename) {
+	public void setSurename(final String surename) {
 		this.surename = surename;
 	}
 }

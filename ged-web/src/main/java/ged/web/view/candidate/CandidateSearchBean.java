@@ -4,9 +4,9 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import ged.ejb.candidate.Candidate;
+import ged.ejb.candidate.CandidateService;
 import ged.ejb.core.util.Log;
-import ged.ejb.service.candidate.Candidate;
-import ged.ejb.service.candidate.CandidateService;
 import ged.web.core.view.AbstractSearchBean;
 
 @Named
@@ -27,66 +27,65 @@ public class CandidateSearchBean extends AbstractSearchBean<Candidate> {
 	private String surename;
 
 	public void clean() {
-		email = null;
-		surename = null;
-		name = null;
-		phoneNumber = null;
+		this.email = null;
+		this.surename = null;
+		this.name = null;
+		this.phoneNumber = null;
 		search();
 	}
 
-	public String edit(Candidate candidate) {
-		flash.put("candidate", candidate);
+	public String edit(final Candidate candidate) {
+		this.flash.put("candidate", candidate);
 		return "candidateEdit?faces-redirect=true";
 	}
 
 	public String getEmail() {
-		return email;
+		return this.email;
 	}
 
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	public String getPhoneNumber() {
-		return phoneNumber;
+		return this.phoneNumber;
 	}
 
 	public String getSurename() {
-		return surename;
+		return this.surename;
 	}
 
 	public String newCandidate() {
 		return "candidateEdit?faces-redirect=true";
 	}
 
-	public void remove(Candidate candidate) {
-		candidateService.delete(candidate);
+	public void remove(final Candidate candidate) {
+		this.candidateService.deleteCandidate(candidate);
 		search();
 	}
 
 	@Log
 	@Override
 	public void search() {
-		logger.fine("Searching for candidates");
-		entities = candidateService.searchByProperties(name, surename, email,
-				phoneNumber);
+		this.logger.fine("Searching for candidates");
+		this.entities = this.candidateService.findCandidateByNameAndSurename(this.name, this.surename);
 		trimList();
 		setPaginationSize();
 	}
 
-	public void setEmail(String email) {
+	public void setEmail(final String email) {
 		this.email = email;
 	}
 
-	public void setName(String name) {
+	public void setName(final String name) {
 		this.name = name;
 	}
 
-	public void setPhoneNumber(String phoneNumber) {
+	public void setPhoneNumber(final String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public void setSurename(String surename) {
+	public void setSurename(final String surename) {
 		this.surename = surename;
 	}
 }

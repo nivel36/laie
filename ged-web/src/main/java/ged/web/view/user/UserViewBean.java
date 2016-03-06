@@ -5,8 +5,8 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import ged.ejb.core.user.User;
-import ged.ejb.core.user.UserService;
+import ged.ejb.user.User;
+import ged.ejb.user.UserService;
 import ged.web.core.view.AbstractBean;
 
 @Named

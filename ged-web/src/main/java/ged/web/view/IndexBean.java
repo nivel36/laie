@@ -4,11 +4,9 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
-import javax.inject.Inject;
 import javax.inject.Named;
 
-import ged.ejb.service.candidate.Candidate;
-import ged.ejb.service.candidate.CandidateService;
+import ged.ejb.candidate.Candidate;
 import ged.web.core.view.AbstractBean;
 
 @Named
@@ -19,20 +17,15 @@ public class IndexBean extends AbstractBean {
 
 	private List<Candidate> candidates;
 
-	@Inject
-	private CandidateService candidateService;
-
 	public List<Candidate> getCandidates() {
-		return candidates;
+		return this.candidates;
 	}
 
 	@PostConstruct
 	public void init() {
-		candidates = candidateService.getByProperties(Candidate.class, null, 6,
-				0);
 	}
 
-	public void setCandidates(List<Candidate> candidates) {
+	public void setCandidates(final List<Candidate> candidates) {
 		this.candidates = candidates;
 	}
 }
