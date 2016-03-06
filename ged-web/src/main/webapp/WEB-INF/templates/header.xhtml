@@ -5,8 +5,18 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 	<h:panelGroup layout="block" id="logo">
 		<h:form id="userForm">
-			<h:commandLink value="#{i18n['user.logout']}"
-				action="#{loginBean.logout()}" />
+			<nav id="userMenu">
+				<ul>
+					<li><h:outputText value="#{sessionBean.user}" /> &#9660;
+						<ul>
+							<li><h:commandLink value="#{i18n['menu.config']}"
+									action="/faces/config/configIndex?faces-redirect=true"
+									styleClass="#{selectedMenu eq 'config' ? 'selected': ''}" /></li>
+							<li><h:commandLink value="#{i18n['user.logout']}"
+									action="#{loginBean.logout()}" /></li>
+						</ul></li>
+				</ul>
+			</nav>
 		</h:form>
 	</h:panelGroup>
 	<ui:insert name="menu">
@@ -32,9 +42,6 @@
 					<li><h:commandLink value="#{i18n['menu.maintenances']}"
 							action="/faces/maintenance/maintenanceIndex?faces-redirect=true"
 							styleClass="#{selectedMenu eq 'maintenances' ? 'selected': ''}" /></li>
-					<li><h:commandLink value="#{i18n['menu.config']}"
-							action="/faces/config/configIndex?faces-redirect=true"
-							styleClass="#{selectedMenu eq 'config' ? 'selected': ''}" /></li>
 					<li><h:commandLink value="#{i18n['menu.help']}"
 							action="/faces/help/helpIndex?faces-redirect=true"
 							styleClass="#{selectedMenu eq 'help' ? 'selected': ''}" /></li>

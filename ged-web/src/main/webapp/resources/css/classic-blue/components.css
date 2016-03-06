@@ -125,9 +125,11 @@ aside .panel h1 {
 	border-radius: 0 0 5px 5px;
 	background: #535993;
 	margin: 0 0 1em 0;
+	position: relative;
 }
 
 .menu {
+	width: 100%;
 	position: relative;
 	background: linear-gradient(#F4F5F9, #ACAFD0);
 	border-radius: 5px 5px 0 0;
@@ -254,15 +256,16 @@ input[type="checkbox"] {
 	margin: 6px 2 5px 2;
 }
 
-input[type="text"]:disabled, input[type="email"]:disabled, textarea:disabled {
+input[type="text"]:disabled, input[type="email"]:disabled, textarea:disabled
+	{
 	border: 0px;
 	background: transparent;
-	color:black;
+	color: black;
 	margin-left: 5px;
 }
 
-input[type="text"], select, textarea, input[type="email"], input[type="date"], input[type="password"]
-	{
+input[type="text"], select, textarea, input[type="email"], input[type="date"],
+	input[type="password"] {
 	outline: medium none;
 	padding: 3px;
 	border-radius: 3px;
@@ -663,4 +666,49 @@ textarea {
 .pieChartIcon {
 	background-image:
 		url("#{resource['img/classic-blue/pie-chart-icon.png']}");
+}
+
+#userMenu {
+	position: absolute;
+	top: 8px;
+	right: 12px;
+	float: right;
+	z-index: 1;
+}
+
+#userMenu ul {
+	list-style: none;
+}
+
+#userMenu ul ul {
+	display: none;
+}
+
+#userMenu>ul>li:hover>ul {
+	display: inline;
+}
+
+#userMenu>ul>li>ul>li {
+	padding-top: 10px;
+}
+
+#userMenu a {
+	text-decoration: none;
+	color: #444;
+	overflow: hidden;
+	color: #444;
+	display: block;
+}
+
+#userMenu>ul {
+	background: linear-gradient(#F4F5F9, #D5D7E8);
+	border-radius: 7px;
+	font-weight: bold;
+	color: #333;
+	font-size: .9em;
+}
+
+#userMenu>ul>li {
+	cursor: pointer;
+	padding: 3 10px;
 }
