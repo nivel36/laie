@@ -705,7 +705,6 @@ textarea {
 }
 
 #userMenu>ul>li:hover>ul {
-	transition: top 0.3s ease-in;
 	background: white;
 	position: absolute;
 	display: block;
@@ -716,15 +715,16 @@ textarea {
 }
 
 #userMenu>ul>li>ul>li {
-	padding: 5px 15px;
 	background: #D5D7E8;
 }
 
 #userMenu>ul>li>ul>li:hover {
 	background: #F4F5F9;
+	transition: all 0.2s ease-in;
 }
 
 #userMenu a {
+	padding: 5px 15px;
 	text-decoration: none;
 	color: #444;
 	overflow: hidden;
