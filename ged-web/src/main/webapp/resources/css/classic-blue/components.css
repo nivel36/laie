@@ -136,6 +136,7 @@ aside .panel h1 {
 	overflow: auto;
 	padding-top: 2px;
 	border-bottom: 2px solid #7D82B0;
+	position: relative;
 }
 
 .menu li a {
@@ -677,7 +678,13 @@ textarea {
 }
 
 #userMenu ul {
+	margin: 0px;
+	padding: 0px;
 	list-style: none;
+}
+
+#userMenu>ul {
+	height: 22px;
 }
 
 #userMenu ul ul {
@@ -688,27 +695,47 @@ textarea {
 	display: inline;
 }
 
-#userMenu>ul>li>ul>li {
-	padding-top: 10px;
-}
-
-#userMenu a {
-	text-decoration: none;
-	color: #444;
-	overflow: hidden;
-	color: #444;
-	display: block;
-}
-
-#userMenu>ul {
-	background: linear-gradient(#F4F5F9, #D5D7E8);
+#userMenu>ul>li {
+	padding: 3px 5px;
+	background: linear-gradient(#D5D7E8, #7D82B0);
 	border-radius: 7px;
 	font-weight: bold;
 	color: #333;
 	font-size: .9em;
 }
 
-#userMenu>ul>li {
+#userMenu>ul>li:hover>ul {
+	transition: top 0.3s ease-in;
+	background: white;
+	position: absolute;
+	display: block;
+	margin-top: 3px;
+	border: 1px solid #7D82B0;
+	border-right: 1px solid #535993;
+	border-bottom: 1px solid #535993;
+}
+
+#userMenu>ul>li>ul>li {
+	padding: 5px 15px;
+	background: #D5D7E8;
+}
+
+#userMenu>ul>li>ul>li:hover {
+	background: #F4F5F9;
+}
+
+#userMenu a {
+	text-decoration: none;
+	color: #444;
+	overflow: hidden;
+	display: block;
+	width: 100%;
+}
+
+#userMenu li {
 	cursor: pointer;
-	padding: 3 10px;
+}
+
+#userMenu>ul>li>ul>li {
+	
 }
