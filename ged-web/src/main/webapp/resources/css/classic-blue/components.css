@@ -675,6 +675,7 @@ textarea {
 	right: 12px;
 	float: right;
 	z-index: 1;
+	min-width: 108px;
 }
 
 #userMenu ul {
@@ -696,7 +697,7 @@ textarea {
 }
 
 #userMenu>ul>li {
-	padding: 3px 5px;
+	padding: 3px 15px;
 	background: linear-gradient(#D5D7E8, #7D82B0);
 	border-radius: 7px;
 	font-weight: bold;
@@ -712,6 +713,8 @@ textarea {
 	border: 1px solid #7D82B0;
 	border-right: 1px solid #535993;
 	border-bottom: 1px solid #535993;
+	width: 100%;
+	left:0px;
 }
 
 #userMenu>ul>li>ul>li {
@@ -734,8 +737,4 @@ textarea {
 
 #userMenu li {
 	cursor: pointer;
-}
-
-#userMenu>ul>li>ul>li {
-	
 }
