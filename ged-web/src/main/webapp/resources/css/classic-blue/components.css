@@ -54,10 +54,72 @@ label input, label textarea, label select {
 	float: left;
 }
 
+/************************************
+ * MODAL DIALOG
+ ************************************/
+ 
+.modalDialog {
+	position: fixed;
+	font-family: Arial, Helvetica, sans-serif;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background: rgba(0, 0, 0, 0.8);
+	z-index: 10;
+	transition: opacity 100ms ease-in;
+	pointer-events: auto;
+}
+
+.modalDialog>div {
+	width: 400px;
+	position: relative;
+	margin: 10% auto;
+	padding: 45px 20px 13px 20px;
+	border-radius: 5px;
+	border: 2px solid #535993;
+	background: #F4F5F9;
+	overflow: auto;
+}
+
+.modalDialog h1 {
+	padding-left: 10px;
+	font-size: 12px;
+	background: #bbb;
+	layout: block;
+	position: absolute;
+	top:0px;
+	left:0px;
+	right:0px;
+}
+
+.close {
+	background: #bbb;
+	color: #FFFFFF;
+	line-height: 25px;
+	position: absolute;
+	right: 0px;
+	text-align: center;
+	top: 0px;
+	width: 30px;
+	text-decoration: none;
+	font-weight: bold;
+	z-index: 11;
+	cursor: pointer;
+}
+
+.close:hover {
+	background: #00d9ff;
+}
+
 .popup {
+	width: 500px;
 	z-index: 10;
 	position: absolute;
-	margin: 0 auto;
+	left: 0;
+	right: 0;
+	margin-left: auto;
+	margin-right: auto;
 	top: 150px;
 	overflow: auto;
 	background: #F4F5F9;
@@ -166,6 +228,7 @@ aside .panel h1 {
 }
 
 .menu li:hover a {
+	transition: all 0.2s ease-in;
 	color: #535993;
 }
 
@@ -214,6 +277,7 @@ aside input[type="submit"] {
 
 aside input[type="submit"]:hover {
 	background: linear-gradient(#FFFDF9, #FFF1CC);
+	transition: all 0.1s ease-in;
 }
 
 /************************************
@@ -277,7 +341,7 @@ input[type="text"], select, textarea, input[type="email"], input[type="date"],
 	width: 158px;
 }
 
-input[type="submit"] {
+input[type="submit"], input[type="button"] {
 	background: linear-gradient(#F4F5F9, #D5D7E8);
 	color: #333;
 	font-weight: bold;
@@ -292,7 +356,7 @@ input[type="submit"] {
 	padding: 2px;
 }
 
-input[type="submit"]:hover {
+input[type="submit"]:hover, input[type="button"]:hover {
 	background: linear-gradient(#F4F5F9, #ACAFD0);
 }
 
@@ -604,7 +668,7 @@ textarea {
 }
 
 .error {
-	color: red;
+	color: red !important;
 	float: left;
 	margin-left: 172px;
 	font-weight: normal;
@@ -714,7 +778,7 @@ textarea {
 	border-right: 1px solid #535993;
 	border-bottom: 1px solid #535993;
 	width: 100%;
-	left:0px;
+	left: 0px;
 }
 
 #userMenu>ul>li>ul>li {

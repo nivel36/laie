@@ -15,7 +15,7 @@ import javax.inject.Inject;
 public class AbstractBean implements Serializable {
 
 	private static final long serialVersionUID = -2545624640193642401L;
-	
+
 	@Inject
 	protected FacesContext facesContext;
 
@@ -24,36 +24,37 @@ public class AbstractBean implements Serializable {
 
 	@Inject
 	protected Logger logger;
-	
+
 	@Inject
 	protected SessionBean sessionBean;
 
-	public void setLogger(Logger logger) {
+	protected void addErrorToField(final UIComponent component, final String message) {
+		final String translatedMessage = translate(message);
+		final FacesMessage facesMessage = new FacesMessage(translatedMessage);
+		facesMessage.setSeverity(FacesMessage.SEVERITY_ERROR);
+		this.facesContext.addMessage(component.getClientId(), facesMessage);
+	}
+
+	protected void addMessage(final Severity severity, final String title, final String message) {
+		final String translatedTitle = translate(title);
+		final String translatedMessage = translate(message);
+		final FacesMessage facesMessage = new FacesMessage(severity, translatedTitle, translatedMessage);
+		this.facesContext.addMessage(null, facesMessage);
+	}
+
+	private ResourceBundle getResourceBundle(final String filename) {
+		final Locale locale = this.facesContext.getViewRoot().getLocale();
+		final ResourceBundle bundle = ResourceBundle.getBundle(filename, locale);
+		return bundle;
+	}
+
+	public void setLogger(final Logger logger) {
 		this.logger = logger;
 	}
 
-	protected void addMessage(Severity severity, String title, String message) {
-		String translatedTitle = translate(title);
-		String translatedMessage = translate(message);
-		FacesMessage facesMessage = new FacesMessage(severity, translatedTitle,
-				translatedMessage);
-		facesContext.addMessage(null, facesMessage);
-	}
-	
-	protected void addErrorToField(UIComponent component, String message) {
-		String translatedMessage = translate(message);
-		facesContext.addMessage(component.getClientId(), new FacesMessage(translatedMessage));
-	}
-
-	private String translate(String message) {
-		ResourceBundle bundle = getResourceBundle("ged.i18n");
-		String translatedMessage = bundle.getString(message);
+	private String translate(final String message) {
+		final ResourceBundle bundle = getResourceBundle("ged.i18n");
+		final String translatedMessage = bundle.getString(message);
 		return translatedMessage;
-	}
-
-	private ResourceBundle getResourceBundle(String filename) {
-		Locale locale = facesContext.getViewRoot().getLocale();
-		ResourceBundle bundle = ResourceBundle.getBundle(filename, locale);
-		return bundle;
 	}
 }
