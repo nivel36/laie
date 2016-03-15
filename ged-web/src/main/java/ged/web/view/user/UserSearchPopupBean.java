@@ -6,14 +6,14 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import ged.ejb.core.util.Log;
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
-import ged.web.core.view.AbstractSearchBean;
+import ged.web.core.view.AbstractDialogBean;
+import ged.web.core.view.Paginator;
 
 @Named
 @ViewScoped
-public class UserSearchPopupBean extends AbstractSearchBean<User> {
+public class UserSearchPopupBean extends AbstractDialogBean {
 
 	private static final long serialVersionUID = -2701760708389112615L;
 
@@ -23,7 +23,7 @@ public class UserSearchPopupBean extends AbstractSearchBean<User> {
 
 	private String name;
 
-	private boolean rendered;
+	private Paginator<User> paginator;
 
 	private String surename;
 
@@ -39,6 +39,13 @@ public class UserSearchPopupBean extends AbstractSearchBean<User> {
 		this.surename = null;
 		this.name = null;
 		search();
+	}
+
+	@Override
+	public void clear() {
+		this.email = null;
+		this.name = null;
+		this.surename = null;
 	}
 
 	private <C extends UIComponent> UIComponent findChildrenByName(final UIComponent parent) {
@@ -67,10 +74,15 @@ public class UserSearchPopupBean extends AbstractSearchBean<User> {
 		return this.name;
 	}
 
+	public Paginator<User> getPaginator() {
+		return this.paginator;
+	}
+
 	public String getSurename() {
 		return this.surename;
 	}
 
+	@Override
 	public boolean isRendered() {
 		return this.rendered;
 	}
@@ -79,17 +91,15 @@ public class UserSearchPopupBean extends AbstractSearchBean<User> {
 		this.rendered = true;
 	}
 
-	@Log
-	@Override
 	public void search() {
 		this.logger.fine("Searching for Users");
 		if ((this.name != null) || (this.surename != null)) {
-			this.entities = this.userService.findUsers(this.name, this.surename);
+			this.paginator.setEntities(this.userService.findUsers(this.name, this.surename));
 		} else {
-			this.entities = this.userService.findAll();
+			this.paginator.setEntities(this.userService.findAll());
 		}
-		trimList();
-		setPaginationSize();
+		this.paginator.trimList();
+		this.paginator.setPaginationSize();
 	}
 
 	public void select(final User user) {
@@ -111,6 +121,7 @@ public class UserSearchPopupBean extends AbstractSearchBean<User> {
 		this.name = name;
 	}
 
+	@Override
 	public void setRendered(final boolean rendered) {
 		this.rendered = rendered;
 	}

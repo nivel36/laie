@@ -6,130 +6,133 @@
 	xmlns:i18n="http://legion.com/i18n"
 	xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
 
-	<h:form id="userSearchPopupForm">
-		<h:panelGroup layout="block" styleClass="modalPanel"
-			rendered="#{userSearchPopupBean.rendered}" />
-		<h:panelGroup layout="block" styleClass="popup"
-			rendered="#{userSearchPopupBean.rendered}" id="userSearchPopup">
-			<h:graphicImage value="/resources/img/s.gif"
-				styleClass="headerIcon usersIcon" />
 
-			<h1 class="header">#{i18n['user.user']}</h1>
+	<h:panelGroup layout="block" rendered="#{userSearchPopupBean.rendered}"
+		styleClass="#{userSearchPopupBean.modal ? 'modalDialog': ''}">
+		<h:panelGroup layout="block" id="modalContent">
+			<h:form id="userSearchPopupForm">
+				<h3 class="header">#{i18n['user.user']}</h3>
 
-			<h:panelGroup layout="block" styleClass="panel">
-				<h1>#{i18n['user.search']}</h1>
-				<h:outputLabel for="searchUserName" value="#{i18n['user.name']}">
-					<h:inputText id="searchUserName"
-						value="#{userSearchPopupBean.name}" label="#{i18n['user.name']}" />
-				</h:outputLabel>
+				<h:panelGroup layout="block" styleClass="panel">
+					<h2>#{i18n['user.search']}</h2>
+					<h:outputLabel for="searchUserName" value="#{i18n['user.name']}">
+						<h:inputText id="searchUserName"
+							value="#{userSearchPopupBean.name}" label="#{i18n['user.name']}" />
+					</h:outputLabel>
 
-				<h:outputLabel for="searchUserSurename"
-					value="#{i18n['user.surename']}">
-					<h:inputText id="searchUserSurename"
-						value="#{userSearchPopupBean.surename}"
-						label="#{i18n['user.surename']}" />
-				</h:outputLabel>
+					<h:outputLabel for="searchUserSurename"
+						value="#{i18n['user.surename']}">
+						<h:inputText id="searchUserSurename"
+							value="#{userSearchPopupBean.surename}"
+							label="#{i18n['user.surename']}" />
+					</h:outputLabel>
 
-				<h:panelGroup layout="block" styleClass="buttonGroup">
-					<h:commandButton value="#{i18n['action.clean']}"
-						action="#{userSearchPopupBean.clean}" />
-					<h:commandButton value="#{i18n['action.search']}"
-						action="#{userSearchPopupBean.search}" />
+					<h:panelGroup layout="block" styleClass="buttonGroup">
+						<h:commandButton value="#{i18n['action.clean']}"
+							action="#{userSearchPopupBean.clean}" />
+						<h:commandButton value="#{i18n['action.search']}"
+							action="#{userSearchPopupBean.search}" />
+					</h:panelGroup>
 				</h:panelGroup>
-			</h:panelGroup>
 
-			<h:panelGroup layout="block" styleClass="panel" id="resultados">
-				<h1>#{i18n['user.search_results']}</h1>
+				<h:panelGroup layout="block" styleClass="panel" id="resultados">
+					<h2>#{i18n['user.search_results']}</h2>
 
-				<h:outputText value="#{i18n['user.no_users_found']}"
-					rendered="#{empty userSearchPopupBean.dataList}" />
+					<h:outputText value="#{i18n['user.no_users_found']}"
+						rendered="#{empty userSearchPopupBean.paginator.dataList}" />
 
-				<h:dataTable var="user" id="usersList"
-					value="#{userSearchPopupBean.dataList}"
-					rendered="#{not empty userSearchPopupBean.dataList}"
-					styleClass="dataTable">
-					<h:column>
-						<f:facet name="header">
+					<h:dataTable var="user" id="usersList"
+						value="#{userSearchPopupBean.paginator.dataList}"
+						rendered="#{not empty userSearchPopupBean.paginator.dataList}"
+						styleClass="dataTable">
+						<h:column>
+							<f:facet name="header">
+								<h:selectBooleanCheckbox />
+							</f:facet>
 							<h:selectBooleanCheckbox />
-						</f:facet>
-						<h:selectBooleanCheckbox />
-					</h:column>
+						</h:column>
 
-					<h:column>
-						<f:facet name="header">
-							<h:outputText value="#{i18n['user.name']}" />
-						</f:facet>
-						<h:outputText value="#{user}" />
-					</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{i18n['user.name']}" />
+							</f:facet>
+							<h:outputText value="#{user}" />
+						</h:column>
 
-					<h:column>
-						<f:facet name="header">
-							<h:outputText value="#{i18n['user.email']}" />
-						</f:facet>
-						<h:outputText value="#{user.email}" />
-					</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{i18n['user.email']}" />
+							</f:facet>
+							<h:outputText value="#{user.email}" />
+						</h:column>
 
-					<h:column>
-						<f:facet name="header">
-							<h:outputText value="#{i18n['user.role']}" />
-						</f:facet>
-						<h:outputText value="#{i18n:translate(user.role.name)}" />
-					</h:column>
-					<h:column>
-						<f:facet name="header">
-							<h:outputText value="Action" />
-						</f:facet>
-						<h:commandLink action="#{userSearchPopupBean.select(user)}"
-							value="#{i18n['action.select']}">
-							<f:ajax render=":userSearchPopupForm :form:manager" />
-						</h:commandLink>
-					</h:column>
-				</h:dataTable>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{i18n['user.role']}" />
+							</f:facet>
+							<h:outputText value="#{i18n:translate(user.role.name)}" />
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="Action" />
+							</f:facet>
+							<h:commandLink action="#{userSearchPopupBean.select(user)}"
+								value="#{i18n['action.select']}">
+								<f:ajax render=":userSearchPopupForm :form:manager" />
+							</h:commandLink>
+						</h:column>
+					</h:dataTable>
 
-				<h:panelGroup layout="block" styleClass="paginator" id="paginator"
-					rendered="#{not empty userSearchPopupBean.dataList}">
-					<h:commandButton disabled="#{userSearchPopupBean.currentPage eq 0}"
-						value="#{i18n['paginator.first']}"
-						action="#{userSearchPopupBean.firstPage}">
-						<f:ajax render=":form:resultados" />
-					</h:commandButton>
-					<h:commandButton disabled="#{userSearchPopupBean.currentPage eq 0}"
-						value="#{i18n['paginator.previous']}"
-						action="#{userSearchPopupBean.previousPage}">
-						<f:ajax render=":form:resultados" />
-					</h:commandButton>
-					<ui:repeat value="#{userSearchPopupBean.pages}" var="page">
-						<h:commandButton value="#{page+1}"
-							action="#{userSearchPopupBean.gotoPage(page)}"
-							disabled="#{userSearchPopupBean.currentPage eq page}">
+					<h:panelGroup layout="block" styleClass="paginator" id="paginator"
+						rendered="#{not empty userSearchPopupBean.paginator.dataList}">
+						<h:commandButton
+							disabled="#{userSearchPopupBean.paginator.currentPage eq 0}"
+							value="#{i18n['paginator.first']}"
+							action="#{userSearchPopupBean.paginator.firstPage}">
 							<f:ajax render=":form:resultados" />
 						</h:commandButton>
-					</ui:repeat>
-					<h:commandButton value="#{i18n['paginator.next']}"
-						disabled="#{userSearchPopupBean.currentPage eq userSearchPopupBean.pagesSize-1}"
-						action="#{userSearchPopupBean.nextPage}">
-						<f:ajax render=":form:resultados" />
-					</h:commandButton>
-					<h:commandButton value="#{i18n['paginator.last']}"
-						disabled="#{userSearchPopupBean.currentPage eq userSearchPopupBean.pagesSize-1}"
-						action="#{userSearchPopupBean.lastPage}">
-						<f:ajax render=":form:resultados" />
-					</h:commandButton>
-					<h:outputLabel value="#{i18n['paginator.show']}">
-						<h:selectOneMenu value="#{userSearchPopupBean.rowsPerPage}">
-							<f:selectItem itemValue="5" itemLabel="5" />
-							<f:selectItem itemValue="10" itemLabel="10" />
-							<f:selectItem itemValue="25" itemLabel="25" />
-							<f:ajax listener="#{userSearchPopupBean.rowsPerPageChange}"
-								render=":form:resultados" execute=":form:paginator" />
-						</h:selectOneMenu>
-					</h:outputLabel>
+						<h:commandButton
+							disabled="#{userSearchPopupBean.paginator.currentPage eq 0}"
+							value="#{i18n['paginator.previous']}"
+							action="#{userSearchPopupBean.paginator.previousPage}">
+							<f:ajax render=":form:resultados" />
+						</h:commandButton>
+						<ui:repeat value="#{userSearchPopupBean.paginator.pages}"
+							var="page">
+							<h:commandButton value="#{page+1}"
+								action="#{userSearchPopupBean.paginator.gotoPage(page)}"
+								disabled="#{userSearchPopupBean.paginator.currentPage eq page}">
+								<f:ajax render=":form:resultados" />
+							</h:commandButton>
+						</ui:repeat>
+						<h:commandButton value="#{i18n['paginator.next']}"
+							disabled="#{userSearchPopupBean.paginator.currentPage eq userSearchPopupBean.paginator.pagesSize-1}"
+							action="#{userSearchPopupBean.paginator.nextPage}">
+							<f:ajax render=":form:resultados" />
+						</h:commandButton>
+						<h:commandButton value="#{i18n['paginator.last']}"
+							disabled="#{userSearchPopupBean.paginator.currentPage eq userSearchPopupBean.paginator.pagesSize-1}"
+							action="#{userSearchPopupBean.paginator.lastPage}">
+							<f:ajax render=":form:resultados" />
+						</h:commandButton>
+						<h:outputLabel value="#{i18n['paginator.show']}">
+							<h:selectOneMenu
+								value="#{userSearchPopupBean.paginator.rowsPerPage}">
+								<f:selectItem itemValue="5" itemLabel="5" />
+								<f:selectItem itemValue="10" itemLabel="10" />
+								<f:selectItem itemValue="25" itemLabel="25" />
+								<f:ajax
+									listener="#{userSearchPopupBean.paginator.rowsPerPageChange}"
+									render=":form:resultados" execute=":form:paginator" />
+							</h:selectOneMenu>
+						</h:outputLabel>
+					</h:panelGroup>
 				</h:panelGroup>
-			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="buttonGroup">
-				<h:commandButton value="#{i18n['action.cancel']}"
-					action="#{userSearchPopupBean.cancel}" immediate="true" />
-			</h:panelGroup>
+				<h:panelGroup layout="block" styleClass="buttonGroup">
+					<h:commandButton value="#{i18n['action.cancel']}"
+						action="#{userSearchPopupBean.cancel}" immediate="true" />
+				</h:panelGroup>
+			</h:form>
 		</h:panelGroup>
-	</h:form>
+	</h:panelGroup>
 </ui:composition>

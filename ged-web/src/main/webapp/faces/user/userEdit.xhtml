@@ -78,11 +78,10 @@
 					<h:inputText id="manager" value="#{userEditBean.user.manager}"
 						label="#{i18n['user.manager']}" readonly="true" />
 				</h:outputLabel>
-				<h:commandButton action="#{userSearchPopupBean.open}" value="+"
+				<h:commandButton action="#{userSearchPopupBean.show}" value="+"
 					immediate="true">
 					<f:setPropertyActionListener
 						target="#{userSearchPopupBean.inputId}" value="manager" />
-					<f:ajax render=":userSearchPopupForm" />
 				</h:commandButton>
 				
 				<h:commandButton action="#{userEditBean.removeManager}" value="-"

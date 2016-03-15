@@ -1,85 +1,102 @@
 package ged.web.core.view;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
-import javax.faces.component.FacesComponent;
-import javax.faces.component.UINamingContainer;
+import ged.ejb.core.model.AbstractEntity;
 
-@FacesComponent("paginator")
-public class Paginator extends UINamingContainer implements Serializable {
+public class Paginator<T extends AbstractEntity> implements Serializable {
 
 	private static final long serialVersionUID = 7195309415237383376L;
 
-	private int firstRow;
+	protected int currentPage;
 
-	private List<?> listElements;
+	protected List<T> dataList;
 
-	private int maxRow;
+	protected List<T> entities;
 
-	private int rowCount;
+	protected Integer[] pages;
+
+	protected int rowsPerPage;
 
 	public void firstPage() {
-		firstRow = 0;
+		this.currentPage = 0;
+		trimList();
 	}
 
-	public int getFirstRow() {
-		return firstRow;
+	public int getCurrentPage() {
+		return this.currentPage;
 	}
 
-	public List<?> getListElements() {
-		return listElements;
+	public List<T> getDataList() {
+		return this.dataList;
 	}
 
-	public int getMaxRow() {
-		return maxRow;
+	public List<T> getEntities() {
+		return this.entities;
 	}
 
-	public List<Integer> getPageNumbers() {
-		List<Integer> numbers = new ArrayList<Integer>();
-		int pages = maxRow / rowCount;
-		for (int i = 0; i < pages; i++) {
-			numbers.add(i);
-		}
-		return numbers;
+	public Integer[] getPages() {
+		return this.pages;
 	}
 
-	public List<?> getpaginatedElements() {
-		return listElements.subList(firstRow, rowCount);
+	public int getPagesSize() {
+		return this.pages.length;
 	}
 
-	public int getRowCount() {
-		return rowCount;
+	public int getRowsPerPage() {
+		return this.rowsPerPage;
+	}
+
+	public void gotoPage(final int page) {
+		this.currentPage = page;
+		trimList();
 	}
 
 	public void lastPage() {
-		firstRow = maxRow / rowCount;
+		this.currentPage = this.pages.length - 1;
+		trimList();
 	}
 
 	public void nextPage() {
-		this.firstRow++;
+		final int maxPage = this.pages.length - 1;
+		if (this.currentPage < maxPage) {
+			this.currentPage++;
+		}
+		trimList();
 	}
 
 	public void previousPage() {
-		if (firstRow > 0) {
-			this.firstRow--;
+		if (this.currentPage > 0) {
+			this.currentPage--;
+		}
+		trimList();
+	}
+
+	public void rowsPerPageChange() {
+		this.currentPage = 0;
+	}
+
+	public void setEntities(final List<T> entities) {
+		this.entities = entities;
+	}
+
+	public void setPaginationSize() {
+		final int size = (int) Math.ceil(this.entities.size() / (double) this.rowsPerPage);
+		this.pages = new Integer[size];
+		for (int i = 0; i < size; i++) {
+			this.pages[i] = i;
 		}
 	}
 
-	public void setFirstRow(int firstRow) {
-		this.firstRow = firstRow;
+	public void setRowsPerPage(final int rowsPerPage) {
+		this.rowsPerPage = rowsPerPage;
 	}
 
-	public void setListElements(List<?> listElements) {
-		this.listElements = listElements;
-	}
-
-	public void setMaxRow(int maxRow) {
-		this.maxRow = maxRow;
-	}
-
-	public void setRowCount(int rowCount) {
-		this.rowCount = rowCount;
+	public void trimList() {
+		final int size = this.entities.size();
+		final int firstRow = this.currentPage * this.rowsPerPage;
+		final int lastRow = Math.min(size - firstRow, this.rowsPerPage);
+		this.dataList = this.entities.subList(firstRow, firstRow + lastRow);
 	}
 }
