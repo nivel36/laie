@@ -52,7 +52,7 @@ public class AbstractBean implements Serializable {
 		this.logger = logger;
 	}
 
-	private String translate(final String message) {
+	protected String translate(final String message) {
 		final ResourceBundle bundle = getResourceBundle("ged.i18n");
 		final String translatedMessage = bundle.getString(message);
 		return translatedMessage;

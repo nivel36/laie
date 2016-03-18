@@ -9,6 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import ged.ejb.core.bookmark.Bookmark;
@@ -29,6 +30,9 @@ public class User extends AbstractEntity {
 	@NotNull
 	@Column(length = 128, nullable = false, unique = true)
 	private String email;
+
+	@Transient
+	private String fullName;
 
 	@NotNull
 	@Column(length = 2, nullable = false)
@@ -108,6 +112,10 @@ public class User extends AbstractEntity {
 		return this.email;
 	}
 
+	public String getFullName() {
+		return this.name + " " + this.surename;
+	}
+
 	public String getLanguage() {
 		return this.language;
 	}
@@ -180,6 +188,10 @@ public class User extends AbstractEntity {
 
 	public void setEmail(final String email) {
 		this.email = email;
+	}
+
+	public void setFullName(final String fullName) {
+		this.fullName = fullName;
 	}
 
 	public void setLanguage(final String language) {

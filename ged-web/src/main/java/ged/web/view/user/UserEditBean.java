@@ -1,16 +1,21 @@
 package ged.web.view.user;
 
-import java.util.List;
 import java.util.Locale;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import ged.ejb.user.Role;
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
 import ged.web.core.view.AbstractBean;
+import ged.web.core.view.Paginator;
 
 @Named
 @ViewScoped
@@ -18,7 +23,19 @@ public class UserEditBean extends AbstractBean {
 
 	private static final long serialVersionUID = 1923340646020120203L;
 
-	private List<User> managers;
+	private String email;
+
+	private User manager;
+
+	protected boolean modal = true;
+
+	private String name;
+
+	private Paginator<User> paginator;
+
+	protected boolean rendered = false;
+
+	private String surename;
 
 	private User user;
 
@@ -29,12 +46,48 @@ public class UserEditBean extends AbstractBean {
 		return "userSearch?faces-redirect=true";
 	}
 
-	public List<User> getManagers() {
-		return this.managers;
+	public void cancelPopup() {
+		this.rendered = false;
+	}
+
+	public void clean() {
+		clear();
+		search();
+	}
+
+	public void clear() {
+		this.email = null;
+		this.name = null;
+		this.surename = null;
+	}
+
+	public String getEmail() {
+		return this.email;
+	}
+
+	public User getManager() {
+		return this.manager;
+	}
+
+	public String getName() {
+		return this.name;
+	}
+
+	public Paginator<User> getPaginator() {
+		return this.paginator;
+	}
+
+	public String getSurename() {
+		return this.surename;
 	}
 
 	public User getUser() {
 		return this.user;
+	}
+
+	public void hide() {
+		clear();
+		this.rendered = false;
 	}
 
 	@PostConstruct
@@ -50,14 +103,41 @@ public class UserEditBean extends AbstractBean {
 			this.user.setLanguage(language);
 			this.user.setPassword("M+SzETkPtT+deVQNIScBEXivvfozSne5QqIqyWICLv0=");
 		}
+		if (this.user.getManager() != null) {
+			this.manager = this.user.getManager();
+		} else {
+			this.manager = new User();
+			this.manager.setName("");
+			this.manager.setSurename("");
+		}
 		this.flash.put("user", this.user);
+		this.paginator = new Paginator<User>();
+		this.paginator.setRowsPerPage(this.sessionBean.getUser().getRowsPerPage());
+	}
+
+	public boolean isModal() {
+		return this.modal;
+	}
+
+	public boolean isRendered() {
+		return this.rendered;
+	}
+
+	public void open() {
+		this.rendered = true;
 	}
 
 	public void removeManager() {
+		this.manager = new User();
+		this.manager.setName("");
+		this.manager.setSurename("");
 		this.user.setManager(null);
 	}
 
 	public String save() {
+		if (this.manager.getUsername() != null) {
+			this.user.setManager(this.manager);
+		}
 		if (this.user.getId() != 0) {
 			this.user = this.userService.updateUser(this.user);
 		} else {
@@ -66,8 +146,44 @@ public class UserEditBean extends AbstractBean {
 		return "userSearch?faces-redirect=true";
 	}
 
-	public void setManagers(final List<User> managers) {
-		this.managers = managers;
+	public void search() {
+		this.logger.fine("Searching for Users");
+		if ((this.name != null) || (this.surename != null)) {
+			this.paginator.setEntities(this.userService.findUsers(this.name, this.surename));
+		} else {
+			this.paginator.setEntities(this.userService.findAll());
+		}
+		this.paginator.trimList();
+		this.paginator.setPaginationSize();
+	}
+
+	public void select(final User manager) {
+		this.manager = manager;
+		this.rendered = false;
+	}
+
+	public void setEmail(final String email) {
+		this.email = email;
+	}
+
+	public void setManager(final User manager) {
+		this.manager = manager;
+	}
+
+	public void setModal(final boolean modal) {
+		this.modal = modal;
+	}
+
+	public void setName(final String name) {
+		this.name = name;
+	}
+
+	public void setRendered(final boolean rendered) {
+		this.rendered = rendered;
+	}
+
+	public void setSurename(final String surename) {
+		this.surename = surename;
 	}
 
 	public void setUser(final User user) {
@@ -76,5 +192,45 @@ public class UserEditBean extends AbstractBean {
 
 	public void setUserService(final UserService userService) {
 		this.userService = userService;
+	}
+
+	public void show() {
+		this.rendered = true;
+	}
+
+	public void validateManager(final FacesContext context, final UIComponent component, final Object value)
+			throws ValidatorException {
+		if (this.manager.getUsername() == null) {
+			return;
+		}
+		if (this.user.equals(this.manager)) {
+			final String msg = translate("user.error.manager");
+			throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg));
+		}
+	}
+
+	public void validateRole(final FacesContext context, final UIComponent component, final Object value)
+			throws ValidatorException {
+		if (this.manager.getUsername() == null) {
+			return;
+		}
+		final Role userRole = (Role) value;
+		final Role managerRole = this.manager.getRole();
+		final String userRoleName = userRole.getName();
+		final String managerRoleName = managerRole.getName();
+		final String msg = translate("user.error.role");
+		if (userRoleName.equals("ADMIN") && !managerRoleName.equals("ADMIN")) {
+			throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg));
+		} else if (userRoleName.equals("RECRUITER_ADMIN")
+				&& (managerRoleName.contains("TECHNIC") || managerRoleName.equals("RECRUITER"))) {
+			throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg));
+		} else if (userRoleName.equals("TECHNIC_ADMIN")
+				&& (managerRoleName.contains("RECRUITER") || managerRoleName.equals("TECHNIC"))) {
+			throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg));
+		} else if (userRoleName.equals("TECHNIC") && managerRoleName.contains("RECRUITER")) {
+			throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg));
+		} else if (userRoleName.equals("RECRUITER") && managerRoleName.contains("TECHNIC")) {
+			throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg));
+		}
 	}
 }

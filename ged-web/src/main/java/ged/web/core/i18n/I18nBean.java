@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.MissingResourceException;
-import java.util.ResourceBundle;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
@@ -46,12 +45,6 @@ public class I18nBean extends AbstractBean {
 		return translatedText;
 	}
 
-	private ResourceBundle getResourceBundle(final String filename) {
-		final Locale locale = this.facesContext.getViewRoot().getLocale();
-		final ResourceBundle bundle = ResourceBundle.getBundle(filename, locale);
-		return bundle;
-	}
-
 	@PostConstruct
 	public void init() {
 		loadLocales();
@@ -85,11 +78,5 @@ public class I18nBean extends AbstractBean {
 			language = defaultLocale.getLanguage();
 		}
 		this.locales.add(language);
-	}
-
-	private String translate(final String message) {
-		final ResourceBundle bundle = getResourceBundle("ged.i18n");
-		final String translatedMessage = bundle.getString(message);
-		return translatedMessage;
 	}
 }
