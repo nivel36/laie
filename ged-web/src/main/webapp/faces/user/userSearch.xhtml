@@ -22,7 +22,7 @@
 
 			<h:panelGroup layout="block" styleClass="panel">
 				<h1>#{i18n['user.search']}</h1>
-				
+
 				<h:outputLabel for="name" value="#{i18n['user.name']}">
 					<h:inputText id="name" value="#{userSearchBean.name}"
 						label="#{i18n['user.name']}" />
@@ -88,12 +88,13 @@
 						<h:link value="#{i18n['action.view']}" outcome="userView">
 							<f:param name="userId" value="#{user.id}" />
 						</h:link>
-						|
+						<h:outputText value=" | " />
 						<h:commandLink action="#{userSearchBean.edit(user)}"
 							value="#{i18n['action.edit']}" />
-						|
+						<h:outputText value=" | " rendered="${user.role.name!='ADMIN'}" />
 						<h:commandLink action="#{userSearchBean.remove(user)}"
-							value="#{i18n['action.remove']}">
+							value="#{i18n['action.remove']}"
+							rendered="${user.role.name!='ADMIN'}">
 							<f:ajax execute="@form" render="@form" />
 						</h:commandLink>
 					</h:column>
