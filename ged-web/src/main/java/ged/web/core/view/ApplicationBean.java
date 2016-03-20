@@ -1,5 +1,6 @@
 package ged.web.core.view;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -15,6 +16,7 @@ import javax.inject.Named;
 
 import ged.ejb.candidate.FileType;
 import ged.ejb.core.Cache;
+import ged.ejb.core.Indexer;
 import ged.ejb.curriculum.LanguageLevel;
 import ged.ejb.curriculum.SkillLevel;
 import ged.ejb.user.Role;
@@ -27,6 +29,9 @@ public class ApplicationBean extends AbstractBean {
 
 	@Inject
 	private Cache cache;
+
+	@Inject
+	private Indexer indexer;
 
 	private List<Locale> locales = new ArrayList<Locale>();
 
@@ -62,12 +67,15 @@ public class ApplicationBean extends AbstractBean {
 
 	@PostConstruct
 	public void init() {
-		loadLocales();
-		this.properties = new Properties();
 		try {
+			loadLocales();
+			this.properties = new Properties();
 			this.properties.load(ApplicationBean.class.getResourceAsStream("/ged/config.properties"));
-		} catch (final Exception e) {
+			this.indexer.index();
+		} catch (final IOException e) {
 			this.logger.log(Level.SEVERE, "Could not load properties");
+		} catch (final InterruptedException ex) {
+			this.logger.log(Level.SEVERE, "Could not index");
 		}
 	}
 

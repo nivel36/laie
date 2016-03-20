@@ -54,6 +54,11 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	public List<User> fullSearch(final String matching) {
+		return this.userDao.fullSearch(matching);
+	}
+
+	@Override
 	public void insertBookmark(final Bookmark bookmark) {
 		this.userDao.insertBookmark(bookmark);
 	}

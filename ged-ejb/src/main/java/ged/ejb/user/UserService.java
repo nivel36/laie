@@ -23,6 +23,8 @@ public interface UserService {
 
 	public List<User> findUsers(String name, String surenames);
 
+	public List<User> fullSearch(String matching);
+
 	public void insertBookmark(Bookmark bookmark);
 
 	public void insertUser(User user);

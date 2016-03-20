@@ -17,6 +17,10 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import org.hibernate.search.jpa.FullTextEntityManager;
+import org.hibernate.search.jpa.Search;
+import org.hibernate.search.query.dsl.QueryBuilder;
+
 import ged.ejb.core.Repository;
 
 @Repository
@@ -116,6 +120,18 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
 	public void flush() {
 		this.logger.log(Level.FINE, "Flush forzado");
 		this.em.flush();
+	}
+
+	@Override
+	public <T extends AbstractEntity> List<T> fullSearch(final Class<T> clazz, final String matching,
+			final String... fields) {
+		final FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(this.em);
+		final QueryBuilder qb = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(clazz).get();
+		final org.apache.lucene.search.Query query = qb.keyword().onFields(fields).matching(matching).createQuery();
+		final Query persistenceQuery = fullTextEntityManager.createFullTextQuery(query, clazz);
+		@SuppressWarnings("unchecked")
+		final List<T> result = persistenceQuery.getResultList();
+		return result;
 	}
 
 	@Override

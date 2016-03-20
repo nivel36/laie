@@ -62,7 +62,7 @@ public class UserSearchBean extends AbstractSearchBean<User> {
 	public void search() {
 		this.logger.fine("Searching for Users");
 		if ((this.name != null) || (this.surename != null)) {
-			this.entities = this.userService.findUsers(this.name, this.surename);
+			this.entities = this.userService.fullSearch(this.name);
 		} else {
 			this.entities = this.userService.findAll();
 		}

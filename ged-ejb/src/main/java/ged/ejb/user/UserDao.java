@@ -33,6 +33,8 @@ public interface UserDao {
 
 	public List<User> findUsers(String name, String surename);
 
+	public List<User> fullSearch(final String matching);
+
 	public void insertAction(Action action) throws IllegalUserAction;
 
 	public void insertBookmark(Bookmark bookmark);

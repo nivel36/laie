@@ -92,6 +92,11 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
+	public List<User> fullSearch(final String matching) {
+		return this.persistenceFacade.fullSearch(User.class, matching, "name", "surename", "email");
+	}
+
+	@Override
 	public void insertAction(final Action action) throws IllegalUserAction {
 		final Action a = findAction(action.getAuditedId(), action.getEntity(), action.getUser());
 		if (a != null) {

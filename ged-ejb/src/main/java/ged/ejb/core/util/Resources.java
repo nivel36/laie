@@ -14,8 +14,7 @@ public class Resources {
 	private EntityManager em;
 
 	@Produces
-	public Logger produceLog(InjectionPoint injectionPoint) {
-		return Logger.getLogger(injectionPoint.getMember().getDeclaringClass()
-				.getName());
+	public Logger produceLog(final InjectionPoint injectionPoint) {
+		return Logger.getLogger(injectionPoint.getMember().getDeclaringClass().getName());
 	}
 }

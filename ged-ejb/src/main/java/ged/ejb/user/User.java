@@ -12,11 +12,23 @@ import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
+import org.apache.lucene.analysis.core.LowerCaseFilterFactory;
+import org.apache.lucene.analysis.standard.StandardTokenizerFactory;
+import org.hibernate.search.annotations.AnalyzerDef;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.TokenFilterDef;
+import org.hibernate.search.annotations.TokenizerDef;
+
 import ged.ejb.core.bookmark.Bookmark;
 import ged.ejb.core.model.AbstractEntity;
 import ged.ejb.core.model.Action;
 
 @Entity
+@Indexed
+@AnalyzerDef(name = "customanalyzer", tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class), filters = {
+		@TokenFilterDef(factory = LowerCaseFilterFactory.class) })
+
 public class User extends AbstractEntity {
 
 	private static final long serialVersionUID = 5920907439877095636L;
@@ -29,6 +41,7 @@ public class User extends AbstractEntity {
 
 	@NotNull
 	@Column(length = 128, nullable = false, unique = true)
+	@Field
 	private String email;
 
 	@Transient
@@ -44,6 +57,7 @@ public class User extends AbstractEntity {
 
 	@NotNull
 	@Column(length = 64, nullable = false)
+	@Field
 	private String name;
 
 	@NotNull
@@ -60,6 +74,7 @@ public class User extends AbstractEntity {
 
 	@NotNull
 	@Column(length = 64, nullable = false)
+	@Field
 	private String surename;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "manager", orphanRemoval = false)
@@ -67,6 +82,7 @@ public class User extends AbstractEntity {
 
 	@NotNull
 	@Column(length = 16, nullable = false, unique = true)
+	@Field
 	private String username;
 
 	public void addAction(final Action action) {

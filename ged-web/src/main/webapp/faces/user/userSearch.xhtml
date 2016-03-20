@@ -22,6 +22,7 @@
 
 			<h:panelGroup layout="block" styleClass="panel">
 				<h1>#{i18n['user.search']}</h1>
+				
 				<h:outputLabel for="name" value="#{i18n['user.name']}">
 					<h:inputText id="name" value="#{userSearchBean.name}"
 						label="#{i18n['user.name']}" />
@@ -55,16 +56,16 @@
 					styleClass="dataTable">
 					<h:column>
 						<f:facet name="header">
-							<h:selectBooleanCheckbox />
+							<h:outputText value="#{i18n['user.name']}" />
 						</f:facet>
-						<h:selectBooleanCheckbox />
+						<h:outputText value="#{user.fullName}" />
 					</h:column>
 
 					<h:column>
 						<f:facet name="header">
-							<h:outputText value="#{i18n['user.name']}" />
+							<h:outputText value="#{i18n['user.username']}" />
 						</f:facet>
-						<h:outputText value="#{user}" />
+						<h:outputText value="#{user.username}" />
 					</h:column>
 
 					<h:column>

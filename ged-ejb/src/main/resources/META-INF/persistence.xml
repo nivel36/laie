@@ -5,7 +5,7 @@
 	version="2.1">
 	<!-- Default datasource name. Do not use in production! -->
 	<persistence-unit name="ged" transaction-type="JTA">
-	<mapping-file>/ged/queries.xml</mapping-file>
+		<mapping-file>/ged/queries.xml</mapping-file>
 		<properties>
 			<property name="javax.persistence.schema-generation.database.action"
 				value="drop-and-create" />
@@ -15,6 +15,9 @@
 				value="metadata" />
 			<property name="javax.persistence.sql-load-script-source"
 				value="import.sql" />
+			<property name="hibernate.search.default.directory_provider"
+				value="filesystem" />
+			<property name="hibernate.search.default.indexBase" value="/Temp/lucene/indexes" />
 		</properties>
 	</persistence-unit>
 </persistence>
