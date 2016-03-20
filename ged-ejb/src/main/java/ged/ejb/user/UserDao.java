@@ -11,6 +11,8 @@ import ged.ejb.core.model.IllegalUserAction;
 @Local
 public interface UserDao {
 
+	public long countAdminRoles();
+
 	public void deleteAction(Action action);
 
 	public void deleteBookmark(Bookmark bookmark);

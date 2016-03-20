@@ -30,5 +30,4 @@ public interface UserService {
 	public void insertUser(User user);
 
 	public User updateUser(User user);
-
 }

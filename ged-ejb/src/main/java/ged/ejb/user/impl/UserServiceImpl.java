@@ -28,6 +28,10 @@ public class UserServiceImpl implements UserService {
 		this.userDao.deleteUser(user);
 	}
 
+	private boolean existAdmin() {
+		return this.userDao.countAdminRoles() > 1;
+	}
+
 	@Override
 	public List<User> findAll() {
 		return this.userDao.findAll();
@@ -70,6 +74,10 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User updateUser(final User user) {
-		return this.userDao.updateUser(user);
+		if (existAdmin()) {
+			return this.userDao.updateUser(user);
+		} else {
+			return user;
+		}
 	}
 }

@@ -22,6 +22,12 @@ public class UserDaoImpl implements UserDao {
 	private PersistenceFacade persistenceFacade;
 
 	@Override
+	public long countAdminRoles() {
+		final Long count = (Long) this.persistenceFacade.getByQuerySingleResult("User.countAdminRoles", null);
+		return count;
+	}
+
+	@Override
 	public void deleteAction(final Action action) {
 		this.persistenceFacade.delete(action);
 	}
