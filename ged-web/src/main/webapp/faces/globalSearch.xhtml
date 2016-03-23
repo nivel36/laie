@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:i18n="http://legion.com/i18n"
+	template="/WEB-INF/templates/default.xhtml">
+
+	<ui:define name="title">
+		<title>Ged</title>
+	</ui:define>
+
+	<ui:param name="selectedMenu" value="index" />
+
+	<ui:define name="content">
+
+		<f:metadata>
+			<f:viewParam name="text" value="#{globalSearchBean.text}" />
+			<f:viewAction action="#{globalSearchBean.search}" />
+		</f:metadata>
+
+		<h:form>
+			<h:graphicImage value="/resources/img/s.gif"
+				styleClass="headerIcon homeIcon" />
+			<h1 class="header">#{i18n['action.search']}</h1>
+
+			<h:panelGroup layout="block" styleClass="panel" id="userResults"
+				rendered="#{not empty globalSearchBean.userDataList}">
+				<h1>#{i18n['user.search_results']}</h1>
+
+				<h:dataTable id="user" var="user"
+					value="#{globalSearchBean.userDataList}" styleClass="dataTable">
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="#{i18n['user.name']}" />
+						</f:facet>
+						<h:outputText value="#{user.fullName}" />
+					</h:column>
+
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="#{i18n['user.username']}" />
+						</f:facet>
+						<h:outputText value="#{user.username}" />
+					</h:column>
+
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="#{i18n['user.email']}" />
+						</f:facet>
+						<h:outputText value="#{user.email}" />
+					</h:column>
+
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="#{i18n['user.role']}" />
+						</f:facet>
+						<h:outputText value="#{i18n:translate(user.role.name)}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Action" />
+						</f:facet>
+						<h:link value="#{i18n['action.view']}" outcome="/faces/user/userView">
+							<f:param name="userId" value="#{user.id}" />
+						</h:link>
+					</h:column>
+				</h:dataTable>
+				<h:panelGroup layout="block" styleClass="paginator" id="paginator"
+					rendered="#{not empty globalSearchBean.userDataList}">
+					<h:commandButton
+						disabled="#{globalSearchBean.userPaginator.currentPage eq 0}"
+						value="#{i18n['paginator.first']}"
+						action="#{globalSearchBean.userPaginator.firstPage}">
+						<f:ajax render=":form:resultados" />
+					</h:commandButton>
+					<h:commandButton
+						disabled="#{globalSearchBean.userPaginator.currentPage eq 0}"
+						value="#{i18n['paginator.previous']}"
+						action="#{globalSearchBean.userPaginator.previousPage}">
+						<f:ajax render=":form:resultados" />
+					</h:commandButton>
+					<ui:repeat value="#{globalSearchBean.userPaginator.pages}"
+						var="page">
+						<h:commandButton value="#{page+1}"
+							action="#{globalSearchBean.userPaginator.gotoPage(page)}"
+							disabled="#{globalSearchBean.userPaginator.currentPage eq page}">
+							<f:ajax render=":form:resultados" />
+						</h:commandButton>
+					</ui:repeat>
+					<h:commandButton value="#{i18n['paginator.next']}"
+						disabled="#{globalSearchBean.userPaginator.currentPage eq globalSearchBean.userPaginator.pagesSize-1}"
+						action="#{globalSearchBean.userPaginator.nextPage}">
+						<f:ajax render=":form:resultados" />
+					</h:commandButton>
+					<h:commandButton value="#{i18n['paginator.last']}"
+						disabled="#{globalSearchBean.userPaginator.currentPage eq globalSearchBean.userPaginator.pagesSize-1}"
+						action="#{globalSearchBean.userPaginator.lastPage}">
+						<f:ajax render=":form:resultados" />
+					</h:commandButton>
+					<h:outputLabel value="#{i18n['paginator.show']}">
+						<h:selectOneMenu
+							value="#{globalSearchBean.userPaginator.rowsPerPage}">
+							<f:selectItem itemValue="5" itemLabel="5" />
+							<f:selectItem itemValue="10" itemLabel="10" />
+							<f:selectItem itemValue="25" itemLabel="25" />
+							<f:ajax
+								listener="#{globalSearchBean.userPaginator.rowsPerPageChange}"
+								render=":form:resultados" execute=":form:paginator" />
+						</h:selectOneMenu>
+					</h:outputLabel>
+				</h:panelGroup>
+			</h:panelGroup>
+		</h:form>
+	</ui:define>
+</ui:composition>

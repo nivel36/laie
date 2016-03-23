@@ -7,9 +7,16 @@
 	<h:form id="asideForm">
 		<h:panelGroup layout="block" styleClass="panel">
 			<h1>#{i18n['aside.search']}</h1>
-			<h:inputText id="searchInput" />
-			<h:commandButton id="searchButton" />
-			<h:commandLink id="searchLink" value="Búsqueda avanzada" />
+			<h:inputText id="inputSearch" styleClass="searchInput"
+				binding="#{inputSearch}">
+				<f:ajax execute="@this" event="keyup" render="searchButton" />
+			</h:inputText>
+			<h:link id="searchButton" styleClass="searchButton"
+				outcome="/faces/globalSearch">
+				<i class="fa fa-search" />
+				<f:param name="text"
+					value="#{empty inputSearch.value ? '' : inputSearch.value}" />
+			</h:link>
 		</h:panelGroup>
 
 		<h:panelGroup layout="block" styleClass="panel">
