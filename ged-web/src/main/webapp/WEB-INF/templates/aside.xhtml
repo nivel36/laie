@@ -4,7 +4,8 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
-	<h:form id="asideForm">
+	<h:form id="asideForm"
+		onkeypress="if (event.keyCode == 13) { document.getElementById('asideForm:searchButton').click(); return false; }">
 		<h:panelGroup layout="block" styleClass="panel">
 			<h1>#{i18n['aside.search']}</h1>
 			<h:inputText id="inputSearch" styleClass="searchInput"
