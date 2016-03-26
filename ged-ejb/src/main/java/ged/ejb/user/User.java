@@ -64,7 +64,7 @@ public class User extends AbstractEntity {
 	private String password;
 
 	@NotNull
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "roleId", nullable = false)
 	private Role role;
 

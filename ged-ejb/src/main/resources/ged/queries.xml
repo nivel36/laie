@@ -33,22 +33,33 @@
 	<named-query name="JobMeeting.findConductedJobMeetings">
 		<query>SELECT j FROM JobMeeting j WHERE j.jobCandidature.id = :jobCandidatureId</query>
 	</named-query>
-
+	
 	<named-query name="User.findById">
-		<query>SELECT u FROM User u LEFT JOIN FETCH u.team WHERE u.id = :id</query>
+		<query>SELECT u FROM User u LEFT JOIN FETCH u.role WHERE u.id = :id</query>
 	</named-query>
-
+	
 	<named-query name="User.findByName">
-		<query>SELECT u FROM User u WHERE u.name = :name</query>
+		<query>SELECT u FROM User u LEFT JOIN FETCH u.role WHERE u.name = :name</query>
 	</named-query>
 
 	<named-query name="User.findByUsername">
-		<query>SELECT u FROM User u WHERE u.username = :username</query>
+		<query>SELECT u FROM User u LEFT JOIN FETCH u.role WHERE u.username = :username</query>
+	</named-query>
+	
+	<named-query name="User.findAll">
+		<query>SELECT 	u
+				FROM 	User u
+				LEFT JOIN FETCH u.role
+		</query>
 	</named-query>
 
 	<named-query name="User.findByNameAndSurename">
-		<query>SELECT u FROM User u WHERE	(:name IS NOT NULL AND u.name = :name)
-									OR 		(:surename IS NOT NULL AND u.surename = :surename)</query>
+		<query>SELECT 	u
+				FROM 	User u
+				LEFT JOIN FETCH u.role
+				WHERE	(:name IS NOT NULL AND u.name = :name)
+				OR 		(:surename IS NOT NULL AND u.surename = :surename)
+		</query>
 	</named-query>
 
 	<named-query name="User.findUser">

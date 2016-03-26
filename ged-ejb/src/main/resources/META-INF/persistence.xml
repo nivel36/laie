@@ -18,6 +18,9 @@
 			<property name="hibernate.search.default.directory_provider"
 				value="filesystem" />
 			<property name="hibernate.search.default.indexBase" value="/Temp/lucene/indexes" />
+			<property name="hibernate.search.lucene_version" value="LUCENE_5_3_1" />
+			<property name="hibernate.show_sql" value="true" />
+			<property name="hibernate.format_sql" value="false" />
 		</properties>
 	</persistence-unit>
 </persistence>

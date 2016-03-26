@@ -52,7 +52,7 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public List<User> findAll() {
-		return this.persistenceFacade.getAll(User.class);
+		return this.persistenceFacade.getByTypedQuery(User.class, "User.findAll", null, 0, 0);
 	}
 
 	@Override
