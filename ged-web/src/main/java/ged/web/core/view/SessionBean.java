@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.enterprise.inject.Produces;
 import javax.inject.Named;
@@ -25,7 +26,7 @@ public class SessionBean extends AbstractBean {
 
 	private List<Bookmark> bookmarks = new ArrayList<Bookmark>();
 
-	private Locale locale = new Locale("es", "ES");
+	private Locale locale;
 
 	@Produces
 	private List<SavedSearch> savedSearches = new ArrayList<SavedSearch>();
@@ -68,6 +69,11 @@ public class SessionBean extends AbstractBean {
 
 	public User getUser() {
 		return this.user;
+	}
+
+	@PostConstruct
+	public void init() {
+		this.locale = this.facesContext.getApplication().getDefaultLocale();
 	}
 
 	public void removeBookmark(final Bookmark bookmark) {
