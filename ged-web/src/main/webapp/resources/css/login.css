@@ -36,7 +36,6 @@ label input {
 #loginForm {
 	margin: 0 auto;
 	width: 400px;
-	height: 245px;
 	position: relative;
 	top: 150px;
 	box-sizing: border-box;
@@ -88,6 +87,33 @@ input[type="submit"] {
 	float: right;
 	clear: left;
 }
+
+.error {
+	color: red !important;
+	float: left;
+	margin-left: 172px;
+	font-weight: normal;
+	font-size: 0.9em;
+	white-space: nowrap;
+}
+
+.errorMessages {
+	color: red !important;
+	font-weight: normal;
+	font-size: 0.9em;
+	white-space: nowrap;
+	background: #ffcccc;
+	border: 1px solid red;
+}
+
+.errorMessages li {
+	display: block;
+	width: 100%;
+	text-decoration: none;
+	padding: 5px;
+}
+
+.errorMessages
 
 input[type="submit"]:hover {
 	background: linear-gradient(#F4F5F9, #ACAFD0);

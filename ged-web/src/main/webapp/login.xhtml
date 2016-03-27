@@ -13,8 +13,9 @@
 		<h:outputStylesheet name="css/login.css" />
 	</h:head>
 	<h:body>
-		<h:form id="loginForm" prependId="false">
+		<h:form id="loginForm">
 			<h1>Login</h1>
+			<h:messages styleClass="errorMessages" globalOnly="true" />
 			<h:outputLabel value="#{i18n['login.username']}"
 				styleClass="required">
 				<h:inputText id="j_username" label="#{i18n['login.username']}"

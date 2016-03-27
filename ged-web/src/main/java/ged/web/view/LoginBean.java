@@ -2,6 +2,7 @@ package ged.web.view;
 
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
+import javax.faces.context.ExternalContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.ServletException;
@@ -23,38 +24,35 @@ public class LoginBean extends AbstractBean {
 	private String username;
 
 	@Inject
-	private UserService userService;
+	private transient UserService userService;
 
 	public String getPassword() {
 		return this.password;
 	}
 
 	public String getUsername() {
-		final String user = this.facesContext.getExternalContext().getRemoteUser();
-		return user;
-	}
-
-	public boolean isUserLoggedIn() {
-		final String user = getUsername();
-		final boolean result = !((user == null) || user.isEmpty());
-		return result;
+		return this.username;
 	}
 
 	public String login() {
-		final HttpServletRequest request = (HttpServletRequest) this.facesContext.getExternalContext().getRequest();
+		final ExternalContext externalContext = this.facesContext.getExternalContext();
+		final HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
 		try {
 			request.login(this.username, this.password);
 			final User user = this.userService.findUserByUsername(this.username);
 			this.sessionBean.setUser(user);
 			return "/faces/index?faces-redirect=true";
 		} catch (final ServletException e) {
-			this.facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Unknown login", null));
+			final String message = translate("login.error.unknow_login");
+			final FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, message, null);
+			this.facesContext.addMessage(null, facesMessage);
 			return null;
 		}
 	}
 
 	public String logout() {
-		final HttpSession session = (HttpSession) this.facesContext.getExternalContext().getSession(true);
+		final ExternalContext externalContext = this.facesContext.getExternalContext();
+		final HttpSession session = (HttpSession) externalContext.getSession(true);
 		session.invalidate();
 		return "/login?faces-redirect=true";
 	}
