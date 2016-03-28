@@ -15,6 +15,7 @@
 
 	<ui:define name="content">
 		<h:form id="userSearchPopupForm">
+		
 			<h:panelGroup layout="block" rendered="#{userEditBean.rendered}"
 				styleClass="#{userEditBean.modal ? 'modalDialog': ''}"
 				id="managerPopup">
@@ -156,15 +157,12 @@
 		<h:form id="form">
 			<input type="hidden" id="userId" value="#{userEditBean.user.id}" />
 
-			<h:graphicImage value="/resources/img/s.gif"
-				styleClass="headerIcon userIcon" />
-
 			<h:panelGroup rendered="#{userEditBean.user.id == 0}">
-				<h1 class="header">#{i18n['user.new_user']}</h1>
+				<h1 class="header"><i class="fa fa-user" />  #{i18n['user.new_user']}</h1>
 			</h:panelGroup>
 
 			<h:panelGroup rendered="#{userEditBean.user.id != 0}">
-				<h1 class="header">#{userEditBean.user}</h1>
+				<h1 class="header"><i class="fa fa-user" />  #{userEditBean.user}</h1>
 			</h:panelGroup>
 
 			<h:panelGroup layout="block" styleClass="panel">

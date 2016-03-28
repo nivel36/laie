@@ -269,7 +269,7 @@ aside input[disabled]:hover {
 	background: linear-gradient(#FFFDF9, #FFF8E7) !important;
 }
 
-aside input[type="text"], select, textarea {
+aside input[type="text"],aside select,aside textarea {
 	margin-right: 0;
 	border-radius: 12px 0 0 12px;
 	vertical-align: top;
