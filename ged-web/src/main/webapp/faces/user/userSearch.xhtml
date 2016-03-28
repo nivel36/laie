@@ -14,11 +14,10 @@
 	<ui:param name="selectedMenu" value="users" />
 
 	<ui:define name="content">
-		<h:form id="form" prependId="false">
-			<h:graphicImage value="/resources/img/s.gif"
-				styleClass="headerIcon usersIcon" />
-
-			<h1 class="header">#{i18n['user.user']}</h1>
+		<h:form id="form">
+			<h1 class="header">
+				<i class="fa fa-user" />  #{i18n['user.user']}
+			</h1>
 
 			<h:panelGroup layout="block" styleClass="panel">
 				<h1>#{i18n['user.search']}</h1>
@@ -83,7 +82,7 @@
 					</h:column>
 					<h:column>
 						<f:facet name="header">
-							<h:outputText value="Action" />
+							<h:outputText value="#{i18n['action.action']}" />
 						</f:facet>
 						<h:link value="#{i18n['action.view']}" outcome="userView">
 							<f:param name="userId" value="#{user.id}" />
@@ -99,6 +98,7 @@
 						</h:commandLink>
 					</h:column>
 				</h:dataTable>
+				
 				<h:panelGroup layout="block" styleClass="paginator" id="paginator"
 					rendered="#{not empty userSearchBean.dataList}">
 					<h:commandButton disabled="#{userSearchBean.currentPage eq 0}"

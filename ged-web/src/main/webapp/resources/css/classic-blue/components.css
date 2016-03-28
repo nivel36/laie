@@ -150,7 +150,7 @@ label input, label textarea, label select {
 
 aside .panel {
 	background: #FFF1CC;
-	margin-top: 32px;
+	margin-bottom: 32px;
 	padding-top: 35px;
 }
 
@@ -486,7 +486,7 @@ textarea {
 	background: #D5D7E8;
 	color: #000000;
 	font-weight: bold;
-	padding: 3px 2px 4px 5px;
+	padding: 3px 2px 1px 5px;
 	text-align: left;
 	vertical-align: bottom;
 }
@@ -692,8 +692,10 @@ textarea {
 
 .header {
 	font-size: 2em;
-	margin-left: 45px;
+	padding-left: 10px;
 	line-height: 25px;
+	color: white;
+	background: linear-gradient(to right, #535993, #D5D7E8);
 }
 
 .subheader {
