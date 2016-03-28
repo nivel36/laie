@@ -16,8 +16,12 @@
 	<ui:define name="content">
 		<h:form id="form">
 			<h1 class="header">
-				<i class="fa fa-user" />  #{i18n['user.user']}
+				<i class="fa fa-user" /> #{i18n['user.user']}
 			</h1>
+			<h:panelGroup layout="block" styleClass="actionPanel">
+				<h:commandButton value="#{i18n['action.new']}"
+					action="#{userSearchBean.newUser}" immediate="true" />
+			</h:panelGroup>
 
 			<h:panelGroup layout="block" styleClass="panel">
 				<h1>#{i18n['user.search']}</h1>
@@ -42,10 +46,7 @@
 
 			<h:panelGroup layout="block" styleClass="panel" id="resultados">
 				<h1>#{i18n['user.search_results']}</h1>
-				<h:panelGroup layout="block" styleClass="buttonGroup">
-					<h:commandButton value="#{i18n['action.new']}"
-						action="#{userSearchBean.newUser}" immediate="true" />
-				</h:panelGroup>
+
 
 				<h:outputText value="#{i18n['user.no_users_found']}"
 					rendered="#{empty userSearchBean.dataList}" />
@@ -98,7 +99,7 @@
 						</h:commandLink>
 					</h:column>
 				</h:dataTable>
-				
+
 				<h:panelGroup layout="block" styleClass="paginator" id="paginator"
 					rendered="#{not empty userSearchBean.dataList}">
 					<h:commandButton disabled="#{userSearchBean.currentPage eq 0}"

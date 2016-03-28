@@ -127,6 +127,14 @@ label input, label textarea, label select {
 	background: #00d9ff;
 }
 
+.actionPanel {
+	position: relative;
+	top: -33px;
+	float: right;
+	padding-right: 3px;
+	height: 0px;
+}
+
 /************************************
  *  PANEL
  ************************************/
