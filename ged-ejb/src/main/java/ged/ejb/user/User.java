@@ -77,9 +77,6 @@ public class User extends AbstractEntity {
 	@Field
 	private String surename;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "manager", orphanRemoval = false)
-	private List<User> team;
-
 	@NotNull
 	@Column(length = 16, nullable = false, unique = true)
 	@Field
@@ -160,10 +157,6 @@ public class User extends AbstractEntity {
 		return this.surename;
 	}
 
-	public List<User> getTeam() {
-		return this.team;
-	}
-
 	public String getUsername() {
 		return this.username;
 	}
@@ -236,10 +229,6 @@ public class User extends AbstractEntity {
 
 	public void setSurename(final String surename) {
 		this.surename = surename;
-	}
-
-	public void setTeam(final List<User> team) {
-		this.team = team;
 	}
 
 	public void setUsername(final String username) {

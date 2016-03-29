@@ -22,15 +22,10 @@
 		<h:form id="form">
 			<input type="hidden" id="userId" value="#{userViewBean.user.id}" />
 
-			<h:graphicImage value="/resources/img/s.gif"
-				styleClass="headerIcon userIcon" />
-
-			<h:panelGroup rendered="#{userViewBean.user.id == 0}">
-				<h1 class="header">#{i18n['user.new_user']}</h1>
-			</h:panelGroup>
-
 			<h:panelGroup rendered="#{userViewBean.user.id != 0}">
-				<h1 class="header">#{userViewBean.user}</h1>
+				<h1 class="header">
+					<i class="fa fa-user" /> #{userViewBean.user}
+				</h1>
 			</h:panelGroup>
 
 			<h:panelGroup layout="block" styleClass="panel">
@@ -64,45 +59,24 @@
 				</h:outputLabel>
 
 				<h:outputLabel value="#{i18n['user.role']}" styleClass="required">
-					<h:selectOneMenu id="role" value="#{userViewBean.user.role}" disabled="true"> 
+					<h:selectOneMenu id="role" value="#{userViewBean.user.role}"
+						disabled="true">
 						<f:selectItems var="role" itemValue="#{role}"
 							value="#{applicationBean.roles}"
-							itemLabel="#{i18n:translate(role.name)}"  />
+							itemLabel="#{i18n:translate(role.name)}" />
 					</h:selectOneMenu>
 				</h:outputLabel>
 
-				<h:panelGroup layout="block" styleClass="secondaryButtonGroup">
+				<h:panelGroup layout="block" styleClass="buttonGroup">
 					<h:commandButton value="#{i18n['action.edit']}"
 						action="#{userViewBean.editUser}" immediate="true" />
 				</h:panelGroup>
 			</h:panelGroup>
+			
 			<h:panelGroup layout="block" styleClass="panel">
 				<h1>#{i18n['user.team']}</h1>
 
-				<h:panelGroup layout="block">
-					<h:outputText value="#{i18n['user.no_team']}"
-						rendered="#{empty userViewBean.user.team}" />
 
-					<h:dataTable var="user" id="users"
-						value="#{userViewBean.user.team}"
-						rendered="#{not empty userViewBean.user.team}"
-						styleClass="dataTable">
-
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="#{i18n['user.name']}" />
-							</f:facet>
-							<h:outputText value="#{user}" />
-						</h:column>
-
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="#{i18n['user.role']}" />
-							</f:facet>
-							<h:outputText value="#{i18n:translate(user.role.name)}" />
-						</h:column>
-					</h:dataTable>
-				</h:panelGroup>
 			</h:panelGroup>
 		</h:form>
 	</ui:define>

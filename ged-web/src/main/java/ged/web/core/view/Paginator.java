@@ -19,6 +19,13 @@ public class Paginator<T extends AbstractEntity> implements Serializable {
 
 	protected int rowsPerPage;
 
+	public Paginator() {
+	}
+
+	public Paginator(final int rowsPerPage) {
+		this.rowsPerPage = rowsPerPage;
+	}
+
 	public void firstPage() {
 		this.currentPage = 0;
 		trimList();
