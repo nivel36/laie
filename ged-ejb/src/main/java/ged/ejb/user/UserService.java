@@ -25,9 +25,16 @@ public interface UserService {
 
 	public List<User> fullSearch(String matching);
 
+	public List<User> fullSearch(String name, String surename);
+
+	public List<User> fullSearchByName(String name);
+
+	public List<User> fullSearchBySurename(String surename);
+
 	public void insertBookmark(Bookmark bookmark);
 
 	public void insertUser(User user);
 
 	public User updateUser(User user);
+
 }

@@ -63,6 +63,21 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	public List<User> fullSearch(final String name, final String surename) {
+		return this.userDao.fullSearch(name, surename);
+	}
+
+	@Override
+	public List<User> fullSearchByName(final String name) {
+		return this.userDao.fullSearchByName(name);
+	}
+
+	@Override
+	public List<User> fullSearchBySurename(final String surename) {
+		return this.userDao.fullSearchBySurename(surename);
+	}
+
+	@Override
 	public void insertBookmark(final Bookmark bookmark) {
 		this.userDao.insertBookmark(bookmark);
 	}

@@ -1,5 +1,7 @@
 package ged.ejb.user.impl;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -103,6 +105,24 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
+	public List<User> fullSearch(final String name, final String surename) {
+		List<User> results = fullSearchByName(name);
+		results.addAll(fullSearchBySurename(surename));
+		results = removeDuplicated(results);
+		return results;
+	}
+
+	@Override
+	public List<User> fullSearchByName(final String name) {
+		return this.persistenceFacade.fullSearch(User.class, name, "name");
+	}
+
+	@Override
+	public List<User> fullSearchBySurename(final String surename) {
+		return this.persistenceFacade.fullSearch(User.class, surename, "surename");
+	}
+
+	@Override
 	public void insertAction(final Action action) throws IllegalUserAction {
 		final Action a = findAction(action.getAuditedId(), action.getEntity(), action.getUser());
 		if (a != null) {
@@ -127,6 +147,27 @@ public class UserDaoImpl implements UserDao {
 		parameters.put("entity", entity);
 		parameters.put("user", user);
 		return parameters;
+	}
+
+	private void orderList(final List<User> results) {
+		Collections.sort(results, (o1, o2) -> {
+			final User u1 = o1;
+			final User u2 = o2;
+			return String.CASE_INSENSITIVE_ORDER.compare(u1.getName(), u2.getName());
+		});
+	}
+
+	private List<User> removeDuplicated(final List<User> users) {
+		orderList(users);
+		final List<User> copy = new ArrayList<User>(users);
+		User previousUser = null;
+		for (final User user : users) {
+			if (user.equals(previousUser)) {
+				copy.remove(user);
+			}
+			previousUser = user;
+		}
+		return copy;
 	}
 
 	@Override

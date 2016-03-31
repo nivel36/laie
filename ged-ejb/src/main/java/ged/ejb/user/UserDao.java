@@ -37,6 +37,12 @@ public interface UserDao {
 
 	public List<User> fullSearch(final String matching);
 
+	public List<User> fullSearch(final String name, String surename);
+
+	public List<User> fullSearchByName(final String name);
+
+	public List<User> fullSearchBySurename(String surename);
+
 	public void insertAction(Action action) throws IllegalUserAction;
 
 	public void insertBookmark(Bookmark bookmark);
