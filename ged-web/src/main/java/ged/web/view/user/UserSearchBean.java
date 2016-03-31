@@ -1,6 +1,7 @@
 package ged.web.view.user;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -75,11 +76,17 @@ public class UserSearchBean extends AbstractBean {
 	public void search() {
 		this.logger.fine("Searching for Users");
 		if ((this.name != null) && (this.surename != null)) {
-			this.paginator.setEntities(this.userService.fullSearch(this.name, this.surename));
+			if (verifySearchField(this.name) && verifySearchField(this.surename)) {
+				this.paginator.setEntities(this.userService.fullSearch(this.name, this.surename));
+			}
 		} else if ((this.name == null) && (this.surename != null)) {
-			this.paginator.setEntities(this.userService.fullSearchBySurename(this.surename));
+			if (verifySearchField(this.surename)) {
+				this.paginator.setEntities(this.userService.fullSearchBySurename(this.surename));
+			}
 		} else if ((this.name != null) && (this.surename == null)) {
-			this.paginator.setEntities(this.userService.fullSearchByName(this.name));
+			if (verifySearchField(this.name)) {
+				this.paginator.setEntities(this.userService.fullSearchByName(this.name));
+			}
 		} else {
 			this.paginator.setEntities(this.userService.findAll());
 		}
@@ -102,5 +109,13 @@ public class UserSearchBean extends AbstractBean {
 
 	public void setSurename(final String surename) {
 		this.surename = surename;
+	}
+
+	private boolean verifySearchField(final String text) {
+		if (text.length() < 3) {
+			addMessage(FacesMessage.SEVERITY_WARN, "error.search.camp_to_short", "error.search.camp_to_short");
+			return false;
+		}
+		return true;
 	}
 }
