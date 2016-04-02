@@ -86,6 +86,8 @@ public class Paginator<T extends AbstractEntity> implements Serializable {
 
 	public void setEntities(final List<T> entities) {
 		this.entities = entities;
+		this.trimList();
+		this.setPaginationSize();
 	}
 
 	public void setPaginationSize() {

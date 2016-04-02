@@ -94,9 +94,6 @@ public class UserSearchBean extends AbstractBean {
 		} else {
 			this.paginator.setEntities(this.userService.findAll());
 		}
-
-		this.paginator.trimList();
-		this.paginator.setPaginationSize();
 		cleanSearchFields();
 	}
 
