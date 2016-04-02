@@ -40,7 +40,7 @@ public class GlobalSearchBean extends AbstractBean {
 	}
 
 	public void search() {
-		if ((this.text != null) && (this.text.length() < 3)) {
+		if ((this.text == null) || (this.text.length() < 3)) {
 			addMessage(FacesMessage.SEVERITY_WARN, "error.search.camp_to_short", "error.search.camp_to_short");
 		} else {
 			this.userDataList = this.userService.fullSearch(this.text);
