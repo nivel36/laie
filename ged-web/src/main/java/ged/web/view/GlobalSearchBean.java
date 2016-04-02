@@ -2,8 +2,8 @@ package ged.web.view;
 
 import java.util.List;
 
+import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
-import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -13,7 +13,7 @@ import ged.web.core.view.AbstractBean;
 import ged.web.core.view.Paginator;
 
 @Named
-@ViewScoped
+@RequestScoped
 public class GlobalSearchBean extends AbstractBean {
 
 	private static final long serialVersionUID = 8268523301916849175L;
