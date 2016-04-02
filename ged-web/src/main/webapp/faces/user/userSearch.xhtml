@@ -14,7 +14,7 @@
 	<ui:param name="selectedMenu" value="users" />
 
 	<ui:define name="content">
-		<h:form id="form">
+		<h:form id="newForm">
 			<h1 class="header">
 				<i class="fa fa-user" /> #{i18n['user.user']}
 			</h1>
@@ -22,7 +22,8 @@
 				<h:commandButton value="#{i18n['action.new']}"
 					action="#{userSearchBean.newUser}" immediate="true" />
 			</h:panelGroup>
-
+		</h:form>
+		<h:form id="form">
 			<h:panelGroup layout="block" styleClass="panel">
 				<h1>#{i18n['user.search']}</h1>
 
@@ -37,10 +38,10 @@
 				</h:outputLabel>
 
 				<h:panelGroup layout="block" styleClass="buttonGroup">
-					<h:commandButton value="#{i18n['action.clean']}"
-						action="#{userSearchBean.clean}" />
 					<h:commandButton value="#{i18n['action.search']}"
 						action="#{userSearchBean.search}" />
+					<h:commandButton value="#{i18n['action.clean']}"
+						action="#{userSearchBean.clean}" />
 				</h:panelGroup>
 			</h:panelGroup>
 
@@ -50,7 +51,8 @@
 				<h:outputText value="#{i18n['user.no_users_found']}"
 					rendered="#{empty userSearchBean.paginator.dataList}" />
 
-				<h:dataTable var="user" id="user" value="#{userSearchBean.paginator.dataList}"
+				<h:dataTable var="user" id="user"
+					value="#{userSearchBean.paginator.dataList}"
 					rendered="#{not empty userSearchBean.paginator.dataList}"
 					styleClass="dataTable">
 					<h:column>
@@ -101,12 +103,14 @@
 
 				<h:panelGroup layout="block" styleClass="paginator" id="paginator"
 					rendered="#{not empty userSearchBean.paginator.dataList}">
-					<h:commandButton disabled="#{userSearchBean.paginator.currentPage eq 0}"
+					<h:commandButton
+						disabled="#{userSearchBean.paginator.currentPage eq 0}"
 						value="#{i18n['paginator.first']}"
 						action="#{userSearchBean.paginator.firstPage}">
 						<f:ajax render=":form:resultados" />
 					</h:commandButton>
-					<h:commandButton disabled="#{userSearchBean.paginator.currentPage eq 0}"
+					<h:commandButton
+						disabled="#{userSearchBean.paginator.currentPage eq 0}"
 						value="#{i18n['paginator.previous']}"
 						action="#{userSearchBean.paginator.previousPage}">
 						<f:ajax render=":form:resultados" />
