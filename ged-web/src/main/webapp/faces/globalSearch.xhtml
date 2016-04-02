@@ -20,13 +20,11 @@
 		</f:metadata>
 
 		<h:form>
-			<h:graphicImage value="/resources/img/s.gif"
-				styleClass="headerIcon homeIcon" />
-			<h1 class="header">#{i18n['action.search']}</h1>
+			<h1 class="header"><i class="fa fa-search" />  #{i18n['user.search_results']}</h1>
 
 			<h:panelGroup layout="block" styleClass="panel" id="userResults"
 				rendered="#{not empty globalSearchBean.userDataList}">
-				<h1>#{i18n['user.search_results']}</h1>
+				<h1>#{i18n['user.users']}</h1>
 
 				<h:dataTable id="user" var="user"
 					value="#{globalSearchBean.userDataList}" styleClass="dataTable">

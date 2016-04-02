@@ -2,6 +2,7 @@ package ged.web.view;
 
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -34,8 +35,14 @@ public class GlobalSearchBean extends AbstractBean {
 		return this.userDataList;
 	}
 
+	public Paginator<User> getUserPaginator() {
+		return this.userPaginator;
+	}
+
 	public void search() {
-		if ((this.text != null) && (this.text.length() > 3)) {
+		if ((this.text != null) && (this.text.length() < 3)) {
+			addMessage(FacesMessage.SEVERITY_WARN, "error.search.camp_to_short", "error.search.camp_to_short");
+		} else {
 			this.userDataList = this.userService.fullSearch(this.text);
 		}
 	}
@@ -48,11 +55,7 @@ public class GlobalSearchBean extends AbstractBean {
 		this.userDataList = userDataList;
 	}
 
-	public Paginator<User> getUserPaginator() {
-		return userPaginator;
-	}
-
-	public void setUserPaginator(Paginator<User> userPaginator) {
+	public void setUserPaginator(final Paginator<User> userPaginator) {
 		this.userPaginator = userPaginator;
 	}
 }

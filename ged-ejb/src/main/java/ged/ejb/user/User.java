@@ -13,23 +13,38 @@ import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import org.apache.lucene.analysis.core.LowerCaseFilterFactory;
-import org.apache.lucene.analysis.standard.StandardTokenizerFactory;
+import org.apache.lucene.analysis.core.WhitespaceTokenizerFactory;
+import org.apache.lucene.analysis.ngram.EdgeNGramFilterFactory;
+import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.AnalyzerDef;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.Parameter;
 import org.hibernate.search.annotations.TokenFilterDef;
 import org.hibernate.search.annotations.TokenizerDef;
 
 import ged.ejb.core.bookmark.Bookmark;
-import ged.ejb.core.model.AbstractEntity;
 import ged.ejb.core.model.Action;
+import ged.ejb.core.model.AuditedEntity;
 
 @Entity
 @Indexed
-@AnalyzerDef(name = "customanalyzer", tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class), filters = {
-		@TokenFilterDef(factory = LowerCaseFilterFactory.class) })
-
-public class User extends AbstractEntity {
+@AnalyzerDef(name = "myanalyzer",
+		// Split input into tokens according to tokenizer
+		tokenizer = @TokenizerDef(factory = WhitespaceTokenizerFactory.class), //
+		filters = { //
+				// Normalize token text to lowercase, as the user is unlikely to
+				// care about casing when searching for matches
+				@TokenFilterDef(factory = LowerCaseFilterFactory.class),
+				// Index partial words starting at the front, so we can provide
+				// Autocomplete functionality
+				@TokenFilterDef(factory = EdgeNGramFilterFactory.class, params = {
+						@Parameter(name = "minGramSize", value = "3"),
+						@Parameter(name = "maxGramSize", value = "20") }),
+		// Close filters & Analyzerdef
+		})
+@Analyzer(definition = "myanalyzer")
+public class User extends AuditedEntity {
 
 	private static final long serialVersionUID = 5920907439877095636L;
 

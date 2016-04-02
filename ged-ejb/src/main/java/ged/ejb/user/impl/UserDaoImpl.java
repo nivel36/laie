@@ -107,8 +107,12 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public List<User> fullSearch(final String name, final String surename) {
 		List<User> results = fullSearchByName(name);
-		results.addAll(fullSearchBySurename(surename));
-		results = removeDuplicated(results);
+		if ((results != null) && (results.size() != 0)) {
+			results.addAll(fullSearchBySurename(surename));
+			results = removeDuplicated(results);
+		} else {
+			results = fullSearchBySurename(surename);
+		}
 		return results;
 	}
 

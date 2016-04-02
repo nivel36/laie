@@ -15,7 +15,7 @@
 
 	<ui:define name="content">
 		<f:metadata>
-			<f:viewParam name="userId" value="#{userViewBean.userId}" />
+			<f:viewParam name="id" value="#{userViewBean.userId}" />
 			<f:viewAction action="#{userViewBean.init}" />
 		</f:metadata>
 
@@ -29,45 +29,26 @@
 			<h:panelGroup layout="block" styleClass="panel">
 				<h1>#{i18n['user.user']}</h1>
 
-				<h:outputLabel value="#{i18n['user.name']}" styleClass="required">
-					<h:inputText id="name" value="#{userViewBean.user.name}"
-						label="#{i18n['user.name']}" required="true"
-						styleClass="#{not component.valid ? 'inputError' : ''}"
-						disabled="true" />
-					<h:message for="name" errorClass="error" />
-				</h:outputLabel>
+				<h:outputText styleClass="label" value="#{i18n['user.name']}:" />
+				<h:outputText
+					value="#{userViewBean.user.name} #{userViewBean.user.surename}" />
 
-				<h:outputLabel value="#{i18n['user.surename']}"
-					styleClass="required">
-					<h:inputText id="surename" value="#{userViewBean.user.surename}"
-						label="#{i18n['user.surename']}" required="true"
-						styleClass="#{not component.valid ? 'inputError' : ''}"
-						disabled="true" />
-					<h:message for="surename" errorClass="error" />
-				</h:outputLabel>
+				<h:outputText styleClass="label" value="#{i18n['user.email']}:" />
+				<h:outputText value="#{userViewBean.user.email}" />
 
-				<h:outputLabel value="#{i18n['user.email']}"
-					styleClass="large required">
-					<h:inputText id="email" p:type="email"
-						value="#{userViewBean.user.email}" required="true"
-						label="#{i18n['user.email']}"
-						styleClass="#{ not component.valid ? 'inputError' : ''}"
-						disabled="true" />
-					<h:message for="email" errorClass="error" />
-				</h:outputLabel>
-
-				<h:outputLabel value="#{i18n['user.role']}" styleClass="required">
-					<h:selectOneMenu id="role" value="#{userViewBean.user.role}"
-						disabled="true">
-						<f:selectItems var="role" itemValue="#{role}"
-							value="#{applicationBean.roles}"
-							itemLabel="#{i18n:translate(role.name)}" />
-					</h:selectOneMenu>
-				</h:outputLabel>
+				<h:outputText styleClass="label" value="#{i18n['user.role']}:" />
+				<h:outputText value="#{i18n:translate(userViewBean.user.role.name)}" />
 
 				<h:panelGroup layout="block" styleClass="buttonGroup">
 					<h:commandButton value="#{i18n['action.edit']}"
 						action="#{userViewBean.editUser}" immediate="true" />
+					<h:commandButton value="#{i18n['bookmark.add_to_bookmarks']}"
+						action="#{favouritesBean.add(userViewBean.user)}" immediate="true"
+						rendered="#{not favouritesBean.isBookmarked(userViewBean.user)}" />
+					<h:commandButton value="#{i18n['bookmark.remove_from_bookmarks']}"
+						action="#{favouritesBean.remove(userViewBean.user)}"
+						immediate="true"
+						rendered="#{favouritesBean.isBookmarked(userViewBean.user)}" />
 				</h:panelGroup>
 			</h:panelGroup>
 
