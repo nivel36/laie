@@ -30,10 +30,14 @@ public class UserSearchBean extends AbstractBean {
 	private UserService userService;
 
 	public void clean() {
+		cleanSearchFields();
+		search();
+	}
+
+	private void cleanSearchFields() {
 		this.email = null;
 		this.surename = null;
 		this.name = null;
-		search();
 	}
 
 	public String edit(final User user) {
@@ -93,6 +97,7 @@ public class UserSearchBean extends AbstractBean {
 
 		this.paginator.trimList();
 		this.paginator.setPaginationSize();
+		cleanSearchFields();
 	}
 
 	public void setEmail(final String email) {
