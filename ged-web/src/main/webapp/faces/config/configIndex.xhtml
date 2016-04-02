@@ -16,8 +16,10 @@
 		<ui:include src="/faces/config/changePasswordPopup.xhtml" />
 
 		<h:form>
-			<h:graphicImage value="/resources/img/s.gif" styleClass="headerIcon" />
-			<h1 class="header">#{i18n['config.config']}</h1>
+
+			<h1 class="header">
+				<i class="fa fa-cog" /> #{i18n['config.config']}
+			</h1>
 			<h:panelGroup layout="block" styleClass="panel">
 				<h1>#{i18n['config.user_data']}</h1>
 

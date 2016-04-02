@@ -13,9 +13,9 @@
 
 	<ui:define name="content">
 		<h:form>
-			<h:graphicImage value="/resources/img/s.gif"
-				styleClass="headerIcon homeIcon" />
-			<h1 class="header">#{i18n['index.index']}</h1>
+			<h1 class="header">
+				<i class="fa fa-home" /> #{i18n['index.index']}
+			</h1>
 
 			<h:panelGrid styleClass="panelGrid" columns="2" cellpadding="10px">
 				<h:panelGroup layout="block" styleClass="panel">
@@ -51,9 +51,10 @@
 						<h:panelGroup styleClass="card" layout="block">
 							<h:graphicImage value="/resources/img/classic-blue/no-photo.png"
 								styleClass="photo" />
-							<h:outputText styleClass="name" value="${candidate.name} ${candidate.surename}" />
-							<br/>
-							<h:outputText value="Arquitecto de software en GFI"  />
+							<h:outputText styleClass="name"
+								value="${candidate.name} ${candidate.surename}" />
+							<br />
+							<h:outputText value="Arquitecto de software en GFI" />
 						</h:panelGroup>
 					</ui:repeat>
 

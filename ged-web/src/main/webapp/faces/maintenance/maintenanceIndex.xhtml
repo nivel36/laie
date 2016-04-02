@@ -13,8 +13,9 @@
 	<ui:param name="selectedMenu" value="maintenances" />
 
 	<ui:define name="content">
-		<h:graphicImage value="/resources/img/s.gif" styleClass="headerIcon" />
-		<h1 class="header">#{i18n['maintenance.maintenances']}</h1>
+		<h1 class="header">
+			<i class="fa fa-cogs" /> #{i18n['maintenance.maintenances']}
+		</h1>
 		<h:panelGrid styleClass="panelGrid" columns="2" cellpadding="10px">
 			<h:panelGroup layout="block" styleClass="panel">
 				<h1>#{i18n['maintenance.skill_knowdeleges']}</h1>
@@ -44,14 +45,13 @@
 					<h:commandButton value="#{i18n['action.new']}" />
 				</h:form>
 			</h:panelGroup>
-			
+
 			<h:panelGroup layout="block" styleClass="panel">
 				<h1>#{i18n['maintenance.file_types']}</h1>
 				<h:form>
-					<h:selectOneMenu id="fileTypes"
-						label="#{i18n['file.type']}" styleClass="largeInput">
-						<f:selectItems var="fileType"
-							itemValue="#{fileType.name}"
+					<h:selectOneMenu id="fileTypes" label="#{i18n['file.type']}"
+						styleClass="largeInput">
+						<f:selectItems var="fileType" itemValue="#{fileType.name}"
 							value="#{applicationBean.fileTypes}"
 							itemLabel="#{i18n:translate(fileType.name)}" />
 					</h:selectOneMenu>

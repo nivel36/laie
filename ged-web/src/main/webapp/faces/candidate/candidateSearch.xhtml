@@ -13,9 +13,9 @@
 
 	<ui:define name="content">
 		<h:form id="form">
-			<h:graphicImage value="/resources/img/s.gif"
-				styleClass="headerIcon candidatesIcon" />
-			<h1 class="header">#{i18n['candidate.candidates']}</h1>
+			<h1 class="header">
+				<i class="fa fa-users" /> #{i18n['candidate.candidates']}
+			</h1>
 			<h:panelGroup layout="block" styleClass="panel">
 				<h1>#{i18n['candidate.search']}</h1>
 				<h:outputLabel for="name" value="#{i18n['candidate.name']}">
@@ -23,10 +23,8 @@
 						label="#{i18n['candidate.name']}" />
 				</h:outputLabel>
 
-				<h:outputLabel for="surename"
-					value="#{i18n['candidate.surename']}">
-					<h:inputText id="surename"
-						value="#{candidateSearchBean.surename}"
+				<h:outputLabel for="surename" value="#{i18n['candidate.surename']}">
+					<h:inputText id="surename" value="#{candidateSearchBean.surename}"
 						label="#{i18n['candidate.surename']}" />
 				</h:outputLabel>
 
@@ -151,7 +149,7 @@
 						</h:selectOneMenu>
 					</h:outputLabel>
 				</h:panelGroup>
-				
+
 				<h:panelGroup layout="block" styleClass="buttonGroup">
 					<h:commandButton value="#{i18n['action.new']}"
 						action="#{candidateSearchBean.newCandidate}" immediate="true" />
