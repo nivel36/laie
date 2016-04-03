@@ -29,15 +29,26 @@
 			<h:panelGroup layout="block" styleClass="panel">
 				<h1>#{i18n['user.user']}</h1>
 
-				<h:outputText styleClass="label" value="#{i18n['user.name']}:" />
-				<h:outputText
-					value="#{userViewBean.user.name} #{userViewBean.user.surename}" />
+				<h:panelGroup layout="block" styleClass="textBlock">
+					<h:outputText styleClass="label" value="#{i18n['user.name']}:" />
+					<h:outputText
+						value="#{userViewBean.user.name} #{userViewBean.user.surename}" />
+				</h:panelGroup>
 
-				<h:outputText styleClass="label" value="#{i18n['user.email']}:" />
-				<h:outputText value="#{userViewBean.user.email}" />
+				<h:panelGroup layout="block" styleClass="textBlock">
+					<h:outputText styleClass="label" value="#{i18n['user.email']}:" />
+					<h:outputText value="#{userViewBean.user.email}" />
+				</h:panelGroup>
+				<h:panelGroup layout="block" styleClass="textBlock">
+					<h:outputText styleClass="label" value="#{i18n['user.role']}:" />
+					<h:outputText
+						value="#{i18n:translate(userViewBean.user.role.name)}" />
+				</h:panelGroup>
 
-				<h:outputText styleClass="label" value="#{i18n['user.role']}:" />
-				<h:outputText value="#{i18n:translate(userViewBean.user.role.name)}" />
+				<h:panelGroup layout="block" styleClass="textBlock">
+					<h:outputText styleClass="label" value="#{i18n['user.manager']}:" />
+					<h:outputText value="#{userViewBean.user.manager}" />
+				</h:panelGroup>
 
 				<h:panelGroup layout="block" styleClass="buttonGroup">
 					<h:commandButton value="#{i18n['action.edit']}"
@@ -51,12 +62,77 @@
 						rendered="#{favouritesBean.isBookmarked(userViewBean.user)}" />
 				</h:panelGroup>
 			</h:panelGroup>
+			<h:panelGrid styleClass="panelGrid" columns="2" cellpadding="10px">
+				<h:panelGroup layout="block" styleClass="panel">
+					<h1>#{i18n['user.team']}</h1>
 
-			<h:panelGroup layout="block" styleClass="panel">
-				<h1>#{i18n['user.team']}</h1>
+					<h:outputText value="#{i18n['user.no_users_found']}"
+						rendered="#{empty userViewBean.team.dataList}" />
 
+					<h:dataTable var="user" id="user"
+						value="#{userViewBean.team.dataList}"
+						rendered="#{not empty userViewBean.team.dataList}"
+						styleClass="dataTable">
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{i18n['user.name']}" />
+							</f:facet>
+							<h:outputText value="#{user.fullName}" />
+						</h:column>
 
-			</h:panelGroup>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{i18n['user.role']}" />
+							</f:facet>
+							<h:outputText value="#{i18n:translate(user.role.name)}" />
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{i18n['action.action']}" />
+							</f:facet>
+							<h:link value="#{i18n['action.view']}" outcome="userView">
+								<f:param name="id" value="#{user.id}" />
+							</h:link>
+						</h:column>
+					</h:dataTable>
+
+					<h:panelGroup layout="block" styleClass="paginator" id="paginator"
+						rendered="#{not empty userViewBean.team.dataList}">
+						<h:commandButton disabled="#{userViewBean.team.currentPage eq 0}"
+							value="#{i18n['paginator.first']}"
+							action="#{userViewBean.team.firstPage}">
+							<f:ajax render=":form:resultados" />
+						</h:commandButton>
+						<h:commandButton disabled="#{userViewBean.team.currentPage eq 0}"
+							value="#{i18n['paginator.previous']}"
+							action="#{userViewBean.team.previousPage}">
+							<f:ajax render=":form:resultados" />
+						</h:commandButton>
+						<ui:repeat value="#{userViewBean.team.pages}" var="page">
+							<h:commandButton value="#{page+1}"
+								action="#{userViewBean.team.gotoPage(page)}"
+								disabled="#{userViewBean.team.currentPage eq page}">
+								<f:ajax render=":form:resultados" />
+							</h:commandButton>
+						</ui:repeat>
+						<h:commandButton value="#{i18n['paginator.next']}"
+							disabled="#{userViewBean.team.currentPage eq userViewBean.team.pagesSize-1}"
+							action="#{userViewBean.team.nextPage}">
+							<f:ajax render=":form:resultados" />
+						</h:commandButton>
+						<h:commandButton value="#{i18n['paginator.last']}"
+							disabled="#{userViewBean.team.currentPage eq userViewBean.team.pagesSize-1}"
+							action="#{userViewBean.team.lastPage}">
+							<f:ajax render=":form:resultados" />
+						</h:commandButton>
+					
+					</h:panelGroup>
+				</h:panelGroup>
+				<h:panelGroup layout="block" styleClass="panel">
+					<h1>#{i18n['job.job_offers']}</h1>
+				</h:panelGroup>
+			</h:panelGrid>
 		</h:form>
 	</ui:define>
 </ui:composition>

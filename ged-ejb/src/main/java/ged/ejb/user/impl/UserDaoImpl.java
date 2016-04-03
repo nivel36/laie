@@ -100,6 +100,13 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
+	public List<User> findUserTeam(final Long id) {
+		final Map<String, Object> parameters = new HashMap<>(2);
+		parameters.put("id", id);
+		return this.persistenceFacade.getByTypedQuery(User.class, "User.findUserTeam", parameters, 0, 0);
+	}
+
+	@Override
 	public List<User> fullSearch(final String matching) {
 		return this.persistenceFacade.fullSearch(User.class, matching, "name", "surename", "email");
 	}

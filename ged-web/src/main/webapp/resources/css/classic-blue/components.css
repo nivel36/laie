@@ -61,7 +61,6 @@ label {
 	color: #444;
 }
 
-
 label input, label textarea, label select {
 	margin-left: 1em;
 }
@@ -291,7 +290,7 @@ aside input[disabled]:hover {
 	background: linear-gradient(#FFFDF9, #FFF8E7) !important;
 }
 
-aside input[type="text"],aside select,aside textarea {
+aside input[type="text"], aside select, aside textarea {
 	margin-right: 0;
 	border-radius: 12px 0 0 12px;
 	vertical-align: top;
@@ -315,6 +314,9 @@ aside input[type="submit"]:hover {
 /************************************
  *  CONTENT
  ************************************/
+.textBlock {
+	float: left;
+}
 
 /************************************
  *  INPUT
@@ -576,6 +578,7 @@ textarea {
 }
 
 .buttonGroup {
+	clear: left;
 	margin-top: 15px;
 	text-align: right;
 }

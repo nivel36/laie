@@ -8,12 +8,15 @@ import javax.inject.Named;
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
 import ged.web.core.view.AbstractBean;
+import ged.web.core.view.Paginator;
 
 @Named
 @ViewScoped
 public class UserViewBean extends AbstractBean {
 
 	private static final long serialVersionUID = -2187385732087309689L;
+
+	private Paginator<User> team;
 
 	private User user;
 
@@ -33,6 +36,10 @@ public class UserViewBean extends AbstractBean {
 		this.facesContext.renderResponse();
 	}
 
+	public Paginator<User> getTeam() {
+		return this.team;
+	}
+
 	public User getUser() {
 		return this.user;
 	}
@@ -45,24 +52,30 @@ public class UserViewBean extends AbstractBean {
 	 * Not using @PostConstruct because the view is a GET based form.
 	 */
 	public void init() {
-		if (this.userId != null) {
-			try {
-				final Long id = Long.parseLong(this.userId);
-				this.user = this.userService.findById(id);
-				if (this.user == null) {
-					error();
-				}
-			} catch (final NumberFormatException ex) {
-				error();
-			}
-		} else {
+		if (this.userId == null) {
 			error();
 		}
+		Long id = null;
+		try {
+			id = Long.parseLong(this.userId);
+		} catch (final NumberFormatException ex) {
+			error();
+		}
+		this.user = this.userService.findById(id);
+		if (this.user == null) {
+			error();
+		}
+		this.team = new Paginator<>(this.sessionBean.getRowsPerPage());
+		this.team.setEntities(this.userService.findUserTeam(id));
 	}
 
 	public String modifyUser() {
 		this.flash.put("user", this.user);
 		return "userEdit?faces-redirect=true";
+	}
+
+	public void setTeam(final Paginator<User> team) {
+		this.team = team;
 	}
 
 	public void setUser(final User user) {

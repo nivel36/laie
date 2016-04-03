@@ -58,6 +58,11 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	public List<User> findUserTeam(final Long id) {
+		return this.userDao.findUserTeam(id);
+	}
+
+	@Override
 	public List<User> fullSearch(final String matching) {
 		return this.userDao.fullSearch(matching);
 	}

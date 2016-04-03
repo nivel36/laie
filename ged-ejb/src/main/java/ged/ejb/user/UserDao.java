@@ -35,6 +35,8 @@ public interface UserDao {
 
 	public List<User> findUsers(String name, String surename);
 
+	public List<User> findUserTeam(Long id);
+
 	public List<User> fullSearch(final String matching);
 
 	public List<User> fullSearch(final String name, String surename);

@@ -23,6 +23,8 @@ public interface UserService {
 
 	public List<User> findUsers(String name, String surenames);
 
+	public List<User> findUserTeam(Long id);
+
 	public List<User> fullSearch(String matching);
 
 	public List<User> fullSearch(String name, String surename);

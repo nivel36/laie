@@ -46,6 +46,13 @@
 		<query>SELECT u FROM User u LEFT JOIN FETCH u.role WHERE u.username = :username</query>
 	</named-query>
 	
+	<named-query name="User.findUserTeam">
+		<query>SELECT 	u
+				FROM 	User u
+				WHERE	(u.manager IS NOT NULL AND u.manager.id = :id)
+		</query>
+	</named-query>
+	
 	<named-query name="User.findAll">
 		<query>SELECT 	u
 				FROM 	User u
