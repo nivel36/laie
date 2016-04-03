@@ -840,3 +840,35 @@ textarea {
 #userMenu li {
 	cursor: pointer;
 }
+
+.messages {
+	font-weight: normal;
+	font-size: 1.2em;
+	white-space: nowrap;
+	margin-bottom: 5px;
+}
+
+.messages li {
+	display: block;
+	width: 100%;
+	text-decoration: none;
+	padding: 3px 0px 3px 5px;
+}
+
+.errorMessages {
+	color: red !important;
+	background: #ffdddd;
+	border: 1px solid #ffcccc;
+}
+
+.warningMessages{
+	color: #ff8000 !important;
+	background: #fff188;
+	border: 1px solid #ffcc44;
+}
+
+.infoMessages{
+	color: blue !important;
+	background: #ddddff;
+	border: 1px solid #ccccff;
+}

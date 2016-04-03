@@ -33,6 +33,9 @@
 			</ui:insert>
 		</aside>
 		<div id="content">
+			<h:messages globalOnly="true" styleClass="messages"
+				errorClass="errorMessages" warnClass="warningMessages"
+				infoClass="infoMessages" fatalClass="fatalMessages" />
 			<ui:insert name="content" />
 		</div>
 		<footer>
