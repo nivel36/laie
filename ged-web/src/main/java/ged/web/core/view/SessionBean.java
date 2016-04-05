@@ -34,13 +34,26 @@ public class SessionBean extends AbstractBean {
 	@Produces
 	private User user;
 
-	public void addBookmark(final Bookmark bookmark) throws BookmarkFullExpcetion {
-		if (this.bookmarks.size() > 9) {
-			throw new BookmarkFullExpcetion();
+	public void addAction(final Action action) {
+		if (!containsAction(action)) {
+			if (this.actions.size() > 9) {
+				this.actions.remove(9);
+			}
+			this.actions.add(0, action);
 		}
+	}
+
+	public void addBookmark(final Bookmark bookmark) throws BookmarkFullExpcetion {
 		if (!containsBookmark(bookmark)) {
+			if (this.bookmarks.size() > 9) {
+				throw new BookmarkFullExpcetion();
+			}
 			this.bookmarks.add(0, bookmark);
 		}
+	}
+
+	public boolean containsAction(final Action action) {
+		return this.actions.contains(action);
 	}
 
 	public boolean containsBookmark(final Bookmark bookmark) {

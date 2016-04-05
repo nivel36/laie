@@ -21,25 +21,7 @@
 				<h:panelGroup layout="block" styleClass="panel">
 					<h1>#{i18n['index.last_offers']}</h1>
 
-					<h:outputText value="#{i18n['job.no_jobs_found']}"
-						rendered="#{empty jobOfferSearchBean.dataList}" />
-
-					<h:dataTable var="jobOffer" id="jobOffer"
-						value="#{jobOfferSearchBean.dataList}"
-						rendered="#{not empty jobOfferSearchBean.dataList}">
-
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="#{i18n['job.name']}" />
-							</f:facet>
-							<h:outputText value="#{jobOffer.name}" />
-						</h:column>
-					</h:dataTable>
-
-					<h:panelGroup display="block" styleClass="buttonGroup">
-						<h:commandButton value="#{i18n['action.new']}"
-							action="job/jobOfferEdit?faces-redirect=true" />
-					</h:panelGroup>
+				
 				</h:panelGroup>
 				<h:panelGroup layout="block" styleClass="panel">
 					<h1>#{i18n['index.last_candidates']}</h1>

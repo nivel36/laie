@@ -12,9 +12,14 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
 import javax.inject.Inject;
 
+import ged.web.view.ActionsBean;
+
 public class AbstractBean implements Serializable {
 
 	private static final long serialVersionUID = -2545624640193642401L;
+
+	@Inject
+	protected ActionsBean actionsBean;
 
 	@Inject
 	protected FacesContext facesContext;

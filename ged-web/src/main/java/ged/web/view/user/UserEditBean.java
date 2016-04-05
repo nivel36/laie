@@ -143,6 +143,7 @@ public class UserEditBean extends AbstractBean {
 		} else {
 			this.userService.insertUser(this.user);
 		}
+		this.actionsBean.add(this.user);
 		return "userSearch?faces-redirect=true";
 	}
 

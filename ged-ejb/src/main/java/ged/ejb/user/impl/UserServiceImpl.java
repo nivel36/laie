@@ -7,6 +7,7 @@ import javax.inject.Inject;
 
 import ged.ejb.core.Repository;
 import ged.ejb.core.bookmark.Bookmark;
+import ged.ejb.core.model.Action;
 import ged.ejb.user.User;
 import ged.ejb.user.UserDao;
 import ged.ejb.user.UserService;
@@ -80,6 +81,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<User> fullSearchBySurename(final String surename) {
 		return this.userDao.fullSearchBySurename(surename);
+	}
+
+	@Override
+	public void insertAction(final Action action) {
+		this.userDao.insertAction(action);
 	}
 
 	@Override

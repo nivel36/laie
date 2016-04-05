@@ -54,12 +54,12 @@
 					<h:commandButton value="#{i18n['action.edit']}"
 						action="#{userViewBean.editUser}" immediate="true" />
 					<h:commandButton value="#{i18n['bookmark.add_to_bookmarks']}"
-						action="#{favouritesBean.add(userViewBean.user)}" immediate="true"
-						rendered="#{not favouritesBean.isBookmarked(userViewBean.user)}" />
+						action="#{bookmarksBean.add(userViewBean.user)}" immediate="true"
+						rendered="#{not bookmarksBean.isBookmarked(userViewBean.user)}" />
 					<h:commandButton value="#{i18n['bookmark.remove_from_bookmarks']}"
-						action="#{favouritesBean.remove(userViewBean.user)}"
+						action="#{bookmarksBean.remove(userViewBean.user)}"
 						immediate="true"
-						rendered="#{favouritesBean.isBookmarked(userViewBean.user)}" />
+						rendered="#{bookmarksBean.isBookmarked(userViewBean.user)}" />
 				</h:panelGroup>
 			</h:panelGroup>
 			<h:panelGrid styleClass="panelGrid" columns="2" cellpadding="10px">

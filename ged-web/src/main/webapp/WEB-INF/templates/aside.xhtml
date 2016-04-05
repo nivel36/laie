@@ -29,8 +29,8 @@
 		</h:panelGroup>
 
 		<h:panelGroup layout="block" styleClass="panel" id="bookmarks">
-			<h1>#{i18n['aside.favourites']}</h1>
-			<h:outputText value="#{i18n['message.favourites.empty']}"
+			<h1>#{i18n['aside.bookmarks']}</h1>
+			<h:outputText value="#{i18n['message.bookmarks.empty']}"
 				styleClass="text" rendered="#{empty sessionBean.bookmarks}" />
 			<ui:repeat value="#{sessionBean.bookmarks}" var="bookmark">
 				<h:outputLink value="#{bookmark.url}">
@@ -43,9 +43,13 @@
 		<h:panelGroup layout="block" styleClass="panel">
 			<h1>#{i18n['aside.last_actions']}</h1>
 			<h:outputText value="#{i18n['message.actions.empty']}"
-				styleClass="text" rendered="#{empty actions}" />
-			<h:commandButton value="#{i18n['action.clean']}" />
-			<h:commandButton value="#{i18n['action.add']}" />
+				styleClass="text" rendered="#{empty sessionBean.actions}" />
+			<ui:repeat value="#{sessionBean.actions}" var="action">
+				<h:outputLink value="#{action.url}">
+					<h:outputText value="#{action.text}" />
+				</h:outputLink>
+				<br />
+			</ui:repeat>
 		</h:panelGroup>
 	</h:form>
 </ui:composition>

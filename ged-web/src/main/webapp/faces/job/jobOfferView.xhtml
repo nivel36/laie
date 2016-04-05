@@ -97,13 +97,13 @@
 					<h:commandButton value="#{i18n['action.save']}"
 						action="#{jobOfferViewBean.edit}" />
 					<h:commandButton value="#{i18n['bookmark.add_to_bookmarks']}"
-						action="#{favouritesBean.add(jobOfferViewBean.jobOffer)}"
+						action="#{bookmarksBean.add(jobOfferViewBean.jobOffer)}"
 						immediate="true"
-						rendered="#{not favouritesBean.isBookmarked(jobOfferViewBean.jobOffer)}" />
+						rendered="#{not bookmarksBean.isBookmarked(jobOfferViewBean.jobOffer)}" />
 					<h:commandButton value="#{i18n['bookmark.remove_from_bookmarks']}"
-						action="#{favouritesBean.remove(jobOfferViewBean.jobOffer)}"
+						action="#{bookmarksBean.remove(jobOfferViewBean.jobOffer)}"
 						immediate="true"
-						rendered="#{favouritesBean.isBookmarked(jobOfferViewBean.jobOffer)}" />
+						rendered="#{bookmarksBean.isBookmarked(jobOfferViewBean.jobOffer)}" />
 				</h:panelGroup>
 			</h:panelGroup>
 

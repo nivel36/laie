@@ -6,7 +6,6 @@ import javax.ejb.Local;
 
 import ged.ejb.core.bookmark.Bookmark;
 import ged.ejb.core.model.Action;
-import ged.ejb.core.model.IllegalUserAction;
 
 @Local
 public interface UserDao {
@@ -45,7 +44,7 @@ public interface UserDao {
 
 	public List<User> fullSearchBySurename(String surename);
 
-	public void insertAction(Action action) throws IllegalUserAction;
+	public void insertAction(Action action);
 
 	public void insertBookmark(Bookmark bookmark);
 

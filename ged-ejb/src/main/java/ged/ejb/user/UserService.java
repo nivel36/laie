@@ -5,6 +5,7 @@ import java.util.List;
 import javax.ejb.Local;
 
 import ged.ejb.core.bookmark.Bookmark;
+import ged.ejb.core.model.Action;
 
 @Local
 public interface UserService {
@@ -32,6 +33,8 @@ public interface UserService {
 	public List<User> fullSearchByName(String name);
 
 	public List<User> fullSearchBySurename(String surename);
+
+	public void insertAction(Action action);
 
 	public void insertBookmark(Bookmark bookmark);
 

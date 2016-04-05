@@ -11,7 +11,6 @@ import javax.inject.Inject;
 import ged.ejb.core.Repository;
 import ged.ejb.core.bookmark.Bookmark;
 import ged.ejb.core.model.Action;
-import ged.ejb.core.model.IllegalUserAction;
 import ged.ejb.core.model.PersistenceFacade;
 import ged.ejb.user.User;
 import ged.ejb.user.UserDao;
@@ -134,11 +133,7 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public void insertAction(final Action action) throws IllegalUserAction {
-		final Action a = findAction(action.getAuditedId(), action.getEntity(), action.getUser());
-		if (a != null) {
-			throw new IllegalUserAction("Action alredy exist");
-		}
+	public void insertAction(final Action action) {
 		this.persistenceFacade.insert(action);
 	}
 

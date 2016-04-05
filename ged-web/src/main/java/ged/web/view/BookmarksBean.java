@@ -13,7 +13,7 @@ import ged.web.core.view.AbstractBean;
 
 @Named
 @RequestScoped
-public class FavouritesBean extends AbstractBean {
+public class BookmarksBean extends AbstractBean {
 
 	private static final long serialVersionUID = 8786492354769335930L;
 
