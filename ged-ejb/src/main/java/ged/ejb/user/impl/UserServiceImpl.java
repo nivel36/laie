@@ -103,6 +103,9 @@ public class UserServiceImpl implements UserService {
 		if (existAdmin()) {
 			return this.userDao.updateUser(user);
 		} else {
+			if (user.hasRole("ADMIN")) {
+				return this.userDao.updateUser(user);
+			}
 			return user;
 		}
 	}
