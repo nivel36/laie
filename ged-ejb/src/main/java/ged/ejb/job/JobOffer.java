@@ -25,7 +25,8 @@ public class JobOffer extends AuditedEntity {
 
 	private static final long serialVersionUID = 5579321864799956403L;
 
-	@Column(length = 64)
+	@Column(nullable = false, length = 64)
+	@NotNull
 	private String city;
 
 	@ManyToOne
@@ -66,7 +67,8 @@ public class JobOffer extends AuditedEntity {
 	@JoinColumn(name = "recruiterId", nullable = true)
 	private User recruiter;
 
-	@Column(length = 64)
+	@Column(nullable = false, length = 64)
+	@NotNull
 	private String state;
 
 	public void addJobCandidature(final JobCandidature jobCandidature) {

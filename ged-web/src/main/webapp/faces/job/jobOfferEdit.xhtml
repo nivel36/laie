@@ -29,7 +29,7 @@
 
 			<h:panelGroup layout="block" styleClass="panel">
 				<h1>#{i18n['job.job_offer']}</h1>
-				
+
 				<h:outputLabel for="name" value="#{i18n['job.name']}"
 					styleClass="very_large required">
 					<h:inputText id="name" value="#{jobOfferEditBean.jobOffer.name}"
@@ -37,10 +37,11 @@
 						styleClass="#{not component.valid ? 'inputError' : ''}" />
 					<h:message for="name" errorClass="error" />
 				</h:outputLabel>
-				
+
 				<h:outputLabel for="client" value="#{i18n['job.client']}"
 					styleClass="required">
-					<h:inputText id="client" value="#{jobOfferEditBean.jobOffer.client.name}"
+					<h:inputText id="client"
+						value="#{jobOfferEditBean.jobOffer.client.name}"
 						label="#{i18n['job.client']}" required="true"
 						styleClass="#{not component.valid ? 'inputError' : ''}" />
 					<h:message for="client" errorClass="error" />
@@ -91,14 +92,16 @@
 
 				<h2>#{i18n['job.place']}</h2>
 
-				<h:outputLabel for="city" value="#{i18n['address.city']}:">
+				<h:outputLabel for="city" value="#{i18n['address.city']}:"
+					styleClass="required">
 					<h:inputText id="city" value="#{jobOfferEditBean.jobOffer.city}"
 						label="#{i18n['address.city']}"
 						styleClass="#{not component.valid ? 'inputError' : ''}" />
 					<h:message for="city" errorClass="error" />
 				</h:outputLabel>
 
-				<h:outputLabel for="state" value="#{i18n['address.state']}:">
+				<h:outputLabel for="state" value="#{i18n['address.state']}:"
+					styleClass="required">
 					<h:inputText id="state" value="#{jobOfferEditBean.jobOffer.state}"
 						label="#{i18n['address.state']}"
 						styleClass="#{not component.valid ? 'inputError' : ''}" />
