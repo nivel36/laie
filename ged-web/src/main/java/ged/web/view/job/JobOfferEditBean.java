@@ -41,7 +41,12 @@ public class JobOfferEditBean extends AbstractBean {
 	}
 
 	public String save() {
-		this.jobService.insertJobOffer(this.jobOffer);
+		if (this.jobOffer.getId() != 0) {
+			this.jobOffer = this.jobService.updateJobOffer(this.jobOffer);
+		} else {
+			this.jobService.insertJobOffer(this.jobOffer);
+		}
+		this.actionsBean.add(this.jobOffer);
 		return "jobOfferSearch?faces-redirect=true";
 	}
 

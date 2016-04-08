@@ -17,14 +17,11 @@
 			<input type="hidden" id="jobOfferId"
 				value="#{jobOfferEditBean.jobOffer.id}" />
 
-			<h:graphicImage value="/resources/img/s.gif" styleClass="headerIcon" />
-
-			<h:panelGroup rendered="#{jobOfferEditBean.jobOffer.id == 0}">
-				<h1 class="header">#{i18n['job.new_job_offer']}</h1>
-			</h:panelGroup>
-
-			<h:panelGroup rendered="#{jobOfferEditBean.jobOffer.id != 0}">
-				<h1 class="header">#{jobOfferEditBean.jobOffer.name}</h1>
+			<h:panelGroup>
+				<h1 class="header">
+					<i class="fa fa-industry" /> #{jobOfferEditBean.jobOffer.id != 0?
+					jobOfferEditBean.jobOffer.name : i18n['job.new_job_offer']}
+				</h1>
 			</h:panelGroup>
 
 			<h:panelGroup layout="block" styleClass="panel">
@@ -109,14 +106,6 @@
 				</h:outputLabel>
 
 				<h:panelGroup layout="block" class="buttonGroup">
-					<h:commandButton value="#{i18n['action.save']}"
-						action="#{jobOfferEditBean.save}">
-					</h:commandButton>
-					<h:commandButton value="#{i18n['action.cancel']}"
-						action="#{jobOfferEditBean.cancel}" immediate="true" />
-				</h:panelGroup>
-
-				<h:panelGroup layout="block" class="secondaryButtonGroup">
 					<h:commandButton value="#{i18n['action.save']}"
 						action="#{jobOfferEditBean.save}">
 					</h:commandButton>

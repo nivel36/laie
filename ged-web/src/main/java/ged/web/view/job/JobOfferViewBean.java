@@ -30,6 +30,11 @@ public class JobOfferViewBean extends AbstractBean {
 
 	private List<JobMeeting> plannedJobMeetings = new ArrayList<JobMeeting>();
 
+	public String edit() {
+		this.flash.put("jobOffer", this.jobOffer);
+		return "jobOfferEdit?faces-redirect=true";
+	}
+
 	private void error() {
 		final NavigationHandler navigationHandler = this.facesContext.getApplication().getNavigationHandler();
 		navigationHandler.handleNavigation(this.facesContext, null, "jobOfferSearch?faces-redirect=true");
@@ -71,11 +76,6 @@ public class JobOfferViewBean extends AbstractBean {
 		} else {
 			error();
 		}
-	}
-
-	public String modify() {
-		this.flash.put("jobOffer", this.jobOffer);
-		return "jobOfferEdit?faces-redirect=true";
 	}
 
 	private void populateJobMeetings(final JobOffer jobOffer) {
