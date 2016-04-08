@@ -69,6 +69,10 @@ public class JobOffer extends AuditedEntity {
 	@Field
 	private String name;
 
+	@ManyToOne
+	@JoinColumn(name = "ownerId", nullable = true)
+	private User owner;
+
 	@NotNull
 	private Integer places = 1;
 
@@ -164,6 +168,10 @@ public class JobOffer extends AuditedEntity {
 		return this.name;
 	}
 
+	public User getOwner() {
+		return this.owner;
+	}
+
 	public Integer getPlaces() {
 		return this.places;
 	}
@@ -231,6 +239,10 @@ public class JobOffer extends AuditedEntity {
 
 	public void setName(final String name) {
 		this.name = name;
+	}
+
+	public void setOwner(final User owner) {
+		this.owner = owner;
 	}
 
 	public void setPlaces(final Integer places) {

@@ -18,6 +18,7 @@ import org.hibernate.search.annotations.Indexed;
 import ged.ejb.core.bookmark.Bookmark;
 import ged.ejb.core.model.Action;
 import ged.ejb.core.model.AuditedEntity;
+import ged.ejb.job.JobOffer;
 
 @Entity
 @Indexed
@@ -38,6 +39,9 @@ public class User extends AuditedEntity {
 
 	@Transient
 	private String fullName;
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "owner", orphanRemoval = false)
+	private List<JobOffer> jobOffers;
 
 	@NotNull
 	@Column(length = 2, nullable = false)
@@ -124,6 +128,10 @@ public class User extends AuditedEntity {
 		return this.name + " " + this.surename;
 	}
 
+	public List<JobOffer> getJobOffers() {
+		return this.jobOffers;
+	}
+
 	public String getLanguage() {
 		return this.language;
 	}
@@ -196,6 +204,10 @@ public class User extends AuditedEntity {
 
 	public void setFullName(final String fullName) {
 		this.fullName = fullName;
+	}
+
+	public void setJobOffers(final List<JobOffer> jobOffers) {
+		this.jobOffers = jobOffers;
 	}
 
 	public void setLanguage(final String language) {
