@@ -44,6 +44,11 @@ public class JobServiceImpl implements JobService {
 	}
 
 	@Override
+	public List<JobOffer> findLastJobOffers() {
+		return this.jobOfferDao.findLastJobOffers();
+	}
+
+	@Override
 	public List<JobMeeting> findPlannedJobMeetingsByJobOffer(final JobOffer jobOffer) {
 		return this.jobOfferDao.findPlannedJobMeetingsByJobOffer(jobOffer);
 	}

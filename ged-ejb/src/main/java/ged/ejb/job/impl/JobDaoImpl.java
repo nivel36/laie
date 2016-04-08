@@ -69,6 +69,11 @@ public class JobDaoImpl implements JobDao {
 	}
 
 	@Override
+	public List<JobOffer> findLastJobOffers() {
+		return this.persistenceFacade.getByTypedQuery(JobOffer.class, "JobOffer.findLastJobOffers", null, 10, 0);
+	}
+
+	@Override
 	public List<JobMeeting> findPlannedJobMeetingsByJobOffer(final JobOffer jobOffer) {
 		List<JobMeeting> plannedJobMeetings = null;
 		final Map<String, Object> parameters = new HashMap<String, Object>();

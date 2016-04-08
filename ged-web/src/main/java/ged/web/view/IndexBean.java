@@ -4,9 +4,12 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import ged.ejb.candidate.Candidate;
+import ged.ejb.job.JobOffer;
+import ged.ejb.job.JobService;
 import ged.web.core.view.AbstractBean;
 
 @Named
@@ -17,15 +20,21 @@ public class IndexBean extends AbstractBean {
 
 	private List<Candidate> candidates;
 
+	private List<JobOffer> jobOffers;
+
+	@Inject
+	private JobService jobService;
+
 	public List<Candidate> getCandidates() {
 		return this.candidates;
 	}
 
-	@PostConstruct
-	public void init() {
+	public List<JobOffer> getJobOffers() {
+		return this.jobOffers;
 	}
 
-	public void setCandidates(final List<Candidate> candidates) {
-		this.candidates = candidates;
+	@PostConstruct
+	public void init() {
+		this.jobOffers = this.jobService.findLastJobOffers();
 	}
 }

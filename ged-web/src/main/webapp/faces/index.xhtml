@@ -21,7 +21,20 @@
 				<h:panelGroup layout="block" styleClass="panel">
 					<h1>#{i18n['index.last_offers']}</h1>
 
-				
+					<h:outputText value="#{i18n['job.no_jobs_found']}"
+						rendered="#{empty indexBean.jobOffers}" />
+
+					<ui:repeat var="jobOffer" value="${indexBean.jobOffers}">
+						<h:panelGroup layout="block" styleClass="textBlock">
+							<h:outputText value="#{jobOffer.client.name} - #{jobOffer.name}" />
+						</h:panelGroup>
+						<br/>
+					</ui:repeat>
+
+					<h:panelGroup display="block" styleClass="buttonGroup">
+						<h:commandButton value="#{i18n['action.new']}"
+							action="/faces/job/jobOfferEdit.xhtml?faces-redirect=true" />
+					</h:panelGroup>
 				</h:panelGroup>
 				<h:panelGroup layout="block" styleClass="panel">
 					<h1>#{i18n['index.last_candidates']}</h1>
