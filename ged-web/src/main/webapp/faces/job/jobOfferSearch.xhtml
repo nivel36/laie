@@ -12,19 +12,27 @@
 	<ui:param name="selectedMenu" value="offers" />
 
 	<ui:define name="content">
-		<h:form id="form">
+		<h:form id="newForm">
 			<h1 class="header">
 				<i class="fa fa-industry" /> #{i18n['job.job_offers']}
 			</h1>
+			<h:panelGroup layout="block" styleClass="actionPanel">
+				<h:commandButton value="#{i18n['action.new']}"
+					action="#{jobOfferSearchBean.newJobOffer}" immediate="true" />
+			</h:panelGroup>
+		</h:form>
+		
+		<h:form id="form">
 			<h:panelGroup layout="block" styleClass="panel">
 				<h1>#{i18n['job.search']}</h1>
 				<h:outputLabel value="#{i18n['job.name']}">
 					<h:inputText id="name" value="#{jobOfferSearchBean.name}"
 						label="#{i18n['job.name']}" />
 				</h:outputLabel>
-				
+
 				<h:outputLabel value="#{i18n['job.client']}">
-					<h:inputText id="clientName" value="#{jobOfferSearchBean.clientName}"
+					<h:inputText id="clientName"
+						value="#{jobOfferSearchBean.clientName}"
 						label="#{i18n['job.client']}" />
 				</h:outputLabel>
 
@@ -98,17 +106,20 @@
 				</h:dataTable>
 				<h:panelGroup layout="block" styleClass="paginator" id="paginator"
 					rendered="#{not empty jobOfferSearchBean.jobOfferPaginator.dataList}">
-					<h:commandButton disabled="#{jobOfferSearchBean.jobOfferPaginator.currentPage eq 0}"
+					<h:commandButton
+						disabled="#{jobOfferSearchBean.jobOfferPaginator.currentPage eq 0}"
 						value="#{i18n['paginator.first']}"
 						action="#{jobOfferSearchBean.jobOfferPaginator.firstPage}">
 						<f:ajax render=":form:resultados" />
 					</h:commandButton>
-					<h:commandButton disabled="#{jobOfferSearchBean.jobOfferPaginator.currentPage eq 0}"
+					<h:commandButton
+						disabled="#{jobOfferSearchBean.jobOfferPaginator.currentPage eq 0}"
 						value="#{i18n['paginator.previous']}"
 						action="#{jobOfferSearchBean.jobOfferPaginator.previousPage}">
 						<f:ajax render=":form:resultados" />
 					</h:commandButton>
-					<ui:repeat value="#{jobOfferSearchBean.jobOfferPaginator.pages}" varStatus="page">
+					<ui:repeat value="#{jobOfferSearchBean.jobOfferPaginator.pages}"
+						varStatus="page">
 						<h:commandButton value="#{page.index+1}"
 							action="#{jobOfferSearchBean.jobOfferPaginator.gotoPage(page.index)}"
 							disabled="#{jobOfferSearchBean.jobOfferPaginator.currentPage eq page.index}">
@@ -126,18 +137,16 @@
 						<f:ajax render=":form:resultados" />
 					</h:commandButton>
 					<h:outputLabel value="#{i18n['paginator.show']}">
-						<h:selectOneMenu value="#{jobOfferSearchBean.jobOfferPaginator.rowsPerPage}">
+						<h:selectOneMenu
+							value="#{jobOfferSearchBean.jobOfferPaginator.rowsPerPage}">
 							<f:selectItem itemValue="5" itemLabel="5" />
 							<f:selectItem itemValue="10" itemLabel="10" />
 							<f:selectItem itemValue="25" itemLabel="25" />
-							<f:ajax listener="#{jobOfferSearchBean.jobOfferPaginator.rowsPerPageChange}"
+							<f:ajax
+								listener="#{jobOfferSearchBean.jobOfferPaginator.rowsPerPageChange}"
 								render=":form:resultados" execute=":form:paginator" />
 						</h:selectOneMenu>
 					</h:outputLabel>
-				</h:panelGroup>
-				<h:panelGroup layout="block" styleClass="buttonGroup">
-					<h:commandButton value="#{i18n['action.new']}"
-						action="#{jobOfferSearchBean.newJobOffer}" immediate="true" />
 				</h:panelGroup>
 			</h:panelGroup>
 		</h:form>

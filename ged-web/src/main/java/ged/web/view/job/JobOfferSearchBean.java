@@ -1,6 +1,7 @@
 package ged.web.view.job;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -68,7 +69,23 @@ public class JobOfferSearchBean extends AbstractBean {
 	}
 
 	public void search() {
-		this.jobOfferPaginator.setEntities(this.jobService.findAllJobOffers());
+		this.logger.fine("Searching for JobOffers");
+		if ((this.name != null) && (this.clientName != null)) {
+			if (verifySearchField(this.name) && verifySearchField(this.clientName)) {
+				this.jobOfferPaginator
+						.setEntities(this.jobService.fullSearchByNameAndClientName(this.name, this.clientName));
+			}
+		} else if ((this.name == null) && (this.clientName != null)) {
+			if (verifySearchField(this.clientName)) {
+				this.jobOfferPaginator.setEntities(this.jobService.fullSearchByClientName(this.clientName));
+			}
+		} else if ((this.name != null) && (this.clientName == null)) {
+			if (verifySearchField(this.name)) {
+				this.jobOfferPaginator.setEntities(this.jobService.fullSearchByName(this.name));
+			}
+		} else {
+			this.jobOfferPaginator.setEntities(this.jobService.findAllJobOffers());
+		}
 		cleanSearchFields();
 	}
 
@@ -84,4 +101,11 @@ public class JobOfferSearchBean extends AbstractBean {
 		this.name = name;
 	}
 
+	private boolean verifySearchField(final String text) {
+		if (text.length() < 3) {
+			addMessage(FacesMessage.SEVERITY_WARN, "error.search.camp_to_short", "error.search.camp_to_short");
+			return false;
+		}
+		return true;
+	}
 }

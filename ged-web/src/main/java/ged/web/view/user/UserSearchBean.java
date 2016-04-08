@@ -6,7 +6,6 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import ged.ejb.core.util.Log;
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
 import ged.web.core.view.AbstractBean;
@@ -76,7 +75,6 @@ public class UserSearchBean extends AbstractBean {
 		search();
 	}
 
-	@Log
 	public void search() {
 		this.logger.fine("Searching for Users");
 		if ((this.name != null) && (this.surename != null)) {

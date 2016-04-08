@@ -15,22 +15,29 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.IndexedEmbedded;
+
 import ged.ejb.client.Client;
 import ged.ejb.core.i18n.I18n;
 import ged.ejb.core.model.AuditedEntity;
 import ged.ejb.user.User;
 
 @Entity
+@Indexed
 public class JobOffer extends AuditedEntity {
 
 	private static final long serialVersionUID = 5579321864799956403L;
 
 	@Column(nullable = false, length = 64)
 	@NotNull
+	@Field
 	private String city;
 
 	@ManyToOne
 	@JoinColumn(name = "clientId", nullable = true)
+	@IndexedEmbedded
 	private Client client;
 
 	@I18n
@@ -51,6 +58,7 @@ public class JobOffer extends AuditedEntity {
 	private Date dateOpened;
 
 	@Column(length = 1024)
+	@Field
 	private String description;
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "jobOffer", orphanRemoval = true)
@@ -58,6 +66,7 @@ public class JobOffer extends AuditedEntity {
 
 	@NotNull
 	@Column(length = 128, nullable = false)
+	@Field
 	private String name;
 
 	@NotNull

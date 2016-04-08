@@ -19,13 +19,15 @@
 			<f:viewAction action="#{globalSearchBean.search}" />
 		</f:metadata>
 
-		<h:form id="userSearchForm">
-			<h1 class="header">
-				<i class="fa fa-search" /> #{i18n['user.search_results']}
-			</h1>
+		<h1 class="header">
+			<i class="fa fa-search" /> #{i18n['job.search_results']}
+		</h1>
 
-			<h:panelGroup layout="block" styleClass="panel" id="userResults"
-				rendered="#{not empty globalSearchBean.userPaginator.entities}">
+
+
+		<h:panelGroup layout="block" styleClass="panel" id="userResults"
+			rendered="#{not empty globalSearchBean.userPaginator.entities}">
+			<h:form id="userSearchForm">
 				<h1>#{i18n['user.users']}</h1>
 
 				<h:dataTable id="user" var="user"
@@ -114,7 +116,106 @@
 						</h:selectOneMenu>
 					</h:outputLabel>
 				</h:panelGroup>
-			</h:panelGroup>
-		</h:form>
+			</h:form>
+		</h:panelGroup>
+
+		<h:panelGroup layout="block" styleClass="panel" id="jobOfferResults"
+			rendered="#{not empty globalSearchBean.jobOfferPaginator.entities}">
+			<h:form id="jobOfferForm">
+				<h1>#{i18n['job.job_offers']}</h1>
+
+				<h:dataTable var="jobOffer" id="jobOffer"
+					value="#{globalSearchBean.jobOfferPaginator.dataList}"
+					rendered="#{not empty globalSearchBean.jobOfferPaginator.dataList}"
+					styleClass="dataTable">
+
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="#{i18n['job.name']}" />
+						</f:facet>
+						<h:outputText value="#{jobOffer.name}" />
+					</h:column>
+
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="#{i18n['job.client']}" />
+						</f:facet>
+						<h:outputText value="#{jobOffer.client.name}" />
+					</h:column>
+
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="#{i18n['job.date_opened']}" />
+						</f:facet>
+						<h:outputText value="#{jobOffer.dateOpened}">
+							<f:convertDateTime pattern="MM / yyyy" />
+						</h:outputText>
+					</h:column>
+
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="#{i18n['job.date_closed']}" />
+						</f:facet>
+						<h:outputText value="#{jobOffer.dateClosed}">
+							<f:convertDateTime pattern="MM / yyyy" />
+						</h:outputText>
+					</h:column>
+
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Action" />
+						</f:facet>
+						<h:link value="Ver" outcome="/faces/job/jobOfferView">
+							<f:param name="id" value="#{jobOffer.id}" />
+						</h:link>
+					</h:column>
+				</h:dataTable>
+				<h:panelGroup layout="block" styleClass="paginator" id="paginator"
+					rendered="#{not empty globalSearchBean.jobOfferPaginator.dataList}">
+					<h:commandButton
+						disabled="#{globalSearchBean.jobOfferPaginator.currentPage eq 0}"
+						value="#{i18n['paginator.first']}"
+						action="#{globalSearchBean.jobOfferPaginator.firstPage}">
+						<f:ajax render=":jobOfferForm:resultados" />
+					</h:commandButton>
+					<h:commandButton
+						disabled="#{globalSearchBean.jobOfferPaginator.currentPage eq 0}"
+						value="#{i18n['paginator.previous']}"
+						action="#{globalSearchBean.jobOfferPaginator.previousPage}">
+						<f:ajax render=":jobOfferForm:resultados" />
+					</h:commandButton>
+					<ui:repeat value="#{globalSearchBean.jobOfferPaginator.pages}"
+						varStatus="page">
+						<h:commandButton value="#{page.index+1}"
+							action="#{globalSearchBean.jobOfferPaginator.gotoPage(page.index)}"
+							disabled="#{globalSearchBean.jobOfferPaginator.currentPage eq page.index}">
+							<f:ajax render=":jobOfferForm:resultados" />
+						</h:commandButton>
+					</ui:repeat>
+					<h:commandButton value="#{i18n['paginator.next']}"
+						disabled="#{globalSearchBean.jobOfferPaginator.currentPage eq globalSearchBean.jobOfferPaginator.pagesSize-1}"
+						action="#{globalSearchBean.jobOfferPaginator.nextPage}">
+						<f:ajax render=":jobOfferForm:resultados" />
+					</h:commandButton>
+					<h:commandButton value="#{i18n['paginator.last']}"
+						disabled="#{globalSearchBean.jobOfferPaginator.currentPage eq globalSearchBean.jobOfferPaginator.pagesSize-1}"
+						action="#{globalSearchBean.jobOfferPaginator.lastPage}">
+						<f:ajax render=":jobOfferForm:resultados" />
+					</h:commandButton>
+					<h:outputLabel value="#{i18n['paginator.show']}">
+						<h:selectOneMenu
+							value="#{globalSearchBean.jobOfferPaginator.rowsPerPage}">
+							<f:selectItem itemValue="5" itemLabel="5" />
+							<f:selectItem itemValue="10" itemLabel="10" />
+							<f:selectItem itemValue="25" itemLabel="25" />
+							<f:ajax
+								listener="#{globalSearchBean.jobOfferPaginator.rowsPerPageChange}"
+								render=":jobOfferForm:resultados"
+								execute=":jobOfferForm:paginator" />
+						</h:selectOneMenu>
+					</h:outputLabel>
+				</h:panelGroup>
+			</h:form>
+		</h:panelGroup>
 	</ui:define>
 </ui:composition>

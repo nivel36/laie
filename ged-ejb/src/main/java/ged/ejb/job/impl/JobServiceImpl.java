@@ -6,9 +6,9 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import ged.ejb.core.Repository;
+import ged.ejb.job.JobDao;
 import ged.ejb.job.JobMeeting;
 import ged.ejb.job.JobOffer;
-import ged.ejb.job.JobOfferDao;
 import ged.ejb.job.JobService;
 
 @Stateless
@@ -16,7 +16,7 @@ public class JobServiceImpl implements JobService {
 
 	@Inject
 	@Repository
-	private JobOfferDao jobOfferDao;
+	private JobDao jobOfferDao;
 
 	@Override
 	public void deleteJobOffer(final JobOffer jobOffer) {
@@ -46,6 +46,26 @@ public class JobServiceImpl implements JobService {
 	@Override
 	public List<JobMeeting> findPlannedJobMeetingsByJobOffer(final JobOffer jobOffer) {
 		return this.jobOfferDao.findPlannedJobMeetingsByJobOffer(jobOffer);
+	}
+
+	@Override
+	public List<JobOffer> fullSearch(final String matching) {
+		return this.jobOfferDao.fullSearch(matching);
+	}
+
+	@Override
+	public List<JobOffer> fullSearchByClientName(final String clientName) {
+		return this.jobOfferDao.fullSearchByClientName(clientName);
+	}
+
+	@Override
+	public List<JobOffer> fullSearchByName(final String name) {
+		return this.jobOfferDao.fullSearchByName(name);
+	}
+
+	@Override
+	public List<JobOffer> fullSearchByNameAndClientName(final String name, final String clientName) {
+		return this.jobOfferDao.fullSearchByNameAndClientName(name, clientName);
 	}
 
 	@Override

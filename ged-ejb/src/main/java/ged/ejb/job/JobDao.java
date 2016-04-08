@@ -7,7 +7,7 @@ import javax.ejb.Local;
 import ged.ejb.client.Client;
 
 @Local
-public interface JobOfferDao {
+public interface JobDao {
 
 	public void deleteJobOffer(JobOffer jobOffer);
 
@@ -22,6 +22,14 @@ public interface JobOfferDao {
 	public List<JobOffer> findJobOfferByName(String name);
 
 	public List<JobMeeting> findPlannedJobMeetingsByJobOffer(JobOffer jobOffer);
+
+	public List<JobOffer> fullSearch(String matching);
+
+	public List<JobOffer> fullSearchByClientName(String clientName);
+
+	public List<JobOffer> fullSearchByName(String name);
+
+	public List<JobOffer> fullSearchByNameAndClientName(String name, String clientName);
 
 	public Client insertClient(String clientName);
 

@@ -19,6 +19,14 @@ public interface JobService {
 
 	public List<JobMeeting> findPlannedJobMeetingsByJobOffer(JobOffer jobOffer);
 
+	public List<JobOffer> fullSearch(String matching);
+
+	public List<JobOffer> fullSearchByClientName(String clientName);
+
+	public List<JobOffer> fullSearchByName(String name);
+
+	public List<JobOffer> fullSearchByNameAndClientName(String name, String clientName);
+
 	public void insertJobOffer(JobOffer jobOffer);
 
 	public JobOffer updateJobOffer(JobOffer jobOffer);

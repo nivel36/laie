@@ -7,6 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 
+import org.hibernate.search.annotations.ContainedIn;
+import org.hibernate.search.annotations.Field;
+
 import ged.ejb.core.model.AuditedEntity;
 import ged.ejb.job.JobOffer;
 
@@ -15,9 +18,11 @@ public class Client extends AuditedEntity {
 
 	private static final long serialVersionUID = -5319357138994738654L;
 
+	@ContainedIn
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "client", orphanRemoval = true)
 	private List<JobOffer> jobOffers;
 
+	@Field
 	private String name;
 
 	@Override
