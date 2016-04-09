@@ -34,7 +34,7 @@ public class Cache implements Serializable {
 	private List<LanguageLevel> languageLevels;
 
 	@Inject
-	protected Logger logger;
+	protected transient Logger logger;
 
 	private List<Role> roles;
 

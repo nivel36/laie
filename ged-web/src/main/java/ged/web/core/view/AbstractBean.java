@@ -28,7 +28,7 @@ public class AbstractBean implements Serializable {
 	protected Flash flash;
 
 	@Inject
-	protected Logger logger;
+	protected transient Logger logger;
 
 	@Inject
 	protected SessionBean sessionBean;

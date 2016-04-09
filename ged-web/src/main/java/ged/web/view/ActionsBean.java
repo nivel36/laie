@@ -23,7 +23,7 @@ public class ActionsBean implements Serializable {
 	protected FacesContext facesContext;
 
 	@Inject
-	protected Logger logger;
+	protected transient Logger logger;
 
 	@Inject
 	protected SessionBean sessionBean;

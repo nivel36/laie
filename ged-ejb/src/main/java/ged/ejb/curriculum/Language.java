@@ -35,84 +35,91 @@ public class Language extends AuditedEntity {
 	@I18n
 	private String write;
 
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		final Language other = (Language) obj;
+		if (this.languageName == null) {
+			if (other.languageName != null) {
+				return false;
+			}
+		} else if (!this.languageName.equals(other.languageName)) {
+			return false;
+		}
+		if (!this.read.equals(other.read)) {
+			return false;
+		}
+		if (!this.speak.equals(other.speak)) {
+			return false;
+		}
+		if (!this.write.equals(other.write)) {
+			return false;
+		}
+		return true;
+	}
+
 	public Curriculum getCurriculum() {
-		return curriculum;
+		return this.curriculum;
 	}
 
 	public String getLanguageName() {
-		return languageName;
+		return this.languageName;
 	}
 
 	public String getRead() {
-		return read;
+		return this.read;
 	}
 
 	public String getSpeak() {
-		return speak;
+		return this.speak;
 	}
 
 	public String getWrite() {
-		return write;
-	}
-
-	public void setCurriculum(Curriculum curriculum) {
-		this.curriculum = curriculum;
-	}
-
-	public void setLanguageName(String languageName) {
-		this.languageName = languageName;
-	}
-
-	public void setRead(String read) {
-		this.read = read;
-	}
-
-	public void setSpeak(String speak) {
-		this.speak = speak;
-	}
-
-	public void setWrite(String write) {
-		this.write = write;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Language other = (Language) obj;
-		if (languageName == null) {
-			if (other.languageName != null)
-				return false;
-		} else if (!languageName.equals(other.languageName))
-			return false;
-		if (read != other.read)
-			return false;
-		if (speak != other.speak)
-			return false;
-		if (write != other.write)
-			return false;
-		return true;
+		return this.write;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result
-				+ ((languageName == null) ? 0 : languageName.hashCode());
-		result = prime * result + ((read == null) ? 0 : read.hashCode());
-		result = prime * result + ((speak == null) ? 0 : speak.hashCode());
-		result = prime * result + ((write == null) ? 0 : write.hashCode());
+		result = (prime * result) + ((this.languageName == null) ? 0 : this.languageName.hashCode());
+		result = (prime * result) + ((this.read == null) ? 0 : this.read.hashCode());
+		result = (prime * result) + ((this.speak == null) ? 0 : this.speak.hashCode());
+		result = (prime * result) + ((this.write == null) ? 0 : this.write.hashCode());
 		return result;
+	}
+
+	public void setCurriculum(final Curriculum curriculum) {
+		this.curriculum = curriculum;
+	}
+
+	public void setLanguageName(final String languageName) {
+		this.languageName = languageName;
+	}
+
+	public void setRead(final String read) {
+		this.read = read;
+	}
+
+	public void setSpeak(final String speak) {
+		this.speak = speak;
+	}
+
+	public void setWrite(final String write) {
+		this.write = write;
 	}
 
 	@Override
 	public String toString() {
-		return "Language [languageName=" + languageName + ", speak=" + speak
-				+ ", write=" + write + ", read=" + read + "]";
+		return "Language [languageName=" + this.languageName + ", speak=" + this.speak + ", write=" + this.write
+				+ ", read=" + this.read + "]";
 	}
 }
