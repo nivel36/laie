@@ -21,7 +21,7 @@
 					action="#{jobOfferSearchBean.newJobOffer}" immediate="true" />
 			</h:panelGroup>
 		</h:form>
-		
+
 		<h:form id="form">
 			<h:panelGroup layout="block" styleClass="panel">
 				<h1>#{i18n['job.search']}</h1>
@@ -89,17 +89,28 @@
 
 					<h:column>
 						<f:facet name="header">
+							<h:outputText value="#{i18n['user.owner']}" />
+						</f:facet>
+						<h:outputText value="#{jobOffer.owner}" />
+					</h:column>
+
+					<h:column>
+						<f:facet name="header">
 							<h:outputText value="Action" />
 						</f:facet>
 						<h:link value="Ver" outcome="jobOfferView">
 							<f:param name="id" value="#{jobOffer.id}" />
 						</h:link>
-						|
+						<h:outputText value=" | "
+							rendered="#{jobOfferSearchBean.canEdit(jobOffer)}" />
 						<h:commandLink action="#{jobOfferSearchBean.edit(jobOffer)}"
-							value="#{i18n['action.edit']}" />
-						|
+							value="#{i18n['action.edit']}"
+							rendered="#{jobOfferSearchBean.canEdit(jobOffer)}" />
+						<h:outputText value=" | "
+							rendered="#{jobOfferSearchBean.canEdit(jobOffer)}" />
 						<h:commandLink action="#{jobOfferSearchBean.remove(jobOffer)}"
-							value="#{i18n['action.remove']}">
+							value="#{i18n['action.remove']}"
+							rendered="#{jobOfferSearchBean.canEdit(jobOffer)}">
 							<f:ajax execute="@form" render="@form" />
 						</h:commandLink>
 					</h:column>

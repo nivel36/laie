@@ -10,6 +10,7 @@ import javax.inject.Named;
 import ged.ejb.candidate.Candidate;
 import ged.ejb.job.JobOffer;
 import ged.ejb.job.JobService;
+import ged.ejb.user.User;
 import ged.web.core.view.AbstractBean;
 
 @Named
@@ -35,6 +36,7 @@ public class IndexBean extends AbstractBean {
 
 	@PostConstruct
 	public void init() {
-		this.jobOffers = this.jobService.findLastJobOffers();
+		final User user = this.sessionBean.getUser();
+		this.jobOffers = this.jobService.findLastJobOffers(user);
 	}
 }

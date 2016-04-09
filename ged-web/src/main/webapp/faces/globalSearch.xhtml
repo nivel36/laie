@@ -163,6 +163,13 @@
 
 					<h:column>
 						<f:facet name="header">
+							<h:outputText value="#{i18n['user.owner']}" />
+						</f:facet>
+						<h:outputText value="#{jobOffer.owner}" />
+					</h:column>
+
+					<h:column>
+						<f:facet name="header">
 							<h:outputText value="Action" />
 						</f:facet>
 						<h:link value="Ver" outcome="/faces/job/jobOfferView">

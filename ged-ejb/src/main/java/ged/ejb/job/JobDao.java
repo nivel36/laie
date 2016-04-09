@@ -5,6 +5,7 @@ import java.util.List;
 import javax.ejb.Local;
 
 import ged.ejb.client.Client;
+import ged.ejb.user.User;
 
 @Local
 public interface JobDao {
@@ -21,7 +22,7 @@ public interface JobDao {
 
 	public List<JobOffer> findJobOfferByName(String name);
 
-	public List<JobOffer> findLastJobOffers();
+	public List<JobOffer> findLastJobOffers(User owner);
 
 	public List<JobMeeting> findPlannedJobMeetingsByJobOffer(JobOffer jobOffer);
 

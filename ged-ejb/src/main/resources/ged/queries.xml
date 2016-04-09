@@ -25,9 +25,9 @@
 	<named-query name="JobOffer.findByName">
 		<query>SELECT j FROM JobOffer j WHERE j.name = :name</query>
 	</named-query>
-	
+
 	<named-query name="JobOffer.findLastJobOffers">
-		<query>SELECT j FROM JobOffer j ORDER BY j.id</query>
+		<query>SELECT j FROM JobOffer j WHERE j.owner = :owner ORDER BY j.id</query>
 	</named-query>
 
 	<named-query name="JobMeeting.findPlannedJobMeetings">
@@ -37,11 +37,11 @@
 	<named-query name="JobMeeting.findConductedJobMeetings">
 		<query>SELECT j FROM JobMeeting j WHERE j.jobCandidature.id = :jobCandidatureId</query>
 	</named-query>
-	
+
 	<named-query name="User.findById">
 		<query>SELECT u FROM User u LEFT JOIN FETCH u.role WHERE u.id = :id</query>
 	</named-query>
-	
+
 	<named-query name="User.findByName">
 		<query>SELECT u FROM User u LEFT JOIN FETCH u.role WHERE u.name = :name</query>
 	</named-query>
@@ -49,14 +49,14 @@
 	<named-query name="User.findByUsername">
 		<query>SELECT u FROM User u LEFT JOIN FETCH u.role WHERE u.username = :username</query>
 	</named-query>
-	
+
 	<named-query name="User.findUserTeam">
 		<query>SELECT 	u
 				FROM 	User u
 				WHERE	(u.manager IS NOT NULL AND u.manager.id = :id)
 		</query>
 	</named-query>
-	
+
 	<named-query name="User.findAll">
 		<query>SELECT 	u
 				FROM 	User u

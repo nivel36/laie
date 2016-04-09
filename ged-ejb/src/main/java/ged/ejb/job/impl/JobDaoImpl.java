@@ -15,6 +15,7 @@ import ged.ejb.core.model.PersistenceFacade;
 import ged.ejb.job.JobDao;
 import ged.ejb.job.JobMeeting;
 import ged.ejb.job.JobOffer;
+import ged.ejb.user.User;
 
 @Repository
 public class JobDaoImpl implements JobDao {
@@ -69,8 +70,10 @@ public class JobDaoImpl implements JobDao {
 	}
 
 	@Override
-	public List<JobOffer> findLastJobOffers() {
-		return this.persistenceFacade.getByTypedQuery(JobOffer.class, "JobOffer.findLastJobOffers", null, 10, 0);
+	public List<JobOffer> findLastJobOffers(final User owner) {
+		final Map<String, Object> parameters = new HashMap<>();
+		parameters.put("owner", owner);
+		return this.persistenceFacade.getByTypedQuery(JobOffer.class, "JobOffer.findLastJobOffers", parameters, 10, 0);
 	}
 
 	@Override

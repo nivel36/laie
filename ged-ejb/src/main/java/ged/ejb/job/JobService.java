@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.ejb.Local;
 
+import ged.ejb.user.User;
+
 @Local
 public interface JobService {
 
@@ -17,7 +19,7 @@ public interface JobService {
 
 	public List<JobOffer> findJobOfferByName(String name);
 
-	public List<JobOffer> findLastJobOffers();
+	public List<JobOffer> findLastJobOffers(User owner);
 
 	public List<JobMeeting> findPlannedJobMeetingsByJobOffer(JobOffer jobOffer);
 

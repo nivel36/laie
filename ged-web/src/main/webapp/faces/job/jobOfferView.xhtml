@@ -75,7 +75,7 @@
 
 				<h:panelGroup layout="block" class="buttonGroup">
 					<h:commandButton value="#{i18n['action.edit']}"
-						action="#{jobOfferViewBean.edit}" />
+						action="#{jobOfferViewBean.edit}" rendered="jobOfferViewBean.canEdit"/>
 					<h:commandButton value="#{i18n['bookmark.add_to_bookmarks']}"
 						action="#{bookmarksBean.add(jobOfferViewBean.jobOffer)}"
 						immediate="true"

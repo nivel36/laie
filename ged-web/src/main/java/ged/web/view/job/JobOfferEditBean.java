@@ -44,6 +44,7 @@ public class JobOfferEditBean extends AbstractBean {
 		if (this.jobOffer.getId() != 0) {
 			this.jobOffer = this.jobService.updateJobOffer(this.jobOffer);
 		} else {
+			this.jobOffer.setOwner(this.sessionBean.getUser());
 			this.jobService.insertJobOffer(this.jobOffer);
 		}
 		this.actionsBean.add(this.jobOffer);

@@ -11,6 +11,7 @@ import javax.inject.Named;
 import ged.ejb.job.JobMeeting;
 import ged.ejb.job.JobOffer;
 import ged.ejb.job.JobService;
+import ged.ejb.user.User;
 import ged.web.core.view.AbstractBean;
 
 @Named
@@ -29,6 +30,21 @@ public class JobOfferViewBean extends AbstractBean {
 	private JobService jobService;
 
 	private List<JobMeeting> plannedJobMeetings = new ArrayList<JobMeeting>();
+
+	public boolean canEdit() {
+		final User owner = this.jobOffer.getOwner();
+		final User user = this.sessionBean.getUser();
+		if (owner.equals(user)) {
+			return true;
+		}
+		if (user.hasRole("ADMIN")) {
+			return true;
+		}
+		if (user.hasRole("RECRUITER_ADMIN")) {
+			return true;
+		}
+		return false;
+	}
 
 	public String edit() {
 		this.flash.put("jobOffer", this.jobOffer);

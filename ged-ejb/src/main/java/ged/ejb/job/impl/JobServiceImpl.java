@@ -10,6 +10,7 @@ import ged.ejb.job.JobDao;
 import ged.ejb.job.JobMeeting;
 import ged.ejb.job.JobOffer;
 import ged.ejb.job.JobService;
+import ged.ejb.user.User;
 
 @Stateless
 public class JobServiceImpl implements JobService {
@@ -44,8 +45,8 @@ public class JobServiceImpl implements JobService {
 	}
 
 	@Override
-	public List<JobOffer> findLastJobOffers() {
-		return this.jobOfferDao.findLastJobOffers();
+	public List<JobOffer> findLastJobOffers(final User owner) {
+		return this.jobOfferDao.findLastJobOffers(owner);
 	}
 
 	@Override

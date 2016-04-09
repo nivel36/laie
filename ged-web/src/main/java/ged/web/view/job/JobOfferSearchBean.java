@@ -8,6 +8,7 @@ import javax.inject.Named;
 
 import ged.ejb.job.JobOffer;
 import ged.ejb.job.JobService;
+import ged.ejb.user.User;
 import ged.web.core.view.AbstractBean;
 import ged.web.core.view.Paginator;
 
@@ -25,6 +26,21 @@ public class JobOfferSearchBean extends AbstractBean {
 	private JobService jobService;
 
 	private String name;
+
+	public boolean canEdit(final JobOffer jobOffer) {
+		final User owner = jobOffer.getOwner();
+		final User user = this.sessionBean.getUser();
+		if (owner.equals(user)) {
+			return true;
+		}
+		if (user.hasRole("ADMIN")) {
+			return true;
+		}
+		if (user.hasRole("RECRUITER_ADMIN")) {
+			return true;
+		}
+		return false;
+	}
 
 	public void clean() {
 		cleanSearchFields();
