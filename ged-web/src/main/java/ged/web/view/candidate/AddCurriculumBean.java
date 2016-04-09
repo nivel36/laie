@@ -8,8 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
+import java.util.logging.Level;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
@@ -33,89 +35,21 @@ public class AddCurriculumBean extends AbstractBean {
 	private String filename;
 
 	private List<String> images;
-	
+
 	private String text;
 
-	@PostConstruct
-	public void init() {
-		if (flash.containsKey("filename")) {
-			filename = (String) flash.get("filename");
-		} else {
-			throw new IllegalStateException("No filename");
-		}
-		String path = "D:\\tmp\\";
-		try {
-			setImages(extractImages(new File(path + filename)));
-			
-			PDDocument pdf = PDDocument.load(new File(path +filename));
-			PDFTextStripper stripper = new PDFTextStripper();
-			text = stripper.getText(pdf);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	public String getFilename() {
-		return filename;
-	}
-
-	public void setFilename(String filename) {
-		this.filename = filename;
-	}
-
-	public List<String> extractImages(File file) throws FileNotFoundException,
-			IOException {
-		COSDocument cosDoc = getDocument(file);
-		List<PDXObjectImage> images = getAllImages(cosDoc);
-		List<String> filenames = writeImages(images, file.getName());
+	public List<String> extractImages(final File file) throws FileNotFoundException, IOException {
+		final COSDocument cosDoc = getDocument(file);
+		final List<PDXObjectImage> images = getAllImages(cosDoc);
+		final List<String> filenames = writeImages(images, file.getName());
 		cosDoc.close();
 		return filenames;
 	}
 
-	private List<PDXObjectImage> getAllImages(COSDocument cosDoc)
-			throws FileNotFoundException, IOException {
-		PDDocument document = new PDDocument(cosDoc);
-		List<PDXObjectImage> images = new ArrayList<PDXObjectImage>();
-		List<PDPage> pages = getAllPages(document);
-		for (PDPage page : pages) {
-			extractImagesFromPage(images, page);
-		}
-		return images;
-	}
-
-	private List<String> writeImages(List<PDXObjectImage> images, String name)
-			throws IOException {
-		int counter = 0;
-		List<String> filenames = new ArrayList<String>();
-		for (PDXObjectImage image : images) {
-			StringTokenizer st = new StringTokenizer(filename, ".");
-			String filename = st.nextToken() + (++counter);
-			String path = "D:\\tmp\\";
-			image.write2file(path + filename);
-			filenames.add(filename+".jpg");
-		}
-		return filenames;
-	}
-
-	private COSDocument getDocument(File file) throws FileNotFoundException,
-			IOException {
-		PDFParser parser = new PDFParser(new FileInputStream(file));
-		parser.parse();
-		COSDocument cosDoc = parser.getDocument();
-
-		return cosDoc;
-	}
-
-	@SuppressWarnings("unchecked")
-	private List<PDPage> getAllPages(PDDocument document) {
-		return document.getDocumentCatalog().getAllPages();
-	}
-
-	private void extractImagesFromPage(List<PDXObjectImage> images, PDPage page) {
-		PDResources resources = page.getResources();
-		Map<String, PDXObject> pDXObjects = resources.getXObjects();
-		for (PDXObject pDXObject : pDXObjects.values()) {
+	private void extractImagesFromPage(final List<PDXObjectImage> images, final PDPage page) {
+		final PDResources resources = page.getResources();
+		final Map<String, PDXObject> pDXObjects = resources.getXObjects();
+		for (final PDXObject pDXObject : pDXObjects.values()) {
 			// There are 2 possible values: images or forms. We are looking for
 			// images
 			if (pDXObject instanceof PDXObjectImage) {
@@ -124,19 +58,83 @@ public class AddCurriculumBean extends AbstractBean {
 		}
 	}
 
-	public List<String> getImages() {
+	private List<PDXObjectImage> getAllImages(final COSDocument cosDoc) throws FileNotFoundException, IOException {
+		final PDDocument document = new PDDocument(cosDoc);
+		final List<PDXObjectImage> images = new ArrayList<PDXObjectImage>();
+		final List<PDPage> pages = getAllPages(document);
+		for (final PDPage page : pages) {
+			extractImagesFromPage(images, page);
+		}
 		return images;
 	}
 
-	public void setImages(List<String> images) {
-		this.images = images;
+	@SuppressWarnings("unchecked")
+	private List<PDPage> getAllPages(final PDDocument document) {
+		return document.getDocumentCatalog().getAllPages();
+	}
+
+	private COSDocument getDocument(final File file) throws FileNotFoundException, IOException {
+		final PDFParser parser = new PDFParser(new FileInputStream(file));
+		parser.parse();
+		final COSDocument cosDoc = parser.getDocument();
+
+		return cosDoc;
+	}
+
+	public String getFilename() {
+		return this.filename;
+	}
+
+	public List<String> getImages() {
+		return this.images;
 	}
 
 	public String getText() {
-		return text;
+		return this.text;
 	}
 
-	public void setText(String text) {
+	@PostConstruct
+	public void init() {
+		if (this.flash.containsKey("filename")) {
+			this.filename = (String) this.flash.get("filename");
+		} else {
+			throw new IllegalStateException("No filename");
+		}
+		final String path = "D:\\tmp\\";
+		try {
+			setImages(extractImages(new File(path + this.filename)));
+
+			final PDDocument pdf = PDDocument.load(new File(path + this.filename));
+			final PDFTextStripper stripper = new PDFTextStripper();
+			this.text = stripper.getText(pdf);
+		} catch (final IOException e) {
+			this.logger.log(Level.SEVERE, "Can't open file", e);
+			addMessage(FacesMessage.SEVERITY_ERROR, "error.unnexpected_error", "error.unnexpected_error");
+		}
+	}
+
+	public void setFilename(final String filename) {
+		this.filename = filename;
+	}
+
+	public void setImages(final List<String> images) {
+		this.images = images;
+	}
+
+	public void setText(final String text) {
 		this.text = text;
+	}
+
+	private List<String> writeImages(final List<PDXObjectImage> images, final String name) throws IOException {
+		int counter = 0;
+		final List<String> filenames = new ArrayList<String>();
+		for (final PDXObjectImage image : images) {
+			final StringTokenizer st = new StringTokenizer(this.filename, ".");
+			final String filename = st.nextToken() + (++counter);
+			final String path = "D:\\tmp\\";
+			image.write2file(path + filename);
+			filenames.add(filename + ".jpg");
+		}
+		return filenames;
 	}
 }

@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.UUID;
 import java.util.logging.Level;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.application.NavigationHandler;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -60,8 +61,8 @@ public class CandidateViewBean extends AbstractBean {
 				removeFileFromFileSystem(this.file.getUuid());
 			}
 		} catch (final IOException e) {
-			e.printStackTrace();
-			// TODO: faces message
+			this.logger.log(Level.SEVERE, "Can't remove file", e);
+			addMessage(FacesMessage.SEVERITY_ERROR, "error.unnexpected_error", "error.unnexpected_error");
 		}
 	}
 
@@ -160,8 +161,8 @@ public class CandidateViewBean extends AbstractBean {
 			new java.io.File(this.fileDirectory, file.getUuid()).renameTo(downloableFile);
 			Faces.sendFile(downloableFile, true);
 		} catch (final IOException e) {
-			e.printStackTrace();
-			// TODO: faces message
+			this.logger.log(Level.SEVERE, "Can't open file", e);
+			addMessage(FacesMessage.SEVERITY_ERROR, "error.unnexpected_error", "error.unnexpected_error");
 		}
 	}
 
@@ -171,8 +172,8 @@ public class CandidateViewBean extends AbstractBean {
 			this.candidate.getFiles().remove(file);
 			this.candidate = this.candidateService.updateCandidate(this.candidate);
 		} catch (final IOException e) {
-			e.printStackTrace();
-			// TODO: faces message
+			this.logger.log(Level.SEVERE, "Can't remove file", e);
+			addMessage(FacesMessage.SEVERITY_ERROR, "error.unnexpected_error", "error.unnexpected_error");
 		}
 	}
 
@@ -229,8 +230,8 @@ public class CandidateViewBean extends AbstractBean {
 			this.file.setUuid(uuid);
 			this.file.setName(fileName);
 		} catch (final IOException ex) {
-			ex.printStackTrace();
-			// TODO: faces message
+			this.logger.log(Level.SEVERE, "Can't upload file", ex);
+			addMessage(FacesMessage.SEVERITY_ERROR, "error.unnexpected_error", "error.unnexpected_error");
 		}
 	}
 }

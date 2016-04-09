@@ -3,7 +3,9 @@ package ged.web.view.user;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.logging.Level;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -90,8 +92,8 @@ public class ChangePasswordPopupBean extends AbstractDialogBean {
 			final byte[] digest = md.digest();
 			output = DatatypeConverter.printBase64Binary(digest);
 		} catch (NoSuchAlgorithmException | UnsupportedEncodingException ex) {
-			// TODO: Faces Message
-			ex.printStackTrace();
+			addMessage(FacesMessage.SEVERITY_ERROR, "error.unnexpected_error", "error.unnexpected_error");
+			this.logger.log(Level.SEVERE, "Can't find hash algorithm", ex);
 		}
 		return output;
 	}
