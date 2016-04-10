@@ -131,6 +131,68 @@
 				</h:panelGroup>
 				<h:panelGroup layout="block" styleClass="panel">
 					<h1>#{i18n['job.job_offers']}</h1>
+
+					<h:outputText value="#{i18n['user.no_users_found']}"
+						rendered="#{empty userViewBean.jobOffers.dataList}" />
+
+					<h:dataTable var="jobOffer" id="jobOffers"
+						value="#{userViewBean.jobOffers.dataList}"
+						rendered="#{not empty userViewBean.jobOffers.dataList}"
+						styleClass="dataTable">
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{i18n['job.name']}" />
+							</f:facet>
+							<h:outputText value="#{jobOffer.name}" />
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{i18n['job.client']}" />
+							</f:facet>
+							<h:outputText value="#{jobOffer.client.name}" />
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{i18n['action.action']}" />
+							</f:facet>
+							<h:link value="#{i18n['action.view']}" outcome="/faces/job/jobOfferView">
+								<f:param name="id" value="#{jobOffer.id}" />
+							</h:link>
+						</h:column>
+					</h:dataTable>
+
+					<h:panelGroup layout="block" styleClass="paginator" id="jobOfferPaginator"
+						rendered="#{not empty userViewBean.team.dataList}">
+						<h:commandButton disabled="#{userViewBean.jobOffers.currentPage eq 0}"
+							value="#{i18n['paginator.first']}"
+							action="#{userViewBean.jobOffers.firstPage}">
+							<f:ajax render=":form:resultados" />
+						</h:commandButton>
+						<h:commandButton disabled="#{userViewBean.jobOffers.currentPage eq 0}"
+							value="#{i18n['paginator.previous']}"
+							action="#{userViewBean.jobOffers.previousPage}">
+							<f:ajax render=":form:resultados" />
+						</h:commandButton>
+						<ui:repeat value="#{userViewBean.jobOffers.pages}" var="page">
+							<h:commandButton value="#{page+1}"
+								action="#{userViewBean.jobOffers.gotoPage(page)}"
+								disabled="#{userViewBean.jobOffers.currentPage eq page}">
+								<f:ajax render=":form:resultados" />
+							</h:commandButton>
+						</ui:repeat>
+						<h:commandButton value="#{i18n['paginator.next']}"
+							disabled="#{userViewBean.jobOffers.currentPage eq userViewBean.jobOffers.pagesSize-1}"
+							action="#{userViewBean.jobOffers.nextPage}">
+							<f:ajax render=":form:resultados" />
+						</h:commandButton>
+						<h:commandButton value="#{i18n['paginator.last']}"
+							disabled="#{userViewBean.jobOffers.currentPage eq userViewBean.jobOffers.pagesSize-1}"
+							action="#{userViewBean.jobOffers.lastPage}">
+							<f:ajax render=":form:resultados" />
+						</h:commandButton>
+					</h:panelGroup>
 				</h:panelGroup>
 			</h:panelGrid>
 		</h:form>

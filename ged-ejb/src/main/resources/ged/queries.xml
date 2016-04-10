@@ -25,6 +25,10 @@
 	<named-query name="JobOffer.findByName">
 		<query>SELECT j FROM JobOffer j WHERE j.name = :name</query>
 	</named-query>
+	
+		<named-query name="JobOffer.findByOwner">
+		<query>SELECT j FROM JobOffer j WHERE j.owner = :owner</query>
+	</named-query>
 
 	<named-query name="JobOffer.findLastJobOffers">
 		<query>SELECT j FROM JobOffer j WHERE j.owner = :owner ORDER BY j.id</query>

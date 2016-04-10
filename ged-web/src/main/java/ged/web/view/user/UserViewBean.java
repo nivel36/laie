@@ -5,6 +5,8 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import ged.ejb.job.JobOffer;
+import ged.ejb.job.JobService;
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
 import ged.web.core.view.AbstractBean;
@@ -15,6 +17,11 @@ import ged.web.core.view.Paginator;
 public class UserViewBean extends AbstractBean {
 
 	private static final long serialVersionUID = -2187385732087309689L;
+
+	private Paginator<JobOffer> jobOffers;
+
+	@Inject
+	private JobService jobService;
 
 	private Paginator<User> team;
 
@@ -34,6 +41,10 @@ public class UserViewBean extends AbstractBean {
 		final NavigationHandler navigationHandler = this.facesContext.getApplication().getNavigationHandler();
 		navigationHandler.handleNavigation(this.facesContext, null, "userSearch?faces-redirect=true");
 		this.facesContext.renderResponse();
+	}
+
+	public Paginator<JobOffer> getJobOffers() {
+		return this.jobOffers;
 	}
 
 	public Paginator<User> getTeam() {
@@ -67,15 +78,13 @@ public class UserViewBean extends AbstractBean {
 		}
 		this.team = new Paginator<>(this.sessionBean.getRowsPerPage());
 		this.team.setEntities(this.userService.findUserTeam(id));
+		this.jobOffers = new Paginator<>(this.sessionBean.getRowsPerPage());
+		this.jobOffers.setEntities(this.jobService.findJobOffersByOwner(this.user));
 	}
 
 	public String modifyUser() {
 		this.flash.put("user", this.user);
 		return "userEdit?faces-redirect=true";
-	}
-
-	public void setTeam(final Paginator<User> team) {
-		this.team = team;
 	}
 
 	public void setUser(final User user) {

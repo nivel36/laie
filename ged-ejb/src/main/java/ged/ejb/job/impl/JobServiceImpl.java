@@ -45,6 +45,11 @@ public class JobServiceImpl implements JobService {
 	}
 
 	@Override
+	public List<JobOffer> findJobOffersByOwner(final User owner) {
+		return this.jobOfferDao.findJobOffersByOwner(owner);
+	}
+
+	@Override
 	public List<JobOffer> findLastJobOffers(final User owner) {
 		return this.jobOfferDao.findLastJobOffers(owner);
 	}

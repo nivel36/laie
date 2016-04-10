@@ -70,6 +70,13 @@ public class JobDaoImpl implements JobDao {
 	}
 
 	@Override
+	public List<JobOffer> findJobOffersByOwner(final User owner) {
+		final Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("owner", owner);
+		return this.persistenceFacade.getByTypedQuery(JobOffer.class, "JobOffer.findByOwner", parameters, 0, 0);
+	}
+
+	@Override
 	public List<JobOffer> findLastJobOffers(final User owner) {
 		final Map<String, Object> parameters = new HashMap<>();
 		parameters.put("owner", owner);

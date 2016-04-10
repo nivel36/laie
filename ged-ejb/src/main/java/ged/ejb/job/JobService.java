@@ -19,6 +19,8 @@ public interface JobService {
 
 	public List<JobOffer> findJobOfferByName(String name);
 
+	public List<JobOffer> findJobOffersByOwner(User owner);
+
 	public List<JobOffer> findLastJobOffers(User owner);
 
 	public List<JobMeeting> findPlannedJobMeetingsByJobOffer(JobOffer jobOffer);
