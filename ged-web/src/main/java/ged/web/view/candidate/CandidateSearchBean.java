@@ -1,17 +1,18 @@
 package ged.web.view.candidate;
 
+import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import ged.ejb.candidate.Candidate;
 import ged.ejb.candidate.CandidateService;
-import ged.ejb.core.util.Log;
-import ged.web.core.view.AbstractSearchBean;
+import ged.web.core.view.AbstractBean;
+import ged.web.core.view.Paginator;
 
 @Named
 @ViewScoped
-public class CandidateSearchBean extends AbstractSearchBean<Candidate> {
+public class CandidateSearchBean extends AbstractBean {
 
 	private static final long serialVersionUID = 2434819723782902618L;
 
@@ -21,6 +22,8 @@ public class CandidateSearchBean extends AbstractSearchBean<Candidate> {
 	private String email;
 
 	private String name;
+
+	private Paginator<Candidate> paginator;
 
 	private String phoneNumber;
 
@@ -47,12 +50,22 @@ public class CandidateSearchBean extends AbstractSearchBean<Candidate> {
 		return this.name;
 	}
 
+	public Paginator<Candidate> getPaginator() {
+		return this.paginator;
+	}
+
 	public String getPhoneNumber() {
 		return this.phoneNumber;
 	}
 
 	public String getSurename() {
 		return this.surename;
+	}
+
+	@PostConstruct
+	public void init() {
+		this.paginator = new Paginator<>(this.sessionBean.getRowsPerPage());
+		this.paginator.setEntities(this.candidateService.findCandidateByNameAndSurename(this.name, this.surename));
 	}
 
 	public String newCandidate() {
@@ -64,13 +77,9 @@ public class CandidateSearchBean extends AbstractSearchBean<Candidate> {
 		search();
 	}
 
-	@Log
-	@Override
 	public void search() {
 		this.logger.fine("Searching for candidates");
-		this.entities = this.candidateService.findCandidateByNameAndSurename(this.name, this.surename);
-		trimList();
-		setPaginationSize();
+		this.paginator.setEntities(this.candidateService.findCandidateByNameAndSurename(this.name, this.surename));
 	}
 
 	public void setEmail(final String email) {

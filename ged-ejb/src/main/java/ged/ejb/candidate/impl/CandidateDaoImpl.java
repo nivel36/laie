@@ -45,6 +45,9 @@ public class CandidateDaoImpl implements CandidateDao {
 
 	@Override
 	public List<Candidate> findCandidateByNameAndSurename(final String name, final String surename) {
+		if ((name == null) && (surename == null)) {
+			return this.persistenceFacade.getAll(Candidate.class);
+		}
 		final Map<String, Object> properties = new HashMap<String, Object>();
 		properties.put("name", name);
 		properties.put("surename", surename);
