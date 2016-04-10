@@ -26,6 +26,14 @@
 				<i class="fa fa-user" /> #{userViewBean.user}
 			</h1>
 
+			<h:panelGroup layout="block" styleClass="actionPanel">
+				<h:link id="exportPdf" styleClass="iconButton">
+					<i class="fa fa-file-pdf-o fa-lg" /> #{i18n['action.export']}</h:link>
+				<h:link id="exportExcel" styleClass="iconButton">
+					<i class="fa fa-file-excel-o fa-lg" /> #{i18n['action.export']}
+				</h:link>
+			</h:panelGroup>
+
 			<h:panelGroup layout="block" styleClass="panel">
 				<h1>#{i18n['user.user']}</h1>
 
@@ -126,7 +134,7 @@
 							action="#{userViewBean.team.lastPage}">
 							<f:ajax render=":form:resultados" />
 						</h:commandButton>
-					
+
 					</h:panelGroup>
 				</h:panelGroup>
 				<h:panelGroup layout="block" styleClass="panel">
@@ -157,20 +165,24 @@
 							<f:facet name="header">
 								<h:outputText value="#{i18n['action.action']}" />
 							</f:facet>
-							<h:link value="#{i18n['action.view']}" outcome="/faces/job/jobOfferView">
+							<h:link value="#{i18n['action.view']}"
+								outcome="/faces/job/jobOfferView">
 								<f:param name="id" value="#{jobOffer.id}" />
 							</h:link>
 						</h:column>
 					</h:dataTable>
 
-					<h:panelGroup layout="block" styleClass="paginator" id="jobOfferPaginator"
+					<h:panelGroup layout="block" styleClass="paginator"
+						id="jobOfferPaginator"
 						rendered="#{not empty userViewBean.team.dataList}">
-						<h:commandButton disabled="#{userViewBean.jobOffers.currentPage eq 0}"
+						<h:commandButton
+							disabled="#{userViewBean.jobOffers.currentPage eq 0}"
 							value="#{i18n['paginator.first']}"
 							action="#{userViewBean.jobOffers.firstPage}">
 							<f:ajax render=":form:resultados" />
 						</h:commandButton>
-						<h:commandButton disabled="#{userViewBean.jobOffers.currentPage eq 0}"
+						<h:commandButton
+							disabled="#{userViewBean.jobOffers.currentPage eq 0}"
 							value="#{i18n['paginator.previous']}"
 							action="#{userViewBean.jobOffers.previousPage}">
 							<f:ajax render=":form:resultados" />
