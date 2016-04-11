@@ -1,9 +1,13 @@
 package ged.web.view.user;
 
+import java.io.IOException;
+
 import javax.faces.application.NavigationHandler;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+
+import org.omnifaces.util.Faces;
 
 import ged.ejb.job.JobOffer;
 import ged.ejb.job.JobService;
@@ -11,6 +15,7 @@ import ged.ejb.user.User;
 import ged.ejb.user.UserService;
 import ged.web.core.view.AbstractBean;
 import ged.web.core.view.Paginator;
+import ged.web.reports.UserReport;
 
 @Named
 @ViewScoped
@@ -41,6 +46,11 @@ public class UserViewBean extends AbstractBean {
 		final NavigationHandler navigationHandler = this.facesContext.getApplication().getNavigationHandler();
 		navigationHandler.handleNavigation(this.facesContext, null, "userSearch?faces-redirect=true");
 		this.facesContext.renderResponse();
+	}
+
+	public void export() throws IOException {
+		final UserReport userReport = new UserReport(this.user);
+		Faces.sendFile(userReport.create(), true);
 	}
 
 	public Paginator<JobOffer> getJobOffers() {

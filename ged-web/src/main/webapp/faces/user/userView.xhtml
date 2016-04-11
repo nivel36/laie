@@ -27,11 +27,11 @@
 			</h1>
 
 			<h:panelGroup layout="block" styleClass="actionPanel">
-				<h:link id="exportPdf" styleClass="iconButton">
-					<i class="fa fa-file-pdf-o fa-lg" /> #{i18n['action.export']}</h:link>
-				<h:link id="exportExcel" styleClass="iconButton">
+				<h:commandLink id="exportPdf" styleClass="iconButton">
+					<i class="fa fa-file-pdf-o fa-lg" /> #{i18n['action.export']}</h:commandLink>
+				<h:commandLink id="exportExcel" styleClass="iconButton" action="#{userViewBean.export}">
 					<i class="fa fa-file-excel-o fa-lg" /> #{i18n['action.export']}
-				</h:link>
+				</h:commandLink>
 			</h:panelGroup>
 
 			<h:panelGroup layout="block" styleClass="panel">
