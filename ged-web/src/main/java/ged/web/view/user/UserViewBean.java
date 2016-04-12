@@ -49,7 +49,7 @@ public class UserViewBean extends AbstractBean {
 	}
 
 	public void export() throws IOException {
-		final UserReport userReport = new UserReport(this.user);
+		final UserReport userReport = new UserReport(this.user, this.jobOffers.getEntities());
 		Faces.sendFile(userReport.create(), true);
 	}
 
