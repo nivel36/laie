@@ -50,12 +50,12 @@ public class UserEditBean extends AbstractBean {
 		this.rendered = false;
 	}
 
-	public void clean() {
-		clear();
+	public void cleanPopup() {
+		clearPopupFields();
 		search();
 	}
 
-	public void clear() {
+	private void clearPopupFields() {
 		this.email = null;
 		this.name = null;
 		this.surename = null;
@@ -86,7 +86,7 @@ public class UserEditBean extends AbstractBean {
 	}
 
 	public void hide() {
-		clear();
+		clearPopupFields();
 		this.rendered = false;
 	}
 
@@ -149,13 +149,22 @@ public class UserEditBean extends AbstractBean {
 
 	public void search() {
 		this.logger.fine("Searching for Users");
-		if ((this.name != null) || (this.surename != null)) {
-			this.paginator.setEntities(this.userService.findUsers(this.name, this.surename));
+		if ((this.name != null) && (this.surename != null)) {
+			if (verifySearchField(this.name) && verifySearchField(this.surename)) {
+				this.paginator.setEntities(this.userService.fullSearch(this.name, this.surename));
+			}
+		} else if ((this.name == null) && (this.surename != null)) {
+			if (verifySearchField(this.surename)) {
+				this.paginator.setEntities(this.userService.fullSearchBySurename(this.surename));
+			}
+		} else if ((this.name != null) && (this.surename == null)) {
+			if (verifySearchField(this.name)) {
+				this.paginator.setEntities(this.userService.fullSearchByName(this.name));
+			}
 		} else {
 			this.paginator.setEntities(this.userService.findAll());
 		}
-		this.paginator.trimList();
-		this.paginator.setPaginationSize();
+		clearPopupFields();
 	}
 
 	public void select(final User manager) {
@@ -197,6 +206,7 @@ public class UserEditBean extends AbstractBean {
 
 	public void show() {
 		this.rendered = true;
+		search();
 	}
 
 	public void validateManager(final FacesContext context, final UIComponent component, final Object value)
@@ -233,5 +243,13 @@ public class UserEditBean extends AbstractBean {
 		} else if (userRoleName.equals("RECRUITER") && managerRoleName.contains("TECHNIC")) {
 			throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg));
 		}
+	}
+
+	private boolean verifySearchField(final String text) {
+		if (text.length() < 3) {
+			addMessage(FacesMessage.SEVERITY_WARN, "error.search.camp_to_short", "error.search.camp_to_short");
+			return false;
+		}
+		return true;
 	}
 }

@@ -15,12 +15,10 @@
 
 	<ui:define name="content">
 		<h:form id="userSearchPopupForm">
-		
 			<h:panelGroup layout="block" rendered="#{userEditBean.rendered}"
 				styleClass="#{userEditBean.modal ? 'modalDialog': ''}"
 				id="managerPopup">
 				<h:panelGroup layout="block" id="modalContent">
-
 					<h:commandLink styleClass="close" action="#{userEditBean.hide}"
 						value="X">
 						<f:ajax execute="@this" render=":userSearchPopupForm" />
@@ -43,7 +41,7 @@
 
 						<h:panelGroup layout="block" styleClass="buttonGroup">
 							<h:commandButton value="#{i18n['action.clean']}"
-								action="#{userEditBean.clean}">
+								action="#{userEditBean.cleanPopup}">
 								<f:ajax execute="@form" render="@form" />
 							</h:commandButton>
 							<h:commandButton value="#{i18n['action.search']}"
@@ -65,25 +63,22 @@
 							styleClass="dataTable">
 							<h:column>
 								<f:facet name="header">
-									<h:selectBooleanCheckbox />
-								</f:facet>
-								<h:selectBooleanCheckbox />
-							</h:column>
-
-							<h:column>
-								<f:facet name="header">
 									<h:outputText value="#{i18n['user.name']}" />
 								</f:facet>
 								<h:outputText value="#{user}" />
 							</h:column>
-
 							<h:column>
 								<f:facet name="header">
 									<h:outputText value="#{i18n['user.email']}" />
 								</f:facet>
 								<h:outputText value="#{user.email}" />
 							</h:column>
-
+							<h:column>
+								<f:facet name="header">
+									<h:outputText value="#{i18n['user.manager']}" />
+								</f:facet>
+								<h:outputText value="#{user.manager}" />
+							</h:column>
 							<h:column>
 								<f:facet name="header">
 									<h:outputText value="#{i18n['user.role']}" />
@@ -101,9 +96,8 @@
 								</h:commandLink>
 							</h:column>
 						</h:dataTable>
-
 						<h:panelGroup layout="block" styleClass="paginator" id="paginator"
-							rendered="#{not empty userEditBean.paginator.dataList}">
+							rendered="#{not empty userEditBean.paginator.entities}">
 							<h:commandButton
 								disabled="#{userEditBean.paginator.currentPage eq 0}"
 								value="#{i18n['paginator.first']}"
@@ -158,11 +152,15 @@
 			<input type="hidden" id="userId" value="#{userEditBean.user.id}" />
 
 			<h:panelGroup rendered="#{userEditBean.user.id == 0}">
-				<h1 class="header"><i class="fa fa-user" />  #{i18n['user.new_user']}</h1>
+				<h1 class="header">
+					<i class="fa fa-user" /> #{i18n['user.new_user']}
+				</h1>
 			</h:panelGroup>
 
 			<h:panelGroup rendered="#{userEditBean.user.id != 0}">
-				<h1 class="header"><i class="fa fa-user" />  #{userEditBean.user}</h1>
+				<h1 class="header">
+					<i class="fa fa-user" /> #{userEditBean.user}
+				</h1>
 			</h:panelGroup>
 
 			<h:panelGroup layout="block" styleClass="panel">
