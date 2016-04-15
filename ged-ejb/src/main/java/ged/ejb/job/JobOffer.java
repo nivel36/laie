@@ -69,8 +69,9 @@ public class JobOffer extends AuditedEntity {
 	@Field
 	private String name;
 
+	@NotNull
 	@ManyToOne
-	@JoinColumn(name = "ownerId", nullable = true)
+	@JoinColumn(name = "ownerId", nullable = false)
 	private User owner;
 
 	@NotNull

@@ -86,10 +86,11 @@
 
 					<h:column>
 						<f:facet name="header">
-							<h:outputText value="#{i18n['candidate.phone_number']} 2" />
+							<h:outputText value="#{i18n['user.owner']}" />
 						</f:facet>
-						<h:outputText value="#{candidate.phoneNumber2}" />
+						<h:outputText value="#{candidate.owner.name}" />
 					</h:column>
+					
 					<h:column>
 						<f:facet name="header">
 							<h:outputText value="Action" />

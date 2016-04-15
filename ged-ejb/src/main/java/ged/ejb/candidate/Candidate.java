@@ -10,6 +10,7 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
@@ -22,6 +23,7 @@ import ged.ejb.core.tag.Tag;
 import ged.ejb.curriculum.Curriculum;
 import ged.ejb.curriculum.FileSys;
 import ged.ejb.job.JobCandidature;
+import ged.ejb.user.User;
 
 @Entity
 public class Candidate extends AuditedEntity {
@@ -56,6 +58,11 @@ public class Candidate extends AuditedEntity {
 	@NotNull
 	@Column(length = 32, nullable = false)
 	private String name;
+
+	@NotNull
+	@ManyToOne
+	@JoinColumn(name = "ownerId", nullable = false)
+	private User owner;
 
 	@NotNull
 	@Pattern(regexp = "(?:[+]?(?:[0-9]{1,5}|\\x28[0-9]{1,5}\\x29)[ ]?)?[0-9]{2}(?:[0-9][ ]?){6}[0-9]")
@@ -132,6 +139,10 @@ public class Candidate extends AuditedEntity {
 		return this.name;
 	}
 
+	public User getOwner() {
+		return this.owner;
+	}
+
 	public String getPhoneNumber1() {
 		return this.phoneNumber1;
 	}
@@ -198,6 +209,10 @@ public class Candidate extends AuditedEntity {
 
 	public void setName(final String name) {
 		this.name = name;
+	}
+
+	public void setOwner(final User owner) {
+		this.owner = owner;
 	}
 
 	public void setPhoneNumber1(final String phoneNumber1) {
