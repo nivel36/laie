@@ -17,16 +17,10 @@
 			<input type="hidden" id="candidateId"
 				value="#{candidateEditBean.candidate.id}" />
 
-			<h:graphicImage value="/resources/img/s.gif"
-				styleClass="headerIcon candidateIcon" />
-
-			<h:panelGroup rendered="#{candidateEditBean.candidate.id == 0}">
-				<h1 class="header">#{i18n['candidate.new_candidate']}</h1>
-			</h:panelGroup>
-
-			<h:panelGroup rendered="#{candidateEditBean.candidate.id != 0}">
-				<h1 class="header">#{candidateEditBean.candidate}</h1>
-			</h:panelGroup>
+			<h1 class="header">
+				<i class="fa fa-users" /> #{candidateEditBean.candidate.id == 0 ?
+				i18n['candidate.new_candidate'] : candidateEditBean.candidate}
+			</h1>
 
 			<h:panelGroup layout="block" styleClass="panel">
 				<h1>#{i18n['candidate.candidate']}</h1>
@@ -55,6 +49,22 @@
 						label="#{i18n['candidate.age']}"
 						styleClass="#{not component.valid ? 'inputError' : ''}" />
 					<h:message for="age" errorClass="error" />
+				</h:outputLabel>
+				
+				<h2>#{i18n['address.address']}</h2>
+
+				<h:outputLabel value="#{i18n['address.city']}">
+					<h:inputText id="city"
+						value="#{candidateEditBean.candidate.address.city}"
+						label="#{i18n['address.city']}"
+						styleClass="#{ not component.valid ? 'inputError' : ''}" />
+				</h:outputLabel>
+
+				<h:outputLabel value="#{i18n['address.state']}">
+					<h:inputText id="state"
+						value="#{candidateEditBean.candidate.address.state}"
+						label="#{i18n['address.state']}"
+						styleClass="#{ not component.valid ? 'inputError' : ''}" />
 				</h:outputLabel>
 
 				<h2>#{i18n['candidate.contact']}</h2>
@@ -112,28 +122,6 @@
 					<h:message for="expected_salary" errorClass="error" />
 				</h:outputLabel>
 
-				<h2>#{i18n['address.address']}</h2>
-
-				<h:outputLabel value="#{i18n['address.city']}">
-					<h:inputText id="city"
-						value="#{candidateEditBean.candidate.address.city}"
-						label="#{i18n['address.city']}"
-						styleClass="#{ not component.valid ? 'inputError' : ''}" />
-				</h:outputLabel>
-
-				<h:outputLabel value="#{i18n['address.state']}">
-					<h:inputText id="state"
-						value="#{candidateEditBean.candidate.address.state}"
-						label="#{i18n['address.state']}"
-						styleClass="#{ not component.valid ? 'inputError' : ''}" />
-				</h:outputLabel>
-
-				<h:outputLabel value="#{i18n['address.country']}">
-					<h:inputText id="country"
-						value="#{candidateEditBean.candidate.address.country}"
-						label="#{i18n['address.country']}"
-						styleClass="#{ not component.valid ? 'inputError' : ''}" />
-				</h:outputLabel>
 				<h:panelGroup layout="block" styleClass="buttonGroup">
 					<h:commandButton value="#{i18n['action.save']}"
 						action="#{candidateEditBean.save}" />
@@ -144,15 +132,6 @@
 						<f:param name="candidateId"
 							value="#{candidateEditBean.candidate.id}" />
 					</h:commandButton>
-				</h:panelGroup>
-
-				<h:panelGroup layout="block" styleClass="secondaryButtonGroup">
-					<h:commandButton value="#{i18n['action.save']}"
-						action="#{candidateEditBean.save}" />
-					<h:commandButton value="#{i18n['action.edit_curriculum']}"
-						action="#{candidateEditBean.editCurriculum}" />
-					<h:commandButton value="#{i18n['action.cancel']}"
-						action="#{candidateEditBean.cancel}" immediate="true" />
 				</h:panelGroup>
 			</h:panelGroup>
 		</h:form>

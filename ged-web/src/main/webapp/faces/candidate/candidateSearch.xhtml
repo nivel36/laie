@@ -16,10 +16,11 @@
 			<h1 class="header">
 				<i class="fa fa-users" /> #{i18n['candidate.candidates']}
 			</h1>
+
 			<h:panelGroup layout="block" styleClass="actionPanel">
-					<h:commandButton value="#{i18n['action.new']}"
-						action="#{candidateSearchBean.newCandidate}" immediate="true" />
-				</h:panelGroup>
+				<h:commandButton value="#{i18n['action.new']}"
+					action="#{candidateSearchBean.newCandidate}" immediate="true" />
+			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="panel">
 				<h1>#{i18n['candidate.search']}</h1>
 				<h:outputLabel for="name" value="#{i18n['candidate.name']}">
@@ -90,7 +91,7 @@
 						</f:facet>
 						<h:outputText value="#{candidate.owner.name}" />
 					</h:column>
-					
+
 					<h:column>
 						<f:facet name="header">
 							<h:outputText value="Action" />
@@ -110,17 +111,20 @@
 				</h:dataTable>
 				<h:panelGroup layout="block" styleClass="paginator" id="paginator"
 					rendered="#{not empty candidateSearchBean.paginator.dataList}">
-					<h:commandButton disabled="#{candidateSearchBean.paginator.currentPage eq 0}"
+					<h:commandButton
+						disabled="#{candidateSearchBean.paginator.currentPage eq 0}"
 						value="#{i18n['paginator.first']}"
 						action="#{candidateSearchBean.paginator.firstPage}">
 						<f:ajax render=":form:resultados" />
 					</h:commandButton>
-					<h:commandButton disabled="#{candidateSearchBean.paginator.currentPage eq 0}"
+					<h:commandButton
+						disabled="#{candidateSearchBean.paginator.currentPage eq 0}"
 						value="#{i18n['paginator.previous']}"
 						action="#{candidateSearchBean.paginator.previousPage}">
 						<f:ajax render=":form:resultados" />
 					</h:commandButton>
-					<ui:repeat value="#{candidateSearchBean.paginator.pages}" var="page">
+					<ui:repeat value="#{candidateSearchBean.paginator.pages}"
+						var="page">
 						<h:commandButton value="#{page+1}"
 							action="#{candidateSearchBean.paginator.gotoPage(page)}"
 							disabled="#{candidateSearchBean.paginator.currentPage eq page}">
@@ -138,11 +142,13 @@
 						<f:ajax render=":form:resultados" />
 					</h:commandButton>
 					<h:outputLabel value="#{i18n['paginator.show']}">
-						<h:selectOneMenu value="#{candidateSearchBean.paginator.rowsPerPage}">
+						<h:selectOneMenu
+							value="#{candidateSearchBean.paginator.rowsPerPage}">
 							<f:selectItem itemValue="5" itemLabel="5" />
 							<f:selectItem itemValue="10" itemLabel="10" />
 							<f:selectItem itemValue="25" itemLabel="25" />
-							<f:ajax listener="#{candidateSearchBean.paginator.rowsPerPageChange}"
+							<f:ajax
+								listener="#{candidateSearchBean.paginator.rowsPerPageChange}"
 								render=":form:resultados" execute=":form:paginator" />
 						</h:selectOneMenu>
 					</h:outputLabel>

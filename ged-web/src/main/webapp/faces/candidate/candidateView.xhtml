@@ -23,16 +23,9 @@
 			<input type="hidden" id="candidateId"
 				value="#{candidateViewBean.candidate.id}" />
 
-			<h:graphicImage value="/resources/img/s.gif"
-				styleClass="headerIcon candidateIcon" />
-
-			<h:panelGroup rendered="#{candidateViewBean.candidate.id == 0}">
-				<h1 class="header">#{i18n['candidate.new_candidate']}</h1>
-			</h:panelGroup>
-
-			<h:panelGroup rendered="#{candidateViewBean.candidate.id != 0}">
-				<h1 class="header">#{candidateViewBean.candidate}</h1>
-			</h:panelGroup>
+			<h1 class="header">
+				<i class="fa fa-users" /> #{candidateViewBean.candidate}
+			</h1>
 
 			<h:panelGroup layout="block" styleClass="panel">
 				<h1>#{i18n['candidate.candidate']}</h1>
@@ -153,7 +146,7 @@
 						disabled="true" />
 				</h:outputLabel>
 
-				<h:panelGroup layout="block" styleClass="secondaryButtonGroup">
+				<h:panelGroup layout="block" styleClass="buttonGroup">
 					<h:commandButton value="#{i18n['action.edit']}"
 						action="#{candidateViewBean.editCandidate}" immediate="true" />
 					<h:commandButton value="#{i18n['bookmark.add_to_bookmarks']}"

@@ -151,17 +151,11 @@
 		<h:form id="form">
 			<input type="hidden" id="userId" value="#{userEditBean.user.id}" />
 
-			<h:panelGroup rendered="#{userEditBean.user.id == 0}">
-				<h1 class="header">
-					<i class="fa fa-user" /> #{i18n['user.new_user']}
-				</h1>
-			</h:panelGroup>
+			<h1 class="header">
+				<i class="fa fa-user" /> #{userEditBean.user.id == 0 ?
+				i18n['user.new_user'] : userEditBean.user}
+			</h1>
 
-			<h:panelGroup rendered="#{userEditBean.user.id != 0}">
-				<h1 class="header">
-					<i class="fa fa-user" /> #{userEditBean.user}
-				</h1>
-			</h:panelGroup>
 
 			<h:panelGroup layout="block" styleClass="panel">
 				<h1>#{i18n['user.user']}</h1>
