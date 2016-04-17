@@ -1,12 +1,9 @@
 package ged.web.reports;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.DataFormat;
@@ -19,7 +16,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import ged.ejb.job.JobOffer;
 import ged.ejb.user.User;
 
-public class UserReport {
+public class UserReport extends AbstractReport {
 
 	private static SimpleDateFormat fmt = new SimpleDateFormat("dd-MMM");
 
@@ -41,66 +38,66 @@ public class UserReport {
 	private final User user;
 
 	public UserReport(final User user, final List<JobOffer> jobOffers) {
+		super("", user.getFullName() + "_report.xls".replace(" ", "_"));
 		this.user = user;
 		this.jobOffers = jobOffers;
 	}
 
 	public File create() {
-		final Workbook wb = new HSSFWorkbook();
-		final Sheet sheet = wb.createSheet(this.user.getFullName());
+		final Sheet sheet = this.wb.createSheet(this.user.getFullName());
 		Row row = sheet.createRow(1);
 		Cell cell = row.createCell(1);
 		cell.setCellValue("Nombre:");
-		cell.setCellStyle(getBoldStyle(wb));
+		cell.setCellStyle(getBoldStyle(this.wb));
 		cell = row.createCell(2);
 		cell.setCellValue(this.user.getFullName());
-		cell.setCellStyle(createBorderedStyle(wb));
+		cell.setCellStyle(createBorderedStyle(this.wb));
 
 		row = sheet.createRow(2);
 		cell = row.createCell(1);
 		cell.setCellValue("Email:");
-		cell.setCellStyle(getBoldStyle(wb));
+		cell.setCellStyle(getBoldStyle(this.wb));
 		cell = row.createCell(2);
 		cell.setCellValue(this.user.getEmail());
-		cell.setCellStyle(createBorderedStyle(wb));
+		cell.setCellStyle(createBorderedStyle(this.wb));
 
 		row = sheet.createRow(3);
 		cell = row.createCell(1);
 		cell.setCellValue("Responsable:");
-		cell.setCellStyle(getBoldStyle(wb));
+		cell.setCellStyle(getBoldStyle(this.wb));
 		cell = row.createCell(2);
 		if (this.user.getManager() != null) {
 			cell.setCellValue(this.user.getManager().getFullName());
 		}
-		cell.setCellStyle(createBorderedStyle(wb));
+		cell.setCellStyle(createBorderedStyle(this.wb));
 
 		row = sheet.createRow(6);
 		cell = row.createCell(1);
 		cell.setCellValue("Cliente");
-		cell.setCellStyle(getHeaderStyle(wb));
+		cell.setCellStyle(getHeaderStyle(this.wb));
 		cell = row.createCell(2);
 		cell.setCellValue("Nombre");
-		cell.setCellStyle(getHeaderStyle(wb));
+		cell.setCellStyle(getHeaderStyle(this.wb));
 		cell = row.createCell(3);
 		cell.setCellValue("Fecha apertura");
-		cell.setCellStyle(getHeaderStyle(wb));
+		cell.setCellStyle(getHeaderStyle(this.wb));
 		cell = row.createCell(4);
 		cell.setCellValue("Fecha cierre");
-		cell.setCellStyle(getHeaderStyle(wb));
+		cell.setCellStyle(getHeaderStyle(this.wb));
 		cell = row.createCell(5);
 		cell.setCellValue("Plazas");
-		cell.setCellStyle(getHeaderStyle(wb));
+		cell.setCellStyle(getHeaderStyle(this.wb));
 		cell = row.createCell(6);
 		cell.setCellValue("Ciudad");
-		cell.setCellStyle(getHeaderStyle(wb));
+		cell.setCellStyle(getHeaderStyle(this.wb));
 		cell = row.createCell(7);
 		cell.setCellValue("Provincia");
-		cell.setCellStyle(getHeaderStyle(wb));
+		cell.setCellStyle(getHeaderStyle(this.wb));
 		cell = row.createCell(8);
 		cell.setCellValue("Descripción");
-		cell.setCellStyle(getHeaderStyle(wb));
+		cell.setCellStyle(getHeaderStyle(this.wb));
 		int i = 7;
-		final DataFormat df = wb.createDataFormat();
+		final DataFormat df = this.wb.createDataFormat();
 		for (final JobOffer jobOffer : this.jobOffers) {
 			row = sheet.createRow(i++);
 			cell = row.createCell(1);
@@ -108,7 +105,7 @@ public class UserReport {
 			cell = row.createCell(2);
 			cell.setCellValue(jobOffer.getName());
 			cell = row.createCell(3);
-			final CellStyle style = wb.createCellStyle();
+			final CellStyle style = this.wb.createCellStyle();
 			style.setDataFormat(df.getFormat("mm-YYYY"));
 			cell.setCellStyle(style);
 			cell.setCellValue(jobOffer.getDateOpened());
@@ -134,16 +131,7 @@ public class UserReport {
 		sheet.autoSizeColumn(7);
 		sheet.autoSizeColumn(8);
 
-		String fileName = this.user.getFullName() + "_report.xls";
-		fileName = fileName.replace(" ", "_");
-		final File file = new File(fileName);
-		try (FileOutputStream out = new FileOutputStream(file)) {
-			wb.write(out);
-			wb.close();
-		} catch (final IOException e) {
-			e.printStackTrace();
-		}
-		return file;
+		return createFile();
 	}
 
 	private CellStyle getBoldStyle(final Workbook wb) {

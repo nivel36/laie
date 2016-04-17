@@ -32,32 +32,16 @@
 
 				<h2>#{i18n['candidate.detail']}</h2>
 
-				<h:outputLabel value="#{i18n['candidate.name']}"
-					styleClass="required">
-					<h:inputText id="name" value="#{candidateViewBean.candidate.name}"
-						label="#{i18n['candidate.name']}" required="true"
-						styleClass="#{not component.valid ? 'inputError' : ''}"
-						disabled="true" />
-					<h:message for="name" errorClass="error" />
-				</h:outputLabel>
+				<h:panelGroup layout="block" styleClass="textBlock">
+					<h:outputText styleClass="label" value="#{i18n['candidate.name']}:" />
+					<h:outputText
+						value="#{candidateViewBean.candidate.name} #{candidateViewBean.candidate.surename}" />
+				</h:panelGroup>
 
-				<h:outputLabel value="#{i18n['candidate.surename']}"
-					styleClass="required">
-					<h:inputText id="surename"
-						value="#{candidateViewBean.candidate.surename}"
-						label="#{i18n['candidate.surename']}" required="true"
-						styleClass="#{not component.valid ? 'inputError' : ''}"
-						disabled="true" />
-					<h:message for="surename" errorClass="error" />
-				</h:outputLabel>
-
-				<h:outputLabel value="#{i18n['candidate.age']}" styleClass="small">
-					<h:inputText id="age" value="#{candidateViewBean.candidate.age}"
-						label="#{i18n['candidate.age']}"
-						styleClass="#{not component.valid ? 'inputError' : ''}"
-						disabled="true" />
-					<h:message for="age" errorClass="error" />
-				</h:outputLabel>
+				<h:panelGroup layout="block" styleClass="textBlock">
+					<h:outputText styleClass="label" value="#{i18n['candidate.age']}:" />
+					<h:outputText value="#{candidateViewBean.candidate.age}" />
+				</h:panelGroup>
 
 				<h2>#{i18n['candidate.contact']}</h2>
 
