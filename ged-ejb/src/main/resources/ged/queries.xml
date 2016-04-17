@@ -5,8 +5,14 @@
         http://xmlns.jcp.org/xml/ns/persistence/orm_2_1.xsd"
 	version="2.1">
 	
-	<named-query name="Candidate.findCandidateAndCurriculumById">
-		<query>SELECT c FROM Candidate c LEFT JOIN FETCH c.curriculum WHERE c.id = :id</query>
+	<named-query name="Candidate.findCurriculumByCandidateId">
+		<query>SELECT c FROM Curriculum c 
+					LEFT JOIN FETCH c.candidate 
+					LEFT JOIN FETCH c.education 
+					LEFT JOIN FETCH c.jobExperiences 
+					LEFT JOIN FETCH c.languages 
+					LEFT JOIN FETCH c.skills 
+					WHERE c.candidate.id = :id</query>
 	</named-query>
 
 	<named-query name="Candidate.findById">

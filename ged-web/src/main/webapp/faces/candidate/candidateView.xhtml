@@ -139,9 +139,9 @@
 					<h:commandButton value="#{i18n['bookmark.remove_from_bookmarks']}"
 						action="#{bookmarksBean.remove(candidateViewBean.candidate)}"
 						rendered="#{bookmarksBean.isBookmarked(candidateViewBean.candidate)}" />
-					<h:button value="#{i18n['curriculum.view_curriculum']}"
-						action="curriculumView">
-						
+					<h:button value="#{i18n['curriculum.view_curriculum']}" 
+						outcome="curriculumView">
+						<f:param name="id" value="#{candidateViewBean.candidate.id}" />
 					</h:button>
 				</h:panelGroup>
 			</h:panelGroup>

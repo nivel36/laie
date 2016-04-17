@@ -10,6 +10,7 @@ import ged.ejb.candidate.CandidateDao;
 import ged.ejb.candidate.CandidateService;
 import ged.ejb.candidate.FileType;
 import ged.ejb.core.Repository;
+import ged.ejb.curriculum.Curriculum;
 
 @Stateless
 public class CandidateServiceImpl implements CandidateService {
@@ -34,11 +35,6 @@ public class CandidateServiceImpl implements CandidateService {
 	}
 
 	@Override
-	public Candidate findCandidateAndCurriculumById(final long id) {
-		return this.candidateDao.findCandidateAndCurriculumById(id);
-	}
-
-	@Override
 	public Candidate findCandidateById(final long id) {
 		return this.candidateDao.findCandidateById(id);
 	}
@@ -46,6 +42,11 @@ public class CandidateServiceImpl implements CandidateService {
 	@Override
 	public List<Candidate> findCandidateByNameAndSurename(final String name, final String surename) {
 		return this.candidateDao.findCandidateByNameAndSurename(name, surename);
+	}
+
+	@Override
+	public Curriculum findCurriculumByCandidateId(final long id) {
+		return this.candidateDao.findCurriculumByCandidateId(id);
 	}
 
 	@Override

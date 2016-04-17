@@ -7,8 +7,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
@@ -17,7 +15,6 @@ import ged.ejb.candidate.Candidate;
 import ged.ejb.core.model.AuditedEntity;
 
 @Entity
-@NamedQueries({ @NamedQuery(name = "Curriculum.getByCandidateId", query = "SELECT c FROM Curriculum c LEFT JOIN FETCH c.candidate LEFT JOIN FETCH c.education LEFT JOIN FETCH c.jobExperiences LEFT JOIN FETCH c.languages LEFT JOIN FETCH c.skills WHERE c.candidate.id = :candidateId") })
 public class Curriculum extends AuditedEntity {
 
 	private static final long serialVersionUID = 5171402772798965261L;
@@ -41,136 +38,139 @@ public class Curriculum extends AuditedEntity {
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "curriculum", orphanRemoval = true)
 	private Set<Skill> skills = new HashSet<Skill>();
 
-	public void addEducation(Education education) {
+	public void addEducation(final Education education) {
 		education.setCurriculum(this);
 		this.education.add(education);
 	}
 
-	public void addJobExperience(JobExperience jobExperience) {
+	public void addJobExperience(final JobExperience jobExperience) {
 		jobExperience.setCurriculum(this);
 		this.jobExperiences.add(jobExperience);
 	}
 
-	public void addLanguage(Language language) {
+	public void addLanguage(final Language language) {
 		language.setCurriculum(this);
 		this.languages.add(language);
 	}
 
-	public void addSkill(Skill skill) {
+	public void addSkill(final Skill skill) {
 		skill.setCurriculum(this);
 		this.skills.add(skill);
 	}
 
-	public void removeEducation(Education education) {
-		this.education.remove(education);
-	}
-
-	public void removeJobExperience(JobExperience jobExperience) {
-		this.jobExperiences.remove(jobExperience);
-	}
-
-	public void removeLanguage(Language language) {
-		this.languages.remove(language);
-	}
-
-	public void removeSkill(Skill skill) {
-		this.skills.remove(skill);
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		final Curriculum other = (Curriculum) obj;
+		if (this.candidate == null) {
+			if (other.candidate != null) {
+				return false;
+			}
+		} else if (!this.candidate.equals(other.candidate)) {
+			return false;
+		}
+		return true;
 	}
 
 	public Candidate getCandidate() {
-		return candidate;
+		return this.candidate;
 	}
 
 	public Set<Education> getEducation() {
-		return education;
+		return this.education;
 	}
 
 	public int getEducationSize() {
-		return education.size();
+		return this.education.size();
 	}
 
 	public Set<JobExperience> getJobExperiences() {
-		return jobExperiences;
+		return this.jobExperiences;
 	}
 
 	public int getJobExperiencesSize() {
-		return jobExperiences.size();
+		return this.jobExperiences.size();
 	}
 
 	public Set<Language> getLanguages() {
-		return languages;
+		return this.languages;
 	}
 
 	public int getLanguagesSize() {
-		return languages.size();
+		return this.languages.size();
 	}
 
 	public String getPerfilProfesional() {
-		return perfilProfesional;
+		return this.perfilProfesional;
 	}
 
 	public Set<Skill> getSkills() {
-		return skills;
+		return this.skills;
 	}
 
 	public int getSkillsSize() {
-		return skills.size();
-	}
-
-	public void setCandidate(Candidate candidate) {
-		this.candidate = candidate;
-	}
-
-	public void setEducation(Set<Education> education) {
-		this.education = education;
-	}
-
-	public void setJobExperiences(Set<JobExperience> jobExperiences) {
-		this.jobExperiences = jobExperiences;
-	}
-
-	public void setLanguages(Set<Language> languages) {
-		this.languages = languages;
-	}
-
-	public void setPerfilProfesional(String perfilProfesional) {
-		this.perfilProfesional = perfilProfesional;
-	}
-
-	public void setSkills(Set<Skill> skills) {
-		this.skills = skills;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Curriculum other = (Curriculum) obj;
-		if (candidate == null) {
-			if (other.candidate != null)
-				return false;
-		} else if (!candidate.equals(other.candidate))
-			return false;
-		return true;
+		return this.skills.size();
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result
-				+ ((candidate == null) ? 0 : candidate.hashCode());
+		result = (prime * result) + ((this.candidate == null) ? 0 : this.candidate.hashCode());
 		return result;
+	}
+
+	public void removeEducation(final Education education) {
+		this.education.remove(education);
+	}
+
+	public void removeJobExperience(final JobExperience jobExperience) {
+		this.jobExperiences.remove(jobExperience);
+	}
+
+	public void removeLanguage(final Language language) {
+		this.languages.remove(language);
+	}
+
+	public void removeSkill(final Skill skill) {
+		this.skills.remove(skill);
+	}
+
+	public void setCandidate(final Candidate candidate) {
+		this.candidate = candidate;
+	}
+
+	public void setEducation(final Set<Education> education) {
+		this.education = education;
+	}
+
+	public void setJobExperiences(final Set<JobExperience> jobExperiences) {
+		this.jobExperiences = jobExperiences;
+	}
+
+	public void setLanguages(final Set<Language> languages) {
+		this.languages = languages;
+	}
+
+	public void setPerfilProfesional(final String perfilProfesional) {
+		this.perfilProfesional = perfilProfesional;
+	}
+
+	public void setSkills(final Set<Skill> skills) {
+		this.skills = skills;
 	}
 
 	@Override
 	public String toString() {
-		return "Curriculum [education=" + education + ", jobExperiences="
-				+ jobExperiences + ", languages=" + languages + ", skills="
-				+ skills + "]";
+		return "Curriculum [education=" + this.education + ", jobExperiences=" + this.jobExperiences + ", languages="
+				+ this.languages + ", skills=" + this.skills + "]";
 	}
 }

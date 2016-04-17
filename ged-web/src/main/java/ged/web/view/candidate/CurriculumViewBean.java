@@ -47,14 +47,10 @@ public class CurriculumViewBean extends AbstractBean {
 		if (this.id != null) {
 			try {
 				final Long id = Long.parseLong(this.id);
-				this.candidate = this.candidateService.findCandidateAndCurriculumById(id);
-				if (this.candidate == null) {
+				this.curriculum = this.candidateService.findCurriculumByCandidateId(id);
+				if (this.curriculum == null) {
 					error();
 				}
-				if (this.candidate.getCurriculum() == null) {
-					error();
-				}
-				this.curriculum = this.candidate.getCurriculum();
 			} catch (final NumberFormatException ex) {
 				error();
 			}
