@@ -122,11 +122,11 @@ public class CurriculumEditBean extends AbstractBean {
 		this.flash.put("candidate", this.curriculum.getCandidate());
 	}
 
-	private void insertOrUpdate(Curriculum curriculum) {
+	private void insertOrUpdate(final Curriculum curriculum) {
 		if (curriculum.getId() == 0) {
 			this.curriculumService.insertCurriculum(curriculum);
 		} else {
-			curriculum = this.curriculumService.updateCurriculum(curriculum);
+			this.curriculum = this.curriculumService.updateCurriculum(curriculum);
 		}
 	}
 

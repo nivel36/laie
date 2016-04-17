@@ -39,6 +39,11 @@ public class CandidateServiceImpl implements CandidateService {
 	}
 
 	@Override
+	public Candidate findCandidateById(final long id) {
+		return this.candidateDao.findCandidateById(id);
+	}
+
+	@Override
 	public List<Candidate> findCandidateByNameAndSurename(final String name, final String surename) {
 		return this.candidateDao.findCandidateByNameAndSurename(name, surename);
 	}

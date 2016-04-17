@@ -1,7 +1,6 @@
 package ged.web.reports;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.apache.poi.ss.usermodel.Cell;
@@ -18,7 +17,7 @@ import ged.ejb.user.User;
 
 public class UserReport extends AbstractReport {
 
-	private static SimpleDateFormat fmt = new SimpleDateFormat("dd-MMM");
+	// private static SimpleDateFormat fmt = new SimpleDateFormat("dd-MMM");
 
 	private static CellStyle createBorderedStyle(final Workbook wb) {
 		final CellStyle style = wb.createCellStyle();

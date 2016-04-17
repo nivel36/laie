@@ -15,6 +15,8 @@ public interface CandidateDao {
 
 	public Candidate findCandidateAndCurriculumById(final long id);
 
+	public Candidate findCandidateById(final long id);
+
 	public List<Candidate> findCandidateByNameAndSurename(String name, String surename);
 
 	public void insertCandidate(Candidate candidate);

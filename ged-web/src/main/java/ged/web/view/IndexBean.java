@@ -1,5 +1,6 @@
 package ged.web.view;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -38,5 +39,6 @@ public class IndexBean extends AbstractBean {
 	public void init() {
 		final User user = this.sessionBean.getUser();
 		this.jobOffers = this.jobService.findLastJobOffers(user);
+		this.candidates = new ArrayList<>();
 	}
 }

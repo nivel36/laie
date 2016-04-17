@@ -132,15 +132,17 @@
 
 				<h:panelGroup layout="block" styleClass="buttonGroup">
 					<h:commandButton value="#{i18n['action.edit']}"
-						action="#{candidateViewBean.editCandidate}" immediate="true" />
+						action="#{candidateViewBean.editCandidate}" />
 					<h:commandButton value="#{i18n['bookmark.add_to_bookmarks']}"
 						action="#{bookmarksBean.add(candidateViewBean.candidate)}"
-						immediate="true"
 						rendered="#{not bookmarksBean.isBookmarked(candidateViewBean.candidate)}" />
 					<h:commandButton value="#{i18n['bookmark.remove_from_bookmarks']}"
 						action="#{bookmarksBean.remove(candidateViewBean.candidate)}"
-						immediate="true"
 						rendered="#{bookmarksBean.isBookmarked(candidateViewBean.candidate)}" />
+					<h:button value="#{i18n['curriculum.view_curriculum']}"
+						action="curriculumView">
+						
+					</h:button>
 				</h:panelGroup>
 			</h:panelGroup>
 		</h:form>

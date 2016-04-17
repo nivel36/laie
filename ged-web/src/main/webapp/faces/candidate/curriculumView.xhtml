@@ -6,7 +6,7 @@
 	template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
-		<title>#{i18n['candidate.candidate']}</title>
+		<title>#{i18n['curriculum.curriculum']}</title>
 	</ui:define>
 
 	<ui:param name="selectedMenu" value="candidates" />
@@ -14,8 +14,8 @@
 	<ui:define name="content">
 		<f:metadata>
 			<f:viewParam name="id"
-				value="#{candidateViewBean.id}" />
-			<f:viewAction action="#{candidateViewBean.init}" />
+				value="#{curriculumViewBean.id}" />
+			<f:viewAction action="#{curriculumViewBean.init}" />
 		</f:metadata>
 
 
@@ -30,7 +30,7 @@
 			<p>#{candidateViewBean.candidate.email}</p>
 
 			<h3>#{i18n['curriculum.education']}</h3>
-			<ui:repeat value="#{candidateViewBean.education}" var="education"
+			<ui:repeat value="#{curriculumViewBean.curriculum.education}" var="education"
 				id="repeatedPanel">
 				<h4>
 					#{education.degree} - #{education.school} (
@@ -49,7 +49,7 @@
 			<!-- JOB EXPERIENCE -->
 
 			<h3>#{i18n['curriculum.job_experiences']}</h3>
-			<ui:repeat value="#{candidateViewBean.jobExperiences}"
+			<ui:repeat value="#{curriculumViewBean.curriculum.jobExperiences}"
 				var="jobExperience" id="jobExperience">
 				<h4>#{jobExperience.jobPosition}</h4>
 				<h5>
@@ -78,7 +78,7 @@
 					<th class="order-table-header">Hablado</th>
 				</tr>
 				<tbody>
-					<ui:repeat value="#{candidateViewBean.languages}" var="language"
+					<ui:repeat value="#{curriculumViewBean.curriculum.languages}" var="language"
 						varStatus="status" id="language">
 						<h:panelGroup >
 							<tr>
@@ -103,7 +103,7 @@
 			<!-- SKILLS -->
 
 			<h3>#{i18n['curriculum.skills']}</h3>
-			<ui:repeat value="#{candidateViewBean.skills}" var="skill" id="skill">
+			<ui:repeat value="#{curriculumViewBean.curriculum.skills}" var="skill" id="skill">
 				<p>#{skill.name}: #{skill.level}</p>
 			</ui:repeat>
 		</h:panelGroup>

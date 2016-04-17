@@ -39,6 +39,15 @@ public class CandidateDaoImpl implements CandidateDao {
 		final Map<String, Object> properties = new HashMap<String, Object>();
 		properties.put("id", id);
 		final Candidate candidate = this.persistenceFacade.getByTypedQuerySingleResult(Candidate.class,
+				"Candidate.findCandidateAndCurriculumById", properties);
+		return candidate;
+	}
+
+	@Override
+	public Candidate findCandidateById(final long id) {
+		final Map<String, Object> properties = new HashMap<String, Object>();
+		properties.put("id", id);
+		final Candidate candidate = this.persistenceFacade.getByTypedQuerySingleResult(Candidate.class,
 				"Candidate.findById", properties);
 		return candidate;
 	}

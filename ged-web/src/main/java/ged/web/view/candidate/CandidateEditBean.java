@@ -30,23 +30,35 @@ public class CandidateEditBean extends AbstractBean {
 		return "candidateSearch?faces-redirect=true";
 	}
 
+	private Curriculum createNewCurriculum() {
+		final Curriculum curriculum = new Curriculum();
+		curriculum.setCandidate(this.candidate);
+		return curriculum;
+	}
+
 	public String editCurriculum() {
-		insertOrUpdate(this.candidate);
-		this.flash.put("curriculum", getCurriculum());
+		Curriculum curriculum = null;
+		if (this.candidate.getId() == 0) {
+			this.candidateService.insertCandidate(this.candidate);
+			curriculum = createNewCurriculum();
+		} else {
+			this.candidate = this.candidateService.updateCandidate(this.candidate);
+			curriculum = findCurriculum(this.candidate.getId());
+		}
+		this.flash.put("curriculum", curriculum);
 		return "curriculumEdit?faces-redirect=true";
+	}
+
+	private Curriculum findCurriculum(final Long id) {
+		Curriculum curriculum = this.curriculumService.findByCandidateId(id);
+		if (curriculum == null) {
+			curriculum = createNewCurriculum();
+		}
+		return curriculum;
 	}
 
 	public Candidate getCandidate() {
 		return this.candidate;
-	}
-
-	private Curriculum getCurriculum() {
-		Curriculum curriculum = this.curriculumService.findByCandidateId(this.candidate.getId());
-		if (curriculum == null) {
-			curriculum = new Curriculum();
-			curriculum.setCandidate(this.candidate);
-		}
-		return curriculum;
 	}
 
 	@PostConstruct
@@ -62,16 +74,12 @@ public class CandidateEditBean extends AbstractBean {
 		this.flash.put("candidate", this.candidate);
 	}
 
-	public void insertOrUpdate(Candidate candidate) {
-		if (candidate.getId() == 0) {
-			this.candidateService.insertCandidate(candidate);
-		} else {
-			candidate = this.candidateService.updateCandidate(candidate);
-		}
-	}
-
 	public String save() {
-		insertOrUpdate(this.candidate);
+		if (this.candidate.getId() == 0) {
+			this.candidateService.insertCandidate(this.candidate);
+		} else {
+			this.candidate = this.candidateService.updateCandidate(this.candidate);
+		}
 		return "candidateSearch?faces-redirect=true";
 	}
 

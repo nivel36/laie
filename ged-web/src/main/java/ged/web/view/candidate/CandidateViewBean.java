@@ -34,7 +34,7 @@ public class CandidateViewBean extends AbstractBean {
 	private Candidate candidate;
 
 	@Inject
-	private CandidateService candidateService;
+	private transient CandidateService candidateService;
 
 	private boolean editingFile;
 
@@ -130,7 +130,7 @@ public class CandidateViewBean extends AbstractBean {
 		if (this.id != null) {
 			try {
 				final Long id = Long.parseLong(this.id);
-				this.candidate = this.candidateService.findCandidateAndCurriculumById(id);
+				this.candidate = this.candidateService.findCandidateById(id);
 				if (this.candidate == null) {
 					error();
 				}
