@@ -45,90 +45,55 @@
 
 				<h2>#{i18n['candidate.contact']}</h2>
 
-				<h:outputLabel value="#{i18n['candidate.phone_number']} 1"
-					styleClass="required">
-					<h:inputText id="phoneNumber1"
-						value="#{candidateViewBean.candidate.phoneNumber1}"
-						required="true" label="#{i18n['candidate.phone_number']}1"
-						styleClass="#{ not component.valid ? 'inputError' : ''}"
-						disabled="true" />
-					<h:message for="phoneNumber1" errorClass="error" />
-				</h:outputLabel>
+				<h:panelGroup layout="block" styleClass="textBlock">
+					<h:outputText styleClass="label"
+						value="#{i18n['candidate.phone_number']} 1:" />
+					<h:outputText value="#{candidateViewBean.candidate.phoneNumber1}" />
+				</h:panelGroup>
 
-				<h:outputLabel value="#{i18n['candidate.phone_number']} 2">
-					<h:inputText id="phoneNumber2"
-						value="#{candidateViewBean.candidate.phoneNumber2}"
-						label="#{i18n['candidate.phone_number']}2"
-						styleClass="#{ not component.valid ? 'inputError' : ''}"
-						disabled="true" />
-					<h:message for="phoneNumber2" errorClass="error" />
-				</h:outputLabel>
+				<h:panelGroup layout="block" styleClass="textBlock">
+					<h:outputText styleClass="label"
+						value="#{i18n['candidate.phone_number']} 2:" />
+					<h:outputText value="#{candidateViewBean.candidate.phoneNumber2}" />
+				</h:panelGroup>
 
-				<h:outputLabel value="#{i18n['candidate.email']}"
-					styleClass="large required">
-					<h:inputText id="email" p:type="email"
-						value="#{candidateViewBean.candidate.email}" required="true"
-						label="#{i18n['candidate.email']}"
-						styleClass="#{ not component.valid ? 'inputError' : ''}"
-						disabled="true" />
-					<h:message for="email" errorClass="error" />
-				</h:outputLabel>
+				<h:panelGroup layout="block" styleClass="textBlock">
+					<h:outputText styleClass="label"
+						value="#{i18n['candidate.email']} :" />
+					<h:outputText value="#{candidateViewBean.candidate.email}" />
+				</h:panelGroup>
 
 				<h2>#{i18n['candidate.work_data']}</h2>
 
-				<h:outputLabel value="#{i18n['candidate.position']}"
-					styleClass="required">
-					<h:inputText id="position"
-						value="#{candidateViewBean.candidate.position}" required="true"
-						label="#{i18n['candidate.position']}"
-						styleClass="#{ not component.valid ? 'inputError' : ''}"
-						disabled="true" />
-					<h:message for="position" errorClass="error" />
-				</h:outputLabel>
+				<h:panelGroup layout="block" styleClass="textBlock">
+					<h:outputText styleClass="label"
+						value="#{i18n['candidate.position']} :" />
+					<h:outputText value="#{candidateViewBean.candidate.position}" />
+				</h:panelGroup>
 
-				<h:outputLabel value="#{i18n['candidate.salary']}">
-					<h:inputText id="salary"
-						value="#{candidateViewBean.candidate.salary}"
-						label="#{i18n['candidate.salary']}"
-						styleClass="#{ not component.valid ? 'inputError' : ''}"
-						disabled="true" />
-					<h:message for="salary" errorClass="error" />
-				</h:outputLabel>
+				<h:panelGroup layout="block" styleClass="textBlock">
+					<h:outputText styleClass="label"
+						value="#{i18n['candidate.salary']} :" />
+					<h:outputText value="#{candidateViewBean.candidate.salary}" />
+				</h:panelGroup>
 
-				<h:outputLabel value="#{i18n['candidate.expected_salary']}">
-					<h:inputText id="expected_salary"
-						value="#{candidateViewBean.candidate.expectedSalary}"
-						label="#{i18n['candidate.expected_salary']}"
-						styleClass="#{ not component.valid ? 'inputError' : ''}"
-						disabled="true" />
-					<h:message for="expected_salary" errorClass="error" />
-				</h:outputLabel>
+				<h:panelGroup layout="block" styleClass="textBlock">
+					<h:outputText styleClass="label"
+						value="#{i18n['candidate.expected_salary']} :" />
+					<h:outputText value="#{candidateViewBean.candidate.expectedSalary}" />
+				</h:panelGroup>
 
 				<h2>#{i18n['address.address']}</h2>
 
-				<h:outputLabel value="#{i18n['address.city']}">
-					<h:inputText id="city"
-						value="#{candidateViewBean.candidate.address.city}"
-						label="#{i18n['address.city']}"
-						styleClass="#{ not component.valid ? 'inputError' : ''}"
-						disabled="true" />
-				</h:outputLabel>
+				<h:panelGroup layout="block" styleClass="textBlock">
+					<h:outputText styleClass="label" value="#{i18n['address.city']} :" />
+					<h:outputText value="#{candidateViewBean.candidate.address.city}" />
+				</h:panelGroup>
 
-				<h:outputLabel value="#{i18n['address.state']}">
-					<h:inputText id="state"
-						value="#{candidateViewBean.candidate.address.state}"
-						label="#{i18n['address.state']}"
-						styleClass="#{ not component.valid ? 'inputError' : ''}"
-						disabled="true" />
-				</h:outputLabel>
-
-				<h:outputLabel value="#{i18n['address.country']}">
-					<h:inputText id="country"
-						value="#{candidateViewBean.candidate.address.country}"
-						label="#{i18n['address.country']}"
-						styleClass="#{ not component.valid ? 'inputError' : ''}"
-						disabled="true" />
-				</h:outputLabel>
+				<h:panelGroup layout="block" styleClass="textBlock">
+					<h:outputText styleClass="label" value="#{i18n['address.state']} :" />
+					<h:outputText value="#{candidateViewBean.candidate.address.state}" />
+				</h:panelGroup>
 
 				<h:panelGroup layout="block" styleClass="buttonGroup">
 					<h:commandButton value="#{i18n['action.edit']}"
@@ -139,7 +104,7 @@
 					<h:commandButton value="#{i18n['bookmark.remove_from_bookmarks']}"
 						action="#{bookmarksBean.remove(candidateViewBean.candidate)}"
 						rendered="#{bookmarksBean.isBookmarked(candidateViewBean.candidate)}" />
-					<h:button value="#{i18n['curriculum.view_curriculum']}" 
+					<h:button value="#{i18n['curriculum.view_curriculum']}"
 						outcome="curriculumView">
 						<f:param name="id" value="#{candidateViewBean.candidate.id}" />
 					</h:button>
