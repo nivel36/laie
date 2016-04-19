@@ -8,7 +8,7 @@
 	<named-query name="Candidate.findCurriculumByCandidateId">
 		<query>SELECT c FROM Curriculum c 
 					LEFT JOIN FETCH c.candidate 
-					LEFT JOIN FETCH c.education 
+					LEFT JOIN FETCH c.education
 					LEFT JOIN FETCH c.jobExperiences 
 					LEFT JOIN FETCH c.languages 
 					LEFT JOIN FETCH c.skills 
