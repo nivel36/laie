@@ -51,6 +51,7 @@ public class CurriculumViewBean extends AbstractBean {
 				if (this.curriculum == null) {
 					error();
 				}
+				this.candidate = this.curriculum.getCandidate();
 			} catch (final NumberFormatException ex) {
 				error();
 			}

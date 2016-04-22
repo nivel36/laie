@@ -13,99 +13,112 @@
 
 	<ui:define name="content">
 		<f:metadata>
-			<f:viewParam name="id"
-				value="#{curriculumViewBean.id}" />
+			<f:viewParam name="id" value="#{curriculumViewBean.id}" />
 			<f:viewAction action="#{curriculumViewBean.init}" />
 		</f:metadata>
 
+		<h:form id="form">
+			<input type="hidden" id="candidateId"
+				value="#{curriculumViewBean.id}" />
 
-		<h:panelGroup layout="block" styleClass="curriculumVitae">
-			<h:graphicImage value="/resources/img/classic-blue/no-photo.png"
-				styleClass="photo" />
-			<h1>#{candidateViewBean.candidate}</h1>
-			<h2>#{candidateViewBean.candidate.curriculum.perfilProfesional}</h2>
-			<h3>#{i18n['candidate.contact']}</h3>
-			<p>#{candidateViewBean.candidate.phoneNumber1}</p>
-			<p>#{candidateViewBean.candidate.phoneNumber2}</p>
-			<p>#{candidateViewBean.candidate.email}</p>
+			<h1 class="header">
+				<i class="fa fa-users" /> #{curriculumViewBean.candidate}
+			</h1>
 
-			<h3>#{i18n['curriculum.education']}</h3>
-			<ui:repeat value="#{curriculumViewBean.curriculum.education.toArray()}" var="education"
-				id="repeatedPanel">
-				<h4>
-					#{education.degree} - #{education.school} (
-					<h:outputText value="#{education.fromDate}">
-						<f:convertDateTime pattern="yyyy" />
-					</h:outputText>
-					-
-					<h:outputText value="#{education.toDate}">
-						<f:convertDateTime pattern="yyyy" />
-					</h:outputText>
-					)
-				</h4>
-				<p>#{education.description}</p>
-			</ui:repeat>
+			<h:panelGroup layout="block" styleClass="panel">
+				<h3>#{i18n['candidate.contact']}</h3>
+				<h:panelGroup layout="block" styleClass="textBlock">
+					<h:outputText styleClass="label" value="#{i18n['user.name']}:" />
+					<h:outputText
+						value="#{curriculumViewBean.candidate.surename}, #{curriculumViewBean.candidate.name}" />
+				</h:panelGroup>
+				<br />
+				<p>#{candidateViewBean.candidate.phoneNumber1}</p>
+				<p>#{candidateViewBean.candidate.phoneNumber2}</p>
+				<p>#{candidateViewBean.candidate.email}</p>
 
-			<!-- JOB EXPERIENCE -->
+				<h3>#{i18n['curriculum.education']}</h3>
+				<ui:repeat
+					value="#{curriculumViewBean.curriculum.education.toArray()}"
+					var="education" id="repeatedPanel">
+					<h4>
+						#{education.degree} - #{education.school} (
+						<h:outputText value="#{education.fromDate}">
+							<f:convertDateTime pattern="yyyy" />
+						</h:outputText>
+						-
+						<h:outputText value="#{education.toDate}">
+							<f:convertDateTime pattern="yyyy" />
+						</h:outputText>
+						)
+					</h4>
+					<p>#{education.description}</p>
+				</ui:repeat>
 
-			<h3>#{i18n['curriculum.job_experiences']}</h3>
-			<ui:repeat value="#{curriculumViewBean.curriculum.jobExperiences.toArray()}"
-				var="jobExperience" id="jobExperience">
-				<h4>#{jobExperience.jobPosition}</h4>
-				<h5>
-					#{jobExperience.companyName}(
-					<h:outputText value="#{jobExperience.fromDate}">
-						<f:convertDateTime pattern="yyyy" />
-					</h:outputText>
-					-
-					<h:outputText value="#{jobExperience.toDate}">
-						<f:convertDateTime pattern="yyyy" />
-					</h:outputText>
-					)
-				</h5>
-				<p>#{jobExperience.description}</p>
-			</ui:repeat>
+				<!-- JOB EXPERIENCE -->
 
-			<!-- LANGUAGES -->
+				<h3>#{i18n['curriculum.job_experiences']}</h3>
+				<ui:repeat
+					value="#{curriculumViewBean.curriculum.jobExperiences.toArray()}"
+					var="jobExperience" id="jobExperience">
+					<h4>#{jobExperience.jobPosition}</h4>
+					<h5>
+						#{jobExperience.companyName}(
+						<h:outputText value="#{jobExperience.fromDate}">
+							<f:convertDateTime pattern="yyyy" />
+						</h:outputText>
+						-
+						<h:outputText value="#{jobExperience.toDate}">
+							<f:convertDateTime pattern="yyyy" />
+						</h:outputText>
+						)
+					</h5>
+					<p>#{jobExperience.description}</p>
+				</ui:repeat>
 
-			<h3>#{i18n['curriculum.languages']}</h3>
+				<!-- LANGUAGES -->
 
-			<table class="order-table">
-				<tr>
-					<th class="order-table-header">Idioma</th>
-					<th class="order-table-header">Leídos</th>
-					<th class="order-table-header">Escrito</th>
-					<th class="order-table-header">Hablado</th>
-				</tr>
-				<tbody>
-					<ui:repeat value="#{curriculumViewBean.curriculum.languages.toArray()}" var="language"
-						varStatus="status" id="language">
-						<h:panelGroup >
-							<tr>
-								<td class="order-table-even-row">#{language.languageName}</td>
-								<td class="order-table-even-row">#{language.read}</td>
-								<td class="order-table-even-row">#{language.write}</td>
-								<td class="order-table-even-row">#{language.speak}</td>
-							</tr>
-						</h:panelGroup>
-						<h:panelGroup rendered="#{status.odd}">
-							<tr>
-								<td class="order-table-odd-row">#{language.languageName}</td>
-								<td class="order-table-odd-row">#{language.read}</td>
-								<td class="order-table-odd-row">#{language.write}</td>
-								<td class="order-table-odd-row">#{language.speak}</td>
-							</tr>
-						</h:panelGroup>
-					</ui:repeat>
-				</tbody>
-			</table>
+				<h3>#{i18n['curriculum.languages']}</h3>
 
-			<!-- SKILLS -->
+				<table class="order-table">
+					<tr>
+						<th class="order-table-header">Idioma</th>
+						<th class="order-table-header">Leídos</th>
+						<th class="order-table-header">Escrito</th>
+						<th class="order-table-header">Hablado</th>
+					</tr>
+					<tbody>
+						<ui:repeat
+							value="#{curriculumViewBean.curriculum.languages.toArray()}"
+							var="language" varStatus="status" id="language">
+							<h:panelGroup>
+								<tr>
+									<td class="order-table-even-row">#{language.languageName}</td>
+									<td class="order-table-even-row">#{language.read}</td>
+									<td class="order-table-even-row">#{language.write}</td>
+									<td class="order-table-even-row">#{language.speak}</td>
+								</tr>
+							</h:panelGroup>
+							<h:panelGroup rendered="#{status.odd}">
+								<tr>
+									<td class="order-table-odd-row">#{language.languageName}</td>
+									<td class="order-table-odd-row">#{language.read}</td>
+									<td class="order-table-odd-row">#{language.write}</td>
+									<td class="order-table-odd-row">#{language.speak}</td>
+								</tr>
+							</h:panelGroup>
+						</ui:repeat>
+					</tbody>
+				</table>
 
-			<h3>#{i18n['curriculum.skills']}</h3>
-			<ui:repeat value="#{curriculumViewBean.curriculum.skills.toArray()}" var="skill" id="skill">
-				<p>#{skill.name}: #{skill.level}</p>
-			</ui:repeat>
-		</h:panelGroup>
+				<!-- SKILLS -->
+
+				<h3>#{i18n['curriculum.skills']}</h3>
+				<ui:repeat value="#{curriculumViewBean.curriculum.skills.toArray()}"
+					var="skill" id="skill">
+					<p>#{skill.name}: #{skill.level}</p>
+				</ui:repeat>
+			</h:panelGroup>
+		</h:form>
 	</ui:define>
 </ui:composition>

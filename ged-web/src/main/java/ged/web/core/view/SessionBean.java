@@ -1,5 +1,6 @@
 package ged.web.core.view;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -7,6 +8,8 @@ import java.util.Locale;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.enterprise.inject.Produces;
+import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import ged.ejb.core.bookmark.Bookmark;
@@ -14,10 +17,11 @@ import ged.ejb.core.bookmark.BookmarkFullExpcetion;
 import ged.ejb.core.model.Action;
 import ged.ejb.core.model.SavedSearch;
 import ged.ejb.user.User;
+import ged.ejb.user.UserService;
 
 @Named
 @SessionScoped
-public class SessionBean extends AbstractBean {
+public class SessionBean implements Serializable {
 
 	private static final long serialVersionUID = -8079836415042166193L;
 
@@ -26,6 +30,9 @@ public class SessionBean extends AbstractBean {
 
 	private List<Bookmark> bookmarks = new ArrayList<Bookmark>();
 
+	@Inject
+	protected FacesContext facesContext;
+
 	private Locale locale;
 
 	@Produces
@@ -33,6 +40,9 @@ public class SessionBean extends AbstractBean {
 
 	@Produces
 	private User user;
+
+	@Inject
+	private transient UserService userService;
 
 	public void addAction(final Action action) {
 		if (!containsAction(action)) {
@@ -86,7 +96,9 @@ public class SessionBean extends AbstractBean {
 
 	@PostConstruct
 	public void init() {
-		this.locale = this.facesContext.getApplication().getDefaultLocale();
+		final String username = this.facesContext.getExternalContext().getRemoteUser();
+		this.user = this.userService.findUserByUsername(username);
+		this.locale = new Locale(this.user.getLanguage());
 	}
 
 	public void removeBookmark(final Bookmark bookmark) {
@@ -115,6 +127,5 @@ public class SessionBean extends AbstractBean {
 
 	public void setUser(final User user) {
 		this.user = user;
-		this.locale = new Locale(this.user.getLanguage());
 	}
 }

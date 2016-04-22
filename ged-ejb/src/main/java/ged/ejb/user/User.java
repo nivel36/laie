@@ -104,14 +104,10 @@ public class User extends AuditedEntity {
 			return false;
 		}
 		final User other = (User) obj;
-		if ((this.username == null) && (other.username != null)) {
-			return false;
-		} else if ((this.username == null) && (other.username == null)) {
-			return true;
-		} else if (!this.username.equals(other.username)) {
+		if (this.username == null) {
 			return false;
 		}
-		return true;
+		return this.username.equals(other.username);
 	}
 
 	public List<Action> getActions() {
