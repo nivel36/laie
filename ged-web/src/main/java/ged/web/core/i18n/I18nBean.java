@@ -16,11 +16,11 @@ import javax.inject.Named;
 
 import ged.ejb.core.i18n.I18nService;
 import ged.ejb.core.i18n.I18nString;
-import ged.web.core.view.AbstractBean;
+import ged.web.core.view.AbstractPageBean;
 
 @Named
 @ApplicationScoped
-public class I18nBean extends AbstractBean {
+public class I18nBean extends AbstractPageBean {
 
 	private static final long serialVersionUID = 7203326692219293611L;
 

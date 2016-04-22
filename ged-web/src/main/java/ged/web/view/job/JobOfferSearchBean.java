@@ -9,12 +9,12 @@ import javax.inject.Named;
 import ged.ejb.job.JobOffer;
 import ged.ejb.job.JobService;
 import ged.ejb.user.User;
-import ged.web.core.view.AbstractBean;
+import ged.web.core.view.AbstractPageBean;
 import ged.web.core.view.Paginator;
 
 @Named
 @ViewScoped
-public class JobOfferSearchBean extends AbstractBean {
+public class JobOfferSearchBean extends AbstractPageBean {
 
 	private static final long serialVersionUID = 8777365288968792501L;
 

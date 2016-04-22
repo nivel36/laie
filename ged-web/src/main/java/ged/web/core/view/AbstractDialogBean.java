@@ -1,6 +1,6 @@
 package ged.web.core.view;
 
-public abstract class AbstractDialogBean extends AbstractBean {
+public abstract class AbstractDialogBean extends AbstractPageBean {
 
 	private static final long serialVersionUID = 1432485776371482410L;
 

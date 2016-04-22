@@ -6,7 +6,7 @@ import javax.annotation.PostConstruct;
 
 import ged.ejb.core.util.Log;
 
-public abstract class AbstractSearchBean<T> extends AbstractBean {
+public abstract class AbstractSearchBean<T> extends AbstractPageBean {
 
 	private static final long serialVersionUID = -2008609936084081329L;
 
@@ -19,88 +19,88 @@ public abstract class AbstractSearchBean<T> extends AbstractBean {
 	protected Integer[] pages;
 
 	protected int rowsPerPage;
-	
+
 	public void firstPage() {
-		currentPage = 0;
+		this.currentPage = 0;
 		trimList();
 	}
 
 	public int getCurrentPage() {
-		return currentPage;
+		return this.currentPage;
 	}
 
 	public List<T> getDataList() {
-		return dataList;
+		return this.dataList;
 	}
 
 	public Integer[] getPages() {
-		return pages;
+		return this.pages;
 	}
 
 	public int getPagesSize() {
-		return pages.length;
+		return this.pages.length;
 	}
 
 	public int getRowsPerPage() {
-		return rowsPerPage;
+		return this.rowsPerPage;
 	}
 
-	public void gotoPage(int page) {
-		currentPage = page;
+	public void gotoPage(final int page) {
+		this.currentPage = page;
 		trimList();
 	}
 
 	@PostConstruct
 	@Log
 	public void init() {
-		rowsPerPage = sessionBean.getRowsPerPage();
+		this.rowsPerPage = this.sessionBean.getRowsPerPage();
 		search();
 	}
-	
+
 	public void lastPage() {
-		currentPage = pages.length - 1;
+		this.currentPage = this.pages.length - 1;
 		trimList();
 	}
-	
+
 	public void nextPage() {
-		int maxPage = pages.length - 1;
-		if (currentPage < maxPage) {
-			currentPage++;
+		final int maxPage = this.pages.length - 1;
+		if (this.currentPage < maxPage) {
+			this.currentPage++;
 		}
 		trimList();
 	}
-	
+
 	public void previousPage() {
-		if (currentPage > 0) {
-			currentPage--;
+		if (this.currentPage > 0) {
+			this.currentPage--;
 		}
 		trimList();
 	}
-	
+
 	public void rowsPerPageChange() {
-		currentPage = 0;
+		this.currentPage = 0;
 		search();
 	}
 
 	public abstract void search();
 
 	protected void setPaginationSize() {
-		int size = (int) Math.ceil(entities.size() / (double) rowsPerPage);
-		pages = new Integer[size];
+		final int size = (int) Math.ceil(this.entities.size() / (double) this.rowsPerPage);
+		this.pages = new Integer[size];
 		for (int i = 0; i < size; i++) {
-			pages[i] = i;
+			this.pages[i] = i;
 		}
 	}
 
-	public void setRowsPerPage(int rowsPerPage) {
-		sessionBean.setRowsPerPage(rowsPerPage);
+	public void setRowsPerPage(final int rowsPerPage) {
+		this.sessionBean.setRowsPerPage(rowsPerPage);
 		this.rowsPerPage = rowsPerPage;
 	}
 
 	protected void trimList() {
-		int size = entities.size();
-		int firstRow = currentPage * rowsPerPage;
-		int lastRow = Math.min(size - firstRow, rowsPerPage);
-		dataList = entities.subList(firstRow, firstRow + lastRow);
+		final int size = this.entities.size();
+		final int firstRow = this.currentPage * this.rowsPerPage;
+		final int lastRow = Math.min(size - firstRow, this.rowsPerPage);
+		this.dataList = this.entities.subList(firstRow, firstRow + lastRow);
 	}
 }

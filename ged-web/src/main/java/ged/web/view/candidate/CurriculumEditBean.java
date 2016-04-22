@@ -17,11 +17,11 @@ import ged.ejb.curriculum.Education;
 import ged.ejb.curriculum.JobExperience;
 import ged.ejb.curriculum.Language;
 import ged.ejb.curriculum.Skill;
-import ged.web.core.view.AbstractBean;
+import ged.web.core.view.AbstractPageBean;
 
 @Named
 @ViewScoped
-public class CurriculumEditBean extends AbstractBean {
+public class CurriculumEditBean extends AbstractPageBean {
 
 	private static final long serialVersionUID = -7941713518794892268L;
 

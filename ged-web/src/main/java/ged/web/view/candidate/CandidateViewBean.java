@@ -21,11 +21,11 @@ import ged.ejb.candidate.CandidateService;
 import ged.ejb.candidate.impl.CandidateServiceImpl;
 import ged.ejb.core.util.ConfigurationProperty;
 import ged.ejb.curriculum.FileSys;
-import ged.web.core.view.AbstractBean;
+import ged.web.core.view.AbstractPageBean;
 
 @Named
 @ViewScoped
-public class CandidateViewBean extends AbstractBean {
+public class CandidateViewBean extends AbstractPageBean {
 
 	private static final long serialVersionUID = 1577879781927493283L;
 

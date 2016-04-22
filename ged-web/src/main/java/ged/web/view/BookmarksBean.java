@@ -9,11 +9,11 @@ import ged.ejb.core.bookmark.Bookmark;
 import ged.ejb.core.bookmark.BookmarkFullExpcetion;
 import ged.ejb.core.model.AuditedEntity;
 import ged.ejb.user.UserService;
-import ged.web.core.view.AbstractBean;
+import ged.web.core.view.AbstractPageBean;
 
 @Named
 @RequestScoped
-public class BookmarksBean extends AbstractBean {
+public class BookmarksBean extends AbstractPageBean {
 
 	private static final long serialVersionUID = 8786492354769335930L;
 

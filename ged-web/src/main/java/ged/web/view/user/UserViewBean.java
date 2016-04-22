@@ -13,13 +13,13 @@ import ged.ejb.job.JobOffer;
 import ged.ejb.job.JobService;
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
-import ged.web.core.view.AbstractBean;
+import ged.web.core.view.AbstractPageBean;
 import ged.web.core.view.Paginator;
 import ged.web.reports.UserReport;
 
 @Named
 @ViewScoped
-public class UserViewBean extends AbstractBean {
+public class UserViewBean extends AbstractPageBean {
 
 	private static final long serialVersionUID = -2187385732087309689L;
 

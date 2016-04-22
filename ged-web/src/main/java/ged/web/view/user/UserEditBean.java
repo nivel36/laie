@@ -14,12 +14,12 @@ import javax.inject.Named;
 import ged.ejb.user.Role;
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
-import ged.web.core.view.AbstractBean;
+import ged.web.core.view.AbstractPageBean;
 import ged.web.core.view.Paginator;
 
 @Named
 @ViewScoped
-public class UserEditBean extends AbstractBean {
+public class UserEditBean extends AbstractPageBean {
 
 	private static final long serialVersionUID = 1923340646020120203L;
 

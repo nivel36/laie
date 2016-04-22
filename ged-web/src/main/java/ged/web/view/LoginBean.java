@@ -11,11 +11,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import ged.web.core.view.AbstractBean;
+import ged.web.core.view.AbstractPageBean;
 
 @Named
 @RequestScoped
-public class LoginBean extends AbstractBean {
+public class LoginBean extends AbstractPageBean {
 
 	private static final long serialVersionUID = 8364578958730650005L;
 

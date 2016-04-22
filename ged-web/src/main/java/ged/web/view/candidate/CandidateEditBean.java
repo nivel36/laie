@@ -10,11 +10,11 @@ import ged.ejb.candidate.Candidate;
 import ged.ejb.candidate.CandidateService;
 import ged.ejb.curriculum.Curriculum;
 import ged.ejb.curriculum.CurriculumService;
-import ged.web.core.view.AbstractBean;
+import ged.web.core.view.AbstractPageBean;
 
 @Named
 @ViewScoped
-public class CandidateEditBean extends AbstractBean {
+public class CandidateEditBean extends AbstractPageBean {
 
 	private static final long serialVersionUID = -4334616177754425866L;
 

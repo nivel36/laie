@@ -8,11 +8,11 @@ import javax.inject.Named;
 import ged.ejb.client.Client;
 import ged.ejb.job.JobOffer;
 import ged.ejb.job.JobService;
-import ged.web.core.view.AbstractBean;
+import ged.web.core.view.AbstractPageBean;
 
 @Named
 @ViewScoped
-public class JobOfferEditBean extends AbstractBean {
+public class JobOfferEditBean extends AbstractPageBean {
 
 	private static final long serialVersionUID = 7362448981391968171L;
 

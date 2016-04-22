@@ -24,11 +24,11 @@ import org.apache.pdfbox.pdmodel.graphics.xobject.PDXObject;
 import org.apache.pdfbox.pdmodel.graphics.xobject.PDXObjectImage;
 import org.apache.pdfbox.util.PDFTextStripper;
 
-import ged.web.core.view.AbstractBean;
+import ged.web.core.view.AbstractPageBean;
 
 @Named
 @ViewScoped
-public class AddCurriculumBean extends AbstractBean {
+public class AddCurriculumBean extends AbstractPageBean {
 
 	private static final long serialVersionUID = 2700151546506672587L;
 

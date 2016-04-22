@@ -7,12 +7,12 @@ import javax.inject.Named;
 
 import ged.ejb.candidate.Candidate;
 import ged.ejb.candidate.CandidateService;
-import ged.web.core.view.AbstractBean;
+import ged.web.core.view.AbstractPageBean;
 import ged.web.core.view.Paginator;
 
 @Named
 @ViewScoped
-public class CandidateSearchBean extends AbstractBean {
+public class CandidateSearchBean extends AbstractPageBean {
 
 	private static final long serialVersionUID = 2434819723782902618L;
 

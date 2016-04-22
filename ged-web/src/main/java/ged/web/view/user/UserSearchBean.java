@@ -8,12 +8,12 @@ import javax.inject.Named;
 
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
-import ged.web.core.view.AbstractBean;
+import ged.web.core.view.AbstractPageBean;
 import ged.web.core.view.Paginator;
 
 @Named
 @ViewScoped
-public class UserSearchBean extends AbstractBean {
+public class UserSearchBean extends AbstractPageBean {
 
 	private static final long serialVersionUID = 2434819723782902618L;
 
