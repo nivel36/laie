@@ -39,7 +39,7 @@
 
 				<h3>#{i18n['curriculum.education']}</h3>
 				<ui:repeat
-					value="#{curriculumViewBean.curriculum.education.toArray()}"
+					value="#{curriculumViewBean.education}"
 					var="education" id="repeatedPanel">
 					<h4>
 						#{education.degree} - #{education.school} (
@@ -59,7 +59,7 @@
 
 				<h3>#{i18n['curriculum.job_experiences']}</h3>
 				<ui:repeat
-					value="#{curriculumViewBean.curriculum.jobExperiences.toArray()}"
+					value="#{curriculumViewBean.jobExperiences}"
 					var="jobExperience" id="jobExperience">
 					<h4>#{jobExperience.jobPosition}</h4>
 					<h5>
@@ -89,7 +89,7 @@
 					</tr>
 					<tbody>
 						<ui:repeat
-							value="#{curriculumViewBean.curriculum.languages.toArray()}"
+							value="#{curriculumViewBean.languages}"
 							var="language" varStatus="status" id="language">
 							<h:panelGroup>
 								<tr>
@@ -114,7 +114,7 @@
 				<!-- SKILLS -->
 
 				<h3>#{i18n['curriculum.skills']}</h3>
-				<ui:repeat value="#{curriculumViewBean.curriculum.skills.toArray()}"
+				<ui:repeat value="#{curriculumViewBean.skills}"
 					var="skill" id="skill">
 					<p>#{skill.name}: #{skill.level}</p>
 				</ui:repeat>

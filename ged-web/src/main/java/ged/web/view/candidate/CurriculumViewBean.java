@@ -1,5 +1,8 @@
 package ged.web.view.candidate;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.faces.application.NavigationHandler;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -8,6 +11,10 @@ import javax.inject.Named;
 import ged.ejb.candidate.Candidate;
 import ged.ejb.candidate.CandidateService;
 import ged.ejb.curriculum.Curriculum;
+import ged.ejb.curriculum.Education;
+import ged.ejb.curriculum.JobExperience;
+import ged.ejb.curriculum.Language;
+import ged.ejb.curriculum.Skill;
 import ged.web.core.view.AbstractBean;
 
 @Named
@@ -23,7 +30,15 @@ public class CurriculumViewBean extends AbstractBean {
 
 	private Curriculum curriculum;
 
+	private List<Education> education;
+
 	private String id;
+
+	private List<JobExperience> jobExperiences;
+
+	private List<Language> languages;
+
+	private List<Skill> skills;
 
 	private void error() {
 		final NavigationHandler navigationHandler = this.facesContext.getApplication().getNavigationHandler();
@@ -39,8 +54,24 @@ public class CurriculumViewBean extends AbstractBean {
 		return this.curriculum;
 	}
 
+	public List<Education> getEducation() {
+		return this.education;
+	}
+
 	public String getId() {
 		return this.id;
+	}
+
+	public List<JobExperience> getJobExperiences() {
+		return this.jobExperiences;
+	}
+
+	public List<Language> getLanguages() {
+		return this.languages;
+	}
+
+	public List<Skill> getSkills() {
+		return this.skills;
 	}
 
 	public void init() {
@@ -52,6 +83,10 @@ public class CurriculumViewBean extends AbstractBean {
 					error();
 				}
 				this.candidate = this.curriculum.getCandidate();
+				this.jobExperiences = new ArrayList<>(this.curriculum.getJobExperiences());
+				this.skills = new ArrayList<>(this.curriculum.getSkills());
+				this.education = new ArrayList<>(this.curriculum.getEducation());
+				this.languages = new ArrayList<>(this.curriculum.getLanguages());
 			} catch (final NumberFormatException ex) {
 				error();
 			}
