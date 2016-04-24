@@ -5,6 +5,7 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:i18n="http://legion.com/i18n"
+	xmlns:a="http://java.sun.com/jsf/composite/legion"
 	template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
@@ -59,7 +60,7 @@
 
 						<h:dataTable var="user" id="usersList"
 							value="#{userEditBean.paginator.dataList}"
-							rendered="#{not empty userEditBean.paginator.dataList}"
+							rendered="#{not empty userEditBean.paginator.entities}"
 							styleClass="dataTable">
 							<h:column>
 								<f:facet name="header">
@@ -96,47 +97,8 @@
 								</h:commandLink>
 							</h:column>
 						</h:dataTable>
-						<h:panelGroup layout="block" styleClass="paginator" id="paginator"
-							rendered="#{not empty userEditBean.paginator.entities}">
-							<h:commandButton
-								disabled="#{userEditBean.paginator.currentPage eq 0}"
-								value="#{i18n['paginator.first']}"
-								action="#{userEditBean.paginator.firstPage}">
-								<f:ajax render="resultados" />
-							</h:commandButton>
-							<h:commandButton
-								disabled="#{userEditBean.paginator.currentPage eq 0}"
-								value="#{i18n['paginator.previous']}"
-								action="#{userEditBean.paginator.previousPage}">
-								<f:ajax render="resultados" />
-							</h:commandButton>
-							<ui:repeat value="#{userEditBean.paginator.pages}" var="page">
-								<h:commandButton value="#{page+1}"
-									action="#{userEditBean.paginator.gotoPage(page)}"
-									disabled="#{userEditBean.paginator.currentPage eq page}">
-									<f:ajax render="resultados" />
-								</h:commandButton>
-							</ui:repeat>
-							<h:commandButton value="#{i18n['paginator.next']}"
-								disabled="#{userEditBean.paginator.currentPage eq userEditBean.paginator.pagesSize-1}"
-								action="#{userEditBean.paginator.nextPage}">
-								<f:ajax render="resultados" />
-							</h:commandButton>
-							<h:commandButton value="#{i18n['paginator.last']}"
-								disabled="#{userEditBean.paginator.currentPage eq userEditBean.paginator.pagesSize-1}"
-								action="#{userEditBean.paginator.lastPage}">
-								<f:ajax render="resultados" />
-							</h:commandButton>
-							<h:outputLabel value="#{i18n['paginator.show']}">
-								<h:selectOneMenu value="#{userEditBean.paginator.rowsPerPage}">
-									<f:selectItem itemValue="5" itemLabel="5" />
-									<f:selectItem itemValue="10" itemLabel="10" />
-									<f:selectItem itemValue="25" itemLabel="25" />
-									<f:ajax listener="#{userEditBean.paginator.rowsPerPageChange}"
-										render="resultados" execute="paginator" />
-								</h:selectOneMenu>
-							</h:outputLabel>
-						</h:panelGroup>
+						<a:paginator paginator="#{userEditBean.paginator}" />
+						
 					</h:panelGroup>
 					<h:panelGroup layout="block" styleClass="buttonGroup">
 						<h:commandButton value="#{i18n['action.cancel']}"

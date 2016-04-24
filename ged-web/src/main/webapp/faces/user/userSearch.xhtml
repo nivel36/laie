@@ -5,6 +5,7 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:i18n="http://legion.com/i18n"
+	xmlns:a="http://java.sun.com/jsf/composite/legion"
 	template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
@@ -102,47 +103,8 @@
 					</h:column>
 				</h:dataTable>
 
-				<h:panelGroup layout="block" styleClass="paginator" id="paginator"
-					rendered="#{not empty userSearchBean.paginator.dataList}">
-					<h:commandButton
-						disabled="#{userSearchBean.paginator.currentPage eq 0}"
-						value="#{i18n['paginator.first']}"
-						action="#{userSearchBean.paginator.firstPage}">
-						<f:ajax render=":form:resultados" />
-					</h:commandButton>
-					<h:commandButton
-						disabled="#{userSearchBean.paginator.currentPage eq 0}"
-						value="#{i18n['paginator.previous']}"
-						action="#{userSearchBean.paginator.previousPage}">
-						<f:ajax render=":form:resultados" />
-					</h:commandButton>
-					<ui:repeat value="#{userSearchBean.paginator.pages}" var="page">
-						<h:commandButton value="#{page+1}"
-							action="#{userSearchBean.paginator.gotoPage(page)}"
-							disabled="#{userSearchBean.paginator.currentPage eq page}">
-							<f:ajax render=":form:resultados" />
-						</h:commandButton>
-					</ui:repeat>
-					<h:commandButton value="#{i18n['paginator.next']}"
-						disabled="#{userSearchBean.paginator.currentPage eq userSearchBean.paginator.pagesSize-1}"
-						action="#{userSearchBean.paginator.nextPage}">
-						<f:ajax render=":form:resultados" />
-					</h:commandButton>
-					<h:commandButton value="#{i18n['paginator.last']}"
-						disabled="#{userSearchBean.paginator.currentPage eq userSearchBean.paginator.pagesSize-1}"
-						action="#{userSearchBean.paginator.lastPage}">
-						<f:ajax render=":form:resultados" />
-					</h:commandButton>
-					<h:outputLabel value="#{i18n['paginator.show']}">
-						<h:selectOneMenu value="#{userSearchBean.paginator.rowsPerPage}">
-							<f:selectItem itemValue="5" itemLabel="5" />
-							<f:selectItem itemValue="10" itemLabel="10" />
-							<f:selectItem itemValue="25" itemLabel="25" />
-							<f:ajax listener="#{userSearchBean.paginator.rowsPerPageChange}"
-								render=":form:resultados" execute=":form:paginator" />
-						</h:selectOneMenu>
-					</h:outputLabel>
-				</h:panelGroup>
+				<a:paginator id="paginator"
+					paginator="#{userSearchBean.paginator}" />
 			</h:panelGroup>
 		</h:form>
 	</ui:define>
