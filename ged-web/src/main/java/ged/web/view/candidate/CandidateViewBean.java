@@ -96,7 +96,7 @@ public class CandidateViewBean extends AbstractPageBean {
 	}
 
 	// Extract part name from content-disposition header of part part
-	private String getFileName(final Part part) {
+	private String getFileName(final Part part) throws IOException {
 		final String partHeader = part.getHeader("content-disposition");
 		this.logger.log(Level.FINE, "partHeader: {0}", partHeader);
 		for (final String content : part.getHeader("content-disposition").split(";")) {
@@ -104,8 +104,7 @@ public class CandidateViewBean extends AbstractPageBean {
 				return content.substring(content.indexOf('=') + 1).trim().replace("\"", "").toLowerCase();
 			}
 		}
-		// TODO: throw Exception!
-		return null;
+		throw new IOException("Name not found");
 	}
 
 	public String getId() {
