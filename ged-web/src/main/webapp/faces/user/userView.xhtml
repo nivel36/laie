@@ -78,7 +78,7 @@
 					<h1>#{i18n['user.team']}</h1>
 
 					<h:outputText value="#{i18n['user.no_users_found']}"
-						rendered="#{empty userViewBean.team.dataList}" />
+						rendered="#{empty userViewBean.team.entities}" />
 
 					<h:dataTable var="user" id="user"
 						value="#{userViewBean.team.dataList}"
@@ -108,7 +108,7 @@
 						</h:column>
 					</h:dataTable>
 
-					<a:paginator paginator="userViewBean.team" />
+					<a:paginator paginator="#{userViewBean.team}" />
 				</h:panelGroup>
 				<h:panelGroup layout="block" styleClass="panel">
 					<h1>#{i18n['job.job_offers']}</h1>
@@ -144,7 +144,7 @@
 							</h:link>
 						</h:column>
 					</h:dataTable>
-					<a:paginator paginator="userViewBean.jobOffers" />
+					<a:paginator paginator="#{userViewBean.jobOffers}" />
 				</h:panelGroup>
 			</h:panelGrid>
 		</h:form>
