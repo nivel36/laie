@@ -35,7 +35,7 @@ public class UserViewBean extends AbstractPageBean {
 	private String userId;
 
 	@Inject
-	private UserService userService;
+	private transient UserService userService;
 
 	public String editUser() {
 		this.flash.put("user", this.user);

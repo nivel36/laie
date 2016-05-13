@@ -51,18 +51,25 @@ public class CandidateViewBean extends AbstractPageBean {
 	public void addFile() {
 		this.addingFile = true;
 		this.editingFile = false;
+		this.facesContext.getExternalContext().getFlash().setKeepMessages(true);
 	}
 
 	public void cancelAddFile() {
 		try {
 			this.addingFile = false;
 			this.editingFile = false;
-			if ((this.file != null) && (this.file.getUuid() != null) && (this.file.getId() == 0)) {
+			if (temporaryFileUploaded()) {
 				removeFileFromFileSystem(this.file.getUuid());
 			}
 		} catch (final IOException e) {
 			this.logger.log(Level.SEVERE, "Can't remove file", e);
 			addMessage(FacesMessage.SEVERITY_ERROR, "error.unnexpected_error", "error.unnexpected_error");
+		}
+	}
+
+	private void checkLopdFile() {
+		if (!hasLopdFile()) {
+			addMessage(FacesMessage.SEVERITY_WARN, "candidate.warn.no_lopd_file", "candidate.warn.no_lopd_file");
 		}
 	}
 
@@ -122,6 +129,15 @@ public class CandidateViewBean extends AbstractPageBean {
 		return "";
 	}
 
+	private boolean hasLopdFile() {
+		for (final FileSys file : this.candidate.getFiles()) {
+			if (file.getFileType().equals("lopd")) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	/**
 	 * Not using @PostConstruct because the view is a GET based form.
 	 */
@@ -139,6 +155,7 @@ public class CandidateViewBean extends AbstractPageBean {
 		} else {
 			error();
 		}
+		checkLopdFile();
 	}
 
 	public boolean isAddingFile() {
@@ -152,6 +169,10 @@ public class CandidateViewBean extends AbstractPageBean {
 	public String modifyCandidate() {
 		this.flash.put("candidate", this.candidate);
 		return "candidateEdit?faces-redirect=true";
+	}
+
+	public void onload() {
+		checkLopdFile();
 	}
 
 	public void openFile(final FileSys file) {
@@ -216,6 +237,10 @@ public class CandidateViewBean extends AbstractPageBean {
 
 	public void setPart(final Part part) {
 		this.part = part;
+	}
+
+	private boolean temporaryFileUploaded() {
+		return (this.file != null) && (this.file.getUuid() != null) && (this.file.getId() == 0);
 	}
 
 	public void upload() {

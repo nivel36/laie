@@ -20,6 +20,7 @@
 		</f:metadata>
 
 		<h:form id="form" prependId="false">
+
 			<input type="hidden" id="candidateId"
 				value="#{candidateViewBean.candidate.id}" />
 
@@ -95,15 +96,22 @@
 					<h:outputText value="#{candidateViewBean.candidate.address.state}" />
 				</h:panelGroup>
 
-				<h:panelGroup layout="block" styleClass="buttonGroup">
+				<h:panelGroup layout="block" styleClass="buttonGroup"
+					id="actionButtons">
 					<h:commandButton value="#{i18n['action.edit']}"
 						action="#{candidateViewBean.editCandidate}" />
 					<h:commandButton value="#{i18n['bookmark.add_to_bookmarks']}"
 						action="#{bookmarksBean.add(candidateViewBean.candidate)}"
-						rendered="#{not bookmarksBean.isBookmarked(candidateViewBean.candidate)}" />
+						rendered="#{not bookmarksBean.isBookmarked(candidateViewBean.candidate)}">
+						<f:ajax process="@form"
+							render=":asideForm:bookmarks actionButtons" />
+					</h:commandButton>
 					<h:commandButton value="#{i18n['bookmark.remove_from_bookmarks']}"
 						action="#{bookmarksBean.remove(candidateViewBean.candidate)}"
-						rendered="#{bookmarksBean.isBookmarked(candidateViewBean.candidate)}" />
+						rendered="#{bookmarksBean.isBookmarked(candidateViewBean.candidate)}">
+						<f:ajax process="@form"
+							render=":asideForm:bookmarks actionButtons" />
+					</h:commandButton>
 					<h:button value="#{i18n['curriculum.view_curriculum']}"
 						outcome="curriculumView">
 						<f:param name="id" value="#{candidateViewBean.candidate.id}" />
@@ -167,19 +175,21 @@
 								|
 							<h:commandLink action="#{candidateViewBean.editFile(file)}"
 								value="#{i18n['action.edit']}">
-								<f:ajax execute="@form" render="@form" />
+								<f:ajax execute="file_form" render="@form" />
 							</h:commandLink>
 									|
 							<h:commandLink action="#{candidateViewBean.removeFile(file)}"
 								value="#{i18n['action.remove']}">
-								<f:ajax execute="@form" render="@form" />
+								<f:ajax execute="file_form" render="@form" />
 							</h:commandLink>
 						</h:column>
 					</h:dataTable>
 
 					<h:panelGroup layout="block" styleClass="buttonGroup">
 						<h:commandButton value="#{i18n['action.add']}"
-							action="#{candidateViewBean.addFile}" immediate="true" />
+							action="#{candidateViewBean.addFile}" immediate="true">
+							<f:ajax render="@form" />
+						</h:commandButton>
 					</h:panelGroup>
 				</h:panelGroup>
 
@@ -193,10 +203,12 @@
 
 					<h:panelGroup layout="block" styleClass="buttonGroup">
 						<h:commandButton value="#{i18n['action.upload']}"
-							action="#{candidateViewBean.upload}" />
+							action="#{candidateViewBean.upload}" >
+							<f:ajax execute="@form" render="@form" />
+							</h:commandButton>
 						<h:commandButton value="#{i18n['action.cancel']}"
 							action="#{candidateViewBean.cancelAddFile}" immediate="true">
-							<f:ajax execute="@form" render="@form" />
+							<f:ajax execute="" render="@form" />
 						</h:commandButton>
 					</h:panelGroup>
 				</h:panelGroup>
@@ -235,7 +247,8 @@
 						<h:commandButton value="#{i18n['action.save']}"
 							action="#{candidateViewBean.saveFile}" />
 						<h:commandButton value="#{i18n['action.cancel']}"
-							action="#{candidateViewBean.cancelAddFile}" immediate="true" />
+							action="#{candidateViewBean.cancelAddFile}" immediate="true">
+						</h:commandButton>
 					</h:panelGroup>
 				</h:panelGroup>
 			</h:panelGroup>
