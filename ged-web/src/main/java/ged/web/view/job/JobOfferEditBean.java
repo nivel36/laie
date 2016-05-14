@@ -48,7 +48,7 @@ public class JobOfferEditBean extends AbstractPageBean {
 			this.jobService.insertJobOffer(this.jobOffer);
 		}
 		this.actionsBean.add(this.jobOffer);
-		return "jobOfferSearch?faces-redirect=true";
+		return "jobOfferView.xhtml?id=" + this.jobOffer.getId() + "&faces-redirect=true";
 	}
 
 	public void setJobOffer(final JobOffer jobOffer) {
