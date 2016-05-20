@@ -1,5 +1,7 @@
 package ged.web.view.job;
 
+import java.util.logging.Logger;
+
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.view.ViewScoped;
@@ -24,6 +26,9 @@ public class JobOfferSearchBean extends AbstractPageBean {
 
 	@Inject
 	private JobService jobService;
+
+	@Inject
+	protected transient Logger logger;
 
 	private String name;
 
@@ -111,6 +116,10 @@ public class JobOfferSearchBean extends AbstractPageBean {
 
 	public void setJobOfferPaginator(final Paginator<JobOffer> jobOfferPaginator) {
 		this.jobOfferPaginator = jobOfferPaginator;
+	}
+
+	public void setLogger(final Logger logger) {
+		this.logger = logger;
 	}
 
 	public void setName(final String name) {

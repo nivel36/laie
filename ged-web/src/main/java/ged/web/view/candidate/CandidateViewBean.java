@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.util.Date;
 import java.util.UUID;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.application.NavigationHandler;
@@ -45,6 +46,9 @@ public class CandidateViewBean extends AbstractPageBean {
 	private String fileDirectory;
 
 	private String id;
+
+	@Inject
+	protected transient Logger logger;
 
 	private Part part;
 
@@ -233,6 +237,10 @@ public class CandidateViewBean extends AbstractPageBean {
 
 	public void setId(final String id) {
 		this.id = id;
+	}
+
+	public void setLogger(final Logger logger) {
+		this.logger = logger;
 	}
 
 	public void setPart(final Part part) {

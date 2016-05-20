@@ -1,7 +1,6 @@
 package ged.web.core.view;
 
 import java.io.Serializable;
-import java.util.logging.Logger;
 
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -20,12 +19,4 @@ public class AbstractBean implements Serializable {
 
 	@Inject
 	protected HttpServletRequest httpServletRequest;
-
-	@Inject
-	protected transient Logger logger;
-
-	public void setLogger(final Logger logger) {
-		this.logger = logger;
-	}
-
 }

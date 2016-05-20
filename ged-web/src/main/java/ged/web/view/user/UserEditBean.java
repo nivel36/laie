@@ -1,6 +1,7 @@
 package ged.web.view.user;
 
 import java.util.Locale;
+import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -24,6 +25,9 @@ public class UserEditBean extends AbstractPageBean {
 	private static final long serialVersionUID = 1923340646020120203L;
 
 	private String email;
+
+	@Inject
+	protected transient Logger logger;
 
 	private User manager;
 
@@ -178,6 +182,10 @@ public class UserEditBean extends AbstractPageBean {
 
 	public void setEmail(final String email) {
 		this.email = email;
+	}
+
+	public void setLogger(final Logger logger) {
+		this.logger = logger;
 	}
 
 	public void setManager(final User manager) {

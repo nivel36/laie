@@ -1,5 +1,7 @@
 package ged.web.view.candidate;
 
+import java.util.logging.Logger;
+
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -20,6 +22,9 @@ public class CandidateSearchBean extends AbstractPageBean {
 	private CandidateService candidateService;
 
 	private String email;
+
+	@Inject
+	protected transient Logger logger;
 
 	private String name;
 
@@ -84,6 +89,10 @@ public class CandidateSearchBean extends AbstractPageBean {
 
 	public void setEmail(final String email) {
 		this.email = email;
+	}
+
+	public void setLogger(final Logger logger) {
+		this.logger = logger;
 	}
 
 	public void setName(final String name) {

@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
@@ -34,6 +35,9 @@ public class ApplicationBean extends AbstractBean {
 	private Indexer indexer;
 
 	private List<Locale> locales = new ArrayList<Locale>();
+
+	@Inject
+	protected transient Logger logger;
 
 	private Properties properties;
 
@@ -95,5 +99,9 @@ public class ApplicationBean extends AbstractBean {
 
 	public void setLocales(final List<Locale> locales) {
 		this.locales = locales;
+	}
+
+	public void setLogger(final Logger logger) {
+		this.logger = logger;
 	}
 }

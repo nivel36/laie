@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
@@ -21,6 +22,9 @@ import ged.web.core.view.AbstractDialogBean;
 public class ChangePasswordPopupBean extends AbstractDialogBean {
 
 	private static final long serialVersionUID = -7760785874121856319L;
+
+	@Inject
+	protected transient Logger logger;
 
 	private String newPassword;
 
@@ -96,6 +100,10 @@ public class ChangePasswordPopupBean extends AbstractDialogBean {
 			this.logger.log(Level.SEVERE, "Can't find hash algorithm", ex);
 		}
 		return output;
+	}
+
+	public void setLogger(final Logger logger) {
+		this.logger = logger;
 	}
 
 	public void setNewPassword(final String newPassword) {

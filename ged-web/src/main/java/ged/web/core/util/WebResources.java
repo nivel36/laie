@@ -34,13 +34,6 @@ public class WebResources {
 		return FacesContext.getCurrentInstance().getExternalContext().getFlash();
 	}
 
-	// @Produces
-	// @RequestScoped
-	// public HttpServletRequest produceHttpServletRequest() {
-	// return (HttpServletRequest)
-	// FacesContext.getCurrentInstance().getExternalContext().getRequest();
-	// }
-
 	@Produces
 	@ConfigurationProperty
 	public String produceProperty(final InjectionPoint ip) {

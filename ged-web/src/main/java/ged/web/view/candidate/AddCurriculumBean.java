@@ -9,10 +9,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.apache.pdfbox.cos.COSDocument;
@@ -35,6 +37,9 @@ public class AddCurriculumBean extends AbstractPageBean {
 	private String filename;
 
 	private List<String> images;
+
+	@Inject
+	protected transient Logger logger;
 
 	private String text;
 
@@ -119,6 +124,10 @@ public class AddCurriculumBean extends AbstractPageBean {
 
 	public void setImages(final List<String> images) {
 		this.images = images;
+	}
+
+	public void setLogger(final Logger logger) {
+		this.logger = logger;
 	}
 
 	public void setText(final String text) {
