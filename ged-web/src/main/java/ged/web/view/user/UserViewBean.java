@@ -39,6 +39,8 @@ public class UserViewBean extends AbstractPageBean {
 
 	public String editUser() {
 		this.flash.put("user", this.user);
+		final String returnAddress = "userView.xhtml?id" + this.user.getId();
+		this.flash.put("returnAddress", returnAddress);
 		return "userEdit?faces-redirect=true";
 	}
 

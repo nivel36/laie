@@ -3,6 +3,7 @@ package ged.web.core.view;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
@@ -27,6 +28,8 @@ public class SessionBean extends AbstractBean {
 	private List<Action> actions = new ArrayList<Action>();
 
 	private List<Bookmark> bookmarks = new ArrayList<Bookmark>();
+
+	private final List<BreadcrumbState> breadcrumb = new ArrayList<BreadcrumbState>();
 
 	private Locale locale;
 
@@ -57,6 +60,14 @@ public class SessionBean extends AbstractBean {
 		}
 	}
 
+	public void addBreadcrumb(final BreadcrumbState breadcrumbState) {
+		this.breadcrumb.add(breadcrumbState);
+	}
+
+	public void clearBreadcrumb() {
+		this.breadcrumb.clear();
+	}
+
 	public boolean containsAction(final Action action) {
 		return this.actions.contains(action);
 	}
@@ -73,8 +84,18 @@ public class SessionBean extends AbstractBean {
 		return this.bookmarks;
 	}
 
+	public List<BreadcrumbState> getBreadcrumb() {
+		return this.breadcrumb;
+	}
+
 	public Locale getLocale() {
 		return this.locale;
+	}
+
+	private ResourceBundle getResourceBundle(final String filename) {
+		final Locale locale = this.facesContext.getViewRoot().getLocale();
+		final ResourceBundle bundle = ResourceBundle.getBundle(filename, locale);
+		return bundle;
 	}
 
 	public int getRowsPerPage() {
@@ -122,5 +143,15 @@ public class SessionBean extends AbstractBean {
 
 	public void setUser(final User user) {
 		this.user = user;
+	}
+
+	public void setUserService(final UserService userService) {
+		this.userService = userService;
+	}
+
+	protected String translate(final String message) {
+		final ResourceBundle bundle = getResourceBundle("ged.i18n");
+		final String translatedMessage = bundle.getString(message);
+		return translatedMessage;
 	}
 }

@@ -24,29 +24,37 @@
 			<nav id="mainMenu" class="menu">
 				<ul>
 					<li><h:commandLink value="#{i18n['menu.index']}"
-							action="/faces/index?faces-redirect=true"
+							action="#{menuBean.gotoIndex}"
 							styleClass="#{selectedMenu eq 'index' ? 'selected': ''}" /></li>
 					<li><h:commandLink value="#{i18n['menu.candidates']}"
-							action="/faces/candidate/candidateSearch?faces-redirect=true"
-							styleClass="#{selectedMenu eq 'candidates' ? 'selected': ''}" /></li>
+							action="#{menuBean.gotoCandidates}"
+							styleClass="#{selectedMenu eq 'candidates' ? 'selected': ''}" />
+					</li>
 					<li><h:commandLink value="#{i18n['menu.offers']}"
-							action="/faces/job/jobOfferSearch?faces-redirect=true"
+							action="#{menuBean.gotoJobOffers}"
 							styleClass="#{selectedMenu eq 'offers' ? 'selected': ''}" /></li>
 					<li><h:commandLink value="#{i18n['menu.reports']}"
-							action="/faces/report/reportSearch?faces-redirect=true"
+							action="#{menuBean.gotoReports}"
 							styleClass="#{selectedMenu eq 'reports' ? 'selected': ''}" /></li>
 					<li><h:commandLink value="#{i18n['menu.users']}"
-							action="/faces/user/userSearch?faces-redirect=true"
+							action="#{menuBean.gotoUsers}"
 							styleClass="#{selectedMenu eq 'users' ? 'selected': ''}"
 							rendered="#{request.isUserInRole('ADMIN')}" /></li>
 					<li><h:commandLink value="#{i18n['menu.maintenances']}"
-							action="/faces/maintenance/maintenanceIndex?faces-redirect=true"
+							action="#{menuBean.gotoMaintenances}"
 							styleClass="#{selectedMenu eq 'maintenances' ? 'selected': ''}" /></li>
 					<li><h:commandLink value="#{i18n['menu.help']}"
-							action="/faces/help/helpIndex?faces-redirect=true"
+							action="#{menuBean.gotoHelp}"
 							styleClass="#{selectedMenu eq 'help' ? 'selected': ''}" /></li>
 				</ul>
 			</nav>
+		</h:form>
+		<h:form id="breadcrumbForm">
+			<ul>
+				<ui:repeat var="bc" value="#{sessionBean.breadcrumb}">
+					<li><h:commandLink value="#{bc.title}" action="#{bc.getUrl}" /></li>
+				</ui:repeat>
+			</ul>
 		</h:form>
 	</ui:insert>
 </ui:composition>

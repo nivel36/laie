@@ -40,10 +40,14 @@ public class UserEditBean extends AbstractPageBean {
 	private User user;
 
 	@Inject
-	private UserService userService;
+	private transient UserService userService;
 
 	public String cancel() {
-		return "userSearch?faces-redirect=true";
+		if (this.user.getId() == 0) {
+			return "userSearch.xhtml?faces-redirect=true";
+		} else {
+			return "userView.xhtml?id=" + this.user.getId() + "&faces-redirect=true";
+		}
 	}
 
 	public void cancelPopup() {
@@ -144,7 +148,7 @@ public class UserEditBean extends AbstractPageBean {
 			this.userService.insertUser(this.user);
 		}
 		this.actionsBean.add(this.user);
-		return "userSearch?faces-redirect=true";
+		return "userView.xhtml?id=" + this.user.getId() + "&faces-redirect=true";
 	}
 
 	public void search() {

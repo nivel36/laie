@@ -3,6 +3,7 @@ package ged.web.core.util;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.InjectionPoint;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
 import javax.inject.Inject;
@@ -11,9 +12,15 @@ import ged.ejb.core.util.ConfigurationProperty;
 import ged.web.core.view.ApplicationBean;
 
 public class WebResources {
-	
+
 	@Inject
 	private ApplicationBean appBean;
+
+	@Produces
+	@RequestScoped
+	public ExternalContext produceExternalContext() {
+		return FacesContext.getCurrentInstance().getExternalContext();
+	}
 
 	@Produces
 	@RequestScoped
@@ -24,22 +31,26 @@ public class WebResources {
 	@Produces
 	@RequestScoped
 	public Flash produceFlash() {
-		return FacesContext.getCurrentInstance().getExternalContext()
-				.getFlash();
+		return FacesContext.getCurrentInstance().getExternalContext().getFlash();
 	}
-	
+
+	// @Produces
+	// @RequestScoped
+	// public HttpServletRequest produceHttpServletRequest() {
+	// return (HttpServletRequest)
+	// FacesContext.getCurrentInstance().getExternalContext().getRequest();
+	// }
+
 	@Produces
 	@ConfigurationProperty
-	public String produceProperty(InjectionPoint ip) {
-		ConfigurationProperty annotation = ip.getAnnotated().getAnnotation(
-				ConfigurationProperty.class);
-		String key = annotation.value();
-		String value = appBean.getProperties().getProperty(key);
+	public String produceProperty(final InjectionPoint ip) {
+		final ConfigurationProperty annotation = ip.getAnnotated().getAnnotation(ConfigurationProperty.class);
+		final String key = annotation.value();
+		final String value = this.appBean.getProperties().getProperty(key);
 		if (value == null) {
-			boolean valueRequired = annotation.required();
+			final boolean valueRequired = annotation.required();
 			if (valueRequired) {
-				throw new IllegalStateException("Property " + key
-						+ " not found");
+				throw new IllegalStateException("Property " + key + " not found");
 			}
 		}
 		return value;
