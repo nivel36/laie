@@ -76,14 +76,14 @@
 						</f:facet>
 						<h:outputText value="#{i18n:translate(user.role.name)}" />
 					</h:column>
-					
+
 					<h:column>
 						<f:facet name="header">
 							<h:outputText value="#{i18n['user.manager']}" />
 						</f:facet>
 						<h:outputText value="#{user.manager}" />
 					</h:column>
-					
+
 					<h:column>
 						<f:facet name="header">
 							<h:outputText value="#{i18n['action.action']}" />
@@ -92,19 +92,19 @@
 							<f:param name="id" value="#{user.id}" />
 						</h:link>
 						<h:outputText value=" | " />
-						<h:commandLink action="#{userSearchBean.edit(user)}"
+						<h:commandLink action="#{userSearchBean.editUser(user)}"
 							value="#{i18n['action.edit']}" />
 						<h:outputText value=" | " rendered="${user.role.name!='ADMIN'}" />
-						<h:commandLink action="#{userSearchBean.remove(user)}"
+						<h:commandLink action="#{userSearchBean.deleteUser(user)}"
 							value="#{i18n['action.remove']}"
-							rendered="${user.role.name!='ADMIN'}">
+							rendered="${user.role.name!='ADMIN'}"
+							onclick="return confirm('#{i18n['action.delete.are_you_sure']}')">
 							<f:ajax execute="@form" render="@form" />
 						</h:commandLink>
 					</h:column>
 				</h:dataTable>
 
-				<a:paginator id="paginator"
-					paginator="#{userSearchBean.paginator}" />
+				<a:paginator id="paginator" paginator="#{userSearchBean.paginator}" />
 			</h:panelGroup>
 		</h:form>
 	</ui:define>

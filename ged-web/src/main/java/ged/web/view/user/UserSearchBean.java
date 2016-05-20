@@ -26,7 +26,7 @@ public class UserSearchBean extends AbstractPageBean {
 	private String surename;
 
 	@Inject
-	private UserService userService;
+	private transient UserService userService;
 
 	public void clean() {
 		cleanSearchFields();
@@ -39,7 +39,12 @@ public class UserSearchBean extends AbstractPageBean {
 		this.name = null;
 	}
 
-	public String edit(final User user) {
+	public void deleteUser(final User user) {
+		this.userService.deleteUser(user);
+		search();
+	}
+
+	public String editUser(final User user) {
 		this.flash.put("user", user);
 		return "userEdit?faces-redirect=true";
 	}
@@ -68,11 +73,6 @@ public class UserSearchBean extends AbstractPageBean {
 
 	public String newUser() {
 		return "userEdit?faces-redirect=true";
-	}
-
-	public void remove(final User user) {
-		this.userService.deleteUser(user);
-		search();
 	}
 
 	public void search() {
@@ -113,7 +113,7 @@ public class UserSearchBean extends AbstractPageBean {
 
 	private boolean verifySearchField(final String text) {
 		if (text.length() < 3) {
-			addMessage(FacesMessage.SEVERITY_WARN, "error.search.camp_to_short", "error.search.camp_to_short");
+			addMessage(FacesMessage.SEVERITY_WARN, "error.search.camp_too_short", "error.search.camp_too_short");
 			return false;
 		}
 		return true;
