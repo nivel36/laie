@@ -25,34 +25,43 @@
 			</h:panelGroup>
 		</h:form>
 		<h:form id="form">
-			<h:panelGroup layout="block" styleClass="panel">
+			<h:panelGroup layout="block" styleClass="panel" id="searchUserPanel">
 				<h1>#{i18n['user.search']}</h1>
 
 				<h:outputLabel for="name" value="#{i18n['user.name']}">
 					<h:inputText id="name" value="#{userSearchBean.name}"
-						label="#{i18n['user.name']}" />
+						label="#{i18n['user.name']}"
+						validator="#{userSearchBean.validateSearchField}" />
+					<h:message for="name" errorClass="error" />
 				</h:outputLabel>
 
 				<h:outputLabel for="surename" value="#{i18n['user.surename']}">
 					<h:inputText id="surename" value="#{userSearchBean.surename}"
-						label="#{i18n['user.surename']}" />
+						label="#{i18n['user.surename']}"
+						validator="#{userSearchBean.validateSearchField}" />
+					<h:message for="surename" errorClass="error" />
 				</h:outputLabel>
 
 				<h:panelGroup layout="block" styleClass="buttonGroup">
 					<h:commandButton value="#{i18n['action.search']}"
-						action="#{userSearchBean.search}" />
+						action="#{userSearchBean.search}">
+						<f:ajax execute="@form" render="@form" />
+					</h:commandButton>
 					<h:commandButton value="#{i18n['action.clean']}"
-						action="#{userSearchBean.clean}" />
+						action="#{userSearchBean.clean}">
+						<f:ajax render="@form" />
+					</h:commandButton>
 				</h:panelGroup>
 			</h:panelGroup>
 
-			<h:panelGroup layout="block" styleClass="panel" id="resultados">
+			<h:panelGroup layout="block" styleClass="panel"
+				id="searchUserResults">
 				<h1>#{i18n['user.search_results']}</h1>
 
 				<h:outputText value="#{i18n['user.no_users_found']}"
 					rendered="#{empty userSearchBean.paginator.dataList}" />
 
-				<h:dataTable var="user" id="user"
+				<h:dataTable var="user" id="userDataTable"
 					value="#{userSearchBean.paginator.dataList}"
 					rendered="#{not empty userSearchBean.paginator.dataList}"
 					styleClass="dataTable">
@@ -98,9 +107,7 @@
 						<h:commandLink action="#{userSearchBean.deleteUser(user)}"
 							value="#{i18n['action.remove']}"
 							rendered="${user.role.name!='ADMIN'}"
-							onclick="return confirm('#{i18n['action.delete.are_you_sure']}')">
-							<f:ajax execute="@form" render="@form" />
-						</h:commandLink>
+							onclick="return confirm('#{i18n['action.delete.are_you_sure']}')" />
 					</h:column>
 				</h:dataTable>
 

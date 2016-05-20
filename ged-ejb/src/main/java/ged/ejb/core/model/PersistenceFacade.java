@@ -23,6 +23,9 @@ public interface PersistenceFacade {
 
 	public abstract void flush();
 
+	public abstract <T extends AbstractEntity> List<T> fullSearch(final Class<T> clazz, final List<String> fields,
+			final List<String> matching);
+
 	public abstract <T extends AbstractEntity> List<T> fullSearch(Class<T> clazz, String matching, String... fields);
 
 	public abstract <T extends AbstractEntity> List<T> getAll(Class<T> clazz);

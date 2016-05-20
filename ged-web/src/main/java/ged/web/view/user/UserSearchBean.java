@@ -2,6 +2,9 @@ package ged.web.view.user;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -77,20 +80,10 @@ public class UserSearchBean extends AbstractPageBean {
 
 	public void search() {
 		this.logger.fine("Searching for Users");
-		if ((this.name != null) && (this.surename != null)) {
-			if (verifySearchField(this.name) && verifySearchField(this.surename)) {
-				this.paginator.setEntities(this.userService.fullSearch(this.name, this.surename));
-			}
-		} else if ((this.name == null) && (this.surename != null)) {
-			if (verifySearchField(this.surename)) {
-				this.paginator.setEntities(this.userService.fullSearchBySurename(this.surename));
-			}
-		} else if ((this.name != null) && (this.surename == null)) {
-			if (verifySearchField(this.name)) {
-				this.paginator.setEntities(this.userService.fullSearchByName(this.name));
-			}
-		} else {
+		if ((this.name == null) && (this.surename == null)) {
 			this.paginator.setEntities(this.userService.findAll());
+		} else {
+			this.paginator.setEntities(this.userService.fullSearch(this.name, this.surename));
 		}
 		cleanSearchFields();
 	}
@@ -111,11 +104,14 @@ public class UserSearchBean extends AbstractPageBean {
 		this.surename = surename;
 	}
 
-	private boolean verifySearchField(final String text) {
-		if (text.length() < 3) {
-			addMessage(FacesMessage.SEVERITY_WARN, "error.search.camp_too_short", "error.search.camp_too_short");
-			return false;
+	public void validateSearchField(final FacesContext context, final UIComponent component, final Object value)
+			throws ValidatorException {
+		final String searchValue = (String) value;
+		if ((searchValue != null) && (searchValue.length() < 3)) {
+			final String translatedMessage = translate("error.search.camp_too_short");
+			final FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, translatedMessage,
+					translatedMessage);
+			throw new ValidatorException(message);
 		}
-		return true;
 	}
 }

@@ -19,6 +19,7 @@ import javax.persistence.criteria.Root;
 
 import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.jpa.Search;
+import org.hibernate.search.query.dsl.BooleanJunction;
 import org.hibernate.search.query.dsl.QueryBuilder;
 
 import ged.ejb.core.Repository;
@@ -122,12 +123,34 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
 		this.em.flush();
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
+	public <T extends AbstractEntity> List<T> fullSearch(final Class<T> clazz, final List<String> fields,
+			final List<String> matching) {
+		final FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(this.em);
+		final QueryBuilder qb = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(clazz).get();
+		final BooleanJunction<BooleanJunction> bj = qb.bool();
+		for (int i = 0; i < fields.size(); i++) {
+			final String value = matching.get(i);
+			if ((value != null) && (value.length() != 0)) {
+				bj.must(getLuceneQuery(qb, fields.get(i), value));
+			}
+		}
+		final Query persistenceQuery = fullTextEntityManager.createFullTextQuery(bj.createQuery(), clazz);
+		final List<T> result = persistenceQuery.getResultList();
+		return result;
+	}
+
+	@Override
+	/**
+	 * @deprecated
+	 */
 	public <T extends AbstractEntity> List<T> fullSearch(final Class<T> clazz, final String matching,
 			final String... fields) {
 		final FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(this.em);
 		final QueryBuilder qb = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(clazz).get();
 		final org.apache.lucene.search.Query query = qb.keyword().onFields(fields).matching(matching).createQuery();
+
 		final Query persistenceQuery = fullTextEntityManager.createFullTextQuery(query, clazz);
 		@SuppressWarnings("unchecked")
 		final List<T> result = persistenceQuery.getResultList();
@@ -272,6 +295,12 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
 	@Override
 	public CriteriaBuilder getCriteriaBuilder() {
 		return this.em.getCriteriaBuilder();
+	}
+
+	private org.apache.lucene.search.Query getLuceneQuery(final QueryBuilder qb, final String field,
+			final String value) {
+		final org.apache.lucene.search.Query query = qb.keyword().onField(field).matching(value).createQuery();
+		return query;
 	}
 
 	/*
