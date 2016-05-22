@@ -19,43 +19,51 @@ import ged.web.core.view.Paginator;
 
 @Named
 @ViewScoped
-public class UserSearchBean extends AbstractPageBean {
+public class SelectManagerPopupBean extends AbstractPageBean {
 
-	private static final long serialVersionUID = 2434819723782902618L;
+	private static final long serialVersionUID = 9150785979243375541L;
+
+	private String email;
 
 	@Inject
 	protected transient Logger logger;
 
+	private User manager;
+
+	protected boolean modal = true;
+
 	private String name;
 
 	private Paginator<User> paginator;
+
+	protected boolean rendered = false;
 
 	private String surename;
 
 	@Inject
 	private transient UserService userService;
 
-	public void clean() {
-		this.logger.log(Level.FINE, "Cleaning search fields");
-		cleanSearchFields();
+	public void cancelPopup() {
+		this.rendered = false;
+	}
+
+	public void cleanPopup() {
+		clearPopupFields();
 		search();
 	}
 
-	private void cleanSearchFields() {
-		this.surename = null;
+	private void clearPopupFields() {
+		this.email = null;
 		this.name = null;
+		this.surename = null;
 	}
 
-	public void deleteUser(final User user) {
-		this.logger.log(Level.FINE, "Deleting an user");
-		this.userService.deleteUser(user);
-		search();
+	public String getEmail() {
+		return this.email;
 	}
 
-	public String editUser(final User user) {
-		this.logger.log(Level.FINE, "Editing an user");
-		this.flash.put("user", user);
-		return "userEdit?faces-redirect=true";
+	public User getManager() {
+		return this.manager;
 	}
 
 	public String getName() {
@@ -70,41 +78,72 @@ public class UserSearchBean extends AbstractPageBean {
 		return this.surename;
 	}
 
-	@PostConstruct
-	public void init() {
-		this.logger.log(Level.FINER, "Init UserSearchBean");
-		this.paginator = new Paginator<User>(this.sessionBean.getRowsPerPage());
-		search();
+	public void hide() {
+		clearPopupFields();
+		this.rendered = false;
 	}
 
-	public String newUser() {
-		this.logger.log(Level.FINE, "Creating a new user");
-		return "userEdit?faces-redirect=true";
+	@PostConstruct
+	public void init() {
+		this.paginator = new Paginator<User>();
+		this.paginator.setRowsPerPage(this.sessionBean.getUser().getRowsPerPage());
+	}
+
+	public boolean isModal() {
+		return this.modal;
+	}
+
+	public boolean isRendered() {
+		return this.rendered;
+	}
+
+	public void open() {
+		this.rendered = true;
 	}
 
 	public void search() {
+		this.logger.fine("Searching for Users");
 		this.logger.fine("Searching for users");
 		if ((this.name == null) && (this.surename == null)) {
 			this.paginator.setEntities(this.userService.findAll());
 		} else {
 			this.paginator.setEntities(this.userService.fullSearch(this.name, this.surename));
 		}
+		clearPopupFields();
 	}
 
-	public void setLogger(final Logger logger) {
-		this.logger = logger;
+	public void select(final User manager) {
+		this.manager = manager;
+		this.rendered = false;
+	}
+
+	public void setEmail(final String email) {
+		this.email = email;
+	}
+
+	public void setManager(final User manager) {
+		this.manager = manager;
+	}
+
+	public void setModal(final boolean modal) {
+		this.modal = modal;
 	}
 
 	public void setName(final String name) {
 		this.name = name;
 	}
 
-	public void setPaginator(final Paginator<User> paginator) {
-		this.paginator = paginator;
+	public void setRendered(final boolean rendered) {
+		this.rendered = rendered;
 	}
 
 	public void setSurename(final String surename) {
 		this.surename = surename;
+	}
+
+	public void show() {
+		this.rendered = true;
+		search();
 	}
 
 	public void validateSearchField(final FacesContext context, final UIComponent component, final Object value)

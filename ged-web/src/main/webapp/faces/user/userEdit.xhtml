@@ -16,12 +16,13 @@
 
 	<ui:define name="content">
 		<h:form id="userSearchPopupForm">
-			<h:panelGroup layout="block" rendered="#{userEditBean.rendered}"
-				styleClass="#{userEditBean.modal ? 'modalDialog': ''}"
+			<h:panelGroup layout="block"
+				rendered="#{userEditBean.selectManagerPopupBean.rendered}"
+				styleClass="#{userEditBean.selectManagerPopupBean.modal ? 'modalDialog': ''}"
 				id="managerPopup">
 				<h:panelGroup layout="block" id="modalContent">
-					<h:commandLink styleClass="close" action="#{userEditBean.hide}"
-						value="X">
+					<h:commandLink styleClass="close"
+						action="#{userEditBean.selectManagerPopupBean.hide}" value="X">
 						<f:ajax execute="@this" render=":userSearchPopupForm" />
 					</h:commandLink>
 					<h3>#{i18n['user.user']}</h3>
@@ -29,24 +30,25 @@
 					<h:panelGroup layout="block" styleClass="panel">
 						<h2>#{i18n['user.search']}</h2>
 						<h:outputLabel for="searchUserName" value="#{i18n['user.name']}">
-							<h:inputText id="searchUserName" value="#{userEditBean.name}"
+							<h:inputText id="searchUserName"
+								value="#{userEditBean.selectManagerPopupBean.name}"
 								label="#{i18n['user.name']}" />
 						</h:outputLabel>
 
 						<h:outputLabel for="searchUserSurename"
 							value="#{i18n['user.surename']}">
 							<h:inputText id="searchUserSurename"
-								value="#{userEditBean.surename}"
+								value="#{userEditBean.selectManagerPopupBean.surename}"
 								label="#{i18n['user.surename']}" />
 						</h:outputLabel>
 
 						<h:panelGroup layout="block" styleClass="buttonGroup">
 							<h:commandButton value="#{i18n['action.clean']}"
-								action="#{userEditBean.cleanPopup}">
+								action="#{userEditBean.selectManagerPopupBean.cleanPopup}">
 								<f:ajax execute="@form" render="@form" />
 							</h:commandButton>
 							<h:commandButton value="#{i18n['action.search']}"
-								action="#{userEditBean.search}">
+								action="#{userEditBean.selectManagerPopupBean.search}">
 								<f:ajax execute="@form" render="@form" />
 							</h:commandButton>
 						</h:panelGroup>
@@ -56,11 +58,11 @@
 						<h2>#{i18n['user.search_results']}</h2>
 
 						<h:outputText value="#{i18n['user.no_users_found']}"
-							rendered="#{empty userEditBean.paginator.dataList}" />
+							rendered="#{empty userEditBean.selectManagerPopupBean.paginator.dataList}" />
 
 						<h:dataTable var="user" id="usersList"
-							value="#{userEditBean.paginator.dataList}"
-							rendered="#{not empty userEditBean.paginator.entities}"
+							value="#{userEditBean.selectManagerPopupBean.paginator.dataList}"
+							rendered="#{not empty userEditBean.selectManagerPopupBean.paginator.entities}"
 							styleClass="dataTable">
 							<h:column>
 								<f:facet name="header">
@@ -90,19 +92,23 @@
 								<f:facet name="header">
 									<h:outputText value="Action" />
 								</f:facet>
-								<h:commandLink action="#{userEditBean.select(user)}"
+								<h:commandLink
+									action="#{userEditBean.selectManagerPopupBean.select(user)}"
 									value="#{i18n['action.select']}">
+									<f:setPropertyActionListener value="#{user}"
+										target="#{userEditBean.manager}" />
 									<f:ajax execute="@this"
 										render=":userSearchPopupForm :form:managerBlock" />
 								</h:commandLink>
 							</h:column>
 						</h:dataTable>
-						<a:paginator paginator="#{userEditBean.paginator}" />
-						
+						<a:paginator
+							paginator="#{userEditBean.selectManagerPopupBean.paginator}" />
+
 					</h:panelGroup>
 					<h:panelGroup layout="block" styleClass="buttonGroup">
 						<h:commandButton value="#{i18n['action.cancel']}"
-							action="#{userEditBean.cancelPopup}">
+							action="#{userEditBean.selectManagerPopupBean.cancelPopup}">
 							<f:ajax execute="@this" render=":userSearchPopupForm" />
 						</h:commandButton>
 					</h:panelGroup>
@@ -174,7 +180,8 @@
 						<h:message for="manager" errorClass="error" />
 					</h:outputLabel>
 
-					<h:commandButton action="#{userEditBean.show}" value="+">
+					<h:commandButton
+						action="#{userEditBean.selectManagerPopupBean.show}" value="+">
 						<f:ajax execute="@this" render=":userSearchPopupForm" />
 					</h:commandButton>
 

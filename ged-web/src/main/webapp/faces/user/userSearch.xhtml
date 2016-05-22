@@ -102,7 +102,7 @@
 						</h:link>
 						<h:outputText value=" | " />
 						<h:commandLink action="#{userSearchBean.editUser(user)}"
-							value="#{i18n['action.edit']}" />
+							value="#{i18n['action.edit']}" immediate="true" />
 						<h:outputText value=" | " rendered="${user.role.name!='ADMIN'}" />
 						<h:commandLink action="#{userSearchBean.deleteUser(user)}"
 							value="#{i18n['action.remove']}"

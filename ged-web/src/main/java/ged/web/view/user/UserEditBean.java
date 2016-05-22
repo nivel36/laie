@@ -16,7 +16,6 @@ import ged.ejb.user.Role;
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
 import ged.web.core.view.AbstractPageBean;
-import ged.web.core.view.Paginator;
 
 @Named
 @ViewScoped
@@ -24,22 +23,13 @@ public class UserEditBean extends AbstractPageBean {
 
 	private static final long serialVersionUID = 1923340646020120203L;
 
-	private String email;
-
 	@Inject
 	protected transient Logger logger;
 
 	private User manager;
 
-	protected boolean modal = true;
-
-	private String name;
-
-	private Paginator<User> paginator;
-
-	protected boolean rendered = false;
-
-	private String surename;
+	@Inject
+	private SelectManagerPopupBean selectManagerPopupBean;
 
 	private User user;
 
@@ -54,48 +44,16 @@ public class UserEditBean extends AbstractPageBean {
 		}
 	}
 
-	public void cancelPopup() {
-		this.rendered = false;
-	}
-
-	public void cleanPopup() {
-		clearPopupFields();
-		search();
-	}
-
-	private void clearPopupFields() {
-		this.email = null;
-		this.name = null;
-		this.surename = null;
-	}
-
-	public String getEmail() {
-		return this.email;
-	}
-
 	public User getManager() {
 		return this.manager;
 	}
 
-	public String getName() {
-		return this.name;
-	}
-
-	public Paginator<User> getPaginator() {
-		return this.paginator;
-	}
-
-	public String getSurename() {
-		return this.surename;
+	public SelectManagerPopupBean getSelectManagerPopupBean() {
+		return this.selectManagerPopupBean;
 	}
 
 	public User getUser() {
 		return this.user;
-	}
-
-	public void hide() {
-		clearPopupFields();
-		this.rendered = false;
 	}
 
 	@PostConstruct
@@ -114,31 +72,19 @@ public class UserEditBean extends AbstractPageBean {
 		if (this.user.getManager() != null) {
 			this.manager = this.user.getManager();
 		} else {
-			this.manager = new User();
-			this.manager.setName("");
-			this.manager.setSurename("");
+			newManager();
 		}
 		this.flash.put("user", this.user);
-		this.paginator = new Paginator<User>();
-		this.paginator.setRowsPerPage(this.sessionBean.getUser().getRowsPerPage());
 	}
 
-	public boolean isModal() {
-		return this.modal;
-	}
-
-	public boolean isRendered() {
-		return this.rendered;
-	}
-
-	public void open() {
-		this.rendered = true;
-	}
-
-	public void removeManager() {
+	private void newManager() {
 		this.manager = new User();
 		this.manager.setName("");
 		this.manager.setSurename("");
+	}
+
+	public void removeManager() {
+		newManager();
 		this.user.setManager(null);
 	}
 
@@ -155,35 +101,6 @@ public class UserEditBean extends AbstractPageBean {
 		return "userView.xhtml?id=" + this.user.getId() + "&faces-redirect=true";
 	}
 
-	public void search() {
-		this.logger.fine("Searching for Users");
-		if ((this.name != null) && (this.surename != null)) {
-			if (verifySearchField(this.name) && verifySearchField(this.surename)) {
-				this.paginator.setEntities(this.userService.fullSearch(this.name, this.surename));
-			}
-		} else if ((this.name == null) && (this.surename != null)) {
-			if (verifySearchField(this.surename)) {
-				this.paginator.setEntities(this.userService.fullSearchBySurename(this.surename));
-			}
-		} else if ((this.name != null) && (this.surename == null)) {
-			if (verifySearchField(this.name)) {
-				this.paginator.setEntities(this.userService.fullSearchByName(this.name));
-			}
-		} else {
-			this.paginator.setEntities(this.userService.findAll());
-		}
-		clearPopupFields();
-	}
-
-	public void select(final User manager) {
-		this.manager = manager;
-		this.rendered = false;
-	}
-
-	public void setEmail(final String email) {
-		this.email = email;
-	}
-
 	public void setLogger(final Logger logger) {
 		this.logger = logger;
 	}
@@ -192,20 +109,8 @@ public class UserEditBean extends AbstractPageBean {
 		this.manager = manager;
 	}
 
-	public void setModal(final boolean modal) {
-		this.modal = modal;
-	}
-
-	public void setName(final String name) {
-		this.name = name;
-	}
-
-	public void setRendered(final boolean rendered) {
-		this.rendered = rendered;
-	}
-
-	public void setSurename(final String surename) {
-		this.surename = surename;
+	public void setSelectManagerPopupBean(final SelectManagerPopupBean selectManagerPopupBean) {
+		this.selectManagerPopupBean = selectManagerPopupBean;
 	}
 
 	public void setUser(final User user) {
@@ -216,9 +121,8 @@ public class UserEditBean extends AbstractPageBean {
 		this.userService = userService;
 	}
 
-	public void show() {
-		this.rendered = true;
-		search();
+	public void showPopup() {
+		this.selectManagerPopupBean.show();
 	}
 
 	public void validateManager(final FacesContext context, final UIComponent component, final Object value)
@@ -255,13 +159,5 @@ public class UserEditBean extends AbstractPageBean {
 		} else if (userRoleName.equals("RECRUITER") && managerRoleName.contains("TECHNIC")) {
 			throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg));
 		}
-	}
-
-	private boolean verifySearchField(final String text) {
-		if (text.length() < 3) {
-			addMessage(FacesMessage.SEVERITY_WARN, "error.search.camp_to_short", "error.search.camp_to_short");
-			return false;
-		}
-		return true;
 	}
 }
