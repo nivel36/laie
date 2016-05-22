@@ -1,13 +1,8 @@
 package ged.web.view.user;
 
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
-import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
-import javax.faces.validator.ValidatorException;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -27,8 +22,6 @@ public class SelectManagerPopupBean extends AbstractPageBean {
 
 	@Inject
 	protected transient Logger logger;
-
-	private User manager;
 
 	private String name;
 
@@ -58,10 +51,6 @@ public class SelectManagerPopupBean extends AbstractPageBean {
 
 	public String getEmail() {
 		return this.email;
-	}
-
-	public User getManager() {
-		return this.manager;
 	}
 
 	public String getName() {
@@ -106,17 +95,8 @@ public class SelectManagerPopupBean extends AbstractPageBean {
 		clearPopupFields();
 	}
 
-	public void select(final User manager) {
-		this.manager = manager;
-		this.rendered = false;
-	}
-
 	public void setEmail(final String email) {
 		this.email = email;
-	}
-
-	public void setManager(final User manager) {
-		this.manager = manager;
 	}
 
 	public void setName(final String name) {
@@ -134,19 +114,5 @@ public class SelectManagerPopupBean extends AbstractPageBean {
 	public void show() {
 		this.rendered = true;
 		search();
-	}
-
-	public void validateSearchField(final FacesContext context, final UIComponent component, final Object value)
-			throws ValidatorException {
-		this.logger.log(Level.FINEST, "Validating search field {} with value {}",
-				new Object[] { component.getClientId(), value.toString() });
-		final String searchValue = (String) value;
-		if ((searchValue != null) && (searchValue.length() < 3)) {
-			this.logger.warning("Search value is too short");
-			final String translatedMessage = translate("error.search.camp_too_short");
-			final FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, translatedMessage,
-					translatedMessage);
-			throw new ValidatorException(message);
-		}
 	}
 }

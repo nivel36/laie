@@ -31,21 +31,21 @@
 				<h:outputLabel for="name" value="#{i18n['user.name']}">
 					<h:inputText id="name" value="#{userSearchBean.name}"
 						label="#{i18n['user.name']}"
-						validator="#{userSearchBean.validateSearchField}" />
+						validator="ged.web.view.SearchFieldValidator" />
 					<h:message for="name" errorClass="error" />
 				</h:outputLabel>
 
 				<h:outputLabel for="surename" value="#{i18n['user.surename']}">
 					<h:inputText id="surename" value="#{userSearchBean.surename}"
 						label="#{i18n['user.surename']}"
-						validator="#{userSearchBean.validateSearchField}" />
+						validator="ged.web.view.SearchFieldValidator" />
 					<h:message for="surename" errorClass="error" />
 				</h:outputLabel>
 
 				<h:panelGroup layout="block" styleClass="buttonGroup">
 					<h:commandButton value="#{i18n['action.search']}"
 						action="#{userSearchBean.search}">
-						<f:ajax execute="@form" render="@form" />
+						<f:ajax execute="searchUserPanel" render="@form" />
 					</h:commandButton>
 					<h:commandButton value="#{i18n['action.clean']}"
 						action="#{userSearchBean.clean}">

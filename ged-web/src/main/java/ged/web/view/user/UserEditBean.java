@@ -28,9 +28,6 @@ public class UserEditBean extends AbstractPageBean {
 
 	private User manager;
 
-	@Inject
-	private SelectManagerPopupBean selectManagerPopupBean;
-
 	private User user;
 
 	@Inject
@@ -46,10 +43,6 @@ public class UserEditBean extends AbstractPageBean {
 
 	public User getManager() {
 		return this.manager;
-	}
-
-	public SelectManagerPopupBean getSelectManagerPopupBean() {
-		return this.selectManagerPopupBean;
 	}
 
 	public User getUser() {
@@ -109,20 +102,12 @@ public class UserEditBean extends AbstractPageBean {
 		this.manager = manager;
 	}
 
-	public void setSelectManagerPopupBean(final SelectManagerPopupBean selectManagerPopupBean) {
-		this.selectManagerPopupBean = selectManagerPopupBean;
-	}
-
 	public void setUser(final User user) {
 		this.user = user;
 	}
 
 	public void setUserService(final UserService userService) {
 		this.userService = userService;
-	}
-
-	public void showPopup() {
-		this.selectManagerPopupBean.show();
 	}
 
 	public void validateManager(final FacesContext context, final UIComponent component, final Object value)

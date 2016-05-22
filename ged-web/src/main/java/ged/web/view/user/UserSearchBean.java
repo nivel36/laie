@@ -4,10 +4,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
-import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
-import javax.faces.validator.ValidatorException;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -105,19 +101,5 @@ public class UserSearchBean extends AbstractPageBean {
 
 	public void setSurename(final String surename) {
 		this.surename = surename;
-	}
-
-	public void validateSearchField(final FacesContext context, final UIComponent component, final Object value)
-			throws ValidatorException {
-		this.logger.log(Level.FINEST, "Validating search field {} with value {}",
-				new Object[] { component.getClientId(), value.toString() });
-		final String searchValue = (String) value;
-		if ((searchValue != null) && (searchValue.length() < 3)) {
-			this.logger.warning("Search value is too short");
-			final String translatedMessage = translate("error.search.camp_too_short");
-			final FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, translatedMessage,
-					translatedMessage);
-			throw new ValidatorException(message);
-		}
 	}
 }
