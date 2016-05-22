@@ -30,8 +30,6 @@ public class SelectManagerPopupBean extends AbstractPageBean {
 
 	private User manager;
 
-	protected boolean modal = true;
-
 	private String name;
 
 	private Paginator<User> paginator;
@@ -89,10 +87,6 @@ public class SelectManagerPopupBean extends AbstractPageBean {
 		this.paginator.setRowsPerPage(this.sessionBean.getUser().getRowsPerPage());
 	}
 
-	public boolean isModal() {
-		return this.modal;
-	}
-
 	public boolean isRendered() {
 		return this.rendered;
 	}
@@ -123,10 +117,6 @@ public class SelectManagerPopupBean extends AbstractPageBean {
 
 	public void setManager(final User manager) {
 		this.manager = manager;
-	}
-
-	public void setModal(final boolean modal) {
-		this.modal = modal;
 	}
 
 	public void setName(final String name) {

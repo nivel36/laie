@@ -18,8 +18,7 @@
 		<h:form id="userSearchPopupForm">
 			<h:panelGroup layout="block"
 				rendered="#{userEditBean.selectManagerPopupBean.rendered}"
-				styleClass="#{userEditBean.selectManagerPopupBean.modal ? 'modalDialog': ''}"
-				id="managerPopup">
+				styleClass="modalDialog" id="managerPopup">
 				<h:panelGroup layout="block" id="modalContent">
 					<h:commandLink styleClass="close"
 						action="#{userEditBean.selectManagerPopupBean.hide}" value="X">
@@ -28,7 +27,7 @@
 					<h3>#{i18n['user.user']}</h3>
 
 					<h:panelGroup layout="block" styleClass="panel">
-						<h2>#{i18n['user.search']}</h2>
+						<h1>#{i18n['user.search']}</h1>
 						<h:outputLabel for="searchUserName" value="#{i18n['user.name']}">
 							<h:inputText id="searchUserName"
 								value="#{userEditBean.selectManagerPopupBean.name}"
@@ -55,7 +54,7 @@
 					</h:panelGroup>
 
 					<h:panelGroup layout="block" styleClass="panel" id="resultados">
-						<h2>#{i18n['user.search_results']}</h2>
+						<h1>#{i18n['user.search_results']}</h1>
 
 						<h:outputText value="#{i18n['user.no_users_found']}"
 							rendered="#{empty userEditBean.selectManagerPopupBean.paginator.dataList}" />
