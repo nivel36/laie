@@ -69,11 +69,11 @@ insert into I18NSTRING( id, version, locale, key, text ) values( 856, 0, 'ca', '
 insert into I18NSTRING( id, version, locale, key, text ) values( 857, 0, 'es', 'other', 'Otro' );
 insert into I18NSTRING( id, version, locale, key, text ) values( 858, 0, 'ca', 'other', 'Altre' );
 
-insert into ROLE( id, version, name ) values( 911, 0, 'ADMIN' );
-insert into ROLE( id, version, name ) values( 913, 0, 'RECRUITER_ADMIN' );
-insert into ROLE( id, version, name ) values( 912, 0, 'RECRUITER' );
-insert into ROLE( id, version, name ) values( 915, 0, 'TECHNIC_ADMIN' );
-insert into ROLE( id, version, name ) values( 914, 0, 'TECHNIC' );
+insert into ROLE( id, version, name, parentRoleId ) values( 911, 0, 'ADMIN', null );
+insert into ROLE( id, version, name, parentRoleId ) values( 913, 0, 'RECRUITER_ADMIN', 911 );
+insert into ROLE( id, version, name, parentRoleId ) values( 912, 0, 'RECRUITER', 913 );
+insert into ROLE( id, version, name, parentRoleId ) values( 915, 0, 'TECHNIC_ADMIN', 911 );
+insert into ROLE( id, version, name, parentRoleId ) values( 914, 0, 'TECHNIC', 915 );
 
 insert into USER( id, version, email, language, name, rowsPerPage, surename, username, password, roleId ) values( 901, 0, 'abel.ferrer.jimenez@gmail.com', 'es', 'Abel', 25, 'Ferrer', 'aferrer', 'jGl25bVBBBW96Qi9Te4V37Fnqchz/Eu4qB9vKrRIqRg=', 911);
 

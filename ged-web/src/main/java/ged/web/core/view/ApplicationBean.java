@@ -41,10 +41,6 @@ public class ApplicationBean extends AbstractBean {
 
 	private Properties properties;
 
-	public Cache getCache() {
-		return this.cache;
-	}
-
 	public List<FileType> getFileTypes() {
 		return this.cache.getFileTypes();
 	}
@@ -91,10 +87,6 @@ public class ApplicationBean extends AbstractBean {
 		}
 		final Locale defaultLocale = app.getDefaultLocale();
 		this.locales.add(defaultLocale);
-	}
-
-	public void setCache(final Cache cache) {
-		this.cache = cache;
 	}
 
 	public void setLocales(final List<Locale> locales) {

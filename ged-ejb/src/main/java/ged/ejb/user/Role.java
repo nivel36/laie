@@ -1,6 +1,9 @@
 package ged.ejb.user;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import ged.ejb.core.model.AbstractEntity;
 
@@ -9,7 +12,12 @@ public class Role extends AbstractEntity {
 
 	private static final long serialVersionUID = 5722113796215191203L;
 
+	@Column(length = 32, unique = true)
 	private String name;
+
+	@ManyToOne
+	@JoinColumn(name = "parentRoleId", nullable = true)
+	private Role parentRole;
 
 	@Override
 	public boolean equals(final Object obj) {
@@ -37,6 +45,10 @@ public class Role extends AbstractEntity {
 		return this.name;
 	}
 
+	public Role getParentRole() {
+		return this.parentRole;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -47,6 +59,10 @@ public class Role extends AbstractEntity {
 
 	public void setName(final String name) {
 		this.name = name;
+	}
+
+	public void setParentRole(final Role parentRole) {
+		this.parentRole = parentRole;
 	}
 
 	@Override

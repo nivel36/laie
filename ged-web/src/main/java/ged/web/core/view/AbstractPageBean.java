@@ -19,6 +19,9 @@ public abstract class AbstractPageBean extends AbstractBean {
 	protected ActionsBean actionsBean;
 
 	@Inject
+	protected ApplicationBean applicationBean;
+
+	@Inject
 	protected Flash flash;
 
 	@Inject

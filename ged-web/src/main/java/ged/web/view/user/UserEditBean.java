@@ -41,6 +41,15 @@ public class UserEditBean extends AbstractPageBean {
 		}
 	}
 
+	private Role findRoleByName(final String roleName) {
+		for (final Role role : this.applicationBean.getRoles()) {
+			if (role.getName().equals(roleName)) {
+				return role;
+			}
+		}
+		return null;
+	}
+
 	public User getManager() {
 		return this.manager;
 	}
@@ -68,6 +77,20 @@ public class UserEditBean extends AbstractPageBean {
 			newManager();
 		}
 		this.flash.put("user", this.user);
+	}
+
+	private boolean isAvalidRole(final String userRoleName, final String managerRoleName) {
+		if (userRoleName.equals(managerRoleName)) {
+			return true;
+		}
+		final Role userRole = findRoleByName(userRoleName);
+		final Role managerRole = findRoleByName(managerRoleName);
+		Role antecessor = userRole;
+		do {
+			antecessor = antecessor.getParentRole();
+		} while ((antecessor != null) && !antecessor.equals(managerRole));
+
+		return (antecessor != null) && antecessor.getName().equals(managerRoleName);
 	}
 
 	private void newManager() {
@@ -131,17 +154,7 @@ public class UserEditBean extends AbstractPageBean {
 		final String userRoleName = userRole.getName();
 		final String managerRoleName = managerRole.getName();
 		final String msg = translate("user.error.role");
-		if (userRoleName.equals("ADMIN") && !managerRoleName.equals("ADMIN")) {
-			throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg));
-		} else if (userRoleName.equals("RECRUITER_ADMIN")
-				&& (managerRoleName.contains("TECHNIC") || managerRoleName.equals("RECRUITER"))) {
-			throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg));
-		} else if (userRoleName.equals("TECHNIC_ADMIN")
-				&& (managerRoleName.contains("RECRUITER") || managerRoleName.equals("TECHNIC"))) {
-			throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg));
-		} else if (userRoleName.equals("TECHNIC") && managerRoleName.contains("RECRUITER")) {
-			throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg));
-		} else if (userRoleName.equals("RECRUITER") && managerRoleName.contains("TECHNIC")) {
+		if (!isAvalidRole(userRoleName, managerRoleName)) {
 			throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg));
 		}
 	}
