@@ -26,7 +26,8 @@
 					</h:commandLink>
 					<h3>#{i18n['user.user']}</h3>
 
-					<h:panelGroup layout="block" styleClass="panel" id="searchManagerPanel">
+					<h:panelGroup layout="block" styleClass="panel"
+						id="searchManagerPanel">
 						<h1>#{i18n['user.search']}</h1>
 						<h:outputLabel for="searchUserName" value="#{i18n['user.name']}">
 							<h:inputText id="searchUserName"
@@ -176,7 +177,7 @@
 						<h:inputText id="manager" value="#{userEditBean.manager.fullName}"
 							label="#{i18n['user.manager']}"
 							styleClass="#{not component.valid ? 'inputError' : ''}"
-							validator="#{userEditBean.validateManager}" readonly="true" />
+							validator="#{userEditBean.validateManager}" readonly="#{facesContext.renderResponse}"/>
 						<h:message for="manager" errorClass="error" />
 					</h:outputLabel>
 
