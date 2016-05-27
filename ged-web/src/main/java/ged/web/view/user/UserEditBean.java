@@ -13,6 +13,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import ged.ejb.user.Role;
+import ged.ejb.user.RoleService;
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
 import ged.web.core.view.AbstractPageBean;
@@ -28,6 +29,9 @@ public class UserEditBean extends AbstractPageBean {
 
 	private User manager;
 
+	@Inject
+	private transient RoleService roleService;
+
 	private User user;
 
 	@Inject
@@ -39,15 +43,6 @@ public class UserEditBean extends AbstractPageBean {
 		} else {
 			return "userView.xhtml?id=" + this.user.getId() + "&faces-redirect=true";
 		}
-	}
-
-	private Role findRoleByName(final String roleName) {
-		for (final Role role : this.applicationBean.getRoles()) {
-			if (role.getName().equals(roleName)) {
-				return role;
-			}
-		}
-		return null;
 	}
 
 	public User getManager() {
@@ -79,18 +74,11 @@ public class UserEditBean extends AbstractPageBean {
 		this.flash.put("user", this.user);
 	}
 
-	private boolean isAvalidRole(final String userRoleName, final String managerRoleName) {
-		if (userRoleName.equals(managerRoleName)) {
+	private boolean isAvalidRole(final Role userRole, final Role managerRole) {
+		if (userRole.getName().equals(managerRole.getName())) {
 			return true;
 		}
-		final Role userRole = findRoleByName(userRoleName);
-		final Role managerRole = findRoleByName(managerRoleName);
-		Role antecessor = userRole;
-		do {
-			antecessor = antecessor.getParentRole();
-		} while ((antecessor != null) && !antecessor.equals(managerRole));
-
-		return (antecessor != null) && antecessor.getName().equals(managerRoleName);
+		return this.roleService.isASubordinateRole(managerRole, userRole);
 	}
 
 	private void newManager() {
@@ -125,12 +113,25 @@ public class UserEditBean extends AbstractPageBean {
 		this.manager = manager;
 	}
 
+	public void setRoleService(final RoleService roleService) {
+		this.roleService = roleService;
+	}
+
 	public void setUser(final User user) {
 		this.user = user;
 	}
 
 	public void setUserService(final UserService userService) {
 		this.userService = userService;
+	}
+
+	public void validateEmail(final FacesContext context, final UIComponent component, final Object value)
+			throws ValidatorException {
+		final String email = (String) value;
+		if (this.userService.emailExists(email)) {
+			final String msg = translate("user.error.email_exists");
+			throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg));
+		}
 	}
 
 	public void validateManager(final FacesContext context, final UIComponent component, final Object value)
@@ -151,10 +152,8 @@ public class UserEditBean extends AbstractPageBean {
 		}
 		final Role userRole = (Role) value;
 		final Role managerRole = this.manager.getRole();
-		final String userRoleName = userRole.getName();
-		final String managerRoleName = managerRole.getName();
-		final String msg = translate("user.error.role");
-		if (!isAvalidRole(userRoleName, managerRoleName)) {
+		if (!isAvalidRole(userRole, managerRole)) {
+			final String msg = translate("user.error.role");
 			throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg));
 		}
 	}

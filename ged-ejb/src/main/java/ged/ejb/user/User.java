@@ -57,6 +57,7 @@ public class User extends AuditedEntity {
 	private String name;
 
 	@NotNull
+	@Column(length = 64, nullable = false)
 	private String password;
 
 	@NotNull

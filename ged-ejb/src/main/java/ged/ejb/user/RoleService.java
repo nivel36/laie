@@ -7,6 +7,10 @@ import javax.ejb.Local;
 @Local
 public interface RoleService {
 
-	public List<Role> findAllRoles();
+	List<Role> findAllRoles();
+
+	List<Role> findSubordinateRoles(final Role manager);
+
+	boolean isASubordinateRole(final Role manager, final Role role);
 
 }

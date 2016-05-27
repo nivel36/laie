@@ -138,11 +138,15 @@
 				</h:outputLabel>
 
 				<h:outputLabel value="#{i18n['user.email']}"
-					styleClass="large required">
+					styleClass="large required" id="emailLabel">
 					<h:inputText id="email" p:type="email"
 						value="#{userEditBean.user.email}" required="true"
 						label="#{i18n['user.email']}"
-						styleClass="#{ not component.valid ? 'inputError' : ''}" />
+						styleClass="#{ not component.valid ? 'inputError' : ''}"
+						validator="#{userEditBean.validateEmail}">
+						<f:ajax event="blur" render="emailLabel" />
+					</h:inputText>
+
 					<h:message for="email" errorClass="error" />
 				</h:outputLabel>
 
@@ -177,12 +181,15 @@
 						<h:inputText id="manager" value="#{userEditBean.manager.fullName}"
 							label="#{i18n['user.manager']}"
 							styleClass="#{not component.valid ? 'inputError' : ''}"
-							validator="#{userEditBean.validateManager}" readonly="#{facesContext.renderResponse}"/>
+							validator="#{userEditBean.validateManager}"
+							readonly="#{facesContext.renderResponse}" />
 						<h:message for="manager" errorClass="error" />
 					</h:outputLabel>
 
 					<h:commandButton action="#{selectManagerPopupBean.show}" value="+">
 						<f:ajax execute="@this" render=":userSearchPopupForm" />
+						<f:setPropertyActionListener value="#{email}"
+							target="#{selectManagerPopupBean.userEmail}" />
 					</h:commandButton>
 
 					<h:commandButton action="#{userEditBean.removeManager}" value="-"

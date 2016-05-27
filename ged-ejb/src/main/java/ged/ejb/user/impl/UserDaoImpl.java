@@ -6,6 +6,13 @@ import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+
+import org.hibernate.search.jpa.FullTextEntityManager;
+import org.hibernate.search.jpa.Search;
+import org.hibernate.search.query.dsl.BooleanJunction;
+import org.hibernate.search.query.dsl.QueryBuilder;
 
 import ged.ejb.core.Repository;
 import ged.ejb.core.bookmark.Bookmark;
@@ -40,6 +47,14 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public void deleteUser(final User user) {
 		this.persistenceFacade.delete(user);
+	}
+
+	@Override
+	public boolean emailExists(final String email) {
+		final Map<String, Object> parameters = new HashMap<>(1);
+		parameters.put("email", email);
+		final Long emails = (Long) this.persistenceFacade.getByQuerySingleResult("User.countEmail", parameters);
+		return emails > 0;
 	}
 
 	@Override
@@ -128,6 +143,22 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public List<User> fullSearchBySurename(final String surename) {
 		return this.persistenceFacade.fullSearch(User.class, surename, "surename");
+	}
+
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@Override
+	public List<User> fullSearchManager(final String name, final String surename, final String email) {
+		final EntityManager em = this.persistenceFacade.getEm();
+		final FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(em);
+		final QueryBuilder qb = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(User.class)
+				.get();
+		final BooleanJunction<BooleanJunction> bj = qb.bool();
+		bj.must(qb.keyword().onField("name").matching(name).createQuery());
+		bj.must(qb.keyword().onField("surename").matching(surename).createQuery());
+		bj.must(qb.keyword().onField("email").matching(email).createQuery()).not();
+		final Query persistenceQuery = fullTextEntityManager.createFullTextQuery(bj.createQuery(), User.class);
+		final List<User> result = persistenceQuery.getResultList();
+		return result;
 	}
 
 	@Override

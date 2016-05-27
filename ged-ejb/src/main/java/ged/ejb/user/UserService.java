@@ -10,35 +10,39 @@ import ged.ejb.core.model.Action;
 @Local
 public interface UserService {
 
-	public void deleteBookmark(Bookmark bookmark);
+	void deleteBookmark(Bookmark bookmark);
 
-	public void deleteUser(User user);
+	void deleteUser(User user);
 
-	public List<User> findAll();
+	boolean emailExists(final String email);
 
-	public Bookmark findBookmarkByUrl(String url);
+	List<User> findAll();
 
-	public User findById(Long id);
+	Bookmark findBookmarkByUrl(String url);
 
-	public User findUserByUsername(String username);
+	User findById(Long id);
 
-	public List<User> findUsers(String name, String surenames);
+	User findUserByUsername(String username);
 
-	public List<User> findUserTeam(Long id);
+	List<User> findUsers(String name, String surenames);
 
-	public List<User> fullSearch(String matching);
+	List<User> findUserTeam(Long id);
 
-	public List<User> fullSearch(String name, String surename);
+	List<User> fullSearch(String matching);
 
-	public List<User> fullSearchByName(String name);
+	List<User> fullSearch(String name, String surename);
 
-	public List<User> fullSearchBySurename(String surename);
+	List<User> fullSearchByName(String name);
 
-	public void insertAction(Action action);
+	List<User> fullSearchBySurename(String surename);
 
-	public void insertBookmark(Bookmark bookmark);
+	List<User> fullSearchManager(final String name, final String surename, final String userEmail);
 
-	public void insertUser(User user);
+	void insertAction(Action action);
 
-	public User updateUser(User user);
+	void insertBookmark(Bookmark bookmark);
+
+	void insertUser(User user);
+
+	User updateUser(User user);
 }

@@ -1,6 +1,8 @@
 package ged.ejb.user.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -16,8 +18,15 @@ public class RoleDaoImpl implements RoleDao {
 	@Repository
 	private PersistenceFacade persistenceFacade;
 
+	@Override
 	public List<Role> findAllRoles() {
 		return this.persistenceFacade.getAll(Role.class);
 	}
 
+	@Override
+	public List<Role> findSubordinateRoles(final Role managerRole) {
+		final Map<String, Object> parameters = new HashMap<>();
+		parameters.put("role", managerRole);
+		return this.persistenceFacade.getByTypedQuery(Role.class, "Role.findSubordinateRoles", parameters, 0, 0);
+	}
 }

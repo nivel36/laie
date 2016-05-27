@@ -1,5 +1,6 @@
 package ged.web.view.user;
 
+import java.util.List;
 import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
@@ -18,8 +19,6 @@ public class SelectManagerPopupBean extends AbstractPageBean {
 
 	private static final long serialVersionUID = 9150785979243375541L;
 
-	private String email;
-
 	@Inject
 	protected transient Logger logger;
 
@@ -30,6 +29,9 @@ public class SelectManagerPopupBean extends AbstractPageBean {
 	protected boolean rendered = false;
 
 	private String surename;
+
+	// El mail del usuario. Necesario para que este no aparezca en la búsqueda
+	private String userEmail;
 
 	@Inject
 	private transient UserService userService;
@@ -44,13 +46,8 @@ public class SelectManagerPopupBean extends AbstractPageBean {
 	}
 
 	private void clearPopupFields() {
-		this.email = null;
 		this.name = null;
 		this.surename = null;
-	}
-
-	public String getEmail() {
-		return this.email;
 	}
 
 	public String getName() {
@@ -85,18 +82,19 @@ public class SelectManagerPopupBean extends AbstractPageBean {
 	}
 
 	public void search() {
-		this.logger.fine("Searching for Users");
 		this.logger.fine("Searching for users");
+		List<User> users = null;
 		if ((this.name == null) && (this.surename == null)) {
-			this.paginator.setEntities(this.userService.findAll());
+			users = this.userService.findAll();
 		} else {
-			this.paginator.setEntities(this.userService.fullSearch(this.name, this.surename));
+			users = this.userService.fullSearchManager(this.name, this.surename, this.userEmail);
 		}
+		this.paginator.setEntities(users);
 		clearPopupFields();
 	}
 
-	public void setEmail(final String email) {
-		this.email = email;
+	public void setLogger(final Logger logger) {
+		this.logger = logger;
 	}
 
 	public void setName(final String name) {
@@ -109,6 +107,14 @@ public class SelectManagerPopupBean extends AbstractPageBean {
 
 	public void setSurename(final String surename) {
 		this.surename = surename;
+	}
+
+	public void setUserEmail(final String userEmail) {
+		this.userEmail = userEmail;
+	}
+
+	public void setUserService(final UserService userService) {
+		this.userService = userService;
 	}
 
 	public void show() {

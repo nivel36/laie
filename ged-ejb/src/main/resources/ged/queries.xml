@@ -4,7 +4,7 @@
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence/orm
         http://xmlns.jcp.org/xml/ns/persistence/orm_2_1.xsd"
 	version="2.1">
-	
+
 	<named-query name="Candidate.findCurriculumByCandidateId">
 		<query>SELECT c FROM Curriculum c 
 					LEFT JOIN FETCH c.candidate 
@@ -35,8 +35,8 @@
 	<named-query name="JobOffer.findByName">
 		<query>SELECT j FROM JobOffer j WHERE j.name = :name</query>
 	</named-query>
-	
-		<named-query name="JobOffer.findByOwner">
+
+	<named-query name="JobOffer.findByOwner">
 		<query>SELECT j FROM JobOffer j WHERE j.owner = :owner</query>
 	</named-query>
 
@@ -52,12 +52,12 @@
 		<query>SELECT j FROM JobMeeting j WHERE j.jobCandidature.id = :jobCandidatureId</query>
 	</named-query>
 
-	<named-query name="User.findById">
-		<query>SELECT u FROM User u LEFT JOIN FETCH u.role WHERE u.id = :id</query>
+	<named-query name="Role.findSubordinateRoles">
+		<query>SELECT r FROM RoleClosure rc JOIN rc.descendant r WHERE rc.antecessor = :role</query>
 	</named-query>
 
-	<named-query name="User.findByName">
-		<query>SELECT u FROM User u LEFT JOIN FETCH u.role WHERE u.name = :name</query>
+	<named-query name="User.findById">
+		<query>SELECT u FROM User u LEFT JOIN FETCH u.role WHERE u.id = :id</query>
 	</named-query>
 
 	<named-query name="User.findByUsername">
@@ -94,6 +94,10 @@
 
 	<named-query name="User.countAdminRoles">
 		<query>SELECT COUNT(u) FROM User u WHERE u.role.name = 'ADMIN'</query>
+	</named-query>
+
+	<named-query name="User.countEmail">
+		<query>SELECT COUNT(u) FROM User u WHERE u.email = :email</query>
 	</named-query>
 
 </entity-mappings>

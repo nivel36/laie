@@ -29,6 +29,11 @@ public class UserServiceImpl implements UserService {
 		this.userDao.deleteUser(user);
 	}
 
+	@Override
+	public boolean emailExists(final String email) {
+		return this.userDao.emailExists(email);
+	}
+
 	private boolean existAdmin() {
 		return this.userDao.countAdminRoles() > 1;
 	}
@@ -81,6 +86,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<User> fullSearchBySurename(final String surename) {
 		return this.userDao.fullSearchBySurename(surename);
+	}
+
+	@Override
+	public List<User> fullSearchManager(final String name, final String surename, final String userEmail) {
+		return this.userDao.fullSearchManager(name, surename, userEmail);
 	}
 
 	@Override

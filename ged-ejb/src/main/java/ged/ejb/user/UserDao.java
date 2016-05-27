@@ -10,46 +10,50 @@ import ged.ejb.core.model.Action;
 @Local
 public interface UserDao {
 
-	public long countAdminRoles();
+	long countAdminRoles();
 
-	public void deleteAction(Action action);
+	void deleteAction(Action action);
 
-	public void deleteBookmark(Bookmark bookmark);
+	void deleteBookmark(Bookmark bookmark);
 
-	public void deleteUser(User user);
+	void deleteUser(User user);
 
-	public Action findAction(Long auditedId, String entity, User user);
+	boolean emailExists(final String email);
 
-	public List<User> findAll();
+	Action findAction(Long auditedId, String entity, User user);
 
-	public Bookmark findBookmark(Long auditedId, String entity, User user);
+	List<User> findAll();
 
-	public Bookmark findBookmarkByUrl(String url);
+	Bookmark findBookmark(Long auditedId, String entity, User user);
 
-	public User findById(Long id);
+	Bookmark findBookmarkByUrl(String url);
 
-	public User findByName(String user);
+	User findById(Long id);
 
-	public User findUserByUsername(String username);
+	User findByName(String user);
 
-	public List<User> findUsers(String name, String surename);
+	User findUserByUsername(String username);
 
-	public List<User> findUserTeam(Long id);
+	List<User> findUsers(String name, String surename);
 
-	public List<User> fullSearch(final String matching);
+	List<User> findUserTeam(Long id);
 
-	public List<User> fullSearch(final String name, String surename);
+	List<User> fullSearch(final String matching);
 
-	public List<User> fullSearchByName(final String name);
+	List<User> fullSearch(final String name, String surename);
 
-	public List<User> fullSearchBySurename(String surename);
+	List<User> fullSearchByName(final String name);
 
-	public void insertAction(Action action);
+	List<User> fullSearchBySurename(String surename);
 
-	public void insertBookmark(Bookmark bookmark);
+	List<User> fullSearchManager(final String name, String surename, final String email);
 
-	public void insertUser(User user);
+	void insertAction(Action action);
 
-	public User updateUser(User user);
+	void insertBookmark(Bookmark bookmark);
+
+	void insertUser(User user);
+
+	User updateUser(User user);
 
 }

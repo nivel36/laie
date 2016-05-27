@@ -297,6 +297,11 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
 		return this.em.getCriteriaBuilder();
 	}
 
+	@Override
+	public EntityManager getEm() {
+		return this.em;
+	}
+
 	private org.apache.lucene.search.Query getLuceneQuery(final QueryBuilder qb, final String field,
 			final String value) {
 		final org.apache.lucene.search.Query query = qb.keyword().onField(field).matching(value).createQuery();

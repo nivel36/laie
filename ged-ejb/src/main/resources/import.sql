@@ -75,6 +75,18 @@ insert into ROLE( id, version, name, parentRoleId ) values( 912, 0, 'RECRUITER',
 insert into ROLE( id, version, name, parentRoleId ) values( 915, 0, 'TECHNIC_ADMIN', 911 );
 insert into ROLE( id, version, name, parentRoleId ) values( 914, 0, 'TECHNIC', 915 );
 
+insert into ROLECLOSURE( id, version, antecessor_id, descendant_id, pathLength ) values( 925, 0, 911, 911, 0 );
+insert into ROLECLOSURE( id, version, antecessor_id, descendant_id, pathLength ) values( 926, 0, 911, 912, 2 );
+insert into ROLECLOSURE( id, version, antecessor_id, descendant_id, pathLength ) values( 927, 0, 911, 913, 1 );
+insert into ROLECLOSURE( id, version, antecessor_id, descendant_id, pathLength ) values( 928, 0, 911, 914, 2 );
+insert into ROLECLOSURE( id, version, antecessor_id, descendant_id, pathLength ) values( 929, 0, 911, 915, 1 );
+insert into ROLECLOSURE( id, version, antecessor_id, descendant_id, pathLength ) values( 930, 0, 912, 912, 0 );
+insert into ROLECLOSURE( id, version, antecessor_id, descendant_id, pathLength ) values( 931, 0, 913, 913, 0 );
+insert into ROLECLOSURE( id, version, antecessor_id, descendant_id, pathLength ) values( 932, 0, 913, 912, 1 );
+insert into ROLECLOSURE( id, version, antecessor_id, descendant_id, pathLength ) values( 933, 0, 914, 914, 0 );
+insert into ROLECLOSURE( id, version, antecessor_id, descendant_id, pathLength ) values( 934, 0, 915, 915, 0 );
+insert into ROLECLOSURE( id, version, antecessor_id, descendant_id, pathLength ) values( 935, 0, 915, 914, 1 );
+
 insert into USER( id, version, email, language, name, rowsPerPage, surename, username, password, roleId ) values( 901, 0, 'abel.ferrer.jimenez@gmail.com', 'es', 'Abel', 25, 'Ferrer', 'aferrer', 'jGl25bVBBBW96Qi9Te4V37Fnqchz/Eu4qB9vKrRIqRg=', 911);
 
 insert into CANDIDATE( id, version, name, surename, phoneNumber1, email, city, country, door, number, state, storey, street, zipCode, curriculumId, ownerid) values ( 201, 0, 'Abel', 'Ferrer Jiménez','685555276', 'abel.ferrer.jimenez@gmail.com', 'Barcelona', 'España','1','85', 'Barcelona', 'Principal', 'Bailén', '08809', 301, 901);
@@ -86,3 +98,4 @@ insert into CANDIDATE( id, version, name, surename, phoneNumber1, email, city, c
 
 
 ALTER SEQUENCE HIBERNATE_SEQUENCE RESTART with 1000;
+
