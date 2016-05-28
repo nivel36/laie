@@ -138,15 +138,13 @@
 				</h:outputLabel>
 
 				<h:outputLabel value="#{i18n['user.email']}"
-					styleClass="large required" id="emailLabel">
+					styleClass="large required">
 					<h:inputText id="email" p:type="email"
 						value="#{userEditBean.user.email}" required="true"
 						label="#{i18n['user.email']}"
 						styleClass="#{ not component.valid ? 'inputError' : ''}"
 						validator="#{userEditBean.validateEmail}">
-						<f:ajax event="blur" render="emailLabel" />
 					</h:inputText>
-
 					<h:message for="email" errorClass="error" />
 				</h:outputLabel>
 
