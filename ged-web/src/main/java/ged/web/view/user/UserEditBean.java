@@ -128,6 +128,12 @@ public class UserEditBean extends AbstractPageBean {
 	public void validateEmail(final FacesContext context, final UIComponent component, final Object value)
 			throws ValidatorException {
 		final String email = (String) value;
+		if (value == null) {
+			return;
+		}
+		if (value.equals(this.user.getEmail())) {
+			return;
+		}
 		if (this.userService.emailExists(email)) {
 			final String msg = translate("user.error.email_exists");
 			throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg));
