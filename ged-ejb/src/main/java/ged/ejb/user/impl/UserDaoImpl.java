@@ -153,8 +153,12 @@ public class UserDaoImpl implements UserDao {
 		final QueryBuilder qb = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(User.class)
 				.get();
 		final BooleanJunction<BooleanJunction> bj = qb.bool();
-		bj.must(qb.keyword().onField("name").matching(name).createQuery());
-		bj.must(qb.keyword().onField("surename").matching(surename).createQuery());
+		if (name != null) {
+			bj.must(qb.keyword().onField("name").matching(name).createQuery());
+		}
+		if (surename != null) {
+			bj.must(qb.keyword().onField("surename").matching(surename).createQuery());
+		}
 		bj.must(qb.keyword().onField("email").matching(email).createQuery()).not();
 		final Query persistenceQuery = fullTextEntityManager.createFullTextQuery(bj.createQuery(), User.class);
 		final List<User> result = persistenceQuery.getResultList();

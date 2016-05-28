@@ -186,7 +186,7 @@
 
 					<h:commandButton action="#{selectManagerPopupBean.show}" value="+">
 						<f:ajax execute="@this" render=":userSearchPopupForm" />
-						<f:setPropertyActionListener value="#{email}"
+						<f:setPropertyActionListener value="#{userEditBean.user.email}"
 							target="#{selectManagerPopupBean.userEmail}" />
 					</h:commandButton>
 

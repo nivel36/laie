@@ -84,11 +84,7 @@ public class SelectManagerPopupBean extends AbstractPageBean {
 	public void search() {
 		this.logger.fine("Searching for users");
 		List<User> users = null;
-		if ((this.name == null) && (this.surename == null)) {
-			users = this.userService.findAll();
-		} else {
-			users = this.userService.fullSearchManager(this.name, this.surename, this.userEmail);
-		}
+		users = this.userService.fullSearchManager(this.name, this.surename, this.userEmail);
 		this.paginator.setEntities(users);
 		clearPopupFields();
 	}
