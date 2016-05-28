@@ -10,6 +10,8 @@ import ged.ejb.core.model.Action;
 @Local
 public interface UserService {
 
+	void deleteAction(final Action action);
+
 	void deleteBookmark(Bookmark bookmark);
 
 	void deleteUser(User user);

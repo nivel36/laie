@@ -20,6 +20,11 @@ public class UserServiceImpl implements UserService {
 	private UserDao userDao;
 
 	@Override
+	public void deleteAction(final Action action) {
+		this.userDao.deleteAction(action);
+	}
+
+	@Override
 	public void deleteBookmark(final Bookmark bookmark) {
 		this.userDao.deleteBookmark(bookmark);
 	}
@@ -101,6 +106,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void insertBookmark(final Bookmark bookmark) {
 		this.userDao.insertBookmark(bookmark);
+
 	}
 
 	@Override

@@ -45,7 +45,6 @@ public class UserSearchBean extends AbstractPageBean {
 	public void deleteUser(final User user) {
 		this.logger.log(Level.FINE, "Deleting an user");
 		this.userService.deleteUser(user);
-		search();
 	}
 
 	public String editUser(final User user) {

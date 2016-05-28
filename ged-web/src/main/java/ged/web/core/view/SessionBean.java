@@ -117,6 +117,10 @@ public class SessionBean extends AbstractBean {
 		this.locale = new Locale(this.user.getLanguage());
 	}
 
+	public void removeAction(final Action action) {
+		this.actions.remove(action);
+	}
+
 	public void removeBookmark(final Bookmark bookmark) {
 		this.bookmarks.remove(bookmark);
 	}

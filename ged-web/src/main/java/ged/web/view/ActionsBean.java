@@ -50,6 +50,14 @@ public class ActionsBean implements Serializable {
 		return action;
 	}
 
+	public void delete(final AuditedEntity entity) {
+		final Action action = createAction(entity);
+		if (this.sessionBean.containsAction(action)) {
+			this.sessionBean.removeAction(action);
+			this.userService.deleteAction(action);
+		}
+	}
+
 	private String getUrl(final AuditedEntity entity) {
 		final String contextPath = this.facesContext.getExternalContext().getRequestContextPath();
 		String viewId = this.facesContext.getViewRoot().getViewId();
