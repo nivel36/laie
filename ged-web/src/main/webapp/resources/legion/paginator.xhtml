@@ -8,6 +8,7 @@
 <cc:interface>
 	<cc:attribute name="id" />
 	<cc:attribute name="paginator" type="ged.web.core.view.Paginator" />
+	<cc:attribute name="showComboPages" type="boolean" default="true" />
 </cc:interface>
 
 <cc:implementation>
@@ -40,7 +41,7 @@
 			action="#{cc.attrs.paginator.lastPage}">
 			<f:ajax render="@form" />
 		</h:commandButton>
-		<h:outputLabel value="#{i18n['paginator.show']}">
+		<h:outputLabel value="#{i18n['paginator.show']}" rendered="#{cc.attrs.showComboPages}">
 			<h:selectOneMenu value="#{cc.attrs.paginator.rowsPerPage}">
 				<f:selectItem itemValue="5" itemLabel="5" />
 				<f:selectItem itemValue="10" itemLabel="10" />
