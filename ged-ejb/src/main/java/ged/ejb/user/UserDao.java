@@ -38,15 +38,7 @@ public interface UserDao {
 
 	List<User> findUserTeam(Long id);
 
-	List<User> fullSearch(final String matching);
-
-	List<User> fullSearch(final String name, String surename);
-
-	List<User> fullSearchByName(final String name);
-
-	List<User> fullSearchBySurename(String surename);
-
-	List<User> fullSearchManager(final String name, String surename, final String email);
+	List<User> fullSearch(final String name, String surename, final String email, final boolean showDeleted);
 
 	void insertAction(Action action);
 

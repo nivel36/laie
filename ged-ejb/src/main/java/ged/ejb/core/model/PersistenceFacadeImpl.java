@@ -133,26 +133,10 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
 		for (int i = 0; i < fields.size(); i++) {
 			final String value = matching.get(i);
 			if ((value != null) && (value.length() != 0)) {
-				bj.must(getLuceneQuery(qb, fields.get(i), value));
+				bj.must(qb.keyword().onField(fields.get(i)).matching(value).createQuery());
 			}
 		}
 		final Query persistenceQuery = fullTextEntityManager.createFullTextQuery(bj.createQuery(), clazz);
-		final List<T> result = persistenceQuery.getResultList();
-		return result;
-	}
-
-	@Override
-	/**
-	 * @deprecated
-	 */
-	public <T extends AbstractEntity> List<T> fullSearch(final Class<T> clazz, final String matching,
-			final String... fields) {
-		final FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(this.em);
-		final QueryBuilder qb = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(clazz).get();
-		final org.apache.lucene.search.Query query = qb.keyword().onFields(fields).matching(matching).createQuery();
-
-		final Query persistenceQuery = fullTextEntityManager.createFullTextQuery(query, clazz);
-		@SuppressWarnings("unchecked")
 		final List<T> result = persistenceQuery.getResultList();
 		return result;
 	}
@@ -300,12 +284,6 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
 	@Override
 	public EntityManager getEm() {
 		return this.em;
-	}
-
-	private org.apache.lucene.search.Query getLuceneQuery(final QueryBuilder qb, final String field,
-			final String value) {
-		final org.apache.lucene.search.Query query = qb.keyword().onField(field).matching(value).createQuery();
-		return query;
 	}
 
 	/*

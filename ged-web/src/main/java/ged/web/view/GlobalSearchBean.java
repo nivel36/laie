@@ -53,7 +53,7 @@ public class GlobalSearchBean extends AbstractPageBean {
 		if ((this.text == null) || (this.text.length() < 3)) {
 			addMessage(FacesMessage.SEVERITY_WARN, "error.search.camp_to_short", "error.search.camp_to_short");
 		} else {
-			this.userPaginator.setEntities(this.userService.fullSearch(this.text));
+			this.userPaginator.setEntities(this.userService.fullSearch(this.text, this.text, null));
 			this.jobOfferPaginator.setEntities(this.jobService.fullSearch(this.text));
 		}
 	}

@@ -110,4 +110,8 @@ public class UserViewBean extends AbstractPageBean {
 	public void setUserService(final UserService userService) {
 		this.userService = userService;
 	}
+
+	public void undeleteUser() {
+		this.userService.undeleteUser(this.user);
+	}
 }

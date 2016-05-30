@@ -95,18 +95,20 @@ public class JobDaoImpl implements JobDao {
 
 	@Override
 	public List<JobOffer> fullSearch(final String matching) {
-		return this.persistenceFacade.fullSearch(JobOffer.class, matching, "name", "client.name", "description",
-				"city");
+		// TODO: add full search
+		return null;
 	}
 
 	@Override
 	public List<JobOffer> fullSearchByClientName(final String clientName) {
-		return this.persistenceFacade.fullSearch(JobOffer.class, clientName, "client.name");
+		// TODO: add full search
+		return null;
 	}
 
 	@Override
 	public List<JobOffer> fullSearchByName(final String name) {
-		return this.persistenceFacade.fullSearch(JobOffer.class, name, "name");
+		// TODO: add full search
+		return null;
 	}
 
 	@Override

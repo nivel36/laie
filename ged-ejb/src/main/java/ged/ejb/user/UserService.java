@@ -30,21 +30,15 @@ public interface UserService {
 
 	List<User> findUserTeam(Long id);
 
-	List<User> fullSearch(String matching);
-
-	List<User> fullSearch(String name, String surename);
-
-	List<User> fullSearchByName(String name);
-
-	List<User> fullSearchBySurename(String surename);
-
-	List<User> fullSearchManager(final String name, final String surename, final String userEmail);
+	List<User> fullSearch(final String name, final String surename, final String userEmail);
 
 	void insertAction(Action action);
 
 	void insertBookmark(Bookmark bookmark);
 
 	void insertUser(User user);
+
+	void undeleteUser(final User user);
 
 	User updateUser(User user);
 }

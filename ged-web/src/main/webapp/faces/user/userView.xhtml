@@ -61,8 +61,12 @@
 				</h:panelGroup>
 
 				<h:panelGroup layout="block" styleClass="buttonGroup">
+					<h:commandButton value="#{i18n['action.undelete']}"
+						action="#{userViewBean.undeleteUser}" immediate="true"
+						rendered="#{userViewBean.user.deleted}" />
 					<h:commandButton value="#{i18n['action.edit']}"
-						action="#{userViewBean.editUser}" immediate="true" />
+						action="#{userViewBean.editUser}" immediate="true"
+						rendered="#{not userViewBean.user.deleted}" />
 					<h:commandButton value="#{i18n['bookmark.add_to_bookmarks']}"
 						action="#{bookmarksBean.add(userViewBean.user)}" immediate="true"
 						rendered="#{not bookmarksBean.isBookmarked(userViewBean.user)}" />

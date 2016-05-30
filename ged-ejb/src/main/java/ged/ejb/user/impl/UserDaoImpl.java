@@ -1,6 +1,5 @@
 package ged.ejb.user.impl;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -119,35 +118,10 @@ public class UserDaoImpl implements UserDao {
 		return this.persistenceFacade.getByTypedQuery(User.class, "User.findUserTeam", parameters, 0, 0);
 	}
 
-	@Override
-	public List<User> fullSearch(final String matching) {
-		return this.persistenceFacade.fullSearch(User.class, matching, "name", "surename", "email");
-	}
-
-	@Override
-	public List<User> fullSearch(final String name, final String surename) {
-		final List<String> fields = new ArrayList<>();
-		fields.add("name");
-		fields.add("surename");
-		final List<String> values = new ArrayList<>();
-		values.add(name);
-		values.add(surename);
-		return this.persistenceFacade.fullSearch(User.class, fields, values);
-	}
-
-	@Override
-	public List<User> fullSearchByName(final String name) {
-		return this.persistenceFacade.fullSearch(User.class, name, "name");
-	}
-
-	@Override
-	public List<User> fullSearchBySurename(final String surename) {
-		return this.persistenceFacade.fullSearch(User.class, surename, "surename");
-	}
-
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
-	public List<User> fullSearchManager(final String name, final String surename, final String email) {
+	public List<User> fullSearch(final String name, final String surename, final String email,
+			final boolean showDeleted) {
 		final EntityManager em = this.persistenceFacade.getEm();
 		final FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(em);
 		final QueryBuilder qb = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(User.class)
@@ -159,8 +133,18 @@ public class UserDaoImpl implements UserDao {
 		if (surename != null) {
 			bj.must(qb.keyword().onField("surename").matching(surename).createQuery());
 		}
-		bj.must(qb.keyword().onField("email").matching(email).createQuery()).not();
-		final Query persistenceQuery = fullTextEntityManager.createFullTextQuery(bj.createQuery(), User.class);
+		if (email != null) {
+			bj.must(qb.keyword().onField("email").matching(email).createQuery()).not();
+		}
+		if (!showDeleted) {
+			bj.must(qb.keyword().onField("deleted").matching(true).createQuery()).not();
+		}
+		Query persistenceQuery = null;
+		if (bj.isEmpty()) {
+			persistenceQuery = fullTextEntityManager.createFullTextQuery(qb.all().createQuery(), User.class);
+		} else {
+			persistenceQuery = fullTextEntityManager.createFullTextQuery(bj.createQuery(), User.class);
+		}
 		final List<User> result = persistenceQuery.getResultList();
 		return result;
 	}

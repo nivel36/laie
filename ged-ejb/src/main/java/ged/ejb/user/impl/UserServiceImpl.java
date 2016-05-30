@@ -31,7 +31,8 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void deleteUser(final User user) {
-		this.userDao.deleteUser(user);
+		user.setDeleted(true);
+		this.userDao.updateUser(user);
 	}
 
 	@Override
@@ -74,28 +75,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<User> fullSearch(final String matching) {
-		return this.userDao.fullSearch(matching);
-	}
-
-	@Override
-	public List<User> fullSearch(final String name, final String surename) {
-		return this.userDao.fullSearch(name, surename);
-	}
-
-	@Override
-	public List<User> fullSearchByName(final String name) {
-		return this.userDao.fullSearchByName(name);
-	}
-
-	@Override
-	public List<User> fullSearchBySurename(final String surename) {
-		return this.userDao.fullSearchBySurename(surename);
-	}
-
-	@Override
-	public List<User> fullSearchManager(final String name, final String surename, final String userEmail) {
-		return this.userDao.fullSearchManager(name, surename, userEmail);
+	public List<User> fullSearch(final String name, final String surename, final String userEmail) {
+		return this.userDao.fullSearch(name, surename, userEmail, false);
 	}
 
 	@Override
@@ -112,6 +93,12 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void insertUser(final User user) {
 		this.userDao.insertUser(user);
+	}
+
+	@Override
+	public void undeleteUser(final User user) {
+		user.setDeleted(false);
+		this.userDao.updateUser(user);
 	}
 
 	@Override

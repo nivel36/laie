@@ -26,8 +26,6 @@ public interface PersistenceFacade {
 	<T extends AbstractEntity> List<T> fullSearch(final Class<T> clazz, final List<String> fields,
 			final List<String> matching);
 
-	<T extends AbstractEntity> List<T> fullSearch(Class<T> clazz, String matching, String... fields);
-
 	<T extends AbstractEntity> List<T> getAll(Class<T> clazz);
 
 	<T> List<T> getByCriteria(CriteriaQuery<T> cq, int pageSize, int pageNum);

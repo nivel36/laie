@@ -1,5 +1,6 @@
 package ged.web.view.user;
 
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -45,6 +46,7 @@ public class UserSearchBean extends AbstractPageBean {
 	public void deleteUser(final User user) {
 		this.logger.log(Level.FINE, "Deleting an user");
 		this.userService.deleteUser(user);
+		search();
 	}
 
 	public String editUser(final User user) {
@@ -79,11 +81,8 @@ public class UserSearchBean extends AbstractPageBean {
 
 	public void search() {
 		this.logger.fine("Searching for users");
-		if ((this.name == null) && (this.surename == null)) {
-			this.paginator.setEntities(this.userService.findAll());
-		} else {
-			this.paginator.setEntities(this.userService.fullSearch(this.name, this.surename));
-		}
+		final List<User> users = this.userService.fullSearch(this.name, this.surename, null);
+		this.paginator.setEntities(users);
 	}
 
 	public void setLogger(final Logger logger) {
