@@ -19,7 +19,7 @@ public class RoleClosure extends AbstractEntity {
 	@JoinColumn(name = "descendant_id", nullable = false)
 	private Role descendant;
 
-	private Integer pathLength;
+	private int pathLength;
 
 	public Role getAntecessor() {
 		return this.antecessor;
@@ -29,7 +29,7 @@ public class RoleClosure extends AbstractEntity {
 		return this.descendant;
 	}
 
-	public Integer getPathLength() {
+	public int getPathLength() {
 		return this.pathLength;
 	}
 
@@ -41,7 +41,7 @@ public class RoleClosure extends AbstractEntity {
 		this.descendant = descendant;
 	}
 
-	public void setPathLength(final Integer pathLength) {
+	public void setPathLength(final int pathLength) {
 		this.pathLength = pathLength;
 	}
 }
