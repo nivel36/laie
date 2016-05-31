@@ -36,7 +36,7 @@ public interface UserDao {
 
 	List<User> findUsers(String name, String surename);
 
-	List<User> findUserTeam(Long id);
+	List<User> findSubordinateUsers(Long id);
 
 	List<User> fullSearch(final String name, String surename, final String email, final boolean showDeleted);
 

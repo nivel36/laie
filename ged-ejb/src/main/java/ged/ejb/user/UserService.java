@@ -28,7 +28,7 @@ public interface UserService {
 
 	List<User> findUsers(String name, String surenames);
 
-	List<User> findUserTeam(Long id);
+	List<User> findSubordinateUsers(Long id);
 
 	List<User> fullSearch(final String name, final String surename, final String userEmail);
 

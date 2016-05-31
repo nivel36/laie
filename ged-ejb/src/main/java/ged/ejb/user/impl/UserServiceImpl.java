@@ -70,8 +70,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<User> findUserTeam(final Long id) {
-		return this.userDao.findUserTeam(id);
+	public List<User> findSubordinateUsers(final Long id) {
+		return this.userDao.findSubordinateUsers(id);
 	}
 
 	@Override

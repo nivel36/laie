@@ -89,7 +89,7 @@ public class UserViewBean extends AbstractPageBean {
 			error();
 		}
 		this.team = new Paginator<>(this.sessionBean.getRowsPerPage());
-		this.team.setEntities(this.userService.findUserTeam(id));
+		this.team.setEntities(this.userService.findSubordinateUsers(id));
 		this.jobOffers = new Paginator<>(this.sessionBean.getRowsPerPage());
 		this.jobOffers.setEntities(this.jobService.findJobOffersByOwner(this.user));
 	}

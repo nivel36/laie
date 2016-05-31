@@ -24,7 +24,7 @@ public class RoleServiceImpl implements RoleService {
 
 	@Override
 	public List<Role> findSubordinateRoles(final Role manager) {
-		return this.roleDao.findSubordinateRoles(manager);
+		return this.roleDao.findSubordinateRoles(manager.getId());
 	}
 
 	@Override

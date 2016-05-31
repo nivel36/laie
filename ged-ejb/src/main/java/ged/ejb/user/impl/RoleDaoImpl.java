@@ -24,9 +24,9 @@ public class RoleDaoImpl implements RoleDao {
 	}
 
 	@Override
-	public List<Role> findSubordinateRoles(final Role managerRole) {
+	public List<Role> findSubordinateRoles(final Long id) {
 		final Map<String, Object> parameters = new HashMap<>();
-		parameters.put("role", managerRole);
+		parameters.put("id", id);
 		return this.persistenceFacade.getByTypedQuery(Role.class, "Role.findSubordinateRoles", parameters, 0, 0);
 	}
 }

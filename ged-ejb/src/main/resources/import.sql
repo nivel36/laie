@@ -88,6 +88,7 @@ insert into ROLECLOSURE( id, version, antecessor_id, descendant_id, pathLength )
 insert into ROLECLOSURE( id, version, antecessor_id, descendant_id, pathLength ) values( 935, 0, 915, 914, 1 );
 
 insert into USER( id, version, email, language, name, rowsPerPage, surename, username, password, roleId ) values( 901, 0, 'abel.ferrer.jimenez@gmail.com', 'es', 'Abel', 25, 'Ferrer', 'aferrer', 'jGl25bVBBBW96Qi9Te4V37Fnqchz/Eu4qB9vKrRIqRg=', 911);
+insert into USERCLOSURE( id, version, antecessor_id, descendant_id, pathLength ) values( 970, 0, 901, 901, 0 );
 
 insert into CANDIDATE( id, version, name, surename, phoneNumber1, email, city, country, door, number, state, storey, street, zipCode, curriculumId, ownerid) values ( 201, 0, 'Abel', 'Ferrer Jiménez','685555276', 'abel.ferrer.jimenez@gmail.com', 'Barcelona', 'España','1','85', 'Barcelona', 'Principal', 'Bailén', '08809', 301, 901);
 insert into CANDIDATE( id, version, name, surename, phoneNumber1, email, city, country, door, number, state, storey, street, zipCode, curriculumId, ownerid) values ( 202, 0, 'Luís', 'González Sánchez','685555277', 'lgonzalez@gmail.com', 'Madrid', 'España','2','85', 'Madrid', '2', 'Miraflores', '80809', NULL, 901);

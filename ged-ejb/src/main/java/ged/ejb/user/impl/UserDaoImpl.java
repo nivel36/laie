@@ -18,6 +18,7 @@ import ged.ejb.core.bookmark.Bookmark;
 import ged.ejb.core.model.Action;
 import ged.ejb.core.model.PersistenceFacade;
 import ged.ejb.user.User;
+import ged.ejb.user.UserClosure;
 import ged.ejb.user.UserDao;
 
 @Repository
@@ -69,6 +70,13 @@ public class UserDaoImpl implements UserDao {
 		return this.persistenceFacade.getByTypedQuery(User.class, "User.findAll", null, 0, 0);
 	}
 
+	public List<UserClosure> findAntecessorsUserClosures(final User user) {
+		final Map<String, Object> parameters = new HashMap<>();
+		parameters.put("id", user.getId());
+		return this.persistenceFacade.getByTypedQuery(UserClosure.class, "UserClosure.findAntecessorsUserClosuresById",
+				parameters, 0, 0);
+	}
+
 	@Override
 	public Bookmark findBookmark(final Long auditedId, final String entity, final User user) {
 		final Map<String, Object> parameters = makeParameters(auditedId, entity, user);
@@ -97,6 +105,13 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
+	public List<User> findSubordinateUsers(final Long id) {
+		final Map<String, Object> parameters = new HashMap<>(1);
+		parameters.put("id", id);
+		return this.persistenceFacade.getByTypedQuery(User.class, "User.findSubordinateUsers", parameters, 0, 0);
+	}
+
+	@Override
 	public User findUserByUsername(final String username) {
 		final Map<String, Object> parameters = new HashMap<>();
 		parameters.put("username", username);
@@ -109,13 +124,6 @@ public class UserDaoImpl implements UserDao {
 		parameters.put("name", name);
 		parameters.put("surename", surename);
 		return this.persistenceFacade.getByTypedQuery(User.class, "User.findByNameAndSurename", parameters, 0, 0);
-	}
-
-	@Override
-	public List<User> findUserTeam(final Long id) {
-		final Map<String, Object> parameters = new HashMap<>(2);
-		parameters.put("id", id);
-		return this.persistenceFacade.getByTypedQuery(User.class, "User.findUserTeam", parameters, 0, 0);
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -162,6 +170,25 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public void insertUser(final User user) {
 		this.persistenceFacade.insert(user);
+		if (user.getManager() != null) {
+			insertUserClosures(user);
+		}
+	}
+
+	private void insertUserClosure(final User antecessor, final User descendant, final int pathLength) {
+		final UserClosure newUserClosure = new UserClosure();
+		newUserClosure.setAntecessor(antecessor);
+		newUserClosure.setDescendant(descendant);
+		newUserClosure.setPathLength(pathLength);
+		this.persistenceFacade.insert(newUserClosure);
+	}
+
+	private void insertUserClosures(final User user) {
+		final List<UserClosure> userClosures = findAntecessorsUserClosures(user.getManager());
+		for (final UserClosure userClosure : userClosures) {
+			insertUserClosure(userClosure.getAntecessor(), user, userClosure.getPathLength() + 1);
+		}
+		insertUserClosure(user, user, 0);
 	}
 
 	private Map<String, Object> makeParameters(final Long auditedId, final String entity, final User user) {

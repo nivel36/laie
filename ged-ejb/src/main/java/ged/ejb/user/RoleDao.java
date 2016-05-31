@@ -9,6 +9,6 @@ public interface RoleDao {
 
 	List<Role> findAllRoles();
 
-	List<Role> findSubordinateRoles(Role managerRole);
+	List<Role> findSubordinateRoles(Long id);
 
 }

@@ -53,7 +53,7 @@
 	</named-query>
 
 	<named-query name="Role.findSubordinateRoles">
-		<query>SELECT r FROM RoleClosure rc JOIN rc.descendant r WHERE rc.antecessor = :role</query>
+		<query>SELECT r FROM RoleClosure rc JOIN rc.descendant r WHERE rc.antecessor.id = :id</query>
 	</named-query>
 
 	<named-query name="User.findById">
@@ -64,11 +64,8 @@
 		<query>SELECT u FROM User u LEFT JOIN FETCH u.role WHERE u.username = :username</query>
 	</named-query>
 
-	<named-query name="User.findUserTeam">
-		<query>SELECT 	u
-				FROM 	User u
-				WHERE	(u.manager IS NOT NULL AND u.manager.id = :id)
-		</query>
+	<named-query name="User.findSubordinateUsers">
+		<query>SELECT u FROM UserClosure uc JOIN uc.descendant u WHERE uc.antecessor.id = :id AND uc.pathLength > 0</query>
 	</named-query>
 
 	<named-query name="User.findAll">
@@ -99,5 +96,8 @@
 	<named-query name="User.countEmail">
 		<query>SELECT COUNT(u) FROM User u WHERE u.email = :email</query>
 	</named-query>
-
+	
+	<named-query name="UserClosure.findAntecessorsUserClosuresById">
+		<query>SELECT uc FROM UserClosure uc WHERE uc.descendant.id = :id</query>
+	</named-query>
 </entity-mappings>
