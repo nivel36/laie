@@ -88,21 +88,6 @@ public class Candidate extends AuditedEntity {
 		this.address = new Address();
 	}
 
-	@Override
-	public boolean equals(final Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (!super.equals(obj)) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		final Candidate other = (Candidate) obj;
-		return this.id == other.id;
-	}
-
 	public Address getAddress() {
 		return this.address;
 	}
@@ -165,14 +150,6 @@ public class Candidate extends AuditedEntity {
 
 	public List<Tag> getTags() {
 		return this.tags;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = (prime * result) + (int) this.id;
-		return result;
 	}
 
 	public void setAddress(final Address address) {

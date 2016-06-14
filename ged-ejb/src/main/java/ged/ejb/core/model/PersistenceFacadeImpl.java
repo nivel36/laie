@@ -55,14 +55,14 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
 	 * @see afersa.core.model.PersistenceFacade#contains(T)
 	 */
 	@Override
-	public <T extends AbstractEntity> boolean contains(final T entity) {
+	public <K, T extends Entity<K>> boolean contains(final T entity) {
 		final boolean isContained = this.em.contains(entity);
 		this.logger.log(Level.FINE, "La entidad {0} esta en el em? {1}",
 				new Object[] { entity.getClass().getSimpleName(), isContained });
 		return isContained;
 	}
 
-	private <T extends AbstractEntity> TypedQuery<T> createQueryFromCriteria(final Class<T> clazz,
+	private <K, T extends Entity<K>> TypedQuery<T> createQueryFromCriteria(final Class<T> clazz,
 			final Map<String, Object> properties) {
 		final CriteriaBuilder cb = this.em.getCriteriaBuilder();
 		final CriteriaQuery<T> cq = cb.createQuery(clazz);
@@ -90,7 +90,7 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
 	 * @see afersa.core.model.PersistenceFacade#delete(T)
 	 */
 	@Override
-	public <T extends AbstractEntity> void delete(final T entity) {
+	public <K, T extends Entity<K>> void delete(final T entity) {
 		this.logger.log(Level.FINE, "Eliminando la entidad::Clase={0}::Id={1}",
 				new Object[] { entity.getClass().getCanonicalName(), entity.getId() });
 		if (this.em.contains(entity)) {
@@ -106,7 +106,7 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
 	 * @see afersa.core.model.PersistenceFacade#detach(T)
 	 */
 	@Override
-	public <T extends AbstractEntity> void detach(final T entity) {
+	public <K, T extends Entity<K>> void detach(final T entity) {
 		this.logger.log(Level.FINE, "Desincronizando la entidad::Clase={0}::Id={1}",
 				new Object[] { entity.getClass().getCanonicalName(), entity.getId() });
 		this.em.detach(entity);
@@ -125,7 +125,7 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
-	public <T extends AbstractEntity> List<T> fullSearch(final Class<T> clazz, final List<String> fields,
+	public <K, T extends Entity<K>> List<T> fullSearch(final Class<T> clazz, final List<String> fields,
 			final List<String> matching) {
 		final FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(this.em);
 		final QueryBuilder qb = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(clazz).get();
@@ -142,7 +142,7 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
 	}
 
 	@Override
-	public <T extends AbstractEntity> List<T> getAll(final Class<T> clazz) {
+	public <K, T extends Entity<K>> List<T> getAll(final Class<T> clazz) {
 		final TypedQuery<T> typedQuery = createQueryFromCriteria(clazz, null);
 		paginar(0, RES_LIMIT, typedQuery);
 		return typedQuery.getResultList();
@@ -182,21 +182,21 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
 	 * java.lang.Object)
 	 */
 	@Override
-	public <T extends AbstractEntity> T getByPrimaryKey(final Class<T> entityClass, final Long id) {
+	public <K, T extends Entity<K>> T getByPrimaryKey(final Class<T> entityClass, final K id) {
 		this.logger.log(Level.FINE, "Buscando por clave primaria::clase={0}::id={1}", new Object[] { entityClass, id });
 		return this.em.find(entityClass, id);
 	}
 
 	@Override
-	public <T extends AbstractEntity> T getByProperties(final Class<T> clazz, final Map<String, Object> properties) {
+	public <K, T extends Entity<K>> T getByProperties(final Class<T> clazz, final Map<String, Object> properties) {
 		final TypedQuery<T> typedQuery = createQueryFromCriteria(clazz, properties);
 		parametrizar(properties, typedQuery);
 		return typedQuery.getSingleResult();
 	}
 
 	@Override
-	public <T extends AbstractEntity> List<T> getByProperties(final Class<T> clazz,
-			final Map<String, Object> properties, final int pageSize, final int pageNum) {
+	public <K, T extends Entity<K>> List<T> getByProperties(final Class<T> clazz, final Map<String, Object> properties,
+			final int pageSize, final int pageNum) {
 		final TypedQuery<T> typedQuery = createQueryFromCriteria(clazz, properties);
 		paginar(pageSize, pageNum, typedQuery);
 		return typedQuery.getResultList();
@@ -245,7 +245,7 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
 	 * java.lang.String, java.util.Map, int, int)
 	 */
 	@Override
-	public <T extends AbstractEntity> List<T> getByTypedQuery(final Class<T> entityClass, final String namedQuery,
+	public <K, T extends Entity<K>> List<T> getByTypedQuery(final Class<T> entityClass, final String namedQuery,
 			final Map<String, Object> parameters, final int pageSize, final int pageNum) {
 		this.logger.log(Level.FINE, "Ejecutando la getByTypedQuery: {0}", namedQuery);
 		final TypedQuery<T> query = this.em.createNamedQuery(namedQuery, entityClass);
@@ -262,7 +262,7 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
 	 * lang.Class, java.lang.String, java.util.Map)
 	 */
 	@Override
-	public <T extends AbstractEntity> T getByTypedQuerySingleResult(final Class<T> entityClass, final String namedQuery,
+	public <K, T extends Entity<K>> T getByTypedQuerySingleResult(final Class<T> entityClass, final String namedQuery,
 			final Map<String, Object> parameters) {
 		this.logger.log(Level.FINE, "Ejecutando la getByTypedQuerySingleResult: {0}", namedQuery);
 		final TypedQuery<T> query = this.em.createNamedQuery(namedQuery, entityClass);
@@ -281,7 +281,6 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
 		return this.em.getCriteriaBuilder();
 	}
 
-	@Override
 	public EntityManager getEm() {
 		return this.em;
 	}
@@ -293,7 +292,7 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
 	 * java.lang.Object)
 	 */
 	@Override
-	public <T extends AbstractEntity> T getReference(final Class<T> entityClass, final Object primaryKey) {
+	public <K, T extends Entity<K>> T getReference(final Class<T> entityClass, final Object primaryKey) {
 		this.logger.log(Level.FINE, "Reference de la entidad::Clase={0}::Id={1}",
 				new Object[] { entityClass, primaryKey });
 		return this.em.getReference(entityClass, primaryKey);
@@ -305,7 +304,7 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
 	 * @see afersa.core.model.PersistenceFacade#persist(T)
 	 */
 	@Override
-	public <T extends AbstractEntity> void insert(final T entity) {
+	public <K, T extends Entity<K>> void insert(final T entity) {
 		this.logger.log(Level.FINE, "Insertando una nueva entidad de tipod::Clase={0}",
 				entity.getClass().getCanonicalName());
 		this.em.persist(entity);
@@ -319,7 +318,7 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
 	 * javax.persistence.LockModeType, java.util.Map)
 	 */
 	@Override
-	public <T extends AbstractEntity> void lock(final T entity, final LockModeType lockModeType,
+	public <K, T extends Entity<K>> void lock(final T entity, final LockModeType lockModeType,
 			final Map<String, Object> properties) {
 		this.logger.log(Level.FINE, "Bloqueando la entidad::clase={0}::id={1}::lockMode={2}",
 				new Object[] { entity.getClass().getCanonicalName(), entity.getId(), lockModeType });
@@ -364,7 +363,7 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
 	 * javax.persistence.LockModeType, java.util.Map)
 	 */
 	@Override
-	public <T extends AbstractEntity> void refresh(final T entity, final LockModeType lockModeType,
+	public <K, T extends Entity<K>> void refresh(final T entity, final LockModeType lockModeType,
 			final Map<String, Object> properties) {
 		this.logger.log(Level.FINE, "Refresh de la entidad::clase={0}::id={1}::lockMode={2}",
 				new Object[] { entity.getClass().getCanonicalName(), entity.getId(), lockModeType });
@@ -378,7 +377,6 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
 	 * afersa.core.model.PersistenceFacade#setEm(javax.persistence.EntityManager
 	 * )
 	 */
-	@Override
 	public void setEm(final EntityManager em) {
 		this.em = em;
 	}
@@ -389,7 +387,6 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
 	 * @see
 	 * afersa.core.model.PersistenceFacade#setLogger(java.util.logging.Logger)
 	 */
-	@Override
 	public void setLogger(final Logger logger) {
 		this.logger = logger;
 	}
@@ -400,7 +397,7 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
 	 * @see afersa.core.model.PersistenceFacade#update(T)
 	 */
 	@Override
-	public <T extends AbstractEntity> T update(final T entity) {
+	public <K, T extends Entity<K>> T update(final T entity) {
 		this.logger.log(Level.FINE, "Actualizando la entidad::Clase={0}::Id={1}",
 				new Object[] { entity.getClass().getCanonicalName(), entity.getId() });
 		if (!this.em.contains(entity)) {

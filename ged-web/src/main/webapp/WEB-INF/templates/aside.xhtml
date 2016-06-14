@@ -31,8 +31,8 @@
 		<h:panelGroup layout="block" styleClass="panel" id="bookmarks">
 			<h1>#{i18n['aside.bookmarks']}</h1>
 			<h:outputText value="#{i18n['message.bookmarks.empty']}"
-				styleClass="text" rendered="#{empty sessionBean.bookmarks}" />
-			<ui:repeat value="#{sessionBean.bookmarks}" var="bookmark">
+				styleClass="text" rendered="#{empty bookmarksBean.bookmarks}" />
+			<ui:repeat value="#{bookmarksBean.bookmarks}" var="bookmark">
 				<h:outputLink value="#{bookmark.url}">
 					<h:outputText value="#{bookmark.text}" />
 				</h:outputLink>

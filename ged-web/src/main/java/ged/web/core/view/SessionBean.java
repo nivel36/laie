@@ -11,8 +11,6 @@ import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import ged.ejb.core.bookmark.Bookmark;
-import ged.ejb.core.bookmark.BookmarkFullExpcetion;
 import ged.ejb.core.model.Action;
 import ged.ejb.core.model.SavedSearch;
 import ged.ejb.user.User;
@@ -26,8 +24,6 @@ public class SessionBean extends AbstractBean {
 
 	@Produces
 	private List<Action> actions = new ArrayList<Action>();
-
-	private List<Bookmark> bookmarks = new ArrayList<Bookmark>();
 
 	private final List<BreadcrumbState> breadcrumb = new ArrayList<BreadcrumbState>();
 
@@ -51,15 +47,6 @@ public class SessionBean extends AbstractBean {
 		}
 	}
 
-	public void addBookmark(final Bookmark bookmark) throws BookmarkFullExpcetion {
-		if (!containsBookmark(bookmark)) {
-			if (this.bookmarks.size() > 9) {
-				throw new BookmarkFullExpcetion();
-			}
-			this.bookmarks.add(0, bookmark);
-		}
-	}
-
 	public void addBreadcrumb(final BreadcrumbState breadcrumbState) {
 		this.breadcrumb.add(breadcrumbState);
 	}
@@ -72,16 +59,8 @@ public class SessionBean extends AbstractBean {
 		return this.actions.contains(action);
 	}
 
-	public boolean containsBookmark(final Bookmark bookmark) {
-		return this.bookmarks.contains(bookmark);
-	}
-
 	public List<Action> getActions() {
 		return this.actions;
-	}
-
-	public List<Bookmark> getBookmarks() {
-		return this.bookmarks;
 	}
 
 	public List<BreadcrumbState> getBreadcrumb() {
@@ -121,16 +100,8 @@ public class SessionBean extends AbstractBean {
 		this.actions.remove(action);
 	}
 
-	public void removeBookmark(final Bookmark bookmark) {
-		this.bookmarks.remove(bookmark);
-	}
-
 	public void setActions(final List<Action> actions) {
 		this.actions = actions;
-	}
-
-	public void setBookmarks(final List<Bookmark> bookmarks) {
-		this.bookmarks = bookmarks;
 	}
 
 	public void setLocale(final Locale locale) {
