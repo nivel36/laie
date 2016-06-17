@@ -1,5 +1,6 @@
 package ged.web.view;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -9,7 +10,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import ged.ejb.core.bookmark.Bookmark;
-import ged.ejb.core.bookmark.BookmarkFullExpcetion;
 import ged.ejb.core.model.AuditedEntity;
 import ged.ejb.user.BookmarkService;
 import ged.web.core.view.AbstractPageBean;
@@ -22,34 +22,29 @@ public class BookmarksBean extends AbstractPageBean {
 
 	private List<Bookmark> bookmarks;
 
-	private BookmarkService bookmarkService;
+	@Inject
+	private transient BookmarkService bookmarkService;
+
+	private List<String> urls;
 
 	public void add(final AuditedEntity entity) {
+		final String url = getUrl(entity);
 		final Bookmark bookmark = createBookmark(entity);
-		try {
-			if (containsBookmark(bookmark)) {
-				removeBookmark(bookmark);
-				addBookmark(bookmark);
-			} else {
-				addBookmark(bookmark);
-				this.bookmarkService.insert(bookmark);
-			}
-		} catch (final BookmarkFullExpcetion e) {
+		if (existsUrl(url)) {
+			removeBookmark(bookmark);
+		} else {
+			addBookmark(bookmark);
+		}
+	}
+
+	private void addBookmark(final Bookmark bookmark) {
+		if (this.bookmarks.size() > 9) {
 			addMessage(FacesMessage.SEVERITY_ERROR, "Bookmark full", "Bookmark full");
+			return;
 		}
-	}
-
-	public void addBookmark(final Bookmark bookmark) throws BookmarkFullExpcetion {
-		if (!containsBookmark(bookmark)) {
-			if (this.bookmarks.size() > 9) {
-				throw new BookmarkFullExpcetion();
-			}
-			this.bookmarks.add(0, bookmark);
-		}
-	}
-
-	public boolean containsBookmark(final Bookmark bookmark) {
-		return this.bookmarks.contains(bookmark);
+		this.bookmarks.add(0, bookmark);
+		this.urls.add(0, bookmark.getUrl());
+		this.bookmarkService.insert(bookmark);
 	}
 
 	private Bookmark createBookmark(final AuditedEntity entity) {
@@ -61,45 +56,51 @@ public class BookmarksBean extends AbstractPageBean {
 		return bookmark;
 	}
 
+	private boolean existsUrl(final String url) {
+		return this.urls.contains(url);
+	}
+
 	public List<Bookmark> getBookmarks() {
 		return this.bookmarks;
 	}
 
 	private String getUrl(final AuditedEntity entity) {
-		final String contextPath = this.facesContext.getExternalContext().getRequestContextPath();
+		final String contextPath = this.externalContext.getRequestContextPath();
 		final String viewId = this.facesContext.getViewRoot().getViewId();
-		final String url = contextPath + viewId + "?id=" + entity.getId();
-		return url;
+		final StringBuilder url = new StringBuilder();
+		url.append(contextPath).append(viewId).append("?id=").append(entity.getId());
+		return url.toString();
 	}
 
 	@PostConstruct
 	public void init() {
-		this.bookmarks = this.bookmarkService.findAll();
+		this.bookmarks = this.bookmarkService.findAllByUser(this.sessionBean.getUser());
+		this.urls = new ArrayList<>(this.bookmarks.size());
+		for (final Bookmark bookmark : this.bookmarks) {
+			this.urls.add(bookmark.getUrl());
+		}
 	}
 
 	public boolean isBookmarked(final AuditedEntity entity) {
-		final Bookmark bookmark = createBookmark(entity);
-		return containsBookmark(bookmark);
+		final String url = getUrl(entity);
+		return existsUrl(url);
 	}
 
 	public void remove(final AuditedEntity entity) {
 		final String url = getUrl(entity);
-		final Bookmark bookmark = this.bookmarkService.findByUrl(url);
-		if (containsBookmark(bookmark)) {
+		if (existsUrl(url)) {
+			final Bookmark bookmark = this.bookmarkService.findByUrl(url);
 			removeBookmark(bookmark);
 			this.bookmarkService.delete(bookmark);
 		}
 	}
 
 	public void removeBookmark(final Bookmark bookmark) {
-		this.bookmarks.remove(bookmark);
+		final int index = this.bookmarks.indexOf(bookmark);
+		this.bookmarks.remove(index);
+		this.urls.remove(index);
 	}
 
-	public void setBookmarks(final List<Bookmark> bookmarks) {
-		this.bookmarks = bookmarks;
-	}
-
-	@Inject
 	public void setUserService(final BookmarkService bookmarkService) {
 		this.bookmarkService = bookmarkService;
 	}
