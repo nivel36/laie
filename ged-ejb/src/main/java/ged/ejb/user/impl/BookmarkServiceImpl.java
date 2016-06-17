@@ -35,6 +35,12 @@ public class BookmarkServiceImpl extends AbstractService<Long, Bookmark> impleme
 		return this.dao;
 	}
 
+	@Override
+	public void delete(final String url) {
+		final Bookmark bookmark = this.dao.findByUrl(url);
+		delete(bookmark);
+	}
+
 	public void setDao(final BookmarkDao dao) {
 		this.dao = dao;
 	}

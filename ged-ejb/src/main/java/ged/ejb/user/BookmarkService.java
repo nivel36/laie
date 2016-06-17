@@ -14,4 +14,6 @@ public interface BookmarkService extends CrudService<Long, Bookmark> {
 
 	Bookmark findByUrl(String url);
 
+	void delete(String url);
+
 }

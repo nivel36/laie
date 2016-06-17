@@ -29,10 +29,10 @@ public class BookmarksBean extends AbstractPageBean {
 
 	public void add(final AuditedEntity entity) {
 		final String url = getUrl(entity);
-		final Bookmark bookmark = createBookmark(entity);
 		if (existsUrl(url)) {
-			removeBookmark(bookmark);
+			removeBookmark(url);
 		} else {
+			final Bookmark bookmark = createBookmark(entity);
 			addBookmark(bookmark);
 		}
 	}
@@ -89,14 +89,12 @@ public class BookmarksBean extends AbstractPageBean {
 	public void remove(final AuditedEntity entity) {
 		final String url = getUrl(entity);
 		if (existsUrl(url)) {
-			final Bookmark bookmark = this.bookmarkService.findByUrl(url);
-			removeBookmark(bookmark);
-			this.bookmarkService.delete(bookmark);
+			this.bookmarkService.delete(url);
 		}
 	}
 
-	public void removeBookmark(final Bookmark bookmark) {
-		final int index = this.bookmarks.indexOf(bookmark);
+	public void removeBookmark(final String url) {
+		final int index = this.urls.indexOf(url);
 		this.bookmarks.remove(index);
 		this.urls.remove(index);
 	}
