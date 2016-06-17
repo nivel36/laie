@@ -14,7 +14,6 @@ import org.hibernate.search.query.dsl.BooleanJunction;
 import org.hibernate.search.query.dsl.QueryBuilder;
 
 import ged.ejb.core.Repository;
-import ged.ejb.core.bookmark.Bookmark;
 import ged.ejb.core.model.Action;
 import ged.ejb.core.model.PersistenceFacade;
 import ged.ejb.user.User;
@@ -37,11 +36,6 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public void deleteAction(final Action action) {
 		this.persistenceFacade.delete(action);
-	}
-
-	@Override
-	public void deleteBookmark(final Bookmark bookmark) {
-		this.persistenceFacade.delete(bookmark);
 	}
 
 	@Override
@@ -75,21 +69,6 @@ public class UserDaoImpl implements UserDao {
 		parameters.put("id", user.getId());
 		return this.persistenceFacade.getByTypedQuery(UserClosure.class, "UserClosure.findAntecessorsUserClosuresById",
 				parameters, 0, 0);
-	}
-
-	@Override
-	public Bookmark findBookmark(final Long auditedId, final String entity, final User user) {
-		final Map<String, Object> parameters = makeParameters(auditedId, entity, user);
-		final Bookmark b = this.persistenceFacade.getByTypedQuerySingleResult(Bookmark.class, "Bookmark.findByValues",
-				parameters);
-		return b;
-	}
-
-	@Override
-	public Bookmark findBookmarkByUrl(final String url) {
-		final Map<String, Object> parameters = new HashMap<>();
-		parameters.put("url", url);
-		return this.persistenceFacade.getByTypedQuerySingleResult(Bookmark.class, "Bookmark.findByUrl", parameters);
 	}
 
 	@Override
@@ -160,11 +139,6 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public void insertAction(final Action action) {
 		this.persistenceFacade.insert(action);
-	}
-
-	@Override
-	public void insertBookmark(final Bookmark bookmark) {
-		this.persistenceFacade.insert(bookmark);
 	}
 
 	@Override

@@ -6,7 +6,6 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import ged.ejb.core.Repository;
-import ged.ejb.core.bookmark.Bookmark;
 import ged.ejb.core.model.Action;
 import ged.ejb.user.User;
 import ged.ejb.user.UserDao;
@@ -22,11 +21,6 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void deleteAction(final Action action) {
 		this.userDao.deleteAction(action);
-	}
-
-	@Override
-	public void deleteBookmark(final Bookmark bookmark) {
-		this.userDao.deleteBookmark(bookmark);
 	}
 
 	@Override
@@ -50,13 +44,13 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public Bookmark findBookmarkByUrl(final String url) {
-		return this.userDao.findBookmarkByUrl(url);
+	public User findById(final Long id) {
+		return this.userDao.findById(id);
 	}
 
 	@Override
-	public User findById(final Long id) {
-		return this.userDao.findById(id);
+	public List<User> findSubordinateUsers(final Long id) {
+		return this.userDao.findSubordinateUsers(id);
 	}
 
 	@Override
@@ -70,11 +64,6 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<User> findSubordinateUsers(final Long id) {
-		return this.userDao.findSubordinateUsers(id);
-	}
-
-	@Override
 	public List<User> fullSearch(final String name, final String surename, final String userEmail) {
 		return this.userDao.fullSearch(name, surename, userEmail, false);
 	}
@@ -82,12 +71,6 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void insertAction(final Action action) {
 		this.userDao.insertAction(action);
-	}
-
-	@Override
-	public void insertBookmark(final Bookmark bookmark) {
-		this.userDao.insertBookmark(bookmark);
-
 	}
 
 	@Override
