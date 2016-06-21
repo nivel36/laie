@@ -1,4 +1,4 @@
-package ged.ejb.user.impl;
+package ged.ejb.user.dao.jpa;
 
 import java.util.HashMap;
 import java.util.List;
@@ -9,10 +9,10 @@ import javax.inject.Inject;
 import ged.ejb.core.Repository;
 import ged.ejb.core.model.PersistenceFacade;
 import ged.ejb.user.Role;
-import ged.ejb.user.RoleDao;
+import ged.ejb.user.dao.RoleDao;
 
 @Repository
-public class RoleDaoImpl implements RoleDao {
+public class RoleDaoJpa implements RoleDao {
 
 	@Inject
 	@Repository

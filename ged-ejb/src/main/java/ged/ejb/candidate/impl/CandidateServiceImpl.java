@@ -8,7 +8,7 @@ import javax.inject.Inject;
 import ged.ejb.candidate.Candidate;
 import ged.ejb.candidate.CandidateDao;
 import ged.ejb.candidate.CandidateService;
-import ged.ejb.candidate.FileType;
+import ged.ejb.core.FileType;
 import ged.ejb.core.Repository;
 import ged.ejb.curriculum.Curriculum;
 

@@ -1,4 +1,4 @@
-package ged.ejb.user.impl;
+package ged.ejb.core.bookmark;
 
 import java.util.List;
 
@@ -6,11 +6,8 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import ged.ejb.core.AbstractService;
-import ged.ejb.core.CrudDao;
 import ged.ejb.core.Repository;
-import ged.ejb.core.bookmark.Bookmark;
-import ged.ejb.user.BookmarkDao;
-import ged.ejb.user.BookmarkService;
+import ged.ejb.core.model.CrudDao;
 import ged.ejb.user.User;
 
 @Stateless

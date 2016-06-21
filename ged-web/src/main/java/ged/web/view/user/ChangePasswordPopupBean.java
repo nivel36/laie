@@ -14,7 +14,7 @@ import javax.inject.Named;
 import javax.xml.bind.DatatypeConverter;
 
 import ged.ejb.user.User;
-import ged.ejb.user.UserService;
+import ged.ejb.user.service.UserService;
 import ged.web.core.view.AbstractDialogBean;
 
 @Named

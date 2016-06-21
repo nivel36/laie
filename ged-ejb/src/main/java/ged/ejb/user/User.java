@@ -15,8 +15,8 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 
+import ged.ejb.core.action.Action;
 import ged.ejb.core.bookmark.Bookmark;
-import ged.ejb.core.model.Action;
 import ged.ejb.core.model.AuditedEntity;
 import ged.ejb.job.JobOffer;
 

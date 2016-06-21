@@ -1,4 +1,4 @@
-package ged.ejb.user.impl;
+package ged.ejb.user.dao.jpa;
 
 import java.util.HashMap;
 import java.util.List;
@@ -14,14 +14,14 @@ import org.hibernate.search.query.dsl.BooleanJunction;
 import org.hibernate.search.query.dsl.QueryBuilder;
 
 import ged.ejb.core.Repository;
-import ged.ejb.core.model.Action;
+import ged.ejb.core.action.Action;
 import ged.ejb.core.model.PersistenceFacade;
 import ged.ejb.user.User;
 import ged.ejb.user.UserClosure;
-import ged.ejb.user.UserDao;
+import ged.ejb.user.dao.UserDao;
 
 @Repository
-public class UserDaoImpl implements UserDao {
+public class UserDaoJpa implements UserDao {
 
 	@Inject
 	@Repository

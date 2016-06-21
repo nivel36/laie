@@ -1,10 +1,9 @@
-package ged.ejb.user;
+package ged.ejb.user.service;
 
 import java.util.List;
 
-import javax.ejb.Local;
+import ged.ejb.user.Role;
 
-@Local
 public interface RoleService {
 
 	List<Role> findAllRoles();

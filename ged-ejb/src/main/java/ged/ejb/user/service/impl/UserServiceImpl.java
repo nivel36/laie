@@ -1,4 +1,4 @@
-package ged.ejb.user.impl;
+package ged.ejb.user.service.impl;
 
 import java.util.List;
 
@@ -6,10 +6,10 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import ged.ejb.core.Repository;
-import ged.ejb.core.model.Action;
+import ged.ejb.core.action.Action;
 import ged.ejb.user.User;
-import ged.ejb.user.UserDao;
-import ged.ejb.user.UserService;
+import ged.ejb.user.dao.UserDao;
+import ged.ejb.user.service.UserService;
 
 @Stateless
 public class UserServiceImpl implements UserService {

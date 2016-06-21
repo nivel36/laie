@@ -1,8 +1,6 @@
-package ged.ejb.core;
+package ged.ejb.core.model;
 
 import java.util.List;
-
-import ged.ejb.core.model.Entity;
 
 public interface CrudDao<K, T extends Entity<K>> {
 

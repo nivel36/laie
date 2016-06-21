@@ -13,9 +13,9 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import ged.ejb.user.Role;
-import ged.ejb.user.RoleService;
 import ged.ejb.user.User;
-import ged.ejb.user.UserService;
+import ged.ejb.user.service.RoleService;
+import ged.ejb.user.service.UserService;
 import ged.web.core.view.AbstractPageBean;
 
 @Named
@@ -96,12 +96,12 @@ public class UserEditBean extends AbstractPageBean {
 		if (this.manager.getUsername() != null) {
 			this.user.setManager(this.manager);
 		}
-		if (this.user.getId() != 0) {
+		if (this.user.getId() != null) {
 			this.user = this.userService.updateUser(this.user);
 		} else {
 			this.userService.insertUser(this.user);
 		}
-		this.actionsBean.add(this.user);
+		// this.actionsBean.add(this.user);
 		return "userView.xhtml?id=" + this.user.getId() + "&faces-redirect=true";
 	}
 

@@ -1,12 +1,10 @@
-package ged.ejb.user;
+package ged.ejb.user.service;
 
 import java.util.List;
 
-import javax.ejb.Local;
+import ged.ejb.core.action.Action;
+import ged.ejb.user.User;
 
-import ged.ejb.core.model.Action;
-
-@Local
 public interface UserService {
 
 	void deleteAction(final Action action);

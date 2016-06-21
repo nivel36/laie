@@ -43,8 +43,8 @@
 		<h:panelGroup layout="block" styleClass="panel">
 			<h1>#{i18n['aside.last_actions']}</h1>
 			<h:outputText value="#{i18n['message.actions.empty']}"
-				styleClass="text" rendered="#{empty sessionBean.actions}" />
-			<ui:repeat value="#{sessionBean.actions}" var="action">
+				styleClass="text" rendered="#{empty actionBean.actions}" />
+			<ui:repeat value="#{actionBean.actions}" var="action">
 				<h:outputLink value="#{action.url}">
 					<h:outputText value="#{action.text}" />
 				</h:outputLink>

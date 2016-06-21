@@ -2,6 +2,7 @@ package ged.web.view;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
@@ -10,8 +11,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import ged.ejb.core.bookmark.Bookmark;
+import ged.ejb.core.bookmark.BookmarkService;
 import ged.ejb.core.model.AuditedEntity;
-import ged.ejb.user.BookmarkService;
 import ged.web.core.view.AbstractPageBean;
 
 @Named
@@ -24,6 +25,9 @@ public class BookmarksBean extends AbstractPageBean {
 
 	@Inject
 	private transient BookmarkService bookmarkService;
+
+	@Inject
+	protected transient Logger logger;
 
 	private List<String> urls;
 

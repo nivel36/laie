@@ -1,11 +1,11 @@
-package ged.ejb.user;
+package ged.ejb.core.bookmark;
 
 import java.util.List;
 
 import javax.ejb.Local;
 
-import ged.ejb.core.CrudDao;
-import ged.ejb.core.bookmark.Bookmark;
+import ged.ejb.core.model.CrudDao;
+import ged.ejb.user.User;
 
 @Local
 public interface BookmarkDao extends CrudDao<Long, Bookmark> {

@@ -10,12 +10,11 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import ged.ejb.candidate.CandidateService;
-import ged.ejb.candidate.FileType;
 import ged.ejb.curriculum.CurriculumService;
 import ged.ejb.curriculum.LanguageLevel;
 import ged.ejb.curriculum.SkillLevel;
 import ged.ejb.user.Role;
-import ged.ejb.user.RoleService;
+import ged.ejb.user.service.RoleService;
 
 @Named
 @ApplicationScoped

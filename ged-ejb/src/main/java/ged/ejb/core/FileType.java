@@ -1,4 +1,4 @@
-package ged.ejb.candidate;
+package ged.ejb.core;
 
 import javax.persistence.Entity;
 

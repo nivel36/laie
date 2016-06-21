@@ -1,10 +1,11 @@
-package ged.ejb.user;
+package ged.ejb.user.dao;
 
 import java.util.List;
 
 import javax.ejb.Local;
 
-import ged.ejb.core.model.Action;
+import ged.ejb.core.action.Action;
+import ged.ejb.user.User;
 
 @Local
 public interface UserDao {

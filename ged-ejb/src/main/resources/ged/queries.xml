@@ -4,6 +4,10 @@
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence/orm
         http://xmlns.jcp.org/xml/ns/persistence/orm_2_1.xsd"
 	version="2.1">
+	
+	<named-query name="Action.findAllByUser">
+		<query>SELECT a FROM Action a WHERE a.user = :user</query>
+	</named-query>
 
 	<named-query name="Bookmark.findByUrl">
 		<query>SELECT b FROM Bookmark b WHERE b.url = :url</query>

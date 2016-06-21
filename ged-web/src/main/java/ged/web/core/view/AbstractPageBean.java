@@ -9,23 +9,18 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.Flash;
 import javax.inject.Inject;
 
-import ged.web.view.ActionsBean;
-
 public abstract class AbstractPageBean extends AbstractBean {
 
 	private static final long serialVersionUID = -647915087403140904L;
 
 	@Inject
-	protected ActionsBean actionsBean;
+	protected transient ApplicationBean applicationBean;
 
 	@Inject
-	protected ApplicationBean applicationBean;
+	protected transient Flash flash;
 
 	@Inject
-	protected Flash flash;
-
-	@Inject
-	protected SessionBean sessionBean;
+	protected transient SessionBean sessionBean;
 
 	protected void addErrorToField(final UIComponent component, final String message) {
 		final String translatedMessage = translate(message);

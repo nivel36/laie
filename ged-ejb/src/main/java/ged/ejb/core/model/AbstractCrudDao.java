@@ -1,14 +1,13 @@
-package ged.ejb.core;
+package ged.ejb.core.model;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
-import ged.ejb.core.model.Entity;
-import ged.ejb.core.model.PersistenceFacade;
+import ged.ejb.core.Repository;
 
 @Repository
-public abstract class AbstractDao<K, T extends Entity<K>> implements CrudDao<K, T> {
+public abstract class AbstractCrudDao<K, T extends Entity<K>> implements CrudDao<K, T> {
 
 	@Inject
 	@Repository

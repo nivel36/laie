@@ -7,14 +7,12 @@ import java.util.ResourceBundle;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
-import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import ged.ejb.core.model.Action;
 import ged.ejb.core.model.SavedSearch;
 import ged.ejb.user.User;
-import ged.ejb.user.UserService;
+import ged.ejb.user.service.UserService;
 
 @Named
 @SessionScoped
@@ -22,30 +20,16 @@ public class SessionBean extends AbstractBean {
 
 	private static final long serialVersionUID = -8079836415042166193L;
 
-	@Produces
-	private List<Action> actions = new ArrayList<Action>();
-
 	private final List<BreadcrumbState> breadcrumb = new ArrayList<BreadcrumbState>();
 
 	private Locale locale;
 
-	@Produces
 	private List<SavedSearch> savedSearches = new ArrayList<SavedSearch>();
 
-	@Produces
 	private User user;
 
 	@Inject
 	private transient UserService userService;
-
-	public void addAction(final Action action) {
-		if (!containsAction(action)) {
-			if (this.actions.size() > 9) {
-				this.actions.remove(9);
-			}
-			this.actions.add(0, action);
-		}
-	}
 
 	public void addBreadcrumb(final BreadcrumbState breadcrumbState) {
 		this.breadcrumb.add(breadcrumbState);
@@ -53,14 +37,6 @@ public class SessionBean extends AbstractBean {
 
 	public void clearBreadcrumb() {
 		this.breadcrumb.clear();
-	}
-
-	public boolean containsAction(final Action action) {
-		return this.actions.contains(action);
-	}
-
-	public List<Action> getActions() {
-		return this.actions;
 	}
 
 	public List<BreadcrumbState> getBreadcrumb() {
@@ -94,14 +70,6 @@ public class SessionBean extends AbstractBean {
 		final String username = this.facesContext.getExternalContext().getRemoteUser();
 		this.user = this.userService.findUserByUsername(username);
 		this.locale = new Locale(this.user.getLanguage());
-	}
-
-	public void removeAction(final Action action) {
-		this.actions.remove(action);
-	}
-
-	public void setActions(final List<Action> actions) {
-		this.actions = actions;
 	}
 
 	public void setLocale(final Locale locale) {

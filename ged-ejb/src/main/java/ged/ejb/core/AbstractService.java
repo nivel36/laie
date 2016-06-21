@@ -2,6 +2,7 @@ package ged.ejb.core;
 
 import java.util.List;
 
+import ged.ejb.core.model.CrudDao;
 import ged.ejb.core.model.Entity;
 
 public abstract class AbstractService<K, T extends Entity<K>> implements CrudService<K, T> {

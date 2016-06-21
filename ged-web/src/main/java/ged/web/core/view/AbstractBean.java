@@ -12,11 +12,11 @@ public class AbstractBean implements Serializable {
 	private static final long serialVersionUID = -2545624640193642401L;
 
 	@Inject
-	protected ExternalContext externalContext;
+	protected transient ExternalContext externalContext;
 
 	@Inject
-	protected FacesContext facesContext;
+	protected transient FacesContext facesContext;
 
 	@Inject
-	protected HttpServletRequest httpServletRequest;
+	protected transient HttpServletRequest httpServletRequest;
 }

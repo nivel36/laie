@@ -1,17 +1,15 @@
-package ged.ejb.user.impl;
+package ged.ejb.core.bookmark;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import ged.ejb.core.AbstractDao;
 import ged.ejb.core.Repository;
-import ged.ejb.core.bookmark.Bookmark;
-import ged.ejb.user.BookmarkDao;
+import ged.ejb.core.model.AbstractCrudDao;
 import ged.ejb.user.User;
 
 @Repository
-public class BookmarkDaoImpl extends AbstractDao<Long, Bookmark> implements BookmarkDao {
+public class BookmarkDaoJpa extends AbstractCrudDao<Long, Bookmark> implements BookmarkDao {
 
 	@Override
 	public List<Bookmark> findAllByUser(final User user) {

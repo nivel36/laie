@@ -47,7 +47,7 @@ public class JobOfferEditBean extends AbstractPageBean {
 			this.jobOffer.setOwner(this.sessionBean.getUser());
 			this.jobService.insertJobOffer(this.jobOffer);
 		}
-		this.actionsBean.add(this.jobOffer);
+		// this.actionsBean.add(this.jobOffer);
 		return "jobOfferView.xhtml?id=" + this.jobOffer.getId() + "&faces-redirect=true";
 	}
 

@@ -1,0 +1,25 @@
+package ged.ejb.core.action;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import ged.ejb.core.Repository;
+import ged.ejb.core.model.AbstractCrudDao;
+import ged.ejb.user.User;
+
+@Repository
+public class ActionDaoJpa extends AbstractCrudDao<Long, Action> implements ActionDao {
+
+	@Override
+	public List<Action> findAllByUser(final User user) {
+		final Map<String, Object> parameters = new HashMap<>();
+		parameters.put("user", user);
+		return this.persistenceFacade.getByTypedQuery(Action.class, "Action.findAllByUser", parameters, 10, 0);
+	}
+
+	@Override
+	public Class<Action> getClazz() {
+		return Action.class;
+	}
+}
