@@ -6,8 +6,8 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import ged.ejb.core.AbstractService;
-import ged.ejb.core.Repository;
 import ged.ejb.core.model.CrudDao;
+import ged.ejb.core.model.Repository;
 import ged.ejb.user.User;
 
 @Stateless

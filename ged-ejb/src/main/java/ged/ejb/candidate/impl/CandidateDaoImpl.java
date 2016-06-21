@@ -9,8 +9,8 @@ import javax.inject.Inject;
 import ged.ejb.candidate.Candidate;
 import ged.ejb.candidate.CandidateDao;
 import ged.ejb.core.FileType;
-import ged.ejb.core.Repository;
 import ged.ejb.core.model.PersistenceFacade;
+import ged.ejb.core.model.Repository;
 import ged.ejb.curriculum.Curriculum;
 
 @Repository

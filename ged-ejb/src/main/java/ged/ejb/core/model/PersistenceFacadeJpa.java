@@ -22,10 +22,8 @@ import org.hibernate.search.jpa.Search;
 import org.hibernate.search.query.dsl.BooleanJunction;
 import org.hibernate.search.query.dsl.QueryBuilder;
 
-import ged.ejb.core.Repository;
-
 @Repository
-public class PersistenceFacadeImpl implements PersistenceFacade {
+public class PersistenceFacadeJpa implements PersistenceFacade {
 
 	/**
 	 * El número máximo de resultados que permiten las búsquedas

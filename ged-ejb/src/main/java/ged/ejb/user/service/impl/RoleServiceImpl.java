@@ -5,7 +5,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
-import ged.ejb.core.Repository;
+import ged.ejb.core.model.Repository;
 import ged.ejb.user.Role;
 import ged.ejb.user.dao.RoleDao;
 import ged.ejb.user.service.RoleService;

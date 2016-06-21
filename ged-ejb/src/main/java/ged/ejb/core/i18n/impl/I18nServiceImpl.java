@@ -5,10 +5,10 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
-import ged.ejb.core.Repository;
 import ged.ejb.core.i18n.I18nDao;
 import ged.ejb.core.i18n.I18nService;
 import ged.ejb.core.i18n.I18nString;
+import ged.ejb.core.model.Repository;
 
 @Stateless
 public class I18nServiceImpl implements I18nService {

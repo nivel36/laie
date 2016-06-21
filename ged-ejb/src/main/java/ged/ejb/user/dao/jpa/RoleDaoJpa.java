@@ -6,8 +6,8 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
-import ged.ejb.core.Repository;
 import ged.ejb.core.model.PersistenceFacade;
+import ged.ejb.core.model.Repository;
 import ged.ejb.user.Role;
 import ged.ejb.user.dao.RoleDao;
 

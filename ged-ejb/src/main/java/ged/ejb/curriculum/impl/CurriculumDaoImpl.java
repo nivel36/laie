@@ -7,8 +7,8 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.persistence.NoResultException;
 
-import ged.ejb.core.Repository;
 import ged.ejb.core.model.PersistenceFacade;
+import ged.ejb.core.model.Repository;
 import ged.ejb.curriculum.Curriculum;
 import ged.ejb.curriculum.CurriculumDao;
 import ged.ejb.curriculum.LanguageLevel;

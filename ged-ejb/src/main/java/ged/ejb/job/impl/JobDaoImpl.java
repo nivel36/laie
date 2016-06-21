@@ -10,8 +10,8 @@ import javax.inject.Inject;
 import javax.persistence.NoResultException;
 
 import ged.ejb.client.Client;
-import ged.ejb.core.Repository;
 import ged.ejb.core.model.PersistenceFacade;
+import ged.ejb.core.model.Repository;
 import ged.ejb.job.JobDao;
 import ged.ejb.job.JobMeeting;
 import ged.ejb.job.JobOffer;

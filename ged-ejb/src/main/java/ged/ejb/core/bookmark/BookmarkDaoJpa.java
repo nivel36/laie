@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import ged.ejb.core.Repository;
 import ged.ejb.core.model.AbstractCrudDao;
+import ged.ejb.core.model.Repository;
 import ged.ejb.user.User;
 
 @Repository

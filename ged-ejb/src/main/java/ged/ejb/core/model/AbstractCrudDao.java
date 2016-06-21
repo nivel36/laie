@@ -4,8 +4,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import ged.ejb.core.Repository;
-
 @Repository
 public abstract class AbstractCrudDao<K, T extends Entity<K>> implements CrudDao<K, T> {
 
