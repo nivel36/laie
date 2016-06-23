@@ -1,20 +1,32 @@
 package ged.web.core.util;
 
+import java.io.IOException;
+import java.util.Properties;
+
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.InjectionPoint;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
-import javax.inject.Inject;
 
 import ged.ejb.core.util.ConfigurationProperty;
-import ged.web.core.view.ApplicationBean;
 
 public class WebResources {
 
-	@Inject
-	private ApplicationBean appBean;
+	private Properties properties;
+
+	@PostConstruct
+	public void init() {
+		this.properties = new Properties();
+		final ClassLoader cl = Thread.currentThread().getContextClassLoader();
+		try {
+			this.properties.load(cl.getResourceAsStream("/ged/config.properties"));
+		} catch (final IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 	@Produces
 	@RequestScoped
@@ -39,11 +51,11 @@ public class WebResources {
 	public String produceProperty(final InjectionPoint ip) {
 		final ConfigurationProperty annotation = ip.getAnnotated().getAnnotation(ConfigurationProperty.class);
 		final String key = annotation.value();
-		final String value = this.appBean.getProperties().getProperty(key);
+		final String value = this.properties.getProperty(key);
 		if (value == null) {
 			final boolean valueRequired = annotation.required();
 			if (valueRequired) {
-				throw new IllegalStateException("Property " + key + " not found");
+				throw new IllegalStateException("Property {} " + key + " not found");
 			}
 		}
 		return value;

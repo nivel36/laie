@@ -36,22 +36,12 @@ public class PersistenceFacadeJpa implements PersistenceFacade {
 	@Inject
 	private Logger logger;
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see afersa.core.model.PersistenceFacade#clear()
-	 */
 	@Override
 	public void clear() {
 		this.logger.log(Level.FINE, "Clear forzado");
 		this.em.clear();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see afersa.core.model.PersistenceFacade#contains(T)
-	 */
 	@Override
 	public <K, T extends Entity<K>> boolean contains(final T entity) {
 		final boolean isContained = this.em.contains(entity);
@@ -82,11 +72,6 @@ public class PersistenceFacadeJpa implements PersistenceFacade {
 		return typedQuery;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see afersa.core.model.PersistenceFacade#delete(T)
-	 */
 	@Override
 	public <K, T extends Entity<K>> void delete(final T entity) {
 		this.logger.log(Level.FINE, "Eliminando la entidad::Clase={0}::Id={1}",
@@ -98,11 +83,6 @@ public class PersistenceFacadeJpa implements PersistenceFacade {
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see afersa.core.model.PersistenceFacade#detach(T)
-	 */
 	@Override
 	public <K, T extends Entity<K>> void detach(final T entity) {
 		this.logger.log(Level.FINE, "Desincronizando la entidad::Clase={0}::Id={1}",
@@ -110,11 +90,6 @@ public class PersistenceFacadeJpa implements PersistenceFacade {
 		this.em.detach(entity);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see afersa.core.model.PersistenceFacade#flush()
-	 */
 	@Override
 	public void flush() {
 		this.logger.log(Level.FINE, "Flush forzado");
@@ -146,12 +121,6 @@ public class PersistenceFacadeJpa implements PersistenceFacade {
 		return typedQuery.getResultList();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see afersa.core.model.PersistenceFacade#getByCriteria(javax.persistence.
-	 * criteria .CriteriaQuery, int, int)
-	 */
 	@Override
 	public <T> List<T> getByCriteria(final CriteriaQuery<T> cq, final int pageSize, final int pageNum) {
 		this.logger.log(Level.FINE, "Lanzando criteria");
@@ -160,12 +129,6 @@ public class PersistenceFacadeJpa implements PersistenceFacade {
 		return query.getResultList();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see afersa.core.model.PersistenceFacade#getByCriteriaSingleResult(javax.
-	 * persistence.criteria.CriteriaQuery)
-	 */
 	@Override
 	public <T> T getByCriteriaSingleResult(final CriteriaQuery<T> cq) {
 		this.logger.log(Level.FINE, "Lanzando criteria para un solo resultado");
@@ -173,12 +136,6 @@ public class PersistenceFacadeJpa implements PersistenceFacade {
 		return query.getSingleResult();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see afersa.core.model.PersistenceFacade#getByPrimaryKey(java.lang.Class,
-	 * java.lang.Object)
-	 */
 	@Override
 	public <K, T extends Entity<K>> T getByPrimaryKey(final Class<T> entityClass, final K id) {
 		this.logger.log(Level.FINE, "Buscando por clave primaria::clase={0}::id={1}", new Object[] { entityClass, id });
@@ -200,12 +157,6 @@ public class PersistenceFacadeJpa implements PersistenceFacade {
 		return typedQuery.getResultList();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see afersa.core.model.PersistenceFacade#getByQuery(java.lang.String,
-	 * java.util.Map, int, int)
-	 */
 	@Override
 	public List<?> getByQuery(final String nombreQuery, final Map<String, Object> parameters, final int pageSize,
 			final int pageNum) {
@@ -216,13 +167,6 @@ public class PersistenceFacadeJpa implements PersistenceFacade {
 		return query.getResultList();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see
-	 * afersa.core.model.PersistenceFacade#getByQuerySingleResult(java.lang.
-	 * String, java.util.Map)
-	 */
 	@Override
 	public Object getByQuerySingleResult(final String nombreQuery, final Map<String, Object> parameters) {
 		this.logger.log(Level.FINE, "Lanzando la la getByQuerySingleResult {0} ", nombreQuery);
@@ -236,12 +180,6 @@ public class PersistenceFacadeJpa implements PersistenceFacade {
 		return result;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see afersa.core.model.PersistenceFacade#getByTypedQuery(java.lang.Class,
-	 * java.lang.String, java.util.Map, int, int)
-	 */
 	@Override
 	public <K, T extends Entity<K>> List<T> getByTypedQuery(final Class<T> entityClass, final String namedQuery,
 			final Map<String, Object> parameters, final int pageSize, final int pageNum) {
@@ -252,13 +190,6 @@ public class PersistenceFacadeJpa implements PersistenceFacade {
 		return query.getResultList();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see
-	 * afersa.core.model.PersistenceFacade#getByTypedQuerySingleResult(java.
-	 * lang.Class, java.lang.String, java.util.Map)
-	 */
 	@Override
 	public <K, T extends Entity<K>> T getByTypedQuerySingleResult(final Class<T> entityClass, final String namedQuery,
 			final Map<String, Object> parameters) {
@@ -269,26 +200,16 @@ public class PersistenceFacadeJpa implements PersistenceFacade {
 		return result;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see afersa.core.model.PersistenceFacade#getCriteriaBuilder()
-	 */
 	@Override
 	public CriteriaBuilder getCriteriaBuilder() {
 		return this.em.getCriteriaBuilder();
 	}
 
+	@Override
 	public EntityManager getEm() {
 		return this.em;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see afersa.core.model.PersistenceFacade#getReference(java.lang.Class,
-	 * java.lang.Object)
-	 */
 	@Override
 	public <K, T extends Entity<K>> T getReference(final Class<T> entityClass, final Object primaryKey) {
 		this.logger.log(Level.FINE, "Reference de la entidad::Clase={0}::Id={1}",
@@ -296,11 +217,6 @@ public class PersistenceFacadeJpa implements PersistenceFacade {
 		return this.em.getReference(entityClass, primaryKey);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see afersa.core.model.PersistenceFacade#persist(T)
-	 */
 	@Override
 	public <K, T extends Entity<K>> void insert(final T entity) {
 		this.logger.log(Level.FINE, "Insertando una nueva entidad de tipod::Clase={0}",
@@ -309,12 +225,6 @@ public class PersistenceFacadeJpa implements PersistenceFacade {
 		this.logger.log(Level.FINE, "Se le ha asignado la id={0}", entity.getId());
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see afersa.core.model.PersistenceFacade#lock(T,
-	 * javax.persistence.LockModeType, java.util.Map)
-	 */
 	@Override
 	public <K, T extends Entity<K>> void lock(final T entity, final LockModeType lockModeType,
 			final Map<String, Object> properties) {
@@ -354,12 +264,6 @@ public class PersistenceFacadeJpa implements PersistenceFacade {
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see afersa.core.model.PersistenceFacade#refresh(T,
-	 * javax.persistence.LockModeType, java.util.Map)
-	 */
 	@Override
 	public <K, T extends Entity<K>> void refresh(final T entity, final LockModeType lockModeType,
 			final Map<String, Object> properties) {
@@ -368,32 +272,14 @@ public class PersistenceFacadeJpa implements PersistenceFacade {
 		this.em.refresh(entity, lockModeType, properties);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see
-	 * afersa.core.model.PersistenceFacade#setEm(javax.persistence.EntityManager
-	 * )
-	 */
 	public void setEm(final EntityManager em) {
 		this.em = em;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see
-	 * afersa.core.model.PersistenceFacade#setLogger(java.util.logging.Logger)
-	 */
 	public void setLogger(final Logger logger) {
 		this.logger = logger;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see afersa.core.model.PersistenceFacade#update(T)
-	 */
 	@Override
 	public <K, T extends Entity<K>> T update(final T entity) {
 		this.logger.log(Level.FINE, "Actualizando la entidad::Clase={0}::Id={1}",

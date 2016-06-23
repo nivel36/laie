@@ -1,11 +1,9 @@
 package ged.web.core.view;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
-import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -39,8 +37,6 @@ public class ApplicationBean extends AbstractBean {
 	@Inject
 	protected transient Logger logger;
 
-	private Properties properties;
-
 	public List<FileType> getFileTypes() {
 		return this.cache.getFileTypes();
 	}
@@ -51,10 +47,6 @@ public class ApplicationBean extends AbstractBean {
 
 	public List<Locale> getLocales() {
 		return this.locales;
-	}
-
-	public Properties getProperties() {
-		return this.properties;
 	}
 
 	public List<Role> getRoles() {
@@ -69,11 +61,7 @@ public class ApplicationBean extends AbstractBean {
 	public void init() {
 		try {
 			loadLocales();
-			this.properties = new Properties();
-			this.properties.load(ApplicationBean.class.getResourceAsStream("/ged/config.properties"));
 			this.indexer.index();
-		} catch (final IOException e) {
-			this.logger.log(Level.SEVERE, "Could not load properties");
 		} catch (final InterruptedException ex) {
 			this.logger.log(Level.SEVERE, "Could not index");
 		}

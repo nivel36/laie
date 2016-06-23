@@ -17,8 +17,7 @@ import javax.inject.Qualifier;
 public @interface ConfigurationProperty {
 
 	@Nonbinding
-	String value() default "";
-
-	@Nonbinding
 	boolean required() default false;
+
+	String value() default "";
 }
