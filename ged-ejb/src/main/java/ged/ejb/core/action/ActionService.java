@@ -8,7 +8,7 @@ import ged.ejb.user.User;
 
 public interface ActionService extends CrudService<Long, Action> {
 
-	void addAction(final AuditedEntity auditedEntity);
+	void addAction(final AuditedEntity auditedEntity, final String actionType);
 
 	List<Action> findAllByUser(final User user);
 

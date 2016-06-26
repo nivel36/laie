@@ -14,11 +14,13 @@ import ged.ejb.user.User;
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = { "entityId", "entityClass", "userId" }))
 public class Action extends AbstractEntity {
 
-	public static enum ACTIONS {
-		DELETE, INSERT, UPDATE
-	}
+	public final static String DELETE = "DELETE";
+
+	public final static String INSERT = "INSERT";
 
 	private static final long serialVersionUID = -3095037007290696579L;
+
+	public final static String UPDATE = "UPDATE";
 
 	private String actionPerformed;
 

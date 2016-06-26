@@ -18,9 +18,9 @@ public class ActionServiceImpl extends AbstractService<Long, Action> implements 
 	private ActionDao dao;
 
 	@Override
-	public void addAction(final AuditedEntity auditedEntity) {
+	public void addAction(final AuditedEntity auditedEntity, final String actionType) {
 		final Action action = getActionFromEntity(auditedEntity);
-		action.setActionPerformed(Action.ACTIONS.INSERT.toString());
+		action.setActionPerformed(actionType);
 		insert(action);
 	}
 
