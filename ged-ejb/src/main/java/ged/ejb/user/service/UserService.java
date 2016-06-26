@@ -2,12 +2,9 @@ package ged.ejb.user.service;
 
 import java.util.List;
 
-import ged.ejb.core.action.Action;
 import ged.ejb.user.User;
 
 public interface UserService {
-
-	void deleteAction(final Action action);
 
 	void deleteUser(User user);
 
@@ -24,8 +21,6 @@ public interface UserService {
 	List<User> findUsers(String name, String surenames);
 
 	List<User> fullSearch(final String name, final String surename, final String userEmail);
-
-	void insertAction(Action action);
 
 	void insertUser(User user);
 

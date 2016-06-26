@@ -10,7 +10,6 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import ged.ejb.core.model.SavedSearch;
 import ged.ejb.user.User;
 import ged.ejb.user.service.UserService;
 
@@ -23,8 +22,6 @@ public class SessionBean extends AbstractBean {
 	private final List<BreadcrumbState> breadcrumb = new ArrayList<BreadcrumbState>();
 
 	private Locale locale;
-
-	private List<SavedSearch> savedSearches = new ArrayList<SavedSearch>();
 
 	private User user;
 
@@ -57,10 +54,6 @@ public class SessionBean extends AbstractBean {
 		return this.user.getRowsPerPage();
 	}
 
-	public List<SavedSearch> getSavedSearches() {
-		return this.savedSearches;
-	}
-
 	public User getUser() {
 		return this.user;
 	}
@@ -78,10 +71,6 @@ public class SessionBean extends AbstractBean {
 
 	public void setRowsPerPage(final int rowsPerPage) {
 		this.user.setRowsPerPage(rowsPerPage);
-	}
-
-	public void setSavedSearches(final List<SavedSearch> savedSearches) {
-		this.savedSearches = savedSearches;
 	}
 
 	public void setUser(final User user) {

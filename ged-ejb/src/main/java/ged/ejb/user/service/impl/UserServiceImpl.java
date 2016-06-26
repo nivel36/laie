@@ -5,7 +5,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
-import ged.ejb.core.action.Action;
+import ged.ejb.core.action.Audited;
 import ged.ejb.core.model.Repository;
 import ged.ejb.user.User;
 import ged.ejb.user.dao.UserDao;
@@ -17,11 +17,6 @@ public class UserServiceImpl implements UserService {
 	@Inject
 	@Repository
 	private UserDao userDao;
-
-	@Override
-	public void deleteAction(final Action action) {
-		this.userDao.deleteAction(action);
-	}
 
 	@Override
 	public void deleteUser(final User user) {
@@ -69,11 +64,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void insertAction(final Action action) {
-		this.userDao.insertAction(action);
-	}
-
-	@Override
+	@Audited
 	public void insertUser(final User user) {
 		this.userDao.insertUser(user);
 	}

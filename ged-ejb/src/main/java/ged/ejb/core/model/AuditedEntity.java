@@ -1,6 +1,8 @@
 package ged.ejb.core.model;
 
 import javax.persistence.Column;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 
 import org.apache.lucene.analysis.core.LowerCaseFilterFactory;
@@ -12,6 +14,8 @@ import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Parameter;
 import org.hibernate.search.annotations.TokenFilterDef;
 import org.hibernate.search.annotations.TokenizerDef;
+
+import ged.ejb.user.User;
 
 @AnalyzerDef(name = "stdAnalyzer",
 		// Split input into tokens according to tokenizer
@@ -37,6 +41,10 @@ public abstract class AuditedEntity extends AbstractEntity {
 	@Field
 	private Boolean deleted;
 
+	@ManyToOne
+	@JoinColumn(name = "userId")
+	private User user;
+
 	/**
 	 * El no hace autoboxing así que Boolean es un objeto que requiere un get en
 	 * lugar de un is.
@@ -47,11 +55,19 @@ public abstract class AuditedEntity extends AbstractEntity {
 		return this.deleted;
 	}
 
+	public User getUser() {
+		return this.user;
+	}
+
 	public Boolean isDeleted() {
 		return this.deleted;
 	}
 
 	public void setDeleted(final Boolean deleted) {
 		this.deleted = deleted;
+	}
+
+	public void setUser(final User user) {
+		this.user = user;
 	}
 }

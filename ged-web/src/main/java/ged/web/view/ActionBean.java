@@ -27,6 +27,15 @@ public class ActionBean extends AbstractPageBean {
 		return this.actions;
 	}
 
+	private String getUrl(final Action action) {
+		final String contextPath = this.externalContext.getRequestContextPath();
+		final String className = action.getEntityClass().toLowerCase();
+		final StringBuilder url = new StringBuilder();
+		url.append(contextPath).append("/faces/").append(className).append("/").append(className).append("View.xhtml")
+				.append("?id=").append(action.getEntityId());
+		return url.toString();
+	}
+
 	@PostConstruct
 	public void init() {
 		final List<Action> entityActions = this.actionService.findAllByUser(this.sessionBean.getUser());
@@ -34,7 +43,8 @@ public class ActionBean extends AbstractPageBean {
 		for (final Action action : entityActions) {
 			final ActionDto dto = new ActionDto();
 			dto.setText(action.toString());
-			dto.setUrl("http");
+			final String url = getUrl(action);
+			dto.setUrl(url);
 			this.actions.add(dto);
 		}
 	}

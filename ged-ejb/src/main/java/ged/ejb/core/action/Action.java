@@ -14,7 +14,13 @@ import ged.ejb.user.User;
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = { "entityId", "entityClass", "userId" }))
 public class Action extends AbstractEntity {
 
+	public static enum ACTIONS {
+		DELETE, INSERT, UPDATE
+	}
+
 	private static final long serialVersionUID = -3095037007290696579L;
+
+	private String actionPerformed;
 
 	private String entityClass;
 
@@ -63,6 +69,10 @@ public class Action extends AbstractEntity {
 		return true;
 	}
 
+	public String getActionPerformed() {
+		return this.actionPerformed;
+	}
+
 	public String getEntityClass() {
 		return this.entityClass;
 	}
@@ -89,6 +99,10 @@ public class Action extends AbstractEntity {
 		return result;
 	}
 
+	public void setActionPerformed(final String actionPerformed) {
+		this.actionPerformed = actionPerformed;
+	}
+
 	public void setEntityClass(final String entityClass) {
 		this.entityClass = entityClass;
 	}
@@ -103,5 +117,10 @@ public class Action extends AbstractEntity {
 
 	public void setUser(final User user) {
 		this.user = user;
+	}
+
+	@Override
+	public String toString() {
+		return this.text;
 	}
 }

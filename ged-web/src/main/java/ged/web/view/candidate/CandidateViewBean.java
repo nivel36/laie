@@ -41,7 +41,6 @@ public class CandidateViewBean extends AbstractPageBean {
 
 	private FileSys file;
 
-	@Inject
 	@ConfigurationProperty(value = "file.directory")
 	private String fileDirectory;
 

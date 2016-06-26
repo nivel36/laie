@@ -93,6 +93,7 @@ public class UserEditBean extends AbstractPageBean {
 	}
 
 	public String save() {
+		this.user.setUser(this.sessionBean.getUser());
 		if (this.manager.getUsername() != null) {
 			this.user.setManager(this.manager);
 		}
