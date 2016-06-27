@@ -12,5 +12,4 @@ public interface ActionService extends CrudService<Long, Action> {
 
 	List<Action> findAllByUser(final User user);
 
-	void removeAction(final AuditedEntity auditedEntity);
 }

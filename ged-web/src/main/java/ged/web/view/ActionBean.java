@@ -48,12 +48,4 @@ public class ActionBean extends AbstractPageBean {
 			this.actions.add(dto);
 		}
 	}
-
-	public void setActions(final List<ActionDto> actions) {
-		this.actions = actions;
-	}
-
-	public void setActionService(final ActionService actionService) {
-		this.actionService = actionService;
-	}
 }

@@ -38,7 +38,7 @@ public class UserEditBean extends AbstractPageBean {
 	private transient UserService userService;
 
 	public String cancel() {
-		if (this.user.getId() == 0) {
+		if (this.user.getId() == null) {
 			return "userSearch.xhtml?faces-redirect=true";
 		} else {
 			return "userView.xhtml?id=" + this.user.getId() + "&faces-redirect=true";

@@ -15,7 +15,7 @@ public class ActionServiceImpl extends AbstractService<Long, Action> implements 
 
 	@Inject
 	@Repository
-	private ActionDao dao;
+	private ActionDao actionDao;
 
 	@Override
 	public void addAction(final AuditedEntity auditedEntity, final String actionType) {
@@ -26,7 +26,7 @@ public class ActionServiceImpl extends AbstractService<Long, Action> implements 
 
 	@Override
 	public List<Action> findAllByUser(final User user) {
-		return this.dao.findAllByUser(user);
+		return this.actionDao.findAllByUser(user);
 	}
 
 	private Action getActionFromEntity(final AuditedEntity auditedEntity) {
@@ -40,15 +40,6 @@ public class ActionServiceImpl extends AbstractService<Long, Action> implements 
 
 	@Override
 	protected ActionDao getDao() {
-		return this.dao;
-	}
-
-	@Override
-	public void removeAction(final AuditedEntity auditedEntity) {
-
-	}
-
-	public void setDao(final ActionDao dao) {
-		this.dao = dao;
+		return this.actionDao;
 	}
 }
