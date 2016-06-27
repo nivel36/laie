@@ -19,5 +19,6 @@ public @interface ConfigurationProperty {
 	@Nonbinding
 	boolean required() default false;
 
+	@Nonbinding
 	String value() default "";
 }

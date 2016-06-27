@@ -13,7 +13,7 @@ import org.hibernate.search.jpa.Search;
 import org.hibernate.search.query.dsl.BooleanJunction;
 import org.hibernate.search.query.dsl.QueryBuilder;
 
-import ged.ejb.core.action.Action;
+import ged.ejb.core.model.AbstractCrudDao;
 import ged.ejb.core.model.PersistenceFacade;
 import ged.ejb.core.model.Repository;
 import ged.ejb.user.User;
@@ -21,7 +21,7 @@ import ged.ejb.user.UserClosure;
 import ged.ejb.user.dao.UserDao;
 
 @Repository
-public class UserDaoJpa implements UserDao {
+public class UserDaoJpa extends AbstractCrudDao<Long, User> implements UserDao {
 
 	@Inject
 	@Repository
@@ -34,16 +34,6 @@ public class UserDaoJpa implements UserDao {
 	}
 
 	@Override
-	public void deleteAction(final Action action) {
-		this.persistenceFacade.delete(action);
-	}
-
-	@Override
-	public void deleteUser(final User user) {
-		this.persistenceFacade.delete(user);
-	}
-
-	@Override
 	public boolean emailExists(final String email) {
 		final Map<String, Object> parameters = new HashMap<>(1);
 		parameters.put("email", email);
@@ -51,31 +41,11 @@ public class UserDaoJpa implements UserDao {
 		return emails > 0;
 	}
 
-	@Override
-	public Action findAction(final Long auditedId, final String entity, final User user) {
-		final Map<String, Object> parameters = makeParameters(auditedId, entity, user);
-		final Action a = this.persistenceFacade.getByTypedQuerySingleResult(Action.class, "Action.findByValues",
-				parameters);
-		return a;
-	}
-
-	@Override
-	public List<User> findAll() {
-		return this.persistenceFacade.getByTypedQuery(User.class, "User.findAll", null, 0, 0);
-	}
-
 	public List<UserClosure> findAntecessorsUserClosures(final User user) {
 		final Map<String, Object> parameters = new HashMap<>();
 		parameters.put("id", user.getId());
 		return this.persistenceFacade.getByTypedQuery(UserClosure.class, "UserClosure.findAntecessorsUserClosuresById",
 				parameters, 0, 0);
-	}
-
-	@Override
-	public User findById(final Long id) {
-		final Map<String, Object> parameters = new HashMap<>();
-		parameters.put("id", id);
-		return this.persistenceFacade.getByTypedQuerySingleResult(User.class, "User.findById", parameters);
 	}
 
 	@Override
@@ -137,12 +107,12 @@ public class UserDaoJpa implements UserDao {
 	}
 
 	@Override
-	public void insertAction(final Action action) {
-		this.persistenceFacade.insert(action);
+	public Class<User> getClazz() {
+		return User.class;
 	}
 
 	@Override
-	public void insertUser(final User user) {
+	public void insert(final User user) {
 		this.persistenceFacade.insert(user);
 		if (user.getManager() != null) {
 			insertUserClosures(user);
@@ -163,18 +133,5 @@ public class UserDaoJpa implements UserDao {
 			insertUserClosure(userClosure.getAntecessor(), user, userClosure.getPathLength() + 1);
 		}
 		insertUserClosure(user, user, 0);
-	}
-
-	private Map<String, Object> makeParameters(final Long auditedId, final String entity, final User user) {
-		final Map<String, Object> parameters = new HashMap<String, Object>(3);
-		parameters.put("auditedId", auditedId);
-		parameters.put("entity", entity);
-		parameters.put("user", user);
-		return parameters;
-	}
-
-	@Override
-	public User updateUser(final User user) {
-		return this.persistenceFacade.update(user);
 	}
 }

@@ -98,32 +98,19 @@ public class UserEditBean extends AbstractPageBean {
 			this.user.setManager(this.manager);
 		}
 		if (this.user.getId() != null) {
-			this.user = this.userService.updateUser(this.user);
+			this.user = this.userService.update(this.user);
 		} else {
-			this.userService.insertUser(this.user);
+			this.userService.insert(this.user);
 		}
-		// this.actionsBean.add(this.user);
 		return "userView.xhtml?id=" + this.user.getId() + "&faces-redirect=true";
-	}
-
-	public void setLogger(final Logger logger) {
-		this.logger = logger;
 	}
 
 	public void setManager(final User manager) {
 		this.manager = manager;
 	}
 
-	public void setRoleService(final RoleService roleService) {
-		this.roleService = roleService;
-	}
-
 	public void setUser(final User user) {
 		this.user = user;
-	}
-
-	public void setUserService(final UserService userService) {
-		this.userService = userService;
 	}
 
 	public void validateEmail(final FacesContext context, final UIComponent component, final Object value)

@@ -5,25 +5,21 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
+import ged.ejb.core.AbstratctAuditedCrudService;
 import ged.ejb.core.action.Action;
 import ged.ejb.core.action.Audited;
+import ged.ejb.core.model.CrudDao;
 import ged.ejb.core.model.Repository;
 import ged.ejb.user.User;
 import ged.ejb.user.dao.UserDao;
 import ged.ejb.user.service.UserService;
 
 @Stateless
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl extends AbstratctAuditedCrudService<User> implements UserService {
 
 	@Inject
 	@Repository
 	private UserDao userDao;
-
-	@Override
-	public void deleteUser(final User user) {
-		user.setDeleted(true);
-		this.userDao.updateUser(user);
-	}
 
 	@Override
 	public boolean emailExists(final String email) {
@@ -32,16 +28,6 @@ public class UserServiceImpl implements UserService {
 
 	private boolean existAdmin() {
 		return this.userDao.countAdminRoles() > 1;
-	}
-
-	@Override
-	public List<User> findAll() {
-		return this.userDao.findAll();
-	}
-
-	@Override
-	public User findById(final Long id) {
-		return this.userDao.findById(id);
 	}
 
 	@Override
@@ -65,24 +51,18 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	@Audited(action = Action.INSERT)
-	public void insertUser(final User user) {
-		this.userDao.insertUser(user);
+	public CrudDao<Long, User> getDao() {
+		return this.userDao;
 	}
 
 	@Override
-	public void undeleteUser(final User user) {
-		user.setDeleted(false);
-		this.userDao.updateUser(user);
-	}
-
-	@Override
-	public User updateUser(final User user) {
+	@Audited(action = Action.UPDATE)
+	public User update(final User user) {
 		if (existAdmin()) {
-			return this.userDao.updateUser(user);
+			return this.userDao.update(user);
 		} else {
 			if (user.hasRole("ADMIN")) {
-				return this.userDao.updateUser(user);
+				return this.userDao.update(user);
 			}
 			return user;
 		}

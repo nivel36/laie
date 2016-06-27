@@ -45,7 +45,7 @@ public class UserSearchBean extends AbstractPageBean {
 
 	public void deleteUser(final User user) {
 		this.logger.log(Level.FINE, "Deleting an user");
-		this.userService.deleteUser(user);
+		this.userService.delete(user);
 		search();
 	}
 
@@ -83,10 +83,6 @@ public class UserSearchBean extends AbstractPageBean {
 		this.logger.fine("Searching for users");
 		final List<User> users = this.userService.fullSearch(this.name, this.surename, null);
 		this.paginator.setEntities(users);
-	}
-
-	public void setLogger(final Logger logger) {
-		this.logger = logger;
 	}
 
 	public void setName(final String name) {

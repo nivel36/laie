@@ -36,7 +36,7 @@ public class ConfigBean extends AbstractPageBean {
 	}
 
 	public void save() {
-		this.user = this.userService.updateUser(this.user);
+		this.user = this.userService.update(this.user);
 		this.sessionBean.setUser(this.user);
 		this.sessionBean.setLocale(new Locale(this.user.getLanguage()));
 		this.sessionBean.setRowsPerPage(this.user.getRowsPerPage());

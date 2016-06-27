@@ -2,27 +2,14 @@ package ged.ejb.user.dao;
 
 import java.util.List;
 
-import javax.ejb.Local;
-
-import ged.ejb.core.action.Action;
+import ged.ejb.core.model.CrudDao;
 import ged.ejb.user.User;
 
-@Local
-public interface UserDao {
+public interface UserDao extends CrudDao<Long, User> {
 
 	long countAdminRoles();
 
-	void deleteAction(Action action);
-
-	void deleteUser(User user);
-
 	boolean emailExists(final String email);
-
-	Action findAction(Long auditedId, String entity, User user);
-
-	List<User> findAll();
-
-	User findById(Long id);
 
 	User findByName(String user);
 
@@ -33,11 +20,4 @@ public interface UserDao {
 	List<User> findUsers(String name, String surename);
 
 	List<User> fullSearch(final String name, String surename, final String email, final boolean showDeleted);
-
-	void insertAction(Action action);
-
-	void insertUser(User user);
-
-	User updateUser(User user);
-
 }

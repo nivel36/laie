@@ -46,7 +46,7 @@ public class ChangePasswordPopupBean extends AbstractDialogBean {
 			if (this.newPassword.equals(this.repeatPassword)) {
 				final String hash = hashPassword(this.newPassword);
 				user.setPassword(hash);
-				user = this.userService.updateUser(user);
+				user = this.userService.update(user);
 				this.sessionBean.setUser(user);
 				hide();
 			} else {

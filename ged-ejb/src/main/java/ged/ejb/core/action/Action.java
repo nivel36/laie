@@ -20,6 +20,8 @@ public class Action extends AbstractEntity {
 
 	private static final long serialVersionUID = -3095037007290696579L;
 
+	public final static String UNDELETE = "UNDELETE";
+
 	public final static String UPDATE = "UPDATE";
 
 	private String actionPerformed;

@@ -26,7 +26,7 @@ public class UserViewBean extends AbstractPageBean {
 	private Paginator<JobOffer> jobOffers;
 
 	@Inject
-	private JobService jobService;
+	private transient JobService jobService;
 
 	private Paginator<User> team;
 
@@ -84,7 +84,7 @@ public class UserViewBean extends AbstractPageBean {
 		} catch (final NumberFormatException ex) {
 			error();
 		}
-		this.user = this.userService.findById(id);
+		this.user = this.userService.find(id);
 		if (this.user == null) {
 			error();
 		}
@@ -107,11 +107,7 @@ public class UserViewBean extends AbstractPageBean {
 		this.userId = userId;
 	}
 
-	public void setUserService(final UserService userService) {
-		this.userService = userService;
-	}
-
 	public void undeleteUser() {
-		this.userService.undeleteUser(this.user);
+		this.userService.undelete(this.user);
 	}
 }
