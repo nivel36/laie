@@ -45,51 +45,26 @@ public abstract class AbstractAuditedEntity extends AbstractEntity implements Au
 	@JoinColumn(name = "userId")
 	private User user;
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see ged.ejb.core.model.AuditedEntity#getDeleted()
-	 */
 	@Override
 	public Boolean getDeleted() {
 		return this.deleted;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see ged.ejb.core.model.AuditedEntity#getUser()
-	 */
 	@Override
 	public User getUser() {
 		return this.user;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see ged.ejb.core.model.AuditedEntity#isDeleted()
-	 */
 	@Override
 	public Boolean isDeleted() {
 		return this.deleted;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see ged.ejb.core.model.AuditedEntity#setDeleted(java.lang.Boolean)
-	 */
 	@Override
 	public void setDeleted(final Boolean deleted) {
 		this.deleted = deleted;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see ged.ejb.core.model.AuditedEntity#setUser(ged.ejb.user.User)
-	 */
 	@Override
 	public void setUser(final User user) {
 		this.user = user;
