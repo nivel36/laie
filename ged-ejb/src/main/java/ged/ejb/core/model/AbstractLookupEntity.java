@@ -12,26 +12,25 @@ public abstract class AbstractLookupEntity extends AbstractEntity {
 
 	@I18n
 	@Column(length = 64)
-	private String name;
+	private String description;
 
 	@I18n
 	@Column(length = 64)
-	private String description;
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
+	private String name;
 
 	public String getDescription() {
-		return description;
+		return this.description;
 	}
 
-	public void setDescription(String description) {
+	public String getName() {
+		return this.name;
+	}
+
+	public void setDescription(final String description) {
 		this.description = description;
 	}
 
+	public void setName(final String name) {
+		this.name = name;
+	}
 }

@@ -5,22 +5,13 @@ import java.util.Map;
 
 import javax.ejb.Local;
 import javax.persistence.EntityManager;
-import javax.persistence.LockModeType;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 
 @Local
 public interface PersistenceFacade {
 
-	void clear();
-
-	<K, T extends Entity<K>> boolean contains(T entity);
-
 	<K, T extends Entity<K>> void delete(T entity);
-
-	<K, T extends Entity<K>> void detach(T entity);
-
-	void flush();
 
 	<K, T extends Entity<K>> List<T> fullSearch(final Class<T> clazz, final List<String> fields,
 			final List<String> matching);
@@ -52,13 +43,7 @@ public interface PersistenceFacade {
 
 	EntityManager getEm();
 
-	<K, T extends Entity<K>> T getReference(Class<T> entityClass, Object primaryKey);
-
 	<K, T extends Entity<K>> void insert(T entity);
-
-	<K, T extends Entity<K>> void lock(T entity, LockModeType lockModeType, Map<String, Object> properties);
-
-	<K, T extends Entity<K>> void refresh(T entity, LockModeType lockModeType, Map<String, Object> properties);
 
 	<K, T extends Entity<K>> T update(T entity);
 

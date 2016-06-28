@@ -8,7 +8,6 @@ import java.util.logging.Logger;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.LockModeType;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
@@ -35,20 +34,6 @@ public class PersistenceFacadeJpa implements PersistenceFacade {
 
 	@Inject
 	private Logger logger;
-
-	@Override
-	public void clear() {
-		this.logger.log(Level.FINE, "Clear forzado");
-		this.em.clear();
-	}
-
-	@Override
-	public <K, T extends Entity<K>> boolean contains(final T entity) {
-		final boolean isContained = this.em.contains(entity);
-		this.logger.log(Level.FINE, "La entidad {0} esta en el em? {1}",
-				new Object[] { entity.getClass().getSimpleName(), isContained });
-		return isContained;
-	}
 
 	private <K, T extends Entity<K>> TypedQuery<T> createQueryFromCriteria(final Class<T> clazz,
 			final Map<String, Object> properties) {
@@ -81,19 +66,6 @@ public class PersistenceFacadeJpa implements PersistenceFacade {
 		} else {
 			this.em.remove(this.em.merge(entity));
 		}
-	}
-
-	@Override
-	public <K, T extends Entity<K>> void detach(final T entity) {
-		this.logger.log(Level.FINE, "Desincronizando la entidad::Clase={0}::Id={1}",
-				new Object[] { entity.getClass().getCanonicalName(), entity.getId() });
-		this.em.detach(entity);
-	}
-
-	@Override
-	public void flush() {
-		this.logger.log(Level.FINE, "Flush forzado");
-		this.em.flush();
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -211,26 +183,11 @@ public class PersistenceFacadeJpa implements PersistenceFacade {
 	}
 
 	@Override
-	public <K, T extends Entity<K>> T getReference(final Class<T> entityClass, final Object primaryKey) {
-		this.logger.log(Level.FINE, "Reference de la entidad::Clase={0}::Id={1}",
-				new Object[] { entityClass, primaryKey });
-		return this.em.getReference(entityClass, primaryKey);
-	}
-
-	@Override
 	public <K, T extends Entity<K>> void insert(final T entity) {
 		this.logger.log(Level.FINE, "Insertando una nueva entidad de tipod::Clase={0}",
 				entity.getClass().getCanonicalName());
 		this.em.persist(entity);
 		this.logger.log(Level.FINE, "Se le ha asignado la id={0}", entity.getId());
-	}
-
-	@Override
-	public <K, T extends Entity<K>> void lock(final T entity, final LockModeType lockModeType,
-			final Map<String, Object> properties) {
-		this.logger.log(Level.FINE, "Bloqueando la entidad::clase={0}::id={1}::lockMode={2}",
-				new Object[] { entity.getClass().getCanonicalName(), entity.getId(), lockModeType });
-		this.em.lock(entity, lockModeType, properties);
 	}
 
 	private void paginar(final int pageSize, final int pageNum, final Query query) {
@@ -262,22 +219,6 @@ public class PersistenceFacadeJpa implements PersistenceFacade {
 				query.setParameter(key, parameter);
 			}
 		}
-	}
-
-	@Override
-	public <K, T extends Entity<K>> void refresh(final T entity, final LockModeType lockModeType,
-			final Map<String, Object> properties) {
-		this.logger.log(Level.FINE, "Refresh de la entidad::clase={0}::id={1}::lockMode={2}",
-				new Object[] { entity.getClass().getCanonicalName(), entity.getId(), lockModeType });
-		this.em.refresh(entity, lockModeType, properties);
-	}
-
-	public void setEm(final EntityManager em) {
-		this.em = em;
-	}
-
-	public void setLogger(final Logger logger) {
-		this.logger = logger;
 	}
 
 	@Override
