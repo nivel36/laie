@@ -31,7 +31,7 @@ public class BookmarksBean extends AbstractPageBean {
 
 	private List<String> urls;
 
-	public void add(final AuditedEntity entity) {
+	public void add(final AuditedEntity<Long> entity) {
 		final String url = getUrl(entity);
 		if (existsUrl(url)) {
 			removeBookmark(url);
@@ -51,7 +51,7 @@ public class BookmarksBean extends AbstractPageBean {
 		this.bookmarkService.insert(bookmark);
 	}
 
-	private Bookmark createBookmark(final AuditedEntity entity) {
+	private Bookmark createBookmark(final AuditedEntity<Long> entity) {
 		final Bookmark bookmark = new Bookmark();
 		final String url = getUrl(entity);
 		bookmark.setUrl(url);
@@ -68,7 +68,7 @@ public class BookmarksBean extends AbstractPageBean {
 		return this.bookmarks;
 	}
 
-	private String getUrl(final AuditedEntity entity) {
+	private String getUrl(final AuditedEntity<Long> entity) {
 		final String contextPath = this.externalContext.getRequestContextPath();
 		final String viewId = this.facesContext.getViewRoot().getViewId();
 		final StringBuilder url = new StringBuilder();
@@ -85,12 +85,12 @@ public class BookmarksBean extends AbstractPageBean {
 		}
 	}
 
-	public boolean isBookmarked(final AuditedEntity entity) {
+	public boolean isBookmarked(final AuditedEntity<Long> entity) {
 		final String url = getUrl(entity);
 		return existsUrl(url);
 	}
 
-	public void remove(final AuditedEntity entity) {
+	public void remove(final AuditedEntity<Long> entity) {
 		final String url = getUrl(entity);
 		if (existsUrl(url)) {
 			this.bookmarkService.delete(url);

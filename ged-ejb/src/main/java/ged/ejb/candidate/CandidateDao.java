@@ -2,12 +2,9 @@ package ged.ejb.candidate;
 
 import java.util.List;
 
-import javax.ejb.Local;
-
 import ged.ejb.core.FileType;
 import ged.ejb.curriculum.Curriculum;
 
-@Local
 public interface CandidateDao {
 
 	public void deleteCandidate(Candidate candidate);

@@ -5,7 +5,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 @Repository
-public abstract class AbstractCrudDao<K, T extends Entity<K>> implements CrudDao<K, T> {
+public abstract class AbstractDao<K, T extends Entity<K>> implements Dao<K, T> {
 
 	@Inject
 	@Repository

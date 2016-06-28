@@ -25,7 +25,8 @@ public class AuditedInterceptor {
 		if (!(entityObject instanceof AuditedEntity)) {
 			throw new IllegalArgumentException("Not audited entity");
 		}
-		final AuditedEntity auditedEntity = (AuditedEntity) entityObject;
+		@SuppressWarnings("unchecked")
+		final AuditedEntity<Long> auditedEntity = (AuditedEntity<Long>) entityObject;
 		try {
 			return joinPoint.proceed();
 		} finally {

@@ -18,7 +18,7 @@ public class ActionServiceImpl extends AbstractService<Long, Action> implements 
 	private ActionDao actionDao;
 
 	@Override
-	public void addAction(final AuditedEntity auditedEntity, final String actionType) {
+	public void addAction(final AuditedEntity<Long> auditedEntity, final String actionType) {
 		final Action action = getActionFromEntity(auditedEntity);
 		action.setActionPerformed(actionType);
 		insert(action);
@@ -29,7 +29,7 @@ public class ActionServiceImpl extends AbstractService<Long, Action> implements 
 		return this.actionDao.findAllByUser(user);
 	}
 
-	private Action getActionFromEntity(final AuditedEntity auditedEntity) {
+	private Action getActionFromEntity(final AuditedEntity<Long> auditedEntity) {
 		final Action action = new Action();
 		action.setEntityId(auditedEntity.getId());
 		action.setEntityClass(auditedEntity.getClass().getSimpleName());

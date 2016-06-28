@@ -4,9 +4,9 @@ import java.util.List;
 
 import ged.ejb.core.action.Action;
 import ged.ejb.core.model.AuditedEntity;
-import ged.ejb.core.model.CrudDao;
+import ged.ejb.core.model.Dao;
 
-public abstract class AbstratctAuditedService<T extends AuditedEntity> extends AbstractService<Long, T>
+public abstract class AbstratctAuditedService<T extends AuditedEntity<Long>> extends AbstractService<Long, T>
 		implements AuditedService<T> {
 
 	@Override
@@ -35,7 +35,7 @@ public abstract class AbstratctAuditedService<T extends AuditedEntity> extends A
 	}
 
 	@Override
-	public abstract CrudDao<Long, T> getDao();
+	public abstract Dao<Long, T> getDao();
 
 	@Override
 	@Audited(action = Action.INSERT)

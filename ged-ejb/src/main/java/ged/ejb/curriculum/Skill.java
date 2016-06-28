@@ -7,10 +7,10 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 import ged.ejb.core.i18n.I18n;
-import ged.ejb.core.model.AuditedEntity;
+import ged.ejb.core.model.AbstractAuditedEntity;
 
 @Entity
-public class Skill extends AuditedEntity {
+public class Skill extends AbstractAuditedEntity {
 
 	private static final long serialVersionUID = 6591356212002981267L;;
 

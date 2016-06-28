@@ -15,7 +15,7 @@ import javax.inject.Named;
 
 import ged.ejb.core.Cache;
 import ged.ejb.core.FileType;
-import ged.ejb.core.Indexer;
+import ged.ejb.core.model.Indexer;
 import ged.ejb.curriculum.LanguageLevel;
 import ged.ejb.curriculum.SkillLevel;
 import ged.ejb.user.Role;

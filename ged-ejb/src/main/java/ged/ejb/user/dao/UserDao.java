@@ -2,10 +2,10 @@ package ged.ejb.user.dao;
 
 import java.util.List;
 
-import ged.ejb.core.model.CrudDao;
+import ged.ejb.core.model.Dao;
 import ged.ejb.user.User;
 
-public interface UserDao extends CrudDao<Long, User> {
+public interface UserDao extends Dao<Long, User> {
 
 	long countAdminRoles();
 

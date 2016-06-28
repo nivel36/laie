@@ -13,7 +13,7 @@ import org.hibernate.search.jpa.Search;
 import org.hibernate.search.query.dsl.BooleanJunction;
 import org.hibernate.search.query.dsl.QueryBuilder;
 
-import ged.ejb.core.model.AbstractCrudDao;
+import ged.ejb.core.model.AbstractDao;
 import ged.ejb.core.model.PersistenceFacade;
 import ged.ejb.core.model.Repository;
 import ged.ejb.user.User;
@@ -21,7 +21,7 @@ import ged.ejb.user.UserClosure;
 import ged.ejb.user.dao.UserDao;
 
 @Repository
-public class UserDaoJpa extends AbstractCrudDao<Long, User> implements UserDao {
+public class UserDaoJpa extends AbstractDao<Long, User> implements UserDao {
 
 	@Inject
 	@Repository

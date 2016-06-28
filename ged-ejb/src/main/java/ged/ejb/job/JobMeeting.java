@@ -14,7 +14,7 @@ import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
-import ged.ejb.core.model.AuditedEntity;
+import ged.ejb.core.model.AbstractAuditedEntity;
 
 @NamedQueries({
 		@NamedQuery(name = "JobMeeting.getConductedJobMeetings", query = "SELECT j FROM JobMeeting j WHERE j.jobCandidature.jobOffer = :jobOffer AND j.dateConducted IS NOT NULL"),
@@ -22,7 +22,7 @@ import ged.ejb.core.model.AuditedEntity;
 @Entity
 @Table(uniqueConstraints = { @UniqueConstraint(columnNames = {
 		"jobCandidatureId", "datePlanned" }) })
-public class JobMeeting extends AuditedEntity {
+public class JobMeeting extends AbstractAuditedEntity {
 
 	private static final long serialVersionUID = 3394583186288921090L;
 

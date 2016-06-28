@@ -4,12 +4,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import ged.ejb.core.model.AbstractCrudDao;
+import ged.ejb.core.model.AbstractDao;
 import ged.ejb.core.model.Repository;
 import ged.ejb.user.User;
 
 @Repository
-public class ActionDaoJpa extends AbstractCrudDao<Long, Action> implements ActionDao {
+public class ActionDaoJpa extends AbstractDao<Long, Action> implements ActionDao {
 
 	@Override
 	public List<Action> findAllByUser(final User user) {

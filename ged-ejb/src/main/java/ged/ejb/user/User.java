@@ -17,12 +17,12 @@ import org.hibernate.search.annotations.Indexed;
 
 import ged.ejb.core.action.Action;
 import ged.ejb.core.bookmark.Bookmark;
-import ged.ejb.core.model.AuditedEntity;
+import ged.ejb.core.model.AbstractAuditedEntity;
 import ged.ejb.job.JobOffer;
 
 @Entity
 @Indexed
-public class User extends AuditedEntity {
+public class User extends AbstractAuditedEntity {
 
 	private static final long serialVersionUID = 5920907439877095636L;
 

@@ -4,12 +4,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import ged.ejb.core.model.AbstractCrudDao;
+import ged.ejb.core.model.AbstractDao;
 import ged.ejb.core.model.Repository;
 import ged.ejb.user.User;
 
 @Repository
-public class BookmarkDaoJpa extends AbstractCrudDao<Long, Bookmark> implements BookmarkDao {
+public class BookmarkDaoJpa extends AbstractDao<Long, Bookmark> implements BookmarkDao {
 
 	@Override
 	public List<Bookmark> findAllByUser(final User user) {

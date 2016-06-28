@@ -11,10 +11,10 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
-import ged.ejb.core.model.AuditedEntity;
+import ged.ejb.core.model.AbstractAuditedEntity;
 
 @Entity
-public class JobExperience extends AuditedEntity {
+public class JobExperience extends AbstractAuditedEntity {
 
 	private static final long serialVersionUID = -2578992834584255548L;
 

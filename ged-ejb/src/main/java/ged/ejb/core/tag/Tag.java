@@ -11,10 +11,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
-import ged.ejb.core.model.AuditedEntity;
+import ged.ejb.core.model.AbstractAuditedEntity;
 
 @Entity
-public class Tag extends AuditedEntity {
+public class Tag extends AbstractAuditedEntity {
 
 	private static final long serialVersionUID = -2676859619371128798L;
 

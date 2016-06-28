@@ -18,7 +18,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
-import ged.ejb.core.model.AuditedEntity;
+import ged.ejb.core.model.AbstractAuditedEntity;
 import ged.ejb.core.tag.Tag;
 import ged.ejb.curriculum.Curriculum;
 import ged.ejb.curriculum.FileSys;
@@ -26,7 +26,7 @@ import ged.ejb.job.JobCandidature;
 import ged.ejb.user.User;
 
 @Entity
-public class Candidate extends AuditedEntity {
+public class Candidate extends AbstractAuditedEntity {
 
 	private static final long serialVersionUID = 1305321530927456159L;
 

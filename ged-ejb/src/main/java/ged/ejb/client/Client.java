@@ -10,11 +10,11 @@ import javax.persistence.OneToMany;
 import org.hibernate.search.annotations.ContainedIn;
 import org.hibernate.search.annotations.Field;
 
-import ged.ejb.core.model.AuditedEntity;
+import ged.ejb.core.model.AbstractAuditedEntity;
 import ged.ejb.job.JobOffer;
 
 @Entity
-public class Client extends AuditedEntity {
+public class Client extends AbstractAuditedEntity {
 
 	private static final long serialVersionUID = -5319357138994738654L;
 

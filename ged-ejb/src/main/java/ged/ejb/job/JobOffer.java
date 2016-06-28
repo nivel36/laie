@@ -21,12 +21,12 @@ import org.hibernate.search.annotations.IndexedEmbedded;
 
 import ged.ejb.client.Client;
 import ged.ejb.core.i18n.I18n;
-import ged.ejb.core.model.AuditedEntity;
+import ged.ejb.core.model.AbstractAuditedEntity;
 import ged.ejb.user.User;
 
 @Entity
 @Indexed
-public class JobOffer extends AuditedEntity {
+public class JobOffer extends AbstractAuditedEntity {
 
 	private static final long serialVersionUID = 5579321864799956403L;
 

@@ -8,7 +8,7 @@ import javax.inject.Inject;
 import ged.ejb.core.AbstratctAuditedService;
 import ged.ejb.core.Audited;
 import ged.ejb.core.action.Action;
-import ged.ejb.core.model.CrudDao;
+import ged.ejb.core.model.Dao;
 import ged.ejb.core.model.Repository;
 import ged.ejb.user.User;
 import ged.ejb.user.dao.UserDao;
@@ -51,7 +51,7 @@ public class UserServiceImpl extends AbstratctAuditedService<User> implements Us
 	}
 
 	@Override
-	public CrudDao<Long, User> getDao() {
+	public Dao<Long, User> getDao() {
 		return this.userDao;
 	}
 

@@ -12,10 +12,10 @@ import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
 import ged.ejb.candidate.Candidate;
-import ged.ejb.core.model.AuditedEntity;
+import ged.ejb.core.model.AbstractAuditedEntity;
 
 @Entity
-public class Curriculum extends AuditedEntity {
+public class Curriculum extends AbstractAuditedEntity {
 
 	private static final long serialVersionUID = 5171402772798965261L;
 

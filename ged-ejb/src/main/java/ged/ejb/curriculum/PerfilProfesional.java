@@ -6,10 +6,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
-import ged.ejb.core.model.AuditedEntity;
+import ged.ejb.core.model.AbstractAuditedEntity;
 
 @Entity
-public class PerfilProfesional extends AuditedEntity {
+public class PerfilProfesional extends AbstractAuditedEntity {
 
 	private static final long serialVersionUID = 8232686306392236943L;
 

@@ -1,4 +1,4 @@
-package ged.ejb.core;
+package ged.ejb.core.model;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
