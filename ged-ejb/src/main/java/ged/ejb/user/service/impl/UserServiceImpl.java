@@ -6,8 +6,8 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import ged.ejb.core.AbstratctAuditedService;
+import ged.ejb.core.Audited;
 import ged.ejb.core.action.Action;
-import ged.ejb.core.action.Audited;
 import ged.ejb.core.model.CrudDao;
 import ged.ejb.core.model.Repository;
 import ged.ejb.user.User;

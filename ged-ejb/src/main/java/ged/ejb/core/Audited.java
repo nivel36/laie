@@ -1,4 +1,4 @@
-package ged.ejb.core.action;
+package ged.ejb.core;
 
 import static java.lang.annotation.ElementType.METHOD;
 import static java.lang.annotation.ElementType.TYPE;

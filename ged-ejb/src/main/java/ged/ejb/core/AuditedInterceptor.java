@@ -1,10 +1,11 @@
-package ged.ejb.core.action;
+package ged.ejb.core;
 
 import javax.inject.Inject;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
 
+import ged.ejb.core.action.ActionService;
 import ged.ejb.core.model.AuditedEntity;
 
 @Interceptor

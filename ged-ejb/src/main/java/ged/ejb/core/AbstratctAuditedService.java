@@ -3,7 +3,6 @@ package ged.ejb.core;
 import java.util.List;
 
 import ged.ejb.core.action.Action;
-import ged.ejb.core.action.Audited;
 import ged.ejb.core.model.AuditedEntity;
 import ged.ejb.core.model.CrudDao;
 
