@@ -28,12 +28,12 @@ public class CurriculumDaoImpl implements CurriculumDao {
 
 	@Override
 	public List<LanguageLevel> findAllLanguageLevels() {
-		return this.persistenceFacade.getAll(LanguageLevel.class);
+		return this.persistenceFacade.findAll(LanguageLevel.class);
 	}
 
 	@Override
 	public List<SkillLevel> findAllSkillLevels() {
-		return this.persistenceFacade.getAll(SkillLevel.class);
+		return this.persistenceFacade.findAll(SkillLevel.class);
 	}
 
 	@Override
@@ -42,7 +42,7 @@ public class CurriculumDaoImpl implements CurriculumDao {
 		try {
 			final Map<String, Object> params = new HashMap<String, Object>();
 			params.put("candidateId", id);
-			curriculum = this.persistenceFacade.getByTypedQuerySingleResult(Curriculum.class,
+			curriculum = this.persistenceFacade.findByTypedQuery(Curriculum.class,
 					"Curriculum.getByCandidateId", params);
 		} catch (final NoResultException ex) {
 			curriculum = null;

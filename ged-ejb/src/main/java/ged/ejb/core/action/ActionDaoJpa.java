@@ -15,7 +15,7 @@ public class ActionDaoJpa extends AbstractDao<Long, Action> implements ActionDao
 	public List<Action> findAllByUser(final User user) {
 		final Map<String, Object> parameters = new HashMap<>();
 		parameters.put("user", user);
-		return this.persistenceFacade.getByTypedQuery(Action.class, "Action.findAllByUser", parameters, 10, 0);
+		return this.persistenceFacade.findByTypedQuery(Action.class, "Action.findAllByUser", parameters, 10, 0);
 	}
 
 	@Override

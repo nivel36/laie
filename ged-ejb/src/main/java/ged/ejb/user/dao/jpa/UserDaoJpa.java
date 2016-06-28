@@ -29,7 +29,7 @@ public class UserDaoJpa extends AbstractDao<Long, User> implements UserDao {
 
 	@Override
 	public long countAdminRoles() {
-		final Long count = (Long) this.persistenceFacade.getByQuerySingleResult("User.countAdminRoles", null);
+		final Long count = (Long) this.persistenceFacade.findByQuery("User.countAdminRoles", null);
 		return count;
 	}
 
@@ -37,34 +37,34 @@ public class UserDaoJpa extends AbstractDao<Long, User> implements UserDao {
 	public boolean emailExists(final String email) {
 		final Map<String, Object> parameters = new HashMap<>(1);
 		parameters.put("email", email);
-		final Long emails = (Long) this.persistenceFacade.getByQuerySingleResult("User.countEmail", parameters);
+		final Long emails = (Long) this.persistenceFacade.findByQuery("User.countEmail", parameters);
 		return emails > 0;
 	}
 
 	public List<UserClosure> findAntecessorsUserClosures(final User user) {
 		final Map<String, Object> parameters = new HashMap<>();
 		parameters.put("id", user.getId());
-		return this.persistenceFacade.getByTypedQuery(UserClosure.class, "UserClosure.findAntecessorsUserClosuresById",
+		return this.persistenceFacade.findByTypedQuery(UserClosure.class, "UserClosure.findAntecessorsUserClosuresById",
 				parameters, 0, 0);
 	}
 
 	@Override
 	public User findByName(final String user) {
-		return this.persistenceFacade.getByTypedQuerySingleResult(User.class, "User.findByName", null);
+		return this.persistenceFacade.findByTypedQuery(User.class, "User.findByName", null);
 	}
 
 	@Override
 	public List<User> findSubordinateUsers(final Long id) {
 		final Map<String, Object> parameters = new HashMap<>(1);
 		parameters.put("id", id);
-		return this.persistenceFacade.getByTypedQuery(User.class, "User.findSubordinateUsers", parameters, 0, 0);
+		return this.persistenceFacade.findByTypedQuery(User.class, "User.findSubordinateUsers", parameters, 0, 0);
 	}
 
 	@Override
 	public User findUserByUsername(final String username) {
 		final Map<String, Object> parameters = new HashMap<>();
 		parameters.put("username", username);
-		return this.persistenceFacade.getByTypedQuerySingleResult(User.class, "User.findByUsername", parameters);
+		return this.persistenceFacade.findByTypedQuery(User.class, "User.findByUsername", parameters);
 	}
 
 	@Override
@@ -72,7 +72,7 @@ public class UserDaoJpa extends AbstractDao<Long, User> implements UserDao {
 		final Map<String, Object> parameters = new HashMap<>(2);
 		parameters.put("name", name);
 		parameters.put("surename", surename);
-		return this.persistenceFacade.getByTypedQuery(User.class, "User.findByNameAndSurename", parameters, 0, 0);
+		return this.persistenceFacade.findByTypedQuery(User.class, "User.findByNameAndSurename", parameters, 0, 0);
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })

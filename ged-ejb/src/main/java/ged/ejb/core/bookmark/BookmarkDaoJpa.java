@@ -15,14 +15,14 @@ public class BookmarkDaoJpa extends AbstractDao<Long, Bookmark> implements Bookm
 	public List<Bookmark> findAllByUser(final User user) {
 		final Map<String, Object> parameters = new HashMap<>();
 		parameters.put("user", user);
-		return this.persistenceFacade.getByTypedQuery(getClazz(), "Bookmark.findAllByUser", parameters, 0, 0);
+		return this.persistenceFacade.findByTypedQuery(getClazz(), "Bookmark.findAllByUser", parameters, 0, 0);
 	}
 
 	@Override
 	public Bookmark findByUrl(final String url) {
 		final Map<String, Object> parameters = new HashMap<>();
 		parameters.put("url", url);
-		return this.persistenceFacade.getByTypedQuerySingleResult(getClazz(), "Bookmark.findByUrl", parameters);
+		return this.persistenceFacade.findByTypedQuery(getClazz(), "Bookmark.findByUrl", parameters);
 	}
 
 	@Override

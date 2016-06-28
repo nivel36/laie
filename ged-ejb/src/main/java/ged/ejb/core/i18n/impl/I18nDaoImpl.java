@@ -18,7 +18,7 @@ public class I18nDaoImpl implements I18nDao {
 
 	@Override
 	public List<I18nString> findAll() {
-		return this.persistenceFacade.getAll(I18nString.class);
+		return this.persistenceFacade.findAll(I18nString.class);
 	}
 
 }

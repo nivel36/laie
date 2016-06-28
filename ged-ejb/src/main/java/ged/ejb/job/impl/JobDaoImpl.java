@@ -31,7 +31,7 @@ public class JobDaoImpl implements JobDao {
 
 	@Override
 	public List<JobOffer> findAllJobOffers() {
-		return this.persistenceFacade.getAll(JobOffer.class);
+		return this.persistenceFacade.findAll(JobOffer.class);
 	}
 
 	@Override
@@ -40,7 +40,7 @@ public class JobDaoImpl implements JobDao {
 		try {
 			final Map<String, Object> properties = new HashMap<>();
 			properties.put("name", clientName);
-			client = this.persistenceFacade.getByTypedQuerySingleResult(Client.class, "Client.findByName", properties);
+			client = this.persistenceFacade.findByTypedQuery(Client.class, "Client.findByName", properties);
 		} catch (final NoResultException ex) {
 			client = null;
 		}
@@ -52,35 +52,35 @@ public class JobDaoImpl implements JobDao {
 		List<JobMeeting> conductedJobMeetings = null;
 		final Map<String, Object> parameters = new HashMap<String, Object>();
 		parameters.put("jobOffer", jobOffer);
-		conductedJobMeetings = this.persistenceFacade.getByTypedQuery(JobMeeting.class,
+		conductedJobMeetings = this.persistenceFacade.findByTypedQuery(JobMeeting.class,
 				"JobMeeting.getConductedJobMeetings", parameters, 0, 0);
 		return conductedJobMeetings;
 	}
 
 	@Override
 	public JobOffer findJobOfferById(final long id) {
-		return this.persistenceFacade.getByPrimaryKey(JobOffer.class, id);
+		return this.persistenceFacade.find(JobOffer.class, id);
 	}
 
 	@Override
 	public List<JobOffer> findJobOfferByName(final String name) {
 		final Map<String, Object> parameters = new HashMap<String, Object>();
 		parameters.put("name", name);
-		return this.persistenceFacade.getByTypedQuery(JobOffer.class, "JobOffer.findByName", parameters, 0, 0);
+		return this.persistenceFacade.findByTypedQuery(JobOffer.class, "JobOffer.findByName", parameters, 0, 0);
 	}
 
 	@Override
 	public List<JobOffer> findJobOffersByOwner(final User owner) {
 		final Map<String, Object> parameters = new HashMap<String, Object>();
 		parameters.put("owner", owner);
-		return this.persistenceFacade.getByTypedQuery(JobOffer.class, "JobOffer.findByOwner", parameters, 0, 0);
+		return this.persistenceFacade.findByTypedQuery(JobOffer.class, "JobOffer.findByOwner", parameters, 0, 0);
 	}
 
 	@Override
 	public List<JobOffer> findLastJobOffers(final User owner) {
 		final Map<String, Object> parameters = new HashMap<>();
 		parameters.put("owner", owner);
-		return this.persistenceFacade.getByTypedQuery(JobOffer.class, "JobOffer.findLastJobOffers", parameters, 10, 0);
+		return this.persistenceFacade.findByTypedQuery(JobOffer.class, "JobOffer.findLastJobOffers", parameters, 10, 0);
 	}
 
 	@Override
@@ -88,7 +88,7 @@ public class JobDaoImpl implements JobDao {
 		List<JobMeeting> plannedJobMeetings = null;
 		final Map<String, Object> parameters = new HashMap<String, Object>();
 		parameters.put("jobOffer", jobOffer);
-		plannedJobMeetings = this.persistenceFacade.getByTypedQuery(JobMeeting.class,
+		plannedJobMeetings = this.persistenceFacade.findByTypedQuery(JobMeeting.class,
 				"JobMeeting.getPlannedJobMeetings", parameters, 0, 0);
 		return plannedJobMeetings;
 	}

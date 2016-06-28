@@ -20,13 +20,13 @@ public class RoleDaoJpa implements RoleDao {
 
 	@Override
 	public List<Role> findAllRoles() {
-		return this.persistenceFacade.getAll(Role.class);
+		return this.persistenceFacade.findAll(Role.class);
 	}
 
 	@Override
 	public List<Role> findSubordinateRoles(final Long id) {
 		final Map<String, Object> parameters = new HashMap<>();
 		parameters.put("id", id);
-		return this.persistenceFacade.getByTypedQuery(Role.class, "Role.findSubordinateRoles", parameters, 0, 0);
+		return this.persistenceFacade.findByTypedQuery(Role.class, "Role.findSubordinateRoles", parameters, 0, 0);
 	}
 }

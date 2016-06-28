@@ -68,6 +68,77 @@ public class PersistenceFacadeJpa implements PersistenceFacade {
 		}
 	}
 
+	@Override
+	public <K, T extends Entity<K>> T find(final Class<T> entityClass, final K id) {
+		this.logger.log(Level.FINE, "Buscando por clave primaria::clase={0}::id={1}", new Object[] { entityClass, id });
+		return this.em.find(entityClass, id);
+	}
+
+	@Override
+	public <T> T findByCriteria(final CriteriaQuery<T> cq) {
+		this.logger.log(Level.FINE, "Lanzando criteria para un solo resultado");
+		final TypedQuery<T> query = this.em.createQuery(cq);
+		return query.getSingleResult();
+	}
+
+	@Override
+	public <K, T extends Entity<K>> T findByProperties(final Class<T> clazz, final Map<String, Object> properties) {
+		final TypedQuery<T> typedQuery = createQueryFromCriteria(clazz, properties);
+		parametrizar(properties, typedQuery);
+		return typedQuery.getSingleResult();
+	}
+
+	@Override
+	public <K, T extends Entity<K>> List<T> findByProperties(final Class<T> clazz, final Map<String, Object> properties,
+			final int pageSize, final int pageNum) {
+		final TypedQuery<T> typedQuery = createQueryFromCriteria(clazz, properties);
+		paginar(pageSize, pageNum, typedQuery);
+		return typedQuery.getResultList();
+	}
+
+	@Override
+	public List<?> findByQuery(final String nombreQuery, final Map<String, Object> parameters, final int pageSize,
+			final int pageNum) {
+		this.logger.log(Level.FINE, "Lanzando la getByQuery {0}", nombreQuery);
+		final Query query = this.em.createNamedQuery(nombreQuery);
+		paginar(pageSize, pageNum, query);
+		parametrizar(parameters, query);
+		return query.getResultList();
+	}
+
+	@Override
+	public Object findByQuery(final String nombreQuery, final Map<String, Object> parameters) {
+		this.logger.log(Level.FINE, "Lanzando la la getByQuerySingleResult {0} ", nombreQuery);
+		final Query query = this.em.createNamedQuery(nombreQuery);
+		parametrizar(parameters, query);
+		Object result = null;
+		try {
+			result = query.getSingleResult();
+		} catch (final NoResultException ex) {
+		}
+		return result;
+	}
+
+	@Override
+	public <K, T extends Entity<K>> List<T> findByTypedQuery(final Class<T> entityClass, final String namedQuery,
+			final Map<String, Object> parameters, final int pageSize, final int pageNum) {
+		this.logger.log(Level.FINE, "Ejecutando la getByTypedQuery: {0}", namedQuery);
+		final TypedQuery<T> query = this.em.createNamedQuery(namedQuery, entityClass);
+		parametrizar(parameters, query);
+		paginar(pageSize, pageNum, query);
+		return query.getResultList();
+	}
+
+	@Override
+	public <K, T extends Entity<K>> T findByTypedQuery(final Class<T> entityClass, final String namedQuery,
+			final Map<String, Object> parameters) {
+		this.logger.log(Level.FINE, "Ejecutando la getByTypedQuerySingleResult: {0}", namedQuery);
+		final TypedQuery<T> query = this.em.createNamedQuery(namedQuery, entityClass);
+		parametrizar(parameters, query);
+		final T result = query.getSingleResult();
+		return result;
+	}
+
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public <K, T extends Entity<K>> List<T> fullSearch(final Class<T> clazz, final List<String> fields,
@@ -87,94 +158,18 @@ public class PersistenceFacadeJpa implements PersistenceFacade {
 	}
 
 	@Override
-	public <K, T extends Entity<K>> List<T> getAll(final Class<T> clazz) {
+	public <K, T extends Entity<K>> List<T> findAll(final Class<T> clazz) {
 		final TypedQuery<T> typedQuery = createQueryFromCriteria(clazz, null);
 		paginar(0, RES_LIMIT, typedQuery);
 		return typedQuery.getResultList();
 	}
 
 	@Override
-	public <T> List<T> getByCriteria(final CriteriaQuery<T> cq, final int pageSize, final int pageNum) {
+	public <T> List<T> findByCriteria(final CriteriaQuery<T> cq, final int pageSize, final int pageNum) {
 		this.logger.log(Level.FINE, "Lanzando criteria");
 		final TypedQuery<T> query = this.em.createQuery(cq);
 		paginar(pageSize, pageNum, query);
 		return query.getResultList();
-	}
-
-	@Override
-	public <T> T getByCriteriaSingleResult(final CriteriaQuery<T> cq) {
-		this.logger.log(Level.FINE, "Lanzando criteria para un solo resultado");
-		final TypedQuery<T> query = this.em.createQuery(cq);
-		return query.getSingleResult();
-	}
-
-	@Override
-	public <K, T extends Entity<K>> T getByPrimaryKey(final Class<T> entityClass, final K id) {
-		this.logger.log(Level.FINE, "Buscando por clave primaria::clase={0}::id={1}", new Object[] { entityClass, id });
-		return this.em.find(entityClass, id);
-	}
-
-	@Override
-	public <K, T extends Entity<K>> T getByProperties(final Class<T> clazz, final Map<String, Object> properties) {
-		final TypedQuery<T> typedQuery = createQueryFromCriteria(clazz, properties);
-		parametrizar(properties, typedQuery);
-		return typedQuery.getSingleResult();
-	}
-
-	@Override
-	public <K, T extends Entity<K>> List<T> getByProperties(final Class<T> clazz, final Map<String, Object> properties,
-			final int pageSize, final int pageNum) {
-		final TypedQuery<T> typedQuery = createQueryFromCriteria(clazz, properties);
-		paginar(pageSize, pageNum, typedQuery);
-		return typedQuery.getResultList();
-	}
-
-	@Override
-	public List<?> getByQuery(final String nombreQuery, final Map<String, Object> parameters, final int pageSize,
-			final int pageNum) {
-		this.logger.log(Level.FINE, "Lanzando la getByQuery {0}", nombreQuery);
-		final Query query = this.em.createNamedQuery(nombreQuery);
-		paginar(pageSize, pageNum, query);
-		parametrizar(parameters, query);
-		return query.getResultList();
-	}
-
-	@Override
-	public Object getByQuerySingleResult(final String nombreQuery, final Map<String, Object> parameters) {
-		this.logger.log(Level.FINE, "Lanzando la la getByQuerySingleResult {0} ", nombreQuery);
-		final Query query = this.em.createNamedQuery(nombreQuery);
-		parametrizar(parameters, query);
-		Object result = null;
-		try {
-			result = query.getSingleResult();
-		} catch (final NoResultException ex) {
-		}
-		return result;
-	}
-
-	@Override
-	public <K, T extends Entity<K>> List<T> getByTypedQuery(final Class<T> entityClass, final String namedQuery,
-			final Map<String, Object> parameters, final int pageSize, final int pageNum) {
-		this.logger.log(Level.FINE, "Ejecutando la getByTypedQuery: {0}", namedQuery);
-		final TypedQuery<T> query = this.em.createNamedQuery(namedQuery, entityClass);
-		parametrizar(parameters, query);
-		paginar(pageSize, pageNum, query);
-		return query.getResultList();
-	}
-
-	@Override
-	public <K, T extends Entity<K>> T getByTypedQuerySingleResult(final Class<T> entityClass, final String namedQuery,
-			final Map<String, Object> parameters) {
-		this.logger.log(Level.FINE, "Ejecutando la getByTypedQuerySingleResult: {0}", namedQuery);
-		final TypedQuery<T> query = this.em.createNamedQuery(namedQuery, entityClass);
-		parametrizar(parameters, query);
-		final T result = query.getSingleResult();
-		return result;
-	}
-
-	@Override
-	public CriteriaBuilder getCriteriaBuilder() {
-		return this.em.getCriteriaBuilder();
 	}
 
 	@Override

@@ -24,12 +24,12 @@ public abstract class AbstractDao<K, T extends Entity<K>> implements Dao<K, T> {
 		if (id == null) {
 			throw new NullPointerException();
 		}
-		return this.persistenceFacade.getByPrimaryKey(getClazz(), id);
+		return this.persistenceFacade.find(getClazz(), id);
 	}
 
 	@Override
 	public List<T> findAll() {
-		return this.persistenceFacade.getAll(getClazz());
+		return this.persistenceFacade.findAll(getClazz());
 	}
 
 	public abstract Class<T> getClazz();
