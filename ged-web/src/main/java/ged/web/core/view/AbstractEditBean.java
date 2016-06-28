@@ -4,7 +4,7 @@ import javax.annotation.PostConstruct;
 
 import ged.ejb.core.model.AuditedEntity;
 
-public abstract class AbstractEditBean<T extends AuditedEntity> extends AbstractPageBean {
+public abstract class AbstractEditBean<T extends AuditedEntity<Long>> extends AbstractPageBean {
 
 	private static final long serialVersionUID = 7342938011321162420L;
 
