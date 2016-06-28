@@ -179,7 +179,6 @@
 						<h:inputText id="manager" value="#{userEditBean.manager.fullName}"
 							label="#{i18n['user.manager']}"
 							styleClass="#{not component.valid ? 'inputError' : ''}"
-							validator="#{userEditBean.validateManager}"
 							readonly="#{facesContext.renderResponse}" />
 						<h:message for="manager" errorClass="error" />
 					</h:outputLabel>

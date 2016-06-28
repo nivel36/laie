@@ -1,6 +1,7 @@
 package ged.web.view.user;
 
 import java.util.Locale;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
@@ -39,8 +40,10 @@ public class UserEditBean extends AbstractPageBean {
 
 	public String cancel() {
 		if (this.user.getId() == null) {
+			this.logger.finer("Cancel create new user");
 			return "userSearch.xhtml?faces-redirect=true";
 		} else {
+			this.logger.log(Level.FINER, "Cancel change user {0}", this.user.getId());
 			return "userView.xhtml?id=" + this.user.getId() + "&faces-redirect=true";
 		}
 	}
@@ -55,9 +58,12 @@ public class UserEditBean extends AbstractPageBean {
 
 	@PostConstruct
 	private void init() {
+		this.logger.finest("Init UserEditBean");
 		if (this.flash.containsKey("user")) {
 			this.user = (User) this.flash.get("user");
+			this.logger.log(Level.FINEST, "Flash scope contains user with name {0}", this.user.getFullName());
 		} else {
+			this.logger.log(Level.FINEST, "Flash scope is empty");
 			this.user = new User();
 			final int rowsPerPage = this.sessionBean.getRowsPerPage();
 			this.user.setRowsPerPage(rowsPerPage);
@@ -93,8 +99,10 @@ public class UserEditBean extends AbstractPageBean {
 	}
 
 	public String save() {
+		this.logger.log(Level.FINE, "Saving user {0}", this.user.getFullName());
 		this.user.setUser(this.sessionBean.getUser());
 		if (this.manager.getUsername() != null) {
+			this.logger.log(Level.FINER, "The user has no manager");
 			this.user.setManager(this.manager);
 		}
 		if (this.user.getId() != null) {
@@ -115,6 +123,7 @@ public class UserEditBean extends AbstractPageBean {
 
 	public void validateEmail(final FacesContext context, final UIComponent component, final Object value)
 			throws ValidatorException {
+		this.logger.log(Level.FINEST, "Checking email");
 		final String email = (String) value;
 		if (value == null) {
 			return;
@@ -123,18 +132,8 @@ public class UserEditBean extends AbstractPageBean {
 			return;
 		}
 		if (this.userService.emailExists(email)) {
+			this.logger.log(Level.FINEST, "The email exists");
 			final String msg = translate("user.error.email_exists");
-			throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg));
-		}
-	}
-
-	public void validateManager(final FacesContext context, final UIComponent component, final Object value)
-			throws ValidatorException {
-		if (this.manager.getUsername() == null) {
-			return;
-		}
-		if (this.user.equals(this.manager)) {
-			final String msg = translate("user.error.manager");
 			throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg));
 		}
 	}

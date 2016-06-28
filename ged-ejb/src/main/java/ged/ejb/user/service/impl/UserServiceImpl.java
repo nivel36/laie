@@ -56,6 +56,18 @@ public class UserServiceImpl extends AbstratctAuditedCrudService<User> implement
 	}
 
 	@Override
+	@Audited(action = Action.INSERT)
+	public void insert(final User user) {
+		if (user == null) {
+			throw new NullPointerException();
+		}
+		if (user.getManager().equals(user)) {
+			throw new IllegalStateException("User can't be his manager");
+		}
+		insert(user);
+	}
+
+	@Override
 	@Audited(action = Action.UPDATE)
 	public User update(final User user) {
 		if (existAdmin()) {

@@ -13,11 +13,17 @@ public abstract class AbstractCrudDao<K, T extends Entity<K>> implements CrudDao
 
 	@Override
 	public void delete(final T entity) {
+		if (entity == null) {
+			throw new NullPointerException();
+		}
 		this.persistenceFacade.delete(entity);
 	}
 
 	@Override
 	public T find(final K id) {
+		if (id == null) {
+			throw new NullPointerException();
+		}
 		return this.persistenceFacade.getByPrimaryKey(getClazz(), id);
 	}
 
@@ -30,11 +36,17 @@ public abstract class AbstractCrudDao<K, T extends Entity<K>> implements CrudDao
 
 	@Override
 	public void insert(final T entity) {
+		if (entity == null) {
+			throw new NullPointerException();
+		}
 		this.persistenceFacade.insert(entity);
 	}
 
 	@Override
 	public T update(final T entity) {
+		if (entity == null) {
+			throw new NullPointerException();
+		}
 		return this.persistenceFacade.update(entity);
 	}
 }

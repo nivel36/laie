@@ -9,11 +9,17 @@ public abstract class AbstractService<K, T extends Entity<K>> implements CrudSer
 
 	@Override
 	public void delete(final T entity) {
+		if (entity == null) {
+			throw new NullPointerException();
+		}
 		this.getDao().delete(entity);
 	}
 
 	@Override
 	public T find(final K id) {
+		if (id == null) {
+			throw new NullPointerException();
+		}
 		return this.getDao().find(id);
 	}
 
@@ -26,11 +32,17 @@ public abstract class AbstractService<K, T extends Entity<K>> implements CrudSer
 
 	@Override
 	public void insert(final T entity) {
+		if (entity == null) {
+			throw new NullPointerException();
+		}
 		this.getDao().insert(entity);
 	}
 
 	@Override
 	public T update(final T entity) {
+		if (entity == null) {
+			throw new NullPointerException();
+		}
 		return this.getDao().update(entity);
 	}
 }

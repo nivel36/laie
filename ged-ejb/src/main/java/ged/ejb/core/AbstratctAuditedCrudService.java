@@ -13,11 +13,20 @@ public abstract class AbstratctAuditedCrudService<T extends AuditedEntity> exten
 	@Override
 	@Audited(action = Action.DELETE)
 	public void delete(final T entity) {
+		if (entity == null) {
+			throw new NullPointerException();
+		}
 		super.delete(entity);
 	}
 
 	@Override
 	public T find(final Long id) {
+		if (id == null) {
+			throw new NullPointerException();
+		}
+		if (id < 1) {
+			throw new IllegalArgumentException("id: " + id);
+		}
 		return super.find(id);
 	}
 
@@ -32,12 +41,18 @@ public abstract class AbstratctAuditedCrudService<T extends AuditedEntity> exten
 	@Override
 	@Audited(action = Action.INSERT)
 	public void insert(final T entity) {
+		if (entity == null) {
+			throw new NullPointerException();
+		}
 		super.insert(entity);
 	}
 
 	@Override
 	@Audited(action = Action.UNDELETE)
 	public T undelete(final T entity) {
+		if (entity == null) {
+			throw new NullPointerException();
+		}
 		entity.setDeleted(Boolean.FALSE);
 		return super.update(entity);
 	}
@@ -45,6 +60,9 @@ public abstract class AbstratctAuditedCrudService<T extends AuditedEntity> exten
 	@Override
 	@Audited(action = Action.UNDELETE)
 	public T update(final T entity) {
+		if (entity == null) {
+			throw new NullPointerException();
+		}
 		return super.update(entity);
 	}
 }
