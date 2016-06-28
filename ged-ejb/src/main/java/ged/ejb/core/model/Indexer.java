@@ -1,13 +1,11 @@
 package ged.ejb.core.model;
 
-import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
 import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.jpa.Search;
 
-@ApplicationScoped
 public class Indexer {
 
 	@Inject
