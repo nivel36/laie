@@ -7,8 +7,8 @@ import ged.ejb.core.action.Audited;
 import ged.ejb.core.model.AuditedEntity;
 import ged.ejb.core.model.CrudDao;
 
-public abstract class AbstratctAuditedCrudService<T extends AuditedEntity> extends AbstractService<Long, T>
-		implements AuditedCrudService<T> {
+public abstract class AbstratctAuditedService<T extends AuditedEntity> extends AbstractService<Long, T>
+		implements AuditedService<T> {
 
 	@Override
 	@Audited(action = Action.DELETE)

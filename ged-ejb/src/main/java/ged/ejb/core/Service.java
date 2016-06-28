@@ -4,7 +4,7 @@ import java.util.List;
 
 import ged.ejb.core.model.Entity;
 
-public interface CrudService<K, T extends Entity<? extends K>> {
+public interface Service<K, T extends Entity<? extends K>> {
 
 	void delete(T entity);
 

@@ -5,7 +5,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
-import ged.ejb.core.AbstratctAuditedCrudService;
+import ged.ejb.core.AbstratctAuditedService;
 import ged.ejb.core.action.Action;
 import ged.ejb.core.action.Audited;
 import ged.ejb.core.model.CrudDao;
@@ -15,7 +15,7 @@ import ged.ejb.user.dao.UserDao;
 import ged.ejb.user.service.UserService;
 
 @Stateless
-public class UserServiceImpl extends AbstratctAuditedCrudService<User> implements UserService {
+public class UserServiceImpl extends AbstratctAuditedService<User> implements UserService {
 
 	@Inject
 	@Repository
