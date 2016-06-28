@@ -16,11 +16,6 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import org.hibernate.search.jpa.FullTextEntityManager;
-import org.hibernate.search.jpa.Search;
-import org.hibernate.search.query.dsl.BooleanJunction;
-import org.hibernate.search.query.dsl.QueryBuilder;
-
 @Repository
 public class PersistenceFacadeJpa implements PersistenceFacade {
 
@@ -75,10 +70,25 @@ public class PersistenceFacadeJpa implements PersistenceFacade {
 	}
 
 	@Override
+	public <K, T extends Entity<K>> List<T> findAll(final Class<T> clazz) {
+		final TypedQuery<T> typedQuery = createQueryFromCriteria(clazz, null);
+		paginar(0, RES_LIMIT, typedQuery);
+		return typedQuery.getResultList();
+	}
+
+	@Override
 	public <T> T findByCriteria(final CriteriaQuery<T> cq) {
 		this.logger.log(Level.FINE, "Lanzando criteria para un solo resultado");
 		final TypedQuery<T> query = this.em.createQuery(cq);
 		return query.getSingleResult();
+	}
+
+	@Override
+	public <T> List<T> findByCriteria(final CriteriaQuery<T> cq, final int pageSize, final int pageNum) {
+		this.logger.log(Level.FINE, "Lanzando criteria");
+		final TypedQuery<T> query = this.em.createQuery(cq);
+		paginar(pageSize, pageNum, query);
+		return query.getResultList();
 	}
 
 	@Override
@@ -97,16 +107,6 @@ public class PersistenceFacadeJpa implements PersistenceFacade {
 	}
 
 	@Override
-	public List<?> findByQuery(final String nombreQuery, final Map<String, Object> parameters, final int pageSize,
-			final int pageNum) {
-		this.logger.log(Level.FINE, "Lanzando la getByQuery {0}", nombreQuery);
-		final Query query = this.em.createNamedQuery(nombreQuery);
-		paginar(pageSize, pageNum, query);
-		parametrizar(parameters, query);
-		return query.getResultList();
-	}
-
-	@Override
 	public Object findByQuery(final String nombreQuery, final Map<String, Object> parameters) {
 		this.logger.log(Level.FINE, "Lanzando la la getByQuerySingleResult {0} ", nombreQuery);
 		final Query query = this.em.createNamedQuery(nombreQuery);
@@ -120,12 +120,12 @@ public class PersistenceFacadeJpa implements PersistenceFacade {
 	}
 
 	@Override
-	public <K, T extends Entity<K>> List<T> findByTypedQuery(final Class<T> entityClass, final String namedQuery,
-			final Map<String, Object> parameters, final int pageSize, final int pageNum) {
-		this.logger.log(Level.FINE, "Ejecutando la getByTypedQuery: {0}", namedQuery);
-		final TypedQuery<T> query = this.em.createNamedQuery(namedQuery, entityClass);
-		parametrizar(parameters, query);
+	public List<?> findByQuery(final String nombreQuery, final Map<String, Object> parameters, final int pageSize,
+			final int pageNum) {
+		this.logger.log(Level.FINE, "Lanzando la getByQuery {0}", nombreQuery);
+		final Query query = this.em.createNamedQuery(nombreQuery);
 		paginar(pageSize, pageNum, query);
+		parametrizar(parameters, query);
 		return query.getResultList();
 	}
 
@@ -139,35 +139,12 @@ public class PersistenceFacadeJpa implements PersistenceFacade {
 		return result;
 	}
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
-	public <K, T extends Entity<K>> List<T> fullSearch(final Class<T> clazz, final List<String> fields,
-			final List<String> matching) {
-		final FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(this.em);
-		final QueryBuilder qb = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(clazz).get();
-		final BooleanJunction<BooleanJunction> bj = qb.bool();
-		for (int i = 0; i < fields.size(); i++) {
-			final String value = matching.get(i);
-			if ((value != null) && (value.length() != 0)) {
-				bj.must(qb.keyword().onField(fields.get(i)).matching(value).createQuery());
-			}
-		}
-		final Query persistenceQuery = fullTextEntityManager.createFullTextQuery(bj.createQuery(), clazz);
-		final List<T> result = persistenceQuery.getResultList();
-		return result;
-	}
-
-	@Override
-	public <K, T extends Entity<K>> List<T> findAll(final Class<T> clazz) {
-		final TypedQuery<T> typedQuery = createQueryFromCriteria(clazz, null);
-		paginar(0, RES_LIMIT, typedQuery);
-		return typedQuery.getResultList();
-	}
-
-	@Override
-	public <T> List<T> findByCriteria(final CriteriaQuery<T> cq, final int pageSize, final int pageNum) {
-		this.logger.log(Level.FINE, "Lanzando criteria");
-		final TypedQuery<T> query = this.em.createQuery(cq);
+	public <K, T extends Entity<K>> List<T> findByTypedQuery(final Class<T> entityClass, final String namedQuery,
+			final Map<String, Object> parameters, final int pageSize, final int pageNum) {
+		this.logger.log(Level.FINE, "Ejecutando la getByTypedQuery: {0}", namedQuery);
+		final TypedQuery<T> query = this.em.createNamedQuery(namedQuery, entityClass);
+		parametrizar(parameters, query);
 		paginar(pageSize, pageNum, query);
 		return query.getResultList();
 	}
