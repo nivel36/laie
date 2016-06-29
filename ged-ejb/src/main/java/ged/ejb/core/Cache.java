@@ -2,7 +2,6 @@ package ged.ejb.core;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
@@ -31,9 +30,6 @@ public class Cache implements Serializable {
 	private List<FileType> fileTypes;
 
 	private List<LanguageLevel> languageLevels;
-
-	@Inject
-	protected transient Logger logger;
 
 	private List<Role> roles;
 
@@ -64,9 +60,5 @@ public class Cache implements Serializable {
 		this.languageLevels = this.curriculumService.findAllLanguageLevels();
 		this.fileTypes = this.candidateService.findAllFileTypes();
 		this.roles = this.roleService.findAllRoles();
-	}
-
-	public void setLogger(final Logger logger) {
-		this.logger = logger;
 	}
 }
