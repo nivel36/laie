@@ -55,7 +55,7 @@ public abstract class AbstratctAuditedService<T extends AuditedEntity<Long>> imp
 	}
 
 	@Override
-	@Audited(action = Action.UNDELETE)
+	@Audited(action = Action.UPDATE)
 	public T update(final T entity) {
 		if (entity == null) {
 			throw new NullPointerException();

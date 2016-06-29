@@ -26,7 +26,7 @@ public class UserServiceImpl extends AbstratctAuditedService<User> implements Us
 		return this.userDao.emailExists(email);
 	}
 
-	private boolean existAdmin() {
+	private boolean existsMoreThanOneAdmin() {
 		return this.userDao.countAdminRoles() > 1;
 	}
 
@@ -64,18 +64,18 @@ public class UserServiceImpl extends AbstratctAuditedService<User> implements Us
 		if (user.getManager().equals(user)) {
 			throw new IllegalStateException("User can't be his manager");
 		}
-		insert(user);
+		this.userDao.insert(user);
 	}
 
 	@Override
 	@Audited(action = Action.UPDATE)
 	public User update(final User user) {
-		if (existAdmin()) {
+		if (existsMoreThanOneAdmin()) {
+			return this.userDao.update(user);
+		} else if (!user.hasRole("ADMIN")) {
 			return this.userDao.update(user);
 		} else {
-			if (user.hasRole("ADMIN")) {
-				return this.userDao.update(user);
-			}
+			// TODO: throw exception
 			return user;
 		}
 	}
