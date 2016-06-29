@@ -11,6 +11,7 @@ import ged.ejb.core.action.Action;
 import ged.ejb.core.model.Dao;
 import ged.ejb.core.model.Repository;
 import ged.ejb.user.User;
+import ged.ejb.user.UserException;
 import ged.ejb.user.dao.UserDao;
 import ged.ejb.user.service.UserService;
 
@@ -38,11 +39,6 @@ public class UserServiceImpl extends AbstratctAuditedService<User> implements Us
 	@Override
 	public User findUserByUsername(final String username) {
 		return this.userDao.findUserByUsername(username);
-	}
-
-	@Override
-	public List<User> findUsers(final String name, final String surenames) {
-		return this.userDao.findUsers(name, surenames);
 	}
 
 	@Override
@@ -75,8 +71,7 @@ public class UserServiceImpl extends AbstratctAuditedService<User> implements Us
 		} else if (!user.hasRole("ADMIN")) {
 			return this.userDao.update(user);
 		} else {
-			// TODO: throw exception
-			return user;
+			throw new UserException("Can not delete user");
 		}
 	}
 }

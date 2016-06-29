@@ -10,10 +10,9 @@ import ged.ejb.user.User;
 @Local
 public interface BookmarkService extends Service<Long, Bookmark> {
 
+	void delete(String url);
+
 	List<Bookmark> findAllByUser(final User user);
 
 	Bookmark findByUrl(String url);
-
-	void delete(String url);
-
 }

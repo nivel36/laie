@@ -13,8 +13,5 @@ public interface UserService extends AuditedService<User> {
 
 	User findUserByUsername(String username);
 
-	List<User> findUsers(String name, String surenames);
-
 	List<User> fullSearch(final String name, final String surename, final String userEmail);
-
 }

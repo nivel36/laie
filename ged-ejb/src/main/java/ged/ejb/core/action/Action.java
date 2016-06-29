@@ -1,5 +1,6 @@
 package ged.ejb.core.action;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -24,12 +25,15 @@ public class Action extends AbstractEntity {
 
 	public final static String UPDATE = "UPDATE";
 
+	@Column(length = 8)
 	private String actionPerformed;
 
+	@Column(length = 64)
 	private String entityClass;
 
 	private Long entityId;
 
+	@Column(length = 128)
 	private String text;
 
 	@NotNull

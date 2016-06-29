@@ -11,13 +11,9 @@ public interface UserDao extends Dao<Long, User> {
 
 	boolean emailExists(final String email);
 
-	User findByName(String user);
-
 	List<User> findSubordinateUsers(Long id);
 
 	User findUserByUsername(String username);
-
-	List<User> findUsers(String name, String surename);
 
 	List<User> fullSearch(final String name, String surename, final String email, final boolean showDeleted);
 }

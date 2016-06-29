@@ -27,12 +27,10 @@ public class AuditedInterceptor {
 		}
 		@SuppressWarnings("unchecked")
 		final AuditedEntity<Long> auditedEntity = (AuditedEntity<Long>) entityObject;
-		try {
-			return joinPoint.proceed();
-		} finally {
-			final Audited annotation = joinPoint.getMethod().getAnnotation(Audited.class);
-			final String action = annotation.action();
-			this.actionService.addAction(auditedEntity, action);
-		}
+		final Object returnObject = joinPoint.proceed();
+		final Audited annotation = joinPoint.getMethod().getAnnotation(Audited.class);
+		final String action = annotation.action();
+		this.actionService.addAction(auditedEntity, action);
+		return returnObject;
 	}
 }

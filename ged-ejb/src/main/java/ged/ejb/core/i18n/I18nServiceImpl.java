@@ -1,16 +1,15 @@
-package ged.ejb.core.i18n.impl;
+package ged.ejb.core.i18n;
 
 import java.util.List;
 
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 
-import ged.ejb.core.i18n.I18nDao;
-import ged.ejb.core.i18n.I18nString;
 import ged.ejb.core.model.PersistenceFacade;
 import ged.ejb.core.model.Repository;
 
-@Repository
-public class I18nDaoImpl implements I18nDao {
+@Stateless
+public class I18nServiceImpl implements I18nService {
 
 	@Inject
 	@Repository
@@ -20,5 +19,4 @@ public class I18nDaoImpl implements I18nDao {
 	public List<I18nString> findAll() {
 		return this.persistenceFacade.findAll(I18nString.class);
 	}
-
 }

@@ -1,5 +1,6 @@
 package ged.ejb.core.bookmark;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -11,13 +12,15 @@ import ged.ejb.core.model.AbstractEntity;
 import ged.ejb.user.User;
 
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = { "userId", "url" }) )
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = { "userId", "url" }))
 public class Bookmark extends AbstractEntity {
 
 	private static final long serialVersionUID = 7897704476327486542L;
 
+	@Column(length = 128)
 	private String text;
 
+	@Column(length = 256)
 	private String url;
 
 	@NotNull

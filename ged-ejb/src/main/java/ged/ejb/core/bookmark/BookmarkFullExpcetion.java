@@ -22,5 +22,4 @@ public class BookmarkFullExpcetion extends Exception {
 	public BookmarkFullExpcetion(final Throwable arg0) {
 		super(arg0);
 	}
-
 }
