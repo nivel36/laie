@@ -6,8 +6,7 @@ import ged.ejb.core.action.Action;
 import ged.ejb.core.model.AuditedEntity;
 import ged.ejb.core.model.Dao;
 
-public abstract class AbstratctAuditedService<T extends AuditedEntity<Long>> extends AbstractService<Long, T>
-		implements AuditedService<T> {
+public abstract class AbstratctAuditedService<T extends AuditedEntity<Long>> implements AuditedService<T> {
 
 	@Override
 	@Audited(action = Action.DELETE)
@@ -15,7 +14,7 @@ public abstract class AbstratctAuditedService<T extends AuditedEntity<Long>> ext
 		if (entity == null) {
 			throw new NullPointerException();
 		}
-		super.delete(entity);
+		this.getDao().delete(entity);
 	}
 
 	@Override
@@ -26,15 +25,14 @@ public abstract class AbstratctAuditedService<T extends AuditedEntity<Long>> ext
 		if (id < 1) {
 			throw new IllegalArgumentException("id: " + id);
 		}
-		return super.find(id);
+		return this.getDao().find(id);
 	}
 
 	@Override
 	public List<T> findAll() {
-		return super.findAll();
+		return this.getDao().findAll();
 	}
 
-	@Override
 	public abstract Dao<Long, T> getDao();
 
 	@Override
@@ -43,7 +41,7 @@ public abstract class AbstratctAuditedService<T extends AuditedEntity<Long>> ext
 		if (entity == null) {
 			throw new NullPointerException();
 		}
-		super.insert(entity);
+		this.getDao().insert(entity);
 	}
 
 	@Override
@@ -53,7 +51,7 @@ public abstract class AbstratctAuditedService<T extends AuditedEntity<Long>> ext
 			throw new NullPointerException();
 		}
 		entity.setDeleted(Boolean.FALSE);
-		return super.update(entity);
+		return this.getDao().update(entity);
 	}
 
 	@Override
@@ -62,6 +60,6 @@ public abstract class AbstratctAuditedService<T extends AuditedEntity<Long>> ext
 		if (entity == null) {
 			throw new NullPointerException();
 		}
-		return super.update(entity);
+		return this.getDao().update(entity);
 	}
 }
