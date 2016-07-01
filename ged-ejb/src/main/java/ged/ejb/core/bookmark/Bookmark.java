@@ -12,16 +12,18 @@ import ged.ejb.core.model.AbstractEntity;
 import ged.ejb.user.User;
 
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = { "userId", "url" }))
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = { "userId", "entityClass", "entityId" }))
 public class Bookmark extends AbstractEntity {
 
 	private static final long serialVersionUID = 7897704476327486542L;
 
+	@Column(length = 64)
+	private String entityClass;
+
+	private Long entityId;
+
 	@Column(length = 128)
 	private String text;
-
-	@Column(length = 256)
-	private String url;
 
 	@NotNull
 	@ManyToOne
@@ -33,15 +35,25 @@ public class Bookmark extends AbstractEntity {
 		if (this == obj) {
 			return true;
 		}
-		if (!(obj instanceof Bookmark)) {
+		if (!super.equals(obj)) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
 		}
 		final Bookmark other = (Bookmark) obj;
-		if (this.url == null) {
-			if (other.url != null) {
+		if (this.entityClass == null) {
+			if (other.entityClass != null) {
 				return false;
 			}
-		} else if (!this.url.equals(other.url)) {
+		} else if (!this.entityClass.equals(other.entityClass)) {
+			return false;
+		}
+		if (this.entityId == null) {
+			if (other.entityId != null) {
+				return false;
+			}
+		} else if (!this.entityId.equals(other.entityId)) {
 			return false;
 		}
 		if (this.user == null) {
@@ -54,12 +66,16 @@ public class Bookmark extends AbstractEntity {
 		return true;
 	}
 
-	public String getText() {
-		return this.text;
+	public String getEntityClass() {
+		return this.entityClass;
 	}
 
-	public String getUrl() {
-		return this.url;
+	public Long getEntityId() {
+		return this.entityId;
+	}
+
+	public String getText() {
+		return this.text;
 	}
 
 	public User getUser() {
@@ -70,20 +86,30 @@ public class Bookmark extends AbstractEntity {
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = (prime * result) + ((this.url == null) ? 0 : this.url.hashCode());
+		result = (prime * result) + ((this.entityClass == null) ? 0 : this.entityClass.hashCode());
+		result = (prime * result) + ((this.entityId == null) ? 0 : this.entityId.hashCode());
 		result = (prime * result) + ((this.user == null) ? 0 : this.user.hashCode());
 		return result;
+	}
+
+	public void setEntityClass(final String entityClass) {
+		this.entityClass = entityClass;
+	}
+
+	public void setEntityId(final Long entityId) {
+		this.entityId = entityId;
 	}
 
 	public void setText(final String text) {
 		this.text = text;
 	}
 
-	public void setUrl(final String url) {
-		this.url = url;
-	}
-
 	public void setUser(final User user) {
 		this.user = user;
+	}
+
+	@Override
+	public String toString() {
+		return this.text;
 	}
 }

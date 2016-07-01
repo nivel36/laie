@@ -18,8 +18,8 @@ public class BookmarkServiceImpl extends AbstractService<Long, Bookmark> impleme
 	private BookmarkDao dao;
 
 	@Override
-	public void delete(final String url) {
-		final Bookmark bookmark = this.dao.findByUrl(url);
+	public void delete(final User user, final String entityClass, final Long entityId) {
+		final Bookmark bookmark = this.dao.find(user, entityClass, entityId);
 		delete(bookmark);
 	}
 
@@ -29,8 +29,8 @@ public class BookmarkServiceImpl extends AbstractService<Long, Bookmark> impleme
 	}
 
 	@Override
-	public Bookmark findByUrl(final String url) {
-		return this.dao.findByUrl(url);
+	public Bookmark findByUrl(final User user, final String entityClass, final Long entityId) {
+		return this.dao.find(user, entityClass, entityId);
 	}
 
 	@Override

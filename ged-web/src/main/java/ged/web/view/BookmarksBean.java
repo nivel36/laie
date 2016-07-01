@@ -21,7 +21,7 @@ public class BookmarksBean extends AbstractPageBean {
 
 	private static final long serialVersionUID = 8786492354769335930L;
 
-	private List<Bookmark> bookmarks;
+	private List<BookmarkDto> bookmarks;
 
 	@Inject
 	private transient BookmarkService bookmarkService;
@@ -37,24 +37,24 @@ public class BookmarksBean extends AbstractPageBean {
 			removeBookmark(url);
 		} else {
 			final Bookmark bookmark = createBookmark(entity);
-			addBookmark(bookmark);
+			addBookmark(url, bookmark);
 		}
 	}
 
-	private void addBookmark(final Bookmark bookmark) {
+	private void addBookmark(final String url, final Bookmark bookmark) {
 		if (this.bookmarks.size() > 9) {
 			addMessage(FacesMessage.SEVERITY_ERROR, "Bookmark full", "Bookmark full");
 			return;
 		}
-		this.bookmarks.add(0, bookmark);
-		this.urls.add(0, bookmark.getUrl());
+		this.bookmarks.add(0, new BookmarkDto(bookmark.getText(), url));
+		this.urls.add(0, url);
 		this.bookmarkService.insert(bookmark);
 	}
 
 	private Bookmark createBookmark(final AuditedEntity<Long> entity) {
 		final Bookmark bookmark = new Bookmark();
-		final String url = getUrl(entity);
-		bookmark.setUrl(url);
+		bookmark.setEntityClass(entity.getClass().getSimpleName());
+		bookmark.setEntityId(entity.getId());
 		bookmark.setText(entity.toString());
 		bookmark.setUser(this.sessionBean.getUser());
 		return bookmark;
@@ -64,24 +64,38 @@ public class BookmarksBean extends AbstractPageBean {
 		return this.urls.contains(url);
 	}
 
-	public List<Bookmark> getBookmarks() {
+	public List<BookmarkDto> getBookmarks() {
 		return this.bookmarks;
 	}
 
 	private String getUrl(final AuditedEntity<Long> entity) {
 		final String contextPath = this.externalContext.getRequestContextPath();
-		final String viewId = this.facesContext.getViewRoot().getViewId();
+		final String className = entity.getClass().getSimpleName().toLowerCase();
 		final StringBuilder url = new StringBuilder();
-		url.append(contextPath).append(viewId).append("?id=").append(entity.getId());
+		url.append(contextPath).append("/faces/").append(className).append("/").append(className).append("View.xhtml")
+				.append("?id=").append(entity.getId());
+		return url.toString();
+	}
+
+	private String getUrl(final Bookmark bookmark) {
+		final String contextPath = this.externalContext.getRequestContextPath();
+		final String className = bookmark.getEntityClass().toLowerCase();
+		final StringBuilder url = new StringBuilder();
+		url.append(contextPath).append("/faces/").append(className).append("/").append(className).append("View.xhtml")
+				.append("?id=").append(bookmark.getEntityId());
 		return url.toString();
 	}
 
 	@PostConstruct
 	public void init() {
-		this.bookmarks = this.bookmarkService.findAllByUser(this.sessionBean.getUser());
-		this.urls = new ArrayList<>(this.bookmarks.size());
-		for (final Bookmark bookmark : this.bookmarks) {
-			this.urls.add(bookmark.getUrl());
+		final List<Bookmark> bookmarkEntities = this.bookmarkService.findAllByUser(this.sessionBean.getUser());
+		this.urls = new ArrayList<>(bookmarkEntities.size());
+		this.bookmarks = new ArrayList<>(bookmarkEntities.size());
+		for (final Bookmark bookmark : bookmarkEntities) {
+			final String url = getUrl(bookmark);
+			final BookmarkDto bookmarkDto = new BookmarkDto(bookmark.getText(), url);
+			this.bookmarks.add(bookmarkDto);
+			this.urls.add(url);
 		}
 	}
 
@@ -93,17 +107,14 @@ public class BookmarksBean extends AbstractPageBean {
 	public void remove(final AuditedEntity<Long> entity) {
 		final String url = getUrl(entity);
 		if (existsUrl(url)) {
-			this.bookmarkService.delete(url);
+			this.bookmarkService.delete(this.sessionBean.getUser(), entity.getClass().getSimpleName(), entity.getId());
+			removeBookmark(url);
 		}
 	}
 
-	public void removeBookmark(final String url) {
+	private void removeBookmark(final String url) {
 		final int index = this.urls.indexOf(url);
 		this.bookmarks.remove(index);
 		this.urls.remove(index);
-	}
-
-	public void setUserService(final BookmarkService bookmarkService) {
-		this.bookmarkService = bookmarkService;
 	}
 }

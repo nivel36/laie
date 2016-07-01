@@ -2,17 +2,14 @@ package ged.ejb.core.bookmark;
 
 import java.util.List;
 
-import javax.ejb.Local;
-
 import ged.ejb.core.Service;
 import ged.ejb.user.User;
 
-@Local
 public interface BookmarkService extends Service<Long, Bookmark> {
 
-	void delete(String url);
+	void delete(final User user, String entityClass, Long entityId);
 
 	List<Bookmark> findAllByUser(final User user);
 
-	Bookmark findByUrl(String url);
+	Bookmark findByUrl(final User user, String entityClass, Long entityId);
 }

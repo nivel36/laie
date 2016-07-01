@@ -7,7 +7,7 @@ import ged.ejb.user.User;
 
 public interface BookmarkDao extends Dao<Long, Bookmark> {
 
-	List<Bookmark> findAllByUser(final User user);
+	Bookmark find(User user, String entityClass, Long entityId);
 
-	Bookmark findByUrl(String url);
+	List<Bookmark> findAllByUser(final User user);
 }
