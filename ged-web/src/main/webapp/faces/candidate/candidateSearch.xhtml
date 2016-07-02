@@ -34,19 +34,6 @@
 						label="#{i18n['candidate.surename']}" />
 				</h:outputLabel>
 
-				<h:outputLabel for="phoneNumber1"
-					value="#{i18n['candidate.phone_number']}">
-					<h:inputText id="phoneNumber1"
-						value="#{candidateSearchBean.phoneNumber}"
-						label="#{i18n['candidate.phone_number']}" />
-				</h:outputLabel>
-
-				<h:outputLabel for="email" value="#{i18n['candidate.email']}"
-					styleClass="large">
-					<h:inputText id="email" value="#{candidateSearchBean.email}"
-						label="#{i18n['candidate.email']}" />
-				</h:outputLabel>
-
 				<h:panelGroup layout="block" styleClass="buttonGroup">
 					<h:commandButton value="#{i18n['action.clean']}"
 						action="#{candidateSearchBean.clean}" />

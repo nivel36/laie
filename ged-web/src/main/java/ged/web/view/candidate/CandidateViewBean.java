@@ -148,7 +148,7 @@ public class CandidateViewBean extends AbstractPageBean {
 		if (this.id != null) {
 			try {
 				final Long id = Long.parseLong(this.id);
-				this.candidate = this.candidateService.findCandidateById(id);
+				this.candidate = this.candidateService.find(id);
 				if (this.candidate == null) {
 					error();
 				}
@@ -193,7 +193,7 @@ public class CandidateViewBean extends AbstractPageBean {
 		try {
 			removeFileFromFileSystem(file.getUuid());
 			this.candidate.getFiles().remove(file);
-			this.candidate = this.candidateService.updateCandidate(this.candidate);
+			this.candidate = this.candidateService.update(this.candidate);
 		} catch (final IOException e) {
 			this.logger.log(Level.SEVERE, "Can't remove file", e);
 			addMessage(FacesMessage.SEVERITY_ERROR, "error.unnexpected_error", "error.unnexpected_error");
@@ -210,7 +210,7 @@ public class CandidateViewBean extends AbstractPageBean {
 			this.candidate.getFiles().add(this.file);
 			this.file.setCandidate(this.candidate);
 		}
-		this.candidate = this.candidateService.updateCandidate(this.candidate);
+		this.candidate = this.candidateService.update(this.candidate);
 		this.editingFile = false;
 	}
 

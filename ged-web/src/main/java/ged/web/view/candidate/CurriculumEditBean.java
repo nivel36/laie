@@ -28,7 +28,7 @@ public class CurriculumEditBean extends AbstractPageBean {
 	private Curriculum curriculum;
 
 	@Inject
-	private CurriculumService curriculumService;
+	private transient CurriculumService curriculumService;
 
 	private List<Education> education = new ArrayList<Education>();
 

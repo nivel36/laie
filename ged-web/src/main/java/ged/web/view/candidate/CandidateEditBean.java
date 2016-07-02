@@ -21,10 +21,10 @@ public class CandidateEditBean extends AbstractPageBean {
 	private Candidate candidate;
 
 	@Inject
-	private CandidateService candidateService;
+	private transient CandidateService candidateService;
 
 	@Inject
-	private CurriculumService curriculumService;
+	private transient CurriculumService curriculumService;
 
 	public String cancel() {
 		return "candidateSearch?faces-redirect=true";
@@ -39,10 +39,10 @@ public class CandidateEditBean extends AbstractPageBean {
 	public String editCurriculum() {
 		Curriculum curriculum = null;
 		if (this.candidate.getId() == 0) {
-			this.candidateService.insertCandidate(this.candidate);
+			this.candidateService.insert(this.candidate);
 			curriculum = createNewCurriculum();
 		} else {
-			this.candidate = this.candidateService.updateCandidate(this.candidate);
+			this.candidate = this.candidateService.update(this.candidate);
 			curriculum = findCurriculum(this.candidate.getId());
 		}
 		this.flash.put("curriculum", curriculum);
@@ -76,9 +76,9 @@ public class CandidateEditBean extends AbstractPageBean {
 
 	public String save() {
 		if (this.candidate.getId() == 0) {
-			this.candidateService.insertCandidate(this.candidate);
+			this.candidateService.insert(this.candidate);
 		} else {
-			this.candidate = this.candidateService.updateCandidate(this.candidate);
+			this.candidate = this.candidateService.update(this.candidate);
 		}
 		return "candidateSearch?faces-redirect=true";
 	}

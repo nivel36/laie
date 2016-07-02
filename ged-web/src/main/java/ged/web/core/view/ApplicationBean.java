@@ -4,18 +4,17 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.inject.Produces;
 import javax.faces.application.Application;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import ged.ejb.core.Cache;
 import ged.ejb.core.FileType;
-import ged.ejb.core.model.Indexer;
 import ged.ejb.curriculum.LanguageLevel;
 import ged.ejb.curriculum.SkillLevel;
 import ged.ejb.user.Role;
@@ -29,13 +28,13 @@ public class ApplicationBean extends AbstractBean {
 	@Inject
 	private Cache cache;
 
-	@Inject
-	private Indexer indexer;
-
 	private List<Locale> locales = new ArrayList<Locale>();
 
 	@Inject
 	protected transient Logger logger;
+
+	@Produces
+	private final String version = "0.1";
 
 	public List<FileType> getFileTypes() {
 		return this.cache.getFileTypes();
@@ -59,12 +58,7 @@ public class ApplicationBean extends AbstractBean {
 
 	@PostConstruct
 	public void init() {
-		try {
-			loadLocales();
-			this.indexer.index();
-		} catch (final InterruptedException ex) {
-			this.logger.log(Level.SEVERE, "Could not index");
-		}
+		loadLocales();
 	}
 
 	private void loadLocales() {

@@ -37,9 +37,9 @@ public abstract class AbstractAuditedEntity extends AbstractEntity implements Au
 
 	private static final long serialVersionUID = 6203444960560029390L;
 
-	@Column(nullable = true)
+	@Column(nullable = false)
 	@Field
-	private Boolean deleted;
+	private Boolean deleted = false;
 
 	@ManyToOne
 	@JoinColumn(name = "userId")

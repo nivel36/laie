@@ -8,21 +8,18 @@ import javax.inject.Inject;
 import ged.ejb.candidate.Candidate;
 import ged.ejb.candidate.CandidateDao;
 import ged.ejb.candidate.CandidateService;
+import ged.ejb.core.AbstratctAuditedService;
 import ged.ejb.core.FileType;
+import ged.ejb.core.model.Dao;
 import ged.ejb.core.model.Repository;
 import ged.ejb.curriculum.Curriculum;
 
 @Stateless
-public class CandidateServiceImpl implements CandidateService {
+public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> implements CandidateService {
 
 	@Inject
 	@Repository
 	private CandidateDao candidateDao;
-
-	@Override
-	public void deleteCandidate(final Candidate candidate) {
-		this.candidateDao.deleteCandidate(candidate);
-	}
 
 	@Override
 	public List<FileType> findAllFileTypes() {
@@ -30,18 +27,13 @@ public class CandidateServiceImpl implements CandidateService {
 	}
 
 	@Override
-	public Candidate findById(final long id) {
-		return this.candidateDao.findById(id);
+	public List<Candidate> findByNameAndSurename(final String name, final String surename) {
+		return this.candidateDao.findByNameAndSurename(name, surename, false);
 	}
 
 	@Override
-	public Candidate findCandidateById(final long id) {
-		return this.candidateDao.findCandidateById(id);
-	}
-
-	@Override
-	public List<Candidate> findCandidateByNameAndSurename(final String name, final String surename) {
-		return this.candidateDao.findCandidateByNameAndSurename(name, surename);
+	public List<Candidate> findByNameAndSurename(final String name, final String surename, final boolean showDeleted) {
+		return this.candidateDao.findByNameAndSurename(name, surename, showDeleted);
 	}
 
 	@Override
@@ -50,13 +42,7 @@ public class CandidateServiceImpl implements CandidateService {
 	}
 
 	@Override
-	public void insertCandidate(final Candidate candidate) {
-		this.candidateDao.insertCandidate(candidate);
-
-	}
-
-	@Override
-	public Candidate updateCandidate(final Candidate candidate) {
-		return this.candidateDao.updateCandidate(candidate);
+	public Dao<Long, Candidate> getDao() {
+		return this.candidateDao;
 	}
 }

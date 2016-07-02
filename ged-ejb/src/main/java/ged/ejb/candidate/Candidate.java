@@ -18,6 +18,9 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+
 import ged.ejb.core.model.AbstractAuditedEntity;
 import ged.ejb.core.tag.Tag;
 import ged.ejb.curriculum.Curriculum;
@@ -26,6 +29,7 @@ import ged.ejb.job.JobCandidature;
 import ged.ejb.user.User;
 
 @Entity
+@Indexed
 public class Candidate extends AbstractAuditedEntity {
 
 	private static final long serialVersionUID = 1305321530927456159L;
@@ -57,6 +61,7 @@ public class Candidate extends AbstractAuditedEntity {
 
 	@NotNull
 	@Column(length = 32, nullable = false)
+	@Field
 	private String name;
 
 	@NotNull
@@ -79,6 +84,7 @@ public class Candidate extends AbstractAuditedEntity {
 
 	@NotNull
 	@Column(length = 64, nullable = false)
+	@Field
 	private String surename;
 
 	@OneToMany

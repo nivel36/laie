@@ -1,5 +1,6 @@
 package ged.web.view.candidate;
 
+import java.util.List;
 import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
@@ -19,9 +20,7 @@ public class CandidateSearchBean extends AbstractPageBean {
 	private static final long serialVersionUID = 2434819723782902618L;
 
 	@Inject
-	private CandidateService candidateService;
-
-	private String email;
+	private transient CandidateService candidateService;
 
 	@Inject
 	protected transient Logger logger;
@@ -30,25 +29,17 @@ public class CandidateSearchBean extends AbstractPageBean {
 
 	private Paginator<Candidate> paginator;
 
-	private String phoneNumber;
-
 	private String surename;
 
 	public void clean() {
-		this.email = null;
 		this.surename = null;
 		this.name = null;
-		this.phoneNumber = null;
 		search();
 	}
 
 	public String edit(final Candidate candidate) {
 		this.flash.put("candidate", candidate);
 		return "candidateEdit?faces-redirect=true";
-	}
-
-	public String getEmail() {
-		return this.email;
 	}
 
 	public String getName() {
@@ -59,10 +50,6 @@ public class CandidateSearchBean extends AbstractPageBean {
 		return this.paginator;
 	}
 
-	public String getPhoneNumber() {
-		return this.phoneNumber;
-	}
-
 	public String getSurename() {
 		return this.surename;
 	}
@@ -70,7 +57,7 @@ public class CandidateSearchBean extends AbstractPageBean {
 	@PostConstruct
 	public void init() {
 		this.paginator = new Paginator<>(this.sessionBean.getRowsPerPage());
-		this.paginator.setEntities(this.candidateService.findCandidateByNameAndSurename(this.name, this.surename));
+		this.paginator.setEntities(this.candidateService.findByNameAndSurename(this.name, this.surename));
 	}
 
 	public String newCandidate() {
@@ -78,29 +65,18 @@ public class CandidateSearchBean extends AbstractPageBean {
 	}
 
 	public void remove(final Candidate candidate) {
-		this.candidateService.deleteCandidate(candidate);
+		this.candidateService.delete(candidate);
 		search();
 	}
 
 	public void search() {
 		this.logger.fine("Searching for candidates");
-		this.paginator.setEntities(this.candidateService.findCandidateByNameAndSurename(this.name, this.surename));
-	}
-
-	public void setEmail(final String email) {
-		this.email = email;
-	}
-
-	public void setLogger(final Logger logger) {
-		this.logger = logger;
+		final List<Candidate> candidates = this.candidateService.findByNameAndSurename(this.name, this.surename);
+		this.paginator.setEntities(candidates);
 	}
 
 	public void setName(final String name) {
 		this.name = name;
-	}
-
-	public void setPhoneNumber(final String phoneNumber) {
-		this.phoneNumber = phoneNumber;
 	}
 
 	public void setSurename(final String surename) {
