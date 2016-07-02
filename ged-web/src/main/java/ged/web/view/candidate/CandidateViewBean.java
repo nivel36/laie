@@ -148,7 +148,7 @@ public class CandidateViewBean extends AbstractPageBean {
 		if (this.id != null) {
 			try {
 				final Long id = Long.parseLong(this.id);
-				this.candidate = this.candidateService.find(id);
+				this.candidate = this.candidateService.findCandidateAndFiles(id);
 				if (this.candidate == null) {
 					error();
 				}

@@ -8,9 +8,11 @@ import ged.ejb.curriculum.Curriculum;
 
 public interface CandidateDao extends Dao<Long, Candidate> {
 
-	public List<FileType> findAllFileTypes();
+	List<FileType> findAllFileTypes();
 
-	public List<Candidate> findByNameAndSurename(String name, String surename, boolean showDeleted);
+	List<Candidate> findByNameAndSurename(String name, String surename, boolean showDeleted);
 
-	public Curriculum findCurriculumByCandidateId(final long id);
+	Candidate findCandidateAndFiles(Long id);
+
+	Curriculum findCurriculumByCandidateId(final Long id);
 }

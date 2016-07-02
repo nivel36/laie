@@ -37,7 +37,12 @@ public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> imp
 	}
 
 	@Override
-	public Curriculum findCurriculumByCandidateId(final long id) {
+	public Candidate findCandidateAndFiles(final Long id) {
+		return this.candidateDao.findCandidateAndFiles(id);
+	}
+
+	@Override
+	public Curriculum findCurriculumByCandidateId(final Long id) {
 		return this.candidateDao.findCurriculumByCandidateId(id);
 	}
 

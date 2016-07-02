@@ -61,7 +61,16 @@ public class CandidateDaoJpa extends AbstractDao<Long, Candidate> implements Can
 	}
 
 	@Override
-	public Curriculum findCurriculumByCandidateId(final long id) {
+	public Candidate findCandidateAndFiles(final Long id) {
+		final Map<String, Object> properties = new HashMap<String, Object>();
+		properties.put("id", id);
+		final Candidate candidate = this.persistenceFacade.findByTypedQuery(Candidate.class,
+				"Candidate.findCandidateAndFilesById", properties);
+		return candidate;
+	}
+
+	@Override
+	public Curriculum findCurriculumByCandidateId(final Long id) {
 		final Map<String, Object> properties = new HashMap<String, Object>();
 		properties.put("id", id);
 		final Curriculum curriculum = this.persistenceFacade.findByTypedQuery(Curriculum.class,

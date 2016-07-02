@@ -27,7 +27,7 @@
 					WHERE c.candidate.id = :id</query>
 	</named-query>
 
-	<named-query name="Candidate.findById">
+	<named-query name="Candidate.findCandidateAndFilesById">
 		<query>SELECT c FROM Candidate c LEFT JOIN FETCH c.files WHERE c.id = :id</query>
 	</named-query>
 
