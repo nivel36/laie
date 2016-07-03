@@ -14,7 +14,8 @@ public abstract class AbstratctAuditedService<T extends AuditedEntity<Long>> imp
 		if (entity == null) {
 			throw new NullPointerException();
 		}
-		this.getDao().delete(entity);
+		entity.setDeleted(true);
+		this.getDao().update(entity);
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package ged.ejb.core.action;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -21,6 +22,7 @@ public class ActionServiceImpl extends AbstractService<Long, Action> implements 
 	public void addAction(final AuditedEntity<Long> auditedEntity, final String actionType) {
 		final Action action = getActionFromEntity(auditedEntity);
 		action.setActionPerformed(actionType);
+		action.setDate(new Date());
 		insert(action);
 	}
 

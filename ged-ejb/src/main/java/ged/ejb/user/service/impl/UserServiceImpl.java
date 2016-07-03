@@ -57,7 +57,7 @@ public class UserServiceImpl extends AbstratctAuditedService<User> implements Us
 		if (user == null) {
 			throw new NullPointerException();
 		}
-		if (user.getManager().equals(user)) {
+		if (user.equals(user.getManager())) {
 			throw new IllegalStateException("User can't be his manager");
 		}
 		this.userDao.insert(user);

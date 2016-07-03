@@ -1,10 +1,14 @@
 package ged.ejb.core.action;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
@@ -12,7 +16,7 @@ import ged.ejb.core.model.AbstractEntity;
 import ged.ejb.user.User;
 
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = { "entityId", "entityClass", "userId" }))
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = { "entityId", "entityClass", "userId", "actionPerformed" }))
 public class Action extends AbstractEntity {
 
 	public final static String DELETE = "DELETE";
@@ -27,6 +31,9 @@ public class Action extends AbstractEntity {
 
 	@Column(length = 8)
 	private String actionPerformed;
+
+	@Temporal(TemporalType.TIME)
+	private Date date;
 
 	@Column(length = 64)
 	private String entityClass;
@@ -81,6 +88,10 @@ public class Action extends AbstractEntity {
 		return this.actionPerformed;
 	}
 
+	public Date getDate() {
+		return this.date;
+	}
+
 	public String getEntityClass() {
 		return this.entityClass;
 	}
@@ -109,6 +120,10 @@ public class Action extends AbstractEntity {
 
 	public void setActionPerformed(final String actionPerformed) {
 		this.actionPerformed = actionPerformed;
+	}
+
+	public void setDate(final Date date) {
+		this.date = date;
 	}
 
 	public void setEntityClass(final String entityClass) {
