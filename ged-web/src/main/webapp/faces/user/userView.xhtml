@@ -27,8 +27,8 @@
 				<i class="fa fa-user" /> #{userViewBean.user}
 			</h1>
 
-			<h:panelGroup layout="block" styleClass="actionPanel">
-				<h:commandLink id="exportPdf" styleClass="iconButton">
+			<h:panelGroup layout="block" styleClass="actionPanel" rendered="{not userViewBean.user.deleted}">
+				<h:commandLink id="exportPdf" styleClass="iconButton" >
 					<i class="fa fa-file-pdf-o fa-lg" /> #{i18n['action.export']}</h:commandLink>
 				<h:commandLink id="exportExcel" styleClass="iconButton"
 					action="#{userViewBean.export}">
@@ -69,7 +69,7 @@
 						rendered="#{not userViewBean.user.deleted}" />
 					<h:commandButton value="#{i18n['bookmark.add_to_bookmarks']}"
 						action="#{bookmarksBean.add(userViewBean.user)}" immediate="true"
-						rendered="#{not bookmarksBean.isBookmarked(userViewBean.user)}" />
+						rendered="#{(not bookmarksBean.isBookmarked(userViewBean.user)) and (not userViewBean.user.deleted)}" />
 					<h:commandButton value="#{i18n['bookmark.remove_from_bookmarks']}"
 						action="#{bookmarksBean.remove(userViewBean.user)}"
 						immediate="true"

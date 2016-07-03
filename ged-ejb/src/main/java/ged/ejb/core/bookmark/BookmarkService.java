@@ -9,6 +9,8 @@ public interface BookmarkService extends Service<Long, Bookmark> {
 
 	void delete(final User user, String entityClass, Long entityId);
 
+	void deleteIfExists(final User user, String entityClass, Long entityId);
+
 	List<Bookmark> findAllByUser(final User user);
 
 	Bookmark findByUrl(final User user, String entityClass, Long entityId);

@@ -133,7 +133,8 @@
 					styleClass="required">
 					<h:inputText id="username" value="#{userEditBean.user.username}"
 						label="#{i18n['user.username']}" required="true"
-						styleClass="#{not component.valid ? 'inputError' : ''}" />
+						styleClass="#{not component.valid ? 'inputError' : ''}" 
+						validator="#{userEditBean.validateUsername}" />
 					<h:message for="username" errorClass="error" />
 				</h:outputLabel>
 

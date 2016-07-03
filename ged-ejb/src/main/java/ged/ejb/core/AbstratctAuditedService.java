@@ -2,11 +2,17 @@ package ged.ejb.core;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import ged.ejb.core.action.Action;
+import ged.ejb.core.bookmark.BookmarkService;
 import ged.ejb.core.model.AuditedEntity;
 import ged.ejb.core.model.Dao;
 
 public abstract class AbstratctAuditedService<T extends AuditedEntity<Long>> implements AuditedService<T> {
+
+	@Inject
+	private BookmarkService bookmarkService;
 
 	@Override
 	@Audited(action = Action.DELETE)
@@ -15,6 +21,7 @@ public abstract class AbstratctAuditedService<T extends AuditedEntity<Long>> imp
 			throw new NullPointerException();
 		}
 		entity.setDeleted(true);
+		this.bookmarkService.deleteIfExists(entity.getUser(), entity.getClass().getSimpleName(), entity.getId());
 		this.getDao().update(entity);
 	}
 

@@ -107,7 +107,9 @@
 						<h:commandLink action="#{userSearchBean.deleteUser(user)}"
 							value="#{i18n['action.remove']}"
 							rendered="${user.role.name!='ADMIN'}"
-							onclick="return confirm('#{i18n['action.delete.are_you_sure']}')" />
+							onclick="return confirm('#{i18n['action.delete.are_you_sure']}')">
+							<f:ajax render="form:searchUserResults :asideForm" />
+						</h:commandLink>
 					</h:column>
 				</h:dataTable>
 

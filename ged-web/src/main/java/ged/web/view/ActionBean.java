@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.faces.view.ViewScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -13,7 +13,7 @@ import ged.ejb.core.action.ActionService;
 import ged.web.core.view.AbstractPageBean;
 
 @Named
-@ViewScoped
+@RequestScoped
 public class ActionBean extends AbstractPageBean {
 
 	private static final long serialVersionUID = 6101883862412908337L;

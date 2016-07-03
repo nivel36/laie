@@ -6,17 +6,14 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
 import ged.ejb.core.model.AbstractEntity;
 import ged.ejb.user.User;
 
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = { "entityId", "entityClass", "userId", "actionPerformed" }))
 public class Action extends AbstractEntity {
 
 	public final static String DELETE = "DELETE";

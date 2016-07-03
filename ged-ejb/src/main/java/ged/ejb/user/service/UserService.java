@@ -14,4 +14,6 @@ public interface UserService extends AuditedService<User> {
 	User findUserByUsername(String username);
 
 	List<User> fullSearch(final String name, final String surename, final String userEmail);
+
+	boolean usernameExists(final String username);
 }

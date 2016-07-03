@@ -121,4 +121,12 @@ public class UserDaoJpa extends AbstractDao<Long, User> implements UserDao {
 		}
 		insertUserClosure(user, user, 0);
 	}
+
+	@Override
+	public boolean usernameExists(final String username) {
+		final Map<String, Object> parameters = new HashMap<>(1);
+		parameters.put("username", username);
+		final Long emails = (Long) this.persistenceFacade.findByQuery("User.countUsername", parameters);
+		return emails > 0;
+	}
 }

@@ -74,4 +74,9 @@ public class UserServiceImpl extends AbstratctAuditedService<User> implements Us
 			throw new UserException("Can not delete user");
 		}
 	}
+
+	@Override
+	public boolean usernameExists(final String username) {
+		return this.userDao.usernameExists(username);
+	}
 }

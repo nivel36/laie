@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.persistence.NoResultException;
 
 import ged.ejb.core.AbstractService;
 import ged.ejb.core.model.Dao;
@@ -21,6 +22,16 @@ public class BookmarkServiceImpl extends AbstractService<Long, Bookmark> impleme
 	public void delete(final User user, final String entityClass, final Long entityId) {
 		final Bookmark bookmark = this.dao.find(user, entityClass, entityId);
 		delete(bookmark);
+	}
+
+	@Override
+	public void deleteIfExists(final User user, final String entityClass, final Long entityId) {
+		try {
+			final Bookmark bookmark = this.dao.find(user, entityClass, entityId);
+			delete(bookmark);
+		} catch (final NoResultException ex) {
+			// No action
+		}
 	}
 
 	@Override

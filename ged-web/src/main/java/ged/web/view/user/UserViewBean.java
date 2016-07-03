@@ -2,6 +2,7 @@ package ged.web.view.user;
 
 import java.io.IOException;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.application.NavigationHandler;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -92,6 +93,9 @@ public class UserViewBean extends AbstractPageBean {
 		this.team.setEntities(this.userService.findSubordinateUsers(id));
 		this.jobOffers = new Paginator<>(this.sessionBean.getRowsPerPage());
 		this.jobOffers.setEntities(this.jobService.findJobOffersByOwner(this.user));
+		if (this.user.isDeleted()) {
+			addMessage(FacesMessage.SEVERITY_WARN, "message.erased_entity", "message.erased_entity");
+		}
 	}
 
 	public String modifyUser() {
