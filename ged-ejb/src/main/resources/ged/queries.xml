@@ -13,6 +13,10 @@
 		<query>SELECT b FROM Bookmark b WHERE b.user = :user AND b.entityClass = :entityClass AND b.entityId = :entityId</query>
 	</named-query>
 	
+	<named-query name="Bookmark.findAllByClassAndId">
+		<query>SELECT b FROM Bookmark b WHERE b.entityClass = :entityClass AND b.entityId = :entityId</query>
+	</named-query>
+	
     <named-query name="Bookmark.findAllByUser">
 		<query>SELECT b FROM Bookmark b WHERE b.user = :user</query>
 	</named-query>

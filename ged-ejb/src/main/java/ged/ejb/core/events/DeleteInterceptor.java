@@ -1,22 +1,28 @@
-package ged.ejb.core;
+package ged.ejb.core.events;
 
+import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
 
-import ged.ejb.core.action.ActionService;
+import ged.ejb.core.events.Audited.Type;
 import ged.ejb.core.model.AuditedEntity;
 
 @Interceptor
-@Audited
-public class AuditedInterceptor {
+@Audited(action = Type.Delete)
+public class DeleteInterceptor {
 
 	@Inject
-	private ActionService actionService;
+	@PostDelete
+	Event<AuditedEntity<Long>> postDeleteEvent;
+
+	@Inject
+	@PreDelete
+	Event<AuditedEntity<Long>> preDeleteEvent;
 
 	@AroundInvoke
-	public Object addAction(final InvocationContext joinPoint) throws Exception {
+	public Object fireEvent(final InvocationContext joinPoint) throws Exception {
 		final Object[] parameters = joinPoint.getParameters();
 		if (parameters.length != 1) {
 			throw new IllegalArgumentException("Arguments: " + parameters.length);
@@ -27,10 +33,9 @@ public class AuditedInterceptor {
 		}
 		@SuppressWarnings("unchecked")
 		final AuditedEntity<Long> auditedEntity = (AuditedEntity<Long>) entityObject;
+		this.preDeleteEvent.fire(auditedEntity);
 		final Object returnObject = joinPoint.proceed();
-		final Audited annotation = joinPoint.getMethod().getAnnotation(Audited.class);
-		final String action = annotation.action();
-		this.actionService.addAction(auditedEntity, action);
+		this.postDeleteEvent.fire(auditedEntity);
 		return returnObject;
 	}
 }

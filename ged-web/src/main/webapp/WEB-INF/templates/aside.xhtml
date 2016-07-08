@@ -33,9 +33,8 @@
 			<h:outputText value="#{i18n['message.bookmarks.empty']}"
 				styleClass="text" rendered="#{empty bookmarksBean.bookmarks}" />
 			<ui:repeat value="#{bookmarksBean.bookmarks}" var="bookmark">
-				<h:outputLink value="#{bookmark.url}">
-					<h:outputText value="#{bookmark.text}" />
-				</h:outputLink>
+				<h:commandLink action="#{bookmarksBean.go(bookmark)}"
+					value="#{bookmark.text}" />
 				<br />
 			</ui:repeat>
 		</h:panelGroup>

@@ -2,26 +2,20 @@ package ged.ejb.core;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
-import ged.ejb.core.action.Action;
-import ged.ejb.core.bookmark.BookmarkService;
+import ged.ejb.core.events.Audited;
+import ged.ejb.core.events.Audited.Type;
 import ged.ejb.core.model.AuditedEntity;
 import ged.ejb.core.model.Dao;
 
 public abstract class AbstratctAuditedService<T extends AuditedEntity<Long>> implements AuditedService<T> {
 
-	@Inject
-	private BookmarkService bookmarkService;
-
 	@Override
-	@Audited(action = Action.DELETE)
+	@Audited(action = Type.Delete)
 	public void delete(final T entity) {
 		if (entity == null) {
 			throw new NullPointerException();
 		}
 		entity.setDeleted(true);
-		this.bookmarkService.deleteIfExists(entity.getUser(), entity.getClass().getSimpleName(), entity.getId());
 		this.getDao().update(entity);
 	}
 
@@ -44,7 +38,7 @@ public abstract class AbstratctAuditedService<T extends AuditedEntity<Long>> imp
 	public abstract Dao<Long, T> getDao();
 
 	@Override
-	@Audited(action = Action.INSERT)
+	@Audited(action = Type.Insert)
 	public void insert(final T entity) {
 		if (entity == null) {
 			throw new NullPointerException();
@@ -53,21 +47,23 @@ public abstract class AbstratctAuditedService<T extends AuditedEntity<Long>> imp
 	}
 
 	@Override
-	@Audited(action = Action.UNDELETE)
+	@Audited(action = Type.UnDelete)
 	public T undelete(final T entity) {
 		if (entity == null) {
 			throw new NullPointerException();
 		}
 		entity.setDeleted(Boolean.FALSE);
-		return this.getDao().update(entity);
+		final T undeletedEntity = this.getDao().update(entity);
+		return undeletedEntity;
 	}
 
 	@Override
-	@Audited(action = Action.UPDATE)
+	@Audited(action = Type.Update)
 	public T update(final T entity) {
 		if (entity == null) {
 			throw new NullPointerException();
 		}
-		return this.getDao().update(entity);
+		final T updatedEntity = this.getDao().update(entity);
+		return updatedEntity;
 	}
 }

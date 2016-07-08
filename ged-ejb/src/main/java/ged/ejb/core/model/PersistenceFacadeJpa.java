@@ -59,7 +59,8 @@ public class PersistenceFacadeJpa implements PersistenceFacade {
 		if (this.em.contains(entity)) {
 			this.em.remove(entity);
 		} else {
-			this.em.remove(this.em.merge(entity));
+			final T attachedEntity = this.em.merge(entity);
+			this.em.remove(attachedEntity);
 		}
 	}
 

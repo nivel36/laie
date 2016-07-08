@@ -12,6 +12,14 @@ import ged.ejb.user.User;
 public class BookmarkDaoJpa extends AbstractDao<Long, Bookmark> implements BookmarkDao {
 
 	@Override
+	public List<Bookmark> find(final String entityClass, final Long entityId) {
+		final Map<String, Object> parameters = new HashMap<>();
+		parameters.put("entityClass", entityClass);
+		parameters.put("entityId", entityId);
+		return this.persistenceFacade.findByTypedQuery(getClazz(), "Bookmark.findAllByClassAndId", parameters, 0, 0);
+	}
+
+	@Override
 	public Bookmark find(final User user, final String entityClass, final Long entityId) {
 		final Map<String, Object> parameters = new HashMap<>();
 		parameters.put("user", user);

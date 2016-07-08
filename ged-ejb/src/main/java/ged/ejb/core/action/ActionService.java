@@ -8,8 +8,14 @@ import ged.ejb.user.User;
 
 public interface ActionService extends Service<Long, Action> {
 
-	void addAction(final AuditedEntity<Long> auditedEntity, final String actionType);
+	void deleteAction(final AuditedEntity<Long> auditedEntity);
 
 	List<Action> findAllByUser(final User user);
+
+	void insertAction(final AuditedEntity<Long> auditedEntity);
+
+	void undeleteAction(final AuditedEntity<Long> auditedEntity);
+
+	void updateAction(final AuditedEntity<Long> auditedEntity);
 
 }

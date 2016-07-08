@@ -3,10 +3,13 @@ package ged.ejb.core.bookmark;
 import java.util.List;
 
 import javax.ejb.Stateless;
+import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.persistence.NoResultException;
 
 import ged.ejb.core.AbstractService;
+import ged.ejb.core.events.PostDelete;
+import ged.ejb.core.model.AuditedEntity;
 import ged.ejb.core.model.Dao;
 import ged.ejb.core.model.Repository;
 import ged.ejb.user.User;
@@ -22,6 +25,17 @@ public class BookmarkServiceImpl extends AbstractService<Long, Bookmark> impleme
 	public void delete(final User user, final String entityClass, final Long entityId) {
 		final Bookmark bookmark = this.dao.find(user, entityClass, entityId);
 		delete(bookmark);
+	}
+
+	@Override
+	public void deleteIfExists(@Observes @PostDelete final AuditedEntity<Long> entity) {
+		if (entity == null) {
+			throw new NullPointerException();
+		}
+		final List<Bookmark> bookmarks = this.dao.find(entity.getClass().getSimpleName(), entity.getId());
+		for (final Bookmark bookmark : bookmarks) {
+			delete(bookmark);
+		}
 	}
 
 	@Override
