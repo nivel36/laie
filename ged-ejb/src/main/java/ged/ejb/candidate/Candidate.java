@@ -56,8 +56,12 @@ public class Candidate extends AbstractAuditedEntity {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "candidate", orphanRemoval = true)
 	private List<FileSys> files;
 
+	private String infojobsProfileUrl;
+
 	@OneToMany(mappedBy = "candidate", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<JobCandidature> jobCandidature;
+
+	private String linkedinProfileUrl;
 
 	@NotNull
 	@Column(length = 32, nullable = false)
@@ -122,8 +126,16 @@ public class Candidate extends AbstractAuditedEntity {
 		return this.files;
 	}
 
+	public String getInfojobsProfileUrl() {
+		return this.infojobsProfileUrl;
+	}
+
 	public List<JobCandidature> getJobCandidature() {
 		return this.jobCandidature;
+	}
+
+	public String getLinkedinProfileUrl() {
+		return this.linkedinProfileUrl;
 	}
 
 	public String getName() {
@@ -186,8 +198,16 @@ public class Candidate extends AbstractAuditedEntity {
 		this.files = files;
 	}
 
+	public void setInfojobsProfileUrl(final String infojobsProfileUrl) {
+		this.infojobsProfileUrl = infojobsProfileUrl;
+	}
+
 	public void setJobCandidature(final List<JobCandidature> jobCandidature) {
 		this.jobCandidature = jobCandidature;
+	}
+
+	public void setLinkedinProfileUrl(final String linkedinProfileUrl) {
+		this.linkedinProfileUrl = linkedinProfileUrl;
 	}
 
 	public void setName(final String name) {

@@ -19,7 +19,7 @@
 			<f:viewAction action="#{candidateViewBean.init}" />
 		</f:metadata>
 
-		<h:form id="form" prependId="false">
+		<h:form id="form">
 
 			<input type="hidden" id="candidateId"
 				value="#{candidateViewBean.candidate.id}" />
@@ -28,10 +28,27 @@
 				<i class="fa fa-users" /> #{candidateViewBean.candidate}
 			</h1>
 
-			<h:panelGroup layout="block" styleClass="panel">
-				<h1>#{i18n['candidate.candidate']}</h1>
+			<h:panelGroup layout="block" styleClass="actionPanel">
+				<h:commandButton value="#{i18n['action.edit']}"
+					action="#{candidateViewBean.editCandidate}" />
+				<h:commandButton value="#{i18n['bookmark.add_to_bookmarks']}"
+					action="#{bookmarksBean.add(candidateViewBean.candidate)}"
+					rendered="#{not bookmarksBean.isBookmarked(candidateViewBean.candidate)}">
+					<f:ajax process="@form" render=":asideForm:bookmarks actionButtons" />
+				</h:commandButton>
+				<h:commandButton value="#{i18n['bookmark.remove_from_bookmarks']}"
+					action="#{bookmarksBean.remove(candidateViewBean.candidate)}"
+					rendered="#{bookmarksBean.isBookmarked(candidateViewBean.candidate)}">
+					<f:ajax process="@form" render=":asideForm:bookmarks actionButtons" />
+				</h:commandButton>
+				<h:button value="#{i18n['curriculum.view_curriculum']}"
+					outcome="curriculumView">
+					<f:param name="id" value="#{candidateViewBean.candidate.id}" />
+				</h:button>
+			</h:panelGroup>
 
-				<h2>#{i18n['candidate.detail']}</h2>
+			<h:panelGroup layout="block" styleClass="panel">
+				<h1>#{i18n['candidate.detail']}</h1>
 
 				<h:panelGroup layout="block" styleClass="textBlock">
 					<h:outputText styleClass="label" value="#{i18n['candidate.name']}:" />
@@ -44,7 +61,6 @@
 					<h:outputText value="#{candidateViewBean.candidate.age}" />
 				</h:panelGroup>
 
-				<h2>#{i18n['candidate.contact']}</h2>
 
 				<h:panelGroup layout="block" styleClass="textBlock">
 					<h:outputText styleClass="label"
@@ -64,7 +80,36 @@
 					<h:outputText value="#{candidateViewBean.candidate.email}" />
 				</h:panelGroup>
 
-				<h2>#{i18n['candidate.work_data']}</h2>
+				<h:panelGroup layout="block" styleClass="textBlock">
+					<h:outputText styleClass="label" value="#{i18n['address.city']} :" />
+					<h:outputText value="#{candidateViewBean.candidate.address.city}" />
+				</h:panelGroup>
+
+				<h:panelGroup layout="block" styleClass="textBlock">
+					<h:outputText styleClass="label" value="#{i18n['address.state']} :" />
+					<h:outputText value="#{candidateViewBean.candidate.address.state}" />
+				</h:panelGroup>
+			</h:panelGroup>
+
+			
+			<h:panelGroup layout="block" styleClass="panel">
+				<h1>#{i18n['candidate.social_network']}</h1>
+				<h:panelGroup layout="block" styleClass="textBlock">
+					<h:outputText styleClass="label"
+						value="#{i18n['social.linkedin']} :" />
+					<h:outputText
+						value="#{candidateViewBean.candidate.linkedinProfileUrl}" />
+				</h:panelGroup>
+				<h:panelGroup layout="block" styleClass="textBlock">
+					<h:outputText styleClass="label"
+						value="#{i18n['social.infojobs']} :" />
+					<h:outputText
+						value="#{candidateViewBean.candidate.infojobsProfileUrl}" />
+				</h:panelGroup>
+			</h:panelGroup>
+			
+			<h:panelGroup layout="block" styleClass="panel">
+				<h1>#{i18n['candidate.work_data']}</h1>
 
 				<h:panelGroup layout="block" styleClass="textBlock">
 					<h:outputText styleClass="label"
@@ -83,41 +128,8 @@
 						value="#{i18n['candidate.expected_salary']} :" />
 					<h:outputText value="#{candidateViewBean.candidate.expectedSalary}" />
 				</h:panelGroup>
-
-				<h2>#{i18n['address.address']}</h2>
-
-				<h:panelGroup layout="block" styleClass="textBlock">
-					<h:outputText styleClass="label" value="#{i18n['address.city']} :" />
-					<h:outputText value="#{candidateViewBean.candidate.address.city}" />
-				</h:panelGroup>
-
-				<h:panelGroup layout="block" styleClass="textBlock">
-					<h:outputText styleClass="label" value="#{i18n['address.state']} :" />
-					<h:outputText value="#{candidateViewBean.candidate.address.state}" />
-				</h:panelGroup>
-
-				<h:panelGroup layout="block" styleClass="buttonGroup"
-					id="actionButtons">
-					<h:commandButton value="#{i18n['action.edit']}"
-						action="#{candidateViewBean.editCandidate}" />
-					<h:commandButton value="#{i18n['bookmark.add_to_bookmarks']}"
-						action="#{bookmarksBean.add(candidateViewBean.candidate)}"
-						rendered="#{not bookmarksBean.isBookmarked(candidateViewBean.candidate)}">
-						<f:ajax process="@form"
-							render=":asideForm:bookmarks actionButtons" />
-					</h:commandButton>
-					<h:commandButton value="#{i18n['bookmark.remove_from_bookmarks']}"
-						action="#{bookmarksBean.remove(candidateViewBean.candidate)}"
-						rendered="#{bookmarksBean.isBookmarked(candidateViewBean.candidate)}">
-						<f:ajax process="@form"
-							render=":asideForm:bookmarks actionButtons" />
-					</h:commandButton>
-					<h:button value="#{i18n['curriculum.view_curriculum']}"
-						outcome="curriculumView">
-						<f:param name="id" value="#{candidateViewBean.candidate.id}" />
-					</h:button>
-				</h:panelGroup>
 			</h:panelGroup>
+			
 		</h:form>
 
 		<h:form id="file_form" prependId="false" enctype="multipart/form-data">
@@ -203,9 +215,9 @@
 
 					<h:panelGroup layout="block" styleClass="buttonGroup">
 						<h:commandButton value="#{i18n['action.upload']}"
-							action="#{candidateViewBean.upload}" >
+							action="#{candidateViewBean.upload}">
 							<f:ajax execute="@form" render="@form" />
-							</h:commandButton>
+						</h:commandButton>
 						<h:commandButton value="#{i18n['action.cancel']}"
 							action="#{candidateViewBean.cancelAddFile}" immediate="true">
 							<f:ajax execute="" render="@form" />

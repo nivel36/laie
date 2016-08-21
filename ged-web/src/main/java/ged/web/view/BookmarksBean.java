@@ -1,6 +1,7 @@
 package ged.web.view;
 
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
@@ -27,11 +28,14 @@ public class BookmarksBean extends AbstractPageBean {
 	private transient BookmarkService bookmarkService;
 
 	@Inject
-	protected transient Logger logger;
+	private transient Logger logger;
 
 	public void add(final AuditedEntity<Long> entity) {
+		this.logger.log(Level.FINE, "Adding bookmark {} for user {}",
+				new Object[] { entity, this.sessionBean.getUser().getUsername() });
 		final Bookmark bookmark = createBookmark(entity);
 		if (this.bookmarks.size() > 9) {
+			this.logger.log(Level.WARNING, "Bookmark full for user {}", this.sessionBean.getUser().getUsername());
 			addMessage(FacesMessage.SEVERITY_ERROR, "Bookmark full", "Bookmark full");
 			return;
 		}

@@ -42,8 +42,8 @@ public class CurriculumDaoImpl implements CurriculumDao {
 		try {
 			final Map<String, Object> params = new HashMap<String, Object>();
 			params.put("candidateId", id);
-			curriculum = this.persistenceFacade.findByTypedQuery(Curriculum.class,
-					"Curriculum.getByCandidateId", params);
+			curriculum = this.persistenceFacade.findByTypedQuery(Curriculum.class, "Curriculum.findByCandidateId",
+					params);
 		} catch (final NoResultException ex) {
 			curriculum = null;
 		}

@@ -7,31 +7,27 @@ h1 {
 
 h2 {
 	color: black;
-	font-size: 1em;
+	font-size: 1.2em;
 	font-weight: bold;
 	border-bottom: 1px solid #535993;
 	clear: left;
-	margin: 10px 0 8px 0;
+	margin: 20px 0 6px 0;
 }
 
 h3 {
 	color: black;
-	font-size: 1.3em;
+	font-size: 1.1em;
 	font-weight: bold;
+	font-style: italic;
 	padding: 5px 0px;
+	clear: left;
 }
 
 h4 {
-	display: block;
-	float: left;
-	margin-left: 1em;
+	color: black;
+	font-size: 1em;
 	font-weight: bold;
-	margin: 0.2em 1em 0.2em 1em;
-	text-align: right;
-	min-height: 2.3em;
-	display: inline-block;
-	box-sizing: border-box;
-	position: relative;
+	padding: 5px 0px;
 	clear: left;
 }
 

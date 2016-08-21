@@ -100,17 +100,17 @@ public class UserEditBean extends AbstractPageBean {
 
 	public String save() {
 		this.logger.log(Level.FINE, "Saving user {0}", this.user.getFullName());
+		setManager();
 		this.user.setUser(this.sessionBean.getUser());
+		this.userService.insertOrUpdate(this.user);
+		return "userView.xhtml?id=" + this.user.getId() + "&faces-redirect=true";
+	}
+
+	private void setManager() {
 		if (this.manager.getUsername() != null) {
 			this.logger.log(Level.FINER, "The user has no manager");
 			this.user.setManager(this.manager);
 		}
-		if (this.user.getId() != null) {
-			this.user = this.userService.update(this.user);
-		} else {
-			this.userService.insert(this.user);
-		}
-		return "userView.xhtml?id=" + this.user.getId() + "&faces-redirect=true";
 	}
 
 	public void setManager(final User manager) {

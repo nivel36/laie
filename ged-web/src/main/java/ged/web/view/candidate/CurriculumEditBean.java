@@ -123,7 +123,7 @@ public class CurriculumEditBean extends AbstractPageBean {
 	}
 
 	private void insertOrUpdate(final Curriculum curriculum) {
-		if (curriculum.getId() == 0) {
+		if (curriculum.getId() == null) {
 			this.curriculumService.insertCurriculum(curriculum);
 		} else {
 			this.curriculum = this.curriculumService.updateCurriculum(curriculum);

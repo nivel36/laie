@@ -46,6 +46,7 @@
 				<artifactId>font-awesome</artifactId>
 				<version>${font-awesome.version}</version>
 			</dependency>
+			
 			<dependency>
 				<groupId>org.omnifaces</groupId>
 				<artifactId>omnifaces</artifactId>
@@ -86,6 +87,7 @@
 				<groupId>javax</groupId>
 				<artifactId>javaee-api</artifactId>
 				<version>${javaee-api.version}</version>
+				<scope>provided</scope>
 			</dependency>
 
 			<dependency>

@@ -38,10 +38,13 @@ public class CandidateEditBean extends AbstractPageBean {
 
 	public String editCurriculum() {
 		Curriculum curriculum = null;
-		if (this.candidate.getId() == 0) {
+		if (this.candidate.getId() == null) {
+			this.candidate.setOwner(this.sessionBean.getUser());
+			this.candidate.setUser(this.sessionBean.getUser());
 			this.candidateService.insert(this.candidate);
 			curriculum = createNewCurriculum();
 		} else {
+			this.candidate.setUser(this.sessionBean.getUser());
 			this.candidate = this.candidateService.update(this.candidate);
 			curriculum = findCurriculum(this.candidate.getId());
 		}
@@ -75,12 +78,13 @@ public class CandidateEditBean extends AbstractPageBean {
 	}
 
 	public String save() {
-		if (this.candidate.getId() == 0) {
-			this.candidateService.insert(this.candidate);
-		} else {
-			this.candidate = this.candidateService.update(this.candidate);
-		}
+		saveCandidate();
 		return "candidateSearch?faces-redirect=true";
+	}
+
+	private void saveCandidate() {
+		this.candidate.setUser(this.sessionBean.getUser());
+		this.candidate = this.candidateService.insertOrUpdate(this.candidate);
 	}
 
 	public void setCandidate(final Candidate candidate) {

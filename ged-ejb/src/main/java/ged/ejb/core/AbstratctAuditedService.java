@@ -16,7 +16,15 @@ public abstract class AbstratctAuditedService<T extends AuditedEntity<Long>> imp
 			throw new NullPointerException();
 		}
 		entity.setDeleted(true);
-		this.getDao().update(entity);
+		doUpdate(entity);
+	}
+
+	private void doInsert(final T entity) {
+		this.getDao().insert(entity);
+	}
+
+	private T doUpdate(final T entity) {
+		return this.getDao().update(entity);
 	}
 
 	@Override
@@ -43,7 +51,20 @@ public abstract class AbstratctAuditedService<T extends AuditedEntity<Long>> imp
 		if (entity == null) {
 			throw new NullPointerException();
 		}
-		this.getDao().insert(entity);
+		doInsert(entity);
+	}
+
+	@Override
+	public T insertOrUpdate(T entity) {
+		if (entity == null) {
+			throw new NullPointerException();
+		}
+		if (entity.getId() == null) {
+			doInsert(entity);
+		} else {
+			entity = doUpdate(entity);
+		}
+		return entity;
 	}
 
 	@Override
@@ -53,8 +74,7 @@ public abstract class AbstratctAuditedService<T extends AuditedEntity<Long>> imp
 			throw new NullPointerException();
 		}
 		entity.setDeleted(Boolean.FALSE);
-		final T undeletedEntity = this.getDao().update(entity);
-		return undeletedEntity;
+		return doUpdate(entity);
 	}
 
 	@Override
@@ -63,7 +83,6 @@ public abstract class AbstratctAuditedService<T extends AuditedEntity<Long>> imp
 		if (entity == null) {
 			throw new NullPointerException();
 		}
-		final T updatedEntity = this.getDao().update(entity);
-		return updatedEntity;
+		return doUpdate(entity);
 	}
 }
