@@ -6,7 +6,6 @@ import javax.ejb.Local;
 
 import ged.ejb.core.AuditedService;
 import ged.ejb.core.FileType;
-import ged.ejb.curriculum.Curriculum;
 
 @Local
 public interface CandidateService extends AuditedService<Candidate> {
@@ -19,5 +18,4 @@ public interface CandidateService extends AuditedService<Candidate> {
 
 	Candidate findCandidateAndFiles(Long id);
 
-	Curriculum findCurriculumByCandidateId(final Long id);
 }

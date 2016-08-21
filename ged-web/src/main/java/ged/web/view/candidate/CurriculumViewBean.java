@@ -9,8 +9,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import ged.ejb.candidate.Candidate;
-import ged.ejb.candidate.CandidateService;
 import ged.ejb.curriculum.Curriculum;
+import ged.ejb.curriculum.CurriculumService;
 import ged.ejb.curriculum.Education;
 import ged.ejb.curriculum.JobExperience;
 import ged.ejb.curriculum.Language;
@@ -25,10 +25,10 @@ public class CurriculumViewBean extends AbstractBean {
 
 	private Candidate candidate;
 
-	@Inject
-	private transient CandidateService candidateService;
-
 	private Curriculum curriculum;
+
+	@Inject
+	private transient CurriculumService curriculumService;
 
 	private List<Education> education;
 
@@ -78,7 +78,7 @@ public class CurriculumViewBean extends AbstractBean {
 		if (this.id != null) {
 			try {
 				final Long id = Long.parseLong(this.id);
-				this.curriculum = this.candidateService.findCurriculumByCandidateId(id);
+				this.curriculum = this.curriculumService.findByCandidateId(id);
 				if (this.curriculum == null) {
 					error();
 				}
@@ -95,12 +95,11 @@ public class CurriculumViewBean extends AbstractBean {
 		}
 	}
 
-	public void setCandidateService(final CandidateService candidateService) {
-		this.candidateService = candidateService;
+	public void setCurriculumService(final CurriculumService curriculumService) {
+		this.curriculumService = curriculumService;
 	}
 
 	public void setId(final String id) {
 		this.id = id;
 	}
-
 }

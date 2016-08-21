@@ -4,7 +4,6 @@ import java.util.List;
 
 import ged.ejb.core.FileType;
 import ged.ejb.core.model.Dao;
-import ged.ejb.curriculum.Curriculum;
 
 public interface CandidateDao extends Dao<Long, Candidate> {
 
@@ -13,6 +12,4 @@ public interface CandidateDao extends Dao<Long, Candidate> {
 	List<Candidate> findByNameAndSurename(String name, String surename, boolean showDeleted);
 
 	Candidate findCandidateAndFiles(Long id);
-
-	Curriculum findCurriculumByCandidateId(final Long id);
 }

@@ -19,7 +19,6 @@ import ged.ejb.core.FileType;
 import ged.ejb.core.model.AbstractDao;
 import ged.ejb.core.model.PersistenceFacade;
 import ged.ejb.core.model.Repository;
-import ged.ejb.curriculum.Curriculum;
 
 @Repository
 public class CandidateDaoJpa extends AbstractDao<Long, Candidate> implements CandidateDao {
@@ -67,15 +66,6 @@ public class CandidateDaoJpa extends AbstractDao<Long, Candidate> implements Can
 		final Candidate candidate = this.persistenceFacade.findByTypedQuery(Candidate.class,
 				"Candidate.findCandidateAndFilesById", properties);
 		return candidate;
-	}
-
-	@Override
-	public Curriculum findCurriculumByCandidateId(final Long id) {
-		final Map<String, Object> properties = new HashMap<String, Object>();
-		properties.put("id", id);
-		final Curriculum curriculum = this.persistenceFacade.findByTypedQuery(Curriculum.class,
-				"Candidate.findCurriculumByCandidateId", properties);
-		return curriculum;
 	}
 
 	@Override

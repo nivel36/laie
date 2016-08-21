@@ -12,7 +12,6 @@ import ged.ejb.core.AbstratctAuditedService;
 import ged.ejb.core.FileType;
 import ged.ejb.core.model.Dao;
 import ged.ejb.core.model.Repository;
-import ged.ejb.curriculum.Curriculum;
 
 @Stateless
 public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> implements CandidateService {
@@ -39,11 +38,6 @@ public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> imp
 	@Override
 	public Candidate findCandidateAndFiles(final Long id) {
 		return this.candidateDao.findCandidateAndFiles(id);
-	}
-
-	@Override
-	public Curriculum findCurriculumByCandidateId(final Long id) {
-		return this.candidateDao.findCurriculumByCandidateId(id);
 	}
 
 	@Override
