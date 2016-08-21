@@ -15,11 +15,11 @@ import ged.ejb.curriculum.Education;
 import ged.ejb.curriculum.JobExperience;
 import ged.ejb.curriculum.Language;
 import ged.ejb.curriculum.Skill;
-import ged.web.core.view.AbstractBean;
+import ged.web.core.view.AbstractPageBean;
 
 @Named
 @ViewScoped
-public class CurriculumViewBean extends AbstractBean {
+public class CurriculumViewBean extends AbstractPageBean {
 
 	private static final long serialVersionUID = -5942086439519787220L;
 
@@ -39,6 +39,11 @@ public class CurriculumViewBean extends AbstractBean {
 	private List<Language> languages;
 
 	private List<Skill> skills;
+
+	public String editCurriculum() {
+		this.flash.put("curriculum", this.curriculum);
+		return "curriculumEdit?faces-redirect=true";
+	}
 
 	private void error() {
 		final NavigationHandler navigationHandler = this.facesContext.getApplication().getNavigationHandler();

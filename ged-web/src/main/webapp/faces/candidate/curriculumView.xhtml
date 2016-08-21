@@ -24,6 +24,11 @@
 			<h1 class="header">
 				<i class="fa fa-users" /> #{curriculumViewBean.candidate}
 			</h1>
+			
+			<h:panelGroup layout="block" styleClass="actionPanel">
+				<h:commandButton value="#{i18n['action.edit']}"
+					action="#{curriculumViewBean.editCurriculum}" />
+			</h:panelGroup>
 
 			<h:panelGroup layout="block" styleClass="panel">
 				<h1>#{i18n['curriculum.curriculum']}</h1>
