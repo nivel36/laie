@@ -80,7 +80,7 @@ public class JobOfferViewBean extends AbstractPageBean {
 		if (this.jobOfferId != null) {
 			try {
 				final Long id = Long.parseLong(this.jobOfferId);
-				this.jobOffer = this.jobService.findJobOfferById(id);
+				this.jobOffer = this.jobService.find(id);
 				if (this.jobOffer == null) {
 					error();
 				} else {

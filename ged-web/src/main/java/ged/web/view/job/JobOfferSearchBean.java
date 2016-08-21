@@ -85,7 +85,7 @@ public class JobOfferSearchBean extends AbstractPageBean {
 	}
 
 	public void remove(final JobOffer jobOffer) {
-		this.jobService.deleteJobOffer(jobOffer);
+		this.jobService.delete(jobOffer);
 		search();
 	}
 
@@ -105,7 +105,7 @@ public class JobOfferSearchBean extends AbstractPageBean {
 				this.jobOfferPaginator.setEntities(this.jobService.fullSearchByName(this.name));
 			}
 		} else {
-			this.jobOfferPaginator.setEntities(this.jobService.findAllJobOffers());
+			this.jobOfferPaginator.setEntities(this.jobService.findAll());
 		}
 		cleanSearchFields();
 	}

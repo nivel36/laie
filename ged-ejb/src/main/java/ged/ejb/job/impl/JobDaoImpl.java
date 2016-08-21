@@ -10,6 +10,7 @@ import javax.inject.Inject;
 import javax.persistence.NoResultException;
 
 import ged.ejb.client.Client;
+import ged.ejb.core.model.AbstractDao;
 import ged.ejb.core.model.PersistenceFacade;
 import ged.ejb.core.model.Repository;
 import ged.ejb.job.JobDao;
@@ -18,21 +19,11 @@ import ged.ejb.job.JobOffer;
 import ged.ejb.user.User;
 
 @Repository
-public class JobDaoImpl implements JobDao {
+public class JobDaoImpl extends AbstractDao<Long, JobOffer> implements JobDao {
 
 	@Inject
 	@Repository
 	private PersistenceFacade persistenceFacade;
-
-	@Override
-	public void deleteJobOffer(final JobOffer jobOffer) {
-		this.persistenceFacade.delete(jobOffer);
-	}
-
-	@Override
-	public List<JobOffer> findAllJobOffers() {
-		return this.persistenceFacade.findAll(JobOffer.class);
-	}
 
 	@Override
 	public Client findClientByName(final String clientName) {
@@ -55,11 +46,6 @@ public class JobDaoImpl implements JobDao {
 		conductedJobMeetings = this.persistenceFacade.findByTypedQuery(JobMeeting.class,
 				"JobMeeting.getConductedJobMeetings", parameters, 0, 0);
 		return conductedJobMeetings;
-	}
-
-	@Override
-	public JobOffer findJobOfferById(final long id) {
-		return this.persistenceFacade.find(JobOffer.class, id);
 	}
 
 	@Override
@@ -124,19 +110,24 @@ public class JobDaoImpl implements JobDao {
 	}
 
 	@Override
+	public Class<JobOffer> getClazz() {
+		return JobOffer.class;
+	}
+
+	@Override
+	public void insert(final JobOffer jobOffer) {
+		if (jobOffer.getClient() != null) {
+			setClientToJobOffer(jobOffer);
+		}
+		this.persistenceFacade.insert(jobOffer);
+	}
+
+	@Override
 	public Client insertClient(final String clientName) {
 		final Client client = new Client();
 		client.setName(clientName);
 		this.persistenceFacade.insert(client);
 		return client;
-	}
-
-	@Override
-	public void insertJobOffer(final JobOffer jobOffer) {
-		if (jobOffer.getClient() != null) {
-			setClientToJobOffer(jobOffer);
-		}
-		this.persistenceFacade.insert(jobOffer);
 	}
 
 	private void orderList(final List<JobOffer> results) {
@@ -167,10 +158,5 @@ public class JobDaoImpl implements JobDao {
 			client = insertClient(clientName);
 		}
 		jobOffer.setClient(client);
-	}
-
-	@Override
-	public JobOffer updateJobOffer(final JobOffer jobOffer) {
-		return this.persistenceFacade.update(jobOffer);
 	}
 }

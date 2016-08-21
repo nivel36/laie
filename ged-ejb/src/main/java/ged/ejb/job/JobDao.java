@@ -5,20 +5,15 @@ import java.util.List;
 import javax.ejb.Local;
 
 import ged.ejb.client.Client;
+import ged.ejb.core.model.Dao;
 import ged.ejb.user.User;
 
 @Local
-public interface JobDao {
-
-	public void deleteJobOffer(JobOffer jobOffer);
-
-	public List<JobOffer> findAllJobOffers();
+public interface JobDao extends Dao<Long, JobOffer> {
 
 	public Client findClientByName(String clientName);
 
 	public List<JobMeeting> findConductedJobMeetingsByJobOffer(JobOffer jobOffer);
-
-	public JobOffer findJobOfferById(long id);
 
 	public List<JobOffer> findJobOfferByName(String name);
 
@@ -37,9 +32,5 @@ public interface JobDao {
 	public List<JobOffer> fullSearchByNameAndClientName(String name, String clientName);
 
 	public Client insertClient(String clientName);
-
-	public void insertJobOffer(JobOffer jobOffer);
-
-	public JobOffer updateJobOffer(JobOffer jobOffer);
 
 }

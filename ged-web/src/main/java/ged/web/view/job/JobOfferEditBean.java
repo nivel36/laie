@@ -19,7 +19,7 @@ public class JobOfferEditBean extends AbstractPageBean {
 	private JobOffer jobOffer;
 
 	@Inject
-	private JobService jobService;
+	private transient JobService jobService;
 
 	public String cancel() {
 		return "jobOfferSearch?faces-redirect=true";
@@ -41,14 +41,15 @@ public class JobOfferEditBean extends AbstractPageBean {
 	}
 
 	public String save() {
-		if (this.jobOffer.getId() != 0) {
-			this.jobOffer = this.jobService.updateJobOffer(this.jobOffer);
-		} else {
-			this.jobOffer.setOwner(this.sessionBean.getUser());
-			this.jobService.insertJobOffer(this.jobOffer);
-		}
+		saveJobOffer();
 		// this.actionsBean.add(this.jobOffer);
 		return "jobOfferView.xhtml?id=" + this.jobOffer.getId() + "&faces-redirect=true";
+	}
+
+	private void saveJobOffer() {
+		this.jobOffer.setUser(this.sessionBean.getUser());
+		this.jobService.insertOrUpdate(this.jobOffer);
+
 	}
 
 	public void setJobOffer(final JobOffer jobOffer) {
