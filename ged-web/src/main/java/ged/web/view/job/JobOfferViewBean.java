@@ -22,6 +22,8 @@ public class JobOfferViewBean extends AbstractPageBean {
 
 	private List<JobMeeting> conductedJobMeetings = new ArrayList<JobMeeting>();
 
+	private boolean editable;
+
 	private JobOffer jobOffer;
 
 	private String jobOfferId;
@@ -31,7 +33,7 @@ public class JobOfferViewBean extends AbstractPageBean {
 
 	private List<JobMeeting> plannedJobMeetings = new ArrayList<JobMeeting>();
 
-	public boolean canEdit() {
+	private boolean canEdit() {
 		final User owner = this.jobOffer.getOwner();
 		final User user = this.sessionBean.getUser();
 		if (owner.equals(user)) {
@@ -86,12 +88,17 @@ public class JobOfferViewBean extends AbstractPageBean {
 				} else {
 					populateJobMeetings(this.jobOffer);
 				}
+				this.editable = canEdit();
 			} catch (final NumberFormatException ex) {
 				error();
 			}
 		} else {
 			error();
 		}
+	}
+
+	public boolean isEditable() {
+		return this.editable;
 	}
 
 	private void populateJobMeetings(final JobOffer jobOffer) {

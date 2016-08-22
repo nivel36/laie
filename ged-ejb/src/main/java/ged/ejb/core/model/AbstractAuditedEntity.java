@@ -39,7 +39,7 @@ public abstract class AbstractAuditedEntity extends AbstractEntity implements Au
 
 	@Column(nullable = false)
 	@Field
-	private Boolean deleted;
+	private Boolean deleted = Boolean.FALSE;
 
 	@ManyToOne
 	@JoinColumn(name = "userId")

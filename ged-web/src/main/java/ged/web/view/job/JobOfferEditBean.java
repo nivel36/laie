@@ -42,14 +42,15 @@ public class JobOfferEditBean extends AbstractPageBean {
 
 	public String save() {
 		saveJobOffer();
-		// this.actionsBean.add(this.jobOffer);
 		return "jobOfferView.xhtml?id=" + this.jobOffer.getId() + "&faces-redirect=true";
 	}
 
 	private void saveJobOffer() {
 		this.jobOffer.setUser(this.sessionBean.getUser());
+		if (this.jobOffer.getOwner() == null) {
+			this.jobOffer.setOwner(this.sessionBean.getUser());
+		}
 		this.jobService.insertOrUpdate(this.jobOffer);
-
 	}
 
 	public void setJobOffer(final JobOffer jobOffer) {

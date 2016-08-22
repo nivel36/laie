@@ -25,7 +25,23 @@
 				<i class="fa fa-industry" /> #{jobOfferViewBean.jobOffer.name}
 			</h1>
 
+			<h:panelGroup layout="block" styleClass="actionPanel">
+				<h:commandButton value="#{i18n['action.edit']}"
+					action="#{jobOfferViewBean.edit}"
+					rendered="#{jobOfferViewBean.editable}" />
+				<h:commandButton value="#{i18n['bookmark.add_to_bookmarks']}"
+					action="#{bookmarksBean.add(jobOfferViewBean.jobOffer)}"
+					immediate="true"
+					rendered="#{not bookmarksBean.isBookmarked(jobOfferViewBean.jobOffer)}" />
+				<h:commandButton value="#{i18n['bookmark.remove_from_bookmarks']}"
+					action="#{bookmarksBean.remove(jobOfferViewBean.jobOffer)}"
+					immediate="true"
+					rendered="#{bookmarksBean.isBookmarked(jobOfferViewBean.jobOffer)}" />
+			</h:panelGroup>
+
 			<h:panelGroup layout="block" styleClass="panel">
+
+				<h1>#{i18n['job.detail']}</h1>
 				<h:panelGroup layout="block" styleClass="textBlock">
 					<h:outputText styleClass="label" value="#{i18n['job.name']}:" />
 					<h:outputText value="#{jobOfferViewBean.jobOffer.name}" />
@@ -35,8 +51,6 @@
 					<h:outputText styleClass="label" value="#{i18n['job.client']}:" />
 					<h:outputText value="#{jobOfferViewBean.jobOffer.client.name}" />
 				</h:panelGroup>
-
-				<h2>#{i18n['job.detail']}</h2>
 
 				<h:panelGroup layout="block" styleClass="textBlock">
 					<h:outputText styleClass="label" value="#{i18n['job.places']}:" />
@@ -61,8 +75,6 @@
 					<h:outputText value="#{jobOfferViewBean.jobOffer.description}" />
 				</h:panelGroup>
 
-				<h2>#{i18n['job.place']}</h2>
-
 				<h:panelGroup layout="block" styleClass="textBlock">
 					<h:outputText styleClass="label" value="#{i18n['address.city']}:" />
 					<h:outputText value="#{jobOfferViewBean.jobOffer.city}" />
@@ -71,19 +83,6 @@
 				<h:panelGroup layout="block" styleClass="textBlock">
 					<h:outputText styleClass="label" value="#{i18n['address.state']}:" />
 					<h:outputText value="#{jobOfferViewBean.jobOffer.state}" />
-				</h:panelGroup>
-
-				<h:panelGroup layout="block" class="buttonGroup">
-					<h:commandButton value="#{i18n['action.edit']}"
-						action="#{jobOfferViewBean.edit}" rendered="jobOfferViewBean.canEdit"/>
-					<h:commandButton value="#{i18n['bookmark.add_to_bookmarks']}"
-						action="#{bookmarksBean.add(jobOfferViewBean.jobOffer)}"
-						immediate="true"
-						rendered="#{not bookmarksBean.isBookmarked(jobOfferViewBean.jobOffer)}" />
-					<h:commandButton value="#{i18n['bookmark.remove_from_bookmarks']}"
-						action="#{bookmarksBean.remove(jobOfferViewBean.jobOffer)}"
-						immediate="true"
-						rendered="#{bookmarksBean.isBookmarked(jobOfferViewBean.jobOffer)}" />
 				</h:panelGroup>
 			</h:panelGroup>
 
