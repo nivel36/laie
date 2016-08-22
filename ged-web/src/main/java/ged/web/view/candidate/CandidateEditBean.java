@@ -84,6 +84,9 @@ public class CandidateEditBean extends AbstractPageBean {
 
 	private void saveCandidate() {
 		this.candidate.setUser(this.sessionBean.getUser());
+		if (this.candidate.getOwner() == null) {
+			this.candidate.setOwner(this.sessionBean.getUser());
+		}
 		this.candidate = this.candidateService.insertOrUpdate(this.candidate);
 	}
 
