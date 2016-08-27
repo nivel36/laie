@@ -7,8 +7,10 @@ import ged.ejb.user.User;
 
 public interface JobOfferService extends AuditedService<JobOffer> {
 
-	public List<JobOffer> findByNameAndClient(String name, String clientName, Boolean showDeleted);
+	List<JobOffer> findAllByOwner(final User owner);
 
-	public List<JobOffer> findLastJobOffers(User owner);
+	List<JobOffer> findByNameAndClient(String name, String clientName, Boolean showDeleted);
+
+	List<JobOffer> findLastJobOffers(User owner);
 
 }

@@ -25,6 +25,13 @@ public class JobOfferDaoJpa extends AbstractDao<Long, JobOffer> implements JobOf
 	@Repository
 	private PersistenceFacade persistenceFacade;
 
+	@Override
+	public List<JobOffer> findAllByOwner(final User owner) {
+		final Map<String, Object> parameters = new HashMap<>();
+		parameters.put("owner", owner);
+		return this.persistenceFacade.findByTypedQuery(JobOffer.class, "JobOffer.findAllByOwner", parameters, 10, 0);
+	}
+
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public List<JobOffer> findByNameAndClient(final String name, final String clientName, final Boolean showDeleted) {

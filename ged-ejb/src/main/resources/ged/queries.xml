@@ -48,8 +48,8 @@
 		<query>SELECT j FROM JobOffer j WHERE j.name = :name</query>
 	</named-query>
 
-	<named-query name="JobOffer.findByOwner">
-		<query>SELECT j FROM JobOffer j WHERE j.owner = :owner</query>
+	<named-query name="JobOffer.findAllByOwner">
+		<query>SELECT j FROM JobOffer j WHERE j.owner = :owner AND NOT j.deleted = TRUE</query>
 	</named-query>
 
 	<named-query name="JobOffer.findLastJobOffers">

@@ -31,13 +31,9 @@ public class JobOfferServiceImpl extends AbstratctAuditedService<JobOffer> imple
 		getDao().insert(jobOffer);
 	}
 
-	private void putClientOnJobOffer(final JobOffer jobOffer) {
-		final Client client = this.clientService.findByName(jobOffer.getClient().getName());
-		if (client == null) {
-			this.clientService.insert(jobOffer.getClient());
-		} else {
-			jobOffer.setClient(client);
-		}
+	@Override
+	public List<JobOffer> findAllByOwner(final User owner) {
+		return this.jobDao.findAllByOwner(owner);
 	}
 
 	@Override
@@ -53,5 +49,14 @@ public class JobOfferServiceImpl extends AbstratctAuditedService<JobOffer> imple
 	@Override
 	public Dao<Long, JobOffer> getDao() {
 		return this.jobDao;
+	}
+
+	private void putClientOnJobOffer(final JobOffer jobOffer) {
+		final Client client = this.clientService.findByName(jobOffer.getClient().getName());
+		if (client == null) {
+			this.clientService.insert(jobOffer.getClient());
+		} else {
+			jobOffer.setClient(client);
+		}
 	}
 }
