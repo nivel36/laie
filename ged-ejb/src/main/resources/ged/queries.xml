@@ -4,23 +4,27 @@
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence/orm
         http://xmlns.jcp.org/xml/ns/persistence/orm_2_1.xsd"
 	version="2.1">
-	
+
 	<named-query name="Action.findAllByUser">
-		<query>SELECT a FROM Action a WHERE a.user = :user</query>
+		<query>
+		<![CDATA[
+		SELECT a FROM Action a WHERE a.user = :user ORDER BY a.date DESC
+		]]>
+		</query>
 	</named-query>
 
 	<named-query name="Bookmark.find">
 		<query>SELECT b FROM Bookmark b WHERE b.user = :user AND b.entityClass = :entityClass AND b.entityId = :entityId</query>
 	</named-query>
-	
+
 	<named-query name="Bookmark.findAllByClassAndId">
 		<query>SELECT b FROM Bookmark b WHERE b.entityClass = :entityClass AND b.entityId = :entityId</query>
 	</named-query>
-	
-    <named-query name="Bookmark.findAllByUser">
+
+	<named-query name="Bookmark.findAllByUser">
 		<query>SELECT b FROM Bookmark b WHERE b.user = :user</query>
 	</named-query>
-	
+
 	<named-query name="Candidate.findCandidateAndFilesById">
 		<query>SELECT c FROM Candidate c LEFT JOIN FETCH c.files WHERE c.id = :id</query>
 	</named-query>
@@ -33,7 +37,7 @@
 	<named-query name="Client.findByName">
 		<query>SELECT c FROM Client c WHERE c.name = :name</query>
 	</named-query>
-	
+
 	<named-query name="Curriculum.findByCandidateId">
 		<query>SELECT c FROM Curriculum c 
 					LEFT JOIN FETCH c.candidate 
@@ -49,7 +53,11 @@
 	</named-query>
 
 	<named-query name="JobOffer.findAllByOwner">
-		<query>SELECT j FROM JobOffer j WHERE j.owner = :owner AND NOT j.deleted = TRUE</query>
+		<query>
+		<![CDATA[
+		SELECT j FROM JobOffer j WHERE j.owner = :owner AND j.deleted <> TRUE
+		]]>
+		</query>
 	</named-query>
 
 	<named-query name="JobOffer.findLastJobOffers">
@@ -108,11 +116,11 @@
 	<named-query name="User.countEmail">
 		<query>SELECT COUNT(u) FROM User u WHERE u.email = :email</query>
 	</named-query>
-	
+
 	<named-query name="User.countUsername">
 		<query>SELECT COUNT(u) FROM User u WHERE u.username = :username</query>
 	</named-query>
-	
+
 	<named-query name="UserClosure.findAntecessorsUserClosuresById">
 		<query>SELECT uc FROM UserClosure uc WHERE uc.descendant.id = :id</query>
 	</named-query>
