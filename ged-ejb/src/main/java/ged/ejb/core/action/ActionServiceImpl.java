@@ -56,6 +56,7 @@ public class ActionServiceImpl extends AbstractService<Long, Action> implements 
 		final Action action = getActionFromEntity(auditedEntity);
 		action.setActionPerformed(actionType);
 		action.setDate(new Date());
+		action.setUser(auditedEntity.getUser());
 		insert(action);
 	}
 
