@@ -1,6 +1,5 @@
 package ged.web.view;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -18,34 +17,38 @@ public class ActionBean extends AbstractPageBean {
 
 	private static final long serialVersionUID = 6101883862412908337L;
 
-	private List<ActionDto> actions;
+	private List<Action> actions;
 
 	@Inject
 	private transient ActionService actionService;
 
-	public List<ActionDto> getActions() {
+	private String buildUrl(final String className) {
+		final StringBuilder sb = new StringBuilder();
+		sb.append("/faces/").append(className).append("/").append(className).append("View.xhtml").append("?id=");
+		return sb.toString();
+	}
+
+	private void findAllActions() {
+		this.actions = this.actionService.findAllByUser(this.sessionBean.getUser());
+	}
+
+	public List<Action> getActions() {
 		return this.actions;
 	}
 
 	private String getUrl(final Action action) {
-		final String contextPath = this.externalContext.getRequestContextPath();
-		final String className = action.getEntityClass().toLowerCase();
-		final StringBuilder url = new StringBuilder();
-		url.append(contextPath).append("/faces/").append(className).append("/").append(className).append("View.xhtml")
-				.append("?id=").append(action.getEntityId());
-		return url.toString();
+		final String entityClass = action.getEntityClass();
+		final String className = entityClass.substring(0, 1).toLowerCase() + entityClass.substring(1);
+		return buildUrl(className) + action.getEntityId();
+	}
+
+	public String go(final Action action) {
+		final String url = getUrl(action);
+		return url + "&faces-redirect=true";
 	}
 
 	@PostConstruct
 	public void init() {
-		final List<Action> entityActions = this.actionService.findAllByUser(this.sessionBean.getUser());
-		this.actions = new ArrayList<ActionDto>();
-		for (final Action action : entityActions) {
-			final ActionDto dto = new ActionDto();
-			dto.setText(action.toString());
-			final String url = getUrl(action);
-			dto.setUrl(url);
-			this.actions.add(dto);
-		}
+		findAllActions();
 	}
 }

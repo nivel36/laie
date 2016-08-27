@@ -44,9 +44,8 @@
 			<h:outputText value="#{i18n['message.actions.empty']}"
 				styleClass="text" rendered="#{empty actionBean.actions}" />
 			<ui:repeat value="#{actionBean.actions}" var="action">
-				<h:outputLink value="#{action.url}">
-					<h:outputText value="#{action.text}" />
-				</h:outputLink>
+				<h:commandLink action="#{actionBean.go(action)}"
+					value="#{action.text}" />
 				<br />
 			</ui:repeat>
 		</h:panelGroup>
