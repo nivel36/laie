@@ -26,7 +26,7 @@ public class MenuBean extends AbstractPageBean {
 
 	public String gotoJobOffers() {
 		this.sessionBean.clearBreadcrumb();
-		return "/faces/job/jobOfferSearch?faces-redirect=true";
+		return "/faces/jobOffer/jobOfferSearch?faces-redirect=true";
 	}
 
 	public String gotoMaintenances() {

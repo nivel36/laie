@@ -67,7 +67,8 @@ public class BookmarksBean extends AbstractPageBean {
 	}
 
 	private String getUrl(final Bookmark bookmark) {
-		final String className = bookmark.getEntityClass().toLowerCase();
+		final String entityClass = bookmark.getEntityClass();
+		final String className = entityClass.substring(0, 1).toLowerCase() + entityClass.substring(1);
 		return buildUrl(className) + bookmark.getEntityId();
 	}
 
