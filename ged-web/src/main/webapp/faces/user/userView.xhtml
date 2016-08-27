@@ -27,8 +27,20 @@
 				<i class="fa fa-user" /> #{userViewBean.user}
 			</h1>
 
-			<h:panelGroup layout="block" styleClass="actionPanel"
-				rendered="{not userViewBean.user.deleted}">
+			<h:panelGroup layout="block" styleClass="actionPanel">
+				<h:commandButton value="#{i18n['action.undelete']}"
+					action="#{userViewBean.undeleteUser}" immediate="true"
+					rendered="#{userViewBean.user.deleted}" />
+				<h:commandButton value="#{i18n['action.edit']}"
+					action="#{userViewBean.editUser}" immediate="true"
+					rendered="#{not userViewBean.user.deleted}" />
+				<h:commandButton value="#{i18n['bookmark.add_to_bookmarks']}"
+					action="#{bookmarksBean.add(userViewBean.user)}" immediate="true"
+					rendered="#{(not bookmarksBean.isBookmarked(userViewBean.user))	and (not userViewBean.user.deleted)}" />
+				<h:commandButton value="#{i18n['bookmark.remove_from_bookmarks']}"
+					action="#{bookmarksBean.remove(userViewBean.user)}"
+					immediate="true"
+					rendered="#{bookmarksBean.isBookmarked(userViewBean.user)}" />
 				<h:commandLink id="exportPdf" styleClass="iconButton">
 					<i class="fa fa-file-pdf-o fa-lg" /> #{i18n['action.export']}</h:commandLink>
 				<h:commandLink id="exportExcel" styleClass="iconButton"
@@ -50,7 +62,7 @@
 					<h:outputText styleClass="label" value="#{i18n['user.email']}:" />
 					<h:outputText value="#{userViewBean.user.email}" />
 				</h:panelGroup>
-				
+
 				<h:panelGroup layout="block" styleClass="textBlock">
 					<h:outputText styleClass="label" value="#{i18n['user.role']}:" />
 					<h:outputText
@@ -61,31 +73,14 @@
 					<h:outputText styleClass="label" value="#{i18n['user.manager']}:" />
 					<h:outputText value="#{userViewBean.user.manager}" />
 				</h:panelGroup>
-
-				<h:panelGroup layout="block" styleClass="buttonGroup">
-					<h:commandButton value="#{i18n['action.undelete']}"
-						action="#{userViewBean.undeleteUser}" immediate="true"
-						rendered="#{userViewBean.user.deleted}" />
-					<h:commandButton value="#{i18n['action.edit']}"
-						action="#{userViewBean.editUser}" immediate="true"
-						rendered="#{not userViewBean.user.deleted}" />
-					<h:commandButton value="#{i18n['bookmark.add_to_bookmarks']}"
-						action="#{bookmarksBean.add(userViewBean.user)}" immediate="true"
-						rendered="#{(not bookmarksBean.isBookmarked(userViewBean.user))	and (not userViewBean.user.deleted)}" />
-					<h:commandButton value="#{i18n['bookmark.remove_from_bookmarks']}"
-						action="#{bookmarksBean.remove(userViewBean.user)}"
-						immediate="true"
-						rendered="#{bookmarksBean.isBookmarked(userViewBean.user)}" />
-				</h:panelGroup>
 			</h:panelGroup>
 
 			<h:panelGrid styleClass="panelGrid" columns="2" cellpadding="10px">
+			
 				<h:panelGroup layout="block" styleClass="panel">
 					<h1>#{i18n['user.team']}</h1>
-
 					<h:outputText value="#{i18n['user.no_users_found']}"
 						rendered="#{empty userViewBean.team.entities}" />
-
 					<h:dataTable var="user" id="user"
 						value="#{userViewBean.team.dataList}"
 						rendered="#{not empty userViewBean.team.dataList}"

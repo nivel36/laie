@@ -21,6 +21,28 @@ public class UserServiceImpl extends AbstratctAuditedService<User> implements Us
 	private UserDao userDao;
 
 	@Override
+	protected void doInsert(final User user) {
+		if (user == null) {
+			throw new NullPointerException();
+		}
+		if (user.equals(user.getManager())) {
+			throw new IllegalStateException("User can't be his manager");
+		}
+		this.userDao.insert(user);
+	}
+
+	@Override
+	protected User doUpdate(final User user) {
+		if (existsMoreThanOneAdmin()) {
+			return this.userDao.update(user);
+		} else if (!user.hasRole("ADMIN")) {
+			return this.userDao.update(user);
+		} else {
+			throw new UserException("Can not delete user");
+		}
+	}
+
+	@Override
 	public boolean emailExists(final String email) {
 		return this.userDao.emailExists(email);
 	}
@@ -47,28 +69,6 @@ public class UserServiceImpl extends AbstratctAuditedService<User> implements Us
 	@Override
 	public Dao<Long, User> getDao() {
 		return this.userDao;
-	}
-
-	@Override
-	public void insert(final User user) {
-		if (user == null) {
-			throw new NullPointerException();
-		}
-		if (user.equals(user.getManager())) {
-			throw new IllegalStateException("User can't be his manager");
-		}
-		this.userDao.insert(user);
-	}
-
-	@Override
-	public User update(final User user) {
-		if (existsMoreThanOneAdmin()) {
-			return this.userDao.update(user);
-		} else if (!user.hasRole("ADMIN")) {
-			return this.userDao.update(user);
-		} else {
-			throw new UserException("Can not delete user");
-		}
 	}
 
 	@Override
