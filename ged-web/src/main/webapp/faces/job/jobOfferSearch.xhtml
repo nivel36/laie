@@ -49,11 +49,11 @@
 				<h1>#{i18n['job.search_results']}</h1>
 
 				<h:outputText value="#{i18n['job.no_jobs_found']}"
-					rendered="#{empty jobOfferSearchBean.jobOfferPaginator.dataList}" />
+					rendered="#{empty jobOfferSearchBean.paginator.dataList}" />
 
 				<h:dataTable var="jobOffer" id="jobOffer"
-					value="#{jobOfferSearchBean.jobOfferPaginator.dataList}"
-					rendered="#{not empty jobOfferSearchBean.jobOfferPaginator.dataList}"
+					value="#{jobOfferSearchBean.paginator.dataList}"
+					rendered="#{not empty jobOfferSearchBean.paginator.dataList}"
 					styleClass="dataTable">
 
 					<h:column>
@@ -117,7 +117,7 @@
 					</h:column>
 				</h:dataTable>
 				<a:paginator id="paginator"
-					paginator="#{jobOfferSearchBean.jobOfferPaginator}" />
+					paginator="#{jobOfferSearchBean.paginator}" />
 			</h:panelGroup>
 		</h:form>
 	</ui:define>

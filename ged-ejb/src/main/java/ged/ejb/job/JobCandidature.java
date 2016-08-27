@@ -11,6 +11,8 @@ import javax.validation.constraints.NotNull;
 
 import ged.ejb.candidate.Candidate;
 import ged.ejb.core.model.AbstractAuditedEntity;
+import ged.ejb.job.meeting.JobMeeting;
+import ged.ejb.job.offer.JobOffer;
 
 @Entity
 public class JobCandidature extends AbstractAuditedEntity {

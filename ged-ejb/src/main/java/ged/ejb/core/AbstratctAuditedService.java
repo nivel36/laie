@@ -19,11 +19,13 @@ public abstract class AbstratctAuditedService<T extends AuditedEntity<Long>> imp
 		doUpdate(entity);
 	}
 
-	private void doInsert(final T entity) {
+	@Audited(action = Type.Insert)
+	protected void doInsert(final T entity) {
 		this.getDao().insert(entity);
 	}
 
-	private T doUpdate(final T entity) {
+	@Audited(action = Type.Update)
+	protected T doUpdate(final T entity) {
 		return this.getDao().update(entity);
 	}
 
@@ -46,7 +48,6 @@ public abstract class AbstratctAuditedService<T extends AuditedEntity<Long>> imp
 	public abstract Dao<Long, T> getDao();
 
 	@Override
-	@Audited(action = Type.Insert)
 	public void insert(final T entity) {
 		if (entity == null) {
 			throw new NullPointerException();
@@ -78,7 +79,6 @@ public abstract class AbstratctAuditedService<T extends AuditedEntity<Long>> imp
 	}
 
 	@Override
-	@Audited(action = Type.Update)
 	public T update(final T entity) {
 		if (entity == null) {
 			throw new NullPointerException();

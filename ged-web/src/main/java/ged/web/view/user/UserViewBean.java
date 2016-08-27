@@ -10,8 +10,7 @@ import javax.inject.Named;
 
 import org.omnifaces.util.Faces;
 
-import ged.ejb.job.JobOffer;
-import ged.ejb.job.JobService;
+import ged.ejb.job.offer.JobOffer;
 import ged.ejb.user.User;
 import ged.ejb.user.service.UserService;
 import ged.web.core.view.AbstractPageBean;
@@ -25,9 +24,6 @@ public class UserViewBean extends AbstractPageBean {
 	private static final long serialVersionUID = -2187385732087309689L;
 
 	private Paginator<JobOffer> jobOffers;
-
-	@Inject
-	private transient JobService jobService;
 
 	private Paginator<User> team;
 
@@ -92,7 +88,7 @@ public class UserViewBean extends AbstractPageBean {
 		this.team = new Paginator<>(this.sessionBean.getRowsPerPage());
 		this.team.setEntities(this.userService.findSubordinateUsers(id));
 		this.jobOffers = new Paginator<>(this.sessionBean.getRowsPerPage());
-		this.jobOffers.setEntities(this.jobService.findJobOffersByOwner(this.user));
+		// this.jobOffers.setEntities(this.jobService.findJobOffersByOwner(this.user));
 		if (this.user.isDeleted()) {
 			addMessage(FacesMessage.SEVERITY_WARN, "message.erased_entity", "message.erased_entity");
 		}

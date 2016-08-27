@@ -9,8 +9,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import ged.ejb.candidate.Candidate;
-import ged.ejb.job.JobOffer;
-import ged.ejb.job.JobService;
+import ged.ejb.job.offer.JobOffer;
+import ged.ejb.job.offer.JobOfferService;
 import ged.ejb.user.User;
 import ged.web.core.view.AbstractPageBean;
 
@@ -25,7 +25,7 @@ public class IndexBean extends AbstractPageBean {
 	private List<JobOffer> jobOffers;
 
 	@Inject
-	private JobService jobService;
+	private JobOfferService jobService;
 
 	public List<Candidate> getCandidates() {
 		return this.candidates;

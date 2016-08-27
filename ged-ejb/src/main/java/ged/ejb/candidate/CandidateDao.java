@@ -9,7 +9,7 @@ public interface CandidateDao extends Dao<Long, Candidate> {
 
 	List<FileType> findAllFileTypes();
 
-	List<Candidate> findByNameAndSurename(String name, String surename, boolean showDeleted);
+	List<Candidate> findByNameAndSurename(String name, String surename, Boolean showDeleted);
 
 	Candidate findCandidateAndFiles(Long id);
 }

@@ -1,4 +1,4 @@
-package ged.ejb.candidate.impl;
+package ged.ejb.candidate;
 
 import java.util.HashMap;
 import java.util.List;
@@ -13,8 +13,6 @@ import org.hibernate.search.jpa.Search;
 import org.hibernate.search.query.dsl.BooleanJunction;
 import org.hibernate.search.query.dsl.QueryBuilder;
 
-import ged.ejb.candidate.Candidate;
-import ged.ejb.candidate.CandidateDao;
 import ged.ejb.core.FileType;
 import ged.ejb.core.model.AbstractDao;
 import ged.ejb.core.model.PersistenceFacade;
@@ -34,7 +32,7 @@ public class CandidateDaoJpa extends AbstractDao<Long, Candidate> implements Can
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
-	public List<Candidate> findByNameAndSurename(final String name, final String surename, final boolean showDeleted) {
+	public List<Candidate> findByNameAndSurename(final String name, final String surename, final Boolean showDeleted) {
 		final EntityManager em = this.persistenceFacade.getEm();
 		final FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(em);
 		final QueryBuilder qb = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(Candidate.class)
@@ -46,7 +44,7 @@ public class CandidateDaoJpa extends AbstractDao<Long, Candidate> implements Can
 		if (surename != null) {
 			bj.must(qb.keyword().onField("surename").matching(surename).createQuery());
 		}
-		if (!showDeleted) {
+		if ((showDeleted == null) || !showDeleted) {
 			bj.must(qb.keyword().onField("deleted").matching(true).createQuery()).not();
 		}
 		Query persistenceQuery = null;

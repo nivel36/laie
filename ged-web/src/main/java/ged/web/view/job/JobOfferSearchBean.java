@@ -1,15 +1,15 @@
 package ged.web.view.job;
 
+import java.util.List;
 import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import ged.ejb.job.JobOffer;
-import ged.ejb.job.JobService;
+import ged.ejb.job.offer.JobOffer;
+import ged.ejb.job.offer.JobOfferService;
 import ged.ejb.user.User;
 import ged.web.core.view.AbstractPageBean;
 import ged.web.core.view.Paginator;
@@ -22,15 +22,15 @@ public class JobOfferSearchBean extends AbstractPageBean {
 
 	private String clientName;
 
-	private Paginator<JobOffer> jobOfferPaginator;
-
 	@Inject
-	private JobService jobService;
+	private transient JobOfferService jobService;
 
 	@Inject
 	protected transient Logger logger;
 
 	private String name;
+
+	private Paginator<JobOffer> paginator;
 
 	public boolean canEdit(final JobOffer jobOffer) {
 		final User owner = jobOffer.getOwner();
@@ -66,17 +66,17 @@ public class JobOfferSearchBean extends AbstractPageBean {
 		return this.clientName;
 	}
 
-	public Paginator<JobOffer> getJobOfferPaginator() {
-		return this.jobOfferPaginator;
-	}
-
 	public String getName() {
 		return this.name;
 	}
 
+	public Paginator<JobOffer> getPaginator() {
+		return this.paginator;
+	}
+
 	@PostConstruct
 	public void init() {
-		this.jobOfferPaginator = new Paginator<JobOffer>(this.sessionBean.getRowsPerPage());
+		this.paginator = new Paginator<JobOffer>(this.sessionBean.getRowsPerPage());
 		search();
 	}
 
@@ -91,31 +91,12 @@ public class JobOfferSearchBean extends AbstractPageBean {
 
 	public void search() {
 		this.logger.fine("Searching for JobOffers");
-		if ((this.name != null) && (this.clientName != null)) {
-			if (verifySearchField(this.name) && verifySearchField(this.clientName)) {
-				this.jobOfferPaginator
-						.setEntities(this.jobService.fullSearchByNameAndClientName(this.name, this.clientName));
-			}
-		} else if ((this.name == null) && (this.clientName != null)) {
-			if (verifySearchField(this.clientName)) {
-				this.jobOfferPaginator.setEntities(this.jobService.fullSearchByClientName(this.clientName));
-			}
-		} else if ((this.name != null) && (this.clientName == null)) {
-			if (verifySearchField(this.name)) {
-				this.jobOfferPaginator.setEntities(this.jobService.fullSearchByName(this.name));
-			}
-		} else {
-			this.jobOfferPaginator.setEntities(this.jobService.findAll());
-		}
-		cleanSearchFields();
+		final List<JobOffer> jobOffers = this.jobService.findByNameAndClient(this.name, this.clientName, null);
+		this.paginator.setEntities(jobOffers);
 	}
 
 	public void setClientName(final String clientName) {
 		this.clientName = clientName;
-	}
-
-	public void setJobOfferPaginator(final Paginator<JobOffer> jobOfferPaginator) {
-		this.jobOfferPaginator = jobOfferPaginator;
 	}
 
 	public void setLogger(final Logger logger) {
@@ -124,13 +105,5 @@ public class JobOfferSearchBean extends AbstractPageBean {
 
 	public void setName(final String name) {
 		this.name = name;
-	}
-
-	private boolean verifySearchField(final String text) {
-		if (text.length() < 3) {
-			addMessage(FacesMessage.SEVERITY_WARN, "error.search.camp_to_short", "error.search.camp_to_short");
-			return false;
-		}
-		return true;
 	}
 }

@@ -1,4 +1,4 @@
-package ged.ejb.job;
+package ged.ejb.job.meeting;
 
 import java.util.Date;
 
@@ -15,6 +15,7 @@ import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
 import ged.ejb.core.model.AbstractAuditedEntity;
+import ged.ejb.job.JobCandidature;
 
 @NamedQueries({
 		@NamedQuery(name = "JobMeeting.getConductedJobMeetings", query = "SELECT j FROM JobMeeting j WHERE j.jobCandidature.jobOffer = :jobOffer AND j.dateConducted IS NOT NULL"),

@@ -1,0 +1,8 @@
+package ged.ejb.client;
+
+import ged.ejb.core.AuditedService;
+
+public interface ClientService extends AuditedService<Client> {
+
+	Client findByName(final String clientName);
+}

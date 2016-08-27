@@ -3,6 +3,7 @@ package ged.ejb.client;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
@@ -11,7 +12,7 @@ import org.hibernate.search.annotations.ContainedIn;
 import org.hibernate.search.annotations.Field;
 
 import ged.ejb.core.model.AbstractAuditedEntity;
-import ged.ejb.job.JobOffer;
+import ged.ejb.job.offer.JobOffer;
 
 @Entity
 public class Client extends AbstractAuditedEntity {
@@ -23,6 +24,7 @@ public class Client extends AbstractAuditedEntity {
 	private List<JobOffer> jobOffers;
 
 	@Field
+	@Column(length = 128, unique = true, nullable = true)
 	private String name;
 
 	@Override

@@ -1,13 +1,10 @@
-package ged.ejb.candidate.impl;
+package ged.ejb.candidate;
 
 import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
-import ged.ejb.candidate.Candidate;
-import ged.ejb.candidate.CandidateDao;
-import ged.ejb.candidate.CandidateService;
 import ged.ejb.core.AbstratctAuditedService;
 import ged.ejb.core.FileType;
 import ged.ejb.core.model.Dao;
@@ -27,11 +24,11 @@ public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> imp
 
 	@Override
 	public List<Candidate> findByNameAndSurename(final String name, final String surename) {
-		return this.candidateDao.findByNameAndSurename(name, surename, false);
+		return this.candidateDao.findByNameAndSurename(name, surename, null);
 	}
 
 	@Override
-	public List<Candidate> findByNameAndSurename(final String name, final String surename, final boolean showDeleted) {
+	public List<Candidate> findByNameAndSurename(final String name, final String surename, final Boolean showDeleted) {
 		return this.candidateDao.findByNameAndSurename(name, surename, showDeleted);
 	}
 

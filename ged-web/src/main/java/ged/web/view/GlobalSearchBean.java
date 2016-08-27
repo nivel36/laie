@@ -6,8 +6,8 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import ged.ejb.job.JobOffer;
-import ged.ejb.job.JobService;
+import ged.ejb.job.offer.JobOffer;
+import ged.ejb.job.offer.JobOfferService;
 import ged.ejb.user.User;
 import ged.ejb.user.service.UserService;
 import ged.web.core.view.AbstractPageBean;
@@ -22,7 +22,7 @@ public class GlobalSearchBean extends AbstractPageBean {
 	private Paginator<JobOffer> jobOfferPaginator;
 
 	@Inject
-	private JobService jobService;
+	private JobOfferService jobService;
 
 	private String text;
 
@@ -54,7 +54,7 @@ public class GlobalSearchBean extends AbstractPageBean {
 			addMessage(FacesMessage.SEVERITY_WARN, "error.search.camp_to_short", "error.search.camp_to_short");
 		} else {
 			this.userPaginator.setEntities(this.userService.fullSearch(this.text, this.text, null));
-			this.jobOfferPaginator.setEntities(this.jobService.fullSearch(this.text));
+			this.jobOfferPaginator.setEntities(this.jobService.findByNameAndClient(this.text, this.text, null));
 		}
 	}
 

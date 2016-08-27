@@ -19,7 +19,7 @@ import org.omnifaces.util.Faces;
 
 import ged.ejb.candidate.Candidate;
 import ged.ejb.candidate.CandidateService;
-import ged.ejb.candidate.impl.CandidateServiceImpl;
+import ged.ejb.candidate.CandidateServiceImpl;
 import ged.ejb.core.util.ConfigurationProperty;
 import ged.ejb.curriculum.FileSys;
 import ged.web.core.view.AbstractPageBean;

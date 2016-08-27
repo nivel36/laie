@@ -12,7 +12,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 
-import ged.ejb.job.JobOffer;
+import ged.ejb.job.offer.JobOffer;
 import ged.ejb.user.User;
 
 public class UserReport extends AbstractReport {

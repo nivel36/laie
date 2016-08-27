@@ -8,9 +8,9 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import ged.ejb.job.JobMeeting;
-import ged.ejb.job.JobOffer;
-import ged.ejb.job.JobService;
+import ged.ejb.job.meeting.JobMeeting;
+import ged.ejb.job.offer.JobOffer;
+import ged.ejb.job.offer.JobOfferService;
 import ged.ejb.user.User;
 import ged.web.core.view.AbstractPageBean;
 
@@ -29,7 +29,7 @@ public class JobOfferViewBean extends AbstractPageBean {
 	private String jobOfferId;
 
 	@Inject
-	private JobService jobService;
+	private JobOfferService jobService;
 
 	private List<JobMeeting> plannedJobMeetings = new ArrayList<JobMeeting>();
 
@@ -102,8 +102,8 @@ public class JobOfferViewBean extends AbstractPageBean {
 	}
 
 	private void populateJobMeetings(final JobOffer jobOffer) {
-		this.plannedJobMeetings = this.jobService.findPlannedJobMeetingsByJobOffer(jobOffer);
-		this.conductedJobMeetings = this.jobService.findConductedJobMeetingsByJobOffer(jobOffer);
+		this.plannedJobMeetings = null;
+		this.conductedJobMeetings = null;
 	}
 
 	public void setConductedJobMeetings(final List<JobMeeting> conductedJobMeetings) {

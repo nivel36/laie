@@ -6,8 +6,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import ged.ejb.client.Client;
-import ged.ejb.job.JobOffer;
-import ged.ejb.job.JobService;
+import ged.ejb.job.offer.JobOffer;
+import ged.ejb.job.offer.JobOfferService;
 import ged.web.core.view.AbstractPageBean;
 
 @Named
@@ -19,7 +19,7 @@ public class JobOfferEditBean extends AbstractPageBean {
 	private JobOffer jobOffer;
 
 	@Inject
-	private transient JobService jobService;
+	private transient JobOfferService jobService;
 
 	public String cancel() {
 		return "jobOfferSearch?faces-redirect=true";

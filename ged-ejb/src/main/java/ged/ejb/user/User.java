@@ -18,7 +18,7 @@ import org.hibernate.search.annotations.Indexed;
 import ged.ejb.core.action.Action;
 import ged.ejb.core.bookmark.Bookmark;
 import ged.ejb.core.model.AbstractAuditedEntity;
-import ged.ejb.job.JobOffer;
+import ged.ejb.job.offer.JobOffer;
 
 @Entity
 @Indexed
