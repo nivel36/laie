@@ -57,7 +57,7 @@ public class CandidateSearchBean extends AbstractPageBean {
 	@PostConstruct
 	public void init() {
 		this.paginator = new Paginator<>(this.sessionBean.getRowsPerPage());
-		this.paginator.setEntities(this.candidateService.findByNameAndSurename(this.name, this.surename));
+		this.paginator.setEntities(this.candidateService.searchByNameAndSurename(this.name, this.surename));
 	}
 
 	public String newCandidate() {
@@ -71,7 +71,7 @@ public class CandidateSearchBean extends AbstractPageBean {
 
 	public void search() {
 		this.logger.fine("Searching for candidates");
-		final List<Candidate> candidates = this.candidateService.findByNameAndSurename(this.name, this.surename);
+		final List<Candidate> candidates = this.candidateService.searchByNameAndSurename(this.name, this.surename);
 		this.paginator.setEntities(candidates);
 	}
 

@@ -34,7 +34,7 @@ public class JobOfferDaoJpa extends AbstractDao<Long, JobOffer> implements JobOf
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
-	public List<JobOffer> findByNameAndClient(final String name, final String clientName, final Boolean showDeleted) {
+	public List<JobOffer> searchByNameAndClient(final String name, final String clientName, final Boolean showDeleted) {
 		final EntityManager em = this.persistenceFacade.getEm();
 		final FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(em);
 		final QueryBuilder qb = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(JobOffer.class)

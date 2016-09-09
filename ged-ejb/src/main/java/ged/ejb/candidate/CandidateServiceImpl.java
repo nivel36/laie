@@ -23,13 +23,13 @@ public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> imp
 	}
 
 	@Override
-	public List<Candidate> findByNameAndSurename(final String name, final String surename) {
-		return this.candidateDao.findByNameAndSurename(name, surename, null);
+	public List<Candidate> searchByNameAndSurename(final String name, final String surename) {
+		return this.candidateDao.searchByNameAndSurename(name, surename, null);
 	}
 
 	@Override
-	public List<Candidate> findByNameAndSurename(final String name, final String surename, final Boolean showDeleted) {
-		return this.candidateDao.findByNameAndSurename(name, surename, showDeleted);
+	public List<Candidate> searchByNameAndSurename(final String name, final String surename, final Boolean showDeleted) {
+		return this.candidateDao.searchByNameAndSurename(name, surename, showDeleted);
 	}
 
 	@Override

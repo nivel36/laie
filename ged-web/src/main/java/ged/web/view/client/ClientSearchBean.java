@@ -1,0 +1,74 @@
+package ged.web.view.client;
+
+import java.util.List;
+import java.util.logging.Logger;
+
+import javax.annotation.PostConstruct;
+import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
+
+import ged.ejb.client.Client;
+import ged.ejb.client.ClientService;
+import ged.web.core.view.AbstractPageBean;
+import ged.web.core.view.Paginator;
+
+@Named
+@ViewScoped
+public class ClientSearchBean extends AbstractPageBean {
+
+	private static final long serialVersionUID = 2434819723782902618L;
+
+	@Inject
+	private transient ClientService clientService;
+
+	@Inject
+	protected transient Logger logger;
+
+	private String name;
+
+	private Paginator<Client> paginator;
+
+	public void clean() {
+		this.name = null;
+		search();
+	}
+
+	public String edit(final Client client) {
+		this.flash.put("client", client);
+		return "clientEdit?faces-redirect=true";
+	}
+
+	public String getName() {
+		return this.name;
+	}
+
+	public Paginator<Client> getPaginator() {
+		return this.paginator;
+	}
+
+	@PostConstruct
+	public void init() {
+		this.paginator = new Paginator<>(this.sessionBean.getRowsPerPage());
+		this.paginator.setEntities(this.clientService.searchByName(this.name));
+	}
+
+	public String newCandidate() {
+		return "candidateEdit?faces-redirect=true";
+	}
+
+	public void remove(final Client client) {
+		this.clientService.delete(client);
+		search();
+	}
+
+	public void search() {
+		this.logger.fine("Searching for candidates");
+		final List<Client> clients = this.clientService.searchByName(this.name);
+		this.paginator.setEntities(clients);
+	}
+
+	public void setName(final String name) {
+		this.name = name;
+	}
+}

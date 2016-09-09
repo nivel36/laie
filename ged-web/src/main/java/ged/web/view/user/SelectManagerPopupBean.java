@@ -69,7 +69,7 @@ public class SelectManagerPopupBean extends AbstractPageBean {
 
 	@PostConstruct
 	public void init() {
-		this.paginator = new Paginator<User>();
+		this.paginator = new Paginator<>();
 		this.paginator.setRowsPerPage(this.sessionBean.getUser().getRowsPerPage());
 	}
 
@@ -84,7 +84,7 @@ public class SelectManagerPopupBean extends AbstractPageBean {
 	public void search() {
 		this.logger.fine("Searching for users");
 		List<User> users = null;
-		users = this.userService.fullSearch(this.name, this.surename, this.userEmail);
+		users = this.userService.searchByNameAndSurename(this.name, this.surename, this.userEmail);
 		this.paginator.setEntities(users);
 		clearPopupFields();
 	}

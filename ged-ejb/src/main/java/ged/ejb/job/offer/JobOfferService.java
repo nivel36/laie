@@ -9,7 +9,7 @@ public interface JobOfferService extends AuditedService<JobOffer> {
 
 	List<JobOffer> findAllByOwner(final User owner);
 
-	List<JobOffer> findByNameAndClient(String name, String clientName, Boolean showDeleted);
+	List<JobOffer> searchByNameAndClient(String name, String clientName, Boolean showDeleted);
 
 	List<JobOffer> findLastJobOffers(User owner);
 

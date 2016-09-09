@@ -91,7 +91,7 @@ public class JobOfferSearchBean extends AbstractPageBean {
 
 	public void search() {
 		this.logger.fine("Searching for JobOffers");
-		final List<JobOffer> jobOffers = this.jobService.findByNameAndClient(this.name, this.clientName, null);
+		final List<JobOffer> jobOffers = this.jobService.searchByNameAndClient(this.name, this.clientName, null);
 		this.paginator.setEntities(jobOffers);
 	}
 

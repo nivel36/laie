@@ -32,7 +32,7 @@ public class CandidateDaoJpa extends AbstractDao<Long, Candidate> implements Can
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
-	public List<Candidate> findByNameAndSurename(final String name, final String surename, final Boolean showDeleted) {
+	public List<Candidate> searchByNameAndSurename(final String name, final String surename, final Boolean showDeleted) {
 		final EntityManager em = this.persistenceFacade.getEm();
 		final FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(em);
 		final QueryBuilder qb = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(Candidate.class)

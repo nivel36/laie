@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
@@ -11,6 +12,7 @@ import javax.persistence.OneToMany;
 import org.hibernate.search.annotations.ContainedIn;
 import org.hibernate.search.annotations.Field;
 
+import ged.ejb.core.Address;
 import ged.ejb.core.model.AbstractAuditedEntity;
 import ged.ejb.job.offer.JobOffer;
 
@@ -18,6 +20,12 @@ import ged.ejb.job.offer.JobOffer;
 public class Client extends AbstractAuditedEntity {
 
 	private static final long serialVersionUID = -5319357138994738654L;
+
+	@Embedded
+	private Address address;
+
+	@Column(length = 10, unique = true, nullable = true)
+	private String cif;
 
 	@ContainedIn
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "client", orphanRemoval = true)
@@ -49,6 +57,14 @@ public class Client extends AbstractAuditedEntity {
 		return true;
 	}
 
+	public Address getAddress() {
+		return this.address;
+	}
+
+	public String getCif() {
+		return this.cif;
+	}
+
 	public List<JobOffer> getJobOffers() {
 		return this.jobOffers;
 	}
@@ -63,6 +79,14 @@ public class Client extends AbstractAuditedEntity {
 		int result = super.hashCode();
 		result = (prime * result) + ((this.name == null) ? 0 : this.name.hashCode());
 		return result;
+	}
+
+	public void setAddress(final Address address) {
+		this.address = address;
+	}
+
+	public void setCif(final String cif) {
+		this.cif = cif;
 	}
 
 	public void setJobOffers(final List<JobOffer> jobOffers) {

@@ -12,9 +12,9 @@ public interface CandidateService extends AuditedService<Candidate> {
 
 	List<FileType> findAllFileTypes();
 
-	List<Candidate> findByNameAndSurename(String name, String surename);
+	List<Candidate> searchByNameAndSurename(String name, String surename);
 
-	List<Candidate> findByNameAndSurename(String name, String surename, Boolean showDeleted);
+	List<Candidate> searchByNameAndSurename(String name, String surename, Boolean showDeleted);
 
 	Candidate findCandidateAndFiles(Long id);
 

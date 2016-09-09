@@ -1,6 +1,7 @@
 package ged.ejb.client;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -16,6 +17,12 @@ public class ClientDaoJpa extends AbstractDao<Long, Client> implements ClientDao
 	@Inject
 	@Repository
 	private PersistenceFacade persistenceFacade;
+
+	@Override
+	public List<Client> searchByName(final String clientName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	@Override
 	public Client findByName(final String clientName) {

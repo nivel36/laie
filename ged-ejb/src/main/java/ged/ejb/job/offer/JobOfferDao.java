@@ -9,7 +9,7 @@ public interface JobOfferDao extends Dao<Long, JobOffer> {
 
 	List<JobOffer> findAllByOwner(final User owner);
 
-	List<JobOffer> findByNameAndClient(final String name, final String clientName, final Boolean showDeleted);
+	List<JobOffer> searchByNameAndClient(final String name, final String clientName, final Boolean showDeleted);
 
 	List<JobOffer> findLastJobOffers(final User owner);
 

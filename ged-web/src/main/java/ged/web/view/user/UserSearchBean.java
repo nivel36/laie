@@ -71,7 +71,7 @@ public class UserSearchBean extends AbstractPageBean {
 	@PostConstruct
 	public void init() {
 		this.logger.log(Level.FINER, "Init UserSearchBean");
-		this.paginator = new Paginator<User>(this.sessionBean.getRowsPerPage());
+		this.paginator = new Paginator<>(this.sessionBean.getRowsPerPage());
 		search();
 	}
 
@@ -82,7 +82,7 @@ public class UserSearchBean extends AbstractPageBean {
 
 	public void search() {
 		this.logger.fine("Searching for users");
-		final List<User> users = this.userService.fullSearch(this.name, this.surename, null);
+		final List<User> users = this.userService.searchByNameAndSurename(this.name, this.surename, null);
 		this.paginator.setEntities(users);
 	}
 

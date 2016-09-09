@@ -45,16 +45,16 @@ public class GlobalSearchBean extends AbstractPageBean {
 
 	@PostConstruct
 	public void init() {
-		this.userPaginator = new Paginator<User>(this.sessionBean.getRowsPerPage());
-		this.jobOfferPaginator = new Paginator<JobOffer>(this.sessionBean.getRowsPerPage());
+		this.userPaginator = new Paginator<>(this.sessionBean.getRowsPerPage());
+		this.jobOfferPaginator = new Paginator<>(this.sessionBean.getRowsPerPage());
 	}
 
 	public void search() {
 		if ((this.text == null) || (this.text.length() < 3)) {
 			addMessage(FacesMessage.SEVERITY_WARN, "error.search.camp_to_short", "error.search.camp_to_short");
 		} else {
-			this.userPaginator.setEntities(this.userService.fullSearch(this.text, this.text, null));
-			this.jobOfferPaginator.setEntities(this.jobService.findByNameAndClient(this.text, this.text, null));
+			this.userPaginator.setEntities(this.userService.searchByNameAndSurename(this.text, this.text, null));
+			this.jobOfferPaginator.setEntities(this.jobService.searchByNameAndClient(this.text, this.text, null));
 		}
 	}
 

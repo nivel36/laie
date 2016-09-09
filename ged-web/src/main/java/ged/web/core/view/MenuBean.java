@@ -14,6 +14,11 @@ public class MenuBean extends AbstractPageBean {
 		return "/faces/candidate/candidateSearch?faces-redirect=true";
 	}
 
+	public String gotoClients() {
+		this.sessionBean.clearBreadcrumb();
+		return "/faces/clients/clientSearch?faces-redirect=true";
+	}
+
 	public String gotoHelp() {
 		this.sessionBean.clearBreadcrumb();
 		return "/faces/help/helpIndex?faces-redirect=true";

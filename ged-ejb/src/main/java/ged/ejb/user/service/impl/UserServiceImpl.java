@@ -26,7 +26,7 @@ public class UserServiceImpl extends AbstratctAuditedService<User> implements Us
 			throw new NullPointerException();
 		}
 		if (user.equals(user.getManager())) {
-			throw new IllegalStateException("User can't be his manager");
+			throw new IllegalStateException("User can't be his/her manager");
 		}
 		this.userDao.insert(user);
 	}
@@ -62,13 +62,13 @@ public class UserServiceImpl extends AbstratctAuditedService<User> implements Us
 	}
 
 	@Override
-	public List<User> fullSearch(final String name, final String surename, final String userEmail) {
-		return this.userDao.fullSearch(name, surename, userEmail, false);
+	public Dao<Long, User> getDao() {
+		return this.userDao;
 	}
 
 	@Override
-	public Dao<Long, User> getDao() {
-		return this.userDao;
+	public List<User> searchByNameAndSurename(final String name, final String surename, final String email) {
+		return this.userDao.searchByNameAndSurename(name, surename, email, false);
 	}
 
 	@Override

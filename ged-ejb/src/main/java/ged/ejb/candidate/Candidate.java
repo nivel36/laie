@@ -21,6 +21,7 @@ import javax.validation.constraints.Pattern;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 
+import ged.ejb.core.Address;
 import ged.ejb.core.model.AbstractAuditedEntity;
 import ged.ejb.core.tag.Tag;
 import ged.ejb.curriculum.Curriculum;

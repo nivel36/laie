@@ -1,5 +1,7 @@
 package ged.ejb.client;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import ged.ejb.core.AbstractService;
@@ -11,6 +13,11 @@ public class ClientServiceImpl extends AbstractService<Long, Client> implements 
 	@Inject
 	@Repository
 	private ClientDao clientDao;
+
+	@Override
+	public List<Client> searchByName(final String clientName) {
+		return this.clientDao.searchByName(clientName);
+	}
 
 	@Override
 	public Client findByName(final String clientName) {
