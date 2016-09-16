@@ -17,7 +17,7 @@ import ged.ejb.core.Cache;
 import ged.ejb.core.FileType;
 import ged.ejb.curriculum.LanguageLevel;
 import ged.ejb.curriculum.SkillLevel;
-import ged.ejb.user.Role;
+import ged.ejb.user.role.Role;
 
 @ApplicationScoped
 @Named

@@ -1,9 +1,8 @@
-package ged.ejb.user.service;
+package ged.ejb.user;
 
 import java.util.List;
 
 import ged.ejb.core.AuditedService;
-import ged.ejb.user.User;
 
 public interface UserService extends AuditedService<User> {
 

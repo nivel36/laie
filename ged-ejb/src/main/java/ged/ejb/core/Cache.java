@@ -12,8 +12,8 @@ import ged.ejb.candidate.CandidateService;
 import ged.ejb.curriculum.CurriculumService;
 import ged.ejb.curriculum.LanguageLevel;
 import ged.ejb.curriculum.SkillLevel;
-import ged.ejb.user.Role;
-import ged.ejb.user.service.RoleService;
+import ged.ejb.user.role.Role;
+import ged.ejb.user.role.RoleService;
 
 @Named
 @ApplicationScoped

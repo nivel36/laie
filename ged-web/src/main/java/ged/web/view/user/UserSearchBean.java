@@ -10,7 +10,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import ged.ejb.user.User;
-import ged.ejb.user.service.UserService;
+import ged.ejb.user.UserService;
 import ged.web.core.view.AbstractPageBean;
 import ged.web.core.view.Paginator;
 
@@ -45,7 +45,6 @@ public class UserSearchBean extends AbstractPageBean {
 
 	public void deleteUser(final User user) {
 		this.logger.log(Level.FINE, "Deleting an user");
-
 		this.userService.delete(user);
 		search();
 	}
@@ -82,7 +81,12 @@ public class UserSearchBean extends AbstractPageBean {
 
 	public void search() {
 		this.logger.fine("Searching for users");
-		final List<User> users = this.userService.searchByNameAndSurename(this.name, this.surename, null);
+		List<User> users = null;
+		if ((this.name == null) && (this.surename == null)) {
+			users = this.userService.findAll();
+		} else {
+			users = this.userService.searchByNameAndSurename(this.name, this.surename, null);
+		}
 		this.paginator.setEntities(users);
 	}
 
@@ -96,5 +100,9 @@ public class UserSearchBean extends AbstractPageBean {
 
 	public void setSurename(final String surename) {
 		this.surename = surename;
+	}
+
+	public void setUserService(final UserService userService) {
+		this.userService = userService;
 	}
 }

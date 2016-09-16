@@ -1,4 +1,4 @@
-package ged.ejb.user.dao.jpa;
+package ged.ejb.user;
 
 import java.util.HashMap;
 import java.util.List;
@@ -16,9 +16,6 @@ import org.hibernate.search.query.dsl.QueryBuilder;
 import ged.ejb.core.model.AbstractDao;
 import ged.ejb.core.model.PersistenceFacade;
 import ged.ejb.core.model.Repository;
-import ged.ejb.user.User;
-import ged.ejb.user.UserClosure;
-import ged.ejb.user.dao.UserDao;
 
 @Repository
 public class UserDaoJpa extends AbstractDao<Long, User> implements UserDao {
@@ -29,8 +26,7 @@ public class UserDaoJpa extends AbstractDao<Long, User> implements UserDao {
 
 	@Override
 	public long countAdminRoles() {
-		final Long count = (Long) this.persistenceFacade.findByQuery("User.countAdminRoles", null);
-		return count;
+		return (Long) this.persistenceFacade.findByQuery("User.countAdminRoles", null);
 	}
 
 	@Override
@@ -39,6 +35,11 @@ public class UserDaoJpa extends AbstractDao<Long, User> implements UserDao {
 		parameters.put("email", email);
 		final Long emails = (Long) this.persistenceFacade.findByQuery("User.countEmail", parameters);
 		return emails > 0;
+	}
+
+	@Override
+	public List<User> findAll() {
+		return this.persistenceFacade.findByTypedQuery(User.class, "User.findAll", null, 0, 0);
 	}
 
 	public List<UserClosure> findAntecessorsUserClosures(final User user) {
@@ -118,8 +119,7 @@ public class UserDaoJpa extends AbstractDao<Long, User> implements UserDao {
 		} else {
 			persistenceQuery = fullTextEntityManager.createFullTextQuery(bj.createQuery(), User.class);
 		}
-		final List<User> result = persistenceQuery.getResultList();
-		return result;
+		return persistenceQuery.getResultList();
 	}
 
 	@Override

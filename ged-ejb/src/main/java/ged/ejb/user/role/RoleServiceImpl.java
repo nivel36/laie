@@ -1,4 +1,4 @@
-package ged.ejb.user.service.impl;
+package ged.ejb.user.role;
 
 import java.util.List;
 
@@ -6,9 +6,6 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import ged.ejb.core.model.Repository;
-import ged.ejb.user.Role;
-import ged.ejb.user.dao.RoleDao;
-import ged.ejb.user.service.RoleService;
 
 @Stateless
 public class RoleServiceImpl implements RoleService {

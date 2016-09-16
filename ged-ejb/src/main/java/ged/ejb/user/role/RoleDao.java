@@ -1,10 +1,8 @@
-package ged.ejb.user.dao;
+package ged.ejb.user.role;
 
 import java.util.List;
 
 import javax.ejb.Local;
-
-import ged.ejb.user.Role;
 
 @Local
 public interface RoleDao {

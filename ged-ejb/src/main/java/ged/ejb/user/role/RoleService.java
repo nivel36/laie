@@ -1,8 +1,6 @@
-package ged.ejb.user.service;
+package ged.ejb.user.role;
 
 import java.util.List;
-
-import ged.ejb.user.Role;
 
 public interface RoleService {
 

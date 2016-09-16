@@ -19,6 +19,7 @@ import ged.ejb.core.action.Action;
 import ged.ejb.core.bookmark.Bookmark;
 import ged.ejb.core.model.AbstractAuditedEntity;
 import ged.ejb.job.offer.JobOffer;
+import ged.ejb.user.role.Role;
 
 @Entity
 @Indexed
@@ -27,10 +28,10 @@ public class User extends AbstractAuditedEntity {
 	private static final long serialVersionUID = 5920907439877095636L;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user", orphanRemoval = true)
-	private List<Action> actions = new ArrayList<Action>();
+	private List<Action> actions = new ArrayList<>();
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user", orphanRemoval = true)
-	private List<Bookmark> bookmarks = new ArrayList<Bookmark>();
+	private List<Bookmark> bookmarks = new ArrayList<>();
 
 	@NotNull
 	@Column(length = 128, nullable = false, unique = true)

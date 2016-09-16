@@ -1,6 +1,8 @@
-package ged.ejb.user.service.impl;
+package ged.ejb.user;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -8,13 +10,12 @@ import javax.inject.Inject;
 import ged.ejb.core.AbstratctAuditedService;
 import ged.ejb.core.model.Dao;
 import ged.ejb.core.model.Repository;
-import ged.ejb.user.User;
-import ged.ejb.user.UserException;
-import ged.ejb.user.dao.UserDao;
-import ged.ejb.user.service.UserService;
 
 @Stateless
 public class UserServiceImpl extends AbstratctAuditedService<User> implements UserService {
+
+	@Inject
+	private Logger logger;
 
 	@Inject
 	@Repository
@@ -25,7 +26,9 @@ public class UserServiceImpl extends AbstratctAuditedService<User> implements Us
 		if (user == null) {
 			throw new NullPointerException();
 		}
+		this.logger.log(Level.FINE, "Insert user {0}", user.getFullName());
 		if (user.equals(user.getManager())) {
+
 			throw new IllegalStateException("User can't be his/her manager");
 		}
 		this.userDao.insert(user);

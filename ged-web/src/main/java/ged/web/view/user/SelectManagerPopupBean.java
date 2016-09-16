@@ -9,7 +9,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import ged.ejb.user.User;
-import ged.ejb.user.service.UserService;
+import ged.ejb.user.UserService;
 import ged.web.core.view.AbstractPageBean;
 import ged.web.core.view.Paginator;
 

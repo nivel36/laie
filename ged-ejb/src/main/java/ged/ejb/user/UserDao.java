@@ -1,9 +1,8 @@
-package ged.ejb.user.dao;
+package ged.ejb.user;
 
 import java.util.List;
 
 import ged.ejb.core.model.Dao;
-import ged.ejb.user.User;
 
 public interface UserDao extends Dao<Long, User> {
 

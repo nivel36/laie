@@ -1,4 +1,4 @@
-package ged.ejb.user;
+package ged.ejb.user.role;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
