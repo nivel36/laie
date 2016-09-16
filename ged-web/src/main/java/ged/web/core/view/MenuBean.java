@@ -19,11 +19,6 @@ public class MenuBean extends AbstractPageBean {
 		return "/faces/client/clientSearch?faces-redirect=true";
 	}
 
-	public String gotoHelp() {
-		this.sessionBean.clearBreadcrumb();
-		return "/faces/help/helpIndex?faces-redirect=true";
-	}
-
 	public String gotoIndex() {
 		this.sessionBean.clearBreadcrumb();
 		return "/faces/index?faces-redirect=true";
