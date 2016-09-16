@@ -93,10 +93,53 @@ public class Candidate extends AbstractAuditedEntity {
 	private String surename;
 
 	@OneToMany
-	private List<Tag> tags = new ArrayList<Tag>();
+	private List<Tag> tags = new ArrayList<>();
 
 	public Candidate() {
 		this.address = new Address();
+	}
+
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (!super.equals(obj)) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		final Candidate other = (Candidate) obj;
+		if (this.email == null) {
+			if (other.email != null) {
+				return false;
+			}
+		} else if (!this.email.equals(other.email)) {
+			return false;
+		}
+		if (this.name == null) {
+			if (other.name != null) {
+				return false;
+			}
+		} else if (!this.name.equals(other.name)) {
+			return false;
+		}
+		if (this.phoneNumber1 == null) {
+			if (other.phoneNumber1 != null) {
+				return false;
+			}
+		} else if (!this.phoneNumber1.equals(other.phoneNumber1)) {
+			return false;
+		}
+		if (this.surename == null) {
+			if (other.surename != null) {
+				return false;
+			}
+		} else if (!this.surename.equals(other.surename)) {
+			return false;
+		}
+		return true;
 	}
 
 	public Address getAddress() {
@@ -169,6 +212,17 @@ public class Candidate extends AbstractAuditedEntity {
 
 	public List<Tag> getTags() {
 		return this.tags;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = (prime * result) + ((this.email == null) ? 0 : this.email.hashCode());
+		result = (prime * result) + ((this.name == null) ? 0 : this.name.hashCode());
+		result = (prime * result) + ((this.phoneNumber1 == null) ? 0 : this.phoneNumber1.hashCode());
+		result = (prime * result) + ((this.surename == null) ? 0 : this.surename.hashCode());
+		return result;
 	}
 
 	public void setAddress(final Address address) {
