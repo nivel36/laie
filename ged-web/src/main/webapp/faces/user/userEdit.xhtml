@@ -122,7 +122,7 @@
 			<input type="hidden" id="userId" value="#{userEditBean.user.id}" />
 
 			<h1 class="header">
-				<i class="fa fa-user" /> #{userEditBean.user.id == 0 ?
+				<i class="fa fa-user" /> #{userEditBean.user.id == null ?
 				i18n['user.new_user'] : userEditBean.user}
 			</h1>
 

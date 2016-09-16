@@ -18,7 +18,7 @@
 				value="#{candidateEditBean.candidate.id}" />
 
 			<h1 class="header">
-				<i class="fa fa-users" /> #{candidateEditBean.candidate.id == 0 ?
+				<i class="fa fa-users" /> #{candidateEditBean.candidate.id eq null ?
 				i18n['candidate.new_candidate'] : candidateEditBean.candidate}
 			</h1>
 

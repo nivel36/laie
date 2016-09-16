@@ -19,8 +19,8 @@
 
 			<h:panelGroup>
 				<h1 class="header">
-					<i class="fa fa-suitcase" /> #{jobOfferEditBean.jobOffer.id != 0?
-					jobOfferEditBean.jobOffer.name : i18n['job.new_job_offer']}
+					<i class="fa fa-suitcase" /> #{jobOfferEditBean.jobOffer.id eq
+					null ? i18n['job.new_job_offer'] : jobOfferEditBean.jobOffer.name}
 				</h1>
 			</h:panelGroup>
 
