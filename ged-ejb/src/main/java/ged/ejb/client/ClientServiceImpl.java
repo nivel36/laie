@@ -15,11 +15,6 @@ public class ClientServiceImpl extends AbstractService<Long, Client> implements 
 	private ClientDao clientDao;
 
 	@Override
-	public List<Client> searchByName(final String clientName) {
-		return this.clientDao.searchByName(clientName);
-	}
-
-	@Override
 	public Client findByName(final String clientName) {
 		return this.clientDao.findByName(clientName);
 	}
@@ -27,5 +22,16 @@ public class ClientServiceImpl extends AbstractService<Long, Client> implements 
 	@Override
 	public Dao<Long, Client> getDao() {
 		return this.clientDao;
+	}
+
+	@Override
+	public List<Client> searchByName(final String clientName) {
+		List<Client> clients = null;
+		if (clientName == null) {
+			clients = this.clientDao.findAll();
+		} else {
+			clients = this.clientDao.searchByName(clientName);
+		}
+		return clients;
 	}
 }

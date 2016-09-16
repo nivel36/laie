@@ -30,11 +30,13 @@ public class ClientSearchBean extends AbstractPageBean {
 	private Paginator<Client> paginator;
 
 	public void clean() {
+		this.logger.fine("Clean action performed");
 		this.name = null;
 		search();
 	}
 
 	public String edit(final Client client) {
+		this.logger.fine("Edit candidate action performed");
 		this.flash.put("client", client);
 		return "clientEdit?faces-redirect=true";
 	}
@@ -49,21 +51,24 @@ public class ClientSearchBean extends AbstractPageBean {
 
 	@PostConstruct
 	public void init() {
+		this.logger.finest("Init ClientSearchBean");
 		this.paginator = new Paginator<>(this.sessionBean.getRowsPerPage());
 		this.paginator.setEntities(this.clientService.searchByName(this.name));
 	}
 
 	public String newCandidate() {
+		this.logger.fine("New candidate action performed");
 		return "candidateEdit?faces-redirect=true";
 	}
 
 	public void remove(final Client client) {
+		this.logger.fine("Removing candidate action performed");
 		this.clientService.delete(client);
 		search();
 	}
 
 	public void search() {
-		this.logger.fine("Searching for candidates");
+		this.logger.fine("Searching for candidates action performed");
 		final List<Client> clients = this.clientService.searchByName(this.name);
 		this.paginator.setEntities(clients);
 	}

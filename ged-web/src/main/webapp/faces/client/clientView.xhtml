@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:i18n="http://legion.com/i18n"
+	template="/WEB-INF/templates/default.xhtml">
+
+	<ui:define name="title">
+		<title>#{i18n['client.client']}</title>
+	</ui:define>
+
+	<ui:param name="selectedMenu" value="clients" />
+
+	<ui:define name="content">
+		<f:metadata>
+			<f:viewParam name="id" value="#{clientViewBean.id}" />
+			<f:viewAction action="#{clientViewBean.init}" />
+		</f:metadata>
+
+		<h:form id="form">
+
+			<input type="hidden" id="clientId"
+				value="#{clientViewBean.client.id}" />
+
+			<h1 class="header">
+				<i class="fa fa-users" /> #{clientViewBean.client}
+			</h1>
+
+			<h:panelGroup layout="block" styleClass="actionPanel">
+				<h:commandButton value="#{i18n['action.edit']}"
+					action="#{clientViewBean.editCandidate}" />
+				<h:commandButton value="#{i18n['bookmark.add_to_bookmarks']}"
+					action="#{bookmarksBean.add(clientViewBean.client)}"
+					rendered="#{not bookmarksBean.isBookmarked(clientViewBean.client)}">
+					<f:ajax process="@form" render=":asideForm:bookmarks actionButtons" />
+				</h:commandButton>
+				<h:commandButton value="#{i18n['bookmark.remove_from_bookmarks']}"
+					action="#{bookmarksBean.remove(clientViewBean.client)}"
+					rendered="#{bookmarksBean.isBookmarked(clientViewBean.client)}">
+					<f:ajax process="@form" render=":asideForm:bookmarks actionButtons" />
+				</h:commandButton>
+				<h:button value="#{i18n['curriculum.view_curriculum']}"
+					outcome="curriculumView">
+					<f:param name="id" value="#{clientViewBean.client.id}" />
+				</h:button>
+			</h:panelGroup>
+
+			<h:panelGroup layout="block" styleClass="panel">
+				<h1>#{i18n['client.detail']}</h1>
+
+				<h:panelGroup layout="block" styleClass="textBlock">
+					<h:outputText styleClass="label" value="#{i18n['client.name']}:" />
+					<h:outputText
+						value="#{clientViewBean.client.name} #{clientViewBean.client.surename}" />
+				</h:panelGroup>
+
+				<h:panelGroup layout="block" styleClass="textBlock">
+					<h:outputText styleClass="label" value="#{i18n['client.age']}:" />
+					<h:outputText value="#{clientViewBean.client.age}" />
+				</h:panelGroup>
+
+
+				<h:panelGroup layout="block" styleClass="textBlock">
+					<h:outputText styleClass="label"
+						value="#{i18n['client.phone_number']} 1:" />
+					<h:outputText value="#{clientViewBean.client.phoneNumber1}" />
+				</h:panelGroup>
+
+				<h:panelGroup layout="block" styleClass="textBlock">
+					<h:outputText styleClass="label"
+						value="#{i18n['client.phone_number']} 2:" />
+					<h:outputText value="#{clientViewBean.client.phoneNumber2}" />
+				</h:panelGroup>
+
+				<h:panelGroup layout="block" styleClass="textBlock">
+					<h:outputText styleClass="label"
+						value="#{i18n['client.email']} :" />
+					<h:outputText value="#{clientViewBean.client.email}" />
+				</h:panelGroup>
+
+				<h:panelGroup layout="block" styleClass="textBlock">
+					<h:outputText styleClass="label" value="#{i18n['address.city']} :" />
+					<h:outputText value="#{clientViewBean.client.address.city}" />
+				</h:panelGroup>
+
+				<h:panelGroup layout="block" styleClass="textBlock">
+					<h:outputText styleClass="label" value="#{i18n['address.state']} :" />
+					<h:outputText value="#{clientViewBean.client.address.state}" />
+				</h:panelGroup>
+			</h:panelGroup>
+
+			
+			<h:panelGroup layout="block" styleClass="panel">
+				<h1>#{i18n['client.social_network']}</h1>
+				<h:panelGroup layout="block" styleClass="textBlock">
+					<h:outputText styleClass="label"
+						value="#{i18n['social.linkedin']} :" />
+					<h:outputText
+						value="#{clientViewBean.client.linkedinProfileUrl}" />
+				</h:panelGroup>
+				<h:panelGroup layout="block" styleClass="textBlock">
+					<h:outputText styleClass="label"
+						value="#{i18n['social.infojobs']} :" />
+					<h:outputText
+						value="#{clientViewBean.client.infojobsProfileUrl}" />
+				</h:panelGroup>
+			</h:panelGroup>
+			
+			<h:panelGroup layout="block" styleClass="panel">
+				<h1>#{i18n['client.work_data']}</h1>
+
+				<h:panelGroup layout="block" styleClass="textBlock">
+					<h:outputText styleClass="label"
+						value="#{i18n['client.position']} :" />
+					<h:outputText value="#{clientViewBean.client.position}" />
+				</h:panelGroup>
+
+				<h:panelGroup layout="block" styleClass="textBlock">
+					<h:outputText styleClass="label"
+						value="#{i18n['client.salary']} :" />
+					<h:outputText value="#{clientViewBean.client.salary}" />
+				</h:panelGroup>
+
+				<h:panelGroup layout="block" styleClass="textBlock">
+					<h:outputText styleClass="label"
+						value="#{i18n['client.expected_salary']} :" />
+					<h:outputText value="#{clientViewBean.client.expectedSalary}" />
+				</h:panelGroup>
+			</h:panelGroup>
+			
+		</h:form>
+
+		<h:form id="file_form" prependId="false" enctype="multipart/form-data">
+			<h:panelGroup layout="block" styleClass="modalPanel"
+				rendered="#{clientViewBean.addingFile or clientViewBean.editingFile}">
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="panel"
+				style="#{clientViewBean.style}">
+				<h1>#{i18n['file.files']}</h1>
+
+				<h:panelGroup layout="block"
+					rendered="#{not clientViewBean.addingFile and not clientViewBean.editingFile}">
+					<h:outputText value="#{i18n['file.no_files']}"
+						rendered="#{empty clientViewBean.client.files}" />
+
+					<h:dataTable var="file" id="files"
+						value="#{clientViewBean.client.files}"
+						rendered="#{not empty clientViewBean.client.files}"
+						styleClass="dataTable">
+
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{i18n['file.name']}" />
+							</f:facet>
+							<h:outputText value="#{file.id}" />
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{i18n['file.name']}" />
+							</f:facet>
+							<h:outputText value="#{file.name}" />
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{i18n['file.type']}" />
+							</f:facet>
+							<h:outputText value="#{file.fileType}" />
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{i18n['file.date']}" />
+							</f:facet>
+							<h:outputText value="#{file.date}" />
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{i18n['action.action']}" />
+							</f:facet>
+							<h:commandLink action="#{clientViewBean.openFile(file)}"
+								value="#{i18n['action.open']}" />
+								|
+							<h:commandLink action="#{clientViewBean.editFile(file)}"
+								value="#{i18n['action.edit']}">
+								<f:ajax execute="file_form" render="@form" />
+							</h:commandLink>
+									|
+							<h:commandLink action="#{clientViewBean.removeFile(file)}"
+								value="#{i18n['action.remove']}">
+								<f:ajax execute="file_form" render="@form" />
+							</h:commandLink>
+						</h:column>
+					</h:dataTable>
+
+					<h:panelGroup layout="block" styleClass="buttonGroup">
+						<h:commandButton value="#{i18n['action.add']}"
+							action="#{clientViewBean.addFile}" immediate="true">
+							<f:ajax render="@form" />
+						</h:commandButton>
+					</h:panelGroup>
+				</h:panelGroup>
+
+				<h:panelGroup layout="block"
+					rendered="#{clientViewBean.addingFile  and not clientViewBean.editingFile}">
+					<h:outputLabel value="#{i18n['file.name']}" styleClass="required"></h:outputLabel>
+					<h:inputFile id="uploadFile" value="#{clientViewBean.part}"
+						label="#{i18n['client.name']}" required="true"
+						styleClass="#{not component.valid ? 'inputError' : ''}" />
+					<h:message for="uploadFile" errorClass="error" />
+
+					<h:panelGroup layout="block" styleClass="buttonGroup">
+						<h:commandButton value="#{i18n['action.upload']}"
+							action="#{clientViewBean.upload}">
+							<f:ajax execute="@form" render="@form" />
+						</h:commandButton>
+						<h:commandButton value="#{i18n['action.cancel']}"
+							action="#{clientViewBean.cancelAddFile}" immediate="true">
+							<f:ajax execute="" render="@form" />
+						</h:commandButton>
+					</h:panelGroup>
+				</h:panelGroup>
+
+				<h:panelGroup layout="block"
+					rendered="#{clientViewBean.editingFile}">
+					<h:outputLabel value="#{i18n['file.name']}"
+						styleClass="large required">
+						<h:inputText id="fileName" value="#{clientViewBean.file.name}"
+							label="#{i18n['file.name']}" required="true"
+							styleClass="#{not component.valid ? 'inputError' : ''}" />
+						<h:message for="fileName" errorClass="error" />
+					</h:outputLabel>
+
+					<h:outputLabel value="#{i18n['file.type']}" styleClass="required">
+						<h:selectOneMenu id="fileType"
+							value="#{clientViewBean.file.fileType}">
+							<f:selectItems var="fileType" itemValue="#{fileType.name}"
+								value="#{applicationBean.fileTypes}"
+								itemLabel="#{i18n:translate(fileType.name)}"
+								styleClass="#{not component.valid ? 'inputError' : ''}" />
+						</h:selectOneMenu>
+						<h:message for="fileType" errorClass="error" />
+					</h:outputLabel>
+
+					<h:outputLabel value="#{i18n['file.description']}"
+						styleClass="large">
+						<h:inputText id="description"
+							value="#{clientViewBean.file.description}"
+							label="#{i18n['file.description']}"
+							styleClass="#{not component.valid ? 'inputError' : ''}" />
+						<h:message for="description" errorClass="error" />
+					</h:outputLabel>
+
+					<h:panelGroup layout="block" styleClass="buttonGroup">
+						<h:commandButton value="#{i18n['action.save']}"
+							action="#{clientViewBean.saveFile}" />
+						<h:commandButton value="#{i18n['action.cancel']}"
+							action="#{clientViewBean.cancelAddFile}" immediate="true">
+						</h:commandButton>
+					</h:panelGroup>
+				</h:panelGroup>
+			</h:panelGroup>
+		</h:form>
+	</ui:define>
+</ui:composition>
