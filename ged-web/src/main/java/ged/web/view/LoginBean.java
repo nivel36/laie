@@ -55,7 +55,7 @@ public class LoginBean extends AbstractPageBean {
 			request.login(this.username, this.password);
 			return "/faces/index?faces-redirect=true";
 		} catch (final ServletException e) {
-			this.logger.log(Level.WARNING, "Bad login credentials");
+			this.logger.log(Level.WARNING, "Bad login credentials", e);
 			final String message = translate("login.error.unknow_login");
 			final FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, message, null);
 			this.facesContext.addMessage(null, facesMessage);
