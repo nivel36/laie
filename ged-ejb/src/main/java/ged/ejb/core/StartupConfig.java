@@ -25,7 +25,7 @@ public class StartupConfig {
 		try {
 			this.indexer.index();
 		} catch (final InterruptedException e) {
-			this.logger.log(Level.SEVERE, "Indexer fail");
+			this.logger.log(Level.SEVERE, "Indexer fail", e);
 		}
 	}
 }

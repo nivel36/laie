@@ -22,7 +22,7 @@ public class PersistenceFacadeJpa implements PersistenceFacade {
 	/**
 	 * El número máximo de resultados que permiten las búsquedas
 	 */
-	private final static int RES_LIMIT = 150;
+	private static final int RES_LIMIT = 150;
 
 	@Inject
 	private EntityManager em;
@@ -48,8 +48,7 @@ public class PersistenceFacadeJpa implements PersistenceFacade {
 			}
 			criteriaQuery.where(condition);
 		}
-		final TypedQuery<T> typedQuery = this.em.createQuery(criteriaQuery);
-		return typedQuery;
+		return this.em.createQuery(criteriaQuery);
 	}
 
 	@Override
@@ -109,13 +108,14 @@ public class PersistenceFacadeJpa implements PersistenceFacade {
 
 	@Override
 	public Object findByQuery(final String nombreQuery, final Map<String, Object> parameters) {
-		this.logger.log(Level.FINE, "Lanzando la la getByQuerySingleResult {0} ", nombreQuery);
+		this.logger.log(Level.FINE, "Lanzando getByQuerySingleResult {0} ", nombreQuery);
 		final Query query = this.em.createNamedQuery(nombreQuery);
 		parametrizar(parameters, query);
 		Object result = null;
 		try {
 			result = query.getSingleResult();
 		} catch (final NoResultException ex) {
+			this.logger.log(Level.FINE, "No se ha encontrado resultados para la consulta", ex);
 		}
 		return result;
 	}
@@ -136,8 +136,7 @@ public class PersistenceFacadeJpa implements PersistenceFacade {
 		this.logger.log(Level.FINE, "Ejecutando la getByTypedQuerySingleResult: {0}", namedQuery);
 		final TypedQuery<T> query = this.em.createNamedQuery(namedQuery, entityClass);
 		parametrizar(parameters, query);
-		final T result = query.getSingleResult();
-		return result;
+		return query.getSingleResult();
 	}
 
 	@Override
