@@ -69,8 +69,7 @@ public class SelectManagerPopupBean extends AbstractPageBean {
 
 	@PostConstruct
 	public void init() {
-		this.paginator = new Paginator<>();
-		this.paginator.setRowsPerPage(this.sessionBean.getUser().getRowsPerPage());
+		this.paginator = new Paginator<>(this.sessionBean.getUser().getRowsPerPage());
 	}
 
 	public boolean isRendered() {
