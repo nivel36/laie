@@ -10,7 +10,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.inject.Inject;
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -21,7 +20,7 @@ public class ImageServlet extends HttpServlet {
 
 	private static final int DEFAULT_BUFFER_SIZE = 10240; // 10KB.
 
-	private static String IMAGE_PATH;
+	private static String IMAGE_PATH = "d:\\tmp\\";
 
 	private static final long serialVersionUID = 6986461066782778042L;
 
@@ -96,10 +95,5 @@ public class ImageServlet extends HttpServlet {
 		} catch (final IOException io) {
 			this.logger.log(Level.SEVERE, "Error loading image", io);
 		}
-	}
-
-	@Override
-	public void init() throws ServletException {
-		ImageServlet.IMAGE_PATH = "d:\\tmp\\";
 	}
 }

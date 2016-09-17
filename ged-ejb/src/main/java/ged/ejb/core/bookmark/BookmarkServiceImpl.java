@@ -1,6 +1,8 @@
 package ged.ejb.core.bookmark;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.ejb.Stateless;
 import javax.enterprise.event.Observes;
@@ -20,6 +22,9 @@ public class BookmarkServiceImpl extends AbstractService<Long, Bookmark> impleme
 	@Inject
 	@Repository
 	private BookmarkDao dao;
+
+	@Inject
+	private Logger logger;
 
 	@Override
 	public void delete(final User user, final String entityClass, final Long entityId) {
@@ -44,7 +49,7 @@ public class BookmarkServiceImpl extends AbstractService<Long, Bookmark> impleme
 			final Bookmark bookmark = this.dao.find(user, entityClass, entityId);
 			delete(bookmark);
 		} catch (final NoResultException ex) {
-			// No action
+			this.logger.log(Level.FINE, "No bookmark find to delete", ex);
 		}
 	}
 

@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.MissingResourceException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
@@ -31,6 +33,9 @@ public class I18nBean extends AbstractPageBean {
 
 	private List<String> locales;
 
+	@Inject
+	private Logger logger;
+
 	public String getI18nText(final String key, final String language) {
 		String translatedText = null;
 		if (this.i18nTexts.get(language).containsKey(key)) {
@@ -39,6 +44,7 @@ public class I18nBean extends AbstractPageBean {
 			try {
 				translatedText = translate(key);
 			} catch (final MissingResourceException e) {
+				this.logger.log(Level.SEVERE, "Error loading image", e);
 				translatedText = "?" + key + "?";
 			}
 		}
@@ -52,7 +58,7 @@ public class I18nBean extends AbstractPageBean {
 	}
 
 	private void loadI18nText() {
-		this.i18nTexts = new HashMap<String, Map<String, String>>();
+		this.i18nTexts = new HashMap<>();
 		for (final String locale : this.locales) {
 			this.i18nTexts.put(locale, new HashMap<String, String>());
 		}
@@ -65,7 +71,7 @@ public class I18nBean extends AbstractPageBean {
 	private void loadLocales() {
 		final Application app = this.facesContext.getApplication();
 		final Iterator<Locale> supportedLocales = app.getSupportedLocales();
-		this.locales = new ArrayList<String>();
+		this.locales = new ArrayList<>();
 		while (supportedLocales.hasNext()) {
 			final String language = supportedLocales.next().getLanguage();
 			this.locales.add(language);
