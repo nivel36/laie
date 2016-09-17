@@ -3,6 +3,8 @@ package ged.ejb.curriculum.impl;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.inject.Inject;
 import javax.persistence.NoResultException;
@@ -16,6 +18,9 @@ import ged.ejb.curriculum.SkillLevel;
 
 @Repository
 public class CurriculumDaoImpl implements CurriculumDao {
+
+	@Inject
+	private Logger logger;
 
 	@Inject
 	@Repository
@@ -40,11 +45,12 @@ public class CurriculumDaoImpl implements CurriculumDao {
 	public Curriculum findByCandidateId(final Long id) {
 		Curriculum curriculum = null;
 		try {
-			final Map<String, Object> params = new HashMap<String, Object>();
+			final Map<String, Object> params = new HashMap<>();
 			params.put("candidateId", id);
 			curriculum = this.persistenceFacade.findByTypedQuery(Curriculum.class, "Curriculum.findByCandidateId",
 					params);
 		} catch (final NoResultException ex) {
+			this.logger.log(Level.FINE, "User has no curriculum", ex);
 			curriculum = null;
 		}
 		return curriculum;

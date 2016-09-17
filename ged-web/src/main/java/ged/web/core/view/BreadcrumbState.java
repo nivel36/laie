@@ -7,7 +7,7 @@ public class BreadcrumbState implements Serializable {
 
 	private static final long serialVersionUID = -92576330486214205L;
 
-	private Map<String, Object> state;
+	private transient Map<String, Object> state;
 
 	private String title;
 
