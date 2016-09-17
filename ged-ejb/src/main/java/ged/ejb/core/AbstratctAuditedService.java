@@ -56,16 +56,16 @@ public abstract class AbstratctAuditedService<T extends AuditedEntity<Long>> imp
 
 	@Override
 	@Audited(action = Type.Insert)
-	public T insertOrUpdate(T entity) {
+	public T insertOrUpdate(final T entity) {
 		if (entity == null) {
 			throw new NullPointerException();
 		}
 		if (entity.getId() == null) {
 			doInsert(entity);
+			return entity;
 		} else {
-			entity = doUpdate(entity);
+			return doUpdate(entity);
 		}
-		return entity;
 	}
 
 	@Override

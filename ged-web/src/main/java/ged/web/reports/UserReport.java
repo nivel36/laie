@@ -1,6 +1,8 @@
 package ged.web.reports;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 
 import org.apache.poi.ss.usermodel.Cell;
@@ -42,7 +44,7 @@ public class UserReport extends AbstractReport {
 		this.jobOffers = jobOffers;
 	}
 
-	public File create() {
+	public File create() throws FileNotFoundException, IOException {
 		final Sheet sheet = this.wb.createSheet(this.user.getFullName());
 		Row row = sheet.createRow(1);
 		Cell cell = row.createCell(1);
