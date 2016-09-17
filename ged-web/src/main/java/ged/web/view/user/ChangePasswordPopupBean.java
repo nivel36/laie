@@ -28,11 +28,11 @@ public class ChangePasswordPopupBean extends AbstractDialogBean {
 
 	private String newPassword;
 
-	private UIComponent newPasswordComponent;
+	private transient UIComponent newPasswordComponent;
 
 	private String password;
 
-	private UIComponent passwordComponent;
+	private transient UIComponent passwordComponent;
 
 	private String repeatPassword;
 
