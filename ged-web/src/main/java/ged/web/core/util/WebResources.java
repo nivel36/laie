@@ -2,6 +2,8 @@ package ged.web.core.util;
 
 import java.io.IOException;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
@@ -10,18 +12,30 @@ import javax.enterprise.inject.spi.InjectionPoint;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
+import javax.inject.Inject;
 
 import ged.ejb.core.util.ConfigurationProperty;
 
 public class WebResources {
 
-	private Properties properties;
+	private final Logger logger;
+
+	private final Properties properties;
+
+	@Inject
+	private WebResources(final Logger logger) {
+		this.logger = logger;
+		this.properties = new Properties();
+	}
 
 	@PostConstruct
-	public void init() throws IOException {
-		this.properties = new Properties();
+	public void init() {
 		final ClassLoader cl = Thread.currentThread().getContextClassLoader();
-		this.properties.load(cl.getResourceAsStream("/ged/config.properties"));
+		try {
+			this.properties.load(cl.getResourceAsStream("/ged/config.properties"));
+		} catch (final IOException e) {
+			this.logger.log(Level.SEVERE, "No se pueden cargar las propiedades", e);
+		}
 	}
 
 	@Produces
