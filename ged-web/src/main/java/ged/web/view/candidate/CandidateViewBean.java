@@ -49,7 +49,7 @@ public class CandidateViewBean extends AbstractPageBean {
 	@Inject
 	protected transient Logger logger;
 
-	private Part part;
+	private transient Part part;
 
 	public void addFile() {
 		this.addingFile = true;
@@ -133,8 +133,8 @@ public class CandidateViewBean extends AbstractPageBean {
 	}
 
 	private boolean hasLopdFile() {
-		for (final FileSys file : this.candidate.getFiles()) {
-			if (file.getFileType().equals("lopd")) {
+		for (final FileSys fileSys : this.candidate.getFiles()) {
+			if ("lopd".equals(fileSys.getFileType())) {
 				return true;
 			}
 		}
@@ -147,8 +147,8 @@ public class CandidateViewBean extends AbstractPageBean {
 	public void init() {
 		if (this.id != null) {
 			try {
-				final Long id = Long.parseLong(this.id);
-				this.candidate = this.candidateService.findCandidateAndFiles(id);
+				final Long candidateId = Long.parseLong(this.id);
+				this.candidate = this.candidateService.findCandidateAndFiles(candidateId);
 				if (this.candidate == null) {
 					error();
 				}
