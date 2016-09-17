@@ -18,14 +18,16 @@ public class StartupConfig {
 	private Indexer indexer;
 
 	@Inject
-	protected transient Logger logger;
+	protected Logger logger;
 
-	public void init(@Observes @Initialized(ApplicationScoped.class) final ServletContext context) {
+	public void init(@Observes @Initialized(ApplicationScoped.class) final ServletContext context)
+			throws InterruptedException {
 		this.logger.log(Level.INFO, "Setting up application");
 		try {
 			this.indexer.index();
 		} catch (final InterruptedException e) {
 			this.logger.log(Level.SEVERE, "Indexer fail", e);
+			throw e;
 		}
 	}
 }
