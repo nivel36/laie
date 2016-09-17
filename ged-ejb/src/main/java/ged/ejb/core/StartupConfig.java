@@ -23,10 +23,9 @@ public class StartupConfig {
 	public void init(@Observes @Initialized(ApplicationScoped.class) final ServletContext context) {
 		this.logger.log(Level.INFO, "Setting up application");
 		try {
-
 			this.indexer.index();
-		} catch (final InterruptedException ex) {
-			this.logger.log(Level.SEVERE, "Could not index");
+		} catch (final InterruptedException e) {
+			this.logger.log(Level.SEVERE, "Indexer fail");
 		}
 	}
 }

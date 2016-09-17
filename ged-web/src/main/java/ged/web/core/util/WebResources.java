@@ -18,14 +18,10 @@ public class WebResources {
 	private Properties properties;
 
 	@PostConstruct
-	public void init() {
+	public void init() throws IOException {
 		this.properties = new Properties();
 		final ClassLoader cl = Thread.currentThread().getContextClassLoader();
-		try {
-			this.properties.load(cl.getResourceAsStream("/ged/config.properties"));
-		} catch (final IOException e) {
-			e.printStackTrace();
-		}
+		this.properties.load(cl.getResourceAsStream("/ged/config.properties"));
 	}
 
 	@Produces

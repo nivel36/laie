@@ -9,18 +9,15 @@ public class Paginator<T extends AbstractEntity> implements Serializable {
 
 	private static final long serialVersionUID = 7195309415237383376L;
 
-	protected int currentPage;
+	private int currentPage;
 
-	protected List<T> dataList;
+	private List<T> dataList;
 
-	protected List<T> entities;
+	private List<T> entities;
 
-	protected Integer[] pages;
+	private Integer[] pages;
 
-	protected int rowsPerPage;
-
-	public Paginator() {
-	}
+	private int rowsPerPage;
 
 	public Paginator(final int rowsPerPage) {
 		this.rowsPerPage = rowsPerPage;
