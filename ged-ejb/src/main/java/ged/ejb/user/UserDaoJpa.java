@@ -3,6 +3,8 @@ package ged.ejb.user;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -20,9 +22,13 @@ import ged.ejb.core.model.Repository;
 @Repository
 public class UserDaoJpa extends AbstractDao<Long, User> implements UserDao {
 
+	private final Logger logger;
+
 	@Inject
-	@Repository
-	private PersistenceFacade persistenceFacade;
+	public UserDaoJpa(final Logger logger, @Repository final PersistenceFacade persistenceFacade) {
+		super(persistenceFacade);
+		this.logger = logger;
+	}
 
 	@Override
 	public long countAdminRoles() {
@@ -124,6 +130,10 @@ public class UserDaoJpa extends AbstractDao<Long, User> implements UserDao {
 
 	@Override
 	public boolean usernameExists(final String username) {
+		if (username == null) {
+			throw new NullPointerException();
+		}
+		this.logger.log(Level.FINE, "Existe el usuario {}?", username);
 		final Map<String, Object> parameters = new HashMap<>(1);
 		parameters.put("username", username);
 		final Long emails = (Long) this.persistenceFacade.findByQuery("User.countUsername", parameters);

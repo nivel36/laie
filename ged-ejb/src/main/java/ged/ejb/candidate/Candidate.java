@@ -95,10 +95,6 @@ public class Candidate extends AbstractAuditedEntity {
 	@OneToMany
 	private List<Tag> tags = new ArrayList<>();
 
-	public Candidate() {
-		this.address = new Address();
-	}
-
 	@Override
 	public boolean equals(final Object obj) {
 		if (this == obj) {

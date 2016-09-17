@@ -73,6 +73,14 @@ public class ClientSearchBean extends AbstractPageBean {
 		this.paginator.setEntities(clients);
 	}
 
+	public void setClientService(final ClientService clientService) {
+		this.clientService = clientService;
+	}
+
+	public void setLogger(final Logger logger) {
+		this.logger = logger;
+	}
+
 	public void setName(final String name) {
 		this.name = name;
 	}

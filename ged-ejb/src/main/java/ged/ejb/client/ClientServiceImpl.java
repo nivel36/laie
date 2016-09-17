@@ -26,12 +26,16 @@ public class ClientServiceImpl extends AbstractService<Long, Client> implements 
 
 	@Override
 	public List<Client> searchByName(final String clientName) {
-		List<Client> clients = null;
+		final List<Client> clients;
 		if (clientName == null) {
 			clients = this.clientDao.findAll();
 		} else {
 			clients = this.clientDao.searchByName(clientName);
 		}
 		return clients;
+	}
+
+	public void setClientDao(final ClientDao clientDao) {
+		this.clientDao = clientDao;
 	}
 }

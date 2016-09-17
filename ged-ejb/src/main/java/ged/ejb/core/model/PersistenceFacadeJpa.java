@@ -24,11 +24,15 @@ public class PersistenceFacadeJpa implements PersistenceFacade {
 	 */
 	private static final int RES_LIMIT = 150;
 
-	@Inject
-	private EntityManager em;
+	private final EntityManager em;
+
+	private final Logger logger;
 
 	@Inject
-	private Logger logger;
+	public PersistenceFacadeJpa(final Logger logger, final EntityManager em) {
+		this.logger = logger;
+		this.em = em;
+	}
 
 	private <K, T extends Entity<K>> TypedQuery<T> createQueryFromCriteria(final Class<T> clazz,
 			final Map<String, Object> properties) {
@@ -185,10 +189,10 @@ public class PersistenceFacadeJpa implements PersistenceFacade {
 
 	private void parametrizar(final Map<String, Object> parameters, final Query query) {
 		if (parameters != null) {
-			for (final String key : parameters.keySet()) {
-				final Object parameter = parameters.get(key);
-				this.logger.log(Level.FINEST, "key={0}::parameter={1}", new Object[] { key, parameter });
-				query.setParameter(key, parameter);
+			for (final Map.Entry<String, Object> entry : parameters.entrySet()) {
+				this.logger.log(Level.FINEST, "key={0}::parameter={1}",
+						new Object[] { entry.getKey(), entry.getValue() });
+				query.setParameter(entry.getKey(), entry.getValue());
 			}
 		}
 	}

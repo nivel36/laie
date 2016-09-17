@@ -3,6 +3,8 @@ package ged.ejb.candidate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -21,18 +23,40 @@ import ged.ejb.core.model.Repository;
 @Repository
 public class CandidateDaoJpa extends AbstractDao<Long, Candidate> implements CandidateDao {
 
+	private final Logger logger;
+
 	@Inject
-	@Repository
-	private PersistenceFacade persistenceFacade;
+	public CandidateDaoJpa(final Logger logger, @Repository final PersistenceFacade persistenceFacade) {
+		super(persistenceFacade);
+		this.logger = logger;
+	}
 
 	@Override
 	public List<FileType> findAllFileTypes() {
 		return this.persistenceFacade.findAll(FileType.class);
 	}
 
+	@Override
+	public Candidate findCandidateAndFiles(final Long id) {
+		if (id == null) {
+			throw new NullPointerException();
+		}
+		this.logger.log(Level.FINE, "Buscando al candidateo con id {}", id);
+		final Map<String, Object> properties = new HashMap<>();
+		properties.put("id", id);
+		return this.persistenceFacade.findByTypedQuery(Candidate.class, "Candidate.findCandidateAndFilesById",
+				properties);
+	}
+
+	@Override
+	public Class<Candidate> getClazz() {
+		return Candidate.class;
+	}
+
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
-	public List<Candidate> searchByNameAndSurename(final String name, final String surename, final Boolean showDeleted) {
+	public List<Candidate> searchByNameAndSurename(final String name, final String surename,
+			final Boolean showDeleted) {
 		final EntityManager em = this.persistenceFacade.getEm();
 		final FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(em);
 		final QueryBuilder qb = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(Candidate.class)
@@ -47,27 +71,12 @@ public class CandidateDaoJpa extends AbstractDao<Long, Candidate> implements Can
 		if ((showDeleted == null) || !showDeleted) {
 			bj.must(qb.keyword().onField("deleted").matching(true).createQuery()).not();
 		}
-		Query persistenceQuery = null;
+		final Query persistenceQuery;
 		if (bj.isEmpty()) {
 			persistenceQuery = fullTextEntityManager.createFullTextQuery(qb.all().createQuery(), Candidate.class);
 		} else {
 			persistenceQuery = fullTextEntityManager.createFullTextQuery(bj.createQuery(), Candidate.class);
 		}
-		final List<Candidate> result = persistenceQuery.getResultList();
-		return result;
-	}
-
-	@Override
-	public Candidate findCandidateAndFiles(final Long id) {
-		final Map<String, Object> properties = new HashMap<String, Object>();
-		properties.put("id", id);
-		final Candidate candidate = this.persistenceFacade.findByTypedQuery(Candidate.class,
-				"Candidate.findCandidateAndFilesById", properties);
-		return candidate;
-	}
-
-	@Override
-	public Class<Candidate> getClazz() {
-		return Candidate.class;
+		return persistenceQuery.getResultList();
 	}
 }

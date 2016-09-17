@@ -3,6 +3,8 @@ package ged.ejb.job.offer;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -21,15 +23,35 @@ import ged.ejb.user.User;
 @Repository
 public class JobOfferDaoJpa extends AbstractDao<Long, JobOffer> implements JobOfferDao {
 
+	private final Logger logger;
+
 	@Inject
-	@Repository
-	private PersistenceFacade persistenceFacade;
+	public JobOfferDaoJpa(final Logger logger, @Repository final PersistenceFacade persistenceFacade) {
+		super(persistenceFacade);
+		this.logger = logger;
+	}
 
 	@Override
 	public List<JobOffer> findAllByOwner(final User owner) {
+		if (owner == null) {
+			throw new NullPointerException();
+		}
+		this.logger.log(Level.FINE, "Buscando todas las ofertas del usuario ", owner.getFullName());
 		final Map<String, Object> parameters = new HashMap<>();
 		parameters.put("owner", owner);
 		return this.persistenceFacade.findByTypedQuery(JobOffer.class, "JobOffer.findAllByOwner", parameters, 10, 0);
+	}
+
+	@Override
+	public List<JobOffer> findLastJobOffers(final User owner) {
+		final Map<String, Object> parameters = new HashMap<>();
+		parameters.put("owner", owner);
+		return this.persistenceFacade.findByTypedQuery(JobOffer.class, "JobOffer.findLastJobOffers", parameters, 10, 0);
+	}
+
+	@Override
+	public Class<JobOffer> getClazz() {
+		return JobOffer.class;
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -57,17 +79,5 @@ public class JobOfferDaoJpa extends AbstractDao<Long, JobOffer> implements JobOf
 		}
 		final List<JobOffer> result = persistenceQuery.getResultList();
 		return result;
-	}
-
-	@Override
-	public List<JobOffer> findLastJobOffers(final User owner) {
-		final Map<String, Object> parameters = new HashMap<>();
-		parameters.put("owner", owner);
-		return this.persistenceFacade.findByTypedQuery(JobOffer.class, "JobOffer.findLastJobOffers", parameters, 10, 0);
-	}
-
-	@Override
-	public Class<JobOffer> getClazz() {
-		return JobOffer.class;
 	}
 }

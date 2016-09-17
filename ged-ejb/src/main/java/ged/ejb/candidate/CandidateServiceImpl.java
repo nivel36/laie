@@ -13,23 +13,16 @@ import ged.ejb.core.model.Repository;
 @Stateless
 public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> implements CandidateService {
 
-	@Inject
-	@Repository
 	private CandidateDao candidateDao;
+
+	@Inject
+	public CandidateServiceImpl(@Repository final CandidateDao candidateDao) {
+		this.candidateDao = candidateDao;
+	}
 
 	@Override
 	public List<FileType> findAllFileTypes() {
 		return this.candidateDao.findAllFileTypes();
-	}
-
-	@Override
-	public List<Candidate> searchByNameAndSurename(final String name, final String surename) {
-		return this.candidateDao.searchByNameAndSurename(name, surename, null);
-	}
-
-	@Override
-	public List<Candidate> searchByNameAndSurename(final String name, final String surename, final Boolean showDeleted) {
-		return this.candidateDao.searchByNameAndSurename(name, surename, showDeleted);
 	}
 
 	@Override
@@ -40,5 +33,20 @@ public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> imp
 	@Override
 	public Dao<Long, Candidate> getDao() {
 		return this.candidateDao;
+	}
+
+	@Override
+	public List<Candidate> searchByNameAndSurename(final String name, final String surename) {
+		return this.candidateDao.searchByNameAndSurename(name, surename, null);
+	}
+
+	@Override
+	public List<Candidate> searchByNameAndSurename(final String name, final String surename,
+			final Boolean showDeleted) {
+		return this.candidateDao.searchByNameAndSurename(name, surename, showDeleted);
+	}
+
+	public void setCandidateDao(final CandidateDao candidateDao) {
+		this.candidateDao = candidateDao;
 	}
 }

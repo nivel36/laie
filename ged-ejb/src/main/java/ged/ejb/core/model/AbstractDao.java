@@ -2,14 +2,14 @@ package ged.ejb.core.model;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
 @Repository
 public abstract class AbstractDao<K, T extends Entity<K>> implements Dao<K, T> {
 
-	@Inject
-	@Repository
 	protected PersistenceFacade persistenceFacade;
+
+	public AbstractDao(final PersistenceFacade persistenceFacade) {
+		this.persistenceFacade = persistenceFacade;
+	}
 
 	@Override
 	public void delete(final T entity) {
