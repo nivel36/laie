@@ -57,27 +57,8 @@
 				</h:panelGroup>
 
 				<h:panelGroup layout="block" styleClass="textBlock">
-					<h:outputText styleClass="label" value="#{i18n['client.age']}:" />
-					<h:outputText value="#{clientViewBean.client.age}" />
-				</h:panelGroup>
-
-
-				<h:panelGroup layout="block" styleClass="textBlock">
-					<h:outputText styleClass="label"
-						value="#{i18n['client.phone_number']} 1:" />
-					<h:outputText value="#{clientViewBean.client.phoneNumber1}" />
-				</h:panelGroup>
-
-				<h:panelGroup layout="block" styleClass="textBlock">
-					<h:outputText styleClass="label"
-						value="#{i18n['client.phone_number']} 2:" />
-					<h:outputText value="#{clientViewBean.client.phoneNumber2}" />
-				</h:panelGroup>
-
-				<h:panelGroup layout="block" styleClass="textBlock">
-					<h:outputText styleClass="label"
-						value="#{i18n['client.email']} :" />
-					<h:outputText value="#{clientViewBean.client.email}" />
+					<h:outputText styleClass="label" value="#{i18n['client.cif']}:" />
+					<h:outputText value="#{clientViewBean.client.cif}" />
 				</h:panelGroup>
 
 				<h:panelGroup layout="block" styleClass="textBlock">
@@ -89,47 +70,7 @@
 					<h:outputText styleClass="label" value="#{i18n['address.state']} :" />
 					<h:outputText value="#{clientViewBean.client.address.state}" />
 				</h:panelGroup>
-			</h:panelGroup>
-
-			
-			<h:panelGroup layout="block" styleClass="panel">
-				<h1>#{i18n['client.social_network']}</h1>
-				<h:panelGroup layout="block" styleClass="textBlock">
-					<h:outputText styleClass="label"
-						value="#{i18n['social.linkedin']} :" />
-					<h:outputText
-						value="#{clientViewBean.client.linkedinProfileUrl}" />
-				</h:panelGroup>
-				<h:panelGroup layout="block" styleClass="textBlock">
-					<h:outputText styleClass="label"
-						value="#{i18n['social.infojobs']} :" />
-					<h:outputText
-						value="#{clientViewBean.client.infojobsProfileUrl}" />
-				</h:panelGroup>
-			</h:panelGroup>
-			
-			<h:panelGroup layout="block" styleClass="panel">
-				<h1>#{i18n['client.work_data']}</h1>
-
-				<h:panelGroup layout="block" styleClass="textBlock">
-					<h:outputText styleClass="label"
-						value="#{i18n['client.position']} :" />
-					<h:outputText value="#{clientViewBean.client.position}" />
-				</h:panelGroup>
-
-				<h:panelGroup layout="block" styleClass="textBlock">
-					<h:outputText styleClass="label"
-						value="#{i18n['client.salary']} :" />
-					<h:outputText value="#{clientViewBean.client.salary}" />
-				</h:panelGroup>
-
-				<h:panelGroup layout="block" styleClass="textBlock">
-					<h:outputText styleClass="label"
-						value="#{i18n['client.expected_salary']} :" />
-					<h:outputText value="#{clientViewBean.client.expectedSalary}" />
-				</h:panelGroup>
-			</h:panelGroup>
-			
+			</h:panelGroup>			
 		</h:form>
 
 		<h:form id="file_form" prependId="false" enctype="multipart/form-data">

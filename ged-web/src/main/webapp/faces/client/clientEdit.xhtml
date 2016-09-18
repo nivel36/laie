@@ -35,92 +35,29 @@
 					<h:message for="name" errorClass="error" />
 				</h:outputLabel>
 
-				<h:outputLabel value="#{i18n['client.surename']}"
-					styleClass="required">
-					<h:inputText id="surename"
-						value="#{clientEditBean.client.surename}"
-						label="#{i18n['client.surename']}" required="true"
+				<h:outputLabel value="#{i18n['client.cif']}"
+					styleClass="required" styleClass="small">
+					<h:inputText id="cif"
+						value="#{clientEditBean.client.cif}"
+						label="#{i18n['client.cif']}" required="true"
 						styleClass="#{not component.valid ? 'inputError' : ''}" />
 					<h:message for="surename" errorClass="error" />
 				</h:outputLabel>
 
-				<h:outputLabel value="#{i18n['client.age']}" styleClass="small">
-					<h:inputText id="age" value="#{clientEditBean.client.age}"
-						label="#{i18n['client.age']}"
+				<h:outputLabel value="#{i18n['client.city']}" >
+					<h:inputText id="city" value="#{clientEditBean.client.address.city}"
+						label="#{i18n['client.city']}"
 						styleClass="#{not component.valid ? 'inputError' : ''}" />
 					<h:message for="age" errorClass="error" />
 				</h:outputLabel>
 				
-				<h2>#{i18n['address.address']}</h2>
-
-				<h:outputLabel value="#{i18n['address.city']}">
-					<h:inputText id="city"
-						value="#{clientEditBean.client.address.city}"
-						label="#{i18n['address.city']}"
-						styleClass="#{ not component.valid ? 'inputError' : ''}" />
+				<h:outputLabel value="#{i18n['client.state']}" styleClass="small">
+					<h:inputText id="state" value="#{clientEditBean.client.address.state}"
+						label="#{i18n['client.state']}"
+						styleClass="#{not component.valid ? 'inputError' : ''}" />
+					<h:message for="age" errorClass="error" />
 				</h:outputLabel>
-
-				<h:outputLabel value="#{i18n['address.state']}">
-					<h:inputText id="state"
-						value="#{clientEditBean.client.address.state}"
-						label="#{i18n['address.state']}"
-						styleClass="#{ not component.valid ? 'inputError' : ''}" />
-				</h:outputLabel>
-
-				<h2>#{i18n['client.contact']}</h2>
-
-				<h:outputLabel value="#{i18n['client.phone_number']} 1"
-					styleClass="required">
-					<h:inputText id="phoneNumber1"
-						value="#{clientEditBean.client.phoneNumber1}"
-						required="true" label="#{i18n['client.phone_number']}1"
-						styleClass="#{ not component.valid ? 'inputError' : ''}" />
-					<h:message for="phoneNumber1" errorClass="error" />
-				</h:outputLabel>
-
-				<h:outputLabel value="#{i18n['client.phone_number']} 2">
-					<h:inputText id="phoneNumber2"
-						value="#{clientEditBean.client.phoneNumber2}"
-						label="#{i18n['client.phone_number']}2"
-						styleClass="#{ not component.valid ? 'inputError' : ''}" />
-					<h:message for="phoneNumber2" errorClass="error" />
-				</h:outputLabel>
-
-				<h:outputLabel value="#{i18n['client.email']}"
-					styleClass="large required">
-					<h:inputText id="email" p:type="email"
-						value="#{clientEditBean.client.email}" required="true"
-						label="#{i18n['client.email']}"
-						styleClass="#{ not component.valid ? 'inputError' : ''}" />
-					<h:message for="email" errorClass="error" />
-				</h:outputLabel>
-
-				<h2>#{i18n['client.work_data']}</h2>
-
-				<h:outputLabel value="#{i18n['client.position']}"
-					styleClass="required">
-					<h:inputText id="position"
-						value="#{clientEditBean.client.position}" required="true"
-						label="#{i18n['client.position']}"
-						styleClass="#{ not component.valid ? 'inputError' : ''}" />
-					<h:message for="position" errorClass="error" />
-				</h:outputLabel>
-
-				<h:outputLabel value="#{i18n['client.salary']}">
-					<h:inputText id="salary"
-						value="#{clientEditBean.client.salary}"
-						label="#{i18n['client.salary']}"
-						styleClass="#{ not component.valid ? 'inputError' : ''}" />
-					<h:message for="salary" errorClass="error" />
-				</h:outputLabel>
-
-				<h:outputLabel value="#{i18n['client.expected_salary']}">
-					<h:inputText id="expected_salary"
-						value="#{clientEditBean.client.expectedSalary}"
-						label="#{i18n['client.expected_salary']}"
-						styleClass="#{ not component.valid ? 'inputError' : ''}" />
-					<h:message for="expected_salary" errorClass="error" />
-				</h:outputLabel>
+				
 
 				<h:panelGroup layout="block" styleClass="buttonGroup">
 					<h:commandButton value="#{i18n['action.save']}"
