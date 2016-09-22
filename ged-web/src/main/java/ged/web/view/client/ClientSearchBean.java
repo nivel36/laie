@@ -23,7 +23,7 @@ public class ClientSearchBean extends AbstractPageBean {
 	private transient ClientService clientService;
 
 	@Inject
-	protected transient Logger logger;
+	private transient Logger logger;
 
 	private String name;
 
