@@ -1,6 +1,7 @@
 package ged.ejb.candidate;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -16,7 +17,8 @@ public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> imp
 	private CandidateDao candidateDao;
 
 	@Inject
-	public CandidateServiceImpl(@Repository final CandidateDao candidateDao) {
+	public CandidateServiceImpl(final Logger logger, @Repository final CandidateDao candidateDao) {
+		super(logger);
 		this.candidateDao = candidateDao;
 	}
 

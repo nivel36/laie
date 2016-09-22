@@ -1,6 +1,7 @@
 package ged.ejb.job.offer;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -17,12 +18,16 @@ import ged.ejb.user.User;
 @Stateless
 public class JobOfferServiceImpl extends AbstratctAuditedService<JobOffer> implements JobOfferService {
 
-	@Inject
 	private ClientService clientService;
 
+	private final JobOfferDao jobDao;
+
 	@Inject
-	@Repository
-	private JobOfferDao jobDao;
+	public JobOfferServiceImpl(final Logger logger, @Repository final JobOfferDao jobDao,
+			final ClientService clientService) {
+		super(logger);
+		this.jobDao = jobDao;
+	}
 
 	@Override
 	@Audited(action = Type.Insert)
@@ -34,11 +39,6 @@ public class JobOfferServiceImpl extends AbstratctAuditedService<JobOffer> imple
 	@Override
 	public List<JobOffer> findAllByOwner(final User owner) {
 		return this.jobDao.findAllByOwner(owner);
-	}
-
-	@Override
-	public List<JobOffer> searchByNameAndClient(final String name, final String clientName, final Boolean showDeleted) {
-		return this.jobDao.searchByNameAndClient(name, clientName, showDeleted);
 	}
 
 	@Override
@@ -58,5 +58,10 @@ public class JobOfferServiceImpl extends AbstratctAuditedService<JobOffer> imple
 		} else {
 			jobOffer.setClient(client);
 		}
+	}
+
+	@Override
+	public List<JobOffer> searchByNameAndClient(final String name, final String clientName, final Boolean showDeleted) {
+		return this.jobDao.searchByNameAndClient(name, clientName, showDeleted);
 	}
 }

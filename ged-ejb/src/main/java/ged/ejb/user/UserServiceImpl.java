@@ -14,12 +14,13 @@ import ged.ejb.core.model.Repository;
 @Stateless
 public class UserServiceImpl extends AbstratctAuditedService<User> implements UserService {
 
-	@Inject
-	private Logger logger;
+	private final UserDao userDao;
 
 	@Inject
-	@Repository
-	private UserDao userDao;
+	public UserServiceImpl(final Logger logger, @Repository final UserDao userDao) {
+		super(logger);
+		this.userDao = userDao;
+	}
 
 	@Override
 	protected void doInsert(final User user) {
