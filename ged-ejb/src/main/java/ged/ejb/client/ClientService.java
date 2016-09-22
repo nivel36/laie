@@ -2,11 +2,11 @@ package ged.ejb.client;
 
 import java.util.List;
 
-import ged.ejb.core.Service;
+import ged.ejb.core.AuditedService;
 
-public interface ClientService extends Service<Long, Client> {
-
-	List<Client> searchByName(final String clientName);
+public interface ClientService extends AuditedService<Client> {
 
 	Client findByName(final String clientName);
+
+	List<Client> searchByName(final String clientName);
 }

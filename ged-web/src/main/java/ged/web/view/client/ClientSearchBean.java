@@ -56,19 +56,19 @@ public class ClientSearchBean extends AbstractPageBean {
 		this.paginator.setEntities(this.clientService.searchByName(this.name));
 	}
 
-	public String newCandidate() {
-		this.logger.fine("New candidate action performed");
-		return "candidateEdit?faces-redirect=true";
+	public String newClient() {
+		this.logger.fine("New client action performed");
+		return "clientEdit?faces-redirect=true";
 	}
 
 	public void remove(final Client client) {
-		this.logger.fine("Removing candidate action performed");
+		this.logger.fine("Removing client action performed");
 		this.clientService.delete(client);
 		search();
 	}
 
 	public void search() {
-		this.logger.fine("Searching for candidates action performed");
+		this.logger.fine("Searching for client action performed");
 		final List<Client> clients = this.clientService.searchByName(this.name);
 		this.paginator.setEntities(clients);
 	}

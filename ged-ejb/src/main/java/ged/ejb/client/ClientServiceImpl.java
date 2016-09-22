@@ -2,13 +2,15 @@ package ged.ejb.client;
 
 import java.util.List;
 
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 
-import ged.ejb.core.AbstractService;
+import ged.ejb.core.AbstratctAuditedService;
 import ged.ejb.core.model.Dao;
 import ged.ejb.core.model.Repository;
 
-public class ClientServiceImpl extends AbstractService<Long, Client> implements ClientService {
+@Stateless
+public class ClientServiceImpl extends AbstratctAuditedService<Client> implements ClientService {
 
 	@Inject
 	@Repository
