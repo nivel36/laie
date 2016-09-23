@@ -14,6 +14,8 @@ import ged.web.core.view.AbstractPageBean;
 @ViewScoped
 public class ClientEditBean extends AbstractPageBean {
 
+	private final static String CLIENT_SEARCH = "clientSearch?faces-redirect=true";
+
 	private static final long serialVersionUID = 2262878574773282127L;
 
 	private Client client;
@@ -22,7 +24,7 @@ public class ClientEditBean extends AbstractPageBean {
 	private transient ClientService clientService;
 
 	public String cancel() {
-		return "clientSearch?faces-redirect=true";
+		return CLIENT_SEARCH;
 	}
 
 	public Client getClient() {
@@ -44,7 +46,7 @@ public class ClientEditBean extends AbstractPageBean {
 
 	public String save() {
 		saveClient();
-		return "clientSearch?faces-redirect=true";
+		return CLIENT_SEARCH;
 	}
 
 	private void saveClient() {

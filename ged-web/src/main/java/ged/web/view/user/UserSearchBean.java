@@ -81,7 +81,7 @@ public class UserSearchBean extends AbstractPageBean {
 
 	public void search() {
 		this.logger.fine("Searching for users");
-		List<User> users = null;
+		final List<User> users;
 		if ((this.name == null) && (this.surename == null)) {
 			users = this.userService.findAll();
 		} else {

@@ -19,7 +19,7 @@ public class SessionBean extends AbstractBean {
 
 	private static final long serialVersionUID = -8079836415042166193L;
 
-	private final List<BreadcrumbState> breadcrumb = new ArrayList<BreadcrumbState>();
+	private final List<BreadcrumbState> breadcrumb = new ArrayList<>();
 
 	private Locale locale;
 
@@ -45,9 +45,8 @@ public class SessionBean extends AbstractBean {
 	}
 
 	private ResourceBundle getResourceBundle(final String filename) {
-		final Locale locale = this.facesContext.getViewRoot().getLocale();
-		final ResourceBundle bundle = ResourceBundle.getBundle(filename, locale);
-		return bundle;
+		final Locale facesLocale = this.facesContext.getViewRoot().getLocale();
+		return ResourceBundle.getBundle(filename, facesLocale);
 	}
 
 	public int getRowsPerPage() {

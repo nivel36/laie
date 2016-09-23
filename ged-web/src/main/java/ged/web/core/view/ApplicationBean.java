@@ -26,7 +26,7 @@ public class ApplicationBean extends AbstractBean {
 	private static final long serialVersionUID = 6394915115616408285L;
 
 	@Produces
-	private final static String version = "0.1";
+	private static final String VERSION = "0.1";
 
 	@Inject
 	private Cache cache;

@@ -119,7 +119,7 @@ public class UserDaoJpa extends AbstractDao<Long, User> implements UserDao {
 		if (!showDeleted) {
 			bj.must(qb.keyword().onField("deleted").matching(true).createQuery()).not();
 		}
-		Query persistenceQuery = null;
+		final Query persistenceQuery;
 		if (bj.isEmpty()) {
 			persistenceQuery = fullTextEntityManager.createFullTextQuery(qb.all().createQuery(), User.class);
 		} else {

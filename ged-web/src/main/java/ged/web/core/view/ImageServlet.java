@@ -20,7 +20,7 @@ public class ImageServlet extends HttpServlet {
 
 	private static final int DEFAULT_BUFFER_SIZE = 10240; // 10KB.
 
-	private static String IMAGE_PATH = "d:\\tmp\\";
+	private static String PATH = "d:\\tmp\\";
 
 	private static final long serialVersionUID = 6986461066782778042L;
 
@@ -47,7 +47,7 @@ public class ImageServlet extends HttpServlet {
 			// Decode the file name (might contain spaces and on) and prepare
 			// file
 			// object.
-			final File image = new File(ImageServlet.IMAGE_PATH, URLDecoder.decode(requestedImage, "UTF-8"));
+			final File image = new File(ImageServlet.PATH, URLDecoder.decode(requestedImage, "UTF-8"));
 
 			// Check if file actually exists in filesystem.
 			if (!image.exists()) {

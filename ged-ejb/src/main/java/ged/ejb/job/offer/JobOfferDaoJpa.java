@@ -71,13 +71,12 @@ public class JobOfferDaoJpa extends AbstractDao<Long, JobOffer> implements JobOf
 		if ((showDeleted == null) || !showDeleted) {
 			bj.must(qb.keyword().onField("deleted").matching(true).createQuery()).not();
 		}
-		Query persistenceQuery = null;
+		final Query persistenceQuery;
 		if (bj.isEmpty()) {
 			persistenceQuery = fullTextEntityManager.createFullTextQuery(qb.all().createQuery(), JobOffer.class);
 		} else {
 			persistenceQuery = fullTextEntityManager.createFullTextQuery(bj.createQuery(), JobOffer.class);
 		}
-		final List<JobOffer> result = persistenceQuery.getResultList();
-		return result;
+		return persistenceQuery.getResultList();
 	}
 }
