@@ -14,17 +14,17 @@ public class LoggingInterceptor implements Serializable {
 	private static final long serialVersionUID = 1270828556944913397L;
 
 	@AroundInvoke
-	public Object log(InvocationContext ctx) throws Exception {
+	public Object log(final InvocationContext ctx) throws Exception {
 
 		String className = ctx.getTarget().getClass().getName();
 		// triming the proxy part
-		className = className.substring(0, className.indexOf("$"));
-		String methodName = ctx.getMethod().getName();
-		Object[] params = ctx.getParameters();
+		className = className.substring(0, className.indexOf('$'));
+		final String methodName = ctx.getMethod().getName();
+		final Object[] params = ctx.getParameters();
 
-		Logger logger = Logger.getLogger(className);
+		final Logger logger = Logger.getLogger(className);
 
-		Object returnMe = null;
+		final Object returnMe;
 		if (params.length == 0) {
 			logger.entering(className, methodName);
 			returnMe = ctx.proceed();

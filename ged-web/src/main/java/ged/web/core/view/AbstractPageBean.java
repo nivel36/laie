@@ -38,13 +38,11 @@ public abstract class AbstractPageBean extends AbstractBean {
 
 	private ResourceBundle getResourceBundle(final String filename) {
 		final Locale locale = this.facesContext.getViewRoot().getLocale();
-		final ResourceBundle bundle = ResourceBundle.getBundle(filename, locale);
-		return bundle;
+		return ResourceBundle.getBundle(filename, locale);
 	}
 
 	protected String translate(final String message) {
 		final ResourceBundle bundle = getResourceBundle("ged.i18n");
-		final String translatedMessage = bundle.getString(message);
-		return translatedMessage;
+		return bundle.getString(message);
 	}
 }

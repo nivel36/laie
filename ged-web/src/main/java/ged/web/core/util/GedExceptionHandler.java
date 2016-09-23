@@ -15,33 +15,29 @@ import javax.faces.event.ExceptionQueuedEventContext;
 
 public class GedExceptionHandler extends ExceptionHandlerWrapper {
 
-	private FacesContext facesContext;
+	private final FacesContext facesContext;
 
-	private ExceptionHandler wrapped;
+	private final ExceptionHandler wrapped;
 
-	{
-		facesContext = FacesContext.getCurrentInstance();
-	}
-
-	public GedExceptionHandler(ExceptionHandler wrapped) {
+	public GedExceptionHandler(final ExceptionHandler wrapped) {
 		this.wrapped = wrapped;
+		this.facesContext = FacesContext.getCurrentInstance();
 	}
 
-	private void addMessage(Severity severity, String title, String message) {
-		String translatedTitle = translate(title);
-		FacesMessage facesMessage = new FacesMessage(severity, translatedTitle, message);
-		facesContext.addMessage(null, facesMessage);
+	private void addMessage(final Severity severity, final String title, final String message) {
+		final String translatedTitle = translate(title);
+		final FacesMessage facesMessage = new FacesMessage(severity, translatedTitle, message);
+		this.facesContext.addMessage(null, facesMessage);
 	}
 
-	private ResourceBundle getResourceBundle(String filename) {
-		Locale locale = facesContext.getViewRoot().getLocale();
-		ResourceBundle bundle = ResourceBundle.getBundle(filename, locale);
-		return bundle;
+	private ResourceBundle getResourceBundle(final String filename) {
+		final Locale locale = this.facesContext.getViewRoot().getLocale();
+		return ResourceBundle.getBundle(filename, locale);
 	}
 
 	private ExceptionQueuedEvent getRootException() {
 		ExceptionQueuedEvent lastEvent = null;
-		Iterator<ExceptionQueuedEvent> iterator = getUnhandledExceptionQueuedEvents().iterator();
+		final Iterator<ExceptionQueuedEvent> iterator = getUnhandledExceptionQueuedEvents().iterator();
 		while (iterator.hasNext()) {
 			lastEvent = iterator.next();
 			iterator.remove();
@@ -51,29 +47,22 @@ public class GedExceptionHandler extends ExceptionHandlerWrapper {
 
 	@Override
 	public ExceptionHandler getWrapped() {
-		return wrapped;
+		return this.wrapped;
 	}
 
 	@Override
 	public void handle() throws FacesException {
-		ExceptionQueuedEvent event = getRootException();
+		final ExceptionQueuedEvent event = getRootException();
 		if (event != null) {
-			ExceptionQueuedEventContext context = (ExceptionQueuedEventContext) event.getSource();
-			Throwable throwable = context.getException();
+			final ExceptionQueuedEventContext context = (ExceptionQueuedEventContext) event.getSource();
+			final Throwable throwable = context.getException();
 			addMessage(FacesMessage.SEVERITY_ERROR, "message.title.unexpected_error", throwable.getLocalizedMessage());
-			// NavigationHandler navigationHandler =
-			// facesContext.getApplication()
-			// .getNavigationHandler();
-			// navigationHandler.handleNavigation(facesContext, null,
-			// "newCurriculum");
-			// facesContext.renderResponse();
 		}
 		getWrapped().handle();
 	}
 
-	private String translate(String message) {
-		ResourceBundle bundle = getResourceBundle("afersa.legion.i18n");
-		String translatedMessage = bundle.getString(message);
-		return translatedMessage;
+	private String translate(final String message) {
+		final ResourceBundle bundle = getResourceBundle("ged.i18n");
+		return bundle.getString(message);
 	}
 }
