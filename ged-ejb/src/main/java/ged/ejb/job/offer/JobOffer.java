@@ -63,7 +63,7 @@ public class JobOffer extends AbstractAuditedEntity {
 	private String description;
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "jobOffer", orphanRemoval = true)
-	private List<JobCandidature> jobCandidatures = new ArrayList<JobCandidature>();
+	private List<JobCandidature> jobCandidatures = new ArrayList<>();
 
 	@NotNull
 	@Column(length = 128, nullable = false)

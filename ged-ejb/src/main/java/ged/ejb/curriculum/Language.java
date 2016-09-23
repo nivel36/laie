@@ -12,7 +12,7 @@ import ged.ejb.core.model.AbstractAuditedEntity;
 @Entity
 public class Language extends AbstractAuditedEntity {
 
-	private static final long serialVersionUID = 8362523998951126576L;;
+	private static final long serialVersionUID = 8362523998951126576L;
 
 	@NotNull
 	@ManyToOne

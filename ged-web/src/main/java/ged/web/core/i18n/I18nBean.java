@@ -37,7 +37,7 @@ public class I18nBean extends AbstractPageBean {
 	private Logger logger;
 
 	public String getI18nText(final String key, final String language) {
-		String translatedText = null;
+		String translatedText;
 		if (this.i18nTexts.get(language).containsKey(key)) {
 			translatedText = this.i18nTexts.get(language).get(key);
 		} else {
@@ -77,7 +77,7 @@ public class I18nBean extends AbstractPageBean {
 			this.locales.add(language);
 		}
 		final Locale defaultLocale = app.getDefaultLocale();
-		String language = null;
+		final String language;
 		if (defaultLocale == null) {
 			language = "es";
 		} else {
