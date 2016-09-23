@@ -10,7 +10,7 @@ import ged.ejb.core.events.Audited.Type;
 import ged.ejb.core.model.AuditedEntity;
 
 @Interceptor
-@Audited(action = Type.Insert)
+@Audited(action = Type.INSERT)
 public class InsertInterceptor {
 
 	@Inject

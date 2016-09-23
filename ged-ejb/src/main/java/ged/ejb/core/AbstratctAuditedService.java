@@ -17,7 +17,7 @@ public abstract class AbstratctAuditedService<T extends AuditedEntity<Long>> imp
 	}
 
 	@Override
-	@Audited(action = Type.Delete)
+	@Audited(action = Type.DELETE)
 	public void delete(final T entity) {
 		if (entity == null) {
 			throw new NullPointerException();
@@ -53,7 +53,7 @@ public abstract class AbstratctAuditedService<T extends AuditedEntity<Long>> imp
 	public abstract Dao<Long, T> getDao();
 
 	@Override
-	@Audited(action = Type.Insert)
+	@Audited(action = Type.INSERT)
 	public void insert(final T entity) {
 		if (entity == null) {
 			throw new NullPointerException();
@@ -62,7 +62,7 @@ public abstract class AbstratctAuditedService<T extends AuditedEntity<Long>> imp
 	}
 
 	@Override
-	@Audited(action = Type.Insert)
+	@Audited(action = Type.INSERT)
 	public T insertOrUpdate(final T entity) {
 		if (entity == null) {
 			throw new NullPointerException();
@@ -76,7 +76,7 @@ public abstract class AbstratctAuditedService<T extends AuditedEntity<Long>> imp
 	}
 
 	@Override
-	@Audited(action = Type.UnDelete)
+	@Audited(action = Type.UNDELETE)
 	public T undelete(final T entity) {
 		if (entity == null) {
 			throw new NullPointerException();
@@ -86,7 +86,7 @@ public abstract class AbstratctAuditedService<T extends AuditedEntity<Long>> imp
 	}
 
 	@Override
-	@Audited(action = Type.Update)
+	@Audited(action = Type.UPDATE)
 	public T update(final T entity) {
 		if (entity == null) {
 			throw new NullPointerException();

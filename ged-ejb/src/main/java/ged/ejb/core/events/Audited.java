@@ -15,7 +15,7 @@ import javax.interceptor.InterceptorBinding;
 public @interface Audited {
 
 	public static enum Type {
-		Delete, Insert, UnDelete, Update
+		DELETE, INSERT, UNDELETE, UPDATE
 	};
 
 	Type action();

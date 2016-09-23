@@ -16,15 +16,15 @@ import ged.ejb.user.User;
 @Entity
 public class Action extends AbstractEntity {
 
-	public final static String DELETE = "DELETE";
+	public static final String DELETE = "DELETE";
 
-	public final static String INSERT = "INSERT";
+	public static final String INSERT = "INSERT";
 
 	private static final long serialVersionUID = -3095037007290696579L;
 
-	public final static String UNDELETE = "UNDELETE";
+	public static final String UNDELETE = "UNDELETE";
 
-	public final static String UPDATE = "UPDATE";
+	public static final String UPDATE = "UPDATE";
 
 	@Column(length = 8)
 	private String actionPerformed;

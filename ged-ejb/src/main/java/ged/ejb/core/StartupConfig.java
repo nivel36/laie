@@ -14,7 +14,7 @@ import ged.ejb.core.model.Indexer;
 @ApplicationScoped
 public class StartupConfig {
 
-	private final static Logger logger = Logger.getLogger(StartupConfig.class.getName());
+	private static final Logger logger = Logger.getLogger(StartupConfig.class.getName());
 
 	@Inject
 	private Indexer indexer;

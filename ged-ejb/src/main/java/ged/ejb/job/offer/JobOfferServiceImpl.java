@@ -30,7 +30,7 @@ public class JobOfferServiceImpl extends AbstratctAuditedService<JobOffer> imple
 	}
 
 	@Override
-	@Audited(action = Type.Insert)
+	@Audited(action = Type.INSERT)
 	protected void doInsert(final JobOffer jobOffer) {
 		putClientOnJobOffer(jobOffer);
 		getDao().insert(jobOffer);
