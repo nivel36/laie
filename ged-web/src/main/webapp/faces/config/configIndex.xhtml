@@ -16,7 +16,6 @@
 		<ui:include src="/faces/config/changePasswordPopup.xhtml" />
 
 		<h:form>
-
 			<h1 class="header">
 				<i class="fa fa-cog" /> #{i18n['config.config']}
 			</h1>
@@ -25,28 +24,28 @@
 
 				<h:outputLabel value="#{i18n['config.username']}"
 					styleClass="required">
-					<h:inputText id="username" value="#{configBean.user.username}"
+					<h:inputText id="username" value="#{configIndexBean.user.username}"
 						label="#{i18n['config.username']}" required="true"
 						styleClass="#{not component.valid ? 'inputError' : ''}" />
 					<h:message for="username" errorClass="error" />
 				</h:outputLabel>
 
 				<h:outputLabel value="#{i18n['config.name']}" styleClass="required">
-					<h:inputText id="name" value="#{configBean.user.name}"
+					<h:inputText id="name" value="#{configIndexBean.user.name}"
 						label="#{i18n['config.name']}" required="true"
 						styleClass="#{not component.valid ? 'inputError' : ''}" />
 					<h:message for="name" errorClass="error" />
 				</h:outputLabel>
 				<h:outputLabel value="#{i18n['config.surename']}"
 					styleClass="required">
-					<h:inputText id="surename" value="#{configBean.user.surename}"
+					<h:inputText id="surename" value="#{configIndexBean.user.surename}"
 						label="#{i18n['config.surename']}" required="true"
 						styleClass="#{not component.valid ? 'inputError' : ''}" />
 					<h:message for="surename" errorClass="error" />
 				</h:outputLabel>
 				<h:outputLabel value="#{i18n['config.email']}"
 					styleClass="large required">
-					<h:inputText id="email" value="#{configBean.user.email}"
+					<h:inputText id="email" value="#{configIndexBean.user.email}"
 						label="#{i18n['config.email']}" required="true"
 						styleClass="#{not component.valid ? 'inputError' : ''}" />
 					<h:message for="email" errorClass="error" />
@@ -55,7 +54,7 @@
 					<h:commandButton value="#{i18n['config.change_password']}"
 						action="#{changePasswordPopupBean.show}" />
 					<h:commandButton value="#{i18n['action.save']}"
-						action="#{configBean.save}" />
+						action="#{configIndexBean.save}" />
 				</h:panelGroup>
 			</h:panelGroup>
 		</h:form>
@@ -65,7 +64,7 @@
 				<h1>#{i18n['config.preferences']}</h1>
 				<h:outputLabel value="#{i18n['config.rows_per_page']}"
 					styleClass="small">
-					<h:selectOneMenu value="#{configBean.user.rowsPerPage}">
+					<h:selectOneMenu value="#{configIndexBean.user.rowsPerPage}">
 						<f:selectItem itemValue="5" itemLabel="5" />
 						<f:selectItem itemValue="10" itemLabel="10" />
 						<f:selectItem itemValue="25" itemLabel="25" />
@@ -74,7 +73,7 @@
 
 				<h:outputLabel value="#{i18n['config.language']}"
 					styleClass="medium">
-					<h:selectOneMenu id="language" value="#{configBean.user.language}"
+					<h:selectOneMenu id="language" value="#{configIndexBean.user.language}"
 						style="text-transform: capitalize">
 						<f:selectItems var="locale" value="#{applicationBean.locales}"
 							itemValue="#{locale.language}"
@@ -83,7 +82,7 @@
 				</h:outputLabel>
 				<h:panelGroup layout="block" class="buttonGroup">
 					<h:commandButton value="#{i18n['action.save']}"
-						action="#{configBean.save}" />
+						action="#{configIndexBean.save}" />
 				</h:panelGroup>
 			</h:panelGroup>
 		</h:form>

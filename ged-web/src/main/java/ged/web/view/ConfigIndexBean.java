@@ -13,7 +13,7 @@ import ged.web.core.view.AbstractPageBean;
 
 @Named
 @ViewScoped
-public class ConfigBean extends AbstractPageBean {
+public class ConfigIndexBean extends AbstractPageBean {
 
 	private static final long serialVersionUID = -2789492893353263506L;
 
@@ -49,5 +49,4 @@ public class ConfigBean extends AbstractPageBean {
 	public void setUserService(final UserService userService) {
 		this.userService = userService;
 	}
-
 }
