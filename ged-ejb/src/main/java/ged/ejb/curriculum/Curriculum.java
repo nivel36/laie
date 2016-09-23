@@ -1,6 +1,5 @@
 package ged.ejb.curriculum;
 
-import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -24,19 +23,19 @@ public class Curriculum extends AbstractAuditedEntity {
 	private Candidate candidate;
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "curriculum", orphanRemoval = true)
-	private Set<Education> education = new HashSet<Education>();
+	private Set<Education> education;
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "curriculum", orphanRemoval = true)
-	private Set<JobExperience> jobExperiences = new HashSet<JobExperience>();
+	private Set<JobExperience> jobExperiences;
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "curriculum", orphanRemoval = true)
-	private Set<Language> languages = new HashSet<Language>();
+	private Set<Language> languages;
 
 	@Column(length = 256)
 	private String perfilProfesional;
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "curriculum", orphanRemoval = true)
-	private Set<Skill> skills = new HashSet<Skill>();
+	private Set<Skill> skills;
 
 	public void addEducation(final Education education) {
 		education.setCurriculum(this);
