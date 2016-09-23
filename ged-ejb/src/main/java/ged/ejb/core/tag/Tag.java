@@ -1,6 +1,5 @@
 package ged.ejb.core.tag;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -18,15 +17,34 @@ public class Tag extends AbstractAuditedEntity {
 
 	private static final long serialVersionUID = -2676859619371128798L;
 
-	@ManyToOne
-	@JoinColumn(name = "parentId")
-	private Tag parent;
-
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "parent", orphanRemoval = true)
-	private List<Tag> children = new ArrayList<Tag>();
+	private List<Tag> children;
 
 	@NotNull
 	@Column(length = 128, nullable = false)
 	private String label;
 
+	@ManyToOne
+	@JoinColumn(name = "parentId")
+	private Tag parent;
+
+	public List<Tag> getChildren() {
+		return this.children;
+	}
+
+	public String getLabel() {
+		return this.label;
+	}
+
+	public Tag getParent() {
+		return this.parent;
+	}
+
+	public void setLabel(final String label) {
+		this.label = label;
+	}
+
+	public void setParent(final Tag parent) {
+		this.parent = parent;
+	}
 }

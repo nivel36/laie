@@ -61,11 +61,6 @@ public abstract class AbstractAuditedEntity extends AbstractEntity implements Au
 	}
 
 	@Override
-	public int hashCode() {
-		return super.hashCode();
-	}
-
-	@Override
 	public Boolean isDeleted() {
 		return this.deleted;
 	}
