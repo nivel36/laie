@@ -1,6 +1,11 @@
 package ged.web.core.view;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public abstract class AbstractDialogBean extends AbstractPageBean {
+
+	private static final Logger logger = Logger.getLogger(AbstractDialogBean.class.getName());
 
 	private static final long serialVersionUID = 1432485776371482410L;
 
@@ -8,9 +13,10 @@ public abstract class AbstractDialogBean extends AbstractPageBean {
 
 	protected boolean rendered = false;
 
-	public abstract void clear();
+	protected abstract void clear();
 
 	public void hide() {
+		logger.log(Level.FINE, "Hide change password dialog action performed");
 		clear();
 		this.rendered = false;
 	}
@@ -32,6 +38,7 @@ public abstract class AbstractDialogBean extends AbstractPageBean {
 	}
 
 	public void show() {
+		logger.log(Level.FINE, "Show change password dialog action performed");
 		this.rendered = true;
 	}
 }

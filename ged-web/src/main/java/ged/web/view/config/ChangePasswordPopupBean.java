@@ -1,4 +1,4 @@
-package ged.web.view.user;
+package ged.web.view.config;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
@@ -21,10 +21,9 @@ import ged.web.core.view.AbstractDialogBean;
 @ViewScoped
 public class ChangePasswordPopupBean extends AbstractDialogBean {
 
-	private static final long serialVersionUID = -7760785874121856319L;
+	private static final Logger logger = Logger.getLogger(ChangePasswordPopupBean.class.getName());
 
-	@Inject
-	protected transient Logger logger;
+	private static final long serialVersionUID = -7760785874121856319L;
 
 	private String newPassword;
 
@@ -40,6 +39,7 @@ public class ChangePasswordPopupBean extends AbstractDialogBean {
 	private UserService userService;
 
 	public void change() {
+		logger.log(Level.FINE, "Change password action performed");
 		final String output = hashPassword(this.password);
 		User user = this.sessionBean.getUser();
 		if (user.getPassword().equals(output)) {
@@ -62,7 +62,7 @@ public class ChangePasswordPopupBean extends AbstractDialogBean {
 	}
 
 	@Override
-	public void clear() {
+	protected void clear() {
 		this.password = null;
 		this.repeatPassword = null;
 		this.newPassword = null;
@@ -97,13 +97,9 @@ public class ChangePasswordPopupBean extends AbstractDialogBean {
 			output = DatatypeConverter.printBase64Binary(digest);
 		} catch (NoSuchAlgorithmException | UnsupportedEncodingException ex) {
 			addMessage(FacesMessage.SEVERITY_ERROR, "error.unnexpected_error", "error.unnexpected_error");
-			this.logger.log(Level.SEVERE, "Can't find hash algorithm", ex);
+			ChangePasswordPopupBean.logger.log(Level.SEVERE, "Can't find hash algorithm", ex);
 		}
 		return output;
-	}
-
-	public void setLogger(final Logger logger) {
-		this.logger = logger;
 	}
 
 	public void setNewPassword(final String newPassword) {
