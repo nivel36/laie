@@ -11,9 +11,9 @@ public class Paginator<T extends AbstractEntity> implements Serializable {
 
 	private int currentPage;
 
-	private List<T> dataList;
+	private transient List<T> dataList;
 
-	private List<T> entities;
+	private transient List<T> entities;
 
 	private Integer[] pages;
 

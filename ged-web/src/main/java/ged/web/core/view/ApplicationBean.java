@@ -25,16 +25,16 @@ public class ApplicationBean extends AbstractBean {
 
 	private static final long serialVersionUID = 6394915115616408285L;
 
+	@Produces
+	private final static String version = "0.1";
+
 	@Inject
 	private Cache cache;
 
-	private List<Locale> locales = new ArrayList<Locale>();
+	private List<Locale> locales = new ArrayList<>();
 
 	@Inject
 	protected transient Logger logger;
-
-	@Produces
-	private final String version = "0.1";
 
 	public List<FileType> getFileTypes() {
 		return this.cache.getFileTypes();

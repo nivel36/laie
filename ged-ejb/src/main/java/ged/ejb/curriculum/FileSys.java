@@ -16,15 +16,15 @@ import ged.ejb.core.model.AbstractEntity;
 public class FileSys extends AbstractEntity {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "candidateId", nullable = false)
 	private Candidate candidate;
 
 	private Date date;
-	
+
 	private String description;
-	
+
 	private String uuid;
 
 	@NotNull

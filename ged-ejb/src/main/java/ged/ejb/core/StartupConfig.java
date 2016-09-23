@@ -14,19 +14,18 @@ import ged.ejb.core.model.Indexer;
 @ApplicationScoped
 public class StartupConfig {
 
+	private final static Logger logger = Logger.getLogger(StartupConfig.class.getName());
+
 	@Inject
 	private Indexer indexer;
 
-	@Inject
-	protected Logger logger;
-
 	public void init(@Observes @Initialized(ApplicationScoped.class) final ServletContext context)
 			throws InterruptedException {
-		this.logger.log(Level.INFO, "Setting up application");
+		StartupConfig.logger.log(Level.INFO, "Setting up application");
 		try {
 			this.indexer.index();
 		} catch (final InterruptedException e) {
-			this.logger.log(Level.SEVERE, "Indexer fail", e);
+			StartupConfig.logger.log(Level.SEVERE, "Indexer fail", e);
 			throw e;
 		}
 	}

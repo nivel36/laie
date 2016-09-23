@@ -102,13 +102,10 @@ public class Education extends AbstractAuditedEntity {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((degree == null) ? 0 : degree.hashCode());
-		result = prime * result
-				+ ((description == null) ? 0 : description.hashCode());
-		result = prime * result
-				+ ((fromDate == null) ? 0 : fromDate.hashCode());
+		result = prime * result + ((description == null) ? 0 : description.hashCode());
+		result = prime * result + ((fromDate == null) ? 0 : fromDate.hashCode());
 		result = prime * result + ((school == null) ? 0 : school.hashCode());
-		result = prime * result
-				+ ((stillStudying == null) ? 0 : stillStudying.hashCode());
+		result = prime * result + ((stillStudying == null) ? 0 : stillStudying.hashCode());
 		result = prime * result + ((toDate == null) ? 0 : toDate.hashCode());
 		return result;
 	}
@@ -157,9 +154,7 @@ public class Education extends AbstractAuditedEntity {
 
 	@Override
 	public String toString() {
-		return "Education [degree=" + degree + ", description=" + description
-				+ ", fromDate=" + fromDate + ", school=" + school
-				+ ", stillStudying=" + stillStudying + ", toDate=" + toDate
-				+ "]";
+		return "Education [degree=" + degree + ", description=" + description + ", fromDate=" + fromDate + ", school="
+				+ school + ", stillStudying=" + stillStudying + ", toDate=" + toDate + "]";
 	}
 }

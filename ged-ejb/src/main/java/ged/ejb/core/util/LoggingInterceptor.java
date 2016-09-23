@@ -15,13 +15,13 @@ public class LoggingInterceptor implements Serializable {
 
 	@AroundInvoke
 	public Object log(InvocationContext ctx) throws Exception {
-		
+
 		String className = ctx.getTarget().getClass().getName();
 		// triming the proxy part
 		className = className.substring(0, className.indexOf("$"));
 		String methodName = ctx.getMethod().getName();
 		Object[] params = ctx.getParameters();
-		
+
 		Logger logger = Logger.getLogger(className);
 
 		Object returnMe = null;

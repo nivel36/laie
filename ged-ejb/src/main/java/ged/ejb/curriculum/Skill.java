@@ -24,7 +24,7 @@ public class Skill extends AbstractAuditedEntity {
 
 	@NotNull
 	@Column(nullable = false)
-	private String name;	
+	private String name;
 
 	public Curriculum getCurriculum() {
 		return curriculum;

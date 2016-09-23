@@ -11,11 +11,11 @@ public class MaintenanceIndexBean extends AbstractBean {
 
 	private static final long serialVersionUID = 3841966930769061075L;
 
-	public String newContractType() {
+	public String modifyContractType() {
 		return "maintenanceEdit";
 	}
 
-	public String modifyContractType() {
+	public String newContractType() {
 		return "maintenanceEdit";
 	}
 

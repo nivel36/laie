@@ -8,10 +8,10 @@ import ged.ejb.core.FileType;
 import ged.web.core.view.AbstractLookupEntityConverter;
 
 @FacesConverter(forClass = FileType.class)
-public class FileTypeConverter extends	AbstractLookupEntityConverter<FileType> {
+public class FileTypeConverter extends AbstractLookupEntityConverter<FileType> {
 
-		@Override
-		protected List<FileType> getListElements() {
-			return getAppBean().getFileTypes();
-		}
+	@Override
+	protected List<FileType> getListElements() {
+		return getAppBean().getFileTypes();
 	}
+}

@@ -21,8 +21,7 @@ import ged.ejb.job.JobCandidature;
 		@NamedQuery(name = "JobMeeting.getConductedJobMeetings", query = "SELECT j FROM JobMeeting j WHERE j.jobCandidature.jobOffer = :jobOffer AND j.dateConducted IS NOT NULL"),
 		@NamedQuery(name = "JobMeeting.getPlannedJobMeetings", query = "SELECT j FROM JobMeeting j WHERE j.jobCandidature.jobOffer = :jobOffer AND j.dateConducted IS NULL") })
 @Entity
-@Table(uniqueConstraints = { @UniqueConstraint(columnNames = {
-		"jobCandidatureId", "datePlanned" }) })
+@Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "jobCandidatureId", "datePlanned" }) })
 public class JobMeeting extends AbstractAuditedEntity {
 
 	private static final long serialVersionUID = 3394583186288921090L;

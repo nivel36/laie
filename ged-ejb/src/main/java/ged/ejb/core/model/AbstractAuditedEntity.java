@@ -46,6 +46,11 @@ public abstract class AbstractAuditedEntity extends AbstractEntity implements Au
 	private User user;
 
 	@Override
+	public boolean equals(final Object obj) {
+		return super.equals(obj);
+	}
+
+	@Override
 	public Boolean getDeleted() {
 		return this.deleted;
 	}
@@ -53,6 +58,11 @@ public abstract class AbstractAuditedEntity extends AbstractEntity implements Au
 	@Override
 	public User getUser() {
 		return this.user;
+	}
+
+	@Override
+	public int hashCode() {
+		return super.hashCode();
 	}
 
 	@Override

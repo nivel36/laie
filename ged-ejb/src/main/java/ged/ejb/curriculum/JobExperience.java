@@ -29,7 +29,7 @@ public class JobExperience extends AbstractAuditedEntity {
 
 	@NotNull
 	@Lob
-	@Column( nullable = false)
+	@Column(nullable = false)
 	private String description;
 
 	@Temporal(TemporalType.DATE)
@@ -46,7 +46,7 @@ public class JobExperience extends AbstractAuditedEntity {
 	public String getCompanyName() {
 		return companyName;
 	}
-	
+
 	public Curriculum getCurriculum() {
 		return curriculum;
 	}
@@ -74,7 +74,7 @@ public class JobExperience extends AbstractAuditedEntity {
 	public void setCompanyName(String companyName) {
 		this.companyName = companyName;
 	}
-	
+
 	public void setCurriculum(Curriculum curriculum) {
 		this.curriculum = curriculum;
 	}
@@ -103,18 +103,12 @@ public class JobExperience extends AbstractAuditedEntity {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result
-				+ ((companyName == null) ? 0 : companyName.hashCode());
-		result = prime * result
-				+ ((curriculum == null) ? 0 : curriculum.hashCode());
-		result = prime * result
-				+ ((description == null) ? 0 : description.hashCode());
-		result = prime * result
-				+ ((fromDate == null) ? 0 : fromDate.hashCode());
-		result = prime * result
-				+ ((jobPosition == null) ? 0 : jobPosition.hashCode());
-		result = prime * result
-				+ ((stillWorking == null) ? 0 : stillWorking.hashCode());
+		result = prime * result + ((companyName == null) ? 0 : companyName.hashCode());
+		result = prime * result + ((curriculum == null) ? 0 : curriculum.hashCode());
+		result = prime * result + ((description == null) ? 0 : description.hashCode());
+		result = prime * result + ((fromDate == null) ? 0 : fromDate.hashCode());
+		result = prime * result + ((jobPosition == null) ? 0 : jobPosition.hashCode());
+		result = prime * result + ((stillWorking == null) ? 0 : stillWorking.hashCode());
 		result = prime * result + ((toDate == null) ? 0 : toDate.hashCode());
 		return result;
 	}
@@ -168,9 +162,7 @@ public class JobExperience extends AbstractAuditedEntity {
 
 	@Override
 	public String toString() {
-		return "JobExperience [companyName=" + companyName + ", description="
-				+ description + ", fromDate=" + fromDate + ", jobPosition="
-				+ jobPosition + ", stillWorking=" + stillWorking + ", toDate="
-				+ toDate + "]";
+		return "JobExperience [companyName=" + companyName + ", description=" + description + ", fromDate=" + fromDate
+				+ ", jobPosition=" + jobPosition + ", stillWorking=" + stillWorking + ", toDate=" + toDate + "]";
 	}
 }

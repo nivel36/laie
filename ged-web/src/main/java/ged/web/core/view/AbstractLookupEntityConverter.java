@@ -9,14 +9,15 @@ import javax.faces.convert.Converter;
 
 import ged.ejb.core.model.AbstractLookupEntity;
 
-public abstract class AbstractLookupEntityConverter<T extends AbstractLookupEntity>
-		implements Converter {
+public abstract class AbstractLookupEntityConverter<T extends AbstractLookupEntity> implements Converter {
 
-	protected abstract List<T> getListElements();
+	protected ApplicationBean getAppBean() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		return context.getApplication().evaluateExpressionGet(context, "#{applicationBean}", ApplicationBean.class);
+	}
 
 	@Override
-	public Object getAsObject(FacesContext context, UIComponent component,
-			String value) {
+	public Object getAsObject(FacesContext context, UIComponent component, String value) {
 		List<T> elements = getListElements();
 		for (T element : elements) {
 			if (element.getName().equals(value)) {
@@ -27,14 +28,9 @@ public abstract class AbstractLookupEntityConverter<T extends AbstractLookupEnti
 	}
 
 	@Override
-	public String getAsString(FacesContext context, UIComponent component,
-			Object value) {
+	public String getAsString(FacesContext context, UIComponent component, Object value) {
 		return value.toString();
 	}
 
-	protected ApplicationBean getAppBean() {
-		FacesContext context = FacesContext.getCurrentInstance();
-		return context.getApplication().evaluateExpressionGet(context,
-				"#{applicationBean}", ApplicationBean.class);
-	}
+	protected abstract List<T> getListElements();
 }

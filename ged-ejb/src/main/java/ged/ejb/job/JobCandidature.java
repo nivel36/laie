@@ -60,10 +60,8 @@ public class JobCandidature extends AbstractAuditedEntity {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result
-				+ ((candidate == null) ? 0 : candidate.hashCode());
-		result = prime * result
-				+ ((jobOffer == null) ? 0 : jobOffer.hashCode());
+		result = prime * result + ((candidate == null) ? 0 : candidate.hashCode());
+		result = prime * result + ((jobOffer == null) ? 0 : jobOffer.hashCode());
 		return result;
 	}
 
@@ -91,7 +89,7 @@ public class JobCandidature extends AbstractAuditedEntity {
 
 	@Override
 	public String toString() {
-		return "JobCandidature [jobOffer=" + jobOffer + ", candidate="
-				+ candidate + ", jobMeetings=" + jobMeetings + "]";
+		return "JobCandidature [jobOffer=" + jobOffer + ", candidate=" + candidate + ", jobMeetings=" + jobMeetings
+				+ "]";
 	}
 }
