@@ -1,7 +1,6 @@
 package ged.web.reports;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
@@ -18,8 +17,6 @@ import ged.ejb.job.offer.JobOffer;
 import ged.ejb.user.User;
 
 public class UserReport extends AbstractReport {
-
-	// private static SimpleDateFormat fmt = new SimpleDateFormat("dd-MMM");
 
 	private static CellStyle createBorderedStyle(final Workbook wb) {
 		final CellStyle style = wb.createCellStyle();
@@ -44,7 +41,7 @@ public class UserReport extends AbstractReport {
 		this.jobOffers = jobOffers;
 	}
 
-	public File create() throws FileNotFoundException, IOException {
+	public File create() throws IOException {
 		final Sheet sheet = this.wb.createSheet(this.user.getFullName());
 		Row row = sheet.createRow(1);
 		Cell cell = row.createCell(1);
