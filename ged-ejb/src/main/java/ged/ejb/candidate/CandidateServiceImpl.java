@@ -14,11 +14,13 @@ import ged.ejb.core.model.Repository;
 @Stateless
 public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> implements CandidateService {
 
+	private static final Logger logger = Logger.getLogger(CandidateServiceImpl.class.getName());
+
 	private CandidateDao candidateDao;
 
 	@Inject
-	public CandidateServiceImpl(final Logger logger, @Repository final CandidateDao candidateDao) {
-		super(logger);
+	public CandidateServiceImpl(@Repository final CandidateDao candidateDao) {
+		super();
 		this.candidateDao = candidateDao;
 	}
 

@@ -18,14 +18,15 @@ import ged.ejb.user.User;
 @Stateless
 public class JobOfferServiceImpl extends AbstratctAuditedService<JobOffer> implements JobOfferService {
 
+	private static final Logger logger = Logger.getLogger(JobOfferServiceImpl.class.getName());
+
 	private ClientService clientService;
 
 	private final JobOfferDao jobDao;
 
 	@Inject
-	public JobOfferServiceImpl(final Logger logger, @Repository final JobOfferDao jobDao,
-			final ClientService clientService) {
-		super(logger);
+	public JobOfferServiceImpl(@Repository final JobOfferDao jobDao, final ClientService clientService) {
+		super();
 		this.jobDao = jobDao;
 	}
 

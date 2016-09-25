@@ -14,11 +14,13 @@ import ged.ejb.core.model.Repository;
 @Stateless
 public class ClientServiceImpl extends AbstratctAuditedService<Client> implements ClientService {
 
+	private static final Logger logger = Logger.getLogger(ClientServiceImpl.class.getName());
+
 	private final ClientDao clientDao;
 
 	@Inject
-	public ClientServiceImpl(final Logger logger, @Repository final ClientDao clientDao) {
-		super(logger);
+	public ClientServiceImpl(@Repository final ClientDao clientDao) {
+		super();
 		this.clientDao = clientDao;
 	}
 
@@ -27,7 +29,7 @@ public class ClientServiceImpl extends AbstratctAuditedService<Client> implement
 		if (clientName == null) {
 			throw new NullPointerException("El nombre del cliente no puede ser nulo");
 		}
-		this.logger.log(Level.FINE, "Buscando cliente con nombre {}", clientName);
+		ClientServiceImpl.logger.log(Level.FINE, "Buscando cliente con nombre {}", clientName);
 		return this.clientDao.findByName(clientName);
 	}
 
@@ -40,10 +42,10 @@ public class ClientServiceImpl extends AbstratctAuditedService<Client> implement
 	public List<Client> searchByName(final String clientName) {
 		final List<Client> clients;
 		if (clientName == null) {
-			this.logger.log(Level.FINE, "Buscando todos los clientes");
+			ClientServiceImpl.logger.log(Level.FINE, "Buscando todos los clientes");
 			clients = this.clientDao.findAll();
 		} else {
-			this.logger.log(Level.FINE, "Buscando clientes con nombre {}", clientName);
+			ClientServiceImpl.logger.log(Level.FINE, "Buscando clientes con nombre {}", clientName);
 			clients = this.clientDao.searchByName(clientName);
 		}
 		return clients;

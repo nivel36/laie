@@ -1,7 +1,6 @@
 package ged.ejb.core;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 import ged.ejb.core.events.Audited;
 import ged.ejb.core.events.Audited.Type;
@@ -9,12 +8,6 @@ import ged.ejb.core.model.AuditedEntity;
 import ged.ejb.core.model.Dao;
 
 public abstract class AbstratctAuditedService<T extends AuditedEntity<Long>> implements AuditedService<T> {
-
-	protected final Logger logger;
-
-	public AbstratctAuditedService(final Logger logger) {
-		this.logger = logger;
-	}
 
 	@Override
 	@Audited(action = Type.DELETE)

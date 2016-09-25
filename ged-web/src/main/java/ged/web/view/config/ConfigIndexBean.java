@@ -1,7 +1,6 @@
 package ged.web.view.config;
 
 import java.util.Locale;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
@@ -37,7 +36,7 @@ public class ConfigIndexBean extends AbstractPageBean {
 	}
 
 	public void save() {
-		logger.log(Level.FINE, "Save config action performed");
+		logger.fine("Save config action performed");
 		this.user = this.userService.update(this.user);
 		this.sessionBean.setUser(this.user);
 		this.sessionBean.setLocale(new Locale(this.user.getLanguage()));

@@ -14,11 +14,13 @@ import ged.ejb.core.model.Repository;
 @Stateless
 public class UserServiceImpl extends AbstratctAuditedService<User> implements UserService {
 
+	private static final Logger logger = Logger.getLogger(UserServiceImpl.class.getName());
+
 	private final UserDao userDao;
 
 	@Inject
-	public UserServiceImpl(final Logger logger, @Repository final UserDao userDao) {
-		super(logger);
+	public UserServiceImpl(@Repository final UserDao userDao) {
+		super();
 		this.userDao = userDao;
 	}
 
@@ -27,7 +29,7 @@ public class UserServiceImpl extends AbstratctAuditedService<User> implements Us
 		if (user == null) {
 			throw new NullPointerException();
 		}
-		this.logger.log(Level.FINE, "INSERT user {0}", user.getFullName());
+		UserServiceImpl.logger.log(Level.FINE, "INSERT user {0}", user.getFullName());
 		if (user.equals(user.getManager())) {
 
 			throw new IllegalStateException("User can't be his/her manager");

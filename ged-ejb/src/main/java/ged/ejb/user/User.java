@@ -1,6 +1,5 @@
 package ged.ejb.user;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -28,10 +27,10 @@ public class User extends AbstractAuditedEntity {
 	private static final long serialVersionUID = 5920907439877095636L;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user", orphanRemoval = true)
-	private List<Action> actions = new ArrayList<>();
+	private List<Action> actions;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user", orphanRemoval = true)
-	private List<Bookmark> bookmarks = new ArrayList<>();
+	private List<Bookmark> bookmarks;
 
 	@NotNull
 	@Column(length = 128, nullable = false, unique = true)
