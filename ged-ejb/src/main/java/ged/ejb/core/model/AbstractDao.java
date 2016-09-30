@@ -7,7 +7,10 @@ public abstract class AbstractDao<K, T extends Entity<K>> implements Dao<K, T> {
 
 	protected PersistenceFacade persistenceFacade;
 
-	public AbstractDao(final PersistenceFacade persistenceFacade) {
+	protected AbstractDao(final PersistenceFacade persistenceFacade) {
+		if (persistenceFacade == null) {
+			throw new NullPointerException("persistanceFacade");
+		}
 		this.persistenceFacade = persistenceFacade;
 	}
 

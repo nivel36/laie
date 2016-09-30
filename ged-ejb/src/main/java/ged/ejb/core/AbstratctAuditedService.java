@@ -43,7 +43,7 @@ public abstract class AbstratctAuditedService<T extends AuditedEntity<Long>> imp
 		return this.getDao().findAll();
 	}
 
-	public abstract Dao<Long, T> getDao();
+	protected abstract Dao<Long, T> getDao();
 
 	@Override
 	@Audited(action = Type.INSERT)

@@ -20,35 +20,43 @@ import ged.ejb.core.model.PersistenceFacade;
 import ged.ejb.core.model.Repository;
 
 @Repository
-public class UserDaoJpa extends AbstractDao<Long, User> implements UserDao {
+public final class UserDaoJpa extends AbstractDao<Long, User> implements UserDao {
 
-	private final Logger logger;
+	private static final Logger logger = Logger.getLogger(UserDaoJpa.class.getName());
 
 	@Inject
-	public UserDaoJpa(final Logger logger, @Repository final PersistenceFacade persistenceFacade) {
+	public UserDaoJpa(@Repository final PersistenceFacade persistenceFacade) {
 		super(persistenceFacade);
-		this.logger = logger;
 	}
 
 	@Override
-	public long countAdminRoles() {
-		return (Long) this.persistenceFacade.findByQuery("User.countAdminRoles", null);
-	}
-
-	@Override
-	public boolean emailExists(final String email) {
+	public Boolean emailExists(final String email) {
+		if (email == null) {
+			throw new NullPointerException("email");
+		}
+		logger.log(Level.FINE, "Looking  ");
 		final Map<String, Object> parameters = new HashMap<>(1);
 		parameters.put("email", email);
-		final Long emails = (Long) this.persistenceFacade.findByQuery("User.countEmail", parameters);
-		return emails > 0;
+		return this.persistenceFacade.findByTypedQuery(Boolean.class, "User.emailExists", parameters);
+	}
+
+	@Override
+	public Boolean existsMoreThanOneAdmin() {
+		logger.fine("Looking for if exists more than one admin");
+		return this.persistenceFacade.findByTypedQuery(Boolean.class, "User.existsMoreThanOneAdmin", null);
 	}
 
 	@Override
 	public List<User> findAll() {
+		logger.fine("Finding all users");
 		return this.persistenceFacade.findByTypedQuery(User.class, "User.findAll", null, 0, 0);
 	}
 
 	public List<UserClosure> findAntecessorsUserClosures(final User user) {
+		if (user == null) {
+			throw new NullPointerException("user");
+		}
+		logger.log(Level.FINER, "Finding all antecessors of the user");
 		final Map<String, Object> parameters = new HashMap<>();
 		parameters.put("id", user.getId());
 		return this.persistenceFacade.findByTypedQuery(UserClosure.class, "UserClosure.findAntecessorsUserClosuresById",
@@ -57,6 +65,10 @@ public class UserDaoJpa extends AbstractDao<Long, User> implements UserDao {
 
 	@Override
 	public List<User> findSubordinateUsers(final Long id) {
+		if (id == null) {
+			throw new NullPointerException("id");
+		}
+		logger.log(Level.FINE, "Find subordinate users of user with id {}", id);
 		final Map<String, Object> parameters = new HashMap<>(1);
 		parameters.put("id", id);
 		return this.persistenceFacade.findByTypedQuery(User.class, "User.findSubordinateUsers", parameters, 0, 0);
@@ -64,6 +76,10 @@ public class UserDaoJpa extends AbstractDao<Long, User> implements UserDao {
 
 	@Override
 	public User findUserByUsername(final String username) {
+		if (username == null) {
+			throw new NullPointerException("username");
+		}
+		logger.log(Level.FINE, "Finding user with username {}", username);
 		final Map<String, Object> parameters = new HashMap<>();
 		parameters.put("username", username);
 		return this.persistenceFacade.findByTypedQuery(User.class, "User.findByUsername", parameters);
@@ -76,6 +92,10 @@ public class UserDaoJpa extends AbstractDao<Long, User> implements UserDao {
 
 	@Override
 	public void insert(final User user) {
+		if (user == null) {
+			throw new NullPointerException("user");
+		}
+		logger.log(Level.FINE, "Insert user {}", user.getFullName());
 		this.persistenceFacade.insert(user);
 		if (user.getManager() != null) {
 			insertUserClosures(user);
@@ -83,6 +103,8 @@ public class UserDaoJpa extends AbstractDao<Long, User> implements UserDao {
 	}
 
 	private void insertUserClosure(final User antecessor, final User descendant, final int pathLength) {
+		logger.log(Level.FINER, "Insert in user closure table. Antecessor {}, descendant {}, pathLength {}",
+				new Object[] { antecessor, descendant, pathLength });
 		final UserClosure newUserClosure = new UserClosure();
 		newUserClosure.setAntecessor(antecessor);
 		newUserClosure.setDescendant(descendant);
@@ -91,6 +113,7 @@ public class UserDaoJpa extends AbstractDao<Long, User> implements UserDao {
 	}
 
 	private void insertUserClosures(final User user) {
+		logger.log(Level.FINER, "Insert user closures for user {}", user);
 		final List<UserClosure> userClosures = findAntecessorsUserClosures(user.getManager());
 		for (final UserClosure userClosure : userClosures) {
 			insertUserClosure(userClosure.getAntecessor(), user, userClosure.getPathLength() + 1);
@@ -102,6 +125,8 @@ public class UserDaoJpa extends AbstractDao<Long, User> implements UserDao {
 	@Override
 	public List<User> searchByNameAndSurename(final String name, final String surename, final String email,
 			final boolean showDeleted) {
+		logger.log(Level.FINE, "SEARCH user by name {} and surename {}, removing users with email {}",
+				new Object[] { name, surename, email });
 		final EntityManager em = this.persistenceFacade.getEm();
 		final FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(em);
 		final QueryBuilder qb = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(User.class)
@@ -129,14 +154,13 @@ public class UserDaoJpa extends AbstractDao<Long, User> implements UserDao {
 	}
 
 	@Override
-	public boolean usernameExists(final String username) {
+	public Boolean usernameExists(final String username) {
 		if (username == null) {
 			throw new NullPointerException();
 		}
-		this.logger.log(Level.FINE, "Existe el usuario {}?", username);
+		UserDaoJpa.logger.log(Level.FINE, "Username {} exists?", username);
 		final Map<String, Object> parameters = new HashMap<>(1);
 		parameters.put("username", username);
-		final Long emails = (Long) this.persistenceFacade.findByQuery("User.countUsername", parameters);
-		return emails > 0;
+		return this.persistenceFacade.findByTypedQuery(Boolean.class, "User.usernameExists", parameters);
 	}
 }

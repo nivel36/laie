@@ -109,16 +109,28 @@
 									OR 		(:surename IS NOT NULL AND u.surename = :surename)</query>
 	</named-query>
 
-	<named-query name="User.countAdminRoles">
-		<query>SELECT COUNT(u) FROM User u WHERE u.role.name = 'ADMIN'</query>
+	<named-query name="User.existsMoreThanOneAdmin">
+		<query>
+		<![CDATA[
+			SELECT CASE WHEN (COUNT(u) > 0)  THEN TRUE ELSE FALSE END FROM User u WHERE u.role.name = 'ADMIN'
+		]]>
+		</query>
 	</named-query>
 
-	<named-query name="User.countEmail">
-		<query>SELECT COUNT(u) FROM User u WHERE u.email = :email</query>
+	<named-query name="User.emailExists">
+		<query>
+		<![CDATA[
+			SELECT CASE WHEN (COUNT(u) > 0)  THEN TRUE ELSE FALSE END FROM User u WHERE u.email = :email
+		]]>
+		</query>
 	</named-query>
 
-	<named-query name="User.countUsername">
-		<query>SELECT COUNT(u) FROM User u WHERE u.username = :username</query>
+	<named-query name="User.usernameExists">
+		<query>
+		<![CDATA[
+			SELECT CASE WHEN (COUNT(u) > 0)  THEN TRUE ELSE FALSE END FROM User u WHERE u.username = :username
+		]]>
+		</query>	
 	</named-query>
 
 	<named-query name="UserClosure.findAntecessorsUserClosuresById">

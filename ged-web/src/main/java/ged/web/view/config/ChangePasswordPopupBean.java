@@ -19,7 +19,7 @@ import ged.web.core.view.AbstractDialogBean;
 
 @Named
 @ViewScoped
-public class ChangePasswordPopupBean extends AbstractDialogBean {
+public final class ChangePasswordPopupBean extends AbstractDialogBean {
 
 	private static final Logger logger = Logger.getLogger(ChangePasswordPopupBean.class.getName());
 
@@ -35,8 +35,15 @@ public class ChangePasswordPopupBean extends AbstractDialogBean {
 
 	private String repeatPassword;
 
+	private final UserService userService;
+
 	@Inject
-	private UserService userService;
+	public ChangePasswordPopupBean(final UserService userService) {
+		if (userService == null) {
+			throw new NullPointerException("userService");
+		}
+		this.userService = userService;
+	}
 
 	public void change() {
 		logger.log(Level.FINE, "Change password action performed");
@@ -55,10 +62,6 @@ public class ChangePasswordPopupBean extends AbstractDialogBean {
 		} else {
 			addErrorToField(this.passwordComponent, "login.error.bad_password");
 		}
-	}
-
-	public void changePassword() {
-		this.rendered = false;
 	}
 
 	@Override

@@ -29,11 +29,10 @@ public interface PersistenceFacade {
 
 	List<?> findByQuery(String nombreQuery, Map<String, Object> parameters, int pageSize, int pageNum);
 
-	<K, T extends Entity<K>> T findByTypedQuery(Class<T> entityClass, String namedQuery,
-			Map<String, Object> parameters);
+	<K, T> T findByTypedQuery(Class<T> entityClass, String namedQuery, Map<String, Object> parameters);
 
-	<K, T extends Entity<K>> List<T> findByTypedQuery(Class<T> entityClass, String namedQuery,
-			Map<String, Object> parameters, int pageSize, int pageNum);
+	<K, T> List<T> findByTypedQuery(Class<T> entityClass, String namedQuery, Map<String, Object> parameters,
+			int pageSize, int pageNum);
 
 	EntityManager getEm();
 

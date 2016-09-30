@@ -14,7 +14,7 @@ import ged.web.core.view.AbstractPageBean;
 
 @Named
 @ViewScoped
-public class ConfigIndexBean extends AbstractPageBean {
+public final class ConfigIndexBean extends AbstractPageBean {
 
 	private static final Logger logger = Logger.getLogger(ConfigIndexBean.class.getName());
 
@@ -22,8 +22,21 @@ public class ConfigIndexBean extends AbstractPageBean {
 
 	private User user;
 
-	@Inject
 	private transient UserService userService;
+
+	@Inject
+	public ConfigIndexBean(final UserService userService) {
+		if (userService == null) {
+			throw new NullPointerException("userService");
+		}
+		this.userService = userService;
+	}
+
+	private void changeSessionUser() {
+		this.sessionBean.setUser(this.user);
+		this.sessionBean.setLocale(new Locale(this.user.getLanguage()));
+		this.sessionBean.setRowsPerPage(this.user.getRowsPerPage());
+	}
 
 	public User getUser() {
 		return this.user;
@@ -36,18 +49,16 @@ public class ConfigIndexBean extends AbstractPageBean {
 	}
 
 	public void save() {
-		logger.fine("Save config action performed");
+		logger.fine("Save user action performed");
+		final Long userId = this.user.getId();
+		if ((userId != null) && userId.equals(this.sessionBean.getUser().getId())) {
+			changeSessionUser();
+		}
+		this.user.setUser(this.sessionBean.getUser());
 		this.user = this.userService.update(this.user);
-		this.sessionBean.setUser(this.user);
-		this.sessionBean.setLocale(new Locale(this.user.getLanguage()));
-		this.sessionBean.setRowsPerPage(this.user.getRowsPerPage());
 	}
 
 	public void setUser(final User user) {
 		this.user = user;
-	}
-
-	public void setUserService(final UserService userService) {
-		this.userService = userService;
 	}
 }

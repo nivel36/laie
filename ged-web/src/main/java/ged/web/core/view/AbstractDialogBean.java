@@ -16,7 +16,7 @@ public abstract class AbstractDialogBean extends AbstractPageBean {
 	protected abstract void clear();
 
 	public void hide() {
-		logger.log(Level.FINE, "Hide change password dialog action performed");
+		logger.log(Level.FINE, "Hide dialog action performed");
 		clear();
 		this.rendered = false;
 	}
@@ -38,7 +38,7 @@ public abstract class AbstractDialogBean extends AbstractPageBean {
 	}
 
 	public void show() {
-		logger.log(Level.FINE, "Show change password dialog action performed");
+		logger.log(Level.FINE, "Show dialog action performed");
 		this.rendered = true;
 	}
 }
