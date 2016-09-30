@@ -16,12 +16,11 @@ import ged.ejb.user.User;
 @Repository
 public class ActionDaoJpa extends AbstractDao<Long, Action> implements ActionDao {
 
-	private final Logger logger;
+	private static final Logger logger = Logger.getLogger(ActionDaoJpa.class.getName());
 
 	@Inject
-	public ActionDaoJpa(final Logger logger, @Repository final PersistenceFacade persistenceFacade) {
+	public ActionDaoJpa(@Repository final PersistenceFacade persistenceFacade) {
 		super(persistenceFacade);
-		this.logger = logger;
 	}
 
 	@Override
@@ -29,7 +28,7 @@ public class ActionDaoJpa extends AbstractDao<Long, Action> implements ActionDao
 		if (user == null) {
 			throw new NullPointerException();
 		}
-		this.logger.log(Level.FINE, "Buscando todas las acciones del usuario {}", user.getFullName());
+		logger.log(Level.FINE, "Find all actions of the user {}", user.getFullName());
 		final Map<String, Object> parameters = new HashMap<>();
 		parameters.put("user", user);
 		return this.persistenceFacade.findByTypedQuery(Action.class, "Action.findAllByUser", parameters, 10, 0);
