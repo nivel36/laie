@@ -51,10 +51,7 @@ public final class ChangePasswordPopupBean extends AbstractDialogBean {
 		User user = this.sessionBean.getUser();
 		if (user.getPassword().equals(output)) {
 			if (this.newPassword.equals(this.repeatPassword)) {
-				final String hash = hashPassword(this.newPassword);
-				user.setPassword(hash);
-				user = this.userService.update(user);
-				this.sessionBean.setUser(user);
+				changePassword(user);
 				hide();
 			} else {
 				addErrorToField(this.newPasswordComponent, "login.error.password_not_equals");
@@ -62,6 +59,14 @@ public final class ChangePasswordPopupBean extends AbstractDialogBean {
 		} else {
 			addErrorToField(this.passwordComponent, "login.error.bad_password");
 		}
+	}
+
+	private void changePassword(User user) {
+		final String hash = hashPassword(this.newPassword);
+		user.setPassword(hash);
+		user.setUser(user);
+		user = this.userService.update(user);
+		this.sessionBean.setUser(user);
 	}
 
 	@Override
