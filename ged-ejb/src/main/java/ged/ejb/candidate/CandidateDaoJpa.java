@@ -23,12 +23,11 @@ import ged.ejb.core.model.Repository;
 @Repository
 public class CandidateDaoJpa extends AbstractDao<Long, Candidate> implements CandidateDao {
 
-	private final Logger logger;
+	private final Logger logger = Logger.getLogger(CandidateDaoJpa.class.getName());
 
 	@Inject
-	public CandidateDaoJpa(final Logger logger, @Repository final PersistenceFacade persistenceFacade) {
+	public CandidateDaoJpa(@Repository final PersistenceFacade persistenceFacade) {
 		super(persistenceFacade);
-		this.logger = logger;
 	}
 
 	@Override

@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 
 import javax.ejb.Stateless;
 import javax.enterprise.event.Observes;
+import javax.inject.Inject;
 
 import ged.ejb.core.AbstractService;
 import ged.ejb.core.events.PostDelete;
@@ -24,6 +25,7 @@ public class ActionServiceImpl extends AbstractService<Long, Action> implements 
 
 	private final ActionDao actionDao;
 
+	@Inject
 	public ActionServiceImpl(@Repository final ActionDao actionDao) {
 		if (actionDao == null) {
 			throw new NullPointerException();
