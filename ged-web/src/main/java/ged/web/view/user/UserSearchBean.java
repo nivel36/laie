@@ -29,8 +29,15 @@ public class UserSearchBean extends AbstractPageBean {
 
 	private String surename;
 
+	private final transient UserService userService;
+
 	@Inject
-	private transient UserService userService;
+	public UserSearchBean(final UserService userService) {
+		if (userService == null) {
+			throw new NullPointerException();
+		}
+		this.userService = userService;
+	}
 
 	public void clean() {
 		this.logger.log(Level.FINE, "Cleaning search fields");
@@ -100,9 +107,5 @@ public class UserSearchBean extends AbstractPageBean {
 
 	public void setSurename(final String surename) {
 		this.surename = surename;
-	}
-
-	public void setUserService(final UserService userService) {
-		this.userService = userService;
 	}
 }

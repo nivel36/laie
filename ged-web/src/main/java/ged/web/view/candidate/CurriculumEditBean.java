@@ -27,16 +27,23 @@ public class CurriculumEditBean extends AbstractPageBean {
 
 	private Curriculum curriculum;
 
+	private final transient CurriculumService curriculumService;
+
+	private List<Education> education = new ArrayList<>();
+
+	private List<JobExperience> jobExperiences = new ArrayList<>();
+
+	private List<Language> languages = new ArrayList<>();
+
+	private List<Skill> skills = new ArrayList<>();
+
 	@Inject
-	private transient CurriculumService curriculumService;
-
-	private List<Education> education = new ArrayList<Education>();
-
-	private List<JobExperience> jobExperiences = new ArrayList<JobExperience>();
-
-	private List<Language> languages = new ArrayList<Language>();
-
-	private List<Skill> skills = new ArrayList<Skill>();
+	public CurriculumEditBean(final CurriculumService curriculumService) {
+		if (curriculumService == null) {
+			throw new NullPointerException();
+		}
+		this.curriculumService = curriculumService;
+	}
 
 	public void addEducation() {
 		final Education education = new Education();
@@ -131,7 +138,7 @@ public class CurriculumEditBean extends AbstractPageBean {
 	}
 
 	private <E> Set<E> listToSet(final List<E> list) {
-		return new HashSet<E>(list);
+		return new HashSet<>(list);
 	}
 
 	public void removeEducation(final Education education) {

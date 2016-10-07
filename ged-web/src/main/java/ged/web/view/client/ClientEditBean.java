@@ -20,8 +20,15 @@ public class ClientEditBean extends AbstractPageBean {
 
 	private Client client;
 
+	private final transient ClientService clientService;
+
 	@Inject
-	private transient ClientService clientService;
+	public ClientEditBean(final ClientService clientService) {
+		if (clientService == null) {
+			throw new NullPointerException();
+		}
+		this.clientService = clientService;
+	}
 
 	public String cancel() {
 		return CLIENT_SEARCH;
@@ -56,9 +63,5 @@ public class ClientEditBean extends AbstractPageBean {
 
 	public void setClient(final Client client) {
 		this.client = client;
-	}
-
-	public void setClientService(final ClientService clientService) {
-		this.clientService = clientService;
 	}
 }

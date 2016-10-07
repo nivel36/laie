@@ -18,8 +18,15 @@ public class JobOfferEditBean extends AbstractPageBean {
 
 	private JobOffer jobOffer;
 
+	private final transient JobOfferService jobService;
+
 	@Inject
-	private transient JobOfferService jobService;
+	public JobOfferEditBean(final JobOfferService jobService) {
+		if (jobService == null) {
+			throw new NullPointerException();
+		}
+		this.jobService = jobService;
+	}
 
 	public String cancel() {
 		return "jobOfferSearch?faces-redirect=true";

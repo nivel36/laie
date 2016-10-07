@@ -17,26 +17,33 @@ import ged.web.core.view.Paginator;
 @ViewScoped
 public class ClientSearchBean extends AbstractPageBean {
 
+	private transient final static Logger logger = Logger.getLogger(ClientSearchBean.class.getName());
+
 	private static final long serialVersionUID = 2434819723782902618L;
 
-	@Inject
-	private transient ClientService clientService;
-
-	@Inject
-	private transient Logger logger;
+	private final transient ClientService clientService;
 
 	private String name;
 
 	private Paginator<Client> paginator;
 
+	@Inject
+	public ClientSearchBean(final ClientService clientService) {
+		if (clientService == null) {
+			throw new NullPointerException();
+		}
+		this.clientService = clientService;
+
+	}
+
 	public void clean() {
-		this.logger.fine("Clean action performed");
+		logger.fine("Clean action performed");
 		this.name = null;
 		search();
 	}
 
 	public String edit(final Client client) {
-		this.logger.fine("Edit candidate action performed");
+		logger.fine("Edit candidate action performed");
 		this.flash.put("client", client);
 		return "clientEdit?faces-redirect=true";
 	}
@@ -51,34 +58,26 @@ public class ClientSearchBean extends AbstractPageBean {
 
 	@PostConstruct
 	public void init() {
-		this.logger.finest("Init ClientSearchBean");
+		logger.finest("Init ClientSearchBean");
 		this.paginator = new Paginator<>(this.sessionBean.getRowsPerPage());
 		this.paginator.setEntities(this.clientService.searchByName(this.name));
 	}
 
 	public String newClient() {
-		this.logger.fine("New client action performed");
+		logger.fine("New client action performed");
 		return "clientEdit?faces-redirect=true";
 	}
 
 	public void remove(final Client client) {
-		this.logger.fine("Removing client action performed");
+		logger.fine("Removing client action performed");
 		this.clientService.delete(client);
 		search();
 	}
 
 	public void search() {
-		this.logger.fine("Searching for client action performed");
+		logger.fine("Searching for client action performed");
 		final List<Client> clients = this.clientService.searchByName(this.name);
 		this.paginator.setEntities(clients);
-	}
-
-	public void setClientService(final ClientService clientService) {
-		this.clientService = clientService;
-	}
-
-	public void setLogger(final Logger logger) {
-		this.logger = logger;
 	}
 
 	public void setName(final String name) {

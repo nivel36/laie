@@ -19,8 +19,15 @@ public class ActionBean extends AbstractPageBean {
 
 	private List<Action> actions;
 
+	private final transient ActionService actionService;
+
 	@Inject
-	private transient ActionService actionService;
+	public ActionBean(final ActionService actionService) {
+		if (actionService == null) {
+			throw new NullPointerException();
+		}
+		this.actionService = actionService;
+	}
 
 	private String buildUrl(final String className) {
 		final StringBuilder sb = new StringBuilder();

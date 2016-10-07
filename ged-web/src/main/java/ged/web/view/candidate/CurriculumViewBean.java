@@ -27,8 +27,7 @@ public class CurriculumViewBean extends AbstractPageBean {
 
 	private Curriculum curriculum;
 
-	@Inject
-	private transient CurriculumService curriculumService;
+	private final transient CurriculumService curriculumService;
 
 	private List<Education> education;
 
@@ -39,6 +38,14 @@ public class CurriculumViewBean extends AbstractPageBean {
 	private List<Language> languages;
 
 	private List<Skill> skills;
+
+	@Inject
+	public CurriculumViewBean(final CurriculumService curriculumService) {
+		if (curriculumService == null) {
+			throw new NullPointerException();
+		}
+		this.curriculumService = curriculumService;
+	}
 
 	public String editCurriculum() {
 		this.flash.put("curriculum", this.curriculum);
@@ -98,10 +105,6 @@ public class CurriculumViewBean extends AbstractPageBean {
 		} else {
 			error();
 		}
-	}
-
-	public void setCurriculumService(final CurriculumService curriculumService) {
-		this.curriculumService = curriculumService;
 	}
 
 	public void setId(final String id) {

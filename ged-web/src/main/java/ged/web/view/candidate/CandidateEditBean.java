@@ -20,11 +20,21 @@ public class CandidateEditBean extends AbstractPageBean {
 
 	private Candidate candidate;
 
-	@Inject
-	private transient CandidateService candidateService;
+	private final transient CandidateService candidateService;
+
+	private final transient CurriculumService curriculumService;
 
 	@Inject
-	private transient CurriculumService curriculumService;
+	public CandidateEditBean(final CandidateService candidateService, final CurriculumService curriculumService) {
+		if (candidateService == null) {
+			throw new NullPointerException();
+		}
+		if (curriculumService == null) {
+			throw new NullPointerException();
+		}
+		this.candidateService = candidateService;
+		this.curriculumService = curriculumService;
+	}
 
 	public String cancel() {
 		return "candidateSearch?faces-redirect=true";

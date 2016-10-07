@@ -20,22 +20,29 @@ import ged.web.core.view.AbstractPageBean;
 @SessionScoped
 public class BookmarksBean extends AbstractPageBean {
 
+	private transient final static Logger logger = Logger.getLogger(BookmarksBean.class.getName());
+
 	private static final long serialVersionUID = 8786492354769335930L;
 
 	private List<Bookmark> bookmarks;
 
-	@Inject
-	private transient BookmarkService bookmarkService;
+	private final transient BookmarkService bookmarkService;
 
 	@Inject
-	private transient Logger logger;
+	public BookmarksBean(final BookmarkService bookmarkService) {
+		if (bookmarkService == null) {
+			throw new NullPointerException();
+		}
+		this.bookmarkService = bookmarkService;
+	}
 
 	public void add(final AuditedEntity<Long> entity) {
-		this.logger.log(Level.FINE, "Adding bookmark {} for user {}",
+		BookmarksBean.logger.log(Level.FINE, "Adding bookmark {} for user {}",
 				new Object[] { entity, this.sessionBean.getUser().getUsername() });
 		final Bookmark bookmark = createBookmark(entity);
 		if (this.bookmarks.size() > 9) {
-			this.logger.log(Level.WARNING, "Bookmark full for user {}", this.sessionBean.getUser().getUsername());
+			BookmarksBean.logger.log(Level.WARNING, "Bookmark full for user {}",
+					this.sessionBean.getUser().getUsername());
 			addMessage(FacesMessage.SEVERITY_ERROR, "Bookmark full", "Bookmark full");
 			return;
 		}

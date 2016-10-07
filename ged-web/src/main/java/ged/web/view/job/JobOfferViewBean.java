@@ -20,7 +20,7 @@ public class JobOfferViewBean extends AbstractPageBean {
 
 	private static final long serialVersionUID = -1200840678252895578L;
 
-	private List<JobMeeting> conductedJobMeetings = new ArrayList<JobMeeting>();
+	private List<JobMeeting> conductedJobMeetings = new ArrayList<>();
 
 	private boolean editable;
 
@@ -28,10 +28,17 @@ public class JobOfferViewBean extends AbstractPageBean {
 
 	private String jobOfferId;
 
-	@Inject
-	private JobOfferService jobService;
+	private transient final JobOfferService jobService;
 
-	private List<JobMeeting> plannedJobMeetings = new ArrayList<JobMeeting>();
+	private List<JobMeeting> plannedJobMeetings = new ArrayList<>();
+
+	@Inject
+	public JobOfferViewBean(final JobOfferService jobService) {
+		if (jobService == null) {
+			throw new NullPointerException();
+		}
+		this.jobService = jobService;
+	}
 
 	private boolean canEdit() {
 		final User owner = this.jobOffer.getOwner();

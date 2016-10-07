@@ -35,7 +35,7 @@ public final class ChangePasswordPopupBean extends AbstractDialogBean {
 
 	private String repeatPassword;
 
-	private final UserService userService;
+	private transient final UserService userService;
 
 	@Inject
 	public ChangePasswordPopupBean(final UserService userService) {
@@ -48,7 +48,7 @@ public final class ChangePasswordPopupBean extends AbstractDialogBean {
 	public void change() {
 		logger.log(Level.FINE, "Change password action performed");
 		final String output = hashPassword(this.password);
-		User user = this.sessionBean.getUser();
+		final User user = this.sessionBean.getUser();
 		if (user.getPassword().equals(output)) {
 			if (this.newPassword.equals(this.repeatPassword)) {
 				changePassword(user);

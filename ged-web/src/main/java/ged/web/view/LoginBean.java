@@ -8,7 +8,6 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
-import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -20,12 +19,11 @@ import ged.web.core.view.AbstractPageBean;
 @RequestScoped
 public class LoginBean extends AbstractPageBean {
 
+	private transient final static Logger logger = Logger.getLogger(LoginBean.class.getName());
+
 	private static final long serialVersionUID = 8364578958730650005L;
 
 	private Locale locale;
-
-	@Inject
-	private transient Logger logger;
 
 	private transient String password;
 
@@ -55,7 +53,7 @@ public class LoginBean extends AbstractPageBean {
 			request.login(this.username, this.password);
 			return "/faces/index?faces-redirect=true";
 		} catch (final ServletException e) {
-			this.logger.log(Level.WARNING, "Bad login credentials", e);
+			logger.log(Level.WARNING, "Bad login credentials", e);
 			final String message = translate("login.error.unknow_login");
 			final FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, message, null);
 			this.facesContext.addMessage(null, facesMessage);

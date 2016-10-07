@@ -14,7 +14,6 @@ import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.view.ViewScoped;
-import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.apache.pdfbox.cos.COSDocument;
@@ -32,14 +31,13 @@ import ged.web.core.view.AbstractPageBean;
 @ViewScoped
 public class AddCurriculumBean extends AbstractPageBean {
 
+	private transient final static Logger logger = Logger.getLogger(AddCurriculumBean.class.getName());
+
 	private static final long serialVersionUID = 2700151546506672587L;
 
 	private String filename;
 
 	private List<String> images;
-
-	@Inject
-	protected transient Logger logger;
 
 	private String text;
 
@@ -65,7 +63,7 @@ public class AddCurriculumBean extends AbstractPageBean {
 
 	private List<PDXObjectImage> getAllImages(final COSDocument cosDoc) throws FileNotFoundException, IOException {
 		final PDDocument document = new PDDocument(cosDoc);
-		final List<PDXObjectImage> images = new ArrayList<PDXObjectImage>();
+		final List<PDXObjectImage> images = new ArrayList<>();
 		final List<PDPage> pages = getAllPages(document);
 		for (final PDPage page : pages) {
 			extractImagesFromPage(images, page);
@@ -113,7 +111,7 @@ public class AddCurriculumBean extends AbstractPageBean {
 			final PDFTextStripper stripper = new PDFTextStripper();
 			this.text = stripper.getText(pdf);
 		} catch (final IOException e) {
-			this.logger.log(Level.SEVERE, "Can't open file", e);
+			AddCurriculumBean.logger.log(Level.SEVERE, "Can't open file", e);
 			addMessage(FacesMessage.SEVERITY_ERROR, "error.unnexpected_error", "error.unnexpected_error");
 		}
 	}
@@ -126,17 +124,13 @@ public class AddCurriculumBean extends AbstractPageBean {
 		this.images = images;
 	}
 
-	public void setLogger(final Logger logger) {
-		this.logger = logger;
-	}
-
 	public void setText(final String text) {
 		this.text = text;
 	}
 
 	private List<String> writeImages(final List<PDXObjectImage> images, final String name) throws IOException {
 		int counter = 0;
-		final List<String> filenames = new ArrayList<String>();
+		final List<String> filenames = new ArrayList<>();
 		for (final PDXObjectImage image : images) {
 			final StringTokenizer st = new StringTokenizer(this.filename, ".");
 			final String filename = st.nextToken() + (++counter);

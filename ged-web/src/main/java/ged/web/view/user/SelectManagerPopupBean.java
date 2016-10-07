@@ -17,10 +17,9 @@ import ged.web.core.view.Paginator;
 @ViewScoped
 public class SelectManagerPopupBean extends AbstractPageBean {
 
-	private static final long serialVersionUID = 9150785979243375541L;
+	public transient final static Logger logger = Logger.getLogger(SelectManagerPopupBean.class.getName());
 
-	@Inject
-	protected transient Logger logger;
+	private static final long serialVersionUID = 9150785979243375541L;
 
 	private String name;
 
@@ -33,8 +32,15 @@ public class SelectManagerPopupBean extends AbstractPageBean {
 	// El mail del usuario. Necesario para que este no aparezca en la búsqueda
 	private String userEmail;
 
-	@Inject
 	private transient UserService userService;
+
+	@Inject
+	public SelectManagerPopupBean(final UserService userService) {
+		if (userService == null) {
+			throw new NullPointerException();
+		}
+		this.userService = userService;
+	}
 
 	public void cancelPopup() {
 		this.rendered = false;
@@ -81,15 +87,11 @@ public class SelectManagerPopupBean extends AbstractPageBean {
 	}
 
 	public void search() {
-		this.logger.fine("Searching for users");
+		logger.fine("Searching for users");
 		List<User> users = null;
 		users = this.userService.searchByNameAndSurename(this.name, this.surename, this.userEmail);
 		this.paginator.setEntities(users);
 		clearPopupFields();
-	}
-
-	public void setLogger(final Logger logger) {
-		this.logger = logger;
 	}
 
 	public void setName(final String name) {

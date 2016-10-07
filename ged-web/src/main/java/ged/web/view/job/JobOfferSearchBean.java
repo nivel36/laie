@@ -18,19 +18,25 @@ import ged.web.core.view.Paginator;
 @ViewScoped
 public class JobOfferSearchBean extends AbstractPageBean {
 
+	protected transient final static Logger logger = Logger.getLogger(JobOfferSearchBean.class.getName());
+
 	private static final long serialVersionUID = 8777365288968792501L;
 
 	private String clientName;
 
-	@Inject
-	private transient JobOfferService jobService;
-
-	@Inject
-	protected transient Logger logger;
+	private final transient JobOfferService jobOfferService;
 
 	private String name;
 
 	private Paginator<JobOffer> paginator;
+
+	@Inject
+	public JobOfferSearchBean(final JobOfferService jobOfferService) {
+		if (jobOfferService == null) {
+			throw new NullPointerException();
+		}
+		this.jobOfferService = jobOfferService;
+	}
 
 	public boolean canEdit(final JobOffer jobOffer) {
 		final User owner = jobOffer.getOwner();
@@ -76,7 +82,7 @@ public class JobOfferSearchBean extends AbstractPageBean {
 
 	@PostConstruct
 	public void init() {
-		this.paginator = new Paginator<JobOffer>(this.sessionBean.getRowsPerPage());
+		this.paginator = new Paginator<>(this.sessionBean.getRowsPerPage());
 		search();
 	}
 
@@ -85,22 +91,18 @@ public class JobOfferSearchBean extends AbstractPageBean {
 	}
 
 	public void remove(final JobOffer jobOffer) {
-		this.jobService.delete(jobOffer);
+		this.jobOfferService.delete(jobOffer);
 		search();
 	}
 
 	public void search() {
-		this.logger.fine("Searching for JobOffers");
-		final List<JobOffer> jobOffers = this.jobService.searchByNameAndClient(this.name, this.clientName, null);
+		logger.fine("Searching for JobOffers");
+		final List<JobOffer> jobOffers = this.jobOfferService.searchByNameAndClient(this.name, this.clientName, null);
 		this.paginator.setEntities(jobOffers);
 	}
 
 	public void setClientName(final String clientName) {
 		this.clientName = clientName;
-	}
-
-	public void setLogger(final Logger logger) {
-		this.logger = logger;
 	}
 
 	public void setName(final String name) {

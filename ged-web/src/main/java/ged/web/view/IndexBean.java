@@ -24,8 +24,15 @@ public class IndexBean extends AbstractPageBean {
 
 	private List<JobOffer> jobOffers;
 
+	private transient final JobOfferService jobService;
+
 	@Inject
-	private JobOfferService jobService;
+	public IndexBean(final JobOfferService jobService) {
+		if (jobService == null) {
+			throw new NullPointerException();
+		}
+		this.jobService = jobService;
+	}
 
 	public List<Candidate> getCandidates() {
 		return this.candidates;

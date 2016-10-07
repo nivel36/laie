@@ -26,8 +26,7 @@ public class UserViewBean extends AbstractPageBean {
 
 	private Paginator<JobOffer> jobOffers;
 
-	@Inject
-	private transient JobOfferService jobOfferService;
+	private final transient JobOfferService jobOfferService;
 
 	private Paginator<User> team;
 
@@ -35,8 +34,19 @@ public class UserViewBean extends AbstractPageBean {
 
 	private String userId;
 
+	private final transient UserService userService;
+
 	@Inject
-	private transient UserService userService;
+	public UserViewBean(final UserService userService, final JobOfferService jobOfferService) {
+		if (userService == null) {
+			throw new NullPointerException();
+		}
+		if (jobOfferService == null) {
+			throw new NullPointerException();
+		}
+		this.userService = userService;
+		this.jobOfferService = jobOfferService;
+	}
 
 	public String editUser() {
 		this.flash.put("user", this.user);

@@ -21,15 +21,25 @@ public class GlobalSearchBean extends AbstractPageBean {
 
 	private Paginator<JobOffer> jobOfferPaginator;
 
-	@Inject
-	private JobOfferService jobService;
+	private transient final JobOfferService jobService;
 
 	private String text;
 
 	private Paginator<User> userPaginator;
 
+	private transient final UserService userService;
+
 	@Inject
-	private UserService userService;
+	public GlobalSearchBean(final JobOfferService jobService, final UserService userService) {
+		if (jobService == null) {
+			throw new NullPointerException();
+		}
+		if (userService == null) {
+			throw new NullPointerException();
+		}
+		this.jobService = jobService;
+		this.userService = userService;
+	}
 
 	public Paginator<JobOffer> getJobOfferPaginator() {
 		return this.jobOfferPaginator;
