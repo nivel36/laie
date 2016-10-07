@@ -1,6 +1,7 @@
 package ged.ejb.candidate;
 
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.ejb.Stateless;
@@ -20,17 +21,21 @@ public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> imp
 
 	@Inject
 	public CandidateServiceImpl(@Repository final CandidateDao candidateDao) {
-		super();
 		this.candidateDao = candidateDao;
 	}
 
 	@Override
 	public List<FileType> findAllFileTypes() {
+		logger.fine("Find all file types");
 		return this.candidateDao.findAllFileTypes();
 	}
 
 	@Override
 	public Candidate findCandidateAndFiles(final Long id) {
+		if (id == null) {
+			throw new NullPointerException();
+		}
+		logger.log(Level.FINE, "Find candidate with id {} and his files", id);
 		return this.candidateDao.findCandidateAndFiles(id);
 	}
 

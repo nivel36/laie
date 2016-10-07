@@ -17,19 +17,25 @@ import ged.web.core.view.Paginator;
 @ViewScoped
 public class CandidateSearchBean extends AbstractPageBean {
 
+	protected transient final static Logger logger = Logger.getLogger(CandidateSearchBean.class.getName());
+
 	private static final long serialVersionUID = 2434819723782902618L;
 
-	@Inject
 	private transient CandidateService candidateService;
-
-	@Inject
-	protected transient Logger logger;
 
 	private String name;
 
 	private Paginator<Candidate> paginator;
 
 	private String surename;
+
+	@Inject
+	public CandidateSearchBean(final CandidateService candidateService) {
+		if (candidateService == null) {
+			throw new NullPointerException();
+		}
+		this.candidateService = candidateService;
+	}
 
 	public void clean() {
 		this.surename = null;
@@ -65,12 +71,15 @@ public class CandidateSearchBean extends AbstractPageBean {
 	}
 
 	public void remove(final Candidate candidate) {
+		if (candidate == null) {
+			throw new NullPointerException();
+		}
 		this.candidateService.delete(candidate);
 		search();
 	}
 
 	public void search() {
-		this.logger.fine("Searching for candidates");
+		CandidateSearchBean.logger.fine("Searching for candidates");
 		final List<Candidate> candidates = this.candidateService.searchByNameAndSurename(this.name, this.surename);
 		this.paginator.setEntities(candidates);
 	}
