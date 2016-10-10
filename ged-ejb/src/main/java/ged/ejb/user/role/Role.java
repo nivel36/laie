@@ -24,9 +24,6 @@ public class Role extends AbstractEntity {
 		if (this == obj) {
 			return true;
 		}
-		if (!super.equals(obj)) {
-			return false;
-		}
 		if (getClass() != obj.getClass()) {
 			return false;
 		}

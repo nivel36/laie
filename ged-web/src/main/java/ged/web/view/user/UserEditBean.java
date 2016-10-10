@@ -49,10 +49,10 @@ public class UserEditBean extends AbstractPageBean {
 
 	public String cancel() {
 		if (this.user.getId() == null) {
-			logger.finer("Cancel create new user");
+			logger.finer("Cancel new user action performed");
 			return "userSearch.xhtml?faces-redirect=true";
 		} else {
-			logger.log(Level.FINER, "Cancel change user {0}", this.user.getId());
+			logger.log(Level.FINE, "Cancel change user action performed");
 			return "userView.xhtml?id=" + this.user.getId() + "&faces-redirect=true";
 		}
 	}
@@ -103,12 +103,13 @@ public class UserEditBean extends AbstractPageBean {
 	}
 
 	public void removeManager() {
+		logger.log(Level.FINE, "Remove manager action performed");
 		newManager();
 		this.user.setManager(null);
 	}
 
 	public String save() {
-		logger.log(Level.FINE, "Saving user {0}", this.user.getFullName());
+		logger.log(Level.FINE, "Save user action performed");
 		setManager();
 		this.user.setUser(this.sessionBean.getUser());
 		this.userService.insertOrUpdate(this.user);
@@ -173,7 +174,7 @@ public class UserEditBean extends AbstractPageBean {
 		if (value.equals(this.user.getUsername())) {
 			// Si el valor del usuario es el mismo que el que estamos validando
 			// es porque estamos actualizando un valor (que no es el de usuario)
-			// y no hace falta que validemos si el registro existe (que oor otra
+			// y no hace falta que validemos si el registro existe (que por otra
 			// parte sí lo estará)
 			return;
 		}
