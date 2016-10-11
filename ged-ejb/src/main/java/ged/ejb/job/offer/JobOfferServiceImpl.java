@@ -1,7 +1,6 @@
 package ged.ejb.job.offer;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -17,8 +16,6 @@ import ged.ejb.user.User;
 
 @Stateless
 public class JobOfferServiceImpl extends AbstratctAuditedService<JobOffer> implements JobOfferService {
-
-	private static final Logger logger = Logger.getLogger(JobOfferServiceImpl.class.getName());
 
 	private ClientService clientService;
 
