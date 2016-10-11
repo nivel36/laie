@@ -31,10 +31,7 @@ public abstract class AbstractEntity implements Entity<Long>, Serializable {
 			return false;
 		}
 		final AbstractEntity other = (AbstractEntity) obj;
-		if (this.id != other.id) {
-			return false;
-		}
-		return true;
+		return this.id.equals(other.id);
 	}
 
 	@Override
