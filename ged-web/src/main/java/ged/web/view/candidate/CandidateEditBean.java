@@ -1,5 +1,8 @@
 package ged.web.view.candidate;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -15,6 +18,8 @@ import ged.web.core.view.AbstractPageBean;
 @Named
 @ViewScoped
 public class CandidateEditBean extends AbstractPageBean {
+
+	private final static Logger logger = Logger.getLogger(CandidateEditBean.class.getName());
 
 	private static final long serialVersionUID = -4334616177754425866L;
 
@@ -88,8 +93,9 @@ public class CandidateEditBean extends AbstractPageBean {
 	}
 
 	public String save() {
+		logger.log(Level.FINE, "Save candidate action performed");
 		saveCandidate();
-		return "candidateSearch?faces-redirect=true";
+		return "candidateView.xhtml?id=" + this.candidate.getId() + "&faces-redirect=true";
 	}
 
 	private void saveCandidate() {

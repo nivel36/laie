@@ -28,18 +28,19 @@
 				<i class="fa fa-users" /> #{candidateViewBean.candidate}
 			</h1>
 
-			<h:panelGroup layout="block" styleClass="actionPanel">
+			<h:panelGroup id="actionButtons" layout="block"
+				styleClass="actionPanel">
 				<h:commandButton value="#{i18n['action.edit']}"
 					action="#{candidateViewBean.editCandidate}" />
 				<h:commandButton value="#{i18n['bookmark.add_to_bookmarks']}"
 					action="#{bookmarksBean.add(candidateViewBean.candidate)}"
 					rendered="#{not bookmarksBean.isBookmarked(candidateViewBean.candidate)}">
-					<f:ajax process="@form" render=":asideForm:bookmarks actionButtons" />
+					<f:ajax render="actionButtons :asideForm:bookmarks" />
 				</h:commandButton>
 				<h:commandButton value="#{i18n['bookmark.remove_from_bookmarks']}"
 					action="#{bookmarksBean.remove(candidateViewBean.candidate)}"
 					rendered="#{bookmarksBean.isBookmarked(candidateViewBean.candidate)}">
-					<f:ajax process="@form" render=":asideForm:bookmarks actionButtons" />
+					<f:ajax render="actionButtons :asideForm:bookmarks" />
 				</h:commandButton>
 				<h:button value="#{i18n['curriculum.view_curriculum']}"
 					outcome="curriculumView">
@@ -91,7 +92,7 @@
 				</h:panelGroup>
 			</h:panelGroup>
 
-			
+
 			<h:panelGroup layout="block" styleClass="panel">
 				<h1>#{i18n['candidate.social_network']}</h1>
 				<h:panelGroup layout="block" styleClass="textBlock">
@@ -107,7 +108,7 @@
 						value="#{candidateViewBean.candidate.infojobsProfileUrl}" />
 				</h:panelGroup>
 			</h:panelGroup>
-			
+
 			<h:panelGroup layout="block" styleClass="panel">
 				<h1>#{i18n['candidate.work_data']}</h1>
 
@@ -129,7 +130,7 @@
 					<h:outputText value="#{candidateViewBean.candidate.expectedSalary}" />
 				</h:panelGroup>
 			</h:panelGroup>
-			
+
 		</h:form>
 
 		<h:form id="file_form" prependId="false" enctype="multipart/form-data">
