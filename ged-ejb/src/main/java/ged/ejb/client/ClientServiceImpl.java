@@ -20,7 +20,6 @@ public class ClientServiceImpl extends AbstratctAuditedService<Client> implement
 
 	@Inject
 	public ClientServiceImpl(@Repository final ClientDao clientDao) {
-		super();
 		this.clientDao = clientDao;
 	}
 

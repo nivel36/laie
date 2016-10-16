@@ -27,6 +27,8 @@ public class CandidateSearchBean extends AbstractPageBean {
 
 	private Paginator<Candidate> paginator;
 
+	private String position;
+
 	private String surename;
 
 	@Inject
@@ -40,6 +42,7 @@ public class CandidateSearchBean extends AbstractPageBean {
 	public void clean() {
 		this.surename = null;
 		this.name = null;
+		this.position = null;
 		search();
 	}
 
@@ -56,6 +59,10 @@ public class CandidateSearchBean extends AbstractPageBean {
 		return this.paginator;
 	}
 
+	public String getPosition() {
+		return this.position;
+	}
+
 	public String getSurename() {
 		return this.surename;
 	}
@@ -63,7 +70,7 @@ public class CandidateSearchBean extends AbstractPageBean {
 	@PostConstruct
 	public void init() {
 		this.paginator = new Paginator<>(this.sessionBean.getRowsPerPage());
-		this.paginator.setEntities(this.candidateService.searchByNameAndSurename(this.name, this.surename));
+		search();
 	}
 
 	public String newCandidate() {
@@ -80,12 +87,16 @@ public class CandidateSearchBean extends AbstractPageBean {
 
 	public void search() {
 		CandidateSearchBean.logger.fine("Searching for candidates");
-		final List<Candidate> candidates = this.candidateService.searchByNameAndSurename(this.name, this.surename);
+		final List<Candidate> candidates = this.candidateService.search(this.name, this.surename, this.position);
 		this.paginator.setEntities(candidates);
 	}
 
 	public void setName(final String name) {
 		this.name = name;
+	}
+
+	public void setPosition(final String position) {
+		this.position = position;
 	}
 
 	public void setSurename(final String surename) {

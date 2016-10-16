@@ -1,6 +1,5 @@
 package ged.ejb.candidate;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -83,6 +82,9 @@ public class Candidate extends AbstractAuditedEntity {
 	@Column(length = 12)
 	private String phoneNumber2;
 
+	@NotNull
+	@Column(length = 64, nullable = false)
+	@Field
 	private String position;
 
 	private Integer salary;
@@ -93,7 +95,7 @@ public class Candidate extends AbstractAuditedEntity {
 	private String surename;
 
 	@OneToMany
-	private List<Tag> tags = new ArrayList<>();
+	private List<Tag> tags;
 
 	@Override
 	public boolean equals(final Object obj) {

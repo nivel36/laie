@@ -4,16 +4,15 @@ import java.util.List;
 
 public interface CurriculumService {
 
-	public void deleteCurriculum(Curriculum curriculum);
+	void deleteCurriculum(Curriculum curriculum);
 
-	public List<LanguageLevel> findAllLanguageLevels();
+	List<LanguageLevel> findAllLanguageLevels();
 
-	public List<SkillLevel> findAllSkillLevels();
+	List<SkillLevel> findAllSkillLevels();
 
-	public Curriculum findByCandidateId(Long id);
+	Curriculum findByCandidateId(Long id);
 
-	public void insertCurriculum(Curriculum curriculum);
+	void insertCurriculum(Curriculum curriculum);
 
-	public Curriculum updateCurriculum(Curriculum curriculum);
-
+	Curriculum updateCurriculum(Curriculum curriculum);
 }

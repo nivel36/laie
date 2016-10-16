@@ -1,4 +1,4 @@
-package ged.ejb.curriculum.impl;
+package ged.ejb.curriculum;
 
 import java.util.HashMap;
 import java.util.List;
@@ -9,22 +9,19 @@ import java.util.logging.Logger;
 import javax.inject.Inject;
 import javax.persistence.NoResultException;
 
+import ged.ejb.core.model.AbstractDao;
 import ged.ejb.core.model.PersistenceFacade;
 import ged.ejb.core.model.Repository;
-import ged.ejb.curriculum.Curriculum;
-import ged.ejb.curriculum.CurriculumDao;
-import ged.ejb.curriculum.LanguageLevel;
-import ged.ejb.curriculum.SkillLevel;
 
 @Repository
-public class CurriculumDaoImpl implements CurriculumDao {
+public class CurriculumDaoImpl extends AbstractDao<Long, Curriculum> implements CurriculumDao {
+
+	private final Logger logger = Logger.getLogger(CurriculumDaoImpl.class.getName());
 
 	@Inject
-	private Logger logger;
-
-	@Inject
-	@Repository
-	private PersistenceFacade persistenceFacade;
+	public CurriculumDaoImpl(@Repository final PersistenceFacade persistenceFacade) {
+		super(persistenceFacade);
+	}
 
 	@Override
 	public void deleteCurriculum(final Curriculum curriculum) {
@@ -54,6 +51,11 @@ public class CurriculumDaoImpl implements CurriculumDao {
 			curriculum = null;
 		}
 		return curriculum;
+	}
+
+	@Override
+	public Class<Curriculum> getClazz() {
+		return Curriculum.class;
 	}
 
 	@Override

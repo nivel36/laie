@@ -1,4 +1,4 @@
-package ged.ejb.core;
+package ged.web.core;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;

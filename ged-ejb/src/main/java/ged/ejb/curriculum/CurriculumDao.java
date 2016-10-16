@@ -2,21 +2,17 @@ package ged.ejb.curriculum;
 
 import java.util.List;
 
-import javax.ejb.Local;
-
-@Local
 public interface CurriculumDao {
 
-	public void deleteCurriculum(Curriculum curriculum);
+	void deleteCurriculum(final Curriculum curriculum);
 
-	public List<LanguageLevel> findAllLanguageLevels();
+	List<LanguageLevel> findAllLanguageLevels();
 
-	public List<SkillLevel> findAllSkillLevels();
+	List<SkillLevel> findAllSkillLevels();
 
-	public Curriculum findByCandidateId(final Long id);
+	Curriculum findByCandidateId(final Long id);
 
-	public void insertCurriculum(Curriculum curriculum);
+	void insertCurriculum(final Curriculum curriculum);
 
-	public Curriculum updateCurriculum(Curriculum curriculum);
-
+	Curriculum updateCurriculum(final Curriculum curriculum);
 }

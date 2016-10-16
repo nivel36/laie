@@ -17,10 +17,13 @@ public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> imp
 
 	private static final Logger logger = Logger.getLogger(CandidateServiceImpl.class.getName());
 
-	private CandidateDao candidateDao;
+	private final CandidateDao candidateDao;
 
 	@Inject
 	public CandidateServiceImpl(@Repository final CandidateDao candidateDao) {
+		if (candidateDao == null) {
+			throw new NullPointerException();
+		}
 		this.candidateDao = candidateDao;
 	}
 
@@ -45,17 +48,16 @@ public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> imp
 	}
 
 	@Override
-	public List<Candidate> searchByNameAndSurename(final String name, final String surename) {
-		return this.candidateDao.searchByNameAndSurename(name, surename, null);
+	public List<Candidate> search(final String name, final String surename, final String position) {
+		logger.log(Level.FINE, "Search candidate by name {} and surename {}", new Object[] { name, surename });
+		return this.candidateDao.searchByNameAndSurename(name, surename, position, null);
 	}
 
 	@Override
-	public List<Candidate> searchByNameAndSurename(final String name, final String surename,
+	public List<Candidate> searchByNameAndSurename(final String name, final String surename, final String position,
 			final Boolean showDeleted) {
-		return this.candidateDao.searchByNameAndSurename(name, surename, showDeleted);
-	}
-
-	public void setCandidateDao(final CandidateDao candidateDao) {
-		this.candidateDao = candidateDao;
+		logger.log(Level.FINE, "Search candidate by name {} and surename {}. Show deleteted {}",
+				new Object[] { name, surename, showDeleted });
+		return this.candidateDao.searchByNameAndSurename(name, surename, position, showDeleted);
 	}
 }

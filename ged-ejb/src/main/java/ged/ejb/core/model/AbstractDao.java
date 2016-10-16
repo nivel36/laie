@@ -5,7 +5,7 @@ import java.util.List;
 @Repository
 public abstract class AbstractDao<K, T extends Entity<K>> implements Dao<K, T> {
 
-	protected PersistenceFacade persistenceFacade;
+	protected final PersistenceFacade persistenceFacade;
 
 	protected AbstractDao(final PersistenceFacade persistenceFacade) {
 		if (persistenceFacade == null) {

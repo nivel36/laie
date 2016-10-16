@@ -54,7 +54,7 @@ public class CandidateDaoJpa extends AbstractDao<Long, Candidate> implements Can
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
-	public List<Candidate> searchByNameAndSurename(final String name, final String surename,
+	public List<Candidate> searchByNameAndSurename(final String name, final String surename, final String position,
 			final Boolean showDeleted) {
 		final EntityManager em = this.persistenceFacade.getEm();
 		final FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(em);
@@ -66,6 +66,9 @@ public class CandidateDaoJpa extends AbstractDao<Long, Candidate> implements Can
 		}
 		if (surename != null) {
 			bj.must(qb.keyword().onField("surename").matching(surename).createQuery());
+		}
+		if (position != null) {
+			bj.must(qb.keyword().onField("position").matching(position).createQuery());
 		}
 		if ((showDeleted == null) || !showDeleted) {
 			bj.must(qb.keyword().onField("deleted").matching(true).createQuery()).not();
