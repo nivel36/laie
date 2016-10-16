@@ -23,12 +23,11 @@ import ged.ejb.user.User;
 @Repository
 public class JobOfferDaoJpa extends AbstractDao<Long, JobOffer> implements JobOfferDao {
 
-	private final Logger logger;
+	private final static Logger logger = Logger.getLogger(JobOfferDaoJpa.class.getName());
 
 	@Inject
-	public JobOfferDaoJpa(final Logger logger, @Repository final PersistenceFacade persistenceFacade) {
+	public JobOfferDaoJpa(@Repository final PersistenceFacade persistenceFacade) {
 		super(persistenceFacade);
-		this.logger = logger;
 	}
 
 	@Override
@@ -36,7 +35,7 @@ public class JobOfferDaoJpa extends AbstractDao<Long, JobOffer> implements JobOf
 		if (owner == null) {
 			throw new NullPointerException();
 		}
-		this.logger.log(Level.FINE, "Buscando todas las ofertas del usuario ", owner.getFullName());
+		logger.log(Level.FINE, "Buscando todas las ofertas del usuario ", owner.getFullName());
 		final Map<String, Object> parameters = new HashMap<>();
 		parameters.put("owner", owner);
 		return this.persistenceFacade.findByTypedQuery(JobOffer.class, "JobOffer.findAllByOwner", parameters, 10, 0);

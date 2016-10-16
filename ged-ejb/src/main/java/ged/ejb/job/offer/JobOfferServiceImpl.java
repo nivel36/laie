@@ -27,7 +27,6 @@ public class JobOfferServiceImpl extends AbstratctAuditedService<JobOffer> imple
 
 	@Inject
 	public JobOfferServiceImpl(@Repository final JobOfferDao jobDao, final ClientService clientService) {
-		super();
 		this.jobDao = jobDao;
 	}
 
