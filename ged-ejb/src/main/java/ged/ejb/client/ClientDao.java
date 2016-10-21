@@ -6,8 +6,7 @@ import ged.ejb.core.model.Dao;
 
 public interface ClientDao extends Dao<Long, Client> {
 
-	List<Client> searchByName(final String clientName);
-
 	Client findByName(final String clientName);
 
+	List<Client> searchByName(final String clientName, final boolean showDeleted);
 }

@@ -13,7 +13,7 @@
 	<ui:param name="selectedMenu" value="clients" />
 
 	<ui:define name="content">
-		<h:form id="form">
+		<h:form id="newForm">
 			<h1 class="header">
 				<i class="fa fa-industry" /> #{i18n['client.clients']}
 			</h1>
@@ -22,6 +22,8 @@
 				<h:commandButton value="#{i18n['action.new']}"
 					action="#{clientSearchBean.newClient}" immediate="true" />
 			</h:panelGroup>
+		</h:form>
+		<h:form id="form">
 			<h:panelGroup layout="block" styleClass="panel">
 				<h1>#{i18n['client.search']}</h1>
 				<h:outputLabel for="name" value="#{i18n['client.name']}">
@@ -30,10 +32,10 @@
 				</h:outputLabel>
 
 				<h:panelGroup layout="block" styleClass="buttonGroup">
-					<h:commandButton value="#{i18n['action.clean']}"
-						action="#{clientSearchBean.clean}" />
 					<h:commandButton value="#{i18n['action.search']}"
 						action="#{clientSearchBean.search}" />
+					<h:commandButton value="#{i18n['action.clean']}"
+						action="#{clientSearchBean.clean}" />
 				</h:panelGroup>
 			</h:panelGroup>
 

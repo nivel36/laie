@@ -21,12 +21,19 @@ public class JobOfferServiceImpl extends AbstratctAuditedService<JobOffer> imple
 
 	private static final Logger logger = Logger.getLogger(JobOfferServiceImpl.class.getName());
 
-	private ClientService clientService;
+	private final ClientService clientService;
 
 	private final JobOfferDao jobDao;
 
 	@Inject
 	public JobOfferServiceImpl(@Repository final JobOfferDao jobDao, final ClientService clientService) {
+		if (jobDao == null) {
+			throw new NullPointerException();
+		}
+		if (clientService == null) {
+			throw new NullPointerException();
+		}
+		this.clientService = clientService;
 		this.jobDao = jobDao;
 	}
 
@@ -35,6 +42,12 @@ public class JobOfferServiceImpl extends AbstratctAuditedService<JobOffer> imple
 	protected void doInsert(final JobOffer jobOffer) {
 		putClientOnJobOffer(jobOffer);
 		getDao().insert(jobOffer);
+	}
+
+	@Override
+	public List<JobOffer> findAllByClient(final Client client) {
+		logger.log(Level.FINE, "Find all job Offers of the client {}", client.getName());
+		return this.jobDao.findAllByClient(client);
 	}
 
 	@Override

@@ -45,7 +45,7 @@ public class ClientServiceImpl extends AbstratctAuditedService<Client> implement
 			clients = this.clientDao.findAll();
 		} else {
 			ClientServiceImpl.logger.log(Level.FINE, "Buscando clientes con nombre {}", clientName);
-			clients = this.clientDao.searchByName(clientName);
+			clients = this.clientDao.searchByName(clientName, false);
 		}
 		return clients;
 	}

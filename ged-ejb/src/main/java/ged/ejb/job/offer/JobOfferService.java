@@ -2,15 +2,17 @@ package ged.ejb.job.offer;
 
 import java.util.List;
 
+import ged.ejb.client.Client;
 import ged.ejb.core.AuditedService;
 import ged.ejb.user.User;
 
 public interface JobOfferService extends AuditedService<JobOffer> {
 
-	List<JobOffer> findAllByOwner(final User owner);
+	List<JobOffer> findAllByClient(final Client client);
 
-	List<JobOffer> searchByNameAndClient(String name, String clientName, Boolean showDeleted);
+	List<JobOffer> findAllByOwner(final User owner);
 
 	List<JobOffer> findLastJobOffers(User owner);
 
+	List<JobOffer> searchByNameAndClient(String name, String clientName, Boolean showDeleted);
 }

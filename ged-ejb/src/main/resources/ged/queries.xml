@@ -47,6 +47,14 @@
 					LEFT JOIN FETCH c.skills 
 					WHERE c.candidate.id = :candidateId</query>
 	</named-query>
+	
+	<named-query name="JobOffer.findAllByClient">
+		<query>
+		<![CDATA[
+		SELECT j FROM JobOffer j WHERE j.client = :client AND j.deleted <> TRUE
+		]]>
+		</query>
+	</named-query>
 
 	<named-query name="JobOffer.findByName">
 		<query>SELECT j FROM JobOffer j WHERE j.name = :name</query>

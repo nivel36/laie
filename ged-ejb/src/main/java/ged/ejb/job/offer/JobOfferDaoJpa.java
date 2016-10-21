@@ -15,6 +15,7 @@ import org.hibernate.search.jpa.Search;
 import org.hibernate.search.query.dsl.BooleanJunction;
 import org.hibernate.search.query.dsl.QueryBuilder;
 
+import ged.ejb.client.Client;
 import ged.ejb.core.model.AbstractDao;
 import ged.ejb.core.model.PersistenceFacade;
 import ged.ejb.core.model.Repository;
@@ -31,6 +32,17 @@ public class JobOfferDaoJpa extends AbstractDao<Long, JobOffer> implements JobOf
 	}
 
 	@Override
+	public List<JobOffer> findAllByClient(final Client client) {
+		if (client == null) {
+			throw new NullPointerException();
+		}
+		logger.log(Level.FINE, "SELECT all the client offers", client.getName());
+		final Map<String, Object> parameters = new HashMap<>();
+		parameters.put("client", client);
+		return this.persistenceFacade.findByTypedQuery(JobOffer.class, "JobOffer.findAllByClient", parameters, 0, 0);
+	}
+
+	@Override
 	public List<JobOffer> findAllByOwner(final User owner) {
 		if (owner == null) {
 			throw new NullPointerException();
@@ -38,14 +50,14 @@ public class JobOfferDaoJpa extends AbstractDao<Long, JobOffer> implements JobOf
 		logger.log(Level.FINE, "Buscando todas las ofertas del usuario ", owner.getFullName());
 		final Map<String, Object> parameters = new HashMap<>();
 		parameters.put("owner", owner);
-		return this.persistenceFacade.findByTypedQuery(JobOffer.class, "JobOffer.findAllByOwner", parameters, 10, 0);
+		return this.persistenceFacade.findByTypedQuery(JobOffer.class, "JobOffer.findAllByOwner", parameters, 0, 0);
 	}
 
 	@Override
 	public List<JobOffer> findLastJobOffers(final User owner) {
 		final Map<String, Object> parameters = new HashMap<>();
 		parameters.put("owner", owner);
-		return this.persistenceFacade.findByTypedQuery(JobOffer.class, "JobOffer.findLastJobOffers", parameters, 10, 0);
+		return this.persistenceFacade.findByTypedQuery(JobOffer.class, "JobOffer.findLastJobOffers", parameters, 0, 0);
 	}
 
 	@Override

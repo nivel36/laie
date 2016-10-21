@@ -5,6 +5,7 @@ import java.util.ResourceBundle;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.application.FacesMessage.Severity;
+import javax.faces.application.NavigationHandler;
 import javax.faces.component.UIComponent;
 import javax.faces.context.Flash;
 import javax.inject.Inject;
@@ -39,6 +40,12 @@ public abstract class AbstractPageBean extends AbstractBean {
 	private ResourceBundle getResourceBundle(final String filename) {
 		final Locale locale = this.facesContext.getViewRoot().getLocale();
 		return ResourceBundle.getBundle(filename, locale);
+	}
+
+	protected void redirectTo(final String url) {
+		final NavigationHandler navigationHandler = this.facesContext.getApplication().getNavigationHandler();
+		navigationHandler.handleNavigation(this.facesContext, null, url + "?faces-redirect=true");
+		this.facesContext.renderResponse();
 	}
 
 	protected String translate(final String message) {

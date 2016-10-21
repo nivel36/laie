@@ -5,6 +5,7 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:i18n="http://legion.com/i18n"
+	xmlns:a="http://java.sun.com/jsf/composite/legion"
 	template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
@@ -20,31 +21,39 @@
 		</f:metadata>
 
 		<h:form id="form">
-
 			<input type="hidden" id="clientId"
 				value="#{clientViewBean.client.id}" />
 
 			<h1 class="header">
-				<i class="fa fa-users" /> #{clientViewBean.client}
+				<i class="fa fa-client" /> #{clientViewBean.client}
 			</h1>
 
-			<h:panelGroup layout="block" styleClass="actionPanel">
+			<h:panelGroup id="actionButtons" layout="block"
+				styleClass="actionPanel">
+				<h:commandButton value="#{i18n['action.undelete']}"
+					action="#{clientViewBean.undeleteClient}" immediate="true"
+					rendered="#{clientViewBean.client.deleted}" />
 				<h:commandButton value="#{i18n['action.edit']}"
-					action="#{clientViewBean.editCandidate}" />
+					action="#{clientViewBean.editClient}" immediate="true"
+					rendered="#{not clientViewBean.client.deleted}" />
 				<h:commandButton value="#{i18n['bookmark.add_to_bookmarks']}"
 					action="#{bookmarksBean.add(clientViewBean.client)}"
-					rendered="#{not bookmarksBean.isBookmarked(clientViewBean.client)}">
-					<f:ajax process="@form" render=":asideForm:bookmarks actionButtons" />
+					immediate="true"
+					rendered="#{(not bookmarksBean.isBookmarked(clientViewBean.client))	and (not clientViewBean.client.deleted)}">
+					<f:ajax render="actionButtons :asideForm:bookmarks" />
 				</h:commandButton>
 				<h:commandButton value="#{i18n['bookmark.remove_from_bookmarks']}"
 					action="#{bookmarksBean.remove(clientViewBean.client)}"
+					immediate="true"
 					rendered="#{bookmarksBean.isBookmarked(clientViewBean.client)}">
-					<f:ajax process="@form" render=":asideForm:bookmarks actionButtons" />
+					<f:ajax render="actionButtons :asideForm:bookmarks" />
 				</h:commandButton>
-				<h:button value="#{i18n['curriculum.view_curriculum']}"
-					outcome="curriculumView">
-					<f:param name="id" value="#{clientViewBean.client.id}" />
-				</h:button>
+				<h:commandLink id="exportPdf" styleClass="iconButton">
+					<i class="fa fa-file-pdf-o fa-lg" /> #{i18n['action.export']}</h:commandLink>
+				<h:commandLink id="exportExcel" styleClass="iconButton"
+					action="#{clientViewBean.export}">
+					<i class="fa fa-file-excel-o fa-lg" /> #{i18n['action.export']}
+				</h:commandLink>
 			</h:panelGroup>
 
 			<h:panelGroup layout="block" styleClass="panel">
@@ -52,8 +61,7 @@
 
 				<h:panelGroup layout="block" styleClass="textBlock">
 					<h:outputText styleClass="label" value="#{i18n['client.name']}:" />
-					<h:outputText
-						value="#{clientViewBean.client.name} #{clientViewBean.client.surename}" />
+					<h:outputText value="#{clientViewBean.client.name}" />
 				</h:panelGroup>
 
 				<h:panelGroup layout="block" styleClass="textBlock">
@@ -62,149 +70,58 @@
 				</h:panelGroup>
 
 				<h:panelGroup layout="block" styleClass="textBlock">
-					<h:outputText styleClass="label" value="#{i18n['address.city']} :" />
+					<h:outputText styleClass="label" value="#{i18n['client.city']}:" />
 					<h:outputText value="#{clientViewBean.client.address.city}" />
 				</h:panelGroup>
 
 				<h:panelGroup layout="block" styleClass="textBlock">
-					<h:outputText styleClass="label" value="#{i18n['address.state']} :" />
+					<h:outputText styleClass="label" value="#{i18n['client.state']}:" />
 					<h:outputText value="#{clientViewBean.client.address.state}" />
 				</h:panelGroup>
-			</h:panelGroup>			
-		</h:form>
-
-		<h:form id="file_form" prependId="false" enctype="multipart/form-data">
-			<h:panelGroup layout="block" styleClass="modalPanel"
-				rendered="#{clientViewBean.addingFile or clientViewBean.editingFile}">
 			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="panel"
-				style="#{clientViewBean.style}">
-				<h1>#{i18n['file.files']}</h1>
 
-				<h:panelGroup layout="block"
-					rendered="#{not clientViewBean.addingFile and not clientViewBean.editingFile}">
-					<h:outputText value="#{i18n['file.no_files']}"
-						rendered="#{empty clientViewBean.client.files}" />
+			<h:panelGrid styleClass="panelGrid" columns="2" cellpadding="10px">
+				<h:panelGroup layout="block" styleClass="panel">
+					<h1>#{i18n['job.job_offers']}</h1>
 
-					<h:dataTable var="file" id="files"
-						value="#{clientViewBean.client.files}"
-						rendered="#{not empty clientViewBean.client.files}"
+					<h:outputText value="#{i18n['client.no_job_offers_found']}"
+						rendered="#{empty clientViewBean.jobOffers.dataList}" />
+
+					<h:dataTable var="jobOffer" id="jobOffers"
+						value="#{clientViewBean.jobOffers.dataList}"
+						rendered="#{not empty clientViewBean.jobOffers.dataList}"
 						styleClass="dataTable">
-
 						<h:column>
 							<f:facet name="header">
-								<h:outputText value="#{i18n['file.name']}" />
+								<h:outputText value="#{i18n['job.name']}" />
 							</f:facet>
-							<h:outputText value="#{file.id}" />
+							<h:outputText value="#{jobOffer.name}" />
 						</h:column>
 
 						<h:column>
 							<f:facet name="header">
-								<h:outputText value="#{i18n['file.name']}" />
+								<h:outputText value="#{i18n['job.date_closed']}" />
 							</f:facet>
-							<h:outputText value="#{file.name}" />
-						</h:column>
-
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="#{i18n['file.type']}" />
-							</f:facet>
-							<h:outputText value="#{file.fileType}" />
-						</h:column>
-
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="#{i18n['file.date']}" />
-							</f:facet>
-							<h:outputText value="#{file.date}" />
+							<h:outputText value="#{jobOffer.dateClosed}">
+								<f:convertDateTime pattern="dd / MM / yyyy" />
+							</h:outputText>
 						</h:column>
 
 						<h:column>
 							<f:facet name="header">
 								<h:outputText value="#{i18n['action.action']}" />
 							</f:facet>
-							<h:commandLink action="#{clientViewBean.openFile(file)}"
-								value="#{i18n['action.open']}" />
-								|
-							<h:commandLink action="#{clientViewBean.editFile(file)}"
-								value="#{i18n['action.edit']}">
-								<f:ajax execute="file_form" render="@form" />
-							</h:commandLink>
-									|
-							<h:commandLink action="#{clientViewBean.removeFile(file)}"
-								value="#{i18n['action.remove']}">
-								<f:ajax execute="file_form" render="@form" />
-							</h:commandLink>
+							<h:link value="#{i18n['action.view']}"
+								outcome="/faces/jobOffer/jobOfferView">
+								<f:param name="id" value="#{jobOffer.id}" />
+							</h:link>
 						</h:column>
 					</h:dataTable>
-
-					<h:panelGroup layout="block" styleClass="buttonGroup">
-						<h:commandButton value="#{i18n['action.add']}"
-							action="#{clientViewBean.addFile}" immediate="true">
-							<f:ajax render="@form" />
-						</h:commandButton>
-					</h:panelGroup>
+					<a:paginator paginator="#{clientViewBean.jobOffers}"
+						showComboPages="false" />
 				</h:panelGroup>
-
-				<h:panelGroup layout="block"
-					rendered="#{clientViewBean.addingFile  and not clientViewBean.editingFile}">
-					<h:outputLabel value="#{i18n['file.name']}" styleClass="required"></h:outputLabel>
-					<h:inputFile id="uploadFile" value="#{clientViewBean.part}"
-						label="#{i18n['client.name']}" required="true"
-						styleClass="#{not component.valid ? 'inputError' : ''}" />
-					<h:message for="uploadFile" errorClass="error" />
-
-					<h:panelGroup layout="block" styleClass="buttonGroup">
-						<h:commandButton value="#{i18n['action.upload']}"
-							action="#{clientViewBean.upload}">
-							<f:ajax execute="@form" render="@form" />
-						</h:commandButton>
-						<h:commandButton value="#{i18n['action.cancel']}"
-							action="#{clientViewBean.cancelAddFile}" immediate="true">
-							<f:ajax execute="" render="@form" />
-						</h:commandButton>
-					</h:panelGroup>
-				</h:panelGroup>
-
-				<h:panelGroup layout="block"
-					rendered="#{clientViewBean.editingFile}">
-					<h:outputLabel value="#{i18n['file.name']}"
-						styleClass="large required">
-						<h:inputText id="fileName" value="#{clientViewBean.file.name}"
-							label="#{i18n['file.name']}" required="true"
-							styleClass="#{not component.valid ? 'inputError' : ''}" />
-						<h:message for="fileName" errorClass="error" />
-					</h:outputLabel>
-
-					<h:outputLabel value="#{i18n['file.type']}" styleClass="required">
-						<h:selectOneMenu id="fileType"
-							value="#{clientViewBean.file.fileType}">
-							<f:selectItems var="fileType" itemValue="#{fileType.name}"
-								value="#{applicationBean.fileTypes}"
-								itemLabel="#{i18n:translate(fileType.name)}"
-								styleClass="#{not component.valid ? 'inputError' : ''}" />
-						</h:selectOneMenu>
-						<h:message for="fileType" errorClass="error" />
-					</h:outputLabel>
-
-					<h:outputLabel value="#{i18n['file.description']}"
-						styleClass="large">
-						<h:inputText id="description"
-							value="#{clientViewBean.file.description}"
-							label="#{i18n['file.description']}"
-							styleClass="#{not component.valid ? 'inputError' : ''}" />
-						<h:message for="description" errorClass="error" />
-					</h:outputLabel>
-
-					<h:panelGroup layout="block" styleClass="buttonGroup">
-						<h:commandButton value="#{i18n['action.save']}"
-							action="#{clientViewBean.saveFile}" />
-						<h:commandButton value="#{i18n['action.cancel']}"
-							action="#{clientViewBean.cancelAddFile}" immediate="true">
-						</h:commandButton>
-					</h:panelGroup>
-				</h:panelGroup>
-			</h:panelGroup>
+			</h:panelGrid>
+			<h:messages />
 		</h:form>
 	</ui:define>
 </ui:composition>
