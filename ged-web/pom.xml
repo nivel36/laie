@@ -9,6 +9,11 @@
 	<artifactId>ged-web</artifactId>
 	<packaging>war</packaging>
 
+	<properties>
+		<timestamp>${maven.build.timestamp}</timestamp>
+		<maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
+	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>igochan</groupId>
@@ -48,6 +53,15 @@
 		<plugins>
 			<plugin>
 				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<webResources>
+						<resource>
+							<filtering>true</filtering>
+							<directory>src/config</directory>
+							<targetPath>WEB-INF/classes/ged</targetPath>
+						</resource>
+					</webResources>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
