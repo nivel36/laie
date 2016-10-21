@@ -8,13 +8,13 @@ import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.inject.Produces;
 import javax.faces.application.Application;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import ged.ejb.core.Cache;
 import ged.ejb.core.FileType;
+import ged.ejb.core.util.ConfigurationProperty;
 import ged.ejb.curriculum.LanguageLevel;
 import ged.ejb.curriculum.SkillLevel;
 import ged.ejb.user.role.Role;
@@ -25,8 +25,9 @@ public class ApplicationBean extends AbstractBean {
 
 	private static final long serialVersionUID = 6394915115616408285L;
 
-	@Produces
-	private static final String VERSION = "0.1";
+	@Inject
+	@ConfigurationProperty(value = "ged.buildtime")
+	private String buildtime;
 
 	@Inject
 	private Cache cache;
@@ -35,6 +36,14 @@ public class ApplicationBean extends AbstractBean {
 
 	@Inject
 	protected transient Logger logger;
+
+	@Inject
+	@ConfigurationProperty(value = "ged.version")
+	private String version;
+
+	public String getBuildtime() {
+		return this.buildtime;
+	}
 
 	public List<FileType> getFileTypes() {
 		return this.cache.getFileTypes();
@@ -56,6 +65,10 @@ public class ApplicationBean extends AbstractBean {
 		return this.cache.getSkillLevels();
 	}
 
+	public String getVersion() {
+		return this.version;
+	}
+
 	@PostConstruct
 	public void init() {
 		loadLocales();
@@ -71,11 +84,19 @@ public class ApplicationBean extends AbstractBean {
 		this.locales.add(defaultLocale);
 	}
 
+	public void setBuildtime(final String buildtime) {
+		this.buildtime = buildtime;
+	}
+
 	public void setLocales(final List<Locale> locales) {
 		this.locales = locales;
 	}
 
 	public void setLogger(final Logger logger) {
 		this.logger = logger;
+	}
+
+	public void setVersion(final String version) {
+		this.version = version;
 	}
 }

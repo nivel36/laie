@@ -65,7 +65,7 @@ public class WebResources {
 		if (value == null) {
 			final boolean valueRequired = annotation.required();
 			if (valueRequired) {
-				throw new IllegalStateException("Property {} " + key + " not found");
+				throw new IllegalStateException("Property " + key + " not found");
 			}
 		}
 		return value;
