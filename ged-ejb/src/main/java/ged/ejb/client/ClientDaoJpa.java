@@ -19,7 +19,6 @@ import org.hibernate.search.query.dsl.QueryBuilder;
 import ged.ejb.core.model.AbstractDao;
 import ged.ejb.core.model.PersistenceFacade;
 import ged.ejb.core.model.Repository;
-import ged.ejb.user.User;
 
 @Repository
 public class ClientDaoJpa extends AbstractDao<Long, Client> implements ClientDao {
@@ -56,7 +55,7 @@ public class ClientDaoJpa extends AbstractDao<Long, Client> implements ClientDao
 		this.logger.log(Level.FINE, "SEARCH client by name {} ", clientName);
 		final EntityManager em = this.persistenceFacade.getEm();
 		final FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(em);
-		final QueryBuilder qb = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(User.class)
+		final QueryBuilder qb = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(Client.class)
 				.get();
 
 		final BooleanJunction<BooleanJunction> bj = qb.bool();
@@ -68,9 +67,9 @@ public class ClientDaoJpa extends AbstractDao<Long, Client> implements ClientDao
 		}
 		final Query persistenceQuery;
 		if (bj.isEmpty()) {
-			persistenceQuery = fullTextEntityManager.createFullTextQuery(qb.all().createQuery(), User.class);
+			persistenceQuery = fullTextEntityManager.createFullTextQuery(qb.all().createQuery(), Client.class);
 		} else {
-			persistenceQuery = fullTextEntityManager.createFullTextQuery(bj.createQuery(), User.class);
+			persistenceQuery = fullTextEntityManager.createFullTextQuery(bj.createQuery(), Client.class);
 		}
 		return persistenceQuery.getResultList();
 	}

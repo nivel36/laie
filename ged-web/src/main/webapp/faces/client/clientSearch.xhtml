@@ -76,7 +76,7 @@
 						|
 						<h:commandLink action="#{clientSearchBean.remove(client)}"
 							value="#{i18n['action.remove']}">
-							<f:ajax execute="@form" render="@form" />
+							<f:ajax execute="@this" render="@form" />
 						</h:commandLink>
 					</h:column>
 				</h:dataTable>

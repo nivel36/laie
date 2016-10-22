@@ -11,12 +11,14 @@ import javax.persistence.OneToMany;
 
 import org.hibernate.search.annotations.ContainedIn;
 import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
 
 import ged.ejb.core.Address;
 import ged.ejb.core.model.AbstractAuditedEntity;
 import ged.ejb.job.offer.JobOffer;
 
 @Entity
+@Indexed
 public class Client extends AbstractAuditedEntity {
 
 	private static final long serialVersionUID = -5319357138994738654L;
@@ -28,7 +30,7 @@ public class Client extends AbstractAuditedEntity {
 	private String cif;
 
 	@ContainedIn
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "client", orphanRemoval = true)
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "client", orphanRemoval = true)
 	private List<JobOffer> jobOffers;
 
 	@Field

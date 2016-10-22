@@ -39,14 +39,7 @@ public class ClientServiceImpl extends AbstratctAuditedService<Client> implement
 
 	@Override
 	public List<Client> searchByName(final String clientName) {
-		final List<Client> clients;
-		if (clientName == null) {
-			ClientServiceImpl.logger.log(Level.FINE, "Buscando todos los clientes");
-			clients = this.clientDao.findAll();
-		} else {
-			ClientServiceImpl.logger.log(Level.FINE, "Buscando clientes con nombre {}", clientName);
-			clients = this.clientDao.searchByName(clientName, false);
-		}
-		return clients;
+		logger.log(Level.FINE, "Buscando clientes con nombre {}", clientName);
+		return this.clientDao.searchByName(clientName, false);
 	}
 }
