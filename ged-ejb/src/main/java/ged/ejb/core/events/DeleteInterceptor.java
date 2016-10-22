@@ -15,7 +15,7 @@ import ged.ejb.core.model.AuditedEntity;
 @Audited(action = Type.DELETE)
 public class DeleteInterceptor extends AbstractInterceptor {
 
-	private final static Logger log = Logger.getLogger(DeleteInterceptor.class.getName());
+	private static final Logger log = Logger.getLogger(DeleteInterceptor.class.getName());
 
 	private final Event<AuditedEntity<Long>> postDeleteEvent;
 

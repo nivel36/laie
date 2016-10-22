@@ -15,7 +15,7 @@ import ged.ejb.core.model.AuditedEntity;
 @Audited(action = Type.UPDATE)
 public class UpdateInterceptor extends AbstractInterceptor {
 
-	private final static Logger log = Logger.getLogger(UpdateInterceptor.class.getName());
+	private static final Logger log = Logger.getLogger(UpdateInterceptor.class.getName());
 
 	private final Event<AuditedEntity<Long>> postUpdateEvent;
 

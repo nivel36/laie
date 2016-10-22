@@ -21,13 +21,13 @@ public class GlobalSearchBean extends AbstractPageBean {
 
 	private Paginator<JobOffer> jobOfferPaginator;
 
-	private transient final JobOfferService jobService;
+	private final transient JobOfferService jobService;
 
 	private String text;
 
 	private Paginator<User> userPaginator;
 
-	private transient final UserService userService;
+	private final transient UserService userService;
 
 	@Inject
 	public GlobalSearchBean(final JobOfferService jobService, final UserService userService) {

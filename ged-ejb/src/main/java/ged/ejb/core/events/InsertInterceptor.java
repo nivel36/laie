@@ -15,7 +15,7 @@ import ged.ejb.core.model.AuditedEntity;
 @Audited(action = Type.INSERT)
 public class InsertInterceptor extends AbstractInterceptor {
 
-	private final static Logger log = Logger.getLogger(InsertInterceptor.class.getName());
+	private static final Logger log = Logger.getLogger(InsertInterceptor.class.getName());
 
 	private final Event<AuditedEntity<Long>> postPersistEvent;
 

@@ -4,17 +4,13 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 
-import ged.ejb.core.model.AbstractEntity;
-import ged.ejb.user.User;
+import ged.ejb.core.model.AbstractRecordEntity;
 
 @Entity
-public class Action extends AbstractEntity {
+public class Action extends AbstractRecordEntity {
 
 	public static final String DELETE = "DELETE";
 
@@ -32,19 +28,6 @@ public class Action extends AbstractEntity {
 	@Temporal(TemporalType.TIME)
 	private Date date;
 
-	@Column(length = 64)
-	private String entityClass;
-
-	private Long entityId;
-
-	@Column(length = 128)
-	private String text;
-
-	@NotNull
-	@ManyToOne
-	@JoinColumn(name = "userId", nullable = false)
-	private User user;
-
 	@Override
 	public boolean equals(final Object obj) {
 		if (this == obj) {
@@ -57,25 +40,18 @@ public class Action extends AbstractEntity {
 			return false;
 		}
 		final Action other = (Action) obj;
-		if (this.entityClass == null) {
-			if (other.entityClass != null) {
+		if (this.actionPerformed == null) {
+			if (other.actionPerformed != null) {
 				return false;
 			}
-		} else if (!this.entityClass.equals(other.entityClass)) {
+		} else if (!this.actionPerformed.equals(other.actionPerformed)) {
 			return false;
 		}
-		if (this.entityId == null) {
-			if (other.entityId != null) {
+		if (this.date == null) {
+			if (other.date != null) {
 				return false;
 			}
-		} else if (!this.entityId.equals(other.entityId)) {
-			return false;
-		}
-		if (this.user == null) {
-			if (other.user != null) {
-				return false;
-			}
-		} else if (!this.user.equals(other.user)) {
+		} else if (!this.date.equals(other.date)) {
 			return false;
 		}
 		return true;
@@ -89,29 +65,12 @@ public class Action extends AbstractEntity {
 		return this.date;
 	}
 
-	public String getEntityClass() {
-		return this.entityClass;
-	}
-
-	public Long getEntityId() {
-		return this.entityId;
-	}
-
-	public String getText() {
-		return this.text;
-	}
-
-	public User getUser() {
-		return this.user;
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = (prime * result) + ((this.entityClass == null) ? 0 : this.entityClass.hashCode());
-		result = (prime * result) + ((this.entityId == null) ? 0 : this.entityId.hashCode());
-		result = (prime * result) + ((this.user == null) ? 0 : this.user.hashCode());
+		result = (prime * result) + ((this.actionPerformed == null) ? 0 : this.actionPerformed.hashCode());
+		result = (prime * result) + ((this.date == null) ? 0 : this.date.hashCode());
 		return result;
 	}
 
@@ -123,24 +82,4 @@ public class Action extends AbstractEntity {
 		this.date = date;
 	}
 
-	public void setEntityClass(final String entityClass) {
-		this.entityClass = entityClass;
-	}
-
-	public void setEntityId(final Long entityId) {
-		this.entityId = entityId;
-	}
-
-	public void setText(final String text) {
-		this.text = text;
-	}
-
-	public void setUser(final User user) {
-		this.user = user;
-	}
-
-	@Override
-	public String toString() {
-		return this.text;
-	}
 }

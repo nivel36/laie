@@ -15,7 +15,7 @@ import ged.ejb.core.model.AuditedEntity;
 @Audited(action = Type.UNDELETE)
 public class UndeleteInterceptor extends AbstractInterceptor {
 
-	private final static Logger log = Logger.getLogger(UndeleteInterceptor.class.getName());
+	private static final Logger log = Logger.getLogger(UndeleteInterceptor.class.getName());
 
 	private final Event<AuditedEntity<Long>> postUndeleteEvent;
 
