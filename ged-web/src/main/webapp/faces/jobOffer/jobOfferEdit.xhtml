@@ -13,6 +13,7 @@
 	<ui:param name="selectedMenu" value="offers" />
 
 	<ui:define name="content">
+
 		<h:form id="form">
 			<input type="hidden" id="jobOfferId"
 				value="#{jobOfferEditBean.jobOffer.id}" />
@@ -61,9 +62,17 @@
 						value="#{jobOfferEditBean.jobOffer.dateOpened}"
 						label="#{i18n['job.date_opened']}"
 						styleClass="#{not component.valid ? 'inputError' : ''}">
-						<f:convertDateTime pattern="MM / yyyy" />
+						<f:convertDateTime pattern="dd/MM/yyyy" />
 					</h:inputText>
 					<h:message for="dateOpened" errorClass="error" />
+					<script type="text/javascript">
+					// <![CDATA[       
+					  var opts = {                      
+					          formElements:{"form:dateOpened":"d-sl-m-sl-Y"},
+					  };      
+					  datePickerController.createDatePicker(opts);
+					// ]]>
+					</script>
 				</h:outputLabel>
 
 				<h:outputLabel for="dateClosed" value="#{i18n['job.date_closed']}"
@@ -73,10 +82,19 @@
 						label="#{i18n['job.date_closed']}"
 						styleClass="#{not component.valid ? 'inputError' : ''}"
 						required="true">
-						<f:convertDateTime pattern="MM / yyyy" />
+						<f:convertDateTime pattern="dd/MM/yyyy" />
 					</h:inputText>
 					<h:message for="dateClosed" errorClass="error" />
+					<script type="text/javascript">
+					// <![CDATA[       
+					  var opts = {                      
+					          formElements:{"form:dateClosed":"d-sl-m-sl-Y"},
+					  };      
+					  datePickerController.createDatePicker(opts);
+					// ]]>
+					</script>
 				</h:outputLabel>
+
 
 				<h:outputLabel for="description" value="#{i18n['job.description']}"
 					styleClass="largest">
