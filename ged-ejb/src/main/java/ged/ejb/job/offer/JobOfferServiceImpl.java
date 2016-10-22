@@ -68,9 +68,11 @@ public class JobOfferServiceImpl extends AbstratctAuditedService<JobOffer> imple
 	}
 
 	private void putClientOnJobOffer(final JobOffer jobOffer) {
-		final Client client = this.clientService.findByName(jobOffer.getClient().getName());
+		Client client = this.clientService.findByName(jobOffer.getClient().getName());
 		if (client == null) {
-			this.clientService.insert(jobOffer.getClient());
+			client = jobOffer.getClient();
+			client.setUser(jobOffer.getUser());
+			this.clientService.insert(client);
 		} else {
 			jobOffer.setClient(client);
 		}
