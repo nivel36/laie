@@ -23,7 +23,7 @@ import ged.web.core.view.AbstractPageBean;
 @ViewScoped
 public class UserEditBean extends AbstractPageBean {
 
-	protected transient static final Logger logger = Logger.getLogger(UserEditBean.class.getName());
+	protected static final transient Logger logger = Logger.getLogger(UserEditBean.class.getName());
 
 	private static final long serialVersionUID = 1923340646020120203L;
 

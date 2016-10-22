@@ -35,7 +35,7 @@ public final class ChangePasswordPopupBean extends AbstractDialogBean {
 
 	private String repeatPassword;
 
-	private transient final UserService userService;
+	private final transient UserService userService;
 
 	@Inject
 	public ChangePasswordPopupBean(final UserService userService) {
@@ -51,7 +51,7 @@ public final class ChangePasswordPopupBean extends AbstractDialogBean {
 		final User user = this.sessionBean.getUser();
 		if (user.getPassword().equals(output)) {
 			if (this.newPassword.equals(this.repeatPassword)) {
-				changePassword(user);
+				this.sessionBean.setUser(changePassword(user));
 				hide();
 			} else {
 				addErrorToField(this.newPasswordComponent, "login.error.password_not_equals");
@@ -61,12 +61,11 @@ public final class ChangePasswordPopupBean extends AbstractDialogBean {
 		}
 	}
 
-	private void changePassword(User user) {
+	private User changePassword(final User user) {
 		final String hash = hashPassword(this.newPassword);
 		user.setPassword(hash);
 		user.setUser(user);
-		user = this.userService.update(user);
-		this.sessionBean.setUser(user);
+		return this.userService.update(user);
 	}
 
 	@Override

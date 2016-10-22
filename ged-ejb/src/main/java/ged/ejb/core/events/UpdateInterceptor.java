@@ -13,7 +13,7 @@ import ged.ejb.core.model.AuditedEntity;
 
 @Interceptor
 @Audited(action = Type.UPDATE)
-public class UpdateInterceptor {
+public class UpdateInterceptor extends AbstractInterceptor {
 
 	private final static Logger log = Logger.getLogger(UpdateInterceptor.class.getName());
 
@@ -36,18 +36,8 @@ public class UpdateInterceptor {
 
 	@AroundInvoke
 	public Object fireEvent(final InvocationContext joinPoint) throws Exception {
-		final Object[] parameters = joinPoint.getParameters();
-		if (parameters.length != 1) {
-			throw new IllegalArgumentException("Arguments: " + parameters.length);
-		}
+		final AuditedEntity<Long> auditedEntity = getAuditedEntity(joinPoint);
 		log.finer("Update event fired");
-		final Object entityObject = parameters[0];
-		if (!(entityObject instanceof AuditedEntity)) {
-			log.severe("Not audited entity");
-			throw new IllegalArgumentException("Not audited entity");
-		}
-		@SuppressWarnings("unchecked")
-		final AuditedEntity<Long> auditedEntity = (AuditedEntity<Long>) entityObject;
 		this.preUpdateEvent.fire(auditedEntity);
 		final Object returnObject = joinPoint.proceed();
 		this.postUpdateEvent.fire(auditedEntity);

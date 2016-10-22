@@ -24,7 +24,7 @@ import ged.ejb.user.User;
 @Repository
 public class JobOfferDaoJpa extends AbstractDao<Long, JobOffer> implements JobOfferDao {
 
-	private final static Logger logger = Logger.getLogger(JobOfferDaoJpa.class.getName());
+	private static final Logger logger = Logger.getLogger(JobOfferDaoJpa.class.getName());
 
 	@Inject
 	public JobOfferDaoJpa(@Repository final PersistenceFacade persistenceFacade) {

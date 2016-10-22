@@ -17,7 +17,7 @@ import ged.web.core.view.Paginator;
 @ViewScoped
 public class SelectManagerPopupBean extends AbstractPageBean {
 
-	public transient final static Logger logger = Logger.getLogger(SelectManagerPopupBean.class.getName());
+	public static final transient Logger logger = Logger.getLogger(SelectManagerPopupBean.class.getName());
 
 	private static final long serialVersionUID = 9150785979243375541L;
 

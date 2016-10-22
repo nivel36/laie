@@ -31,7 +31,7 @@ import ged.web.core.view.AbstractPageBean;
 @ViewScoped
 public class AddCurriculumBean extends AbstractPageBean {
 
-	private transient final static Logger logger = Logger.getLogger(AddCurriculumBean.class.getName());
+	private static final transient Logger logger = Logger.getLogger(AddCurriculumBean.class.getName());
 
 	private static final long serialVersionUID = 2700151546506672587L;
 

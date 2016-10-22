@@ -19,7 +19,7 @@ import ged.web.core.view.AbstractPageBean;
 @ViewScoped
 public class CandidateEditBean extends AbstractPageBean {
 
-	private final static Logger logger = Logger.getLogger(CandidateEditBean.class.getName());
+	private static final Logger logger = Logger.getLogger(CandidateEditBean.class.getName());
 
 	private static final long serialVersionUID = -4334616177754425866L;
 

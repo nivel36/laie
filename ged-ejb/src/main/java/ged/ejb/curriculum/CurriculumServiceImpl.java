@@ -12,7 +12,7 @@ import ged.ejb.core.model.Repository;
 @Stateless
 public class CurriculumServiceImpl implements CurriculumService {
 
-	private final static Logger logger = Logger.getLogger(CurriculumServiceImpl.class.getName());
+	private static final Logger logger = Logger.getLogger(CurriculumServiceImpl.class.getName());
 
 	private final CurriculumDao curriculumDao;
 

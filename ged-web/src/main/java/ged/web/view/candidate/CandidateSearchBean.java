@@ -17,7 +17,7 @@ import ged.web.core.view.Paginator;
 @ViewScoped
 public class CandidateSearchBean extends AbstractPageBean {
 
-	private transient final static Logger logger = Logger.getLogger(CandidateSearchBean.class.getName());
+	private static final transient Logger logger = Logger.getLogger(CandidateSearchBean.class.getName());
 
 	private static final long serialVersionUID = 2434819723782902618L;
 

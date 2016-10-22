@@ -44,10 +44,7 @@ public class UserServiceImpl extends AbstratctAuditedService<User> implements Us
 		if (user == null) {
 			throw new NullPointerException("user");
 		}
-		if (!user.hasRole("ADMIN")) {
-			logger.log(Level.FINE, "UPDATE user {0}", user.getFullName());
-			return this.userDao.update(user);
-		} else if (this.userDao.existsMoreThanOneAdmin()) {
+		if (!user.hasRole("ADMIN") || this.userDao.existsMoreThanOneAdmin()) {
 			logger.log(Level.FINE, "UPDATE user {0}", user.getFullName());
 			return this.userDao.update(user);
 		} else {

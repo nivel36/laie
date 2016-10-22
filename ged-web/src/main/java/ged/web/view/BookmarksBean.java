@@ -20,7 +20,7 @@ import ged.web.core.view.AbstractPageBean;
 @SessionScoped
 public class BookmarksBean extends AbstractPageBean {
 
-	private transient final static Logger logger = Logger.getLogger(BookmarksBean.class.getName());
+	private static final transient Logger logger = Logger.getLogger(BookmarksBean.class.getName());
 
 	private static final long serialVersionUID = 8786492354769335930L;
 

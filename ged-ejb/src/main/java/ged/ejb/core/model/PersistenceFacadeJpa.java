@@ -124,8 +124,9 @@ public class PersistenceFacadeJpa implements PersistenceFacade {
 		return result;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public List<?> findByQuery(final String nombreQuery, final Map<String, Object> parameters, final int pageSize,
+	public List<Object> findByQuery(final String nombreQuery, final Map<String, Object> parameters, final int pageSize,
 			final int pageNum) {
 		this.logger.log(Level.FINE, "Lanzando la getByQuery {0}", nombreQuery);
 		final Query query = this.em.createNamedQuery(nombreQuery);
@@ -135,7 +136,7 @@ public class PersistenceFacadeJpa implements PersistenceFacade {
 	}
 
 	@Override
-	public <K, T> T findByTypedQuery(final Class<T> entityClass, final String namedQuery,
+	public <T> T findByTypedQuery(final Class<T> entityClass, final String namedQuery,
 			final Map<String, Object> parameters) {
 		this.logger.log(Level.FINE, "Ejecutando la getByTypedQuerySingleResult: {0}", namedQuery);
 		final TypedQuery<T> query = this.em.createNamedQuery(namedQuery, entityClass);
@@ -144,7 +145,7 @@ public class PersistenceFacadeJpa implements PersistenceFacade {
 	}
 
 	@Override
-	public <K, T> List<T> findByTypedQuery(final Class<T> entityClass, final String namedQuery,
+	public <T> List<T> findByTypedQuery(final Class<T> entityClass, final String namedQuery,
 			final Map<String, Object> parameters, final int pageSize, final int pageNum) {
 		this.logger.log(Level.FINE, "Ejecutando la getByTypedQuery: {0}", namedQuery);
 		final TypedQuery<T> query = this.em.createNamedQuery(namedQuery, entityClass);

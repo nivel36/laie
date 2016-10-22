@@ -19,12 +19,17 @@ import ged.ejb.user.User;
 @Stateless
 public class BookmarkServiceImpl extends AbstractService<Long, Bookmark> implements BookmarkService {
 
-	@Inject
-	@Repository
-	private BookmarkDao dao;
+	private static final Logger logger = Logger.getLogger(BookmarkServiceImpl.class.getName());
+
+	private final BookmarkDao dao;
 
 	@Inject
-	private Logger logger;
+	public BookmarkServiceImpl(@Repository final BookmarkDao dao) {
+		if (dao == null) {
+			throw new NullPointerException();
+		}
+		this.dao = dao;
+	}
 
 	@Override
 	public void delete(final User user, final String entityClass, final Long entityId) {
@@ -49,7 +54,7 @@ public class BookmarkServiceImpl extends AbstractService<Long, Bookmark> impleme
 			final Bookmark bookmark = this.dao.find(user, entityClass, entityId);
 			delete(bookmark);
 		} catch (final NoResultException ex) {
-			this.logger.log(Level.FINE, "No bookmark find to delete", ex);
+			logger.log(Level.FINE, "No bookmark find to delete", ex);
 		}
 	}
 

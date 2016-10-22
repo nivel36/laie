@@ -18,10 +18,9 @@ import ged.web.core.view.Paginator;
 @ViewScoped
 public class UserSearchBean extends AbstractPageBean {
 
-	private static final long serialVersionUID = 2434819723782902618L;
+	private final transient static Logger logger = Logger.getLogger(UserSearchBean.class.getName());
 
-	@Inject
-	protected transient Logger logger;
+	private static final long serialVersionUID = 2434819723782902618L;
 
 	private String name;
 
@@ -40,7 +39,7 @@ public class UserSearchBean extends AbstractPageBean {
 	}
 
 	public void clean() {
-		this.logger.log(Level.FINE, "Cleaning search fields");
+		logger.log(Level.FINE, "Cleaning search fields");
 		cleanSearchFields();
 		search();
 	}
@@ -51,13 +50,13 @@ public class UserSearchBean extends AbstractPageBean {
 	}
 
 	public void deleteUser(final User user) {
-		this.logger.log(Level.FINE, "Deleting an user");
+		logger.log(Level.FINE, "Deleting an user");
 		this.userService.delete(user);
 		search();
 	}
 
 	public String editUser(final User user) {
-		this.logger.log(Level.FINE, "Editing an user");
+		logger.log(Level.FINE, "Editing an user");
 		this.flash.put("user", user);
 		return "userEdit?faces-redirect=true";
 	}
@@ -76,18 +75,18 @@ public class UserSearchBean extends AbstractPageBean {
 
 	@PostConstruct
 	public void init() {
-		this.logger.log(Level.FINER, "Init UserSearchBean");
+		logger.log(Level.FINER, "Init UserSearchBean");
 		this.paginator = new Paginator<>(this.sessionBean.getRowsPerPage());
 		search();
 	}
 
 	public String newUser() {
-		this.logger.log(Level.FINE, "Creating a new user");
+		logger.log(Level.FINE, "Creating a new user");
 		return "userEdit?faces-redirect=true";
 	}
 
 	public void search() {
-		this.logger.fine("Searching for users");
+		logger.fine("Searching for users");
 		final List<User> users;
 		if ((this.name == null) && (this.surename == null)) {
 			users = this.userService.findAll();
