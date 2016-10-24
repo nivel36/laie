@@ -88,7 +88,7 @@ a.date-picker-control:link, a.date-picker-control:visited {
 	cursor: pointer;
 	visibility: visible;
 	text-decoration: none;
-	vertical-align: top;
+	vertical-align: text-bottom;
 }
 
 a.date-picker-control:hover, a.date-picker-control:active, a.date-picker-control:focus,
