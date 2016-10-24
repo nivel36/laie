@@ -41,9 +41,24 @@
 					<h:inputText id="client"
 						value="#{jobOfferEditBean.jobOffer.client.name}"
 						label="#{i18n['job.client']}" required="true"
-						styleClass="#{not component.valid ? 'inputError' : ''}" />
+						styleClass="#{not component.valid ? 'inputError' : ''}">
+						<f:ajax event="blur"
+							listener="#{jobOfferEditBean.updateClientState}" execute="@this"
+							render=":form:cif_wrapper" />
+					</h:inputText>
 					<h:message for="client" errorClass="error" />
 				</h:outputLabel>
+
+				<h:panelGroup styleClass="block" id="cif_wrapper">
+					<h:outputLabel for="cif" value="#{i18n['job.cif']}"
+						styleClass="required" rendered="#{jobOfferEditBean.newClient}">
+						<h:inputText id="cif"
+							value="#{jobOfferEditBean.jobOffer.client.cif}"
+							label="#{i18n['job.cif']}" required="true"
+							styleClass="#{not component.valid ? 'inputError' : ''}" />
+						<h:message for="cif" errorClass="error" />
+					</h:outputLabel>
+				</h:panelGroup>
 
 				<h2>#{i18n['job.detail']}</h2>
 

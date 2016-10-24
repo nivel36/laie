@@ -24,6 +24,12 @@ public class ClientServiceImpl extends AbstratctAuditedService<Client> implement
 	}
 
 	@Override
+	public boolean existsClient(final String clientName) {
+		// TODO arreglar
+		return findByName(clientName) != null;
+	}
+
+	@Override
 	public Client findByName(final String clientName) {
 		if (clientName == null) {
 			throw new NullPointerException("El nombre del cliente no puede ser nulo");
