@@ -60,13 +60,17 @@
 				<h:panelGroup layout="block" styleClass="textBlock">
 					<h:outputText styleClass="label"
 						value="#{i18n['job.date_opened']}:" />
-					<h:outputText value="#{jobOfferViewBean.jobOffer.dateOpened}" />
+					<h:outputText value="#{jobOfferViewBean.jobOffer.dateOpened}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
 				</h:panelGroup>
 
 				<h:panelGroup layout="block" styleClass="textBlock">
 					<h:outputText styleClass="label"
 						value="#{i18n['job.date_closed']}:" />
-					<h:outputText value="#{jobOfferViewBean.jobOffer.dateClosed}" />
+					<h:outputText value="#{jobOfferViewBean.jobOffer.dateClosed}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
 				</h:panelGroup>
 
 				<h:panelGroup layout="block" styleClass="textBlock">
