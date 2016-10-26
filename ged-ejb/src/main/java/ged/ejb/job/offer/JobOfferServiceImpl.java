@@ -7,6 +7,8 @@ import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
+import ged.ejb.candidate.Candidate;
+import ged.ejb.candidate.CandidateDao;
 import ged.ejb.client.Client;
 import ged.ejb.client.ClientService;
 import ged.ejb.core.AbstratctAuditedService;
@@ -14,6 +16,7 @@ import ged.ejb.core.events.Audited;
 import ged.ejb.core.events.Audited.Type;
 import ged.ejb.core.model.Dao;
 import ged.ejb.core.model.Repository;
+import ged.ejb.job.JobCandidature;
 import ged.ejb.user.User;
 
 @Stateless
@@ -21,20 +24,36 @@ public class JobOfferServiceImpl extends AbstratctAuditedService<JobOffer> imple
 
 	private static final Logger logger = Logger.getLogger(JobOfferServiceImpl.class.getName());
 
+	private final CandidateDao candidateDao;
+
 	private final ClientService clientService;
 
 	private final JobOfferDao jobDao;
 
 	@Inject
-	public JobOfferServiceImpl(@Repository final JobOfferDao jobDao, final ClientService clientService) {
-		if (jobDao == null) {
+	public JobOfferServiceImpl(@Repository final JobOfferDao jobDao, final ClientService clientService,
+			@Repository final CandidateDao candidateDao) {
+		if ((jobDao == null) || (clientService == null) || (candidateDao == null)) {
 			throw new NullPointerException();
 		}
-		if (clientService == null) {
-			throw new NullPointerException();
-		}
+
 		this.clientService = clientService;
+		this.candidateDao = candidateDao;
 		this.jobDao = jobDao;
+	}
+
+	@Override
+	public void addJobCandidature(final JobOffer jobOffer, final Candidate candidate) {
+		if ((jobOffer == null) || (candidate == null)) {
+			throw new NullPointerException();
+		}
+		final JobCandidature jobCandidature = new JobCandidature();
+		jobCandidature.setCandidate(candidate);
+		jobCandidature.setJobOffer(jobOffer);
+		jobOffer.addJobCandidature(jobCandidature);
+		candidate.addJobCandidature(jobCandidature);
+		this.jobDao.update(jobOffer);
+		this.candidateDao.update(candidate);
 	}
 
 	@Override

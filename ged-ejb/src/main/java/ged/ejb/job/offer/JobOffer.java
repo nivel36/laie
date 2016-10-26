@@ -63,7 +63,7 @@ public class JobOffer extends AbstractAuditedEntity {
 	private String description;
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "jobOffer", orphanRemoval = true)
-	private List<JobCandidature> jobCandidatures = new ArrayList<>();
+	private List<JobCandidature> jobCandidatures;
 
 	@NotNull
 	@Column(length = 128, nullable = false)
@@ -89,6 +89,9 @@ public class JobOffer extends AbstractAuditedEntity {
 	public void addJobCandidature(final JobCandidature jobCandidature) {
 		if (jobCandidature == null) {
 			throw new NullPointerException();
+		}
+		if (this.jobCandidatures == null) {
+			this.jobCandidatures = new ArrayList<>();
 		}
 		jobCandidature.setJobOffer(this);
 		this.jobCandidatures.add(jobCandidature);

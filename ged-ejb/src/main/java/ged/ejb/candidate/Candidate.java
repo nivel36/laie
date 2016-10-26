@@ -1,5 +1,6 @@
 package ged.ejb.candidate;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -59,7 +60,7 @@ public class Candidate extends AbstractAuditedEntity {
 	private String infojobsProfileUrl;
 
 	@OneToMany(mappedBy = "candidate", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<JobCandidature> jobCandidature;
+	private List<JobCandidature> jobCandidatures;
 
 	private String linkedinProfileUrl;
 
@@ -96,6 +97,17 @@ public class Candidate extends AbstractAuditedEntity {
 
 	@OneToMany
 	private List<Tag> tags;
+
+	public void addJobCandidature(final JobCandidature jobCandidature) {
+		if (jobCandidature == null) {
+			throw new NullPointerException();
+		}
+		if (this.jobCandidatures == null) {
+			this.jobCandidatures = new ArrayList<>();
+		}
+		jobCandidature.setCandidate(this);
+		this.jobCandidatures.add(jobCandidature);
+	}
 
 	@Override
 	public boolean equals(final Object obj) {
@@ -172,8 +184,8 @@ public class Candidate extends AbstractAuditedEntity {
 		return this.infojobsProfileUrl;
 	}
 
-	public List<JobCandidature> getJobCandidature() {
-		return this.jobCandidature;
+	public List<JobCandidature> getJobCandidatures() {
+		return this.jobCandidatures;
 	}
 
 	public String getLinkedinProfileUrl() {
@@ -255,8 +267,8 @@ public class Candidate extends AbstractAuditedEntity {
 		this.infojobsProfileUrl = infojobsProfileUrl;
 	}
 
-	public void setJobCandidature(final List<JobCandidature> jobCandidature) {
-		this.jobCandidature = jobCandidature;
+	public void setJobCandidature(final List<JobCandidature> jobCandidatures) {
+		this.jobCandidatures = jobCandidatures;
 	}
 
 	public void setLinkedinProfileUrl(final String linkedinProfileUrl) {
