@@ -5,7 +5,6 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import ged.ejb.candidate.Candidate;
 import ged.ejb.client.Client;
 import ged.ejb.client.ClientService;
 import ged.ejb.job.offer.JobOffer;
@@ -17,6 +16,8 @@ import ged.web.core.view.AbstractPageBean;
 public class JobOfferEditBean extends AbstractPageBean {
 
 	private static final long serialVersionUID = 7362448981391968171L;
+
+	private static final String URL = "/faces/jobOffer/jobOfferEdit";
 
 	private final transient ClientService clientService;
 
@@ -36,13 +37,6 @@ public class JobOfferEditBean extends AbstractPageBean {
 		}
 		this.jobService = jobService;
 		this.clientService = clientService;
-	}
-
-	public void addJobCandidature(final Candidate candidate) {
-		if (candidate == null) {
-			throw new NullPointerException();
-		}
-		this.jobService.addJobCandidature(this.jobOffer, candidate);
 	}
 
 	public String cancel() {

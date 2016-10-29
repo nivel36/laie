@@ -8,6 +8,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import ged.ejb.candidate.Candidate;
 import ged.ejb.job.meeting.JobMeeting;
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
@@ -38,6 +39,17 @@ public class JobOfferViewBean extends AbstractPageBean {
 			throw new NullPointerException();
 		}
 		this.jobService = jobService;
+	}
+
+	public String addCandidate() {
+		return "/faces/candidate/candidateSearch?faces-redirect=true";
+	}
+
+	public void addJobCandidature(final Candidate candidate) {
+		if (candidate == null) {
+			throw new NullPointerException();
+		}
+		this.jobService.addJobCandidature(this.jobOffer, candidate);
 	}
 
 	private boolean canEdit() {

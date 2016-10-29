@@ -103,31 +103,6 @@ input[type="text"], select {
 		rgba(0, 0, 0, .3) 100%);
 }
 
-.breadcrumb {
-	font: 1em "Roboto", sans-serif;
-	position: relative;
-	background: #839aae;
-	height: 23px;
-}
-
-.breadcrumb a {
-	text-transform: capitalize;
-	display: block;
-	font-weight: bold;
-	text-decoration: none;
-	padding: 4px 2px;
-	color: #fff;
-	text-shadow: 0 1px rgba(64, 64, 64, 1);
-}
-
-.breadcrumb a:before {
-	content: "> ";
-}
-
-.breadcrumb li {
-	float: left;
-}
-
 .table {
 	margin: 1em;
 	width: calc(100% - 2em);

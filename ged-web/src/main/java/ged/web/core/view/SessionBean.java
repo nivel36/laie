@@ -1,7 +1,5 @@
 package ged.web.core.view;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -19,26 +17,12 @@ public class SessionBean extends AbstractBean {
 
 	private static final long serialVersionUID = -8079836415042166193L;
 
-	private final List<BreadcrumbState> breadcrumb = new ArrayList<>();
-
 	private Locale locale;
 
 	private User user;
 
 	@Inject
 	private transient UserService userService;
-
-	public void addBreadcrumb(final BreadcrumbState breadcrumbState) {
-		this.breadcrumb.add(breadcrumbState);
-	}
-
-	public void clearBreadcrumb() {
-		this.breadcrumb.clear();
-	}
-
-	public List<BreadcrumbState> getBreadcrumb() {
-		return this.breadcrumb;
-	}
 
 	public Locale getLocale() {
 		return this.locale;

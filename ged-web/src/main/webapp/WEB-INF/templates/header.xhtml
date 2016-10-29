@@ -49,12 +49,5 @@
 				</ul>
 			</nav>
 		</h:form>
-		<h:form id="breadcrumbForm">
-			<ul>
-				<ui:repeat var="bc" value="#{sessionBean.breadcrumb}">
-					<li><h:commandLink value="#{bc.title}" action="#{bc.getUrl}" /></li>
-				</ui:repeat>
-			</ul>
-		</h:form>
 	</ui:insert>
 </ui:composition>
