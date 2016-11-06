@@ -3,6 +3,7 @@ package ged.ejb.candidate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -37,8 +38,9 @@ public class CandidateDaoJpa extends AbstractDao<Long, Candidate> implements Can
 
 	@Override
 	public Candidate findCandidateAndFiles(final Long id) {
-		if (id == null) {
-			throw new NullPointerException();
+		Objects.requireNonNull(id);
+		if (id < 1) {
+			throw new IllegalArgumentException("id: " + id);
 		}
 		this.logger.log(Level.FINE, "Buscando al candidateo con id {}", id);
 		final Map<String, Object> properties = new HashMap<>();

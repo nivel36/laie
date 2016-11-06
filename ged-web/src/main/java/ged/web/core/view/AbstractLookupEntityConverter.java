@@ -7,9 +7,9 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 
-import ged.ejb.core.model.AbstractLookupEntity;
+import ged.ejb.core.maintenance.AbstractEnumEntity;
 
-public abstract class AbstractLookupEntityConverter<T extends AbstractLookupEntity> implements Converter {
+public abstract class AbstractLookupEntityConverter<T extends AbstractEnumEntity> implements Converter {
 
 	protected ApplicationBean getAppBean() {
 		FacesContext context = FacesContext.getCurrentInstance();

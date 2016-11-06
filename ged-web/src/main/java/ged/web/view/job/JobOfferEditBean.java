@@ -1,5 +1,7 @@
 package ged.web.view.job;
 
+import java.util.Objects;
+
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -17,8 +19,6 @@ public class JobOfferEditBean extends AbstractPageBean {
 
 	private static final long serialVersionUID = 7362448981391968171L;
 
-	private static final String URL = "/faces/jobOffer/jobOfferEdit";
-
 	private final transient ClientService clientService;
 
 	private JobOffer jobOffer;
@@ -29,12 +29,8 @@ public class JobOfferEditBean extends AbstractPageBean {
 
 	@Inject
 	public JobOfferEditBean(final JobOfferService jobService, final ClientService clientService) {
-		if (jobService == null) {
-			throw new NullPointerException();
-		}
-		if (clientService == null) {
-			throw new NullPointerException();
-		}
+		Objects.requireNonNull(jobService);
+		Objects.requireNonNull(clientService);
 		this.jobService = jobService;
 		this.clientService = clientService;
 	}

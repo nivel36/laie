@@ -3,6 +3,7 @@ package ged.ejb.core.action;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -25,9 +26,7 @@ public class ActionDaoJpa extends AbstractDao<Long, Action> implements ActionDao
 
 	@Override
 	public List<Action> findAllByUser(final User user) {
-		if (user == null) {
-			throw new NullPointerException();
-		}
+		Objects.requireNonNull(user);
 		logger.log(Level.FINE, "Find all actions of the user {}", user.getFullName());
 		final Map<String, Object> parameters = new HashMap<>();
 		parameters.put("user", user);

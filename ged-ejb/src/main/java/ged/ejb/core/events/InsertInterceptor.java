@@ -1,5 +1,6 @@
 package ged.ejb.core.events;
 
+import java.util.Objects;
 import java.util.logging.Logger;
 
 import javax.enterprise.event.Event;
@@ -24,12 +25,8 @@ public class InsertInterceptor extends AbstractInterceptor {
 	@Inject
 	public InsertInterceptor(@PostPersist final Event<AuditedEntity<Long>> postPersistEvent,
 			@PrePersist final Event<AuditedEntity<Long>> prePersistEvent) {
-		if (postPersistEvent == null) {
-			throw new NullPointerException();
-		}
-		if (prePersistEvent == null) {
-			throw new NullPointerException();
-		}
+		Objects.requireNonNull(postPersistEvent);
+		Objects.requireNonNull(prePersistEvent);
 		this.postPersistEvent = postPersistEvent;
 		this.prePersistEvent = prePersistEvent;
 	}

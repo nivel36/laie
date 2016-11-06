@@ -1,6 +1,7 @@
 package ged.web.view.user;
 
 import java.util.Locale;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -37,12 +38,8 @@ public class UserEditBean extends AbstractPageBean {
 
 	@Inject
 	public UserEditBean(final RoleService roleService, final UserService userService) {
-		if (roleService == null) {
-			throw new NullPointerException();
-		}
-		if (userService == null) {
-			throw new NullPointerException();
-		}
+		Objects.requireNonNull(roleService);
+		Objects.requireNonNull(userService);
 		this.roleService = roleService;
 		this.userService = userService;
 	}

@@ -1,5 +1,6 @@
 package ged.web.view.candidate;
 
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -31,12 +32,8 @@ public class CandidateEditBean extends AbstractPageBean {
 
 	@Inject
 	public CandidateEditBean(final CandidateService candidateService, final CurriculumService curriculumService) {
-		if (candidateService == null) {
-			throw new NullPointerException();
-		}
-		if (curriculumService == null) {
-			throw new NullPointerException();
-		}
+		Objects.requireNonNull(candidateService);
+		Objects.requireNonNull(curriculumService);
 		this.candidateService = candidateService;
 		this.curriculumService = curriculumService;
 	}

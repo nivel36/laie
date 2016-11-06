@@ -1,6 +1,7 @@
 package ged.web.view.job;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
@@ -32,9 +33,7 @@ public class JobOfferSearchBean extends AbstractPageBean {
 
 	@Inject
 	public JobOfferSearchBean(final JobOfferService jobOfferService) {
-		if (jobOfferService == null) {
-			throw new NullPointerException();
-		}
+		Objects.requireNonNull(jobOfferService);
 		this.jobOfferService = jobOfferService;
 	}
 

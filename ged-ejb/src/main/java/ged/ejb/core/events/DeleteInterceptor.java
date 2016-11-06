@@ -1,5 +1,6 @@
 package ged.ejb.core.events;
 
+import java.util.Objects;
 import java.util.logging.Logger;
 
 import javax.enterprise.event.Event;
@@ -24,12 +25,8 @@ public class DeleteInterceptor extends AbstractInterceptor {
 	@Inject
 	public DeleteInterceptor(@PreDelete final Event<AuditedEntity<Long>> preDeleteEvent,
 			@PostDelete final Event<AuditedEntity<Long>> postDeleteEvent) {
-		if (preDeleteEvent == null) {
-			throw new NullPointerException();
-		}
-		if (postDeleteEvent == null) {
-			throw new NullPointerException();
-		}
+		Objects.requireNonNull(preDeleteEvent);
+		Objects.requireNonNull(postDeleteEvent);
 		this.preDeleteEvent = preDeleteEvent;
 		this.postDeleteEvent = postDeleteEvent;
 	}

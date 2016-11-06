@@ -2,6 +2,7 @@ package ged.web.view.candidate;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.faces.application.NavigationHandler;
 import javax.faces.view.ViewScoped;
@@ -41,9 +42,7 @@ public class CurriculumViewBean extends AbstractPageBean {
 
 	@Inject
 	public CurriculumViewBean(final CurriculumService curriculumService) {
-		if (curriculumService == null) {
-			throw new NullPointerException();
-		}
+		Objects.requireNonNull(curriculumService);
 		this.curriculumService = curriculumService;
 	}
 

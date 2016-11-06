@@ -1,6 +1,7 @@
 package ged.web.view.user;
 
 import java.io.IOException;
+import java.util.Objects;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.application.NavigationHandler;
@@ -38,12 +39,8 @@ public class UserViewBean extends AbstractPageBean {
 
 	@Inject
 	public UserViewBean(final UserService userService, final JobOfferService jobOfferService) {
-		if (userService == null) {
-			throw new NullPointerException();
-		}
-		if (jobOfferService == null) {
-			throw new NullPointerException();
-		}
+		Objects.requireNonNull(userService);
+		Objects.requireNonNull(jobOfferService);
 		this.userService = userService;
 		this.jobOfferService = jobOfferService;
 	}

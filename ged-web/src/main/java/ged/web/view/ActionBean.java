@@ -1,6 +1,7 @@
 package ged.web.view;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
@@ -23,9 +24,7 @@ public class ActionBean extends AbstractPageBean {
 
 	@Inject
 	public ActionBean(final ActionService actionService) {
-		if (actionService == null) {
-			throw new NullPointerException();
-		}
+		Objects.requireNonNull(actionService);
 		this.actionService = actionService;
 	}
 

@@ -1,6 +1,7 @@
 package ged.ejb.candidate;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,9 +22,7 @@ public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> imp
 
 	@Inject
 	public CandidateServiceImpl(@Repository final CandidateDao candidateDao) {
-		if (candidateDao == null) {
-			throw new NullPointerException();
-		}
+		Objects.requireNonNull(candidateDao);
 		this.candidateDao = candidateDao;
 	}
 
@@ -35,8 +34,9 @@ public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> imp
 
 	@Override
 	public Candidate findCandidateAndFiles(final Long id) {
-		if (id == null) {
-			throw new NullPointerException();
+		Objects.requireNonNull(id);
+		if (id < 1) {
+			throw new IllegalArgumentException("id: " + id);
 		}
 		logger.log(Level.FINE, "Find candidate with id {} and his files", id);
 		return this.candidateDao.findCandidateAndFiles(id);

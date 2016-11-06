@@ -2,6 +2,7 @@ package ged.web.view;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -28,9 +29,7 @@ public class IndexBean extends AbstractPageBean {
 
 	@Inject
 	public IndexBean(final JobOfferService jobService) {
-		if (jobService == null) {
-			throw new NullPointerException();
-		}
+		Objects.requireNonNull(jobService);
 		this.jobService = jobService;
 	}
 

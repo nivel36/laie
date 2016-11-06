@@ -3,6 +3,7 @@ package ged.ejb.user;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -31,9 +32,7 @@ public final class UserDaoJpa extends AbstractDao<Long, User> implements UserDao
 
 	@Override
 	public Boolean emailExists(final String email) {
-		if (email == null) {
-			throw new NullPointerException("email");
-		}
+		Objects.requireNonNull(email);
 		logger.log(Level.FINE, "Looking  ");
 		final Map<String, Object> parameters = new HashMap<>(1);
 		parameters.put("email", email);
@@ -53,9 +52,7 @@ public final class UserDaoJpa extends AbstractDao<Long, User> implements UserDao
 	}
 
 	public List<UserClosure> findAntecessorsUserClosures(final User user) {
-		if (user == null) {
-			throw new NullPointerException("user");
-		}
+		Objects.requireNonNull(user);
 		logger.log(Level.FINER, "Finding all antecessors of the user");
 		final Map<String, Object> parameters = new HashMap<>();
 		parameters.put("id", user.getId());
@@ -65,8 +62,9 @@ public final class UserDaoJpa extends AbstractDao<Long, User> implements UserDao
 
 	@Override
 	public List<User> findSubordinateUsers(final Long id) {
-		if (id == null) {
-			throw new NullPointerException("id");
+		Objects.requireNonNull(id);
+		if (id < 1) {
+			throw new IllegalArgumentException("id: " + id);
 		}
 		logger.log(Level.FINE, "Find subordinate users of user with id {}", id);
 		final Map<String, Object> parameters = new HashMap<>(1);
@@ -76,9 +74,7 @@ public final class UserDaoJpa extends AbstractDao<Long, User> implements UserDao
 
 	@Override
 	public User findUserByUsername(final String username) {
-		if (username == null) {
-			throw new NullPointerException("username");
-		}
+		Objects.requireNonNull(username);
 		logger.log(Level.FINE, "Finding user with username {}", username);
 		final Map<String, Object> parameters = new HashMap<>();
 		parameters.put("username", username);
@@ -92,9 +88,7 @@ public final class UserDaoJpa extends AbstractDao<Long, User> implements UserDao
 
 	@Override
 	public void insert(final User user) {
-		if (user == null) {
-			throw new NullPointerException("user");
-		}
+		Objects.requireNonNull(user);
 		logger.log(Level.FINE, "Insert user {}", user.getFullName());
 		this.persistenceFacade.insert(user);
 		if (user.getManager() != null) {
@@ -155,9 +149,7 @@ public final class UserDaoJpa extends AbstractDao<Long, User> implements UserDao
 
 	@Override
 	public Boolean usernameExists(final String username) {
-		if (username == null) {
-			throw new NullPointerException();
-		}
+		Objects.requireNonNull(username);
 		UserDaoJpa.logger.log(Level.FINE, "Username {} exists?", username);
 		final Map<String, Object> parameters = new HashMap<>(1);
 		parameters.put("username", username);

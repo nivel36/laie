@@ -2,6 +2,7 @@ package ged.web.view.job;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.faces.application.NavigationHandler;
 import javax.faces.view.ViewScoped;
@@ -35,9 +36,7 @@ public class JobOfferViewBean extends AbstractPageBean {
 
 	@Inject
 	public JobOfferViewBean(final JobOfferService jobService) {
-		if (jobService == null) {
-			throw new NullPointerException();
-		}
+		Objects.requireNonNull(jobService);
 		this.jobService = jobService;
 	}
 
@@ -46,9 +45,7 @@ public class JobOfferViewBean extends AbstractPageBean {
 	}
 
 	public void addJobCandidature(final Candidate candidate) {
-		if (candidate == null) {
-			throw new NullPointerException();
-		}
+		Objects.requireNonNull(candidate);
 		this.jobService.addJobCandidature(this.jobOffer, candidate);
 	}
 

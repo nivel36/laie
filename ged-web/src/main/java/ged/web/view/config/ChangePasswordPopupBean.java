@@ -3,6 +3,7 @@ package ged.web.view.config;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -39,9 +40,7 @@ public final class ChangePasswordPopupBean extends AbstractDialogBean {
 
 	@Inject
 	public ChangePasswordPopupBean(final UserService userService) {
-		if (userService == null) {
-			throw new NullPointerException("userService");
-		}
+		Objects.requireNonNull(userService);
 		this.userService = userService;
 	}
 

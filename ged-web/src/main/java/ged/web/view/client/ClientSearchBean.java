@@ -1,6 +1,7 @@
 package ged.web.view.client;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
@@ -29,11 +30,8 @@ public class ClientSearchBean extends AbstractPageBean {
 
 	@Inject
 	public ClientSearchBean(final ClientService clientService) {
-		if (clientService == null) {
-			throw new NullPointerException();
-		}
+		Objects.requireNonNull(clientService);
 		this.clientService = clientService;
-
 	}
 
 	public void clean() {

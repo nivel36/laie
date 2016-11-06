@@ -1,6 +1,7 @@
 package ged.ejb.curriculum;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -18,17 +19,13 @@ public class CurriculumServiceImpl implements CurriculumService {
 
 	@Inject
 	public CurriculumServiceImpl(@Repository final CurriculumDao curriculumDao) {
-		if (curriculumDao == null) {
-			throw new NullPointerException();
-		}
+		Objects.requireNonNull(curriculumDao);
 		this.curriculumDao = curriculumDao;
 	}
 
 	@Override
 	public void deleteCurriculum(final Curriculum curriculum) {
-		if (curriculum == null) {
-			throw new NullPointerException();
-		}
+		Objects.requireNonNull(curriculum);
 		logger.log(Level.FINE, "Delete curriculum of the candidate {}", curriculum.getCandidate());
 		this.curriculumDao.deleteCurriculum(curriculum);
 	}
@@ -47,8 +44,9 @@ public class CurriculumServiceImpl implements CurriculumService {
 
 	@Override
 	public Curriculum findByCandidateId(final Long id) {
-		if (id == null) {
-			throw new NullPointerException();
+		Objects.requireNonNull(id);
+		if ( id < 1 ){
+			throw new IllegalArgumentException("id: " + id);
 		}
 		logger.log(Level.FINE, "Find curriculum by candidate id {}", id);
 		return this.curriculumDao.findByCandidateId(id);
@@ -56,18 +54,14 @@ public class CurriculumServiceImpl implements CurriculumService {
 
 	@Override
 	public void insertCurriculum(final Curriculum curriculum) {
-		if (curriculum == null) {
-			throw new NullPointerException();
-		}
+		Objects.requireNonNull(curriculum);
 		logger.log(Level.FINE, "Insert curriculum of the candidate {}", curriculum.getCandidate());
 		this.curriculumDao.insertCurriculum(curriculum);
 	}
 
 	@Override
 	public Curriculum updateCurriculum(final Curriculum curriculum) {
-		if (curriculum == null) {
-			throw new NullPointerException();
-		}
+		Objects.requireNonNull(curriculum);
 		logger.log(Level.FINE, "Update curriculum of the candidate {}", curriculum.getCandidate());
 		return this.curriculumDao.updateCurriculum(curriculum);
 	}

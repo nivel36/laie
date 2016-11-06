@@ -19,6 +19,8 @@ import javax.persistence.criteria.Root;
 @Repository
 public class PersistenceFacadeJpa implements PersistenceFacade {
 
+	private final static Logger logger = Logger.getLogger(PersistenceFacadeJpa.class.getName());
+
 	/**
 	 * El número máximo de resultados que permiten las búsquedas
 	 */
@@ -26,11 +28,8 @@ public class PersistenceFacadeJpa implements PersistenceFacade {
 
 	private final EntityManager em;
 
-	private final Logger logger;
-
 	@Inject
-	public PersistenceFacadeJpa(final Logger logger, final EntityManager em) {
-		this.logger = logger;
+	public PersistenceFacadeJpa(final EntityManager em) {
 		this.em = em;
 	}
 
@@ -57,7 +56,7 @@ public class PersistenceFacadeJpa implements PersistenceFacade {
 
 	@Override
 	public <K, T extends Entity<K>> void delete(final T entity) {
-		this.logger.log(Level.FINE, "Eliminando la entidad::Clase={0}::Id={1}",
+		logger.log(Level.FINE, "Eliminando la entidad::Clase={0}::Id={1}",
 				new Object[] { entity.getClass().getCanonicalName(), entity.getId() });
 		if (this.em.contains(entity)) {
 			this.em.remove(entity);
@@ -69,7 +68,7 @@ public class PersistenceFacadeJpa implements PersistenceFacade {
 
 	@Override
 	public <K, T extends Entity<K>> T find(final Class<T> entityClass, final K id) {
-		this.logger.log(Level.FINE, "Buscando por clave primaria::clase={0}::id={1}", new Object[] { entityClass, id });
+		logger.log(Level.FINE, "Buscando por clave primaria::clase={0}::id={1}", new Object[] { entityClass, id });
 		return this.em.find(entityClass, id);
 	}
 
@@ -82,14 +81,14 @@ public class PersistenceFacadeJpa implements PersistenceFacade {
 
 	@Override
 	public <T> T findByCriteria(final CriteriaQuery<T> cq) {
-		this.logger.log(Level.FINE, "Lanzando criteria para un solo resultado");
+		logger.log(Level.FINE, "Lanzando criteria para un solo resultado");
 		final TypedQuery<T> query = this.em.createQuery(cq);
 		return query.getSingleResult();
 	}
 
 	@Override
 	public <T> List<T> findByCriteria(final CriteriaQuery<T> cq, final int pageSize, final int pageNum) {
-		this.logger.log(Level.FINE, "Lanzando criteria");
+		logger.log(Level.FINE, "Lanzando criteria");
 		final TypedQuery<T> query = this.em.createQuery(cq);
 		paginar(pageSize, pageNum, query);
 		return query.getResultList();
@@ -112,14 +111,14 @@ public class PersistenceFacadeJpa implements PersistenceFacade {
 
 	@Override
 	public Object findByQuery(final String nombreQuery, final Map<String, Object> parameters) {
-		this.logger.log(Level.FINE, "Lanzando getByQuerySingleResult {0} ", nombreQuery);
+		logger.log(Level.FINE, "Lanzando getByQuerySingleResult {0} ", nombreQuery);
 		final Query query = this.em.createNamedQuery(nombreQuery);
 		parametrizar(parameters, query);
 		Object result = null;
 		try {
 			result = query.getSingleResult();
 		} catch (final NoResultException ex) {
-			this.logger.log(Level.FINE, "No se ha encontrado resultados para la consulta", ex);
+			logger.log(Level.FINE, "No se ha encontrado resultados para la consulta", ex);
 		}
 		return result;
 	}
@@ -128,7 +127,7 @@ public class PersistenceFacadeJpa implements PersistenceFacade {
 	@Override
 	public List<Object> findByQuery(final String nombreQuery, final Map<String, Object> parameters, final int pageSize,
 			final int pageNum) {
-		this.logger.log(Level.FINE, "Lanzando la getByQuery {0}", nombreQuery);
+		logger.log(Level.FINE, "Lanzando la getByQuery {0}", nombreQuery);
 		final Query query = this.em.createNamedQuery(nombreQuery);
 		paginar(pageSize, pageNum, query);
 		parametrizar(parameters, query);
@@ -138,7 +137,7 @@ public class PersistenceFacadeJpa implements PersistenceFacade {
 	@Override
 	public <T> T findByTypedQuery(final Class<T> entityClass, final String namedQuery,
 			final Map<String, Object> parameters) {
-		this.logger.log(Level.FINE, "Ejecutando la getByTypedQuerySingleResult: {0}", namedQuery);
+		logger.log(Level.FINE, "Ejecutando la getByTypedQuerySingleResult: {0}", namedQuery);
 		final TypedQuery<T> query = this.em.createNamedQuery(namedQuery, entityClass);
 		parametrizar(parameters, query);
 		return query.getSingleResult();
@@ -147,7 +146,7 @@ public class PersistenceFacadeJpa implements PersistenceFacade {
 	@Override
 	public <T> List<T> findByTypedQuery(final Class<T> entityClass, final String namedQuery,
 			final Map<String, Object> parameters, final int pageSize, final int pageNum) {
-		this.logger.log(Level.FINE, "Ejecutando la getByTypedQuery: {0}", namedQuery);
+		logger.log(Level.FINE, "Ejecutando la getByTypedQuery: {0}", namedQuery);
 		final TypedQuery<T> query = this.em.createNamedQuery(namedQuery, entityClass);
 		parametrizar(parameters, query);
 		paginar(pageSize, pageNum, query);
@@ -161,10 +160,12 @@ public class PersistenceFacadeJpa implements PersistenceFacade {
 
 	@Override
 	public <K, T extends Entity<K>> void insert(final T entity) {
-		this.logger.log(Level.FINE, "Insertando una nueva entidad de tipod::Clase={0}",
+		logger.log(Level.FINE, "Insertando una nueva entidad de tipod::Clase={0}",
 				entity.getClass().getCanonicalName());
 		this.em.persist(entity);
-		this.logger.log(Level.FINE, "Se le ha asignado la id={0}", entity.getId());
+		this.em.flush();
+		this.em.refresh(entity);
+		logger.log(Level.FINE, "Se le ha asignado la id={0}", entity.getId());
 	}
 
 	private void paginar(final int pageSize, final int pageNum, final Query query) {
@@ -176,14 +177,14 @@ public class PersistenceFacadeJpa implements PersistenceFacade {
 			throw new IllegalArgumentException("pageSize: " + pageSize);
 		}
 
-		this.logger.log(Level.FINEST, "Página actual {0}", pageNum);
+		logger.log(Level.FINEST, "Página actual {0}", pageNum);
 		query.setFirstResult(pageNum * pageSize);
 
 		if (pageSize > 0) {
-			this.logger.log(Level.FINEST, "Tamaño de página {0}", pageSize);
+			logger.log(Level.FINEST, "Tamaño de página {0}", pageSize);
 			query.setMaxResults(pageSize);
 		} else if (pageSize == 0) {
-			this.logger.log(Level.FINEST, "Limitando a {0} resultados", RES_LIMIT);
+			logger.log(Level.FINEST, "Limitando a {0} resultados", RES_LIMIT);
 			query.setMaxResults(RES_LIMIT);
 		}
 	}
@@ -191,8 +192,7 @@ public class PersistenceFacadeJpa implements PersistenceFacade {
 	private void parametrizar(final Map<String, Object> parameters, final Query query) {
 		if (parameters != null) {
 			for (final Map.Entry<String, Object> entry : parameters.entrySet()) {
-				this.logger.log(Level.FINEST, "key={0}::parameter={1}",
-						new Object[] { entry.getKey(), entry.getValue() });
+				logger.log(Level.FINEST, "key={0}::parameter={1}", new Object[] { entry.getKey(), entry.getValue() });
 				query.setParameter(entry.getKey(), entry.getValue());
 			}
 		}
@@ -200,7 +200,7 @@ public class PersistenceFacadeJpa implements PersistenceFacade {
 
 	@Override
 	public <K, T extends Entity<K>> T update(final T entity) {
-		this.logger.log(Level.FINE, "Actualizando la entidad::Clase={0}::Id={1}",
+		logger.log(Level.FINE, "Actualizando la entidad::Clase={0}::Id={1}",
 				new Object[] { entity.getClass().getCanonicalName(), entity.getId() });
 		if (!this.em.contains(entity)) {
 			return this.em.merge(entity);

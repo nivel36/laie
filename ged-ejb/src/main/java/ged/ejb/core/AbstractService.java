@@ -1,6 +1,7 @@
 package ged.ejb.core;
 
 import java.util.List;
+import java.util.Objects;
 
 import ged.ejb.core.model.Dao;
 import ged.ejb.core.model.Entity;
@@ -9,17 +10,13 @@ public abstract class AbstractService<K, T extends Entity<K>> implements Service
 
 	@Override
 	public void delete(final T entity) {
-		if (entity == null) {
-			throw new NullPointerException();
-		}
+		Objects.requireNonNull(entity);
 		this.getDao().delete(entity);
 	}
 
 	@Override
 	public T find(final K id) {
-		if (id == null) {
-			throw new NullPointerException();
-		}
+		Objects.requireNonNull(id);
 		return this.getDao().find(id);
 	}
 
@@ -32,17 +29,13 @@ public abstract class AbstractService<K, T extends Entity<K>> implements Service
 
 	@Override
 	public void insert(final T entity) {
-		if (entity == null) {
-			throw new NullPointerException();
-		}
+		Objects.requireNonNull(entity);
 		this.getDao().insert(entity);
 	}
 
 	@Override
 	public T update(final T entity) {
-		if (entity == null) {
-			throw new NullPointerException();
-		}
+		Objects.requireNonNull(entity);
 		return this.getDao().update(entity);
 	}
 }

@@ -1,6 +1,7 @@
 package ged.ejb.user;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -20,17 +21,13 @@ public class UserServiceImpl extends AbstratctAuditedService<User> implements Us
 
 	@Inject
 	public UserServiceImpl(@Repository final UserDao userDao) {
-		if (userDao == null) {
-			throw new NullPointerException("userDao");
-		}
+		Objects.requireNonNull(userDao);
 		this.userDao = userDao;
 	}
 
 	@Override
 	protected void doInsert(final User user) {
-		if (user == null) {
-			throw new NullPointerException();
-		}
+		Objects.requireNonNull(user);
 		logger.log(Level.FINE, "INSERT user {0}", user.getFullName());
 		if (user.equals(user.getManager())) {
 			logger.log(Level.WARNING, "The user {0} can't be his/her manager", user.getFullName());
@@ -41,9 +38,7 @@ public class UserServiceImpl extends AbstratctAuditedService<User> implements Us
 
 	@Override
 	protected User doUpdate(final User user) {
-		if (user == null) {
-			throw new NullPointerException("user");
-		}
+		Objects.requireNonNull(user);
 		if (!user.hasRole("ADMIN") || this.userDao.existsMoreThanOneAdmin()) {
 			logger.log(Level.FINE, "UPDATE user {0}", user.getFullName());
 			return this.userDao.update(user);
@@ -55,9 +50,7 @@ public class UserServiceImpl extends AbstratctAuditedService<User> implements Us
 
 	@Override
 	public boolean emailExists(final String email) {
-		if (email == null) {
-			throw new NullPointerException("email");
-		}
+		Objects.requireNonNull(email);
 		final boolean emailExists = this.userDao.emailExists(email);
 		if (emailExists) {
 			logger.log(Level.FINE, "The email {} exists on database", email);
@@ -69,8 +62,9 @@ public class UserServiceImpl extends AbstratctAuditedService<User> implements Us
 
 	@Override
 	public List<User> findSubordinateUsers(final Long id) {
-		if (id == null) {
-			throw new NullPointerException("id");
+		Objects.requireNonNull(id);
+		if (id < 1) {
+			throw new IllegalArgumentException("id: " + id);
 		}
 		logger.log(Level.FINE, "FIND subordinate users by id {}", id);
 		return this.userDao.findSubordinateUsers(id);
@@ -78,9 +72,7 @@ public class UserServiceImpl extends AbstratctAuditedService<User> implements Us
 
 	@Override
 	public User findUserByUsername(final String username) {
-		if (username == null) {
-			throw new NullPointerException("username");
-		}
+		Objects.requireNonNull(username);
 		logger.log(Level.FINE, "FIND user by username {}", username);
 		return this.userDao.findUserByUsername(username);
 	}
@@ -99,9 +91,7 @@ public class UserServiceImpl extends AbstratctAuditedService<User> implements Us
 
 	@Override
 	public boolean usernameExists(final String username) {
-		if (username == null) {
-			throw new NullPointerException("username");
-		}
+		Objects.requireNonNull(username);
 		final boolean usernameExists = this.userDao.usernameExists(username);
 		if (usernameExists) {
 			logger.log(Level.FINE, "The username {} exists on database", username);

@@ -18,5 +18,4 @@ public class MaintenanceIndexBean extends AbstractBean {
 	public String newContractType() {
 		return "maintenanceEdit";
 	}
-
 }

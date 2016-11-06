@@ -1,5 +1,7 @@
 package ged.web.view.client;
 
+import java.util.Objects;
+
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -22,9 +24,7 @@ public class ClientEditBean extends AbstractPageBean {
 
 	@Inject
 	public ClientEditBean(final ClientService clientService) {
-		if (clientService == null) {
-			throw new NullPointerException();
-		}
+		Objects.requireNonNull(clientService);
 		this.clientService = clientService;
 	}
 

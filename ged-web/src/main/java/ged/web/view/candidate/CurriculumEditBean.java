@@ -3,6 +3,7 @@ package ged.web.view.candidate;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.annotation.PostConstruct;
@@ -39,9 +40,7 @@ public class CurriculumEditBean extends AbstractPageBean {
 
 	@Inject
 	public CurriculumEditBean(final CurriculumService curriculumService) {
-		if (curriculumService == null) {
-			throw new NullPointerException();
-		}
+		Objects.requireNonNull(curriculumService);
 		this.curriculumService = curriculumService;
 	}
 

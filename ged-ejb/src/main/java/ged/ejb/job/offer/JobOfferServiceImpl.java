@@ -1,6 +1,7 @@
 package ged.ejb.job.offer;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -33,10 +34,9 @@ public class JobOfferServiceImpl extends AbstratctAuditedService<JobOffer> imple
 	@Inject
 	public JobOfferServiceImpl(@Repository final JobOfferDao jobDao, final ClientService clientService,
 			@Repository final CandidateDao candidateDao) {
-		if ((jobDao == null) || (clientService == null) || (candidateDao == null)) {
-			throw new NullPointerException();
-		}
-
+		Objects.requireNonNull(jobDao);
+		Objects.requireNonNull(clientService);
+		Objects.requireNonNull(candidateDao == null);
 		this.clientService = clientService;
 		this.candidateDao = candidateDao;
 		this.jobDao = jobDao;
@@ -44,9 +44,8 @@ public class JobOfferServiceImpl extends AbstratctAuditedService<JobOffer> imple
 
 	@Override
 	public void addJobCandidature(final JobOffer jobOffer, final Candidate candidate) {
-		if ((jobOffer == null) || (candidate == null)) {
-			throw new NullPointerException();
-		}
+		Objects.requireNonNull(jobOffer);
+		Objects.requireNonNull(candidate == null);
 		final JobCandidature jobCandidature = new JobCandidature();
 		jobCandidature.setCandidate(candidate);
 		jobCandidature.setJobOffer(jobOffer);

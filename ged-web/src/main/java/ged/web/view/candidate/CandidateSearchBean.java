@@ -1,6 +1,7 @@
 package ged.web.view.candidate;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
@@ -33,9 +34,7 @@ public class CandidateSearchBean extends AbstractPageBean {
 
 	@Inject
 	public CandidateSearchBean(final CandidateService candidateService) {
-		if (candidateService == null) {
-			throw new NullPointerException();
-		}
+		Objects.requireNonNull(candidateService);
 		this.candidateService = candidateService;
 	}
 
@@ -78,9 +77,7 @@ public class CandidateSearchBean extends AbstractPageBean {
 	}
 
 	public void remove(final Candidate candidate) {
-		if (candidate == null) {
-			throw new NullPointerException();
-		}
+		Objects.requireNonNull(candidate);
 		this.candidateService.delete(candidate);
 		search();
 	}

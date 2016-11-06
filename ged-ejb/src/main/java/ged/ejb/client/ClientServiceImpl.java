@@ -1,6 +1,7 @@
 package ged.ejb.client;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -31,9 +32,7 @@ public class ClientServiceImpl extends AbstratctAuditedService<Client> implement
 
 	@Override
 	public Client findByName(final String clientName) {
-		if (clientName == null) {
-			throw new NullPointerException("El nombre del cliente no puede ser nulo");
-		}
+		Objects.requireNonNull(clientName, "El nombre del cliente no puede ser nulo");
 		ClientServiceImpl.logger.log(Level.FINE, "Buscando cliente con nombre {}", clientName);
 		return this.clientDao.findByName(clientName);
 	}

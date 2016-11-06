@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.Date;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -50,12 +51,8 @@ public class CandidateViewBean extends AbstractPageBean {
 	@Inject
 	public CandidateViewBean(final CandidateService candidateService,
 			@ConfigurationProperty(value = "file.directory") final String fileDirectory) {
-		if (candidateService == null) {
-			throw new NullPointerException();
-		}
-		if (fileDirectory == null) {
-			throw new NullPointerException();
-		}
+		Objects.requireNonNull(candidateService);
+		Objects.requireNonNull(fileDirectory);
 		this.candidateService = candidateService;
 		this.fileDirectory = fileDirectory;
 

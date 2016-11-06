@@ -1,6 +1,7 @@
 package ged.ejb.user;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -80,16 +81,12 @@ public class User extends AbstractAuditedEntity {
 	private String username;
 
 	public void addAction(final Action action) {
-		if (action == null) {
-			throw new NullPointerException();
-		}
+		Objects.requireNonNull(action);
 		this.actions.add(action);
 	}
 
 	public void addBookmark(final Bookmark bookmark) {
-		if (bookmark == null) {
-			throw new NullPointerException();
-		}
+		Objects.requireNonNull(bookmark);
 		this.bookmarks.add(bookmark);
 	}
 
@@ -176,16 +173,12 @@ public class User extends AbstractAuditedEntity {
 	}
 
 	public void removeAction(final Action action) {
-		if (action == null) {
-			throw new NullPointerException();
-		}
+		Objects.requireNonNull(action);
 		this.actions.remove(action);
 	}
 
 	public void removeBookmark(final Bookmark bookmark) {
-		if (bookmark == null) {
-			throw new NullPointerException();
-		}
+		Objects.requireNonNull(bookmark);
 		this.bookmarks.remove(bookmark);
 	}
 

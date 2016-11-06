@@ -3,6 +3,7 @@ package ged.ejb.core.bookmark;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -43,9 +44,7 @@ public class BookmarkDaoJpa extends AbstractDao<Long, Bookmark> implements Bookm
 
 	@Override
 	public List<Bookmark> findAllByUser(final User user) {
-		if (user == null) {
-			throw new NullPointerException();
-		}
+		Objects.requireNonNull(user);
 		this.logger.log(Level.FINE, "Buscando todos los Bookmarks del usuario ", user.getFullName());
 		final Map<String, Object> parameters = new HashMap<>();
 		parameters.put("user", user);

@@ -3,6 +3,7 @@ package ged.ejb.job.offer;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -33,9 +34,7 @@ public class JobOfferDaoJpa extends AbstractDao<Long, JobOffer> implements JobOf
 
 	@Override
 	public List<JobOffer> findAllByClient(final Client client) {
-		if (client == null) {
-			throw new NullPointerException();
-		}
+		Objects.requireNonNull(client);
 		logger.log(Level.FINE, "SELECT all the client offers", client.getName());
 		final Map<String, Object> parameters = new HashMap<>();
 		parameters.put("client", client);
@@ -44,9 +43,7 @@ public class JobOfferDaoJpa extends AbstractDao<Long, JobOffer> implements JobOf
 
 	@Override
 	public List<JobOffer> findAllByOwner(final User owner) {
-		if (owner == null) {
-			throw new NullPointerException();
-		}
+		Objects.requireNonNull(owner);
 		logger.log(Level.FINE, "Buscando todas las ofertas del usuario ", owner.getFullName());
 		final Map<String, Object> parameters = new HashMap<>();
 		parameters.put("owner", owner);

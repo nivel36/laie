@@ -1,6 +1,7 @@
 package ged.ejb.core;
 
 import java.util.List;
+import java.util.Objects;
 
 import ged.ejb.core.events.Audited;
 import ged.ejb.core.events.Audited.Type;
@@ -12,9 +13,7 @@ public abstract class AbstratctAuditedService<T extends AuditedEntity<Long>> imp
 	@Override
 	@Audited(action = Type.DELETE)
 	public void delete(final T entity) {
-		if (entity == null) {
-			throw new NullPointerException();
-		}
+		Objects.requireNonNull(entity);
 		entity.setDeleted(true);
 		doUpdate(entity);
 	}
@@ -29,9 +28,7 @@ public abstract class AbstratctAuditedService<T extends AuditedEntity<Long>> imp
 
 	@Override
 	public T find(final Long id) {
-		if (id == null) {
-			throw new NullPointerException();
-		}
+		Objects.requireNonNull(id);
 		if (id < 1) {
 			throw new IllegalArgumentException("id: " + id);
 		}
@@ -48,18 +45,14 @@ public abstract class AbstratctAuditedService<T extends AuditedEntity<Long>> imp
 	@Override
 	@Audited(action = Type.INSERT)
 	public void insert(final T entity) {
-		if (entity == null) {
-			throw new NullPointerException();
-		}
+		Objects.requireNonNull(entity);
 		doInsert(entity);
 	}
 
 	@Override
 	@Audited(action = Type.INSERT)
 	public T insertOrUpdate(final T entity) {
-		if (entity == null) {
-			throw new NullPointerException();
-		}
+		Objects.requireNonNull(entity);
 		if (entity.getId() == null) {
 			doInsert(entity);
 			return entity;
@@ -71,9 +64,7 @@ public abstract class AbstratctAuditedService<T extends AuditedEntity<Long>> imp
 	@Override
 	@Audited(action = Type.UNDELETE)
 	public T undelete(final T entity) {
-		if (entity == null) {
-			throw new NullPointerException();
-		}
+		Objects.requireNonNull(entity);
 		entity.setDeleted(Boolean.FALSE);
 		return doUpdate(entity);
 	}
@@ -81,9 +72,7 @@ public abstract class AbstratctAuditedService<T extends AuditedEntity<Long>> imp
 	@Override
 	@Audited(action = Type.UPDATE)
 	public T update(final T entity) {
-		if (entity == null) {
-			throw new NullPointerException();
-		}
+		Objects.requireNonNull(entity);
 		return doUpdate(entity);
 	}
 }

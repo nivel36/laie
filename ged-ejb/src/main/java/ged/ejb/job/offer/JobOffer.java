@@ -3,6 +3,7 @@ package ged.ejb.job.offer;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -87,9 +88,7 @@ public class JobOffer extends AbstractAuditedEntity {
 	private String state;
 
 	public void addJobCandidature(final JobCandidature jobCandidature) {
-		if (jobCandidature == null) {
-			throw new NullPointerException();
-		}
+		Objects.requireNonNull(jobCandidature);
 		if (this.jobCandidatures == null) {
 			this.jobCandidatures = new ArrayList<>();
 		}
@@ -200,9 +199,7 @@ public class JobOffer extends AbstractAuditedEntity {
 	}
 
 	public void removeJobCandidature(final JobCandidature jobCandidature) {
-		if (jobCandidature == null) {
-			throw new NullPointerException();
-		}
+		Objects.requireNonNull(jobCandidature);
 		this.jobCandidatures.remove(jobCandidature);
 	}
 

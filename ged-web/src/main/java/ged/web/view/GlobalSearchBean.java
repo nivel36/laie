@@ -1,5 +1,7 @@
 package ged.web.view;
 
+import java.util.Objects;
+
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.view.ViewScoped;
@@ -31,12 +33,8 @@ public class GlobalSearchBean extends AbstractPageBean {
 
 	@Inject
 	public GlobalSearchBean(final JobOfferService jobService, final UserService userService) {
-		if (jobService == null) {
-			throw new NullPointerException();
-		}
-		if (userService == null) {
-			throw new NullPointerException();
-		}
+		Objects.requireNonNull(jobService);
+		Objects.requireNonNull(userService);
 		this.jobService = jobService;
 		this.userService = userService;
 	}

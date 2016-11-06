@@ -1,6 +1,7 @@
 package ged.web.view.config;
 
 import java.util.Locale;
+import java.util.Objects;
 import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
@@ -26,9 +27,7 @@ public final class ConfigIndexBean extends AbstractPageBean {
 
 	@Inject
 	public ConfigIndexBean(final UserService userService) {
-		if (userService == null) {
-			throw new NullPointerException("userService");
-		}
+		Objects.requireNonNull(userService);
 		this.userService = userService;
 	}
 

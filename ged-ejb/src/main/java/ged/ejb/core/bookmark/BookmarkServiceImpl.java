@@ -1,6 +1,7 @@
 package ged.ejb.core.bookmark;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -25,9 +26,7 @@ public class BookmarkServiceImpl extends AbstractService<Long, Bookmark> impleme
 
 	@Inject
 	public BookmarkServiceImpl(@Repository final BookmarkDao dao) {
-		if (dao == null) {
-			throw new NullPointerException();
-		}
+		Objects.requireNonNull(dao);
 		this.dao = dao;
 	}
 
@@ -39,9 +38,7 @@ public class BookmarkServiceImpl extends AbstractService<Long, Bookmark> impleme
 
 	@Override
 	public void deleteIfExists(@Observes @PostDelete final AuditedEntity<Long> entity) {
-		if (entity == null) {
-			throw new NullPointerException();
-		}
+		Objects.requireNonNull(entity);
 		final List<Bookmark> bookmarks = this.dao.find(entity.getClass().getSimpleName(), entity.getId());
 		for (final Bookmark bookmark : bookmarks) {
 			delete(bookmark);

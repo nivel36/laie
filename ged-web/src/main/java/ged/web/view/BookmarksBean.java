@@ -1,6 +1,7 @@
 package ged.web.view;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -30,9 +31,7 @@ public class BookmarksBean extends AbstractPageBean {
 
 	@Inject
 	public BookmarksBean(final BookmarkService bookmarkService) {
-		if (bookmarkService == null) {
-			throw new NullPointerException();
-		}
+		Objects.requireNonNull(bookmarkService);
 		this.bookmarkService = bookmarkService;
 	}
 

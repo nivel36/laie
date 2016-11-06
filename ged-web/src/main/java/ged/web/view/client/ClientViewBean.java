@@ -1,5 +1,7 @@
 package ged.web.view.client;
 
+import java.util.Objects;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -30,12 +32,8 @@ public class ClientViewBean extends AbstractPageBean {
 
 	@Inject
 	public ClientViewBean(final ClientService clientService, final JobOfferService jobOfferService) {
-		if (clientService == null) {
-			throw new NullPointerException();
-		}
-		if (jobOfferService == null) {
-			throw new NullPointerException();
-		}
+		Objects.requireNonNull(clientService);
+		Objects.requireNonNull(jobOfferService);
 		this.clientService = clientService;
 		this.jobOfferService = jobOfferService;
 	}

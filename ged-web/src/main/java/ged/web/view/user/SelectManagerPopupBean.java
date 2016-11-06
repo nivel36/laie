@@ -1,6 +1,7 @@
 package ged.web.view.user;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
@@ -36,9 +37,7 @@ public class SelectManagerPopupBean extends AbstractPageBean {
 
 	@Inject
 	public SelectManagerPopupBean(final UserService userService) {
-		if (userService == null) {
-			throw new NullPointerException();
-		}
+		Objects.requireNonNull(userService);
 		this.userService = userService;
 	}
 
