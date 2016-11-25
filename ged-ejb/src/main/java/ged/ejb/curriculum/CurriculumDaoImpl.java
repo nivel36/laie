@@ -1,7 +1,6 @@
 package ged.ejb.curriculum;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -11,8 +10,6 @@ import ged.ejb.core.model.Repository;
 
 @Repository
 public class CurriculumDaoImpl extends AbstractDao<Long, Curriculum> implements CurriculumDao {
-
-	private final Logger logger = Logger.getLogger(CurriculumDaoImpl.class.getName());
 
 	@Inject
 	public CurriculumDaoImpl(final EntityManager entityManger) {
