@@ -18,7 +18,6 @@ import org.hibernate.search.query.dsl.QueryBuilder;
 
 import ged.ejb.core.FileType;
 import ged.ejb.core.model.AbstractDao;
-import ged.ejb.core.model.PersistenceFacade;
 import ged.ejb.core.model.Repository;
 
 @Repository
@@ -27,13 +26,13 @@ public class CandidateDaoJpa extends AbstractDao<Long, Candidate> implements Can
 	private final Logger logger = Logger.getLogger(CandidateDaoJpa.class.getName());
 
 	@Inject
-	public CandidateDaoJpa(@Repository final PersistenceFacade persistenceFacade) {
-		super(persistenceFacade);
+	public CandidateDaoJpa(final EntityManager entityManager) {
+		super(entityManager);
 	}
 
 	@Override
 	public List<FileType> findAllFileTypes() {
-		return this.persistenceFacade.findAll(FileType.class);
+		return createQueryFromCriteria(FileType.class).getResultList();
 	}
 
 	@Override
@@ -45,12 +44,11 @@ public class CandidateDaoJpa extends AbstractDao<Long, Candidate> implements Can
 		this.logger.log(Level.FINE, "Buscando al candidateo con id {}", id);
 		final Map<String, Object> properties = new HashMap<>();
 		properties.put("id", id);
-		return this.persistenceFacade.findByTypedQuery(Candidate.class, "Candidate.findCandidateAndFilesById",
-				properties);
+		return findByTypedQuery(Candidate.class, "Candidate.findCandidateAndFilesById", properties);
 	}
 
 	@Override
-	public Class<Candidate> getClazz() {
+	public Class<Candidate> getType() {
 		return Candidate.class;
 	}
 
@@ -58,8 +56,7 @@ public class CandidateDaoJpa extends AbstractDao<Long, Candidate> implements Can
 	@Override
 	public List<Candidate> searchByNameAndSurename(final String name, final String surename, final String position,
 			final Boolean showDeleted) {
-		final EntityManager em = this.persistenceFacade.getEm();
-		final FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(em);
+		final FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(getEm());
 		final QueryBuilder qb = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(Candidate.class)
 				.get();
 		final BooleanJunction<BooleanJunction> bj = qb.bool();
@@ -72,7 +69,7 @@ public class CandidateDaoJpa extends AbstractDao<Long, Candidate> implements Can
 		if (position != null) {
 			bj.must(qb.keyword().onField("position").matching(position).createQuery());
 		}
-		if ((showDeleted == null) || !showDeleted) {
+		if (showDeleted == null || !showDeleted) {
 			bj.must(qb.keyword().onField("deleted").matching(true).createQuery()).not();
 		}
 		final Query persistenceQuery;

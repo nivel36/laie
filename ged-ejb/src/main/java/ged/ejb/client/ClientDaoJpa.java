@@ -17,7 +17,6 @@ import org.hibernate.search.query.dsl.BooleanJunction;
 import org.hibernate.search.query.dsl.QueryBuilder;
 
 import ged.ejb.core.model.AbstractDao;
-import ged.ejb.core.model.PersistenceFacade;
 import ged.ejb.core.model.Repository;
 
 @Repository
@@ -26,8 +25,8 @@ public class ClientDaoJpa extends AbstractDao<Long, Client> implements ClientDao
 	private final Logger logger = Logger.getLogger(ClientDaoJpa.class.getName());
 
 	@Inject
-	public ClientDaoJpa(@Repository final PersistenceFacade persistenceFacade) {
-		super(persistenceFacade);
+	public ClientDaoJpa(final EntityManager entityManager) {
+		super(entityManager);
 	}
 
 	@Override
@@ -36,7 +35,7 @@ public class ClientDaoJpa extends AbstractDao<Long, Client> implements ClientDao
 		parameters.put("name", clientName);
 		Client client;
 		try {
-			client = this.persistenceFacade.findByTypedQuery(Client.class, "Client.findByName", parameters);
+			client = findByTypedQuery(Client.class, "Client.findByName", parameters);
 		} catch (final NoResultException e) {
 			this.logger.log(Level.FINE, "No client found with that name", e);
 			client = null;
@@ -45,7 +44,7 @@ public class ClientDaoJpa extends AbstractDao<Long, Client> implements ClientDao
 	}
 
 	@Override
-	public Class<Client> getClazz() {
+	public Class<Client> getType() {
 		return Client.class;
 	}
 
@@ -53,8 +52,7 @@ public class ClientDaoJpa extends AbstractDao<Long, Client> implements ClientDao
 	@Override
 	public List<Client> searchByName(final String clientName, final boolean showDeleted) {
 		this.logger.log(Level.FINE, "SEARCH client by name {} ", clientName);
-		final EntityManager em = this.persistenceFacade.getEm();
-		final FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(em);
+		final FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(getEm());
 		final QueryBuilder qb = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(Client.class)
 				.get();
 

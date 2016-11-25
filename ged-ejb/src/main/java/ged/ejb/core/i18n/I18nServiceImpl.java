@@ -4,19 +4,20 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-
-import ged.ejb.core.model.PersistenceFacade;
-import ged.ejb.core.model.Repository;
+import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 
 @Stateless
 public class I18nServiceImpl implements I18nService {
 
 	@Inject
-	@Repository
-	private PersistenceFacade persistenceFacade;
+	private EntityManager entityManager;
 
 	@Override
 	public List<I18nString> findAll() {
-		return this.persistenceFacade.findAll(I18nString.class);
+		final CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
+		final CriteriaQuery<I18nString> criteriaQuery = cb.createQuery(I18nString.class);
+		return this.entityManager.createQuery(criteriaQuery).getResultList();
 	}
 }

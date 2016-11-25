@@ -4,11 +4,10 @@ import java.util.List;
 
 import javax.ejb.Local;
 
-@Local
-public interface RoleDao {
+import ged.ejb.core.model.Dao;
 
-	List<Role> findAllRoles();
+@Local
+public interface RoleDao extends Dao<Long, Role> {
 
 	List<Role> findSubordinateRoles(Long id);
-
 }

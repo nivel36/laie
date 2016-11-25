@@ -2,17 +2,12 @@ package ged.ejb.curriculum;
 
 import java.util.List;
 
-public interface CurriculumDao {
+import ged.ejb.core.model.Dao;
 
-	void deleteCurriculum(final Curriculum curriculum);
+public interface CurriculumDao extends Dao<Long, Curriculum> {
 
 	List<LanguageLevel> findAllLanguageLevels();
 
 	List<SkillLevel> findAllSkillLevels();
 
-	Curriculum findByCandidateId(final Long id);
-
-	void insertCurriculum(final Curriculum curriculum);
-
-	Curriculum updateCurriculum(final Curriculum curriculum);
 }

@@ -27,7 +27,7 @@ public class CurriculumServiceImpl implements CurriculumService {
 	public void deleteCurriculum(final Curriculum curriculum) {
 		Objects.requireNonNull(curriculum);
 		logger.log(Level.FINE, "Delete curriculum of the candidate {}", curriculum.getCandidate());
-		this.curriculumDao.deleteCurriculum(curriculum);
+		this.curriculumDao.delete(curriculum);
 	}
 
 	@Override
@@ -45,24 +45,24 @@ public class CurriculumServiceImpl implements CurriculumService {
 	@Override
 	public Curriculum findByCandidateId(final Long id) {
 		Objects.requireNonNull(id);
-		if ( id < 1 ){
+		if (id < 1) {
 			throw new IllegalArgumentException("id: " + id);
 		}
 		logger.log(Level.FINE, "Find curriculum by candidate id {}", id);
-		return this.curriculumDao.findByCandidateId(id);
+		return this.curriculumDao.find(id);
 	}
 
 	@Override
 	public void insertCurriculum(final Curriculum curriculum) {
 		Objects.requireNonNull(curriculum);
 		logger.log(Level.FINE, "Insert curriculum of the candidate {}", curriculum.getCandidate());
-		this.curriculumDao.insertCurriculum(curriculum);
+		this.curriculumDao.insert(curriculum);
 	}
 
 	@Override
 	public Curriculum updateCurriculum(final Curriculum curriculum) {
 		Objects.requireNonNull(curriculum);
 		logger.log(Level.FINE, "Update curriculum of the candidate {}", curriculum.getCandidate());
-		return this.curriculumDao.updateCurriculum(curriculum);
+		return this.curriculumDao.update(curriculum);
 	}
 }

@@ -17,7 +17,6 @@ import org.hibernate.search.query.dsl.BooleanJunction;
 import org.hibernate.search.query.dsl.QueryBuilder;
 
 import ged.ejb.core.model.AbstractDao;
-import ged.ejb.core.model.PersistenceFacade;
 import ged.ejb.core.model.Repository;
 
 @Repository
@@ -26,8 +25,8 @@ public final class UserDaoJpa extends AbstractDao<Long, User> implements UserDao
 	private static final Logger logger = Logger.getLogger(UserDaoJpa.class.getName());
 
 	@Inject
-	public UserDaoJpa(@Repository final PersistenceFacade persistenceFacade) {
-		super(persistenceFacade);
+	public UserDaoJpa(final EntityManager entityManager) {
+		super(entityManager);
 	}
 
 	@Override
@@ -36,19 +35,19 @@ public final class UserDaoJpa extends AbstractDao<Long, User> implements UserDao
 		logger.log(Level.FINE, "Looking  ");
 		final Map<String, Object> parameters = new HashMap<>(1);
 		parameters.put("email", email);
-		return this.persistenceFacade.findByTypedQuery(Boolean.class, "User.emailExists", parameters);
+		return findByTypedQuery(Boolean.class, "User.emailExists", parameters);
 	}
 
 	@Override
 	public Boolean existsMoreThanOneAdmin() {
 		logger.fine("Looking for if exists more than one admin");
-		return this.persistenceFacade.findByTypedQuery(Boolean.class, "User.existsMoreThanOneAdmin", null);
+		return findByTypedQuery(Boolean.class, "User.existsMoreThanOneAdmin", null);
 	}
 
 	@Override
 	public List<User> findAll() {
 		logger.fine("Finding all users");
-		return this.persistenceFacade.findByTypedQuery(User.class, "User.findAll", null, 0, 0);
+		return findByTypedQuery(User.class, "User.findAll", null, 0, 0);
 	}
 
 	public List<UserClosure> findAntecessorsUserClosures(final User user) {
@@ -56,8 +55,7 @@ public final class UserDaoJpa extends AbstractDao<Long, User> implements UserDao
 		logger.log(Level.FINER, "Finding all antecessors of the user");
 		final Map<String, Object> parameters = new HashMap<>();
 		parameters.put("id", user.getId());
-		return this.persistenceFacade.findByTypedQuery(UserClosure.class, "UserClosure.findAntecessorsUserClosuresById",
-				parameters, 0, 0);
+		return findByTypedQuery(UserClosure.class, "UserClosure.findAntecessorsUserClosuresById", parameters, 0, 0);
 	}
 
 	@Override
@@ -69,7 +67,7 @@ public final class UserDaoJpa extends AbstractDao<Long, User> implements UserDao
 		logger.log(Level.FINE, "Find subordinate users of user with id {}", id);
 		final Map<String, Object> parameters = new HashMap<>(1);
 		parameters.put("id", id);
-		return this.persistenceFacade.findByTypedQuery(User.class, "User.findSubordinateUsers", parameters, 0, 0);
+		return findByTypedQuery(User.class, "User.findSubordinateUsers", parameters, 0, 0);
 	}
 
 	@Override
@@ -78,11 +76,11 @@ public final class UserDaoJpa extends AbstractDao<Long, User> implements UserDao
 		logger.log(Level.FINE, "Finding user with username {}", username);
 		final Map<String, Object> parameters = new HashMap<>();
 		parameters.put("username", username);
-		return this.persistenceFacade.findByTypedQuery(User.class, "User.findByUsername", parameters);
+		return findByTypedQuery(User.class, "User.findByUsername", parameters);
 	}
 
 	@Override
-	public Class<User> getClazz() {
+	public Class<User> getType() {
 		return User.class;
 	}
 
@@ -90,7 +88,7 @@ public final class UserDaoJpa extends AbstractDao<Long, User> implements UserDao
 	public void insert(final User user) {
 		Objects.requireNonNull(user);
 		logger.log(Level.FINE, "Insert user {}", user.getFullName());
-		this.persistenceFacade.insert(user);
+		getEm().persist(user);
 		if (user.getManager() != null) {
 			insertUserClosures(user);
 		}
@@ -103,7 +101,7 @@ public final class UserDaoJpa extends AbstractDao<Long, User> implements UserDao
 		newUserClosure.setAntecessor(antecessor);
 		newUserClosure.setDescendant(descendant);
 		newUserClosure.setPathLength(pathLength);
-		this.persistenceFacade.insert(newUserClosure);
+		getEm().persist(newUserClosure);
 	}
 
 	private void insertUserClosures(final User user) {
@@ -121,8 +119,7 @@ public final class UserDaoJpa extends AbstractDao<Long, User> implements UserDao
 			final boolean showDeleted) {
 		logger.log(Level.FINE, "SEARCH user by name {} and surename {}, removing users with email {}",
 				new Object[] { name, surename, email });
-		final EntityManager em = this.persistenceFacade.getEm();
-		final FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(em);
+		final FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(getEm());
 		final QueryBuilder qb = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(User.class)
 				.get();
 		final BooleanJunction<BooleanJunction> bj = qb.bool();
@@ -153,6 +150,6 @@ public final class UserDaoJpa extends AbstractDao<Long, User> implements UserDao
 		UserDaoJpa.logger.log(Level.FINE, "Username {} exists?", username);
 		final Map<String, Object> parameters = new HashMap<>(1);
 		parameters.put("username", username);
-		return this.persistenceFacade.findByTypedQuery(Boolean.class, "User.usernameExists", parameters);
+		return findByTypedQuery(Boolean.class, "User.usernameExists", parameters);
 	}
 }

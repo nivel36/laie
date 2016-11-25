@@ -18,7 +18,6 @@ import org.hibernate.search.query.dsl.QueryBuilder;
 
 import ged.ejb.client.Client;
 import ged.ejb.core.model.AbstractDao;
-import ged.ejb.core.model.PersistenceFacade;
 import ged.ejb.core.model.Repository;
 import ged.ejb.user.User;
 
@@ -28,8 +27,8 @@ public class JobOfferDaoJpa extends AbstractDao<Long, JobOffer> implements JobOf
 	private static final Logger logger = Logger.getLogger(JobOfferDaoJpa.class.getName());
 
 	@Inject
-	public JobOfferDaoJpa(@Repository final PersistenceFacade persistenceFacade) {
-		super(persistenceFacade);
+	public JobOfferDaoJpa(final EntityManager entityManager) {
+		super(entityManager);
 	}
 
 	@Override
@@ -38,7 +37,7 @@ public class JobOfferDaoJpa extends AbstractDao<Long, JobOffer> implements JobOf
 		logger.log(Level.FINE, "SELECT all the client offers", client.getName());
 		final Map<String, Object> parameters = new HashMap<>();
 		parameters.put("client", client);
-		return this.persistenceFacade.findByTypedQuery(JobOffer.class, "JobOffer.findAllByClient", parameters, 0, 0);
+		return findByTypedQuery(JobOffer.class, "JobOffer.findAllByClient", parameters, 0, 0);
 	}
 
 	@Override
@@ -47,26 +46,25 @@ public class JobOfferDaoJpa extends AbstractDao<Long, JobOffer> implements JobOf
 		logger.log(Level.FINE, "Buscando todas las ofertas del usuario ", owner.getFullName());
 		final Map<String, Object> parameters = new HashMap<>();
 		parameters.put("owner", owner);
-		return this.persistenceFacade.findByTypedQuery(JobOffer.class, "JobOffer.findAllByOwner", parameters, 0, 0);
+		return findByTypedQuery(JobOffer.class, "JobOffer.findAllByOwner", parameters, 0, 0);
 	}
 
 	@Override
 	public List<JobOffer> findLastJobOffers(final User owner) {
 		final Map<String, Object> parameters = new HashMap<>();
 		parameters.put("owner", owner);
-		return this.persistenceFacade.findByTypedQuery(JobOffer.class, "JobOffer.findLastJobOffers", parameters, 0, 0);
+		return findByTypedQuery(JobOffer.class, "JobOffer.findLastJobOffers", parameters, 0, 0);
 	}
 
 	@Override
-	public Class<JobOffer> getClazz() {
+	public Class<JobOffer> getType() {
 		return JobOffer.class;
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public List<JobOffer> searchByNameAndClient(final String name, final String clientName, final Boolean showDeleted) {
-		final EntityManager em = this.persistenceFacade.getEm();
-		final FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(em);
+		final FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(getEm());
 		final QueryBuilder qb = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(JobOffer.class)
 				.get();
 		final BooleanJunction<BooleanJunction> bj = qb.bool();
@@ -76,7 +74,7 @@ public class JobOfferDaoJpa extends AbstractDao<Long, JobOffer> implements JobOf
 		if (clientName != null) {
 			bj.must(qb.keyword().onField("client.name").matching(clientName).createQuery());
 		}
-		if ((showDeleted == null) || !showDeleted) {
+		if (showDeleted == null || !showDeleted) {
 			bj.must(qb.keyword().onField("deleted").matching(true).createQuery()).not();
 		}
 		final Query persistenceQuery;
