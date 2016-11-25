@@ -5,7 +5,7 @@ import java.util.List;
 import ged.ejb.core.AuditedService;
 import ged.ejb.core.FileType;
 
-public interface CandidateService extends AuditedService<Candidate> {
+public interface CandidateService extends AuditedService<Long, Candidate> {
 
 	List<FileType> findAllFileTypes();
 

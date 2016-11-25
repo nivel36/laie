@@ -68,7 +68,7 @@ public class JobOfferEditBean extends AbstractPageBean {
 		if (this.jobOffer.getOwner() == null) {
 			this.jobOffer.setOwner(this.sessionBean.getUser());
 		}
-		this.jobService.insertOrUpdate(this.jobOffer);
+		this.jobService.save(this.jobOffer);
 	}
 
 	public void setJobOffer(final JobOffer jobOffer) {

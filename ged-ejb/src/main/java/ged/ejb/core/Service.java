@@ -12,7 +12,5 @@ public interface Service<K, T extends Entity<? extends K>> {
 
 	List<T> findAll();
 
-	void insert(T entity);
-
-	T update(T entity);
+	T save(T entity);
 }

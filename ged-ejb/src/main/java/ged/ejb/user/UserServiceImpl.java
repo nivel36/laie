@@ -13,7 +13,7 @@ import ged.ejb.core.model.Dao;
 import ged.ejb.core.model.Repository;
 
 @Stateless
-public class UserServiceImpl extends AbstratctAuditedService<User> implements UserService {
+public class UserServiceImpl extends AbstratctAuditedService<Long, User> implements UserService {
 
 	private static final Logger logger = Logger.getLogger(UserServiceImpl.class.getName());
 
@@ -27,7 +27,6 @@ public class UserServiceImpl extends AbstratctAuditedService<User> implements Us
 
 	@Override
 	protected void doInsert(final User user) {
-		Objects.requireNonNull(user);
 		logger.log(Level.FINE, "INSERT user {0}", user.getFullName());
 		if (user.equals(user.getManager())) {
 			logger.log(Level.WARNING, "The user {0} can't be his/her manager", user.getFullName());
@@ -38,7 +37,6 @@ public class UserServiceImpl extends AbstratctAuditedService<User> implements Us
 
 	@Override
 	protected User doUpdate(final User user) {
-		Objects.requireNonNull(user);
 		if (!user.hasRole("ADMIN") || this.userDao.existsMoreThanOneAdmin()) {
 			logger.log(Level.FINE, "UPDATE user {0}", user.getFullName());
 			return this.userDao.update(user);

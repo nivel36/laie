@@ -7,7 +7,7 @@ import ged.ejb.client.Client;
 import ged.ejb.core.AuditedService;
 import ged.ejb.user.User;
 
-public interface JobOfferService extends AuditedService<JobOffer> {
+public interface JobOfferService extends AuditedService<Long, JobOffer> {
 
 	void addJobCandidature(final JobOffer jobOffer, final Candidate candidate);
 

@@ -200,7 +200,7 @@ public class CandidateViewBean extends AbstractPageBean {
 		try {
 			removeFileFromFileSystem(file.getUuid());
 			this.candidate.getFiles().remove(file);
-			this.candidate = this.candidateService.update(this.candidate);
+			this.candidate = this.candidateService.save(this.candidate);
 		} catch (final IOException e) {
 			CandidateViewBean.logger.log(Level.SEVERE, "Can't remove file", e);
 			addMessage(FacesMessage.SEVERITY_ERROR, "error.unnexpected_error", "error.unnexpected_error");
@@ -218,7 +218,7 @@ public class CandidateViewBean extends AbstractPageBean {
 			this.file.setCandidate(this.candidate);
 		}
 		this.candidate.setUser(this.sessionBean.getUser());
-		this.candidate = this.candidateService.update(this.candidate);
+		this.candidate = this.candidateService.save(this.candidate);
 		this.editingFile = false;
 	}
 
@@ -247,7 +247,7 @@ public class CandidateViewBean extends AbstractPageBean {
 	}
 
 	private boolean temporaryFileUploaded() {
-		return (this.file != null) && (this.file.getUuid() != null) && (this.file.getId() == 0);
+		return this.file != null && this.file.getUuid() != null && this.file.getId() == 0;
 	}
 
 	public void upload() {

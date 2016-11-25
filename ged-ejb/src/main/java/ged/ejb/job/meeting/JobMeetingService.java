@@ -2,6 +2,6 @@ package ged.ejb.job.meeting;
 
 import ged.ejb.core.AuditedService;
 
-public interface JobMeetingService extends AuditedService<JobMeeting> {
+public interface JobMeetingService extends AuditedService<Long, JobMeeting> {
 
 }

@@ -13,7 +13,7 @@ import ged.ejb.core.events.Audited.Type;
 import ged.ejb.core.model.AuditedEntity;
 
 @Interceptor
-@Audited(action = Type.INSERT)
+@Audited(action = Type.PERSIST)
 public class InsertInterceptor extends AbstractInterceptor {
 
 	private static final Logger log = Logger.getLogger(InsertInterceptor.class.getName());

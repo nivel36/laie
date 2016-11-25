@@ -21,7 +21,7 @@ import ged.ejb.job.JobCandidature;
 import ged.ejb.user.User;
 
 @Stateless
-public class JobOfferServiceImpl extends AbstratctAuditedService<JobOffer> implements JobOfferService {
+public class JobOfferServiceImpl extends AbstratctAuditedService<Long, JobOffer> implements JobOfferService {
 
 	private static final Logger logger = Logger.getLogger(JobOfferServiceImpl.class.getName());
 
@@ -56,13 +56,6 @@ public class JobOfferServiceImpl extends AbstratctAuditedService<JobOffer> imple
 	}
 
 	@Override
-	@Audited(action = Type.INSERT)
-	protected void doInsert(final JobOffer jobOffer) {
-		putClientOnJobOffer(jobOffer);
-		getDao().insert(jobOffer);
-	}
-
-	@Override
 	public List<JobOffer> findAllByClient(final Client client) {
 		logger.log(Level.FINE, "Find all job Offers of the client {}", client.getName());
 		return this.jobDao.findAllByClient(client);
@@ -90,10 +83,18 @@ public class JobOfferServiceImpl extends AbstratctAuditedService<JobOffer> imple
 		if (client == null) {
 			client = jobOffer.getClient();
 			client.setUser(jobOffer.getUser());
-			this.clientService.insert(client);
+			this.clientService.save(client);
 		} else {
 			jobOffer.setClient(client);
 		}
+	}
+
+	@Override
+	@Audited(action = Type.PERSIST)
+	public JobOffer save(final JobOffer jobOffer) {
+		putClientOnJobOffer(jobOffer);
+		getDao().insert(jobOffer);
+		return jobOffer;
 	}
 
 	@Override

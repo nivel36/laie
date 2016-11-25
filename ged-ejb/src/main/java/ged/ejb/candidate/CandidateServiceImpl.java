@@ -14,7 +14,7 @@ import ged.ejb.core.model.Dao;
 import ged.ejb.core.model.Repository;
 
 @Stateless
-public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> implements CandidateService {
+public class CandidateServiceImpl extends AbstratctAuditedService<Long, Candidate> implements CandidateService {
 
 	private static final Logger logger = Logger.getLogger(CandidateServiceImpl.class.getName());
 

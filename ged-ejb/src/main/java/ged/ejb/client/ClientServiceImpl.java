@@ -13,7 +13,7 @@ import ged.ejb.core.model.Dao;
 import ged.ejb.core.model.Repository;
 
 @Stateless
-public class ClientServiceImpl extends AbstratctAuditedService<Client> implements ClientService {
+public class ClientServiceImpl extends AbstratctAuditedService<Long, Client> implements ClientService {
 
 	private static final Logger logger = Logger.getLogger(ClientServiceImpl.class.getName());
 

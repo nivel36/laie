@@ -4,7 +4,7 @@ import java.util.List;
 
 import ged.ejb.core.AuditedService;
 
-public interface UserService extends AuditedService<User> {
+public interface UserService extends AuditedService<Long, User> {
 
 	boolean emailExists(final String email);
 

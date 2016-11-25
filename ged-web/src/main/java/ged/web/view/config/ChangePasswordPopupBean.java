@@ -64,7 +64,7 @@ public final class ChangePasswordPopupBean extends AbstractDialogBean {
 		final String hash = hashPassword(this.newPassword);
 		user.setPassword(hash);
 		user.setUser(user);
-		return this.userService.update(user);
+		return this.userService.save(user);
 	}
 
 	@Override

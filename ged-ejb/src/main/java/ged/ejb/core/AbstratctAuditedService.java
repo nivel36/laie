@@ -1,64 +1,27 @@
 package ged.ejb.core;
 
-import java.util.List;
 import java.util.Objects;
 
 import ged.ejb.core.events.Audited;
 import ged.ejb.core.events.Audited.Type;
 import ged.ejb.core.model.AuditedEntity;
-import ged.ejb.core.model.Dao;
 
-public abstract class AbstratctAuditedService<T extends AuditedEntity<Long>> implements AuditedService<T> {
+public abstract class AbstratctAuditedService<K, T extends AuditedEntity<K>> extends AbstractService<K, T>
+		implements AuditedService<K, T> {
 
 	@Override
 	@Audited(action = Type.DELETE)
 	public void delete(final T entity) {
 		Objects.requireNonNull(entity);
 		entity.setDeleted(true);
-		doUpdate(entity);
-	}
-
-	protected void doInsert(final T entity) {
-		this.getDao().insert(entity);
-	}
-
-	protected T doUpdate(final T entity) {
-		return this.getDao().update(entity);
+		save(entity);
 	}
 
 	@Override
-	public T find(final Long id) {
-		Objects.requireNonNull(id);
-		if (id < 1) {
-			throw new IllegalArgumentException("id: " + id);
-		}
-		return this.getDao().find(id);
-	}
-
-	@Override
-	public List<T> findAll() {
-		return this.getDao().findAll();
-	}
-
-	protected abstract Dao<Long, T> getDao();
-
-	@Override
-	@Audited(action = Type.INSERT)
-	public void insert(final T entity) {
+	@Audited(action = Type.PERSIST)
+	public T save(final T entity) {
 		Objects.requireNonNull(entity);
-		doInsert(entity);
-	}
-
-	@Override
-	@Audited(action = Type.INSERT)
-	public T insertOrUpdate(final T entity) {
-		Objects.requireNonNull(entity);
-		if (entity.getId() == null) {
-			doInsert(entity);
-			return entity;
-		} else {
-			return doUpdate(entity);
-		}
+		return super.save(entity);
 	}
 
 	@Override
@@ -66,13 +29,6 @@ public abstract class AbstratctAuditedService<T extends AuditedEntity<Long>> imp
 	public T undelete(final T entity) {
 		Objects.requireNonNull(entity);
 		entity.setDeleted(Boolean.FALSE);
-		return doUpdate(entity);
-	}
-
-	@Override
-	@Audited(action = Type.UPDATE)
-	public T update(final T entity) {
-		Objects.requireNonNull(entity);
-		return doUpdate(entity);
+		return save(entity);
 	}
 }

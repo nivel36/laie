@@ -2,6 +2,7 @@ package ged.ejb.core.model;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -37,18 +38,23 @@ public abstract class AbstractDao<K, T extends Entity<K>> implements Dao<K, T> {
 
 	@Override
 	public void delete(final T entity) {
+		Objects.requireNonNull(entity);
+		if (entity.getId() == null) {
+			throw new IllegalStateException();
+		}
 		logger.log(Level.FINE, "Eliminando la entidad::Clase={0}::Id={1}",
 				new Object[] { entity.getClass().getCanonicalName(), entity.getId() });
 		if (this.em.contains(entity)) {
 			this.em.remove(entity);
 		} else {
-			final T attachedEntity = this.em.merge(entity);
+			final T attachedEntity = this.em.getReference(getType(), entity.getId());
 			this.em.remove(attachedEntity);
 		}
 	}
 
 	@Override
 	public T find(final K id) {
+		Objects.requireNonNull(id);
 		logger.log(Level.FINE, "Buscando por clave primaria::clase={0}::id={1}", new Object[] { getClass(), id });
 		return this.em.find(getType(), id);
 	}
@@ -61,12 +67,14 @@ public abstract class AbstractDao<K, T extends Entity<K>> implements Dao<K, T> {
 	}
 
 	protected T findByCriteria(final CriteriaQuery<T> cq) {
+		Objects.requireNonNull(cq);
 		logger.log(Level.FINE, "Lanzando criteria para un solo resultado");
 		final TypedQuery<T> query = this.em.createQuery(cq);
 		return query.getSingleResult();
 	}
 
 	protected List<T> findByCriteria(final CriteriaQuery<T> cq, final int pageSize, final int pageNum) {
+		Objects.requireNonNull(cq);
 		logger.log(Level.FINE, "Lanzando criteria");
 		final TypedQuery<T> query = this.em.createQuery(cq);
 		paginar(pageSize, pageNum, query);
@@ -75,6 +83,8 @@ public abstract class AbstractDao<K, T extends Entity<K>> implements Dao<K, T> {
 
 	protected <E> E findByTypedQuery(final Class<E> entityClass, final String namedQuery,
 			final Map<String, Object> parameters) {
+		Objects.requireNonNull(entityClass);
+		Objects.requireNonNull(namedQuery);
 		logger.log(Level.FINE, "Ejecutando la getByTypedQuerySingleResult: {0}", namedQuery);
 		final TypedQuery<E> query = this.em.createNamedQuery(namedQuery, entityClass);
 		parametrizar(parameters, query);
@@ -83,6 +93,8 @@ public abstract class AbstractDao<K, T extends Entity<K>> implements Dao<K, T> {
 
 	protected <E> List<E> findByTypedQuery(final Class<E> entityClass, final String namedQuery,
 			final Map<String, Object> parameters, final int pageSize, final int pageNum) {
+		Objects.requireNonNull(entityClass);
+		Objects.requireNonNull(namedQuery);
 		logger.log(Level.FINE, "Ejecutando la getByTypedQuery: {0}", namedQuery);
 		final TypedQuery<E> query = this.em.createNamedQuery(namedQuery, entityClass);
 		parametrizar(parameters, query);
@@ -98,6 +110,10 @@ public abstract class AbstractDao<K, T extends Entity<K>> implements Dao<K, T> {
 
 	@Override
 	public void insert(final T entity) {
+		Objects.requireNonNull(entity);
+		if (entity.getId() != null) {
+			throw new IllegalStateException();
+		}
 		logger.log(Level.FINE, "Insertando una nueva entidad de tipod::Clase={0}",
 				entity.getClass().getCanonicalName());
 		this.em.persist(entity);
@@ -111,10 +127,8 @@ public abstract class AbstractDao<K, T extends Entity<K>> implements Dao<K, T> {
 		if (pageSize < 0) {
 			throw new IllegalArgumentException("pageSize: " + pageSize);
 		}
-
 		logger.log(Level.FINEST, "Página actual {0}", pageNum);
 		query.setFirstResult(pageNum * pageSize);
-
 		if (pageSize > 0) {
 			logger.log(Level.FINEST, "Tamaño de página {0}", pageSize);
 			query.setMaxResults(pageSize);
@@ -125,22 +139,27 @@ public abstract class AbstractDao<K, T extends Entity<K>> implements Dao<K, T> {
 	}
 
 	private void parametrizar(final Map<String, Object> parameters, final Query query) {
-		if (parameters != null) {
-			for (final Map.Entry<String, Object> entry : parameters.entrySet()) {
-				logger.log(Level.FINEST, "key={0}::parameter={1}", new Object[] { entry.getKey(), entry.getValue() });
-				query.setParameter(entry.getKey(), entry.getValue());
-			}
+		if (parameters == null) {
+			return;
+		}
+		for (final Map.Entry<String, Object> entry : parameters.entrySet()) {
+			logger.log(Level.FINEST, "key={0}::parameter={1}", new Object[] { entry.getKey(), entry.getValue() });
+			query.setParameter(entry.getKey(), entry.getValue());
 		}
 	}
 
 	@Override
 	public T update(final T entity) {
+		Objects.requireNonNull(entity);
+		if (entity.getId() == null) {
+			throw new IllegalStateException();
+		}
 		logger.log(Level.FINE, "Actualizando la entidad::Clase={0}::Id={1}",
 				new Object[] { entity.getClass().getCanonicalName(), entity.getId() });
-		if (!this.em.contains(entity)) {
-			return this.em.merge(entity);
-		} else {
+		if (this.em.contains(entity)) {
 			return entity;
+		} else {
+			return this.em.merge(entity);
 		}
 	}
 }

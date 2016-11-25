@@ -14,6 +14,14 @@ public abstract class AbstractService<K, T extends Entity<K>> implements Service
 		this.getDao().delete(entity);
 	}
 
+	protected void doInsert(final T entity) {
+		this.getDao().insert(entity);
+	}
+
+	protected T doUpdate(final T entity) {
+		return this.getDao().update(entity);
+	}
+
 	@Override
 	public T find(final K id) {
 		Objects.requireNonNull(id);
@@ -28,14 +36,13 @@ public abstract class AbstractService<K, T extends Entity<K>> implements Service
 	protected abstract Dao<K, T> getDao();
 
 	@Override
-	public void insert(final T entity) {
+	public T save(final T entity) {
 		Objects.requireNonNull(entity);
-		this.getDao().insert(entity);
-	}
-
-	@Override
-	public T update(final T entity) {
-		Objects.requireNonNull(entity);
-		return this.getDao().update(entity);
+		if (entity.getId() == null) {
+			doInsert(entity);
+			return entity;
+		} else {
+			return doUpdate(entity);
+		}
 	}
 }

@@ -45,7 +45,7 @@ public class BookmarksBean extends AbstractPageBean {
 			addMessage(FacesMessage.SEVERITY_ERROR, "Bookmark full", "Bookmark full");
 			return;
 		}
-		this.bookmarkService.insert(bookmark);
+		this.bookmarkService.save(bookmark);
 		this.bookmarks.add(bookmark);
 	}
 

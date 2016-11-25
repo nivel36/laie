@@ -37,6 +37,6 @@ public class MaintenanceEditBean extends AbstractPageBean {
 	}
 
 	public void save() {
-		this.maintenanceService.insert(this.enumEntity);
+		this.maintenanceService.save(this.enumEntity);
 	}
 }
