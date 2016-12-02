@@ -69,21 +69,13 @@
 
 				<h2>#{i18n['candidate.contact']}</h2>
 
-				<h:outputLabel value="#{i18n['candidate.phone_number']} 1"
+				<h:outputLabel value="#{i18n['candidate.phone_number']}"
 					styleClass="required">
-					<h:inputText id="phoneNumber1"
-						value="#{candidateEditBean.candidate.phoneNumber1}"
-						required="true" label="#{i18n['candidate.phone_number']}1"
+					<h:inputText id="phoneNumber"
+						value="#{candidateEditBean.candidate.phoneNumber}"
+						required="true" label="#{i18n['candidate.phone_number']}"
 						styleClass="#{ not component.valid ? 'inputError' : ''}" />
-					<h:message for="phoneNumber1" errorClass="error" />
-				</h:outputLabel>
-
-				<h:outputLabel value="#{i18n['candidate.phone_number']} 2">
-					<h:inputText id="phoneNumber2"
-						value="#{candidateEditBean.candidate.phoneNumber2}"
-						label="#{i18n['candidate.phone_number']}2"
-						styleClass="#{ not component.valid ? 'inputError' : ''}" />
-					<h:message for="phoneNumber2" errorClass="error" />
+					<h:message for="phoneNumber" errorClass="error" />
 				</h:outputLabel>
 
 				<h:outputLabel value="#{i18n['candidate.email']}"

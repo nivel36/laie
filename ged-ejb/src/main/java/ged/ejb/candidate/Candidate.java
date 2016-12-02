@@ -78,11 +78,7 @@ public class Candidate extends AbstractAuditedEntity {
 	@NotNull
 	@Pattern(regexp = "(?:[+]?(?:[0-9]{1,5}|\\x28[0-9]{1,5}\\x29)[ ]?)?[0-9]{2}(?:[0-9][ ]?){6}[0-9]")
 	@Column(length = 12, nullable = false)
-	private String phoneNumber1;
-
-	@Pattern(regexp = "(?:[+]?(?:[0-9]{1,5}|\\x28[0-9]{1,5}\\x29)[ ]?)?[0-9]{2}(?:[0-9][ ]?){6}[0-9]")
-	@Column(length = 12)
-	private String phoneNumber2;
+	private String phoneNumber;
 
 	@NotNull
 	@Column(length = 64, nullable = false)
@@ -134,11 +130,11 @@ public class Candidate extends AbstractAuditedEntity {
 		} else if (!this.name.equals(other.name)) {
 			return false;
 		}
-		if (this.phoneNumber1 == null) {
-			if (other.phoneNumber1 != null) {
+		if (this.phoneNumber == null) {
+			if (other.phoneNumber != null) {
 				return false;
 			}
-		} else if (!this.phoneNumber1.equals(other.phoneNumber1)) {
+		} else if (!this.phoneNumber.equals(other.phoneNumber)) {
 			return false;
 		}
 		if (this.surename == null) {
@@ -199,12 +195,8 @@ public class Candidate extends AbstractAuditedEntity {
 		return this.owner;
 	}
 
-	public String getPhoneNumber1() {
-		return this.phoneNumber1;
-	}
-
-	public String getPhoneNumber2() {
-		return this.phoneNumber2;
+	public String getPhoneNumber() {
+		return this.phoneNumber;
 	}
 
 	public String getPosition() {
@@ -227,10 +219,10 @@ public class Candidate extends AbstractAuditedEntity {
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = (prime * result) + ((this.email == null) ? 0 : this.email.hashCode());
-		result = (prime * result) + ((this.name == null) ? 0 : this.name.hashCode());
-		result = (prime * result) + ((this.phoneNumber1 == null) ? 0 : this.phoneNumber1.hashCode());
-		result = (prime * result) + ((this.surename == null) ? 0 : this.surename.hashCode());
+		result = prime * result + (this.email == null ? 0 : this.email.hashCode());
+		result = prime * result + (this.name == null ? 0 : this.name.hashCode());
+		result = prime * result + (this.phoneNumber == null ? 0 : this.phoneNumber.hashCode());
+		result = prime * result + (this.surename == null ? 0 : this.surename.hashCode());
 		return result;
 	}
 
@@ -282,12 +274,8 @@ public class Candidate extends AbstractAuditedEntity {
 		this.owner = owner;
 	}
 
-	public void setPhoneNumber1(final String phoneNumber1) {
-		this.phoneNumber1 = phoneNumber1;
-	}
-
-	public void setPhoneNumber2(final String phoneNumber2) {
-		this.phoneNumber2 = phoneNumber2;
+	public void setPhoneNumber(final String phoneNumber) {
+		this.phoneNumber = phoneNumber;
 	}
 
 	public void setPosition(final String position) {
