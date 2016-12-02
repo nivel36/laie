@@ -81,10 +81,9 @@ public class UserServiceImpl extends AbstratctAuditedService<Long, User> impleme
 	}
 
 	@Override
-	public List<User> searchByNameAndSurename(final String name, final String surename, final String email) {
-		logger.log(Level.FINE, "SEARCH user by name {} and surename {}, removing users with email {}",
-				new Object[] { name, surename, email });
-		return this.userDao.searchByNameAndSurename(name, surename, email, false);
+	public List<User> searchByNameAndSurename(final String name, final String surename) {
+		logger.log(Level.FINE, "SEARCH user by name {} and surename {}", new Object[] { name, surename });
+		return this.userDao.searchByNameAndSurename(name, surename, false);
 	}
 
 	@Override

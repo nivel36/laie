@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://xmlns.jcp.org/jsf/passthrough" xmlns:i18n="http://legion.com/i18n"
+	xmlns:a="http://java.sun.com/jsf/composite/legion">
+
+	<h:form id="userSearchPopupForm">
+		<h:panelGroup layout="block" rendered="#{userSearchPopupBean.rendered}" styleClass="modalDialog" id="managerPopup">
+			<h:panelGroup layout="block" id="modalContent">
+				<h:commandLink styleClass="close" action="#{userSearchPopupBean.hide}" value="X">
+					<f:ajax execute="@this" render=":userSearchPopupForm" />
+				</h:commandLink>
+				<h3>#{i18n['user.user']}</h3>
+
+				<h:panelGroup layout="block" styleClass="panel" id="searchManagerPanel">
+					<h1>#{i18n['user.search']}</h1>
+					<h:outputLabel for="searchUserName" value="#{i18n['user.name']}">
+						<h:inputText id="searchUserName" value="#{userSearchPopupBean.name}" label="#{i18n['user.name']}"
+							validator="ged.web.view.SearchFieldValidator" />
+						<h:message for="searchUserName" errorClass="error" />
+					</h:outputLabel>
+
+					<h:outputLabel for="searchUserSurename" value="#{i18n['user.surename']}">
+						<h:inputText id="searchUserSurename" value="#{userSearchPopupBean.surename}" label="#{i18n['user.surename']}"
+							validator="ged.web.view.SearchFieldValidator" />
+						<h:message for="searchUserSurename" errorClass="error" />
+					</h:outputLabel>
+
+					<h:panelGroup layout="block" styleClass="buttonGroup">
+						<h:commandButton value="#{i18n['action.clean']}" action="#{userSearchPopupBean.clean}">
+							<f:ajax render="@form" />
+						</h:commandButton>
+						<h:commandButton value="#{i18n['action.search']}" action="#{userSearchPopupBean.search}">
+							<f:ajax execute="searchManagerPanel" render="@form" />
+						</h:commandButton>
+					</h:panelGroup>
+				</h:panelGroup>
+
+				<h:panelGroup layout="block" styleClass="panel" id="resultados">
+					<h1>#{i18n['user.search_results']}</h1>
+
+					<h:outputText value="#{i18n['user.no_users_found']}" rendered="#{empty userSearchPopupBean.paginator.dataList}" />
+
+					<h:dataTable var="user" id="usersList" value="#{userSearchPopupBean.paginator.dataList}"
+						rendered="#{not empty userSearchPopupBean.paginator.entities}" styleClass="dataTable">
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{i18n['user.name']}" />
+							</f:facet>
+							<h:outputText value="#{user}" />
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{i18n['user.email']}" />
+							</f:facet>
+							<h:outputText value="#{user.email}" />
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{i18n['user.manager']}" />
+							</f:facet>
+							<h:outputText value="#{user.manager}" />
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{i18n['user.role']}" />
+							</f:facet>
+							<h:outputText value="#{i18n:translate(user.role.name)}" />
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="Action" />
+							</f:facet>
+							<h:commandLink action="#{userSearchPopupBean.hide}" value="#{i18n['action.select']}">
+								<f:setPropertyActionListener value="#{user}" target="#{userEditBean.manager}" />
+								<f:ajax execute="@this" render=":userSearchPopupForm :form:managerBlock" />
+							</h:commandLink>
+						</h:column>
+					</h:dataTable>
+					<a:paginator paginator="#{userSearchPopupBean.paginator}" />
+
+				</h:panelGroup>
+				<h:panelGroup layout="block" styleClass="buttonGroup">
+					<h:commandButton value="#{i18n['action.cancel']}" action="#{userSearchPopupBean.cancel}">
+						<f:ajax execute="@this" render=":userSearchPopupForm" />
+					</h:commandButton>
+				</h:panelGroup>
+			</h:panelGroup>
+		</h:panelGroup>
+	</h:form>
+</ui:composition>

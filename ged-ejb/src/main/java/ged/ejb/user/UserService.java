@@ -12,7 +12,7 @@ public interface UserService extends AuditedService<Long, User> {
 
 	User findUserByUsername(String username);
 
-	List<User> searchByNameAndSurename(final String name, final String surename, final String email);
+	List<User> searchByNameAndSurename(final String name, final String surename);
 
 	boolean usernameExists(final String username);
 }

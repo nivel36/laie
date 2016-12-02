@@ -115,10 +115,8 @@ public final class UserDaoJpa extends AbstractDao<Long, User> implements UserDao
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
-	public List<User> searchByNameAndSurename(final String name, final String surename, final String email,
-			final boolean showDeleted) {
-		logger.log(Level.FINE, "SEARCH user by name {} and surename {}, removing users with email {}",
-				new Object[] { name, surename, email });
+	public List<User> searchByNameAndSurename(final String name, final String surename, final boolean showDeleted) {
+		logger.log(Level.FINE, "SEARCH user by name {} and surename {}", new Object[] { name, surename });
 		final FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(getEm());
 		final QueryBuilder qb = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(User.class)
 				.get();
@@ -128,9 +126,6 @@ public final class UserDaoJpa extends AbstractDao<Long, User> implements UserDao
 		}
 		if (surename != null) {
 			bj.must(qb.keyword().onField("surename").matching(surename).createQuery());
-		}
-		if (email != null) {
-			bj.must(qb.keyword().onField("email").matching(email).createQuery()).not();
 		}
 		if (!showDeleted) {
 			bj.must(qb.keyword().onField("deleted").matching(true).createQuery()).not();

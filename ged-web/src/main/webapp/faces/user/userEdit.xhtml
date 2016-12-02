@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
-	xmlns:i18n="http://legion.com/i18n"
-	xmlns:a="http://java.sun.com/jsf/composite/legion"
-	template="/WEB-INF/templates/default.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://xmlns.jcp.org/jsf/passthrough" xmlns:i18n="http://legion.com/i18n"
+	xmlns:a="http://java.sun.com/jsf/composite/legion" template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
 		<title>#{i18n['user.user']}</title>
@@ -15,193 +11,73 @@
 	<ui:param name="selectedMenu" value="user" />
 
 	<ui:define name="content">
-		<h:form id="userSearchPopupForm">
-			<h:panelGroup layout="block"
-				rendered="#{selectManagerPopupBean.rendered}"
-				styleClass="modalDialog" id="managerPopup">
-				<h:panelGroup layout="block" id="modalContent">
-					<h:commandLink styleClass="close"
-						action="#{selectManagerPopupBean.hide}" value="X">
-						<f:ajax execute="@this" render=":userSearchPopupForm" />
-					</h:commandLink>
-					<h3>#{i18n['user.user']}</h3>
-
-					<h:panelGroup layout="block" styleClass="panel"
-						id="searchManagerPanel">
-						<h1>#{i18n['user.search']}</h1>
-						<h:outputLabel for="searchUserName" value="#{i18n['user.name']}">
-							<h:inputText id="searchUserName"
-								value="#{selectManagerPopupBean.name}"
-								label="#{i18n['user.name']}"
-								validator="ged.web.view.SearchFieldValidator" />
-							<h:message for="searchUserName" errorClass="error" />
-						</h:outputLabel>
-
-						<h:outputLabel for="searchUserSurename"
-							value="#{i18n['user.surename']}">
-							<h:inputText id="searchUserSurename"
-								value="#{selectManagerPopupBean.surename}"
-								label="#{i18n['user.surename']}"
-								validator="ged.web.view.SearchFieldValidator" />
-							<h:message for="searchUserSurename" errorClass="error" />
-						</h:outputLabel>
-
-						<h:panelGroup layout="block" styleClass="buttonGroup">
-							<h:commandButton value="#{i18n['action.clean']}"
-								action="#{selectManagerPopupBean.cleanPopup}">
-								<f:ajax render="@form" />
-							</h:commandButton>
-							<h:commandButton value="#{i18n['action.search']}"
-								action="#{selectManagerPopupBean.search}">
-								<f:ajax execute="searchManagerPanel" render="@form" />
-							</h:commandButton>
-						</h:panelGroup>
-					</h:panelGroup>
-
-					<h:panelGroup layout="block" styleClass="panel" id="resultados">
-						<h1>#{i18n['user.search_results']}</h1>
-
-						<h:outputText value="#{i18n['user.no_users_found']}"
-							rendered="#{empty selectManagerPopupBean.paginator.dataList}" />
-
-						<h:dataTable var="user" id="usersList"
-							value="#{selectManagerPopupBean.paginator.dataList}"
-							rendered="#{not empty selectManagerPopupBean.paginator.entities}"
-							styleClass="dataTable">
-							<h:column>
-								<f:facet name="header">
-									<h:outputText value="#{i18n['user.name']}" />
-								</f:facet>
-								<h:outputText value="#{user}" />
-							</h:column>
-							<h:column>
-								<f:facet name="header">
-									<h:outputText value="#{i18n['user.email']}" />
-								</f:facet>
-								<h:outputText value="#{user.email}" />
-							</h:column>
-							<h:column>
-								<f:facet name="header">
-									<h:outputText value="#{i18n['user.manager']}" />
-								</f:facet>
-								<h:outputText value="#{user.manager}" />
-							</h:column>
-							<h:column>
-								<f:facet name="header">
-									<h:outputText value="#{i18n['user.role']}" />
-								</f:facet>
-								<h:outputText value="#{i18n:translate(user.role.name)}" />
-							</h:column>
-							<h:column>
-								<f:facet name="header">
-									<h:outputText value="Action" />
-								</f:facet>
-								<h:commandLink action="#{selectManagerPopupBean.hide}"
-									value="#{i18n['action.select']}">
-									<f:setPropertyActionListener value="#{user}"
-										target="#{userEditBean.manager}" />
-									<f:ajax execute="@this"
-										render=":userSearchPopupForm :form:managerBlock" />
-								</h:commandLink>
-							</h:column>
-						</h:dataTable>
-						<a:paginator paginator="#{selectManagerPopupBean.paginator}" />
-
-					</h:panelGroup>
-					<h:panelGroup layout="block" styleClass="buttonGroup">
-						<h:commandButton value="#{i18n['action.cancel']}"
-							action="#{selectManagerPopupBean.cancelPopup}">
-							<f:ajax execute="@this" render=":userSearchPopupForm" />
-						</h:commandButton>
-					</h:panelGroup>
-				</h:panelGroup>
-			</h:panelGroup>
-		</h:form>
+	
+		<ui:include src="userSearchPopup.xhtml" />
 
 		<h:form id="form">
 			<input type="hidden" id="userId" value="#{userEditBean.user.id}" />
 
 			<h1 class="header">
-				<i class="fa fa-user" /> #{userEditBean.user.id == null ?
-				i18n['user.new_user'] : userEditBean.user}
+				<i class="fa fa-user" /> #{userEditBean.user.id == null ? i18n['user.new_user'] : userEditBean.user}
 			</h1>
 
 			<h:panelGroup layout="block" styleClass="panel">
 				<h1>#{i18n['user.user']}</h1>
 
-				<h:outputLabel value="#{i18n['user.username']}"
-					styleClass="required">
-					<h:inputText id="username" value="#{userEditBean.user.username}"
-						label="#{i18n['user.username']}" required="true"
-						styleClass="#{not component.valid ? 'inputError' : ''}" 
-						validator="#{userEditBean.validateUsername}" />
+				<h:outputLabel value="#{i18n['user.username']}" styleClass="required">
+					<h:inputText id="username" value="#{userEditBean.user.username}" label="#{i18n['user.username']}" required="true"
+						styleClass="#{not component.valid ? 'inputError' : ''}" validator="#{userEditBean.validateUsername}" />
 					<h:message for="username" errorClass="error" />
 				</h:outputLabel>
 
-				<h:outputLabel value="#{i18n['user.email']}"
-					styleClass="large required">
-					<h:inputText id="email" p:type="email"
-						value="#{userEditBean.user.email}" required="true"
-						label="#{i18n['user.email']}"
-						styleClass="#{ not component.valid ? 'inputError' : ''}"
+				<h:outputLabel value="#{i18n['user.email']}" styleClass="large required">
+					<h:inputText id="email" p:type="email" value="#{userEditBean.user.email}" required="true"
+						label="#{i18n['user.email']}" styleClass="#{ not component.valid ? 'inputError' : ''}"
 						validator="#{userEditBean.validateEmail}">
 					</h:inputText>
 					<h:message for="email" errorClass="error" />
 				</h:outputLabel>
 
 				<h:outputLabel value="#{i18n['user.name']}" styleClass="required">
-					<h:inputText id="name" value="#{userEditBean.user.name}"
-						label="#{i18n['user.name']}" required="true"
+					<h:inputText id="name" value="#{userEditBean.user.name}" label="#{i18n['user.name']}" required="true"
 						styleClass="#{not component.valid ? 'inputError' : ''}" />
 					<h:message for="name" errorClass="error" />
 				</h:outputLabel>
 
-				<h:outputLabel value="#{i18n['user.surename']}"
-					styleClass="large required">
-					<h:inputText id="surename" value="#{userEditBean.user.surename}"
-						label="#{i18n['user.surename']}" required="true"
+				<h:outputLabel value="#{i18n['user.surename']}" styleClass="large required">
+					<h:inputText id="surename" value="#{userEditBean.user.surename}" label="#{i18n['user.surename']}" required="true"
 						styleClass="#{not component.valid ? 'inputError' : ''}" />
 					<h:message for="surename" errorClass="error" />
 				</h:outputLabel>
 
 				<h:outputLabel value="#{i18n['user.role']}" styleClass="required">
-					<h:selectOneMenu id="role" value="#{userEditBean.user.role}"
-						validator="#{userEditBean.validateRole}">
-						<f:selectItems var="role" itemValue="#{role}"
-							value="#{applicationBean.roles}"
+					<h:selectOneMenu id="role" value="#{userEditBean.user.role}" validator="#{userEditBean.validateRole}">
+						<f:selectItems var="role" itemValue="#{role}" value="#{applicationBean.roles}"
 							itemLabel="#{i18n:translate(role.name)}" />
 					</h:selectOneMenu>
 					<h:message for="role" errorClass="error" />
 				</h:outputLabel>
 
-				<h:panelGroup layout="block" id="managerBlock"
-					styleClass="selectField">
+				<h:panelGroup layout="block" id="managerBlock" styleClass="selectField">
 					<h:outputLabel value="#{i18n['user.manager']}">
-						<h:inputText id="manager" value="#{userEditBean.manager.fullName}"
-							label="#{i18n['user.manager']}"
-							styleClass="#{not component.valid ? 'inputError' : ''}"
-							readonly="#{facesContext.renderResponse}" />
+						<h:inputText id="manager" value="#{userEditBean.manager.fullName}" label="#{i18n['user.manager']}"
+							styleClass="#{not component.valid ? 'inputError' : ''}" readonly="#{facesContext.renderResponse}" />
 						<h:message for="manager" errorClass="error" />
 					</h:outputLabel>
 
-					<h:commandButton action="#{selectManagerPopupBean.show}" value="+">
+					<h:commandButton action="#{userSearchPopupBean.show}" value="+">
 						<f:ajax execute="@this" render=":userSearchPopupForm" />
-						<f:setPropertyActionListener value="#{userEditBean.user.email}"
-							target="#{selectManagerPopupBean.userEmail}" />
 					</h:commandButton>
 
 					<h:commandButton action="#{userEditBean.removeManager}" value="-"
-						rendered="#{not empty userEditBean.manager.username}"
-						id="removeManager">
+						rendered="#{not empty userEditBean.manager.username}" id="removeManager">
 						<f:ajax execute="@this" render="managerBlock" />
 					</h:commandButton>
 				</h:panelGroup>
 
 				<h:panelGroup layout="block" styleClass="buttonGroup">
-					<h:commandButton value="#{i18n['action.save']}"
-						action="#{userEditBean.save}" />
-					<h:commandButton value="#{i18n['action.cancel']}"
-						action="#{userEditBean.cancel}" immediate="true" />
+					<h:commandButton value="#{i18n['action.save']}" action="#{userEditBean.save}" />
+					<h:commandButton value="#{i18n['action.cancel']}" action="#{userEditBean.cancel}" immediate="true" />
 				</h:panelGroup>
 			</h:panelGroup>
 		</h:form>

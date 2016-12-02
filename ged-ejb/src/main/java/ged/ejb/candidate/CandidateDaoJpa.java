@@ -32,7 +32,7 @@ public class CandidateDaoJpa extends AbstractDao<Long, Candidate> implements Can
 
 	@Override
 	public List<FileType> findAllFileTypes() {
-		return createQueryFromCriteria(FileType.class).getResultList();
+		return findAll(FileType.class);
 	}
 
 	@Override

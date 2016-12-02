@@ -10,11 +10,11 @@ public interface UserDao extends Dao<Long, User> {
 
 	Boolean existsMoreThanOneAdmin();
 
-	List<User> findSubordinateUsers(Long id);
+	List<User> findSubordinateUsers(final Long id);
 
-	User findUserByUsername(String username);
+	User findUserByUsername(final String username);
 
-	List<User> searchByNameAndSurename(final String name, String surename, String email, final boolean showDeleted);
+	List<User> searchByNameAndSurename(final String name, String surename, final boolean showDeleted);
 
 	Boolean usernameExists(final String username);
 }

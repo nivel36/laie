@@ -12,6 +12,7 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 @Repository
 public abstract class AbstractDao<K, T extends Entity<K>> implements Dao<K, T> {
@@ -28,12 +29,6 @@ public abstract class AbstractDao<K, T extends Entity<K>> implements Dao<K, T> {
 	@Inject
 	public AbstractDao(final EntityManager em) {
 		this.em = em;
-	}
-
-	protected <E> TypedQuery<E> createQueryFromCriteria(final Class<E> clazz) {
-		final CriteriaBuilder cb = this.em.getCriteriaBuilder();
-		final CriteriaQuery<E> cq = cb.createQuery(clazz);
-		return this.em.createQuery(cq);
 	}
 
 	@Override
@@ -61,9 +56,23 @@ public abstract class AbstractDao<K, T extends Entity<K>> implements Dao<K, T> {
 
 	@Override
 	public List<T> findAll() {
-		final TypedQuery<T> typedQuery = createQueryFromCriteria(getType());
-		paginar(0, RES_LIMIT, typedQuery);
-		return typedQuery.getResultList();
+		return findAll(getType());
+	}
+
+	protected <E> List<E> findAll(final Class<E> type) {
+		final CriteriaBuilder cb = this.em.getCriteriaBuilder();
+		final CriteriaQuery<E> cq = cb.createQuery(type);
+		final Root<E> root = cq.from(type);
+		final CriteriaQuery<E> all = cq.select(root);
+		return findByCriteria(all, 0, 0);
+	}
+
+	protected <E> List<E> findByCriteria(final CriteriaQuery<E> cq, final int pageSize, final int pageNum) {
+		Objects.requireNonNull(cq);
+		logger.log(Level.FINE, "Lanzando criteria");
+		final TypedQuery<E> query = this.em.createQuery(cq);
+		paginar(pageSize, pageNum, query);
+		return query.getResultList();
 	}
 
 	protected T findByCriteria(final CriteriaQuery<T> cq) {
@@ -71,14 +80,6 @@ public abstract class AbstractDao<K, T extends Entity<K>> implements Dao<K, T> {
 		logger.log(Level.FINE, "Lanzando criteria para un solo resultado");
 		final TypedQuery<T> query = this.em.createQuery(cq);
 		return query.getSingleResult();
-	}
-
-	protected List<T> findByCriteria(final CriteriaQuery<T> cq, final int pageSize, final int pageNum) {
-		Objects.requireNonNull(cq);
-		logger.log(Level.FINE, "Lanzando criteria");
-		final TypedQuery<T> query = this.em.createQuery(cq);
-		paginar(pageSize, pageNum, query);
-		return query.getResultList();
 	}
 
 	protected <E> E findByTypedQuery(final Class<E> entityClass, final String namedQuery,

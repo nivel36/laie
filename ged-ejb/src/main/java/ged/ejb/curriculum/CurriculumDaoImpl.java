@@ -18,12 +18,12 @@ public class CurriculumDaoImpl extends AbstractDao<Long, Curriculum> implements 
 
 	@Override
 	public List<LanguageLevel> findAllLanguageLevels() {
-		return createQueryFromCriteria(LanguageLevel.class).getResultList();
+		return findAll(LanguageLevel.class);
 	}
 
 	@Override
 	public List<SkillLevel> findAllSkillLevels() {
-		return createQueryFromCriteria(SkillLevel.class).getResultList();
+		return findAll(SkillLevel.class);
 	}
 
 	@Override
