@@ -149,6 +149,18 @@ public class UserEditBean extends AbstractPageBean {
 		}
 	}
 
+	public void validateManager(final FacesContext context, final UIComponent component, final Object value)
+			throws ValidatorException {
+		if (value == null) {
+			return;
+		}
+		if (this.manager.equals(this.user)) {
+			logger.log(Level.FINEST, "User can't be his/her manager");
+			final String msg = translate("user.error.manager");
+			throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg));
+		}
+	}
+
 	public void validateRole(final FacesContext context, final UIComponent component, final Object value)
 			throws ValidatorException {
 		if (this.manager.getUsername() == null) {
