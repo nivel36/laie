@@ -13,7 +13,7 @@ import ged.ejb.user.UserService;
 import ged.web.core.view.AbstractPageBean;
 import ged.web.core.view.Paginator;
 
-public abstract class AbstractUserSearchBean extends AbstractPageBean {
+abstract class AbstractUserSearchBean extends AbstractPageBean {
 
 	private final transient static Logger logger = Logger.getLogger(AbstractPageBean.class.getName());
 
@@ -39,7 +39,7 @@ public abstract class AbstractUserSearchBean extends AbstractPageBean {
 		search();
 	}
 
-	private void cleanSearchFields() {
+	protected void cleanSearchFields() {
 		this.surename = null;
 		this.name = null;
 	}

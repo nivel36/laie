@@ -24,11 +24,11 @@ public class UserSearchPopupBean extends AbstractUserSearchBean {
 	}
 
 	public void cancel() {
-		this.rendered = false;
+		hide();
 	}
 
 	public void hide() {
-		clean();
+		cleanSearchFields();
 		this.rendered = false;
 	}
 
@@ -38,10 +38,6 @@ public class UserSearchPopupBean extends AbstractUserSearchBean {
 
 	public void open() {
 		this.rendered = true;
-	}
-
-	public void setRendered(final boolean rendered) {
-		this.rendered = rendered;
 	}
 
 	public void show() {
