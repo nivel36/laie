@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
-	xmlns:i18n="http://legion.com/i18n"
-	xmlns:a="http://java.sun.com/jsf/composite/legion"
-	template="/WEB-INF/templates/default.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://xmlns.jcp.org/jsf/passthrough" xmlns:i18n="http://legion.com/i18n"
+	xmlns:a="http://java.sun.com/jsf/composite/legion" template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
 		<title>#{i18n['user.user']}</title>
@@ -27,29 +23,24 @@
 				<i class="fa fa-user" /> #{userViewBean.user}
 			</h1>
 
-			<h:panelGroup id="actionButtons" layout="block"
-				styleClass="actionPanel">
-				<h:commandButton value="#{i18n['action.undelete']}"
-					action="#{userViewBean.undeleteUser}" immediate="true"
+			<h:panelGroup id="actionButtons" layout="block" styleClass="actionPanel">
+				<h:commandButton value="#{i18n['action.undelete']}" action="#{userViewBean.undeleteUser}" immediate="true"
 					rendered="#{userViewBean.user.deleted}" />
-				<h:commandButton value="#{i18n['action.edit']}"
-					action="#{userViewBean.editUser}" immediate="true"
+				<h:commandButton value="#{i18n['action.edit']}" action="#{userViewBean.editUser}" immediate="true"
 					rendered="#{not userViewBean.user.deleted}" />
-				<h:commandButton value="#{i18n['bookmark.add_to_bookmarks']}"
-					action="#{bookmarksBean.add(userViewBean.user)}" immediate="true"
+				<h:commandButton value="#{i18n['bookmark.add_to_bookmarks']}" action="#{bookmarksBean.add(userViewBean.user)}"
+					immediate="true"
 					rendered="#{(not bookmarksBean.isBookmarked(userViewBean.user))	and (not userViewBean.user.deleted)}">
 					<f:ajax render="actionButtons :asideForm:bookmarks" />
 				</h:commandButton>
 				<h:commandButton value="#{i18n['bookmark.remove_from_bookmarks']}"
-					action="#{bookmarksBean.remove(userViewBean.user)}"
-					immediate="true"
+					action="#{bookmarksBean.remove(userViewBean.user)}" immediate="true"
 					rendered="#{bookmarksBean.isBookmarked(userViewBean.user)}">
 					<f:ajax render="actionButtons :asideForm:bookmarks" />
 				</h:commandButton>
 				<h:commandLink id="exportPdf" styleClass="iconButton">
 					<i class="fa fa-file-pdf-o fa-lg" /> #{i18n['action.export']}</h:commandLink>
-				<h:commandLink id="exportExcel" styleClass="iconButton"
-					action="#{userViewBean.export}">
+				<h:commandLink id="exportExcel" styleClass="iconButton" action="#{userViewBean.export}">
 					<i class="fa fa-file-excel-o fa-lg" /> #{i18n['action.export']}
 				</h:commandLink>
 			</h:panelGroup>
@@ -59,8 +50,7 @@
 
 				<h:panelGroup layout="block" styleClass="textBlock">
 					<h:outputText styleClass="label" value="#{i18n['user.name']}:" />
-					<h:outputText
-						value="#{userViewBean.user.name} #{userViewBean.user.surename}" />
+					<h:outputText value="#{userViewBean.user.name} #{userViewBean.user.surename}" />
 				</h:panelGroup>
 
 				<h:panelGroup layout="block" styleClass="textBlock">
@@ -70,8 +60,7 @@
 
 				<h:panelGroup layout="block" styleClass="textBlock">
 					<h:outputText styleClass="label" value="#{i18n['user.role']}:" />
-					<h:outputText
-						value="#{i18n:translate(userViewBean.user.role.name)}" />
+					<h:outputText value="#{i18n:translate(userViewBean.user.role.name)}" />
 				</h:panelGroup>
 
 				<h:panelGroup layout="block" styleClass="textBlock">
@@ -84,12 +73,9 @@
 
 				<h:panelGroup layout="block" styleClass="panel">
 					<h1>#{i18n['user.team']}</h1>
-					<h:outputText value="#{i18n['user.no_users_found']}"
-						rendered="#{empty userViewBean.team.entities}" />
-					<h:dataTable var="user" id="user"
-						value="#{userViewBean.team.dataList}"
-						rendered="#{not empty userViewBean.team.dataList}"
-						styleClass="dataTable">
+					<h:outputText value="#{i18n['user.no_users_found']}" rendered="#{empty userViewBean.team.entities}" />
+					<h:dataTable var="user" id="user" value="#{userViewBean.team.dataList}"
+						rendered="#{not empty userViewBean.team.dataList}" styleClass="dataTable">
 						<h:column>
 							<f:facet name="header">
 								<h:outputText value="#{i18n['user.name']}" />
@@ -114,20 +100,16 @@
 						</h:column>
 					</h:dataTable>
 
-					<a:paginator paginator="#{userViewBean.team}"
-						showComboPages="false" />
+					<a:paginator paginator="#{userViewBean.team}" showComboPages="false" />
 				</h:panelGroup>
 
 				<h:panelGroup layout="block" styleClass="panel">
 					<h1>#{i18n['job.job_offers']}</h1>
 
-					<h:outputText value="#{i18n['user.no_users_found']}"
-						rendered="#{empty userViewBean.jobOffers.dataList}" />
+					<h:outputText value="#{i18n['user.no_users_found']}" rendered="#{empty userViewBean.jobOffers.dataList}" />
 
-					<h:dataTable var="jobOffer" id="jobOffers"
-						value="#{userViewBean.jobOffers.dataList}"
-						rendered="#{not empty userViewBean.jobOffers.dataList}"
-						styleClass="dataTable">
+					<h:dataTable var="jobOffer" id="jobOffers" value="#{userViewBean.jobOffers.dataList}"
+						rendered="#{not empty userViewBean.jobOffers.dataList}" styleClass="dataTable">
 						<h:column>
 							<f:facet name="header">
 								<h:outputText value="#{i18n['job.name']}" />
@@ -146,14 +128,12 @@
 							<f:facet name="header">
 								<h:outputText value="#{i18n['action.action']}" />
 							</f:facet>
-							<h:link value="#{i18n['action.view']}"
-								outcome="/faces/jobOffer/jobOfferView">
+							<h:link value="#{i18n['action.view']}" outcome="/faces/jobOffer/jobOfferView">
 								<f:param name="id" value="#{jobOffer.id}" />
 							</h:link>
 						</h:column>
 					</h:dataTable>
-					<a:paginator paginator="#{userViewBean.jobOffers}"
-						showComboPages="false" />
+					<a:paginator paginator="#{userViewBean.jobOffers}" showComboPages="false" />
 				</h:panelGroup>
 			</h:panelGrid>
 			<h:messages />

@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:a="http://java.sun.com/jsf/composite/legion"
-	template="/WEB-INF/templates/default.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a="http://java.sun.com/jsf/composite/legion" template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
 		<title>#{i18n['job.job_offer']}</title>
@@ -18,8 +15,7 @@
 				<i class="fa fa-suitcase" /> #{i18n['job.job_offers']}
 			</h1>
 			<h:panelGroup layout="block" styleClass="actionPanel">
-				<h:commandButton value="#{i18n['action.new']}"
-					action="#{jobOfferSearchBean.newJobOffer}" immediate="true" />
+				<h:commandButton value="#{i18n['action.new']}" action="#{jobOfferSearchBean.newJobOffer}" immediate="true" />
 			</h:panelGroup>
 		</h:form>
 
@@ -27,34 +23,26 @@
 			<h:panelGroup layout="block" styleClass="panel">
 				<h1>#{i18n['job.search']}</h1>
 				<h:outputLabel value="#{i18n['job.name']}">
-					<h:inputText id="name" value="#{jobOfferSearchBean.name}"
-						label="#{i18n['job.name']}" />
+					<h:inputText id="name" value="#{jobOfferSearchBean.name}" label="#{i18n['job.name']}" />
 				</h:outputLabel>
 
 				<h:outputLabel value="#{i18n['job.client']}">
-					<h:inputText id="clientName"
-						value="#{jobOfferSearchBean.clientName}"
-						label="#{i18n['job.client']}" />
+					<h:inputText id="clientName" value="#{jobOfferSearchBean.clientName}" label="#{i18n['job.client']}" />
 				</h:outputLabel>
 
 				<h:panelGroup layout="block" class="buttonGroup">
-					<h:commandButton value="#{i18n['action.search']}"
-						action="#{jobOfferSearchBean.search}" />
-					<h:commandButton value="#{i18n['action.clean']}"
-						action="#{jobOfferSearchBean.clean}" />
+					<h:commandButton value="#{i18n['action.search']}" action="#{jobOfferSearchBean.search}" />
+					<h:commandButton value="#{i18n['action.clean']}" action="#{jobOfferSearchBean.clean}" />
 				</h:panelGroup>
 			</h:panelGroup>
 
 			<h:panelGroup layout="block" styleClass="panel" id="resultados">
 				<h1>#{i18n['job.search_results']}</h1>
 
-				<h:outputText value="#{i18n['job.no_jobs_found']}"
-					rendered="#{empty jobOfferSearchBean.paginator.dataList}" />
+				<h:outputText value="#{i18n['job.no_jobs_found']}" rendered="#{empty jobOfferSearchBean.paginator.dataList}" />
 
-				<h:dataTable var="jobOffer" id="jobOffer"
-					value="#{jobOfferSearchBean.paginator.dataList}"
-					rendered="#{not empty jobOfferSearchBean.paginator.dataList}"
-					styleClass="dataTable">
+				<h:dataTable var="jobOffer" id="jobOffer" value="#{jobOfferSearchBean.paginator.dataList}"
+					rendered="#{not empty jobOfferSearchBean.paginator.dataList}" styleClass="dataTable">
 
 					<h:column>
 						<f:facet name="header">
@@ -102,22 +90,17 @@
 						<h:link value="Ver" outcome="jobOfferView">
 							<f:param name="id" value="#{jobOffer.id}" />
 						</h:link>
-						<h:outputText value=" | "
+						<h:outputText value=" | " rendered="#{jobOfferSearchBean.canEdit(jobOffer)}" />
+						<h:commandLink action="#{jobOfferSearchBean.edit(jobOffer)}" value="#{i18n['action.edit']}"
 							rendered="#{jobOfferSearchBean.canEdit(jobOffer)}" />
-						<h:commandLink action="#{jobOfferSearchBean.edit(jobOffer)}"
-							value="#{i18n['action.edit']}"
-							rendered="#{jobOfferSearchBean.canEdit(jobOffer)}" />
-						<h:outputText value=" | "
-							rendered="#{jobOfferSearchBean.canEdit(jobOffer)}" />
-						<h:commandLink action="#{jobOfferSearchBean.remove(jobOffer)}"
-							value="#{i18n['action.remove']}"
+						<h:outputText value=" | " rendered="#{jobOfferSearchBean.canEdit(jobOffer)}" />
+						<h:commandLink action="#{jobOfferSearchBean.remove(jobOffer)}" value="#{i18n['action.remove']}"
 							rendered="#{jobOfferSearchBean.canEdit(jobOffer)}">
 							<f:ajax execute="@form" render="@form" />
 						</h:commandLink>
 					</h:column>
 				</h:dataTable>
-				<a:paginator id="paginator"
-					paginator="#{jobOfferSearchBean.paginator}" />
+				<a:paginator id="paginator" paginator="#{jobOfferSearchBean.paginator}" />
 			</h:panelGroup>
 		</h:form>
 	</ui:define>

@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:i18n="http://legion.com/i18n"
-	xmlns:a="http://java.sun.com/jsf/composite/legion"
-	template="/WEB-INF/templates/default.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://legion.com/i18n"
+	xmlns:a="http://java.sun.com/jsf/composite/legion" template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
 		<title>Ged</title>
@@ -24,16 +20,12 @@
 			<i class="fa fa-search" /> #{i18n['job.search_results']}
 		</h1>
 
-
-
 		<h:panelGroup layout="block" styleClass="panel" id="userResults"
 			rendered="#{not empty globalSearchBean.userPaginator.entities}">
 			<h:form id="userSearchForm">
 				<h1>#{i18n['user.users']}</h1>
 
-				<h:dataTable id="user" var="user"
-					value="#{globalSearchBean.userPaginator.entities}"
-					styleClass="dataTable">
+				<h:dataTable id="user" var="user" value="#{globalSearchBean.userPaginator.entities}" styleClass="dataTable">
 					<h:column>
 						<f:facet name="header">
 							<h:outputText value="#{i18n['user.name']}" />
@@ -65,8 +57,7 @@
 						<f:facet name="header">
 							<h:outputText value="Action" />
 						</f:facet>
-						<h:link value="#{i18n['action.view']}"
-							outcome="/faces/user/userView">
+						<h:link value="#{i18n['action.view']}" outcome="/faces/user/userView">
 							<f:param name="id" value="#{user.id}" />
 						</h:link>
 					</h:column>
@@ -81,10 +72,8 @@
 			<h:form id="jobOfferForm">
 				<h1>#{i18n['job.job_offers']}</h1>
 
-				<h:dataTable var="jobOffer" id="jobOffer"
-					value="#{globalSearchBean.jobOfferPaginator.dataList}"
-					rendered="#{not empty globalSearchBean.jobOfferPaginator.dataList}"
-					styleClass="dataTable">
+				<h:dataTable var="jobOffer" id="jobOffer" value="#{globalSearchBean.jobOfferPaginator.dataList}"
+					rendered="#{not empty globalSearchBean.jobOfferPaginator.dataList}" styleClass="dataTable">
 
 					<h:column>
 						<f:facet name="header">

@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:cc="http://java.sun.com/jsf/composite">
 
 <cc:interface>
@@ -14,19 +12,16 @@
 <cc:implementation>
 	<h:panelGroup layout="block" styleClass="paginator" id="#{cc.attrs.id}"
 		rendered="#{not empty cc.attrs.paginator.dataList}">
-		<h:commandButton disabled="#{ cc.attrs.paginator.currentPage eq 0}"
-			value="#{i18n['paginator.first']}"
+		<h:commandButton disabled="#{ cc.attrs.paginator.currentPage eq 0}" value="#{i18n['paginator.first']}"
 			action="#{cc.attrs.paginator.firstPage}">
 			<f:ajax render="@form" />
 		</h:commandButton>
-		<h:commandButton disabled="#{cc.attrs.paginator.currentPage eq 0}"
-			value="#{i18n['paginator.previous']}"
+		<h:commandButton disabled="#{cc.attrs.paginator.currentPage eq 0}" value="#{i18n['paginator.previous']}"
 			action="#{cc.attrs.paginator.previousPage}">
 			<f:ajax render="@form" />
 		</h:commandButton>
 		<ui:repeat value="#{cc.attrs.paginator.pages}" var="page">
-			<h:commandButton value="#{page+1}"
-				action="#{cc.attrs.paginator.gotoPage(page)}"
+			<h:commandButton value="#{page+1}" action="#{cc.attrs.paginator.gotoPage(page)}"
 				disabled="#{cc.attrs.paginator.currentPage eq page}">
 				<f:ajax render="@form" />
 			</h:commandButton>
@@ -46,8 +41,7 @@
 				<f:selectItem itemValue="5" itemLabel="5" />
 				<f:selectItem itemValue="10" itemLabel="10" />
 				<f:selectItem itemValue="25" itemLabel="25" />
-				<f:ajax listener="#{cc.attrs.paginator.rowsPerPageChange}"
-					render="@form" execute="#{cc.attrs.id}" />
+				<f:ajax listener="#{cc.attrs.paginator.rowsPerPageChange}" render="@form" execute="#{cc.attrs.id}" />
 			</h:selectOneMenu>
 		</h:outputLabel>
 	</h:panelGroup>

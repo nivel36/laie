@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
-	xmlns:i18n="http://legion.com/i18n"
-	xmlns:a="http://java.sun.com/jsf/composite/legion"
-	template="/WEB-INF/templates/default.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://xmlns.jcp.org/jsf/passthrough" xmlns:i18n="http://legion.com/i18n"
+	xmlns:a="http://java.sun.com/jsf/composite/legion" template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
 		<title>#{i18n['client.client']}</title>
@@ -21,37 +17,30 @@
 		</f:metadata>
 
 		<h:form id="form">
-			<input type="hidden" id="clientId"
-				value="#{clientViewBean.client.id}" />
+			<input type="hidden" id="clientId" value="#{clientViewBean.client.id}" />
 
 			<h1 class="header">
 				<i class="fa fa-client" /> #{clientViewBean.client}
 			</h1>
 
-			<h:panelGroup id="actionButtons" layout="block"
-				styleClass="actionPanel">
-				<h:commandButton value="#{i18n['action.undelete']}"
-					action="#{clientViewBean.undeleteClient}" immediate="true"
+			<h:panelGroup id="actionButtons" layout="block" styleClass="actionPanel">
+				<h:commandButton value="#{i18n['action.undelete']}" action="#{clientViewBean.undeleteClient}" immediate="true"
 					rendered="#{clientViewBean.client.deleted}" />
-				<h:commandButton value="#{i18n['action.edit']}"
-					action="#{clientViewBean.editClient}" immediate="true"
+				<h:commandButton value="#{i18n['action.edit']}" action="#{clientViewBean.editClient}" immediate="true"
 					rendered="#{not clientViewBean.client.deleted}" />
-				<h:commandButton value="#{i18n['bookmark.add_to_bookmarks']}"
-					action="#{bookmarksBean.add(clientViewBean.client)}"
+				<h:commandButton value="#{i18n['bookmark.add_to_bookmarks']}" action="#{bookmarksBean.add(clientViewBean.client)}"
 					immediate="true"
 					rendered="#{(not bookmarksBean.isBookmarked(clientViewBean.client))	and (not clientViewBean.client.deleted)}">
 					<f:ajax render="actionButtons :asideForm:bookmarks" />
 				</h:commandButton>
 				<h:commandButton value="#{i18n['bookmark.remove_from_bookmarks']}"
-					action="#{bookmarksBean.remove(clientViewBean.client)}"
-					immediate="true"
+					action="#{bookmarksBean.remove(clientViewBean.client)}" immediate="true"
 					rendered="#{bookmarksBean.isBookmarked(clientViewBean.client)}">
 					<f:ajax render="actionButtons :asideForm:bookmarks" />
 				</h:commandButton>
 				<h:commandLink id="exportPdf" styleClass="iconButton">
 					<i class="fa fa-file-pdf-o fa-lg" /> #{i18n['action.export']}</h:commandLink>
-				<h:commandLink id="exportExcel" styleClass="iconButton"
-					action="#{clientViewBean.export}">
+				<h:commandLink id="exportExcel" styleClass="iconButton" action="#{clientViewBean.export}">
 					<i class="fa fa-file-excel-o fa-lg" /> #{i18n['action.export']}
 				</h:commandLink>
 			</h:panelGroup>
@@ -84,13 +73,10 @@
 				<h:panelGroup layout="block" styleClass="panel">
 					<h1>#{i18n['job.job_offers']}</h1>
 
-					<h:outputText value="#{i18n['client.no_job_offers_found']}"
-						rendered="#{empty clientViewBean.jobOffers.dataList}" />
+					<h:outputText value="#{i18n['client.no_job_offers_found']}" rendered="#{empty clientViewBean.jobOffers.dataList}" />
 
-					<h:dataTable var="jobOffer" id="jobOffers"
-						value="#{clientViewBean.jobOffers.dataList}"
-						rendered="#{not empty clientViewBean.jobOffers.dataList}"
-						styleClass="dataTable">
+					<h:dataTable var="jobOffer" id="jobOffers" value="#{clientViewBean.jobOffers.dataList}"
+						rendered="#{not empty clientViewBean.jobOffers.dataList}" styleClass="dataTable">
 						<h:column>
 							<f:facet name="header">
 								<h:outputText value="#{i18n['job.name']}" />
@@ -111,14 +97,12 @@
 							<f:facet name="header">
 								<h:outputText value="#{i18n['action.action']}" />
 							</f:facet>
-							<h:link value="#{i18n['action.view']}"
-								outcome="/faces/jobOffer/jobOfferView">
+							<h:link value="#{i18n['action.view']}" outcome="/faces/jobOffer/jobOfferView">
 								<f:param name="id" value="#{jobOffer.id}" />
 							</h:link>
 						</h:column>
 					</h:dataTable>
-					<a:paginator paginator="#{clientViewBean.jobOffers}"
-						showComboPages="false" />
+					<a:paginator paginator="#{clientViewBean.jobOffers}" showComboPages="false" />
 				</h:panelGroup>
 			</h:panelGrid>
 			<h:messages />

@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:i18n="http://legion.com/i18n"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://legion.com/i18n"
 	template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
@@ -20,10 +17,8 @@
 			<h:panelGroup layout="block" styleClass="panel">
 				<h1>#{i18n['maintenance.skill_knowdeleges']}</h1>
 				<h:form>
-					<h:selectOneMenu id="skillKnowdelege"
-						label="#{i18n['skill.level']}" styleClass="largeInput">
-						<f:selectItems var="skillLevel" itemValue="#{skillLevel.name}"
-							value="#{applicationBean.skillLevels}"
+					<h:selectOneMenu id="skillKnowdelege" label="#{i18n['skill.level']}" styleClass="largeInput">
+						<f:selectItems var="skillLevel" itemValue="#{skillLevel.name}" value="#{applicationBean.skillLevels}"
 							itemLabel="#{i18n:translate(skillLevel.name)}" />
 					</h:selectOneMenu>
 					<h:commandButton value="#{i18n['action.modify']}" />
@@ -34,11 +29,8 @@
 			<h:panelGroup layout="block" styleClass="panel">
 				<h1>#{i18n['maintenance.language_knowdeleges']}</h1>
 				<h:form>
-					<h:selectOneMenu id="languageKnowdelege"
-						label="#{i18n['language.level']}" styleClass="largeInput">
-						<f:selectItems var="languageLevel"
-							itemValue="#{languageLevel.name}"
-							value="#{applicationBean.languageLevels}"
+					<h:selectOneMenu id="languageKnowdelege" label="#{i18n['language.level']}" styleClass="largeInput">
+						<f:selectItems var="languageLevel" itemValue="#{languageLevel.name}" value="#{applicationBean.languageLevels}"
 							itemLabel="#{i18n:translate(languageLevel.name)}" />
 					</h:selectOneMenu>
 					<h:commandButton value="#{i18n['action.modify']}" />
@@ -49,10 +41,8 @@
 			<h:panelGroup layout="block" styleClass="panel">
 				<h1>#{i18n['maintenance.file_types']}</h1>
 				<h:form>
-					<h:selectOneMenu id="fileTypes" label="#{i18n['file.type']}"
-						styleClass="largeInput">
-						<f:selectItems var="fileType" itemValue="#{fileType.name}"
-							value="#{applicationBean.fileTypes}"
+					<h:selectOneMenu id="fileTypes" label="#{i18n['file.type']}" styleClass="largeInput">
+						<f:selectItems var="fileType" itemValue="#{fileType.name}" value="#{applicationBean.fileTypes}"
 							itemLabel="#{i18n:translate(fileType.name)}" />
 					</h:selectOneMenu>
 					<h:commandButton value="#{i18n['action.modify']}" />

@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
 	template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
@@ -18,16 +16,14 @@
 		</f:metadata>
 
 		<h:form id="form">
-			<input type="hidden" id="candidateId"
-				value="#{curriculumViewBean.id}" />
+			<input type="hidden" id="candidateId" value="#{curriculumViewBean.id}" />
 
 			<h1 class="header">
 				<i class="fa fa-users" /> #{curriculumViewBean.candidate}
 			</h1>
-			
+
 			<h:panelGroup layout="block" styleClass="actionPanel">
-				<h:commandButton value="#{i18n['action.edit']}"
-					action="#{curriculumViewBean.editCurriculum}" />
+				<h:commandButton value="#{i18n['action.edit']}" action="#{curriculumViewBean.editCurriculum}" />
 			</h:panelGroup>
 
 			<h:panelGroup layout="block" styleClass="panel">
@@ -37,26 +33,22 @@
 
 				<h:panelGroup layout="block" styleClass="textBlock">
 					<h:outputText styleClass="label" value="#{i18n['user.name']}:" />
-					<h:outputText
-						value="#{curriculumViewBean.candidate.surename}, #{curriculumViewBean.candidate.name}" />
+					<h:outputText value="#{curriculumViewBean.candidate.surename}, #{curriculumViewBean.candidate.name}" />
 				</h:panelGroup>
 
 				<h:panelGroup layout="block" styleClass="textBlock">
-					<h:outputText styleClass="label"
-						value="#{i18n['candidate.phone']}:" />
+					<h:outputText styleClass="label" value="#{i18n['candidate.phone']}:" />
 					<h:outputText value="#{candidateViewBean.candidate.phoneNumber}" />
 				</h:panelGroup>
 
 				<h:panelGroup layout="block" styleClass="textBlock">
-					<h:outputText styleClass="label"
-						value="#{i18n['candidate.email']}:" />
+					<h:outputText styleClass="label" value="#{i18n['candidate.email']}:" />
 					<h:outputText value="#{candidateViewBean.candidate.email}" />
 				</h:panelGroup>
 
 				<h2>#{i18n['curriculum.education']}</h2>
 
-				<ui:repeat value="#{curriculumViewBean.education}" var="education"
-					id="repeatedPanel">
+				<ui:repeat value="#{curriculumViewBean.education}" var="education" id="repeatedPanel">
 					<h4>
 						#{education.degree} - #{education.school} (
 						<h:outputText value="#{education.fromDate}">
@@ -74,8 +66,7 @@
 				<!-- JOB EXPERIENCE -->
 
 				<h2>#{i18n['curriculum.job_experiences']}</h2>
-				<ui:repeat value="#{curriculumViewBean.jobExperiences}"
-					var="jobExperience" id="jobExperience">
+				<ui:repeat value="#{curriculumViewBean.jobExperiences}" var="jobExperience" id="jobExperience">
 					<h3>#{jobExperience.jobPosition}</h3>
 					<h4>
 						#{jobExperience.companyName}(
@@ -95,10 +86,9 @@
 
 				<h2>#{i18n['curriculum.languages']}</h2>
 
-				<ui:repeat value="#{curriculumViewBean.languages}" var="language"
-					varStatus="status" id="language">
+				<ui:repeat value="#{curriculumViewBean.languages}" var="language" varStatus="status" id="language">
 					<h3>#{language.languageName}</h3>
-					
+
 					<h:panelGroup layout="block" styleClass="textBlock">
 						<h:outputText styleClass="label" value="Leídos:" />
 						<h:outputText value="#{language.read}" />
@@ -118,8 +108,7 @@
 				<!-- SKILLS -->
 
 				<h2>#{i18n['curriculum.skills']}</h2>
-				<ui:repeat value="#{curriculumViewBean.skills}" var="skill"
-					id="skill">
+				<ui:repeat value="#{curriculumViewBean.skills}" var="skill" id="skill">
 					<h:outputText styleClass="label" value="#{skill.name}:" />
 					<h:outputText value="#{skill.level}" />
 				</ui:repeat>

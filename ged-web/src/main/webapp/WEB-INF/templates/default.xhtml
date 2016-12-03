@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <f:view contentType="text/html" locale="#{sessionBean.locale}">
@@ -10,8 +8,7 @@
 			<title>Legion</title>
 		</ui:insert>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<meta http-equiv="Cache-Control"
-			content="no-cache, no-store, must-revalidate" />
+		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
 		<meta http-equiv="Pragma" content="no-cache" />
 		<meta http-equiv="Expires" content="-1" />
 		<h:outputScript library="js" name="datepicker.js" />
@@ -20,8 +17,7 @@
 		<h:outputStylesheet name="css/classic-blue/layout.css" />
 		<h:outputStylesheet name="css/classic-blue/components.css" />
 		<h:outputStylesheet name="css/datepicker.css" />
-		<h:outputStylesheet library="webjars"
-			name="font-awesome/4.5.0/css/font-awesome-jsf.css" />
+		<h:outputStylesheet library="webjars" name="font-awesome/4.5.0/css/font-awesome-jsf.css" />
 	</h:head>
 
 	<h:body>
@@ -36,8 +32,7 @@
 			</ui:insert>
 		</aside>
 		<div id="content">
-			<h:messages globalOnly="true" styleClass="messages"
-				errorClass="errorMessages" warnClass="warningMessages"
+			<h:messages globalOnly="true" styleClass="messages" errorClass="errorMessages" warnClass="warningMessages"
 				infoClass="infoMessages" fatalClass="fatalMessages" />
 			<ui:insert name="content" />
 		</div>

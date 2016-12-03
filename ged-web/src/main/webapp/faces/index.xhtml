@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
 	template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
@@ -21,48 +19,41 @@
 				<h:panelGroup layout="block" styleClass="panel">
 					<h1>#{i18n['index.last_offers']}</h1>
 
-					<h:outputText value="#{i18n['job.no_jobs_found']}"
-						rendered="#{empty indexBean.jobOffers}" />
+					<h:outputText value="#{i18n['job.no_jobs_found']}" rendered="#{empty indexBean.jobOffers}" />
 
 					<ui:repeat var="jobOffer" value="${indexBean.jobOffers}">
 						<h:panelGroup layout="block" styleClass="textBlock">
 							<h:outputText value="#{jobOffer.client.name} - #{jobOffer.name}" />
 						</h:panelGroup>
-						<br/>
+						<br />
 					</ui:repeat>
 
 					<h:panelGroup display="block" styleClass="buttonGroup">
-						<h:commandButton value="#{i18n['action.new']}"
-							action="/faces/jobOffer/jobOfferEdit.xhtml?faces-redirect=true" />
+						<h:commandButton value="#{i18n['action.new']}" action="/faces/jobOffer/jobOfferEdit.xhtml?faces-redirect=true" />
 					</h:panelGroup>
 				</h:panelGroup>
 				<h:panelGroup layout="block" styleClass="panel">
 					<h1>#{i18n['index.last_candidates']}</h1>
 
-					<h:outputText value="#{i18n['candidate.no_candidates_found']}"
-						rendered="#{empty indexBean.candidates}" />
+					<h:outputText value="#{i18n['candidate.no_candidates_found']}" rendered="#{empty indexBean.candidates}" />
 
 					<ui:repeat var="candidate" value="${indexBean.candidates}">
 						<h:panelGroup styleClass="card" layout="block">
-							<h:graphicImage value="/resources/img/classic-blue/no-photo.png"
-								styleClass="photo" />
-							<h:outputText styleClass="name"
-								value="${candidate.name} ${candidate.surename}" />
+							<h:graphicImage value="/resources/img/classic-blue/no-photo.png" styleClass="photo" />
+							<h:outputText styleClass="name" value="${candidate.name} ${candidate.surename}" />
 							<br />
 							<h:outputText value="Arquitecto de software en GFI" />
 						</h:panelGroup>
 					</ui:repeat>
 
 					<h:panelGroup display="block" styleClass="buttonGroup">
-						<h:commandButton value="#{i18n['action.new']}"
-							action="candidate/candidateEdit?faces-redirect=true" />
+						<h:commandButton value="#{i18n['action.new']}" action="candidate/candidateEdit?faces-redirect=true" />
 					</h:panelGroup>
 				</h:panelGroup>
 				<h:panelGroup layout="block" styleClass="panel">
 					<h1>#{i18n['index.last_reports']}</h1>
 					<h:panelGroup display="block" styleClass="buttonGroup">
-						<h:commandButton value="#{i18n['action.new']}"
-							action="#{jobOfferViewBean.edit}" />
+						<h:commandButton value="#{i18n['action.new']}" action="#{jobOfferViewBean.edit}" />
 					</h:panelGroup>
 				</h:panelGroup>
 				<h:panelGroup layout="block" styleClass="panel">

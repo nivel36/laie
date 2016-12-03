@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:a="http://java.sun.com/jsf/composite/legion"
-	template="/WEB-INF/templates/default.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a="http://java.sun.com/jsf/composite/legion" template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
 		<title>#{i18n['candidate.candidates']}</title>
@@ -19,8 +16,7 @@
 			</h1>
 
 			<h:panelGroup layout="block" styleClass="actionPanel">
-				<h:commandButton value="#{i18n['action.new']}"
-					action="#{candidateSearchBean.newCandidate}" immediate="true" />
+				<h:commandButton value="#{i18n['action.new']}" action="#{candidateSearchBean.newCandidate}" immediate="true" />
 			</h:panelGroup>
 		</h:form>
 		<h:form id="form">
@@ -28,27 +24,22 @@
 				<h1>#{i18n['candidate.search']}</h1>
 				<h:panelGroup layout="block" styleClass="panel" id="searchUserPanel">
 					<h:outputLabel for="name" value="#{i18n['candidate.name']}">
-						<h:inputText id="name" value="#{candidateSearchBean.name}"
-							label="#{i18n['candidate.name']}" />
+						<h:inputText id="name" value="#{candidateSearchBean.name}" label="#{i18n['candidate.name']}" />
 					</h:outputLabel>
 
 					<h:outputLabel for="surename" value="#{i18n['candidate.surename']}">
-						<h:inputText id="surename" value="#{candidateSearchBean.surename}"
-							label="#{i18n['candidate.surename']}" />
+						<h:inputText id="surename" value="#{candidateSearchBean.surename}" label="#{i18n['candidate.surename']}" />
 					</h:outputLabel>
 
 					<h:outputLabel for="position" value="#{i18n['candidate.position']}">
-						<h:inputText id="position" value="#{candidateSearchBean.position}"
-							label="#{i18n['candidate.position']}" />
+						<h:inputText id="position" value="#{candidateSearchBean.position}" label="#{i18n['candidate.position']}" />
 					</h:outputLabel>
 
 					<h:panelGroup layout="block" styleClass="buttonGroup">
-						<h:commandButton value="#{i18n['action.search']}"
-							action="#{candidateSearchBean.search}">
+						<h:commandButton value="#{i18n['action.search']}" action="#{candidateSearchBean.search}">
 							<f:ajax execute="searchUserPanel" render="@form" />
 						</h:commandButton>
-						<h:commandButton value="#{i18n['action.clean']}"
-							action="#{candidateSearchBean.clean}">
+						<h:commandButton value="#{i18n['action.clean']}" action="#{candidateSearchBean.clean}">
 							<f:ajax render="@form" />
 						</h:commandButton>
 					</h:panelGroup>
@@ -61,10 +52,8 @@
 				<h:outputText value="#{i18n['candidate.no_candidates_found']}"
 					rendered="#{empty candidateSearchBean.paginator.entities}" />
 
-				<h:dataTable var="candidate" id="candidate"
-					value="#{candidateSearchBean.paginator.dataList}"
-					rendered="#{not empty candidateSearchBean.paginator.entities}"
-					styleClass="dataTable">
+				<h:dataTable var="candidate" id="candidate" value="#{candidateSearchBean.paginator.dataList}"
+					rendered="#{not empty candidateSearchBean.paginator.entities}" styleClass="dataTable">
 					<h:column>
 						<f:facet name="header">
 							<h:outputText value="#{i18n['candidate.name']}" />
@@ -108,18 +97,15 @@
 							<f:param name="id" value="#{candidate.id}" />
 						</h:link>
 						|
-						<h:commandLink action="#{candidateSearchBean.edit(candidate)}"
-							value="#{i18n['action.edit']}" />
+						<h:commandLink action="#{candidateSearchBean.edit(candidate)}" value="#{i18n['action.edit']}" />
 						|
-						<h:commandLink action="#{candidateSearchBean.remove(candidate)}"
-							value="#{i18n['action.remove']}">
+						<h:commandLink action="#{candidateSearchBean.remove(candidate)}" value="#{i18n['action.remove']}">
 							<f:ajax execute="@form" render="@form" />
 						</h:commandLink>
 					</h:column>
 				</h:dataTable>
 
-				<a:paginator id="paginator"
-					paginator="#{candidateSearchBean.paginator}" />
+				<a:paginator id="paginator" paginator="#{candidateSearchBean.paginator}" />
 			</h:panelGroup>
 		</h:form>
 	</ui:define>

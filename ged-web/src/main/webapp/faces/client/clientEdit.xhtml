@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
-	template="/WEB-INF/templates/default.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://xmlns.jcp.org/jsf/passthrough" template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
 		<title>#{i18n['client.client']}</title>
@@ -14,56 +11,44 @@
 
 	<ui:define name="content">
 		<h:form id="form">
-			<input type="hidden" id="clientId"
-				value="#{clientEditBean.client.id}" />
+			<input type="hidden" id="clientId" value="#{clientEditBean.client.id}" />
 
 			<h1 class="header">
-				<i class="fa fa-users" /> #{clientEditBean.client.id eq null ?
-				i18n['client.new_client'] : clientEditBean.client}
+				<i class="fa fa-users" /> #{clientEditBean.client.id eq null ? i18n['client.new_client'] : clientEditBean.client}
 			</h1>
 
 			<h:panelGroup layout="block" styleClass="panel">
 				<h1>#{i18n['client.client']}</h1>
 
-				<h:outputLabel value="#{i18n['client.name']}"
-					styleClass="required">
-					<h:inputText id="name" value="#{clientEditBean.client.name}"
-						label="#{i18n['client.name']}" required="true"
+				<h:outputLabel value="#{i18n['client.name']}" styleClass="required">
+					<h:inputText id="name" value="#{clientEditBean.client.name}" label="#{i18n['client.name']}" required="true"
 						styleClass="#{not component.valid ? 'inputError' : ''}" />
 					<h:message for="name" errorClass="error" />
 				</h:outputLabel>
 
-				<h:outputLabel value="#{i18n['client.cif']}"
-					styleClass="small required">
-					<h:inputText id="cif"
-						value="#{clientEditBean.client.cif}"
-						label="#{i18n['client.cif']}" required="true"
+				<h:outputLabel value="#{i18n['client.cif']}" styleClass="small required">
+					<h:inputText id="cif" value="#{clientEditBean.client.cif}" label="#{i18n['client.cif']}" required="true"
 						styleClass="#{not component.valid ? 'inputError' : ''}" />
 					<h:message for="cif" errorClass="error" />
 				</h:outputLabel>
 
-				<h:outputLabel value="#{i18n['client.city']}" >
-					<h:inputText id="city" value="#{clientEditBean.client.address.city}"
-						label="#{i18n['client.city']}"
+				<h:outputLabel value="#{i18n['client.city']}">
+					<h:inputText id="city" value="#{clientEditBean.client.address.city}" label="#{i18n['client.city']}"
 						styleClass="#{not component.valid ? 'inputError' : ''}" />
 					<h:message for="age" errorClass="error" />
 				</h:outputLabel>
-				
+
 				<h:outputLabel value="#{i18n['client.state']}">
-					<h:inputText id="state" value="#{clientEditBean.client.address.state}"
-						label="#{i18n['client.state']}"
+					<h:inputText id="state" value="#{clientEditBean.client.address.state}" label="#{i18n['client.state']}"
 						styleClass="#{not component.valid ? 'inputError' : ''}" />
 					<h:message for="age" errorClass="error" />
 				</h:outputLabel>
-				
+
 
 				<h:panelGroup layout="block" styleClass="buttonGroup">
-					<h:commandButton value="#{i18n['action.save']}"
-						action="#{clientEditBean.save}" />
-					<h:commandButton value="#{i18n['action.cancel']}"
-						action="#{clientEditBean.cancel}" immediate="true">
-						<f:param name="clientId"
-							value="#{clientEditBean.client.id}" />
+					<h:commandButton value="#{i18n['action.save']}" action="#{clientEditBean.save}" />
+					<h:commandButton value="#{i18n['action.cancel']}" action="#{clientEditBean.cancel}" immediate="true">
+						<f:param name="clientId" value="#{clientEditBean.client.id}" />
 					</h:commandButton>
 				</h:panelGroup>
 			</h:panelGroup>

@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:a="http://java.sun.com/jsf/composite/legion"
-	template="/WEB-INF/templates/default.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a="http://java.sun.com/jsf/composite/legion" template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
 		<title>#{i18n['client.clients']}</title>
@@ -19,36 +16,29 @@
 			</h1>
 
 			<h:panelGroup layout="block" styleClass="actionPanel">
-				<h:commandButton value="#{i18n['action.new']}"
-					action="#{clientSearchBean.newClient}" immediate="true" />
+				<h:commandButton value="#{i18n['action.new']}" action="#{clientSearchBean.newClient}" immediate="true" />
 			</h:panelGroup>
 		</h:form>
 		<h:form id="form">
 			<h:panelGroup layout="block" styleClass="panel">
 				<h1>#{i18n['client.search']}</h1>
 				<h:outputLabel for="name" value="#{i18n['client.name']}">
-					<h:inputText id="name" value="#{clientSearchBean.name}"
-						label="#{i18n['client.name']}" />
+					<h:inputText id="name" value="#{clientSearchBean.name}" label="#{i18n['client.name']}" />
 				</h:outputLabel>
 
 				<h:panelGroup layout="block" styleClass="buttonGroup">
-					<h:commandButton value="#{i18n['action.search']}"
-						action="#{clientSearchBean.search}" />
-					<h:commandButton value="#{i18n['action.clean']}"
-						action="#{clientSearchBean.clean}" />
+					<h:commandButton value="#{i18n['action.search']}" action="#{clientSearchBean.search}" />
+					<h:commandButton value="#{i18n['action.clean']}" action="#{clientSearchBean.clean}" />
 				</h:panelGroup>
 			</h:panelGroup>
 
 			<h:panelGroup layout="block" styleClass="panel" id="resultados">
 				<h1>#{i18n['client.search_results']}</h1>
 
-				<h:outputText value="#{i18n['client.no_clients_found']}"
-					rendered="#{empty clientSearchBean.paginator.entities}" />
+				<h:outputText value="#{i18n['client.no_clients_found']}" rendered="#{empty clientSearchBean.paginator.entities}" />
 
-				<h:dataTable var="client" id="client"
-					value="#{clientSearchBean.paginator.dataList}"
-					rendered="#{not empty clientSearchBean.paginator.entities}"
-					styleClass="dataTable">
+				<h:dataTable var="client" id="client" value="#{clientSearchBean.paginator.dataList}"
+					rendered="#{not empty clientSearchBean.paginator.entities}" styleClass="dataTable">
 					<h:column>
 						<f:facet name="header">
 							<h:outputText value="#{i18n['client.name']}" />
@@ -71,18 +61,15 @@
 							<f:param name="id" value="#{client.id}" />
 						</h:link>
 						|
-						<h:commandLink action="#{clientSearchBean.edit(client)}"
-							value="#{i18n['action.edit']}" />
+						<h:commandLink action="#{clientSearchBean.edit(client)}" value="#{i18n['action.edit']}" />
 						|
-						<h:commandLink action="#{clientSearchBean.remove(client)}"
-							value="#{i18n['action.remove']}">
+						<h:commandLink action="#{clientSearchBean.remove(client)}" value="#{i18n['action.remove']}">
 							<f:ajax execute="@this" render="@form" />
 						</h:commandLink>
 					</h:column>
 				</h:dataTable>
 
-				<a:paginator id="paginator"
-					paginator="#{clientSearchBean.paginator}" />
+				<a:paginator id="paginator" paginator="#{clientSearchBean.paginator}" />
 			</h:panelGroup>
 		</h:form>
 	</ui:define>
