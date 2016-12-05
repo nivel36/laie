@@ -82,17 +82,19 @@ label input, label textarea, label select {
 	right: 0;
 	bottom: 0;
 	left: 0;
-	background: rgba(0, 0, 0, 0.8);
+	background: rgba(0, 0, 0, 0.33);
 	z-index: 10;
 	transition: opacity 100ms ease-in;
 	pointer-events: auto;
 }
 
 .smallModalDialog>div {
+	box-shadow: 0 8px 10px rgba(0, 0, 0, .5);
 	width: 400px;
 }
 
 .modalDialog>div {
+	box-shadow: 0 8px 10px rgba(0, 0, 0, .5);
 	width: 800px;
 }
 
@@ -100,8 +102,7 @@ label input, label textarea, label select {
 	position: relative;
 	margin: 10% auto;
 	padding: 45px 20px 13px 20px;
-	border-radius: 5px;
-	border: 2px solid #535993;
+	border: 2px solid #7D82B0;
 	background: #F4F5F9;
 	overflow: auto;
 }
@@ -109,17 +110,19 @@ label input, label textarea, label select {
 .smallModalDialog h3, .modalDialog h3 {
 	padding-left: 10px;
 	font-size: 12px;
-	background: #bbb;
 	layout: block;
 	position: absolute;
 	top: 0px;
 	left: 0px;
 	right: 0px;
+	color: white;
+	background: linear-gradient(to right, #535993, #D5D7E8);
+	border-bottom: 1px solid #535993;
 }
 
 .close {
-	background: #bbb;
-	color: #FFFFFF;
+	background: transparent;
+	color: #000;
 	line-height: 25px;
 	position: absolute;
 	right: 0px;
@@ -133,7 +136,8 @@ label input, label textarea, label select {
 }
 
 .close:hover {
-	background: #00d9ff;
+	color: #FFFFFF;
+	background: #535993;
 }
 
 .actionPanel {
@@ -515,7 +519,7 @@ textarea {
 }
 
 .dataTable tr:hover {
-	background: #E8E9EC;
+	background: #F4F5F9;
 }
 
 .dataTable thead {

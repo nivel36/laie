@@ -68,13 +68,3 @@ footer {
 	width: 100%;
 	color: white;
 }
-
-.modalPanel {
-	background-color: rgba(0, 0, 0, .50);
-	position: absolute;
-	top: 0px;
-	left: 0px;
-	width: 100%;
-	height: 100%;
-	z-index: 5;
-}
