@@ -101,7 +101,7 @@
 						|
 						<h:commandLink action="#{candidateSearchBean.remove(candidate)}" value="#{i18n['action.remove']}"
 							onclick="return confirm('#{i18n['action.delete.are_you_sure']}')">
-							<f:ajax execute="@form" render="@form" />
+							<f:ajax execute="@this" render=":form:resultados :asideForm:actions" />
 						</h:commandLink>
 					</h:column>
 				</h:dataTable>

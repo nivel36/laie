@@ -15,7 +15,7 @@
 			</h:link>
 		</h:panelGroup>
 
-		<h:panelGroup layout="block" styleClass="panel">
+		<h:panelGroup layout="block" styleClass="panel" id="searchs">
 			<h1>#{i18n['aside.saved_searchs']}</h1>
 			<h:outputText value="#{i18n['message.saved_searchs.empty']}" styleClass="text" rendered="#{empty savedSearches}" />
 			<h:commandButton value="#{i18n['action.clean']}" />
@@ -32,7 +32,7 @@
 			</ui:repeat>
 		</h:panelGroup>
 
-		<h:panelGroup layout="block" styleClass="panel">
+		<h:panelGroup layout="block" styleClass="panel" id="actions">
 			<h1>#{i18n['aside.last_actions']}</h1>
 			<h:outputText value="#{i18n['message.actions.empty']}" styleClass="text" rendered="#{empty actionBean.actions}" />
 			<ui:repeat value="#{actionBean.actions}" var="action">

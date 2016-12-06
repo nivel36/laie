@@ -23,8 +23,12 @@
 			<h1 class="header">
 				<i class="fa fa-users" /> #{candidateViewBean.candidate}
 			</h1>
+			
+			<h:panelGroup id="undeleteButton" layout="block" styleClass="actionPanel" rendered="#{candidateViewBean.candidate.deleted}">
+				<h:commandButton value="#{i18n['action.undelete']}" action="#{candidateViewBean.undelete}" />
+			</h:panelGroup>
 
-			<h:panelGroup id="actionButtons" layout="block" styleClass="actionPanel">
+			<h:panelGroup id="actionButtons" layout="block" styleClass="actionPanel" rendered="#{!candidateViewBean.candidate.deleted}">
 				<h:commandButton value="#{i18n['action.edit']}" action="#{candidateViewBean.editCandidate}" />
 				<h:commandButton value="#{i18n['bookmark.add_to_bookmarks']}"
 					action="#{bookmarksBean.add(candidateViewBean.candidate)}"
@@ -75,7 +79,6 @@
 					<h:outputText value="#{candidateViewBean.candidate.address.state}" />
 				</h:panelGroup>
 			</h:panelGroup>
-
 
 			<h:panelGroup layout="block" styleClass="panel">
 				<h1>#{i18n['candidate.social_network']}</h1>
