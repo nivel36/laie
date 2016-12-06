@@ -99,7 +99,8 @@
 						|
 						<h:commandLink action="#{candidateSearchBean.edit(candidate)}" value="#{i18n['action.edit']}" />
 						|
-						<h:commandLink action="#{candidateSearchBean.remove(candidate)}" value="#{i18n['action.remove']}">
+						<h:commandLink action="#{candidateSearchBean.remove(candidate)}" value="#{i18n['action.remove']}"
+							onclick="return confirm('#{i18n['action.delete.are_you_sure']}')">
 							<f:ajax execute="@form" render="@form" />
 						</h:commandLink>
 					</h:column>

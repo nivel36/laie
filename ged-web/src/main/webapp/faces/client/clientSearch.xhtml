@@ -63,7 +63,8 @@
 						|
 						<h:commandLink action="#{clientSearchBean.edit(client)}" value="#{i18n['action.edit']}" />
 						|
-						<h:commandLink action="#{clientSearchBean.remove(client)}" value="#{i18n['action.remove']}">
+						<h:commandLink action="#{clientSearchBean.remove(client)}" value="#{i18n['action.remove']}"
+							onclick="return confirm('#{i18n['action.delete.are_you_sure']}')">
 							<f:ajax execute="@this" render="@form" />
 						</h:commandLink>
 					</h:column>

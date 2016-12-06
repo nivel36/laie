@@ -78,6 +78,7 @@ public class CandidateSearchBean extends AbstractPageBean {
 
 	public void remove(final Candidate candidate) {
 		Objects.requireNonNull(candidate);
+		candidate.setUser(this.sessionBean.getUser());
 		this.candidateService.delete(candidate);
 		search();
 	}
