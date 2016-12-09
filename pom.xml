@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>igochan</groupId>
 	<artifactId>ged</artifactId>
-	<version>0.0.2-SNAPSHOT</version>
+	<version>${ged.version}</version>
 	<packaging>pom</packaging>
 	<name>ged</name>
 	<modules>
@@ -14,8 +14,8 @@
 	</modules>
 
 	<properties>
+	<ged.version>0.0.2-SNAPSHOT</ged.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<ged.version>0.0.1-SNAPSHOT</ged.version>
 		<javaee-api.version>7.0</javaee-api.version>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<maven.compiler.source>1.8</maven.compiler.source>
@@ -111,6 +111,7 @@
 	</dependencyManagement>
 
 	<build>
+		<finalName>ged-web</finalName>
 		<pluginManagement>
 			<plugins>
 				<plugin>
@@ -139,7 +140,7 @@
 							<webModule>
 								<groupId>igochan</groupId>
 								<artifactId>ged-rest</artifactId>
-								<contextRoot>/web/rest</contextRoot>
+								<contextRoot>/rest</contextRoot>
 							</webModule>
 							<webModule>
 								<groupId>igochan</groupId>

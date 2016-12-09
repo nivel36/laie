@@ -4,7 +4,8 @@
 	<parent>
 		<groupId>igochan</groupId>
 		<artifactId>ged</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>${ged.version}</version>
+		<relativePath>..</relativePath>
 	</parent>
 	<artifactId>ged-web</artifactId>
 	<packaging>war</packaging>

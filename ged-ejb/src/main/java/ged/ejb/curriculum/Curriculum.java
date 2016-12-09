@@ -9,11 +9,13 @@ import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import ged.ejb.candidate.Candidate;
 import ged.ejb.core.model.AbstractAuditedEntity;
 
 @Entity
+@XmlRootElement
 public class Curriculum extends AbstractAuditedEntity {
 
 	private static final long serialVersionUID = 5171402772798965261L;
@@ -123,7 +125,7 @@ public class Curriculum extends AbstractAuditedEntity {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = (prime * result) + ((this.candidate == null) ? 0 : this.candidate.hashCode());
+		result = prime * result + (this.candidate == null ? 0 : this.candidate.hashCode());
 		return result;
 	}
 
