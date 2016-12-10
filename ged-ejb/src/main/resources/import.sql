@@ -36,7 +36,7 @@ insert into SKILL( id, version, curriculumId, name, level, deleted ) values( 607
 insert into SKILL( id, version, curriculumId, name, level, deleted ) values( 608, 0, 301, 'HTML5', 'high', false);
 insert into SKILL( id, version, curriculumId, name, level, deleted ) values( 609, 0, 301, 'Javascript', 'high', false);
 
-insert into JOBEXPERIENCE( id, version, curriculumId, companyName, description, fromDate, jobPosition, stillWorking, toDate, deleted) values (701, 0, 301, 'Alten', 'Desarrollo de la herramienta para Gas Natural Fenosa con el que se dará cobertura a todas las actividades asociadas al proceso de expansión de la red y provisión de servicio en todos los ámbitos geográficos donde el grupo Gas Natural Fenosa (GNF) desarrolla sus negocios de distribución de gas natural y electricidad.\n Puesto de Arquitecto JEE desarrollando las siguientes tareas:\n' , DATE '2010-11-04', 'Arquitecto JAVA', true, null, false);
+insert into JOBEXPERIENCE( id, version, curriculumId, companyName, description, fromDate, jobPosition, stillWorking, toDate, deleted) values (701, 0, 301, 'Alten', 'Desarrollo de la herramienta para Gas Natural Fenosa con el que se dará cobertura a todas las actividades asociadas al proceso de expansión de la red y provisión de servicio en todos los ámbitos geográficos donde el grupo Gas Natural Fenosa (GNF) desarrolla sus negocios de distribución de gas natural y electricidad. Puesto de Arquitecto JEE desarrollando las siguientes tareas:' , DATE '2010-11-04', 'Arquitecto JAVA', true, null, false);
 
 insert into I18NSTRING( id, version, locale, key, text ) values( 800, 0, 'es', 'all_day', 'Jornada completa' );
 insert into I18NSTRING( id, version, locale, key, text ) values( 801, 0, 'ca', 'all_day', 'Jornada completa' );

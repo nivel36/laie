@@ -69,7 +69,7 @@ public class CurriculumEditBean extends AbstractPageBean {
 	}
 
 	public String cancel() {
-		return "candidateSearch?faces-redirect=true";
+		return "curriculumView.xhtml?id=" + this.curriculum.getCandidate().getId() + "&faces-redirect=true";
 	}
 
 	private void error() {
@@ -128,14 +128,6 @@ public class CurriculumEditBean extends AbstractPageBean {
 		this.flash.put("candidate", this.curriculum.getCandidate());
 	}
 
-	private void insertOrUpdate(final Curriculum curriculum) {
-		if (curriculum.getId() == null) {
-			this.curriculumService.insertCurriculum(curriculum);
-		} else {
-			this.curriculum = this.curriculumService.updateCurriculum(curriculum);
-		}
-	}
-
 	private <E> Set<E> listToSet(final List<E> list) {
 		return new HashSet<>(list);
 	}
@@ -161,8 +153,8 @@ public class CurriculumEditBean extends AbstractPageBean {
 		this.curriculum.setLanguages(listToSet(this.languages));
 		this.curriculum.setJobExperiences(listToSet(this.jobExperiences));
 		this.curriculum.setSkills(listToSet(this.skills));
-		insertOrUpdate(this.curriculum);
-		return "candidateSearch?faces-redirect=true";
+		this.curriculumService.save(this.curriculum);
+		return "curriculumView.xhtml?id=" + this.curriculum.getCandidate().getId() + "&faces-redirect=true";
 	}
 
 	public void setCurriculum(final Curriculum curriculum) {

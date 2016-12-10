@@ -8,10 +8,12 @@ import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
+import ged.ejb.core.AbstractService;
+import ged.ejb.core.model.Dao;
 import ged.ejb.core.model.Repository;
 
 @Stateless
-public class CurriculumServiceImpl implements CurriculumService {
+public class CurriculumServiceImpl extends AbstractService<Long, Curriculum> implements CurriculumService {
 
 	private static final Logger logger = Logger.getLogger(CurriculumServiceImpl.class.getName());
 
@@ -21,13 +23,6 @@ public class CurriculumServiceImpl implements CurriculumService {
 	public CurriculumServiceImpl(@Repository final CurriculumDao curriculumDao) {
 		Objects.requireNonNull(curriculumDao);
 		this.curriculumDao = curriculumDao;
-	}
-
-	@Override
-	public void deleteCurriculum(final Curriculum curriculum) {
-		Objects.requireNonNull(curriculum);
-		logger.log(Level.FINE, "Delete curriculum of the candidate {}", curriculum.getCandidate());
-		this.curriculumDao.delete(curriculum);
 	}
 
 	@Override
@@ -53,16 +48,7 @@ public class CurriculumServiceImpl implements CurriculumService {
 	}
 
 	@Override
-	public void insertCurriculum(final Curriculum curriculum) {
-		Objects.requireNonNull(curriculum);
-		logger.log(Level.FINE, "Insert curriculum of the candidate {}", curriculum.getCandidate());
-		this.curriculumDao.insert(curriculum);
-	}
-
-	@Override
-	public Curriculum updateCurriculum(final Curriculum curriculum) {
-		Objects.requireNonNull(curriculum);
-		logger.log(Level.FINE, "Update curriculum of the candidate {}", curriculum.getCandidate());
-		return this.curriculumDao.update(curriculum);
+	protected Dao<Long, Curriculum> getDao() {
+		return this.curriculumDao;
 	}
 }

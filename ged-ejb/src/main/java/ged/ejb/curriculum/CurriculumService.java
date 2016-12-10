@@ -2,17 +2,13 @@ package ged.ejb.curriculum;
 
 import java.util.List;
 
-public interface CurriculumService {
+import ged.ejb.core.Service;
 
-	void deleteCurriculum(Curriculum curriculum);
+public interface CurriculumService extends Service<Long, Curriculum> {
 
 	List<LanguageLevel> findAllLanguageLevels();
 
 	List<SkillLevel> findAllSkillLevels();
 
 	Curriculum findByCandidateId(Long id);
-
-	void insertCurriculum(Curriculum curriculum);
-
-	Curriculum updateCurriculum(Curriculum curriculum);
 }
