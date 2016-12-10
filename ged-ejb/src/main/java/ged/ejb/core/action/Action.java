@@ -28,6 +28,13 @@ public class Action extends AbstractRecordEntity {
 	@Temporal(TemporalType.TIME)
 	private Date date;
 
+	public Action() {
+	}
+
+	public Action(final String entityClass, final Long entityId, final String text) {
+		super(entityClass, entityId, text);
+	}
+
 	@Override
 	public boolean equals(final Object obj) {
 		if (this == obj) {
@@ -69,8 +76,8 @@ public class Action extends AbstractRecordEntity {
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = (prime * result) + ((this.actionPerformed == null) ? 0 : this.actionPerformed.hashCode());
-		result = (prime * result) + ((this.date == null) ? 0 : this.date.hashCode());
+		result = prime * result + (this.actionPerformed == null ? 0 : this.actionPerformed.hashCode());
+		result = prime * result + (this.date == null ? 0 : this.date.hashCode());
 		return result;
 	}
 

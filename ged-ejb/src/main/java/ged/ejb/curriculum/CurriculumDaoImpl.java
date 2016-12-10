@@ -1,6 +1,8 @@
 package ged.ejb.curriculum;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -24,6 +26,13 @@ public class CurriculumDaoImpl extends AbstractDao<Long, Curriculum> implements 
 	@Override
 	public List<SkillLevel> findAllSkillLevels() {
 		return findAll(SkillLevel.class);
+	}
+
+	@Override
+	public Curriculum findByCandidateId(final Long candidateId) {
+		final Map<String, Object> parameters = new HashMap<>();
+		parameters.put("candidateId", candidateId);
+		return findByTypedQuery(Curriculum.class, "Curriculum.findByCandidateId", parameters);
 	}
 
 	@Override

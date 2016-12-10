@@ -10,4 +10,5 @@ public interface CurriculumDao extends Dao<Long, Curriculum> {
 
 	List<SkillLevel> findAllSkillLevels();
 
+	Curriculum findByCandidateId(Long candidateId);
 }

@@ -49,7 +49,7 @@ public class CurriculumServiceImpl implements CurriculumService {
 			throw new IllegalArgumentException("id: " + id);
 		}
 		logger.log(Level.FINE, "Find curriculum by candidate id {}", id);
-		return this.curriculumDao.find(id);
+		return this.curriculumDao.findByCandidateId(id);
 	}
 
 	@Override

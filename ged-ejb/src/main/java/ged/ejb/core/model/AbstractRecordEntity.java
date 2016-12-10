@@ -26,6 +26,15 @@ public class AbstractRecordEntity extends AbstractEntity {
 	@JoinColumn(name = "userId", nullable = false)
 	private User user;
 
+	public AbstractRecordEntity() {
+	}
+
+	public AbstractRecordEntity(final String entityClass, final Long entityId, final String text) {
+		this.entityClass = entityClass;
+		this.entityId = entityId;
+		this.text = text;
+	}
+
 	@Override
 	public boolean equals(final Object obj) {
 		if (this == obj) {
@@ -79,9 +88,9 @@ public class AbstractRecordEntity extends AbstractEntity {
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = (prime * result) + ((this.entityClass == null) ? 0 : this.entityClass.hashCode());
-		result = (prime * result) + ((this.entityId == null) ? 0 : this.entityId.hashCode());
-		result = (prime * result) + ((this.user == null) ? 0 : this.user.hashCode());
+		result = prime * result + (this.entityClass == null ? 0 : this.entityClass.hashCode());
+		result = prime * result + (this.entityId == null ? 0 : this.entityId.hashCode());
+		result = prime * result + (this.user == null ? 0 : this.user.hashCode());
 		return result;
 	}
 
