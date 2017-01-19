@@ -77,12 +77,14 @@ public class ApplicationExceptionHandler extends ExceptionHandlerWrapper {
 	}
 
 	private void handle(final Throwable exception) {
-		if (exception instanceof EJBException) {
+		if (exception instanceof FacesException) {
+			handle(exception.getCause());
+		} else if (exception instanceof EJBException) {
 			handle(exception.getCause());
 		} else if (exception instanceof ViewExpiredException) {
 			gotoPage("login");
 		} else if (exception instanceof OptimisticLockException) {
-			addMessage(FacesMessage.SEVERITY_ERROR, "warning.optimistick_lock.title",
+			addMessage(FacesMessage.SEVERITY_ERROR, "warning.optimistick_lock.message",
 					"warning.optimistick_lock.message");
 		} else {
 			// do nothing
