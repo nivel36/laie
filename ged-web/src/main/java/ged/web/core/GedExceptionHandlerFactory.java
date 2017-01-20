@@ -1,19 +1,19 @@
-package ged.web.core.util;
+package ged.web.core;
 
 import javax.faces.context.ExceptionHandler;
 import javax.faces.context.ExceptionHandlerFactory;
 
 public class GedExceptionHandlerFactory extends ExceptionHandlerFactory {
 
-	private ExceptionHandlerFactory parent;
+	private final ExceptionHandlerFactory parent;
 
-	public GedExceptionHandlerFactory(ExceptionHandlerFactory parent) {
+	public GedExceptionHandlerFactory(final ExceptionHandlerFactory parent) {
 		this.parent = parent;
 	}
 
 	@Override
 	public ExceptionHandler getExceptionHandler() {
-		ExceptionHandler result = new GedExceptionHandler(parent.getExceptionHandler());
+		final ExceptionHandler result = new GedExceptionHandler(this.parent.getExceptionHandler());
 		return result;
 	}
 }

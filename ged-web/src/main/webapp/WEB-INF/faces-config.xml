@@ -13,6 +13,6 @@
   </locale-config>
  </application>
  <factory>
-  <exception-handler-factory>ged.web.core.CustomExceptionHandlerFactory</exception-handler-factory>
+  <exception-handler-factory>ged.web.core.GedExceptionHandlerFactory</exception-handler-factory>
  </factory>
 </faces-config>

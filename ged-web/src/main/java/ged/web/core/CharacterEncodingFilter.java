@@ -1,4 +1,4 @@
-package ged.web.core.util;
+package ged.web.core;
 
 import java.io.IOException;
 

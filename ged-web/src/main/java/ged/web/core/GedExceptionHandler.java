@@ -1,38 +1,29 @@
-package ged.web.core.util;
+package ged.web.core;
 
 import java.util.Iterator;
-import java.util.Locale;
-import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import javax.ejb.EJBException;
 import javax.faces.FacesException;
-import javax.faces.application.FacesMessage;
-import javax.faces.application.FacesMessage.Severity;
+import javax.faces.application.ViewExpiredException;
 import javax.faces.context.ExceptionHandler;
 import javax.faces.context.ExceptionHandlerWrapper;
-import javax.faces.context.FacesContext;
 import javax.faces.event.ExceptionQueuedEvent;
 import javax.faces.event.ExceptionQueuedEventContext;
+import javax.persistence.OptimisticLockException;
+
+import ged.web.core.util.MessageUtils;
+import ged.web.core.util.NavigationUtils;
 
 public class GedExceptionHandler extends ExceptionHandlerWrapper {
 
-	private final FacesContext facesContext;
+	private static final Logger logger = Logger.getLogger(GedExceptionHandler.class.getName());
 
 	private final ExceptionHandler wrapped;
 
 	public GedExceptionHandler(final ExceptionHandler wrapped) {
 		this.wrapped = wrapped;
-		this.facesContext = FacesContext.getCurrentInstance();
-	}
-
-	private void addMessage(final Severity severity, final String title, final String message) {
-		final String translatedTitle = translate(title);
-		final FacesMessage facesMessage = new FacesMessage(severity, translatedTitle, message);
-		this.facesContext.addMessage(null, facesMessage);
-	}
-
-	private ResourceBundle getResourceBundle(final String filename) {
-		final Locale locale = this.facesContext.getViewRoot().getLocale();
-		return ResourceBundle.getBundle(filename, locale);
 	}
 
 	private ExceptionQueuedEvent getRootException() {
@@ -56,13 +47,23 @@ public class GedExceptionHandler extends ExceptionHandlerWrapper {
 		if (event != null) {
 			final ExceptionQueuedEventContext context = (ExceptionQueuedEventContext) event.getSource();
 			final Throwable throwable = context.getException();
-			addMessage(FacesMessage.SEVERITY_ERROR, "message.title.unexpected_error", throwable.getLocalizedMessage());
+			logger.log(Level.FINE, "Handling exception", throwable);
+			handle(throwable);
 		}
 		getWrapped().handle();
 	}
 
-	private String translate(final String message) {
-		final ResourceBundle bundle = getResourceBundle("ged.i18n");
-		return bundle.getString(message);
+	private void handle(final Throwable exception) {
+		if (exception instanceof FacesException) {
+			handle(exception.getCause());
+		} else if (exception instanceof EJBException) {
+			handle(exception.getCause());
+		} else if (exception instanceof ViewExpiredException) {
+			NavigationUtils.gotoPage("login");
+		} else if (exception instanceof OptimisticLockException) {
+			MessageUtils.addErrorMessage("warning.optimistick_lock.message", "warning.optimistick_lock.message");
+		} else {
+			MessageUtils.addErrorMessage("message.title.unexpected_error", exception.getLocalizedMessage());
+		}
 	}
 }
