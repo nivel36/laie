@@ -10,7 +10,7 @@ public class MessageUtils {
 		addMessage(FacesMessage.SEVERITY_ERROR, title, message);
 	}
 
-	public static void addInfoErrorMessage(final String title, final String message) {
+	public static void addInfoMessage(final String title, final String message) {
 		addMessage(FacesMessage.SEVERITY_INFO, title, message);
 	}
 
