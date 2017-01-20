@@ -18,6 +18,7 @@ import ged.ejb.user.User;
 import ged.ejb.user.UserService;
 import ged.ejb.user.role.Role;
 import ged.ejb.user.role.RoleService;
+import ged.web.core.util.TransaltionUtils;
 import ged.web.core.view.AbstractPageBean;
 
 @Named
@@ -144,7 +145,7 @@ public class UserEditBean extends AbstractPageBean {
 		}
 		if (this.userService.emailExists(email)) {
 			logger.log(Level.FINEST, "The email exists");
-			final String msg = translate("user.error.email_exists");
+			final String msg = TransaltionUtils.translate("user.error.email_exists");
 			throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg));
 		}
 	}
@@ -156,7 +157,7 @@ public class UserEditBean extends AbstractPageBean {
 		}
 		if (this.manager.equals(this.user)) {
 			logger.log(Level.FINEST, "User can't be his/her manager");
-			final String msg = translate("user.error.manager");
+			final String msg = TransaltionUtils.translate("user.error.manager");
 			throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg));
 		}
 	}
@@ -169,7 +170,7 @@ public class UserEditBean extends AbstractPageBean {
 		final Role userRole = (Role) value;
 		final Role managerRole = this.manager.getRole();
 		if (!isAvalidRole(userRole, managerRole)) {
-			final String msg = translate("user.error.role");
+			final String msg = TransaltionUtils.translate("user.error.role");
 			throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg));
 		}
 	}
@@ -189,7 +190,7 @@ public class UserEditBean extends AbstractPageBean {
 		}
 		if (this.userService.usernameExists(username)) {
 			logger.log(Level.FINEST, "The username exists");
-			final String msg = translate("user.error.username_exists");
+			final String msg = TransaltionUtils.translate("user.error.username_exists");
 			throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg));
 		}
 	}

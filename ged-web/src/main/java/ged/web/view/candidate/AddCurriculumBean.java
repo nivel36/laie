@@ -12,7 +12,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
@@ -25,6 +24,7 @@ import org.apache.pdfbox.pdmodel.graphics.xobject.PDXObject;
 import org.apache.pdfbox.pdmodel.graphics.xobject.PDXObjectImage;
 import org.apache.pdfbox.util.PDFTextStripper;
 
+import ged.web.core.util.MessageUtils;
 import ged.web.core.view.AbstractPageBean;
 
 @Named
@@ -112,7 +112,7 @@ public class AddCurriculumBean extends AbstractPageBean {
 			this.text = stripper.getText(pdf);
 		} catch (final IOException e) {
 			AddCurriculumBean.logger.log(Level.SEVERE, "Can't open file", e);
-			addMessage(FacesMessage.SEVERITY_ERROR, "error.unnexpected_error", "error.unnexpected_error");
+			MessageUtils.addErrorMessage("error.unnexpected_error", "error.unnexpected_error");
 		}
 	}
 

@@ -21,5 +21,4 @@ public class TransaltionUtils {
 
 	private TransaltionUtils() {
 	}
-
 }

@@ -7,7 +7,6 @@ import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -16,6 +15,7 @@ import javax.xml.bind.DatatypeConverter;
 
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
+import ged.web.core.util.MessageUtils;
 import ged.web.core.view.AbstractDialogBean;
 
 @Named
@@ -102,7 +102,7 @@ public final class ChangePasswordPopupBean extends AbstractDialogBean {
 			final byte[] digest = md.digest();
 			output = DatatypeConverter.printBase64Binary(digest);
 		} catch (NoSuchAlgorithmException | UnsupportedEncodingException ex) {
-			addMessage(FacesMessage.SEVERITY_ERROR, "error.unnexpected_error", "error.unnexpected_error");
+			MessageUtils.addErrorMessage("error.unnexpected_error", "error.unnexpected_error");
 			ChangePasswordPopupBean.logger.log(Level.SEVERE, "Can't find hash algorithm", ex);
 		}
 		return output;

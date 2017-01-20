@@ -3,7 +3,6 @@ package ged.web.view.user;
 import java.io.IOException;
 import java.util.Objects;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.application.NavigationHandler;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -15,6 +14,7 @@ import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
+import ged.web.core.util.MessageUtils;
 import ged.web.core.view.AbstractPageBean;
 import ged.web.core.view.Paginator;
 import ged.web.reports.UserReport;
@@ -101,7 +101,7 @@ public class UserViewBean extends AbstractPageBean {
 		this.jobOffers = new Paginator<>(this.sessionBean.getRowsPerPage());
 		this.jobOffers.setEntities(this.jobOfferService.findAllByOwner(this.user));
 		if (this.user.isDeleted()) {
-			addMessage(FacesMessage.SEVERITY_WARN, "message.erased_entity", "message.erased_entity");
+			MessageUtils.addWarningMessage("message.erased_entity", "message.erased_entity");
 		}
 	}
 

@@ -2,7 +2,6 @@ package ged.web.view.client;
 
 import java.util.Objects;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -11,6 +10,8 @@ import ged.ejb.client.Client;
 import ged.ejb.client.ClientService;
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
+import ged.web.core.util.MessageUtils;
+import ged.web.core.util.NavigationUtils;
 import ged.web.core.view.AbstractPageBean;
 import ged.web.core.view.Paginator;
 
@@ -66,23 +67,23 @@ public class ClientViewBean extends AbstractPageBean {
 	 */
 	public void init() {
 		if (this.id == null) {
-			redirectTo("clientSearch");
+			NavigationUtils.gotoPage("clientSearch");
 		}
 		Long clientId = null;
 		try {
 			clientId = Long.parseLong(this.id);
 		} catch (final NumberFormatException ex) {
-			redirectTo("clientSearch");
+			NavigationUtils.gotoPage("clientSearch");
 		}
 		this.client = this.clientService.find(clientId);
 		if (this.client == null) {
-			redirectTo("clientSearch");
+			NavigationUtils.gotoPage("clientSearch");
 		}
 
 		this.jobOffers = new Paginator<>(this.sessionBean.getRowsPerPage());
 		this.jobOffers.setEntities(this.jobOfferService.findAllByClient(this.client));
 		if (this.client.isDeleted()) {
-			addMessage(FacesMessage.SEVERITY_WARN, "message.erased_entity", "message.erased_entity");
+			MessageUtils.addWarningMessage("message.erased_entity", "message.erased_entity");
 		}
 	}
 

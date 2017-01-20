@@ -7,7 +7,6 @@ import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
-import javax.faces.application.FacesMessage;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -15,6 +14,7 @@ import ged.ejb.core.bookmark.Bookmark;
 import ged.ejb.core.bookmark.BookmarkService;
 import ged.ejb.core.model.AuditedEntity;
 import ged.ejb.user.User;
+import ged.web.core.util.MessageUtils;
 import ged.web.core.view.AbstractPageBean;
 
 @Named
@@ -42,7 +42,7 @@ public class BookmarksBean extends AbstractPageBean {
 		if (this.bookmarks.size() > 9) {
 			BookmarksBean.logger.log(Level.WARNING, "Bookmark full for user {}",
 					this.sessionBean.getUser().getUsername());
-			addMessage(FacesMessage.SEVERITY_ERROR, "Bookmark full", "Bookmark full");
+			MessageUtils.addErrorMessage("Bookmark full", "Bookmark full");
 			return;
 		}
 		this.bookmarkService.save(bookmark);

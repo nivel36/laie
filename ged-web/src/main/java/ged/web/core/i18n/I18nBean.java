@@ -18,6 +18,7 @@ import javax.inject.Named;
 
 import ged.ejb.core.i18n.I18nService;
 import ged.ejb.core.i18n.I18nString;
+import ged.web.core.util.TransaltionUtils;
 import ged.web.core.view.AbstractPageBean;
 
 @Named
@@ -42,7 +43,7 @@ public class I18nBean extends AbstractPageBean {
 			translatedText = this.i18nTexts.get(language).get(key);
 		} else {
 			try {
-				translatedText = translate(key);
+				translatedText = TransaltionUtils.translate(key);
 			} catch (final MissingResourceException e) {
 				this.logger.log(Level.SEVERE, "Error loading image", e);
 				translatedText = "?" + key + "?";

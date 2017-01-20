@@ -9,7 +9,6 @@ import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.application.NavigationHandler;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -22,6 +21,7 @@ import ged.ejb.candidate.Candidate;
 import ged.ejb.candidate.CandidateService;
 import ged.ejb.core.util.ConfigurationProperty;
 import ged.ejb.curriculum.FileSys;
+import ged.web.core.util.MessageUtils;
 import ged.web.core.view.AbstractPageBean;
 
 @Named
@@ -73,13 +73,13 @@ public class CandidateViewBean extends AbstractPageBean {
 			}
 		} catch (final IOException e) {
 			logger.log(Level.SEVERE, "Can't remove file", e);
-			addMessage(FacesMessage.SEVERITY_ERROR, "error.unnexpected_error", "error.unnexpected_error");
+			MessageUtils.addErrorMessage("error.unnexpected_error", "error.unnexpected_error");
 		}
 	}
 
 	private void checkLopdFile() {
 		if (!hasLopdFile()) {
-			addMessage(FacesMessage.SEVERITY_WARN, "candidate.warn.no_lopd_file", "candidate.warn.no_lopd_file");
+			MessageUtils.addWarningMessage("candidate.warn.no_lopd_file", "candidate.warn.no_lopd_file");
 		}
 	}
 
@@ -192,7 +192,7 @@ public class CandidateViewBean extends AbstractPageBean {
 			Faces.sendFile(downloableFile, true);
 		} catch (final IOException e) {
 			logger.log(Level.SEVERE, "Can't open file", e);
-			addMessage(FacesMessage.SEVERITY_ERROR, "error.unnexpected_error", "error.unnexpected_error");
+			MessageUtils.addErrorMessage("error.unnexpected_error", "error.unnexpected_error");
 		}
 	}
 
@@ -203,7 +203,7 @@ public class CandidateViewBean extends AbstractPageBean {
 			this.candidate = this.candidateService.save(this.candidate);
 		} catch (final IOException e) {
 			logger.log(Level.SEVERE, "Can't remove file", e);
-			addMessage(FacesMessage.SEVERITY_ERROR, "error.unnexpected_error", "error.unnexpected_error");
+			MessageUtils.addErrorMessage("error.unnexpected_error", "error.unnexpected_error");
 		}
 	}
 
@@ -268,7 +268,7 @@ public class CandidateViewBean extends AbstractPageBean {
 			this.file.setName(fileName);
 		} catch (final IOException ex) {
 			logger.log(Level.SEVERE, "Can't upload file", ex);
-			addMessage(FacesMessage.SEVERITY_ERROR, "error.unnexpected_error", "error.unnexpected_error");
+			MessageUtils.addErrorMessage("error.unnexpected_error", "error.unnexpected_error");
 		}
 	}
 }

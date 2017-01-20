@@ -13,6 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import ged.web.core.util.TransaltionUtils;
 import ged.web.core.view.AbstractPageBean;
 
 @Named
@@ -54,7 +55,7 @@ public class LoginBean extends AbstractPageBean {
 			return "/faces/index?faces-redirect=true";
 		} catch (final ServletException e) {
 			logger.log(Level.WARNING, "Bad login credentials", e);
-			final String message = translate("login.error.unknow_login");
+			final String message = TransaltionUtils.translate("login.error.unknow_login");
 			final FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, message, null);
 			this.facesContext.addMessage(null, facesMessage);
 			return null;
