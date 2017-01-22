@@ -12,7 +12,10 @@
 
 	<ui:define name="content">
 
-		<ui:include src="userSearchPopup.xhtml" />
+		<ui:include src="userSearchPopup.xhtml">
+			<ui:param name="callback" value="#{userEditBean.manager}" />
+			<ui:param name="render" value=":form:managerBlock" />
+		</ui:include>
 
 		<h:form id="form">
 			<input type="hidden" id="userId" value="#{userEditBean.user.id}" />

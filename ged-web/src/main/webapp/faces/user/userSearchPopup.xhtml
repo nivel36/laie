@@ -3,7 +3,7 @@
 	xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://xmlns.jcp.org/jsf/passthrough" xmlns:i18n="http://legion.com/i18n"
 	xmlns:a="http://java.sun.com/jsf/composite/legion">
-
+	
 	<h:form id="userSearchPopupForm">
 		<h:panelGroup layout="block" rendered="#{userSearchPopupBean.rendered}" styleClass="modalDialog" id="managerPopup">
 			<h:panelGroup layout="block" id="modalContent">
@@ -73,8 +73,8 @@
 								<h:outputText value="Action" />
 							</f:facet>
 							<h:commandLink action="#{userSearchPopupBean.hide}" value="#{i18n['action.select']}">
-								<f:setPropertyActionListener value="#{user}" target="#{userEditBean.manager}" />
-								<f:ajax execute="@this" render=":userSearchPopupForm :form:managerBlock" />
+								<f:setPropertyActionListener value="#{user}" target="#{callback}" />
+								<f:ajax execute="@this" render=":userSearchPopupForm #{render}" />
 							</h:commandLink>
 						</h:column>
 					</h:dataTable>
