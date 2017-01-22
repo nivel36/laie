@@ -1,103 +1,49 @@
 package ged.web.view.candidate;
 
-import java.util.List;
 import java.util.Objects;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import ged.ejb.candidate.Candidate;
 import ged.ejb.candidate.CandidateService;
-import ged.web.core.view.AbstractPageBean;
-import ged.web.core.view.Paginator;
 
 @Named
 @ViewScoped
-public class CandidateSearchBean extends AbstractPageBean {
+public class CandidateSearchBean extends AbstractCandidateSearchBean {
 
 	private static final transient Logger logger = Logger.getLogger(CandidateSearchBean.class.getName());
 
 	private static final long serialVersionUID = 2434819723782902618L;
 
-	private final transient CandidateService candidateService;
-
-	private String name;
-
-	private Paginator<Candidate> paginator;
-
-	private String position;
-
-	private String surename;
-
 	@Inject
 	public CandidateSearchBean(final CandidateService candidateService) {
-		Objects.requireNonNull(candidateService);
-		this.candidateService = candidateService;
+		super(candidateService);
 	}
 
-	public void clean() {
-		this.surename = null;
-		this.name = null;
-		this.position = null;
-		search();
-	}
-
+	@Override
 	public String edit(final Candidate candidate) {
+		Objects.requireNonNull(candidate);
+		logger.log(Level.FINE, "Editing a candidate");
 		this.flash.put("candidate", candidate);
 		return "candidateEdit?faces-redirect=true";
 	}
 
-	public String getName() {
-		return this.name;
-	}
-
-	public Paginator<Candidate> getPaginator() {
-		return this.paginator;
-	}
-
-	public String getPosition() {
-		return this.position;
-	}
-
-	public String getSurename() {
-		return this.surename;
-	}
-
-	@PostConstruct
-	public void init() {
-		this.paginator = new Paginator<>(this.sessionBean.getRowsPerPage());
-		search();
-	}
-
+	@Override
 	public String newCandidate() {
+		logger.log(Level.FINE, "New candidate");
 		return "candidateEdit?faces-redirect=true";
 	}
 
+	@Override
 	public void remove(final Candidate candidate) {
 		Objects.requireNonNull(candidate);
+		logger.log(Level.FINE, "Deleting candidate");
 		candidate.setUser(this.sessionBean.getUser());
 		this.candidateService.delete(candidate);
 		search();
-	}
-
-	public void search() {
-		CandidateSearchBean.logger.fine("Searching for candidates");
-		final List<Candidate> candidates = this.candidateService.search(this.name, this.surename, this.position);
-		this.paginator.setEntities(candidates);
-	}
-
-	public void setName(final String name) {
-		this.name = name;
-	}
-
-	public void setPosition(final String position) {
-		this.position = position;
-	}
-
-	public void setSurename(final String surename) {
-		this.surename = surename;
 	}
 }

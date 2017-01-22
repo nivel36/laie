@@ -79,8 +79,8 @@
 						</h:column>
 					</h:dataTable>
 					<a:paginator paginator="#{userSearchPopupBean.paginator}" />
-
 				</h:panelGroup>
+				
 				<h:panelGroup layout="block" styleClass="buttonGroup">
 					<h:commandButton value="#{i18n['action.cancel']}" action="#{userSearchPopupBean.cancel}">
 						<f:ajax execute="@this" render=":userSearchPopupForm" />
