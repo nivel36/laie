@@ -85,7 +85,7 @@
 				<h:outputText value="#{i18n['job_meeting.no_candidates']}"
 					rendered="#{empty jobOfferViewBean.jobOffer.jobCandidatures}" />
 				<h:panelGroup layout="block" styleClass="buttonGroup">
-					<h:commandButton value="#{i18n['action.add']}" action="#{jobOfferViewBean.addCandidate}" />
+					<h:commandButton value="#{i18n['action.add']}" action="#{candidateSearchPopupBean.show}" />
 				</h:panelGroup>
 			</h:panelGroup>
 
@@ -106,6 +106,11 @@
 				</h:panelGroup>
 			</h:panelGroup>
 		</h:form>
+		
+		<ui:include src="../candidate/candidateSearchPopup.xhtml">
+			<ui:param name="callback" value="#{jobOfferViewBean.addCandidate}" />
+			<ui:param name="render" value=":form" />
+		</ui:include>
 	</ui:define>
 
 </ui:composition>

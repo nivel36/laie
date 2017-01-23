@@ -2,10 +2,14 @@ package ged.web.view.candidate;
 
 import java.util.logging.Logger;
 
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import ged.ejb.candidate.CandidateService;
 
+@Named
+@ViewScoped
 public class CandidateSearchPopupBean extends AbstractCandidateSearchBean {
 
 	public static final transient Logger logger = Logger.getLogger(CandidateSearchPopupBean.class.getName());
