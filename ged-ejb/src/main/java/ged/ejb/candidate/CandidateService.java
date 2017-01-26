@@ -4,8 +4,11 @@ import java.util.List;
 
 import ged.ejb.core.AuditedService;
 import ged.ejb.core.FileType;
+import ged.ejb.job.offer.JobOffer;
 
 public interface CandidateService extends AuditedService<Long, Candidate> {
+
+	List<Candidate> findAllByJobOffer(JobOffer jobOffer);
 
 	List<FileType> findAllFileTypes();
 

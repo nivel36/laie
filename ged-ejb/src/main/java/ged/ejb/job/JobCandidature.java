@@ -21,75 +21,90 @@ public class JobCandidature extends AbstractAuditedEntity {
 
 	@NotNull
 	@ManyToOne
-	@JoinColumn(name = "jobOfferId", nullable = false)
-	private JobOffer jobOffer;
-
-	@NotNull
-	@ManyToOne
 	@JoinColumn(name = "candidateId", nullable = false)
 	private Candidate candidate;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "jobCandidature", orphanRemoval = true)
 	private List<JobMeeting> jobMeetings;
 
-	public Candidate getCandidate() {
-		return candidate;
+	@NotNull
+	@ManyToOne
+	@JoinColumn(name = "jobOfferId", nullable = false)
+	private JobOffer jobOffer;
+
+	public JobCandidature() {
 	}
 
-	public JobOffer getJobOffer() {
-		return jobOffer;
-	}
-
-	public List<JobMeeting> getJobMeetings() {
-		return jobMeetings;
-	}
-
-	public void setCandidate(Candidate candidate) {
+	public JobCandidature(final JobOffer jobOffer, final Candidate candidate) {
+		this.jobOffer = jobOffer;
 		this.candidate = candidate;
 	}
 
-	public void setJobOffer(JobOffer jobOffer) {
-		this.jobOffer = jobOffer;
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		final JobCandidature other = (JobCandidature) obj;
+		if (this.candidate == null) {
+			if (other.candidate != null) {
+				return false;
+			}
+		} else if (!this.candidate.equals(other.candidate)) {
+			return false;
+		}
+		if (this.jobOffer == null) {
+			if (other.jobOffer != null) {
+				return false;
+			}
+		} else if (!this.jobOffer.equals(other.jobOffer)) {
+			return false;
+		}
+		return true;
 	}
 
-	public void setJobMeetings(List<JobMeeting> jobMeetings) {
-		this.jobMeetings = jobMeetings;
+	public Candidate getCandidate() {
+		return this.candidate;
+	}
+
+	public List<JobMeeting> getJobMeetings() {
+		return this.jobMeetings;
+	}
+
+	public JobOffer getJobOffer() {
+		return this.jobOffer;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((candidate == null) ? 0 : candidate.hashCode());
-		result = prime * result + ((jobOffer == null) ? 0 : jobOffer.hashCode());
+		result = prime * result + (this.candidate == null ? 0 : this.candidate.hashCode());
+		result = prime * result + (this.jobOffer == null ? 0 : this.jobOffer.hashCode());
 		return result;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		JobCandidature other = (JobCandidature) obj;
-		if (candidate == null) {
-			if (other.candidate != null)
-				return false;
-		} else if (!candidate.equals(other.candidate))
-			return false;
-		if (jobOffer == null) {
-			if (other.jobOffer != null)
-				return false;
-		} else if (!jobOffer.equals(other.jobOffer))
-			return false;
-		return true;
+	public void setCandidate(final Candidate candidate) {
+		this.candidate = candidate;
+	}
+
+	public void setJobMeetings(final List<JobMeeting> jobMeetings) {
+		this.jobMeetings = jobMeetings;
+	}
+
+	public void setJobOffer(final JobOffer jobOffer) {
+		this.jobOffer = jobOffer;
 	}
 
 	@Override
 	public String toString() {
-		return "JobCandidature [jobOffer=" + jobOffer + ", candidate=" + candidate + ", jobMeetings=" + jobMeetings
-				+ "]";
+		return "JobCandidature [jobOffer=" + this.jobOffer + ", candidate=" + this.candidate + ", jobMeetings="
+				+ this.jobMeetings + "]";
 	}
 }

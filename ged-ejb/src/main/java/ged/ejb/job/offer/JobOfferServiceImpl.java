@@ -9,7 +9,6 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import ged.ejb.candidate.Candidate;
-import ged.ejb.candidate.CandidateDao;
 import ged.ejb.client.Client;
 import ged.ejb.client.ClientService;
 import ged.ejb.core.AbstratctAuditedService;
@@ -25,57 +24,52 @@ public class JobOfferServiceImpl extends AbstratctAuditedService<Long, JobOffer>
 
 	private static final Logger logger = Logger.getLogger(JobOfferServiceImpl.class.getName());
 
-	private final CandidateDao candidateDao;
-
 	private final ClientService clientService;
 
-	private final JobOfferDao jobDao;
+	private final JobCandidatureDao jobCandidatureDao;
+
+	private final JobOfferDao jobOfferDao;
 
 	@Inject
 	public JobOfferServiceImpl(@Repository final JobOfferDao jobDao, final ClientService clientService,
-			@Repository final CandidateDao candidateDao) {
+			@Repository final JobCandidatureDao jobCandidatureDao) {
 		Objects.requireNonNull(jobDao);
 		Objects.requireNonNull(clientService);
-		Objects.requireNonNull(candidateDao == null);
+		Objects.requireNonNull(jobCandidatureDao);
 		this.clientService = clientService;
-		this.candidateDao = candidateDao;
-		this.jobDao = jobDao;
+		this.jobCandidatureDao = jobCandidatureDao;
+		this.jobOfferDao = jobDao;
 	}
 
 	@Override
 	public void addJobCandidature(final JobOffer jobOffer, final Candidate candidate) {
 		Objects.requireNonNull(jobOffer);
-		Objects.requireNonNull(candidate == null);
-		final JobCandidature jobCandidature = new JobCandidature();
-		jobCandidature.setCandidate(candidate);
-		jobCandidature.setJobOffer(jobOffer);
-		jobOffer.addJobCandidature(jobCandidature);
-		candidate.addJobCandidature(jobCandidature);
-		this.jobDao.update(jobOffer);
-		this.candidateDao.update(candidate);
+		Objects.requireNonNull(candidate);
+		final JobCandidature jobCandidature = new JobCandidature(jobOffer, candidate);
+		this.jobCandidatureDao.insert(jobCandidature);
 	}
 
 	@Override
 	public List<JobOffer> findAllByClient(final Client client) {
 		logger.log(Level.FINE, "Find all job Offers of the client {}", client.getName());
-		return this.jobDao.findAllByClient(client);
+		return this.jobOfferDao.findAllByClient(client);
 	}
 
 	@Override
 	public List<JobOffer> findAllByOwner(final User owner) {
 		logger.log(Level.FINE, "Find all job Offers of the owner {}", owner.getFullName());
-		return this.jobDao.findAllByOwner(owner);
+		return this.jobOfferDao.findAllByOwner(owner);
 	}
 
 	@Override
 	public List<JobOffer> findLastJobOffers(final User owner) {
 		logger.log(Level.FINE, "Find last job Offers of the owner {}", owner.getFullName());
-		return this.jobDao.findLastJobOffers(owner);
+		return this.jobOfferDao.findLastJobOffers(owner);
 	}
 
 	@Override
 	public Dao<Long, JobOffer> getDao() {
-		return this.jobDao;
+		return this.jobOfferDao;
 	}
 
 	private void putClientOnJobOffer(final JobOffer jobOffer) {
@@ -101,6 +95,6 @@ public class JobOfferServiceImpl extends AbstratctAuditedService<Long, JobOffer>
 	public List<JobOffer> searchByNameAndClient(final String name, final String clientName, final Boolean showDeleted) {
 		logger.log(Level.FINE, "Search all job Offers by name {} and client name {}",
 				new Object[] { name, clientName });
-		return this.jobDao.searchByNameAndClient(name, clientName, showDeleted);
+		return this.jobOfferDao.searchByNameAndClient(name, clientName, showDeleted);
 	}
 }

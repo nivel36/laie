@@ -12,6 +12,7 @@ import ged.ejb.core.AbstratctAuditedService;
 import ged.ejb.core.FileType;
 import ged.ejb.core.model.Dao;
 import ged.ejb.core.model.Repository;
+import ged.ejb.job.offer.JobOffer;
 
 @Stateless
 public class CandidateServiceImpl extends AbstratctAuditedService<Long, Candidate> implements CandidateService {
@@ -24,6 +25,13 @@ public class CandidateServiceImpl extends AbstratctAuditedService<Long, Candidat
 	public CandidateServiceImpl(@Repository final CandidateDao candidateDao) {
 		Objects.requireNonNull(candidateDao);
 		this.candidateDao = candidateDao;
+	}
+
+	@Override
+	public List<Candidate> findAllByJobOffer(final JobOffer jobOffer) {
+		Objects.requireNonNull(jobOffer);
+		logger.log(Level.FINE, "Search candidates by jobOffer {} ", jobOffer.getId());
+		return this.candidateDao.findAllByJobOffer(jobOffer);
 	}
 
 	@Override

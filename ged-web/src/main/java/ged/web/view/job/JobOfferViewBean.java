@@ -10,6 +10,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import ged.ejb.candidate.Candidate;
+import ged.ejb.candidate.CandidateService;
 import ged.ejb.job.meeting.JobMeeting;
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
@@ -21,6 +22,10 @@ import ged.web.core.view.AbstractPageBean;
 public class JobOfferViewBean extends AbstractPageBean {
 
 	private static final long serialVersionUID = -1200840678252895578L;
+
+	private List<Candidate> candidates = new ArrayList<>();
+
+	private transient final CandidateService candidateService;
 
 	private List<JobMeeting> conductedJobMeetings = new ArrayList<>();
 
@@ -35,13 +40,11 @@ public class JobOfferViewBean extends AbstractPageBean {
 	private List<JobMeeting> plannedJobMeetings = new ArrayList<>();
 
 	@Inject
-	public JobOfferViewBean(final JobOfferService jobService) {
+	public JobOfferViewBean(final JobOfferService jobService, final CandidateService candidateService) {
 		Objects.requireNonNull(jobService);
+		Objects.requireNonNull(candidateService);
 		this.jobService = jobService;
-	}
-
-	public String addCandidate() {
-		return "/faces/candidate/candidateSearch?faces-redirect=true";
+		this.candidateService = candidateService;
 	}
 
 	public void addJobCandidature(final Candidate candidate) {
@@ -75,6 +78,10 @@ public class JobOfferViewBean extends AbstractPageBean {
 		this.facesContext.renderResponse();
 	}
 
+	public List<Candidate> getCandidates() {
+		return this.candidates;
+	}
+
 	public List<JobMeeting> getConductedJobMeetings() {
 		return this.conductedJobMeetings;
 	}
@@ -103,6 +110,7 @@ public class JobOfferViewBean extends AbstractPageBean {
 					error();
 				} else {
 					populateJobMeetings(this.jobOffer);
+					this.candidates = this.candidateService.findAllByJobOffer(this.jobOffer);
 				}
 				this.editable = canEdit();
 			} catch (final NumberFormatException ex) {
@@ -120,6 +128,19 @@ public class JobOfferViewBean extends AbstractPageBean {
 	private void populateJobMeetings(final JobOffer jobOffer) {
 		this.plannedJobMeetings = null;
 		this.conductedJobMeetings = null;
+	}
+
+	public void setCandidate(final Candidate candidate) {
+		Objects.requireNonNull(candidate);
+		if (this.candidates.contains(candidate)) {
+			return;
+		}
+		this.candidates.add(candidate);
+		this.jobService.addJobCandidature(this.jobOffer, candidate);
+	}
+
+	public void setCandidates(final List<Candidate> candidates) {
+		this.candidates = candidates;
 	}
 
 	public void setConductedJobMeetings(final List<JobMeeting> conductedJobMeetings) {

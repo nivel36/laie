@@ -5,142 +5,234 @@
 	version="2.1">
 
 	<named-query name="Action.findAllByUser">
-		<query>
-		<![CDATA[
-		SELECT a FROM Action a WHERE a.user = :user ORDER BY a.date DESC
-		]]>
-		</query>
+		<query><![CDATA[
+			SELECT a 
+			FROM Action a 
+			WHERE a.user = :user 
+			ORDER BY a.date DESC
+		]]></query>
 	</named-query>
 
 	<named-query name="Bookmark.find">
-		<query>SELECT b FROM Bookmark b WHERE b.user = :user AND b.entityClass = :entityClass AND b.entityId = :entityId</query>
+		<query><![CDATA[
+			SELECT b 
+			FROM Bookmark b 
+			WHERE b.user = :user 
+			AND b.entityClass = :entityClass 
+			AND b.entityId = :entityId
+		]]></query>
 	</named-query>
 
 	<named-query name="Bookmark.findAllByClassAndId">
-		<query>SELECT b FROM Bookmark b WHERE b.entityClass = :entityClass AND b.entityId = :entityId</query>
+		<query><![CDATA[
+			SELECT b 
+			FROM Bookmark b 
+			WHERE b.entityClass = :entityClass 
+			AND b.entityId = :entityId
+		]]></query>
 	</named-query>
 
 	<named-query name="Bookmark.findAllByUser">
-		<query>SELECT b FROM Bookmark b WHERE b.user = :user</query>
+		<query><![CDATA[
+			SELECT b 
+			FROM Bookmark b 
+			WHERE b.user = :user
+		]]></query>
 	</named-query>
 
 	<named-query name="Candidate.findCandidateAndFilesById">
-		<query>SELECT c FROM Candidate c LEFT JOIN FETCH c.files WHERE c.id = :id</query>
+		<query><![CDATA[
+			SELECT c 
+			FROM Candidate c 
+			LEFT JOIN FETCH c.files
+			WHERE c.id = :id
+		]]></query>
 	</named-query>
 
 	<named-query name="Candidate.findByNameAndSurename">
-		<query>SELECT c FROM Candidate c WHERE	(:name IS NOT NULL AND c.name = :name)
-										  OR	(:surename IS NOT NULL AND c.surename = :surename)</query>
+		<query><![CDATA[
+			SELECT c 
+			FROM Candidate c 
+			WHERE (:name IS NOT NULL AND c.name = :name)
+			OR (:surename IS NOT NULL AND c.surename = :surename)
+		]]></query>
 	</named-query>
 
 	<named-query name="Client.findByName">
-		<query>SELECT c FROM Client c WHERE c.name = :name</query>
+		<query><![CDATA[
+			SELECT c 
+			FROM Client c 
+			WHERE c.name = :name
+		]]></query>
 	</named-query>
 
 	<named-query name="Curriculum.findByCandidateId">
-		<query>SELECT c FROM Curriculum c 
-					LEFT JOIN FETCH c.candidate 
-					LEFT JOIN FETCH c.education
-					LEFT JOIN FETCH c.jobExperiences 
-					LEFT JOIN FETCH c.languages 
-					LEFT JOIN FETCH c.skills 
-					WHERE c.candidate.id = :candidateId</query>
+		<query><![CDATA[
+			SELECT c 
+			FROM Curriculum c 
+			LEFT JOIN FETCH c.candidate 
+			LEFT JOIN FETCH c.education
+			LEFT JOIN FETCH c.jobExperiences 
+			LEFT JOIN FETCH c.languages 
+			LEFT JOIN FETCH c.skills 
+			WHERE c.candidate.id = :candidateId
+		]]></query>
 	</named-query>
 
 	<named-query name="JobOffer.findAllByClient">
-		<query>
-		<![CDATA[
-		SELECT j FROM JobOffer j WHERE j.client = :client AND j.deleted <> TRUE
-		]]>
-		</query>
+		<query><![CDATA[
+			SELECT j 
+			FROM JobOffer j 
+			WHERE j.client = :client 
+			AND j.deleted <> TRUE
+		]]></query>
 	</named-query>
 
 	<named-query name="JobOffer.findByName">
-		<query>SELECT j FROM JobOffer j WHERE j.name = :name</query>
+		<query><![CDATA[
+			SELECT j 
+			FROM JobOffer j 
+			WHERE j.name = :name
+		]]></query>
 	</named-query>
 
 	<named-query name="JobOffer.findAllByOwner">
-		<query>
-		<![CDATA[
-		SELECT j FROM JobOffer j WHERE j.owner = :owner AND j.deleted <> TRUE
-		]]>
-		</query>
+		<query><![CDATA[
+			SELECT j 
+			FROM JobOffer j 
+			WHERE j.owner = :owner 
+			AND j.deleted <> TRUE
+		]]></query>
 	</named-query>
 
 	<named-query name="JobOffer.findLastJobOffers">
-		<query>SELECT j FROM JobOffer j WHERE j.owner = :owner ORDER BY j.id</query>
+		<query><![CDATA[
+			SELECT j 
+			FROM JobOffer j 
+			WHERE j.owner = :owner 
+			ORDER BY j.id
+		]]></query>
+	</named-query>
+	
+	<named-query name="Candidate.findAllByJobOffer">
+		<query><![CDATA[
+			SELECT c 
+			FROM Candidate c
+			LEFT JOIN c.jobCandidatures jc
+			WHERE jc.jobOffer = :jobOffer
+		]]></query>
 	</named-query>
 
 	<named-query name="JobMeeting.findPlannedJobMeetings">
-		<query>SELECT j FROM JobMeeting j WHERE j.jobCandidature.id = :jobCandidatureId</query>
+		<query><![CDATA[
+			SELECT j 
+			FROM JobMeeting j 
+			WHERE j.jobCandidature.id = :jobCandidatureId
+		]]></query>
 	</named-query>
 
 	<named-query name="JobMeeting.findConductedJobMeetings">
-		<query>SELECT j FROM JobMeeting j WHERE j.jobCandidature.id = :jobCandidatureId</query>
+		<query><![CDATA[
+			SELECT j 
+			FROM JobMeeting j 
+			WHERE j.jobCandidature.id = :jobCandidatureId
+		]]></query>
 	</named-query>
 
 	<named-query name="Role.findSubordinateRoles">
-		<query>SELECT r FROM RoleClosure rc JOIN rc.descendant r WHERE rc.antecessor.id = :id</query>
+		<query><![CDATA[
+			SELECT r 
+			FROM RoleClosure rc 
+			JOIN rc.descendant r 
+			WHERE rc.antecessor.id = :id
+		]]></query>
 	</named-query>
 
 	<named-query name="User.findById">
-		<query>SELECT u FROM User u LEFT JOIN FETCH u.role WHERE u.id = :id</query>
+		<query><![CDATA[
+			SELECT u 
+			FROM User u 
+			LEFT JOIN FETCH u.role 
+			WHERE u.id = :id
+		]]></query>
 	</named-query>
 
 	<named-query name="User.findByUsername">
-		<query>SELECT u FROM User u LEFT JOIN FETCH u.role WHERE u.username = :username</query>
+		<query><![CDATA[
+			SELECT u 
+			FROM User u 
+			LEFT JOIN FETCH u.role 
+			WHERE u.username = :username
+		]]></query>
 	</named-query>
 
 	<named-query name="User.findSubordinateUsers">
-		<query>SELECT u FROM UserClosure uc JOIN uc.descendant u WHERE uc.antecessor.id = :id AND uc.pathLength > 0</query>
+		<query><![CDATA[
+			SELECT u 
+			FROM UserClosure uc 
+			JOIN uc.descendant u 
+			WHERE uc.antecessor.id = :id 
+			AND uc.pathLength > 0
+		]]></query>
 	</named-query>
 
 	<named-query name="User.findAll">
-		<query>SELECT 	u
-				FROM 	User u
-				LEFT JOIN FETCH u.role
+		<query><![CDATA[
+			SELECT u
+			FROM User u
+			LEFT JOIN FETCH u.role
+		]]>
 		</query>
 	</named-query>
 
 	<named-query name="User.findByNameAndSurename">
-		<query>SELECT 	u
-				FROM 	User u
-				LEFT JOIN FETCH u.role
-				WHERE	(:name IS NOT NULL AND u.name = :name)
-				OR 		(:surename IS NOT NULL AND u.surename = :surename)
-		</query>
+		<query><![CDATA[
+			SELECT u
+			FROM User u
+			LEFT JOIN FETCH u.role
+			WHERE (:name IS NOT NULL AND u.name = :name)
+			OR (:surename IS NOT NULL AND u.surename = :surename)
+		]]></query>
 	</named-query>
 
 	<named-query name="User.findUser">
-		<query>SELECT u FROM User u WHERE	(:name IS NOT NULL AND u.name = :name)
-									OR 		(:surename IS NOT NULL AND u.surename = :surename)</query>
+		<query><![CDATA[
+			SELECT u 
+			FROM User u 
+			WHERE (:name IS NOT NULL AND u.name = :name)
+			OR (:surename IS NOT NULL AND u.surename = :surename)
+		]]></query>
 	</named-query>
 
 	<named-query name="User.existsMoreThanOneAdmin">
-		<query>
-		<![CDATA[
-			SELECT CASE WHEN (COUNT(u) > 0)  THEN TRUE ELSE FALSE END FROM User u WHERE u.role.name = 'ADMIN'
-		]]>
-		</query>
+		<query><![CDATA[
+			SELECT CASE WHEN (COUNT(u) > 0) THEN TRUE ELSE FALSE END 
+			FROM User u 
+			WHERE u.role.name = 'ADMIN'
+		]]></query>
 	</named-query>
 
 	<named-query name="User.emailExists">
-		<query>
-		<![CDATA[
-			SELECT CASE WHEN (COUNT(u) > 0)  THEN TRUE ELSE FALSE END FROM User u WHERE u.email = :email
-		]]>
-		</query>
+		<query><![CDATA[
+			SELECT CASE WHEN (COUNT(u) > 0) THEN TRUE ELSE FALSE END 
+			FROM User u 
+			WHERE u.email = :email
+		]]></query>
 	</named-query>
 
 	<named-query name="User.usernameExists">
-		<query>
-		<![CDATA[
-			SELECT CASE WHEN (COUNT(u) > 0)  THEN TRUE ELSE FALSE END FROM User u WHERE u.username = :username
-		]]>
-		</query>
+		<query><![CDATA[
+			SELECT CASE WHEN (COUNT(u) > 0) THEN TRUE ELSE FALSE END 
+			FROM User u 
+			WHERE u.username = :username
+		]]></query>
 	</named-query>
 
 	<named-query name="UserClosure.findAntecessorsUserClosuresById">
-		<query>SELECT uc FROM UserClosure uc WHERE uc.descendant.id = :id</query>
+		<query><![CDATA[
+			SELECT uc 
+			FROM UserClosure uc 
+			WHERE uc.descendant.id = :id
+		]]></query>
 	</named-query>
 </entity-mappings>

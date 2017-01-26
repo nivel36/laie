@@ -19,6 +19,7 @@ import org.hibernate.search.query.dsl.QueryBuilder;
 import ged.ejb.core.FileType;
 import ged.ejb.core.model.AbstractDao;
 import ged.ejb.core.model.Repository;
+import ged.ejb.job.offer.JobOffer;
 
 @Repository
 public class CandidateDaoJpa extends AbstractDao<Long, Candidate> implements CandidateDao {
@@ -28,6 +29,15 @@ public class CandidateDaoJpa extends AbstractDao<Long, Candidate> implements Can
 	@Inject
 	public CandidateDaoJpa(final EntityManager entityManager) {
 		super(entityManager);
+	}
+
+	@Override
+	public List<Candidate> findAllByJobOffer(final JobOffer jobOffer) {
+		Objects.requireNonNull(jobOffer);
+		this.logger.log(Level.FINE, "Buscando al candidateo con jobOffer {}", jobOffer.getId());
+		final Map<String, Object> properties = new HashMap<>();
+		properties.put("jobOffer", jobOffer);
+		return findByTypedQuery(Candidate.class, "Candidate.findAllByJobOffer", properties, 0, 0);
 	}
 
 	@Override

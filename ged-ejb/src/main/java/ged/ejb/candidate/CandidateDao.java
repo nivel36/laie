@@ -6,9 +6,12 @@ import javax.ejb.Local;
 
 import ged.ejb.core.FileType;
 import ged.ejb.core.model.Dao;
+import ged.ejb.job.offer.JobOffer;
 
 @Local
 public interface CandidateDao extends Dao<Long, Candidate> {
+
+	List<Candidate> findAllByJobOffer(JobOffer jobOffer);
 
 	List<FileType> findAllFileTypes();
 
