@@ -35,7 +35,7 @@ public class ActionServiceImpl extends AbstractService<Long, Action> implements 
 	@Override
 	public void deleteAction(@PostDelete @Observes final AuditedEntity<Long> auditedEntity) {
 		Objects.requireNonNull(auditedEntity);
-		logger.log(Level.FINE, "Delete action class {} with id {} for user {} ",
+		logger.log(Level.FINE, "Delete action class {0} with id {1} for user {2}",
 				new Object[] { auditedEntity.getClass().getName(), auditedEntity.getId(), auditedEntity.getUser() });
 		insertAction(auditedEntity, Action.DELETE);
 	}
@@ -43,7 +43,7 @@ public class ActionServiceImpl extends AbstractService<Long, Action> implements 
 	@Override
 	public List<Action> findAllByUser(final User user) {
 		Objects.requireNonNull(user);
-		logger.log(Level.FINE, "Find all actions of the user {}", user.getFullName());
+		logger.log(Level.FINE, "Find all actions of the user {0}", user.getFullName());
 		return this.actionDao.findAllByUser(user);
 	}
 
@@ -64,7 +64,7 @@ public class ActionServiceImpl extends AbstractService<Long, Action> implements 
 	@Override
 	public void insertAction(@PostPersist @Observes final AuditedEntity<Long> auditedEntity) {
 		Objects.requireNonNull(auditedEntity);
-		logger.log(Level.FINE, "Insert action class {} with id {} for user {} ",
+		logger.log(Level.FINE, "Insert action class {0} with id {1} for user {2}",
 				new Object[] { auditedEntity.getClass().getName(), auditedEntity.getId(), auditedEntity.getUser() });
 		insertAction(auditedEntity, Action.INSERT);
 	}
@@ -80,7 +80,7 @@ public class ActionServiceImpl extends AbstractService<Long, Action> implements 
 	@Override
 	public void undeleteAction(@PostUndelete @Observes final AuditedEntity<Long> auditedEntity) {
 		Objects.requireNonNull(auditedEntity);
-		logger.log(Level.FINE, "Undelete action class {} with id {} for user {} ",
+		logger.log(Level.FINE, "Undelete action class {0} with id {1} for user {2}",
 				new Object[] { auditedEntity.getClass().getName(), auditedEntity.getId(), auditedEntity.getUser() });
 		insertAction(auditedEntity, Action.UNDELETE);
 	}
@@ -88,7 +88,7 @@ public class ActionServiceImpl extends AbstractService<Long, Action> implements 
 	@Override
 	public void updateAction(@PostUpdate @Observes final AuditedEntity<Long> auditedEntity) {
 		Objects.requireNonNull(auditedEntity);
-		logger.log(Level.FINE, "Update action class {} with id {} for user {} ",
+		logger.log(Level.FINE, "Update action class {0} with id {1} for user {2}",
 				new Object[] { auditedEntity.getClass().getName(), auditedEntity.getId(), auditedEntity.getUser() });
 		insertAction(auditedEntity, Action.UPDATE);
 	}

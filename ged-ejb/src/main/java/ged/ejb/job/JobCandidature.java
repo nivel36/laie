@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
 import ged.ejb.candidate.Candidate;
@@ -15,6 +17,7 @@ import ged.ejb.job.meeting.JobMeeting;
 import ged.ejb.job.offer.JobOffer;
 
 @Entity
+@Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "jobOfferId", "candidateId" }) })
 public class JobCandidature extends AbstractAuditedEntity {
 
 	private static final long serialVersionUID = 4596378123715515824L;

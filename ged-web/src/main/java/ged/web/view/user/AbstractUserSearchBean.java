@@ -21,7 +21,7 @@ abstract class AbstractUserSearchBean extends AbstractPageBean {
 
 	private String name;
 
-	private Paginator<User> paginator;
+	protected Paginator<User> paginator;
 
 	private String surename;
 

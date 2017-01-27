@@ -22,7 +22,7 @@ public abstract class AbstractCandidateSearchBean extends AbstractPageBean {
 
 	private String name;
 
-	private Paginator<Candidate> paginator;
+	protected Paginator<Candidate> paginator;
 
 	private String position;
 

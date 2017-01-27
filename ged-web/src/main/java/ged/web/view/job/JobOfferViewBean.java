@@ -130,6 +130,11 @@ public class JobOfferViewBean extends AbstractPageBean {
 		this.conductedJobMeetings = null;
 	}
 
+	public void removeCandidate(final Candidate candidate) {
+		this.candidates.remove(candidate);
+		this.jobService.removeJobCandidature(this.jobOffer, candidate);
+	}
+
 	public void setCandidate(final Candidate candidate) {
 		Objects.requireNonNull(candidate);
 		if (this.candidates.contains(candidate)) {

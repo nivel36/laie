@@ -27,7 +27,7 @@ public class ActionDaoJpa extends AbstractDao<Long, Action> implements ActionDao
 	@Override
 	public List<Action> findAllByUser(final User user) {
 		Objects.requireNonNull(user);
-		logger.log(Level.FINE, "Find all actions of the user {}", user.getFullName());
+		logger.log(Level.FINE, "Find all actions of the user {0}", user.getFullName());
 		final Map<String, Object> parameters = new HashMap<>();
 		parameters.put("user", user);
 		return findByTypedQuery(Action.class, "Action.findAllByUser", parameters, 10, 0);

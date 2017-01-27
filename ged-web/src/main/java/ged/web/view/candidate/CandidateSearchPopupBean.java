@@ -2,11 +2,13 @@ package ged.web.view.candidate;
 
 import java.util.logging.Logger;
 
+import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import ged.ejb.candidate.CandidateService;
+import ged.web.core.view.Paginator;
 
 @Named
 @ViewScoped
@@ -30,6 +32,15 @@ public class CandidateSearchPopupBean extends AbstractCandidateSearchBean {
 	public void hide() {
 		clean();
 		this.rendered = false;
+	}
+
+	@Override
+	@PostConstruct
+	public void init() {
+		this.paginator = new Paginator<>(this.sessionBean.getRowsPerPage());
+		if (isRendered()) {
+			search();
+		}
 	}
 
 	public boolean isRendered() {

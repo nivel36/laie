@@ -51,9 +51,9 @@ public class UserServiceImpl extends AbstratctAuditedService<Long, User> impleme
 		Objects.requireNonNull(email);
 		final boolean emailExists = this.userDao.emailExists(email);
 		if (emailExists) {
-			logger.log(Level.FINE, "The email {} exists on database", email);
+			logger.log(Level.FINE, "The email {0} exists on database", email);
 		} else {
-			logger.log(Level.FINE, "The email {} doesn't exists on database", email);
+			logger.log(Level.FINE, "The email {0} doesn't exists on database", email);
 		}
 		return emailExists;
 	}
@@ -64,14 +64,14 @@ public class UserServiceImpl extends AbstratctAuditedService<Long, User> impleme
 		if (id < 1) {
 			throw new IllegalArgumentException("id: " + id);
 		}
-		logger.log(Level.FINE, "FIND subordinate users by id {}", id);
+		logger.log(Level.FINE, "FIND subordinate users by id {0}", id);
 		return this.userDao.findSubordinateUsers(id);
 	}
 
 	@Override
 	public User findUserByUsername(final String username) {
 		Objects.requireNonNull(username);
-		logger.log(Level.FINE, "FIND user by username {}", username);
+		logger.log(Level.FINE, "FIND user by username {0}", username);
 		return this.userDao.findUserByUsername(username);
 	}
 
@@ -82,7 +82,7 @@ public class UserServiceImpl extends AbstratctAuditedService<Long, User> impleme
 
 	@Override
 	public List<User> searchByNameAndSurename(final String name, final String surename) {
-		logger.log(Level.FINE, "SEARCH user by name {} and surename {}", new Object[] { name, surename });
+		logger.log(Level.FINE, "SEARCH user by name {0} and surename {1}", new Object[] { name, surename });
 		return this.userDao.searchByNameAndSurename(name, surename, false);
 	}
 
@@ -91,9 +91,9 @@ public class UserServiceImpl extends AbstratctAuditedService<Long, User> impleme
 		Objects.requireNonNull(username);
 		final boolean usernameExists = this.userDao.usernameExists(username);
 		if (usernameExists) {
-			logger.log(Level.FINE, "The username {} exists on database", username);
+			logger.log(Level.FINE, "The username {0} exists on database", username);
 		} else {
-			logger.log(Level.FINE, "The username {} doesn't exists on database", username);
+			logger.log(Level.FINE, "The username {0} doesn't exists on database", username);
 		}
 		return usernameExists;
 	}

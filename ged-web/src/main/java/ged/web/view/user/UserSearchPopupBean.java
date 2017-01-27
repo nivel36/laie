@@ -1,12 +1,15 @@
 package ged.web.view.user;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import ged.ejb.user.UserService;
+import ged.web.core.view.Paginator;
 
 @Named
 @ViewScoped
@@ -30,6 +33,16 @@ public class UserSearchPopupBean extends AbstractUserSearchBean {
 	public void hide() {
 		cleanSearchFields();
 		this.rendered = false;
+	}
+
+	@Override
+	@PostConstruct
+	public void init() {
+		logger.log(Level.FINER, "Init UserSearchBean");
+		this.paginator = new Paginator<>(this.sessionBean.getRowsPerPage());
+		if (isRendered()) {
+			search();
+		}
 	}
 
 	public boolean isRendered() {

@@ -51,7 +51,7 @@ public class ClientDaoJpa extends AbstractDao<Long, Client> implements ClientDao
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public List<Client> searchByName(final String clientName, final boolean showDeleted) {
-		this.logger.log(Level.FINE, "SEARCH client by name {} ", clientName);
+		this.logger.log(Level.FINE, "SEARCH client by name {0} ", clientName);
 		final FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(getEm());
 		final QueryBuilder qb = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(Client.class)
 				.get();

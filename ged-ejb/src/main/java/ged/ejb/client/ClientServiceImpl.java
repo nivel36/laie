@@ -33,7 +33,7 @@ public class ClientServiceImpl extends AbstratctAuditedService<Long, Client> imp
 	@Override
 	public Client findByName(final String clientName) {
 		Objects.requireNonNull(clientName, "El nombre del cliente no puede ser nulo");
-		ClientServiceImpl.logger.log(Level.FINE, "Buscando cliente con nombre {}", clientName);
+		ClientServiceImpl.logger.log(Level.FINE, "Buscando cliente con nombre {0}", clientName);
 		return this.clientDao.findByName(clientName);
 	}
 
@@ -44,7 +44,7 @@ public class ClientServiceImpl extends AbstratctAuditedService<Long, Client> imp
 
 	@Override
 	public List<Client> searchByName(final String clientName) {
-		logger.log(Level.FINE, "Buscando clientes con nombre {}", clientName);
+		logger.log(Level.FINE, "Buscando clientes con nombre {0}", clientName);
 		return this.clientDao.searchByName(clientName, false);
 	}
 }

@@ -34,7 +34,7 @@ public class CandidateDaoJpa extends AbstractDao<Long, Candidate> implements Can
 	@Override
 	public List<Candidate> findAllByJobOffer(final JobOffer jobOffer) {
 		Objects.requireNonNull(jobOffer);
-		this.logger.log(Level.FINE, "Buscando al candidateo con jobOffer {}", jobOffer.getId());
+		this.logger.log(Level.FINE, "Buscando al candidateo con jobOffer {0}", jobOffer.getId());
 		final Map<String, Object> properties = new HashMap<>();
 		properties.put("jobOffer", jobOffer);
 		return findByTypedQuery(Candidate.class, "Candidate.findAllByJobOffer", properties, 0, 0);
@@ -51,7 +51,7 @@ public class CandidateDaoJpa extends AbstractDao<Long, Candidate> implements Can
 		if (id < 1) {
 			throw new IllegalArgumentException("id: " + id);
 		}
-		this.logger.log(Level.FINE, "Buscando al candidateo con id {}", id);
+		this.logger.log(Level.FINE, "Buscando al candidateo con id {0}", id);
 		final Map<String, Object> properties = new HashMap<>();
 		properties.put("id", id);
 		return findByTypedQuery(Candidate.class, "Candidate.findCandidateAndFilesById", properties);

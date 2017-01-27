@@ -80,13 +80,13 @@
 				</h:panelGroup>
 			</h:panelGroup>
 
-			<h:panelGroup layout="block" styleClass="panel">
+			<h:panelGroup layout="block" styleClass="panel" id="candidates">
 				<h1>#{i18n['candidate.candidates']}</h1>
 
 				<h:panelGroup layout="block">
 					<h:outputText value="#{i18n['job_meeting.no_candidates']}" rendered="#{empty jobOfferViewBean.candidates}" />
 
-					<h:dataTable var="candidate" id="candidates" value="#{jobOfferViewBean.candidates}"
+					<h:dataTable var="candidate" value="#{jobOfferViewBean.candidates}"
 						rendered="#{not empty jobOfferViewBean.candidates}" styleClass="dataTable">
 
 						<h:column>
@@ -95,7 +95,19 @@
 							</f:facet>
 							<h:outputText value="#{candidate}" />
 						</h:column>
-
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="Action" />
+							</f:facet>
+							<h:link value="#{i18n['action.view']}" outcome="/faces/candidate/candidateView">
+								<f:param name="id" value="#{candidate.id}" />
+							</h:link>
+						|
+						<h:commandLink action="#{jobOfferViewBean.removeCandidate(candidate)}" value="#{i18n['action.remove']}"
+								onclick="return confirm('#{i18n['action.delete.are_you_sure']}')">
+								<f:ajax execute="@this" render=":form:candidates :asideForm:actions" />
+							</h:commandLink>
+						</h:column>
 					</h:dataTable>
 
 					<h:panelGroup layout="block" styleClass="buttonGroup">

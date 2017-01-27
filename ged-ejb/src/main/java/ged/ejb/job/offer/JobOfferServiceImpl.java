@@ -51,19 +51,19 @@ public class JobOfferServiceImpl extends AbstratctAuditedService<Long, JobOffer>
 
 	@Override
 	public List<JobOffer> findAllByClient(final Client client) {
-		logger.log(Level.FINE, "Find all job Offers of the client {}", client.getName());
+		logger.log(Level.FINE, "Find all job Offers of the client {0}", client.getName());
 		return this.jobOfferDao.findAllByClient(client);
 	}
 
 	@Override
 	public List<JobOffer> findAllByOwner(final User owner) {
-		logger.log(Level.FINE, "Find all job Offers of the owner {}", owner.getFullName());
+		logger.log(Level.FINE, "Find all job Offers of the owner {0}", owner.getFullName());
 		return this.jobOfferDao.findAllByOwner(owner);
 	}
 
 	@Override
 	public List<JobOffer> findLastJobOffers(final User owner) {
-		logger.log(Level.FINE, "Find last job Offers of the owner {}", owner.getFullName());
+		logger.log(Level.FINE, "Find last job Offers of the owner {0}", owner.getFullName());
 		return this.jobOfferDao.findLastJobOffers(owner);
 	}
 
@@ -84,6 +84,16 @@ public class JobOfferServiceImpl extends AbstratctAuditedService<Long, JobOffer>
 	}
 
 	@Override
+	public void removeJobCandidature(final JobOffer jobOffer, final Candidate candidate) {
+		Objects.requireNonNull(jobOffer);
+		Objects.requireNonNull(candidate);
+		final JobCandidature jobCandidature = this.jobCandidatureDao.findByJobOfferAndCandidate(jobOffer, candidate);
+		this.jobCandidatureDao.delete(jobCandidature);
+		final List<JobCandidature> candidatures = this.jobCandidatureDao.findAll();
+		final int s = candidatures.size();
+	}
+
+	@Override
 	@Audited(action = Type.PERSIST)
 	public JobOffer save(final JobOffer jobOffer) {
 		putClientOnJobOffer(jobOffer);
@@ -93,7 +103,7 @@ public class JobOfferServiceImpl extends AbstratctAuditedService<Long, JobOffer>
 
 	@Override
 	public List<JobOffer> searchByNameAndClient(final String name, final String clientName, final Boolean showDeleted) {
-		logger.log(Level.FINE, "Search all job Offers by name {} and client name {}",
+		logger.log(Level.FINE, "Search all job Offers by name {0} and client name {1}",
 				new Object[] { name, clientName });
 		return this.jobOfferDao.searchByNameAndClient(name, clientName, showDeleted);
 	}

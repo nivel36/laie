@@ -30,7 +30,7 @@ public class CandidateServiceImpl extends AbstratctAuditedService<Long, Candidat
 	@Override
 	public List<Candidate> findAllByJobOffer(final JobOffer jobOffer) {
 		Objects.requireNonNull(jobOffer);
-		logger.log(Level.FINE, "Search candidates by jobOffer {} ", jobOffer.getId());
+		logger.log(Level.FINE, "Search candidates by jobOffer {0} ", jobOffer.getId());
 		return this.candidateDao.findAllByJobOffer(jobOffer);
 	}
 
@@ -46,7 +46,7 @@ public class CandidateServiceImpl extends AbstratctAuditedService<Long, Candidat
 		if (id < 1) {
 			throw new IllegalArgumentException("id: " + id);
 		}
-		logger.log(Level.FINE, "Find candidate with id {} and his files", id);
+		logger.log(Level.FINE, "Find candidate with id {0} and his files", id);
 		return this.candidateDao.findCandidateAndFiles(id);
 	}
 
@@ -57,14 +57,14 @@ public class CandidateServiceImpl extends AbstratctAuditedService<Long, Candidat
 
 	@Override
 	public List<Candidate> search(final String name, final String surename, final String position) {
-		logger.log(Level.FINE, "Search candidate by name {} and surename {}", new Object[] { name, surename });
+		logger.log(Level.FINE, "Search candidate by name {0} and surename {1}", new Object[] { name, surename });
 		return this.candidateDao.searchByNameAndSurename(name, surename, position, null);
 	}
 
 	@Override
 	public List<Candidate> searchByNameAndSurename(final String name, final String surename, final String position,
 			final Boolean showDeleted) {
-		logger.log(Level.FINE, "Search candidate by name {} and surename {}. Show deleteted {}",
+		logger.log(Level.FINE, "Search candidate by name {0} and surename {1}. Show deleteted {2}",
 				new Object[] { name, surename, showDeleted });
 		return this.candidateDao.searchByNameAndSurename(name, surename, position, showDeleted);
 	}

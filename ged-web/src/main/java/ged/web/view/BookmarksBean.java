@@ -36,11 +36,11 @@ public class BookmarksBean extends AbstractPageBean {
 	}
 
 	public void add(final AuditedEntity<Long> entity) {
-		BookmarksBean.logger.log(Level.FINE, "Adding bookmark {} for user {}",
+		BookmarksBean.logger.log(Level.FINE, "Adding bookmark {0} for user {1}",
 				new Object[] { entity, this.sessionBean.getUser().getUsername() });
 		final Bookmark bookmark = createBookmark(entity);
 		if (this.bookmarks.size() > 9) {
-			BookmarksBean.logger.log(Level.WARNING, "Bookmark full for user {}",
+			BookmarksBean.logger.log(Level.WARNING, "Bookmark full for user {0}",
 					this.sessionBean.getUser().getUsername());
 			MessageUtils.addErrorMessage("Bookmark full", "Bookmark full");
 			return;

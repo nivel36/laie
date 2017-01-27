@@ -43,7 +43,7 @@ public class CurriculumServiceImpl extends AbstractService<Long, Curriculum> imp
 		if (id < 1) {
 			throw new IllegalArgumentException("id: " + id);
 		}
-		logger.log(Level.FINE, "Find curriculum by candidate id {}", id);
+		logger.log(Level.FINE, "Find curriculum by candidate id {0}", id);
 		return this.curriculumDao.findByCandidateId(id);
 	}
 

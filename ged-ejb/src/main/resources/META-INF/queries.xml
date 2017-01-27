@@ -78,6 +78,15 @@
 			WHERE c.candidate.id = :candidateId
 		]]></query>
 	</named-query>
+	
+	<named-query name="JobCandidature.findByJobOfferAndCandidate">
+		<query><![CDATA[
+			SELECT j 
+			FROM JobCandidature j 
+			WHERE j.candidate = :candidate 
+			AND j.jobOffer = :jobOffer
+		]]></query>
+	</named-query>
 
 	<named-query name="JobOffer.findAllByClient">
 		<query><![CDATA[

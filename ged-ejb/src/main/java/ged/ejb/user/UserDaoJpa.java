@@ -64,7 +64,7 @@ public final class UserDaoJpa extends AbstractDao<Long, User> implements UserDao
 		if (id < 1) {
 			throw new IllegalArgumentException("id: " + id);
 		}
-		logger.log(Level.FINE, "Find subordinate users of user with id {}", id);
+		logger.log(Level.FINE, "Find subordinate users of user with id {0}", id);
 		final Map<String, Object> parameters = new HashMap<>(1);
 		parameters.put("id", id);
 		return findByTypedQuery(User.class, "User.findSubordinateUsers", parameters, 0, 0);
@@ -73,7 +73,7 @@ public final class UserDaoJpa extends AbstractDao<Long, User> implements UserDao
 	@Override
 	public User findUserByUsername(final String username) {
 		Objects.requireNonNull(username);
-		logger.log(Level.FINE, "Finding user with username {}", username);
+		logger.log(Level.FINE, "Finding user with username {0}", username);
 		final Map<String, Object> parameters = new HashMap<>();
 		parameters.put("username", username);
 		return findByTypedQuery(User.class, "User.findByUsername", parameters);
@@ -87,7 +87,7 @@ public final class UserDaoJpa extends AbstractDao<Long, User> implements UserDao
 	@Override
 	public void insert(final User user) {
 		Objects.requireNonNull(user);
-		logger.log(Level.FINE, "Insert user {}", user.getFullName());
+		logger.log(Level.FINE, "Insert user {0}", user.getFullName());
 		getEm().persist(user);
 		if (user.getManager() != null) {
 			insertUserClosures(user);
@@ -95,7 +95,7 @@ public final class UserDaoJpa extends AbstractDao<Long, User> implements UserDao
 	}
 
 	private void insertUserClosure(final User antecessor, final User descendant, final int pathLength) {
-		logger.log(Level.FINER, "Insert in user closure table. Antecessor {}, descendant {}, pathLength {}",
+		logger.log(Level.FINER, "Insert in user closure table. Antecessor {0}, descendant {1}, pathLength {2}",
 				new Object[] { antecessor, descendant, pathLength });
 		final UserClosure newUserClosure = new UserClosure();
 		newUserClosure.setAntecessor(antecessor);
@@ -105,7 +105,7 @@ public final class UserDaoJpa extends AbstractDao<Long, User> implements UserDao
 	}
 
 	private void insertUserClosures(final User user) {
-		logger.log(Level.FINER, "Insert user closures for user {}", user);
+		logger.log(Level.FINER, "Insert user closures for user {0}", user);
 		final List<UserClosure> userClosures = findAntecessorsUserClosures(user.getManager());
 		for (final UserClosure userClosure : userClosures) {
 			insertUserClosure(userClosure.getAntecessor(), user, userClosure.getPathLength() + 1);
@@ -116,7 +116,7 @@ public final class UserDaoJpa extends AbstractDao<Long, User> implements UserDao
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public List<User> searchByNameAndSurename(final String name, final String surename, final boolean showDeleted) {
-		logger.log(Level.FINE, "SEARCH user by name {} and surename {}", new Object[] { name, surename });
+		logger.log(Level.FINE, "SEARCH user by name {0} and surename {1}", new Object[] { name, surename });
 		final FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(getEm());
 		final QueryBuilder qb = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(User.class)
 				.get();
@@ -142,7 +142,7 @@ public final class UserDaoJpa extends AbstractDao<Long, User> implements UserDao
 	@Override
 	public Boolean usernameExists(final String username) {
 		Objects.requireNonNull(username);
-		UserDaoJpa.logger.log(Level.FINE, "Username {} exists?", username);
+		UserDaoJpa.logger.log(Level.FINE, "Username {0} exists?", username);
 		final Map<String, Object> parameters = new HashMap<>(1);
 		parameters.put("username", username);
 		return findByTypedQuery(Boolean.class, "User.usernameExists", parameters);
