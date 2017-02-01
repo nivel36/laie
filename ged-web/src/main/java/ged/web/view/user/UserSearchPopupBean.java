@@ -1,7 +1,7 @@
 package ged.web.view.user;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -15,7 +15,7 @@ import ged.web.core.view.Paginator;
 @ViewScoped
 public class UserSearchPopupBean extends AbstractUserSearchBean {
 
-	public static final transient Logger logger = Logger.getLogger(UserSearchPopupBean.class.getName());
+	public static final transient Logger logger = LoggerFactory.getLogger(UserSearchPopupBean.class.getName());
 
 	private static final long serialVersionUID = 9150785979243375541L;
 
@@ -38,7 +38,7 @@ public class UserSearchPopupBean extends AbstractUserSearchBean {
 	@Override
 	@PostConstruct
 	public void init() {
-		logger.log(Level.FINER, "Init UserSearchBean");
+		logger.trace( "Init UserSearchBean");
 		this.paginator = new Paginator<>(this.sessionBean.getRowsPerPage());
 		if (isRendered()) {
 			search();

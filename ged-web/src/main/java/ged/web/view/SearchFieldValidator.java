@@ -2,7 +2,6 @@ package ged.web.view;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
-import java.util.logging.Logger;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
@@ -11,6 +10,8 @@ import javax.faces.validator.FacesValidator;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 import javax.inject.Inject;
+
+import org.slf4j.Logger;
 
 @FacesValidator("ged.web.view.SearchFieldValidator")
 public class SearchFieldValidator implements Validator {
@@ -37,8 +38,8 @@ public class SearchFieldValidator implements Validator {
 	public void validate(final FacesContext context, final UIComponent component, final Object value)
 			throws ValidatorException {
 		final String searchValue = (String) value;
-		if ((searchValue != null) && (searchValue.length() < 3)) {
-			this.logger.warning("Search value is too short");
+		if (searchValue != null && searchValue.length() < 3) {
+			this.logger.warn("Search value is too short");
 			final String translatedMessage = translate("error.search.camp_too_short");
 			final FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, translatedMessage,
 					translatedMessage);

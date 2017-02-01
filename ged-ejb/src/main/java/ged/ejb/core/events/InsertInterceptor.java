@@ -1,13 +1,15 @@
 package ged.ejb.core.events;
 
 import java.util.Objects;
-import java.util.logging.Logger;
 
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import ged.ejb.core.events.Audited.Type;
 import ged.ejb.core.model.AuditedEntity;
@@ -16,7 +18,7 @@ import ged.ejb.core.model.AuditedEntity;
 @Audited(action = Type.PERSIST)
 public class InsertInterceptor extends AbstractInterceptor {
 
-	private static final Logger log = Logger.getLogger(InsertInterceptor.class.getName());
+	private static final Logger log = LoggerFactory.getLogger(InsertInterceptor.class.getName());
 
 	private final Event<AuditedEntity<Long>> postPersistEvent;
 
@@ -34,7 +36,7 @@ public class InsertInterceptor extends AbstractInterceptor {
 	@AroundInvoke
 	public Object fireEvent(final InvocationContext joinPoint) throws Exception {
 		final AuditedEntity<Long> auditedEntity = getAuditedEntity(joinPoint);
-		log.finer("Insert event fired");
+		log.trace("Insert event fired");
 		this.prePersistEvent.fire(auditedEntity);
 		final Object returnObject = joinPoint.proceed();
 		this.postPersistEvent.fire(auditedEntity);

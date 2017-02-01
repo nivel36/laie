@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -15,6 +13,8 @@ import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.jpa.Search;
 import org.hibernate.search.query.dsl.BooleanJunction;
 import org.hibernate.search.query.dsl.QueryBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import ged.ejb.core.FileType;
 import ged.ejb.core.model.AbstractDao;
@@ -24,7 +24,7 @@ import ged.ejb.job.offer.JobOffer;
 @Repository
 public class CandidateDaoJpa extends AbstractDao<Long, Candidate> implements CandidateDao {
 
-	private final Logger logger = Logger.getLogger(CandidateDaoJpa.class.getName());
+	private final Logger logger = LoggerFactory.getLogger(CandidateDaoJpa.class.getName());
 
 	@Inject
 	public CandidateDaoJpa(final EntityManager entityManager) {
@@ -34,7 +34,7 @@ public class CandidateDaoJpa extends AbstractDao<Long, Candidate> implements Can
 	@Override
 	public List<Candidate> findAllByJobOffer(final JobOffer jobOffer) {
 		Objects.requireNonNull(jobOffer);
-		this.logger.log(Level.FINE, "Buscando al candidateo con jobOffer {0}", jobOffer.getId());
+		this.logger.debug("Buscando al candidateo con jobOffer {}", jobOffer.getId());
 		final Map<String, Object> properties = new HashMap<>();
 		properties.put("jobOffer", jobOffer);
 		return findByTypedQuery(Candidate.class, "Candidate.findAllByJobOffer", properties, 0, 0);
@@ -51,7 +51,7 @@ public class CandidateDaoJpa extends AbstractDao<Long, Candidate> implements Can
 		if (id < 1) {
 			throw new IllegalArgumentException("id: " + id);
 		}
-		this.logger.log(Level.FINE, "Buscando al candidateo con id {0}", id);
+		this.logger.debug("Buscando al candidateo con id {}", id);
 		final Map<String, Object> properties = new HashMap<>();
 		properties.put("id", id);
 		return findByTypedQuery(Candidate.class, "Candidate.findCandidateAndFilesById", properties);

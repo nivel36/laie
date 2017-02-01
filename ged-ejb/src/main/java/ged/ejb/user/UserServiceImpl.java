@@ -2,11 +2,12 @@ package ged.ejb.user;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import ged.ejb.core.AbstratctAuditedService;
 import ged.ejb.core.model.Dao;
@@ -15,7 +16,7 @@ import ged.ejb.core.model.Repository;
 @Stateless
 public class UserServiceImpl extends AbstratctAuditedService<Long, User> implements UserService {
 
-	private static final Logger logger = Logger.getLogger(UserServiceImpl.class.getName());
+	private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class.getName());
 
 	private final UserDao userDao;
 
@@ -27,9 +28,9 @@ public class UserServiceImpl extends AbstratctAuditedService<Long, User> impleme
 
 	@Override
 	protected void doInsert(final User user) {
-		logger.log(Level.FINE, "INSERT user {0}", user.getFullName());
+		logger.debug("INSERT user {}", user.getFullName());
 		if (user.equals(user.getManager())) {
-			logger.log(Level.WARNING, "The user {0} can't be his/her manager", user.getFullName());
+			logger.warn("The user {} can't be his/her manager", user.getFullName());
 			throw new IllegalStateException("User can't be his/her manager");
 		}
 		this.userDao.insert(user);
@@ -38,10 +39,10 @@ public class UserServiceImpl extends AbstratctAuditedService<Long, User> impleme
 	@Override
 	protected User doUpdate(final User user) {
 		if (!user.hasRole("ADMIN") || this.userDao.existsMoreThanOneAdmin()) {
-			logger.log(Level.FINE, "UPDATE user {0}", user.getFullName());
+			logger.debug("UPDATE user {}", user.getFullName());
 			return this.userDao.update(user);
 		} else {
-			logger.log(Level.WARNING, "Can't delete user. Last Admin on app");
+			logger.warn("Can't delete user. Last Admin on app");
 			throw new UserException("Can't delete user. Last Admin on app");
 		}
 	}
@@ -51,9 +52,9 @@ public class UserServiceImpl extends AbstratctAuditedService<Long, User> impleme
 		Objects.requireNonNull(email);
 		final boolean emailExists = this.userDao.emailExists(email);
 		if (emailExists) {
-			logger.log(Level.FINE, "The email {0} exists on database", email);
+			logger.debug("The email {} exists on database", email);
 		} else {
-			logger.log(Level.FINE, "The email {0} doesn't exists on database", email);
+			logger.debug("The email {} doesn't exists on database", email);
 		}
 		return emailExists;
 	}
@@ -64,14 +65,14 @@ public class UserServiceImpl extends AbstratctAuditedService<Long, User> impleme
 		if (id < 1) {
 			throw new IllegalArgumentException("id: " + id);
 		}
-		logger.log(Level.FINE, "FIND subordinate users by id {0}", id);
+		logger.debug("FIND subordinate users by id {}", id);
 		return this.userDao.findSubordinateUsers(id);
 	}
 
 	@Override
 	public User findUserByUsername(final String username) {
 		Objects.requireNonNull(username);
-		logger.log(Level.FINE, "FIND user by username {0}", username);
+		logger.debug("FIND user by username {}", username);
 		return this.userDao.findUserByUsername(username);
 	}
 
@@ -82,7 +83,7 @@ public class UserServiceImpl extends AbstratctAuditedService<Long, User> impleme
 
 	@Override
 	public List<User> searchByNameAndSurename(final String name, final String surename) {
-		logger.log(Level.FINE, "SEARCH user by name {0} and surename {1}", new Object[] { name, surename });
+		logger.debug("SEARCH user by name {} and surename {}", new Object[] { name, surename });
 		return this.userDao.searchByNameAndSurename(name, surename, false);
 	}
 
@@ -91,9 +92,9 @@ public class UserServiceImpl extends AbstratctAuditedService<Long, User> impleme
 		Objects.requireNonNull(username);
 		final boolean usernameExists = this.userDao.usernameExists(username);
 		if (usernameExists) {
-			logger.log(Level.FINE, "The username {0} exists on database", username);
+			logger.debug("The username {} exists on database", username);
 		} else {
-			logger.log(Level.FINE, "The username {0} doesn't exists on database", username);
+			logger.debug("The username {} doesn't exists on database", username);
 		}
 		return usernameExists;
 	}

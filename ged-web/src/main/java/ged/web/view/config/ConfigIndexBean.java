@@ -2,12 +2,14 @@ package ged.web.view.config;
 
 import java.util.Locale;
 import java.util.Objects;
-import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
@@ -17,7 +19,7 @@ import ged.web.core.view.AbstractPageBean;
 @ViewScoped
 public final class ConfigIndexBean extends AbstractPageBean {
 
-	private static final Logger logger = Logger.getLogger(ConfigIndexBean.class.getName());
+	private static final Logger logger = LoggerFactory.getLogger(ConfigIndexBean.class.getName());
 
 	private static final long serialVersionUID = -2789492893353263506L;
 
@@ -43,12 +45,12 @@ public final class ConfigIndexBean extends AbstractPageBean {
 
 	@PostConstruct
 	public void init() {
-		logger.finest("Init ConfigIndexBean");
+		logger.trace("Init ConfigIndexBean");
 		this.user = this.sessionBean.getUser();
 	}
 
 	public void save() {
-		logger.fine("Save user action performed");
+		logger.debug("Save user action performed");
 		final Long userId = this.user.getId();
 		if (userId != null && userId.equals(this.sessionBean.getUser().getId())) {
 			changeSessionUser();

@@ -2,8 +2,8 @@ package ged.web.view.user;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -15,7 +15,7 @@ import ged.web.core.view.Paginator;
 
 abstract class AbstractUserSearchBean extends AbstractPageBean {
 
-	private final transient static Logger logger = Logger.getLogger(AbstractPageBean.class.getName());
+	private final transient static Logger logger = LoggerFactory.getLogger(AbstractPageBean.class.getName());
 
 	private static final long serialVersionUID = 3522778618602713805L;
 
@@ -34,7 +34,7 @@ abstract class AbstractUserSearchBean extends AbstractPageBean {
 	}
 
 	public void clean() {
-		logger.log(Level.FINE, "Cleaning search fields");
+		logger.debug( "Cleaning search fields");
 		cleanSearchFields();
 		search();
 	}
@@ -58,13 +58,13 @@ abstract class AbstractUserSearchBean extends AbstractPageBean {
 
 	@PostConstruct
 	public void init() {
-		logger.log(Level.FINER, "Init UserSearchBean");
+		logger.trace( "Init UserSearchBean");
 		this.paginator = new Paginator<>(this.sessionBean.getRowsPerPage());
 		search();
 	}
 
 	public void search() {
-		logger.fine("Searching for users");
+		logger.debug("Searching for users");
 		final List<User> users;
 		if (this.name == null && this.surename == null) {
 			users = this.userService.findAll();

@@ -116,35 +116,9 @@ public class Candidate extends AbstractAuditedEntity {
 			return false;
 		}
 		final Candidate other = (Candidate) obj;
-		if (this.email == null) {
-			if (other.email != null) {
-				return false;
-			}
-		} else if (!this.email.equals(other.email)) {
-			return false;
-		}
-		if (this.name == null) {
-			if (other.name != null) {
-				return false;
-			}
-		} else if (!this.name.equals(other.name)) {
-			return false;
-		}
-		if (this.phoneNumber == null) {
-			if (other.phoneNumber != null) {
-				return false;
-			}
-		} else if (!this.phoneNumber.equals(other.phoneNumber)) {
-			return false;
-		}
-		if (this.surename == null) {
-			if (other.surename != null) {
-				return false;
-			}
-		} else if (!this.surename.equals(other.surename)) {
-			return false;
-		}
-		return true;
+		return Objects.equals(this.email, other.email) && Objects.equals(this.name, other.name)
+				&& Objects.equals(this.phoneNumber, other.phoneNumber) && Objects.equals(this.surename, other.surename);
+
 	}
 
 	public Address getAddress() {
@@ -217,13 +191,7 @@ public class Candidate extends AbstractAuditedEntity {
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result + (this.email == null ? 0 : this.email.hashCode());
-		result = prime * result + (this.name == null ? 0 : this.name.hashCode());
-		result = prime * result + (this.phoneNumber == null ? 0 : this.phoneNumber.hashCode());
-		result = prime * result + (this.surename == null ? 0 : this.surename.hashCode());
-		return result;
+		return Objects.hash(this.email, this.name, this.phoneNumber, this.surename);
 	}
 
 	public void setAddress(final Address address) {

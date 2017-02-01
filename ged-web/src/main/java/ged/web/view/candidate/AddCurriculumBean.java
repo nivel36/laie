@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -31,7 +31,7 @@ import ged.web.core.view.AbstractPageBean;
 @ViewScoped
 public class AddCurriculumBean extends AbstractPageBean {
 
-	private static final transient Logger logger = Logger.getLogger(AddCurriculumBean.class.getName());
+	private static final transient Logger logger = LoggerFactory.getLogger(AddCurriculumBean.class.getName());
 
 	private static final long serialVersionUID = 2700151546506672587L;
 
@@ -111,7 +111,7 @@ public class AddCurriculumBean extends AbstractPageBean {
 			final PDFTextStripper stripper = new PDFTextStripper();
 			this.text = stripper.getText(pdf);
 		} catch (final IOException e) {
-			AddCurriculumBean.logger.log(Level.SEVERE, "Can't open file", e);
+			AddCurriculumBean.logger.error( "Can't open file", e);
 			MessageUtils.addErrorMessage("error.unnexpected_error", "error.unnexpected_error");
 		}
 	}

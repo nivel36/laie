@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -17,7 +17,7 @@ import ged.ejb.user.User;
 @Repository
 public class BookmarkDaoJpa extends AbstractDao<Long, Bookmark> implements BookmarkDao {
 
-	private static final Logger logger = Logger.getLogger(BookmarkDaoJpa.class.getName());
+	private static final Logger logger = LoggerFactory.getLogger(BookmarkDaoJpa.class.getName());
 
 	@Inject
 	public BookmarkDaoJpa(final EntityManager entityManager) {
@@ -44,7 +44,7 @@ public class BookmarkDaoJpa extends AbstractDao<Long, Bookmark> implements Bookm
 	@Override
 	public List<Bookmark> findAllByUser(final User user) {
 		Objects.requireNonNull(user);
-		logger.log(Level.FINE, "Buscando todos los Bookmarks del usuario ", user.getFullName());
+		logger.debug( "Buscando todos los Bookmarks del usuario ", user.getFullName());
 		final Map<String, Object> parameters = new HashMap<>();
 		parameters.put("user", user);
 		return findByTypedQuery(getType(), "Bookmark.findAllByUser", parameters, 0, 0);

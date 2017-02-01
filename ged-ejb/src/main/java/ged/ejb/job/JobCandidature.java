@@ -1,6 +1,7 @@
 package ged.ejb.job;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -55,21 +56,7 @@ public class JobCandidature extends AbstractAuditedEntity {
 			return false;
 		}
 		final JobCandidature other = (JobCandidature) obj;
-		if (this.candidate == null) {
-			if (other.candidate != null) {
-				return false;
-			}
-		} else if (!this.candidate.equals(other.candidate)) {
-			return false;
-		}
-		if (this.jobOffer == null) {
-			if (other.jobOffer != null) {
-				return false;
-			}
-		} else if (!this.jobOffer.equals(other.jobOffer)) {
-			return false;
-		}
-		return true;
+		return Objects.equals(this.candidate, other.candidate) && Objects.equals(this.jobOffer, other.jobOffer);
 	}
 
 	public Candidate getCandidate() {
@@ -86,11 +73,7 @@ public class JobCandidature extends AbstractAuditedEntity {
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + (this.candidate == null ? 0 : this.candidate.hashCode());
-		result = prime * result + (this.jobOffer == null ? 0 : this.jobOffer.hashCode());
-		return result;
+		return Objects.hash(this.candidate, this.jobOffer);
 	}
 
 	public void setCandidate(final Candidate candidate) {

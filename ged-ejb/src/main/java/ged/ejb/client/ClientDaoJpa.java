@@ -3,8 +3,8 @@ package ged.ejb.client;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -22,7 +22,7 @@ import ged.ejb.core.model.Repository;
 @Repository
 public class ClientDaoJpa extends AbstractDao<Long, Client> implements ClientDao {
 
-	private final Logger logger = Logger.getLogger(ClientDaoJpa.class.getName());
+	private final Logger logger = LoggerFactory.getLogger(ClientDaoJpa.class.getName());
 
 	@Inject
 	public ClientDaoJpa(final EntityManager entityManager) {
@@ -37,7 +37,7 @@ public class ClientDaoJpa extends AbstractDao<Long, Client> implements ClientDao
 		try {
 			client = findByTypedQuery(Client.class, "Client.findByName", parameters);
 		} catch (final NoResultException e) {
-			this.logger.log(Level.FINE, "No client found with that name", e);
+			this.logger.debug( "No client found with that name", e);
 			client = null;
 		}
 		return client;
@@ -51,7 +51,7 @@ public class ClientDaoJpa extends AbstractDao<Long, Client> implements ClientDao
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public List<Client> searchByName(final String clientName, final boolean showDeleted) {
-		this.logger.log(Level.FINE, "SEARCH client by name {0} ", clientName);
+		this.logger.debug( "SEARCH client by name {} ", clientName);
 		final FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(getEm());
 		final QueryBuilder qb = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(Client.class)
 				.get();

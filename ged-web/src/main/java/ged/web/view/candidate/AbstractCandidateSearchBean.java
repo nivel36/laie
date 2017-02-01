@@ -2,10 +2,12 @@ package ged.web.view.candidate;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import ged.ejb.candidate.Candidate;
 import ged.ejb.candidate.CandidateService;
@@ -14,7 +16,7 @@ import ged.web.core.view.Paginator;
 
 public abstract class AbstractCandidateSearchBean extends AbstractPageBean {
 
-	private static final transient Logger logger = Logger.getLogger(AbstractCandidateSearchBean.class.getName());
+	private static final transient Logger logger = LoggerFactory.getLogger(AbstractCandidateSearchBean.class.getName());
 
 	private static final long serialVersionUID = -5446836478526189391L;
 
@@ -80,7 +82,7 @@ public abstract class AbstractCandidateSearchBean extends AbstractPageBean {
 	}
 
 	public void search() {
-		logger.fine("Searching for candidates");
+		logger.debug("Searching for candidates");
 		final List<Candidate> candidates = this.candidateService.search(this.name, this.surename, this.position);
 		this.paginator.setEntities(candidates);
 	}

@@ -2,8 +2,8 @@ package ged.web.core.util;
 
 import java.io.IOException;
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
@@ -34,7 +34,7 @@ public class WebResources {
 		try {
 			this.properties.load(cl.getResourceAsStream("/ged/config.properties"));
 		} catch (final IOException e) {
-			this.logger.log(Level.SEVERE, "No se pueden cargar las propiedades", e);
+			this.logger.error( "No se pueden cargar las propiedades", e);
 		}
 	}
 

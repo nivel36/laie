@@ -2,12 +2,14 @@ package ged.web.view.job;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
@@ -19,7 +21,7 @@ import ged.web.core.view.Paginator;
 @ViewScoped
 public class JobOfferSearchBean extends AbstractPageBean {
 
-	protected static final transient Logger logger = Logger.getLogger(JobOfferSearchBean.class.getName());
+	protected static final transient Logger logger = LoggerFactory.getLogger(JobOfferSearchBean.class.getName());
 
 	private static final long serialVersionUID = 8777365288968792501L;
 
@@ -95,7 +97,7 @@ public class JobOfferSearchBean extends AbstractPageBean {
 	}
 
 	public void search() {
-		logger.fine("Searching for JobOffers");
+		logger.debug("Searching for JobOffers");
 		final List<JobOffer> jobOffers = this.jobOfferService.searchByNameAndClient(this.name, this.clientName, null);
 		this.paginator.setEntities(jobOffers);
 	}

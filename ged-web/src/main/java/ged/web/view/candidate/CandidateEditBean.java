@@ -1,8 +1,8 @@
 package ged.web.view.candidate;
 
 import java.util.Objects;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -20,7 +20,7 @@ import ged.web.core.view.AbstractPageBean;
 @ViewScoped
 public class CandidateEditBean extends AbstractPageBean {
 
-	private static final Logger logger = Logger.getLogger(CandidateEditBean.class.getName());
+	private static final Logger logger = LoggerFactory.getLogger(CandidateEditBean.class.getName());
 
 	private static final long serialVersionUID = -4334616177754425866L;
 
@@ -90,7 +90,7 @@ public class CandidateEditBean extends AbstractPageBean {
 	}
 
 	public String save() {
-		logger.log(Level.FINE, "Save candidate action performed");
+		logger.debug( "Save candidate action performed");
 		saveCandidate();
 		return "candidateView.xhtml?id=" + this.candidate.getId() + "&faces-redirect=true";
 	}

@@ -2,8 +2,6 @@ package ged.web.view.user;
 
 import java.util.Locale;
 import java.util.Objects;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -13,6 +11,9 @@ import javax.faces.validator.ValidatorException;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
@@ -25,7 +26,7 @@ import ged.web.core.view.AbstractPageBean;
 @ViewScoped
 public class UserEditBean extends AbstractPageBean {
 
-	protected static final transient Logger logger = Logger.getLogger(UserEditBean.class.getName());
+	protected static final transient Logger logger = LoggerFactory.getLogger(UserEditBean.class.getName());
 
 	private static final long serialVersionUID = 1923340646020120203L;
 
@@ -47,10 +48,10 @@ public class UserEditBean extends AbstractPageBean {
 
 	public String cancel() {
 		if (this.user.getId() == null) {
-			logger.finer("Cancel new user action performed");
+			logger.trace("Cancel new user action performed");
 			return "userSearch.xhtml?faces-redirect=true";
 		} else {
-			logger.log(Level.FINE, "Cancel change user action performed");
+			logger.debug("Cancel change user action performed");
 			return "userView.xhtml?id=" + this.user.getId() + "&faces-redirect=true";
 		}
 	}
@@ -65,12 +66,12 @@ public class UserEditBean extends AbstractPageBean {
 
 	@PostConstruct
 	private void init() {
-		logger.finest("Init UserEditBean");
+		logger.trace("Init UserEditBean");
 		if (this.flash.containsKey("user")) {
 			this.user = (User) this.flash.get("user");
-			logger.log(Level.FINEST, "Flash scope contains user with name {0}", this.user.getFullName());
+			logger.debug("Flash scope contains user with name {}", this.user.getFullName());
 		} else {
-			logger.log(Level.FINEST, "Flash scope is empty");
+			logger.debug("Flash scope is empty");
 			this.user = new User();
 			final int rowsPerPage = this.sessionBean.getRowsPerPage();
 			this.user.setRowsPerPage(rowsPerPage);
@@ -101,13 +102,13 @@ public class UserEditBean extends AbstractPageBean {
 	}
 
 	public void removeManager() {
-		logger.log(Level.FINE, "Remove manager action performed");
+		logger.debug("Remove manager action performed");
 		newManager();
 		this.user.setManager(null);
 	}
 
 	public String save() {
-		logger.log(Level.FINE, "Save user action performed");
+		logger.debug("Save user action performed");
 		setManager();
 		this.user.setUser(this.sessionBean.getUser());
 		this.userService.save(this.user);
@@ -116,7 +117,7 @@ public class UserEditBean extends AbstractPageBean {
 
 	private void setManager() {
 		if (this.manager.getUsername() != null) {
-			logger.log(Level.FINER, "The user has no manager");
+			logger.trace("The user has no manager");
 			this.user.setManager(this.manager);
 		}
 	}
@@ -131,7 +132,7 @@ public class UserEditBean extends AbstractPageBean {
 
 	public void validateEmail(final FacesContext context, final UIComponent component, final Object value)
 			throws ValidatorException {
-		logger.log(Level.FINEST, "Checking email");
+		logger.debug("Checking email");
 		if (value == null) {
 			return;
 		}
@@ -144,7 +145,7 @@ public class UserEditBean extends AbstractPageBean {
 			return;
 		}
 		if (this.userService.emailExists(email)) {
-			logger.log(Level.FINEST, "The email exists");
+			logger.debug("The email exists");
 			final String msg = TransaltionUtils.translate("user.error.email_exists");
 			throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg));
 		}
@@ -156,7 +157,7 @@ public class UserEditBean extends AbstractPageBean {
 			return;
 		}
 		if (this.manager.equals(this.user)) {
-			logger.log(Level.FINEST, "User can't be his/her manager");
+			logger.debug("User can't be his/her manager");
 			final String msg = TransaltionUtils.translate("user.error.manager");
 			throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg));
 		}
@@ -189,7 +190,7 @@ public class UserEditBean extends AbstractPageBean {
 			return;
 		}
 		if (this.userService.usernameExists(username)) {
-			logger.log(Level.FINEST, "The username exists");
+			logger.debug("The username exists");
 			final String msg = TransaltionUtils.translate("user.error.username_exists");
 			throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg));
 		}

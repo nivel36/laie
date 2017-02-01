@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -24,7 +24,7 @@ import ged.ejb.user.User;
 @Repository
 public class JobOfferDaoJpa extends AbstractDao<Long, JobOffer> implements JobOfferDao {
 
-	private static final Logger logger = Logger.getLogger(JobOfferDaoJpa.class.getName());
+	private static final Logger logger = LoggerFactory.getLogger(JobOfferDaoJpa.class.getName());
 
 	@Inject
 	public JobOfferDaoJpa(final EntityManager entityManager) {
@@ -34,7 +34,7 @@ public class JobOfferDaoJpa extends AbstractDao<Long, JobOffer> implements JobOf
 	@Override
 	public List<JobOffer> findAllByClient(final Client client) {
 		Objects.requireNonNull(client);
-		logger.log(Level.FINE, "SELECT all the client offers", client.getName());
+		logger.debug( "SELECT all the client offers", client.getName());
 		final Map<String, Object> parameters = new HashMap<>();
 		parameters.put("client", client);
 		return findByTypedQuery(JobOffer.class, "JobOffer.findAllByClient", parameters, 0, 0);
@@ -43,7 +43,7 @@ public class JobOfferDaoJpa extends AbstractDao<Long, JobOffer> implements JobOf
 	@Override
 	public List<JobOffer> findAllByOwner(final User owner) {
 		Objects.requireNonNull(owner);
-		logger.log(Level.FINE, "Buscando todas las ofertas del usuario ", owner.getFullName());
+		logger.debug( "Buscando todas las ofertas del usuario ", owner.getFullName());
 		final Map<String, Object> parameters = new HashMap<>();
 		parameters.put("owner", owner);
 		return findByTypedQuery(JobOffer.class, "JobOffer.findAllByOwner", parameters, 0, 0);

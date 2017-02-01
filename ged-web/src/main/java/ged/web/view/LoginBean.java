@@ -1,8 +1,8 @@
 package ged.web.view;
 
 import java.util.Locale;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
@@ -20,7 +20,7 @@ import ged.web.core.view.AbstractPageBean;
 @RequestScoped
 public class LoginBean extends AbstractPageBean {
 
-	private static final transient Logger logger = Logger.getLogger(LoginBean.class.getName());
+	private static final transient Logger logger = LoggerFactory.getLogger(LoginBean.class.getName());
 
 	private static final long serialVersionUID = 8364578958730650005L;
 
@@ -54,7 +54,7 @@ public class LoginBean extends AbstractPageBean {
 			request.login(this.username, this.password);
 			return "/faces/index?faces-redirect=true";
 		} catch (final ServletException e) {
-			logger.log(Level.WARNING, "Bad login credentials", e);
+			logger.warn("Bad login credentials", e);
 			final String message = TransaltionUtils.translate("login.error.unknow_login");
 			final FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, message, null);
 			this.facesContext.addMessage(null, facesMessage);

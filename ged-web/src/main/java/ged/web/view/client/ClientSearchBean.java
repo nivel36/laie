@@ -2,12 +2,14 @@ package ged.web.view.client;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import ged.ejb.client.Client;
 import ged.ejb.client.ClientService;
@@ -18,7 +20,7 @@ import ged.web.core.view.Paginator;
 @ViewScoped
 public class ClientSearchBean extends AbstractPageBean {
 
-	private static final transient Logger logger = Logger.getLogger(ClientSearchBean.class.getName());
+	private static final transient Logger logger = LoggerFactory.getLogger(ClientSearchBean.class.getName());
 
 	private static final long serialVersionUID = 2434819723782902618L;
 
@@ -35,13 +37,13 @@ public class ClientSearchBean extends AbstractPageBean {
 	}
 
 	public void clean() {
-		logger.fine("Clean action performed");
+		logger.debug("Clean action performed");
 		this.name = null;
 		search();
 	}
 
 	public String edit(final Client client) {
-		logger.fine("Edit candidate action performed");
+		logger.debug("Edit candidate action performed");
 		this.flash.put("client", client);
 		return "clientEdit?faces-redirect=true";
 	}
@@ -56,24 +58,24 @@ public class ClientSearchBean extends AbstractPageBean {
 
 	@PostConstruct
 	public void init() {
-		logger.finest("Init ClientSearchBean");
+		logger.trace("Init ClientSearchBean");
 		this.paginator = new Paginator<>(this.sessionBean.getRowsPerPage());
 		this.paginator.setEntities(this.clientService.searchByName(this.name));
 	}
 
 	public String newClient() {
-		logger.fine("New client action performed");
+		logger.debug("New client action performed");
 		return "clientEdit?faces-redirect=true";
 	}
 
 	public void remove(final Client client) {
-		logger.fine("Removing client action performed");
+		logger.debug("Removing client action performed");
 		this.clientService.delete(client);
 		search();
 	}
 
 	public void search() {
-		logger.fine("Searching for client action performed");
+		logger.debug("Searching for client action performed");
 		final List<Client> clients = this.clientService.searchByName(this.name);
 		this.paginator.setEntities(clients);
 	}

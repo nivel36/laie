@@ -1,8 +1,8 @@
 package ged.web.core;
 
 import java.util.Iterator;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import javax.ejb.EJBException;
 import javax.faces.FacesException;
@@ -18,7 +18,7 @@ import ged.web.core.util.NavigationUtils;
 
 public class GedExceptionHandler extends ExceptionHandlerWrapper {
 
-	private static final Logger logger = Logger.getLogger(GedExceptionHandler.class.getName());
+	private static final Logger logger = LoggerFactory.getLogger(GedExceptionHandler.class.getName());
 
 	private final ExceptionHandler wrapped;
 
@@ -47,7 +47,7 @@ public class GedExceptionHandler extends ExceptionHandlerWrapper {
 		if (event != null) {
 			final ExceptionQueuedEventContext context = (ExceptionQueuedEventContext) event.getSource();
 			final Throwable throwable = context.getException();
-			logger.log(Level.FINE, "Handling exception", throwable);
+			logger.debug( "Handling exception", throwable);
 			handle(throwable);
 		}
 		getWrapped().handle();

@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.MissingResourceException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
@@ -45,7 +45,7 @@ public class I18nBean extends AbstractPageBean {
 			try {
 				translatedText = TransaltionUtils.translate(key);
 			} catch (final MissingResourceException e) {
-				this.logger.log(Level.SEVERE, "Error loading image", e);
+				this.logger.error( "Error loading image", e);
 				translatedText = "?" + key + "?";
 			}
 		}

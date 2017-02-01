@@ -2,8 +2,8 @@ package ged.web.view;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
@@ -21,7 +21,7 @@ import ged.web.core.view.AbstractPageBean;
 @SessionScoped
 public class BookmarksBean extends AbstractPageBean {
 
-	private static final transient Logger logger = Logger.getLogger(BookmarksBean.class.getName());
+	private static final transient Logger logger = LoggerFactory.getLogger(BookmarksBean.class.getName());
 
 	private static final long serialVersionUID = 8786492354769335930L;
 
@@ -36,11 +36,11 @@ public class BookmarksBean extends AbstractPageBean {
 	}
 
 	public void add(final AuditedEntity<Long> entity) {
-		BookmarksBean.logger.log(Level.FINE, "Adding bookmark {0} for user {1}",
+		BookmarksBean.logger.debug( "Adding bookmark {} for user {}",
 				new Object[] { entity, this.sessionBean.getUser().getUsername() });
 		final Bookmark bookmark = createBookmark(entity);
 		if (this.bookmarks.size() > 9) {
-			BookmarksBean.logger.log(Level.WARNING, "Bookmark full for user {0}",
+			BookmarksBean.logger.warn("Bookmark full for user {}",
 					this.sessionBean.getUser().getUsername());
 			MessageUtils.addErrorMessage("Bookmark full", "Bookmark full");
 			return;

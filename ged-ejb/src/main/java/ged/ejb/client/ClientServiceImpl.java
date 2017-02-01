@@ -2,8 +2,8 @@ package ged.ejb.client;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -15,7 +15,7 @@ import ged.ejb.core.model.Repository;
 @Stateless
 public class ClientServiceImpl extends AbstratctAuditedService<Long, Client> implements ClientService {
 
-	private static final Logger logger = Logger.getLogger(ClientServiceImpl.class.getName());
+	private static final Logger logger = LoggerFactory.getLogger(ClientServiceImpl.class.getName());
 
 	private final ClientDao clientDao;
 
@@ -33,7 +33,7 @@ public class ClientServiceImpl extends AbstratctAuditedService<Long, Client> imp
 	@Override
 	public Client findByName(final String clientName) {
 		Objects.requireNonNull(clientName, "El nombre del cliente no puede ser nulo");
-		ClientServiceImpl.logger.log(Level.FINE, "Buscando cliente con nombre {0}", clientName);
+		ClientServiceImpl.logger.debug( "Buscando cliente con nombre {}", clientName);
 		return this.clientDao.findByName(clientName);
 	}
 
@@ -44,7 +44,7 @@ public class ClientServiceImpl extends AbstratctAuditedService<Long, Client> imp
 
 	@Override
 	public List<Client> searchByName(final String clientName) {
-		logger.log(Level.FINE, "Buscando clientes con nombre {0}", clientName);
+		logger.debug( "Buscando clientes con nombre {}", clientName);
 		return this.clientDao.searchByName(clientName, false);
 	}
 }

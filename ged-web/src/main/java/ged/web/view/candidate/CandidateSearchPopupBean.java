@@ -1,11 +1,12 @@
 package ged.web.view.candidate;
 
-import java.util.logging.Logger;
-
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import ged.ejb.candidate.CandidateService;
 import ged.web.core.view.Paginator;
@@ -14,7 +15,7 @@ import ged.web.core.view.Paginator;
 @ViewScoped
 public class CandidateSearchPopupBean extends AbstractCandidateSearchBean {
 
-	public static final transient Logger logger = Logger.getLogger(CandidateSearchPopupBean.class.getName());
+	public static final transient Logger logger = LoggerFactory.getLogger(CandidateSearchPopupBean.class.getName());
 
 	private static final long serialVersionUID = -8526606627082697013L;
 

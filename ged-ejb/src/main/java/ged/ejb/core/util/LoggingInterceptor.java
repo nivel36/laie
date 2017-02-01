@@ -1,11 +1,13 @@
 package ged.ejb.core.util;
 
 import java.io.Serializable;
-import java.util.logging.Logger;
 
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Log
 @Interceptor
@@ -22,21 +24,21 @@ public class LoggingInterceptor implements Serializable {
 		final String methodName = ctx.getMethod().getName();
 		final Object[] params = ctx.getParameters();
 
-		final Logger logger = Logger.getLogger(className);
+		final Logger logger = LoggerFactory.getLogger(className);
 
 		final Object returnMe;
 		if (params.length == 0) {
-			logger.entering(className, methodName);
+			logger.trace(className, methodName);
 			returnMe = ctx.proceed();
-			logger.exiting(className, methodName);
+			logger.trace(className, methodName);
 		} else if (params.length == 1) {
-			logger.entering(className, methodName, params[0]);
+			logger.trace(className, methodName, params[0]);
 			returnMe = ctx.proceed();
-			logger.exiting(className, methodName, params[0]);
+			logger.trace(className, methodName, params[0]);
 		} else {
-			logger.entering(className, methodName, params);
+			logger.trace(className, methodName, params);
 			returnMe = ctx.proceed();
-			logger.exiting(className, methodName, params);
+			logger.trace(className, methodName, params);
 		}
 		return returnMe;
 	}

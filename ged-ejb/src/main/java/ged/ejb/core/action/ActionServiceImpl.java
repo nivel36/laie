@@ -3,8 +3,8 @@ package ged.ejb.core.action;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import javax.ejb.Stateless;
 import javax.enterprise.event.Observes;
@@ -22,7 +22,7 @@ import ged.ejb.user.User;
 @Stateless
 public class ActionServiceImpl extends AbstractService<Long, Action> implements ActionService {
 
-	private static final Logger logger = Logger.getLogger(ActionServiceImpl.class.getName());
+	private static final Logger logger = LoggerFactory.getLogger(ActionServiceImpl.class.getName());
 
 	private final ActionDao actionDao;
 
@@ -35,7 +35,7 @@ public class ActionServiceImpl extends AbstractService<Long, Action> implements 
 	@Override
 	public void deleteAction(@PostDelete @Observes final AuditedEntity<Long> auditedEntity) {
 		Objects.requireNonNull(auditedEntity);
-		logger.log(Level.FINE, "Delete action class {0} with id {1} for user {2}",
+		logger.debug( "Delete action class {} with id {} for user {2}",
 				new Object[] { auditedEntity.getClass().getName(), auditedEntity.getId(), auditedEntity.getUser() });
 		insertAction(auditedEntity, Action.DELETE);
 	}
@@ -43,7 +43,7 @@ public class ActionServiceImpl extends AbstractService<Long, Action> implements 
 	@Override
 	public List<Action> findAllByUser(final User user) {
 		Objects.requireNonNull(user);
-		logger.log(Level.FINE, "Find all actions of the user {0}", user.getFullName());
+		logger.debug( "Find all actions of the user {}", user.getFullName());
 		return this.actionDao.findAllByUser(user);
 	}
 
@@ -64,7 +64,7 @@ public class ActionServiceImpl extends AbstractService<Long, Action> implements 
 	@Override
 	public void insertAction(@PostPersist @Observes final AuditedEntity<Long> auditedEntity) {
 		Objects.requireNonNull(auditedEntity);
-		logger.log(Level.FINE, "Insert action class {0} with id {1} for user {2}",
+		logger.debug( "Insert action class {} with id {} for user {2}",
 				new Object[] { auditedEntity.getClass().getName(), auditedEntity.getId(), auditedEntity.getUser() });
 		insertAction(auditedEntity, Action.INSERT);
 	}
@@ -80,7 +80,7 @@ public class ActionServiceImpl extends AbstractService<Long, Action> implements 
 	@Override
 	public void undeleteAction(@PostUndelete @Observes final AuditedEntity<Long> auditedEntity) {
 		Objects.requireNonNull(auditedEntity);
-		logger.log(Level.FINE, "Undelete action class {0} with id {1} for user {2}",
+		logger.debug( "Undelete action class {} with id {} for user {2}",
 				new Object[] { auditedEntity.getClass().getName(), auditedEntity.getId(), auditedEntity.getUser() });
 		insertAction(auditedEntity, Action.UNDELETE);
 	}
@@ -88,7 +88,7 @@ public class ActionServiceImpl extends AbstractService<Long, Action> implements 
 	@Override
 	public void updateAction(@PostUpdate @Observes final AuditedEntity<Long> auditedEntity) {
 		Objects.requireNonNull(auditedEntity);
-		logger.log(Level.FINE, "Update action class {0} with id {1} for user {2}",
+		logger.debug( "Update action class {} with id {} for user {2}",
 				new Object[] { auditedEntity.getClass().getName(), auditedEntity.getId(), auditedEntity.getUser() });
 		insertAction(auditedEntity, Action.UPDATE);
 	}
