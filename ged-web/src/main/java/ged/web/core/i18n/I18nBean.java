@@ -7,14 +7,14 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.MissingResourceException;
-import org.slf4j.LoggerFactory;
-import org.slf4j.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.faces.application.Application;
 import javax.inject.Inject;
 import javax.inject.Named;
+
+import org.slf4j.Logger;
 
 import ged.ejb.core.i18n.I18nService;
 import ged.ejb.core.i18n.I18nString;
@@ -45,7 +45,7 @@ public class I18nBean extends AbstractPageBean {
 			try {
 				translatedText = TransaltionUtils.translate(key);
 			} catch (final MissingResourceException e) {
-				this.logger.error( "Error loading image", e);
+				this.logger.error("Error loading image", e);
 				translatedText = "?" + key + "?";
 			}
 		}
