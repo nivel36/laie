@@ -60,7 +60,7 @@ public class Candidate extends AbstractAuditedEntity {
 
 	private String infojobsProfileUrl;
 
-	@OneToMany(mappedBy = "candidate", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "candidate", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<JobCandidature> jobCandidatures;
 
 	private String linkedinProfileUrl;

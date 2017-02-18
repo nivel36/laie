@@ -63,7 +63,7 @@ public class JobOffer extends AbstractAuditedEntity {
 	@Field
 	private String description;
 
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "jobOffer", orphanRemoval = true)
+	@OneToMany(mappedBy = "jobOffer", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<JobCandidature> jobCandidatures;
 
 	@NotNull
@@ -192,9 +192,9 @@ public class JobOffer extends AbstractAuditedEntity {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = (prime * result) + ((this.dateOpened == null) ? 0 : this.dateOpened.hashCode());
-		result = (prime * result) + ((this.name == null) ? 0 : this.name.hashCode());
-		result = (prime * result) + ((this.places == null) ? 0 : this.places.hashCode());
+		result = prime * result + (this.dateOpened == null ? 0 : this.dateOpened.hashCode());
+		result = prime * result + (this.name == null ? 0 : this.name.hashCode());
+		result = prime * result + (this.places == null ? 0 : this.places.hashCode());
 		return result;
 	}
 

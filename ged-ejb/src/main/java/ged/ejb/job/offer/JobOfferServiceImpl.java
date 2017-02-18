@@ -2,11 +2,12 @@ package ged.ejb.job.offer;
 
 import java.util.List;
 import java.util.Objects;
-import org.slf4j.LoggerFactory;
-import org.slf4j.Logger;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import ged.ejb.candidate.Candidate;
 import ged.ejb.client.Client;
@@ -51,19 +52,19 @@ public class JobOfferServiceImpl extends AbstratctAuditedService<Long, JobOffer>
 
 	@Override
 	public List<JobOffer> findAllByClient(final Client client) {
-		logger.debug( "Find all job Offers of the client {}", client.getName());
+		logger.debug("Find all job Offers of the client {}", client.getName());
 		return this.jobOfferDao.findAllByClient(client);
 	}
 
 	@Override
 	public List<JobOffer> findAllByOwner(final User owner) {
-		logger.debug( "Find all job Offers of the owner {}", owner.getFullName());
+		logger.debug("Find all job Offers of the owner {}", owner.getFullName());
 		return this.jobOfferDao.findAllByOwner(owner);
 	}
 
 	@Override
 	public List<JobOffer> findLastJobOffers(final User owner) {
-		logger.debug( "Find last job Offers of the owner {}", owner.getFullName());
+		logger.debug("Find last job Offers of the owner {}", owner.getFullName());
 		return this.jobOfferDao.findLastJobOffers(owner);
 	}
 
@@ -89,8 +90,6 @@ public class JobOfferServiceImpl extends AbstratctAuditedService<Long, JobOffer>
 		Objects.requireNonNull(candidate);
 		final JobCandidature jobCandidature = this.jobCandidatureDao.findByJobOfferAndCandidate(jobOffer, candidate);
 		this.jobCandidatureDao.delete(jobCandidature);
-		final List<JobCandidature> candidatures = this.jobCandidatureDao.findAll();
-		final int s = candidatures.size();
 	}
 
 	@Override
@@ -103,8 +102,7 @@ public class JobOfferServiceImpl extends AbstratctAuditedService<Long, JobOffer>
 
 	@Override
 	public List<JobOffer> searchByNameAndClient(final String name, final String clientName, final Boolean showDeleted) {
-		logger.debug( "Search all job Offers by name {} and client name {}",
-				new Object[] { name, clientName });
+		logger.debug("Search all job Offers by name {} and client name {}", new Object[] { name, clientName });
 		return this.jobOfferDao.searchByNameAndClient(name, clientName, showDeleted);
 	}
 }
