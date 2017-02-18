@@ -152,6 +152,11 @@ public class JobOfferViewBean extends AbstractPageBean {
 		this.conductedJobMeetings = conductedJobMeetings;
 	}
 
+	public void setJobMeeting(final JobMeeting jobMeeting) {
+		Objects.requireNonNull(jobMeeting);
+
+	}
+
 	public void setJobOffer(final JobOffer jobOffer) {
 		this.jobOffer = jobOffer;
 	}

@@ -138,6 +138,11 @@
 			<ui:param name="callback" value="#{jobOfferViewBean.candidate}" />
 			<ui:param name="render" value=":form" />
 		</ui:include>
+		
+		<ui:include src="../candidate/meetingEditPopup.xhtml">
+			<ui:param name="callback" value="#{jobOfferViewBean.candidate}" />
+			<ui:param name="render" value=":form" />
+		</ui:include>
 	</ui:define>
 
 </ui:composition>

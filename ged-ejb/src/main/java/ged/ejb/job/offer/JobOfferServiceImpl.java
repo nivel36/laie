@@ -18,6 +18,8 @@ import ged.ejb.core.events.Audited.Type;
 import ged.ejb.core.model.Dao;
 import ged.ejb.core.model.Repository;
 import ged.ejb.job.JobCandidature;
+import ged.ejb.job.meeting.JobMeeting;
+import ged.ejb.job.meeting.JobMeetingDao;
 import ged.ejb.user.User;
 
 @Stateless
@@ -29,17 +31,21 @@ public class JobOfferServiceImpl extends AbstratctAuditedService<Long, JobOffer>
 
 	private final JobCandidatureDao jobCandidatureDao;
 
+	private final JobMeetingDao jobMeetingDao;
+
 	private final JobOfferDao jobOfferDao;
 
 	@Inject
-	public JobOfferServiceImpl(@Repository final JobOfferDao jobDao, final ClientService clientService,
-			@Repository final JobCandidatureDao jobCandidatureDao) {
-		Objects.requireNonNull(jobDao);
+	public JobOfferServiceImpl(@Repository final JobOfferDao jobOfferDao, @Repository final JobMeetingDao jobMeetingDao,
+			final ClientService clientService, @Repository final JobCandidatureDao jobCandidatureDao) {
+		Objects.requireNonNull(jobOfferDao);
 		Objects.requireNonNull(clientService);
 		Objects.requireNonNull(jobCandidatureDao);
+		Objects.requireNonNull(jobMeetingDao);
 		this.clientService = clientService;
 		this.jobCandidatureDao = jobCandidatureDao;
-		this.jobOfferDao = jobDao;
+		this.jobOfferDao = jobOfferDao;
+		this.jobMeetingDao = jobMeetingDao;
 	}
 
 	@Override
@@ -48,6 +54,12 @@ public class JobOfferServiceImpl extends AbstratctAuditedService<Long, JobOffer>
 		Objects.requireNonNull(candidate);
 		final JobCandidature jobCandidature = new JobCandidature(jobOffer, candidate);
 		this.jobCandidatureDao.insert(jobCandidature);
+	}
+
+	@Override
+	public void addJobMeeting(final JobMeeting jobMeeting) {
+		Objects.requireNonNull(jobMeeting);
+		this.jobMeetingDao.insert(jobMeeting);
 	}
 
 	@Override

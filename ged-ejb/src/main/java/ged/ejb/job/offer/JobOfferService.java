@@ -5,11 +5,14 @@ import java.util.List;
 import ged.ejb.candidate.Candidate;
 import ged.ejb.client.Client;
 import ged.ejb.core.AuditedService;
+import ged.ejb.job.meeting.JobMeeting;
 import ged.ejb.user.User;
 
 public interface JobOfferService extends AuditedService<Long, JobOffer> {
 
 	void addJobCandidature(final JobOffer jobOffer, final Candidate candidate);
+
+	void addJobMeeting(final JobMeeting jobMeeting);
 
 	List<JobOffer> findAllByClient(final Client client);
 
