@@ -14,7 +14,6 @@
 			<h1 class="header">
 				<i class="fa fa-users" /> #{i18n['candidate.candidates']}
 			</h1>
-
 			<h:panelGroup layout="block" styleClass="actionPanel">
 				<h:commandButton value="#{i18n['action.new']}" action="#{candidateSearchBean.newCandidate}" immediate="true" />
 			</h:panelGroup>
@@ -22,27 +21,25 @@
 		<h:form id="form">
 			<h:panelGroup layout="block" styleClass="panel">
 				<h1>#{i18n['candidate.search']}</h1>
-				<h:panelGroup layout="block" styleClass="panel" id="searchUserPanel">
-					<h:outputLabel for="name" value="#{i18n['candidate.name']}">
-						<h:inputText id="name" value="#{candidateSearchBean.name}" label="#{i18n['candidate.name']}" />
-					</h:outputLabel>
+				<h:outputLabel for="name" value="#{i18n['candidate.name']}">
+					<h:inputText id="name" value="#{candidateSearchBean.name}" label="#{i18n['candidate.name']}" />
+				</h:outputLabel>
 
-					<h:outputLabel for="surename" value="#{i18n['candidate.surename']}">
-						<h:inputText id="surename" value="#{candidateSearchBean.surename}" label="#{i18n['candidate.surename']}" />
-					</h:outputLabel>
+				<h:outputLabel for="surename" value="#{i18n['candidate.surename']}">
+					<h:inputText id="surename" value="#{candidateSearchBean.surename}" label="#{i18n['candidate.surename']}" />
+				</h:outputLabel>
 
-					<h:outputLabel for="position" value="#{i18n['candidate.position']}">
-						<h:inputText id="position" value="#{candidateSearchBean.position}" label="#{i18n['candidate.position']}" />
-					</h:outputLabel>
+				<h:outputLabel for="position" value="#{i18n['candidate.position']}">
+					<h:inputText id="position" value="#{candidateSearchBean.position}" label="#{i18n['candidate.position']}" />
+				</h:outputLabel>
 
-					<h:panelGroup layout="block" styleClass="buttonGroup">
-						<h:commandButton value="#{i18n['action.search']}" action="#{candidateSearchBean.search}">
-							<f:ajax execute="searchUserPanel" render="@form" />
-						</h:commandButton>
-						<h:commandButton value="#{i18n['action.clean']}" action="#{candidateSearchBean.clean}">
-							<f:ajax render="@form" />
-						</h:commandButton>
-					</h:panelGroup>
+				<h:panelGroup layout="block" styleClass="buttonGroup">
+					<h:commandButton value="#{i18n['action.search']}" action="#{candidateSearchBean.search}">
+						<f:ajax execute="searchUserPanel" render="@form" />
+					</h:commandButton>
+					<h:commandButton value="#{i18n['action.clean']}" action="#{candidateSearchBean.clean}">
+						<f:ajax render="@form" />
+					</h:commandButton>
 				</h:panelGroup>
 			</h:panelGroup>
 
