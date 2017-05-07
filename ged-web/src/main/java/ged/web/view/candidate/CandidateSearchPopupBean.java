@@ -9,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ged.ejb.candidate.CandidateService;
-import ged.web.core.view.Paginator;
 
 @Named
 @ViewScoped
@@ -38,7 +37,6 @@ public class CandidateSearchPopupBean extends AbstractCandidateSearchBean {
 	@Override
 	@PostConstruct
 	public void init() {
-		this.paginator = new Paginator<>(this.sessionBean.getRowsPerPage());
 		if (isRendered()) {
 			search();
 		}

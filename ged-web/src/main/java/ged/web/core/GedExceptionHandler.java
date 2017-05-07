@@ -1,8 +1,6 @@
 package ged.web.core;
 
 import java.util.Iterator;
-import org.slf4j.LoggerFactory;
-import org.slf4j.Logger;
 
 import javax.ejb.EJBException;
 import javax.faces.FacesException;
@@ -12,6 +10,9 @@ import javax.faces.context.ExceptionHandlerWrapper;
 import javax.faces.event.ExceptionQueuedEvent;
 import javax.faces.event.ExceptionQueuedEventContext;
 import javax.persistence.OptimisticLockException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import ged.web.core.util.MessageUtils;
 import ged.web.core.util.NavigationUtils;
@@ -47,7 +48,7 @@ public class GedExceptionHandler extends ExceptionHandlerWrapper {
 		if (event != null) {
 			final ExceptionQueuedEventContext context = (ExceptionQueuedEventContext) event.getSource();
 			final Throwable throwable = context.getException();
-			logger.debug( "Handling exception", throwable);
+			logger.debug("Handling exception", throwable);
 			handle(throwable);
 		}
 		getWrapped().handle();
@@ -55,7 +56,12 @@ public class GedExceptionHandler extends ExceptionHandlerWrapper {
 
 	private void handle(final Throwable exception) {
 		if (exception instanceof FacesException) {
-			handle(exception.getCause());
+			final Throwable cause = exception.getCause();
+			if (cause != null) {
+				handle(exception.getCause());
+			} else {
+				MessageUtils.addErrorMessage("message.title.unexpected_error", exception.getLocalizedMessage());
+			}
 		} else if (exception instanceof EJBException) {
 			handle(exception.getCause());
 		} else if (exception instanceof ViewExpiredException) {

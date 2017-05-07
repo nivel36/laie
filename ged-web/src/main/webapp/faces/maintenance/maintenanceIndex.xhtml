@@ -10,44 +10,53 @@
 	<ui:param name="selectedMenu" value="maintenances" />
 
 	<ui:define name="content">
-		<h1 class="header">
-			<i class="fa fa-cogs" /> #{i18n['maintenance.maintenances']}
-		</h1>
 		<h:panelGrid styleClass="panelGrid" columns="2" cellpadding="10px">
 			<h:panelGroup layout="block" styleClass="panel">
-				<h1>#{i18n['maintenance.skill_knowdeleges']}</h1>
-				<h:form>
-					<h:selectOneMenu id="skillKnowdelege" label="#{i18n['skill.level']}" styleClass="largeInput">
-						<f:selectItems var="skillLevel" itemValue="#{skillLevel.name}" value="#{applicationBean.skillLevels}"
-							itemLabel="#{i18n:translate(skillLevel.name)}" />
-					</h:selectOneMenu>
-					<h:commandButton value="#{i18n['action.modify']}" />
-					<h:commandButton value="#{i18n['action.new']}" />
-				</h:form>
+				<h:panelGroup layout="block" styleClass="panel-header">
+					<h4>#{i18n['maintenance.skill_knowdeleges']}</h4>
+				</h:panelGroup>
+				<h:panelGroup layout="block" styleClass="panel-content">
+					<h:form>
+						<h:selectOneMenu id="skillKnowdelege" label="#{i18n['skill.level']}" styleClass="largeInput">
+							<f:selectItems var="skillLevel" itemValue="#{skillLevel.name}" value="#{applicationBean.skillLevels}"
+								itemLabel="#{i18n:translate(skillLevel.name)}" />
+						</h:selectOneMenu>
+						<h:commandButton value="#{i18n['action.modify']}" />
+						<h:commandButton value="#{i18n['action.new']}" />
+					</h:form>
+				</h:panelGroup>
 			</h:panelGroup>
 
 			<h:panelGroup layout="block" styleClass="panel">
-				<h1>#{i18n['maintenance.language_knowdeleges']}</h1>
-				<h:form>
-					<h:selectOneMenu id="languageKnowdelege" label="#{i18n['language.level']}" styleClass="largeInput">
-						<f:selectItems var="languageLevel" itemValue="#{languageLevel.name}" value="#{applicationBean.languageLevels}"
-							itemLabel="#{i18n:translate(languageLevel.name)}" />
-					</h:selectOneMenu>
-					<h:commandButton value="#{i18n['action.modify']}" />
-					<h:commandButton value="#{i18n['action.new']}" />
-				</h:form>
+				<h:panelGroup layout="block" styleClass="panel-header">
+					<h4>#{i18n['maintenance.language_knowdeleges']}</h4>
+				</h:panelGroup>
+				<h:panelGroup layout="block" styleClass="panel-content">
+					<h:form>
+						<h:selectOneMenu id="languageKnowdelege" label="#{i18n['language.level']}" styleClass="largeInput">
+							<f:selectItems var="languageLevel" itemValue="#{languageLevel.name}" value="#{applicationBean.languageLevels}"
+								itemLabel="#{i18n:translate(languageLevel.name)}" />
+						</h:selectOneMenu>
+						<h:commandButton value="#{i18n['action.modify']}" />
+						<h:commandButton value="#{i18n['action.new']}" />
+					</h:form>
+				</h:panelGroup>
 			</h:panelGroup>
 
-			<h:panelGroup layout="block" styleClass="panel">
-				<h1>#{i18n['maintenance.file_types']}</h1>
-				<h:form>
-					<h:selectOneMenu id="fileTypes" label="#{i18n['file.type']}" styleClass="largeInput">
-						<f:selectItems var="fileType" itemValue="#{fileType.name}" value="#{applicationBean.fileTypes}"
-							itemLabel="#{i18n:translate(fileType.name)}" />
-					</h:selectOneMenu>
-					<h:commandButton value="#{i18n['action.modify']}" />
-					<h:commandButton value="#{i18n['action.new']}" />
-				</h:form>
+			<h:panelGroup layout="block" styleClass="darkblue-panel">
+				<h:panelGroup layout="block" styleClass="panel-header">
+					<h4>#{i18n['maintenance.file_types']}</h4>
+				</h:panelGroup>
+				<h:panelGroup layout="block" styleClass="panel-content">
+					<h:form>
+						<h:selectOneMenu id="fileTypes" label="#{i18n['file.type']}" styleClass="largeInput">
+							<f:selectItems var="fileType" itemValue="#{fileType.name}" value="#{applicationBean.fileTypes}"
+								itemLabel="#{i18n:translate(fileType.name)}" />
+						</h:selectOneMenu>
+						<h:commandButton value="#{i18n['action.modify']}" />
+						<h:commandButton value="#{i18n['action.new']}" />
+					</h:form>
+				</h:panelGroup>
 			</h:panelGroup>
 		</h:panelGrid>
 	</ui:define>

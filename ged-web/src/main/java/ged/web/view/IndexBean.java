@@ -1,6 +1,8 @@
 package ged.web.view;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -8,6 +10,9 @@ import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+
+import org.primefaces.model.LazyScheduleModel;
+import org.primefaces.model.ScheduleModel;
 
 import ged.ejb.candidate.Candidate;
 import ged.ejb.job.offer.JobOffer;
@@ -27,6 +32,8 @@ public class IndexBean extends AbstractPageBean {
 
 	private transient final JobOfferService jobService;
 
+	private transient ScheduleModel schedule;
+
 	@Inject
 	public IndexBean(final JobOfferService jobService) {
 		Objects.requireNonNull(jobService);
@@ -37,8 +44,19 @@ public class IndexBean extends AbstractPageBean {
 		return this.candidates;
 	}
 
+	public Date getInitialDate() {
+		final Calendar calendar = Calendar.getInstance();
+		calendar.set(calendar.get(Calendar.YEAR), Calendar.FEBRUARY, calendar.get(Calendar.DATE), 0, 0, 0);
+
+		return calendar.getTime();
+	}
+
 	public List<JobOffer> getJobOffers() {
 		return this.jobOffers;
+	}
+
+	public ScheduleModel getSchedule() {
+		return this.schedule;
 	}
 
 	@PostConstruct
@@ -46,5 +64,8 @@ public class IndexBean extends AbstractPageBean {
 		final User user = this.sessionBean.getUser();
 		this.jobOffers = this.jobService.findLastJobOffers(user);
 		this.candidates = new ArrayList<>();
+
+		this.schedule = new LazyScheduleModel();
 	}
+
 }

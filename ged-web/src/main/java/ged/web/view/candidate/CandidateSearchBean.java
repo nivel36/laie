@@ -1,12 +1,13 @@
 package ged.web.view.candidate;
 
 import java.util.Objects;
-import org.slf4j.LoggerFactory;
-import org.slf4j.Logger;
 
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import ged.ejb.candidate.Candidate;
 import ged.ejb.candidate.CandidateService;
@@ -27,23 +28,28 @@ public class CandidateSearchBean extends AbstractCandidateSearchBean {
 	@Override
 	public String edit(final Candidate candidate) {
 		Objects.requireNonNull(candidate);
-		logger.debug( "Editing a candidate");
+		logger.debug("Editing a candidate");
 		this.flash.put("candidate", candidate);
 		return "candidateEdit?faces-redirect=true";
 	}
 
 	@Override
 	public String newCandidate() {
-		logger.debug( "New candidate");
+		logger.debug("New candidate");
 		return "candidateEdit?faces-redirect=true";
 	}
 
 	@Override
 	public void remove(final Candidate candidate) {
 		Objects.requireNonNull(candidate);
-		logger.debug( "Deleting candidate");
+		logger.debug("Deleting candidate");
 		candidate.setUser(this.sessionBean.getUser());
 		this.candidateService.delete(candidate);
 		search();
+	}
+
+	public String view() {
+		return "candidateEdit?faces-redirect=true&includeViewParams=true";
+
 	}
 }

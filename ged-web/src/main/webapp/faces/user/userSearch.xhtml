@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://legion.com/i18n"
-	xmlns:a="http://java.sun.com/jsf/composite/legion" template="/WEB-INF/templates/default.xhtml">
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
 		<title>#{i18n['user.users']}</title>
@@ -10,94 +10,78 @@
 	<ui:param name="selectedMenu" value="users" />
 
 	<ui:define name="content">
-	
-		<h:form id="newForm">
-			<h1 class="header">
-				<i class="fa fa-user" /> #{i18n['user.user']}
-			</h1>
-			<h:panelGroup layout="block" styleClass="actionPanel">
-				<h:commandButton value="#{i18n['action.new']}" action="#{userSearchBean.newUser}" immediate="true" />
-			</h:panelGroup>
-		</h:form>
 		<h:form id="form">
-			<h:panelGroup layout="block" styleClass="panel" id="searchUserPanel">
-				<h1>#{i18n['user.search']}</h1>
+			<h:panelGroup layout="block" styleClass="magenta-panel" id="searchUserPanel">
+				<h:panelGroup layout="block" styleClass="panel-header">
+					<h4>#{i18n['user.search']}</h4>
+				</h:panelGroup>
+				<h:panelGroup layout="block" styleClass="panel-content">
 
-				<h:outputLabel for="name" value="#{i18n['user.name']}">
-					<h:inputText id="name" value="#{userSearchBean.name}" label="#{i18n['user.name']}"
-						validator="ged.web.view.SearchFieldValidator" />
-					<h:message for="name" errorClass="error" />
-				</h:outputLabel>
+					<h:outputLabel for="name" value="#{i18n['user.name']}">
+						<h:inputText id="name" value="#{userSearchBean.name}" label="#{i18n['user.name']}"
+							validator="ged.web.view.SearchFieldValidator" />
+						<h:message for="name" errorClass="error" />
+					</h:outputLabel>
 
-				<h:outputLabel for="surename" value="#{i18n['user.surename']}">
-					<h:inputText id="surename" value="#{userSearchBean.surename}" label="#{i18n['user.surename']}"
-						validator="ged.web.view.SearchFieldValidator" />
-					<h:message for="surename" errorClass="error" />
-				</h:outputLabel>
+					<h:outputLabel for="surename" value="#{i18n['user.surename']}">
+						<h:inputText id="surename" value="#{userSearchBean.surename}" label="#{i18n['user.surename']}"
+							validator="ged.web.view.SearchFieldValidator" />
+						<h:message for="surename" errorClass="error" />
+					</h:outputLabel>
 
-				<h:panelGroup layout="block" styleClass="buttonGroup">
-					<h:commandButton value="#{i18n['action.search']}" action="#{userSearchBean.search}">
-						<f:ajax execute="searchUserPanel" render="@form" />
-					</h:commandButton>
-					<h:commandButton value="#{i18n['action.clean']}" action="#{userSearchBean.clean}">
-						<f:ajax render="@form" />
-					</h:commandButton>
+					<h:panelGroup layout="block" styleClass="buttonGroup">
+						<h:commandButton value="#{i18n['action.new']}" action="#{userSearchBean.newUser}" immediate="true" />
+						<h:commandButton value="#{i18n['action.search']}" action="#{userSearchBean.search}">
+							<f:ajax execute="searchUserPanel" render="@form" />
+						</h:commandButton>
+						<h:commandButton value="#{i18n['action.clean']}" action="#{userSearchBean.clean}">
+							<f:ajax render="@form" />
+						</h:commandButton>
+					</h:panelGroup>
 				</h:panelGroup>
 			</h:panelGroup>
 
-			<h:panelGroup layout="block" styleClass="panel" id="searchUserResults">
-				<h1>#{i18n['user.search_results']}</h1>
+			<h:panelGroup layout="block" styleClass="magenta-panel" id="searchUserResults">
+				<h:panelGroup layout="block" styleClass="panel-header">
+					<h4>#{i18n['user.search_results']}</h4>
+				</h:panelGroup>
+				<h:panelGroup layout="block" styleClass="panel-content">
 
-				<h:outputText value="#{i18n['user.no_users_found']}" rendered="#{empty userSearchBean.paginator.dataList}" />
+					<h:outputText value="#{i18n['user.no_users_found']}" rendered="#{empty userSearchBean.paginator.dataList}" />
 
-				<h:dataTable var="user" id="userDataTable" value="#{userSearchBean.paginator.dataList}"
-					rendered="#{not empty userSearchBean.paginator.dataList}" styleClass="dataTable">
-					<h:column>
-						<f:facet name="header">
-							<h:outputText value="#{i18n['user.name']}" />
-						</f:facet>
-						<h:outputText value="#{user.fullName}" />
-					</h:column>
+					<p:dataTable var="user" id="userDataTable" value="#{userSearchBean.paginator.dataList}"
+						rendered="#{not empty userSearchBean.paginator.dataList}" styleClass="dataTable">
+						<p:column headerText="#{i18n['user.name']}" sortBy="#{user.fullName}">
+							<h:outputText value="#{user.fullName}" />
+						</p:column>
 
-					<h:column>
-						<f:facet name="header">
-							<h:outputText value="#{i18n['user.email']}" />
-						</f:facet>
-						<h:outputText value="#{user.email}" />
-					</h:column>
+						<p:column headerText="#{i18n['user.email']}" sortBy="#{user.email}">
+							<h:outputText value="#{user.email}" />
+						</p:column>
 
-					<h:column>
-						<f:facet name="header">
-							<h:outputText value="#{i18n['user.role']}" />
-						</f:facet>
-						<h:outputText value="#{i18n:translate(user.role.name)}" />
-					</h:column>
+						<p:column headerText="#{i18n['user.role']}" sortBy="#{i18n:translate(user.role.name)}">
+							<h:outputText value="#{i18n:translate(user.role.name)}" />
+						</p:column>
 
-					<h:column>
-						<f:facet name="header">
-							<h:outputText value="#{i18n['user.manager']}" />
-						</f:facet>
-						<h:outputText value="#{user.manager}" />
-					</h:column>
+						<p:column headerText="#{i18n['user.manager']}" sortBy="#{user.manager}">
+							<h:outputText value="#{user.manager}" />
+						</p:column>
 
-					<h:column>
-						<f:facet name="header">
-							<h:outputText value="#{i18n['action.action']}" />
-						</f:facet>
-						<h:link value="#{i18n['action.view']}" outcome="userView">
-							<f:param name="id" value="#{user.id}" />
-						</h:link>
-						<h:outputText value=" | " />
-						<h:commandLink action="#{userSearchBean.editUser(user)}" value="#{i18n['action.edit']}" immediate="true" />
-						<h:outputText value=" | " rendered="${user.role.name!='ADMIN'}" />
-						<h:commandLink action="#{userSearchBean.deleteUser(user)}" value="#{i18n['action.remove']}"
-							rendered="${user.role.name!='ADMIN'}" onclick="return confirm('#{i18n['action.delete.are_you_sure']}')">
-							<f:ajax render="form:searchUserResults :asideForm" />
-						</h:commandLink>
-					</h:column>
-				</h:dataTable>
+						<p:column headerText="#{i18n['action.action']}">
+							<h:link value="#{i18n['action.view']}" outcome="userView">
+								<f:param name="id" value="#{user.id}" />
+							</h:link>
+							<h:outputText value=" | " />
+							<h:commandLink action="#{userSearchBean.editUser(user)}" value="#{i18n['action.edit']}" immediate="true" />
+							<h:outputText value=" | " rendered="${user.role.name!='ADMIN'}" />
+							<h:commandLink action="#{userSearchBean.deleteUser(user)}" value="#{i18n['action.remove']}"
+								rendered="${user.role.name!='ADMIN'}" onclick="return confirm('#{i18n['action.delete.are_you_sure']}')">
+								<f:ajax render="form:searchUserResults :asideForm" />
+							</h:commandLink>
+						</p:column>
+					</p:dataTable>
+				</h:panelGroup>
 
-				<a:paginator id="paginator" paginator="#{userSearchBean.paginator}" />
 			</h:panelGroup>
 		</h:form>
 	</ui:define>

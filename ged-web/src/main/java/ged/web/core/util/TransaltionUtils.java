@@ -3,6 +3,7 @@ package ged.web.core.util;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 
 public class TransaltionUtils {
@@ -10,7 +11,13 @@ public class TransaltionUtils {
 	private static final String FILE_NAME = "ged.i18n";
 
 	private static ResourceBundle getResourceBundle(final String filename) {
-		final Locale locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
+		final UIViewRoot uIViewRoot = FacesContext.getCurrentInstance().getViewRoot();
+		final Locale locale;
+		if (uIViewRoot != null) {
+			locale = uIViewRoot.getLocale();
+		} else {
+			locale = Locale.ENGLISH;
+		}
 		return ResourceBundle.getBundle(filename, locale);
 	}
 

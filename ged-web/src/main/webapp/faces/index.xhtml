@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
 	template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
@@ -11,55 +11,71 @@
 
 	<ui:define name="content">
 		<h:form>
-			<h1 class="header">
+			<!-- 			<h1 class="header">
 				<i class="fa fa-home" /> #{i18n['index.index']}
 			</h1>
-
-			<h:panelGrid styleClass="panelGrid" columns="2" cellpadding="10px">
-				<h:panelGroup layout="block" styleClass="panel">
-					<h1>#{i18n['index.last_offers']}</h1>
-
-					<h:outputText value="#{i18n['job.no_jobs_found']}" rendered="#{empty indexBean.jobOffers}" />
-
-					<ui:repeat var="jobOffer" value="${indexBean.jobOffers}">
-						<h:panelGroup layout="block" styleClass="textBlock">
-							<h:outputText value="#{jobOffer.client.name} - #{jobOffer.name}" />
-						</h:panelGroup>
-						<br />
-					</ui:repeat>
-
-					<h:panelGroup display="block" styleClass="buttonGroup">
-						<h:commandButton value="#{i18n['action.new']}" action="/faces/jobOffer/jobOfferEdit.xhtml?faces-redirect=true" />
+ -->
+			<h:panelGroup layout="block" styleClass="row">
+				<h:panelGroup layout="block" styleClass="half yellow-panel">
+					<h:panelGroup layout="block" styleClass="panel-header">
+						<h3>#{i18n['index.last_offers']}</h3>
 					</h:panelGroup>
-				</h:panelGroup>
-				<h:panelGroup layout="block" styleClass="panel">
-					<h1>#{i18n['index.last_candidates']}</h1>
-
-					<h:outputText value="#{i18n['candidate.no_candidates_found']}" rendered="#{empty indexBean.candidates}" />
-
-					<ui:repeat var="candidate" value="${indexBean.candidates}">
-						<h:panelGroup styleClass="card" layout="block">
-							<h:graphicImage value="/resources/img/classic-blue/no-photo.png" styleClass="photo" />
-							<h:outputText styleClass="name" value="${candidate.name} ${candidate.surename}" />
+					<h:panelGroup layout="block" styleClass="panel-content">
+						<h:outputText value="#{i18n['job.no_jobs_found']}" rendered="#{empty indexBean.jobOffers}" styleClass="text" />
+						<ui:repeat var="jobOffer" value="${indexBean.jobOffers}">
+							<h:panelGroup layout="block" styleClass="textBlock">
+								<h:outputText value="#{jobOffer.client.name} - #{jobOffer.name}" />
+							</h:panelGroup>
 							<br />
-							<h:outputText value="Arquitecto de software en GFI" />
+						</ui:repeat>
+						<h:panelGroup layout="block" styleClass="buttonGroup">
+							<p:commandButton value="#{i18n['action.new']}" action="/faces/jobOffer/jobOfferEdit.xhtml?faces-redirect=true" />
 						</h:panelGroup>
-					</ui:repeat>
+					</h:panelGroup>
+				</h:panelGroup>
 
-					<h:panelGroup display="block" styleClass="buttonGroup">
-						<h:commandButton value="#{i18n['action.new']}" action="candidate/candidateEdit?faces-redirect=true" />
+				<h:panelGroup layout="block" styleClass="half purple-panel">
+					<h:panelGroup layout="block" styleClass="panel-header">
+						<h3>#{i18n['index.last_candidates']}</h3>
+					</h:panelGroup>
+					<h:panelGroup layout="block" styleClass="panel-content">
+						<h:outputText value="#{i18n['candidate.no_candidates_found']}" rendered="#{empty indexBean.candidates}" />
+
+						<ui:repeat var="candidate" value="${indexBean.candidates}">
+							<h:panelGroup styleClass="card" layout="block">
+								<h:graphicImage value="/resources/img/classic-blue/no-photo.png" styleClass="photo" />
+								<h:outputText styleClass="name" value="${candidate.name} ${candidate.surename}" />
+								<br />
+								<h:outputText value="Arquitecto de software en GFI" />
+							</h:panelGroup>
+						</ui:repeat>
+
+						<h:panelGroup layout="block" styleClass="buttonGroup">
+							<p:commandButton value="#{i18n['action.new']}" action="candidate/candidateEdit?faces-redirect=true" />
+						</h:panelGroup>
 					</h:panelGroup>
 				</h:panelGroup>
-				<h:panelGroup layout="block" styleClass="panel">
-					<h1>#{i18n['index.last_reports']}</h1>
-					<h:panelGroup display="block" styleClass="buttonGroup">
-						<h:commandButton value="#{i18n['action.new']}" action="#{jobOfferViewBean.edit}" />
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="row">
+				<h:panelGroup layout="block" styleClass="half green-panel">
+					<h:panelGroup layout="block" styleClass="panel-header">
+						<h3>#{i18n['index.last_reports']}</h3>
+					</h:panelGroup>
+					<h:panelGroup layout="block" styleClass="panel-content">
+						<h:panelGroup layout="block" styleClass="buttonGroup">
+							<p:commandButton value="#{i18n['action.new']}" action="#{jobOfferViewBean.edit}" />
+						</h:panelGroup>
 					</h:panelGroup>
 				</h:panelGroup>
-				<h:panelGroup layout="block" styleClass="panel">
-					<h1>#{i18n['index.scheudele']}</h1>
+				<h:panelGroup layout="block" styleClass="half red-panel">
+					<h:panelGroup layout="block" styleClass="panel-header">
+						<h3>#{i18n['index.scheudele']}</h3>
+					</h:panelGroup>
+					<h:panelGroup layout="block" styleClass="panel-content">
+						
+					</h:panelGroup>
 				</h:panelGroup>
-			</h:panelGrid>
+			</h:panelGroup>
 		</h:form>
 	</ui:define>
 </ui:composition>

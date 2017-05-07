@@ -6,8 +6,6 @@ import java.nio.file.Files;
 import java.util.Date;
 import java.util.Objects;
 import java.util.UUID;
-import org.slf4j.LoggerFactory;
-import org.slf4j.Logger;
 
 import javax.faces.application.NavigationHandler;
 import javax.faces.view.ViewScoped;
@@ -16,6 +14,8 @@ import javax.inject.Named;
 import javax.servlet.http.Part;
 
 import org.omnifaces.util.Faces;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import ged.ejb.candidate.Candidate;
 import ged.ejb.candidate.CandidateService;
@@ -72,7 +72,7 @@ public class CandidateViewBean extends AbstractPageBean {
 				removeFileFromFileSystem(this.file.getUuid());
 			}
 		} catch (final IOException e) {
-			logger.error( "Can't remove file", e);
+			logger.error("Can't remove file", e);
 			MessageUtils.addErrorMessage("error.unnexpected_error", "error.unnexpected_error");
 		}
 	}
@@ -115,7 +115,7 @@ public class CandidateViewBean extends AbstractPageBean {
 	// Extract part name from content-disposition header of part part
 	private String getFileName(final Part part) throws IOException {
 		final String partHeader = part.getHeader("content-disposition");
-		logger.debug( "partHeader: {}", partHeader);
+		logger.debug("partHeader: {}", partHeader);
 		for (final String content : part.getHeader("content-disposition").split(";")) {
 			if (content.trim().startsWith("filename")) {
 				return content.substring(content.indexOf('=') + 1).trim().replace("\"", "").toLowerCase();
@@ -140,6 +140,9 @@ public class CandidateViewBean extends AbstractPageBean {
 	}
 
 	private boolean hasLopdFile() {
+		if (this.candidate.getFiles() == null) {
+			return false;
+		}
 		for (final FileSys fileSys : this.candidate.getFiles()) {
 			if ("lopd".equals(fileSys.getFileType())) {
 				return true;
@@ -191,7 +194,7 @@ public class CandidateViewBean extends AbstractPageBean {
 			new java.io.File(this.fileDirectory, file.getUuid()).renameTo(downloableFile);
 			Faces.sendFile(downloableFile, true);
 		} catch (final IOException e) {
-			logger.error( "Can't open file", e);
+			logger.error("Can't open file", e);
 			MessageUtils.addErrorMessage("error.unnexpected_error", "error.unnexpected_error");
 		}
 	}
@@ -202,7 +205,7 @@ public class CandidateViewBean extends AbstractPageBean {
 			this.candidate.getFiles().remove(file);
 			this.candidate = this.candidateService.save(this.candidate);
 		} catch (final IOException e) {
-			logger.error( "Can't remove file", e);
+			logger.error("Can't remove file", e);
 			MessageUtils.addErrorMessage("error.unnexpected_error", "error.unnexpected_error");
 		}
 	}
@@ -251,7 +254,7 @@ public class CandidateViewBean extends AbstractPageBean {
 	}
 
 	public void undelete() {
-		logger.debug( "UNDELETE action");
+		logger.debug("UNDELETE action");
 		this.candidate.setDeleted(false);
 		this.candidateService.save(this.candidate);
 	}
@@ -267,7 +270,7 @@ public class CandidateViewBean extends AbstractPageBean {
 			this.file.setUuid(uuid);
 			this.file.setName(fileName);
 		} catch (final IOException ex) {
-			logger.error( "Can't upload file", ex);
+			logger.error("Can't upload file", ex);
 			MessageUtils.addErrorMessage("error.unnexpected_error", "error.unnexpected_error");
 		}
 	}

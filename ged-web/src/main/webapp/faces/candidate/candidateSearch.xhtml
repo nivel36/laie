@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:a="http://java.sun.com/jsf/composite/legion" template="/WEB-INF/templates/default.xhtml">
+	xmlns:a="http://java.sun.com/jsf/composite/legion" xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
 		<title>#{i18n['candidate.candidates']}</title>
@@ -10,100 +11,73 @@
 	<ui:param name="selectedMenu" value="candidates" />
 
 	<ui:define name="content">
-		<h:form id="newForm">
-			<h1 class="header">
-				<i class="fa fa-users" /> #{i18n['candidate.candidates']}
-			</h1>
-			<h:panelGroup layout="block" styleClass="actionPanel">
-				<h:commandButton value="#{i18n['action.new']}" action="#{candidateSearchBean.newCandidate}" immediate="true" />
-			</h:panelGroup>
-		</h:form>
 		<h:form id="form">
-			<h:panelGroup layout="block" styleClass="panel">
-				<h1>#{i18n['candidate.search']}</h1>
-				<h:outputLabel for="name" value="#{i18n['candidate.name']}">
-					<h:inputText id="name" value="#{candidateSearchBean.name}" label="#{i18n['candidate.name']}" />
-				</h:outputLabel>
+			<h:panelGroup layout="block" styleClass="purple-panel">
+				<h:panelGroup layout="block" styleClass="panel-header">
+					<h4>#{i18n['candidate.search']}</h4>
+				</h:panelGroup>
+				<h:panelGroup layout="block" styleClass="panel-content">
+					<h:outputLabel for="name" value="#{i18n['candidate.name']}">
+						<h:inputText id="name" value="#{candidateSearchBean.name}" label="#{i18n['candidate.name']}" />
+					</h:outputLabel>
 
-				<h:outputLabel for="surename" value="#{i18n['candidate.surename']}">
-					<h:inputText id="surename" value="#{candidateSearchBean.surename}" label="#{i18n['candidate.surename']}" />
-				</h:outputLabel>
+					<h:outputLabel for="surename" value="#{i18n['candidate.surename']}">
+						<h:inputText id="surename" value="#{candidateSearchBean.surename}" label="#{i18n['candidate.surename']}" />
+					</h:outputLabel>
 
-				<h:outputLabel for="position" value="#{i18n['candidate.position']}">
-					<h:inputText id="position" value="#{candidateSearchBean.position}" label="#{i18n['candidate.position']}" />
-				</h:outputLabel>
+					<h:outputLabel for="position" value="#{i18n['candidate.position']}">
+						<h:inputText id="position" value="#{candidateSearchBean.position}" label="#{i18n['candidate.position']}" />
+					</h:outputLabel>
 
-				<h:panelGroup layout="block" styleClass="buttonGroup">
-					<h:commandButton value="#{i18n['action.search']}" action="#{candidateSearchBean.search}">
-						<f:ajax execute="searchUserPanel" render="@form" />
-					</h:commandButton>
-					<h:commandButton value="#{i18n['action.clean']}" action="#{candidateSearchBean.clean}">
-						<f:ajax render="@form" />
-					</h:commandButton>
+					<h:panelGroup layout="block" styleClass="buttonGroup">
+						<p:commandButton value="#{i18n['action.new']}" action="#{candidateSearchBean.newCandidate}" immediate="true" />
+						<p:commandButton value="#{i18n['action.search']}" action="#{candidateSearchBean.search}">
+							<f:ajax execute="searchUserPanel" render="@form" />
+						</p:commandButton>
+						<p:commandButton value="#{i18n['action.clean']}" action="#{candidateSearchBean.clean}">
+							<f:ajax render="@form" />
+						</p:commandButton>
+					</h:panelGroup>
 				</h:panelGroup>
 			</h:panelGroup>
 
-			<h:panelGroup layout="block" styleClass="panel" id="resultados">
-				<h1>#{i18n['candidate.search_results']}</h1>
+			<h:panelGroup layout="block" styleClass="purple-panel">
+				<h:panelGroup layout="block" styleClass="panel-header">
+					<h4>#{i18n['candidate.search_results']}</h4>
+				</h:panelGroup>
+				<h:panelGroup layout="block" styleClass="panel-content">
+					<p:dataTable var="candidate" id="candidate" value="#{candidateSearchBean.candidates}"
+						rendered="#{not empty candidateSearchBean.candidates}" emptyMessage="#{i18n['candidate.no_candidates_found']}"
+						styleClass="dataTable" reflow="true" paginator="true" paginatorPosition="bottom">
 
-				<h:outputText value="#{i18n['candidate.no_candidates_found']}"
-					rendered="#{empty candidateSearchBean.paginator.entities}" />
+						<p:ajax event="rowSelect" listener="#{candidateSearchBean.view}" />
 
-				<h:dataTable var="candidate" id="candidate" value="#{candidateSearchBean.paginator.dataList}"
-					rendered="#{not empty candidateSearchBean.paginator.entities}" styleClass="dataTable">
-					<h:column>
-						<f:facet name="header">
-							<h:outputText value="#{i18n['candidate.name']}" />
-						</f:facet>
-						<h:outputText value="#{candidate}" />
-					</h:column>
+						<p:column headerText="#{i18n['candidate.name']}" sortBy="#{candidate.name}">
+							<h:outputText value="#{candidate}" />
+						</p:column>
 
-					<h:column>
-						<f:facet name="header">
-							<h:outputText value="#{i18n['candidate.position']}" />
-						</f:facet>
-						<h:outputText value="#{candidate.position}" />
-					</h:column>
+						<p:column headerText="#{i18n['candidate.position']}" sortBy="#{candidate.position}">
+							<h:outputText value="#{candidate.position}" />
+						</p:column>
 
-					<h:column>
-						<f:facet name="header">
-							<h:outputText value="#{i18n['candidate.email']}" />
-						</f:facet>
-						<h:outputText value="#{candidate.email}" />
-					</h:column>
+						<p:column headerText="#{i18n['candidate.email']}" sortBy="#{candidate.email}">
+							<h:outputText value="#{candidate.email}" />
+						</p:column>
 
-					<h:column>
-						<f:facet name="header">
-							<h:outputText value="#{i18n['candidate.phone_number']}" />
-						</f:facet>
-						<h:outputText value="#{candidate.phoneNumber}" />
-					</h:column>
+						<p:column headerText="#{i18n['candidate.phone_number']}" sortBy="#{candidate.phoneNumber}">
+							<h:outputText value="#{candidate.phoneNumber}" />
+						</p:column>
 
-					<h:column>
-						<f:facet name="header">
-							<h:outputText value="#{i18n['user.owner']}" />
-						</f:facet>
-						<h:outputText value="#{candidate.owner.name}" />
-					</h:column>
-
-					<h:column>
-						<f:facet name="header">
-							<h:outputText value="Action" />
-						</f:facet>
-						<h:link value="#{i18n['action.view']}" outcome="candidateView">
-							<f:param name="id" value="#{candidate.id}" />
-						</h:link>
-						|
-						<h:commandLink action="#{candidateSearchBean.edit(candidate)}" value="#{i18n['action.edit']}" />
-						|
-						<h:commandLink action="#{candidateSearchBean.remove(candidate)}" value="#{i18n['action.remove']}"
-							onclick="return confirm('#{i18n['action.delete.are_you_sure']}')">
-							<f:ajax execute="@this" render=":form:resultados :asideForm:actions" />
-						</h:commandLink>
-					</h:column>
-				</h:dataTable>
-
-				<a:paginator id="paginator" paginator="#{candidateSearchBean.paginator}" />
+						<p:column headerText="#{i18n['user.owner']}" sortBy="#{candidate.owner.name}">
+							<h:outputText value="#{candidate.owner.name}" />
+						</p:column>
+						<p:column>
+							<p:button outcome="candidateView" icon="ui-icon-search">
+								<f:param name="id" value="#{candidate.id}" />
+							</p:button>
+						</p:column>
+					</p:dataTable>
+				</h:panelGroup>
 			</h:panelGroup>
 		</h:form>
 	</ui:define>

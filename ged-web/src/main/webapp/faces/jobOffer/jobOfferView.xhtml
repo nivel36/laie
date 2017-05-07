@@ -18,118 +18,126 @@
 		</f:metadata>
 
 		<h:form id="form">
-			<h1 class="header">
-				<i class="fa fa-suitcase" /> #{jobOfferViewBean.jobOffer.name}
-			</h1>
+			<h:panelGroup layout="block" styleClass="row">
+				<h:panelGroup layout="block" styleClass="half yellow-panel">
+					<h:panelGroup layout="block" styleClass="panel-header">
+						<h4>#{jobOfferViewBean.jobOffer.name}</h4>
+					</h:panelGroup>
+					<h:panelGroup layout="block" styleClass="panel-content">
+						<h:panelGroup layout="block" styleClass="textBlock">
+							<h:outputText styleClass="label" value="#{i18n['job.client']}:" />
+							<h:outputText value="#{jobOfferViewBean.jobOffer.client.name}" />
+						</h:panelGroup>
 
-			<h:panelGroup layout="block" styleClass="actionPanel">
-				<h:commandButton value="#{i18n['action.edit']}" action="#{jobOfferViewBean.edit}"
-					rendered="#{jobOfferViewBean.editable}" />
-				<h:commandButton value="#{i18n['bookmark.add_to_bookmarks']}"
-					action="#{bookmarksBean.add(jobOfferViewBean.jobOffer)}" immediate="true"
-					rendered="#{not bookmarksBean.isBookmarked(jobOfferViewBean.jobOffer)}" />
-				<h:commandButton value="#{i18n['bookmark.remove_from_bookmarks']}"
-					action="#{bookmarksBean.remove(jobOfferViewBean.jobOffer)}" immediate="true"
-					rendered="#{bookmarksBean.isBookmarked(jobOfferViewBean.jobOffer)}" />
-			</h:panelGroup>
+						<h:panelGroup layout="block" styleClass="textBlock">
+							<h:outputText styleClass="label" value="#{i18n['job.places']}:" />
+							<h:outputText value="#{jobOfferEditBean.jobOffer.places}" />
+						</h:panelGroup>
 
-			<h:panelGroup layout="block" styleClass="panel">
-				<h1>#{i18n['job.detail']}</h1>
-				<h:panelGroup layout="block" styleClass="textBlock">
-					<h:outputText styleClass="label" value="#{i18n['job.name']}:" />
-					<h:outputText value="#{jobOfferViewBean.jobOffer.name}" />
+						<h:panelGroup layout="block" styleClass="textBlock">
+							<h:outputText styleClass="label" value="#{i18n['job.date_opened']}:" />
+							<h:outputText value="#{jobOfferViewBean.jobOffer.dateOpened}">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</h:outputText>
+						</h:panelGroup>
+
+						<h:panelGroup layout="block" styleClass="textBlock">
+							<h:outputText styleClass="label" value="#{i18n['job.date_closed']}:" />
+							<h:outputText value="#{jobOfferViewBean.jobOffer.dateClosed}">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</h:outputText>
+						</h:panelGroup>
+
+						<h:panelGroup layout="block" styleClass="textBlock">
+							<h:outputText styleClass="label" value="#{i18n['job.description']}:" />
+							<h:outputText value="#{jobOfferViewBean.jobOffer.description}" />
+						</h:panelGroup>
+
+						<h:panelGroup layout="block" styleClass="textBlock">
+							<h:outputText styleClass="label" value="#{i18n['address.city']}:" />
+							<h:outputText value="#{jobOfferViewBean.jobOffer.city}" />
+						</h:panelGroup>
+
+						<h:panelGroup layout="block" styleClass="textBlock">
+							<h:outputText styleClass="label" value="#{i18n['address.state']}:" />
+							<h:outputText value="#{jobOfferViewBean.jobOffer.state}" />
+						</h:panelGroup>
+
+						<h:panelGroup layout="block" styleClass="buttonGroup">
+							<h:commandButton value="#{i18n['action.edit']}" action="#{jobOfferViewBean.edit}"
+								rendered="#{jobOfferViewBean.editable}" />
+							<h:commandButton value="#{i18n['bookmark.add_to_bookmarks']}"
+								action="#{bookmarksBean.add(jobOfferViewBean.jobOffer)}" immediate="true"
+								rendered="#{not bookmarksBean.isBookmarked(jobOfferViewBean.jobOffer)}" />
+							<h:commandButton value="#{i18n['bookmark.remove_from_bookmarks']}"
+								action="#{bookmarksBean.remove(jobOfferViewBean.jobOffer)}" immediate="true"
+								rendered="#{bookmarksBean.isBookmarked(jobOfferViewBean.jobOffer)}" />
+						</h:panelGroup>
+					</h:panelGroup>
 				</h:panelGroup>
 
-				<h:panelGroup layout="block" styleClass="textBlock">
-					<h:outputText styleClass="label" value="#{i18n['job.client']}:" />
-					<h:outputText value="#{jobOfferViewBean.jobOffer.client.name}" />
-				</h:panelGroup>
+				<h:panelGroup layout="block" styleClass="half purple-panel" id="candidates">
+					<h:panelGroup layout="block" styleClass="panel-header">
+						<h4>#{i18n['candidate.candidates']}</h4>
+					</h:panelGroup>
+					<h:panelGroup layout="block" styleClass="panel-content">
 
-				<h:panelGroup layout="block" styleClass="textBlock">
-					<h:outputText styleClass="label" value="#{i18n['job.places']}:" />
-					<h:outputText value="#{jobOfferEditBean.jobOffer.places}" />
-				</h:panelGroup>
+						<h:panelGroup layout="block">
+							<h:outputText value="#{i18n['job_meeting.no_candidates']}" rendered="#{empty jobOfferViewBean.candidates}" />
 
-				<h:panelGroup layout="block" styleClass="textBlock">
-					<h:outputText styleClass="label" value="#{i18n['job.date_opened']}:" />
-					<h:outputText value="#{jobOfferViewBean.jobOffer.dateOpened}">
-						<f:convertDateTime pattern="dd/MM/yyyy" />
-					</h:outputText>
-				</h:panelGroup>
+							<h:dataTable var="candidate" value="#{jobOfferViewBean.candidates}"
+								rendered="#{not empty jobOfferViewBean.candidates}" styleClass="dataTable">
 
-				<h:panelGroup layout="block" styleClass="textBlock">
-					<h:outputText styleClass="label" value="#{i18n['job.date_closed']}:" />
-					<h:outputText value="#{jobOfferViewBean.jobOffer.dateClosed}">
-						<f:convertDateTime pattern="dd/MM/yyyy" />
-					</h:outputText>
-				</h:panelGroup>
-
-				<h:panelGroup layout="block" styleClass="textBlock">
-					<h:outputText styleClass="label" value="#{i18n['job.description']}:" />
-					<h:outputText value="#{jobOfferViewBean.jobOffer.description}" />
-				</h:panelGroup>
-
-				<h:panelGroup layout="block" styleClass="textBlock">
-					<h:outputText styleClass="label" value="#{i18n['address.city']}:" />
-					<h:outputText value="#{jobOfferViewBean.jobOffer.city}" />
-				</h:panelGroup>
-
-				<h:panelGroup layout="block" styleClass="textBlock">
-					<h:outputText styleClass="label" value="#{i18n['address.state']}:" />
-					<h:outputText value="#{jobOfferViewBean.jobOffer.state}" />
-				</h:panelGroup>
-			</h:panelGroup>
-
-			<h:panelGroup layout="block" styleClass="panel" id="candidates">
-				<h1>#{i18n['candidate.candidates']}</h1>
-
-				<h:panelGroup layout="block">
-					<h:outputText value="#{i18n['job_meeting.no_candidates']}" rendered="#{empty jobOfferViewBean.candidates}" />
-
-					<h:dataTable var="candidate" value="#{jobOfferViewBean.candidates}"
-						rendered="#{not empty jobOfferViewBean.candidates}" styleClass="dataTable">
-
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="#{i18n['candidate.name']}" />
-							</f:facet>
-							<h:outputText value="#{candidate}" />
-						</h:column>
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="Action" />
-							</f:facet>
-							<h:link value="#{i18n['action.view']}" outcome="/faces/candidate/candidateView">
-								<f:param name="id" value="#{candidate.id}" />
-							</h:link>
+								<h:column>
+									<f:facet name="header">
+										<h:outputText value="#{i18n['candidate.name']}" />
+									</f:facet>
+									<h:outputText value="#{candidate}" />
+								</h:column>
+								<h:column>
+									<f:facet name="header">
+										<h:outputText value="Action" />
+									</f:facet>
+									<h:link value="#{i18n['action.view']}" outcome="/faces/candidate/candidateView">
+										<f:param name="id" value="#{candidate.id}" />
+									</h:link>
 						|
 						<h:commandLink action="#{jobOfferViewBean.removeCandidate(candidate)}" value="#{i18n['action.remove']}"
-								onclick="return confirm('#{i18n['action.delete.are_you_sure']}')">
-								<f:ajax execute="@this" render=":form:candidates :asideForm:actions" />
-							</h:commandLink>
-						</h:column>
-					</h:dataTable>
+										onclick="return confirm('#{i18n['action.delete.are_you_sure']}')">
+										<f:ajax execute="@this" render=":form:candidates :asideForm:actions" />
+									</h:commandLink>
+								</h:column>
+							</h:dataTable>
 
-					<h:panelGroup layout="block" styleClass="buttonGroup">
-						<h:commandButton value="#{i18n['action.add']}" action="#{candidateSearchPopupBean.show}" />
+							<h:panelGroup layout="block" styleClass="buttonGroup">
+								<h:commandButton value="#{i18n['action.add']}" action="#{candidateSearchPopupBean.show}" />
+							</h:panelGroup>
+						</h:panelGroup>
 					</h:panelGroup>
 				</h:panelGroup>
 			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="row">
 
-			<h:panelGroup layout="block" styleClass="panel">
-				<h1>#{i18n['job_meeting.job_meetings']}</h1>
-
-				<h:panelGroup layout="block" class=" half">
-					<h2>#{i18n['job_meeting.conducted_job_meetings']}</h2>
-					<h:outputText value="#{i18n['job_meeting.no_conducted']}" rendered="#{empty jobOfferViewBean.conductedJobMeetings}" />
+				<h:panelGroup layout="block" styleClass="half red-panel">
+					<h:panelGroup layout="block" styleClass="panel-header">
+						<h4>#{i18n['job_meeting.conducted_job_meetings']}</h4>
+					</h:panelGroup>
+					<h:panelGroup layout="block" styleClass="panel-content">
+						<h:outputText value="#{i18n['job_meeting.no_conducted']}"
+							rendered="#{empty jobOfferViewBean.conductedJobMeetings}" />
+					</h:panelGroup>
 				</h:panelGroup>
 
-				<h:panelGroup layout="block" class=" half">
-					<h2>#{i18n['job_meeting.planned_job_meetings']}</h2>
-					<h:outputText value="#{i18n['job_meeting.no_planned']}" rendered="#{empty jobOfferViewBean.plannedJobMeetings}" />
-				</h:panelGroup>
-				<h:panelGroup layout="block" styleClass="buttonGroup">
-					<h:commandButton value="#{i18n['action.create']}" action="#{jobOfferViewBean.edit}" />
+				<h:panelGroup layout="block" styleClass="half red-panel">
+					<h:panelGroup layout="block" styleClass="panel-header">
+						<h4>#{i18n['job_meeting.planned_job_meetings']}</h4>
+					</h:panelGroup>
+					<h:panelGroup layout="block" styleClass="panel-content">
+						<h:outputText value="#{i18n['job_meeting.no_planned']}" rendered="#{empty jobOfferViewBean.plannedJobMeetings}" />
+						<h:panelGroup layout="block" styleClass="buttonGroup">
+							<h:commandButton value="#{i18n['action.create']}" action="#{jobOfferViewBean.edit}" />
+						</h:panelGroup>
+					</h:panelGroup>
 				</h:panelGroup>
 			</h:panelGroup>
 		</h:form>
@@ -138,11 +146,7 @@
 			<ui:param name="callback" value="#{jobOfferViewBean.candidate}" />
 			<ui:param name="render" value=":form" />
 		</ui:include>
-		
-		<ui:include src="../candidate/meetingEditPopup.xhtml">
-			<ui:param name="callback" value="#{jobOfferViewBean.candidate}" />
-			<ui:param name="render" value=":form" />
-		</ui:include>
+
 	</ui:define>
 
 </ui:composition>

@@ -11,10 +11,12 @@
 
 	<ui:define name="content">
 		<h:form>
-			<h1 class="header">
-				<i class="fa fa-bar-chart" /> #{i18n['report.reports']}
-			</h1>
-			<h:panelGroup layout="block" styleClass="panel">
+			<h:panelGroup layout="block" styleClass="green-panel">
+				<h:panelGroup layout="block" styleClass="panel-header">
+					<h4>#{i18n['report.reports']}</h4>
+				</h:panelGroup>
+				<h:panelGroup layout="block" styleClass="panel-content">
+				</h:panelGroup>
 			</h:panelGroup>
 		</h:form>
 	</ui:define>

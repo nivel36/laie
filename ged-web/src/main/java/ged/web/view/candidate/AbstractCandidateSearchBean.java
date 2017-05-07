@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
 import ged.ejb.candidate.Candidate;
 import ged.ejb.candidate.CandidateService;
 import ged.web.core.view.AbstractPageBean;
-import ged.web.core.view.Paginator;
 
 public abstract class AbstractCandidateSearchBean extends AbstractPageBean {
 
@@ -20,13 +19,15 @@ public abstract class AbstractCandidateSearchBean extends AbstractPageBean {
 
 	private static final long serialVersionUID = -5446836478526189391L;
 
+	protected List<Candidate> candidates;
+
 	protected final transient CandidateService candidateService;
 
 	private String name;
 
-	protected Paginator<Candidate> paginator;
-
 	private String position;
+
+	protected Candidate selectedCandidate;
 
 	private String surename;
 
@@ -48,16 +49,20 @@ public abstract class AbstractCandidateSearchBean extends AbstractPageBean {
 		return "candidateEdit?faces-redirect=true";
 	}
 
+	public List<Candidate> getCandidates() {
+		return this.candidates;
+	}
+
 	public String getName() {
 		return this.name;
 	}
 
-	public Paginator<Candidate> getPaginator() {
-		return this.paginator;
-	}
-
 	public String getPosition() {
 		return this.position;
+	}
+
+	public Candidate getSelectedCandidate() {
+		return this.selectedCandidate;
 	}
 
 	public String getSurename() {
@@ -66,7 +71,6 @@ public abstract class AbstractCandidateSearchBean extends AbstractPageBean {
 
 	@PostConstruct
 	public void init() {
-		this.paginator = new Paginator<>(this.sessionBean.getRowsPerPage());
 		search();
 	}
 
@@ -83,8 +87,7 @@ public abstract class AbstractCandidateSearchBean extends AbstractPageBean {
 
 	public void search() {
 		logger.debug("Searching for candidates");
-		final List<Candidate> candidates = this.candidateService.search(this.name, this.surename, this.position);
-		this.paginator.setEntities(candidates);
+		this.candidates = this.candidateService.search(this.name, this.surename, this.position);
 	}
 
 	public void setName(final String name) {
@@ -93,6 +96,10 @@ public abstract class AbstractCandidateSearchBean extends AbstractPageBean {
 
 	public void setPosition(final String position) {
 		this.position = position;
+	}
+
+	public void setSelectedCandidate(final Candidate selectedCandidate) {
+		this.selectedCandidate = selectedCandidate;
 	}
 
 	public void setSurename(final String surename) {

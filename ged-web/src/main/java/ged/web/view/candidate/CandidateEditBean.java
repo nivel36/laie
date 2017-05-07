@@ -1,13 +1,14 @@
 package ged.web.view.candidate;
 
 import java.util.Objects;
-import org.slf4j.LoggerFactory;
-import org.slf4j.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import ged.ejb.candidate.Candidate;
 import ged.ejb.candidate.CandidateService;
@@ -39,7 +40,11 @@ public class CandidateEditBean extends AbstractPageBean {
 	}
 
 	public String cancel() {
-		return "candidateSearch?faces-redirect=true";
+		if (this.candidate.getId() == null) {
+			return "candidateSearch?&faces-redirect=true";
+		} else {
+			return "candidateView?id=" + this.candidate.getId() + "&faces-redirect=true";
+		}
 	}
 
 	private Curriculum createNewCurriculum() {
@@ -90,7 +95,7 @@ public class CandidateEditBean extends AbstractPageBean {
 	}
 
 	public String save() {
-		logger.debug( "Save candidate action performed");
+		logger.debug("Save candidate action performed");
 		saveCandidate();
 		return "candidateView.xhtml?id=" + this.candidate.getId() + "&faces-redirect=true";
 	}

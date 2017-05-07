@@ -1,44 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
 
 	<h:form id="asideForm"
 		onkeypress="if (event.keyCode == 13) { document.getElementById('asideForm:searchButton').click(); return false; }">
 		<h:panelGroup layout="block" styleClass="panel">
-			<h1>#{i18n['aside.search']}</h1>
-			<h:inputText id="inputSearch" styleClass="searchInput" binding="#{inputSearch}">
-				<f:ajax execute="@this" event="keyup" render="searchButton" />
-			</h:inputText>
-			<h:link id="searchButton" styleClass="searchButton" outcome="/faces/globalSearch">
-				<i class="fa fa-search" />
-				<f:param name="text" value="#{empty inputSearch.value ? '' : inputSearch.value}" />
-			</h:link>
+			<h:panelGroup layout="block" styleClass="panel-header">
+				<h4>#{i18n['aside.search']}</h4>
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="panel-content">
+				<h:inputText id="inputSearch" styleClass="searchInput" binding="#{inputSearch}">
+					<f:ajax execute="@this" event="keyup" render="searchButton" />
+				</h:inputText>
+				<h:link id="searchButton" styleClass="searchButton" outcome="/faces/globalSearch">
+					<i class="fa fa-search" />
+					<f:param name="text" value="#{empty inputSearch.value ? '' : inputSearch.value}" />
+				</h:link>
+			</h:panelGroup>
 		</h:panelGroup>
 
 		<h:panelGroup layout="block" styleClass="panel" id="searchs">
-			<h1>#{i18n['aside.saved_searchs']}</h1>
-			<h:outputText value="#{i18n['message.saved_searchs.empty']}" styleClass="text" rendered="#{empty savedSearches}" />
-			<h:commandButton value="#{i18n['action.clean']}" />
-			<h:commandButton value="#{i18n['action.add']}" />
+			<h:panelGroup layout="block" styleClass="panel-header">
+				<h4>#{i18n['aside.saved_searchs']}</h4>
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="panel-content">
+				<h:outputText value="#{i18n['message.saved_searchs.empty']}" styleClass="text" rendered="#{empty savedSearches}" />
+				<p:commandButton value="#{i18n['action.clean']}" />
+				<p:commandButton value="#{i18n['action.add']}" />
+			</h:panelGroup>
 		</h:panelGroup>
 
 		<h:panelGroup layout="block" styleClass="panel" id="bookmarks">
-			<h1>#{i18n['aside.bookmarks']}</h1>
-			<h:outputText value="#{i18n['message.bookmarks.empty']}" styleClass="text"
-				rendered="#{empty bookmarksBean.bookmarks}" />
-			<ui:repeat value="#{bookmarksBean.bookmarks}" var="bookmark">
-				<h:commandLink action="#{bookmarksBean.go(bookmark)}" value="#{bookmark.text}" />
-				<br />
-			</ui:repeat>
+			<h:panelGroup layout="block" styleClass="panel-header">
+				<h4>#{i18n['aside.bookmarks']}</h4>
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="panel-content">
+				<h:outputText value="#{i18n['message.bookmarks.empty']}" styleClass="text"
+					rendered="#{empty bookmarksBean.bookmarks}" />
+				<ui:repeat value="#{bookmarksBean.bookmarks}" var="bookmark">
+					<h:commandLink action="#{bookmarksBean.go(bookmark)}" value="#{bookmark.text}" />
+					<br />
+				</ui:repeat>
+			</h:panelGroup>
 		</h:panelGroup>
 
 		<h:panelGroup layout="block" styleClass="panel" id="actions">
-			<h1>#{i18n['aside.last_actions']}</h1>
-			<h:outputText value="#{i18n['message.actions.empty']}" styleClass="text" rendered="#{empty actionBean.actions}" />
-			<ui:repeat value="#{actionBean.actions}" var="action">
-				<h:commandLink action="#{actionBean.go(action)}" value="#{action.text}" />
-				<br />
-			</ui:repeat>
+			<h:panelGroup layout="block" styleClass="panel-header">
+				<h4>#{i18n['aside.last_actions']}</h4>
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="panel-content">
+				<h:outputText value="#{i18n['message.actions.empty']}" styleClass="text" rendered="#{empty actionBean.actions}" />
+				<ui:repeat value="#{actionBean.actions}" var="action">
+					<h:commandLink action="#{actionBean.go(action)}" value="#{action.text}" />
+					<br />
+				</ui:repeat>
+			</h:panelGroup>
 		</h:panelGroup>
 	</h:form>
 </ui:composition>
