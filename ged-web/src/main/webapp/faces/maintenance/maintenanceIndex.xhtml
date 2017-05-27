@@ -10,8 +10,8 @@
 	<ui:param name="selectedMenu" value="maintenances" />
 
 	<ui:define name="content">
-		<h:panelGrid styleClass="panelGrid" columns="2" cellpadding="10px">
-			<h:panelGroup layout="block" styleClass="panel">
+		<h:panelGroup layout="block" styleClass="row">
+			<h:panelGroup layout="block" styleClass="half panel">
 				<h:panelGroup layout="block" styleClass="panel-header">
 					<h4>#{i18n['maintenance.skill_knowdeleges']}</h4>
 				</h:panelGroup>
@@ -27,7 +27,7 @@
 				</h:panelGroup>
 			</h:panelGroup>
 
-			<h:panelGroup layout="block" styleClass="panel">
+			<h:panelGroup layout="block" styleClass="half panel">
 				<h:panelGroup layout="block" styleClass="panel-header">
 					<h4>#{i18n['maintenance.language_knowdeleges']}</h4>
 				</h:panelGroup>
@@ -42,8 +42,10 @@
 					</h:form>
 				</h:panelGroup>
 			</h:panelGroup>
+		</h:panelGroup>
+		<h:panelGroup layout="block" styleClass="row">
 
-			<h:panelGroup layout="block" styleClass="darkblue-panel">
+			<h:panelGroup layout="block" styleClass="half panel">
 				<h:panelGroup layout="block" styleClass="panel-header">
 					<h4>#{i18n['maintenance.file_types']}</h4>
 				</h:panelGroup>
@@ -58,6 +60,6 @@
 					</h:form>
 				</h:panelGroup>
 			</h:panelGroup>
-		</h:panelGrid>
+		</h:panelGroup>
 	</ui:define>
 </ui:composition>

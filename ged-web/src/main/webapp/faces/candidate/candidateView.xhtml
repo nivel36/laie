@@ -41,7 +41,7 @@
 							<h:outputText value="#{candidateViewBean.candidate.email}" />
 						</h:panelGroup>
 					</h:panelGroup>
-					
+
 					<h:panelGroup layout="block" styleClass="row">
 
 						<h:panelGroup layout="block" styleClass="textBlock">
@@ -54,7 +54,7 @@
 							<h:outputText value="#{candidateViewBean.candidate.address.state}" />
 						</h:panelGroup>
 					</h:panelGroup>
-					
+
 					<h:panelGroup layout="block" styleClass="row">
 						<h:panelGroup layout="block" styleClass="textBlock">
 							<h:outputText styleClass="label" value="#{i18n['social.linkedin']} :" />
@@ -65,7 +65,7 @@
 							<h:outputText value="#{candidateViewBean.candidate.infojobsProfileUrl}" />
 						</h:panelGroup>
 					</h:panelGroup>
-					
+
 					<h:panelGroup layout="block" styleClass="row">
 
 						<h:panelGroup layout="block" styleClass="textBlock">
@@ -83,7 +83,7 @@
 							<h:outputText value="#{candidateViewBean.candidate.expectedSalary}" />
 						</h:panelGroup>
 					</h:panelGroup>
-					
+
 					<h:panelGroup id="undeleteButton" layout="block" styleClass="buttonGroup"
 						rendered="#{candidateViewBean.candidate.deleted}">
 						<p:commandButton value="#{i18n['action.undelete']}" action="#{candidateViewBean.undelete}" />
@@ -99,120 +99,133 @@
 						<p:commandButton value="#{i18n['bookmark.remove_from_bookmarks']}"
 							action="#{bookmarksBean.remove(candidateViewBean.candidate)}"
 							rendered="#{bookmarksBean.isBookmarked(candidateViewBean.candidate)}" update="actionButtons :asideForm:bookmarks" />
-						<p:button value="#{i18n['curriculum.view_curriculum']}" outcome="curriculumView">
-							<f:param name="id" value="#{candidateViewBean.candidate.id}" />
-						</p:button>
 					</h:panelGroup>
 				</h:panelGroup>
 			</h:panelGroup>
 		</h:form>
 
 		<h:form id="file_form" prependId="false" enctype="multipart/form-data">
-			<h:panelGroup layout="block" styleClass="modalPanel"
-				rendered="#{candidateViewBean.addingFile or candidateViewBean.editingFile}">
-			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="purple-panel">
-				<h:panelGroup layout="block" styleClass="panel-header">
-					<h4>#{i18n['file.files']}</h4>
-				</h:panelGroup>
-				<h:panelGroup layout="block" styleClass="panel-content">
-					<h:panelGroup layout="block" rendered="#{not candidateViewBean.addingFile and not candidateViewBean.editingFile}">
-						<h:outputText value="#{i18n['file.no_files']}" rendered="#{empty candidateViewBean.candidate.files}" />
+			<h:panelGroup layout="block" styleClass="row">
 
-						<h:dataTable var="file" id="files" value="#{candidateViewBean.candidate.files}"
-							rendered="#{not empty candidateViewBean.candidate.files}" styleClass="dataTable">
-
-							<h:column>
-								<f:facet name="header">
-									<h:outputText value="#{i18n['file.name']}" />
-								</f:facet>
-								<h:outputText value="#{file.id}" />
-							</h:column>
-
-							<h:column>
-								<f:facet name="header">
-									<h:outputText value="#{i18n['file.name']}" />
-								</f:facet>
-								<h:outputText value="#{file.name}" />
-							</h:column>
-
-							<h:column>
-								<f:facet name="header">
-									<h:outputText value="#{i18n['file.type']}" />
-								</f:facet>
-								<h:outputText value="#{file.fileType}" />
-							</h:column>
-
-							<h:column>
-								<f:facet name="header">
-									<h:outputText value="#{i18n['file.date']}" />
-								</f:facet>
-								<h:outputText value="#{file.date}" />
-							</h:column>
-
-							<h:column>
-								<f:facet name="header">
-									<h:outputText value="#{i18n['action.action']}" />
-								</f:facet>
-								<h:commandLink action="#{candidateViewBean.openFile(file)}" value="#{i18n['action.open']}" />
-								|
-							<h:commandLink action="#{candidateViewBean.editFile(file)}" value="#{i18n['action.edit']}">
-									<f:ajax execute="file_form" render="@form" />
-								</h:commandLink>
-									|
-							<h:commandLink action="#{candidateViewBean.removeFile(file)}" value="#{i18n['action.remove']}">
-									<f:ajax execute="file_form" render="@form" />
-								</h:commandLink>
-							</h:column>
-						</h:dataTable>
-
+				<h:panelGroup layout="block" styleClass="half purple-panel">
+					<h:panelGroup layout="block" styleClass="panel-header">
+						<h4>#{i18n['curriculum.curriculums']}</h4>
+					</h:panelGroup>
+					<h:panelGroup layout="block" styleClass="panel-content">
 						<h:panelGroup layout="block" styleClass="buttonGroup">
 							<p:commandButton value="#{i18n['action.add']}" action="#{candidateViewBean.addFile}" immediate="true">
 								<f:ajax render="@form" />
 							</p:commandButton>
 						</h:panelGroup>
 					</h:panelGroup>
+				</h:panelGroup>
 
-					<h:panelGroup layout="block" rendered="#{candidateViewBean.addingFile  and not candidateViewBean.editingFile}">
-						<h:outputLabel value="#{i18n['file.name']}" styleClass="required"></h:outputLabel>
-						<h:inputFile id="uploadFile" value="#{candidateViewBean.part}" label="#{i18n['candidate.name']}" required="true"
-							styleClass="#{not component.valid ? 'inputError' : ''}" />
-						<h:message for="uploadFile" errorClass="error" />
-
-						<h:panelGroup layout="block" styleClass="buttonGroup">
-							<p:commandButton value="#{i18n['action.upload']}" action="#{candidateViewBean.upload}">
-								<f:ajax execute="@form" render="@form" />
-							</p:commandButton>
-							<p:commandButton value="#{i18n['action.cancel']}" action="#{candidateViewBean.cancelAddFile}" immediate="true">
-								<f:ajax execute="" render="@form" />
-							</p:commandButton>
-						</h:panelGroup>
+				<h:panelGroup layout="block" styleClass="half purple-panel">
+					<h:panelGroup layout="block" styleClass="modalPanel"
+						rendered="#{candidateViewBean.addingFile or candidateViewBean.editingFile}">
 					</h:panelGroup>
+					<h:panelGroup layout="block" styleClass="panel-header">
+						<h4>#{i18n['file.files']}</h4>
+					</h:panelGroup>
+					<h:panelGroup layout="block" styleClass="panel-content">
+						<h:panelGroup layout="block" rendered="#{not candidateViewBean.addingFile and not candidateViewBean.editingFile}">
+							<h:outputText value="#{i18n['file.no_files']}" rendered="#{empty candidateViewBean.candidate.files}" />
 
-					<h:panelGroup layout="block" rendered="#{candidateViewBean.editingFile}">
-						<h:outputLabel value="#{i18n['file.name']}" styleClass="large required">
-							<h:inputText id="fileName" value="#{candidateViewBean.file.name}" label="#{i18n['file.name']}" required="true"
+							<h:dataTable var="file" id="files" value="#{candidateViewBean.candidate.files}"
+								rendered="#{not empty candidateViewBean.candidate.files}" styleClass="dataTable">
+
+								<h:column>
+									<f:facet name="header">
+										<h:outputText value="#{i18n['file.name']}" />
+									</f:facet>
+									<h:outputText value="#{file.id}" />
+								</h:column>
+
+								<h:column>
+									<f:facet name="header">
+										<h:outputText value="#{i18n['file.name']}" />
+									</f:facet>
+									<h:outputText value="#{file.name}" />
+								</h:column>
+
+								<h:column>
+									<f:facet name="header">
+										<h:outputText value="#{i18n['file.type']}" />
+									</f:facet>
+									<h:outputText value="#{file.fileType}" />
+								</h:column>
+
+								<h:column>
+									<f:facet name="header">
+										<h:outputText value="#{i18n['file.date']}" />
+									</f:facet>
+									<h:outputText value="#{file.date}" />
+								</h:column>
+
+								<h:column>
+									<f:facet name="header">
+										<h:outputText value="#{i18n['action.action']}" />
+									</f:facet>
+									<h:commandLink action="#{candidateViewBean.openFile(file)}" value="#{i18n['action.open']}" />
+								|
+							<h:commandLink action="#{candidateViewBean.editFile(file)}" value="#{i18n['action.edit']}">
+										<f:ajax execute="file_form" render="@form" />
+									</h:commandLink>
+									|
+							<h:commandLink action="#{candidateViewBean.removeFile(file)}" value="#{i18n['action.remove']}">
+										<f:ajax execute="file_form" render="@form" />
+									</h:commandLink>
+								</h:column>
+							</h:dataTable>
+
+							<h:panelGroup layout="block" styleClass="buttonGroup">
+								<p:commandButton value="#{i18n['action.add']}" action="#{candidateViewBean.addFile}" immediate="true">
+									<f:ajax render="@form" />
+								</p:commandButton>
+							</h:panelGroup>
+						</h:panelGroup>
+
+						<h:panelGroup layout="block" rendered="#{candidateViewBean.addingFile  and not candidateViewBean.editingFile}">
+							<h:outputLabel value="#{i18n['file.name']}" styleClass="required"></h:outputLabel>
+							<h:inputFile id="uploadFile" value="#{candidateViewBean.part}" label="#{i18n['candidate.name']}" required="true"
 								styleClass="#{not component.valid ? 'inputError' : ''}" />
-							<h:message for="fileName" errorClass="error" />
-						</h:outputLabel>
+							<h:message for="uploadFile" errorClass="error" />
 
-						<h:outputLabel value="#{i18n['file.type']}" styleClass="required">
-							<h:selectOneMenu id="fileType" value="#{candidateViewBean.file.fileType}">
-								<f:selectItems var="fileType" itemValue="#{fileType.name}" value="#{applicationBean.fileTypes}"
-									itemLabel="#{i18n:translate(fileType.name)}" styleClass="#{not component.valid ? 'inputError' : ''}" />
-							</h:selectOneMenu>
-							<h:message for="fileType" errorClass="error" />
-						</h:outputLabel>
+							<h:panelGroup layout="block" styleClass="buttonGroup">
+								<p:commandButton value="#{i18n['action.upload']}" action="#{candidateViewBean.upload}">
+									<f:ajax execute="@form" render="@form" />
+								</p:commandButton>
+								<p:commandButton value="#{i18n['action.cancel']}" action="#{candidateViewBean.cancelAddFile}" immediate="true">
+									<f:ajax execute="" render="@form" />
+								</p:commandButton>
+							</h:panelGroup>
+						</h:panelGroup>
 
-						<h:outputLabel value="#{i18n['file.description']}" styleClass="large">
-							<h:inputText id="description" value="#{candidateViewBean.file.description}" label="#{i18n['file.description']}"
-								styleClass="#{not component.valid ? 'inputError' : ''}" />
-							<h:message for="description" errorClass="error" />
-						</h:outputLabel>
+						<h:panelGroup layout="block" rendered="#{candidateViewBean.editingFile}">
+							<h:outputLabel value="#{i18n['file.name']}" styleClass="large required">
+								<h:inputText id="fileName" value="#{candidateViewBean.file.name}" label="#{i18n['file.name']}" required="true"
+									styleClass="#{not component.valid ? 'inputError' : ''}" />
+								<h:message for="fileName" errorClass="error" />
+							</h:outputLabel>
 
-						<h:panelGroup layout="block" styleClass="buttonGroup">
-							<p:commandButton value="#{i18n['action.save']}" action="#{candidateViewBean.saveFile}" />
-							<p:commandButton value="#{i18n['action.cancel']}" action="#{candidateViewBean.cancelAddFile}" immediate="true" />
+							<h:outputLabel value="#{i18n['file.type']}" styleClass="required">
+								<h:selectOneMenu id="fileType" value="#{candidateViewBean.file.fileType}">
+									<f:selectItems var="fileType" itemValue="#{fileType.name}" value="#{applicationBean.fileTypes}"
+										itemLabel="#{i18n:translate(fileType.name)}" styleClass="#{not component.valid ? 'inputError' : ''}" />
+								</h:selectOneMenu>
+								<h:message for="fileType" errorClass="error" />
+							</h:outputLabel>
+
+							<h:outputLabel value="#{i18n['file.description']}" styleClass="large">
+								<h:inputText id="description" value="#{candidateViewBean.file.description}" label="#{i18n['file.description']}"
+									styleClass="#{not component.valid ? 'inputError' : ''}" />
+								<h:message for="description" errorClass="error" />
+							</h:outputLabel>
+
+							<h:panelGroup layout="block" styleClass="buttonGroup">
+								<p:commandButton value="#{i18n['action.save']}" action="#{candidateViewBean.saveFile}" />
+								<p:commandButton value="#{i18n['action.cancel']}" action="#{candidateViewBean.cancelAddFile}" immediate="true" />
+							</h:panelGroup>
 						</h:panelGroup>
 					</h:panelGroup>
 				</h:panelGroup>
