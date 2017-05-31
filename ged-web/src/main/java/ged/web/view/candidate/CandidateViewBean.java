@@ -38,6 +38,8 @@ public class CandidateViewBean extends AbstractPageBean {
 
 	private final transient CandidateService candidateService;
 
+	private boolean editable;
+
 	private boolean editingFile;
 
 	private FileSys file;
@@ -55,7 +57,6 @@ public class CandidateViewBean extends AbstractPageBean {
 		Objects.requireNonNull(fileDirectory);
 		this.candidateService = candidateService;
 		this.fileDirectory = fileDirectory;
-
 	}
 
 	public void addFile() {
@@ -77,15 +78,18 @@ public class CandidateViewBean extends AbstractPageBean {
 		}
 	}
 
+	public void cancelEditCandidate() {
+		this.editable = false;
+	}
+
 	private void checkLopdFile() {
 		if (!hasLopdFile()) {
 			MessageUtils.addWarningMessage("candidate.warn.no_lopd_file", "candidate.warn.no_lopd_file");
 		}
 	}
 
-	public String editCandidate() {
-		this.flash.put("candidate", this.candidate);
-		return "candidateEdit?faces-redirect=true";
+	public void editCandidate() {
+		this.editable = true;
 	}
 
 	public void editFile() {
@@ -175,6 +179,10 @@ public class CandidateViewBean extends AbstractPageBean {
 		return this.addingFile;
 	}
 
+	public boolean isEditable() {
+		return this.editable;
+	}
+
 	public boolean isEditingFile() {
 		return this.editingFile;
 	}
@@ -212,6 +220,12 @@ public class CandidateViewBean extends AbstractPageBean {
 
 	private void removeFileFromFileSystem(final String uuid) throws IOException {
 		Files.deleteIfExists(new java.io.File(this.fileDirectory, uuid).toPath());
+	}
+
+	public void saveCandidate() {
+		this.candidate.setUser(this.sessionBean.getUser());
+		this.candidateService.save(this.candidate);
+		this.editable = false;
 	}
 
 	public void saveFile() {

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://legion.com/i18n"
-	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/templates/default.xhtml">
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
 		<title>#{i18n['candidate.candidate']}</title>
@@ -26,72 +27,91 @@
 
 				<h:panelGroup layout="block" styleClass="panel-content">
 					<h:panelGroup layout="block" styleClass="row">
-						<h:panelGroup layout="block" styleClass="textBlock">
-							<h:outputText styleClass="label" value="#{i18n['candidate.age']}:" />
-							<h:outputText value="#{candidateViewBean.candidate.age}" />
-						</h:panelGroup>
+						<h:outputLabel value="#{i18n['candidate.name']}" styleClass="required">
+							<h:inputText id="name" value="#{candidateViewBean.candidate.name}" label="#{i18n['candidate.name']}"
+								required="true" styleClass="#{not component.valid ? 'inputError' : ''}"
+								readonly="#{!candidateViewBean.editable}" />
+							<h:message for="name" errorClass="error" />
+						</h:outputLabel>
 
-						<h:panelGroup layout="block" styleClass="textBlock">
-							<h:outputText styleClass="label" value="#{i18n['candidate.phone_number']} :" />
-							<h:outputText value="#{candidateViewBean.candidate.phoneNumber}" />
-						</h:panelGroup>
+						<h:outputLabel value="#{i18n['candidate.surename']}" styleClass="required">
+							<h:inputText id="surename" value="#{candidateViewBean.candidate.surename}" label="#{i18n['candidate.surename']}"
+								required="true" styleClass="#{not component.valid ? 'inputError' : ''}"
+								readonly="#{!candidateViewBean.editable}" />
+							<h:message for="surename" errorClass="error" />
+						</h:outputLabel>
 
-						<h:panelGroup layout="block" styleClass="textBlock">
-							<h:outputText styleClass="label" value="#{i18n['candidate.email']} :" />
-							<h:outputText value="#{candidateViewBean.candidate.email}" />
-						</h:panelGroup>
+						<h:outputLabel value="#{i18n['candidate.age']}" styleClass="small">
+							<h:inputText id="age" value="#{candidateViewBean.candidate.age}" label="#{i18n['candidate.age']}"
+								styleClass="#{not component.valid ? 'inputError' : ''}" readonly="#{!candidateViewBean.editable}" />
+							<h:message for="age" errorClass="error" />
+						</h:outputLabel>
 					</h:panelGroup>
 
 					<h:panelGroup layout="block" styleClass="row">
+						<h:outputLabel value="#{i18n['candidate.phone_number']}" styleClass="required">
+							<h:inputText id="phoneNumber" value="#{candidateViewBean.candidate.phoneNumber}" required="true"
+								label="#{i18n['candidate.phone_number']}" styleClass="#{ not component.valid ? 'inputError' : ''}"
+								readonly="#{!candidateViewBean.editable}" />
+							<h:message for="phoneNumber" errorClass="error" />
+						</h:outputLabel>
 
-						<h:panelGroup layout="block" styleClass="textBlock">
-							<h:outputText styleClass="label" value="#{i18n['address.city']} :" />
-							<h:outputText value="#{candidateViewBean.candidate.address.city}" />
-						</h:panelGroup>
-
-						<h:panelGroup layout="block" styleClass="textBlock">
-							<h:outputText styleClass="label" value="#{i18n['address.state']} :" />
-							<h:outputText value="#{candidateViewBean.candidate.address.state}" />
-						</h:panelGroup>
+						<h:outputLabel value="#{i18n['candidate.email']}" styleClass="large required">
+							<h:inputText id="email" pt:type="email" value="#{candidateViewBean.candidate.email}" required="true"
+								label="#{i18n['candidate.email']}" styleClass="#{ not component.valid ? 'inputError' : ''}"
+								readonly="#{!candidateViewBean.editable}" />
+							<h:message for="email" errorClass="error" />
+						</h:outputLabel>
 					</h:panelGroup>
 
 					<h:panelGroup layout="block" styleClass="row">
-						<h:panelGroup layout="block" styleClass="textBlock">
-							<h:outputText styleClass="label" value="#{i18n['social.linkedin']} :" />
-							<h:outputText value="#{candidateViewBean.candidate.linkedinProfileUrl}" />
-						</h:panelGroup>
-						<h:panelGroup layout="block" styleClass="textBlock">
-							<h:outputText styleClass="label" value="#{i18n['social.infojobs']} :" />
-							<h:outputText value="#{candidateViewBean.candidate.infojobsProfileUrl}" />
-						</h:panelGroup>
+						<h:outputLabel value="#{i18n['address.city']}">
+							<h:inputText id="city" value="#{candidateViewBean.candidate.address.city}" label="#{i18n['address.city']}"
+								styleClass="#{ not component.valid ? 'inputError' : ''}" readonly="#{!candidateViewBean.editable}" />
+						</h:outputLabel>
+
+						<h:outputLabel value="#{i18n['address.state']}">
+							<h:inputText id="state" value="#{candidateViewBean.candidate.address.state}" label="#{i18n['address.state']}"
+								styleClass="#{ not component.valid ? 'inputError' : ''}" readonly="#{!candidateViewBean.editable}" />
+						</h:outputLabel>
 					</h:panelGroup>
 
 					<h:panelGroup layout="block" styleClass="row">
+						<h:outputLabel value="#{i18n['candidate.position']}" styleClass="required">
+							<h:inputText id="position" value="#{candidateViewBean.candidate.position}" required="true"
+								label="#{i18n['candidate.position']}" styleClass="#{ not component.valid ? 'inputError' : ''}"
+								readonly="#{!candidateViewBean.editable}" />
+							<h:message for="position" errorClass="error" />
+						</h:outputLabel>
 
-						<h:panelGroup layout="block" styleClass="textBlock">
-							<h:outputText styleClass="label" value="#{i18n['candidate.position']} :" />
-							<h:outputText value="#{candidateViewBean.candidate.position}" />
-						</h:panelGroup>
+						<h:outputLabel value="#{i18n['candidate.salary']}">
+							<h:inputText id="salary" value="#{candidateViewBean.candidate.salary}" label="#{i18n['candidate.salary']}"
+								styleClass="#{ not component.valid ? 'inputError' : ''}" readonly="#{!candidateViewBean.editable}" />
+							<h:message for="salary" errorClass="error" />
+						</h:outputLabel>
 
-						<h:panelGroup layout="block" styleClass="textBlock">
-							<h:outputText styleClass="label" value="#{i18n['candidate.salary']} :" />
-							<h:outputText value="#{candidateViewBean.candidate.salary}" />
-						</h:panelGroup>
-
-						<h:panelGroup layout="block" styleClass="textBlock">
-							<h:outputText styleClass="label" value="#{i18n['candidate.expected_salary']} :" />
-							<h:outputText value="#{candidateViewBean.candidate.expectedSalary}" />
-						</h:panelGroup>
+						<h:outputLabel value="#{i18n['candidate.expected_salary']}">
+							<h:inputText id="expected_salary" value="#{candidateViewBean.candidate.expectedSalary}"
+								label="#{i18n['candidate.expected_salary']}" styleClass="#{ not component.valid ? 'inputError' : ''}"
+								readonly="#{!candidateViewBean.editable}" />
+							<h:message for="expected_salary" errorClass="error" />
+						</h:outputLabel>
 					</h:panelGroup>
 
 					<h:panelGroup id="undeleteButton" layout="block" styleClass="buttonGroup"
 						rendered="#{candidateViewBean.candidate.deleted}">
 						<p:commandButton value="#{i18n['action.undelete']}" action="#{candidateViewBean.undelete}" />
 					</h:panelGroup>
+					
+					<h:panelGroup layout="block" styleClass="buttonGroup"
+						rendered="#{candidateViewBean.editable}">
+						<p:commandButton value="#{i18n['action.cancel']}" action="#{candidateViewBean.cancelEditCandidate}" update="@form" />
+						<p:commandButton value="#{i18n['action.save']}" action="#{candidateViewBean.saveCandidate}" update="@form" />
+					</h:panelGroup>
 
 					<h:panelGroup id="actionButtons" layout="block" styleClass="buttonGroup"
-						rendered="#{!candidateViewBean.candidate.deleted}">
-						<p:commandButton value="#{i18n['action.edit']}" action="#{candidateViewBean.editCandidate}" />
+						rendered="#{!candidateViewBean.candidate.deleted and !candidateViewBean.editable}">
+						<p:commandButton value="#{i18n['action.edit']}" action="#{candidateViewBean.editCandidate}" update="@form" />
 						<p:commandButton value="#{i18n['bookmark.add_to_bookmarks']}"
 							action="#{bookmarksBean.add(candidateViewBean.candidate)}"
 							rendered="#{not bookmarksBean.isBookmarked(candidateViewBean.candidate)}"

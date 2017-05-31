@@ -50,8 +50,6 @@
 						rendered="#{not empty candidateSearchBean.candidates}" emptyMessage="#{i18n['candidate.no_candidates_found']}"
 						styleClass="dataTable" reflow="true" paginator="true" paginatorPosition="bottom">
 
-						<p:ajax event="rowSelect" listener="#{candidateSearchBean.view}" />
-
 						<p:column headerText="#{i18n['candidate.name']}" sortBy="#{candidate.name}">
 							<h:outputText value="#{candidate}" />
 						</p:column>

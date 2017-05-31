@@ -12,7 +12,4 @@
 			<supported-locale>ca</supported-locale>
 		</locale-config>
 	</application>
-	<factory>
-		<exception-handler-factory>ged.web.core.GedExceptionHandlerFactory</exception-handler-factory>
-	</factory>
 </faces-config>
