@@ -2,19 +2,19 @@ package ged.ejb.core.events;
 
 import javax.interceptor.InvocationContext;
 
-import ged.ejb.core.model.AuditedEntity;
+import ged.ejb.core.model.Auditable;
 
 public abstract class AbstractInterceptor {
 
-	protected AuditedEntity getAuditedEntity(final InvocationContext joinPoint) {
+	protected Auditable getAuditedEntity(final InvocationContext joinPoint) {
 		final Object[] parameters = joinPoint.getParameters();
 		if (parameters.length != 1) {
 			throw new IllegalArgumentException("Arguments: " + parameters.length);
 		}
 		final Object entityObject = parameters[0];
-		if (!(entityObject instanceof AuditedEntity)) {
+		if (!(entityObject instanceof Auditable)) {
 			throw new IllegalArgumentException("Not audited entity");
 		}
-		return (AuditedEntity) entityObject;
+		return (Auditable) entityObject;
 	}
 }

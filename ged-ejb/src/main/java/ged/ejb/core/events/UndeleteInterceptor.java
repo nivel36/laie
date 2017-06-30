@@ -12,7 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ged.ejb.core.events.Audited.Type;
-import ged.ejb.core.model.AuditedEntity;
+import ged.ejb.core.model.Auditable;
 
 @Interceptor
 @Audited(action = Type.UNDELETE)
@@ -20,13 +20,13 @@ public class UndeleteInterceptor extends AbstractInterceptor {
 
 	private static final Logger log = LoggerFactory.getLogger(UndeleteInterceptor.class.getName());
 
-	private final Event<AuditedEntity> postUndeleteEvent;
+	private final Event<Auditable> postUndeleteEvent;
 
-	private final Event<AuditedEntity> preUndeleteEvent;
+	private final Event<Auditable> preUndeleteEvent;
 
 	@Inject
-	public UndeleteInterceptor(@PreUpdate final Event<AuditedEntity> preUndeleteEvent,
-			@PostUpdate final Event<AuditedEntity> postUndeleteEvent) {
+	public UndeleteInterceptor(@PreUpdate final Event<Auditable> preUndeleteEvent,
+			@PostUpdate final Event<Auditable> postUndeleteEvent) {
 		Objects.requireNonNull(preUndeleteEvent);
 		Objects.requireNonNull(postUndeleteEvent);
 		this.preUndeleteEvent = preUndeleteEvent;
@@ -35,7 +35,7 @@ public class UndeleteInterceptor extends AbstractInterceptor {
 
 	@AroundInvoke
 	public Object fireEvent(final InvocationContext joinPoint) throws Exception {
-		final AuditedEntity auditedEntity = getAuditedEntity(joinPoint);
+		final Auditable auditedEntity = getAuditedEntity(joinPoint);
 		log.trace("Undelete event fired");
 		this.preUndeleteEvent.fire(auditedEntity);
 		final Object returnObject = joinPoint.proceed();

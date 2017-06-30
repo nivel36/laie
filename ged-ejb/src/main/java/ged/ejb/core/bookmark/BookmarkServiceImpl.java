@@ -12,7 +12,7 @@ import javax.persistence.NoResultException;
 
 import ged.ejb.core.AbstractService;
 import ged.ejb.core.events.PostDelete;
-import ged.ejb.core.model.AuditedEntity;
+import ged.ejb.core.model.Auditable;
 import ged.ejb.core.model.Dao;
 import ged.ejb.core.model.Repository;
 import ged.ejb.user.User;
@@ -37,7 +37,7 @@ public class BookmarkServiceImpl extends AbstractService<Bookmark> implements Bo
 	}
 
 	@Override
-	public void deleteIfExists(@Observes @PostDelete final AuditedEntity entity) {
+	public void deleteIfExists(@Observes @PostDelete final Auditable entity) {
 		Objects.requireNonNull(entity);
 		final List<Bookmark> bookmarks = this.dao.find(entity.getClass().getSimpleName(), entity.getId());
 		for (final Bookmark bookmark : bookmarks) {

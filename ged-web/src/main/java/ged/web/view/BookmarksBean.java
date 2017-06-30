@@ -12,7 +12,7 @@ import javax.inject.Named;
 
 import ged.ejb.core.bookmark.Bookmark;
 import ged.ejb.core.bookmark.BookmarkService;
-import ged.ejb.core.model.AuditedEntity;
+import ged.ejb.core.model.Auditable;
 import ged.ejb.user.User;
 import ged.web.core.util.MessageUtils;
 import ged.web.core.view.AbstractPageBean;
@@ -35,7 +35,7 @@ public class BookmarksBean extends AbstractPageBean {
 		this.bookmarkService = bookmarkService;
 	}
 
-	public void add(final AuditedEntity entity) {
+	public void add(final Auditable entity) {
 		BookmarksBean.logger.debug("Adding bookmark {} for user {}",
 				new Object[] { entity, this.sessionBean.getUser().getUsername() });
 		final Bookmark bookmark = createBookmark(entity);
@@ -54,7 +54,7 @@ public class BookmarksBean extends AbstractPageBean {
 		return sb.toString();
 	}
 
-	private Bookmark createBookmark(final AuditedEntity entity) {
+	private Bookmark createBookmark(final Auditable entity) {
 		final Bookmark bookmark = new Bookmark();
 		bookmark.setEntityClass(entity.getClass().getSimpleName());
 		bookmark.setEntityId(entity.getId());
@@ -87,12 +87,12 @@ public class BookmarksBean extends AbstractPageBean {
 		findAllBookmarks();
 	}
 
-	public boolean isBookmarked(final AuditedEntity entity) {
+	public boolean isBookmarked(final Auditable entity) {
 		final Bookmark bookmark = createBookmark(entity);
 		return this.bookmarks.contains(bookmark);
 	}
 
-	public void remove(final AuditedEntity entity) {
+	public void remove(final Auditable entity) {
 		final User user = this.sessionBean.getUser();
 		final String className = entity.getClass().getSimpleName();
 		final long id = entity.getId();

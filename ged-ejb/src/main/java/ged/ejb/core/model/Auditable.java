@@ -2,7 +2,7 @@ package ged.ejb.core.model;
 
 import ged.ejb.user.User;
 
-public interface AuditedEntity extends Identificable {
+public interface Auditable extends Identificable {
 
 	/**
 	 * El no hace autoboxing así que Boolean es un objeto que requiere un get en

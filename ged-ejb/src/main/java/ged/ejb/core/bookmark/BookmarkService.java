@@ -3,14 +3,14 @@ package ged.ejb.core.bookmark;
 import java.util.List;
 
 import ged.ejb.core.Service;
-import ged.ejb.core.model.AuditedEntity;
+import ged.ejb.core.model.Auditable;
 import ged.ejb.user.User;
 
 public interface BookmarkService extends Service<Bookmark> {
 
 	void delete(final User user, String entityClass, long entityId);
 
-	void deleteIfExists(final AuditedEntity entity);
+	void deleteIfExists(final Auditable entity);
 
 	void deleteIfExists(final User user, String entityClass, long entityId);
 
