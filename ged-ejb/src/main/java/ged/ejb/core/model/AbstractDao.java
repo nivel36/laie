@@ -15,7 +15,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 @Repository
-public abstract class AbstractDao<K, T extends Identificable<K>> implements Dao<K, T> {
+public abstract class AbstractDao<T extends Identificable> implements Dao<T> {
 
 	private final static Logger logger = LoggerFactory.getLogger(AbstractDao.class.getName());
 
@@ -34,10 +34,10 @@ public abstract class AbstractDao<K, T extends Identificable<K>> implements Dao<
 	@Override
 	public void delete(final T entity) {
 		Objects.requireNonNull(entity);
-		if (entity.getId() == null) {
+		if (entity.getId() == 0) {
 			throw new IllegalStateException();
 		}
-		logger.debug( "Eliminando la entidad::Clase={}::Id={}",
+		logger.debug("Eliminando la entidad::Clase={}::Id={}",
 				new Object[] { entity.getClass().getCanonicalName(), entity.getId() });
 		if (this.em.contains(entity)) {
 			this.em.remove(entity);
@@ -48,9 +48,9 @@ public abstract class AbstractDao<K, T extends Identificable<K>> implements Dao<
 	}
 
 	@Override
-	public T find(final K id) {
+	public T find(final long id) {
 		Objects.requireNonNull(id);
-		logger.debug( "Buscando por clave primaria::clase={}::id={}", new Object[] { getClass(), id });
+		logger.debug("Buscando por clave primaria::clase={}::id={}", new Object[] { getClass(), id });
 		return this.em.find(getType(), id);
 	}
 
@@ -69,7 +69,7 @@ public abstract class AbstractDao<K, T extends Identificable<K>> implements Dao<
 
 	protected <E> List<E> findByCriteria(final CriteriaQuery<E> cq, final int pageSize, final int pageNum) {
 		Objects.requireNonNull(cq);
-		logger.debug( "Lanzando criteria");
+		logger.debug("Lanzando criteria");
 		final TypedQuery<E> query = this.em.createQuery(cq);
 		paginar(pageSize, pageNum, query);
 		return query.getResultList();
@@ -77,7 +77,7 @@ public abstract class AbstractDao<K, T extends Identificable<K>> implements Dao<
 
 	protected T findByCriteria(final CriteriaQuery<T> cq) {
 		Objects.requireNonNull(cq);
-		logger.debug( "Lanzando criteria para un solo resultado");
+		logger.debug("Lanzando criteria para un solo resultado");
 		final TypedQuery<T> query = this.em.createQuery(cq);
 		return query.getSingleResult();
 	}
@@ -86,7 +86,7 @@ public abstract class AbstractDao<K, T extends Identificable<K>> implements Dao<
 			final Map<String, Object> parameters) {
 		Objects.requireNonNull(entityClass);
 		Objects.requireNonNull(namedQuery);
-		logger.debug( "Ejecutando la getByTypedQuerySingleResult: {}", namedQuery);
+		logger.debug("Ejecutando la getByTypedQuerySingleResult: {}", namedQuery);
 		final TypedQuery<E> query = this.em.createNamedQuery(namedQuery, entityClass);
 		parametrizar(parameters, query);
 		return query.getSingleResult();
@@ -96,7 +96,7 @@ public abstract class AbstractDao<K, T extends Identificable<K>> implements Dao<
 			final Map<String, Object> parameters, final int pageSize, final int pageNum) {
 		Objects.requireNonNull(entityClass);
 		Objects.requireNonNull(namedQuery);
-		logger.debug( "Ejecutando la getByTypedQuery: {}", namedQuery);
+		logger.debug("Ejecutando la getByTypedQuery: {}", namedQuery);
 		final TypedQuery<E> query = this.em.createNamedQuery(namedQuery, entityClass);
 		parametrizar(parameters, query);
 		paginar(pageSize, pageNum, query);
@@ -112,13 +112,12 @@ public abstract class AbstractDao<K, T extends Identificable<K>> implements Dao<
 	@Override
 	public void insert(final T entity) {
 		Objects.requireNonNull(entity);
-		if (entity.getId() != null) {
+		if (entity.getId() != 0) {
 			throw new IllegalStateException();
 		}
-		logger.debug( "Insertando una nueva entidad de tipod::Clase={}",
-				entity.getClass().getCanonicalName());
+		logger.debug("Insertando una nueva entidad de tipod::Clase={}", entity.getClass().getCanonicalName());
 		this.em.persist(entity);
-		logger.debug( "Se le ha asignado la id={}", entity.getId());
+		logger.debug("Se le ha asignado la id={}", entity.getId());
 	}
 
 	private void paginar(final int pageSize, final int pageNum, final Query query) {
@@ -128,13 +127,13 @@ public abstract class AbstractDao<K, T extends Identificable<K>> implements Dao<
 		if (pageSize < 0) {
 			throw new IllegalArgumentException("pageSize: " + pageSize);
 		}
-		logger.debug( "Página actual {}", pageNum);
+		logger.debug("Página actual {}", pageNum);
 		query.setFirstResult(pageNum * pageSize);
 		if (pageSize > 0) {
-			logger.debug( "Tamaño de página {}", pageSize);
+			logger.debug("Tamaño de página {}", pageSize);
 			query.setMaxResults(pageSize);
 		} else if (pageSize == 0) {
-			logger.debug( "Limitando a {} resultados", RES_LIMIT);
+			logger.debug("Limitando a {} resultados", RES_LIMIT);
 			query.setMaxResults(RES_LIMIT);
 		}
 	}
@@ -144,7 +143,7 @@ public abstract class AbstractDao<K, T extends Identificable<K>> implements Dao<
 			return;
 		}
 		for (final Map.Entry<String, Object> entry : parameters.entrySet()) {
-			logger.debug( "key={}::parameter={}", new Object[] { entry.getKey(), entry.getValue() });
+			logger.debug("key={}::parameter={}", new Object[] { entry.getKey(), entry.getValue() });
 			query.setParameter(entry.getKey(), entry.getValue());
 		}
 	}
@@ -152,10 +151,10 @@ public abstract class AbstractDao<K, T extends Identificable<K>> implements Dao<
 	@Override
 	public T update(final T entity) {
 		Objects.requireNonNull(entity);
-		if (entity.getId() == null) {
+		if (entity.getId() == 0) {
 			throw new IllegalStateException();
 		}
-		logger.debug( "Actualizando la entidad::Clase={}::Id={}",
+		logger.debug("Actualizando la entidad::Clase={}::Id={}",
 				new Object[] { entity.getClass().getCanonicalName(), entity.getId() });
 		if (this.em.contains(entity)) {
 			return entity;

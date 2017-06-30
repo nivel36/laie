@@ -20,13 +20,13 @@ public class UndeleteInterceptor extends AbstractInterceptor {
 
 	private static final Logger log = LoggerFactory.getLogger(UndeleteInterceptor.class.getName());
 
-	private final Event<AuditedEntity<Long>> postUndeleteEvent;
+	private final Event<AuditedEntity> postUndeleteEvent;
 
-	private final Event<AuditedEntity<Long>> preUndeleteEvent;
+	private final Event<AuditedEntity> preUndeleteEvent;
 
 	@Inject
-	public UndeleteInterceptor(@PreUpdate final Event<AuditedEntity<Long>> preUndeleteEvent,
-			@PostUpdate final Event<AuditedEntity<Long>> postUndeleteEvent) {
+	public UndeleteInterceptor(@PreUpdate final Event<AuditedEntity> preUndeleteEvent,
+			@PostUpdate final Event<AuditedEntity> postUndeleteEvent) {
 		Objects.requireNonNull(preUndeleteEvent);
 		Objects.requireNonNull(postUndeleteEvent);
 		this.preUndeleteEvent = preUndeleteEvent;
@@ -35,7 +35,7 @@ public class UndeleteInterceptor extends AbstractInterceptor {
 
 	@AroundInvoke
 	public Object fireEvent(final InvocationContext joinPoint) throws Exception {
-		final AuditedEntity<Long> auditedEntity = getAuditedEntity(joinPoint);
+		final AuditedEntity auditedEntity = getAuditedEntity(joinPoint);
 		log.trace("Undelete event fired");
 		this.preUndeleteEvent.fire(auditedEntity);
 		final Object returnObject = joinPoint.proceed();

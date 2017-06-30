@@ -14,7 +14,7 @@ import ged.ejb.core.model.Dao;
 import ged.ejb.core.model.Repository;
 
 @Stateless
-public class UserServiceImpl extends AbstratctAuditedService<Long, User> implements UserService {
+public class UserServiceImpl extends AbstratctAuditedService<User> implements UserService {
 
 	private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class.getName());
 
@@ -60,7 +60,7 @@ public class UserServiceImpl extends AbstratctAuditedService<Long, User> impleme
 	}
 
 	@Override
-	public List<User> findSubordinateUsers(final Long id) {
+	public List<User> findSubordinateUsers(final long id) {
 		Objects.requireNonNull(id);
 		if (id < 1) {
 			throw new IllegalArgumentException("id: " + id);
@@ -77,7 +77,7 @@ public class UserServiceImpl extends AbstratctAuditedService<Long, User> impleme
 	}
 
 	@Override
-	protected Dao<Long, User> getDao() {
+	protected Dao<User> getDao() {
 		return this.userDao;
 	}
 

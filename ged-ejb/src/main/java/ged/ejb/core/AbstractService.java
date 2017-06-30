@@ -6,7 +6,7 @@ import java.util.Objects;
 import ged.ejb.core.model.Dao;
 import ged.ejb.core.model.Identificable;
 
-public abstract class AbstractService<K, T extends Identificable<K>> implements Service<K, T> {
+public abstract class AbstractService<T extends Identificable> implements Service<T> {
 
 	@Override
 	public void delete(final T entity) {
@@ -23,7 +23,7 @@ public abstract class AbstractService<K, T extends Identificable<K>> implements 
 	}
 
 	@Override
-	public T find(final K id) {
+	public T find(final long id) {
 		Objects.requireNonNull(id);
 		return this.getDao().find(id);
 	}
@@ -33,12 +33,12 @@ public abstract class AbstractService<K, T extends Identificable<K>> implements 
 		return this.getDao().findAll();
 	}
 
-	protected abstract Dao<K, T> getDao();
+	protected abstract Dao<T> getDao();
 
 	@Override
 	public T save(final T entity) {
 		Objects.requireNonNull(entity);
-		if (entity.getId() == null) {
+		if (entity.getId() == 0) {
 			doInsert(entity);
 			return entity;
 		} else {

@@ -16,7 +16,7 @@ import ged.ejb.core.model.Repository;
 import ged.ejb.job.offer.JobOffer;
 
 @Stateless
-public class CandidateServiceImpl extends AbstratctAuditedService<Long, Candidate> implements CandidateService {
+public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> implements CandidateService {
 
 	private static final Logger logger = LoggerFactory.getLogger(CandidateServiceImpl.class.getName());
 
@@ -42,30 +42,30 @@ public class CandidateServiceImpl extends AbstratctAuditedService<Long, Candidat
 	}
 
 	@Override
-	public Candidate findCandidateAndFiles(final Long id) {
+	public Candidate findCandidateAndFiles(final long id) {
 		Objects.requireNonNull(id);
 		if (id < 1) {
 			throw new IllegalArgumentException("id: " + id);
 		}
-		logger.debug( "Find candidate with id {} and his files", id);
+		logger.debug("Find candidate with id {} and his files", id);
 		return this.candidateDao.findCandidateAndFiles(id);
 	}
 
 	@Override
-	public Dao<Long, Candidate> getDao() {
+	public Dao<Candidate> getDao() {
 		return this.candidateDao;
 	}
 
 	@Override
 	public List<Candidate> search(final String name, final String surename, final String position) {
-		logger.debug( "Search candidate by name {} and surename {}", new Object[] { name, surename });
+		logger.debug("Search candidate by name {} and surename {}", new Object[] { name, surename });
 		return this.candidateDao.searchByNameAndSurename(name, surename, position, null);
 	}
 
 	@Override
 	public List<Candidate> searchByNameAndSurename(final String name, final String surename, final String position,
 			final Boolean showDeleted) {
-		logger.debug( "Search candidate by name {} and surename {}. Show deleteted {2}",
+		logger.debug("Search candidate by name {} and surename {}. Show deleteted {2}",
 				new Object[] { name, surename, showDeleted });
 		return this.candidateDao.searchByNameAndSurename(name, surename, position, showDeleted);
 	}

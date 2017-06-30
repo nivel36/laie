@@ -5,7 +5,7 @@ import java.util.List;
 import ged.ejb.core.model.Dao;
 import ged.ejb.user.User;
 
-public interface ActionDao extends Dao<Long, Action> {
+public interface ActionDao extends Dao< Action> {
 
 	List<Action> findAllByUser(final User user);
 

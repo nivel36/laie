@@ -69,7 +69,7 @@ public class ClientViewBean extends AbstractPageBean {
 		if (this.id == null) {
 			NavigationUtils.gotoPage("clientSearch");
 		}
-		Long clientId = null;
+		long clientId = 0;
 		try {
 			clientId = Long.parseLong(this.id);
 		} catch (final NumberFormatException ex) {

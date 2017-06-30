@@ -15,7 +15,7 @@ import ged.ejb.core.model.Repository;
 import ged.ejb.user.User;
 
 @Repository
-public class BookmarkDaoJpa extends AbstractDao<Long, Bookmark> implements BookmarkDao {
+public class BookmarkDaoJpa extends AbstractDao<Bookmark> implements BookmarkDao {
 
 	private static final Logger logger = LoggerFactory.getLogger(BookmarkDaoJpa.class.getName());
 
@@ -25,7 +25,7 @@ public class BookmarkDaoJpa extends AbstractDao<Long, Bookmark> implements Bookm
 	}
 
 	@Override
-	public List<Bookmark> find(final String entityClass, final Long entityId) {
+	public List<Bookmark> find(final String entityClass, final long entityId) {
 		final Map<String, Object> parameters = new HashMap<>();
 		parameters.put("entityClass", entityClass);
 		parameters.put("entityId", entityId);
@@ -33,7 +33,7 @@ public class BookmarkDaoJpa extends AbstractDao<Long, Bookmark> implements Bookm
 	}
 
 	@Override
-	public Bookmark find(final User user, final String entityClass, final Long entityId) {
+	public Bookmark find(final User user, final String entityClass, final long entityId) {
 		final Map<String, Object> parameters = new HashMap<>();
 		parameters.put("user", user);
 		parameters.put("entityClass", entityClass);
@@ -44,7 +44,7 @@ public class BookmarkDaoJpa extends AbstractDao<Long, Bookmark> implements Bookm
 	@Override
 	public List<Bookmark> findAllByUser(final User user) {
 		Objects.requireNonNull(user);
-		logger.debug( "Buscando todos los Bookmarks del usuario ", user.getFullName());
+		logger.debug("Buscando todos los Bookmarks del usuario ", user.getFullName());
 		final Map<String, Object> parameters = new HashMap<>();
 		parameters.put("user", user);
 		return findByTypedQuery(getType(), "Bookmark.findAllByUser", parameters, 0, 0);

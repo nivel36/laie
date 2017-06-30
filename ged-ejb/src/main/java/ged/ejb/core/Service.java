@@ -4,11 +4,11 @@ import java.util.List;
 
 import ged.ejb.core.model.Identificable;
 
-public interface Service<K, T extends Identificable<? extends K>> {
+public interface Service<T extends Identificable> {
 
 	void delete(T entity);
 
-	T find(K id);
+	T find(long id);
 
 	List<T> findAll();
 

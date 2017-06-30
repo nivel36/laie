@@ -8,13 +8,13 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.Version;
 
 @MappedSuperclass
-public abstract class AbstractEntity implements Identificable<Long>, Serializable {
+public abstract class AbstractEntity implements Identificable, Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue
-	protected Long id;
+	protected long id;
 
 	@Version
 	protected long version;
@@ -31,11 +31,11 @@ public abstract class AbstractEntity implements Identificable<Long>, Serializabl
 			return false;
 		}
 		final AbstractEntity other = (AbstractEntity) obj;
-		return this.id.equals(other.id);
+		return this.id == other.id;
 	}
 
 	@Override
-	public Long getId() {
+	public long getId() {
 		return this.id;
 	}
 
@@ -52,7 +52,7 @@ public abstract class AbstractEntity implements Identificable<Long>, Serializabl
 	}
 
 	@Override
-	public void setId(final Long id) {
+	public void setId(final long id) {
 		this.id = id;
 	}
 

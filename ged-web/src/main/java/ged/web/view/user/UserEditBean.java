@@ -47,7 +47,7 @@ public class UserEditBean extends AbstractPageBean {
 	}
 
 	public String cancel() {
-		if (this.user.getId() == null) {
+		if (this.user.getId() == 0) {
 			logger.trace("Cancel new user action performed");
 			return "userSearch.xhtml?faces-redirect=true";
 		} else {

@@ -15,7 +15,7 @@ import ged.ejb.core.model.Repository;
 import ged.ejb.user.User;
 
 @Repository
-public class ActionDaoJpa extends AbstractDao<Long, Action> implements ActionDao {
+public class ActionDaoJpa extends AbstractDao< Action> implements ActionDao {
 
 	private static final Logger logger = LoggerFactory.getLogger(ActionDaoJpa.class.getName());
 

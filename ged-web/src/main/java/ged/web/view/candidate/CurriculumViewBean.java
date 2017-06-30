@@ -88,7 +88,7 @@ public class CurriculumViewBean extends AbstractPageBean {
 	public void init() {
 		if (this.id != null) {
 			try {
-				final Long candidateId = Long.parseLong(this.id);
+				final long candidateId = Long.parseLong(this.id);
 				this.curriculum = this.curriculumService.findByCandidateId(candidateId);
 				if (this.curriculum == null) {
 					error();

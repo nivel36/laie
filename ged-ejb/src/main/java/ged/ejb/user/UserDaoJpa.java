@@ -20,7 +20,7 @@ import ged.ejb.core.model.AbstractDao;
 import ged.ejb.core.model.Repository;
 
 @Repository
-public final class UserDaoJpa extends AbstractDao<Long, User> implements UserDao {
+public final class UserDaoJpa extends AbstractDao< User> implements UserDao {
 
 	private static final Logger logger = LoggerFactory.getLogger(UserDaoJpa.class.getName());
 
@@ -59,7 +59,7 @@ public final class UserDaoJpa extends AbstractDao<Long, User> implements UserDao
 	}
 
 	@Override
-	public List<User> findSubordinateUsers(final Long id) {
+	public List<User> findSubordinateUsers(final long id) {
 		Objects.requireNonNull(id);
 		if (id < 1) {
 			throw new IllegalArgumentException("id: " + id);

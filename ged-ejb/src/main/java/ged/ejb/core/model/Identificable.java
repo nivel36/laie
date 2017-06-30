@@ -1,8 +1,8 @@
 package ged.ejb.core.model;
 
-public interface Identificable<K> {
+public interface Identificable {
 
-	K getId();
+	long getId();
 
-	void setId(K id);
+	void setId(long id);
 }

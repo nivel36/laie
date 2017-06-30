@@ -4,7 +4,7 @@ import java.util.List;
 
 import ged.ejb.core.AuditedService;
 
-public interface ClientService extends AuditedService<Long, Client> {
+public interface ClientService extends AuditedService<Client> {
 
 	boolean existsClient(final String clientName);
 

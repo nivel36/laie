@@ -11,7 +11,7 @@ import ged.ejb.core.model.AbstractDao;
 import ged.ejb.core.model.Repository;
 
 @Repository
-public class RoleDaoJpa extends AbstractDao<Long, Role> implements RoleDao {
+public class RoleDaoJpa extends AbstractDao< Role> implements RoleDao {
 
 	@Inject
 	public RoleDaoJpa(final EntityManager entityManger) {
@@ -19,7 +19,7 @@ public class RoleDaoJpa extends AbstractDao<Long, Role> implements RoleDao {
 	}
 
 	@Override
-	public List<Role> findSubordinateRoles(final Long id) {
+	public List<Role> findSubordinateRoles(final long id) {
 		final Map<String, Object> parameters = new HashMap<>();
 		parameters.put("id", id);
 		return findByTypedQuery(Role.class, "Role.findSubordinateRoles", parameters, 0, 0);

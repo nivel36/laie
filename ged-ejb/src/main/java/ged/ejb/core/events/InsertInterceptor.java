@@ -20,13 +20,13 @@ public class InsertInterceptor extends AbstractInterceptor {
 
 	private static final Logger log = LoggerFactory.getLogger(InsertInterceptor.class.getName());
 
-	private final Event<AuditedEntity<Long>> postPersistEvent;
+	private final Event<AuditedEntity> postPersistEvent;
 
-	private final Event<AuditedEntity<Long>> prePersistEvent;
+	private final Event<AuditedEntity> prePersistEvent;
 
 	@Inject
-	public InsertInterceptor(@PostPersist final Event<AuditedEntity<Long>> postPersistEvent,
-			@PrePersist final Event<AuditedEntity<Long>> prePersistEvent) {
+	public InsertInterceptor(@PostPersist final Event<AuditedEntity> postPersistEvent,
+			@PrePersist final Event<AuditedEntity> prePersistEvent) {
 		Objects.requireNonNull(postPersistEvent);
 		Objects.requireNonNull(prePersistEvent);
 		this.postPersistEvent = postPersistEvent;
@@ -35,7 +35,7 @@ public class InsertInterceptor extends AbstractInterceptor {
 
 	@AroundInvoke
 	public Object fireEvent(final InvocationContext joinPoint) throws Exception {
-		final AuditedEntity<Long> auditedEntity = getAuditedEntity(joinPoint);
+		final AuditedEntity auditedEntity = getAuditedEntity(joinPoint);
 		log.trace("Insert event fired");
 		this.prePersistEvent.fire(auditedEntity);
 		final Object returnObject = joinPoint.proceed();

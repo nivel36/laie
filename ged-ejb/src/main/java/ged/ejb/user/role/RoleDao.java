@@ -7,7 +7,7 @@ import javax.ejb.Local;
 import ged.ejb.core.model.Dao;
 
 @Local
-public interface RoleDao extends Dao<Long, Role> {
+public interface RoleDao extends Dao< Role> {
 
-	List<Role> findSubordinateRoles(Long id);
+	List<Role> findSubordinateRoles(long id);
 }

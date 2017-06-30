@@ -18,7 +18,7 @@ import ged.ejb.core.model.Repository;
 import ged.ejb.user.User;
 
 @Stateless
-public class BookmarkServiceImpl extends AbstractService<Long, Bookmark> implements BookmarkService {
+public class BookmarkServiceImpl extends AbstractService<Bookmark> implements BookmarkService {
 
 	private static final Logger logger = LoggerFactory.getLogger(BookmarkServiceImpl.class.getName());
 
@@ -31,13 +31,13 @@ public class BookmarkServiceImpl extends AbstractService<Long, Bookmark> impleme
 	}
 
 	@Override
-	public void delete(final User user, final String entityClass, final Long entityId) {
+	public void delete(final User user, final String entityClass, final long entityId) {
 		final Bookmark bookmark = this.dao.find(user, entityClass, entityId);
 		delete(bookmark);
 	}
 
 	@Override
-	public void deleteIfExists(@Observes @PostDelete final AuditedEntity<Long> entity) {
+	public void deleteIfExists(@Observes @PostDelete final AuditedEntity entity) {
 		Objects.requireNonNull(entity);
 		final List<Bookmark> bookmarks = this.dao.find(entity.getClass().getSimpleName(), entity.getId());
 		for (final Bookmark bookmark : bookmarks) {
@@ -46,12 +46,12 @@ public class BookmarkServiceImpl extends AbstractService<Long, Bookmark> impleme
 	}
 
 	@Override
-	public void deleteIfExists(final User user, final String entityClass, final Long entityId) {
+	public void deleteIfExists(final User user, final String entityClass, final long entityId) {
 		try {
 			final Bookmark bookmark = this.dao.find(user, entityClass, entityId);
 			delete(bookmark);
 		} catch (final NoResultException ex) {
-			logger.debug( "No bookmark find to delete", ex);
+			logger.debug("No bookmark find to delete", ex);
 		}
 	}
 
@@ -61,12 +61,12 @@ public class BookmarkServiceImpl extends AbstractService<Long, Bookmark> impleme
 	}
 
 	@Override
-	public Bookmark findByUrl(final User user, final String entityClass, final Long entityId) {
+	public Bookmark findByUrl(final User user, final String entityClass, final long entityId) {
 		return this.dao.find(user, entityClass, entityId);
 	}
 
 	@Override
-	protected Dao<Long, Bookmark> getDao() {
+	protected Dao<Bookmark> getDao() {
 		return this.dao;
 	}
 }

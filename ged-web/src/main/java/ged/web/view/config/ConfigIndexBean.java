@@ -51,8 +51,8 @@ public final class ConfigIndexBean extends AbstractPageBean {
 
 	public void save() {
 		logger.debug("Save user action performed");
-		final Long userId = this.user.getId();
-		if (userId != null && userId.equals(this.sessionBean.getUser().getId())) {
+		final long userId = this.user.getId();
+		if (userId == this.sessionBean.getUser().getId()) {
 			changeSessionUser();
 		}
 		this.user.setUser(this.sessionBean.getUser());

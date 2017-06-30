@@ -22,7 +22,7 @@ import ged.ejb.core.model.Repository;
 import ged.ejb.job.offer.JobOffer;
 
 @Repository
-public class CandidateDaoJpa extends AbstractDao<Long, Candidate> implements CandidateDao {
+public class CandidateDaoJpa extends AbstractDao< Candidate> implements CandidateDao {
 
 	private final Logger logger = LoggerFactory.getLogger(CandidateDaoJpa.class.getName());
 
@@ -46,7 +46,7 @@ public class CandidateDaoJpa extends AbstractDao<Long, Candidate> implements Can
 	}
 
 	@Override
-	public Candidate findCandidateAndFiles(final Long id) {
+	public Candidate findCandidateAndFiles(final long id) {
 		Objects.requireNonNull(id);
 		if (id < 1) {
 			throw new IllegalArgumentException("id: " + id);

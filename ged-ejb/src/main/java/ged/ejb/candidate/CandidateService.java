@@ -6,13 +6,13 @@ import ged.ejb.core.AuditedService;
 import ged.ejb.core.FileType;
 import ged.ejb.job.offer.JobOffer;
 
-public interface CandidateService extends AuditedService<Long, Candidate> {
+public interface CandidateService extends AuditedService<Candidate> {
 
 	List<Candidate> findAllByJobOffer(JobOffer jobOffer);
 
 	List<FileType> findAllFileTypes();
 
-	Candidate findCandidateAndFiles(Long id);
+	Candidate findCandidateAndFiles(long id);
 
 	List<Candidate> search(String name, String surename, String position);
 

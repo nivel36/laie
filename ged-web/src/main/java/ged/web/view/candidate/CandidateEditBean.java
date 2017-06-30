@@ -40,7 +40,7 @@ public class CandidateEditBean extends AbstractPageBean {
 	}
 
 	public String cancel() {
-		if (this.candidate.getId() == null) {
+		if (this.candidate.getId() == 0) {
 			return "candidateSearch?&faces-redirect=true";
 		} else {
 			return "candidateView?id=" + this.candidate.getId() + "&faces-redirect=true";
@@ -55,7 +55,7 @@ public class CandidateEditBean extends AbstractPageBean {
 
 	public String editCurriculum() {
 		Curriculum curriculum = null;
-		if (this.candidate.getId() == null) {
+		if (this.candidate.getId() == 0) {
 			this.candidate.setOwner(this.sessionBean.getUser());
 			this.candidate.setUser(this.sessionBean.getUser());
 			this.candidateService.save(this.candidate);
@@ -69,7 +69,7 @@ public class CandidateEditBean extends AbstractPageBean {
 		return "curriculumEdit?faces-redirect=true";
 	}
 
-	private Curriculum findCurriculum(final Long id) {
+	private Curriculum findCurriculum(final long id) {
 		Curriculum curriculum = this.curriculumService.findByCandidateId(id);
 		if (curriculum == null) {
 			curriculum = createNewCurriculum();

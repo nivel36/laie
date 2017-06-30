@@ -30,7 +30,7 @@ public class CandidateRestController {
 	@GET
 	@Path("/{id:[0-9][0-9]*}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Candidate find(@PathParam("id") final Long id) {
+	public Candidate find(@PathParam("id") final long id) {
 		final Candidate candidate = this.candidateDao.find(id);
 		this.em.detach(candidate);
 		return candidate;

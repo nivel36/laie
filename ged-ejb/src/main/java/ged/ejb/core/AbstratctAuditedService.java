@@ -6,8 +6,8 @@ import ged.ejb.core.events.Audited;
 import ged.ejb.core.events.Audited.Type;
 import ged.ejb.core.model.AuditedEntity;
 
-public abstract class AbstratctAuditedService<K, T extends AuditedEntity<K>> extends AbstractService<K, T>
-		implements AuditedService<K, T> {
+public abstract class AbstratctAuditedService<T extends AuditedEntity> extends AbstractService<T>
+		implements AuditedService<T> {
 
 	@Override
 	@Audited(action = Type.DELETE)

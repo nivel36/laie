@@ -10,7 +10,7 @@ import ged.ejb.core.model.Dao;
 import ged.ejb.core.model.Repository;
 
 @Stateless
-public class MaintenanceServiceImpl extends AbstractService<Long, EnumEntity> implements MaintenanceService {
+public class MaintenanceServiceImpl extends AbstractService<EnumEntity> implements MaintenanceService {
 
 	private final MaintenanceDao maintenanceDao;
 
@@ -21,7 +21,7 @@ public class MaintenanceServiceImpl extends AbstractService<Long, EnumEntity> im
 	}
 
 	@Override
-	protected Dao<Long, EnumEntity> getDao() {
+	protected Dao<EnumEntity> getDao() {
 		return this.maintenanceDao;
 	}
 }

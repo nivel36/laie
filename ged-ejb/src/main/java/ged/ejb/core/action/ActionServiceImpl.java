@@ -20,7 +20,7 @@ import ged.ejb.core.model.Repository;
 import ged.ejb.user.User;
 
 @Stateless
-public class ActionServiceImpl extends AbstractService<Long, Action> implements ActionService {
+public class ActionServiceImpl extends AbstractService<Action> implements ActionService {
 
 	private static final Logger logger = LoggerFactory.getLogger(ActionServiceImpl.class.getName());
 
@@ -33,9 +33,9 @@ public class ActionServiceImpl extends AbstractService<Long, Action> implements 
 	}
 
 	@Override
-	public void deleteAction(@PostDelete @Observes final AuditedEntity<Long> auditedEntity) {
+	public void deleteAction(@PostDelete @Observes final AuditedEntity auditedEntity) {
 		Objects.requireNonNull(auditedEntity);
-		logger.debug( "Delete action class {} with id {} for user {2}",
+		logger.debug("Delete action class {} with id {} for user {}",
 				new Object[] { auditedEntity.getClass().getName(), auditedEntity.getId(), auditedEntity.getUser() });
 		insertAction(auditedEntity, Action.DELETE);
 	}
@@ -43,11 +43,11 @@ public class ActionServiceImpl extends AbstractService<Long, Action> implements 
 	@Override
 	public List<Action> findAllByUser(final User user) {
 		Objects.requireNonNull(user);
-		logger.debug( "Find all actions of the user {}", user.getFullName());
+		logger.debug("Find all actions of the user {}", user.getFullName());
 		return this.actionDao.findAllByUser(user);
 	}
 
-	private Action getActionFromEntity(final AuditedEntity<Long> auditedEntity) {
+	private Action getActionFromEntity(final AuditedEntity auditedEntity) {
 		final Action action = new Action();
 		action.setEntityId(auditedEntity.getId());
 		action.setEntityClass(auditedEntity.getClass().getSimpleName());
@@ -62,14 +62,14 @@ public class ActionServiceImpl extends AbstractService<Long, Action> implements 
 	}
 
 	@Override
-	public void insertAction(@PostPersist @Observes final AuditedEntity<Long> auditedEntity) {
+	public void insertAction(@PostPersist @Observes final AuditedEntity auditedEntity) {
 		Objects.requireNonNull(auditedEntity);
-		logger.debug( "Insert action class {} with id {} for user {2}",
+		logger.debug("Insert action class {} with id {} for user {}",
 				new Object[] { auditedEntity.getClass().getName(), auditedEntity.getId(), auditedEntity.getUser() });
 		insertAction(auditedEntity, Action.INSERT);
 	}
 
-	private void insertAction(final AuditedEntity<Long> auditedEntity, final String actionType) {
+	private void insertAction(final AuditedEntity auditedEntity, final String actionType) {
 		final Action action = getActionFromEntity(auditedEntity);
 		action.setActionPerformed(actionType);
 		action.setDate(new Date());
@@ -78,17 +78,17 @@ public class ActionServiceImpl extends AbstractService<Long, Action> implements 
 	}
 
 	@Override
-	public void undeleteAction(@PostUndelete @Observes final AuditedEntity<Long> auditedEntity) {
+	public void undeleteAction(@PostUndelete @Observes final AuditedEntity auditedEntity) {
 		Objects.requireNonNull(auditedEntity);
-		logger.debug( "Undelete action class {} with id {} for user {2}",
+		logger.debug("Undelete action class {} with id {} for user {}",
 				new Object[] { auditedEntity.getClass().getName(), auditedEntity.getId(), auditedEntity.getUser() });
 		insertAction(auditedEntity, Action.UNDELETE);
 	}
 
 	@Override
-	public void updateAction(@PostUpdate @Observes final AuditedEntity<Long> auditedEntity) {
+	public void updateAction(@PostUpdate @Observes final AuditedEntity auditedEntity) {
 		Objects.requireNonNull(auditedEntity);
-		logger.debug( "Update action class {} with id {} for user {2}",
+		logger.debug("Update action class {} with id {} for user {}",
 				new Object[] { auditedEntity.getClass().getName(), auditedEntity.getId(), auditedEntity.getUser() });
 		insertAction(auditedEntity, Action.UPDATE);
 	}

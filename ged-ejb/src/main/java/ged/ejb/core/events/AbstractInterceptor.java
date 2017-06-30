@@ -6,8 +6,7 @@ import ged.ejb.core.model.AuditedEntity;
 
 public abstract class AbstractInterceptor {
 
-	@SuppressWarnings("unchecked")
-	protected AuditedEntity<Long> getAuditedEntity(final InvocationContext joinPoint) {
+	protected AuditedEntity getAuditedEntity(final InvocationContext joinPoint) {
 		final Object[] parameters = joinPoint.getParameters();
 		if (parameters.length != 1) {
 			throw new IllegalArgumentException("Arguments: " + parameters.length);
@@ -16,7 +15,6 @@ public abstract class AbstractInterceptor {
 		if (!(entityObject instanceof AuditedEntity)) {
 			throw new IllegalArgumentException("Not audited entity");
 		}
-		return (AuditedEntity<Long>) entityObject;
+		return (AuditedEntity) entityObject;
 	}
-
 }

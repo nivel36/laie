@@ -12,7 +12,7 @@ import ged.ejb.core.model.Repository;
 import ged.ejb.job.JobCandidature;
 
 @Repository
-public class JobCandidatureDaoJpa extends AbstractDao<Long, JobCandidature> implements JobCandidatureDao {
+public class JobCandidatureDaoJpa extends AbstractDao< JobCandidature> implements JobCandidatureDao {
 
 	@Inject
 	public JobCandidatureDaoJpa(final EntityManager em) {

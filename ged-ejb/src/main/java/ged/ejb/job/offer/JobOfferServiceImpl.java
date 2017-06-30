@@ -23,7 +23,7 @@ import ged.ejb.job.meeting.JobMeetingDao;
 import ged.ejb.user.User;
 
 @Stateless
-public class JobOfferServiceImpl extends AbstratctAuditedService<Long, JobOffer> implements JobOfferService {
+public class JobOfferServiceImpl extends AbstratctAuditedService<JobOffer> implements JobOfferService {
 
 	private static final Logger logger = LoggerFactory.getLogger(JobOfferServiceImpl.class.getName());
 
@@ -81,7 +81,7 @@ public class JobOfferServiceImpl extends AbstratctAuditedService<Long, JobOffer>
 	}
 
 	@Override
-	public Dao<Long, JobOffer> getDao() {
+	public Dao<JobOffer> getDao() {
 		return this.jobOfferDao;
 	}
 

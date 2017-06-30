@@ -11,7 +11,7 @@ import ged.ejb.core.model.AbstractDao;
 import ged.ejb.core.model.Repository;
 
 @Repository
-public class CurriculumDaoImpl extends AbstractDao<Long, Curriculum> implements CurriculumDao {
+public class CurriculumDaoImpl extends AbstractDao< Curriculum> implements CurriculumDao {
 
 	@Inject
 	public CurriculumDaoImpl(final EntityManager entityManger) {
@@ -29,7 +29,7 @@ public class CurriculumDaoImpl extends AbstractDao<Long, Curriculum> implements 
 	}
 
 	@Override
-	public Curriculum findByCandidateId(final Long candidateId) {
+	public Curriculum findByCandidateId(final long candidateId) {
 		final Map<String, Object> parameters = new HashMap<>();
 		parameters.put("candidateId", candidateId);
 		return findByTypedQuery(Curriculum.class, "Curriculum.findByCandidateId", parameters);

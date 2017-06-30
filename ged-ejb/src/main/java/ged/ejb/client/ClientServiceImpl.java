@@ -13,7 +13,7 @@ import ged.ejb.core.model.Dao;
 import ged.ejb.core.model.Repository;
 
 @Stateless
-public class ClientServiceImpl extends AbstratctAuditedService<Long, Client> implements ClientService {
+public class ClientServiceImpl extends AbstratctAuditedService<Client> implements ClientService {
 
 	private static final Logger logger = LoggerFactory.getLogger(ClientServiceImpl.class.getName());
 
@@ -33,18 +33,18 @@ public class ClientServiceImpl extends AbstratctAuditedService<Long, Client> imp
 	@Override
 	public Client findByName(final String clientName) {
 		Objects.requireNonNull(clientName, "El nombre del cliente no puede ser nulo");
-		ClientServiceImpl.logger.debug( "Buscando cliente con nombre {}", clientName);
+		ClientServiceImpl.logger.debug("Buscando cliente con nombre {}", clientName);
 		return this.clientDao.findByName(clientName);
 	}
 
 	@Override
-	public Dao<Long, Client> getDao() {
+	public Dao<Client> getDao() {
 		return this.clientDao;
 	}
 
 	@Override
 	public List<Client> searchByName(final String clientName) {
-		logger.debug( "Buscando clientes con nombre {}", clientName);
+		logger.debug("Buscando clientes con nombre {}", clientName);
 		return this.clientDao.searchByName(clientName, false);
 	}
 }

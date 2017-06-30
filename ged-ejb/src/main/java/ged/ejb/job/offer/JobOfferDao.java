@@ -6,7 +6,7 @@ import ged.ejb.client.Client;
 import ged.ejb.core.model.Dao;
 import ged.ejb.user.User;
 
-public interface JobOfferDao extends Dao<Long, JobOffer> {
+public interface JobOfferDao extends Dao< JobOffer> {
 
 	List<JobOffer> findAllByClient(final Client client);
 

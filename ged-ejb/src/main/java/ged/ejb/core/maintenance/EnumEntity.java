@@ -2,7 +2,7 @@ package ged.ejb.core.maintenance;
 
 import ged.ejb.core.model.Identificable;
 
-public interface EnumEntity extends Identificable<Long> {
+public interface EnumEntity extends Identificable {
 
 	String getDescription();
 

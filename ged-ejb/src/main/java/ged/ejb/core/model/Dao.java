@@ -2,11 +2,11 @@ package ged.ejb.core.model;
 
 import java.util.List;
 
-public interface Dao<K, T extends Identificable<K>> {
+public interface Dao<T extends Identificable> {
 
 	void delete(T entity);
 
-	T find(K id);
+	T find(long id);
 
 	List<T> findAll();
 

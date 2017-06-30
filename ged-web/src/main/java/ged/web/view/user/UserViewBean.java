@@ -86,7 +86,7 @@ public class UserViewBean extends AbstractPageBean {
 		if (this.userId == null) {
 			error();
 		}
-		Long id = null;
+		long id = 0;
 		try {
 			id = Long.parseLong(this.userId);
 		} catch (final NumberFormatException ex) {

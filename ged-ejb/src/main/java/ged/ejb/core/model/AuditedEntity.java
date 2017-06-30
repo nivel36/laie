@@ -2,7 +2,7 @@ package ged.ejb.core.model;
 
 import ged.ejb.user.User;
 
-public interface AuditedEntity<K> extends Identificable<K> {
+public interface AuditedEntity extends Identificable {
 
 	/**
 	 * El no hace autoboxing así que Boolean es un objeto que requiere un get en
@@ -19,5 +19,4 @@ public interface AuditedEntity<K> extends Identificable<K> {
 	void setDeleted(Boolean deleted);
 
 	void setUser(User user);
-
 }

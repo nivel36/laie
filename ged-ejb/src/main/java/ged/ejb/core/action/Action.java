@@ -31,7 +31,7 @@ public class Action extends AbstractRecordEntity {
 	public Action() {
 	}
 
-	public Action(final String entityClass, final Long entityId, final String text) {
+	public Action(final String entityClass, final long entityId, final String text) {
 		super(entityClass, entityId, text);
 	}
 

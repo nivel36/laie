@@ -16,7 +16,7 @@ public class AbstractRecordEntity extends AbstractEntity {
 	@Column(length = 64)
 	private String entityClass;
 
-	private Long entityId;
+	private long entityId;
 
 	@Column(length = 128)
 	private String text;
@@ -29,7 +29,7 @@ public class AbstractRecordEntity extends AbstractEntity {
 	public AbstractRecordEntity() {
 	}
 
-	public AbstractRecordEntity(final String entityClass, final Long entityId, final String text) {
+	public AbstractRecordEntity(final String entityClass, final long entityId, final String text) {
 		this.entityClass = entityClass;
 		this.entityId = entityId;
 		this.text = text;
@@ -51,11 +51,7 @@ public class AbstractRecordEntity extends AbstractEntity {
 		} else if (!this.entityClass.equals(other.entityClass)) {
 			return false;
 		}
-		if (this.entityId == null) {
-			if (other.entityId != null) {
-				return false;
-			}
-		} else if (!this.entityId.equals(other.entityId)) {
+		if (this.entityId != other.entityId) {
 			return false;
 		}
 		if (this.user == null) {
@@ -72,7 +68,7 @@ public class AbstractRecordEntity extends AbstractEntity {
 		return this.entityClass;
 	}
 
-	public Long getEntityId() {
+	public long getEntityId() {
 		return this.entityId;
 	}
 
@@ -89,7 +85,7 @@ public class AbstractRecordEntity extends AbstractEntity {
 		final int prime = 31;
 		int result = super.hashCode();
 		result = prime * result + (this.entityClass == null ? 0 : this.entityClass.hashCode());
-		result = prime * result + (this.entityId == null ? 0 : this.entityId.hashCode());
+		result = prime * result + (int) this.entityId;
 		result = prime * result + (this.user == null ? 0 : this.user.hashCode());
 		return result;
 	}
@@ -98,7 +94,7 @@ public class AbstractRecordEntity extends AbstractEntity {
 		this.entityClass = entityClass;
 	}
 
-	public void setEntityId(final Long entityId) {
+	public void setEntityId(final long entityId) {
 		this.entityId = entityId;
 	}
 

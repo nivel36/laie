@@ -33,7 +33,7 @@ import ged.ejb.user.User;
 		})
 @Analyzer(definition = "stdAnalyzer")
 @MappedSuperclass
-public abstract class AbstractAuditedEntity extends AbstractEntity implements AuditedEntity<Long> {
+public abstract class AbstractAuditedEntity extends AbstractEntity implements AuditedEntity {
 
 	private static final long serialVersionUID = 6203444960560029390L;
 

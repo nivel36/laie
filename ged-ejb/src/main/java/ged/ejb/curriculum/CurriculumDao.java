@@ -4,11 +4,11 @@ import java.util.List;
 
 import ged.ejb.core.model.Dao;
 
-public interface CurriculumDao extends Dao<Long, Curriculum> {
+public interface CurriculumDao extends Dao< Curriculum> {
 
 	List<LanguageLevel> findAllLanguageLevels();
 
 	List<SkillLevel> findAllSkillLevels();
 
-	Curriculum findByCandidateId(Long candidateId);
+	Curriculum findByCandidateId(long candidateId);
 }
