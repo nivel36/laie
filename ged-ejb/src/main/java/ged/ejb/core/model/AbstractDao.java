@@ -15,7 +15,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 @Repository
-public abstract class AbstractDao<K, T extends Entity<K>> implements Dao<K, T> {
+public abstract class AbstractDao<K, T extends Identificable<K>> implements Dao<K, T> {
 
 	private final static Logger logger = LoggerFactory.getLogger(AbstractDao.class.getName());
 

@@ -2,7 +2,7 @@ package ged.ejb.core.model;
 
 import java.util.List;
 
-public interface Dao<K, T extends Entity<K>> {
+public interface Dao<K, T extends Identificable<K>> {
 
 	void delete(T entity);
 

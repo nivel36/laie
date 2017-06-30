@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.Objects;
 
 import ged.ejb.core.model.Dao;
-import ged.ejb.core.model.Entity;
+import ged.ejb.core.model.Identificable;
 
-public abstract class AbstractService<K, T extends Entity<K>> implements Service<K, T> {
+public abstract class AbstractService<K, T extends Identificable<K>> implements Service<K, T> {
 
 	@Override
 	public void delete(final T entity) {
