@@ -4,9 +4,9 @@ import java.util.Objects;
 
 import ged.ejb.core.events.Audited;
 import ged.ejb.core.events.Audited.Type;
-import ged.ejb.core.model.Auditable;
+import ged.ejb.core.model.AbstractAuditedEntity;
 
-public abstract class AbstratctAuditedService<T extends Auditable> extends AbstractService<T>
+public abstract class AbstratctAuditedService<T extends AbstractAuditedEntity> extends AbstractService<T>
 		implements AuditedService<T> {
 
 	@Override
