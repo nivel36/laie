@@ -7,7 +7,7 @@ import ged.ejb.core.model.AbstractDao;
 import ged.ejb.core.model.Repository;
 
 @Repository
-public class JobMeetingDaoJpa extends AbstractDao< JobMeeting> implements JobMeetingDao {
+public class JobMeetingDaoJpa extends AbstractDao<JobMeeting> implements JobMeetingDao {
 
 	@Inject
 	public JobMeetingDaoJpa(final EntityManager em) {

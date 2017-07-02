@@ -11,7 +11,7 @@ import ged.ejb.core.model.AbstractDao;
 import ged.ejb.core.model.Repository;
 
 @Repository
-public class RoleDaoJpa extends AbstractDao< Role> implements RoleDao {
+public class RoleDaoJpa extends AbstractDao<Role> implements RoleDao {
 
 	@Inject
 	public RoleDaoJpa(final EntityManager entityManger) {

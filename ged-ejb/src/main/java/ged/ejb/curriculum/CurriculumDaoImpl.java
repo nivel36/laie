@@ -11,7 +11,7 @@ import ged.ejb.core.model.AbstractDao;
 import ged.ejb.core.model.Repository;
 
 @Repository
-public class CurriculumDaoImpl extends AbstractDao< Curriculum> implements CurriculumDao {
+public class CurriculumDaoImpl extends AbstractDao<Curriculum> implements CurriculumDao {
 
 	@Inject
 	public CurriculumDaoImpl(final EntityManager entityManger) {

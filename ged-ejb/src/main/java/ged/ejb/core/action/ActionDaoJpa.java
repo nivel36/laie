@@ -15,7 +15,7 @@ import ged.ejb.core.model.Repository;
 import ged.ejb.user.User;
 
 @Repository
-public class ActionDaoJpa extends AbstractDao< Action> implements ActionDao {
+public class ActionDaoJpa extends AbstractDao<Action> implements ActionDao {
 
 	private static final Logger logger = LoggerFactory.getLogger(ActionDaoJpa.class.getName());
 
@@ -27,7 +27,7 @@ public class ActionDaoJpa extends AbstractDao< Action> implements ActionDao {
 	@Override
 	public List<Action> findAllByUser(final User user) {
 		Objects.requireNonNull(user);
-		logger.debug( "Find all actions of the user {}", user.getFullName());
+		logger.debug("Find all actions of the user {}", user.getFullName());
 		final Map<String, Object> parameters = new HashMap<>();
 		parameters.put("user", user);
 		return findByTypedQuery(Action.class, "Action.findAllByUser", parameters, 10, 0);

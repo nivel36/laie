@@ -1,10 +1,10 @@
 package ged.ejb.core.model;
 
 import javax.persistence.Column;
+import javax.persistence.EntityListeners;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
-
 import org.apache.lucene.analysis.core.LowerCaseFilterFactory;
 import org.apache.lucene.analysis.core.WhitespaceTokenizerFactory;
 import org.apache.lucene.analysis.ngram.EdgeNGramFilterFactory;
@@ -33,6 +33,7 @@ import ged.ejb.user.User;
 		})
 @Analyzer(definition = "stdAnalyzer")
 @MappedSuperclass
+@EntityListeners(AuditedListener.class)
 public abstract class AbstractAuditedEntity extends AbstractEntity implements Auditable, Erasable {
 
 	private static final long serialVersionUID = 6203444960560029390L;

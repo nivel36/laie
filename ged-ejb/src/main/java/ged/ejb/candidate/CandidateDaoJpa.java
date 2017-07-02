@@ -22,7 +22,7 @@ import ged.ejb.core.model.Repository;
 import ged.ejb.job.offer.JobOffer;
 
 @Repository
-public class CandidateDaoJpa extends AbstractDao< Candidate> implements CandidateDao {
+public class CandidateDaoJpa extends AbstractDao<Candidate> implements CandidateDao {
 
 	private final Logger logger = LoggerFactory.getLogger(CandidateDaoJpa.class.getName());
 
