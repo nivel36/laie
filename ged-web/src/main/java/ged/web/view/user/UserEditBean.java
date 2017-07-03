@@ -110,7 +110,6 @@ public class UserEditBean extends AbstractPageBean {
 	public String save() {
 		logger.debug("Save user action performed");
 		setManager();
-		this.user.setUser(this.sessionBean.getUser());
 		this.userService.save(this.user);
 		return "userView.xhtml?id=" + this.user.getId() + "&faces-redirect=true";
 	}

@@ -223,7 +223,6 @@ public class CandidateViewBean extends AbstractPageBean {
 	}
 
 	public void saveCandidate() {
-		this.candidate.setUser(this.sessionBean.getUser());
 		this.candidateService.save(this.candidate);
 		this.editable = false;
 	}
@@ -234,7 +233,6 @@ public class CandidateViewBean extends AbstractPageBean {
 			this.candidate.getFiles().add(this.file);
 			this.file.setCandidate(this.candidate);
 		}
-		this.candidate.setUser(this.sessionBean.getUser());
 		this.candidate = this.candidateService.save(this.candidate);
 		this.editingFile = false;
 	}

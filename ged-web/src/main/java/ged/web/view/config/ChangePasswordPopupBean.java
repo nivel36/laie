@@ -45,7 +45,7 @@ public final class ChangePasswordPopupBean extends AbstractDialogBean {
 	}
 
 	public void change() {
-		logger.debug( "Change password action performed");
+		logger.debug("Change password action performed");
 		final String output = hashPassword(this.password);
 		final User user = this.sessionBean.getUser();
 		if (user.getPassword().equals(output)) {
@@ -63,7 +63,6 @@ public final class ChangePasswordPopupBean extends AbstractDialogBean {
 	private User changePassword(final User user) {
 		final String hash = hashPassword(this.newPassword);
 		user.setPassword(hash);
-		user.setUser(user);
 		return this.userService.save(user);
 	}
 
@@ -103,7 +102,7 @@ public final class ChangePasswordPopupBean extends AbstractDialogBean {
 			output = DatatypeConverter.printBase64Binary(digest);
 		} catch (NoSuchAlgorithmException | UnsupportedEncodingException ex) {
 			MessageUtils.addErrorMessage("error.unnexpected_error", "error.unnexpected_error");
-			ChangePasswordPopupBean.logger.error( "Can't find hash algorithm", ex);
+			ChangePasswordPopupBean.logger.error("Can't find hash algorithm", ex);
 		}
 		return output;
 	}

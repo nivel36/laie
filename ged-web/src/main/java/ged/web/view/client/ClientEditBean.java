@@ -55,7 +55,6 @@ public class ClientEditBean extends AbstractPageBean {
 	}
 
 	private void saveClient() {
-		this.client.setUser(this.sessionBean.getUser());
 		this.client = this.clientService.save(this.client);
 	}
 

@@ -64,7 +64,6 @@ public class JobOfferEditBean extends AbstractPageBean {
 	}
 
 	private void saveJobOffer() {
-		this.jobOffer.setUser(this.sessionBean.getUser());
 		if (this.jobOffer.getOwner() == null) {
 			this.jobOffer.setOwner(this.sessionBean.getUser());
 		}
