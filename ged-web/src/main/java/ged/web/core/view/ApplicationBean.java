@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
@@ -23,6 +24,8 @@ import ged.ejb.user.role.Role;
 @Named
 public class ApplicationBean extends AbstractBean {
 
+	private final static Logger logger = LoggerFactory.getLogger(AbstractBean.class.getName());
+
 	private static final long serialVersionUID = 6394915115616408285L;
 
 	@Inject
@@ -33,9 +36,6 @@ public class ApplicationBean extends AbstractBean {
 	private Cache cache;
 
 	private List<Locale> locales = new ArrayList<>();
-
-	@Inject
-	protected transient Logger logger;
 
 	@Inject
 	@ConfigurationProperty(value = "ged.version")
@@ -75,6 +75,7 @@ public class ApplicationBean extends AbstractBean {
 	}
 
 	private void loadLocales() {
+		logger.info("Loading locales");
 		final Application app = this.facesContext.getApplication();
 		final Iterator<Locale> supportedLocales = app.getSupportedLocales();
 		while (supportedLocales.hasNext()) {
@@ -90,10 +91,6 @@ public class ApplicationBean extends AbstractBean {
 
 	public void setLocales(final List<Locale> locales) {
 		this.locales = locales;
-	}
-
-	public void setLogger(final Logger logger) {
-		this.logger = logger;
 	}
 
 	public void setVersion(final String version) {

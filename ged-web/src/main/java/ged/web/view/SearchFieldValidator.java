@@ -12,15 +12,15 @@ import javax.faces.validator.ValidatorException;
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @FacesValidator("ged.web.view.SearchFieldValidator")
 public class SearchFieldValidator implements Validator {
 
-	@Inject
-	protected FacesContext facesContext;
+	private final static Logger logger = LoggerFactory.getLogger(SearchFieldValidator.class.getName());
 
 	@Inject
-	protected transient Logger logger;
+	protected FacesContext facesContext;
 
 	private ResourceBundle getResourceBundle(final String filename) {
 		final Locale locale = this.facesContext.getViewRoot().getLocale();
@@ -39,7 +39,7 @@ public class SearchFieldValidator implements Validator {
 			throws ValidatorException {
 		final String searchValue = (String) value;
 		if (searchValue != null && searchValue.length() < 3) {
-			this.logger.warn("Search value is too short");
+			logger.warn("Search value is too short");
 			final String translatedMessage = translate("error.search.camp_too_short");
 			final FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, translatedMessage,
 					translatedMessage);

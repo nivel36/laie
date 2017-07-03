@@ -10,21 +10,18 @@ import javax.enterprise.inject.spi.InjectionPoint;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
-import javax.inject.Inject;
-
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import ged.ejb.core.util.ConfigurationProperty;
 
 public class WebResources {
 
-	private final Logger logger;
+	private final static Logger logger = LoggerFactory.getLogger(WebResources.class.getName());
 
 	private final Properties properties;
 
-	@Inject
-	private WebResources(final Logger logger) {
-		this.logger = logger;
+	private WebResources() {
 		this.properties = new Properties();
 	}
 
@@ -34,7 +31,7 @@ public class WebResources {
 		try {
 			this.properties.load(cl.getResourceAsStream("/ged/config.properties"));
 		} catch (final IOException e) {
-			this.logger.error("No se pueden cargar las propiedades", e);
+			logger.error("No se pueden cargar las propiedades", e);
 		}
 	}
 

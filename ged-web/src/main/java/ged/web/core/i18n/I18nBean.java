@@ -15,6 +15,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import ged.ejb.core.i18n.I18nService;
 import ged.ejb.core.i18n.I18nString;
@@ -25,6 +26,8 @@ import ged.web.core.view.AbstractPageBean;
 @ApplicationScoped
 public class I18nBean extends AbstractPageBean {
 
+	private final static Logger logger = LoggerFactory.getLogger(I18nBean.class.getName());
+
 	private static final long serialVersionUID = 7203326692219293611L;
 
 	@Inject
@@ -34,9 +37,6 @@ public class I18nBean extends AbstractPageBean {
 
 	private List<String> locales;
 
-	@Inject
-	private Logger logger;
-
 	public String getI18nText(final String key, final String language) {
 		String translatedText;
 		if (this.i18nTexts.get(language).containsKey(key)) {
@@ -45,7 +45,7 @@ public class I18nBean extends AbstractPageBean {
 			try {
 				translatedText = TransaltionUtils.translate(key);
 			} catch (final MissingResourceException e) {
-				this.logger.error("Error loading image", e);
+				logger.error("Error loading image", e);
 				translatedText = "?" + key + "?";
 			}
 		}
