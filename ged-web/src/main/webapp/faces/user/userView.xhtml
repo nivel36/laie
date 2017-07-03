@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
-	xmlns:i18n="http://legion.com/i18n" xmlns:a="http://java.sun.com/jsf/composite/legion"
+	xmlns:i18n="http://legion.com/i18n" 
 	template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
@@ -98,7 +98,6 @@
 							</h:column>
 						</h:dataTable>
 
-						<a:paginator paginator="#{userViewBean.team}" showComboPages="false" />
 					</h:panelGroup>
 				</h:panelGroup>
 
@@ -135,7 +134,6 @@
 								</h:link>
 							</h:column>
 						</h:dataTable>
-						<a:paginator paginator="#{userViewBean.jobOffers}" showComboPages="false" />
 					</h:panelGroup>
 				</h:panelGroup>
 			</h:panelGrid>

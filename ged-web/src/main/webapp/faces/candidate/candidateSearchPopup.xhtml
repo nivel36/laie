@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:a="http://java.sun.com/jsf/composite/legion">
+	>
 
 	<h:form id="candidateSearchPopupForm">
 		<h:panelGroup layout="block" rendered="#{candidateSearchPopupBean.rendered}" styleClass="modalDialog"
@@ -40,10 +40,10 @@
 					<h1>#{i18n['candidate.search_results']}</h1>
 
 					<h:outputText value="#{i18n['candidate.no_candidates_found']}"
-						rendered="#{empty candidateSearchBean.paginator.entities}" />
+						rendered="#{empty candidateSearchBean.candidates}" />
 
-					<h:dataTable var="candidate" id="candidate" value="#{candidateSearchBean.paginator.dataList}"
-						rendered="#{not empty candidateSearchBean.paginator.entities}" styleClass="dataTable">
+					<h:dataTable var="candidate" id="candidate" value="#{candidateSearchBean.candidates}"
+						rendered="#{not empty candidateSearchBean.candidates}" styleClass="dataTable">
 						<h:column>
 							<f:facet name="header">
 								<h:outputText value="#{i18n['candidate.name']}" />
@@ -89,7 +89,6 @@
 							</h:commandLink>
 						</h:column>
 					</h:dataTable>
-					<a:paginator paginator="#{candidateSearchPopupBean.paginator}" />
 				</h:panelGroup>
 
 				<h:panelGroup layout="block" styleClass="buttonGroup">

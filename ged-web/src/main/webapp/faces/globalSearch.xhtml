@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://legion.com/i18n"
-	xmlns:a="http://java.sun.com/jsf/composite/legion" template="/WEB-INF/templates/default.xhtml">
+	 template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
 		<title>Ged</title>
@@ -62,8 +62,6 @@
 						</h:link>
 					</h:column>
 				</h:dataTable>
-				<a:paginator paginator="#{globalSearchBean.userPaginator}" />
-
 			</h:form>
 		</h:panelGroup>
 
@@ -123,7 +121,6 @@
 						</h:link>
 					</h:column>
 				</h:dataTable>
-				<a:paginator paginator="#{globalSearchBean.jobOfferPaginator}" />
 			</h:form>
 		</h:panelGroup>
 	</ui:define>
