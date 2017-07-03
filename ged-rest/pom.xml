@@ -30,7 +30,7 @@
 	</dependencies>
 
 	<build>
-			<finalName>ged-rest</finalName>
+		<finalName>ged-rest</finalName>
 		<plugins>
 			<plugin>
 				<artifactId>maven-war-plugin</artifactId>
