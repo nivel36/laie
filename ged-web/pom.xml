@@ -61,6 +61,7 @@
 	</dependencies>
 
 	<build>
+		<finalName>ged-web</finalName>
 		<plugins>
 			<plugin>
 				<artifactId>maven-war-plugin</artifactId>
