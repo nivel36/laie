@@ -1,31 +1,89 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>${i18n['login.login']}</title>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+	<meta name="viewport" content="width=device-width" />
+	<f:facet name="first">
+		<h:outputStylesheet library="webjars" name="bootstrap/3.3.5/css/bootstrap.min.css" />
+		<h:outputStylesheet name="/css/material-dashboard.css" />
+		<h:outputStylesheet library="webjars" name="font-awesome/4.5.0/css/font-awesome-jsf.css" />
+	</f:facet>
+	<link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' rel='stylesheet' type='text/css' />
+</h:head>
+<h:body>
+<!-- 	<p:growl id="msg" life="5000" /> -->
+	<div class="wrapper wrapper-full-page">
+		<div class="full-page login-page" data-image="/web/resources/img/loginbg.jpg">
+			<div class="content">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-4 col-sm-6 col-md-offset-4 col-sm-offset-3">
+							<h:form id="form">
+								<div class="card card-login card-hidden">
+									<div class="card-header text-center" data-background-color="purple">
+										<h4 class="card-title">${i18n['login.login']}</h4>
+									</div>
+									<div class="card-content">
+										<div class="input-group">
+											<span class="input-group-addon"> <i class="material-icons">face</i>
+											</span>
+											<div class="form-group label-floating">
+												<p:outputLabel for="username" styleClass="control-label" value="${i18n['login.username']}"/>
+												<p:inputText id="username" styleClass="form-control" value="#{loginBean.username}" />
+											</div>
+										</div>
+										<div class="input-group">
+											<span class="input-group-addon"> <i class="material-icons">lock_outline</i>
+											</span>
+											<div class="form-group label-floating">
+												<p:outputLabel for="password" styleClass="control-label" value="${i18n['login.password']}"/>
+												<p:password id="password" styleClass="form-control" value="#{loginBean.password}" />
+											</div>
+										</div>
+									</div>
+									<div class="footer text-center">
+										<p:commandButton styleClass="btn btn-primary btn-simple btn-wd btn-lg" action="#{loginBean.login}" value="${i18n['login.enter']}" />
+									</div>
+								</div>
+							</h:form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</h:body>
+	<h:outputScript library="webjars" name="jquery/3.1.1-1/jquery.min.js" />
+	<h:outputScript library="webjars" name="jquery-ui/1.12.1/jquery-ui.min.js" />
+	<h:outputScript library="webjars" name="bootstrap/3.3.5/js/bootstrap.min.js" />
+	<h:outputScript library="js" name="perfect-scrollbar.jquery.min.js" />
+	<h:outputScript library="js" name="material.min.js" />
+	<h:outputScript library="js" name="material-dashboard.js" />
+<script type="text/javascript">
 
-<f:view contentType="text/html" locale="#{loginBean.locale}">
-	<h:head>
-		<ui:insert name="title">
-			<title>#{i18n['login.login']}</title>
-		</ui:insert>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<h:outputStylesheet name="css/login.css" />
-	</h:head>
-	<h:body>
-		<h:form id="loginForm">
-			<h1>Login</h1>
-			<h:messages styleClass="errorMessages" globalOnly="true" />
-			<h:outputLabel value="#{i18n['login.username']}" styleClass="required">
-				<h:inputText id="j_username" label="#{i18n['login.username']}" required="true" value="#{loginBean.username}"
-					styleClass="#{not component.valid ? 'inputError' : ''}" />
-				<h:message for="j_username" errorClass="error" />
-			</h:outputLabel>
-			<h:outputLabel value="#{i18n['login.password']}" styleClass="required">
-				<h:inputSecret id="j_password" label="#{i18n['login.password']}" required="true" value="#{loginBean.password}"
-					styleClass="#{not component.valid ? 'inputError' : ''}" />
-				<h:message for="j_password" errorClass="error" />
-			</h:outputLabel>
-			<h:commandButton action="#{loginBean.login}" value="#{i18n['login.enter']}" />
-		</h:form>
-	</h:body>
-</f:view>
+login = {
+	    checkFullPageBackgroundImage: function(){
+	        $page = $('.full-page');
+	        image_src = $page.data('image');
+
+	        if(image_src !== undefined){
+	            image_container = '<div class="full-page-background" style="background-image: url(' + image_src + ') "/>'
+	            $page.append(image_container);
+	        }
+	    }
+}
+
+    $().ready(function() {
+        
+        login.checkFullPageBackgroundImage();
+
+        setTimeout(function() {
+            $('.card').removeClass('card-hidden');
+        }, 800)
+    });
+</script>
 </html>

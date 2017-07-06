@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:jsf="http://xmlns.jcp.org/jsf">
+
+	<div class="sidebar" data-active-color="purple" data-background-color="white" data-image="../assets/img/sidebar-1.jpg">
+		<div class="logo">
+			<a href="http://www.creative-tim.com" class="simple-text"> Ged </a>
+		</div>
+		<div class="logo logo-mini">
+			<a href="http://www.creative-tim.com" class="simple-text"> Ged </a>
+		</div>
+		<div class="sidebar-wrapper">
+			<div class="user">
+				<div class="photo">
+					<img jsf:value="/resources/img/abel.jpg" />
+				</div>
+				<div class="info">
+					<a data-toggle="collapse" href="#collapseExample" class="collapsed">${sessionBean.user.fullName}<b
+						class="caret"></b>
+					</a>
+					<div class="collapse" id="collapseExample">
+						<ul class="nav">
+							<li><a href="#">My Profile</a></li>
+							<li><a href="#">Edit Profile</a></li>
+							<li><a href="#">Settings</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<form jsf:id="navForm">
+				<ul class="nav">
+					<li class="#{selectedMenu eq 'index' ? 'active': ''}"><a jsf:outcome="/faces/index?faces-redirect=true"> <i
+							class="material-icons">dashboard</i>
+							<p>#{i18n['menu.index']}</p>
+					</a></li>
+					<li class="#{selectedMenu eq 'candidates' ? 'active': ''}"><a jsf:outcome="/faces/candidate/candidateSearch?faces-redirect=true"> <i class="material-icons">group</i>
+							<p>#{i18n['menu.candidates']}</p>
+					</a></li>
+					<li><a jsf:action="#{menuBean.gotoJobOffers}"> <i class="material-icons">work</i>
+							<p>#{i18n['menu.offers']}</p>
+					</a></li>
+					<li><a jsf:action="#{menuBean.gotoClients}"> <i class="material-icons">business center</i>
+							<p>#{i18n['menu.clients']}</p>
+					</a></li>
+					<li><a jsf:action="#{menuBean.gotoReports}"> <i class="material-icons">equalizer</i>
+							<p>#{i18n['menu.reports']}</p>
+					</a></li>
+					<li><a jsf:action="#{menuBean.gotoUsers}"> <i class="material-icons">person</i>
+							<p>#{i18n['menu.users']}</p>
+					</a></li>
+					<li><a jsf:action="#{menuBean.gotoMaintenances}"> <i class="material-icons">build</i>
+							<p>#{i18n['menu.maintenances']}</p>
+					</a></li>
+				</ul>
+			</form>
+		</div>
+	</div>
+</ui:composition>

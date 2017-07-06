@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<f:view contentType="text/html" locale="#{sessionBean.locale}">
+	<h:head>
+		<ui:insert name="title">
+			<title>Ged</title>
+		</ui:insert>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+		<meta name="viewport" content="width=device-width" />
+		<f:facet name="first">
+			<h:outputStylesheet library="webjars" name="bootstrap/3.3.5/css/bootstrap.min.css" />
+			<h:outputStylesheet name="/css/material-dashboard.css" />
+			<h:outputStylesheet library="webjars" name="font-awesome/4.5.0/css/font-awesome-jsf.css" />
+		</f:facet>
+		<link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' rel='stylesheet' type='text/css' />
+	</h:head>
+
+	<h:body>
+		<div class="wrapper">
+			<ui:insert name="aside">
+				<ui:decorate template="asideBootstrap.xhtml" />
+			</ui:insert>
+			<div class="main-panel">
+				<ui:insert name="header">
+					<ui:decorate template="headerBootstrap.xhtml" />
+				</ui:insert>
+				<div class="content">
+					<div class="row">
+						<div class="col-lg-9">
+							<div class="container-fluid">
+								<ui:insert name="content" />
+							</div>
+						</div>
+						<div class="col-lg-3">
+							<div class="side">
+								<ui:include src="side.xhtml" />
+							</div>
+						</div>
+					</div>
+					<ui:insert name="footer">
+						<ui:include src="footer.xhtml" />
+					</ui:insert>
+				</div>
+			</div>
+		</div>
+	</h:body>
+	<h:outputScript library="webjars" name="jquery/3.1.1-1/jquery.min.js" />
+	<h:outputScript library="webjars" name="jquery-ui/1.12.1/jquery-ui.min.js" />
+	<h:outputScript library="webjars" name="bootstrap/3.3.5/js/bootstrap.min.js" />
+
+	<h:outputScript library="js" name="material.min.js" />
+	<h:outputScript library="js" name="perfect-scrollbar.jquery.min.js" />
+	<h:outputScript library="js" name="jquery.validate.min.js" />
+	<h:outputScript library="js" name="moment.min.js" />
+	<h:outputScript library="js" name="chartist.min.js" />
+	<h:outputScript library="js" name="jquery.bootstrap-wizard.js" />
+	<h:outputScript library="js" name="bootstrap-notify.js" />
+	<h:outputScript library="js" name="bootstrap-datetimepicker.js" />
+	<h:outputScript library="js" name="jquery-jvectormap.js" />
+	<h:outputScript library="js" name="nouislider.min.js" />
+	<h:outputScript library="js" name="jquery.select-bootstrap.js" />
+	<h:outputScript library="js" name="sweetalert2.js" />
+	<h:outputScript library="js" name="jasny-bootstrap.min.js" />
+	<h:outputScript library="js" name="fullcalendar.min.js" />
+	<h:outputScript library="js" name="jquery.tagsinput.js" />
+	<h:outputScript library="js" name="material-dashboard.js" />
+</f:view>
+</html>
