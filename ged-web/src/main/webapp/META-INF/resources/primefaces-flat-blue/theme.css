@@ -303,9 +303,6 @@ body .ui-multiselectlistbox li.ui-multiselectlistbox-item.ui-state-hover {
 	color: #000000;
 }
 
-
-
-
 body .ui-splitbutton {
 	-moz-border-radius: 2px;
 	-webkit-border-radius: 2px;
@@ -3390,191 +3387,147 @@ body .md-inputfield .ui-message.ui-message-error .ui-message-error-icon {
 	font-size: 13px;
 }
 
+body .ui-growl-item-container {
+	opacity: 1;
+}
+
 body .ui-growl {
-	top: 20px;
+	width: 600px;
+	top: 0;
 }
 
 body .ui-growl>.ui-growl-item-container {
-	opacity: 0.75;
+	border: 0;
+	border-radius: 0;
+	position: relative;
+	padding: 20px 15px;
+	line-height: 20px;
+	margin-top: 32px;
 }
 
-body .ui-growl>.ui-growl-item-container.ui-growl-info {
-	background-color: #2196F3;
-}
-
-body .ui-growl>.ui-growl-item-container.ui-growl-warn {
-	background-color: #ffc107;
-}
-
-body .ui-growl>.ui-growl-item-container.ui-growl-error {
-	background-color: #e62a10;
-}
-
-body .ui-growl>.ui-growl-item-container.ui-growl-fatal {
-	background-color: #212121;
-}
-
-body .ui-growl>.ui-growl-item-container.ui-shadow {
-	-webkit-box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
-	-moz-box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
-	box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+body .ui-growl>.ui-growl-item-container .ui-growl-message {
+	padding-left: 66px;
+	width: 100%;
+	display: block;
 }
 
 body .ui-growl .ui-growl-item .ui-growl-image {
-	background: none;
 	color: #ffffff;
-	padding: 4px;
+	padding: 6px 0px;
+	width: 32px;
+	height: 32px;
+	display: block;
+	left: 15px;
+	position: absolute;
+	margin-top: -36px;
+	font-size: 20px;
+	border-radius: 50%;
+	max-width: 38px;
+	box-shadow: 0 10px 30px -12px rgba(0, 0, 0, 0.42), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px
+		rgba(0, 0, 0, 0.2);
+}
+
+body .ui-growl>.ui-growl-item-container.ui-growl-info {
+	background-color: #5cb860;
+	color: #ffffff;
+	border-radius: 3px;
+	box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(76, 175, 80, 0.4);
+}
+
+body .ui-growl>.ui-growl-item-container.ui-growl-warn {
+	background-color: #ffa21a;
+	color: #ffffff;
+	border-radius: 3px;
+	box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(255, 152, 0, 0.4);
+}
+
+body .ui-growl>.ui-growl-item-container.ui-growl-error {
+	background-color: #f55a4e;
+	color: #ffffff;
+	border-radius: 3px;
+	box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(244, 67, 54, 0.4);
+}
+
+body .ui-growl>.ui-growl-item-container.ui-growl-fatal {
+	background-color: #f55a4e;
+	color: #ffffff;
+	border-radius: 3px;
+	box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(244, 67, 54, 0.4);
 }
 
 body .ui-growl .ui-growl-item .ui-growl-image.ui-growl-image-info {
 	font-family: 'Material Icons';
-	font-weight: normal;
-	font-style: normal;
-	font-size: 24px;
-	/* Preferred icon size */
-	display: inline-block;
-	width: 1em;
-	height: 1em;
-	line-height: 1;
-	text-transform: none;
-	letter-spacing: normal;
-	word-wrap: normal;
-	white-space: nowrap;
-	direction: ltr;
-	/* Support for all WebKit browsers. */
-	-webkit-font-smoothing: antialiased;
-	/* Support for Safari and Chrome. */
-	text-rendering: optimizeLegibility;
-	/* Support for Firefox. */
-	-moz-osx-font-smoothing: grayscale;
-	/* Support for IE. */
 	font-feature-settings: 'liga';
-	font-size: 36px;
+	font-size: 38px;
+	background: #5cb860;
 }
 
 body .ui-growl .ui-growl-item .ui-growl-image.ui-growl-image-info:before {
-	content: "";
+	content: "\e000";
+	position: absolute;
+	left: -3px;
 }
 
 body .ui-growl .ui-growl-item .ui-growl-image.ui-growl-image-error {
 	font-family: 'Material Icons';
-	font-weight: normal;
-	font-style: normal;
-	font-size: 24px;
-	/* Preferred icon size */
-	display: inline-block;
-	width: 1em;
-	height: 1em;
-	line-height: 1;
-	text-transform: none;
-	letter-spacing: normal;
-	word-wrap: normal;
-	white-space: nowrap;
-	direction: ltr;
-	/* Support for all WebKit browsers. */
-	-webkit-font-smoothing: antialiased;
-	/* Support for Safari and Chrome. */
-	text-rendering: optimizeLegibility;
-	/* Support for Firefox. */
-	-moz-osx-font-smoothing: grayscale;
-	/* Support for IE. */
 	font-feature-settings: 'liga';
-	font-size: 36px;
+	font-size: 38px;
+	background: #f55a4e;
 }
 
 body .ui-growl .ui-growl-item .ui-growl-image.ui-growl-image-error:before {
-	content: "";
+	content: "\e000";
+	position: absolute;
+	left: -3px;
 }
 
 body .ui-growl .ui-growl-item .ui-growl-image.ui-growl-image-warn {
 	font-family: 'Material Icons';
-	font-weight: normal;
-	font-style: normal;
-	font-size: 24px;
-	/* Preferred icon size */
-	display: inline-block;
-	width: 1em;
-	height: 1em;
-	line-height: 1;
-	text-transform: none;
-	letter-spacing: normal;
-	word-wrap: normal;
-	white-space: nowrap;
-	direction: ltr;
-	/* Support for all WebKit browsers. */
-	-webkit-font-smoothing: antialiased;
-	/* Support for Safari and Chrome. */
-	text-rendering: optimizeLegibility;
-	/* Support for Firefox. */
-	-moz-osx-font-smoothing: grayscale;
-	/* Support for IE. */
 	font-feature-settings: 'liga';
-	font-size: 36px;
+	font-size: 38px;
+	background: #ffa21a;
 }
 
 body .ui-growl .ui-growl-item .ui-growl-image.ui-growl-image-warn:before {
-	content: "";
+	content: "\e000";
+	position: absolute;
+	left: -3px;
 }
 
 body .ui-growl .ui-growl-item .ui-growl-image.ui-growl-image-fatal {
 	font-family: 'Material Icons';
-	font-weight: normal;
-	font-style: normal;
-	font-size: 24px;
-	/* Preferred icon size */
-	display: inline-block;
-	width: 1em;
-	height: 1em;
-	line-height: 1;
-	text-transform: none;
-	letter-spacing: normal;
-	word-wrap: normal;
-	white-space: nowrap;
-	direction: ltr;
-	/* Support for all WebKit browsers. */
-	-webkit-font-smoothing: antialiased;
-	/* Support for Safari and Chrome. */
-	text-rendering: optimizeLegibility;
-	/* Support for Firefox. */
-	-moz-osx-font-smoothing: grayscale;
-	/* Support for IE. */
 	font-feature-settings: 'liga';
-	font-size: 36px;
+	font-size: 38px;
+	background: #f55a4e;
 }
 
 body .ui-growl .ui-growl-item .ui-growl-image.ui-growl-image-fatal:before {
-	content: "";
+	content: "\e000";
+	position: absolute;
+	left: -3px;
 }
 
 body .ui-growl .ui-growl-item .ui-growl-message {
 	color: #ffffff;
 }
 
+body .ui-growl .ui-growl-item .ui-growl-message .ui-growl-title {
+	font-weight: 300;
+	padding: 0;
+	display: block;
+}
+
+body .ui-growl .ui-growl-item {
+	padding: 0;
+}
+
 body .ui-growl .ui-growl-item .ui-growl-icon-close {
 	font-family: 'Material Icons';
-	font-weight: normal;
-	font-style: normal;
-	font-size: 24px;
-	/* Preferred icon size */
-	display: inline-block;
-	width: 1em;
-	height: 1em;
-	line-height: 1;
-	text-transform: none;
-	letter-spacing: normal;
-	word-wrap: normal;
-	white-space: nowrap;
-	direction: ltr;
-	/* Support for all WebKit browsers. */
-	-webkit-font-smoothing: antialiased;
-	/* Support for Safari and Chrome. */
-	text-rendering: optimizeLegibility;
-	/* Support for Firefox. */
-	-moz-osx-font-smoothing: grayscale;
-	/* Support for IE. */
 	font-feature-settings: 'liga';
-	font-size: 24px;
-	color: #ffffff;
+	font-size: 14px;
+	color: white;
+	top: 10px;
+	right: 5px;
 }
 
 body .ui-growl .ui-growl-item .ui-growl-icon-close:before {
