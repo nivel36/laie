@@ -29,20 +29,11 @@
 					<ui:decorate template="headerBootstrap.xhtml" />
 				</ui:insert>
 				<div class="content">
-					<div class="row">
-						<div class="col-lg-9">
-							<div class="container-fluid">
-								<ui:insert name="content" />
-							</div>
-						</div>
-						<div class="col-lg-3">
-							<div class="side">
-								<ui:include src="side.xhtml" />
-							</div>
-						</div>
+					<div class="container-fluid">
+						<ui:insert name="content" />
 					</div>
 					<ui:insert name="footer">
-						<ui:include src="footer.xhtml" />
+						<ui:include src="footerBootstrap.xhtml" />
 					</ui:insert>
 				</div>
 			</div>
