@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
-	 xmlns:p="http://primefaces.org/ui"
-	template="/WEB-INF/templates/default.xhtml">
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/defaultBootstrap.xhtml">
 
 	<ui:define name="title">
 		<title>#{i18n['candidate.candidates']}</title>
@@ -12,71 +11,90 @@
 
 	<ui:define name="content">
 		<h:form id="form">
-			<h:panelGroup layout="block" styleClass="purple-panel">
-				<h:panelGroup layout="block" styleClass="panel-header">
-					<h4>#{i18n['candidate.search']}</h4>
-				</h:panelGroup>
-				<h:panelGroup layout="block" styleClass="panel-content">
-					<h:outputLabel for="name" value="#{i18n['candidate.name']}">
-						<h:inputText id="name" value="#{candidateSearchBean.name}" label="#{i18n['candidate.name']}" />
-					</h:outputLabel>
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="card">
+							<div class="card-header card-header-icon" data-background-color="purple">
+								<i class="material-icons">group</i>
+							</div>
+							<h:panelGroup styleClass="card-content" id="searchUserPanel" layout="block">
+								<h4 class="card-title">#{i18n['candidate.search']}</h4>
+								<div class="row">
+									<div class="col-lg-4">
+										<div class="form-group label-floating">
+											<p:outputLabel class="control-label" for="name" value="#{i18n['candidate.name']}" />
+											<p:inputText class="form-control" id="name" value="#{candidateSearchBean.name}" />
+										</div>
+									</div>
 
-					<h:outputLabel for="surename" value="#{i18n['candidate.surename']}">
-						<h:inputText id="surename" value="#{candidateSearchBean.surename}" label="#{i18n['candidate.surename']}" />
-					</h:outputLabel>
+									<div class="col-lg-4">
+										<div class="form-group label-floating">
+											<p:outputLabel class="control-label" for="surename" value="#{i18n['candidate.surename']}" />
+											<p:inputText class="form-control" id="surename" value="#{candidateSearchBean.surename}" />
+										</div>
+									</div>
+									<div class="col-lg-4">
+										<div class="form-group label-floating">
+											<p:outputLabel class="control-label" for="position" value="#{i18n['candidate.position']}" />
+											<p:inputText class="form-control" id="position" value="#{candidateSearchBean.position}" />
+										</div>
+									</div>
 
-					<h:outputLabel for="position" value="#{i18n['candidate.position']}">
-						<h:inputText id="position" value="#{candidateSearchBean.position}" label="#{i18n['candidate.position']}" />
-					</h:outputLabel>
+									<p:commandButton value="#{i18n['action.new']}" action="#{candidateSearchBean.newCandidate}" immediate="true" />
+									<p:commandButton value="#{i18n['action.search']}" action="#{candidateSearchBean.search}" update="@form"
+										process="searchUserPanel" />
+									<p:commandButton value="#{i18n['action.clean']}" action="#{candidateSearchBean.clean}" update="@form" />
+								</div>
+							</h:panelGroup>
+						</div>
+					</div>
+				</div>
+			</div>
 
-					<h:panelGroup layout="block" styleClass="buttonGroup">
-						<p:commandButton value="#{i18n['action.new']}" action="#{candidateSearchBean.newCandidate}" immediate="true" />
-						<p:commandButton value="#{i18n['action.search']}" action="#{candidateSearchBean.search}">
-							<f:ajax execute="searchUserPanel" render="@form" />
-						</p:commandButton>
-						<p:commandButton value="#{i18n['action.clean']}" action="#{candidateSearchBean.clean}">
-							<f:ajax render="@form" />
-						</p:commandButton>
-					</h:panelGroup>
-				</h:panelGroup>
-			</h:panelGroup>
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="card">
+							<div class="card-header card-header-icon" data-background-color="purple">
+								<i class="material-icons">group</i>
+							</div>
+							<div class="card-content">
+								<h4 class="card-title">#{i18n['candidate.search_results']}</h4>
+								<p:dataTable var="candidate" id="candidate" value="#{candidateSearchBean.candidates}"
+									rendered="#{not empty candidateSearchBean.candidates}" emptyMessage="#{i18n['candidate.no_candidates_found']}"
+									styleClass="dataTable" reflow="true" paginator="true" paginatorPosition="bottom">
 
-			<h:panelGroup layout="block" styleClass="purple-panel">
-				<h:panelGroup layout="block" styleClass="panel-header">
-					<h4>#{i18n['candidate.search_results']}</h4>
-				</h:panelGroup>
-				<h:panelGroup layout="block" styleClass="panel-content">
-					<p:dataTable var="candidate" id="candidate" value="#{candidateSearchBean.candidates}"
-						rendered="#{not empty candidateSearchBean.candidates}" emptyMessage="#{i18n['candidate.no_candidates_found']}"
-						styleClass="dataTable" reflow="true" paginator="true" paginatorPosition="bottom">
+									<p:column headerText="#{i18n['candidate.name']}" sortBy="#{candidate.name}">
+										<h:outputText value="#{candidate}" />
+									</p:column>
 
-						<p:column headerText="#{i18n['candidate.name']}" sortBy="#{candidate.name}">
-							<h:outputText value="#{candidate}" />
-						</p:column>
+									<p:column headerText="#{i18n['candidate.position']}" sortBy="#{candidate.position}">
+										<h:outputText value="#{candidate.position}" />
+									</p:column>
 
-						<p:column headerText="#{i18n['candidate.position']}" sortBy="#{candidate.position}">
-							<h:outputText value="#{candidate.position}" />
-						</p:column>
+									<p:column headerText="#{i18n['candidate.email']}" sortBy="#{candidate.email}">
+										<h:outputText value="#{candidate.email}" />
+									</p:column>
 
-						<p:column headerText="#{i18n['candidate.email']}" sortBy="#{candidate.email}">
-							<h:outputText value="#{candidate.email}" />
-						</p:column>
+									<p:column headerText="#{i18n['candidate.phone_number']}" sortBy="#{candidate.phoneNumber}">
+										<h:outputText value="#{candidate.phoneNumber}" />
+									</p:column>
 
-						<p:column headerText="#{i18n['candidate.phone_number']}" sortBy="#{candidate.phoneNumber}">
-							<h:outputText value="#{candidate.phoneNumber}" />
-						</p:column>
-
-						<p:column headerText="#{i18n['user.owner']}" sortBy="#{candidate.owner.name}">
-							<h:outputText value="#{candidate.owner.name}" />
-						</p:column>
-						<p:column>
-							<p:button outcome="candidateView" icon="ui-icon-search">
-								<f:param name="id" value="#{candidate.id}" />
-							</p:button>
-						</p:column>
-					</p:dataTable>
-				</h:panelGroup>
-			</h:panelGroup>
+									<p:column headerText="#{i18n['user.owner']}" sortBy="#{candidate.owner.name}">
+										<h:outputText value="#{candidate.owner.name}" />
+									</p:column>
+									<p:column>
+										<p:button outcome="candidateView" icon="ui-icon-search">
+											<f:param name="id" value="#{candidate.id}" />
+										</p:button>
+									</p:column>
+								</p:dataTable>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</h:form>
 	</ui:define>
 </ui:composition>

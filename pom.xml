@@ -14,7 +14,7 @@
 	</modules>
 
 	<properties>
-		<ged.version>0.0.3-SNAPSHOT</ged.version>
+		<ged.version>0.0.4.-SNAPSHOT</ged.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<javaee-api.version>7.0</javaee-api.version>
 		<primefaces.version>6.1</primefaces.version>

@@ -134,33 +134,17 @@ body a {
 }
 
 body .ui-inputfield {
-	background: transparent;
-	border-width: 0 0 1px 0;
-	padding: 2px 2px 1px 2px;
-	border-color: #bdbdbd;
-	border-style: solid;
-	font-size: 14px;
-	-moz-transition: border-color 0.3s;
-	-o-transition: border-color 0.3s;
-	-webkit-transition: border-color 0.3s;
-	transition: border-color 0.3s;
-	-moz-border-radius: 0px;
-	-webkit-border-radius: 0px;
-	border-radius: 0px;
 }
 
 body .ui-inputfield.ui-state-focus {
-	border-width: 0 0 2px 0;
-	border-color: #1976d2;
-	padding-bottom: 0;
 }
 
 body .ui-inputfield.ui-state-disabled {
-	border-bottom: 1px dotted;
+
 }
 
 body .ui-inputfield.ui-widget-content {
-	border-width: 1px;
+
 }
 
 body .ui-inputfield.ui-state-error {
