@@ -4243,7 +4243,7 @@ body .btn-primary.ui-state-hover {
 }
 
 body .ui-button-text-only .ui-button-text {
-	padding: 0;
+	padding: 0.2em 0.4em;
 }
 
 .ripple-effect {

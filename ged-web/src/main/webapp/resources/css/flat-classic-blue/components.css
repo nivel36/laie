@@ -777,26 +777,6 @@ textarea {
 	margin-left: 15px;
 }
 
-.candidatesIcon {
-	background-image: url("#{resource['img/classic-blue/user-group-icon.png']}");
-}
-
-.candidateIcon {
-	background-image: url("#{resource['img/classic-blue/user-icon.png']}");
-}
-
-.homeIcon {
-	background-image: url("#{resource['img/classic-blue/home-icon.png']}");
-}
-
-.aboutIcon {
-	background-image: url("#{resource['img/classic-blue/about-icon.png']}");
-}
-
-.pieChartIcon {
-	background-image: url("#{resource['img/classic-blue/pie-chart-icon.png']}");
-}
-
 .logout, .config {
 	font-size: 0;
 	text-decoration: none;
