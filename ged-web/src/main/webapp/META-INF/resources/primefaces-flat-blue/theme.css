@@ -4137,7 +4137,7 @@ body .ui-growl .ui-growl-item .ui-growl-icon-close {
 
 body .ui-outputlabel {
 	font-weight: bold;
-	font-size: 0.9em;
+	font-size: 12px;
 	margin: 0.2em 1em 0.2em 1em;
 	text-align: right;
 	min-height: 2.3em;
@@ -4151,7 +4151,7 @@ body .ui-panel {
 	display: inline-block;
 	position: relative;
 	width: 100%;
-	margin: 20px 0px 5px 0px;
+	margin: 5px 0px 0px 0px;
 	box-shadow: 0px 4px 4px rgba(0, 0, 0, .25);
 	border-radius: 4px;
 	padding: 0px;
