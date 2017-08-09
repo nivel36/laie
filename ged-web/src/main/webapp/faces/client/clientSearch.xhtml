@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
-	 template="/WEB-INF/templates/default.xhtml">
+	template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
 		<title>#{i18n['client.clients']}</title>
@@ -11,55 +11,44 @@
 
 	<ui:define name="content">
 		<h:form id="form">
-			<h:panelGroup layout="block" styleClass="cyan-panel">
-				<h:panelGroup layout="block" styleClass="panel-header">
-					<h4>#{i18n['client.search']}</h4>
+			<p:panel styleClass="cyan" header="#{i18n['client.search']}">
+				<h:outputLabel for="name" value="#{i18n['client.name']}">
+					<h:inputText id="name" value="#{clientSearchBean.name}" label="#{i18n['client.name']}" />
+				</h:outputLabel>
+
+				<h:panelGroup layout="block" styleClass="buttonGroup">
+					<p:commandButton value="#{i18n['action.new']}" action="#{clientSearchBean.newClient}" immediate="true" />
+					<p:commandButton value="#{i18n['action.search']}" action="#{clientSearchBean.search}" />
+					<p:commandButton value="#{i18n['action.clean']}" action="#{clientSearchBean.clean}" />
 				</h:panelGroup>
-				<h:panelGroup layout="block" styleClass="panel-content">
-					<h:outputLabel for="name" value="#{i18n['client.name']}">
-						<h:inputText id="name" value="#{clientSearchBean.name}" label="#{i18n['client.name']}" />
-					</h:outputLabel>
+			</p:panel>
+			<p:panel styleClass="cyan" header="#{i18n['client.search_results']}">
+				<p:dataTable var="client" id="client" value="#{clientSearchBean.paginator.dataList}"
+					rendered="#{not empty clientSearchBean.paginator.entities}" styleClass="dataTable"
+					emptyMessage="#{i18n['client.no_clients_found']}" paginator="true" paginatorPosition="bottom">
 
-					<h:panelGroup layout="block" styleClass="buttonGroup">
-						<p:commandButton value="#{i18n['action.new']}" action="#{clientSearchBean.newClient}" immediate="true" />
-						<p:commandButton value="#{i18n['action.search']}" action="#{clientSearchBean.search}" />
-						<p:commandButton value="#{i18n['action.clean']}" action="#{clientSearchBean.clean}" />
-					</h:panelGroup>
-				</h:panelGroup>
-			</h:panelGroup>
+					<p:column headerText="#{i18n['client.name']}" sortBy="#{client.name}">
+						<h:outputText value="#{client.name}" />
+					</p:column>
 
-			<h:panelGroup layout="block" styleClass="cyan-panel" id="resultados">
-				<h:panelGroup layout="block" styleClass="panel-header">
-					<h4>#{i18n['client.search_results']}</h4>
-				</h:panelGroup>
-				<h:panelGroup layout="block" styleClass="panel-content">
-					<p:dataTable var="client" id="client" value="#{clientSearchBean.paginator.dataList}"
-						rendered="#{not empty clientSearchBean.paginator.entities}" styleClass="dataTable"
-						emptyMessage="#{i18n['client.no_clients_found']}" paginator="true" paginatorPosition="bottom">
+					<p:column headerText="#{i18n['client.cif']}" sortBy="#{client.cif}">
+						<h:outputText value="#{client.cif}" />
+					</p:column>
 
-						<p:column headerText="#{i18n['client.name']}" sortBy="#{client.name}">
-							<h:outputText value="#{client.name}" />
-						</p:column>
-
-						<p:column headerText="#{i18n['client.cif']}" sortBy="#{client.cif}">
-							<h:outputText value="#{client.cif}" />
-						</p:column>
-
-						<p:column>
-							<h:link value="#{i18n['action.view']}" outcome="clientView">
-								<f:param name="id" value="#{client.id}" />
-							</h:link>
+					<p:column>
+						<h:link value="#{i18n['action.view']}" outcome="clientView">
+							<f:param name="id" value="#{client.id}" />
+						</h:link>
 						|
 						<h:commandLink action="#{clientSearchBean.edit(client)}" value="#{i18n['action.edit']}" />
 						|
 						<h:commandLink action="#{clientSearchBean.remove(client)}" value="#{i18n['action.remove']}"
-								onclick="return confirm('#{i18n['action.delete.are_you_sure']}')">
-								<f:ajax execute="@this" render="@form" />
-							</h:commandLink>
-						</p:column>
-					</p:dataTable>
-				</h:panelGroup>
-			</h:panelGroup>
+							onclick="return confirm('#{i18n['action.delete.are_you_sure']}')">
+							<f:ajax execute="@this" render="@form" />
+						</h:commandLink>
+					</p:column>
+				</p:dataTable>
+			</p:panel>
 		</h:form>
 	</ui:define>
 </ui:composition>

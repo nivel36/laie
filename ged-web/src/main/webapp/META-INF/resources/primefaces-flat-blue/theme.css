@@ -1,5 +1,11 @@
 @charset "UTF-8";
 
+*::after, *::before {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
 .ui-icon-carat-2-n-s:before {
 	content: "";
 }
@@ -4145,11 +4151,31 @@ body .ui-panel {
 	display: inline-block;
 	position: relative;
 	width: 100%;
-	margin: 25px 0;
+	margin: 20px 0px 5px 0px;
 	box-shadow: 0px 4px 4px rgba(0, 0, 0, .25);
 	border-radius: 4px;
 	padding: 0px;
 	border: 0px;
+}
+
+body .ui-panel.yellow .ui-panel-titlebar {
+	background: #fb8c00;
+}
+
+body .ui-panel.cyan .ui-panel-titlebar {
+	background: #00acc1;
+}
+
+body .ui-panel.purple .ui-panel-titlebar {
+	background: #8e24aa;
+}
+
+body .ui-panel.green .ui-panel-titlebar {
+	background: #43a047;
+}
+
+body .ui-panel.red .ui-panel-titlebar {
+	background: #e53935;
 }
 
 body .ui-panel .ui-panel-titlebar {
@@ -4184,7 +4210,6 @@ body .ui-panel .ui-panel-titlebar .ui-panel-titlebar-icon:hover {
 }
 
 body .ui-panel .ui-panel-content {
-	height: 100%;
 	box-sizing: border-box;
 	padding: 8px 14px;
 }
@@ -4208,8 +4233,9 @@ body .ui-widget-content {
 body .ui-button {
 	background: #1976d2;
 	color: #fff;
-	font-size: 1em;
-	padding: 6px 20px;
+	height: 30px;
+	font-size: 14px;
+	padding: 0px 14px;
 	margin: 10px 1px;
 	border-radius: 2px;
 	cursor: pointer;

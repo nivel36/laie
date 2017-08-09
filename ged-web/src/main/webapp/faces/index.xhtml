@@ -11,13 +11,9 @@
 
 	<ui:define name="content">
 		<h:form>
-
-			<h:panelGroup layout="block" styleClass="row">
-				<h:panelGroup layout="block" styleClass="half yellow-panel">
-					<h:panelGroup layout="block" styleClass="panel-header">
-						<h3>#{i18n['index.last_offers']}</h3>
-					</h:panelGroup>
-					<h:panelGroup layout="block" styleClass="panel-content">
+			<div class="ui-g">
+				<div class="ui-g-12 ui-md-12 ui-lg-6">
+					<p:panel styleClass="yellow" header="#{i18n['index.last_offers']}">
 						<h:outputText value="#{i18n['job.no_jobs_found']}" rendered="#{empty indexBean.jobOffers}" styleClass="text" />
 						<ui:repeat var="jobOffer" value="${indexBean.jobOffers}">
 							<h:panelGroup layout="block" styleClass="textBlock">
@@ -25,17 +21,12 @@
 							</h:panelGroup>
 							<br />
 						</ui:repeat>
-						<h:panelGroup layout="block" styleClass="buttonGroup">
-							<p:commandButton value="#{i18n['action.new']}" action="/faces/jobOffer/jobOfferEdit.xhtml?faces-redirect=true" />
-						</h:panelGroup>
-					</h:panelGroup>
-				</h:panelGroup>
-
-				<h:panelGroup layout="block" styleClass="half purple-panel">
-					<h:panelGroup layout="block" styleClass="panel-header">
-						<h3>#{i18n['index.last_candidates']}</h3>
-					</h:panelGroup>
-					<h:panelGroup layout="block" styleClass="panel-content">
+						<p:commandButton styleClass="push-right" value="#{i18n['action.new']}"
+							action="/faces/jobOffer/jobOfferEdit.xhtml?faces-redirect=true" />
+					</p:panel>
+				</div>
+				<div class="ui-g-12 ui-md-12 ui-lg-6">
+					<p:panel styleClass="purple" header="#{i18n['index.last_candidates']}">
 						<h:outputText value="#{i18n['candidate.no_candidates_found']}" rendered="#{empty indexBean.candidates}" />
 
 						<ui:repeat var="candidate" value="${indexBean.candidates}">
@@ -47,32 +38,23 @@
 							</h:panelGroup>
 						</ui:repeat>
 
-						<h:panelGroup layout="block" styleClass="buttonGroup">
-							<p:commandButton value="#{i18n['action.new']}" action="candidate/candidateEdit?faces-redirect=true" />
-						</h:panelGroup>
-					</h:panelGroup>
-				</h:panelGroup>
-			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="row">
-				<h:panelGroup layout="block" styleClass="half green-panel">
-					<h:panelGroup layout="block" styleClass="panel-header">
-						<h3>#{i18n['index.last_reports']}</h3>
-					</h:panelGroup>
-					<h:panelGroup layout="block" styleClass="panel-content">
-						<h:panelGroup layout="block" styleClass="buttonGroup">
-							<p:commandButton value="#{i18n['action.new']}" action="#{jobOfferViewBean.edit}" />
-						</h:panelGroup>
-					</h:panelGroup>
-				</h:panelGroup>
-				<h:panelGroup layout="block" styleClass="half red-panel">
-					<h:panelGroup layout="block" styleClass="panel-header">
-						<h3>#{i18n['index.scheudele']}</h3>
-					</h:panelGroup>
-					<h:panelGroup layout="block" styleClass="panel-content">
-						
-					</h:panelGroup>
-				</h:panelGroup>
-			</h:panelGroup>
+						<p:commandButton styleClass="push-right" value="#{i18n['action.new']}"
+							action="candidate/candidateEdit?faces-redirect=true" />
+					</p:panel>
+				</div>
+			</div>
+			<div class="ui-g">
+				<div class="ui-g-12 ui-md-12 ui-lg-6">
+					<p:panel styleClass="green" header="#{i18n['index.last_reports']}">
+						<p:commandButton value="#{i18n['action.new']}" action="#{jobOfferViewBean.edit}" />
+					</p:panel>
+				</div>
+
+				<div class="ui-g-12 ui-md-12 ui-lg-6">
+					<p:panel styleClass="red" header="#{i18n['index.scheudele']}">
+					</p:panel>
+				</div>
+			</div>
 		</h:form>
 	</ui:define>
 </ui:composition>

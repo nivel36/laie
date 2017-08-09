@@ -20,21 +20,21 @@
 	</h:head>
 
 	<h:body>
-		<h:panelGroup layout="block" styleClass="wrapper">
+		<div class="wrapper">
 			<header>
 				<ui:insert name="header">
 					<ui:decorate template="header.xhtml" />
 				</ui:insert>
 			</header>
-			<h:panelGroup layout="block" id="main-panel">
-				<h:panelGroup layout="block" id="aside">
+			<div class="ui-g" id="main-panel">
+				<div class="ui-g-12 ui-md-4 ui-lg-3" id="aside">
 					<aside>
 						<ui:insert name="aside">
 							<ui:include src="aside.xhtml" />
 						</ui:insert>
 					</aside>
-				</h:panelGroup>
-				<h:panelGroup layout="block" id="content">
+				</div>
+				<div class="ui-g-12 ui-md-8 ui-lg-9" id="content">
 					<p:growl id="growl" globalOnly="true" />
 					<ui:insert name="content" />
 					<footer>
@@ -42,9 +42,9 @@
 							<ui:include src="footer.xhtml" />
 						</ui:insert>
 					</footer>
-				</h:panelGroup>
-			</h:panelGroup>
-		</h:panelGroup>
+				</div>
+			</div>
+		</div>
 	</h:body>
 </f:view>
 </html>

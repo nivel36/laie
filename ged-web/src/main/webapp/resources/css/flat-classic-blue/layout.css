@@ -78,7 +78,6 @@ Complement color
 }
 
 #main-panel {
-	margin-top: 2em;
 	width: 100%;
 	position: relative;
 	overflow: auto;
@@ -87,17 +86,9 @@ Complement color
 }
 
 #content {
-	width: 80%;
-	z-index: -1;
-	min-height: 600px;
-	overflow: auto;
-	float: left;
 }
 
 #aside {
-	float: left;
-	width: 20%;
-	background: transparent;
 }
 
 footer {
