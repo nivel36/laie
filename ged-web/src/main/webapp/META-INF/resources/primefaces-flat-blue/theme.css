@@ -4294,17 +4294,17 @@ body .ui-button-text-only .ui-button-text {
 	animation: ripple-animation 2s;
 }
 
-@
-keyframes ripple-animation {from { transform:scale(1);
-	opacity: 0.4;
+@keyframes ripple-animation {
+	from { 
+		transform:scale(1);
+		opacity: 0.4;
+	}
+	to {
+		transform: scale(100);
+		opacity: 0;
+	}
 }
 
-to {
-	transform: scale(100);
-	opacity: 0;
-}
-
-}
 .ui-selected {
 	background-color: #ffc107;
 	color: black;
