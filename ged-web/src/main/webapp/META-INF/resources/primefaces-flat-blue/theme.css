@@ -1,9 +1,18 @@
 @charset "UTF-8";
 
 *::after, *::before {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+body .ui-icon {
+	font-family: FontAwesome;
+	font-size: 16px;
+	color: black;
+	top: 8px;
+	right: 12px;
+	text-indent: 0px;
 }
 
 .ui-icon-carat-2-n-s:before {
@@ -19,7 +28,7 @@
 }
 
 .ui-icon-triangle-1-s:before {
-	content: "";
+	content: "\f0d7";
 }
 
 .ui-icon-triangle-1-w:before {
@@ -3990,33 +3999,6 @@
 	content: "";
 }
 
-.material-icons {
-	font-family: 'Material Icons';
-	font-weight: normal;
-	font-style: normal;
-	font-size: 24px;
-	/* Preferred icon size */
-	display: inline-block;
-	width: 1em;
-	height: 1em;
-	line-height: 1;
-	text-transform: none;
-	letter-spacing: normal;
-	word-wrap: normal;
-	white-space: nowrap;
-	direction: ltr;
-	/* Support for all WebKit browsers. */
-	-webkit-font-smoothing: antialiased;
-	/* Support for Safari and Chrome. */
-	text-rendering: optimizeLegibility;
-	/* Support for Firefox. */
-	-moz-osx-font-smoothing: grayscale;
-	/* Support for IE. */
-	font-feature-settings: 'liga';
-}
-
-#ui-growl
-
 body .ui-growl-item-container {
 	opacity: 1;
 }
@@ -4135,16 +4117,65 @@ body .ui-growl .ui-growl-item .ui-growl-icon-close {
 	text-indent: 0px;
 }
 
+body .form-group {
+	display: flex;
+	align-items: center
+}
+
 body .ui-outputlabel {
 	font-weight: bold;
 	font-size: 12px;
-	margin: 0.2em 1em 0.2em 1em;
+	margin: 2px 12px;
 	text-align: right;
-	min-height: 2.3em;
 	display: inline-block;
 	position: relative;
 	color: #424242;
-	width: 150px;
+	width: 120px;
+}
+
+body .ui-inputfield {
+	outline: medium none;
+	padding: 3px;
+	border-radius: 3px;
+	background-color: white;
+	font-size: 13px;
+	border: 1px solid #1976d2;
+	width: 200px;
+}
+
+body .ui-selectonemenu {
+	outline: medium none;
+	padding: 1px;
+	border-radius: 3px;
+	background-color: white;
+	font-size: 13px;
+	border: 1px solid #1976d2;
+	width: 200px;
+}
+
+body .ui-selectonemenu-panel .ui-selectonemenu-list {
+	padding: 2px;
+	border: 0 none;
+}
+
+body .ui-selectonemenu-item {
+	padding: 2px;
+}
+
+body .ui-selectonemenu-item.ui-state-hover {
+	border-radius: 3px;
+	background-color: #FFE9B8;
+}
+
+body .ui-selectonemenu-item.ui-state-highlight {
+	border-radius: 3px;
+	background-color: #FFC60C;
+}
+
+body .ui-selectonemenu .ui-selectonemenu-trigger {
+	outline: medium none;
+	margin: 0px;
+	width: 20px;
 }
 
 body .ui-panel {
@@ -4263,16 +4294,17 @@ body .ui-button-text-only .ui-button-text {
 	animation: ripple-animation 2s;
 }
 
-@keyframes ripple-animation {
-	from { transform:scale(1);
+@
+keyframes ripple-animation {from { transform:scale(1);
 	opacity: 0.4;
-	}
-	to {
-	transform: scale(100);
-	opacity: 0;
-	}
 }
 
+to {
+	transform: scale(100);
+	opacity: 0;
+}
+
+}
 .ui-selected {
 	background-color: #ffc107;
 	color: black;

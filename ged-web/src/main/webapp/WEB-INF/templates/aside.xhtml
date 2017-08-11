@@ -30,7 +30,7 @@
 
 		<div class="ui-g">
 			<div class="ui-g-12">
-				<p:panel header="#{i18n['aside.bookmarks']}">
+				<p:panel header="#{i18n['aside.bookmarks']}" id="bookmarks">
 					<h:outputText value="#{i18n['message.bookmarks.empty']}" styleClass="text"
 						rendered="#{empty bookmarksBean.bookmarks}" />
 					<ui:repeat value="#{bookmarksBean.bookmarks}" var="bookmark">

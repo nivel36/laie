@@ -11,69 +11,92 @@
 
 	<ui:define name="content">
 		<ui:include src="/faces/config/changePasswordPopup.xhtml" />
-		<h:form>
-			<h:panelGroup layout="block" styleClass="panel">
-				<h:panelGroup layout="block" styleClass="panel-header">
-					<h4>#{i18n['config.user_data']}</h4>
-				</h:panelGroup>
-				<h:panelGroup layout="block" styleClass="panel-content">
-					<h:panelGroup layout="block" styleClass="row">
-						<h:outputLabel value="#{i18n['config.username']}" styleClass="required">
-							<h:inputText id="username" value="#{configIndexBean.user.username}" label="#{i18n['config.username']}"
-								required="true" styleClass="#{not component.valid ? 'inputError' : ''}" />
-							<h:message for="username" errorClass="error" />
-						</h:outputLabel>
-						<h:outputLabel value="#{i18n['config.name']}" styleClass="required">
-							<h:inputText id="name" value="#{configIndexBean.user.name}" label="#{i18n['config.name']}" required="true"
-								styleClass="#{not component.valid ? 'inputError' : ''}" />
-							<h:message for="name" errorClass="error" />
-						</h:outputLabel>
-						<h:outputLabel value="#{i18n['config.surename']}" styleClass="required">
-							<h:inputText id="surename" value="#{configIndexBean.user.surename}" label="#{i18n['config.surename']}"
-								required="true" styleClass="#{not component.valid ? 'inputError' : ''}" />
-							<h:message for="surename" errorClass="error" />
-						</h:outputLabel>
-						<h:outputLabel value="#{i18n['config.email']}" styleClass="large required">
-							<h:inputText id="email" value="#{configIndexBean.user.email}" label="#{i18n['config.email']}" required="true"
-								styleClass="#{not component.valid ? 'inputError' : ''}" />
-							<h:message for="email" errorClass="error" />
-						</h:outputLabel>
-					</h:panelGroup>
-					<h:panelGroup layout="block" styleClass="row">
-						<h:panelGroup layout="block" class="buttonGroup">
-							<h:commandButton value="#{i18n['config.change_password']}" action="#{changePasswordPopupBean.show}" />
-							<h:commandButton value="#{i18n['action.save']}" action="#{configIndexBean.save}" />
-						</h:panelGroup>
-					</h:panelGroup>
-				</h:panelGroup>
-			</h:panelGroup>
-		</h:form>
+		<div class="ui-g">
+			<div class="ui-g-12">
+				<h:form>
+					<p:panel header="#{i18n['config.user_data']}">
+						<div class="ui-g">
+							<div class="ui-md-12 ui-lg-6 ui-xl-4">
+								<div class="form-group">
+									<p:outputLabel value="#{i18n['config.username']}" />
+									<p:inputText id="username" value="#{configIndexBean.user.username}" label="#{i18n['config.username']}"
+										required="true" styleClass="#{not component.valid ? 'inputError' : ''}" />
+									<h:message for="username" errorClass="error" />
+								</div>
+							</div>
+							<div class="ui-md-12 ui-lg-6 ui-xl-4">
+								<div class="form-group">
+									<p:outputLabel value="#{i18n['config.name']}" />
+									<p:inputText id="name" value="#{configIndexBean.user.name}" label="#{i18n['config.name']}" required="true"
+										styleClass="#{not component.valid ? 'inputError' : ''}" />
+									<h:message for="name" errorClass="error" />
+								</div>
+							</div>
+							<div class="ui-md-12 ui-lg-6 ui-xl-4">
+								<div class="form-group">
+									<p:outputLabel value="#{i18n['config.surename']}" />
+									<p:inputText id="surename" value="#{configIndexBean.user.surename}" label="#{i18n['config.surename']}"
+										required="true" styleClass="#{not component.valid ? 'inputError' : ''}" />
+									<h:message for="surename" errorClass="error" />
+								</div>
+							</div>
+							<div class="ui-md-12 ui-lg-6 ui-xl-4">
+								<div class="form-group">
+									<p:outputLabel value="#{i18n['config.email']}" />
+									<p:inputText id="email" value="#{configIndexBean.user.email}" label="#{i18n['config.email']}" required="true"
+										styleClass="#{not component.valid ? 'inputError' : ''}" />
+									<h:message for="email" errorClass="error" />
+								</div>
+							</div>
+						</div>
+						<div class="ui-g">
+							<div class="ui-g-12">
+								<div class="push-right">
+									<p:commandButton value="#{i18n['config.change_password']}" action="#{changePasswordPopupBean.show}" />
+									<p:commandButton value="#{i18n['action.save']}" action="#{configIndexBean.save}" />
+								</div>
+							</div>
+						</div>
+					</p:panel>
+				</h:form>
+			</div>
+		</div>
+		<div class="ui-g">
+			<div class="ui-g-12">
+				<h:form>
+					<p:panel header="#{i18n['config.preferences']}">
+						<div class="ui-g">
+							<div class="ui-md-12 ui-lg-6 ui-xl-4">
+								<div class="form-group">
+									<p:outputLabel value="#{i18n['config.rows_per_page']}" />
+									<p:selectOneMenu value="#{configIndexBean.user.rowsPerPage}">
+										<f:selectItem itemValue="5" itemLabel="5" />
+										<f:selectItem itemValue="10" itemLabel="10" />
+										<f:selectItem itemValue="25" itemLabel="25" />
+									</p:selectOneMenu>
+								</div>
+							</div>
 
-		<h:form>
-			<h:panelGroup layout="block" styleClass="panel">
-				<h:panelGroup layout="block" styleClass="panel-header">
-					<h4>#{i18n['config.preferences']}</h4>
-				</h:panelGroup>
-				<h:panelGroup layout="block" styleClass="panel-content">
-					<h:outputLabel value="#{i18n['config.rows_per_page']}" styleClass="small">
-						<h:selectOneMenu value="#{configIndexBean.user.rowsPerPage}">
-							<f:selectItem itemValue="5" itemLabel="5" />
-							<f:selectItem itemValue="10" itemLabel="10" />
-							<f:selectItem itemValue="25" itemLabel="25" />
-						</h:selectOneMenu>
-					</h:outputLabel>
-
-					<h:outputLabel value="#{i18n['config.language']}" styleClass="medium">
-						<h:selectOneMenu id="language" value="#{configIndexBean.user.language}" style="text-transform: capitalize">
-							<f:selectItems var="locale" value="#{applicationBean.locales}" itemValue="#{locale.language}"
-								itemLabel="#{locale.displayLanguage}" />
-						</h:selectOneMenu>
-					</h:outputLabel>
-					<h:panelGroup layout="block" class="buttonGroup">
-						<h:commandButton value="#{i18n['action.save']}" action="#{configIndexBean.save}" />
-					</h:panelGroup>
-				</h:panelGroup>
-			</h:panelGroup>
-		</h:form>
+							<div class="ui-md-12 ui-lg-6 ui-xl-4">
+								<div class="form-group">
+									<p:outputLabel value="#{i18n['config.language']}" />
+									<p:selectOneMenu id="language" value="#{configIndexBean.user.language}" style="text-transform: capitalize">
+										<f:selectItems var="locale" value="#{applicationBean.locales}" itemValue="#{locale.language}"
+											itemLabel="#{locale.displayLanguage}" />
+									</p:selectOneMenu>
+								</div>
+							</div>
+						</div>
+						<div class="ui-g">
+							<div class="ui-g-12">
+								<div class="push-right">
+									<p:commandButton styleClass="push-right" value="#{i18n['action.save']}" action="#{configIndexBean.save}" />
+								</div>
+							</div>
+						</div>
+					</p:panel>
+				</h:form>
+			</div>
+		</div>
 	</ui:define>
 </ui:composition>

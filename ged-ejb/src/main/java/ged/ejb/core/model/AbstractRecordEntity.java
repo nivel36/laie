@@ -1,14 +1,16 @@
 package ged.ejb.core.model;
 
 import javax.persistence.Column;
+import javax.persistence.EntityListeners;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
-import javax.validation.constraints.NotNull;
 
+import ged.ejb.core.action.ActionListener;
 import ged.ejb.user.User;
 
 @MappedSuperclass
+@EntityListeners(ActionListener.class)
 public class AbstractRecordEntity extends AbstractEntity {
 
 	private static final long serialVersionUID = 8347072557418850004L;
@@ -21,9 +23,8 @@ public class AbstractRecordEntity extends AbstractEntity {
 	@Column(length = 128)
 	private String text;
 
-	@NotNull
 	@ManyToOne
-	@JoinColumn(name = "userId", nullable = false)
+	@JoinColumn(name = "userId")
 	private User user;
 
 	public AbstractRecordEntity() {

@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
-	xmlns:i18n="http://legion.com/i18n" 
-	template="/WEB-INF/templates/default.xhtml">
+	xmlns:i18n="http://legion.com/i18n" template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
 		<title>#{i18n['client.client']}</title>
@@ -16,57 +15,55 @@
 			<f:viewAction action="#{clientViewBean.init}" />
 		</f:metadata>
 
-		<h:form id="form">
-			<input type="hidden" id="clientId" value="#{clientViewBean.client.id}" />
+		<div class="ui-g">
+			<div class="ui-g-12">
+				<h:form id="form">
+					<input type="hidden" id="clientId" value="#{clientViewBean.client.id}" />
+					<p:panel styleClass="cyan" header="#{clientViewBean.client}">
+						<h:panelGroup layout="block" styleClass="textBlock">
+							<h:outputText styleClass="label" value="#{i18n['client.name']}:" />
+							<h:outputText value="#{clientViewBean.client.name}" />
+						</h:panelGroup>
 
-			<h:panelGroup layout="block" styleClass="cyan-panel">
-				<h:panelGroup layout="block" styleClass="panel-header">
-					<h4>#{clientViewBean.client}</h4>
-				</h:panelGroup>
-				<h:panelGroup layout="block" styleClass="panel-content">
-					<h:panelGroup layout="block" styleClass="textBlock">
-						<h:outputText styleClass="label" value="#{i18n['client.name']}:" />
-						<h:outputText value="#{clientViewBean.client.name}" />
-					</h:panelGroup>
+						<h:panelGroup layout="block" styleClass="textBlock">
+							<h:outputText styleClass="label" value="#{i18n['client.cif']}:" />
+							<h:outputText value="#{clientViewBean.client.cif}" />
+						</h:panelGroup>
 
-					<h:panelGroup layout="block" styleClass="textBlock">
-						<h:outputText styleClass="label" value="#{i18n['client.cif']}:" />
-						<h:outputText value="#{clientViewBean.client.cif}" />
-					</h:panelGroup>
+						<h:panelGroup layout="block" styleClass="textBlock">
+							<h:outputText styleClass="label" value="#{i18n['client.city']}:" />
+							<h:outputText value="#{clientViewBean.client.address.city}" />
+						</h:panelGroup>
 
-					<h:panelGroup layout="block" styleClass="textBlock">
-						<h:outputText styleClass="label" value="#{i18n['client.city']}:" />
-						<h:outputText value="#{clientViewBean.client.address.city}" />
-					</h:panelGroup>
+						<h:panelGroup layout="block" styleClass="textBlock">
+							<h:outputText styleClass="label" value="#{i18n['client.state']}:" />
+							<h:outputText value="#{clientViewBean.client.address.state}" />
+						</h:panelGroup>
 
-					<h:panelGroup layout="block" styleClass="textBlock">
-						<h:outputText styleClass="label" value="#{i18n['client.state']}:" />
-						<h:outputText value="#{clientViewBean.client.address.state}" />
-					</h:panelGroup>
+						<h:panelGroup id="actionButtons" layout="block" styleClass="buttonGroup">
+							<p:commandButton value="#{i18n['action.undelete']}" action="#{clientViewBean.undeleteClient}" immediate="true"
+								rendered="#{clientViewBean.client.deleted}" />
+							<p:commandButton value="#{i18n['action.edit']}" action="#{clientViewBean.editClient}" immediate="true"
+								rendered="#{not clientViewBean.client.deleted}" />
+							<p:commandButton value="#{i18n['bookmark.add_to_bookmarks']}"
+								action="#{bookmarksBean.add(clientViewBean.client)}" immediate="true"
+								rendered="#{(not bookmarksBean.isBookmarked(clientViewBean.client))	and (not clientViewBean.client.deleted)}"
+								update="actionButtons :asideForm:bookmarks" />
+							<p:commandButton value="#{i18n['bookmark.remove_from_bookmarks']}"
+								action="#{bookmarksBean.remove(clientViewBean.client)}" immediate="true"
+								rendered="#{bookmarksBean.isBookmarked(clientViewBean.client)}" update="actionButtons :asideForm:bookmarks" />
+							<p:commandButton id="exportPdf" icon="fa fa-file-pdf-o" value="#{i18n['action.export']}" />
+							<p:commandButton id="exportExcel" icon="fa fa-file-excel-o" value="#{i18n['action.export']}"
+								action="#{clientViewBean.export}" />
+						</h:panelGroup>
 
-					<h:panelGroup id="actionButtons" layout="block" styleClass="buttonGroup">
-						<p:commandButton value="#{i18n['action.undelete']}" action="#{clientViewBean.undeleteClient}" immediate="true"
-							rendered="#{clientViewBean.client.deleted}" />
-						<p:commandButton value="#{i18n['action.edit']}" action="#{clientViewBean.editClient}" immediate="true"
-							rendered="#{not clientViewBean.client.deleted}" />
-						<p:commandButton value="#{i18n['bookmark.add_to_bookmarks']}" action="#{bookmarksBean.add(clientViewBean.client)}"
-							immediate="true"
-							rendered="#{(not bookmarksBean.isBookmarked(clientViewBean.client))	and (not clientViewBean.client.deleted)}" 
-							update="actionButtons :asideForm:bookmarks" />
-						<p:commandButton value="#{i18n['bookmark.remove_from_bookmarks']}"
-							action="#{bookmarksBean.remove(clientViewBean.client)}" immediate="true"
-							rendered="#{bookmarksBean.isBookmarked(clientViewBean.client)}" update="actionButtons :asideForm:bookmarks" />
-						<p:commandButton id="exportPdf" icon="fa fa-file-pdf-o" value="#{i18n['action.export']}" />
-						<p:commandButton id="exportExcel" icon="fa fa-file-excel-o" value="#{i18n['action.export']}" action="#{clientViewBean.export}"/>
-					</h:panelGroup>
-				</h:panelGroup>
-			</h:panelGroup>
-
-			<h:panelGroup layout="block" styleClass="cyan-panel">
-				<h:panelGroup layout="block" styleClass="panel-header">
-					<h4>#{i18n['job.job_offers']}</h4>
-				</h:panelGroup>
-				<h:panelGroup layout="block" styleClass="panel-content">
+					</p:panel>
+				</h:form>
+			</div>
+		</div>
+		<div class="ui-g">
+			<div class="ui-g-12">
+				<p:panel styleClass="cyan" header="#{i18n['job.job_offers']}">
 					<p:dataTable var="jobOffer" id="jobOffers" value="#{clientViewBean.jobOffers.dataList}"
 						rendered="#{not empty clientViewBean.jobOffers.dataList}" styleClass="dataTable" paginatorPosition="bottom"
 						paginator="true" emptyMessage="#{i18n['client.no_job_offers_found']}">
@@ -84,8 +81,8 @@
 							</h:link>
 						</p:column>
 					</p:dataTable>
-				</h:panelGroup>
-			</h:panelGroup>
-		</h:form>
+				</p:panel>
+			</div>
+		</div>
 	</ui:define>
 </ui:composition>

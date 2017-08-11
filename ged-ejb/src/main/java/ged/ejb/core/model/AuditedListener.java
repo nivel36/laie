@@ -12,4 +12,5 @@ public class AuditedListener {
 	@PreUpdate
 	public void preUpdate(final AbstractAuditedEntity entity) {
 	}
+
 }
