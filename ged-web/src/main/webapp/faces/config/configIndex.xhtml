@@ -52,7 +52,7 @@
 						<div class="ui-g">
 							<div class="ui-g-12">
 								<div class="push-right">
-									<p:commandButton value="#{i18n['config.change_password']}" action="#{changePasswordPopupBean.show}" />
+									<p:commandButton value="#{i18n['config.change_password']}" onclick="PF('changePasswordDlg').show();" />
 									<p:commandButton value="#{i18n['action.save']}" action="#{configIndexBean.save}" />
 								</div>
 							</div>

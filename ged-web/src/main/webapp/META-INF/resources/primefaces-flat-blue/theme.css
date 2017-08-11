@@ -3999,6 +3999,41 @@ body .ui-icon {
 	content: "";
 }
 
+body a {
+	text-decoration: none;
+}
+
+body .ui-dialog {
+	border-top-left-radius: 0px;
+	border-top-right-radius: 0px;
+	border-bottom-right-radius: 4px;
+	border-bottom-left-radius: 4px;
+}
+
+body .ui-dialog .ui-dialog-titlebar {
+	position: relative;
+	background: #1976d2;
+	padding: 8px 14px;
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+	border-bottom-right-radius: 0px;
+	border-bottom-left-radius: 0px;
+}
+
+body .ui-dialog .ui-dialog-title {
+	color: white;
+	margin: 0;
+	font-size: 1.3em;
+}
+
+body .ui-dialog .ui-icon {
+	color: white;
+}
+
+body .ui-dialog-mask {
+	background: rgba(0, 0, 0, 0.3);
+}
+
 body .ui-growl-item-container {
 	opacity: 1;
 }
@@ -4294,17 +4329,17 @@ body .ui-button-text-only .ui-button-text {
 	animation: ripple-animation 2s;
 }
 
-@keyframes ripple-animation {
-	from { 
-		transform:scale(1);
-		opacity: 0.4;
-	}
-	to {
-		transform: scale(100);
-		opacity: 0;
-	}
+@
+keyframes ripple-animation {from { transform:scale(1);
+	opacity: 0.4;
 }
 
+to {
+	transform: scale(100);
+	opacity: 0;
+}
+
+}
 .ui-selected {
 	background-color: #ffc107;
 	color: black;
