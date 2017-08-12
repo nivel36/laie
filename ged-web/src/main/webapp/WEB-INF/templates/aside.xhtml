@@ -21,9 +21,19 @@
 		<div class="ui-g">
 			<div class="ui-g-12">
 				<p:panel header="#{i18n['aside.saved_searchs']}">
-					<h:outputText value="#{i18n['message.saved_searchs.empty']}" styleClass="text" rendered="#{empty savedSearches}" />
-					<p:commandButton value="#{i18n['action.clean']}" />
-					<p:commandButton value="#{i18n['action.add']}" />
+					<div class="ui-g">
+						<div class="ui-g-12">
+							<h:outputText value="#{i18n['message.saved_searchs.empty']}" styleClass="text" rendered="#{empty savedSearches}" />
+						</div>
+					</div>
+					<div class="ui-g">
+						<div class="ui-g-12">
+							<div class="push-right">
+								<p:commandButton value="#{i18n['action.clean']}" />
+								<p:commandButton value="#{i18n['action.add']}" />
+							</div>
+						</div>
+					</div>
 				</p:panel>
 			</div>
 		</div>
