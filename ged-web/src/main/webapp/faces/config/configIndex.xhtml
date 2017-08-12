@@ -12,11 +12,11 @@
 	<ui:define name="content">
 		<ui:include src="/faces/config/changePasswordPopup.xhtml" />
 		<div class="ui-g">
-			<div class="ui-g-12">
+			<div class="ui-md-12 ui-lg-12 ui-xl-6">
 				<h:form>
 					<p:panel header="#{i18n['config.user_data']}">
 						<div class="ui-g">
-							<div class="ui-md-12 ui-lg-6 ui-xl-4">
+							<div class="ui-md-12 ui-lg-6">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['config.username']}" />
 									<p:inputText id="username" value="#{configIndexBean.user.username}" label="#{i18n['config.username']}"
@@ -24,7 +24,7 @@
 									<h:message for="username" errorClass="error" />
 								</div>
 							</div>
-							<div class="ui-md-12 ui-lg-6 ui-xl-4">
+							<div class="ui-md-12 ui-lg-6">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['config.name']}" />
 									<p:inputText id="name" value="#{configIndexBean.user.name}" label="#{i18n['config.name']}" required="true"
@@ -32,7 +32,7 @@
 									<h:message for="name" errorClass="error" />
 								</div>
 							</div>
-							<div class="ui-md-12 ui-lg-6 ui-xl-4">
+							<div class="ui-md-12 ui-lg-6">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['config.surename']}" />
 									<p:inputText id="surename" value="#{configIndexBean.user.surename}" label="#{i18n['config.surename']}"
@@ -40,7 +40,7 @@
 									<h:message for="surename" errorClass="error" />
 								</div>
 							</div>
-							<div class="ui-md-12 ui-lg-6 ui-xl-4">
+							<div class="ui-md-12 ui-lg-6">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['config.email']}" />
 									<p:inputText id="email" value="#{configIndexBean.user.email}" label="#{i18n['config.email']}" required="true"
@@ -60,13 +60,11 @@
 					</p:panel>
 				</h:form>
 			</div>
-		</div>
-		<div class="ui-g">
-			<div class="ui-g-12">
+			<div class="ui-md-12 ui-lg-12 ui-xl-6">
 				<h:form>
 					<p:panel header="#{i18n['config.preferences']}">
 						<div class="ui-g">
-							<div class="ui-md-12 ui-lg-6 ui-xl-4">
+							<div class="ui-md-12 ui-lg-6">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['config.rows_per_page']}" />
 									<p:selectOneMenu value="#{configIndexBean.user.rowsPerPage}">
@@ -77,7 +75,7 @@
 								</div>
 							</div>
 
-							<div class="ui-md-12 ui-lg-6 ui-xl-4">
+							<div class="ui-md-12 ui-lg-6">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['config.language']}" />
 									<p:selectOneMenu id="language" value="#{configIndexBean.user.language}" style="text-transform: capitalize">
