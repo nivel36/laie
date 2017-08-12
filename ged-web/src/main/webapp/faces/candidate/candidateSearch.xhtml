@@ -11,88 +11,78 @@
 
 	<ui:define name="content">
 		<h:form id="form">
-			<div class="container-fluid">
-				<div class="row">
-					<div class="col-lg-12">
-						<div class="card">
-							<div class="card-header card-header-icon" data-background-color="purple">
-								<i class="material-icons">group</i>
+			<div class="ui-g">
+				<div class="ui-lg-12">
+					<p:panel styleClass="purple" header="#{i18n['candidate.search']}">
+						<div class="ui-g">
+							<div class="ui-lg-4">
+								<div class="form-group label-floating">
+									<p:outputLabel class="control-label" for="name" value="#{i18n['candidate.name']}" />
+									<p:inputText class="form-control" id="name" value="#{candidateSearchBean.name}" />
+								</div>
 							</div>
-							<h:panelGroup styleClass="card-content" id="searchUserPanel" layout="block">
-								<h4 class="card-title">#{i18n['candidate.search']}</h4>
-								<div class="row">
-									<div class="col-lg-4">
-										<div class="form-group label-floating">
-											<p:outputLabel class="control-label" for="name" value="#{i18n['candidate.name']}" />
-											<p:inputText class="form-control" id="name" value="#{candidateSearchBean.name}" />
-										</div>
-									</div>
 
-									<div class="col-lg-4">
-										<div class="form-group label-floating">
-											<p:outputLabel class="control-label" for="surename" value="#{i18n['candidate.surename']}" />
-											<p:inputText class="form-control" id="surename" value="#{candidateSearchBean.surename}" />
-										</div>
-									</div>
-									<div class="col-lg-4">
-										<div class="form-group label-floating">
-											<p:outputLabel class="control-label" for="position" value="#{i18n['candidate.position']}" />
-											<p:inputText class="form-control" id="position" value="#{candidateSearchBean.position}" />
-										</div>
-									</div>
-
+							<div class="ui-lg-4">
+								<div class="form-group label-floating">
+									<p:outputLabel class="control-label" for="surename" value="#{i18n['candidate.surename']}" />
+									<p:inputText class="form-control" id="surename" value="#{candidateSearchBean.surename}" />
+								</div>
+							</div>
+							<div class="ui-lg-4">
+								<div class="form-group label-floating">
+									<p:outputLabel class="control-label" for="position" value="#{i18n['candidate.position']}" />
+									<p:inputText class="form-control" id="position" value="#{candidateSearchBean.position}" />
+								</div>
+							</div>
+						</div>
+						<div class="ui-g">
+							<div class="ui-lg-12">
+								<div class="push-right">
 									<p:commandButton value="#{i18n['action.new']}" action="#{candidateSearchBean.newCandidate}" immediate="true" />
 									<p:commandButton value="#{i18n['action.search']}" action="#{candidateSearchBean.search}" update="@form"
 										process="searchUserPanel" />
 									<p:commandButton value="#{i18n['action.clean']}" action="#{candidateSearchBean.clean}" update="@form" />
 								</div>
-							</h:panelGroup>
+							</div>
 						</div>
-					</div>
+					</p:panel>
 				</div>
 			</div>
 
-			<div class="container-fluid">
-				<div class="row">
-					<div class="col-lg-12">
-						<div class="card">
-							<div class="card-header card-header-icon" data-background-color="purple">
-								<i class="material-icons">group</i>
-							</div>
-							<div class="card-content">
-								<h4 class="card-title">#{i18n['candidate.search_results']}</h4>
-								<p:dataTable var="candidate" id="candidate" value="#{candidateSearchBean.candidates}"
-									rendered="#{not empty candidateSearchBean.candidates}" emptyMessage="#{i18n['candidate.no_candidates_found']}"
-									styleClass="dataTable" reflow="true" paginator="true" paginatorPosition="bottom">
+			<div class="ui-g">
+				<div class="ui-lg-12">
+					<p:panel styleClass="purple" header="#{i18n['candidate.search_results']}" id="searchUserPanel">
 
-									<p:column headerText="#{i18n['candidate.name']}" sortBy="#{candidate.name}">
-										<h:outputText value="#{candidate}" />
-									</p:column>
+						<p:dataTable var="candidate" id="candidate" value="#{candidateSearchBean.candidates}"
+							rendered="#{not empty candidateSearchBean.candidates}" emptyMessage="#{i18n['candidate.no_candidates_found']}"
+							styleClass="dataTable" reflow="true" paginator="true" paginatorPosition="bottom">
 
-									<p:column headerText="#{i18n['candidate.position']}" sortBy="#{candidate.position}">
-										<h:outputText value="#{candidate.position}" />
-									</p:column>
+							<p:column headerText="#{i18n['candidate.name']}" sortBy="#{candidate.name}">
+								<h:outputText value="#{candidate}" />
+							</p:column>
 
-									<p:column headerText="#{i18n['candidate.email']}" sortBy="#{candidate.email}">
-										<h:outputText value="#{candidate.email}" />
-									</p:column>
+							<p:column headerText="#{i18n['candidate.position']}" sortBy="#{candidate.position}">
+								<h:outputText value="#{candidate.position}" />
+							</p:column>
 
-									<p:column headerText="#{i18n['candidate.phone_number']}" sortBy="#{candidate.phoneNumber}">
-										<h:outputText value="#{candidate.phoneNumber}" />
-									</p:column>
+							<p:column headerText="#{i18n['candidate.email']}" sortBy="#{candidate.email}">
+								<h:outputText value="#{candidate.email}" />
+							</p:column>
 
-									<p:column headerText="#{i18n['user.owner']}" sortBy="#{candidate.owner.name}">
-										<h:outputText value="#{candidate.owner.name}" />
-									</p:column>
-									<p:column>
-										<p:button outcome="candidateView" icon="ui-icon-search">
-											<f:param name="id" value="#{candidate.id}" />
-										</p:button>
-									</p:column>
-								</p:dataTable>
-							</div>
-						</div>
-					</div>
+							<p:column headerText="#{i18n['candidate.phone_number']}" sortBy="#{candidate.phoneNumber}">
+								<h:outputText value="#{candidate.phoneNumber}" />
+							</p:column>
+
+							<p:column headerText="#{i18n['user.owner']}" sortBy="#{candidate.owner.name}">
+								<h:outputText value="#{candidate.owner.name}" />
+							</p:column>
+							<p:column>
+								<p:button outcome="candidateView" icon="ui-icon-search">
+									<f:param name="id" value="#{candidate.id}" />
+								</p:button>
+							</p:column>
+						</p:dataTable>
+					</p:panel>
 				</div>
 			</div>
 		</h:form>
