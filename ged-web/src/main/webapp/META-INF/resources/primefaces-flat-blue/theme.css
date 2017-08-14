@@ -4097,7 +4097,7 @@ body .ui-growl .ui-growl-item .ui-growl-image.ui-growl-image-info {
 }
 
 body .ui-growl .ui-growl-item .ui-growl-image.ui-growl-image-info:before {
-	content: "\e000";
+	content: "\f06a";
 }
 
 body .ui-growl .ui-growl-item .ui-growl-image.ui-growl-image-error {
@@ -4117,7 +4117,7 @@ body .ui-growl .ui-growl-item .ui-growl-image.ui-growl-image-warn {
 }
 
 body .ui-growl .ui-growl-item .ui-growl-image.ui-growl-image-warn:before {
-	content: "\e000";
+	content: "\f06a";
 }
 
 body .ui-growl .ui-growl-item .ui-growl-image.ui-growl-image-fatal {
@@ -4127,7 +4127,7 @@ body .ui-growl .ui-growl-item .ui-growl-image.ui-growl-image-fatal {
 }
 
 body .ui-growl .ui-growl-item .ui-growl-image.ui-growl-image-fatal:before {
-	content: "\e000";
+	content: "\f06a";
 }
 
 body .ui-growl .ui-growl-item .ui-growl-message {
