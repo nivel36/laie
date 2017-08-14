@@ -4269,6 +4269,10 @@ body .ui-panel.purple .ui-panel-titlebar {
 	background: #8e24aa;
 }
 
+body .ui-panel.magenta .ui-panel-titlebar {
+	background: #ea4c89;
+}
+
 body .ui-panel.green .ui-panel-titlebar {
 	background: #43a047;
 }
