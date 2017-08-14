@@ -16,11 +16,11 @@ body .ui-icon {
 }
 
 .ui-icon-carat-2-n-s:before {
-	content: "";
+	content: "\f0dc";
 }
 
 .ui-icon-triangle-1-n:before {
-	content: "";
+	content: "\f0d8";
 }
 
 .ui-icon-triangle-1-e:before {
