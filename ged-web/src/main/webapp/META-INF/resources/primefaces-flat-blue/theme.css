@@ -4021,11 +4021,20 @@ body .ui-paginator .ui-paginator-last:before {
 
 body .ui-paginator {
 	font-family: FontAwesome;
-	font-size: 16px;
+	font-size: 14px;
 	color: black;
 	top: 8px;
 	right: 12px;
 	text-indent: 0px;
+}
+
+body .ui-paginator .ui-paginator-page.ui-state-active {
+	background-color: #1976d2;
+	border-radius: 50%;
+	width: 24px;
+	height: 24px;
+	line-height: 24px;
+	color: white;
 }
 
 a {
