@@ -459,61 +459,6 @@ textarea {
 	font-size: 1.1em;
 }
 
-/************************************
- *  TABLE
- ************************************/
-.dataTable {
-	margin: 1em 0em 1em 0em;
-	width: 100%;
-	border-radius: 3px;
-	background-color: #F4F5F9;
-}
-
-.dataTable tr {
-	padding: 8px 0;
-	color: #000;
-	background: white;
-}
-
-.dataTable tr:hover {
-	background: #F4F5F9;
-}
-
-.dataTable thead {
-	font-size: .9em;
-}
-
-.dataTable th {
-	border: 1px solid #7D82B0;
-	background: #D5D7E8;
-	color: #000000;
-	font-weight: bold;
-	padding: 3px 2px 1px 5px;
-	text-align: left;
-	vertical-align: bottom;
-}
-
-.dataTable td {
-	border: 1px solid #7D82B0;
-	padding: 3px 2px 4px 5px;
-	text-align: left;
-	vertical-align: bottom;
-	cursor: default;
-}
-
-.dataTable input[type="checkbox"] {
-	margin: 0 !important;
-}
-
-.dataTable a {
-	color: #535993;
-	text-decoration: none;
-	font-weight: normal;
-}
-
-.dataTable a:hover {
-	text-decoration: underline;
-}
 
 .panelGrid {
 	width: 100%;
@@ -522,32 +467,6 @@ textarea {
 .panelGrid tr td {
 	padding-left: 3px;
 	width: 50%;
-}
-
-.paginator {
-	float: left;
-	text-align: center;
-	width: 100%;
-	overflow: auto;
-	position: relative;
-}
-
-.paginator label {
-	margin: 2px;
-	padding: 2px 3px;
-	display: inline-block;
-	height: 20px;
-	font-size: .9em;
-}
-
-.paginator select {
-	width: 4em;
-	padding: 1px;
-	font-size: 1em;
-}
-
-.paginator input[type="submit"] {
-	min-width: 2em;
 }
 
 .contentPanel {

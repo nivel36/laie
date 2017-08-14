@@ -4152,6 +4152,39 @@ body .ui-growl .ui-growl-item .ui-growl-icon-close {
 	text-indent: 0px;
 }
 
+body .ui-datatable thead th {
+	text-align: left;
+}
+
+body .ui-datatable thead th, body .ui-datatable tbody td, body .ui-datatable tfoot td, body .ui-datatable tfoot th {
+	padding: 4px 10px;
+	overflow: hidden;
+	border-width: 0px;
+}
+
+body .ui-datatable .ui-column-title {
+	padding: 12px 8px;
+	vertical-align: middle;
+	font-size: 15px;
+}
+
+body .ui-datatable thead th {
+	vertical-align: bottom;
+	border-bottom: 2px solid #ddd;
+	border-bottom-width: 2px;
+}
+
+body .ui-datatable tbody tr {
+	vertical-align: bottom;
+	border-bottom: 1px solid #ddd;
+	border-bottom-width: 1px;
+}
+
+body .ui-widget-content.ui-datatable-odd {
+	background-color: #f9f9f9;
+}
+
+
 body .form-group {
 	display: flex;
 	align-items: center
