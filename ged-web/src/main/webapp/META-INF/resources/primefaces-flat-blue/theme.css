@@ -3999,8 +3999,42 @@ body .ui-icon {
 	content: "";
 }
 
-body a {
+body .ui-paginator > a span {
+	display: none;
+}
+
+body .ui-paginator .ui-paginator-first:before {
+	content: "\f100";
+}
+
+body .ui-paginator .ui-paginator-prev:before {
+	content: "\f104";
+}
+
+body .ui-paginator .ui-paginator-next:before {
+	content: "\f105";
+}
+
+body .ui-paginator .ui-paginator-last:before {
+	content: "\f101";
+}
+
+body .ui-paginator {
+	font-family: FontAwesome;
+	font-size: 16px;
+	color: black;
+	top: 8px;
+	right: 12px;
+	text-indent: 0px;
+}
+
+a {
 	text-decoration: none;
+	color: black;
+}
+
+body .ui-state-disabled {
+	color: gray;
 }
 
 body .ui-dialog {
