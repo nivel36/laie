@@ -4396,6 +4396,11 @@ body .ui-button {
 	overflow: hidden;
 }
 
+body .ui-button.btn-gray {
+	background: #999999;;
+	
+}
+
 body .ui-button.ui-state-hover {
 	box-shadow: 0px 0px 0px rgba(0, 0, 0, .25);
 }
