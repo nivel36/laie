@@ -600,9 +600,10 @@ textarea {
 }
 
 .error {
+	margin-left: 145px;
+	display: block;
 	color: red !important;
 	float: left;
-	margin-left: 172px;
 	font-weight: normal;
 	font-size: 0.9em;
 	white-space: nowrap;

@@ -34,8 +34,7 @@
 									<p:inputText class="form-control" id="position" value="#{candidateSearchBean.position}" />
 								</div>
 							</div>
-						</div>
-						<div class="ui-g">
+
 							<div class="ui-lg-12">
 								<div class="push-right">
 									<p:commandButton value="#{i18n['action.new']}" action="#{candidateSearchBean.newCandidate}" immediate="true" />
@@ -54,7 +53,7 @@
 					<p:panel styleClass="purple" header="#{i18n['candidate.search_results']}" id="searchUserPanel">
 						<p:dataTable var="candidate" id="candidate" value="#{candidateSearchBean.candidates}"
 							rendered="#{not empty candidateSearchBean.candidates}" emptyMessage="#{i18n['candidate.no_candidates_found']}"
-							reflow="true" paginator="true" paginatorPosition="bottom" rows="#{sessionBean.rowsPerPage}" >
+							reflow="true" paginator="true" paginatorPosition="bottom" rows="#{sessionBean.rowsPerPage}">
 
 							<p:column headerText="#{i18n['candidate.name']}" sortBy="#{candidate.name}">
 								<h:outputText value="#{candidate}" />
