@@ -37,7 +37,8 @@
 
 							<div class="ui-lg-12">
 								<div class="push-right">
-									<p:commandButton value="#{i18n['action.new']}" action="#{candidateSearchBean.newCandidate}" immediate="true" />
+									<p:commandButton value="#{i18n['action.new']}" action="#{candidateSearchBean.newCandidate}" immediate="true"
+										styleClass="btn-green" />
 									<p:commandButton value="#{i18n['action.search']}" action="#{candidateSearchBean.search}" update="@form"
 										process="searchUserPanel" />
 									<p:commandButton value="#{i18n['action.clean']}" action="#{candidateSearchBean.clean}" update="@form" />
