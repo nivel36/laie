@@ -14,82 +14,100 @@
 		<h:form id="form">
 			<input type="hidden" id="jobOfferId" value="#{jobOfferEditBean.jobOffer.id}" />
 
-			<h:panelGroup layout="block" styleClass="yellow-panel">
-				<h:panelGroup layout="block" styleClass="panel-header">
-					<h4>#{jobOfferEditBean.jobOffer.id eq null?i18n['job.new_job_offer']:jobOfferEditBean.jobOffer.name}</h4>
-				</h:panelGroup>
-				<h:panelGroup layout="block" styleClass="panel-content">
-					<h:panelGroup layout="block" styleClass="row">
-						<h:outputLabel for="name" value="#{i18n['job.name']}" styleClass="very_large required">
-							<h:inputText id="name" value="#{jobOfferEditBean.jobOffer.name}" label="#{i18n['job.name']}" required="true"
-								styleClass="#{not component.valid ? 'inputError' : ''}" />
-							<h:message for="name" errorClass="error" />
-						</h:outputLabel>
+			<div class="ui-g">
+				<div class="ui-g-12">
+					<p:panel styleClass="yellow"
+						header="#{jobOfferEditBean.jobOffer.id eq 0?i18n['job.new_job_offer']:jobOfferEditBean.jobOffer.name}">
+						<div class="ui-g">
+							<div class="ui-md-12 ui-lg-6 ui-xl-4">
+								<div class="form-group">
+									<p:outputLabel for="name" value="#{i18n['job.name']}" />
+									<p:inputText id="name" value="#{jobOfferEditBean.jobOffer.name}" label="#{i18n['job.name']}" required="true" />
+								</div>
+								<h:message for="name" errorClass="error" />
+							</div>
 
-						<h:outputLabel for="client" value="#{i18n['job.client']}" styleClass="required">
-							<h:inputText id="client" value="#{jobOfferEditBean.jobOffer.client.name}" label="#{i18n['job.client']}"
-								required="true" styleClass="#{not component.valid ? 'inputError' : ''}">
-								<f:ajax event="blur" listener="#{jobOfferEditBean.updateClientState}" execute="@this" render=":form:cif_wrapper" />
-							</h:inputText>
-							<h:message for="client" errorClass="error" />
-						</h:outputLabel>
+							<div class="ui-md-12 ui-lg-6 ui-xl-4">
+								<div class="form-group">
+									<p:outputLabel for="client" value="#{i18n['job.client']}" />
+									<p:inputText id="client" value="#{jobOfferEditBean.jobOffer.client.name}" label="#{i18n['job.client']}"
+										required="true">
+										<f:ajax event="blur" listener="#{jobOfferEditBean.updateClientState}" execute="@this"
+											render=":form:cif_wrapper" />
+									</p:inputText>
+								</div>
+								<h:message for="client" errorClass="error" />
+							</div>
 
-						<h:panelGroup styleClass="block" id="cif_wrapper">
-							<h:outputLabel for="cif" value="#{i18n['job.cif']}" styleClass="required"
-								rendered="#{jobOfferEditBean.newClient}">
-								<h:inputText id="cif" value="#{jobOfferEditBean.jobOffer.client.cif}" label="#{i18n['job.cif']}" required="true"
-									styleClass="#{not component.valid ? 'inputError' : ''}" />
-								<h:message for="cif" errorClass="error" />
-							</h:outputLabel>
-						</h:panelGroup>
+							<div class="ui-md-12 ui-lg-6 ui-xl-4">
+								<h:panelGroup styleClass="block" id="cif_wrapper">
+									<div class="form-group">
+										<p:outputLabel for="cif" value="#{i18n['job.cif']}" rendered="#{jobOfferEditBean.newClient}" />
+										<p:inputText id="cif" value="#{jobOfferEditBean.jobOffer.client.cif}" label="#{i18n['job.cif']}"
+											required="true" />
+									</div>
+									<h:message for="cif" errorClass="error" />
+								</h:panelGroup>
+							</div>
 
-						<h:outputLabel for="places" value="#{i18n['job.places']}" styleClass="small">
-							<h:inputText id="places" value="#{jobOfferEditBean.jobOffer.places}" label="#{i18n['job.places']}"
-								styleClass="#{not component.valid ? 'number inputError' : 'number'}" />
-							<h:message for="places" errorClass="error" />
-						</h:outputLabel>
-					</h:panelGroup>
-					<h:panelGroup layout="block" styleClass="row">
-						<h:outputLabel for="dateOpened" value="#{i18n['job.date_opened']}" styleClass="small">
-							<p:calendar id="dateOpened" value="#{jobOfferEditBean.jobOffer.dateOpened}"
-								styleClass="#{not component.valid ? 'inputError' : ''}" required="true" />
-							<h:message for="dateOpened" errorClass="error" />
-						</h:outputLabel>
-
-						<h:outputLabel for="dateClosed" value="#{i18n['job.date_closed']}" styleClass="small required">
-							<p:calendar id="dateClosed" value="#{jobOfferEditBean.jobOffer.dateClosed}"
-								styleClass="#{not component.valid ? 'inputError' : ''}" required="true" />
-							<h:message for="dateClosed" errorClass="error" />
-						</h:outputLabel>
-					</h:panelGroup>
-					<h:panelGroup layout="block" styleClass="row">
-
-						<h:outputLabel for="description" value="#{i18n['job.description']}" styleClass="largest">
-							<h:inputTextarea id="description" value="#{jobOfferEditBean.jobOffer.description}"
-								label="#{i18n['job.description']}" styleClass="#{not component.valid ? 'inputError' : ''}" />
-							<h:message for="description" errorClass="error" />
-						</h:outputLabel>
-					</h:panelGroup>
-					<h:panelGroup layout="block" styleClass="row">
-						<h:outputLabel for="city" value="#{i18n['address.city']}:" styleClass="required">
-							<h:inputText id="city" value="#{jobOfferEditBean.jobOffer.city}" label="#{i18n['address.city']}"
-								styleClass="#{not component.valid ? 'inputError' : ''}" />
-							<h:message for="city" errorClass="error" />
-						</h:outputLabel>
-
-						<h:outputLabel for="state" value="#{i18n['address.state']}:" styleClass="required">
-							<h:inputText id="state" value="#{jobOfferEditBean.jobOffer.state}" label="#{i18n['address.state']}"
-								styleClass="#{not component.valid ? 'inputError' : ''}" />
-							<h:message for="state" errorClass="error" />
-						</h:outputLabel>
-					</h:panelGroup>
-
-					<h:panelGroup layout="block" class="buttonGroup">
-						<p:commandButton value="#{i18n['action.save']}" action="#{jobOfferEditBean.save}" />
-						<p:commandButton value="#{i18n['action.cancel']}" action="#{jobOfferEditBean.cancel}" immediate="true" />
-					</h:panelGroup>
-				</h:panelGroup>
-			</h:panelGroup>
+							<div class="ui-md-12 ui-lg-6 ui-xl-4">
+								<div class="form-group">
+									<p:outputLabel for="places" value="#{i18n['job.places']}">
+										<p:inputText id="places" value="#{jobOfferEditBean.jobOffer.places}" label="#{i18n['job.places']}" />
+									</p:outputLabel>
+									<h:message for="places" errorClass="error" />
+								</div>
+							</div>
+							<div class="ui-md-12 ui-lg-6 ui-xl-4">
+								<div class="form-group">
+									<p:outputLabel for="dateOpened" value="#{i18n['job.date_opened']}" />
+									<p:calendar id="dateOpened" value="#{jobOfferEditBean.jobOffer.dateOpened}"
+										styleClass="#{not component.valid ? 'inputError' : ''}" required="true" />
+								</div>
+								<h:message for="dateOpened" errorClass="error" />
+							</div>
+							<div class="ui-md-12 ui-lg-6 ui-xl-4">
+								<div class="form-group">
+									<p:outputLabel for="dateClosed" value="#{i18n['job.date_closed']}" />
+									<p:calendar id="dateClosed" value="#{jobOfferEditBean.jobOffer.dateClosed}"
+										styleClass="#{not component.valid ? 'inputError' : ''}" required="true" />
+								</div>
+								<h:message for="dateClosed" errorClass="error" />
+							</div>
+							<div class="ui-md-12 ui-lg-6 ui-xl-4">
+								<div class="form-group">
+									<p:outputLabel for="description" value="#{i18n['job.description']}" />
+									<p:inputTextarea id="description" value="#{jobOfferEditBean.jobOffer.description}"
+										label="#{i18n['job.description']}" />
+								</div>
+								<h:message for="description" errorClass="error" />
+							</div>
+							<div class="ui-md-12 ui-lg-6 ui-xl-4">
+								<div class="form-group">
+									<p:outputLabel for="city" value="#{i18n['address.city']}:" />
+									<p:inputText id="city" value="#{jobOfferEditBean.jobOffer.city}" label="#{i18n['address.city']}" />
+								</div>
+								<h:message for="city" errorClass="error" />
+							</div>
+							<div class="ui-md-12 ui-lg-6 ui-xl-4">
+								<div class="form-group">
+									<p:outputLabel for=" state" value="#{i18n['address.state']}:" />
+									<p:inputText id="state" value="#{jobOfferEditBean.jobOffer.state}" label="#{i18n['address.state']}" />
+								</div>
+								<h:message for="state" errorClass="error" />
+							</div>
+						</div>
+						<div class="ui-g">
+							<div class="ui-g-12">
+								<div class="push-right">
+									<p:commandButton value="#{i18n['action.save']}" action="#{jobOfferEditBean.save}" />
+									<p:commandButton value="#{i18n['action.cancel']}" action="#{jobOfferEditBean.cancel}" immediate="true" />
+								</div>
+							</div>
+						</div>
+					</p:panel>
+				</div>
+			</div>
 		</h:form>
 	</ui:define>
 </ui:composition>
