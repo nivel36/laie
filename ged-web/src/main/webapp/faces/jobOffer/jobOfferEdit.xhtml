@@ -40,9 +40,9 @@
 							</div>
 
 							<div class="ui-md-12 ui-lg-6 ui-xl-4">
-								<h:panelGroup styleClass="block" id="cif_wrapper">
+								<h:panelGroup styleClass="block" id="cif_wrapper" rendered="#{jobOfferEditBean.newClient}">
 									<div class="form-group">
-										<p:outputLabel for="cif" value="#{i18n['job.cif']}" rendered="#{jobOfferEditBean.newClient}" />
+										<p:outputLabel for="cif" value="#{i18n['job.cif']}" />
 										<p:inputText id="cif" value="#{jobOfferEditBean.jobOffer.client.cif}" label="#{i18n['job.cif']}"
 											required="true" />
 									</div>
@@ -52,35 +52,24 @@
 
 							<div class="ui-md-12 ui-lg-6 ui-xl-4">
 								<div class="form-group">
-									<p:outputLabel for="places" value="#{i18n['job.places']}">
-										<p:inputText id="places" value="#{jobOfferEditBean.jobOffer.places}" label="#{i18n['job.places']}" />
-									</p:outputLabel>
-									<h:message for="places" errorClass="error" />
+									<p:outputLabel for="places" value="#{i18n['job.places']}" />
+									<p:inputText id="places" value="#{jobOfferEditBean.jobOffer.places}" label="#{i18n['job.places']}" />
 								</div>
+								<h:message for="places" errorClass="error" />
 							</div>
 							<div class="ui-md-12 ui-lg-6 ui-xl-4">
 								<div class="form-group">
 									<p:outputLabel for="dateOpened" value="#{i18n['job.date_opened']}" />
-									<p:calendar id="dateOpened" value="#{jobOfferEditBean.jobOffer.dateOpened}"
-										styleClass="#{not component.valid ? 'inputError' : ''}" required="true" />
+									<p:calendar id="dateOpened" value="#{jobOfferEditBean.jobOffer.dateOpened}" required="true" />
 								</div>
 								<h:message for="dateOpened" errorClass="error" />
 							</div>
 							<div class="ui-md-12 ui-lg-6 ui-xl-4">
 								<div class="form-group">
 									<p:outputLabel for="dateClosed" value="#{i18n['job.date_closed']}" />
-									<p:calendar id="dateClosed" value="#{jobOfferEditBean.jobOffer.dateClosed}"
-										styleClass="#{not component.valid ? 'inputError' : ''}" required="true" />
+									<p:calendar id="dateClosed" value="#{jobOfferEditBean.jobOffer.dateClosed}" required="true" />
 								</div>
 								<h:message for="dateClosed" errorClass="error" />
-							</div>
-							<div class="ui-md-12 ui-lg-6 ui-xl-4">
-								<div class="form-group">
-									<p:outputLabel for="description" value="#{i18n['job.description']}" />
-									<p:inputTextarea id="description" value="#{jobOfferEditBean.jobOffer.description}"
-										label="#{i18n['job.description']}" />
-								</div>
-								<h:message for="description" errorClass="error" />
 							</div>
 							<div class="ui-md-12 ui-lg-6 ui-xl-4">
 								<div class="form-group">
@@ -95,6 +84,14 @@
 									<p:inputText id="state" value="#{jobOfferEditBean.jobOffer.state}" label="#{i18n['address.state']}" />
 								</div>
 								<h:message for="state" errorClass="error" />
+							</div>
+								<div class="ui-md-12 ui-lg-12 ui-xl-6">
+								<div class="form-group">
+									<p:outputLabel for="description" value="#{i18n['job.description']}" />
+									<p:inputTextarea id="description" value="#{jobOfferEditBean.jobOffer.description}"
+										label="#{i18n['job.description']}" />
+								</div>
+								<h:message for="description" errorClass="error" />
 							</div>
 						</div>
 						<div class="ui-g">

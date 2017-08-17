@@ -4245,7 +4245,7 @@ body .ui-outputlabel {
 	display: inline-block;
 	position: relative;
 	color: #424242;
-	width: 120px;
+	width: 30%;
 }
 
 body .ui-inputfield {
@@ -4255,7 +4255,15 @@ body .ui-inputfield {
 	background-color: white;
 	font-size: 13px;
 	border: 1px solid #1976d2;
-	width: 200px;
+	width: 100%;
+}
+
+body .ui-inputtext {
+	width: 70%;
+}
+
+body .ui-calendar {
+	width: 70%;
 }
 
 body .ui-selectonemenu {
