@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://legion.com/i18n"
-	template="/WEB-INF/templates/default.xhtml">
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
 		<title>#{i18n['job.job_offer']}</title>
@@ -18,128 +18,135 @@
 		</f:metadata>
 
 		<h:form id="form">
-			<h:panelGroup layout="block" styleClass="row">
-				<h:panelGroup layout="block" styleClass="half yellow-panel">
-					<h:panelGroup layout="block" styleClass="panel-header">
-						<h4>#{jobOfferViewBean.jobOffer.name}</h4>
-					</h:panelGroup>
-					<h:panelGroup layout="block" styleClass="panel-content">
-						<h:panelGroup layout="block" styleClass="textBlock">
-							<h:outputText styleClass="label" value="#{i18n['job.client']}:" />
-							<h:outputText value="#{jobOfferViewBean.jobOffer.client.name}" />
-						</h:panelGroup>
+			<div class="ui-g">
+				<div class="ui-g-12 ui-md-12 ui-lg-6">
+					<p:panel styleClass="yellow" header="#{jobOfferViewBean.jobOffer.name}">
+						<div class="ui-g">
+							<div class="ui-g-12">
 
-						<h:panelGroup layout="block" styleClass="textBlock">
-							<h:outputText styleClass="label" value="#{i18n['job.places']}:" />
-							<h:outputText value="#{jobOfferEditBean.jobOffer.places}" />
-						</h:panelGroup>
+								<h:panelGroup layout="block" styleClass="textBlock">
+									<h:outputText styleClass="label" value="#{i18n['job.client']}:" />
+									<h:outputText value="#{jobOfferViewBean.jobOffer.client.name}" />
+								</h:panelGroup>
 
-						<h:panelGroup layout="block" styleClass="textBlock">
-							<h:outputText styleClass="label" value="#{i18n['job.date_opened']}:" />
-							<h:outputText value="#{jobOfferViewBean.jobOffer.dateOpened}">
-								<f:convertDateTime pattern="dd/MM/yyyy" />
-							</h:outputText>
-						</h:panelGroup>
+								<h:panelGroup layout="block" styleClass="textBlock">
+									<h:outputText styleClass="label" value="#{i18n['job.places']}:" />
+									<h:outputText value="#{jobOfferEditBean.jobOffer.places}" />
+								</h:panelGroup>
 
-						<h:panelGroup layout="block" styleClass="textBlock">
-							<h:outputText styleClass="label" value="#{i18n['job.date_closed']}:" />
-							<h:outputText value="#{jobOfferViewBean.jobOffer.dateClosed}">
-								<f:convertDateTime pattern="dd/MM/yyyy" />
-							</h:outputText>
-						</h:panelGroup>
+								<h:panelGroup layout="block" styleClass="textBlock">
+									<h:outputText styleClass="label" value="#{i18n['job.date_opened']}:" />
+									<h:outputText value="#{jobOfferViewBean.jobOffer.dateOpened}">
+										<f:convertDateTime pattern="dd/MM/yyyy" />
+									</h:outputText>
+								</h:panelGroup>
 
-						<h:panelGroup layout="block" styleClass="textBlock">
-							<h:outputText styleClass="label" value="#{i18n['job.description']}:" />
-							<h:outputText value="#{jobOfferViewBean.jobOffer.description}" />
-						</h:panelGroup>
+								<h:panelGroup layout="block" styleClass="textBlock">
+									<h:outputText styleClass="label" value="#{i18n['job.date_closed']}:" />
+									<h:outputText value="#{jobOfferViewBean.jobOffer.dateClosed}">
+										<f:convertDateTime pattern="dd/MM/yyyy" />
+									</h:outputText>
+								</h:panelGroup>
 
-						<h:panelGroup layout="block" styleClass="textBlock">
-							<h:outputText styleClass="label" value="#{i18n['address.city']}:" />
-							<h:outputText value="#{jobOfferViewBean.jobOffer.city}" />
-						</h:panelGroup>
+								<h:panelGroup layout="block" styleClass="textBlock">
+									<h:outputText styleClass="label" value="#{i18n['job.description']}:" />
+									<h:outputText value="#{jobOfferViewBean.jobOffer.description}" />
+								</h:panelGroup>
 
-						<h:panelGroup layout="block" styleClass="textBlock">
-							<h:outputText styleClass="label" value="#{i18n['address.state']}:" />
-							<h:outputText value="#{jobOfferViewBean.jobOffer.state}" />
-						</h:panelGroup>
+								<h:panelGroup layout="block" styleClass="textBlock">
+									<h:outputText styleClass="label" value="#{i18n['address.city']}:" />
+									<h:outputText value="#{jobOfferViewBean.jobOffer.city}" />
+								</h:panelGroup>
 
-						<h:panelGroup layout="block" styleClass="buttonGroup">
-							<h:commandButton value="#{i18n['action.edit']}" action="#{jobOfferViewBean.edit}"
-								rendered="#{jobOfferViewBean.editable}" />
-							<h:commandButton value="#{i18n['bookmark.add_to_bookmarks']}"
-								action="#{bookmarksBean.add(jobOfferViewBean.jobOffer)}" immediate="true"
-								rendered="#{not bookmarksBean.isBookmarked(jobOfferViewBean.jobOffer)}" />
-							<h:commandButton value="#{i18n['bookmark.remove_from_bookmarks']}"
-								action="#{bookmarksBean.remove(jobOfferViewBean.jobOffer)}" immediate="true"
-								rendered="#{bookmarksBean.isBookmarked(jobOfferViewBean.jobOffer)}" />
-						</h:panelGroup>
-					</h:panelGroup>
-				</h:panelGroup>
+								<h:panelGroup layout="block" styleClass="textBlock">
+									<h:outputText styleClass="label" value="#{i18n['address.state']}:" />
+									<h:outputText value="#{jobOfferViewBean.jobOffer.state}" />
+								</h:panelGroup>
+							</div>
+						</div>
 
-				<h:panelGroup layout="block" styleClass="half purple-panel" id="candidates">
-					<h:panelGroup layout="block" styleClass="panel-header">
-						<h4>#{i18n['candidate.candidates']}</h4>
-					</h:panelGroup>
-					<h:panelGroup layout="block" styleClass="panel-content">
+						<div class="ui-g">
+							<div class="ui-g-12">
+								<div class="push-right">
+									<p:commandButton value="#{i18n['action.edit']}" action="#{jobOfferViewBean.edit}"
+										rendered="#{jobOfferViewBean.editable}" />
+									<p:commandButton styleClass="btn-green" value="#{i18n['bookmark.add_to_bookmarks']}"
+										action="#{bookmarksBean.add(jobOfferViewBean.jobOffer)}" immediate="true"
+										rendered="#{not bookmarksBean.isBookmarked(jobOfferViewBean.jobOffer)}" />
+									<p:commandButton styleClass="btn-red" value="#{i18n['bookmark.remove_from_bookmarks']}"
+										action="#{bookmarksBean.remove(jobOfferViewBean.jobOffer)}" immediate="true"
+										rendered="#{bookmarksBean.isBookmarked(jobOfferViewBean.jobOffer)}" />
+								</div>
+							</div>
+						</div>
+					</p:panel>
+				</div>
 
-						<h:panelGroup layout="block">
-							<h:outputText value="#{i18n['job_meeting.no_candidates']}" rendered="#{empty jobOfferViewBean.candidates}" />
+				<div class="ui-g-12 ui-md-12 ui-lg-6">
+					<p:panel styleClass="purple" header="#{i18n['candidate.candidates']}">
+						<div class="ui-g">
+							<div class="ui-g-12">
+								<h:outputText value="#{i18n['job_meeting.no_candidates']}" rendered="#{empty jobOfferViewBean.candidates}" />
 
-							<h:dataTable var="candidate" value="#{jobOfferViewBean.candidates}"
-								rendered="#{not empty jobOfferViewBean.candidates}" styleClass="dataTable">
+								<h:dataTable var="candidate" value="#{jobOfferViewBean.candidates}"
+									rendered="#{not empty jobOfferViewBean.candidates}" styleClass="dataTable">
 
-								<h:column>
-									<f:facet name="header">
-										<h:outputText value="#{i18n['candidate.name']}" />
-									</f:facet>
-									<h:outputText value="#{candidate}" />
-								</h:column>
-								<h:column>
-									<f:facet name="header">
-										<h:outputText value="Action" />
-									</f:facet>
-									<h:link value="#{i18n['action.view']}" outcome="/faces/candidate/candidateView">
-										<f:param name="id" value="#{candidate.id}" />
-									</h:link>
+									<h:column>
+										<f:facet name="header">
+											<h:outputText value="#{i18n['candidate.name']}" />
+										</f:facet>
+										<h:outputText value="#{candidate}" />
+									</h:column>
+									<h:column>
+										<f:facet name="header">
+											<h:outputText value="Action" />
+										</f:facet>
+										<h:link value="#{i18n['action.view']}" outcome="/faces/candidate/candidateView">
+											<f:param name="id" value="#{candidate.id}" />
+										</h:link>
 						|
 						<h:commandLink action="#{jobOfferViewBean.removeCandidate(candidate)}" value="#{i18n['action.remove']}"
-										onclick="return confirm('#{i18n['action.delete.are_you_sure']}')">
-										<f:ajax execute="@this" render=":form:candidates :asideForm:actions" />
-									</h:commandLink>
-								</h:column>
-							</h:dataTable>
-
-							<h:panelGroup layout="block" styleClass="buttonGroup">
-								<h:commandButton value="#{i18n['action.add']}" action="#{candidateSearchPopupBean.show}" />
-							</h:panelGroup>
-						</h:panelGroup>
-					</h:panelGroup>
-				</h:panelGroup>
-			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="row">
-
-				<h:panelGroup layout="block" styleClass="half red-panel">
-					<h:panelGroup layout="block" styleClass="panel-header">
-						<h4>#{i18n['job_meeting.conducted_job_meetings']}</h4>
-					</h:panelGroup>
-					<h:panelGroup layout="block" styleClass="panel-content">
+											onclick="return confirm('#{i18n['action.delete.are_you_sure']}')">
+											<f:ajax execute="@this" render=":form:candidates :asideForm:actions" />
+										</h:commandLink>
+									</h:column>
+								</h:dataTable>
+							</div>
+						</div>
+						<div class="ui-g">
+							<div class="ui-g-12">
+								<div class="push-right">
+									<p:commandButton styleClass="btn-green" value="#{i18n['action.add']}" action="#{candidateSearchPopupBean.show}" />
+								</div>
+							</div>
+						</div>
+					</p:panel>
+				</div>
+			</div>
+			<div class="ui-g">
+				<div class="ui-g-12 ui-md-12 ui-lg-6">
+					<p:panel styleClass="red" header="#{i18n['job_meeting.conducted_job_meetings']}">
 						<h:outputText value="#{i18n['job_meeting.no_conducted']}"
 							rendered="#{empty jobOfferViewBean.conductedJobMeetings}" />
-					</h:panelGroup>
-				</h:panelGroup>
-
-				<h:panelGroup layout="block" styleClass="half red-panel">
-					<h:panelGroup layout="block" styleClass="panel-header">
-						<h4>#{i18n['job_meeting.planned_job_meetings']}</h4>
-					</h:panelGroup>
-					<h:panelGroup layout="block" styleClass="panel-content">
-						<h:outputText value="#{i18n['job_meeting.no_planned']}" rendered="#{empty jobOfferViewBean.plannedJobMeetings}" />
-						<h:panelGroup layout="block" styleClass="buttonGroup">
-							<h:commandButton value="#{i18n['action.create']}" action="#{jobOfferViewBean.edit}" />
-						</h:panelGroup>
-					</h:panelGroup>
-				</h:panelGroup>
-			</h:panelGroup>
+					</p:panel>
+				</div>
+				<div class="ui-g-12 ui-md-12 ui-lg-6">
+					<p:panel styleClass="red" header="#{i18n['job_meeting.planned_job_meetings']}">
+						<div class="ui-g">
+							<div class="ui-g-12">
+								<h:outputText value="#{i18n['job_meeting.no_planned']}" rendered="#{empty jobOfferViewBean.plannedJobMeetings}" />
+							</div>
+						</div>
+						<div class="ui-g">
+							<div class="ui-g-12">
+								<div class="push-right">
+									<p:commandButton styleClass="btn-green" value="#{i18n['action.create']}" action="#{jobOfferViewBean.edit}" />
+								</div>
+							</div>
+						</div>
+					</p:panel>
+				</div>
+			</div>
 		</h:form>
 
 		<ui:include src="../candidate/candidateSearchPopup.xhtml">
@@ -150,3 +157,4 @@
 	</ui:define>
 
 </ui:composition>
+
