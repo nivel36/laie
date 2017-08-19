@@ -4003,7 +4003,7 @@ body .ui-icon {
 	content: "";
 }
 
-body .ui-paginator > a span {
+body .ui-paginator>a span {
 	display: none;
 }
 
@@ -4231,7 +4231,6 @@ body .ui-widget-content.ui-datatable-odd {
 	background-color: #f9f9f9;
 }
 
-
 body .form-group {
 	display: flex;
 	align-items: center
@@ -4245,7 +4244,8 @@ body .ui-outputlabel {
 	display: inline-block;
 	position: relative;
 	color: #424242;
-	width: 30%;
+	width: 150px;
+	display: block;
 }
 
 body .ui-inputfield {
@@ -4255,15 +4255,27 @@ body .ui-inputfield {
 	background-color: white;
 	font-size: 13px;
 	border: 1px solid #1976d2;
+	overflow: auto;
+}
+
+body .ui-calendar .ui-inputfield{
 	width: 100%;
 }
 
 body .ui-inputtext {
-	width: 70%;
+	flex: 2;
 }
 
 body .ui-calendar {
-	width: 70%;
+	flex: 2;
+}
+
+body .ui-password {
+	flex: 2;
+}
+
+body .ui-inputtextarea {
+	flex: 2;
 }
 
 body .ui-selectonemenu {
@@ -4429,17 +4441,17 @@ body .ui-button-text-only .ui-button-text {
 	animation: ripple-animation 2s;
 }
 
-@keyframes ripple-animation {
-	from { 
-		transform:scale(1);
-		opacity: 0.4;
-	}
-	to {
-		transform: scale(100);
-		opacity: 0;
-	}
+@
+keyframes ripple-animation {from { transform:scale(1);
+	opacity: 0.4;
 }
 
+to {
+	transform: scale(100);
+	opacity: 0;
+}
+
+}
 .ui-selected {
 	background-color: #ffc107;
 	color: black;

@@ -459,7 +459,6 @@ textarea {
 	font-size: 1.1em;
 }
 
-
 .panelGrid {
 	width: 100%;
 }
@@ -734,6 +733,8 @@ textarea {
 .form-group {
 	padding-bottom: 5px;
 	margin: 15px 0 0 0;
+	width: 100%;
+	display: flex;
 }
 
 .login-page>.content {
