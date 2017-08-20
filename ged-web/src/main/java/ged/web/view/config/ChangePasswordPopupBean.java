@@ -53,6 +53,8 @@ public final class ChangePasswordPopupBean extends AbstractPageBean {
 			if (this.newPassword.equals(this.repeatPassword)) {
 				this.sessionBean.setUser(changePassword(user));
 				clear();
+				// Clearing the view bean of the main page because we need to
+				// reload the user from database
 				this.facesContext.getViewRoot().getViewMap().clear();
 				addMessage(FacesMessage.SEVERITY_INFO, "action.save_action_performed", "action.save_action_performed");
 			} else {
