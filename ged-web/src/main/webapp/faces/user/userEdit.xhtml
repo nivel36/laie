@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://xmlns.jcp.org/jsf/passthrough" xmlns:i18n="http://legion.com/i18n"
-	 template="/WEB-INF/templates/default.xhtml">
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://legion.com/i18n"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
 		<title>#{i18n['user.user']}</title>
@@ -20,73 +19,87 @@
 		<h:form id="form">
 			<input type="hidden" id="userId" value="#{userEditBean.user.id}" />
 
-			<h:panelGroup layout="block" styleClass="panel">
-				<h:panelGroup layout="block" styleClass="panel-header">
-					<h4>#{userEditBean.user.id == null ? i18n['user.new_user'] : userEditBean.user}</h4>
-				</h:panelGroup>
-				<h:panelGroup layout="block" styleClass="panel-content">
-					<h:panelGroup layout="block" styleClass="row">
-						<h:outputLabel value="#{i18n['user.username']}" styleClass="required">
-							<h:inputText id="username" value="#{userEditBean.user.username}" label="#{i18n['user.username']}" required="true"
-								styleClass="#{not component.valid ? 'inputError' : ''}" validator="#{userEditBean.validateUsername}" />
-							<h:message for="username" errorClass="error" />
-						</h:outputLabel>
+			<div class="ui-g">
+				<div class="ui-g-12">
+					<p:panel styleClass="magenta" header="#{userEditBean.user.id == 0 ? i18n['user.new_user'] : userEditBean.user}">
+						<div class="ui-g">
+							<div class="ui-md-12 ui-lg-6 ui-xl-4">
+								<div class="form-group">
+									<p:outputLabel value="#{i18n['user.username']}" for="username" />
+									<p:inputText id="username" value="#{userEditBean.user.username}" required="true"
+										validator="#{userEditBean.validateUsername}" />
+								</div>
+								<h:message for="username" errorClass="error" />
+							</div>
+							<div class="ui-md-12 ui-lg-6 ui-xl-4">
+								<div class="form-group">
+									<p:outputLabel value="#{i18n['user.email']}" for="email" />
+									<p:inputText id="email" p:type="email" value="#{userEditBean.user.email}" required="true"
+										validator="#{userEditBean.validateEmail}" />
+								</div>
+								<h:message for="email" errorClass="error" />
+							</div>
 
-						<h:outputLabel value="#{i18n['user.email']}" styleClass="large required">
-							<h:inputText id="email" p:type="email" value="#{userEditBean.user.email}" required="true"
-								label="#{i18n['user.email']}" styleClass="#{ not component.valid ? 'inputError' : ''}"
-								validator="#{userEditBean.validateEmail}">
-							</h:inputText>
-							<h:message for="email" errorClass="error" />
-						</h:outputLabel>
+							<div class="ui-md-12 ui-lg-6 ui-xl-4">
+								<div class="form-group">
+									<p:outputLabel value="#{i18n['user.name']}" for="name" />
+									<p:inputText id="name" value="#{userEditBean.user.name}" required="true" />
+								</div>
+								<h:message for="name" errorClass="error" />
+							</div>
+						</div>
 
-						<h:outputLabel value="#{i18n['user.name']}" styleClass="required">
-							<h:inputText id="name" value="#{userEditBean.user.name}" label="#{i18n['user.name']}" required="true"
-								styleClass="#{not component.valid ? 'inputError' : ''}" />
-							<h:message for="name" errorClass="error" />
-						</h:outputLabel>
-					</h:panelGroup>
-					<h:panelGroup layout="block" styleClass="row">
+						<div class="ui-g">
+							<div class="ui-md-12 ui-lg-6 ui-xl-4">
+								<div class="form-group">
+									<p:outputLabel value="#{i18n['user.surename']}" for="surename" />
+									<p:inputText id="surename" value="#{userEditBean.user.surename}" required="true" />
+								</div>
+								<h:message for="surename" errorClass="error" />
+							</div>
 
-						<h:outputLabel value="#{i18n['user.surename']}" styleClass="large required">
-							<h:inputText id="surename" value="#{userEditBean.user.surename}" label="#{i18n['user.surename']}" required="true"
-								styleClass="#{not component.valid ? 'inputError' : ''}" />
-							<h:message for="surename" errorClass="error" />
-						</h:outputLabel>
+							<div class="ui-md-12 ui-lg-6 ui-xl-4">
+								<div class="form-group">
+									<p:outputLabel value="#{i18n['user.role']}" for="role" />
+									<p:selectOneMenu id="role" value="#{userEditBean.user.role}" validator="#{userEditBean.validateRole}">
+										<f:selectItems var="role" itemValue="#{role}" value="#{applicationBean.roles}"
+											itemLabel="#{i18n:translate(role.name)}" />
+									</p:selectOneMenu>
+								</div>
+								<h:message for="role" errorClass="error" />
+							</div>
 
-						<h:outputLabel value="#{i18n['user.role']}" styleClass="required">
-							<h:selectOneMenu id="role" value="#{userEditBean.user.role}" validator="#{userEditBean.validateRole}">
-								<f:selectItems var="role" itemValue="#{role}" value="#{applicationBean.roles}"
-									itemLabel="#{i18n:translate(role.name)}" />
-							</h:selectOneMenu>
-							<h:message for="role" errorClass="error" />
-						</h:outputLabel>
+							<div class="ui-md-12 ui-lg-6 ui-xl-4">
+								<div class="form-group">
+									<h:outputLabel value="#{i18n['user.manager']}">
+										<h:inputText id="manager" value="#{userEditBean.manager.fullName}" label="#{i18n['user.manager']}"
+											readonly="#{facesContext.renderResponse}" validator="#{userEditBean.validateManager}" />
+										<h:message for="manager" errorClass="error" />
+									</h:outputLabel>
 
-						<h:panelGroup layout="block" id="managerBlock" styleClass="selectField">
-							<h:outputLabel value="#{i18n['user.manager']}">
-								<h:inputText id="manager" value="#{userEditBean.manager.fullName}" label="#{i18n['user.manager']}"
-									styleClass="#{not component.valid ? 'inputError' : ''}" readonly="#{facesContext.renderResponse}"
-									validator="#{userEditBean.validateManager}" />
-								<h:message for="manager" errorClass="error" />
-							</h:outputLabel>
+									<h:commandButton action="#{userSearchPopupBean.show}" value="+">
+										<f:ajax execute="@this" render=":userSearchPopupForm" />
+									</h:commandButton>
 
-							<h:commandButton action="#{userSearchPopupBean.show}" value="+">
-								<f:ajax execute="@this" render=":userSearchPopupForm" />
-							</h:commandButton>
-
-							<h:commandButton action="#{userEditBean.removeManager}" value="-"
-								rendered="#{not empty userEditBean.manager.username}" id="removeManager">
-								<f:ajax execute="@this" render="managerBlock" />
-							</h:commandButton>
-						</h:panelGroup>
-					</h:panelGroup>
-
-					<h:panelGroup layout="block" styleClass="buttonGroup">
-						<h:commandButton value="#{i18n['action.save']}" action="#{userEditBean.save}" />
-						<h:commandButton value="#{i18n['action.cancel']}" action="#{userEditBean.cancel}" immediate="true" />
-					</h:panelGroup>
-				</h:panelGroup>
-			</h:panelGroup>
+									<h:commandButton action="#{userEditBean.removeManager}" value="-"
+										rendered="#{not empty userEditBean.manager.username}" id="removeManager">
+										<f:ajax execute="@this" render="managerBlock" />
+									</h:commandButton>
+								</div>
+							</div>
+						</div>
+						
+						<div class="ui-g">
+							<div class="ui-g-12">
+								<div class="push-right">
+									<h:commandButton value="#{i18n['action.save']}" action="#{userEditBean.save}" />
+									<h:commandButton value="#{i18n['action.cancel']}" action="#{userEditBean.cancel}" immediate="true" />
+								</div>
+							</div>
+						</div>
+					</p:panel>
+				</div>
+			</div>
 		</h:form>
 	</ui:define>
 </ui:composition>
