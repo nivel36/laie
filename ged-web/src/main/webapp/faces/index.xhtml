@@ -14,39 +14,65 @@
 			<div class="ui-g">
 				<div class="ui-g-12 ui-md-12 ui-lg-6">
 					<p:panel styleClass="yellow" header="#{i18n['index.last_offers']}">
-						<h:outputText value="#{i18n['job.no_jobs_found']}" rendered="#{empty indexBean.jobOffers}" styleClass="text" />
-						<ui:repeat var="jobOffer" value="${indexBean.jobOffers}">
-							<h:panelGroup layout="block" styleClass="textBlock">
-								<h:outputText value="#{jobOffer.client.name} - #{jobOffer.name}" />
-							</h:panelGroup>
-							<br />
-						</ui:repeat>
-						<p:commandButton styleClass="push-right" value="#{i18n['action.new']}"
-							action="/faces/jobOffer/jobOfferEdit.xhtml?faces-redirect=true" />
+						<div class="ui-g">
+							<div class="ui-g-12">
+								<h:outputText value="#{i18n['job.no_jobs_found']}" rendered="#{empty indexBean.jobOffers}" styleClass="text" />
+								<ui:repeat var="jobOffer" value="${indexBean.jobOffers}">
+									<h:panelGroup layout="block" styleClass="textBlock">
+										<h:outputText value="#{jobOffer.client.name} - #{jobOffer.name}" />
+									</h:panelGroup>
+									<br />
+								</ui:repeat>
+							</div>
+						</div>
+						<div class="ui-g">
+							<div class="ui-g-12">
+								<div class="push-right">
+									<p:commandButton styleClass="btn-green" value="#{i18n['action.new']}"
+										action="/faces/jobOffer/jobOfferEdit.xhtml?faces-redirect=true" />
+								</div>
+							</div>
+						</div>
 					</p:panel>
 				</div>
 				<div class="ui-g-12 ui-md-12 ui-lg-6">
 					<p:panel styleClass="purple" header="#{i18n['index.last_candidates']}">
-						<h:outputText value="#{i18n['candidate.no_candidates_found']}" rendered="#{empty indexBean.candidates}" />
+						<div class="ui-g">
+							<div class="ui-g-12">
+								<h:outputText value="#{i18n['candidate.no_candidates_found']}" rendered="#{empty indexBean.candidates}"
+									styleClass="text" />
 
-						<ui:repeat var="candidate" value="${indexBean.candidates}">
-							<h:panelGroup styleClass="card" layout="block">
-								<h:graphicImage value="/resources/img/classic-blue/no-photo.png" styleClass="photo" />
-								<h:outputText styleClass="name" value="${candidate.name} ${candidate.surename}" />
-								<br />
-								<h:outputText value="Arquitecto de software en GFI" />
-							</h:panelGroup>
-						</ui:repeat>
-
-						<p:commandButton styleClass="push-right" value="#{i18n['action.new']}"
-							action="candidate/candidateEdit?faces-redirect=true" />
+								<ui:repeat var="candidate" value="${indexBean.candidates}">
+									<h:panelGroup styleClass="card" layout="block">
+										<h:graphicImage value="/resources/img/classic-blue/no-photo.png" styleClass="photo" />
+										<h:outputText styleClass="name" value="${candidate.name} ${candidate.surename}" />
+										<br />
+										<h:outputText value="Arquitecto de software en GFI" />
+									</h:panelGroup>
+								</ui:repeat>
+							</div>
+						</div>
+						<div class="ui-g">
+							<div class="ui-g-12">
+								<div class="push-right">
+									<p:commandButton styleClass="btn-green" value="#{i18n['action.new']}"
+										action="candidate/candidateEdit?faces-redirect=true" />
+								</div>
+							</div>
+						</div>
 					</p:panel>
 				</div>
 			</div>
 			<div class="ui-g">
 				<div class="ui-g-12 ui-md-12 ui-lg-6">
 					<p:panel styleClass="green" header="#{i18n['index.last_reports']}">
-						<p:commandButton value="#{i18n['action.new']}" action="#{jobOfferViewBean.edit}" />
+						<div class="ui-g">
+							<div class="ui-g-12">
+								<div class="push-right">
+									<p:commandButton styleClass="btn-green" value="#{i18n['action.new']}" action="#{jobOfferViewBean.edit}" />
+								</div>
+							</div>
+						</div>
 					</p:panel>
 				</div>
 

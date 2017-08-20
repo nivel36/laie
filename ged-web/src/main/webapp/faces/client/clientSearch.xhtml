@@ -14,16 +14,24 @@
 			<div class="ui-g">
 				<div class="ui-g-12">
 					<p:panel styleClass="cyan" header="#{i18n['client.search']}">
-						<div class="form-group">
-							<p:outputLabel for="name" styleClass="control-label" value="#{i18n['client.name']}" />
-							<p:inputText id="name" styleClass="form-control" value="#{clientSearchBean.name}" label="#{i18n['client.name']}" />
+						<div class="ui-g">
+							<div class="ui-md-12 ui-lg-6 ui-xl-4">
+								<div class="form-group">
+									<p:outputLabel for="name" styleClass="control-label" value="#{i18n['client.name']}" />
+									<p:inputText id="name" styleClass="form-control" value="#{clientSearchBean.name}"
+										label="#{i18n['client.name']}" />
+								</div>
+							</div>
 						</div>
-
-						<h:panelGroup layout="block" styleClass="buttonGroup">
-							<p:commandButton value="#{i18n['action.new']}" action="#{clientSearchBean.newClient}" immediate="true" />
-							<p:commandButton value="#{i18n['action.search']}" action="#{clientSearchBean.search}" />
-							<p:commandButton value="#{i18n['action.clean']}" action="#{clientSearchBean.clean}" />
-						</h:panelGroup>
+						<div class="ui-g">
+							<div class="ui-g-12">
+								<div class="push-right">
+									<p:commandButton styleClass="btn-green" value="#{i18n['action.new']}" action="#{clientSearchBean.newClient}" immediate="true" />
+									<p:commandButton value="#{i18n['action.search']}" action="#{clientSearchBean.search}" />
+									<p:commandButton styleClass="btn-gray" value="#{i18n['action.clean']}" action="#{clientSearchBean.clean}" />
+								</div>
+							</div>
+						</div>
 					</p:panel>
 				</div>
 			</div>

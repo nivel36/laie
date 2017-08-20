@@ -7,6 +7,7 @@ import java.util.Objects;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -16,11 +17,11 @@ import javax.xml.bind.DatatypeConverter;
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
 import ged.web.core.util.MessageUtils;
-import ged.web.core.view.AbstractDialogBean;
+import ged.web.core.view.AbstractPageBean;
 
 @Named
 @ViewScoped
-public final class ChangePasswordPopupBean extends AbstractDialogBean {
+public final class ChangePasswordPopupBean extends AbstractPageBean {
 
 	private static final Logger logger = LoggerFactory.getLogger(ChangePasswordPopupBean.class.getName());
 
@@ -51,7 +52,9 @@ public final class ChangePasswordPopupBean extends AbstractDialogBean {
 		if (user.getPassword().equals(output)) {
 			if (this.newPassword.equals(this.repeatPassword)) {
 				this.sessionBean.setUser(changePassword(user));
-				hide();
+				clear();
+				this.facesContext.getViewRoot().getViewMap().clear();
+				addMessage(FacesMessage.SEVERITY_INFO, "action.save_action_performed", "action.save_action_performed");
 			} else {
 				addErrorToField(this.newPasswordComponent, "login.error.password_not_equals");
 			}
@@ -66,8 +69,7 @@ public final class ChangePasswordPopupBean extends AbstractDialogBean {
 		return this.userService.save(user);
 	}
 
-	@Override
-	protected void clear() {
+	private void clear() {
 		this.password = null;
 		this.repeatPassword = null;
 		this.newPassword = null;
@@ -102,7 +104,7 @@ public final class ChangePasswordPopupBean extends AbstractDialogBean {
 			output = DatatypeConverter.printBase64Binary(digest);
 		} catch (NoSuchAlgorithmException | UnsupportedEncodingException ex) {
 			MessageUtils.addErrorMessage("error.unnexpected_error", "error.unnexpected_error");
-			ChangePasswordPopupBean.logger.error("Can't find hash algorithm", ex);
+			logger.error("Can't find hash algorithm", ex);
 		}
 		return output;
 	}

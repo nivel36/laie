@@ -4,6 +4,7 @@ import java.util.Locale;
 import java.util.Objects;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -57,6 +58,7 @@ public final class ConfigIndexBean extends AbstractPageBean {
 		}
 		this.user = this.userService.save(this.user);
 		this.sessionBean.setUser(this.user);
+		addMessage(FacesMessage.SEVERITY_INFO, "action.save_action_performed", "action.save_action_performed");
 	}
 
 	public void setUser(final User user) {
