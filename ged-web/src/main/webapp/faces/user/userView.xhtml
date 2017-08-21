@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
-	xmlns:i18n="http://legion.com/i18n" 
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" xmlns:i18n="http://legion.com/i18n"
 	template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
@@ -19,61 +21,74 @@
 		<h:form id="form">
 			<input type="hidden" id="userId" value="#{userViewBean.user.id}" />
 
-			<h:panelGroup layout="block" styleClass="panel">
-				<h:panelGroup layout="block" styleClass="panel-header">
-					<h4>#{i18n['user.user']}</h4>
+			<div class="ui-g">
+				<div class="ui-g-12">
+					<h:panelGroup layout="block" styleClass="panel">
+						<h:panelGroup layout="block" styleClass="panel-header">
+							<h4>#{i18n['user.user']}</h4>
+						</h:panelGroup>
+						<h:panelGroup layout="block" styleClass="panel-content">
+							<h:panelGroup layout="block" styleClass="textBlock">
+								<h:outputText styleClass="label" value="#{i18n['user.name']}:" />
+								<h:outputText
+									value="#{userViewBean.user.name} #{userViewBean.user.surename}" />
+							</h:panelGroup>
 
-				</h:panelGroup>
-				<h:panelGroup layout="block" styleClass="panel-content">
-					<h:panelGroup layout="block" styleClass="textBlock">
-						<h:outputText styleClass="label" value="#{i18n['user.name']}:" />
-						<h:outputText value="#{userViewBean.user.name} #{userViewBean.user.surename}" />
-					</h:panelGroup>
+							<h:panelGroup layout="block" styleClass="textBlock">
+								<h:outputText styleClass="label" value="#{i18n['user.email']}:" />
+								<h:outputText value="#{userViewBean.user.email}" />
+							</h:panelGroup>
 
-					<h:panelGroup layout="block" styleClass="textBlock">
-						<h:outputText styleClass="label" value="#{i18n['user.email']}:" />
-						<h:outputText value="#{userViewBean.user.email}" />
-					</h:panelGroup>
+							<h:panelGroup layout="block" styleClass="textBlock">
+								<h:outputText styleClass="label" value="#{i18n['user.role']}:" />
+								<h:outputText
+									value="#{i18n:translate(userViewBean.user.role.name)}" />
+							</h:panelGroup>
 
-					<h:panelGroup layout="block" styleClass="textBlock">
-						<h:outputText styleClass="label" value="#{i18n['user.role']}:" />
-						<h:outputText value="#{i18n:translate(userViewBean.user.role.name)}" />
-					</h:panelGroup>
+							<h:panelGroup layout="block" styleClass="textBlock">
+								<h:outputText styleClass="label"
+									value="#{i18n['user.manager']}:" />
+								<h:outputText value="#{userViewBean.user.manager}" />
+							</h:panelGroup>
 
-					<h:panelGroup layout="block" styleClass="textBlock">
-						<h:outputText styleClass="label" value="#{i18n['user.manager']}:" />
-						<h:outputText value="#{userViewBean.user.manager}" />
+							<h:panelGroup id="actionButtons" layout="block"
+								styleClass="buttonGroup">
+								<p:commandButton value="#{i18n['action.undelete']}"
+									action="#{userViewBean.undeleteUser}" immediate="true"
+									rendered="#{userViewBean.user.deleted}" />
+								<p:commandButton value="#{i18n['action.edit']}"
+									action="#{userViewBean.editUser}" immediate="true"
+									rendered="#{not userViewBean.user.deleted}" />
+								<p:commandButton value="#{i18n['bookmark.add_to_bookmarks']}"
+									action="#{bookmarksBean.add(userViewBean.user)}"
+									immediate="true"
+									rendered="#{(not bookmarksBean.isBookmarked(userViewBean.user))	and (not userViewBean.user.deleted)}"
+									update="actionButtons :asideForm:bookmarks" />
+								<p:commandButton
+									value="#{i18n['bookmark.remove_from_bookmarks']}"
+									action="#{bookmarksBean.remove(userViewBean.user)}"
+									immediate="true"
+									rendered="#{bookmarksBean.isBookmarked(userViewBean.user)}"
+									update="actionButtons :asideForm:bookmarks" />
+								<p:commandButton id="exportPdf" icon="fa fa-file-pdf-o"
+									value="#{i18n['action.export']}"
+									action="#{userViewBean.export}" />
+								<p:commandButton id="exportExcel" icon="fa fa-file-excel-o"
+									value="#{i18n['action.export']}"
+									action="#{userViewBean.export}" />
+							</h:panelGroup>
+						</h:panelGroup>
 					</h:panelGroup>
+				</div>
+			</div>
 
-					<h:panelGroup id="actionButtons" layout="block" styleClass="buttonGroup">
-						<p:commandButton value="#{i18n['action.undelete']}" action="#{userViewBean.undeleteUser}" immediate="true"
-							rendered="#{userViewBean.user.deleted}" />
-						<p:commandButton value="#{i18n['action.edit']}" action="#{userViewBean.editUser}" immediate="true"
-							rendered="#{not userViewBean.user.deleted}" />
-						<p:commandButton value="#{i18n['bookmark.add_to_bookmarks']}" action="#{bookmarksBean.add(userViewBean.user)}"
-							immediate="true"
-							rendered="#{(not bookmarksBean.isBookmarked(userViewBean.user))	and (not userViewBean.user.deleted)}"
-							update="actionButtons :asideForm:bookmarks" />
-						<p:commandButton value="#{i18n['bookmark.remove_from_bookmarks']}"
-							action="#{bookmarksBean.remove(userViewBean.user)}" immediate="true"
-							rendered="#{bookmarksBean.isBookmarked(userViewBean.user)}" update="actionButtons :asideForm:bookmarks" />
-						<p:commandButton id="exportPdf" icon="fa fa-file-pdf-o" value="#{i18n['action.export']}"
-							action="#{userViewBean.export}" />
-						<p:commandButton id="exportExcel" icon="fa fa-file-excel-o" value="#{i18n['action.export']}"
-							action="#{userViewBean.export}" />
-					</h:panelGroup>
-				</h:panelGroup>
-			</h:panelGroup>
-
-			<h:panelGrid styleClass="panelGrid" columns="2" cellpadding="10px">
-				<h:panelGroup layout="block" styleClass="panel">
-					<h:panelGroup layout="block" styleClass="panel-header">
-						<h4>#{i18n['user.team']}</h4>
-					</h:panelGroup>
-					<h:panelGroup layout="block" styleClass="panel-content">
-						<h:outputText value="#{i18n['user.no_users_found']}" rendered="#{empty userViewBean.team.entities}" />
-						<h:dataTable var="user" id="user" value="#{userViewBean.team.dataList}"
-							rendered="#{not empty userViewBean.team.dataList}" styleClass="dataTable">
+			<div class="ui-g">
+				<div class="ui-g-12 ui-md-12 ui-lg-6">
+					<p:panel styleClass="magenta" header="#{i18n['user.team']}">
+						<p:dataTable var="user" id="user"
+							value="#{userViewBean.team.dataList}"
+							emptyMessage="#{i18n['user.no_users_found']}" paginator="true"
+							paginatorPosition="bottom">
 							<h:column>
 								<f:facet name="header">
 									<h:outputText value="#{i18n['user.name']}" />
@@ -96,21 +111,19 @@
 									<f:param name="id" value="#{user.id}" />
 								</h:link>
 							</h:column>
-						</h:dataTable>
+						</p:dataTable>
+					</p:panel>
+				</div>
+				<div class="ui-g-12 ui-md-12 ui-lg-6">
+					<p:panel styleClass="magenta" header="#{i18n['job.job_offers']}">
 
-					</h:panelGroup>
-				</h:panelGroup>
+						<h:outputText value="#{i18n['user.no_users_found']}"
+							rendered="#{empty userViewBean.jobOffers.dataList}" />
 
-				<h:panelGroup layout="block" styleClass="panel">
-					<h:panelGroup layout="block" styleClass="panel-header">
-						<h4>#{i18n['job.job_offers']}</h4>
-					</h:panelGroup>
-					<h:panelGroup layout="block" styleClass="panel-content">
-
-						<h:outputText value="#{i18n['user.no_users_found']}" rendered="#{empty userViewBean.jobOffers.dataList}" />
-
-						<h:dataTable var="jobOffer" id="jobOffers" value="#{userViewBean.jobOffers.dataList}"
-							rendered="#{not empty userViewBean.jobOffers.dataList}" styleClass="dataTable">
+						<h:dataTable var="jobOffer" id="jobOffers"
+							value="#{userViewBean.jobOffers.dataList}"
+							rendered="#{not empty userViewBean.jobOffers.dataList}"
+							styleClass="dataTable">
 							<h:column>
 								<f:facet name="header">
 									<h:outputText value="#{i18n['job.name']}" />
@@ -129,15 +142,15 @@
 								<f:facet name="header">
 									<h:outputText value="#{i18n['action.action']}" />
 								</f:facet>
-								<h:link value="#{i18n['action.view']}" outcome="/faces/jobOffer/jobOfferView">
+								<h:link value="#{i18n['action.view']}"
+									outcome="/faces/jobOffer/jobOfferView">
 									<f:param name="id" value="#{jobOffer.id}" />
 								</h:link>
 							</h:column>
 						</h:dataTable>
-					</h:panelGroup>
-				</h:panelGroup>
-			</h:panelGrid>
-			<h:messages />
+					</p:panel>
+				</div>
+			</div>
 		</h:form>
 	</ui:define>
 </ui:composition>

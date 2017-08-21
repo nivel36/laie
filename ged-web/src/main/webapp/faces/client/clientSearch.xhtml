@@ -38,7 +38,7 @@
 			<div class="ui-g">
 				<div class="ui-g-12">
 					<p:panel styleClass="cyan" header="#{i18n['client.search_results']}">
-						<p:dataTable var="client" id="client" value="#{clientSearchBean.paginator.dataList}"
+						<p:dataTable var="client" id="client" value="#{clientSearchBean.clients}"
 							rendered="#{not empty clientSearchBean.paginator.entities}" styleClass="dataTable"
 							emptyMessage="#{i18n['client.no_clients_found']}" paginator="true" paginatorPosition="bottom">
 

@@ -85,15 +85,16 @@
 										label="#{i18n['user.manager']}"
 										readonly="#{facesContext.renderResponse}"
 										validator="#{userEditBean.validateManager}" />
+
+									<p:commandButton action="#{userSearchPopupBean.show}" value="+"
+										process="@this" update="userSearchPopupForm" />
+
+									<p:commandButton action="#{userEditBean.removeManager}"
+										value="-"
+										rendered="#{not empty userEditBean.manager.username}"
+										id="removeManager" process="@this" update="managerBlock" />
 								</div>
 								<h:message for="manager" errorClass="error" />
-
-								<p:commandButton action="#{userSearchPopupBean.show}" value="+"
-									process="@this" update="userSearchPopupForm" />
-
-								<p:commandButton action="#{userEditBean.removeManager}"
-									value="-" rendered="#{not empty userEditBean.manager.username}"
-									id="removeManager" process="@this" update="managerBlock" />
 							</div>
 
 						</div>
@@ -104,7 +105,8 @@
 									<h:commandButton value="#{i18n['action.save']}"
 										action="#{userEditBean.save}" />
 									<h:commandButton value="#{i18n['action.cancel']}"
-										action="#{userEditBean.cancel}" immediate="true" />
+										styleClass="btn-gray" action="#{userEditBean.cancel}"
+										immediate="true" />
 								</div>
 							</div>
 						</div>

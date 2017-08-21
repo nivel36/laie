@@ -15,7 +15,6 @@ import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
 import ged.ejb.user.User;
 import ged.web.core.view.AbstractPageBean;
-import ged.web.core.view.Paginator;
 
 @Named
 @ViewScoped
@@ -31,7 +30,7 @@ public class JobOfferSearchBean extends AbstractPageBean {
 
 	private String name;
 
-	private Paginator<JobOffer> paginator;
+	private List<JobOffer> jobOffers;
 
 	@Inject
 	public JobOfferSearchBean(final JobOfferService jobOfferService) {
@@ -77,13 +76,12 @@ public class JobOfferSearchBean extends AbstractPageBean {
 		return this.name;
 	}
 
-	public Paginator<JobOffer> getPaginator() {
-		return this.paginator;
+	public List<JobOffer> getJobOffers() {
+		return this.jobOffers;
 	}
 
 	@PostConstruct
 	public void init() {
-		this.paginator = new Paginator<>(this.sessionBean.getRowsPerPage());
 		search();
 	}
 
@@ -98,8 +96,7 @@ public class JobOfferSearchBean extends AbstractPageBean {
 
 	public void search() {
 		logger.debug("Searching for JobOffers");
-		final List<JobOffer> jobOffers = this.jobOfferService.searchByNameAndClient(this.name, this.clientName, null);
-		this.paginator.setEntities(jobOffers);
+		jobOffers = this.jobOfferService.searchByNameAndClient(this.name, this.clientName, null);
 	}
 
 	public void setClientName(final String clientName) {

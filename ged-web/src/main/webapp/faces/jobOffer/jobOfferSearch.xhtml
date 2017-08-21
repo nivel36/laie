@@ -45,8 +45,8 @@
 			<div class="ui-g">
 				<div class="ui-g-12">
 					<p:panel styleClass="yellow" header="#{i18n['job.search_results']}">
-						<p:dataTable var="jobOffer" id="jobOffer" value="#{jobOfferSearchBean.paginator.dataList}"
-							emptyMessage="#{i18n['job.no_jobs_found']}" styleClass="dataTable" reflow="true" paginator="true"
+						<p:dataTable var="jobOffer" id="jobOffer" value="#{jobOfferSearchBean.jobOffers}"
+							emptyMessage="#{i18n['job.no_jobs_found']}" paginator="true"
 							paginatorPosition="bottom">
 
 							<p:column headerText="#{i18n['job.name']}" sortBy="#{jobOffer.name}">

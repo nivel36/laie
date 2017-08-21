@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
 import ged.ejb.client.Client;
 import ged.ejb.client.ClientService;
 import ged.web.core.view.AbstractPageBean;
-import ged.web.core.view.Paginator;
 
 @Named
 @ViewScoped
@@ -28,7 +27,7 @@ public class ClientSearchBean extends AbstractPageBean {
 
 	private String name;
 
-	private Paginator<Client> paginator;
+	private List<Client> clients;
 
 	@Inject
 	public ClientSearchBean(final ClientService clientService) {
@@ -52,15 +51,14 @@ public class ClientSearchBean extends AbstractPageBean {
 		return this.name;
 	}
 
-	public Paginator<Client> getPaginator() {
-		return this.paginator;
+	public List<Client> getClients() {
+		return this.clients;
 	}
 
 	@PostConstruct
 	public void init() {
 		logger.trace("Init ClientSearchBean");
-		this.paginator = new Paginator<>(this.sessionBean.getRowsPerPage());
-		this.paginator.setEntities(this.clientService.searchByName(this.name));
+		this.clients = this.clientService.searchByName(this.name);
 	}
 
 	public String newClient() {
@@ -76,8 +74,7 @@ public class ClientSearchBean extends AbstractPageBean {
 
 	public void search() {
 		logger.debug("Searching for client action performed");
-		final List<Client> clients = this.clientService.searchByName(this.name);
-		this.paginator.setEntities(clients);
+		clients = this.clientService.searchByName(this.name);
 	}
 
 	public void setName(final String name) {

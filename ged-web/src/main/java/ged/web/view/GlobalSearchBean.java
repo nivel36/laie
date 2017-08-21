@@ -1,5 +1,7 @@
 package ged.web.view;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import javax.annotation.PostConstruct;
@@ -13,7 +15,6 @@ import ged.ejb.user.User;
 import ged.ejb.user.UserService;
 import ged.web.core.util.MessageUtils;
 import ged.web.core.view.AbstractPageBean;
-import ged.web.core.view.Paginator;
 
 @Named
 @ViewScoped
@@ -21,13 +22,13 @@ public class GlobalSearchBean extends AbstractPageBean {
 
 	private static final long serialVersionUID = 8268523301916849175L;
 
-	private Paginator<JobOffer> jobOfferPaginator;
+	private List<JobOffer> jobOffers;
 
 	private final transient JobOfferService jobService;
 
 	private String text;
 
-	private Paginator<User> userPaginator;
+	private List<User> users;
 
 	private final transient UserService userService;
 
@@ -39,30 +40,30 @@ public class GlobalSearchBean extends AbstractPageBean {
 		this.userService = userService;
 	}
 
-	public Paginator<JobOffer> getJobOfferPaginator() {
-		return this.jobOfferPaginator;
+	public List<JobOffer> getJobOffes() {
+		return this.jobOffers;
 	}
 
 	public String getText() {
 		return this.text;
 	}
 
-	public Paginator<User> getUserPaginator() {
-		return this.userPaginator;
+	public List<User> getUsers() {
+		return this.users;
 	}
 
 	@PostConstruct
 	public void init() {
-		this.userPaginator = new Paginator<>(this.sessionBean.getRowsPerPage());
-		this.jobOfferPaginator = new Paginator<>(this.sessionBean.getRowsPerPage());
+		this.users = new ArrayList<>();
+		this.jobOffers = new ArrayList<>();
 	}
 
 	public void search() {
 		if (this.text == null || this.text.length() < 3) {
 			MessageUtils.addWarningMessage("error.search.camp_to_short", "error.search.camp_to_short");
 		} else {
-			this.userPaginator.setEntities(this.userService.searchByNameAndSurename(this.text, this.text));
-			this.jobOfferPaginator.setEntities(this.jobService.searchByNameAndClient(this.text, this.text, null));
+			this.users = this.userService.searchByNameAndSurename(this.text, this.text);
+			this.jobOffers = this.jobService.searchByNameAndClient(this.text, this.text, null);
 		}
 	}
 

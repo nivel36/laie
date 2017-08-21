@@ -21,11 +21,11 @@
 		</h1>
 
 		<h:panelGroup layout="block" styleClass="panel" id="userResults"
-			rendered="#{not empty globalSearchBean.userPaginator.entities}">
+			rendered="#{not empty globalSearchBean.users}">
 			<h:form id="userSearchForm">
 				<h1>#{i18n['user.users']}</h1>
 
-				<h:dataTable id="user" var="user" value="#{globalSearchBean.userPaginator.entities}" styleClass="dataTable">
+				<h:dataTable id="user" var="user" value="#{globalSearchBean.users}" styleClass="dataTable">
 					<h:column>
 						<f:facet name="header">
 							<h:outputText value="#{i18n['user.name']}" />
@@ -66,12 +66,12 @@
 		</h:panelGroup>
 
 		<h:panelGroup layout="block" styleClass="panel" id="jobOfferResults"
-			rendered="#{not empty globalSearchBean.jobOfferPaginator.entities}">
+			rendered="#{not empty globalSearchBean.jobOffers}">
 			<h:form id="jobOfferForm">
 				<h1>#{i18n['job.job_offers']}</h1>
 
-				<h:dataTable var="jobOffer" id="jobOffer" value="#{globalSearchBean.jobOfferPaginator.dataList}"
-					rendered="#{not empty globalSearchBean.jobOfferPaginator.dataList}" styleClass="dataTable">
+				<h:dataTable var="jobOffer" id="jobOffer" value="#{globalSearchBean.jobOfferPaginators}"
+					rendered="#{not empty globalSearchBean.jobOfferPaginators}" styleClass="dataTable">
 
 					<h:column>
 						<f:facet name="header">

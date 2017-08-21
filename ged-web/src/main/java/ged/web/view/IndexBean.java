@@ -64,8 +64,6 @@ public class IndexBean extends AbstractPageBean {
 		final User user = this.sessionBean.getUser();
 		this.jobOffers = this.jobService.findLastJobOffers(user);
 		this.candidates = new ArrayList<>();
-
 		this.schedule = new LazyScheduleModel();
 	}
-
 }

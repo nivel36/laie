@@ -1,5 +1,6 @@
 package ged.web.view.client;
 
+import java.util.List;
 import java.util.Objects;
 
 import javax.faces.view.ViewScoped;
@@ -13,7 +14,6 @@ import ged.ejb.job.offer.JobOfferService;
 import ged.web.core.util.MessageUtils;
 import ged.web.core.util.NavigationUtils;
 import ged.web.core.view.AbstractPageBean;
-import ged.web.core.view.Paginator;
 
 @Named
 @ViewScoped
@@ -27,7 +27,7 @@ public class ClientViewBean extends AbstractPageBean {
 
 	private String id;
 
-	private Paginator<JobOffer> jobOffers;
+	private List<JobOffer> jobOffers;
 
 	private final transient JobOfferService jobOfferService;
 
@@ -58,7 +58,7 @@ public class ClientViewBean extends AbstractPageBean {
 		return this.id;
 	}
 
-	public Paginator<JobOffer> getJobOffers() {
+	public List<JobOffer> getJobOffers() {
 		return this.jobOffers;
 	}
 
@@ -80,8 +80,7 @@ public class ClientViewBean extends AbstractPageBean {
 			NavigationUtils.gotoPage("clientSearch");
 		}
 
-		this.jobOffers = new Paginator<>(this.sessionBean.getRowsPerPage());
-		this.jobOffers.setEntities(this.jobOfferService.findAllByClient(this.client));
+		this.jobOffers = this.jobOfferService.findAllByClient(this.client);
 		if (this.client.isDeleted()) {
 			MessageUtils.addWarningMessage("message.erased_entity", "message.erased_entity");
 		}

@@ -1,6 +1,7 @@
 package ged.web.view.user;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Objects;
 
 import javax.faces.application.NavigationHandler;
@@ -16,7 +17,6 @@ import ged.ejb.user.User;
 import ged.ejb.user.UserService;
 import ged.web.core.util.MessageUtils;
 import ged.web.core.view.AbstractPageBean;
-import ged.web.core.view.Paginator;
 import ged.web.reports.UserReport;
 
 @Named
@@ -25,11 +25,11 @@ public class UserViewBean extends AbstractPageBean {
 
 	private static final long serialVersionUID = -2187385732087309689L;
 
-	private Paginator<JobOffer> jobOffers;
+	private List<JobOffer> jobOffers;
 
 	private final transient JobOfferService jobOfferService;
 
-	private Paginator<User> team;
+	private List<User> team;
 
 	private User user;
 
@@ -59,15 +59,15 @@ public class UserViewBean extends AbstractPageBean {
 	}
 
 	public void export() throws IOException {
-		final UserReport userReport = new UserReport(this.user, this.jobOffers.getEntities());
+		final UserReport userReport = new UserReport(this.user, this.jobOffers);
 		Faces.sendFile(userReport.create(), true);
 	}
 
-	public Paginator<JobOffer> getJobOffers() {
+	public List<JobOffer> getJobOffers() {
 		return this.jobOffers;
 	}
 
-	public Paginator<User> getTeam() {
+	public List<User> getTeam() {
 		return this.team;
 	}
 
@@ -96,10 +96,8 @@ public class UserViewBean extends AbstractPageBean {
 		if (this.user == null) {
 			error();
 		}
-		this.team = new Paginator<>(this.sessionBean.getRowsPerPage());
-		this.team.setEntities(this.userService.findSubordinateUsers(id));
-		this.jobOffers = new Paginator<>(this.sessionBean.getRowsPerPage());
-		this.jobOffers.setEntities(this.jobOfferService.findAllByOwner(this.user));
+		this.team =  this.userService.findSubordinateUsers(id);
+		this.jobOffers =  this.jobOfferService.findAllByOwner(this.user);
 		if (this.user.isDeleted()) {
 			MessageUtils.addWarningMessage("message.erased_entity", "message.erased_entity");
 		}
