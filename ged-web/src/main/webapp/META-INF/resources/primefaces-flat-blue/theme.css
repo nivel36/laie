@@ -4279,6 +4279,10 @@ body .ui-inputtextarea {
 }
 
 body .ui-selectonemenu {
+	flex: 2;
+}
+
+body .ui-selectonemenu {
 	outline: medium none;
 	padding: 1px;
 	border-radius: 3px;
