@@ -4420,6 +4420,11 @@ body .ui-button {
 	overflow: hidden;
 }
 
+body .ui-button.ui-button-icon-only {
+	padding: 0px 4px;
+	width: 30px;
+}
+
 body .ui-button.btn-gray {
 	background: #999999;;
 }
@@ -4446,6 +4451,7 @@ body .ui-button-text-icon-left .ui-icon.fa {
 
 body .ui-button-icon-only .ui-icon.fa, body .ui-button-text-icon-left .ui-icon.fa, body .ui-button-text-icon-right .ui-icon.fa
 	{
+	width: 16px;
 	color: white;
 	margin-top: -7px;
 }
