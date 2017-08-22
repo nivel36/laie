@@ -15,6 +15,7 @@ import ged.ejb.job.meeting.JobMeeting;
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
 import ged.ejb.user.User;
+import ged.ejb.user.role.Role;
 import ged.web.core.view.AbstractPageBean;
 
 @Named
@@ -58,10 +59,10 @@ public class JobOfferViewBean extends AbstractPageBean {
 		if (owner.equals(user)) {
 			return true;
 		}
-		if (user.hasRole("ADMIN")) {
+		if (user.hasRole(Role.ADMIN)) {
 			return true;
 		}
-		if (user.hasRole("RECRUITER_ADMIN")) {
+		if (user.hasRole(Role.RECRUITER_ADMIN)) {
 			return true;
 		}
 		return false;

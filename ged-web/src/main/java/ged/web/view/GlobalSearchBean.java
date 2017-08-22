@@ -40,7 +40,7 @@ public class GlobalSearchBean extends AbstractPageBean {
 		this.userService = userService;
 	}
 
-	public List<JobOffer> getJobOffes() {
+	public List<JobOffer> getJobOffers() {
 		return this.jobOffers;
 	}
 

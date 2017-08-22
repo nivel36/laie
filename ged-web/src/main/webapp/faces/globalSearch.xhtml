@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://legion.com/i18n"
-	 template="/WEB-INF/templates/default.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:i18n="http://legion.com/i18n" xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
-		<title>Ged</title>
+		<title>#{i18n['job.search_results']}</title>
 	</ui:define>
 
 	<ui:param name="selectedMenu" value="index" />
@@ -16,16 +19,11 @@
 			<f:viewAction action="#{globalSearchBean.search}" />
 		</f:metadata>
 
-		<h1 class="header">
-			<i class="fa fa-search" /> #{i18n['job.search_results']}
-		</h1>
-
-		<h:panelGroup layout="block" styleClass="panel" id="userResults"
+		<p:panel styleClass="magenta" header="#{i18n['user.users']}"
 			rendered="#{not empty globalSearchBean.users}">
 			<h:form id="userSearchForm">
-				<h1>#{i18n['user.users']}</h1>
-
-				<h:dataTable id="user" var="user" value="#{globalSearchBean.users}" styleClass="dataTable">
+				<p:dataTable var="user" value="#{globalSearchBean.users}"
+					styleClass="dataTable">
 					<h:column>
 						<f:facet name="header">
 							<h:outputText value="#{i18n['user.name']}" />
@@ -57,22 +55,19 @@
 						<f:facet name="header">
 							<h:outputText value="Action" />
 						</f:facet>
-						<h:link value="#{i18n['action.view']}" outcome="/faces/user/userView">
+						<h:link value="#{i18n['action.view']}"
+							outcome="/faces/user/userView">
 							<f:param name="id" value="#{user.id}" />
 						</h:link>
 					</h:column>
-				</h:dataTable>
+				</p:dataTable>
 			</h:form>
-		</h:panelGroup>
+		</p:panel>
 
-		<h:panelGroup layout="block" styleClass="panel" id="jobOfferResults"
+		<p:panel styleClass="yellow" header="#{i18n['user.users']}"
 			rendered="#{not empty globalSearchBean.jobOffers}">
 			<h:form id="jobOfferForm">
-				<h1>#{i18n['job.job_offers']}</h1>
-
-				<h:dataTable var="jobOffer" id="jobOffer" value="#{globalSearchBean.jobOfferPaginators}"
-					rendered="#{not empty globalSearchBean.jobOfferPaginators}" styleClass="dataTable">
-
+				<p:dataTable var="jobOffer" value="#{globalSearchBean.jobOffers}">
 					<h:column>
 						<f:facet name="header">
 							<h:outputText value="#{i18n['job.name']}" />
@@ -120,8 +115,8 @@
 							<f:param name="id" value="#{jobOffer.id}" />
 						</h:link>
 					</h:column>
-				</h:dataTable>
+				</p:dataTable>
 			</h:form>
-		</h:panelGroup>
+		</p:panel>
 	</ui:define>
 </ui:composition>
