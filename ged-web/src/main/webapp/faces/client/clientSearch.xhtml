@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
 	template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
@@ -17,8 +20,10 @@
 						<div class="ui-g">
 							<div class="ui-md-12 ui-lg-6 ui-xl-4">
 								<div class="form-group">
-									<p:outputLabel for="name" styleClass="control-label" value="#{i18n['client.name']}" />
-									<p:inputText id="name" styleClass="form-control" value="#{clientSearchBean.name}"
+									<p:outputLabel for="name" styleClass="control-label"
+										value="#{i18n['client.name']}" />
+									<p:inputText id="name" styleClass="form-control"
+										value="#{clientSearchBean.name}"
 										label="#{i18n['client.name']}" />
 								</div>
 							</div>
@@ -26,10 +31,14 @@
 						<div class="ui-g">
 							<div class="ui-g-12">
 								<div class="push-right">
-									<p:commandButton styleClass="btn-green" value="#{i18n['action.new']}" action="#{clientSearchBean.newClient}"
-										immediate="true" />
-									<p:commandButton value="#{i18n['action.search']}" action="#{clientSearchBean.search}" />
-									<p:commandButton styleClass="btn-gray" value="#{i18n['action.clean']}" action="#{clientSearchBean.clean}" />
+									<p:commandButton styleClass="btn-green"
+										value="#{i18n['action.new']}"
+										action="#{clientSearchBean.newClient}" immediate="true" />
+									<p:commandButton value="#{i18n['action.search']}"
+										action="#{clientSearchBean.search}" />
+									<p:commandButton styleClass="btn-gray"
+										value="#{i18n['action.clean']}"
+										action="#{clientSearchBean.clean}" />
 								</div>
 							</div>
 						</div>
@@ -38,15 +47,20 @@
 			</div>
 			<div class="ui-g">
 				<div class="ui-g-12">
-					<p:panel styleClass="cyan" header="#{i18n['client.search_results']}">
-						<p:dataTable var="client" value="#{clientSearchBean.clients}" rendered="#{not empty clientSearchBean.clients}"
-							emptyMessage="#{i18n['client.no_clients_found']}" paginator="true" paginatorPosition="bottom">
+					<p:panel styleClass="cyan"
+						header="#{i18n['client.search_results']}">
+						<p:dataTable var="client" value="#{clientSearchBean.clients}"
+							emptyMessage="#{i18n['client.no_clients_found']}" reflow="true"
+							paginator="true" paginatorPosition="bottom"
+							rows="#{sessionBean.rowsPerPage}">
 
-							<p:column headerText="#{i18n['client.name']}" sortBy="#{client.name}">
+							<p:column headerText="#{i18n['client.name']}"
+								sortBy="#{client.name}">
 								<h:outputText value="#{client.name}" />
 							</p:column>
 
-							<p:column headerText="#{i18n['client.cif']}" sortBy="#{client.cif}">
+							<p:column headerText="#{i18n['client.cif']}"
+								sortBy="#{client.cif}">
 								<h:outputText value="#{client.cif}" />
 							</p:column>
 
@@ -55,9 +69,11 @@
 									<f:param name="id" value="#{client.id}" />
 								</h:link>
 						|
-						<h:commandLink action="#{clientSearchBean.edit(client)}" value="#{i18n['action.edit']}" />
+						<h:commandLink action="#{clientSearchBean.edit(client)}"
+									value="#{i18n['action.edit']}" />
 						|
-						<h:commandLink action="#{clientSearchBean.remove(client)}" value="#{i18n['action.remove']}"
+						<h:commandLink action="#{clientSearchBean.remove(client)}"
+									value="#{i18n['action.remove']}"
 									onclick="return confirm('#{i18n['action.delete.are_you_sure']}')">
 									<f:ajax execute="@this" render="@form" />
 								</h:commandLink>

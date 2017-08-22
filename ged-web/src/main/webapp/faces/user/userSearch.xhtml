@@ -57,7 +57,8 @@
 						header="#{i18n['user.search_results']}">
 
 						<p:dataTable var="user" id="userDataTable"
-							value="#{userSearchBean.users}">
+							value="#{userSearchBean.users}" reflow="true" paginator="true"
+							paginatorPosition="bottom" rows="#{sessionBean.rowsPerPage}">
 							<p:column headerText="#{i18n['user.name']}"
 								sortBy="#{user.fullName}">
 								<h:outputText value="#{user.fullName}" />

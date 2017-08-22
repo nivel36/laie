@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
 	template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
@@ -18,13 +21,16 @@
 							<div class="ui-md-12 ui-lg-6 ui-xl-4">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['job.name']}" />
-									<p:inputText id="name" value="#{jobOfferSearchBean.name}" label="#{i18n['job.name']}" />
+									<p:inputText id="name" value="#{jobOfferSearchBean.name}"
+										label="#{i18n['job.name']}" />
 								</div>
 							</div>
 							<div class="ui-md-12 ui-lg-6 ui-xl-4">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['job.client']}" />
-									<p:inputText id="clientName" value="#{jobOfferSearchBean.clientName}" label="#{i18n['job.client']}" />
+									<p:inputText id="clientName"
+										value="#{jobOfferSearchBean.clientName}"
+										label="#{i18n['job.client']}" />
 								</div>
 							</div>
 						</div>
@@ -32,10 +38,13 @@
 						<div class="ui-g">
 							<div class="ui-g-12">
 								<div class="push-right">
-									<p:commandButton value="#{i18n['action.new']}" action="#{jobOfferSearchBean.newJobOffer}" immediate="true"
+									<p:commandButton value="#{i18n['action.new']}"
+										action="#{jobOfferSearchBean.newJobOffer}" immediate="true"
 										styleClass="btn-green" />
-									<p:commandButton value="#{i18n['action.search']}" action="#{jobOfferSearchBean.search}" />
-									<p:commandButton value="#{i18n['action.clean']}" action="#{jobOfferSearchBean.clean}" styleClass="btn-gray" />
+									<p:commandButton value="#{i18n['action.search']}"
+										action="#{jobOfferSearchBean.search}" />
+									<p:commandButton value="#{i18n['action.clean']}"
+										action="#{jobOfferSearchBean.clean}" styleClass="btn-gray" />
 								</div>
 							</div>
 						</div>
@@ -45,38 +54,49 @@
 			<div class="ui-g">
 				<div class="ui-g-12">
 					<p:panel styleClass="yellow" header="#{i18n['job.search_results']}">
-						<p:dataTable var="jobOffer" id="jobOffer" value="#{jobOfferSearchBean.jobOffers}"
-							emptyMessage="#{i18n['job.no_jobs_found']}" paginator="true"
-							paginatorPosition="bottom">
+						<p:dataTable var="jobOffer"
+							value="#{jobOfferSearchBean.jobOffers}"
+							emptyMessage="#{i18n['job.no_jobs_found']}" reflow="true"
+							paginator="true" paginatorPosition="bottom"
+							rows="#{sessionBean.rowsPerPage}">
 
-							<p:column headerText="#{i18n['job.name']}" sortBy="#{jobOffer.name}">
+							<p:column headerText="#{i18n['job.name']}"
+								sortBy="#{jobOffer.name}">
 								<h:outputText value="#{jobOffer.name}" />
 							</p:column>
-							<p:column headerText="#{i18n['job.client']}" sortBy="#{jobOffer.client.name}">
+							<p:column headerText="#{i18n['job.client']}"
+								sortBy="#{jobOffer.client.name}">
 								<h:outputText value="#{jobOffer.client.name}" />
 							</p:column>
-							<p:column headerText="#{i18n['job.date_opened']}" sortBy="#{jobOffer.dateOpened}">
+							<p:column headerText="#{i18n['job.date_opened']}"
+								sortBy="#{jobOffer.dateOpened}">
 								<h:outputText value="#{jobOffer.dateOpened}">
 									<f:convertDateTime pattern="MM / yyyy" />
 								</h:outputText>
 							</p:column>
-							<p:column headerText="#{i18n['job.date_closed']}" sortBy="#{jobOffer.dateClosed}">
+							<p:column headerText="#{i18n['job.date_closed']}"
+								sortBy="#{jobOffer.dateClosed}">
 								<h:outputText value="#{jobOffer.dateClosed}">
 									<f:convertDateTime pattern="MM / yyyy" />
 								</h:outputText>
 							</p:column>
-							<p:column headerText="#{i18n['user.owner']}" sortBy="#{i18n['user.owner']}">
+							<p:column headerText="#{i18n['user.owner']}"
+								sortBy="#{i18n['user.owner']}">
 								<h:outputText value="#{jobOffer.owner}" />
 							</p:column>
 							<p:column>
 								<h:link value="Ver" outcome="jobOfferView">
 									<f:param name="id" value="#{jobOffer.id}" />
 								</h:link>
-								<h:outputText value=" | " rendered="#{jobOfferSearchBean.canEdit(jobOffer)}" />
-								<h:commandLink action="#{jobOfferSearchBean.edit(jobOffer)}" value="#{i18n['action.edit']}"
+								<h:outputText value=" | "
 									rendered="#{jobOfferSearchBean.canEdit(jobOffer)}" />
-								<h:outputText value=" | " rendered="#{jobOfferSearchBean.canEdit(jobOffer)}" />
-								<h:commandLink action="#{jobOfferSearchBean.remove(jobOffer)}" value="#{i18n['action.remove']}"
+								<h:commandLink action="#{jobOfferSearchBean.edit(jobOffer)}"
+									value="#{i18n['action.edit']}"
+									rendered="#{jobOfferSearchBean.canEdit(jobOffer)}" />
+								<h:outputText value=" | "
+									rendered="#{jobOfferSearchBean.canEdit(jobOffer)}" />
+								<h:commandLink action="#{jobOfferSearchBean.remove(jobOffer)}"
+									value="#{i18n['action.remove']}"
 									rendered="#{jobOfferSearchBean.canEdit(jobOffer)}">
 									<f:ajax execute="@form" render="@form" />
 								</h:commandLink>

@@ -23,7 +23,8 @@
 			rendered="#{not empty globalSearchBean.users}">
 			<h:form id="userSearchForm">
 				<p:dataTable var="user" value="#{globalSearchBean.users}"
-					styleClass="dataTable">
+					reflow="true" paginator="true" paginatorPosition="bottom"
+					rows="#{sessionBean.rowsPerPage}">
 					<h:column>
 						<f:facet name="header">
 							<h:outputText value="#{i18n['user.name']}" />
@@ -67,7 +68,9 @@
 		<p:panel styleClass="yellow" header="#{i18n['user.users']}"
 			rendered="#{not empty globalSearchBean.jobOffers}">
 			<h:form id="jobOfferForm">
-				<p:dataTable var="jobOffer" value="#{globalSearchBean.jobOffers}">
+				<p:dataTable var="jobOffer" value="#{globalSearchBean.jobOffers}"
+					reflow="true" paginator="true" paginatorPosition="bottom"
+					rows="#{sessionBean.rowsPerPage}">
 					<h:column>
 						<f:facet name="header">
 							<h:outputText value="#{i18n['job.name']}" />

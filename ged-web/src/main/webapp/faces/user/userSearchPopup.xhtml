@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui"
-	xmlns:i18n="http://legion.com/i18n">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:i18n="http://legion.com/i18n">
 
-	<p:dialog modal="true" widgetVar="managerDlg" resizable="false" responsive="true" header="#{i18n['user.user']}">
+	<p:dialog modal="true" widgetVar="managerDlg" resizable="false"
+		responsive="true" header="#{i18n['user.user']}">
 		<h:form id="userSearchPopupForm">
 			<div class="ui-g">
 				<div class="ui-g-12">
@@ -11,8 +14,10 @@
 						<div class="ui-g">
 							<div class="ui-md-12 ui-lg-6 ui-xl-4">
 								<div class="form-group">
-									<p:outputLabel for="searchUserName" value="#{i18n['user.name']}" />
-									<p:inputText id="searchUserName" value="#{userSearchPopupBean.name}"
+									<p:outputLabel for="searchUserName"
+										value="#{i18n['user.name']}" />
+									<p:inputText id="searchUserName"
+										value="#{userSearchPopupBean.name}"
 										validator="ged.web.view.SearchFieldValidator" />
 								</div>
 								<h:message for="searchUserName" errorClass="error" />
@@ -20,8 +25,11 @@
 
 							<div class="ui-md-12 ui-lg-6 ui-xl-4">
 								<div class="form-group">
-									<p:outputLabel for="searchUserSurename" value="#{i18n['user.surename']}" />
-									<p:inputText id="searchUserSurename" value="#{userSearchPopupBean.surename}" label="#{i18n['user.surename']}"
+									<p:outputLabel for="searchUserSurename"
+										value="#{i18n['user.surename']}" />
+									<p:inputText id="searchUserSurename"
+										value="#{userSearchPopupBean.surename}"
+										label="#{i18n['user.surename']}"
 										validator="ged.web.view.SearchFieldValidator" />
 								</div>
 								<h:message for="searchUserSurename" errorClass="error" />
@@ -32,10 +40,13 @@
 						<div class="ui-g">
 							<div class="ui-g-12">
 								<div class="push-right">
-									<p:commandButton value="#{i18n['action.search']}" action="#{userSearchPopupBean.search}">
+									<p:commandButton value="#{i18n['action.search']}"
+										action="#{userSearchPopupBean.search}">
 										<f:ajax execute="searchManagerPanel" render="@form" />
 									</p:commandButton>
-									<p:commandButton styleClass="btn-gray" value="#{i18n['action.clean']}" action="#{userSearchPopupBean.clean}">
+									<p:commandButton styleClass="btn-gray"
+										value="#{i18n['action.clean']}"
+										action="#{userSearchPopupBean.clean}">
 										<f:ajax render="@form" />
 									</p:commandButton>
 								</div>
@@ -47,10 +58,13 @@
 
 			<div class="ui-g">
 				<div class="ui-g-12">
-					<p:panel styleClass="magenta" header="#{i18n['user.search_results']}">
+					<p:panel styleClass="magenta"
+						header="#{i18n['user.search_results']}">
 
-						<p:dataTable var="user" id="usersList" value="#{userSearchPopupBean.users}"
-							emptyMessage="#{i18n['user.no_users_found']}">
+						<p:dataTable var="user" value="#{userSearchPopupBean.users}"
+							emptyMessage="#{i18n['user.no_users_found']}" reflow="true"
+							paginator="true" paginatorPosition="bottom"
+							rows="#{sessionBean.rowsPerPage}">
 							<h:column>
 								<f:facet name="header">
 									<h:outputText value="#{i18n['user.name']}" />
@@ -79,8 +93,10 @@
 								<f:facet name="header">
 									<h:outputText value="Action" />
 								</f:facet>
-								<h:commandLink action="#{userSearchPopupBean.hide}" value="#{i18n['action.select']}">
-									<f:setPropertyActionListener value="#{user}" target="#{callback}" />
+								<h:commandLink action="#{userSearchPopupBean.hide}"
+									value="#{i18n['action.select']}">
+									<f:setPropertyActionListener value="#{user}"
+										target="#{callback}" />
 									<f:ajax execute="@this" render=":userSearchPopupForm #{render}" />
 								</h:commandLink>
 							</h:column>
