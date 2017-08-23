@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui" xmlns:i18n="http://legion.com/i18n"
-	template="/WEB-INF/templates/default.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
+	xmlns:i18n="http://legion.com/i18n" template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
 		<title>#{i18n['user.user']}</title>
@@ -13,6 +10,12 @@
 	<ui:param name="selectedMenu" value="users" />
 
 	<ui:define name="content">
+
+		<ui:include src="userSearchPopup.xhtml">
+			<ui:param name="callback" value="#{userViewBean.manager}" />
+			<ui:param name="render" value=":form:managerBlock" />
+		</ui:include>
+
 		<f:metadata>
 			<f:viewParam name="id" value="#{userViewBean.userId}" />
 			<f:viewAction action="#{userViewBean.init}" />
@@ -23,73 +26,107 @@
 
 			<div class="ui-g">
 				<div class="ui-g-12">
+					<p:panel styleClass="magenta" header="#{i18n['user.user']}">
+						<div class="ui-g">
+							<div class="ui-md-12 ui-lg-6 ui-xl-4">
+								<div class="form-group">
+									<p:outputLabel value="#{i18n['user.username']}" for="username" />
+									<p:inputText id="username" value="#{userViewBean.user.username}" required="true"
+										validator="#{userViewBean.validateUsername}" readonly="#{not userViewBean.editable}" />
+								</div>
+								<h:message for="username" errorClass="error" />
+							</div>
+							<div class="ui-md-12 ui-lg-6 ui-xl-4">
+								<div class="form-group">
+									<p:outputLabel value="#{i18n['user.email']}" for="email" />
+									<p:inputText id="email" p:type="email" value="#{userViewBean.user.email}" required="true"
+										validator="#{userViewBean.validateEmail}" readonly="#{not userViewBean.editable}" />
+								</div>
+								<h:message for="email" errorClass="error" />
+							</div>
 
-					<h:panelGroup layout="block" styleClass="panel">
-						<h:panelGroup layout="block" styleClass="panel-header">
-							<h4>#{i18n['user.user']}</h4>
-						</h:panelGroup>
-						<h:panelGroup layout="block" styleClass="panel-content">
-							<h:panelGroup layout="block" styleClass="textBlock">
-								<h:outputText styleClass="label" value="#{i18n['user.name']}:" />
-								<h:outputText
-									value="#{userViewBean.user.name} #{userViewBean.user.surename}" />
-							</h:panelGroup>
+							<div class="ui-md-12 ui-lg-6 ui-xl-4">
+								<div class="form-group">
+									<p:outputLabel value="#{i18n['user.name']}" for="name" />
+									<p:inputText id="name" value="#{userViewBean.user.name}" required="true"
+										readonly="#{not userViewBean.editable}" />
+								</div>
+								<h:message for="name" errorClass="error" />
+							</div>
 
-							<h:panelGroup layout="block" styleClass="textBlock">
-								<h:outputText styleClass="label" value="#{i18n['user.email']}:" />
-								<h:outputText value="#{userViewBean.user.email}" />
-							</h:panelGroup>
+							<div class="ui-md-12 ui-lg-6 ui-xl-4">
+								<div class="form-group">
+									<p:outputLabel value="#{i18n['user.surename']}" for="surename" />
+									<p:inputText id="surename" value="#{userViewBean.user.surename}" required="true"
+										readonly="#{not userViewBean.editable}" />
+								</div>
+								<h:message for="surename" errorClass="error" />
+							</div>
 
-							<h:panelGroup layout="block" styleClass="textBlock">
-								<h:outputText styleClass="label" value="#{i18n['user.role']}:" />
-								<h:outputText
-									value="#{i18n:translate(userViewBean.user.role.name)}" />
-							</h:panelGroup>
+							<div class="ui-md-12 ui-lg-6 ui-xl-4">
+								<div class="form-group">
+									<p:outputLabel value="#{i18n['user.role']}" for="role" />
+									<p:selectOneMenu id="role" value="#{userViewBean.user.role}" validator="#{userViewBean.validateRole}"
+										readonly="#{not userViewBean.editable}">
+										<f:selectItems var="role" itemValue="#{role}" value="#{applicationBean.roles}"
+											itemLabel="#{i18n:translate(role.name)}" />
+									</p:selectOneMenu>
+								</div>
+								<h:message for="role" errorClass="error" />
+							</div>
 
-							<h:panelGroup layout="block" styleClass="textBlock">
-								<h:outputText styleClass="label"
-									value="#{i18n['user.manager']}:" />
-								<h:outputText value="#{userViewBean.user.manager}" />
-							</h:panelGroup>
+							<div class="ui-md-12 ui-lg-6 ui-xl-4">
+								<div class="form-group">
+									<p:outputLabel value="#{i18n['user.manager']}" />
+									<p:inputText id="manager" value="#{userViewBean.manager.fullName}" label="#{i18n['user.manager']}"
+										readonly="#{facesContext.renderResponse}" validator="#{userViewBean.validateManager}" />
+									<p:commandButton value="+" onclick="PF('managerDlg').show();" rendered="#{userViewBean.editable}" />
+									<p:commandButton action="#{userViewBean.removeManager}" value="-"
+										rendered="#{not empty userViewBean.manager.username and userViewBean.editable}" id="removeManager"
+										process="@this" update="managerBlock" />
+								</div>
+								<h:message for="manager" errorClass="error" />
+							</div>
+						</div>
 
-							<h:panelGroup id="actionButtons" layout="block"
-								styleClass="buttonGroup">
-								<p:commandButton value="#{i18n['action.undelete']}"
-									action="#{userViewBean.undeleteUser}" immediate="true"
-									rendered="#{userViewBean.user.deleted}" />
-								<p:commandButton value="#{i18n['action.edit']}"
-									action="#{userViewBean.editUser}" immediate="true"
-									rendered="#{not userViewBean.user.deleted}" />
-								<p:commandButton value="#{i18n['bookmark.add_to_bookmarks']}"
-									action="#{bookmarksBean.add(userViewBean.user)}"
-									immediate="true"
-									rendered="#{(not bookmarksBean.isBookmarked(userViewBean.user))	and (not userViewBean.user.deleted)}"
-									update="actionButtons :asideForm:bookmarks" />
-								<p:commandButton
-									value="#{i18n['bookmark.remove_from_bookmarks']}"
-									action="#{bookmarksBean.remove(userViewBean.user)}"
-									immediate="true"
-									rendered="#{bookmarksBean.isBookmarked(userViewBean.user)}"
-									update="actionButtons :asideForm:bookmarks" />
-								<p:commandButton id="exportPdf" icon="fa fa-file-pdf-o"
-									value="#{i18n['action.export']}"
-									action="#{userViewBean.export}" />
-								<p:commandButton id="exportExcel" icon="fa fa-file-excel-o"
-									value="#{i18n['action.export']}"
-									action="#{userViewBean.export}" />
-							</h:panelGroup>
-						</h:panelGroup>
-					</h:panelGroup>
+						<div class="ui-g">
+							<div class="ui-g-12">
+								<div class="push-right">
+									<h:panelGroup id="actionButtons" layout="block">
+										<p:commandButton value="#{i18n['action.undelete']}" action="#{userViewBean.undeleteUser}" immediate="true"
+											rendered="#{userViewBean.user.deleted}" />
+										<p:commandButton value="#{i18n['action.edit']}" action="#{userViewBean.editUser}" immediate="true"
+											rendered="#{not userViewBean.user.deleted and not userViewBean.editable}" update="@form" />
+										<p:commandButton value="#{i18n['action.save']}" action="#{userViewBean.saveUser}"
+											rendered="#{not userViewBean.user.deleted and userViewBean.editable}" update="@form growl" />
+										<p:commandButton styleClass="btn-gray" value="#{i18n['action.cancel']}"
+											action="#{userViewBean.cancelEditUser}" rendered="#{not userViewBean.user.deleted and userViewBean.editable}"
+											immediate="true" update="@form growl" />
+										<p:commandButton value="#{i18n['bookmark.add_to_bookmarks']}" action="#{bookmarksBean.add(userViewBean.user)}"
+											immediate="true"
+											rendered="#{(not bookmarksBean.isBookmarked(userViewBean.user))	and (not userViewBean.user.deleted) and (not userViewBean.editable)}"
+											update="actionButtons :asideForm:bookmarks" />
+										<p:commandButton value="#{i18n['bookmark.remove_from_bookmarks']}"
+											action="#{bookmarksBean.remove(userViewBean.user)}" immediate="true"
+											rendered="#{bookmarksBean.isBookmarked(userViewBean.user)} and not userViewBean.editable"
+											update="actionButtons :asideForm:bookmarks" />
+										<p:commandButton id="exportPdf" icon="fa fa-file-pdf-o" value="#{i18n['action.export']}"
+											action="#{userViewBean.export}" rendered="#{not userViewBean.editable}" />
+										<p:commandButton id="exportExcel" icon="fa fa-file-excel-o" value="#{i18n['action.export']}"
+											action="#{userViewBean.export}" rendered="#{not userViewBean.editable}" />
+									</h:panelGroup>
+								</div>
+							</div>
+						</div>
+					</p:panel>
 				</div>
 			</div>
 
 			<div class="ui-g">
 				<div class="ui-g-12 ui-md-12 ui-lg-6">
 					<p:panel styleClass="magenta" header="#{i18n['user.team']}">
-						<p:dataTable var="user" value="#{userViewBean.team}"
-							emptyMessage="#{i18n['user.no_users_found']}" reflow="true"
-							paginator="true" paginatorPosition="bottom"
-							rows="#{sessionBean.rowsPerPage}">
+						<p:dataTable var="user" value="#{userViewBean.team}" emptyMessage="#{i18n['user.no_users_found']}" reflow="true"
+							paginator="true" paginatorPosition="bottom" rows="#{sessionBean.rowsPerPage}">
 							<h:column>
 								<f:facet name="header">
 									<h:outputText value="#{i18n['user.name']}" />
@@ -117,10 +154,8 @@
 				</div>
 				<div class="ui-g-12 ui-md-12 ui-lg-6">
 					<p:panel styleClass="magenta" header="#{i18n['job.job_offers']}">
-						<p:dataTable var="jobOffer" value="#{userViewBean.jobOffers}"
-							emptyMessage="#{i18n['user.no_users_found']}" reflow="true"
-							paginator="true" paginatorPosition="bottom"
-							rows="#{sessionBean.rowsPerPage}">
+						<p:dataTable var="jobOffer" value="#{userViewBean.jobOffers}" emptyMessage="#{i18n['user.no_users_found']}"
+							reflow="true" paginator="true" paginatorPosition="bottom" rows="#{sessionBean.rowsPerPage}">
 							<h:column>
 								<f:facet name="header">
 									<h:outputText value="#{i18n['job.name']}" />
@@ -139,8 +174,7 @@
 								<f:facet name="header">
 									<h:outputText value="#{i18n['action.action']}" />
 								</f:facet>
-								<h:link value="#{i18n['action.view']}"
-									outcome="/faces/jobOffer/jobOfferView">
+								<h:link value="#{i18n['action.view']}" outcome="/faces/jobOffer/jobOfferView">
 									<f:param name="id" value="#{jobOffer.id}" />
 								</h:link>
 							</h:column>
