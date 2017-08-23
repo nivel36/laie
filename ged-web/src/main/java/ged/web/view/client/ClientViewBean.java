@@ -30,6 +30,8 @@ public class ClientViewBean extends AbstractPageBean {
 	private List<JobOffer> jobOffers;
 
 	private final transient JobOfferService jobOfferService;
+	
+	private boolean editable;
 
 	@Inject
 	public ClientViewBean(final ClientService clientService, final JobOfferService jobOfferService) {
@@ -38,18 +40,15 @@ public class ClientViewBean extends AbstractPageBean {
 		this.clientService = clientService;
 		this.jobOfferService = jobOfferService;
 	}
-
-	public String editClient() {
-		this.flash.put("client", this.client);
-		final String returnAddress = "clientView.xhtml?id" + this.client.getId();
-		this.flash.put("returnAddress", returnAddress);
-		return "clientEdit?faces-redirect=true";
+	
+	public void editClient() {
+		editable=true;
 	}
 
 	public void export() {
 
 	}
-
+	
 	public Client getClient() {
 		return this.client;
 	}
@@ -86,9 +85,18 @@ public class ClientViewBean extends AbstractPageBean {
 		}
 	}
 
+	public boolean isEditable() {
+		return editable;
+	}
+
 	public String modifyClient() {
 		this.flash.put("client", this.client);
 		return "clientEdit?faces-redirect=true";
+	}
+
+	public void saveClient() {
+		editable=false;
+		clientService.save(client);
 	}
 
 	public void setClient(final Client client) {

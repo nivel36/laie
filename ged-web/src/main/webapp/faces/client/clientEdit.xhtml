@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
 	template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
@@ -11,7 +14,8 @@
 
 	<ui:define name="content">
 		<h:form id="form">
-			<input type="hidden" id="clientId" value="#{clientEditBean.client.id}" />
+			<input type="hidden" id="clientId"
+				value="#{clientEditBean.client.id}" />
 
 			<div class="ui-g">
 				<div class="ui-g-12">
@@ -20,45 +24,50 @@
 						<div class="ui-g">
 							<div class="ui-md-12 ui-lg-6 ui-xl-4">
 								<div class="form-group">
-									<p:outputLabel value="#{i18n['client.name']}" />
-									<p:inputText id="name" value="#{clientEditBean.client.name}" label="#{i18n['client.name']}" required="true"
-										styleClass="#{not component.valid ? 'inputError' : ''}" />
-									<h:message for="name" errorClass="error" />
+									<p:outputLabel value="#{i18n['client.name']}" for="name" />
+									<p:inputText id="name" value="#{clientEditBean.client.name}"
+										required="true" />
 								</div>
+								<h:message for="name" errorClass="error" />
 							</div>
 							<div class="ui-md-12 ui-lg-6 ui-xl-4">
 								<div class="form-group">
-									<p:outputLabel value="#{i18n['client.cif']}" />
-									<p:inputText id="cif" value="#{clientEditBean.client.cif}" label="#{i18n['client.cif']}" required="true"
-										styleClass="#{not component.valid ? 'inputError' : ''}" />
-									<h:message for="cif" errorClass="error" />
+									<p:outputLabel value="#{i18n['client.cif']}" for="cif" />
+									<p:inputText id="cif" value="#{clientEditBean.client.cif}"
+										required="true" />
 								</div>
-							</div>
-						
-							<div class="ui-md-12 ui-lg-6 ui-xl-4">
-								<div class="form-group">
-									<p:outputLabel value="#{i18n['client.city']}" />
-									<p:inputText id="city" value="#{clientEditBean.client.address.city}" label="#{i18n['client.city']}"
-										styleClass="#{not component.valid ? 'inputError' : ''}" />
-									<h:message for="age" errorClass="error" />
-								</div>
+								<h:message for="cif" errorClass="error" />
 							</div>
 							<div class="ui-md-12 ui-lg-6 ui-xl-4">
 								<div class="form-group">
-									<p:outputLabel value="#{i18n['client.state']}" />
-									<p:inputText id="state" value="#{clientEditBean.client.address.state}" label="#{i18n['client.state']}"
-										styleClass="#{not component.valid ? 'inputError' : ''}" />
-									<h:message for="state" errorClass="error" />
+									<p:outputLabel value="#{i18n['client.city']}" for="city" />
+									<p:inputText id="city"
+										value="#{clientEditBean.client.address.city}" />
+								</div>
+								<h:message for="city" errorClass="error" />
+							</div>
+							<div class="ui-md-12 ui-lg-6 ui-xl-4">
+								<div class="form-group">
+									<p:outputLabel value="#{i18n['client.state']}" for="state" />
+									<p:inputText id="state"
+										value="#{clientEditBean.client.address.state}" />
+								</div>
+								<h:message for="state" errorClass="error" />
+							</div>
+						</div>
+						<div class="ui-g">
+							<div class="ui-g">
+								<div class="push-right">
+									<p:commandButton value="#{i18n['action.save']}"
+										action="#{clientEditBean.save}" />
+									<p:commandButton styleClass="btn-gray"
+										value="#{i18n['action.cancel']}"
+										action="#{clientEditBean.cancel}" immediate="true">
+										<f:param name="clientId" value="#{clientEditBean.client.id}" />
+									</p:commandButton>
 								</div>
 							</div>
 						</div>
-
-						<h:panelGroup layout="block" styleClass="buttonGroup">
-							<p:commandButton value="#{i18n['action.save']}" action="#{clientEditBean.save}" />
-							<p:commandButton value="#{i18n['action.cancel']}" action="#{clientEditBean.cancel}" immediate="true">
-								<f:param name="clientId" value="#{clientEditBean.client.id}" />
-							</p:commandButton>
-						</h:panelGroup>
 					</p:panel>
 				</div>
 			</div>

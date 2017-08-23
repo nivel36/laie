@@ -24,52 +24,74 @@
 					<input type="hidden" id="clientId"
 						value="#{clientViewBean.client.id}" />
 					<p:panel styleClass="cyan" header="#{clientViewBean.client}">
-						<h:panelGroup layout="block" styleClass="textBlock">
-							<h:outputText styleClass="label" value="#{i18n['client.name']}:" />
-							<h:outputText value="#{clientViewBean.client.name}" />
-						</h:panelGroup>
+						<div class="ui-g">
+							<div class="ui-md-12 ui-lg-6 ui-xl-4">
+								<div class="form-group">
+									<p:outputLabel value="#{i18n['client.name']}" for="name" />
+									<p:inputText id="name" value="#{clientViewBean.client.name}"
+										readonly="#{!clientViewBean.editable}" required="true" />
+								</div>
+								<h:message for="name" errorClass="error" />
+							</div>
+							<div class="ui-md-12 ui-lg-6 ui-xl-4">
+								<div class="form-group">
+									<p:outputLabel value="#{i18n['client.cif']}" for="cif" />
+									<p:inputText id="cif" value="#{clientViewBean.client.cif}"
+										readonly="#{!clientViewBean.editable}" required="true" />
+								</div>
+								<h:message for="cif" errorClass="error" />
+							</div>
+							<div class="ui-md-12 ui-lg-6 ui-xl-4">
+								<div class="form-group">
+									<p:outputLabel value="#{i18n['client.city']}" for="city" />
+									<p:inputText id="city"
+										value="#{clientViewBean.client.address.city}"
+										readonly="#{!clientViewBean.editable}" />
+								</div>
+								<h:message for="city" errorClass="error" />
+							</div>
+							<div class="ui-md-12 ui-lg-6 ui-xl-4">
+								<div class="form-group">
+									<p:outputLabel value="#{i18n['client.state']}" for="state" />
+									<p:inputText id="state"
+										value="#{clientViewBean.client.address.state}"
+										readonly="#{!clientViewBean.editable}" />
+								</div>
+								<h:message for="state" errorClass="error" />
+							</div>
+						</div>
 
-						<h:panelGroup layout="block" styleClass="textBlock">
-							<h:outputText styleClass="label" value="#{i18n['client.cif']}:" />
-							<h:outputText value="#{clientViewBean.client.cif}" />
-						</h:panelGroup>
-
-						<h:panelGroup layout="block" styleClass="textBlock">
-							<h:outputText styleClass="label" value="#{i18n['client.city']}:" />
-							<h:outputText value="#{clientViewBean.client.address.city}" />
-						</h:panelGroup>
-
-						<h:panelGroup layout="block" styleClass="textBlock">
-							<h:outputText styleClass="label" value="#{i18n['client.state']}:" />
-							<h:outputText value="#{clientViewBean.client.address.state}" />
-						</h:panelGroup>
-
-						<h:panelGroup id="actionButtons" layout="block"
-							styleClass="buttonGroup">
-							<p:commandButton value="#{i18n['action.undelete']}"
-								action="#{clientViewBean.undeleteClient}" immediate="true"
-								rendered="#{clientViewBean.client.deleted}" />
-							<p:commandButton value="#{i18n['action.edit']}"
-								action="#{clientViewBean.editClient}" immediate="true"
-								rendered="#{not clientViewBean.client.deleted}" />
-							<p:commandButton value="#{i18n['bookmark.add_to_bookmarks']}"
-								action="#{bookmarksBean.add(clientViewBean.client)}"
-								immediate="true"
-								rendered="#{(not bookmarksBean.isBookmarked(clientViewBean.client))	and (not clientViewBean.client.deleted)}"
-								update="actionButtons :asideForm:bookmarks" />
-							<p:commandButton
-								value="#{i18n['bookmark.remove_from_bookmarks']}"
-								action="#{bookmarksBean.remove(clientViewBean.client)}"
-								immediate="true"
-								rendered="#{bookmarksBean.isBookmarked(clientViewBean.client)}"
-								update="actionButtons :asideForm:bookmarks" />
-							<p:commandButton id="exportPdf" icon="fa fa-file-pdf-o"
-								value="#{i18n['action.export']}" />
-							<p:commandButton id="exportExcel" icon="fa fa-file-excel-o"
-								value="#{i18n['action.export']}"
-								action="#{clientViewBean.export}" />
-						</h:panelGroup>
-
+						<div class="ui-g">
+							<div class="ui-g-12">
+								<div class="push-right">
+									<p:commandButton value="#{i18n['action.undelete']}"
+										action="#{clientViewBean.undeleteClient}" immediate="true"
+										rendered="#{clientViewBean.client.deleted}" />
+									<p:commandButton value="#{i18n['action.save']}"
+										action="#{clientViewBean.editClient}"
+										rendered="#{not clientViewBean.client.deleted and clientViewBean.editable}" />
+									<p:commandButton value="#{i18n['action.edit']}"
+										action="#{clientViewBean.editClient}" immediate="true"
+										rendered="#{not clientViewBean.client.deleted and not clientViewBean.editable}" />
+									<p:commandButton value="#{i18n['bookmark.add_to_bookmarks']}"
+										action="#{bookmarksBean.add(clientViewBean.client)}"
+										immediate="true"
+										rendered="#{(not bookmarksBean.isBookmarked(clientViewBean.client))	and (not clientViewBean.client.deleted)}"
+										update="actionButtons :asideForm:bookmarks" />
+									<p:commandButton
+										value="#{i18n['bookmark.remove_from_bookmarks']}"
+										action="#{bookmarksBean.remove(clientViewBean.client)}"
+										immediate="true"
+										rendered="#{bookmarksBean.isBookmarked(clientViewBean.client)}"
+										update="actionButtons :asideForm:bookmarks" />
+									<p:commandButton id="exportPdf" icon="fa fa-file-pdf-o"
+										value="#{i18n['action.export']}" />
+									<p:commandButton id="exportExcel" icon="fa fa-file-excel-o"
+										value="#{i18n['action.export']}"
+										action="#{clientViewBean.export}" />
+								</div>
+							</div>
+						</div>
 					</p:panel>
 				</h:form>
 			</div>
