@@ -46,80 +46,87 @@
 							<ui:repeat value="#{curriculumEditBean.education}"
 								var="education" id="repeatedPanel">
 								<h:panelGroup layout="block" class="repeatedPanel">
+									<div class="ui-g">
+										<div class="ui-md-12 ui-lg-6 ui-xl-4">
+											<div class="form-group">
+												<p:outputLabel value="#{i18n['education.degree']}" />
+												<p:inputText id="degree" value="#{education.degree}"
+													required="true" />
+											</div>
+											<h:message for="degree" errorClass="error" />
+										</div>
+										<div class="ui-md-12 ui-lg-6 ui-xl-4">
+											<div class="form-group">
+												<p:outputLabel value="#{i18n['education.school']}" />
+												<p:inputText id="school" value="#{education.school}"
+													required="true" />
+											</div>
+											<h:message for="school" errorClass="error" />
+										</div>
+										<div class="ui-md-12 ui-lg-6 ui-xl-4">
+											<div class="form-group">
+												<p:outputLabel value="#{i18n['education.from_date']}" />
+												<p:inputText id="fromDate" value="#{education.fromDate}"
+													label="#{i18n['education.from_date']}">
+													<f:convertDateTime pattern="MM / yyyy" />
+												</p:inputText>
+											</div>
+											<h:message for="fromDate" errorClass="error" />
+										</div>
+										<div class="ui-md-12 ui-lg-6 ui-xl-4">
+											<div class="form-group">
+												<p:outputLabel value="#{i18n['education.to_date']}" />
+												<p:inputText id="toDate" value="#{education.toDate}"
+													disabled="#{education.stillStudying}">
+													<f:convertDateTime pattern="MM / yyyy" />
+												</p:inputText>
+											</div>
+											<h:message for="toDate" errorClass="error" />
+										</div>
 
-									<h:outputLabel value="#{i18n['education.degree']}"
-										styleClass="required large">
-										<h:inputText id="degree" value="#{education.degree}"
-											label="#{i18n['education.degree']}" required="true"
-											styleClass="#{not component.valid ? 'inputError' : ''}" />
-										<h:message for="degree" errorClass="error" />
-									</h:outputLabel>
+										<div class="ui-md-12 ui-lg-6 ui-xl-4">
+											<div class="form-group">
+												<p:outputLabel value="#{i18n['education.still_studying']}" />
+												<p:selectBooleanCheckbox value="#{education.stillStudying}"
+													id="stillStudying">
+													<f:ajax render="toDate" />
+												</p:selectBooleanCheckbox>
+											</div>
+										</div>
 
-									<br />
-
-									<h:outputLabel value="#{i18n['education.school']}"
-										styleClass="required large">
-										<h:inputText id="school" value="#{education.school}"
-											label="#{i18n['education.school']}" required="true"
-											styleClass="#{not component.valid ? 'inputError' : ''}" />
-										<h:message for="school" errorClass="error" />
-									</h:outputLabel>
-
-									<br />
-
-									<h:outputLabel value="#{i18n['education.from_date']}"
-										styleClass="small">
-										<h:inputText id="from" value="#{education.fromDate}"
-											label="#{i18n['education.from_date']}">
-											<f:convertDateTime pattern="MM / yyyy" />
-										</h:inputText>
-									</h:outputLabel>
-
-									<h:outputLabel value="#{i18n['education.to_date']}"
-										styleClass="small">
-										<h:inputText id="toDate" value="#{education.toDate}"
-											label="#{i18n['education.to_date']}"
-											disabled="#{education.stillStudying}">
-											<f:convertDateTime pattern="MM / yyyy" />
-										</h:inputText>
-									</h:outputLabel>
-
-									<h:outputLabel value="#{i18n['education.still_studying']}"
-										styleClass="small">
-										<h:selectBooleanCheckbox value="#{education.stillStudying}"
-											id="stillStudying"
-											label="#{i18n['education.still_studying']}">
-											<f:ajax render="toDate" />
-										</h:selectBooleanCheckbox>
-									</h:outputLabel>
-
-									<br />
-
-									<h:outputLabel value="#{i18n['education.description']}"
-										styleClass="largest">
-										<h:inputTextarea value="#{education.description}"
-											id="description" label="#{i18n['education.description']}" />
-									</h:outputLabel>
-
-									<br />
-
-									<h:panelGroup layout="block" class="buttonGroup">
-										<h:commandButton value="#{i18n['action.remove']}"
-											action="#{curriculumEditBean.removeEducation(education)}"
-											immediate="true">
-											<f:ajax execute=":form:educationPanel"
-												render=":form:educationPanel" />
-										</h:commandButton>
-									</h:panelGroup>
+										<div class="ui-md-12 ui-lg-6 ui-xl-4">
+											<div class="form-group">
+												<p:outputLabel value="#{i18n['education.description']}" />
+												<p:inputTextarea value="#{education.description}"
+													id="description" label="#{i18n['education.description']}" />
+											</div>
+										</div>
+									</div>
+									<div class="ui-g">
+										<div class="ui-g-12">
+											<div class="push-right">
+												<h:commandButton value="#{i18n['action.remove']}"
+													action="#{curriculumEditBean.removeEducation(education)}"
+													immediate="true">
+													<f:ajax execute=":form:educationPanel"
+														render=":form:educationPanel" />
+												</h:commandButton>
+											</div>
+										</div>
+									</div>
 								</h:panelGroup>
 							</ui:repeat>
 
-							<h:panelGroup layout="block" styleClass="buttonGroup">
-								<h:commandButton value="#{i18n['action.add']}"
-									action="#{curriculumEditBean.addEducation}">
-									<f:ajax execute="educationPanel" render="educationPanel" />
-								</h:commandButton>
-							</h:panelGroup>
+							<div class="ui-g">
+								<div class="ui-g-12">
+									<div class="push-right">
+										<p:commandButton styleClass="btn-green"
+											value="#{i18n['action.add']}"
+											action="#{curriculumEditBean.addEducation}"
+											process="educationPanel" update="educationPanel" />
+									</div>
+								</div>
+							</div>
 						</h:panelGroup>
 
 						<!-- JOB EXPERIENCE -->
@@ -130,84 +137,90 @@
 								var="jobExperience" id="jobExperience">
 								<h:panelGroup layout="block" class="repeatedPanel">
 
-									<h:outputLabel value="#{i18n['job_experience.company_name']}"
-										styleClass="required large">
-										<h:inputText id="companyName"
-											value="#{jobExperience.companyName}"
-											label="#{i18n['job_experience.company_name']}"
-											required="true"
-											styleClass="#{not component.valid ? 'inputError' : ''}" />
-										<h:message for="companyName" errorClass="error" />
-									</h:outputLabel>
+									<div class="ui-g">
+										<div class="ui-md-12 ui-lg-6 ui-xl-4">
+											<div class="form-group">
+												<p:outputLabel
+													value="#{i18n['job_experience.company_name']}" />
+												<p:inputText id="companyName"
+													value="#{jobExperience.companyName}" required="true" />
+											</div>
+											<h:message for="companyName" errorClass="error" />
+										</div>
 
-									<br />
-									<h:outputLabel value="#{i18n['job_experience.job_position']}"
-										styleClass="required large">
-										<h:inputText id="jobPosition"
-											value="#{jobExperience.jobPosition}"
-											label="#{i18n['job_experience.job_position']}"
-											required="true"
-											styleClass="#{not component.valid ? 'inputError' : ''}" />
-										<h:message for="jobPosition" errorClass="error" />
-									</h:outputLabel>
+										<div class="ui-md-12 ui-lg-6 ui-xl-4">
+											<div class="form-group">
+												<p:outputLabel
+													value="#{i18n['job_experience.job_position']}" />
+												<p:inputText id="jobPosition"
+													value="#{jobExperience.jobPosition}" required="true" />
+											</div>
+											<h:message for="jobPosition" errorClass="error" />
+										</div>
 
-									<br />
+										<div class="ui-md-12 ui-lg-6 ui-xl-4">
+											<div class="form-group">
+												<p:outputLabel value="#{i18n['job_experience.from_date']}" />
+												<p:inputText id="from" value="#{jobExperience.fromDate}">
+													<f:convertDateTime pattern="MM / yyyy" />
+												</p:inputText>
+											</div>
+										</div>
 
-									<h:outputLabel value="#{i18n['job_experience.from_date']}"
-										styleClass="small">
-										<h:inputText id="from" value="#{jobExperience.fromDate}"
-											label="#{i18n['job_experience.from_date']}">
-											<f:convertDateTime pattern="MM / yyyy" />
-										</h:inputText>
-									</h:outputLabel>
+										<div class="ui-md-12 ui-lg-6 ui-xl-4">
+											<div class="form-group">
+												<p:outputLabel value="#{i18n['job_experience.to_date']}" />
+												<p:inputText id="toDate" value="#{jobExperience.toDate}"
+													disabled="#{jobExperience.stillWorking}">
+													<f:convertDateTime pattern="MM / yyyy" />
+												</p:inputText>
+											</div>
+										</div>
 
-									<h:outputLabel value="#{i18n['job_experience.to_date']}"
-										styleClass="small">
-										<h:inputText id="toDate" value="#{jobExperience.toDate}"
-											label="#{i18n['job_experience.to_date']}"
-											disabled="#{jobExperience.stillWorking}">
-											<f:convertDateTime pattern="MM / yyyy" />
-										</h:inputText>
-									</h:outputLabel>
+										<div class="ui-md-12 ui-lg-6 ui-xl-4">
+											<div class="form-group">
+												<p:outputLabel
+													value="#{i18n['job_experience.still_working']}" />
+												<p:selectBooleanCheckbox
+													value="#{jobExperience.stillWorking}" id="stillWorking">
+													<f:ajax render="toDate" />
+												</p:selectBooleanCheckbox>
+											</div>
+										</div>
 
-									<h:outputLabel value="#{i18n['job_experience.still_working']}"
-										styleClass="small">
-										<h:selectBooleanCheckbox value="#{jobExperience.stillWorking}"
-											id="stillWorking"
-											label="#{i18n['job_experience.still_working']}">
-											<f:ajax render="toDate" />
-										</h:selectBooleanCheckbox>
-									</h:outputLabel>
+										<div class="ui-md-12 ui-lg-6 ui-xl-4">
+											<div class="form-group">
+												<p:outputLabel value="#{i18n['job_experience.description']}" />
+												<p:inputTextarea id="description"
+													value="#{jobExperience.description}" required="true" />
+											</div>
+											<h:message for="description" errorClass="error" />
+										</div>
+									</div>
 
-									<br />
-
-									<h:outputLabel value="#{i18n['job_experience.description']}"
-										styleClass="required largest">
-										<h:inputTextarea id="description"
-											value="#{jobExperience.description}"
-											label="#{i18n['job_experience.description']}" required="true"
-											styleClass="#{not component.valid ? 'inputError' : ''}" />
-										<h:message for="description" errorClass="error" />
-									</h:outputLabel>
-
-									<br />
-
-									<h:panelGroup layout="block" class="buttonGroup">
-										<h:commandButton value="#{i18n['action.remove']}"
-											action="#{curriculumEditBean.removeJobExperience(jobExperience)}"
-											immediate="true">
-											<f:ajax render=":form:jobExperiences"
-												execute=":form:jobExperiences" />
-										</h:commandButton>
-									</h:panelGroup>
+									<div class="ui-g">
+										<div class="ui-g-12">
+											<div class="push-right">
+												<p:commandButton styleClass="btn-gray"
+													value="#{i18n['action.remove']}"
+													action="#{curriculumEditBean.removeJobExperience(jobExperience)}"
+													immediate="true" update="jobExperiences"
+													process="jobExperiences" />
+											</div>
+										</div>
+									</div>
 								</h:panelGroup>
 							</ui:repeat>
-							<h:panelGroup layout="block" class="buttonGroup">
-								<h:commandButton value="#{i18n['action.add']}"
-									action="#{curriculumEditBean.addJobExperience}">
-									<f:ajax execute="jobExperiences" render="jobExperiences" />
-								</h:commandButton>
-							</h:panelGroup>
+							<div class="ui-g">
+								<div class="ui-g-12">
+									<div class="push-right">
+										<p:commandButton styleClass="btn-green"
+											value="#{i18n['action.add']}"
+											action="#{curriculumEditBean.addJobExperience}"
+											update="jobExperiences" execute="jobExperiences" />
+									</div>
+								</div>
+							</div>
 						</h:panelGroup>
 
 						<!-- LANGUAGES -->
@@ -218,58 +231,73 @@
 								varStatus="current" id="language">
 								<h:panelGroup layout="block" class="repeatedPanel">
 
-									<h:outputLabel value="#{i18n['language.language']}"
-										styleClass="required small">
-										<h:inputText id="languageName"
-											value="#{language.languageName}"
-											label="#{i18n['language.language']}" required="true"
-											styleClass="#{not component.valid ? 'inputError' : ''}" />
-										<h:message for="languageName" errorClass="error" />
-									</h:outputLabel>
+									<div class="ui-g">
+										<div class="ui-md-12 ui-lg-6 ui-xl-4">
+											<div class="form-group">
+												<p:outputLabel value="#{i18n['language.language']}" />
+												<p:inputText id="languageName"
+													value="#{language.languageName}" required="true" />
+											</div>
+											<h:message for="languageName" errorClass="error" />
+										</div>
 
-									<h:outputLabel value="#{i18n['language.read']}"
-										styleClass="compact small">
-										<h:selectOneMenu id="read" value="#{language.read}">
-											<f:selectItems var="languageLevel"
-												itemValue="#{languageLevel.name}"
-												value="#{applicationBean.languageLevels}"
-												itemLabel="#{i18n:translate(languageLevel.name)}" />
-										</h:selectOneMenu>
-									</h:outputLabel>
+										<div class="ui-md-12 ui-lg-6 ui-xl-4">
+											<div class="form-group">
+												<p:outputLabel value="#{i18n['language.read']}" />
+												<p:selectOneMenu id="read" value="#{language.read}">
+													<f:selectItems var="languageLevel"
+														itemValue="#{languageLevel.name}"
+														value="#{applicationBean.languageLevels}"
+														itemLabel="#{i18n:translate(languageLevel.name)}" />
+												</p:selectOneMenu>
+											</div>
+										</div>
 
-									<h:outputLabel value="#{i18n['language.speak']}"
-										styleClass="compact small">
-										<h:selectOneMenu id="speak" value="#{language.speak}">
-											<f:selectItems var="languageLevel"
-												itemValue="#{languageLevel.name}"
-												value="#{applicationBean.languageLevels}"
-												itemLabel="#{i18n:translate(languageLevel.name)}" />
-										</h:selectOneMenu>
-									</h:outputLabel>
+										<div class="ui-md-12 ui-lg-6 ui-xl-4">
+											<div class="form-group">
+												<p:outputLabel value="#{i18n['language.speak']}" />
+												<p:selectOneMenu id="speak" value="#{language.speak}">
+													<f:selectItems var="languageLevel"
+														itemValue="#{languageLevel.name}"
+														value="#{applicationBean.languageLevels}"
+														itemLabel="#{i18n:translate(languageLevel.name)}" />
+												</p:selectOneMenu>
+											</div>
+										</div>
 
-									<h:outputLabel value="#{i18n['language.write']}"
-										styleClass="compact small">
-										<h:selectOneMenu id="write" value="#{language.write}">
-											<f:selectItems var="languageLevel"
-												itemValue="#{languageLevel.name}"
-												value="#{applicationBean.languageLevels}"
-												itemLabel="#{i18n:translate(languageLevel.name)}" />
-										</h:selectOneMenu>
-									</h:outputLabel>
-
-									<h:commandButton value="#{i18n['action.remove']}"
-										action="#{curriculumEditBean.removeLanguage(language)}"
-										immediate="true">
-										<f:ajax render=":form:languages" execute=":form:languages" />
-									</h:commandButton>
+										<div class="ui-md-12 ui-lg-6 ui-xl-4">
+											<div class="form-group">
+												<p:outputLabel value="#{i18n['language.write']}" />
+												<p:selectOneMenu id="write" value="#{language.write}">
+													<f:selectItems var="languageLevel"
+														itemValue="#{languageLevel.name}"
+														value="#{applicationBean.languageLevels}" />
+												</p:selectOneMenu>
+											</div>
+										</div>
+									</div>
+									<div class="ui-g">
+										<div class="ui-g-12">
+											<div class="push-right">
+												<p:commandButton styleClass="btn-gray"
+													value="#{i18n['action.remove']}"
+													action="#{curriculumEditBean.removeLanguage(language)}"
+													immediate="true" />
+											</div>
+										</div>
+									</div>
 								</h:panelGroup>
 							</ui:repeat>
-							<h:panelGroup layout="block" class="buttonGroup">
-								<h:commandButton value="#{i18n['action.add']}"
-									action="#{curriculumEditBean.addLanguage}">
-									<f:ajax execute="languages" render="languages" />
-								</h:commandButton>
-							</h:panelGroup>
+							<div class="ui-g">
+								<div class="ui-g-12">
+									<div class="push-right">
+										<p:commandButton styleClass="btn-green"
+											value="#{i18n['action.add']}"
+											action="#{curriculumEditBean.addLanguage}" update="languages"
+											process="languages" />
+									</div>
+								</div>
+							</div>
 						</h:panelGroup>
 
 						<!-- SKILLS -->
@@ -280,47 +308,65 @@
 								id="skill">
 								<h:panelGroup layout="block" class="repeatedPanel">
 
-									<h:outputLabel styleClass="required small">
-										<h:inputText id="name" value="#{skill.name}"
-											label="#{i18n['skill.name']}" required="true" />
-									</h:outputLabel>
+									<div class="ui-g">
+										<div class="ui-md-12 ui-lg-6 ui-xl-4">
+											<div class="form-group">
+												<p:inputText id="name" value="#{skill.name}"
+													label="#{i18n['skill.name']}" required="true" />
+											</div>
+										</div>
 
-									<h:outputLabel styleClass="compact small">
-										<h:selectOneMenu id="level" value="#{skill.level}"
-											label="#{curriculumEditBean.skills}">
-											<f:selectItems var="skillLevel"
-												itemValue="#{skillLevel.name}"
-												value="#{applicationBean.skillLevels}"
-												itemLabel="#{i18n:translate(skillLevel.name)}" />
-										</h:selectOneMenu>
-									</h:outputLabel>
+										<div class="ui-md-12 ui-lg-6 ui-xl-4">
+											<div class="form-group">
+												<p:selectOneMenu id="level" value="#{skill.level}"
+													label="#{curriculumEditBean.skills}">
+													<f:selectItems var="skillLevel"
+														itemValue="#{skillLevel.name}"
+														value="#{applicationBean.skillLevels}"
+														itemLabel="#{i18n:translate(skillLevel.name)}" />
+												</p:selectOneMenu>
+											</div>
+										</div>
+									</div>
 
-									<h:commandButton value="#{i18n['action.remove']}"
-										action="#{curriculumEditBean.removeSkill(skill)}"
-										immediate="true">
-										<f:ajax render=":form:skills" execute=":form:skills" />
-									</h:commandButton>
-
+									<div class="ui-g">
+										<div class="ui-g-12">
+											<div class="push-right">
+												<p:commandButton styleClass="btn-gray"
+													value="#{i18n['action.remove']}"
+													action="#{curriculumEditBean.removeSkill(skill)}"
+													immediate="true" update="skills" process="skills" />
+											</div>
+										</div>
+									</div>
 								</h:panelGroup>
 							</ui:repeat>
 
-							<h:panelGroup layout="block" class="buttonGroup">
-								<h:commandButton value="#{i18n['action.add']}"
-									action="#{curriculumEditBean.addSkill}">
-									<f:ajax render="skills" />
-								</h:commandButton>
-							</h:panelGroup>
+							<div class="ui-g">
+								<div class="ui-g-12">
+									<div class="push-right">
+										<p:commandButton styleClass="btn-green"
+											value="#{i18n['action.add']}"
+											action="#{curriculumEditBean.addSkill}" update="skills" />
+									</div>
+								</div>
+							</div>
+						</h:panelGroup>
 						</h:panelGroup>
 					</p:panel>
 				</div>
 			</div>
 
-			<h:panelGroup layout="block" class="buttonGroup">
-				<h:commandButton value="#{i18n['action.save']}"
-					action="#{curriculumEditBean.save}" />
-				<h:commandButton value="#{i18n['action.cancel']}"
-					action="#{curriculumEditBean.cancel}" immediate="true" />
-			</h:panelGroup>
+			<div class="ui-g">
+				<div class="ui-g-12">
+					<div class="push-right">
+						<h:commandButton value="#{i18n['action.save']}"
+							action="#{curriculumEditBean.save}" />
+						<h:commandButton value="#{i18n['action.cancel']}"
+							action="#{curriculumEditBean.cancel}" immediate="true" />
+					</div>
+				</div>
+			</div>
 		</h:form>
 	</ui:define>
 </ui:composition>
