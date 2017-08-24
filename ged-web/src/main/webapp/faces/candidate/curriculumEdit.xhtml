@@ -105,12 +105,11 @@
 									<div class="ui-g">
 										<div class="ui-g-12">
 											<div class="push-right">
-												<h:commandButton value="#{i18n['action.remove']}"
+												<p:commandButton styleClass="btn-gray"
+													value="#{i18n['action.remove']}"
 													action="#{curriculumEditBean.removeEducation(education)}"
-													immediate="true">
-													<f:ajax execute=":form:educationPanel"
-														render=":form:educationPanel" />
-												</h:commandButton>
+													immediate="true" process="educationPanel"
+													update="educationPanel" />
 											</div>
 										</div>
 									</div>
@@ -217,7 +216,7 @@
 										<p:commandButton styleClass="btn-green"
 											value="#{i18n['action.add']}"
 											action="#{curriculumEditBean.addJobExperience}"
-											update="jobExperiences" execute="jobExperiences" />
+											update="jobExperiences" process="jobExperiences" />
 									</div>
 								</div>
 							</div>
@@ -360,9 +359,9 @@
 			<div class="ui-g">
 				<div class="ui-g-12">
 					<div class="push-right">
-						<h:commandButton value="#{i18n['action.save']}"
+						<p:commandButton value="#{i18n['action.save']}"
 							action="#{curriculumEditBean.save}" />
-						<h:commandButton value="#{i18n['action.cancel']}"
+						<p:commandButton styleClass="btn-gray" value="#{i18n['action.cancel']}"
 							action="#{curriculumEditBean.cancel}" immediate="true" />
 					</div>
 				</div>
