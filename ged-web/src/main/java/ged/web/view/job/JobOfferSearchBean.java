@@ -1,7 +1,7 @@
 package ged.web.view.job;
 
+import java.lang.invoke.MethodHandles;
 import java.util.List;
-import java.util.Objects;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -13,67 +13,42 @@ import org.slf4j.LoggerFactory;
 
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
-import ged.ejb.user.User;
 import ged.web.core.view.AbstractPageBean;
 
 @Named
 @ViewScoped
 public class JobOfferSearchBean extends AbstractPageBean {
 
-	protected static final transient Logger logger = LoggerFactory.getLogger(JobOfferSearchBean.class.getName());
+	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	private static final long serialVersionUID = 8777365288968792501L;
-
+	
 	private String clientName;
 
-	private final transient JobOfferService jobOfferService;
+	@Inject
+	private transient JobOfferService jobOfferService;
 
-	private String name;
+	private String jobOfferName;
 
 	private List<JobOffer> jobOffers;
 
-	@Inject
-	public JobOfferSearchBean(final JobOfferService jobOfferService) {
-		Objects.requireNonNull(jobOfferService);
-		this.jobOfferService = jobOfferService;
-	}
-
-	public boolean canEdit(final JobOffer jobOffer) {
-		final User owner = jobOffer.getOwner();
-		final User user = this.sessionBean.getUser();
-		if (owner.equals(user)) {
-			return true;
-		}
-		if (user.hasRole("ADMIN")) {
-			return true;
-		}
-		if (user.hasRole("RECRUITER_ADMIN")) {
-			return true;
-		}
-		return false;
-	}
-
 	public void clean() {
+		logger.debug("Clean job offer search fields action performed");
 		cleanSearchFields();
 		search();
 	}
 
 	private void cleanSearchFields() {
-		this.name = null;
+		this.jobOfferName = null;
 		this.clientName = null;
-	}
-
-	public String edit(final JobOffer jobOffer) {
-		this.flash.put("jobOffer", jobOffer);
-		return "jobOfferEdit?faces-redirect=true";
 	}
 
 	public String getClientName() {
 		return this.clientName;
 	}
 
-	public String getName() {
-		return this.name;
+	public String getJobOfferName() {
+		return jobOfferName;
 	}
 
 	public List<JobOffer> getJobOffers() {
@@ -82,28 +57,30 @@ public class JobOfferSearchBean extends AbstractPageBean {
 
 	@PostConstruct
 	public void init() {
+		logger.trace("JobOfferSearchBean init");
 		search();
 	}
 
 	public String newJobOffer() {
+		logger.debug("New job offer action performed");
 		return "jobOfferEdit?faces-redirect=true";
 	}
 
-	public void remove(final JobOffer jobOffer) {
-		this.jobOfferService.delete(jobOffer);
-		search();
-	}
-
 	public void search() {
-		logger.debug("Searching for JobOffers");
-		jobOffers = this.jobOfferService.searchByNameAndClient(this.name, this.clientName, null);
+		logger.debug("Search job offer action performed");
+		jobOffers = this.jobOfferService.searchByNameAndClient(this.jobOfferName, this.clientName, null);
+		addWarningMessageIfMaxSearchResultsHaveBeenReached(jobOffers);
 	}
 
 	public void setClientName(final String clientName) {
 		this.clientName = clientName;
 	}
 
-	public void setName(final String name) {
-		this.name = name;
+	public void setJobOfferName(final String jobOfferName) {
+		this.jobOfferName = jobOfferName;
+	}
+
+	public void setJobOfferService(final JobOfferService jobOfferService) {
+		this.jobOfferService = jobOfferService;
 	}
 }

@@ -20,21 +20,19 @@
 						<div class="ui-g">
 							<div class="ui-md-12 ui-lg-6 ui-xl-4">
 								<div class="form-group">
-									<p:outputLabel value="#{i18n['job.name']}" />
-									<p:inputText id="name" value="#{jobOfferSearchBean.name}"
-										label="#{i18n['job.name']}" />
+									<p:outputLabel value="#{i18n['job.name']}" for="jobOfferName" />
+									<p:inputText id="jobOfferName"
+										value="#{jobOfferSearchBean.jobOfferName}" />
 								</div>
 							</div>
 							<div class="ui-md-12 ui-lg-6 ui-xl-4">
 								<div class="form-group">
-									<p:outputLabel value="#{i18n['job.client']}" />
+									<p:outputLabel value="#{i18n['job.client']}" for="clientName" />
 									<p:inputText id="clientName"
-										value="#{jobOfferSearchBean.clientName}"
-										label="#{i18n['job.client']}" />
+										value="#{jobOfferSearchBean.clientName}" />
 								</div>
 							</div>
 						</div>
-
 						<div class="ui-g">
 							<div class="ui-g-12">
 								<div class="push-right">
@@ -42,9 +40,10 @@
 										action="#{jobOfferSearchBean.newJobOffer}" immediate="true"
 										styleClass="btn-green" />
 									<p:commandButton value="#{i18n['action.search']}"
-										action="#{jobOfferSearchBean.search}" />
-									<p:commandButton value="#{i18n['action.clean']}"
-										action="#{jobOfferSearchBean.clean}" styleClass="btn-gray" />
+										action="#{jobOfferSearchBean.search}" update="@form growl" />
+									<p:commandButton value="#{i18n['action.clean']}" update="@form"
+										action="#{jobOfferSearchBean.clean}" immediate="true"
+										styleClass="btn-gray" />
 								</div>
 							</div>
 						</div>
@@ -85,21 +84,9 @@
 								<h:outputText value="#{jobOffer.owner}" />
 							</p:column>
 							<p:column>
-								<h:link value="Ver" outcome="jobOfferView">
+								<p:button outcome="userView" icon="fa fa-eye">
 									<f:param name="id" value="#{jobOffer.id}" />
-								</h:link>
-								<h:outputText value=" | "
-									rendered="#{jobOfferSearchBean.canEdit(jobOffer)}" />
-								<h:commandLink action="#{jobOfferSearchBean.edit(jobOffer)}"
-									value="#{i18n['action.edit']}"
-									rendered="#{jobOfferSearchBean.canEdit(jobOffer)}" />
-								<h:outputText value=" | "
-									rendered="#{jobOfferSearchBean.canEdit(jobOffer)}" />
-								<h:commandLink action="#{jobOfferSearchBean.remove(jobOffer)}"
-									value="#{i18n['action.remove']}"
-									rendered="#{jobOfferSearchBean.canEdit(jobOffer)}">
-									<f:ajax execute="@form" render="@form" />
-								</h:commandLink>
+								</p:button>
 							</p:column>
 						</p:dataTable>
 					</p:panel>
@@ -108,4 +95,3 @@
 		</h:form>
 	</ui:define>
 </ui:composition>
-

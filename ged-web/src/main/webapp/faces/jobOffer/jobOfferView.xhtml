@@ -79,7 +79,7 @@
 								<div class="push-right">
 									<p:commandButton value="#{i18n['action.edit']}"
 										action="#{jobOfferViewBean.edit}"
-										rendered="#{jobOfferViewBean.editable}" />
+										rendered="#{jobOfferViewBean.editable and jobOfferViewBean.userHasPermissionToEditJobOffer}"  />
 									<p:commandButton styleClass="btn-green"
 										value="#{i18n['bookmark.add_to_bookmarks']}"
 										action="#{bookmarksBean.add(jobOfferViewBean.jobOffer)}"
@@ -180,8 +180,5 @@
 			<ui:param name="callback" value="#{jobOfferViewBean.candidate}" />
 			<ui:param name="render" value=":form" />
 		</ui:include>
-
 	</ui:define>
-
 </ui:composition>
-

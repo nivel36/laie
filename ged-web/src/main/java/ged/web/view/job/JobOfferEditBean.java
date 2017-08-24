@@ -1,11 +1,14 @@
 package ged.web.view.job;
 
-import java.util.Objects;
+import java.lang.invoke.MethodHandles;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import ged.ejb.client.Client;
 import ged.ejb.client.ClientService;
@@ -17,26 +20,29 @@ import ged.web.core.view.AbstractPageBean;
 @ViewScoped
 public class JobOfferEditBean extends AbstractPageBean {
 
+	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
+
 	private static final long serialVersionUID = 7362448981391968171L;
 
-	private final transient ClientService clientService;
+	@Inject
+	private transient ClientService clientService;
 
 	private JobOffer jobOffer;
 
-	private final transient JobOfferService jobService;
+	@Inject
+	private transient JobOfferService jobService;
 
 	private boolean newClient;
 
-	@Inject
-	public JobOfferEditBean(final JobOfferService jobService, final ClientService clientService) {
-		Objects.requireNonNull(jobService);
-		Objects.requireNonNull(clientService);
-		this.jobService = jobService;
-		this.clientService = clientService;
+	public String cancel() {
+		logger.debug("Cancel new job offer action performed");
+		return "jobOfferSearch?faces-redirect=true";
 	}
 
-	public String cancel() {
-		return "jobOfferSearch?faces-redirect=true";
+	public void clientChangedListener() {
+		final String clientName = this.jobOffer.getClient().getName();
+		logger.trace("Client name changed to {}", clientName);
+		this.newClient = !this.clientService.existsClient(clientName);
 	}
 
 	public JobOffer getJobOffer() {
@@ -45,13 +51,10 @@ public class JobOfferEditBean extends AbstractPageBean {
 
 	@PostConstruct
 	public void init() {
-		if (this.flash.containsKey("jobOffer")) {
-			this.jobOffer = (JobOffer) this.flash.get("jobOffer");
-		} else {
-			this.jobOffer = new JobOffer();
-			final Client client = new Client();
-			this.jobOffer.setClient(client);
-		}
+		logger.trace("JobOfferEditBean init");
+		this.jobOffer = new JobOffer();
+		this.jobOffer.setOwner(this.sessionBean.getUser());
+		this.jobOffer.setClient(new Client());
 	}
 
 	public boolean isNewClient() {
@@ -59,26 +62,24 @@ public class JobOfferEditBean extends AbstractPageBean {
 	}
 
 	public String save() {
-		saveJobOffer();
+		logger.debug("Save job offer action performed");
+		this.jobService.save(this.jobOffer);
 		return "jobOfferView.xhtml?id=" + this.jobOffer.getId() + "&faces-redirect=true";
 	}
 
-	private void saveJobOffer() {
-		if (this.jobOffer.getOwner() == null) {
-			this.jobOffer.setOwner(this.sessionBean.getUser());
-		}
-		this.jobService.save(this.jobOffer);
+	public void setClientService(ClientService clientService) {
+		this.clientService = clientService;
 	}
 
 	public void setJobOffer(final JobOffer jobOffer) {
 		this.jobOffer = jobOffer;
 	}
 
-	public void setNewClient(final boolean newClient) {
-		this.newClient = newClient;
+	public void setJobService(JobOfferService jobService) {
+		this.jobService = jobService;
 	}
 
-	public void updateClientState() {
-		this.newClient = !this.clientService.existsClient(this.jobOffer.getClient().getName());
+	public void setNewClient(final boolean newClient) {
+		this.newClient = newClient;
 	}
 }
