@@ -100,7 +100,7 @@
 			<div class="ui-g-12">
 				<p:panel styleClass="cyan" header="#{i18n['job.job_offers']}">
 					<p:dataTable var="jobOffer"
-						value="#{clientViewBean.jobOffers.dataList}"
+						value="#{clientViewBean.jobOffers}"
 						emptyMessage="#{i18n['client.no_job_offers_found']}" reflow="true"
 						paginator="true" paginatorPosition="bottom"
 						rows="#{sessionBean.rowsPerPage}">
