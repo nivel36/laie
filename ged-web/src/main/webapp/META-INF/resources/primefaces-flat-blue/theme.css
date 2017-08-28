@@ -4266,6 +4266,10 @@ body .ui-inputtext {
 	flex: 2;
 }
 
+body input[aria-required="true"], input[data-p-required="true"] {
+    margin-left: 2px solid blue;
+}
+
 body .ui-calendar {
 	flex: 2;
 }
