@@ -765,6 +765,6 @@ textarea {
 	transform: translate3d(0, -60px, 0);
 }
 
-.push-right {
+.form-action-primary {
 	float: right;
 }

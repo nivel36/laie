@@ -140,7 +140,7 @@
 						</div>
 						<div class="ui-g">
 							<div class="ui-g-12">
-								<div class="push-right">
+								<div class="form-action-primary">
 									<h:panelGroup id="undeleteButton" layout="block"
 										rendered="#{candidateViewBean.candidate.deleted}">
 										<p:commandButton value="#{i18n['action.undelete']}"
@@ -247,7 +247,7 @@
 						</div>
 						<div class="ui-g">
 							<div class="ui-g-12">
-								<div class="push-right">
+								<div class="form-action-primary">
 									<p:commandButton value="#{i18n['action.add']}"
 										action="#{candidateViewBean.addFile}" immediate="true"
 										update="@form growl" />
@@ -273,7 +273,7 @@
 
 						<div class="ui-g">
 							<div class="ui-g-12">
-								<div class="push-right">
+								<div class="form-action-primary">
 									<p:commandButton styleClass="btn-green"
 										value="#{i18n['action.upload']}"
 										action="#{candidateViewBean.upload}" update="@form growl" />
@@ -319,7 +319,7 @@
 						</div>
 						<div class="ui-g">
 							<div class="ui-g-12">
-								<div class="push-right">
+								<div class="form-action-primary">
 									<p:commandButton value="#{i18n['action.save']}"
 										action="#{candidateViewBean.saveFile}" update="@form growl" />
 									<p:commandButton styleClass="btn-gray"

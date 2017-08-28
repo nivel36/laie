@@ -51,7 +51,7 @@
 						</div>
 						<div class="ui-g">
 							<div class="ui-g-12">
-								<div class="push-right">
+								<div class="form-action-primary">
 									<p:commandButton value="#{i18n['config.change_password']}" onclick="PF('changePasswordDlg').show();" />
 									<p:commandButton value="#{i18n['action.save']}" action="#{configIndexBean.save}"  update="growl"/>
 								</div>
@@ -87,8 +87,8 @@
 						</div>
 						<div class="ui-g">
 							<div class="ui-g-12">
-								<div class="push-right">
-									<p:commandButton styleClass="push-right" value="#{i18n['action.save']}" action="#{configIndexBean.save}" update="@all" />
+								<div class="form-action-primary">
+									<p:commandButton styleClass="form-action-primary" value="#{i18n['action.save']}" action="#{configIndexBean.save}" update="@all" />
 								</div>
 							</div>
 						</div>
