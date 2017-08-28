@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 
 import ged.ejb.candidate.Candidate;
 import ged.ejb.candidate.CandidateService;
+import ged.ejb.client.ClientService;
 import ged.ejb.job.meeting.JobMeeting;
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
@@ -26,14 +27,17 @@ import ged.web.core.view.AbstractPageBean;
 @ViewScoped
 public class JobOfferViewBean extends AbstractPageBean {
 
-	private static final long serialVersionUID = -1200840678252895578L;
-	
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
+
+	private static final long serialVersionUID = -1200840678252895578L;
 
 	private List<Candidate> candidates = new ArrayList<>();
 
 	@Inject
-	private transient  CandidateService candidateService;
+	private transient CandidateService candidateService;
+
+	@Inject
+	private transient ClientService clientService;
 
 	private List<JobMeeting> conductedJobMeetings = new ArrayList<>();
 
@@ -44,7 +48,9 @@ public class JobOfferViewBean extends AbstractPageBean {
 	private String jobOfferId;
 
 	@Inject
-	private transient  JobOfferService jobService;
+	private transient JobOfferService jobService;
+
+	private boolean newClient;
 
 	private List<JobMeeting> plannedJobMeetings = new ArrayList<>();
 
@@ -53,9 +59,20 @@ public class JobOfferViewBean extends AbstractPageBean {
 		this.jobService.addJobCandidature(this.jobOffer, candidate);
 	}
 
-	public String edit() {
-		this.flash.put("jobOffer", this.jobOffer);
-		return "jobOfferEdit?faces-redirect=true";
+	public void clientChangedListener() {
+		final String clientName = this.jobOffer.getClient().getName();
+		logger.trace("Client name changed to {}", clientName);
+		this.newClient = !this.clientService.existsClient(clientName);
+	}
+
+	public void edit() {
+		logger.debug("Edit job offer action performed");
+		editable = true;
+	}
+	
+	public void cancel() {
+		logger.debug("Cancel edit job offer action performed");
+		editable = false;
 	}
 
 	private void error() {
@@ -63,11 +80,16 @@ public class JobOfferViewBean extends AbstractPageBean {
 		navigationHandler.handleNavigation(this.facesContext, null, "jobOfferSearch?faces-redirect=true");
 		this.facesContext.renderResponse();
 	}
+	
+	public void save() {
+		logger.debug("Save job offer action performed");
+		this.jobService.save(this.jobOffer);
+	}
 
 	public List<Candidate> getCandidates() {
 		return this.candidates;
 	}
-	
+
 	public List<JobMeeting> getConductedJobMeetings() {
 		return this.conductedJobMeetings;
 	}
@@ -98,7 +120,7 @@ public class JobOfferViewBean extends AbstractPageBean {
 					populateJobMeetings(this.jobOffer);
 					this.candidates = this.candidateService.findAllByJobOffer(this.jobOffer);
 				}
-				this.editable = userHasPermissionToEditJobOffer();
+				this.editable = isUserHasPermissionToEditJobOffer();
 			} catch (final NumberFormatException ex) {
 				error();
 			}
@@ -109,6 +131,23 @@ public class JobOfferViewBean extends AbstractPageBean {
 
 	public boolean isEditable() {
 		return this.editable;
+	}
+
+	public boolean isNewClient() {
+		return newClient;
+	}
+
+	// boolean -> is[name]
+	public boolean isUserHasPermissionToEditJobOffer() {
+		final User jobOfferOwner = jobOffer.getOwner();
+		final User user = this.sessionBean.getUser();
+		if (jobOfferOwner.equals(user)) {
+			return true;
+		}
+		if (user.hasRole(Role.ADMIN) || user.hasRole(Role.RECRUITER_ADMIN)) {
+			return true;
+		}
+		return false;
 	}
 
 	private void populateJobMeetings(final JobOffer jobOffer) {
@@ -138,6 +177,10 @@ public class JobOfferViewBean extends AbstractPageBean {
 		this.candidateService = candidateService;
 	}
 
+	public void setClientService(ClientService clientService) {
+		this.clientService = clientService;
+	}
+
 	public void setConductedJobMeetings(final List<JobMeeting> conductedJobMeetings) {
 		this.conductedJobMeetings = conductedJobMeetings;
 	}
@@ -161,17 +204,5 @@ public class JobOfferViewBean extends AbstractPageBean {
 
 	public void setPlannedJobMeetings(final List<JobMeeting> plannedJobMeetings) {
 		this.plannedJobMeetings = plannedJobMeetings;
-	}
-
-	public boolean userHasPermissionToEditJobOffer() {
-		final User jobOfferOwner = jobOffer.getOwner();
-		final User user = this.sessionBean.getUser();
-		if (jobOfferOwner.equals(user)) {
-			return true;
-		}
-		if (user.hasRole(Role.ADMIN) || user.hasRole(Role.RECRUITER_ADMIN)) {
-			return true;
-		}
-		return false;
 	}
 }

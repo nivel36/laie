@@ -118,7 +118,10 @@ public class Candidate extends AbstractAuditedEntity {
 		final Candidate other = (Candidate) obj;
 		return Objects.equals(this.email, other.email) && Objects.equals(this.name, other.name)
 				&& Objects.equals(this.phoneNumber, other.phoneNumber) && Objects.equals(this.surename, other.surename);
+	}
 
+	public String getFullName() {
+		return name + " " + surename;
 	}
 
 	public Address getAddress() {
@@ -264,6 +267,6 @@ public class Candidate extends AbstractAuditedEntity {
 
 	@Override
 	public String toString() {
-		return this.name + " " + this.surename;
+		return getFullName();
 	}
 }
