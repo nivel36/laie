@@ -8,7 +8,7 @@ import ged.ejb.user.User;
 
 public interface JobOfferDao extends Dao< JobOffer> {
 
-	List<JobOffer> findAllByClient(final Client client);
+	List<JobOffer> findAllJobOffersByClient(final Client client);
 
 	List<JobOffer> findAllByOwner(final User owner);
 

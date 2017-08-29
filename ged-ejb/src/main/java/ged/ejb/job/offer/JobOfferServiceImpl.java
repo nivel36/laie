@@ -1,5 +1,6 @@
 package ged.ejb.job.offer;
 
+import java.lang.invoke.MethodHandles;
 import java.util.List;
 import java.util.Objects;
 
@@ -17,7 +18,6 @@ import ged.ejb.core.events.Audited;
 import ged.ejb.core.events.Audited.Type;
 import ged.ejb.core.model.Dao;
 import ged.ejb.core.model.Repository;
-import ged.ejb.job.JobCandidature;
 import ged.ejb.job.meeting.JobMeeting;
 import ged.ejb.job.meeting.JobMeetingDao;
 import ged.ejb.user.User;
@@ -25,7 +25,7 @@ import ged.ejb.user.User;
 @Stateless
 public class JobOfferServiceImpl extends AbstratctAuditedService<JobOffer> implements JobOfferService {
 
-	private static final Logger logger = LoggerFactory.getLogger(JobOfferServiceImpl.class.getName());
+	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	private final ClientService clientService;
 
@@ -52,6 +52,7 @@ public class JobOfferServiceImpl extends AbstratctAuditedService<JobOffer> imple
 	public void addJobCandidature(final JobOffer jobOffer, final Candidate candidate) {
 		Objects.requireNonNull(jobOffer);
 		Objects.requireNonNull(candidate);
+		logger.debug("Add Job Candidature of candidate {} to jobOffer {}", candidate.getFullName(), jobOffer.getName());
 		final JobCandidature jobCandidature = new JobCandidature(jobOffer, candidate);
 		this.jobCandidatureDao.insert(jobCandidature);
 	}
@@ -59,17 +60,18 @@ public class JobOfferServiceImpl extends AbstratctAuditedService<JobOffer> imple
 	@Override
 	public void addJobMeeting(final JobMeeting jobMeeting) {
 		Objects.requireNonNull(jobMeeting);
+		logger.debug("Add Job meeting {}", jobMeeting.getDescription());
 		this.jobMeetingDao.insert(jobMeeting);
 	}
 
 	@Override
-	public List<JobOffer> findAllByClient(final Client client) {
+	public List<JobOffer> findAllJobOffersByClient(final Client client) {
 		logger.debug("Find all job Offers of the client {}", client.getName());
-		return this.jobOfferDao.findAllByClient(client);
+		return this.jobOfferDao.findAllJobOffersByClient(client);
 	}
 
 	@Override
-	public List<JobOffer> findAllByOwner(final User owner) {
+	public List<JobOffer> findAllJobOffersByOwner(final User owner) {
 		logger.debug("Find all job Offers of the owner {}", owner.getFullName());
 		return this.jobOfferDao.findAllByOwner(owner);
 	}
@@ -99,6 +101,8 @@ public class JobOfferServiceImpl extends AbstratctAuditedService<JobOffer> imple
 	public void removeJobCandidature(final JobOffer jobOffer, final Candidate candidate) {
 		Objects.requireNonNull(jobOffer);
 		Objects.requireNonNull(candidate);
+		logger.debug("Remove job candidature of candidate {} to job offer {}", candidate.getFullName(),
+				jobOffer.getName());
 		final JobCandidature jobCandidature = this.jobCandidatureDao.findByJobOfferAndCandidate(jobOffer, candidate);
 		this.jobCandidatureDao.delete(jobCandidature);
 	}
@@ -106,6 +110,8 @@ public class JobOfferServiceImpl extends AbstratctAuditedService<JobOffer> imple
 	@Override
 	@Audited(action = Type.PERSIST)
 	public JobOffer save(final JobOffer jobOffer) {
+		Objects.requireNonNull(jobOffer);
+		logger.debug("Save job offer {}", jobOffer.getDescription());
 		putClientOnJobOffer(jobOffer);
 		getDao().insert(jobOffer);
 		return jobOffer;
@@ -113,7 +119,8 @@ public class JobOfferServiceImpl extends AbstratctAuditedService<JobOffer> imple
 
 	@Override
 	public List<JobOffer> searchByNameAndClient(final String name, final String clientName, final Boolean showDeleted) {
-		logger.debug("Search all job offers by name {} and client name {}", new Object[] { name, clientName });
+		logger.debug("Search all job offers by name {} and client name {}, show deleted {}",
+				new Object[] { name, clientName, showDeleted });
 		return this.jobOfferDao.searchByNameAndClient(name, clientName, showDeleted);
 	}
 }

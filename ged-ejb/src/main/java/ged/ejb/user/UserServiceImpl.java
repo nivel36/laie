@@ -1,5 +1,6 @@
 package ged.ejb.user;
 
+import java.lang.invoke.MethodHandles;
 import java.util.List;
 import java.util.Objects;
 
@@ -12,11 +13,12 @@ import org.slf4j.LoggerFactory;
 import ged.ejb.core.AbstratctAuditedService;
 import ged.ejb.core.model.Dao;
 import ged.ejb.core.model.Repository;
+import ged.ejb.user.role.Role;
 
 @Stateless
 public class UserServiceImpl extends AbstratctAuditedService<User> implements UserService {
 
-	private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class.getName());
+	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	private final UserDao userDao;
 
@@ -27,24 +29,37 @@ public class UserServiceImpl extends AbstratctAuditedService<User> implements Us
 	}
 
 	@Override
-	protected void doInsert(final User user) {
-		logger.debug("INSERT user {}", user.getFullName());
+	protected void insert(final User user) {
+		logger.debug("Insert user {}", user.getUsername());
 		if (user.equals(user.getManager())) {
-			logger.warn("The user {} can't be his/her manager", user.getFullName());
+			logger.warn("The user {} can't be his/her manager", user.getUsername());
 			throw new IllegalStateException("User can't be his/her manager");
 		}
 		this.userDao.insert(user);
 	}
 
+	private boolean isLastAdminOnApp(final User user) {
+		User userInDataBase = find(user.getId());
+		return userInDataBase.hasRole(Role.ADMIN) && !user.hasRole(Role.ADMIN)
+				&& !this.userDao.existsMoreThanOneAdmin();
+	}
+
+	private boolean isDeletingAdmin(final User user) {
+		return (user.getDeleted() != null && user.getDeleted() == true) && user.hasRole(Role.ADMIN);
+	}
+
 	@Override
-	protected User doUpdate(final User user) {
-		if (!user.hasRole("ADMIN") || this.userDao.existsMoreThanOneAdmin()) {
-			logger.debug("UPDATE user {}", user.getFullName());
-			return this.userDao.update(user);
-		} else {
-			logger.warn("Can't delete user. Last Admin on app");
-			throw new UserException("Can't delete user. Last Admin on app");
+	protected User update(final User user) {
+		if (isLastAdminOnApp(user)) {
+			logger.warn("Can't change user {} role. Last Admin on app", user.getUsername());
+			throw new UserException("Can't change user role. Last Admin on app");
 		}
+		if (isDeletingAdmin(user)) {
+			logger.warn("Can't delete user {}. User is Admin", user.getUsername());
+			throw new UserException("Can't delete user. User is Admin");
+		}
+		logger.debug("Update user {}", user.getUsername());
+		return this.userDao.update(user);
 	}
 
 	@Override
@@ -60,19 +75,16 @@ public class UserServiceImpl extends AbstratctAuditedService<User> implements Us
 	}
 
 	@Override
-	public List<User> findSubordinateUsers(final long id) {
-		Objects.requireNonNull(id);
-		if (id < 1) {
-			throw new IllegalArgumentException("id: " + id);
-		}
-		logger.debug("FIND subordinate users by id {}", id);
-		return this.userDao.findSubordinateUsers(id);
+	public List<User> findSubordinateUsers(final User user) {
+		Objects.requireNonNull(user);
+		logger.debug("Find subordinate users of user {}", user.getUsername());
+		return this.userDao.findSubordinateUsers(user);
 	}
 
 	@Override
 	public User findUserByUsername(final String username) {
 		Objects.requireNonNull(username);
-		logger.debug("FIND user by username {}", username);
+		logger.debug("Find user by username {}", username);
 		return this.userDao.findUserByUsername(username);
 	}
 
@@ -83,7 +95,7 @@ public class UserServiceImpl extends AbstratctAuditedService<User> implements Us
 
 	@Override
 	public List<User> searchByNameAndSurename(final String name, final String surename) {
-		logger.debug("SEARCH user by name {} and surename {}", new Object[] { name, surename });
+		logger.debug("Search user by name {} and surename {}", new Object[] { name, surename });
 		return this.userDao.searchByNameAndSurename(name, surename, false);
 	}
 

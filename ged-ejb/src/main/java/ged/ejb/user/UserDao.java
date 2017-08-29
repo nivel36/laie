@@ -6,15 +6,15 @@ import ged.ejb.core.model.Dao;
 
 public interface UserDao extends Dao< User> {
 
-	Boolean emailExists(final String email);
+	boolean emailExists(final String email);
 
-	Boolean existsMoreThanOneAdmin();
+	boolean existsMoreThanOneAdmin();
 
-	List<User> findSubordinateUsers(final long id);
+	List<User> findSubordinateUsers(final User user);
 
 	User findUserByUsername(final String username);
 
 	List<User> searchByNameAndSurename(final String name, String surename, final boolean showDeleted);
 
-	Boolean usernameExists(final String username);
+	boolean usernameExists(final String username);
 }

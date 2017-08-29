@@ -17,5 +17,5 @@ public interface CandidateDao extends Dao< Candidate> {
 
 	Candidate findCandidateAndFiles(long id);
 
-	List<Candidate> searchByNameAndSurename(String name, String surename, String position, Boolean showDeleted);
+	List<Candidate> searchByNameAndSurename(String name, String surename, String position, boolean showDeleted);
 }

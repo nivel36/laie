@@ -27,7 +27,7 @@ import ged.ejb.core.model.AbstractAuditedEntity;
 import ged.ejb.core.tag.Tag;
 import ged.ejb.curriculum.Curriculum;
 import ged.ejb.curriculum.FileSys;
-import ged.ejb.job.JobCandidature;
+import ged.ejb.job.offer.JobCandidature;
 import ged.ejb.user.User;
 
 @Entity
@@ -35,7 +35,7 @@ import ged.ejb.user.User;
 public class Candidate extends AbstractAuditedEntity {
 
 	private static final long serialVersionUID = 1305321530927456159L;
-
+	
 	@Embedded
 	private Address address;
 
@@ -92,7 +92,7 @@ public class Candidate extends AbstractAuditedEntity {
 	@Field
 	private String surename;
 
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<Tag> tags;
 
 	public void addJobCandidature(final JobCandidature jobCandidature) {

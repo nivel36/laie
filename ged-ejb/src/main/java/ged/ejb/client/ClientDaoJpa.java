@@ -1,10 +1,10 @@
 package ged.ejb.client;
 
-import java.util.HashMap;
+import static ged.ejb.core.model.QueryParameter.with;
+
+import java.lang.invoke.MethodHandles;
 import java.util.List;
-import java.util.Map;
-import org.slf4j.LoggerFactory;
-import org.slf4j.Logger;
+import java.util.Objects;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -15,6 +15,8 @@ import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.jpa.Search;
 import org.hibernate.search.query.dsl.BooleanJunction;
 import org.hibernate.search.query.dsl.QueryBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import ged.ejb.core.model.AbstractDao;
 import ged.ejb.core.model.Repository;
@@ -22,7 +24,7 @@ import ged.ejb.core.model.Repository;
 @Repository
 public class ClientDaoJpa extends AbstractDao<Client> implements ClientDao {
 
-	private final Logger logger = LoggerFactory.getLogger(ClientDaoJpa.class.getName());
+	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	@Inject
 	public ClientDaoJpa(final EntityManager entityManager) {
@@ -30,14 +32,19 @@ public class ClientDaoJpa extends AbstractDao<Client> implements ClientDao {
 	}
 
 	@Override
+	public boolean clientExist(final String clientName) {
+		Objects.requireNonNull(clientName);
+		return (boolean) findByQuery("Client.clientExist", with("name", clientName).parameters());
+	}
+
+	@Override
 	public Client findByName(final String clientName) {
-		final Map<String, Object> parameters = new HashMap<>();
-		parameters.put("name", clientName);
+		Objects.requireNonNull(clientName);
 		Client client;
 		try {
-			client = findByTypedQuery(Client.class, "Client.findByName", parameters);
+			client = findByTypedQuery(Client.class, "Client.findByName", with("name", clientName).parameters());
 		} catch (final NoResultException e) {
-			this.logger.debug( "No client found with that name", e);
+			logger.debug("No client found", e);
 			client = null;
 		}
 		return client;
@@ -51,7 +58,6 @@ public class ClientDaoJpa extends AbstractDao<Client> implements ClientDao {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public List<Client> searchByName(final String clientName, final boolean showDeleted) {
-		this.logger.debug( "SEARCH client by name {} ", clientName);
 		final FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(getEm());
 		final QueryBuilder qb = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(Client.class)
 				.get();

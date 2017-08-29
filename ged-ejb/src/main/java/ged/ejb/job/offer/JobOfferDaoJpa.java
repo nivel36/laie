@@ -1,5 +1,6 @@
 package ged.ejb.job.offer;
 
+import java.lang.invoke.MethodHandles;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,7 +25,7 @@ import ged.ejb.user.User;
 @Repository
 public class JobOfferDaoJpa extends AbstractDao<JobOffer> implements JobOfferDao {
 
-	private static final Logger logger = LoggerFactory.getLogger(JobOfferDaoJpa.class.getName());
+	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	@Inject
 	public JobOfferDaoJpa(final EntityManager entityManager) {
@@ -32,7 +33,7 @@ public class JobOfferDaoJpa extends AbstractDao<JobOffer> implements JobOfferDao
 	}
 
 	@Override
-	public List<JobOffer> findAllByClient(final Client client) {
+	public List<JobOffer> findAllJobOffersByClient(final Client client) {
 		Objects.requireNonNull(client);
 		logger.debug( "SELECT all the client offers", client.getName());
 		final Map<String, Object> parameters = new HashMap<>();

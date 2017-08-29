@@ -1,5 +1,6 @@
 package ged.ejb.client;
 
+import java.lang.invoke.MethodHandles;
 import java.util.List;
 import java.util.Objects;
 import org.slf4j.LoggerFactory;
@@ -15,7 +16,7 @@ import ged.ejb.core.model.Repository;
 @Stateless
 public class ClientServiceImpl extends AbstratctAuditedService<Client> implements ClientService {
 
-	private static final Logger logger = LoggerFactory.getLogger(ClientServiceImpl.class.getName());
+	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	private final ClientDao clientDao;
 
@@ -25,15 +26,16 @@ public class ClientServiceImpl extends AbstratctAuditedService<Client> implement
 	}
 
 	@Override
-	public boolean existsClient(final String clientName) {
-		// TODO arreglar
-		return findByName(clientName) != null;
+	public boolean clientExist(final String clientName) {
+		Objects.requireNonNull(clientName);
+		logger.debug("Look for client {} in database", clientName);
+		return clientDao.clientExist(clientName);
 	}
 
 	@Override
 	public Client findByName(final String clientName) {
-		Objects.requireNonNull(clientName, "El nombre del cliente no puede ser nulo");
-		ClientServiceImpl.logger.debug("Buscando cliente con nombre {}", clientName);
+		Objects.requireNonNull(clientName);
+		ClientServiceImpl.logger.debug("Find client with name {}", clientName);
 		return this.clientDao.findByName(clientName);
 	}
 
@@ -44,7 +46,7 @@ public class ClientServiceImpl extends AbstratctAuditedService<Client> implement
 
 	@Override
 	public List<Client> searchByName(final String clientName) {
-		logger.debug("Buscando clientes con nombre {}", clientName);
+		logger.debug("Search clients with name {}", clientName);
 		return this.clientDao.searchByName(clientName, false);
 	}
 }

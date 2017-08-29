@@ -1,5 +1,6 @@
 package ged.ejb.candidate;
 
+import java.lang.invoke.MethodHandles;
 import java.util.List;
 import java.util.Objects;
 
@@ -18,7 +19,7 @@ import ged.ejb.job.offer.JobOffer;
 @Stateless
 public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> implements CandidateService {
 
-	private static final Logger logger = LoggerFactory.getLogger(CandidateServiceImpl.class.getName());
+	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	private final CandidateDao candidateDao;
 
@@ -31,7 +32,7 @@ public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> imp
 	@Override
 	public List<Candidate> findAllByJobOffer(final JobOffer jobOffer) {
 		Objects.requireNonNull(jobOffer);
-		logger.debug("Search candidates by jobOffer {} ", jobOffer.getId());
+		logger.debug("Find candidates by jobOffer id {} ", jobOffer.getId());
 		return this.candidateDao.findAllByJobOffer(jobOffer);
 	}
 
@@ -43,11 +44,10 @@ public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> imp
 
 	@Override
 	public Candidate findCandidateAndFiles(final long id) {
-		Objects.requireNonNull(id);
 		if (id < 1) {
 			throw new IllegalArgumentException("id: " + id);
 		}
-		logger.debug("Find candidate with id {} and his files", id);
+		logger.debug("Find candidate with id {} and his/her files", id);
 		return this.candidateDao.findCandidateAndFiles(id);
 	}
 
@@ -59,13 +59,13 @@ public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> imp
 	@Override
 	public List<Candidate> search(final String name, final String surename, final String position) {
 		logger.debug("Search candidate by name {} and surename {}", new Object[] { name, surename });
-		return this.candidateDao.searchByNameAndSurename(name, surename, position, null);
+		return this.candidateDao.searchByNameAndSurename(name, surename, position, false);
 	}
 
 	@Override
 	public List<Candidate> searchByNameAndSurename(final String name, final String surename, final String position,
-			final Boolean showDeleted) {
-		logger.debug("Search candidate by name {} and surename {}. Show deleteted {2}",
+			final boolean showDeleted) {
+		logger.debug("Search candidate by name {} and surename {}. Show deleteted {}",
 				new Object[] { name, surename, showDeleted });
 		return this.candidateDao.searchByNameAndSurename(name, surename, position, showDeleted);
 	}

@@ -23,7 +23,6 @@ import org.hibernate.search.annotations.IndexedEmbedded;
 import ged.ejb.client.Client;
 import ged.ejb.core.i18n.I18n;
 import ged.ejb.core.model.AbstractAuditedEntity;
-import ged.ejb.job.JobCandidature;
 import ged.ejb.user.User;
 
 @Entity

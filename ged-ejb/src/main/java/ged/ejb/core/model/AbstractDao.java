@@ -19,9 +19,7 @@ public abstract class AbstractDao<T extends Identificable> implements Dao<T> {
 
 	private final static Logger logger = LoggerFactory.getLogger(AbstractDao.class.getName());
 
-	/**
-	 * El número máximo de resultados que permiten las búsquedas
-	 */
+	// max number of results
 	private static final int RES_LIMIT = 150;
 
 	private final EntityManager em;
@@ -82,6 +80,18 @@ public abstract class AbstractDao<T extends Identificable> implements Dao<T> {
 		return query.getSingleResult();
 	}
 
+	protected Object findByQuery(final String namedQuery) {
+		return findByQuery(namedQuery, null);
+	}
+
+	protected Object findByQuery(final String namedQuery, final Map<String, Object> parameters) {
+		Objects.requireNonNull(namedQuery);
+		logger.debug("Ejecutando la findByQuery: {}", namedQuery);
+		final Query query = this.em.createNamedQuery(namedQuery);
+		parametrizar(parameters, query);
+		return query.getSingleResult();
+	}
+
 	protected <E> E findByTypedQuery(final Class<E> entityClass, final String namedQuery,
 			final Map<String, Object> parameters) {
 		Objects.requireNonNull(entityClass);
@@ -101,6 +111,11 @@ public abstract class AbstractDao<T extends Identificable> implements Dao<T> {
 		parametrizar(parameters, query);
 		paginar(pageSize, pageNum, query);
 		return query.getResultList();
+	}
+
+	protected <E> List<E> findByTypedQuery(final Class<E> entityClass, final String namedQuery, final int pageSize,
+			final int pageNum) {
+		return findByTypedQuery(entityClass, namedQuery, null, pageSize, pageNum);
 	}
 
 	protected EntityManager getEm() {

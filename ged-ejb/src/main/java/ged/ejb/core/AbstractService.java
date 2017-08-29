@@ -14,11 +14,11 @@ public abstract class AbstractService<T extends Identificable> implements Servic
 		this.getDao().delete(entity);
 	}
 
-	protected void doInsert(final T entity) {
+	protected void insert(final T entity) {
 		this.getDao().insert(entity);
 	}
 
-	protected T doUpdate(final T entity) {
+	protected T update(final T entity) {
 		return this.getDao().update(entity);
 	}
 
@@ -39,10 +39,10 @@ public abstract class AbstractService<T extends Identificable> implements Servic
 	public T save(final T entity) {
 		Objects.requireNonNull(entity);
 		if (entity.getId() == 0) {
-			doInsert(entity);
+			insert(entity);
 			return entity;
 		} else {
-			return doUpdate(entity);
+			return update(entity);
 		}
 	}
 }

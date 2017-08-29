@@ -9,7 +9,6 @@ import javax.persistence.EntityManager;
 import ged.ejb.candidate.Candidate;
 import ged.ejb.core.model.AbstractDao;
 import ged.ejb.core.model.Repository;
-import ged.ejb.job.JobCandidature;
 
 @Repository
 public class JobCandidatureDaoJpa extends AbstractDao<JobCandidature> implements JobCandidatureDao {
@@ -31,5 +30,4 @@ public class JobCandidatureDaoJpa extends AbstractDao<JobCandidature> implements
 	protected Class<JobCandidature> getType() {
 		return JobCandidature.class;
 	}
-
 }

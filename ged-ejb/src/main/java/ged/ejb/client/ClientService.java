@@ -6,7 +6,7 @@ import ged.ejb.core.AuditedService;
 
 public interface ClientService extends AuditedService<Client> {
 
-	boolean existsClient(final String clientName);
+	boolean clientExist(final String clientName);
 
 	Client findByName(final String clientName);
 

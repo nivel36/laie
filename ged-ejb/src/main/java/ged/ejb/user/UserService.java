@@ -8,9 +8,9 @@ public interface UserService extends AuditedService<User> {
 
 	boolean emailExists(final String email);
 
-	List<User> findSubordinateUsers(long id);
+	List<User> findSubordinateUsers(final User user);
 
-	User findUserByUsername(String username);
+	User findUserByUsername(final String username);
 
 	List<User> searchByNameAndSurename(final String name, final String surename);
 

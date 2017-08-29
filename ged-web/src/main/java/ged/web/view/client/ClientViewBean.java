@@ -79,7 +79,7 @@ public class ClientViewBean extends AbstractPageBean {
 			NavigationUtils.gotoPage("clientSearch");
 		}
 
-		this.jobOffers = this.jobOfferService.findAllByClient(this.client);
+		this.jobOffers = this.jobOfferService.findAllJobOffersByClient(this.client);
 		if (this.client.isDeleted()) {
 			MessageUtils.addWarningMessage("message.erased_entity", "message.erased_entity");
 		}

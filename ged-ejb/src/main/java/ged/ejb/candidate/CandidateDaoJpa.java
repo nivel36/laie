@@ -1,12 +1,15 @@
 package ged.ejb.candidate;
 
-import java.util.HashMap;
+import static ged.ejb.core.model.QueryParameter.with;
+
+import java.lang.invoke.MethodHandles;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 import org.hibernate.search.jpa.FullTextEntityManager;
@@ -24,7 +27,7 @@ import ged.ejb.job.offer.JobOffer;
 @Repository
 public class CandidateDaoJpa extends AbstractDao<Candidate> implements CandidateDao {
 
-	private final Logger logger = LoggerFactory.getLogger(CandidateDaoJpa.class.getName());
+	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	@Inject
 	public CandidateDaoJpa(final EntityManager entityManager) {
@@ -34,10 +37,15 @@ public class CandidateDaoJpa extends AbstractDao<Candidate> implements Candidate
 	@Override
 	public List<Candidate> findAllByJobOffer(final JobOffer jobOffer) {
 		Objects.requireNonNull(jobOffer);
-		this.logger.debug("Buscando al candidateo con jobOffer {}", jobOffer.getId());
-		final Map<String, Object> properties = new HashMap<>();
-		properties.put("jobOffer", jobOffer);
-		return findByTypedQuery(Candidate.class, "Candidate.findAllByJobOffer", properties, 0, 0);
+		List<Candidate> candidates;
+		try {
+			candidates = findByTypedQuery(Candidate.class, "Candidate.findAllByJobOffer",
+					with("jobOffer", jobOffer).parameters(), 0, 0);
+		} catch (final NoResultException e) {
+			logger.debug("No candidates found");
+			candidates = new ArrayList<Candidate>();
+		}
+		return candidates;
 	}
 
 	@Override
@@ -47,14 +55,10 @@ public class CandidateDaoJpa extends AbstractDao<Candidate> implements Candidate
 
 	@Override
 	public Candidate findCandidateAndFiles(final long id) {
-		Objects.requireNonNull(id);
 		if (id < 1) {
 			throw new IllegalArgumentException("id: " + id);
 		}
-		this.logger.debug("Buscando al candidateo con id {}", id);
-		final Map<String, Object> properties = new HashMap<>();
-		properties.put("id", id);
-		return findByTypedQuery(Candidate.class, "Candidate.findCandidateAndFilesById", properties);
+		return findByTypedQuery(Candidate.class, "Candidate.findCandidateAndFilesById", with("id", id).parameters());
 	}
 
 	@Override
@@ -65,7 +69,7 @@ public class CandidateDaoJpa extends AbstractDao<Candidate> implements Candidate
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public List<Candidate> searchByNameAndSurename(final String name, final String surename, final String position,
-			final Boolean showDeleted) {
+			final boolean showDeleted) {
 		final FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(getEm());
 		final QueryBuilder qb = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(Candidate.class)
 				.get();
@@ -79,7 +83,7 @@ public class CandidateDaoJpa extends AbstractDao<Candidate> implements Candidate
 		if (position != null) {
 			bj.must(qb.keyword().onField("position").matching(position).createQuery());
 		}
-		if (showDeleted == null || !showDeleted) {
+		if (!showDeleted) {
 			bj.must(qb.keyword().onField("deleted").matching(true).createQuery()).not();
 		}
 		final Query persistenceQuery;

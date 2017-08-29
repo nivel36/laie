@@ -13,7 +13,7 @@ import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
 import ged.ejb.core.model.AbstractAuditedEntity;
-import ged.ejb.job.JobCandidature;
+import ged.ejb.job.offer.JobCandidature;
 
 @Entity
 @Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "jobCandidatureId", "datePlanned" }) })

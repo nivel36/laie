@@ -121,8 +121,8 @@ public class UserViewBean extends AbstractPageBean {
 		if (this.user == null) {
 			error();
 		}
-		this.team = this.userService.findSubordinateUsers(id);
-		this.jobOffers = this.jobOfferService.findAllByOwner(this.user);
+		this.team = this.userService.findSubordinateUsers(this.user);
+		this.jobOffers = this.jobOfferService.findAllJobOffersByOwner(this.user);
 		if (this.user.isDeleted()) {
 			MessageUtils.addWarningMessage("message.erased_entity", "message.erased_entity");
 		}

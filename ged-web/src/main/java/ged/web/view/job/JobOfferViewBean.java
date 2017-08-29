@@ -62,7 +62,7 @@ public class JobOfferViewBean extends AbstractPageBean {
 	public void clientChangedListener() {
 		final String clientName = this.jobOffer.getClient().getName();
 		logger.trace("Client name changed to {}", clientName);
-		this.newClient = !this.clientService.existsClient(clientName);
+		this.newClient = !this.clientService.clientExist(clientName);
 	}
 
 	public void edit() {

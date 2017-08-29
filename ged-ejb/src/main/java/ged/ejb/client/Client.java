@@ -8,6 +8,7 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.search.annotations.ContainedIn;
 import org.hibernate.search.annotations.Field;
@@ -34,7 +35,8 @@ public class Client extends AbstractAuditedEntity {
 	private List<JobOffer> jobOffers;
 
 	@Field
-	@Column(length = 128, unique = true, nullable = true)
+	@Column(length = 128, unique = true, nullable = false)
+	@NotNull
 	private String name;
 
 	@Override

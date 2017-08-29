@@ -9,5 +9,5 @@ import ged.ejb.core.model.Dao;
 @Local
 public interface RoleDao extends Dao< Role> {
 
-	List<Role> findSubordinateRoles(long id);
+	List<Role> findSubordinateRoles(final Role role);
 }
