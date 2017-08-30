@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -31,7 +32,7 @@ import ged.web.core.view.AbstractPageBean;
 @ViewScoped
 public class AddCurriculumBean extends AbstractPageBean {
 
-	private static final transient Logger logger = LoggerFactory.getLogger(AddCurriculumBean.class.getName());
+	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	private static final long serialVersionUID = 2700151546506672587L;
 

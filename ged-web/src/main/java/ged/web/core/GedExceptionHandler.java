@@ -1,5 +1,6 @@
 package ged.web.core;
 
+import java.lang.invoke.MethodHandles;
 import java.util.Iterator;
 
 import javax.ejb.EJBException;
@@ -19,7 +20,7 @@ import ged.web.core.util.NavigationUtils;
 
 public class GedExceptionHandler extends ExceptionHandlerWrapper {
 
-	private static final Logger logger = LoggerFactory.getLogger(GedExceptionHandler.class.getName());
+	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	private final ExceptionHandler wrapped;
 

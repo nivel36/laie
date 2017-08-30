@@ -1,5 +1,6 @@
 package ged.ejb.core.model;
 
+import java.lang.invoke.MethodHandles;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -15,9 +16,9 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 @Repository
-public abstract class AbstractJpaDao<T extends AbstractEntity> implements Dao<T> {
+public abstract class AbstractDaoJpa<T extends AbstractEntity> implements Dao<T> {
 
-	private final static Logger logger = LoggerFactory.getLogger(AbstractJpaDao.class.getName());
+	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	// max number of results
 	private static final int RES_LIMIT = 150;
@@ -25,7 +26,7 @@ public abstract class AbstractJpaDao<T extends AbstractEntity> implements Dao<T>
 	private final EntityManager em;
 
 	@Inject
-	public AbstractJpaDao(final EntityManager em) {
+	public AbstractDaoJpa(final EntityManager em) {
 		this.em = em;
 	}
 

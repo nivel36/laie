@@ -1,5 +1,7 @@
 package ged.web.core;
 
+import java.lang.invoke.MethodHandles;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.Initialized;
 import javax.enterprise.event.Observes;
@@ -14,7 +16,7 @@ import ged.ejb.core.model.Indexer;
 @ApplicationScoped
 public class StartupConfig {
 
-	private static final Logger logger = LoggerFactory.getLogger(StartupConfig.class.getName());
+	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	@Inject
 	private Indexer indexer;

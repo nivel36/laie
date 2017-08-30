@@ -1,5 +1,6 @@
 package ged.ejb.core.bookmark;
 
+import java.lang.invoke.MethodHandles;
 import java.util.List;
 import java.util.Objects;
 
@@ -21,7 +22,7 @@ import ged.ejb.user.User;
 @Stateless
 public class BookmarkServiceImpl extends AbstractService<Bookmark> implements BookmarkService {
 
-	private static final Logger logger = LoggerFactory.getLogger(BookmarkServiceImpl.class.getName());
+	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	private final BookmarkDao dao;
 

@@ -1,5 +1,6 @@
 package ged.ejb.core.action;
 
+import java.lang.invoke.MethodHandles;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -22,7 +23,7 @@ import ged.ejb.user.User;
 @Stateless
 public class ActionServiceImpl extends AbstractService<Action> implements ActionService {
 
-	private static final Logger logger = LoggerFactory.getLogger(ActionServiceImpl.class.getName());
+	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	private final ActionDao actionDao;
 

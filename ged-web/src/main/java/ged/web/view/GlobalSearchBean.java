@@ -2,7 +2,6 @@ package ged.web.view;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -24,21 +23,23 @@ public class GlobalSearchBean extends AbstractPageBean {
 
 	private List<JobOffer> jobOffers;
 
-	private final transient JobOfferService jobService;
+	@Inject
+	private transient JobOfferService jobService;
+
+	public void setJobService(JobOfferService jobService) {
+		this.jobService = jobService;
+	}
+
+	public void setUserService(UserService userService) {
+		this.userService = userService;
+	}
 
 	private String text;
 
 	private List<User> users;
 
-	private final transient UserService userService;
-
 	@Inject
-	public GlobalSearchBean(final JobOfferService jobService, final UserService userService) {
-		Objects.requireNonNull(jobService);
-		Objects.requireNonNull(userService);
-		this.jobService = jobService;
-		this.userService = userService;
-	}
+	private transient UserService userService;
 
 	public List<JobOffer> getJobOffers() {
 		return this.jobOffers;

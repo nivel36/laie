@@ -1,29 +1,23 @@
 package ged.web.view.candidate;
 
+import java.lang.invoke.MethodHandles;
+
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
-import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ged.ejb.candidate.CandidateService;
-
 @Named
 @ViewScoped
 public class CandidateSearchPopupBean extends AbstractCandidateSearchBean {
 
-	public static final transient Logger logger = LoggerFactory.getLogger(CandidateSearchPopupBean.class.getName());
+	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	private static final long serialVersionUID = -8526606627082697013L;
 
 	protected boolean rendered = false;
-
-	@Inject
-	public CandidateSearchPopupBean(final CandidateService candidateService) {
-		super(candidateService);
-	}
 
 	public void cancel() {
 		hide();
@@ -37,6 +31,7 @@ public class CandidateSearchPopupBean extends AbstractCandidateSearchBean {
 	@Override
 	@PostConstruct
 	public void init() {
+		logger.debug("CandidateSearchPopupBean init");
 		if (isRendered()) {
 			search();
 		}

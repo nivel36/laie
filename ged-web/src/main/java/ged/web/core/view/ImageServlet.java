@@ -5,6 +5,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.lang.invoke.MethodHandles;
 import java.net.URLDecoder;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
@@ -22,7 +23,7 @@ public class ImageServlet extends HttpServlet {
 
 	private static final int DEFAULT_BUFFER_SIZE = 10240; // 10KB.
 
-	private static final Logger logger = LoggerFactory.getLogger(ImageServlet.class.getName());
+	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	private static final long serialVersionUID = 6986461066782778042L;
 

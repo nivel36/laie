@@ -1,7 +1,7 @@
 package ged.web.view.config;
 
+import java.lang.invoke.MethodHandles;
 import java.util.Locale;
-import java.util.Objects;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -18,19 +18,18 @@ import ged.web.core.view.AbstractPageBean;
 
 @Named
 @ViewScoped
-public final class ConfigIndexBean extends AbstractPageBean {
+public class ConfigIndexBean extends AbstractPageBean {
 
-	private static final Logger logger = LoggerFactory.getLogger(ConfigIndexBean.class.getName());
+	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	private static final long serialVersionUID = -2789492893353263506L;
 
 	private User user;
 
+	@Inject
 	private transient UserService userService;
 
-	@Inject
-	public ConfigIndexBean(final UserService userService) {
-		Objects.requireNonNull(userService);
+	public void setUserService(UserService userService) {
 		this.userService = userService;
 	}
 

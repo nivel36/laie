@@ -1,7 +1,7 @@
 package ged.web.view.client;
 
+import java.lang.invoke.MethodHandles;
 import java.util.List;
-import java.util.Objects;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -19,21 +19,20 @@ import ged.web.core.view.AbstractPageBean;
 @ViewScoped
 public class ClientSearchBean extends AbstractPageBean {
 
-	private static final transient Logger logger = LoggerFactory.getLogger(ClientSearchBean.class.getName());
+	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	private static final long serialVersionUID = 2434819723782902618L;
 
-	private final transient ClientService clientService;
+	@Inject
+	private transient ClientService clientService;
+
+	public void setClientService(ClientService clientService) {
+		this.clientService = clientService;
+	}
 
 	private String name;
 
 	private List<Client> clients;
-
-	@Inject
-	public ClientSearchBean(final ClientService clientService) {
-		Objects.requireNonNull(clientService);
-		this.clientService = clientService;
-	}
 
 	public void clean() {
 		logger.debug("Clean action performed");

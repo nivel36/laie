@@ -1,29 +1,23 @@
 package ged.web.view.user;
 
+import java.lang.invoke.MethodHandles;
+
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
-import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ged.ejb.user.UserService;
-
 @Named
 @ViewScoped
 public class UserSearchPopupBean extends AbstractUserSearchBean {
 
-	public static final transient Logger logger = LoggerFactory.getLogger(UserSearchPopupBean.class.getName());
+	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	private static final long serialVersionUID = 9150785979243375541L;
 
 	protected boolean rendered = false;
-
-	@Inject
-	public UserSearchPopupBean(final UserService userService) {
-		super(userService);
-	}
 
 	public void cancel() {
 		hide();

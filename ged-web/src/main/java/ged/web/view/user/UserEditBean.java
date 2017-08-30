@@ -1,7 +1,7 @@
 package ged.web.view.user;
 
+import java.lang.invoke.MethodHandles;
 import java.util.Locale;
-import java.util.Objects;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -26,25 +26,27 @@ import ged.web.core.view.AbstractPageBean;
 @ViewScoped
 public class UserEditBean extends AbstractPageBean {
 
-	protected static final transient Logger logger = LoggerFactory.getLogger(UserEditBean.class.getName());
+	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	private static final long serialVersionUID = 1923340646020120203L;
 
 	private User manager;
 
-	private final transient RoleService roleService;
+	@Inject
+	private transient RoleService roleService;
+
+	public void setRoleService(RoleService roleService) {
+		this.roleService = roleService;
+	}
+
+	public void setUserService(UserService userService) {
+		this.userService = userService;
+	}
 
 	private User user;
 
-	private final transient UserService userService;
-
 	@Inject
-	public UserEditBean(final RoleService roleService, final UserService userService) {
-		Objects.requireNonNull(roleService);
-		Objects.requireNonNull(userService);
-		this.roleService = roleService;
-		this.userService = userService;
-	}
+	private transient UserService userService;
 
 	public String cancel() {
 		if (this.user.getId() == 0) {

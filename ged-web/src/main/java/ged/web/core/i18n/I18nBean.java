@@ -1,5 +1,6 @@
 package ged.web.core.i18n;
 
+import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -26,7 +27,7 @@ import ged.web.core.view.AbstractPageBean;
 @ApplicationScoped
 public class I18nBean extends AbstractPageBean {
 
-	private final static Logger logger = LoggerFactory.getLogger(I18nBean.class.getName());
+	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	private static final long serialVersionUID = 7203326692219293611L;
 

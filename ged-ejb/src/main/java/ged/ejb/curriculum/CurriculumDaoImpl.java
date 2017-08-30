@@ -7,11 +7,11 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
-import ged.ejb.core.model.AbstractDao;
+import ged.ejb.core.model.AbstractDaoJpa;
 import ged.ejb.core.model.Repository;
 
 @Repository
-public class CurriculumDaoImpl extends AbstractDao<Curriculum> implements CurriculumDao {
+public class CurriculumDaoImpl extends AbstractDaoJpa<Curriculum> implements CurriculumDao {
 
 	@Inject
 	public CurriculumDaoImpl(final EntityManager entityManger) {

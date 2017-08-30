@@ -2,9 +2,9 @@ package ged.web.view.candidate;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.invoke.MethodHandles;
 import java.nio.file.Files;
 import java.util.Date;
-import java.util.Objects;
 import java.util.UUID;
 
 import javax.faces.application.NavigationHandler;
@@ -28,7 +28,7 @@ import ged.web.core.view.AbstractPageBean;
 @ViewScoped
 public class CandidateViewBean extends AbstractPageBean {
 
-	private static final transient Logger logger = LoggerFactory.getLogger(CandidateViewBean.class.getName());
+	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	private static final long serialVersionUID = 1577879781927493283L;
 
@@ -36,28 +36,30 @@ public class CandidateViewBean extends AbstractPageBean {
 
 	private Candidate candidate;
 
-	private final transient CandidateService candidateService;
+	@Inject
+	private transient CandidateService candidateService;
 
 	private boolean editable;
 
 	private boolean editingFile;
 
+	public void setCandidateService(CandidateService candidateService) {
+		this.candidateService = candidateService;
+	}
+
+	public void setFileDirectory(String fileDirectory) {
+		this.fileDirectory = fileDirectory;
+	}
+
 	private FileSys file;
 
-	private final String fileDirectory;
+	@Inject
+	@ConfigurationProperty(value = "file.directory")
+	private  String fileDirectory;
 
 	private String id;
 
 	private transient Part part;
-
-	@Inject
-	public CandidateViewBean(final CandidateService candidateService,
-			@ConfigurationProperty(value = "file.directory") final String fileDirectory) {
-		Objects.requireNonNull(candidateService);
-		Objects.requireNonNull(fileDirectory);
-		this.candidateService = candidateService;
-		this.fileDirectory = fileDirectory;
-	}
 
 	public void addFile() {
 		this.addingFile = true;

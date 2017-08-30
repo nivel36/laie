@@ -1,5 +1,6 @@
 package ged.web.view.candidate;
 
+import java.lang.invoke.MethodHandles;
 import java.util.List;
 import java.util.Objects;
 
@@ -15,13 +16,18 @@ import ged.web.core.view.AbstractPageBean;
 
 public abstract class AbstractCandidateSearchBean extends AbstractPageBean {
 
-	private static final transient Logger logger = LoggerFactory.getLogger(AbstractCandidateSearchBean.class.getName());
+	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	private static final long serialVersionUID = -5446836478526189391L;
 
 	protected List<Candidate> candidates;
 
-	protected final transient CandidateService candidateService;
+	@Inject
+	protected transient CandidateService candidateService;
+
+	public void setCandidateService(CandidateService candidateService) {
+		this.candidateService = candidateService;
+	}
 
 	private String name;
 
@@ -30,12 +36,6 @@ public abstract class AbstractCandidateSearchBean extends AbstractPageBean {
 	protected Candidate selectedCandidate;
 
 	private String surename;
-
-	@Inject
-	public AbstractCandidateSearchBean(final CandidateService candidateService) {
-		Objects.requireNonNull(candidateService);
-		this.candidateService = candidateService;
-	}
 
 	public void clean() {
 		this.surename = null;

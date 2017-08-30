@@ -1,5 +1,6 @@
 package ged.ejb.core.action;
 
+import java.lang.invoke.MethodHandles;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,14 +11,14 @@ import org.slf4j.Logger;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
-import ged.ejb.core.model.AbstractDao;
+import ged.ejb.core.model.AbstractDaoJpa;
 import ged.ejb.core.model.Repository;
 import ged.ejb.user.User;
 
 @Repository
-public class ActionDaoJpa extends AbstractDao<Action> implements ActionDao {
+public class ActionDaoJpa extends AbstractDaoJpa<Action> implements ActionDao {
 
-	private static final Logger logger = LoggerFactory.getLogger(ActionDaoJpa.class.getName());
+	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	@Inject
 	public ActionDaoJpa(final EntityManager entityManager) {

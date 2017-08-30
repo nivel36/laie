@@ -1,5 +1,6 @@
 package ged.web.view;
 
+import java.lang.invoke.MethodHandles;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -17,7 +18,7 @@ import org.slf4j.LoggerFactory;
 @FacesValidator("ged.web.view.SearchFieldValidator")
 public class SearchFieldValidator implements Validator {
 
-	private final static Logger logger = LoggerFactory.getLogger(SearchFieldValidator.class.getName());
+	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	@Inject
 	protected FacesContext facesContext;

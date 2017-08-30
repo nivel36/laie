@@ -1,6 +1,7 @@
 package ged.web.core.util;
 
 import java.io.IOException;
+import java.lang.invoke.MethodHandles;
 import java.util.Properties;
 
 import javax.annotation.PostConstruct;
@@ -17,7 +18,7 @@ import ged.ejb.core.util.ConfigurationProperty;
 
 public class WebResources {
 
-	private final static Logger logger = LoggerFactory.getLogger(WebResources.class.getName());
+	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	private final Properties properties;
 

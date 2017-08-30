@@ -1,11 +1,9 @@
 package ged.web.view.config;
 
 import java.io.UnsupportedEncodingException;
+import java.lang.invoke.MethodHandles;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Objects;
-import org.slf4j.LoggerFactory;
-import org.slf4j.Logger;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
@@ -14,6 +12,9 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.xml.bind.DatatypeConverter;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
 import ged.web.core.util.MessageUtils;
@@ -21,9 +22,9 @@ import ged.web.core.view.AbstractPageBean;
 
 @Named
 @ViewScoped
-public final class ChangePasswordPopupBean extends AbstractPageBean {
+public class ChangePasswordPopupBean extends AbstractPageBean {
 
-	private static final Logger logger = LoggerFactory.getLogger(ChangePasswordPopupBean.class.getName());
+	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	private static final long serialVersionUID = -7760785874121856319L;
 
@@ -37,13 +38,8 @@ public final class ChangePasswordPopupBean extends AbstractPageBean {
 
 	private String repeatPassword;
 
-	private final transient UserService userService;
-
 	@Inject
-	public ChangePasswordPopupBean(final UserService userService) {
-		Objects.requireNonNull(userService);
-		this.userService = userService;
-	}
+	private transient UserService userService;
 
 	public void change() {
 		logger.debug("Change password action performed");
@@ -129,5 +125,9 @@ public final class ChangePasswordPopupBean extends AbstractPageBean {
 
 	public void setRepeatPassword(final String repeatPassword) {
 		this.repeatPassword = repeatPassword;
+	}
+
+	public void setUserService(UserService userService) {
+		this.userService = userService;
 	}
 }

@@ -1,29 +1,23 @@
 package ged.web.view.candidate;
 
+import java.lang.invoke.MethodHandles;
 import java.util.Objects;
 
 import javax.faces.view.ViewScoped;
-import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ged.ejb.candidate.Candidate;
-import ged.ejb.candidate.CandidateService;
 
 @Named
 @ViewScoped
 public class CandidateSearchBean extends AbstractCandidateSearchBean {
 
-	private static final transient Logger logger = LoggerFactory.getLogger(CandidateSearchBean.class.getName());
+	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	private static final long serialVersionUID = 2434819723782902618L;
-
-	@Inject
-	public CandidateSearchBean(final CandidateService candidateService) {
-		super(candidateService);
-	}
 
 	@Override
 	public String edit(final Candidate candidate) {

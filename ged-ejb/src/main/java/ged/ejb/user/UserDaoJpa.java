@@ -19,11 +19,11 @@ import org.hibernate.search.query.dsl.QueryBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ged.ejb.core.model.AbstractJpaDao;
+import ged.ejb.core.model.AbstractDaoJpa;
 import ged.ejb.core.model.Repository;
 
 @Repository
-public final class UserDaoJpa extends AbstractJpaDao<User> implements UserDao {
+public final class UserDaoJpa extends AbstractDaoJpa<User> implements UserDao {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 

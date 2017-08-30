@@ -1,5 +1,6 @@
 package ged.ejb.core.events;
 
+import java.lang.invoke.MethodHandles;
 import java.util.Objects;
 
 import javax.enterprise.event.Event;
@@ -18,7 +19,7 @@ import ged.ejb.core.model.Auditable;
 @Audited(action = Type.UNDELETE)
 public class UndeleteInterceptor extends AbstractInterceptor {
 
-	private static final Logger log = LoggerFactory.getLogger(UndeleteInterceptor.class.getName());
+	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	private final Event<Auditable> postUndeleteEvent;
 
@@ -36,7 +37,7 @@ public class UndeleteInterceptor extends AbstractInterceptor {
 	@AroundInvoke
 	public Object fireEvent(final InvocationContext joinPoint) throws Exception {
 		final Auditable auditedEntity = getAuditedEntity(joinPoint);
-		log.trace("Undelete event fired");
+		logger.trace("Undelete event fired");
 		this.preUndeleteEvent.fire(auditedEntity);
 		final Object returnObject = joinPoint.proceed();
 		this.postUndeleteEvent.fire(auditedEntity);

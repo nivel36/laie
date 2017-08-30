@@ -7,11 +7,11 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
 import ged.ejb.candidate.Candidate;
-import ged.ejb.core.model.AbstractJpaDao;
+import ged.ejb.core.model.AbstractDaoJpa;
 import ged.ejb.core.model.Repository;
 
 @Repository
-public class JobCandidatureDaoJpa extends AbstractJpaDao<JobCandidature> implements JobCandidatureDao {
+public class JobCandidatureDaoJpa extends AbstractDaoJpa<JobCandidature> implements JobCandidatureDao {
 
 	@Inject
 	public JobCandidatureDaoJpa(final EntityManager em) {

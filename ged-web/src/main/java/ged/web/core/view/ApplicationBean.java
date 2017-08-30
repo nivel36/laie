@@ -1,5 +1,6 @@
 package ged.web.core.view;
 
+import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -24,7 +25,7 @@ import ged.ejb.user.role.Role;
 @Named
 public class ApplicationBean extends AbstractBean {
 
-	private final static Logger logger = LoggerFactory.getLogger(AbstractBean.class.getName());
+	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	private static final long serialVersionUID = 6394915115616408285L;
 

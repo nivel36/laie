@@ -13,11 +13,11 @@ import javax.persistence.NoResultException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ged.ejb.core.model.AbstractJpaDao;
+import ged.ejb.core.model.AbstractDaoJpa;
 import ged.ejb.core.model.Repository;
 
 @Repository
-public class RoleDaoJpa extends AbstractJpaDao<Role> implements RoleDao {
+public class RoleDaoJpa extends AbstractDaoJpa<Role> implements RoleDao {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 

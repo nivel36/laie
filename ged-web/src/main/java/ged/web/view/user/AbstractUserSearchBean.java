@@ -1,7 +1,7 @@
 package ged.web.view.user;
 
+import java.lang.invoke.MethodHandles;
 import java.util.List;
-import java.util.Objects;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -15,7 +15,7 @@ import ged.web.core.view.AbstractPageBean;
 
 abstract class AbstractUserSearchBean extends AbstractPageBean {
 
-	private final transient static Logger logger = LoggerFactory.getLogger(AbstractPageBean.class.getName());
+	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	private static final long serialVersionUID = 3522778618602713805L;
 
@@ -25,16 +25,15 @@ abstract class AbstractUserSearchBean extends AbstractPageBean {
 
 	private String surename;
 
-	protected final transient UserService userService;
-
 	@Inject
-	public AbstractUserSearchBean(final UserService userService) {
-		Objects.requireNonNull(userService);
+	protected transient UserService userService;
+
+	public void setUserService(UserService userService) {
 		this.userService = userService;
 	}
 
 	public void clean() {
-		logger.debug( "Cleaning search fields");
+		logger.debug("Cleaning search fields");
 		cleanSearchFields();
 		search();
 	}
@@ -58,7 +57,7 @@ abstract class AbstractUserSearchBean extends AbstractPageBean {
 
 	@PostConstruct
 	public void init() {
-		logger.trace( "Init UserSearchBean");
+		logger.trace("Init UserSearchBean");
 		search();
 	}
 

@@ -20,12 +20,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ged.ejb.core.FileType;
-import ged.ejb.core.model.AbstractDao;
+import ged.ejb.core.model.AbstractDaoJpa;
 import ged.ejb.core.model.Repository;
 import ged.ejb.job.offer.JobOffer;
 
 @Repository
-public class CandidateDaoJpa extends AbstractDao<Candidate> implements CandidateDao {
+public class CandidateDaoJpa extends AbstractDaoJpa<Candidate> implements CandidateDao {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 

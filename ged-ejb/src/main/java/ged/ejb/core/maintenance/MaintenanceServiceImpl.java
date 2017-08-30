@@ -12,10 +12,10 @@ import ged.ejb.core.model.Repository;
 @Stateless
 public class MaintenanceServiceImpl extends AbstractService<EnumEntity> implements MaintenanceService {
 
-	private final MaintenanceDao maintenanceDao;
+	private final MaintenanceDao<EnumEntity> maintenanceDao;
 
 	@Inject
-	public MaintenanceServiceImpl(@Repository final MaintenanceDao maintenanceDao) {
+	public MaintenanceServiceImpl(@Repository final MaintenanceDao<EnumEntity> maintenanceDao) {
 		Objects.requireNonNull(maintenanceDao);
 		this.maintenanceDao = maintenanceDao;
 	}

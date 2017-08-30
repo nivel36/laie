@@ -1,8 +1,8 @@
 package ged.web.view.user;
 
 import java.io.IOException;
+import java.lang.invoke.MethodHandles;
 import java.util.List;
-import java.util.Objects;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.application.NavigationHandler;
@@ -32,7 +32,7 @@ import ged.web.reports.UserReport;
 @ViewScoped
 public class UserViewBean extends AbstractPageBean {
 
-	protected static final transient Logger logger = LoggerFactory.getLogger(UserViewBean.class.getName());
+	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	private static final long serialVersionUID = -2187385732087309689L;
 
@@ -40,11 +40,25 @@ public class UserViewBean extends AbstractPageBean {
 
 	private List<JobOffer> jobOffers;
 
-	private final transient JobOfferService jobOfferService;
+	@Inject
+	private transient JobOfferService jobOfferService;
 
 	private User manager;
 
-	private final transient RoleService roleService;
+	@Inject
+	private transient RoleService roleService;
+
+	public void setJobOfferService(JobOfferService jobOfferService) {
+		this.jobOfferService = jobOfferService;
+	}
+
+	public void setRoleService(RoleService roleService) {
+		this.roleService = roleService;
+	}
+
+	public void setUserService(UserService userService) {
+		this.userService = userService;
+	}
 
 	private List<User> team;
 
@@ -52,18 +66,9 @@ public class UserViewBean extends AbstractPageBean {
 
 	private String userId;
 
-	private final transient UserService userService;
-
 	@Inject
-	public UserViewBean(final UserService userService, final JobOfferService jobOfferService,
-			final RoleService roleService) {
-		Objects.requireNonNull(userService);
-		Objects.requireNonNull(jobOfferService);
-		Objects.requireNonNull(roleService);
-		this.userService = userService;
-		this.jobOfferService = jobOfferService;
-		this.roleService = roleService;
-	}
+	private transient UserService userService;
+
 
 	public void cancelEditUser() {
 		this.editable = false;

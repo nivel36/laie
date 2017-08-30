@@ -1,6 +1,6 @@
 package ged.web.view.candidate;
 
-import java.util.Objects;
+import java.lang.invoke.MethodHandles;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -21,23 +21,25 @@ import ged.web.core.view.AbstractPageBean;
 @ViewScoped
 public class CandidateEditBean extends AbstractPageBean {
 
-	private static final Logger logger = LoggerFactory.getLogger(CandidateEditBean.class.getName());
+	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	private static final long serialVersionUID = -4334616177754425866L;
 
 	private Candidate candidate;
 
-	private final transient CandidateService candidateService;
-
-	private final transient CurriculumService curriculumService;
-
 	@Inject
-	public CandidateEditBean(final CandidateService candidateService, final CurriculumService curriculumService) {
-		Objects.requireNonNull(candidateService);
-		Objects.requireNonNull(curriculumService);
+	private  transient CandidateService candidateService;
+
+	public void setCandidateService(CandidateService candidateService) {
 		this.candidateService = candidateService;
+	}
+
+	public void setCurriculumService(CurriculumService curriculumService) {
 		this.curriculumService = curriculumService;
 	}
+
+	@Inject
+	private  transient CurriculumService curriculumService;
 
 	public String cancel() {
 		if (this.candidate.getId() == 0) {

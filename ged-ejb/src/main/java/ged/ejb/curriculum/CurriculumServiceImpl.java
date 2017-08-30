@@ -1,5 +1,6 @@
 package ged.ejb.curriculum;
 
+import java.lang.invoke.MethodHandles;
 import java.util.List;
 import java.util.Objects;
 import org.slf4j.LoggerFactory;
@@ -15,7 +16,7 @@ import ged.ejb.core.model.Repository;
 @Stateless
 public class CurriculumServiceImpl extends AbstractService<Curriculum> implements CurriculumService {
 
-	private static final Logger logger = LoggerFactory.getLogger(CurriculumServiceImpl.class.getName());
+	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	private final CurriculumDao curriculumDao;
 

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -30,15 +29,14 @@ public class IndexBean extends AbstractPageBean {
 
 	private List<JobOffer> jobOffers;
 
-	private transient final JobOfferService jobService;
-
-	private transient ScheduleModel schedule;
-
 	@Inject
-	public IndexBean(final JobOfferService jobService) {
-		Objects.requireNonNull(jobService);
+	private transient JobOfferService jobService;
+
+	public void setJobService(JobOfferService jobService) {
 		this.jobService = jobService;
 	}
+
+	private transient ScheduleModel schedule;
 
 	public List<Candidate> getCandidates() {
 		return this.candidates;
@@ -47,7 +45,6 @@ public class IndexBean extends AbstractPageBean {
 	public Date getInitialDate() {
 		final Calendar calendar = Calendar.getInstance();
 		calendar.set(calendar.get(Calendar.YEAR), Calendar.FEBRUARY, calendar.get(Calendar.DATE), 0, 0, 0);
-
 		return calendar.getTime();
 	}
 

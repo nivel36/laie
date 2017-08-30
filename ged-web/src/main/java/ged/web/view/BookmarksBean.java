@@ -1,14 +1,15 @@
 package ged.web.view;
 
+import java.lang.invoke.MethodHandles;
 import java.util.List;
-import java.util.Objects;
-import org.slf4j.LoggerFactory;
-import org.slf4j.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import ged.ejb.core.bookmark.Bookmark;
 import ged.ejb.core.bookmark.BookmarkService;
@@ -21,17 +22,16 @@ import ged.web.core.view.AbstractPageBean;
 @SessionScoped
 public class BookmarksBean extends AbstractPageBean {
 
-	private static final transient Logger logger = LoggerFactory.getLogger(BookmarksBean.class.getName());
+	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	private static final long serialVersionUID = 8786492354769335930L;
 
 	private List<Bookmark> bookmarks;
 
-	private final transient BookmarkService bookmarkService;
-
 	@Inject
-	public BookmarksBean(final BookmarkService bookmarkService) {
-		Objects.requireNonNull(bookmarkService);
+	private transient BookmarkService bookmarkService;
+
+	public void setBookmarkService(BookmarkService bookmarkService) {
 		this.bookmarkService = bookmarkService;
 	}
 

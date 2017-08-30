@@ -1,7 +1,6 @@
 package ged.web.view.client;
 
 import java.util.List;
-import java.util.Objects;
 
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -23,24 +22,26 @@ public class ClientViewBean extends AbstractPageBean {
 
 	private Client client;
 
-	private final transient ClientService clientService;
+	@Inject
+	private transient ClientService clientService;
+
+	public void setClientService(ClientService clientService) {
+		this.clientService = clientService;
+	}
+
+	public void setJobOfferService(JobOfferService jobOfferService) {
+		this.jobOfferService = jobOfferService;
+	}
 
 	private String id;
 
 	private List<JobOffer> jobOffers;
 
-	private final transient JobOfferService jobOfferService;
+	@Inject
+	private transient JobOfferService jobOfferService;
 	
 	private boolean editable;
 
-	@Inject
-	public ClientViewBean(final ClientService clientService, final JobOfferService jobOfferService) {
-		Objects.requireNonNull(clientService);
-		Objects.requireNonNull(jobOfferService);
-		this.clientService = clientService;
-		this.jobOfferService = jobOfferService;
-	}
-	
 	public void editClient() {
 		editable=true;
 	}

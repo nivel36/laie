@@ -1,5 +1,6 @@
 package ged.web.view;
 
+import java.lang.invoke.MethodHandles;
 import java.util.Locale;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
@@ -20,7 +21,7 @@ import ged.web.core.view.AbstractPageBean;
 @RequestScoped
 public class LoginBean extends AbstractPageBean {
 
-	private static final transient Logger logger = LoggerFactory.getLogger(LoginBean.class.getName());
+	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	private static final long serialVersionUID = 8364578958730650005L;
 

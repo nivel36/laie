@@ -2,7 +2,6 @@ package ged.web.view.candidate;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import javax.faces.application.NavigationHandler;
 import javax.faces.view.ViewScoped;
@@ -28,7 +27,12 @@ public class CurriculumViewBean extends AbstractPageBean {
 
 	private Curriculum curriculum;
 
-	private final transient CurriculumService curriculumService;
+	@Inject
+	private transient CurriculumService curriculumService;
+
+	public void setCurriculumService(CurriculumService curriculumService) {
+		this.curriculumService = curriculumService;
+	}
 
 	private List<Education> education;
 
@@ -39,12 +43,6 @@ public class CurriculumViewBean extends AbstractPageBean {
 	private List<Language> languages;
 
 	private List<Skill> skills;
-
-	@Inject
-	public CurriculumViewBean(final CurriculumService curriculumService) {
-		Objects.requireNonNull(curriculumService);
-		this.curriculumService = curriculumService;
-	}
 
 	public String editCurriculum() {
 		this.flash.put("curriculum", this.curriculum);

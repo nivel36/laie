@@ -3,7 +3,6 @@ package ged.web.view.candidate;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 
 import javax.annotation.PostConstruct;
@@ -28,21 +27,20 @@ public class CurriculumEditBean extends AbstractPageBean {
 
 	private Curriculum curriculum;
 
-	private final transient CurriculumService curriculumService;
+	@Inject
+	private transient CurriculumService curriculumService;
 
 	private List<Education> education = new ArrayList<>();
+
+	public void setCurriculumService(CurriculumService curriculumService) {
+		this.curriculumService = curriculumService;
+	}
 
 	private List<JobExperience> jobExperiences = new ArrayList<>();
 
 	private List<Language> languages = new ArrayList<>();
 
 	private List<Skill> skills = new ArrayList<>();
-
-	@Inject
-	public CurriculumEditBean(final CurriculumService curriculumService) {
-		Objects.requireNonNull(curriculumService);
-		this.curriculumService = curriculumService;
-	}
 
 	public void addEducation() {
 		final Education education = new Education();

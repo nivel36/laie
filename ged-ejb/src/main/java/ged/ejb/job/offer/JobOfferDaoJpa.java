@@ -18,12 +18,12 @@ import org.hibernate.search.query.dsl.BooleanJunction;
 import org.hibernate.search.query.dsl.QueryBuilder;
 
 import ged.ejb.client.Client;
-import ged.ejb.core.model.AbstractJpaDao;
+import ged.ejb.core.model.AbstractDaoJpa;
 import ged.ejb.core.model.Repository;
 import ged.ejb.user.User;
 
 @Repository
-public class JobOfferDaoJpa extends AbstractJpaDao<JobOffer> implements JobOfferDao {
+public class JobOfferDaoJpa extends AbstractDaoJpa<JobOffer> implements JobOfferDao {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
