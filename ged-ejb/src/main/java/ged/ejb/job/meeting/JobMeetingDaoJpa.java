@@ -3,11 +3,11 @@ package ged.ejb.job.meeting;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
-import ged.ejb.core.model.AbstractDao;
+import ged.ejb.core.model.AbstractJpaDao;
 import ged.ejb.core.model.Repository;
 
 @Repository
-public class JobMeetingDaoJpa extends AbstractDao<JobMeeting> implements JobMeetingDao {
+public class JobMeetingDaoJpa extends AbstractJpaDao<JobMeeting> implements JobMeetingDao {
 
 	@Inject
 	public JobMeetingDaoJpa(final EntityManager em) {

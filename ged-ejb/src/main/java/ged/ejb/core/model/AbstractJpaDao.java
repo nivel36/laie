@@ -15,9 +15,9 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 @Repository
-public abstract class AbstractDao<T extends Identificable> implements Dao<T> {
+public abstract class AbstractJpaDao<T extends AbstractEntity> implements Dao<T> {
 
-	private final static Logger logger = LoggerFactory.getLogger(AbstractDao.class.getName());
+	private final static Logger logger = LoggerFactory.getLogger(AbstractJpaDao.class.getName());
 
 	// max number of results
 	private static final int RES_LIMIT = 150;
@@ -25,7 +25,7 @@ public abstract class AbstractDao<T extends Identificable> implements Dao<T> {
 	private final EntityManager em;
 
 	@Inject
-	public AbstractDao(final EntityManager em) {
+	public AbstractJpaDao(final EntityManager em) {
 		this.em = em;
 	}
 
