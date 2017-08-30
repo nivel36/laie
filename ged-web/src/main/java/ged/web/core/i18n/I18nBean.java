@@ -41,6 +41,7 @@ public class I18nBean extends AbstractPageBean {
 	@Inject
 	private Application application;
 
+	//TODO: problemas: Si se añade o modifica un registro en la tabla de i18n esto no funciona.
 	public String getI18nText(final String key, final String language) {
 		return this.i18nTexts.get(language).get(key);
 	}
