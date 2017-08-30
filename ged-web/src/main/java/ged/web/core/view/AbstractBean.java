@@ -19,5 +19,5 @@ public class AbstractBean implements Serializable {
 
 	@Inject
 	protected transient HttpServletRequest httpServletRequest;
-
+	
 }

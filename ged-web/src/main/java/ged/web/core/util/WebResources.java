@@ -8,6 +8,7 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.InjectionPoint;
+import javax.faces.application.Application;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
@@ -46,6 +47,12 @@ public class WebResources {
 	@RequestScoped
 	public FacesContext produceFacesContext() {
 		return FacesContext.getCurrentInstance();
+	}
+	
+	@Produces
+	@RequestScoped
+	public Application produceApplication() {
+		return FacesContext.getCurrentInstance().getApplication();
 	}
 
 	@Produces

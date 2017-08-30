@@ -7,7 +7,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.MissingResourceException;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
@@ -20,7 +19,6 @@ import org.slf4j.LoggerFactory;
 
 import ged.ejb.core.i18n.I18nService;
 import ged.ejb.core.i18n.I18nString;
-import ged.web.core.util.TransaltionUtils;
 import ged.web.core.view.AbstractPageBean;
 
 @Named
@@ -28,6 +26,8 @@ import ged.web.core.view.AbstractPageBean;
 public class I18nBean extends AbstractPageBean {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
+
+	private static final String SPANISH = "es";
 
 	private static final long serialVersionUID = 7203326692219293611L;
 
@@ -37,24 +37,17 @@ public class I18nBean extends AbstractPageBean {
 	private Map<String, Map<String, String>> i18nTexts;
 
 	private List<String> locales;
+	
+	@Inject
+	private Application application;
 
 	public String getI18nText(final String key, final String language) {
-		String translatedText;
-		if (this.i18nTexts.get(language).containsKey(key)) {
-			translatedText = this.i18nTexts.get(language).get(key);
-		} else {
-			try {
-				translatedText = TransaltionUtils.translate(key);
-			} catch (final MissingResourceException e) {
-				logger.error("Error loading image", e);
-				translatedText = "?" + key + "?";
-			}
-		}
-		return translatedText;
+		return this.i18nTexts.get(language).get(key);
 	}
 
 	@PostConstruct
 	public void init() {
+		logger.debug("I18nBean init");
 		loadLocales();
 		loadI18nText();
 	}
@@ -71,20 +64,22 @@ public class I18nBean extends AbstractPageBean {
 	}
 
 	private void loadLocales() {
-		final Application app = this.facesContext.getApplication();
-		final Iterator<Locale> supportedLocales = app.getSupportedLocales();
+		final Iterator<Locale> supportedLocales = this.application.getSupportedLocales();
 		this.locales = new ArrayList<>();
 		while (supportedLocales.hasNext()) {
 			final String language = supportedLocales.next().getLanguage();
 			this.locales.add(language);
 		}
-		final Locale defaultLocale = app.getDefaultLocale();
-		final String language;
-		if (defaultLocale == null) {
-			language = "es";
-		} else {
-			language = defaultLocale.getLanguage();
-		}
+		final String language = getLanguageFromDefaultLocale();
 		this.locales.add(language);
+	}
+
+	private String getLanguageFromDefaultLocale() {
+		final Locale defaultLocale = this.application.getDefaultLocale();
+		if (defaultLocale == null) {
+			return SPANISH;
+		} else {
+			return defaultLocale.getLanguage();
+		}
 	}
 }
