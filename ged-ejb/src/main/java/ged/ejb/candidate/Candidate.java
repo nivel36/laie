@@ -38,7 +38,7 @@ public class Candidate extends AbstractAuditedEntity {
 	
 	@Embedded
 	private Address address;
-
+	
 	private Integer age;
 
 	@Temporal(TemporalType.DATE)
@@ -57,6 +57,8 @@ public class Candidate extends AbstractAuditedEntity {
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "candidate", orphanRemoval = true)
 	private List<FileSys> files;
+
+	private String image;
 
 	private String infojobsProfileUrl;
 
@@ -120,10 +122,6 @@ public class Candidate extends AbstractAuditedEntity {
 				&& Objects.equals(this.phoneNumber, other.phoneNumber) && Objects.equals(this.surename, other.surename);
 	}
 
-	public String getFullName() {
-		return name + " " + surename;
-	}
-
 	public Address getAddress() {
 		return this.address;
 	}
@@ -150,6 +148,14 @@ public class Candidate extends AbstractAuditedEntity {
 
 	public List<FileSys> getFiles() {
 		return this.files;
+	}
+
+	public String getFullName() {
+		return name + " " + surename;
+	}
+
+	public String getImage() {
+		return image;
 	}
 
 	public String getInfojobsProfileUrl() {
@@ -223,6 +229,10 @@ public class Candidate extends AbstractAuditedEntity {
 
 	public void setFiles(final List<FileSys> files) {
 		this.files = files;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
 	}
 
 	public void setInfojobsProfileUrl(final String infojobsProfileUrl) {
