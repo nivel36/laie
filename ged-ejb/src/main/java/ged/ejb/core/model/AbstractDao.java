@@ -35,8 +35,7 @@ public abstract class AbstractDao<T extends Identificable> implements Dao<T> {
 		if (entity.getId() == 0) {
 			throw new IllegalStateException();
 		}
-		logger.debug("Eliminando la entidad::Clase={}::Id={}",
-				new Object[] { entity.getClass().getCanonicalName(), entity.getId() });
+		logger.debug("Delete entity class {} with id {}", entity.getClass(), entity.getId());
 		if (this.em.contains(entity)) {
 			this.em.remove(entity);
 		} else {
@@ -48,16 +47,19 @@ public abstract class AbstractDao<T extends Identificable> implements Dao<T> {
 	@Override
 	public T find(final long id) {
 		Objects.requireNonNull(id);
-		logger.debug("Buscando por clave primaria::clase={}::id={}", new Object[] { getClass(), id });
+		logger.debug("Find class {} by id {}", getType(), id);
 		return this.em.find(getType(), id);
 	}
 
 	@Override
 	public List<T> findAll() {
+		logger.debug("Find all entities of class {}", getType());
 		return findAll(getType());
 	}
 
 	protected <E> List<E> findAll(final Class<E> type) {
+		Objects.requireNonNull(type);
+		logger.debug("Find all entities of class {}", type);
 		final CriteriaBuilder cb = this.em.getCriteriaBuilder();
 		final CriteriaQuery<E> cq = cb.createQuery(type);
 		final Root<E> root = cq.from(type);
@@ -67,7 +69,7 @@ public abstract class AbstractDao<T extends Identificable> implements Dao<T> {
 
 	protected <E> List<E> findByCriteria(final CriteriaQuery<E> cq, final int pageSize, final int pageNum) {
 		Objects.requireNonNull(cq);
-		logger.debug("Lanzando criteria");
+		logger.debug("Find entities by criteria");
 		final TypedQuery<E> query = this.em.createQuery(cq);
 		paginar(pageSize, pageNum, query);
 		return query.getResultList();
@@ -75,7 +77,7 @@ public abstract class AbstractDao<T extends Identificable> implements Dao<T> {
 
 	protected T findByCriteria(final CriteriaQuery<T> cq) {
 		Objects.requireNonNull(cq);
-		logger.debug("Lanzando criteria para un solo resultado");
+		logger.debug("Find entity by criteria");
 		final TypedQuery<T> query = this.em.createQuery(cq);
 		return query.getSingleResult();
 	}
@@ -86,7 +88,7 @@ public abstract class AbstractDao<T extends Identificable> implements Dao<T> {
 
 	protected Object findByQuery(final String namedQuery, final Map<String, Object> parameters) {
 		Objects.requireNonNull(namedQuery);
-		logger.debug("Ejecutando la findByQuery: {}", namedQuery);
+		logger.debug("Find entity by named query {}", namedQuery);
 		final Query query = this.em.createNamedQuery(namedQuery);
 		parametrizar(parameters, query);
 		return query.getSingleResult();
@@ -96,7 +98,7 @@ public abstract class AbstractDao<T extends Identificable> implements Dao<T> {
 			final Map<String, Object> parameters) {
 		Objects.requireNonNull(entityClass);
 		Objects.requireNonNull(namedQuery);
-		logger.debug("Ejecutando la getByTypedQuerySingleResult: {}", namedQuery);
+		logger.debug("Find entity {} by named query {}", entityClass, namedQuery);
 		final TypedQuery<E> query = this.em.createNamedQuery(namedQuery, entityClass);
 		parametrizar(parameters, query);
 		return query.getSingleResult();
@@ -106,7 +108,7 @@ public abstract class AbstractDao<T extends Identificable> implements Dao<T> {
 			final Map<String, Object> parameters, final int pageSize, final int pageNum) {
 		Objects.requireNonNull(entityClass);
 		Objects.requireNonNull(namedQuery);
-		logger.debug("Ejecutando la getByTypedQuery: {}", namedQuery);
+		logger.debug("Find entities {} by named query {}", entityClass, namedQuery);
 		final TypedQuery<E> query = this.em.createNamedQuery(namedQuery, entityClass);
 		parametrizar(parameters, query);
 		paginar(pageSize, pageNum, query);
@@ -130,9 +132,9 @@ public abstract class AbstractDao<T extends Identificable> implements Dao<T> {
 		if (entity.getId() != 0) {
 			throw new IllegalStateException();
 		}
-		logger.debug("Insertando una nueva entidad de tipod::Clase={}", entity.getClass().getCanonicalName());
+		logger.debug("Insert entity of class {}", getType());
 		this.em.persist(entity);
-		logger.debug("Se le ha asignado la id={}", entity.getId());
+		logger.debug("Innsertedd entity has the id {}", entity.getId());
 	}
 
 	private void paginar(final int pageSize, final int pageNum, final Query query) {
@@ -142,13 +144,13 @@ public abstract class AbstractDao<T extends Identificable> implements Dao<T> {
 		if (pageSize < 0) {
 			throw new IllegalArgumentException("pageSize: " + pageSize);
 		}
-		logger.debug("Página actual {}", pageNum);
+		logger.trace("Page number {}", pageNum);
 		query.setFirstResult(pageNum * pageSize);
 		if (pageSize > 0) {
-			logger.debug("Tamaño de página {}", pageSize);
+			logger.trace("Page size {}", pageSize);
 			query.setMaxResults(pageSize);
 		} else if (pageSize == 0) {
-			logger.debug("Limitando a {} resultados", RES_LIMIT);
+			logger.warn("Setting max result to {}", RES_LIMIT);
 			query.setMaxResults(RES_LIMIT);
 		}
 	}
@@ -158,7 +160,7 @@ public abstract class AbstractDao<T extends Identificable> implements Dao<T> {
 			return;
 		}
 		for (final Map.Entry<String, Object> entry : parameters.entrySet()) {
-			logger.debug("key={}::parameter={}", new Object[] { entry.getKey(), entry.getValue() });
+			logger.trace("Paramtrize query with key {} value={}", entry.getKey(), entry.getValue());
 			query.setParameter(entry.getKey(), entry.getValue());
 		}
 	}
@@ -169,8 +171,7 @@ public abstract class AbstractDao<T extends Identificable> implements Dao<T> {
 		if (entity.getId() == 0) {
 			throw new IllegalStateException();
 		}
-		logger.debug("Actualizando la entidad::Clase={}::Id={}",
-				new Object[] { entity.getClass().getCanonicalName(), entity.getId() });
+		logger.debug("Update entity of class {} and id {}", new Object[] { getType(), entity.getId() });
 		if (this.em.contains(entity)) {
 			return entity;
 		} else {
