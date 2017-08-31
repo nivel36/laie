@@ -10,18 +10,18 @@ import ged.ejb.core.model.Dao;
 import ged.ejb.core.model.Repository;
 
 @Stateless
-public class MaintenanceServiceImpl extends AbstractService<EnumEntity> implements MaintenanceService {
+public class MaintenanceServiceImpl extends AbstractService<AbstractEnumEntity> implements MaintenanceService {
 
-	private final MaintenanceDao<EnumEntity> maintenanceDao;
+	private final MaintenanceDao maintenanceDao;
 
 	@Inject
-	public MaintenanceServiceImpl(@Repository final MaintenanceDao<EnumEntity> maintenanceDao) {
+	public MaintenanceServiceImpl(@Repository final MaintenanceDao maintenanceDao) {
 		Objects.requireNonNull(maintenanceDao);
 		this.maintenanceDao = maintenanceDao;
 	}
 
 	@Override
-	protected Dao<EnumEntity> getDao() {
+	protected Dao<AbstractEnumEntity> getDao() {
 		return this.maintenanceDao;
 	}
 }

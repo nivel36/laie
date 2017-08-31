@@ -6,7 +6,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
-import ged.ejb.core.maintenance.EnumEntity;
+import ged.ejb.core.maintenance.AbstractEnumEntity;
 import ged.ejb.core.maintenance.MaintenanceService;
 import ged.web.core.view.AbstractPageBean;
 
@@ -18,7 +18,7 @@ public class MaintenanceEditBean extends AbstractPageBean {
 
 	private String entityClass;
 
-	private EnumEntity enumEntity;
+	private AbstractEnumEntity enumEntity;
 
 	private MaintenanceService maintenanceService;
 

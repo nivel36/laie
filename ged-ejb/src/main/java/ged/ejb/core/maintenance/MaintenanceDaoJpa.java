@@ -7,7 +7,7 @@ import ged.ejb.core.model.AbstractDaoJpa;
 import ged.ejb.core.model.Repository;
 
 @Repository
-public class MaintenanceDaoJpa extends AbstractDaoJpa<AbstractEnumEntity> implements MaintenanceDao<AbstractEnumEntity> {
+public class MaintenanceDaoJpa extends AbstractDaoJpa<AbstractEnumEntity> implements MaintenanceDao {
 
 	@Inject
 	protected MaintenanceDaoJpa(final EntityManager entityManager) {
