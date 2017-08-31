@@ -1,6 +1,7 @@
 package ged.ejb.curriculum;
 
 import java.util.Date;
+import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -83,4 +84,20 @@ public class FileSys extends AbstractEntity {
 		this.uuid = uuid;
 	}
 
+	@Override
+	public int hashCode() {
+		return Objects.hash(uuid);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		FileSys other = (FileSys) obj;
+		return Objects.equals(this.uuid, other.uuid);
+	}
 }

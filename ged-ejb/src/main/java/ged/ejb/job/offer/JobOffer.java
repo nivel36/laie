@@ -107,28 +107,8 @@ public class JobOffer extends AbstractAuditedEntity {
 			return false;
 		}
 		final JobOffer other = (JobOffer) obj;
-		if (this.dateOpened == null) {
-			if (other.dateOpened != null) {
-				return false;
-			}
-		} else if (!this.dateOpened.equals(other.dateOpened)) {
-			return false;
-		}
-		if (this.name == null) {
-			if (other.name != null) {
-				return false;
-			}
-		} else if (!this.name.equals(other.name)) {
-			return false;
-		}
-		if (this.places == null) {
-			if (other.places != null) {
-				return false;
-			}
-		} else if (!this.places.equals(other.places)) {
-			return false;
-		}
-		return true;
+		return Objects.equals(this.dateOpened, other.dateOpened) && Objects.equals(this.name, other.name)
+				&& Objects.equals(this.places, other.places);
 	}
 
 	public String getCity() {
@@ -189,12 +169,7 @@ public class JobOffer extends AbstractAuditedEntity {
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + (this.dateOpened == null ? 0 : this.dateOpened.hashCode());
-		result = prime * result + (this.name == null ? 0 : this.name.hashCode());
-		result = prime * result + (this.places == null ? 0 : this.places.hashCode());
-		return result;
+		return Objects.hash(dateOpened, name, places);
 	}
 
 	public void removeJobCandidature(final JobCandidature jobCandidature) {

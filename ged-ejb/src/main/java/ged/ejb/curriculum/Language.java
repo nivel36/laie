@@ -1,5 +1,7 @@
 package ged.ejb.curriculum;
 
+import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -47,23 +49,8 @@ public class Language extends AbstractAuditedEntity {
 			return false;
 		}
 		final Language other = (Language) obj;
-		if (this.languageName == null) {
-			if (other.languageName != null) {
-				return false;
-			}
-		} else if (!this.languageName.equals(other.languageName)) {
-			return false;
-		}
-		if (!this.read.equals(other.read)) {
-			return false;
-		}
-		if (!this.speak.equals(other.speak)) {
-			return false;
-		}
-		if (!this.write.equals(other.write)) {
-			return false;
-		}
-		return true;
+		return Objects.equals(this.languageName, other.languageName) && Objects.equals(this.read, other.read)
+				&& Objects.equals(this.speak, other.speak) && Objects.equals(this.write, other.write);
 	}
 
 	public Curriculum getCurriculum() {
@@ -88,13 +75,7 @@ public class Language extends AbstractAuditedEntity {
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = (prime * result) + ((this.languageName == null) ? 0 : this.languageName.hashCode());
-		result = (prime * result) + ((this.read == null) ? 0 : this.read.hashCode());
-		result = (prime * result) + ((this.speak == null) ? 0 : this.speak.hashCode());
-		result = (prime * result) + ((this.write == null) ? 0 : this.write.hashCode());
-		return result;
+		return Objects.hash(languageName, read, speak, write);
 	}
 
 	public void setCurriculum(final Curriculum curriculum) {

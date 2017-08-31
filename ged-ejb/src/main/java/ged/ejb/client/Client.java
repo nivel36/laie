@@ -1,6 +1,7 @@
 package ged.ejb.client;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -51,14 +52,7 @@ public class Client extends AbstractAuditedEntity {
 			return false;
 		}
 		final Client other = (Client) obj;
-		if (this.name == null) {
-			if (other.name != null) {
-				return false;
-			}
-		} else if (!this.name.equals(other.name)) {
-			return false;
-		}
-		return true;
+		return Objects.equals(this.name, other.name);
 	}
 
 	public Address getAddress() {
@@ -79,10 +73,7 @@ public class Client extends AbstractAuditedEntity {
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = (prime * result) + ((this.name == null) ? 0 : this.name.hashCode());
-		return result;
+		return Objects.hash(name);
 	}
 
 	public void setAddress(final Address address) {

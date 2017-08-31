@@ -1,6 +1,7 @@
 package ged.ejb.core.action;
 
 import java.util.Date;
+import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -47,21 +48,7 @@ public class Action extends AbstractRecordEntity {
 			return false;
 		}
 		final Action other = (Action) obj;
-		if (this.actionPerformed == null) {
-			if (other.actionPerformed != null) {
-				return false;
-			}
-		} else if (!this.actionPerformed.equals(other.actionPerformed)) {
-			return false;
-		}
-		if (this.date == null) {
-			if (other.date != null) {
-				return false;
-			}
-		} else if (!this.date.equals(other.date)) {
-			return false;
-		}
-		return true;
+		return Objects.equals(this.actionPerformed, other.actionPerformed) && Objects.equals(this.date, other.date);
 	}
 
 	public String getActionPerformed() {
@@ -74,11 +61,7 @@ public class Action extends AbstractRecordEntity {
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result + (this.actionPerformed == null ? 0 : this.actionPerformed.hashCode());
-		result = prime * result + (this.date == null ? 0 : this.date.hashCode());
-		return result;
+		return Objects.hash(actionPerformed, date);
 	}
 
 	public void setActionPerformed(final String actionPerformed) {

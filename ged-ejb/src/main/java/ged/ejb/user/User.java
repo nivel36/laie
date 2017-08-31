@@ -102,10 +102,7 @@ public class User extends AbstractAuditedEntity {
 			return false;
 		}
 		final User other = (User) obj;
-		if (this.username == null) {
-			return false;
-		}
-		return this.username.equals(other.username);
+		return Objects.equals(this.username,other.username);
 	}
 
 	public List<Action> getActions() {
@@ -162,10 +159,7 @@ public class User extends AbstractAuditedEntity {
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = (prime * result) + ((this.username == null) ? 0 : this.username.hashCode());
-		return result;
+		return Objects.hash(username);
 	}
 
 	public boolean hasRole(final String roleName) {

@@ -1,5 +1,7 @@
 package ged.ejb.user.role;
 
+import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -9,9 +11,9 @@ import ged.ejb.core.model.AbstractEntity;
 
 @Entity
 public class Role extends AbstractEntity {
-	
+
 	public static final String ADMIN = "ADMIN";
-	
+
 	public static final String RECRUITER_ADMIN = "RECRUITER_ADMIN";
 
 	private static final long serialVersionUID = 5722113796215191203L;
@@ -35,14 +37,7 @@ public class Role extends AbstractEntity {
 			return false;
 		}
 		final Role other = (Role) obj;
-		if (this.name == null) {
-			if (other.name != null) {
-				return false;
-			}
-		} else if (!this.name.equals(other.name)) {
-			return false;
-		}
-		return true;
+		return Objects.equals(this.name, other.name);
 	}
 
 	public String getName() {
@@ -55,10 +50,7 @@ public class Role extends AbstractEntity {
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = (prime * result) + ((this.name == null) ? 0 : this.name.hashCode());
-		return result;
+		return Objects.hash(name);
 	}
 
 	public void setName(final String name) {

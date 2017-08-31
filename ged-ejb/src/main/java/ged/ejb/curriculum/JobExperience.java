@@ -1,6 +1,7 @@
 package ged.ejb.curriculum;
 
 import java.util.Date;
+import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -101,63 +102,25 @@ public class JobExperience extends AbstractAuditedEntity {
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((companyName == null) ? 0 : companyName.hashCode());
-		result = prime * result + ((curriculum == null) ? 0 : curriculum.hashCode());
-		result = prime * result + ((description == null) ? 0 : description.hashCode());
-		result = prime * result + ((fromDate == null) ? 0 : fromDate.hashCode());
-		result = prime * result + ((jobPosition == null) ? 0 : jobPosition.hashCode());
-		result = prime * result + ((stillWorking == null) ? 0 : stillWorking.hashCode());
-		result = prime * result + ((toDate == null) ? 0 : toDate.hashCode());
-		return result;
+		return Objects.hash(companyName, curriculum, description, fromDate, jobPosition, stillWorking, toDate);
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		JobExperience other = (JobExperience) obj;
-		if (companyName == null) {
-			if (other.companyName != null)
-				return false;
-		} else if (!companyName.equals(other.companyName))
-			return false;
-		if (curriculum == null) {
-			if (other.curriculum != null)
-				return false;
-		} else if (!curriculum.equals(other.curriculum))
-			return false;
-		if (description == null) {
-			if (other.description != null)
-				return false;
-		} else if (!description.equals(other.description))
-			return false;
-		if (fromDate == null) {
-			if (other.fromDate != null)
-				return false;
-		} else if (!fromDate.equals(other.fromDate))
-			return false;
-		if (jobPosition == null) {
-			if (other.jobPosition != null)
-				return false;
-		} else if (!jobPosition.equals(other.jobPosition))
-			return false;
-		if (stillWorking == null) {
-			if (other.stillWorking != null)
-				return false;
-		} else if (!stillWorking.equals(other.stillWorking))
-			return false;
-		if (toDate == null) {
-			if (other.toDate != null)
-				return false;
-		} else if (!toDate.equals(other.toDate))
-			return false;
-		return true;
+		return Objects.equals(this.companyName, other.companyName) && Objects.equals(this.curriculum, other.curriculum)
+				&& Objects.equals(this.description, other.description) && Objects.equals(this.fromDate, other.fromDate)
+				&& Objects.equals(this.jobPosition, other.jobPosition)
+				&& Objects.equals(this.stillWorking, other.stillWorking) && Objects.equals(this.toDate, other.toDate);
 	}
 
 	@Override

@@ -1,5 +1,7 @@
 package ged.ejb.core.tag;
 
+import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
@@ -23,5 +25,30 @@ public class Tag extends AbstractEntity {
 
 	public void setLabel(final String label) {
 		this.label = label;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(label);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (!super.equals(obj)) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		Tag other = (Tag) obj;
+		return Objects.equals(this.label, other.label);
+	}
+
+	@Override
+	public String toString() {
+		return label;
 	}
 }

@@ -1,5 +1,7 @@
 package ged.ejb.core.i18n;
 
+import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -52,11 +54,7 @@ public class I18nString extends AbstractEntity {
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result + ((key == null) ? 0 : key.hashCode());
-		result = prime * result + ((locale == null) ? 0 : locale.hashCode());
-		return result;
+		return Objects.hash(key, locale);
 	}
 
 	@Override
@@ -68,17 +66,7 @@ public class I18nString extends AbstractEntity {
 		if (getClass() != obj.getClass())
 			return false;
 		I18nString other = (I18nString) obj;
-		if (key == null) {
-			if (other.key != null)
-				return false;
-		} else if (!key.equals(other.key))
-			return false;
-		if (locale == null) {
-			if (other.locale != null)
-				return false;
-		} else if (!locale.equals(other.locale))
-			return false;
-		return true;
+		return Objects.equals(this.key, other.key) && Objects.equals(this.locale, other.locale);
 	}
 
 	@Override

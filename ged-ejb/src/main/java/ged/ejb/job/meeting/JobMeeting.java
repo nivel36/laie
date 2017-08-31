@@ -1,6 +1,7 @@
 package ged.ejb.job.meeting;
 
 import java.util.Date;
+import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -53,42 +54,11 @@ public class JobMeeting extends AbstractAuditedEntity {
 			return false;
 		}
 		final JobMeeting other = (JobMeeting) obj;
-		if (this.dateConducted == null) {
-			if (other.dateConducted != null) {
-				return false;
-			}
-		} else if (!this.dateConducted.equals(other.dateConducted)) {
-			return false;
-		}
-		if (this.datePlanned == null) {
-			if (other.datePlanned != null) {
-				return false;
-			}
-		} else if (!this.datePlanned.equals(other.datePlanned)) {
-			return false;
-		}
-		if (this.description == null) {
-			if (other.description != null) {
-				return false;
-			}
-		} else if (!this.description.equals(other.description)) {
-			return false;
-		}
-		if (this.jobCandidature == null) {
-			if (other.jobCandidature != null) {
-				return false;
-			}
-		} else if (!this.jobCandidature.equals(other.jobCandidature)) {
-			return false;
-		}
-		if (this.result == null) {
-			if (other.result != null) {
-				return false;
-			}
-		} else if (!this.result.equals(other.result)) {
-			return false;
-		}
-		return true;
+		return Objects.equals(this.dateConducted, other.dateConducted)
+				&& Objects.equals(this.datePlanned, other.datePlanned)
+				&& Objects.equals(this.description, other.description)
+				&& Objects.equals(this.jobCandidature, other.jobCandidature)
+				&& Objects.equals(this.result, other.result);
 	}
 
 	public Date getDateConducted() {
@@ -113,14 +83,7 @@ public class JobMeeting extends AbstractAuditedEntity {
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result + (this.dateConducted == null ? 0 : this.dateConducted.hashCode());
-		result = prime * result + (this.datePlanned == null ? 0 : this.datePlanned.hashCode());
-		result = prime * result + (this.description == null ? 0 : this.description.hashCode());
-		result = prime * result + (this.jobCandidature == null ? 0 : this.jobCandidature.hashCode());
-		result = prime * result + (this.result == null ? 0 : this.result.hashCode());
-		return result;
+		return Objects.hash(dateConducted, datePlanned, description, jobCandidature, result);
 	}
 
 	public void setDateConducted(final Date dateConducted) {

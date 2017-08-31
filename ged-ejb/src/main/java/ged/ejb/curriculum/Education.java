@@ -1,6 +1,7 @@
 package ged.ejb.curriculum;
 
 import java.util.Date;
+import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -99,15 +100,7 @@ public class Education extends AbstractAuditedEntity {
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((degree == null) ? 0 : degree.hashCode());
-		result = prime * result + ((description == null) ? 0 : description.hashCode());
-		result = prime * result + ((fromDate == null) ? 0 : fromDate.hashCode());
-		result = prime * result + ((school == null) ? 0 : school.hashCode());
-		result = prime * result + ((stillStudying == null) ? 0 : stillStudying.hashCode());
-		result = prime * result + ((toDate == null) ? 0 : toDate.hashCode());
-		return result;
+		return Objects.hash(degree, description, fromDate, stillStudying, toDate);
 	}
 
 	@Override
@@ -119,37 +112,9 @@ public class Education extends AbstractAuditedEntity {
 		if (getClass() != obj.getClass())
 			return false;
 		Education other = (Education) obj;
-		if (degree == null) {
-			if (other.degree != null)
-				return false;
-		} else if (!degree.equals(other.degree))
-			return false;
-		if (description == null) {
-			if (other.description != null)
-				return false;
-		} else if (!description.equals(other.description))
-			return false;
-		if (fromDate == null) {
-			if (other.fromDate != null)
-				return false;
-		} else if (!fromDate.equals(other.fromDate))
-			return false;
-		if (school == null) {
-			if (other.school != null)
-				return false;
-		} else if (!school.equals(other.school))
-			return false;
-		if (stillStudying == null) {
-			if (other.stillStudying != null)
-				return false;
-		} else if (!stillStudying.equals(other.stillStudying))
-			return false;
-		if (toDate == null) {
-			if (other.toDate != null)
-				return false;
-		} else if (!toDate.equals(other.toDate))
-			return false;
-		return true;
+		return Objects.equals(this.degree, other.degree) && Objects.equals(this.description, other.description)
+				&& Objects.equals(this.fromDate, other.fromDate)
+				&& Objects.equals(this.stillStudying, other.stillStudying) && Objects.equals(this.toDate, other.toDate);
 	}
 
 	@Override

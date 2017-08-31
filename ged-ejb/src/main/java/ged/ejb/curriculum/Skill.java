@@ -1,5 +1,7 @@
 package ged.ejb.curriculum;
 
+import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -38,17 +40,7 @@ public class Skill extends AbstractAuditedEntity {
 			return false;
 		}
 		final Skill other = (Skill) obj;
-		if (this.level != other.level) {
-			return false;
-		}
-		if (this.name == null) {
-			if (other.name != null) {
-				return false;
-			}
-		} else if (!this.name.equals(other.name)) {
-			return false;
-		}
-		return true;
+		return Objects.equals(this.level, other.level) && Objects.equals(this.name, other.name);
 	}
 
 	public Curriculum getCurriculum() {
@@ -65,11 +57,7 @@ public class Skill extends AbstractAuditedEntity {
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = (prime * result) + ((this.level == null) ? 0 : this.level.hashCode());
-		result = (prime * result) + ((this.name == null) ? 0 : this.name.hashCode());
-		return result;
+		return Objects.hash(level, name);
 	}
 
 	public void setCurriculum(final Curriculum curriculum) {
