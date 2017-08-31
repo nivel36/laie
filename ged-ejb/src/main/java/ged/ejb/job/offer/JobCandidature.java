@@ -39,6 +39,8 @@ public class JobCandidature extends AbstractAuditedEntity {
 	}
 
 	public JobCandidature(final JobOffer jobOffer, final Candidate candidate) {
+		Objects.requireNonNull(jobOffer);
+		Objects.requireNonNull(candidate);
 		this.jobOffer = jobOffer;
 		this.candidate = candidate;
 	}
