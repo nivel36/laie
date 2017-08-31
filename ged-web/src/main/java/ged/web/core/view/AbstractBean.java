@@ -5,7 +5,6 @@ import java.io.Serializable;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
 
 public class AbstractBean implements Serializable {
 
@@ -16,8 +15,5 @@ public class AbstractBean implements Serializable {
 
 	@Inject
 	protected transient FacesContext facesContext;
-
-	@Inject
-	protected transient HttpServletRequest httpServletRequest;
 	
 }

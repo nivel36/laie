@@ -16,10 +16,10 @@ import javax.inject.Named;
 
 import ged.ejb.core.Cache;
 import ged.ejb.core.FileType;
-import ged.ejb.core.util.ConfigurationProperty;
 import ged.ejb.curriculum.LanguageLevel;
 import ged.ejb.curriculum.SkillLevel;
 import ged.ejb.user.role.Role;
+import ged.web.core.util.ConfigurationProperty;
 
 @ApplicationScoped
 @Named

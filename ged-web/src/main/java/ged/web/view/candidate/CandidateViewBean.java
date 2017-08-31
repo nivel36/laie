@@ -19,8 +19,8 @@ import org.slf4j.LoggerFactory;
 
 import ged.ejb.candidate.Candidate;
 import ged.ejb.candidate.CandidateService;
-import ged.ejb.core.util.ConfigurationProperty;
 import ged.ejb.curriculum.FileSys;
+import ged.web.core.util.ConfigurationProperty;
 import ged.web.core.util.MessageUtils;
 import ged.web.core.view.AbstractPageBean;
 
