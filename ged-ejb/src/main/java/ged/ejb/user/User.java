@@ -41,6 +41,9 @@ public class User extends AbstractAuditedEntity {
 	@Transient
 	private String fullName;
 
+	@Column(length = 128, nullable = true, unique = true)
+	private String imageFileName;
+
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "owner", orphanRemoval = false)
 	private List<JobOffer> jobOffers;
 
@@ -102,7 +105,7 @@ public class User extends AbstractAuditedEntity {
 			return false;
 		}
 		final User other = (User) obj;
-		return Objects.equals(this.username,other.username);
+		return Objects.equals(this.username, other.username);
 	}
 
 	public List<Action> getActions() {
@@ -119,6 +122,10 @@ public class User extends AbstractAuditedEntity {
 
 	public String getFullName() {
 		return this.name + " " + this.surename;
+	}
+
+	public String getImageFileName() {
+		return this.imageFileName;
 	}
 
 	public List<JobOffer> getJobOffers() {
@@ -159,7 +166,7 @@ public class User extends AbstractAuditedEntity {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(username);
+		return Objects.hash(this.username);
 	}
 
 	public boolean hasRole(final String roleName) {
@@ -190,6 +197,10 @@ public class User extends AbstractAuditedEntity {
 
 	public void setFullName(final String fullName) {
 		this.fullName = fullName;
+	}
+
+	public void setImageFileName(final String imageFileName) {
+		this.imageFileName = imageFileName;
 	}
 
 	public void setJobOffers(final List<JobOffer> jobOffers) {

@@ -1,19 +1,24 @@
 package ged.web.view.user;
 
+import java.io.File;
 import java.io.IOException;
 import java.lang.invoke.MethodHandles;
 import java.util.List;
 
+import javax.faces.FacesException;
 import javax.faces.application.FacesMessage;
 import javax.faces.application.NavigationHandler;
 import javax.faces.component.UIComponent;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
 import javax.faces.view.ViewScoped;
+import javax.imageio.stream.FileImageOutputStream;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.omnifaces.util.Faces;
+import org.primefaces.event.CaptureEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -48,18 +53,6 @@ public class UserViewBean extends AbstractPageBean {
 	@Inject
 	private transient RoleService roleService;
 
-	public void setJobOfferService(JobOfferService jobOfferService) {
-		this.jobOfferService = jobOfferService;
-	}
-
-	public void setRoleService(RoleService roleService) {
-		this.roleService = roleService;
-	}
-
-	public void setUserService(UserService userService) {
-		this.userService = userService;
-	}
-
 	private List<User> team;
 
 	private User user;
@@ -68,7 +61,6 @@ public class UserViewBean extends AbstractPageBean {
 
 	@Inject
 	private transient UserService userService;
-
 
 	public void cancelEditUser() {
 		this.editable = false;
@@ -167,6 +159,10 @@ public class UserViewBean extends AbstractPageBean {
 		this.userService.save(this.user);
 	}
 
+	public void setJobOfferService(final JobOfferService jobOfferService) {
+		this.jobOfferService = jobOfferService;
+	}
+
 	private void setManager() {
 		if (this.manager.getUsername() != null) {
 			logger.trace("The user has no manager");
@@ -178,6 +174,10 @@ public class UserViewBean extends AbstractPageBean {
 		this.manager = manager;
 	}
 
+	public void setRoleService(final RoleService roleService) {
+		this.roleService = roleService;
+	}
+
 	public void setUser(final User user) {
 		this.user = user;
 	}
@@ -186,8 +186,31 @@ public class UserViewBean extends AbstractPageBean {
 		this.userId = userId;
 	}
 
+	public void setUserService(final UserService userService) {
+		this.userService = userService;
+	}
+
 	public void undeleteUser() {
 		this.userService.undelete(this.user);
+	}
+
+	public void uploadImage(final CaptureEvent captureEvent) {
+		this.user.setImageFileName(this.userId);
+		final byte[] data = captureEvent.getData();
+
+		final ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+		final String newFileName = externalContext.getRealPath("") + File.separator + "resources" + File.separator
+				+ "demo" + File.separator + "images" + File.separator + "photocam" + File.separator
+				+ this.user.getImageFileName() + ".jpeg";
+
+		FileImageOutputStream imageOutput;
+		try {
+			imageOutput = new FileImageOutputStream(new File(newFileName));
+			imageOutput.write(data, 0, data.length);
+			imageOutput.close();
+		} catch (final IOException e) {
+			throw new FacesException("Error in writing captured image.", e);
+		}
 	}
 
 	public void validateEmail(final FacesContext context, final UIComponent component, final Object value)

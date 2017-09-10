@@ -2,9 +2,8 @@ package ged.rest.controller;
 
 import java.util.List;
 
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -17,32 +16,25 @@ import ged.ejb.candidate.CandidateDao;
 import ged.ejb.core.model.Repository;
 
 @Path("candidates")
-@RequestScoped
+@ApplicationScoped
 public class CandidateRestController {
 
 	@Inject
 	@Repository
 	private CandidateDao candidateDao;
 
-	@Inject
-	private EntityManager em;
-
 	@GET
 	@Path("/{id:[0-9][0-9]*}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Candidate find(@PathParam("id") final long id) {
-		final Candidate candidate = this.candidateDao.find(id);
-		this.em.detach(candidate);
-		return candidate;
+		return this.candidateDao.find(id);
 	}
 
 	@GET
 	@Path("/")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Candidate> findAll() {
-		final List<Candidate> candidates = this.candidateDao.findAll();
-		this.em.clear();
-		return candidates;
+		return this.candidateDao.findAll();
 	}
 
 	@GET

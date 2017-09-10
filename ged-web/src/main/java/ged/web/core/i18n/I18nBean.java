@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.MissingResourceException;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
@@ -19,6 +20,7 @@ import org.slf4j.LoggerFactory;
 
 import ged.ejb.core.i18n.I18nService;
 import ged.ejb.core.i18n.I18nString;
+import ged.web.core.util.TransaltionUtils;
 import ged.web.core.view.AbstractPageBean;
 
 @Named
@@ -27,9 +29,12 @@ public class I18nBean extends AbstractPageBean {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
+	private static final long serialVersionUID = 7203326692219293611L;
+
 	private static final String SPANISH = "es";
 
-	private static final long serialVersionUID = 7203326692219293611L;
+	@Inject
+	private Application application;
 
 	@Inject
 	private I18nService i18nService;
@@ -37,13 +42,30 @@ public class I18nBean extends AbstractPageBean {
 	private Map<String, Map<String, String>> i18nTexts;
 
 	private List<String> locales;
-	
-	@Inject
-	private Application application;
 
-	//TODO: problemas: Si se añade o modifica un registro en la tabla de i18n esto no funciona.
+	// TODO: problemas: Si se añade o modifica un registro en la tabla de i18n
+	// esto no funciona.
 	public String getI18nText(final String key, final String language) {
-		return this.i18nTexts.get(language).get(key);
+		String translatedText;
+		if (this.i18nTexts.get(language).containsKey(key)) {
+			translatedText = this.i18nTexts.get(language).get(key);
+		} else {
+			try {
+				translatedText = TransaltionUtils.translate(key);
+			} catch (final MissingResourceException e) {
+				translatedText = "?" + key + "?";
+			}
+		}
+		return translatedText;
+	}
+
+	private String getLanguageFromDefaultLocale() {
+		final Locale defaultLocale = this.application.getDefaultLocale();
+		if (defaultLocale == null) {
+			return SPANISH;
+		} else {
+			return defaultLocale.getLanguage();
+		}
 	}
 
 	@PostConstruct
@@ -73,14 +95,5 @@ public class I18nBean extends AbstractPageBean {
 		}
 		final String language = getLanguageFromDefaultLocale();
 		this.locales.add(language);
-	}
-
-	private String getLanguageFromDefaultLocale() {
-		final Locale defaultLocale = this.application.getDefaultLocale();
-		if (defaultLocale == null) {
-			return SPANISH;
-		} else {
-			return defaultLocale.getLanguage();
-		}
 	}
 }
