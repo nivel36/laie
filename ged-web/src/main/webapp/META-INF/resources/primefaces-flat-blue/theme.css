@@ -6,7 +6,7 @@
 	box-sizing: border-box;
 }
 
-body .ui-inputfield.ui-state-error {
+body  .form-group .ui-inputfield.ui-state-error {
 	border: 1px solid red;
 }
 
@@ -4268,6 +4268,10 @@ body .ui-inputtext[aria-required="true"], body .ui-inputtext[data-p-required="tr
 	border-left: 2px solid #a2aab8;
 }
 
+body .ui-inputtext[aria-readonly="true"] {
+	background: #f2f2f2;
+}
+
 body .ui-selectonemenu {
 	outline: medium none;
 	padding: 0px;
@@ -4289,12 +4293,12 @@ body .ui-selectonemenu-item {
 
 body .ui-selectonemenu-item.ui-state-hover {
 	border-radius: 3px;
-	background-color: #FFE9B8;
+	background-color: #b6d8f3;
 }
 
 body .ui-selectonemenu-item.ui-state-highlight {
 	border-radius: 3px;
-	background-color: #FFC60C;
+	background-color: #5b9bd1;
 }
 
 body .ui-selectonemenu .ui-selectonemenu-trigger {
@@ -4454,7 +4458,7 @@ body .ui-button.medium.rounded {
 body .ui-button.medium {
 	height: 20px;
 	font-size: 10px;
-	padding: 0px 5px;
+	padding: 0px 10px;
 	margin: 5px 1px;
 }
 

@@ -35,7 +35,7 @@
 								<span class="name">#{userViewBean.user}</span> <span class="position">#{i18n:translate(userViewBean.user.role.name)}</span>
 							</div>
 							<div class="form-action">
-								<p:commandButton styleClass="medium rounded" id="exportExcel" icon="fa fa-file-excel-o" value="#{i18n['action.export']}"
+								<p:commandButton styleClass="medium rounded" id="exportExcel" value="#{i18n['action.export']}"
 									action="#{userViewBean.export}" rendered="#{not userViewBean.editable}" />
 							</div>
 						</div>
@@ -44,14 +44,15 @@
 
 				<div class="ui-md-12 ui-lg-9 ui-xl-6">
 					<p:panel styleClass="with-tabs" header="#{i18n['user.user']}">
-						<p:tabView dynamic="true" cache="true" >
+						<p:tabView dynamic="true" cache="true">
 							<p:tab title="Detalles">
+							</p:tab>
+							<p:tab title="Datos">
 								<div class="ui-g">
 									<div class="ui-md-12 ui-lg-6">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['user.username']}" for="username" />
-											<p:inputText id="username" value="#{userViewBean.user.username}" required="true"
-												validator="#{userViewBean.validateUsername}" readonly="#{not userViewBean.editable}" />
+											<p:inputText id="username" value="#{userViewBean.user.username}" readonly="true"/>
 										</div>
 										<h:message for="username" errorClass="error" />
 									</div>
@@ -59,15 +60,14 @@
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['user.email']}" for="email" />
 											<p:inputText id="email" p:type="email" value="#{userViewBean.user.email}" required="true"
-												validator="#{userViewBean.validateEmail}" readonly="#{not userViewBean.editable}" />
+												validator="#{userViewBean.validateEmail}" />
 										</div>
 										<h:message for="email" errorClass="error" />
 									</div>
 									<div class="ui-md-12 ui-lg-6">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['user.name']}" for="name" />
-											<p:inputText id="name" value="#{userViewBean.user.name}" required="true"
-												readonly="#{not userViewBean.editable}" />
+											<p:inputText id="name" value="#{userViewBean.user.name}" required="true" />
 										</div>
 										<h:message for="name" errorClass="error" />
 									</div>
@@ -75,8 +75,7 @@
 									<div class="ui-md-12 ui-lg-6">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['user.surename']}" for="surename" />
-											<p:inputText id="surename" value="#{userViewBean.user.surename}" required="true"
-												readonly="#{not userViewBean.editable}" />
+											<p:inputText id="surename" value="#{userViewBean.user.surename}" required="true" />
 										</div>
 										<h:message for="surename" errorClass="error" />
 									</div>
@@ -92,43 +91,13 @@
 										</div>
 										<h:message for="role" errorClass="error" />
 									</div>
-
-									<div class="ui-md-12 ui-lg-6">
-										<div class="form-group">
-											<p:outputLabel value="#{i18n['user.manager']}" />
-											<p:inputText id="manager" value="#{userViewBean.manager.fullName}" label="#{i18n['user.manager']}"
-												readonly="#{facesContext.renderResponse}" validator="#{userViewBean.validateManager}" />
-											<p:commandButton value="+" onclick="PF('managerDlg').show();" rendered="#{userViewBean.editable}" />
-											<p:commandButton action="#{userViewBean.removeManager}" value="-"
-												rendered="#{not empty userViewBean.manager.username and userViewBean.editable}" id="removeManager"
-												process="@this" update="managerBlock" />
-										</div>
-										<h:message for="manager" errorClass="error" />
-									</div>
 								</div>
 
 								<div class="ui-g">
 									<div class="ui-g-12">
 										<div class="form-action-primary">
 											<h:panelGroup id="actionButtons" layout="block">
-												<p:commandButton value="#{i18n['action.undelete']}" action="#{userViewBean.undeleteUser}" immediate="true"
-													rendered="#{userViewBean.user.deleted}" />
-												<p:commandButton value="#{i18n['action.edit']}" action="#{userViewBean.editUser}" immediate="true"
-													rendered="#{not userViewBean.user.deleted and not userViewBean.editable}" update="@form" />
-												<p:commandButton value="#{i18n['action.save']}" action="#{userViewBean.saveUser}"
-													rendered="#{not userViewBean.user.deleted and userViewBean.editable}" update="@form growl" />
-												<p:commandButton styleClass="btn-gray" value="#{i18n['action.cancel']}"
-													action="#{userViewBean.cancelEditUser}"
-													rendered="#{not userViewBean.user.deleted and userViewBean.editable}" immediate="true" update="@form growl" />
-												<!-- <p:commandButton value="#{i18n['bookmark.add_to_bookmarks']}" action="#{bookmarksBean.add(userViewBean.user)}"
-											immediate="true"
-											rendered="#{(not bookmarksBean.isBookmarked(userViewBean.user))	and (not userViewBean.user.deleted) and (not userViewBean.editable)}"
-											update="actionButtons :asideForm:bookmarks" />
-										<p:commandButton value="#{i18n['bookmark.remove_from_bookmarks']}"
-											action="#{bookmarksBean.remove(userViewBean.user)}" immediate="true"
-											rendered="#{bookmarksBean.isBookmarked(userViewBean.user)} and not userViewBean.editable"
-											update="actionButtons :asideForm:bookmarks" /> -->
-
+												<p:commandButton value="#{i18n['action.save']}" action="#{userViewBean.saveUser}" update="@form growl" />
 											</h:panelGroup>
 										</div>
 									</div>
@@ -143,6 +112,18 @@
 								</p:outputPanel>
 							</p:tab>
 							<p:tab title="Responsable">
+								<div class="ui-md-12 ui-lg-6">
+									<div class="form-group">
+										<p:outputLabel value="#{i18n['user.manager']}" />
+										<p:inputText id="manager" value="#{userViewBean.manager.fullName}" label="#{i18n['user.manager']}"
+											readonly="#{facesContext.renderResponse}" validator="#{userViewBean.validateManager}" />
+										<p:commandButton value="+" onclick="PF('managerDlg').show();" rendered="#{userViewBean.editable}" />
+										<p:commandButton action="#{userViewBean.removeManager}" value="-"
+											rendered="#{not empty userViewBean.manager.username and userViewBean.editable}" id="removeManager"
+											process="@this" update="managerBlock" />
+									</div>
+									<h:message for="manager" errorClass="error" />
+								</div>
 							</p:tab>
 						</p:tabView>
 					</p:panel>

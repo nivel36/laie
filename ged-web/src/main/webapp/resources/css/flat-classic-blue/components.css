@@ -597,7 +597,6 @@ textarea {
 }
 
 .error {
-	margin-left: 175px;
 	display: block;
 	color: red !important;
 	float: left;

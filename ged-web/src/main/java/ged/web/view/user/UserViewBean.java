@@ -118,6 +118,7 @@ public class UserViewBean extends AbstractPageBean {
 		if (this.user == null) {
 			error();
 		}
+		this.manager = this.user.getManager();
 		this.team = this.userService.findSubordinateUsers(this.user);
 		this.jobOffers = this.jobOfferService.findAllJobOffersByOwner(this.user);
 		if (this.user.isDeleted()) {
@@ -155,19 +156,11 @@ public class UserViewBean extends AbstractPageBean {
 
 	public void saveUser() {
 		logger.debug("Save user action performed");
-		setManager();
-		this.userService.save(this.user);
+		this.user = this.userService.save(this.user);
 	}
 
 	public void setJobOfferService(final JobOfferService jobOfferService) {
 		this.jobOfferService = jobOfferService;
-	}
-
-	private void setManager() {
-		if (this.manager.getUsername() != null) {
-			logger.trace("The user has no manager");
-			this.user.setManager(this.manager);
-		}
 	}
 
 	public void setManager(final User manager) {
