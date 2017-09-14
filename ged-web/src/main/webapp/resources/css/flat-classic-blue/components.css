@@ -239,12 +239,12 @@ h4 {
 	line-height: 2.8em;
 	float: left;
 	width: 130px;
-	border-bottom: 3px solid #1976d2;
+	border-bottom: 3px solid #5b9bd1;
 	margin-right: 3px;
 }
 
 .menu li .selected {
-	background: #1976d2;
+	background: #5b9bd1;
 	color: white;
 }
 
@@ -793,11 +793,11 @@ textarea {
 	border-radius: 50%;
 }
 
-.user-info {
+.user-card .user-info {
 	text-align: center;
 }
 
-.user-info .name {
+.user-card .user-info .name {
 	display: block;
 	color: #5a7391;
 	font-size: 20px;
@@ -805,10 +805,27 @@ textarea {
 	margin-bottom: 7px;
 }
 
-.user-info .position {
+.user-card .user-info .position {
 	text-transform: uppercase;
 	color: #5b9bd1;
 	font-size: 13px;
+	font-weight: 800;
+	margin-bottom: 7px;
+}
+
+.user-details {
+}
+
+.user-details .name {
+	display: block;
+	font-size: 13px;
+	font-weight: 600;
+	margin-bottom: 7px;
+}
+
+.user-details .position {
+	text-transform: uppercase;
+	font-size: 11px;
 	font-weight: 800;
 	margin-bottom: 7px;
 }

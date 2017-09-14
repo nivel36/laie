@@ -20,7 +20,6 @@ import ged.ejb.job.meeting.JobMeeting;
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
 import ged.ejb.user.User;
-import ged.ejb.user.role.Role;
 import ged.web.core.view.AbstractPageBean;
 
 @Named
@@ -59,6 +58,11 @@ public class JobOfferViewBean extends AbstractPageBean {
 		this.jobService.addJobCandidature(this.jobOffer, candidate);
 	}
 
+	public void cancel() {
+		logger.debug("Cancel edit job offer action performed");
+		this.editable = false;
+	}
+
 	public void clientChangedListener() {
 		final String clientName = this.jobOffer.getClient().getName();
 		logger.trace("Client name changed to {}", clientName);
@@ -67,23 +71,13 @@ public class JobOfferViewBean extends AbstractPageBean {
 
 	public void edit() {
 		logger.debug("Edit job offer action performed");
-		editable = true;
-	}
-	
-	public void cancel() {
-		logger.debug("Cancel edit job offer action performed");
-		editable = false;
+		this.editable = true;
 	}
 
 	private void error() {
 		final NavigationHandler navigationHandler = this.facesContext.getApplication().getNavigationHandler();
 		navigationHandler.handleNavigation(this.facesContext, null, "jobOfferSearch?faces-redirect=true");
 		this.facesContext.renderResponse();
-	}
-	
-	public void save() {
-		logger.debug("Save job offer action performed");
-		this.jobService.save(this.jobOffer);
 	}
 
 	public List<Candidate> getCandidates() {
@@ -134,17 +128,17 @@ public class JobOfferViewBean extends AbstractPageBean {
 	}
 
 	public boolean isNewClient() {
-		return newClient;
+		return this.newClient;
 	}
 
 	// boolean -> is[name]
 	public boolean isUserHasPermissionToEditJobOffer() {
-		final User jobOfferOwner = jobOffer.getOwner();
+		final User jobOfferOwner = this.jobOffer.getOwner();
 		final User user = this.sessionBean.getUser();
 		if (jobOfferOwner.equals(user)) {
 			return true;
 		}
-		if (user.hasRole(Role.ADMIN) || user.hasRole(Role.RECRUITER_ADMIN)) {
+		if (user.isAdmin() || user.isRecruiterAdmin()) {
 			return true;
 		}
 		return false;
@@ -160,6 +154,11 @@ public class JobOfferViewBean extends AbstractPageBean {
 		this.jobService.removeJobCandidature(this.jobOffer, candidate);
 	}
 
+	public void save() {
+		logger.debug("Save job offer action performed");
+		this.jobService.save(this.jobOffer);
+	}
+
 	public void setCandidate(final Candidate candidate) {
 		Objects.requireNonNull(candidate);
 		if (this.candidates.contains(candidate)) {
@@ -173,11 +172,11 @@ public class JobOfferViewBean extends AbstractPageBean {
 		this.candidates = candidates;
 	}
 
-	public void setCandidateService(CandidateService candidateService) {
+	public void setCandidateService(final CandidateService candidateService) {
 		this.candidateService = candidateService;
 	}
 
-	public void setClientService(ClientService clientService) {
+	public void setClientService(final ClientService clientService) {
 		this.clientService = clientService;
 	}
 
@@ -198,7 +197,7 @@ public class JobOfferViewBean extends AbstractPageBean {
 		this.jobOfferId = jobOfferId;
 	}
 
-	public void setJobService(JobOfferService jobService) {
+	public void setJobService(final JobOfferService jobService) {
 		this.jobService = jobService;
 	}
 
