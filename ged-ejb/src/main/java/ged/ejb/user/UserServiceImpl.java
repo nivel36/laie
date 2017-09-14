@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
 import ged.ejb.core.AbstratctAuditedService;
 import ged.ejb.core.model.Dao;
 import ged.ejb.core.model.Repository;
-import ged.ejb.user.role.Role;
 
 @Stateless
 public class UserServiceImpl extends AbstratctAuditedService<User> implements UserService {
@@ -26,40 +25,6 @@ public class UserServiceImpl extends AbstratctAuditedService<User> implements Us
 	public UserServiceImpl(@Repository final UserDao userDao) {
 		Objects.requireNonNull(userDao);
 		this.userDao = userDao;
-	}
-
-	@Override
-	protected void insert(final User user) {
-		logger.debug("Insert user {}", user.getUsername());
-		if (user.equals(user.getManager())) {
-			logger.warn("The user {} can't be his/her manager", user.getUsername());
-			throw new IllegalStateException("User can't be his/her manager");
-		}
-		this.userDao.insert(user);
-	}
-
-	private boolean isLastAdminOnApp(final User user) {
-		User userInDataBase = find(user.getId());
-		return userInDataBase.hasRole(Role.ADMIN) && !user.hasRole(Role.ADMIN)
-				&& !this.userDao.existsMoreThanOneAdmin();
-	}
-
-	private boolean isDeletingAdmin(final User user) {
-		return (user.getDeleted() != null && user.getDeleted() == true) && user.hasRole(Role.ADMIN);
-	}
-
-	@Override
-	protected User update(final User user) {
-		if (isLastAdminOnApp(user)) {
-			logger.warn("Can't change user {} role. Last Admin on app", user.getUsername());
-			throw new UserException("Can't change user role. Last Admin on app");
-		}
-		if (isDeletingAdmin(user)) {
-			logger.warn("Can't delete user {}. User is Admin", user.getUsername());
-			throw new UserException("Can't delete user. User is Admin");
-		}
-		logger.debug("Update user {}", user.getUsername());
-		return this.userDao.update(user);
 	}
 
 	@Override
@@ -94,9 +59,42 @@ public class UserServiceImpl extends AbstratctAuditedService<User> implements Us
 	}
 
 	@Override
+	protected void insert(final User user) {
+		logger.debug("Insert user {}", user.getUsername());
+		if (user.equals(user.getManager())) {
+			logger.warn("The user {} can't be his/her manager", user.getUsername());
+			throw new IllegalStateException("User can't be his/her manager");
+		}
+		this.userDao.insert(user);
+	}
+
+	private boolean isDeletingAdmin(final User user) {
+		return user.getDeleted() != null && user.getDeleted() == true && user.isAdmin();
+	}
+
+	private boolean isLastAdminOnApp(final User user) {
+		final User userInDataBase = find(user.getId());
+		return userInDataBase.isAdmin() && !user.isAdmin() && !this.userDao.existsMoreThanOneAdmin();
+	}
+
+	@Override
 	public List<User> searchByNameAndSurename(final String name, final String surename) {
 		logger.debug("Search user by name {} and surename {}", new Object[] { name, surename });
 		return this.userDao.searchByNameAndSurename(name, surename, false);
+	}
+
+	@Override
+	protected User update(final User user) {
+		if (isLastAdminOnApp(user)) {
+			logger.warn("Can't change user {} role. Last Admin on app", user.getUsername());
+			throw new UserException("Can't change user role. Last Admin on app");
+		}
+		if (isDeletingAdmin(user)) {
+			logger.warn("Can't delete user {}. User is Admin", user.getUsername());
+			throw new UserException("Can't delete user. User is Admin");
+		}
+		logger.debug("Update user {}", user.getUsername());
+		return this.userDao.update(user);
 	}
 
 	@Override

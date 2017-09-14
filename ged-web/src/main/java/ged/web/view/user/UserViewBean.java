@@ -156,7 +156,13 @@ public class UserViewBean extends AbstractPageBean {
 
 	public void saveUser() {
 		logger.debug("Save user action performed");
-		this.user = this.userService.save(this.user);
+		try {
+			this.user = this.userService.save(this.user);
+		} catch (final Exception ue) {
+			final Role admin = this.roleService.findAdmin();
+			this.user.setRole(admin);
+			addMessage(FacesMessage.SEVERITY_ERROR, "user.error.last_admin", "user.error.last_admin");
+		}
 	}
 
 	public void setJobOfferService(final JobOfferService jobOfferService) {
@@ -241,7 +247,7 @@ public class UserViewBean extends AbstractPageBean {
 
 	public void validateRole(final FacesContext context, final UIComponent component, final Object value)
 			throws ValidatorException {
-		if (this.manager.getUsername() == null) {
+		if (this.manager == null || this.manager.getUsername() == null) {
 			return;
 		}
 		final Role userRole = (Role) value;

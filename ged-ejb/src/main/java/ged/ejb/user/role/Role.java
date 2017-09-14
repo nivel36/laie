@@ -12,10 +12,6 @@ import ged.ejb.core.model.AbstractEntity;
 @Entity
 public class Role extends AbstractEntity {
 
-	public static final String ADMIN = "ADMIN";
-
-	public static final String RECRUITER_ADMIN = "RECRUITER_ADMIN";
-
 	private static final long serialVersionUID = 5722113796215191203L;
 
 	@Column(length = 32, unique = true)
@@ -24,6 +20,13 @@ public class Role extends AbstractEntity {
 	@ManyToOne
 	@JoinColumn(name = "parentRoleId", nullable = true)
 	private Role parentRole;
+
+	public Role() {
+	}
+
+	public Role(final String roleName) {
+		this.name = roleName;
+	}
 
 	@Override
 	public boolean equals(final Object obj) {
@@ -50,7 +53,7 @@ public class Role extends AbstractEntity {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(name);
+		return Objects.hash(this.name);
 	}
 
 	public void setName(final String name) {
@@ -65,5 +68,4 @@ public class Role extends AbstractEntity {
 	public String toString() {
 		return this.name;
 	}
-
 }

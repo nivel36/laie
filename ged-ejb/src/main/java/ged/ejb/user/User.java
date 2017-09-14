@@ -173,6 +173,18 @@ public class User extends AbstractAuditedEntity {
 		return this.role.getName().equals(roleName);
 	}
 
+	public boolean isAdmin() {
+		return "ADMIN".equals(this.role.getName());
+	}
+
+	public boolean isRecruiter() {
+		return "RECRUITER".equals(this.role.getName());
+	}
+
+	public boolean isRecruiterAdmin() {
+		return "RECRUITER_ADMIN".equals(this.role.getName());
+	}
+
 	public void removeAction(final Action action) {
 		Objects.requireNonNull(action);
 		this.actions.remove(action);

@@ -45,14 +45,29 @@
 				<div class="ui-md-12 ui-lg-9 ui-xl-6">
 					<p:panel styleClass="with-tabs" header="#{i18n['user.user']}">
 						<p:tabView dynamic="true" cache="true">
-							<p:tab title="Detalles">
+							<p:tab title="#{i18n['user.details']}">
+								<h4>Información</h4>
+								<div class="user-details">
+									<div class="name">#{userViewBean.user}</div>
+									<div class="position">#{i18n:translate(userViewBean.user.role.name)}</div>
+									<div class="email">#{userViewBean.user.email}</div>
+									<div class="username">#{userViewBean.user.username}</div>
+								</div>
+								<h4>Responsable</h4>
+								<div class="user-image">
+									<img class="image" src="/web/resources/img/abel.jpg" />
+								</div>
+								<div class="user-info">
+									<div class="name">#{userViewBean.user}</div> <div class="position">#{i18n:translate(userViewBean.user.role.name)}</div>
+								</div>
+
 							</p:tab>
-							<p:tab title="Datos">
+							<p:tab title="#{i18n['user.edit_user']}">
 								<div class="ui-g">
 									<div class="ui-md-12 ui-lg-6">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['user.username']}" for="username" />
-											<p:inputText id="username" value="#{userViewBean.user.username}" readonly="true"/>
+											<p:inputText id="username" value="#{userViewBean.user.username}" readonly="true" />
 										</div>
 										<h:message for="username" errorClass="error" />
 									</div>
@@ -83,8 +98,7 @@
 									<div class="ui-md-12 ui-lg-6">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['user.role']}" for="role" />
-											<p:selectOneMenu id="role" value="#{userViewBean.user.role}" validator="#{userViewBean.validateRole}"
-												readonly="#{not userViewBean.editable}">
+											<p:selectOneMenu id="role" value="#{userViewBean.user.role}" validator="#{userViewBean.validateRole}">
 												<f:selectItems var="role" itemValue="#{role}" value="#{applicationBean.roles}"
 													itemLabel="#{i18n:translate(role.name)}" />
 											</p:selectOneMenu>
@@ -103,7 +117,7 @@
 									</div>
 								</div>
 							</p:tab>
-							<p:tab title="Avatar">
+							<p:tab title="#{i18n['user.avatar']}">
 								<p:photoCam widgetVar="pc" listener="#{userViewBean.uploadImage}" update="photo" />
 								<p:commandButton type="button" value="Capture" onclick="PF('pc').capture()" />
 								<p:outputPanel id="photo">
@@ -111,7 +125,7 @@
 										rendered="#{not empty userViewBean.user.imageFileName}" />
 								</p:outputPanel>
 							</p:tab>
-							<p:tab title="Responsable">
+							<p:tab title="#{i18n['user.manager']}">
 								<div class="ui-md-12 ui-lg-6">
 									<div class="form-group">
 										<p:outputLabel value="#{i18n['user.manager']}" />

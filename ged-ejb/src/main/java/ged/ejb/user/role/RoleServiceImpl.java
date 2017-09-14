@@ -20,8 +20,14 @@ public class RoleServiceImpl implements RoleService {
 	@Repository
 	private RoleDao roleDao;
 
+	public Role findAdmin() {
+		logger.debug("Find admin role");
+		return this.roleDao.findAdmin();
+	}
+
 	@Override
 	public List<Role> findAllRoles() {
+		logger.debug("Find all roles");
 		return this.roleDao.findAll();
 	}
 

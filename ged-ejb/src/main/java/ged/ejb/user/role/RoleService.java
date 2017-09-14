@@ -4,6 +4,8 @@ import java.util.List;
 
 public interface RoleService {
 
+	Role findAdmin();
+
 	List<Role> findAllRoles();
 
 	List<Role> findSubordinateRoles(final Role manager);
