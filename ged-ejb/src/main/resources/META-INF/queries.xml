@@ -144,7 +144,8 @@
 		<query><![CDATA[
 			SELECT j 
 			FROM JobMeeting j 
-			WHERE j.jobCandidature.id = :jobCandidatureId
+			WHERE j.datePlanned IS NOT NULL
+			AND j.dateConducted IS NULL
 		]]></query>
 	</named-query>
 
@@ -152,10 +153,19 @@
 		<query><![CDATA[
 			SELECT j 
 			FROM JobMeeting j 
-			WHERE j.jobCandidature.id = :jobCandidatureId
+			WHERE j.dateConducted IS NOT NULL
 		]]></query>
 	</named-query>
-
+	
+	<named-query name="JobMeeting.findByUserAndCandidate">
+		<query><![CDATA[
+			SELECT j 
+			FROM JobMeeting j 
+			WHERE j.user = :user
+			AND j.can
+		]]></query>
+	</named-query>
+	
 	<named-query name="Role.findAdmin">
 		<query><![CDATA[
 			SELECT r 
