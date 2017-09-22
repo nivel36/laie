@@ -20,11 +20,12 @@ import org.junit.BeforeClass;
 public class AbstractJpaTest {
 
 	protected static EntityManagerFactory emf;
+	
 	protected static EntityManager em;
 
 	@BeforeClass
 	public static void init() throws FileNotFoundException, SQLException {
-		emf = Persistence.createEntityManagerFactory("ged-test");
+		emf = Persistence.createEntityManagerFactory("ged");
 		em = emf.createEntityManager();
 	}
 
