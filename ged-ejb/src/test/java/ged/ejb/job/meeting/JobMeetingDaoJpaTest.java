@@ -1,11 +1,14 @@
 package ged.ejb.job.meeting;
 
+import org.junit.Assert;
 import org.junit.Test;
 
-public class JobMeetingDaoJpaTest {
+import ged.ejb.AbstractJpaTest;
+
+public class JobMeetingDaoJpaTest extends AbstractJpaTest{
 	
 	@Test
 	public void findByUserTest() {
-		
+		Assert.assertEquals(true, true);
 	}
 }

@@ -162,14 +162,13 @@
 			SELECT j 
 			FROM JobMeeting j 
 			WHERE j.user = :user
-			AND j.can
 		]]></query>
 	</named-query>
 	
 	<named-query name="Role.findAdmin">
 		<query><![CDATA[
 			SELECT r 
-			FROM Role r  
+			FROM Role r
 			WHERE r.name = 'ADMIN'
 		]]></query>
 	</named-query>
