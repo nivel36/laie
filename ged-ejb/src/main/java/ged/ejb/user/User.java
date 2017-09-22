@@ -9,8 +9,8 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
@@ -38,9 +38,6 @@ public class User extends AbstractAuditedEntity {
 	@Field
 	private String email;
 
-	@Transient
-	private String fullName;
-
 	@Column(length = 128, nullable = true, unique = true)
 	private String imageFileName;
 
@@ -64,6 +61,10 @@ public class User extends AbstractAuditedEntity {
 	@Column(length = 64, nullable = false)
 	private String password;
 
+	@Pattern(regexp = "(?:[+]?(?:[0-9]{1,5}|\\x28[0-9]{1,5}\\x29)[ ]?)?[0-9]{2}(?:[0-9][ ]?){6}[0-9]")
+	@Column(length = 12)
+	private String phoneNumber;
+
 	@NotNull
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "roleId", nullable = false)
@@ -71,7 +72,7 @@ public class User extends AbstractAuditedEntity {
 
 	@NotNull
 	@Column(nullable = false)
-	private Integer rowsPerPage;
+	private int rowsPerPage;
 
 	@NotNull
 	@Column(length = 64, nullable = false)
@@ -148,6 +149,10 @@ public class User extends AbstractAuditedEntity {
 		return this.password;
 	}
 
+	public String getPhoneNumber() {
+		return this.phoneNumber;
+	}
+
 	public Role getRole() {
 		return this.role;
 	}
@@ -207,10 +212,6 @@ public class User extends AbstractAuditedEntity {
 		this.email = email;
 	}
 
-	public void setFullName(final String fullName) {
-		this.fullName = fullName;
-	}
-
 	public void setImageFileName(final String imageFileName) {
 		this.imageFileName = imageFileName;
 	}
@@ -235,6 +236,10 @@ public class User extends AbstractAuditedEntity {
 		this.password = password;
 	}
 
+	public void setPhoneNumber(final String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
 	public void setRole(final Role role) {
 		this.role = role;
 	}
@@ -253,6 +258,6 @@ public class User extends AbstractAuditedEntity {
 
 	@Override
 	public String toString() {
-		return this.name + " " + this.surename;
+		return getFullName();
 	}
 }

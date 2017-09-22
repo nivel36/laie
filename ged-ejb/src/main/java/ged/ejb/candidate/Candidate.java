@@ -16,6 +16,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
@@ -53,6 +54,7 @@ public class Candidate extends AbstractAuditedEntity {
 	@Column(length = 64, unique = true, nullable = false)
 	private String email;
 
+	@Min(0)
 	private Integer expectedSalary;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "candidate", orphanRemoval = true)

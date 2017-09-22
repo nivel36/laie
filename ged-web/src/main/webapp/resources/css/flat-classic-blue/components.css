@@ -814,18 +814,57 @@ textarea {
 }
 
 .user-details {
+	border-radius: 3px;
+	padding: 10px 20px;
+	font-size: 12px;
+	background-color: rgba(238, 238, 238, 0.5);
 }
 
-.user-details .name {
-	display: block;
-	font-size: 13px;
+.user-details .data-panel {
+	margin: 5px 0px;
+}
+
+.user-details .data-panel .label {
 	font-weight: 600;
-	margin-bottom: 7px;
+	width: 50%;
+	display: inline-block;
 }
 
-.user-details .position {
-	text-transform: uppercase;
-	font-size: 11px;
-	font-weight: 800;
-	margin-bottom: 7px;
+.user-minicard {
+	background-color: rgba(238, 238, 238, 0.5);
+	padding: 10px;
+	overflow: auto;
+}
+
+.user-minicard .user-image {
+	float: left;
+	margin: 10px;
+}
+
+.user-minicard .user-image .image {
+	width: 74px;
+	height: 74px;
+	border-radius: 50%;
+}
+
+.user-minicard .user-info {
+	float: left;
+	margin: 0px 10px;
+}
+
+.user-minicard .user-info .name {
+	font-weight: 600;
+	font-size: 14px;
+	margin-bottom: 3px;
+}
+
+.user-minicard .user-info .position {
+	font-weight: 600;
+	font-size: 12px;
+	margin-bottom: 2px;
+}
+
+.user-minicard .user-info .email, .user-minicard .user-info .phoneNumber {
+	font-size: 12px;
+	margin-bottom: 2px;
 }
