@@ -48,17 +48,27 @@
 							<p:tab title="#{i18n['user.details']}">
 								<h4>Información</h4>
 								<div class="user-details">
-									<div class="data-panel">
-										<span class="label">#{i18n['user.name']}:</span><span class="data">#{userViewBean.user}</span>
-									</div>
-									<div class="data-panel">
-										<span class="label">#{i18n['user.role']}:</span><span class="data">#{i18n:translate(userViewBean.user.role.name)}</span>
-									</div>
-									<div class="data-panel">
-										<span class="label">#{i18n['user.email']}:</span><span class="data">#{userViewBean.user.email}</span>
-									</div>
-									<div class="data-panel">
-										<span class="label">#{i18n['user.phone_number']}:</span><span class="data">#{userViewBean.user.phoneNumber}</span>
+									<div class="ui-g">
+										<div class="ui-md-12 ui-lg-6">
+											<div class="data-panel">
+												<span class="label">#{i18n['user.name']}:</span><span class="data">#{userViewBean.user}</span>
+											</div>
+										</div>
+										<div class="ui-md-12 ui-lg-6">
+											<div class="data-panel">
+												<span class="label">#{i18n['user.role']}:</span><span class="data">#{i18n:translate(userViewBean.user.role.name)}</span>
+											</div>
+										</div>
+										<div class="ui-md-12 ui-lg-6">
+											<div class="data-panel">
+												<span class="label">#{i18n['user.email']}:</span><span class="data">#{userViewBean.user.email}</span>
+											</div>
+										</div>
+										<div class="ui-md-12 ui-lg-6">
+											<div class="data-panel">
+												<span class="label">#{i18n['user.phone_number']}:</span><span class="data">#{userViewBean.user.phoneNumber}</span>
+											</div>
+										</div>
 									</div>
 								</div>
 								<h4>Responsable</h4>

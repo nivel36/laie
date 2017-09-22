@@ -1,47 +1,47 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:jsf="http://xmlns.jcp.org/jsf"
-	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui">
 <h:head>
 	<title>${i18n['login.login']}</title>
-	<meta charset="utf-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-	<meta
-		content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'
-		name='viewport' />
-	<meta name="viewport" content="width=device-width" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="-1" />
+	<script>{"describedby":"form"}</script>
+	<h:outputStylesheet name="css/reset.css" />
+	<h:outputStylesheet name="css/flat-classic-blue/layout.css" />
 	<h:outputStylesheet name="css/flat-classic-blue/components.css" />
+	<h:outputStylesheet library="webjars" name="font-awesome/4.5.0/css/font-awesome-jsf.css" />
+	<link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' rel='stylesheet' type='text/css' />
 </h:head>
 <h:body>
 	<p:growl id="msg" sticky="true" />
 	<div class="wrapper">
-		<div class="full-page login-page"
-			data-image="/web/resources/img/loginbg.jpg">
+		<div class="full-page login-page" data-image="/web/resources/img/loginbg.jpg">
 			<div class="content">
 				<h:form id="form">
-					<p:panel styleClass="card-login card-hidden"
-						header="${i18n['login.login']}">
-						<div class="form-group">
-							<p:outputLabel for="username" styleClass="control-label"
-								value="${i18n['login.username']}" />
-							<span class="input-icon"> <i class="fa fa-user"></i> <p:inputText
-									id="username" styleClass="form-control"
-									value="#{loginBean.username}" />
-							</span>
+					<p:panel styleClass="card-login card-hidden" header="${i18n['login.login']}">
+						<div class="ui-g">
+							<div class="ui-g-12">
+								<span class="input-icon"> <i class="fa fa-user"></i></span>
+								<div class="form-group">
+									<p:inputText id="username" styleClass="form-control" value="#{loginBean.username}" />
+
+								</div>
+							</div>
 						</div>
-						<div class="form-group">
-							<p:outputLabel for="password" styleClass="control-label"
-								value="${i18n['login.password']}" />
-							<span class="input-icon"> <i class="fa fa-lock"></i> <p:password
-									id="password" styleClass="form-control"
-									value="#{loginBean.password}" />
-							</span>
+						<div class="ui-g">
+							<div class="ui-g-12">
+								<span class="input-icon"> <i class="fa fa-lock"></i></span>
+								<div class="form-group">
+									<p:password id="password" styleClass="form-control" value="#{loginBean.password}" />
+								</div>
+							</div>
 						</div>
-						<p:commandButton styleClass="form-action-primary"
-							action="#{loginBean.login}" value="${i18n['login.enter']}"
-							update="msg" />
+						<div class="form-action">
+							<p:commandButton styleClass="form-action-primary" action="#{loginBean.login}" value="${i18n['login.enter']}"
+								update="msg" />
+						</div>
 					</p:panel>
 				</h:form>
 			</div>
