@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -23,7 +24,8 @@ import ged.ejb.user.User;
 public class JobMeeting extends AbstractAuditedEntity {
 
 	private static final long serialVersionUID = 3394583186288921090L;
-	
+
+	@OneToMany
 	private List<User> attendees;
 
 	@Temporal(TemporalType.TIME)
@@ -66,7 +68,7 @@ public class JobMeeting extends AbstractAuditedEntity {
 	}
 
 	public List<User> getAttendees() {
-		return attendees;
+		return this.attendees;
 	}
 
 	public Date getDateConducted() {
@@ -91,10 +93,10 @@ public class JobMeeting extends AbstractAuditedEntity {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(dateConducted, datePlanned, description, jobCandidature, result);
+		return Objects.hash(this.dateConducted, this.datePlanned, this.description, this.jobCandidature, this.result);
 	}
 
-	public void setAttendees(List<User> attendees) {
+	public void setAttendees(final List<User> attendees) {
 		this.attendees = attendees;
 	}
 

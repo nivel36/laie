@@ -58,6 +58,16 @@
 		]]></query>
 	</named-query>
 
+	<named-query name="Candidate.findAllByJobOffer">
+		<query><![CDATA[
+			SELECT c 
+			FROM Candidate c
+			LEFT JOIN c.jobCandidatures jc
+			WHERE jc.jobOffer = :jobOffer
+		]]></query>
+	</named-query>
+
+
 	<named-query name="Client.findByName">
 		<query><![CDATA[
 			SELECT c 
@@ -65,14 +75,14 @@
 			WHERE c.name = :name
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="Client.clientExist">
 		<query><![CDATA[
 			SELECT CASE WHEN (COUNT(c) > 0) THEN TRUE ELSE FALSE END 
 			FROM Client c 
 			WHERE c.name = :name
 		]]></query>
-	</named-query>		
+	</named-query>
 
 	<named-query name="Curriculum.findByCandidateId">
 		<query><![CDATA[
@@ -86,57 +96,13 @@
 			WHERE c.candidate.id = :candidateId
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="JobCandidature.findByJobOfferAndCandidate">
 		<query><![CDATA[
 			SELECT j 
 			FROM JobCandidature j 
 			WHERE j.candidate = :candidate 
 			AND j.jobOffer = :jobOffer
-		]]></query>
-	</named-query>
-
-	<named-query name="JobOffer.findAllByClient">
-		<query><![CDATA[
-			SELECT j 
-			FROM JobOffer j 
-			WHERE j.client = :client 
-			AND j.deleted <> TRUE
-		]]></query>
-	</named-query>
-
-	<named-query name="JobOffer.findByName">
-		<query><![CDATA[
-			SELECT j 
-			FROM JobOffer j 
-			WHERE j.name = :name
-		]]></query>
-	</named-query>
-
-	<named-query name="JobOffer.findAllByOwner">
-		<query><![CDATA[
-			SELECT j 
-			FROM JobOffer j 
-			WHERE j.owner = :owner 
-			AND j.deleted <> TRUE
-		]]></query>
-	</named-query>
-
-	<named-query name="JobOffer.findLastJobOffers">
-		<query><![CDATA[
-			SELECT j 
-			FROM JobOffer j 
-			WHERE j.owner = :owner 
-			ORDER BY j.id
-		]]></query>
-	</named-query>
-	
-	<named-query name="Candidate.findAllByJobOffer">
-		<query><![CDATA[
-			SELECT c 
-			FROM Candidate c
-			LEFT JOIN c.jobCandidatures jc
-			WHERE jc.jobOffer = :jobOffer
 		]]></query>
 	</named-query>
 
@@ -156,7 +122,7 @@
 			WHERE j.dateConducted IS NOT NULL
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="JobMeeting.findByUserAndCandidate">
 		<query><![CDATA[
 			SELECT j 
@@ -164,7 +130,42 @@
 			WHERE j.user = :user
 		]]></query>
 	</named-query>
+
+	<named-query name="JobOffer.findAllByClient">
+		<query><![CDATA[
+			SELECT j 
+			FROM JobOffer j 
+			WHERE j.client = :client 
+			AND j.deleted <> TRUE
+		]]></query>
+	</named-query>
 	
+	<named-query name="JobOffer.findByName">
+		<query><![CDATA[
+			SELECT j 
+			FROM JobOffer j 
+			WHERE j.name = :name
+		]]></query>
+	</named-query>
+	
+	<named-query name="JobOffer.findAllByOwner">
+		<query><![CDATA[
+			SELECT j 
+			FROM JobOffer j 
+			WHERE j.owner = :owner 
+			AND j.deleted <> TRUE
+		]]></query>
+	</named-query>
+	
+	<named-query name="JobOffer.findLastJobOffers">
+		<query><![CDATA[
+			SELECT j 
+			FROM JobOffer j 
+			WHERE j.owner = :owner 
+			ORDER BY j.id
+		]]></query>
+	</named-query>
+
 	<named-query name="Role.findAdmin">
 		<query><![CDATA[
 			SELECT r 
@@ -172,7 +173,7 @@
 			WHERE r.name = 'ADMIN'
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="Role.findSubordinateRoles">
 		<query><![CDATA[
 			SELECT r 
