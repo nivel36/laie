@@ -894,3 +894,35 @@ textarea {
 	font-size: 12px;
 	margin-bottom: 2px;
 }
+
+.user-card-resume {
+	width: 300px;
+	margin: 10px;
+	overflow: auto;
+}
+
+.user-card-resume .user-image  {
+	float: left;
+}
+
+.user-card-resume .user-image .image{
+	width: 64px;
+	height: 64px;
+	border-radius: 50%;
+}
+
+.user-card-resume .user-info {
+	padding: 0px 10px;
+	float: left;
+}
+
+.user-card-resume .user-info .name {
+	font-weight: 600;
+	font-size: 14px;
+}
+
+.user-card-resume .user-info .position {
+	font-weight: 400;
+	font-size: 12px;
+	color: #999999;
+}
