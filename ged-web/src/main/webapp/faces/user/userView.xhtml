@@ -25,7 +25,7 @@
 			<input type="hidden" id="userId" value="#{userViewBean.user.id}" />
 
 			<div class="ui-g">
-				<div class="ui-md-12 ui-lg-3 ui-xl-2">
+				<div class="ui-g-12 ui-md-12 ui-lg-3 ui-xl-2">
 					<div class="panel user-card">
 						<div class="panel-content">
 							<div class="user-image">
@@ -42,29 +42,29 @@
 					</div>
 				</div>
 
-				<div class="ui-md-12 ui-lg-9 ui-xl-6">
+				<div class="ui-g-12 ui-md-12 ui-lg-9 ui-xl-6">
 					<p:panel styleClass="with-tabs" header="#{i18n['user.user']}">
 						<p:tabView dynamic="true" cache="true">
 							<p:tab title="#{i18n['user.details']}">
 								<h4>Información</h4>
 								<div class="user-details">
 									<div class="ui-g">
-										<div class="ui-md-12 ui-lg-6">
+										<div class="ui-g-12 ui-md-12 ui-lg-6">
 											<div class="data-panel">
 												<span class="label">#{i18n['user.name']}:</span><span class="data">#{userViewBean.user}</span>
 											</div>
 										</div>
-										<div class="ui-md-12 ui-lg-6">
+										<div class="ui-g-12 ui-md-12 ui-lg-6">
 											<div class="data-panel">
 												<span class="label">#{i18n['user.role']}:</span><span class="data">#{i18n:translate(userViewBean.user.role.name)}</span>
 											</div>
 										</div>
-										<div class="ui-md-12 ui-lg-6">
+										<div class="ui-g-12 ui-md-12 ui-lg-6">
 											<div class="data-panel">
 												<span class="label">#{i18n['user.email']}:</span><span class="data">#{userViewBean.user.email}</span>
 											</div>
 										</div>
-										<div class="ui-md-12 ui-lg-6">
+										<div class="ui-g-12 ui-md-12 ui-lg-6">
 											<div class="data-panel">
 												<span class="label">#{i18n['user.phone_number']}:</span><span class="data">#{userViewBean.user.phoneNumber}</span>
 											</div>
@@ -78,14 +78,14 @@
 							</p:tab>
 							<p:tab title="#{i18n['user.edit_user']}">
 								<div class="ui-g">
-									<div class="ui-md-12 ui-lg-6">
+									<div class="ui-g-12 ui-md-12 ui-lg-6">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['user.username']}" for="username" />
 											<p:inputText id="username" value="#{userViewBean.user.username}" readonly="true" />
 										</div>
 										<h:message for="username" errorClass="error" />
 									</div>
-									<div class="ui-md-12 ui-lg-6">
+									<div class="ui-g-12 ui-md-12 ui-lg-6">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['user.email']}" for="email" />
 											<p:inputText id="email" p:type="email" value="#{userViewBean.user.email}" required="true"
@@ -93,7 +93,7 @@
 										</div>
 										<h:message for="email" errorClass="error" />
 									</div>
-									<div class="ui-md-12 ui-lg-6">
+									<div class="ui-g-12 ui-md-12 ui-lg-6">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['user.name']}" for="name" />
 											<p:inputText id="name" value="#{userViewBean.user.name}" required="true" />
@@ -101,7 +101,7 @@
 										<h:message for="name" errorClass="error" />
 									</div>
 
-									<div class="ui-md-12 ui-lg-6">
+									<div class="ui-g-12 ui-md-12 ui-lg-6">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['user.surename']}" for="surename" />
 											<p:inputText id="surename" value="#{userViewBean.user.surename}" required="true" />
@@ -109,7 +109,7 @@
 										<h:message for="surename" errorClass="error" />
 									</div>
 
-									<div class="ui-md-12 ui-lg-6">
+									<div class="ui-g-12 ui-md-12 ui-lg-6">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['user.role']}" for="role" />
 											<p:selectOneMenu id="role" value="#{userViewBean.user.role}" validator="#{userViewBean.validateRole}">
@@ -119,18 +119,25 @@
 										</div>
 										<h:message for="role" errorClass="error" />
 									</div>
+
+									<div class="ui-g-12 ui-md-12 ui-lg-6">
+										<div class="form-group">
+											<p:outputLabel value="#{i18n['user.phone_number']}" for="phone_number" />
+											<p:inputText id="phone_number" value="#{userViewBean.user.phoneNumber}" />
+										</div>
+										<h:message for="phone_number" errorClass="error" />
+									</div>
 								</div>
 
 								<div class="ui-g">
 									<div class="ui-g-12">
 										<div class="form-action-primary">
-											<h:panelGroup id="actionButtons" layout="block">
-												<p:commandButton value="#{i18n['action.save']}" action="#{userViewBean.saveUser}" update="@form growl" />
-											</h:panelGroup>
+											<p:commandButton value="#{i18n['action.save']}" action="#{userViewBean.saveUser}" update="@form growl" />
 										</div>
 									</div>
 								</div>
 							</p:tab>
+							
 							<p:tab title="#{i18n['user.avatar']}">
 								<p:photoCam widgetVar="pc" listener="#{userViewBean.uploadImage}" update="photo" />
 								<p:commandButton type="button" value="Capture" onclick="PF('pc').capture()" />
@@ -140,7 +147,7 @@
 								</p:outputPanel>
 							</p:tab>
 							<p:tab title="#{i18n['user.manager']}">
-								<div class="ui-md-12 ui-lg-6">
+								<div class="ui-g-12 ui-md-12 ui-lg-6">
 									<div class="form-group">
 										<p:outputLabel value="#{i18n['user.manager']}" />
 										<p:inputText id="manager" value="#{userViewBean.manager.fullName}" label="#{i18n['user.manager']}"
@@ -157,7 +164,7 @@
 					</p:panel>
 				</div>
 
-				<div class="ui-md-12 ui-lg-6 ui-xl-4">
+				<div class="ui-g-12 ui-md-12 ui-lg-6 ui-xl-4">
 					<p:panel styleClass="magenta" header="#{i18n['user.team']}">
 						<p:dataTable var="user" value="#{userViewBean.team}" emptyMessage="#{i18n['user.no_users_found']}" reflow="true"
 							paginator="true" paginatorPosition="bottom" rows="#{sessionBean.rowsPerPage}">
@@ -186,7 +193,7 @@
 						</p:dataTable>
 					</p:panel>
 				</div>
-				<div class="ui-md-12 ui-lg-6">
+				<div class="ui-g-12 ui-md-12 ui-lg-6">
 					<p:panel styleClass="magenta" header="#{i18n['job.job_offers']}">
 						<p:dataTable var="jobOffer" value="#{userViewBean.jobOffers}" emptyMessage="#{i18n['user.no_users_found']}"
 							reflow="true" paginator="true" paginatorPosition="bottom" rows="#{sessionBean.rowsPerPage}">

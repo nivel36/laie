@@ -4033,7 +4033,7 @@ body .ui-paginator {
 }
 
 body .ui-paginator .ui-paginator-page.ui-state-active {
-	background-color: #1976d2;
+	background-color: #3598DC;
 	border-radius: 50%;
 	width: 24px;
 	height: 24px;
@@ -4247,7 +4247,7 @@ body .ui-outputlabel .ui-outputlabel-rfi {
 	display: none;
 }
 
-body .form-group .ui-inputfield {
+body .form-group .ui-inputfield, body .ui-inputfield {
 	outline: medium none;
 	padding: 5px;
 	background-color: white;
@@ -4500,6 +4500,10 @@ body .ui-button-icon-only .ui-icon.fa, body .ui-button-text-icon-left .ui-icon.f
 
 body .ui-tabs-panels {
 	border-top: 1px solid #CCCCCC;
+}
+
+body .ui-tabs-panels .ui-tabs-panel {
+	overflow: auto;
 }
 
 .ripple-effect {

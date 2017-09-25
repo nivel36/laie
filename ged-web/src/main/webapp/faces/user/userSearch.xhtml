@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:i18n="http://legion.com/i18n" xmlns:p="http://primefaces.org/ui"
-	template="/WEB-INF/templates/default.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://legion.com/i18n"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
 		<title>#{i18n['user.users']}</title>
@@ -15,67 +12,44 @@
 	<ui:define name="content">
 		<h:form id="form">
 			<div class="ui-g">
-				<div class="ui-g-12">
-					<p:panel styleClass="magenta" header="#{i18n['user.search']}">
-						<div class="ui-g">
-							<div class="ui-md-12 ui-lg-6 ui-xl-4">
-								<div class="form-group">
-									<p:outputLabel for="name" value="#{i18n['user.name']}" />
-									<p:inputText id="name" value="#{userSearchBean.name}"
-										label="#{i18n['user.name']}"
-										validator="ged.web.view.SearchFieldValidator" />
+				<div class="ui-g-12 ui-md-12 ui-lg-12 ui-xl-12">
+					<p:panel id="searchUserPanel" header="#{i18n['user.search']}">
+						<div class="search-bar">
+							<div class="ui-g">
+								<div class="ui-md-4 ui-lg-3 ui-xl-2">
+									<div class="search-input">
+										<p:inputText id="name" value="#{userSearchBean.name}" label="#{i18n['user.name']}"
+											validator="ged.web.view.SearchFieldValidator" placeholder="#{i18n['action.search']}" />
+									</div>
 								</div>
-							</div>
-							<div class="ui-md-12 ui-lg-6 ui-xl-4">
-								<div class="form-group">
-									<p:outputLabel for="surename" value="#{i18n['user.surename']}" />
-									<p:inputText id="surename" value="#{userSearchBean.surename}"
-										label="#{i18n['user.surename']}"
-										validator="ged.web.view.SearchFieldValidator" />
-								</div>
-							</div>
-						</div>
-						<div class="ui-g">
-							<div class="ui-g-12">
-								<div class="form-action-primary">
-									<p:commandButton styleClass="btn-green"
-										value="#{i18n['action.new']}"
-										action="#{userSearchBean.newUser}" immediate="true" />
-									<p:commandButton value="#{i18n['action.search']}"
-										action="#{userSearchBean.search}" execute="searchUserPanel"
-										update="@form" />
-									<p:commandButton styleClass="btn-gray"
-										value="#{i18n['action.clean']}"
-										action="#{userSearchBean.clean}" update="@form" />
+								<div class="ui-md-8 ui-lg-9 ui-xl-10">
+									<div class="form-action-primary">
+										<p:commandButton styleClass="btn-green" value="#{i18n['action.new']}" action="#{userSearchBean.newUser}"
+											immediate="true" />
+										<p:commandButton value="#{i18n['action.search']}" action="#{userSearchBean.search}" execute="searchUserPanel"
+											update="@form" />
+										<p:commandButton styleClass="btn-gray" value="#{i18n['action.clean']}" action="#{userSearchBean.clean}"
+											update="@form" />
+									</div>
 								</div>
 							</div>
 						</div>
-					</p:panel>
-				</div>
-				<div class="ui-g-12">
-					<p:panel id="searchUserPanel" styleClass="magenta"
-						header="#{i18n['user.search_results']}">
 
-						<p:dataTable var="user" id="userDataTable"
-							value="#{userSearchBean.users}" reflow="true" paginator="true"
+						<p:dataTable var="user" id="userDataTable" value="#{userSearchBean.users}" reflow="true" paginator="true"
 							paginatorPosition="bottom" rows="#{sessionBean.rowsPerPage}">
-							<p:column headerText="#{i18n['user.name']}"
-								sortBy="#{user.fullName}">
+							<p:column headerText="#{i18n['user.name']}" sortBy="#{user.fullName}">
 								<h:outputText value="#{user.fullName}" />
 							</p:column>
 
-							<p:column headerText="#{i18n['user.email']}"
-								sortBy="#{user.email}">
+							<p:column headerText="#{i18n['user.email']}" sortBy="#{user.email}">
 								<h:outputText value="#{user.email}" />
 							</p:column>
 
-							<p:column headerText="#{i18n['user.role']}"
-								sortBy="#{i18n:translate(user.role.name)}">
+							<p:column headerText="#{i18n['user.role']}" sortBy="#{i18n:translate(user.role.name)}">
 								<h:outputText value="#{i18n:translate(user.role.name)}" />
 							</p:column>
 
-							<p:column headerText="#{i18n['user.manager']}"
-								sortBy="#{user.manager}">
+							<p:column headerText="#{i18n['user.manager']}" sortBy="#{user.manager}">
 								<h:outputText value="#{user.manager}" />
 							</p:column>
 
@@ -84,13 +58,10 @@
 									<f:param name="id" value="#{user.id}" />
 								</h:link>
 								<h:outputText value=" | " />
-								<h:commandLink action="#{userSearchBean.editUser(user)}"
-									value="#{i18n['action.edit']}" immediate="true" />
+								<h:commandLink action="#{userSearchBean.editUser(user)}" value="#{i18n['action.edit']}" immediate="true" />
 								<h:outputText value=" | " rendered="${user.role.name!='ADMIN'}" />
-								<h:commandLink action="#{userSearchBean.deleteUser(user)}"
-									value="#{i18n['action.remove']}"
-									rendered="${user.role.name!='ADMIN'}"
-									onclick="return confirm('#{i18n['action.delete.are_you_sure']}')">
+								<h:commandLink action="#{userSearchBean.deleteUser(user)}" value="#{i18n['action.remove']}"
+									rendered="${user.role.name!='ADMIN'}" onclick="return confirm('#{i18n['action.delete.are_you_sure']}')">
 									<f:ajax render="form:searchUserResults :asideForm" />
 								</h:commandLink>
 							</p:column>

@@ -789,7 +789,26 @@ textarea {
 }
 
 .form-action-primary {
-	float: right;
+	text-align: right;
+	overflow: auto;
+	width: 100%;
+}
+
+.form-action-primary .ui-button {
+
+}
+
+.search-input .search-text {
+	padding: 0 10px 0 0;
+	font-size: 14px;
+	align-items: center;
+	overflow: auto;
+	display: relative;
+	width: 100%;
+}
+
+.search-bar {
+	margin: 10px 0;
 }
 
 .form-action {
@@ -901,11 +920,11 @@ textarea {
 	overflow: auto;
 }
 
-.user-card-resume .user-image  {
+.user-card-resume .user-image {
 	float: left;
 }
 
-.user-card-resume .user-image .image{
+.user-card-resume .user-image .image {
 	width: 64px;
 	height: 64px;
 	border-radius: 50%;
@@ -925,4 +944,13 @@ textarea {
 	font-weight: 400;
 	font-size: 12px;
 	color: #999999;
+}
+
+@media screen and (max-width: 699px) {
+	body .ui-tabs.ui-tabs-top>.ui-tabs-nav li {
+		width: 100%;
+	}
+	body .ui-panel .ui-tabs .ui-tabs-nav {
+		overflow: hidden;
+	}
 }
