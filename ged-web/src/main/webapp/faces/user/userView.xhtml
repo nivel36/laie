@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui" xmlns:i18n="http://legion.com/i18n"
-	template="/WEB-INF/templates/default.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
+	xmlns:i18n="http://legion.com/i18n" template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
 		<title>#{i18n['user.user']}</title>
@@ -35,14 +32,11 @@
 								<img class="image" src="/web/resources/img/abel.jpg" />
 							</div>
 							<div class="user-info">
-								<span class="name">#{userViewBean.user}</span> <span
-									class="position">#{i18n:translate(userViewBean.user.role.name)}</span>
+								<span class="name">#{userViewBean.user}</span> <span class="position">#{i18n:translate(userViewBean.user.role.name)}</span>
 							</div>
 							<div class="form-action">
-								<p:commandButton styleClass="medium rounded" id="exportExcel"
-									value="#{i18n['action.export']}"
-									action="#{userViewBean.export}"
-									rendered="#{not userViewBean.editable}" />
+								<p:commandButton styleClass="medium rounded" id="exportExcel" value="#{i18n['action.export']}"
+									action="#{userViewBean.export}" rendered="#{not userViewBean.editable}" />
 							</div>
 						</div>
 					</div>
@@ -57,51 +51,42 @@
 									<div class="ui-g">
 										<div class="ui-g-12 ui-md-12 ui-lg-6">
 											<div class="data-panel">
-												<span class="label">#{i18n['user.name']}:</span><span
-													class="data">#{userViewBean.user}</span>
+												<span class="label">#{i18n['user.name']}:</span><span class="data">#{userViewBean.user}</span>
 											</div>
 										</div>
 										<div class="ui-g-12 ui-md-12 ui-lg-6">
 											<div class="data-panel">
-												<span class="label">#{i18n['user.role']}:</span><span
-													class="data">#{i18n:translate(userViewBean.user.role.name)}</span>
+												<span class="label">#{i18n['user.role']}:</span><span class="data">#{i18n:translate(userViewBean.user.role.name)}</span>
 											</div>
 										</div>
 										<div class="ui-g-12 ui-md-12 ui-lg-6">
 											<div class="data-panel">
-												<span class="label">#{i18n['user.email']}:</span><span
-													class="data">#{userViewBean.user.email}</span>
+												<span class="label">#{i18n['user.email']}:</span><span class="data">#{userViewBean.user.email}</span>
 											</div>
 										</div>
 										<div class="ui-g-12 ui-md-12 ui-lg-6">
 											<div class="data-panel">
-												<span class="label">#{i18n['user.phone_number']}:</span><span
-													class="data">#{userViewBean.user.phoneNumber}</span>
+												<span class="label">#{i18n['user.phone_number']}:</span><span class="data">#{userViewBean.user.phoneNumber}</span>
 											</div>
 										</div>
 									</div>
 								</div>
 								<h4>#{i18n['user.manager']}</h4>
-								<h:panelGroup layout="block"
-									render="#{empty userViewBean.user.manager}">
+								<h:panelGroup layout="block" rendered="#{empty userViewBean.manager}">
 									<span class="message">#{i18n['user.no_manager']}</span>
 								</h:panelGroup>
-								<h:panelGroup layout="block"
-									render="#{not empty userViewBean.user.manager}">
+								<h:panelGroup layout="block" rendered="#{not empty userViewBean.manager}">
 									<ui:include src="userCard.xhtml">
 										<ui:param name="user" value="#{userViewBean.user}" />
 									</ui:include>
 								</h:panelGroup>
 
 								<h4>#{i18n['user.team']}</h4>
-								<h:panelGroup layout="block"
-									render="#{empty userViewBean.user.team}">
-									<span class="message">#{i18n['user.no_team_member']}</span>
+								<h:panelGroup layout="block" rendered="#{empty userViewBean.team}">
+									<span class="message">#{i18n['user.no_team']}</span>
 								</h:panelGroup>
-								<h:panelGroup layout="block"
-									render="#{not empty userViewBean.user.team}">
-									<ui:repeat var="userTeamMember"
-										value="#{userViewBean.user.team}" varStatus="status">
+								<h:panelGroup layout="block" rendered="#{not empty userViewBean.team}">
+									<ui:repeat var="userTeamMember" value="#{userViewBean.team}" varStatus="status">
 										<ui:include src="userCard.xhtml">
 											<ui:param name="user" value="#{userTeamMember}" />
 										</ui:include>
@@ -112,18 +97,15 @@
 								<div class="ui-g">
 									<div class="ui-g-12 ui-md-12 ui-lg-6">
 										<div class="form-group">
-											<p:outputLabel value="#{i18n['user.username']}"
-												for="username" />
-											<p:inputText id="username"
-												value="#{userViewBean.user.username}" readonly="true" />
+											<p:outputLabel value="#{i18n['user.username']}" for="username" />
+											<p:inputText id="username" value="#{userViewBean.user.username}" readonly="true" />
 										</div>
 										<h:message for="username" errorClass="error" />
 									</div>
 									<div class="ui-g-12 ui-md-12 ui-lg-6">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['user.email']}" for="email" />
-											<p:inputText id="email" p:type="email"
-												value="#{userViewBean.user.email}" required="true"
+											<p:inputText id="email" p:type="email" value="#{userViewBean.user.email}" required="true"
 												validator="#{userViewBean.validateEmail}" />
 										</div>
 										<h:message for="email" errorClass="error" />
@@ -131,18 +113,15 @@
 									<div class="ui-g-12 ui-md-12 ui-lg-6">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['user.name']}" for="name" />
-											<p:inputText id="name" value="#{userViewBean.user.name}"
-												required="true" />
+											<p:inputText id="name" value="#{userViewBean.user.name}" required="true" />
 										</div>
 										<h:message for="name" errorClass="error" />
 									</div>
 
 									<div class="ui-g-12 ui-md-12 ui-lg-6">
 										<div class="form-group">
-											<p:outputLabel value="#{i18n['user.surename']}"
-												for="surename" />
-											<p:inputText id="surename"
-												value="#{userViewBean.user.surename}" required="true" />
+											<p:outputLabel value="#{i18n['user.surename']}" for="surename" />
+											<p:inputText id="surename" value="#{userViewBean.user.surename}" required="true" />
 										</div>
 										<h:message for="surename" errorClass="error" />
 									</div>
@@ -150,10 +129,8 @@
 									<div class="ui-g-12 ui-md-12 ui-lg-6">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['user.role']}" for="role" />
-											<p:selectOneMenu id="role" value="#{userViewBean.user.role}"
-												validator="#{userViewBean.validateRole}">
-												<f:selectItems var="role" itemValue="#{role}"
-													value="#{applicationBean.roles}"
+											<p:selectOneMenu id="role" value="#{userViewBean.user.role}" validator="#{userViewBean.validateRole}">
+												<f:selectItems var="role" itemValue="#{role}" value="#{applicationBean.roles}"
 													itemLabel="#{i18n:translate(role.name)}" />
 											</p:selectOneMenu>
 										</div>
@@ -162,10 +139,8 @@
 
 									<div class="ui-g-12 ui-md-12 ui-lg-6">
 										<div class="form-group">
-											<p:outputLabel value="#{i18n['user.phone_number']}"
-												for="phone_number" />
-											<p:inputText id="phone_number"
-												value="#{userViewBean.user.phoneNumber}" />
+											<p:outputLabel value="#{i18n['user.phone_number']}" for="phone_number" />
+											<p:inputText id="phone_number" value="#{userViewBean.user.phoneNumber}" />
 										</div>
 										<h:message for="phone_number" errorClass="error" />
 									</div>
@@ -174,18 +149,15 @@
 								<div class="ui-g">
 									<div class="ui-g-12">
 										<div class="form-action-primary">
-											<p:commandButton value="#{i18n['action.save']}"
-												action="#{userViewBean.saveUser}" update="@form growl" />
+											<p:commandButton value="#{i18n['action.save']}" action="#{userViewBean.saveUser}" update="@form growl" />
 										</div>
 									</div>
 								</div>
 							</p:tab>
 
 							<p:tab title="#{i18n['user.avatar']}">
-								<p:photoCam widgetVar="pc"
-									listener="#{userViewBean.uploadImage}" update="photo" />
-								<p:commandButton type="button" value="Capture"
-									onclick="PF('pc').capture()" />
+								<p:photoCam widgetVar="pc" listener="#{userViewBean.uploadImage}" update="photo" />
+								<p:commandButton type="button" value="Capture" onclick="PF('pc').capture()" />
 								<p:outputPanel id="photo">
 									<p:graphicImage name="#{userViewBean.user.imageFileName}"
 										rendered="#{not empty userViewBean.user.imageFileName}" />
@@ -195,17 +167,12 @@
 								<div class="ui-g-12 ui-md-12 ui-lg-6">
 									<div class="form-group">
 										<p:outputLabel value="#{i18n['user.manager']}" />
-										<p:inputText id="manager"
-											value="#{userViewBean.manager.fullName}"
-											label="#{i18n['user.manager']}"
-											readonly="#{facesContext.renderResponse}"
-											validator="#{userViewBean.validateManager}" />
-										<p:commandButton value="+" onclick="PF('managerDlg').show();"
-											rendered="#{userViewBean.editable}" />
-										<p:commandButton action="#{userViewBean.removeManager}"
-											value="-"
-											rendered="#{not empty userViewBean.manager.username and userViewBean.editable}"
-											id="removeManager" process="@this" update="managerBlock" />
+										<p:inputText id="manager" value="#{userViewBean.manager.fullName}" label="#{i18n['user.manager']}"
+											readonly="#{facesContext.renderResponse}" validator="#{userViewBean.validateManager}" />
+										<p:commandButton value="+" onclick="PF('managerDlg').show();" rendered="#{userViewBean.editable}" />
+										<p:commandButton action="#{userViewBean.removeManager}" value="-"
+											rendered="#{not empty userViewBean.manager.username and userViewBean.editable}" id="removeManager"
+											process="@this" update="managerBlock" />
 									</div>
 									<h:message for="manager" errorClass="error" />
 								</div>
@@ -216,10 +183,8 @@
 
 				<div class="ui-g-12 ui-md-12 ui-lg-6 ui-xl-4">
 					<p:panel styleClass="magenta" header="#{i18n['user.team']}">
-						<p:dataTable var="user" value="#{userViewBean.team}"
-							emptyMessage="#{i18n['user.no_users_found']}" reflow="true"
-							paginator="true" paginatorPosition="bottom"
-							rows="#{sessionBean.rowsPerPage}">
+						<p:dataTable var="user" value="#{userViewBean.team}" emptyMessage="#{i18n['user.no_users_found']}" reflow="true"
+							paginator="true" paginatorPosition="bottom" rows="#{sessionBean.rowsPerPage}">
 							<h:column>
 								<f:facet name="header">
 									<h:outputText value="#{i18n['user.name']}" />
@@ -247,10 +212,8 @@
 				</div>
 				<div class="ui-g-12 ui-md-12 ui-lg-6">
 					<p:panel styleClass="magenta" header="#{i18n['job.job_offers']}">
-						<p:dataTable var="jobOffer" value="#{userViewBean.jobOffers}"
-							emptyMessage="#{i18n['user.no_users_found']}" reflow="true"
-							paginator="true" paginatorPosition="bottom"
-							rows="#{sessionBean.rowsPerPage}">
+						<p:dataTable var="jobOffer" value="#{userViewBean.jobOffers}" emptyMessage="#{i18n['user.no_users_found']}"
+							reflow="true" paginator="true" paginatorPosition="bottom" rows="#{sessionBean.rowsPerPage}">
 							<h:column>
 								<f:facet name="header">
 									<h:outputText value="#{i18n['job.name']}" />
@@ -269,8 +232,7 @@
 								<f:facet name="header">
 									<h:outputText value="#{i18n['action.action']}" />
 								</f:facet>
-								<h:link value="#{i18n['action.view']}"
-									outcome="/faces/jobOffer/jobOfferView">
+								<h:link value="#{i18n['action.view']}" outcome="/faces/jobOffer/jobOfferView">
 									<f:param name="id" value="#{jobOffer.id}" />
 								</h:link>
 							</h:column>
