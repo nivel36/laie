@@ -12,6 +12,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.primefaces.event.FlowEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,13 +36,7 @@ public class UserEditBean extends AbstractPageBean {
 	@Inject
 	private transient RoleService roleService;
 
-	public void setRoleService(RoleService roleService) {
-		this.roleService = roleService;
-	}
-
-	public void setUserService(UserService userService) {
-		this.userService = userService;
-	}
+	private boolean skip;
 
 	private User user;
 
@@ -97,10 +92,23 @@ public class UserEditBean extends AbstractPageBean {
 		return this.roleService.isASubordinateRole(managerRole, userRole);
 	}
 
+	public boolean isSkip() {
+		return this.skip;
+	}
+
 	private void newManager() {
 		this.manager = new User();
 		this.manager.setName("");
 		this.manager.setSurename("");
+	}
+
+	public String onFlowProcess(final FlowEvent event) {
+		if (this.skip) {
+			this.skip = false; // reset in case user goes back
+			return "confirm";
+		} else {
+			return event.getNewStep();
+		}
 	}
 
 	public void removeManager() {
@@ -127,8 +135,20 @@ public class UserEditBean extends AbstractPageBean {
 		this.manager = manager;
 	}
 
+	public void setRoleService(final RoleService roleService) {
+		this.roleService = roleService;
+	}
+
+	public void setSkip(final boolean skip) {
+		this.skip = skip;
+	}
+
 	public void setUser(final User user) {
 		this.user = user;
+	}
+
+	public void setUserService(final UserService userService) {
+		this.userService = userService;
 	}
 
 	public void validateEmail(final FacesContext context, final UIComponent component, final Object value)

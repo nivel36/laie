@@ -11,11 +11,6 @@
 
 	<ui:define name="content">
 
-		<ui:include src="userSearchPopup.xhtml">
-			<ui:param name="callback" value="#{userViewBean.manager}" />
-			<ui:param name="render" value=":form:managerBlock" />
-		</ui:include>
-
 		<f:metadata>
 			<f:viewParam name="id" value="#{userViewBean.userId}" />
 			<f:viewAction action="#{userViewBean.init}" />
@@ -93,6 +88,7 @@
 									</ui:repeat>
 								</h:panelGroup>
 							</p:tab>
+
 							<p:tab title="#{i18n['user.edit_user']}">
 								<div class="ui-g">
 									<div class="ui-g-12 ui-md-12 ui-lg-6">
@@ -163,18 +159,15 @@
 										rendered="#{not empty userViewBean.user.imageFileName}" />
 								</p:outputPanel>
 							</p:tab>
+
 							<p:tab title="#{i18n['user.manager']}">
 								<div class="ui-g-12 ui-md-12 ui-lg-6">
 									<div class="form-group">
-										<p:outputLabel value="#{i18n['user.manager']}" />
-										<p:inputText id="manager" value="#{userViewBean.manager.fullName}" label="#{i18n['user.manager']}"
-											readonly="#{facesContext.renderResponse}" validator="#{userViewBean.validateManager}" />
-										<p:commandButton value="+" onclick="PF('managerDlg').show();" rendered="#{userViewBean.editable}" />
-										<p:commandButton action="#{userViewBean.removeManager}" value="-"
-											rendered="#{not empty userViewBean.manager.username and userViewBean.editable}" id="removeManager"
-											process="@this" update="managerBlock" />
+										<ui:include src="userSearchSnippet.xhtml">
+											<ui:param name="callback" value="#{userViewBean.manager}" />
+											<ui:param name="render" value=":form:managerBlock" />
+										</ui:include>
 									</div>
-									<h:message for="manager" errorClass="error" />
 								</div>
 							</p:tab>
 						</p:tabView>
@@ -182,32 +175,8 @@
 				</div>
 
 				<div class="ui-g-12 ui-md-12 ui-lg-6 ui-xl-4">
-					<p:panel styleClass="magenta" header="#{i18n['user.team']}">
-						<p:dataTable var="user" value="#{userViewBean.team}" emptyMessage="#{i18n['user.no_users_found']}" reflow="true"
-							paginator="true" paginatorPosition="bottom" rows="#{sessionBean.rowsPerPage}">
-							<h:column>
-								<f:facet name="header">
-									<h:outputText value="#{i18n['user.name']}" />
-								</f:facet>
-								<h:outputText value="#{user.fullName}" />
-							</h:column>
+					<p:panel styleClass="magenta" header="#{i18n['job_meeting.planned_job_meetings']}">
 
-							<h:column>
-								<f:facet name="header">
-									<h:outputText value="#{i18n['user.role']}" />
-								</f:facet>
-								<h:outputText value="#{i18n:translate(user.role.name)}" />
-							</h:column>
-
-							<h:column>
-								<f:facet name="header">
-									<h:outputText value="#{i18n['action.action']}" />
-								</f:facet>
-								<h:link value="#{i18n['action.view']}" outcome="userView">
-									<f:param name="id" value="#{user.id}" />
-								</h:link>
-							</h:column>
-						</p:dataTable>
 					</p:panel>
 				</div>
 				<div class="ui-g-12 ui-md-12 ui-lg-6">

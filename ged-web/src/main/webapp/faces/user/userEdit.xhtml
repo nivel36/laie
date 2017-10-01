@@ -11,88 +11,82 @@
 
 	<ui:define name="content">
 
-		<ui:include src="userSearchPopup.xhtml">
-			<ui:param name="callback" value="#{userEditBean.manager}" />
-			<ui:param name="render" value=":form:managerBlock" />
-		</ui:include>
-
 		<h:form id="form">
 			<input type="hidden" id="userId" value="#{userEditBean.user.id}" />
-
-			<div class="ui-g">
-				<div class="ui-g-12">
-					<p:panel styleClass="magenta" header="#{userEditBean.user.id == 0 ? i18n['user.new_user'] : userEditBean.user}">
-						<div class="ui-g">
-							<div class="ui-md-12 ui-lg-6 ui-xl-4">
-								<div class="form-group">
-									<p:outputLabel value="#{i18n['user.username']}" for="username" />
-									<p:inputText id="username" value="#{userEditBean.user.username}" required="true"
-										validator="#{userEditBean.validateUsername}" />
-								</div>
-								<h:message for="username" errorClass="error" />
+			<p:wizard flowListener="#{userEditBean.onFlowProcess}">
+				<p:tab id="user" title="#{i18n['user.new_user']}">
+					<div class="ui-g">
+						<div class="ui-md-12 ui-lg-6 ui-xl-4">
+							<div class="form-group">
+								<p:outputLabel value="#{i18n['user.username']}" for="username" />
+								<p:inputText id="username" value="#{userEditBean.user.username}" required="true"
+									validator="#{userEditBean.validateUsername}" />
 							</div>
-							<div class="ui-md-12 ui-lg-6 ui-xl-4">
-								<div class="form-group">
-									<p:outputLabel value="#{i18n['user.email']}" for="email" />
-									<p:inputText id="email" p:type="email" value="#{userEditBean.user.email}" required="true"
-										validator="#{userEditBean.validateEmail}" />
-								</div>
-								<h:message for="email" errorClass="error" />
+							<h:message for="username" errorClass="error" />
+						</div>
+						<div class="ui-md-12 ui-lg-6 ui-xl-4">
+							<div class="form-group">
+								<p:outputLabel value="#{i18n['user.email']}" for="email" />
+								<p:inputText id="email" p:type="email" value="#{userEditBean.user.email}" required="true"
+									validator="#{userEditBean.validateEmail}" />
 							</div>
-
-							<div class="ui-md-12 ui-lg-6 ui-xl-4">
-								<div class="form-group">
-									<p:outputLabel value="#{i18n['user.name']}" for="name" />
-									<p:inputText id="name" value="#{userEditBean.user.name}" required="true" />
-								</div>
-								<h:message for="name" errorClass="error" />
-							</div>
-
-							<div class="ui-md-12 ui-lg-6 ui-xl-4">
-								<div class="form-group">
-									<p:outputLabel value="#{i18n['user.surename']}" for="surename" />
-									<p:inputText id="surename" value="#{userEditBean.user.surename}" required="true" />
-								</div>
-								<h:message for="surename" errorClass="error" />
-							</div>
-
-							<div class="ui-md-12 ui-lg-6 ui-xl-4">
-								<div class="form-group">
-									<p:outputLabel value="#{i18n['user.role']}" for="role" />
-									<p:selectOneMenu id="role" value="#{userEditBean.user.role}" validator="#{userEditBean.validateRole}">
-										<f:selectItems var="role" itemValue="#{role}" value="#{applicationBean.roles}"
-											itemLabel="#{i18n:translate(role.name)}" />
-									</p:selectOneMenu>
-								</div>
-								<h:message for="role" errorClass="error" />
-							</div>
-
-							<div class="ui-md-12 ui-lg-6 ui-xl-4">
-								<div class="form-group">
-									<p:outputLabel value="#{i18n['user.manager']}" />
-									<p:inputText id="manager" value="#{userEditBean.manager.fullName}" label="#{i18n['user.manager']}"
-										readonly="#{facesContext.renderResponse}" validator="#{userEditBean.validateManager}" />
-									<p:commandButton value="+" onclick="PF('managerDlg').show();" />
-									<p:commandButton action="#{userEditBean.removeManager}" value="-"
-										rendered="#{not empty userEditBean.manager.username}" id="removeManager" process="@this" update="managerBlock" />
-								</div>
-								<h:message for="manager" errorClass="error" />
-							</div>
-
+							<h:message for="email" errorClass="error" />
 						</div>
 
-						<div class="ui-g">
-							<div class="ui-g-12">
-								<div class="form-action-primary">
-									<p:commandButton value="#{i18n['action.save']}" action="#{userEditBean.save}" />
-									<p:commandButton value="#{i18n['action.cancel']}" styleClass="btn-gray" action="#{userEditBean.cancel}"
-										immediate="true" />
-								</div>
+						<div class="ui-md-12 ui-lg-6 ui-xl-4">
+							<div class="form-group">
+								<p:outputLabel value="#{i18n['user.name']}" for="name" />
+								<p:inputText id="name" value="#{userEditBean.user.name}" required="true" />
+							</div>
+							<h:message for="name" errorClass="error" />
+						</div>
+
+						<div class="ui-md-12 ui-lg-6 ui-xl-4">
+							<div class="form-group">
+								<p:outputLabel value="#{i18n['user.surename']}" for="surename" />
+								<p:inputText id="surename" value="#{userEditBean.user.surename}" required="true" />
+							</div>
+							<h:message for="surename" errorClass="error" />
+						</div>
+
+						<div class="ui-md-12 ui-lg-6 ui-xl-4">
+							<div class="form-group">
+								<p:outputLabel value="#{i18n['user.role']}" for="role" />
+								<p:selectOneMenu id="role" value="#{userEditBean.user.role}" validator="#{userEditBean.validateRole}">
+									<f:selectItems var="role" itemValue="#{role}" value="#{applicationBean.roles}"
+										itemLabel="#{i18n:translate(role.name)}" />
+								</p:selectOneMenu>
+							</div>
+							<h:message for="role" errorClass="error" />
+						</div>
+
+						<div class="ui-md-12 ui-lg-6 ui-xl-4">
+							<div class="form-group">
+								<p:outputLabel value="#{i18n['user.phone_number']}" for="phoneNumber" />
+								<p:inputText id="phoneNumber" value="#{userEditBean.user.phoneNumber}" />
+							</div>
+							<h:message for="phoneNumber" errorClass="error" />
+						</div>
+					</div>
+				</p:tab>
+				<p:tab id="manager" title="#{i18n['user.manager']}">
+					<ui:include src="userSearchSnippet.xhtml">
+						<ui:param name="callback" value="#{userEditBean.manager}" />
+						<ui:param name="render" value=":form:managerBlock" />
+					</ui:include>
+				</p:tab>
+				<p:tab id="picture" title="#{i18n['user.avatar']}">
+					<div class="ui-g">
+						<div class="ui-g-12">
+							<div class="form-action-primary">
+								<p:commandButton value="#{i18n['action.save']}" action="#{userEditBean.save}" />
+								<p:commandButton value="#{i18n['action.cancel']}" styleClass="btn-gray" action="#{userEditBean.cancel}"
+									immediate="true" />
 							</div>
 						</div>
-					</p:panel>
-				</div>
-			</div>
+					</div>
+				</p:tab>
+			</p:wizard>
 		</h:form>
 	</ui:define>
 </ui:composition>
