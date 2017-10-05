@@ -124,6 +124,11 @@ public class UserEditBean extends AbstractPageBean {
 		return "userView.xhtml?id=" + this.user.getId() + "&faces-redirect=true";
 	}
 
+	public void selectManager(final User manager) {
+		this.manager = manager;
+		addInfoMessage("user.manager_added", new Object[] { this.manager.getFullName() });
+	}
+
 	private void setManager() {
 		if (this.manager.getUsername() != null) {
 			logger.trace("The user has no manager");
