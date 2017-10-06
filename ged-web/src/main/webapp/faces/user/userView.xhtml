@@ -156,10 +156,44 @@
 							<p:tab title="#{i18n['user.manager']}">
 								<div class="ui-g-12 ui-md-12 ui-lg-6">
 									<div class="form-group">
-										<ui:include src="userSearchSnippet.xhtml">
-											<ui:param name="callback" value="#{userViewBean.manager}" />
-											<ui:param name="render" value=":form:managerBlock" />
-										</ui:include>
+										<p:outputPanel layout="block" id="userSearch">
+							<div class="ui-g">
+								<div class="ui-md-12 ui-lg-6 ui-xl-4">
+									<div class="form-group">
+										<p:outputLabel for="searchUserName" value="#{i18n['user.name']}" />
+										<p:inputText id="searchUserName" value="#{userSearchSnippetBean.name}"
+											validator="ged.web.view.SearchFieldValidator" />
+									</div>
+									<h:message for="searchUserName" errorClass="error" />
+
+									<div class="form-action-primary">
+										<p:commandButton value="#{i18n['action.search']}" action="#{userSearchSnippetBean.search}" update="userSearch" />
+										<p:commandButton styleClass="btn-gray" value="#{i18n['action.clean']}" action="#{userSearchSnippetBean.clean}"
+											update="userSearch" />
+									</div>
+								</div>
+							</div>
+
+							<p:dataTable var="user" value="#{userSearchSnippetBean.users}" emptyMessage="#{i18n['user.no_users_found']}"
+								reflow="true" paginator="true" paginatorPosition="bottom" rows="#{sessionBean.rowsPerPage}">
+								<p:column headerText="#{i18n['user.name']}">
+									<h:outputText value="#{user}" />
+								</p:column>
+								<p:column headerText="#{i18n['user.email']}">
+									<h:outputText value="#{user.email}" />
+								</p:column>
+								<p:column headerText="#{i18n['user.manager']}">
+									<h:outputText value="#{user.manager}" />
+								</p:column>
+								<p:column headerText="#{i18n['user.role']}">
+									<h:outputText value="#{i18n:translate(user.role.name)}" />
+								</p:column>
+								<p:column>
+									<p:commandLink action="#{userEditBean.selectManager(user)}" value="#{i18n['action.select']}"
+										update="@form growl" />
+								</p:column>
+							</p:dataTable>
+						</p:outputPanel>
 									</div>
 								</div>
 							</p:tab>
