@@ -192,12 +192,12 @@
 		]]></query>
 	</named-query>
 
-	<named-query name="User.findByUsername">
+	<named-query name="User.findByEmail">
 		<query><![CDATA[
 			SELECT u 
 			FROM User u 
 			LEFT JOIN FETCH u.role 
-			WHERE u.username = :username
+			WHERE u.email = :email
 		]]></query>
 	</named-query>
 
@@ -252,14 +252,6 @@
 			SELECT CASE WHEN (COUNT(u) > 0) THEN TRUE ELSE FALSE END 
 			FROM User u 
 			WHERE u.email = :email
-		]]></query>
-	</named-query>
-
-	<named-query name="User.usernameExists">
-		<query><![CDATA[
-			SELECT CASE WHEN (COUNT(u) > 0) THEN TRUE ELSE FALSE END 
-			FROM User u 
-			WHERE u.username = :username
 		]]></query>
 	</named-query>
 

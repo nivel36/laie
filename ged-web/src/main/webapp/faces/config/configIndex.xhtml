@@ -18,14 +18,6 @@
 						<div class="ui-g">
 							<div class="ui-md-12 ui-lg-6">
 								<div class="form-group">
-									<p:outputLabel value="#{i18n['config.username']}" />
-									<p:inputText id="username" value="#{configIndexBean.user.username}" label="#{i18n['config.username']}"
-										required="true" styleClass="#{not component.valid ? 'inputError' : ''}" />
-									<h:message for="username" errorClass="error" />
-								</div>
-							</div>
-							<div class="ui-md-12 ui-lg-6">
-								<div class="form-group">
 									<p:outputLabel value="#{i18n['config.name']}" />
 									<p:inputText id="name" value="#{configIndexBean.user.name}" label="#{i18n['config.name']}" required="true"
 										styleClass="#{not component.valid ? 'inputError' : ''}" />

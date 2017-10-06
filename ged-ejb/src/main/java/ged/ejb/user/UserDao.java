@@ -4,7 +4,7 @@ import java.util.List;
 
 import ged.ejb.core.model.Dao;
 
-public interface UserDao extends Dao< User> {
+public interface UserDao extends Dao<User> {
 
 	boolean emailExists(final String email);
 
@@ -12,9 +12,7 @@ public interface UserDao extends Dao< User> {
 
 	List<User> findSubordinateUsers(final User user);
 
-	User findUserByUsername(final String username);
+	User findUserByEmail(final String email);
 
 	List<User> searchByNameAndSurename(final String name, String surename, final boolean showDeleted);
-
-	boolean usernameExists(final String username);
 }

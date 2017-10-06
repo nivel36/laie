@@ -93,13 +93,6 @@
 								<div class="ui-g">
 									<div class="ui-g-12 ui-md-12 ui-lg-6">
 										<div class="form-group">
-											<p:outputLabel value="#{i18n['user.username']}" for="username" />
-											<p:inputText id="username" value="#{userViewBean.user.username}" readonly="true" />
-										</div>
-										<h:message for="username" errorClass="error" />
-									</div>
-									<div class="ui-g-12 ui-md-12 ui-lg-6">
-										<div class="form-group">
 											<p:outputLabel value="#{i18n['user.email']}" for="email" />
 											<p:inputText id="email" p:type="email" value="#{userViewBean.user.email}" required="true"
 												validator="#{userViewBean.validateEmail}" />

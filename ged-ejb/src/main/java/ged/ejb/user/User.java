@@ -79,11 +79,6 @@ public class User extends AbstractAuditedEntity {
 	@Field
 	private String surename;
 
-	@NotNull
-	@Column(length = 16, nullable = false, unique = true)
-	@Field
-	private String username;
-
 	public void addAction(final Action action) {
 		Objects.requireNonNull(action);
 		this.actions.add(action);
@@ -106,7 +101,7 @@ public class User extends AbstractAuditedEntity {
 			return false;
 		}
 		final User other = (User) obj;
-		return Objects.equals(this.username, other.username);
+		return Objects.equals(this.email, other.email);
 	}
 
 	public List<Action> getActions() {
@@ -165,13 +160,9 @@ public class User extends AbstractAuditedEntity {
 		return this.surename;
 	}
 
-	public String getUsername() {
-		return this.username;
-	}
-
 	@Override
 	public int hashCode() {
-		return Objects.hash(this.username);
+		return Objects.hash(this.email);
 	}
 
 	public boolean hasRole(final String roleName) {
@@ -250,10 +241,6 @@ public class User extends AbstractAuditedEntity {
 
 	public void setSurename(final String surename) {
 		this.surename = surename;
-	}
-
-	public void setUsername(final String username) {
-		this.username = username;
 	}
 
 	@Override

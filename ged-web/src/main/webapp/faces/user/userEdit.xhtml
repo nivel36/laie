@@ -18,14 +18,6 @@
 						<div class="ui-g">
 							<div class="ui-g-12 ui-lg-6 ui-xl-4">
 								<div class="form-group">
-									<p:outputLabel value="#{i18n['user.username']}" for="username" />
-									<p:inputText id="username" value="#{userEditBean.user.username}" required="true"
-										validator="#{userEditBean.validateUsername}" />
-								</div>
-								<h:message for="username" errorClass="error" />
-							</div>
-							<div class="ui-g-12 ui-lg-6 ui-xl-4">
-								<div class="form-group">
 									<p:outputLabel value="#{i18n['user.email']}" for="email" />
 									<p:inputText id="email" p:type="email" value="#{userEditBean.user.email}" required="true"
 										validator="#{userEditBean.validateEmail}" />

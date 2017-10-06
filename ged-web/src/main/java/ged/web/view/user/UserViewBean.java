@@ -247,33 +247,13 @@ public class UserViewBean extends AbstractPageBean {
 
 	public void validateRole(final FacesContext context, final UIComponent component, final Object value)
 			throws ValidatorException {
-		if (this.manager == null || this.manager.getUsername() == null) {
+		if (this.manager == null || this.manager.getEmail() == null) {
 			return;
 		}
 		final Role userRole = (Role) value;
 		final Role managerRole = this.manager.getRole();
 		if (!isAvalidRole(userRole, managerRole)) {
 			final String msg = TransaltionUtils.translate("user.error.role");
-			throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg));
-		}
-	}
-
-	public void validateUsername(final FacesContext context, final UIComponent component, final Object value)
-			throws ValidatorException {
-		if (value == null) {
-			return;
-		}
-		final String username = (String) value;
-		if (value.equals(this.user.getUsername())) {
-			// Si el valor del usuario es el mismo que el que estamos validando
-			// es porque estamos actualizando un valor (que no es el de usuario)
-			// y no hace falta que validemos si el registro existe (que por otra
-			// parte sí lo estará)
-			return;
-		}
-		if (this.userService.usernameExists(username)) {
-			logger.debug("The username exists");
-			final String msg = TransaltionUtils.translate("user.error.username_exists");
 			throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg));
 		}
 	}

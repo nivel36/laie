@@ -44,7 +44,7 @@ public class SessionBean extends AbstractBean {
 	@PostConstruct
 	public void init() {
 		final String username = this.facesContext.getExternalContext().getRemoteUser();
-		this.user = this.userService.findUserByUsername(username);
+		this.user = this.userService.findUserByEmail(username);
 		this.locale = new Locale(this.user.getLanguage());
 	}
 
