@@ -54,16 +54,9 @@
 							</p:column>
 
 							<p:column headerText="#{i18n['action.action']}">
-								<h:link value="#{i18n['action.view']}" outcome="userView">
+								<p:button outcome="userView" icon="fa fa-eye">
 									<f:param name="id" value="#{user.id}" />
-								</h:link>
-								<h:outputText value=" | " />
-								<h:commandLink action="#{userSearchBean.editUser(user)}" value="#{i18n['action.edit']}" immediate="true" />
-								<h:outputText value=" | " rendered="${user.role.name!='ADMIN'}" />
-								<h:commandLink action="#{userSearchBean.deleteUser(user)}" value="#{i18n['action.remove']}"
-									rendered="${user.role.name!='ADMIN'}" onclick="return confirm('#{i18n['action.delete.are_you_sure']}')">
-									<f:ajax render="form:searchUserResults :asideForm" />
-								</h:commandLink>
+								</p:button>
 							</p:column>
 						</p:dataTable>
 					</p:panel>
