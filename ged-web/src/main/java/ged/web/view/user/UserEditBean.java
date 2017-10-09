@@ -12,6 +12,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.primefaces.event.FlowEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,13 +36,7 @@ public class UserEditBean extends AbstractPageBean {
 	@Inject
 	private transient RoleService roleService;
 
-	public void setRoleService(RoleService roleService) {
-		this.roleService = roleService;
-	}
-
-	public void setUserService(UserService userService) {
-		this.userService = userService;
-	}
+	private boolean skip;
 
 	private User user;
 
@@ -97,10 +92,23 @@ public class UserEditBean extends AbstractPageBean {
 		return this.roleService.isASubordinateRole(managerRole, userRole);
 	}
 
+	public boolean isSkip() {
+		return this.skip;
+	}
+
 	private void newManager() {
 		this.manager = new User();
 		this.manager.setName("");
 		this.manager.setSurename("");
+	}
+
+	public String onFlowProcess(final FlowEvent event) {
+		if (this.skip) {
+			this.skip = false; // reset in case user goes back
+			return "confirm";
+		} else {
+			return event.getNewStep();
+		}
 	}
 
 	public void removeManager() {
@@ -116,8 +124,13 @@ public class UserEditBean extends AbstractPageBean {
 		return "userView.xhtml?id=" + this.user.getId() + "&faces-redirect=true";
 	}
 
+	public void selectManager(final User manager) {
+		this.manager = manager;
+		addInfoMessage("user.manager_added", new Object[] { this.manager.getFullName() });
+	}
+
 	private void setManager() {
-		if (this.manager.getUsername() != null) {
+		if (this.manager.getEmail() != null) {
 			logger.trace("The user has no manager");
 			this.user.setManager(this.manager);
 		}
@@ -127,8 +140,20 @@ public class UserEditBean extends AbstractPageBean {
 		this.manager = manager;
 	}
 
+	public void setRoleService(final RoleService roleService) {
+		this.roleService = roleService;
+	}
+
+	public void setSkip(final boolean skip) {
+		this.skip = skip;
+	}
+
 	public void setUser(final User user) {
 		this.user = user;
+	}
+
+	public void setUserService(final UserService userService) {
+		this.userService = userService;
 	}
 
 	public void validateEmail(final FacesContext context, final UIComponent component, final Object value)
@@ -166,33 +191,13 @@ public class UserEditBean extends AbstractPageBean {
 
 	public void validateRole(final FacesContext context, final UIComponent component, final Object value)
 			throws ValidatorException {
-		if (this.manager.getUsername() == null) {
+		if (this.manager.getEmail() == null) {
 			return;
 		}
 		final Role userRole = (Role) value;
 		final Role managerRole = this.manager.getRole();
 		if (!isAvalidRole(userRole, managerRole)) {
 			final String msg = TransaltionUtils.translate("user.error.role");
-			throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg));
-		}
-	}
-
-	public void validateUsername(final FacesContext context, final UIComponent component, final Object value)
-			throws ValidatorException {
-		if (value == null) {
-			return;
-		}
-		final String username = (String) value;
-		if (value.equals(this.user.getUsername())) {
-			// Si el valor del usuario es el mismo que el que estamos validando
-			// es porque estamos actualizando un valor (que no es el de usuario)
-			// y no hace falta que validemos si el registro existe (que por otra
-			// parte sí lo estará)
-			return;
-		}
-		if (this.userService.usernameExists(username)) {
-			logger.debug("The username exists");
-			final String msg = TransaltionUtils.translate("user.error.username_exists");
 			throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg));
 		}
 	}

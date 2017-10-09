@@ -10,10 +10,54 @@
 	<ui:param name="selectedMenu" value="index" />
 
 	<ui:define name="content">
+		<div class="stats">
+			<div class="ui-g">
+				<div class="ui-g-12 ui-md-6 ui-lg-3">
+					<div class="card card-stats">
+						<div class="card-header"></div>
+						<div class="card-body">
+							<p class="card-category">Candidatos</p>
+							<span class="number">12</span>
+						</div>
+						<div class="card-footer"></div>
+					</div>
+				</div>
+				<div class="ui-g-12 ui-md-6 ui-lg-3">
+					<div class="card card-stats">
+						<div class="card-header"></div>
+						<div class="card-body">
+							<p class="card-category">Clientes</p>
+							<span class="number">2</span>
+						</div>
+						<div class="card-footer"></div>
+					</div>
+				</div>
+				<div class="ui-g-12 ui-md-6 ui-lg-3">
+					<div class="card card-stats">
+						<div class="card-header"></div>
+						<div class="card-body">
+							<p class="card-category">Ofertas de empleo</p>
+							<span class="number">4</span>
+						</div>
+						<div class="card-footer"></div>
+					</div>
+				</div>
+				<div class="ui-g-12 ui-md-6 ui-lg-3">
+					<div class="card card-stats">
+						<div class="card-header"></div>
+						<div class="card-body">
+							<p class="card-category">Ofertas cerradas</p>
+							<span class="number">10</span>
+						</div>
+						<div class="card-footer"></div>
+					</div>
+				</div>
+			</div>
+		</div>
 		<h:form>
 			<div class="ui-g">
-				<div class="ui-md-12 ui-lg-6">
-					<p:panel styleClass="yellow" header="#{i18n['index.last_offers']}">
+				<div class="ui-g-12 ui-lg-6">
+					<p:panel header="#{i18n['index.last_offers']}">
 						<div class="ui-g">
 							<div class="ui-g-12">
 								<h:outputText value="#{i18n['job.no_jobs_found']}" rendered="#{empty indexBean.jobOffers}" styleClass="text" />
@@ -35,8 +79,8 @@
 						</div>
 					</p:panel>
 				</div>
-				<div class="ui-md-12 ui-lg-6">
-					<p:panel styleClass="purple" header="#{i18n['index.last_candidates']}">
+				<div class="ui-g-12 ui-lg-6">
+					<p:panel header="#{i18n['index.last_candidates']}">
 						<div class="ui-g">
 							<div class="ui-g-12">
 								<h:outputText value="#{i18n['candidate.no_candidates_found']}" rendered="#{empty indexBean.candidates}"
@@ -64,8 +108,8 @@
 				</div>
 			</div>
 			<div class="ui-g">
-				<div class="ui-md-12 ui-lg-6">
-					<p:panel styleClass="green" header="#{i18n['index.last_reports']}">
+				<div class="ui-g-12 ui-lg-6">
+					<p:panel header="#{i18n['index.last_reports']}">
 						<div class="ui-g">
 							<div class="ui-g-12">
 								<div class="form-action-primary">
@@ -76,8 +120,15 @@
 					</p:panel>
 				</div>
 
-				<div class="ui-md-12 ui-lg-6">
-					<p:panel styleClass="red" header="#{i18n['index.scheudele']}">
+				<div class="ui-g-12 ui-lg-6">
+					<p:panel header="#{i18n['index.scheudele']}">
+						<div class="ui-g">
+							<div class="ui-g-12">
+								<div class="form-action-primary">
+									<p:commandButton styleClass="btn-green" value="#{i18n['action.new']}" action="#{jobOfferViewBean.edit}" />
+								</div>
+							</div>
+						</div>
 					</p:panel>
 				</div>
 			</div>

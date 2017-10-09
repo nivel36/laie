@@ -31,16 +31,12 @@ public class BookmarksBean extends AbstractPageBean {
 	@Inject
 	private transient BookmarkService bookmarkService;
 
-	public void setBookmarkService(BookmarkService bookmarkService) {
-		this.bookmarkService = bookmarkService;
-	}
-
 	public void add(final AbstractAuditedEntity entity) {
 		BookmarksBean.logger.debug("Adding bookmark {} for user {}",
-				new Object[] { entity, this.sessionBean.getUser().getUsername() });
+				new Object[] { entity, this.sessionBean.getUser().getEmail() });
 		final Bookmark bookmark = createBookmark(entity);
 		if (this.bookmarks.size() > 9) {
-			BookmarksBean.logger.warn("Bookmark full for user {}", this.sessionBean.getUser().getUsername());
+			BookmarksBean.logger.warn("Bookmark full for user {}", this.sessionBean.getUser().getEmail());
 			MessageUtils.addErrorMessage("Bookmark full", "Bookmark full");
 			return;
 		}
@@ -98,5 +94,9 @@ public class BookmarksBean extends AbstractPageBean {
 		final long id = entity.getId();
 		this.bookmarkService.delete(user, className, id);
 		findAllBookmarks();
+	}
+
+	public void setBookmarkService(final BookmarkService bookmarkService) {
+		this.bookmarkService = bookmarkService;
 	}
 }

@@ -42,15 +42,15 @@ public class UserServiceImpl extends AbstratctAuditedService<User> implements Us
 	@Override
 	public List<User> findSubordinateUsers(final User user) {
 		Objects.requireNonNull(user);
-		logger.debug("Find subordinate users of user {}", user.getUsername());
+		logger.debug("Find subordinate users of user {}", user.getEmail());
 		return this.userDao.findSubordinateUsers(user);
 	}
 
 	@Override
-	public User findUserByUsername(final String username) {
-		Objects.requireNonNull(username);
-		logger.debug("Find user by username {}", username);
-		return this.userDao.findUserByUsername(username);
+	public User findUserByEmail(final String email) {
+		Objects.requireNonNull(email);
+		logger.debug("Find user by email {}", email);
+		return this.userDao.findUserByEmail(email);
 	}
 
 	@Override
@@ -60,9 +60,9 @@ public class UserServiceImpl extends AbstratctAuditedService<User> implements Us
 
 	@Override
 	protected void insert(final User user) {
-		logger.debug("Insert user {}", user.getUsername());
+		logger.debug("Insert user {}", user.getEmail());
 		if (user.equals(user.getManager())) {
-			logger.warn("The user {} can't be his/her manager", user.getUsername());
+			logger.warn("The user {} can't be his/her manager", user.getEmail());
 			throw new IllegalStateException("User can't be his/her manager");
 		}
 		this.userDao.insert(user);
@@ -86,26 +86,14 @@ public class UserServiceImpl extends AbstratctAuditedService<User> implements Us
 	@Override
 	protected User update(final User user) {
 		if (isLastAdminOnApp(user)) {
-			logger.warn("Can't change user {} role. Last Admin on app", user.getUsername());
+			logger.warn("Can't change user {} role. Last Admin on app", user.getEmail());
 			throw new UserException("Can't change user role. Last Admin on app");
 		}
 		if (isDeletingAdmin(user)) {
-			logger.warn("Can't delete user {}. User is Admin", user.getUsername());
+			logger.warn("Can't delete user {}. User is Admin", user.getEmail());
 			throw new UserException("Can't delete user. User is Admin");
 		}
-		logger.debug("Update user {}", user.getUsername());
+		logger.debug("Update user {}", user.getEmail());
 		return this.userDao.update(user);
-	}
-
-	@Override
-	public boolean usernameExists(final String username) {
-		Objects.requireNonNull(username);
-		final boolean usernameExists = this.userDao.usernameExists(username);
-		if (usernameExists) {
-			logger.debug("The username {} exists on database", username);
-		} else {
-			logger.debug("The username {} doesn't exists on database", username);
-		}
-		return usernameExists;
 	}
 }

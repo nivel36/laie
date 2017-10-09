@@ -10,28 +10,13 @@
 	<ui:param name="selectedMenu" value="user" />
 
 	<ui:define name="content">
-
-		<ui:include src="userSearchPopup.xhtml">
-			<ui:param name="callback" value="#{userEditBean.manager}" />
-			<ui:param name="render" value=":form:managerBlock" />
-		</ui:include>
-
-		<h:form id="form">
-			<input type="hidden" id="userId" value="#{userEditBean.user.id}" />
-
-			<div class="ui-g">
-				<div class="ui-g-12">
-					<p:panel styleClass="magenta" header="#{userEditBean.user.id == 0 ? i18n['user.new_user'] : userEditBean.user}">
+		<p:panel id="searchUserPanel" header="#{i18n['user.new_user']}">
+			<h:form id="form">
+				<input type="hidden" id="userId" value="#{userEditBean.user.id}" />
+				<p:wizard flowListener="#{userEditBean.onFlowProcess}">
+					<p:tab id="user" title="#{i18n['user.personal_info']}">
 						<div class="ui-g">
-							<div class="ui-md-12 ui-lg-6 ui-xl-4">
-								<div class="form-group">
-									<p:outputLabel value="#{i18n['user.username']}" for="username" />
-									<p:inputText id="username" value="#{userEditBean.user.username}" required="true"
-										validator="#{userEditBean.validateUsername}" />
-								</div>
-								<h:message for="username" errorClass="error" />
-							</div>
-							<div class="ui-md-12 ui-lg-6 ui-xl-4">
+							<div class="ui-g-12 ui-lg-6 ui-xl-4">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['user.email']}" for="email" />
 									<p:inputText id="email" p:type="email" value="#{userEditBean.user.email}" required="true"
@@ -40,7 +25,7 @@
 								<h:message for="email" errorClass="error" />
 							</div>
 
-							<div class="ui-md-12 ui-lg-6 ui-xl-4">
+							<div class="ui-g-12 ui-lg-6 ui-xl-4">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['user.name']}" for="name" />
 									<p:inputText id="name" value="#{userEditBean.user.name}" required="true" />
@@ -48,7 +33,7 @@
 								<h:message for="name" errorClass="error" />
 							</div>
 
-							<div class="ui-md-12 ui-lg-6 ui-xl-4">
+							<div class="ui-g-12 ui-lg-6 ui-xl-4">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['user.surename']}" for="surename" />
 									<p:inputText id="surename" value="#{userEditBean.user.surename}" required="true" />
@@ -56,7 +41,7 @@
 								<h:message for="surename" errorClass="error" />
 							</div>
 
-							<div class="ui-md-12 ui-lg-6 ui-xl-4">
+							<div class="ui-g-12 ui-lg-6 ui-xl-4">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['user.role']}" for="role" />
 									<p:selectOneMenu id="role" value="#{userEditBean.user.role}" validator="#{userEditBean.validateRole}">
@@ -67,20 +52,56 @@
 								<h:message for="role" errorClass="error" />
 							</div>
 
-							<div class="ui-md-12 ui-lg-6 ui-xl-4">
+							<div class="ui-g-12 ui-lg-6 ui-xl-4">
 								<div class="form-group">
-									<p:outputLabel value="#{i18n['user.manager']}" />
-									<p:inputText id="manager" value="#{userEditBean.manager.fullName}" label="#{i18n['user.manager']}"
-										readonly="#{facesContext.renderResponse}" validator="#{userEditBean.validateManager}" />
-									<p:commandButton value="+" onclick="PF('managerDlg').show();" />
-									<p:commandButton action="#{userEditBean.removeManager}" value="-"
-										rendered="#{not empty userEditBean.manager.username}" id="removeManager" process="@this" update="managerBlock" />
+									<p:outputLabel value="#{i18n['user.phone_number']}" for="phoneNumber" />
+									<p:inputText id="phoneNumber" value="#{userEditBean.user.phoneNumber}" />
 								</div>
-								<h:message for="manager" errorClass="error" />
+								<h:message for="phoneNumber" errorClass="error" />
+							</div>
+						</div>
+					</p:tab>
+					<p:tab id="manager" title="#{i18n['user.manager']}">
+						<p:outputPanel layout="block" id="userSearch">
+							<div class="ui-g">
+								<div class="ui-md-12 ui-lg-6 ui-xl-4">
+									<div class="form-group">
+										<p:outputLabel for="searchUserName" value="#{i18n['user.name']}" />
+										<p:inputText id="searchUserName" value="#{userSearchSnippetBean.name}"
+											validator="ged.web.view.SearchFieldValidator" />
+									</div>
+									<h:message for="searchUserName" errorClass="error" />
+
+									<div class="form-action-primary">
+										<p:commandButton value="#{i18n['action.search']}" action="#{userSearchSnippetBean.search}" update="userSearch" />
+										<p:commandButton styleClass="btn-gray" value="#{i18n['action.clean']}" action="#{userSearchSnippetBean.clean}"
+											update="userSearch" />
+									</div>
+								</div>
 							</div>
 
-						</div>
-
+							<p:dataTable var="user" value="#{userSearchSnippetBean.users}" emptyMessage="#{i18n['user.no_users_found']}"
+								reflow="true" paginator="true" paginatorPosition="bottom" rows="#{sessionBean.rowsPerPage}">
+								<p:column headerText="#{i18n['user.name']}">
+									<h:outputText value="#{user}" />
+								</p:column>
+								<p:column headerText="#{i18n['user.email']}">
+									<h:outputText value="#{user.email}" />
+								</p:column>
+								<p:column headerText="#{i18n['user.manager']}">
+									<h:outputText value="#{user.manager}" />
+								</p:column>
+								<p:column headerText="#{i18n['user.role']}">
+									<h:outputText value="#{i18n:translate(user.role.name)}" />
+								</p:column>
+								<p:column>
+									<p:commandLink action="#{userEditBean.selectManager(user)}" value="#{i18n['action.select']}"
+										update="@form growl" />
+								</p:column>
+							</p:dataTable>
+						</p:outputPanel>
+					</p:tab>
+					<p:tab id="picture" title="#{i18n['user.avatar']}">
 						<div class="ui-g">
 							<div class="ui-g-12">
 								<div class="form-action-primary">
@@ -90,9 +111,9 @@
 								</div>
 							</div>
 						</div>
-					</p:panel>
-				</div>
-			</div>
-		</h:form>
+					</p:tab>
+				</p:wizard>
+			</h:form>
+		</p:panel>
 	</ui:define>
 </ui:composition>
