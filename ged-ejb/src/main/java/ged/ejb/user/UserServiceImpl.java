@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import ged.ejb.core.AbstratctAuditedService;
 import ged.ejb.core.model.Dao;
 import ged.ejb.core.model.Repository;
+import ged.ejb.user.role.Role;
 
 @Stateless
 public class UserServiceImpl extends AbstratctAuditedService<User> implements UserService {
@@ -25,6 +26,20 @@ public class UserServiceImpl extends AbstratctAuditedService<User> implements Us
 	public UserServiceImpl(@Repository final UserDao userDao) {
 		Objects.requireNonNull(userDao);
 		this.userDao = userDao;
+	}
+
+	public User create(final String name, final String surename, final String email, final Role role,
+			final User manager) {
+		final User user = new User();
+		user.setName(name);
+		user.setSurename(surename);
+		user.setEmail(email);
+		user.setRole(role);
+		user.setManager(manager);
+		user.setLanguage("ES");
+		user.setRowsPerPage(25);
+		user.setPassword("M+SzETkPtT+deVQNIScBEXivvfozSne5QqIqyWICLv0=");
+		return user;
 	}
 
 	@Override

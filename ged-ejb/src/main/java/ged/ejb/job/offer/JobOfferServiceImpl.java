@@ -112,9 +112,13 @@ public class JobOfferServiceImpl extends AbstratctAuditedService<JobOffer> imple
 	public JobOffer save(final JobOffer jobOffer) {
 		Objects.requireNonNull(jobOffer);
 		logger.debug("Save job offer {}", jobOffer.getDescription());
-		putClientOnJobOffer(jobOffer);
-		getDao().insert(jobOffer);
-		return jobOffer;
+		if (jobOffer.getId() == 0) {
+			putClientOnJobOffer(jobOffer);
+			getDao().insert(jobOffer);
+			return jobOffer;
+		} else {
+			return getDao().update(jobOffer);
+		}
 	}
 
 	@Override

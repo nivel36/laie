@@ -13,7 +13,7 @@
 		<p:panel id="searchUserPanel" header="#{i18n['user.new_user']}">
 			<h:form id="form">
 				<input type="hidden" id="userId" value="#{userEditBean.user.id}" />
-				<p:wizard flowListener="#{userEditBean.onFlowProcess}">
+				<p:wizard>
 					<p:tab id="user" title="#{i18n['user.personal_info']}">
 						<div class="ui-g">
 							<div class="ui-g-12 ui-lg-6 ui-xl-4">

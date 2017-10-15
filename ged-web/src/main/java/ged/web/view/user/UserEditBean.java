@@ -1,8 +1,6 @@
 package ged.web.view.user;
 
 import java.lang.invoke.MethodHandles;
-import java.util.Locale;
-
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
@@ -12,7 +10,6 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.primefaces.event.FlowEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,15 +33,13 @@ public class UserEditBean extends AbstractPageBean {
 	@Inject
 	private transient RoleService roleService;
 
-	private boolean skip;
-
 	private User user;
 
 	@Inject
 	private transient UserService userService;
 
 	public String cancel() {
-		if (this.user.getId() == 0) {
+		if (isNewUser(this.user)) {
 			logger.trace("Cancel new user action performed");
 			return "userSearch.xhtml?faces-redirect=true";
 		} else {
@@ -70,12 +65,6 @@ public class UserEditBean extends AbstractPageBean {
 		} else {
 			logger.debug("Flash scope is empty");
 			this.user = new User();
-			final int rowsPerPage = this.sessionBean.getRowsPerPage();
-			this.user.setRowsPerPage(rowsPerPage);
-			final Locale locale = this.facesContext.getApplication().getDefaultLocale();
-			final String language = locale.getLanguage();
-			this.user.setLanguage(language);
-			this.user.setPassword("M+SzETkPtT+deVQNIScBEXivvfozSne5QqIqyWICLv0=");
 		}
 		if (this.user.getManager() != null) {
 			this.manager = this.user.getManager();
@@ -85,6 +74,13 @@ public class UserEditBean extends AbstractPageBean {
 		this.flash.put("user", this.user);
 	}
 
+	private String insertNewUser() {
+		final User newUser = this.userService.create(this.user.getName(), this.user.getSurename(), this.user.getEmail(),
+				this.user.getRole(), this.manager);
+		this.userService.save(newUser);
+		return "userView.xhtml?id=" + newUser.getId() + "&faces-redirect=true";
+	}
+
 	private boolean isAvalidRole(final Role userRole, final Role managerRole) {
 		if (userRole.getName().equals(managerRole.getName())) {
 			return true;
@@ -92,23 +88,14 @@ public class UserEditBean extends AbstractPageBean {
 		return this.roleService.isASubordinateRole(managerRole, userRole);
 	}
 
-	public boolean isSkip() {
-		return this.skip;
+	private boolean isNewUser(final User user) {
+		return user.getId() == 0;
 	}
 
 	private void newManager() {
 		this.manager = new User();
 		this.manager.setName("");
 		this.manager.setSurename("");
-	}
-
-	public String onFlowProcess(final FlowEvent event) {
-		if (this.skip) {
-			this.skip = false; // reset in case user goes back
-			return "confirm";
-		} else {
-			return event.getNewStep();
-		}
 	}
 
 	public void removeManager() {
@@ -119,21 +106,16 @@ public class UserEditBean extends AbstractPageBean {
 
 	public String save() {
 		logger.debug("Save user action performed");
-		setManager();
-		this.userService.save(this.user);
-		return "userView.xhtml?id=" + this.user.getId() + "&faces-redirect=true";
+		if (isNewUser(this.user)) {
+			return insertNewUser();
+		} else {
+			return updateUser();
+		}
 	}
 
 	public void selectManager(final User manager) {
 		this.manager = manager;
 		addInfoMessage("user.manager_added", new Object[] { this.manager.getFullName() });
-	}
-
-	private void setManager() {
-		if (this.manager.getEmail() != null) {
-			logger.trace("The user has no manager");
-			this.user.setManager(this.manager);
-		}
 	}
 
 	public void setManager(final User manager) {
@@ -144,10 +126,6 @@ public class UserEditBean extends AbstractPageBean {
 		this.roleService = roleService;
 	}
 
-	public void setSkip(final boolean skip) {
-		this.skip = skip;
-	}
-
 	public void setUser(final User user) {
 		this.user = user;
 	}
@@ -156,8 +134,16 @@ public class UserEditBean extends AbstractPageBean {
 		this.userService = userService;
 	}
 
-	public void validateEmail(final FacesContext context, final UIComponent component, final Object value)
-			throws ValidatorException {
+	private String updateUser() {
+		if (this.manager.getEmail() != null) {
+			logger.trace("The user has no manager");
+			this.user.setManager(this.manager);
+		}
+		this.userService.save(this.user);
+		return "userView.xhtml?id=" + this.user.getId() + "&faces-redirect=true";
+	}
+
+	public void validateEmail(final FacesContext context, final UIComponent component, final Object value) {
 		logger.debug("Checking email");
 		if (value == null) {
 			return;
@@ -177,8 +163,7 @@ public class UserEditBean extends AbstractPageBean {
 		}
 	}
 
-	public void validateManager(final FacesContext context, final UIComponent component, final Object value)
-			throws ValidatorException {
+	public void validateManager(final FacesContext context, final UIComponent component, final Object value) {
 		if (value == null) {
 			return;
 		}
@@ -189,8 +174,7 @@ public class UserEditBean extends AbstractPageBean {
 		}
 	}
 
-	public void validateRole(final FacesContext context, final UIComponent component, final Object value)
-			throws ValidatorException {
+	public void validateRole(final FacesContext context, final UIComponent component, final Object value) {
 		if (this.manager.getEmail() == null) {
 			return;
 		}

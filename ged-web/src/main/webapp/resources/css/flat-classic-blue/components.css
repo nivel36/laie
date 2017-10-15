@@ -977,6 +977,12 @@ textarea {
 	float: right;
 }
 
+.separator {
+	margin: 20px 0;
+	width: 100%;
+	border-bottom: 1px solid #CCCCCC;
+}
+
 @media screen and (max-width: 699px) {
 	body .ui-tabs.ui-tabs-top>.ui-tabs-nav li {
 		width: 100%;

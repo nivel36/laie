@@ -25,13 +25,7 @@ public class ClientViewBean extends AbstractPageBean {
 	@Inject
 	private transient ClientService clientService;
 
-	public void setClientService(ClientService clientService) {
-		this.clientService = clientService;
-	}
-
-	public void setJobOfferService(JobOfferService jobOfferService) {
-		this.jobOfferService = jobOfferService;
-	}
+	private boolean editable;
 
 	private String id;
 
@@ -39,17 +33,15 @@ public class ClientViewBean extends AbstractPageBean {
 
 	@Inject
 	private transient JobOfferService jobOfferService;
-	
-	private boolean editable;
 
 	public void editClient() {
-		editable=true;
+		this.editable = true;
 	}
 
 	public void export() {
 
 	}
-	
+
 	public Client getClient() {
 		return this.client;
 	}
@@ -87,7 +79,7 @@ public class ClientViewBean extends AbstractPageBean {
 	}
 
 	public boolean isEditable() {
-		return editable;
+		return this.editable;
 	}
 
 	public String modifyClient() {
@@ -96,16 +88,24 @@ public class ClientViewBean extends AbstractPageBean {
 	}
 
 	public void saveClient() {
-		editable=false;
-		clientService.save(client);
+		this.editable = false;
+		this.clientService.save(this.client);
 	}
 
 	public void setClient(final Client client) {
 		this.client = client;
 	}
 
+	public void setClientService(final ClientService clientService) {
+		this.clientService = clientService;
+	}
+
 	public void setId(final String id) {
 		this.id = id;
+	}
+
+	public void setJobOfferService(final JobOfferService jobOfferService) {
+		this.jobOfferService = jobOfferService;
 	}
 
 	public void undeleteClient() {

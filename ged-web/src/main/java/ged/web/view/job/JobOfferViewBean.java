@@ -114,7 +114,7 @@ public class JobOfferViewBean extends AbstractPageBean {
 					populateJobMeetings(this.jobOffer);
 					this.candidates = this.candidateService.findAllByJobOffer(this.jobOffer);
 				}
-				this.editable = isUserHasPermissionToEditJobOffer();
+				this.editable = false;
 			} catch (final NumberFormatException ex) {
 				error();
 			}
@@ -156,7 +156,8 @@ public class JobOfferViewBean extends AbstractPageBean {
 
 	public void save() {
 		logger.debug("Save job offer action performed");
-		this.jobService.save(this.jobOffer);
+		this.jobOffer = this.jobService.save(this.jobOffer);
+		this.editable = false;
 	}
 
 	public void setCandidate(final Candidate candidate) {

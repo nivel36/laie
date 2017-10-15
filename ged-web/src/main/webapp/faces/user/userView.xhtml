@@ -20,7 +20,7 @@
 			<input type="hidden" id="userId" value="#{userViewBean.user.id}" />
 
 			<div class="ui-g">
-				<div class="ui-g-12 ui-md-12 ui-lg-3 ui-xl-2">
+				<div class="ui-g-12 ui-lg-3 ui-xl-2">
 					<div class="panel user-card">
 						<div class="panel-content">
 							<div class="user-image">
@@ -37,19 +37,19 @@
 					</div>
 				</div>
 
-				<div class="ui-g-12 ui-md-12 ui-lg-9 ui-xl-6">
+				<div class="ui-g-12 ui-lg-9 ui-xl-6">
 					<p:panel styleClass="with-tabs" header="#{i18n['user.user']}">
 						<p:tabView dynamic="true" cache="true">
 							<p:tab title="#{i18n['user.details']}">
 								<h4>#{i18n['user.details']}</h4>
 								<div class="user-details">
 									<div class="ui-g">
-										<div class="ui-g-12 ui-md-12 ui-lg-6">
+										<div class="ui-g-12 ui-lg-6">
 											<div class="data-panel">
 												<span class="label">#{i18n['user.name']}:</span><span class="data">#{userViewBean.user}</span>
 											</div>
 										</div>
-										<div class="ui-g-12 ui-md-12 ui-lg-6">
+										<div class="ui-g-12 ui-lg-6">
 											<div class="data-panel">
 												<span class="label">#{i18n['user.role']}:</span><span class="data">#{i18n:translate(userViewBean.user.role.name)}</span>
 											</div>
