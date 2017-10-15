@@ -45,10 +45,12 @@ public class LoginBean extends AbstractPageBean {
 
 	@PostConstruct
 	public void init() {
+		logger.debug("Login Bean init");
 		this.locale = this.facesContext.getApplication().getDefaultLocale();
 	}
 
 	public String login() {
+		logger.debug("Username {} login", this.username);
 		final ExternalContext externalContext = this.facesContext.getExternalContext();
 		final HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
 		try {
@@ -64,6 +66,7 @@ public class LoginBean extends AbstractPageBean {
 	}
 
 	public String logout() {
+		logger.debug("Username {} logout", this.username);
 		final ExternalContext externalContext = this.facesContext.getExternalContext();
 		final HttpSession session = (HttpSession) externalContext.getSession(true);
 		session.invalidate();

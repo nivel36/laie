@@ -222,7 +222,7 @@ public class UserViewBean extends AbstractPageBean {
 		if (value.equals(this.user.getEmail())) {
 			// Si el valor del email es el mismo que el que estamos validando
 			// es porque estamos actualizando un valor (que no es el email)
-			// y no hace falta que validemos si el registro existe (que oor otra
+			// y no hace falta que validemos si el registro existe (que por otra
 			// parte sí lo estará)
 			return;
 		}
