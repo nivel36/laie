@@ -4280,6 +4280,7 @@ body .ui-selectonemenu {
 	float: left;
 	display: block;
 	width: 100%;
+	border: 1px solid #c2cad8;
 }
 
 body .ui-selectonemenu-panel .ui-selectonemenu-list {
