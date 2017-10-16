@@ -11,7 +11,7 @@ import ged.ejb.client.ClientService;
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
 import ged.web.core.util.MessageUtils;
-import ged.web.core.util.NavigationUtils;
+import ged.web.core.util.Navigate;
 import ged.web.core.view.AbstractPageBean;
 
 @Named
@@ -59,17 +59,17 @@ public class ClientViewBean extends AbstractPageBean {
 	 */
 	public void init() {
 		if (this.id == null) {
-			NavigationUtils.gotoPage("clientSearch");
+			Navigate.toPage("clientSearch");
 		}
 		long clientId = 0;
 		try {
 			clientId = Long.parseLong(this.id);
 		} catch (final NumberFormatException ex) {
-			NavigationUtils.gotoPage("clientSearch");
+			Navigate.toPage("clientSearch");
 		}
 		this.client = this.clientService.find(clientId);
 		if (this.client == null) {
-			NavigationUtils.gotoPage("clientSearch");
+			Navigate.toPage("clientSearch");
 		}
 
 		this.jobOffers = this.jobOfferService.findAllJobOffersByClient(this.client);

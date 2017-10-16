@@ -7,7 +7,6 @@ import java.util.List;
 
 import javax.faces.FacesException;
 import javax.faces.application.FacesMessage;
-import javax.faces.application.NavigationHandler;
 import javax.faces.component.UIComponent;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -29,6 +28,7 @@ import ged.ejb.user.UserService;
 import ged.ejb.user.role.Role;
 import ged.ejb.user.role.RoleService;
 import ged.web.core.util.MessageUtils;
+import ged.web.core.util.Navigate;
 import ged.web.core.util.TransaltionUtils;
 import ged.web.core.view.AbstractPageBean;
 import ged.web.reports.UserReport;
@@ -71,9 +71,7 @@ public class UserViewBean extends AbstractPageBean {
 	}
 
 	private void error() {
-		final NavigationHandler navigationHandler = this.facesContext.getApplication().getNavigationHandler();
-		navigationHandler.handleNavigation(this.facesContext, null, "userSearch?faces-redirect=true");
-		this.facesContext.renderResponse();
+		Navigate.toPage("userSearch");
 	}
 
 	public void export() throws IOException {

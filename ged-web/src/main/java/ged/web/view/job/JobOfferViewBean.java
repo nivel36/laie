@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import javax.faces.application.NavigationHandler;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -20,6 +19,7 @@ import ged.ejb.job.meeting.JobMeeting;
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
 import ged.ejb.user.User;
+import ged.web.core.util.Navigate;
 import ged.web.core.view.AbstractPageBean;
 
 @Named
@@ -75,9 +75,7 @@ public class JobOfferViewBean extends AbstractPageBean {
 	}
 
 	private void error() {
-		final NavigationHandler navigationHandler = this.facesContext.getApplication().getNavigationHandler();
-		navigationHandler.handleNavigation(this.facesContext, null, "jobOfferSearch?faces-redirect=true");
-		this.facesContext.renderResponse();
+		Navigate.toPage("jobOfferSearch");
 	}
 
 	public List<Candidate> getCandidates() {

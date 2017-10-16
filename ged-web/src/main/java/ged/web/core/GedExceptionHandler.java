@@ -16,7 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ged.web.core.util.MessageUtils;
-import ged.web.core.util.NavigationUtils;
+import ged.web.core.util.Navigate;
 
 public class GedExceptionHandler extends ExceptionHandlerWrapper {
 
@@ -66,7 +66,7 @@ public class GedExceptionHandler extends ExceptionHandlerWrapper {
 		} else if (exception instanceof EJBException) {
 			handle(exception.getCause());
 		} else if (exception instanceof ViewExpiredException) {
-			NavigationUtils.gotoPage("login");
+			Navigate.toPage("login");
 		} else if (exception instanceof OptimisticLockException) {
 			MessageUtils.addErrorMessage("warning.optimistick_lock.message", "warning.optimistick_lock.message");
 		} else {

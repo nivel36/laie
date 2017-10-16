@@ -7,7 +7,6 @@ import java.nio.file.Files;
 import java.util.Date;
 import java.util.UUID;
 
-import javax.faces.application.NavigationHandler;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -22,6 +21,7 @@ import ged.ejb.candidate.CandidateService;
 import ged.ejb.curriculum.FileSys;
 import ged.web.core.util.ConfigurationProperty;
 import ged.web.core.util.MessageUtils;
+import ged.web.core.util.Navigate;
 import ged.web.core.view.AbstractPageBean;
 
 @Named
@@ -55,7 +55,7 @@ public class CandidateViewBean extends AbstractPageBean {
 
 	@Inject
 	@ConfigurationProperty(value = "file.directory")
-	private  String fileDirectory;
+	private String fileDirectory;
 
 	private String id;
 
@@ -105,9 +105,7 @@ public class CandidateViewBean extends AbstractPageBean {
 	}
 
 	private void error() {
-		final NavigationHandler navigationHandler = this.facesContext.getApplication().getNavigationHandler();
-		navigationHandler.handleNavigation(this.facesContext, null, "candidateSearch?faces-redirect=true");
-		this.facesContext.renderResponse();
+		Navigate.toPage("candidateSearch");
 	}
 
 	public Candidate getCandidate() {

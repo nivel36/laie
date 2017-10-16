@@ -3,7 +3,6 @@ package ged.web.view.candidate;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.faces.application.NavigationHandler;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -15,6 +14,7 @@ import ged.ejb.curriculum.Education;
 import ged.ejb.curriculum.JobExperience;
 import ged.ejb.curriculum.Language;
 import ged.ejb.curriculum.Skill;
+import ged.web.core.util.Navigate;
 import ged.web.core.view.AbstractPageBean;
 
 @Named
@@ -50,9 +50,7 @@ public class CurriculumViewBean extends AbstractPageBean {
 	}
 
 	private void error() {
-		final NavigationHandler navigationHandler = this.facesContext.getApplication().getNavigationHandler();
-		navigationHandler.handleNavigation(this.facesContext, null, "candidateSearch?faces-redirect=true");
-		this.facesContext.renderResponse();
+		Navigate.toPage("candidateSearch");
 	}
 
 	public Candidate getCandidate() {
