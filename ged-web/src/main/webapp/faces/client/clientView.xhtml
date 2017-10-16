@@ -21,7 +21,7 @@
 					<input type="hidden" id="clientId" value="#{clientViewBean.client.id}" />
 					<p:panel header="#{clientViewBean.client}" id="client">
 						<div class="ui-g">
-							<div class="ui-md-12 ui-lg-6 ui-xl-4">
+							<div class="ui-g-12 ui-md-6 ui-xl-4">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['client.name']}" for="name" />
 									<p:inputText id="name" value="#{clientViewBean.client.name}" readonly="#{!clientViewBean.editable}"
@@ -29,7 +29,7 @@
 								</div>
 								<h:message for="name" errorClass="error" />
 							</div>
-							<div class="ui-md-12 ui-lg-6 ui-xl-4">
+							<div class="ui-g-12 ui-md-6 ui-xl-4">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['client.cif']}" for="cif" />
 									<p:inputText id="cif" value="#{clientViewBean.client.cif}" readonly="#{!clientViewBean.editable}"
@@ -37,14 +37,14 @@
 								</div>
 								<h:message for="cif" errorClass="error" />
 							</div>
-							<div class="ui-md-12 ui-lg-6 ui-xl-4">
+							<div class="ui-g-12 ui-md-6 ui-xl-4">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['client.city']}" for="city" />
 									<p:inputText id="city" value="#{clientViewBean.client.address.city}" readonly="#{!clientViewBean.editable}" />
 								</div>
 								<h:message for="city" errorClass="error" />
 							</div>
-							<div class="ui-md-12 ui-lg-6 ui-xl-4">
+							<div class="ui-g-12 ui-md-6 ui-xl-4">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['client.state']}" for="state" />
 									<p:inputText id="state" value="#{clientViewBean.client.address.state}" readonly="#{!clientViewBean.editable}" />
@@ -74,7 +74,7 @@
 			</div>
 		</div>
 		<div class="ui-g">
-			<div class="ui-g-12">
+			<div class="ui-g-12 ui-xl-6">
 				<p:panel header="#{i18n['job.job_offers']}">
 					<p:dataTable var="jobOffer" value="#{clientViewBean.jobOffers}"
 						emptyMessage="#{i18n['client.no_job_offers_found']}" reflow="true" paginator="true" paginatorPosition="bottom"
@@ -88,9 +88,9 @@
 							</h:outputText>
 						</p:column>
 						<p:column headerText="#{i18n['action.action']}">
-							<h:link value="#{i18n['action.view']}" outcome="/faces/jobOffer/jobOfferView">
+							<p:button outcome="/faces/jobOffer/jobOfferView" icon="fa fa-eye">
 								<f:param name="id" value="#{jobOffer.id}" />
-							</h:link>
+							</p:button>
 						</p:column>
 					</p:dataTable>
 				</p:panel>
