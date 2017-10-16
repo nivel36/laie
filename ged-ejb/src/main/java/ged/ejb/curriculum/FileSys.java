@@ -26,8 +26,6 @@ public class FileSys extends AbstractEntity {
 
 	private String description;
 
-	private String uuid;
-
 	@NotNull
 	@I18n
 	private String fileType;
@@ -35,6 +33,26 @@ public class FileSys extends AbstractEntity {
 	@NotNull
 	@Column(nullable = false)
 	private String name;
+
+	private String uuid;
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null){
+			return false;
+		}
+		if (this == obj){
+			return true;
+		}
+		if (!super.equals(obj)){
+			return false;
+		}
+		if (getClass() != obj.getClass()){
+			return false;
+		}
+		FileSys other = (FileSys) obj;
+		return Objects.equals(this.uuid, other.uuid);
+	}
 
 	public Candidate getCandidate() {
 		return candidate;
@@ -54,6 +72,15 @@ public class FileSys extends AbstractEntity {
 
 	public String getName() {
 		return name;
+	}
+
+	public String getUuid() {
+		return uuid;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(uuid);
 	}
 
 	public void setCandidate(Candidate candidate) {
@@ -76,28 +103,7 @@ public class FileSys extends AbstractEntity {
 		this.name = name;
 	}
 
-	public String getUuid() {
-		return uuid;
-	}
-
 	public void setUuid(String uuid) {
 		this.uuid = uuid;
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(uuid);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (!super.equals(obj))
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		FileSys other = (FileSys) obj;
-		return Objects.equals(this.uuid, other.uuid);
 	}
 }

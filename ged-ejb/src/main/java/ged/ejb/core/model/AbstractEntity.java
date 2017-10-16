@@ -30,8 +30,8 @@ public abstract class AbstractEntity implements Identificable, Serializable {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		final AbstractEntity other = (AbstractEntity) obj;
-		return this.id == other.id;
+		AbstractEntity other = (AbstractEntity) obj;
+		return other.id == this.id;
 	}
 
 	@Override

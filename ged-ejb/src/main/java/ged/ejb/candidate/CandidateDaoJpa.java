@@ -2,7 +2,6 @@ package ged.ejb.candidate;
 
 import static ged.ejb.core.model.QueryParameter.with;
 
-import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -16,8 +15,6 @@ import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.jpa.Search;
 import org.hibernate.search.query.dsl.BooleanJunction;
 import org.hibernate.search.query.dsl.QueryBuilder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import ged.ejb.core.FileType;
 import ged.ejb.core.model.AbstractDaoJpa;
@@ -27,8 +24,6 @@ import ged.ejb.job.offer.JobOffer;
 @Repository
 public class CandidateDaoJpa extends AbstractDaoJpa<Candidate> implements CandidateDao {
 
-	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
-
 	@Inject
 	public CandidateDaoJpa(final EntityManager entityManager) {
 		super(entityManager);
@@ -37,13 +32,12 @@ public class CandidateDaoJpa extends AbstractDaoJpa<Candidate> implements Candid
 	@Override
 	public List<Candidate> findAllByJobOffer(final JobOffer jobOffer) {
 		Objects.requireNonNull(jobOffer);
-		List<Candidate> candidates;
+		final List<Candidate> candidates;
 		try {
 			candidates = findByTypedQuery(Candidate.class, "Candidate.findAllByJobOffer",
 					with("jobOffer", jobOffer).parameters(), 0, 0);
 		} catch (final NoResultException e) {
-			logger.debug("No candidates found");
-			candidates = new ArrayList<Candidate>();
+			return new ArrayList<>();
 		}
 		return candidates;
 	}

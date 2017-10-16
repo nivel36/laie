@@ -107,9 +107,18 @@ public class Candidate extends AbstractAuditedEntity {
 		jobCandidature.setCandidate(this);
 		this.jobCandidatures.add(jobCandidature);
 	}
-
+	
+	protected boolean deepEquals(final Object obj) {
+		final Candidate other = (Candidate) obj;
+		return Objects.equals(this.email, other.email) && Objects.equals(this.name, other.name)
+				&& Objects.equals(this.phoneNumber, other.phoneNumber) && Objects.equals(this.surename, other.surename);
+	}
+	
 	@Override
 	public boolean equals(final Object obj) {
+		if (obj == null) {
+			return false;
+		}
 		if (this == obj) {
 			return true;
 		}

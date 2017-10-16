@@ -57,12 +57,11 @@ public final class UserDaoJpa extends AbstractDaoJpa<User> implements UserDao {
 	@Override
 	public List<User> findSubordinateUsers(final User user) {
 		Objects.requireNonNull(user);
-		List<User> users;
+		final List<User> users;
 		try {
 			users = findByTypedQuery(User.class, "User.findSubordinateUsers", with("id", user.getId()).parameters(), 0,
 					0);
 		} catch (final NoResultException e) {
-			logger.warn("No subordinate Users for user {}", user.getEmail());
 			return new ArrayList<>();
 		}
 		return users;
@@ -75,7 +74,6 @@ public final class UserDaoJpa extends AbstractDaoJpa<User> implements UserDao {
 		try {
 			user = findByTypedQuery(User.class, "User.findByEmail", with("email", email).parameters());
 		} catch (final NoResultException e) {
-			logger.debug("No user with email {} found", email);
 			return null;
 		}
 		return user;

@@ -30,7 +30,10 @@ public class Role extends AbstractEntity {
 
 	@Override
 	public boolean equals(final Object obj) {
-		if (this == obj) {
+		if( obj == null ) {
+			return false;
+		}
+		if (this == obj)  {
 			return true;
 		}
 		if (!super.equals(obj)) {

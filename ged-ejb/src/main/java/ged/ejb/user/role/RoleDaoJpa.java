@@ -33,13 +33,13 @@ public class RoleDaoJpa extends AbstractDaoJpa<Role> implements RoleDao {
 
 	@Override
 	public List<Role> findSubordinateRoles(final Role role) {
-		final List<Role> roles;
+		List<Role> roles;
 		try {
 			roles = findByTypedQuery(Role.class, "Role.findSubordinateRoles", with("id", role.getId()).parameters(), 0,
 					0);
 		} catch (final NoResultException e) {
+			roles = new ArrayList<>();
 			logger.warn("No subordinate roles for role {}", role.getName());
-			return new ArrayList<>();
 		}
 		return roles;
 	}
