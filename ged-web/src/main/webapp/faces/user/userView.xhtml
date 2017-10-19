@@ -133,7 +133,7 @@
 						<h:panelGroup layout="block" rendered="#{not empty userViewBean.team}">
 							<div class="ui-g">
 								<ui:repeat var="userTeamMember" value="#{userViewBean.team}" varStatus="status">
-									<div class="ui-g-12 ui-lg-6">
+									<div class="ui-sm-12 ui-g-6">
 										<ui:include src="userCard.xhtml">
 											<ui:param name="user" value="#{userTeamMember}" />
 										</ui:include>
