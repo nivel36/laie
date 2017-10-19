@@ -156,6 +156,7 @@ public class UserViewBean extends AbstractPageBean {
 		logger.debug("Save user action performed");
 		try {
 			this.user = this.userService.save(this.user);
+			this.editable = false;
 		} catch (final Exception ue) {
 			final Role admin = this.roleService.findAdmin();
 			this.user.setRole(admin);
