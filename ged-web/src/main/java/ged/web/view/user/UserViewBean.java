@@ -66,6 +66,10 @@ public class UserViewBean extends AbstractPageBean {
 		this.editable = false;
 	}
 
+	public List<User> completeManager(final String query) {
+		return this.userService.search(query);
+	}
+
 	public void editUser() {
 		this.editable = true;
 	}
@@ -140,21 +144,10 @@ public class UserViewBean extends AbstractPageBean {
 		return "userEdit?faces-redirect=true";
 	}
 
-	private void newManager() {
-		this.manager = new User();
-		this.manager.setName("");
-		this.manager.setSurename("");
-	}
-
-	public void removeManager() {
-		logger.debug("Remove manager action performed");
-		newManager();
-		this.user.setManager(null);
-	}
-
 	public void saveUser() {
 		logger.debug("Save user action performed");
 		try {
+			this.user.setManager(this.manager);
 			this.user = this.userService.save(this.user);
 			this.editable = false;
 		} catch (final Exception ue) {

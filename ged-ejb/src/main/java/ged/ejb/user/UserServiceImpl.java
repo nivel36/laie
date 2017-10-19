@@ -28,6 +28,7 @@ public class UserServiceImpl extends AbstratctAuditedService<User> implements Us
 		this.userDao = userDao;
 	}
 
+	@Override
 	public User create(final String name, final String surename, final String email, final Role role,
 			final User manager) {
 		final User user = new User();
@@ -90,6 +91,12 @@ public class UserServiceImpl extends AbstratctAuditedService<User> implements Us
 	private boolean isLastAdminOnApp(final User user) {
 		final User userInDataBase = find(user.getId());
 		return userInDataBase.isAdmin() && !user.isAdmin() && !this.userDao.existsMoreThanOneAdmin();
+	}
+
+	@Override
+	public List<User> search(final String query) {
+		logger.debug("Search user by text {}", query);
+		return this.userDao.search(query, false);
 	}
 
 	@Override

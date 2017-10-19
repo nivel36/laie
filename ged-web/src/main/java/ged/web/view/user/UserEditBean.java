@@ -1,6 +1,8 @@
 package ged.web.view.user;
 
 import java.lang.invoke.MethodHandles;
+import java.util.List;
+
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
@@ -39,13 +41,12 @@ public class UserEditBean extends AbstractPageBean {
 	private transient UserService userService;
 
 	public String cancel() {
-		if (isNewUser(this.user)) {
-			logger.trace("Cancel new user action performed");
-			return "userSearch.xhtml?faces-redirect=true";
-		} else {
-			logger.debug("Cancel change user action performed");
-			return "userView.xhtml?id=" + this.user.getId() + "&faces-redirect=true";
-		}
+		logger.trace("Cancel new user action performed");
+		return "userSearch.xhtml?faces-redirect=true";
+	}
+
+	public List<User> completeManager(final String query) {
+		return this.userService.search(query);
 	}
 
 	public User getManager() {
@@ -74,22 +75,11 @@ public class UserEditBean extends AbstractPageBean {
 		this.flash.put("user", this.user);
 	}
 
-	private String insertNewUser() {
-		final User newUser = this.userService.create(this.user.getName(), this.user.getSurename(), this.user.getEmail(),
-				this.user.getRole(), this.manager);
-		this.userService.save(newUser);
-		return "userView.xhtml?id=" + newUser.getId() + "&faces-redirect=true";
-	}
-
 	private boolean isAvalidRole(final Role userRole, final Role managerRole) {
 		if (userRole.getName().equals(managerRole.getName())) {
 			return true;
 		}
 		return this.roleService.isASubordinateRole(managerRole, userRole);
-	}
-
-	private boolean isNewUser(final User user) {
-		return user.getId() == 0;
 	}
 
 	private void newManager() {
@@ -106,11 +96,10 @@ public class UserEditBean extends AbstractPageBean {
 
 	public String save() {
 		logger.debug("Save user action performed");
-		if (isNewUser(this.user)) {
-			return insertNewUser();
-		} else {
-			return updateUser();
-		}
+		final User newUser = this.userService.create(this.user.getName(), this.user.getSurename(), this.user.getEmail(),
+				this.user.getRole(), this.manager);
+		this.userService.save(newUser);
+		return "userView.xhtml?id=" + newUser.getId() + "&faces-redirect=true";
 	}
 
 	public void selectManager(final User manager) {
@@ -132,15 +121,6 @@ public class UserEditBean extends AbstractPageBean {
 
 	public void setUserService(final UserService userService) {
 		this.userService = userService;
-	}
-
-	private String updateUser() {
-		if (this.manager.getEmail() != null) {
-			logger.trace("The user has no manager");
-			this.user.setManager(this.manager);
-		}
-		this.userService.save(this.user);
-		return "userView.xhtml?id=" + this.user.getId() + "&faces-redirect=true";
 	}
 
 	public void validateEmail(final FacesContext context, final UIComponent component, final Object value) {

@@ -15,40 +15,52 @@
 			<div class="ui-g-12 ui-xl-6">
 				<h:form>
 					<p:panel header="#{i18n['config.user_data']}">
-						<div class="ui-g">
-							<div class="ui-g-12 ui-lg-6">
-								<div class="form-group">
-									<p:outputLabel value="#{i18n['config.name']}" />
-									<p:inputText id="name" value="#{configIndexBean.user.name}" label="#{i18n['config.name']}" required="true"
-										styleClass="#{not component.valid ? 'inputError' : ''}" />
-									<h:message for="name" errorClass="error" />
+						<p:tabView dynamic="true" cache="true">
+							<p:tab title="#{i18n['user.edit_user']}">
+								<div class="ui-g">
+									<div class="ui-g-12 ui-lg-6">
+										<div class="form-group">
+											<p:outputLabel value="#{i18n['config.name']}" />
+											<p:inputText id="name" value="#{configIndexBean.user.name}" label="#{i18n['config.name']}" required="true"
+												styleClass="#{not component.valid ? 'inputError' : ''}" />
+											<h:message for="name" errorClass="error" />
+										</div>
+									</div>
+									<div class="ui-g-12 ui-lg-6">
+										<div class="form-group">
+											<p:outputLabel value="#{i18n['config.surename']}" />
+											<p:inputText id="surename" value="#{configIndexBean.user.surename}" label="#{i18n['config.surename']}"
+												required="true" styleClass="#{not component.valid ? 'inputError' : ''}" />
+											<h:message for="surename" errorClass="error" />
+										</div>
+									</div>
+									<div class="ui-g-12 ui-lg-6">
+										<div class="form-group">
+											<p:outputLabel value="#{i18n['config.email']}" />
+											<p:inputText id="email" value="#{configIndexBean.user.email}" label="#{i18n['config.email']}" required="true"
+												styleClass="#{not component.valid ? 'inputError' : ''}" />
+											<h:message for="email" errorClass="error" />
+										</div>
+									</div>
 								</div>
-							</div>
-							<div class="ui-g-12 ui-lg-6">
-								<div class="form-group">
-									<p:outputLabel value="#{i18n['config.surename']}" />
-									<p:inputText id="surename" value="#{configIndexBean.user.surename}" label="#{i18n['config.surename']}"
-										required="true" styleClass="#{not component.valid ? 'inputError' : ''}" />
-									<h:message for="surename" errorClass="error" />
+								<div class="ui-g">
+									<div class="ui-g-12">
+										<div class="form-action-primary">
+											<p:commandButton value="#{i18n['config.change_password']}" onclick="PF('changePasswordDlg').show();" />
+											<p:commandButton value="#{i18n['action.save']}" action="#{configIndexBean.save}" update="growl" />
+										</div>
+									</div>
 								</div>
-							</div>
-							<div class="ui-g-12 ui-lg-6">
-								<div class="form-group">
-									<p:outputLabel value="#{i18n['config.email']}" />
-									<p:inputText id="email" value="#{configIndexBean.user.email}" label="#{i18n['config.email']}" required="true"
-										styleClass="#{not component.valid ? 'inputError' : ''}" />
-									<h:message for="email" errorClass="error" />
-								</div>
-							</div>
-						</div>
-						<div class="ui-g">
-							<div class="ui-g-12">
-								<div class="form-action-primary">
-									<p:commandButton value="#{i18n['config.change_password']}" onclick="PF('changePasswordDlg').show();" />
-									<p:commandButton value="#{i18n['action.save']}" action="#{configIndexBean.save}" update="growl" />
-								</div>
-							</div>
-						</div>
+							</p:tab>
+							<p:tab title="#{i18n['user.avatar']}">
+								<p:photoCam widgetVar="pc" listener="#{userViewBean.uploadImage}" update="photo" />
+								<p:commandButton type="button" value="Capture" onclick="PF('pc').capture()" />
+								<p:outputPanel id="photo">
+									<p:graphicImage name="#{userViewBean.user.imageFileName}"
+										rendered="#{not empty userViewBean.user.imageFileName}" />
+								</p:outputPanel>
+							</p:tab>
+						</p:tabView>
 					</p:panel>
 				</h:form>
 			</div>

@@ -4439,6 +4439,14 @@ body .ui-widget-content {
 	color: rgba(0, 0, 0, 0.87);
 }
 
+body .ui-autocomplete {
+	width: 100%;
+}
+
+body .ui-autocomplete-panel .ui-autocomplete-table td {
+	border: 0px solid transparent;
+}
+
 body .ui-button {
 	background: #32c5d2;
 	color: #fff;

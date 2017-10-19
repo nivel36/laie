@@ -15,14 +15,14 @@ import ged.web.core.view.ApplicationBean;
 public class RoleConverter implements Converter {
 
 	protected ApplicationBean getAppBean() {
-		FacesContext context = FacesContext.getCurrentInstance();
+		final FacesContext context = FacesContext.getCurrentInstance();
 		return context.getApplication().evaluateExpressionGet(context, "#{applicationBean}", ApplicationBean.class);
 	}
 
 	@Override
-	public Object getAsObject(FacesContext context, UIComponent component, String value) {
-		List<Role> roles = getAppBean().getRoles();
-		for (Role role : roles) {
+	public Object getAsObject(final FacesContext context, final UIComponent component, final String value) {
+		final List<Role> roles = getAppBean().getRoles();
+		for (final Role role : roles) {
 			if (role.getName().equals(value)) {
 				return role;
 			}
@@ -31,8 +31,8 @@ public class RoleConverter implements Converter {
 	}
 
 	@Override
-	public String getAsString(FacesContext context, UIComponent component, Object value) {
-		Role role = (Role) value;
+	public String getAsString(final FacesContext context, final UIComponent component, final Object value) {
+		final Role role = (Role) value;
 		return role.getName();
 	}
 }

@@ -14,5 +14,7 @@ public interface UserDao extends Dao<User> {
 
 	User findUserByEmail(final String email);
 
+	List<User> search(final String query, final boolean showDeleted);
+
 	List<User> searchByNameAndSurename(final String name, String surename, final boolean showDeleted);
 }

@@ -24,7 +24,10 @@
 					<div class="panel user-card">
 						<div class="panel-content">
 							<div class="user-image">
-								<img class="image" src="/web/resources/img/abel.jpg" />
+								<p:graphicImage class="image" value="/images/#{userViewBean.user.imageFileName}"
+									rendered="#{not empty userViewBean.user.imageFileName}" />
+								<h:graphicImage class="image" value="/resources/img/default-avatar.png"
+									rendered="#{empty userViewBean.user.imageFileName}" />
 							</div>
 							<div class="user-info">
 								<span class="name">#{userViewBean.user}</span> <span class="position">#{i18n:translate(userViewBean.user.role.name)}</span>
@@ -38,104 +41,105 @@
 				</div>
 
 				<div class="ui-g-12 ui-lg-9 ui-xl-6">
-					<p:panel styleClass="with-tabs" header="#{i18n['user.user']}">
-						<p:tabView dynamic="true" cache="true">
-							<p:tab title="#{i18n['user.edit_user']}">
-								<div class="ui-g">
-									<div class="ui-g-12 ui-md-12 ui-lg-6">
-										<div class="form-group">
-											<p:outputLabel value="#{i18n['user.name']}" for="name" />
-											<p:inputText id="name" value="#{userViewBean.user.name}" required="true"
-												readonly="#{not userViewBean.editable}" />
-										</div>
-										<h:message for="name" errorClass="error" />
-									</div>
-
-									<div class="ui-g-12 ui-md-12 ui-lg-6">
-										<div class="form-group">
-											<p:outputLabel value="#{i18n['user.surename']}" for="surename" />
-											<p:inputText id="surename" value="#{userViewBean.user.surename}" required="true"
-												readonly="#{not userViewBean.editable}" />
-										</div>
-										<h:message for="surename" errorClass="error" />
-									</div>
-
-									<div class="ui-g-12 ui-md-12 ui-lg-6">
-										<div class="form-group">
-											<p:outputLabel value="#{i18n['user.email']}" for="email" />
-											<p:inputText id="email" value="#{userViewBean.user.email}" readonly="#{not userViewBean.editable}" />
-										</div>
-										<h:message for="email" errorClass="error" />
-									</div>
-
-									<div class="ui-g-12 ui-md-12 ui-lg-6">
-										<div class="form-group">
-											<p:outputLabel value="#{i18n['user.phone_number']}" for="phone_number" />
-											<p:inputText id="phone_number" value="#{userViewBean.user.phoneNumber}"
-												readonly="#{not userViewBean.editable}" />
-										</div>
-										<h:message for="phone_number" errorClass="error" />
-									</div>
-									
-									<div class="ui-g-12 ui-md-12 ui-lg-6">
-										<div class="form-group">
-											<p:outputLabel value="#{i18n['user.role']}" for="role" />
-											<p:selectOneMenu id="role" value="#{userViewBean.user.role}" validator="#{userViewBean.validateRole}"
-												disabled="#{not userViewBean.editable}">
-												<f:selectItems var="role" itemValue="#{role}" value="#{applicationBean.roles}"
-													itemLabel="#{i18n:translate(role.name)}" />
-											</p:selectOneMenu>
-										</div>
-										<h:message for="role" errorClass="error" />
-									</div>
-
-									<div class="ui-g-12 ui-md-12 ui-lg-6">
-										<div class="form-group">
-											<p:outputLabel value="#{i18n['user.manager']}" for="manager" />
-											<p:inputText id="manager" value="#{userViewBean.manager}" readonly="#{not userViewBean.editable}" />
-										</div>
-										<h:message for="manager" errorClass="error" />
-									</div>
+					<p:panel header="#{i18n['user.user']}">
+						<div class="ui-g">
+							<div class="ui-g-12 ui-md-12 ui-lg-6">
+								<div class="form-group">
+									<p:outputLabel value="#{i18n['user.name']}" for="name" />
+									<p:inputText id="name" value="#{userViewBean.user.name}" required="true"
+										readonly="#{not userViewBean.editable}" />
 								</div>
+								<h:message for="name" errorClass="error" />
+							</div>
 
-								<div class="ui-g">
-									<div class="ui-g-12">
-										<div class="form-action-primary">
-											<p:commandButton rendered="#{not userViewBean.editable}" value="#{i18n['action.edit']}"
-												action="#{userViewBean.editUser}" update="@form growl" />
-											<p:commandButton rendered="#{userViewBean.editable}" value="#{i18n['action.save']}"
-												action="#{userViewBean.saveUser}" update="@form growl" />
-											<p:commandButton styleClass="btn-gray" rendered="#{userViewBean.editable}" value="#{i18n['action.cancel']}"
-												action="#{userViewBean.cancelEditUser}" update="@form growl" />
-										</div>
-									</div>
+							<div class="ui-g-12 ui-md-12 ui-lg-6">
+								<div class="form-group">
+									<p:outputLabel value="#{i18n['user.surename']}" for="surename" />
+									<p:inputText id="surename" value="#{userViewBean.user.surename}" required="true"
+										readonly="#{not userViewBean.editable}" />
 								</div>
-							</p:tab>
+								<h:message for="surename" errorClass="error" />
+							</div>
 
-							<p:tab title="#{i18n['user.avatar']}">
-								<p:photoCam widgetVar="pc" listener="#{userViewBean.uploadImage}" update="photo" />
-								<p:commandButton type="button" value="Capture" onclick="PF('pc').capture()" />
-								<p:outputPanel id="photo">
-									<p:graphicImage name="#{userViewBean.user.imageFileName}"
-										rendered="#{not empty userViewBean.user.imageFileName}" />
-								</p:outputPanel>
-							</p:tab>
+							<div class="ui-g-12 ui-md-12 ui-lg-6">
+								<div class="form-group">
+									<p:outputLabel value="#{i18n['user.email']}" for="email" />
+									<p:inputText id="email" value="#{userViewBean.user.email}" readonly="#{not userViewBean.editable}" />
+								</div>
+								<h:message for="email" errorClass="error" />
+							</div>
 
-						</p:tabView>
+							<div class="ui-g-12 ui-md-12 ui-lg-6">
+								<div class="form-group">
+									<p:outputLabel value="#{i18n['user.phone_number']}" for="phone_number" />
+									<p:inputText id="phone_number" value="#{userViewBean.user.phoneNumber}" readonly="#{not userViewBean.editable}" />
+								</div>
+								<h:message for="phone_number" errorClass="error" />
+							</div>
+
+							<div class="ui-g-12 ui-md-12 ui-lg-6">
+								<div class="form-group">
+									<p:outputLabel value="#{i18n['user.role']}" for="role" />
+									<p:selectOneMenu id="role" value="#{userViewBean.user.role}" validator="#{userViewBean.validateRole}"
+										disabled="#{not userViewBean.editable}">
+										<f:selectItems var="role" itemValue="#{role}" value="#{applicationBean.roles}"
+											itemLabel="#{i18n:translate(role.name)}" />
+									</p:selectOneMenu>
+								</div>
+								<h:message for="role" errorClass="error" />
+							</div>
+
+							<div class="ui-g-12 ui-md-12 ui-lg-6">
+								<div class="form-group">
+									<p:outputLabel value="#{i18n['user.manager']}" for="manager" />
+									<p:autoComplete id="manager" value="#{userViewBean.manager}" completeMethod="#{userViewBean.completeManager}"
+										var="manager" itemLabel="#{manager.fullName}" itemValue="#{manager}" forceSelection="true"
+										readonly="#{not userViewBean.editable}" >
+										<p:column styleClass="user-select image">
+											<p:graphicImage class="image image_icon" value="/images/#{manager.imageFileName}"
+												rendered="#{not empty manager.imageFileName}" />
+											<p:graphicImage class="image image_icon" value="/resources/img/default-avatar.png"
+												rendered="#{empty manager.imageFileName}" />
+										</p:column>
+										<p:column styleClass="user-select name">
+											<h:outputText value="#{manager.fullName}" />
+										</p:column>
+									</p:autoComplete>
+								</div>
+								<h:message for="manager" errorClass="error" />
+							</div>
+						</div>
+
+						<div class="ui-g">
+							<div class="ui-g-12">
+								<div class="form-action-primary">
+									<p:commandButton rendered="#{not userViewBean.editable}" value="#{i18n['action.edit']}"
+										action="#{userViewBean.editUser}" update="@form growl" />
+									<p:commandButton rendered="#{userViewBean.editable}" value="#{i18n['action.save']}"
+										action="#{userViewBean.saveUser}" update="@form growl" />
+									<p:commandButton styleClass="btn-gray" rendered="#{userViewBean.editable}" value="#{i18n['action.cancel']}"
+										action="#{userViewBean.cancelEditUser}" update="@form growl" />
+								</div>
+							</div>
+						</div>
 					</p:panel>
 				</div>
 
-				<div class="ui-g-12 ui-md-12 ui-lg-6 ui-xl-4">
+				<div class="ui-g-12 ui-lg-6 ui-xl-4">
 					<p:panel header="#{i18n['user.team']}">
 						<h:panelGroup layout="block" rendered="#{empty userViewBean.team}">
 							<span class="message">#{i18n['user.no_team']}</span>
 						</h:panelGroup>
 						<h:panelGroup layout="block" rendered="#{not empty userViewBean.team}">
-							<ui:repeat var="userTeamMember" value="#{userViewBean.team}" varStatus="status">
-								<ui:include src="userCard.xhtml">
-									<ui:param name="user" value="#{userTeamMember}" />
-								</ui:include>
-							</ui:repeat>
+							<div class="ui-g">
+								<ui:repeat var="userTeamMember" value="#{userViewBean.team}" varStatus="status">
+									<div class="ui-g-12 ui-lg-6">
+										<ui:include src="userCard.xhtml">
+											<ui:param name="user" value="#{userTeamMember}" />
+										</ui:include>
+									</div>
+								</ui:repeat>
+							</div>
 						</h:panelGroup>
 					</p:panel>
 				</div>

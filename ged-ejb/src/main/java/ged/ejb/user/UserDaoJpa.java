@@ -114,6 +114,22 @@ public final class UserDaoJpa extends AbstractDaoJpa<User> implements UserDao {
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
+	public List<User> search(final String query, final boolean showDeleted) {
+		Objects.requireNonNull(query);
+		final FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(getEm());
+		final QueryBuilder qb = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(User.class)
+				.get();
+		final BooleanJunction<BooleanJunction> bj = qb.bool();
+		bj.should(qb.keyword().onField("name").matching(query).createQuery());
+		bj.should(qb.keyword().onField("surename").matching(query).createQuery());
+		bj.should(qb.keyword().onField("email").matching(query).createQuery());
+		bj.must(qb.keyword().onField("deleted").matching(true).createQuery()).not();
+		final Query persistenceQuery = fullTextEntityManager.createFullTextQuery(bj.createQuery(), User.class);
+		return persistenceQuery.getResultList();
+	}
+
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@Override
 	public List<User> searchByNameAndSurename(final String name, final String surename, final boolean showDeleted) {
 		final FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(getEm());
 		final QueryBuilder qb = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(User.class)
@@ -136,5 +152,4 @@ public final class UserDaoJpa extends AbstractDaoJpa<User> implements UserDao {
 		}
 		return persistenceQuery.getResultList();
 	}
-
 }
