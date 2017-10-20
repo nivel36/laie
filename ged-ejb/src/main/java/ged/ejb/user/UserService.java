@@ -15,6 +15,10 @@ public interface UserService extends AuditedService<User> {
 
 	User findUserByEmail(final String email);
 
+	List<User> findUsersOfflineLastMonth();
+
+	List<User> findUsersOnlineLastWeek();
+
 	List<User> search(final String query);
 
 	List<User> searchByNameAndSurename(final String name, final String surename);

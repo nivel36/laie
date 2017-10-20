@@ -3,7 +3,6 @@ package ged.web.view.user;
 import java.lang.invoke.MethodHandles;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
@@ -21,16 +20,12 @@ abstract class AbstractUserSearchBean extends AbstractPageBean {
 
 	private String name;
 
-	protected List<User> users;
-
 	private String surename;
+
+	protected List<User> users;
 
 	@Inject
 	protected transient UserService userService;
-
-	public void setUserService(UserService userService) {
-		this.userService = userService;
-	}
 
 	public void clean() {
 		logger.debug("Cleaning search fields");
@@ -47,26 +42,20 @@ abstract class AbstractUserSearchBean extends AbstractPageBean {
 		return this.name;
 	}
 
-	public List<User> getUsers() {
-		return this.users;
-	}
-
 	public String getSurename() {
 		return this.surename;
 	}
 
-	@PostConstruct
-	public void init() {
-		logger.trace("Init UserSearchBean");
-		search();
+	public List<User> getUsers() {
+		return this.users;
 	}
 
 	public void search() {
 		logger.debug("Searching for users");
 		if (this.name == null && this.surename == null) {
-			users = this.userService.findAll();
+			this.users = this.userService.findAll();
 		} else {
-			users = this.userService.searchByNameAndSurename(this.name, this.surename);
+			this.users = this.userService.searchByNameAndSurename(this.name, this.surename);
 		}
 	}
 
@@ -74,11 +63,15 @@ abstract class AbstractUserSearchBean extends AbstractPageBean {
 		this.name = name;
 	}
 
+	public void setSurename(final String surename) {
+		this.surename = surename;
+	}
+
 	public void setUsers(final List<User> users) {
 		this.users = users;
 	}
 
-	public void setSurename(final String surename) {
-		this.surename = surename;
+	public void setUserService(final UserService userService) {
+		this.userService = userService;
 	}
 }

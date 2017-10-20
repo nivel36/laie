@@ -1,5 +1,6 @@
 package ged.ejb.user;
 
+import java.util.Date;
 import java.util.List;
 
 import ged.ejb.core.model.Dao;
@@ -13,6 +14,10 @@ public interface UserDao extends Dao<User> {
 	List<User> findSubordinateUsers(final User user);
 
 	User findUserByEmail(final String email);
+
+	List<User> findUsersOffline(final Date start, final Date end);
+
+	List<User> findUsersOnline(final Date start, final Date end);
 
 	List<User> search(final String query, final boolean showDeleted);
 

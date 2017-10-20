@@ -26,14 +26,6 @@ public class GlobalSearchBean extends AbstractPageBean {
 	@Inject
 	private transient JobOfferService jobService;
 
-	public void setJobService(JobOfferService jobService) {
-		this.jobService = jobService;
-	}
-
-	public void setUserService(UserService userService) {
-		this.userService = userService;
-	}
-
 	private String text;
 
 	private List<User> users;
@@ -68,7 +60,15 @@ public class GlobalSearchBean extends AbstractPageBean {
 		}
 	}
 
+	public void setJobService(final JobOfferService jobService) {
+		this.jobService = jobService;
+	}
+
 	public void setText(final String text) {
 		this.text = text;
+	}
+
+	public void setUserService(final UserService userService) {
+		this.userService = userService;
 	}
 }

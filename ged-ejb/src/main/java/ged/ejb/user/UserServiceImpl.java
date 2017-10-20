@@ -1,6 +1,8 @@
 package ged.ejb.user;
 
 import java.lang.invoke.MethodHandles;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -69,9 +71,39 @@ public class UserServiceImpl extends AbstratctAuditedService<User> implements Us
 		return this.userDao.findUserByEmail(email);
 	}
 
+	public List<User> findUsersOfflineLastMonth() {
+		logger.debug("Find users offline last month");
+		final Date oneMonthAgo = getOneMonthAgo();
+		final Date today = Calendar.getInstance().getTime();
+		return this.userDao.findUsersOffline(oneMonthAgo, today);
+	}
+
+	public List<User> findUsersOnlineLastWeek() {
+		logger.debug("Find users online last week");
+		final Date oneWeekAgo = getOneWeekAgo();
+		final Date today = Calendar.getInstance().getTime();
+		return this.userDao.findUsersOnline(oneWeekAgo, today);
+	}
+
 	@Override
 	protected Dao<User> getDao() {
 		return this.userDao;
+	}
+
+	private Date getOneMonthAgo() {
+		final Date referenceDate = new Date();
+		final Calendar c = Calendar.getInstance();
+		c.setTime(referenceDate);
+		c.add(Calendar.MONTH, -30);
+		return c.getTime();
+	}
+
+	private Date getOneWeekAgo() {
+		final Date referenceDate = new Date();
+		final Calendar c = Calendar.getInstance();
+		c.setTime(referenceDate);
+		c.add(Calendar.MONTH, -7);
+		return c.getTime();
 	}
 
 	@Override

@@ -139,7 +139,7 @@
 			AND j.deleted <> TRUE
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="JobOffer.findByName">
 		<query><![CDATA[
 			SELECT j 
@@ -147,7 +147,7 @@
 			WHERE j.name = :name
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="JobOffer.findAllByOwner">
 		<query><![CDATA[
 			SELECT j 
@@ -156,7 +156,7 @@
 			AND j.deleted <> TRUE
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="JobOffer.findLastJobOffers">
 		<query><![CDATA[
 			SELECT j 
@@ -236,6 +236,22 @@
 			FROM User u 
 			WHERE (:name IS NOT NULL AND u.name = :name)
 			OR (:surename IS NOT NULL AND u.surename = :surename)
+		]]></query>
+	</named-query>
+
+	<named-query name="User.findUsersOffline">
+		<query><![CDATA[
+			SELECT u 
+			FROM User u 
+			WHERE u.lastConnection BETWEEN :start and :end
+		]]></query>
+	</named-query>
+
+	<named-query name="User.findUsersOnline">
+		<query><![CDATA[
+			SELECT u 
+			FROM User u 
+			WHERE u.lastConnection NOT BETWEEN :start and :end
 		]]></query>
 	</named-query>
 

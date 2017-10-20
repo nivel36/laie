@@ -1,5 +1,6 @@
 package ged.web.core.view;
 
+import java.util.Calendar;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -45,7 +46,13 @@ public class SessionBean extends AbstractBean {
 	public void init() {
 		final String username = this.facesContext.getExternalContext().getRemoteUser();
 		this.user = this.userService.findUserByEmail(username);
+		setLastConnectionToNow();
 		this.locale = new Locale(this.user.getLanguage());
+	}
+
+	private void setLastConnectionToNow() {
+		this.user.setLastConnection(Calendar.getInstance().getTime());
+		this.user = this.userService.save(this.user);
 	}
 
 	public void setLocale(final Locale locale) {

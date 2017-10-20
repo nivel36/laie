@@ -127,7 +127,7 @@ public class ChangePasswordPopupBean extends AbstractPageBean {
 		this.repeatPassword = repeatPassword;
 	}
 
-	public void setUserService(UserService userService) {
+	public void setUserService(final UserService userService) {
 		this.userService = userService;
 	}
 }

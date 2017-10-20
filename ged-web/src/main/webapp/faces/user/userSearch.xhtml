@@ -10,6 +10,50 @@
 	<ui:param name="selectedMenu" value="users" />
 
 	<ui:define name="content">
+		<div class="stats">
+			<div class="ui-g">
+				<div class="ui-g-6 ui-lg-3">
+					<div class="card card-stats">
+						<div class="card-header"></div>
+						<div class="card-body">
+							<p class="card-category">#{i18n['user.stats.users']}</p>
+							<span class="number">#{userSearchBean.numberOfUsers}</span>
+						</div>
+						<div class="card-footer"></div>
+					</div>
+				</div>
+				<div class="ui-g-6 ui-lg-3">
+					<div class="card card-stats">
+						<div class="card-header"></div>
+						<div class="card-body">
+							<p class="card-category">#{i18n['user.stats.online_last_week']}</p>
+							<span class="number">#{userSearchBean.numberOfUsersOnlineLastWeek}</span>
+						</div>
+						<div class="card-footer"></div>
+					</div>
+				</div>
+				<div class="ui-g-6 ui-lg-3">
+					<div class="card card-stats">
+						<div class="card-header"></div>
+						<div class="card-body">
+							<p class="card-category">#{i18n['user.stats.offline_last_month']}</p>
+							<span class="number">#{userSearchBean.numberOfUsersOfflineLastMonth}</span>
+						</div>
+						<div class="card-footer"></div>
+					</div>
+				</div>
+				<div class="ui-g-6 ui-lg-3">
+					<div class="card card-stats">
+						<div class="card-header"></div>
+						<div class="card-body">
+							<p class="card-category">#{i18n['user.stats.team_by_user']}</p>
+							<span class="number">10</span>
+						</div>
+						<div class="card-footer"></div>
+					</div>
+				</div>
+			</div>
+		</div>
 		<h:form id="form">
 			<div class="ui-g">
 				<div class="ui-g-12 ui-md-12 ui-lg-12 ui-xl-12">

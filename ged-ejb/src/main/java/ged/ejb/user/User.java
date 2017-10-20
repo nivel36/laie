@@ -1,5 +1,6 @@
 package ged.ejb.user;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -47,6 +48,8 @@ public class User extends AbstractAuditedEntity {
 	@NotNull
 	@Column(length = 2, nullable = false)
 	private String language;
+
+	private Date lastConnection;
 
 	@ManyToOne
 	@JoinColumn(name = "managerId", nullable = true)
@@ -132,6 +135,10 @@ public class User extends AbstractAuditedEntity {
 		return this.language;
 	}
 
+	public Date getLastConnection() {
+		return this.lastConnection;
+	}
+
 	public User getManager() {
 		return this.manager;
 	}
@@ -213,6 +220,10 @@ public class User extends AbstractAuditedEntity {
 
 	public void setLanguage(final String language) {
 		this.language = language;
+	}
+
+	public void setLastConnection(final Date lastConnection) {
+		this.lastConnection = lastConnection;
 	}
 
 	public void setManager(final User manager) {

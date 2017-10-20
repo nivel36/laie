@@ -4,6 +4,7 @@ import static ged.ejb.core.model.QueryParameter.with;
 
 import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -77,6 +78,18 @@ public final class UserDaoJpa extends AbstractDaoJpa<User> implements UserDao {
 			return null;
 		}
 		return user;
+	}
+
+	@Override
+	public List<User> findUsersOffline(final Date start, final Date end) {
+		return findByTypedQuery(User.class, "User.findUsersOffline", with("start", start).and("end", end).parameters(),
+				0, 0);
+	}
+
+	@Override
+	public List<User> findUsersOnline(final Date start, final Date end) {
+		return findByTypedQuery(User.class, "User.findUsersOffline", with("start", start).and("end", end).parameters(),
+				0, 0);
 	}
 
 	@Override
