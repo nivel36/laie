@@ -230,7 +230,8 @@ public class UserViewBean extends AbstractPageBean {
 		if (value == null) {
 			return;
 		}
-		if (this.manager.equals(this.user)) {
+		final User manager = (User) value;
+		if (manager.equals(this.user)) {
 			logger.debug("User can't be his/her manager");
 			final String msg = TransaltionUtils.translate("user.error.manager");
 			throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg));

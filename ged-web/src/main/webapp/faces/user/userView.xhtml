@@ -94,7 +94,7 @@
 									<p:outputLabel value="#{i18n['user.manager']}" for="manager" />
 									<p:autoComplete id="manager" value="#{userViewBean.manager}" completeMethod="#{userViewBean.completeManager}"
 										var="manager" itemLabel="#{manager.fullName}" itemValue="#{manager}" forceSelection="true"
-										readonly="#{not userViewBean.editable}" >
+										readonly="#{not userViewBean.editable}" validator="#{userViewBean.validateManager}">
 										<p:column styleClass="user-select image">
 											<p:graphicImage class="image image_icon" value="/images/#{manager.imageFileName}"
 												rendered="#{not empty manager.imageFileName}" />
