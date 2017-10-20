@@ -43,7 +43,7 @@
 				<div class="ui-g-12 ui-lg-9 ui-xl-6">
 					<p:panel header="#{i18n['user.user']}">
 						<div class="ui-g">
-							<div class="ui-g-12 ui-md-12 ui-lg-6">
+							<div class="ui-g-12 ui-md-6">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['user.name']}" for="name" />
 									<p:inputText id="name" value="#{userViewBean.user.name}" required="true"
@@ -52,7 +52,7 @@
 								<h:message for="name" errorClass="error" />
 							</div>
 
-							<div class="ui-g-12 ui-md-12 ui-lg-6">
+							<div class="ui-g-12 ui-md-6">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['user.surename']}" for="surename" />
 									<p:inputText id="surename" value="#{userViewBean.user.surename}" required="true"
@@ -61,7 +61,7 @@
 								<h:message for="surename" errorClass="error" />
 							</div>
 
-							<div class="ui-g-12 ui-md-12 ui-lg-6">
+							<div class="ui-g-12 ui-md-6">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['user.email']}" for="email" />
 									<p:inputText id="email" value="#{userViewBean.user.email}" readonly="#{not userViewBean.editable}" />
@@ -69,7 +69,7 @@
 								<h:message for="email" errorClass="error" />
 							</div>
 
-							<div class="ui-g-12 ui-md-12 ui-lg-6">
+							<div class="ui-g-12 ui-md-6">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['user.phone_number']}" for="phone_number" />
 									<p:inputText id="phone_number" value="#{userViewBean.user.phoneNumber}" readonly="#{not userViewBean.editable}" />
@@ -77,7 +77,7 @@
 								<h:message for="phone_number" errorClass="error" />
 							</div>
 
-							<div class="ui-g-12 ui-md-12 ui-lg-6">
+							<div class="ui-g-12 ui-md-6">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['user.role']}" for="role" />
 									<p:selectOneMenu id="role" value="#{userViewBean.user.role}" validator="#{userViewBean.validateRole}"
@@ -89,7 +89,7 @@
 								<h:message for="role" errorClass="error" />
 							</div>
 
-							<div class="ui-g-12 ui-md-12 ui-lg-6">
+							<div class="ui-sm-12 ui-md-6">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['user.manager']}" for="manager" />
 									<p:autoComplete id="manager" value="#{userViewBean.manager}" completeMethod="#{userViewBean.completeManager}"
@@ -133,7 +133,7 @@
 						<h:panelGroup layout="block" rendered="#{not empty userViewBean.team}">
 							<div class="ui-g">
 								<ui:repeat var="userTeamMember" value="#{userViewBean.team}" varStatus="status">
-									<div class="ui-sm-12 ui-g-6">
+									<div class="ui-g-12 ui-md-6">
 										<ui:include src="userCard.xhtml">
 											<ui:param name="user" value="#{userTeamMember}" />
 										</ui:include>
