@@ -88,7 +88,7 @@ public final class UserDaoJpa extends AbstractDaoJpa<User> implements UserDao {
 
 	@Override
 	public List<User> findUsersOnline(final Date start, final Date end) {
-		return findByTypedQuery(User.class, "User.findUsersOffline", with("start", start).and("end", end).parameters(),
+		return findByTypedQuery(User.class, "User.findUsersOnline", with("start", start).and("end", end).parameters(),
 				0, 0);
 	}
 

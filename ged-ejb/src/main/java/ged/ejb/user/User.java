@@ -10,6 +10,8 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
@@ -49,6 +51,7 @@ public class User extends AbstractAuditedEntity {
 	@Column(length = 2, nullable = false)
 	private String language;
 
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date lastConnection;
 
 	@ManyToOne
