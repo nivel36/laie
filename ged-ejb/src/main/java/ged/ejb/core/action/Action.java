@@ -13,15 +13,11 @@ import ged.ejb.core.model.AbstractRecordEntity;
 @Entity
 public class Action extends AbstractRecordEntity {
 
-	public static final String DELETE = "DELETE";
-
-	public static final String INSERT = "INSERT";
+	public enum ActionType {
+		DELETE, INSERT, LOGIN, UNDELETE, UPDATE
+	};
 
 	private static final long serialVersionUID = -3095037007290696579L;
-
-	public static final String UNDELETE = "UNDELETE";
-
-	public static final String UPDATE = "UPDATE";
 
 	@Column(length = 8)
 	private String actionPerformed;
@@ -38,7 +34,7 @@ public class Action extends AbstractRecordEntity {
 
 	@Override
 	public boolean equals(final Object obj) {
-		if ( obj == null ) {
+		if (obj == null) {
 			return false;
 		}
 		if (this == obj) {
@@ -64,7 +60,7 @@ public class Action extends AbstractRecordEntity {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(actionPerformed, date);
+		return Objects.hash(this.actionPerformed, this.date);
 	}
 
 	public void setActionPerformed(final String actionPerformed) {

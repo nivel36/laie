@@ -9,6 +9,8 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import ged.ejb.core.Audited;
+import ged.ejb.core.action.Action.ActionType;
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
 
@@ -46,13 +48,18 @@ public class SessionBean extends AbstractBean {
 	public void init() {
 		final String username = this.facesContext.getExternalContext().getRemoteUser();
 		this.user = this.userService.findUserByEmail(username);
-		setLastConnectionToNow();
-		this.locale = new Locale(this.user.getLanguage());
+		login(this.user);
 	}
 
-	private void setLastConnectionToNow() {
-		this.user.setLastConnection(Calendar.getInstance().getTime());
-		this.user = this.userService.save(this.user);
+	@Audited(action = ActionType.LOGIN)
+	public void login(final User user) {
+		setLastConnectionToNow(user);
+		this.locale = new Locale(user.getLanguage());
+	}
+
+	private void setLastConnectionToNow(User user) {
+		user.setLastConnection(Calendar.getInstance().getTime());
+		user = this.userService.save(user);
 	}
 
 	public void setLocale(final Locale locale) {

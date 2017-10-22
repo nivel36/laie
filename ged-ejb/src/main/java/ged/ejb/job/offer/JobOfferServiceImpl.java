@@ -14,8 +14,8 @@ import ged.ejb.candidate.Candidate;
 import ged.ejb.client.Client;
 import ged.ejb.client.ClientService;
 import ged.ejb.core.AbstratctAuditedService;
-import ged.ejb.core.events.Audited;
-import ged.ejb.core.events.Audited.Type;
+import ged.ejb.core.Audited;
+import ged.ejb.core.action.Action.ActionType;
 import ged.ejb.core.model.Dao;
 import ged.ejb.core.model.Repository;
 import ged.ejb.job.meeting.JobMeeting;
@@ -108,7 +108,7 @@ public class JobOfferServiceImpl extends AbstratctAuditedService<JobOffer> imple
 	}
 
 	@Override
-	@Audited(action = Type.PERSIST)
+	@Audited(action = ActionType.INSERT)
 	public JobOffer save(final JobOffer jobOffer) {
 		Objects.requireNonNull(jobOffer);
 		logger.debug("Save job offer {}", jobOffer.getDescription());

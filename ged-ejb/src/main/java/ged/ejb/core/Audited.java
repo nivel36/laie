@@ -1,4 +1,4 @@
-package ged.ejb.core.events;
+package ged.ejb.core;
 
 import static java.lang.annotation.ElementType.METHOD;
 import static java.lang.annotation.ElementType.TYPE;
@@ -9,14 +9,12 @@ import java.lang.annotation.Target;
 
 import javax.interceptor.InterceptorBinding;
 
+import ged.ejb.core.action.Action.ActionType;
+
 @InterceptorBinding
 @Retention(RUNTIME)
 @Target({ TYPE, METHOD })
 public @interface Audited {
 
-	public enum Type {
-		DELETE, PERSIST, UNDELETE
-	};
-
-	Type action();
+	ActionType action();
 }

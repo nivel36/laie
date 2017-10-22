@@ -12,6 +12,7 @@ import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 
 import ged.ejb.core.AbstractService;
+import ged.ejb.core.action.Action.ActionType;
 import ged.ejb.core.events.PostDelete;
 import ged.ejb.core.events.PostPersist;
 import ged.ejb.core.events.PostUndelete;
@@ -38,7 +39,7 @@ public class ActionServiceImpl extends AbstractService<Action> implements Action
 		Objects.requireNonNull(auditedEntity);
 		logger.debug("Delete action class {} with id {} for user {}",
 				new Object[] { auditedEntity.getClass().getName(), auditedEntity.getId(), auditedEntity.getUser() });
-		insertAction(auditedEntity, Action.DELETE);
+		insertAction(auditedEntity, ActionType.DELETE);
 	}
 
 	@Override
@@ -67,12 +68,12 @@ public class ActionServiceImpl extends AbstractService<Action> implements Action
 		Objects.requireNonNull(auditedEntity);
 		logger.debug("Insert action class {} with id {} for user {}",
 				new Object[] { auditedEntity.getClass().getName(), auditedEntity.getId(), auditedEntity.getUser() });
-		insertAction(auditedEntity, Action.INSERT);
+		insertAction(auditedEntity, ActionType.INSERT);
 	}
 
-	private void insertAction(final AbstractAuditedEntity auditedEntity, final String actionType) {
+	private void insertAction(final AbstractAuditedEntity auditedEntity, final ActionType actionType) {
 		final Action action = getActionFromEntity(auditedEntity);
-		action.setActionPerformed(actionType);
+		action.setActionPerformed(actionType.name());
 		action.setDate(new Date());
 		action.setUser(auditedEntity.getUser());
 		save(action);
@@ -83,7 +84,7 @@ public class ActionServiceImpl extends AbstractService<Action> implements Action
 		Objects.requireNonNull(auditedEntity);
 		logger.debug("Undelete action class {} with id {} for user {}",
 				new Object[] { auditedEntity.getClass().getName(), auditedEntity.getId(), auditedEntity.getUser() });
-		insertAction(auditedEntity, Action.UNDELETE);
+		insertAction(auditedEntity, ActionType.UNDELETE);
 	}
 
 	@Override
@@ -91,6 +92,6 @@ public class ActionServiceImpl extends AbstractService<Action> implements Action
 		Objects.requireNonNull(auditedEntity);
 		logger.debug("Update action class {} with id {} for user {}",
 				new Object[] { auditedEntity.getClass().getName(), auditedEntity.getId(), auditedEntity.getUser() });
-		insertAction(auditedEntity, Action.UPDATE);
+		insertAction(auditedEntity, ActionType.UPDATE);
 	}
 }

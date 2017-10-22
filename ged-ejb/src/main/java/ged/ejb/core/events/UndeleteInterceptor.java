@@ -12,11 +12,12 @@ import javax.interceptor.InvocationContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ged.ejb.core.events.Audited.Type;
+import ged.ejb.core.Audited;
+import ged.ejb.core.action.Action.ActionType;
 import ged.ejb.core.model.Auditable;
 
 @Interceptor
-@Audited(action = Type.UNDELETE)
+@Audited(action = ActionType.UNDELETE)
 public class UndeleteInterceptor extends AbstractInterceptor {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
