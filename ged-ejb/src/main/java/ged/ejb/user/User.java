@@ -65,7 +65,7 @@ public class User extends AbstractAuditedEntity {
 
 	@NotNull
 	@Column(length = 64, nullable = false)
-	private String password;
+	private char[] password;
 
 	@Pattern(regexp = "(?:[+]?(?:[0-9]{1,5}|\\x28[0-9]{1,5}\\x29)[ ]?)?[0-9]{2}(?:[0-9][ ]?){6}[0-9]")
 	@Column(length = 12)
@@ -150,7 +150,7 @@ public class User extends AbstractAuditedEntity {
 		return this.name;
 	}
 
-	public String getPassword() {
+	public char[] getPassword() {
 		return this.password;
 	}
 
@@ -237,7 +237,7 @@ public class User extends AbstractAuditedEntity {
 		this.name = name;
 	}
 
-	public void setPassword(final String password) {
+	public void setPassword(final char[] password) {
 		this.password = password;
 	}
 

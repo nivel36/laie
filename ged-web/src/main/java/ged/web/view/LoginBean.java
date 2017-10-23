@@ -9,11 +9,13 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import ged.ejb.core.LoginService;
 import ged.web.core.util.TransaltionUtils;
 import ged.web.core.view.AbstractPageBean;
 
@@ -24,8 +26,11 @@ public class LoginBean extends AbstractPageBean {
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	private static final long serialVersionUID = 8364578958730650005L;
-
+	
 	private Locale locale;
+
+	@Inject
+	private LoginService loginService;
 
 	private transient String password;
 
@@ -55,6 +60,7 @@ public class LoginBean extends AbstractPageBean {
 		final HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
 		try {
 			request.login(this.username, this.password);
+			loginService.login(this.username);
 			return "/faces/index?faces-redirect=true";
 		} catch (final ServletException e) {
 			logger.warn("Bad login credentials", e);
@@ -75,6 +81,10 @@ public class LoginBean extends AbstractPageBean {
 
 	public void setLocale(final Locale locale) {
 		this.locale = locale;
+	}
+
+	public void setLoginService(LoginService loginService) {
+		this.loginService = loginService;
 	}
 
 	public void setPassword(final String password) {

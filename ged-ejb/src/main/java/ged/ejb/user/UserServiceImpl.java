@@ -41,7 +41,7 @@ public class UserServiceImpl extends AbstratctAuditedService<User> implements Us
 		user.setManager(manager);
 		user.setLanguage("ES");
 		user.setRowsPerPage(25);
-		user.setPassword("M+SzETkPtT+deVQNIScBEXivvfozSne5QqIqyWICLv0=");
+		user.setPassword("M+SzETkPtT+deVQNIScBEXivvfozSne5QqIqyWICLv0=".toCharArray());
 		return user;
 	}
 

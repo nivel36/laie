@@ -94,4 +94,11 @@ public class ActionServiceImpl extends AbstractService<Action> implements Action
 				new Object[] { auditedEntity.getClass().getName(), auditedEntity.getId(), auditedEntity.getUser() });
 		insertAction(auditedEntity, ActionType.UPDATE);
 	}
+
+	@Override
+	public void loginAction(User user) {
+		Objects.requireNonNull(user);
+		logger.debug("Login user {}", user.getEmail());
+		insertAction(user, ActionType.LOGIN);
+	}
 }

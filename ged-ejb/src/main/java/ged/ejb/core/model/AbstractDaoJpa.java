@@ -151,7 +151,7 @@ public abstract class AbstractDaoJpa<T extends AbstractEntity> implements Dao<T>
 			logger.trace("Page size {}", pageSize);
 			query.setMaxResults(pageSize);
 		} else if (pageSize == 0) {
-			logger.warn("Setting max result to {}", RES_LIMIT);
+			logger.trace("Setting max result to {}", RES_LIMIT);
 			query.setMaxResults(RES_LIMIT);
 		}
 	}

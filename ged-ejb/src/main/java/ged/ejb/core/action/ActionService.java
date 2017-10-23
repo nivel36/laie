@@ -17,4 +17,6 @@ public interface ActionService extends Service<Action> {
 	void undeleteAction(final AbstractAuditedEntity auditedEntity);
 
 	void updateAction(final AbstractAuditedEntity auditedEntity);
+	
+	void loginAction(final User user);
 }
