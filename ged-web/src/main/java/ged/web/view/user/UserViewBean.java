@@ -181,10 +181,6 @@ public class UserViewBean extends AbstractPageBean {
 		this.userService = userService;
 	}
 
-	public void undeleteUser() {
-		this.userService.undelete(this.user);
-	}
-
 	public void uploadImage(final CaptureEvent captureEvent) {
 		this.user.setImageFileName(this.userId);
 		final byte[] data = captureEvent.getData();

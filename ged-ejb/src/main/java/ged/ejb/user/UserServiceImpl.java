@@ -12,13 +12,13 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ged.ejb.core.AbstratctAuditedService;
+import ged.ejb.core.AbstractService;
 import ged.ejb.core.model.Dao;
 import ged.ejb.core.model.Repository;
 import ged.ejb.user.role.Role;
 
 @Stateless
-public class UserServiceImpl extends AbstratctAuditedService<User> implements UserService {
+public class UserServiceImpl extends AbstractService<User> implements UserService {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
@@ -71,6 +71,7 @@ public class UserServiceImpl extends AbstratctAuditedService<User> implements Us
 		return this.userDao.findUserByEmail(email);
 	}
 
+	@Override
 	public List<User> findUsersOfflineLastMonth() {
 		logger.debug("Find users offline last month");
 		final Date oneMonthAgo = getOneMonthAgo();
@@ -78,6 +79,7 @@ public class UserServiceImpl extends AbstratctAuditedService<User> implements Us
 		return this.userDao.findUsersOffline(oneMonthAgo, today);
 	}
 
+	@Override
 	public List<User> findUsersOnlineLastWeek() {
 		logger.debug("Find users online last week");
 		final Date oneWeekAgo = getOneWeekAgo();
