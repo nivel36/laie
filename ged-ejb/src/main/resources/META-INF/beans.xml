@@ -4,8 +4,9 @@
                       http://xmlns.jcp.org/xml/ns/javaee/beans_1_1.xsd"
 	bean-discovery-mode="all">
 	<interceptors>
-		<class>ged.ejb.core.events.InsertInterceptor</class>
+		<class>ged.ejb.core.events.SaveInterceptor</class>
 		<class>ged.ejb.core.events.DeleteInterceptor</class>
 		<class>ged.ejb.core.events.UndeleteInterceptor</class>
+		<class>ged.ejb.core.events.LoginInterceptor</class>
 	</interceptors>
 </beans>

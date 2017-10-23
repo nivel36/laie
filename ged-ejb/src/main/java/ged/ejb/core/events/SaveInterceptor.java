@@ -17,8 +17,8 @@ import ged.ejb.core.action.Action.ActionType;
 import ged.ejb.core.model.Auditable;
 
 @Interceptor
-@Audited(action = ActionType.INSERT)
-public class InsertInterceptor extends AbstractInterceptor {
+@Audited(action = ActionType.SAVE)
+public class SaveInterceptor extends AbstractInterceptor {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
@@ -27,7 +27,7 @@ public class InsertInterceptor extends AbstractInterceptor {
 	private final Event<Auditable> prePersistEvent;
 
 	@Inject
-	public InsertInterceptor(@PostPersist final Event<Auditable> postPersistEvent,
+	public SaveInterceptor(@PostPersist final Event<Auditable> postPersistEvent,
 			@PrePersist final Event<Auditable> prePersistEvent) {
 		Objects.requireNonNull(postPersistEvent);
 		Objects.requireNonNull(prePersistEvent);

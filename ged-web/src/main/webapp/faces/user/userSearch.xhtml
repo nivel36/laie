@@ -106,7 +106,12 @@
 					</p:panel>
 				</div>
 				<div class="ui-g-12 ui-md-6 ui-xl-3">
-					<p:panel id="lastActions" header="Ultimas acciones">
+					<p:panel id="lastActions" header="#{i18n['user.last_actions']}">
+						<ul>
+							<ui:repeat var="action" value="#{userSearchBean.actions}">
+								<li>#{action.user} - #{action.actionPerformed} - #{action.text}</li>
+							</ui:repeat>
+						</ul>
 					</p:panel>
 				</div>
 			</div>

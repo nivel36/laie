@@ -4,22 +4,27 @@ import java.lang.invoke.MethodHandles;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
-import org.slf4j.LoggerFactory;
-import org.slf4j.Logger;
 
+import javax.annotation.Resource;
+import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import ged.ejb.core.AbstractService;
 import ged.ejb.core.action.Action.ActionType;
 import ged.ejb.core.events.PostDelete;
+import ged.ejb.core.events.PostLogin;
 import ged.ejb.core.events.PostPersist;
 import ged.ejb.core.events.PostUndelete;
 import ged.ejb.core.events.PostUpdate;
 import ged.ejb.core.model.AbstractAuditedEntity;
 import ged.ejb.core.model.Repository;
 import ged.ejb.user.User;
+import ged.ejb.user.UserService;
 
 @Stateless
 public class ActionServiceImpl extends AbstractService<Action> implements ActionService {
@@ -28,9 +33,16 @@ public class ActionServiceImpl extends AbstractService<Action> implements Action
 
 	private final ActionDao actionDao;
 
+	@Resource
+	private SessionContext sessionContext;
+
+	private final UserService userService;
+
 	@Inject
-	public ActionServiceImpl(@Repository final ActionDao actionDao) {
+	public ActionServiceImpl(@Repository final ActionDao actionDao, final UserService userService) {
 		Objects.requireNonNull(actionDao);
+		Objects.requireNonNull(userService);
+		this.userService = userService;
 		this.actionDao = actionDao;
 	}
 
@@ -54,7 +66,6 @@ public class ActionServiceImpl extends AbstractService<Action> implements Action
 		action.setEntityId(auditedEntity.getId());
 		action.setEntityClass(auditedEntity.getClass().getSimpleName());
 		action.setText(auditedEntity.toString());
-		action.setUser(auditedEntity.getUser());
 		return action;
 	}
 
@@ -68,15 +79,28 @@ public class ActionServiceImpl extends AbstractService<Action> implements Action
 		Objects.requireNonNull(auditedEntity);
 		logger.debug("Insert action class {} with id {} for user {}",
 				new Object[] { auditedEntity.getClass().getName(), auditedEntity.getId(), auditedEntity.getUser() });
-		insertAction(auditedEntity, ActionType.INSERT);
+		insertAction(auditedEntity, ActionType.SAVE);
 	}
 
 	private void insertAction(final AbstractAuditedEntity auditedEntity, final ActionType actionType) {
 		final Action action = getActionFromEntity(auditedEntity);
 		action.setActionPerformed(actionType.name());
 		action.setDate(new Date());
-		action.setUser(auditedEntity.getUser());
+		final User user = this.userService.findUserByEmail(this.sessionContext.getCallerPrincipal().getName());
+		action.setUser(user);
 		save(action);
+	}
+
+	@Override
+	public void loginAction(@PostLogin @Observes final String email) {
+		Objects.requireNonNull(email);
+		logger.debug("Login user {}", email);
+		final User user = this.userService.findUserByEmail(email);
+		insertAction(user, ActionType.LOGIN);
+	}
+
+	public void setSessionContext(final SessionContext sessionContext) {
+		this.sessionContext = sessionContext;
 	}
 
 	@Override
@@ -92,13 +116,6 @@ public class ActionServiceImpl extends AbstractService<Action> implements Action
 		Objects.requireNonNull(auditedEntity);
 		logger.debug("Update action class {} with id {} for user {}",
 				new Object[] { auditedEntity.getClass().getName(), auditedEntity.getId(), auditedEntity.getUser() });
-		insertAction(auditedEntity, ActionType.UPDATE);
-	}
-
-	@Override
-	public void loginAction(User user) {
-		Objects.requireNonNull(user);
-		logger.debug("Login user {}", user.getEmail());
-		insertAction(user, ActionType.LOGIN);
+		insertAction(auditedEntity, ActionType.SAVE);
 	}
 }

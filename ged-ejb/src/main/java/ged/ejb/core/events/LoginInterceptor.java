@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
 
 import ged.ejb.core.Audited;
 import ged.ejb.core.action.Action.ActionType;
-import ged.ejb.user.User;
 
 @Interceptor
 @Audited(action = ActionType.LOGIN)
@@ -22,38 +21,32 @@ public class LoginInterceptor extends AbstractInterceptor {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
-	private final Event<User> postLoginEvent;
-
-	private final Event<User> preLoginEvent;
+	private final Event<String> postLoginEvent;
 
 	@Inject
-	public LoginInterceptor(@PostPersist final Event<User> postLoginEvent,
-			@PrePersist final Event<User> preLoginEvent) {
+	public LoginInterceptor(@PostLogin final Event<String> postLoginEvent) {
 		Objects.requireNonNull(postLoginEvent);
-		Objects.requireNonNull(preLoginEvent);
 		this.postLoginEvent = postLoginEvent;
-		this.preLoginEvent = preLoginEvent;
 	}
 
 	@AroundInvoke
 	public Object fireEvent(final InvocationContext joinPoint) throws Exception {
-		final User user = getUserEntity(joinPoint);
 		logger.trace("Loign event fired");
-		this.preLoginEvent.fire(user);
+		final String email = getEmail(joinPoint);
 		final Object returnObject = joinPoint.proceed();
-		this.postLoginEvent.fire(user);
+		this.postLoginEvent.fire(email);
 		return returnObject;
 	}
 
-	protected User getUserEntity(final InvocationContext joinPoint) {
+	protected String getEmail(final InvocationContext joinPoint) {
 		final Object[] parameters = joinPoint.getParameters();
 		if (parameters.length != 1) {
 			throw new IllegalArgumentException("Arguments: " + parameters.length);
 		}
 		final Object entityObject = parameters[0];
-		if (!(entityObject instanceof User)) {
+		if (!(entityObject instanceof String)) {
 			throw new IllegalArgumentException("Not user entity");
 		}
-		return (User) entityObject;
+		return (String) entityObject;
 	}
 }

@@ -108,7 +108,7 @@ public class JobOfferServiceImpl extends AbstratctAuditedService<JobOffer> imple
 	}
 
 	@Override
-	@Audited(action = ActionType.INSERT)
+	@Audited(action = ActionType.SAVE)
 	public JobOffer save(final JobOffer jobOffer) {
 		Objects.requireNonNull(jobOffer);
 		logger.debug("Save job offer {}", jobOffer.getDescription());

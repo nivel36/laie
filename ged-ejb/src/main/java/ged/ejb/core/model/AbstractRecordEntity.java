@@ -2,6 +2,7 @@ package ged.ejb.core.model;
 
 import javax.persistence.Column;
 import javax.persistence.EntityListeners;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
@@ -23,7 +24,7 @@ public class AbstractRecordEntity extends AbstractEntity {
 	@Column(length = 128)
 	private String text;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "userId")
 	private User user;
 
@@ -38,7 +39,7 @@ public class AbstractRecordEntity extends AbstractEntity {
 
 	@Override
 	public boolean equals(final Object obj) {
-		if ( obj == null ){
+		if (obj == null) {
 			return false;
 		}
 		if (this == obj) {

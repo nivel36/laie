@@ -20,17 +20,12 @@ public class LoginServiceImpl implements LoginService {
 		Objects.requireNonNull(userService);
 		this.userSerivce = userService;
 	}
-	
-	@Override
-	public User login(String email) {
-		User user = userSerivce.findUserByEmail(email);
-		return login(user);
-	}
-	
+
 	@Override
 	@Audited(action = ActionType.LOGIN)
-	public User login(User user) {
+	public User login(final String email) {
+		final User user = this.userSerivce.findUserByEmail(email);
 		user.setLastConnection(Calendar.getInstance().getTime());
-		return user;
+		return this.userSerivce.save(user);
 	}
 }
