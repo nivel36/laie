@@ -109,11 +109,11 @@
 					<p:panel id="lastActions" header="#{i18n['user.last_actions']}">
 						<ul>
 							<ui:repeat var="action" value="#{userSearchBean.actions}">
-								<li><h:outputFormat value="#{i18n['action.action_performed']}">
-										<f:param value="#{action.user}" />
-									</h:outputFormat> 
-									<h:outputFormat value="#{i18n:translate(action.actionPerformed)}" rendered="#{action.actionPerformed == 'LOGIN'}" />
-									<h:outputFormat value="#{i18n:translate(action.actionPerformed)}" rendered="#{action.actionPerformed != 'LOGIN'}">
+								<li><h:link value="#{action.user}" outcome="userView">
+										<f:param name="id" value="#{action.user.id}" />
+									</h:link> <h:outputFormat value=" #{i18n:translate(action.actionPerformed)}"
+										rendered="#{action.actionPerformed == 'LOGIN'}" /> <h:outputFormat
+										value="#{i18n:translate(action.actionPerformed)}" rendered="#{action.actionPerformed != 'LOGIN'}">
 										<f:param value="#{action.text}" />
 									</h:outputFormat></li>
 							</ui:repeat>
