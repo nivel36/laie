@@ -18,10 +18,10 @@ public interface UserDao extends Dao<User> {
 	List<User> findUsersOffline(final Date start, final Date end);
 
 	List<User> findUsersOnline(final Date start, final Date end);
-	
-	int numberOfUsersOffline(final Date start, final Date end);
 
-	int numberOfUsersOnline(final Date start, final Date end);
+	long numberOfUsersOffline(final Date start, final Date end);
+
+	long numberOfUsersOnline(final Date start, final Date end);
 
 	List<User> search(final String query, final boolean showDeleted);
 

@@ -125,6 +125,18 @@ public final class UserDaoJpa extends AbstractDaoJpa<User> implements UserDao {
 		insertUserClosure(user, user, 0);
 	}
 
+	@Override
+	public long numberOfUsersOffline(final Date start, final Date end) {
+		return findByTypedQuery(Long.class, "User.numberOfUsersOffline",
+				with("start", start).and("end", end).parameters());
+	}
+
+	@Override
+	public long numberOfUsersOnline(final Date start, final Date end) {
+		return findByTypedQuery(Long.class, "User.numberOfUsersOnline",
+				with("start", start).and("end", end).parameters());
+	}
+
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public List<User> search(final String query, final boolean showDeleted) {
@@ -164,15 +176,5 @@ public final class UserDaoJpa extends AbstractDaoJpa<User> implements UserDao {
 			persistenceQuery = fullTextEntityManager.createFullTextQuery(bj.createQuery(), User.class);
 		}
 		return persistenceQuery.getResultList();
-	}
-
-	@Override
-	public int numberOfUsersOffline(Date start, Date end) {
-		return findByTypedQuery(Integer.class, "User.numberOfUsersOffline", with("start", start).and("end", end).parameters());
-	}
-
-	@Override
-	public int numberOfUsersOnline(Date start, Date end) {
-		return findByTypedQuery(Integer.class, "User.numberOfUsersOnline", with("start", start).and("end", end).parameters());
 	}
 }

@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:i18n="http://legion.com/i18n" xmlns:p="http://primefaces.org/ui"
-	template="/WEB-INF/templates/default.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://legion.com/i18n"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
 		<title>#{i18n['user.users']}</title>
@@ -14,56 +11,56 @@
 
 	<ui:define name="content">
 		<div class="stats">
-			<div class="ui-g">
-				<div class="ui-g-6 ui-lg-3">
-					<h:panelGroup layout="block" class="card card-stats"
-						onclick="search()">
-						<div class="card-header"></div>
-						<div class="card-body">
-							<p class="card-category">#{i18n['user.stats.users']}</p>
-							<span class="number">#{userSearchBean.numberOfUsers}</span>
+			<h:form id="statsForm">
+				<div class="ui-g">
+					<div class="ui-g-6 ui-lg-3">
+						<p:commandLink action="#{userSearchBean.search}" update=":form">
+							<h:panelGroup layout="block" class="card card-stats">
+								<div class="card-header"></div>
+								<div class="card-body">
+									<p class="card-category">#{i18n['user.stats.users']}</p>
+									<span class="number">#{userSearchBean.numberOfUsers}</span>
+								</div>
+								<div class="card-footer"></div>
+							</h:panelGroup>
+						</p:commandLink>
+					</div>
+					<div class="ui-g-6 ui-lg-3">
+						<p:commandLink action="#{userSearchBean.findUsersOnline}" update=":form">
+							<h:panelGroup layout="block" class="card card-stats">
+								<div class="card-header"></div>
+								<div class="card-body">
+									<p class="card-category">#{i18n['user.stats.online_last_week']}</p>
+									<span class="number">#{userSearchBean.numberOfUsersOnlineLastWeek}</span>
+								</div>
+								<div class="card-footer"></div>
+							</h:panelGroup>
+						</p:commandLink>
+					</div>
+					<div class="ui-g-6 ui-lg-3">
+						<p:commandLink action="#{userSearchBean.findUsersOffline}" update=":form">
+							<h:panelGroup layout="block" class="card card-stats">
+								<div class="card-header"></div>
+								<div class="card-body">
+									<p class="card-category">#{i18n['user.stats.offline_last_month']}</p>
+									<span class="number">#{userSearchBean.numberOfUsersOfflineLastMonth}</span>
+								</div>
+								<div class="card-footer"></div>
+							</h:panelGroup>
+						</p:commandLink>
+					</div>
+					<div class="ui-g-6 ui-lg-3">
+						<div class="card card-stats">
+							<div class="card-header"></div>
+							<div class="card-body">
+								<p class="card-category">#{i18n['user.stats.team_by_user']}</p>
+								<span class="number">10</span>
+							</div>
+							<div class="card-footer"></div>
 						</div>
-						<div class="card-footer"></div>
-					</h:panelGroup>
-					<p:remoteCommand name="search" action="#{userSearchBean.search()}" />
-				</div>
-				<div class="ui-g-6 ui-lg-3">
-					<h:panelGroup layout="block" class="card card-stats"
-						onclick="findUsersOnline()">
-						<div class="card-header"></div>
-						<div class="card-body">
-							<p class="card-category">#{i18n['user.stats.online_last_week']}</p>
-							<span class="number">#{userSearchBean.numberOfUsersOnlineLastWeek}</span>
-						</div>
-						<div class="card-footer"></div>
-					<</h:panelGroup>
-					<p:remoteCommand name="findUsersOnline"
-						action="#{userSearchBean.findUsersOnline()}" />
-				</div>
-				<div class="ui-g-6 ui-lg-3">
-					<h:panelGroup layout="block" class="card card-stats"
-						onclick="findUsersOffline()">
-						<div class="card-header"></div>
-						<div class="card-body">
-							<p class="card-category">#{i18n['user.stats.offline_last_month']}</p>
-							<span class="number">#{userSearchBean.numberOfUsersOfflineLastMonth}</span>
-						</div>
-						<div class="card-footer"></div>
-					</h:panelGroup>
-					<p:remoteCommand name="findUsersOffline"
-						action="#{userSearchBean.findUsersOffline()}" />
-				</div>
-				<div class="ui-g-6 ui-lg-3">
-					<div class="card card-stats">
-						<div class="card-header"></div>
-						<div class="card-body">
-							<p class="card-category">#{i18n['user.stats.team_by_user']}</p>
-							<span class="number">10</span>
-						</div>
-						<div class="card-footer"></div>
 					</div>
 				</div>
-			</div>
+			</h:form>
 		</div>
 		<h:form id="form">
 			<div class="ui-g">
@@ -73,48 +70,38 @@
 							<div class="ui-g">
 								<div class="ui-md-4 ui-lg-3 ui-xl-2">
 									<div class="search-input">
-										<p:inputText id="name" value="#{userSearchBean.name}"
-											label="#{i18n['user.name']}"
-											validator="ged.web.view.SearchFieldValidator"
-											placeholder="#{i18n['action.search']}" />
+										<p:inputText id="name" value="#{userSearchBean.name}" label="#{i18n['user.name']}"
+											validator="ged.web.view.SearchFieldValidator" placeholder="#{i18n['action.search']}" />
 									</div>
 								</div>
 								<div class="ui-md-8 ui-lg-9 ui-xl-10">
 									<div class="form-action-primary">
-										<p:commandButton styleClass="btn-green"
-											value="#{i18n['action.new']}"
-											action="#{userSearchBean.newUser}" immediate="true" />
-										<p:commandButton value="#{i18n['action.search']}"
-											action="#{userSearchBean.search}" execute="searchUserPanel"
+										<p:commandButton styleClass="btn-green" value="#{i18n['action.new']}" action="#{userSearchBean.newUser}"
+											immediate="true" />
+										<p:commandButton value="#{i18n['action.search']}" action="#{userSearchBean.search}" execute="searchUserPanel"
 											update="@form" />
-										<p:commandButton styleClass="btn-gray"
-											value="#{i18n['action.clean']}"
-											action="#{userSearchBean.clean}" update="@form" />
+										<p:commandButton styleClass="btn-gray" value="#{i18n['action.clean']}" action="#{userSearchBean.clean}"
+											update="@form" />
 									</div>
 								</div>
 							</div>
 						</div>
 
-						<p:dataTable var="user" id="userDataTable"
-							value="#{userSearchBean.users}" reflow="true" paginator="true"
+						<p:dataTable var="user" id="userDataTable" value="#{userSearchBean.users}" reflow="true" paginator="true"
 							paginatorPosition="bottom" rows="#{sessionBean.rowsPerPage}">
-							<p:column headerText="#{i18n['user.name']}"
-								sortBy="#{user.fullName}">
+							<p:column headerText="#{i18n['user.name']}" sortBy="#{user.fullName}">
 								<h:outputText value="#{user.fullName}" />
 							</p:column>
 
-							<p:column headerText="#{i18n['user.email']}"
-								sortBy="#{user.email}">
+							<p:column headerText="#{i18n['user.email']}" sortBy="#{user.email}">
 								<h:outputText value="#{user.email}" />
 							</p:column>
 
-							<p:column headerText="#{i18n['user.role']}"
-								sortBy="#{i18n:translate(user.role.name)}">
+							<p:column headerText="#{i18n['user.role']}" sortBy="#{i18n:translate(user.role.name)}">
 								<h:outputText value="#{i18n:translate(user.role.name)}" />
 							</p:column>
 
-							<p:column headerText="#{i18n['user.manager']}"
-								sortBy="#{user.manager}">
+							<p:column headerText="#{i18n['user.manager']}" sortBy="#{user.manager}">
 								<h:outputText value="#{user.manager}" />
 							</p:column>
 
@@ -132,11 +119,9 @@
 							<ui:repeat var="action" value="#{userSearchBean.actions}">
 								<li><h:link value="#{action.user}" outcome="userView">
 										<f:param name="id" value="#{action.user.id}" />
-									</h:link> <h:outputFormat
-										value=" #{i18n:translate(action.actionPerformed)}"
+									</h:link> <h:outputFormat value=" #{i18n:translate(action.actionPerformed)}"
 										rendered="#{action.actionPerformed == 'LOGIN'}" /> <h:outputFormat
-										value="#{i18n:translate(action.actionPerformed)}"
-										rendered="#{action.actionPerformed != 'LOGIN'}">
+										value="#{i18n:translate(action.actionPerformed)}" rendered="#{action.actionPerformed != 'LOGIN'}">
 										<f:param value="#{action.text}" />
 									</h:outputFormat></li>
 							</ui:repeat>

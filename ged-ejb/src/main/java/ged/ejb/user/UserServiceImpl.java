@@ -78,14 +78,6 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
 		final Date today = Calendar.getInstance().getTime();
 		return this.userDao.findUsersOffline(oneMonthAgo, today);
 	}
-	
-	@Override
-	public int numberOfUsersOfflineLastMonth() {
-		logger.debug("Find users offline last month");
-		final Date oneMonthAgo = getOneMonthAgo();
-		final Date today = Calendar.getInstance().getTime();
-		return this.userDao.numberOfUsersOffline(oneMonthAgo, today);
-	}
 
 	@Override
 	public List<User> findUsersOnlineLastWeek() {
@@ -93,14 +85,6 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
 		final Date oneWeekAgo = getOneWeekAgo();
 		final Date today = Calendar.getInstance().getTime();
 		return this.userDao.findUsersOnline(oneWeekAgo, today);
-	}
-	
-	@Override
-	public int numberOfUsersOnlineLastWeek() {
-		logger.debug("Find users online last week");
-		final Date oneWeekAgo = getOneWeekAgo();
-		final Date today = Calendar.getInstance().getTime();
-		return this.userDao.numberOfUsersOnline(oneWeekAgo, today);
 	}
 
 	@Override
@@ -141,6 +125,22 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
 	private boolean isLastAdminOnApp(final User user) {
 		final User userInDataBase = find(user.getId());
 		return userInDataBase.isAdmin() && !user.isAdmin() && !this.userDao.existsMoreThanOneAdmin();
+	}
+
+	@Override
+	public long numberOfUsersOfflineLastMonth() {
+		logger.debug("Find users offline last month");
+		final Date oneMonthAgo = getOneMonthAgo();
+		final Date today = Calendar.getInstance().getTime();
+		return this.userDao.numberOfUsersOffline(oneMonthAgo, today);
+	}
+
+	@Override
+	public long numberOfUsersOnlineLastWeek() {
+		logger.debug("Find users online last week");
+		final Date oneWeekAgo = getOneWeekAgo();
+		final Date today = Calendar.getInstance().getTime();
+		return this.userDao.numberOfUsersOnline(oneWeekAgo, today);
 	}
 
 	@Override

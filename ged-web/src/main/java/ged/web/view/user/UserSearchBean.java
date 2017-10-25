@@ -27,9 +27,9 @@ public class UserSearchBean extends AbstractUserSearchBean {
 	@Inject
 	private ActionService actionService;
 
-	private int numberOfUsersOfflineLastMonth;
+	private long numberOfUsersOfflineLastMonth;
 
-	private int numberOfUsersOnlineLastWeek;
+	private long numberOfUsersOnlineLastWeek;
 
 	public void findUsersOffline() {
 		this.users = this.userService.findUsersOfflineLastMonth();
@@ -50,14 +50,14 @@ public class UserSearchBean extends AbstractUserSearchBean {
 		return this.users.size();
 	}
 
-	public int getNumberOfUsersOfflineLastMonth() {
+	public long getNumberOfUsersOfflineLastMonth() {
 		return this.numberOfUsersOfflineLastMonth;
 	}
-	
-	public int getNumberOfUsersOnlineLastWeek() {
+
+	public long getNumberOfUsersOnlineLastWeek() {
 		return this.numberOfUsersOnlineLastWeek;
 	}
-	
+
 	@PostConstruct
 	public void init() {
 		logger.trace("Init UserSearchBean");
