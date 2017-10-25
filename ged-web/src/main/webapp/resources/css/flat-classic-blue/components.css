@@ -972,6 +972,21 @@ textarea {
 	background: white;
 }
 
+.card.card-stats:focus{
+	background-color: #effffc;
+	animation: color-me-in 1s;
+}
+
+@keyframes color-me-in {
+  0% {
+    background-color: #b7fff2;
+  }
+  100% {
+    background: #effffc;
+    background-color: 1s ease-out;
+  }
+}
+
 .card.card-stats .card-header {
 	font-size: 30px;
 	float: left;

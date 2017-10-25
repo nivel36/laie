@@ -15,42 +15,42 @@
 				<div class="ui-g">
 					<div class="ui-g-6 ui-lg-3">
 						<p:commandLink action="#{userSearchBean.search}" update=":form">
-							<h:panelGroup layout="block" class="card card-stats">
+							<div class="card card-stats" tabindex="1">
 								<div class="card-header"></div>
 								<div class="card-body">
 									<p class="card-category">#{i18n['user.stats.users']}</p>
 									<span class="number">#{userSearchBean.numberOfUsers}</span>
 								</div>
 								<div class="card-footer"></div>
-							</h:panelGroup>
+							</div>
 						</p:commandLink>
 					</div>
 					<div class="ui-g-6 ui-lg-3">
 						<p:commandLink action="#{userSearchBean.findUsersOnline}" update=":form">
-							<h:panelGroup layout="block" class="card card-stats">
+							<div class="card card-stats" tabindex="2">
 								<div class="card-header"></div>
 								<div class="card-body">
 									<p class="card-category">#{i18n['user.stats.online_last_week']}</p>
 									<span class="number">#{userSearchBean.numberOfUsersOnlineLastWeek}</span>
 								</div>
 								<div class="card-footer"></div>
-							</h:panelGroup>
+							</div>
 						</p:commandLink>
 					</div>
 					<div class="ui-g-6 ui-lg-3">
 						<p:commandLink action="#{userSearchBean.findUsersOffline}" update=":form">
-							<h:panelGroup layout="block" class="card card-stats">
+							<div class="card card-stats" tabindex="3">
 								<div class="card-header"></div>
 								<div class="card-body">
 									<p class="card-category">#{i18n['user.stats.offline_last_month']}</p>
 									<span class="number">#{userSearchBean.numberOfUsersOfflineLastMonth}</span>
 								</div>
 								<div class="card-footer"></div>
-							</h:panelGroup>
+							</div>
 						</p:commandLink>
 					</div>
 					<div class="ui-g-6 ui-lg-3">
-						<div class="card card-stats">
+						<div class="card card-stats"  tabindex="4">
 							<div class="card-header"></div>
 							<div class="card-body">
 								<p class="card-category">#{i18n['user.stats.team_by_user']}</p>
