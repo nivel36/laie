@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<entity-mappings xmlns="http://xmlns.jcp.org/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<entity-mappings xmlns="http://xmlns.jcp.org/xml/ns/persistence/orm"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence/orm
         http://xmlns.jcp.org/xml/ns/persistence/orm_2_1.xsd"
 	version="2.1">
@@ -247,9 +248,25 @@
 		]]></query>
 	</named-query>
 
+	<named-query name="User.numberOfUsersOffline">
+		<query><![CDATA[
+			SELECT COUNT(u) 
+			FROM User u 
+			WHERE u.lastConnection NOT BETWEEN :start and :end
+		]]></query>
+	</named-query>
+
 	<named-query name="User.findUsersOnline">
 		<query><![CDATA[
 			SELECT u 
+			FROM User u 
+			WHERE u.lastConnection BETWEEN :start and :end
+		]]></query>
+	</named-query>
+
+	<named-query name="User.numberOfUsersOnline">
+		<query><![CDATA[
+			SELECT COUNT(u) 
 			FROM User u 
 			WHERE u.lastConnection BETWEEN :start and :end
 		]]></query>

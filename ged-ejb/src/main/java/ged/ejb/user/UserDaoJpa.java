@@ -165,4 +165,14 @@ public final class UserDaoJpa extends AbstractDaoJpa<User> implements UserDao {
 		}
 		return persistenceQuery.getResultList();
 	}
+
+	@Override
+	public int numberOfUsersOffline(Date start, Date end) {
+		return findByTypedQuery(Integer.class, "User.numberOfUsersOffline", with("start", start).and("end", end).parameters());
+	}
+
+	@Override
+	public int numberOfUsersOnline(Date start, Date end) {
+		return findByTypedQuery(Integer.class, "User.numberOfUsersOnline", with("start", start).and("end", end).parameters());
+	}
 }

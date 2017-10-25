@@ -18,6 +18,10 @@ public interface UserService extends Service<User> {
 	List<User> findUsersOfflineLastMonth();
 
 	List<User> findUsersOnlineLastWeek();
+	
+	int numberOfUsersOfflineLastMonth();
+
+	int numberOfUsersOnlineLastWeek();
 
 	List<User> search(final String query);
 

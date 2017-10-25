@@ -31,6 +31,14 @@ public class UserSearchBean extends AbstractUserSearchBean {
 
 	private int numberOfUsersOnlineLastWeek;
 
+	public void findUsersOffline() {
+		this.users = this.userService.findUsersOfflineLastMonth();
+	}
+
+	public void findUsersOnline() {
+		this.users = this.userService.findUsersOnlineLastWeek();
+	}
+
 	public List<Action> getActions() {
 		return this.actions;
 	}
@@ -45,18 +53,18 @@ public class UserSearchBean extends AbstractUserSearchBean {
 	public int getNumberOfUsersOfflineLastMonth() {
 		return this.numberOfUsersOfflineLastMonth;
 	}
-
+	
 	public int getNumberOfUsersOnlineLastWeek() {
 		return this.numberOfUsersOnlineLastWeek;
 	}
-
+	
 	@PostConstruct
 	public void init() {
 		logger.trace("Init UserSearchBean");
 		search();
 		this.actions = this.actionService.findAll();
-		this.numberOfUsersOfflineLastMonth = this.userService.findUsersOfflineLastMonth().size();
-		this.numberOfUsersOnlineLastWeek = this.userService.findUsersOnlineLastWeek().size();
+		this.numberOfUsersOfflineLastMonth = this.userService.numberOfUsersOfflineLastMonth();
+		this.numberOfUsersOnlineLastWeek = this.userService.numberOfUsersOnlineLastWeek();
 	}
 
 	public String newUser() {
