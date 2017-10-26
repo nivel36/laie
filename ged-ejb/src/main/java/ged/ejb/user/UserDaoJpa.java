@@ -33,6 +33,14 @@ public final class UserDaoJpa extends AbstractDaoJpa<User> implements UserDao {
 		super(entityManager);
 	}
 
+	private void deleteUserClosures(final User user) {
+		logger.trace("Delete user closures for user {}", user.getEmail());
+		final List<UserClosure> userClosures = findAntecessorsUserClosures(user.getManager());
+		for (final UserClosure userClosure : userClosures) {
+			getEm().remove(userClosure);
+		}
+	}
+
 	@Override
 	public boolean emailExists(final String email) {
 		Objects.requireNonNull(email);
@@ -107,8 +115,8 @@ public final class UserDaoJpa extends AbstractDaoJpa<User> implements UserDao {
 	}
 
 	private void insertUserClosure(final User antecessor, final User descendant, final int pathLength) {
-		logger.trace("Insert in user closure table. Antecessor {}, descendant {}, pathLength {}",
-				antecessor, descendant, pathLength);
+		logger.trace("Insert in user closure table. Antecessor {}, descendant {}, pathLength {}", antecessor,
+				descendant, pathLength);
 		final UserClosure newUserClosure = new UserClosure();
 		newUserClosure.setAntecessor(antecessor);
 		newUserClosure.setDescendant(descendant);
@@ -117,7 +125,7 @@ public final class UserDaoJpa extends AbstractDaoJpa<User> implements UserDao {
 	}
 
 	private void insertUserClosures(final User user) {
-		logger.trace("Insert user closures for user {}", user);
+		logger.trace("Insert user closures for user {}", user.getEmail());
 		final List<UserClosure> userClosures = findAntecessorsUserClosures(user.getManager());
 		for (final UserClosure userClosure : userClosures) {
 			insertUserClosure(userClosure.getAntecessor(), user, userClosure.getPathLength() + 1);
@@ -176,5 +184,22 @@ public final class UserDaoJpa extends AbstractDaoJpa<User> implements UserDao {
 			persistenceQuery = fullTextEntityManager.createFullTextQuery(bj.createQuery(), User.class);
 		}
 		return persistenceQuery.getResultList();
+	}
+
+	@Override
+	public User update(final User user) {
+		Objects.requireNonNull(user);
+		final User userInDatabase = find(user.getId());
+
+		if (userInDatabase.getManager() == null && user.getManager() != null) {
+			insertUserClosures(user);
+		} else if (userInDatabase.getManager() != null && user.getManager() == null) {
+			deleteUserClosures(user);
+		} else if (userInDatabase.getManager() != null && user.getManager() != null
+				&& !user.getManager().equals(userInDatabase.getManager())) {
+			deleteUserClosures(user);
+			insertUserClosures(user);
+		}
+		return getEm().merge(user);
 	}
 }
