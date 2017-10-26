@@ -117,7 +117,7 @@
 									<p:commandButton rendered="#{userViewBean.editable}" value="#{i18n['action.save']}"
 										action="#{userViewBean.saveUser}" update="@form growl" />
 									<p:commandButton styleClass="btn-gray" rendered="#{userViewBean.editable}" value="#{i18n['action.cancel']}"
-										action="#{userViewBean.cancelEditUser}" update="@form growl" />
+										action="#{userViewBean.cancelEditUser}" update="@form" process="@this"/>
 								</div>
 							</div>
 						</div>

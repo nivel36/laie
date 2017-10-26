@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:i18n="http://legion.com/i18n" xmlns:p="http://primefaces.org/ui"
-	template="/WEB-INF/templates/default.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://legion.com/i18n"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
 		<title>#{i18n['curriculum.curriculum']}</title>
@@ -14,25 +11,20 @@
 
 	<ui:define name="content">
 		<h:form id="form">
-			<h:graphicImage value="/resources/img/classic-blue/no-photo.png"
-				styleClass="pictureIcon" />
+			<h:graphicImage value="/resources/img/classic-blue/no-photo.png" styleClass="pictureIcon" />
 			<h1 class="header">#{curriculumEditBean.curriculum.candidate}</h1>
 
 			<div class="ui-g">
 				<div class="ui-g-12">
-					<p:panel styleClass="purple"
-						header="#{i18n['curriculum.curriculum']}">
+					<p:panel styleClass="purple" header="#{i18n['curriculum.curriculum']}">
 
 						<!-- PROFILE -->
 						<h:panelGroup layout="block" id="perfilesProfesionales">
 							<div class="ui-g">
 								<div class="ui-md-12 ui-lg-6 ui-xl-4">
 									<div class="form-group">
-										<p:outputLabel
-											value="#{i18n['curriculum.perfil_profesional']}" />
-										<p:inputText id="perfilProfesional"
-											value="#{curriculumEditBean.curriculum.perfilProfesional}"
-											required="true" />
+										<p:outputLabel value="#{i18n['curriculum.perfil_profesional']}" />
+										<p:inputText id="perfilProfesional" value="#{curriculumEditBean.curriculum.perfilProfesional}" required="true" />
 									</div>
 									<h:message for="perfilProfesional" errorClass="error" />
 								</div>
@@ -43,31 +35,27 @@
 
 						<h:panelGroup layout="block" id="educationPanel">
 							<h2>#{i18n['curriculum.education']}</h2>
-							<ui:repeat value="#{curriculumEditBean.education}"
-								var="education" id="repeatedPanel">
+							<ui:repeat value="#{curriculumEditBean.education}" var="education" id="repeatedPanel">
 								<h:panelGroup layout="block" class="repeatedPanel">
 									<div class="ui-g">
 										<div class="ui-md-12 ui-lg-6 ui-xl-4">
 											<div class="form-group">
 												<p:outputLabel value="#{i18n['education.degree']}" />
-												<p:inputText id="degree" value="#{education.degree}"
-													required="true" />
+												<p:inputText id="degree" value="#{education.degree}" required="true" />
 											</div>
 											<h:message for="degree" errorClass="error" />
 										</div>
 										<div class="ui-md-12 ui-lg-6 ui-xl-4">
 											<div class="form-group">
 												<p:outputLabel value="#{i18n['education.school']}" />
-												<p:inputText id="school" value="#{education.school}"
-													required="true" />
+												<p:inputText id="school" value="#{education.school}" required="true" />
 											</div>
 											<h:message for="school" errorClass="error" />
 										</div>
 										<div class="ui-md-12 ui-lg-6 ui-xl-4">
 											<div class="form-group">
 												<p:outputLabel value="#{i18n['education.from_date']}" />
-												<p:inputText id="fromDate" value="#{education.fromDate}"
-													label="#{i18n['education.from_date']}">
+												<p:inputText id="fromDate" value="#{education.fromDate}" label="#{i18n['education.from_date']}">
 													<f:convertDateTime pattern="MM / yyyy" />
 												</p:inputText>
 											</div>
@@ -76,8 +64,7 @@
 										<div class="ui-md-12 ui-lg-6 ui-xl-4">
 											<div class="form-group">
 												<p:outputLabel value="#{i18n['education.to_date']}" />
-												<p:inputText id="toDate" value="#{education.toDate}"
-													disabled="#{education.stillStudying}">
+												<p:inputText id="toDate" value="#{education.toDate}" disabled="#{education.stillStudying}">
 													<f:convertDateTime pattern="MM / yyyy" />
 												</p:inputText>
 											</div>
@@ -87,8 +74,7 @@
 										<div class="ui-md-12 ui-lg-6 ui-xl-4">
 											<div class="form-group">
 												<p:outputLabel value="#{i18n['education.still_studying']}" />
-												<p:selectBooleanCheckbox value="#{education.stillStudying}"
-													id="stillStudying">
+												<p:selectBooleanCheckbox value="#{education.stillStudying}" id="stillStudying">
 													<f:ajax render="toDate" />
 												</p:selectBooleanCheckbox>
 											</div>
@@ -97,18 +83,15 @@
 										<div class="ui-md-12 ui-lg-6 ui-xl-4">
 											<div class="form-group">
 												<p:outputLabel value="#{i18n['education.description']}" />
-												<p:inputTextarea value="#{education.description}"
-													id="description" label="#{i18n['education.description']}" />
+												<p:inputTextarea value="#{education.description}" id="description" label="#{i18n['education.description']}" />
 											</div>
 										</div>
 									</div>
 									<div class="ui-g">
 										<div class="ui-g-12">
 											<div class="form-action-primary">
-												<p:commandButton styleClass="btn-gray"
-													value="#{i18n['action.remove']}"
-													action="#{curriculumEditBean.removeEducation(education)}"
-													immediate="true" process="educationPanel"
+												<p:commandButton styleClass="btn-gray" value="#{i18n['action.remove']}"
+													action="#{curriculumEditBean.removeEducation(education)}" immediate="true" process="educationPanel"
 													update="educationPanel" />
 											</div>
 										</div>
@@ -119,10 +102,8 @@
 							<div class="ui-g">
 								<div class="ui-g-12">
 									<div class="form-action-primary">
-										<p:commandButton styleClass="btn-green"
-											value="#{i18n['action.add']}"
-											action="#{curriculumEditBean.addEducation}"
-											process="educationPanel" update="educationPanel" />
+										<p:commandButton styleClass="btn-green" value="#{i18n['action.add']}"
+											action="#{curriculumEditBean.addEducation}" process="educationPanel" update="educationPanel" />
 									</div>
 								</div>
 							</div>
@@ -132,27 +113,22 @@
 
 						<h:panelGroup layout="block" id="jobExperiences">
 							<h2>#{i18n['curriculum.job_experiences']}</h2>
-							<ui:repeat value="#{curriculumEditBean.jobExperiences}"
-								var="jobExperience" id="jobExperience">
+							<ui:repeat value="#{curriculumEditBean.jobExperiences}" var="jobExperience" id="jobExperience">
 								<h:panelGroup layout="block" class="repeatedPanel">
 
 									<div class="ui-g">
 										<div class="ui-md-12 ui-lg-6 ui-xl-4">
 											<div class="form-group">
-												<p:outputLabel
-													value="#{i18n['job_experience.company_name']}" />
-												<p:inputText id="companyName"
-													value="#{jobExperience.companyName}" required="true" />
+												<p:outputLabel value="#{i18n['job_experience.company_name']}" />
+												<p:inputText id="companyName" value="#{jobExperience.companyName}" required="true" />
 											</div>
 											<h:message for="companyName" errorClass="error" />
 										</div>
 
 										<div class="ui-md-12 ui-lg-6 ui-xl-4">
 											<div class="form-group">
-												<p:outputLabel
-													value="#{i18n['job_experience.job_position']}" />
-												<p:inputText id="jobPosition"
-													value="#{jobExperience.jobPosition}" required="true" />
+												<p:outputLabel value="#{i18n['job_experience.job_position']}" />
+												<p:inputText id="jobPosition" value="#{jobExperience.jobPosition}" required="true" />
 											</div>
 											<h:message for="jobPosition" errorClass="error" />
 										</div>
@@ -169,8 +145,7 @@
 										<div class="ui-md-12 ui-lg-6 ui-xl-4">
 											<div class="form-group">
 												<p:outputLabel value="#{i18n['job_experience.to_date']}" />
-												<p:inputText id="toDate" value="#{jobExperience.toDate}"
-													disabled="#{jobExperience.stillWorking}">
+												<p:inputText id="toDate" value="#{jobExperience.toDate}" disabled="#{jobExperience.stillWorking}">
 													<f:convertDateTime pattern="MM / yyyy" />
 												</p:inputText>
 											</div>
@@ -178,10 +153,8 @@
 
 										<div class="ui-md-12 ui-lg-6 ui-xl-4">
 											<div class="form-group">
-												<p:outputLabel
-													value="#{i18n['job_experience.still_working']}" />
-												<p:selectBooleanCheckbox
-													value="#{jobExperience.stillWorking}" id="stillWorking">
+												<p:outputLabel value="#{i18n['job_experience.still_working']}" />
+												<p:selectBooleanCheckbox value="#{jobExperience.stillWorking}" id="stillWorking">
 													<f:ajax render="toDate" />
 												</p:selectBooleanCheckbox>
 											</div>
@@ -190,8 +163,7 @@
 										<div class="ui-md-12 ui-lg-6 ui-xl-4">
 											<div class="form-group">
 												<p:outputLabel value="#{i18n['job_experience.description']}" />
-												<p:inputTextarea id="description"
-													value="#{jobExperience.description}" required="true" />
+												<p:inputTextarea id="description" value="#{jobExperience.description}" required="true" />
 											</div>
 											<h:message for="description" errorClass="error" />
 										</div>
@@ -200,10 +172,8 @@
 									<div class="ui-g">
 										<div class="ui-g-12">
 											<div class="form-action-primary">
-												<p:commandButton styleClass="btn-gray"
-													value="#{i18n['action.remove']}"
-													action="#{curriculumEditBean.removeJobExperience(jobExperience)}"
-													immediate="true" update="jobExperiences"
+												<p:commandButton styleClass="btn-gray" value="#{i18n['action.remove']}"
+													action="#{curriculumEditBean.removeJobExperience(jobExperience)}" immediate="true" update="jobExperiences"
 													process="jobExperiences" />
 											</div>
 										</div>
@@ -213,10 +183,8 @@
 							<div class="ui-g">
 								<div class="ui-g-12">
 									<div class="form-action-primary">
-										<p:commandButton styleClass="btn-green"
-											value="#{i18n['action.add']}"
-											action="#{curriculumEditBean.addJobExperience}"
-											update="jobExperiences" process="jobExperiences" />
+										<p:commandButton styleClass="btn-green" value="#{i18n['action.add']}"
+											action="#{curriculumEditBean.addJobExperience}" update="jobExperiences" process="jobExperiences" />
 									</div>
 								</div>
 							</div>
@@ -226,16 +194,14 @@
 
 						<h:panelGroup layout="block" id="languages">
 							<h2>#{i18n['curriculum.languages']}</h2>
-							<ui:repeat value="#{curriculumEditBean.languages}" var="language"
-								varStatus="current" id="language">
+							<ui:repeat value="#{curriculumEditBean.languages}" var="language" varStatus="current" id="language">
 								<h:panelGroup layout="block" class="repeatedPanel">
 
 									<div class="ui-g">
 										<div class="ui-md-12 ui-lg-6 ui-xl-4">
 											<div class="form-group">
 												<p:outputLabel value="#{i18n['language.language']}" />
-												<p:inputText id="languageName"
-													value="#{language.languageName}" required="true" />
+												<p:inputText id="languageName" value="#{language.languageName}" required="true" />
 											</div>
 											<h:message for="languageName" errorClass="error" />
 										</div>
@@ -244,10 +210,8 @@
 											<div class="form-group">
 												<p:outputLabel value="#{i18n['language.read']}" />
 												<p:selectOneMenu id="read" value="#{language.read}">
-													<f:selectItems var="languageLevel"
-														itemValue="#{languageLevel.name}"
-														value="#{applicationBean.languageLevels}"
-														itemLabel="#{i18n:translate(languageLevel.name)}" />
+													<f:selectItems var="languageLevel" itemValue="#{languageLevel.name}"
+														value="#{applicationBean.languageLevels}" itemLabel="#{i18n:translate(languageLevel.name)}" />
 												</p:selectOneMenu>
 											</div>
 										</div>
@@ -256,10 +220,8 @@
 											<div class="form-group">
 												<p:outputLabel value="#{i18n['language.speak']}" />
 												<p:selectOneMenu id="speak" value="#{language.speak}">
-													<f:selectItems var="languageLevel"
-														itemValue="#{languageLevel.name}"
-														value="#{applicationBean.languageLevels}"
-														itemLabel="#{i18n:translate(languageLevel.name)}" />
+													<f:selectItems var="languageLevel" itemValue="#{languageLevel.name}"
+														value="#{applicationBean.languageLevels}" itemLabel="#{i18n:translate(languageLevel.name)}" />
 												</p:selectOneMenu>
 											</div>
 										</div>
@@ -268,8 +230,7 @@
 											<div class="form-group">
 												<p:outputLabel value="#{i18n['language.write']}" />
 												<p:selectOneMenu id="write" value="#{language.write}">
-													<f:selectItems var="languageLevel"
-														itemValue="#{languageLevel.name}"
+													<f:selectItems var="languageLevel" itemValue="#{languageLevel.name}"
 														value="#{applicationBean.languageLevels}" />
 												</p:selectOneMenu>
 											</div>
@@ -278,10 +239,8 @@
 									<div class="ui-g">
 										<div class="ui-g-12">
 											<div class="form-action-primary">
-												<p:commandButton styleClass="btn-gray"
-													value="#{i18n['action.remove']}"
-													action="#{curriculumEditBean.removeLanguage(language)}"
-													immediate="true" />
+												<p:commandButton styleClass="btn-gray" value="#{i18n['action.remove']}"
+													action="#{curriculumEditBean.removeLanguage(language)}" immediate="true" />
 											</div>
 										</div>
 									</div>
@@ -290,10 +249,8 @@
 							<div class="ui-g">
 								<div class="ui-g-12">
 									<div class="form-action-primary">
-										<p:commandButton styleClass="btn-green"
-											value="#{i18n['action.add']}"
-											action="#{curriculumEditBean.addLanguage}" update="languages"
-											process="languages" />
+										<p:commandButton styleClass="btn-green" value="#{i18n['action.add']}"
+											action="#{curriculumEditBean.addLanguage}" update="languages" process="languages" />
 									</div>
 								</div>
 							</div>
@@ -303,25 +260,20 @@
 
 						<h:panelGroup layout="block" id="skills">
 							<h2>#{i18n['curriculum.skills']}</h2>
-							<ui:repeat value="#{curriculumEditBean.skills}" var="skill"
-								id="skill">
+							<ui:repeat value="#{curriculumEditBean.skills}" var="skill" id="skill">
 								<h:panelGroup layout="block" class="repeatedPanel">
 
 									<div class="ui-g">
 										<div class="ui-md-12 ui-lg-6 ui-xl-4">
 											<div class="form-group">
-												<p:inputText id="name" value="#{skill.name}"
-													label="#{i18n['skill.name']}" required="true" />
+												<p:inputText id="name" value="#{skill.name}" label="#{i18n['skill.name']}" required="true" />
 											</div>
 										</div>
 
 										<div class="ui-md-12 ui-lg-6 ui-xl-4">
 											<div class="form-group">
-												<p:selectOneMenu id="level" value="#{skill.level}"
-													label="#{curriculumEditBean.skills}">
-													<f:selectItems var="skillLevel"
-														itemValue="#{skillLevel.name}"
-														value="#{applicationBean.skillLevels}"
+												<p:selectOneMenu id="level" value="#{skill.level}" label="#{curriculumEditBean.skills}">
+													<f:selectItems var="skillLevel" itemValue="#{skillLevel.name}" value="#{applicationBean.skillLevels}"
 														itemLabel="#{i18n:translate(skillLevel.name)}" />
 												</p:selectOneMenu>
 											</div>
@@ -331,10 +283,8 @@
 									<div class="ui-g">
 										<div class="ui-g-12">
 											<div class="form-action-primary">
-												<p:commandButton styleClass="btn-gray"
-													value="#{i18n['action.remove']}"
-													action="#{curriculumEditBean.removeSkill(skill)}"
-													immediate="true" update="skills" process="skills" />
+												<p:commandButton styleClass="btn-gray" value="#{i18n['action.remove']}"
+													action="#{curriculumEditBean.removeSkill(skill)}" immediate="true" update="skills" process="skills" />
 											</div>
 										</div>
 									</div>
@@ -344,9 +294,8 @@
 							<div class="ui-g">
 								<div class="ui-g-12">
 									<div class="form-action-primary">
-										<p:commandButton styleClass="btn-green"
-											value="#{i18n['action.add']}"
-											action="#{curriculumEditBean.addSkill}" update="skills" />
+										<p:commandButton styleClass="btn-green" value="#{i18n['action.add']}" action="#{curriculumEditBean.addSkill}"
+											update="skills" />
 									</div>
 								</div>
 							</div>
@@ -359,10 +308,9 @@
 			<div class="ui-g">
 				<div class="ui-g-12">
 					<div class="form-action-primary">
-						<p:commandButton value="#{i18n['action.save']}"
-							action="#{curriculumEditBean.save}" />
-						<p:commandButton styleClass="btn-gray" value="#{i18n['action.cancel']}"
-							action="#{curriculumEditBean.cancel}" immediate="true" />
+						<p:commandButton value="#{i18n['action.save']}" action="#{curriculumEditBean.save}" />
+						<p:commandButton styleClass="btn-gray" value="#{i18n['action.cancel']}" action="#{curriculumEditBean.cancel}"
+							immediate="true" />
 					</div>
 				</div>
 			</div>
