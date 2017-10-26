@@ -36,6 +36,9 @@ public class User extends AbstractAuditedEntity {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user", orphanRemoval = true)
 	private List<Bookmark> bookmarks;
 
+	@Temporal(TemporalType.DATE)
+	private Date dateOfJoin;
+	
 	@NotNull
 	@Column(length = 128, nullable = false, unique = true)
 	@Field
@@ -116,6 +119,10 @@ public class User extends AbstractAuditedEntity {
 
 	public List<Bookmark> getBookmarks() {
 		return this.bookmarks;
+	}
+
+	public Date getDateOfJoin() {
+		return dateOfJoin;
 	}
 
 	public String getEmail() {
@@ -207,6 +214,10 @@ public class User extends AbstractAuditedEntity {
 
 	public void setBookmarks(final List<Bookmark> bookmarks) {
 		this.bookmarks = bookmarks;
+	}
+
+	public void setDateOfJoin(Date dateOfJoin) {
+		this.dateOfJoin = dateOfJoin;
 	}
 
 	public void setEmail(final String email) {

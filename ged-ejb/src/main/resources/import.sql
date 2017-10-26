@@ -74,6 +74,7 @@ insert into ROLE( id, version, name, parentRoleId ) values( 913, 0, 'RECRUITER_A
 insert into ROLE( id, version, name, parentRoleId ) values( 912, 0, 'RECRUITER', 913 );
 insert into ROLE( id, version, name, parentRoleId ) values( 915, 0, 'TECHNIC_ADMIN', 911 );
 insert into ROLE( id, version, name, parentRoleId ) values( 914, 0, 'TECHNIC', 915 );
+insert into ROLE( id, version, name, parentRoleId ) values( 916, 0, 'PROJECT_MANAGER', 911 );
 
 insert into ROLECLOSURE( id, version, antecessor_id, descendant_id, pathLength ) values( 925, 0, 911, 911, 0 );
 insert into ROLECLOSURE( id, version, antecessor_id, descendant_id, pathLength ) values( 926, 0, 911, 912, 2 );

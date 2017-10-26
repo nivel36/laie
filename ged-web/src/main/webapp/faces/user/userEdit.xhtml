@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://legion.com/i18n"
-	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/templates/default.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:i18n="http://legion.com/i18n" xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
 		<title>#{i18n['user.user']}</title>
@@ -17,7 +20,8 @@
 					<div class="ui-g-12 ui-lg-6 ui-xl-4">
 						<div class="form-group">
 							<p:outputLabel value="#{i18n['user.name']}" for="name" />
-							<p:inputText id="name" value="#{userEditBean.user.name}" required="true" />
+							<p:inputText id="name" value="#{userEditBean.user.name}"
+								required="true" />
 						</div>
 						<h:message for="name" errorClass="error" />
 					</div>
@@ -25,7 +29,8 @@
 					<div class="ui-g-12 ui-lg-6 ui-xl-4">
 						<div class="form-group">
 							<p:outputLabel value="#{i18n['user.surename']}" for="surename" />
-							<p:inputText id="surename" value="#{userEditBean.user.surename}" required="true" />
+							<p:inputText id="surename" value="#{userEditBean.user.surename}"
+								required="true" />
 						</div>
 						<h:message for="surename" errorClass="error" />
 					</div>
@@ -33,7 +38,8 @@
 					<div class="ui-g-12 ui-lg-6 ui-xl-4">
 						<div class="form-group">
 							<p:outputLabel value="#{i18n['user.email']}" for="email" />
-							<p:inputText id="email" p:type="email" value="#{userEditBean.user.email}" required="true"
+							<p:inputText id="email" p:type="email"
+								value="#{userEditBean.user.email}" required="true"
 								validator="#{userEditBean.validateEmail}" />
 						</div>
 						<h:message for="email" errorClass="error" />
@@ -41,8 +47,10 @@
 
 					<div class="ui-g-12 ui-lg-6 ui-xl-4">
 						<div class="form-group">
-							<p:outputLabel value="#{i18n['user.phone_number']}" for="phoneNumber" />
-							<p:inputText id="phoneNumber" value="#{userEditBean.user.phoneNumber}" />
+							<p:outputLabel value="#{i18n['user.phone_number']}"
+								for="phoneNumber" />
+							<p:inputText id="phoneNumber"
+								value="#{userEditBean.user.phoneNumber}" />
 						</div>
 						<h:message for="phoneNumber" errorClass="error" />
 					</div>
@@ -50,8 +58,10 @@
 					<div class="ui-g-12 ui-lg-6 ui-xl-4">
 						<div class="form-group">
 							<p:outputLabel value="#{i18n['user.role']}" for="role" />
-							<p:selectOneMenu id="role" value="#{userEditBean.user.role}" validator="#{userEditBean.validateRole}">
-								<f:selectItems var="role" itemValue="#{role}" value="#{applicationBean.roles}"
+							<p:selectOneMenu id="role" value="#{userEditBean.user.role}"
+								validator="#{userEditBean.validateRole}">
+								<f:selectItems var="role" itemValue="#{role}"
+									value="#{applicationBean.roles}"
 									itemLabel="#{i18n:translate(role.name)}" />
 							</p:selectOneMenu>
 						</div>
@@ -61,12 +71,16 @@
 					<div class="ui-g-12 ui-lg-6 ui-xl-4">
 						<div class="form-group">
 							<p:outputLabel value="#{i18n['user.manager']}" for="manager" />
-							<p:autoComplete id="manager" value="#{userEditBean.manager}" completeMethod="#{userEditBean.completeManager}"
-								var="manager" itemLabel="#{manager.fullName}" itemValue="#{manager}" forceSelection="true">
+							<p:autoComplete id="manager" value="#{userEditBean.manager}"
+								completeMethod="#{userEditBean.completeManager}" var="manager"
+								itemLabel="#{manager.fullName}" itemValue="#{manager}"
+								forceSelection="true">
 								<p:column styleClass="user-select image">
-									<p:graphicImage class="image image_icon" value="/images/#{manager.imageFileName}"
+									<p:graphicImage class="image image_icon"
+										value="/images/#{manager.imageFileName}"
 										rendered="#{not empty manager.imageFileName}" />
-									<p:graphicImage class="image image_icon" value="/resources/img/default-avatar.png"
+									<p:graphicImage class="image image_icon"
+										value="/resources/img/default-avatar.png"
 										rendered="#{empty manager.imageFileName}" />
 								</p:column>
 								<p:column styleClass="user-select name">
@@ -76,12 +90,24 @@
 						</div>
 						<h:message for="manager" errorClass="error" />
 					</div>
+
+					<div class="ui-g-12 ui-md-6">
+						<div class="form-group">
+							<p:outputLabel value="#{i18n['user.date_of_join']}"
+								for="date_of_join" />
+							<p:inputText id="dateOfJoin"
+								value="#{userEditBean.user.dateOfJoin}" />
+						</div>
+						<h:message for="dateOfJoin" errorClass="error" />
+					</div>
 				</div>
 				<div class="ui-g">
 					<div class="ui-g-12">
 						<div class="form-action-primary">
-							<p:commandButton value="#{i18n['action.save']}" action="#{userEditBean.save}" update="@form growl" />
-							<p:commandButton styleClass="btn-gray" action="#{userEditBean.cancel}" value="#{i18n['action.cancel']}"
+							<p:commandButton value="#{i18n['action.save']}"
+								action="#{userEditBean.save}" update="@form growl" />
+							<p:commandButton styleClass="btn-gray"
+								action="#{userEditBean.cancel}" value="#{i18n['action.cancel']}"
 								immediate="true" />
 						</div>
 					</div>

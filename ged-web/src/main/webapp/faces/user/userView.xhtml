@@ -88,6 +88,14 @@
 								</div>
 								<h:message for="role" errorClass="error" />
 							</div>
+							
+							<div class="ui-g-12 ui-md-6">
+								<div class="form-group">
+									<p:outputLabel value="#{i18n['user.date_of_join']}" for="date_of_join" />
+									<p:inputText id="dateOfJoin" value="#{userViewBean.user.dateOfJoin}" readonly="#{not userViewBean.editable}" />
+								</div>
+								<h:message for="dateOfJoin" errorClass="error" />
+							</div>
 
 							<div class="ui-sm-12 ui-md-6">
 								<div class="form-group">

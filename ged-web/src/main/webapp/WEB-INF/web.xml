@@ -23,6 +23,7 @@
 			<role-name>TECHNIC</role-name>
 			<role-name>TECHNIC_ADMIN</role-name>
 			<role-name>ADMIN</role-name>
+			<role-name>PROJECT_MANAGER</role-name>
 		</auth-constraint>
 	</security-constraint>
 	<security-role>
@@ -40,7 +41,9 @@
 	<security-role>
 		<role-name>RECRUITER_ADMIN</role-name>
 	</security-role>
-
+	<security-role>
+		<role-name>PROJECT_MANAGER</role-name>
+	</security-role>
 	<context-param>
 		<param-name>javax.faces.FACELETS_REFRESH_PERIOD</param-name>
 		<param-value>2</param-value>
