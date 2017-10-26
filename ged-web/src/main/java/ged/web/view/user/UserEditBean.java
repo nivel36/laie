@@ -104,7 +104,7 @@ public class UserEditBean extends AbstractPageBean {
 
 	public void selectManager(final User manager) {
 		this.manager = manager;
-		addInfoMessage("user.manager_added", new Object[] { this.manager.getFullName() });
+		addInfoMessage("user.manager_added",  this.manager.getFullName());
 	}
 
 	public void setManager(final User manager) {

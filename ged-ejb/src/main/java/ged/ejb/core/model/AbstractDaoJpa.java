@@ -172,7 +172,7 @@ public abstract class AbstractDaoJpa<T extends AbstractEntity> implements Dao<T>
 		if (entity.getId() == 0) {
 			throw new IllegalStateException();
 		}
-		logger.debug("Update entity of class {} and id {}", new Object[] { getType(), entity.getId() });
+		logger.debug("Update entity of class {} and id {}",  getType(), entity.getId());
 		if (this.em.contains(entity)) {
 			return entity;
 		} else {

@@ -58,15 +58,14 @@ public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> imp
 
 	@Override
 	public List<Candidate> search(final String name, final String surename, final String position) {
-		logger.debug("Search candidate by name {} and surename {}", new Object[] { name, surename });
+		logger.debug("Search candidate by name {} and surename {}", name, surename );
 		return this.candidateDao.searchByNameAndSurename(name, surename, position, false);
 	}
 
 	@Override
 	public List<Candidate> searchByNameAndSurename(final String name, final String surename, final String position,
 			final boolean showDeleted) {
-		logger.debug("Search candidate by name {} and surename {}. Show deleteted {}",
-				new Object[] { name, surename, showDeleted });
+		logger.debug("Search candidate by name {} and surename {}. Show deleteted {}", name, surename, showDeleted);
 		return this.candidateDao.searchByNameAndSurename(name, surename, position, showDeleted);
 	}
 }

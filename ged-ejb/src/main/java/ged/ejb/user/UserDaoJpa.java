@@ -108,7 +108,7 @@ public final class UserDaoJpa extends AbstractDaoJpa<User> implements UserDao {
 
 	private void insertUserClosure(final User antecessor, final User descendant, final int pathLength) {
 		logger.trace("Insert in user closure table. Antecessor {}, descendant {}, pathLength {}",
-				new Object[] { antecessor, descendant, pathLength });
+				antecessor, descendant, pathLength);
 		final UserClosure newUserClosure = new UserClosure();
 		newUserClosure.setAntecessor(antecessor);
 		newUserClosure.setDescendant(descendant);

@@ -50,7 +50,7 @@ public class ActionServiceImpl extends AbstractService<Action> implements Action
 	public void deleteAction(@PostDelete @Observes final AbstractAuditedEntity auditedEntity) {
 		Objects.requireNonNull(auditedEntity);
 		logger.debug("Delete action class {} with id {} for user {}",
-				new Object[] { auditedEntity.getClass().getName(), auditedEntity.getId(), auditedEntity.getUser() });
+				 auditedEntity.getClass().getName(), auditedEntity.getId(), auditedEntity.getUser());
 		insertAction(auditedEntity, ActionType.DELETE);
 	}
 
@@ -78,7 +78,7 @@ public class ActionServiceImpl extends AbstractService<Action> implements Action
 	public void insertAction(@PostPersist @Observes final AbstractAuditedEntity auditedEntity) {
 		Objects.requireNonNull(auditedEntity);
 		logger.debug("Insert action class {} with id {} for user {}",
-				new Object[] { auditedEntity.getClass().getName(), auditedEntity.getId(), auditedEntity.getUser() });
+				 auditedEntity.getClass().getName(), auditedEntity.getId(), auditedEntity.getUser());
 		insertAction(auditedEntity, ActionType.SAVE);
 	}
 
@@ -107,7 +107,7 @@ public class ActionServiceImpl extends AbstractService<Action> implements Action
 	public void undeleteAction(@PostUndelete @Observes final AbstractAuditedEntity auditedEntity) {
 		Objects.requireNonNull(auditedEntity);
 		logger.debug("Undelete action class {} with id {} for user {}",
-				new Object[] { auditedEntity.getClass().getName(), auditedEntity.getId(), auditedEntity.getUser() });
+				 auditedEntity.getClass().getName(), auditedEntity.getId(), auditedEntity.getUser());
 		insertAction(auditedEntity, ActionType.UNDELETE);
 	}
 
@@ -115,7 +115,7 @@ public class ActionServiceImpl extends AbstractService<Action> implements Action
 	public void updateAction(@PostUpdate @Observes final AbstractAuditedEntity auditedEntity) {
 		Objects.requireNonNull(auditedEntity);
 		logger.debug("Update action class {} with id {} for user {}",
-				new Object[] { auditedEntity.getClass().getName(), auditedEntity.getId(), auditedEntity.getUser() });
+				auditedEntity.getClass().getName(), auditedEntity.getId(), auditedEntity.getUser());
 		insertAction(auditedEntity, ActionType.SAVE);
 	}
 

@@ -31,7 +31,7 @@ public abstract class AbstractPageBean extends AbstractBean {
 		addMessage(null, FacesMessage.SEVERITY_INFO, message, message, null);
 	}
 
-	protected void addInfoMessage(final String message, final Object[] params) {
+	protected void addInfoMessage(final String message, final Object... params) {
 		addMessage(null, FacesMessage.SEVERITY_INFO, message, message, params);
 	}
 
@@ -39,7 +39,7 @@ public abstract class AbstractPageBean extends AbstractBean {
 		addMessage(null, FacesMessage.SEVERITY_INFO, title, message, null);
 	}
 
-	protected void addInfoMessage(final String title, final String message, final Object[] params) {
+	protected void addInfoMessage(final String title, final String message, final Object... params) {
 		addMessage(null, FacesMessage.SEVERITY_INFO, title, message, params);
 	}
 
@@ -47,7 +47,8 @@ public abstract class AbstractPageBean extends AbstractBean {
 		addMessage(null, severity, title, message, null);
 	}
 
-	protected void addMessage(final Severity severity, final String title, final String message, final Object[] params) {
+	protected void addMessage(final Severity severity, final String title, final String message,
+			final Object... params) {
 		addMessage(null, severity, title, message, params);
 	}
 
@@ -66,7 +67,7 @@ public abstract class AbstractPageBean extends AbstractBean {
 	protected void addWarningMessageIfMaxSearchResultsHaveBeenReached(final Collection<?> collection) {
 		final int maxResults = 150;
 		if (collection.size() == maxResults) {
-			addInfoMessage("warning.max_results_reached", new Object[] { maxResults });
+			addInfoMessage("warning.max_results_reached", maxResults);
 		}
 	}
 

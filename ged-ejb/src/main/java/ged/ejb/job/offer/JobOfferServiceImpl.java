@@ -124,7 +124,7 @@ public class JobOfferServiceImpl extends AbstratctAuditedService<JobOffer> imple
 	@Override
 	public List<JobOffer> searchByNameAndClient(final String name, final String clientName, final Boolean showDeleted) {
 		logger.debug("Search all job offers by name {} and client name {}, show deleted {}",
-				new Object[] { name, clientName, showDeleted });
+				name, clientName, showDeleted );
 		return this.jobOfferDao.searchByNameAndClient(name, clientName, showDeleted);
 	}
 }

@@ -151,7 +151,7 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
 
 	@Override
 	public List<User> searchByNameAndSurename(final String name, final String surename) {
-		logger.debug("Search user by name {} and surename {}", new Object[] { name, surename });
+		logger.debug("Search user by name {} and surename {}", name, surename );
 		return this.userDao.searchByNameAndSurename(name, surename, false);
 	}
 
