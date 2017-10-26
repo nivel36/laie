@@ -8,5 +8,6 @@ import ged.ejb.user.User;
 public interface ActionDao extends Dao< Action> {
 
 	List<Action> findAllByUser(final User user);
-
+	
+	List<Action> findLastActions();
 }

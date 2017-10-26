@@ -62,7 +62,7 @@ public class UserSearchBean extends AbstractUserSearchBean {
 	public void init() {
 		logger.trace("Init UserSearchBean");
 		search();
-		this.actions = this.actionService.findAll();
+		this.actions = this.actionService.findLastActions();
 		this.numberOfUsersOfflineLastMonth = this.userService.numberOfUsersOfflineLastMonth();
 		this.numberOfUsersOnlineLastWeek = this.userService.numberOfUsersOnlineLastWeek();
 	}

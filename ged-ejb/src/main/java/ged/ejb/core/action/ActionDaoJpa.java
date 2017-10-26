@@ -1,12 +1,9 @@
 package ged.ejb.core.action;
 
-import java.lang.invoke.MethodHandles;
-import java.util.HashMap;
+import static ged.ejb.core.model.QueryParameter.with;
+
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
-import org.slf4j.LoggerFactory;
-import org.slf4j.Logger;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -18,8 +15,6 @@ import ged.ejb.user.User;
 @Repository
 public class ActionDaoJpa extends AbstractDaoJpa<Action> implements ActionDao {
 
-	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
-
 	@Inject
 	public ActionDaoJpa(final EntityManager entityManager) {
 		super(entityManager);
@@ -28,14 +23,16 @@ public class ActionDaoJpa extends AbstractDaoJpa<Action> implements ActionDao {
 	@Override
 	public List<Action> findAllByUser(final User user) {
 		Objects.requireNonNull(user);
-		logger.debug("Find all actions of the user {}", user.getFullName());
-		final Map<String, Object> parameters = new HashMap<>();
-		parameters.put("user", user);
-		return findByTypedQuery(Action.class, "Action.findAllByUser", parameters, 10, 0);
+		return findByTypedQuery(Action.class, "Action.findAllByUser", with("user", user).parameters(), 10, 0);
 	}
 
 	@Override
 	public Class<Action> getType() {
 		return Action.class;
+	}
+
+	@Override
+	public List<Action> findLastActions() {
+		return findByTypedQuery(Action.class, "Action.findLastActions", 25, 0);
 	}
 }

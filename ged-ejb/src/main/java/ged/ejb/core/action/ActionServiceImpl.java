@@ -118,4 +118,10 @@ public class ActionServiceImpl extends AbstractService<Action> implements Action
 				new Object[] { auditedEntity.getClass().getName(), auditedEntity.getId(), auditedEntity.getUser() });
 		insertAction(auditedEntity, ActionType.SAVE);
 	}
+
+	@Override
+	public List<Action> findLastActions() {
+		logger.debug("Find last actions");
+		return this.actionDao.findLastActions();
+	}
 }

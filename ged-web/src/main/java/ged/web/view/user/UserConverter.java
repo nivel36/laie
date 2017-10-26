@@ -18,7 +18,7 @@ public class UserConverter implements Converter {
 
 	@Override
 	public Object getAsObject(final FacesContext context, final UIComponent component, final String value) {
-		if (value == null) {
+		if (value == null || value.trim().equals("")) {
 			return null;
 		}
 		final List<User> users = this.userService.search(value);
