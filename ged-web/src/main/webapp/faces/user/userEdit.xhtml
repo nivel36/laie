@@ -17,7 +17,7 @@
 			<h:form id="form">
 				<input type="hidden" id="userId" value="#{userEditBean.user.id}" />
 				<div class="ui-g">
-					<div class="ui-g-12 ui-lg-6 ui-xl-4">
+					<div class="ui-g-12 ui-md-6 ui-xl-4">
 						<div class="form-group">
 							<p:outputLabel value="#{i18n['user.name']}" for="name" />
 							<p:inputText id="name" value="#{userEditBean.user.name}"
@@ -26,7 +26,7 @@
 						<h:message for="name" errorClass="error" />
 					</div>
 
-					<div class="ui-g-12 ui-lg-6 ui-xl-4">
+					<div class="ui-g-12 ui-md-6 ui-xl-4">
 						<div class="form-group">
 							<p:outputLabel value="#{i18n['user.surename']}" for="surename" />
 							<p:inputText id="surename" value="#{userEditBean.user.surename}"
@@ -35,7 +35,7 @@
 						<h:message for="surename" errorClass="error" />
 					</div>
 
-					<div class="ui-g-12 ui-lg-6 ui-xl-4">
+					<div class="ui-g-12 ui-md-6 ui-xl-4">
 						<div class="form-group">
 							<p:outputLabel value="#{i18n['user.email']}" for="email" />
 							<p:inputText id="email" p:type="email"
@@ -45,7 +45,7 @@
 						<h:message for="email" errorClass="error" />
 					</div>
 
-					<div class="ui-g-12 ui-lg-6 ui-xl-4">
+					<div class="ui-g-12 ui-md-6 ui-xl-4">
 						<div class="form-group">
 							<p:outputLabel value="#{i18n['user.phone_number']}"
 								for="phoneNumber" />
@@ -55,7 +55,7 @@
 						<h:message for="phoneNumber" errorClass="error" />
 					</div>
 
-					<div class="ui-g-12 ui-lg-6 ui-xl-4">
+					<div class="ui-g-12 ui-md-6 ui-xl-4">
 						<div class="form-group">
 							<p:outputLabel value="#{i18n['user.role']}" for="role" />
 							<p:selectOneMenu id="role" value="#{userEditBean.user.role}"
@@ -68,7 +68,7 @@
 						<h:message for="role" errorClass="error" />
 					</div>
 
-					<div class="ui-g-12 ui-lg-6 ui-xl-4">
+					<div class="ui-g-12 ui-md-6 ui-xl-4">
 						<div class="form-group">
 							<p:outputLabel value="#{i18n['user.manager']}" for="manager" />
 							<p:autoComplete id="manager" value="#{userEditBean.manager}"
@@ -91,7 +91,7 @@
 						<h:message for="manager" errorClass="error" />
 					</div>
 
-					<div class="ui-g-12 ui-md-6">
+					<div class="ui-g-12 ui-md-6 ui-xl-4">
 						<div class="form-group">
 							<p:outputLabel value="#{i18n['user.date_of_join']}"
 								for="date_of_join" />
