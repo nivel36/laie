@@ -16,35 +16,39 @@
 </h:head>
 <h:body>
 	<p:growl id="msg" sticky="true" />
-		<div class="full-page login-page" data-image="/web/resources/img/loginbg.jpg">
-			<div class="content">
-				<h:form id="form">
-					<p:panel styleClass="card-login card-hidden" header="${i18n['login.login']}">
-						<div class="ui-g">
-							<div class="ui-g-12">
-								<span class="input-icon"> <i class="fa fa-user"></i></span>
-								<div class="form-group">
-									<p:inputText id="username" styleClass="form-control" value="#{loginBean.username}" />
+	<div class="full-page login-page" data-image="/web/resources/img/loginbg.jpg">
+		<div class="content">
+			<h:form id="form">
+				<p:panel styleClass="card-login card-hidden" header="${i18n['login.login']}">
+					<div class="ui-g">
+						<div class="ui-g-12">
+							<span class="input-icon"> <i class="fa fa-user"></i></span>
+							<div class="form-group">
+								<p:inputText id="username" styleClass="form-control" value="#{loginBean.username}" />
 
-								</div>
 							</div>
 						</div>
-						<div class="ui-g">
-							<div class="ui-g-12">
-								<span class="input-icon"> <i class="fa fa-lock"></i></span>
-								<div class="form-group">
-									<p:password id="password" styleClass="form-control" value="#{loginBean.password}" />
-								</div>
+					</div>
+					<div class="ui-g">
+						<div class="ui-g-12">
+							<span class="input-icon"> <i class="fa fa-lock"></i></span>
+							<div class="form-group">
+								<p:password id="password" styleClass="form-control" value="#{loginBean.password}" />
 							</div>
 						</div>
-						<div class="form-action">
-							<p:commandButton styleClass="form-action-primary" action="#{loginBean.login}" value="${i18n['login.enter']}"
-								update="msg" />
+					</div>
+					<div class="ui-g">
+						<div class="ui-g-12">
+							<div class="form-action-primary">
+								<p:commandButton  action="#{loginBean.login}" value="${i18n['login.enter']}"
+									update="msg" />
+							</div>
 						</div>
-					</p:panel>
-				</h:form>
-			</div>
+					</div>
+				</p:panel>
+			</h:form>
 		</div>
+	</div>
 </h:body>
 <h:outputScript library="js" name="ged.js" />
 <script type="text/javascript">

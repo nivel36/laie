@@ -4258,6 +4258,7 @@ body .form-group .ui-inputfield, body .ui-inputfield {
 	float: left;
 	display: block;
 	width: 100%;
+	height: 30px;
 }
 
 body .ui-calendar .ui-inputfield {
@@ -4268,7 +4269,7 @@ body .ui-inputtext[aria-required="true"], body .ui-inputtext[data-p-required="tr
 	border-left: 2px solid #a2aab8;
 }
 
-body .ui-inputtext[aria-readonly="true"] {
+body .ui-inputfield[aria-readonly="true"] {
 	background: #f2f2f2;
 }
 

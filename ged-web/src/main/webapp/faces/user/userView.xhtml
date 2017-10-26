@@ -88,14 +88,6 @@
 								</div>
 								<h:message for="role" errorClass="error" />
 							</div>
-							
-							<div class="ui-g-12 ui-md-6">
-								<div class="form-group">
-									<p:outputLabel value="#{i18n['user.date_of_join']}" for="date_of_join" />
-									<p:inputText id="dateOfJoin" value="#{userViewBean.user.dateOfJoin}" readonly="#{not userViewBean.editable}" />
-								</div>
-								<h:message for="dateOfJoin" errorClass="error" />
-							</div>
 
 							<div class="ui-sm-12 ui-md-6">
 								<div class="form-group">
@@ -116,7 +108,16 @@
 								</div>
 								<h:message for="manager" errorClass="error" />
 							</div>
+
+							<div class="ui-g-12 ui-md-6">
+								<div class="form-group">
+									<p:outputLabel value="#{i18n['user.date_of_join']}" for="date_of_join" />
+									<p:calendar id="date_of_join" value="#{userViewBean.user.dateOfJoin}" readonly="#{not userViewBean.editable}" />
+								</div>
+								<h:message for="date_of_join" errorClass="error" />
+							</div>
 						</div>
+						
 						<div class="ui-g">
 							<div class="ui-g-12">
 								<div class="form-action-primary">
@@ -125,7 +126,7 @@
 									<p:commandButton rendered="#{userViewBean.editable}" value="#{i18n['action.save']}"
 										action="#{userViewBean.saveUser}" update="@form growl" />
 									<p:commandButton styleClass="btn-gray" rendered="#{userViewBean.editable}" value="#{i18n['action.cancel']}"
-										action="#{userViewBean.cancelEditUser}" update="@form" process="@this"/>
+										action="#{userViewBean.cancelEditUser}" update="@form" process="@this" />
 								</div>
 							</div>
 						</div>
