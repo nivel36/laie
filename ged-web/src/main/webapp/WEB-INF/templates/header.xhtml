@@ -17,22 +17,23 @@
 		<h:form id="nav">
 			<nav id="mainMenu" class="menu">
 				<ul>
-					<li><a jsf:action="#{menuBean.gotoIndex}" jsf:styleClass="#{selectedMenu eq 'index' ? 'selected': ''}"><i
-							class="fa fa-home" /> #{i18n['menu.index']}</a></li>
+					<li><a jsf:action="#{menuBean.gotoIndex}" jsf:styleClass="#{selectedMenu eq 'index' ? 'selected': ''}"><span
+							class="menu_icon"><i class="fa fa-home" /></span> <span class="menu_text">#{i18n['menu.index']}</span></a></li>
 					<li><a jsf:action="#{menuBean.gotoCandidates}"
-						jsf:styleClass="#{selectedMenu eq 'candidates' ? 'selected': ''}"><i class="fa fa-users" />
-							#{i18n['menu.candidates']}</a></li>
-					<li><a jsf:action="#{menuBean.gotoJobOffers}" jsf:styleClass="#{selectedMenu eq 'offers' ? 'selected': ''}"><i
-							class="fa fa-suitcase" /> #{i18n['menu.offers']}</a></li>
-					<li><a jsf:action="#{menuBean.gotoClients}" jsf:styleClass="#{selectedMenu eq 'clients' ? 'selected': ''}"><i
-							class="fa fa-industry" /> #{i18n['menu.clients']}</a></li>
-					<li><a jsf:action="#{menuBean.gotoReports}" jsf:styleClass="#{selectedMenu eq 'reports' ? 'selected': ''}"><i
-							class="fa fa-bar-chart" /> #{i18n['menu.reports']}</a></li>
+						jsf:styleClass="#{selectedMenu eq 'candidates' ? 'selected': ''}"><span class="menu_icon"><i
+								class="fa fa-users" /></span> <span class="menu_text">#{i18n['menu.candidates']}</span></a></li>
+					<li><a jsf:action="#{menuBean.gotoJobOffers}" jsf:styleClass="#{selectedMenu eq 'offers' ? 'selected': ''}"><span
+							class="menu_icon"><i class="fa fa-suitcase" /></span> <span class="menu_text">#{i18n['menu.offers']}</span></a></li>
+					<li><a jsf:action="#{menuBean.gotoClients}" jsf:styleClass="#{selectedMenu eq 'clients' ? 'selected': ''}"><span
+							class="menu_icon"><i class="fa fa-industry" /></span> <span class="menu_text">#{i18n['menu.clients']}</span></a></li>
+					<li><a jsf:action="#{menuBean.gotoReports}" jsf:styleClass="#{selectedMenu eq 'reports' ? 'selected': ''}"><span
+							class="menu_icon"><i class="fa fa-bar-chart" /></span> <span class="menu_text">#{i18n['menu.reports']}</span></a></li>
 					<li><a jsf:action="#{menuBean.gotoUsers}" jsf:rendered="#{request.isUserInRole('ADMIN')}"
-						jsf:styleClass="#{selectedMenu eq 'users' ? 'selected': ''}"><i class="fa fa-user" /> #{i18n['menu.users']}</a></li>
+						jsf:styleClass="#{selectedMenu eq 'users' ? 'selected': ''}"><span class="menu_icon"><i
+								class="fa fa-user" /></span> <span class="menu_text">#{i18n['menu.users']}</span></a></li>
 					<li><a jsf:action="#{menuBean.gotoMaintenances}"
-						jsf:styleClass="#{selectedMenu eq 'maintenances' ? 'selected': ''}"><i class="fa fa-cogs" />
-							#{i18n['menu.maintenances']}</a></li>
+						jsf:styleClass="#{selectedMenu eq 'maintenances' ? 'selected': ''}"><span class="menu_icon"><i
+								class="fa fa-cogs" /></span> <span class="menu_text">#{i18n['menu.maintenances']}</span></a></li>
 				</ul>
 			</nav>
 		</h:form>

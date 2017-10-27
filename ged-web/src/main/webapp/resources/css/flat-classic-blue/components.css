@@ -214,10 +214,6 @@ h4 {
 /************************************
  *  HEADER
  ************************************/
-#logo {
-	
-}
-
 .menu {
 	width: 100%;
 	position: relative;
@@ -232,6 +228,7 @@ h4 {
 	font-size: 1.2em;
 	text-decoration: none;
 	color: #444;
+	height: 34px;
 }
 
 .menu li {
@@ -255,6 +252,18 @@ h4 {
 
 .menu li:hover a {
 	transition: all 0.2s ease-in;
+}
+
+@media ( max-width : 1124px) {
+	.menu .menu_text {
+		display: none;
+	}
+	.menu li {
+		width: 40px;
+	}
+	.menu .menu_icon {
+		padding: 10px;
+	}
 }
 
 /************************************
@@ -908,16 +917,15 @@ textarea {
 	margin-bottom: 3px;
 }
 
-.user-select.image{
+.user-select.image {
 	width: 36px;
 	height: 36px;
-	vertical-align: middle;	
+	vertical-align: middle;
 }
 
-.user-select.name{
-	vertical-align: middle;	
+.user-select.name {
+	vertical-align: middle;
 }
-
 
 .user-minicard .user-info .position {
 	font-weight: 600;
@@ -972,21 +980,47 @@ textarea {
 	background: white;
 }
 
-.card.card-stats:focus{
+.card.card-stats:focus {
 	background-color: #effffc;
 	animation: color-me-in 1s;
 }
 
-@keyframes color-me-in {
-  0% {
-    background-color: #d1e7cc;
-  }
-  100% {
-    background: #effffc;
-    background-color: 1s ease-out;
-  }
+@
+keyframes color-me-in { 0% {
+	background-color: #d1e7cc;
 }
 
+100%
+{
+background
+
+
+:
+
+ 
+
+#effffc
+
+
+;
+background-color
+
+
+:
+
+ 
+
+1
+s
+
+ 
+
+ease-out
+
+
+;
+}
+}
 .card.card-stats .card-header {
 	font-size: 30px;
 	float: left;
