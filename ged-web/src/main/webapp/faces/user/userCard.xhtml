@@ -7,7 +7,7 @@
 		<div class="user-card-resume">
 			<div class="user-image">
 				<p:graphicImage class="image" value="/images/#{user.imageFileName}" rendered="#{not empty user.imageFileName}" />
-				<h:graphicImage class="image" value="/resources/img/default-avatar.png" rendered="#{empty user.imageFileName}" />
+				<p:graphicImage class="image" value="/resources/img/default-avatar.png" rendered="#{empty user.imageFileName}" />
 			</div>
 			<div class="user-info">
 				<div class="name">#{user}</div>

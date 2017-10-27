@@ -56,8 +56,8 @@
 		</div>
 		<h:form id="form">
 			<div class="ui-g">
-				<div class="ui-lg-12">
-					<p:panel styleClass="purple" header="#{i18n['candidate.search']}">
+				<div class="ui-g-12 ui-xl-9">
+					<p:panel id="searchUserPanel" header="#{i18n['candidate.search']}">
 						<div class="ui-g">
 							<div class="ui-md-12 ui-lg-6 ui-xl-4">
 								<div class="form-group">
@@ -90,13 +90,7 @@
 								</div>
 							</div>
 						</div>
-					</p:panel>
-				</div>
-			</div>
 
-			<div class="ui-g">
-				<div class="ui-lg-12">
-					<p:panel styleClass="purple" header="#{i18n['candidate.search_results']}" id="searchUserPanel">
 						<p:dataTable var="candidate" id="candidate"
 							value="#{candidateSearchBean.candidates}"
 							emptyMessage="#{i18n['candidate.no_candidates_found']}"
@@ -134,6 +128,10 @@
 								</p:button>
 							</p:column>
 						</p:dataTable>
+					</p:panel>
+				</div>
+				<div class="ui-g-12 ui-md-6 ui-xl-3">
+					<p:panel id="lastActions" header="#{i18n['index.last_candidates']}">
 					</p:panel>
 				</div>
 			</div>
