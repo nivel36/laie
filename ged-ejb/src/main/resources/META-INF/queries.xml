@@ -305,4 +305,12 @@
 			WHERE uc.descendant.id = :id
 		]]></query>
 	</named-query>
+	
+		<named-query name="UserClosure.findDescendantsUserClosuresById">
+		<query><![CDATA[
+			SELECT uc 
+			FROM UserClosure uc 
+			WHERE uc.antecessor.id = :id
+		]]></query>
+	</named-query>
 </entity-mappings>

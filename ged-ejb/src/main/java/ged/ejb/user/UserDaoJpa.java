@@ -35,7 +35,7 @@ public final class UserDaoJpa extends AbstractDaoJpa<User> implements UserDao {
 
 	private void deleteUserClosures(final User user) {
 		logger.trace("Delete user closures for user {}", user.getEmail());
-		final List<UserClosure> userClosures = findAntecessorsUserClosures(user.getManager());
+		final List<UserClosure> userClosures = findAntecessorsUserClosures(user);
 		for (final UserClosure userClosure : userClosures) {
 			getEm().remove(userClosure);
 		}
@@ -190,14 +190,13 @@ public final class UserDaoJpa extends AbstractDaoJpa<User> implements UserDao {
 	public User update(final User user) {
 		Objects.requireNonNull(user);
 		final User userInDatabase = find(user.getId());
-
 		if (userInDatabase.getManager() == null && user.getManager() != null) {
 			insertUserClosures(user);
 		} else if (userInDatabase.getManager() != null && user.getManager() == null) {
-			deleteUserClosures(user);
+			deleteUserClosures(userInDatabase);
 		} else if (userInDatabase.getManager() != null && user.getManager() != null
 				&& !user.getManager().equals(userInDatabase.getManager())) {
-			deleteUserClosures(user);
+			deleteUserClosures(userInDatabase);
 			insertUserClosures(user);
 		}
 		return getEm().merge(user);
