@@ -88,7 +88,7 @@ insert into ROLECLOSURE( id, version, antecessor_id, descendant_id, pathLength )
 insert into ROLECLOSURE( id, version, antecessor_id, descendant_id, pathLength ) values( 934, 0, 915, 915, 0 );
 insert into ROLECLOSURE( id, version, antecessor_id, descendant_id, pathLength ) values( 935, 0, 915, 914, 1 );
 
-insert into USER( id, version, email, language, name, rowsPerPage, surename, password, roleId, deleted, imageFileName ) values( 901, 0, 'abel.ferrer.jimenez@gmail.com', 'es', 'Abel', 25, 'Ferrer', 'jGl25bVBBBW96Qi9Te4V37Fnqchz/Eu4qB9vKrRIqRg=', 911, false, 901);
+insert into USER( id, version, email, language, name, rowsPerPage, surename, password, roleId, deleted, imageFileName ) values( 901, 0, 'abel.ferrer.jimenez@gmail.com', 'es', 'Abel', 25, 'Ferrer', 'jGl25bVBBBW96Qi9Te4V37Fnqchz/Eu4qB9vKrRIqRg=', 911, false, null);
 insert into USERCLOSURE( id, version, antecessor_id, descendant_id, pathLength ) values( 970, 0, 901, 901, 0 );
 
 insert into CANDIDATE( id, version, name, surename, phoneNumber, email, city, country, door, number, state, storey, street, zipCode, position, curriculumId, ownerid, deleted) values ( 201, 0, 'Abel', 'Ferrer Jiménez','685555276', 'abel.ferrer.jimenez@gmail.com', 'Barcelona', 'España','1','85', 'Barcelona', 'Principal', 'Bailén', '08809', 'Arquitecto', 301, 901, false);

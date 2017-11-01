@@ -42,6 +42,8 @@ public class CandidateViewBean extends AbstractPageBean {
 	private boolean editable;
 
 	private boolean editingFile;
+	
+	public void export(){}
 
 	public void setCandidateService(CandidateService candidateService) {
 		this.candidateService = candidateService;
