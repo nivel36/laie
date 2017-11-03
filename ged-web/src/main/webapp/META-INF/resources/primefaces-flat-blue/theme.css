@@ -4445,14 +4445,18 @@ body .ui-autocomplete {
 }
 
 body .ui-autocomplete-input[aria-readonly="true"] {
-	background: #f2f2f2;	
+	background: #f2f2f2;
 }
 
 body .ui-autocomplete-panel .ui-autocomplete-table td {
 	border: 0px solid transparent;
 }
 
-body .ui-button {
+.ui-fileupload-buttonbar .ui-fileupload-choose input {
+	height: 40px;
+}
+
+body .ui-button, body button.ui-button.ui-state-default, body .ui-button.ui-state-default {
 	background: #32c5d2;
 	color: #fff;
 	height: 30px;
@@ -4463,6 +4467,23 @@ body .ui-button {
 	border: 0px;
 	display: inline;
 	overflow: hidden;
+}
+
+body .ui-button,body .ui-button span,body button.ui-button.ui-state-default span,body .ui-button.ui-state-default span {
+    font-weight: bold;
+}
+
+body .ui-button-text-icon-left .ui-button-text {
+    padding: .3em 1em .3em 2.1em;
+}
+
+body .ui-button .ui-button-text {
+    display: block;
+    line-height: normal;
+}
+
+body .ui-button.ui-state-disabled {
+	background: #c9c9c9;
 }
 
 body .ui-button.medium.rounded {

@@ -7,12 +7,14 @@ import java.nio.file.Files;
 import java.util.Date;
 import java.util.UUID;
 
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.servlet.http.Part;
-
 import org.omnifaces.util.Faces;
+import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.UploadedFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,8 +34,6 @@ public class CandidateViewBean extends AbstractPageBean {
 
 	private static final long serialVersionUID = 1577879781927493283L;
 
-	private boolean addingFile;
-
 	private Candidate candidate;
 
 	@Inject
@@ -41,44 +41,11 @@ public class CandidateViewBean extends AbstractPageBean {
 
 	private boolean editable;
 
-	private boolean editingFile;
-
-	public void setCandidateService(CandidateService candidateService) {
-		this.candidateService = candidateService;
-	}
-
-	public void setFileDirectory(String fileDirectory) {
-		this.fileDirectory = fileDirectory;
-	}
-
-	private FileSys file;
-
 	@Inject
 	@ConfigurationProperty(value = "file.directory")
 	private String fileDirectory;
 
 	private String id;
-
-	private transient Part part;
-
-	public void addFile() {
-		this.addingFile = true;
-		this.editingFile = false;
-		this.facesContext.getExternalContext().getFlash().setKeepMessages(true);
-	}
-
-	public void cancelAddFile() {
-		try {
-			this.addingFile = false;
-			this.editingFile = false;
-			if (temporaryFileUploaded()) {
-				removeFileFromFileSystem(this.file.getUuid());
-			}
-		} catch (final IOException e) {
-			logger.error("Can't remove file", e);
-			MessageUtils.addErrorMessage("error.unnexpected_error", "error.unnexpected_error");
-		}
-	}
 
 	public void cancelEditCandidate() {
 		this.editable = false;
@@ -94,16 +61,6 @@ public class CandidateViewBean extends AbstractPageBean {
 		this.editable = true;
 	}
 
-	public void editFile() {
-		this.addingFile = false;
-		this.editingFile = true;
-	}
-
-	public void editFile(final FileSys file) {
-		this.file = file;
-		editFile();
-	}
-
 	private void error() {
 		Navigate.toPage("candidateSearch");
 	}
@@ -112,35 +69,15 @@ public class CandidateViewBean extends AbstractPageBean {
 		return this.candidate;
 	}
 
-	public FileSys getFile() {
-		return this.file;
-	}
-
-	// Extract part name from content-disposition header of part part
-	private String getFileName(final Part part) throws IOException {
-		final String partHeader = part.getHeader("content-disposition");
-		logger.debug("partHeader: {}", partHeader);
-		for (final String content : part.getHeader("content-disposition").split(";")) {
-			if (content.trim().startsWith("filename")) {
-				return content.substring(content.indexOf('=') + 1).trim().replace("\"", "").toLowerCase();
-			}
-		}
-		throw new IOException("Name not found");
-	}
-
 	public String getId() {
 		return this.id;
 	}
 
-	public Part getPart() {
-		return this.part;
-	}
-
-	public String getStyle() {
-		if (isAddingFile() || isEditingFile()) {
-			return "z-index: 10";
-		}
-		return "";
+	public void handleFileUpload(final FileUploadEvent event) {
+		final String uuid = upload(event.getFile());
+		saveFile(uuid, event.getFile().getFileName());
+		final FacesMessage message = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");
+		FacesContext.getCurrentInstance().addMessage(null, message);
 	}
 
 	private boolean hasLopdFile() {
@@ -175,16 +112,8 @@ public class CandidateViewBean extends AbstractPageBean {
 		checkLopdFile();
 	}
 
-	public boolean isAddingFile() {
-		return this.addingFile;
-	}
-
 	public boolean isEditable() {
 		return this.editable;
-	}
-
-	public boolean isEditingFile() {
-		return this.editingFile;
 	}
 
 	public String modifyCandidate() {
@@ -227,42 +156,33 @@ public class CandidateViewBean extends AbstractPageBean {
 		this.editable = false;
 	}
 
-	public void saveFile() {
-		this.file.setDate(new Date());
-		if (!this.candidate.getFiles().contains(this.file)) {
-			this.candidate.getFiles().add(this.file);
-			this.file.setCandidate(this.candidate);
+	private void saveFile(final String uuid, final String fileName) {
+		final FileSys file = new FileSys();
+		file.setUuid(uuid);
+		file.setName(fileName);
+		file.setDate(new Date());
+		file.setFileType("other");
+		if (!this.candidate.getFiles().contains(file)) {
+			this.candidate.getFiles().add(file);
+			file.setCandidate(this.candidate);
 		}
 		this.candidate = this.candidateService.save(this.candidate);
-		this.editingFile = false;
-	}
-
-	public void setAddingFile(final boolean addingFile) {
-		this.addingFile = addingFile;
 	}
 
 	public void setCandidate(final Candidate candidate) {
 		this.candidate = candidate;
 	}
 
-	public void setEditingFile(final boolean editingFile) {
-		this.editingFile = editingFile;
+	public void setCandidateService(final CandidateService candidateService) {
+		this.candidateService = candidateService;
 	}
 
-	public void setFile(final FileSys file) {
-		this.file = file;
+	public void setFileDirectory(final String fileDirectory) {
+		this.fileDirectory = fileDirectory;
 	}
 
 	public void setId(final String id) {
 		this.id = id;
-	}
-
-	public void setPart(final Part part) {
-		this.part = part;
-	}
-
-	private boolean temporaryFileUploaded() {
-		return this.file != null && this.file.getUuid() != null && this.file.getId() == 0;
 	}
 
 	public void undelete() {
@@ -271,19 +191,14 @@ public class CandidateViewBean extends AbstractPageBean {
 		this.candidateService.save(this.candidate);
 	}
 
-	public void upload() {
-		try (InputStream input = this.part.getInputStream()) {
-			final String fileName = getFileName(this.part);
-			final String uuid = UUID.randomUUID().toString();
+	private String upload(final UploadedFile file) {
+		final String uuid = UUID.randomUUID().toString();
+		try (InputStream input = file.getInputstream()) {
 			Files.copy(input, new java.io.File(this.fileDirectory, uuid).toPath());
-			this.addingFile = false;
-			this.editingFile = true;
-			this.file = new FileSys();
-			this.file.setUuid(uuid);
-			this.file.setName(fileName);
 		} catch (final IOException ex) {
 			logger.error("Can't upload file", ex);
 			MessageUtils.addErrorMessage("error.unnexpected_error", "error.unnexpected_error");
 		}
+		return uuid;
 	}
 }
