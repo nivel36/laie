@@ -1,5 +1,6 @@
 package ged.web.view.candidate;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.invoke.MethodHandles;
@@ -7,11 +8,10 @@ import java.nio.file.Files;
 import java.util.Date;
 import java.util.UUID;
 
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+
 import org.omnifaces.util.Faces;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 
 import ged.ejb.candidate.Candidate;
 import ged.ejb.candidate.CandidateService;
-import ged.ejb.curriculum.FileSys;
+import ged.ejb.candidate.UploadedServerFile;
 import ged.web.core.util.ConfigurationProperty;
 import ged.web.core.util.MessageUtils;
 import ged.web.core.util.Navigate;
@@ -76,16 +76,15 @@ public class CandidateViewBean extends AbstractPageBean {
 	public void handleFileUpload(final FileUploadEvent event) {
 		final String uuid = upload(event.getFile());
 		saveFile(uuid, event.getFile().getFileName());
-		final FacesMessage message = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");
-		FacesContext.getCurrentInstance().addMessage(null, message);
+		addInfoMessage("file.message.upload", "file.message.upload", event.getFile().getFileName());
 	}
 
 	private boolean hasLopdFile() {
 		if (this.candidate.getFiles() == null) {
 			return false;
 		}
-		for (final FileSys fileSys : this.candidate.getFiles()) {
-			if ("lopd".equals(fileSys.getFileType())) {
+		for (final UploadedServerFile fileSys : this.candidate.getFiles()) {
+			if (fileSys.isLopd()) {
 				return true;
 			}
 		}
@@ -125,9 +124,9 @@ public class CandidateViewBean extends AbstractPageBean {
 		checkLopdFile();
 	}
 
-	public void openFile(final FileSys file) {
+	public void openFile(final UploadedServerFile file) {
 		try {
-			final java.io.File downloableFile = new java.io.File(file.getName());
+			final File downloableFile = new File(file.getName());
 			new java.io.File(this.fileDirectory, file.getUuid()).renameTo(downloableFile);
 			Faces.sendFile(downloableFile, true);
 		} catch (final IOException e) {
@@ -136,11 +135,12 @@ public class CandidateViewBean extends AbstractPageBean {
 		}
 	}
 
-	public void removeFile(final FileSys file) {
+	public void removeFile(final UploadedServerFile file) {
 		try {
 			removeFileFromFileSystem(file.getUuid());
 			this.candidate.getFiles().remove(file);
 			this.candidate = this.candidateService.save(this.candidate);
+			addInfoMessage("file.message.remove", "file.message.remove", file.getName());
 		} catch (final IOException e) {
 			logger.error("Can't remove file", e);
 			MessageUtils.addErrorMessage("error.unnexpected_error", "error.unnexpected_error");
@@ -157,11 +157,10 @@ public class CandidateViewBean extends AbstractPageBean {
 	}
 
 	private void saveFile(final String uuid, final String fileName) {
-		final FileSys file = new FileSys();
+		final UploadedServerFile file = new UploadedServerFile();
 		file.setUuid(uuid);
 		file.setName(fileName);
 		file.setDate(new Date());
-		file.setFileType("other");
 		if (!this.candidate.getFiles().contains(file)) {
 			this.candidate.getFiles().add(file);
 			file.setCandidate(this.candidate);
@@ -189,6 +188,11 @@ public class CandidateViewBean extends AbstractPageBean {
 		logger.debug("UNDELETE action");
 		this.candidate.setDeleted(false);
 		this.candidateService.save(this.candidate);
+	}
+
+	public void updateFile(final UploadedServerFile file) {
+		this.candidateService.upddateFile(file);
+		addInfoMessage("file.message.update", "file.message.update", file.getName());
 	}
 
 	private String upload(final UploadedFile file) {

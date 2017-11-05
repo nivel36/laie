@@ -35,7 +35,7 @@
 			<div class="ui-g-12 ui-lg-9 ui-xl-6">
 				<h:form id="form">
 					<input type="hidden" id="candidateId" value="#{candidateViewBean.candidate.id}" />
-					<p:panel styleClass="purple" header="#{candidateViewBean.candidate}">
+					<p:panel header="#{candidateViewBean.candidate}">
 						<div class="ui-g">
 							<div class="ui-g-12 ui-md-6">
 								<div class="form-group">
@@ -144,7 +144,49 @@
 				</h:form>
 			</div>
 
-			<div class="ui-g-12 ui-lg-3 ui-xl-4">
+			<div class="ui-g-12 ui-lg-6 ui-xl-4">
+
+				<h:form id="file_form" enctype="multipart/form-data">
+					<p:panel header="#{i18n['file.files']}">
+						<div class="ui-g">
+							<div class="ui-g-12">
+								<p:dataTable var="file" id="files" value="#{candidateViewBean.candidate.files}"
+									emptyMessage="#{i18n['file.no_files']}" reflow="true" rows="#{sessionBean.rowsPerPage}" rowKey="#{file.id}">
+
+									<p:column headerText="#{i18n['file.name']}">
+										<h:commandLink action="#{candidateViewBean.openFile(file)}">
+											<h:outputText value="#{file.name}" />
+										</h:commandLink>
+									</p:column>
+
+									<p:column headerText="#{i18n['file.lopd']}">
+										<p:selectBooleanCheckbox value="#{file.lopd}">
+											<p:ajax event="change" listener="#{candidateViewBean.updateFile(file)}" update="growl file_form" />
+										</p:selectBooleanCheckbox>
+									</p:column>
+
+									<p:column>
+										<p:commandButton icon="fa fa-trash" styleClass="btn-gray" action="#{candidateViewBean.removeFile(file)}"
+											update="growl file_form" />
+									</p:column>
+								</p:dataTable>
+							</div>
+						</div>
+
+						<div class="ui-g">
+							<div class="ui-g-12">
+								<div class="form-action-primary">
+									<p:fileUpload id="uploadFile" styleClass="btn-green" fileUploadListener="#{candidateViewBean.handleFileUpload}"
+										mode="advanced" dragDropSupport="false" update="file_form growl" sizeLimit="100000" auto="true"
+										label="#{i18n['action.add']}" disabled="#{candidateViewBean.candidate.files.size() gt 6}" />
+								</div>
+							</div>
+						</div>
+					</p:panel>
+				</h:form>
+			</div>
+
+			<div class="ui-g-12 ui-md-12 ui-lg-6">
 				<p:panel header="#{i18n['job_candidature.job_candidatures']}">
 				</p:panel>
 			</div>
@@ -153,50 +195,7 @@
 				<p:panel header="#{i18n['curriculum.curricula']}">
 				</p:panel>
 			</div>
-			<div class="ui-g-12 ui-md-12 ui-lg-6">
-				<h:form id="file_form" enctype="multipart/form-data">
-					<p:panel header="#{i18n['file.files']}">
-						<div class="ui-g">
-							<div class="ui-g-12">
-								<p:dataTable var="file" id="files" value="#{candidateViewBean.candidate.files}"
-									emptyMessage="#{i18n['file.no_files']}" reflow="true" paginator="true" paginatorPosition="bottom"
-									rows="#{sessionBean.rowsPerPage}">
 
-									<p:column headerText="#{i18n['file.name']}">
-										<h:outputText value="#{file.name}" />
-									</p:column>
-
-									<p:column headerText="#{i18n['file.type']}">
-										<h:outputText value="#{file.fileType}" />
-									</p:column>
-
-									<p:column headerText="#{i18n['file.date']}">
-										<h:outputText value="#{file.date}" />
-									</p:column>
-
-									<p:column>
-										<h:commandLink action="#{candidateViewBean.openFile(file)}" value="#{i18n['action.open']}" />
-										<h:commandLink action="#{candidateViewBean.removeFile(file)}" value="#{i18n['action.remove']}">
-											<f:ajax execute="file_form" render="@form" />
-										</h:commandLink>
-									</p:column>
-								</p:dataTable>
-							</div>
-						</div>
-
-						<div class="ui-g">
-							<div class="ui-g-12">
-								<div class="form-group">
-									<p:outputLabel value="#{i18n['file.name']}" for="uploadFile" />
-									<p:fileUpload id="uploadFile" fileUploadListener="#{candidateViewBean.handleFileUpload}" mode="advanced"
-										dragDropSupport="false" update="file_form, growl" sizeLimit="100000" fileLimit="3" auto="true" label="Accept" />
-								</div>
-								<h:message for="uploadFile" errorClass="error" />
-							</div>
-						</div>
-					</p:panel>
-				</h:form>
-			</div>
 		</div>
 	</ui:define>
 </ui:composition>

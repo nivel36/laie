@@ -13,9 +13,6 @@ body  .form-group .ui-inputfield.ui-state-error {
 body .ui-icon {
 	font-family: FontAwesome;
 	font-size: 16px;
-	color: black;
-	top: 8px;
-	right: 12px;
 	text-indent: 0px;
 }
 
@@ -212,7 +209,7 @@ body .ui-icon {
 }
 
 .ui-icon-plusthick:before {
-	content: "";
+	content: "\f067";
 }
 
 .ui-icon-minusthick:before {
@@ -896,7 +893,7 @@ body .ui-icon {
 }
 
 .ui-icon-check:before {
-	content: "";
+	content: "\f00c";
 }
 
 .ui-icon-check-box:before {
@@ -4452,11 +4449,15 @@ body .ui-autocomplete-panel .ui-autocomplete-table td {
 	border: 0px solid transparent;
 }
 
-.ui-fileupload-buttonbar .ui-fileupload-choose input {
+body .ui-fileupload-buttonbar .ui-fileupload-choose input {
 	height: 40px;
 }
 
-body .ui-button, body button.ui-button.ui-state-default, body .ui-button.ui-state-default {
+body .ui-fileupload-content {
+	display: none;
+}
+
+body .ui-button, body button.ui-button {
 	background: #32c5d2;
 	color: #fff;
 	height: 30px;
@@ -4465,41 +4466,49 @@ body .ui-button, body button.ui-button.ui-state-default, body .ui-button.ui-stat
 	margin: 10px 1px;
 	cursor: pointer;
 	border: 0px;
-	display: inline;
 	overflow: hidden;
-}
-
-body .ui-button,body .ui-button span,body button.ui-button.ui-state-default span,body .ui-button.ui-state-default span {
-    font-weight: bold;
+	font-weight: bold;
 }
 
 body .ui-button-text-icon-left .ui-button-text {
-    padding: .3em 1em .3em 2.1em;
+	padding: .3em 1em .3em 2.1em;
+}
+
+body .ui-button-text-only .ui-button-text {
+	padding: 0.2em 0.4em;
 }
 
 body .ui-button .ui-button-text {
-    display: block;
-    line-height: normal;
+	line-height: normal;
+}
+
+body .ui-button.ui-button-icon-only {
+	width: 30px;
+	margin: 0px 2px;
+	border-radius: 5px;
+}
+
+body .ui-button-text-icon-left .ui-icon.fa {
+	margin-left: -60px;
+}
+
+body .ui-button.ui-button-text-icon-left .ui-button-icon-left {
+	padding: 0 8px;
+}
+
+body .ui-button-icon-only .ui-icon.fa, body .ui-button-text-icon-left .ui-icon.fa, body .ui-button-text-icon-right .ui-icon.fa
+	{
+	width: 16px;
+	color: white;
+	margin-top: -7px;
 }
 
 body .ui-button.ui-state-disabled {
 	background: #c9c9c9;
 }
 
-body .ui-button.medium.rounded {
-	border-radius: 10px;
-}
-
-body .ui-button.medium {
-	height: 20px;
-	font-size: 10px;
-	padding: 0px 10px;
-	margin: 5px 1px;
-}
-
-body .ui-button.ui-button-icon-only {
-	padding: 0px 4px;
-	width: 30px;
+body .ui-button.ui-state-hover {
+	background: #2499a3;
 }
 
 body .ui-button.btn-gray {
@@ -4514,23 +4523,27 @@ body .ui-button.btn-red {
 	background: #e53935;;
 }
 
-body .ui-button.ui-state-hover {
-	background: #2499a3;
+body .ui-button.medium {
+	height: 20px;
+	font-size: 10px;
+	padding: 0px 10px;
+	margin: 5px 1px;
 }
 
-body .ui-button-text-only .ui-button-text {
-	padding: 0.2em 0.4em;
+body .ui-button.medium.rounded {
+	border-radius: 10px;
 }
 
-body .ui-button-text-icon-left .ui-icon.fa {
-	margin-left: -60px;
-}
-
-body .ui-button-icon-only .ui-icon.fa, body .ui-button-text-icon-left .ui-icon.fa, body .ui-button-text-icon-right .ui-icon.fa
-	{
+body .ui-chkbox .ui-chkbox-box {
 	width: 16px;
-	color: white;
-	margin-top: -7px;
+	height: 16px;
+	display: inline-block;
+	border-radius: 2px;
+	border: 1px solid #d6d6d6;
+}
+
+body .ui-chkbox .ui-chkbox-box .ui-chkbox-icon {
+	color: #5b9bd1;
 }
 
 body .ui-tabs-panels {

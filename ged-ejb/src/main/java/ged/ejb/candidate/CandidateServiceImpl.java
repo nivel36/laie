@@ -11,7 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ged.ejb.core.AbstratctAuditedService;
-import ged.ejb.core.FileType;
 import ged.ejb.core.model.Dao;
 import ged.ejb.core.model.Repository;
 import ged.ejb.job.offer.JobOffer;
@@ -23,10 +22,14 @@ public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> imp
 
 	private final CandidateDao candidateDao;
 
+	private final FileSysDao fileSysDao;
+
 	@Inject
-	public CandidateServiceImpl(@Repository final CandidateDao candidateDao) {
+	public CandidateServiceImpl(@Repository final CandidateDao candidateDao, @Repository final FileSysDao fileSysDao) {
+		Objects.requireNonNull(fileSysDao);
 		Objects.requireNonNull(candidateDao);
 		this.candidateDao = candidateDao;
+		this.fileSysDao = fileSysDao;
 	}
 
 	@Override
@@ -34,12 +37,6 @@ public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> imp
 		Objects.requireNonNull(jobOffer);
 		logger.debug("Find candidates by jobOffer id {} ", jobOffer.getId());
 		return this.candidateDao.findAllByJobOffer(jobOffer);
-	}
-
-	@Override
-	public List<FileType> findAllFileTypes() {
-		logger.debug("Find all file types");
-		return this.candidateDao.findAllFileTypes();
 	}
 
 	@Override
@@ -52,13 +49,18 @@ public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> imp
 	}
 
 	@Override
+	public UploadedServerFile findFile(final long id) {
+		return this.fileSysDao.find(id);
+	}
+
+	@Override
 	public Dao<Candidate> getDao() {
 		return this.candidateDao;
 	}
 
 	@Override
 	public List<Candidate> search(final String name, final String surename, final String position) {
-		logger.debug("Search candidate by name {} and surename {}", name, surename );
+		logger.debug("Search candidate by name {} and surename {}", name, surename);
 		return this.candidateDao.searchByNameAndSurename(name, surename, position, false);
 	}
 
@@ -67,5 +69,10 @@ public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> imp
 			final boolean showDeleted) {
 		logger.debug("Search candidate by name {} and surename {}. Show deleteted {}", name, surename, showDeleted);
 		return this.candidateDao.searchByNameAndSurename(name, surename, position, showDeleted);
+	}
+
+	@Override
+	public UploadedServerFile upddateFile(final UploadedServerFile file) {
+		return this.fileSysDao.update(file);
 	}
 }

@@ -27,7 +27,6 @@ import ged.ejb.core.Address;
 import ged.ejb.core.model.AbstractAuditedEntity;
 import ged.ejb.core.tag.Tag;
 import ged.ejb.curriculum.Curriculum;
-import ged.ejb.curriculum.FileSys;
 import ged.ejb.job.offer.JobCandidature;
 import ged.ejb.user.User;
 
@@ -58,7 +57,7 @@ public class Candidate extends AbstractAuditedEntity {
 	private Integer expectedSalary;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "candidate", orphanRemoval = true)
-	private List<FileSys> files;
+	private List<UploadedServerFile> files;
 
 	private String image;
 
@@ -157,7 +156,7 @@ public class Candidate extends AbstractAuditedEntity {
 		return this.expectedSalary;
 	}
 
-	public List<FileSys> getFiles() {
+	public List<UploadedServerFile> getFiles() {
 		return this.files;
 	}
 
@@ -238,7 +237,7 @@ public class Candidate extends AbstractAuditedEntity {
 		this.expectedSalary = expectedSalary;
 	}
 
-	public void setFiles(final List<FileSys> files) {
+	public void setFiles(final List<UploadedServerFile> files) {
 		this.files = files;
 	}
 
