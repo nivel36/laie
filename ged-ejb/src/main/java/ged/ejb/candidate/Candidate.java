@@ -59,7 +59,7 @@ public class Candidate extends AbstractAuditedEntity {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "candidate", orphanRemoval = true)
 	private List<UploadedServerFile> files;
 
-	private String image;
+	private String imageFileName;
 
 	private String infojobsProfileUrl;
 
@@ -164,8 +164,8 @@ public class Candidate extends AbstractAuditedEntity {
 		return name + " " + surename;
 	}
 
-	public String getImage() {
-		return image;
+	public String getImageFileName() {
+		return imageFileName;
 	}
 
 	public String getInfojobsProfileUrl() {
@@ -241,8 +241,8 @@ public class Candidate extends AbstractAuditedEntity {
 		this.files = files;
 	}
 
-	public void setImage(String image) {
-		this.image = image;
+	public void setImage(String imageFileName) {
+		this.imageFileName = imageFileName;
 	}
 
 	public void setInfojobsProfileUrl(final String infojobsProfileUrl) {

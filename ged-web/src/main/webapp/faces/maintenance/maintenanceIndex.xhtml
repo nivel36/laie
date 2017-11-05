@@ -11,7 +11,7 @@
 
 	<ui:define name="content">
 		<div class="ui-g">
-			<div class="ui-g-12 ui-lg-6 ui-xl-4">
+			<div class="ui-g-12 ui-md-4">
 				<p:panel header="#{i18n['maintenance.skill_knowdeleges']}">
 					<h:form>
 						<div class="ui-g">
@@ -34,12 +34,12 @@
 				</p:panel>
 			</div>
 
-			<div class="ui-g-12 ui-lg-6 ui-xl-4">
+			<div class="ui-g-12  ui-md-4">
 				<p:panel header="#{i18n['maintenance.language_knowdeleges']}">
 					<h:form>
 						<div class="ui-g">
 							<div class="ui-g-12">
-								<p:selectOneMenu id="languageKnowdelege" label="#{i18n['language.level']}" styleClass="largeInput">
+								<p:selectOneMenu id="languageKnowdelege" label="#{i18n['language.level']}">
 									<f:selectItems var="languageLevel" itemValue="#{languageLevel.name}" value="#{applicationBean.languageLevels}"
 										itemLabel="#{i18n:translate(languageLevel.name)}" />
 								</p:selectOneMenu>
@@ -57,12 +57,12 @@
 				</p:panel>
 			</div>
 			
-			<div class="ui-g-12 ui-lg-6 ui-xl-4">
+			<div class="ui-g-12 ui-md-4">
 				<p:panel header="#{i18n['maintenance.file_types']}">
 					<h:form>
 						<div class="ui-g">
 							<div class="ui-g-12">
-								<p:selectOneMenu id="fileTypes" label="#{i18n['file.type']}" styleClass="largeInput">
+								<p:selectOneMenu id="fileTypes" label="#{i18n['file.type']}">
 									<f:selectItems var="fileType" itemValue="#{fileType.name}" value="#{applicationBean.fileTypes}"
 										itemLabel="#{i18n:translate(fileType.name)}" />
 								</p:selectOneMenu>
