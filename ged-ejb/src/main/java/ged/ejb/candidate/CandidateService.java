@@ -22,4 +22,6 @@ public interface CandidateService extends AuditedService<Candidate> {
 	List<Tag> findAllTags();
 	
 	UploadedServerFile upddateFile(UploadedServerFile file);
+	
+	UploadedServerFile findFile(final long id);
 }

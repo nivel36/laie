@@ -24,6 +24,8 @@ public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> imp
 
 	private final CandidateDao candidateDao;
 
+	private final FileSysDao fileSysDao;
+
 	@Inject
 	public CandidateServiceImpl(@Repository final CandidateDao candidateDao, @Repository final FileSysDao fileSysDao) {
 		Objects.requireNonNull(fileSysDao);
@@ -53,7 +55,7 @@ public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> imp
 		logger.debug("Find candidate with id {} and his/her files", id);
 		return this.candidateDao.findCandidateAndFiles(id);
 	}
-	
+
 	@Override
 	public UploadedServerFile findFile(final long id) {
 		return this.fileSysDao.find(id);
@@ -66,7 +68,7 @@ public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> imp
 
 	@Override
 	public List<Candidate> search(final String name, final String surename, final String position) {
-		logger.debug("Search candidate by name {} and surename {}", name, surename );
+		logger.debug("Search candidate by name {} and surename {}", name, surename);
 		return this.candidateDao.searchByNameAndSurename(name, surename, position, false);
 	}
 
@@ -82,7 +84,7 @@ public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> imp
 		logger.debug("Find all tags");
 		return candidateDao.findAllTags();
 	}
-	
+
 	@Override
 	public UploadedServerFile upddateFile(final UploadedServerFile file) {
 		return this.fileSysDao.update(file);
