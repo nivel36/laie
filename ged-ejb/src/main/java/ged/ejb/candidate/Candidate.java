@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -57,7 +58,7 @@ public class Candidate extends AbstractAuditedEntity {
 	private Integer expectedSalary;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "candidate", orphanRemoval = true)
-	private List<UploadedServerFile> files;
+	private Set<UploadedServerFile> files;
 
 	private String imageFileName;
 
@@ -96,7 +97,7 @@ public class Candidate extends AbstractAuditedEntity {
 	private String surename;
 
 	@OneToMany(cascade = CascadeType.ALL)
-	private List<Tag> tags;
+	private Set<Tag> tags;
 
 	public void addJobCandidature(final JobCandidature jobCandidature) {
 		Objects.requireNonNull(jobCandidature);
@@ -156,7 +157,7 @@ public class Candidate extends AbstractAuditedEntity {
 		return this.expectedSalary;
 	}
 
-	public List<UploadedServerFile> getFiles() {
+	public Set<UploadedServerFile> getFiles() {
 		return this.files;
 	}
 
@@ -204,7 +205,7 @@ public class Candidate extends AbstractAuditedEntity {
 		return this.surename;
 	}
 
-	public List<Tag> getTags() {
+	public Set<Tag> getTags() {
 		return this.tags;
 	}
 
@@ -237,7 +238,7 @@ public class Candidate extends AbstractAuditedEntity {
 		this.expectedSalary = expectedSalary;
 	}
 
-	public void setFiles(final List<UploadedServerFile> files) {
+	public void setFiles(final Set<UploadedServerFile> files) {
 		this.files = files;
 	}
 
@@ -281,7 +282,7 @@ public class Candidate extends AbstractAuditedEntity {
 		this.surename = surename;
 	}
 
-	public void setTags(final List<Tag> tags) {
+	public void setTags(final Set<Tag> tags) {
 		this.tags = tags;
 	}
 

@@ -22,10 +22,10 @@
 					<div class="panel-content">
 						<div class="panel-candidate-detail">
 							<div class="user-image">
-								<p:graphicImage class="image" value="/images/#{candidateViewBean.candidate.image}"
-									rendered="#{not empty candidateViewBean.candidate.image}" />
+								<p:graphicImage class="image" value="/images/#{candidateViewBean.candidate.imageFileName}"
+									rendered="#{not empty candidateViewBean.candidate.imageFileName}" />
 								<p:graphicImage class="image" value="/resources/img/default-avatar.png"
-									rendered="#{empty candidateViewBean.candidate.image}" />
+									rendered="#{empty candidateViewBean.candidate.imageFileName}" />
 							</div>
 						</div>
 					</div>
@@ -129,7 +129,7 @@
 							<div class="ui-g-12 ui-md-6">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['candidate.tags']}" for="tags"/>
-									<p:chip id="tags" value="#{candidateViewBean.candidate.tags}"
+									<p:chips id="tags" value="#{candidateViewBean.tags}"
 										label="#{i18n['candidate.tags']}" styleClass="#{ not component.valid ? 'inputError' : ''}"
 										readonly="#{!candidateViewBean.editable}" />
 								</div>
@@ -158,7 +158,7 @@
 					<p:panel header="#{i18n['file.files']}">
 						<div class="ui-g">
 							<div class="ui-g-12">
-								<p:dataTable var="file" id="files" value="#{candidateViewBean.candidate.files}"
+								<p:dataTable var="file" id="files" value="#{candidateViewBean.files}"
 									emptyMessage="#{i18n['file.no_files']}" reflow="true" rows="#{sessionBean.rowsPerPage}" rowKey="#{file.id}">
 
 									<p:column headerText="#{i18n['file.name']}">

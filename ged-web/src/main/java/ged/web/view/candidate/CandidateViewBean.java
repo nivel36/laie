@@ -5,7 +5,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.invoke.MethodHandles;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import javax.faces.view.ViewScoped;
@@ -21,6 +25,7 @@ import org.slf4j.LoggerFactory;
 import ged.ejb.candidate.Candidate;
 import ged.ejb.candidate.CandidateService;
 import ged.ejb.candidate.UploadedServerFile;
+import ged.ejb.core.tag.Tag;
 import ged.web.core.util.ConfigurationProperty;
 import ged.web.core.util.MessageUtils;
 import ged.web.core.util.Navigate;
@@ -46,6 +51,22 @@ public class CandidateViewBean extends AbstractPageBean {
 	private String fileDirectory;
 
 	private String id;
+	
+	private List<Tag> tags = new ArrayList<>();
+	
+	private List<UploadedServerFile> files =  new ArrayList<>();
+
+	public void setTags(List<Tag> tags) {
+		this.tags = tags;
+	}
+
+	public List<Tag> getTags() {
+		return tags;
+	}
+
+	public List<UploadedServerFile> getFiles() {
+		return files;
+	}
 
 	public void cancelEditCandidate() {
 		this.editable = false;
@@ -102,6 +123,8 @@ public class CandidateViewBean extends AbstractPageBean {
 				if (this.candidate == null) {
 					error();
 				}
+				tags.addAll(candidate.getTags());
+				files.addAll(candidate.getFiles());
 			} catch (final NumberFormatException ex) {
 				error();
 			}
@@ -165,6 +188,12 @@ public class CandidateViewBean extends AbstractPageBean {
 			this.candidate.getFiles().add(file);
 			file.setCandidate(this.candidate);
 		}
+		Set<Tag> tags = new HashSet<>();
+		tags.addAll(this.tags);
+		this.candidate.setTags(tags);
+		Set<UploadedServerFile> files = new HashSet<>();
+		files.addAll(this.files);
+		this.candidate.setFiles(files);
 		this.candidate = this.candidateService.save(this.candidate);
 	}
 

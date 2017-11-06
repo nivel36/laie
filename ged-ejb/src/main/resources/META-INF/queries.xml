@@ -55,6 +55,7 @@
 			SELECT c 
 			FROM Candidate c 
 			LEFT JOIN FETCH c.files
+			LEFT JOIN FETCH c.tags
 			WHERE c.id = :id
 		]]></query>
 	</named-query>
