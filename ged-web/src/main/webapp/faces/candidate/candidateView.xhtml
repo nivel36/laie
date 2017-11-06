@@ -119,12 +119,20 @@
 
 							<div class="ui-g-12 ui-md-6">
 								<div class="form-group">
-									<p:outputLabel value="#{i18n['candidate.expected_salary']}" />
+									<p:outputLabel value="#{i18n['candidate.expected_salary']}" for="expected_salary"/>
 									<p:inputText id="expected_salary" value="#{candidateViewBean.candidate.expectedSalary}"
 										label="#{i18n['candidate.expected_salary']}" styleClass="#{ not component.valid ? 'inputError' : ''}"
 										readonly="#{!candidateViewBean.editable}" />
 								</div>
 								<h:message for="expected_salary" errorClass="error" />
+							</div>
+							<div class="ui-g-12 ui-md-6">
+								<div class="form-group">
+									<p:outputLabel value="#{i18n['candidate.tags']}" for="tags"/>
+									<p:chip id="tags" value="#{candidateViewBean.candidate.tags}"
+										label="#{i18n['candidate.tags']}" styleClass="#{ not component.valid ? 'inputError' : ''}"
+										readonly="#{!candidateViewBean.editable}" />
+								</div>
 							</div>
 						</div>
 						<div class="ui-g">

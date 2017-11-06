@@ -35,10 +35,10 @@ import ged.ejb.user.User;
 public class Candidate extends AbstractAuditedEntity {
 
 	private static final long serialVersionUID = 1305321530927456159L;
-	
+
 	@Embedded
 	private Address address;
-	
+
 	private Integer age;
 
 	@Temporal(TemporalType.DATE)
@@ -106,13 +106,13 @@ public class Candidate extends AbstractAuditedEntity {
 		jobCandidature.setCandidate(this);
 		this.jobCandidatures.add(jobCandidature);
 	}
-	
+
 	protected boolean deepEquals(final Object obj) {
 		final Candidate other = (Candidate) obj;
 		return Objects.equals(this.email, other.email) && Objects.equals(this.name, other.name)
 				&& Objects.equals(this.phoneNumber, other.phoneNumber) && Objects.equals(this.surename, other.surename);
 	}
-	
+
 	@Override
 	public boolean equals(final Object obj) {
 		if (obj == null) {
@@ -161,11 +161,11 @@ public class Candidate extends AbstractAuditedEntity {
 	}
 
 	public String getFullName() {
-		return name + " " + surename;
+		return this.name + " " + this.surename;
 	}
 
 	public String getImageFileName() {
-		return imageFileName;
+		return this.imageFileName;
 	}
 
 	public String getInfojobsProfileUrl() {
@@ -241,7 +241,7 @@ public class Candidate extends AbstractAuditedEntity {
 		this.files = files;
 	}
 
-	public void setImage(String imageFileName) {
+	public void setImage(final String imageFileName) {
 		this.imageFileName = imageFileName;
 	}
 
