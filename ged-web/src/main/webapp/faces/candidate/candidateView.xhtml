@@ -201,38 +201,19 @@
 									paginator="true" paginatorPosition="bottom"
 									rows="#{sessionBean.rowsPerPage}">
 
-									<h:column>
-										<f:facet name="header">
-											<h:outputText value="#{i18n['file.name']}" />
-										</f:facet>
-										<h:outputText value="#{file.id}" />
-									</h:column>
-
-									<h:column>
-										<f:facet name="header">
-											<h:outputText value="#{i18n['file.name']}" />
-										</f:facet>
+									<p:column headerText="#{i18n['file.name']}">
 										<h:outputText value="#{file.name}" />
-									</h:column>
+									</p:column>
 
-									<h:column>
-										<f:facet name="header">
-											<h:outputText value="#{i18n['file.type']}" />
-										</f:facet>
+									<p:column header="#{i18n['file.type']}">
 										<h:outputText value="#{file.fileType}" />
-									</h:column>
+									</p:column>
 
-									<h:column>
-										<f:facet name="header">
-											<h:outputText value="#{i18n['file.date']}" />
-										</f:facet>
+									<p:column header="#{i18n['file.date']}">
 										<h:outputText value="#{file.date}" />
-									</h:column>
+									</p:column>
 
-									<h:column>
-										<f:facet name="header">
-											<h:outputText value="#{i18n['action.action']}" />
-										</f:facet>
+									<p:column>
 										<h:commandLink action="#{candidateViewBean.openFile(file)}"
 											value="#{i18n['action.open']}" />
 								|
@@ -245,91 +226,22 @@
 											value="#{i18n['action.remove']}">
 											<f:ajax execute="file_form" render="@form" />
 										</h:commandLink>
-									</h:column>
+									</p:column>
 								</p:dataTable>
 							</div>
 						</div>
-						<div class="ui-g">
-							<div class="ui-g-12">
-								<div class="form-action-primary">
-									<p:commandButton value="#{i18n['action.add']}"
-										action="#{candidateViewBean.addFile}" immediate="true"
-										update="@form growl" />
-								</div>
-							</div>
-						</div>
-					</p:panel>
-
-					<p:panel styleClass="purple" header="#{i18n['file.files']}"
-						rendered="#{candidateViewBean.addingFile and not candidateViewBean.editingFile}">
 
 						<div class="ui-g">
-							<div class="ui-md-12 ui-lg-6 ui-xl-6">
+							<div class="ui-g-12 ui-lg-6">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['file.name']}" for="uploadFile"
 										styleClass="required" />
-									<p:fileUpload id="uploadFile" value="#{candidateViewBean.part}"
-										required="true" />
+									<p:fileUpload id="uploadFile"
+										fileUploadListener="#{candidateViewBean.part}" mode="advanced"
+										dragDropSupport="false" sizeLimit="100000" fileLimit="3"
+										allowTypes="/(\.|\/)(gif|jpe?g|png|pdf|doc)$/" />
 								</div>
 								<h:message for="uploadFile" errorClass="error" />
-							</div>
-						</div>
-
-						<div class="ui-g">
-							<div class="ui-g-12">
-								<div class="form-action-primary">
-									<p:commandButton styleClass="btn-green"
-										value="#{i18n['action.upload']}"
-										action="#{candidateViewBean.upload}" update="@form growl" />
-									<p:commandButton styleClass="btn-gray"
-										value="#{i18n['action.cancel']}"
-										action="#{candidateViewBean.cancelAddFile}" immediate="true" />
-								</div>
-							</div>
-						</div>
-					</p:panel>
-
-					<p:panel styleClass="purple" header="#{i18n['file.files']}"
-						rendered="#{candidateViewBean.editingFile}">
-						<div class="ui-g">
-							<div class="ui-md-12 ui-lg-6 ui-xl-6">
-								<div class="form-group">
-									<p:outputLabel value="#{i18n['file.name']}" />
-									<p:inputText id="fileName"
-										value="#{candidateViewBean.file.name}" required="true" />
-								</div>
-								<h:message for="fileName" errorClass="error" />
-							</div>
-
-							<div class="ui-md-12 ui-lg-6 ui-xl-6">
-								<div class="form-group">
-									<p:outputLabel value="#{i18n['file.type']}" />
-									<p:selectOneMenu id="fileType"
-										value="#{candidateViewBean.file.fileType}">
-										<f:selectItems var="fileType" itemValue="#{fileType.name}"
-											value="#{applicationBean.fileTypes}" />
-									</p:selectOneMenu>
-								</div>
-								<h:message for="fileType" errorClass="error" />
-							</div>
-							<div class="ui-md-12 ui-lg-6 ui-xl-6">
-								<div class="form-group">
-									<p:outputLabel value="#{i18n['file.description']}" />
-									<p:inputText id="description"
-										value="#{candidateViewBean.file.description}" />
-								</div>
-								<h:message for="description" errorClass="error" />
-							</div>
-						</div>
-						<div class="ui-g">
-							<div class="ui-g-12">
-								<div class="form-action-primary">
-									<p:commandButton value="#{i18n['action.save']}"
-										action="#{candidateViewBean.saveFile}" update="@form growl" />
-									<p:commandButton styleClass="btn-gray"
-										value="#{i18n['action.cancel']}"
-										action="#{candidateViewBean.cancelAddFile}" immediate="true" />
-								</div>
 							</div>
 						</div>
 					</p:panel>

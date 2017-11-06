@@ -4,6 +4,7 @@ import java.util.List;
 
 import ged.ejb.core.AuditedService;
 import ged.ejb.core.FileType;
+import ged.ejb.core.tag.Tag;
 import ged.ejb.job.offer.JobOffer;
 
 public interface CandidateService extends AuditedService<Candidate> {
@@ -17,4 +18,6 @@ public interface CandidateService extends AuditedService<Candidate> {
 	List<Candidate> search(String name, String surename, String position);
 
 	List<Candidate> searchByNameAndSurename(String name, String surename, String position, boolean showDeleted);
+	
+	List<Tag> findAllTags();
 }

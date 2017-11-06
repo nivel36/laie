@@ -19,6 +19,7 @@ import org.hibernate.search.query.dsl.QueryBuilder;
 import ged.ejb.core.FileType;
 import ged.ejb.core.model.AbstractDaoJpa;
 import ged.ejb.core.model.Repository;
+import ged.ejb.core.tag.Tag;
 import ged.ejb.job.offer.JobOffer;
 
 @Repository
@@ -87,5 +88,10 @@ public class CandidateDaoJpa extends AbstractDaoJpa<Candidate> implements Candid
 			persistenceQuery = fullTextEntityManager.createFullTextQuery(bj.createQuery(), Candidate.class);
 		}
 		return persistenceQuery.getResultList();
+	}
+
+	@Override
+	public List<Tag> findAllTags() {
+		return findAll(Tag.class);
 	}
 }

@@ -14,6 +14,7 @@ import ged.ejb.core.AbstratctAuditedService;
 import ged.ejb.core.FileType;
 import ged.ejb.core.model.Dao;
 import ged.ejb.core.model.Repository;
+import ged.ejb.core.tag.Tag;
 import ged.ejb.job.offer.JobOffer;
 
 @Stateless
@@ -67,5 +68,11 @@ public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> imp
 			final boolean showDeleted) {
 		logger.debug("Search candidate by name {} and surename {}. Show deleteted {}", name, surename, showDeleted);
 		return this.candidateDao.searchByNameAndSurename(name, surename, position, showDeleted);
+	}
+
+	@Override
+	public List<Tag> findAllTags() {
+		logger.debug("Find all tags");
+		return candidateDao.findAllTags();
 	}
 }
