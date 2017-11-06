@@ -1,4 +1,4 @@
-package ged.ejb.curriculum;
+package ged.ejb.candidate;
 
 import java.util.Date;
 import java.util.Objects;
@@ -9,14 +9,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
-import ged.ejb.candidate.Candidate;
-import ged.ejb.core.i18n.I18n;
 import ged.ejb.core.model.AbstractEntity;
 
 @Entity
-public class FileSys extends AbstractEntity {
+public class UploadedServerFile extends AbstractEntity {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 6267888369284581482L;
 
 	@ManyToOne
 	@JoinColumn(name = "candidateId", nullable = false)
@@ -26,9 +24,7 @@ public class FileSys extends AbstractEntity {
 
 	private String description;
 
-	@NotNull
-	@I18n
-	private String fileType;
+	private boolean lopd;
 
 	@NotNull
 	@Column(nullable = false)
@@ -37,73 +33,73 @@ public class FileSys extends AbstractEntity {
 	private String uuid;
 
 	@Override
-	public boolean equals(Object obj) {
-		if (obj == null){
+	public boolean equals(final Object obj) {
+		if (obj == null) {
 			return false;
 		}
-		if (this == obj){
+		if (this == obj) {
 			return true;
 		}
-		if (!super.equals(obj)){
+		if (!super.equals(obj)) {
 			return false;
 		}
-		if (getClass() != obj.getClass()){
+		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		FileSys other = (FileSys) obj;
+		final UploadedServerFile other = (UploadedServerFile) obj;
 		return Objects.equals(this.uuid, other.uuid);
 	}
 
 	public Candidate getCandidate() {
-		return candidate;
+		return this.candidate;
 	}
 
 	public Date getDate() {
-		return date;
+		return this.date;
 	}
 
 	public String getDescription() {
-		return description;
-	}
-
-	public String getFileType() {
-		return fileType;
+		return this.description;
 	}
 
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	public String getUuid() {
-		return uuid;
+		return this.uuid;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(uuid);
+		return Objects.hash(this.uuid);
 	}
 
-	public void setCandidate(Candidate candidate) {
+	public boolean isLopd() {
+		return this.lopd;
+	}
+
+	public void setCandidate(final Candidate candidate) {
 		this.candidate = candidate;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(final Date date) {
 		this.date = date;
 	}
 
-	public void setDescription(String description) {
+	public void setDescription(final String description) {
 		this.description = description;
 	}
 
-	public void setFileType(String fileType) {
-		this.fileType = fileType;
+	public void setLopd(final boolean lopd) {
+		this.lopd = lopd;
 	}
 
-	public void setName(String name) {
+	public void setName(final String name) {
 		this.name = name;
 	}
 
-	public void setUuid(String uuid) {
+	public void setUuid(final String uuid) {
 		this.uuid = uuid;
 	}
 }

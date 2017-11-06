@@ -129,8 +129,7 @@ h4 {
 /************************************
  *  PANEL
  ************************************/
-.panel, .yellow-panel, .purple-panel, .green-panel, .red-panel,
-	.cyan-panel, .magenta-panel {
+.panel, .yellow-panel, .purple-panel, .green-panel, .red-panel, .cyan-panel, .magenta-panel {
 	position: relative;
 	width: 100%;
 	overflow: auto;
@@ -220,6 +219,7 @@ h4 {
 	position: relative;
 	background: #F4F5F9;
 	overflow: auto;
+	position: relative;
 	box-shadow: 0 8px 10px rgba(0, 0, 0, .25);
 }
 
@@ -259,26 +259,8 @@ h4 {
 		display: none;
 	}
 	.menu li {
-		display: inline;
 		width: 40px;
 	}
-	.menu .menu_icon {
-		padding: 10px;
-	}
-}
-
-@media ( max-width : 424px) {
-	.menu .menu_text {
-		display: none;
-	}
-	.menu li {
-		width: 40px;
-	}
-	.menu li {
-		display: inline;
-	}
-	display: block ;
-	
 	.menu .menu_icon {
 		padding: 10px;
 	}
@@ -370,12 +352,7 @@ input[type="submit"]:disabled:hover {
 	background: linear-gradient(#F4F5F9, #D5D7E8) !important;
 }
 
-input[type="checkbox"] {
-	margin: 6px 2 5px 2;
-}
-
-input[type="text"]:disabled, input[type="email"]:disabled, textarea:disabled
-	{
+input[type="text"]:disabled, input[type="email"]:disabled, textarea:disabled {
 	border: 0px;
 	background: transparent;
 	color: black;
@@ -398,8 +375,7 @@ input[type="text"]:disabled, input[type="email"]:disabled, textarea:disabled
 	padding: 4px;
 }
 
-.iconButton:hover, input[type="submit"]:hover, input[type="button"]:hover
-	{
+.iconButton:hover, input[type="submit"]:hover, input[type="button"]:hover {
 	box-shadow: 0px 0px 0px rgba(0, 0, 0, .25);
 }
 
@@ -544,8 +520,7 @@ textarea {
 	margin-bottom: 1em;
 	cursor: pointer;
 	text-shadow: 0 1px rgba(255, 255, 255, .75);
-	background: #ddd linear-gradient(to bottom, rgba(255, 255, 255, .3) 0%,
-		rgba(0, 0, 0, .3) 100%);
+	background: #ddd linear-gradient(to bottom, rgba(255, 255, 255, .3) 0%, rgba(0, 0, 0, .3) 100%);
 }
 
 .repeatedPanel {
@@ -766,8 +741,7 @@ textarea {
 
 .login-page>.content {
 	padding-top: 20vh;
-	max-width: 400px;
-	min-width: 300px;
+	width: 400px;
 	margin: 0 auto;
 }
 
@@ -864,8 +838,8 @@ textarea {
 }
 
 .panel .user-image .image {
-	width: 100%;
-	max-width: 149px;
+	width: 149px;
+	height: 149px;
 	border-radius: 50%;
 }
 
@@ -955,8 +929,7 @@ textarea {
 	margin-bottom: 2px;
 }
 
-.user-minicard .user-info .email, .user-minicard .user-info .phoneNumber
-	{
+.user-minicard .user-info .email, .user-minicard .user-info .phoneNumber {
 	font-size: 12px;
 	margin-bottom: 2px;
 }
@@ -1018,41 +991,27 @@ keyframes color-me-in { 0% {
 background
 
 
-
-
 :
-
 
  
 
-
 #effffc
-
-
 
 
 ;
 background-color
 
 
-
-
 :
 
-
  
-
 
 1
 s
 
-
  
 
-
 ease-out
-
-
 
 
 ;

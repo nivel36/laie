@@ -8,7 +8,6 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import ged.ejb.candidate.CandidateService;
 import ged.ejb.curriculum.CurriculumService;
 import ged.ejb.curriculum.LanguageLevel;
 import ged.ejb.curriculum.SkillLevel;
@@ -20,9 +19,6 @@ import ged.ejb.user.role.RoleService;
 public class Cache implements Serializable {
 
 	private static final long serialVersionUID = -8778037668334921574L;
-
-	@Inject
-	private CandidateService candidateService;
 
 	@Inject
 	private CurriculumService curriculumService;
@@ -58,7 +54,6 @@ public class Cache implements Serializable {
 	public void init() {
 		this.skillLevels = this.curriculumService.findAllSkillLevels();
 		this.languageLevels = this.curriculumService.findAllLanguageLevels();
-		this.fileTypes = this.candidateService.findAllFileTypes();
 		this.roles = this.roleService.findAllRoles();
 	}
 }

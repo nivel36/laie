@@ -27,7 +27,6 @@ import ged.ejb.core.Address;
 import ged.ejb.core.model.AbstractAuditedEntity;
 import ged.ejb.core.tag.Tag;
 import ged.ejb.curriculum.Curriculum;
-import ged.ejb.curriculum.FileSys;
 import ged.ejb.job.offer.JobCandidature;
 import ged.ejb.user.User;
 
@@ -36,10 +35,10 @@ import ged.ejb.user.User;
 public class Candidate extends AbstractAuditedEntity {
 
 	private static final long serialVersionUID = 1305321530927456159L;
-	
+
 	@Embedded
 	private Address address;
-	
+
 	private Integer age;
 
 	@Temporal(TemporalType.DATE)
@@ -58,7 +57,7 @@ public class Candidate extends AbstractAuditedEntity {
 	private Integer expectedSalary;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "candidate", orphanRemoval = true)
-	private List<FileSys> files;
+	private List<UploadedServerFile> files;
 
 	private String imageFileName;
 
@@ -107,13 +106,13 @@ public class Candidate extends AbstractAuditedEntity {
 		jobCandidature.setCandidate(this);
 		this.jobCandidatures.add(jobCandidature);
 	}
-	
+
 	protected boolean deepEquals(final Object obj) {
 		final Candidate other = (Candidate) obj;
 		return Objects.equals(this.email, other.email) && Objects.equals(this.name, other.name)
 				&& Objects.equals(this.phoneNumber, other.phoneNumber) && Objects.equals(this.surename, other.surename);
 	}
-	
+
 	@Override
 	public boolean equals(final Object obj) {
 		if (obj == null) {
@@ -157,16 +156,16 @@ public class Candidate extends AbstractAuditedEntity {
 		return this.expectedSalary;
 	}
 
-	public List<FileSys> getFiles() {
+	public List<UploadedServerFile> getFiles() {
 		return this.files;
 	}
 
 	public String getFullName() {
-		return name + " " + surename;
+		return this.name + " " + this.surename;
 	}
 
 	public String getImageFileName() {
-		return imageFileName;
+		return this.imageFileName;
 	}
 
 	public String getInfojobsProfileUrl() {
@@ -238,11 +237,11 @@ public class Candidate extends AbstractAuditedEntity {
 		this.expectedSalary = expectedSalary;
 	}
 
-	public void setFiles(final List<FileSys> files) {
+	public void setFiles(final List<UploadedServerFile> files) {
 		this.files = files;
 	}
 
-	public void setImage(String imageFileName) {
+	public void setImage(final String imageFileName) {
 		this.imageFileName = imageFileName;
 	}
 

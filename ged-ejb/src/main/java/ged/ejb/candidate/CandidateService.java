@@ -20,4 +20,6 @@ public interface CandidateService extends AuditedService<Candidate> {
 	List<Candidate> searchByNameAndSurename(String name, String surename, String position, boolean showDeleted);
 	
 	List<Tag> findAllTags();
+	
+	UploadedServerFile upddateFile(UploadedServerFile file);
 }

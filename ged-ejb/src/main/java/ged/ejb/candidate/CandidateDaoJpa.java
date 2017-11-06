@@ -94,4 +94,9 @@ public class CandidateDaoJpa extends AbstractDaoJpa<Candidate> implements Candid
 	public List<Tag> findAllTags() {
 		return findAll(Tag.class);
 	}
+	
+	@Override
+	public UploadedServerFile updateFile(final UploadedServerFile file) {
+		return getEm().merge(file);
+	}
 }

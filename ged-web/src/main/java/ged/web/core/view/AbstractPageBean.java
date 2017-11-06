@@ -54,7 +54,7 @@ public abstract class AbstractPageBean extends AbstractBean {
 
 	private void addMessage(final UIComponent component, final Severity severity, final String title,
 			final String message, final Object[] params) {
-		final String translatedTitle = TransaltionUtils.translate(title);
+		final String translatedTitle = TransaltionUtils.translate(title, params);
 		final String translatedMessage = TransaltionUtils.translate(message, params);
 		final FacesMessage facesMessage = new FacesMessage(severity, translatedTitle, translatedMessage);
 		if (component == null) {

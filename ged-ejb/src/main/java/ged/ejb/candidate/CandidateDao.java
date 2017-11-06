@@ -21,4 +21,6 @@ public interface CandidateDao extends Dao< Candidate> {
 	List<Candidate> searchByNameAndSurename(String name, String surename, String position, boolean showDeleted);
 	
 	List<Tag> findAllTags();
+	
+	UploadedServerFile updateFile(UploadedServerFile file);
 }
