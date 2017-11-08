@@ -4033,8 +4033,7 @@ body .ui-paginator .ui-paginator-page.ui-state-active {
 	background-color: #3598DC;
 	border-radius: 50%;
 	width: 24px;
-	height: 24px;
-	line-height: 24px;
+	line-height: 20px;
 	color: white;
 }
 
@@ -4494,7 +4493,12 @@ body .ui-button .ui-button-text {
 body .ui-button.ui-button-icon-only {
 	width: 30px;
 	margin: 0px 2px;
-	border-radius: 5px;
+	border-radius: 2px;
+}
+
+body .ui-datatable-data .ui-button-icon-only .ui-icon.fa {
+	font-size: 14px;
+	height: 18px;
 }
 
 body .ui-button-text-icon-left .ui-icon.fa {

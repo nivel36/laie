@@ -186,6 +186,7 @@ public class CandidateViewBean extends AbstractPageBean {
 			removeFileFromFileSystem(file.getUuid());
 			this.candidate.getFiles().remove(file);
 			this.candidate = this.candidateService.save(this.candidate);
+			this.files.remove(file);
 			addInfoMessage("file.message.remove", "file.message.remove", file.getName());
 		} catch (final IOException e) {
 			logger.error("Can't remove file", e);
@@ -199,6 +200,7 @@ public class CandidateViewBean extends AbstractPageBean {
 
 	public void saveCandidate() {
 		this.candidate.setTags(getTagsFromStringList(tags));
+		this.candidate.setFiles(new HashSet<>(files));
 		this.candidate = this.candidateService.save(this.candidate);
 		this.editable = false;
 	}
@@ -239,12 +241,14 @@ public class CandidateViewBean extends AbstractPageBean {
 	public void undelete() {
 		logger.debug("UNDELETE action");
 		this.candidate.setDeleted(false);
-		this.candidateService.save(this.candidate);
+		this.candidate = this.candidateService.save(this.candidate);
 	}
 
 	public void updateFile(final UploadedServerFile file) {
-		this.candidateService.updateFile(file);
-		addInfoMessage("file.message.update", "file.message.update", file.getName());
+		files.remove(file);
+		UploadedServerFile updatedFile = this.candidateService.updateFile(file);
+		files.add(updatedFile);
+		addInfoMessage("file.message.update", "file.message.update", updatedFile.getName());
 	}
 
 	private String upload(final UploadedFile file) {
