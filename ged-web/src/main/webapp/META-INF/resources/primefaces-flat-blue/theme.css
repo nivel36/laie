@@ -4532,6 +4532,10 @@ body .ui-button.btn-green {
 	background: #26a1ab;
 }
 
+body .btn-green .ui-button{
+	background: #26a1ab;
+}
+
 body .ui-button.btn-red {
 	background: #e53935;;
 }

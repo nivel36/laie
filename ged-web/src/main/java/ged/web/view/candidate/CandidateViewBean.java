@@ -114,7 +114,7 @@ public class CandidateViewBean extends AbstractPageBean {
 		return candidateTags;
 	}
 
-	public void handleFileUpload(final FileUploadEvent event) {
+	public void uploadFile(final FileUploadEvent event) {
 		final String uuid = upload(event.getFile());
 		UploadedServerFile file = saveFile(uuid, event.getFile().getFileName());
 		files.add(file);
