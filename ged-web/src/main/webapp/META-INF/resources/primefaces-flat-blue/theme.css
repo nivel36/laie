@@ -941,7 +941,7 @@ body .ui-icon {
 }
 
 .ui-icon-close:before {
-	content: "";
+	content: "\f00d";
 }
 
 .ui-icon-closed-caption:before {
@@ -4110,28 +4110,32 @@ body .ui-growl>.ui-growl-item-container.ui-growl-info {
 	background-color: #5cb860;
 	color: #ffffff;
 	border-radius: 3px;
-	box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(76, 175, 80, 0.4);
+	box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px
+		rgba(76, 175, 80, 0.4);
 }
 
 body .ui-growl>.ui-growl-item-container.ui-growl-warn {
 	background-color: #ffa21a;
 	color: #ffffff;
 	border-radius: 3px;
-	box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(255, 152, 0, 0.4);
+	box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px
+		rgba(255, 152, 0, 0.4);
 }
 
 body .ui-growl>.ui-growl-item-container.ui-growl-error {
 	background-color: #f55a4e;
 	color: #ffffff;
 	border-radius: 3px;
-	box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(244, 67, 54, 0.4);
+	box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px
+		rgba(244, 67, 54, 0.4);
 }
 
 body .ui-growl>.ui-growl-item-container.ui-growl-fatal {
 	background-color: #f55a4e;
 	color: #ffffff;
 	border-radius: 3px;
-	box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(244, 67, 54, 0.4);
+	box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px
+		rgba(244, 67, 54, 0.4);
 }
 
 body .ui-growl .ui-growl-item .ui-growl-image.ui-growl-image-info {
@@ -4140,7 +4144,8 @@ body .ui-growl .ui-growl-item .ui-growl-image.ui-growl-image-info {
 	background: #5cb860;
 }
 
-body .ui-growl .ui-growl-item .ui-growl-image.ui-growl-image-info:before {
+body .ui-growl .ui-growl-item .ui-growl-image.ui-growl-image-info:before
+	{
 	content: "\f06a";
 }
 
@@ -4150,7 +4155,8 @@ body .ui-growl .ui-growl-item .ui-growl-image.ui-growl-image-error {
 	background: #f55a4e;
 }
 
-body .ui-growl .ui-growl-item .ui-growl-image.ui-growl-image-error:before {
+body .ui-growl .ui-growl-item .ui-growl-image.ui-growl-image-error:before
+	{
 	content: "\f06a";
 }
 
@@ -4160,7 +4166,8 @@ body .ui-growl .ui-growl-item .ui-growl-image.ui-growl-image-warn {
 	background: #ffa21a;
 }
 
-body .ui-growl .ui-growl-item .ui-growl-image.ui-growl-image-warn:before {
+body .ui-growl .ui-growl-item .ui-growl-image.ui-growl-image-warn:before
+	{
 	content: "\f06a";
 }
 
@@ -4170,7 +4177,8 @@ body .ui-growl .ui-growl-item .ui-growl-image.ui-growl-image-fatal {
 	background: #f55a4e;
 }
 
-body .ui-growl .ui-growl-item .ui-growl-image.ui-growl-image-fatal:before {
+body .ui-growl .ui-growl-item .ui-growl-image.ui-growl-image-fatal:before
+	{
 	content: "\f06a";
 }
 
@@ -4200,7 +4208,8 @@ body .ui-datatable thead th {
 	text-align: left;
 }
 
-body .ui-datatable thead th, body .ui-datatable tbody td, body .ui-datatable tfoot td, body .ui-datatable tfoot th {
+body .ui-datatable thead th, body .ui-datatable tbody td, body .ui-datatable tfoot td,
+	body .ui-datatable tfoot th {
 	padding: 4px 10px;
 	overflow: hidden;
 	border-width: 0px;
@@ -4244,9 +4253,8 @@ body .ui-outputlabel .ui-outputlabel-rfi {
 	display: none;
 }
 
-body .form-group .ui-inputfield, body .ui-inputfield {
+body .ui-inputfield {
 	outline: medium none;
-	padding: 5px;
 	background-color: white;
 	font-size: 13px;
 	border: 1px solid #c2cad8;
@@ -4262,7 +4270,8 @@ body .ui-calendar .ui-inputfield {
 	width: 100%;
 }
 
-body .ui-inputtext[aria-required="true"], body .ui-inputtext[data-p-required="true"] {
+body .ui-inputtext[aria-required="true"], body .ui-inputtext[data-p-required="true"]
+	{
 	border-left: 2px solid #a2aab8;
 }
 
@@ -4496,8 +4505,8 @@ body .ui-button.ui-button-text-icon-left .ui-button-icon-left {
 	padding: 0 8px;
 }
 
-body .ui-button-icon-only .ui-icon.fa, body .ui-button-text-icon-left .ui-icon.fa, body .ui-button-text-icon-right .ui-icon.fa
-	{
+body .ui-button-icon-only .ui-icon.fa, body .ui-button-text-icon-left .ui-icon.fa,
+	body .ui-button-text-icon-right .ui-icon.fa {
 	width: 16px;
 	color: white;
 	margin-top: -7px;
@@ -4544,6 +4553,49 @@ body .ui-chkbox .ui-chkbox-box {
 
 body .ui-chkbox .ui-chkbox-box .ui-chkbox-icon {
 	color: #5b9bd1;
+}
+
+body .ui-chips-container {
+	height: auto;
+	min-height: 30px;
+}
+
+body .ui-chips-container.ui-state-disabled {
+	height: auto;
+	min-height: 30px;
+	border: 1px solid transparent;
+}
+
+body .ui-chips-container .ui-chips-token {
+	padding: 3px 0px 3px 5px;
+	border-radius: 3px;
+	background: #5b9bd1;
+	color: white;
+}
+
+body .ui-chips-container .ui-chips-token:hover .ui-chips-token-label {
+	padding: 0 2.1em 0 .5em;
+}
+
+body .ui-chips-container.ui-state-disabled .ui-chips-token:hover .ui-chips-token-label {
+	padding: 0 1em 0 .5em;
+}
+
+body .ui-chips-token .ui-chips-token-label {
+	padding: 0 1em 0 .5em;
+}
+
+body .ui-chips-container.ui-state-disabled .ui-chips-token:hover .ui-icon
+	{
+	display: none;
+}
+
+body .ui-chips-container .ui-chips-token:hover .ui-icon {
+	display: inline;
+}
+
+body .ui-chips-container .ui-chips-token .ui-icon {
+	display: none;
 }
 
 body .ui-tabs-panels {

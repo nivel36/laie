@@ -12,11 +12,6 @@ insert into LANGUAGELEVEL( id, version, name, description ) values ( 121, 0, 'me
 insert into LANGUAGELEVEL( id, version, name, description ) values ( 122, 0, 'low', 'low.description');
 insert into LANGUAGELEVEL( id, version, name, description ) values ( 123, 0, 'native', 'native.description');
 
-insert into FILETYPE( id, version, name, description ) values ( 130, 0, 'curriculum', 'curriculum.description');
-insert into FILETYPE( id, version, name, description ) values ( 131, 0, 'lopd', 'lopd.description');
-insert into FILETYPE( id, version, name, description ) values ( 132, 0, 'edited_curriculum', 'edited_curriculum.description');
-insert into FILETYPE( id, version, name, description ) values ( 133, 0, 'other', 'other.description');
-
 insert into CURRICULUM( id, version, perfilProfesional, deleted ) values (301, 0, 'Arquitecto JEE', false);
 
 insert into EDUCATION( id, version, curriculumId, degree, description,  fromDate, school, stillStudying, toDate, deleted) values( 401, 0, 301, 'Licenciado en Matemáticas', 'Licenciado en Matemáticas por la universidad de Barcelona',  DATE '2000-10-01', 'Universitat de Barcelona', false, DATE '2012-12-01', false);
