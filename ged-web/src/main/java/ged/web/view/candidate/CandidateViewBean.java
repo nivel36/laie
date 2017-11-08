@@ -50,23 +50,11 @@ public class CandidateViewBean extends AbstractPageBean {
 	@ConfigurationProperty(value = "file.directory")
 	private String fileDirectory;
 
+	private List<UploadedServerFile> files = new ArrayList<>();
+
 	private String id;
 
 	private List<String> tags = new ArrayList<>();
-
-	private List<UploadedServerFile> files = new ArrayList<>();
-
-	public void setTags(List<String> tags) {
-		this.tags = tags;
-	}
-
-	public List<String> getTags() {
-		return tags;
-	}
-
-	public List<UploadedServerFile> getFiles() {
-		return files;
-	}
 
 	public void cancelEditCandidate() {
 		this.editable = false;
@@ -90,8 +78,40 @@ public class CandidateViewBean extends AbstractPageBean {
 		return this.candidate;
 	}
 
+	public List<UploadedServerFile> getFiles() {
+		return files;
+	}
+
 	public String getId() {
 		return this.id;
+	}
+
+	public List<String> getTags() {
+		return tags;
+	}
+
+	private Set<Tag> getTagsFromStringList(List<String> labels) {
+		List<Tag> allTags = candidateService.findAllTags();
+		Set<Tag> candidateTags = new HashSet<>();
+		for (String label : labels) {
+			if (label == null) {
+				return null;
+			}
+			boolean found = false;
+			for (Tag tag : allTags) {
+				if (tag.getLabel().equals(label)) {
+					candidateTags.add(tag);
+					found = true;
+					break;
+				}
+			}
+			if (!found) {
+				final Tag tag = new Tag();
+				tag.setLabel(label);
+				candidateTags.add(tag);
+			}
+		}
+		return candidateTags;
 	}
 
 	public void handleFileUpload(final FileUploadEvent event) {
@@ -135,30 +155,6 @@ public class CandidateViewBean extends AbstractPageBean {
 			error();
 		}
 		checkLopdFile();
-	}
-
-	private Set<Tag> getTagsFromStringList(List<String> labels) {
-		List<Tag> allTags = candidateService.findAllTags();
-		Set<Tag> candidateTags = new HashSet<>();
-		for (String label : labels) {
-			if (label == null) {
-				return null;
-			}
-			boolean found = false;
-			for (Tag tag : allTags) {
-				if (tag.getLabel().equals(label)) {
-					candidateTags.add(tag);
-					found = true;
-					break;
-				}
-			}
-			if (!found) {
-				final Tag tag = new Tag();
-				tag.setLabel(label);
-				candidateTags.add(tag);
-			}
-		}
-		return candidateTags;
 	}
 
 	public boolean isEditable() {
@@ -234,6 +230,10 @@ public class CandidateViewBean extends AbstractPageBean {
 
 	public void setId(final String id) {
 		this.id = id;
+	}
+
+	public void setTags(final List<String> tags) {
+		this.tags = tags;
 	}
 
 	public void undelete() {
