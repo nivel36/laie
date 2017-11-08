@@ -7,9 +7,7 @@ import java.lang.invoke.MethodHandles;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
 import javax.faces.view.ViewScoped;
@@ -51,10 +49,10 @@ public class CandidateViewBean extends AbstractPageBean {
 	private String fileDirectory;
 
 	private String id;
-	
+
 	private List<Tag> tags = new ArrayList<>();
-	
-	private List<UploadedServerFile> files =  new ArrayList<>();
+
+	private List<UploadedServerFile> files = new ArrayList<>();
 
 	public void setTags(List<Tag> tags) {
 		this.tags = tags;
@@ -96,7 +94,8 @@ public class CandidateViewBean extends AbstractPageBean {
 
 	public void handleFileUpload(final FileUploadEvent event) {
 		final String uuid = upload(event.getFile());
-		saveFile(uuid, event.getFile().getFileName());
+		UploadedServerFile file = saveFile(uuid, event.getFile().getFileName());
+		files.add(file);
 		addInfoMessage("file.message.upload", "file.message.upload", event.getFile().getFileName());
 	}
 
@@ -179,7 +178,7 @@ public class CandidateViewBean extends AbstractPageBean {
 		this.editable = false;
 	}
 
-	private void saveFile(final String uuid, final String fileName) {
+	private UploadedServerFile saveFile(final String uuid, final String fileName) {
 		final UploadedServerFile file = new UploadedServerFile();
 		file.setUuid(uuid);
 		file.setName(fileName);
@@ -188,13 +187,8 @@ public class CandidateViewBean extends AbstractPageBean {
 			this.candidate.getFiles().add(file);
 			file.setCandidate(this.candidate);
 		}
-		Set<Tag> tags = new HashSet<>();
-		tags.addAll(this.tags);
-		this.candidate.setTags(tags);
-		Set<UploadedServerFile> files = new HashSet<>();
-		files.addAll(this.files);
-		this.candidate.setFiles(files);
-		this.candidate = this.candidateService.save(this.candidate);
+		this.candidateService.insertFile(file);
+		return file;
 	}
 
 	public void setCandidate(final Candidate candidate) {
@@ -220,7 +214,7 @@ public class CandidateViewBean extends AbstractPageBean {
 	}
 
 	public void updateFile(final UploadedServerFile file) {
-		this.candidateService.upddateFile(file);
+		this.candidateService.updateFile(file);
 		addInfoMessage("file.message.update", "file.message.update", file.getName());
 	}
 

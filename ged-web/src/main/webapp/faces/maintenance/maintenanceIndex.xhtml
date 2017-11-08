@@ -56,29 +56,6 @@
 					</h:form>
 				</p:panel>
 			</div>
-			
-			<div class="ui-g-12 ui-md-4">
-				<p:panel header="#{i18n['maintenance.file_types']}">
-					<h:form>
-						<div class="ui-g">
-							<div class="ui-g-12">
-								<p:selectOneMenu id="fileTypes" label="#{i18n['file.type']}">
-									<f:selectItems var="fileType" itemValue="#{fileType.name}" value="#{applicationBean.fileTypes}"
-										itemLabel="#{i18n:translate(fileType.name)}" />
-								</p:selectOneMenu>
-							</div>
-						</div>
-						<div class="ui-g">
-							<div class="ui-g-12">
-								<div class="form-action-primary">
-									<p:commandButton styleClass="btn-green" value="#{i18n['action.new']}" />
-									<p:commandButton value="#{i18n['action.modify']}" />
-								</div>
-							</div>
-						</div>
-					</h:form>
-				</p:panel>
-			</div>
 		</div>
 	</ui:define>
 </ui:composition>

@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
@@ -14,8 +12,10 @@ import javax.faces.application.Application;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import ged.ejb.core.Cache;
-import ged.ejb.core.FileType;
 import ged.ejb.curriculum.LanguageLevel;
 import ged.ejb.curriculum.SkillLevel;
 import ged.ejb.user.role.Role;
@@ -44,10 +44,6 @@ public class ApplicationBean extends AbstractBean {
 
 	public String getBuildtime() {
 		return this.buildtime;
-	}
-
-	public List<FileType> getFileTypes() {
-		return this.cache.getFileTypes();
 	}
 
 	public List<LanguageLevel> getLanguageLevels() {

@@ -16,7 +16,6 @@ import org.hibernate.search.jpa.Search;
 import org.hibernate.search.query.dsl.BooleanJunction;
 import org.hibernate.search.query.dsl.QueryBuilder;
 
-import ged.ejb.core.FileType;
 import ged.ejb.core.model.AbstractDaoJpa;
 import ged.ejb.core.model.Repository;
 import ged.ejb.core.tag.Tag;
@@ -41,11 +40,6 @@ public class CandidateDaoJpa extends AbstractDaoJpa<Candidate> implements Candid
 			return new ArrayList<>();
 		}
 		return candidates;
-	}
-
-	@Override
-	public List<FileType> findAllFileTypes() {
-		return findAll(FileType.class);
 	}
 
 	@Override
@@ -93,10 +87,5 @@ public class CandidateDaoJpa extends AbstractDaoJpa<Candidate> implements Candid
 	@Override
 	public List<Tag> findAllTags() {
 		return findAll(Tag.class);
-	}
-	
-	@Override
-	public UploadedServerFile updateFile(final UploadedServerFile file) {
-		return getEm().merge(file);
 	}
 }

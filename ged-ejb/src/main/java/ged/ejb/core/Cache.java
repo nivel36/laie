@@ -23,8 +23,6 @@ public class Cache implements Serializable {
 	@Inject
 	private CurriculumService curriculumService;
 
-	private List<FileType> fileTypes;
-
 	private List<LanguageLevel> languageLevels;
 
 	private List<Role> roles;
@@ -33,10 +31,6 @@ public class Cache implements Serializable {
 	private RoleService roleService;
 
 	private List<SkillLevel> skillLevels;
-
-	public List<FileType> getFileTypes() {
-		return this.fileTypes;
-	}
 
 	public List<LanguageLevel> getLanguageLevels() {
 		return this.languageLevels;

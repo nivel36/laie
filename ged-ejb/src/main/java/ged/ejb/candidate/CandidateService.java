@@ -3,15 +3,12 @@ package ged.ejb.candidate;
 import java.util.List;
 
 import ged.ejb.core.AuditedService;
-import ged.ejb.core.FileType;
 import ged.ejb.core.tag.Tag;
 import ged.ejb.job.offer.JobOffer;
 
 public interface CandidateService extends AuditedService<Candidate> {
 
 	List<Candidate> findAllByJobOffer(JobOffer jobOffer);
-
-	List<FileType> findAllFileTypes();
 
 	Candidate findCandidateAndFiles(long id);
 
@@ -21,7 +18,9 @@ public interface CandidateService extends AuditedService<Candidate> {
 	
 	List<Tag> findAllTags();
 	
-	UploadedServerFile upddateFile(UploadedServerFile file);
+	UploadedServerFile updateFile(UploadedServerFile file);
 	
 	UploadedServerFile findFile(final long id);
+	
+	void insertFile(UploadedServerFile file);
 }

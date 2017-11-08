@@ -11,7 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ged.ejb.core.AbstratctAuditedService;
-import ged.ejb.core.FileType;
 import ged.ejb.core.model.Dao;
 import ged.ejb.core.model.Repository;
 import ged.ejb.core.tag.Tag;
@@ -24,14 +23,15 @@ public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> imp
 
 	private final CandidateDao candidateDao;
 
-	private final FileSysDao fileSysDao;
+	private final UploadedServerFileDao uploadedServerFileDao;
 
 	@Inject
-	public CandidateServiceImpl(@Repository final CandidateDao candidateDao, @Repository final FileSysDao fileSysDao) {
-		Objects.requireNonNull(fileSysDao);
+	public CandidateServiceImpl(@Repository final CandidateDao candidateDao,
+			@Repository final UploadedServerFileDao uploadedServerFileDao) {
+		Objects.requireNonNull(uploadedServerFileDao);
 		Objects.requireNonNull(candidateDao);
 		this.candidateDao = candidateDao;
-		this.fileSysDao = fileSysDao;
+		this.uploadedServerFileDao = uploadedServerFileDao;
 	}
 
 	@Override
@@ -39,12 +39,6 @@ public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> imp
 		Objects.requireNonNull(jobOffer);
 		logger.debug("Find candidates by jobOffer id {} ", jobOffer.getId());
 		return this.candidateDao.findAllByJobOffer(jobOffer);
-	}
-
-	@Override
-	public List<FileType> findAllFileTypes() {
-		logger.debug("Find all file types");
-		return this.candidateDao.findAllFileTypes();
 	}
 
 	@Override
@@ -58,7 +52,7 @@ public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> imp
 
 	@Override
 	public UploadedServerFile findFile(final long id) {
-		return this.fileSysDao.find(id);
+		return this.uploadedServerFileDao.find(id);
 	}
 
 	@Override
@@ -86,7 +80,12 @@ public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> imp
 	}
 
 	@Override
-	public UploadedServerFile upddateFile(final UploadedServerFile file) {
-		return this.fileSysDao.update(file);
+	public UploadedServerFile updateFile(final UploadedServerFile file) {
+		return this.uploadedServerFileDao.update(file);
+	}
+
+	@Override
+	public void insertFile(UploadedServerFile file) {
+		 this.uploadedServerFileDao.insert(file);
 	}
 }
