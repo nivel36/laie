@@ -50,7 +50,7 @@ public class CandidateViewBean extends AbstractPageBean {
 	@ConfigurationProperty(value = "file.directory")
 	private String fileDirectory;
 
-	private List<UploadedServerFile> files = new ArrayList<>();
+	private final List<UploadedServerFile> files = new ArrayList<>();
 
 	private String id;
 
@@ -79,7 +79,7 @@ public class CandidateViewBean extends AbstractPageBean {
 	}
 
 	public List<UploadedServerFile> getFiles() {
-		return files;
+		return this.files;
 	}
 
 	public String getId() {
@@ -87,18 +87,18 @@ public class CandidateViewBean extends AbstractPageBean {
 	}
 
 	public List<String> getTags() {
-		return tags;
+		return this.tags;
 	}
 
-	private Set<Tag> getTagsFromStringList(List<String> labels) {
-		List<Tag> allTags = candidateService.findAllTags();
-		Set<Tag> candidateTags = new HashSet<>();
-		for (String label : labels) {
+	private Set<Tag> getTagsFromStringList(final List<String> labels) {
+		final List<Tag> allTags = this.candidateService.findAllTags();
+		final Set<Tag> candidateTags = new HashSet<>();
+		for (final String label : labels) {
 			if (label == null) {
 				return null;
 			}
 			boolean found = false;
-			for (Tag tag : allTags) {
+			for (final Tag tag : allTags) {
 				if (tag.getLabel().equals(label)) {
 					candidateTags.add(tag);
 					found = true;
@@ -112,13 +112,6 @@ public class CandidateViewBean extends AbstractPageBean {
 			}
 		}
 		return candidateTags;
-	}
-
-	public void uploadFile(final FileUploadEvent event) {
-		final String uuid = upload(event.getFile());
-		UploadedServerFile file = saveFile(uuid, event.getFile().getFileName());
-		files.add(file);
-		addInfoMessage("file.message.upload", "file.message.upload", event.getFile().getFileName());
 	}
 
 	private boolean hasLopdFile() {
@@ -144,10 +137,10 @@ public class CandidateViewBean extends AbstractPageBean {
 				if (this.candidate == null) {
 					error();
 				}
-				for (Tag tag : candidate.getTags()) {
-					tags.add(tag.getLabel());
+				for (final Tag tag : this.candidate.getTags()) {
+					this.tags.add(tag.getLabel());
 				}
-				files.addAll(candidate.getFiles());
+				this.files.addAll(this.candidate.getFiles());
 			} catch (final NumberFormatException ex) {
 				error();
 			}
@@ -199,8 +192,8 @@ public class CandidateViewBean extends AbstractPageBean {
 	}
 
 	public void saveCandidate() {
-		this.candidate.setTags(getTagsFromStringList(tags));
-		this.candidate.setFiles(new HashSet<>(files));
+		this.candidate.setTags(getTagsFromStringList(this.tags));
+		this.candidate.setFiles(new HashSet<>(this.files));
 		this.candidate = this.candidateService.save(this.candidate);
 		this.editable = false;
 	}
@@ -245,9 +238,9 @@ public class CandidateViewBean extends AbstractPageBean {
 	}
 
 	public void updateFile(final UploadedServerFile file) {
-		files.remove(file);
-		UploadedServerFile updatedFile = this.candidateService.updateFile(file);
-		files.add(updatedFile);
+		this.files.remove(file);
+		final UploadedServerFile updatedFile = this.candidateService.updateFile(file);
+		this.files.add(updatedFile);
 		addInfoMessage("file.message.update", "file.message.update", updatedFile.getName());
 	}
 
@@ -260,5 +253,12 @@ public class CandidateViewBean extends AbstractPageBean {
 			MessageUtils.addErrorMessage("error.unnexpected_error", "error.unnexpected_error");
 		}
 		return uuid;
+	}
+
+	public void uploadFile(final FileUploadEvent event) {
+		final String uuid = upload(event.getFile());
+		final UploadedServerFile file = saveFile(uuid, event.getFile().getFileName());
+		this.files.add(file);
+		addInfoMessage("file.message.upload", "file.message.upload", event.getFile().getFileName());
 	}
 }
