@@ -50,7 +50,7 @@
 						</p:commandLink>
 					</div>
 					<div class="ui-g-6 ui-lg-3">
-						<div class="card card-stats"  tabindex="4">
+						<div class="card card-stats" tabindex="4">
 							<div class="card-header"></div>
 							<div class="card-body">
 								<p class="card-category">#{i18n['user.stats.team_by_user']}</p>
@@ -115,19 +115,16 @@
 				</div>
 				<div class="ui-g-12 ui-md-6 ui-lg-3">
 					<p:panel id="lastActions" header="#{i18n['user.last_actions']}">
-					<ul>
+						<ul>
 							<ui:repeat var="action" value="#{userSearchBean.actions}">
 								<li><h:link value="#{action.user}" outcome="userView">
 										<f:param name="id" value="#{action.user.id}" />
-									</h:link> 
-									<h:outputText value=" "/>
-									<h:outputFormat value="#{i18n:translate(action.actionPerformed)}"
-										rendered="#{action.actionPerformed == 'LOGIN'}" /> 
-									<h:outputText value="#{i18n:translate(action.actionPerformed)}" rendered="#{action.actionPerformed != 'LOGIN'}" />
-									<h:outputFormat	value="#{i18n:translate(action.entityClass)}" rendered="#{action.actionPerformed != 'LOGIN'}" >
+									</h:link> <h:outputText value=" " /> <h:outputFormat value="#{i18n:translate(action.actionPerformed)}"
+										rendered="#{action.actionPerformed == 'LOGIN'}" /> <h:outputText
+										value="#{i18n:translate(action.actionPerformed)}" rendered="#{action.actionPerformed != 'LOGIN'}" /> <h:outputFormat
+										value="#{i18n:translate(action.entityClass)}" rendered="#{action.actionPerformed != 'LOGIN'}">
 										<f:param value="#{action.text}" />
-									</h:outputFormat>
-								</li>
+									</h:outputFormat></li>
 							</ui:repeat>
 						</ul>
 					</p:panel>
