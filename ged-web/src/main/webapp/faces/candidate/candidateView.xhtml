@@ -39,7 +39,7 @@
 						<div class="ui-g">
 							<div class="ui-g-12 ui-md-4">
 								<div class="form-group">
-									<p:outputLabel value="#{i18n['candidate.name']}" />
+									<p:outputLabel value="#{i18n['candidate.name']}" for="name"/>
 									<p:inputText id="name" value="#{candidateViewBean.candidate.name}" required="true"
 										readonly="#{!candidateViewBean.editable}" />
 								</div>
@@ -48,7 +48,7 @@
 
 							<div class="ui-g-12 ui-md-4">
 								<div class="form-group">
-									<p:outputLabel value="#{i18n['candidate.surename']}" />
+									<p:outputLabel value="#{i18n['candidate.surename']}" for="surename"/>
 									<p:inputText id="surename" value="#{candidateViewBean.candidate.surename}" required="true"
 										readonly="#{!candidateViewBean.editable}" />
 								</div>
@@ -57,7 +57,7 @@
 
 							<div class="ui-g-12 ui-md-4">
 								<div class="form-group">
-									<p:outputLabel value="#{i18n['candidate.age']}" />
+									<p:outputLabel value="#{i18n['candidate.age']}" for="age" />
 									<p:inputText id="age" value="#{candidateViewBean.candidate.age}" readonly="#{!candidateViewBean.editable}" />
 								</div>
 								<h:message for="age" errorClass="error" />
@@ -66,7 +66,7 @@
 						<div class="ui-g">
 							<div class="ui-g-12 ui-md-4">
 								<div class="form-group">
-									<p:outputLabel value="#{i18n['candidate.phone_number']}" />
+									<p:outputLabel value="#{i18n['candidate.phone_number']}" for="phoneNumber"/>
 									<p:inputText id="phoneNumber" value="#{candidateViewBean.candidate.phoneNumber}" required="true"
 										readonly="#{!candidateViewBean.editable}" />
 								</div>
@@ -75,13 +75,23 @@
 
 							<div class="ui-g-12 ui-md-4">
 								<div class="form-group">
-									<p:outputLabel value="#{i18n['candidate.email']}" />
+									<p:outputLabel value="#{i18n['candidate.email']}" for="email"/>
 									<p:inputText id="email" pt:type="email" value="#{candidateViewBean.candidate.email}" required="true"
 										readonly="#{!candidateViewBean.editable}" />
 								</div>
 								<h:message for="email" errorClass="error" />
 							</div>
+							
+							<div class="ui-g-12 ui-md-4">
+								<div class="form-group">
+									<p:outputLabel value="#{i18n['candidate.skype']}" for="email"/>
+									<p:inputText id="email" pt:type="email" value="#{candidateViewBean.candidate.skype}" 
+										readonly="#{!candidateViewBean.editable}" />
+								</div>
+								<h:message for="skype" errorClass="error" />
+							</div>
 						</div>
+						
 						<div class="ui-g">
 							<div class="ui-g-12 ui-md-4">
 								<div class="form-group">

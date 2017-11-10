@@ -93,6 +93,9 @@ public class Candidate extends AbstractAuditedEntity {
 
 	private Integer salary;
 
+	@Column(length = 128)
+	private String skype;
+
 	@NotNull
 	@Column(length = 64, nullable = false)
 	@Field
@@ -204,6 +207,10 @@ public class Candidate extends AbstractAuditedEntity {
 		return this.salary;
 	}
 
+	public String getSkype() {
+		return this.skype;
+	}
+
 	public String getSurename() {
 		return this.surename;
 	}
@@ -279,6 +286,10 @@ public class Candidate extends AbstractAuditedEntity {
 
 	public void setSalary(final Integer salary) {
 		this.salary = salary;
+	}
+
+	public void setSkype(final String skype) {
+		this.skype = skype;
 	}
 
 	public void setSurename(final String surename) {
