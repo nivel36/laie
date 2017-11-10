@@ -6,9 +6,14 @@
 	box-sizing: border-box;
 }
 
-body  .form-group .ui-inputfield.ui-state-error {
+body .ui-inputfield.ui-state-error {
 	border: 1px solid red;
 }
+
+body .ui-inputfield.ui-state-disabled {
+	background: #f2f2f2;
+}
+
 
 body .ui-icon {
 	font-family: FontAwesome;
