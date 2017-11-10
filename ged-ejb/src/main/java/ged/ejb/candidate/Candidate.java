@@ -42,8 +42,6 @@ public class Candidate extends AbstractAuditedEntity {
 	@Embedded
 	private Address address;
 
-	private Integer age;
-
 	@Temporal(TemporalType.DATE)
 	private Date bornDate;
 
@@ -143,10 +141,6 @@ public class Candidate extends AbstractAuditedEntity {
 		return this.address;
 	}
 
-	public Integer getAge() {
-		return this.age;
-	}
-
 	public Date getBornDate() {
 		return this.bornDate;
 	}
@@ -226,10 +220,6 @@ public class Candidate extends AbstractAuditedEntity {
 
 	public void setAddress(final Address address) {
 		this.address = address;
-	}
-
-	public void setAge(final Integer age) {
-		this.age = age;
 	}
 
 	public void setBornDate(final Date bornDate) {

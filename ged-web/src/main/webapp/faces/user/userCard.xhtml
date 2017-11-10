@@ -4,7 +4,7 @@
 	xmlns:i18n="http://legion.com/i18n">
 	<p:link includeViewParams="/faces/user">
 		<f:param name="id" value="#{user.id}" />
-		<div class="user-card-resume">
+		<div class="user-minicard">
 			<div class="user-image">
 				<p:graphicImage class="image" value="/images/#{user.imageFileName}" rendered="#{not empty user.imageFileName}" />
 				<p:graphicImage class="image" value="/resources/img/default-avatar.png" rendered="#{empty user.imageFileName}" />
