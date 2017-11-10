@@ -52,60 +52,20 @@ body .ui-icon {
 	content: "";
 }
 
-.ui-icon-arrow-1-n {
-	-webkit-transform: rotate(-90deg);
-	-moz-transform: rotate(-90deg);
-	-o-transform: rotate(-90deg);
-	-ms-transform: rotate(-90deg);
-	transform: rotate(-90deg);
-}
-
 .ui-icon-arrow-1-n:before {
 	content: "";
-}
-
-.ui-icon-arrowstop-1-n {
-	-webkit-transform: rotate(-90deg);
-	-moz-transform: rotate(-90deg);
-	-o-transform: rotate(-90deg);
-	-ms-transform: rotate(-90deg);
-	transform: rotate(-90deg);
 }
 
 .ui-icon-arrowstop-1-n:before {
 	content: "";
 }
 
-.ui-icon-arrow-1-s {
-	-webkit-transform: rotate(90deg);
-	-moz-transform: rotate(90deg);
-	-o-transform: rotate(90deg);
-	-ms-transform: rotate(90deg);
-	transform: rotate(90deg);
-}
-
 .ui-icon-arrow-1-s:before {
 	content: "";
 }
 
-.ui-icon-arrowstop-1-s {
-	-webkit-transform: rotate(-90deg);
-	-moz-transform: rotate(-90deg);
-	-o-transform: rotate(-90deg);
-	-ms-transform: rotate(-90deg);
-	transform: rotate(-90deg);
-}
-
 .ui-icon-arrowstop-1-s:before {
 	content: "";
-}
-
-.ui-icon-arrow-1-w {
-	-webkit-transform: rotate(180deg);
-	-moz-transform: rotate(180deg);
-	-o-transform: rotate(180deg);
-	-ms-transform: rotate(180deg);
-	transform: rotate(180deg);
 }
 
 .ui-icon-arrow-1-w:before {
@@ -124,24 +84,8 @@ body .ui-icon {
 	content: "";
 }
 
-.ui-icon-arrowthick-1-s {
-	-webkit-transform: rotate(90deg);
-	-moz-transform: rotate(90deg);
-	-o-transform: rotate(90deg);
-	-ms-transform: rotate(90deg);
-	transform: rotate(90deg);
-}
-
 .ui-icon-arrowthick-1-s:before {
 	content: "";
-}
-
-.ui-icon-arrowthick-1-n {
-	-webkit-transform: rotate(-90deg);
-	-moz-transform: rotate(-90deg);
-	-o-transform: rotate(-90deg);
-	-ms-transform: rotate(-90deg);
-	transform: rotate(-90deg);
 }
 
 .ui-icon-arrowthick-1-n:before {
@@ -152,24 +96,8 @@ body .ui-icon {
 	content: "";
 }
 
-.ui-icon-circle-triangle-w {
-	-webkit-transform: rotate(180deg);
-	-moz-transform: rotate(180deg);
-	-o-transform: rotate(180deg);
-	-ms-transform: rotate(180deg);
-	transform: rotate(180deg);
-}
-
 .ui-icon-circle-triangle-w:before {
-	content: "";
-}
-
-.ui-icon-circle-triangle-s {
-	-webkit-transform: rotate(90deg);
-	-moz-transform: rotate(90deg);
-	-o-transform: rotate(90deg);
-	-ms-transform: rotate(90deg);
-	transform: rotate(90deg);
+	content: "\f0d9";
 }
 
 .ui-icon-circle-triangle-s:before {
@@ -4109,32 +4037,28 @@ body .ui-growl>.ui-growl-item-container.ui-growl-info {
 	background-color: #5cb860;
 	color: #ffffff;
 	border-radius: 3px;
-	box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px
-		rgba(76, 175, 80, 0.4);
+	box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(76, 175, 80, 0.4);
 }
 
 body .ui-growl>.ui-growl-item-container.ui-growl-warn {
 	background-color: #ffa21a;
 	color: #ffffff;
 	border-radius: 3px;
-	box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px
-		rgba(255, 152, 0, 0.4);
+	box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(255, 152, 0, 0.4);
 }
 
 body .ui-growl>.ui-growl-item-container.ui-growl-error {
 	background-color: #f55a4e;
 	color: #ffffff;
 	border-radius: 3px;
-	box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px
-		rgba(244, 67, 54, 0.4);
+	box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(244, 67, 54, 0.4);
 }
 
 body .ui-growl>.ui-growl-item-container.ui-growl-fatal {
 	background-color: #f55a4e;
 	color: #ffffff;
 	border-radius: 3px;
-	box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px
-		rgba(244, 67, 54, 0.4);
+	box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(244, 67, 54, 0.4);
 }
 
 body .ui-growl .ui-growl-item .ui-growl-image.ui-growl-image-info {
@@ -4143,8 +4067,7 @@ body .ui-growl .ui-growl-item .ui-growl-image.ui-growl-image-info {
 	background: #5cb860;
 }
 
-body .ui-growl .ui-growl-item .ui-growl-image.ui-growl-image-info:before
-	{
+body .ui-growl .ui-growl-item .ui-growl-image.ui-growl-image-info:before {
 	content: "\f06a";
 }
 
@@ -4154,8 +4077,7 @@ body .ui-growl .ui-growl-item .ui-growl-image.ui-growl-image-error {
 	background: #f55a4e;
 }
 
-body .ui-growl .ui-growl-item .ui-growl-image.ui-growl-image-error:before
-	{
+body .ui-growl .ui-growl-item .ui-growl-image.ui-growl-image-error:before {
 	content: "\f06a";
 }
 
@@ -4165,8 +4087,7 @@ body .ui-growl .ui-growl-item .ui-growl-image.ui-growl-image-warn {
 	background: #ffa21a;
 }
 
-body .ui-growl .ui-growl-item .ui-growl-image.ui-growl-image-warn:before
-	{
+body .ui-growl .ui-growl-item .ui-growl-image.ui-growl-image-warn:before {
 	content: "\f06a";
 }
 
@@ -4176,8 +4097,7 @@ body .ui-growl .ui-growl-item .ui-growl-image.ui-growl-image-fatal {
 	background: #f55a4e;
 }
 
-body .ui-growl .ui-growl-item .ui-growl-image.ui-growl-image-fatal:before
-	{
+body .ui-growl .ui-growl-item .ui-growl-image.ui-growl-image-fatal:before {
 	content: "\f06a";
 }
 
@@ -4207,8 +4127,7 @@ body .ui-datatable thead th {
 	text-align: left;
 }
 
-body .ui-datatable thead th, body .ui-datatable tbody td, body .ui-datatable tfoot td,
-	body .ui-datatable tfoot th {
+body .ui-datatable thead th, body .ui-datatable tbody td, body .ui-datatable tfoot td, body .ui-datatable tfoot th {
 	padding: 4px 10px;
 	overflow: hidden;
 	border-width: 0px;
@@ -4269,13 +4188,68 @@ body .ui-calendar .ui-inputfield {
 	width: 100%;
 }
 
-body .ui-inputtext[aria-required="true"], body .ui-inputtext[data-p-required="true"]
-	{
+body .ui-inputtext[aria-required="true"], body .ui-inputtext[data-p-required="true"] {
 	border-left: 2px solid #a2aab8;
 }
 
 body .ui-inputfield[aria-readonly="true"] {
 	background: #f2f2f2;
+}
+
+body .ui-datepicker {
+	border: 1px solid #c2cad8;
+	padding: 0;
+}
+
+body .ui-datepicker .ui-datepicker-header .ui-icon {
+	display: none;
+}
+
+body .ui-datepicker .ui-datepicker-header {
+	background: #5b9bd1;
+	color: white;
+}
+
+body .ui-datepicker .ui-datepicker-header .ui-datepicker-title {
+	font-weight: bold;
+}
+
+body .ui-datepicker .ui-datepicker-header .ui-datepicker-prev::before {
+	font-family: FontAwesome;
+	font-size: 20px;
+	content: "\f0d9";	
+}
+
+body .ui-datepicker .ui-datepicker-header .ui-datepicker-prev {
+	cursor: pointer;
+	color: white;
+	width: 25px;
+	height: 25px;
+	padding: 3px 8px;
+}
+
+body .ui-datepicker .ui-datepicker-header .ui-datepicker-next::before {
+	font-family: FontAwesome;
+	font-size: 20px;
+	content: "\f0da";	
+}
+
+body .ui-datepicker .ui-datepicker-header .ui-datepicker-next {
+	cursor: pointer;
+	color: white;
+	width: 25px;
+	height: 25px;
+	padding: 3px 8px;
+}
+
+body .ui-datepicker .ui-datepicker-calendar a {
+	text-align: center;
+	color: #666; 
+}
+
+body .ui-datepicker .ui-datepicker-calendar a.ui-state-active {
+	background: #5b9bd1;
+	color: white;
 }
 
 body .ui-selectonemenu {
@@ -4509,8 +4483,8 @@ body .ui-button.ui-button-text-icon-left .ui-button-icon-left {
 	padding: 0 8px;
 }
 
-body .ui-button-icon-only .ui-icon.fa, body .ui-button-text-icon-left .ui-icon.fa,
-	body .ui-button-text-icon-right .ui-icon.fa {
+body .ui-button-icon-only .ui-icon.fa, body .ui-button-text-icon-left .ui-icon.fa, body .ui-button-text-icon-right .ui-icon.fa
+	{
 	width: 16px;
 	color: white;
 	margin-top: -7px;
@@ -4532,7 +4506,7 @@ body .ui-button.btn-green {
 	background: #26a1ab;
 }
 
-body .btn-green .ui-button{
+body .btn-green .ui-button {
 	background: #26a1ab;
 }
 
@@ -4593,8 +4567,7 @@ body .ui-chips-token .ui-chips-token-label {
 	padding: 0 1em 0 .5em;
 }
 
-body .ui-chips-container.ui-state-disabled .ui-chips-token:hover .ui-icon
-	{
+body .ui-chips-container.ui-state-disabled .ui-chips-token:hover .ui-icon {
 	display: none;
 }
 
