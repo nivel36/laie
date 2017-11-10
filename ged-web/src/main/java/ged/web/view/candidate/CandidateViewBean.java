@@ -18,6 +18,7 @@ import javax.inject.Named;
 
 import org.omnifaces.util.Faces;
 import org.primefaces.event.FileUploadEvent;
+import org.primefaces.event.RateEvent;
 import org.primefaces.model.UploadedFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -164,6 +165,12 @@ public class CandidateViewBean extends AbstractPageBean {
 
 	public void onload() {
 		checkLopdFile();
+	}
+
+	public void onrate(final RateEvent rateEvent) {
+		final Integer rate = (Integer) rateEvent.getRating();
+		this.candidate.setRating(rate);
+		saveCandidate();
 	}
 
 	public void openFile(final UploadedServerFile file) {

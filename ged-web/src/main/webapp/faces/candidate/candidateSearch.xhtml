@@ -110,12 +110,19 @@
 								<h:outputText value="#{candidate.jobProfile}" />
 							</p:column>
 
-							<p:column headerText="#{i18n['candidate.email']}" sortBy="#{candidate.email}">
+							<p:column headerText="#{i18n['candidate.email']}">
 								<h:outputText value="#{candidate.email}" />
 							</p:column>
 
-							<p:column headerText="#{i18n['candidate.phone_number']}" sortBy="#{candidate.phoneNumber}">
+							<p:column headerText="#{i18n['candidate.phone_number']}">
 								<h:outputText value="#{candidate.phoneNumber}" />
+							</p:column>
+
+							<p:column headerText="#{i18n['candidate.rating']}" sortBy="#{candidate.rating}">
+								<p:rating value="#{candidate.rating}" cancel="false" readonly="true" />
+							</p:column>
+
+							<p:column headerText="#{i18n['candidate.state']}">
 							</p:column>
 						</p:dataTable>
 					</p:panel>

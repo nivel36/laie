@@ -89,6 +89,8 @@ public class Candidate extends AbstractAuditedEntity {
 	@Column(length = 12, nullable = false)
 	private String phoneNumber;
 
+	private Integer rating;
+
 	private Integer salary;
 
 	@Column(length = 128)
@@ -197,6 +199,10 @@ public class Candidate extends AbstractAuditedEntity {
 		return this.phoneNumber;
 	}
 
+	public Integer getRating() {
+		return this.rating;
+	}
+
 	public Integer getSalary() {
 		return this.salary;
 	}
@@ -272,6 +278,10 @@ public class Candidate extends AbstractAuditedEntity {
 
 	public void setPhoneNumber(final String phoneNumber) {
 		this.phoneNumber = phoneNumber;
+	}
+
+	public void setRating(final Integer rating) {
+		this.rating = rating;
 	}
 
 	public void setSalary(final Integer salary) {

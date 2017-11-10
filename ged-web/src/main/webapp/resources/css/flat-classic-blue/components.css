@@ -129,13 +129,13 @@ h4 {
 }
 
 @media ( max-width : 1124px) {
-	.menu .menu_text {
+	.page_header .menu .menu_text {
 		display: none;
 	}
-	.menu li {
+	.page_header .menu li {
 		width: 40px;
 	}
-	.menu .menu_icon {
+	.page_header .menu .menu_icon {
 		padding: 10px;
 	}
 }
@@ -273,6 +273,11 @@ h4 {
 
 .user-card .user-info {
 	text-align: center;
+}
+
+.user-card .user-rating {
+	text-align: center;
+	padding: 5px;
 }
 
 .user-card .user-info .name {

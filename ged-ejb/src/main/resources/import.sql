@@ -12,6 +12,9 @@ insert into LANGUAGELEVEL( id, version, name, description ) values ( 121, 0, 'me
 insert into LANGUAGELEVEL( id, version, name, description ) values ( 122, 0, 'low', 'low.description');
 insert into LANGUAGELEVEL( id, version, name, description ) values ( 123, 0, 'native', 'native.description');
 
+insert into JOBCANDIDATURESTATE( id, version, name, description ) values ( 130, 0, 'open', 'open.description');
+insert into JOBCANDIDATURESTATE( id, version, name, description ) values ( 131, 0, 'closed', 'closed.description');
+
 insert into CURRICULUM( id, version, perfilProfesional, deleted ) values (301, 0, 'Arquitecto JEE', false);
 
 insert into EDUCATION( id, version, curriculumId, degree, description,  fromDate, school, stillStudying, toDate, deleted) values( 401, 0, 301, 'Licenciado en Matemáticas', 'Licenciado en Matemáticas por la universidad de Barcelona',  DATE '2000-10-01', 'Universitat de Barcelona', false, DATE '2012-12-01', false);
@@ -63,6 +66,11 @@ insert into I18NSTRING( id, version, locale, key, text ) values( 855, 0, 'es', '
 insert into I18NSTRING( id, version, locale, key, text ) values( 856, 0, 'ca', 'edited_curriculum', 'Curriculum editat' );
 insert into I18NSTRING( id, version, locale, key, text ) values( 857, 0, 'es', 'other', 'Otro' );
 insert into I18NSTRING( id, version, locale, key, text ) values( 858, 0, 'ca', 'other', 'Altre' );
+
+insert into I18NSTRING( id, version, locale, key, text ) values( 860, 0, 'es', 'open', 'Abierta' );
+insert into I18NSTRING( id, version, locale, key, text ) values( 861, 0, 'ca', 'open', 'Oberta' );
+insert into I18NSTRING( id, version, locale, key, text ) values( 864, 0, 'es', 'closed', 'Cerrada' );
+insert into I18NSTRING( id, version, locale, key, text ) values( 865, 0, 'ca', 'closed', 'Tancada' );
 
 insert into ROLE( id, version, name, parentRoleId ) values( 911, 0, 'ADMIN', null );
 insert into ROLE( id, version, name, parentRoleId ) values( 913, 0, 'RECRUITER_ADMIN', 911 );

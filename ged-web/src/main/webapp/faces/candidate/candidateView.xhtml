@@ -27,6 +27,13 @@
 								<p:graphicImage class="image" value="/resources/img/default-avatar.png"
 									rendered="#{empty candidateViewBean.candidate.imageFileName}" />
 							</div>
+							<div class="user-rating">
+								<h:form id="ratingForm">
+									<p:rating value="#{candidateViewBean.candidate.rating}" cancel="false">
+										<p:ajax event="rate" listener="#{candidateViewBean.onrate}" update="growl" />
+									</p:rating>
+								</h:form>
+							</div>
 						</div>
 					</div>
 				</div>
