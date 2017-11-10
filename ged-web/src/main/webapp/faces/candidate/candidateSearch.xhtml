@@ -10,7 +10,7 @@
 	<ui:param name="selectedMenu" value="candidates" />
 
 	<ui:define name="content">
-	<div class="stats">
+		<div class="stats">
 			<div class="ui-g">
 				<div class="ui-g-12 ui-md-6 ui-lg-3">
 					<div class="card card-stats">
@@ -91,41 +91,31 @@
 							</div>
 						</div>
 
-						<p:dataTable var="candidate" id="candidate"
-							value="#{candidateSearchBean.candidates}"
-							emptyMessage="#{i18n['candidate.no_candidates_found']}"
-							reflow="true" paginator="true" paginatorPosition="bottom"
+						<p:dataTable var="candidate" id="candidate" value="#{candidateSearchBean.candidates}"
+							emptyMessage="#{i18n['candidate.no_candidates_found']}" reflow="true" paginator="true" paginatorPosition="bottom"
 							rows="#{sessionBean.rowsPerPage}">
 
-							<p:column headerText="#{i18n['candidate.name']}"
-								sortBy="#{candidate.name}">
-								<h:outputText value="#{candidate}" />
+							<p:column headerText="#{i18n['candidate.name']}" sortBy="#{candidate.name}">
+								<p:link outcome="candidateView">
+									<p:graphicImage class="image-icon" value="/images/#{candiate.imageFileName}"
+										rendered="#{not empty candiate.imageFileName}" />
+									<p:graphicImage class="image-icon" value="/resources/img/default-avatar.png"
+										rendered="#{empty candiate.imageFileName}" />
+									<f:param name="id" value="#{candidate.id}" />
+									<h:outputText value="#{candidate}" />
+								</p:link>
 							</p:column>
 
-							<p:column headerText="#{i18n['candidate.jobProfile']}"
-								sortBy="#{candidate.jobProfile}">
+							<p:column headerText="#{i18n['candidate.jobProfile']}" sortBy="#{candidate.jobProfile}">
 								<h:outputText value="#{candidate.jobProfile}" />
 							</p:column>
 
-							<p:column headerText="#{i18n['candidate.email']}"
-								sortBy="#{candidate.email}">
+							<p:column headerText="#{i18n['candidate.email']}" sortBy="#{candidate.email}">
 								<h:outputText value="#{candidate.email}" />
 							</p:column>
 
-							<p:column headerText="#{i18n['candidate.phone_number']}"
-								sortBy="#{candidate.phoneNumber}">
+							<p:column headerText="#{i18n['candidate.phone_number']}" sortBy="#{candidate.phoneNumber}">
 								<h:outputText value="#{candidate.phoneNumber}" />
-							</p:column>
-
-							<p:column headerText="#{i18n['user.owner']}"
-								sortBy="#{candidate.owner.name}">
-								<h:outputText value="#{candidate.owner.name}" />
-							</p:column>
-
-							<p:column>
-								<p:button outcome="candidateView" icon="fa fa-eye">
-									<f:param name="id" value="#{candidate.id}" />
-								</p:button>
 							</p:column>
 						</p:dataTable>
 					</p:panel>

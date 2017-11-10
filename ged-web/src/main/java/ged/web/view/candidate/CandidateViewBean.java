@@ -144,13 +144,13 @@ public class CandidateViewBean extends AbstractPageBean {
 					this.tags.add(tag.getLabel());
 				}
 				this.files.addAll(this.candidate.getFiles());
+				checkLopdFile();
 			} catch (final NumberFormatException ex) {
 				error();
 			}
 		} else {
 			error();
 		}
-		checkLopdFile();
 	}
 
 	public boolean isEditable() {

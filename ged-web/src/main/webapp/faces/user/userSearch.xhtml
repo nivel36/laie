@@ -90,7 +90,14 @@
 						<p:dataTable var="user" id="userDataTable" value="#{userSearchBean.users}" reflow="true" paginator="true"
 							paginatorPosition="bottom" rows="#{sessionBean.rowsPerPage}">
 							<p:column headerText="#{i18n['user.name']}" sortBy="#{user.fullName}">
-								<h:outputText value="#{user.fullName}" />
+								<p:link outcome="userView" icon="fa fa-eye">
+									<p:graphicImage class="image-icon" value="/images/#{user.imageFileName}"
+										rendered="#{not empty user.imageFileName}" />
+									<p:graphicImage class="image-icon" value="/resources/img/default-avatar.png"
+										rendered="#{empty user.imageFileName}" />
+									<f:param name="id" value="#{user.id}" />
+									<h:outputText value="#{user.fullName}" />
+								</p:link>
 							</p:column>
 
 							<p:column headerText="#{i18n['user.email']}" sortBy="#{user.email}">
@@ -102,13 +109,10 @@
 							</p:column>
 
 							<p:column headerText="#{i18n['user.manager']}" sortBy="#{user.manager}">
-								<h:outputText value="#{user.manager}" />
-							</p:column>
-
-							<p:column headerText="#{i18n['action.action']}">
-								<p:button outcome="userView" icon="fa fa-eye">
-									<f:param name="id" value="#{user.id}" />
-								</p:button>
+								<p:link outcome="userView" icon="fa fa-eye">
+									<f:param name="id" value="#{user.manager.id}" />
+									<h:outputText value="#{user.manager}" />
+								</p:link>
 							</p:column>
 						</p:dataTable>
 					</p:panel>
