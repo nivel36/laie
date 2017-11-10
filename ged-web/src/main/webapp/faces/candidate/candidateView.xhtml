@@ -104,16 +104,16 @@
 						<div class="ui-g">
 							<div class="ui-g-12 ui-md-4">
 								<div class="form-group">
-									<p:outputLabel value="#{i18n['candidate.position']}" />
-									<p:inputText id="position" value="#{candidateViewBean.candidate.position}" required="true"
+									<p:outputLabel value="#{i18n['candidate.jobProfile']}" for="jobProfile" />
+									<p:inputText id="jobProfile" value="#{candidateViewBean.candidate.jobProfile}" required="true"
 										readonly="#{!candidateViewBean.editable}" />
 								</div>
-								<h:message for="position" errorClass="error" />
+								<h:message for="jobProfile" errorClass="error" />
 							</div>
 
 							<div class="ui-g-12 ui-md-4">
 								<div class="form-group">
-									<p:outputLabel value="#{i18n['candidate.salary']}" />
+									<p:outputLabel value="#{i18n['candidate.salary']}" for="salary" />
 									<p:inputText id="salary" value="#{candidateViewBean.candidate.salary}"
 										readonly="#{!candidateViewBean.editable}" />
 								</div>
@@ -132,7 +132,10 @@
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['candidate.tags']}" for="tags" />
 									<p:chips id="tags" value="#{candidateViewBean.tags}" label="#{i18n['candidate.tags']}"
-										disabled="#{!candidateViewBean.editable}" />
+										disabled="#{!candidateViewBean.editable}"
+										rendered="#{not empty candidateViewBean.tags or candidateViewBean.editable}" />
+									<h:outputText styleClass="text" value="#{i18n['candidate.message.no_tags']}"
+										rendered="#{empty candidateViewBean.tags and not candidateViewBean.editable}" />
 								</div>
 							</div>
 						</div>

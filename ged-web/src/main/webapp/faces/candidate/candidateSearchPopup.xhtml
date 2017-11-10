@@ -29,7 +29,7 @@
 							<div class="ui-md-12 ui-lg-6 ui-xl-4">
 								<div class="form-group">
 									<p:outputLabel for="position"
-										value="#{i18n['candidate.position']}" />
+										value="#{i18n['candidate.jobProfile']}" />
 									<p:inputText id="position"
 										value="#{candidateSearchBean.position}" />
 								</div>
@@ -65,9 +65,9 @@
 								<h:outputText value="#{candidate}" />
 							</p:column>
 
-							<p:column headerText="#{i18n['candidate.position']}"
-								sortBy="#{candidate.position}">
-								<h:outputText value="#{candidate.position}" />
+							<p:column headerText="#{i18n['candidate.jobProfile']}"
+								sortBy="#{candidate.jobProfile}">
+								<h:outputText value="#{candidate.jobProfile}" />
 							</p:column>
 
 							<p:column headerText="#{i18n['candidate.email']}"

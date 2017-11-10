@@ -74,7 +74,7 @@
 							</div>
 							<div class="ui-md-12 ui-lg-4">
 								<div class="form-group">
-									<p:outputLabel class="control-label" for="position" value="#{i18n['candidate.position']}" />
+									<p:outputLabel class="control-label" for="position" value="#{i18n['candidate.jobProfile']}" />
 									<p:inputText class="form-control" id="position" value="#{candidateSearchBean.position}" />
 								</div>
 							</div>
@@ -102,9 +102,9 @@
 								<h:outputText value="#{candidate}" />
 							</p:column>
 
-							<p:column headerText="#{i18n['candidate.position']}"
-								sortBy="#{candidate.position}">
-								<h:outputText value="#{candidate.position}" />
+							<p:column headerText="#{i18n['candidate.jobProfile']}"
+								sortBy="#{candidate.jobProfile}">
+								<h:outputText value="#{candidate.jobProfile}" />
 							</p:column>
 
 							<p:column headerText="#{i18n['candidate.email']}"

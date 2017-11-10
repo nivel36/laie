@@ -91,6 +91,9 @@ public class CandidateViewBean extends AbstractPageBean {
 	}
 
 	private Set<Tag> getTagsFromStringList(final List<String> labels) {
+		if (labels == null) {
+			return new HashSet<>();
+		}
 		final List<Tag> allTags = this.candidateService.findAllTags();
 		final Set<Tag> candidateTags = new HashSet<>();
 		for (final String label : labels) {

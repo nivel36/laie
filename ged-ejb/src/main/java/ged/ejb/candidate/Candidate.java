@@ -69,6 +69,11 @@ public class Candidate extends AbstractAuditedEntity {
 	@OneToMany(mappedBy = "candidate", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<JobCandidature> jobCandidatures;
 
+	@NotNull
+	@Column(length = 64, nullable = false)
+	@Field
+	private String jobProfile;
+
 	private String linkedinProfileUrl;
 
 	@NotNull
@@ -85,11 +90,6 @@ public class Candidate extends AbstractAuditedEntity {
 	@Pattern(regexp = "(?:[+]?(?:[0-9]{1,5}|\\x28[0-9]{1,5}\\x29)[ ]?)?[0-9]{2}(?:[0-9][ ]?){6}[0-9]")
 	@Column(length = 12, nullable = false)
 	private String phoneNumber;
-
-	@NotNull
-	@Column(length = 64, nullable = false)
-	@Field
-	private String position;
 
 	private Integer salary;
 
@@ -180,6 +180,10 @@ public class Candidate extends AbstractAuditedEntity {
 		return this.jobCandidatures;
 	}
 
+	public String getJobProfile() {
+		return this.jobProfile;
+	}
+
 	public String getLinkedinProfileUrl() {
 		return this.linkedinProfileUrl;
 	}
@@ -194,10 +198,6 @@ public class Candidate extends AbstractAuditedEntity {
 
 	public String getPhoneNumber() {
 		return this.phoneNumber;
-	}
-
-	public String getPosition() {
-		return this.position;
 	}
 
 	public Integer getSalary() {
@@ -257,6 +257,10 @@ public class Candidate extends AbstractAuditedEntity {
 		this.jobCandidatures = jobCandidatures;
 	}
 
+	public void setJobProfile(final String jobProfile) {
+		this.jobProfile = jobProfile;
+	}
+
 	public void setLinkedinProfileUrl(final String linkedinProfileUrl) {
 		this.linkedinProfileUrl = linkedinProfileUrl;
 	}
@@ -271,10 +275,6 @@ public class Candidate extends AbstractAuditedEntity {
 
 	public void setPhoneNumber(final String phoneNumber) {
 		this.phoneNumber = phoneNumber;
-	}
-
-	public void setPosition(final String position) {
-		this.position = position;
 	}
 
 	public void setSalary(final Integer salary) {
