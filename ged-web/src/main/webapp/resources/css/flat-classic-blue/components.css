@@ -277,7 +277,7 @@ h4 {
 
 .user-card .user-rating {
 	text-align: center;
-	padding: 5px;
+	margin: 10px;
 }
 
 .user-card .user-info .name {

@@ -27,6 +27,10 @@
 								<p:graphicImage class="image" value="/resources/img/default-avatar.png"
 									rendered="#{empty candidateViewBean.candidate.imageFileName}" />
 							</div>
+							<div class="user-info">
+								<div class="name">#{candidateViewBean.candidate.fullName}</div>
+								<div class="position">#{candidateViewBean.candidate.jobProfile}</div>
+							</div>
 							<div class="user-rating">
 								<h:form id="ratingForm">
 									<p:rating value="#{candidateViewBean.candidate.rating}" cancel="false">
