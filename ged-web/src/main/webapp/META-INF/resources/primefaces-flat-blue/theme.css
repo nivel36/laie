@@ -4272,6 +4272,10 @@ body .ui-selectonemenu {
 	border: 1px solid #c2cad8;
 }
 
+body .ui-selectonemenu label.ui-selectonemenu-label {
+	padding: 7px;
+}
+
 body .ui-selectonemenu-panel .ui-selectonemenu-list {
 	padding: 2px;
 	border: 0 none;
