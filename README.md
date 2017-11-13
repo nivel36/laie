@@ -2,6 +2,7 @@
 ## Install
 ### Wildfly
 
+```
 <security-domain name="secureDomain" cache-type="default">
     <authentication>
         <login-module code="Database" flag="required">
@@ -13,3 +14,4 @@
         </login-module>
     </authentication>
 </security-domain>
+```
