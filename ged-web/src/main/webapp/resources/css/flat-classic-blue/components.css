@@ -163,6 +163,17 @@ h4 {
 	display: relative;
 }
 
+.form-search {
+	width: 100%;
+	float: left;
+	display: inline-block;
+}
+
+.form-search .search-buttons {
+	float: left;
+	display: inline;
+}
+
 .full-page .full-page-background {
 	position: absolute;
 	z-index: -1;

@@ -1,48 +1,78 @@
 package ged.web.view.candidate;
 
 import java.lang.invoke.MethodHandles;
-import java.util.Objects;
-
+import java.util.ArrayList;
+import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ged.ejb.candidate.Candidate;
+import ged.ejb.candidate.CandidateService;
+import ged.ejb.core.SearchCondition;
+import ged.web.core.view.AbstractPageBean;
 
 @Named
 @ViewScoped
-public class CandidateSearchBean extends AbstractCandidateSearchBean {
+public class CandidateSearchBean extends AbstractPageBean {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	private static final long serialVersionUID = 2434819723782902618L;
 
-	@Override
-	public String edit(final Candidate candidate) {
-		Objects.requireNonNull(candidate);
-		logger.debug("Editing a candidate");
-		this.flash.put("candidate", candidate);
-		return "candidateEdit?faces-redirect=true";
+	protected List<Candidate> candidates;
+
+	@Inject
+	protected transient CandidateService candidateService;
+
+	private String name;
+
+	public void clean() {
+		this.name = null;
+		search();
 	}
 
-	@Override
+	public List<Candidate> getCandidates() {
+		return this.candidates;
+	}
+
+	public String getName() {
+		return this.name;
+	}
+
+	@PostConstruct
+	public void init() {
+		search();
+	}
+
 	public String newCandidate() {
 		logger.debug("New candidate");
 		return "candidateEdit?faces-redirect=true";
 	}
 
-	@Override
-	public void remove(final Candidate candidate) {
-		Objects.requireNonNull(candidate);
-		logger.debug("Deleting candidate");
-		this.candidateService.delete(candidate);
-		search();
+	public void search() {
+		logger.debug("Searching for candidates");
+		final List<SearchCondition> searchConditions = new ArrayList<>();
+		final SearchCondition sc = new SearchCondition();
+		sc.setField("name");
+		sc.setValue(this.name);
+		searchConditions.add(sc);
+		this.candidates = this.candidateService.search(searchConditions);
+	}
+
+	public void setCandidateService(final CandidateService candidateService) {
+		this.candidateService = candidateService;
+	}
+
+	public void setName(final String name) {
+		this.name = name;
 	}
 
 	public String view() {
 		return "candidateEdit?faces-redirect=true&includeViewParams=true";
-
 	}
 }

@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ged.ejb.core.AbstratctAuditedService;
+import ged.ejb.core.SearchCondition;
 import ged.ejb.core.model.Dao;
 import ged.ejb.core.model.Repository;
 import ged.ejb.core.tag.Tag;
@@ -42,6 +43,12 @@ public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> imp
 	}
 
 	@Override
+	public List<Tag> findAllTags() {
+		logger.debug("Find all tags");
+		return this.candidateDao.findAllTags();
+	}
+
+	@Override
 	public Candidate findCandidateAndFiles(final long id) {
 		if (id < 1) {
 			throw new IllegalArgumentException("id: " + id);
@@ -61,6 +68,16 @@ public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> imp
 	}
 
 	@Override
+	public void insertFile(final UploadedServerFile file) {
+		this.uploadedServerFileDao.insert(file);
+	}
+
+	@Override
+	public List<Candidate> search(final List<SearchCondition> searchConditions) {
+		return this.candidateDao.search(searchConditions);
+	}
+
+	@Override
 	public List<Candidate> search(final String name, final String surename, final String position) {
 		logger.debug("Search candidate by name {} and surename {}", name, surename);
 		return this.candidateDao.searchByNameAndSurename(name, surename, position, false);
@@ -74,18 +91,7 @@ public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> imp
 	}
 
 	@Override
-	public List<Tag> findAllTags() {
-		logger.debug("Find all tags");
-		return candidateDao.findAllTags();
-	}
-
-	@Override
 	public UploadedServerFile updateFile(final UploadedServerFile file) {
 		return this.uploadedServerFileDao.update(file);
-	}
-
-	@Override
-	public void insertFile(UploadedServerFile file) {
-		 this.uploadedServerFileDao.insert(file);
 	}
 }

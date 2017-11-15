@@ -16,6 +16,7 @@ import org.hibernate.search.jpa.Search;
 import org.hibernate.search.query.dsl.BooleanJunction;
 import org.hibernate.search.query.dsl.QueryBuilder;
 
+import ged.ejb.core.SearchCondition;
 import ged.ejb.core.model.AbstractDaoJpa;
 import ged.ejb.core.model.Repository;
 import ged.ejb.core.tag.Tag;
@@ -43,6 +44,11 @@ public class CandidateDaoJpa extends AbstractDaoJpa<Candidate> implements Candid
 	}
 
 	@Override
+	public List<Tag> findAllTags() {
+		return findAll(Tag.class);
+	}
+
+	@Override
 	public Candidate findCandidateAndFiles(final long id) {
 		if (id < 1) {
 			throw new IllegalArgumentException("id: " + id);
@@ -53,6 +59,26 @@ public class CandidateDaoJpa extends AbstractDaoJpa<Candidate> implements Candid
 	@Override
 	public Class<Candidate> getType() {
 		return Candidate.class;
+	}
+
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@Override
+	public List<Candidate> search(final List<SearchCondition> searchConditions) {
+		final FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(getEm());
+		final QueryBuilder qb = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(Candidate.class)
+				.get();
+		final BooleanJunction<BooleanJunction> bj = qb.bool();
+		for (final SearchCondition searchCondition : searchConditions) {
+			bj.must(qb.keyword().onField(searchCondition.getField()).matching(searchCondition.getValue())
+					.createQuery());
+		}
+		final Query persistenceQuery;
+		if (bj.isEmpty()) {
+			persistenceQuery = fullTextEntityManager.createFullTextQuery(qb.all().createQuery(), Candidate.class);
+		} else {
+			persistenceQuery = fullTextEntityManager.createFullTextQuery(bj.createQuery(), Candidate.class);
+		}
+		return persistenceQuery.getResultList();
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -82,10 +108,5 @@ public class CandidateDaoJpa extends AbstractDaoJpa<Candidate> implements Candid
 			persistenceQuery = fullTextEntityManager.createFullTextQuery(bj.createQuery(), Candidate.class);
 		}
 		return persistenceQuery.getResultList();
-	}
-
-	@Override
-	public List<Tag> findAllTags() {
-		return findAll(Tag.class);
 	}
 }

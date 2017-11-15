@@ -3,6 +3,7 @@ package ged.ejb.candidate;
 import java.util.List;
 
 import ged.ejb.core.AuditedService;
+import ged.ejb.core.SearchCondition;
 import ged.ejb.core.tag.Tag;
 import ged.ejb.job.offer.JobOffer;
 
@@ -17,6 +18,8 @@ public interface CandidateService extends AuditedService<Candidate> {
 	UploadedServerFile findFile(final long id);
 
 	void insertFile(UploadedServerFile file);
+
+	List<Candidate> search(List<SearchCondition> searchConditions);
 
 	List<Candidate> search(String name, String surename, String position);
 

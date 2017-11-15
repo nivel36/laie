@@ -60,33 +60,22 @@
 					<p:panel id="searchUserPanel" header="#{i18n['candidate.search']}">
 						<div class="ui-g">
 							<div class="ui-md-12 ui-lg-4">
-								<div class="form-group">
-									<p:outputLabel class="control-label" for="name" value="#{i18n['candidate.name']}" />
-									<p:inputText class="form-control" id="name" value="#{candidateSearchBean.name}" />
-								</div>
-							</div>
-
-							<div class="ui-md-12 ui-lg-4">
-								<div class="form-group">
-									<p:outputLabel class="control-label" for="surename" value="#{i18n['candidate.surename']}" />
-									<p:inputText class="form-control" id="surename" value="#{candidateSearchBean.surename}" />
-								</div>
+								<p:inputText id="name" value="#{candidateSearchBean.name}" />
 							</div>
 							<div class="ui-md-12 ui-lg-4">
-								<div class="form-group">
-									<p:outputLabel class="control-label" for="position" value="#{i18n['candidate.jobProfile']}" />
-									<p:inputText class="form-control" id="position" value="#{candidateSearchBean.position}" />
-								</div>
+								<p:commandButton icon="fa fa-plus" styleClass="btn-green" action="#{candidateSearchBean.search}" update="@form"
+									process="searchUserPanel" />
+								<p:commandButton value="#{i18n['action.search']}" action="#{candidateSearchBean.search}" update="@form"
+									process="searchUserPanel" />
+								<p:commandButton value="#{i18n['action.clean']}" action="#{candidateSearchBean.clean}" update="@form"
+									styleClass="btn-gray" />
 							</div>
-
+						</div>
+						<div class="ui-g">
 							<div class="ui-lg-12">
 								<div class="form-action-primary">
 									<p:commandButton value="#{i18n['action.new']}" action="#{candidateSearchBean.newCandidate}" immediate="true"
 										styleClass="btn-green" />
-									<p:commandButton value="#{i18n['action.search']}" action="#{candidateSearchBean.search}" update="@form"
-										process="searchUserPanel" />
-									<p:commandButton value="#{i18n['action.clean']}" action="#{candidateSearchBean.clean}" update="@form"
-										styleClass="btn-gray" />
 								</div>
 							</div>
 						</div>
