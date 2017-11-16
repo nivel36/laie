@@ -75,9 +75,11 @@ public class CandidateDaoJpa extends AbstractDaoJpa<Candidate> implements Candid
 			if (searchValue == null) {
 				continue;
 			}
+			final BooleanJunction<BooleanJunction> fieldBj = qb.bool();
 			for (final String field : searchFields) {
-				bj.should(qb.keyword().onField(field).matching(searchValue).createQuery());
+				fieldBj.should(qb.keyword().onField(field).matching(searchValue).createQuery());
 			}
+			bj.must(fieldBj.createQuery());
 		}
 		final Query persistenceQuery;
 		if (bj.isEmpty()) {
