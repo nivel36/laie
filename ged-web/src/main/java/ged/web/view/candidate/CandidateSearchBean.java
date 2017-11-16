@@ -2,7 +2,9 @@ package ged.web.view.candidate;
 
 import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -13,7 +15,6 @@ import org.slf4j.LoggerFactory;
 
 import ged.ejb.candidate.Candidate;
 import ged.ejb.candidate.CandidateService;
-import ged.ejb.core.SearchCondition;
 import ged.web.core.view.AbstractPageBean;
 
 @Named
@@ -56,12 +57,13 @@ public class CandidateSearchBean extends AbstractPageBean {
 
 	public void search() {
 		logger.debug("Searching for candidates");
-		final List<SearchCondition> searchConditions = new ArrayList<>();
-		final SearchCondition sc = new SearchCondition();
-		sc.setField("name");
-		sc.setValue(this.name);
-		searchConditions.add(sc);
-		this.candidates = this.candidateService.search(searchConditions);
+		final List<String> searchValues;
+		if (this.name != null) {
+			searchValues = Arrays.asList(this.name.split("\\s"));
+		} else {
+			searchValues = new ArrayList<>();
+		}
+		this.candidates = this.candidateService.search(searchValues);
 	}
 
 	public void setCandidateService(final CandidateService candidateService) {

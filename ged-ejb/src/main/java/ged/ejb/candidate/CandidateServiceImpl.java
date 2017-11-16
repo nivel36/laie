@@ -11,7 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ged.ejb.core.AbstratctAuditedService;
-import ged.ejb.core.SearchCondition;
 import ged.ejb.core.model.Dao;
 import ged.ejb.core.model.Repository;
 import ged.ejb.core.tag.Tag;
@@ -73,8 +72,8 @@ public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> imp
 	}
 
 	@Override
-	public List<Candidate> search(final List<SearchCondition> searchConditions) {
-		return this.candidateDao.search(searchConditions);
+	public List<Candidate> search(final List<String> searchValues) {
+		return this.candidateDao.search(searchValues);
 	}
 
 	@Override

@@ -3,8 +3,11 @@ package ged.ejb.candidate;
 import static ged.ejb.core.model.QueryParameter.with;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -16,7 +19,6 @@ import org.hibernate.search.jpa.Search;
 import org.hibernate.search.query.dsl.BooleanJunction;
 import org.hibernate.search.query.dsl.QueryBuilder;
 
-import ged.ejb.core.SearchCondition;
 import ged.ejb.core.model.AbstractDaoJpa;
 import ged.ejb.core.model.Repository;
 import ged.ejb.core.tag.Tag;
@@ -63,14 +65,19 @@ public class CandidateDaoJpa extends AbstractDaoJpa<Candidate> implements Candid
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
-	public List<Candidate> search(final List<SearchCondition> searchConditions) {
+	public List<Candidate> search(final List<String> searchValues) {
+		final Set<String> searchFields = new HashSet<>(Arrays.asList("name", "surename", "jobProfile"));
 		final FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(getEm());
 		final QueryBuilder qb = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(Candidate.class)
 				.get();
 		final BooleanJunction<BooleanJunction> bj = qb.bool();
-		for (final SearchCondition searchCondition : searchConditions) {
-			bj.must(qb.keyword().onField(searchCondition.getField()).matching(searchCondition.getValue())
-					.createQuery());
+		for (final String searchValue : searchValues) {
+			if (searchValue == null) {
+				continue;
+			}
+			for (final String field : searchFields) {
+				bj.should(qb.keyword().onField(field).matching(searchValue).createQuery());
+			}
 		}
 		final Query persistenceQuery;
 		if (bj.isEmpty()) {
