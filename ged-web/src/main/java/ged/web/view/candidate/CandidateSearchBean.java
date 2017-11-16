@@ -3,6 +3,7 @@ package ged.web.view.candidate;
 import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -34,7 +35,7 @@ public class CandidateSearchBean extends AbstractPageBean {
 
 	public void clean() {
 		this.name = null;
-		search();
+		this.search();
 	}
 
 	public List<Candidate> getCandidates() {
@@ -47,7 +48,7 @@ public class CandidateSearchBean extends AbstractPageBean {
 
 	@PostConstruct
 	public void init() {
-		search();
+		this.search();
 	}
 
 	public String newCandidate() {
@@ -64,6 +65,7 @@ public class CandidateSearchBean extends AbstractPageBean {
 			searchValues = new ArrayList<>();
 		}
 		this.candidates = this.candidateService.search(searchValues);
+		this.sortCandidates(this.candidates);
 	}
 
 	public void setCandidateService(final CandidateService candidateService) {
@@ -72,6 +74,10 @@ public class CandidateSearchBean extends AbstractPageBean {
 
 	public void setName(final String name) {
 		this.name = name;
+	}
+
+	private void sortCandidates(final List<Candidate> candidates) {
+		candidates.sort(Comparator.comparing(Candidate::getFullName));
 	}
 
 	public String view() {
