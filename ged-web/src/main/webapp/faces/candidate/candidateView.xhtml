@@ -185,7 +185,7 @@
 						<div class="ui-g">
 							<div class="ui-g-12">
 								<p:dataTable var="file" id="files" value="#{candidateViewBean.files}" emptyMessage="#{i18n['file.no_files']}"
-									reflow="true" rows="#{sessionBean.rowsPerPage}" rowKey="#{file.id}" tableStyle="table-layout: auto;">
+									reflow="true" rows="#{sessionBean.rowsPerPage}" rowKey="#{file.id}" >
 
 									<p:column headerText="#{i18n['file.name']}">
 										<h:commandLink action="#{candidateViewBean.openFile(file)}">

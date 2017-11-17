@@ -4127,6 +4127,10 @@ body .ui-growl .ui-growl-item .ui-growl-icon-close {
 	text-indent: 0px;
 }
 
+body .ui-datatable table {
+	table-layout: auto;
+}
+
 body .ui-datatable thead th {
 	text-align: left;
 }
