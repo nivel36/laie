@@ -63,8 +63,6 @@
 								<p:inputText id="name" value="#{candidateSearchBean.name}" />
 							</div>
 							<div class="ui-md-12 ui-lg-4">
-								<p:commandButton icon="fa fa-plus" styleClass="btn-green" action="#{candidateSearchBean.search}" update="@form"
-									process="searchUserPanel" />
 								<p:commandButton value="#{i18n['action.search']}" action="#{candidateSearchBean.search}" update="@form"
 									process="searchUserPanel" />
 								<p:commandButton value="#{i18n['action.clean']}" action="#{candidateSearchBean.clean}" update="@form"

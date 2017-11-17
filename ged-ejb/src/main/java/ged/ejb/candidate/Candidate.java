@@ -25,6 +25,7 @@ import javax.validation.constraints.Pattern;
 
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.IndexedEmbedded;
 
 import ged.ejb.core.Address;
 import ged.ejb.core.model.AbstractAuditedEntity;
@@ -103,6 +104,7 @@ public class Candidate extends AbstractAuditedEntity {
 
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "candidate_tag", joinColumns = @JoinColumn(name = "candidate_id"), inverseJoinColumns = @JoinColumn(name = "tag_id"))
+	@IndexedEmbedded
 	private Set<Tag> tags;
 
 	public void addJobCandidature(final JobCandidature jobCandidature) {

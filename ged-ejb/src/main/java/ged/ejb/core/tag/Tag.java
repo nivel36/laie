@@ -6,34 +6,24 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 
-import ged.ejb.core.i18n.I18n;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+
 import ged.ejb.core.model.AbstractEntity;
 
 @Entity
+@Indexed
 public class Tag extends AbstractEntity {
 
 	private static final long serialVersionUID = -2676859619371128798L;
 
 	@NotNull
 	@Column(length = 128, nullable = false)
-	@I18n
+	@Field
 	private String label;
 
-	public String getLabel() {
-		return this.label;
-	}
-
-	public void setLabel(final String label) {
-		this.label = label;
-	}
-
 	@Override
-	public int hashCode() {
-		return Objects.hash(label);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(final Object obj) {
 		if (obj == null) {
 			return false;
 		}
@@ -46,12 +36,25 @@ public class Tag extends AbstractEntity {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		Tag other = (Tag) obj;
+		final Tag other = (Tag) obj;
 		return Objects.equals(this.label, other.label);
+	}
+
+	public String getLabel() {
+		return this.label;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(this.label);
+	}
+
+	public void setLabel(final String label) {
+		this.label = label;
 	}
 
 	@Override
 	public String toString() {
-		return label;
+		return this.label;
 	}
 }
