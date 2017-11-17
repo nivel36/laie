@@ -7,6 +7,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 import org.apache.lucene.analysis.core.LowerCaseFilterFactory;
 import org.apache.lucene.analysis.core.WhitespaceTokenizerFactory;
+import org.apache.lucene.analysis.miscellaneous.ASCIIFoldingFilterFactory;
 import org.apache.lucene.analysis.ngram.EdgeNGramFilterFactory;
 import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.AnalyzerDef;
@@ -24,6 +25,8 @@ import ged.ejb.user.User;
 				// Normalize token text to lowercase, as the user is unlikely to
 				// care about casing when searching for matches
 				@TokenFilterDef(factory = LowerCaseFilterFactory.class),
+				// Ignore accents
+				@TokenFilterDef(factory = ASCIIFoldingFilterFactory.class),
 				// Index partial words starting at the front, so we can provide
 				// Autocomplete functionality
 				@TokenFilterDef(factory = EdgeNGramFilterFactory.class, params = {
