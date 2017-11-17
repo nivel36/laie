@@ -15,7 +15,9 @@ public interface CandidateDao extends Dao<Candidate> {
 
 	List<Tag> findAllTags();
 
-	Candidate findCandidateAndFiles(long id);
+	Candidate findCandidateAndFiles(final long id);
+
+	List<Candidate> findLastAddedCandidates(final int numberOfCandidates);
 
 	List<Candidate> search(final List<String> searchValues);
 

@@ -55,6 +55,14 @@ public class CandidateDaoJpa extends AbstractDaoJpa<Candidate> implements Candid
 	}
 
 	@Override
+	public List<Candidate> findLastAddedCandidates(final int numberOfCandidates) {
+		if (numberOfCandidates < 1) {
+			throw new IllegalArgumentException("numberOfCandidates: " + numberOfCandidates);
+		}
+		return findByTypedQuery(Candidate.class, "Candidate.findLastAddedCandidates", null, numberOfCandidates, 0);
+	}
+
+	@Override
 	public Class<Candidate> getType() {
 		return Candidate.class;
 	}

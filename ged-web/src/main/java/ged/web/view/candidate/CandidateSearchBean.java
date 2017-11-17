@@ -31,15 +31,21 @@ public class CandidateSearchBean extends AbstractPageBean {
 	@Inject
 	protected transient CandidateService candidateService;
 
+	private List<Candidate> lastAddedCandidates;
+
 	private String name;
 
 	public void clean() {
 		this.name = null;
-		this.search();
+		search();
 	}
 
 	public List<Candidate> getCandidates() {
 		return this.candidates;
+	}
+
+	public List<Candidate> getLastAddedCandidates() {
+		return this.lastAddedCandidates;
 	}
 
 	public String getName() {
@@ -48,7 +54,8 @@ public class CandidateSearchBean extends AbstractPageBean {
 
 	@PostConstruct
 	public void init() {
-		this.search();
+		search();
+		this.lastAddedCandidates = this.candidateService.findLastAddedCandidates(10);
 	}
 
 	public String newCandidate() {
@@ -65,7 +72,7 @@ public class CandidateSearchBean extends AbstractPageBean {
 			searchValues = new ArrayList<>();
 		}
 		this.candidates = this.candidateService.search(searchValues);
-		this.sortCandidates(this.candidates);
+		sortCandidates(this.candidates);
 	}
 
 	public void setCandidateService(final CandidateService candidateService) {

@@ -54,9 +54,33 @@
 				</div>
 			</div>
 		</div>
-		<h:form id="form">
-			<div class="ui-g">
-				<div class="ui-g-12 ui-xl-9">
+
+		<div class="ui-g">
+			<div class="ui-g-12 ui-xl-3">
+				<h:form id="lastCandidatesForm">
+					<p:panel id="lastActions" header="#{i18n['index.last_candidates']}">
+						<div class="ui-g">
+							<div class="ui-g-12">
+								<div class="form-action-primary">
+									<p:commandButton value="#{i18n['action.new']}" action="#{candidateSearchBean.newCandidate}" immediate="true"
+										styleClass="btn-green" />
+								</div>
+							</div>
+						</div>
+						<div class="ui-g">
+							<ui:repeat var="candidate" value="#{candidateSearchBean.lastAddedCandidates}" varStatus="status">
+								<div class="ui-g-12 ui-md-4 ui-lg-4 ui-xl-6">
+									<ui:include src="candidateCard.xhtml">
+										<ui:param name="user" value="#{candidate}" />
+									</ui:include>
+								</div>
+							</ui:repeat>
+						</div>
+					</p:panel>
+				</h:form>
+			</div>
+			<div class="ui-g-12 ui-xl-9">
+				<h:form id="searchForm">
 					<p:panel id="searchUserPanel" header="#{i18n['candidate.search']}">
 						<div class="ui-g">
 							<div class="ui-md-12 ui-lg-4">
@@ -67,14 +91,6 @@
 									process="searchUserPanel" />
 								<p:commandButton value="#{i18n['action.clean']}" action="#{candidateSearchBean.clean}" update="@form"
 									styleClass="btn-gray" />
-							</div>
-						</div>
-						<div class="ui-g">
-							<div class="ui-lg-12">
-								<div class="form-action-primary">
-									<p:commandButton value="#{i18n['action.new']}" action="#{candidateSearchBean.newCandidate}" immediate="true"
-										styleClass="btn-green" />
-								</div>
 							</div>
 						</div>
 
@@ -113,12 +129,9 @@
 							</p:column>
 						</p:dataTable>
 					</p:panel>
-				</div>
-				<div class="ui-g-12 ui-md-6 ui-xl-3">
-					<p:panel id="lastActions" header="#{i18n['index.last_candidates']}">
-					</p:panel>
-				</div>
+				</h:form>
 			</div>
-		</h:form>
+
+		</div>
 	</ui:define>
 </ui:composition>

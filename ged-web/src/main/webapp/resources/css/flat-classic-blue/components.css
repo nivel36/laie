@@ -307,7 +307,7 @@ h4 {
 
 .user-minicard {
 	width: 100%;
-	margin: 10px;
+	margin: 5px;
 	overflow: auto;
 }
 
@@ -316,24 +316,23 @@ h4 {
 }
 
 .user-minicard .user-image .image {
-	width: 64px;
-	height: 64px;
+	width: 48px;
+	height: 48px;
 	border-radius: 50%;
 }
 
 .user-minicard .user-info {
 	padding: 0px 10px;
-	float: left;
 }
 
 .user-minicard .user-info .name {
-	font-weight: 600;
-	font-size: 14px;
+	font-weight: 500;
+	font-size: 13px;
 }
 
 .user-minicard .user-info .position {
 	font-weight: 400;
-	font-size: 12px;
+	font-size: 11px;
 	color: #999999;
 }
 
