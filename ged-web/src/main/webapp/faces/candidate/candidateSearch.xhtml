@@ -60,14 +60,6 @@
 				<h:form id="lastCandidatesForm">
 					<p:panel id="lastActions" header="#{i18n['index.last_candidates']}">
 						<div class="ui-g">
-							<div class="ui-g-12">
-								<div class="form-action-primary">
-									<p:commandButton value="#{i18n['action.new']}" action="#{candidateSearchBean.newCandidate}" immediate="true"
-										styleClass="btn-green" />
-								</div>
-							</div>
-						</div>
-						<div class="ui-g">
 							<ui:repeat var="candidate" value="#{candidateSearchBean.lastAddedCandidates}" varStatus="status">
 								<div class="ui-g-12 ui-md-4 ui-lg-4 ui-xl-6">
 									<ui:include src="candidateCard.xhtml">
@@ -76,58 +68,69 @@
 								</div>
 							</ui:repeat>
 						</div>
+						<div class="ui-g">
+							<div class="ui-g-12">
+								<div class="form-action-primary">
+									<p:commandButton value="#{i18n['action.new']}" action="#{candidateSearchBean.newCandidate}" immediate="true"
+										styleClass="btn-green" />
+								</div>
+							</div>
+						</div>
 					</p:panel>
 				</h:form>
 			</div>
 			<div class="ui-g-12 ui-xl-9">
 				<h:form id="searchForm">
 					<p:panel id="searchUserPanel" header="#{i18n['candidate.search']}">
-						<div class="ui-g">
-							<div class="ui-md-12 ui-lg-4">
-								<p:inputText id="name" value="#{candidateSearchBean.name}" />
-							</div>
-							<div class="ui-md-12 ui-lg-4">
-								<p:commandButton value="#{i18n['action.search']}" action="#{candidateSearchBean.search}" update="@form"
-									process="searchUserPanel" />
-								<p:commandButton value="#{i18n['action.clean']}" action="#{candidateSearchBean.clean}" update="@form"
-									styleClass="btn-gray" />
+						<div class="searchForm">
+							<div class="ui-g">
+								<div class="ui-md-12 ui-lg-4">
+									<p:inputText id="name" value="#{candidateSearchBean.name}" />
+								</div>
+								<div class="ui-md-12 ui-lg-4">
+									<p:commandButton value="#{i18n['action.search']}" action="#{candidateSearchBean.search}" update="@form"
+										process="searchUserPanel" />
+									<p:commandButton value="#{i18n['action.clean']}" action="#{candidateSearchBean.clean}" update="@form"
+										styleClass="btn-gray" />
+								</div>
 							</div>
 						</div>
+						<div class="searchResults">
+							<p:dataTable var="candidate" id="candidate" value="#{candidateSearchBean.candidates}"
+								emptyMessage="#{i18n['candidate.no_candidates_found']}" reflow="true" paginator="true"
+								paginatorPosition="bottom" rows="#{sessionBean.rowsPerPage}">
 
-						<p:dataTable var="candidate" id="candidate" value="#{candidateSearchBean.candidates}"
-							emptyMessage="#{i18n['candidate.no_candidates_found']}" reflow="true" paginator="true" paginatorPosition="bottom"
-							rows="#{sessionBean.rowsPerPage}">
+								<p:column headerText="#{i18n['candidate.name']}" sortBy="#{candidate.name}">
+									<p:link outcome="candidateView">
+										<p:graphicImage class="image-icon" value="/images/#{candiate.imageFileName}"
+											rendered="#{not empty candiate.imageFileName}" />
+										<p:graphicImage class="image-icon" value="/resources/img/default-avatar.png"
+											rendered="#{empty candiate.imageFileName}" />
+										<f:param name="id" value="#{candidate.id}" />
+										<h:outputText value="#{candidate}" />
+									</p:link>
+								</p:column>
 
-							<p:column headerText="#{i18n['candidate.name']}" sortBy="#{candidate.name}">
-								<p:link outcome="candidateView">
-									<p:graphicImage class="image-icon" value="/images/#{candiate.imageFileName}"
-										rendered="#{not empty candiate.imageFileName}" />
-									<p:graphicImage class="image-icon" value="/resources/img/default-avatar.png"
-										rendered="#{empty candiate.imageFileName}" />
-									<f:param name="id" value="#{candidate.id}" />
-									<h:outputText value="#{candidate}" />
-								</p:link>
-							</p:column>
+								<p:column headerText="#{i18n['candidate.jobProfile']}" sortBy="#{candidate.jobProfile}">
+									<h:outputText value="#{candidate.jobProfile}" />
+								</p:column>
 
-							<p:column headerText="#{i18n['candidate.jobProfile']}" sortBy="#{candidate.jobProfile}">
-								<h:outputText value="#{candidate.jobProfile}" />
-							</p:column>
+								<p:column headerText="#{i18n['candidate.email']}">
+									<h:outputText value="#{candidate.email}" />
+								</p:column>
 
-							<p:column headerText="#{i18n['candidate.email']}">
-								<h:outputText value="#{candidate.email}" />
-							</p:column>
+								<p:column headerText="#{i18n['candidate.phone_number']}">
+									<h:outputText value="#{candidate.phoneNumber}" />
+								</p:column>
 
-							<p:column headerText="#{i18n['candidate.phone_number']}">
-								<h:outputText value="#{candidate.phoneNumber}" />
-							</p:column>
+								<p:column headerText="#{i18n['candidate.rating']}" sortBy="#{candidate.rating}">
+									<p:rating value="#{candidate.rating}" cancel="false" readonly="true" />
+								</p:column>
 
-							<p:column headerText="#{i18n['candidate.rating']}" sortBy="#{candidate.rating}">
-								<p:rating value="#{candidate.rating}" cancel="false" readonly="true" />
-							</p:column>
-
-							<p:column headerText="#{i18n['candidate.state']}">
-							</p:column>
-						</p:dataTable>
+								<p:column headerText="#{i18n['candidate.state']}">
+								</p:column>
+							</p:dataTable>
+						</div>
 					</p:panel>
 				</h:form>
 			</div>

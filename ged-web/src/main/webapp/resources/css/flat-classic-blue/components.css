@@ -241,17 +241,8 @@ h4 {
 	width: 100%;
 }
 
-.search-input .search-text {
-	padding: 0 10px 0 0;
-	font-size: 14px;
-	align-items: center;
-	overflow: auto;
-	display: relative;
-	width: 100%;
-}
-
-.search-bar {
-	margin: 10px 0;
+.searchForm {
+	padding: 10px 0px 20px 0px;
 }
 
 .form-action {
