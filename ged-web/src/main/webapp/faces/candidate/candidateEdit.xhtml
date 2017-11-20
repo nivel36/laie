@@ -11,110 +11,124 @@
 	<ui:param name="selectedMenu" value="candidates" />
 
 	<ui:define name="content">
-		<h:form id="form">
-			<input type="hidden" id="candidateId" value="#{candidateEditBean.candidate.id}" />
 
-			<div class="ui-g">
-				<div class="ui-g-12">
-					<p:panel
-						header="#{candidateEditBean.candidate.id eq 0 ? i18n['candidate.new_candidate'] : candidateEditBean.candidate}">
-
+		<div class="ui-g">
+			<div class="ui-g-12">
+				<h:form id="form">
+					<input type="hidden" id="candidateId" value="#{candidateEditBean.candidate.id}" />
+					<p:panel header="#{candidateEditBean.candidate}">
 						<div class="ui-g">
-							<div class="ui-md-12 ui-lg-6 ui-xl-4">
+							<div class="ui-g-12 ui-md-4">
 								<div class="form-group">
-									<p:outputLabel value="#{i18n['candidate.name']}" />
-									<p:inputText id="name" value="#{candidateEditBean.candidate.name}" label="#{i18n['candidate.name']}"
-										required="true" />
+									<p:outputLabel value="#{i18n['candidate.name']}" for="name" />
+									<p:inputText id="name" value="#{candidateEditBean.candidate.name}" required="true" />
 								</div>
 								<h:message for="name" errorClass="error" />
 							</div>
-							<div class="ui-md-12 ui-lg-6 ui-xl-4">
+
+							<div class="ui-g-12 ui-md-4">
 								<div class="form-group">
-									<p:outputLabel value="#{i18n['candidate.surename']}" />
-									<p:inputText id="surename" value="#{candidateEditBean.candidate.surename}"
-										label="#{i18n['candidate.surename']}" required="true" />
+									<p:outputLabel value="#{i18n['candidate.surename']}" for="surename" />
+									<p:inputText id="surename" value="#{candidateEditBean.candidate.surename}" required="true" />
 								</div>
 								<h:message for="surename" errorClass="error" />
 							</div>
-							<div class="ui-md-12 ui-lg-6 ui-xl-4">
+
+							<div class="ui-g-12 ui-md-4">
 								<div class="form-group">
-									<p:outputLabel value="#{i18n['candidate.bornDate']}" />
-									<p:inputText id="age" value="#{candidateEditBean.candidate.bornDate}" label="#{i18n['candidate.bornDate']}" />
+									<p:outputLabel value="#{i18n['candidate.bornDate']}" for="bornDate" />
+									<p:calendar id="bornDate" value="#{candidateEditBean.candidate.bornDate}" />
 								</div>
-								<h:message for="age" errorClass="error" />
+								<h:message for="bornDate" errorClass="error" />
+							</div>
+						</div>
+						<div class="ui-g">
+							<div class="ui-g-12 ui-md-4">
+								<div class="form-group">
+									<p:outputLabel value="#{i18n['candidate.phone_number']}" for="phoneNumber" />
+									<p:inputText id="phoneNumber" value="#{candidateEditBean.candidate.phoneNumber}" required="true" />
+								</div>
+								<h:message for="phoneNumber" errorClass="error" />
 							</div>
 
-							<div class="ui-md-12 ui-lg-6 ui-xl-4">
+							<div class="ui-g-12 ui-md-4">
 								<div class="form-group">
-									<p:outputLabel value="#{i18n['address.city']}" />
-									<p:inputText id="city" value="#{candidateEditBean.candidate.address.city}" label="#{i18n['address.city']}" />
+									<p:outputLabel value="#{i18n['candidate.email']}" for="email" />
+									<p:inputText id="email" pt:type="email" value="#{candidateEditBean.candidate.email}" required="true" />
+								</div>
+								<h:message for="email" errorClass="error" />
+							</div>
+
+							<div class="ui-g-12 ui-md-4">
+								<div class="form-group">
+									<p:outputLabel value="#{i18n['candidate.skype']}" for="email" />
+									<p:inputText id="skype" pt:type="skype" value="#{candidateEditBean.candidate.skype}" />
+								</div>
+								<h:message for="skype" errorClass="error" />
+							</div>
+						</div>
+
+						<div class="ui-g">
+							<div class="ui-g-12 ui-md-4">
+								<div class="form-group">
+									<p:outputLabel value="#{i18n['address.city']}" for="city" />
+									<p:inputText id="city" value="#{candidateEditBean.candidate.address.city}" />
 								</div>
 								<h:message for="city" errorClass="error" />
 							</div>
-							<div class="ui-md-12 ui-lg-6 ui-xl-4">
+
+							<div class="ui-g-12 ui-md-4">
 								<div class="form-group">
-									<p:outputLabel value="#{i18n['address.state']}" />
-									<p:inputText id="state" value="#{candidateEditBean.candidate.address.state}" label="#{i18n['address.state']}" />
+									<p:outputLabel value="#{i18n['address.state']}" for="state" />
+									<p:inputText id="state" value="#{candidateEditBean.candidate.address.state}" />
 								</div>
 								<h:message for="state" errorClass="error" />
 							</div>
 						</div>
 						<div class="ui-g">
-							<div class="ui-md-12 ui-lg-6 ui-xl-4">
+							<div class="ui-g-12 ui-md-4">
 								<div class="form-group">
-									<p:outputLabel value="#{i18n['candidate.phone_number']}" />
-									<p:inputText id="phoneNumber" value="#{candidateEditBean.candidate.phoneNumber}" required="true"
-										label="#{i18n['candidate.phone_number']}" />
+									<p:outputLabel value="#{i18n['candidate.jobProfile']}" for="jobProfile" />
+									<p:inputText id="jobProfile" value="#{candidateEditBean.candidate.jobProfile}" required="true" />
 								</div>
-								<h:message for="phoneNumber" errorClass="error" />
+								<h:message for="jobProfile" errorClass="error" />
 							</div>
-							<div class="ui-md-12 ui-lg-6 ui-xl-4">
+
+							<div class="ui-g-12 ui-md-4">
 								<div class="form-group">
-									<p:outputLabel value="#{i18n['candidate.email']}" />
-									<p:inputText id="email" pt:type="email" value="#{candidateEditBean.candidate.email}" required="true"
-										label="#{i18n['candidate.email']}" />
+									<p:outputLabel value="#{i18n['candidate.salary']}" for="salary" />
+									<p:inputText id="salary" value="#{candidateEditBean.candidate.salary}" />
 								</div>
-								<h:message for="email" errorClass="error" />
+								<h:message for="salary" errorClass="error" />
 							</div>
-						</div>
-						<div class="ui-g">
-							<div class="ui-md-12 ui-lg-6 ui-xl-4">
+
+							<div class="ui-g-12 ui-md-4">
 								<div class="form-group">
-									<p:outputLabel value="#{i18n['candidate.jobProfile']}" />
-									<p:inputText id="position" value="#{candidateEditBean.candidate.jobProfile}" required="true"
-										label="#{i18n['candidate.jobProfile']}" />
-								</div>
-								<h:message for="position" errorClass="error" />
-							</div>
-							<div class="ui-md-12 ui-lg-6 ui-xl-4">
-								<div class="form-group">
-									<p:outputLabel value="#{i18n['candidate.salary']}" />
-									<p:inputText id="salary" value="#{candidateEditBean.candidate.salary}" label="#{i18n['candidate.salary']}" />
-									<h:message for="salary" errorClass="error" />
-								</div>
-							</div>
-							<div class="ui-md-12 ui-lg-6 ui-xl-4">
-								<div class="form-group">
-									<p:outputLabel value="#{i18n['candidate.expected_salary']}" />
+									<p:outputLabel value="#{i18n['candidate.expected_salary']}" for="expected_salary" />
 									<p:inputText id="expected_salary" value="#{candidateEditBean.candidate.expectedSalary}"
 										label="#{i18n['candidate.expected_salary']}" />
 								</div>
 								<h:message for="expected_salary" errorClass="error" />
 							</div>
+							<div class="ui-g-12">
+								<div class="form-group">
+									<p:outputLabel value="#{i18n['candidate.tags']}" for="tags" />
+									<p:chips id="tags" value="#{candidateEditBean.candidate.tags}" label="#{i18n['candidate.tags']}" />
+								</div>
+							</div>
 						</div>
 						<div class="ui-g">
 							<div class="ui-g-12">
 								<div class="form-action-primary">
-									<p:commandButton value="#{i18n['action.save']}" action="#{candidateEditBean.save}" process="@form"
-										update="@form growl" />
-									<p:commandButton value="#{i18n['action.cancel']}" action="#{candidateEditBean.cancel}" immediate="true"
-										styleClass="btn-gray" />
+									<p:commandButton value="#{i18n['action.save']}" action="#{candidateEditBean.save}" update="@form growl" />
+									<p:commandButton styleClass="btn-gray" value="#{i18n['action.cancel']}" action="#{candidateEditBean.cancel}"
+										update="@form" process="@this" />
 								</div>
 							</div>
 						</div>
 					</p:panel>
-				</div>
+				</h:form>
 			</div>
-		</h:form>
+		</div>
 	</ui:define>
 </ui:composition>
