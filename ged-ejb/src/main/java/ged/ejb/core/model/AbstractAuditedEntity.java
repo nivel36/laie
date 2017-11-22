@@ -5,6 +5,7 @@ import javax.persistence.EntityListeners;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
+
 import org.apache.lucene.analysis.core.LowerCaseFilterFactory;
 import org.apache.lucene.analysis.core.WhitespaceTokenizerFactory;
 import org.apache.lucene.analysis.miscellaneous.ASCIIFoldingFilterFactory;
@@ -43,16 +44,11 @@ public abstract class AbstractAuditedEntity extends AbstractEntity implements Au
 
 	@Column(nullable = false)
 	@Field
-	private Boolean deleted = Boolean.FALSE;
+	private boolean deleted;
 
 	@ManyToOne
 	@JoinColumn(name = "userId")
 	private User user;
-
-	@Override
-	public Boolean getDeleted() {
-		return this.deleted;
-	}
 
 	@Override
 	public User getUser() {
@@ -60,12 +56,12 @@ public abstract class AbstractAuditedEntity extends AbstractEntity implements Au
 	}
 
 	@Override
-	public Boolean isDeleted() {
+	public boolean isDeleted() {
 		return this.deleted;
 	}
 
 	@Override
-	public void setDeleted(final Boolean deleted) {
+	public void setDeleted(final boolean deleted) {
 		this.deleted = deleted;
 	}
 
