@@ -1,4 +1,4 @@
-package ged.rest.controller;
+package ged.rest.candidate;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package ged.rest.controller;
+package ged.rest;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;

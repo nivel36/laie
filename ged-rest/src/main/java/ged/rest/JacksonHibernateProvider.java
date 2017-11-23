@@ -1,4 +1,4 @@
-package ged.rest.controller;
+package ged.rest;
 
 import javax.ws.rs.ext.ContextResolver;
 import javax.ws.rs.ext.Provider;
