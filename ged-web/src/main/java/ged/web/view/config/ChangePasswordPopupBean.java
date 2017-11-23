@@ -43,26 +43,27 @@ public class ChangePasswordPopupBean extends AbstractPageBean {
 
 	public void change() {
 		logger.debug("Change password action performed");
-		final String output = hashPassword(this.password);
+		final String output = this.hashPassword(this.password);
 		final User user = this.sessionBean.getUser();
-		if (user.getPassword().equals(output)) {
+		if (user.getPassword().toString().equals(output)) {
 			if (this.newPassword.equals(this.repeatPassword)) {
-				this.sessionBean.setUser(changePassword(user));
-				clear();
+				this.sessionBean.setUser(this.changePassword(user));
+				this.clear();
 				// Clearing the view bean of the main page because we need to
 				// reload the user from database
 				this.facesContext.getViewRoot().getViewMap().clear();
-				addMessage(FacesMessage.SEVERITY_INFO, "action.save_action_performed", "action.save_action_performed");
+				this.addMessage(FacesMessage.SEVERITY_INFO, "action.save_action_performed",
+						"action.save_action_performed");
 			} else {
-				addErrorToField(this.newPasswordComponent, "login.error.password_not_equals");
+				this.addErrorToField(this.newPasswordComponent, "login.error.password_not_equals");
 			}
 		} else {
-			addErrorToField(this.passwordComponent, "login.error.bad_password");
+			this.addErrorToField(this.passwordComponent, "login.error.bad_password");
 		}
 	}
 
 	private User changePassword(final User user) {
-		final String hash = hashPassword(this.newPassword);
+		final String hash = this.hashPassword(this.newPassword);
 		user.setPassword(hash.toCharArray());
 		return this.userService.save(user);
 	}
