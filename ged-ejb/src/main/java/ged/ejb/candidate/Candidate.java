@@ -133,7 +133,7 @@ public class Candidate extends AbstractAuditedEntity {
 		if (!super.equals(obj)) {
 			return false;
 		}
-		if (getClass() != obj.getClass()) {
+		if (this.getClass() != obj.getClass()) {
 			return false;
 		}
 		final Candidate other = (Candidate) obj;
@@ -250,7 +250,7 @@ public class Candidate extends AbstractAuditedEntity {
 		this.files = files;
 	}
 
-	public void setImage(final String imageFileName) {
+	public void setImageFileName(final String imageFileName) {
 		this.imageFileName = imageFileName;
 	}
 
@@ -304,6 +304,6 @@ public class Candidate extends AbstractAuditedEntity {
 
 	@Override
 	public String toString() {
-		return getFullName();
+		return this.getFullName();
 	}
 }
