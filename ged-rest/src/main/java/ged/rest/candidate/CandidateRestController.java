@@ -112,6 +112,18 @@ public class CandidateRestController {
 		return candidateDtos;
 	}
 
+	public void setCandidateService(final CandidateService candidateService) {
+		this.candidateService = candidateService;
+	}
+
+	public void setUserSerivce(final UserService userSerivce) {
+		this.userSerivce = userSerivce;
+	}
+
+	public void setValidator(final Validator validator) {
+		this.validator = validator;
+	}
+
 	private Candidate toCandidate(final CandidateDto candidateDto) {
 		final Candidate candidate = new Candidate();
 		final User owner = this.userSerivce.findUserByEmail(candidateDto.getOwnerEmail());
