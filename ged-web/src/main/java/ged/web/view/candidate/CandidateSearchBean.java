@@ -55,7 +55,7 @@ public class CandidateSearchBean extends AbstractPageBean {
 	@PostConstruct
 	public void init() {
 		search();
-		this.lastAddedCandidates = this.candidateService.findLastAddedCandidates(10);
+		this.lastAddedCandidates = this.candidateService.findLastAddedCandidates(6);
 	}
 
 	public String newCandidate() {

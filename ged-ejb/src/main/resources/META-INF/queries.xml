@@ -81,7 +81,7 @@
 		<query><![CDATA[
 			SELECT c
 			FROM Candidate c
-			ORDER BY c.id
+			ORDER BY c.id DESC
 		]]></query>
 	</named-query>
 

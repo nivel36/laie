@@ -65,10 +65,10 @@ public abstract class AbstractDaoJpa<T extends AbstractEntity> implements Dao<T>
 		final CriteriaQuery<E> cq = cb.createQuery(type);
 		final Root<E> root = cq.from(type);
 		final CriteriaQuery<E> all = cq.select(root);
-		return findByCriteria(all, 0, 0);
+		return findByCriteria(all, null, null);
 	}
 
-	protected <E> List<E> findByCriteria(final CriteriaQuery<E> cq, final int pageSize, final int pageNum) {
+	protected <E> List<E> findByCriteria(final CriteriaQuery<E> cq, final Integer pageSize, final Integer pageNum) {
 		Objects.requireNonNull(cq);
 		logger.debug("Find entities by criteria");
 		final TypedQuery<E> query = this.em.createQuery(cq);
@@ -95,6 +95,11 @@ public abstract class AbstractDaoJpa<T extends AbstractEntity> implements Dao<T>
 		return query.getSingleResult();
 	}
 
+	protected <E> List<E> findByTypedQuery(final Class<E> entityClass, final String namedQuery, final Integer pageSize,
+			final Integer pageNum) {
+		return findByTypedQuery(entityClass, namedQuery, null, pageSize, pageNum);
+	}
+
 	protected <E> E findByTypedQuery(final Class<E> entityClass, final String namedQuery,
 			final Map<String, Object> parameters) {
 		Objects.requireNonNull(entityClass);
@@ -106,7 +111,7 @@ public abstract class AbstractDaoJpa<T extends AbstractEntity> implements Dao<T>
 	}
 
 	protected <E> List<E> findByTypedQuery(final Class<E> entityClass, final String namedQuery,
-			final Map<String, Object> parameters, final int pageSize, final int pageNum) {
+			final Map<String, Object> parameters, final Integer pageSize, final Integer pageNum) {
 		Objects.requireNonNull(entityClass);
 		Objects.requireNonNull(namedQuery);
 		logger.debug("Find entities {} by named query {}", entityClass, namedQuery);
@@ -114,11 +119,6 @@ public abstract class AbstractDaoJpa<T extends AbstractEntity> implements Dao<T>
 		parametrizar(parameters, query);
 		paginar(pageSize, pageNum, query);
 		return query.getResultList();
-	}
-
-	protected <E> List<E> findByTypedQuery(final Class<E> entityClass, final String namedQuery, final int pageSize,
-			final int pageNum) {
-		return findByTypedQuery(entityClass, namedQuery, null, pageSize, pageNum);
 	}
 
 	protected EntityManager getEm() {
@@ -138,19 +138,21 @@ public abstract class AbstractDaoJpa<T extends AbstractEntity> implements Dao<T>
 		logger.debug("Innsertedd entity has the id {}", entity.getId());
 	}
 
-	private void paginar(final int pageSize, final int pageNum, final Query query) {
-		if (pageNum < 0) {
+	private void paginar(final Integer pageSize, final Integer pageNum, final Query query) {
+		if (pageNum != null && pageNum < 0) {
 			throw new IllegalArgumentException("pageNum: " + pageNum);
 		}
-		if (pageSize < 0) {
+		if (pageSize != null && pageSize < 0) {
 			throw new IllegalArgumentException("pageSize: " + pageSize);
 		}
 		logger.trace("Page number {}", pageNum);
-		query.setFirstResult(pageNum * pageSize);
-		if (pageSize > 0) {
+		if (pageSize != null && pageNum != null) {
+			query.setFirstResult(pageNum * pageSize);
+		}
+		if (pageSize != null && pageSize > 0) {
 			logger.trace("Page size {}", pageSize);
 			query.setMaxResults(pageSize);
-		} else if (pageSize == 0) {
+		} else if (pageSize == null || pageSize == 0) {
 			logger.trace("Setting max result to {}", RES_LIMIT);
 			query.setMaxResults(RES_LIMIT);
 		}
@@ -172,7 +174,7 @@ public abstract class AbstractDaoJpa<T extends AbstractEntity> implements Dao<T>
 		if (entity.getId() == 0) {
 			throw new IllegalStateException();
 		}
-		logger.debug("Update entity of class {} and id {}",  getType(), entity.getId());
+		logger.debug("Update entity of class {} and id {}", getType(), entity.getId());
 		if (this.em.contains(entity)) {
 			return entity;
 		} else {

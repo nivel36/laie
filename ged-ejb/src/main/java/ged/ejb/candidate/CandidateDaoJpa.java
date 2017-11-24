@@ -59,7 +59,7 @@ public class CandidateDaoJpa extends AbstractDaoJpa<Candidate> implements Candid
 		if (numberOfCandidates < 1) {
 			throw new IllegalArgumentException("numberOfCandidates: " + numberOfCandidates);
 		}
-		return findByTypedQuery(Candidate.class, "Candidate.findLastAddedCandidates", null, numberOfCandidates, 0);
+		return findByTypedQuery(Candidate.class, "Candidate.findLastAddedCandidates", null, numberOfCandidates, null);
 	}
 
 	@Override
