@@ -27,6 +27,7 @@ import ged.ejb.candidate.Candidate;
 import ged.ejb.candidate.CandidateService;
 import ged.ejb.candidate.UploadedServerFile;
 import ged.ejb.core.tag.Tag;
+import ged.ejb.core.tag.TagService;
 import ged.web.core.util.ConfigurationProperty;
 import ged.web.core.util.MessageUtils;
 import ged.web.core.util.Navigate;
@@ -56,6 +57,9 @@ public class CandidateViewBean extends AbstractPageBean {
 	private String id;
 
 	private List<String> tags = new ArrayList<>();
+
+	@Inject
+	private transient TagService tagService;
 
 	public void cancelEditCandidate() {
 		this.editable = false;
@@ -95,22 +99,17 @@ public class CandidateViewBean extends AbstractPageBean {
 		if (labels == null) {
 			return new HashSet<>();
 		}
-		final List<Tag> allTags = this.candidateService.findAllTags();
 		final Set<Tag> candidateTags = new HashSet<>();
 		for (final String label : labels) {
 			if (label == null) {
 				return null;
 			}
-			boolean found = false;
-			for (final Tag tag : allTags) {
-				if (tag.getLabel().equals(label)) {
-					candidateTags.add(tag);
-					found = true;
-					break;
-				}
-			}
-			if (!found) {
-				final Tag tag = new Tag();
+			final Tag tag;
+			final List<Tag> tagsFoundInDataBase = this.tagService.searchByLabel(label);
+			if (tagsFoundInDataBase.size() == 1) {
+				tag = tagsFoundInDataBase.get(0);
+			} else {
+				tag = new Tag();
 				tag.setLabel(label);
 				candidateTags.add(tag);
 			}
@@ -239,6 +238,10 @@ public class CandidateViewBean extends AbstractPageBean {
 
 	public void setTags(final List<String> tags) {
 		this.tags = tags;
+	}
+
+	public void setTagService(final TagService tagService) {
+		this.tagService = tagService;
 	}
 
 	public void undelete() {
