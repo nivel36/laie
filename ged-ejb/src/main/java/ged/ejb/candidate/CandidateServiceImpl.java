@@ -67,6 +67,11 @@ public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> imp
 	}
 
 	@Override
+	public long findNumberOfCandidates() {
+		return this.candidateDao.findNumberOfCandidates();
+	}
+
+	@Override
 	public Dao<Candidate> getDao() {
 		return this.candidateDao;
 	}

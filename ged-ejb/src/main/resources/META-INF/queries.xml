@@ -85,6 +85,12 @@
 		]]></query>
 	</named-query>
 
+	<named-query name="Candidate.numberOfCandidates">
+		<query><![CDATA[
+			SELECT COUNT(c)
+			FROM Candidate c
+		]]></query>
+	</named-query>
 
 	<named-query name="Client.findByName">
 		<query><![CDATA[

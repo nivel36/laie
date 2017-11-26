@@ -35,6 +35,8 @@ public class CandidateSearchBean extends AbstractPageBean {
 
 	private String name;
 
+	private long numberOfCandidates;
+
 	public void clean() {
 		this.name = null;
 		search();
@@ -52,9 +54,14 @@ public class CandidateSearchBean extends AbstractPageBean {
 		return this.name;
 	}
 
+	public long getNumberOfCandidates() {
+		return this.numberOfCandidates;
+	}
+
 	@PostConstruct
 	public void init() {
 		search();
+		this.numberOfCandidates = this.candidateService.findNumberOfCandidates();
 		this.lastAddedCandidates = this.candidateService.findLastAddedCandidates(6);
 	}
 

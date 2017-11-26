@@ -304,6 +304,6 @@ public class Candidate extends AbstractAuditedEntity {
 
 	@Override
 	public String toString() {
-		return this.getFullName();
+		return getFullName();
 	}
 }

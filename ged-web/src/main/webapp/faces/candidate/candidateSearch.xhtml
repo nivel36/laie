@@ -16,8 +16,8 @@
 					<div class="card card-stats">
 						<div class="card-header"></div>
 						<div class="card-body">
-							<p class="card-category">Candidatos</p>
-							<span class="number">12</span>
+							<p class="card-category">#{i18n['candidate.candidates']}</p>
+							<span class="number">#{candidateSearchBean.numberOfCandidates}</span>
 						</div>
 						<div class="card-footer"></div>
 					</div>
@@ -58,7 +58,7 @@
 		<div class="ui-g">
 			<div class="ui-g-12 ui-xl-3">
 				<h:form id="lastCandidatesForm">
-					<p:panel id="lastActions" header="#{i18n['index.last_candidates']}">
+					<p:panel id="lastActions" header="#{i18n['candidate.last_candidates']}">
 						<div class="ui-g">
 							<ui:repeat var="candidate" value="#{candidateSearchBean.lastAddedCandidates}" varStatus="status">
 								<div class="ui-g-12 ui-md-4 ui-lg-4 ui-xl-6">

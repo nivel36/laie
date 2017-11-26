@@ -18,6 +18,8 @@ public interface CandidateService extends AuditedService<Candidate> {
 
 	List<Candidate> findLastAddedCandidates(final int numberOfCandidates);
 
+	long findNumberOfCandidates();
+
 	void insertFile(UploadedServerFile file);
 
 	List<Candidate> search(List<String> searchValues);

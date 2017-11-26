@@ -1,6 +1,10 @@
 package ged.web.view.candidate;
 
 import java.lang.invoke.MethodHandles;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -13,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import ged.ejb.candidate.Candidate;
 import ged.ejb.candidate.CandidateService;
 import ged.ejb.core.Address;
+import ged.ejb.core.tag.Tag;
 import ged.ejb.curriculum.Curriculum;
 import ged.ejb.curriculum.CurriculumService;
 import ged.web.core.view.AbstractPageBean;
@@ -28,18 +33,12 @@ public class CandidateEditBean extends AbstractPageBean {
 	private Candidate candidate;
 
 	@Inject
-	private  transient CandidateService candidateService;
-
-	public void setCandidateService(CandidateService candidateService) {
-		this.candidateService = candidateService;
-	}
-
-	public void setCurriculumService(CurriculumService curriculumService) {
-		this.curriculumService = curriculumService;
-	}
+	private transient CandidateService candidateService;
 
 	@Inject
-	private  transient CurriculumService curriculumService;
+	private transient CurriculumService curriculumService;
+
+	private List<String> tagLabels;
 
 	public String cancel() {
 		if (this.candidate.getId() == 0) {
@@ -81,21 +80,47 @@ public class CandidateEditBean extends AbstractPageBean {
 		return this.candidate;
 	}
 
+	public List<String> getTagLabels() {
+		return this.tagLabels;
+	}
+
+	private Set<Tag> getTagsFromStringList(final List<String> labels) {
+		if (labels == null) {
+			return new HashSet<>();
+		}
+		final List<Tag> allTags = this.candidateService.findAllTags();
+		final Set<Tag> candidateTags = new HashSet<>();
+		for (final String label : labels) {
+			if (label == null) {
+				return null;
+			}
+			boolean found = false;
+			for (final Tag tag : allTags) {
+				if (tag.getLabel().equals(label)) {
+					candidateTags.add(tag);
+					found = true;
+					break;
+				}
+			}
+			if (!found) {
+				final Tag tag = new Tag();
+				tag.setLabel(label);
+				candidateTags.add(tag);
+			}
+		}
+		return candidateTags;
+	}
+
 	@PostConstruct
 	private void init() {
-		if (this.flash.containsKey("candidate")) {
-			this.candidate = (Candidate) this.flash.get("candidate");
-		} else {
-			this.candidate = new Candidate();
-		}
-		if (this.candidate.getAddress() == null) {
-			this.candidate.setAddress(new Address());
-		}
-		this.flash.put("candidate", this.candidate);
+		this.candidate = new Candidate();
+		this.candidate.setAddress(new Address());
+		this.tagLabels = new ArrayList<>();
 	}
 
 	public String save() {
 		logger.debug("Save candidate action performed");
+		this.candidate.setTags(getTagsFromStringList(this.tagLabels));
 		saveCandidate();
 		return "candidateView.xhtml?id=" + this.candidate.getId() + "&faces-redirect=true";
 	}
@@ -110,4 +135,17 @@ public class CandidateEditBean extends AbstractPageBean {
 	public void setCandidate(final Candidate candidate) {
 		this.candidate = candidate;
 	}
+
+	public void setCandidateService(final CandidateService candidateService) {
+		this.candidateService = candidateService;
+	}
+
+	public void setCurriculumService(final CurriculumService curriculumService) {
+		this.curriculumService = curriculumService;
+	}
+
+	public void setTagLabels(final List<String> tagLabels) {
+		this.tagLabels = tagLabels;
+	}
+
 }

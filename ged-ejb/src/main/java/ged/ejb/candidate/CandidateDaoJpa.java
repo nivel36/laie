@@ -63,6 +63,11 @@ public class CandidateDaoJpa extends AbstractDaoJpa<Candidate> implements Candid
 	}
 
 	@Override
+	public long findNumberOfCandidates() {
+		return (long) findByQuery("Candidate.numberOfCandidates", null);
+	}
+
+	@Override
 	public Class<Candidate> getType() {
 		return Candidate.class;
 	}
