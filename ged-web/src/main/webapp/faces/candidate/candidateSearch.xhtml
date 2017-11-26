@@ -102,10 +102,10 @@
 
 								<p:column headerText="#{i18n['candidate.name']}" sortBy="#{candidate.name}">
 									<p:link outcome="candidateView">
-										<p:graphicImage class="image-icon" value="/images/#{candiate.imageFileName}"
-											rendered="#{not empty candiate.imageFileName}" />
+										<p:graphicImage class="image-icon" value="/images/#{candidate.imageFileName}"
+											rendered="#{not empty candidate.imageFileName}" />
 										<p:graphicImage class="image-icon" value="/resources/img/default-avatar.png"
-											rendered="#{empty candiate.imageFileName}" />
+											rendered="#{empty candidate.imageFileName}" />
 										<f:param name="id" value="#{candidate.id}" />
 										<h:outputText value="#{candidate}" />
 									</p:link>

@@ -304,6 +304,7 @@ h4 {
 
 .user-minicard .user-image {
 	float: left;
+	padding: 5px;
 }
 
 .user-minicard .user-image .image {
@@ -372,6 +373,14 @@ h4 {
 	font-weight: 300;
 	font-size: 30px;
 	float: right;
+}
+
+.selectable {
+	cursor: pointer;
+}
+
+.uploadImageButton {
+	display:none;
 }
 
 @media screen and (max-width: 699px) {

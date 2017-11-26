@@ -56,6 +56,10 @@ public class CandidateViewBean extends AbstractPageBean {
 
 	private String id;
 
+	@Inject
+	@ConfigurationProperty(value = "image.directory")
+	private String imageDirectory;
+
 	private List<String> tags = new ArrayList<>();
 
 	@Inject
@@ -236,6 +240,10 @@ public class CandidateViewBean extends AbstractPageBean {
 		this.id = id;
 	}
 
+	public void setImageDirectory(final String imageDirectory) {
+		this.imageDirectory = imageDirectory;
+	}
+
 	public void setTags(final List<String> tags) {
 		this.tags = tags;
 	}
@@ -257,10 +265,10 @@ public class CandidateViewBean extends AbstractPageBean {
 		addInfoMessage("file.message.update", "file.message.update", updatedFile.getName());
 	}
 
-	private String upload(final UploadedFile file) {
+	private String upload(final String directory, final UploadedFile file) {
 		final String uuid = UUID.randomUUID().toString();
 		try (InputStream input = file.getInputstream()) {
-			Files.copy(input, new java.io.File(this.fileDirectory, uuid).toPath());
+			Files.copy(input, new java.io.File(directory, uuid).toPath());
 		} catch (final IOException ex) {
 			logger.error("Can't upload file", ex);
 			MessageUtils.addErrorMessage("error.unnexpected_error", "error.unnexpected_error");
@@ -269,9 +277,15 @@ public class CandidateViewBean extends AbstractPageBean {
 	}
 
 	public void uploadFile(final FileUploadEvent event) {
-		final String uuid = upload(event.getFile());
+		final String uuid = upload(this.fileDirectory, event.getFile());
 		final UploadedServerFile file = saveFile(uuid, event.getFile().getFileName());
 		this.files.add(file);
 		addInfoMessage("file.message.upload", "file.message.upload", event.getFile().getFileName());
+	}
+
+	public void uploadImage(final FileUploadEvent event) {
+		final String uuid = upload(this.imageDirectory, event.getFile());
+		this.candidate.setImageFileName(uuid);
+		this.candidate = this.candidateService.save(this.candidate);
 	}
 }
