@@ -1,23 +1,23 @@
 package ged.web.view.user;
 
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.invoke.MethodHandles;
+import java.nio.file.Files;
 import java.util.List;
+import java.util.UUID;
 
-import javax.faces.FacesException;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
 import javax.faces.view.ViewScoped;
-import javax.imageio.stream.FileImageOutputStream;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.omnifaces.util.Faces;
-import org.primefaces.event.CaptureEvent;
+import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.UploadedFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,6 +27,7 @@ import ged.ejb.user.User;
 import ged.ejb.user.UserService;
 import ged.ejb.user.role.Role;
 import ged.ejb.user.role.RoleService;
+import ged.web.core.util.ConfigurationProperty;
 import ged.web.core.util.MessageUtils;
 import ged.web.core.util.Navigate;
 import ged.web.core.util.TransaltionUtils;
@@ -42,6 +43,10 @@ public class UserViewBean extends AbstractPageBean {
 	private static final long serialVersionUID = -2187385732087309689L;
 
 	private boolean editable;
+
+	@Inject
+	@ConfigurationProperty(value = "image.directory")
+	private String imageDirectory;
 
 	private List<JobOffer> jobOffers;
 
@@ -157,6 +162,10 @@ public class UserViewBean extends AbstractPageBean {
 		}
 	}
 
+	public void setImageDirectory(final String imageDirectory) {
+		this.imageDirectory = imageDirectory;
+	}
+
 	public void setJobOfferService(final JobOfferService jobOfferService) {
 		this.jobOfferService = jobOfferService;
 	}
@@ -181,23 +190,21 @@ public class UserViewBean extends AbstractPageBean {
 		this.userService = userService;
 	}
 
-	public void uploadImage(final CaptureEvent captureEvent) {
-		this.user.setImageFileName(this.userId);
-		final byte[] data = captureEvent.getData();
-
-		final ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-		final String newFileName = externalContext.getRealPath("") + File.separator + "resources" + File.separator
-				+ "demo" + File.separator + "images" + File.separator + "photocam" + File.separator
-				+ this.user.getImageFileName() + ".jpeg";
-
-		FileImageOutputStream imageOutput;
-		try {
-			imageOutput = new FileImageOutputStream(new File(newFileName));
-			imageOutput.write(data, 0, data.length);
-			imageOutput.close();
-		} catch (final IOException e) {
-			throw new FacesException("Error in writing captured image.", e);
+	private String upload(final String directory, final UploadedFile file) {
+		final String uuid = UUID.randomUUID().toString();
+		try (InputStream input = file.getInputstream()) {
+			Files.copy(input, new java.io.File(directory, uuid).toPath());
+		} catch (final IOException ex) {
+			logger.error("Can't upload file", ex);
+			MessageUtils.addErrorMessage("error.unnexpected_error", "error.unnexpected_error");
 		}
+		return uuid;
+	}
+
+	public void uploadImage(final FileUploadEvent event) {
+		final String uuid = upload(this.imageDirectory, event.getFile());
+		this.user.setImageFileName(uuid);
+		this.user = this.userService.save(this.user);
 	}
 
 	public void validateEmail(final FacesContext context, final UIComponent component, final Object value)

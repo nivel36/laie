@@ -91,9 +91,9 @@
 							paginatorPosition="bottom" rows="#{sessionBean.rowsPerPage}">
 							<p:column headerText="#{i18n['user.name']}" sortBy="#{user.fullName}">
 								<p:link outcome="userView" icon="fa fa-eye">
-									<p:graphicImage class="image-icon" value="/images/#{user.imageFileName}"
+									<p:graphicImage class="image image-icon" value="/images/#{user.imageFileName}"
 										rendered="#{not empty user.imageFileName}" />
-									<p:graphicImage class="image-icon" value="/resources/img/default-avatar.png"
+									<p:graphicImage class="image image-icon" value="/resources/img/default-avatar.png"
 										rendered="#{empty user.imageFileName}" />
 									<f:param name="id" value="#{user.id}" />
 									<h:outputText value="#{user.fullName}" />
