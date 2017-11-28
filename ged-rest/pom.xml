@@ -10,6 +10,13 @@
 	<artifactId>ged-rest</artifactId>
 	<packaging>war</packaging>
 	<dependencies>
+
+		<dependency>
+			<groupId>io.swagger</groupId>
+			<artifactId>swagger-jaxrs</artifactId>
+			<version>1.5.17</version>
+		</dependency>
+
 		<dependency>
 			<groupId>igochan</groupId>
 			<artifactId>ged-ejb</artifactId>
@@ -28,12 +35,11 @@
 			<artifactId>jackson-datatype-hibernate5</artifactId>
 			<version>2.9.2</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 		</dependency>
-
 	</dependencies>
 
 	<build>

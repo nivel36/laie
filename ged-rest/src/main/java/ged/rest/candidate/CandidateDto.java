@@ -1,9 +1,7 @@
 package ged.rest.candidate;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Temporal;
@@ -13,9 +11,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 import ged.ejb.candidate.Candidate;
-import ged.ejb.candidate.UploadedServerFile;
-import ged.ejb.core.tag.Tag;
-import ged.ejb.job.offer.JobCandidature;
 import ged.rest.AbstractDto;
 
 public class CandidateDto extends AbstractDto {
@@ -32,15 +27,11 @@ public class CandidateDto extends AbstractDto {
 	@Min(0)
 	private Integer expectedSalary;
 
-	private Set<UploadedServerFile> files;
-
 	private long id;
 
 	private String imageFileName;
 
 	private String infojobsProfileUrl;
-
-	private List<JobCandidature> jobCandidatures;
 
 	@NotNull
 	private String jobProfile;
@@ -68,8 +59,6 @@ public class CandidateDto extends AbstractDto {
 	@NotNull
 	private String surename;
 
-	private Set<Tag> tags;
-
 	public CandidateDto() {
 	}
 
@@ -81,7 +70,6 @@ public class CandidateDto extends AbstractDto {
 		this.city = candidate.getAddress().getCity();
 		this.email = candidate.getEmail();
 		this.expectedSalary = candidate.getExpectedSalary();
-		this.files = candidate.getFiles();
 		this.id = candidate.getId();
 		this.imageFileName = candidate.getImageFileName();
 		this.infojobsProfileUrl = candidate.getInfojobsProfileUrl();
@@ -95,7 +83,6 @@ public class CandidateDto extends AbstractDto {
 		this.skype = candidate.getSkype();
 		this.state = candidate.getAddress().getState();
 		this.surename = candidate.getSurename();
-		this.tags = candidate.getTags();
 	}
 
 	@Override
@@ -130,10 +117,6 @@ public class CandidateDto extends AbstractDto {
 		return this.expectedSalary;
 	}
 
-	public Set<UploadedServerFile> getFiles() {
-		return this.files;
-	}
-
 	public long getId() {
 		return this.id;
 	}
@@ -144,10 +127,6 @@ public class CandidateDto extends AbstractDto {
 
 	public String getInfojobsProfileUrl() {
 		return this.infojobsProfileUrl;
-	}
-
-	public List<JobCandidature> getJobCandidatures() {
-		return this.jobCandidatures;
 	}
 
 	public String getJobProfile() {
@@ -190,10 +169,6 @@ public class CandidateDto extends AbstractDto {
 		return this.surename;
 	}
 
-	public Set<Tag> getTags() {
-		return this.tags;
-	}
-
 	@Override
 	public int hashCode() {
 		return Objects.hash(this.email, this.name, this.phoneNumber, this.surename);
@@ -215,10 +190,6 @@ public class CandidateDto extends AbstractDto {
 		this.expectedSalary = expectedSalary;
 	}
 
-	public void setFiles(final Set<UploadedServerFile> files) {
-		this.files = files;
-	}
-
 	public void setId(final long id) {
 		this.id = id;
 	}
@@ -229,10 +200,6 @@ public class CandidateDto extends AbstractDto {
 
 	public void setInfojobsProfileUrl(final String infojobsProfileUrl) {
 		this.infojobsProfileUrl = infojobsProfileUrl;
-	}
-
-	public void setJobCandidatures(final List<JobCandidature> jobCandidatures) {
-		this.jobCandidatures = jobCandidatures;
 	}
 
 	public void setJobProfile(final String jobProfile) {
@@ -273,9 +240,5 @@ public class CandidateDto extends AbstractDto {
 
 	public void setSurename(final String surename) {
 		this.surename = surename;
-	}
-
-	public void setTags(final Set<Tag> tags) {
-		this.tags = tags;
 	}
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -23,8 +24,10 @@ import ged.ejb.user.UserService;
 import ged.ejb.user.role.Role;
 import ged.ejb.user.role.RoleService;
 import ged.rest.AbstractRestController;
+import io.swagger.annotations.Api;
 
 @Path("users")
+@Api("users")
 @ApplicationScoped
 public class UserRestController extends AbstractRestController {
 
@@ -34,16 +37,34 @@ public class UserRestController extends AbstractRestController {
 	@Inject
 	private UserService userService;
 
-	private List<UserDto> convertToUserDtoList(final List<User> users) {
+	public UserDto createUserDtoFromUser(final User user) {
+		Objects.requireNonNull(user);
+		final UserDto userDto = new UserDto();
+		userDto.setDateOfJoin(user.getDateOfJoin());
+		userDto.setEmail(user.getEmail());
+		userDto.setImageFileName(user.getImageFileName());
+		userDto.setLanguage(user.getLanguage());
+		userDto.setLastConnection(user.getLastConnection());
+		if (user.getManager() != null) {
+			userDto.setManagerEmail(user.getManager().getEmail());
+		}
+		userDto.setName(user.getName());
+		userDto.setPhoneNumber(user.getPhoneNumber());
+		userDto.setRoleName(user.getRole().getName());
+		userDto.setSurename(user.getSurename());
+		return userDto;
+	}
+
+	private List<UserDto> createUserDtoListFromUserList(final List<User> users) {
 		final List<UserDto> userDtos = new ArrayList<>(users.size());
 		for (final User user : users) {
-			final UserDto userDto = new UserDto(user);
+			final UserDto userDto = this.createUserDtoFromUser(user);
 			userDtos.add(userDto);
 		}
 		return userDtos;
 	}
 
-	private User convertUserDtoToUser(final UserDto userDto) {
+	private User createUserFromUserDto(final UserDto userDto) {
 		final User user = new User();
 		user.setDateOfJoin(userDto.getDateOfJoin());
 		user.setEmail(userDto.getEmail());
@@ -70,30 +91,28 @@ public class UserRestController extends AbstractRestController {
 	@Produces(MediaType.APPLICATION_JSON)
 	public UserDto find(@PathParam("id") final long id) {
 		final User user = this.userService.find(id);
-		final UserDto userDto = new UserDto(user);
+		final UserDto userDto = this.createUserDtoFromUser(user);
 		return userDto;
 	}
 
 	@GET
-	@Path("/")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<UserDto> findAll() {
 		final List<User> users = this.userService.findAll();
-		final List<UserDto> userDtos = this.convertToUserDtoList(users);
+		final List<UserDto> userDtos = this.createUserDtoListFromUserList(users);
 		return userDtos;
 	}
 
 	@POST
-	@Path("/")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response insert(final UserDto userDto) {
 		Response.ResponseBuilder builder;
-		final User user = this.convertUserDtoToUser(userDto);
+		final User user = this.createUserFromUserDto(userDto);
 		try {
 			this.validate(userDto);
 			final User savedUser = this.userService.save(user);
-			final UserDto returnedUserDto = new UserDto(savedUser);
+			final UserDto returnedUserDto = this.createUserDtoFromUser(savedUser);
 			builder = Response.status(Response.Status.OK).entity(returnedUserDto);
 		} catch (final ConstraintViolationException ce) {
 			builder = this.createViolationResponse(ce.getConstraintViolations());

@@ -25,8 +25,10 @@ import ged.ejb.core.Address;
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
 import ged.rest.AbstractRestController;
+import io.swagger.annotations.Api;
 
 @Path("candidates")
+@Api("candidates")
 @ApplicationScoped
 public class CandidateRestController extends AbstractRestController {
 
@@ -55,7 +57,6 @@ public class CandidateRestController extends AbstractRestController {
 	}
 
 	@GET
-	@Path("/")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<CandidateDto> findAll() {
 		final List<Candidate> candidates = this.candidateService.findAll();
@@ -117,7 +118,6 @@ public class CandidateRestController extends AbstractRestController {
 		candidate.setBornDate(candidateDto.getBornDate());
 		candidate.setEmail(candidateDto.getEmail());
 		candidate.setExpectedSalary(candidateDto.getExpectedSalary());
-		candidate.setFiles(candidateDto.getFiles());
 		candidate.setImageFileName(candidateDto.getImageFileName());
 		candidate.setInfojobsProfileUrl(candidateDto.getInfojobsProfileUrl());
 		candidate.setJobProfile(candidateDto.getJobProfile());
@@ -128,7 +128,6 @@ public class CandidateRestController extends AbstractRestController {
 		candidate.setSalary(candidateDto.getSalary());
 		candidate.setSkype(candidateDto.getSkype());
 		candidate.setSurename(candidateDto.getSurename());
-		candidate.setTags(candidateDto.getTags());
 		return candidate;
 	}
 }
