@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -38,7 +37,9 @@ public class UserRestController extends AbstractRestController {
 	private UserService userService;
 
 	public UserDto createUserDtoFromUser(final User user) {
-		Objects.requireNonNull(user);
+		if (user == null) {
+			return null;
+		}
 		final UserDto userDto = new UserDto();
 		userDto.setDateOfJoin(user.getDateOfJoin());
 		userDto.setEmail(user.getEmail());

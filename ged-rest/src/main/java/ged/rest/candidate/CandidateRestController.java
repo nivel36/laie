@@ -108,6 +108,9 @@ public class CandidateRestController extends AbstractRestController {
 	}
 
 	private Candidate toCandidate(final CandidateDto candidateDto) {
+		if (candidateDto == null) {
+			return null;
+		}
 		final Candidate candidate = new Candidate();
 		final User owner = this.userSerivce.findUserByEmail(candidateDto.getOwnerEmail());
 		candidate.setOwner(owner);
