@@ -9,8 +9,9 @@ import javax.validation.constraints.Pattern;
 
 import ged.ejb.core.action.Action;
 import ged.ejb.user.User;
+import ged.rest.AbstractDto;
 
-public class UserDto {
+public class UserDto extends AbstractDto {
 
 	private List<Action> actions;
 

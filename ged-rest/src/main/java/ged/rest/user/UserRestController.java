@@ -1,25 +1,32 @@
 package ged.rest.user;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.validation.ConstraintViolationException;
+import javax.validation.ValidationException;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
 import ged.ejb.user.role.Role;
 import ged.ejb.user.role.RoleService;
+import ged.rest.AbstractRestController;
 
 @Path("users")
 @ApplicationScoped
-public class UserRestController {
+public class UserRestController extends AbstractRestController {
 
 	@Inject
 	private RoleService roleService;
@@ -79,9 +86,35 @@ public class UserRestController {
 	@POST
 	@Path("/")
 	@Produces(MediaType.APPLICATION_JSON)
-	public UserDto insert(final UserDto userDto) {
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response insert(final UserDto userDto) {
+		Response.ResponseBuilder builder;
 		final User user = this.convertUserDtoToUser(userDto);
-		final User savedUser = this.userService.save(user);
-		return new UserDto(savedUser);
+		try {
+			this.validate(userDto);
+			final User savedUser = this.userService.save(user);
+			final UserDto returnedUserDto = new UserDto(savedUser);
+			builder = Response.status(Response.Status.OK).entity(returnedUserDto);
+		} catch (final ConstraintViolationException ce) {
+			builder = this.createViolationResponse(ce.getConstraintViolations());
+		} catch (final ValidationException e) {
+			final Map<String, String> responseObj = new HashMap<>();
+			responseObj.put("email", "Email taken");
+			builder = Response.status(Response.Status.CONFLICT).entity(responseObj);
+		} catch (final Exception e) {
+			final Map<String, String> responseObj = new HashMap<>();
+			responseObj.put("error", e.getMessage());
+			builder = Response.status(Response.Status.BAD_REQUEST).entity(responseObj);
+		}
+
+		return builder.build();
+	}
+
+	public void setRoleService(final RoleService roleService) {
+		this.roleService = roleService;
+	}
+
+	public void setUserService(final UserService userService) {
+		this.userService = userService;
 	}
 }

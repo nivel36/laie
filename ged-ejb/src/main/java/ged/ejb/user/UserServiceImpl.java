@@ -8,6 +8,7 @@ import java.util.Objects;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.validation.ValidationException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -114,6 +115,9 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
 		if (user.equals(user.getManager())) {
 			logger.warn("The user {} can't be his/her manager", user.getEmail());
 			throw new IllegalStateException("User can't be his/her manager");
+		}
+		if (this.findUserByEmail(user.getEmail()) != null) {
+			throw new ValidationException("Email exists");
 		}
 		this.userDao.insert(user);
 	}

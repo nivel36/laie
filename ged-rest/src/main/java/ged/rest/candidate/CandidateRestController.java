@@ -2,17 +2,13 @@ package ged.rest.candidate;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import javax.validation.ValidationException;
-import javax.validation.Validator;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -28,19 +24,17 @@ import ged.ejb.candidate.CandidateService;
 import ged.ejb.core.Address;
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
+import ged.rest.AbstractRestController;
 
 @Path("candidates")
 @ApplicationScoped
-public class CandidateRestController {
+public class CandidateRestController extends AbstractRestController {
 
 	@Inject
 	private CandidateService candidateService;
 
 	@Inject
 	UserService userSerivce;
-
-	@Inject
-	private Validator validator;
 
 	private List<CandidateDto> convertToCandidateDtoList(final List<Candidate> candidates) {
 		final List<CandidateDto> candidateDtos = new ArrayList<>();
@@ -49,14 +43,6 @@ public class CandidateRestController {
 			candidateDtos.add(candidateDto);
 		}
 		return candidateDtos;
-	}
-
-	private Response.ResponseBuilder createViolationResponse(final Set<ConstraintViolation<?>> violations) {
-		final Map<String, String> responseObj = new HashMap<>();
-		for (final ConstraintViolation<?> violation : violations) {
-			responseObj.put(violation.getPropertyPath().toString(), violation.getMessage());
-		}
-		return Response.status(Response.Status.BAD_REQUEST).entity(responseObj);
 	}
 
 	@GET
@@ -83,7 +69,7 @@ public class CandidateRestController {
 	public Response insert(final CandidateDto candidateDto) {
 		Response.ResponseBuilder builder = null;
 		try {
-			this.validateMember(candidateDto);
+			this.validate(candidateDto);
 			final Candidate candidateToInsert = this.toCandidate(candidateDto);
 			this.candidateService.save(candidateToInsert);
 			builder = Response.ok();
@@ -120,10 +106,6 @@ public class CandidateRestController {
 		this.userSerivce = userSerivce;
 	}
 
-	public void setValidator(final Validator validator) {
-		this.validator = validator;
-	}
-
 	private Candidate toCandidate(final CandidateDto candidateDto) {
 		final Candidate candidate = new Candidate();
 		final User owner = this.userSerivce.findUserByEmail(candidateDto.getOwnerEmail());
@@ -148,13 +130,5 @@ public class CandidateRestController {
 		candidate.setSurename(candidateDto.getSurename());
 		candidate.setTags(candidateDto.getTags());
 		return candidate;
-	}
-
-	private void validateMember(final CandidateDto candidateDto)
-			throws ConstraintViolationException, ValidationException {
-		final Set<ConstraintViolation<CandidateDto>> violations = this.validator.validate(candidateDto);
-		if (!violations.isEmpty()) {
-			throw new ConstraintViolationException(new HashSet<>(violations));
-		}
 	}
 }

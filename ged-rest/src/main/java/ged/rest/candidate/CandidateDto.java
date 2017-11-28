@@ -16,8 +16,9 @@ import ged.ejb.candidate.Candidate;
 import ged.ejb.candidate.UploadedServerFile;
 import ged.ejb.core.tag.Tag;
 import ged.ejb.job.offer.JobCandidature;
+import ged.rest.AbstractDto;
 
-public class CandidateDto {
+public class CandidateDto extends AbstractDto {
 
 	@Temporal(TemporalType.DATE)
 	private Date bornDate;
