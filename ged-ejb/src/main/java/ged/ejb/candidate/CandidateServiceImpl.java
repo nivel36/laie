@@ -6,6 +6,7 @@ import java.util.Objects;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.validation.ValidationException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -77,6 +78,15 @@ public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> imp
 	}
 
 	@Override
+	public void insert(final Candidate candidate) {
+		Objects.requireNonNull(candidate);
+		if (this.candidateDao.emailExists(candidate.getEmail())) {
+			throw new ValidationException("email");
+		}
+		this.candidateDao.insert(candidate);
+	}
+
+	@Override
 	public void insertFile(final UploadedServerFile file) {
 		this.uploadedServerFileDao.insert(file);
 	}
@@ -97,6 +107,15 @@ public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> imp
 			final boolean showDeleted) {
 		logger.debug("Search candidate by name {} and surename {}. Show deleteted {}", name, surename, showDeleted);
 		return this.candidateDao.searchByNameAndSurename(name, surename, position, showDeleted);
+	}
+
+	@Override
+	public Candidate update(final Candidate candidate) {
+		Objects.requireNonNull(candidate);
+		if (this.candidateDao.emailExists(candidate.getEmail())) {
+			throw new ValidationException("email");
+		}
+		return this.candidateDao.update(candidate);
 	}
 
 	@Override

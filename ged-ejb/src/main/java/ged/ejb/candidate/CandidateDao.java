@@ -11,6 +11,8 @@ import ged.ejb.job.offer.JobOffer;
 @Local
 public interface CandidateDao extends Dao<Candidate> {
 
+	boolean emailExists(String email);
+
 	List<Candidate> findAllByJobOffer(JobOffer jobOffer);
 
 	List<Tag> findAllTags();

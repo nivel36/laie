@@ -5,6 +5,7 @@ import static ged.ejb.core.model.QueryParameter.with;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -29,11 +30,16 @@ public class CandidateDaoJpa extends AbstractDaoJpa<Candidate> implements Candid
 	}
 
 	@Override
+	public boolean emailExists(final String email) {
+		return (boolean) this.findByQuery("Candidate.emailExists", with("email", email).parameters());
+	}
+
+	@Override
 	public List<Candidate> findAllByJobOffer(final JobOffer jobOffer) {
 		Objects.requireNonNull(jobOffer);
 		final List<Candidate> candidates;
 		try {
-			candidates = findByTypedQuery(Candidate.class, "Candidate.findAllByJobOffer",
+			candidates = this.findByTypedQuery(Candidate.class, "Candidate.findAllByJobOffer",
 					with("jobOffer", jobOffer).parameters(), 0, 0);
 		} catch (final NoResultException e) {
 			return new ArrayList<>();
@@ -43,7 +49,7 @@ public class CandidateDaoJpa extends AbstractDaoJpa<Candidate> implements Candid
 
 	@Override
 	public List<Tag> findAllTags() {
-		return findAll(Tag.class);
+		return this.findAll(Tag.class);
 	}
 
 	@Override
@@ -51,7 +57,8 @@ public class CandidateDaoJpa extends AbstractDaoJpa<Candidate> implements Candid
 		if (id < 1) {
 			throw new IllegalArgumentException("id: " + id);
 		}
-		return findByTypedQuery(Candidate.class, "Candidate.findCandidateAndFilesById", with("id", id).parameters());
+		return this.findByTypedQuery(Candidate.class, "Candidate.findCandidateAndFilesById",
+				with("id", id).parameters());
 	}
 
 	@Override
@@ -59,12 +66,13 @@ public class CandidateDaoJpa extends AbstractDaoJpa<Candidate> implements Candid
 		if (numberOfCandidates < 1) {
 			throw new IllegalArgumentException("numberOfCandidates: " + numberOfCandidates);
 		}
-		return findByTypedQuery(Candidate.class, "Candidate.findLastAddedCandidates", null, numberOfCandidates, null);
+		return this.findByTypedQuery(Candidate.class, "Candidate.findLastAddedCandidates", null, numberOfCandidates,
+				null);
 	}
 
 	@Override
 	public long findNumberOfCandidates() {
-		return (long) findByQuery("Candidate.numberOfCandidates", null);
+		return (long) this.findByQuery("Candidate.numberOfCandidates", null);
 	}
 
 	@Override
@@ -75,7 +83,7 @@ public class CandidateDaoJpa extends AbstractDaoJpa<Candidate> implements Candid
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public List<Candidate> search(final List<String> searchValues) {
-		final FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(getEm());
+		final FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(this.getEm());
 		final QueryBuilder qb = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(Candidate.class)
 				.get();
 		final BooleanJunction<BooleanJunction> bj = qb.bool();
@@ -101,7 +109,7 @@ public class CandidateDaoJpa extends AbstractDaoJpa<Candidate> implements Candid
 	@Override
 	public List<Candidate> searchByNameAndSurename(final String name, final String surename, final String position,
 			final boolean showDeleted) {
-		final FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(getEm());
+		final FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(this.getEm());
 		final QueryBuilder qb = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(Candidate.class)
 				.get();
 		final BooleanJunction<BooleanJunction> bj = qb.bool();

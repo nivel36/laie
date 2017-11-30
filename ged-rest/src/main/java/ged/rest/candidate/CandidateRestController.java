@@ -1,14 +1,10 @@
 package ged.rest.candidate;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.validation.ConstraintViolationException;
-import javax.validation.ValidationException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -69,22 +65,10 @@ public class CandidateRestController extends AbstractRestController {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response insert(final CandidateDto candidateDto) {
 		Response.ResponseBuilder builder = null;
-		try {
-			this.validate(candidateDto);
-			final Candidate candidateToInsert = this.toCandidate(candidateDto);
-			this.candidateService.save(candidateToInsert);
-			builder = Response.ok();
-		} catch (final ConstraintViolationException ce) {
-			builder = this.createViolationResponse(ce.getConstraintViolations());
-		} catch (final ValidationException e) {
-			final Map<String, String> responseObj = new HashMap<>();
-			responseObj.put("email", "Email taken");
-			builder = Response.status(Response.Status.CONFLICT).entity(responseObj);
-		} catch (final Exception e) {
-			final Map<String, String> responseObj = new HashMap<>();
-			responseObj.put("error", e.getMessage());
-			builder = Response.status(Response.Status.BAD_REQUEST).entity(responseObj);
-		}
+		this.validate(candidateDto);
+		final Candidate candidateToInsert = this.toCandidate(candidateDto);
+		this.candidateService.save(candidateToInsert);
+		builder = Response.ok();
 		return builder.build();
 	}
 
