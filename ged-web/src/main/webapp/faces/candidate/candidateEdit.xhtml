@@ -36,7 +36,7 @@
 							<div class="ui-g-12 ui-md-4">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['candidate.bornDate']}" for="bornDate" />
-									<p:calendar id="bornDate" value="#{candidateEditBean.candidate.bornDate}" yearRange="c-100:c0" navigator="true"/>
+									<p:calendar id="bornDate" value="#{candidateEditBean.candidate.bornDate}" yearRange="c-100:c0" navigator="true" />
 								</div>
 								<h:message for="bornDate" errorClass="error" />
 							</div>
@@ -53,7 +53,8 @@
 							<div class="ui-g-12 ui-md-4">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['candidate.email']}" for="email" />
-									<p:inputText id="email" pt:type="email" value="#{candidateEditBean.candidate.email}" required="true" />
+									<p:inputText id="email" pt:type="email" value="#{candidateEditBean.candidate.email}" required="true"
+										binding="#{candidateEditBean.emailField}" />
 								</div>
 								<h:message for="email" errorClass="error" />
 							</div>

@@ -7,9 +7,12 @@ import java.util.List;
 import java.util.Set;
 
 import javax.annotation.PostConstruct;
+import javax.ejb.EJBException;
+import javax.faces.component.UIComponent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.validation.ValidationException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,6 +41,8 @@ public class CandidateEditBean extends AbstractPageBean {
 
 	@Inject
 	private transient CurriculumService curriculumService;
+
+	private UIComponent emailField;
 
 	private List<String> tagLabels;
 
@@ -84,6 +89,10 @@ public class CandidateEditBean extends AbstractPageBean {
 		return this.candidate;
 	}
 
+	public UIComponent getEmailField() {
+		return this.emailField;
+	}
+
 	public List<String> getTagLabels() {
 		return this.tagLabels;
 	}
@@ -120,7 +129,14 @@ public class CandidateEditBean extends AbstractPageBean {
 	public String save() {
 		logger.debug("Save candidate action performed");
 		this.candidate.setTags(getTagsFromStringList(this.tagLabels));
-		saveCandidate();
+		try {
+			saveCandidate();
+		} catch (final EJBException e) {
+			if (e.getCause() instanceof ValidationException) {
+				addErrorToField(this.emailField, "candidate.error.email_exist");
+				return null;
+			}
+		}
 		return "candidateView.xhtml?id=" + this.candidate.getId() + "&faces-redirect=true";
 	}
 
@@ -141,6 +157,10 @@ public class CandidateEditBean extends AbstractPageBean {
 
 	public void setCurriculumService(final CurriculumService curriculumService) {
 		this.curriculumService = curriculumService;
+	}
+
+	public void setEmailField(final UIComponent emailField) {
+		this.emailField = emailField;
 	}
 
 	public void setTagLabels(final List<String> tagLabels) {
