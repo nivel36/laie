@@ -1,5 +1,6 @@
 package ged.web.view.client;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.view.ViewScoped;
@@ -8,6 +9,7 @@ import javax.inject.Named;
 
 import ged.ejb.client.Client;
 import ged.ejb.client.ClientService;
+import ged.ejb.client.Contact;
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
 import ged.web.core.util.MessageUtils;
@@ -24,6 +26,8 @@ public class ClientViewBean extends AbstractPageBean {
 
 	@Inject
 	private transient ClientService clientService;
+
+	private List<Contact> contacts;
 
 	private boolean editable;
 
@@ -44,6 +48,10 @@ public class ClientViewBean extends AbstractPageBean {
 
 	public Client getClient() {
 		return this.client;
+	}
+
+	public List<Contact> getContacts() {
+		return this.contacts;
 	}
 
 	public String getId() {
@@ -71,11 +79,11 @@ public class ClientViewBean extends AbstractPageBean {
 		if (this.client == null) {
 			Navigate.toPage("clientSearch");
 		}
-
 		this.jobOffers = this.jobOfferService.findAllJobOffersByClient(this.client);
 		if (this.client.isDeleted()) {
 			MessageUtils.addWarningMessage("message.erased_entity", "message.erased_entity");
 		}
+		this.contacts = new ArrayList<>(this.client.getContacts());
 	}
 
 	public boolean isEditable() {
@@ -98,6 +106,10 @@ public class ClientViewBean extends AbstractPageBean {
 
 	public void setClientService(final ClientService clientService) {
 		this.clientService = clientService;
+	}
+
+	public void setContacts(final List<Contact> contacts) {
+		this.contacts = contacts;
 	}
 
 	public void setId(final String id) {

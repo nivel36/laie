@@ -4444,7 +4444,7 @@ body .ui-button, body button.ui-button {
 }
 
 body .ui-button-text-icon-left .ui-button-text {
-	padding: .3em 1em .3em 2.1em;
+	padding: .2em 0.4em .2em 1.1em;
 }
 
 body .ui-button-text-only .ui-button-text {
@@ -4467,18 +4467,15 @@ body .ui-datatable-data .ui-button-icon-only .ui-icon.fa {
 }
 
 body .ui-button-text-icon-left .ui-icon.fa {
-	margin-left: -60px;
 }
 
 body .ui-button.ui-button-text-icon-left .ui-button-icon-left {
-	padding: 0 8px;
 }
 
 body .ui-button-icon-only .ui-icon.fa, body .ui-button-text-icon-left .ui-icon.fa, body .ui-button-text-icon-right .ui-icon.fa
 	{
 	width: 16px;
 	color: white;
-	margin-top: -7px;
 }
 
 body .ui-button.ui-state-disabled {
