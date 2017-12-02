@@ -10,6 +10,7 @@ import javax.inject.Named;
 import ged.ejb.client.Client;
 import ged.ejb.client.ClientService;
 import ged.ejb.client.Contact;
+import ged.ejb.core.Address;
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
 import ged.web.core.util.MessageUtils;
@@ -79,6 +80,9 @@ public class ClientViewBean extends AbstractPageBean {
 		if (this.client == null) {
 			Navigate.toPage("clientSearch");
 		}
+		if (this.client.getAddress() == null) {
+			this.client.setAddress(new Address());
+		}
 		this.jobOffers = this.jobOfferService.findAllJobOffersByClient(this.client);
 		if (this.client.isDeleted()) {
 			MessageUtils.addWarningMessage("message.erased_entity", "message.erased_entity");
@@ -97,7 +101,7 @@ public class ClientViewBean extends AbstractPageBean {
 
 	public void saveClient() {
 		this.editable = false;
-		this.clientService.save(this.client);
+		this.client = this.clientService.save(this.client);
 	}
 
 	public void setClient(final Client client) {
