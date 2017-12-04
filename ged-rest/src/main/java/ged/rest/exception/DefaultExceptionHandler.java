@@ -1,29 +1,18 @@
-package ged.rest;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+package ged.rest.exception;
 
 import javax.ejb.EJBException;
-import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import javax.validation.ValidationException;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
+import ged.rest.ErrorResponseDto;
+
 @Provider
-public class DefaultExceptionHandler implements ExceptionMapper<Exception> {
+public class DefaultExceptionHandler extends AbstractExceptionMapper implements ExceptionMapper<Exception> {
 
 	// TODO: https://samaxes.com/2014/04/jaxrs-beanvalidation-javaee7-wildfly/
-
-	protected Response.ResponseBuilder createViolationResponse(final Set<ConstraintViolation<?>> violations) {
-		final Map<String, String> responseObj = new HashMap<>();
-		for (final ConstraintViolation<?> violation : violations) {
-			responseObj.put(violation.getPropertyPath().toString(), violation.getMessage());
-		}
-		return Response.status(Response.Status.BAD_REQUEST).entity(responseObj);
-	}
 
 	private Response mapContraintViolationException(final ConstraintViolationException e) {
 		Response.ResponseBuilder builder;

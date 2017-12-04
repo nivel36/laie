@@ -1,14 +1,10 @@
 package ged.rest.user;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.validation.ConstraintViolationException;
-import javax.validation.ValidationException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -110,23 +106,10 @@ public class UserRestController extends AbstractRestController {
 	public Response insert(final UserDto userDto) {
 		Response.ResponseBuilder builder;
 		final User user = this.createUserFromUserDto(userDto);
-		try {
-			this.validate(userDto);
-			final User savedUser = this.userService.save(user);
-			final UserDto returnedUserDto = this.createUserDtoFromUser(savedUser);
-			builder = Response.status(Response.Status.OK).entity(returnedUserDto);
-		} catch (final ConstraintViolationException ce) {
-			builder = this.createViolationResponse(ce.getConstraintViolations());
-		} catch (final ValidationException e) {
-			final Map<String, String> responseObj = new HashMap<>();
-			responseObj.put("email", "Email taken");
-			builder = Response.status(Response.Status.CONFLICT).entity(responseObj);
-		} catch (final Exception e) {
-			final Map<String, String> responseObj = new HashMap<>();
-			responseObj.put("error", e.getMessage());
-			builder = Response.status(Response.Status.BAD_REQUEST).entity(responseObj);
-		}
-
+		this.validate(userDto);
+		final User savedUser = this.userService.save(user);
+		final UserDto returnedUserDto = this.createUserDtoFromUser(savedUser);
+		builder = Response.status(Response.Status.OK).entity(returnedUserDto);
 		return builder.build();
 	}
 
