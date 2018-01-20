@@ -26,12 +26,13 @@
 									<p:fileUpload id="uploadImage" styleClass="uploadImageButton"
 										fileUploadListener="#{candidateViewBean.uploadImage}" mode="advanced" dragDropSupport="false"
 										update="userPanelForm growl" auto="true" label="#{i18n['action.add']}"
-										disabled="#{!candidateViewBean.editable}" />
+										rendered="#{candidateViewBean.editable}" />
 									<h:outputLabel for="uploadImage_input">
-										<p:graphicImage class="image selectable" value="/images/#{candidateViewBean.candidate.imageFileName}"
+										<p:graphicImage class="image" styleClass="#{candidateViewBean.editable ? 'selectable' : ''}"
+											value="/images/#{candidateViewBean.candidate.imageFileName}"
 											rendered="#{not empty candidateViewBean.candidate.imageFileName}" />
-										<p:graphicImage class="image selectable" value="/resources/img/default-avatar.png"
-											rendered="#{empty candidateViewBean.candidate.imageFileName}" />
+										<p:graphicImage class="image" styleClass="#{candidateViewBean.editable? 'selectable' : ''}"
+											value="/resources/img/default-avatar.png" rendered="#{empty candidateViewBean.candidate.imageFileName}" />
 									</h:outputLabel>
 								</h:form>
 							</div>
@@ -221,8 +222,8 @@
 						<div class="ui-g">
 							<div class="ui-g-12">
 								<div class="form-action-primary">
-									<p:fileUpload id="uploadFile" fileUploadListener="#{candidateViewBean.uploadFile}"
-										mode="advanced" dragDropSupport="false" update="file_form growl" auto="true" label="#{i18n['action.add']}"
+									<p:fileUpload id="uploadFile" fileUploadListener="#{candidateViewBean.uploadFile}" mode="advanced"
+										dragDropSupport="false" update="file_form growl" auto="true" label="#{i18n['action.add']}"
 										disabled="#{candidateViewBean.candidate.files.size() gt 6}" />
 								</div>
 							</div>
