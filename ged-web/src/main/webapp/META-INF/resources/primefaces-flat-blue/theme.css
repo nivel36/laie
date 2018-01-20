@@ -4487,11 +4487,19 @@ body .ui-button.ui-state-hover {
 }
 
 body .ui-button.btn-gray {
-	background: #999999;;
+	background: #999999;
 }
 
-body .ui-button.btn-green {
-	background: #26a1ab;
+body .ui-button.btn-gray.ui-state-hover {
+	background: #797979;
+}
+
+body .ui-button.btn-primary {
+	background: #5b9bd1;
+}
+
+body .ui-button.btn-primary.ui-state-hover {
+	background: #3b7bb1;
 }
 
 body .btn-green .ui-button {

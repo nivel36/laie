@@ -175,11 +175,13 @@
 						<div class="ui-g">
 							<div class="ui-g-12">
 								<div class="form-action-primary">
-									<p:commandButton value="#{i18n['action.edit']}" action="#{candidateViewBean.editCandidate}"
+									<p:commandButton styleClass="btn-primary" value="#{i18n['action.edit']}"
+										action="#{candidateViewBean.editCandidate}"
 										rendered="#{!candidateViewBean.candidate.deleted and !candidateViewBean.editable}"
 										update="@form growl :ratingForm :userPanelForm" />
-									<p:commandButton value="#{i18n['action.save']}" action="#{candidateViewBean.saveCandidate}"
-										rendered="#{candidateViewBean.editable}" update="@form growl :ratingForm :userPanelForm" />
+									<p:commandButton styleClass="btn-primary" value="#{i18n['action.save']}"
+										action="#{candidateViewBean.saveCandidate}" rendered="#{candidateViewBean.editable}"
+										update="@form growl :ratingForm :userPanelForm" />
 									<p:commandButton styleClass="btn-gray" value="#{i18n['action.cancel']}"
 										action="#{candidateViewBean.cancelEditCandidate}" rendered="#{candidateViewBean.editable}"
 										update="@form :ratingForm :userPanelForm" process="@this" />

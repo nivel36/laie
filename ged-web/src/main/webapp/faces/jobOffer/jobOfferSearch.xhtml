@@ -31,9 +31,9 @@
 						<div class="ui-g">
 							<div class="ui-g-12">
 								<div class="form-action-primary">
-									<p:commandButton value="#{i18n['action.new']}" action="#{jobOfferSearchBean.newJobOffer}" immediate="true"
-										 />
-									<p:commandButton value="#{i18n['action.search']}" action="#{jobOfferSearchBean.search}" update="@form growl" />
+									<p:commandButton value="#{i18n['action.new']}" action="#{jobOfferSearchBean.newJobOffer}" immediate="true" />
+									<p:commandButton styleClass="btn-primary" value="#{i18n['action.search']}"
+										action="#{jobOfferSearchBean.search}" update="@form growl" />
 									<p:commandButton value="#{i18n['action.clean']}" update="@form" action="#{jobOfferSearchBean.clean}"
 										immediate="true" styleClass="btn-gray" />
 								</div>
