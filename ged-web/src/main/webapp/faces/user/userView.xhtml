@@ -37,10 +37,6 @@
 								<div class="name">#{userViewBean.user}</div>
 								<div class="position">#{i18n:translate(userViewBean.user.role.name)}</div>
 							</div>
-							<div class="form-action">
-								<p:commandButton styleClass="medium rounded" id="exportExcel" value="#{i18n['action.export']}"
-									action="#{userViewBean.export}" rendered="#{not userViewBean.editable}" />
-							</div>
 						</div>
 					</h:form>
 				</div>
@@ -134,6 +130,8 @@
 										action="#{userViewBean.saveUser}" update="@form growl" />
 									<p:commandButton styleClass="btn-gray" rendered="#{userViewBean.editable}" value="#{i18n['action.cancel']}"
 										action="#{userViewBean.cancelEditUser}" update="@form" process="@this" />
+									<p:commandButton icon="fa fa-file-excel-o" id="exportExcel" value="#{i18n['action.export']}"
+										action="#{userViewBean.export}" rendered="#{not userViewBean.editable}" />
 								</div>
 							</div>
 						</div>
