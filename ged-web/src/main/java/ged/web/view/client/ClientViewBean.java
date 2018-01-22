@@ -41,6 +41,10 @@ public class ClientViewBean extends AbstractPageBean {
 	@Inject
 	private transient JobOfferService jobOfferService;
 
+	public void cancelEdit() {
+		this.editable = false;
+	}
+
 	public void editClient() {
 		this.editable = true;
 	}
@@ -106,8 +110,13 @@ public class ClientViewBean extends AbstractPageBean {
 				.getRequest();
 		final String url = req.getRequestURL().toString();
 		this.flash.put("returnPage", url);
-
 		return "editContact";
+	}
+
+	public String newJobOffer() {
+		this.flash.put("returnPage", "/faces/client/clientView?faces-redirect=true");
+		this.flash.put("client", this.client);
+		return "/faces/jobOffer/jobOfferEdit?faces-redirect=true";
 	}
 
 	public void saveClient() {

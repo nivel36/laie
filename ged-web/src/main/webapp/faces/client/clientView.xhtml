@@ -70,11 +70,13 @@
 										rendered="#{clientViewBean.client.deleted}" />
 									<p:commandButton  value="#{i18n['action.save']}" action="#{clientViewBean.saveClient}"
 										rendered="#{not clientViewBean.client.deleted and clientViewBean.editable}" update="client growl" />
-									<p:commandButton  value="#{i18n['action.edit']}" action="#{clientViewBean.editClient}"
+									<p:commandButton styleClass="btn-primary"  value="#{i18n['action.edit']}" action="#{clientViewBean.editClient}"
 										immediate="true" rendered="#{not clientViewBean.client.deleted and not clientViewBean.editable}"
 										update="client growl" />
-									<p:commandButton id="exportExcel" icon="fa fa-file-excel-o" value="#{i18n['action.export']}"
-										action="#{clientViewBean.export}" />
+									<p:commandButton  styleClass="btn-gray"  value="#{i18n['action.cancel']}" action="#{clientViewBean.cancelEdit}"
+										rendered="#{not clientViewBean.client.deleted and clientViewBean.editable}" update="client growl" />
+									<p:commandButton styleClass="btn-primary" id="exportExcel" icon="fa fa-file-excel-o" value="#{i18n['action.export']}"
+										action="#{clientViewBean.export}" rendered="#{not clientViewBean.editable}" />
 								</div>
 							</div>
 						</div>
@@ -143,7 +145,7 @@
 						<div class="ui-g">
 							<div class="ui-g-12">
 								<div class="form-action-primary">
-									<p:commandButton  value="#{i18n['action.add']}" action="#{clientViewBean.newContact}"
+									<p:commandButton  value="#{i18n['action.add']}" action="#{clientViewBean.newJobOffer}"
 										update="@form growl" />
 								</div>
 							</div>

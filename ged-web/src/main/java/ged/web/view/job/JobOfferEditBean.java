@@ -34,9 +34,15 @@ public class JobOfferEditBean extends AbstractPageBean {
 
 	private boolean newClient;
 
+	private String returnPage;
+
 	public String cancel() {
 		logger.debug("Cancel new job offer action performed");
-		return "jobOfferSearch?faces-redirect=true";
+		if (this.returnPage != null) {
+			return this.returnPage;
+		} else {
+			return "jobOfferSearch?faces-redirect=true";
+		}
 	}
 
 	public void clientChangedListener() {
@@ -49,12 +55,28 @@ public class JobOfferEditBean extends AbstractPageBean {
 		return this.jobOffer;
 	}
 
+	private String getReturnPage() {
+		if (this.returnPage != null) {
+			return this.returnPage;
+		} else {
+			return "jobOfferView.xhtml?id=" + this.jobOffer.getId() + "&faces-redirect=true";
+		}
+	}
+
 	@PostConstruct
 	public void init() {
 		logger.trace("JobOfferEditBean init");
 		this.jobOffer = new JobOffer();
 		this.jobOffer.setOwner(this.sessionBean.getUser());
-		this.jobOffer.setClient(new Client());
+		if (this.flash.containsKey("client")) {
+			final Client client = (Client) this.flash.get("client");
+			this.jobOffer.setClient(client);
+		} else {
+			this.jobOffer.setClient(new Client());
+		}
+		if (this.flash.containsKey("returnPage")) {
+			this.returnPage = (String) this.flash.get("returnPage");
+		}
 	}
 
 	public boolean isNewClient() {
@@ -64,10 +86,10 @@ public class JobOfferEditBean extends AbstractPageBean {
 	public String save() {
 		logger.debug("Save job offer action performed");
 		this.jobService.save(this.jobOffer);
-		return "jobOfferView.xhtml?id=" + this.jobOffer.getId() + "&faces-redirect=true";
+		return getReturnPage();
 	}
 
-	public void setClientService(ClientService clientService) {
+	public void setClientService(final ClientService clientService) {
 		this.clientService = clientService;
 	}
 
@@ -75,7 +97,7 @@ public class JobOfferEditBean extends AbstractPageBean {
 		this.jobOffer = jobOffer;
 	}
 
-	public void setJobService(JobOfferService jobService) {
+	public void setJobService(final JobOfferService jobService) {
 		this.jobService = jobService;
 	}
 
