@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -16,9 +17,8 @@ import javax.ws.rs.core.Response;
 
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
-import ged.ejb.user.role.Role;
-import ged.ejb.user.role.RoleService;
 import ged.rest.AbstractRestController;
+import ged.rest.mapper.UserMapper;
 import io.swagger.annotations.Api;
 
 @Path("users")
@@ -27,7 +27,7 @@ import io.swagger.annotations.Api;
 public class UserRestController extends AbstractRestController {
 
 	@Inject
-	private RoleService roleService;
+	private UserMapper userMapper;
 
 	@Inject
 	private UserService userService;
@@ -62,25 +62,7 @@ public class UserRestController extends AbstractRestController {
 	}
 
 	private User createUserFromUserDto(final UserDto userDto) {
-		final User user = new User();
-		user.setDateOfJoin(userDto.getDateOfJoin());
-		user.setEmail(userDto.getEmail());
-		user.setImageFileName(userDto.getImageFileName());
-		user.setLanguage(userDto.getLanguage());
-		if (user.getManager() != null) {
-			final User manager = this.userService.findUserByEmail(userDto.getManagerEmail());
-			user.setManager(manager);
-		}
-		user.setName(userDto.getName());
-		user.setPhoneNumber(userDto.getPhoneNumber());
-		final List<Role> roles = this.roleService.findAllRoles();
-		for (final Role role : roles) {
-			if (role.getName().equals(userDto.getRoleName())) {
-				user.setRole(role);
-			}
-		}
-		user.setSurename(userDto.getSurename());
-		return user;
+		return this.userMapper.toObject(userDto);
 	}
 
 	@GET
@@ -103,18 +85,13 @@ public class UserRestController extends AbstractRestController {
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response insert(final UserDto userDto) {
+	public Response insert(@Valid final UserDto userDto) {
 		Response.ResponseBuilder builder;
 		final User user = this.createUserFromUserDto(userDto);
-		this.validate(userDto);
 		final User savedUser = this.userService.save(user);
 		final UserDto returnedUserDto = this.createUserDtoFromUser(savedUser);
 		builder = Response.status(Response.Status.OK).entity(returnedUserDto);
 		return builder.build();
-	}
-
-	public void setRoleService(final RoleService roleService) {
-		this.roleService = roleService;
 	}
 
 	public void setUserService(final UserService userService) {

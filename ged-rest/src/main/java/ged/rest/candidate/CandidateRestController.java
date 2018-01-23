@@ -5,7 +5,7 @@ import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.validation.ValidationException;
+import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -64,13 +64,8 @@ public class CandidateRestController extends AbstractRestController {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response insert(final CandidateDto candidateDto) {
+	public Response insert(@Valid final CandidateDto candidateDto) {
 		Response.ResponseBuilder builder = null;
-		try {
-			this.validate(candidateDto);
-		} catch (final Exception e) {
-			throw new ValidationException(e);
-		}
 		final Candidate candidateToInsert = this.toCandidate(candidateDto);
 		this.candidateService.save(candidateToInsert);
 		builder = Response.ok();
