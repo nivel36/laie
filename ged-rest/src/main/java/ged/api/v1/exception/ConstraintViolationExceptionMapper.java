@@ -1,4 +1,4 @@
-package ged.rest.exception;
+package ged.api.v1.exception;
 
 import javax.validation.ConstraintViolationException;
 import javax.ws.rs.core.Response;

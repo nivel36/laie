@@ -177,7 +177,7 @@
 							<webModule>
 								<groupId>igochan</groupId>
 								<artifactId>ged-rest</artifactId>
-								<contextRoot>/rest</contextRoot>
+								<contextRoot>/api</contextRoot>
 							</webModule>
 							<webModule>
 								<groupId>igochan</groupId>

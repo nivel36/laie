@@ -1,11 +1,11 @@
-package ged.rest.exception;
+package ged.api.v1.exception;
 
 import javax.validation.ValidationException;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
-import ged.rest.ErrorResponseDto;
+import ged.api.v1.ErrorResponseDto;
 
 @Provider
 public class ValidationExceptionMapper extends AbstractExceptionMapper implements ExceptionMapper<ValidationException> {

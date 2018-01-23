@@ -1,4 +1,4 @@
-package ged.rest.candidate;
+package ged.api.v1.candidate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,16 +16,16 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import ged.api.v1.AbstractRestController;
 import ged.ejb.candidate.Candidate;
 import ged.ejb.candidate.CandidateService;
 import ged.ejb.core.Address;
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
-import ged.rest.AbstractRestController;
 import io.swagger.annotations.Api;
 
-@Path("candidates")
-@Api("candidates")
+@Path("candidate")
+@Api
 @ApplicationScoped
 public class CandidateRestController extends AbstractRestController {
 

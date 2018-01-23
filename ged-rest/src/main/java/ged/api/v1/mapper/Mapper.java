@@ -1,4 +1,4 @@
-package ged.rest.mapper;
+package ged.api.v1.mapper;
 
 public interface Mapper<I, O> {
 

@@ -15,3 +15,6 @@
     </authentication>
 </security-domain>
 ```
+
+## Api
+Swagger -> /api/v1/

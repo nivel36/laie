@@ -1,4 +1,4 @@
-package ged.rest;
+package ged.api.v1;
 
 import java.util.HashSet;
 import java.util.Set;

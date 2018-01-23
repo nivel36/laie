@@ -1,7 +1,7 @@
-package ged.rest.mapper;
+package ged.api.v1.mapper;
 
+import ged.api.v1.user.UserDto;
 import ged.ejb.user.User;
-import ged.rest.user.UserDto;
 
 public class UserMapper {
 

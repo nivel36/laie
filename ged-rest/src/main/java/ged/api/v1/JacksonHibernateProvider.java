@@ -1,4 +1,4 @@
-package ged.rest;
+package ged.api.v1;
 
 import javax.ws.rs.ext.ContextResolver;
 import javax.ws.rs.ext.Provider;

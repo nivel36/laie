@@ -1,4 +1,4 @@
-package ged.rest;
+package ged.api.v1;
 
 import javax.xml.bind.annotation.XmlRootElement;
 

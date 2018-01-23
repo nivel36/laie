@@ -1,4 +1,4 @@
-package ged.rest.candidate;
+package ged.api.v1.candidate;
 
 import java.util.Date;
 import java.util.Objects;
@@ -10,8 +10,8 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
+import ged.api.v1.AbstractDto;
 import ged.ejb.candidate.Candidate;
-import ged.rest.AbstractDto;
 
 public class CandidateDto extends AbstractDto {
 

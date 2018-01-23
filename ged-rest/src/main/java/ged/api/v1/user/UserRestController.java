@@ -1,4 +1,4 @@
-package ged.rest.user;
+package ged.api.v1.user;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,10 +15,10 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import ged.api.v1.AbstractRestController;
+import ged.api.v1.mapper.UserMapper;
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
-import ged.rest.AbstractRestController;
-import ged.rest.mapper.UserMapper;
 import io.swagger.annotations.Api;
 
 @Path("users")
@@ -26,7 +26,6 @@ import io.swagger.annotations.Api;
 @ApplicationScoped
 public class UserRestController extends AbstractRestController {
 
-	@Inject
 	private UserMapper userMapper;
 
 	@Inject

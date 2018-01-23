@@ -1,4 +1,4 @@
-package ged.rest.exception;
+package ged.api.v1.exception;
 
 import javax.ejb.EJBException;
 import javax.validation.ConstraintViolationException;
@@ -7,7 +7,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
-import ged.rest.ErrorResponseDto;
+import ged.api.v1.ErrorResponseDto;
 
 @Provider
 public class DefaultExceptionHandler extends AbstractExceptionMapper implements ExceptionMapper<Exception> {

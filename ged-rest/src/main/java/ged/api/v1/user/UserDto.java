@@ -1,11 +1,11 @@
-package ged.rest.user;
+package ged.api.v1.user;
 
 import java.util.Date;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
-import ged.rest.AbstractDto;
+import ged.api.v1.AbstractDto;
 
 public class UserDto extends AbstractDto {
 

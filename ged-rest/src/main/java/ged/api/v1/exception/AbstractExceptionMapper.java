@@ -1,4 +1,4 @@
-package ged.rest.exception;
+package ged.api.v1.exception;
 
 import java.util.HashMap;
 import java.util.Map;
