@@ -16,40 +16,35 @@
 			<f:viewAction action="#{userViewBean.init}" />
 		</f:metadata>
 
+		<input type="hidden" id="userId" value="#{userViewBean.user.id}" />
 
-			<input type="hidden" id="userId" value="#{userViewBean.user.id}" />
-
-			<div class="ui-g">
-				<div class="ui-g-12 ui-md-3 ui-xl-2">
-					<div class="panel user-card">
-						<h:form id="userPanelForm" enctype="multipart/form-data">
-							<div class="panel-content">
-								<div class="user-image">
-									<p:fileUpload id="uploadImage" styleClass="uploadImageButton" fileUploadListener="#{userViewBean.uploadImage}"
-										mode="advanced" dragDropSupport="false" update="userPanelForm growl" auto="true" label="#{i18n['action.add']}" />
-									<h:outputLabel for="uploadImage_input">
-										<p:graphicImage class="selectable image" value="/images/#{userViewBean.user.imageFileName}"
-											rendered="#{not empty userViewBean.user.imageFileName}" />
-										<p:graphicImage class="selectable image" value="/resources/img/default-avatar.png"
-											rendered="#{empty userViewBean.user.imageFileName}" />
-									</h:outputLabel>
-								</div>
-								<div class="user-info">
-									<div class="name">#{userViewBean.user}</div>
-									<div class="position">#{i18n:translate(userViewBean.user.role.name)}</div>
-								</div>
-								<div class="form-action">
-									<p:commandButton styleClass="medium rounded" id="exportExcel" value="#{i18n['action.export']}"
-										action="#{userViewBean.export}" rendered="#{not userViewBean.editable}" />
-								</div>
+		<div class="ui-g">
+			<div class="ui-g-12 ui-md-3 ui-xl-2">
+				<div class="panel user-card">
+					<h:form id="userPanelForm" enctype="multipart/form-data">
+						<div class="panel-content">
+							<div class="user-image">
+								<p:fileUpload id="uploadImage" styleClass="uploadImageButton" fileUploadListener="#{userViewBean.uploadImage}"
+									mode="advanced" dragDropSupport="false" update="userPanelForm growl" auto="true" label="#{i18n['action.add']}" />
+								<h:outputLabel for="uploadImage_input">
+									<p:graphicImage class="selectable image" value="/images/#{userViewBean.user.imageFileName}"
+										rendered="#{not empty userViewBean.user.imageFileName}" />
+									<p:graphicImage class="selectable image" value="/resources/img/default-avatar.png"
+										rendered="#{empty userViewBean.user.imageFileName}" />
+								</h:outputLabel>
 							</div>
-						</h:form>
-					</div>
+							<div class="user-info">
+								<div class="name">#{userViewBean.user}</div>
+								<div class="position">#{i18n:translate(userViewBean.user.role.name)}</div>
+							</div>
+						</div>
+					</h:form>
 				</div>
+			</div>
 
-				<div class="ui-g-12 ui-md-9 ui-xl-6">
-					<p:panel header="#{i18n['user.user']}">
-							<h:form id="form">
+			<div class="ui-g-12 ui-md-9 ui-xl-6">
+				<p:panel header="#{i18n['user.user']}">
+					<h:form id="form">
 						<div class="ui-g">
 							<div class="ui-g-12 ui-md-6">
 								<div class="form-group">
@@ -135,66 +130,68 @@
 										action="#{userViewBean.saveUser}" update="@form growl" />
 									<p:commandButton styleClass="btn-gray" rendered="#{userViewBean.editable}" value="#{i18n['action.cancel']}"
 										action="#{userViewBean.cancelEditUser}" update="@form" process="@this" />
+									<p:commandButton icon="fa fa-file-excel-o" id="exportExcel" value="#{i18n['action.export']}"
+										action="#{userViewBean.export}" rendered="#{not userViewBean.editable}" />
 								</div>
 							</div>
 						</div>
-						</h:form>
-					</p:panel>
-				</div>
-
-				<div class="ui-g-12 ui-lg-6 ui-xl-4">
-					<p:panel header="#{i18n['user.team']}">
-						<h:panelGroup layout="block" rendered="#{empty userViewBean.team}">
-							<span class="message">#{i18n['user.no_team']}</span>
-						</h:panelGroup>
-						<h:panelGroup layout="block" rendered="#{not empty userViewBean.team}">
-							<div class="ui-g">
-								<ui:repeat var="userTeamMember" value="#{userViewBean.team}" varStatus="status">
-									<div class="ui-g-12 ui-md-6">
-										<ui:include src="userCard.xhtml">
-											<ui:param name="user" value="#{userTeamMember}" />
-										</ui:include>
-									</div>
-								</ui:repeat>
-							</div>
-						</h:panelGroup>
-					</p:panel>
-				</div>
-
-				<div class="ui-g-12 ui-md-12 ui-lg-6 ui-xl-6">
-					<p:panel styleClass="magenta" header="#{i18n['job_meeting.planned_job_meetings']}">
-
-					</p:panel>
-				</div>
-				<div class="ui-g-12 ui-md-12 ui-lg-6">
-					<p:panel styleClass="magenta" header="#{i18n['job.job_offers']}">
-						<p:dataTable var="jobOffer" value="#{userViewBean.jobOffers}" emptyMessage="#{i18n['user.no_users_found']}"
-							reflow="true" paginator="true" paginatorPosition="bottom" rows="#{sessionBean.rowsPerPage}">
-							<h:column>
-								<f:facet name="header">
-									<h:outputText value="#{i18n['job.name']}" />
-								</f:facet>
-								<h:outputText value="#{jobOffer.name}" />
-							</h:column>
-
-							<h:column>
-								<f:facet name="header">
-									<h:outputText value="#{i18n['job.client']}" />
-								</f:facet>
-								<h:outputText value="#{jobOffer.client.name}" />
-							</h:column>
-
-							<h:column>
-								<f:facet name="header">
-									<h:outputText value="#{i18n['action.action']}" />
-								</f:facet>
-								<h:link value="#{i18n['action.view']}" outcome="/faces/jobOffer/jobOfferView">
-									<f:param name="id" value="#{jobOffer.id}" />
-								</h:link>
-							</h:column>
-						</p:dataTable>
-					</p:panel>
-				</div>
+					</h:form>
+				</p:panel>
 			</div>
+
+			<div class="ui-g-12 ui-lg-6 ui-xl-4">
+				<p:panel header="#{i18n['user.team']}">
+					<h:panelGroup layout="block" rendered="#{empty userViewBean.team}">
+						<span class="message">#{i18n['user.no_team']}</span>
+					</h:panelGroup>
+					<h:panelGroup layout="block" rendered="#{not empty userViewBean.team}">
+						<div class="ui-g">
+							<ui:repeat var="userTeamMember" value="#{userViewBean.team}" varStatus="status">
+								<div class="ui-g-12 ui-md-6">
+									<ui:include src="userCard.xhtml">
+										<ui:param name="user" value="#{userTeamMember}" />
+									</ui:include>
+								</div>
+							</ui:repeat>
+						</div>
+					</h:panelGroup>
+				</p:panel>
+			</div>
+
+			<div class="ui-g-12 ui-md-12 ui-lg-6 ui-xl-6">
+				<p:panel styleClass="magenta" header="#{i18n['job_meeting.planned_job_meetings']}">
+
+				</p:panel>
+			</div>
+			<div class="ui-g-12 ui-md-12 ui-lg-6">
+				<p:panel styleClass="magenta" header="#{i18n['job.job_offers']}">
+					<p:dataTable var="jobOffer" value="#{userViewBean.jobOffers}" emptyMessage="#{i18n['user.no_users_found']}"
+						reflow="true" paginator="true" paginatorPosition="bottom" rows="#{sessionBean.rowsPerPage}">
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{i18n['job.name']}" />
+							</f:facet>
+							<h:outputText value="#{jobOffer.name}" />
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{i18n['job.client']}" />
+							</f:facet>
+							<h:outputText value="#{jobOffer.client.name}" />
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{i18n['action.action']}" />
+							</f:facet>
+							<h:link value="#{i18n['action.view']}" outcome="/faces/jobOffer/jobOfferView">
+								<f:param name="id" value="#{jobOffer.id}" />
+							</h:link>
+						</h:column>
+					</p:dataTable>
+				</p:panel>
+			</div>
+		</div>
 	</ui:define>
 </ui:composition>

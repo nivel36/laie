@@ -4444,7 +4444,7 @@ body .ui-button, body button.ui-button {
 }
 
 body .ui-button-text-icon-left .ui-button-text {
-	padding: .3em 1em .3em 2.1em;
+	padding: .3em 1em .3em 1.3em;
 }
 
 body .ui-button-text-only .ui-button-text {
@@ -4467,18 +4467,15 @@ body .ui-datatable-data .ui-button-icon-only .ui-icon.fa {
 }
 
 body .ui-button-text-icon-left .ui-icon.fa {
-	margin-left: -60px;
 }
 
 body .ui-button.ui-button-text-icon-left .ui-button-icon-left {
-	padding: 0 8px;
 }
 
 body .ui-button-icon-only .ui-icon.fa, body .ui-button-text-icon-left .ui-icon.fa, body .ui-button-text-icon-right .ui-icon.fa
 	{
 	width: 16px;
 	color: white;
-	margin-top: -7px;
 }
 
 body .ui-button.ui-state-disabled {
@@ -4490,11 +4487,19 @@ body .ui-button.ui-state-hover {
 }
 
 body .ui-button.btn-gray {
-	background: #999999;;
+	background: #999999;
 }
 
-body .ui-button.btn-green {
-	background: #26a1ab;
+body .ui-button.btn-gray.ui-state-hover {
+	background: #797979;
+}
+
+body .ui-button.btn-primary {
+	background: #5b9bd1;
+}
+
+body .ui-button.btn-primary.ui-state-hover {
+	background: #3b7bb1;
 }
 
 body .btn-green .ui-button {

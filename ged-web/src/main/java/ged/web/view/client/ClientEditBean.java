@@ -21,10 +21,6 @@ public class ClientEditBean extends AbstractPageBean {
 	@Inject
 	private transient ClientService clientService;
 
-	public void setClientService(ClientService clientService) {
-		this.clientService = clientService;
-	}
-
 	public String cancel() {
 		return "clientSearch?faces-redirect=true";
 	}
@@ -57,5 +53,9 @@ public class ClientEditBean extends AbstractPageBean {
 
 	public void setClient(final Client client) {
 		this.client = client;
+	}
+
+	public void setClientService(final ClientService clientService) {
+		this.clientService = clientService;
 	}
 }

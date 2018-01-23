@@ -105,11 +105,11 @@
 						<div class="ui-g">
 							<div class="ui-g-12">
 								<div class="form-action-primary">
-									<p:commandButton styleClass="btn-green" value="#{i18n['action.edit']}" action="#{jobOfferViewBean.edit}"
+									<p:commandButton  value="#{i18n['action.edit']}" action="#{jobOfferViewBean.edit}"
 										immediate="true"
 										rendered="#{not jobOfferViewBean.editable and jobOfferViewBean.userHasPermissionToEditJobOffer}"
 										update="jobOfferForm" />
-									<p:commandButton styleClass="btn-green" value="#{i18n['action.save']}" action="#{jobOfferViewBean.save}"
+									<p:commandButton  value="#{i18n['action.save']}" action="#{jobOfferViewBean.save}"
 										update="jobOfferForm"
 										rendered="#{jobOfferViewBean.editable and jobOfferViewBean.userHasPermissionToEditJobOffer}" />
 									<p:commandButton styleClass="btn-gray" value="#{i18n['action.cancel']}" action="#{jobOfferViewBean.cancel}"
@@ -144,7 +144,7 @@
 						<div class="ui-g">
 							<div class="ui-g-12">
 								<div class="form-action-primary">
-								<p:button styleClass="btn-green" value="#{i18n['action.add']}" onclick="PF('candidateSearchDialog').show();" />
+								<p:button  value="#{i18n['action.add']}" onclick="PF('candidateSearchDialog').show();" />
 									</div>
 							</div>
 						</div>
@@ -168,7 +168,7 @@
 					<div class="ui-g">
 						<div class="ui-g-12">
 							<div class="form-action-primary">
-								<p:commandButton styleClass="btn-green" value="#{i18n['action.create']}" action="#{jobOfferViewBean.edit}" />
+								<p:commandButton  value="#{i18n['action.create']}" action="#{jobOfferViewBean.edit}" />
 							</div>
 						</div>
 					</div>

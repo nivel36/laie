@@ -11,11 +11,9 @@
 
 	<ui:define name="content">
 		<h:form id="form">
-			<input type="hidden" id="clientId" value="#{clientEditBean.client.id}" />
-
 			<div class="ui-g">
-				<div class="ui-g-12">
-					<p:panel header="#{clientEditBean.client.id eq 0 ? i18n['client.new_client'] : clientEditBean.client}">
+				<div class="ui-g-12 ui-xl-6 ui-g-offset-2">
+					<p:panel header="#{i18n['client.new_client']}">
 						<div class="ui-g">
 							<div class="ui-md-12 ui-lg-6 ui-xl-4">
 								<div class="form-group">
@@ -30,6 +28,16 @@
 									<p:inputText id="cif" value="#{clientEditBean.client.cif}" required="true" />
 								</div>
 								<h:message for="cif" errorClass="error" />
+							</div>
+						</div>
+
+						<div class="ui-g">
+							<div class="ui-md-12 ui-lg-6 ui-xl-4">
+								<div class="form-group">
+									<p:outputLabel value="#{i18n['client.phoneNumber']}" for="phone_number" />
+									<p:inputText id="phone_number" value="#{clientEditBean.client.phoneNumber}" />
+								</div>
+								<h:message for="phone_number" errorClass="error" />
 							</div>
 							<div class="ui-md-12 ui-lg-6 ui-xl-4">
 								<div class="form-group">

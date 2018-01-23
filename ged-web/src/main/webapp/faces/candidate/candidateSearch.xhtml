@@ -71,8 +71,7 @@
 						<div class="ui-g">
 							<div class="ui-g-12">
 								<div class="form-action-primary">
-									<p:commandButton value="#{i18n['action.new']}" action="#{candidateSearchBean.newCandidate}" immediate="true"
-										styleClass="btn-green" />
+									<p:commandButton value="#{i18n['action.new']}" action="#{candidateSearchBean.newCandidate}" immediate="true" />
 								</div>
 							</div>
 						</div>
@@ -85,11 +84,14 @@
 						<div class="searchForm">
 							<div class="ui-g">
 								<div class="ui-md-12 ui-lg-4">
-									<p:inputText id="name" value="#{candidateSearchBean.name}" />
+									<span class="input-icon"> <i class="fa fa-search input-icon-right" /></span>
+									<div class="form-group">
+										<p:inputText id="name" value="#{candidateSearchBean.name}" class="icon-left"/>
+									</div>
 								</div>
 								<div class="ui-md-12 ui-lg-4">
-									<p:commandButton value="#{i18n['action.search']}" action="#{candidateSearchBean.search}" update="@form"
-										process="searchUserPanel" />
+									<p:commandButton value="#{i18n['action.search']}" class="btn-primary" action="#{candidateSearchBean.search}"
+										update="@form" process="searchUserPanel" />
 									<p:commandButton value="#{i18n['action.clean']}" action="#{candidateSearchBean.clean}" update="@form"
 										styleClass="btn-gray" />
 								</div>

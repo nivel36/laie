@@ -2,6 +2,7 @@ package ged.ejb.client;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -10,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 import org.hibernate.search.annotations.ContainedIn;
 import org.hibernate.search.annotations.Field;
@@ -31,6 +33,9 @@ public class Client extends AbstractAuditedEntity {
 	@Column(length = 10, unique = true, nullable = true)
 	private String cif;
 
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "client", orphanRemoval = true)
+	private Set<Contact> contacts;
+
 	@ContainedIn
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "client", orphanRemoval = true)
 	private List<JobOffer> jobOffers;
@@ -40,9 +45,13 @@ public class Client extends AbstractAuditedEntity {
 	@NotNull
 	private String name;
 
+	@Pattern(regexp = "(?:[+]?(?:[0-9]{1,5}|\\x28[0-9]{1,5}\\x29)[ ]?)?[0-9]{2}(?:[0-9][ ]?){6}[0-9]")
+	@Column(length = 12)
+	private String phoneNumber;
+
 	@Override
 	public boolean equals(final Object obj) {
-		if ( obj == null ) {
+		if (obj == null) {
 			return false;
 		}
 		if (this == obj) {
@@ -66,6 +75,10 @@ public class Client extends AbstractAuditedEntity {
 		return this.cif;
 	}
 
+	public Set<Contact> getContacts() {
+		return this.contacts;
+	}
+
 	public List<JobOffer> getJobOffers() {
 		return this.jobOffers;
 	}
@@ -74,9 +87,13 @@ public class Client extends AbstractAuditedEntity {
 		return this.name;
 	}
 
+	public String getPhoneNumber() {
+		return this.phoneNumber;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(name);
+		return Objects.hash(this.name);
 	}
 
 	public void setAddress(final Address address) {
@@ -87,12 +104,20 @@ public class Client extends AbstractAuditedEntity {
 		this.cif = cif;
 	}
 
+	public void setContacts(final Set<Contact> contacts) {
+		this.contacts = contacts;
+	}
+
 	public void setJobOffers(final List<JobOffer> jobOffers) {
 		this.jobOffers = jobOffers;
 	}
 
 	public void setName(final String name) {
 		this.name = name;
+	}
+
+	public void setPhoneNumber(final String phoneNumber) {
+		this.phoneNumber = phoneNumber;
 	}
 
 	@Override

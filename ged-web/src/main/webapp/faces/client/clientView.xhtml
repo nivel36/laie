@@ -16,7 +16,7 @@
 		</f:metadata>
 
 		<div class="ui-g">
-			<div class="ui-g-12">
+			<div class="ui-g-12 ui-xl-6">
 				<h:form id="form">
 					<input type="hidden" id="clientId" value="#{clientViewBean.client.id}" />
 					<p:panel header="#{clientViewBean.client}" id="client">
@@ -36,6 +36,16 @@
 										required="true" />
 								</div>
 								<h:message for="cif" errorClass="error" />
+							</div>
+						</div>
+						<div class="ui-g">
+							<div class="ui-g-12 ui-md-6 ui-xl-4">
+								<div class="form-group">
+									<p:outputLabel value="#{i18n['client.phoneNumber']}" for="phone_number" />
+									<p:inputText id="phone_number" value="#{clientViewBean.client.phoneNumber}"
+										readonly="#{!clientViewBean.editable}" />
+								</div>
+								<h:message for="phone_number" errorClass="error" />
 							</div>
 							<div class="ui-g-12 ui-md-6 ui-xl-4">
 								<div class="form-group">
@@ -58,42 +68,90 @@
 								<div class="form-action-primary">
 									<p:commandButton value="#{i18n['action.undelete']}" action="#{clientViewBean.undeleteClient}" immediate="true"
 										rendered="#{clientViewBean.client.deleted}" />
-									<p:commandButton styleClass="btn-green" value="#{i18n['action.save']}" action="#{clientViewBean.saveClient}"
+									<p:commandButton  value="#{i18n['action.save']}" action="#{clientViewBean.saveClient}"
 										rendered="#{not clientViewBean.client.deleted and clientViewBean.editable}" update="client growl" />
-									<p:commandButton styleClass="btn-green" value="#{i18n['action.edit']}" action="#{clientViewBean.editClient}"
+									<p:commandButton styleClass="btn-primary"  value="#{i18n['action.edit']}" action="#{clientViewBean.editClient}"
 										immediate="true" rendered="#{not clientViewBean.client.deleted and not clientViewBean.editable}"
 										update="client growl" />
-									<p:commandButton id="exportPdf" icon="fa fa-file-pdf-o" value="#{i18n['action.export']}" />
-									<p:commandButton id="exportExcel" icon="fa fa-file-excel-o" value="#{i18n['action.export']}"
-										action="#{clientViewBean.export}" />
+									<p:commandButton  styleClass="btn-gray"  value="#{i18n['action.cancel']}" action="#{clientViewBean.cancelEdit}"
+										rendered="#{not clientViewBean.client.deleted and clientViewBean.editable}" update="client growl" />
+									<p:commandButton styleClass="btn-primary" id="exportExcel" icon="fa fa-file-excel-o" value="#{i18n['action.export']}"
+										action="#{clientViewBean.export}" rendered="#{not clientViewBean.editable}" />
 								</div>
 							</div>
 						</div>
 					</p:panel>
 				</h:form>
 			</div>
-		</div>
-		<div class="ui-g">
 			<div class="ui-g-12 ui-xl-6">
-				<p:panel header="#{i18n['job.job_offers']}">
-					<p:dataTable var="jobOffer" value="#{clientViewBean.jobOffers}"
-						emptyMessage="#{i18n['client.no_job_offers_found']}" reflow="true" paginator="true" paginatorPosition="bottom"
-						rows="#{sessionBean.rowsPerPage}">
-						<p:column headerText="#{i18n['job.name']}">
-							<h:outputText value="#{jobOffer.name}" />
-						</p:column>
-						<p:column headerText="#{i18n['job.date_closed']}">
-							<h:outputText value="#{jobOffer.dateClosed}">
-								<f:convertDateTime pattern="dd / MM / yyyy" />
-							</h:outputText>
-						</p:column>
-						<p:column headerText="#{i18n['action.action']}">
-							<p:button outcome="/faces/jobOffer/jobOfferView" icon="fa fa-eye">
-								<f:param name="id" value="#{jobOffer.id}" />
-							</p:button>
-						</p:column>
-					</p:dataTable>
-				</p:panel>
+				<h:form>
+					<p:panel header="#{i18n['client.contacts']}">
+						<div class="ui-g">
+							<div class="ui-g-12">
+								<p:dataTable var="contact" value="#{clientViewBean.contacts}" emptyMessage="#{i18n['client.no_contacts_found']}"
+									reflow="true" paginator="true" paginatorPosition="bottom" rows="#{sessionBean.rowsPerPage}">
+									<p:column headerText="#{i18n['contact.name']}">
+										<h:outputText value="#{contact.fullName}" />
+									</p:column>
+									<p:column headerText="#{i18n['contact.email']}">
+										<h:outputText value="#{contact.email}" />
+									</p:column>
+									<p:column headerText="#{i18n['contact.phoneNumber']}">
+										<h:outputText value="#{contact.phoneNumber}" />
+									</p:column>
+									<p:column headerText="#{i18n['action.action']}">
+										<p:button outcome="/faces/jobOffer/jobOfferView" icon="fa fa-eye">
+											<f:param name="id" value="#{contact.id}" />
+										</p:button>
+									</p:column>
+								</p:dataTable>
+							</div>
+						</div>
+						<div class="ui-g">
+							<div class="ui-g-12">
+								<div class="form-action-primary">
+									<p:commandButton  value="#{i18n['action.add']}" action="#{clientViewBean.newContact}"
+										update="@form growl" />
+								</div>
+							</div>
+						</div>
+					</p:panel>
+				</h:form>
+			</div>
+			<div class="ui-g-12 ui-xl-6">
+				<h:form>
+					<p:panel header="#{i18n['job.job_offers']}">
+						<div class="ui-g">
+							<div class="ui-g-12">
+								<p:dataTable var="jobOffer" value="#{clientViewBean.jobOffers}"
+									emptyMessage="#{i18n['client.no_job_offers_found']}" reflow="true" paginator="true" paginatorPosition="bottom"
+									rows="#{sessionBean.rowsPerPage}">
+									<p:column headerText="#{i18n['job.name']}">
+										<h:outputText value="#{jobOffer.name}" />
+									</p:column>
+									<p:column headerText="#{i18n['job.date_closed']}">
+										<h:outputText value="#{jobOffer.dateClosed}">
+											<f:convertDateTime pattern="dd / MM / yyyy" />
+										</h:outputText>
+									</p:column>
+									<p:column headerText="#{i18n['action.action']}">
+										<p:button outcome="/faces/jobOffer/jobOfferView" icon="fa fa-eye">
+											<f:param name="id" value="#{jobOffer.id}" />
+										</p:button>
+									</p:column>
+								</p:dataTable>
+							</div>
+						</div>
+						<div class="ui-g">
+							<div class="ui-g-12">
+								<div class="form-action-primary">
+									<p:commandButton  value="#{i18n['action.add']}" action="#{clientViewBean.newJobOffer}"
+										update="@form growl" />
+								</div>
+							</div>
+						</div>
+					</p:panel>
+				</h:form>
 			</div>
 		</div>
 	</ui:define>

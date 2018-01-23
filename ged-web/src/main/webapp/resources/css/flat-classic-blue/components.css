@@ -230,11 +230,27 @@ h4 {
 	padding: 10px 25px;
 }
 
-.login-page .input-icon {
-	display: inline;
-	float: left;
+body .input-icon {
+	display: block;
 	font-size: 18px;
-	padding: 10px;
+	position: relative;
+}
+
+body .input-icon .input-icon-left {
+	float: left;
+	padding: 6px 10px;
+}
+
+body input.icon-left {
+	padding-right: 26px;
+}
+
+body .input-icon .input-icon-right {
+	color: #aaa;
+	float: right;
+	margin-left: -36px;
+	padding: 6px 10px;
+	z-index: 2;
 }
 
 .form-action-primary {
@@ -347,32 +363,16 @@ h4 {
 	animation: color-me-in 1s;
 }
 
-@
-keyframes color-me-in { 0% {
-	background-color: #d1e7cc;
+@keyframes color-me-in { 
+	0% {
+		background-color: #d1e7cc;
+	}
+	100% {
+		background: #effffc;
+		background-color: 1s ease-out;
+	}
 }
 
-100%
-{
-background
-:
- 
-#effffc
-;
-
-		
-background-color
-:
- 
-1
-s
- 
-ease-out
-;
-
-	
-}
-}
 .card.card-stats .card-header {
 	font-size: 30px;
 	float: left;

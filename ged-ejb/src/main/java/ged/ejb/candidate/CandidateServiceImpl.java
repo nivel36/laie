@@ -112,8 +112,10 @@ public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> imp
 	@Override
 	public Candidate update(final Candidate candidate) {
 		Objects.requireNonNull(candidate);
-		if (this.candidateDao.emailExists(candidate.getEmail())) {
-			throw new ValidationException("email");
+		final Candidate candidateInRepository = this.candidateDao.find(candidate.getId());
+		if (!candidate.getEmail().equals(candidateInRepository.getEmail())
+				&& this.candidateDao.emailExists(candidate.getEmail())) {
+			throw new ValidationException("Email duplicated");
 		}
 		return this.candidateDao.update(candidate);
 	}

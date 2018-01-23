@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>igochan</groupId>
 	<artifactId>ged</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>0.1.2-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>ged</name>
 	<modules>
@@ -14,7 +14,7 @@
 	</modules>
 
 	<properties>
-		<ged.version>1.0.0-SNAPSHOT</ged.version>
+		<ged.version>${project.version}</ged.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<javaee-api.version>7.0</javaee-api.version>
 		<junit.version>4.12</junit.version>
@@ -33,6 +33,8 @@
 		<poi.version>3.14</poi.version>
 		<omnifaces.version>2.2</omnifaces.version>
 		<version.commons-fileupload>1.3</version.commons-fileupload>
+		<swagger.version>1.5.17</swagger.version>
+		<jackson-datatype-hibernate5.version>2.9.2</jackson-datatype-hibernate5.version>
 	</properties>
 
 	<dependencyManagement>
@@ -68,7 +70,7 @@
 				<version>${hibernate-search.version}</version>
 				<scope>provided</scope>
 			</dependency>
-			
+
 			<dependency>
 				<groupId>igochan</groupId>
 				<artifactId>ged-ejb</artifactId>
@@ -124,9 +126,22 @@
 			</dependency>
 
 			<dependency>
+				<groupId>io.swagger</groupId>
+				<artifactId>swagger-jaxrs</artifactId>
+				<version>${swagger.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.fasterxml.jackson.datatype</groupId>
+				<artifactId>jackson-datatype-hibernate5</artifactId>
+				<version>${jackson-datatype-hibernate5.version}</version>
+			</dependency>
+
+
+			<dependency>
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>
-				<version>4.12</version>
+				<version>${junit.version}</version>
 				<scope>test</scope>
 			</dependency>
 		</dependencies>

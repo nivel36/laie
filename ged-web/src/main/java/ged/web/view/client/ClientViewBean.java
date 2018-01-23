@@ -1,13 +1,18 @@
 package ged.web.view.client;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
 
 import ged.ejb.client.Client;
 import ged.ejb.client.ClientService;
+import ged.ejb.client.Contact;
+import ged.ejb.core.Address;
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
 import ged.web.core.util.MessageUtils;
@@ -25,6 +30,8 @@ public class ClientViewBean extends AbstractPageBean {
 	@Inject
 	private transient ClientService clientService;
 
+	private List<Contact> contacts;
+
 	private boolean editable;
 
 	private String id;
@@ -33,6 +40,10 @@ public class ClientViewBean extends AbstractPageBean {
 
 	@Inject
 	private transient JobOfferService jobOfferService;
+
+	public void cancelEdit() {
+		this.editable = false;
+	}
 
 	public void editClient() {
 		this.editable = true;
@@ -44,6 +55,10 @@ public class ClientViewBean extends AbstractPageBean {
 
 	public Client getClient() {
 		return this.client;
+	}
+
+	public List<Contact> getContacts() {
+		return this.contacts;
 	}
 
 	public String getId() {
@@ -71,11 +86,14 @@ public class ClientViewBean extends AbstractPageBean {
 		if (this.client == null) {
 			Navigate.toPage("clientSearch");
 		}
-
+		if (this.client.getAddress() == null) {
+			this.client.setAddress(new Address());
+		}
 		this.jobOffers = this.jobOfferService.findAllJobOffersByClient(this.client);
 		if (this.client.isDeleted()) {
 			MessageUtils.addWarningMessage("message.erased_entity", "message.erased_entity");
 		}
+		this.contacts = new ArrayList<>(this.client.getContacts());
 	}
 
 	public boolean isEditable() {
@@ -87,9 +105,23 @@ public class ClientViewBean extends AbstractPageBean {
 		return "clientEdit?faces-redirect=true";
 	}
 
+	public String newContact() {
+		final HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
+				.getRequest();
+		final String url = req.getRequestURL().toString();
+		this.flash.put("returnPage", url);
+		return "editContact";
+	}
+
+	public String newJobOffer() {
+		this.flash.put("returnPage", "/faces/client/clientView?faces-redirect=true");
+		this.flash.put("client", this.client);
+		return "/faces/jobOffer/jobOfferEdit?faces-redirect=true";
+	}
+
 	public void saveClient() {
 		this.editable = false;
-		this.clientService.save(this.client);
+		this.client = this.clientService.save(this.client);
 	}
 
 	public void setClient(final Client client) {
@@ -98,6 +130,10 @@ public class ClientViewBean extends AbstractPageBean {
 
 	public void setClientService(final ClientService clientService) {
 		this.clientService = clientService;
+	}
+
+	public void setContacts(final List<Contact> contacts) {
+		this.contacts = contacts;
 	}
 
 	public void setId(final String id) {
