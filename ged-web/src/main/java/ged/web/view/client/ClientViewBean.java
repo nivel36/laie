@@ -3,12 +3,9 @@ package ged.web.view.client;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.servlet.http.HttpServletRequest;
-
 import ged.ejb.client.Client;
 import ged.ejb.client.ClientService;
 import ged.ejb.client.Contact;
@@ -106,15 +103,13 @@ public class ClientViewBean extends AbstractPageBean {
 	}
 
 	public String newContact() {
-		final HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
-				.getRequest();
-		final String url = req.getRequestURL().toString();
+		final String url = "/faces/client/clientView?id=" + this.id;
 		this.flash.put("returnPage", url);
 		return "editContact";
 	}
 
 	public String newJobOffer() {
-		this.flash.put("returnPage", "/faces/client/clientView?faces-redirect=true");
+		this.flash.put("returnPage", "/faces/client/clientView?id=" + this.id);
 		this.flash.put("client", this.client);
 		return "/faces/jobOffer/jobOfferEdit?faces-redirect=true";
 	}
