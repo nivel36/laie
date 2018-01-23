@@ -9,7 +9,7 @@
 	<modules>
 		<module>ged-ear</module>
 		<module>ged-ejb</module>
-		<module>ged-rest</module>
+		<module>ged-api</module>
 		<module>ged-web</module>
 	</modules>
 
@@ -88,7 +88,7 @@
 
 			<dependency>
 				<groupId>igochan</groupId>
-				<artifactId>ged-rest</artifactId>
+				<artifactId>ged-api</artifactId>
 				<version>${ged.version}</version>
 				<type>war</type>
 				<scope>compile</scope>
@@ -176,7 +176,7 @@
 						<modules>
 							<webModule>
 								<groupId>igochan</groupId>
-								<artifactId>ged-rest</artifactId>
+								<artifactId>ged-api</artifactId>
 								<contextRoot>/api</contextRoot>
 							</webModule>
 							<webModule>

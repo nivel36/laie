@@ -19,7 +19,7 @@
 		</dependency>
 		<dependency>
 			<groupId>igochan</groupId>
-			<artifactId>ged-rest</artifactId>
+			<artifactId>ged-api</artifactId>
 			<type>war</type>
 		</dependency>
 		<dependency>
