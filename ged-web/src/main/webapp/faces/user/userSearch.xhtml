@@ -62,78 +62,98 @@
 				</div>
 			</h:form>
 		</div>
-		<h:form id="form">
-			<div class="ui-g">
-				<div class="ui-g-12 ui-xl-9">
-					<p:panel id="searchUserPanel" header="#{i18n['user.search']}">
-						<div class="search-bar">
-							<div class="ui-g">
-								<div class="ui-md-4 ui-lg-3 ui-xl-2">
-									<div class="search-input">
-										<p:inputText id="name" value="#{userSearchBean.name}" label="#{i18n['user.name']}"
-											validator="ged.web.view.SearchFieldValidator" placeholder="#{i18n['action.search']}" />
-									</div>
+		<div class="ui-g">
+			<div class="ui-g-12 ui-xl-3">
+				<h:form id="lastCandidatesForm">
+					<p:panel id="lastCandidates" header="#{i18n['user.stats.online_last_week']}">
+						<div class="ui-g">
+							<ui:repeat var="user" value="#{userSearchBean.usersOnlineLastWeek}" varStatus="status">
+								<div class="ui-g-12 ui-md-4 ui-lg-4 ui-xl-6">
+									<ui:include src="userCard.xhtml">
+										<ui:param name="user" value="#{user}" />
+									</ui:include>
 								</div>
-								<div class="ui-md-8 ui-lg-9 ui-xl-10">
-									<div class="form-action-primary">
-										<p:commandButton  value="#{i18n['action.new']}" action="#{userSearchBean.newUser}"
-											immediate="true" />
-										<p:commandButton value="#{i18n['action.search']}" action="#{userSearchBean.search}" execute="searchUserPanel"
-											update="@form" />
-										<p:commandButton styleClass="btn-gray" value="#{i18n['action.clean']}" action="#{userSearchBean.clean}"
-											update="@form" />
-									</div>
+							</ui:repeat>
+						</div>
+						<div class="ui-g">
+							<div class="ui-g-12">
+								<div class="form-action-primary">
+									<p:commandButton class="btn-primary" value="#{i18n['action.new']}" action="#{userSearchBean.newUser}"
+										immediate="true" />
 								</div>
 							</div>
 						</div>
-
-						<p:dataTable var="user" id="userDataTable" value="#{userSearchBean.users}" reflow="true" paginator="true"
-							paginatorPosition="bottom" rows="#{sessionBean.rowsPerPage}">
-							<p:column headerText="#{i18n['user.name']}" sortBy="#{user.fullName}">
-								<p:link outcome="userView" icon="fa fa-eye">
-									<p:graphicImage class="image image-icon" value="/images/#{user.imageFileName}"
-										rendered="#{not empty user.imageFileName}" />
-									<p:graphicImage class="image image-icon" value="/resources/img/default-avatar.png"
-										rendered="#{empty user.imageFileName}" />
-									<f:param name="id" value="#{user.id}" />
-									<h:outputText value="#{user.fullName}" />
-								</p:link>
-							</p:column>
-
-							<p:column headerText="#{i18n['user.email']}" sortBy="#{user.email}">
-								<h:outputText value="#{user.email}" />
-							</p:column>
-
-							<p:column headerText="#{i18n['user.role']}" sortBy="#{i18n:translate(user.role.name)}">
-								<h:outputText value="#{i18n:translate(user.role.name)}" />
-							</p:column>
-
-							<p:column headerText="#{i18n['user.manager']}" sortBy="#{user.manager}">
-								<p:link outcome="userView" icon="fa fa-eye">
-									<f:param name="id" value="#{user.manager.id}" />
-									<h:outputText value="#{user.manager}" />
-								</p:link>
-							</p:column>
-						</p:dataTable>
 					</p:panel>
-				</div>
-				<div class="ui-g-12 ui-md-6 ui-lg-4">
-					<p:panel id="lastActions" header="#{i18n['user.last_actions']}">
-						<ul>
-							<ui:repeat var="action" value="#{userSearchBean.actions}">
-								<li><h:link value="#{action.user}" outcome="userView">
-										<f:param name="id" value="#{action.user.id}" />
-									</h:link> <h:outputText value=" " /> <h:outputFormat value="#{i18n:translate(action.actionPerformed)}"
-										rendered="#{action.actionPerformed == 'LOGIN'}" /> <h:outputText
-										value="#{i18n:translate(action.actionPerformed)}" rendered="#{action.actionPerformed != 'LOGIN'}" /> <h:outputFormat
-										value="#{i18n:translate(action.entityClass)}" rendered="#{action.actionPerformed != 'LOGIN'}">
-										<f:param value="#{action.text}" />
-									</h:outputFormat></li>
-							</ui:repeat>
-						</ul>
-					</p:panel>
-				</div>
+				</h:form>
 			</div>
-		</h:form>
+			<div class="ui-g-12 ui-xl-9">
+				<h:form id="form">
+					<p:panel id="searchUserPanel" header="#{i18n['user.search']}">
+						<div class="searchForm">
+							<div class="ui-g">
+								<div class="ui-md-12 ui-lg-4">
+									<span class="input-icon"> <i class="fa fa-search input-icon-right" /></span>
+									<div class="form-group">
+										<p:inputText id="name" value="#{userSearchBean.searchText}" class="icon-left" />
+									</div>
+								</div>
+								<div class="ui-md-12 ui-lg-4">
+									<p:commandButton value="#{i18n['action.search']}" action="#{userSearchBean.search}" execute="searchUserPanel"
+										update="@form" />
+									<p:commandButton styleClass="btn-gray" value="#{i18n['action.clean']}" action="#{userSearchBean.clean}"
+										update="@form" />
+								</div>
+							</div>
+						</div>
+						<div class="searchResults">
+							<p:dataTable var="user" id="userDataTable" value="#{userSearchBean.users}" reflow="true" paginator="true"
+								paginatorPosition="bottom" rows="#{sessionBean.rowsPerPage}">
+								<p:column headerText="#{i18n['user.name']}" sortBy="#{user.fullName}">
+									<p:link outcome="userView" icon="fa fa-eye">
+										<p:graphicImage class="image image-icon" value="/images/#{user.imageFileName}"
+											rendered="#{not empty user.imageFileName}" />
+										<p:graphicImage class="image image-icon" value="/resources/img/default-avatar.png"
+											rendered="#{empty user.imageFileName}" />
+										<f:param name="id" value="#{user.id}" />
+										<h:outputText value="#{user.fullName}" />
+									</p:link>
+								</p:column>
+
+								<p:column headerText="#{i18n['user.email']}" sortBy="#{user.email}">
+									<h:outputText value="#{user.email}" />
+								</p:column>
+
+								<p:column headerText="#{i18n['user.role']}" sortBy="#{i18n:translate(user.role.name)}">
+									<h:outputText value="#{i18n:translate(user.role.name)}" />
+								</p:column>
+
+								<p:column headerText="#{i18n['user.manager']}" sortBy="#{user.manager}">
+									<p:link outcome="userView" icon="fa fa-eye">
+										<f:param name="id" value="#{user.manager.id}" />
+										<h:outputText value="#{user.manager}" />
+									</p:link>
+								</p:column>
+							</p:dataTable>
+						</div>
+					</p:panel>
+				</h:form>
+			</div>
+			<div class="ui-g-12 ui-md-6 ui-lg-4">
+				<p:panel id="lastActions" header="#{i18n['user.last_actions']}">
+					<ul>
+						<ui:repeat var="action" value="#{userSearchBean.actions}">
+							<li><h:link value="#{action.user}" outcome="userView">
+									<f:param name="id" value="#{action.user.id}" />
+								</h:link> <h:outputText value=" " /> <h:outputFormat value="#{i18n:translate(action.actionPerformed)}"
+									rendered="#{action.actionPerformed == 'LOGIN'}" /> <h:outputText
+									value="#{i18n:translate(action.actionPerformed)}" rendered="#{action.actionPerformed != 'LOGIN'}" /> <h:outputFormat
+									value="#{i18n:translate(action.entityClass)}" rendered="#{action.actionPerformed != 'LOGIN'}">
+									<f:param value="#{action.text}" />
+								</h:outputFormat></li>
+						</ui:repeat>
+					</ul>
+				</p:panel>
+			</div>
+		</div>
 	</ui:define>
 </ui:composition>
