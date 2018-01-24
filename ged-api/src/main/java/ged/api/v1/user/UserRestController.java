@@ -16,16 +16,18 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import ged.api.v1.AbstractRestController;
-import ged.api.v1.mapper.UserMapper;
+import ged.api.v1.mapper.Mapper;
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
 import io.swagger.annotations.Api;
 
-@Path("users")
-@Api("users")
+@Path("user")
+@Api("user")
 @ApplicationScoped
 public class UserRestController extends AbstractRestController {
 
+	@Inject
+	@Mapper
 	private UserMapper userMapper;
 
 	@Inject
@@ -60,10 +62,6 @@ public class UserRestController extends AbstractRestController {
 		return userDtos;
 	}
 
-	private User createUserFromUserDto(final UserDto userDto) {
-		return this.userMapper.toObject(userDto);
-	}
-
 	@GET
 	@Path("/{id:[0-9][0-9]*}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -86,11 +84,15 @@ public class UserRestController extends AbstractRestController {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response insert(@Valid final UserDto userDto) {
 		Response.ResponseBuilder builder;
-		final User user = this.createUserFromUserDto(userDto);
+		final User user = this.userMapper.mapDto(userDto);
 		final User savedUser = this.userService.save(user);
 		final UserDto returnedUserDto = this.createUserDtoFromUser(savedUser);
 		builder = Response.status(Response.Status.OK).entity(returnedUserDto);
 		return builder.build();
+	}
+
+	public void setUserMapper(final UserMapper userMapper) {
+		this.userMapper = userMapper;
 	}
 
 	public void setUserService(final UserService userService) {
