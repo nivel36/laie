@@ -205,6 +205,14 @@
 			WHERE r.name = 'ADMIN'
 		]]></query>
 	</named-query>
+	
+	<named-query name="Role.findRoleByName">
+		<query><![CDATA[
+			SELECT r 
+			FROM Role r 
+			WHERE r.name = :name
+		]]></query>
+	</named-query>
 
 	<named-query name="Role.findSubordinateRoles">
 		<query><![CDATA[

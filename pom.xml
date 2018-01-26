@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>igochan</groupId>
 	<artifactId>ged</artifactId>
-	<version>0.1.2-SNAPSHOT</version>
+	<version>0.2.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>ged</name>
 	<modules>
@@ -35,6 +35,7 @@
 		<version.commons-fileupload>1.3</version.commons-fileupload>
 		<swagger.version>1.5.17</swagger.version>
 		<jackson-datatype-hibernate5.version>2.9.2</jackson-datatype-hibernate5.version>
+		<mockito.version>1.9.5</mockito.version>
 	</properties>
 
 	<dependencyManagement>
@@ -137,6 +138,12 @@
 				<version>${jackson-datatype-hibernate5.version}</version>
 			</dependency>
 
+			<dependency>
+				<groupId>org.mockito</groupId>
+				<artifactId>mockito-all</artifactId>
+				<version>${mockito.version}</version>
+				<scope>test</scope>
+			</dependency>
 
 			<dependency>
 				<groupId>junit</groupId>

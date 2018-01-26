@@ -1,7 +1,5 @@
 package ged.api.v1.user;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
 import ged.api.v1.mapper.AbstractMapper;
@@ -14,30 +12,36 @@ import ged.ejb.user.role.RoleService;
 @Mapper
 public class UserMapper extends AbstractMapper<User, UserDto> {
 
-	@Inject
-	private RoleService roleService;
+	private final RoleService roleService;
+
+	private final UserService userService;
 
 	@Inject
-	private UserService userService;
+	public UserMapper(final RoleService roleService, final UserService userService) {
+		this.userService = userService;
+		this.roleService = roleService;
+	}
 
 	@Override
 	public User mapDto(final UserDto userDto) {
+		if (userDto == null) {
+			return null;
+		}
 		final User user = new User();
 		user.setDateOfJoin(userDto.getDateOfJoin());
 		user.setEmail(userDto.getEmail());
 		user.setImageFileName(userDto.getImageFileName());
 		user.setLanguage(userDto.getLanguage());
-		if (user.getManager() != null) {
+		user.setLastConnection(userDto.getLastConnection());
+		if (userDto.getManagerEmail() != null) {
 			final User manager = this.userService.findUserByEmail(userDto.getManagerEmail());
 			user.setManager(manager);
 		}
 		user.setName(userDto.getName());
 		user.setPhoneNumber(userDto.getPhoneNumber());
-		final List<Role> roles = this.roleService.findAllRoles();
-		for (final Role role : roles) {
-			if (role.getName().equals(userDto.getRoleName())) {
-				user.setRole(role);
-			}
+		if (userDto.getRoleName() != null) {
+			final Role role = this.roleService.findRoleByName(userDto.getRoleName());
+			user.setRole(role);
 		}
 		user.setSurename(userDto.getSurename());
 		return user;

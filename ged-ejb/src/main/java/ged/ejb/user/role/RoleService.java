@@ -8,6 +8,8 @@ public interface RoleService {
 
 	List<Role> findAllRoles();
 
+	Role findRoleByName(String roleName);
+
 	List<Role> findSubordinateRoles(final Role manager);
 
 	boolean isASubordinateRole(final Role manager, final Role role);

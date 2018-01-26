@@ -2,6 +2,7 @@ package ged.ejb.user.role;
 
 import java.lang.invoke.MethodHandles;
 import java.util.List;
+import java.util.Objects;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -20,6 +21,7 @@ public class RoleServiceImpl implements RoleService {
 	@Repository
 	private RoleDao roleDao;
 
+	@Override
 	public Role findAdmin() {
 		logger.debug("Find admin role");
 		return this.roleDao.findAdmin();
@@ -29,6 +31,12 @@ public class RoleServiceImpl implements RoleService {
 	public List<Role> findAllRoles() {
 		logger.debug("Find all roles");
 		return this.roleDao.findAll();
+	}
+
+	@Override
+	public Role findRoleByName(final String roleName) {
+		Objects.requireNonNull(roleName);
+		return this.roleDao.findRoleByName(roleName);
 	}
 
 	@Override

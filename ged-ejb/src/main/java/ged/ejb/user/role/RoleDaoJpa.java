@@ -5,6 +5,7 @@ import static ged.ejb.core.model.QueryParameter.with;
 import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -29,6 +30,14 @@ public class RoleDaoJpa extends AbstractDaoJpa<Role> implements RoleDao {
 	@Override
 	public Role findAdmin() {
 		return findByTypedQuery(Role.class, "Role.findAdmin", null);
+	}
+
+	@Override
+	public Role findRoleByName(final String roleName) {
+		Objects.requireNonNull(roleName);
+		Role role;
+		role = findByTypedQuery(Role.class, "Role.findRoleByName", with("name", roleName).parameters());
+		return role;
 	}
 
 	@Override

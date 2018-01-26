@@ -63,26 +63,7 @@ public class CandidateDto extends AbstractDto {
 	}
 
 	public CandidateDto(final Candidate candidate) {
-		Objects.requireNonNull(candidate);
-		Objects.requireNonNull(candidate.getAddress());
-		Objects.requireNonNull(candidate.getOwner());
-		this.bornDate = candidate.getBornDate();
-		this.city = candidate.getAddress().getCity();
-		this.email = candidate.getEmail();
-		this.expectedSalary = candidate.getExpectedSalary();
-		this.id = candidate.getId();
-		this.imageFileName = candidate.getImageFileName();
-		this.infojobsProfileUrl = candidate.getInfojobsProfileUrl();
-		this.jobProfile = candidate.getJobProfile();
-		this.linkedinProfileUrl = candidate.getLinkedinProfileUrl();
-		this.name = candidate.getName();
-		this.ownerEmail = candidate.getOwner().getEmail();
-		this.phoneNumber = candidate.getPhoneNumber();
-		this.rating = candidate.getRating();
-		this.salary = candidate.getSalary();
-		this.skype = candidate.getSkype();
-		this.state = candidate.getAddress().getState();
-		this.surename = candidate.getSurename();
+
 	}
 
 	@Override
