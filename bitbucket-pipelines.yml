@@ -8,6 +8,7 @@ pipelines:
           - maven
         script: 
           - mvn clean verify
+
   sonar:
     - step:
         caches:
