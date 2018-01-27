@@ -53,7 +53,9 @@ public class JobOfferServiceImpl extends AbstratctAuditedService<JobOffer> imple
 		Objects.requireNonNull(jobOffer);
 		Objects.requireNonNull(candidate);
 		logger.debug("Add Job Candidature of candidate {} to jobOffer {}", candidate.getFullName(), jobOffer.getName());
-		final JobCandidature jobCandidature = new JobCandidature(jobOffer, candidate);
+		final JobCandidature jobCandidature = new JobCandidature();
+		jobCandidature.setCandidate(candidate);
+		jobCandidature.setJobOffer(jobOffer);
 		this.jobCandidatureDao.insert(jobCandidature);
 	}
 
@@ -123,8 +125,8 @@ public class JobOfferServiceImpl extends AbstratctAuditedService<JobOffer> imple
 
 	@Override
 	public List<JobOffer> searchByNameAndClient(final String name, final String clientName, final Boolean showDeleted) {
-		logger.debug("Search all job offers by name {} and client name {}, show deleted {}",
-				name, clientName, showDeleted );
+		logger.debug("Search all job offers by name {} and client name {}, show deleted {}", name, clientName,
+				showDeleted);
 		return this.jobOfferDao.searchByNameAndClient(name, clientName, showDeleted);
 	}
 }

@@ -40,16 +40,6 @@ public class JobCandidature extends AbstractAuditedEntity {
 	@JoinColumn(name = "jobOfferId", nullable = false)
 	private JobOffer jobOffer;
 
-	public JobCandidature() {
-	}
-
-	public JobCandidature(final JobOffer jobOffer, final Candidate candidate) {
-		Objects.requireNonNull(jobOffer);
-		Objects.requireNonNull(candidate);
-		this.jobOffer = jobOffer;
-		this.candidate = candidate;
-	}
-
 	@Override
 	public boolean equals(final Object obj) {
 		if (this == obj) {
