@@ -2,15 +2,51 @@ package ged.api.v1.candidate;
 
 import java.util.Objects;
 
-import ged.api.v1.mapper.AbstractMapper;
-import ged.ejb.candidate.Candidate;
+import javax.inject.Inject;
 
-public class CandidateMapper extends AbstractMapper<Candidate, CandidateDto> {
+import ged.api.v1.mapper.AbstractMapper;
+import ged.api.v1.mapper.Mapper;
+import ged.ejb.candidate.Candidate;
+import ged.ejb.core.Address;
+import ged.ejb.user.User;
+import ged.ejb.user.UserService;
+
+@Mapper
+public class CandidateMapper implements AbstractMapper<Candidate, CandidateDto> {
+
+	private final UserService userService;
+
+	@Inject
+	public CandidateMapper(final UserService userService) {
+		this.userService = userService;
+	}
 
 	@Override
-	public Candidate mapDto(final CandidateDto dtos) {
-		// TODO Auto-generated method stub
-		return null;
+	public Candidate mapDto(final CandidateDto candidateDto) {
+		if (candidateDto == null) {
+			return null;
+		}
+		final Candidate candidate = new Candidate();
+		final User owner = this.userService.findUserByEmail(candidateDto.getOwnerEmail());
+		candidate.setOwner(owner);
+		final Address address = new Address();
+		address.setCity(candidateDto.getCity());
+		address.setState(candidateDto.getState());
+		candidate.setAddress(address);
+		candidate.setBornDate(candidateDto.getBornDate());
+		candidate.setEmail(candidateDto.getEmail());
+		candidate.setExpectedSalary(candidateDto.getExpectedSalary());
+		candidate.setImageFileName(candidateDto.getImageFileName());
+		candidate.setInfojobsProfileUrl(candidateDto.getInfojobsProfileUrl());
+		candidate.setJobProfile(candidateDto.getJobProfile());
+		candidate.setLinkedinProfileUrl(candidateDto.getLinkedinProfileUrl());
+		candidate.setName(candidateDto.getName());
+		candidate.setPhoneNumber(candidateDto.getPhoneNumber());
+		candidate.setRating(candidateDto.getRating());
+		candidate.setSalary(candidateDto.getSalary());
+		candidate.setSkype(candidateDto.getSkype());
+		candidate.setSurename(candidateDto.getSurename());
+		return candidate;
 	}
 
 	@Override

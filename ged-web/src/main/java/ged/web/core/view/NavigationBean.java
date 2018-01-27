@@ -1,8 +1,6 @@
 package ged.web.core.view;
 
 import java.io.Serializable;
-import java.util.Queue;
-
 import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
@@ -18,15 +16,13 @@ public class NavigationBean implements Serializable {
 	@Inject
 	private FacesContext facesContext;
 
-	private Queue<Navigation> navigationQueue;
-
-	private void restoreView(final Object savedState) {
+	public void restoreView(final Object savedState) {
 		final UIViewRoot viewRoot = new UIViewRoot();
 		viewRoot.restoreState(this.facesContext, savedState);
 	}
 
-	private void saveView() {
+	public Object saveView() {
 		final UIViewRoot viewRoot = this.facesContext.getViewRoot();
-		final Object savedState = viewRoot.saveState(this.facesContext);
+		return viewRoot.saveState(this.facesContext);
 	}
 }

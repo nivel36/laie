@@ -36,10 +36,10 @@ public class UserSearchBean extends AbstractPageBean {
 
 	private String searchText;
 
-	protected List<User> users;
+	private List<User> users;
 
 	@Inject
-	protected transient UserService userService;
+	private transient UserService userService;
 
 	private List<User> usersOnlineLastWeek;
 

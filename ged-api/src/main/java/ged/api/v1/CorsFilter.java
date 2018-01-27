@@ -15,6 +15,7 @@ public class CorsFilter implements javax.servlet.Filter {
 
 	@Override
 	public void destroy() {
+		// do nothing
 	}
 
 	@Override
@@ -29,5 +30,6 @@ public class CorsFilter implements javax.servlet.Filter {
 
 	@Override
 	public void init(final FilterConfig filterConfig) throws ServletException {
+		// do nothing
 	}
 }

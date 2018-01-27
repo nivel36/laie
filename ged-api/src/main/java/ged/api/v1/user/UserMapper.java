@@ -10,7 +10,7 @@ import ged.ejb.user.role.Role;
 import ged.ejb.user.role.RoleService;
 
 @Mapper
-public class UserMapper extends AbstractMapper<User, UserDto> {
+public class UserMapper implements AbstractMapper<User, UserDto> {
 
 	private final RoleService roleService;
 

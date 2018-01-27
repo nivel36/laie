@@ -6,7 +6,6 @@ import java.util.Set;
 import javax.inject.Inject;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
-import javax.validation.ValidationException;
 import javax.validation.Validator;
 
 public abstract class AbstractRestController {
@@ -18,7 +17,7 @@ public abstract class AbstractRestController {
 		this.validator = validator;
 	}
 
-	protected void validate(final Dto dto) throws ConstraintViolationException, ValidationException {
+	protected void validate(final Dto dto) {
 		final Set<ConstraintViolation<Dto>> violations = this.validator.validate(dto);
 		if (!violations.isEmpty()) {
 			throw new ConstraintViolationException(new HashSet<>(violations));

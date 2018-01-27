@@ -207,8 +207,7 @@ public class UserViewBean extends AbstractPageBean {
 		this.user = this.userService.save(this.user);
 	}
 
-	public void validateEmail(final FacesContext context, final UIComponent component, final Object value)
-			throws ValidatorException {
+	public void validateEmail(final FacesContext context, final UIComponent component, final Object value) {
 		logger.debug("Checking email");
 		if (value == null) {
 			return;
@@ -228,21 +227,19 @@ public class UserViewBean extends AbstractPageBean {
 		}
 	}
 
-	public void validateManager(final FacesContext context, final UIComponent component, final Object value)
-			throws ValidatorException {
+	public void validateManager(final FacesContext context, final UIComponent component, final Object value) {
 		if (value == null) {
 			return;
 		}
-		final User manager = (User) value;
-		if (manager.equals(this.user)) {
+		final User managerToValidate = (User) value;
+		if (managerToValidate.equals(this.user)) {
 			logger.debug("User can't be his/her manager");
 			final String msg = TransaltionUtils.translate("user.error.manager");
 			throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg));
 		}
 	}
 
-	public void validateRole(final FacesContext context, final UIComponent component, final Object value)
-			throws ValidatorException {
+	public void validateRole(final FacesContext context, final UIComponent component, final Object value) {
 		if (this.manager == null || this.manager.getEmail() == null) {
 			return;
 		}

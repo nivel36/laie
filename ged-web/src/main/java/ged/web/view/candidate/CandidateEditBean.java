@@ -42,7 +42,7 @@ public class CandidateEditBean extends AbstractPageBean {
 	@Inject
 	private transient CurriculumService curriculumService;
 
-	private UIComponent emailField;
+	private transient UIComponent emailField;
 
 	private List<String> tagLabels;
 

@@ -35,9 +35,6 @@ public class UserDto extends AbstractDto {
 	@NotNull
 	private String surename;
 
-	public UserDto() {
-	}
-
 	@Override
 	public boolean equals(final Object obj) {
 		if (this == obj) {
@@ -104,7 +101,7 @@ public class UserDto extends AbstractDto {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = (prime * result) + ((this.email == null) ? 0 : this.email.hashCode());
+		result = prime * result + (this.email == null ? 0 : this.email.hashCode());
 		return result;
 	}
 

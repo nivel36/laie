@@ -4,6 +4,8 @@ import java.io.UnsupportedEncodingException;
 import java.lang.invoke.MethodHandles;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
+import java.util.Objects;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
@@ -43,27 +45,28 @@ public class ChangePasswordPopupBean extends AbstractPageBean {
 
 	public void change() {
 		logger.debug("Change password action performed");
-		final String output = this.hashPassword(this.password);
+		final String output = hashPassword(this.password);
 		final User user = this.sessionBean.getUser();
-		if (user.getPassword().toString().equals(output)) {
+		if (Arrays.toString(user.getPassword()).equals(output)) {
 			if (this.newPassword.equals(this.repeatPassword)) {
-				this.sessionBean.setUser(this.changePassword(user));
-				this.clear();
+				this.sessionBean.setUser(changePassword(user));
+				clear();
 				// Clearing the view bean of the main page because we need to
 				// reload the user from database
 				this.facesContext.getViewRoot().getViewMap().clear();
 				this.addMessage(FacesMessage.SEVERITY_INFO, "action.save_action_performed",
 						"action.save_action_performed");
 			} else {
-				this.addErrorToField(this.newPasswordComponent, "login.error.password_not_equals");
+				addErrorToField(this.newPasswordComponent, "login.error.password_not_equals");
 			}
 		} else {
-			this.addErrorToField(this.passwordComponent, "login.error.bad_password");
+			addErrorToField(this.passwordComponent, "login.error.bad_password");
 		}
 	}
 
 	private User changePassword(final User user) {
-		final String hash = this.hashPassword(this.newPassword);
+		final String hash = hashPassword(this.newPassword);
+		Objects.requireNonNull(hash);
 		user.setPassword(hash.toCharArray());
 		return this.userService.save(user);
 	}

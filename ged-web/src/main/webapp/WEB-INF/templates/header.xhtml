@@ -18,21 +18,21 @@
 			<nav id="mainMenu" class="menu">
 				<ul>
 					<li><a jsf:action="#{menuBean.gotoIndex}" jsf:styleClass="#{selectedMenu eq 'index' ? 'selected': ''}"><span
-							class="menu_icon"><i class="fa fa-home" /></span> <span class="menu_text">#{i18n['menu.index']}</span></a></li>
+							class="menu_icon"><em class="fa fa-home" /></span> <span class="menu_text">#{i18n['menu.index']}</span></a></li>
 					<li><a jsf:action="#{menuBean.gotoCandidates}"
-						jsf:styleClass="#{selectedMenu eq 'candidates' ? 'selected': ''}"><span class="menu_icon"><i
+						jsf:styleClass="#{selectedMenu eq 'candidates' ? 'selected': ''}"><span class="menu_icon"><em
 								class="fa fa-users" /></span> <span class="menu_text">#{i18n['menu.candidates']}</span></a></li>
 					<li><a jsf:action="#{menuBean.gotoJobOffers}" jsf:styleClass="#{selectedMenu eq 'offers' ? 'selected': ''}"><span
-							class="menu_icon"><i class="fa fa-suitcase" /></span> <span class="menu_text">#{i18n['menu.offers']}</span></a></li>
+							class="menu_icon"><em class="fa fa-suitcase" /></span> <span class="menu_text">#{i18n['menu.offers']}</span></a></li>
 					<li><a jsf:action="#{menuBean.gotoClients}" jsf:styleClass="#{selectedMenu eq 'clients' ? 'selected': ''}"><span
-							class="menu_icon"><i class="fa fa-industry" /></span> <span class="menu_text">#{i18n['menu.clients']}</span></a></li>
+							class="menu_icon"><em class="fa fa-industry" /></span> <span class="menu_text">#{i18n['menu.clients']}</span></a></li>
 					<li><a jsf:action="#{menuBean.gotoReports}" jsf:styleClass="#{selectedMenu eq 'reports' ? 'selected': ''}"><span
-							class="menu_icon"><i class="fa fa-bar-chart" /></span> <span class="menu_text">#{i18n['menu.reports']}</span></a></li>
+							class="menu_icon"><em class="fa fa-bar-chart" /></span> <span class="menu_text">#{i18n['menu.reports']}</span></a></li>
 					<li><a jsf:action="#{menuBean.gotoUsers}" jsf:rendered="#{request.isUserInRole('ADMIN')}"
-						jsf:styleClass="#{selectedMenu eq 'users' ? 'selected': ''}"><span class="menu_icon"><i
+						jsf:styleClass="#{selectedMenu eq 'users' ? 'selected': ''}"><span class="menu_icon"><em
 								class="fa fa-user" /></span> <span class="menu_text">#{i18n['menu.users']}</span></a></li>
 					<li><a jsf:action="#{menuBean.gotoMaintenances}"
-						jsf:styleClass="#{selectedMenu eq 'maintenances' ? 'selected': ''}"><span class="menu_icon"><i
+						jsf:styleClass="#{selectedMenu eq 'maintenances' ? 'selected': ''}"><span class="menu_icon"><em
 								class="fa fa-cogs" /></span> <span class="menu_text">#{i18n['menu.maintenances']}</span></a></li>
 				</ul>
 			</nav>

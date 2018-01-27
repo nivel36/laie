@@ -15,7 +15,7 @@ public class Action extends AbstractRecordEntity {
 
 	public enum ActionType {
 		DELETE, LOGIN, SAVE, UNDELETE
-	};
+	}
 
 	private static final long serialVersionUID = -3095037007290696579L;
 

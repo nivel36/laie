@@ -1,5 +1,7 @@
 package ged.ejb.client;
 
+import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -43,6 +45,21 @@ public class Contact extends AbstractAuditedEntity {
 	@Field
 	private String surename;
 
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (!super.equals(obj)) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		final Contact other = (Contact) obj;
+		return Objects.equals(this.email, other.email);
+	}
+
 	public Client getClient() {
 		return this.client;
 	}
@@ -69,6 +86,11 @@ public class Contact extends AbstractAuditedEntity {
 
 	public String getSurename() {
 		return this.surename;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(this.email);
 	}
 
 	public void setClient(final Client client) {

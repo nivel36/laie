@@ -47,16 +47,14 @@ public class UserRestController extends AbstractRestController {
 	@Produces(MediaType.APPLICATION_JSON)
 	public UserDto find(@PathParam("id") final long id) {
 		final User user = this.userService.find(id);
-		final UserDto userDto = this.userMapper.mapEntity(user);
-		return userDto;
+		return this.userMapper.mapEntity(user);
 	}
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<UserDto> findAll() {
 		final List<User> users = this.userService.findAll();
-		final List<UserDto> userDtos = createUserDtoListFromUserList(users);
-		return userDtos;
+		return createUserDtoListFromUserList(users);
 	}
 
 	@POST

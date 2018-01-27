@@ -1,7 +1,6 @@
 package ged.web.core;
 
 import java.io.Serializable;
-import java.util.Map;
 
 public class Page implements Serializable {
 
@@ -13,18 +12,12 @@ public class Page implements Serializable {
 
 	private String name;
 
-	private Map<String, Object> params;
-
 	private RequestType requestType;
 
 	private String url;
 
 	public String getName() {
 		return this.name;
-	}
-
-	public Map<String, Object> getParams() {
-		return this.params;
 	}
 
 	public RequestType getRequestType() {
@@ -37,10 +30,6 @@ public class Page implements Serializable {
 
 	public void setName(final String name) {
 		this.name = name;
-	}
-
-	public void setParams(final Map<String, Object> params) {
-		this.params = params;
 	}
 
 	public void setRequestType(final RequestType requestType) {

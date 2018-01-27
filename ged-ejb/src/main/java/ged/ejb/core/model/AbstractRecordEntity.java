@@ -1,17 +1,14 @@
 package ged.ejb.core.model;
 
 import javax.persistence.Column;
-import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 
-import ged.ejb.core.action.ActionListener;
 import ged.ejb.user.User;
 
 @MappedSuperclass
-@EntityListeners(ActionListener.class)
 public class AbstractRecordEntity extends AbstractEntity {
 
 	private static final long serialVersionUID = 8347072557418850004L;

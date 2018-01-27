@@ -26,6 +26,12 @@ import ged.ejb.core.model.Repository;
 @Repository
 public final class UserDaoJpa extends AbstractDaoJpa<User> implements UserDao {
 
+	private static final String END = "end";
+
+	private static final String START = "start";
+
+	private static final String EMAIL = "email";
+
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	@Inject
@@ -44,7 +50,7 @@ public final class UserDaoJpa extends AbstractDaoJpa<User> implements UserDao {
 	@Override
 	public boolean emailExists(final String email) {
 		Objects.requireNonNull(email);
-		return (boolean) findByQuery("User.emailExists", with("email", email).parameters());
+		return (boolean) findByQuery("User.emailExists", with(EMAIL, email).parameters());
 	}
 
 	@Override
@@ -81,7 +87,7 @@ public final class UserDaoJpa extends AbstractDaoJpa<User> implements UserDao {
 		Objects.requireNonNull(email);
 		final User user;
 		try {
-			user = findByTypedQuery(User.class, "User.findByEmail", with("email", email).parameters());
+			user = findByTypedQuery(User.class, "User.findByEmail", with(EMAIL, email).parameters());
 		} catch (final NoResultException e) {
 			return null;
 		}
@@ -90,13 +96,13 @@ public final class UserDaoJpa extends AbstractDaoJpa<User> implements UserDao {
 
 	@Override
 	public List<User> findUsersOffline(final Date start, final Date end) {
-		return findByTypedQuery(User.class, "User.findUsersOffline", with("start", start).and("end", end).parameters(),
+		return findByTypedQuery(User.class, "User.findUsersOffline", with(START, start).and(END, end).parameters(),
 				0, 0);
 	}
 
 	@Override
 	public List<User> findUsersOnline(final Date start, final Date end) {
-		return findByTypedQuery(User.class, "User.findUsersOnline", with("start", start).and("end", end).parameters(),
+		return findByTypedQuery(User.class, "User.findUsersOnline", with(START, start).and(END, end).parameters(),
 				0, 0);
 	}
 
@@ -136,13 +142,13 @@ public final class UserDaoJpa extends AbstractDaoJpa<User> implements UserDao {
 	@Override
 	public long numberOfUsersOffline(final Date start, final Date end) {
 		return findByTypedQuery(Long.class, "User.numberOfUsersOffline",
-				with("start", start).and("end", end).parameters());
+				with(START, start).and(END, end).parameters());
 	}
 
 	@Override
 	public long numberOfUsersOnline(final Date start, final Date end) {
 		return findByTypedQuery(Long.class, "User.numberOfUsersOnline",
-				with("start", start).and("end", end).parameters());
+				with(START, start).and(END, end).parameters());
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -155,7 +161,7 @@ public final class UserDaoJpa extends AbstractDaoJpa<User> implements UserDao {
 		final BooleanJunction<BooleanJunction> bj = qb.bool();
 		bj.should(qb.keyword().onField("name").matching(query).createQuery());
 		bj.should(qb.keyword().onField("surename").matching(query).createQuery());
-		bj.should(qb.keyword().onField("email").matching(query).createQuery());
+		bj.should(qb.keyword().onField(EMAIL).matching(query).createQuery());
 		bj.must(qb.keyword().onField("deleted").matching(true).createQuery()).not();
 		final Query persistenceQuery = fullTextEntityManager.createFullTextQuery(bj.createQuery(), User.class);
 		return persistenceQuery.getResultList();

@@ -26,7 +26,7 @@ public class CandidateSearchBean extends AbstractPageBean {
 
 	private static final long serialVersionUID = 2434819723782902618L;
 
-	protected List<Candidate> candidates;
+	private List<Candidate> candidates;
 
 	@Inject
 	protected transient CandidateService candidateService;

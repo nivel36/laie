@@ -37,6 +37,8 @@ import ged.web.core.view.AbstractPageBean;
 @ViewScoped
 public class CandidateViewBean extends AbstractPageBean {
 
+	private static final String UNNEXPECTED_ERROR = "error.unnexpected_error";
+
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	private static final long serialVersionUID = 1577879781927493283L;
@@ -99,24 +101,22 @@ public class CandidateViewBean extends AbstractPageBean {
 		return this.tags;
 	}
 
+	// TODO: Redo
 	private Set<Tag> getTagsFromStringList(final List<String> labels) {
 		if (labels == null) {
 			return new HashSet<>();
 		}
 		final Set<Tag> candidateTags = new HashSet<>();
 		for (final String label : labels) {
-			if (label == null) {
-				return null;
-			}
-			final Tag tag;
 			final List<Tag> tagsFoundInDataBase = this.tagService.searchByLabel(label);
+			final Tag tag;
 			if (tagsFoundInDataBase.size() == 1) {
 				tag = tagsFoundInDataBase.get(0);
 			} else {
 				tag = new Tag();
 				tag.setLabel(label);
-				candidateTags.add(tag);
 			}
+			candidateTags.add(tag);
 		}
 		return candidateTags;
 	}
@@ -179,11 +179,15 @@ public class CandidateViewBean extends AbstractPageBean {
 	public void openFile(final UploadedServerFile file) {
 		try {
 			final File downloableFile = new File(file.getName());
-			new java.io.File(this.fileDirectory, file.getUuid()).renameTo(downloableFile);
+			final boolean renamed = new java.io.File(this.fileDirectory, file.getUuid()).renameTo(downloableFile);
+			if (!renamed) {
+				logger.error("Can't rename the file");
+				MessageUtils.addErrorMessage(UNNEXPECTED_ERROR, UNNEXPECTED_ERROR);
+			}
 			Faces.sendFile(downloableFile, true);
 		} catch (final IOException e) {
 			logger.error("Can't open file", e);
-			MessageUtils.addErrorMessage("error.unnexpected_error", "error.unnexpected_error");
+			MessageUtils.addErrorMessage(UNNEXPECTED_ERROR, UNNEXPECTED_ERROR);
 		}
 	}
 
@@ -196,7 +200,7 @@ public class CandidateViewBean extends AbstractPageBean {
 			addInfoMessage("file.message.remove", "file.message.remove", file.getName());
 		} catch (final IOException e) {
 			logger.error("Can't remove file", e);
-			MessageUtils.addErrorMessage("error.unnexpected_error", "error.unnexpected_error");
+			MessageUtils.addErrorMessage(UNNEXPECTED_ERROR, UNNEXPECTED_ERROR);
 		}
 	}
 
@@ -271,7 +275,7 @@ public class CandidateViewBean extends AbstractPageBean {
 			Files.copy(input, new java.io.File(directory, uuid).toPath());
 		} catch (final IOException ex) {
 			logger.error("Can't upload file", ex);
-			MessageUtils.addErrorMessage("error.unnexpected_error", "error.unnexpected_error");
+			MessageUtils.addErrorMessage(UNNEXPECTED_ERROR, UNNEXPECTED_ERROR);
 		}
 		return uuid;
 	}

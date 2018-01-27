@@ -4,6 +4,7 @@ import java.util.Objects;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import ged.ejb.core.maintenance.AbstractEnumEntity;
@@ -20,7 +21,8 @@ public class MaintenanceEditBean extends AbstractPageBean {
 
 	private AbstractEnumEntity enumEntity;
 
-	private MaintenanceService maintenanceService;
+	@Inject
+	private transient MaintenanceService maintenanceService;
 
 	public String cancel() {
 		return "maintenanceIndex";

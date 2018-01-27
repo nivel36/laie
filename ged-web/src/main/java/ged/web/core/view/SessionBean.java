@@ -1,7 +1,6 @@
 package ged.web.core.view;
 
 import java.util.Locale;
-import java.util.Queue;
 import java.util.ResourceBundle;
 
 import javax.annotation.PostConstruct;
@@ -19,8 +18,6 @@ public class SessionBean extends AbstractBean {
 	private static final long serialVersionUID = -8079836415042166193L;
 
 	private Locale locale;
-
-	private Queue<Navigation> navigationQueue;
 
 	private User user;
 
@@ -49,15 +46,6 @@ public class SessionBean extends AbstractBean {
 		final String username = this.facesContext.getExternalContext().getRemoteUser();
 		this.user = this.userService.findUserByEmail(username);
 		this.locale = new Locale(this.user.getLanguage());
-	}
-
-	private void restoreView() {
-
-	}
-
-	private Navigation saveView() {
-		this.externalContext.getRequest();
-		return null;
 	}
 
 	public void setLocale(final Locale locale) {

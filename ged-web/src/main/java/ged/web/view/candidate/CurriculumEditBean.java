@@ -23,6 +23,8 @@ import ged.web.core.view.AbstractPageBean;
 @ViewScoped
 public class CurriculumEditBean extends AbstractPageBean {
 
+	private static final String CURRICULUM_KEY = "curriculum";
+
 	private static final long serialVersionUID = -7941713518794892268L;
 
 	private Curriculum curriculum;
@@ -96,8 +98,8 @@ public class CurriculumEditBean extends AbstractPageBean {
 
 	@PostConstruct
 	public void init() {
-		if (this.flash.containsKey("curriculum")) {
-			this.curriculum = (Curriculum) this.flash.get("curriculum");
+		if (this.flash.containsKey(CURRICULUM_KEY)) {
+			this.curriculum = (Curriculum) this.flash.get(CURRICULUM_KEY);
 		} else {
 			error();
 			return;
@@ -120,7 +122,7 @@ public class CurriculumEditBean extends AbstractPageBean {
 		this.jobExperiences.addAll(this.curriculum.getJobExperiences());
 		this.languages.addAll(this.curriculum.getLanguages());
 
-		this.flash.put("curriculum", this.curriculum);
+		this.flash.put(CURRICULUM_KEY, this.curriculum);
 		this.flash.put("candidate", this.curriculum.getCandidate());
 	}
 

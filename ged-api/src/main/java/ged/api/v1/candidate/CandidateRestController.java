@@ -17,10 +17,9 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import ged.api.v1.AbstractRestController;
+import ged.api.v1.mapper.Mapper;
 import ged.ejb.candidate.Candidate;
 import ged.ejb.candidate.CandidateService;
-import ged.ejb.core.Address;
-import ged.ejb.user.User;
 import ged.ejb.user.UserService;
 import io.swagger.annotations.Api;
 
@@ -28,6 +27,10 @@ import io.swagger.annotations.Api;
 @Api
 @ApplicationScoped
 public class CandidateRestController extends AbstractRestController {
+
+	@Inject
+	@Mapper
+	private CandidateMapper candidateMapper;
 
 	@Inject
 	private CandidateService candidateService;
@@ -49,16 +52,14 @@ public class CandidateRestController extends AbstractRestController {
 	@Produces(MediaType.APPLICATION_JSON)
 	public CandidateDto find(@PathParam("id") final long id) {
 		final Candidate candidate = this.candidateService.find(id);
-		final CandidateDto candidateDto = new CandidateDto(candidate);
-		return candidateDto;
+		return new CandidateDto(candidate);
 	}
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<CandidateDto> findAll() {
 		final List<Candidate> candidates = this.candidateService.findAll();
-		final List<CandidateDto> candidateDtos = this.convertToCandidateDtoList(candidates);
-		return candidateDtos;
+		return convertToCandidateDtoList(candidates);
 	}
 
 	@POST
@@ -66,7 +67,7 @@ public class CandidateRestController extends AbstractRestController {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response insert(@Valid final CandidateDto candidateDto) {
 		Response.ResponseBuilder builder = null;
-		final Candidate candidateToInsert = this.toCandidate(candidateDto);
+		final Candidate candidateToInsert = this.candidateMapper.mapDto(candidateDto);
 		this.candidateService.save(candidateToInsert);
 		builder = Response.ok();
 		return builder.build();
@@ -79,8 +80,7 @@ public class CandidateRestController extends AbstractRestController {
 			@QueryParam("surename") final String surename, @QueryParam("position") final String position) {
 		final List<Candidate> candidates = this.candidateService.searchByNameAndSurename(name, surename, position,
 				false);
-		final List<CandidateDto> candidateDtos = this.convertToCandidateDtoList(candidates);
-		return candidateDtos;
+		return convertToCandidateDtoList(candidates);
 	}
 
 	public void setCandidateService(final CandidateService candidateService) {
@@ -89,32 +89,5 @@ public class CandidateRestController extends AbstractRestController {
 
 	public void setUserSerivce(final UserService userSerivce) {
 		this.userSerivce = userSerivce;
-	}
-
-	private Candidate toCandidate(final CandidateDto candidateDto) {
-		if (candidateDto == null) {
-			return null;
-		}
-		final Candidate candidate = new Candidate();
-		final User owner = this.userSerivce.findUserByEmail(candidateDto.getOwnerEmail());
-		candidate.setOwner(owner);
-		final Address address = new Address();
-		address.setCity(candidateDto.getCity());
-		address.setState(candidateDto.getState());
-		candidate.setAddress(address);
-		candidate.setBornDate(candidateDto.getBornDate());
-		candidate.setEmail(candidateDto.getEmail());
-		candidate.setExpectedSalary(candidateDto.getExpectedSalary());
-		candidate.setImageFileName(candidateDto.getImageFileName());
-		candidate.setInfojobsProfileUrl(candidateDto.getInfojobsProfileUrl());
-		candidate.setJobProfile(candidateDto.getJobProfile());
-		candidate.setLinkedinProfileUrl(candidateDto.getLinkedinProfileUrl());
-		candidate.setName(candidateDto.getName());
-		candidate.setPhoneNumber(candidateDto.getPhoneNumber());
-		candidate.setRating(candidateDto.getRating());
-		candidate.setSalary(candidateDto.getSalary());
-		candidate.setSkype(candidateDto.getSkype());
-		candidate.setSurename(candidateDto.getSurename());
-		return candidate;
 	}
 }

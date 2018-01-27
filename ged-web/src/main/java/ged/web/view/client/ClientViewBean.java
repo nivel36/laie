@@ -20,6 +20,8 @@ import ged.web.core.view.AbstractPageBean;
 @ViewScoped
 public class ClientViewBean extends AbstractPageBean {
 
+	private static final String CLIENT_SEARCH = "clientSearch";
+
 	private static final long serialVersionUID = 1412905869664752048L;
 
 	private Client client;
@@ -47,7 +49,7 @@ public class ClientViewBean extends AbstractPageBean {
 	}
 
 	public void export() {
-
+		// TODO
 	}
 
 	public Client getClient() {
@@ -71,17 +73,19 @@ public class ClientViewBean extends AbstractPageBean {
 	 */
 	public void init() {
 		if (this.id == null) {
-			Navigate.toPage("clientSearch");
+			Navigate.toPage(CLIENT_SEARCH);
+			return;
 		}
 		long clientId = 0;
 		try {
 			clientId = Long.parseLong(this.id);
 		} catch (final NumberFormatException ex) {
-			Navigate.toPage("clientSearch");
+			Navigate.toPage(CLIENT_SEARCH);
 		}
 		this.client = this.clientService.find(clientId);
 		if (this.client == null) {
-			Navigate.toPage("clientSearch");
+			Navigate.toPage(CLIENT_SEARCH);
+			return;
 		}
 		if (this.client.getAddress() == null) {
 			this.client.setAddress(new Address());
