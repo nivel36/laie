@@ -11,7 +11,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 import ged.api.v1.AbstractDto;
-import ged.ejb.candidate.Candidate;
 
 public class CandidateDto extends AbstractDto {
 
@@ -58,13 +57,6 @@ public class CandidateDto extends AbstractDto {
 
 	@NotNull
 	private String surename;
-
-	public CandidateDto() {
-	}
-
-	public CandidateDto(final Candidate candidate) {
-
-	}
 
 	@Override
 	public boolean equals(final Object obj) {
