@@ -41,7 +41,7 @@ public class CandidateRestController extends AbstractRestController {
 	private List<CandidateDto> convertToCandidateDtoList(final List<Candidate> candidates) {
 		final List<CandidateDto> candidateDtos = new ArrayList<>();
 		for (final Candidate candidate : candidates) {
-			final CandidateDto candidateDto = new CandidateDto(candidate);
+			final CandidateDto candidateDto = this.candidateMapper.mapEntity(candidate);
 			candidateDtos.add(candidateDto);
 		}
 		return candidateDtos;
@@ -52,7 +52,7 @@ public class CandidateRestController extends AbstractRestController {
 	@Produces(MediaType.APPLICATION_JSON)
 	public CandidateDto find(@PathParam("id") final long id) {
 		final Candidate candidate = this.candidateService.find(id);
-		return new CandidateDto(candidate);
+		return this.candidateMapper.mapEntity(candidate);
 	}
 
 	@GET
