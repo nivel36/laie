@@ -31,6 +31,7 @@ public class CandidateDaoJpa extends AbstractDaoJpa<Candidate> implements Candid
 
 	@Override
 	public boolean emailExists(final String email) {
+		Objects.requireNonNull(email);
 		return (boolean) this.findByQuery("Candidate.emailExists", with("email", email).parameters());
 	}
 
@@ -83,7 +84,7 @@ public class CandidateDaoJpa extends AbstractDaoJpa<Candidate> implements Candid
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public List<Candidate> search(final List<String> searchValues) {
-		final FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(this.getEm());
+		final FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(getEm());
 		final QueryBuilder qb = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(Candidate.class)
 				.get();
 		final BooleanJunction<BooleanJunction> bj = qb.bool();
@@ -109,7 +110,7 @@ public class CandidateDaoJpa extends AbstractDaoJpa<Candidate> implements Candid
 	@Override
 	public List<Candidate> searchByNameAndSurename(final String name, final String surename, final String position,
 			final boolean showDeleted) {
-		final FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(this.getEm());
+		final FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(getEm());
 		final QueryBuilder qb = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(Candidate.class)
 				.get();
 		final BooleanJunction<BooleanJunction> bj = qb.bool();
