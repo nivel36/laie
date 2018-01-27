@@ -2,6 +2,7 @@ package ged.ejb.candidate;
 
 import java.util.List;
 
+import ged.ejb.UploadedServerFile;
 import ged.ejb.core.AuditedService;
 import ged.ejb.core.tag.Tag;
 import ged.ejb.job.offer.JobOffer;

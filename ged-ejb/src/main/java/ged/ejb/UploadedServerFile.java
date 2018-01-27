@@ -1,4 +1,4 @@
-package ged.ejb.candidate;
+package ged.ejb;
 
 import java.util.Date;
 import java.util.Objects;
@@ -9,6 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
+import ged.ejb.candidate.Candidate;
 import ged.ejb.core.model.AbstractEntity;
 
 @Entity

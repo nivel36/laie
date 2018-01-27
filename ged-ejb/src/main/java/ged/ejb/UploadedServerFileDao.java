@@ -1,4 +1,4 @@
-package ged.ejb.candidate;
+package ged.ejb;
 
 import ged.ejb.core.model.Dao;
 

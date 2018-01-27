@@ -1,4 +1,4 @@
-package ged.ejb.candidate;
+package ged.ejb;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
