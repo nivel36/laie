@@ -7,33 +7,41 @@ import javax.inject.Named;
 @RequestScoped
 public class MenuBean extends AbstractPageBean {
 
+	private static final String CANDIDATE_URL = "/faces/candidate/candidateSearch?faces-redirect=true";
+	private static final String CLIENT_URL = "/faces/client/clientSearch?faces-redirect=true";
+	private static final String INDEX_URL = "/faces/index?faces-redirect=true";
+	private static final String JOB_OFFERS_URL = "/faces/jobOffer/jobOfferSearch?faces-redirect=true";
+	private static final String MAINTENANCES_URL = "/faces/maintenance/maintenanceIndex?faces-redirect=true";
+	private static final String REPORTS_URL = "/faces/report/reportSearch?faces-redirect=true";
 	private static final long serialVersionUID = 334119408975744799L;
 
+	private static final String USERS_URL = "/faces/user/userSearch?faces-redirect=true";
+
 	public String gotoCandidates() {
-		return "/faces/candidate/candidateSearch?faces-redirect=true";
+		return CANDIDATE_URL;
 	}
 
 	public String gotoClients() {
-		return "/faces/client/clientSearch?faces-redirect=true";
+		return CLIENT_URL;
 	}
 
 	public String gotoIndex() {
-		return "/faces/index?faces-redirect=true";
+		return INDEX_URL;
 	}
 
 	public String gotoJobOffers() {
-		return "/faces/jobOffer/jobOfferSearch?faces-redirect=true";
+		return JOB_OFFERS_URL;
 	}
 
 	public String gotoMaintenances() {
-		return "/faces/maintenance/maintenanceIndex?faces-redirect=true";
+		return MAINTENANCES_URL;
 	}
 
 	public String gotoReports() {
-		return "/faces/report/reportSearch?faces-redirect=true";
+		return REPORTS_URL;
 	}
 
 	public String gotoUsers() {
-		return "/faces/user/userSearch?faces-redirect=true";
+		return USERS_URL;
 	}
 }
