@@ -50,7 +50,7 @@ public class Address implements Serializable {
 		return Objects.equals(this.city, other.city) && Objects.equals(this.country, other.country)
 				&& Objects.equals(this.door, other.door) && Objects.equals(this.number, other.number)
 				&& Objects.equals(this.state, other.state) && Objects.equals(this.storey, other.storey)
-				&& Objects.equals(this.street, other.street) && Objects.equals(this.street, other.street);
+				&& Objects.equals(this.street, other.street) && Objects.equals(this.zipCode, other.zipCode);
 	}
 
 	public String getCity() {
