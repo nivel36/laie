@@ -32,7 +32,7 @@ public class CandidateDaoJpa extends AbstractDaoJpa<Candidate> implements Candid
 	@Override
 	public boolean emailExists(final String email) {
 		Objects.requireNonNull(email);
-		return (boolean) this.findByQuery("Candidate.emailExists", with("email", email).parameters());
+		return this.findByTypedQuery(Boolean.class, "Candidate.emailExists", with("email", email).parameters());
 	}
 
 	@Override

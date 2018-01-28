@@ -5,7 +5,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
-import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -38,39 +38,83 @@ public class CandidateDaoJpaTest {
 
 	@Test
 	public void emailExistsTest() {
-		final Query mockedQuery = Mockito.mock(Query.class);
-		Mockito.when(mockedQuery.getSingleResult()).thenReturn(Boolean.TRUE);
-		Mockito.when(this.entityManager.createNamedQuery("Candidate.emailExists")).thenReturn(mockedQuery);
-		this.candidateJpaDao.emailExists("aaron@test.com");
+		mockQuery("Candidate.emailExists", Boolean.TRUE, Boolean.class);
+
+		final boolean result = this.candidateJpaDao.emailExists("aaron@test.com");
+
+		Assert.assertTrue(result);
 	}
 
+	@Test
 	public void findAllByJobOfferEmptyTest() {
-		Mockito.when(this.entityManager.createNamedQuery("Candidate.findAllByJobOffer"))
+		Mockito.when(this.entityManager.createNamedQuery("Candidate.findAllByJobOffer", Candidate.class))
 				.thenThrow(new NoResultException());
+
 		final List<Candidate> candidates = this.candidateJpaDao.findAllByJobOffer(new JobOffer());
-		Assert.assertNotNull(candidates);
+
 		Assert.assertEquals(0, candidates.size());
 	}
 
+	@Test
 	public void findAllByJobOfferNullTest() {
 		this.thrown.expect(NullPointerException.class);
 		this.candidateJpaDao.findAllByJobOffer(null);
 	}
 
+	@Test
 	public void findAllByJobOfferTest() {
-		final List<Candidate> candidates = new ArrayList<>();
+		final List<Candidate> candidates = mockCandidates();
+		mockQuery("Candidate.findAllByJobOffer", candidates, Candidate.class);
+
+		final List<Candidate> candidatesFromRepository = this.candidateJpaDao.findAllByJobOffer(new JobOffer());
+
+		Assert.assertEquals(1, candidatesFromRepository.size());
+		Assert.assertEquals("aaron.douglas@test.com", candidatesFromRepository.get(0).getEmail());
+	}
+
+	@Test
+	public void findCandidateAndFilesByWrongIdTest() {
+		this.thrown.expect(IllegalArgumentException.class);
+		this.candidateJpaDao.findCandidateAndFiles(0);
+	}
+
+	@Test
+	public void findCandidateAndFilesTest() {
+		final Candidate mockedCandidate = mockCandidate();
+		mockQuery("Candidate.findCandidateAndFilesById", mockedCandidate, Candidate.class);
+
+		final Candidate candidateFromRepository = this.candidateJpaDao.findCandidateAndFiles(1);
+
+		Assert.assertEquals(mockedCandidate, candidateFromRepository);
+	}
+
+	private Candidate mockCandidate() {
 		final Candidate candidate = new Candidate();
 		candidate.setName("Aaron");
 		candidate.setSurename("Douglas");
 		candidate.setEmail("aaron.douglas@test.com");
+		return candidate;
+	}
+
+	private List<Candidate> mockCandidates() {
+		final List<Candidate> candidates = new ArrayList<>();
+		final Candidate candidate = mockCandidate();
 		candidates.add(candidate);
-		final Query mockedQuery = Mockito.mock(Query.class);
-		Mockito.when(mockedQuery.getResultList()).thenReturn(candidates);
-		Mockito.when(this.entityManager.createNamedQuery("Candidate.findAllByJobOffer")).thenReturn(mockedQuery);
-		final List<Candidate> candidatesFromRepository = this.candidateJpaDao.findAllByJobOffer(new JobOffer());
-		Assert.assertNotNull(candidatesFromRepository);
-		Assert.assertEquals(1, candidatesFromRepository.size());
-		Assert.assertEquals("aaron.douglas@test.com", candidatesFromRepository.get(0).getEmail());
+		return candidates;
+	}
+
+	private <T> void mockQuery(final String query, final List<T> mockResults, final Class<T> type) {
+		@SuppressWarnings("unchecked")
+		final TypedQuery<T> mockedQuery = Mockito.mock(TypedQuery.class);
+		Mockito.when(mockedQuery.getResultList()).thenReturn(mockResults);
+		Mockito.when(this.entityManager.createNamedQuery(query, type)).thenReturn(mockedQuery);
+	}
+
+	private <T> void mockQuery(final String query, final T mockResult, final Class<T> type) {
+		@SuppressWarnings("unchecked")
+		final TypedQuery<T> mockedQuery = Mockito.mock(TypedQuery.class);
+		Mockito.when(mockedQuery.getSingleResult()).thenReturn(mockResult);
+		Mockito.when(this.entityManager.createNamedQuery(query, type)).thenReturn(mockedQuery);
 	}
 
 	@Before
