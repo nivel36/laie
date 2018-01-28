@@ -12,43 +12,43 @@ public class MenuBeanTest {
 	@Test
 	public void gotoCandidatesTest() {
 		final String url = this.menuBean.gotoCandidates();
-		Assert.assertNotNull(url);
+		Assert.assertEquals(MenuBean.CANDIDATES, url);
 	}
 
 	@Test
 	public void gotoClientsTest() {
 		final String url = this.menuBean.gotoClients();
-		Assert.assertNotNull(url);
+		Assert.assertEquals(MenuBean.CLIENTS, url);
 	}
 
 	@Test
 	public void gotoIndexTest() {
 		final String url = this.menuBean.gotoIndex();
-		Assert.assertNotNull(url);
+		Assert.assertEquals(MenuBean.INDEX, url);
 	}
 
 	@Test
 	public void gotoJobOffersTest() {
 		final String url = this.menuBean.gotoJobOffers();
-		Assert.assertNotNull(url);
+		Assert.assertEquals(MenuBean.JOB_OFFERS, url);
 	}
 
 	@Test
 	public void gotoMaintenancesTest() {
 		final String url = this.menuBean.gotoMaintenances();
-		Assert.assertNotNull(url);
+		Assert.assertEquals(MenuBean.MAINTENANCES, url);
 	}
 
 	@Test
 	public void gotoReportsTest() {
 		final String url = this.menuBean.gotoReports();
-		Assert.assertNotNull(url);
+		Assert.assertEquals(MenuBean.REPORTS, url);
 	}
 
 	@Test
 	public void gotoUsersTest() {
 		final String url = this.menuBean.gotoUsers();
-		Assert.assertNotNull(url);
+		Assert.assertEquals(MenuBean.USERS, url);
 	}
 
 	@Before
