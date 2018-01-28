@@ -1,5 +1,6 @@
 package ged.ejb.candidate;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -54,6 +55,22 @@ public class CandidateDaoJpaTest {
 	public void findAllByJobOfferNullTest() {
 		this.thrown.expect(NullPointerException.class);
 		this.candidateJpaDao.findAllByJobOffer(null);
+	}
+
+	public void findAllByJobOfferTest() {
+		final List<Candidate> candidates = new ArrayList<>();
+		final Candidate candidate = new Candidate();
+		candidate.setName("Aaron");
+		candidate.setSurename("Douglas");
+		candidate.setEmail("aaron.douglas@test.com");
+		candidates.add(candidate);
+		final Query mockedQuery = Mockito.mock(Query.class);
+		Mockito.when(mockedQuery.getResultList()).thenReturn(candidates);
+		Mockito.when(this.entityManager.createNamedQuery("Candidate.findAllByJobOffer")).thenReturn(mockedQuery);
+		final List<Candidate> candidatesFromRepository = this.candidateJpaDao.findAllByJobOffer(new JobOffer());
+		Assert.assertNotNull(candidatesFromRepository);
+		Assert.assertEquals(1, candidatesFromRepository.size());
+		Assert.assertEquals("aaron.douglas@test.com", candidatesFromRepository.get(0).getEmail());
 	}
 
 	@Before
