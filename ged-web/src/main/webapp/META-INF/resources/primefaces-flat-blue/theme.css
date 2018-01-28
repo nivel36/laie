@@ -4141,6 +4141,10 @@ body .ui-datatable thead th, body .ui-datatable tbody td, body .ui-datatable tfo
 	border-width: 0px;
 }
 
+body .ui-datatable tbody tr.ui-state-hover {
+	background-color: #eee;
+}
+
 body .ui-datatable .ui-column-title {
 	padding: 12px 8px;
 	vertical-align: middle;

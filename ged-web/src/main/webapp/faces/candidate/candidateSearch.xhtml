@@ -86,7 +86,7 @@
 								<div class="ui-md-12 ui-lg-4">
 									<span class="input-icon"> <em class="fa fa-search input-icon-right" /></span>
 									<div class="form-group">
-										<p:inputText id="name" value="#{candidateSearchBean.name}" class="icon-left"/>
+										<p:inputText id="searchText" value="#{candidateSearchBean.searchText}" class="icon-left" />
 									</div>
 								</div>
 								<div class="ui-md-12 ui-lg-4">
@@ -100,17 +100,17 @@
 						<div class="searchResults">
 							<p:dataTable var="candidate" id="candidate" value="#{candidateSearchBean.candidates}"
 								emptyMessage="#{i18n['candidate.no_candidates_found']}" reflow="true" paginator="true"
-								paginatorPosition="bottom" rows="#{sessionBean.rowsPerPage}">
+								paginatorPosition="bottom" rows="#{sessionBean.rowsPerPage}" selectionMode="single" 
+								selection="#{candidateSearchBean.selectedCandidate}" rowKey="#{candidate.id}">
+
+								<p:ajax event="rowSelect" listener="#{candidateSearchBean.onCandidateSelect}" update="@form" />
 
 								<p:column headerText="#{i18n['candidate.name']}" sortBy="#{candidate.name}">
-									<p:link outcome="candidateView">
-										<p:graphicImage class="image image-icon" value="/images/#{candidate.imageFileName}"
-											rendered="#{not empty candidate.imageFileName}" />
-										<p:graphicImage class="image image-icon" value="/resources/img/default-avatar.png"
-											rendered="#{empty candidate.imageFileName}" />
-										<f:param name="id" value="#{candidate.id}" />
-										<h:outputText value="#{candidate}" />
-									</p:link>
+									<p:graphicImage class="image image-icon" value="/images/#{candidate.imageFileName}"
+										rendered="#{not empty candidate.imageFileName}" />
+									<p:graphicImage class="image image-icon" value="/resources/img/default-avatar.png"
+										rendered="#{empty candidate.imageFileName}" />
+									<h:outputText value="#{candidate}" />
 								</p:column>
 
 								<p:column headerText="#{i18n['candidate.jobProfile']}" sortBy="#{candidate.jobProfile}">

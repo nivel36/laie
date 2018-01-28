@@ -1,5 +1,6 @@
 package ged.web.view.candidate;
 
+import java.io.IOException;
 import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,12 +34,14 @@ public class CandidateSearchBean extends AbstractPageBean {
 
 	private List<Candidate> lastAddedCandidates;
 
-	private String name;
-
 	private long numberOfCandidates;
 
+	private String searchText;
+
+	private Candidate selectedCandidate;
+
 	public void clean() {
-		this.name = null;
+		this.searchText = null;
 		search();
 	}
 
@@ -50,12 +53,16 @@ public class CandidateSearchBean extends AbstractPageBean {
 		return this.lastAddedCandidates;
 	}
 
-	public String getName() {
-		return this.name;
-	}
-
 	public long getNumberOfCandidates() {
 		return this.numberOfCandidates;
+	}
+
+	public String getSearchText() {
+		return this.searchText;
+	}
+
+	public Candidate getSelectedCandidate() {
+		return this.selectedCandidate;
 	}
 
 	@PostConstruct
@@ -70,11 +77,15 @@ public class CandidateSearchBean extends AbstractPageBean {
 		return "candidateEdit?faces-redirect=true";
 	}
 
+	public void onCandidateSelect() throws IOException {
+		this.externalContext.redirect("candidateView.xhtml?id=" + this.selectedCandidate.getId());
+	}
+
 	public void search() {
 		logger.debug("Searching for candidates");
 		final List<String> searchValues;
-		if (this.name != null) {
-			searchValues = Arrays.asList(this.name.split("\\s"));
+		if (this.searchText != null) {
+			searchValues = Arrays.asList(this.searchText.split("\\s"));
 		} else {
 			searchValues = new ArrayList<>();
 		}
@@ -86,8 +97,12 @@ public class CandidateSearchBean extends AbstractPageBean {
 		this.candidateService = candidateService;
 	}
 
-	public void setName(final String name) {
-		this.name = name;
+	public void setSearchText(final String searchText) {
+		this.searchText = searchText;
+	}
+
+	public void setSelectedCandidate(final Candidate selectedCandidate) {
+		this.selectedCandidate = selectedCandidate;
 	}
 
 	private void sortCandidates(final List<Candidate> candidates) {
