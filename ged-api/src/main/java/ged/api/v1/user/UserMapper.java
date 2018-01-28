@@ -43,7 +43,7 @@ public class UserMapper implements AbstractMapper<User, UserDto> {
 			final Role role = this.roleService.findRoleByName(userDto.getRoleName());
 			user.setRole(role);
 		}
-		user.setSurename(userDto.getSurename());
+		user.setSurname(userDto.getSurname());
 		return user;
 	}
 
@@ -64,7 +64,7 @@ public class UserMapper implements AbstractMapper<User, UserDto> {
 		userDto.setName(user.getName());
 		userDto.setPhoneNumber(user.getPhoneNumber());
 		userDto.setRoleName(user.getRole().getName());
-		userDto.setSurename(user.getSurename());
+		userDto.setSurname(user.getSurname());
 		return userDto;
 	}
 }

@@ -33,7 +33,7 @@ public class UserDto extends AbstractDto {
 	private String roleName;
 
 	@NotNull
-	private String surename;
+	private String surname;
 
 	@Override
 	public boolean equals(final Object obj) {
@@ -93,8 +93,8 @@ public class UserDto extends AbstractDto {
 		return this.roleName;
 	}
 
-	public String getSurename() {
-		return this.surename;
+	public String getSurname() {
+		return this.surname;
 	}
 
 	@Override
@@ -141,8 +141,8 @@ public class UserDto extends AbstractDto {
 		this.roleName = roleName;
 	}
 
-	public void setSurename(final String surename) {
-		this.surename = surename;
+	public void setSurname(final String surname) {
+		this.surname = surname;
 	}
 
 }

@@ -93,7 +93,7 @@ public class CandidateDaoJpa extends AbstractDaoJpa<Candidate> implements Candid
 				continue;
 			}
 			final BooleanJunction<BooleanJunction> fieldBj = qb.bool();
-			fieldBj.should(qb.keyword().onFields("name", "surename", "jobProfile", "tags.label").matching(searchValue)
+			fieldBj.should(qb.keyword().onFields("name", "surname", "jobProfile", "tags.label").matching(searchValue)
 					.createQuery());
 			bj.must(fieldBj.createQuery());
 		}
@@ -108,7 +108,7 @@ public class CandidateDaoJpa extends AbstractDaoJpa<Candidate> implements Candid
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
-	public List<Candidate> searchByNameAndSurename(final String name, final String surename, final String position,
+	public List<Candidate> searchByNameAndSurname(final String name, final String surname, final String position,
 			final boolean showDeleted) {
 		final FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(getEm());
 		final QueryBuilder qb = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(Candidate.class)
@@ -117,8 +117,8 @@ public class CandidateDaoJpa extends AbstractDaoJpa<Candidate> implements Candid
 		if (name != null) {
 			bj.must(qb.keyword().onField("name").matching(name).createQuery());
 		}
-		if (surename != null) {
-			bj.must(qb.keyword().onField("surename").matching(surename).createQuery());
+		if (surname != null) {
+			bj.must(qb.keyword().onField("surname").matching(surname).createQuery());
 		}
 		if (position != null) {
 			bj.must(qb.keyword().onField("position").matching(position).createQuery());

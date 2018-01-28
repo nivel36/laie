@@ -32,11 +32,11 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
 	}
 
 	@Override
-	public User create(final String name, final String surename, final String email, final Role role,
+	public User create(final String name, final String surname, final String email, final Role role,
 			final User manager) {
 		final User user = new User();
 		user.setName(name);
-		user.setSurename(surename);
+		user.setSurname(surname);
 		user.setEmail(email);
 		user.setRole(role);
 		user.setManager(manager);
@@ -154,9 +154,9 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
 	}
 
 	@Override
-	public List<User> searchByNameAndSurename(final String name, final String surename) {
-		logger.debug("Search user by name {} and surename {}", name, surename);
-		return this.userDao.searchByNameAndSurename(name, surename, false);
+	public List<User> searchByNameAndSurname(final String name, final String surname) {
+		logger.debug("Search user by name {} and surname {}", name, surname);
+		return this.userDao.searchByNameAndSurname(name, surname, false);
 	}
 
 	@Override

@@ -56,7 +56,7 @@ public class CandidateDto extends AbstractDto {
 	private String state;
 
 	@NotNull
-	private String surename;
+	private String surname;
 
 	@Override
 	public boolean equals(final Object obj) {
@@ -71,7 +71,7 @@ public class CandidateDto extends AbstractDto {
 		}
 		final CandidateDto other = (CandidateDto) obj;
 		return Objects.equals(this.email, other.email) && Objects.equals(this.name, other.name)
-				&& Objects.equals(this.phoneNumber, other.phoneNumber) && Objects.equals(this.surename, other.surename);
+				&& Objects.equals(this.phoneNumber, other.phoneNumber) && Objects.equals(this.surname, other.surname);
 	}
 
 	public Date getBornDate() {
@@ -138,13 +138,13 @@ public class CandidateDto extends AbstractDto {
 		return this.state;
 	}
 
-	public String getSurename() {
-		return this.surename;
+	public String getSurname() {
+		return this.surname;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(this.email, this.name, this.phoneNumber, this.surename);
+		return Objects.hash(this.email, this.name, this.phoneNumber, this.surname);
 	}
 
 	public void setBornDate(final Date bornDate) {
@@ -211,7 +211,7 @@ public class CandidateDto extends AbstractDto {
 		this.state = state;
 	}
 
-	public void setSurename(final String surename) {
-		this.surename = surename;
+	public void setSurname(final String surname) {
+		this.surname = surname;
 	}
 }

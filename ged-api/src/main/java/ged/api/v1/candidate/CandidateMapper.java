@@ -45,7 +45,7 @@ public class CandidateMapper implements AbstractMapper<Candidate, CandidateDto> 
 		candidate.setRating(candidateDto.getRating());
 		candidate.setSalary(candidateDto.getSalary());
 		candidate.setSkype(candidateDto.getSkype());
-		candidate.setSurename(candidateDto.getSurename());
+		candidate.setSurname(candidateDto.getSurname());
 		return candidate;
 	}
 
@@ -71,7 +71,7 @@ public class CandidateMapper implements AbstractMapper<Candidate, CandidateDto> 
 		candidateDto.setSalary(candidate.getSalary());
 		candidateDto.setSkype(candidate.getSkype());
 		candidateDto.setState(candidate.getAddress().getState());
-		candidateDto.setSurename(candidate.getSurename());
+		candidateDto.setSurname(candidate.getSurname());
 		return candidateDto;
 	}
 

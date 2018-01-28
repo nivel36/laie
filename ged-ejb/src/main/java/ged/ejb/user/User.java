@@ -86,7 +86,7 @@ public class User extends AbstractAuditedEntity {
 	@NotNull
 	@Column(length = 64, nullable = false)
 	@Field
-	private String surename;
+	private String surname;
 
 	public void addAction(final Action action) {
 		Objects.requireNonNull(action);
@@ -130,7 +130,7 @@ public class User extends AbstractAuditedEntity {
 	}
 
 	public String getFullName() {
-		return this.name + " " + this.surename;
+		return this.name + " " + this.surname;
 	}
 
 	public String getImageFileName() {
@@ -173,8 +173,8 @@ public class User extends AbstractAuditedEntity {
 		return this.rowsPerPage;
 	}
 
-	public String getSurename() {
-		return this.surename;
+	public String getSurname() {
+		return this.surname;
 	}
 
 	@Override
@@ -264,8 +264,8 @@ public class User extends AbstractAuditedEntity {
 		this.rowsPerPage = rowsPerPage;
 	}
 
-	public void setSurename(final String surename) {
-		this.surename = surename;
+	public void setSurname(final String surname) {
+		this.surname = surname;
 	}
 
 	@Override

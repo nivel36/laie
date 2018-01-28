@@ -7,7 +7,7 @@ import ged.ejb.user.role.Role;
 
 public interface UserService extends Service<User> {
 
-	User create(final String name, final String surename, final String email, final Role role, final User manager);
+	User create(final String name, final String surname, final String email, final Role role, final User manager);
 
 	boolean emailExists(final String email);
 
@@ -25,5 +25,5 @@ public interface UserService extends Service<User> {
 
 	List<User> search(final String query);
 
-	List<User> searchByNameAndSurename(final String name, final String surename);
+	List<User> searchByNameAndSurname(final String name, final String surname);
 }

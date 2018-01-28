@@ -35,7 +35,7 @@ public class CandidateSearchBeanTest {
 	private Candidate mockCandidate() {
 		final Candidate candidate = new Candidate();
 		candidate.setName("Aaron");
-		candidate.setSurename("Douglas");
+		candidate.setSurname("Douglas");
 		candidate.setEmail("aaron.douglas@test.com");
 		return candidate;
 	}

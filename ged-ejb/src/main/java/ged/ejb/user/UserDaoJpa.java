@@ -160,7 +160,7 @@ public final class UserDaoJpa extends AbstractDaoJpa<User> implements UserDao {
 				.get();
 		final BooleanJunction<BooleanJunction> bj = qb.bool();
 		bj.should(qb.keyword().onField("name").matching(query).createQuery());
-		bj.should(qb.keyword().onField("surename").matching(query).createQuery());
+		bj.should(qb.keyword().onField("surname").matching(query).createQuery());
 		bj.should(qb.keyword().onField(EMAIL).matching(query).createQuery());
 		bj.must(qb.keyword().onField("deleted").matching(true).createQuery()).not();
 		final Query persistenceQuery = fullTextEntityManager.createFullTextQuery(bj.createQuery(), User.class);
@@ -169,7 +169,7 @@ public final class UserDaoJpa extends AbstractDaoJpa<User> implements UserDao {
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
-	public List<User> searchByNameAndSurename(final String name, final String surename, final boolean showDeleted) {
+	public List<User> searchByNameAndSurname(final String name, final String surname, final boolean showDeleted) {
 		final FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(getEm());
 		final QueryBuilder qb = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(User.class)
 				.get();
@@ -177,8 +177,8 @@ public final class UserDaoJpa extends AbstractDaoJpa<User> implements UserDao {
 		if (name != null) {
 			bj.must(qb.keyword().onField("name").matching(name).createQuery());
 		}
-		if (surename != null) {
-			bj.must(qb.keyword().onField("surename").matching(surename).createQuery());
+		if (surname != null) {
+			bj.must(qb.keyword().onField("surname").matching(surname).createQuery());
 		}
 		if (!showDeleted) {
 			bj.must(qb.keyword().onField("deleted").matching(true).createQuery()).not();

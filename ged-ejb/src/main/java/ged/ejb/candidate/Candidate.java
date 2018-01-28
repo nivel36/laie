@@ -101,7 +101,7 @@ public class Candidate extends AbstractAuditedEntity {
 	@NotNull
 	@Column(length = 64, nullable = false)
 	@Field
-	private String surename;
+	private String surname;
 
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "candidate_tag", joinColumns = @JoinColumn(name = "candidate_id"), inverseJoinColumns = @JoinColumn(name = "tag_id"))
@@ -120,7 +120,7 @@ public class Candidate extends AbstractAuditedEntity {
 	protected boolean deepEquals(final Object obj) {
 		final Candidate other = (Candidate) obj;
 		return Objects.equals(this.email, other.email) && Objects.equals(this.name, other.name)
-				&& Objects.equals(this.phoneNumber, other.phoneNumber) && Objects.equals(this.surename, other.surename);
+				&& Objects.equals(this.phoneNumber, other.phoneNumber) && Objects.equals(this.surname, other.surname);
 	}
 
 	@Override
@@ -139,7 +139,7 @@ public class Candidate extends AbstractAuditedEntity {
 		}
 		final Candidate other = (Candidate) obj;
 		return Objects.equals(this.email, other.email) && Objects.equals(this.name, other.name)
-				&& Objects.equals(this.phoneNumber, other.phoneNumber) && Objects.equals(this.surename, other.surename);
+				&& Objects.equals(this.phoneNumber, other.phoneNumber) && Objects.equals(this.surname, other.surname);
 	}
 
 	public Address getAddress() {
@@ -167,7 +167,7 @@ public class Candidate extends AbstractAuditedEntity {
 	}
 
 	public String getFullName() {
-		return this.name + " " + this.surename;
+		return this.name + " " + this.surname;
 	}
 
 	public String getImageFileName() {
@@ -214,8 +214,8 @@ public class Candidate extends AbstractAuditedEntity {
 		return this.skype;
 	}
 
-	public String getSurename() {
-		return this.surename;
+	public String getSurname() {
+		return this.surname;
 	}
 
 	public Set<Tag> getTags() {
@@ -224,7 +224,7 @@ public class Candidate extends AbstractAuditedEntity {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(this.email, this.name, this.phoneNumber, this.surename);
+		return Objects.hash(this.email, this.name, this.phoneNumber, this.surname);
 	}
 
 	public void setAddress(final Address address) {
@@ -295,8 +295,8 @@ public class Candidate extends AbstractAuditedEntity {
 		this.skype = skype;
 	}
 
-	public void setSurename(final String surename) {
-		this.surename = surename;
+	public void setSurname(final String surname) {
+		this.surname = surname;
 	}
 
 	public void setTags(final Set<Tag> tags) {

@@ -59,12 +59,12 @@
 		]]></query>
 	</named-query>
 
-	<named-query name="Candidate.findByNameAndSurename">
+	<named-query name="Candidate.findByNameAndSurname">
 		<query><![CDATA[
 			SELECT c 
 			FROM Candidate c 
 			WHERE (:name IS NOT NULL AND c.name = :name)
-			OR (:surename IS NOT NULL AND c.surename = :surename)
+			OR (:surname IS NOT NULL AND c.surname = :surname)
 		]]></query>
 	</named-query>
 
@@ -260,13 +260,13 @@
 		</query>
 	</named-query>
 
-	<named-query name="User.findByNameAndSurename">
+	<named-query name="User.findByNameAndSurname">
 		<query><![CDATA[
 			SELECT u
 			FROM User u
 			LEFT JOIN FETCH u.role
 			WHERE (:name IS NOT NULL AND u.name = :name)
-			OR (:surename IS NOT NULL AND u.surename = :surename)
+			OR (:surname IS NOT NULL AND u.surname = :surname)
 		]]></query>
 	</named-query>
 
@@ -275,7 +275,7 @@
 			SELECT u 
 			FROM User u 
 			WHERE (:name IS NOT NULL AND u.name = :name)
-			OR (:surename IS NOT NULL AND u.surename = :surename)
+			OR (:surname IS NOT NULL AND u.surname = :surname)
 		]]></query>
 	</named-query>
 

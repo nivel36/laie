@@ -46,7 +46,7 @@ public class UserMapperTest {
 		userDto.setName("Aaron");
 		userDto.setPhoneNumber("123456789");
 		userDto.setRoleName("ADMIN");
-		userDto.setSurename("Smith");
+		userDto.setSurname("Smith");
 
 		final User user = this.userMapper.mapDto(userDto);
 		Assert.assertNotNull(user);
@@ -59,7 +59,7 @@ public class UserMapperTest {
 		Assert.assertEquals(userDto.getName(), user.getName());
 		Assert.assertEquals(userDto.getPhoneNumber(), user.getPhoneNumber());
 		Assert.assertEquals(userDto.getRoleName(), user.getRole().getName());
-		Assert.assertEquals(userDto.getSurename(), user.getSurename());
+		Assert.assertEquals(userDto.getSurname(), user.getSurname());
 	}
 
 	@Test

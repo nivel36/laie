@@ -43,7 +43,7 @@ public class Contact extends AbstractAuditedEntity {
 	@NotNull
 	@Column(length = 64, nullable = false)
 	@Field
-	private String surename;
+	private String surname;
 
 	@Override
 	public boolean equals(final Object obj) {
@@ -69,7 +69,7 @@ public class Contact extends AbstractAuditedEntity {
 	}
 
 	public String getFullName() {
-		return this.name + " " + this.surename;
+		return this.name + " " + this.surname;
 	}
 
 	public String getLanguage() {
@@ -84,8 +84,8 @@ public class Contact extends AbstractAuditedEntity {
 		return this.phoneNumber;
 	}
 
-	public String getSurename() {
-		return this.surename;
+	public String getSurname() {
+		return this.surname;
 	}
 
 	@Override
@@ -113,8 +113,8 @@ public class Contact extends AbstractAuditedEntity {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public void setSurename(final String surename) {
-		this.surename = surename;
+	public void setSurname(final String surname) {
+		this.surname = surname;
 	}
 
 	@Override

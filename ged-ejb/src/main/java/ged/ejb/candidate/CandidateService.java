@@ -25,9 +25,9 @@ public interface CandidateService extends AuditedService<Candidate> {
 
 	List<Candidate> search(List<String> searchValues);
 
-	List<Candidate> search(String name, String surename, String position);
+	List<Candidate> search(String name, String surname, String position);
 
-	List<Candidate> searchByNameAndSurename(String name, String surename, String position, boolean showDeleted);
+	List<Candidate> searchByNameAndSurname(String name, String surname, String position, boolean showDeleted);
 
 	UploadedServerFile updateFile(UploadedServerFile file);
 }

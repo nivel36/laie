@@ -85,7 +85,7 @@ public class UserEditBean extends AbstractPageBean {
 	private void newManager() {
 		this.manager = new User();
 		this.manager.setName("");
-		this.manager.setSurename("");
+		this.manager.setSurname("");
 	}
 
 	public void removeManager() {
@@ -96,7 +96,7 @@ public class UserEditBean extends AbstractPageBean {
 
 	public String save() {
 		logger.debug("Save user action performed");
-		final User newUser = this.userService.create(this.user.getName(), this.user.getSurename(), this.user.getEmail(),
+		final User newUser = this.userService.create(this.user.getName(), this.user.getSurname(), this.user.getEmail(),
 				this.user.getRole(), this.manager);
 		this.userService.save(newUser);
 		return "userView.xhtml?id=" + newUser.getId() + "&faces-redirect=true";
