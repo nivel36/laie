@@ -2,8 +2,8 @@ image: maven:3.3.3
 
 pipelines:
 
-  custom:
-    sonar:
+  branches:
+    master:
       - step:
           caches:
             - maven
