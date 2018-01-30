@@ -4,8 +4,6 @@ import java.lang.invoke.MethodHandles;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import org.slf4j.LoggerFactory;
-import org.slf4j.Logger;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -14,6 +12,9 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public abstract class AbstractDaoJpa<T extends AbstractEntity> implements Dao<T> {
 
@@ -39,7 +40,7 @@ public abstract class AbstractDaoJpa<T extends AbstractEntity> implements Dao<T>
 		if (this.em.contains(entity)) {
 			this.em.remove(entity);
 		} else {
-			final T attachedEntity = this.em.getReference(getType(), entity.getId());
+			final T attachedEntity = this.em.getReference(this.getType(), entity.getId());
 			this.em.remove(attachedEntity);
 		}
 	}
@@ -47,14 +48,14 @@ public abstract class AbstractDaoJpa<T extends AbstractEntity> implements Dao<T>
 	@Override
 	public T find(final long id) {
 		Objects.requireNonNull(id);
-		logger.debug("Find class {} by id {}", getType(), id);
-		return this.em.find(getType(), id);
+		logger.debug("Find class {} by id {}", this.getType(), id);
+		return this.em.find(this.getType(), id);
 	}
 
 	@Override
 	public List<T> findAll() {
-		logger.debug("Find all entities of class {}", getType());
-		return findAll(getType());
+		logger.debug("Find all entities of class {}", this.getType());
+		return this.findAll(this.getType());
 	}
 
 	protected <E> List<E> findAll(final Class<E> type) {
@@ -64,14 +65,14 @@ public abstract class AbstractDaoJpa<T extends AbstractEntity> implements Dao<T>
 		final CriteriaQuery<E> cq = cb.createQuery(type);
 		final Root<E> root = cq.from(type);
 		final CriteriaQuery<E> all = cq.select(root);
-		return findByCriteria(all, null, null);
+		return this.findByCriteria(all, null, null);
 	}
 
 	protected <E> List<E> findByCriteria(final CriteriaQuery<E> cq, final Integer pageSize, final Integer pageNum) {
 		Objects.requireNonNull(cq);
 		logger.debug("Find entities by criteria");
 		final TypedQuery<E> query = this.em.createQuery(cq);
-		paginar(pageSize, pageNum, query);
+		this.paginate(pageSize, pageNum, query);
 		return query.getResultList();
 	}
 
@@ -83,20 +84,20 @@ public abstract class AbstractDaoJpa<T extends AbstractEntity> implements Dao<T>
 	}
 
 	protected Object findByQuery(final String namedQuery) {
-		return findByQuery(namedQuery, null);
+		return this.findByQuery(namedQuery, null);
 	}
 
 	protected Object findByQuery(final String namedQuery, final Map<String, Object> parameters) {
 		Objects.requireNonNull(namedQuery);
 		logger.debug("Find entity by named query {}", namedQuery);
 		final Query query = this.em.createNamedQuery(namedQuery);
-		parametrizar(parameters, query);
+		this.parametrize(parameters, query);
 		return query.getSingleResult();
 	}
 
 	protected <E> List<E> findByTypedQuery(final Class<E> entityClass, final String namedQuery, final Integer pageSize,
 			final Integer pageNum) {
-		return findByTypedQuery(entityClass, namedQuery, null, pageSize, pageNum);
+		return this.findByTypedQuery(entityClass, namedQuery, null, pageSize, pageNum);
 	}
 
 	protected <E> E findByTypedQuery(final Class<E> entityClass, final String namedQuery,
@@ -105,7 +106,7 @@ public abstract class AbstractDaoJpa<T extends AbstractEntity> implements Dao<T>
 		Objects.requireNonNull(namedQuery);
 		logger.debug("Find entity {} by named query {}", entityClass, namedQuery);
 		final TypedQuery<E> query = this.em.createNamedQuery(namedQuery, entityClass);
-		parametrizar(parameters, query);
+		this.parametrize(parameters, query);
 		return query.getSingleResult();
 	}
 
@@ -115,8 +116,8 @@ public abstract class AbstractDaoJpa<T extends AbstractEntity> implements Dao<T>
 		Objects.requireNonNull(namedQuery);
 		logger.debug("Find entities {} by named query {}", entityClass, namedQuery);
 		final TypedQuery<E> query = this.em.createNamedQuery(namedQuery, entityClass);
-		parametrizar(parameters, query);
-		paginar(pageSize, pageNum, query);
+		this.parametrize(parameters, query);
+		this.paginate(pageSize, pageNum, query);
 		return query.getResultList();
 	}
 
@@ -132,32 +133,32 @@ public abstract class AbstractDaoJpa<T extends AbstractEntity> implements Dao<T>
 		if (entity.getId() != 0) {
 			throw new IllegalStateException();
 		}
-		logger.debug("Insert entity of class {}", getType());
+		logger.debug("Insert entity of class {}", this.getType());
 		this.em.persist(entity);
 		logger.debug("Innsertedd entity has the id {}", entity.getId());
 	}
 
-	private void paginar(final Integer pageSize, final Integer pageNum, final Query query) {
-		if (pageNum != null && pageNum < 0) {
+	private void paginate(final Integer pageSize, final Integer pageNum, final Query query) {
+		if ((pageNum != null) && (pageNum < 0)) {
 			throw new IllegalArgumentException("pageNum: " + pageNum);
 		}
-		if (pageSize != null && pageSize < 0) {
+		if ((pageSize != null) && (pageSize < 0)) {
 			throw new IllegalArgumentException("pageSize: " + pageSize);
 		}
 		logger.trace("Page number {}", pageNum);
-		if (pageSize != null && pageNum != null) {
+		if ((pageSize != null) && (pageNum != null)) {
 			query.setFirstResult(pageNum * pageSize);
 		}
-		if (pageSize != null && pageSize > 0) {
+		if ((pageSize != null) && (pageSize > 0)) {
 			logger.trace("Page size {}", pageSize);
 			query.setMaxResults(pageSize);
-		} else if (pageSize == null || pageSize == 0) {
+		} else if ((pageSize == null) || (pageSize == 0)) {
 			logger.trace("Setting max result to {}", RES_LIMIT);
 			query.setMaxResults(RES_LIMIT);
 		}
 	}
 
-	private void parametrizar(final Map<String, Object> parameters, final Query query) {
+	private void parametrize(final Map<String, Object> parameters, final Query query) {
 		if (parameters == null) {
 			return;
 		}
@@ -173,7 +174,7 @@ public abstract class AbstractDaoJpa<T extends AbstractEntity> implements Dao<T>
 		if (entity.getId() == 0) {
 			throw new IllegalStateException();
 		}
-		logger.debug("Update entity of class {} and id {}", getType(), entity.getId());
+		logger.debug("Update entity of class {} and id {}", this.getType(), entity.getId());
 		if (this.em.contains(entity)) {
 			return entity;
 		} else {
