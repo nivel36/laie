@@ -23,11 +23,5 @@ public interface CandidateService extends AuditedService<Candidate> {
 
 	void insertFile(UploadedServerFile file);
 
-	List<Candidate> search(List<String> searchValues);
-
-	List<Candidate> search(String name, String surname, String position);
-
-	List<Candidate> searchByNameAndSurname(String name, String surname, String position, boolean showDeleted);
-
 	UploadedServerFile updateFile(UploadedServerFile file);
 }

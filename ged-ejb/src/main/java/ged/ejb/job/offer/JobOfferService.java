@@ -21,6 +21,4 @@ public interface JobOfferService extends AuditedService<JobOffer> {
 	List<JobOffer> findLastJobOffers(User owner);
 
 	void removeJobCandidature(final JobOffer jobOffer, final Candidate candidate);
-
-	List<JobOffer> searchByNameAndClient(String name, String clientName, Boolean showDeleted);
 }

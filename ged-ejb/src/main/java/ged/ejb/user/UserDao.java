@@ -22,8 +22,4 @@ public interface UserDao extends Dao<User> {
 	long numberOfUsersOffline(final Date start, final Date end);
 
 	long numberOfUsersOnline(final Date start, final Date end);
-
-	List<User> search(final String query, final boolean showDeleted);
-
-	List<User> searchByNameAndSurname(final String name, String surname, final boolean showDeleted);
 }

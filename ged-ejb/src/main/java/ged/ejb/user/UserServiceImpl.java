@@ -148,18 +148,6 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
 	}
 
 	@Override
-	public List<User> search(final String query) {
-		logger.debug("Search user by text {}", query);
-		return this.userDao.search(query, false);
-	}
-
-	@Override
-	public List<User> searchByNameAndSurname(final String name, final String surname) {
-		logger.debug("Search user by name {} and surname {}", name, surname);
-		return this.userDao.searchByNameAndSurname(name, surname, false);
-	}
-
-	@Override
 	protected User update(final User user) {
 		if (this.isLastAdminOnApp(user)) {
 			logger.warn("Can't change user {} role. Last Admin on app", user.getEmail());

@@ -12,5 +12,7 @@ public interface Dao<T extends Identificable> {
 
 	void insert(T entity);
 
+	List<T> search(String searchText);
+
 	T update(T entity);
 }

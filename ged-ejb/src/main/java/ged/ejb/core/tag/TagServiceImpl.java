@@ -1,6 +1,5 @@
 package ged.ejb.core.tag;
 
-import java.util.List;
 import java.util.Objects;
 
 import javax.inject.Inject;
@@ -22,11 +21,5 @@ public class TagServiceImpl extends AbstractService<Tag> implements TagService {
 	@Override
 	protected Dao<Tag> getDao() {
 		return this.tagDao;
-	}
-
-	@Override
-	public List<Tag> searchByLabel(final String label) {
-		Objects.requireNonNull(label);
-		return this.tagDao.searchByLabel(label);
 	}
 }

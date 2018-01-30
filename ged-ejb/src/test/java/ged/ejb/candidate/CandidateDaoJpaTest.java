@@ -146,6 +146,6 @@ public class CandidateDaoJpaTest {
 
 	@Before
 	public void setUp() {
-		this.candidateJpaDao = new CandidateDaoJpa(this.entityManager);
+		this.candidateJpaDao = new CandidateDaoJpa();
 	}
 }

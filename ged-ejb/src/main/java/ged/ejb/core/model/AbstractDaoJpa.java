@@ -1,128 +1,68 @@
 package ged.ejb.core.model;
 
-import java.lang.invoke.MethodHandles;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public abstract class AbstractDaoJpa<T extends AbstractEntity> implements Dao<T> {
 
-	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
-
-	// max number of results
-	private static final int RES_LIMIT = 150;
-
-	private final EntityManager em;
-
 	@Inject
-	public AbstractDaoJpa(final EntityManager em) {
-		this.em = em;
-	}
+	@Repository
+	private PersistenceFacade pf;
 
 	@Override
 	public void delete(final T entity) {
 		Objects.requireNonNull(entity);
-		if (entity.getId() == 0) {
-			throw new IllegalStateException();
-		}
-		logger.debug("Delete entity class {} with id {}", entity.getClass(), entity.getId());
-		if (this.em.contains(entity)) {
-			this.em.remove(entity);
-		} else {
-			final T attachedEntity = this.em.getReference(this.getType(), entity.getId());
-			this.em.remove(attachedEntity);
-		}
+		this.pf.delete(this.getType(), entity);
 	}
 
 	@Override
 	public T find(final long id) {
-		Objects.requireNonNull(id);
-		logger.debug("Find class {} by id {}", this.getType(), id);
-		return this.em.find(this.getType(), id);
+		return this.pf.find(this.getType(), id);
 	}
 
 	@Override
 	public List<T> findAll() {
-		logger.debug("Find all entities of class {}", this.getType());
-		return this.findAll(this.getType());
+		return this.pf.findAll(this.getType());
 	}
 
-	protected <E> List<E> findAll(final Class<E> type) {
+	public <E> List<E> findAll(final Class<E> type) {
 		Objects.requireNonNull(type);
-		logger.debug("Find all entities of class {}", type);
-		final CriteriaBuilder cb = this.em.getCriteriaBuilder();
-		final CriteriaQuery<E> cq = cb.createQuery(type);
-		final Root<E> root = cq.from(type);
-		final CriteriaQuery<E> all = cq.select(root);
-		return this.findByCriteria(all, null, null);
+		return this.pf.findAll(type);
 	}
 
-	protected <E> List<E> findByCriteria(final CriteriaQuery<E> cq, final Integer pageSize, final Integer pageNum) {
-		Objects.requireNonNull(cq);
-		logger.debug("Find entities by criteria");
-		final TypedQuery<E> query = this.em.createQuery(cq);
-		this.paginate(pageSize, pageNum, query);
-		return query.getResultList();
-	}
-
-	protected T findByCriteria(final CriteriaQuery<T> cq) {
-		Objects.requireNonNull(cq);
-		logger.debug("Find entity by criteria");
-		final TypedQuery<T> query = this.em.createQuery(cq);
-		return query.getSingleResult();
-	}
-
-	protected Object findByQuery(final String namedQuery) {
-		return this.findByQuery(namedQuery, null);
-	}
-
-	protected Object findByQuery(final String namedQuery, final Map<String, Object> parameters) {
-		Objects.requireNonNull(namedQuery);
-		logger.debug("Find entity by named query {}", namedQuery);
-		final Query query = this.em.createNamedQuery(namedQuery);
-		this.parametrize(parameters, query);
-		return query.getSingleResult();
-	}
-
-	protected <E> List<E> findByTypedQuery(final Class<E> entityClass, final String namedQuery, final Integer pageSize,
+	protected <E> List<E> findByQuery(final Class<E> entityClass, final String namedQuery, final Integer pageSize,
 			final Integer pageNum) {
 		return this.findByTypedQuery(entityClass, namedQuery, null, pageSize, pageNum);
 	}
 
-	protected <E> E findByTypedQuery(final Class<E> entityClass, final String namedQuery,
+	protected <E> E findByQuery(final Class<E> entityClass, final String namedQuery,
 			final Map<String, Object> parameters) {
 		Objects.requireNonNull(entityClass);
 		Objects.requireNonNull(namedQuery);
-		logger.debug("Find entity {} by named query {}", entityClass, namedQuery);
-		final TypedQuery<E> query = this.em.createNamedQuery(namedQuery, entityClass);
-		this.parametrize(parameters, query);
-		return query.getSingleResult();
+		return this.pf.findByTypedQuery(entityClass, namedQuery, parameters);
+	}
+
+	public Object findByQuery(final String namedQuery) {
+		return this.findByQuery(namedQuery, null);
+	}
+
+	public Object findByQuery(final String namedQuery, final Map<String, Object> parameters) {
+		Objects.requireNonNull(namedQuery);
+		return this.pf.findByQuery(namedQuery, parameters);
 	}
 
 	protected <E> List<E> findByTypedQuery(final Class<E> entityClass, final String namedQuery,
 			final Map<String, Object> parameters, final Integer pageSize, final Integer pageNum) {
 		Objects.requireNonNull(entityClass);
 		Objects.requireNonNull(namedQuery);
-		logger.debug("Find entities {} by named query {}", entityClass, namedQuery);
-		final TypedQuery<E> query = this.em.createNamedQuery(namedQuery, entityClass);
-		this.parametrize(parameters, query);
-		this.paginate(pageSize, pageNum, query);
-		return query.getResultList();
+		return this.pf.findByTypedQuery(entityClass, namedQuery, parameters, pageSize, pageNum);
 	}
 
-	protected EntityManager getEm() {
-		return this.em;
+	protected PersistenceFacade getPf() {
+		return this.pf;
 	}
 
 	protected abstract Class<T> getType();
@@ -130,55 +70,18 @@ public abstract class AbstractDaoJpa<T extends AbstractEntity> implements Dao<T>
 	@Override
 	public void insert(final T entity) {
 		Objects.requireNonNull(entity);
-		if (entity.getId() != 0) {
-			throw new IllegalStateException();
-		}
-		logger.debug("Insert entity of class {}", this.getType());
-		this.em.persist(entity);
-		logger.debug("Innsertedd entity has the id {}", entity.getId());
+		this.pf.insert(entity);
 	}
 
-	private void paginate(final Integer pageSize, final Integer pageNum, final Query query) {
-		if ((pageNum != null) && (pageNum < 0)) {
-			throw new IllegalArgumentException("pageNum: " + pageNum);
-		}
-		if ((pageSize != null) && (pageSize < 0)) {
-			throw new IllegalArgumentException("pageSize: " + pageSize);
-		}
-		logger.trace("Page number {}", pageNum);
-		if ((pageSize != null) && (pageNum != null)) {
-			query.setFirstResult(pageNum * pageSize);
-		}
-		if ((pageSize != null) && (pageSize > 0)) {
-			logger.trace("Page size {}", pageSize);
-			query.setMaxResults(pageSize);
-		} else if ((pageSize == null) || (pageSize == 0)) {
-			logger.trace("Setting max result to {}", RES_LIMIT);
-			query.setMaxResults(RES_LIMIT);
-		}
-	}
+	public abstract List<T> search(final String searchText);
 
-	private void parametrize(final Map<String, Object> parameters, final Query query) {
-		if (parameters == null) {
-			return;
-		}
-		for (final Map.Entry<String, Object> entry : parameters.entrySet()) {
-			logger.trace("Paramtrize query with key {} value={}", entry.getKey(), entry.getValue());
-			query.setParameter(entry.getKey(), entry.getValue());
-		}
+	public void setPf(final PersistenceFacade pf) {
+		this.pf = pf;
 	}
 
 	@Override
 	public T update(final T entity) {
 		Objects.requireNonNull(entity);
-		if (entity.getId() == 0) {
-			throw new IllegalStateException();
-		}
-		logger.debug("Update entity of class {} and id {}", this.getType(), entity.getId());
-		if (this.em.contains(entity)) {
-			return entity;
-		} else {
-			return this.em.merge(entity);
-		}
+		return this.pf.update(entity);
 	}
 }

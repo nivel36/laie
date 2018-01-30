@@ -1,13 +1,13 @@
 package ged.ejb.client;
 
 import java.lang.invoke.MethodHandles;
-import java.util.List;
 import java.util.Objects;
-import org.slf4j.LoggerFactory;
-import org.slf4j.Logger;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import ged.ejb.core.AbstratctAuditedService;
 import ged.ejb.core.model.Dao;
@@ -29,7 +29,7 @@ public class ClientServiceImpl extends AbstratctAuditedService<Client> implement
 	public boolean clientExist(final String clientName) {
 		Objects.requireNonNull(clientName);
 		logger.debug("Look for client {} in database", clientName);
-		return clientDao.clientExist(clientName);
+		return this.clientDao.clientExist(clientName);
 	}
 
 	@Override
@@ -42,11 +42,5 @@ public class ClientServiceImpl extends AbstratctAuditedService<Client> implement
 	@Override
 	public Dao<Client> getDao() {
 		return this.clientDao;
-	}
-
-	@Override
-	public List<Client> searchByName(final String clientName) {
-		logger.debug("Search clients with name {}", clientName);
-		return this.clientDao.searchByName(clientName, false);
 	}
 }

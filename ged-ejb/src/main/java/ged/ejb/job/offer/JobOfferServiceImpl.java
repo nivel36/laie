@@ -115,18 +115,11 @@ public class JobOfferServiceImpl extends AbstratctAuditedService<JobOffer> imple
 		Objects.requireNonNull(jobOffer);
 		logger.debug("Save job offer {}", jobOffer.getDescription());
 		if (jobOffer.getId() == 0) {
-			putClientOnJobOffer(jobOffer);
-			getDao().insert(jobOffer);
+			this.putClientOnJobOffer(jobOffer);
+			this.getDao().insert(jobOffer);
 			return jobOffer;
 		} else {
-			return getDao().update(jobOffer);
+			return this.getDao().update(jobOffer);
 		}
-	}
-
-	@Override
-	public List<JobOffer> searchByNameAndClient(final String name, final String clientName, final Boolean showDeleted) {
-		logger.debug("Search all job offers by name {} and client name {}, show deleted {}", name, clientName,
-				showDeleted);
-		return this.jobOfferDao.searchByNameAndClient(name, clientName, showDeleted);
 	}
 }

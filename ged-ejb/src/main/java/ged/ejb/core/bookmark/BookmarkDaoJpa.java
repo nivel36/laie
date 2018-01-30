@@ -5,11 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import org.slf4j.LoggerFactory;
-import org.slf4j.Logger;
 
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import ged.ejb.core.model.AbstractDaoJpa;
 import ged.ejb.core.model.Repository;
@@ -20,17 +18,12 @@ public class BookmarkDaoJpa extends AbstractDaoJpa<Bookmark> implements Bookmark
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
-	@Inject
-	public BookmarkDaoJpa(final EntityManager entityManager) {
-		super(entityManager);
-	}
-
 	@Override
 	public List<Bookmark> find(final String entityClass, final long entityId) {
 		final Map<String, Object> parameters = new HashMap<>();
 		parameters.put("entityClass", entityClass);
 		parameters.put("entityId", entityId);
-		return findByTypedQuery(getType(), "Bookmark.findAllByClassAndId", parameters, 0, 0);
+		return this.findByTypedQuery(this.getType(), "Bookmark.findAllByClassAndId", parameters, 0, 0);
 	}
 
 	@Override
@@ -39,7 +32,7 @@ public class BookmarkDaoJpa extends AbstractDaoJpa<Bookmark> implements Bookmark
 		parameters.put("user", user);
 		parameters.put("entityClass", entityClass);
 		parameters.put("entityId", entityId);
-		return findByTypedQuery(getType(), "Bookmark.find", parameters);
+		return this.findByQuery(this.getType(), "Bookmark.find", parameters);
 	}
 
 	@Override
@@ -48,11 +41,16 @@ public class BookmarkDaoJpa extends AbstractDaoJpa<Bookmark> implements Bookmark
 		logger.debug("Buscando todos los Bookmarks del usuario ", user.getFullName());
 		final Map<String, Object> parameters = new HashMap<>();
 		parameters.put("user", user);
-		return findByTypedQuery(getType(), "Bookmark.findAllByUser", parameters, 0, 0);
+		return this.findByTypedQuery(this.getType(), "Bookmark.findAllByUser", parameters, 0, 0);
 	}
 
 	@Override
 	public Class<Bookmark> getType() {
 		return Bookmark.class;
+	}
+
+	@Override
+	public List<Bookmark> search(final String searchText) {
+		throw new UnsupportedOperationException();
 	}
 }

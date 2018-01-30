@@ -6,15 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
-import javax.persistence.Query;
-
-import org.hibernate.search.jpa.FullTextEntityManager;
-import org.hibernate.search.jpa.Search;
-import org.hibernate.search.query.dsl.BooleanJunction;
-import org.hibernate.search.query.dsl.QueryBuilder;
 
 import ged.ejb.core.model.AbstractDaoJpa;
 import ged.ejb.core.model.Repository;
@@ -24,15 +16,10 @@ import ged.ejb.job.offer.JobOffer;
 @Repository
 public class CandidateDaoJpa extends AbstractDaoJpa<Candidate> implements CandidateDao {
 
-	@Inject
-	public CandidateDaoJpa(final EntityManager entityManager) {
-		super(entityManager);
-	}
-
 	@Override
 	public boolean emailExists(final String email) {
 		Objects.requireNonNull(email);
-		return this.findByTypedQuery(Boolean.class, "Candidate.emailExists", with("email", email).parameters());
+		return this.findByQuery(Boolean.class, "Candidate.emailExists", with("email", email).parameters());
 	}
 
 	@Override
@@ -58,8 +45,7 @@ public class CandidateDaoJpa extends AbstractDaoJpa<Candidate> implements Candid
 		if (id < 1) {
 			throw new IllegalArgumentException("id: " + id);
 		}
-		return this.findByTypedQuery(Candidate.class, "Candidate.findCandidateAndFilesById",
-				with("id", id).parameters());
+		return this.findByQuery(Candidate.class, "Candidate.findCandidateAndFilesById", with("id", id).parameters());
 	}
 
 	@Override
@@ -81,57 +67,8 @@ public class CandidateDaoJpa extends AbstractDaoJpa<Candidate> implements Candid
 		return Candidate.class;
 	}
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
-	public List<Candidate> search(final List<String> searchValues) {
-		final FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(getEm());
-		final QueryBuilder qb = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(Candidate.class)
-				.get();
-		final BooleanJunction<BooleanJunction> bj = qb.bool();
-		for (final String searchValue : searchValues) {
-			if (searchValue == null) {
-				continue;
-			}
-			final BooleanJunction<BooleanJunction> fieldBj = qb.bool();
-			fieldBj.should(qb.keyword().onFields("name", "surname", "jobProfile", "tags.label").matching(searchValue)
-					.createQuery());
-			bj.must(fieldBj.createQuery());
-		}
-		final Query persistenceQuery;
-		if (bj.isEmpty()) {
-			persistenceQuery = fullTextEntityManager.createFullTextQuery(qb.all().createQuery(), Candidate.class);
-		} else {
-			persistenceQuery = fullTextEntityManager.createFullTextQuery(bj.createQuery(), Candidate.class);
-		}
-		return persistenceQuery.getResultList();
-	}
-
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	@Override
-	public List<Candidate> searchByNameAndSurname(final String name, final String surname, final String position,
-			final boolean showDeleted) {
-		final FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(getEm());
-		final QueryBuilder qb = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(Candidate.class)
-				.get();
-		final BooleanJunction<BooleanJunction> bj = qb.bool();
-		if (name != null) {
-			bj.must(qb.keyword().onField("name").matching(name).createQuery());
-		}
-		if (surname != null) {
-			bj.must(qb.keyword().onField("surname").matching(surname).createQuery());
-		}
-		if (position != null) {
-			bj.must(qb.keyword().onField("position").matching(position).createQuery());
-		}
-		if (!showDeleted) {
-			bj.must(qb.keyword().onField("deleted").matching(true).createQuery()).not();
-		}
-		final Query persistenceQuery;
-		if (bj.isEmpty()) {
-			persistenceQuery = fullTextEntityManager.createFullTextQuery(qb.all().createQuery(), Candidate.class);
-		} else {
-			persistenceQuery = fullTextEntityManager.createFullTextQuery(bj.createQuery(), Candidate.class);
-		}
-		return persistenceQuery.getResultList();
+	public List<Candidate> search(final String searchText) {
+		return this.getPf().search(Candidate.class, searchText, "name", "surname", "jobProfile", "tags.label");
 	}
 }

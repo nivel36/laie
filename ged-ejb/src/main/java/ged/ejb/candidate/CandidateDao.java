@@ -23,7 +23,4 @@ public interface CandidateDao extends Dao<Candidate> {
 
 	long findNumberOfCandidates();
 
-	List<Candidate> search(final List<String> searchValues);
-
-	List<Candidate> searchByNameAndSurname(String name, String surname, String position, boolean showDeleted);
 }

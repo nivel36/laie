@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 
 import org.slf4j.Logger;
@@ -22,21 +20,16 @@ public class RoleDaoJpa extends AbstractDaoJpa<Role> implements RoleDao {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
-	@Inject
-	public RoleDaoJpa(final EntityManager entityManger) {
-		super(entityManger);
-	}
-
 	@Override
 	public Role findAdmin() {
-		return findByTypedQuery(Role.class, "Role.findAdmin", null);
+		return this.findByQuery(Role.class, "Role.findAdmin", null);
 	}
 
 	@Override
 	public Role findRoleByName(final String roleName) {
 		Objects.requireNonNull(roleName);
 		Role role;
-		role = findByTypedQuery(Role.class, "Role.findRoleByName", with("name", roleName).parameters());
+		role = this.findByQuery(Role.class, "Role.findRoleByName", with("name", roleName).parameters());
 		return role;
 	}
 
@@ -44,8 +37,8 @@ public class RoleDaoJpa extends AbstractDaoJpa<Role> implements RoleDao {
 	public List<Role> findSubordinateRoles(final Role role) {
 		List<Role> roles;
 		try {
-			roles = findByTypedQuery(Role.class, "Role.findSubordinateRoles", with("id", role.getId()).parameters(), 0,
-					0);
+			roles = this.findByTypedQuery(Role.class, "Role.findSubordinateRoles",
+					with("id", role.getId()).parameters(), 0, 0);
 		} catch (final NoResultException e) {
 			roles = new ArrayList<>();
 			logger.warn("No subordinate roles for role {}", role.getName());
@@ -56,5 +49,10 @@ public class RoleDaoJpa extends AbstractDaoJpa<Role> implements RoleDao {
 	@Override
 	protected Class<Role> getType() {
 		return Role.class;
+	}
+
+	@Override
+	public List<Role> search(final String searchText) {
+		throw new UnsupportedOperationException();
 	}
 }

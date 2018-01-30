@@ -22,8 +22,4 @@ public interface UserService extends Service<User> {
 	long numberOfUsersOfflineLastMonth();
 
 	long numberOfUsersOnlineLastWeek();
-
-	List<User> search(final String query);
-
-	List<User> searchByNameAndSurname(final String name, final String surname);
 }
