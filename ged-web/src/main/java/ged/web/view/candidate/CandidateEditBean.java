@@ -103,18 +103,15 @@ public class CandidateEditBean extends AbstractPageBean {
 		}
 		final Set<Tag> candidateTags = new HashSet<>();
 		for (final String label : labels) {
-			if (label == null) {
-				return null;
-			}
-			final Tag tag;
 			final List<Tag> tagsFoundInDataBase = this.tagService.search(label);
+			final Tag tag;
 			if (tagsFoundInDataBase.size() == 1) {
 				tag = tagsFoundInDataBase.get(0);
 			} else {
 				tag = new Tag();
 				tag.setLabel(label);
-				candidateTags.add(tag);
 			}
+			candidateTags.add(tag);
 		}
 		return candidateTags;
 	}

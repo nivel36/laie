@@ -25,13 +25,17 @@ public final class UserDaoJpa extends AbstractDaoJpa<User> implements UserDao {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
+	private static final String NAME = "name";
+
 	private static final String START = "start";
+
+	private static final String SURNAME = "surname";
 
 	private void deleteUserClosures(final User user) {
 		logger.trace("Delete user closures for user {}", user.getEmail());
-		final List<UserClosure> userClosures = this.findAntecessorsUserClosures(user);
+		final List<UserClosure> userClosures = findAntecessorsUserClosures(user);
 		for (final UserClosure userClosure : userClosures) {
-			this.getPf().delete(UserClosure.class, userClosure);
+			getPf().delete(UserClosure.class, userClosure);
 		}
 	}
 
@@ -62,8 +66,8 @@ public final class UserDaoJpa extends AbstractDaoJpa<User> implements UserDao {
 		Objects.requireNonNull(user);
 		final List<User> users;
 		try {
-			users = this.findByQuery(User.class, "User.findSubordinateUsers",
-					with("id", user.getId()).parameters(), 0, 0);
+			users = this.findByQuery(User.class, "User.findSubordinateUsers", with("id", user.getId()).parameters(), 0,
+					0);
 		} catch (final NoResultException e) {
 			return new ArrayList<>();
 		}
@@ -84,14 +88,14 @@ public final class UserDaoJpa extends AbstractDaoJpa<User> implements UserDao {
 
 	@Override
 	public List<User> findUsersOffline(final Date start, final Date end) {
-		return this.findByQuery(User.class, "User.findUsersOffline", with(START, start).and(END, end).parameters(),
-				0, 0);
+		return this.findByQuery(User.class, "User.findUsersOffline", with(START, start).and(END, end).parameters(), 0,
+				0);
 	}
 
 	@Override
 	public List<User> findUsersOnline(final Date start, final Date end) {
-		return this.findByQuery(User.class, "User.findUsersOnline", with(START, start).and(END, end).parameters(),
-				0, 0);
+		return this.findByQuery(User.class, "User.findUsersOnline", with(START, start).and(END, end).parameters(), 0,
+				0);
 	}
 
 	@Override
@@ -102,9 +106,9 @@ public final class UserDaoJpa extends AbstractDaoJpa<User> implements UserDao {
 	@Override
 	public void insert(final User user) {
 		Objects.requireNonNull(user);
-		this.getPf().insert(user);
+		getPf().insert(user);
 		if (user.getManager() != null) {
-			this.insertUserClosures(user);
+			insertUserClosures(user);
 		}
 	}
 
@@ -115,16 +119,16 @@ public final class UserDaoJpa extends AbstractDaoJpa<User> implements UserDao {
 		newUserClosure.setAntecessor(antecessor);
 		newUserClosure.setDescendant(descendant);
 		newUserClosure.setPathLength(pathLength);
-		this.getPf().insert(newUserClosure);
+		getPf().insert(newUserClosure);
 	}
 
 	private void insertUserClosures(final User user) {
 		logger.trace("Insert user closures for user {}", user.getEmail());
-		final List<UserClosure> userClosures = this.findAntecessorsUserClosures(user.getManager());
+		final List<UserClosure> userClosures = findAntecessorsUserClosures(user.getManager());
 		for (final UserClosure userClosure : userClosures) {
-			this.insertUserClosure(userClosure.getAntecessor(), user, userClosure.getPathLength() + 1);
+			insertUserClosure(userClosure.getAntecessor(), user, userClosure.getPathLength() + 1);
 		}
-		this.insertUserClosure(user, user, 0);
+		insertUserClosure(user, user, 0);
 	}
 
 	@Override
@@ -139,22 +143,22 @@ public final class UserDaoJpa extends AbstractDaoJpa<User> implements UserDao {
 
 	@Override
 	public List<User> search(final String searchText) {
-		return this.getPf().search(User.class, searchText, "name", "surname", "email");
+		return getPf().search(User.class, searchText, NAME, SURNAME, EMAIL);
 	}
 
 	@Override
 	public User update(final User user) {
 		Objects.requireNonNull(user);
-		final User userInDatabase = this.find(user.getId());
-		if ((userInDatabase.getManager() == null) && (user.getManager() != null)) {
-			this.insertUserClosures(user);
-		} else if ((userInDatabase.getManager() != null) && (user.getManager() == null)) {
-			this.deleteUserClosures(userInDatabase);
-		} else if ((userInDatabase.getManager() != null) && (user.getManager() != null)
+		final User userInDatabase = find(user.getId());
+		if (userInDatabase.getManager() == null && user.getManager() != null) {
+			insertUserClosures(user);
+		} else if (userInDatabase.getManager() != null && user.getManager() == null) {
+			deleteUserClosures(userInDatabase);
+		} else if (userInDatabase.getManager() != null && user.getManager() != null
 				&& !user.getManager().equals(userInDatabase.getManager())) {
-			this.deleteUserClosures(userInDatabase);
-			this.insertUserClosures(user);
+			deleteUserClosures(userInDatabase);
+			insertUserClosures(user);
 		}
-		return this.getPf().update(user);
+		return getPf().update(user);
 	}
 }

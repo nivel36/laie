@@ -24,7 +24,6 @@ public abstract class AbstractPageBean extends AbstractBean {
 	protected transient SessionBean sessionBean;
 
 	protected void addErrorToField(final UIComponent component, final String message) {
-		// component.getAttributes().put("styleClass", "ui-state-error");
 		addMessage(component, FacesMessage.SEVERITY_ERROR, message, message, null);
 	}
 

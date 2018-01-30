@@ -2,7 +2,6 @@ package ged.web.view.candidate;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
@@ -42,10 +41,10 @@ public class AddCurriculumBean extends AbstractPageBean {
 
 	private String text;
 
-	public List<String> extractImages(final File file) throws FileNotFoundException, IOException {
+	public List<String> extractImages(final File file) throws IOException {
 		final COSDocument cosDoc = getDocument(file);
-		final List<PDXObjectImage> images = getAllImages(cosDoc);
-		final List<String> filenames = writeImages(images, file.getName());
+		final List<PDXObjectImage> imagesFromDoc = getAllImages(cosDoc);
+		final List<String> filenames = writeImages(imagesFromDoc);
 		cosDoc.close();
 		return filenames;
 	}
@@ -62,14 +61,14 @@ public class AddCurriculumBean extends AbstractPageBean {
 		}
 	}
 
-	private List<PDXObjectImage> getAllImages(final COSDocument cosDoc) throws FileNotFoundException, IOException {
+	private List<PDXObjectImage> getAllImages(final COSDocument cosDoc) throws IOException {
 		final PDDocument document = new PDDocument(cosDoc);
-		final List<PDXObjectImage> images = new ArrayList<>();
+		final List<PDXObjectImage> imagesFromDoc = new ArrayList<>();
 		final List<PDPage> pages = getAllPages(document);
 		for (final PDPage page : pages) {
-			extractImagesFromPage(images, page);
+			extractImagesFromPage(imagesFromDoc, page);
 		}
-		return images;
+		return imagesFromDoc;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -77,12 +76,10 @@ public class AddCurriculumBean extends AbstractPageBean {
 		return document.getDocumentCatalog().getAllPages();
 	}
 
-	private COSDocument getDocument(final File file) throws FileNotFoundException, IOException {
+	private COSDocument getDocument(final File file) throws IOException {
 		final PDFParser parser = new PDFParser(new FileInputStream(file));
 		parser.parse();
-		final COSDocument cosDoc = parser.getDocument();
-
-		return cosDoc;
+		return parser.getDocument();
 	}
 
 	public String getFilename() {
@@ -112,7 +109,7 @@ public class AddCurriculumBean extends AbstractPageBean {
 			final PDFTextStripper stripper = new PDFTextStripper();
 			this.text = stripper.getText(pdf);
 		} catch (final IOException e) {
-			AddCurriculumBean.logger.error( "Can't open file", e);
+			AddCurriculumBean.logger.error("Can't open file", e);
 			MessageUtils.addErrorMessage("error.unnexpected_error", "error.unnexpected_error");
 		}
 	}
@@ -129,7 +126,7 @@ public class AddCurriculumBean extends AbstractPageBean {
 		this.text = text;
 	}
 
-	private List<String> writeImages(final List<PDXObjectImage> images, final String name) throws IOException {
+	private List<String> writeImages(final List<PDXObjectImage> images) throws IOException {
 		int counter = 0;
 		final List<String> filenames = new ArrayList<>();
 		for (final PDXObjectImage image : images) {
