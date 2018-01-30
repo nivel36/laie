@@ -5,9 +5,9 @@ import java.util.Date;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
-import ged.api.v1.AbstractDto;
+import ged.api.v1.Dto;
 
-public class UserDto extends AbstractDto {
+public class UserDto implements Dto {
 
 	private Date dateOfJoin;
 

@@ -44,7 +44,7 @@ public class GedExceptionHandler extends ExceptionHandlerWrapper {
 	}
 
 	@Override
-	public void handle() throws FacesException {
+	public void handle() {
 		final ExceptionQueuedEvent event = getRootException();
 		if (event != null) {
 			final ExceptionQueuedEventContext context = (ExceptionQueuedEventContext) event.getSource();

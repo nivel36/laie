@@ -18,12 +18,31 @@ public class JobCandidatureState extends AbstractEnumEntity {
 	@OneToMany
 	private List<JobCandidatureState> previousStates;
 
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (!super.equals(obj)) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		return super.equals(obj);
+	}
+
 	public List<JobCandidatureState> getNextStates() {
 		return this.nextStates;
 	}
 
 	public List<JobCandidatureState> getPreviousStates() {
 		return this.previousStates;
+	}
+
+	@Override
+	public int hashCode() {
+		return super.hashCode();
 	}
 
 	public void setNextStates(final List<JobCandidatureState> nextStates) {

@@ -1,5 +1,7 @@
 package ged.ejb.core.maintenance;
 
+import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 
@@ -20,6 +22,21 @@ public abstract class AbstractEnumEntity extends AbstractEntity implements EnumE
 	private String name;
 
 	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (!super.equals(obj)) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		final AbstractEnumEntity other = (AbstractEnumEntity) obj;
+		return Objects.equals(this.description, other.description) && Objects.equals(this.name, other.name);
+	}
+
+	@Override
 	public String getDescription() {
 		return this.description;
 	}
@@ -27,6 +44,11 @@ public abstract class AbstractEnumEntity extends AbstractEntity implements EnumE
 	@Override
 	public String getName() {
 		return this.name;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(this.description, this.name);
 	}
 
 	@Override

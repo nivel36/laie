@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.apache.pdfbox.cos.COSDocument;
@@ -24,6 +25,7 @@ import org.apache.pdfbox.pdmodel.graphics.xobject.PDXObject;
 import org.apache.pdfbox.pdmodel.graphics.xobject.PDXObjectImage;
 import org.apache.pdfbox.util.PDFTextStripper;
 
+import ged.web.core.util.ConfigurationProperty;
 import ged.web.core.util.MessageUtils;
 import ged.web.core.view.AbstractPageBean;
 
@@ -38,6 +40,10 @@ public class AddCurriculumBean extends AbstractPageBean {
 	private String filename;
 
 	private List<String> images;
+
+	@Inject
+	@ConfigurationProperty("file.directory")
+	private String path;
 
 	private String text;
 
@@ -61,7 +67,7 @@ public class AddCurriculumBean extends AbstractPageBean {
 		}
 	}
 
-	private List<PDXObjectImage> getAllImages(final COSDocument cosDoc) throws IOException {
+	private List<PDXObjectImage> getAllImages(final COSDocument cosDoc) {
 		final PDDocument document = new PDDocument(cosDoc);
 		final List<PDXObjectImage> imagesFromDoc = new ArrayList<>();
 		final List<PDPage> pages = getAllPages(document);
@@ -101,11 +107,10 @@ public class AddCurriculumBean extends AbstractPageBean {
 		} else {
 			throw new IllegalStateException("No filename");
 		}
-		final String path = "D:\\tmp\\";
 		try {
-			setImages(extractImages(new File(path + this.filename)));
+			setImages(extractImages(new File(this.path + this.filename)));
 
-			final PDDocument pdf = PDDocument.load(new File(path + this.filename));
+			final PDDocument pdf = PDDocument.load(new File(this.path + this.filename));
 			final PDFTextStripper stripper = new PDFTextStripper();
 			this.text = stripper.getText(pdf);
 		} catch (final IOException e) {
@@ -122,6 +127,10 @@ public class AddCurriculumBean extends AbstractPageBean {
 		this.images = images;
 	}
 
+	public void setPath(final String path) {
+		this.path = path;
+	}
+
 	public void setText(final String text) {
 		this.text = text;
 	}
@@ -131,10 +140,9 @@ public class AddCurriculumBean extends AbstractPageBean {
 		final List<String> filenames = new ArrayList<>();
 		for (final PDXObjectImage image : images) {
 			final StringTokenizer st = new StringTokenizer(this.filename, ".");
-			final String filename = st.nextToken() + (++counter);
-			final String path = "D:\\tmp\\";
-			image.write2file(path + filename);
-			filenames.add(filename + ".jpg");
+			final String name = st.nextToken() + (++counter);
+			image.write2file(this.path + name);
+			filenames.add(name + ".jpg");
 		}
 		return filenames;
 	}

@@ -9,6 +9,7 @@ import ged.ejb.client.Client;
 import ged.ejb.client.ClientService;
 import ged.ejb.core.Address;
 import ged.web.core.view.AbstractPageBean;
+import ged.web.core.view.MenuBean;
 
 @Named
 @ViewScoped
@@ -22,7 +23,7 @@ public class ClientEditBean extends AbstractPageBean {
 	private transient ClientService clientService;
 
 	public String cancel() {
-		return "clientSearch?faces-redirect=true";
+		return MenuBean.CLIENTS;
 	}
 
 	public Client getClient() {

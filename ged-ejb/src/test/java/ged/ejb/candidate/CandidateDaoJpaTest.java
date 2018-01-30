@@ -111,6 +111,6 @@ public class CandidateDaoJpaTest {
 	@Before
 	public void setUp() {
 		this.candidateJpaDao = new CandidateDaoJpa();
-		this.candidateJpaDao.setPf(this.persistenceFacade);
+		this.candidateJpaDao.setPersistenceFacade(this.persistenceFacade);
 	}
 }

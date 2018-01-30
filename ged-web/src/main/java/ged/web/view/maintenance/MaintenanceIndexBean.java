@@ -9,13 +9,15 @@ import ged.web.core.view.AbstractBean;
 @ViewScoped
 public class MaintenanceIndexBean extends AbstractBean {
 
+	private static final String MAINTENANCE_EDIT = "maintenanceEdit";
+
 	private static final long serialVersionUID = 3841966930769061075L;
 
 	public String modifyContractType() {
-		return "maintenanceEdit";
+		return MAINTENANCE_EDIT;
 	}
 
 	public String newContractType() {
-		return "maintenanceEdit";
+		return MAINTENANCE_EDIT;
 	}
 }

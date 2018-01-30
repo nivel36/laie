@@ -25,19 +25,16 @@ public class SearchFieldValidator implements Validator {
 
 	private ResourceBundle getResourceBundle(final String filename) {
 		final Locale locale = this.facesContext.getViewRoot().getLocale();
-		final ResourceBundle bundle = ResourceBundle.getBundle(filename, locale);
-		return bundle;
+		return ResourceBundle.getBundle(filename, locale);
 	}
 
 	protected String translate(final String message) {
 		final ResourceBundle bundle = getResourceBundle("ged.i18n");
-		final String translatedMessage = bundle.getString(message);
-		return translatedMessage;
+		return bundle.getString(message);
 	}
 
 	@Override
-	public void validate(final FacesContext context, final UIComponent component, final Object value)
-			throws ValidatorException {
+	public void validate(final FacesContext context, final UIComponent component, final Object value) {
 		final String searchValue = (String) value;
 		if (searchValue != null && searchValue.length() < 3) {
 			logger.warn("Search value is too short");

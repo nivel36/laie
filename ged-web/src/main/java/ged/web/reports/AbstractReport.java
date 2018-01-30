@@ -1,7 +1,6 @@
 package ged.web.reports;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -21,7 +20,7 @@ public class AbstractReport {
 		this.fileName = fileName;
 	}
 
-	protected File createFile() throws FileNotFoundException, IOException {
+	protected File createFile() throws IOException {
 		final File file = new File(this.path + this.fileName);
 		try (FileOutputStream out = new FileOutputStream(file)) {
 			this.wb.write(out);

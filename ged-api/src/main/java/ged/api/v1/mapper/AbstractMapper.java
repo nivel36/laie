@@ -3,10 +3,10 @@ package ged.api.v1.mapper;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import ged.api.v1.AbstractDto;
+import ged.api.v1.Dto;
 import ged.ejb.core.model.AbstractEntity;
 
-public interface AbstractMapper<E extends AbstractEntity, D extends AbstractDto> {
+public interface AbstractMapper<E extends AbstractEntity, D extends Dto> {
 
 	public default Collection<E> mapCollectionOfDtos(final Collection<D> dtos) {
 		final Collection<E> entities = new ArrayList<>();
@@ -26,8 +26,7 @@ public interface AbstractMapper<E extends AbstractEntity, D extends AbstractDto>
 		return dtos;
 	}
 
-	public abstract E mapDto(D dtos);
+	public abstract E mapDto(D dto);
 
-	public abstract D mapEntity(final E entities);
-
+	public abstract D mapEntity(final E entity);
 }

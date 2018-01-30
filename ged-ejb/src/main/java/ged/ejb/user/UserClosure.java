@@ -1,5 +1,7 @@
 package ged.ejb.user;
 
+import java.util.Objects;
+
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -21,6 +23,22 @@ public class UserClosure extends AbstractEntity {
 
 	private int pathLength;
 
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (!super.equals(obj)) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		final UserClosure other = (UserClosure) obj;
+		return Objects.equals(other.antecessor, this.antecessor) && Objects.equals(other.descendant, this.descendant)
+				&& Objects.equals(other.pathLength, this.pathLength);
+	}
+
 	public User getAntecessor() {
 		return this.antecessor;
 	}
@@ -31,6 +49,11 @@ public class UserClosure extends AbstractEntity {
 
 	public int getPathLength() {
 		return this.pathLength;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(this.antecessor, this.descendant, this.pathLength);
 	}
 
 	public void setAntecessor(final User antecessor) {

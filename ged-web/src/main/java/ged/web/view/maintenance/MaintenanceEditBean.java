@@ -15,6 +15,8 @@ import ged.web.core.view.AbstractPageBean;
 @ViewScoped
 public class MaintenanceEditBean extends AbstractPageBean {
 
+	private static final String MAINTENANCE_INDEX = "maintenanceIndex";
+
 	private static final long serialVersionUID = 3193783501437738942L;
 
 	private String entityClass;
@@ -25,11 +27,15 @@ public class MaintenanceEditBean extends AbstractPageBean {
 	private transient MaintenanceService maintenanceService;
 
 	public String cancel() {
-		return "maintenanceIndex";
+		return MAINTENANCE_INDEX;
 	}
 
 	public void delete() {
 		this.maintenanceService.delete(this.enumEntity);
+	}
+
+	public String getEntityClass() {
+		return this.entityClass;
 	}
 
 	@PostConstruct

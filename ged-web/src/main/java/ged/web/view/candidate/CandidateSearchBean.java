@@ -21,6 +21,8 @@ import ged.web.core.view.AbstractPageBean;
 @ViewScoped
 public class CandidateSearchBean extends AbstractPageBean {
 
+	private static final String CANDIDATE_EDIT = "candidateEdit?faces-redirect=true";
+
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	private static final long serialVersionUID = 2434819723782902618L;
@@ -72,7 +74,7 @@ public class CandidateSearchBean extends AbstractPageBean {
 
 	public String newCandidate() {
 		logger.debug("New candidate");
-		return "candidateEdit?faces-redirect=true";
+		return CANDIDATE_EDIT;
 	}
 
 	public void onCandidateSelect() throws IOException {
@@ -102,6 +104,6 @@ public class CandidateSearchBean extends AbstractPageBean {
 	}
 
 	public String view() {
-		return "candidateEdit?faces-redirect=true&includeViewParams=true";
+		return CANDIDATE_EDIT + "&includeViewParams=true";
 	}
 }

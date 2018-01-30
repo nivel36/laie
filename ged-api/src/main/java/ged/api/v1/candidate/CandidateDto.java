@@ -10,9 +10,9 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
-import ged.api.v1.AbstractDto;
+import ged.api.v1.Dto;
 
-public class CandidateDto extends AbstractDto {
+public class CandidateDto implements Dto {
 
 	@Temporal(TemporalType.DATE)
 	private Date bornDate;

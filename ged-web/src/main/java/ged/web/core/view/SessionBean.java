@@ -66,7 +66,6 @@ public class SessionBean extends AbstractBean {
 
 	protected String translate(final String message) {
 		final ResourceBundle bundle = getResourceBundle("ged.i18n");
-		final String translatedMessage = bundle.getString(message);
-		return translatedMessage;
+		return bundle.getString(message);
 	}
 }

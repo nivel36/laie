@@ -45,9 +45,9 @@ public class CurriculumEditBean extends AbstractPageBean {
 	private List<Skill> skills = new ArrayList<>();
 
 	public void addEducation() {
-		final Education education = new Education();
-		education.setCurriculum(this.curriculum);
-		this.education.add(education);
+		final Education newEducation = new Education();
+		newEducation.setCurriculum(this.curriculum);
+		this.education.add(newEducation);
 	}
 
 	public void addJobExperience() {

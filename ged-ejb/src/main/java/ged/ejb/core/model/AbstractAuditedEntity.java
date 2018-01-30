@@ -36,8 +36,27 @@ public abstract class AbstractAuditedEntity extends AbstractEntity implements Au
 	private User user;
 
 	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		return super.equals(obj);
+	}
+
+	@Override
 	public User getUser() {
 		return this.user;
+	}
+
+	@Override
+	public int hashCode() {
+		return super.hashCode();
 	}
 
 	@Override

@@ -74,5 +74,4 @@ public class CandidateMapper implements AbstractMapper<Candidate, CandidateDto> 
 		candidateDto.setSurname(candidate.getSurname());
 		return candidateDto;
 	}
-
 }

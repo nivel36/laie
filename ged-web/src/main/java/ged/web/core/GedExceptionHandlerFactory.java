@@ -13,7 +13,6 @@ public class GedExceptionHandlerFactory extends ExceptionHandlerFactory {
 
 	@Override
 	public ExceptionHandler getExceptionHandler() {
-		final ExceptionHandler result = new GedExceptionHandler(this.parent.getExceptionHandler());
-		return result;
+		return new GedExceptionHandler(this.parent.getExceptionHandler());
 	}
 }

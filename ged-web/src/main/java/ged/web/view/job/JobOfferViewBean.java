@@ -109,7 +109,7 @@ public class JobOfferViewBean extends AbstractPageBean {
 				if (this.jobOffer == null) {
 					error();
 				} else {
-					populateJobMeetings(this.jobOffer);
+					populateJobMeetings();
 					this.candidates = this.candidateService.findAllByJobOffer(this.jobOffer);
 				}
 				this.editable = false;
@@ -136,13 +136,10 @@ public class JobOfferViewBean extends AbstractPageBean {
 		if (jobOfferOwner.equals(user)) {
 			return true;
 		}
-		if (user.isAdmin() || user.isRecruiterAdmin()) {
-			return true;
-		}
-		return false;
+		return user.isAdmin() || user.isRecruiterAdmin();
 	}
 
-	private void populateJobMeetings(final JobOffer jobOffer) {
+	private void populateJobMeetings() {
 		this.plannedJobMeetings = null;
 		this.conductedJobMeetings = null;
 	}
