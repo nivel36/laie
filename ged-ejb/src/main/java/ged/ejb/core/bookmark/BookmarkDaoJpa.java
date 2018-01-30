@@ -23,7 +23,7 @@ public class BookmarkDaoJpa extends AbstractDaoJpa<Bookmark> implements Bookmark
 		final Map<String, Object> parameters = new HashMap<>();
 		parameters.put("entityClass", entityClass);
 		parameters.put("entityId", entityId);
-		return this.findByTypedQuery(this.getType(), "Bookmark.findAllByClassAndId", parameters, 0, 0);
+		return this.findByQuery(this.getType(), "Bookmark.findAllByClassAndId", parameters, 0, 0);
 	}
 
 	@Override
@@ -41,7 +41,7 @@ public class BookmarkDaoJpa extends AbstractDaoJpa<Bookmark> implements Bookmark
 		logger.debug("Buscando todos los Bookmarks del usuario ", user.getFullName());
 		final Map<String, Object> parameters = new HashMap<>();
 		parameters.put("user", user);
-		return this.findByTypedQuery(this.getType(), "Bookmark.findAllByUser", parameters, 0, 0);
+		return this.findByQuery(this.getType(), "Bookmark.findAllByUser", parameters, 0, 0);
 	}
 
 	@Override

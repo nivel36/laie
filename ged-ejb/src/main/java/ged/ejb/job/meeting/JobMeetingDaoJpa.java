@@ -17,14 +17,14 @@ public class JobMeetingDaoJpa extends AbstractDaoJpa<JobMeeting> implements JobM
 	@Override
 	public List<JobMeeting> findByUser(final User user) {
 		Objects.requireNonNull(user);
-		return this.findByTypedQuery(JobMeeting.class, "JobMeeting.findByUser", with("user", user).parameters(), 0, 0);
+		return this.findByQuery(JobMeeting.class, "JobMeeting.findByUser", with("user", user).parameters(), 0, 0);
 	}
 
 	@Override
 	public List<JobMeeting> findByUserAndCandidate(final User user, final Candidate candidate) {
 		Objects.requireNonNull(user);
 		Objects.requireNonNull(candidate);
-		return this.findByTypedQuery(JobMeeting.class, "JobMeeting.findByUserAndCandidate",
+		return this.findByQuery(JobMeeting.class, "JobMeeting.findByUserAndCandidate",
 				with("user", user).and("candidate", candidate).parameters(), 0, 0);
 	}
 
@@ -32,7 +32,7 @@ public class JobMeetingDaoJpa extends AbstractDaoJpa<JobMeeting> implements JobM
 	public List<JobMeeting> findByUserAndClient(final User user, final Client client) {
 		Objects.requireNonNull(user);
 		Objects.requireNonNull(client);
-		return this.findByTypedQuery(JobMeeting.class, "JobMeeting.findByUserAndClient",
+		return this.findByQuery(JobMeeting.class, "JobMeeting.findByUserAndClient",
 				with("user", user).and("client", client).parameters(), 0, 0);
 	}
 

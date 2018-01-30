@@ -37,11 +37,11 @@ import ged.web.core.view.AbstractPageBean;
 @ViewScoped
 public class CandidateViewBean extends AbstractPageBean {
 
-	private static final String UNNEXPECTED_ERROR = "error.unnexpected_error";
-
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	private static final long serialVersionUID = 1577879781927493283L;
+
+	private static final String UNNEXPECTED_ERROR = "error.unnexpected_error";
 
 	private Candidate candidate;
 
@@ -108,7 +108,7 @@ public class CandidateViewBean extends AbstractPageBean {
 		}
 		final Set<Tag> candidateTags = new HashSet<>();
 		for (final String label : labels) {
-			final List<Tag> tagsFoundInDataBase = this.tagService.searchByLabel(label);
+			final List<Tag> tagsFoundInDataBase = this.tagService.search(label);
 			final Tag tag;
 			if (tagsFoundInDataBase.size() == 1) {
 				tag = tagsFoundInDataBase.get(0);

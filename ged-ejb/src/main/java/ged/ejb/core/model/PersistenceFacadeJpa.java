@@ -125,9 +125,9 @@ public class PersistenceFacadeJpa implements PersistenceFacade {
 	 * java.lang.String, java.lang.Integer, java.lang.Integer)
 	 */
 	@Override
-	public <E> List<E> findByTypedQuery(final Class<E> entityClass, final String namedQuery, final Integer pageSize,
+	public <E> List<E> findByQuery(final Class<E> entityClass, final String namedQuery, final Integer pageSize,
 			final Integer pageNum) {
-		return this.findByTypedQuery(entityClass, namedQuery, null, pageSize, pageNum);
+		return this.findByQuery(entityClass, namedQuery, null, pageSize, pageNum);
 	}
 
 	/*
@@ -137,7 +137,7 @@ public class PersistenceFacadeJpa implements PersistenceFacade {
 	 * java.lang.String, java.util.Map)
 	 */
 	@Override
-	public <E> E findByTypedQuery(final Class<E> entityClass, final String namedQuery,
+	public <E> E findByQuery(final Class<E> entityClass, final String namedQuery,
 			final Map<String, Object> parameters) {
 		Objects.requireNonNull(entityClass);
 		Objects.requireNonNull(namedQuery);
@@ -154,7 +154,7 @@ public class PersistenceFacadeJpa implements PersistenceFacade {
 	 * java.lang.String, java.util.Map, java.lang.Integer, java.lang.Integer)
 	 */
 	@Override
-	public <E> List<E> findByTypedQuery(final Class<E> entityClass, final String namedQuery,
+	public <E> List<E> findByQuery(final Class<E> entityClass, final String namedQuery,
 			final Map<String, Object> parameters, final Integer pageSize, final Integer pageNum) {
 		Objects.requireNonNull(entityClass);
 		Objects.requireNonNull(namedQuery);

@@ -22,15 +22,15 @@ public class JobOfferSearchBean extends AbstractPageBean {
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	private static final long serialVersionUID = 8777365288968792501L;
-	
-	private String clientName;
 
-	@Inject
-	private transient JobOfferService jobOfferService;
+	private String clientName;
 
 	private String jobOfferName;
 
 	private List<JobOffer> jobOffers;
+
+	@Inject
+	private transient JobOfferService jobOfferService;
 
 	public void clean() {
 		logger.debug("Clean job offer search fields action performed");
@@ -48,7 +48,7 @@ public class JobOfferSearchBean extends AbstractPageBean {
 	}
 
 	public String getJobOfferName() {
-		return jobOfferName;
+		return this.jobOfferName;
 	}
 
 	public List<JobOffer> getJobOffers() {
@@ -68,8 +68,8 @@ public class JobOfferSearchBean extends AbstractPageBean {
 
 	public void search() {
 		logger.debug("Search job offer action performed");
-		jobOffers = this.jobOfferService.searchByNameAndClient(this.jobOfferName, this.clientName, null);
-		addWarningMessageIfMaxSearchResultsHaveBeenReached(jobOffers);
+		this.jobOffers = this.jobOfferService.search(this.jobOfferName);
+		addWarningMessageIfMaxSearchResultsHaveBeenReached(this.jobOffers);
 	}
 
 	public void setClientName(final String clientName) {

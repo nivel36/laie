@@ -23,16 +23,12 @@ public class ClientSearchBean extends AbstractPageBean {
 
 	private static final long serialVersionUID = 2434819723782902618L;
 
+	private List<Client> clients;
+
 	@Inject
 	private transient ClientService clientService;
 
-	public void setClientService(ClientService clientService) {
-		this.clientService = clientService;
-	}
-
 	private String name;
-
-	private List<Client> clients;
 
 	public void clean() {
 		logger.debug("Clean action performed");
@@ -46,18 +42,18 @@ public class ClientSearchBean extends AbstractPageBean {
 		return "clientEdit?faces-redirect=true";
 	}
 
-	public String getName() {
-		return this.name;
-	}
-
 	public List<Client> getClients() {
 		return this.clients;
+	}
+
+	public String getName() {
+		return this.name;
 	}
 
 	@PostConstruct
 	public void init() {
 		logger.trace("Init ClientSearchBean");
-		this.clients = this.clientService.searchByName(this.name);
+		this.clients = this.clientService.search(this.name);
 	}
 
 	public String newClient() {
@@ -73,7 +69,11 @@ public class ClientSearchBean extends AbstractPageBean {
 
 	public void search() {
 		logger.debug("Searching for client action performed");
-		clients = this.clientService.searchByName(this.name);
+		this.clients = this.clientService.search(this.name);
+	}
+
+	public void setClientService(final ClientService clientService) {
+		this.clientService = clientService;
 	}
 
 	public void setName(final String name) {

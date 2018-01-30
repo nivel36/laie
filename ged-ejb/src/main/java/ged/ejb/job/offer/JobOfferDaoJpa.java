@@ -25,7 +25,7 @@ public class JobOfferDaoJpa extends AbstractDaoJpa<JobOffer> implements JobOffer
 		logger.debug("Buscando todas las ofertas del usuario ", owner.getFullName());
 		final Map<String, Object> parameters = new HashMap<>();
 		parameters.put("owner", owner);
-		return this.findByTypedQuery(JobOffer.class, "JobOffer.findAllByOwner", parameters, 0, 0);
+		return this.findByQuery(JobOffer.class, "JobOffer.findAllByOwner", parameters, 0, 0);
 	}
 
 	@Override
@@ -34,14 +34,14 @@ public class JobOfferDaoJpa extends AbstractDaoJpa<JobOffer> implements JobOffer
 		logger.debug("SELECT all the client offers", client.getName());
 		final Map<String, Object> parameters = new HashMap<>();
 		parameters.put("client", client);
-		return this.findByTypedQuery(JobOffer.class, "JobOffer.findAllByClient", parameters, 0, 0);
+		return this.findByQuery(JobOffer.class, "JobOffer.findAllByClient", parameters, 0, 0);
 	}
 
 	@Override
 	public List<JobOffer> findLastJobOffers(final User owner) {
 		final Map<String, Object> parameters = new HashMap<>();
 		parameters.put("owner", owner);
-		return this.findByTypedQuery(JobOffer.class, "JobOffer.findLastJobOffers", parameters, 0, 0);
+		return this.findByQuery(JobOffer.class, "JobOffer.findLastJobOffers", parameters, 0, 0);
 	}
 
 	@Override

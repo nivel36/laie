@@ -27,7 +27,7 @@ public class CandidateDaoJpa extends AbstractDaoJpa<Candidate> implements Candid
 		Objects.requireNonNull(jobOffer);
 		final List<Candidate> candidates;
 		try {
-			candidates = this.findByTypedQuery(Candidate.class, "Candidate.findAllByJobOffer",
+			candidates = this.findByQuery(Candidate.class, "Candidate.findAllByJobOffer",
 					with("jobOffer", jobOffer).parameters(), 0, 0);
 		} catch (final NoResultException e) {
 			return new ArrayList<>();
@@ -53,7 +53,7 @@ public class CandidateDaoJpa extends AbstractDaoJpa<Candidate> implements Candid
 		if (numberOfCandidates < 1) {
 			throw new IllegalArgumentException("numberOfCandidates: " + numberOfCandidates);
 		}
-		return this.findByTypedQuery(Candidate.class, "Candidate.findLastAddedCandidates", null, numberOfCandidates,
+		return this.findByQuery(Candidate.class, "Candidate.findLastAddedCandidates", null, numberOfCandidates,
 				null);
 	}
 

@@ -2,8 +2,6 @@ package ged.web.view.candidate;
 
 import java.io.IOException;
 import java.lang.invoke.MethodHandles;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
@@ -83,13 +81,7 @@ public class CandidateSearchBean extends AbstractPageBean {
 
 	public void search() {
 		logger.debug("Searching for candidates");
-		final List<String> searchValues;
-		if (this.searchText != null) {
-			searchValues = Arrays.asList(this.searchText.split("\\s"));
-		} else {
-			searchValues = new ArrayList<>();
-		}
-		this.candidates = this.candidateService.search(searchValues);
+		this.candidates = this.candidateService.search(this.searchText);
 		sortCandidates(this.candidates);
 	}
 

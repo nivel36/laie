@@ -37,7 +37,7 @@ public class RoleDaoJpa extends AbstractDaoJpa<Role> implements RoleDao {
 	public List<Role> findSubordinateRoles(final Role role) {
 		List<Role> roles;
 		try {
-			roles = this.findByTypedQuery(Role.class, "Role.findSubordinateRoles",
+			roles = this.findByQuery(Role.class, "Role.findSubordinateRoles",
 					with("id", role.getId()).parameters(), 0, 0);
 		} catch (final NoResultException e) {
 			roles = new ArrayList<>();

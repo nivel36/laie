@@ -15,7 +15,7 @@ public class ActionDaoJpa extends AbstractDaoJpa<Action> implements ActionDao {
 	@Override
 	public List<Action> findAllByUser(final User user) {
 		Objects.requireNonNull(user);
-		return this.findByTypedQuery(Action.class, "Action.findAllByUser", with("user", user).parameters(), 10, 0);
+		return this.findByQuery(Action.class, "Action.findAllByUser", with("user", user).parameters(), 10, 0);
 	}
 
 	@Override

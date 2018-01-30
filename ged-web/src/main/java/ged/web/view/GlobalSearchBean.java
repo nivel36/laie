@@ -55,8 +55,8 @@ public class GlobalSearchBean extends AbstractPageBean {
 		if (this.text == null || this.text.length() < 3) {
 			MessageUtils.addWarningMessage("error.search.camp_to_short", "error.search.camp_to_short");
 		} else {
-			this.users = this.userService.searchByNameAndSurname(this.text, this.text);
-			this.jobOffers = this.jobService.searchByNameAndClient(this.text, this.text, null);
+			this.users = this.userService.search(this.text);
+			this.jobOffers = this.jobService.search(this.text);
 		}
 	}
 

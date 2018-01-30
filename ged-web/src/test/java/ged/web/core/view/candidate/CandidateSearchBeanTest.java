@@ -25,7 +25,7 @@ public class CandidateSearchBeanTest {
 
 	@Test
 	public void cleanTest() {
-		Mockito.when(this.candidateService.search(new ArrayList<String>())).thenReturn(this.mockCandidates());
+		Mockito.when(this.candidateService.search("Test")).thenReturn(mockCandidates());
 		this.candidateSearchBean.setSearchText("Test");
 		this.candidateSearchBean.clean();
 		Assert.assertEquals(null, this.candidateSearchBean.getSearchText());
@@ -42,7 +42,7 @@ public class CandidateSearchBeanTest {
 
 	private List<Candidate> mockCandidates() {
 		final List<Candidate> candidates = new ArrayList<>();
-		final Candidate candidate = this.mockCandidate();
+		final Candidate candidate = mockCandidate();
 		candidates.add(candidate);
 		return candidates;
 	}

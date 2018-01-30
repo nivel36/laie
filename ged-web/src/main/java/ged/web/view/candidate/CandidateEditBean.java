@@ -107,7 +107,7 @@ public class CandidateEditBean extends AbstractPageBean {
 				return null;
 			}
 			final Tag tag;
-			final List<Tag> tagsFoundInDataBase = this.tagService.searchByLabel(label);
+			final List<Tag> tagsFoundInDataBase = this.tagService.search(label);
 			if (tagsFoundInDataBase.size() == 1) {
 				tag = tagsFoundInDataBase.get(0);
 			} else {

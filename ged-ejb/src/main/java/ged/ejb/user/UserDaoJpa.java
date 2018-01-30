@@ -53,7 +53,7 @@ public final class UserDaoJpa extends AbstractDaoJpa<User> implements UserDao {
 
 	private List<UserClosure> findAntecessorsUserClosures(final User user) {
 		Objects.requireNonNull(user);
-		return this.findByTypedQuery(UserClosure.class, "UserClosure.findAntecessorsUserClosuresById",
+		return this.findByQuery(UserClosure.class, "UserClosure.findAntecessorsUserClosuresById",
 				with("id", user.getId()).parameters(), 0, 0);
 	}
 
@@ -62,7 +62,7 @@ public final class UserDaoJpa extends AbstractDaoJpa<User> implements UserDao {
 		Objects.requireNonNull(user);
 		final List<User> users;
 		try {
-			users = this.findByTypedQuery(User.class, "User.findSubordinateUsers",
+			users = this.findByQuery(User.class, "User.findSubordinateUsers",
 					with("id", user.getId()).parameters(), 0, 0);
 		} catch (final NoResultException e) {
 			return new ArrayList<>();
@@ -84,13 +84,13 @@ public final class UserDaoJpa extends AbstractDaoJpa<User> implements UserDao {
 
 	@Override
 	public List<User> findUsersOffline(final Date start, final Date end) {
-		return this.findByTypedQuery(User.class, "User.findUsersOffline", with(START, start).and(END, end).parameters(),
+		return this.findByQuery(User.class, "User.findUsersOffline", with(START, start).and(END, end).parameters(),
 				0, 0);
 	}
 
 	@Override
 	public List<User> findUsersOnline(final Date start, final Date end) {
-		return this.findByTypedQuery(User.class, "User.findUsersOnline", with(START, start).and(END, end).parameters(),
+		return this.findByQuery(User.class, "User.findUsersOnline", with(START, start).and(END, end).parameters(),
 				0, 0);
 	}
 
