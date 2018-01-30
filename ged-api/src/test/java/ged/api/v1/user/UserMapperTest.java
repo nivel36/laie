@@ -35,20 +35,10 @@ public class UserMapperTest {
 		final Role adminRole = new Role();
 		adminRole.setName("ADMIN");
 		Mockito.when(this.roleService.findRoleByName("ADMIN")).thenReturn(adminRole);
-
-		final UserDto userDto = new UserDto();
-		userDto.setDateOfJoin(new Date());
-		userDto.setEmail("aaron@test.com");
-		userDto.setImageFileName("1");
-		userDto.setLanguage("ES");
-		userDto.setLastConnection(new Date());
-		userDto.setManagerEmail("boss@test.com");
-		userDto.setName("Aaron");
-		userDto.setPhoneNumber("123456789");
-		userDto.setRoleName("ADMIN");
-		userDto.setSurname("Smith");
+		final UserDto userDto = this.mockUserDto();
 
 		final User user = this.userMapper.mapDto(userDto);
+
 		Assert.assertNotNull(user);
 		Assert.assertEquals(userDto.getDateOfJoin(), user.getDateOfJoin());
 		Assert.assertEquals(userDto.getEmail(), user.getEmail());
@@ -62,6 +52,24 @@ public class UserMapperTest {
 		Assert.assertEquals(userDto.getSurname(), user.getSurname());
 	}
 
+	public void mapEntityTest() {
+		final User user = this.mockUser();
+
+		final UserDto userDto = this.userMapper.mapEntity(user);
+
+		Assert.assertNotNull(userDto);
+		Assert.assertEquals(user.getDateOfJoin(), userDto.getDateOfJoin());
+		Assert.assertEquals(user.getEmail(), userDto.getEmail());
+		Assert.assertEquals(user.getImageFileName(), userDto.getImageFileName());
+		Assert.assertEquals(user.getLanguage(), userDto.getLanguage());
+		Assert.assertEquals(user.getLastConnection(), userDto.getLastConnection());
+		Assert.assertEquals(user.getManager().getEmail(), userDto.getManagerEmail());
+		Assert.assertEquals(user.getName(), userDto.getName());
+		Assert.assertEquals(user.getPhoneNumber(), userDto.getPhoneNumber());
+		Assert.assertEquals(user.getRole().getName(), userDto.getRoleName());
+		Assert.assertEquals(user.getSurname(), userDto.getSurname());
+	}
+
 	@Test
 	public void mapNullDtoTest() {
 		final User user = this.userMapper.mapDto(null);
@@ -72,6 +80,40 @@ public class UserMapperTest {
 	public void mapNullEntityTest() {
 		final UserDto userDto = this.userMapper.mapEntity(null);
 		Assert.assertNull(userDto);
+	}
+
+	private User mockUser() {
+		final User user = new User();
+		user.setDateOfJoin(new Date());
+		user.setEmail("aaron@test.com");
+		user.setImageFileName("1");
+		user.setLanguage("ES");
+		user.setLastConnection(new Date());
+		final User manager = new User();
+		manager.setEmail("boss@test.com");
+		user.setManager(manager);
+		user.setName("Aaron");
+		user.setPhoneNumber("123456789");
+		final Role role = new Role();
+		role.setName("ADMIN");
+		user.setRole(role);
+		user.setSurname("Smith");
+		return user;
+	}
+
+	private UserDto mockUserDto() {
+		final UserDto userDto = new UserDto();
+		userDto.setDateOfJoin(new Date());
+		userDto.setEmail("aaron@test.com");
+		userDto.setImageFileName("1");
+		userDto.setLanguage("ES");
+		userDto.setLastConnection(new Date());
+		userDto.setManagerEmail("boss@test.com");
+		userDto.setName("Aaron");
+		userDto.setPhoneNumber("123456789");
+		userDto.setRoleName("ADMIN");
+		userDto.setSurname("Smith");
+		return userDto;
 	}
 
 	@Before
