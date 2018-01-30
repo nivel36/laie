@@ -61,7 +61,7 @@ public abstract class AbstractDaoJpa<T extends AbstractEntity> implements Dao<T>
 		return this.persistenceFacade.findByQuery(namedQuery, parameters);
 	}
 
-	protected PersistenceFacade getPf() {
+	protected PersistenceFacade getPersistenceFacade() {
 		return this.persistenceFacade;
 	}
 
@@ -73,11 +73,8 @@ public abstract class AbstractDaoJpa<T extends AbstractEntity> implements Dao<T>
 		this.persistenceFacade.insert(entity);
 	}
 
-	@Override
-	public abstract List<T> search(final String searchText);
-
-	public void setPf(final PersistenceFacade pf) {
-		this.persistenceFacade = pf;
+	public void setPersistenceFacade(final PersistenceFacade persistenceFacade) {
+		this.persistenceFacade = persistenceFacade;
 	}
 
 	@Override

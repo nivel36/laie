@@ -15,6 +15,6 @@ public class TagJpaDao extends AbstractDaoJpa<Tag> implements TagDao {
 
 	@Override
 	public final List<Tag> search(final String searchText) {
-		return this.getPf().search(Tag.class, searchText, "label");
+		return this.getPersistenceFacade().search(Tag.class, searchText, "label");
 	}
 }

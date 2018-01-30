@@ -69,6 +69,6 @@ public class CandidateDaoJpa extends AbstractDaoJpa<Candidate> implements Candid
 
 	@Override
 	public List<Candidate> search(final String searchText) {
-		return this.getPf().search(Candidate.class, searchText, "name", "surname", "jobProfile", "tags.label");
+		return this.getPersistenceFacade().search(Candidate.class, searchText, "name", "surname", "jobProfile", "tags.label");
 	}
 }

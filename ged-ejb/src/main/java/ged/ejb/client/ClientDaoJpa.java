@@ -45,6 +45,6 @@ public class ClientDaoJpa extends AbstractDaoJpa<Client> implements ClientDao {
 
 	@Override
 	public List<Client> search(final String searchText) {
-		return this.getPf().search(Client.class, searchText, "name");
+		return this.getPersistenceFacade().search(Client.class, searchText, "name");
 	}
 }

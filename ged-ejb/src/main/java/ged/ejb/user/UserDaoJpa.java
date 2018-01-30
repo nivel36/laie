@@ -35,7 +35,7 @@ public final class UserDaoJpa extends AbstractDaoJpa<User> implements UserDao {
 		logger.trace("Delete user closures for user {}", user.getEmail());
 		final List<UserClosure> userClosures = findAntecessorsUserClosures(user);
 		for (final UserClosure userClosure : userClosures) {
-			getPf().delete(UserClosure.class, userClosure);
+			getPersistenceFacade().delete(UserClosure.class, userClosure);
 		}
 	}
 
@@ -106,7 +106,7 @@ public final class UserDaoJpa extends AbstractDaoJpa<User> implements UserDao {
 	@Override
 	public void insert(final User user) {
 		Objects.requireNonNull(user);
-		getPf().insert(user);
+		getPersistenceFacade().insert(user);
 		if (user.getManager() != null) {
 			insertUserClosures(user);
 		}
@@ -119,7 +119,7 @@ public final class UserDaoJpa extends AbstractDaoJpa<User> implements UserDao {
 		newUserClosure.setAntecessor(antecessor);
 		newUserClosure.setDescendant(descendant);
 		newUserClosure.setPathLength(pathLength);
-		getPf().insert(newUserClosure);
+		getPersistenceFacade().insert(newUserClosure);
 	}
 
 	private void insertUserClosures(final User user) {
@@ -143,7 +143,7 @@ public final class UserDaoJpa extends AbstractDaoJpa<User> implements UserDao {
 
 	@Override
 	public List<User> search(final String searchText) {
-		return getPf().search(User.class, searchText, NAME, SURNAME, EMAIL);
+		return getPersistenceFacade().search(User.class, searchText, NAME, SURNAME, EMAIL);
 	}
 
 	@Override
@@ -159,6 +159,6 @@ public final class UserDaoJpa extends AbstractDaoJpa<User> implements UserDao {
 			deleteUserClosures(userInDatabase);
 			insertUserClosures(user);
 		}
-		return getPf().update(user);
+		return getPersistenceFacade().update(user);
 	}
 }

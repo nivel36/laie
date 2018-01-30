@@ -51,6 +51,6 @@ public class JobOfferDaoJpa extends AbstractDaoJpa<JobOffer> implements JobOffer
 
 	@Override
 	public List<JobOffer> search(final String searchText) {
-		return this.getPf().search(JobOffer.class, searchText, "name", "client.name");
+		return this.getPersistenceFacade().search(JobOffer.class, searchText, "name", "client.name");
 	}
 }
