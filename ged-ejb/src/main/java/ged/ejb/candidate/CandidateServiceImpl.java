@@ -61,11 +61,17 @@ public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> imp
 
 	@Override
 	public UploadedServerFile findFile(final long id) {
+		if (id < 1) {
+			throw new IllegalArgumentException("id: " + id);
+		}
 		return this.uploadedServerFileDao.find(id);
 	}
 
 	@Override
 	public List<Candidate> findLastAddedCandidates(final int numberOfCandidates) {
+		if (numberOfCandidates < 1) {
+			throw new IllegalArgumentException("numberOfCandidates: " + numberOfCandidates);
+		}
 		return this.candidateDao.findLastAddedCandidates(numberOfCandidates);
 	}
 
@@ -90,6 +96,7 @@ public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> imp
 
 	@Override
 	public void insertFile(final UploadedServerFile file) {
+		Objects.requireNonNull(file);
 		this.uploadedServerFileDao.insert(file);
 	}
 
@@ -106,6 +113,7 @@ public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> imp
 
 	@Override
 	public UploadedServerFile updateFile(final UploadedServerFile file) {
+		Objects.requireNonNull(file);
 		return this.uploadedServerFileDao.update(file);
 	}
 }
