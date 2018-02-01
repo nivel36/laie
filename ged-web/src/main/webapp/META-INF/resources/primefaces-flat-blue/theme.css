@@ -4141,8 +4141,9 @@ body .ui-datatable thead th, body .ui-datatable tbody td, body .ui-datatable tfo
 	border-width: 0px;
 }
 
-body .ui-datatable tbody tr.ui-state-hover {
+body .ui-datatable .ui-datatable-data tr.ui-state-hover {
 	background-color: #eee;
+	border-color: #ccc;
 }
 
 body .ui-datatable .ui-column-title {
