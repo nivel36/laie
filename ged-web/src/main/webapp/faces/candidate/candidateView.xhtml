@@ -28,10 +28,10 @@
 										update="userPanelForm growl" auto="true" label="#{i18n['action.add']}"
 										rendered="#{candidateViewBean.editable}" />
 									<h:outputLabel for="uploadImage_input">
-										<p:graphicImage class="image" styleClass="#{candidateViewBean.editable ? 'selectable' : ''}"
+										<p:graphicImage styleClass="#{candidateViewBean.editable ? 'selectable image' : 'image'}"
 											value="/images/#{candidateViewBean.candidate.imageFileName}"
 											rendered="#{not empty candidateViewBean.candidate.imageFileName}" />
-										<p:graphicImage class="image" styleClass="#{candidateViewBean.editable? 'selectable' : ''}"
+										<p:graphicImage styleClass="#{candidateViewBean.editable? 'selectable image' : 'image'}"
 											value="/resources/img/default-avatar.png" rendered="#{empty candidateViewBean.candidate.imageFileName}" />
 									</h:outputLabel>
 								</h:form>
