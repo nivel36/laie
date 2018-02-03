@@ -17,7 +17,7 @@
 						<div class="card-header"></div>
 						<div class="card-body">
 							<p class="card-category">#{i18n['candidate.candidates']}</p>
-							<span class="number">#{candidateSearchBean.numberOfCandidates}</span>
+							<span class="number">#{candidateListPanelBean.numberOfCandidates}</span>
 						</div>
 						<div class="card-footer"></div>
 					</div>
@@ -56,29 +56,7 @@
 		</div>
 
 		<div class="ui-g">
-			<div class="ui-g-12 ui-xl-3">
-				<h:form id="lastCandidatesForm">
-					<p:panel id="lastCandidates" header="#{i18n['candidate.last_candidates']}">
-						<div class="ui-g">
-							<ui:repeat var="candidate" value="#{candidateSearchBean.lastAddedCandidates}" varStatus="status">
-								<div class="ui-g-12 ui-md-4 ui-lg-4 ui-xl-6">
-									<ui:include src="candidateCard.xhtml">
-										<ui:param name="user" value="#{candidate}" />
-									</ui:include>
-								</div>
-							</ui:repeat>
-						</div>
-						<div class="ui-g">
-							<div class="ui-g-12">
-								<div class="form-action-primary">
-									<p:commandButton value="#{i18n['action.new']}" action="#{candidateSearchBean.newCandidate}" immediate="true" />
-								</div>
-							</div>
-						</div>
-					</p:panel>
-				</h:form>
-			</div>
-			<div class="ui-g-12 ui-xl-9">
+			<div class="ui-g-12 ui-xl-8">
 				<h:form id="searchForm">
 					<p:panel id="searchUserPanel" header="#{i18n['candidate.search']}">
 						<div class="searchForm">
@@ -100,7 +78,7 @@
 						<div class="searchResults">
 							<p:dataTable var="candidate" id="candidate" value="#{candidateSearchBean.candidates}"
 								emptyMessage="#{i18n['candidate.no_candidates_found']}" reflow="true" paginator="true"
-								paginatorPosition="bottom" rows="#{sessionBean.rowsPerPage}" selectionMode="single" 
+								paginatorPosition="bottom" rows="#{sessionBean.rowsPerPage}" selectionMode="single"
 								selection="#{candidateSearchBean.selectedCandidate}" rowKey="#{candidate.id}">
 
 								<p:ajax event="rowSelect" listener="#{candidateSearchBean.onCandidateSelect}" update="@form" />
@@ -136,6 +114,7 @@
 					</p:panel>
 				</h:form>
 			</div>
+				<ui:include src="/faces/candidate/candidateListPanel.xhtml" />
 
 		</div>
 	</ui:define>

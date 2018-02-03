@@ -32,10 +32,6 @@ public class CandidateSearchBean extends AbstractPageBean {
 	@Inject
 	protected transient CandidateService candidateService;
 
-	private List<Candidate> lastAddedCandidates;
-
-	private long numberOfCandidates;
-
 	private String searchText;
 
 	private Candidate selectedCandidate;
@@ -49,14 +45,6 @@ public class CandidateSearchBean extends AbstractPageBean {
 		return this.candidates;
 	}
 
-	public List<Candidate> getLastAddedCandidates() {
-		return this.lastAddedCandidates;
-	}
-
-	public long getNumberOfCandidates() {
-		return this.numberOfCandidates;
-	}
-
 	public String getSearchText() {
 		return this.searchText;
 	}
@@ -68,13 +56,6 @@ public class CandidateSearchBean extends AbstractPageBean {
 	@PostConstruct
 	public void init() {
 		search();
-		this.numberOfCandidates = this.candidateService.findNumberOfCandidates();
-		this.lastAddedCandidates = this.candidateService.findLastAddedCandidates(6);
-	}
-
-	public String newCandidate() {
-		logger.debug("New candidate");
-		return CANDIDATE_EDIT;
 	}
 
 	public void onCandidateSelect() throws IOException {

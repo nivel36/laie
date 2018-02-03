@@ -16,8 +16,8 @@
 					<div class="card card-stats">
 						<div class="card-header"></div>
 						<div class="card-body">
-							<p class="card-category">Candidatos</p>
-							<span class="number">12</span>
+							<p class="card-category">#{i18n['candidate.candidates']}</p>
+							<span class="number">#{candidateListPanelBean.numberOfCandidates}</span>
 						</div>
 						<div class="card-footer"></div>
 					</div>
@@ -72,40 +72,13 @@
 						<div class="ui-g">
 							<div class="ui-g-12">
 								<div class="form-action-primary">
-									<p:commandButton  value="#{i18n['action.new']}"
-										action="/faces/jobOffer/jobOfferEdit.xhtml?faces-redirect=true" />
+									<p:commandButton value="#{i18n['action.new']}" action="/faces/jobOffer/jobOfferEdit.xhtml?faces-redirect=true" />
 								</div>
 							</div>
 						</div>
 					</p:panel>
 				</div>
-				<div class="ui-g-12 ui-lg-6">
-					<p:panel header="#{i18n['index.last_candidates']}">
-						<div class="ui-g">
-							<div class="ui-g-12">
-								<h:outputText value="#{i18n['candidate.no_candidates_found']}" rendered="#{empty indexBean.candidates}"
-									styleClass="text" />
-
-								<ui:repeat var="candidate" value="${indexBean.candidates}">
-									<h:panelGroup styleClass="card" layout="block">
-										<h:graphicImage value="/resources/img/classic-blue/no-photo.png" styleClass="photo" />
-										<h:outputText styleClass="name" value="${candidate.name} ${candidate.surname}" />
-										<br />
-										<h:outputText value="Arquitecto de software en GFI" />
-									</h:panelGroup>
-								</ui:repeat>
-							</div>
-						</div>
-						<div class="ui-g">
-							<div class="ui-g-12">
-								<div class="form-action-primary">
-									<p:commandButton  value="#{i18n['action.new']}"
-										action="candidate/candidateEdit?faces-redirect=true" />
-								</div>
-							</div>
-						</div>
-					</p:panel>
-				</div>
+				<ui:include src="/faces/candidate/candidateListPanel.xhtml" />
 			</div>
 			<div class="ui-g">
 				<div class="ui-g-12 ui-lg-6">
@@ -113,7 +86,7 @@
 						<div class="ui-g">
 							<div class="ui-g-12">
 								<div class="form-action-primary">
-									<p:commandButton  value="#{i18n['action.new']}" action="#{jobOfferViewBean.edit}" />
+									<p:commandButton value="#{i18n['action.new']}" action="#{jobOfferViewBean.edit}" />
 								</div>
 							</div>
 						</div>
@@ -125,7 +98,7 @@
 						<div class="ui-g">
 							<div class="ui-g-12">
 								<div class="form-action-primary">
-									<p:commandButton  value="#{i18n['action.new']}" action="#{jobOfferViewBean.edit}" />
+									<p:commandButton value="#{i18n['action.new']}" action="#{jobOfferViewBean.edit}" />
 								</div>
 							</div>
 						</div>

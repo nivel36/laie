@@ -68,15 +68,6 @@ Complement color
 	box-sizing: border-box;
 }
 
-.wrapper {
-	font: normal 12px "Roboto", "Helvetica", "Arial", sans-serif;
-	overflow: auto;
-	margin: 0px auto;
-	height: 100%;
-	width: 100%;
-	background-color: #f7f7f7;
-}
-
 #main-panel {
 	width: 100%;
 	position: relative;
@@ -91,14 +82,6 @@ Complement color
 #aside {
 }
 
-footer {
-	padding: 1em;
-	text-align: center;
-	float: left;
-	width: 100%;
-	color: white;
-	color: 999999;
-}
 
 .row {
 	widht: 100%;

@@ -1,4 +1,8 @@
 /* azul#133BA9 */
+html {
+	height: 100%;	
+}
+
 body, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4 {
 	font-family: "Helvetica", "Arial", sans-serif;
 	font-weight: 300;
@@ -8,6 +12,24 @@ body, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4 {
 
 body {
 	font-size: 14px;
+	min-height: 100%;
+	background-color: #f7f7f7;
+}
+
+.wrapper {
+	font: normal 12px "Roboto", "Helvetica", "Arial", sans-serif;
+	overflow: auto;
+	margin: 0px auto;
+	height: 100%;
+	width: 100%;
+}
+
+footer {
+	padding: 1em;
+	text-align: center;
+	float: left;
+	width: 100%;
+	color: 999999;
 }
 
 h1 {

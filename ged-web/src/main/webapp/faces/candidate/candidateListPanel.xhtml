@@ -1,0 +1,26 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui"
+	xmlns:i18n="http://legion.com/i18n">
+	<div class="ui-g-12 ui-lg-6 ui-xl-4">
+		<h:form id="lastCandidatesForm">
+			<p:panel id="lastCandidates" header="#{i18n['candidate.last_candidates']}">
+				<div class="ui-g">
+					<ui:repeat var="candidate" value="#{candidateListPanelBean.lastAddedCandidates}" varStatus="status">
+						<div class="ui-g-12 ui-md-4 ui-lg-6">
+							<ui:include src="candidateCard.xhtml">
+								<ui:param name="user" value="#{candidate}" />
+							</ui:include>
+						</div>
+					</ui:repeat>
+				</div>
+				<div class="ui-g">
+					<div class="ui-g-12">
+						<div class="form-action-primary">
+							<p:commandButton value="#{i18n['action.new']}" action="#{candidateListPanelBean.newCandidate}" immediate="true" />
+						</div>
+					</div>
+				</div>
+			</p:panel>
+		</h:form>
+	</div>
+</ui:composition>
