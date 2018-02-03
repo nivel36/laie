@@ -6,14 +6,6 @@
 	box-sizing: border-box;
 }
 
-body .ui-inputfield.ui-state-error {
-	border: 1px solid red;
-}
-
-body .ui-inputfield.ui-state-disabled {
-	background: #f2f2f2;
-}
-
 body .ui-icon {
 	font-family: FontAwesome;
 	font-size: 16px;
@@ -4197,16 +4189,32 @@ body .ui-inputfield {
 	height: 30px;
 }
 
+body .ui-inputfield.ui-state-error {
+	border: 1px solid red;
+}
+
+body .ui-inputfield.ui-state-disabled {
+	background: #f2f2f2;
+}
+
+body .ui-inputfield.ui-state-focus {
+	box-shadow: 0 0 5px #5b9bd1;
+}
+
+body .ui-inputfield.ui-state-disabled.ui-state-focus, body .ui-inputfield[aria-readonly="true"].ui-state-focus {
+	box-shadow: none;
+}
+
+body .ui-inputfield[aria-readonly="true"] {
+	background: #f2f2f2;
+}
+
 body .ui-calendar .ui-inputfield {
 	width: 100%;
 }
 
 body .ui-inputtext[aria-required="true"], body .ui-inputtext[data-p-required="true"] {
 	border-left: 2px solid #a2aab8;
-}
-
-body .ui-inputfield[aria-readonly="true"] {
-	background: #f2f2f2;
 }
 
 body .ui-datepicker {

@@ -159,9 +159,8 @@ h4 {
 }
 
 .form-group {
-	align-items: center;
-	overflow: auto;
-	display: relative;
+	display: block;
+	position: relative;
 }
 
 .form-search {
@@ -230,10 +229,11 @@ h4 {
 	padding: 10px 25px;
 }
 
-body .input-icon {
-	display: block;
+.form-group .input-icon {
 	font-size: 18px;
-	position: relative;
+	position: absolute;
+	right: 6px;
+	top: 2px;
 }
 
 body .input-icon .input-icon-left {
@@ -363,16 +363,42 @@ body .input-icon .input-icon-right {
 	animation: color-me-in 1s;
 }
 
-@keyframes color-me-in { 
-	0% {
-		background-color: #d1e7cc;
-	}
-	100% {
-		background: #effffc;
-		background-color: 1s ease-out;
-	}
+@
+keyframes color-me-in { 0% {
+	background-color: #d1e7cc;
 }
 
+100%
+{
+background
+
+
+:
+
+ 
+
+#effffc
+
+
+;
+background-color
+
+
+:
+
+ 
+
+1
+s
+
+ 
+
+ease-out
+
+
+;
+}
+}
 .card.card-stats .card-header {
 	font-size: 30px;
 	float: left;
