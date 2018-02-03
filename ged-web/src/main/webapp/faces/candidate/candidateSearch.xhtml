@@ -79,7 +79,8 @@
 							<p:dataTable var="candidate" id="candidate" value="#{candidateSearchBean.candidates}"
 								emptyMessage="#{i18n['candidate.no_candidates_found']}" reflow="true" paginator="true"
 								paginatorPosition="bottom" rows="#{sessionBean.rowsPerPage}" selectionMode="single"
-								selection="#{candidateSearchBean.selectedCandidate}" rowKey="#{candidate.id}">
+								selection="#{candidateSearchBean.selectedCandidate}" rowKey="#{candidate.id}" sortBy="#{candidate.fullName}"
+								sortOrder="ascending">
 
 								<p:ajax event="rowSelect" listener="#{candidateSearchBean.onCandidateSelect}" update="@form" />
 
@@ -114,7 +115,7 @@
 					</p:panel>
 				</h:form>
 			</div>
-				<ui:include src="/faces/candidate/candidateListPanel.xhtml" />
+			<ui:include src="/faces/candidate/candidateListPanel.xhtml" />
 
 		</div>
 	</ui:define>

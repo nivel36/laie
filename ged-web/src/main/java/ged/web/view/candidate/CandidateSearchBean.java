@@ -2,7 +2,6 @@ package ged.web.view.candidate;
 
 import java.io.IOException;
 import java.lang.invoke.MethodHandles;
-import java.util.Comparator;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -20,8 +19,6 @@ import ged.web.core.view.AbstractPageBean;
 @Named
 @ViewScoped
 public class CandidateSearchBean extends AbstractPageBean {
-
-	private static final String CANDIDATE_EDIT = "candidateEdit?faces-redirect=true";
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
@@ -58,14 +55,21 @@ public class CandidateSearchBean extends AbstractPageBean {
 		search();
 	}
 
-	public void onCandidateSelect() throws IOException {
-		this.externalContext.redirect("candidateView.xhtml?id=" + this.selectedCandidate.getId());
+	public void onCandidateSelect() {
+		try {
+			final String context = this.externalContext.getContextName();
+			final StringBuilder url = new StringBuilder();
+			url.append("/").append(context).append("/faces/candidate/candidateView.xhtml?id=")
+					.append(this.selectedCandidate.getId());
+			this.externalContext.redirect(url.toString());
+		} catch (final IOException e) {
+			logger.error("Unable to redirect to page");
+		}
 	}
 
 	public void search() {
 		logger.debug("Searching for candidates");
 		this.candidates = this.candidateService.search(this.searchText);
-		sortCandidates(this.candidates);
 	}
 
 	public void setCandidateService(final CandidateService candidateService) {
@@ -78,13 +82,5 @@ public class CandidateSearchBean extends AbstractPageBean {
 
 	public void setSelectedCandidate(final Candidate selectedCandidate) {
 		this.selectedCandidate = selectedCandidate;
-	}
-
-	private void sortCandidates(final List<Candidate> candidates) {
-		candidates.sort(Comparator.comparing(Candidate::getFullName));
-	}
-
-	public String view() {
-		return CANDIDATE_EDIT + "&includeViewParams=true";
 	}
 }
