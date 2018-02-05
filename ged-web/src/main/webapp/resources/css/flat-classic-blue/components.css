@@ -13,7 +13,7 @@ body, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4 {
 body {
 	font-size: 14px;
 	min-height: 100%;
-	background-color: #f7f7f7;
+	background-color: #f2f2f2;
 }
 
 .wrapper {
@@ -291,23 +291,22 @@ body .input-icon .input-icon-right {
 	overflow: auto;
 }
 
-.panel.user-card {
+.user-card {
 	display: inline-block;
 	position: relative;
 	width: 100%;
-	background: white;
-	border: 1px solid #BDBDBD;
+	background: transparent;
 	padding: 0px;
 }
 
-.panel.user-card .user-image {
-	padding: 20px;
+.user-card .user-image {
+	padding: 5px 10px;
 	text-align: center;
 }
 
-.panel.user-card .user-image .image {
-	width: 149px;
-	height: 149px;
+.user-card .user-image .image {
+	width: 129px;
+	height: 129px;
 	border-radius: 50%;
 	object-fit: cover;
 }
@@ -318,7 +317,7 @@ body .input-icon .input-icon-right {
 
 .user-card .user-rating {
 	text-align: center;
-	margin: 10px;
+	margin: 5px;
 }
 
 .user-card .user-info .name {
@@ -326,14 +325,6 @@ body .input-icon .input-icon-right {
 	color: #5a7391;
 	font-size: 20px;
 	font-weight: 600;
-	margin-bottom: 7px;
-}
-
-.user-card .user-info .position {
-	text-transform: uppercase;
-	color: #5b9bd1;
-	font-size: 13px;
-	font-weight: 800;
 	margin-bottom: 7px;
 }
 

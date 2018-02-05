@@ -4420,7 +4420,7 @@ body .ui-panel .ui-tabs .ui-tabs-panel {
 }
 
 body .ui-widget-content {
-	background: #fff;
+	background: #fafafa;
 	color: rgba(0, 0, 0, 0.87);
 }
 
@@ -4555,7 +4555,7 @@ body .ui-chips-container.ui-state-disabled {
 	height: auto;
 	min-height: 30px;
 	border: 1px solid transparent;
-	background: white;
+	background: transparent;
 }
 
 body .ui-chips-container .ui-chips-token {

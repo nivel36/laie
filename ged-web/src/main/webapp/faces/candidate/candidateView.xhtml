@@ -17,183 +17,172 @@
 		</f:metadata>
 
 		<div class="ui-g">
-			<div class="ui-g-12 ui-lg-3 ui-xl-2">
-				<div class="panel user-card">
-					<div class="panel-content">
-						<div class="panel-candidate-detail">
-							<div class="user-image">
-								<h:form id="userPanelForm" enctype="multipart/form-data">
-									<p:fileUpload id="uploadImage" styleClass="uploadImageButton"
-										fileUploadListener="#{candidateViewBean.uploadImage}" mode="advanced" dragDropSupport="false"
-										update="userPanelForm growl" auto="true" label="#{i18n['action.add']}"
-										rendered="#{candidateViewBean.editable}" />
-									<h:outputLabel for="uploadImage_input">
-										<p:graphicImage styleClass="#{candidateViewBean.editable ? 'selectable image' : 'image'}"
-											value="/images/#{candidateViewBean.candidate.imageFileName}"
-											rendered="#{not empty candidateViewBean.candidate.imageFileName}" />
-										<p:graphicImage styleClass="#{candidateViewBean.editable? 'selectable image' : 'image'}"
-											value="/resources/img/default-avatar.png" rendered="#{empty candidateViewBean.candidate.imageFileName}" />
-									</h:outputLabel>
-								</h:form>
+			<div class="ui-g-12 ui-lg-12 ui-xl-7">
+				<p:panel header="#{candidateViewBean.candidate}">
+					<h:form id="userPanelForm" enctype="multipart/form-data">
+						<div class="ui-g">
+							<div class="ui-g-12 ui-lg-3 ui-xl-2">
+								<div class="user-card">
+									<div class="user-image">
+										<p:fileUpload id="uploadImage" styleClass="uploadImageButton"
+											fileUploadListener="#{candidateViewBean.uploadImage}" mode="advanced" dragDropSupport="false"
+											update="userPanelForm growl" auto="true" label="#{i18n['action.add']}"
+											rendered="#{candidateViewBean.editable}" />
+										<h:outputLabel for="uploadImage_input">
+											<p:graphicImage styleClass="#{candidateViewBean.editable ? 'selectable image' : 'image'}"
+												value="/images/#{candidateViewBean.candidate.imageFileName}"
+												rendered="#{not empty candidateViewBean.candidate.imageFileName}" />
+											<p:graphicImage styleClass="#{candidateViewBean.editable? 'selectable image' : 'image'}"
+												value="/resources/img/default-avatar.png" rendered="#{empty candidateViewBean.candidate.imageFileName}" />
+										</h:outputLabel>
+									</div>
+									<div class="user-rating">
+										<p:rating value="#{candidateViewBean.candidate.rating}" cancel="false"
+											readonly="#{!candidateViewBean.editable}">
+											<p:ajax event="rate" listener="#{candidateViewBean.onrate}" update="growl" />
+										</p:rating>
+									</div>
+								</div>
+								<div class="ui-g-12">
+									<div class="form-group">
+										<p:chips id="tags" value="#{candidateViewBean.tags}" label="#{i18n['candidate.tags']}"
+											disabled="#{!candidateViewBean.editable}"
+											rendered="#{not empty candidateViewBean.tags or candidateViewBean.editable}" />
+										<h:outputText styleClass="text" value="#{i18n['candidate.message.no_tags']}"
+											rendered="#{empty candidateViewBean.tags and not candidateViewBean.editable}" />
+									</div>
+								</div>
 							</div>
-							<div class="user-info">
-								<div class="name">#{candidateViewBean.candidate.fullName}</div>
-								<div class="position">#{candidateViewBean.candidate.jobProfile}</div>
-							</div>
-							<div class="user-rating">
-								<h:form id="ratingForm">
-									<p:rating value="#{candidateViewBean.candidate.rating}" cancel="false"
-										readonly="#{!candidateViewBean.editable}">
-										<p:ajax event="rate" listener="#{candidateViewBean.onrate}" update="growl" />
-									</p:rating>
-								</h:form>
+
+							<div class="ui-g-12 ui-lg-9 ui-xl-10">
+								<input type="hidden" id="candidateId" value="#{candidateViewBean.candidate.id}" />
+
+								<div class="ui-g">
+									<div class="ui-g-12 ui-md-4">
+										<div class="form-group">
+											<p:outputLabel value="#{i18n['candidate.name']}" for="name" />
+											<p:inputText id="name" value="#{candidateViewBean.candidate.name}" required="true"
+												readonly="#{!candidateViewBean.editable}" />
+										</div>
+										<h:message for="name" errorClass="error" />
+									</div>
+
+									<div class="ui-g-12 ui-md-4">
+										<div class="form-group">
+											<p:outputLabel value="#{i18n['candidate.surname']}" for="surname" />
+											<p:inputText id="surname" value="#{candidateViewBean.candidate.surname}" required="true"
+												readonly="#{!candidateViewBean.editable}" />
+										</div>
+										<h:message for="surname" errorClass="error" />
+									</div>
+
+									<div class="ui-g-12 ui-md-4">
+										<div class="form-group">
+											<p:outputLabel value="#{i18n['candidate.bornDate']}" for="bornDate" />
+											<p:calendar id="bornDate" value="#{candidateViewBean.candidate.bornDate}"
+												disabled="#{!candidateViewBean.editable}" yearRange="c-100:c0" navigator="true" />
+										</div>
+										<h:message for="bornDate" errorClass="error" />
+									</div>
+								</div>
+								<div class="ui-g">
+									<div class="ui-g-12 ui-md-4">
+										<div class="form-group">
+											<p:outputLabel value="#{i18n['candidate.phone_number']}" for="phoneNumber" />
+											<p:inputText id="phoneNumber" value="#{candidateViewBean.candidate.phoneNumber}" required="true"
+												readonly="#{!candidateViewBean.editable}" />
+										</div>
+										<h:message for="phoneNumber" errorClass="error" />
+									</div>
+
+									<div class="ui-g-12 ui-md-4">
+										<div class="form-group">
+											<p:outputLabel value="#{i18n['candidate.email']}" for="email" />
+											<p:inputText id="email" pt:type="email" value="#{candidateViewBean.candidate.email}" required="true"
+												readonly="#{!candidateViewBean.editable}" />
+										</div>
+										<h:message for="email" errorClass="error" />
+									</div>
+
+									<div class="ui-g-12 ui-md-4">
+										<div class="form-group">
+											<p:outputLabel value="#{i18n['candidate.skype']}" for="skype" />
+											<p:inputText id="skype" pt:type="skype" value="#{candidateViewBean.candidate.skype}"
+												readonly="#{!candidateViewBean.editable}" />
+										</div>
+										<h:message for="skype" errorClass="error" />
+									</div>
+								</div>
+
+								<div class="ui-g">
+									<div class="ui-g-12 ui-md-4">
+										<div class="form-group">
+											<p:outputLabel value="#{i18n['address.city']}" for="city" />
+											<p:inputText id="city" value="#{candidateViewBean.candidate.address.city}"
+												readonly="#{!candidateViewBean.editable}" />
+										</div>
+										<h:message for="city" errorClass="error" />
+									</div>
+
+									<div class="ui-g-12 ui-md-4">
+										<div class="form-group">
+											<p:outputLabel value="#{i18n['address.state']}" for="state" />
+											<p:inputText id="state" value="#{candidateViewBean.candidate.address.state}"
+												readonly="#{!candidateViewBean.editable}" />
+										</div>
+										<h:message for="state" errorClass="error" />
+									</div>
+								</div>
+								<div class="ui-g">
+									<div class="ui-g-12 ui-md-4">
+										<div class="form-group">
+											<p:outputLabel value="#{i18n['candidate.jobProfile']}" for="jobProfile" />
+											<p:inputText id="jobProfile" value="#{candidateViewBean.candidate.jobProfile}" required="true"
+												readonly="#{!candidateViewBean.editable}" />
+										</div>
+										<h:message for="jobProfile" errorClass="error" />
+									</div>
+
+									<div class="ui-g-12 ui-md-4">
+										<div class="form-group">
+											<p:outputLabel value="#{i18n['candidate.salary']}" for="salary" />
+											<p:inputText id="salary" value="#{candidateViewBean.candidate.salary}"
+												readonly="#{!candidateViewBean.editable}" />
+										</div>
+										<h:message for="salary" errorClass="error" />
+									</div>
+
+									<div class="ui-g-12 ui-md-4">
+										<div class="form-group">
+											<p:outputLabel value="#{i18n['candidate.expected_salary']}" for="expected_salary" />
+											<p:inputText id="expected_salary" value="#{candidateViewBean.candidate.expectedSalary}"
+												label="#{i18n['candidate.expected_salary']}" readonly="#{!candidateViewBean.editable}" />
+										</div>
+										<h:message for="expected_salary" errorClass="error" />
+									</div>
+
+								</div>
+								<div class="ui-g">
+									<div class="ui-g-12">
+										<div class="form-action-primary">
+											<p:commandButton styleClass="btn-primary" value="#{i18n['action.edit']}"
+												action="#{candidateViewBean.editCandidate}"
+												rendered="#{!candidateViewBean.candidate.deleted and !candidateViewBean.editable}" update="@form growl" />
+											<p:commandButton styleClass="btn-primary" value="#{i18n['action.save']}"
+												action="#{candidateViewBean.saveCandidate}" rendered="#{candidateViewBean.editable}" update="@form growl" />
+											<p:commandButton styleClass="btn-gray" value="#{i18n['action.cancel']}"
+												action="#{candidateViewBean.cancelEditCandidate}" rendered="#{candidateViewBean.editable}" update="@form"
+												process="@this" />
+										</div>
+									</div>
+								</div>
 							</div>
 						</div>
-					</div>
-
-				</div>
+					</h:form>
+				</p:panel>
 			</div>
 
-			<div class="ui-g-12 ui-lg-9 ui-xl-6">
-				<h:form id="form">
-					<input type="hidden" id="candidateId" value="#{candidateViewBean.candidate.id}" />
-					<p:panel header="#{candidateViewBean.candidate}">
-						<div class="ui-g">
-							<div class="ui-g-12 ui-md-4">
-								<div class="form-group">
-									<p:outputLabel value="#{i18n['candidate.name']}" for="name" />
-									<p:inputText id="name" value="#{candidateViewBean.candidate.name}" required="true"
-										readonly="#{!candidateViewBean.editable}" />
-								</div>
-								<h:message for="name" errorClass="error" />
-							</div>
-
-							<div class="ui-g-12 ui-md-4">
-								<div class="form-group">
-									<p:outputLabel value="#{i18n['candidate.surname']}" for="surname" />
-									<p:inputText id="surname" value="#{candidateViewBean.candidate.surname}" required="true"
-										readonly="#{!candidateViewBean.editable}" />
-								</div>
-								<h:message for="surname" errorClass="error" />
-							</div>
-
-							<div class="ui-g-12 ui-md-4">
-								<div class="form-group">
-									<p:outputLabel value="#{i18n['candidate.bornDate']}" for="bornDate" />
-									<p:calendar id="bornDate" value="#{candidateViewBean.candidate.bornDate}"
-										disabled="#{!candidateViewBean.editable}" yearRange="c-100:c0" navigator="true" />
-								</div>
-								<h:message for="bornDate" errorClass="error" />
-							</div>
-						</div>
-						<div class="ui-g">
-							<div class="ui-g-12 ui-md-4">
-								<div class="form-group">
-									<p:outputLabel value="#{i18n['candidate.phone_number']}" for="phoneNumber" />
-									<p:inputText id="phoneNumber" value="#{candidateViewBean.candidate.phoneNumber}" required="true"
-										readonly="#{!candidateViewBean.editable}" />
-								</div>
-								<h:message for="phoneNumber" errorClass="error" />
-							</div>
-
-							<div class="ui-g-12 ui-md-4">
-								<div class="form-group">
-									<p:outputLabel value="#{i18n['candidate.email']}" for="email" />
-									<p:inputText id="email" pt:type="email" value="#{candidateViewBean.candidate.email}" required="true"
-										readonly="#{!candidateViewBean.editable}" />
-								</div>
-								<h:message for="email" errorClass="error" />
-							</div>
-
-							<div class="ui-g-12 ui-md-4">
-								<div class="form-group">
-									<p:outputLabel value="#{i18n['candidate.skype']}" for="skype" />
-									<p:inputText id="skype" pt:type="skype" value="#{candidateViewBean.candidate.skype}"
-										readonly="#{!candidateViewBean.editable}" />
-								</div>
-								<h:message for="skype" errorClass="error" />
-							</div>
-						</div>
-
-						<div class="ui-g">
-							<div class="ui-g-12 ui-md-4">
-								<div class="form-group">
-									<p:outputLabel value="#{i18n['address.city']}" for="city" />
-									<p:inputText id="city" value="#{candidateViewBean.candidate.address.city}"
-										readonly="#{!candidateViewBean.editable}" />
-								</div>
-								<h:message for="city" errorClass="error" />
-							</div>
-
-							<div class="ui-g-12 ui-md-4">
-								<div class="form-group">
-									<p:outputLabel value="#{i18n['address.state']}" for="state" />
-									<p:inputText id="state" value="#{candidateViewBean.candidate.address.state}"
-										readonly="#{!candidateViewBean.editable}" />
-								</div>
-								<h:message for="state" errorClass="error" />
-							</div>
-						</div>
-						<div class="ui-g">
-							<div class="ui-g-12 ui-md-4">
-								<div class="form-group">
-									<p:outputLabel value="#{i18n['candidate.jobProfile']}" for="jobProfile" />
-									<p:inputText id="jobProfile" value="#{candidateViewBean.candidate.jobProfile}" required="true"
-										readonly="#{!candidateViewBean.editable}" />
-								</div>
-								<h:message for="jobProfile" errorClass="error" />
-							</div>
-
-							<div class="ui-g-12 ui-md-4">
-								<div class="form-group">
-									<p:outputLabel value="#{i18n['candidate.salary']}" for="salary" />
-									<p:inputText id="salary" value="#{candidateViewBean.candidate.salary}"
-										readonly="#{!candidateViewBean.editable}" />
-								</div>
-								<h:message for="salary" errorClass="error" />
-							</div>
-
-							<div class="ui-g-12 ui-md-4">
-								<div class="form-group">
-									<p:outputLabel value="#{i18n['candidate.expected_salary']}" for="expected_salary" />
-									<p:inputText id="expected_salary" value="#{candidateViewBean.candidate.expectedSalary}"
-										label="#{i18n['candidate.expected_salary']}" readonly="#{!candidateViewBean.editable}" />
-								</div>
-								<h:message for="expected_salary" errorClass="error" />
-							</div>
-							<div class="ui-g-12">
-								<div class="form-group">
-									<p:outputLabel value="#{i18n['candidate.tags']}" for="tags" />
-									<p:chips id="tags" value="#{candidateViewBean.tags}" label="#{i18n['candidate.tags']}"
-										disabled="#{!candidateViewBean.editable}"
-										rendered="#{not empty candidateViewBean.tags or candidateViewBean.editable}" />
-									<h:outputText styleClass="text" value="#{i18n['candidate.message.no_tags']}"
-										rendered="#{empty candidateViewBean.tags and not candidateViewBean.editable}" />
-								</div>
-							</div>
-						</div>
-						<div class="ui-g">
-							<div class="ui-g-12">
-								<div class="form-action-primary">
-									<p:commandButton styleClass="btn-primary" value="#{i18n['action.edit']}"
-										action="#{candidateViewBean.editCandidate}"
-										rendered="#{!candidateViewBean.candidate.deleted and !candidateViewBean.editable}"
-										update="@form growl :ratingForm :userPanelForm" />
-									<p:commandButton styleClass="btn-primary" value="#{i18n['action.save']}"
-										action="#{candidateViewBean.saveCandidate}" rendered="#{candidateViewBean.editable}"
-										update="@form growl :ratingForm :userPanelForm" />
-									<p:commandButton styleClass="btn-gray" value="#{i18n['action.cancel']}"
-										action="#{candidateViewBean.cancelEditCandidate}" rendered="#{candidateViewBean.editable}"
-										update="@form :ratingForm :userPanelForm" process="@this" />
-								</div>
-							</div>
-						</div>
-					</p:panel>
-				</h:form>
-			</div>
-
-			<div class="ui-g-12 ui-lg-6 ui-xl-4">
-
+			<div class="ui-g-12 ui-lg-6 ui-xl-5">
 				<h:form id="file_form" enctype="multipart/form-data">
 					<p:panel header="#{i18n['file.files']}">
 						<div class="ui-g">
