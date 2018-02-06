@@ -26,6 +26,7 @@ import org.slf4j.LoggerFactory;
 import ged.ejb.UploadedServerFile;
 import ged.ejb.candidate.Candidate;
 import ged.ejb.candidate.CandidateService;
+import ged.ejb.core.Address;
 import ged.ejb.core.tag.Tag;
 import ged.ejb.core.tag.TagService;
 import ged.web.core.util.ConfigurationProperty;
@@ -66,6 +67,14 @@ public class CandidateViewBean extends AbstractPageBean {
 
 	@Inject
 	private transient TagService tagService;
+
+	public Candidate buildNewCandidate() {
+		final Candidate candidate = new Candidate();
+		final Address address = new Address();
+		candidate.setAddress(address);
+		candidate.setOwner(this.sessionBean.getUser());
+		return candidate;
+	}
 
 	public void cancelEditCandidate() {
 		this.editable = false;
@@ -153,12 +162,24 @@ public class CandidateViewBean extends AbstractPageBean {
 				error();
 			}
 		} else {
-			error();
+			this.editable = true;
+			this.candidate = buildNewCandidate();
 		}
+	}
+
+	public String insertCandidate() {
+		this.candidate.setTags(getTagsFromStringList(this.tags));
+		this.candidate.setFiles(new HashSet<>(this.files));
+		this.candidate = this.candidateService.save(this.candidate);
+		return "candidateView.xhtml?id=" + this.candidate.getId() + "&faces-redirect=true";
 	}
 
 	public boolean isEditable() {
 		return this.editable;
+	}
+
+	public boolean isNewCandidate() {
+		return this.candidate.getId() == 0;
 	}
 
 	public String modifyCandidate() {
@@ -173,7 +194,6 @@ public class CandidateViewBean extends AbstractPageBean {
 	public void onrate(final RateEvent rateEvent) {
 		final Integer rate = (Integer) rateEvent.getRating();
 		this.candidate.setRating(rate);
-		saveCandidate();
 	}
 
 	public void openFile(final UploadedServerFile file) {
@@ -206,13 +226,6 @@ public class CandidateViewBean extends AbstractPageBean {
 
 	private void removeFileFromFileSystem(final String uuid) throws IOException {
 		Files.deleteIfExists(new java.io.File(this.fileDirectory, uuid).toPath());
-	}
-
-	public void saveCandidate() {
-		this.candidate.setTags(getTagsFromStringList(this.tags));
-		this.candidate.setFiles(new HashSet<>(this.files));
-		this.candidate = this.candidateService.save(this.candidate);
-		this.editable = false;
 	}
 
 	private UploadedServerFile saveFile(final String uuid, final String fileName) {
@@ -260,6 +273,13 @@ public class CandidateViewBean extends AbstractPageBean {
 		logger.debug("UNDELETE action");
 		this.candidate.setDeleted(false);
 		this.candidate = this.candidateService.save(this.candidate);
+	}
+
+	public void updateCandidate() {
+		this.candidate.setTags(getTagsFromStringList(this.tags));
+		this.candidate.setFiles(new HashSet<>(this.files));
+		this.candidate = this.candidateService.save(this.candidate);
+		this.editable = false;
 	}
 
 	public void updateFile(final UploadedServerFile file) {

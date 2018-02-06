@@ -18,7 +18,7 @@
 
 		<div class="ui-g">
 			<div class="ui-g-12 ui-lg-12 ui-xl-7">
-				<p:panel header="#{candidateViewBean.candidate}">
+				<p:panel header="#{candidateViewBean.newCandidate?i18n['candidate.new_candidate']:candidateViewBean.candidate}">
 					<h:form id="userPanelForm" enctype="multipart/form-data">
 						<div class="ui-g">
 							<div class="ui-g-12 ui-lg-3 ui-xl-2">
@@ -169,10 +169,16 @@
 												action="#{candidateViewBean.editCandidate}"
 												rendered="#{!candidateViewBean.candidate.deleted and !candidateViewBean.editable}" update="@form growl" />
 											<p:commandButton styleClass="btn-primary" value="#{i18n['action.save']}"
-												action="#{candidateViewBean.saveCandidate}" rendered="#{candidateViewBean.editable}" update="@form growl" />
+												action="#{candidateViewBean.insertCandidate}" rendered="#{candidateViewBean.newCandidate}"  />
+											<p:commandButton styleClass="btn-primary" value="#{i18n['action.save']}"
+												action="#{candidateViewBean.updateCandidate}"
+												rendered="#{candidateViewBean.editable and not candidateViewBean.newCandidate}" update="@form growl" />
 											<p:commandButton styleClass="btn-gray" value="#{i18n['action.cancel']}"
-												action="#{candidateViewBean.cancelEditCandidate}" rendered="#{candidateViewBean.editable}" update="@form"
+												action="#{candidateViewBean.cancelEditCandidate}"
+												rendered="#{candidateViewBean.editable and not candidateViewBean.newCandidate}" update="@form"
 												process="@this" />
+											<p:button styleClass="btn-gray" value="#{i18n['action.cancel']}" outcome="candidateSearch"
+												rendered="#{candidateViewBean.newCandidate}"/>
 										</div>
 									</div>
 								</div>
@@ -184,7 +190,7 @@
 
 			<div class="ui-g-12 ui-lg-6 ui-xl-5">
 				<h:form id="file_form" enctype="multipart/form-data">
-					<p:panel header="#{i18n['file.files']}">
+					<p:panel header="#{i18n['file.files']}" rendered="#{not candidateViewBean.newCandidate}">
 						<div class="ui-g">
 							<div class="ui-g-12">
 								<p:dataTable var="file" id="files" value="#{candidateViewBean.files}" emptyMessage="#{i18n['file.no_files']}"
@@ -224,12 +230,12 @@
 			</div>
 
 			<div class="ui-g-12 ui-lg-6 ui-xl-6">
-				<p:panel header="#{i18n['job_candidature.job_candidatures']}">
+				<p:panel header="#{i18n['job_candidature.job_candidatures']}" rendered="#{not candidateViewBean.newCandidate}">
 				</p:panel>
 			</div>
 
 			<div class="ui-g-12 ui-lg-6 ui-xl-6">
-				<p:panel header="#{i18n['curriculum.curricula']}">
+				<p:panel header="#{i18n['curriculum.curricula']}" rendered="#{not candidateViewBean.newCandidate}">
 				</p:panel>
 			</div>
 
