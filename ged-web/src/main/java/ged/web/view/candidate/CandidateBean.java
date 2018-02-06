@@ -36,7 +36,7 @@ import ged.web.core.view.AbstractPageBean;
 
 @Named
 @ViewScoped
-public class CandidateViewBean extends AbstractPageBean {
+public class CandidateBean extends AbstractPageBean {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
@@ -171,7 +171,7 @@ public class CandidateViewBean extends AbstractPageBean {
 		this.candidate.setTags(getTagsFromStringList(this.tags));
 		this.candidate.setFiles(new HashSet<>(this.files));
 		this.candidate = this.candidateService.save(this.candidate);
-		return "candidateView.xhtml?id=" + this.candidate.getId() + "&faces-redirect=true";
+		return "candidate.xhtml?id=" + this.candidate.getId() + "&faces-redirect=true";
 	}
 
 	public boolean isEditable() {

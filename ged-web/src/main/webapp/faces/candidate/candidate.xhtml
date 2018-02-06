@@ -12,57 +12,57 @@
 
 	<ui:define name="content">
 		<f:metadata>
-			<f:viewParam name="id" value="#{candidateViewBean.id}" />
-			<f:viewAction action="#{candidateViewBean.init}" />
+			<f:viewParam name="id" value="#{candidateBean.id}" />
+			<f:viewAction action="#{candidateBean.init}" />
 		</f:metadata>
 
 		<div class="ui-g">
 			<div class="ui-g-12 ui-lg-12 ui-xl-7">
-				<p:panel header="#{candidateViewBean.newCandidate?i18n['candidate.new_candidate']:candidateViewBean.candidate}">
+				<p:panel header="#{candidateBean.newCandidate?i18n['candidate.new_candidate']:candidateBean.candidate}">
 					<h:form id="userPanelForm" enctype="multipart/form-data">
 						<div class="ui-g">
 							<div class="ui-g-12 ui-lg-3 ui-xl-2">
 								<div class="user-card">
 									<div class="user-image">
 										<p:fileUpload id="uploadImage" styleClass="uploadImageButton"
-											fileUploadListener="#{candidateViewBean.uploadImage}" mode="advanced" dragDropSupport="false"
+											fileUploadListener="#{candidateBean.uploadImage}" mode="advanced" dragDropSupport="false"
 											update="userPanelForm growl" auto="true" label="#{i18n['action.add']}"
-											rendered="#{candidateViewBean.editable}" />
+											rendered="#{candidateBean.editable}" />
 										<h:outputLabel for="uploadImage_input">
-											<p:graphicImage styleClass="#{candidateViewBean.editable ? 'selectable image' : 'image'}"
-												value="/images/#{candidateViewBean.candidate.imageFileName}"
-												rendered="#{not empty candidateViewBean.candidate.imageFileName}" />
-											<p:graphicImage styleClass="#{candidateViewBean.editable? 'selectable image' : 'image'}"
-												value="/resources/img/default-avatar.png" rendered="#{empty candidateViewBean.candidate.imageFileName}" />
+											<p:graphicImage styleClass="#{candidateBean.editable ? 'selectable image' : 'image'}"
+												value="/images/#{candidateBean.candidate.imageFileName}"
+												rendered="#{not empty candidateBean.candidate.imageFileName}" />
+											<p:graphicImage styleClass="#{candidateBean.editable? 'selectable image' : 'image'}"
+												value="/resources/img/default-avatar.png" rendered="#{empty candidateBean.candidate.imageFileName}" />
 										</h:outputLabel>
 									</div>
 									<div class="user-rating">
-										<p:rating value="#{candidateViewBean.candidate.rating}" cancel="false"
-											readonly="#{!candidateViewBean.editable}">
-											<p:ajax event="rate" listener="#{candidateViewBean.onrate}" update="growl" />
+										<p:rating value="#{candidateBean.candidate.rating}" cancel="false"
+											readonly="#{!candidateBean.editable}">
+											<p:ajax event="rate" listener="#{candidateBean.onrate}" update="growl" />
 										</p:rating>
 									</div>
 								</div>
 								<div class="ui-g-12">
 									<div class="form-group">
-										<p:chips id="tags" value="#{candidateViewBean.tags}" label="#{i18n['candidate.tags']}"
-											disabled="#{!candidateViewBean.editable}"
-											rendered="#{not empty candidateViewBean.tags or candidateViewBean.editable}" />
+										<p:chips id="tags" value="#{candidateBean.tags}" label="#{i18n['candidate.tags']}"
+											disabled="#{!candidateBean.editable}"
+											rendered="#{not empty candidateBean.tags or candidateBean.editable}" />
 										<h:outputText styleClass="text" value="#{i18n['candidate.message.no_tags']}"
-											rendered="#{empty candidateViewBean.tags and not candidateViewBean.editable}" />
+											rendered="#{empty candidateBean.tags and not candidateBean.editable}" />
 									</div>
 								</div>
 							</div>
 
 							<div class="ui-g-12 ui-lg-9 ui-xl-10">
-								<input type="hidden" id="candidateId" value="#{candidateViewBean.candidate.id}" />
+								<input type="hidden" id="candidateId" value="#{candidateBean.candidate.id}" />
 
 								<div class="ui-g">
 									<div class="ui-g-12 ui-md-4">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['candidate.name']}" for="name" />
-											<p:inputText id="name" value="#{candidateViewBean.candidate.name}" required="true"
-												readonly="#{!candidateViewBean.editable}" />
+											<p:inputText id="name" value="#{candidateBean.candidate.name}" required="true"
+												readonly="#{!candidateBean.editable}" />
 										</div>
 										<h:message for="name" errorClass="error" />
 									</div>
@@ -70,8 +70,8 @@
 									<div class="ui-g-12 ui-md-4">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['candidate.surname']}" for="surname" />
-											<p:inputText id="surname" value="#{candidateViewBean.candidate.surname}" required="true"
-												readonly="#{!candidateViewBean.editable}" />
+											<p:inputText id="surname" value="#{candidateBean.candidate.surname}" required="true"
+												readonly="#{!candidateBean.editable}" />
 										</div>
 										<h:message for="surname" errorClass="error" />
 									</div>
@@ -79,8 +79,8 @@
 									<div class="ui-g-12 ui-md-4">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['candidate.bornDate']}" for="bornDate" />
-											<p:calendar id="bornDate" value="#{candidateViewBean.candidate.bornDate}"
-												disabled="#{!candidateViewBean.editable}" yearRange="c-100:c0" navigator="true" />
+											<p:calendar id="bornDate" value="#{candidateBean.candidate.bornDate}"
+												disabled="#{!candidateBean.editable}" yearRange="c-100:c0" navigator="true" />
 										</div>
 										<h:message for="bornDate" errorClass="error" />
 									</div>
@@ -89,8 +89,8 @@
 									<div class="ui-g-12 ui-md-4">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['candidate.phone_number']}" for="phoneNumber" />
-											<p:inputText id="phoneNumber" value="#{candidateViewBean.candidate.phoneNumber}" required="true"
-												readonly="#{!candidateViewBean.editable}" />
+											<p:inputText id="phoneNumber" value="#{candidateBean.candidate.phoneNumber}" required="true"
+												readonly="#{!candidateBean.editable}" />
 										</div>
 										<h:message for="phoneNumber" errorClass="error" />
 									</div>
@@ -98,8 +98,8 @@
 									<div class="ui-g-12 ui-md-4">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['candidate.email']}" for="email" />
-											<p:inputText id="email" pt:type="email" value="#{candidateViewBean.candidate.email}" required="true"
-												readonly="#{!candidateViewBean.editable}" />
+											<p:inputText id="email" pt:type="email" value="#{candidateBean.candidate.email}" required="true"
+												readonly="#{!candidateBean.editable}" />
 										</div>
 										<h:message for="email" errorClass="error" />
 									</div>
@@ -107,8 +107,8 @@
 									<div class="ui-g-12 ui-md-4">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['candidate.skype']}" for="skype" />
-											<p:inputText id="skype" pt:type="skype" value="#{candidateViewBean.candidate.skype}"
-												readonly="#{!candidateViewBean.editable}" />
+											<p:inputText id="skype" pt:type="skype" value="#{candidateBean.candidate.skype}"
+												readonly="#{!candidateBean.editable}" />
 										</div>
 										<h:message for="skype" errorClass="error" />
 									</div>
@@ -118,8 +118,8 @@
 									<div class="ui-g-12 ui-md-4">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['address.city']}" for="city" />
-											<p:inputText id="city" value="#{candidateViewBean.candidate.address.city}"
-												readonly="#{!candidateViewBean.editable}" />
+											<p:inputText id="city" value="#{candidateBean.candidate.address.city}"
+												readonly="#{!candidateBean.editable}" />
 										</div>
 										<h:message for="city" errorClass="error" />
 									</div>
@@ -127,8 +127,8 @@
 									<div class="ui-g-12 ui-md-4">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['address.state']}" for="state" />
-											<p:inputText id="state" value="#{candidateViewBean.candidate.address.state}"
-												readonly="#{!candidateViewBean.editable}" />
+											<p:inputText id="state" value="#{candidateBean.candidate.address.state}"
+												readonly="#{!candidateBean.editable}" />
 										</div>
 										<h:message for="state" errorClass="error" />
 									</div>
@@ -137,8 +137,8 @@
 									<div class="ui-g-12 ui-md-4">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['candidate.jobProfile']}" for="jobProfile" />
-											<p:inputText id="jobProfile" value="#{candidateViewBean.candidate.jobProfile}" required="true"
-												readonly="#{!candidateViewBean.editable}" />
+											<p:inputText id="jobProfile" value="#{candidateBean.candidate.jobProfile}" required="true"
+												readonly="#{!candidateBean.editable}" />
 										</div>
 										<h:message for="jobProfile" errorClass="error" />
 									</div>
@@ -146,8 +146,8 @@
 									<div class="ui-g-12 ui-md-4">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['candidate.salary']}" for="salary" />
-											<p:inputText id="salary" value="#{candidateViewBean.candidate.salary}"
-												readonly="#{!candidateViewBean.editable}" />
+											<p:inputText id="salary" value="#{candidateBean.candidate.salary}"
+												readonly="#{!candidateBean.editable}" />
 										</div>
 										<h:message for="salary" errorClass="error" />
 									</div>
@@ -155,8 +155,8 @@
 									<div class="ui-g-12 ui-md-4">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['candidate.expected_salary']}" for="expected_salary" />
-											<p:inputText id="expected_salary" value="#{candidateViewBean.candidate.expectedSalary}"
-												label="#{i18n['candidate.expected_salary']}" readonly="#{!candidateViewBean.editable}" />
+											<p:inputText id="expected_salary" value="#{candidateBean.candidate.expectedSalary}"
+												label="#{i18n['candidate.expected_salary']}" readonly="#{!candidateBean.editable}" />
 										</div>
 										<h:message for="expected_salary" errorClass="error" />
 									</div>
@@ -166,19 +166,19 @@
 									<div class="ui-g-12">
 										<div class="form-action-primary">
 											<p:commandButton styleClass="btn-primary" value="#{i18n['action.edit']}"
-												action="#{candidateViewBean.editCandidate}"
-												rendered="#{!candidateViewBean.candidate.deleted and !candidateViewBean.editable}" update="@form growl" />
+												action="#{candidateBean.editCandidate}"
+												rendered="#{!candidateBean.candidate.deleted and !candidateBean.editable}" update="@form growl" />
 											<p:commandButton styleClass="btn-primary" value="#{i18n['action.save']}"
-												action="#{candidateViewBean.insertCandidate}" rendered="#{candidateViewBean.newCandidate}"  />
+												action="#{candidateBean.insertCandidate}" rendered="#{candidateBean.newCandidate}"  />
 											<p:commandButton styleClass="btn-primary" value="#{i18n['action.save']}"
-												action="#{candidateViewBean.updateCandidate}"
-												rendered="#{candidateViewBean.editable and not candidateViewBean.newCandidate}" update="@form growl" />
+												action="#{candidateBean.updateCandidate}"
+												rendered="#{candidateBean.editable and not candidateBean.newCandidate}" update="@form growl" />
 											<p:commandButton styleClass="btn-gray" value="#{i18n['action.cancel']}"
-												action="#{candidateViewBean.cancelEditCandidate}"
-												rendered="#{candidateViewBean.editable and not candidateViewBean.newCandidate}" update="@form"
+												action="#{candidateBean.cancelEditCandidate}"
+												rendered="#{candidateBean.editable and not candidateBean.newCandidate}" update="@form"
 												process="@this" />
 											<p:button styleClass="btn-gray" value="#{i18n['action.cancel']}" outcome="candidateSearch"
-												rendered="#{candidateViewBean.newCandidate}"/>
+												rendered="#{candidateBean.newCandidate}"/>
 										</div>
 									</div>
 								</div>
@@ -190,26 +190,26 @@
 
 			<div class="ui-g-12 ui-lg-6 ui-xl-5">
 				<h:form id="file_form" enctype="multipart/form-data">
-					<p:panel header="#{i18n['file.files']}" rendered="#{not candidateViewBean.newCandidate}">
+					<p:panel header="#{i18n['file.files']}" rendered="#{not candidateBean.newCandidate}">
 						<div class="ui-g">
 							<div class="ui-g-12">
-								<p:dataTable var="file" id="files" value="#{candidateViewBean.files}" emptyMessage="#{i18n['file.no_files']}"
+								<p:dataTable var="file" id="files" value="#{candidateBean.files}" emptyMessage="#{i18n['file.no_files']}"
 									reflow="true" rows="#{sessionBean.rowsPerPage}" rowKey="#{file.id}">
 
 									<p:column headerText="#{i18n['file.name']}">
-										<h:commandLink action="#{candidateViewBean.openFile(file)}">
+										<h:commandLink action="#{candidateBean.openFile(file)}">
 											<h:outputText value="#{file.name}" />
 										</h:commandLink>
 									</p:column>
 
 									<p:column headerText="#{i18n['file.lopd']}">
 										<p:selectBooleanCheckbox value="#{file.lopd}">
-											<p:ajax event="change" listener="#{candidateViewBean.updateFile(file)}" update="growl file_form" />
+											<p:ajax event="change" listener="#{candidateBean.updateFile(file)}" update="growl file_form" />
 										</p:selectBooleanCheckbox>
 									</p:column>
 
 									<p:column>
-										<p:commandButton icon="fa fa-trash" styleClass="btn-gray" action="#{candidateViewBean.removeFile(file)}"
+										<p:commandButton icon="fa fa-trash" styleClass="btn-gray" action="#{candidateBean.removeFile(file)}"
 											update="growl file_form" />
 									</p:column>
 								</p:dataTable>
@@ -219,9 +219,9 @@
 						<div class="ui-g">
 							<div class="ui-g-12">
 								<div class="form-action-primary">
-									<p:fileUpload id="uploadFile" fileUploadListener="#{candidateViewBean.uploadFile}" mode="advanced"
+									<p:fileUpload id="uploadFile" fileUploadListener="#{candidateBean.uploadFile}" mode="advanced"
 										dragDropSupport="false" update="file_form growl" auto="true" label="#{i18n['action.add']}"
-										disabled="#{candidateViewBean.candidate.files.size() gt 6}" />
+										disabled="#{candidateBean.candidate.files.size() gt 6}" />
 								</div>
 							</div>
 						</div>
@@ -230,12 +230,12 @@
 			</div>
 
 			<div class="ui-g-12 ui-lg-6 ui-xl-6">
-				<p:panel header="#{i18n['job_candidature.job_candidatures']}" rendered="#{not candidateViewBean.newCandidate}">
+				<p:panel header="#{i18n['job_candidature.job_candidatures']}" rendered="#{not candidateBean.newCandidate}">
 				</p:panel>
 			</div>
 
 			<div class="ui-g-12 ui-lg-6 ui-xl-6">
-				<p:panel header="#{i18n['curriculum.curricula']}" rendered="#{not candidateViewBean.newCandidate}">
+				<p:panel header="#{i18n['curriculum.curricula']}" rendered="#{not candidateBean.newCandidate}">
 				</p:panel>
 			</div>
 

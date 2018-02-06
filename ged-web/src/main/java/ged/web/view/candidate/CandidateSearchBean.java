@@ -59,7 +59,7 @@ public class CandidateSearchBean extends AbstractPageBean {
 		try {
 			final String context = this.externalContext.getContextName();
 			final StringBuilder url = new StringBuilder();
-			url.append("/").append(context).append("/faces/candidate/candidateView.xhtml?id=")
+			url.append("/").append(context).append("/faces/candidate/candidate.xhtml?id=")
 					.append(this.selectedCandidate.getId());
 			this.externalContext.redirect(url.toString());
 		} catch (final IOException e) {
