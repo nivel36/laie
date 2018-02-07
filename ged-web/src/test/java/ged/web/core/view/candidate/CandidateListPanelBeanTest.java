@@ -50,7 +50,7 @@ public class CandidateListPanelBeanTest {
 	@Test
 	public void newCanidateTest() {
 		final String newCandidateUrl = this.candidateListPanelBean.newCandidate();
-		Assert.assertEquals("/faces/candidate/candidateEdit?faces-redirect=true", newCandidateUrl);
+		Assert.assertEquals("/faces/candidate/candidate?faces-redirect=true", newCandidateUrl);
 	}
 
 	@Before
