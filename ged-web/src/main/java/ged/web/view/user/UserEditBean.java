@@ -20,11 +20,11 @@ import ged.ejb.user.UserService;
 import ged.ejb.user.role.Role;
 import ged.ejb.user.role.RoleService;
 import ged.web.core.util.TransaltionUtils;
-import ged.web.core.view.AbstractPageBean;
+import ged.web.core.view.AbstractBean;
 
 @Named
 @ViewScoped
-public class UserEditBean extends AbstractPageBean {
+public class UserEditBean extends AbstractBean {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 

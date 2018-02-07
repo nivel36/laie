@@ -27,11 +27,11 @@ import org.apache.pdfbox.util.PDFTextStripper;
 
 import ged.web.core.util.ConfigurationProperty;
 import ged.web.core.util.MessageUtils;
-import ged.web.core.view.AbstractPageBean;
+import ged.web.core.view.AbstractBean;
 
 @Named
 @ViewScoped
-public class AddCurriculumBean extends AbstractPageBean {
+public class AddCurriculumBean extends AbstractBean {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 

@@ -17,11 +17,11 @@ import ged.ejb.curriculum.JobExperience;
 import ged.ejb.curriculum.Language;
 import ged.ejb.curriculum.Skill;
 import ged.web.core.util.Navigate;
-import ged.web.core.view.AbstractPageBean;
+import ged.web.core.view.AbstractBean;
 
 @Named
 @ViewScoped
-public class CurriculumEditBean extends AbstractPageBean {
+public class CurriculumEditBean extends AbstractBean {
 
 	private static final String CURRICULUM_KEY = "curriculum";
 

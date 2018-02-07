@@ -9,11 +9,11 @@ import javax.inject.Named;
 
 import ged.ejb.core.maintenance.AbstractEnumEntity;
 import ged.ejb.core.maintenance.MaintenanceService;
-import ged.web.core.view.AbstractPageBean;
+import ged.web.core.view.AbstractBean;
 
 @Named
 @ViewScoped
-public class MaintenanceEditBean extends AbstractPageBean {
+public class MaintenanceEditBean extends AbstractBean {
 
 	private static final String MAINTENANCE_INDEX = "maintenanceIndex";
 

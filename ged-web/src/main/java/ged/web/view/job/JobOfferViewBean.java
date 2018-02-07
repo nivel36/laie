@@ -20,11 +20,11 @@ import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
 import ged.ejb.user.User;
 import ged.web.core.util.Navigate;
-import ged.web.core.view.AbstractPageBean;
+import ged.web.core.view.AbstractBean;
 
 @Named
 @ViewScoped
-public class JobOfferViewBean extends AbstractPageBean {
+public class JobOfferViewBean extends AbstractBean {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 

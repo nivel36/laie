@@ -31,12 +31,12 @@ import ged.web.core.util.ConfigurationProperty;
 import ged.web.core.util.MessageUtils;
 import ged.web.core.util.Navigate;
 import ged.web.core.util.TransaltionUtils;
-import ged.web.core.view.AbstractPageBean;
+import ged.web.core.view.AbstractBean;
 import ged.web.reports.UserReport;
 
 @Named
 @ViewScoped
-public class UserViewBean extends AbstractPageBean {
+public class UserViewBean extends AbstractBean {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 

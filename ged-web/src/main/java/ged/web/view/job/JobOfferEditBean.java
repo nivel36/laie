@@ -14,11 +14,11 @@ import ged.ejb.client.Client;
 import ged.ejb.client.ClientService;
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
-import ged.web.core.view.AbstractPageBean;
+import ged.web.core.view.AbstractBean;
 
 @Named
 @ViewScoped
-public class JobOfferEditBean extends AbstractPageBean {
+public class JobOfferEditBean extends AbstractBean {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 

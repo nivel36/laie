@@ -5,7 +5,7 @@ import javax.inject.Named;
 
 @Named
 @RequestScoped
-public class MenuBean extends AbstractPageBean {
+public class MenuBean extends AbstractBean {
 
 	public static final String CANDIDATES = "/faces/candidate/candidateSearch?faces-redirect=true";
 

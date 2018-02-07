@@ -13,11 +13,11 @@ import org.slf4j.LoggerFactory;
 
 import ged.ejb.client.Client;
 import ged.ejb.client.ClientService;
-import ged.web.core.view.AbstractPageBean;
+import ged.web.core.view.AbstractBean;
 
 @Named
 @ViewScoped
-public class ClientSearchBean extends AbstractPageBean {
+public class ClientSearchBean extends AbstractBean {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 

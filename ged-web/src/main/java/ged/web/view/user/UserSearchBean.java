@@ -15,11 +15,11 @@ import ged.ejb.core.action.Action;
 import ged.ejb.core.action.ActionService;
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
-import ged.web.core.view.AbstractPageBean;
+import ged.web.core.view.AbstractBean;
 
 @Named
 @ViewScoped
-public class UserSearchBean extends AbstractPageBean {
+public class UserSearchBean extends AbstractBean {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 

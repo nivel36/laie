@@ -13,11 +13,11 @@ import ged.ejb.job.offer.JobOfferService;
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
 import ged.web.core.util.MessageUtils;
-import ged.web.core.view.AbstractPageBean;
+import ged.web.core.view.AbstractBean;
 
 @Named
 @ViewScoped
-public class GlobalSearchBean extends AbstractPageBean {
+public class GlobalSearchBean extends AbstractBean {
 
 	private static final long serialVersionUID = 8268523301916849175L;
 

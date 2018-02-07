@@ -21,11 +21,11 @@ import org.slf4j.LoggerFactory;
 import ged.ejb.core.i18n.I18nService;
 import ged.ejb.core.i18n.I18nString;
 import ged.web.core.util.TransaltionUtils;
-import ged.web.core.view.AbstractPageBean;
+import ged.web.core.view.AbstractBean;
 
 @Named
 @ApplicationScoped
-public class I18nBean extends AbstractPageBean {
+public class I18nBean extends AbstractBean {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 

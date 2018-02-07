@@ -1,25 +1,18 @@
 package ged.web.view.candidate;
 
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.lang.invoke.MethodHandles;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.UUID;
-
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.omnifaces.util.Faces;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.RateEvent;
-import org.primefaces.model.UploadedFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,14 +22,14 @@ import ged.ejb.candidate.CandidateService;
 import ged.ejb.core.Address;
 import ged.ejb.core.tag.Tag;
 import ged.ejb.core.tag.TagService;
-import ged.web.core.util.ConfigurationProperty;
 import ged.web.core.util.MessageUtils;
 import ged.web.core.util.Navigate;
-import ged.web.core.view.AbstractPageBean;
+import ged.web.core.view.AbstractBean;
+import ged.web.core.view.FileUploadService;
 
 @Named
 @ViewScoped
-public class CandidateBean extends AbstractPageBean {
+public class CandidateBean extends AbstractBean {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
@@ -51,17 +44,12 @@ public class CandidateBean extends AbstractPageBean {
 
 	private boolean editable;
 
-	@Inject
-	@ConfigurationProperty(value = "file.directory")
-	private String fileDirectory;
-
 	private final List<UploadedServerFile> files = new ArrayList<>();
 
-	private String id;
-
 	@Inject
-	@ConfigurationProperty(value = "image.directory")
-	private String imageDirectory;
+	private transient FileUploadService fileUploadService;
+
+	private String id;
 
 	private List<String> tags = new ArrayList<>();
 
@@ -201,22 +189,15 @@ public class CandidateBean extends AbstractPageBean {
 
 	public void openFile(final UploadedServerFile file) {
 		try {
-			final File downloableFile = new File(file.getName());
-			final boolean renamed = new java.io.File(this.fileDirectory, file.getUuid()).renameTo(downloableFile);
-			if (!renamed) {
-				logger.error("Can't rename the file");
-				MessageUtils.addErrorMessage(UNNEXPECTED_ERROR, UNNEXPECTED_ERROR);
-			}
-			Faces.sendFile(downloableFile, true);
+			this.fileUploadService.openFile(file);
 		} catch (final IOException e) {
-			logger.error("Can't open file", e);
 			MessageUtils.addErrorMessage(UNNEXPECTED_ERROR, UNNEXPECTED_ERROR);
 		}
 	}
 
 	public void removeFile(final UploadedServerFile file) {
 		try {
-			removeFileFromFileSystem(file.getUuid());
+			this.fileUploadService.removeFileFromFileSystem(file.getUuid());
 			this.candidate.getFiles().remove(file);
 			this.candidate = this.candidateService.save(this.candidate);
 			this.files.remove(file);
@@ -225,10 +206,6 @@ public class CandidateBean extends AbstractPageBean {
 			logger.error("Can't remove file", e);
 			MessageUtils.addErrorMessage(UNNEXPECTED_ERROR, UNNEXPECTED_ERROR);
 		}
-	}
-
-	private void removeFileFromFileSystem(final String uuid) throws IOException {
-		Files.deleteIfExists(new java.io.File(this.fileDirectory, uuid).toPath());
 	}
 
 	private UploadedServerFile saveFile(final String uuid, final String fileName) {
@@ -252,16 +229,8 @@ public class CandidateBean extends AbstractPageBean {
 		this.candidateService = candidateService;
 	}
 
-	public void setFileDirectory(final String fileDirectory) {
-		this.fileDirectory = fileDirectory;
-	}
-
 	public void setId(final String id) {
 		this.id = id;
-	}
-
-	public void setImageDirectory(final String imageDirectory) {
-		this.imageDirectory = imageDirectory;
 	}
 
 	public void setTags(final List<String> tags) {
@@ -292,26 +261,25 @@ public class CandidateBean extends AbstractPageBean {
 		addInfoMessage("file.message.update", "file.message.update", updatedFile.getName());
 	}
 
-	private String upload(final String directory, final UploadedFile file) {
-		final String uuid = UUID.randomUUID().toString();
-		try (InputStream input = file.getInputstream()) {
-			Files.copy(input, new java.io.File(directory, uuid).toPath());
-		} catch (final IOException ex) {
-			logger.error("Can't upload file", ex);
+	public void uploadFile(final FileUploadEvent event) {
+		try {
+			final String uuid = this.fileUploadService.uploadFile(event.getFile());
+			final UploadedServerFile file = saveFile(uuid, event.getFile().getFileName());
+			this.files.add(file);
+			addInfoMessage("file.message.upload", "file.message.upload", event.getFile().getFileName());
+		} catch (final IOException e) {
+			logger.error("Can't upload file", e);
 			MessageUtils.addErrorMessage(UNNEXPECTED_ERROR, UNNEXPECTED_ERROR);
 		}
-		return uuid;
-	}
-
-	public void uploadFile(final FileUploadEvent event) {
-		final String uuid = upload(this.fileDirectory, event.getFile());
-		final UploadedServerFile file = saveFile(uuid, event.getFile().getFileName());
-		this.files.add(file);
-		addInfoMessage("file.message.upload", "file.message.upload", event.getFile().getFileName());
 	}
 
 	public void uploadImage(final FileUploadEvent event) {
-		final String uuid = upload(this.imageDirectory, event.getFile());
-		this.candidate.setImageFileName(uuid);
+		try {
+			final String uuid = this.fileUploadService.uploadImage(event.getFile());
+			this.candidate.setImageFileName(uuid);
+		} catch (final IOException e) {
+			logger.error("Can't upload file", e);
+			MessageUtils.addErrorMessage(UNNEXPECTED_ERROR, UNNEXPECTED_ERROR);
+		}
 	}
 }

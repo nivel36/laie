@@ -14,11 +14,11 @@ import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
 import ged.web.core.util.MessageUtils;
 import ged.web.core.util.Navigate;
-import ged.web.core.view.AbstractPageBean;
+import ged.web.core.view.AbstractBean;
 
 @Named
 @ViewScoped
-public class ClientViewBean extends AbstractPageBean {
+public class ClientViewBean extends AbstractBean {
 
 	private static final String CLIENT_SEARCH = "clientSearch";
 

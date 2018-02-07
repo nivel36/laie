@@ -15,11 +15,11 @@ import ged.ejb.curriculum.JobExperience;
 import ged.ejb.curriculum.Language;
 import ged.ejb.curriculum.Skill;
 import ged.web.core.util.Navigate;
-import ged.web.core.view.AbstractPageBean;
+import ged.web.core.view.AbstractBean;
 
 @Named
 @ViewScoped
-public class CurriculumViewBean extends AbstractPageBean {
+public class CurriculumViewBean extends AbstractBean {
 
 	private static final long serialVersionUID = -5942086439519787220L;
 

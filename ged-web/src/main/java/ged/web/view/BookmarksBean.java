@@ -16,11 +16,11 @@ import ged.ejb.core.bookmark.BookmarkService;
 import ged.ejb.core.model.AbstractAuditedEntity;
 import ged.ejb.user.User;
 import ged.web.core.util.MessageUtils;
-import ged.web.core.view.AbstractPageBean;
+import ged.web.core.view.AbstractBean;
 
 @Named
 @SessionScoped
-public class BookmarksBean extends AbstractPageBean {
+public class BookmarksBean extends AbstractBean {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 

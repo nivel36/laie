@@ -8,12 +8,12 @@ import javax.inject.Named;
 import ged.ejb.client.Client;
 import ged.ejb.client.ClientService;
 import ged.ejb.core.Address;
-import ged.web.core.view.AbstractPageBean;
+import ged.web.core.view.AbstractBean;
 import ged.web.core.view.MenuBean;
 
 @Named
 @ViewScoped
-public class ClientEditBean extends AbstractPageBean {
+public class ClientEditBean extends AbstractBean {
 
 	private static final long serialVersionUID = 2262878574773282127L;
 

@@ -17,11 +17,11 @@ import javax.servlet.http.HttpSession;
 
 import ged.ejb.core.LoginService;
 import ged.web.core.util.TransaltionUtils;
-import ged.web.core.view.AbstractPageBean;
+import ged.web.core.view.AbstractBean;
 
 @Named
 @RequestScoped
-public class LoginBean extends AbstractPageBean {
+public class LoginBean extends AbstractBean {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 

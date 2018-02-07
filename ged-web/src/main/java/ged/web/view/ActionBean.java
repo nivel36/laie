@@ -9,11 +9,11 @@ import javax.inject.Named;
 
 import ged.ejb.core.action.Action;
 import ged.ejb.core.action.ActionService;
-import ged.web.core.view.AbstractPageBean;
+import ged.web.core.view.AbstractBean;
 
 @Named
 @RequestScoped
-public class ActionBean extends AbstractPageBean {
+public class ActionBean extends AbstractBean {
 
 	private static final long serialVersionUID = 6101883862412908337L;
 

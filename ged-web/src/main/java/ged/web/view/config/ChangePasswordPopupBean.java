@@ -20,11 +20,11 @@ import org.slf4j.LoggerFactory;
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
 import ged.web.core.util.MessageUtils;
-import ged.web.core.view.AbstractPageBean;
+import ged.web.core.view.AbstractBean;
 
 @Named
 @ViewScoped
-public class ChangePasswordPopupBean extends AbstractPageBean {
+public class ChangePasswordPopupBean extends AbstractBean {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 

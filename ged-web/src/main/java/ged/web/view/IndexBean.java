@@ -17,11 +17,11 @@ import ged.ejb.candidate.Candidate;
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
 import ged.ejb.user.User;
-import ged.web.core.view.AbstractPageBean;
+import ged.web.core.view.AbstractBean;
 
 @Named
 @ViewScoped
-public class IndexBean extends AbstractPageBean {
+public class IndexBean extends AbstractBean {
 
 	private static final long serialVersionUID = 3050470966176013477L;
 
