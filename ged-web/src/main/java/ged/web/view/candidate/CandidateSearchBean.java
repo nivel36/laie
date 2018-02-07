@@ -34,8 +34,8 @@ public class CandidateSearchBean extends AbstractPageBean {
 	private Candidate selectedCandidate;
 
 	public void clean() {
-		search();
 		this.searchText = null;
+		search();
 	}
 
 	public List<Candidate> getCandidates() {

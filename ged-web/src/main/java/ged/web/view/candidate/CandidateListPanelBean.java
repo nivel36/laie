@@ -19,7 +19,7 @@ import ged.ejb.candidate.CandidateService;
 @ViewScoped
 public class CandidateListPanelBean implements Serializable {
 
-	private static final String CANDIDATE_EDIT = "/faces/candidate/candidateEdit?faces-redirect=true";
+	private static final String CANDIDATE_EDIT = "/faces/candidate/candidate?faces-redirect=true";
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 

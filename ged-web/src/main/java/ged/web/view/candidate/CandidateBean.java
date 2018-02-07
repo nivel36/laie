@@ -153,6 +153,9 @@ public class CandidateBean extends AbstractPageBean {
 				if (this.candidate == null) {
 					error();
 				}
+				if (this.candidate.getAddress() == null) {
+					this.candidate.setAddress(new Address());
+				}
 				for (final Tag tag : this.candidate.getTags()) {
 					this.tags.add(tag.getLabel());
 				}
@@ -310,6 +313,5 @@ public class CandidateBean extends AbstractPageBean {
 	public void uploadImage(final FileUploadEvent event) {
 		final String uuid = upload(this.imageDirectory, event.getFile());
 		this.candidate.setImageFileName(uuid);
-		this.candidate = this.candidateService.save(this.candidate);
 	}
 }

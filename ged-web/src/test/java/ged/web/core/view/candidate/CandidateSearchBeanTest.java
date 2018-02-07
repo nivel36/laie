@@ -25,7 +25,7 @@ public class CandidateSearchBeanTest {
 
 	@Test
 	public void cleanTest() {
-		Mockito.when(this.candidateService.search("Aaron")).thenReturn(mockCandidates());
+		Mockito.when(this.candidateService.search(null)).thenReturn(mockCandidates());
 		this.candidateSearchBean.setSearchText("Aaron");
 		this.candidateSearchBean.clean();
 		Assert.assertEquals(null, this.candidateSearchBean.getSearchText());
