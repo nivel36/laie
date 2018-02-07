@@ -1,5 +1,6 @@
 package ged.web.view.candidate;
 
+import java.io.File;
 import java.io.IOException;
 import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.omnifaces.util.Faces;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.RateEvent;
 import org.slf4j.Logger;
@@ -189,7 +191,8 @@ public class CandidateBean extends AbstractBean {
 
 	public void openFile(final UploadedServerFile file) {
 		try {
-			this.fileUploadService.openFile(file);
+			final File fileToOpen = this.fileUploadService.getFileFromFileSystem(file);
+			Faces.sendFile(fileToOpen, true);
 		} catch (final IOException e) {
 			MessageUtils.addErrorMessage(UNNEXPECTED_ERROR, UNNEXPECTED_ERROR);
 		}
