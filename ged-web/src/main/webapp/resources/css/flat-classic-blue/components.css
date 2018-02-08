@@ -251,30 +251,6 @@ h4 {
 	padding: 10px 25px;
 }
 
-.form-group .input-icon {
-	font-size: 18px;
-	position: absolute;
-	right: 6px;
-	top: 2px;
-}
-
-body .input-icon .input-icon-left {
-	float: left;
-	padding: 6px 10px;
-}
-
-body input.icon-left {
-	padding-right: 26px;
-}
-
-body .input-icon .input-icon-right {
-	color: #aaa;
-	float: right;
-	margin-left: -36px;
-	padding: 6px 10px;
-	z-index: 2;
-}
-
 .form-action-primary {
 	text-align: right;
 	overflow: auto;
