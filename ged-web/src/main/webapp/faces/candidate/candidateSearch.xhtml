@@ -64,7 +64,8 @@
 								<div class="ui-md-12 ui-lg-4">
 									<div class="ui-inputgroup">
 										<p:inputText id="searchText" value="#{candidateSearchBean.searchText}" />
-										<span class="ui-inputgroup-addon"><em class="fa fa-search" /></span>
+										<p:commandButton icon="fa fa-plus" styleClass="green-button" action="#{candidateSearchBean.searchPlus}"
+											update="@form" process="searchUserPanel"/>
 									</div>
 								</div>
 								<div class="ui-md-12 ui-lg-4">

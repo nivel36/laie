@@ -352,42 +352,16 @@ h4 {
 	animation: color-me-in 1s;
 }
 
-@
-keyframes color-me-in { 0% {
-	background-color: #d1e7cc;
+@keyframes color-me-in { 
+	0% {
+		background-color: #d1e7cc;
+	}
+	100% {
+		background: #effffc;
+		background-color:1s ease-out;
+	}
 }
 
-100%
-{
-background
-
-
-:
-
- 
-
-#effffc
-
-
-;
-background-color
-
-
-:
-
- 
-
-1
-s
-
- 
-
-ease-out
-
-
-;
-}
-}
 .card.card-stats .card-header {
 	font-size: 30px;
 	float: left;
