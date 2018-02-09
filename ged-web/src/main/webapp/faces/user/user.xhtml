@@ -12,11 +12,11 @@
 	<ui:define name="content">
 
 		<f:metadata>
-			<f:viewParam name="id" value="#{userViewBean.userId}" />
-			<f:viewAction action="#{userViewBean.init}" />
+			<f:viewParam name="id" value="#{userBean.userId}" />
+			<f:viewAction action="#{userBean.init}" />
 		</f:metadata>
 
-		<input type="hidden" id="userId" value="#{userViewBean.user.id}" />
+		<input type="hidden" id="userId" value="#{userBean.user.id}" />
 
 		<div class="ui-g">
 			<div class="ui-g-12 ui-md-3 ui-xl-2">
@@ -24,18 +24,18 @@
 					<h:form id="userPanelForm" enctype="multipart/form-data">
 						<div class="panel-content">
 							<div class="user-image">
-								<p:fileUpload id="uploadImage" styleClass="uploadImageButton" fileUploadListener="#{userViewBean.uploadImage}"
+								<p:fileUpload id="uploadImage" styleClass="uploadImageButton" fileUploadListener="#{userBean.uploadImage}"
 									mode="advanced" dragDropSupport="false" update="userPanelForm growl" auto="true" label="#{i18n['action.add']}" />
 								<h:outputLabel for="uploadImage_input">
-									<p:graphicImage class="selectable image" value="/images/#{userViewBean.user.imageFileName}"
-										rendered="#{not empty userViewBean.user.imageFileName}" />
+									<p:graphicImage class="selectable image" value="/images/#{userBean.user.imageFileName}"
+										rendered="#{not empty userBean.user.imageFileName}" />
 									<p:graphicImage class="selectable image" value="/resources/img/default-avatar.png"
-										rendered="#{empty userViewBean.user.imageFileName}" />
+										rendered="#{empty userBean.user.imageFileName}" />
 								</h:outputLabel>
 							</div>
 							<div class="user-info">
-								<div class="name">#{userViewBean.user}</div>
-								<div class="position">#{i18n:translate(userViewBean.user.role.name)}</div>
+								<div class="name">#{userBean.user}</div>
+								<div class="position">#{i18n:translate(userBean.user.role.name)}</div>
 							</div>
 						</div>
 					</h:form>
@@ -49,8 +49,8 @@
 							<div class="ui-g-12 ui-md-6">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['user.name']}" for="name" />
-									<p:inputText id="name" value="#{userViewBean.user.name}" required="true"
-										readonly="#{not userViewBean.editable}" />
+									<p:inputText id="name" value="#{userBean.user.name}" required="true"
+										readonly="#{not userBean.editable}" />
 								</div>
 								<h:message for="name" errorClass="error" />
 							</div>
@@ -58,8 +58,8 @@
 							<div class="ui-g-12 ui-md-6">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['user.surname']}" for="surname" />
-									<p:inputText id="surname" value="#{userViewBean.user.surname}" required="true"
-										readonly="#{not userViewBean.editable}" />
+									<p:inputText id="surname" value="#{userBean.user.surname}" required="true"
+										readonly="#{not userBean.editable}" />
 								</div>
 								<h:message for="surname" errorClass="error" />
 							</div>
@@ -67,7 +67,7 @@
 							<div class="ui-g-12 ui-md-6">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['user.email']}" for="email" />
-									<p:inputText id="email" value="#{userViewBean.user.email}" readonly="#{not userViewBean.editable}" />
+									<p:inputText id="email" value="#{userBean.user.email}" readonly="#{not userBean.editable}" />
 								</div>
 								<h:message for="email" errorClass="error" />
 							</div>
@@ -75,7 +75,7 @@
 							<div class="ui-g-12 ui-md-6">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['user.phone_number']}" for="phone_number" />
-									<p:inputText id="phone_number" value="#{userViewBean.user.phoneNumber}" readonly="#{not userViewBean.editable}" />
+									<p:inputText id="phone_number" value="#{userBean.user.phoneNumber}" readonly="#{not userBean.editable}" />
 								</div>
 								<h:message for="phone_number" errorClass="error" />
 							</div>
@@ -83,8 +83,8 @@
 							<div class="ui-g-12 ui-md-6">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['user.role']}" for="role" />
-									<p:selectOneMenu id="role" value="#{userViewBean.user.role}" validator="#{userViewBean.validateRole}"
-										disabled="#{not userViewBean.editable}">
+									<p:selectOneMenu id="role" value="#{userBean.user.role}" validator="#{userBean.validateRole}"
+										disabled="#{not userBean.editable}">
 										<f:selectItems var="role" itemValue="#{role}" value="#{applicationBean.roles}"
 											itemLabel="#{i18n:translate(role.name)}" />
 									</p:selectOneMenu>
@@ -95,9 +95,9 @@
 							<div class="ui-sm-12 ui-md-6">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['user.manager']}" for="manager" />
-									<p:autoComplete id="manager" value="#{userViewBean.manager}" completeMethod="#{userViewBean.completeManager}"
+									<p:autoComplete id="manager" value="#{userBean.manager}" completeMethod="#{userBean.completeManager}"
 										var="manager" itemLabel="#{manager.fullName}" itemValue="#{manager}" forceSelection="true"
-										readonly="#{not userViewBean.editable}" validator="#{userViewBean.validateManager}">
+										readonly="#{not userBean.editable}" validator="#{userBean.validateManager}">
 										<p:column styleClass="user-select image">
 											<p:graphicImage class="image image_icon" value="/images/#{manager.imageFileName}"
 												rendered="#{not empty manager.imageFileName}" />
@@ -115,7 +115,7 @@
 							<div class="ui-g-12 ui-md-6">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['user.date_of_join']}" for="date_of_join" />
-									<p:calendar id="date_of_join" value="#{userViewBean.user.dateOfJoin}" readonly="#{not userViewBean.editable}" />
+									<p:calendar id="date_of_join" value="#{userBean.user.dateOfJoin}" readonly="#{not userBean.editable}" />
 								</div>
 								<h:message for="date_of_join" errorClass="error" />
 							</div>
@@ -124,14 +124,14 @@
 						<div class="ui-g">
 							<div class="ui-g-12">
 								<div class="form-action-primary">
-									<p:commandButton rendered="#{not userViewBean.editable}" value="#{i18n['action.edit']}"
-										action="#{userViewBean.editUser}" update="@form growl" />
-									<p:commandButton rendered="#{userViewBean.editable}" value="#{i18n['action.save']}"
-										action="#{userViewBean.saveUser}" update="@form growl" />
-									<p:commandButton styleClass="btn-gray" rendered="#{userViewBean.editable}" value="#{i18n['action.cancel']}"
-										action="#{userViewBean.cancelEditUser}" update="@form" process="@this" />
+									<p:commandButton rendered="#{not userBean.editable}" value="#{i18n['action.edit']}"
+										action="#{userBean.editUser}" update="@form growl" />
+									<p:commandButton rendered="#{userBean.editable}" value="#{i18n['action.save']}"
+										action="#{userBean.saveUser}" update="@form growl" />
+									<p:commandButton styleClass="btn-gray" rendered="#{userBean.editable}" value="#{i18n['action.cancel']}"
+										action="#{userBean.cancelEditUser}" update="@form" process="@this" />
 									<p:commandButton icon="fa fa-file-excel-o" id="exportExcel" value="#{i18n['action.export']}"
-										action="#{userViewBean.export}" rendered="#{not userViewBean.editable}" />
+										action="#{userBean.export}" rendered="#{not userBean.editable}" />
 								</div>
 							</div>
 						</div>
@@ -141,12 +141,12 @@
 
 			<div class="ui-g-12 ui-lg-6 ui-xl-4">
 				<p:panel header="#{i18n['user.team']}">
-					<h:panelGroup layout="block" rendered="#{empty userViewBean.team}">
+					<h:panelGroup layout="block" rendered="#{empty userBean.team}">
 						<span class="message">#{i18n['user.no_team']}</span>
 					</h:panelGroup>
-					<h:panelGroup layout="block" rendered="#{not empty userViewBean.team}">
+					<h:panelGroup layout="block" rendered="#{not empty userBean.team}">
 						<div class="ui-g">
-							<ui:repeat var="userTeamMember" value="#{userViewBean.team}" varStatus="status">
+							<ui:repeat var="userTeamMember" value="#{userBean.team}" varStatus="status">
 								<div class="ui-g-12 ui-md-6">
 									<ui:include src="userCard.xhtml">
 										<ui:param name="user" value="#{userTeamMember}" />
@@ -165,7 +165,7 @@
 			</div>
 			<div class="ui-g-12 ui-md-12 ui-lg-6">
 				<p:panel styleClass="magenta" header="#{i18n['job.job_offers']}">
-					<p:dataTable var="jobOffer" value="#{userViewBean.jobOffers}" emptyMessage="#{i18n['user.no_users_found']}"
+					<p:dataTable var="jobOffer" value="#{userBean.jobOffers}" emptyMessage="#{i18n['user.no_users_found']}"
 						reflow="true" paginator="true" paginatorPosition="bottom" rows="#{sessionBean.rowsPerPage}">
 						<h:column>
 							<f:facet name="header">

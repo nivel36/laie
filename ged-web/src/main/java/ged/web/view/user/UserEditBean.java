@@ -99,7 +99,7 @@ public class UserEditBean extends AbstractBean {
 		final User newUser = this.userService.create(this.user.getName(), this.user.getSurname(), this.user.getEmail(),
 				this.user.getRole(), this.manager);
 		this.userService.save(newUser);
-		return "userView.xhtml?id=" + newUser.getId() + "&faces-redirect=true";
+		return "user.xhtml?id=" + newUser.getId() + "&faces-redirect=true";
 	}
 
 	public void selectManager(final User manager) {

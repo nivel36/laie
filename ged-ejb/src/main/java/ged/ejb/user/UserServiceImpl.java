@@ -75,7 +75,7 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
 	@Override
 	public List<User> findUsersOfflineLastMonth() {
 		logger.debug("Find users offline last month");
-		final Date oneMonthAgo = this.getOneMonthAgo();
+		final Date oneMonthAgo = getOneMonthAgo();
 		final Date today = Calendar.getInstance().getTime();
 		return this.userDao.findUsersOffline(oneMonthAgo, today);
 	}
@@ -83,7 +83,7 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
 	@Override
 	public List<User> findUsersOnlineLastWeek() {
 		logger.debug("Find users online last week");
-		final Date oneWeekAgo = this.getOneWeekAgo();
+		final Date oneWeekAgo = getOneWeekAgo();
 		final Date today = Calendar.getInstance().getTime();
 		return this.userDao.findUsersOnline(oneWeekAgo, today);
 	}
@@ -116,7 +116,7 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
 			logger.warn("The user {} can't be his/her manager", user.getEmail());
 			throw new IllegalStateException("User can't be his/her manager");
 		}
-		if (this.findUserByEmail(user.getEmail()) != null) {
+		if (findUserByEmail(user.getEmail()) != null) {
 			throw new ValidationException("Email exists");
 		}
 		this.userDao.insert(user);
@@ -127,33 +127,39 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
 	}
 
 	private boolean isLastAdminOnApp(final User user) {
-		final User userInDataBase = this.find(user.getId());
+		final User userInDataBase = find(user.getId());
 		return userInDataBase.isAdmin() && !user.isAdmin() && !this.userDao.existsMoreThanOneAdmin();
 	}
 
 	@Override
+	public long numberOfUsersInTeam(final User user) {
+		logger.debug("Find number of users in team of {}", user.getEmail());
+		return this.userDao.numberOfUsersInTeam(user);
+	}
+
+	@Override
 	public long numberOfUsersOfflineLastMonth() {
-		logger.debug("Find users offline last month");
-		final Date oneMonthAgo = this.getOneMonthAgo();
+		logger.debug("Find number of users offline last month");
+		final Date oneMonthAgo = getOneMonthAgo();
 		final Date today = Calendar.getInstance().getTime();
 		return this.userDao.numberOfUsersOffline(oneMonthAgo, today);
 	}
 
 	@Override
 	public long numberOfUsersOnlineLastWeek() {
-		logger.debug("Find users online last week");
-		final Date oneWeekAgo = this.getOneWeekAgo();
+		logger.debug("Find number of users online last week");
+		final Date oneWeekAgo = getOneWeekAgo();
 		final Date today = Calendar.getInstance().getTime();
 		return this.userDao.numberOfUsersOnline(oneWeekAgo, today);
 	}
 
 	@Override
 	protected User update(final User user) {
-		if (this.isLastAdminOnApp(user)) {
+		if (isLastAdminOnApp(user)) {
 			logger.warn("Can't change user {} role. Last Admin on app", user.getEmail());
 			throw new UserException("Can't change user role. Last Admin on app");
 		}
-		if (this.isDeletingAdmin(user)) {
+		if (isDeletingAdmin(user)) {
 			logger.warn("Can't delete user {}. User is Admin", user.getEmail());
 			throw new UserException("Can't delete user. User is Admin");
 		}

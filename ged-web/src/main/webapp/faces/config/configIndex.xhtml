@@ -53,11 +53,11 @@
 								</div>
 							</p:tab>
 							<p:tab title="#{i18n['user.avatar']}">
-								<p:photoCam widgetVar="pc" listener="#{userViewBean.uploadImage}" update="photo" />
+								<p:photoCam widgetVar="pc" listener="#{userBean.uploadImage}" update="photo" />
 								<p:commandButton type="button" value="Capture" onclick="PF('pc').capture()" />
 								<p:outputPanel id="photo">
-									<p:graphicImage name="#{userViewBean.user.imageFileName}"
-										rendered="#{not empty userViewBean.user.imageFileName}" />
+									<p:graphicImage name="#{userBean.user.imageFileName}"
+										rendered="#{not empty userBean.user.imageFileName}" />
 								</p:outputPanel>
 							</p:tab>
 						</p:tabView>

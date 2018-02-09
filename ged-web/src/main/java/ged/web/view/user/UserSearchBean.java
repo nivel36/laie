@@ -1,5 +1,6 @@
 package ged.web.view.user;
 
+import java.io.IOException;
 import java.lang.invoke.MethodHandles;
 import java.util.List;
 
@@ -30,11 +31,15 @@ public class UserSearchBean extends AbstractBean {
 	@Inject
 	private ActionService actionService;
 
+	private long numberOfUsersInTeam;
+
 	private long numberOfUsersOfflineLastMonth;
 
 	private long numberOfUsersOnlineLastWeek;
 
 	private String searchText;
+
+	private User selectedUser;
 
 	private List<User> users;
 
@@ -47,6 +52,10 @@ public class UserSearchBean extends AbstractBean {
 		logger.debug("Cleaning search fields");
 		this.searchText = null;
 		search();
+	}
+
+	public void findUsersInTeam() {
+		this.users = this.userService.findSubordinateUsers(this.sessionBean.getUser());
 	}
 
 	public void findUsersOffline() {
@@ -68,6 +77,10 @@ public class UserSearchBean extends AbstractBean {
 		return this.users.size();
 	}
 
+	public long getNumberOfUsersInTeam() {
+		return this.numberOfUsersInTeam;
+	}
+
 	public long getNumberOfUsersOfflineLastMonth() {
 		return this.numberOfUsersOfflineLastMonth;
 	}
@@ -78,6 +91,10 @@ public class UserSearchBean extends AbstractBean {
 
 	public String getSearchText() {
 		return this.searchText;
+	}
+
+	public User getSelectedUser() {
+		return this.selectedUser;
 	}
 
 	public List<User> getUsers() {
@@ -96,11 +113,23 @@ public class UserSearchBean extends AbstractBean {
 		this.usersOnlineLastWeek = this.userService.findUsersOnlineLastWeek();
 		this.numberOfUsersOfflineLastMonth = this.userService.numberOfUsersOfflineLastMonth();
 		this.numberOfUsersOnlineLastWeek = this.userService.numberOfUsersOnlineLastWeek();
+		this.numberOfUsersInTeam = this.userService.numberOfUsersInTeam(this.sessionBean.getUser());
 	}
 
 	public String newUser() {
 		logger.debug("Creating a new user");
 		return "userEdit?faces-redirect=true";
+	}
+
+	public void onUserSelect() {
+		try {
+			final String context = this.externalContext.getContextName();
+			final StringBuilder url = new StringBuilder();
+			url.append("/").append(context).append("/faces/user/user.xhtml?id=").append(this.selectedUser.getId());
+			this.externalContext.redirect(url.toString());
+		} catch (final IOException e) {
+			logger.error("Unable to redirect to page");
+		}
 	}
 
 	public void search() {
@@ -118,6 +147,10 @@ public class UserSearchBean extends AbstractBean {
 
 	public void setSearchText(final String searchText) {
 		this.searchText = searchText;
+	}
+
+	public void setSelectedUser(final User selectedUser) {
+		this.selectedUser = selectedUser;
 	}
 
 	public void setUsers(final List<User> users) {

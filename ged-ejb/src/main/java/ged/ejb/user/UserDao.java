@@ -19,6 +19,8 @@ public interface UserDao extends Dao<User> {
 
 	List<User> findUsersOnline(final Date start, final Date end);
 
+	long numberOfUsersInTeam(final User user);
+
 	long numberOfUsersOffline(final Date start, final Date end);
 
 	long numberOfUsersOnline(final Date start, final Date end);

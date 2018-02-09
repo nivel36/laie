@@ -132,6 +132,11 @@ public final class UserDaoJpa extends AbstractDaoJpa<User> implements UserDao {
 	}
 
 	@Override
+	public long numberOfUsersInTeam(final User user) {
+		return this.findByQuery(Long.class, "User.numberOfUsersInTeam", with("id", user.getId()).parameters());
+	}
+
+	@Override
 	public long numberOfUsersOffline(final Date start, final Date end) {
 		return this.findByQuery(Long.class, "User.numberOfUsersOffline", with(START, start).and(END, end).parameters());
 	}

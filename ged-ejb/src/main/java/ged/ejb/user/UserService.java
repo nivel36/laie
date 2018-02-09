@@ -19,6 +19,8 @@ public interface UserService extends Service<User> {
 
 	List<User> findUsersOnlineLastWeek();
 
+	long numberOfUsersInTeam(final User user);
+
 	long numberOfUsersOfflineLastMonth();
 
 	long numberOfUsersOnlineLastWeek();

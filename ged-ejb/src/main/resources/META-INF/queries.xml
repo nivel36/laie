@@ -311,6 +311,16 @@
 			WHERE u.lastConnection BETWEEN :start and :end
 		]]></query>
 	</named-query>
+	
+	<named-query name="User.numberOfUsersInTeam">
+		<query><![CDATA[
+			SELECT COUNT (u) 
+			FROM UserClosure uc 
+			JOIN uc.descendant u 
+			WHERE uc.antecessor.id = :id 
+			AND uc.pathLength > 0
+		]]></query>
+	</named-query>
 
 	<named-query name="User.existsMoreThanOneAdmin">
 		<query><![CDATA[
