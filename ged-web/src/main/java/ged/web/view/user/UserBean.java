@@ -1,12 +1,10 @@
 package ged.web.view.user;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.lang.invoke.MethodHandles;
-import java.nio.file.Files;
 import java.util.List;
-import java.util.UUID;
 
+import javax.ejb.EJBException;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -17,21 +15,21 @@ import javax.inject.Named;
 
 import org.omnifaces.util.Faces;
 import org.primefaces.event.FileUploadEvent;
-import org.primefaces.model.UploadedFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
 import ged.ejb.user.User;
+import ged.ejb.user.UserException;
 import ged.ejb.user.UserService;
 import ged.ejb.user.role.Role;
 import ged.ejb.user.role.RoleService;
-import ged.web.core.util.ConfigurationProperty;
 import ged.web.core.util.MessageUtils;
 import ged.web.core.util.Navigate;
 import ged.web.core.util.TransaltionUtils;
 import ged.web.core.view.AbstractBean;
+import ged.web.core.view.FileUploadService;
 import ged.web.reports.UserReport;
 
 @Named
@@ -45,8 +43,7 @@ public class UserBean extends AbstractBean {
 	private boolean editable;
 
 	@Inject
-	@ConfigurationProperty(value = "image.directory")
-	private String imageDirectory;
+	private transient FileUploadService fileUploadService;
 
 	private List<JobOffer> jobOffers;
 
@@ -66,6 +63,10 @@ public class UserBean extends AbstractBean {
 
 	@Inject
 	private transient UserService userService;
+
+	public User buildNewUser() {
+		return new User();
+	}
 
 	public void cancelEditUser() {
 		this.editable = false;
@@ -112,25 +113,33 @@ public class UserBean extends AbstractBean {
 	 * Not using @PostConstruct because the view is a GET based form.
 	 */
 	public void init() {
-		if (this.userId == null) {
-			error();
+		if (this.userId != null) {
+			try {
+				final long id = Long.parseLong(this.userId);
+				this.user = this.userService.find(id);
+				if (this.user == null) {
+					error();
+				}
+				this.manager = this.user.getManager();
+				this.team = this.userService.findSubordinateUsers(this.user);
+				this.jobOffers = this.jobOfferService.findAllJobOffersByOwner(this.user);
+				if (this.user.isDeleted()) {
+					MessageUtils.addWarningMessage("message.erased_entity", "message.erased_entity");
+				}
+			} catch (final NumberFormatException ex) {
+				error();
+			}
+		} else {
+			this.editable = true;
+			this.user = buildNewUser();
 		}
-		long id = 0;
-		try {
-			id = Long.parseLong(this.userId);
-		} catch (final NumberFormatException ex) {
-			error();
-		}
-		this.user = this.userService.find(id);
-		if (this.user == null) {
-			error();
-		}
-		this.manager = this.user.getManager();
-		this.team = this.userService.findSubordinateUsers(this.user);
-		this.jobOffers = this.jobOfferService.findAllJobOffersByOwner(this.user);
-		if (this.user.isDeleted()) {
-			MessageUtils.addWarningMessage("message.erased_entity", "message.erased_entity");
-		}
+	}
+
+	public String insertUser() {
+		logger.debug("Insert user action performed");
+		this.user.setManager(this.manager);
+		this.userService.save(this.user);
+		return "user.xhtml?id=" + this.user.getId() + "&faces-redirect=true";
 	}
 
 	private boolean isAvalidRole(final Role userRole, final Role managerRole) {
@@ -144,26 +153,17 @@ public class UserBean extends AbstractBean {
 		return this.editable;
 	}
 
+	public boolean isNewUser() {
+		return this.user.getId() == 0;
+	}
+
 	public String modifyUser() {
 		this.flash.put("user", this.user);
-		return "userEdit?faces-redirect=true";
+		return "user?faces-redirect=true";
 	}
 
-	public void saveUser() {
-		logger.debug("Save user action performed");
-		try {
-			this.user.setManager(this.manager);
-			this.user = this.userService.save(this.user);
-			this.editable = false;
-		} catch (final Exception ue) {
-			final Role admin = this.roleService.findAdmin();
-			this.user.setRole(admin);
-			addMessage(FacesMessage.SEVERITY_ERROR, "user.error.last_admin", "user.error.last_admin");
-		}
-	}
-
-	public void setImageDirectory(final String imageDirectory) {
-		this.imageDirectory = imageDirectory;
+	public void setFileUploadService(final FileUploadService fileUploadService) {
+		this.fileUploadService = fileUploadService;
 	}
 
 	public void setJobOfferService(final JobOfferService jobOfferService) {
@@ -190,21 +190,26 @@ public class UserBean extends AbstractBean {
 		this.userService = userService;
 	}
 
-	private String upload(final String directory, final UploadedFile file) {
-		final String uuid = UUID.randomUUID().toString();
-		try (InputStream input = file.getInputstream()) {
-			Files.copy(input, new java.io.File(directory, uuid).toPath());
-		} catch (final IOException ex) {
-			logger.error("Can't upload file", ex);
-			MessageUtils.addErrorMessage("error.unnexpected_error", "error.unnexpected_error");
+	public void updateUser() {
+		logger.debug("Update user action performed");
+		try {
+			this.user.setManager(this.manager);
+			this.user = this.userService.save(this.user);
+			this.editable = false;
+		} catch (final EJBException e) {
+			if (e.getCause() instanceof UserException) {
+				final Role admin = this.roleService.findAdmin();
+				this.user.setRole(admin);
+				addMessage(FacesMessage.SEVERITY_ERROR, "user.error.last_admin", "user.error.last_admin");
+			} else {
+				throw e;
+			}
 		}
-		return uuid;
 	}
 
-	public void uploadImage(final FileUploadEvent event) {
-		final String uuid = upload(this.imageDirectory, event.getFile());
+	public void uploadImage(final FileUploadEvent event) throws IOException {
+		final String uuid = this.fileUploadService.uploadImage(event.getFile());
 		this.user.setImageFileName(uuid);
-		this.user = this.userService.save(this.user);
 	}
 
 	public void validateEmail(final FacesContext context, final UIComponent component, final Object value) {

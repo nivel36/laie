@@ -284,6 +284,7 @@
 			SELECT u 
 			FROM User u 
 			WHERE u.lastConnection NOT BETWEEN :start and :end
+			OR u.lastConnection IS NULL
 		]]></query>
 	</named-query>
 

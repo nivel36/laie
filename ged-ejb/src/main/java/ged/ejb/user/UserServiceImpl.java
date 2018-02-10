@@ -16,7 +16,6 @@ import org.slf4j.LoggerFactory;
 import ged.ejb.core.AbstractService;
 import ged.ejb.core.model.Dao;
 import ged.ejb.core.model.Repository;
-import ged.ejb.user.role.Role;
 
 @Stateless
 public class UserServiceImpl extends AbstractService<User> implements UserService {
@@ -29,21 +28,6 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
 	public UserServiceImpl(@Repository final UserDao userDao) {
 		Objects.requireNonNull(userDao);
 		this.userDao = userDao;
-	}
-
-	@Override
-	public User create(final String name, final String surname, final String email, final Role role,
-			final User manager) {
-		final User user = new User();
-		user.setName(name);
-		user.setSurname(surname);
-		user.setEmail(email);
-		user.setRole(role);
-		user.setManager(manager);
-		user.setLanguage("ES");
-		user.setRowsPerPage(25);
-		user.setPassword("M+SzETkPtT+deVQNIScBEXivvfozSne5QqIqyWICLv0=".toCharArray());
-		return user;
 	}
 
 	@Override
@@ -118,6 +102,15 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
 		}
 		if (findUserByEmail(user.getEmail()) != null) {
 			throw new ValidationException("Email exists");
+		}
+		if (user.getLanguage() == null) {
+			user.setLanguage("ES");
+		}
+		if (user.getRowsPerPage() == 0) {
+			user.setRowsPerPage(25);
+		}
+		if (user.getPassword() == null || user.getPassword().length == 0) {
+			user.setPassword("M+SzETkPtT+deVQNIScBEXivvfozSne5QqIqyWICLv0=".toCharArray());
 		}
 		this.userDao.insert(user);
 	}

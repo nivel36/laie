@@ -118,7 +118,7 @@ public class UserSearchBean extends AbstractBean {
 
 	public String newUser() {
 		logger.debug("Creating a new user");
-		return "userEdit?faces-redirect=true";
+		return "user?faces-redirect=true";
 	}
 
 	public void onUserSelect() {
