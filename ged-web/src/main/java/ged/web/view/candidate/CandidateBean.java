@@ -57,11 +57,11 @@ public class CandidateBean extends AbstractBean {
 	private transient TagService tagService;
 
 	public Candidate buildNewCandidate() {
-		final Candidate candidate = new Candidate();
+		final Candidate newCandidate = new Candidate();
 		final Address address = new Address();
-		candidate.setAddress(address);
-		candidate.setOwner(this.sessionBean.getUser());
-		return candidate;
+		newCandidate.setAddress(address);
+		newCandidate.setOwner(this.sessionBean.getUser());
+		return newCandidate;
 	}
 
 	public void cancelEditCandidate() {

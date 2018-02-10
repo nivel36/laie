@@ -25,6 +25,8 @@ import org.slf4j.LoggerFactory;
 @Repository
 public class PersistenceFacadeJpa implements PersistenceFacade {
 
+	private static final String CACHE_STORE_MODE = "javax.persistence.cache.storeMode";
+
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	// max number of results
@@ -89,7 +91,7 @@ public class PersistenceFacadeJpa implements PersistenceFacade {
 		Objects.requireNonNull(cq);
 		logger.debug("Find entities by criteria");
 		final TypedQuery<E> query = this.em.createQuery(cq);
-		query.setHint("javax.persistence.cache.storeMode", CacheStoreMode.REFRESH);
+		query.setHint(CACHE_STORE_MODE, CacheStoreMode.REFRESH);
 		paginate(pageSize, pageNum, query);
 		return query.getResultList();
 	}
@@ -121,7 +123,7 @@ public class PersistenceFacadeJpa implements PersistenceFacade {
 		Objects.requireNonNull(namedQuery);
 		logger.debug("Find entity {} by named query {}", entityClass, namedQuery);
 		final TypedQuery<E> query = this.em.createNamedQuery(namedQuery, entityClass);
-		query.setHint("javax.persistence.cache.storeMode", CacheStoreMode.REFRESH);
+		query.setHint(CACHE_STORE_MODE, CacheStoreMode.REFRESH);
 		parametrize(parameters, query);
 		return query.getSingleResult();
 	}
@@ -140,7 +142,7 @@ public class PersistenceFacadeJpa implements PersistenceFacade {
 		Objects.requireNonNull(namedQuery);
 		logger.debug("Find entities {} by named query {}", entityClass, namedQuery);
 		final TypedQuery<E> query = this.em.createNamedQuery(namedQuery, entityClass);
-		query.setHint("javax.persistence.cache.storeMode", CacheStoreMode.REFRESH);
+		query.setHint(CACHE_STORE_MODE, CacheStoreMode.REFRESH);
 		parametrize(parameters, query);
 		paginate(pageSize, pageNum, query);
 		return query.getResultList();
@@ -167,7 +169,7 @@ public class PersistenceFacadeJpa implements PersistenceFacade {
 		Objects.requireNonNull(namedQuery);
 		logger.debug("Find entity by named query {}", namedQuery);
 		final Query query = this.em.createNamedQuery(namedQuery);
-		query.setHint("javax.persistence.cache.storeMode", CacheStoreMode.REFRESH);
+		query.setHint(CACHE_STORE_MODE, CacheStoreMode.REFRESH);
 		parametrize(parameters, query);
 		return query.getSingleResult();
 	}
@@ -248,7 +250,7 @@ public class PersistenceFacadeJpa implements PersistenceFacade {
 		} else {
 			persistenceQuery = fullTextEntityManager.createFullTextQuery(bj.createQuery(), type);
 		}
-		persistenceQuery.setHint("javax.persistence.cache.storeMode", CacheStoreMode.REFRESH);
+		persistenceQuery.setHint(CACHE_STORE_MODE, CacheStoreMode.REFRESH);
 		return persistenceQuery.getResultList();
 	}
 
