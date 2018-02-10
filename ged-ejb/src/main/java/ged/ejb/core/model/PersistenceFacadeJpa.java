@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import javax.inject.Inject;
+import javax.persistence.CacheStoreMode;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
@@ -88,6 +89,7 @@ public class PersistenceFacadeJpa implements PersistenceFacade {
 		Objects.requireNonNull(cq);
 		logger.debug("Find entities by criteria");
 		final TypedQuery<E> query = this.em.createQuery(cq);
+		query.setHint("javax.persistence.cache.storeMode", CacheStoreMode.REFRESH);
 		paginate(pageSize, pageNum, query);
 		return query.getResultList();
 	}
@@ -119,6 +121,7 @@ public class PersistenceFacadeJpa implements PersistenceFacade {
 		Objects.requireNonNull(namedQuery);
 		logger.debug("Find entity {} by named query {}", entityClass, namedQuery);
 		final TypedQuery<E> query = this.em.createNamedQuery(namedQuery, entityClass);
+		query.setHint("javax.persistence.cache.storeMode", CacheStoreMode.REFRESH);
 		parametrize(parameters, query);
 		return query.getSingleResult();
 	}
@@ -137,6 +140,7 @@ public class PersistenceFacadeJpa implements PersistenceFacade {
 		Objects.requireNonNull(namedQuery);
 		logger.debug("Find entities {} by named query {}", entityClass, namedQuery);
 		final TypedQuery<E> query = this.em.createNamedQuery(namedQuery, entityClass);
+		query.setHint("javax.persistence.cache.storeMode", CacheStoreMode.REFRESH);
 		parametrize(parameters, query);
 		paginate(pageSize, pageNum, query);
 		return query.getResultList();
@@ -163,6 +167,7 @@ public class PersistenceFacadeJpa implements PersistenceFacade {
 		Objects.requireNonNull(namedQuery);
 		logger.debug("Find entity by named query {}", namedQuery);
 		final Query query = this.em.createNamedQuery(namedQuery);
+		query.setHint("javax.persistence.cache.storeMode", CacheStoreMode.REFRESH);
 		parametrize(parameters, query);
 		return query.getSingleResult();
 	}
@@ -243,6 +248,7 @@ public class PersistenceFacadeJpa implements PersistenceFacade {
 		} else {
 			persistenceQuery = fullTextEntityManager.createFullTextQuery(bj.createQuery(), type);
 		}
+		persistenceQuery.setHint("javax.persistence.cache.storeMode", CacheStoreMode.REFRESH);
 		return persistenceQuery.getResultList();
 	}
 
