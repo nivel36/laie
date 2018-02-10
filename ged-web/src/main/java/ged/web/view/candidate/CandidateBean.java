@@ -37,8 +37,6 @@ public class CandidateBean extends AbstractBean {
 
 	private static final long serialVersionUID = 1577879781927493283L;
 
-	private static final String UNNEXPECTED_ERROR = "error.unnexpected_error";
-
 	private Candidate candidate;
 
 	@Inject
@@ -189,26 +187,17 @@ public class CandidateBean extends AbstractBean {
 		this.candidate.setRating(rate);
 	}
 
-	public void openFile(final UploadedServerFile file) {
-		try {
-			final File fileToOpen = this.fileUploadService.getFileFromFileSystem(file);
-			Faces.sendFile(fileToOpen, true);
-		} catch (final IOException e) {
-			MessageUtils.addErrorMessage(UNNEXPECTED_ERROR, UNNEXPECTED_ERROR);
-		}
+	public void openFile(final UploadedServerFile file) throws IOException {
+		final File fileToOpen = this.fileUploadService.getFileFromFileSystem(file);
+		Faces.sendFile(fileToOpen, true);
 	}
 
-	public void removeFile(final UploadedServerFile file) {
-		try {
-			this.fileUploadService.removeFileFromFileSystem(file.getUuid());
-			this.candidate.getFiles().remove(file);
-			this.candidate = this.candidateService.save(this.candidate);
-			this.files.remove(file);
-			addInfoMessage("file.message.remove", "file.message.remove", file.getName());
-		} catch (final IOException e) {
-			logger.error("Can't remove file", e);
-			MessageUtils.addErrorMessage(UNNEXPECTED_ERROR, UNNEXPECTED_ERROR);
-		}
+	public void removeFile(final UploadedServerFile file) throws IOException {
+		this.fileUploadService.removeFileFromFileSystem(file.getUuid());
+		this.candidate.getFiles().remove(file);
+		this.candidate = this.candidateService.save(this.candidate);
+		this.files.remove(file);
+		addInfoMessage("file.message.remove", "file.message.remove", file.getName());
 	}
 
 	private UploadedServerFile saveFile(final String uuid, final String fileName) {
@@ -264,25 +253,15 @@ public class CandidateBean extends AbstractBean {
 		addInfoMessage("file.message.update", "file.message.update", updatedFile.getName());
 	}
 
-	public void uploadFile(final FileUploadEvent event) {
-		try {
-			final String uuid = this.fileUploadService.uploadFile(event.getFile());
-			final UploadedServerFile file = saveFile(uuid, event.getFile().getFileName());
-			this.files.add(file);
-			addInfoMessage("file.message.upload", "file.message.upload", event.getFile().getFileName());
-		} catch (final IOException e) {
-			logger.error("Can't upload file", e);
-			MessageUtils.addErrorMessage(UNNEXPECTED_ERROR, UNNEXPECTED_ERROR);
-		}
+	public void uploadFile(final FileUploadEvent event) throws IOException {
+		final String uuid = this.fileUploadService.uploadFile(event.getFile());
+		final UploadedServerFile file = saveFile(uuid, event.getFile().getFileName());
+		this.files.add(file);
+		addInfoMessage("file.message.upload", "file.message.upload", event.getFile().getFileName());
 	}
 
-	public void uploadImage(final FileUploadEvent event) {
-		try {
-			final String uuid = this.fileUploadService.uploadImage(event.getFile());
-			this.candidate.setImageFileName(uuid);
-		} catch (final IOException e) {
-			logger.error("Can't upload file", e);
-			MessageUtils.addErrorMessage(UNNEXPECTED_ERROR, UNNEXPECTED_ERROR);
-		}
+	public void uploadImage(final FileUploadEvent event) throws IOException {
+		final String uuid = this.fileUploadService.uploadImage(event.getFile());
+		this.candidate.setImageFileName(uuid);
 	}
 }
