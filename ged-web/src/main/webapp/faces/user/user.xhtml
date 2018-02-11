@@ -27,13 +27,19 @@
 									<div class="user-image">
 										<p:fileUpload id="uploadImage" styleClass="uploadImageButton" fileUploadListener="#{userBean.uploadImage}"
 											mode="advanced" dragDropSupport="false" update="userPanelForm growl" auto="true"
-											label="#{i18n['action.add']}" rendered="#{userBean.editable}"/>
-										<h:outputLabel for="uploadImage_input">
+											label="#{i18n['action.add']}" rendered="#{userBean.editable}" />
+										<h:outputLabel for="uploadImage_input" rendered="#{userBean.editable}">
 											<p:graphicImage styleClass="#{userBean.editable ? 'selectable image' : 'image'}"
 												value="/images/#{userBean.user.imageFileName}" rendered="#{not empty userBean.user.imageFileName}" />
-											<p:graphicImage styleClass="#{userBean.editable ? 'selectable image' : 'image'}" value="/resources/img/default-avatar.png"
-												rendered="#{empty userBean.user.imageFileName}" />
+											<p:graphicImage styleClass="#{userBean.editable ? 'selectable image' : 'image'}"
+												value="/resources/img/default-avatar.png" rendered="#{empty userBean.user.imageFileName}" />
 										</h:outputLabel>
+										<p:graphicImage styleClass="#{userBean.editable ? 'selectable image' : 'image'}"
+											value="/images/#{userBean.user.imageFileName}"
+											rendered="#{not empty userBean.user.imageFileName and not userBean.editable}" />
+										<p:graphicImage styleClass="#{userBean.editable ? 'selectable image' : 'image'}"
+											value="/resources/img/default-avatar.png"
+											rendered="#{empty userBean.user.imageFileName and not userBean.editable}" />
 									</div>
 								</div>
 							</div>
@@ -111,7 +117,8 @@
 									<div class="ui-g-12 ui-md-4">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['user.date_of_join']}" for="date_of_join" />
-											<p:calendar id="date_of_join" value="#{userBean.user.dateOfJoin}" readonly="#{not userBean.editable}" disabled="#{not userBean.editable}" />
+											<p:calendar id="date_of_join" value="#{userBean.user.dateOfJoin}" readonly="#{not userBean.editable}"
+												disabled="#{not userBean.editable}" />
 										</div>
 										<h:message for="date_of_join" errorClass="error" />
 									</div>
