@@ -4255,7 +4255,7 @@ body .ui-inputfield.ui-state-error {
 	border: 1px solid red;
 }
 
-body .ui-inputfield.ui-state-disabled {
+body .ui-inputfield.ui-state-disabled, body .ui-state-disabled .ui-inputfield {
 	background: #f2f2f2;
 }
 
