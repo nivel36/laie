@@ -24,9 +24,9 @@
 						<div class="ui-g">
 							<div class="ui-g-12 ui-lg-3 ui-xl-2">
 								<div class="user-card">
-									<div class="user-image">
+									<p:outputPanel layout="block" id="userImage" styleClass="user-image">
 										<p:fileUpload id="uploadImage" styleClass="uploadImageButton" fileUploadListener="#{userBean.uploadImage}"
-											mode="advanced" dragDropSupport="false" update="userPanelForm growl" auto="true"
+											mode="advanced" dragDropSupport="false" update="userImage growl" auto="true"
 											label="#{i18n['action.add']}" rendered="#{userBean.editable}" />
 										<h:outputLabel for="uploadImage_input" rendered="#{userBean.editable}">
 											<p:graphicImage styleClass="#{userBean.editable ? 'selectable image' : 'image'}"
@@ -40,7 +40,7 @@
 										<p:graphicImage styleClass="#{userBean.editable ? 'selectable image' : 'image'}"
 											value="/resources/img/default-avatar.png"
 											rendered="#{empty userBean.user.imageFileName and not userBean.editable}" />
-									</div>
+									</p:outputPanel>
 								</div>
 							</div>
 

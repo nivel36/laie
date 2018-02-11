@@ -267,6 +267,14 @@ h4 {
 	overflow: auto;
 }
 
+.user-select.image {
+	width: 32px;
+}
+
+.user-select.name {
+	vertical-align: middle;
+}
+
 .user-card {
 	display: inline-block;
 	position: relative;

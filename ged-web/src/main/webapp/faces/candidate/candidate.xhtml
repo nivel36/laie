@@ -24,10 +24,10 @@
 						<div class="ui-g">
 							<div class="ui-g-12 ui-lg-3 ui-xl-2">
 								<div class="user-card">
-									<div class="user-image">
+									<p:outputPanel layout="block" id="userImage" styleClass="user-image">
 										<p:fileUpload id="uploadImage" styleClass="uploadImageButton"
 											fileUploadListener="#{candidateBean.uploadImage}" mode="advanced" dragDropSupport="false"
-											update="userPanelForm growl" auto="true" label="#{i18n['action.add']}" rendered="#{candidateBean.editable}" />
+											update="userImage growl" auto="true" label="#{i18n['action.add']}" rendered="#{candidateBean.editable}" />
 										<h:outputLabel for="uploadImage_input">
 											<p:graphicImage styleClass="#{candidateBean.editable ? 'selectable image' : 'image'}"
 												value="/images/#{candidateBean.candidate.imageFileName}"
@@ -35,7 +35,7 @@
 											<p:graphicImage styleClass="#{candidateBean.editable? 'selectable image' : 'image'}"
 												value="/resources/img/default-avatar.png" rendered="#{empty candidateBean.candidate.imageFileName}" />
 										</h:outputLabel>
-									</div>
+									</p:outputPanel>
 									<div class="user-rating">
 										<p:rating value="#{candidateBean.candidate.rating}" cancel="false" readonly="#{!candidateBean.editable}">
 											<p:ajax event="rate" listener="#{candidateBean.onrate}" update="growl" />

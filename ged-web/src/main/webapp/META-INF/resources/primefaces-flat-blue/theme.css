@@ -6,6 +6,10 @@
 	box-sizing: border-box;
 }
 
+body .ui-autocomplete-panel .ui-autocomplete-table th, body .ui-autocomplete-panel .ui-autocomplete-table td {
+	padding: 4px;
+}
+
 body .ui-icon {
 	font-family: FontAwesome;
 	font-size: 16px;
@@ -4177,65 +4181,68 @@ body .ui-outputlabel .ui-outputlabel-rfi {
 }
 
 body .ui-inputgroup {
-    display: flex;
+	display: flex;
 }
 
 body .ui-inputgroup .ui-button.ui-button-icon-only:last-child {
-    border-top-right-radius: 4px;
-    border-bottom-right-radius: 4px;
+	border-top-right-radius: 4px;
+	border-bottom-right-radius: 4px;
 }
 
 body .ui-inputgroup .ui-button, body .ui-inputgroup .ui-button.ui-button-icon-only {
-    margin: 0;
-    border-radius: 0;
-    border-top-right-radius: 0px;
-    border-bottom-right-radius: 0px;
+	margin: 0;
+	border-radius: 0;
+	border-top-right-radius: 0px;
+	border-bottom-right-radius: 0px;
 }
 
 body .ui-inputgroup .ui-button {
-    margin-right: 0;
-    border-radius: 0;
-    border-top-right-radius: 0px;
-    border-bottom-right-radius: 0px;
+	margin-right: 0;
+	border-radius: 0;
+	border-top-right-radius: 0px;
+	border-bottom-right-radius: 0px;
 }
 
 body .ui-inputgroup .ui-inputgroup-addon:first-child, .ui-inputgroup .ui-inputgroup-addon-checkbox:first-child {
-    border-top-left-radius: 4px;
-    border-bottom-left-radius: 4px;
+	border-top-left-radius: 4px;
+	border-bottom-left-radius: 4px;
 }
 
 body .ui-inputgroup .ui-inputgroup-addon:last-child, .ui-inputgroup .ui-inputgroup-addon-checkbox:last-child {
-    border-top-right-radius: 4px;
-    border-bottom-right-radius: 4px;
+	border-top-right-radius: 4px;
+	border-bottom-right-radius: 4px;
 }
 
 body .ui-inputgroup .ui-inputgroup-addon {
-    padding: 4px 4px 3px 4px;
-    font-size: 15px
+	padding: 4px 4px 3px 4px;
+	font-size: 15px
 }
 
 body .ui-inputgroup .ui-inputgroup-addon, .ui-inputgroup .ui-inputgroup-addon-checkbox {
-    display: inline-block;
-    text-align: center;
-    width: 31px;
-    border-width: 1px;
-    border-style: solid;
+	display: inline-block;
+	text-align: center;
+	width: 31px;
+	border-width: 1px;
+	border-style: solid;
 }
 
 body .ui-inputgroup .ui-inputgroup-addon, .ui-inputgroup .ui-inputgroup-addon-checkbox {
-    border-color: #d6d6d6;
-    background-color: #f0f0f0;
-    color: #222;
+	border-color: #d6d6d6;
+	background-color: #f0f0f0;
+	color: #222;
 }
 
-body .ui-inputgroup > .ui-inputtext:not(:first-child), .ui-inputgroup > .ui-password:not(:first-child), .ui-inputgroup > .ui-inputnumber:not(:first-child) > .ui-inputtext, .ui-inputgroup > .ui-inputmask:not(:first-child), .ui-inputgroup > .ui-calendar:not(:first-child) > .ui-inputfield, .ui-inputgroup > .ui-selectonemenu:not(:first-child), .ui-inputgroup > .ui-selectonebutton:not(:first-child) > .ui-button {
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-    border-left: 0 none;
+body .ui-inputgroup>.ui-inputtext:not (:first-child ), .ui-inputgroup>.ui-password:not (:first-child ), .ui-inputgroup>.ui-inputnumber:not
+	(:first-child ) >.ui-inputtext, .ui-inputgroup>.ui-inputmask:not (:first-child ), .ui-inputgroup>.ui-calendar:not (:first-child
+	) >.ui-inputfield, .ui-inputgroup>.ui-selectonemenu:not (:first-child ), .ui-inputgroup>.ui-selectonebutton:not (:first-child
+	) >.ui-button {
+	border-top-left-radius: 0;
+	border-bottom-left-radius: 0;
+	border-left: 0 none;
 }
 
 body .ui-inputgroup .ui-inputtext, .ui-inputgroup .ui-password {
-    padding-left: .5em;
+	padding-left: .5em;
 }
 
 body .ui-inputfield {
@@ -4300,7 +4307,7 @@ body .ui-datepicker .ui-datepicker-header .ui-datepicker-title {
 body .ui-datepicker .ui-datepicker-header .ui-datepicker-prev::before {
 	font-family: FontAwesome;
 	font-size: 20px;
-	content: "\f0d9";	
+	content: "\f0d9";
 }
 
 body .ui-datepicker .ui-datepicker-header .ui-datepicker-prev {
@@ -4314,7 +4321,7 @@ body .ui-datepicker .ui-datepicker-header .ui-datepicker-prev {
 body .ui-datepicker .ui-datepicker-header .ui-datepicker-next::before {
 	font-family: FontAwesome;
 	font-size: 20px;
-	content: "\f0da";	
+	content: "\f0da";
 }
 
 body .ui-datepicker .ui-datepicker-header .ui-datepicker-next {
@@ -4331,9 +4338,8 @@ body .ui-datepicker .ui-datepicker-calendar .ui-datepicker-today a {
 
 body .ui-datepicker .ui-datepicker-calendar a {
 	text-align: center;
-	color: #666; 
+	color: #666;
 }
-
 
 body .ui-datepicker .ui-datepicker-calendar a.ui-state-active {
 	background: #5b9bd1;
@@ -4542,9 +4548,11 @@ body .ui-datatable-data .ui-button-icon-only .ui-icon.fa {
 }
 
 body .ui-button-text-icon-left .ui-icon.fa {
+	
 }
 
 body .ui-button.ui-button-text-icon-left .ui-button-icon-left {
+	
 }
 
 body .ui-button-icon-only .ui-icon.fa, body .ui-button-text-icon-left .ui-icon.fa, body .ui-button-text-icon-right .ui-icon.fa
@@ -4669,7 +4677,8 @@ body .ui-tabs-panels .ui-tabs-panel {
 }
 
 @keyframes ripple-animation {
-	from { transform:scale(1);
+	from { 
+		transform:scale(1);
 		opacity: 0.4;
 	}
 	to {
