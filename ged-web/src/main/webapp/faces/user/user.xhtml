@@ -111,7 +111,7 @@
 									<div class="ui-g-12 ui-md-4">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['user.date_of_join']}" for="date_of_join" />
-											<p:calendar id="date_of_join" value="#{userBean.user.dateOfJoin}" readonly="#{not userBean.editable}" />
+											<p:calendar id="date_of_join" value="#{userBean.user.dateOfJoin}" readonly="#{not userBean.editable}" disabled="#{not userBean.editable}" />
 										</div>
 										<h:message for="date_of_join" errorClass="error" />
 									</div>
