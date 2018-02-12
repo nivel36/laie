@@ -40,7 +40,7 @@ public class BookmarksBean extends AbstractBean {
 			MessageUtils.addErrorMessage("Bookmark full", "Bookmark full");
 			return;
 		}
-		this.bookmarkService.save(bookmark);
+		this.bookmarkService.update(bookmark);
 		this.bookmarks.add(bookmark);
 	}
 

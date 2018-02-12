@@ -49,8 +49,8 @@ public class ActionServiceImpl extends AbstractService<Action> implements Action
 	@Override
 	public void deleteAction(@PostDelete @Observes final AbstractAuditedEntity auditedEntity) {
 		Objects.requireNonNull(auditedEntity);
-		logger.debug("Delete action class {} with id {} for user {}",
-				 auditedEntity.getClass().getName(), auditedEntity.getId(), auditedEntity.getUser());
+		logger.debug("Delete action class {} with id {} for user {}", auditedEntity.getClass().getName(),
+				auditedEntity.getId(), auditedEntity.getUser());
 		insertAction(auditedEntity, ActionType.DELETE);
 	}
 
@@ -59,6 +59,12 @@ public class ActionServiceImpl extends AbstractService<Action> implements Action
 		Objects.requireNonNull(user);
 		logger.debug("Find all actions of the user {}", user.getFullName());
 		return this.actionDao.findAllByUser(user);
+	}
+
+	@Override
+	public List<Action> findLastActions() {
+		logger.debug("Find last actions");
+		return this.actionDao.findLastActions();
 	}
 
 	private Action getActionFromEntity(final AbstractAuditedEntity auditedEntity) {
@@ -77,9 +83,9 @@ public class ActionServiceImpl extends AbstractService<Action> implements Action
 	@Override
 	public void insertAction(@PostPersist @Observes final AbstractAuditedEntity auditedEntity) {
 		Objects.requireNonNull(auditedEntity);
-		logger.debug("Insert action class {} with id {} for user {}",
-				 auditedEntity.getClass().getName(), auditedEntity.getId(), auditedEntity.getUser());
-		insertAction(auditedEntity, ActionType.SAVE);
+		logger.debug("Insert action class {} with id {} for user {}", auditedEntity.getClass().getName(),
+				auditedEntity.getId(), auditedEntity.getUser());
+		insertAction(auditedEntity, ActionType.INSERT);
 	}
 
 	private void insertAction(final AbstractAuditedEntity auditedEntity, final ActionType actionType) {
@@ -88,7 +94,7 @@ public class ActionServiceImpl extends AbstractService<Action> implements Action
 		action.setDate(new Date());
 		final User user = this.userService.findUserByEmail(this.sessionContext.getCallerPrincipal().getName());
 		action.setUser(user);
-		save(action);
+		update(action);
 	}
 
 	@Override
@@ -106,22 +112,16 @@ public class ActionServiceImpl extends AbstractService<Action> implements Action
 	@Override
 	public void undeleteAction(@PostUndelete @Observes final AbstractAuditedEntity auditedEntity) {
 		Objects.requireNonNull(auditedEntity);
-		logger.debug("Undelete action class {} with id {} for user {}",
-				 auditedEntity.getClass().getName(), auditedEntity.getId(), auditedEntity.getUser());
+		logger.debug("Undelete action class {} with id {} for user {}", auditedEntity.getClass().getName(),
+				auditedEntity.getId(), auditedEntity.getUser());
 		insertAction(auditedEntity, ActionType.UNDELETE);
 	}
 
 	@Override
 	public void updateAction(@PostUpdate @Observes final AbstractAuditedEntity auditedEntity) {
 		Objects.requireNonNull(auditedEntity);
-		logger.debug("Update action class {} with id {} for user {}",
-				auditedEntity.getClass().getName(), auditedEntity.getId(), auditedEntity.getUser());
-		insertAction(auditedEntity, ActionType.SAVE);
-	}
-
-	@Override
-	public List<Action> findLastActions() {
-		logger.debug("Find last actions");
-		return this.actionDao.findLastActions();
+		logger.debug("Update action class {} with id {} for user {}", auditedEntity.getClass().getName(),
+				auditedEntity.getId(), auditedEntity.getUser());
+		insertAction(auditedEntity, ActionType.UPDATE);
 	}
 }

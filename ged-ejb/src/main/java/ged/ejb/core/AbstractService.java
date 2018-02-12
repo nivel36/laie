@@ -27,19 +27,9 @@ public abstract class AbstractService<T extends Identificable> implements Servic
 
 	protected abstract Dao<T> getDao();
 
-	protected void insert(final T entity) {
-		this.getDao().insert(entity);
-	}
-
 	@Override
-	public T save(final T entity) {
-		Objects.requireNonNull(entity);
-		if (entity.getId() == 0) {
-			this.insert(entity);
-			return entity;
-		} else {
-			return this.update(entity);
-		}
+	public void insert(final T entity) {
+		this.getDao().insert(entity);
 	}
 
 	@Override
@@ -47,7 +37,8 @@ public abstract class AbstractService<T extends Identificable> implements Servic
 		return this.getDao().search(searchText);
 	}
 
-	protected T update(final T entity) {
+	@Override
+	public T update(final T entity) {
 		return this.getDao().update(entity);
 	}
 }

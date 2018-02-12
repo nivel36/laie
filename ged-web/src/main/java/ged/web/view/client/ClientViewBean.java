@@ -120,7 +120,7 @@ public class ClientViewBean extends AbstractBean {
 
 	public void saveClient() {
 		this.editable = false;
-		this.client = this.clientService.save(this.client);
+		this.client = this.clientService.update(this.client);
 	}
 
 	public void setClient(final Client client) {

@@ -26,6 +26,6 @@ public class LoginServiceImpl implements LoginService {
 	public User login(final String email) {
 		final User user = this.userSerivce.findUserByEmail(email);
 		user.setLastConnection(Calendar.getInstance().getTime());
-		return this.userSerivce.save(user);
+		return this.userSerivce.update(user);
 	}
 }

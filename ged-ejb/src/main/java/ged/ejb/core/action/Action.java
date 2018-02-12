@@ -14,7 +14,7 @@ import ged.ejb.core.model.AbstractRecordEntity;
 public class Action extends AbstractRecordEntity {
 
 	public enum ActionType {
-		DELETE, LOGIN, SAVE, UNDELETE
+		DELETE, INSERT, LOGIN, UNDELETE, UPDATE
 	}
 
 	private static final long serialVersionUID = -3095037007290696579L;

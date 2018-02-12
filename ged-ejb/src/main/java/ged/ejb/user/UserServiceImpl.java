@@ -94,7 +94,7 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
 	}
 
 	@Override
-	protected void insert(final User user) {
+	public void insert(final User user) {
 		logger.debug("Insert user {}", user.getEmail());
 		if (user.equals(user.getManager())) {
 			logger.warn("The user {} can't be his/her manager", user.getEmail());
@@ -147,7 +147,7 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
 	}
 
 	@Override
-	protected User update(final User user) {
+	public User update(final User user) {
 		if (isLastAdminOnApp(user)) {
 			logger.warn("Can't change user {} role. Last Admin on app", user.getEmail());
 			throw new UserException("Can't change user role. Last Admin on app");

@@ -138,7 +138,7 @@ public class UserBean extends AbstractBean {
 	public String insertUser() {
 		logger.debug("Insert user action performed");
 		this.user.setManager(this.manager);
-		this.userService.save(this.user);
+		this.userService.insert(this.user);
 		return "user.xhtml?id=" + this.user.getId() + "&faces-redirect=true";
 	}
 
@@ -194,7 +194,7 @@ public class UserBean extends AbstractBean {
 		logger.debug("Update user action performed");
 		try {
 			this.user.setManager(this.manager);
-			this.user = this.userService.save(this.user);
+			this.user = this.userService.update(this.user);
 			this.editable = false;
 		} catch (final EJBException e) {
 			if (e.getCause() instanceof UserException) {

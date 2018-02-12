@@ -151,7 +151,7 @@ public class JobOfferViewBean extends AbstractBean {
 
 	public void save() {
 		logger.debug("Save job offer action performed");
-		this.jobOffer = this.jobService.save(this.jobOffer);
+		this.jobOffer = this.jobService.update(this.jobOffer);
 		this.editable = false;
 	}
 

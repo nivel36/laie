@@ -89,11 +89,20 @@ public class JobOfferServiceImpl extends AbstratctAuditedService<JobOffer> imple
 		return this.jobOfferDao;
 	}
 
+	@Override
+	@Audited(action = ActionType.INSERT)
+	public void insert(final JobOffer jobOffer) {
+		Objects.requireNonNull(jobOffer);
+		logger.debug("Insert job offer {}", jobOffer.getDescription());
+		putClientOnJobOffer(jobOffer);
+		getDao().insert(jobOffer);
+	}
+
 	private void putClientOnJobOffer(final JobOffer jobOffer) {
 		Client client = this.clientService.findByName(jobOffer.getClient().getName());
 		if (client == null) {
 			client = jobOffer.getClient();
-			this.clientService.save(client);
+			this.clientService.update(client);
 		} else {
 			jobOffer.setClient(client);
 		}
@@ -110,16 +119,10 @@ public class JobOfferServiceImpl extends AbstratctAuditedService<JobOffer> imple
 	}
 
 	@Override
-	@Audited(action = ActionType.SAVE)
-	public JobOffer save(final JobOffer jobOffer) {
+	@Audited(action = ActionType.UPDATE)
+	public JobOffer update(final JobOffer jobOffer) {
 		Objects.requireNonNull(jobOffer);
-		logger.debug("Save job offer {}", jobOffer.getDescription());
-		if (jobOffer.getId() == 0) {
-			this.putClientOnJobOffer(jobOffer);
-			this.getDao().insert(jobOffer);
-			return jobOffer;
-		} else {
-			return this.getDao().update(jobOffer);
-		}
+		logger.debug("Update job offer {}", jobOffer.getDescription());
+		return getDao().update(jobOffer);
 	}
 }

@@ -68,7 +68,7 @@ public class CandidateRestController extends AbstractRestController {
 	public Response insert(@Valid final CandidateDto candidateDto) {
 		Response.ResponseBuilder builder = null;
 		final Candidate candidateToInsert = this.candidateMapper.mapDto(candidateDto);
-		this.candidateService.save(candidateToInsert);
+		this.candidateService.update(candidateToInsert);
 		builder = Response.ok();
 		return builder.build();
 	}

@@ -12,7 +12,9 @@ public interface Service<T extends Identificable> {
 
 	List<T> findAll();
 
-	T save(T entity);
+	void insert(T entity);
+
+	T update(T entity);
 
 	List<T> search(String searchText);
 }

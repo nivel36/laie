@@ -13,13 +13,13 @@ public abstract class AbstratctAuditedService<T extends AbstractAuditedEntity> e
 	public void delete(final T entity) {
 		Objects.requireNonNull(entity);
 		entity.setDeleted(true);
-		super.save(entity);
+		super.update(entity);
 	}
 
 	@Override
-	@Audited(action = ActionType.SAVE)
-	public T save(final T entity) {
-		return super.save(entity);
+	@Audited(action = ActionType.INSERT)
+	public void insert(final T entity) {
+		super.insert(entity);
 	}
 
 	@Override
@@ -27,6 +27,12 @@ public abstract class AbstratctAuditedService<T extends AbstractAuditedEntity> e
 	public T undelete(final T entity) {
 		Objects.requireNonNull(entity);
 		entity.setDeleted(Boolean.FALSE);
-		return super.save(entity);
+		return super.update(entity);
+	}
+
+	@Override
+	@Audited(action = ActionType.UPDATE)
+	public T update(final T entity) {
+		return super.update(entity);
 	}
 }

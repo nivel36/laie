@@ -68,7 +68,7 @@ public class ChangePasswordPopupBean extends AbstractBean {
 		final String hash = hashPassword(this.newPassword);
 		Objects.requireNonNull(hash);
 		user.setPassword(hash.toCharArray());
-		return this.userService.save(user);
+		return this.userService.update(user);
 	}
 
 	private void clear() {

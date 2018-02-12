@@ -161,7 +161,7 @@ public class CandidateBean extends AbstractBean {
 	public String insertCandidate() {
 		this.candidate.setTags(getTagsFromStringList(this.tags));
 		this.candidate.setFiles(new HashSet<>(this.files));
-		this.candidate = this.candidateService.save(this.candidate);
+		this.candidateService.insert(this.candidate);
 		return "candidate.xhtml?id=" + this.candidate.getId() + "&faces-redirect=true";
 	}
 
@@ -195,7 +195,7 @@ public class CandidateBean extends AbstractBean {
 	public void removeFile(final UploadedServerFile file) throws IOException {
 		this.fileUploadService.removeFileFromFileSystem(file.getUuid());
 		this.candidate.getFiles().remove(file);
-		this.candidate = this.candidateService.save(this.candidate);
+		this.candidate = this.candidateService.update(this.candidate);
 		this.files.remove(file);
 		addInfoMessage("file.message.remove", "file.message.remove", file.getName());
 	}
@@ -236,13 +236,13 @@ public class CandidateBean extends AbstractBean {
 	public void undelete() {
 		logger.debug("UNDELETE action");
 		this.candidate.setDeleted(false);
-		this.candidate = this.candidateService.save(this.candidate);
+		this.candidate = this.candidateService.update(this.candidate);
 	}
 
 	public void updateCandidate() {
 		this.candidate.setTags(getTagsFromStringList(this.tags));
 		this.candidate.setFiles(new HashSet<>(this.files));
-		this.candidate = this.candidateService.save(this.candidate);
+		this.candidate = this.candidateService.update(this.candidate);
 		this.editable = false;
 	}
 

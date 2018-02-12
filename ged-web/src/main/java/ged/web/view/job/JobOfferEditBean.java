@@ -85,7 +85,7 @@ public class JobOfferEditBean extends AbstractBean {
 
 	public String save() {
 		logger.debug("Save job offer action performed");
-		this.jobService.save(this.jobOffer);
+		this.jobService.update(this.jobOffer);
 		return getReturnPage();
 	}
 
