@@ -4,7 +4,7 @@
 	version="2.1">
 	<persistence-unit name="ged" transaction-type="JTA">
 		<mapping-file>/META-INF/queries.xml</mapping-file>
-		<shared-cache-mode>DISABLE_SELECTIVE</shared-cache-mode>
+		<shared-cache-mode>NONE</shared-cache-mode>
 		<properties>
 			<property name="javax.persistence.schema-generation.database.action" value="drop-and-create" />
 			<property name="javax.persistence.schema-generation.create-source" value="metadata" />
@@ -14,8 +14,8 @@
 			<property name="hibernate.search.lucene_version" value="LUCENE_5_3_1" />
 			<property name="hibernate.show_sql" value="false" />
 			<property name="hibernate.format_sql" value="false" />
-			<property name="hibernate.cache.use_second_level_cache" value="true" />
-			<property name="hibernate.cache.use_query_cache" value="true" />
+			<property name="hibernate.cache.use_second_level_cache" value="false" />
+			<property name="hibernate.cache.use_query_cache" value="false" />
 		</properties>
 	</persistence-unit>
 </persistence>
