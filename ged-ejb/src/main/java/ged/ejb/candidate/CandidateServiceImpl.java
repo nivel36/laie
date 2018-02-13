@@ -14,6 +14,8 @@ import org.slf4j.LoggerFactory;
 import ged.ejb.UploadedServerFile;
 import ged.ejb.UploadedServerFileDao;
 import ged.ejb.core.AbstratctAuditedService;
+import ged.ejb.core.Audited;
+import ged.ejb.core.action.Action.ActionType;
 import ged.ejb.core.model.Dao;
 import ged.ejb.core.model.Repository;
 import ged.ejb.core.tag.Tag;
@@ -86,6 +88,7 @@ public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> imp
 	}
 
 	@Override
+	@Audited(action = ActionType.INSERT)
 	public void insert(final Candidate candidate) {
 		Objects.requireNonNull(candidate);
 		if (this.candidateDao.emailExists(candidate.getEmail())) {
@@ -101,6 +104,7 @@ public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> imp
 	}
 
 	@Override
+	@Audited(action = ActionType.UPDATE)
 	public Candidate update(final Candidate candidate) {
 		Objects.requireNonNull(candidate);
 		final Candidate candidateInRepository = this.candidateDao.find(candidate.getId());

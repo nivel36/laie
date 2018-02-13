@@ -94,7 +94,7 @@ public class ActionServiceImpl extends AbstractService<Action> implements Action
 		action.setDate(new Date());
 		final User user = this.userService.findUserByEmail(this.sessionContext.getCallerPrincipal().getName());
 		action.setUser(user);
-		update(action);
+		insert(action);
 	}
 
 	@Override
