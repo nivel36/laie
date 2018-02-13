@@ -10,54 +10,91 @@
 	<ui:param name="selectedMenu" value="clients" />
 
 	<ui:define name="content">
-		<h:form id="form">
+		<div class="stats">
 			<div class="ui-g">
-				<div class="ui-g-12">
-					<p:panel header="#{i18n['client.search']}">
+				<div class="ui-g-12 ui-md-6 ui-lg-3">
+					<div class="card card-stats" tabindex="1">
+						<div class="card-header"></div>
+						<div class="card-body">
+							<p class="card-category">#{i18n['candidate.candidates']}</p>
+							<span class="number">#{candidateListPanelBean.numberOfCandidates}</span>
+						</div>
+						<div class="card-footer"></div>
+					</div>
+				</div>
+				<div class="ui-g-12 ui-md-6 ui-lg-3">
+					<div class="card card-stats" tabindex="2">
+						<div class="card-header"></div>
+						<div class="card-body">
+							<p class="card-category">Clientes</p>
+							<span class="number">2</span>
+						</div>
+						<div class="card-footer"></div>
+					</div>
+				</div>
+				<div class="ui-g-12 ui-md-6 ui-lg-3">
+					<div class="card card-stats" tabindex="3">
+						<div class="card-header"></div>
+						<div class="card-body">
+							<p class="card-category">Ofertas de empleo</p>
+							<span class="number">4</span>
+						</div>
+						<div class="card-footer"></div>
+					</div>
+				</div>
+				<div class="ui-g-12 ui-md-6 ui-lg-3">
+					<div class="card card-stats" tabindex="4">
+						<div class="card-header"></div>
+						<div class="card-body">
+							<p class="card-category">Ofertas cerradas</p>
+							<span class="number">10</span>
+						</div>
+						<div class="card-footer"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="ui-g">
+			<div class="ui-g-12 ui-xl-8">
+				<h:form id="searchForm">
+					<p:panel id="searchPanel" header="#{i18n['client.search']}">
 						<div class="ui-g">
-							<div class="ui-md-12 ui-lg-6 ui-xl-4">
-								<div class="form-group">
-									<p:outputLabel for="name" value="#{i18n['client.name']}" />
-									<p:inputText id="name" value="#{clientSearchBean.name}" />
+							<div class="ui-md-12 ui-lg-4">
+								<div class="ui-inputgroup">
+									<p:inputText id="searchText" value="#{clientSearchBean.searchText}" />
+									<p:commandButton icon="fa fa-search" styleClass="green-button" action="#{clientSearchBean.search}"
+										update="@form" process="searchPanel" />
 								</div>
+							</div>
+							<div class="ui-md-12 ui-lg-4">
+								<p:commandButton value="#{i18n['action.search']}" styleClass="btn-primary" action="#{clientSearchBean.search}"
+									update="@form" process="searchPanel" />
+								<p:commandButton value="#{i18n['action.clean']}" action="#{clientSearchBean.clean}" update="@form"
+									styleClass="btn-gray" />
 							</div>
 						</div>
 						<div class="ui-g">
 							<div class="ui-g-12">
-								<div class="form-action-primary">
-									<p:commandButton  value="#{i18n['action.new']}" action="#{clientSearchBean.newClient}"
-										immediate="true" />
-									<p:commandButton styleClass="btn-primary" value="#{i18n['action.search']}" action="#{clientSearchBean.search}" />
-									<p:commandButton styleClass="btn-gray" value="#{i18n['action.clean']}" action="#{clientSearchBean.clean}" />
-								</div>
+								<p:dataTable var="client" id="clients" value="#{clientSearchBean.clients}"
+									emptyMessage="#{i18n['client.no_clients_found']}" reflow="true" paginator="true" paginatorPosition="bottom"
+									rows="#{sessionBean.rowsPerPage}" selectionMode="single" selection="#{clientSearchBean.selectedClient}"
+									rowKey="#{client.id}" sortBy="#{client.name}" sortOrder="ascending">
+
+									<p:ajax event="rowSelect" listener="#{clientSearchBean.onClientSelect}" update="@form" />
+
+									<p:column headerText="#{i18n['client.name']}" sortBy="#{client.name}">
+										<h:outputText value="#{client.name}" />
+									</p:column>
+
+									<p:column headerText="#{i18n['client.cif']}" sortBy="#{client.cif}">
+										<h:outputText value="#{client.cif}" />
+									</p:column>
+								</p:dataTable>
 							</div>
 						</div>
 					</p:panel>
-				</div>
+				</h:form>
 			</div>
-			<div class="ui-g">
-				<div class="ui-g-12">
-					<p:panel header="#{i18n['client.search_results']}">
-						<p:dataTable var="client" value="#{clientSearchBean.clients}" emptyMessage="#{i18n['client.no_clients_found']}"
-							reflow="true" paginator="true" paginatorPosition="bottom" rows="#{sessionBean.rowsPerPage}">
-
-							<p:column headerText="#{i18n['client.name']}" sortBy="#{client.name}">
-								<h:outputText value="#{client.name}" />
-							</p:column>
-
-							<p:column headerText="#{i18n['client.cif']}" sortBy="#{client.cif}">
-								<h:outputText value="#{client.cif}" />
-							</p:column>
-
-							<p:column>
-								<p:button outcome="clientView" icon="fa fa-eye">
-									<f:param name="id" value="#{client.id}" />
-								</p:button>
-							</p:column>
-						</p:dataTable>
-					</p:panel>
-				</div>
-			</div>
-		</h:form>
+		</div>
 	</ui:define>
 </ui:composition>

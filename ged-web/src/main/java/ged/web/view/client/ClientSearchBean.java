@@ -1,5 +1,6 @@
 package ged.web.view.client;
 
+import java.io.IOException;
 import java.lang.invoke.MethodHandles;
 import java.util.List;
 
@@ -28,32 +29,32 @@ public class ClientSearchBean extends AbstractBean {
 	@Inject
 	private transient ClientService clientService;
 
-	private String name;
+	private String searchText;
+
+	private Client selectedClient;
 
 	public void clean() {
 		logger.debug("Clean action performed");
-		this.name = null;
+		this.searchText = null;
 		search();
-	}
-
-	public String edit(final Client client) {
-		logger.debug("Edit candidate action performed");
-		this.flash.put("client", client);
-		return "clientEdit?faces-redirect=true";
 	}
 
 	public List<Client> getClients() {
 		return this.clients;
 	}
 
-	public String getName() {
-		return this.name;
+	public String getSearchText() {
+		return this.searchText;
+	}
+
+	public Client getSelectedClient() {
+		return this.selectedClient;
 	}
 
 	@PostConstruct
 	public void init() {
 		logger.trace("Init ClientSearchBean");
-		this.clients = this.clientService.search(this.name);
+		this.clients = this.clientService.search(this.searchText);
 	}
 
 	public String newClient() {
@@ -61,22 +62,33 @@ public class ClientSearchBean extends AbstractBean {
 		return "clientEdit?faces-redirect=true";
 	}
 
-	public void remove(final Client client) {
-		logger.debug("Removing client action performed");
-		this.clientService.delete(client);
-		search();
+	public void onClientSelect() {
+		try {
+			final String context = this.externalContext.getContextName();
+			final StringBuilder url = new StringBuilder();
+			url.append("/").append(context).append("/faces/client/client.xhtml?id=")
+					.append(this.selectedClient.getId());
+			this.externalContext.redirect(url.toString());
+		} catch (final IOException e) {
+			logger.error("Unable to redirect to page");
+		}
 	}
 
 	public void search() {
 		logger.debug("Searching for client action performed");
-		this.clients = this.clientService.search(this.name);
+		this.clients = this.clientService.search(this.searchText);
 	}
 
 	public void setClientService(final ClientService clientService) {
 		this.clientService = clientService;
 	}
 
-	public void setName(final String name) {
-		this.name = name;
+	public void setSearchText(final String searchText) {
+		this.searchText = searchText;
 	}
+
+	public void setSelectedClient(final Client selectedClient) {
+		this.selectedClient = selectedClient;
+	}
+
 }
