@@ -34,10 +34,6 @@ public class CurriculumEditBean extends AbstractBean {
 
 	private List<Education> education = new ArrayList<>();
 
-	public void setCurriculumService(CurriculumService curriculumService) {
-		this.curriculumService = curriculumService;
-	}
-
 	private List<JobExperience> jobExperiences = new ArrayList<>();
 
 	private List<Language> languages = new ArrayList<>();
@@ -101,8 +97,7 @@ public class CurriculumEditBean extends AbstractBean {
 		if (this.flash.containsKey(CURRICULUM_KEY)) {
 			this.curriculum = (Curriculum) this.flash.get(CURRICULUM_KEY);
 		} else {
-			error();
-			return;
+			this.curriculum = new Curriculum();
 		}
 		if (this.curriculum.getSkills() == null) {
 			this.curriculum.setSkills(new HashSet<Skill>());
@@ -157,6 +152,10 @@ public class CurriculumEditBean extends AbstractBean {
 
 	public void setCurriculum(final Curriculum curriculum) {
 		this.curriculum = curriculum;
+	}
+
+	public void setCurriculumService(final CurriculumService curriculumService) {
+		this.curriculumService = curriculumService;
 	}
 
 	public void setEducation(final List<Education> education) {

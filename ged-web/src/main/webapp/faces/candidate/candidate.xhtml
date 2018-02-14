@@ -53,7 +53,7 @@
 							</div>
 
 							<div class="ui-g-12 ui-lg-9 ui-xl-10">
-							
+
 								<input type="hidden" id="candidateId" value="#{candidateBean.candidate.id}" />
 
 								<div class="ui-g">
@@ -232,6 +232,13 @@
 
 			<div class="ui-g-12 ui-lg-6 ui-xl-6">
 				<p:panel header="#{i18n['curriculum.curricula']}" rendered="#{not candidateBean.newCandidate}">
+					<div class="ui-g">
+						<div class="ui-g-12">
+							<div class="form-action-primary">
+								<p:button value="#{i18n['action.new']}" outcome="/faces/candidate/curriculumEdit" />
+							</div>
+						</div>
+					</div>
 				</p:panel>
 			</div>
 
