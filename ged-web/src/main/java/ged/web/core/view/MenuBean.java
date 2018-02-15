@@ -3,15 +3,13 @@ package ged.web.core.view;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 
+import ged.web.core.util.Navigate;
+
 @Named
 @RequestScoped
 public class MenuBean extends AbstractBean {
 
-	public static final String CANDIDATES = "/faces/candidate/candidateSearch?faces-redirect=true";
-
 	public static final String CLIENTS = "/faces/client/clientSearch?faces-redirect=true";
-
-	public static final String INDEX = "/faces/index?faces-redirect=true";
 
 	public static final String JOB_OFFERS = "/faces/jobOffer/jobOfferSearch?faces-redirect=true";
 
@@ -24,15 +22,15 @@ public class MenuBean extends AbstractBean {
 	public static final String USERS = "/faces/user/userSearch?faces-redirect=true";
 
 	public String gotoCandidates() {
-		return CANDIDATES;
+		return Navigate.candidateSearchUrl();
 	}
 
 	public String gotoClients() {
-		return CLIENTS;
+		return Navigate.clientSearchUrl();
 	}
 
 	public String gotoIndex() {
-		return INDEX;
+		return Navigate.indexUrl();
 	}
 
 	public String gotoJobOffers() {

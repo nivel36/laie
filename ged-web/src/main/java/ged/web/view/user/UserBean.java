@@ -27,7 +27,7 @@ import ged.ejb.user.role.Role;
 import ged.ejb.user.role.RoleService;
 import ged.web.core.util.Message;
 import ged.web.core.util.Navigate;
-import ged.web.core.util.Transalte;
+import ged.web.core.util.Translate;
 import ged.web.core.view.AbstractBean;
 import ged.web.core.view.FileUploadService;
 import ged.web.reports.UserReport;
@@ -227,7 +227,7 @@ public class UserBean extends AbstractBean {
 		}
 		if (this.userService.emailExists(email)) {
 			logger.debug("The email exists");
-			final String msg = Transalte.message("user.error.email_exists");
+			final String msg = Translate.message("user.error.email_exists");
 			throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg));
 		}
 	}
@@ -239,7 +239,7 @@ public class UserBean extends AbstractBean {
 		final User managerToValidate = (User) value;
 		if (managerToValidate.equals(this.user)) {
 			logger.debug("User can't be his/her manager");
-			final String msg = Transalte.message("user.error.manager");
+			final String msg = Translate.message("user.error.manager");
 			throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg));
 		}
 	}
@@ -251,7 +251,7 @@ public class UserBean extends AbstractBean {
 		final Role userRole = (Role) value;
 		final Role managerRole = this.manager.getRole();
 		if (!this.isAvalidRole(userRole, managerRole)) {
-			final String msg = Transalte.message("user.error.role");
+			final String msg = Translate.message("user.error.role");
 			throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg));
 		}
 	}

@@ -11,7 +11,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
 import javax.inject.Inject;
 
-import ged.web.core.util.Transalte;
+import ged.web.core.util.Translate;
 
 public abstract class AbstractBean implements Serializable {
 
@@ -63,8 +63,8 @@ public abstract class AbstractBean implements Serializable {
 
 	private void addMessage(final UIComponent component, final Severity severity, final String title,
 			final String message, final Object[] params) {
-		final String translatedTitle = Transalte.message(title, params);
-		final String translatedMessage = Transalte.message(message, params);
+		final String translatedTitle = Translate.message(title, params);
+		final String translatedMessage = Translate.message(message, params);
 		final FacesMessage facesMessage = new FacesMessage(severity, translatedTitle, translatedMessage);
 		if (component == null) {
 			this.facesContext.addMessage(null, facesMessage);

@@ -1,10 +1,30 @@
 package ged.web.core.util;
 
+import java.io.IOException;
+
 import javax.faces.application.NavigationHandler;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
 public class Navigate {
+
+	private static final String REDIRECT = "&faces-redirect=true";
+
+	public static String candidateSearchUrl() {
+		return Page.CandidateSearch.url();
+	}
+
+	public static String candidateUrl(final long id) {
+		return Page.Candidate.url() + id + REDIRECT;
+	}
+
+	public static String clientSearchUrl() {
+		return Page.ClientSearch.url();
+	}
+
+	public static String clientUrl(final long id) {
+		return Page.Client.url() + id + REDIRECT;
+	}
 
 	private static void get(final String page) {
 		try {
@@ -14,9 +34,13 @@ public class Navigate {
 			final StringBuilder url = new StringBuilder("/");
 			url.append(contextName).append(page);
 			externalContext.redirect(url.toString());
-		} catch (final Exception e) {
+		} catch (final IOException e) {
 			throw new NavigationException("Unable to go to " + page, e);
 		}
+	}
+
+	public static String indexUrl() {
+		return Page.Index.url();
 	}
 
 	private static void post(final String page) {
@@ -27,11 +51,11 @@ public class Navigate {
 	}
 
 	public static void toCandidate(final long id) {
-		get(Page.Candiadte.url() + id);
+		get(candidateUrl(id));
 	}
 
 	public static void toCandidateSearch() {
-		post(Page.CandidateSearch.url());
+		post(candidateSearchUrl());
 	}
 
 	public static void toClient(final long id) {

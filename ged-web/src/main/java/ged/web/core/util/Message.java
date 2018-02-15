@@ -15,7 +15,7 @@ public class Message {
 	}
 
 	public static void add(final Severity severity, final String title, final String message) {
-		final String translatedTitle = Transalte.message(title);
+		final String translatedTitle = Translate.message(title);
 		final FacesMessage facesMessage = new FacesMessage(severity, translatedTitle, message);
 		FacesContext.getCurrentInstance().addMessage(null, facesMessage);
 	}

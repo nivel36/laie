@@ -7,7 +7,7 @@ import java.util.ResourceBundle;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 
-public class Transalte {
+public class Translate {
 
 	private static final String FILE_NAME = "ged.i18n";
 
@@ -42,6 +42,6 @@ public class Transalte {
 		return text;
 	}
 
-	private Transalte() {
+	private Translate() {
 	}
 }

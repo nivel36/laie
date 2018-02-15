@@ -163,7 +163,7 @@ public class CandidateBean extends AbstractBean {
 		this.candidate.setTags(this.getTagsFromStringList(this.tags));
 		this.candidate.setFiles(new HashSet<>(this.files));
 		this.candidateService.insert(this.candidate);
-		return "candidate.xhtml?id=" + this.candidate.getId() + "&faces-redirect=true";
+		return Navigate.candidateUrl(this.candidate.getId());
 	}
 
 	public boolean isEditable() {
@@ -172,11 +172,6 @@ public class CandidateBean extends AbstractBean {
 
 	public boolean isNewCandidate() {
 		return this.candidate.getId() == 0;
-	}
-
-	public String modifyCandidate() {
-		this.flash.put("candidate", this.candidate);
-		return "candidateEdit?faces-redirect=true";
 	}
 
 	public void onload() {
