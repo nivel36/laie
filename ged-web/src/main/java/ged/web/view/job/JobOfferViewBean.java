@@ -75,7 +75,7 @@ public class JobOfferViewBean extends AbstractBean {
 	}
 
 	private void error() {
-		Navigate.toPage("jobOfferSearch");
+		Navigate.toJobOfferSearch();
 	}
 
 	public List<Candidate> getCandidates() {
@@ -107,17 +107,17 @@ public class JobOfferViewBean extends AbstractBean {
 				final long id = Long.parseLong(this.jobOfferId);
 				this.jobOffer = this.jobService.find(id);
 				if (this.jobOffer == null) {
-					error();
+					this.error();
 				} else {
-					populateJobMeetings();
+					this.populateJobMeetings();
 					this.candidates = this.candidateService.findAllByJobOffer(this.jobOffer);
 				}
 				this.editable = false;
 			} catch (final NumberFormatException ex) {
-				error();
+				this.error();
 			}
 		} else {
-			error();
+			this.error();
 		}
 	}
 

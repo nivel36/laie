@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -69,7 +70,7 @@ public class CandidateBean extends AbstractBean {
 	}
 
 	private void checkLopdFile() {
-		if (!hasLopdFile()) {
+		if (!this.hasLopdFile()) {
 			Message.addWarning("candidate.warn.no_lopd_file", "candidate.warn.no_lopd_file");
 		}
 	}
@@ -79,7 +80,7 @@ public class CandidateBean extends AbstractBean {
 	}
 
 	private void error() {
-		Navigate.toPage("candidateSearch");
+		Navigate.toCandidateSearch();
 	}
 
 	public Candidate getCandidate() {
@@ -139,7 +140,7 @@ public class CandidateBean extends AbstractBean {
 				final long candidateId = Long.parseLong(this.id);
 				this.candidate = this.candidateService.findCandidateAndFiles(candidateId);
 				if (this.candidate == null) {
-					error();
+					this.error();
 				}
 				if (this.candidate.getAddress() == null) {
 					this.candidate.setAddress(new Address());
@@ -148,18 +149,18 @@ public class CandidateBean extends AbstractBean {
 					this.tags.add(tag.getLabel());
 				}
 				this.files.addAll(this.candidate.getFiles());
-				checkLopdFile();
+				this.checkLopdFile();
 			} catch (final NumberFormatException ex) {
-				error();
+				this.error();
 			}
 		} else {
 			this.editable = true;
-			this.candidate = buildNewCandidate();
+			this.candidate = this.buildNewCandidate();
 		}
 	}
 
 	public String insertCandidate() {
-		this.candidate.setTags(getTagsFromStringList(this.tags));
+		this.candidate.setTags(this.getTagsFromStringList(this.tags));
 		this.candidate.setFiles(new HashSet<>(this.files));
 		this.candidateService.insert(this.candidate);
 		return "candidate.xhtml?id=" + this.candidate.getId() + "&faces-redirect=true";
@@ -179,7 +180,7 @@ public class CandidateBean extends AbstractBean {
 	}
 
 	public void onload() {
-		checkLopdFile();
+		this.checkLopdFile();
 	}
 
 	public void onrate(final RateEvent rateEvent) {
@@ -197,7 +198,7 @@ public class CandidateBean extends AbstractBean {
 		this.candidate.getFiles().remove(file);
 		this.candidate = this.candidateService.update(this.candidate);
 		this.files.remove(file);
-		addInfoMessage("file.message.remove", "file.message.remove", file.getName());
+		this.addInfoMessage("file.message.remove", "file.message.remove", file.getName());
 	}
 
 	private UploadedServerFile saveFile(final String uuid, final String fileName) {
@@ -240,7 +241,7 @@ public class CandidateBean extends AbstractBean {
 	}
 
 	public void updateCandidate() {
-		this.candidate.setTags(getTagsFromStringList(this.tags));
+		this.candidate.setTags(this.getTagsFromStringList(this.tags));
 		this.candidate.setFiles(new HashSet<>(this.files));
 		this.candidate = this.candidateService.update(this.candidate);
 		this.editable = false;
@@ -250,14 +251,14 @@ public class CandidateBean extends AbstractBean {
 		this.files.remove(file);
 		final UploadedServerFile updatedFile = this.candidateService.updateFile(file);
 		this.files.add(updatedFile);
-		addInfoMessage("file.message.update", "file.message.update", updatedFile.getName());
+		this.addInfoMessage("file.message.update", "file.message.update", updatedFile.getName());
 	}
 
 	public void uploadFile(final FileUploadEvent event) throws IOException {
 		final String uuid = this.fileUploadService.uploadFile(event.getFile());
-		final UploadedServerFile file = saveFile(uuid, event.getFile().getFileName());
+		final UploadedServerFile file = this.saveFile(uuid, event.getFile().getFileName());
 		this.files.add(file);
-		addInfoMessage("file.message.upload", "file.message.upload", event.getFile().getFileName());
+		this.addInfoMessage("file.message.upload", "file.message.upload", event.getFile().getFileName());
 	}
 
 	public void uploadImage(final FileUploadEvent event) throws IOException {

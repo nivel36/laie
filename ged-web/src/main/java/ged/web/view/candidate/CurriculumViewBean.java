@@ -30,10 +30,6 @@ public class CurriculumViewBean extends AbstractBean {
 	@Inject
 	private transient CurriculumService curriculumService;
 
-	public void setCurriculumService(CurriculumService curriculumService) {
-		this.curriculumService = curriculumService;
-	}
-
 	private List<Education> education;
 
 	private String id;
@@ -50,7 +46,8 @@ public class CurriculumViewBean extends AbstractBean {
 	}
 
 	private void error() {
-		Navigate.toPage("candidateSearch");
+		Navigate.toCandidateSearch();
+		;
 	}
 
 	public Candidate getCandidate() {
@@ -87,7 +84,7 @@ public class CurriculumViewBean extends AbstractBean {
 				final long candidateId = Long.parseLong(this.id);
 				this.curriculum = this.curriculumService.findByCandidateId(candidateId);
 				if (this.curriculum == null) {
-					error();
+					this.error();
 				}
 				this.candidate = this.curriculum.getCandidate();
 				this.jobExperiences = new ArrayList<>(this.curriculum.getJobExperiences());
@@ -95,11 +92,15 @@ public class CurriculumViewBean extends AbstractBean {
 				this.education = new ArrayList<>(this.curriculum.getEducation());
 				this.languages = new ArrayList<>(this.curriculum.getLanguages());
 			} catch (final NumberFormatException ex) {
-				error();
+				this.error();
 			}
 		} else {
-			error();
+			this.error();
 		}
+	}
+
+	public void setCurriculumService(final CurriculumService curriculumService) {
+		this.curriculumService = curriculumService;
 	}
 
 	public void setId(final String id) {

@@ -1,6 +1,5 @@
 package ged.web.view.candidate;
 
-import java.io.IOException;
 import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +14,7 @@ import org.slf4j.LoggerFactory;
 
 import ged.ejb.candidate.Candidate;
 import ged.ejb.candidate.CandidateService;
+import ged.web.core.util.Navigate;
 import ged.web.core.view.AbstractBean;
 
 @Named
@@ -38,7 +38,7 @@ public class CandidateSearchBean extends AbstractBean {
 
 	public void clean() {
 		this.searchText = null;
-		search();
+		this.search();
 	}
 
 	public List<Candidate> getCandidates() {
@@ -59,19 +59,11 @@ public class CandidateSearchBean extends AbstractBean {
 
 	@PostConstruct
 	public void init() {
-		search();
+		this.search();
 	}
 
 	public void onCandidateSelect() {
-		try {
-			final String context = this.externalContext.getContextName();
-			final StringBuilder url = new StringBuilder();
-			url.append("/").append(context).append("/faces/candidate/candidate.xhtml?id=")
-					.append(this.selectedCandidate.getId());
-			this.externalContext.redirect(url.toString());
-		} catch (final IOException e) {
-			logger.error("Unable to redirect to page");
-		}
+		Navigate.toCandidate(this.selectedCandidate.getId());
 	}
 
 	public void search() {

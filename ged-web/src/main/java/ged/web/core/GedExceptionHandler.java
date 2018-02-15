@@ -30,7 +30,7 @@ public class GedExceptionHandler extends ExceptionHandlerWrapper {
 
 	private ExceptionQueuedEvent getRootException() {
 		ExceptionQueuedEvent lastEvent = null;
-		final Iterator<ExceptionQueuedEvent> iterator = getUnhandledExceptionQueuedEvents().iterator();
+		final Iterator<ExceptionQueuedEvent> iterator = this.getUnhandledExceptionQueuedEvents().iterator();
 		while (iterator.hasNext()) {
 			lastEvent = iterator.next();
 			iterator.remove();
@@ -45,28 +45,28 @@ public class GedExceptionHandler extends ExceptionHandlerWrapper {
 
 	@Override
 	public void handle() {
-		final ExceptionQueuedEvent event = getRootException();
+		final ExceptionQueuedEvent event = this.getRootException();
 		if (event != null) {
 			final ExceptionQueuedEventContext context = (ExceptionQueuedEventContext) event.getSource();
 			final Throwable throwable = context.getException();
 			logger.debug("Handling exception", throwable);
-			handle(throwable);
+			this.handle(throwable);
 		}
-		getWrapped().handle();
+		this.getWrapped().handle();
 	}
 
 	private void handle(final Throwable exception) {
 		if (exception instanceof FacesException) {
 			final Throwable cause = exception.getCause();
 			if (cause != null) {
-				handle(exception.getCause());
+				this.handle(exception.getCause());
 			} else {
 				Message.addError("message.title.unexpected_error", exception.getLocalizedMessage());
 			}
 		} else if (exception instanceof EJBException) {
-			handle(exception.getCause());
+			this.handle(exception.getCause());
 		} else if (exception instanceof ViewExpiredException) {
-			Navigate.toPage("login");
+			Navigate.toLogin();
 		} else if (exception instanceof OptimisticLockException) {
 			Message.addError("warning.optimistick_lock.message", "warning.optimistick_lock.message");
 		} else {

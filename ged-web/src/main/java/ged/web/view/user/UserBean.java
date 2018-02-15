@@ -81,7 +81,7 @@ public class UserBean extends AbstractBean {
 	}
 
 	private void error() {
-		Navigate.toPage("userSearch");
+		Navigate.toUserSearch();
 	}
 
 	public void export() throws IOException {
@@ -118,7 +118,7 @@ public class UserBean extends AbstractBean {
 				final long id = Long.parseLong(this.userId);
 				this.user = this.userService.find(id);
 				if (this.user == null) {
-					error();
+					this.error();
 				}
 				this.manager = this.user.getManager();
 				this.team = this.userService.findSubordinateUsers(this.user);
@@ -127,11 +127,11 @@ public class UserBean extends AbstractBean {
 					Message.addWarning("message.erased_entity", "message.erased_entity");
 				}
 			} catch (final NumberFormatException ex) {
-				error();
+				this.error();
 			}
 		} else {
 			this.editable = true;
-			this.user = buildNewUser();
+			this.user = this.buildNewUser();
 		}
 	}
 
@@ -200,7 +200,7 @@ public class UserBean extends AbstractBean {
 			if (e.getCause() instanceof UserException) {
 				final Role admin = this.roleService.findAdmin();
 				this.user.setRole(admin);
-				addMessage(FacesMessage.SEVERITY_ERROR, "user.error.last_admin", "user.error.last_admin");
+				this.addMessage(FacesMessage.SEVERITY_ERROR, "user.error.last_admin", "user.error.last_admin");
 			} else {
 				throw e;
 			}
@@ -245,12 +245,12 @@ public class UserBean extends AbstractBean {
 	}
 
 	public void validateRole(final FacesContext context, final UIComponent component, final Object value) {
-		if (this.manager == null || this.manager.getEmail() == null) {
+		if ((this.manager == null) || (this.manager.getEmail() == null)) {
 			return;
 		}
 		final Role userRole = (Role) value;
 		final Role managerRole = this.manager.getRole();
-		if (!isAvalidRole(userRole, managerRole)) {
+		if (!this.isAvalidRole(userRole, managerRole)) {
 			final String msg = Transalte.message("user.error.role");
 			throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg));
 		}

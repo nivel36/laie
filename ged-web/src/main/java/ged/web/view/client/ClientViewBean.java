@@ -6,6 +6,7 @@ import java.util.List;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+
 import ged.ejb.client.Client;
 import ged.ejb.client.ClientService;
 import ged.ejb.client.Contact;
@@ -73,18 +74,18 @@ public class ClientViewBean extends AbstractBean {
 	 */
 	public void init() {
 		if (this.id == null) {
-			Navigate.toPage(CLIENT_SEARCH);
+			Navigate.toClientSearch();
 			return;
 		}
 		long clientId = 0;
 		try {
 			clientId = Long.parseLong(this.id);
 		} catch (final NumberFormatException ex) {
-			Navigate.toPage(CLIENT_SEARCH);
+			Navigate.toClientSearch();
 		}
 		this.client = this.clientService.find(clientId);
 		if (this.client == null) {
-			Navigate.toPage(CLIENT_SEARCH);
+			Navigate.toClientSearch();
 			return;
 		}
 		if (this.client.getAddress() == null) {
