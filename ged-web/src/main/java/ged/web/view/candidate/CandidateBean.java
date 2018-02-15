@@ -24,7 +24,7 @@ import ged.ejb.candidate.CandidateService;
 import ged.ejb.core.Address;
 import ged.ejb.core.tag.Tag;
 import ged.ejb.core.tag.TagService;
-import ged.web.core.util.MessageUtils;
+import ged.web.core.util.Message;
 import ged.web.core.util.Navigate;
 import ged.web.core.view.AbstractBean;
 import ged.web.core.view.FileUploadService;
@@ -70,7 +70,7 @@ public class CandidateBean extends AbstractBean {
 
 	private void checkLopdFile() {
 		if (!hasLopdFile()) {
-			MessageUtils.addWarningMessage("candidate.warn.no_lopd_file", "candidate.warn.no_lopd_file");
+			Message.addWarning("candidate.warn.no_lopd_file", "candidate.warn.no_lopd_file");
 		}
 	}
 

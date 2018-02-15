@@ -7,7 +7,7 @@ import java.util.ResourceBundle;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 
-public class TransaltionUtils {
+public class Transalte {
 
 	private static final String FILE_NAME = "ged.i18n";
 
@@ -27,12 +27,12 @@ public class TransaltionUtils {
 		return ResourceBundle.getBundle(filename, locale);
 	}
 
-	public static String translate(final String message) {
+	public static String message(final String message) {
 		final ResourceBundle bundle = getResourceBundle(FILE_NAME);
 		return bundle.getString(message);
 	}
 
-	public static String translate(final String message, Object[] params) {
+	public static String message(final String message, Object[] params) {
 		final ResourceBundle bundle = getResourceBundle(FILE_NAME);
 		String text = bundle.getString(message);
 		if (params != null) {
@@ -42,6 +42,6 @@ public class TransaltionUtils {
 		return text;
 	}
 
-	private TransaltionUtils() {
+	private Transalte() {
 	}
 }

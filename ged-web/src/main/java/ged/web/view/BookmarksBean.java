@@ -15,7 +15,7 @@ import ged.ejb.core.bookmark.Bookmark;
 import ged.ejb.core.bookmark.BookmarkService;
 import ged.ejb.core.model.AbstractAuditedEntity;
 import ged.ejb.user.User;
-import ged.web.core.util.MessageUtils;
+import ged.web.core.util.Message;
 import ged.web.core.view.AbstractBean;
 
 @Named
@@ -37,7 +37,7 @@ public class BookmarksBean extends AbstractBean {
 		final Bookmark bookmark = createBookmark(entity);
 		if (this.bookmarks.size() > 9) {
 			BookmarksBean.logger.warn("Bookmark full for user {}", this.sessionBean.getUser().getEmail());
-			MessageUtils.addErrorMessage("Bookmark full", "Bookmark full");
+			Message.addError("Bookmark full", "Bookmark full");
 			return;
 		}
 		this.bookmarkService.update(bookmark);

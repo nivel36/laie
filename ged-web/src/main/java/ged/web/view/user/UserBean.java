@@ -25,9 +25,9 @@ import ged.ejb.user.UserException;
 import ged.ejb.user.UserService;
 import ged.ejb.user.role.Role;
 import ged.ejb.user.role.RoleService;
-import ged.web.core.util.MessageUtils;
+import ged.web.core.util.Message;
 import ged.web.core.util.Navigate;
-import ged.web.core.util.TransaltionUtils;
+import ged.web.core.util.Transalte;
 import ged.web.core.view.AbstractBean;
 import ged.web.core.view.FileUploadService;
 import ged.web.reports.UserReport;
@@ -124,7 +124,7 @@ public class UserBean extends AbstractBean {
 				this.team = this.userService.findSubordinateUsers(this.user);
 				this.jobOffers = this.jobOfferService.findAllJobOffersByOwner(this.user);
 				if (this.user.isDeleted()) {
-					MessageUtils.addWarningMessage("message.erased_entity", "message.erased_entity");
+					Message.addWarning("message.erased_entity", "message.erased_entity");
 				}
 			} catch (final NumberFormatException ex) {
 				error();
@@ -227,7 +227,7 @@ public class UserBean extends AbstractBean {
 		}
 		if (this.userService.emailExists(email)) {
 			logger.debug("The email exists");
-			final String msg = TransaltionUtils.translate("user.error.email_exists");
+			final String msg = Transalte.message("user.error.email_exists");
 			throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg));
 		}
 	}
@@ -239,7 +239,7 @@ public class UserBean extends AbstractBean {
 		final User managerToValidate = (User) value;
 		if (managerToValidate.equals(this.user)) {
 			logger.debug("User can't be his/her manager");
-			final String msg = TransaltionUtils.translate("user.error.manager");
+			final String msg = Transalte.message("user.error.manager");
 			throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg));
 		}
 	}
@@ -251,7 +251,7 @@ public class UserBean extends AbstractBean {
 		final Role userRole = (Role) value;
 		final Role managerRole = this.manager.getRole();
 		if (!isAvalidRole(userRole, managerRole)) {
-			final String msg = TransaltionUtils.translate("user.error.role");
+			final String msg = Transalte.message("user.error.role");
 			throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg));
 		}
 	}

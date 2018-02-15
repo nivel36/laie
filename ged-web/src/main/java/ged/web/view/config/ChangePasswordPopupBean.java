@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
 
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
-import ged.web.core.util.MessageUtils;
+import ged.web.core.util.Message;
 import ged.web.core.view.AbstractBean;
 
 @Named
@@ -105,7 +105,7 @@ public class ChangePasswordPopupBean extends AbstractBean {
 			final byte[] digest = md.digest();
 			output = DatatypeConverter.printBase64Binary(digest);
 		} catch (NoSuchAlgorithmException | UnsupportedEncodingException ex) {
-			MessageUtils.addErrorMessage("error.unnexpected_error", "error.unnexpected_error");
+			Message.addError("error.unnexpected_error", "error.unnexpected_error");
 			logger.error("Can't find hash algorithm", ex);
 		}
 		return output;

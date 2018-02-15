@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 
 import ged.ejb.core.i18n.I18nService;
 import ged.ejb.core.i18n.I18nString;
-import ged.web.core.util.TransaltionUtils;
+import ged.web.core.util.Transalte;
 import ged.web.core.view.AbstractBean;
 
 @Named
@@ -51,7 +51,7 @@ public class I18nBean extends AbstractBean {
 			translatedText = this.i18nTexts.get(language).get(key);
 		} else {
 			try {
-				translatedText = TransaltionUtils.translate(key);
+				translatedText = Transalte.message(key);
 			} catch (final MissingResourceException e) {
 				translatedText = "?" + key + "?";
 			}

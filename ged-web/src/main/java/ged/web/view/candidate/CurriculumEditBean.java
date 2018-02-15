@@ -16,7 +16,6 @@ import ged.ejb.curriculum.Education;
 import ged.ejb.curriculum.JobExperience;
 import ged.ejb.curriculum.Language;
 import ged.ejb.curriculum.Skill;
-import ged.web.core.util.Navigate;
 import ged.web.core.view.AbstractBean;
 
 @Named
@@ -66,10 +65,6 @@ public class CurriculumEditBean extends AbstractBean {
 
 	public String cancel() {
 		return "curriculumView.xhtml?id=" + this.curriculum.getCandidate().getId() + "&faces-redirect=true";
-	}
-
-	private void error() {
-		Navigate.toPage("candidateSearch");
 	}
 
 	public Curriculum getCurriculum() {

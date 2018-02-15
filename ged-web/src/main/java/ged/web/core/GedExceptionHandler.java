@@ -15,7 +15,7 @@ import javax.persistence.OptimisticLockException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ged.web.core.util.MessageUtils;
+import ged.web.core.util.Message;
 import ged.web.core.util.Navigate;
 
 public class GedExceptionHandler extends ExceptionHandlerWrapper {
@@ -61,16 +61,16 @@ public class GedExceptionHandler extends ExceptionHandlerWrapper {
 			if (cause != null) {
 				handle(exception.getCause());
 			} else {
-				MessageUtils.addErrorMessage("message.title.unexpected_error", exception.getLocalizedMessage());
+				Message.addError("message.title.unexpected_error", exception.getLocalizedMessage());
 			}
 		} else if (exception instanceof EJBException) {
 			handle(exception.getCause());
 		} else if (exception instanceof ViewExpiredException) {
 			Navigate.toPage("login");
 		} else if (exception instanceof OptimisticLockException) {
-			MessageUtils.addErrorMessage("warning.optimistick_lock.message", "warning.optimistick_lock.message");
+			Message.addError("warning.optimistick_lock.message", "warning.optimistick_lock.message");
 		} else {
-			MessageUtils.addErrorMessage("message.title.unexpected_error", exception.getLocalizedMessage());
+			Message.addError("message.title.unexpected_error", exception.getLocalizedMessage());
 		}
 	}
 }

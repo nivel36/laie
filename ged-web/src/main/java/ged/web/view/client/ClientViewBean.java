@@ -12,7 +12,7 @@ import ged.ejb.client.Contact;
 import ged.ejb.core.Address;
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
-import ged.web.core.util.MessageUtils;
+import ged.web.core.util.Message;
 import ged.web.core.util.Navigate;
 import ged.web.core.view.AbstractBean;
 
@@ -92,7 +92,7 @@ public class ClientViewBean extends AbstractBean {
 		}
 		this.jobOffers = this.jobOfferService.findAllJobOffersByClient(this.client);
 		if (this.client.isDeleted()) {
-			MessageUtils.addWarningMessage("message.erased_entity", "message.erased_entity");
+			Message.addWarning("message.erased_entity", "message.erased_entity");
 		}
 		this.contacts = new ArrayList<>(this.client.getContacts());
 	}

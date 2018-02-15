@@ -12,7 +12,7 @@ import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
-import ged.web.core.util.MessageUtils;
+import ged.web.core.util.Message;
 import ged.web.core.view.AbstractBean;
 
 @Named
@@ -53,7 +53,7 @@ public class GlobalSearchBean extends AbstractBean {
 
 	public void search() {
 		if (this.text == null || this.text.length() < 3) {
-			MessageUtils.addWarningMessage("error.search.camp_to_short", "error.search.camp_to_short");
+			Message.addWarning("error.search.camp_to_short", "error.search.camp_to_short");
 		} else {
 			this.users = this.userService.search(this.text);
 			this.jobOffers = this.jobService.search(this.text);

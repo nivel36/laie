@@ -26,7 +26,7 @@ import org.apache.pdfbox.pdmodel.graphics.xobject.PDXObjectImage;
 import org.apache.pdfbox.util.PDFTextStripper;
 
 import ged.web.core.util.ConfigurationProperty;
-import ged.web.core.util.MessageUtils;
+import ged.web.core.util.Message;
 import ged.web.core.view.AbstractBean;
 
 @Named
@@ -115,7 +115,7 @@ public class AddCurriculumBean extends AbstractBean {
 			this.text = stripper.getText(pdf);
 		} catch (final IOException e) {
 			AddCurriculumBean.logger.error("Can't open file", e);
-			MessageUtils.addErrorMessage("error.unnexpected_error", "error.unnexpected_error");
+			Message.addError("error.unnexpected_error", "error.unnexpected_error");
 		}
 	}
 
