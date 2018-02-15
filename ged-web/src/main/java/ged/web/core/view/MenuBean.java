@@ -9,17 +9,7 @@ import ged.web.core.util.Navigate;
 @RequestScoped
 public class MenuBean extends AbstractBean {
 
-	public static final String CLIENTS = "/faces/client/clientSearch?faces-redirect=true";
-
-	public static final String JOB_OFFERS = "/faces/jobOffer/jobOfferSearch?faces-redirect=true";
-
-	public static final String MAINTENANCES = "/faces/maintenance/maintenanceIndex?faces-redirect=true";
-
-	public static final String REPORTS = "/faces/report/reportSearch?faces-redirect=true";
-
 	private static final long serialVersionUID = 334119408975744799L;
-
-	public static final String USERS = "/faces/user/userSearch?faces-redirect=true";
 
 	public String gotoCandidates() {
 		return Navigate.candidateSearchUrl();
@@ -34,18 +24,18 @@ public class MenuBean extends AbstractBean {
 	}
 
 	public String gotoJobOffers() {
-		return JOB_OFFERS;
+		return Navigate.jobOfferSearchUrl();
 	}
 
 	public String gotoMaintenances() {
-		return MAINTENANCES;
+		return Navigate.maintenancesUrl();
 	}
 
 	public String gotoReports() {
-		return REPORTS;
+		return Navigate.reportsSearchUrl();
 	}
 
 	public String gotoUsers() {
-		return USERS;
+		return Navigate.userSearchUrl();
 	}
 }

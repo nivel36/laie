@@ -8,8 +8,8 @@ import javax.inject.Named;
 import ged.ejb.client.Client;
 import ged.ejb.client.ClientService;
 import ged.ejb.core.Address;
+import ged.web.core.util.Navigate;
 import ged.web.core.view.AbstractBean;
-import ged.web.core.view.MenuBean;
 
 @Named
 @ViewScoped
@@ -23,7 +23,7 @@ public class ClientEditBean extends AbstractBean {
 	private transient ClientService clientService;
 
 	public String cancel() {
-		return MenuBean.CLIENTS;
+		return Navigate.clientSearchUrl();
 	}
 
 	public Client getClient() {

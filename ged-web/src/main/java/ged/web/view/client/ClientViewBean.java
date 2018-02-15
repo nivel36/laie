@@ -21,8 +21,6 @@ import ged.web.core.view.AbstractBean;
 @ViewScoped
 public class ClientViewBean extends AbstractBean {
 
-	private static final String CLIENT_SEARCH = "clientSearch";
-
 	private static final long serialVersionUID = 1412905869664752048L;
 
 	private Client client;

@@ -43,11 +43,23 @@ public class Navigate {
 		return Page.Index.url();
 	}
 
+	public static String jobOfferSearchUrl() {
+		return Page.JobOfferSearch.url();
+	}
+
+	public static String maintenancesUrl() {
+		return Page.Maintenances.url();
+	}
+
 	private static void post(final String page) {
 		final FacesContext fc = FacesContext.getCurrentInstance();
 		final NavigationHandler nav = fc.getApplication().getNavigationHandler();
 		nav.handleNavigation(fc, null, page);
 		fc.renderResponse();
+	}
+
+	public static String reportsSearchUrl() {
+		return Page.Reports.url();
 	}
 
 	public static void toCandidate(final long id) {
@@ -84,6 +96,10 @@ public class Navigate {
 
 	public static void toUserSearch() {
 		post(Page.UserSearch.url());
+	}
+
+	public static String userSearchUrl() {
+		return Page.UserSearch.url();
 	}
 
 	private Navigate() {
