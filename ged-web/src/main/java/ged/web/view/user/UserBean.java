@@ -238,7 +238,7 @@ public class UserBean extends AbstractBean {
 		}
 		final User managerToValidate = (User) value;
 		if (managerToValidate.equals(this.user)) {
-			logger.debug("User can't be his/her manager");
+			logger.debug("USER can't be his/her manager");
 			final String msg = Translate.message("user.error.manager");
 			throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg));
 		}

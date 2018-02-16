@@ -11,19 +11,19 @@ public class Navigate {
 	private static final String REDIRECT = "&faces-redirect=true";
 
 	public static String candidateSearchUrl() {
-		return Page.CandidateSearch.url();
+		return Page.CANDIDATE_SEARCH.url();
 	}
 
 	public static String candidateUrl(final long id) {
-		return Page.Candidate.url() + id + REDIRECT;
+		return Page.CANDIDATE.url() + id + REDIRECT;
 	}
 
 	public static String clientSearchUrl() {
-		return Page.ClientSearch.url();
+		return Page.CLIENT_SEARCH.url();
 	}
 
 	public static String clientUrl(final long id) {
-		return Page.Client.url() + id + REDIRECT;
+		return Page.CLIENT.url() + id + REDIRECT;
 	}
 
 	private static void get(final String page) {
@@ -40,15 +40,15 @@ public class Navigate {
 	}
 
 	public static String indexUrl() {
-		return Page.Index.url();
+		return Page.INDEX.url();
 	}
 
 	public static String jobOfferSearchUrl() {
-		return Page.JobOfferSearch.url();
+		return Page.JOB_OFFER_SEARCH.url();
 	}
 
 	public static String maintenancesUrl() {
-		return Page.Maintenances.url();
+		return Page.MAINTENANCE.url();
 	}
 
 	private static void post(final String page) {
@@ -59,7 +59,7 @@ public class Navigate {
 	}
 
 	public static String reportsSearchUrl() {
-		return Page.Reports.url();
+		return Page.REPORT.url();
 	}
 
 	public static void toCandidate(final long id) {
@@ -71,35 +71,35 @@ public class Navigate {
 	}
 
 	public static void toClient(final long id) {
-		get(Page.Client.url() + id);
+		get(Page.CLIENT.url() + id);
 	}
 
 	public static void toClientSearch() {
-		post(Page.ClientSearch.url());
+		post(Page.CLIENT_SEARCH.url());
 	}
 
 	public static void toJobOffer(final long id) {
-		get(Page.JobOffer.url() + id);
+		get(Page.JOB_OFFER.url() + id);
 	}
 
 	public static void toJobOfferSearch() {
-		post(Page.JobOfferSearch.url());
+		post(Page.JOB_OFFER_SEARCH.url());
 	}
 
 	public static void toLogin() {
-		post(Page.Login.url());
+		post(Page.LOGIN.url());
 	}
 
 	public static void toUser(final long id) {
-		get(Page.User.url() + id);
+		get(Page.USER.url() + id);
 	}
 
 	public static void toUserSearch() {
-		post(Page.UserSearch.url());
+		post(Page.USER_SEARCH.url());
 	}
 
 	public static String userSearchUrl() {
-		return Page.UserSearch.url();
+		return Page.USER_SEARCH.url();
 	}
 
 	private Navigate() {

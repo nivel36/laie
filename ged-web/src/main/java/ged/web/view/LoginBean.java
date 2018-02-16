@@ -50,7 +50,7 @@ public class LoginBean extends AbstractBean {
 
 	@PostConstruct
 	public void init() {
-		logger.debug("Login Bean init");
+		logger.debug("LOGIN Bean init");
 		this.locale = this.facesContext.getApplication().getDefaultLocale();
 	}
 

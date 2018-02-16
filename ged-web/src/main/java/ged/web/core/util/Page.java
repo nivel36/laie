@@ -2,18 +2,18 @@ package ged.web.core.util;
 
 public enum Page {
 
-	Candidate("/faces/candidate/candidate?id="),
-	CandidateSearch("/faces/candidate/candidateSearch?faces-redirect=true"),
-	Client("/faces/client/client?id="),
-	ClientSearch("/faces/client/clientSearch?faces-redirect=true"),
-	Index("/faces/index?faces-redirect=true"),
-	JobOffer("/faces/jobOffer/jobOffer?id="),
-	JobOfferSearch("/faces/jobOffer/jobOfferSearch?faces-redirect=true"),
-	Login("/login?faces-redirect=true"),
-	User("/faces/user/user?id="),
-	UserSearch("/faces/user/userSearch?faces-redirect=true"),
-	Reports("/faces/report/reportSearch?faces-redirect=true"),
-	Maintenances("/faces/maintenance/maintenanceSearch?faces-redirect=true");
+	CANDIDATE("/faces/candidate/candidate?id="),
+	CANDIDATE_SEARCH("/faces/candidate/candidateSearch?faces-redirect=true"),
+	CLIENT("/faces/client/client?id="),
+	CLIENT_SEARCH("/faces/client/clientSearch?faces-redirect=true"),
+	INDEX("/faces/index?faces-redirect=true"),
+	JOB_OFFER("/faces/jobOffer/jobOffer?id="),
+	JOB_OFFER_SEARCH("/faces/jobOffer/jobOfferSearch?faces-redirect=true"),
+	LOGIN("/login?faces-redirect=true"),
+	USER("/faces/user/user?id="),
+	USER_SEARCH("/faces/user/userSearch?faces-redirect=true"),
+	REPORT("/faces/report/reportSearch?faces-redirect=true"),
+	MAINTENANCE("/faces/maintenance/maintenanceSearch?faces-redirect=true");
 
 	private String url;
 
