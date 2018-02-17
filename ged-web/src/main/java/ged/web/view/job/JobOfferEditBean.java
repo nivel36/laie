@@ -10,10 +10,11 @@ import javax.inject.Named;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ged.ejb.client.Client;
 import ged.ejb.client.ClientService;
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
+import ged.web.core.util.Navigate;
+import ged.web.core.util.Page;
 import ged.web.core.view.AbstractBean;
 
 @Named
@@ -38,11 +39,7 @@ public class JobOfferEditBean extends AbstractBean {
 
 	public String cancel() {
 		logger.debug("Cancel new job offer action performed");
-		if (this.returnPage != null) {
-			return this.returnPage;
-		} else {
-			return "jobOfferSearch?faces-redirect=true";
-		}
+		return this.returnPage;
 	}
 
 	public void clientChangedListener() {
@@ -55,27 +52,19 @@ public class JobOfferEditBean extends AbstractBean {
 		return this.jobOffer;
 	}
 
-	private String getReturnPage() {
-		if (this.returnPage != null) {
-			return this.returnPage;
-		} else {
-			return "jobOfferView.xhtml?id=" + this.jobOffer.getId() + "&faces-redirect=true";
-		}
-	}
-
 	@PostConstruct
 	public void init() {
 		logger.trace("JobOfferEditBean init");
-		this.jobOffer = new JobOffer();
-		this.jobOffer.setOwner(this.sessionBean.getUser());
-		if (this.flash.containsKey("client")) {
-			final Client client = (Client) this.flash.get("client");
-			this.jobOffer.setClient(client);
+		if (this.flash.containsKey("jobOffer")) {
+			this.jobOffer = (JobOffer) this.flash.get("jobOffer");
 		} else {
-			this.jobOffer.setClient(new Client());
+			this.jobOffer = new JobOffer();
 		}
+		this.jobOffer.setOwner(this.sessionBean.getUser());
 		if (this.flash.containsKey("returnPage")) {
 			this.returnPage = (String) this.flash.get("returnPage");
+		} else {
+			this.returnPage = Navigate.to(Page.JOB_OFFER_SEARCH).toUrl();
 		}
 	}
 
@@ -85,8 +74,8 @@ public class JobOfferEditBean extends AbstractBean {
 
 	public String save() {
 		logger.debug("Save job offer action performed");
-		this.jobService.update(this.jobOffer);
-		return getReturnPage();
+		this.jobService.insert(this.jobOffer);
+		return this.returnPage;
 	}
 
 	public void setClientService(final ClientService clientService) {

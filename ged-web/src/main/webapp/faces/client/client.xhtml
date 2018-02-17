@@ -11,29 +11,27 @@
 
 	<ui:define name="content">
 		<f:metadata>
-			<f:viewParam name="id" value="#{clientViewBean.id}" />
-			<f:viewAction action="#{clientViewBean.init}" />
+			<f:viewParam name="id" value="#{clientBean.id}" />
+			<f:viewAction action="#{clientBean.init}" />
 		</f:metadata>
 
 		<div class="ui-g">
 			<div class="ui-g-12 ui-xl-6">
 				<h:form id="form">
-					<input type="hidden" id="clientId" value="#{clientViewBean.client.id}" />
-					<p:panel header="#{clientViewBean.client}" id="client">
+					<input type="hidden" id="clientId" value="#{clientBean.client.id}" />
+					<p:panel header="#{clientBean.insertable ? i18n['client.new_client'] : clientBean.client}" id="client">
 						<div class="ui-g">
 							<div class="ui-g-12 ui-md-6 ui-xl-4">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['client.name']}" for="name" />
-									<p:inputText id="name" value="#{clientViewBean.client.name}" readonly="#{!clientViewBean.editable}"
-										required="true" />
+									<p:inputText id="name" value="#{clientBean.client.name}" readonly="#{!clientBean.editable}" required="true" />
 								</div>
 								<h:message for="name" errorClass="error" />
 							</div>
 							<div class="ui-g-12 ui-md-6 ui-xl-4">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['client.cif']}" for="cif" />
-									<p:inputText id="cif" value="#{clientViewBean.client.cif}" readonly="#{!clientViewBean.editable}"
-										required="true" />
+									<p:inputText id="cif" value="#{clientBean.client.cif}" readonly="#{!clientBean.editable}" required="true" />
 								</div>
 								<h:message for="cif" errorClass="error" />
 							</div>
@@ -42,22 +40,21 @@
 							<div class="ui-g-12 ui-md-6 ui-xl-4">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['client.phoneNumber']}" for="phone_number" />
-									<p:inputText id="phone_number" value="#{clientViewBean.client.phoneNumber}"
-										readonly="#{!clientViewBean.editable}" />
+									<p:inputText id="phone_number" value="#{clientBean.client.phoneNumber}" readonly="#{!clientBean.editable}" />
 								</div>
 								<h:message for="phone_number" errorClass="error" />
 							</div>
 							<div class="ui-g-12 ui-md-6 ui-xl-4">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['client.city']}" for="city" />
-									<p:inputText id="city" value="#{clientViewBean.client.address.city}" readonly="#{!clientViewBean.editable}" />
+									<p:inputText id="city" value="#{clientBean.client.address.city}" readonly="#{!clientBean.editable}" />
 								</div>
 								<h:message for="city" errorClass="error" />
 							</div>
 							<div class="ui-g-12 ui-md-6 ui-xl-4">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['client.state']}" for="state" />
-									<p:inputText id="state" value="#{clientViewBean.client.address.state}" readonly="#{!clientViewBean.editable}" />
+									<p:inputText id="state" value="#{clientBean.client.address.state}" readonly="#{!clientBean.editable}" />
 								</div>
 								<h:message for="state" errorClass="error" />
 							</div>
@@ -66,17 +63,25 @@
 						<div class="ui-g">
 							<div class="ui-g-12">
 								<div class="form-action-primary">
-									<p:commandButton value="#{i18n['action.undelete']}" action="#{clientViewBean.undeleteClient}" immediate="true"
-										rendered="#{clientViewBean.client.deleted}" />
-									<p:commandButton  value="#{i18n['action.save']}" action="#{clientViewBean.saveClient}"
-										rendered="#{not clientViewBean.client.deleted and clientViewBean.editable}" update="client growl" />
-									<p:commandButton styleClass="btn-primary"  value="#{i18n['action.edit']}" action="#{clientViewBean.editClient}"
-										immediate="true" rendered="#{not clientViewBean.client.deleted and not clientViewBean.editable}"
+									<p:commandButton value="#{i18n['action.undelete']}" action="#{clientBean.undeleteClient}" immediate="true"
+										rendered="#{clientBean.client.deleted}" />
+
+									<p:commandButton value="#{i18n['action.save']}" action="#{clientBean.updateClient}"
+										rendered="#{not clientBean.client.deleted and clientBean.editable and not clientBean.insertable}"
 										update="client growl" />
-									<p:commandButton  styleClass="btn-gray"  value="#{i18n['action.cancel']}" action="#{clientViewBean.cancelEdit}"
-										rendered="#{not clientViewBean.client.deleted and clientViewBean.editable}" update="client growl" />
-									<p:commandButton styleClass="btn-primary" id="exportExcel" icon="fa fa-file-excel-o" value="#{i18n['action.export']}"
-										action="#{clientViewBean.export}" rendered="#{not clientViewBean.editable}" />
+
+									<p:commandButton value="#{i18n['action.save']}" action="#{clientBean.insertClient}"
+										rendered="#{not clientBean.client.deleted and clientBean.insertable}" update="client growl" />
+
+									<p:commandButton styleClass="btn-primary" value="#{i18n['action.edit']}" action="#{clientBean.editClient}"
+										immediate="true" rendered="#{not clientBean.client.deleted and not clientBean.editable}" update="client growl" />
+
+									<p:commandButton styleClass="btn-gray" value="#{i18n['action.cancel']}" action="#{clientBean.cancelEdit}"
+										rendered="#{not clientBean.client.deleted and clientBean.editable}"
+										update="client growl contactsForm jobOffersForm" process="@this" />
+
+									<p:commandButton styleClass="btn-primary" id="exportExcel" icon="fa fa-file-excel-o"
+										value="#{i18n['action.export']}" action="#{clientBean.export}" rendered="#{not clientBean.editable}" />
 								</div>
 							</div>
 						</div>
@@ -84,11 +89,11 @@
 				</h:form>
 			</div>
 			<div class="ui-g-12 ui-xl-6">
-				<h:form>
-					<p:panel header="#{i18n['client.contacts']}">
+				<h:form id="contactsForm">
+					<p:panel header="#{i18n['client.contacts']}" rendered="#{not clientBean.insertable}" id="contacts">
 						<div class="ui-g">
 							<div class="ui-g-12">
-								<p:dataTable var="contact" value="#{clientViewBean.contacts}" emptyMessage="#{i18n['client.no_contacts_found']}"
+								<p:dataTable var="contact" value="#{clientBean.contacts}" emptyMessage="#{i18n['client.no_contacts_found']}"
 									reflow="true" paginator="true" paginatorPosition="bottom" rows="#{sessionBean.rowsPerPage}">
 									<p:column headerText="#{i18n['contact.name']}">
 										<h:outputText value="#{contact.fullName}" />
@@ -110,8 +115,7 @@
 						<div class="ui-g">
 							<div class="ui-g-12">
 								<div class="form-action-primary">
-									<p:commandButton  value="#{i18n['action.add']}" action="#{clientViewBean.newContact}"
-										update="@form growl" />
+									<p:commandButton value="#{i18n['action.add']}" action="#{clientBean.newContact}" update="@form growl" />
 								</div>
 							</div>
 						</div>
@@ -119,13 +123,17 @@
 				</h:form>
 			</div>
 			<div class="ui-g-12 ui-xl-6">
-				<h:form>
-					<p:panel header="#{i18n['job.job_offers']}">
+				<h:form id="jobOffersForm">
+					<p:panel header="#{i18n['job.job_offers']}" rendered="#{not clientBean.insertable}" id="jobOffers">
 						<div class="ui-g">
 							<div class="ui-g-12">
-								<p:dataTable var="jobOffer" value="#{clientViewBean.jobOffers}"
-									emptyMessage="#{i18n['client.no_job_offers_found']}" reflow="true" paginator="true" paginatorPosition="bottom"
-									rows="#{sessionBean.rowsPerPage}">
+								<p:dataTable var="jobOffer" value="#{clientBean.jobOffers}" emptyMessage="#{i18n['client.no_job_offers_found']}"
+									reflow="true" paginator="true" paginatorPosition="bottom" rows="#{sessionBean.rowsPerPage}"
+									selectionMode="single" selection="#{clientBean.selectedJobOffer}" rowKey="#{jobOffer.id}"
+									sortBy="#{jobOffer.name}" sortOrder="ascending">
+
+									<p:ajax event="rowSelect" listener="#{clientBean.onJobOfferSelect}" />
+
 									<p:column headerText="#{i18n['job.name']}">
 										<h:outputText value="#{jobOffer.name}" />
 									</p:column>
@@ -145,8 +153,7 @@
 						<div class="ui-g">
 							<div class="ui-g-12">
 								<div class="form-action-primary">
-									<p:commandButton  value="#{i18n['action.add']}" action="#{clientViewBean.newJobOffer}"
-										update="@form growl" />
+									<p:commandButton value="#{i18n['action.add']}" action="#{clientBean.newJobOffer}" update="@form growl" />
 								</div>
 							</div>
 						</div>

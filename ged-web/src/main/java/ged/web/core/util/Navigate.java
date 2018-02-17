@@ -26,15 +26,21 @@ public class Navigate {
 	}
 
 	private String buildQueryParams() {
-		final StringBuilder stringBuilder = new StringBuilder("?");
 		if (this.params != null && this.params.size() != 0) {
+			final StringBuilder stringBuilder = new StringBuilder();
 			final Set<Entry<String, Object>> entriesSet = this.params.entrySet();
 			for (final Entry<String, Object> entry : entriesSet) {
-				stringBuilder.append(entry.getKey()).append("=").append(entry.getValue().toString()).append("&");
+				if (stringBuilder.length() == 0) {
+					stringBuilder.append("?");
+				} else {
+					stringBuilder.append("&");
+				}
+				stringBuilder.append(entry.getKey()).append("=").append(entry.getValue().toString());
 			}
+			return stringBuilder.toString();
+		} else {
+			return null;
 		}
-		stringBuilder.append(FACES_REDIRECT);
-		return stringBuilder.toString();
 	}
 
 	public void doGet() {
@@ -43,7 +49,7 @@ public class Navigate {
 			final ExternalContext externalContext = facesContext.getExternalContext();
 			final String contextName = externalContext.getContextName();
 			final StringBuilder url = new StringBuilder("/");
-			url.append(contextName).append(toUrl());
+			url.append(contextName).append(this.page.url()).append(".xhtml").append(buildQueryParams());
 			externalContext.redirect(url.toString());
 		} catch (final IOException e) {
 			throw new NavigationException("Unable to go to " + this.page, e);
@@ -58,7 +64,12 @@ public class Navigate {
 	}
 
 	public String toUrl() {
-		final String queryParams = buildQueryParams();
+		String queryParams = buildQueryParams();
+		if (queryParams == null) {
+			queryParams = "?" + FACES_REDIRECT;
+		} else {
+			queryParams = queryParams + "&" + FACES_REDIRECT;
+		}
 		return this.page.url() + queryParams;
 	}
 

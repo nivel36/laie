@@ -51,6 +51,14 @@
 									<p:column headerText="#{i18n['client.cif']}" sortBy="#{client.cif}">
 										<h:outputText value="#{client.cif}" />
 									</p:column>
+									
+									<p:column headerText="#{i18n['client.city']}" sortBy="#{client.address.city}">
+										<h:outputText value="#{client.address.city}" />
+									</p:column>
+									
+									<p:column headerText="#{i18n['client.state']}" sortBy="#{client.address.state}">
+										<h:outputText value="#{client.address.state}" />
+									</p:column>
 
 									<p:column headerText="#{i18n['client.owner']}" sortBy="#{client.user.fullName}">
 										<h:outputText value="#{client.user.fullName}" />
