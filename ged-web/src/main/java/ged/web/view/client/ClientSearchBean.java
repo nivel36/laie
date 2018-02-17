@@ -85,5 +85,4 @@ public class ClientSearchBean extends AbstractBean {
 	public void setSelectedClient(final Client selectedClient) {
 		this.selectedClient = selectedClient;
 	}
-
 }
