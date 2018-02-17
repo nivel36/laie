@@ -1,5 +1,8 @@
 package ged.web.core;
 
+import static ged.web.core.util.Navigate.to;
+import static ged.web.core.util.Page.LOGIN;
+
 import java.lang.invoke.MethodHandles;
 import java.util.Iterator;
 
@@ -16,7 +19,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ged.web.core.util.Message;
-import ged.web.core.util.Navigate;
 
 public class GedExceptionHandler extends ExceptionHandlerWrapper {
 
@@ -30,7 +32,7 @@ public class GedExceptionHandler extends ExceptionHandlerWrapper {
 
 	private ExceptionQueuedEvent getRootException() {
 		ExceptionQueuedEvent lastEvent = null;
-		final Iterator<ExceptionQueuedEvent> iterator = this.getUnhandledExceptionQueuedEvents().iterator();
+		final Iterator<ExceptionQueuedEvent> iterator = getUnhandledExceptionQueuedEvents().iterator();
 		while (iterator.hasNext()) {
 			lastEvent = iterator.next();
 			iterator.remove();
@@ -45,14 +47,14 @@ public class GedExceptionHandler extends ExceptionHandlerWrapper {
 
 	@Override
 	public void handle() {
-		final ExceptionQueuedEvent event = this.getRootException();
+		final ExceptionQueuedEvent event = getRootException();
 		if (event != null) {
 			final ExceptionQueuedEventContext context = (ExceptionQueuedEventContext) event.getSource();
 			final Throwable throwable = context.getException();
 			logger.debug("Handling exception", throwable);
 			this.handle(throwable);
 		}
-		this.getWrapped().handle();
+		getWrapped().handle();
 	}
 
 	private void handle(final Throwable exception) {
@@ -66,7 +68,7 @@ public class GedExceptionHandler extends ExceptionHandlerWrapper {
 		} else if (exception instanceof EJBException) {
 			this.handle(exception.getCause());
 		} else if (exception instanceof ViewExpiredException) {
-			Navigate.toLogin();
+			to(LOGIN).doPost();
 		} else if (exception instanceof OptimisticLockException) {
 			Message.addError("warning.optimistick_lock.message", "warning.optimistick_lock.message");
 		} else {

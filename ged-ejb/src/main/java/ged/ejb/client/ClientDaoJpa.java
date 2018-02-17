@@ -1,7 +1,6 @@
 package ged.ejb.client;
 
-import static ged.ejb.core.model.QueryParameter.with;
-
+import static ged.ejb.core.model.FluentHashMap.map;
 import java.lang.invoke.MethodHandles;
 import java.util.List;
 import java.util.Objects;
@@ -22,7 +21,7 @@ public class ClientDaoJpa extends AbstractDaoJpa<Client> implements ClientDao {
 	@Override
 	public boolean clientExist(final String clientName) {
 		Objects.requireNonNull(clientName);
-		return (boolean) this.findByQuery("Client.clientExist", with("name", clientName).parameters());
+		return (boolean) this.findByQuery("Client.clientExist", map("name", clientName));
 	}
 
 	@Override
@@ -30,7 +29,7 @@ public class ClientDaoJpa extends AbstractDaoJpa<Client> implements ClientDao {
 		Objects.requireNonNull(clientName);
 		Client client;
 		try {
-			client = this.findByQuery(Client.class, "Client.findByName", with("name", clientName).parameters());
+			client = this.findByQuery(Client.class, "Client.findByName", map("name", clientName));
 		} catch (final NoResultException e) {
 			logger.debug("No client found", e);
 			client = null;
@@ -45,6 +44,6 @@ public class ClientDaoJpa extends AbstractDaoJpa<Client> implements ClientDao {
 
 	@Override
 	public List<Client> search(final String searchText) {
-		return this.getPersistenceFacade().search(Client.class, searchText, "name");
+		return getPersistenceFacade().search(Client.class, searchText, "name");
 	}
 }

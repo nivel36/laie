@@ -1,6 +1,6 @@
 package ged.ejb.core.action;
 
-import static ged.ejb.core.model.QueryParameter.with;
+import static ged.ejb.core.model.FluentHashMap.map;
 
 import java.util.List;
 import java.util.Objects;
@@ -15,7 +15,7 @@ public class ActionDaoJpa extends AbstractDaoJpa<Action> implements ActionDao {
 	@Override
 	public List<Action> findAllByUser(final User user) {
 		Objects.requireNonNull(user);
-		return this.findByQuery(Action.class, "Action.findAllByUser", with("user", user).parameters(), 10, 0);
+		return this.findByQuery(Action.class, "Action.findAllByUser", map("user", user), 10, 0);
 	}
 
 	@Override

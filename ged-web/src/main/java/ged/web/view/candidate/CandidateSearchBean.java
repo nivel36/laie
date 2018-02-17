@@ -1,9 +1,13 @@
 package ged.web.view.candidate;
 
 import java.lang.invoke.MethodHandles;
+import static ged.ejb.core.model.FluentHashMap.map;
+import static ged.web.core.util.Navigate.to;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import static ged.web.core.util.Page.CANDIDATE;
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -14,7 +18,6 @@ import org.slf4j.LoggerFactory;
 
 import ged.ejb.candidate.Candidate;
 import ged.ejb.candidate.CandidateService;
-import ged.web.core.util.Navigate;
 import ged.web.core.view.AbstractBean;
 
 @Named
@@ -38,7 +41,7 @@ public class CandidateSearchBean extends AbstractBean {
 
 	public void clean() {
 		this.searchText = null;
-		this.search();
+		search();
 	}
 
 	public List<Candidate> getCandidates() {
@@ -59,11 +62,11 @@ public class CandidateSearchBean extends AbstractBean {
 
 	@PostConstruct
 	public void init() {
-		this.search();
+		search();
 	}
 
 	public void onCandidateSelect() {
-		Navigate.toCandidate(this.selectedCandidate.getId());
+		to(CANDIDATE).withParams(map("id", this.selectedCandidate.getId())).doGet();
 	}
 
 	public void search() {

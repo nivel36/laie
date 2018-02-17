@@ -1,6 +1,6 @@
 package ged.ejb.job.meeting;
 
-import static ged.ejb.core.model.QueryParameter.with;
+import static ged.ejb.core.model.FluentHashMap.map;
 
 import java.util.List;
 import java.util.Objects;
@@ -17,7 +17,7 @@ public class JobMeetingDaoJpa extends AbstractDaoJpa<JobMeeting> implements JobM
 	@Override
 	public List<JobMeeting> findByUser(final User user) {
 		Objects.requireNonNull(user);
-		return this.findByQuery(JobMeeting.class, "JobMeeting.findByUser", with("user", user).parameters(), 0, 0);
+		return this.findByQuery(JobMeeting.class, "JobMeeting.findByUser", map("user", user), 0, 0);
 	}
 
 	@Override
@@ -25,7 +25,7 @@ public class JobMeetingDaoJpa extends AbstractDaoJpa<JobMeeting> implements JobM
 		Objects.requireNonNull(user);
 		Objects.requireNonNull(candidate);
 		return this.findByQuery(JobMeeting.class, "JobMeeting.findByUserAndCandidate",
-				with("user", user).and("candidate", candidate).parameters(), 0, 0);
+				map("user", user).and("candidate", candidate), 0, 0);
 	}
 
 	@Override
@@ -33,7 +33,7 @@ public class JobMeetingDaoJpa extends AbstractDaoJpa<JobMeeting> implements JobM
 		Objects.requireNonNull(user);
 		Objects.requireNonNull(client);
 		return this.findByQuery(JobMeeting.class, "JobMeeting.findByUserAndClient",
-				with("user", user).and("client", client).parameters(), 0, 0);
+				map("user", user).and("client", client), 0, 0);
 	}
 
 	@Override

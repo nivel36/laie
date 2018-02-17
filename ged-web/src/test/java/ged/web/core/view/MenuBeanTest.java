@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ged.web.core.util.Navigate;
+import ged.web.core.util.Page;
 
 import org.junit.Assert;
 
@@ -14,43 +15,43 @@ public class MenuBeanTest {
 	@Test
 	public void gotoCandidatesTest() {
 		final String url = this.menuBean.gotoCandidates();
-		Assert.assertEquals(Navigate.candidateSearchUrl(), url);
+		Assert.assertEquals(Page.CANDIDATE_SEARCH.url() + "?" + Navigate.FACES_REDIRECT, url);
 	}
 
 	@Test
 	public void gotoClientsTest() {
 		final String url = this.menuBean.gotoClients();
-		Assert.assertEquals(Navigate.clientSearchUrl(), url);
+		Assert.assertEquals(Page.CLIENT_SEARCH.url() + "?" + Navigate.FACES_REDIRECT, url);
 	}
 
 	@Test
 	public void gotoIndexTest() {
 		final String url = this.menuBean.gotoIndex();
-		Assert.assertEquals(Navigate.indexUrl(), url);
+		Assert.assertEquals(Page.INDEX.url() + "?" + Navigate.FACES_REDIRECT, url);
 	}
 
 	@Test
 	public void gotoJobOffersTest() {
 		final String url = this.menuBean.gotoJobOffers();
-		Assert.assertEquals(Navigate.jobOfferSearchUrl(), url);
+		Assert.assertEquals(Page.JOB_OFFER_SEARCH.url() + "?" + Navigate.FACES_REDIRECT, url);
 	}
 
 	@Test
 	public void gotoMaintenancesTest() {
 		final String url = this.menuBean.gotoMaintenances();
-		Assert.assertEquals(Navigate.maintenancesUrl(), url);
+		Assert.assertEquals(Page.MAINTENANCE.url() + "?" + Navigate.FACES_REDIRECT, url);
 	}
 
 	@Test
 	public void gotoReportsTest() {
 		final String url = this.menuBean.gotoReports();
-		Assert.assertEquals(Navigate.reportsSearchUrl(), url);
+		Assert.assertEquals(Page.REPORT.url() + "?" + Navigate.FACES_REDIRECT, url);
 	}
 
 	@Test
 	public void gotoUsersTest() {
 		final String url = this.menuBean.gotoUsers();
-		Assert.assertEquals(Navigate.userSearchUrl(), url);
+		Assert.assertEquals(Page.USER_SEARCH.url() + "?" + Navigate.FACES_REDIRECT, url);
 	}
 
 	@Before

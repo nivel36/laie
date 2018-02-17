@@ -1,6 +1,6 @@
 package ged.ejb.user.role;
 
-import static ged.ejb.core.model.QueryParameter.with;
+import static ged.ejb.core.model.FluentHashMap.map;
 
 import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
@@ -29,7 +29,7 @@ public class RoleDaoJpa extends AbstractDaoJpa<Role> implements RoleDao {
 	public Role findRoleByName(final String roleName) {
 		Objects.requireNonNull(roleName);
 		Role role;
-		role = this.findByQuery(Role.class, "Role.findRoleByName", with("name", roleName).parameters());
+		role = this.findByQuery(Role.class, "Role.findRoleByName", map("name", roleName));
 		return role;
 	}
 
@@ -37,8 +37,7 @@ public class RoleDaoJpa extends AbstractDaoJpa<Role> implements RoleDao {
 	public List<Role> findSubordinateRoles(final Role role) {
 		List<Role> roles;
 		try {
-			roles = this.findByQuery(Role.class, "Role.findSubordinateRoles",
-					with("id", role.getId()).parameters(), 0, 0);
+			roles = this.findByQuery(Role.class, "Role.findSubordinateRoles", map("id", role.getId()), 0, 0);
 		} catch (final NoResultException e) {
 			roles = new ArrayList<>();
 			logger.warn("No subordinate roles for role {}", role.getName());

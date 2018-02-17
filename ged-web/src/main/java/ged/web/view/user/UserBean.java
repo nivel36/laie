@@ -1,5 +1,8 @@
 package ged.web.view.user;
 
+import static ged.web.core.util.Navigate.to;
+import static ged.web.core.util.Page.USER_SEARCH;
+
 import java.io.IOException;
 import java.lang.invoke.MethodHandles;
 import java.util.List;
@@ -26,7 +29,6 @@ import ged.ejb.user.UserService;
 import ged.ejb.user.role.Role;
 import ged.ejb.user.role.RoleService;
 import ged.web.core.util.Message;
-import ged.web.core.util.Navigate;
 import ged.web.core.util.Translate;
 import ged.web.core.view.AbstractBean;
 import ged.web.core.view.FileUploadService;
@@ -81,7 +83,7 @@ public class UserBean extends AbstractBean {
 	}
 
 	private void error() {
-		Navigate.toUserSearch();
+		to(USER_SEARCH).doPost();
 	}
 
 	public void export() throws IOException {
@@ -118,7 +120,7 @@ public class UserBean extends AbstractBean {
 				final long id = Long.parseLong(this.userId);
 				this.user = this.userService.find(id);
 				if (this.user == null) {
-					this.error();
+					error();
 				}
 				this.manager = this.user.getManager();
 				this.team = this.userService.findSubordinateUsers(this.user);
@@ -127,11 +129,11 @@ public class UserBean extends AbstractBean {
 					Message.addWarning("message.erased_entity", "message.erased_entity");
 				}
 			} catch (final NumberFormatException ex) {
-				this.error();
+				error();
 			}
 		} else {
 			this.editable = true;
-			this.user = this.buildNewUser();
+			this.user = buildNewUser();
 		}
 	}
 
@@ -245,12 +247,12 @@ public class UserBean extends AbstractBean {
 	}
 
 	public void validateRole(final FacesContext context, final UIComponent component, final Object value) {
-		if ((this.manager == null) || (this.manager.getEmail() == null)) {
+		if (this.manager == null || this.manager.getEmail() == null) {
 			return;
 		}
 		final Role userRole = (Role) value;
 		final Role managerRole = this.manager.getRole();
-		if (!this.isAvalidRole(userRole, managerRole)) {
+		if (!isAvalidRole(userRole, managerRole)) {
 			final String msg = Translate.message("user.error.role");
 			throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg));
 		}

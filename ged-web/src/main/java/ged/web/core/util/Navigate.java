@@ -1,6 +1,9 @@
 package ged.web.core.util;
 
 import java.io.IOException;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import javax.faces.application.NavigationHandler;
 import javax.faces.context.ExternalContext;
@@ -8,100 +11,60 @@ import javax.faces.context.FacesContext;
 
 public class Navigate {
 
-	private static final String REDIRECT = "&faces-redirect=true";
+	public static final String FACES_REDIRECT = "faces-redirect=true";
 
-	public static String candidateSearchUrl() {
-		return Page.CANDIDATE_SEARCH.url();
+	public static Navigate to(final Page page) {
+		final Navigate navigate = new Navigate(page);
+		return navigate;
 	}
 
-	public static String candidateUrl(final long id) {
-		return Page.CANDIDATE.url() + id + REDIRECT;
+	private final Page page;
+
+	private Map<String, Object> params;
+
+	private Navigate(final Page page) {
+		this.page = page;
 	}
 
-	public static String clientSearchUrl() {
-		return Page.CLIENT_SEARCH.url();
+	private String buildQueryParams() {
+		final StringBuilder stringBuilder = new StringBuilder("?");
+		if (this.params != null && this.params.size() != 0) {
+			final Set<Entry<String, Object>> entriesSet = this.params.entrySet();
+			for (final Entry<String, Object> entry : entriesSet) {
+				stringBuilder.append(entry.getKey()).append("=").append(entry.getValue().toString()).append("&");
+			}
+		}
+		stringBuilder.append(FACES_REDIRECT);
+		return stringBuilder.toString();
 	}
 
-	public static String clientUrl(final long id) {
-		return Page.CLIENT.url() + id + REDIRECT;
-	}
-
-	private static void get(final String page) {
+	public void doGet() {
 		try {
 			final FacesContext facesContext = FacesContext.getCurrentInstance();
 			final ExternalContext externalContext = facesContext.getExternalContext();
 			final String contextName = externalContext.getContextName();
 			final StringBuilder url = new StringBuilder("/");
-			url.append(contextName).append(page);
+			url.append(contextName).append(toUrl());
 			externalContext.redirect(url.toString());
 		} catch (final IOException e) {
-			throw new NavigationException("Unable to go to " + page, e);
+			throw new NavigationException("Unable to go to " + this.page, e);
 		}
 	}
 
-	public static String indexUrl() {
-		return Page.INDEX.url();
-	}
-
-	public static String jobOfferSearchUrl() {
-		return Page.JOB_OFFER_SEARCH.url();
-	}
-
-	public static String maintenancesUrl() {
-		return Page.MAINTENANCE.url();
-	}
-
-	private static void post(final String page) {
+	public void doPost() {
 		final FacesContext fc = FacesContext.getCurrentInstance();
 		final NavigationHandler nav = fc.getApplication().getNavigationHandler();
-		nav.handleNavigation(fc, null, page);
+		nav.handleNavigation(fc, null, toUrl());
 		fc.renderResponse();
 	}
 
-	public static String reportsSearchUrl() {
-		return Page.REPORT.url();
+	public String toUrl() {
+		final String queryParams = buildQueryParams();
+		return this.page.url() + queryParams;
 	}
 
-	public static void toCandidate(final long id) {
-		get(candidateUrl(id));
-	}
-
-	public static void toCandidateSearch() {
-		post(candidateSearchUrl());
-	}
-
-	public static void toClient(final long id) {
-		get(Page.CLIENT.url() + id);
-	}
-
-	public static void toClientSearch() {
-		post(Page.CLIENT_SEARCH.url());
-	}
-
-	public static void toJobOffer(final long id) {
-		get(Page.JOB_OFFER.url() + id);
-	}
-
-	public static void toJobOfferSearch() {
-		post(Page.JOB_OFFER_SEARCH.url());
-	}
-
-	public static void toLogin() {
-		post(Page.LOGIN.url());
-	}
-
-	public static void toUser(final long id) {
-		get(Page.USER.url() + id);
-	}
-
-	public static void toUserSearch() {
-		post(Page.USER_SEARCH.url());
-	}
-
-	public static String userSearchUrl() {
-		return Page.USER_SEARCH.url();
-	}
-
-	private Navigate() {
+	public Navigate withParams(final Map<String, Object> params) {
+		this.params = params;
+		return this;
 	}
 }

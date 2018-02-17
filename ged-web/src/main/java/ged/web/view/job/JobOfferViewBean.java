@@ -1,5 +1,8 @@
 package ged.web.view.job;
 
+import static ged.web.core.util.Navigate.to;
+import static ged.web.core.util.Page.JOB_OFFER_SEARCH;
+
 import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +22,6 @@ import ged.ejb.job.meeting.JobMeeting;
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
 import ged.ejb.user.User;
-import ged.web.core.util.Navigate;
 import ged.web.core.view.AbstractBean;
 
 @Named
@@ -75,7 +77,7 @@ public class JobOfferViewBean extends AbstractBean {
 	}
 
 	private void error() {
-		Navigate.toJobOfferSearch();
+		to(JOB_OFFER_SEARCH).doPost();
 	}
 
 	public List<Candidate> getCandidates() {
@@ -107,17 +109,17 @@ public class JobOfferViewBean extends AbstractBean {
 				final long id = Long.parseLong(this.jobOfferId);
 				this.jobOffer = this.jobService.find(id);
 				if (this.jobOffer == null) {
-					this.error();
+					error();
 				} else {
-					this.populateJobMeetings();
+					populateJobMeetings();
 					this.candidates = this.candidateService.findAllByJobOffer(this.jobOffer);
 				}
 				this.editable = false;
 			} catch (final NumberFormatException ex) {
-				this.error();
+				error();
 			}
 		} else {
-			this.error();
+			error();
 		}
 	}
 

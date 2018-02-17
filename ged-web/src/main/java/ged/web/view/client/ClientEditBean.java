@@ -1,5 +1,8 @@
 package ged.web.view.client;
 
+import static ged.web.core.util.Navigate.to;
+import static ged.web.core.util.Page.CLIENT;
+
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -8,7 +11,7 @@ import javax.inject.Named;
 import ged.ejb.client.Client;
 import ged.ejb.client.ClientService;
 import ged.ejb.core.Address;
-import ged.web.core.util.Navigate;
+import static ged.ejb.core.model.FluentHashMap.*;
 import ged.web.core.view.AbstractBean;
 
 @Named
@@ -23,7 +26,7 @@ public class ClientEditBean extends AbstractBean {
 	private transient ClientService clientService;
 
 	public String cancel() {
-		return Navigate.clientSearchUrl();
+		return to(CLIENT).toUrl();
 	}
 
 	public Client getClient() {
@@ -45,7 +48,7 @@ public class ClientEditBean extends AbstractBean {
 
 	public String save() {
 		saveClient();
-		return "clientView.xhtml?id=" + this.client.getId() + "&faces-redirect=true";
+		return to(CLIENT).withParams(map("id", this.client.getId())).toUrl();
 	}
 
 	private void saveClient() {

@@ -1,6 +1,6 @@
 package ged.ejb.user;
 
-import static ged.ejb.core.model.QueryParameter.with;
+import static ged.ejb.core.model.FluentHashMap.map;
 
 import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ged.ejb.core.model.AbstractDaoJpa;
+import ged.ejb.core.model.FluentHashMap;
 import ged.ejb.core.model.Repository;
 
 @Repository
@@ -42,7 +43,7 @@ public final class UserDaoJpa extends AbstractDaoJpa<User> implements UserDao {
 	@Override
 	public boolean emailExists(final String email) {
 		Objects.requireNonNull(email);
-		return (boolean) this.findByQuery("User.emailExists", with(EMAIL, email).parameters());
+		return (boolean) this.findByQuery("User.emailExists", map(EMAIL, email));
 	}
 
 	@Override
@@ -58,7 +59,7 @@ public final class UserDaoJpa extends AbstractDaoJpa<User> implements UserDao {
 	private List<UserClosure> findAntecessorsUserClosures(final User user) {
 		Objects.requireNonNull(user);
 		return this.findByQuery(UserClosure.class, "UserClosure.findAntecessorsUserClosuresById",
-				with("id", user.getId()).parameters(), 0, 0);
+				map("id", user.getId()), 0, 0);
 	}
 
 	@Override
@@ -66,8 +67,7 @@ public final class UserDaoJpa extends AbstractDaoJpa<User> implements UserDao {
 		Objects.requireNonNull(user);
 		final List<User> users;
 		try {
-			users = this.findByQuery(User.class, "User.findSubordinateUsers", with("id", user.getId()).parameters(), 0,
-					0);
+			users = this.findByQuery(User.class, "User.findSubordinateUsers", map("id", user.getId()), 0, 0);
 		} catch (final NoResultException e) {
 			return new ArrayList<>();
 		}
@@ -79,7 +79,7 @@ public final class UserDaoJpa extends AbstractDaoJpa<User> implements UserDao {
 		Objects.requireNonNull(email);
 		final User user;
 		try {
-			user = this.findByQuery(User.class, "User.findByEmail", with(EMAIL, email).parameters());
+			user = this.findByQuery(User.class, "User.findByEmail", map(EMAIL, email));
 		} catch (final NoResultException e) {
 			return null;
 		}
@@ -88,14 +88,14 @@ public final class UserDaoJpa extends AbstractDaoJpa<User> implements UserDao {
 
 	@Override
 	public List<User> findUsersOffline(final Date start, final Date end) {
-		return this.findByQuery(User.class, "User.findUsersOffline", with(START, start).and(END, end).parameters(), 0,
-				0);
+		map(START, start);
+		return this.findByQuery(User.class, "User.findUsersOffline", FluentHashMap.map(END, end), 0, 0);
 	}
 
 	@Override
 	public List<User> findUsersOnline(final Date start, final Date end) {
-		return this.findByQuery(User.class, "User.findUsersOnline", with(START, start).and(END, end).parameters(), 0,
-				0);
+		map(START, start);
+		return this.findByQuery(User.class, "User.findUsersOnline", FluentHashMap.map(END, end), 0, 0);
 	}
 
 	@Override
@@ -133,17 +133,19 @@ public final class UserDaoJpa extends AbstractDaoJpa<User> implements UserDao {
 
 	@Override
 	public long numberOfUsersInTeam(final User user) {
-		return this.findByQuery(Long.class, "User.numberOfUsersInTeam", with("id", user.getId()).parameters());
+		return this.findByQuery(Long.class, "User.numberOfUsersInTeam", map("id", user.getId()));
 	}
 
 	@Override
 	public long numberOfUsersOffline(final Date start, final Date end) {
-		return this.findByQuery(Long.class, "User.numberOfUsersOffline", with(START, start).and(END, end).parameters());
+		map(START, start);
+		return this.findByQuery(Long.class, "User.numberOfUsersOffline", FluentHashMap.map(END, end));
 	}
 
 	@Override
 	public long numberOfUsersOnline(final Date start, final Date end) {
-		return this.findByQuery(Long.class, "User.numberOfUsersOnline", with(START, start).and(END, end).parameters());
+		map(START, start);
+		return this.findByQuery(Long.class, "User.numberOfUsersOnline", FluentHashMap.map(END, end));
 	}
 
 	@Override

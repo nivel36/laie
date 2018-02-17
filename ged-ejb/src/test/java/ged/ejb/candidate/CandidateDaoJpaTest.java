@@ -1,11 +1,12 @@
 package ged.ejb.candidate;
 
-import static ged.ejb.core.model.QueryParameter.with;
+import static ged.ejb.core.model.FluentHashMap.map;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.NoResultException;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
@@ -40,7 +41,7 @@ public class CandidateDaoJpaTest {
 	@Test
 	public void emailExistsTest() {
 		Mockito.when(this.persistenceFacade.findByQuery(Boolean.class, "Candidate.emailExists",
-				with("email", "aaron@test.com").parameters())).thenReturn(Boolean.TRUE);
+				map("email", "aaron@test.com"))).thenReturn(Boolean.TRUE);
 		final boolean result = this.candidateDaoJpa.emailExists("aaron@test.com");
 		Assert.assertTrue(result);
 	}
@@ -49,7 +50,7 @@ public class CandidateDaoJpaTest {
 	public void findAllByJobOfferEmptyTest() {
 		final JobOffer jobOffer = Mockito.mock(JobOffer.class);
 		Mockito.when(this.persistenceFacade.findByQuery(Candidate.class, "Candidate.findAllByJobOffer",
-				with("jobOffer", jobOffer).parameters())).thenThrow(new NoResultException());
+				map("jobOffer", jobOffer))).thenThrow(new NoResultException());
 		final List<Candidate> candidates = this.candidateDaoJpa.findAllByJobOffer(jobOffer);
 		Assert.assertEquals(0, candidates.size());
 	}
@@ -64,7 +65,7 @@ public class CandidateDaoJpaTest {
 	public void findAllByJobOfferTest() {
 		final JobOffer jobOffer = Mockito.mock(JobOffer.class);
 		Mockito.when(this.persistenceFacade.findByQuery(Candidate.class, "Candidate.findAllByJobOffer",
-				with("jobOffer", jobOffer).parameters(), 0, 0)).thenReturn(mockCandidates());
+				map("jobOffer", jobOffer), 0, 0)).thenReturn(mockCandidates());
 		final List<Candidate> candidatesFromRepository = this.candidateDaoJpa.findAllByJobOffer(jobOffer);
 		Assert.assertEquals(1, candidatesFromRepository.size());
 		Assert.assertEquals("aaron.douglas@test.com", candidatesFromRepository.get(0).getEmail());
@@ -88,7 +89,7 @@ public class CandidateDaoJpaTest {
 	public void findCandidateAndFilesTest() {
 		final Candidate mockedCandidate = mockCandidate();
 		Mockito.when(this.persistenceFacade.findByQuery(Candidate.class, "Candidate.findCandidateAndFilesById",
-				with("id", 1L).parameters())).thenReturn(mockedCandidate);
+				map("id", 1L))).thenReturn(mockedCandidate);
 		final Candidate candidateFromRepository = this.candidateDaoJpa.findCandidateAndFiles(1L);
 		Assert.assertEquals(mockedCandidate, candidateFromRepository);
 	}

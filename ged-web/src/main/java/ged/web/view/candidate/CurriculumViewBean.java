@@ -1,5 +1,8 @@
 package ged.web.view.candidate;
 
+import static ged.web.core.util.Navigate.to;
+import static ged.web.core.util.Page.CANDIDATE_SEARCH;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +17,6 @@ import ged.ejb.curriculum.Education;
 import ged.ejb.curriculum.JobExperience;
 import ged.ejb.curriculum.Language;
 import ged.ejb.curriculum.Skill;
-import ged.web.core.util.Navigate;
 import ged.web.core.view.AbstractBean;
 
 @Named
@@ -46,8 +48,7 @@ public class CurriculumViewBean extends AbstractBean {
 	}
 
 	private void error() {
-		Navigate.toCandidateSearch();
-		;
+		to(CANDIDATE_SEARCH).doPost();
 	}
 
 	public Candidate getCandidate() {
@@ -84,7 +85,7 @@ public class CurriculumViewBean extends AbstractBean {
 				final long candidateId = Long.parseLong(this.id);
 				this.curriculum = this.curriculumService.findByCandidateId(candidateId);
 				if (this.curriculum == null) {
-					this.error();
+					error();
 				}
 				this.candidate = this.curriculum.getCandidate();
 				this.jobExperiences = new ArrayList<>(this.curriculum.getJobExperiences());
@@ -92,10 +93,10 @@ public class CurriculumViewBean extends AbstractBean {
 				this.education = new ArrayList<>(this.curriculum.getEducation());
 				this.languages = new ArrayList<>(this.curriculum.getLanguages());
 			} catch (final NumberFormatException ex) {
-				this.error();
+				error();
 			}
 		} else {
-			this.error();
+			error();
 		}
 	}
 

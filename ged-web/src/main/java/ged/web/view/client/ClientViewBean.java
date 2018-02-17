@@ -1,5 +1,8 @@
 package ged.web.view.client;
 
+import static ged.web.core.util.Navigate.to;
+import static ged.web.core.util.Page.CLIENT_SEARCH;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +17,6 @@ import ged.ejb.core.Address;
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
 import ged.web.core.util.Message;
-import ged.web.core.util.Navigate;
 import ged.web.core.view.AbstractBean;
 
 @Named
@@ -72,18 +74,17 @@ public class ClientViewBean extends AbstractBean {
 	 */
 	public void init() {
 		if (this.id == null) {
-			Navigate.toClientSearch();
 			return;
 		}
 		long clientId = 0;
 		try {
 			clientId = Long.parseLong(this.id);
 		} catch (final NumberFormatException ex) {
-			Navigate.toClientSearch();
+			to(CLIENT_SEARCH).doPost();
 		}
 		this.client = this.clientService.find(clientId);
 		if (this.client == null) {
-			Navigate.toClientSearch();
+			to(CLIENT_SEARCH).doPost();
 			return;
 		}
 		if (this.client.getAddress() == null) {
