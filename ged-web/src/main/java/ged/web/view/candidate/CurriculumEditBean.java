@@ -10,12 +10,15 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import static ged.ejb.core.model.FluentHashMap.*;
 import ged.ejb.curriculum.Curriculum;
 import ged.ejb.curriculum.CurriculumService;
 import ged.ejb.curriculum.Education;
 import ged.ejb.curriculum.JobExperience;
 import ged.ejb.curriculum.Language;
 import ged.ejb.curriculum.Skill;
+import static ged.web.core.util.Navigate.*;
+import static ged.web.core.util.Page.*;
 import ged.web.core.view.AbstractBean;
 
 @Named
@@ -64,7 +67,7 @@ public class CurriculumEditBean extends AbstractBean {
 	}
 
 	public String cancel() {
-		return "curriculumView.xhtml?id=" + this.curriculum.getCandidate().getId() + "&faces-redirect=true";
+		return to(CURRICULUM).withParams(map("id", this.curriculum.getCandidate().getId())).toUrl();
 	}
 
 	public Curriculum getCurriculum() {
@@ -142,7 +145,7 @@ public class CurriculumEditBean extends AbstractBean {
 		this.curriculum.setJobExperiences(listToSet(this.jobExperiences));
 		this.curriculum.setSkills(listToSet(this.skills));
 		this.curriculumService.update(this.curriculum);
-		return "curriculumView.xhtml?id=" + this.curriculum.getCandidate().getId() + "&faces-redirect=true";
+		return to(CURRICULUM).withParams(map("id", this.curriculum.getCandidate().getId())).toUrl();
 	}
 
 	public void setCurriculum(final Curriculum curriculum) {

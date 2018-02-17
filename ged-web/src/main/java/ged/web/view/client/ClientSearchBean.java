@@ -1,6 +1,8 @@
 package ged.web.view.client;
 
-import java.io.IOException;
+import static ged.web.core.util.Navigate.to;
+import static ged.web.core.util.Page.CLIENT;
+
 import java.lang.invoke.MethodHandles;
 import java.util.List;
 
@@ -14,6 +16,7 @@ import org.slf4j.LoggerFactory;
 
 import ged.ejb.client.Client;
 import ged.ejb.client.ClientService;
+import static ged.ejb.core.model.FluentHashMap.*;
 import ged.web.core.view.AbstractBean;
 
 @Named
@@ -59,19 +62,11 @@ public class ClientSearchBean extends AbstractBean {
 
 	public String newClient() {
 		logger.debug("New client action performed");
-		return "clientEdit?faces-redirect=true";
+		return to(CLIENT).toUrl();
 	}
 
 	public void onClientSelect() {
-		try {
-			final String context = this.externalContext.getContextName();
-			final StringBuilder url = new StringBuilder();
-			url.append("/").append(context).append("/faces/client/client.xhtml?id=")
-					.append(this.selectedClient.getId());
-			this.externalContext.redirect(url.toString());
-		} catch (final IOException e) {
-			logger.error("Unable to redirect to page");
-		}
+		to(CLIENT).withParams(map("id", this.selectedClient.getId())).doGet();
 	}
 
 	public void search() {

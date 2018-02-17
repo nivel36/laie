@@ -1,5 +1,8 @@
 package ged.web.view.candidate;
 
+import static ged.web.core.util.Navigate.to;
+import static ged.web.core.util.Page.CANDIDATE;
+
 import java.io.Serializable;
 import java.lang.invoke.MethodHandles;
 import java.util.List;
@@ -18,8 +21,6 @@ import ged.ejb.candidate.CandidateService;
 @Named
 @ViewScoped
 public class CandidateListPanelBean implements Serializable {
-
-	private static final String CANDIDATE_EDIT = "/faces/candidate/candidate?faces-redirect=true";
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
@@ -48,7 +49,7 @@ public class CandidateListPanelBean implements Serializable {
 
 	public String newCandidate() {
 		logger.debug("New candidate");
-		return CANDIDATE_EDIT;
+		return to(CANDIDATE).toUrl();
 	}
 
 	public void setCandidateService(final CandidateService candidateService) {

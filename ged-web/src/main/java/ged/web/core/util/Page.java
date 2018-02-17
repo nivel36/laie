@@ -4,6 +4,7 @@ public enum Page {
 
 	CANDIDATE("/faces/candidate/candidate"),
 	CANDIDATE_SEARCH("/faces/candidate/candidateSearch"),
+	CURRICULUM("/faces/candidate/curriculum"),
 	CLIENT("/faces/client/client"),
 	CLIENT_SEARCH("/faces/client/clientSearch"),
 	INDEX("/faces/index"),

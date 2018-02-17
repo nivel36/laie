@@ -1,7 +1,9 @@
 package ged.web.view.client;
 
 import static ged.web.core.util.Navigate.to;
+import static ged.web.core.util.Page.CLIENT;
 import static ged.web.core.util.Page.CLIENT_SEARCH;
+import static ged.web.core.util.Page.JOB_OFFER;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -103,7 +105,7 @@ public class ClientViewBean extends AbstractBean {
 
 	public String modifyClient() {
 		this.flash.put("client", this.client);
-		return "clientEdit?faces-redirect=true";
+		return to(CLIENT).toUrl();
 	}
 
 	public String newContact() {
@@ -115,7 +117,7 @@ public class ClientViewBean extends AbstractBean {
 	public String newJobOffer() {
 		this.flash.put("returnPage", "/faces/client/clientView?id=" + this.id);
 		this.flash.put("client", this.client);
-		return "/faces/jobOffer/jobOfferEdit?faces-redirect=true";
+		return to(JOB_OFFER).toUrl();
 	}
 
 	public void saveClient() {

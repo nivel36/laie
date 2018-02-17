@@ -2,6 +2,7 @@ package ged.web.view.candidate;
 
 import static ged.web.core.util.Navigate.to;
 import static ged.web.core.util.Page.CANDIDATE_SEARCH;
+import static ged.web.core.util.Page.CURRICULUM;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +45,7 @@ public class CurriculumViewBean extends AbstractBean {
 
 	public String editCurriculum() {
 		this.flash.put("curriculum", this.curriculum);
-		return "curriculumEdit?faces-redirect=true";
+		return to(CURRICULUM).toUrl();
 	}
 
 	private void error() {
