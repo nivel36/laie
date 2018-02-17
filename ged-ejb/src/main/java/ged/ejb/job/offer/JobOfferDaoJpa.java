@@ -22,7 +22,7 @@ public class JobOfferDaoJpa extends AbstractDaoJpa<JobOffer> implements JobOffer
 	@Override
 	public List<JobOffer> findAllByOwner(final User owner) {
 		Objects.requireNonNull(owner);
-		logger.debug("Buscando todas las ofertas del usuario ", owner.getFullName());
+		logger.debug("Buscando todas las ofertas del usuario {}", owner.getFullName());
 		final Map<String, Object> parameters = new HashMap<>();
 		parameters.put("owner", owner);
 		return this.findByQuery(JobOffer.class, "JobOffer.findAllByOwner", parameters, 0, 0);
@@ -31,7 +31,7 @@ public class JobOfferDaoJpa extends AbstractDaoJpa<JobOffer> implements JobOffer
 	@Override
 	public List<JobOffer> findAllJobOffersByClient(final Client client) {
 		Objects.requireNonNull(client);
-		logger.debug("SELECT all the client offers", client.getName());
+		logger.debug("SELECT all the client offers {}", client.getName());
 		final Map<String, Object> parameters = new HashMap<>();
 		parameters.put("client", client);
 		return this.findByQuery(JobOffer.class, "JobOffer.findAllByClient", parameters, 0, 0);
@@ -51,6 +51,6 @@ public class JobOfferDaoJpa extends AbstractDaoJpa<JobOffer> implements JobOffer
 
 	@Override
 	public List<JobOffer> search(final String searchText) {
-		return this.getPersistenceFacade().search(JobOffer.class, searchText, "name", "client.name");
+		return getPersistenceFacade().search(JobOffer.class, searchText, "name", "client.name");
 	}
 }

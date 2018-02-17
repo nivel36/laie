@@ -14,8 +14,7 @@ public class Navigate {
 	public static final String FACES_REDIRECT = "faces-redirect=true";
 
 	public static Navigate to(final Page page) {
-		final Navigate navigate = new Navigate(page);
-		return navigate;
+		return new Navigate(page);
 	}
 
 	private final Page page;
