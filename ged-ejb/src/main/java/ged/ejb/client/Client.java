@@ -49,7 +49,7 @@ public class Client extends AbstractAuditedEntity {
 	private String name;
 
 	@NotNull
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ownerId", nullable = false)
 	private User owner;
 

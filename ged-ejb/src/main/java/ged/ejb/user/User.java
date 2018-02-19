@@ -18,6 +18,7 @@ import javax.validation.constraints.Pattern;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 
+import ged.ejb.client.Client;
 import ged.ejb.core.action.Action;
 import ged.ejb.core.bookmark.Bookmark;
 import ged.ejb.core.model.AbstractAuditedEntity;
@@ -36,9 +37,12 @@ public class User extends AbstractAuditedEntity {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user", orphanRemoval = true)
 	private List<Bookmark> bookmarks;
 
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "owner", orphanRemoval = false)
+	private List<Client> clients;
+
 	@Temporal(TemporalType.DATE)
 	private Date dateOfJoin;
-	
+
 	@NotNull
 	@Column(length = 128, nullable = false, unique = true)
 	@Field
@@ -121,8 +125,12 @@ public class User extends AbstractAuditedEntity {
 		return this.bookmarks;
 	}
 
+	public List<Client> getClients() {
+		return this.clients;
+	}
+
 	public Date getDateOfJoin() {
-		return dateOfJoin;
+		return this.dateOfJoin;
 	}
 
 	public String getEmail() {
@@ -216,7 +224,11 @@ public class User extends AbstractAuditedEntity {
 		this.bookmarks = bookmarks;
 	}
 
-	public void setDateOfJoin(Date dateOfJoin) {
+	public void setClients(final List<Client> clients) {
+		this.clients = clients;
+	}
+
+	public void setDateOfJoin(final Date dateOfJoin) {
 		this.dateOfJoin = dateOfJoin;
 	}
 
