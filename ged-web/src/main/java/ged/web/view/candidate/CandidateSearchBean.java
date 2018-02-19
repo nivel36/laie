@@ -1,7 +1,7 @@
 package ged.web.view.candidate;
 
 import java.lang.invoke.MethodHandles;
-import static ged.ejb.core.model.FluentHashMap.map;
+import static ged.ejb.core.model.Parameters.map;
 import static ged.web.core.util.Navigate.to;
 
 import java.util.ArrayList;

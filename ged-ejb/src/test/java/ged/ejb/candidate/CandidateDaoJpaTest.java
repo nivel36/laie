@@ -1,6 +1,6 @@
 package ged.ejb.candidate;
 
-import static ged.ejb.core.model.FluentHashMap.map;
+import static ged.ejb.core.model.Parameters.map;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,6 +1,6 @@
 package ged.ejb.user;
 
-import static ged.ejb.core.model.FluentHashMap.map;
+import static ged.ejb.core.model.Parameters.map;
 
 import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
@@ -14,7 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ged.ejb.core.model.AbstractDaoJpa;
-import ged.ejb.core.model.FluentHashMap;
+import ged.ejb.core.model.Parameters;
 import ged.ejb.core.model.Repository;
 
 @Repository
@@ -89,13 +89,13 @@ public final class UserDaoJpa extends AbstractDaoJpa<User> implements UserDao {
 	@Override
 	public List<User> findUsersOffline(final Date start, final Date end) {
 		map(START, start);
-		return this.findByQuery(User.class, "User.findUsersOffline", FluentHashMap.map(END, end), 0, 0);
+		return this.findByQuery(User.class, "User.findUsersOffline", Parameters.map(END, end), 0, 0);
 	}
 
 	@Override
 	public List<User> findUsersOnline(final Date start, final Date end) {
 		map(START, start);
-		return this.findByQuery(User.class, "User.findUsersOnline", FluentHashMap.map(END, end), 0, 0);
+		return this.findByQuery(User.class, "User.findUsersOnline", Parameters.map(END, end), 0, 0);
 	}
 
 	@Override
@@ -139,13 +139,13 @@ public final class UserDaoJpa extends AbstractDaoJpa<User> implements UserDao {
 	@Override
 	public long numberOfUsersOffline(final Date start, final Date end) {
 		map(START, start);
-		return this.findByQuery(Long.class, "User.numberOfUsersOffline", FluentHashMap.map(END, end));
+		return this.findByQuery(Long.class, "User.numberOfUsersOffline", Parameters.map(END, end));
 	}
 
 	@Override
 	public long numberOfUsersOnline(final Date start, final Date end) {
 		map(START, start);
-		return this.findByQuery(Long.class, "User.numberOfUsersOnline", FluentHashMap.map(END, end));
+		return this.findByQuery(Long.class, "User.numberOfUsersOnline", Parameters.map(END, end));
 	}
 
 	@Override

@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 
 import ged.ejb.client.Client;
 import ged.ejb.client.ClientService;
-import static ged.ejb.core.model.FluentHashMap.*;
+import static ged.ejb.core.model.Parameters.*;
 import ged.web.core.view.AbstractBean;
 
 @Named

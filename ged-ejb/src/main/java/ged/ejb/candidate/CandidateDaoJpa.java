@@ -7,7 +7,7 @@ import java.util.Objects;
 import javax.persistence.NoResultException;
 
 import ged.ejb.core.model.AbstractDaoJpa;
-import static ged.ejb.core.model.FluentHashMap.map;
+import static ged.ejb.core.model.Parameters.map;
 import ged.ejb.core.model.Repository;
 import ged.ejb.core.tag.Tag;
 import ged.ejb.job.offer.JobOffer;
