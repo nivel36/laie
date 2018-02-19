@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 public class Parameters implements Map<String, Object>, Serializable {
@@ -14,10 +15,14 @@ public class Parameters implements Map<String, Object>, Serializable {
 		return new Parameters().and(key, value);
 	}
 
-	private final Map<String, Object> hashMap = new HashMap<>();
+	private final Map<String, Object> hashMap;
+
+	private Parameters() {
+		this.hashMap = new HashMap<>();
+	}
 
 	public Parameters and(final String key, final Object value) {
-		this.put(key, value);
+		this.hashMap.put(key, value);
 		return this;
 	}
 
@@ -42,8 +47,28 @@ public class Parameters implements Map<String, Object>, Serializable {
 	}
 
 	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (this.getClass() != obj.getClass()) {
+			return false;
+		}
+		final Parameters other = (Parameters) obj;
+		return Objects.equals(this.hashMap, other.hashMap);
+	}
+
+	@Override
 	public Object get(final Object key) {
 		return this.hashMap.get(key);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(this.hashMap);
 	}
 
 	@Override
@@ -74,6 +99,11 @@ public class Parameters implements Map<String, Object>, Serializable {
 	@Override
 	public int size() {
 		return this.hashMap.size();
+	}
+
+	@Override
+	public String toString() {
+		return this.hashMap.toString();
 	}
 
 	@Override
