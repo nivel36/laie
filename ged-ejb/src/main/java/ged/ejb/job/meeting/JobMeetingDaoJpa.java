@@ -1,6 +1,6 @@
 package ged.ejb.job.meeting;
 
-import static ged.ejb.core.model.Parameters.map;
+import static ged.ejb.core.util.Parameters.map;
 
 import java.util.List;
 import java.util.Objects;

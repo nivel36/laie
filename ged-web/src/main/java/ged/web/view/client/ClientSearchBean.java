@@ -1,5 +1,6 @@
 package ged.web.view.client;
 
+import static ged.ejb.core.util.Parameters.*;
 import static ged.web.core.util.Navigate.to;
 import static ged.web.core.util.Page.CLIENT;
 
@@ -16,7 +17,6 @@ import org.slf4j.LoggerFactory;
 
 import ged.ejb.client.Client;
 import ged.ejb.client.ClientService;
-import static ged.ejb.core.model.Parameters.*;
 import ged.web.core.view.AbstractBean;
 
 @Named

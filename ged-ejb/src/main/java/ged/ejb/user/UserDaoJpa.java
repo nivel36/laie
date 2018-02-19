@@ -1,6 +1,6 @@
 package ged.ejb.user;
 
-import static ged.ejb.core.model.Parameters.map;
+import static ged.ejb.core.util.Parameters.map;
 
 import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
@@ -14,8 +14,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ged.ejb.core.model.AbstractDaoJpa;
-import ged.ejb.core.model.Parameters;
 import ged.ejb.core.model.Repository;
+import ged.ejb.core.util.Parameters;
 
 @Repository
 public final class UserDaoJpa extends AbstractDaoJpa<User> implements UserDao {

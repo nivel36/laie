@@ -10,13 +10,14 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import static ged.ejb.core.model.Parameters.*;
 import ged.ejb.curriculum.Curriculum;
 import ged.ejb.curriculum.CurriculumService;
 import ged.ejb.curriculum.Education;
 import ged.ejb.curriculum.JobExperience;
 import ged.ejb.curriculum.Language;
 import ged.ejb.curriculum.Skill;
+
+import static ged.ejb.core.util.Parameters.*;
 import static ged.web.core.util.Navigate.*;
 import static ged.web.core.util.Page.*;
 import ged.web.core.view.AbstractBean;

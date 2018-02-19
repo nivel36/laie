@@ -1,6 +1,7 @@
 package ged.ejb.client;
 
-import static ged.ejb.core.model.Parameters.map;
+import static ged.ejb.core.util.Parameters.map;
+
 import java.lang.invoke.MethodHandles;
 import java.util.List;
 import java.util.Objects;

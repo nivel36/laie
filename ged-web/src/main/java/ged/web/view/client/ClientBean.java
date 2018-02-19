@@ -1,5 +1,6 @@
 package ged.web.view.client;
 
+import static ged.ejb.core.util.Parameters.map;
 import static ged.web.core.util.Navigate.to;
 import static ged.web.core.util.Page.CLIENT;
 import static ged.web.core.util.Page.CLIENT_SEARCH;
@@ -17,7 +18,6 @@ import ged.ejb.client.Client;
 import ged.ejb.client.ClientService;
 import ged.ejb.client.Contact;
 import ged.ejb.core.Address;
-import static ged.ejb.core.model.Parameters.map;
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
 import ged.web.core.util.Message;

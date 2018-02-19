@@ -1,4 +1,4 @@
-package ged.ejb.core.model;
+package ged.ejb.core.util;
 
 import java.util.HashMap;
 
