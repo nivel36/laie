@@ -7,6 +7,7 @@ public enum Page {
 	CURRICULUM("/faces/candidate/curriculum"),
 	CLIENT("/faces/client/client"),
 	CLIENT_SEARCH("/faces/client/clientSearch"),
+	CONTACT("/faces/client/contact"),
 	INDEX("/faces/index"),
 	JOB_OFFER("/faces/jobOffer/jobOfferView"),
 	JOB_OFFER_EDIT("/faces/jobOffer/jobOfferEdit"),

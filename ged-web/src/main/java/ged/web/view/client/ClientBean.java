@@ -4,6 +4,7 @@ import static ged.ejb.core.util.Parameters.map;
 import static ged.web.core.util.Navigate.to;
 import static ged.web.core.util.Page.CLIENT;
 import static ged.web.core.util.Page.CLIENT_SEARCH;
+import static ged.web.core.util.Page.CONTACT;
 import static ged.web.core.util.Page.JOB_OFFER;
 import static ged.web.core.util.Page.JOB_OFFER_EDIT;
 
@@ -101,18 +102,18 @@ public class ClientBean extends AbstractBean {
 	 */
 	public void init() {
 		if (this.id == null) {
-			this.client = this.buildNewClient();
+			this.client = buildNewClient();
 			this.editable = true;
 		} else {
 			long clientId = 0;
 			try {
 				clientId = Long.parseLong(this.id);
 			} catch (final NumberFormatException ex) {
-				this.error();
+				error();
 			}
 			this.client = this.clientService.find(clientId);
 			if (this.client == null) {
-				this.error();
+				error();
 			}
 			if (this.client.getAddress() == null) {
 				this.client.setAddress(new Address());
@@ -150,7 +151,7 @@ public class ClientBean extends AbstractBean {
 		contact.setPhoneNumber(this.client.getPhoneNumber());
 		this.flash.put("contact", contact);
 		this.flash.put("returnPage", to(CLIENT).withParams(map("id", this.id)).toUrl());
-		return null;
+		return to(CONTACT).toUrl();
 	}
 
 	public String newJobOffer() {
