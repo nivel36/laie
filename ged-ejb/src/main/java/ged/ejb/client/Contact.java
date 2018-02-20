@@ -27,8 +27,7 @@ public class Contact extends AbstractAuditedEntity {
 	@Field
 	private String email;
 
-	@NotNull
-	@Column(length = 2, nullable = false)
+	@Column(length = 2)
 	private String language;
 
 	@NotNull
@@ -53,7 +52,7 @@ public class Contact extends AbstractAuditedEntity {
 		if (!super.equals(obj)) {
 			return false;
 		}
-		if (getClass() != obj.getClass()) {
+		if (this.getClass() != obj.getClass()) {
 			return false;
 		}
 		final Contact other = (Contact) obj;
@@ -119,6 +118,6 @@ public class Contact extends AbstractAuditedEntity {
 
 	@Override
 	public String toString() {
-		return getFullName();
+		return this.getFullName();
 	}
 }

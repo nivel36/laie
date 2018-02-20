@@ -33,32 +33,32 @@ public abstract class AbstractBean implements Serializable {
 	protected transient SessionBean sessionBean;
 
 	protected void addErrorToField(final UIComponent component, final String message) {
-		addMessage(component, FacesMessage.SEVERITY_ERROR, message, message, null);
+		this.addMessage(component, FacesMessage.SEVERITY_ERROR, message, message, null);
 	}
 
 	protected void addInfoMessage(final String message) {
-		addMessage(null, FacesMessage.SEVERITY_INFO, message, message, null);
+		this.addMessage(null, FacesMessage.SEVERITY_INFO, message, message, null);
 	}
 
 	protected void addInfoMessage(final String message, final Object... params) {
-		addMessage(null, FacesMessage.SEVERITY_INFO, message, message, params);
+		this.addMessage(null, FacesMessage.SEVERITY_INFO, message, message, params);
 	}
 
 	protected void addInfoMessage(final String title, final String message) {
-		addMessage(null, FacesMessage.SEVERITY_INFO, title, message, null);
+		this.addMessage(null, FacesMessage.SEVERITY_INFO, title, message, null);
 	}
 
 	protected void addInfoMessage(final String title, final String message, final Object... params) {
-		addMessage(null, FacesMessage.SEVERITY_INFO, title, message, params);
+		this.addMessage(null, FacesMessage.SEVERITY_INFO, title, message, params);
 	}
 
 	protected void addMessage(final Severity severity, final String title, final String message) {
-		addMessage(null, severity, title, message, null);
+		this.addMessage(null, severity, title, message, null);
 	}
 
 	protected void addMessage(final Severity severity, final String title, final String message,
 			final Object... params) {
-		addMessage(null, severity, title, message, params);
+		this.addMessage(null, severity, title, message, params);
 	}
 
 	private void addMessage(final UIComponent component, final Severity severity, final String title,
@@ -76,7 +76,16 @@ public abstract class AbstractBean implements Serializable {
 	protected void addWarningMessageIfMaxSearchResultsHaveBeenReached(final Collection<?> collection) {
 		final int maxResults = 150;
 		if (collection.size() == maxResults) {
-			addInfoMessage("warning.max_results_reached", maxResults);
+			this.addInfoMessage("warning.max_results_reached", maxResults);
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	public <T> T getFromFlash(final Class<T> type, final String key) {
+		if (this.flash.containsKey(key)) {
+			return (T) this.flash.get(key);
+		} else {
+			return null;
 		}
 	}
 
