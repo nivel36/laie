@@ -145,9 +145,10 @@ public class ClientBean extends AbstractBean {
 	}
 
 	public String newContact() {
-		final String url = "/faces/client/clientView?id=" + this.id;
-		this.flash.put("returnPage", url);
-		return "editContact";
+		final Contact contact = new Contact();
+		contact.setClient(this.client);
+		this.flash.put("contact", contact);
+		return null;
 	}
 
 	public String newJobOffer() {
