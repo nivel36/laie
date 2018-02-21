@@ -4146,6 +4146,8 @@ body .ui-datatable .ui-column-title {
 	padding: 12px 8px;
 	vertical-align: middle;
 	font-size: 15px;
+	font-weight: 600;
+	color: #666666;
 }
 
 body .ui-datatable thead th {
@@ -4158,6 +4160,10 @@ body .ui-datatable tbody tr {
 	vertical-align: bottom;
 	border-bottom: 1px solid #ddd;
 	border-bottom-width: 1px;
+}
+
+body .ui-datatable .ui-datatable-data {
+	font-size: 14px;
 }
 
 body .ui-widget-content.ui-datatable-odd {
