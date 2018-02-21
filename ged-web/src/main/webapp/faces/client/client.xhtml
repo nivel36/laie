@@ -98,7 +98,7 @@
 									selectionMode="single" selection="#{clientBean.selectedContact}" rowKey="#{contact.id}"
 									sortBy="#{contact.fullName}" sortOrder="ascending">
 
-									<p:ajax event="rowSelect" listener="#{clientBean.onClientSelect}" />
+									<p:ajax event="rowSelect" listener="#{clientBean.onContactSelect}" />
 
 									<p:column headerText="#{i18n['contact.name']}">
 										<h:outputText value="#{contact.fullName}" />

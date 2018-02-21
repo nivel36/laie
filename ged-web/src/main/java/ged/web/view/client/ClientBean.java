@@ -109,17 +109,17 @@ public class ClientBean extends AbstractBean {
 	 */
 	public void init() {
 		if (this.id == null) {
-			this.client = this.buildNewClient();
+			this.client = buildNewClient();
 			this.editable = true;
 		} else {
 			try {
 				final long clientId = Long.parseLong(this.id);
 				this.client = this.clientService.find(clientId);
 				if (this.client == null) {
-					this.error();
+					error();
 				}
 			} catch (final NumberFormatException ex) {
-				this.error();
+				error();
 			}
 			if (this.client.getAddress() == null) {
 				this.client.setAddress(new Address());
@@ -169,7 +169,7 @@ public class ClientBean extends AbstractBean {
 		return to(JOB_OFFER_EDIT).toUrl();
 	}
 
-	public void onClientSelect() {
+	public void onContactSelect() {
 		to(CONTACT).withParams(map("id", this.selectedContact.getId())).doGet();
 	}
 

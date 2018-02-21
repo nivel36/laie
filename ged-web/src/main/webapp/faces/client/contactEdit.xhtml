@@ -48,8 +48,8 @@
 							<div class="ui-g-12">
 								<div class="form-action-primary">
 									<p:commandButton value="#{i18n['action.save']}" action="#{contactEditBean.insert}" update="growl" />
-									<p:commandButton styleClass="btn-gray" value="#{i18n['action.cancel']}" action="#{contactEditBean.cancel}"
-										immediate="true" />
+									<p:commandButton value="#{i18n['action.cancel']}" action="#{contactEditBean.cancel}" process="@this"
+										styleClass="btn-gray" />
 								</div>
 							</div>
 						</div>
