@@ -5,6 +5,7 @@ import static ged.web.core.util.Navigate.to;
 import static ged.web.core.util.Page.CLIENT;
 import static ged.web.core.util.Page.CLIENT_SEARCH;
 import static ged.web.core.util.Page.CONTACT;
+import static ged.web.core.util.Page.CONTACT_EDIT;
 import static ged.web.core.util.Page.JOB_OFFER;
 import static ged.web.core.util.Page.JOB_OFFER_EDIT;
 
@@ -48,7 +49,7 @@ public class ClientBean extends AbstractBean {
 	@Inject
 	private transient JobOfferService jobOfferService;
 
-	private Client selectedClient;
+	private Contact selectedContact;
 
 	private JobOffer selectedJobOffer;
 
@@ -95,8 +96,8 @@ public class ClientBean extends AbstractBean {
 		return this.jobOffers;
 	}
 
-	public Client getSelectedClient() {
-		return this.selectedClient;
+	public Contact getSelectedContact() {
+		return this.selectedContact;
 	}
 
 	public JobOffer getSelectedJobOffer() {
@@ -108,18 +109,17 @@ public class ClientBean extends AbstractBean {
 	 */
 	public void init() {
 		if (this.id == null) {
-			this.client = buildNewClient();
+			this.client = this.buildNewClient();
 			this.editable = true;
 		} else {
-			long clientId = 0;
 			try {
-				clientId = Long.parseLong(this.id);
+				final long clientId = Long.parseLong(this.id);
+				this.client = this.clientService.find(clientId);
+				if (this.client == null) {
+					this.error();
+				}
 			} catch (final NumberFormatException ex) {
-				error();
-			}
-			this.client = this.clientService.find(clientId);
-			if (this.client == null) {
-				error();
+				this.error();
 			}
 			if (this.client.getAddress() == null) {
 				this.client.setAddress(new Address());
@@ -157,7 +157,7 @@ public class ClientBean extends AbstractBean {
 		contact.setPhoneNumber(this.client.getPhoneNumber());
 		this.flash.put("contact", contact);
 		this.flash.put("returnPage", to(CLIENT).withParams(map("id", this.id)).toUrl());
-		return to(CONTACT).toUrl();
+		return to(CONTACT_EDIT).toUrl();
 	}
 
 	public String newJobOffer() {
@@ -170,7 +170,7 @@ public class ClientBean extends AbstractBean {
 	}
 
 	public void onClientSelect() {
-		to(CLIENT).withParams(map("id", this.selectedClient.getId())).doGet();
+		to(CONTACT).withParams(map("id", this.selectedContact.getId())).doGet();
 	}
 
 	public void onJobOfferSelect() {
@@ -197,8 +197,8 @@ public class ClientBean extends AbstractBean {
 		this.jobOfferService = jobOfferService;
 	}
 
-	public void setSelectedClient(final Client selectedClient) {
-		this.selectedClient = selectedClient;
+	public void setSelectedContact(final Contact selectedContact) {
+		this.selectedContact = selectedContact;
 	}
 
 	public void setSelectedJobOffer(final JobOffer selectedJobOffer) {
