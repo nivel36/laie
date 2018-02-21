@@ -15,7 +15,6 @@ import org.slf4j.LoggerFactory;
 
 import ged.ejb.core.model.AbstractDaoJpa;
 import ged.ejb.core.model.Repository;
-import ged.ejb.core.util.Parameters;
 
 @Repository
 public final class UserDaoJpa extends AbstractDaoJpa<User> implements UserDao {
@@ -23,6 +22,8 @@ public final class UserDaoJpa extends AbstractDaoJpa<User> implements UserDao {
 	private static final String EMAIL = "email";
 
 	private static final String END = "end";
+
+	private static final String ID = "id";
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
@@ -58,8 +59,8 @@ public final class UserDaoJpa extends AbstractDaoJpa<User> implements UserDao {
 
 	private List<UserClosure> findAntecessorsUserClosures(final User user) {
 		Objects.requireNonNull(user);
-		return this.findByQuery(UserClosure.class, "UserClosure.findAntecessorsUserClosuresById",
-				map("id", user.getId()), 0, 0);
+		return this.findByQuery(UserClosure.class, "UserClosure.findAntecessorsUserClosuresById", map(ID, user.getId()),
+				0, 0);
 	}
 
 	@Override
@@ -67,7 +68,7 @@ public final class UserDaoJpa extends AbstractDaoJpa<User> implements UserDao {
 		Objects.requireNonNull(user);
 		final List<User> users;
 		try {
-			users = this.findByQuery(User.class, "User.findSubordinateUsers", map("id", user.getId()), 0, 0);
+			users = this.findByQuery(User.class, "User.findSubordinateUsers", map(ID, user.getId()), 0, 0);
 		} catch (final NoResultException e) {
 			return new ArrayList<>();
 		}
@@ -88,14 +89,12 @@ public final class UserDaoJpa extends AbstractDaoJpa<User> implements UserDao {
 
 	@Override
 	public List<User> findUsersOffline(final Date start, final Date end) {
-		map(START, start);
-		return this.findByQuery(User.class, "User.findUsersOffline", Parameters.map(END, end), 0, 0);
+		return this.findByQuery(User.class, "User.findUsersOffline", map(START, start).and(END, end), 0, 0);
 	}
 
 	@Override
 	public List<User> findUsersOnline(final Date start, final Date end) {
-		map(START, start);
-		return this.findByQuery(User.class, "User.findUsersOnline", Parameters.map(END, end), 0, 0);
+		return this.findByQuery(User.class, "User.findUsersOnline", map(START, start).and(END, end), 0, 0);
 	}
 
 	@Override
@@ -133,19 +132,17 @@ public final class UserDaoJpa extends AbstractDaoJpa<User> implements UserDao {
 
 	@Override
 	public long numberOfUsersInTeam(final User user) {
-		return this.findByQuery(Long.class, "User.numberOfUsersInTeam", map("id", user.getId()));
+		return this.findByQuery(Long.class, "User.numberOfUsersInTeam", map(ID, user.getId()));
 	}
 
 	@Override
 	public long numberOfUsersOffline(final Date start, final Date end) {
-		map(START, start);
-		return this.findByQuery(Long.class, "User.numberOfUsersOffline", Parameters.map(END, end));
+		return this.findByQuery(Long.class, "User.numberOfUsersOffline", map(START, start).and(END, end));
 	}
 
 	@Override
 	public long numberOfUsersOnline(final Date start, final Date end) {
-		map(START, start);
-		return this.findByQuery(Long.class, "User.numberOfUsersOnline", Parameters.map(END, end));
+		return this.findByQuery(Long.class, "User.numberOfUsersOnline", map(START, start).and(END, end));
 	}
 
 	@Override
