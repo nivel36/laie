@@ -48,6 +48,8 @@ public class ClientBean extends AbstractBean {
 	@Inject
 	private transient JobOfferService jobOfferService;
 
+	private Client selectedClient;
+
 	private JobOffer selectedJobOffer;
 
 	public Client buildNewClient() {
@@ -91,6 +93,10 @@ public class ClientBean extends AbstractBean {
 
 	public List<JobOffer> getJobOffers() {
 		return this.jobOffers;
+	}
+
+	public Client getSelectedClient() {
+		return this.selectedClient;
 	}
 
 	public JobOffer getSelectedJobOffer() {
@@ -163,6 +169,10 @@ public class ClientBean extends AbstractBean {
 		return to(JOB_OFFER_EDIT).toUrl();
 	}
 
+	public void onClientSelect() {
+		to(CLIENT).withParams(map("id", this.selectedClient.getId())).doGet();
+	}
+
 	public void onJobOfferSelect() {
 		to(JOB_OFFER).withParams(map("id", this.selectedJobOffer.getId())).doGet();
 	}
@@ -185,6 +195,10 @@ public class ClientBean extends AbstractBean {
 
 	public void setJobOfferService(final JobOfferService jobOfferService) {
 		this.jobOfferService = jobOfferService;
+	}
+
+	public void setSelectedClient(final Client selectedClient) {
+		this.selectedClient = selectedClient;
 	}
 
 	public void setSelectedJobOffer(final JobOffer selectedJobOffer) {

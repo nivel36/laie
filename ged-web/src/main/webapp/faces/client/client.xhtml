@@ -94,7 +94,12 @@
 						<div class="ui-g">
 							<div class="ui-g-12">
 								<p:dataTable var="contact" value="#{clientBean.contacts}" emptyMessage="#{i18n['client.no_contacts_found']}"
-									reflow="true" paginator="true" paginatorPosition="bottom" rows="#{sessionBean.rowsPerPage}">
+									reflow="true" paginator="true" paginatorPosition="bottom" rows="#{sessionBean.rowsPerPage}"
+									selectionMode="single" selection="#{clientBean.selectedContact}" rowKey="#{contact.id}"
+									sortBy="#{contact.fullName}" sortOrder="ascending">
+
+									<p:ajax event="rowSelect" listener="#{clientBean.onClientSelect}" />
+
 									<p:column headerText="#{i18n['contact.name']}">
 										<h:outputText value="#{contact.fullName}" />
 									</p:column>
