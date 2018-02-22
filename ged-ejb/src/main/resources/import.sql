@@ -15,7 +15,7 @@ insert into LANGUAGELEVEL( id, version, name, description ) values ( 123, 0, 'na
 insert into JOBCANDIDATURESTATE( id, version, name, description ) values ( 130, 0, 'open', 'open.description');
 insert into JOBCANDIDATURESTATE( id, version, name, description ) values ( 131, 0, 'closed', 'closed.description');
 
-insert into CURRICULUM( id, version, perfilProfesional, deleted ) values (301, 0, 'Arquitecto JEE', false);
+insert into CURRICULUM( id, version, jobProfile, deleted ) values (301, 0, 'Arquitecto JEE', false);
 
 insert into EDUCATION( id, version, curriculumId, degree, description,  fromDate, school, stillStudying, toDate, deleted) values( 401, 0, 301, 'Licenciado en Matemáticas', 'Licenciado en Matemáticas por la universidad de Barcelona',  DATE '2000-10-01', 'Universitat de Barcelona', false, DATE '2012-12-01', false);
 insert into EDUCATION( id, version, curriculumId, degree, description,  fromDate, school, stillStudying, toDate, deleted) values( 402, 0, 301, 'Bachillerato', null,  DATE '1988-10-01', 'IES Thalassa', false, DATE '1996-06-01', false);

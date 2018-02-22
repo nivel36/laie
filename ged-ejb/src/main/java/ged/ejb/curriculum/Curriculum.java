@@ -33,7 +33,7 @@ public class Curriculum extends AbstractAuditedEntity {
 	private Set<Language> languages;
 
 	@Column(length = 256)
-	private String perfilProfesional;
+	private String jobProfile;
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "curriculum", orphanRemoval = true)
 	private Set<Skill> skills;
@@ -101,8 +101,8 @@ public class Curriculum extends AbstractAuditedEntity {
 		return this.languages.size();
 	}
 
-	public String getPerfilProfesional() {
-		return this.perfilProfesional;
+	public String getJobProfile() {
+		return this.jobProfile;
 	}
 
 	public Set<Skill> getSkills() {
@@ -150,8 +150,8 @@ public class Curriculum extends AbstractAuditedEntity {
 		this.languages = languages;
 	}
 
-	public void setPerfilProfesional(final String perfilProfesional) {
-		this.perfilProfesional = perfilProfesional;
+	public void setJobProfile(final String jobProfile) {
+		this.jobProfile = jobProfile;
 	}
 
 	public void setSkills(final Set<Skill> skills) {
