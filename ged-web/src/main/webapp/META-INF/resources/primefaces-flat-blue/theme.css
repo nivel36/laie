@@ -3951,10 +3951,7 @@ body .ui-paginator .ui-paginator-last:before {
 body .ui-paginator {
 	font-family: FontAwesome;
 	font-size: 14px;
-	color: black;
-	top: 8px;
-	right: 12px;
-	text-indent: 0px;
+	margin-top: 10px;
 }
 
 body .ui-paginator .ui-paginator-page.ui-state-active {
@@ -3998,7 +3995,7 @@ body .ui-dialog .ui-dialog-title {
 }
 
 body .ui-dialog .ui-dialog-content {
-	padding: 10px 0 0 0;
+	padding: 15px;
 }
 
 body .ui-dialog .ui-icon {

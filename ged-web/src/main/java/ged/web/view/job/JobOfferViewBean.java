@@ -1,6 +1,9 @@
 package ged.web.view.job;
 
+import static ged.ejb.core.util.Parameters.map;
 import static ged.web.core.util.Navigate.to;
+import static ged.web.core.util.Page.CANDIDATE_SELECT;
+import static ged.web.core.util.Page.JOB_OFFER;
 import static ged.web.core.util.Page.JOB_OFFER_SEARCH;
 
 import java.lang.invoke.MethodHandles;
@@ -155,6 +158,11 @@ public class JobOfferViewBean extends AbstractBean {
 		logger.debug("Save job offer action performed");
 		this.jobOffer = this.jobService.update(this.jobOffer);
 		this.editable = false;
+	}
+
+	public String selectCandidate() {
+		this.flash.put("returnUrl", to(JOB_OFFER).withParams(map("id", this.jobOffer.getId())).toUrl());
+		return to(CANDIDATE_SELECT).toUrl();
 	}
 
 	public void setCandidate(final Candidate candidate) {
