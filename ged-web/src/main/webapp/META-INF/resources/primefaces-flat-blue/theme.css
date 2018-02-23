@@ -3977,28 +3977,32 @@ body .ui-state-disabled {
 body .ui-dialog {
 	border-top-left-radius: 0px;
 	border-top-right-radius: 0px;
-	border-bottom-right-radius: 4px;
-	border-bottom-left-radius: 4px;
+	border-bottom-right-radius: 0px;
+	border-bottom-left-radius: 0px;
+	width: 100%;
+	padding: 10px;
+	border: 1px solid #BDBDBD;
 }
 
 body .ui-dialog .ui-dialog-titlebar {
-	position: relative;
-	background: #1976d2;
-	padding: 8px 14px;
-	border-top-left-radius: 4px;
-	border-top-right-radius: 4px;
-	border-bottom-right-radius: 0px;
-	border-bottom-left-radius: 0px;
+	padding: 0px 5px 8px 0px;
+	border-bottom: 1px solid #CCCCCC;
 }
 
 body .ui-dialog .ui-dialog-title {
-	color: white;
 	margin: 0;
-	font-size: 1.3em;
+	text-transform: uppercase;
+	color: #5b9bd1;
+	font-size: 14px;
+	font-weight: 800;
+}
+
+body .ui-dialog .ui-dialog-content {
+	padding: 10px 0 0 0;
 }
 
 body .ui-dialog .ui-icon {
-	color: white;
+	color: #5b9bd1;
 }
 
 body .ui-dialog-mask {
@@ -4410,7 +4414,6 @@ body .ui-panel {
 }
 
 body .ui-panel .ui-panel-titlebar {
-	position: relative;
 	padding: 0px 5px 8px 0px;
 	border-bottom: 1px solid #CCCCCC;
 }
@@ -4427,7 +4430,6 @@ body .ui-panel .ui-panel-titlebar .ui-panel-title {
 	color: #5b9bd1;
 	font-size: 14px;
 	font-weight: 800;
-	margin-bottom: 7px;
 }
 
 body .ui-panel .ui-panel-titlebar .ui-panel-titlebar-icon {
