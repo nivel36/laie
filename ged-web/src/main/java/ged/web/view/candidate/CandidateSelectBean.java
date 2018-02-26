@@ -13,6 +13,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.primefaces.context.RequestContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -85,6 +86,10 @@ public class CandidateSelectBean extends AbstractBean {
 		this.searchValues.add(this.searchText);
 		this.candidates = this.candidateService.search(this.searchText);
 		this.searchText = null;
+	}
+
+	public void select() {
+		RequestContext.getCurrentInstance().closeDialog(this.selectedCandidates);
 	}
 
 	public void setCandidateService(final CandidateService candidateService) {

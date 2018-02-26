@@ -144,7 +144,9 @@
 						<div class="ui-g">
 							<div class="ui-g-12">
 								<div class="form-action-primary">
-									<p:commandButton value="#{i18n['action.add']}"  onclick="PF('candidateSelectDlg').show();" />
+									<p:commandButton value="#{i18n['action.add']}" onclick="PF('candidateSelectDlg').show();">
+										<p:ajax event="dialogReturn" update="@form" listener="#{jobOfferViewBean.onCandidatesSelect}" />
+									</p:commandButton>
 								</div>
 							</div>
 						</div>
