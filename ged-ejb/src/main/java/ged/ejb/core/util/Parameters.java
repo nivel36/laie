@@ -15,7 +15,7 @@ public class Parameters implements Map<String, Object>, Serializable {
 		return new Parameters().and(key, value);
 	}
 
-	private final Map<String, Object> hashMap;
+	private final HashMap<String, Object> hashMap;
 
 	private Parameters() {
 		this.hashMap = new HashMap<>();
