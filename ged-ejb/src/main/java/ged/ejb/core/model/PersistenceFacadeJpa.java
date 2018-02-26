@@ -92,28 +92,14 @@ public class PersistenceFacadeJpa implements PersistenceFacade {
 		logger.debug("Find entities by criteria");
 		final TypedQuery<E> query = this.em.createQuery(cq);
 		query.setHint(CACHE_STORE_MODE, CacheStoreMode.REFRESH);
-		paginate(pageSize, pageNum, query);
+		this.paginate(pageSize, pageNum, query);
 		return query.getResultList();
 	}
 
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see
-	 * ged.ejb.core.model.PersistenceFacade#findByTypedQuery(java.lang.Class,
-	 * java.lang.String, java.lang.Integer, java.lang.Integer)
-	 */
-	@Override
-	public <E> List<E> findByQuery(final Class<E> entityClass, final String namedQuery, final Integer pageSize,
-			final Integer pageNum) {
-		return this.findByQuery(entityClass, namedQuery, null, pageSize, pageNum);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see
-	 * ged.ejb.core.model.PersistenceFacade#findByTypedQuery(java.lang.Class,
+	 * @see ged.ejb.core.model.PersistenceFacade#findByTypedQuery(java.lang.Class,
 	 * java.lang.String, java.util.Map)
 	 */
 	@Override
@@ -124,15 +110,14 @@ public class PersistenceFacadeJpa implements PersistenceFacade {
 		logger.debug("Find entity {} by named query {}", entityClass, namedQuery);
 		final TypedQuery<E> query = this.em.createNamedQuery(namedQuery, entityClass);
 		query.setHint(CACHE_STORE_MODE, CacheStoreMode.REFRESH);
-		parametrize(parameters, query);
+		this.parametrize(parameters, query);
 		return query.getSingleResult();
 	}
 
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see
-	 * ged.ejb.core.model.PersistenceFacade#findByTypedQuery(java.lang.Class,
+	 * @see ged.ejb.core.model.PersistenceFacade#findByTypedQuery(java.lang.Class,
 	 * java.lang.String, java.util.Map, java.lang.Integer, java.lang.Integer)
 	 */
 	@Override
@@ -143,19 +128,9 @@ public class PersistenceFacadeJpa implements PersistenceFacade {
 		logger.debug("Find entities {} by named query {}", entityClass, namedQuery);
 		final TypedQuery<E> query = this.em.createNamedQuery(namedQuery, entityClass);
 		query.setHint(CACHE_STORE_MODE, CacheStoreMode.REFRESH);
-		parametrize(parameters, query);
-		paginate(pageSize, pageNum, query);
+		this.parametrize(parameters, query);
+		this.paginate(pageSize, pageNum, query);
 		return query.getResultList();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see ged.ejb.core.model.PersistenceFacade#findByQuery(java.lang.String)
-	 */
-	@Override
-	public Object findByQuery(final String namedQuery) {
-		return this.findByQuery(namedQuery, null);
 	}
 
 	/*
@@ -170,7 +145,7 @@ public class PersistenceFacadeJpa implements PersistenceFacade {
 		logger.debug("Find entity by named query {}", namedQuery);
 		final Query query = this.em.createNamedQuery(namedQuery);
 		query.setHint(CACHE_STORE_MODE, CacheStoreMode.REFRESH);
-		parametrize(parameters, query);
+		this.parametrize(parameters, query);
 		return query.getSingleResult();
 	}
 
@@ -195,20 +170,20 @@ public class PersistenceFacadeJpa implements PersistenceFacade {
 	}
 
 	private void paginate(final Integer pageSize, final Integer pageNum, final Query query) {
-		if (pageNum != null && pageNum < 0) {
+		if ((pageNum != null) && (pageNum < 0)) {
 			throw new IllegalArgumentException("pageNum: " + pageNum);
 		}
-		if (pageSize != null && pageSize < 0) {
+		if ((pageSize != null) && (pageSize < 0)) {
 			throw new IllegalArgumentException("pageSize: " + pageSize);
 		}
 		logger.trace("Page number {}", pageNum);
-		if (pageSize != null && pageNum != null) {
+		if ((pageSize != null) && (pageNum != null)) {
 			query.setFirstResult(pageNum * pageSize);
 		}
-		if (pageSize != null && pageSize > 0) {
+		if ((pageSize != null) && (pageSize > 0)) {
 			logger.trace("Page size {}", pageSize);
 			query.setMaxResults(pageSize);
-		} else if (pageSize == null || pageSize == 0) {
+		} else if ((pageSize == null) || (pageSize == 0)) {
 			logger.trace("Setting max result to {}", RES_LIMIT);
 			query.setMaxResults(RES_LIMIT);
 		}
@@ -228,7 +203,7 @@ public class PersistenceFacadeJpa implements PersistenceFacade {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public <T extends Identificable> List<T> search(final Class<T> type, final String searchText,
 			final String... fields) {
-		final FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(getEm());
+		final FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(this.getEm());
 		final QueryBuilder qb = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(type).get();
 		final BooleanJunction<BooleanJunction> bj = qb.bool();
 

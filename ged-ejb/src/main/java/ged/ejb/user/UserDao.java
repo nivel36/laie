@@ -7,9 +7,9 @@ import ged.ejb.core.model.Dao;
 
 public interface UserDao extends Dao<User> {
 
-	boolean emailExists(final String email);
+	boolean emailExist(final String email);
 
-	boolean existsMoreThanOneAdmin();
+	boolean existMoreThanOneAdmin();
 
 	List<User> findSubordinateUsers(final User user);
 

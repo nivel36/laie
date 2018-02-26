@@ -31,7 +31,7 @@ public class UserClosure extends AbstractEntity {
 		if (!super.equals(obj)) {
 			return false;
 		}
-		if (getClass() != obj.getClass()) {
+		if (this.getClass() != obj.getClass()) {
 			return false;
 		}
 		final UserClosure other = (UserClosure) obj;
@@ -67,5 +67,4 @@ public class UserClosure extends AbstractEntity {
 	public void setPathLength(final int pathLength) {
 		this.pathLength = pathLength;
 	}
-
 }

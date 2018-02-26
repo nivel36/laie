@@ -33,6 +33,12 @@ public abstract class AbstractDaoJpa<T extends AbstractEntity> implements Dao<T>
 		return this.persistenceFacade.findAll(type);
 	}
 
+	protected <E> E findByQuery(final Class<E> entityClass, final String namedQuery) {
+		Objects.requireNonNull(entityClass);
+		Objects.requireNonNull(namedQuery);
+		return this.persistenceFacade.findByQuery(entityClass, namedQuery, null);
+	}
+
 	protected <E> List<E> findByQuery(final Class<E> entityClass, final String namedQuery, final Integer pageSize,
 			final Integer pageNum) {
 		return this.findByQuery(entityClass, namedQuery, null, pageSize, pageNum);

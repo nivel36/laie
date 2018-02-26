@@ -11,14 +11,10 @@ public interface PersistenceFacade {
 
 	<E> List<E> findAll(Class<E> type);
 
-	<E> List<E> findByQuery(Class<E> entityClass, String namedQuery, Integer pageSize, Integer pageNum);
-
 	<E> E findByQuery(Class<E> entityClass, String namedQuery, Map<String, Object> parameters);
 
 	<E> List<E> findByQuery(Class<E> entityClass, String namedQuery, Map<String, Object> parameters, Integer pageSize,
 			Integer pageNum);
-
-	Object findByQuery(String namedQuery);
 
 	Object findByQuery(String namedQuery, Map<String, Object> parameters);
 
