@@ -3,6 +3,7 @@ package ged.ejb.user;
 import static ged.ejb.core.util.Parameters.map;
 import static org.mockito.Mockito.when;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -113,6 +114,66 @@ public class UserDaoJpaTest {
 				.thenThrow(new NoResultException());
 		final User userInDataBase = this.userDaoJpa.findUserByEmail("aaron@test.com");
 		Assert.assertNull(userInDataBase);
+	}
+
+	@Test
+	public void findUsersOfflineTest() {
+		final LocalDate start = LocalDate.now();
+		final LocalDate end = start.plusDays(1);
+		when(this.persistenceFacade.findByQuery(User.class, "User.findUsersOffline",
+				map("start", start).and("end", end), 0, 0)).thenReturn(new ArrayList<>());
+		final List<User> usersInDataBase = this.userDaoJpa.findUsersOffline(start, end);
+		Assert.assertEquals(0, usersInDataBase.size());
+	}
+
+	@Test
+	public void findUsersOfflineWithNullDatesTest() {
+		this.thrown.expect(NullPointerException.class);
+		this.userDaoJpa.findUsersOffline(null, LocalDate.now());
+
+		this.thrown.expect(NullPointerException.class);
+		this.userDaoJpa.findUsersOffline(LocalDate.now(), null);
+
+		this.thrown.expect(NullPointerException.class);
+		this.userDaoJpa.findUsersOffline(null, null);
+	}
+
+	@Test
+	public void findUsersOfflineWithWrongTest() {
+		final LocalDate start = LocalDate.now();
+		final LocalDate end = start.minusDays(1);
+		this.thrown.expect(IllegalStateException.class);
+		this.userDaoJpa.findUsersOffline(start, end);
+	}
+
+	@Test
+	public void findUsersOnlineTest() {
+		final LocalDate start = LocalDate.now();
+		final LocalDate end = start.plusDays(1);
+		when(this.persistenceFacade.findByQuery(User.class, "User.findUsersOnline", map("start", start).and("end", end),
+				0, 0)).thenReturn(new ArrayList<>());
+		final List<User> usersInDataBase = this.userDaoJpa.findUsersOffline(start, end);
+		Assert.assertEquals(0, usersInDataBase.size());
+	}
+
+	@Test
+	public void findUsersOnlineWithNullDatesTest() {
+		this.thrown.expect(NullPointerException.class);
+		this.userDaoJpa.findUsersOnline(null, LocalDate.now());
+
+		this.thrown.expect(NullPointerException.class);
+		this.userDaoJpa.findUsersOnline(LocalDate.now(), null);
+
+		this.thrown.expect(NullPointerException.class);
+		this.userDaoJpa.findUsersOnline(null, null);
+	}
+
+	@Test
+	public void findUsersOnlineWithWrongTest() {
+		final LocalDate start = LocalDate.now();
+		final LocalDate end = start.minusDays(1);
+		this.thrown.expect(IllegalStateException.class);
+		this.userDaoJpa.findUsersOnline(start, end);
 	}
 
 	@Before
