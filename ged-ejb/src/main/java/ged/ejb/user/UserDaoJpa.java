@@ -74,11 +74,15 @@ public final class UserDaoJpa extends AbstractDaoJpa<User> implements UserDao {
 
 	@Override
 	public List<User> findUsersOffline(final Date start, final Date end) {
+		Objects.requireNonNull(start);
+		Objects.requireNonNull(end);
 		return this.findByQuery(User.class, "User.findUsersOffline", mapDates(start, end), 0, 0);
 	}
 
 	@Override
 	public List<User> findUsersOnline(final Date start, final Date end) {
+		Objects.requireNonNull(start);
+		Objects.requireNonNull(end);
 		return this.findByQuery(User.class, "User.findUsersOnline", mapDates(start, end), 0, 0);
 	}
 
@@ -134,22 +138,31 @@ public final class UserDaoJpa extends AbstractDaoJpa<User> implements UserDao {
 
 	@Override
 	public long numberOfUsersInTeam(final User user) {
+		Objects.requireNonNull(user);
 		return this.findByQuery(Long.class, "User.numberOfUsersInTeam", map("id", user.getId()));
 	}
 
 	@Override
 	public long numberOfUsersOffline(final Date start, final Date end) {
+		Objects.requireNonNull(start);
+		Objects.requireNonNull(end);
 		return this.findByQuery(Long.class, "User.numberOfUsersOffline", mapDates(start, end));
 	}
 
 	@Override
 	public long numberOfUsersOnline(final Date start, final Date end) {
+		Objects.requireNonNull(start);
+		Objects.requireNonNull(end);
 		return this.findByQuery(Long.class, "User.numberOfUsersOnline", mapDates(start, end));
 	}
 
 	@Override
 	public List<User> search(final String searchText) {
-		return getPersistenceFacade().search(User.class, searchText, "name", "surname", "email");
+		if (searchText == null) {
+			return findAll();
+		} else {
+			return getPersistenceFacade().search(User.class, searchText, "name", "surname", "email");
+		}
 	}
 
 	@Override

@@ -29,6 +29,7 @@ public abstract class AbstractService<T extends Identificable> implements Servic
 
 	@Override
 	public void insert(final T entity) {
+		Objects.requireNonNull(entity);
 		this.getDao().insert(entity);
 	}
 
@@ -39,6 +40,7 @@ public abstract class AbstractService<T extends Identificable> implements Servic
 
 	@Override
 	public T update(final T entity) {
+		Objects.requireNonNull(entity);
 		return this.getDao().update(entity);
 	}
 }

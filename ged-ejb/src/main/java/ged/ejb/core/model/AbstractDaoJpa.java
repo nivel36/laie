@@ -20,6 +20,9 @@ public abstract class AbstractDaoJpa<T extends AbstractEntity> implements Dao<T>
 
 	@Override
 	public T find(final long id) {
+		if (id <= 0) {
+			throw new IllegalArgumentException("id: " + id);
+		}
 		return this.persistenceFacade.find(this.getType(), id);
 	}
 
@@ -80,6 +83,7 @@ public abstract class AbstractDaoJpa<T extends AbstractEntity> implements Dao<T>
 	}
 
 	public void setPersistenceFacade(final PersistenceFacade persistenceFacade) {
+		Objects.requireNonNull(persistenceFacade);
 		this.persistenceFacade = persistenceFacade;
 	}
 
