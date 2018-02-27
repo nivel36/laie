@@ -22,11 +22,19 @@ public final class UserDaoJpa extends AbstractDaoJpa<User> implements UserDao {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
+	private void checkDates(final Date start, final Date end) {
+		Objects.requireNonNull(start);
+		Objects.requireNonNull(end);
+		if (start.compareTo(end) > 0) {
+			throw new IllegalStateException("start after end");
+		}
+	}
+
 	private void deleteUserClosures(final User user) {
 		logger.trace("Delete user closures for user {}", user.getEmail());
-		final List<UserClosure> userClosures = findAntecessorsUserClosures(user);
+		final List<UserClosure> userClosures = this.findAntecessorsUserClosures(user);
 		for (final UserClosure userClosure : userClosures) {
-			getPersistenceFacade().delete(UserClosure.class, userClosure);
+			this.getPersistenceFacade().delete(UserClosure.class, userClosure);
 		}
 	}
 
@@ -74,16 +82,14 @@ public final class UserDaoJpa extends AbstractDaoJpa<User> implements UserDao {
 
 	@Override
 	public List<User> findUsersOffline(final Date start, final Date end) {
-		Objects.requireNonNull(start);
-		Objects.requireNonNull(end);
-		return this.findByQuery(User.class, "User.findUsersOffline", mapDates(start, end), 0, 0);
+		this.checkDates(start, end);
+		return this.findByQuery(User.class, "User.findUsersOffline", this.mapDates(start, end), 0, 0);
 	}
 
 	@Override
 	public List<User> findUsersOnline(final Date start, final Date end) {
-		Objects.requireNonNull(start);
-		Objects.requireNonNull(end);
-		return this.findByQuery(User.class, "User.findUsersOnline", mapDates(start, end), 0, 0);
+		this.checkDates(start, end);
+		return this.findByQuery(User.class, "User.findUsersOnline", this.mapDates(start, end), 0, 0);
 	}
 
 	@Override
@@ -94,9 +100,9 @@ public final class UserDaoJpa extends AbstractDaoJpa<User> implements UserDao {
 	@Override
 	public void insert(final User user) {
 		Objects.requireNonNull(user);
-		getPersistenceFacade().insert(user);
+		this.getPersistenceFacade().insert(user);
 		if (user.getManager() != null) {
-			insertUserClosures(user);
+			this.insertUserClosures(user);
 		}
 	}
 
@@ -107,29 +113,29 @@ public final class UserDaoJpa extends AbstractDaoJpa<User> implements UserDao {
 		newUserClosure.setAntecessor(antecessor);
 		newUserClosure.setDescendant(descendant);
 		newUserClosure.setPathLength(pathLength);
-		getPersistenceFacade().insert(newUserClosure);
+		this.getPersistenceFacade().insert(newUserClosure);
 	}
 
 	private void insertUserClosures(final User user) {
 		logger.trace("Insert user closures for user {}", user.getEmail());
-		final List<UserClosure> userClosures = findAntecessorsUserClosures(user.getManager());
+		final List<UserClosure> userClosures = this.findAntecessorsUserClosures(user.getManager());
 		for (final UserClosure userClosure : userClosures) {
-			insertUserClosure(userClosure.getAntecessor(), user, userClosure.getPathLength() + 1);
+			this.insertUserClosure(userClosure.getAntecessor(), user, userClosure.getPathLength() + 1);
 		}
-		insertUserClosure(user, user, 0);
+		this.insertUserClosure(user, user, 0);
 	}
 
 	private boolean isAddingManager(final User user, final User userInDatabase) {
-		return userInDatabase.getManager() == null && user.getManager() != null;
+		return (userInDatabase.getManager() == null) && (user.getManager() != null);
 	}
 
 	private boolean isChangingManager(final User user, final User userInDatabase) {
-		return userInDatabase.getManager() != null && user.getManager() != null
+		return (userInDatabase.getManager() != null) && (user.getManager() != null)
 				&& !user.getManager().equals(userInDatabase.getManager());
 	}
 
 	private boolean isRemovingManager(final User user, final User userInDatabase) {
-		return userInDatabase.getManager() != null && user.getManager() == null;
+		return (userInDatabase.getManager() != null) && (user.getManager() == null);
 	}
 
 	private Parameters mapDates(final Date start, final Date end) {
@@ -144,39 +150,33 @@ public final class UserDaoJpa extends AbstractDaoJpa<User> implements UserDao {
 
 	@Override
 	public long numberOfUsersOffline(final Date start, final Date end) {
-		Objects.requireNonNull(start);
-		Objects.requireNonNull(end);
-		return this.findByQuery(Long.class, "User.numberOfUsersOffline", mapDates(start, end));
+		this.checkDates(start, end);
+		return this.findByQuery(Long.class, "User.numberOfUsersOffline", this.mapDates(start, end));
 	}
 
 	@Override
 	public long numberOfUsersOnline(final Date start, final Date end) {
-		Objects.requireNonNull(start);
-		Objects.requireNonNull(end);
-		return this.findByQuery(Long.class, "User.numberOfUsersOnline", mapDates(start, end));
+		this.checkDates(start, end);
+		return this.findByQuery(Long.class, "User.numberOfUsersOnline", this.mapDates(start, end));
 	}
 
 	@Override
 	public List<User> search(final String searchText) {
-		if (searchText == null) {
-			return findAll();
-		} else {
-			return getPersistenceFacade().search(User.class, searchText, "name", "surname", "email");
-		}
+		return this.getPersistenceFacade().search(User.class, searchText, "name", "surname", "email");
 	}
 
 	@Override
 	public User update(final User user) {
 		Objects.requireNonNull(user);
-		final User userInDatabase = find(user.getId());
-		if (isAddingManager(user, userInDatabase)) {
-			insertUserClosures(user);
-		} else if (isRemovingManager(user, userInDatabase)) {
-			deleteUserClosures(userInDatabase);
-		} else if (isChangingManager(user, userInDatabase)) {
-			deleteUserClosures(userInDatabase);
-			insertUserClosures(user);
+		final User userInDatabase = this.find(user.getId());
+		if (this.isAddingManager(user, userInDatabase)) {
+			this.insertUserClosures(user);
+		} else if (this.isRemovingManager(user, userInDatabase)) {
+			this.deleteUserClosures(userInDatabase);
+		} else if (this.isChangingManager(user, userInDatabase)) {
+			this.deleteUserClosures(userInDatabase);
+			this.insertUserClosures(user);
 		}
-		return getPersistenceFacade().update(user);
+		return this.getPersistenceFacade().update(user);
 	}
 }
