@@ -1,6 +1,7 @@
 package ged.api.v1.user;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -9,7 +10,7 @@ import ged.api.v1.Dto;
 
 public class UserDto implements Dto {
 
-	private Date dateOfJoin;
+	private LocalDate dateOfJoin;
 
 	@NotNull
 	private String email;
@@ -19,7 +20,7 @@ public class UserDto implements Dto {
 	@NotNull
 	private String language;
 
-	private Date lastConnection;
+	private LocalDateTime lastConnection;
 
 	private String managerEmail;
 
@@ -57,7 +58,7 @@ public class UserDto implements Dto {
 		return true;
 	}
 
-	public Date getDateOfJoin() {
+	public LocalDate getDateOfJoin() {
 		return this.dateOfJoin;
 	}
 
@@ -73,7 +74,7 @@ public class UserDto implements Dto {
 		return this.language;
 	}
 
-	public Date getLastConnection() {
+	public LocalDateTime getLastConnection() {
 		return this.lastConnection;
 	}
 
@@ -101,11 +102,11 @@ public class UserDto implements Dto {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + (this.email == null ? 0 : this.email.hashCode());
+		result = (prime * result) + (this.email == null ? 0 : this.email.hashCode());
 		return result;
 	}
 
-	public void setDateOfJoin(final Date dateOfJoin) {
+	public void setDateOfJoin(final LocalDate dateOfJoin) {
 		this.dateOfJoin = dateOfJoin;
 	}
 
@@ -121,7 +122,7 @@ public class UserDto implements Dto {
 		this.language = language;
 	}
 
-	public void setLastConnection(final Date lastConnection) {
+	public void setLastConnection(final LocalDateTime lastConnection) {
 		this.lastConnection = lastConnection;
 	}
 
@@ -144,5 +145,4 @@ public class UserDto implements Dto {
 	public void setSurname(final String surname) {
 		this.surname = surname;
 	}
-
 }

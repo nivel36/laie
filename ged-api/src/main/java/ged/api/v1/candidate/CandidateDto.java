@@ -1,6 +1,6 @@
 package ged.api.v1.candidate;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Objects;
 
 import javax.persistence.Column;
@@ -15,7 +15,7 @@ import ged.api.v1.Dto;
 public class CandidateDto implements Dto {
 
 	@Temporal(TemporalType.DATE)
-	private Date bornDate;
+	private LocalDate bornDate;
 
 	private String city;
 
@@ -74,7 +74,7 @@ public class CandidateDto implements Dto {
 				&& Objects.equals(this.phoneNumber, other.phoneNumber) && Objects.equals(this.surname, other.surname);
 	}
 
-	public Date getBornDate() {
+	public LocalDate getBornDate() {
 		return this.bornDate;
 	}
 
@@ -147,7 +147,7 @@ public class CandidateDto implements Dto {
 		return Objects.hash(this.email, this.name, this.phoneNumber, this.surname);
 	}
 
-	public void setBornDate(final Date bornDate) {
+	public void setBornDate(final LocalDate bornDate) {
 		this.bornDate = bornDate;
 	}
 

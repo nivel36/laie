@@ -1,7 +1,7 @@
 package ged.ejb.candidate;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -17,8 +17,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -44,8 +42,7 @@ public class Candidate extends AbstractAuditedEntity {
 	@Embedded
 	private Address address;
 
-	@Temporal(TemporalType.DATE)
-	private Date bornDate;
+	private LocalDate bornDate;
 
 	@OneToOne(fetch = FetchType.LAZY, orphanRemoval = true)
 	@JoinColumn(name = "curriculumId", nullable = true, unique = true)
@@ -146,7 +143,7 @@ public class Candidate extends AbstractAuditedEntity {
 		return this.address;
 	}
 
-	public Date getBornDate() {
+	public LocalDate getBornDate() {
 		return this.bornDate;
 	}
 
@@ -231,7 +228,7 @@ public class Candidate extends AbstractAuditedEntity {
 		this.address = address;
 	}
 
-	public void setBornDate(final Date bornDate) {
+	public void setBornDate(final LocalDate bornDate) {
 		this.bornDate = bornDate;
 	}
 
@@ -305,6 +302,6 @@ public class Candidate extends AbstractAuditedEntity {
 
 	@Override
 	public String toString() {
-		return getFullName();
+		return this.getFullName();
 	}
 }

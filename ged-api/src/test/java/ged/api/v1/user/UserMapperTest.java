@@ -1,6 +1,7 @@
 package ged.api.v1.user;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -84,11 +85,11 @@ public class UserMapperTest {
 
 	private User mockUser() {
 		final User user = new User();
-		user.setDateOfJoin(new Date());
+		user.setDateOfJoin(LocalDate.now());
 		user.setEmail("aaron@test.com");
 		user.setImageFileName("1");
 		user.setLanguage("ES");
-		user.setLastConnection(new Date());
+		user.setLastConnection(LocalDateTime.now());
 		final User manager = new User();
 		manager.setEmail("boss@test.com");
 		user.setManager(manager);
@@ -103,11 +104,11 @@ public class UserMapperTest {
 
 	private UserDto mockUserDto() {
 		final UserDto userDto = new UserDto();
-		userDto.setDateOfJoin(new Date());
+		userDto.setDateOfJoin(LocalDate.now());
 		userDto.setEmail("aaron@test.com");
 		userDto.setImageFileName("1");
 		userDto.setLanguage("ES");
-		userDto.setLastConnection(new Date());
+		userDto.setLastConnection(LocalDateTime.now());
 		userDto.setManagerEmail("boss@test.com");
 		userDto.setName("Aaron");
 		userDto.setPhoneNumber("123456789");

@@ -1,6 +1,7 @@
 package ged.ejb.user;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -10,8 +11,6 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
@@ -40,8 +39,7 @@ public class User extends AbstractAuditedEntity {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "owner", orphanRemoval = false)
 	private List<Client> clients;
 
-	@Temporal(TemporalType.DATE)
-	private Date dateOfJoin;
+	private LocalDate dateOfJoin;
 
 	@NotNull
 	@Column(length = 128, nullable = false, unique = true)
@@ -58,8 +56,7 @@ public class User extends AbstractAuditedEntity {
 	@Column(length = 2, nullable = false)
 	private String language;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date lastConnection;
+	private LocalDateTime lastConnection;
 
 	@ManyToOne
 	@JoinColumn(name = "managerId", nullable = true)
@@ -110,7 +107,7 @@ public class User extends AbstractAuditedEntity {
 		if (this == obj) {
 			return true;
 		}
-		if (getClass() != obj.getClass()) {
+		if (this.getClass() != obj.getClass()) {
 			return false;
 		}
 		final User other = (User) obj;
@@ -129,7 +126,7 @@ public class User extends AbstractAuditedEntity {
 		return this.clients;
 	}
 
-	public Date getDateOfJoin() {
+	public LocalDate getDateOfJoin() {
 		return this.dateOfJoin;
 	}
 
@@ -153,7 +150,7 @@ public class User extends AbstractAuditedEntity {
 		return this.language;
 	}
 
-	public Date getLastConnection() {
+	public LocalDateTime getLastConnection() {
 		return this.lastConnection;
 	}
 
@@ -228,7 +225,7 @@ public class User extends AbstractAuditedEntity {
 		this.clients = clients;
 	}
 
-	public void setDateOfJoin(final Date dateOfJoin) {
+	public void setDateOfJoin(final LocalDate dateOfJoin) {
 		this.dateOfJoin = dateOfJoin;
 	}
 
@@ -248,7 +245,7 @@ public class User extends AbstractAuditedEntity {
 		this.language = language;
 	}
 
-	public void setLastConnection(final Date lastConnection) {
+	public void setLastConnection(final LocalDateTime lastConnection) {
 		this.lastConnection = lastConnection;
 	}
 
@@ -282,6 +279,6 @@ public class User extends AbstractAuditedEntity {
 
 	@Override
 	public String toString() {
-		return getFullName();
+		return this.getFullName();
 	}
 }

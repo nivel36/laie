@@ -1,6 +1,6 @@
 package ged.ejb.core;
 
-import java.util.Calendar;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 import javax.ejb.Stateless;
@@ -25,7 +25,7 @@ public class LoginServiceImpl implements LoginService {
 	@Audited(action = ActionType.LOGIN)
 	public User login(final String email) {
 		final User user = this.userSerivce.findUserByEmail(email);
-		user.setLastConnection(Calendar.getInstance().getTime());
+		user.setLastConnection(LocalDateTime.now());
 		return this.userSerivce.update(user);
 	}
 }
