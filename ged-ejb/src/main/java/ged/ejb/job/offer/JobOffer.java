@@ -1,7 +1,7 @@
 package ged.ejb.job.offer;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -12,8 +12,6 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.search.annotations.Field;
@@ -50,13 +48,9 @@ public class JobOffer extends AbstractAuditedEntity {
 	@Column(length = 64)
 	private String country;
 
-	@NotNull
-	@Column(nullable = false)
-	@Temporal(TemporalType.DATE)
-	private Date dateClosed;
+	private LocalDate dateClosed;
 
-	@Temporal(TemporalType.DATE)
-	private Date dateOpened;
+	private LocalDate dateOpened;
 
 	@Column(length = 1024)
 	@Field
@@ -131,11 +125,11 @@ public class JobOffer extends AbstractAuditedEntity {
 		return this.country;
 	}
 
-	public Date getDateClosed() {
+	public LocalDate getDateClosed() {
 		return this.dateClosed;
 	}
 
-	public Date getDateOpened() {
+	public LocalDate getDateOpened() {
 		return this.dateOpened;
 	}
 
@@ -169,7 +163,7 @@ public class JobOffer extends AbstractAuditedEntity {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(dateOpened, name, places);
+		return Objects.hash(this.dateOpened, this.name, this.places);
 	}
 
 	public void removeJobCandidature(final JobCandidature jobCandidature) {
@@ -197,11 +191,11 @@ public class JobOffer extends AbstractAuditedEntity {
 		this.country = country;
 	}
 
-	public void setDateClosed(final Date dateClosed) {
+	public void setDateClosed(final LocalDate dateClosed) {
 		this.dateClosed = dateClosed;
 	}
 
-	public void setDateOpened(final Date dateOpened) {
+	public void setDateOpened(final LocalDate dateOpened) {
 		this.dateOpened = dateOpened;
 	}
 

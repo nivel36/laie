@@ -1,6 +1,6 @@
 package ged.ejb;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Objects;
 
 import javax.persistence.Column;
@@ -21,7 +21,7 @@ public class UploadedServerFile extends AbstractEntity {
 	@JoinColumn(name = "candidateId", nullable = false)
 	private Candidate candidate;
 
-	private Date date;
+	private LocalDate date;
 
 	private String description;
 
@@ -55,7 +55,7 @@ public class UploadedServerFile extends AbstractEntity {
 		return this.candidate;
 	}
 
-	public Date getDate() {
+	public LocalDate getDate() {
 		return this.date;
 	}
 
@@ -84,7 +84,7 @@ public class UploadedServerFile extends AbstractEntity {
 		this.candidate = candidate;
 	}
 
-	public void setDate(final Date date) {
+	public void setDate(final LocalDate date) {
 		this.date = date;
 	}
 

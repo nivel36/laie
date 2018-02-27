@@ -1,13 +1,10 @@
 package ged.ejb.core.action;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
 import ged.ejb.core.model.AbstractRecordEntity;
 
 @Entity
@@ -22,8 +19,7 @@ public class Action extends AbstractRecordEntity {
 	@Column(length = 8)
 	private String actionPerformed;
 
-	@Temporal(TemporalType.TIME)
-	private Date date;
+	private LocalDateTime date;
 
 	public Action() {
 	}
@@ -54,7 +50,7 @@ public class Action extends AbstractRecordEntity {
 		return this.actionPerformed;
 	}
 
-	public Date getDate() {
+	public LocalDateTime getDate() {
 		return this.date;
 	}
 
@@ -67,7 +63,7 @@ public class Action extends AbstractRecordEntity {
 		this.actionPerformed = actionPerformed;
 	}
 
-	public void setDate(final Date date) {
+	public void setDate(final LocalDateTime date) {
 		this.date = date;
 	}
 

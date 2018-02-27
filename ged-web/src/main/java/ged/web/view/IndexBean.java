@@ -1,8 +1,7 @@
 package ged.web.view;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -32,20 +31,14 @@ public class IndexBean extends AbstractBean {
 	@Inject
 	private transient JobOfferService jobService;
 
-	public void setJobService(JobOfferService jobService) {
-		this.jobService = jobService;
-	}
-
 	private transient ScheduleModel schedule;
 
 	public List<Candidate> getCandidates() {
 		return this.candidates;
 	}
 
-	public Date getInitialDate() {
-		final Calendar calendar = Calendar.getInstance();
-		calendar.set(calendar.get(Calendar.YEAR), Calendar.FEBRUARY, calendar.get(Calendar.DATE), 0, 0, 0);
-		return calendar.getTime();
+	public LocalDate getInitialDate() {
+		return LocalDate.now();
 	}
 
 	public List<JobOffer> getJobOffers() {
@@ -62,5 +55,9 @@ public class IndexBean extends AbstractBean {
 		this.jobOffers = this.jobService.findLastJobOffers(user);
 		this.candidates = new ArrayList<>();
 		this.schedule = new LazyScheduleModel();
+	}
+
+	public void setJobService(final JobOfferService jobService) {
+		this.jobService = jobService;
 	}
 }

@@ -1,7 +1,7 @@
 package ged.ejb.core.action;
 
 import java.lang.invoke.MethodHandles;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -91,7 +91,7 @@ public class ActionServiceImpl extends AbstractService<Action> implements Action
 	private void insertAction(final AbstractAuditedEntity auditedEntity, final ActionType actionType) {
 		final Action action = getActionFromEntity(auditedEntity);
 		action.setActionPerformed(actionType.name());
-		action.setDate(new Date());
+		action.setDate(LocalDateTime.now());
 		final User user = this.userService.findUserByEmail(this.sessionContext.getCallerPrincipal().getName());
 		action.setUser(user);
 		insert(action);

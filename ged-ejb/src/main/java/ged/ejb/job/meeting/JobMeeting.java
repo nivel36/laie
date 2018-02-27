@@ -1,6 +1,6 @@
 package ged.ejb.job.meeting;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -10,8 +10,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
@@ -28,13 +26,11 @@ public class JobMeeting extends AbstractAuditedEntity {
 	@OneToMany
 	private List<User> attendees;
 
-	@Temporal(TemporalType.TIME)
-	private Date dateConducted;
+	private LocalDateTime dateConducted;
 
 	@NotNull
-	@Temporal(TemporalType.TIME)
 	@Column(nullable = false)
-	private Date datePlanned;
+	private LocalDateTime datePlanned;
 
 	@Column(length = 1024)
 	private String description;
@@ -50,7 +46,7 @@ public class JobMeeting extends AbstractAuditedEntity {
 
 	@Override
 	public boolean equals(final Object obj) {
-		if ( obj == null ) {
+		if (obj == null) {
 			return false;
 		}
 		if (this == obj) {
@@ -74,11 +70,11 @@ public class JobMeeting extends AbstractAuditedEntity {
 		return this.attendees;
 	}
 
-	public Date getDateConducted() {
+	public LocalDateTime getDateConducted() {
 		return this.dateConducted;
 	}
 
-	public Date getDatePlanned() {
+	public LocalDateTime getDatePlanned() {
 		return this.datePlanned;
 	}
 
@@ -103,11 +99,11 @@ public class JobMeeting extends AbstractAuditedEntity {
 		this.attendees = attendees;
 	}
 
-	public void setDateConducted(final Date dateConducted) {
+	public void setDateConducted(final LocalDateTime dateConducted) {
 		this.dateConducted = dateConducted;
 	}
 
-	public void setDatePlanned(final Date datePlanned) {
+	public void setDatePlanned(final LocalDateTime datePlanned) {
 		this.datePlanned = datePlanned;
 	}
 

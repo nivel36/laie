@@ -1,6 +1,6 @@
 package ged.ejb.curriculum;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Objects;
 
 import javax.persistence.Column;
@@ -8,8 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 import ged.ejb.core.model.AbstractAuditedEntity;
@@ -20,93 +18,30 @@ public class JobExperience extends AbstractAuditedEntity {
 	private static final long serialVersionUID = -2578992834584255548L;
 
 	@NotNull
+	@Column(length = 128, nullable = false)
+	private String companyName;
+
+	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "curriculumId", nullable = false)
 	private Curriculum curriculum;
-
-	@NotNull
-	@Column(length = 128, nullable = false)
-	private String companyName;
 
 	@NotNull
 	@Lob
 	@Column(nullable = false)
 	private String description;
 
-	@Temporal(TemporalType.DATE)
-	private Date fromDate;
+	private LocalDate fromDate;
 
 	@Column(length = 256)
 	private String jobPosition;
 
 	private Boolean stillWorking;
 
-	@Temporal(TemporalType.DATE)
-	private Date toDate;
-
-	public String getCompanyName() {
-		return companyName;
-	}
-
-	public Curriculum getCurriculum() {
-		return curriculum;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public Date getFromDate() {
-		return fromDate;
-	}
-
-	public String getJobPosition() {
-		return jobPosition;
-	}
-
-	public Date getToDate() {
-		return toDate;
-	}
-
-	public Boolean getStillWorking() {
-		return stillWorking;
-	}
-
-	public void setCompanyName(String companyName) {
-		this.companyName = companyName;
-	}
-
-	public void setCurriculum(Curriculum curriculum) {
-		this.curriculum = curriculum;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public void setFromDate(Date fromDate) {
-		this.fromDate = fromDate;
-	}
-
-	public void setJobPosition(String jobPosition) {
-		this.jobPosition = jobPosition;
-	}
-
-	public void setStillWorking(Boolean stillWorking) {
-		this.stillWorking = stillWorking;
-	}
-
-	public void setToDate(Date toDate) {
-		this.toDate = toDate;
-	}
+	private LocalDate toDate;
 
 	@Override
-	public int hashCode() {
-		return Objects.hash(companyName, curriculum, description, fromDate, jobPosition, stillWorking, toDate);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(final Object obj) {
 		if (this == obj) {
 			return true;
 		}
@@ -116,16 +51,79 @@ public class JobExperience extends AbstractAuditedEntity {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		JobExperience other = (JobExperience) obj;
+		final JobExperience other = (JobExperience) obj;
 		return Objects.equals(this.companyName, other.companyName) && Objects.equals(this.curriculum, other.curriculum)
 				&& Objects.equals(this.description, other.description) && Objects.equals(this.fromDate, other.fromDate)
 				&& Objects.equals(this.jobPosition, other.jobPosition)
 				&& Objects.equals(this.stillWorking, other.stillWorking) && Objects.equals(this.toDate, other.toDate);
 	}
 
+	public String getCompanyName() {
+		return this.companyName;
+	}
+
+	public Curriculum getCurriculum() {
+		return this.curriculum;
+	}
+
+	public String getDescription() {
+		return this.description;
+	}
+
+	public LocalDate getFromDate() {
+		return this.fromDate;
+	}
+
+	public String getJobPosition() {
+		return this.jobPosition;
+	}
+
+	public Boolean getStillWorking() {
+		return this.stillWorking;
+	}
+
+	public LocalDate getToDate() {
+		return this.toDate;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(this.companyName, this.curriculum, this.description, this.fromDate, this.jobPosition,
+				this.stillWorking, this.toDate);
+	}
+
+	public void setCompanyName(final String companyName) {
+		this.companyName = companyName;
+	}
+
+	public void setCurriculum(final Curriculum curriculum) {
+		this.curriculum = curriculum;
+	}
+
+	public void setDescription(final String description) {
+		this.description = description;
+	}
+
+	public void setFromDate(final LocalDate fromDate) {
+		this.fromDate = fromDate;
+	}
+
+	public void setJobPosition(final String jobPosition) {
+		this.jobPosition = jobPosition;
+	}
+
+	public void setStillWorking(final Boolean stillWorking) {
+		this.stillWorking = stillWorking;
+	}
+
+	public void setToDate(final LocalDate toDate) {
+		this.toDate = toDate;
+	}
+
 	@Override
 	public String toString() {
-		return "JobExperience [companyName=" + companyName + ", description=" + description + ", fromDate=" + fromDate
-				+ ", jobPosition=" + jobPosition + ", stillWorking=" + stillWorking + ", toDate=" + toDate + "]";
+		return "JobExperience [companyName=" + this.companyName + ", description=" + this.description + ", fromDate="
+				+ this.fromDate + ", jobPosition=" + this.jobPosition + ", stillWorking=" + this.stillWorking
+				+ ", toDate=" + this.toDate + "]";
 	}
 }

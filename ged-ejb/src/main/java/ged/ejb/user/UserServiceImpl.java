@@ -1,8 +1,7 @@
 package ged.ejb.user;
 
 import java.lang.invoke.MethodHandles;
-import java.util.Calendar;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
@@ -59,16 +58,16 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
 	@Override
 	public List<User> findUsersOfflineLastMonth() {
 		logger.debug("Find users offline last month");
-		final Date oneMonthAgo = getOneMonthAgo();
-		final Date today = Calendar.getInstance().getTime();
+		final LocalDate oneMonthAgo = getOneMonthAgo();
+		final LocalDate today = LocalDate.now();
 		return this.userDao.findUsersOffline(oneMonthAgo, today);
 	}
 
 	@Override
 	public List<User> findUsersOnlineLastWeek() {
 		logger.debug("Find users online last week");
-		final Date oneWeekAgo = getOneWeekAgo();
-		final Date today = Calendar.getInstance().getTime();
+		final LocalDate oneWeekAgo = getOneWeekAgo();
+		final LocalDate today = LocalDate.now();
 		return this.userDao.findUsersOnline(oneWeekAgo, today);
 	}
 
@@ -77,20 +76,12 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
 		return this.userDao;
 	}
 
-	private Date getOneMonthAgo() {
-		final Date referenceDate = new Date();
-		final Calendar c = Calendar.getInstance();
-		c.setTime(referenceDate);
-		c.add(Calendar.MONTH, -30);
-		return c.getTime();
+	private LocalDate getOneMonthAgo() {
+		return LocalDate.now().minusMonths(1);
 	}
 
-	private Date getOneWeekAgo() {
-		final Date referenceDate = new Date();
-		final Calendar c = Calendar.getInstance();
-		c.setTime(referenceDate);
-		c.add(Calendar.MONTH, -7);
-		return c.getTime();
+	private LocalDate getOneWeekAgo() {
+		return LocalDate.now().minusDays(7);
 	}
 
 	@Override
@@ -133,16 +124,16 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
 	@Override
 	public long numberOfUsersOfflineLastMonth() {
 		logger.debug("Find number of users offline last month");
-		final Date oneMonthAgo = getOneMonthAgo();
-		final Date today = Calendar.getInstance().getTime();
+		final LocalDate oneMonthAgo = getOneMonthAgo();
+		final LocalDate today = LocalDate.now();
 		return this.userDao.numberOfUsersOffline(oneMonthAgo, today);
 	}
 
 	@Override
 	public long numberOfUsersOnlineLastWeek() {
 		logger.debug("Find number of users online last week");
-		final Date oneWeekAgo = getOneWeekAgo();
-		final Date today = Calendar.getInstance().getTime();
+		final LocalDate oneWeekAgo = getOneWeekAgo();
+		final LocalDate today = LocalDate.now();
 		return this.userDao.numberOfUsersOnline(oneWeekAgo, today);
 	}
 

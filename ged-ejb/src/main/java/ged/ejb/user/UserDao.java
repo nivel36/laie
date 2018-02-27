@@ -1,6 +1,6 @@
 package ged.ejb.user;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import ged.ejb.core.model.Dao;
@@ -15,13 +15,13 @@ public interface UserDao extends Dao<User> {
 
 	User findUserByEmail(final String email);
 
-	List<User> findUsersOffline(final Date start, final Date end);
+	List<User> findUsersOffline(final LocalDate start, final LocalDate end);
 
-	List<User> findUsersOnline(final Date start, final Date end);
+	List<User> findUsersOnline(final LocalDate start, final LocalDate end);
 
 	long numberOfUsersInTeam(final User user);
 
-	long numberOfUsersOffline(final Date start, final Date end);
+	long numberOfUsersOffline(final LocalDate start, final LocalDate end);
 
-	long numberOfUsersOnline(final Date start, final Date end);
+	long numberOfUsersOnline(final LocalDate start, final LocalDate end);
 }

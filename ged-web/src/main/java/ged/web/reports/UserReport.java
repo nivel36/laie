@@ -106,10 +106,10 @@ public class UserReport extends AbstractReport {
 			final CellStyle style = this.wb.createCellStyle();
 			style.setDataFormat(df.getFormat("mm-YYYY"));
 			cell.setCellStyle(style);
-			cell.setCellValue(jobOffer.getDateOpened());
+			cell.setCellValue(1L); // TODO: corregir
 			cell = row.createCell(4);
 			cell.setCellStyle(style);
-			cell.setCellValue(jobOffer.getDateClosed());
+			cell.setCellValue(1L); // TODO: corregir
 			cell = row.createCell(5);
 			cell.setCellValue(jobOffer.getPlaces());
 			cell = row.createCell(6);

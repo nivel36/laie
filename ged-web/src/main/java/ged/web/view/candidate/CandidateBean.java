@@ -7,8 +7,8 @@ import static ged.web.core.util.Page.CANDIDATE_SEARCH;
 import java.io.File;
 import java.io.IOException;
 import java.lang.invoke.MethodHandles;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -203,7 +203,7 @@ public class CandidateBean extends AbstractBean {
 		final UploadedServerFile file = new UploadedServerFile();
 		file.setUuid(uuid);
 		file.setName(fileName);
-		file.setDate(new Date());
+		file.setDate(LocalDate.now());
 		if (!this.candidate.getFiles().contains(file)) {
 			this.candidate.getFiles().add(file);
 			file.setCandidate(this.candidate);

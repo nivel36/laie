@@ -41,7 +41,7 @@
 								</h:panelGroup>
 							</div>
 						</div>
-						
+
 						<div class="ui-g">
 							<div class="ui-g-12">
 								<div class="form-group">
@@ -63,14 +63,14 @@
 							<div class="ui-g-12 ui-md-6 ui-xl-4">
 								<div class="form-group">
 									<p:outputLabel for="dateOpened" value="#{i18n['job.date_opened']}:" />
-									<p:calendar id="dateOpened" value="#{jobOfferEditBean.jobOffer.dateOpened}" required="true" />
+									<p:calendar id="dateOpened" value="#{jobOfferEditBean.jobOffer.dateOpened}" />
 								</div>
 								<h:message for="dateOpened" errorClass="error" />
 							</div>
 							<div class="ui-g-12 ui-md-6 ui-xl-4">
 								<div class="form-group">
 									<p:outputLabel for="dateClosed" value="#{i18n['job.date_closed']}:" />
-									<p:calendar id="dateClosed" value="#{jobOfferEditBean.jobOffer.dateClosed}" required="true" />
+									<p:calendar id="dateClosed" value="#{jobOfferEditBean.jobOffer.dateClosed}"  />
 								</div>
 								<h:message for="dateClosed" errorClass="error" />
 							</div>
@@ -96,7 +96,8 @@
 						<div class="ui-g">
 							<div class="ui-g-12">
 								<div class="form-action-primary">
-									<p:commandButton styleClass="btn-primary" value="#{i18n['action.save']}" action="#{jobOfferEditBean.save}" update="@form growl" />
+									<p:commandButton styleClass="btn-primary" value="#{i18n['action.save']}" action="#{jobOfferEditBean.save}"
+										update="@form growl" />
 									<p:commandButton value="#{i18n['action.cancel']}" action="#{jobOfferEditBean.cancel}" immediate="true"
 										styleClass="btn-gray" />
 								</div>
