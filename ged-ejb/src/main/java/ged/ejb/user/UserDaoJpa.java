@@ -169,6 +169,9 @@ public final class UserDaoJpa extends AbstractDaoJpa<User> implements UserDao {
 	public User update(final User user) {
 		Objects.requireNonNull(user);
 		final User userInDatabase = find(user.getId());
+		if (userInDatabase == null) {
+			throw new IllegalStateException();
+		}
 		if (isAddingManager(user, userInDatabase)) {
 			insertUserClosures(user);
 		} else if (isRemovingManager(user, userInDatabase)) {
