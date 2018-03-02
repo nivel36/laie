@@ -1,9 +1,5 @@
 package ged.web.view.candidate;
 
-import static ged.ejb.core.util.Parameters.map;
-import static ged.web.core.util.Navigate.to;
-import static ged.web.core.util.Page.CANDIDATE;
-
 import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,11 +9,13 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.omnifaces.util.Ajax;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ged.ejb.candidate.Candidate;
 import ged.ejb.candidate.CandidateService;
+import ged.web.core.ActionCallback;
 import ged.web.core.view.AbstractBean;
 
 @Named
@@ -28,6 +26,8 @@ public class CandidateSelectBean extends AbstractBean {
 
 	private static final long serialVersionUID = 8503929833968698420L;
 
+	private ActionCallback<List<Candidate>> action;
+
 	private List<Candidate> candidates;
 
 	@Inject
@@ -37,9 +37,14 @@ public class CandidateSelectBean extends AbstractBean {
 
 	private List<String> searchValues = new ArrayList<>();
 
-	private Candidate selectedCandidate;
-
 	private List<Candidate> selectedCandidates;
+
+	private String updateElement;
+
+	public void action(final ActionCallback<List<Candidate>> action, final String updateElement) {
+		this.action = action;
+		this.updateElement = updateElement;
+	}
 
 	public void clean() {
 		this.searchText = null;
@@ -58,12 +63,12 @@ public class CandidateSelectBean extends AbstractBean {
 		return this.searchValues;
 	}
 
-	public Candidate getSelectedCandidate() {
-		return this.selectedCandidate;
-	}
-
 	public List<Candidate> getSelectedCandidates() {
 		return this.selectedCandidates;
+	}
+
+	public String getUpdateElement() {
+		return this.updateElement;
 	}
 
 	@PostConstruct
@@ -71,25 +76,15 @@ public class CandidateSelectBean extends AbstractBean {
 		search();
 	}
 
-	public void onCandidateSelect() {
-		to(CANDIDATE).withParams(map("id", this.selectedCandidate.getId())).doGet();
-	}
-
 	public void search() {
 		logger.debug("Searching for candidates");
 		this.candidates = this.candidateService.search(this.searchText);
 	}
 
-	public void searchPlus() {
-		logger.debug("Searching plus for candidates");
-		this.searchValues.add(this.searchText);
-		this.candidates = this.candidateService.search(this.searchText);
-		this.searchText = null;
-	}
-
 	public void select() {
-		this.flash.put("selectedCandidates", this.selectedCandidates);
+		this.action.doAction(this.selectedCandidates);
 		this.selectedCandidates.clear();
+		Ajax.update("candidateSelectForm", this.updateElement);
 	}
 
 	public void setCandidateService(final CandidateService candidateService) {
@@ -102,10 +97,6 @@ public class CandidateSelectBean extends AbstractBean {
 
 	public void setSearchValues(final List<String> searchValues) {
 		this.searchValues = searchValues;
-	}
-
-	public void setSelectedCandidate(final Candidate selectedCandidate) {
-		this.selectedCandidate = selectedCandidate;
 	}
 
 	public void setSelectedCandidates(final List<Candidate> selectedCandidates) {

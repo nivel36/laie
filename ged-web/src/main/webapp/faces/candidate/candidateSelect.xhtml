@@ -3,16 +3,15 @@
 	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://legion.com/i18n"
 	xmlns:p="http://primefaces.org/ui">
 
-	<p:dialog modal="true" widgetVar="candidateSelectDlg" resizable="false" responsive="true"
-		header="#{i18n['candidate.candidates']}">
-		<h:form id="candidateSelectForm">
-
+	<h:form id="candidateSelectForm">
+		<p:dialog modal="true" widgetVar="candidateSelectDlg" resizable="false" responsive="true"
+			header="#{i18n['candidate.candidates']}">
 			<div class="searchForm">
 				<div class="ui-g">
 					<div class="ui-md-8">
 						<div class="ui-inputgroup">
 							<p:inputText id="searchText" value="#{candidateSelectBean.searchText}" />
-							<p:commandButton icon="fa fa-search" styleClass="green-button" action="#{candidateSelectBean.searchPlus}"
+							<p:commandButton icon="fa fa-search" styleClass="green-button" action="#{candidateSelectBean.search}"
 								update="@form" process="@form" />
 						</div>
 					</div>
@@ -56,11 +55,12 @@
 				<div class="ui-g">
 					<div class="ui-g-12">
 						<div class="pull-right">
-							<p:commandButton value="#{i18n['action.select']}" action="#{candidateSelectBean.select}" oncomplete="PF('candidateSelectDlg').hide();"/>
+							<p:commandButton value="#{i18n['action.select']}" action="#{candidateSelectBean.select}"
+								oncomplete="PF('candidateSelectDlg').hide();" />
 						</div>
 					</div>
 				</div>
 			</div>
-		</h:form>
-	</p:dialog>
+		</p:dialog>
+	</h:form>
 </ui:composition>

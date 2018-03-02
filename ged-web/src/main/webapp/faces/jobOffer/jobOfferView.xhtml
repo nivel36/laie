@@ -144,9 +144,7 @@
 						<div class="ui-g">
 							<div class="ui-g-12">
 								<div class="form-action-primary">
-									<p:commandButton value="#{i18n['action.add']}" onclick="PF('candidateSelectDlg').show();">
-										<p:ajax event="dialogReturn" update="@form" listener="#{jobOfferViewBean.onCandidatesSelect}" />
-									</p:commandButton>
+									<p:commandButton value="#{i18n['action.add']}" action="#{candidateSelectBean.action(jobOfferViewBean.miCallback,'candidatesForm')}" onclick="PF('candidateSelectDlg').show();" />
 								</div>
 							</div>
 						</div>
@@ -177,5 +175,6 @@
 				</p:panel>
 			</div>
 		</div>
+		
 	</ui:define>
 </ui:composition>

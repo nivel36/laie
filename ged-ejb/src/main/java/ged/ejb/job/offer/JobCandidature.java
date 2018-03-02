@@ -27,9 +27,8 @@ public class JobCandidature extends AbstractAuditedEntity {
 	@JoinColumn(name = "candidateId", nullable = false)
 	private Candidate candidate;
 
-	@NotNull
 	@ManyToOne
-	@JoinColumn(name = "jobCandidatureStateId", nullable = false)
+	@JoinColumn(name = "jobCandidatureStateId")
 	private JobCandidatureState jobCandidatureState;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "jobCandidature", orphanRemoval = true)

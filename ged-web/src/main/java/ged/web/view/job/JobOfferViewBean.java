@@ -12,7 +12,6 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.primefaces.event.SelectEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,11 +19,11 @@ import ged.ejb.candidate.Candidate;
 import ged.ejb.candidate.CandidateService;
 import ged.ejb.client.ClientService;
 import ged.ejb.job.meeting.JobMeeting;
-import ged.ejb.job.offer.JobCandidature;
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
 import ged.ejb.user.User;
 import ged.web.core.view.AbstractBean;
+import ged.web.view.candidate.SelectCandidatesAction;
 
 @Named
 @ViewScoped
@@ -52,6 +51,8 @@ public class JobOfferViewBean extends AbstractBean {
 
 	@Inject
 	private transient JobOfferService jobService;
+
+	private final SelectCandidatesAction miCallback = new SelectCandidatesAction(this);
 
 	private boolean newClient;
 
@@ -96,6 +97,10 @@ public class JobOfferViewBean extends AbstractBean {
 
 	public String getJobOfferId() {
 		return this.jobOfferId;
+	}
+
+	public SelectCandidatesAction getMiCallback() {
+		return this.miCallback;
 	}
 
 	public List<JobMeeting> getPlannedJobMeetings() {
@@ -143,16 +148,11 @@ public class JobOfferViewBean extends AbstractBean {
 		return user.isAdmin() || user.isRecruiterAdmin();
 	}
 
-	public void onCandidatesSelect(final SelectEvent event) {
-		@SuppressWarnings("unchecked")
-		final List<Candidate> selectedCandidates = getFromFlash(List.class, "selectedCandidates");
+	public void onCandidatesSelect(final List<Candidate> selectedCandidates) {
 		for (final Candidate candidate : selectedCandidates) {
-			final JobCandidature jobCandidature = new JobCandidature();
-			jobCandidature.setCandidate(candidate);
-			jobCandidature.setJobOffer(this.jobOffer);
-
+			this.jobService.addJobCandidature(this.jobOffer, candidate);
 		}
-		this.flash.remove("selectedCandidates");
+		this.candidates.addAll(selectedCandidates);
 	}
 
 	private void populateJobMeetings() {
@@ -198,7 +198,6 @@ public class JobOfferViewBean extends AbstractBean {
 
 	public void setJobMeeting(final JobMeeting jobMeeting) {
 		Objects.requireNonNull(jobMeeting);
-
 	}
 
 	public void setJobOffer(final JobOffer jobOffer) {
