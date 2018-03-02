@@ -56,7 +56,7 @@
 				<div class="ui-g">
 					<div class="ui-g-12">
 						<div class="pull-right">
-							<p:commandButton value="#{i18n['action.select']}" actionListener="#{candidateSelectBean.select}" />
+							<p:commandButton value="#{i18n['action.select']}" action="#{candidateSelectBean.select}" oncomplete="PF('candidateSelectDlg').hide();"/>
 						</div>
 					</div>
 				</div>

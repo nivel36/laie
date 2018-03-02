@@ -1,9 +1,6 @@
 package ged.web.view.job;
 
-import static ged.ejb.core.util.Parameters.map;
 import static ged.web.core.util.Navigate.to;
-import static ged.web.core.util.Page.CANDIDATE_SELECT;
-import static ged.web.core.util.Page.JOB_OFFER;
 import static ged.web.core.util.Page.JOB_OFFER_SEARCH;
 
 import java.lang.invoke.MethodHandles;
@@ -11,12 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import javax.faces.event.ActionEvent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +19,6 @@ import org.slf4j.LoggerFactory;
 import ged.ejb.candidate.Candidate;
 import ged.ejb.candidate.CandidateService;
 import ged.ejb.client.ClientService;
-import ged.ejb.core.util.Parameters;
 import ged.ejb.job.meeting.JobMeeting;
 import ged.ejb.job.offer.JobCandidature;
 import ged.ejb.job.offer.JobOffer;
@@ -151,13 +145,14 @@ public class JobOfferViewBean extends AbstractBean {
 
 	public void onCandidatesSelect(final SelectEvent event) {
 		@SuppressWarnings("unchecked")
-		final List<Candidate> selectedCandidates = (List<Candidate>) event.getObject();
+		final List<Candidate> selectedCandidates = getFromFlash(List.class, "selectedCandidates");
 		for (final Candidate candidate : selectedCandidates) {
 			final JobCandidature jobCandidature = new JobCandidature();
 			jobCandidature.setCandidate(candidate);
-			this.jobOffer.addJobCandidature(jobCandidature);
+			jobCandidature.setJobOffer(this.jobOffer);
+
 		}
-		this.jobService.update(this.jobOffer);
+		this.flash.remove("selectedCandidates");
 	}
 
 	private void populateJobMeetings() {
@@ -174,16 +169,6 @@ public class JobOfferViewBean extends AbstractBean {
 		logger.debug("Save job offer action performed");
 		this.jobOffer = this.jobService.update(this.jobOffer);
 		this.editable = false;
-	}
-
-	public String selectCandidate() {
-		this.flash.put("returnUrl", to(JOB_OFFER).withParams(map("id", this.jobOffer.getId())).toUrl());
-		return to(CANDIDATE_SELECT).toUrl();
-	}
-
-	public void selectCandidates(final ActionEvent ae) {
-		RequestContext.getCurrentInstance().openDialog("/faces/candidate/candidateSelect",
-				Parameters.map("modal", true).and("responsive", true).and("resizable", false), null);
 	}
 
 	public void setCandidate(final Candidate candidate) {
