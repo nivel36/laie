@@ -31,6 +31,10 @@ public class ClientEditBean extends AbstractBean {
 		return newClient;
 	}
 
+	public void clear() {
+		this.client = null;
+	}
+
 	public Client getClient() {
 		return this.client;
 	}

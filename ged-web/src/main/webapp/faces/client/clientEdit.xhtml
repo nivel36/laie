@@ -3,12 +3,13 @@
 	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://legion.com/i18n"
 	xmlns:p="http://primefaces.org/ui">
 
-	<h:form id="newClientForm">
-		<p:dialog modal="true" widgetVar="newClientDlg" resizable="false" responsive="true"
-			header="#{i18n['client.new_client']}">
+	<p:dialog modal="true" widgetVar="newClientDlg" resizable="false" responsive="true"
+		header="#{i18n['client.new_client']}" id="newClientDlg">
 
-			<p:ajax event="close" listener="#{clientEditBean.init}" />
+		<p:ajax event="open" listener="#{clientEditBean.init}" />
+		<p:ajax event="close" listener="#{clientEditBean.clear}" update="newClientForm" resetValues="true" />
 
+		<h:form id="newClientForm">
 			<div class="ui-g">
 				<div class="ui-md-12 ui-lg-6 ui-xl-4">
 					<div class="form-group">
@@ -52,11 +53,12 @@
 			<div class="ui-g">
 				<div class="ui-g-12">
 					<div class="form-action-primary">
-						<p:commandButton value="#{i18n['action.save']}" action="#{clientEditBean.save}" update="growl" />
-						<p:commandButton styleClass="btn-gray" value="#{i18n['action.cancel']}" onclick="PF('newClientDlg').hide();" />
+						<p:commandButton value="#{i18n['action.save']}" action="#{clientEditBean.save}" update="newClientForm" />
+						<p:commandButton styleClass="btn-gray" value="#{i18n['action.cancel']}" onclick="PF('newClientDlg').hide();"
+							process="@this" />
 					</div>
 				</div>
 			</div>
-		</p:dialog>
-	</h:form>
+		</h:form>
+	</p:dialog>
 </ui:composition>
