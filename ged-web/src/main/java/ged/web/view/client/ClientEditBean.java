@@ -39,10 +39,6 @@ public class ClientEditBean extends AbstractBean {
 		this.client = buildNewClient();
 	}
 
-	public void onCloseDialog() {
-		this.client = null;
-	}
-
 	public void save() {
 		this.clientService.insert(this.client);
 		Navigate.to(CLIENT).withParams(map("id", this.client.getId())).doGet();
