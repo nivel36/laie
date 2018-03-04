@@ -10,6 +10,9 @@
 	<ui:param name="selectedMenu" value="contacts" />
 
 	<ui:define name="content">
+	
+		<ui:include src="/faces/contact/contactEdit.xhtml" />
+	
 		<f:metadata>
 			<f:viewParam name="id" value="#{contactBean.id}" />
 			<f:viewAction action="#{contactBean.init}" />

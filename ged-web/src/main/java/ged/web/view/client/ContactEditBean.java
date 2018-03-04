@@ -1,10 +1,13 @@
 package ged.web.view.client;
 
-import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.omnifaces.util.Ajax;
+import org.primefaces.PrimeFaces;
+
+import ged.ejb.client.Client;
 import ged.ejb.client.Contact;
 import ged.ejb.client.ContactService;
 import ged.web.core.view.AbstractBean;
@@ -20,25 +23,28 @@ public class ContactEditBean extends AbstractBean {
 	@Inject
 	private transient ContactService contactService;
 
-	private String returnPage;
+	private void buildContact(final Client client) {
+		this.contact = new Contact();
+		this.contact.setClient(client);
+		this.contact.setPhoneNumber(client.getPhoneNumber());
+	}
 
-	public String cancel() {
-		return this.returnPage;
+	public void clear() {
+		this.contact = null;
 	}
 
 	public Contact getContact() {
 		return this.contact;
 	}
 
-	@PostConstruct
-	public void init() {
-		this.contact = this.getFromFlash(Contact.class, "contact");
-		this.returnPage = this.getFromFlash(String.class, "returnPage");
+	public void openDialog(final Client client) {
+		buildContact(client);
+		PrimeFaces.current().executeScript("PF('newContactDlg').show()");
+		Ajax.update("newContactForm");
 	}
 
-	public String insert() {
+	public void save() {
 		this.contactService.insert(this.contact);
-		return this.returnPage;
 	}
 
 	public void setContact(final Contact contact) {
@@ -48,10 +54,4 @@ public class ContactEditBean extends AbstractBean {
 	public void setContactService(final ContactService contactService) {
 		this.contactService = contactService;
 	}
-
-	public String update() {
-		this.contactService.update(this.contact);
-		return this.returnPage;
-	}
-
 }

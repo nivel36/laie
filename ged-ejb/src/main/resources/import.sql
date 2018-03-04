@@ -105,4 +105,3 @@ insert into CANDIDATE( id, version, name, surname, phoneNumber, email, city, cou
 insert into CANDIDATE( id, version, name, surname, phoneNumber, email, city, country, door, number, state, storey, street, zipCode, jobProfile, curriculumId, ownerid, deleted) values ( 206, 0, 'Antonio', 'García Collado','685555281', 'agc2@gmail.com', 'Pontevedra', 'España','2','85', 'Pontevedra', 'Principal', 'Luguense', '01809', 'Programador Junior', NULL, 901, false);
 
 ALTER SEQUENCE HIBERNATE_SEQUENCE RESTART with 1000;
-

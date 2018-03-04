@@ -15,6 +15,8 @@
 			<f:viewAction action="#{clientBean.init}" />
 		</f:metadata>
 
+		<ui:include src="/faces/client/contactEdit.xhtml" />
+
 		<div class="ui-g">
 			<div class="ui-g-12 ui-xl-6">
 				<h:form id="form">
@@ -115,7 +117,8 @@
 						<div class="ui-g">
 							<div class="ui-g-12">
 								<div class="form-action-primary">
-									<p:commandButton value="#{i18n['action.add']}" process="@this" action="#{clientBean.newContact}" />
+									<p:commandButton value="#{i18n['action.add']}" process="@this"
+										action="#{contactEditBean.openDialog(clientBean.client)}" />
 								</div>
 							</div>
 						</div>
