@@ -53,35 +53,35 @@ body .ui-icon {
 }
 
 .ui-icon-arrow-1-n:before {
-	content: "";
+	content: "\f106";
 }
 
 .ui-icon-arrowstop-1-n:before {
-	content: "";
+	content: "\f102";
 }
 
 .ui-icon-arrow-1-s:before {
-	content: "";
+	content: "\f107";
 }
 
 .ui-icon-arrowstop-1-s:before {
-	content: "";
+	content: "\f103";
 }
 
 .ui-icon-arrow-1-w:before {
-	content: "";
+	content: "\f104";
 }
 
 .ui-icon-arrowstop-1-w:before {
-	content: "";
+	content: "\f100";
 }
 
 .ui-icon-arrow-1-e:before {
-	content: "";
+	content: "\f105";
 }
 
 .ui-icon-arrowstop-1-e:before {
-	content: "";
+	content: "\f101";
 }
 
 .ui-icon-arrowthick-1-s:before {
@@ -4695,4 +4695,49 @@ body .ui-tabs-panels .ui-tabs-panel {
 .ui-selected {
 	background-color: #ffc107;
 	color: black;
+}
+
+body .ui-picklist-list {
+	border: 1px solid #BDBDBD;
+}
+
+body .ui-picklist-buttons .ui-button {
+	margin-bottom: 2px;	
+}
+
+body .ui-picklist-buttons .ui-icon-arrow-1-w:before, body .ui-picklist-buttons .ui-icon-arrow-1-e:before {
+	padding-left: 5px;
+}
+
+body .ui-picklist-buttons .ui-icon-arrowstop-1-w:before {
+	padding-left: 3px;
+}
+
+body .ui-picklist-buttons .ui-icon-arrowstop-1-e:before {
+	padding-left: 4px;
+}
+
+body .ui-state-highlight {
+	background-color: #5b9bd1;
+	color: white;
+}
+
+body .ui-picklist .ui-picklist-list li {
+	padding: 4px 5px;
+}
+
+body .ui-picklist-buttons .ui-icon-arrow-1-n:before {
+	padding-left: 3px;
+}
+
+body .ui-picklist-buttons .ui-icon-arrowstop-1-n:before {
+	padding-left: 3px;
+}
+
+body .ui-picklist-buttons .ui-icon-arrow-1-s:before {
+	padding-left: 3px;
+}
+
+body .ui-picklist-buttons .ui-icon-arrowstop-1-s:before {
+	padding-left: 3px;
 }

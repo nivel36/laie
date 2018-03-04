@@ -18,7 +18,8 @@ public enum Page {
 	USER("/faces/user/user"),
 	USER_SEARCH("/faces/user/userSearch"),
 	REPORT("/faces/report/reportSearch"),
-	MAINTENANCE("/faces/maintenance/maintenanceSearch");
+	MAINTENANCE("/faces/maintenance/maintenanceSearch"),
+	ISABEL("/faces/isabel/isabel");
 
 	private String url;
 

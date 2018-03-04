@@ -8,6 +8,7 @@ import static ged.web.core.util.Page.JOB_OFFER_SEARCH;
 import static ged.web.core.util.Page.MAINTENANCE;
 import static ged.web.core.util.Page.REPORT;
 import static ged.web.core.util.Page.USER_SEARCH;
+import static ged.web.core.util.Page.ISABEL;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
@@ -37,12 +38,16 @@ public class MenuBean extends AbstractBean {
 	public String gotoMaintenances() {
 		return to(MAINTENANCE).toUrl();
 	}
-
+	
 	public String gotoReports() {
 		return to(REPORT).toUrl();
 	}
 
 	public String gotoUsers() {
 		return to(USER_SEARCH).toUrl();
+	}
+	
+	public String gotoIsabel() {
+		return to(ISABEL).toUrl();
 	}
 }
