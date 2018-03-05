@@ -10,6 +10,9 @@ import org.primefaces.PrimeFaces;
 import ged.ejb.client.Client;
 import ged.ejb.client.Contact;
 import ged.ejb.client.ContactService;
+import ged.ejb.core.util.Parameters;
+import ged.web.core.util.Navigate;
+import ged.web.core.util.Page;
 import ged.web.core.view.AbstractBean;
 
 @Named
@@ -45,6 +48,7 @@ public class ContactEditBean extends AbstractBean {
 
 	public void save() {
 		this.contactService.insert(this.contact);
+		Navigate.to(Page.CLIENT).withParams(Parameters.map("id", this.contact.getClient().getId())).doGet();
 	}
 
 	public void setContact(final Contact contact) {
