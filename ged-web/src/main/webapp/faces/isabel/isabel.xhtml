@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://legion.com/i18n"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/templates/default.xhtml">
+
+	<ui:define name="title">
+		<title>Isabel</title>
+	</ui:define>
+
+	<ui:param name="selectedMenu" value="isabel" />
+
+	<ui:define name="content">
+		<div class="ui-g">
+			<div class="ui-g-12 ui-md-4">
+				<p:panel header="Exportacion">
+					<h:form>
+						<div class="ui-g">
+							<div class="ui-g-12">
+								<p:pickList value="#{isabelBean.campos}" var="item" itemLabel="#{item}" itemValue="#{item}" showTargetControls="true" />
+							</div>
+						</div>
+						<div class="ui-g">
+							<div class="ui-g-12">
+								<div class="form-action-primary">
+									<p:commandButton value="Guardar" />
+								</div>
+							</div>
+						</div>
+					</h:form>
+				</p:panel>
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>
