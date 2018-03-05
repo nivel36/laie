@@ -4,9 +4,6 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.omnifaces.util.Ajax;
-import org.primefaces.PrimeFaces;
-
 import ged.ejb.client.Client;
 import ged.ejb.client.Contact;
 import ged.ejb.client.ContactService;
@@ -26,6 +23,8 @@ public class ContactEditBean extends AbstractBean {
 	@Inject
 	private transient ContactService contactService;
 
+	private boolean showDialog;
+
 	private void buildContact(final Client client) {
 		this.contact = new Contact();
 		this.contact.setClient(client);
@@ -40,10 +39,17 @@ public class ContactEditBean extends AbstractBean {
 		return this.contact;
 	}
 
+	public boolean isShowDialog() {
+		return this.showDialog;
+	}
+
 	public void openDialog(final Client client) {
 		buildContact(client);
-		PrimeFaces.current().executeScript("PF('newContactDlg').show()");
-		Ajax.update("newContactForm");
+		this.showDialog = true;
+	}
+
+	public void cancel() {
+		this.showDialog = false;
 	}
 
 	public void save() {
@@ -57,5 +63,9 @@ public class ContactEditBean extends AbstractBean {
 
 	public void setContactService(final ContactService contactService) {
 		this.contactService = contactService;
+	}
+
+	public void setShowDialog(final boolean showDialog) {
+		this.showDialog = showDialog;
 	}
 }

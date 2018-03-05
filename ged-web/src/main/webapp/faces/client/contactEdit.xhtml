@@ -4,12 +4,9 @@
 	xmlns:p="http://primefaces.org/ui">
 
 	<p:dialog modal="true" widgetVar="newContactDlg" resizable="false" responsive="true"
-		header="#{i18n['contact.new_contact']}" id="newContactDlg">
-
-		<p:ajax event="close" listener="#{contactEditBean.clear}" update="newContactForm" resetValues="true" />
+		header="#{i18n['contact.new_contact']}" id="newContactDlg" closable="false" visible="#{contactEditBean.showDialog}">
 
 		<h:form id="newContactForm">
-
 			<div class="ui-g">
 				<div class="ui-md-12 ui-lg-6 ui-xl-4">
 					<div class="form-group">
@@ -44,8 +41,8 @@
 				<div class="ui-g-12">
 					<div class="form-action-primary">
 						<p:commandButton value="#{i18n['action.save']}" action="#{contactEditBean.save}" update="newContactForm growl" />
-						<p:commandButton styleClass="btn-gray" value="#{i18n['action.cancel']}" onclick="PF('newContactDlg').hide();"
-							process="@this" />
+						<p:commandButton styleClass="btn-gray" value="#{i18n['action.cancel']}" action="#{contactEditBean.cancel}"
+							process="@this" update="newContactDlg" />
 					</div>
 				</div>
 			</div>
