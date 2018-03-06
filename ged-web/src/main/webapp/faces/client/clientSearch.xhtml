@@ -11,7 +11,7 @@
 
 	<ui:define name="content">
 
-		<ui:include src="/faces/client/clientEdit.xhtml" />
+		<ui:include src="/faces/client/clientDialog.xhtml" />
 
 		<div class="ui-g">
 			<div class="ui-g-12">
@@ -20,7 +20,7 @@
 						<div class="ui-g">
 							<div class="ui-g-12">
 								<div class="pull-right">
-									<p:commandButton value="#{i18n['action.new']}" onclick="PF('newClientDlg').show();" />
+									<p:commandButton value="#{i18n['action.new']}" action="#{clientDialogBean.openDialog}" update="newClientForm" />
 									<p:commandButton value="#{i18n['action.import']}" styleClass="btn-primary" action="#{clientSearchBean.clean}" />
 								</div>
 							</div>

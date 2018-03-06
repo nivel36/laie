@@ -10,12 +10,12 @@ import javax.inject.Named;
 import ged.ejb.client.Client;
 import ged.ejb.client.ClientService;
 import ged.ejb.core.Address;
-import ged.web.core.util.Navigate;
-import ged.web.core.view.AbstractBean;
+import static ged.web.core.util.Navigate.*;
+import ged.web.core.view.AbstractDialogBean;
 
 @Named
 @ViewScoped
-public class ClientEditBean extends AbstractBean {
+public class ClientDialogBean extends AbstractDialogBean {
 
 	private static final long serialVersionUID = 1412905869664752048L;
 
@@ -31,7 +31,8 @@ public class ClientEditBean extends AbstractBean {
 		return newClient;
 	}
 
-	public void clear() {
+	@Override
+	protected void dispose() {
 		this.client = null;
 	}
 
@@ -39,12 +40,13 @@ public class ClientEditBean extends AbstractBean {
 		return this.client;
 	}
 
-	public void init() {
+	@Override
+	protected void init() {
 		this.client = buildNewClient();
 	}
 
 	public void save() {
 		this.clientService.insert(this.client);
-		Navigate.to(CLIENT).withParams(map("id", this.client.getId())).doGet();
+		to(CLIENT).withParams(map("id", this.client.getId())).doGet();
 	}
 }
