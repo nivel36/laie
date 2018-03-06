@@ -15,6 +15,7 @@
 			<f:viewAction action="#{clientBean.init}" />
 		</f:metadata>
 
+		<ui:include src="/faces/jobOffer/jobOfferDialog.xhtml" />
 		<ui:include src="/faces/client/contactEdit.xhtml" />
 
 		<div class="ui-g">
@@ -151,7 +152,10 @@
 						<div class="ui-g">
 							<div class="ui-g-12">
 								<div class="form-action-primary">
-									<p:commandButton value="#{i18n['action.add']}" action="#{clientBean.newJobOffer}" process="@this" />
+									<p:commandButton value="#{i18n['action.add']}" actionListener="#{jobOfferDialogBean.openDialog}"
+										update="newJobOfferForm">
+										<f:attribute name="client" value="#{clientBean.client}" />
+									</p:commandButton>
 								</div>
 							</div>
 						</div>
