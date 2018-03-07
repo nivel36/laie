@@ -12,10 +12,12 @@ import ged.ejb.client.Client;
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
 import ged.web.core.view.AbstractDialogBean;
+import ged.web.view.client.ClientSelecteable;
+import ged.web.view.client.SelectClientAction;
 
 @Named
 @ViewScoped
-public class JobOfferDialogBean extends AbstractDialogBean {
+public class JobOfferDialogBean extends AbstractDialogBean implements ClientSelecteable {
 
 	private static final long serialVersionUID = -4373329969104383876L;
 
@@ -23,6 +25,8 @@ public class JobOfferDialogBean extends AbstractDialogBean {
 
 	@Inject
 	private transient JobOfferService jobOfferService;
+
+	private transient final SelectClientAction selectClientCallback = new SelectClientAction(this);
 
 	@Override
 	protected void dispose() {
@@ -33,15 +37,21 @@ public class JobOfferDialogBean extends AbstractDialogBean {
 		return this.jobOffer;
 	}
 
+	public SelectClientAction getSelectClientCallback() {
+		return this.selectClientCallback;
+	}
+
 	@Override
 	protected void init() {
 		this.jobOffer = new JobOffer();
 		final Client client = (Client) getAttribute("client");
-		if (client == null) {
-			throw new IllegalStateException("Client can not be null");
-		}
 		this.jobOffer.setClient(client);
 		this.jobOffer.setOwner(this.sessionBean.getUser());
+	}
+
+	@Override
+	public void onClientSelect(final Client client) {
+		this.jobOffer.setClient(client);
 	}
 
 	public void save() {

@@ -5,24 +5,18 @@ import java.util.Objects;
 
 import ged.ejb.candidate.Candidate;
 import ged.web.core.ActionCallback;
-import ged.web.view.job.JobOfferViewBean;
 
 public final class SelectCandidatesAction implements ActionCallback<List<Candidate>> {
 
-	private final JobOfferViewBean parent;
+	private final CandidateSelecteable parent;
 
-	public SelectCandidatesAction(final JobOfferViewBean parent) {
-		super();
+	public SelectCandidatesAction(final CandidateSelecteable parent) {
 		Objects.requireNonNull(parent);
 		this.parent = parent;
 	}
 
 	@Override
 	public void doAction(final List<Candidate> o) {
-		getParent().onCandidatesSelect(o);
-	}
-
-	public JobOfferViewBean getParent() {
-		return this.parent;
+		this.parent.onCandidatesSelect(o);
 	}
 }

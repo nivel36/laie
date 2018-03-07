@@ -4564,6 +4564,7 @@ body .ui-button-icon-only .ui-icon.fa, body .ui-button-text-icon-left .ui-icon.f
 	{
 	width: 16px;
 	color: white;
+	margin-top: -8px;
 }
 
 body .ui-button.ui-state-disabled {

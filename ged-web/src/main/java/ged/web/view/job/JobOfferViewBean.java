@@ -23,11 +23,12 @@ import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
 import ged.ejb.user.User;
 import ged.web.core.view.AbstractBean;
+import ged.web.view.candidate.CandidateSelecteable;
 import ged.web.view.candidate.SelectCandidatesAction;
 
 @Named
 @ViewScoped
-public class JobOfferViewBean extends AbstractBean {
+public class JobOfferViewBean extends AbstractBean implements CandidateSelecteable {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
@@ -148,6 +149,7 @@ public class JobOfferViewBean extends AbstractBean {
 		return user.isAdmin() || user.isRecruiterAdmin();
 	}
 
+	@Override
 	public void onCandidatesSelect(final List<Candidate> selectedCandidates) {
 		for (final Candidate candidate : selectedCandidates) {
 			this.jobService.addJobCandidature(this.jobOffer, candidate);

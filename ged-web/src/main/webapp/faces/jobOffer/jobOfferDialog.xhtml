@@ -3,6 +3,8 @@
 	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://legion.com/i18n"
 	xmlns:p="http://primefaces.org/ui">
 
+	<ui:include src="/faces/client/clientSearchDialog.xhtml" />
+
 	<h:form id="newJobOfferForm">
 		<p:dialog modal="true" widgetVar="newClientDlg" resizable="false" responsive="true"
 			header="#{i18n['job.new_job_offer']}" id="newJobOfferDlg" closable="false" visible="#{jobOfferDialogBean.showDialog}">
@@ -10,15 +12,22 @@
 			<div class="ui-g">
 				<div class="ui-g-12 ui-md-6 ui-xl-4">
 					<div class="form-group">
-						<p:outputLabel for="name" value="#{i18n['job.name']}:" />
+						<p:outputLabel for="name" value="#{i18n['job.name']}" />
 						<p:inputText id="name" value="#{jobOfferDialogBean.jobOffer.name}" required="true" />
 					</div>
 					<h:message for="name" errorClass="error" />
 				</div>
 				<div class="ui-g-12 ui-md-6 ui-xl-4">
 					<div class="form-group">
-						<p:outputLabel for="client" value="#{i18n['job.client']}:" />
-						<p:inputText id="client" value="#{jobOfferDialogBean.jobOffer.client.name}" required="true" />
+						<p:outputLabel for="client" value="#{i18n['job.client']}" />
+					
+							<p:inputText id="client" value="#{jobOfferDialogBean.jobOffer.client.name}" required="true" />
+							<p:commandButton icon="fa fa-search" styleClass="green-button"
+								actionListener="#{clientSearchDialogBean.openDialog}" update="clientSearchDialogForm" process="@this">
+								<f:attribute name="updateField" value="newJobOfferForm:client" />
+								<f:attribute name="callback" value="#{jobOfferDialogBean.selectClientCallback}" />
+							</p:commandButton>
+					
 					</div>
 					<h:message for="client" errorClass="error" />
 				</div>
@@ -27,7 +36,7 @@
 			<div class="ui-g">
 				<div class="ui-g-12">
 					<div class="form-group">
-						<p:outputLabel for="description" value="#{i18n['job.description']}:" />
+						<p:outputLabel for="description" value="#{i18n['job.description']}" />
 						<p:inputTextarea id="description" value="#{jobOfferDialogBean.jobOffer.description}" />
 					</div>
 					<h:message for="description" errorClass="error" />
@@ -37,21 +46,21 @@
 			<div class="ui-g">
 				<div class="ui-g-12 ui-md-6 ui-xl-4">
 					<div class="form-group">
-						<p:outputLabel for="places" value="#{i18n['job.places']}:" />
+						<p:outputLabel for="places" value="#{i18n['job.places']}" />
 						<p:inputText id="places" value="#{jobOfferDialogBean.jobOffer.places}" />
 					</div>
 					<h:message for="places" errorClass="error" />
 				</div>
 				<div class="ui-g-12 ui-md-6 ui-xl-4">
 					<div class="form-group">
-						<p:outputLabel for="dateOpened" value="#{i18n['job.date_opened']}:" />
+						<p:outputLabel for="dateOpened" value="#{i18n['job.date_opened']}" />
 						<p:calendar id="dateOpened" value="#{jobOfferDialogBean.jobOffer.dateOpened}" />
 					</div>
 					<h:message for="dateOpened" errorClass="error" />
 				</div>
 				<div class="ui-g-12 ui-md-6 ui-xl-4">
 					<div class="form-group">
-						<p:outputLabel for="dateClosed" value="#{i18n['job.date_closed']}:" />
+						<p:outputLabel for="dateClosed" value="#{i18n['job.date_closed']}" />
 						<p:calendar id="dateClosed" value="#{jobOfferDialogBean.jobOffer.dateClosed}" />
 					</div>
 					<h:message for="dateClosed" errorClass="error" />
@@ -61,14 +70,14 @@
 			<div class="ui-g">
 				<div class="ui-g-12 ui-md-6 ui-xl-4">
 					<div class="form-group">
-						<p:outputLabel for="city" value="#{i18n['address.city']}:" />
+						<p:outputLabel for="city" value="#{i18n['address.city']}" />
 						<p:inputText id="city" value="#{jobOfferDialogBean.jobOffer.city}" required="true" />
 					</div>
 					<h:message for="city" errorClass="error" />
 				</div>
 				<div class="ui-g-12 ui-md-6 ui-xl-4">
 					<div class="form-group">
-						<p:outputLabel for=" state" value="#{i18n['address.state']}:" />
+						<p:outputLabel for=" state" value="#{i18n['address.state']}" />
 						<p:inputText id="state" value="#{jobOfferDialogBean.jobOffer.state}" required="true" />
 					</div>
 					<h:message for="state" errorClass="error" />
@@ -81,7 +90,7 @@
 						<p:commandButton styleClass="btn-primary" value="#{i18n['action.save']}" action="#{jobOfferDialogBean.save}"
 							update="@form growl" />
 						<p:commandButton value="#{i18n['action.cancel']}" action="#{jobOfferDialogBean.closeDialog}" immediate="true"
-							styleClass="btn-gray" />
+							styleClass="btn-gray" update="@form" />
 					</div>
 				</div>
 			</div>

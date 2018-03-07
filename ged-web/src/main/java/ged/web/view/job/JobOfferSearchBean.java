@@ -23,36 +23,19 @@ public class JobOfferSearchBean extends AbstractBean {
 
 	private static final long serialVersionUID = 8777365288968792501L;
 
-	private String clientName;
-
-	private String jobOfferName;
-
 	private List<JobOffer> jobOffers;
 
 	@Inject
 	private transient JobOfferService jobOfferService;
 
-	public void clean() {
-		logger.debug("Clean job offer search fields action performed");
-		cleanSearchFields();
-		search();
-	}
-
-	private void cleanSearchFields() {
-		this.jobOfferName = null;
-		this.clientName = null;
-	}
-
-	public String getClientName() {
-		return this.clientName;
-	}
-
-	public String getJobOfferName() {
-		return this.jobOfferName;
-	}
+	private String searchText;
 
 	public List<JobOffer> getJobOffers() {
 		return this.jobOffers;
+	}
+
+	public String getSearchText() {
+		return this.searchText;
 	}
 
 	@PostConstruct
@@ -61,26 +44,17 @@ public class JobOfferSearchBean extends AbstractBean {
 		search();
 	}
 
-	public String newJobOffer() {
-		logger.debug("New job offer action performed");
-		return "jobOfferEdit?faces-redirect=true";
-	}
-
 	public void search() {
 		logger.debug("Search job offer action performed");
-		this.jobOffers = this.jobOfferService.search(this.jobOfferName);
+		this.jobOffers = this.jobOfferService.search(this.searchText);
 		addWarningMessageIfMaxSearchResultsHaveBeenReached(this.jobOffers);
-	}
-
-	public void setClientName(final String clientName) {
-		this.clientName = clientName;
-	}
-
-	public void setJobOfferName(final String jobOfferName) {
-		this.jobOfferName = jobOfferName;
 	}
 
 	public void setJobOfferService(final JobOfferService jobOfferService) {
 		this.jobOfferService = jobOfferService;
+	}
+
+	public void setSearchText(final String searchText) {
+		this.searchText = searchText;
 	}
 }
