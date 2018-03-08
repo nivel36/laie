@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
-	template="/WEB-INF/templates/default.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
 		<title>#{i18n['job.job_offer']}</title>
@@ -12,7 +11,7 @@
 	<ui:define name="content">
 
 		<ui:include src="/faces/jobOffer/jobOfferDialog.xhtml" />
-		
+
 		<div class="ui-g">
 			<div class="ui-g-12">
 				<h:form id="form">
@@ -20,8 +19,7 @@
 						<div class="ui-g">
 							<div class="ui-g-12">
 								<div class="pull-right">
-									<p:commandButton value="#{i18n['action.new']}" actionListener="#{jobOfferDialogBean.openDialog}"
-										update="newJobOfferForm" />
+									<p:commandButton value="#{i18n['action.new']}" actionListener="#{jobOfferDialogBean.openDialog}" update="newJobOfferForm" />
 									<p:commandButton styleClass="btn-primary" value="#{i18n['action.import']}" />
 								</div>
 							</div>
@@ -30,16 +28,15 @@
 							<div class="ui-md-12 ui-lg-4">
 								<div class="ui-inputgroup">
 									<p:inputText id="searchText" value="#{jobOfferSearchBean.searchText}" />
-									<p:commandButton icon="fa fa-search" styleClass="green-button" action="#{jobOfferSearchBean.search}"
-										update="@form" process="searchPanel" />
+									<p:commandButton icon="fa fa-search" styleClass="green-button" action="#{jobOfferSearchBean.search}" update="@form" process="searchPanel" />
 								</div>
 							</div>
 						</div>
 						<div class="ui-g">
 							<div class="ui-g-12">
 
-								<p:dataTable var="jobOffer" value="#{jobOfferSearchBean.jobOffers}" emptyMessage="#{i18n['job.no_jobs_found']}"
-									reflow="true" paginator="true" paginatorPosition="bottom" rows="#{sessionBean.rowsPerPage}">
+								<p:dataTable var="jobOffer" value="#{jobOfferSearchBean.jobOffers}" emptyMessage="#{i18n['job.no_jobs_found']}" reflow="true" paginator="true"
+									paginatorPosition="bottom" rows="#{sessionBean.rowsPerPage}">
 
 									<p:column headerText="#{i18n['job.name']}" sortBy="#{jobOffer.name}">
 										<h:outputText value="#{jobOffer.name}" />
@@ -49,12 +46,12 @@
 									</p:column>
 									<p:column headerText="#{i18n['job.date_opened']}" sortBy="#{jobOffer.dateOpened}">
 										<h:outputText value="#{jobOffer.dateOpened}">
-											<f:convertDateTime pattern="MM / yyyy" />
+											<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
 										</h:outputText>
 									</p:column>
 									<p:column headerText="#{i18n['job.date_closed']}" sortBy="#{jobOffer.dateClosed}">
 										<h:outputText value="#{jobOffer.dateClosed}">
-											<f:convertDateTime pattern="MM / yyyy" />
+											<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
 										</h:outputText>
 									</p:column>
 									<p:column headerText="#{i18n['user.owner']}" sortBy="#{i18n['user.owner']}">

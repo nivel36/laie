@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://legion.com/i18n"
-	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/templates/default.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://legion.com/i18n" xmlns:p="http://primefaces.org/ui" template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
 		<title>#{i18n['job.job_offer']}</title>
@@ -27,16 +26,14 @@
 							<div class="ui-g-12 ui-lg-6 ui-xl-4">
 								<div class="form-group">
 									<p:outputLabel for="name" value="#{i18n['job.name']}:" />
-									<p:inputText id="name" value="#{jobOfferViewBean.jobOffer.name}" required="true"
-										readonly="#{not jobOfferViewBean.editable}" />
+									<p:inputText id="name" value="#{jobOfferViewBean.jobOffer.name}" required="true" readonly="#{not jobOfferViewBean.editable}" />
 								</div>
 								<h:message for="name" errorClass="error" />
 							</div>
 							<div class="ui-g-12 ui-lg-6 ui-xl-4">
 								<div class="form-group">
 									<p:outputLabel for="client" value="#{i18n['job.client']}:" />
-									<p:inputText id="client" value="#{jobOfferViewBean.jobOffer.client.name}" required="true"
-										readonly="#{not jobOfferViewBean.editable}">
+									<p:inputText id="client" value="#{jobOfferViewBean.jobOffer.client.name}" required="true" readonly="#{not jobOfferViewBean.editable}">
 										<f:ajax event="blur" listener="#{jobOfferViewBean.clientChangedListener}" execute="@this" render="cif_wrapper" />
 									</p:inputText>
 								</div>
@@ -46,8 +43,7 @@
 								<h:panelGroup layout="block" id="cif_wrapper">
 									<h:panelGroup layout="block" class="form-group" rendered="#{jobOfferViewBean.newClient}">
 										<p:outputLabel for="cif" value="#{i18n['job.cif']}:" />
-										<p:inputText id="cif" value="#{jobOfferViewBean.jobOffer.client.cif}" required="true"
-											readonly="#{not jobOfferViewBean.editable}" />
+										<p:inputText id="cif" value="#{jobOfferViewBean.jobOffer.client.cif}" required="true" readonly="#{not jobOfferViewBean.editable}" />
 									</h:panelGroup>
 									<h:message for="cif" errorClass="error" />
 								</h:panelGroup>
@@ -57,24 +53,27 @@
 							<div class="ui-g-12 ui-lg-6 ui-xl-4">
 								<div class="form-group">
 									<p:outputLabel for="places" value="#{i18n['job.places']}:" />
-									<p:inputText id="places" value="#{jobOfferViewBean.jobOffer.places}"
-										readonly="#{not jobOfferViewBean.editable}" />
+									<p:inputText id="places" value="#{jobOfferViewBean.jobOffer.places}" readonly="#{not jobOfferViewBean.editable}" />
 								</div>
 								<h:message for="places" errorClass="error" />
 							</div>
 							<div class="ui-g-12 ui-lg-6 ui-xl-4">
 								<div class="form-group">
 									<p:outputLabel for="dateOpened" value="#{i18n['job.date_opened']}:" />
-									<p:calendar id="dateOpened" value="#{jobOfferViewBean.jobOffer.dateOpened}" required="true"
-										readonly="#{not jobOfferViewBean.editable}" />
+									<p:calendar id="dateOpened" value="#{jobOfferViewBean.jobOffer.dateOpened}" required="true" readonly="#{not jobOfferViewBean.editable}"
+										pattern="dd/MM/yyyy">
+										<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
+									</p:calendar>
 								</div>
 								<h:message for="dateOpened" errorClass="error" />
 							</div>
 							<div class="ui-g-12 ui-lg-6 ui-xl-4">
 								<div class="form-group">
 									<p:outputLabel for="dateClosed" value="#{i18n['job.date_closed']}:" />
-									<p:calendar id="dateClosed" value="#{jobOfferViewBean.jobOffer.dateClosed}" required="true"
-										readonly="#{not jobOfferViewBean.editable}" />
+									<p:calendar id="dateClosed" value="#{jobOfferViewBean.jobOffer.dateClosed}" required="true" readonly="#{not jobOfferViewBean.editable}"
+										pattern="dd/MM/yyyy">
+										<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
+									</p:calendar>
 								</div>
 								<h:message for="dateClosed" errorClass="error" />
 							</div>
@@ -97,8 +96,7 @@
 							<div class="ui-g-12">
 								<div class="form-group">
 									<p:outputLabel for="description" value="#{i18n['job.description']}:" />
-									<p:inputTextarea id="description" value="#{jobOfferViewBean.jobOffer.description}"
-										readonly="#{not jobOfferViewBean.editable}" />
+									<p:inputTextarea id="description" value="#{jobOfferViewBean.jobOffer.description}" readonly="#{not jobOfferViewBean.editable}" />
 								</div>
 								<h:message for="description" errorClass="error" />
 							</div>
@@ -108,13 +106,11 @@
 							<div class="ui-g-12">
 								<div class="form-action-primary">
 									<p:commandButton value="#{i18n['action.edit']}" action="#{jobOfferViewBean.edit}" immediate="true"
-										rendered="#{not jobOfferViewBean.editable and jobOfferViewBean.userHasPermissionToEditJobOffer}"
-										update="jobOfferForm" />
+										rendered="#{not jobOfferViewBean.editable and jobOfferViewBean.userHasPermissionToEditJobOffer}" update="jobOfferForm" />
 									<p:commandButton value="#{i18n['action.save']}" action="#{jobOfferViewBean.save}" update="jobOfferForm"
 										rendered="#{jobOfferViewBean.editable and jobOfferViewBean.userHasPermissionToEditJobOffer}" />
-									<p:commandButton styleClass="btn-gray" value="#{i18n['action.cancel']}" action="#{jobOfferViewBean.cancel}"
-										immediate="true" rendered="#{jobOfferViewBean.editable and jobOfferViewBean.userHasPermissionToEditJobOffer}"
-										update="jobOfferForm" />
+									<p:commandButton styleClass="btn-gray" value="#{i18n['action.cancel']}" action="#{jobOfferViewBean.cancel}" immediate="true"
+										rendered="#{jobOfferViewBean.editable and jobOfferViewBean.userHasPermissionToEditJobOffer}" update="jobOfferForm" />
 								</div>
 							</div>
 						</div>
@@ -126,9 +122,8 @@
 					<h:form id="candidatesForm">
 						<div class="ui-g">
 							<div class="ui-g-12">
-								<p:dataTable var="candidate" value="#{jobOfferViewBean.candidates}"
-									emptyMessage="#{i18n['job_meeting.no_candidates']}" reflow="true" paginator="true" paginatorPosition="bottom"
-									rows="#{sessionBean.rowsPerPage}">
+								<p:dataTable var="candidate" value="#{jobOfferViewBean.candidates}" emptyMessage="#{i18n['job_meeting.no_candidates']}" reflow="true" paginator="true"
+									paginatorPosition="bottom" rows="#{sessionBean.rowsPerPage}">
 
 									<p:column headerText="#{i18n['candidate.name']}" sortBy="#{candidate.fullName}">
 										<h:outputText value="#{candidate.fullName}" />
@@ -144,7 +139,8 @@
 						<div class="ui-g">
 							<div class="ui-g-12">
 								<div class="form-action-primary">
-									<p:commandButton value="#{i18n['action.add']}" action="#{candidateSelectBean.action(jobOfferViewBean.miCallback,'candidatesForm')}" onclick="PF('candidateSelectDlg').show();" />
+									<p:commandButton value="#{i18n['action.add']}" action="#{candidateSelectBean.action(jobOfferViewBean.miCallback,'candidatesForm')}"
+										onclick="PF('candidateSelectDlg').show();" />
 								</div>
 							</div>
 						</div>
@@ -175,6 +171,6 @@
 				</p:panel>
 			</div>
 		</div>
-		
+
 	</ui:define>
 </ui:composition>
