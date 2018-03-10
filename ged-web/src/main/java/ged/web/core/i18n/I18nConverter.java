@@ -8,26 +8,26 @@ import javax.faces.convert.FacesConverter;
 import ged.web.core.view.SessionBean;
 
 @FacesConverter(value = "i18nConverter")
-public class I18nConverter implements Converter {
+public class I18nConverter implements Converter<String> {
 
 	@Override
-	public Object getAsObject(FacesContext context, UIComponent component, String value) {
-		return null;
+	public String getAsObject(final FacesContext context, final UIComponent component, final String value) {
+		return value;
 	}
 
 	@Override
-	public String getAsString(FacesContext context, UIComponent component, Object value) {
-		String language = getSessionBean().getUser().getLanguage();
-		return getI18nBeanBean().getI18nText((String) value, language);
+	public String getAsString(final FacesContext context, final UIComponent component, final String value) {
+		final String language = this.getSessionBean().getUser().getLanguage();
+		return this.getI18nBeanBean().getI18nText(value, language);
 	}
 
 	protected I18nBean getI18nBeanBean() {
-		FacesContext context = FacesContext.getCurrentInstance();
+		final FacesContext context = FacesContext.getCurrentInstance();
 		return context.getApplication().evaluateExpressionGet(context, "#{i18nBean}", I18nBean.class);
 	}
 
 	protected SessionBean getSessionBean() {
-		FacesContext context = FacesContext.getCurrentInstance();
+		final FacesContext context = FacesContext.getCurrentInstance();
 		return context.getApplication().evaluateExpressionGet(context, "#{sessionBean}", SessionBean.class);
 	}
 }

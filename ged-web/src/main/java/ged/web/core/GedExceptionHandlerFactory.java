@@ -5,14 +5,12 @@ import javax.faces.context.ExceptionHandlerFactory;
 
 public class GedExceptionHandlerFactory extends ExceptionHandlerFactory {
 
-	private final ExceptionHandlerFactory parent;
-
 	public GedExceptionHandlerFactory(final ExceptionHandlerFactory parent) {
-		this.parent = parent;
+		super(parent);
 	}
 
 	@Override
 	public ExceptionHandler getExceptionHandler() {
-		return new GedExceptionHandler(this.parent.getExceptionHandler());
+		return new GedExceptionHandler(this.getWrapped().getExceptionHandler());
 	}
 }

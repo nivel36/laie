@@ -9,17 +9,17 @@ import javax.faces.convert.Converter;
 
 import ged.ejb.core.maintenance.AbstractEnumEntity;
 
-public abstract class AbstractLookupEntityConverter<T extends AbstractEnumEntity> implements Converter {
+public abstract class AbstractLookupEntityConverter<T extends AbstractEnumEntity> implements Converter<T> {
 
 	protected ApplicationBean getAppBean() {
-		FacesContext context = FacesContext.getCurrentInstance();
+		final FacesContext context = FacesContext.getCurrentInstance();
 		return context.getApplication().evaluateExpressionGet(context, "#{applicationBean}", ApplicationBean.class);
 	}
 
 	@Override
-	public Object getAsObject(FacesContext context, UIComponent component, String value) {
-		List<T> elements = getListElements();
-		for (T element : elements) {
+	public T getAsObject(final FacesContext context, final UIComponent component, final String value) {
+		final List<T> elements = this.getListElements();
+		for (final T element : elements) {
 			if (element.getName().equals(value)) {
 				return element;
 			}
@@ -28,7 +28,7 @@ public abstract class AbstractLookupEntityConverter<T extends AbstractEnumEntity
 	}
 
 	@Override
-	public String getAsString(FacesContext context, UIComponent component, Object value) {
+	public String getAsString(final FacesContext context, final UIComponent component, final T value) {
 		return value.toString();
 	}
 

@@ -16,7 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @FacesValidator("ged.web.view.SearchFieldValidator")
-public class SearchFieldValidator implements Validator {
+public class SearchFieldValidator implements Validator<String> {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
@@ -29,18 +29,16 @@ public class SearchFieldValidator implements Validator {
 	}
 
 	protected String translate(final String message) {
-		final ResourceBundle bundle = getResourceBundle("ged.i18n");
+		final ResourceBundle bundle = this.getResourceBundle("ged.i18n");
 		return bundle.getString(message);
 	}
 
 	@Override
-	public void validate(final FacesContext context, final UIComponent component, final Object value) {
-		final String searchValue = (String) value;
-		if (searchValue != null && searchValue.length() < 3) {
+	public void validate(final FacesContext context, final UIComponent component, final String value) {
+		if ((value != null) && (value.length() < 3)) {
 			logger.warn("Search value is too short");
-			final String translatedMessage = translate("error.search.camp_too_short");
-			final FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, translatedMessage,
-					translatedMessage);
+			final String translatedMessage = this.translate("error.search.camp_too_short");
+			final FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, translatedMessage, translatedMessage);
 			throw new ValidatorException(message);
 		}
 	}

@@ -12,7 +12,7 @@ import ged.ejb.user.role.Role;
 import ged.web.core.view.ApplicationBean;
 
 @FacesConverter(forClass = Role.class)
-public class RoleConverter implements Converter {
+public class RoleConverter implements Converter<Role> {
 
 	protected ApplicationBean getAppBean() {
 		final FacesContext context = FacesContext.getCurrentInstance();
@@ -20,8 +20,8 @@ public class RoleConverter implements Converter {
 	}
 
 	@Override
-	public Object getAsObject(final FacesContext context, final UIComponent component, final String value) {
-		final List<Role> roles = getAppBean().getRoles();
+	public Role getAsObject(final FacesContext context, final UIComponent component, final String value) {
+		final List<Role> roles = this.getAppBean().getRoles();
 		for (final Role role : roles) {
 			if (role.getName().equals(value)) {
 				return role;
@@ -31,8 +31,7 @@ public class RoleConverter implements Converter {
 	}
 
 	@Override
-	public String getAsString(final FacesContext context, final UIComponent component, final Object value) {
-		final Role role = (Role) value;
-		return role.getName();
+	public String getAsString(final FacesContext context, final UIComponent component, final Role value) {
+		return value.getName();
 	}
 }

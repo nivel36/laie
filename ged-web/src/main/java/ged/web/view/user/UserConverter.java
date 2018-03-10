@@ -1,6 +1,7 @@
 package ged.web.view.user;
 
 import java.util.List;
+
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -11,14 +12,14 @@ import ged.ejb.user.User;
 import ged.ejb.user.UserService;
 
 @FacesConverter(forClass = User.class)
-public class UserConverter implements Converter {
+public class UserConverter implements Converter<User> {
 
 	@Inject
 	private UserService userService;
 
 	@Override
-	public Object getAsObject(final FacesContext context, final UIComponent component, final String value) {
-		if (value == null || value.trim().equals("")) {
+	public User getAsObject(final FacesContext context, final UIComponent component, final String value) {
+		if ((value == null) || value.trim().equals("")) {
 			return null;
 		}
 		final List<User> users = this.userService.search(value);
@@ -31,8 +32,7 @@ public class UserConverter implements Converter {
 	}
 
 	@Override
-	public String getAsString(final FacesContext context, final UIComponent component, final Object value) {
-		final User user = (User) value;
-		return user.getFullName();
+	public String getAsString(final FacesContext context, final UIComponent component, final User value) {
+		return value.getFullName();
 	}
 }

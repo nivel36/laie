@@ -24,15 +24,13 @@ public class GedExceptionHandler extends ExceptionHandlerWrapper {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
-	private final ExceptionHandler wrapped;
-
 	public GedExceptionHandler(final ExceptionHandler wrapped) {
-		this.wrapped = wrapped;
+		super(wrapped);
 	}
 
 	private ExceptionQueuedEvent getRootException() {
 		ExceptionQueuedEvent lastEvent = null;
-		final Iterator<ExceptionQueuedEvent> iterator = getUnhandledExceptionQueuedEvents().iterator();
+		final Iterator<ExceptionQueuedEvent> iterator = this.getUnhandledExceptionQueuedEvents().iterator();
 		while (iterator.hasNext()) {
 			lastEvent = iterator.next();
 			iterator.remove();
@@ -41,20 +39,15 @@ public class GedExceptionHandler extends ExceptionHandlerWrapper {
 	}
 
 	@Override
-	public ExceptionHandler getWrapped() {
-		return this.wrapped;
-	}
-
-	@Override
 	public void handle() {
-		final ExceptionQueuedEvent event = getRootException();
+		final ExceptionQueuedEvent event = this.getRootException();
 		if (event != null) {
 			final ExceptionQueuedEventContext context = (ExceptionQueuedEventContext) event.getSource();
 			final Throwable throwable = context.getException();
 			logger.debug("Handling exception", throwable);
 			this.handle(throwable);
 		}
-		getWrapped().handle();
+		this.getWrapped().handle();
 	}
 
 	private void handle(final Throwable exception) {
@@ -62,16 +55,21 @@ public class GedExceptionHandler extends ExceptionHandlerWrapper {
 			final Throwable cause = exception.getCause();
 			if (cause != null) {
 				this.handle(exception.getCause());
-			} else {
+			}
+			else {
 				Message.addError("message.title.unexpected_error", exception.getLocalizedMessage());
 			}
-		} else if (exception instanceof EJBException) {
+		}
+		else if (exception instanceof EJBException) {
 			this.handle(exception.getCause());
-		} else if (exception instanceof ViewExpiredException) {
+		}
+		else if (exception instanceof ViewExpiredException) {
 			to(LOGIN).doPost();
-		} else if (exception instanceof OptimisticLockException) {
+		}
+		else if (exception instanceof OptimisticLockException) {
 			Message.addError("warning.optimistick_lock.message", "warning.optimistick_lock.message");
-		} else {
+		}
+		else {
 			Message.addError("message.title.unexpected_error", exception.getLocalizedMessage());
 		}
 	}

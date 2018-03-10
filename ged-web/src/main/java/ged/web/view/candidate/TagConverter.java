@@ -12,18 +12,18 @@ import ged.ejb.candidate.CandidateService;
 import ged.ejb.core.tag.Tag;
 
 @FacesConverter(forClass = Tag.class)
-public class TagConverter implements Converter {
+public class TagConverter implements Converter<Tag> {
 
 	@Inject
 	private CandidateService candidateService;
 
 	@Override
-	public Object getAsObject(final FacesContext context, final UIComponent component, final String value) {
+	public Tag getAsObject(final FacesContext context, final UIComponent component, final String value) {
 		if (value == null) {
 			return null;
 		}
-		List<Tag> tags = candidateService.findAllTags();
-		for (Tag tag : tags) {
+		final List<Tag> tags = this.candidateService.findAllTags();
+		for (final Tag tag : tags) {
 			if (tag.getLabel().equals(value)) {
 				return tag;
 			}
@@ -34,11 +34,10 @@ public class TagConverter implements Converter {
 	}
 
 	@Override
-	public String getAsString(final FacesContext context, final UIComponent component, final Object value) {
+	public String getAsString(final FacesContext context, final UIComponent component, final Tag value) {
 		if (value == null) {
 			return null;
 		}
-		final Tag tag = (Tag) value;
-		return tag.getLabel();
+		return value.getLabel();
 	}
 }
