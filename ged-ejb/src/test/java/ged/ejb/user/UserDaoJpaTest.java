@@ -3,7 +3,7 @@ package ged.ejb.user;
 import static ged.ejb.core.util.Parameters.map;
 import static org.mockito.Mockito.when;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,24 +39,21 @@ public class UserDaoJpaTest {
 
 	@Test
 	public void emailExistTest() {
-		when(this.persistenceFacade.findByQuery(Boolean.class, "User.emailExists", map("email", "aaron@test.com")))
-				.thenReturn(Boolean.TRUE);
+		when(this.persistenceFacade.findByQuery(Boolean.class, "User.emailExists", map("email", "aaron@test.com"))).thenReturn(Boolean.TRUE);
 		final boolean result = this.userDaoJpa.emailExist("aaron@test.com");
 		Assert.assertTrue(result);
 	}
 
 	@Test
 	public void existMoreThanOneAdminTest() {
-		when(this.persistenceFacade.findByQuery(Boolean.class, "User.existsMoreThanOneAdmin", null))
-				.thenReturn(Boolean.TRUE);
+		when(this.persistenceFacade.findByQuery(Boolean.class, "User.existsMoreThanOneAdmin", null)).thenReturn(Boolean.TRUE);
 		final boolean result = this.userDaoJpa.existMoreThanOneAdmin();
 		Assert.assertTrue(result);
 	}
 
 	@Test
 	public void findAllTest() {
-		when(this.persistenceFacade.findByQuery(User.class, "User.findAll", null, 0, 0))
-				.thenReturn(new ArrayList<User>());
+		when(this.persistenceFacade.findByQuery(User.class, "User.findAll", null, 0, 0)).thenReturn(new ArrayList<User>());
 		final List<User> users = this.userDaoJpa.findAll();
 		Assert.assertEquals(0, users.size());
 	}
@@ -76,8 +73,7 @@ public class UserDaoJpaTest {
 		subordinateUser.setManager(user);
 		final List<User> subordinateUsers = new ArrayList<>();
 		subordinateUsers.add(subordinateUser);
-		when(this.persistenceFacade.findByQuery(User.class, "User.findSubordinateUsers", map("id", 1L), 0, 0))
-				.thenReturn(subordinateUsers);
+		when(this.persistenceFacade.findByQuery(User.class, "User.findSubordinateUsers", map("id", 1L), 0, 0)).thenReturn(subordinateUsers);
 		final List<User> subordinateUsersFromDataBase = this.userDaoJpa.findSubordinateUsers(user);
 		Assert.assertEquals(1, subordinateUsersFromDataBase.size());
 	}
@@ -86,8 +82,7 @@ public class UserDaoJpaTest {
 	public void findSubordinateUsersWithoutSubordinatesTest() {
 		final User user = new User();
 		user.setId(1L);
-		when(this.persistenceFacade.findByQuery(User.class, "User.findSubordinateUsers", map("id", 1L), 0, 0))
-				.thenThrow(new NoResultException());
+		when(this.persistenceFacade.findByQuery(User.class, "User.findSubordinateUsers", map("id", 1L), 0, 0)).thenThrow(new NoResultException());
 		final List<User> subordinateUsersFromDataBases = this.userDaoJpa.findSubordinateUsers(user);
 		Assert.assertEquals(0, subordinateUsersFromDataBases.size());
 	}
@@ -102,26 +97,23 @@ public class UserDaoJpaTest {
 	public void findUserByEmailTest() {
 		final User user = new User();
 		user.setEmail("aaron@test.com");
-		when(this.persistenceFacade.findByQuery(User.class, "User.findByEmail", map("email", "aaron@test.com")))
-				.thenReturn(user);
+		when(this.persistenceFacade.findByQuery(User.class, "User.findByEmail", map("email", "aaron@test.com"))).thenReturn(user);
 		final User userInDataBase = this.userDaoJpa.findUserByEmail("aaron@test.com");
 		Assert.assertEquals(user, userInDataBase);
 	}
 
 	@Test
 	public void findUserByNonExistingEmailTest() {
-		when(this.persistenceFacade.findByQuery(User.class, "User.findByEmail", map("email", "aaron@test.com")))
-				.thenThrow(new NoResultException());
+		when(this.persistenceFacade.findByQuery(User.class, "User.findByEmail", map("email", "aaron@test.com"))).thenThrow(new NoResultException());
 		final User userInDataBase = this.userDaoJpa.findUserByEmail("aaron@test.com");
 		Assert.assertNull(userInDataBase);
 	}
 
 	@Test
 	public void findUsersOfflineTest() {
-		final LocalDate start = LocalDate.now();
-		final LocalDate end = start.plusDays(1);
-		when(this.persistenceFacade.findByQuery(User.class, "User.findUsersOffline",
-				map("start", start).and("end", end), 0, 0)).thenReturn(new ArrayList<>());
+		final LocalDateTime start = LocalDateTime.now();
+		final LocalDateTime end = start.plusDays(1);
+		when(this.persistenceFacade.findByQuery(User.class, "User.findUsersOffline", map("start", start).and("end", end), 0, 0)).thenReturn(new ArrayList<>());
 		final List<User> usersInDataBase = this.userDaoJpa.findUsersOffline(start, end);
 		Assert.assertEquals(0, usersInDataBase.size());
 	}
@@ -129,10 +121,10 @@ public class UserDaoJpaTest {
 	@Test
 	public void findUsersOfflineWithNullDatesTest() {
 		this.thrown.expect(NullPointerException.class);
-		this.userDaoJpa.findUsersOffline(null, LocalDate.now());
+		this.userDaoJpa.findUsersOffline(null, LocalDateTime.now());
 
 		this.thrown.expect(NullPointerException.class);
-		this.userDaoJpa.findUsersOffline(LocalDate.now(), null);
+		this.userDaoJpa.findUsersOffline(LocalDateTime.now(), null);
 
 		this.thrown.expect(NullPointerException.class);
 		this.userDaoJpa.findUsersOffline(null, null);
@@ -140,18 +132,17 @@ public class UserDaoJpaTest {
 
 	@Test
 	public void findUsersOfflineWithWrongTest() {
-		final LocalDate start = LocalDate.now();
-		final LocalDate end = start.minusDays(1);
+		final LocalDateTime start = LocalDateTime.now();
+		final LocalDateTime end = start.minusDays(1);
 		this.thrown.expect(IllegalStateException.class);
 		this.userDaoJpa.findUsersOffline(start, end);
 	}
 
 	@Test
 	public void findUsersOnlineTest() {
-		final LocalDate start = LocalDate.now();
-		final LocalDate end = start.plusDays(1);
-		when(this.persistenceFacade.findByQuery(User.class, "User.findUsersOnline", map("start", start).and("end", end),
-				0, 0)).thenReturn(new ArrayList<>());
+		final LocalDateTime start = LocalDateTime.now();
+		final LocalDateTime end = start.plusDays(1);
+		when(this.persistenceFacade.findByQuery(User.class, "User.findUsersOnline", map("start", start).and("end", end), 0, 0)).thenReturn(new ArrayList<>());
 		final List<User> usersInDataBase = this.userDaoJpa.findUsersOffline(start, end);
 		Assert.assertEquals(0, usersInDataBase.size());
 	}
@@ -159,10 +150,10 @@ public class UserDaoJpaTest {
 	@Test
 	public void findUsersOnlineWithNullDatesTest() {
 		this.thrown.expect(NullPointerException.class);
-		this.userDaoJpa.findUsersOnline(null, LocalDate.now());
+		this.userDaoJpa.findUsersOnline(null, LocalDateTime.now());
 
 		this.thrown.expect(NullPointerException.class);
-		this.userDaoJpa.findUsersOnline(LocalDate.now(), null);
+		this.userDaoJpa.findUsersOnline(LocalDateTime.now(), null);
 
 		this.thrown.expect(NullPointerException.class);
 		this.userDaoJpa.findUsersOnline(null, null);
@@ -170,8 +161,8 @@ public class UserDaoJpaTest {
 
 	@Test
 	public void findUsersOnlineWithWrongDatesTest() {
-		final LocalDate start = LocalDate.now();
-		final LocalDate end = start.minusDays(1);
+		final LocalDateTime start = LocalDateTime.now();
+		final LocalDateTime end = start.minusDays(1);
 		this.thrown.expect(IllegalStateException.class);
 		this.userDaoJpa.findUsersOnline(start, end);
 	}
@@ -199,8 +190,8 @@ public class UserDaoJpaTest {
 		final List<UserClosure> userClosures = new ArrayList<>();
 		userClosures.add(userClosure);
 
-		when(this.persistenceFacade.findByQuery(UserClosure.class, "UserClosure.findAntecessorsUserClosuresById",
-				map("id", user.getId()), 0, 0)).thenReturn(userClosures);
+		when(this.persistenceFacade.findByQuery(UserClosure.class, "UserClosure.findAntecessorsUserClosuresById", map("id", user.getId()), 0, 0))
+				.thenReturn(userClosures);
 		this.userDaoJpa.insert(user);
 	}
 
@@ -220,8 +211,7 @@ public class UserDaoJpaTest {
 	public void numberOfUsersInTeamTest() {
 		final User user = new User();
 		user.setId(1L);
-		when(this.persistenceFacade.findByQuery(Long.class, "User.numberOfUsersInTeam", map("id", user.getId())))
-				.thenReturn(1L);
+		when(this.persistenceFacade.findByQuery(Long.class, "User.numberOfUsersInTeam", map("id", user.getId()))).thenReturn(1L);
 		final long numberOfUsersInTeam = this.userDaoJpa.numberOfUsersInTeam(user);
 		Assert.assertEquals(1L, numberOfUsersInTeam);
 	}
@@ -229,10 +219,10 @@ public class UserDaoJpaTest {
 	@Test
 	public void numberOfUsersOfflineNullDatesTest() {
 		this.thrown.expect(NullPointerException.class);
-		this.userDaoJpa.numberOfUsersOffline(null, LocalDate.now());
+		this.userDaoJpa.numberOfUsersOffline(null, LocalDateTime.now());
 
 		this.thrown.expect(NullPointerException.class);
-		this.userDaoJpa.numberOfUsersOffline(LocalDate.now(), null);
+		this.userDaoJpa.numberOfUsersOffline(LocalDateTime.now(), null);
 
 		this.thrown.expect(NullPointerException.class);
 		this.userDaoJpa.numberOfUsersOffline(null, null);
@@ -240,18 +230,17 @@ public class UserDaoJpaTest {
 
 	@Test
 	public void numberOfUsersOfflineTest() {
-		final LocalDate start = LocalDate.now();
-		final LocalDate end = start.plusDays(1);
-		when(this.persistenceFacade.findByQuery(Long.class, "User.numberOfUsersOffline",
-				map("start", start).and("end", end))).thenReturn(1L);
+		final LocalDateTime start = LocalDateTime.now();
+		final LocalDateTime end = start.plusDays(1);
+		when(this.persistenceFacade.findByQuery(Long.class, "User.numberOfUsersOffline", map("start", start).and("end", end))).thenReturn(1L);
 		final long numberOfUsersInTeam = this.userDaoJpa.numberOfUsersOffline(start, end);
 		Assert.assertEquals(1L, numberOfUsersInTeam);
 	}
 
 	@Test
 	public void numberOfUsersOfflineWithWrongDatesTest() {
-		final LocalDate start = LocalDate.now();
-		final LocalDate end = start.minusDays(1);
+		final LocalDateTime start = LocalDateTime.now();
+		final LocalDateTime end = start.minusDays(1);
 		this.thrown.expect(IllegalStateException.class);
 		this.userDaoJpa.numberOfUsersOffline(start, end);
 	}
@@ -259,10 +248,10 @@ public class UserDaoJpaTest {
 	@Test
 	public void numberOfUsersOnlineNullDatesTest() {
 		this.thrown.expect(NullPointerException.class);
-		this.userDaoJpa.numberOfUsersOnline(null, LocalDate.now());
+		this.userDaoJpa.numberOfUsersOnline(null, LocalDateTime.now());
 
 		this.thrown.expect(NullPointerException.class);
-		this.userDaoJpa.numberOfUsersOnline(LocalDate.now(), null);
+		this.userDaoJpa.numberOfUsersOnline(LocalDateTime.now(), null);
 
 		this.thrown.expect(NullPointerException.class);
 		this.userDaoJpa.numberOfUsersOnline(null, null);
@@ -270,18 +259,17 @@ public class UserDaoJpaTest {
 
 	@Test
 	public void numberOfUsersOnlineTest() {
-		final LocalDate start = LocalDate.now();
-		final LocalDate end = start.plusDays(1);
-		when(this.persistenceFacade.findByQuery(Long.class, "User.numberOfUsersOnline",
-				map("start", start).and("end", end))).thenReturn(2L);
+		final LocalDateTime start = LocalDateTime.now();
+		final LocalDateTime end = start.plusDays(1);
+		when(this.persistenceFacade.findByQuery(Long.class, "User.numberOfUsersOnline", map("start", start).and("end", end))).thenReturn(2L);
 		final long numberOfUsersInTeam = this.userDaoJpa.numberOfUsersOnline(start, end);
 		Assert.assertEquals(2L, numberOfUsersInTeam);
 	}
 
 	@Test
 	public void numberOfUsersOnlineWithWrongDatesTest() {
-		final LocalDate start = LocalDate.now();
-		final LocalDate end = start.minusDays(1);
+		final LocalDateTime start = LocalDateTime.now();
+		final LocalDateTime end = start.minusDays(1);
 		this.thrown.expect(IllegalStateException.class);
 		this.userDaoJpa.numberOfUsersOnline(start, end);
 	}
@@ -302,8 +290,7 @@ public class UserDaoJpaTest {
 
 	@Test
 	public void searchTest() {
-		when(this.persistenceFacade.search(User.class, "aaron", "name", "surname", "email"))
-				.thenReturn(new ArrayList<>());
+		when(this.persistenceFacade.search(User.class, "aaron", "name", "surname", "email")).thenReturn(new ArrayList<>());
 		final List<User> users = this.userDaoJpa.search("aaron");
 		Assert.assertEquals(0, users.size());
 	}

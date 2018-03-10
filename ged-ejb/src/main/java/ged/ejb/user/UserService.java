@@ -6,17 +6,17 @@ import ged.ejb.core.Service;
 
 public interface UserService extends Service<User> {
 
-	boolean emailExists(final String email);
+	boolean emailExists(String email);
 
-	List<User> findSubordinateUsers(final User user);
+	List<User> findSubordinateUsers(User user);
 
-	User findUserByEmail(final String email);
+	User findUserByEmail(String email);
 
 	List<User> findUsersOfflineLastMonth();
 
 	List<User> findUsersOnlineLastWeek();
 
-	long numberOfUsersInTeam(final User user);
+	long numberOfUsersInTeam(User user);
 
 	long numberOfUsersOfflineLastMonth();
 

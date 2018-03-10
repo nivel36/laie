@@ -3,7 +3,7 @@ package ged.ejb.user;
 import static ged.ejb.core.util.Parameters.map;
 
 import java.lang.invoke.MethodHandles;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -22,7 +22,7 @@ public final class UserDaoJpa extends AbstractDaoJpa<User> implements UserDao {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
-	private void checkDates(final LocalDate start, final LocalDate end) {
+	private void checkDates(final LocalDateTime start, final LocalDateTime end) {
 		Objects.requireNonNull(start);
 		Objects.requireNonNull(end);
 		if (start.compareTo(end) > 0) {
@@ -32,9 +32,9 @@ public final class UserDaoJpa extends AbstractDaoJpa<User> implements UserDao {
 
 	private void deleteUserClosures(final User user) {
 		logger.trace("Delete user closures for user {}", user.getEmail());
-		final List<UserClosure> userClosures = findAntecessorsUserClosures(user);
+		final List<UserClosure> userClosures = this.findAntecessorsUserClosures(user);
 		for (final UserClosure userClosure : userClosures) {
-			getPersistenceFacade().delete(UserClosure.class, userClosure);
+			this.getPersistenceFacade().delete(UserClosure.class, userClosure);
 		}
 	}
 
@@ -56,8 +56,7 @@ public final class UserDaoJpa extends AbstractDaoJpa<User> implements UserDao {
 
 	private List<UserClosure> findAntecessorsUserClosures(final User user) {
 		Objects.requireNonNull(user);
-		return this.findByQuery(UserClosure.class, "UserClosure.findAntecessorsUserClosuresById",
-				map("id", user.getId()), 0, 0);
+		return this.findByQuery(UserClosure.class, "UserClosure.findAntecessorsUserClosuresById", map("id", user.getId()), 0, 0);
 	}
 
 	@Override
@@ -65,7 +64,8 @@ public final class UserDaoJpa extends AbstractDaoJpa<User> implements UserDao {
 		Objects.requireNonNull(user);
 		try {
 			return this.findByQuery(User.class, "User.findSubordinateUsers", map("id", user.getId()), 0, 0);
-		} catch (final NoResultException e) {
+		}
+		catch (final NoResultException e) {
 			return new ArrayList<>();
 		}
 	}
@@ -75,21 +75,22 @@ public final class UserDaoJpa extends AbstractDaoJpa<User> implements UserDao {
 		Objects.requireNonNull(email);
 		try {
 			return this.findByQuery(User.class, "User.findByEmail", map("email", email));
-		} catch (final NoResultException e) {
+		}
+		catch (final NoResultException e) {
 			return null;
 		}
 	}
 
 	@Override
-	public List<User> findUsersOffline(final LocalDate start, final LocalDate end) {
-		checkDates(start, end);
-		return this.findByQuery(User.class, "User.findUsersOffline", mapDates(start, end), 0, 0);
+	public List<User> findUsersOffline(final LocalDateTime start, final LocalDateTime end) {
+		this.checkDates(start, end);
+		return this.findByQuery(User.class, "User.findUsersOffline", this.mapDates(start, end), 0, 0);
 	}
 
 	@Override
-	public List<User> findUsersOnline(final LocalDate start, final LocalDate end) {
-		checkDates(start, end);
-		return this.findByQuery(User.class, "User.findUsersOnline", mapDates(start, end), 0, 0);
+	public List<User> findUsersOnline(final LocalDateTime start, final LocalDateTime end) {
+		this.checkDates(start, end);
+		return this.findByQuery(User.class, "User.findUsersOnline", this.mapDates(start, end), 0, 0);
 	}
 
 	@Override
@@ -100,45 +101,43 @@ public final class UserDaoJpa extends AbstractDaoJpa<User> implements UserDao {
 	@Override
 	public void insert(final User user) {
 		Objects.requireNonNull(user);
-		getPersistenceFacade().insert(user);
+		this.getPersistenceFacade().insert(user);
 		if (user.getManager() != null) {
-			insertUserClosures(user);
+			this.insertUserClosures(user);
 		}
 	}
 
 	private void insertUserClosure(final User antecessor, final User descendant, final int pathLength) {
-		logger.trace("Insert in user closure table. Antecessor {}, descendant {}, pathLength {}", antecessor,
-				descendant, pathLength);
+		logger.trace("Insert in user closure table. Antecessor {}, descendant {}, pathLength {}", antecessor, descendant, pathLength);
 		final UserClosure newUserClosure = new UserClosure();
 		newUserClosure.setAntecessor(antecessor);
 		newUserClosure.setDescendant(descendant);
 		newUserClosure.setPathLength(pathLength);
-		getPersistenceFacade().insert(newUserClosure);
+		this.getPersistenceFacade().insert(newUserClosure);
 	}
 
 	private void insertUserClosures(final User user) {
 		logger.trace("Insert user closures for user {}", user.getEmail());
-		final List<UserClosure> userClosures = findAntecessorsUserClosures(user.getManager());
+		final List<UserClosure> userClosures = this.findAntecessorsUserClosures(user.getManager());
 		for (final UserClosure userClosure : userClosures) {
-			insertUserClosure(userClosure.getAntecessor(), user, userClosure.getPathLength() + 1);
+			this.insertUserClosure(userClosure.getAntecessor(), user, userClosure.getPathLength() + 1);
 		}
-		insertUserClosure(user, user, 0);
+		this.insertUserClosure(user, user, 0);
 	}
 
 	private boolean isAddingManager(final User user, final User userInDatabase) {
-		return userInDatabase.getManager() == null && user.getManager() != null;
+		return (userInDatabase.getManager() == null) && (user.getManager() != null);
 	}
 
 	private boolean isChangingManager(final User user, final User userInDatabase) {
-		return userInDatabase.getManager() != null && user.getManager() != null
-				&& !user.getManager().equals(userInDatabase.getManager());
+		return (userInDatabase.getManager() != null) && (user.getManager() != null) && !user.getManager().equals(userInDatabase.getManager());
 	}
 
 	private boolean isRemovingManager(final User user, final User userInDatabase) {
-		return userInDatabase.getManager() != null && user.getManager() == null;
+		return (userInDatabase.getManager() != null) && (user.getManager() == null);
 	}
 
-	private Parameters mapDates(final LocalDate start, final LocalDate end) {
+	private Parameters mapDates(final LocalDateTime start, final LocalDateTime end) {
 		return map("start", start).and("end", end);
 	}
 
@@ -149,37 +148,39 @@ public final class UserDaoJpa extends AbstractDaoJpa<User> implements UserDao {
 	}
 
 	@Override
-	public long numberOfUsersOffline(final LocalDate start, final LocalDate end) {
-		checkDates(start, end);
-		return this.findByQuery(Long.class, "User.numberOfUsersOffline", mapDates(start, end));
+	public long numberOfUsersOffline(final LocalDateTime start, final LocalDateTime end) {
+		this.checkDates(start, end);
+		return this.findByQuery(Long.class, "User.numberOfUsersOffline", this.mapDates(start, end));
 	}
 
 	@Override
-	public long numberOfUsersOnline(final LocalDate start, final LocalDate end) {
-		checkDates(start, end);
-		return this.findByQuery(Long.class, "User.numberOfUsersOnline", mapDates(start, end));
+	public long numberOfUsersOnline(final LocalDateTime start, final LocalDateTime end) {
+		this.checkDates(start, end);
+		return this.findByQuery(Long.class, "User.numberOfUsersOnline", this.mapDates(start, end));
 	}
 
 	@Override
 	public List<User> search(final String searchText) {
-		return getPersistenceFacade().search(User.class, searchText, "name", "surname", "email");
+		return this.getPersistenceFacade().search(User.class, searchText, "name", "surname", "email");
 	}
 
 	@Override
 	public User update(final User user) {
 		Objects.requireNonNull(user);
-		final User userInDatabase = find(user.getId());
+		final User userInDatabase = this.find(user.getId());
 		if (userInDatabase == null) {
 			throw new IllegalStateException();
 		}
-		if (isAddingManager(user, userInDatabase)) {
-			insertUserClosures(user);
-		} else if (isRemovingManager(user, userInDatabase)) {
-			deleteUserClosures(userInDatabase);
-		} else if (isChangingManager(user, userInDatabase)) {
-			deleteUserClosures(userInDatabase);
-			insertUserClosures(user);
+		if (this.isAddingManager(user, userInDatabase)) {
+			this.insertUserClosures(user);
 		}
-		return getPersistenceFacade().update(user);
+		else if (this.isRemovingManager(user, userInDatabase)) {
+			this.deleteUserClosures(userInDatabase);
+		}
+		else if (this.isChangingManager(user, userInDatabase)) {
+			this.deleteUserClosures(userInDatabase);
+			this.insertUserClosures(user);
+		}
+		return this.getPersistenceFacade().update(user);
 	}
 }

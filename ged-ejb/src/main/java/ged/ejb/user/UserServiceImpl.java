@@ -1,7 +1,7 @@
 package ged.ejb.user;
 
 import java.lang.invoke.MethodHandles;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -35,7 +35,8 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
 		final boolean emailExists = this.userDao.emailExist(email);
 		if (emailExists) {
 			logger.debug("The email {} exists on database", email);
-		} else {
+		}
+		else {
 			logger.debug("The email {} doesn't exists on database", email);
 		}
 		return emailExists;
@@ -58,16 +59,16 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
 	@Override
 	public List<User> findUsersOfflineLastMonth() {
 		logger.debug("Find users offline last month");
-		final LocalDate oneMonthAgo = getOneMonthAgo();
-		final LocalDate today = LocalDate.now();
+		final LocalDateTime oneMonthAgo = this.getOneMonthAgo();
+		final LocalDateTime today = LocalDateTime.now();
 		return this.userDao.findUsersOffline(oneMonthAgo, today);
 	}
 
 	@Override
 	public List<User> findUsersOnlineLastWeek() {
 		logger.debug("Find users online last week");
-		final LocalDate oneWeekAgo = getOneWeekAgo();
-		final LocalDate today = LocalDate.now();
+		final LocalDateTime oneWeekAgo = this.getOneWeekAgo();
+		final LocalDateTime today = LocalDateTime.now();
 		return this.userDao.findUsersOnline(oneWeekAgo, today);
 	}
 
@@ -76,12 +77,12 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
 		return this.userDao;
 	}
 
-	private LocalDate getOneMonthAgo() {
-		return LocalDate.now().minusMonths(1);
+	private LocalDateTime getOneMonthAgo() {
+		return LocalDateTime.now().minusMonths(1);
 	}
 
-	private LocalDate getOneWeekAgo() {
-		return LocalDate.now().minusDays(7);
+	private LocalDateTime getOneWeekAgo() {
+		return LocalDateTime.now().minusDays(7);
 	}
 
 	@Override
@@ -91,7 +92,7 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
 			logger.warn("The user {} can't be his/her manager", user.getEmail());
 			throw new IllegalStateException("User can't be his/her manager");
 		}
-		if (findUserByEmail(user.getEmail()) != null) {
+		if (this.findUserByEmail(user.getEmail()) != null) {
 			throw new ValidationException("Email exists");
 		}
 		if (user.getLanguage() == null) {
@@ -100,7 +101,7 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
 		if (user.getRowsPerPage() == 0) {
 			user.setRowsPerPage(25);
 		}
-		if (user.getPassword() == null || user.getPassword().length == 0) {
+		if ((user.getPassword() == null) || (user.getPassword().length == 0)) {
 			user.setPassword("M+SzETkPtT+deVQNIScBEXivvfozSne5QqIqyWICLv0=".toCharArray());
 		}
 		this.userDao.insert(user);
@@ -111,7 +112,7 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
 	}
 
 	private boolean isLastAdminOnApp(final User user) {
-		final User userInDataBase = find(user.getId());
+		final User userInDataBase = this.find(user.getId());
 		return userInDataBase.isAdmin() && !user.isAdmin() && !this.userDao.existMoreThanOneAdmin();
 	}
 
@@ -124,26 +125,26 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
 	@Override
 	public long numberOfUsersOfflineLastMonth() {
 		logger.debug("Find number of users offline last month");
-		final LocalDate oneMonthAgo = getOneMonthAgo();
-		final LocalDate today = LocalDate.now();
+		final LocalDateTime oneMonthAgo = this.getOneMonthAgo();
+		final LocalDateTime today = LocalDateTime.now();
 		return this.userDao.numberOfUsersOffline(oneMonthAgo, today);
 	}
 
 	@Override
 	public long numberOfUsersOnlineLastWeek() {
 		logger.debug("Find number of users online last week");
-		final LocalDate oneWeekAgo = getOneWeekAgo();
-		final LocalDate today = LocalDate.now();
+		final LocalDateTime oneWeekAgo = this.getOneWeekAgo();
+		final LocalDateTime today = LocalDateTime.now();
 		return this.userDao.numberOfUsersOnline(oneWeekAgo, today);
 	}
 
 	@Override
 	public User update(final User user) {
-		if (isLastAdminOnApp(user)) {
+		if (this.isLastAdminOnApp(user)) {
 			logger.warn("Can't change user {} role. Last Admin on app", user.getEmail());
 			throw new UserException("Can't change user role. Last Admin on app");
 		}
-		if (isDeletingAdmin(user)) {
+		if (this.isDeletingAdmin(user)) {
 			logger.warn("Can't delete user {}. User is Admin", user.getEmail());
 			throw new UserException("Can't delete user. User is Admin");
 		}
