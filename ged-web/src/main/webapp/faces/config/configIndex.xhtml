@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
-	template="/WEB-INF/templates/default.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
 		<title>#{i18n['config.config']}</title>
@@ -10,7 +9,7 @@
 	<ui:param name="selectedMenu" value="config" />
 
 	<ui:define name="content">
-		<ui:include src="/faces/config/changePasswordPopup.xhtml" />
+		<ui:include src="/faces/config/changePasswordDialog.xhtml" />
 		<div class="ui-g">
 			<div class="ui-g-12 ui-xl-6">
 				<h:form>
@@ -21,24 +20,21 @@
 									<div class="ui-g-12 ui-lg-6">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['config.name']}" />
-											<p:inputText id="name" value="#{configIndexBean.user.name}" label="#{i18n['config.name']}" required="true"
-												styleClass="#{not component.valid ? 'inputError' : ''}" />
+											<p:inputText id="name" value="#{configIndexBean.user.name}" label="#{i18n['config.name']}" required="true" />
 											<h:message for="name" errorClass="error" />
 										</div>
 									</div>
 									<div class="ui-g-12 ui-lg-6">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['config.surname']}" />
-											<p:inputText id="surname" value="#{configIndexBean.user.surname}" label="#{i18n['config.surname']}"
-												required="true" styleClass="#{not component.valid ? 'inputError' : ''}" />
+											<p:inputText id="surname" value="#{configIndexBean.user.surname}" label="#{i18n['config.surname']}" required="true" />
 											<h:message for="surname" errorClass="error" />
 										</div>
 									</div>
 									<div class="ui-g-12 ui-lg-6">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['config.email']}" />
-											<p:inputText id="email" value="#{configIndexBean.user.email}" label="#{i18n['config.email']}" required="true"
-												styleClass="#{not component.valid ? 'inputError' : ''}" />
+											<p:inputText id="email" value="#{configIndexBean.user.email}" label="#{i18n['config.email']}" required="true" />
 											<h:message for="email" errorClass="error" />
 										</div>
 									</div>
@@ -46,7 +42,8 @@
 								<div class="ui-g">
 									<div class="ui-g-12">
 										<div class="form-action-primary">
-											<p:commandButton value="#{i18n['config.change_password']}" onclick="PF('changePasswordDlg').show();" />
+											<p:commandButton value="#{i18n['config.change_password']}" actionListener="#{changePasswordDialogBean.openDialog}" update="changePasswordDialogForm"
+												process="@this" />
 											<p:commandButton value="#{i18n['action.save']}" action="#{configIndexBean.save}" update="growl" />
 										</div>
 									</div>
@@ -56,8 +53,7 @@
 								<p:photoCam widgetVar="pc" listener="#{userBean.uploadImage}" update="photo" />
 								<p:commandButton type="button" value="Capture" onclick="PF('pc').capture()" />
 								<p:outputPanel id="photo">
-									<p:graphicImage name="#{userBean.user.imageFileName}"
-										rendered="#{not empty userBean.user.imageFileName}" />
+									<p:graphicImage name="#{userBean.user.imageFileName}" rendered="#{not empty userBean.user.imageFileName}" />
 								</p:outputPanel>
 							</p:tab>
 						</p:tabView>
@@ -83,8 +79,7 @@
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['config.language']}" />
 									<p:selectOneMenu id="language" value="#{configIndexBean.user.language}" style="text-transform: capitalize">
-										<f:selectItems var="locale" value="#{applicationBean.locales}" itemValue="#{locale.language}"
-											itemLabel="#{locale.displayLanguage}" />
+										<f:selectItems var="locale" value="#{applicationBean.locales}" itemValue="#{locale.language}" itemLabel="#{locale.displayLanguage}" />
 									</p:selectOneMenu>
 								</div>
 							</div>
