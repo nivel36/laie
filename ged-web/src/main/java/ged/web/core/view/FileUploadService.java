@@ -1,7 +1,6 @@
 package ged.web.core.view;
 
 import java.io.File;
-import java.io.IOException;
 
 import org.primefaces.model.UploadedFile;
 
@@ -9,12 +8,11 @@ import ged.ejb.UploadedServerFile;
 
 public interface FileUploadService {
 
-	File getFileFromFileSystem(UploadedServerFile file) throws IOException;
+	File getFileFromFileSystem(UploadedServerFile file);
 
-	void removeFileFromFileSystem(String uuid) throws IOException;
+	void removeFileFromFileSystem(String uuid);
 
-	String uploadFile(UploadedFile file) throws IOException;
+	String uploadFile(UploadedFile file);
 
-	String uploadImage(UploadedFile file) throws IOException;
-
+	String uploadImage(UploadedFile file);
 }

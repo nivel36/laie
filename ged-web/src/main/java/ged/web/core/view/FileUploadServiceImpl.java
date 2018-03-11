@@ -1,10 +1,15 @@
 package ged.web.core.view;
 
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UncheckedIOException;
 import java.lang.invoke.MethodHandles;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -31,53 +36,52 @@ public class FileUploadServiceImpl implements FileUploadService {
 	@ConfigurationProperty(value = "image.directory")
 	private String imageDirectory;
 
-	/* (non-Javadoc)
-	 * @see ged.web.core.view.FileUploadService#getFileFromFileSystem(ged.ejb.UploadedServerFile)
-	 */
 	@Override
-	public File getFileFromFileSystem(final UploadedServerFile file) throws IOException {
-		final File downloableFile = new File(file.getName());
-		final boolean renamed = new File(this.fileDirectory, file.getUuid()).renameTo(downloableFile);
-		if (!renamed) {
-			logger.error("Can't rename the file");
-			throw new IOException("Can't rename the file");
+	public File getFileFromFileSystem(final UploadedServerFile file) {
+		Objects.requireNonNull(file);
+		try {
+			final Path source = Paths.get(this.fileDirectory, file.getUuid());
+			final Path target = Paths.get(file.getName());
+			final Path newPath = Files.move(source, target.resolve(source.getFileName()), REPLACE_EXISTING);
+			return newPath.toFile();
 		}
-		return downloableFile;
+		catch (final IOException e) {
+			throw new UncheckedIOException(e);
+		}
 	}
 
-	/* (non-Javadoc)
-	 * @see ged.web.core.view.FileUploadService#removeFileFromFileSystem(java.lang.String)
-	 */
 	@Override
-	public void removeFileFromFileSystem(final String uuid) throws IOException {
-		Files.deleteIfExists(new File(this.fileDirectory, uuid).toPath());
+	public void removeFileFromFileSystem(final String uuid) {
+		try {
+			Files.deleteIfExists(new File(this.fileDirectory, uuid).toPath());
+		}
+		catch (final IOException e) {
+			throw new UncheckedIOException(e);
+		}
 	}
 
-	private String upload(final String directory, final UploadedFile file) throws IOException {
+	private String upload(final String directory, final UploadedFile file) {
 		final String uuid = UUID.randomUUID().toString();
 		try (InputStream input = file.getInputstream()) {
 			Files.copy(input, new File(directory, uuid).toPath());
 		}
+		catch (final IOException e) {
+			throw new UncheckedIOException(e);
+		}
 		return uuid;
 	}
 
-	/* (non-Javadoc)
-	 * @see ged.web.core.view.FileUploadService#uploadFile(org.primefaces.model.UploadedFile)
-	 */
 	@Override
-	public String uploadFile(final UploadedFile file) throws IOException {
+	public String uploadFile(final UploadedFile file) {
 		Objects.requireNonNull(file);
 		logger.debug("Uploading file {}", file.getFileName());
-		return upload(this.fileDirectory, file);
+		return this.upload(this.fileDirectory, file);
 	}
 
-	/* (non-Javadoc)
-	 * @see ged.web.core.view.FileUploadService#uploadImage(org.primefaces.model.UploadedFile)
-	 */
 	@Override
-	public String uploadImage(final UploadedFile file) throws IOException {
+	public String uploadImage(final UploadedFile file) {
 		Objects.requireNonNull(file);
 		logger.debug("Uploading image {}", file.getFileName());
-		return upload(this.imageDirectory, file);
+		return this.upload(this.imageDirectory, file);
 	}
 }
