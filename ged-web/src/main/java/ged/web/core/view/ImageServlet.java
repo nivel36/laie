@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.omnifaces.servlet.FileServlet;
 
-import ged.web.core.util.ConfigurationProperty;
+import ged.ejb.core.util.ConfigurationProperty;
 
 @WebServlet("/images/*")
 public class ImageServlet extends FileServlet {
@@ -22,7 +22,7 @@ public class ImageServlet extends FileServlet {
 	@Override
 	protected File getFile(final HttpServletRequest request) {
 		final String pathInfo = request.getPathInfo();
-		if (pathInfo == null || pathInfo.isEmpty() || "/".equals(pathInfo)) {
+		if ((pathInfo == null) || pathInfo.isEmpty() || "/".equals(pathInfo)) {
 			throw new IllegalArgumentException();
 		}
 		return new File(this.folder, pathInfo);

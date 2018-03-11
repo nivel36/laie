@@ -1,4 +1,4 @@
-package ged.web.core.util;
+package ged.ejb.core.util;
 
 import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.ElementType.METHOD;

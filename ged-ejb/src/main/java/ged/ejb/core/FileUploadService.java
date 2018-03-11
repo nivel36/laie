@@ -1,8 +1,7 @@
-package ged.web.core.view;
+package ged.ejb.core;
 
 import java.io.File;
-
-import org.primefaces.model.UploadedFile;
+import java.io.InputStream;
 
 import ged.ejb.UploadedServerFile;
 
@@ -12,7 +11,7 @@ public interface FileUploadService {
 
 	void removeFileFromFileSystem(String uuid);
 
-	String uploadFile(UploadedFile file);
+	String uploadFile(InputStream inputStream);
 
-	String uploadImage(UploadedFile file);
+	String uploadImage(InputStream inputStream);
 }

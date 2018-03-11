@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
-import org.slf4j.LoggerFactory;
-import org.slf4j.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -24,8 +22,10 @@ import org.apache.pdfbox.pdmodel.PDResources;
 import org.apache.pdfbox.pdmodel.graphics.xobject.PDXObject;
 import org.apache.pdfbox.pdmodel.graphics.xobject.PDXObjectImage;
 import org.apache.pdfbox.util.PDFTextStripper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import ged.web.core.util.ConfigurationProperty;
+import ged.ejb.core.util.ConfigurationProperty;
 import ged.web.core.util.Message;
 import ged.web.core.view.AbstractBean;
 
@@ -48,9 +48,9 @@ public class AddCurriculumBean extends AbstractBean {
 	private String text;
 
 	public List<String> extractImages(final File file) throws IOException {
-		final COSDocument cosDoc = getDocument(file);
-		final List<PDXObjectImage> imagesFromDoc = getAllImages(cosDoc);
-		final List<String> filenames = writeImages(imagesFromDoc);
+		final COSDocument cosDoc = this.getDocument(file);
+		final List<PDXObjectImage> imagesFromDoc = this.getAllImages(cosDoc);
+		final List<String> filenames = this.writeImages(imagesFromDoc);
 		cosDoc.close();
 		return filenames;
 	}
@@ -70,9 +70,9 @@ public class AddCurriculumBean extends AbstractBean {
 	private List<PDXObjectImage> getAllImages(final COSDocument cosDoc) {
 		final PDDocument document = new PDDocument(cosDoc);
 		final List<PDXObjectImage> imagesFromDoc = new ArrayList<>();
-		final List<PDPage> pages = getAllPages(document);
+		final List<PDPage> pages = this.getAllPages(document);
 		for (final PDPage page : pages) {
-			extractImagesFromPage(imagesFromDoc, page);
+			this.extractImagesFromPage(imagesFromDoc, page);
 		}
 		return imagesFromDoc;
 	}
@@ -104,16 +104,18 @@ public class AddCurriculumBean extends AbstractBean {
 	public void init() {
 		if (this.flash.containsKey("filename")) {
 			this.filename = (String) this.flash.get("filename");
-		} else {
+		}
+		else {
 			throw new IllegalStateException("No filename");
 		}
 		try {
-			setImages(extractImages(new File(this.path + this.filename)));
+			this.setImages(this.extractImages(new File(this.path + this.filename)));
 
 			final PDDocument pdf = PDDocument.load(new File(this.path + this.filename));
 			final PDFTextStripper stripper = new PDFTextStripper();
 			this.text = stripper.getText(pdf);
-		} catch (final IOException e) {
+		}
+		catch (final IOException e) {
 			AddCurriculumBean.logger.error("Can't open file", e);
 			Message.addError("error.unnexpected_error", "error.unnexpected_error");
 		}

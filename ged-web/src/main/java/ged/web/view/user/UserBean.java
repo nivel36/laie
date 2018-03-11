@@ -21,6 +21,7 @@ import org.primefaces.event.FileUploadEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import ged.ejb.core.FileUploadService;
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
 import ged.ejb.user.User;
@@ -31,7 +32,6 @@ import ged.ejb.user.role.RoleService;
 import ged.web.core.util.Message;
 import ged.web.core.util.Translate;
 import ged.web.core.view.AbstractBean;
-import ged.web.core.view.FileUploadService;
 import ged.web.reports.UserReport;
 
 @Named
@@ -120,7 +120,7 @@ public class UserBean extends AbstractBean {
 				final long id = Long.parseLong(this.userId);
 				this.user = this.userService.find(id);
 				if (this.user == null) {
-					error();
+					this.error();
 				}
 				this.manager = this.user.getManager();
 				this.team = this.userService.findSubordinateUsers(this.user);
@@ -128,12 +128,14 @@ public class UserBean extends AbstractBean {
 				if (this.user.isDeleted()) {
 					Message.addWarning("message.erased_entity", "message.erased_entity");
 				}
-			} catch (final NumberFormatException ex) {
-				error();
 			}
-		} else {
+			catch (final NumberFormatException ex) {
+				this.error();
+			}
+		}
+		else {
 			this.editable = true;
-			this.user = buildNewUser();
+			this.user = this.buildNewUser();
 		}
 	}
 
@@ -198,19 +200,21 @@ public class UserBean extends AbstractBean {
 			this.user.setManager(this.manager);
 			this.user = this.userService.update(this.user);
 			this.editable = false;
-		} catch (final EJBException e) {
+		}
+		catch (final EJBException e) {
 			if (e.getCause() instanceof UserException) {
 				final Role admin = this.roleService.findAdmin();
 				this.user.setRole(admin);
 				this.addMessage(FacesMessage.SEVERITY_ERROR, "user.error.last_admin", "user.error.last_admin");
-			} else {
+			}
+			else {
 				throw e;
 			}
 		}
 	}
 
 	public void uploadImage(final FileUploadEvent event) throws IOException {
-		final String uuid = this.fileUploadService.uploadImage(event.getFile());
+		final String uuid = this.fileUploadService.uploadImage(event.getFile().getInputstream());
 		this.user.setImageFileName(uuid);
 	}
 
@@ -247,12 +251,12 @@ public class UserBean extends AbstractBean {
 	}
 
 	public void validateRole(final FacesContext context, final UIComponent component, final Object value) {
-		if (this.manager == null || this.manager.getEmail() == null) {
+		if ((this.manager == null) || (this.manager.getEmail() == null)) {
 			return;
 		}
 		final Role userRole = (Role) value;
 		final Role managerRole = this.manager.getRole();
-		if (!isAvalidRole(userRole, managerRole)) {
+		if (!this.isAvalidRole(userRole, managerRole)) {
 			final String msg = Translate.message("user.error.role");
 			throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg));
 		}

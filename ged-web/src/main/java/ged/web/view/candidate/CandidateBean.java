@@ -6,6 +6,7 @@ import static ged.web.core.util.Page.CANDIDATE_SEARCH;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.lang.invoke.MethodHandles;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -27,11 +28,11 @@ import ged.ejb.UploadedServerFile;
 import ged.ejb.candidate.Candidate;
 import ged.ejb.candidate.CandidateService;
 import ged.ejb.core.Address;
+import ged.ejb.core.FileUploadService;
 import ged.ejb.core.tag.Tag;
 import ged.ejb.core.tag.TagService;
 import ged.web.core.util.Message;
 import ged.web.core.view.AbstractBean;
-import ged.web.core.view.FileUploadService;
 
 @Named
 @ViewScoped
@@ -73,7 +74,7 @@ public class CandidateBean extends AbstractBean {
 	}
 
 	private void checkLopdFile() {
-		if (!hasLopdFile()) {
+		if (!this.hasLopdFile()) {
 			Message.addWarning("candidate.warn.no_lopd_file", "candidate.warn.no_lopd_file");
 		}
 	}
@@ -113,7 +114,8 @@ public class CandidateBean extends AbstractBean {
 			final Tag tag;
 			if (tagsFoundInDataBase.size() == 1) {
 				tag = tagsFoundInDataBase.get(0);
-			} else {
+			}
+			else {
 				tag = new Tag();
 				tag.setLabel(label);
 			}
@@ -143,7 +145,7 @@ public class CandidateBean extends AbstractBean {
 				final long candidateId = Long.parseLong(this.id);
 				this.candidate = this.candidateService.findCandidateAndFiles(candidateId);
 				if (this.candidate == null) {
-					error();
+					this.error();
 				}
 				if (this.candidate.getAddress() == null) {
 					this.candidate.setAddress(new Address());
@@ -152,18 +154,20 @@ public class CandidateBean extends AbstractBean {
 					this.tags.add(tag.getLabel());
 				}
 				this.files.addAll(this.candidate.getFiles());
-				checkLopdFile();
-			} catch (final NumberFormatException ex) {
-				error();
+				this.checkLopdFile();
 			}
-		} else {
+			catch (final NumberFormatException ex) {
+				this.error();
+			}
+		}
+		else {
 			this.editable = true;
-			this.candidate = buildNewCandidate();
+			this.candidate = this.buildNewCandidate();
 		}
 	}
 
 	public String insertCandidate() {
-		this.candidate.setTags(getTagsFromStringList(this.tags));
+		this.candidate.setTags(this.getTagsFromStringList(this.tags));
 		this.candidate.setFiles(new HashSet<>(this.files));
 		this.candidateService.insert(this.candidate);
 		return to(CANDIDATE).toUrl();
@@ -178,7 +182,7 @@ public class CandidateBean extends AbstractBean {
 	}
 
 	public void onload() {
-		checkLopdFile();
+		this.checkLopdFile();
 	}
 
 	public void onrate(final RateEvent rateEvent) {
@@ -239,7 +243,7 @@ public class CandidateBean extends AbstractBean {
 	}
 
 	public void updateCandidate() {
-		this.candidate.setTags(getTagsFromStringList(this.tags));
+		this.candidate.setTags(this.getTagsFromStringList(this.tags));
 		this.candidate.setFiles(new HashSet<>(this.files));
 		this.candidate = this.candidateService.update(this.candidate);
 		this.editable = false;
@@ -252,15 +256,26 @@ public class CandidateBean extends AbstractBean {
 		this.addInfoMessage("file.message.update", "file.message.update", updatedFile.getName());
 	}
 
-	public void uploadFile(final FileUploadEvent event) throws IOException {
-		final String uuid = this.fileUploadService.uploadFile(event.getFile());
-		final UploadedServerFile file = saveFile(uuid, event.getFile().getFileName());
-		this.files.add(file);
-		this.addInfoMessage("file.message.upload", "file.message.upload", event.getFile().getFileName());
+	public void uploadFile(final FileUploadEvent event) {
+		try {
+			String uuid;
+			uuid = this.fileUploadService.uploadFile(event.getFile().getInputstream());
+			final UploadedServerFile file = this.saveFile(uuid, event.getFile().getFileName());
+			this.files.add(file);
+			this.addInfoMessage("file.message.upload", "file.message.upload", event.getFile().getFileName());
+		}
+		catch (final IOException e) {
+			throw new UncheckedIOException(e);
+		}
 	}
 
-	public void uploadImage(final FileUploadEvent event) throws IOException {
-		final String uuid = this.fileUploadService.uploadImage(event.getFile());
-		this.candidate.setImageFileName(uuid);
+	public void uploadImage(final FileUploadEvent event) {
+		try {
+			final String uuid = this.fileUploadService.uploadImage(event.getFile().getInputstream());
+			this.candidate.setImageFileName(uuid);
+		}
+		catch (final IOException e) {
+			throw new UncheckedIOException(e);
+		}
 	}
 }
