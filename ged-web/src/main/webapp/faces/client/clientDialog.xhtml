@@ -3,7 +3,7 @@
 	xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://legion.com/i18n" xmlns:p="http://primefaces.org/ui">
 
 	<h:form id="newClientForm">
-		<p:dialog modal="true" widgetVar="newClientDlg" resizable="false" responsive="true" header="#{i18n['client.new_client']}" id="newClientDlg" closable="false"
+		<p:dialog id="newClientDlg" header="#{i18n['client.new_client']}" closable="false" modal="true" resizable="false" responsive="true"
 			visible="#{clientDialogBean.showDialog}">
 
 			<div class="ui-g">
@@ -48,7 +48,7 @@
 			</div>
 			<f:facet name="footer">
 				<div class="form-action-primary">
-					<p:commandButton styleClass="btn-gray" value="#{i18n['action.cancel']}" action="#{clientDialogBean.closeDialog}" process="@this" update="@form">
+					<p:commandButton value="#{i18n['action.cancel']}" action="#{clientDialogBean.closeDialog}" styleClass="btn-gray" process="@this" update="@form">
 						<p:resetInput target="@form" />
 					</p:commandButton>
 					<p:commandButton value="#{i18n['action.save']}" action="#{clientDialogBean.save}" update="@form" />

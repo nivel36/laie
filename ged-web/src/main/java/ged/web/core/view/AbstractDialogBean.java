@@ -15,7 +15,7 @@ public abstract class AbstractDialogBean extends AbstractBean {
 
 	public void closeDialog() {
 		this.showDialog = false;
-		dispose();
+		this.dispose();
 	}
 
 	protected abstract void dispose();
@@ -40,7 +40,7 @@ public abstract class AbstractDialogBean extends AbstractBean {
 	public void openDialog(final ActionEvent event) {
 		this.showDialog = true;
 		this.attributes = event.getComponent().getAttributes();
-		init();
+		this.init();
 	}
 
 	public void setShowDialog(final boolean showDialog) {
