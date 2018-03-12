@@ -14,6 +14,8 @@
 	</modules>
 
 	<properties>
+		<timestamp>${maven.build.timestamp}</timestamp>
+		<maven.build.timestamp.format>dd-MM-yyyy HH:mm</maven.build.timestamp.format>
 		<ged.version>${project.version}</ged.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<javaee-api.version>8.0</javaee-api.version>
