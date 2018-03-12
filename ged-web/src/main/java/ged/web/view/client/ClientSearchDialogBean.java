@@ -40,7 +40,7 @@ public class ClientSearchDialogBean extends AbstractDialogBean {
 	public void clean() {
 		logger.debug("Clean action performed");
 		this.searchText = null;
-		search();
+		this.search();
 	}
 
 	@Override
@@ -60,18 +60,17 @@ public class ClientSearchDialogBean extends AbstractDialogBean {
 		return this.selectedClient;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public void init() {
 		logger.trace("Init ClientSearchDialogBean");
-		this.selectClientActionCallback = getAttribute(ActionCallback.class, "callback");
-		this.updateField = getAttribute(String.class, "updateField");
+		this.selectClientActionCallback = this.getAttribute("callback");
+		this.updateField = this.getAttribute("updateField");
 		this.clients = this.clientService.search(this.searchText);
 	}
 
 	public void onClientSelect() {
 		this.selectClientActionCallback.doAction(this.selectedClient);
-		closeDialog();
+		this.closeDialog();
 		Ajax.update(this.updateField);
 	}
 

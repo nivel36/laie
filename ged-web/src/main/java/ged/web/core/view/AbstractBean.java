@@ -56,19 +56,18 @@ public abstract class AbstractBean implements Serializable {
 		this.addMessage(null, severity, title, message, null);
 	}
 
-	protected void addMessage(final Severity severity, final String title, final String message,
-			final Object... params) {
+	protected void addMessage(final Severity severity, final String title, final String message, final Object... params) {
 		this.addMessage(null, severity, title, message, params);
 	}
 
-	private void addMessage(final UIComponent component, final Severity severity, final String title,
-			final String message, final Object[] params) {
+	private void addMessage(final UIComponent component, final Severity severity, final String title, final String message, final Object[] params) {
 		final String translatedTitle = Translate.message(title, params);
 		final String translatedMessage = Translate.message(message, params);
 		final FacesMessage facesMessage = new FacesMessage(severity, translatedTitle, translatedMessage);
 		if (component == null) {
 			this.facesContext.addMessage(null, facesMessage);
-		} else {
+		}
+		else {
 			this.facesContext.addMessage(component.getClientId(), facesMessage);
 		}
 	}
@@ -81,10 +80,11 @@ public abstract class AbstractBean implements Serializable {
 	}
 
 	@SuppressWarnings("unchecked")
-	public <T> T getFromFlash(final Class<T> type, final String key) {
+	public <T> T getFromFlash(final String key) {
 		if (this.flash.containsKey(key)) {
 			return (T) this.flash.get(key);
-		} else {
+		}
+		else {
 			return null;
 		}
 	}

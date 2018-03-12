@@ -21,14 +21,9 @@ public abstract class AbstractDialogBean extends AbstractBean {
 	protected abstract void dispose();
 
 	@SuppressWarnings("unchecked")
-	protected <T> T getAttribute(final Class<T> type, final String key) {
+	protected <T> T getAttribute(final String key) {
 		Objects.requireNonNull(key);
 		return (T) this.attributes.get(key);
-	}
-
-	protected Object getAttribute(final String key) {
-		Objects.requireNonNull(key);
-		return this.attributes.get(key);
 	}
 
 	protected abstract void init();

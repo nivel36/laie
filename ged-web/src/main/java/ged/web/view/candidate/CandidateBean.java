@@ -195,7 +195,7 @@ public class CandidateBean extends AbstractBean {
 		Faces.sendFile(fileToOpen, true);
 	}
 
-	public void removeFile(final UploadedServerFile file) throws IOException {
+	public void removeFile(final UploadedServerFile file) {
 		this.fileUploadService.removeFileFromFileSystem(file.getUuid());
 		this.candidate.getFiles().remove(file);
 		this.candidate = this.candidateService.update(this.candidate);
