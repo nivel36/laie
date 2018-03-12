@@ -3972,17 +3972,12 @@ body .ui-state-disabled {
 }
 
 body .ui-dialog {
-	border-top-left-radius: 0px;
-	border-top-right-radius: 0px;
-	border-bottom-right-radius: 0px;
-	border-bottom-left-radius: 0px;
+	border-radius: 0px;
 	width: 100%;
-	padding: 10px;
-	border: 1px solid #BDBDBD;
 }
 
 body .ui-dialog .ui-dialog-titlebar {
-	padding: 0px 5px 8px 0px;
+	padding: 10px;
 	border-bottom: 1px solid #CCCCCC;
 }
 
@@ -4000,6 +3995,10 @@ body .ui-dialog .ui-dialog-content {
 
 body .ui-dialog .ui-icon {
 	color: #5b9bd1;
+}
+
+body .ui-dialog .ui-dialog-footer {
+	padding: 15px;
 }
 
 body .ui-dialog-mask {
@@ -4133,9 +4132,10 @@ body .ui-datatable thead th {
 }
 
 body .ui-datatable thead th, body .ui-datatable tbody td, body .ui-datatable tfoot td, body .ui-datatable tfoot th {
-	padding: 4px 10px;
+	padding: 10px;
 	overflow: hidden;
 	border-width: 0px;
+	vertical-align: middle;
 }
 
 body .ui-datatable .ui-datatable-data tr.ui-state-hover {
@@ -4159,6 +4159,7 @@ body .ui-datatable thead th {
 
 body .ui-datatable tbody tr {
 	vertical-align: bottom;
+	padding: 5px;
 	border-bottom: 1px solid #ddd;
 	border-bottom-width: 1px;
 }
@@ -4265,7 +4266,7 @@ body .ui-inputfield {
 	height: 30px;
 }
 
-body .ui-inputfield.ui-state-error {
+body .ui-inputfield.ui-state-error, body .ui-inputtext[aria-required="true"].ui-state-error, body .ui-inputtext[data-p-required="true"].ui-state-error {
 	border: 1px solid red;
 }
 
@@ -4576,7 +4577,7 @@ body .ui-button.ui-state-hover {
 }
 
 body .ui-button.btn-gray {
-	background: #999999;
+	background: #bababa;
 }
 
 body .ui-button.btn-gray.ui-state-hover {
@@ -4589,14 +4590,6 @@ body .ui-button.btn-primary {
 
 body .ui-button.btn-primary.ui-state-hover {
 	background: #3b7bb1;
-}
-
-body .btn-green .ui-button {
-	background: #26a1ab;
-}
-
-body .ui-button.btn-red {
-	background: #e53935;;
 }
 
 body .ui-button.medium {
@@ -4741,4 +4734,26 @@ body .ui-picklist-buttons .ui-icon-arrow-1-s:before {
 
 body .ui-picklist-buttons .ui-icon-arrowstop-1-s:before {
 	padding-left: 3px;
+}
+
+body .ui-message-error{
+	border: 0px;
+	background: transparent;
+	overflow: auto;
+	margin: 0px;
+	position: absolute;
+	bottom: 0px;
+	padding: 0px;
+}
+
+body .ui-message-error .ui-message-error-icon {
+	display: none;
+}
+
+body .ui-message-error .ui-message-error-detail {
+	color: red;
+	float: left;
+	font-weight: normal;
+	font-size: 0.9em;
+	margin-left: 2px;
 }

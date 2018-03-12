@@ -57,15 +57,6 @@ h4 {
 	padding: 5px 0px;
 }
 
-.error {
-	display: block;
-	color: red !important;
-	float: left;
-	font-weight: normal;
-	font-size: 0.9em;
-	white-space: nowrap;
-}
-
 /************************************
  *  HEADER
  ************************************/
@@ -181,7 +172,8 @@ h4 {
 }
 
 .form-group {
-	display: block;
+	overflow: auto;
+	padding: 0px 7px 15px 7px;
 	position: relative;
 }
 
@@ -253,8 +245,6 @@ h4 {
 
 .form-action-primary {
 	text-align: right;
-	overflow: auto;
-	width: 100%;
 }
 
 .searchForm {
