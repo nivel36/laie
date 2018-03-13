@@ -55,7 +55,7 @@ public class FileUploadServiceImpl implements FileUploadService {
 	private String upload(final String directory, final InputStream inputStream) {
 		try {
 			final String uuid = UUID.randomUUID().toString();
-			Files.copy(inputStream, new File(directory, uuid).toPath());
+			Files.copy(inputStream, new File(directory, uuid).toPath(), REPLACE_EXISTING);
 			return uuid;
 		}
 		catch (final IOException e) {

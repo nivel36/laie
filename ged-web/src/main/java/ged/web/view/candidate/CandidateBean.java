@@ -6,6 +6,7 @@ import static ged.web.core.util.Page.CANDIDATE_SEARCH;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.UncheckedIOException;
 import java.lang.invoke.MethodHandles;
 import java.time.LocalDate;
@@ -21,6 +22,7 @@ import javax.inject.Named;
 import org.omnifaces.util.Faces;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.RateEvent;
+import org.primefaces.model.UploadedFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -257,12 +259,13 @@ public class CandidateBean extends AbstractBean {
 	}
 
 	public void uploadFile(final FileUploadEvent event) {
-		try {
-			String uuid;
-			uuid = this.fileUploadService.uploadFile(event.getFile().getInputstream());
-			final UploadedServerFile file = this.saveFile(uuid, event.getFile().getFileName());
+		final UploadedFile uploadedFile = event.getFile();
+		try (InputStream inputStream = uploadedFile.getInputstream()) {
+			final String uuid = this.fileUploadService.uploadFile(inputStream);
+			final String fileName = uploadedFile.getFileName();
+			final UploadedServerFile file = this.saveFile(uuid, fileName);
 			this.files.add(file);
-			this.addInfoMessage("file.message.upload", "file.message.upload", event.getFile().getFileName());
+			this.addInfoMessage("file.message.upload", "file.message.upload", fileName);
 		}
 		catch (final IOException e) {
 			throw new UncheckedIOException(e);
@@ -270,8 +273,9 @@ public class CandidateBean extends AbstractBean {
 	}
 
 	public void uploadImage(final FileUploadEvent event) {
-		try {
-			final String uuid = this.fileUploadService.uploadImage(event.getFile().getInputstream());
+		final UploadedFile uploadedFile = event.getFile();
+		try (InputStream inputStream = uploadedFile.getInputstream()) {
+			final String uuid = this.fileUploadService.uploadImage(inputStream);
 			this.candidate.setImageFileName(uuid);
 		}
 		catch (final IOException e) {
