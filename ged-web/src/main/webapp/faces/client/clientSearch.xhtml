@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
-	template="/WEB-INF/templates/default.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
 		<title>#{i18n['client.clients']}</title>
@@ -16,29 +15,25 @@
 		<div class="ui-g">
 			<div class="ui-g-12">
 				<h:form id="searchForm">
+					<p:defaultCommand target="searchAction" />
 					<p:panel id="searchPanel" header="#{i18n['client.clients']}">
-						<div class="ui-g">
-							<div class="ui-g-12">
-								<div class="pull-right">
-									<p:commandButton value="#{i18n['action.new']}" actionListener="#{clientDialogBean.openDialog}" update="newClientForm" />
-									<p:commandButton value="#{i18n['action.export']}" styleClass="btn-primary" action="#{clientSearchBean.clean}" icon="fa fa-file-excel-o" />
-								</div>
-							</div>
+						<div class="pull-right">
+							<p:commandButton value="#{i18n['action.new']}" actionListener="#{clientDialogBean.openDialog}" update="newClientForm" />
+							<p:commandButton value="#{i18n['action.export']}" action="#{clientSearchBean.clean}" styleClass="btn-primary" icon="fa fa-file-excel-o" />
 						</div>
 						<div class="ui-g">
 							<div class="ui-md-12 ui-lg-4">
 								<div class="ui-inputgroup">
 									<p:inputText id="searchText" value="#{clientSearchBean.searchText}" />
-									<p:commandButton icon="fa fa-search" styleClass="green-button" action="#{clientSearchBean.search}"
-										update="@form" process="searchPanel" />
+									<p:commandButton id="cleanSearchTextAction" action="#{clientSearchBean.clean}" update="@form" styleClass="btn-gray" icon="fa fa-refresh" rendered="#{not empty clientSearchBean.searchText}" />
+									<p:commandButton id="searchAction" action="#{clientSearchBean.search}" update="@form" styleClass="btn-primary" icon="fa fa-search" />
 								</div>
 							</div>
 						</div>
 						<div class="ui-g">
 							<div class="ui-g-12">
-								<p:dataTable var="client" id="clients" value="#{clientSearchBean.clients}"
-									emptyMessage="#{i18n['client.no_clients_found']}" reflow="true" paginator="true" paginatorPosition="bottom"
-									rows="#{sessionBean.rowsPerPage}" selectionMode="single" selection="#{clientSearchBean.selectedClient}"
+								<p:dataTable var="client" id="clients" value="#{clientSearchBean.clients}" emptyMessage="#{i18n['client.no_clients_found']}" reflow="true"
+									paginator="true" paginatorPosition="bottom" rows="#{sessionBean.rowsPerPage}" selectionMode="single" selection="#{clientSearchBean.selectedClient}"
 									rowKey="#{client.id}" sortBy="#{client.name}" sortOrder="ascending">
 
 									<p:ajax event="rowSelect" listener="#{clientSearchBean.onClientSelect}" update="@form" />
