@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://legion.com/i18n" xmlns:p="http://primefaces.org/ui">
+
+	<h:form id="contactForm">
+		<p:dialog id="contactDlg" header="#{i18n['contact.new_contact']}" closable="false" modal="true" resizable="false" responsive="true"
+			visible="#{contactDialogBean.showDialog}">
+
+			<div class="ui-g">
+				<div class="ui-g-12 ui-md-6">
+					<div class="form-group">
+						<p:outputLabel value="#{i18n['contact.name']}" for="name" />
+						<p:inputText id="name" value="#{contactDialogBean.contact.name}" required="true" />
+						<p:message for="name" />
+					</div>
+				</div>
+				<div class="ui-g-12 ui-md-6">
+					<div class="form-group">
+						<p:outputLabel value="#{i18n['contact.surname']}" for="surname" />
+						<p:inputText id="surname" value="#{contactDialogBean.contact.surname}" required="true" />
+						<p:message for="surname" />
+					</div>
+				</div>
+				<div class="ui-g-12 ui-md-6">
+					<div class="form-group">
+						<p:outputLabel value="#{i18n['contact.email']}" for="email" />
+						<p:inputText id="email" value="#{contactDialogBean.contact.email}" required="true" />
+						<p:message for="email" />
+					</div>
+				</div>
+				<div class="ui-g-12 ui-md-6">
+					<div class="form-group">
+						<p:outputLabel value="#{i18n['contact.phoneNumber']}" for="phone_number" />
+						<p:inputText id="phone_number" value="#{contactDialogBean.contact.phoneNumber}" />
+						<p:message for="phone_number" />
+					</div>
+				</div>
+			</div>
+			<f:facet name="footer">
+				<div class="form-action-primary">
+					<p:commandButton value="#{i18n['action.cancel']}" action="#{contactDialogBean.closeDialog}" process="@this" update="contactDlg" styleClass="btn-gray">
+						<p:resetInput target="@form" />
+					</p:commandButton>
+					<p:commandButton value="#{i18n['action.save']}" action="#{contactDialogBean.save}" update="@form growl" />
+				</div>
+			</f:facet>
+		</p:dialog>
+	</h:form>
+</ui:composition>

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
-	xmlns:i18n="http://legion.com/i18n" template="/WEB-INF/templates/default.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:i18n="http://legion.com/i18n" template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
 		<title>#{i18n['client.client']}</title>
@@ -16,7 +15,8 @@
 		</f:metadata>
 
 		<ui:include src="/faces/jobOffer/jobOfferDialog.xhtml" />
-		<ui:include src="/faces/client/contactEdit.xhtml" />
+		<ui:include src="/faces/client/clientDialog.xhtml" />
+		<ui:include src="/faces/client/contactDialog.xhtml" />
 
 		<div class="ui-g">
 			<div class="ui-g-12 ui-xl-6">
@@ -66,25 +66,10 @@
 						<div class="ui-g">
 							<div class="ui-g-12">
 								<div class="form-action-primary">
-									<p:commandButton value="#{i18n['action.undelete']}" action="#{clientBean.undeleteClient}" immediate="true"
-										rendered="#{clientBean.client.deleted}" />
-
-									<p:commandButton value="#{i18n['action.save']}" action="#{clientBean.updateClient}"
-										rendered="#{not clientBean.client.deleted and clientBean.editable and not clientBean.insertable}"
-										update="client growl" />
-
-									<p:commandButton value="#{i18n['action.save']}" action="#{clientBean.insertClient}"
-										rendered="#{not clientBean.client.deleted and clientBean.insertable}" update="client growl" />
-
-									<p:commandButton styleClass="btn-primary" value="#{i18n['action.edit']}" action="#{clientBean.editClient}"
-										immediate="true" rendered="#{not clientBean.client.deleted and not clientBean.editable}" update="client growl" />
-
-									<p:commandButton styleClass="btn-gray" value="#{i18n['action.cancel']}" action="#{clientBean.cancelEdit}"
-										rendered="#{not clientBean.client.deleted and clientBean.editable}"
-										update="client growl contactsForm jobOffersForm" process="@this" />
-
-									<p:commandButton styleClass="btn-primary" id="exportExcel" icon="fa fa-file-excel-o"
-										value="#{i18n['action.export']}" action="#{clientBean.export}" rendered="#{not clientBean.editable}" />
+									<p:commandButton id="editClient" value="#{i18n['action.edit']}" actionListener="#{clientDialogBean.openDialog}" update="clientForm">
+										<f:attribute name="client" value="#{clientBean.client}" />
+									</p:commandButton>
+									<p:commandButton id="exportExcel" value="#{i18n['action.export']}" icon="fa fa-file-excel-o" styleClass="btn-primary" action="#{clientBean.export}" />
 								</div>
 							</div>
 						</div>
@@ -96,9 +81,8 @@
 					<p:panel header="#{i18n['client.contacts']}" rendered="#{not clientBean.insertable}" id="contacts">
 						<div class="ui-g">
 							<div class="ui-g-12">
-								<p:dataTable var="contact" value="#{clientBean.contacts}" emptyMessage="#{i18n['client.no_contacts_found']}"
-									reflow="true" paginator="true" paginatorPosition="bottom" rows="#{sessionBean.rowsPerPage}"
-									selectionMode="single" selection="#{clientBean.selectedContact}" rowKey="#{contact.id}"
+								<p:dataTable var="contact" value="#{clientBean.contacts}" emptyMessage="#{i18n['client.no_contacts_found']}" reflow="true" paginator="true"
+									paginatorPosition="bottom" rows="#{sessionBean.rowsPerPage}" selectionMode="single" selection="#{clientBean.selectedContact}" rowKey="#{contact.id}"
 									sortBy="#{contact.fullName}" sortOrder="ascending">
 
 									<p:ajax event="rowSelect" listener="#{clientBean.onContactSelect}" />
@@ -118,8 +102,9 @@
 						<div class="ui-g">
 							<div class="ui-g-12">
 								<div class="form-action-primary">
-									<p:commandButton value="#{i18n['action.add']}" process="@this"
-										action="#{contactEditBean.openDialog(clientBean.client)}" update="newContactDlg" />
+									<p:commandButton value="#{i18n['action.add']}" actionListener="#{contactDialogBean.openDialog}" process="@this" update="contactForm">
+										<f:attribute name="client" value="#{clientBean.client}" />
+									</p:commandButton>
 								</div>
 							</div>
 						</div>
@@ -131,9 +116,8 @@
 					<p:panel header="#{i18n['job.job_offers']}" rendered="#{not clientBean.insertable}" id="jobOffers">
 						<div class="ui-g">
 							<div class="ui-g-12">
-								<p:dataTable var="jobOffer" value="#{clientBean.jobOffers}" emptyMessage="#{i18n['client.no_job_offers_found']}"
-									reflow="true" paginator="true" paginatorPosition="bottom" rows="#{sessionBean.rowsPerPage}"
-									selectionMode="single" selection="#{clientBean.selectedJobOffer}" rowKey="#{jobOffer.id}"
+								<p:dataTable var="jobOffer" value="#{clientBean.jobOffers}" emptyMessage="#{i18n['client.no_job_offers_found']}" reflow="true" paginator="true"
+									paginatorPosition="bottom" rows="#{sessionBean.rowsPerPage}" selectionMode="single" selection="#{clientBean.selectedJobOffer}" rowKey="#{jobOffer.id}"
 									sortBy="#{jobOffer.name}" sortOrder="ascending">
 
 									<p:ajax event="rowSelect" listener="#{clientBean.onJobOfferSelect}" />
@@ -152,8 +136,7 @@
 						<div class="ui-g">
 							<div class="ui-g-12">
 								<div class="form-action-primary">
-									<p:commandButton value="#{i18n['action.add']}" actionListener="#{jobOfferDialogBean.openDialog}"
-										update="newJobOfferForm">
+									<p:commandButton value="#{i18n['action.add']}" actionListener="#{jobOfferDialogBean.openDialog}" update="newJobOfferForm">
 										<f:attribute name="client" value="#{clientBean.client}" />
 									</p:commandButton>
 								</div>

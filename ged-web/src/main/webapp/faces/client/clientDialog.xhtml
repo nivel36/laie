@@ -2,8 +2,8 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://legion.com/i18n" xmlns:p="http://primefaces.org/ui">
 
-	<h:form id="newClientForm">
-		<p:dialog id="newClientDlg" header="#{i18n['client.new_client']}" closable="false" modal="true" resizable="false" responsive="true"
+	<h:form id="clientForm">
+		<p:dialog id="clientDlg" header="#{i18n['client.new_client']}" closable="false" modal="true" resizable="false" responsive="true"
 			visible="#{clientDialogBean.showDialog}">
 
 			<div class="ui-g">
@@ -48,10 +48,10 @@
 			</div>
 			<f:facet name="footer">
 				<div class="form-action-primary">
-					<p:commandButton value="#{i18n['action.cancel']}" action="#{clientDialogBean.closeDialog}" styleClass="btn-gray" process="@this" update="@form">
+					<p:commandButton value="#{i18n['action.cancel']}" action="#{clientDialogBean.closeDialog}" process="@this" update="@form" styleClass="btn-gray">
 						<p:resetInput target="@form" />
 					</p:commandButton>
-					<p:commandButton value="#{i18n['action.save']}" action="#{clientDialogBean.save}" update="@form" />
+					<p:commandButton value="#{i18n['action.save']}" action="#{clientDialogBean.save}" update="@form growl" />
 				</div>
 			</f:facet>
 		</p:dialog>

@@ -51,12 +51,20 @@ public class ClientDialogBean extends AbstractDialogBean {
 	@Override
 	protected void init() {
 		logger.trace("ClientDialog oppened");
-		this.client = this.buildNewClient();
+		this.client = this.getAttribute("client");
+		if (this.client == null) {
+			this.client = this.buildNewClient();
+		}
 	}
 
 	public void save() {
 		logger.debug("ClientDialog save action performed");
-		this.clientService.insert(this.client);
+		if (this.client.getId() == 0) {
+			this.clientService.insert(this.client);
+		}
+		else {
+			this.clientService.update(this.client);
+		}
 		to(CLIENT).withParams(map("id", this.client.getId())).doGet();
 	}
 
