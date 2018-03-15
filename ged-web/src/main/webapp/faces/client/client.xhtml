@@ -63,15 +63,11 @@
 							</div>
 						</div>
 
-						<div class="ui-g">
-							<div class="ui-g-12">
-								<div class="form-action-primary">
-									<p:commandButton id="editClient" value="#{i18n['action.edit']}" actionListener="#{clientDialogBean.openDialog}" update="clientForm">
-										<f:attribute name="client" value="#{clientBean.client}" />
-									</p:commandButton>
-									<p:commandButton id="exportExcel" value="#{i18n['action.export']}" icon="fa fa-file-excel-o" styleClass="btn-primary" action="#{clientBean.export}" />
-								</div>
-							</div>
+						<div class="pull-right">
+							<p:commandButton id="exportExcel" value="#{i18n['action.export']}" action="#{clientBean.export}" icon="fa fa-file-excel-o" />
+							<p:commandButton id="editClient" value="#{i18n['action.edit']}" actionListener="#{clientDialogBean.openDialog}" update="clientForm">
+								<f:attribute name="client" value="#{clientBean.client}" />
+							</p:commandButton>
 						</div>
 					</p:panel>
 				</h:form>
@@ -82,8 +78,8 @@
 						<div class="ui-g">
 							<div class="ui-g-12">
 								<p:dataTable var="contact" value="#{clientBean.contacts}" emptyMessage="#{i18n['client.no_contacts_found']}" reflow="true" paginator="true"
-									paginatorPosition="bottom" rows="#{sessionBean.rowsPerPage}" selectionMode="single" rowKey="#{contact.id}"
-									sortBy="#{contact.fullName}" sortOrder="ascending">
+									paginatorPosition="bottom" rows="#{sessionBean.rowsPerPage}" selectionMode="single" rowKey="#{contact.id}" sortBy="#{contact.fullName}"
+									sortOrder="ascending">
 
 									<f:attribute name="contact" value="#{contact}" />
 									<p:ajax event="rowSelect" listener="#{contactDialogBean.openDialog}" update="clientForm" />
@@ -100,14 +96,11 @@
 								</p:dataTable>
 							</div>
 						</div>
-						<div class="ui-g">
-							<div class="ui-g-12">
-								<div class="form-action-primary">
-									<p:commandButton value="#{i18n['action.add']}" actionListener="#{contactDialogBean.openDialog}" process="@this" update="contactForm">
-										<f:attribute name="client" value="#{clientBean.client}" />
-									</p:commandButton>
-								</div>
-							</div>
+						<div class="pull-right">
+							<p:commandButton value="#{i18n['action.new']}" actionListener="#{contactDialogBean.openDialog}" process="@this" update="contactForm"
+								styleClass="btn-primary">
+								<f:attribute name="client" value="#{clientBean.client}" />
+							</p:commandButton>
 						</div>
 					</p:panel>
 				</h:form>
@@ -134,14 +127,13 @@
 								</p:dataTable>
 							</div>
 						</div>
-						<div class="ui-g">
-							<div class="ui-g-12">
-								<div class="form-action-primary">
-									<p:commandButton value="#{i18n['action.add']}" actionListener="#{jobOfferDialogBean.openDialog}" update="newJobOfferForm">
-										<f:attribute name="client" value="#{clientBean.client}" />
-									</p:commandButton>
-								</div>
-							</div>
+						<div class="pull-right">
+							<p:commandButton value="#{i18n['action.add']}" actionListener="#{jobOfferDialogBean.openDialog}" update="newJobOfferForm">
+								<f:attribute name="client" value="#{clientBean.client}" />
+							</p:commandButton>
+							<p:commandButton value="#{i18n['action.new']}" actionListener="#{jobOfferDialogBean.openDialog}" update="newJobOfferForm" styleClass="btn-primary">
+								<f:attribute name="client" value="#{clientBean.client}" />
+							</p:commandButton>
 						</div>
 					</p:panel>
 				</h:form>

@@ -177,9 +177,6 @@
 				<plugin>
 					<artifactId>maven-ejb-plugin</artifactId>
 					<version>${maven.ejb.plugin.version}</version>
-					<configuration>
-						<ejbVersion>3.2</ejbVersion>
-					</configuration>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>

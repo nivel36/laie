@@ -23,13 +23,13 @@
 									<p:inputText id="searchText" value="#{clientSearchBean.searchText}" />
 									<p:commandButton id="cleanSearchTextAction" action="#{clientSearchBean.clean}" update="@form" styleClass="btn-gray" icon="fa fa-times"
 										rendered="#{not empty clientSearchBean.searchText}" />
-									<p:commandButton id="searchAction" action="#{clientSearchBean.search}" update="@form" styleClass="btn-primary" icon="fa fa-search" />
+									<p:commandButton id="searchAction" action="#{clientSearchBean.search}" update="@form" icon="fa fa-search" />
 								</div>
 							</div>
 							<div class="ui-g-12 ui-md-6 ui-lg-8">
 								<div class="pull-right">
-									<p:commandButton value="#{i18n['action.new']}" actionListener="#{clientDialogBean.openDialog}" update="clientForm" />
-									<p:commandButton value="#{i18n['action.export']}" action="#{clientSearchBean.clean}" styleClass="btn-primary" icon="fa fa-file-excel-o" />
+									<p:commandButton value="#{i18n['action.export']}" action="#{clientSearchBean.clean}" icon="fa fa-file-excel-o" />
+									<p:commandButton value="#{i18n['action.new']}" actionListener="#{clientDialogBean.openDialog}" update="clientForm" styleClass="btn-primary" />
 								</div>
 							</div>
 						</div>

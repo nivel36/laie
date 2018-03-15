@@ -63,6 +63,7 @@
 			<plugin>
 				<artifactId>maven-ejb-plugin</artifactId>
 				<configuration>
+					<ejbVersion>3.2</ejbVersion>
 					<filters>
 						<filter>src/main/resources/config.properties</filter>
 					</filters>

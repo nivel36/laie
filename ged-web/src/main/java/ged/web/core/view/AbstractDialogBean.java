@@ -25,7 +25,12 @@ public abstract class AbstractDialogBean extends AbstractBean {
 	@SuppressWarnings("unchecked")
 	protected <T> T getAttribute(final String key) {
 		Objects.requireNonNull(key);
-		return (T) this.attributes.get(key);
+		if (this.attributes.containsKey(key)) {
+			return (T) this.attributes.get(key);
+		}
+		else {
+			return null;
+		}
 	}
 
 	protected abstract void init();

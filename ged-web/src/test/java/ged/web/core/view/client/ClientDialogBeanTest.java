@@ -8,6 +8,9 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.faces.component.UIComponent;
 import javax.faces.event.ActionEvent;
 
@@ -53,7 +56,8 @@ public class ClientDialogBeanTest {
 		final ActionEvent actionEvent = mock(ActionEvent.class);
 		final UIComponent uiComponent = mock(UIComponent.class);
 		when(actionEvent.getComponent()).thenReturn(uiComponent);
-		when(uiComponent.getAttributes()).thenReturn(null);
+		final Map<String, Object> attributes = new HashMap<>();
+		when(uiComponent.getAttributes()).thenReturn(attributes);
 		final User user = new User();
 		user.setEmail("aaron@test.com");
 		when(this.sessionBean.getUser()).thenReturn(user);
