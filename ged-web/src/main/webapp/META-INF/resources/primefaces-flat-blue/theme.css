@@ -4168,6 +4168,19 @@ body .ui-datatable .ui-datatable-data {
 	font-size: 14px;
 }
 
+body .ui-datatable .ui-datatable-data tr:hover {
+	background: #eee;
+}
+
+body .ui-datatable .ui-datatable-data td a {
+	color: #5b9bd1;
+	font-weight: 600;
+}
+
+body .ui-datatable .ui-datatable-data td a:hover {
+	text-decoration: underline;
+}
+
 body .ui-widget-content.ui-datatable-odd {
 	background-color: #f9f9f9;
 }

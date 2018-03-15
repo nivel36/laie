@@ -31,6 +31,17 @@ public class ContactDialogBean extends AbstractDialogBean {
 	@Inject
 	private transient ContactService contactService;
 
+	private Contact buildContact() {
+		final Client client = this.getAttribute("client");
+		if (client == null) {
+			throw new IllegalStateException("Null client");
+		}
+		final Contact newContact = new Contact();
+		newContact.setClient(client);
+		newContact.setPhoneNumber(client.getPhoneNumber());
+		return newContact;
+	}
+
 	@Override
 	protected void dispose() {
 		logger.trace("ContactDialog closed");
@@ -44,10 +55,10 @@ public class ContactDialogBean extends AbstractDialogBean {
 	@Override
 	protected void init() {
 		logger.trace("ContactDialog oppened");
-		final Client client = this.getAttribute("client");
-		this.contact = new Contact();
-		this.contact.setClient(client);
-		this.contact.setPhoneNumber(client.getPhoneNumber());
+		this.contact = this.getAttribute("contact");
+		if (this.contact == null) {
+			this.contact = this.buildContact();
+		}
 	}
 
 	public void save() {

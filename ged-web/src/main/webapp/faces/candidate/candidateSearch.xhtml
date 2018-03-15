@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
-	template="/WEB-INF/templates/default.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
 		<title>#{i18n['candidate.candidates']}</title>
@@ -64,36 +63,30 @@
 								<div class="ui-md-12 ui-lg-4">
 									<div class="ui-inputgroup">
 										<p:inputText id="searchText" value="#{candidateSearchBean.searchText}" />
-										<p:commandButton icon="fa fa-search" styleClass="green-button" action="#{candidateSearchBean.searchPlus}"
-											update="@form" process="searchUserPanel"/>
+										<p:commandButton icon="fa fa-search" styleClass="green-button" action="#{candidateSearchBean.searchPlus}" update="@form" process="searchUserPanel" />
 									</div>
 								</div>
 								<div class="ui-md-12 ui-lg-4">
-									<p:commandButton value="#{i18n['action.search']}" styleClass="btn-primary" action="#{candidateSearchBean.search}"
-										update="@form" process="searchUserPanel" />
-									<p:commandButton value="#{i18n['action.clean']}" action="#{candidateSearchBean.clean}" update="@form"
-										styleClass="btn-gray" />
+									<p:commandButton value="#{i18n['action.search']}" styleClass="btn-primary" action="#{candidateSearchBean.search}" update="@form"
+										process="searchUserPanel" />
+									<p:commandButton value="#{i18n['action.clean']}" action="#{candidateSearchBean.clean}" update="@form" styleClass="btn-gray" />
 								</div>
 							</div>
 						</div>
 						<div class="searchResults">
-							<p:dataTable var="candidate" id="candidates" value="#{candidateSearchBean.candidates}"
-								emptyMessage="#{i18n['candidate.no_candidates_found']}" reflow="true" paginator="true"
-								paginatorPosition="bottom" rows="#{sessionBean.rowsPerPage}" selectionMode="single"
-								selection="#{candidateSearchBean.selectedCandidate}" rowKey="#{candidate.id}" sortBy="#{candidate.fullName}"
-								sortOrder="ascending">
+							<p:dataTable var="candidate" id="candidates" value="#{candidateSearchBean.candidates}" emptyMessage="#{i18n['candidate.no_candidates_found']}"
+								reflow="true" paginator="true" paginatorPosition="bottom" rows="#{sessionBean.rowsPerPage}" sortBy="#{candidate.fullName}" sortOrder="ascending">
 
-								<p:ajax event="rowSelect" listener="#{candidateSearchBean.onCandidateSelect}" update="@form" />
-								
+
 								<p:column>
-									<p:graphicImage class="image image-icon" value="/images/#{candidate.imageFileName}"
-										rendered="#{not empty candidate.imageFileName}" />
-									<p:graphicImage class="image image-icon" value="/resources/img/default-avatar.png"
-										rendered="#{empty candidate.imageFileName}" />
+									<p:graphicImage class="image image-icon" value="/images/#{candidate.imageFileName}" rendered="#{not empty candidate.imageFileName}" />
+									<p:graphicImage class="image image-icon" value="/resources/img/default-avatar.png" rendered="#{empty candidate.imageFileName}" />
 								</p:column>
 
 								<p:column headerText="#{i18n['candidate.name']}" sortBy="#{candidate.name}">
-									<h:outputText value="#{candidate}" />
+									<h:link value="#{candidate.fullName}" outcome="/faces/candidate/candidate">
+										<f:param name="id" value="#{candidate.id}" />
+									</h:link>
 								</p:column>
 
 								<p:column headerText="#{i18n['candidate.jobProfile']}" sortBy="#{candidate.jobProfile}">

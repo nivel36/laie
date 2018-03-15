@@ -36,13 +36,12 @@
 						<div class="ui-g">
 							<div class="ui-g-12">
 								<p:dataTable var="client" id="clients" value="#{clientSearchBean.clients}" emptyMessage="#{i18n['client.no_clients_found']}" reflow="true"
-									paginator="true" paginatorPosition="bottom" rows="#{sessionBean.rowsPerPage}" selectionMode="single" selection="#{clientSearchBean.selectedClient}"
-									rowKey="#{client.id}" sortBy="#{client.name}" sortOrder="ascending">
-
-									<p:ajax event="rowSelect" listener="#{clientSearchBean.onClientSelect}" update="@form" />
+									paginator="true" paginatorPosition="bottom" rows="#{sessionBean.rowsPerPage}" sortBy="#{client.name}" sortOrder="ascending">
 
 									<p:column headerText="#{i18n['client.name']}" sortBy="#{client.name}">
-										<h:outputText value="#{client.name}" />
+										<h:link value="#{client.name}" outcome="/faces/client/client">
+											<f:param name="id" value="#{client.id}" />
+										</h:link>
 									</p:column>
 
 									<p:column headerText="#{i18n['client.phoneNumber']}" sortBy="#{client.phoneNumber}">
@@ -62,7 +61,9 @@
 									</p:column>
 
 									<p:column headerText="#{i18n['client.owner']}" sortBy="#{client.user.fullName}">
-										<h:outputText value="#{client.owner.fullName}" />
+										<h:link value="#{client.owner.fullName}" outcome="/faces/user/user">
+											<f:param name="id" value="#{client.owner.id}" />
+										</h:link>
 									</p:column>
 								</p:dataTable>
 							</div>

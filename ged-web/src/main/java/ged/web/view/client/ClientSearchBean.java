@@ -1,9 +1,5 @@
 package ged.web.view.client;
 
-import static ged.ejb.core.util.Parameters.*;
-import static ged.web.core.util.Navigate.to;
-import static ged.web.core.util.Page.CLIENT;
-
 import java.lang.invoke.MethodHandles;
 import java.util.List;
 
@@ -34,12 +30,10 @@ public class ClientSearchBean extends AbstractBean {
 
 	private String searchText;
 
-	private Client selectedClient;
-
 	public void clean() {
 		logger.debug("Clean action performed");
 		this.searchText = null;
-		search();
+		this.search();
 	}
 
 	public List<Client> getClients() {
@@ -50,23 +44,10 @@ public class ClientSearchBean extends AbstractBean {
 		return this.searchText;
 	}
 
-	public Client getSelectedClient() {
-		return this.selectedClient;
-	}
-
 	@PostConstruct
 	public void init() {
 		logger.trace("Init ClientSearchBean");
 		this.clients = this.clientService.search(this.searchText);
-	}
-
-	public String newClient() {
-		logger.debug("New client action performed");
-		return to(CLIENT).toUrl();
-	}
-
-	public void onClientSelect() {
-		to(CLIENT).withParams(map("id", this.selectedClient.getId())).doGet();
 	}
 
 	public void search() {
@@ -80,9 +61,5 @@ public class ClientSearchBean extends AbstractBean {
 
 	public void setSearchText(final String searchText) {
 		this.searchText = searchText;
-	}
-
-	public void setSelectedClient(final Client selectedClient) {
-		this.selectedClient = selectedClient;
 	}
 }
