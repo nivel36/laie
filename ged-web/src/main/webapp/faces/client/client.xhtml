@@ -14,7 +14,7 @@
 			<f:viewAction action="#{clientBean.init}" />
 		</f:metadata>
 
-		<ui:include src="/faces/jobOffer/jobOfferDialog.xhtml" />
+
 		<ui:include src="/faces/client/clientDialog.xhtml" />
 
 		<div class="ui-g">
@@ -75,37 +75,7 @@
 				<ui:include src="/faces/client/contactPanel.xhtml" />
 			</div>
 			<div class="ui-g-12 ui-xl-6">
-				<h:form id="jobOffersForm">
-					<p:panel header="#{i18n['job.job_offers']}" id="jobOffers">
-						<div class="ui-g">
-							<div class="ui-g-12">
-								<p:dataTable var="jobOffer" value="#{clientBean.jobOffers}" emptyMessage="#{i18n['client.no_job_offers_found']}" reflow="true" paginator="true"
-									paginatorPosition="bottom" rows="#{sessionBean.rowsPerPage}" selectionMode="single" selection="#{clientBean.selectedJobOffer}" rowKey="#{jobOffer.id}"
-									sortBy="#{jobOffer.name}" sortOrder="ascending">
-
-									<p:ajax event="rowSelect" listener="#{clientBean.onJobOfferSelect}" />
-
-									<p:column headerText="#{i18n['job.name']}">
-										<h:outputText value="#{jobOffer.name}" />
-									</p:column>
-									<p:column headerText="#{i18n['job.date_closed']}">
-										<h:outputText value="#{jobOffer.dateClosed}">
-											<f:convertDateTime pattern="dd / MM / yyyy" />
-										</h:outputText>
-									</p:column>
-								</p:dataTable>
-							</div>
-						</div>
-						<div class="pull-right">
-							<p:commandButton value="#{i18n['action.add']}" actionListener="#{jobOfferDialogBean.openDialog}" update="newJobOfferForm">
-								<f:attribute name="client" value="#{clientBean.client}" />
-							</p:commandButton>
-							<p:commandButton value="#{i18n['action.new']}" actionListener="#{jobOfferDialogBean.openDialog}" update="newJobOfferForm" styleClass="btn-primary">
-								<f:attribute name="client" value="#{clientBean.client}" />
-							</p:commandButton>
-						</div>
-					</p:panel>
-				</h:form>
+				<ui:include src="/faces/jobOffer/jobOfferPanel.xhtml" />
 			</div>
 		</div>
 	</ui:define>

@@ -171,12 +171,11 @@
 		]]></query>
 	</named-query>
 
-	<named-query name="JobOffer.findAllByClient">
+	<named-query name="JobOffer.findByClientId">
 		<query><![CDATA[
 			SELECT j 
 			FROM JobOffer j 
-			WHERE j.client = :client 
-			AND j.deleted <> TRUE
+			WHERE j.client.id = :clientId
 		]]></query>
 	</named-query>
 

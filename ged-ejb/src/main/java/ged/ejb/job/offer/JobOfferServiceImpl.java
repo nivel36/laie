@@ -36,8 +36,8 @@ public class JobOfferServiceImpl extends AbstratctAuditedService<JobOffer> imple
 	private final JobOfferDao jobOfferDao;
 
 	@Inject
-	public JobOfferServiceImpl(@Repository final JobOfferDao jobOfferDao, @Repository final JobMeetingDao jobMeetingDao,
-			final ClientService clientService, @Repository final JobCandidatureDao jobCandidatureDao) {
+	public JobOfferServiceImpl(@Repository final JobOfferDao jobOfferDao, @Repository final JobMeetingDao jobMeetingDao, final ClientService clientService,
+			@Repository final JobCandidatureDao jobCandidatureDao) {
 		Objects.requireNonNull(jobOfferDao);
 		Objects.requireNonNull(clientService);
 		Objects.requireNonNull(jobCandidatureDao);
@@ -67,15 +67,15 @@ public class JobOfferServiceImpl extends AbstratctAuditedService<JobOffer> imple
 	}
 
 	@Override
-	public List<JobOffer> findAllJobOffersByClient(final Client client) {
-		logger.debug("Find all job Offers of the client {}", client.getName());
-		return this.jobOfferDao.findAllJobOffersByClient(client);
-	}
-
-	@Override
 	public List<JobOffer> findAllJobOffersByOwner(final User owner) {
 		logger.debug("Find all job Offers of the owner {}", owner.getFullName());
 		return this.jobOfferDao.findAllByOwner(owner);
+	}
+
+	@Override
+	public List<JobOffer> findJobOffersByClientId(final long clientId) {
+		logger.debug("Find all job Offers of the client id {}", clientId);
+		return this.jobOfferDao.findJobOffersByClientId(clientId);
 	}
 
 	@Override
@@ -94,8 +94,8 @@ public class JobOfferServiceImpl extends AbstratctAuditedService<JobOffer> imple
 	public void insert(final JobOffer jobOffer) {
 		Objects.requireNonNull(jobOffer);
 		logger.debug("Insert job offer {}", jobOffer.getDescription());
-		putClientOnJobOffer(jobOffer);
-		getDao().insert(jobOffer);
+		this.putClientOnJobOffer(jobOffer);
+		this.getDao().insert(jobOffer);
 	}
 
 	private void putClientOnJobOffer(final JobOffer jobOffer) {
@@ -103,7 +103,8 @@ public class JobOfferServiceImpl extends AbstratctAuditedService<JobOffer> imple
 		if (client == null) {
 			client = jobOffer.getClient();
 			this.clientService.update(client);
-		} else {
+		}
+		else {
 			jobOffer.setClient(client);
 		}
 	}
@@ -112,8 +113,7 @@ public class JobOfferServiceImpl extends AbstratctAuditedService<JobOffer> imple
 	public void removeJobCandidature(final JobOffer jobOffer, final Candidate candidate) {
 		Objects.requireNonNull(jobOffer);
 		Objects.requireNonNull(candidate);
-		logger.debug("Remove job candidature of candidate {} to job offer {}", candidate.getFullName(),
-				jobOffer.getName());
+		logger.debug("Remove job candidature of candidate {} to job offer {}", candidate.getFullName(), jobOffer.getName());
 		final JobCandidature jobCandidature = this.jobCandidatureDao.findByJobOfferAndCandidate(jobOffer, candidate);
 		this.jobCandidatureDao.delete(jobCandidature);
 	}
@@ -123,6 +123,6 @@ public class JobOfferServiceImpl extends AbstratctAuditedService<JobOffer> imple
 	public JobOffer update(final JobOffer jobOffer) {
 		Objects.requireNonNull(jobOffer);
 		logger.debug("Update job offer {}", jobOffer.getDescription());
-		return getDao().update(jobOffer);
+		return this.getDao().update(jobOffer);
 	}
 }

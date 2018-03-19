@@ -9,7 +9,6 @@ import java.util.Objects;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ged.ejb.client.Client;
 import ged.ejb.core.model.AbstractDaoJpa;
 import ged.ejb.core.model.Repository;
 import ged.ejb.user.User;
@@ -29,12 +28,11 @@ public class JobOfferDaoJpa extends AbstractDaoJpa<JobOffer> implements JobOffer
 	}
 
 	@Override
-	public List<JobOffer> findAllJobOffersByClient(final Client client) {
-		Objects.requireNonNull(client);
-		logger.debug("SELECT all the client offers {}", client.getName());
+	public List<JobOffer> findJobOffersByClientId(final long clientId) {
+		logger.debug("SELECT  job offers by client id {}", clientId);
 		final Map<String, Object> parameters = new HashMap<>();
-		parameters.put("client", client);
-		return this.findByQuery(JobOffer.class, "JobOffer.findAllByClient", parameters, 0, 0);
+		parameters.put("clientId", clientId);
+		return this.findByQuery(JobOffer.class, "JobOffer.findByClientId", parameters, 0, 0);
 	}
 
 	@Override
@@ -51,6 +49,6 @@ public class JobOfferDaoJpa extends AbstractDaoJpa<JobOffer> implements JobOffer
 
 	@Override
 	public List<JobOffer> search(final String searchText) {
-		return getPersistenceFacade().search(JobOffer.class, searchText, "name", "client.name");
+		return this.getPersistenceFacade().search(JobOffer.class, searchText, "name", "client.name");
 	}
 }

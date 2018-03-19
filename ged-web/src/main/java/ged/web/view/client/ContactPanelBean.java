@@ -26,7 +26,7 @@ public class ContactPanelBean extends AbstractBean {
 	private List<Contact> contacts;
 
 	@Inject
-	private ContactService contactService;
+	private transient ContactService contactService;
 
 	public Long getClientId() {
 		return this.clientId;

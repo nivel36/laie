@@ -90,8 +90,10 @@
 			<div class="ui-g">
 				<div class="ui-g-12">
 					<div class="form-action-primary">
-						<p:commandButton styleClass="btn-primary" value="#{i18n['action.save']}" action="#{jobOfferDialogBean.save}" update="@form growl" />
-						<p:commandButton value="#{i18n['action.cancel']}" action="#{jobOfferDialogBean.closeDialog}" immediate="true" styleClass="btn-gray" update="@form" />
+						<p:commandButton value="#{i18n['action.cancel']}" action="#{jobOfferDialogBean.closeDialog}" process="@this" update="@form" styleClass="btn-gray">
+							<p:resetInput target="@form" />
+						</p:commandButton>
+						<p:commandButton value="#{i18n['action.save']}" action="#{jobOfferDialogBean.save}" update="@form growl" styleClass="btn-primary" />
 					</div>
 				</div>
 			</div>

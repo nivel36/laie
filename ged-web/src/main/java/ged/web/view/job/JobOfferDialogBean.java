@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import ged.ejb.client.Client;
+import ged.ejb.client.ClientService;
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
 import ged.web.core.view.AbstractDialogBean;
@@ -20,6 +21,9 @@ import ged.web.view.client.SelectClientAction;
 public class JobOfferDialogBean extends AbstractDialogBean implements ClientSelecteable {
 
 	private static final long serialVersionUID = -4373329969104383876L;
+
+	@Inject
+	private transient ClientService clientService;
 
 	private JobOffer jobOffer;
 
@@ -44,7 +48,8 @@ public class JobOfferDialogBean extends AbstractDialogBean implements ClientSele
 	@Override
 	protected void init() {
 		this.jobOffer = new JobOffer();
-		final Client client = (Client) getAttribute("client");
+		final Long clientId = (Long) this.getAttribute("client");
+		final Client client = this.clientService.find(clientId);
 		this.jobOffer.setClient(client);
 		this.jobOffer.setOwner(this.sessionBean.getUser());
 	}
