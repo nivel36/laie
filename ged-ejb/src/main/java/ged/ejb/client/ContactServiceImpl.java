@@ -1,5 +1,8 @@
 package ged.ejb.client;
 
+import java.util.List;
+import java.util.Objects;
+
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
@@ -14,7 +17,13 @@ public class ContactServiceImpl extends AbstratctAuditedService<Contact> impleme
 
 	@Inject
 	public ContactServiceImpl(@Repository final ContactDao contactDao) {
+		Objects.requireNonNull(contactDao);
 		this.contactDao = contactDao;
+	}
+
+	@Override
+	public List<Contact> findByClientId(final long clientId) {
+		return this.contactDao.findByClientId(clientId);
 	}
 
 	@Override

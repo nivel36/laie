@@ -4,7 +4,7 @@
 
 	<h:form id="contactForm">
 		<p:dialog id="contactDlg" header="#{i18n['contact.new_contact']}" closable="false" modal="true" resizable="false" responsive="true"
-			visible="#{contactDialogBean.showDialog}">
+			visible="#{contactDialogBean.showDialog}" dynamic="true" >
 
 			<div class="ui-g">
 				<div class="ui-g-12 ui-md-6">
@@ -38,7 +38,7 @@
 			</div>
 			<f:facet name="footer">
 				<div class="form-action-primary">
-					<p:commandButton value="#{i18n['action.cancel']}" action="#{contactDialogBean.closeDialog}" process="@this" update="contactDlg" styleClass="btn-gray">
+					<p:commandButton value="#{i18n['action.cancel']}" action="#{contactDialogBean.closeDialog}" process="@this" update="@form" styleClass="btn-gray">
 						<p:resetInput target="@form" />
 					</p:commandButton>
 					<p:commandButton value="#{i18n['action.save']}" action="#{contactDialogBean.save}" update="@form growl" />

@@ -4,12 +4,9 @@ import static ged.ejb.core.util.Parameters.map;
 import static ged.web.core.util.Navigate.to;
 import static ged.web.core.util.Page.CLIENT;
 import static ged.web.core.util.Page.CLIENT_SEARCH;
-import static ged.web.core.util.Page.CONTACT;
-import static ged.web.core.util.Page.CONTACT_EDIT;
 import static ged.web.core.util.Page.JOB_OFFER;
 import static ged.web.core.util.Page.JOB_OFFER_EDIT;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.view.ViewScoped;
@@ -18,13 +15,10 @@ import javax.inject.Named;
 
 import ged.ejb.client.Client;
 import ged.ejb.client.ClientService;
-import ged.ejb.client.Contact;
 import ged.ejb.core.Address;
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
 import ged.web.core.util.Message;
-import ged.web.core.util.Navigate;
-import ged.web.core.util.Page;
 import ged.web.core.view.AbstractBean;
 
 @Named
@@ -35,42 +29,17 @@ public class ClientBean extends AbstractBean {
 
 	private Client client;
 
+	private Long clientId;
+
 	@Inject
 	private transient ClientService clientService;
-
-	private List<Contact> contacts;
-
-	private boolean editable;
-
-	private String id;
 
 	private List<JobOffer> jobOffers;
 
 	@Inject
 	private transient JobOfferService jobOfferService;
 
-	private Contact selectedContact;
-
 	private JobOffer selectedJobOffer;
-
-	public Client buildNewClient() {
-		final Client newClient = new Client();
-		newClient.setOwner(this.sessionBean.getUser());
-		newClient.setAddress(new Address());
-		return newClient;
-	}
-
-	public void cancelEdit() {
-		if (this.client.getId() == 0) {
-			Navigate.to(Page.CLIENT_SEARCH).doPost();
-		} else {
-			this.editable = false;
-		}
-	}
-
-	public void editClient() {
-		this.editable = true;
-	}
 
 	public void error() {
 		to(CLIENT_SEARCH).doPost();
@@ -84,20 +53,12 @@ public class ClientBean extends AbstractBean {
 		return this.client;
 	}
 
-	public List<Contact> getContacts() {
-		return this.contacts;
-	}
-
-	public String getId() {
-		return this.id;
+	public Long getClientId() {
+		return this.clientId;
 	}
 
 	public List<JobOffer> getJobOffers() {
 		return this.jobOffers;
-	}
-
-	public Contact getSelectedContact() {
-		return this.selectedContact;
 	}
 
 	public JobOffer getSelectedJobOffer() {
@@ -108,69 +69,26 @@ public class ClientBean extends AbstractBean {
 	 * Not using @PostConstruct because the view is a GET based form.
 	 */
 	public void init() {
-		if (this.id == null) {
-			this.client = buildNewClient();
-			this.editable = true;
-		} else {
-			try {
-				final long clientId = Long.parseLong(this.id);
-				this.client = this.clientService.find(clientId);
-				if (this.client == null) {
-					error();
-				}
-			} catch (final NumberFormatException ex) {
-				error();
-			}
-			if (this.client.getAddress() == null) {
-				this.client.setAddress(new Address());
-			}
-			this.jobOffers = this.jobOfferService.findAllJobOffersByClient(this.client);
-			if (this.client.isDeleted()) {
-				Message.addWarning("message.erased_entity", "message.erased_entity");
-			}
-			this.contacts = new ArrayList<>(this.client.getContacts());
+		this.client = this.clientService.find(this.clientId);
+		if (this.client == null) {
+			this.error();
 		}
-	}
-
-	public void insertClient() {
-		this.editable = false;
-		this.clientService.insert(this.client);
-		Navigate.to(CLIENT).withParams(map("id", this.client.getId())).doGet();
-	}
-
-	public boolean isEditable() {
-		return this.editable;
-	}
-
-	public boolean isInsertable() {
-		return this.client.getId() == 0;
-	}
-
-	public String modifyClient() {
-		this.flash.put("client", this.client);
-		return to(CLIENT).toUrl();
-	}
-
-	public String newContact() {
-		final Contact contact = new Contact();
-		contact.setClient(this.client);
-		contact.setPhoneNumber(this.client.getPhoneNumber());
-		this.flash.put("contact", contact);
-		this.flash.put("returnPage", to(CLIENT).withParams(map("id", this.id)).toUrl());
-		return to(CONTACT_EDIT).toUrl();
+		if (this.client.getAddress() == null) {
+			this.client.setAddress(new Address());
+		}
+		this.jobOffers = this.jobOfferService.findAllJobOffersByClient(this.client);
+		if (this.client.isDeleted()) {
+			Message.addWarning("message.erased_entity", "message.erased_entity");
+		}
 	}
 
 	public String newJobOffer() {
 		final JobOffer jobOffer = new JobOffer();
 		jobOffer.setClient(this.client);
-		final String url = to(CLIENT).withParams(map("id", this.id)).toUrl();
+		final String url = to(CLIENT).withParams(map("id", this.clientId)).toUrl();
 		this.flash.put("returnPage", url);
 		this.flash.put("jobOffer", jobOffer);
 		return to(JOB_OFFER_EDIT).toUrl();
-	}
-
-	public void onContactSelect() {
-		to(CONTACT).withParams(map("id", this.selectedContact.getId())).doGet();
 	}
 
 	public void onJobOfferSelect() {
@@ -181,36 +99,19 @@ public class ClientBean extends AbstractBean {
 		this.client = client;
 	}
 
+	public void setClientId(final Long clientId) {
+		this.clientId = clientId;
+	}
+
 	public void setClientService(final ClientService clientService) {
 		this.clientService = clientService;
-	}
-
-	public void setContacts(final List<Contact> contacts) {
-		this.contacts = contacts;
-	}
-
-	public void setId(final String id) {
-		this.id = id;
 	}
 
 	public void setJobOfferService(final JobOfferService jobOfferService) {
 		this.jobOfferService = jobOfferService;
 	}
 
-	public void setSelectedContact(final Contact selectedContact) {
-		this.selectedContact = selectedContact;
-	}
-
 	public void setSelectedJobOffer(final JobOffer selectedJobOffer) {
 		this.selectedJobOffer = selectedJobOffer;
-	}
-
-	public void undeleteClient() {
-		this.clientService.undelete(this.client);
-	}
-
-	public void updateClient() {
-		this.editable = false;
-		this.client = this.clientService.update(this.client);
 	}
 }

@@ -10,31 +10,30 @@
 
 	<ui:define name="content">
 		<f:metadata>
-			<f:viewParam name="id" value="#{clientBean.id}" />
+			<f:viewParam name="clientId" value="#{clientBean.clientId}" converter="javax.faces.Long" />
 			<f:viewAction action="#{clientBean.init}" />
 		</f:metadata>
 
 		<ui:include src="/faces/jobOffer/jobOfferDialog.xhtml" />
 		<ui:include src="/faces/client/clientDialog.xhtml" />
-		<ui:include src="/faces/client/contactDialog.xhtml" />
 
 		<div class="ui-g">
 			<div class="ui-g-12 ui-xl-6">
 				<h:form id="form">
 					<input type="hidden" id="clientId" value="#{clientBean.client.id}" />
-					<p:panel header="#{clientBean.insertable ? i18n['client.new_client'] : clientBean.client}" id="client">
+					<p:panel header="#{clientBean.client}" id="client">
 						<div class="ui-g">
 							<div class="ui-g-12 ui-md-6 ui-xl-4">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['client.name']}" for="name" />
-									<p:inputText id="name" value="#{clientBean.client.name}" readonly="#{!clientBean.editable}" required="true" />
+									<p:inputText id="name" value="#{clientBean.client.name}" readonly="true" required="true" />
 								</div>
 								<h:message for="name" errorClass="error" />
 							</div>
 							<div class="ui-g-12 ui-md-6 ui-xl-4">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['client.cif']}" for="cif" />
-									<p:inputText id="cif" value="#{clientBean.client.cif}" readonly="#{!clientBean.editable}" required="true" />
+									<p:inputText id="cif" value="#{clientBean.client.cif}" readonly="true" required="true" />
 								</div>
 								<h:message for="cif" errorClass="error" />
 							</div>
@@ -43,21 +42,21 @@
 							<div class="ui-g-12 ui-md-6 ui-xl-4">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['client.phoneNumber']}" for="phone_number" />
-									<p:inputText id="phone_number" value="#{clientBean.client.phoneNumber}" readonly="#{!clientBean.editable}" />
+									<p:inputText id="phone_number" value="#{clientBean.client.phoneNumber}" readonly="true" />
 								</div>
 								<h:message for="phone_number" errorClass="error" />
 							</div>
 							<div class="ui-g-12 ui-md-6 ui-xl-4">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['client.city']}" for="city" />
-									<p:inputText id="city" value="#{clientBean.client.address.city}" readonly="#{!clientBean.editable}" />
+									<p:inputText id="city" value="#{clientBean.client.address.city}" readonly="true" />
 								</div>
 								<h:message for="city" errorClass="error" />
 							</div>
 							<div class="ui-g-12 ui-md-6 ui-xl-4">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['client.state']}" for="state" />
-									<p:inputText id="state" value="#{clientBean.client.address.state}" readonly="#{!clientBean.editable}" />
+									<p:inputText id="state" value="#{clientBean.client.address.state}" readonly="true" />
 								</div>
 								<h:message for="state" errorClass="error" />
 							</div>
@@ -73,41 +72,11 @@
 				</h:form>
 			</div>
 			<div class="ui-g-12 ui-xl-6">
-				<h:form id="contactsForm">
-					<p:panel header="#{i18n['client.contacts']}" rendered="#{not clientBean.insertable}" id="contacts">
-						<div class="ui-g">
-							<div class="ui-g-12">
-								<p:dataTable var="contact" value="#{clientBean.contacts}" emptyMessage="#{i18n['client.no_contacts_found']}" reflow="true" paginator="true"
-									paginatorPosition="bottom" rows="#{sessionBean.rowsPerPage}" selectionMode="single" rowKey="#{contact.id}" sortBy="#{contact.fullName}"
-									sortOrder="ascending">
-
-									<f:attribute name="contact" value="#{contact}" />
-									<p:ajax event="rowSelect" listener="#{contactDialogBean.openDialog}" update="clientForm" />
-
-									<p:column headerText="#{i18n['contact.name']}">
-										<h:outputText value="#{contact.fullName}" />
-									</p:column>
-									<p:column headerText="#{i18n['contact.email']}">
-										<h:outputText value="#{contact.email}" />
-									</p:column>
-									<p:column headerText="#{i18n['contact.phoneNumber']}">
-										<h:outputText value="#{contact.phoneNumber}" />
-									</p:column>
-								</p:dataTable>
-							</div>
-						</div>
-						<div class="pull-right">
-							<p:commandButton value="#{i18n['action.new']}" actionListener="#{contactDialogBean.openDialog}" process="@this" update="contactForm"
-								styleClass="btn-primary">
-								<f:attribute name="client" value="#{clientBean.client}" />
-							</p:commandButton>
-						</div>
-					</p:panel>
-				</h:form>
+				<ui:include src="/faces/client/contactPanel.xhtml" />
 			</div>
 			<div class="ui-g-12 ui-xl-6">
 				<h:form id="jobOffersForm">
-					<p:panel header="#{i18n['job.job_offers']}" rendered="#{not clientBean.insertable}" id="jobOffers">
+					<p:panel header="#{i18n['job.job_offers']}" id="jobOffers">
 						<div class="ui-g">
 							<div class="ui-g-12">
 								<p:dataTable var="jobOffer" value="#{clientBean.jobOffers}" emptyMessage="#{i18n['client.no_job_offers_found']}" reflow="true" paginator="true"

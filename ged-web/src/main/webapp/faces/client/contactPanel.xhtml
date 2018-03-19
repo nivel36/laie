@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:i18n="http://legion.com/i18n">
+
+	<ui:include src="/faces/client/contactDialog.xhtml" />
+
+	<h:form id="contactsForm">
+		<p:panel id="contacts" header="#{i18n['client.contacts']}">
+			<div class="ui-g">
+				<div class="ui-g-12">
+					<p:dataTable var="contact" value="#{contactPanelBean.contacts}" emptyMessage="#{i18n['client.no_contacts_found']}" reflow="true" paginator="true"
+						paginatorPosition="bottom" rows="#{sessionBean.rowsPerPage}" sortBy="#{contact.fullName}" sortOrder="ascending">
+
+						<p:column headerText="#{i18n['contact.name']}">
+							<h:outputText value="#{contact.fullName}" />
+						</p:column>
+						<p:column headerText="#{i18n['contact.email']}">
+							<h:outputText value="#{contact.email}" />
+						</p:column>
+						<p:column headerText="#{i18n['contact.phoneNumber']}">
+							<h:outputText value="#{contact.phoneNumber}" />
+						</p:column>
+					</p:dataTable>
+				</div>
+			</div>
+			<div class="pull-right">
+				<p:commandButton id="openContactDialog" value="#{i18n['action.new']}" actionListener="#{contactDialogBean.openDialog}" process="@this" update="contactForm"
+					styleClass="btn-primary">
+					<f:attribute name="client" value="#{contactPanelBean.clientId}" />
+				</p:commandButton>
+			</div>
+		</p:panel>
+	</h:form>
+</ui:composition>

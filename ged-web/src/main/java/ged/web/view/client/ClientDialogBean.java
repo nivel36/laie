@@ -65,7 +65,7 @@ public class ClientDialogBean extends AbstractDialogBean {
 		else {
 			this.clientService.update(this.client);
 		}
-		to(CLIENT).withParams(map("id", this.client.getId())).doGet();
+		to(CLIENT).withParams(map("clientId", this.client.getId())).doGet();
 	}
 
 	public void setClientService(final ClientService clientService) {

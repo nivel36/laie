@@ -19,7 +19,7 @@ public class Contact extends AbstractAuditedEntity {
 	private static final long serialVersionUID = -5910261570364209778L;
 
 	@ManyToOne
-	@JoinColumn(name = "clientId", nullable = true)
+	@JoinColumn(name = "clientId", nullable = false)
 	private Client client;
 
 	@NotNull

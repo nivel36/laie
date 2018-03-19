@@ -115,6 +115,14 @@
 			WHERE c.name = :name
 		]]></query>
 	</named-query>
+	
+	<named-query name="Contact.findByClientId">
+		<query><![CDATA[
+			SELECT c 
+			FROM Contact c 
+			WHERE c.client.id = :clientId
+		]]></query>
+	</named-query>
 
 	<named-query name="Curriculum.findByCandidateId">
 		<query><![CDATA[
