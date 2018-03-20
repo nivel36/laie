@@ -44,7 +44,9 @@
 										</h:link>
 									</p:column>
 									<p:column headerText="#{i18n['job.client']}" sortBy="#{jobOffer.client.name}">
-										<h:outputText value="#{jobOffer.client.name}" />
+										<h:link value="#{jobOffer.client.name}" outcome="/faces/client/client">
+											<f:param name="clientId" value="#{jobOffer.client.id}" />
+										</h:link>
 									</p:column>
 									<p:column headerText="#{i18n['job.date_opened']}" sortBy="#{jobOffer.dateOpened}">
 										<h:outputText value="#{jobOffer.dateOpened}">

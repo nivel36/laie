@@ -7,10 +7,12 @@
 			visible="#{clientSearchDialogBean.showDialog}">
 
 			<div class="ui-g">
-				<div class="ui-md-12 ui-lg-4">
+				<div class="ui-g-12 ui-md-6">
 					<div class="ui-inputgroup">
 						<p:inputText id="searchText" value="#{clientSearchDialogBean.searchText}" />
-						<p:commandButton icon="fa fa-search" styleClass="green-button" action="#{clientSearchDialogBean.search}" update="@form" process="searchText" />
+						<p:commandButton id="cleanSearchTextAction" action="#{clientSearchDialogBean.clean}" update="@form" styleClass="btn-gray" icon="fa fa-times"
+							rendered="#{not empty clientSearchDialogBean.searchText}" />
+						<p:commandButton id="searchAction" action="#{clientSearchDialogBean.search}" update="@form" icon="fa fa-search" />
 					</div>
 				</div>
 			</div>
@@ -20,7 +22,7 @@
 						paginator="true" paginatorPosition="bottom" rows="#{sessionBean.rowsPerPage}" selectionMode="single" selection="#{clientSearchDialogBean.selectedClient}"
 						rowKey="#{client.id}" sortBy="#{client.name}" sortOrder="ascending">
 
-						<p:ajax event="rowSelect" listener="#{clientSearchDialogBean.onClientSelect}" update="@form" />
+						<p:ajax event="rowSelect" listener="#{clientSearchDialogBean.onClientSelect}" update="@form" resetValues="true" />
 
 						<p:column headerText="#{i18n['client.name']}" sortBy="#{client.name}">
 							<h:outputText value="#{client.name}" />
@@ -48,14 +50,14 @@
 					</p:dataTable>
 				</div>
 			</div>
-			
+
 			<div class="ui-g">
 				<div class="ui-g-12">
 					<div class="form-action-primary">
 						<p:commandButton value="#{i18n['action.cancel']}" action="#{clientSearchDialogBean.closeDialog}" process="@this" update="@form" styleClass="btn-gray">
 							<p:resetInput target="@form" />
 						</p:commandButton>
-						
+
 					</div>
 				</div>
 			</div>

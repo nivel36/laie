@@ -46,6 +46,7 @@ public class ClientSearchDialogBean extends AbstractDialogBean {
 	@Override
 	protected void dispose() {
 		this.searchText = null;
+		this.selectedClient = null;
 	}
 
 	public List<Client> getClients() {

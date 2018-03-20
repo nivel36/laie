@@ -33,7 +33,7 @@ public class JobOfferDialogBean extends AbstractDialogBean implements ClientSele
 	private transient final SelectClientAction selectClientCallback = new SelectClientAction(this);
 
 	public void cleanClient() {
-		this.jobOffer.setClient(null);
+		this.jobOffer.setClient(new Client());
 	}
 
 	@Override
@@ -52,9 +52,7 @@ public class JobOfferDialogBean extends AbstractDialogBean implements ClientSele
 	@Override
 	protected void init() {
 		this.jobOffer = new JobOffer();
-		final Long clientId = this.getAttribute("client");
-		final Client client = this.clientService.find(clientId);
-		this.jobOffer.setClient(client);
+		this.setClientIntoJobOffer();
 		this.jobOffer.setOwner(this.sessionBean.getUser());
 	}
 
@@ -66,6 +64,18 @@ public class JobOfferDialogBean extends AbstractDialogBean implements ClientSele
 	public void save() {
 		this.jobOfferService.insert(this.jobOffer);
 		to(JOB_OFFER).withParams(map("jobOfferId", this.jobOffer.getId())).doGet();
+	}
+
+	private void setClientIntoJobOffer() {
+		final Long clientId = this.getAttribute("client");
+		final Client client;
+		if (clientId != null) {
+			client = this.clientService.find(clientId);
+		}
+		else {
+			client = null;
+		}
+		this.jobOffer.setClient(client);
 	}
 
 	public void setJobOffer(final JobOffer jobOffer) {

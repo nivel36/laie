@@ -16,20 +16,20 @@
 					</div>
 				</div>
 				<div class="ui-g-12 ui-md-6">
-					<div class="form-group">
+					<h:panelGroup id="clientGroup" layout="block" styleClass="form-group">
 						<p:outputLabel for="client" value="#{i18n['job.client']}" />
 						<div class="ui-inputgroup">
 							<p:inputText id="client" value="#{jobOfferDialogBean.jobOffer.client.name}" required="true" />
-							<p:commandButton id="cleanClient" action="#{jobOfferDialogBean.cleanClient}" process="@this" update="client cleanClient" styleClass="btn-gray"
-								icon="fa fa-times" rendered="#{not empty jobOfferDialogBean.jobOffer.client.name}" />
+							<p:commandButton action="#{jobOfferDialogBean.cleanClient}" process="@this" update="clientGroup" styleClass="btn-gray" icon="fa fa-times"
+								rendered="#{not empty jobOfferDialogBean.jobOffer.client.name}" />
 							<p:commandButton icon="fa fa-search" styleClass="green-button" actionListener="#{clientSearchDialogBean.openDialog}" update="clientSearchDialogForm"
 								process="@this">
-								<f:attribute name="updateField" value="newJobOfferForm:client" />
+								<f:attribute name="updateField" value="newJobOfferForm:clientGroup" />
 								<f:attribute name="callback" value="#{jobOfferDialogBean.selectClientCallback}" />
 							</p:commandButton>
 						</div>
 						<p:message for="client" />
-					</div>
+					</h:panelGroup>
 				</div>
 				<div class="ui-g-12 ui-md-6">
 					<div class="form-group">
@@ -78,13 +78,14 @@
 					</div>
 				</div>
 			</div>
-
-			<div class="pull-right">
-				<p:commandButton value="#{i18n['action.cancel']}" action="#{jobOfferDialogBean.closeDialog}" process="@this" update="@form" styleClass="btn-gray">
-					<p:resetInput target="@form" />
-				</p:commandButton>
-				<p:commandButton value="#{i18n['action.save']}" action="#{jobOfferDialogBean.save}" update="@form growl" styleClass="btn-primary" />
-			</div>
+			<f:facet name="footer">
+				<div class="form-action-primary">
+					<p:commandButton value="#{i18n['action.cancel']}" action="#{jobOfferDialogBean.closeDialog}" process="@this" update="@form" styleClass="btn-gray">
+						<p:resetInput target="@form" />
+					</p:commandButton>
+					<p:commandButton value="#{i18n['action.save']}" action="#{jobOfferDialogBean.save}" update="@form growl" styleClass="btn-primary" />
+				</div>
+			</f:facet>
 		</p:dialog>
 	</h:form>
 </ui:composition>
