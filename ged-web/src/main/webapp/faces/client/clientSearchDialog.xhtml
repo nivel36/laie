@@ -1,29 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://legion.com/i18n"
-	xmlns:p="http://primefaces.org/ui">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://legion.com/i18n" xmlns:p="http://primefaces.org/ui">
 
 	<h:form id="clientSearchDialogForm">
-		<p:dialog modal="true" widgetVar="clientSearchDlg" resizable="false" responsive="true"
-			header="#{i18n['client.clients']}" id="clientSearchDlg" closable="false"
+		<p:dialog id="clientSearchDlg" header="#{i18n['client.clients']}" modal="true" resizable="false" responsive="true" closable="false"
 			visible="#{clientSearchDialogBean.showDialog}">
 
 			<div class="ui-g">
 				<div class="ui-md-12 ui-lg-4">
 					<div class="ui-inputgroup">
 						<p:inputText id="searchText" value="#{clientSearchDialogBean.searchText}" />
-						<p:commandButton icon="fa fa-search" styleClass="green-button" action="#{clientSearchDialogBean.search}"
-							update="@form" process="searchText" />
+						<p:commandButton icon="fa fa-search" styleClass="green-button" action="#{clientSearchDialogBean.search}" update="@form" process="searchText" />
 					</div>
 				</div>
 			</div>
 			<div class="ui-g">
 				<div class="ui-g-12">
-					<p:dataTable var="client" id="clients" value="#{clientSearchDialogBean.clients}"
-									emptyMessage="#{i18n['client.no_clients_found']}" reflow="true" paginator="true" paginatorPosition="bottom"
-									rows="#{sessionBean.rowsPerPage}" selectionMode="single" selection="#{clientSearchDialogBean.selectedClient}"
-									rowKey="#{client.id}" sortBy="#{client.name}" sortOrder="ascending">
-						
+					<p:dataTable var="client" id="clients" value="#{clientSearchDialogBean.clients}" emptyMessage="#{i18n['client.no_clients_found']}" reflow="true"
+						paginator="true" paginatorPosition="bottom" rows="#{sessionBean.rowsPerPage}" selectionMode="single" selection="#{clientSearchDialogBean.selectedClient}"
+						rowKey="#{client.id}" sortBy="#{client.name}" sortOrder="ascending">
+
 						<p:ajax event="rowSelect" listener="#{clientSearchDialogBean.onClientSelect}" update="@form" />
 
 						<p:column headerText="#{i18n['client.name']}" sortBy="#{client.name}">
@@ -50,6 +46,17 @@
 							<h:outputText value="#{client.owner.fullName}" />
 						</p:column>
 					</p:dataTable>
+				</div>
+			</div>
+			
+			<div class="ui-g">
+				<div class="ui-g-12">
+					<div class="form-action-primary">
+						<p:commandButton value="#{i18n['action.cancel']}" action="#{clientSearchDialogBean.closeDialog}" process="@this" update="@form" styleClass="btn-gray">
+							<p:resetInput target="@form" />
+						</p:commandButton>
+						
+					</div>
 				</div>
 			</div>
 		</p:dialog>

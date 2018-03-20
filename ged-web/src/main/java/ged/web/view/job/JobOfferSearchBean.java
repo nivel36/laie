@@ -30,6 +30,11 @@ public class JobOfferSearchBean extends AbstractBean {
 
 	private String searchText;
 
+	public void clean() {
+		this.searchText = null;
+		this.search();
+	}
+
 	public List<JobOffer> getJobOffers() {
 		return this.jobOffers;
 	}
@@ -41,13 +46,13 @@ public class JobOfferSearchBean extends AbstractBean {
 	@PostConstruct
 	public void init() {
 		logger.trace("JobOfferSearchBean init");
-		search();
+		this.search();
 	}
 
 	public void search() {
 		logger.debug("Search job offer action performed");
 		this.jobOffers = this.jobOfferService.search(this.searchText);
-		addWarningMessageIfMaxSearchResultsHaveBeenReached(this.jobOffers);
+		this.addWarningMessageIfMaxSearchResultsHaveBeenReached(this.jobOffers);
 	}
 
 	public void setJobOfferService(final JobOfferService jobOfferService) {

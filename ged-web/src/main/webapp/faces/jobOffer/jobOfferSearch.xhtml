@@ -14,32 +14,34 @@
 
 		<div class="ui-g">
 			<div class="ui-g-12">
-				<h:form id="form">
+				<h:form id="jobOfferSearchform">
 					<p:panel header="#{i18n['job.job_offers']}" id="searchPanel">
 						<div class="ui-g">
-							<div class="ui-g-12">
-								<div class="pull-right">
-									<p:commandButton value="#{i18n['action.new']}" actionListener="#{jobOfferDialogBean.openDialog}" update="newJobOfferForm" />
-									<p:commandButton styleClass="btn-primary" value="#{i18n['action.import']}" />
-								</div>
-							</div>
-						</div>
-						<div class="ui-g">
-							<div class="ui-md-12 ui-lg-4">
+							<div class="ui-g-12 ui-md-6 ui-lg-4">
 								<div class="ui-inputgroup">
 									<p:inputText id="searchText" value="#{jobOfferSearchBean.searchText}" />
-									<p:commandButton icon="fa fa-search" styleClass="green-button" action="#{jobOfferSearchBean.search}" update="@form" process="searchPanel" />
+									<p:commandButton id="cleanSearchTextAction" action="#{jobOfferSearchBean.clean}" update="@form" styleClass="btn-gray" icon="fa fa-times"
+										rendered="#{not empty jobOfferSearchBean.searchText}" />
+									<p:commandButton id="searchAction" action="#{jobOfferSearchBean.search}" update="@form" icon="fa fa-search" />
+								</div>
+							</div>
+							<div class="ui-g-12 ui-md-6 ui-lg-8">
+								<div class="pull-right">
+									<p:commandButton value="#{i18n['action.export']}" action="#{clientSearchBean.clean}" icon="fa fa-file-excel-o" />
+									<p:commandButton value="#{i18n['action.new']}" actionListener="#{jobOfferDialogBean.openDialog}" update="newJobOfferForm" styleClass="btn-primary" />
 								</div>
 							</div>
 						</div>
+
 						<div class="ui-g">
 							<div class="ui-g-12">
-
 								<p:dataTable var="jobOffer" value="#{jobOfferSearchBean.jobOffers}" emptyMessage="#{i18n['job.no_jobs_found']}" reflow="true" paginator="true"
 									paginatorPosition="bottom" rows="#{sessionBean.rowsPerPage}">
 
 									<p:column headerText="#{i18n['job.name']}" sortBy="#{jobOffer.name}">
-										<h:outputText value="#{jobOffer.name}" />
+										<h:link value="#{jobOffer.name}" outcome="/faces/jobOffer/jobOfferView">
+											<f:param name="jobOfferId" value="#{jobOffer.id}" />
+										</h:link>
 									</p:column>
 									<p:column headerText="#{i18n['job.client']}" sortBy="#{jobOffer.client.name}">
 										<h:outputText value="#{jobOffer.client.name}" />
@@ -55,12 +57,9 @@
 										</h:outputText>
 									</p:column>
 									<p:column headerText="#{i18n['user.owner']}" sortBy="#{i18n['user.owner']}">
-										<h:outputText value="#{jobOffer.owner}" />
-									</p:column>
-									<p:column>
-										<p:button outcome="jobOfferView" icon="fa fa-eye">
-											<f:param name="id" value="#{jobOffer.id}" />
-										</p:button>
+										<h:link value="#{jobOffer.owner.fullName}" outcome="/faces/user/user">
+											<f:param name="userId" value="#{jobOffer.owner.id}" />
+										</h:link>
 									</p:column>
 								</p:dataTable>
 							</div>

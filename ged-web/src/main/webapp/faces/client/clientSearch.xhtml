@@ -14,7 +14,7 @@
 
 		<div class="ui-g">
 			<div class="ui-g-12">
-				<h:form id="searchForm">
+				<h:form id="clientSearchForm">
 					<p:defaultCommand target="searchAction" />
 					<p:panel id="searchPanel" header="#{i18n['client.clients']}">
 						<div class="ui-g">
@@ -62,7 +62,7 @@
 
 									<p:column headerText="#{i18n['client.owner']}" sortBy="#{client.user.fullName}">
 										<h:link value="#{client.owner.fullName}" outcome="/faces/user/user">
-											<f:param name="id" value="#{client.owner.id}" />
+											<f:param name="userId" value="#{client.owner.id}" />
 										</h:link>
 									</p:column>
 								</p:dataTable>

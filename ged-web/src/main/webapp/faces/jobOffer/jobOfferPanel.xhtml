@@ -11,21 +11,26 @@
 					<p:dataTable var="jobOffer" value="#{jobOfferPanelBean.jobOffers}" emptyMessage="#{i18n['client.no_job_offers_found']}" reflow="true" paginator="true"
 						paginatorPosition="bottom" rows="#{sessionBean.rowsPerPage}" sortBy="#{jobOffer.name}" sortOrder="ascending">
 						<p:column headerText="#{i18n['job.name']}">
-							<h:outputText value="#{jobOffer.name}" />
+							<h:link value="#{jobOffer.name}" outcome="/faces/jobOffer/jobOfferView">
+								<f:param name="jobOfferId" value="#{jobOffer.id}" />
+							</h:link>
 						</p:column>
 						<p:column headerText="#{i18n['job.date_closed']}">
 							<h:outputText value="#{jobOffer.dateClosed}">
-								<f:convertDateTime pattern="dd / MM / yyyy" />
+								<f:convertDateTime pattern="dd / MM / yyyy" type="localDate" />
 							</h:outputText>
+						</p:column>
+						<p:column headerText="#{i18n['job.owner']}">
+							<h:link value="#{jobOffer.owner.fullName}" outcome="/faces/user/user">
+								<f:param name="userId" value="#{jobOffer.owner.id}" />
+							</h:link>
 						</p:column>
 					</p:dataTable>
 				</div>
 			</div>
 			<div class="pull-right">
-				<p:commandButton value="#{i18n['action.add']}" actionListener="#{jobOfferDialogBean.openDialog}" process="@this" update="newJobOfferForm">
-					<f:attribute name="client" value="#{jobOfferPanelBean.clientId}" />
-				</p:commandButton>
-				<p:commandButton value="#{i18n['action.new']}" actionListener="#{jobOfferDialogBean.openDialog}" process="@this" update="newJobOfferForm" styleClass="btn-primary">
+				<p:commandButton value="#{i18n['action.new']}" actionListener="#{jobOfferDialogBean.openDialog}" process="@this" update="newJobOfferForm"
+					styleClass="btn-primary">
 					<f:attribute name="client" value="#{jobOfferPanelBean.clientId}" />
 				</p:commandButton>
 			</div>

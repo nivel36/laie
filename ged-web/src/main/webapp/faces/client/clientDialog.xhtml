@@ -3,7 +3,7 @@
 	xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://legion.com/i18n" xmlns:p="http://primefaces.org/ui">
 
 	<h:form id="clientForm">
-		<p:dialog id="clientDlg" header="#{i18n['client.new_client']}" closable="false" modal="true" resizable="false" responsive="true"
+		<p:dialog id="clientDlg" header="#{i18n['client.new_client']}" closable="false" modal="true" resizable="false" responsive="true" styleClass="medium"
 			visible="#{clientDialogBean.showDialog}">
 
 			<div class="ui-g">
@@ -21,9 +21,6 @@
 						<p:message for="cif" />
 					</div>
 				</div>
-			</div>
-
-			<div class="ui-g">
 				<div class="ui-g-12 ui-md-6">
 					<div class="form-group">
 						<p:outputLabel value="#{i18n['client.phoneNumber']}" for="phone_number" />
