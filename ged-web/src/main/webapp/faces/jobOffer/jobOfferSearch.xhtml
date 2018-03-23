@@ -39,7 +39,7 @@
 									paginatorPosition="bottom" rows="#{sessionBean.rowsPerPage}">
 
 									<p:column headerText="#{i18n['job.name']}" sortBy="#{jobOffer.name}">
-										<h:link value="#{jobOffer.name}" outcome="/faces/jobOffer/jobOfferView">
+										<h:link value="#{jobOffer.name}" outcome="/faces/jobOffer/jobOffer">
 											<f:param name="jobOfferId" value="#{jobOffer.id}" />
 										</h:link>
 									</p:column>

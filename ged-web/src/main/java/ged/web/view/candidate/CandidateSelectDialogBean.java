@@ -4,7 +4,6 @@ import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -16,11 +15,11 @@ import org.slf4j.LoggerFactory;
 import ged.ejb.candidate.Candidate;
 import ged.ejb.candidate.CandidateService;
 import ged.web.core.ActionCallback;
-import ged.web.core.view.AbstractBean;
+import ged.web.core.view.AbstractDialogBean;
 
 @Named
 @ViewScoped
-public class CandidateSelectBean extends AbstractBean {
+public class CandidateSelectDialogBean extends AbstractDialogBean {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
@@ -48,7 +47,13 @@ public class CandidateSelectBean extends AbstractBean {
 
 	public void clean() {
 		this.searchText = null;
-		search();
+		this.search();
+	}
+
+	@Override
+	protected void dispose() {
+		this.searchText = null;
+		this.selectedCandidates = null;
 	}
 
 	public List<Candidate> getCandidates() {
@@ -71,9 +76,9 @@ public class CandidateSelectBean extends AbstractBean {
 		return this.updateElement;
 	}
 
-	@PostConstruct
+	@Override
 	public void init() {
-		search();
+		this.search();
 	}
 
 	public void search() {
@@ -85,6 +90,7 @@ public class CandidateSelectBean extends AbstractBean {
 		this.action.doAction(this.selectedCandidates);
 		this.selectedCandidates.clear();
 		Ajax.update("candidateSelectForm", this.updateElement);
+		this.closeDialog();
 	}
 
 	public void setCandidateService(final CandidateService candidateService) {

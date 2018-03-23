@@ -14,28 +14,25 @@
 			<f:viewAction action="#{clientBean.init}" />
 		</f:metadata>
 
-
 		<ui:include src="/faces/client/clientDialog.xhtml" />
 
 		<div class="ui-g">
 			<div class="ui-g-12 ui-xl-6">
-				<h:form id="form">
+				<h:form id="clientViewForm">
 					<input type="hidden" id="clientId" value="#{clientBean.client.id}" />
 					<p:panel header="#{clientBean.client}" id="client">
 						<div class="ui-g">
 							<div class="ui-g-12 ui-md-6 ui-xl-4">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['client.name']}" for="name" />
-									<p:inputText id="name" value="#{clientBean.client.name}" readonly="true" required="true" />
+									<p:inputText id="name" value="#{clientBean.client.name}" readonly="true"/>
 								</div>
-								<h:message for="name" errorClass="error" />
 							</div>
 							<div class="ui-g-12 ui-md-6 ui-xl-4">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['client.cif']}" for="cif" />
-									<p:inputText id="cif" value="#{clientBean.client.cif}" readonly="true" required="true" />
+									<p:inputText id="cif" value="#{clientBean.client.cif}" readonly="true"  />
 								</div>
-								<h:message for="cif" errorClass="error" />
 							</div>
 						</div>
 						<div class="ui-g">
@@ -44,21 +41,18 @@
 									<p:outputLabel value="#{i18n['client.phoneNumber']}" for="phone_number" />
 									<p:inputText id="phone_number" value="#{clientBean.client.phoneNumber}" readonly="true" />
 								</div>
-								<h:message for="phone_number" errorClass="error" />
 							</div>
 							<div class="ui-g-12 ui-md-6 ui-xl-4">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['client.city']}" for="city" />
 									<p:inputText id="city" value="#{clientBean.client.address.city}" readonly="true" />
 								</div>
-								<h:message for="city" errorClass="error" />
 							</div>
 							<div class="ui-g-12 ui-md-6 ui-xl-4">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['client.state']}" for="state" />
 									<p:inputText id="state" value="#{clientBean.client.address.state}" readonly="true" />
 								</div>
-								<h:message for="state" errorClass="error" />
 							</div>
 						</div>
 

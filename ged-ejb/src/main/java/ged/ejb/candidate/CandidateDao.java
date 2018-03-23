@@ -2,25 +2,20 @@ package ged.ejb.candidate;
 
 import java.util.List;
 
-import javax.ejb.Local;
-
 import ged.ejb.core.model.Dao;
 import ged.ejb.core.tag.Tag;
-import ged.ejb.job.offer.JobOffer;
 
-@Local
 public interface CandidateDao extends Dao<Candidate> {
 
 	boolean emailExists(String email);
 
-	List<Candidate> findAllByJobOffer(JobOffer jobOffer);
+	List<Candidate> findByJobOfferId(long jobOfferId);
 
-	List<Tag> findAllTags();
+	Candidate findCandidateAndFiles(long id);
 
-	Candidate findCandidateAndFiles(final long id);
-
-	List<Candidate> findLastAddedCandidates(final int numberOfCandidates);
+	List<Candidate> findLastAddedCandidates(int numberOfCandidates);
 
 	long findNumberOfCandidates();
 
+	List<Tag> findTags();
 }

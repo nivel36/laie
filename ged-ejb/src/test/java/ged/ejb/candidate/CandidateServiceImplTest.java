@@ -18,7 +18,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 import ged.ejb.UploadedServerFile;
 import ged.ejb.UploadedServerFileDao;
 import ged.ejb.core.tag.Tag;
-import ged.ejb.job.offer.JobOffer;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CandidateServiceImplTest {
@@ -36,22 +35,21 @@ public class CandidateServiceImplTest {
 
 	@Test
 	public void findAllByJobOfferTest() {
-		final JobOffer mockedJobOffer = Mockito.mock(JobOffer.class);
-		Mockito.when(this.candidateDao.findAllByJobOffer(mockedJobOffer)).thenReturn(new ArrayList<>());
-		final List<Candidate> candidatesFromRepository = this.candidateServiceImpl.findAllByJobOffer(mockedJobOffer);
+		Mockito.when(this.candidateDao.findByJobOfferId(1L)).thenReturn(new ArrayList<>());
+		final List<Candidate> candidatesFromRepository = this.candidateServiceImpl.findByJobOfferId(1L);
 		Assert.assertEquals(0, candidatesFromRepository.size());
 	}
 
 	@Test
 	public void findAllByNullJobOfferTest() {
-		this.thrown.expect(NullPointerException.class);
-		this.candidateServiceImpl.findAllByJobOffer(null);
+		this.thrown.expect(IllegalArgumentException.class);
+		this.candidateServiceImpl.findByJobOfferId(0L);
 	}
 
 	@Test
 	public void findAllTagsTest() {
-		Mockito.when(this.candidateDao.findAllTags()).thenReturn(new ArrayList<>());
-		final List<Tag> tagsFromRepository = this.candidateServiceImpl.findAllTags();
+		Mockito.when(this.candidateDao.findTags()).thenReturn(new ArrayList<>());
+		final List<Tag> tagsFromRepository = this.candidateServiceImpl.findTags();
 		Assert.assertEquals(0, tagsFromRepository.size());
 	}
 
@@ -159,8 +157,7 @@ public class CandidateServiceImplTest {
 	public void updateFileTest() {
 		final UploadedServerFile mockedUploadedServerFile = Mockito.mock(UploadedServerFile.class);
 		Mockito.when(this.uploadedServerFileDao.update(mockedUploadedServerFile)).thenReturn(mockedUploadedServerFile);
-		final UploadedServerFile uploadedServerFileFromRepository = this.candidateServiceImpl
-				.updateFile(mockedUploadedServerFile);
+		final UploadedServerFile uploadedServerFileFromRepository = this.candidateServiceImpl.updateFile(mockedUploadedServerFile);
 		Assert.assertEquals(mockedUploadedServerFile, uploadedServerFileFromRepository);
 	}
 

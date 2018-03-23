@@ -68,12 +68,12 @@
 		]]></query>
 	</named-query>
 
-	<named-query name="Candidate.findAllByJobOffer">
+	<named-query name="Candidate.findByJobOfferId">
 		<query><![CDATA[
 			SELECT c 
 			FROM Candidate c
 			LEFT JOIN c.jobCandidatures jc
-			WHERE jc.jobOffer = :jobOffer
+			WHERE jc.jobOffer.id = :jobOfferId
 		]]></query>
 	</named-query>
 

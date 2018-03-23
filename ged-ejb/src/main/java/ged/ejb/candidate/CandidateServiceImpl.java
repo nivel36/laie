@@ -19,7 +19,6 @@ import ged.ejb.core.action.Action.ActionType;
 import ged.ejb.core.model.Dao;
 import ged.ejb.core.model.Repository;
 import ged.ejb.core.tag.Tag;
-import ged.ejb.job.offer.JobOffer;
 
 @Stateless
 public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> implements CandidateService {
@@ -31,8 +30,7 @@ public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> imp
 	private final UploadedServerFileDao uploadedServerFileDao;
 
 	@Inject
-	public CandidateServiceImpl(@Repository final CandidateDao candidateDao,
-			@Repository final UploadedServerFileDao uploadedServerFileDao) {
+	public CandidateServiceImpl(@Repository final CandidateDao candidateDao, @Repository final UploadedServerFileDao uploadedServerFileDao) {
 		Objects.requireNonNull(uploadedServerFileDao);
 		Objects.requireNonNull(candidateDao);
 		this.candidateDao = candidateDao;
@@ -40,16 +38,12 @@ public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> imp
 	}
 
 	@Override
-	public List<Candidate> findAllByJobOffer(final JobOffer jobOffer) {
-		Objects.requireNonNull(jobOffer);
-		logger.debug("Find candidates by jobOffer id {} ", jobOffer.getId());
-		return this.candidateDao.findAllByJobOffer(jobOffer);
-	}
-
-	@Override
-	public List<Tag> findAllTags() {
-		logger.debug("Find all tags");
-		return this.candidateDao.findAllTags();
+	public List<Candidate> findByJobOfferId(final long jobOfferId) {
+		if (jobOfferId < 1) {
+			throw new IllegalArgumentException("jobOfferId: " + jobOfferId);
+		}
+		logger.debug("Find candidates by jobOffer id {} ", jobOfferId);
+		return this.candidateDao.findByJobOfferId(jobOfferId);
 	}
 
 	@Override
@@ -83,6 +77,12 @@ public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> imp
 	}
 
 	@Override
+	public List<Tag> findTags() {
+		logger.debug("Find all tags");
+		return this.candidateDao.findTags();
+	}
+
+	@Override
 	public Dao<Candidate> getDao() {
 		return this.candidateDao;
 	}
@@ -108,11 +108,14 @@ public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> imp
 	public Candidate update(final Candidate candidate) {
 		Objects.requireNonNull(candidate);
 		final Candidate candidateInRepository = this.candidateDao.find(candidate.getId());
-		if (!candidate.getEmail().equals(candidateInRepository.getEmail())
-				&& this.candidateDao.emailExists(candidate.getEmail())) {
+		if (isDuplicatedEmail(candidate, candidateInRepository)) {
 			throw new ValidationException("Email duplicated");
 		}
 		return this.candidateDao.update(candidate);
+	}
+
+	private boolean isDuplicatedEmail(final Candidate candidate, final Candidate candidateInRepository) {
+		return !candidate.getEmail().equals(candidateInRepository.getEmail()) && this.candidateDao.emailExists(candidate.getEmail());
 	}
 
 	@Override

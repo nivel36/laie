@@ -21,11 +21,12 @@ import org.hibernate.search.annotations.IndexedEmbedded;
 import ged.ejb.client.Client;
 import ged.ejb.core.i18n.I18n;
 import ged.ejb.core.model.AbstractAuditedEntity;
+import ged.ejb.core.model.Ownerable;
 import ged.ejb.user.User;
 
 @Entity
 @Indexed
-public class JobOffer extends AbstractAuditedEntity {
+public class JobOffer extends AbstractAuditedEntity implements Ownerable {
 
 	private static final long serialVersionUID = 5579321864799956403L;
 
@@ -97,12 +98,11 @@ public class JobOffer extends AbstractAuditedEntity {
 		if (obj == null) {
 			return false;
 		}
-		if (getClass() != obj.getClass()) {
+		if (this.getClass() != obj.getClass()) {
 			return false;
 		}
 		final JobOffer other = (JobOffer) obj;
-		return Objects.equals(this.dateOpened, other.dateOpened) && Objects.equals(this.name, other.name)
-				&& Objects.equals(this.places, other.places);
+		return Objects.equals(this.dateOpened, other.dateOpened) && Objects.equals(this.name, other.name) && Objects.equals(this.places, other.places);
 	}
 
 	public String getCity() {
@@ -145,6 +145,7 @@ public class JobOffer extends AbstractAuditedEntity {
 		return this.name;
 	}
 
+	@Override
 	public User getOwner() {
 		return this.owner;
 	}
@@ -211,6 +212,7 @@ public class JobOffer extends AbstractAuditedEntity {
 		this.name = name;
 	}
 
+	@Override
 	public void setOwner(final User owner) {
 		this.owner = owner;
 	}

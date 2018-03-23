@@ -1,8 +1,5 @@
 package ged.web.view.user;
 
-import static ged.web.core.util.Navigate.to;
-import static ged.web.core.util.Page.USER_SEARCH;
-
 import java.io.IOException;
 import java.lang.invoke.MethodHandles;
 import java.util.List;
@@ -29,6 +26,7 @@ import ged.ejb.user.UserException;
 import ged.ejb.user.UserService;
 import ged.ejb.user.role.Role;
 import ged.ejb.user.role.RoleService;
+import ged.web.core.PageNotFoundException;
 import ged.web.core.util.Message;
 import ged.web.core.util.Translate;
 import ged.web.core.view.AbstractBean;
@@ -82,10 +80,6 @@ public class UserBean extends AbstractBean {
 		this.editable = true;
 	}
 
-	private void error() {
-		to(USER_SEARCH).doPost();
-	}
-
 	public void export() throws IOException {
 		final UserReport userReport = new UserReport(this.user, this.jobOffers);
 		Faces.sendFile(userReport.create(), true);
@@ -120,7 +114,7 @@ public class UserBean extends AbstractBean {
 				final long id = Long.parseLong(this.userId);
 				this.user = this.userService.find(id);
 				if (this.user == null) {
-					this.error();
+					throw new PageNotFoundException();
 				}
 				this.manager = this.user.getManager();
 				this.team = this.userService.findSubordinateUsers(this.user);
@@ -130,7 +124,7 @@ public class UserBean extends AbstractBean {
 				}
 			}
 			catch (final NumberFormatException ex) {
-				this.error();
+				throw new PageNotFoundException();
 			}
 		}
 		else {

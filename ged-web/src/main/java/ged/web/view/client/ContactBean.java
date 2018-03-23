@@ -6,6 +6,7 @@ import javax.inject.Named;
 
 import ged.ejb.client.Contact;
 import ged.ejb.client.ContactService;
+import ged.web.core.PageNotFoundException;
 import ged.web.core.view.AbstractBean;
 
 @Named
@@ -31,10 +32,6 @@ public class ContactBean extends AbstractBean {
 		this.editable = true;
 	}
 
-	public void error() {
-
-	}
-
 	public Contact getContact() {
 		return this.contact;
 	}
@@ -45,16 +42,17 @@ public class ContactBean extends AbstractBean {
 
 	public void init() {
 		if (this.id == null) {
-			error();
+			throw new PageNotFoundException();
 		}
 		try {
 			final long contactId = Long.parseLong(this.id);
 			this.contact = this.contactService.find(contactId);
 			if (this.contact == null) {
-				error();
+				throw new PageNotFoundException();
 			}
-		} catch (final NumberFormatException ex) {
-			error();
+		}
+		catch (final NumberFormatException ex) {
+			throw new PageNotFoundException();
 		}
 	}
 

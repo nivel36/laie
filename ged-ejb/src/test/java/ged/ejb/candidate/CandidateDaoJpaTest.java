@@ -1,7 +1,6 @@
 package ged.ejb.candidate;
 
 import static ged.ejb.core.util.Parameters.map;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -20,7 +19,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import ged.ejb.core.model.PersistenceFacade;
 import ged.ejb.core.tag.Tag;
-import ged.ejb.job.offer.JobOffer;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CandidateDaoJpaTest {
@@ -41,33 +39,28 @@ public class CandidateDaoJpaTest {
 
 	@Test
 	public void emailExistsTest() {
-		when(this.persistenceFacade.findByQuery(Boolean.class, "Candidate.emailExists", map("email", "aaron@test.com")))
-				.thenReturn(Boolean.TRUE);
+		when(this.persistenceFacade.findByQuery(Boolean.class, "Candidate.emailExists", map("email", "aaron@test.com"))).thenReturn(Boolean.TRUE);
 		final boolean result = this.candidateDaoJpa.emailExists("aaron@test.com");
 		Assert.assertTrue(result);
 	}
 
 	@Test
 	public void findAllByJobOfferEmptyTest() {
-		final JobOffer jobOffer = mock(JobOffer.class);
-		when(this.persistenceFacade.findByQuery(Candidate.class, "Candidate.findAllByJobOffer",
-				map("jobOffer", jobOffer))).thenThrow(new NoResultException());
-		final List<Candidate> candidates = this.candidateDaoJpa.findAllByJobOffer(jobOffer);
+		when(this.persistenceFacade.findByQuery(Candidate.class, "Candidate.findByJobOfferId", map("jobOfferId", 1L))).thenThrow(new NoResultException());
+		final List<Candidate> candidates = this.candidateDaoJpa.findByJobOfferId(1L);
 		Assert.assertEquals(0, candidates.size());
 	}
 
 	@Test
 	public void findAllByJobOfferNullTest() {
-		this.thrown.expect(NullPointerException.class);
-		this.candidateDaoJpa.findAllByJobOffer(null);
+		this.thrown.expect(IllegalArgumentException.class);
+		this.candidateDaoJpa.findByJobOfferId(0L);
 	}
 
 	@Test
 	public void findAllByJobOfferTest() {
-		final JobOffer jobOffer = mock(JobOffer.class);
-		when(this.persistenceFacade.findByQuery(Candidate.class, "Candidate.findAllByJobOffer",
-				map("jobOffer", jobOffer), 0, 0)).thenReturn(this.mockCandidates());
-		final List<Candidate> candidatesFromRepository = this.candidateDaoJpa.findAllByJobOffer(jobOffer);
+		when(this.persistenceFacade.findByQuery(Candidate.class, "Candidate.findByJobOfferId", map("jobOfferId", 1L), 0, 0)).thenReturn(this.mockCandidates());
+		final List<Candidate> candidatesFromRepository = this.candidateDaoJpa.findByJobOfferId(1L);
 		Assert.assertEquals(1, candidatesFromRepository.size());
 		Assert.assertEquals("aaron.douglas@test.com", candidatesFromRepository.get(0).getEmail());
 	}
@@ -75,7 +68,7 @@ public class CandidateDaoJpaTest {
 	@Test
 	public void findAllTagsTest() {
 		when(this.persistenceFacade.findAll(Tag.class)).thenReturn(new ArrayList<Tag>());
-		final List<Tag> tagsFromRepository = this.candidateDaoJpa.findAllTags();
+		final List<Tag> tagsFromRepository = this.candidateDaoJpa.findTags();
 		Assert.assertNotNull(tagsFromRepository);
 		Assert.assertEquals(0, tagsFromRepository.size());
 	}
@@ -89,8 +82,7 @@ public class CandidateDaoJpaTest {
 	@Test
 	public void findCandidateAndFilesTest() {
 		final Candidate mockedCandidate = this.mockCandidate();
-		when(this.persistenceFacade.findByQuery(Candidate.class, "Candidate.findCandidateAndFilesById", map("id", 1L)))
-				.thenReturn(mockedCandidate);
+		when(this.persistenceFacade.findByQuery(Candidate.class, "Candidate.findCandidateAndFilesById", map("id", 1L))).thenReturn(mockedCandidate);
 		final Candidate candidateFromRepository = this.candidateDaoJpa.findCandidateAndFiles(1L);
 		Assert.assertEquals(mockedCandidate, candidateFromRepository);
 	}

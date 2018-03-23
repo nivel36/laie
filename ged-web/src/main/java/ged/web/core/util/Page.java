@@ -11,7 +11,7 @@ public enum Page {
 	CONTACT("/faces/client/contact"),
 	CONTACT_EDIT("/faces/client/contactEdit"),
 	INDEX("/faces/index"),
-	JOB_OFFER("/faces/jobOffer/jobOfferView"),
+	JOB_OFFER("/faces/jobOffer/jobOffer"),
 	JOB_OFFER_EDIT("/faces/jobOffer/jobOfferEdit"),
 	JOB_OFFER_SEARCH("/faces/jobOffer/jobOfferSearch"),
 	LOGIN("/login"),

@@ -11,6 +11,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
 import javax.inject.Inject;
 
+import ged.ejb.core.model.Ownerable;
+import ged.ejb.user.User;
 import ged.web.core.util.Translate;
 
 public abstract class AbstractBean implements Serializable {
@@ -99,5 +101,20 @@ public abstract class AbstractBean implements Serializable {
 
 	public void setSessionBean(final SessionBean sessionBean) {
 		this.sessionBean = sessionBean;
+	}
+
+	protected boolean userHasPermissionToEdit(final Ownerable entity) {
+		final User owner = entity.getOwner();
+		final User user = this.sessionBean.getUser();
+		if (user.isAdmin() || user.isRecruiterAdmin()) {
+			return true;
+		}
+		if (owner.equals(user)) {
+			return true;
+		}
+		if (this.sessionBean.getTeam().contains(user)) {
+			return true;
+		}
+		return false;
 	}
 }

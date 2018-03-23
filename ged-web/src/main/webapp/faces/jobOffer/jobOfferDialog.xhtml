@@ -19,9 +19,9 @@
 					<h:panelGroup id="clientGroup" layout="block" styleClass="form-group">
 						<p:outputLabel for="client" value="#{i18n['job.client']}" />
 						<div class="ui-inputgroup">
-							<p:inputText id="client" value="#{jobOfferDialogBean.jobOffer.client.name}" required="true" />
+							<p:inputText id="client" value="#{jobOfferDialogBean.client.name}" required="true" />
 							<p:commandButton action="#{jobOfferDialogBean.cleanClient}" process="@this" update="clientGroup" styleClass="btn-gray" icon="fa fa-times"
-								rendered="#{not empty jobOfferDialogBean.jobOffer.client.name}" />
+								rendered="#{not empty jobOfferDialogBean.client.name}" />
 							<p:commandButton icon="fa fa-search" styleClass="green-button" actionListener="#{clientSearchDialogBean.openDialog}" update="clientSearchDialogForm"
 								process="@this">
 								<f:attribute name="updateField" value="newJobOfferForm:clientGroup" />

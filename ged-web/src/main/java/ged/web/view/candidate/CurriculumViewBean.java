@@ -1,7 +1,6 @@
 package ged.web.view.candidate;
 
 import static ged.web.core.util.Navigate.to;
-import static ged.web.core.util.Page.CANDIDATE_SEARCH;
 import static ged.web.core.util.Page.CURRICULUM;
 
 import java.util.ArrayList;
@@ -18,6 +17,7 @@ import ged.ejb.curriculum.Education;
 import ged.ejb.curriculum.JobExperience;
 import ged.ejb.curriculum.Language;
 import ged.ejb.curriculum.Skill;
+import ged.web.core.PageNotFoundException;
 import ged.web.core.view.AbstractBean;
 
 @Named
@@ -46,10 +46,6 @@ public class CurriculumViewBean extends AbstractBean {
 	public String editCurriculum() {
 		this.flash.put("curriculum", this.curriculum);
 		return to(CURRICULUM).toUrl();
-	}
-
-	private void error() {
-		to(CANDIDATE_SEARCH).doPost();
 	}
 
 	public Candidate getCandidate() {
@@ -86,18 +82,20 @@ public class CurriculumViewBean extends AbstractBean {
 				final long candidateId = Long.parseLong(this.id);
 				this.curriculum = this.curriculumService.findByCandidateId(candidateId);
 				if (this.curriculum == null) {
-					error();
+					throw new PageNotFoundException();
 				}
 				this.candidate = this.curriculum.getCandidate();
 				this.jobExperiences = new ArrayList<>(this.curriculum.getJobExperiences());
 				this.skills = new ArrayList<>(this.curriculum.getSkills());
 				this.education = new ArrayList<>(this.curriculum.getEducation());
 				this.languages = new ArrayList<>(this.curriculum.getLanguages());
-			} catch (final NumberFormatException ex) {
-				error();
 			}
-		} else {
-			error();
+			catch (final NumberFormatException ex) {
+				throw new PageNotFoundException();
+			}
+		}
+		else {
+			throw new PageNotFoundException();
 		}
 	}
 

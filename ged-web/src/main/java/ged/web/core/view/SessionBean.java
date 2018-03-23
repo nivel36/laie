@@ -1,5 +1,6 @@
 package ged.web.core.view;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -19,6 +20,8 @@ public class SessionBean extends AbstractBean {
 
 	private Locale locale;
 
+	private List<User> team;
+
 	private User user;
 
 	@Inject
@@ -37,6 +40,10 @@ public class SessionBean extends AbstractBean {
 		return this.user.getRowsPerPage();
 	}
 
+	public List<User> getTeam() {
+		return this.team;
+	}
+
 	public User getUser() {
 		return this.user;
 	}
@@ -46,6 +53,7 @@ public class SessionBean extends AbstractBean {
 		final String username = this.facesContext.getExternalContext().getRemoteUser();
 		this.user = this.userService.findUserByEmail(username);
 		this.locale = new Locale(this.user.getLanguage());
+		this.team = this.userService.findSubordinateUsers(this.user);
 	}
 
 	public void setLocale(final Locale locale) {
@@ -65,7 +73,7 @@ public class SessionBean extends AbstractBean {
 	}
 
 	protected String translate(final String message) {
-		final ResourceBundle bundle = getResourceBundle("ged.i18n");
+		final ResourceBundle bundle = this.getResourceBundle("ged.i18n");
 		return bundle.getString(message);
 	}
 }

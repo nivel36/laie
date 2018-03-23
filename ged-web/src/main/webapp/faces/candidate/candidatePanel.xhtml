@@ -1,0 +1,29 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui" xmlns:i18n="http://legion.com/i18n">
+
+	<ui:include src="/faces/candidate/candidateSelectDialog.xhtml" />
+
+	<h:form id="candidatesForm">
+		<p:panel id="candidates" header="#{i18n['candidate.candidates']}">
+			<div class="ui-g">
+				<ui:repeat var="candidate" value="#{candidatePanelBean.candidates}" varStatus="status">
+					<div class="ui-g-12 ui-md-4 ui-lg-6">
+						<ui:include src="candidateCard.xhtml">
+							<ui:param name="candidate" value="#{candidate}" />
+						</ui:include>
+					</div>
+				</ui:repeat>
+			</div>
+			<div class="ui-g">
+				<div class="ui-g-12">
+					<div class="form-action-primary">
+						<p:commandButton value="#{i18n['action.add']}" actionListener="#{candidateSelectDialogBean.openDialog}" process="@this" update="candidateSelectForm">
+							<f:attribute name="callback" value="#{candidatePanelBean.selectClientCallback}" />
+							<f:attribute name="updateField" value="candidatesForm" />
+						</p:commandButton>
+					</div>
+				</div>
+			</div>
+		</p:panel>
+	</h:form>
+</ui:composition>

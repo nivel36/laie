@@ -22,6 +22,8 @@ public class JobOfferDialogBean extends AbstractDialogBean implements ClientSele
 
 	private static final long serialVersionUID = -4373329969104383876L;
 
+	private Client client;
+
 	@Inject
 	private transient ClientService clientService;
 
@@ -32,13 +34,36 @@ public class JobOfferDialogBean extends AbstractDialogBean implements ClientSele
 
 	private transient final SelectClientAction selectClientCallback = new SelectClientAction(this);
 
+	private JobOffer buildNewJobOffer() {
+		final JobOffer newJobOffer = new JobOffer();
+		newJobOffer.setClient(this.getClientFromAttributes());
+		newJobOffer.setOwner(this.sessionBean.getUser());
+		return newJobOffer;
+	}
+
 	public void cleanClient() {
-		this.jobOffer.setClient(new Client());
+		this.client = new Client();
 	}
 
 	@Override
 	protected void dispose() {
 		this.jobOffer = null;
+	}
+
+	public Client getClient() {
+		return this.client;
+	}
+
+	private Client getClientFromAttributes() {
+		final Long clientId = this.getAttribute("client_id");
+		final Client client;
+		if (clientId != null) {
+			client = this.clientService.find(clientId);
+		}
+		else {
+			client = null;
+		}
+		return client;
 	}
 
 	public JobOffer getJobOffer() {
@@ -51,31 +76,36 @@ public class JobOfferDialogBean extends AbstractDialogBean implements ClientSele
 
 	@Override
 	protected void init() {
-		this.jobOffer = new JobOffer();
-		this.setClientIntoJobOffer();
-		this.jobOffer.setOwner(this.sessionBean.getUser());
+		JobOffer newJobOffer = this.getAttribute("jobOffer");
+		if (newJobOffer == null) {
+			newJobOffer = this.buildNewJobOffer();
+		}
+		this.jobOffer = newJobOffer;
+		this.client = newJobOffer.getClient();
 	}
 
-	@Override
-	public void onClientSelect(final Client client) {
-		this.jobOffer.setClient(client);
-	}
-
-	public void save() {
+	private void insertJobOffer() {
 		this.jobOfferService.insert(this.jobOffer);
 		to(JOB_OFFER).withParams(map("jobOfferId", this.jobOffer.getId())).doGet();
 	}
 
-	private void setClientIntoJobOffer() {
-		final Long clientId = this.getAttribute("client");
-		final Client client;
-		if (clientId != null) {
-			client = this.clientService.find(clientId);
+	@Override
+	public void onClientSelect(final Client selectedClient) {
+		this.client = selectedClient;
+	}
+
+	public void save() {
+		this.jobOffer.setClient(this.client);
+		if (this.jobOffer.getId() == 0) {
+			this.insertJobOffer();
 		}
 		else {
-			client = null;
+			this.updateJobOffer();
 		}
-		this.jobOffer.setClient(client);
+	}
+
+	public void setClient(final Client client) {
+		this.client = client;
 	}
 
 	public void setJobOffer(final JobOffer jobOffer) {
@@ -84,5 +114,10 @@ public class JobOfferDialogBean extends AbstractDialogBean implements ClientSele
 
 	public void setJobOfferService(final JobOfferService jobOfferService) {
 		this.jobOfferService = jobOfferService;
+	}
+
+	private void updateJobOffer() {
+		this.jobOffer = this.jobOfferService.update(this.jobOffer);
+		to(JOB_OFFER).withParams(map("jobOfferId", this.jobOffer.getId())).doGet();
 	}
 }

@@ -2,7 +2,6 @@ package ged.web.view.candidate;
 
 import static ged.web.core.util.Navigate.to;
 import static ged.web.core.util.Page.CANDIDATE;
-import static ged.web.core.util.Page.CANDIDATE_SEARCH;
 
 import java.io.File;
 import java.io.IOException;
@@ -33,6 +32,7 @@ import ged.ejb.core.Address;
 import ged.ejb.core.FileUploadService;
 import ged.ejb.core.tag.Tag;
 import ged.ejb.core.tag.TagService;
+import ged.web.core.PageNotFoundException;
 import ged.web.core.util.Message;
 import ged.web.core.view.AbstractBean;
 
@@ -83,10 +83,6 @@ public class CandidateBean extends AbstractBean {
 
 	public void editCandidate() {
 		this.editable = true;
-	}
-
-	private void error() {
-		to(CANDIDATE_SEARCH).toUrl();
 	}
 
 	public Candidate getCandidate() {
@@ -147,7 +143,7 @@ public class CandidateBean extends AbstractBean {
 				final long candidateId = Long.parseLong(this.id);
 				this.candidate = this.candidateService.findCandidateAndFiles(candidateId);
 				if (this.candidate == null) {
-					this.error();
+					throw new PageNotFoundException();
 				}
 				if (this.candidate.getAddress() == null) {
 					this.candidate.setAddress(new Address());
@@ -159,7 +155,7 @@ public class CandidateBean extends AbstractBean {
 				this.checkLopdFile();
 			}
 			catch (final NumberFormatException ex) {
-				this.error();
+				throw new PageNotFoundException();
 			}
 		}
 		else {

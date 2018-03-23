@@ -68,7 +68,7 @@ public class Client extends AbstractAuditedEntity {
 		if (!super.equals(obj)) {
 			return false;
 		}
-		if (getClass() != obj.getClass()) {
+		if (this.getClass() != obj.getClass()) {
 			return false;
 		}
 		final Client other = (Client) obj;
