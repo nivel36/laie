@@ -1,13 +1,12 @@
 package ged.web.core;
 
 import static ged.web.core.util.Navigate.to;
+import static ged.web.core.util.Page.INDEX;
 import static ged.web.core.util.Page.LOGIN;
 
 import java.lang.invoke.MethodHandles;
 import java.util.Iterator;
 
-import javax.ejb.EJBException;
-import javax.faces.FacesException;
 import javax.faces.application.ViewExpiredException;
 import javax.faces.context.ExceptionHandler;
 import javax.faces.context.ExceptionHandlerWrapper;
@@ -28,7 +27,17 @@ public class GedExceptionHandler extends ExceptionHandlerWrapper {
 		super(wrapped);
 	}
 
-	private ExceptionQueuedEvent getRootException() {
+	@Override
+	public Throwable getRootCause(final Throwable exception) {
+		if (exception.getCause() == null) {
+			return exception;
+		}
+		else {
+			return this.getRootCause(exception.getCause());
+		}
+	}
+
+	private ExceptionQueuedEvent getRootEvent() {
 		ExceptionQueuedEvent lastEvent = null;
 		final Iterator<ExceptionQueuedEvent> iterator = this.getUnhandledExceptionQueuedEvents().iterator();
 		while (iterator.hasNext()) {
@@ -40,31 +49,22 @@ public class GedExceptionHandler extends ExceptionHandlerWrapper {
 
 	@Override
 	public void handle() {
-		final ExceptionQueuedEvent event = this.getRootException();
+		final ExceptionQueuedEvent event = this.getRootEvent();
 		if (event != null) {
 			final ExceptionQueuedEventContext context = (ExceptionQueuedEventContext) event.getSource();
-			final Throwable throwable = context.getException();
-			logger.debug("Handling exception", throwable);
-			this.handle(throwable);
+			final Throwable exception = context.getException();
+			logger.debug("Handling exception", exception);
+			this.handle(this.getRootCause(exception));
 		}
 		this.getWrapped().handle();
 	}
 
 	private void handle(final Throwable exception) {
-		if (exception instanceof FacesException) {
-			final Throwable cause = exception.getCause();
-			if (cause != null) {
-				this.handle(exception.getCause());
-			}
-			else {
-				Message.addError("message.title.unexpected_error", exception.getLocalizedMessage());
-			}
-		}
-		else if (exception instanceof EJBException) {
-			this.handle(exception.getCause());
-		}
-		else if (exception instanceof ViewExpiredException) {
+		if (exception instanceof ViewExpiredException) {
 			to(LOGIN).doPost();
+		}
+		else if (exception instanceof PageNotFoundException) {
+			to(INDEX).doPost();
 		}
 		else if (exception instanceof OptimisticLockException) {
 			Message.addError("warning.optimistick_lock.message", "warning.optimistick_lock.message");
