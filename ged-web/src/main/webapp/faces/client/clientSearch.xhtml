@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/WEB-INF/templates/default.xhtml">
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:af="http://java.sun.com/jsf/composite/afaces"
+	template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
 		<title>#{i18n['client.clients']}</title>
@@ -15,6 +16,9 @@
 		<div class="ui-g">
 			<div class="ui-g-12">
 				<h:form id="clientSearchForm">
+					<af:afDialog id="boton" label="Test">
+			
+					</af:afDialog>
 					<p:defaultCommand target="searchAction" />
 					<p:panel id="searchPanel" header="#{i18n['client.clients']}">
 						<div class="ui-g">

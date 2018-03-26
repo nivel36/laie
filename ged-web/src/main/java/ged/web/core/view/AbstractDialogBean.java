@@ -20,6 +20,10 @@ public abstract class AbstractDialogBean extends AbstractBean {
 		this.dispose();
 	}
 
+	public void closeDialog(final Object data) {
+		this.closeDialog();
+	}
+
 	protected abstract void dispose();
 
 	@SuppressWarnings("unchecked")
