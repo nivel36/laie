@@ -24,9 +24,8 @@
 								rendered="#{not empty jobOfferDialogBean.client.name}" />
 							<p:commandButton icon="fa fa-search" styleClass="green-button" actionListener="#{clientSearchDialogBean.openDialog}" update="clientSearchDialogForm"
 								process="@this">
-								<f:ajax >
 								<f:attribute name="updateField" value="newJobOfferForm:clientGroup" />
-								<f:attribute name="callback" value="#{jobOfferDialogBean.selectClientCallback}" />
+								<f:attribute name="callback" value="#{jobOfferDialogBean}" />
 							</p:commandButton>
 						</div>
 						<p:message for="client" />

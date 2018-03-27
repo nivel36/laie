@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
 
 import ged.ejb.client.Client;
 import ged.ejb.client.ClientService;
-import ged.web.core.ActionCallback;
 import ged.web.core.view.AbstractDialogBean;
 
 @Named
@@ -31,11 +30,7 @@ public class ClientSearchDialogBean extends AbstractDialogBean {
 
 	private String searchText;
 
-	private ActionCallback<Client> selectClientActionCallback;
-
 	private Client selectedClient;
-
-	private String updateField;
 
 	public void clean() {
 		logger.debug("Clean action performed");
@@ -64,13 +59,11 @@ public class ClientSearchDialogBean extends AbstractDialogBean {
 	@Override
 	public void init() {
 		logger.trace("Init ClientSearchDialogBean");
-		this.selectClientActionCallback = this.getAttribute("callback");
-		this.updateField = this.getAttribute("updateField");
 		this.clients = this.clientService.search(this.searchText);
 	}
 
 	public void onClientSelect() {
-		this.selectClientActionCallback.doAction(this.selectedClient);
+		this.callback.doAction(this.selectedClient);
 		this.closeDialog();
 		Ajax.update(this.updateField);
 	}
@@ -86,10 +79,6 @@ public class ClientSearchDialogBean extends AbstractDialogBean {
 
 	public void setSearchText(final String searchText) {
 		this.searchText = searchText;
-	}
-
-	public void setSelectClientActionCallback(final ActionCallback<Client> selectClientActionCallback) {
-		this.selectClientActionCallback = selectClientActionCallback;
 	}
 
 	public void setSelectedClient(final Client selectedClient) {

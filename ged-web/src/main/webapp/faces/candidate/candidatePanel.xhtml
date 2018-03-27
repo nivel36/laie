@@ -18,7 +18,7 @@
 				<div class="ui-g-12">
 					<div class="form-action-primary">
 						<p:commandButton value="#{i18n['action.add']}" actionListener="#{candidateSelectDialogBean.openDialog}" process="@this" update="candidateSelectForm">
-							<f:attribute name="callback" value="#{candidatePanelBean.selectClientCallback}" />
+							<f:attribute name="callback" value="#{candidatePanelBean}" />
 							<f:attribute name="updateField" value="candidatesForm" />
 						</p:commandButton>
 					</div>

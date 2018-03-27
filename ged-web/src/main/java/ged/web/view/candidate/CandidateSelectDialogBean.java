@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
 
 import ged.ejb.candidate.Candidate;
 import ged.ejb.candidate.CandidateService;
-import ged.web.core.ActionCallback;
 import ged.web.core.view.AbstractDialogBean;
 
 @Named
@@ -24,8 +23,6 @@ public class CandidateSelectDialogBean extends AbstractDialogBean {
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	private static final long serialVersionUID = 8503929833968698420L;
-
-	private ActionCallback<List<Candidate>> action;
 
 	private List<Candidate> candidates;
 
@@ -37,13 +34,6 @@ public class CandidateSelectDialogBean extends AbstractDialogBean {
 	private List<String> searchValues = new ArrayList<>();
 
 	private List<Candidate> selectedCandidates;
-
-	private String updateElement;
-
-	public void action(final ActionCallback<List<Candidate>> action, final String updateElement) {
-		this.action = action;
-		this.updateElement = updateElement;
-	}
 
 	public void clean() {
 		this.searchText = null;
@@ -72,10 +62,6 @@ public class CandidateSelectDialogBean extends AbstractDialogBean {
 		return this.selectedCandidates;
 	}
 
-	public String getUpdateElement() {
-		return this.updateElement;
-	}
-
 	@Override
 	public void init() {
 		this.search();
@@ -87,9 +73,9 @@ public class CandidateSelectDialogBean extends AbstractDialogBean {
 	}
 
 	public void select() {
-		this.action.doAction(this.selectedCandidates);
+		this.callback.doAction(this.selectedCandidates);
 		this.selectedCandidates.clear();
-		Ajax.update("candidateSelectForm", this.updateElement);
+		Ajax.update("candidateSelectForm", this.updateField);
 		this.closeDialog();
 	}
 

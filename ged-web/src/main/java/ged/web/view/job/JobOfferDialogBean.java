@@ -12,13 +12,12 @@ import ged.ejb.client.Client;
 import ged.ejb.client.ClientService;
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
+import ged.web.core.CallbackListener;
 import ged.web.core.view.AbstractDialogBean;
-import ged.web.view.client.ClientSelecteable;
-import ged.web.view.client.SelectClientAction;
 
 @Named
 @ViewScoped
-public class JobOfferDialogBean extends AbstractDialogBean implements ClientSelecteable {
+public class JobOfferDialogBean extends AbstractDialogBean implements CallbackListener {
 
 	private static final long serialVersionUID = -4373329969104383876L;
 
@@ -31,8 +30,6 @@ public class JobOfferDialogBean extends AbstractDialogBean implements ClientSele
 
 	@Inject
 	private transient JobOfferService jobOfferService;
-
-	private transient final SelectClientAction selectClientCallback = new SelectClientAction(this);
 
 	private JobOffer buildNewJobOffer() {
 		final JobOffer newJobOffer = new JobOffer();
@@ -48,6 +45,11 @@ public class JobOfferDialogBean extends AbstractDialogBean implements ClientSele
 	@Override
 	protected void dispose() {
 		this.jobOffer = null;
+	}
+
+	@Override
+	public void doAction(final Object value) {
+		this.client = (Client) value;
 	}
 
 	public Client getClient() {
@@ -70,10 +72,6 @@ public class JobOfferDialogBean extends AbstractDialogBean implements ClientSele
 		return this.jobOffer;
 	}
 
-	public SelectClientAction getSelectClientCallback() {
-		return this.selectClientCallback;
-	}
-
 	@Override
 	protected void init() {
 		JobOffer newJobOffer = this.getAttribute("jobOffer");
@@ -87,11 +85,6 @@ public class JobOfferDialogBean extends AbstractDialogBean implements ClientSele
 	private void insertJobOffer() {
 		this.jobOfferService.insert(this.jobOffer);
 		to(JOB_OFFER).withParams(map("jobOfferId", this.jobOffer.getId())).doGet();
-	}
-
-	@Override
-	public void onClientSelect(final Client selectedClient) {
-		this.client = selectedClient;
 	}
 
 	public void save() {

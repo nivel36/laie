@@ -11,11 +11,12 @@ import org.omnifaces.cdi.Param;
 
 import ged.ejb.candidate.Candidate;
 import ged.ejb.candidate.CandidateService;
+import ged.web.core.CallbackListener;
 import ged.web.core.view.AbstractBean;
 
 @ViewScoped
 @Named
-public class CandidatePanelBean extends AbstractBean implements CandidateSelecteable {
+public class CandidatePanelBean extends AbstractBean implements CallbackListener {
 
 	private static final long serialVersionUID = 3685531862855960321L;
 
@@ -28,7 +29,11 @@ public class CandidatePanelBean extends AbstractBean implements CandidateSelecte
 	@Param
 	private Long jobOfferId;
 
-	private final SelectCandidatesAction selectCandidateCallback = new SelectCandidatesAction(this);
+	@Override
+	public void doAction(final Object value) {
+		final List<Candidate> selectedCandidates = (List<Candidate>) value;
+		this.candidates.addAll(selectedCandidates);
+	}
 
 	public List<Candidate> getCandidates() {
 		return this.candidates;
@@ -38,20 +43,11 @@ public class CandidatePanelBean extends AbstractBean implements CandidateSelecte
 		return this.jobOfferId;
 	}
 
-	public SelectCandidatesAction getSelectCandidateCallback() {
-		return this.selectCandidateCallback;
-	}
-
 	@PostConstruct
 	public void init() {
 		if (this.jobOfferId != null) {
 			this.candidates = this.candidateService.findByJobOfferId(this.jobOfferId);
 		}
-	}
-
-	@Override
-	public void onCandidatesSelect(final List<Candidate> selectedCandidates) {
-		this.candidates.addAll(selectedCandidates);
 	}
 
 	public void setCandidateService(final CandidateService candidateService) {

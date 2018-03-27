@@ -3,9 +3,12 @@ package ged.web.core.view;
 import java.util.Map;
 import java.util.Objects;
 
+import javax.annotation.PreDestroy;
 import javax.faces.event.ActionEvent;
 
 import org.primefaces.event.SelectEvent;
+
+import ged.web.core.CallbackListener;
 
 public abstract class AbstractDialogBean extends AbstractBean {
 
@@ -13,7 +16,11 @@ public abstract class AbstractDialogBean extends AbstractBean {
 
 	private Map<String, Object> attributes;
 
+	protected CallbackListener callback;
+
 	private boolean showDialog;
+
+	protected String updateField;
 
 	public void closeDialog() {
 		this.showDialog = false;
@@ -41,6 +48,8 @@ public abstract class AbstractDialogBean extends AbstractBean {
 	public void openDialog(final ActionEvent event) {
 		this.showDialog = true;
 		this.attributes = event.getComponent().getAttributes();
+		this.callback = this.getAttribute("callback");
+		this.updateField = this.getAttribute("updateField");
 		this.init();
 	}
 
@@ -48,6 +57,15 @@ public abstract class AbstractDialogBean extends AbstractBean {
 		this.showDialog = true;
 		this.attributes = event.getComponent().getAttributes();
 		this.init();
+	}
+
+	@PreDestroy
+	public void preDestroy() {
+		this.callback = null;
+	}
+
+	public void setSelectClientActionCallback(final CallbackListener callback) {
+		this.callback = callback;
 	}
 
 	public void setShowDialog(final boolean showDialog) {
