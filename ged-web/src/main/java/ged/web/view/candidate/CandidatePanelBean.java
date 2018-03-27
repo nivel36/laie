@@ -11,6 +11,8 @@ import org.omnifaces.cdi.Param;
 
 import ged.ejb.candidate.Candidate;
 import ged.ejb.candidate.CandidateService;
+import ged.ejb.job.offer.JobOffer;
+import ged.ejb.job.offer.JobOfferService;
 import ged.web.core.CallbackListener;
 import ged.web.core.view.AbstractBean;
 
@@ -29,10 +31,24 @@ public class CandidatePanelBean extends AbstractBean implements CallbackListener
 	@Param
 	private Long jobOfferId;
 
+	@Inject
+	private JobOfferService jobOfferService;
+
+	private void addCandidatesToJobOffer(final List<Candidate> selectedCandidates) {
+		final JobOffer jobOffer = this.jobOfferService.find(this.jobOfferId);
+		for (final Candidate candidate : selectedCandidates) {
+			this.jobOfferService.addJobCandidature(jobOffer, candidate);
+		}
+	}
+
 	@Override
 	public void doAction(final Object value) {
+		@SuppressWarnings("unchecked")
 		final List<Candidate> selectedCandidates = (List<Candidate>) value;
 		this.candidates.addAll(selectedCandidates);
+		if (this.jobOfferId != null) {
+			this.addCandidatesToJobOffer(selectedCandidates);
+		}
 	}
 
 	public List<Candidate> getCandidates() {

@@ -11,6 +11,8 @@ public interface JobOfferService extends AuditedService<JobOffer> {
 
 	void addJobCandidature(final JobOffer jobOffer, final Candidate candidate);
 
+	void addJobCandidatures(final JobOffer jobOffer, final List<Candidate> candidates);
+
 	void addJobMeeting(final JobMeeting jobMeeting);
 
 	List<JobOffer> findAllJobOffersByOwner(final User owner);

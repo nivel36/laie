@@ -60,6 +60,16 @@ public class JobOfferServiceImpl extends AbstratctAuditedService<JobOffer> imple
 	}
 
 	@Override
+	public void addJobCandidatures(final JobOffer jobOffer, final List<Candidate> candidates) {
+		Objects.requireNonNull(jobOffer);
+		Objects.requireNonNull(candidates);
+		for (final Candidate candidate : candidates) {
+			this.addJobCandidature(jobOffer, candidate);
+		}
+
+	}
+
+	@Override
 	public void addJobMeeting(final JobMeeting jobMeeting) {
 		Objects.requireNonNull(jobMeeting);
 		logger.debug("Add Job meeting {}", jobMeeting.getDescription());
