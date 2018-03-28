@@ -39,6 +39,9 @@ public class Contact extends AbstractAuditedEntity {
 	@Column(length = 12)
 	private String phoneNumber;
 
+	@Column(length = 128)
+	private String position;
+
 	@NotNull
 	@Column(length = 64, nullable = false)
 	@Field
@@ -83,6 +86,10 @@ public class Contact extends AbstractAuditedEntity {
 		return this.phoneNumber;
 	}
 
+	public String getPosition() {
+		return this.position;
+	}
+
 	public String getSurname() {
 		return this.surname;
 	}
@@ -110,6 +117,10 @@ public class Contact extends AbstractAuditedEntity {
 
 	public void setPhoneNumber(final String phoneNumber) {
 		this.phoneNumber = phoneNumber;
+	}
+
+	public void setPosition(final String position) {
+		this.position = position;
 	}
 
 	public void setSurname(final String surname) {

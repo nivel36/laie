@@ -23,6 +23,13 @@
 				</div>
 				<div class="ui-g-12 ui-md-6">
 					<div class="form-group">
+						<p:outputLabel value="#{i18n['contact.position']}" for="position" />
+						<p:inputText id="position" value="#{contactDialogBean.contact.position}" />
+						<p:message for="position" />
+					</div>
+				</div>
+				<div class="ui-g-12 ui-md-6">
+					<div class="form-group">
 						<p:outputLabel value="#{i18n['contact.email']}" for="email" />
 						<p:inputText id="email" value="#{contactDialogBean.contact.email}" required="true" />
 						<p:message for="email" />

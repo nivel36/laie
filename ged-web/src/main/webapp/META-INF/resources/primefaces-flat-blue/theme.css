@@ -4140,6 +4140,12 @@ body .ui-datatable table {
 	table-layout: auto;
 }
 
+body .ui-datatable table  .ui-state-highlight {
+	color: black;
+	background: transparent;
+}
+
+
 body .ui-datatable thead th {
 	text-align: left;
 }
