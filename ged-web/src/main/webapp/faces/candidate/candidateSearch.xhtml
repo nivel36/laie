@@ -77,7 +77,6 @@
 							<p:dataTable var="candidate" id="candidates" value="#{candidateSearchBean.candidates}" emptyMessage="#{i18n['candidate.no_candidates_found']}"
 								reflow="true" paginator="true" paginatorPosition="bottom" rows="#{sessionBean.rowsPerPage}" sortBy="#{candidate.fullName}" sortOrder="ascending">
 
-
 								<p:column>
 									<p:graphicImage class="image image-icon" value="/images/#{candidate.imageFileName}" rendered="#{not empty candidate.imageFileName}" />
 									<p:graphicImage class="image image-icon" value="/resources/img/default-avatar.png" rendered="#{empty candidate.imageFileName}" />

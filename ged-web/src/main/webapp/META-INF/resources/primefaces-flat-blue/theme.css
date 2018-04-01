@@ -4578,6 +4578,11 @@ body .ui-button, body button.ui-button {
 	border: 0px;
 	overflow: hidden;
 	font-weight: bold;
+	transition: 0.1s;
+}
+
+body .ui-button:hover, body button.ui-button:hover {
+	box-shadow: none;	
 }
 
 body .ui-button-text-icon-left .ui-button-text {
