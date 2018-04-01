@@ -18,6 +18,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import ged.ejb.UploadedServerFile;
 import ged.ejb.UploadedServerFileDao;
 import ged.ejb.core.tag.Tag;
+import ged.ejb.job.offer.JobCandidatureDao;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CandidateServiceImplTest {
@@ -26,6 +27,9 @@ public class CandidateServiceImplTest {
 	private CandidateDao candidateDao;
 
 	private CandidateServiceImpl candidateServiceImpl;
+
+	@Mock
+	private JobCandidatureDao jobCandidatureDao;
 
 	@Rule
 	public ExpectedException thrown = ExpectedException.none();
@@ -138,7 +142,7 @@ public class CandidateServiceImplTest {
 
 	@Before
 	public void setUp() {
-		this.candidateServiceImpl = new CandidateServiceImpl(this.candidateDao, this.uploadedServerFileDao);
+		this.candidateServiceImpl = new CandidateServiceImpl(this.candidateDao, this.uploadedServerFileDao, this.jobCandidatureDao);
 	}
 
 	@Test

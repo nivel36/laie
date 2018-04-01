@@ -5,6 +5,7 @@ import java.util.List;
 import ged.ejb.UploadedServerFile;
 import ged.ejb.core.AuditedService;
 import ged.ejb.core.tag.Tag;
+import ged.ejb.job.offer.JobCandidature;
 
 public interface CandidateService extends AuditedService<Candidate> {
 
@@ -13,6 +14,8 @@ public interface CandidateService extends AuditedService<Candidate> {
 	Candidate findCandidateAndFiles(long id);
 
 	UploadedServerFile findFile(long id);
+
+	List<JobCandidature> findJobCandidatures(long candidateId);
 
 	List<Candidate> findLastAddedCandidates(int numberOfCandidates);
 

@@ -19,6 +19,8 @@ import ged.ejb.core.action.Action.ActionType;
 import ged.ejb.core.model.Dao;
 import ged.ejb.core.model.Repository;
 import ged.ejb.core.tag.Tag;
+import ged.ejb.job.offer.JobCandidature;
+import ged.ejb.job.offer.JobCandidatureDao;
 
 @Stateless
 public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> implements CandidateService {
@@ -27,14 +29,18 @@ public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> imp
 
 	private final CandidateDao candidateDao;
 
+	private final JobCandidatureDao jobCandidatureDao;
+
 	private final UploadedServerFileDao uploadedServerFileDao;
 
 	@Inject
-	public CandidateServiceImpl(@Repository final CandidateDao candidateDao, @Repository final UploadedServerFileDao uploadedServerFileDao) {
+	public CandidateServiceImpl(@Repository final CandidateDao candidateDao, @Repository final UploadedServerFileDao uploadedServerFileDao,
+			@Repository final JobCandidatureDao jobCandidatureDao) {
 		Objects.requireNonNull(uploadedServerFileDao);
 		Objects.requireNonNull(candidateDao);
 		this.candidateDao = candidateDao;
 		this.uploadedServerFileDao = uploadedServerFileDao;
+		this.jobCandidatureDao = jobCandidatureDao;
 	}
 
 	@Override
@@ -61,6 +67,14 @@ public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> imp
 			throw new IllegalArgumentException("id: " + id);
 		}
 		return this.uploadedServerFileDao.find(id);
+	}
+
+	@Override
+	public List<JobCandidature> findJobCandidatures(final long candidateId) {
+		if (candidateId < 1) {
+			throw new IllegalArgumentException();
+		}
+		return this.jobCandidatureDao.findByCandidateId(candidateId);
 	}
 
 	@Override
@@ -103,19 +117,19 @@ public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> imp
 		this.uploadedServerFileDao.insert(file);
 	}
 
+	private boolean isDuplicatedEmail(final Candidate candidate, final Candidate candidateInRepository) {
+		return !candidate.getEmail().equals(candidateInRepository.getEmail()) && this.candidateDao.emailExists(candidate.getEmail());
+	}
+
 	@Override
 	@Audited(action = ActionType.UPDATE)
 	public Candidate update(final Candidate candidate) {
 		Objects.requireNonNull(candidate);
 		final Candidate candidateInRepository = this.candidateDao.find(candidate.getId());
-		if (isDuplicatedEmail(candidate, candidateInRepository)) {
+		if (this.isDuplicatedEmail(candidate, candidateInRepository)) {
 			throw new ValidationException("Email duplicated");
 		}
 		return this.candidateDao.update(candidate);
-	}
-
-	private boolean isDuplicatedEmail(final Candidate candidate, final Candidate candidateInRepository) {
-		return !candidate.getEmail().equals(candidateInRepository.getEmail()) && this.candidateDao.emailExists(candidate.getEmail());
 	}
 
 	@Override

@@ -124,7 +124,7 @@ public class JobOfferServiceImpl extends AbstratctAuditedService<JobOffer> imple
 		Objects.requireNonNull(jobOffer);
 		Objects.requireNonNull(candidate);
 		logger.debug("Remove job candidature of candidate {} to job offer {}", candidate.getFullName(), jobOffer.getName());
-		final JobCandidature jobCandidature = this.jobCandidatureDao.findByJobOfferAndCandidate(jobOffer, candidate);
+		final JobCandidature jobCandidature = this.jobCandidatureDao.findByJobOfferIdAndCandidateId(jobOffer.getId(), candidate.getId());
 		this.jobCandidatureDao.delete(jobCandidature);
 	}
 

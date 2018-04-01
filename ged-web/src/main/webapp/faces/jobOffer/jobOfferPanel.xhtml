@@ -11,7 +11,7 @@
 					<p:dataTable var="jobOffer" value="#{jobOfferPanelBean.jobOffers}" emptyMessage="#{i18n['client.no_job_offers_found']}" reflow="true" paginator="true"
 						paginatorPosition="bottom" rows="#{sessionBean.rowsPerPage}" sortBy="#{jobOffer.name}" sortOrder="ascending">
 						<p:column headerText="#{i18n['job.name']}">
-							<h:link value="#{jobOffer.name}" outcome="/faces/jobOffer/jobOfferView">
+							<h:link value="#{jobOffer.name}" outcome="/faces/jobOffer/jobOffer">
 								<f:param name="jobOfferId" value="#{jobOffer.id}" />
 							</h:link>
 						</p:column>

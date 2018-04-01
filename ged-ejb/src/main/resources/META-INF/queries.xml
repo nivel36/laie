@@ -136,13 +136,29 @@
 			WHERE c.candidate.id = :candidateId
 		]]></query>
 	</named-query>
-
-	<named-query name="JobCandidature.findByJobOfferAndCandidate">
+	
+	<named-query name="JobCandidature.findByJobOfferId">
 		<query><![CDATA[
 			SELECT j 
 			FROM JobCandidature j 
-			WHERE j.candidate = :candidate 
-			AND j.jobOffer = :jobOffer
+			WHERE j.jobOffer.id = :jobOfferId
+		]]></query>
+	</named-query>
+	
+	<named-query name="JobCandidature.findByCandidateId">
+		<query><![CDATA[
+			SELECT j 
+			FROM JobCandidature j 
+			WHERE j.candidate.id = :candidateId 
+		]]></query>
+	</named-query>
+
+	<named-query name="JobCandidature.findByJobOfferIdAndCandidateId">
+		<query><![CDATA[
+			SELECT j 
+			FROM JobCandidature j 
+			WHERE j.candidate.id = :candidateId 
+			AND j.jobOffer.id = :jobOfferId
 		]]></query>
 	</named-query>
 

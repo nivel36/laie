@@ -1,10 +1,14 @@
 package ged.ejb.job.offer;
 
-import ged.ejb.candidate.Candidate;
+import java.util.List;
+
 import ged.ejb.core.model.Dao;
 
-public interface JobCandidatureDao extends Dao< JobCandidature> {
+public interface JobCandidatureDao extends Dao<JobCandidature> {
 
-	public JobCandidature findByJobOfferAndCandidate(final JobOffer jobOffer, final Candidate candidate);
+	List<JobCandidature> findByCandidateId(long candidateId);
 
+	List<JobCandidature> findByJobOfferId(long jobOfferId);
+
+	JobCandidature findByJobOfferIdAndCandidateId(long jobOfferId, long candidateId);
 }

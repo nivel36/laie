@@ -32,6 +32,7 @@ import ged.ejb.core.Address;
 import ged.ejb.core.FileUploadService;
 import ged.ejb.core.tag.Tag;
 import ged.ejb.core.tag.TagService;
+import ged.ejb.job.offer.JobCandidature;
 import ged.web.core.PageNotFoundException;
 import ged.web.core.util.Message;
 import ged.web.core.view.AbstractBean;
@@ -46,6 +47,8 @@ public class CandidateBean extends AbstractBean {
 
 	private Candidate candidate;
 
+	private Long candidateId;
+
 	@Inject
 	private transient CandidateService candidateService;
 
@@ -56,7 +59,7 @@ public class CandidateBean extends AbstractBean {
 	@Inject
 	private transient FileUploadService fileUploadService;
 
-	private String id;
+	private List<JobCandidature> jobCandidatures;
 
 	private List<String> tags = new ArrayList<>();
 
@@ -89,12 +92,16 @@ public class CandidateBean extends AbstractBean {
 		return this.candidate;
 	}
 
+	public Long getCandidateId() {
+		return this.candidateId;
+	}
+
 	public List<UploadedServerFile> getFiles() {
 		return this.files;
 	}
 
-	public String getId() {
-		return this.id;
+	public List<JobCandidature> getJobCandidatures() {
+		return this.jobCandidatures;
 	}
 
 	public List<String> getTags() {
@@ -138,30 +145,22 @@ public class CandidateBean extends AbstractBean {
 	 * Not using @PostConstruct because the view is a GET based form.
 	 */
 	public void init() {
-		if (this.id != null) {
-			try {
-				final long candidateId = Long.parseLong(this.id);
-				this.candidate = this.candidateService.findCandidateAndFiles(candidateId);
-				if (this.candidate == null) {
-					throw new PageNotFoundException();
-				}
-				if (this.candidate.getAddress() == null) {
-					this.candidate.setAddress(new Address());
-				}
-				for (final Tag tag : this.candidate.getTags()) {
-					this.tags.add(tag.getLabel());
-				}
-				this.files.addAll(this.candidate.getFiles());
-				this.checkLopdFile();
-			}
-			catch (final NumberFormatException ex) {
-				throw new PageNotFoundException();
-			}
+		if (this.candidateId == null) {
+			throw new PageNotFoundException();
 		}
-		else {
-			this.editable = true;
-			this.candidate = this.buildNewCandidate();
+		this.candidate = this.candidateService.findCandidateAndFiles(this.candidateId);
+		if (this.candidate == null) {
+			throw new PageNotFoundException();
 		}
+		if (this.candidate.getAddress() == null) {
+			this.candidate.setAddress(new Address());
+		}
+		for (final Tag tag : this.candidate.getTags()) {
+			this.tags.add(tag.getLabel());
+		}
+		this.files.addAll(this.candidate.getFiles());
+		this.jobCandidatures = this.candidateService.findJobCandidatures(this.candidateId);
+		this.checkLopdFile();
 	}
 
 	public String insertCandidate() {
@@ -173,10 +172,6 @@ public class CandidateBean extends AbstractBean {
 
 	public boolean isEditable() {
 		return this.editable;
-	}
-
-	public boolean isNewCandidate() {
-		return this.candidate.getId() == 0;
 	}
 
 	public void onload() {
@@ -218,12 +213,16 @@ public class CandidateBean extends AbstractBean {
 		this.candidate = candidate;
 	}
 
+	public void setCandidateId(final Long candidateId) {
+		this.candidateId = candidateId;
+	}
+
 	public void setCandidateService(final CandidateService candidateService) {
 		this.candidateService = candidateService;
 	}
 
-	public void setId(final String id) {
-		this.id = id;
+	public void setJobCandidatures(final List<JobCandidature> jobCandidatures) {
+		this.jobCandidatures = jobCandidatures;
 	}
 
 	public void setTags(final List<String> tags) {

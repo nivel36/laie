@@ -1,10 +1,9 @@
 package ged.ejb.job.offer;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import static ged.ejb.core.util.Parameters.map;
 
-import ged.ejb.candidate.Candidate;
+import java.util.List;
+
 import ged.ejb.core.model.AbstractDaoJpa;
 import ged.ejb.core.model.Repository;
 
@@ -12,11 +11,31 @@ import ged.ejb.core.model.Repository;
 public class JobCandidatureDaoJpa extends AbstractDaoJpa<JobCandidature> implements JobCandidatureDao {
 
 	@Override
-	public JobCandidature findByJobOfferAndCandidate(final JobOffer jobOffer, final Candidate candidate) {
-		final Map<String, Object> parameters = new HashMap<>();
-		parameters.put("jobOffer", jobOffer);
-		parameters.put("candidate", candidate);
-		return this.findByQuery(JobCandidature.class, "JobCandidature.findByJobOfferAndCandidate", parameters);
+	public List<JobCandidature> findByCandidateId(final long candidateId) {
+		if (candidateId < 1) {
+			throw new IllegalArgumentException();
+		}
+		return this.findByQuery(JobCandidature.class, "JobCandidature.findByCandidateId", map("candidateId", candidateId), 0, 0);
+	}
+
+	@Override
+	public List<JobCandidature> findByJobOfferId(final long jobOfferId) {
+		if (jobOfferId < 1) {
+			throw new IllegalArgumentException();
+		}
+		return this.findByQuery(JobCandidature.class, "JobCandidature.findByJobOfferId", map("jobOfferId", jobOfferId), 0, 0);
+	}
+
+	@Override
+	public JobCandidature findByJobOfferIdAndCandidateId(final long jobOfferId, final long candidateId) {
+		if (candidateId < 1) {
+			throw new IllegalArgumentException();
+		}
+		if (jobOfferId < 1) {
+			throw new IllegalArgumentException();
+		}
+		return this.findByQuery(JobCandidature.class, "JobCandidature.findByJobOfferIdAndCandidateId",
+				map("jobOfferId", jobOfferId).and("candidateId", candidateId));
 	}
 
 	@Override
