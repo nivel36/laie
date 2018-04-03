@@ -44,7 +44,7 @@ public class Candidate extends AbstractAuditedEntity {
 
 	private LocalDate bornDate;
 
-	@OneToOne(fetch = FetchType.LAZY, orphanRemoval = true)
+	@OneToOne(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, orphanRemoval = true)
 	@JoinColumn(name = "curriculumId", nullable = true, unique = true)
 	private Curriculum curriculum;
 
@@ -56,14 +56,14 @@ public class Candidate extends AbstractAuditedEntity {
 	@Min(0)
 	private Integer expectedSalary;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "candidate", orphanRemoval = true)
+	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "candidate", orphanRemoval = true)
 	private Set<UploadedServerFile> files;
 
 	private String imageFileName;
 
 	private String infojobsProfileUrl;
 
-	@OneToMany(mappedBy = "candidate", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "candidate", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
 	private List<JobCandidature> jobCandidatures;
 
 	@NotNull
@@ -116,8 +116,8 @@ public class Candidate extends AbstractAuditedEntity {
 
 	protected boolean deepEquals(final Object obj) {
 		final Candidate other = (Candidate) obj;
-		return Objects.equals(this.email, other.email) && Objects.equals(this.name, other.name)
-				&& Objects.equals(this.phoneNumber, other.phoneNumber) && Objects.equals(this.surname, other.surname);
+		return Objects.equals(this.email, other.email) && Objects.equals(this.name, other.name) && Objects.equals(this.phoneNumber, other.phoneNumber)
+				&& Objects.equals(this.surname, other.surname);
 	}
 
 	@Override
@@ -135,8 +135,8 @@ public class Candidate extends AbstractAuditedEntity {
 			return false;
 		}
 		final Candidate other = (Candidate) obj;
-		return Objects.equals(this.email, other.email) && Objects.equals(this.name, other.name)
-				&& Objects.equals(this.phoneNumber, other.phoneNumber) && Objects.equals(this.surname, other.surname);
+		return Objects.equals(this.email, other.email) && Objects.equals(this.name, other.name) && Objects.equals(this.phoneNumber, other.phoneNumber)
+				&& Objects.equals(this.surname, other.surname);
 	}
 
 	public Address getAddress() {

@@ -44,21 +44,21 @@ public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> imp
 	}
 
 	@Override
+	public Candidate findAllDataById(final long id) {
+		if (id < 1) {
+			throw new IllegalArgumentException("id: " + id);
+		}
+		logger.debug("Find candidate with id {} and his/her files", id);
+		return this.candidateDao.findAllDataById(id);
+	}
+
+	@Override
 	public List<Candidate> findByJobOfferId(final long jobOfferId) {
 		if (jobOfferId < 1) {
 			throw new IllegalArgumentException("jobOfferId: " + jobOfferId);
 		}
 		logger.debug("Find candidates by jobOffer id {} ", jobOfferId);
 		return this.candidateDao.findByJobOfferId(jobOfferId);
-	}
-
-	@Override
-	public Candidate findCandidateAndFiles(final long id) {
-		if (id < 1) {
-			throw new IllegalArgumentException("id: " + id);
-		}
-		logger.debug("Find candidate with id {} and his/her files", id);
-		return this.candidateDao.findCandidateAndFiles(id);
 	}
 
 	@Override

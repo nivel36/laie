@@ -3973,8 +3973,10 @@ body .ui-state-disabled {
 }
 
 body .ui-dialog {
-	border-radius: 0px;
+	border-radius: 3px;
 	max-width: 100%;
+	overflow: auto;
+    max-height: 100%;
 }
 
 body .ui-dialog.medium {
@@ -3982,16 +3984,14 @@ body .ui-dialog.medium {
 }
 
 body .ui-dialog .ui-dialog-titlebar {
-	padding: 10px;
-	border-bottom: 1px solid #CCCCCC;
+	padding: 8px 15px;
+	background: #2d353c;
 }
 
 body .ui-dialog .ui-dialog-title {
 	margin: 0;
-	text-transform: uppercase;
-	color: #5b9bd1;
-	font-size: 14px;
-	font-weight: 800;
+	color: white;
+	font-size: 16px;
 }
 
 body .ui-dialog .ui-dialog-content {
@@ -3999,7 +3999,7 @@ body .ui-dialog .ui-dialog-content {
 }
 
 body .ui-dialog .ui-icon {
-	color: #5b9bd1;
+	color: white;
 }
 
 body .ui-dialog .ui-dialog-footer {
@@ -4668,6 +4668,10 @@ body .ui-chkbox .ui-chkbox-box {
 
 body .ui-chkbox .ui-chkbox-box .ui-chkbox-icon {
 	color: #5b9bd1;
+}
+
+body .ui-chips {
+	width:100%;
 }
 
 body .ui-chips-container {

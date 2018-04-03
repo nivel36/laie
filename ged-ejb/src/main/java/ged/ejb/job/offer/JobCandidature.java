@@ -31,7 +31,7 @@ public class JobCandidature extends AbstractAuditedEntity {
 	@JoinColumn(name = "jobCandidatureStateId")
 	private JobCandidatureState jobCandidatureState;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "jobCandidature", orphanRemoval = true)
+	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "jobCandidature", orphanRemoval = true)
 	private List<JobMeeting> jobMeetings;
 
 	@NotNull
@@ -47,7 +47,7 @@ public class JobCandidature extends AbstractAuditedEntity {
 		if (obj == null) {
 			return false;
 		}
-		if (getClass() != obj.getClass()) {
+		if (this.getClass() != obj.getClass()) {
 			return false;
 		}
 		final JobCandidature other = (JobCandidature) obj;
@@ -93,7 +93,6 @@ public class JobCandidature extends AbstractAuditedEntity {
 
 	@Override
 	public String toString() {
-		return "JobCandidature [jobOffer=" + this.jobOffer + ", candidate=" + this.candidate + ", jobMeetings="
-				+ this.jobMeetings + "]";
+		return "JobCandidature [jobOffer=" + this.jobOffer + ", candidate=" + this.candidate + ", jobMeetings=" + this.jobMeetings + "]";
 	}
 }

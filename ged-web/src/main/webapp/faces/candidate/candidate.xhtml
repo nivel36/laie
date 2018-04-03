@@ -16,22 +16,19 @@
 			<f:viewAction action="#{candidateBean.init}" />
 		</f:metadata>
 
+		<ui:include src="/faces/candidate/candidateDialog.xhtml" />
+
 		<div class="ui-g">
 			<div class="ui-g-12 ui-lg-12 ui-xl-7">
 				<p:panel header="#{candidateBean.candidate}">
-					<h:form id="userPanelForm" enctype="multipart/form-data">
+					<h:form id="candidatePanelForm">
 						<div class="ui-g">
 							<div class="ui-g-12 ui-lg-3 ui-xl-2">
 								<div class="user-card">
 									<p:outputPanel layout="block" id="userImage" styleClass="user-image">
-										<p:fileUpload id="uploadImage" styleClass="uploadImageButton" fileUploadListener="#{candidateBean.uploadImage}" mode="advanced"
-											dragDropSupport="false" update="userImage growl" auto="true" label="#{i18n['action.add']}" rendered="#{candidateBean.editable}" />
-										<h:outputLabel for="uploadImage_input">
-											<p:graphicImage styleClass="#{candidateBean.editable ? 'selectable image' : 'image'}" value="/images/#{candidateBean.candidate.imageFileName}"
-												rendered="#{not empty candidateBean.candidate.imageFileName}" />
-											<p:graphicImage styleClass="#{candidateBean.editable? 'selectable image' : 'image'}" value="/resources/img/default-avatar.png"
-												rendered="#{empty candidateBean.candidate.imageFileName}" />
-										</h:outputLabel>
+										<p:graphicImage styleClass="image" value="/images/#{candidateBean.candidate.imageFileName}"
+											rendered="#{not empty candidateBean.candidate.imageFileName}" />
+										<p:graphicImage styleClass="image" value="/resources/img/default-avatar.png" rendered="#{empty candidateBean.candidate.imageFileName}" />
 									</p:outputPanel>
 									<div class="user-rating">
 										<p:rating value="#{candidateBean.candidate.rating}" cancel="false" readonly="true">
@@ -41,9 +38,7 @@
 								</div>
 								<div class="ui-g-12">
 									<div class="form-group">
-										<p:chips id="tags" value="#{candidateBean.tags}" label="#{i18n['candidate.tags']}" disabled="true"
-											rendered="#{not empty candidateBean.tags or candidateBean.editable}" />
-										<h:outputText styleClass="text" value="#{i18n['candidate.message.no_tags']}" rendered="#{empty candidateBean.tags and not candidateBean.editable}" />
+										<h:outputText styleClass="text" value="#{i18n['candidate.message.no_tags']}" rendered="#{empty candidateBean.tags}" />
 									</div>
 								</div>
 							</div>
@@ -136,7 +131,10 @@
 								<div class="ui-g">
 									<div class="ui-g-12">
 										<div class="form-action-primary">
-											<p:commandButton styleClass="btn-primary" value="#{i18n['action.edit']}" action="#{candidateBean.editCandidate}" update="@form growl" />
+											<p:commandButton styleClass="btn-primary" value="#{i18n['action.edit']}" actionListener="#{candidateDialogBean.openDialog}" process="@this"
+												update="candidateForm">
+												<f:attribute name="candidate" value="#{candidateBean.candidate}" />
+											</p:commandButton>
 										</div>
 									</div>
 								</div>

@@ -49,12 +49,13 @@
 		]]></query>
 	</named-query>
 
-	<named-query name="Candidate.findCandidateAndFilesById">
+	<named-query name="Candidate.findAllDataById">
 		<query><![CDATA[
 			SELECT c 
 			FROM Candidate c 
 			LEFT JOIN FETCH c.files
 			LEFT JOIN FETCH c.tags
+			LEFT JOIN FETCH c.jobCandidatures
 			WHERE c.id = :id
 		]]></query>
 	</named-query>

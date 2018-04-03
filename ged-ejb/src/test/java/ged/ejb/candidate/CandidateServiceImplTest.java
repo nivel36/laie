@@ -60,14 +60,14 @@ public class CandidateServiceImplTest {
 	@Test
 	public void findCandidateAndFilesByWrongIdTest() {
 		this.thrown.expect(IllegalArgumentException.class);
-		this.candidateServiceImpl.findCandidateAndFiles(0);
+		this.candidateServiceImpl.findAllDataById(0);
 	}
 
 	@Test
 	public void findCandidateAndFilesTest() {
 		final Candidate mockedCandidate = Mockito.mock(Candidate.class);
-		Mockito.when(this.candidateDao.findCandidateAndFiles(1L)).thenReturn(mockedCandidate);
-		final Candidate candidateFromRepository = this.candidateServiceImpl.findCandidateAndFiles(1L);
+		Mockito.when(this.candidateDao.findAllDataById(1L)).thenReturn(mockedCandidate);
+		final Candidate candidateFromRepository = this.candidateServiceImpl.findAllDataById(1L);
 		Assert.assertNotNull(candidateFromRepository);
 	}
 

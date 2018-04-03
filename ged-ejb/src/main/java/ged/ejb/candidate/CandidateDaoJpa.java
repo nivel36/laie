@@ -22,6 +22,14 @@ public class CandidateDaoJpa extends AbstractDaoJpa<Candidate> implements Candid
 	}
 
 	@Override
+	public Candidate findAllDataById(final long id) {
+		if (id < 1) {
+			throw new IllegalArgumentException("id: " + id);
+		}
+		return this.findByQuery(Candidate.class, "Candidate.findAllDataById", map("id", id));
+	}
+
+	@Override
 	public List<Candidate> findByJobOfferId(final long jobOfferId) {
 		if (jobOfferId < 1) {
 			throw new IllegalArgumentException("jobOfferId: " + jobOfferId);
@@ -32,14 +40,6 @@ public class CandidateDaoJpa extends AbstractDaoJpa<Candidate> implements Candid
 		catch (final NoResultException e) {
 			return new ArrayList<>();
 		}
-	}
-
-	@Override
-	public Candidate findCandidateAndFiles(final long id) {
-		if (id < 1) {
-			throw new IllegalArgumentException("id: " + id);
-		}
-		return this.findByQuery(Candidate.class, "Candidate.findCandidateAndFilesById", map("id", id));
 	}
 
 	@Override

@@ -76,14 +76,14 @@ public class CandidateDaoJpaTest {
 	@Test
 	public void findCandidateAndFilesByWrongIdTest() {
 		this.thrown.expect(IllegalArgumentException.class);
-		this.candidateDaoJpa.findCandidateAndFiles(0);
+		this.candidateDaoJpa.findAllDataById(0);
 	}
 
 	@Test
 	public void findCandidateAndFilesTest() {
 		final Candidate mockedCandidate = this.mockCandidate();
-		when(this.persistenceFacade.findByQuery(Candidate.class, "Candidate.findCandidateAndFilesById", map("id", 1L))).thenReturn(mockedCandidate);
-		final Candidate candidateFromRepository = this.candidateDaoJpa.findCandidateAndFiles(1L);
+		when(this.persistenceFacade.findByQuery(Candidate.class, "Candidate.findAllDataById", map("id", 1L))).thenReturn(mockedCandidate);
+		final Candidate candidateFromRepository = this.candidateDaoJpa.findAllDataById(1L);
 		Assert.assertEquals(mockedCandidate, candidateFromRepository);
 	}
 

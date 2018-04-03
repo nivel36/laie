@@ -9,9 +9,9 @@ public interface CandidateDao extends Dao<Candidate> {
 
 	boolean emailExists(String email);
 
-	List<Candidate> findByJobOfferId(long jobOfferId);
+	Candidate findAllDataById(long id);
 
-	Candidate findCandidateAndFiles(long id);
+	List<Candidate> findByJobOfferId(long jobOfferId);
 
 	List<Candidate> findLastAddedCandidates(int numberOfCandidates);
 

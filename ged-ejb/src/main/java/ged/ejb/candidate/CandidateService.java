@@ -11,7 +11,7 @@ public interface CandidateService extends AuditedService<Candidate> {
 
 	List<Candidate> findByJobOfferId(long jobOfferId);
 
-	Candidate findCandidateAndFiles(long id);
+	Candidate findAllDataById(long id);
 
 	UploadedServerFile findFile(long id);
 

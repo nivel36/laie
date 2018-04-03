@@ -1,8 +1,5 @@
 package ged.web.view.candidate;
 
-import static ged.web.core.util.Navigate.to;
-import static ged.web.core.util.Page.CANDIDATE;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,9 +7,7 @@ import java.io.UncheckedIOException;
 import java.lang.invoke.MethodHandles;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -20,7 +15,6 @@ import javax.inject.Named;
 
 import org.omnifaces.util.Faces;
 import org.primefaces.event.FileUploadEvent;
-import org.primefaces.event.RateEvent;
 import org.primefaces.model.UploadedFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,7 +25,6 @@ import ged.ejb.candidate.CandidateService;
 import ged.ejb.core.Address;
 import ged.ejb.core.FileUploadService;
 import ged.ejb.core.tag.Tag;
-import ged.ejb.core.tag.TagService;
 import ged.ejb.job.offer.JobCandidature;
 import ged.web.core.PageNotFoundException;
 import ged.web.core.util.Message;
@@ -52,8 +45,6 @@ public class CandidateBean extends AbstractBean {
 	@Inject
 	private transient CandidateService candidateService;
 
-	private boolean editable;
-
 	private final List<UploadedServerFile> files = new ArrayList<>();
 
 	@Inject
@@ -63,29 +54,10 @@ public class CandidateBean extends AbstractBean {
 
 	private List<String> tags = new ArrayList<>();
 
-	@Inject
-	private transient TagService tagService;
-
-	public Candidate buildNewCandidate() {
-		final Candidate newCandidate = new Candidate();
-		final Address address = new Address();
-		newCandidate.setAddress(address);
-		newCandidate.setOwner(this.sessionBean.getUser());
-		return newCandidate;
-	}
-
-	public void cancelEditCandidate() {
-		this.editable = false;
-	}
-
 	private void checkLopdFile() {
 		if (!this.hasLopdFile()) {
 			Message.addWarning("candidate.warn.no_lopd_file", "candidate.warn.no_lopd_file");
 		}
-	}
-
-	public void editCandidate() {
-		this.editable = true;
 	}
 
 	public Candidate getCandidate() {
@@ -108,27 +80,6 @@ public class CandidateBean extends AbstractBean {
 		return this.tags;
 	}
 
-	// TODO: Redo
-	private Set<Tag> getTagsFromStringList(final List<String> labels) {
-		if (labels == null) {
-			return new HashSet<>();
-		}
-		final Set<Tag> candidateTags = new HashSet<>();
-		for (final String label : labels) {
-			final List<Tag> tagsFoundInDataBase = this.tagService.search(label);
-			final Tag tag;
-			if (tagsFoundInDataBase.size() == 1) {
-				tag = tagsFoundInDataBase.get(0);
-			}
-			else {
-				tag = new Tag();
-				tag.setLabel(label);
-			}
-			candidateTags.add(tag);
-		}
-		return candidateTags;
-	}
-
 	private boolean hasLopdFile() {
 		if (this.candidate.getFiles() == null) {
 			return false;
@@ -148,7 +99,7 @@ public class CandidateBean extends AbstractBean {
 		if (this.candidateId == null) {
 			throw new PageNotFoundException();
 		}
-		this.candidate = this.candidateService.findCandidateAndFiles(this.candidateId);
+		this.candidate = this.candidateService.findAllDataById(this.candidateId);
 		if (this.candidate == null) {
 			throw new PageNotFoundException();
 		}
@@ -159,28 +110,12 @@ public class CandidateBean extends AbstractBean {
 			this.tags.add(tag.getLabel());
 		}
 		this.files.addAll(this.candidate.getFiles());
-		this.jobCandidatures = this.candidateService.findJobCandidatures(this.candidateId);
+		this.jobCandidatures = this.candidate.getJobCandidatures();
 		this.checkLopdFile();
-	}
-
-	public String insertCandidate() {
-		this.candidate.setTags(this.getTagsFromStringList(this.tags));
-		this.candidate.setFiles(new HashSet<>(this.files));
-		this.candidateService.insert(this.candidate);
-		return to(CANDIDATE).toUrl();
-	}
-
-	public boolean isEditable() {
-		return this.editable;
 	}
 
 	public void onload() {
 		this.checkLopdFile();
-	}
-
-	public void onrate(final RateEvent rateEvent) {
-		final Integer rate = (Integer) rateEvent.getRating();
-		this.candidate.setRating(rate);
 	}
 
 	public void openFile(final UploadedServerFile file) throws IOException {
@@ -229,23 +164,6 @@ public class CandidateBean extends AbstractBean {
 		this.tags = tags;
 	}
 
-	public void setTagService(final TagService tagService) {
-		this.tagService = tagService;
-	}
-
-	public void undelete() {
-		logger.debug("UNDELETE action");
-		this.candidate.setDeleted(false);
-		this.candidate = this.candidateService.update(this.candidate);
-	}
-
-	public void updateCandidate() {
-		this.candidate.setTags(this.getTagsFromStringList(this.tags));
-		this.candidate.setFiles(new HashSet<>(this.files));
-		this.candidate = this.candidateService.update(this.candidate);
-		this.editable = false;
-	}
-
 	public void updateFile(final UploadedServerFile file) {
 		this.files.remove(file);
 		final UploadedServerFile updatedFile = this.candidateService.updateFile(file);
@@ -261,17 +179,6 @@ public class CandidateBean extends AbstractBean {
 			final UploadedServerFile file = this.saveFile(uuid, fileName);
 			this.files.add(file);
 			this.addInfoMessage("file.message.upload", "file.message.upload", fileName);
-		}
-		catch (final IOException e) {
-			throw new UncheckedIOException(e);
-		}
-	}
-
-	public void uploadImage(final FileUploadEvent event) {
-		final UploadedFile uploadedFile = event.getFile();
-		try (InputStream inputStream = uploadedFile.getInputstream()) {
-			final String uuid = this.fileUploadService.uploadImage(inputStream);
-			this.candidate.setImageFileName(uuid);
 		}
 		catch (final IOException e) {
 			throw new UncheckedIOException(e);
