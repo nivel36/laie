@@ -6,6 +6,7 @@ import java.util.Objects;
 import javax.annotation.PreDestroy;
 import javax.faces.event.ActionEvent;
 
+import org.primefaces.event.CloseEvent;
 import org.primefaces.event.SelectEvent;
 
 import ged.web.core.CallbackListener;
@@ -37,6 +38,10 @@ public abstract class AbstractDialogBean extends AbstractBean {
 	protected <T> T getAttribute(final String key) {
 		Objects.requireNonNull(key);
 		return (T) this.attributes.get(key);
+	}
+
+	public void handleClose(final CloseEvent event) {
+		this.closeDialog();
 	}
 
 	protected abstract void init();

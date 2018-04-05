@@ -3984,11 +3984,13 @@ body .ui-dialog.medium {
 }
 
 body .ui-dialog .ui-dialog-titlebar {
-	padding: 8px 15px;
 	background: #2d353c;
+	padding: 0px;
+	margin: 0px;
 }
 
 body .ui-dialog .ui-dialog-title {
+	padding: 8px 15px;
 	margin: 0;
 	color: white;
 	font-size: 16px;
@@ -4004,6 +4006,18 @@ body .ui-dialog .ui-icon {
 
 body .ui-dialog .ui-dialog-footer {
 	padding: 15px;
+}
+
+body .ui-dialog .ui-dialog-titlebar-close.ui-state-hover{
+	background:  rgba(255, 0, 0, 0.7);
+}
+
+body .ui-dialog .ui-dialog-titlebar-close, .ui-dialog .ui-dialog-titlebar-minimize, .ui-dialog .ui-dialog-titlebar-maximize,body .ui-dialog .ui-dialog-titlebar-close.ui-state-hover, .ui-dialog .ui-dialog-titlebar-minimize.ui-state-hover, .ui-dialog .ui-dialog-titlebar-maximize.ui-state-hover {
+    float: right;
+    margin: 0;
+    top: 0;
+	padding: 8px 15px;
+    cursor: pointer;
 }
 
 body .ui-dialog-mask {

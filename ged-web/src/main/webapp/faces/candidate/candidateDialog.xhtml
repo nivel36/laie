@@ -5,6 +5,7 @@
 	<h:form id="candidateForm">
 		<p:dialog id="candidateDlg" header="#{i18n['candidate.new_candidate']}" closable="true" modal="true" resizable="false" responsive="true" styleClass="medium"
 			visible="#{candidateDialogBean.showDialog}">
+			<p:ajax event="close" listener="#{candidateDialogBean.closeDialog}" resetValues="true" />
 			<div class="ui-g">
 				<div class="ui-g-12 ui-md-6">
 					<div class="user-card">
