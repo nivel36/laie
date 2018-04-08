@@ -4009,14 +4009,14 @@ body .ui-dialog .ui-dialog-footer {
 }
 
 body .ui-dialog .ui-dialog-titlebar-close.ui-state-hover{
-	background:  rgba(255, 0, 0, 0.7);
+	background:  rgba(255, 0, 0, 0.8);
 }
 
 body .ui-dialog .ui-dialog-titlebar-close, .ui-dialog .ui-dialog-titlebar-minimize, .ui-dialog .ui-dialog-titlebar-maximize,body .ui-dialog .ui-dialog-titlebar-close.ui-state-hover, .ui-dialog .ui-dialog-titlebar-minimize.ui-state-hover, .ui-dialog .ui-dialog-titlebar-maximize.ui-state-hover {
     float: right;
     margin: 0;
     top: 0;
-	padding: 8px 15px;
+	padding: 10px 15px;
     cursor: pointer;
 }
 
