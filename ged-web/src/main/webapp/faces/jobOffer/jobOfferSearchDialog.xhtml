@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://legion.com/i18n" xmlns:p="http://primefaces.org/ui">
+
+	<h:form id="jobOfferSearchDialogForm">
+		<p:dialog id="jobOfferSearchDlg" header="#{i18n['jobOffer.jobOffers']}" modal="true" resizable="false" responsive="true" closable="true"
+			visible="#{jobOfferSearchDialogBean.showDialog}">
+			<p:ajax event="close" listener="#{jobOfferSearchDialogBean.closeDialog}" resetValues="true" />
+			<div class="ui-g">
+				<div class="ui-g-12 ui-md-6 ui-lg-4">
+					<div class="ui-inputgroup">
+						<p:inputText id="searchText" value="#{jobOfferSearchDialogBean.searchText}" />
+						<p:commandButton id="cleanSearchTextAction" action="#{jobOfferSearchDialogBean.clean}" update="@form" styleClass="btn-gray" icon="fa fa-times"
+							rendered="#{not empty jobOfferSearchDialogBean.searchText}" />
+						<p:commandButton id="searchAction" action="#{jobOfferSearchDialogBean.search}" update="@form" icon="fa fa-search" />
+					</div>
+				</div>
+			</div>
+
+			<div class="ui-g">
+				<div class="ui-g-12">
+					<p:dataTable var="jobOffer" value="#{jobOfferSearchDialogBean.jobOffers}" emptyMessage="#{i18n['job.no_jobs_found']}" reflow="true" paginator="true"
+						paginatorPosition="bottom" rows="#{sessionBean.rowsPerPage}">
+
+						<p:column selectionMode="multiple" style="width:16px;text-align:center" />
+
+						<p:column headerText="#{i18n['job.name']}" sortBy="#{jobOffer.name}">
+							<h:outputText value="#{jobOffer.name}" />
+						</p:column>
+						<p:column headerText="#{i18n['job.client']}" sortBy="#{jobOffer.client.name}">
+							<h:outputText value="#{jobOffer.client.name}" />
+						</p:column>
+						<p:column headerText="#{i18n['job.date_opened']}" sortBy="#{jobOffer.dateOpened}">
+							<h:outputText value="#{jobOffer.dateOpened}">
+								<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="#{i18n['job.date_closed']}" sortBy="#{jobOffer.dateClosed}">
+							<h:outputText value="#{jobOffer.dateClosed}">
+								<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="#{i18n['user.owner']}" sortBy="#{i18n['user.owner']}">
+							<h:outputText value="#{jobOffer.owner.fullName}" />
+						</p:column>
+					</p:dataTable>
+				</div>
+			</div>
+			<div class="ui-g">
+				<div class="ui-g-12">
+					<div class="pull-right">
+						<p:commandButton value="#{i18n['action.cancel']}" actionListener="#{jobOfferSearchDialogBean.closeDialog}" process="@this" update="@form"
+							styleClass="btn-gray">
+							<p:resetInput target="@form" />
+						</p:commandButton>
+						<p:commandButton value="#{i18n['action.select']}" action="#{jobOfferSearchDialogBean.select}" update="@form growl" />
+					</div>
+				</div>
+			</div>
+		</p:dialog>
+	</h:form>
+</ui:composition>

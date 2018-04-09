@@ -3,8 +3,9 @@
 	xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://legion.com/i18n" xmlns:p="http://primefaces.org/ui">
 
 	<h:form id="clientSearchDialogForm">
-		<p:dialog id="clientSearchDlg" header="#{i18n['client.clients']}" modal="true" resizable="false" responsive="true" closable="false"
+		<p:dialog id="clientSearchDlg" header="#{i18n['client.clients']}" modal="true" resizable="false" responsive="true" closable="true"
 			visible="#{clientSearchDialogBean.showDialog}">
+			<p:ajax event="close" listener="#{clientSearchDialogBean.closeDialog}" resetValues="true" />
 
 			<div class="ui-g">
 				<div class="ui-g-12 ui-md-6">
