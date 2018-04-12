@@ -9,7 +9,7 @@ import javax.faces.event.ActionEvent;
 import org.primefaces.event.CloseEvent;
 import org.primefaces.event.SelectEvent;
 
-import ged.web.core.CallbackListener;
+import ged.web.core.CloseDialogListener;
 
 public abstract class AbstractDialogBean extends AbstractBean {
 
@@ -17,7 +17,7 @@ public abstract class AbstractDialogBean extends AbstractBean {
 
 	private Map<String, Object> attributes;
 
-	protected CallbackListener callback;
+	protected CloseDialogListener callback;
 
 	private boolean showDialog;
 
@@ -69,7 +69,7 @@ public abstract class AbstractDialogBean extends AbstractBean {
 		this.callback = null;
 	}
 
-	public void setSelectClientActionCallback(final CallbackListener callback) {
+	public void setSelectClientActionCallback(final CloseDialogListener callback) {
 		this.callback = callback;
 	}
 

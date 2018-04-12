@@ -12,12 +12,12 @@ import ged.ejb.client.Client;
 import ged.ejb.client.ClientService;
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
-import ged.web.core.CallbackListener;
+import ged.web.core.CloseDialogListener;
 import ged.web.core.view.AbstractDialogBean;
 
 @Named
 @ViewScoped
-public class JobOfferDialogBean extends AbstractDialogBean implements CallbackListener {
+public class JobOfferDialogBean extends AbstractDialogBean implements CloseDialogListener {
 
 	private static final long serialVersionUID = -4373329969104383876L;
 
@@ -48,7 +48,7 @@ public class JobOfferDialogBean extends AbstractDialogBean implements CallbackLi
 	}
 
 	@Override
-	public void doAction(final Object value) {
+	public void onCloseDialog(final Object value) {
 		this.client = (Client) value;
 	}
 

@@ -13,12 +13,12 @@ import ged.ejb.candidate.Candidate;
 import ged.ejb.candidate.CandidateService;
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
-import ged.web.core.CallbackListener;
+import ged.web.core.CloseDialogListener;
 import ged.web.core.view.AbstractBean;
 
 @ViewScoped
 @Named
-public class CandidatePanelBean extends AbstractBean implements CallbackListener {
+public class CandidatePanelBean extends AbstractBean implements CloseDialogListener {
 
 	private static final long serialVersionUID = 3685531862855960321L;
 
@@ -42,7 +42,7 @@ public class CandidatePanelBean extends AbstractBean implements CallbackListener
 	}
 
 	@Override
-	public void doAction(final Object value) {
+	public void onCloseDialog(final Object value) {
 		@SuppressWarnings("unchecked")
 		final List<Candidate> selectedCandidates = (List<Candidate>) value;
 		this.candidates.addAll(selectedCandidates);

@@ -7,13 +7,14 @@ import javax.inject.Named;
 import ged.ejb.client.Client;
 import ged.ejb.client.ClientService;
 import ged.ejb.core.Address;
+import ged.web.core.CloseDialogListener;
 import ged.web.core.PageNotFoundException;
 import ged.web.core.util.Message;
 import ged.web.core.view.AbstractBean;
 
 @Named
 @ViewScoped
-public class ClientBean extends AbstractBean {
+public class ClientBean extends AbstractBean implements CloseDialogListener {
 
 	private static final long serialVersionUID = 1412905869664752048L;
 
@@ -25,7 +26,6 @@ public class ClientBean extends AbstractBean {
 	private transient ClientService clientService;
 
 	public void export() {
-		// TODO
 	}
 
 	public Client getClient() {
@@ -50,6 +50,11 @@ public class ClientBean extends AbstractBean {
 		if (this.client.isDeleted()) {
 			Message.addWarning("message.erased_entity", "message.erased_entity");
 		}
+	}
+
+	@Override
+	public void onCloseDialog(final Object value) {
+		this.client = (Client) value;
 	}
 
 	public void setClient(final Client client) {

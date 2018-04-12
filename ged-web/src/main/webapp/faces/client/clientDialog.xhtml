@@ -3,8 +3,9 @@
 	xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://legion.com/i18n" xmlns:p="http://primefaces.org/ui">
 
 	<h:form id="clientForm">
-		<p:dialog id="clientDlg" header="#{i18n['client.new_client']}" closable="false" modal="true" resizable="false" responsive="true" styleClass="medium"
-			visible="#{clientDialogBean.showDialog}">
+		<p:dialog id="clientDlg" header="#{clientDialogBean.newClient ? i18n['client.new_client'] : clientDialogBean.client.name}" dynamic="true" closable="true"
+			modal="true" resizable="false" responsive="true" styleClass="medium" visible="#{clientDialogBean.showDialog}">
+			<p:ajax event="close" listener="#{clientDialogBean.closeDialog}" resetValues="true" />
 			<div class="ui-g">
 				<div class="ui-g-12 ui-md-6">
 					<div class="form-group">

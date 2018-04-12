@@ -63,7 +63,7 @@ public class ClientSearchDialogBean extends AbstractDialogBean {
 	}
 
 	public void onClientSelect() {
-		this.callback.doAction(this.selectedClient);
+		this.callback.onCloseDialog(this.selectedClient);
 		this.closeDialog();
 		Ajax.update(this.updateField);
 	}

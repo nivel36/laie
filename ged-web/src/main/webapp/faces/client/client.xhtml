@@ -60,6 +60,8 @@
 							<p:commandButton id="exportExcel" value="#{i18n['action.export']}" action="#{clientBean.export}" icon="fa fa-file-excel-o" />
 							<p:commandButton id="editClient" value="#{i18n['action.edit']}" actionListener="#{clientDialogBean.openDialog}" update="clientForm">
 								<f:attribute name="client" value="#{clientBean.client}" />
+								<f:attribute name="updateField" value="clientViewForm" />
+								<f:attribute name="callback" value="#{clientBean}" />
 							</p:commandButton>
 						</div>
 					</p:panel>

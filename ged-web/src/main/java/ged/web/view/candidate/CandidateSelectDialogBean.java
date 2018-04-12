@@ -73,7 +73,7 @@ public class CandidateSelectDialogBean extends AbstractDialogBean {
 	}
 
 	public void select() {
-		this.callback.doAction(this.selectedCandidates);
+		this.callback.onCloseDialog(this.selectedCandidates);
 		this.selectedCandidates.clear();
 		Ajax.update("candidateSelectForm", this.updateField);
 		this.closeDialog();

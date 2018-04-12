@@ -10,6 +10,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.omnifaces.util.Ajax;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,6 +43,7 @@ public class ClientDialogBean extends AbstractDialogBean {
 	protected void dispose() {
 		logger.trace("ClientDialog closed");
 		this.client = null;
+
 	}
 
 	public Client getClient() {
@@ -57,18 +59,36 @@ public class ClientDialogBean extends AbstractDialogBean {
 		}
 	}
 
+	private void insertClient() {
+		this.clientService.insert(this.client);
+		to(CLIENT).withParams(map("clientId", this.client.getId())).doGet();
+	}
+
+	public boolean isNewClient() {
+		if (this.client == null) {
+			return true;
+		}
+		return this.client.getId() == 0;
+	}
+
 	public void save() {
 		logger.debug("ClientDialog save action performed");
-		if (this.client.getId() == 0) {
-			this.clientService.insert(this.client);
+		if (this.isNewClient()) {
+			this.insertClient();
 		}
 		else {
-			this.clientService.update(this.client);
+			this.updateClient();
 		}
-		to(CLIENT).withParams(map("clientId", this.client.getId())).doGet();
 	}
 
 	public void setClientService(final ClientService clientService) {
 		this.clientService = clientService;
+	}
+
+	private void updateClient() {
+		this.client = this.clientService.update(this.client);
+		this.callback.onCloseDialog(this.client);
+		Ajax.update("clientForm", this.updateField);
+		this.closeDialog();
 	}
 }
