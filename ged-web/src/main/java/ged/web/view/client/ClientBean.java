@@ -66,6 +66,10 @@ public class ClientBean extends AbstractBean implements CloseDialogListener {
 		}
 	}
 
+	public boolean isUserHasPermissionToEdit() {
+		return this.userHasPermissionToEdit(this.client);
+	}
+
 	@Override
 	public void onCloseDialog(final Object value) {
 		this.client = (Client) value;
@@ -81,9 +85,5 @@ public class ClientBean extends AbstractBean implements CloseDialogListener {
 
 	public void setClientService(final ClientService clientService) {
 		this.clientService = clientService;
-	}
-
-	public boolean userHasPermissionToEdit() {
-		return this.userHasPermissionToEdit(this.client);
 	}
 }

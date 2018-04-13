@@ -96,6 +96,7 @@ public class CandidateBean extends AbstractBean {
 	 * Not using @PostConstruct because the view is a GET based form.
 	 */
 	public void init() {
+		logger.trace("CandidateBean init");
 		if (this.candidateId == null) {
 			throw new PageNotFoundException();
 		}

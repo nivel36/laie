@@ -6,7 +6,8 @@
 
 	<h:form id="contactsForm">
 		<p:panel id="contacts" header="#{i18n['client.contacts']}">
-			<p:dataGrid layout="grid" var="contact" value="#{contactPanelBean.contacts}" emptyMessage="#{i18n['client.no_contacts_found']}" paginator="true" paginatorPosition="bottom">
+			<p:dataGrid layout="grid" var="contact" value="#{contactPanelBean.contacts}" emptyMessage="#{i18n['client.no_contacts_found']}" paginator="true"
+				paginatorPosition="bottom">
 				<div class="card contact">
 					<div class="image">
 						<p:graphicImage class="image image-icon" value="/resources/img/default-avatar.png" />

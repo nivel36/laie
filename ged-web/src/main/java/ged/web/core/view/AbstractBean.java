@@ -82,13 +82,17 @@ public abstract class AbstractBean implements Serializable {
 	}
 
 	@SuppressWarnings("unchecked")
-	public <T> T getFromFlash(final String key) {
+	public <T> T getValueFromFlash(final String key) {
 		if (this.flash.containsKey(key)) {
 			return (T) this.flash.get(key);
 		}
 		else {
 			return null;
 		}
+	}
+
+	public String getValueFromGetParameters(final String key) {
+		return this.externalContext.getRequestParameterMap().get(key);
 	}
 
 	public void setApplicationBean(final ApplicationBean applicationBean) {

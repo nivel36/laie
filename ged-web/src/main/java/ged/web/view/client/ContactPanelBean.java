@@ -8,7 +8,6 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.omnifaces.cdi.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,8 +24,6 @@ public class ContactPanelBean extends AbstractBean {
 
 	private static final long serialVersionUID = -2270817798985551387L;
 
-	@Inject
-	@Param
 	private Long clientId;
 
 	private List<Contact> contacts;
@@ -45,15 +42,13 @@ public class ContactPanelBean extends AbstractBean {
 	@PostConstruct
 	public void init() {
 		logger.trace("Init ContactPanelBean");
-		if (this.clientId == null) {
+		final String clientIdValue = this.getValueFromGetParameters("clientId");
+		if (clientIdValue == null) {
 			logger.error("ClientId is null");
 			throw new PageNotFoundException();
 		}
+		this.clientId = Long.parseLong(clientIdValue);
 		this.contacts = this.contactService.findByClientId(this.clientId);
-	}
-
-	public void setClientId(final Long clientId) {
-		this.clientId = clientId;
 	}
 
 	public void setContacts(final List<Contact> contacts) {
