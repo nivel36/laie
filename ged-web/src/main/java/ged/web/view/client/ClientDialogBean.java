@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import ged.ejb.client.Client;
 import ged.ejb.client.ClientService;
 import ged.ejb.core.Address;
+import ged.web.core.GedPermissionException;
 import ged.web.core.view.AbstractDialogBean;
 
 @Named
@@ -43,7 +44,6 @@ public class ClientDialogBean extends AbstractDialogBean {
 	protected void dispose() {
 		logger.trace("ClientDialog closed");
 		this.client = null;
-
 	}
 
 	public Client getClient() {
@@ -77,7 +77,12 @@ public class ClientDialogBean extends AbstractDialogBean {
 			this.insertClient();
 		}
 		else {
-			this.updateClient();
+			if (this.userHasPermissionToEdit(this.client)) {
+				this.updateClient();
+			}
+			else {
+				throw new GedPermissionException();
+			}
 		}
 	}
 

@@ -21,12 +21,13 @@ import org.hibernate.search.annotations.Indexed;
 
 import ged.ejb.core.Address;
 import ged.ejb.core.model.AbstractAuditedEntity;
+import ged.ejb.core.model.Ownerable;
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.user.User;
 
 @Entity
 @Indexed
-public class Client extends AbstractAuditedEntity {
+public class Client extends AbstractAuditedEntity implements Ownerable {
 
 	private static final long serialVersionUID = -5319357138994738654L;
 
@@ -95,6 +96,7 @@ public class Client extends AbstractAuditedEntity {
 		return this.name;
 	}
 
+	@Override
 	public User getOwner() {
 		return this.owner;
 	}
@@ -128,6 +130,7 @@ public class Client extends AbstractAuditedEntity {
 		this.name = name;
 	}
 
+	@Override
 	public void setOwner(final User owner) {
 		this.owner = owner;
 	}

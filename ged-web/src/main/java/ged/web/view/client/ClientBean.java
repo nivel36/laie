@@ -1,8 +1,13 @@
 package ged.web.view.client;
 
+import java.lang.invoke.MethodHandles;
+
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import ged.ejb.client.Client;
 import ged.ejb.client.ClientService;
@@ -15,6 +20,8 @@ import ged.web.core.view.AbstractBean;
 @Named
 @ViewScoped
 public class ClientBean extends AbstractBean implements CloseDialogListener {
+
+	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	private static final long serialVersionUID = 1412905869664752048L;
 
@@ -40,14 +47,21 @@ public class ClientBean extends AbstractBean implements CloseDialogListener {
 	 * Not using @PostConstruct because the view is a GET based form.
 	 */
 	public void init() {
+		logger.trace("Init ClientBean");
+		if (this.clientId == null) {
+			logger.error("ClientId is null");
+			throw new PageNotFoundException();
+		}
 		this.client = this.clientService.find(this.clientId);
 		if (this.client == null) {
+			logger.error("Client mot found");
 			throw new PageNotFoundException();
 		}
 		if (this.client.getAddress() == null) {
 			this.client.setAddress(new Address());
 		}
 		if (this.client.isDeleted()) {
+			logger.warn("Client was erased");
 			Message.addWarning("message.erased_entity", "message.erased_entity");
 		}
 	}
@@ -67,5 +81,9 @@ public class ClientBean extends AbstractBean implements CloseDialogListener {
 
 	public void setClientService(final ClientService clientService) {
 		this.clientService = clientService;
+	}
+
+	public boolean userHasPermissionToEdit() {
+		return this.userHasPermissionToEdit(this.client);
 	}
 }

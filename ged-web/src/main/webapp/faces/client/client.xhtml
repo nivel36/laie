@@ -25,13 +25,13 @@
 							<div class="ui-g-12 ui-md-6 ui-xl-4">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['client.name']}" for="name" />
-									<p:inputText id="name" value="#{clientBean.client.name}" readonly="true"/>
+									<p:inputText id="name" value="#{clientBean.client.name}" readonly="true" />
 								</div>
 							</div>
 							<div class="ui-g-12 ui-md-6 ui-xl-4">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['client.cif']}" for="cif" />
-									<p:inputText id="cif" value="#{clientBean.client.cif}" readonly="true"  />
+									<p:inputText id="cif" value="#{clientBean.client.cif}" readonly="true" />
 								</div>
 							</div>
 						</div>
@@ -56,14 +56,14 @@
 							</div>
 						</div>
 
-						<div class="pull-right">
+						<h:panelGroup rendered="#{clientBean.userHasPermissionToEdit}" styleClass="pull-right">
 							<p:commandButton id="exportExcel" value="#{i18n['action.export']}" action="#{clientBean.export}" icon="fa fa-file-excel-o" />
 							<p:commandButton id="editClient" value="#{i18n['action.edit']}" actionListener="#{clientDialogBean.openDialog}" update="clientForm">
 								<f:attribute name="client" value="#{clientBean.client}" />
 								<f:attribute name="updateField" value="clientViewForm" />
 								<f:attribute name="callback" value="#{clientBean}" />
 							</p:commandButton>
-						</div>
+						</h:panelGroup>
 					</p:panel>
 				</h:form>
 			</div>

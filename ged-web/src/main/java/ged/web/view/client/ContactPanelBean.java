@@ -1,5 +1,6 @@
 package ged.web.view.client;
 
+import java.lang.invoke.MethodHandles;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -8,14 +9,19 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.omnifaces.cdi.Param;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import ged.ejb.client.Contact;
 import ged.ejb.client.ContactService;
+import ged.web.core.PageNotFoundException;
 import ged.web.core.view.AbstractBean;
 
 @Named
 @ViewScoped
 public class ContactPanelBean extends AbstractBean {
+
+	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	private static final long serialVersionUID = -2270817798985551387L;
 
@@ -38,6 +44,11 @@ public class ContactPanelBean extends AbstractBean {
 
 	@PostConstruct
 	public void init() {
+		logger.trace("Init ContactPanelBean");
+		if (this.clientId == null) {
+			logger.error("ClientId is null");
+			throw new PageNotFoundException();
+		}
 		this.contacts = this.contactService.findByClientId(this.clientId);
 	}
 
