@@ -155,33 +155,7 @@
 			</div>
 
 			<div class="ui-g-12 ui-lg-6 ui-xl-6">
-				<h:form id="jobOffersForm">
-					<p:panel header="#{i18n['job_candidature.job_candidatures']}">
-						<p:dataTable var="jobCandidature" value="#{candidateBean.jobCandidatures}" emptyMessage="#{i18n['candidate.no_job_offers_found']}" reflow="true"
-							paginator="true" paginatorPosition="bottom" rows="#{sessionBean.rowsPerPage}" sortBy="#{jobOffer.name}" sortOrder="ascending">
-							<p:column headerText="#{i18n['job.client']}">
-								<h:link value="#{jobCandidature.jobOffer.client.name}" outcome="/faces/client/client">
-									<f:param name="clientId" value="#{jobCandidature.jobOffer.client.id}" />
-								</h:link>
-							</p:column>
-							<p:column headerText="#{i18n['job.name']}">
-								<h:link value="#{jobCandidature.jobOffer.name}" outcome="/faces/jobOffer/jobOffer">
-									<f:param name="jobOfferId" value="#{jobCandidature.jobOffer.id}" />
-								</h:link>
-							</p:column>
-						</p:dataTable>
-						<div class="ui-g">
-							<div class="ui-g-12">
-								<div class="form-action-primary">
-									<p:commandButton value="#{i18n['action.add']}" actionListener="#{jobOfferSearchDialogBean.openDialog}" process="@this" update="jobOfferSearchDialogForm">
-										<f:attribute name="callback" value="#{candidateBean}" />
-										<f:attribute name="updateField" value="jobOffersForm" />
-									</p:commandButton>
-								</div>
-							</div>
-						</div>
-					</p:panel>
-				</h:form>
+				<ui:include src="/faces/jobOffer/jobOfferPanel.xhtml" />
 			</div>
 
 			<div class="ui-g-12 ui-lg-6 ui-xl-5">

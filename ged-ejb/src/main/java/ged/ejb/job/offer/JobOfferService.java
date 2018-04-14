@@ -9,17 +9,19 @@ import ged.ejb.user.User;
 
 public interface JobOfferService extends AuditedService<JobOffer> {
 
-	void addJobCandidature(final JobOffer jobOffer, final Candidate candidate);
+	void addJobCandidature(JobOffer jobOffer, Candidate candidate);
 
-	void addJobCandidatures(final JobOffer jobOffer, final List<Candidate> candidates);
+	void addJobCandidatures(JobOffer jobOffer, List<Candidate> candidates);
 
-	void addJobMeeting(final JobMeeting jobMeeting);
+	void addJobMeeting(JobMeeting jobMeeting);
 
-	List<JobOffer> findAllJobOffersByOwner(final User owner);
+	List<JobOffer> findAllJobOffersByOwner(User owner);
 
-	List<JobOffer> findJobOffersByClientId(final long clientId);
+	List<JobOffer> findJobOffersByCandidateId(long candidateId);
+
+	List<JobOffer> findJobOffersByClientId(long clientId);
 
 	List<JobOffer> findLastJobOffers(User owner);
 
-	void removeJobCandidature(final JobOffer jobOffer, final Candidate candidate);
+	void removeJobCandidature(JobOffer jobOffer, Candidate candidate);
 }

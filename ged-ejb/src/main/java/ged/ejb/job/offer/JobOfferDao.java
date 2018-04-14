@@ -7,9 +7,11 @@ import ged.ejb.user.User;
 
 public interface JobOfferDao extends Dao<JobOffer> {
 
-	List<JobOffer> findAllByOwner(final User owner);
+	List<JobOffer> findAllByOwner(User owner);
 
-	List<JobOffer> findJobOffersByClientId(final long clientId);
+	List<JobOffer> findJobOffersByCandidateId(long candidateId);
 
-	List<JobOffer> findLastJobOffers(final User owner);
+	List<JobOffer> findJobOffersByClientId(long clientId);
+
+	List<JobOffer> findLastJobOffers(User owner);
 }

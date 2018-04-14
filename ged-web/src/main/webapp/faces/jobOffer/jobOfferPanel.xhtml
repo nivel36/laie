@@ -8,7 +8,7 @@
 		<p:panel header="#{i18n['job.job_offers']}" id="jobOffers">
 			<div class="ui-g">
 				<div class="ui-g-12">
-					<p:dataTable var="jobOffer" value="#{jobOfferPanelBean.jobOffers}" emptyMessage="#{i18n['client.no_job_offers_found']}" reflow="true" paginator="true"
+					<p:dataTable var="jobOffer" value="#{jobOfferPanelBean.jobOffers}" emptyMessage="#{i18n['job.no_jobs_found']}" reflow="true" paginator="true"
 						paginatorPosition="bottom" rows="#{sessionBean.rowsPerPage}" sortBy="#{jobOffer.name}" sortOrder="ascending">
 						<p:column headerText="#{i18n['job.name']}">
 							<h:link value="#{jobOffer.name}" outcome="/faces/jobOffer/jobOffer">
@@ -30,7 +30,7 @@
 			</div>
 			<div class="pull-right">
 				<p:commandButton value="#{i18n['action.new']}" actionListener="#{jobOfferDialogBean.openDialog}" process="@this" update="newJobOfferForm"
-					styleClass="btn-primary" >
+					styleClass="btn-primary" rendered="#{jobOfferPanelBean.newJobOfferVisible}" >
 					<f:attribute name="client_id" value="#{jobOfferPanelBean.clientId}" />
 				</p:commandButton>
 			</div>

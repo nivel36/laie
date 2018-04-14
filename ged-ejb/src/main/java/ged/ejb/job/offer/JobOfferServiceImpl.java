@@ -83,6 +83,12 @@ public class JobOfferServiceImpl extends AbstratctAuditedService<JobOffer> imple
 	}
 
 	@Override
+	public List<JobOffer> findJobOffersByCandidateId(final long candidateId) {
+		logger.debug("Find all job Offers of the candidate id {}", candidateId);
+		return this.jobOfferDao.findJobOffersByCandidateId(candidateId);
+	}
+
+	@Override
 	public List<JobOffer> findJobOffersByClientId(final long clientId) {
 		logger.debug("Find all job Offers of the client id {}", clientId);
 		return this.jobOfferDao.findJobOffersByClientId(clientId);

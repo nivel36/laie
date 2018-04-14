@@ -1,9 +1,9 @@
 package ged.ejb.job.offer;
 
+import static ged.ejb.core.util.Parameters.map;
+
 import java.lang.invoke.MethodHandles;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 import org.slf4j.Logger;
@@ -22,24 +22,24 @@ public class JobOfferDaoJpa extends AbstractDaoJpa<JobOffer> implements JobOffer
 	public List<JobOffer> findAllByOwner(final User owner) {
 		Objects.requireNonNull(owner);
 		logger.debug("Buscando todas las ofertas del usuario {}", owner.getFullName());
-		final Map<String, Object> parameters = new HashMap<>();
-		parameters.put("owner", owner);
-		return this.findByQuery(JobOffer.class, "JobOffer.findAllByOwner", parameters, 0, 0);
+		return this.findByQuery(JobOffer.class, "JobOffer.findAllByOwner", map("owner", owner), 0, 0);
+	}
+
+	@Override
+	public List<JobOffer> findJobOffersByCandidateId(final long candidateId) {
+		logger.debug("SELECT  job offers by candidate id {}", candidateId);
+		return this.findByQuery(JobOffer.class, "JobOffer.findByCandidateId", map("candidateId", candidateId), 0, 0);
 	}
 
 	@Override
 	public List<JobOffer> findJobOffersByClientId(final long clientId) {
 		logger.debug("SELECT  job offers by client id {}", clientId);
-		final Map<String, Object> parameters = new HashMap<>();
-		parameters.put("clientId", clientId);
-		return this.findByQuery(JobOffer.class, "JobOffer.findByClientId", parameters, 0, 0);
+		return this.findByQuery(JobOffer.class, "JobOffer.findByClientId", map("clientId", clientId), 0, 0);
 	}
 
 	@Override
 	public List<JobOffer> findLastJobOffers(final User owner) {
-		final Map<String, Object> parameters = new HashMap<>();
-		parameters.put("owner", owner);
-		return this.findByQuery(JobOffer.class, "JobOffer.findLastJobOffers", parameters, 0, 0);
+		return this.findByQuery(JobOffer.class, "JobOffer.findLastJobOffers", map("owner", owner), 0, 0);
 	}
 
 	@Override

@@ -187,6 +187,16 @@
 			WHERE j.user = :user
 		]]></query>
 	</named-query>
+	
+	<named-query name="JobOffer.findByCandidateId">
+		<query><![CDATA[
+			SELECT j
+			FROM JobOffer j
+			INNER JOIN j.jobCandidatures jc 
+			WHERE jc.candidate.id = :candidateId
+		]]></query>
+	</named-query>
+	
 
 	<named-query name="JobOffer.findByClientId">
 		<query><![CDATA[
