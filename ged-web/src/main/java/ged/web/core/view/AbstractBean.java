@@ -116,9 +116,6 @@ public abstract class AbstractBean implements Serializable {
 		if (owner.equals(user)) {
 			return true;
 		}
-		if (this.sessionBean.getTeam().contains(user)) {
-			return true;
-		}
-		return false;
+		return this.sessionBean.getTeam().contains(user);
 	}
 }

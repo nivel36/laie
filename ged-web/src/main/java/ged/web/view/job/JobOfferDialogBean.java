@@ -64,12 +64,12 @@ public class JobOfferDialogBean extends AbstractDialogBean implements CloseDialo
 		if (clientId == null) {
 			return null;
 		}
-		final Client client = this.clientService.find(clientId);
-		if (client == null) {
+		final Client clientFromAttributes = this.clientService.find(clientId);
+		if (clientFromAttributes == null) {
 			logger.error("client with id {} not found", clientId);
 			throw new IllegalStateException();
 		}
-		return client;
+		return clientFromAttributes;
 	}
 
 	public JobOffer getJobOffer() {

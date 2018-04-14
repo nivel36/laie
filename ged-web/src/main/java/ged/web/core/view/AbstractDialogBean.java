@@ -15,9 +15,9 @@ public abstract class AbstractDialogBean extends AbstractBean {
 
 	private static final long serialVersionUID = 8427233134254733395L;
 
-	private Map<String, Object> attributes;
+	private transient Map<String, Object> attributes;
 
-	protected CloseDialogListener callback;
+	protected transient CloseDialogListener callback;
 
 	private boolean showDialog;
 
@@ -26,10 +26,6 @@ public abstract class AbstractDialogBean extends AbstractBean {
 	public void closeDialog() {
 		this.showDialog = false;
 		this.dispose();
-	}
-
-	public void closeDialog(final Object data) {
-		this.closeDialog();
 	}
 
 	protected abstract void dispose();
