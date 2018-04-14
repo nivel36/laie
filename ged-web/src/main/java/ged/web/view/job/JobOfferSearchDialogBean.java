@@ -60,9 +60,8 @@ public class JobOfferSearchDialogBean extends AbstractDialogBean {
 
 	public void select() {
 		this.callback.onCloseDialog(this.selectedJobOffers);
-		this.selectedJobOffers.clear();
-		Ajax.update("jobOfferSelectForm", this.updateField);
 		this.closeDialog();
+		Ajax.update("jobOfferSelectForm", this.updateField);
 	}
 
 	public void setJobOfferService(final JobOfferService jobOfferService) {

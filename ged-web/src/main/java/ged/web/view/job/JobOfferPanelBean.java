@@ -7,8 +7,6 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.omnifaces.cdi.Param;
-
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
 import ged.web.core.view.AbstractBean;
@@ -19,8 +17,6 @@ public class JobOfferPanelBean extends AbstractBean {
 
 	private static final long serialVersionUID = -8972909678807698224L;
 
-	@Inject
-	@Param
 	private Long clientId;
 
 	private List<JobOffer> jobOffers;
@@ -38,11 +34,11 @@ public class JobOfferPanelBean extends AbstractBean {
 
 	@PostConstruct
 	public void init() {
-		this.jobOffers = this.jobOfferService.findJobOffersByClientId(this.clientId);
-	}
-
-	public void setClientId(final Long clientId) {
-		this.clientId = clientId;
+		final String clientIdValue = this.getValueFromGetParameters("clientId");
+		if (clientIdValue != null) {
+			this.clientId = Long.parseLong(clientIdValue);
+			this.jobOffers = this.jobOfferService.findJobOffersByClientId(this.clientId);
+		}
 	}
 
 	public void setJobOfferService(final JobOfferService jobOfferService) {

@@ -5,8 +5,7 @@
 	<ui:include src="/faces/client/clientSearchDialog.xhtml" />
 
 	<h:form id="newJobOfferForm">
-		<p:dialog id="newJobOfferDlg" header="#{i18n['job.new_job_offer']}" modal="true" resizable="false" responsive="true" closable="false" styleClass="medium"
-			visible="#{jobOfferDialogBean.showDialog}">
+		<p:dialog id="newJobOfferDlg" header="#{i18n['job.new_job_offer']}" modal="true" resizable="false" responsive="true" closable="true" styleClass="medium" visible="#{jobOfferDialogBean.showDialog}">
 			<div class="ui-g">
 				<div class="ui-g-12 ui-md-6">
 					<div class="form-group">

@@ -7,8 +7,6 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.omnifaces.cdi.Param;
-
 import ged.ejb.candidate.Candidate;
 import ged.ejb.candidate.CandidateService;
 import ged.ejb.job.offer.JobOffer;
@@ -27,8 +25,6 @@ public class CandidatePanelBean extends AbstractBean implements CloseDialogListe
 	@Inject
 	private CandidateService candidateService;
 
-	@Inject
-	@Param
 	private Long jobOfferId;
 
 	@Inject
@@ -41,6 +37,19 @@ public class CandidatePanelBean extends AbstractBean implements CloseDialogListe
 		}
 	}
 
+	public List<Candidate> getCandidates() {
+		return this.candidates;
+	}
+
+	@PostConstruct
+	public void init() {
+		final String jobOfferIdValue = this.getValueFromGetParameters("jobOfferId");
+		if (jobOfferIdValue != null) {
+			this.jobOfferId = Long.parseLong(jobOfferIdValue);
+			this.candidates = this.candidateService.findByJobOfferId(this.jobOfferId);
+		}
+	}
+
 	@Override
 	public void onCloseDialog(final Object value) {
 		@SuppressWarnings("unchecked")
@@ -48,21 +57,6 @@ public class CandidatePanelBean extends AbstractBean implements CloseDialogListe
 		this.candidates.addAll(selectedCandidates);
 		if (this.jobOfferId != null) {
 			this.addCandidatesToJobOffer(selectedCandidates);
-		}
-	}
-
-	public List<Candidate> getCandidates() {
-		return this.candidates;
-	}
-
-	public Long getJobOfferId() {
-		return this.jobOfferId;
-	}
-
-	@PostConstruct
-	public void init() {
-		if (this.jobOfferId != null) {
-			this.candidates = this.candidateService.findByJobOfferId(this.jobOfferId);
 		}
 	}
 
