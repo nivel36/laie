@@ -10,6 +10,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.omnifaces.util.Ajax;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,6 +19,7 @@ import ged.ejb.client.ClientService;
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
 import ged.web.core.CloseDialogListener;
+import ged.web.core.GedPermissionException;
 import ged.web.core.view.AbstractDialogBean;
 
 @Named
@@ -92,6 +94,10 @@ public class JobOfferDialogBean extends AbstractDialogBean implements CloseDialo
 		to(JOB_OFFER).withParams(map("jobOfferId", this.jobOffer.getId())).doGet();
 	}
 
+	public boolean isUserHasPermissionToEditJobOffer() {
+		return this.userHasPermissionToEdit(this.jobOffer);
+	}
+
 	@Override
 	public void onCloseDialog(final Object value) {
 		this.client = (Client) value;
@@ -120,7 +126,12 @@ public class JobOfferDialogBean extends AbstractDialogBean implements CloseDialo
 	}
 
 	private void updateJobOffer() {
+		if (!this.isUserHasPermissionToEditJobOffer()) {
+			throw new GedPermissionException();
+		}
 		this.jobOffer = this.jobOfferService.update(this.jobOffer);
-		to(JOB_OFFER).withParams(map("jobOfferId", this.jobOffer.getId())).doGet();
+		this.callback.onCloseDialog(this.jobOffer);
+		Ajax.update("jobOfferForm", this.updateField);
+		this.closeDialog();
 	}
 }

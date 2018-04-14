@@ -79,6 +79,8 @@
 							<p:commandButton id="exportExcel" value="#{i18n['action.export']}" action="#" icon="fa fa-file-excel-o" />
 							<p:commandButton id="editClient" value="#{i18n['action.edit']}" actionListener="#{jobOfferDialogBean.openDialog}" update="newJobOfferForm">
 								<f:attribute name="jobOffer" value="#{jobOfferBean.jobOffer}" />
+								<f:attribute name="updateField" value="jobOfferViewForm" />
+								<f:attribute name="callback" value="#{jobOfferBean}" />
 							</p:commandButton>
 						</div>
 					</p:panel>

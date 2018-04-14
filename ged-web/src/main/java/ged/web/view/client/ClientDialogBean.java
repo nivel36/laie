@@ -77,12 +77,7 @@ public class ClientDialogBean extends AbstractDialogBean {
 			this.insertClient();
 		}
 		else {
-			if (this.userHasPermissionToEdit(this.client)) {
-				this.updateClient();
-			}
-			else {
-				throw new GedPermissionException();
-			}
+			this.updateClient();
 		}
 	}
 
@@ -91,6 +86,9 @@ public class ClientDialogBean extends AbstractDialogBean {
 	}
 
 	private void updateClient() {
+		if (!this.userHasPermissionToEdit(this.client)) {
+			throw new GedPermissionException();
+		}
 		this.client = this.clientService.update(this.client);
 		this.callback.onCloseDialog(this.client);
 		Ajax.update("clientForm", this.updateField);

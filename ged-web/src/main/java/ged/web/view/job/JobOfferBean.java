@@ -11,12 +11,13 @@ import org.slf4j.LoggerFactory;
 
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
+import ged.web.core.CloseDialogListener;
 import ged.web.core.PageNotFoundException;
 import ged.web.core.view.AbstractBean;
 
 @Named
 @ViewScoped
-public class JobOfferBean extends AbstractBean {
+public class JobOfferBean extends AbstractBean implements CloseDialogListener {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
@@ -56,6 +57,11 @@ public class JobOfferBean extends AbstractBean {
 		return this.userHasPermissionToEdit(this.jobOffer);
 	}
 
+	@Override
+	public void onCloseDialog(final Object value) {
+		this.jobOffer = (JobOffer) value;
+	}
+
 	public void setJobOffer(final JobOffer jobOffer) {
 		this.jobOffer = jobOffer;
 	}
@@ -64,7 +70,4 @@ public class JobOfferBean extends AbstractBean {
 		this.jobOfferId = jobOfferId;
 	}
 
-	public void setJobService(final JobOfferService jobService) {
-		this.jobService = jobService;
-	}
 }
