@@ -13,7 +13,7 @@ import ged.ejb.candidate.Candidate;
 import ged.ejb.core.model.AbstractEntity;
 
 @Entity
-public class UploadedServerFile extends AbstractEntity {
+public class ServerFile extends AbstractEntity {
 
 	private static final long serialVersionUID = 6267888369284581482L;
 
@@ -47,7 +47,7 @@ public class UploadedServerFile extends AbstractEntity {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		final UploadedServerFile other = (UploadedServerFile) obj;
+		final ServerFile other = (ServerFile) obj;
 		return Objects.equals(this.uuid, other.uuid);
 	}
 

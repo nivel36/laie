@@ -256,6 +256,14 @@
 			WHERE rc.antecessor.id = :id
 		]]></query>
 	</named-query>
+	
+	<named-query name="ServerFile.findByCandidateId">
+		<query><![CDATA[
+			SELECT s 
+			FROM ServerFile s 
+			WHERE s.candidate.id = :candidateId
+		]]></query>
+	</named-query>
 
 	<named-query name="User.findById">
 		<query><![CDATA[

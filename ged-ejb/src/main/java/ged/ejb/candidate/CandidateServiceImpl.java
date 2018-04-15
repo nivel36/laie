@@ -11,8 +11,8 @@ import javax.validation.ValidationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ged.ejb.UploadedServerFile;
-import ged.ejb.UploadedServerFileDao;
+import ged.ejb.ServerFile;
+import ged.ejb.ServerFileDao;
 import ged.ejb.core.AbstratctAuditedService;
 import ged.ejb.core.Audited;
 import ged.ejb.core.action.Action.ActionType;
@@ -31,15 +31,15 @@ public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> imp
 
 	private final JobCandidatureDao jobCandidatureDao;
 
-	private final UploadedServerFileDao uploadedServerFileDao;
+	private final ServerFileDao serverFileDao;
 
 	@Inject
-	public CandidateServiceImpl(@Repository final CandidateDao candidateDao, @Repository final UploadedServerFileDao uploadedServerFileDao,
+	public CandidateServiceImpl(@Repository final CandidateDao candidateDao, @Repository final ServerFileDao uploadedServerFileDao,
 			@Repository final JobCandidatureDao jobCandidatureDao) {
 		Objects.requireNonNull(uploadedServerFileDao);
 		Objects.requireNonNull(candidateDao);
 		this.candidateDao = candidateDao;
-		this.uploadedServerFileDao = uploadedServerFileDao;
+		this.serverFileDao = uploadedServerFileDao;
 		this.jobCandidatureDao = jobCandidatureDao;
 	}
 
@@ -62,11 +62,19 @@ public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> imp
 	}
 
 	@Override
-	public UploadedServerFile findFile(final long id) {
+	public ServerFile findFile(final long id) {
 		if (id < 1) {
 			throw new IllegalArgumentException("id: " + id);
 		}
-		return this.uploadedServerFileDao.find(id);
+		return this.serverFileDao.find(id);
+	}
+
+	@Override
+	public List<ServerFile> findFilesByCandidateId(final long candidateId) {
+		if (candidateId < 1) {
+			throw new IllegalArgumentException("candidateId: " + candidateId);
+		}
+		return this.serverFileDao.findByCandidateId(candidateId);
 	}
 
 	@Override
@@ -112,9 +120,9 @@ public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> imp
 	}
 
 	@Override
-	public void insertFile(final UploadedServerFile file) {
+	public void insertFile(final ServerFile file) {
 		Objects.requireNonNull(file);
-		this.uploadedServerFileDao.insert(file);
+		this.serverFileDao.insert(file);
 	}
 
 	private boolean isDuplicatedEmail(final Candidate candidate, final Candidate candidateInRepository) {
@@ -133,8 +141,8 @@ public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> imp
 	}
 
 	@Override
-	public UploadedServerFile updateFile(final UploadedServerFile file) {
+	public ServerFile updateFile(final ServerFile file) {
 		Objects.requireNonNull(file);
-		return this.uploadedServerFileDao.update(file);
+		return this.serverFileDao.update(file);
 	}
 }

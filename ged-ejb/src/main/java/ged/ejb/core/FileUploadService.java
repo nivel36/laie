@@ -3,11 +3,11 @@ package ged.ejb.core;
 import java.io.File;
 import java.io.InputStream;
 
-import ged.ejb.UploadedServerFile;
+import ged.ejb.ServerFile;
 
 public interface FileUploadService {
 
-	File getFileFromFileSystem(UploadedServerFile file);
+	File getFileFromFileSystem(ServerFile file);
 
 	void removeFileFromFileSystem(String uuid);
 

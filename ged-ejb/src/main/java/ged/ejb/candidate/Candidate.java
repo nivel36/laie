@@ -25,7 +25,7 @@ import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.IndexedEmbedded;
 
-import ged.ejb.UploadedServerFile;
+import ged.ejb.ServerFile;
 import ged.ejb.core.Address;
 import ged.ejb.core.model.AbstractAuditedEntity;
 import ged.ejb.core.tag.Tag;
@@ -57,7 +57,7 @@ public class Candidate extends AbstractAuditedEntity {
 	private Integer expectedSalary;
 
 	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "candidate", orphanRemoval = true)
-	private Set<UploadedServerFile> files;
+	private Set<ServerFile> files;
 
 	private String imageFileName;
 
@@ -100,7 +100,7 @@ public class Candidate extends AbstractAuditedEntity {
 	@Field
 	private String surname;
 
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name = "candidate_tag", joinColumns = @JoinColumn(name = "candidate_id"), inverseJoinColumns = @JoinColumn(name = "tag_id"))
 	@IndexedEmbedded
 	private Set<Tag> tags;
@@ -159,7 +159,7 @@ public class Candidate extends AbstractAuditedEntity {
 		return this.expectedSalary;
 	}
 
-	public Set<UploadedServerFile> getFiles() {
+	public Set<ServerFile> getFiles() {
 		return this.files;
 	}
 
@@ -244,7 +244,7 @@ public class Candidate extends AbstractAuditedEntity {
 		this.expectedSalary = expectedSalary;
 	}
 
-	public void setFiles(final Set<UploadedServerFile> files) {
+	public void setFiles(final Set<ServerFile> files) {
 		this.files = files;
 	}
 

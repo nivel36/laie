@@ -2,18 +2,20 @@ package ged.ejb.candidate;
 
 import java.util.List;
 
-import ged.ejb.UploadedServerFile;
+import ged.ejb.ServerFile;
 import ged.ejb.core.AuditedService;
 import ged.ejb.core.tag.Tag;
 import ged.ejb.job.offer.JobCandidature;
 
 public interface CandidateService extends AuditedService<Candidate> {
 
-	List<Candidate> findByJobOfferId(long jobOfferId);
-
 	Candidate findAllDataById(long id);
 
-	UploadedServerFile findFile(long id);
+	List<Candidate> findByJobOfferId(long jobOfferId);
+
+	ServerFile findFile(long id);
+
+	List<ServerFile> findFilesByCandidateId(long candidateId);
 
 	List<JobCandidature> findJobCandidatures(long candidateId);
 
@@ -23,7 +25,7 @@ public interface CandidateService extends AuditedService<Candidate> {
 
 	List<Tag> findTags();
 
-	void insertFile(UploadedServerFile file);
+	void insertFile(ServerFile file);
 
-	UploadedServerFile updateFile(UploadedServerFile file);
+	ServerFile updateFile(ServerFile file);
 }

@@ -1,0 +1,39 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui" xmlns:i18n="http://legion.com/i18n">
+	<h:form id="file_form" enctype="multipart/form-data">
+		<p:panel header="#{i18n['file.files']}">
+			<div class="ui-g">
+				<div class="ui-g-12">
+					<p:dataTable var="file" id="files" value="#{candidateBean.files}" emptyMessage="#{i18n['file.no_files']}" reflow="true" rows="#{sessionBean.rowsPerPage}"
+						rowKey="#{file.id}">
+
+						<p:column headerText="#{i18n['file.name']}">
+							<h:commandLink action="#{candidateBean.openFile(file)}">
+								<h:outputText value="#{file.name}" />
+							</h:commandLink>
+						</p:column>
+
+						<p:column headerText="#{i18n['file.lopd']}">
+							<p:selectBooleanCheckbox value="#{file.lopd}">
+								<p:ajax event="change" listener="#{candidateBean.updateFile(file)}" update="growl file_form" />
+							</p:selectBooleanCheckbox>
+						</p:column>
+
+						<p:column>
+							<p:commandButton icon="fa fa-trash" styleClass="btn-gray" action="#{candidateBean.removeFile(file)}" update="growl file_form" />
+						</p:column>
+					</p:dataTable>
+				</div>
+			</div>
+
+			<div class="ui-g">
+				<div class="ui-g-12">
+					<div class="form-action-primary">
+						<p:fileUpload id="uploadFile" fileUploadListener="#{candidateBean.uploadFile}" mode="advanced" dragDropSupport="false" update="file_form growl"
+							auto="true" label="#{i18n['action.add']}" disabled="#{candidateBean.candidate.files.size() gt 6}" />
+					</div>
+				</div>
+			</div>
+		</p:panel>
+	</h:form>
+</ui:composition>

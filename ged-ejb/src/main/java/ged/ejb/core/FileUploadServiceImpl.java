@@ -15,7 +15,7 @@ import java.util.UUID;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
-import ged.ejb.UploadedServerFile;
+import ged.ejb.ServerFile;
 import ged.ejb.core.util.ConfigurationProperty;
 
 @Stateless
@@ -30,7 +30,7 @@ public class FileUploadServiceImpl implements FileUploadService {
 	private String imageDirectory;
 
 	@Override
-	public File getFileFromFileSystem(final UploadedServerFile file) {
+	public File getFileFromFileSystem(final ServerFile file) {
 		Objects.requireNonNull(file);
 		try {
 			final Path source = Paths.get(this.fileDirectory, file.getUuid());
