@@ -1,7 +1,6 @@
 package ged.web.view.candidate;
 
 import java.lang.invoke.MethodHandles;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.view.ViewScoped;
@@ -31,8 +30,6 @@ public class CandidateSelectDialogBean extends AbstractDialogBean {
 
 	private String searchText;
 
-	private List<String> searchValues = new ArrayList<>();
-
 	private List<Candidate> selectedCandidates;
 
 	public void clean() {
@@ -44,6 +41,7 @@ public class CandidateSelectDialogBean extends AbstractDialogBean {
 	protected void dispose() {
 		this.searchText = null;
 		this.selectedCandidates = null;
+		this.candidates = null;
 	}
 
 	public List<Candidate> getCandidates() {
@@ -52,10 +50,6 @@ public class CandidateSelectDialogBean extends AbstractDialogBean {
 
 	public String getSearchText() {
 		return this.searchText;
-	}
-
-	public List<String> getSearchValues() {
-		return this.searchValues;
 	}
 
 	public List<Candidate> getSelectedCandidates() {
@@ -74,7 +68,6 @@ public class CandidateSelectDialogBean extends AbstractDialogBean {
 
 	public void select() {
 		this.callback.onCloseDialog(this.selectedCandidates);
-		this.selectedCandidates.clear();
 		Ajax.update("candidateSelectForm", this.updateField);
 		this.closeDialog();
 	}
@@ -85,10 +78,6 @@ public class CandidateSelectDialogBean extends AbstractDialogBean {
 
 	public void setSearchText(final String searchText) {
 		this.searchText = searchText;
-	}
-
-	public void setSearchValues(final List<String> searchValues) {
-		this.searchValues = searchValues;
 	}
 
 	public void setSelectedCandidates(final List<Candidate> selectedCandidates) {
