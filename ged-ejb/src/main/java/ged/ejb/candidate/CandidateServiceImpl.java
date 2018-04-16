@@ -44,29 +44,33 @@ public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> imp
 	}
 
 	@Override
-	public Candidate findAllDataById(final long id) {
-		if (id < 1) {
-			throw new IllegalArgumentException("id: " + id);
-		}
-		logger.debug("Find candidate with id {} and his/her files", id);
-		return this.candidateDao.findAllDataById(id);
+	public void addFile(final ServerFile file) {
+		Objects.requireNonNull(file);
+		this.serverFileDao.insert(file);
 	}
 
 	@Override
-	public List<Candidate> findByJobOfferId(final long jobOfferId) {
+	public Candidate findAllData(final long candidateId) {
+		if (candidateId < 1) {
+			throw new IllegalArgumentException("id: " + candidateId);
+		}
+		logger.debug("Find candidate with id {} and his/her files", candidateId);
+		return this.candidateDao.findAllDataById(candidateId);
+	}
+
+	@Override
+	public List<Tag> findAllTags() {
+		logger.debug("Find all tags");
+		return this.candidateDao.findTags();
+	}
+
+	@Override
+	public List<Candidate> findCandidatesByJobOfferId(final long jobOfferId) {
 		if (jobOfferId < 1) {
 			throw new IllegalArgumentException("jobOfferId: " + jobOfferId);
 		}
 		logger.debug("Find candidates by jobOffer id {} ", jobOfferId);
 		return this.candidateDao.findByJobOfferId(jobOfferId);
-	}
-
-	@Override
-	public ServerFile findFile(final long id) {
-		if (id < 1) {
-			throw new IllegalArgumentException("id: " + id);
-		}
-		return this.serverFileDao.find(id);
 	}
 
 	@Override
@@ -78,11 +82,19 @@ public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> imp
 	}
 
 	@Override
-	public List<JobCandidature> findJobCandidatures(final long candidateId) {
+	public List<JobCandidature> findJobCandidaturesByCandidateId(final long candidateId) {
 		if (candidateId < 1) {
 			throw new IllegalArgumentException();
 		}
 		return this.jobCandidatureDao.findByCandidateId(candidateId);
+	}
+
+	@Override
+	public ServerFile findFile(final long id) {
+		if (id < 1) {
+			throw new IllegalArgumentException("id: " + id);
+		}
+		return this.serverFileDao.find(id);
 	}
 
 	@Override
@@ -96,12 +108,6 @@ public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> imp
 	@Override
 	public long findNumberOfCandidates() {
 		return this.candidateDao.findNumberOfCandidates();
-	}
-
-	@Override
-	public List<Tag> findTags() {
-		logger.debug("Find all tags");
-		return this.candidateDao.findTags();
 	}
 
 	@Override
@@ -119,14 +125,13 @@ public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> imp
 		this.candidateDao.insert(candidate);
 	}
 
-	@Override
-	public void insertFile(final ServerFile file) {
-		Objects.requireNonNull(file);
-		this.serverFileDao.insert(file);
-	}
-
 	private boolean isDuplicatedEmail(final Candidate candidate, final Candidate candidateInRepository) {
 		return !candidate.getEmail().equals(candidateInRepository.getEmail()) && this.candidateDao.emailExists(candidate.getEmail());
+	}
+
+	@Override
+	public void removeFile(final ServerFile file) {
+		this.serverFileDao.delete(file);
 	}
 
 	@Override

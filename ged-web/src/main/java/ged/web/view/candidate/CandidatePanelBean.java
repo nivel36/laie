@@ -46,7 +46,7 @@ public class CandidatePanelBean extends AbstractBean implements CloseDialogListe
 		final String jobOfferIdValue = this.getValueFromGetParameters("jobOfferId");
 		if (jobOfferIdValue != null) {
 			this.jobOfferId = Long.parseLong(jobOfferIdValue);
-			this.candidates = this.candidateService.findByJobOfferId(this.jobOfferId);
+			this.candidates = this.candidateService.findCandidatesByJobOfferId(this.jobOfferId);
 		}
 	}
 

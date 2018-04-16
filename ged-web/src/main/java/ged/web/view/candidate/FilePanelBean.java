@@ -90,8 +90,8 @@ public class FilePanelBean extends AbstractBean {
 
 	public void removeFile(final ServerFile file) {
 		this.fileUploadService.removeFileFromFileSystem(file.getUuid());
+		this.candidateService.removeFile(file);
 		this.files.remove(file);
-		// TODO: remove file
 		this.addInfoMessage("file.message.remove", "file.message.remove", file.getName());
 	}
 
@@ -108,7 +108,7 @@ public class FilePanelBean extends AbstractBean {
 			final String uuid = this.fileUploadService.uploadFile(inputStream);
 			final String fileName = uploadedFile.getFileName();
 			final ServerFile file = this.buildServerFile(uuid, fileName);
-			this.candidateService.insertFile(file);
+			this.candidateService.addFile(file);
 			this.files.add(file);
 			this.addInfoMessage("file.message.upload", "file.message.upload", fileName);
 		}

@@ -9,23 +9,25 @@ import ged.ejb.job.offer.JobCandidature;
 
 public interface CandidateService extends AuditedService<Candidate> {
 
-	Candidate findAllDataById(long id);
+	void addFile(ServerFile file);
 
-	List<Candidate> findByJobOfferId(long jobOfferId);
+	Candidate findAllData(long candidateId);
 
-	ServerFile findFile(long id);
+	List<Tag> findAllTags();
+
+	List<Candidate> findCandidatesByJobOfferId(long jobOfferId);
 
 	List<ServerFile> findFilesByCandidateId(long candidateId);
 
-	List<JobCandidature> findJobCandidatures(long candidateId);
+	List<JobCandidature> findJobCandidaturesByCandidateId(long candidateId);
+
+	ServerFile findFile(long fileId);
 
 	List<Candidate> findLastAddedCandidates(int numberOfCandidates);
 
 	long findNumberOfCandidates();
 
-	List<Tag> findTags();
-
-	void insertFile(ServerFile file);
+	void removeFile(ServerFile file);
 
 	ServerFile updateFile(ServerFile file);
 }

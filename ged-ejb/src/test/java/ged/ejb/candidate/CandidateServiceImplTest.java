@@ -40,34 +40,34 @@ public class CandidateServiceImplTest {
 	@Test
 	public void findAllByJobOfferTest() {
 		Mockito.when(this.candidateDao.findByJobOfferId(1L)).thenReturn(new ArrayList<>());
-		final List<Candidate> candidatesFromRepository = this.candidateServiceImpl.findByJobOfferId(1L);
+		final List<Candidate> candidatesFromRepository = this.candidateServiceImpl.findCandidatesByJobOfferId(1L);
 		Assert.assertEquals(0, candidatesFromRepository.size());
 	}
 
 	@Test
 	public void findAllByNullJobOfferTest() {
 		this.thrown.expect(IllegalArgumentException.class);
-		this.candidateServiceImpl.findByJobOfferId(0L);
+		this.candidateServiceImpl.findCandidatesByJobOfferId(0L);
 	}
 
 	@Test
 	public void findAllTagsTest() {
 		Mockito.when(this.candidateDao.findTags()).thenReturn(new ArrayList<>());
-		final List<Tag> tagsFromRepository = this.candidateServiceImpl.findTags();
+		final List<Tag> tagsFromRepository = this.candidateServiceImpl.findAllTags();
 		Assert.assertEquals(0, tagsFromRepository.size());
 	}
 
 	@Test
 	public void findCandidateAndFilesByWrongIdTest() {
 		this.thrown.expect(IllegalArgumentException.class);
-		this.candidateServiceImpl.findAllDataById(0);
+		this.candidateServiceImpl.findAllData(0);
 	}
 
 	@Test
 	public void findCandidateAndFilesTest() {
 		final Candidate mockedCandidate = Mockito.mock(Candidate.class);
 		Mockito.when(this.candidateDao.findAllDataById(1L)).thenReturn(mockedCandidate);
-		final Candidate candidateFromRepository = this.candidateServiceImpl.findAllDataById(1L);
+		final Candidate candidateFromRepository = this.candidateServiceImpl.findAllData(1L);
 		Assert.assertNotNull(candidateFromRepository);
 	}
 
@@ -117,13 +117,13 @@ public class CandidateServiceImplTest {
 	@Test
 	public void insertFileNullTest() {
 		this.thrown.expect(NullPointerException.class);
-		this.candidateServiceImpl.insertFile(null);
+		this.candidateServiceImpl.addFile(null);
 	}
 
 	@Test
 	public void insertFileTest() {
 		final ServerFile mockedUploadedServerFile = Mockito.mock(ServerFile.class);
-		this.candidateServiceImpl.insertFile(mockedUploadedServerFile);
+		this.candidateServiceImpl.addFile(mockedUploadedServerFile);
 	}
 
 	@Test

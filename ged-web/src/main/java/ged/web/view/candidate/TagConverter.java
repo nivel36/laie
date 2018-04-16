@@ -22,7 +22,7 @@ public class TagConverter implements Converter<Tag> {
 		if (value == null) {
 			return null;
 		}
-		final List<Tag> tags = this.candidateService.findTags();
+		final List<Tag> tags = this.candidateService.findAllTags();
 		for (final Tag tag : tags) {
 			if (tag.getLabel().equals(value)) {
 				return tag;
