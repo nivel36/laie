@@ -1,7 +1,6 @@
 package ged.ejb.candidate;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -104,21 +103,6 @@ public class Candidate extends AbstractAuditedEntity {
 	@JoinTable(name = "candidate_tag", joinColumns = @JoinColumn(name = "candidate_id"), inverseJoinColumns = @JoinColumn(name = "tag_id"))
 	@IndexedEmbedded
 	private Set<Tag> tags;
-
-	public void addJobCandidature(final JobCandidature jobCandidature) {
-		Objects.requireNonNull(jobCandidature);
-		if (this.jobCandidatures == null) {
-			this.jobCandidatures = new ArrayList<>();
-		}
-		jobCandidature.setCandidate(this);
-		this.jobCandidatures.add(jobCandidature);
-	}
-
-	protected boolean deepEquals(final Object obj) {
-		final Candidate other = (Candidate) obj;
-		return Objects.equals(this.email, other.email) && Objects.equals(this.name, other.name) && Objects.equals(this.phoneNumber, other.phoneNumber)
-				&& Objects.equals(this.surname, other.surname);
-	}
 
 	@Override
 	public boolean equals(final Object obj) {
