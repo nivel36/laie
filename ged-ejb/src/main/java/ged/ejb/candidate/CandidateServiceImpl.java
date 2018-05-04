@@ -21,6 +21,7 @@ import ged.ejb.core.model.Repository;
 import ged.ejb.core.tag.Tag;
 import ged.ejb.job.offer.JobCandidature;
 import ged.ejb.job.offer.JobCandidatureDao;
+import ged.ejb.job.offer.JobOffer;
 
 @Stateless
 public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> implements CandidateService {
@@ -65,12 +66,18 @@ public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> imp
 	}
 
 	@Override
-	public List<Candidate> findCandidatesByJobOfferId(final long jobOfferId) {
-		if (jobOfferId < 1) {
-			throw new IllegalArgumentException("jobOfferId: " + jobOfferId);
+	public List<Candidate> findCandidatesByJobOffer(final JobOffer jobOffer) {
+		Objects.requireNonNull(jobOffer);
+		logger.debug("Find candidates by jobOffer {} ", jobOffer);
+		return this.candidateDao.findCandidatesByJobOffer(jobOffer);
+	}
+
+	@Override
+	public ServerFile findFile(final long id) {
+		if (id < 1) {
+			throw new IllegalArgumentException("id: " + id);
 		}
-		logger.debug("Find candidates by jobOffer id {} ", jobOfferId);
-		return this.candidateDao.findByJobOfferId(jobOfferId);
+		return this.serverFileDao.find(id);
 	}
 
 	@Override
@@ -87,14 +94,6 @@ public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> imp
 			throw new IllegalArgumentException();
 		}
 		return this.jobCandidatureDao.findByCandidateId(candidateId);
-	}
-
-	@Override
-	public ServerFile findFile(final long id) {
-		if (id < 1) {
-			throw new IllegalArgumentException("id: " + id);
-		}
-		return this.serverFileDao.find(id);
 	}
 
 	@Override

@@ -25,15 +25,14 @@ public class CandidatePanelBean extends AbstractBean implements CloseDialogListe
 	@Inject
 	private CandidateService candidateService;
 
-	private Long jobOfferId;
+	private JobOffer jobOffer;
 
 	@Inject
 	private JobOfferService jobOfferService;
 
 	private void addCandidatesToJobOffer(final List<Candidate> selectedCandidates) {
-		final JobOffer jobOffer = this.jobOfferService.find(this.jobOfferId);
 		for (final Candidate candidate : selectedCandidates) {
-			this.jobOfferService.addJobCandidature(jobOffer, candidate);
+			this.jobOfferService.addJobCandidature(this.jobOffer, candidate);
 		}
 	}
 
@@ -45,8 +44,9 @@ public class CandidatePanelBean extends AbstractBean implements CloseDialogListe
 	public void init() {
 		final String jobOfferIdValue = this.getValueFromGetParameters("jobOfferId");
 		if (jobOfferIdValue != null) {
-			this.jobOfferId = Long.parseLong(jobOfferIdValue);
-			this.candidates = this.candidateService.findCandidatesByJobOfferId(this.jobOfferId);
+			final Long jobOfferId = Long.parseLong(jobOfferIdValue);
+			this.jobOffer = this.jobOfferService.find(jobOfferId);
+			this.candidates = this.candidateService.findCandidatesByJobOffer(this.jobOffer);
 		}
 	}
 
@@ -55,16 +55,12 @@ public class CandidatePanelBean extends AbstractBean implements CloseDialogListe
 		@SuppressWarnings("unchecked")
 		final List<Candidate> selectedCandidates = (List<Candidate>) value;
 		this.candidates.addAll(selectedCandidates);
-		if (this.jobOfferId != null) {
+		if (this.jobOffer != null) {
 			this.addCandidatesToJobOffer(selectedCandidates);
 		}
 	}
 
 	public void setCandidateService(final CandidateService candidateService) {
 		this.candidateService = candidateService;
-	}
-
-	public void setJobOfferId(final Long jobOfferId) {
-		this.jobOfferId = jobOfferId;
 	}
 }

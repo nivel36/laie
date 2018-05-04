@@ -19,6 +19,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import ged.ejb.core.model.PersistenceFacade;
 import ged.ejb.core.tag.Tag;
+import ged.ejb.job.offer.JobOffer;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CandidateDaoJpaTest {
@@ -46,21 +47,24 @@ public class CandidateDaoJpaTest {
 
 	@Test
 	public void findAllByJobOfferEmptyTest() {
-		when(this.persistenceFacade.findByQuery(Candidate.class, "Candidate.findByJobOfferId", map("jobOfferId", 1L))).thenThrow(new NoResultException());
-		final List<Candidate> candidates = this.candidateDaoJpa.findByJobOfferId(1L);
+		final JobOffer jobOffer = new JobOffer();
+		when(this.persistenceFacade.findByQuery(Candidate.class, "Candidate.findByJobOffer", map("jobOffer", jobOffer))).thenThrow(new NoResultException());
+		final List<Candidate> candidates = this.candidateDaoJpa.findCandidatesByJobOffer(jobOffer);
 		Assert.assertEquals(0, candidates.size());
 	}
 
 	@Test
 	public void findAllByJobOfferNullTest() {
-		this.thrown.expect(IllegalArgumentException.class);
-		this.candidateDaoJpa.findByJobOfferId(0L);
+		this.thrown.expect(NullPointerException.class);
+		this.candidateDaoJpa.findCandidatesByJobOffer(null);
 	}
 
 	@Test
 	public void findAllByJobOfferTest() {
-		when(this.persistenceFacade.findByQuery(Candidate.class, "Candidate.findByJobOfferId", map("jobOfferId", 1L), 0, 0)).thenReturn(this.mockCandidates());
-		final List<Candidate> candidatesFromRepository = this.candidateDaoJpa.findByJobOfferId(1L);
+		final JobOffer jobOffer = new JobOffer();
+		when(this.persistenceFacade.findByQuery(Candidate.class, "Candidate.findByJobOffer", map("jobOffer", jobOffer), 0, 0))
+				.thenReturn(this.mockCandidates());
+		final List<Candidate> candidatesFromRepository = this.candidateDaoJpa.findCandidatesByJobOffer(jobOffer);
 		Assert.assertEquals(1, candidatesFromRepository.size());
 		Assert.assertEquals("aaron.douglas@test.com", candidatesFromRepository.get(0).getEmail());
 	}

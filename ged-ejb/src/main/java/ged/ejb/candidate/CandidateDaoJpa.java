@@ -11,6 +11,7 @@ import javax.persistence.NoResultException;
 import ged.ejb.core.model.AbstractDaoJpa;
 import ged.ejb.core.model.Repository;
 import ged.ejb.core.tag.Tag;
+import ged.ejb.job.offer.JobOffer;
 
 @Repository
 public class CandidateDaoJpa extends AbstractDaoJpa<Candidate> implements CandidateDao {
@@ -30,12 +31,10 @@ public class CandidateDaoJpa extends AbstractDaoJpa<Candidate> implements Candid
 	}
 
 	@Override
-	public List<Candidate> findByJobOfferId(final long jobOfferId) {
-		if (jobOfferId < 1) {
-			throw new IllegalArgumentException("jobOfferId: " + jobOfferId);
-		}
+	public List<Candidate> findCandidatesByJobOffer(final JobOffer jobOffer) {
+		Objects.requireNonNull(jobOffer);
 		try {
-			return this.findByQuery(Candidate.class, "Candidate.findByJobOfferId", map("jobOfferId", jobOfferId), 0, 0);
+			return this.findByQuery(Candidate.class, "Candidate.findByJobOffer", map("jobOffer", jobOffer), 0, 0);
 		}
 		catch (final NoResultException e) {
 			return new ArrayList<>();

@@ -6,6 +6,7 @@ import ged.ejb.ServerFile;
 import ged.ejb.core.AuditedService;
 import ged.ejb.core.tag.Tag;
 import ged.ejb.job.offer.JobCandidature;
+import ged.ejb.job.offer.JobOffer;
 
 public interface CandidateService extends AuditedService<Candidate> {
 
@@ -15,13 +16,13 @@ public interface CandidateService extends AuditedService<Candidate> {
 
 	List<Tag> findAllTags();
 
-	List<Candidate> findCandidatesByJobOfferId(long jobOfferId);
+	List<Candidate> findCandidatesByJobOffer(JobOffer jobOffer);
+
+	ServerFile findFile(long fileId);
 
 	List<ServerFile> findFilesByCandidateId(long candidateId);
 
 	List<JobCandidature> findJobCandidaturesByCandidateId(long candidateId);
-
-	ServerFile findFile(long fileId);
 
 	List<Candidate> findLastAddedCandidates(int numberOfCandidates);
 

@@ -19,6 +19,7 @@ import ged.ejb.ServerFile;
 import ged.ejb.ServerFileDao;
 import ged.ejb.core.tag.Tag;
 import ged.ejb.job.offer.JobCandidatureDao;
+import ged.ejb.job.offer.JobOffer;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CandidateServiceImplTest {
@@ -39,15 +40,16 @@ public class CandidateServiceImplTest {
 
 	@Test
 	public void findAllByJobOfferTest() {
-		Mockito.when(this.candidateDao.findByJobOfferId(1L)).thenReturn(new ArrayList<>());
-		final List<Candidate> candidatesFromRepository = this.candidateServiceImpl.findCandidatesByJobOfferId(1L);
+		final JobOffer jobOffer = new JobOffer();
+		Mockito.when(this.candidateDao.findCandidatesByJobOffer(jobOffer)).thenReturn(new ArrayList<>());
+		final List<Candidate> candidatesFromRepository = this.candidateServiceImpl.findCandidatesByJobOffer(jobOffer);
 		Assert.assertEquals(0, candidatesFromRepository.size());
 	}
 
 	@Test
 	public void findAllByNullJobOfferTest() {
-		this.thrown.expect(IllegalArgumentException.class);
-		this.candidateServiceImpl.findCandidatesByJobOfferId(0L);
+		this.thrown.expect(NullPointerException.class);
+		this.candidateServiceImpl.findCandidatesByJobOffer(null);
 	}
 
 	@Test
