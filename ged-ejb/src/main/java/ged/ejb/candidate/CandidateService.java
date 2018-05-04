@@ -11,7 +11,7 @@ public interface CandidateService extends AuditedService<Candidate> {
 
 	void addFile(ServerFile file);
 
-	Candidate findAllData(long candidateId);
+	Candidate findAllCandidateDataById(long candidateId);
 
 	List<Tag> findAllTags();
 

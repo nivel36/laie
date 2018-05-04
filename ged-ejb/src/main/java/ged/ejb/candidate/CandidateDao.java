@@ -9,7 +9,7 @@ public interface CandidateDao extends Dao<Candidate> {
 
 	boolean emailExists(String email);
 
-	Candidate findAllDataById(long id);
+	Candidate findAllCandidateDataById(long id);
 
 	List<Candidate> findByJobOfferId(long jobOfferId);
 

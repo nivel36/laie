@@ -22,7 +22,7 @@ public class CandidateDaoJpa extends AbstractDaoJpa<Candidate> implements Candid
 	}
 
 	@Override
-	public Candidate findAllDataById(final long id) {
+	public Candidate findAllCandidateDataById(final long id) {
 		if (id < 1) {
 			throw new IllegalArgumentException("id: " + id);
 		}
