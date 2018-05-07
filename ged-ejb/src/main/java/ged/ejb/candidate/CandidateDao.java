@@ -3,7 +3,6 @@ package ged.ejb.candidate;
 import java.util.List;
 
 import ged.ejb.core.model.Dao;
-import ged.ejb.core.tag.Tag;
 import ged.ejb.job.offer.JobOffer;
 
 public interface CandidateDao extends Dao<Candidate> {
@@ -17,6 +16,4 @@ public interface CandidateDao extends Dao<Candidate> {
 	List<Candidate> findLastAddedCandidates(int numberOfCandidates);
 
 	long findNumberOfCandidates();
-
-	List<Tag> findTags();
 }

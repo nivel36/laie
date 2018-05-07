@@ -10,7 +10,6 @@ import javax.persistence.NoResultException;
 
 import ged.ejb.core.model.AbstractDaoJpa;
 import ged.ejb.core.model.Repository;
-import ged.ejb.core.tag.Tag;
 import ged.ejb.job.offer.JobOffer;
 
 @Repository
@@ -52,11 +51,6 @@ public class CandidateDaoJpa extends AbstractDaoJpa<Candidate> implements Candid
 	@Override
 	public long findNumberOfCandidates() {
 		return (long) this.findByQuery("Candidate.numberOfCandidates", null);
-	}
-
-	@Override
-	public List<Tag> findTags() {
-		return this.findAll(Tag.class);
 	}
 
 	@Override

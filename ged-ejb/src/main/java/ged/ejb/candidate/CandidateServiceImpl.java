@@ -18,7 +18,6 @@ import ged.ejb.core.Audited;
 import ged.ejb.core.action.Action.ActionType;
 import ged.ejb.core.model.Dao;
 import ged.ejb.core.model.Repository;
-import ged.ejb.core.tag.Tag;
 import ged.ejb.job.offer.JobCandidature;
 import ged.ejb.job.offer.JobCandidatureDao;
 import ged.ejb.job.offer.JobOffer;
@@ -57,12 +56,6 @@ public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> imp
 		}
 		logger.debug("Find candidate with id {} and his/her files", candidateId);
 		return this.candidateDao.findAllCandidateDataById(candidateId);
-	}
-
-	@Override
-	public List<Tag> findAllTags() {
-		logger.debug("Find all tags");
-		return this.candidateDao.findTags();
 	}
 
 	@Override

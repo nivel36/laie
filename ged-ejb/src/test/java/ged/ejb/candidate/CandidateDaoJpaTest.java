@@ -18,7 +18,6 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import ged.ejb.core.model.PersistenceFacade;
-import ged.ejb.core.tag.Tag;
 import ged.ejb.job.offer.JobOffer;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -67,14 +66,6 @@ public class CandidateDaoJpaTest {
 		final List<Candidate> candidatesFromRepository = this.candidateDaoJpa.findCandidatesByJobOffer(jobOffer);
 		Assert.assertEquals(1, candidatesFromRepository.size());
 		Assert.assertEquals("aaron.douglas@test.com", candidatesFromRepository.get(0).getEmail());
-	}
-
-	@Test
-	public void findAllTagsTest() {
-		when(this.persistenceFacade.findAll(Tag.class)).thenReturn(new ArrayList<Tag>());
-		final List<Tag> tagsFromRepository = this.candidateDaoJpa.findTags();
-		Assert.assertNotNull(tagsFromRepository);
-		Assert.assertEquals(0, tagsFromRepository.size());
 	}
 
 	@Test

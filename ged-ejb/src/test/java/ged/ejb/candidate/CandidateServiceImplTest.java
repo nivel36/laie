@@ -17,7 +17,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import ged.ejb.ServerFile;
 import ged.ejb.ServerFileDao;
-import ged.ejb.core.tag.Tag;
 import ged.ejb.job.offer.JobCandidatureDao;
 import ged.ejb.job.offer.JobOffer;
 
@@ -50,13 +49,6 @@ public class CandidateServiceImplTest {
 	public void findAllByNullJobOfferTest() {
 		this.thrown.expect(NullPointerException.class);
 		this.candidateServiceImpl.findCandidatesByJobOffer(null);
-	}
-
-	@Test
-	public void findAllTagsTest() {
-		Mockito.when(this.candidateDao.findTags()).thenReturn(new ArrayList<>());
-		final List<Tag> tagsFromRepository = this.candidateServiceImpl.findAllTags();
-		Assert.assertEquals(0, tagsFromRepository.size());
 	}
 
 	@Test
