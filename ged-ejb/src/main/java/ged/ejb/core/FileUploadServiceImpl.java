@@ -15,7 +15,7 @@ import java.util.UUID;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
-import ged.ejb.ServerFile;
+import ged.ejb.core.file.ServerFile;
 import ged.ejb.core.util.ConfigurationProperty;
 
 @Stateless

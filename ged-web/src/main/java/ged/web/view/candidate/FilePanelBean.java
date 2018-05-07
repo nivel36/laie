@@ -16,10 +16,10 @@ import org.omnifaces.util.Faces;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 
-import ged.ejb.ServerFile;
 import ged.ejb.candidate.Candidate;
 import ged.ejb.candidate.CandidateService;
 import ged.ejb.core.FileUploadService;
+import ged.ejb.core.file.ServerFile;
 import ged.web.core.util.Message;
 import ged.web.core.view.AbstractBean;
 
@@ -108,7 +108,7 @@ public class FilePanelBean extends AbstractBean {
 			final String uuid = this.fileUploadService.uploadFile(inputStream);
 			final String fileName = uploadedFile.getFileName();
 			final ServerFile file = this.buildServerFile(uuid, fileName);
-			this.candidateService.addFile(file);
+			this.candidateService.addFileToCandidate(this.candidate, file);
 			this.files.add(file);
 			this.addInfoMessage("file.message.upload", "file.message.upload", fileName);
 		}

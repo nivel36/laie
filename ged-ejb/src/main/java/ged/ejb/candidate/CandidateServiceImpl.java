@@ -11,11 +11,11 @@ import javax.validation.ValidationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ged.ejb.ServerFile;
-import ged.ejb.ServerFileDao;
 import ged.ejb.core.AbstratctAuditedService;
 import ged.ejb.core.Audited;
 import ged.ejb.core.action.Action.ActionType;
+import ged.ejb.core.file.ServerFile;
+import ged.ejb.core.file.ServerFileDao;
 import ged.ejb.core.model.Dao;
 import ged.ejb.core.model.Repository;
 import ged.ejb.job.offer.JobCandidature;
@@ -44,13 +44,15 @@ public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> imp
 	}
 
 	@Override
-	public void addFile(final ServerFile file) {
+	public void addFileToCandidate(final Candidate candidate, final ServerFile file) {
 		Objects.requireNonNull(file);
+		Objects.requireNonNull(candidate);
+		file.setCandidate(candidate);
 		this.serverFileDao.insert(file);
 	}
 
 	@Override
-	public Candidate findAllCandidateDataById(final long candidateId) {
+	public Candidate findAllCandidateDataByCandidateId(final long candidateId) {
 		if (candidateId < 1) {
 			throw new IllegalArgumentException("id: " + candidateId);
 		}

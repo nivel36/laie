@@ -2,16 +2,16 @@ package ged.ejb.candidate;
 
 import java.util.List;
 
-import ged.ejb.ServerFile;
 import ged.ejb.core.AuditedService;
+import ged.ejb.core.file.ServerFile;
 import ged.ejb.job.offer.JobCandidature;
 import ged.ejb.job.offer.JobOffer;
 
 public interface CandidateService extends AuditedService<Candidate> {
 
-	void addFile(ServerFile file);
+	void addFileToCandidate(Candidate candidate, ServerFile file);
 
-	Candidate findAllCandidateDataById(long candidateId);
+	Candidate findAllCandidateDataByCandidateId(long candidateId);
 
 	List<Candidate> findCandidatesByJobOffer(JobOffer jobOffer);
 

@@ -24,8 +24,8 @@ import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.IndexedEmbedded;
 
-import ged.ejb.ServerFile;
 import ged.ejb.core.Address;
+import ged.ejb.core.file.ServerFile;
 import ged.ejb.core.model.AbstractAuditedEntity;
 import ged.ejb.core.model.Ownerable;
 import ged.ejb.core.tag.Tag;

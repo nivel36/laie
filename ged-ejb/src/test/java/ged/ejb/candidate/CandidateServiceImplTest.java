@@ -15,8 +15,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import ged.ejb.ServerFile;
-import ged.ejb.ServerFileDao;
+import ged.ejb.core.file.ServerFile;
+import ged.ejb.core.file.ServerFileDao;
 import ged.ejb.job.offer.JobCandidatureDao;
 import ged.ejb.job.offer.JobOffer;
 
@@ -54,14 +54,14 @@ public class CandidateServiceImplTest {
 	@Test
 	public void findCandidateAndFilesByWrongIdTest() {
 		this.thrown.expect(IllegalArgumentException.class);
-		this.candidateServiceImpl.findAllCandidateDataById(0);
+		this.candidateServiceImpl.findAllCandidateDataByCandidateId(0);
 	}
 
 	@Test
 	public void findCandidateAndFilesTest() {
 		final Candidate mockedCandidate = Mockito.mock(Candidate.class);
 		Mockito.when(this.candidateDao.findAllCandidateDataById(1L)).thenReturn(mockedCandidate);
-		final Candidate candidateFromRepository = this.candidateServiceImpl.findAllCandidateDataById(1L);
+		final Candidate candidateFromRepository = this.candidateServiceImpl.findAllCandidateDataByCandidateId(1L);
 		Assert.assertNotNull(candidateFromRepository);
 	}
 
@@ -111,13 +111,13 @@ public class CandidateServiceImplTest {
 	@Test
 	public void insertFileNullTest() {
 		this.thrown.expect(NullPointerException.class);
-		this.candidateServiceImpl.addFile(null);
+		this.candidateServiceImpl.addFileToCandidate(null, null);
 	}
 
 	@Test
 	public void insertFileTest() {
 		final ServerFile mockedUploadedServerFile = Mockito.mock(ServerFile.class);
-		this.candidateServiceImpl.addFile(mockedUploadedServerFile);
+		this.candidateServiceImpl.addFileToCandidate(null, mockedUploadedServerFile);
 	}
 
 	@Test

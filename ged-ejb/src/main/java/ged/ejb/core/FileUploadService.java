@@ -3,7 +3,7 @@ package ged.ejb.core;
 import java.io.File;
 import java.io.InputStream;
 
-import ged.ejb.ServerFile;
+import ged.ejb.core.file.ServerFile;
 
 public interface FileUploadService {
 

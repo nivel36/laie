@@ -1,4 +1,4 @@
-package ged.ejb;
+package ged.ejb.core.file;
 
 import java.util.List;
 
