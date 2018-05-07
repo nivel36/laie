@@ -117,7 +117,8 @@ public class CandidateServiceImplTest {
 	@Test
 	public void insertFileTest() {
 		final ServerFile mockedUploadedServerFile = Mockito.mock(ServerFile.class);
-		this.candidateServiceImpl.addFileToCandidate(null, mockedUploadedServerFile);
+		final Candidate mockedCandidate = Mockito.mock(Candidate.class);
+		this.candidateServiceImpl.addFileToCandidate(mockedCandidate, mockedUploadedServerFile);
 	}
 
 	@Test
