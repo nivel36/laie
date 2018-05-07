@@ -3,6 +3,7 @@ package ged.ejb.job.offer;
 import java.util.List;
 
 import ged.ejb.candidate.Candidate;
+import ged.ejb.client.Client;
 import ged.ejb.core.AuditedService;
 import ged.ejb.job.meeting.JobMeeting;
 import ged.ejb.user.User;
@@ -17,9 +18,9 @@ public interface JobOfferService extends AuditedService<JobOffer> {
 
 	List<JobOffer> findAllJobOffersByOwner(User owner);
 
-	List<JobOffer> findJobOffersByCandidateId(long candidateId);
+	List<JobOffer> findJobOffersByCandidate(Candidate candidate);
 
-	List<JobOffer> findJobOffersByClientId(long clientId);
+	List<JobOffer> findJobOffersByClient(Client client);
 
 	List<JobOffer> findLastJobOffers(User owner);
 

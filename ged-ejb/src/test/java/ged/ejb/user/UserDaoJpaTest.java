@@ -34,20 +34,20 @@ public class UserDaoJpaTest {
 	@Test
 	public void emailExistNullValueTest() {
 		this.thrown.expect(NullPointerException.class);
-		this.userDaoJpa.emailExist(null);
+		this.userDaoJpa.isDuplicatedEmail(null);
 	}
 
 	@Test
 	public void emailExistTest() {
 		when(this.persistenceFacade.findByQuery(Boolean.class, "User.emailExists", map("email", "aaron@test.com"))).thenReturn(Boolean.TRUE);
-		final boolean result = this.userDaoJpa.emailExist("aaron@test.com");
+		final boolean result = this.userDaoJpa.isDuplicatedEmail("aaron@test.com");
 		Assert.assertTrue(result);
 	}
 
 	@Test
 	public void existMoreThanOneAdminTest() {
 		when(this.persistenceFacade.findByQuery(Boolean.class, "User.existsMoreThanOneAdmin", null)).thenReturn(Boolean.TRUE);
-		final boolean result = this.userDaoJpa.existMoreThanOneAdmin();
+		final boolean result = this.userDaoJpa.existsMoreThanOneAdmin();
 		Assert.assertTrue(result);
 	}
 

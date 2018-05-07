@@ -26,7 +26,7 @@
 			<div class="pull-right">
 				<p:commandButton id="openContactDialog" value="#{i18n['action.new']}" actionListener="#{contactDialogBean.openDialog}" process="@this" update="contactForm"
 					styleClass="btn-primary">
-					<f:attribute name="client" value="#{contactPanelBean.clientId}" />
+					<f:attribute name="client" value="#{contactPanelBean.client}" />
 				</p:commandButton>
 			</div>
 		</p:panel>

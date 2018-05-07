@@ -32,7 +32,7 @@
 			<div class="pull-right">
 				<p:commandButton value="#{i18n['action.new']}" actionListener="#{jobOfferDialogBean.openDialog}" process="@this" update="newJobOfferForm"
 					styleClass="btn-primary" rendered="#{jobOfferPanelBean.newJobOfferVisible}">
-					<f:attribute name="client_id" value="#{jobOfferPanelBean.clientId}" />
+					<f:attribute name="client" value="#{jobOfferPanelBean.client}" />
 				</p:commandButton>
 				<p:commandButton value="#{i18n['action.add']}" actionListener="#{jobOfferSearchDialogBean.openDialog}" process="@this" update="jobOfferSearchDialogForm"
 					styleClass="btn-primary" rendered="#{jobOfferPanelBean.addJobOfferVisible}">

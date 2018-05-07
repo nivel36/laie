@@ -14,7 +14,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ged.ejb.client.Client;
-import ged.ejb.client.ClientService;
 import ged.ejb.client.Contact;
 import ged.ejb.client.ContactService;
 import ged.web.core.view.AbstractDialogBean;
@@ -27,21 +26,15 @@ public class ContactDialogBean extends AbstractDialogBean {
 
 	private static final long serialVersionUID = 8611792798437280352L;
 
-	@Inject
-	private transient ClientService clientService;
-
 	private Contact contact;
 
 	@Inject
 	private transient ContactService contactService;
 
 	private Contact buildContact() {
-		final Long clientId = this.getAttribute("client");
-		if (clientId == null) {
-			throw new IllegalStateException("Null clientId");
-		}
-		final Client client = this.clientService.find(clientId);
+		final Client client = this.getAttribute("client");
 		if (client == null) {
+			logger.error("Null client");
 			throw new IllegalStateException("Null client");
 		}
 		final Contact newContact = new Contact();

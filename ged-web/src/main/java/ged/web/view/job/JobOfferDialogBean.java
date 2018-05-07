@@ -15,9 +15,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ged.ejb.client.Client;
-import ged.ejb.client.ClientService;
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
+import ged.ejb.user.User;
 import ged.web.core.CloseDialogListener;
 import ged.web.core.GedPermissionException;
 import ged.web.core.view.AbstractDialogBean;
@@ -32,9 +32,6 @@ public class JobOfferDialogBean extends AbstractDialogBean implements CloseDialo
 
 	private Client client;
 
-	@Inject
-	private transient ClientService clientService;
-
 	private JobOffer jobOffer;
 
 	@Inject
@@ -42,8 +39,10 @@ public class JobOfferDialogBean extends AbstractDialogBean implements CloseDialo
 
 	private JobOffer buildNewJobOffer() {
 		final JobOffer newJobOffer = new JobOffer();
-		newJobOffer.setClient(this.getClientFromAttributes());
-		newJobOffer.setOwner(this.sessionBean.getUser());
+		final Client client = this.getClientFromAttributes();
+		newJobOffer.setClient(client);
+		final User user = this.sessionBean.getUser();
+		newJobOffer.setOwner(user);
 		return newJobOffer;
 	}
 
@@ -62,14 +61,10 @@ public class JobOfferDialogBean extends AbstractDialogBean implements CloseDialo
 	}
 
 	private Client getClientFromAttributes() {
-		final Long clientId = this.getAttribute("client_id");
-		if (clientId == null) {
-			return null;
-		}
-		final Client clientFromAttributes = this.clientService.find(clientId);
+		final Client clientFromAttributes = this.getAttribute("client");
 		if (clientFromAttributes == null) {
-			logger.error("client with id {} not found", clientId);
-			throw new IllegalStateException();
+			logger.error("Null client", this.client);
+			throw new IllegalStateException("Null client");
 		}
 		return clientFromAttributes;
 	}

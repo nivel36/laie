@@ -28,21 +28,19 @@ public class RoleDaoJpa extends AbstractDaoJpa<Role> implements RoleDao {
 	@Override
 	public Role findRoleByName(final String roleName) {
 		Objects.requireNonNull(roleName);
-		Role role;
-		role = this.findByQuery(Role.class, "Role.findRoleByName", map("name", roleName));
-		return role;
+		return this.findByQuery(Role.class, "Role.findRoleByName", map("name", roleName));
 	}
 
 	@Override
 	public List<Role> findSubordinateRoles(final Role role) {
-		List<Role> roles;
 		try {
-			roles = this.findByQuery(Role.class, "Role.findSubordinateRoles", map("id", role.getId()), 0, 0);
-		} catch (final NoResultException e) {
-			roles = new ArrayList<>();
-			logger.warn("No subordinate roles for role {}", role.getName());
+			Objects.requireNonNull(role);
+			return this.findByQuery(Role.class, "Role.findSubordinateRoles", map("antecessor", role), 0, 0);
 		}
-		return roles;
+		catch (final NoResultException e) {
+			logger.debug("No subordinate roles for role {}", role.getName(), e);
+			return new ArrayList<>();
+		}
 	}
 
 	@Override

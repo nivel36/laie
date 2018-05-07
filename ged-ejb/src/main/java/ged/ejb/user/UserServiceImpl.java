@@ -27,12 +27,13 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
 	public UserServiceImpl(@Repository final UserDao userDao) {
 		Objects.requireNonNull(userDao);
 		this.userDao = userDao;
+		logger.trace("UserServiceImpl initiated");
 	}
 
 	@Override
 	public boolean emailExists(final String email) {
 		Objects.requireNonNull(email);
-		final boolean emailExists = this.userDao.emailExist(email);
+		final boolean emailExists = this.userDao.isDuplicatedEmail(email);
 		if (emailExists) {
 			logger.debug("The email {} exists on database", email);
 		}
@@ -113,7 +114,7 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
 
 	private boolean isLastAdminOnApp(final User user) {
 		final User userInDataBase = this.find(user.getId());
-		return userInDataBase.isAdmin() && !user.isAdmin() && !this.userDao.existMoreThanOneAdmin();
+		return userInDataBase.isAdmin() && !user.isAdmin() && !this.userDao.existsMoreThanOneAdmin();
 	}
 
 	@Override

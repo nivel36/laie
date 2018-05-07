@@ -198,11 +198,11 @@
 	</named-query>
 	
 
-	<named-query name="JobOffer.findByClientId">
+	<named-query name="JobOffer.findByClient">
 		<query><![CDATA[
 			SELECT j 
 			FROM JobOffer j 
-			WHERE j.client.id = :clientId
+			WHERE j.client = :client
 		]]></query>
 	</named-query>
 
@@ -253,7 +253,7 @@
 			SELECT r 
 			FROM RoleClosure rc 
 			JOIN rc.descendant r 
-			WHERE rc.antecessor.id = :id
+			WHERE rc.antecessor = :antecessor
 		]]></query>
 	</named-query>
 	

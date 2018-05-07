@@ -26,6 +26,7 @@ public final class UserDaoJpa extends AbstractDaoJpa<User> implements UserDao {
 		Objects.requireNonNull(start);
 		Objects.requireNonNull(end);
 		if (start.compareTo(end) > 0) {
+			logger.error("Start date {} after end date {}", start, end);
 			throw new IllegalStateException("start after end");
 		}
 	}
@@ -39,13 +40,7 @@ public final class UserDaoJpa extends AbstractDaoJpa<User> implements UserDao {
 	}
 
 	@Override
-	public boolean emailExist(final String email) {
-		Objects.requireNonNull(email);
-		return this.findByQuery(Boolean.class, "User.emailExists", map("email", email));
-	}
-
-	@Override
-	public boolean existMoreThanOneAdmin() {
+	public boolean existsMoreThanOneAdmin() {
 		return this.findByQuery(Boolean.class, "User.existsMoreThanOneAdmin");
 	}
 
@@ -61,22 +56,24 @@ public final class UserDaoJpa extends AbstractDaoJpa<User> implements UserDao {
 
 	@Override
 	public List<User> findSubordinateUsers(final User user) {
-		Objects.requireNonNull(user);
 		try {
+			Objects.requireNonNull(user);
 			return this.findByQuery(User.class, "User.findSubordinateUsers", map("id", user.getId()), 0, 0);
 		}
 		catch (final NoResultException e) {
+			logger.debug("No subordinate users found", e);
 			return new ArrayList<>();
 		}
 	}
 
 	@Override
 	public User findUserByEmail(final String email) {
-		Objects.requireNonNull(email);
 		try {
+			Objects.requireNonNull(email);
 			return this.findByQuery(User.class, "User.findByEmail", map("email", email));
 		}
 		catch (final NoResultException e) {
+			logger.debug("No users with email {} found", email, e);
 			return null;
 		}
 	}
@@ -133,6 +130,11 @@ public final class UserDaoJpa extends AbstractDaoJpa<User> implements UserDao {
 		return (userInDatabase.getManager() != null) && (user.getManager() != null) && !user.getManager().equals(userInDatabase.getManager());
 	}
 
+	@Override
+	public boolean isDuplicatedEmail(final String email) {
+		return this.findByQuery(Boolean.class, "User.emailExists", map("email", email));
+	}
+
 	private boolean isRemovingManager(final User user, final User userInDatabase) {
 		return (userInDatabase.getManager() != null) && (user.getManager() == null);
 	}
@@ -169,6 +171,7 @@ public final class UserDaoJpa extends AbstractDaoJpa<User> implements UserDao {
 		Objects.requireNonNull(user);
 		final User userInDatabase = this.find(user.getId());
 		if (userInDatabase == null) {
+			logger.error("User don't exists");
 			throw new IllegalStateException();
 		}
 		if (this.isAddingManager(user, userInDatabase)) {

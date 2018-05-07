@@ -36,6 +36,7 @@ public class RoleServiceImpl implements RoleService {
 	@Override
 	public Role findRoleByName(final String roleName) {
 		Objects.requireNonNull(roleName);
+		logger.debug("Find role by name {}", roleName);
 		return this.roleDao.findRoleByName(roleName);
 	}
 
@@ -47,7 +48,9 @@ public class RoleServiceImpl implements RoleService {
 
 	@Override
 	public boolean isASubordinateRole(final Role manager, final Role role) {
-		final List<Role> subordinateRoles = findSubordinateRoles(manager);
+		Objects.requireNonNull(manager);
+		Objects.requireNonNull(role);
+		final List<Role> subordinateRoles = this.findSubordinateRoles(manager);
 		for (final Role subordinateRole : subordinateRoles) {
 			if (subordinateRole.equals(role)) {
 				logger.debug("Role {} is a subordinate role of {}", role.getName(), manager.getName());

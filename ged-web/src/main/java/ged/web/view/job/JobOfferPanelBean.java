@@ -9,6 +9,8 @@ import javax.inject.Named;
 
 import ged.ejb.candidate.Candidate;
 import ged.ejb.candidate.CandidateService;
+import ged.ejb.client.Client;
+import ged.ejb.client.ClientService;
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
 import ged.ejb.user.User;
@@ -21,12 +23,15 @@ public class JobOfferPanelBean extends AbstractBean implements CloseDialogListen
 
 	private static final long serialVersionUID = -8972909678807698224L;
 
-	private Long candidateId;
+	private Candidate candidate;
 
 	@Inject
 	private transient CandidateService candidateService;
 
-	private Long clientId;
+	private Client client;
+
+	@Inject
+	private transient ClientService clientService;
 
 	private List<JobOffer> jobOffers;
 
@@ -34,13 +39,15 @@ public class JobOfferPanelBean extends AbstractBean implements CloseDialogListen
 	private transient JobOfferService jobOfferService;
 
 	private void findJobOffersByCandidate(final String candidateIdValue) {
-		this.candidateId = Long.parseLong(candidateIdValue);
-		this.jobOffers = this.jobOfferService.findJobOffersByCandidateId(this.candidateId);
+		final Long candidateId = Long.parseLong(candidateIdValue);
+		this.candidate = this.candidateService.find(candidateId);
+		this.jobOffers = this.jobOfferService.findJobOffersByCandidate(this.candidate);
 	}
 
 	private void findJobOffersByClient(final String clientIdValue) {
-		this.clientId = Long.parseLong(clientIdValue);
-		this.jobOffers = this.jobOfferService.findJobOffersByClientId(this.clientId);
+		final Long clientId = Long.parseLong(clientIdValue);
+		this.client = this.clientService.find(clientId);
+		this.jobOffers = this.jobOfferService.findJobOffersByClient(this.client);
 	}
 
 	private void findJobOffersByOwner() {
@@ -48,12 +55,8 @@ public class JobOfferPanelBean extends AbstractBean implements CloseDialogListen
 		this.jobOffers = this.jobOfferService.findAllJobOffersByOwner(owner);
 	}
 
-	public Long getCandidateId() {
-		return this.candidateId;
-	}
-
-	public Long getClientId() {
-		return this.clientId;
+	public Client getClient() {
+		return this.client;
 	}
 
 	public List<JobOffer> getJobOffers() {
@@ -76,20 +79,19 @@ public class JobOfferPanelBean extends AbstractBean implements CloseDialogListen
 	}
 
 	public boolean isAddJobOfferVisible() {
-		return this.candidateId != null;
+		return this.candidate != null;
 	}
 
 	public boolean isNewJobOfferVisible() {
-		return this.candidateId == null;
+		return this.candidate == null;
 	}
 
 	@Override
 	public void onCloseDialog(final Object value) {
 		@SuppressWarnings("unchecked")
 		final List<JobOffer> selectedJobOffers = (List<JobOffer>) value;
-		final Candidate candidate = this.candidateService.find(this.candidateId);
 		for (final JobOffer jobOffer : selectedJobOffers) {
-			this.jobOfferService.addJobCandidature(jobOffer, candidate);
+			this.jobOfferService.addJobCandidature(jobOffer, this.candidate);
 		}
 	}
 

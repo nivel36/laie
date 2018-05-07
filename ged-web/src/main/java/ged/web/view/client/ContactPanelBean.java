@@ -11,6 +11,8 @@ import javax.inject.Named;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import ged.ejb.client.Client;
+import ged.ejb.client.ClientService;
 import ged.ejb.client.Contact;
 import ged.ejb.client.ContactService;
 import ged.web.core.PageNotFoundException;
@@ -24,15 +26,18 @@ public class ContactPanelBean extends AbstractBean {
 
 	private static final long serialVersionUID = -2270817798985551387L;
 
-	private Long clientId;
+	private Client client;
+
+	@Inject
+	private transient ClientService clientService;
 
 	private List<Contact> contacts;
 
 	@Inject
 	private transient ContactService contactService;
 
-	public Long getClientId() {
-		return this.clientId;
+	public Client getClient() {
+		return this.client;
 	}
 
 	public List<Contact> getContacts() {
@@ -47,8 +52,9 @@ public class ContactPanelBean extends AbstractBean {
 			logger.error("ClientId is null");
 			throw new PageNotFoundException();
 		}
-		this.clientId = Long.parseLong(clientIdValue);
-		this.contacts = this.contactService.findContactsByClientId(this.clientId);
+		final Long clientId = Long.parseLong(clientIdValue);
+		this.client = this.clientService.find(clientId);
+		this.contacts = this.contactService.findContactsByClient(this.client);
 	}
 
 	public void setContacts(final List<Contact> contacts) {
