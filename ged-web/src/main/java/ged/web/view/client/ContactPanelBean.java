@@ -48,7 +48,7 @@ public class ContactPanelBean extends AbstractBean {
 			throw new PageNotFoundException();
 		}
 		this.clientId = Long.parseLong(clientIdValue);
-		this.contacts = this.contactService.findByClientId(this.clientId);
+		this.contacts = this.contactService.findContactsByClientId(this.clientId);
 	}
 
 	public void setContacts(final List<Contact> contacts) {

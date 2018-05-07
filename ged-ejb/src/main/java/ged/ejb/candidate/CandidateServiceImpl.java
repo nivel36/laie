@@ -41,12 +41,14 @@ public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> imp
 		this.candidateDao = candidateDao;
 		this.serverFileDao = uploadedServerFileDao;
 		this.jobCandidatureDao = jobCandidatureDao;
+		logger.trace("CandidateServiceImpl initiated");
 	}
 
 	@Override
 	public void addFileToCandidate(final Candidate candidate, final ServerFile file) {
 		Objects.requireNonNull(file);
 		Objects.requireNonNull(candidate);
+		logger.debug("Adding file {} to candidate  {}", file, candidate);
 		file.setCandidate(candidate);
 		this.serverFileDao.insert(file);
 	}
@@ -54,9 +56,10 @@ public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> imp
 	@Override
 	public Candidate findAllCandidateDataByCandidateId(final long candidateId) {
 		if (candidateId < 1) {
-			throw new IllegalArgumentException("id: " + candidateId);
+			logger.error("Bad candidate id {}", candidateId);
+			throw new IllegalArgumentException("Bad candidate id: " + candidateId);
 		}
-		logger.debug("Find candidate with id {} and his/her files", candidateId);
+		logger.debug("Find all candidate data with id {}", candidateId);
 		return this.candidateDao.findAllCandidateDataById(candidateId);
 	}
 
@@ -68,27 +71,27 @@ public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> imp
 	}
 
 	@Override
-	public ServerFile findFile(final long id) {
-		if (id < 1) {
-			throw new IllegalArgumentException("id: " + id);
+	public ServerFile findFileByFileId(final long fileId) {
+		if (fileId < 1) {
+			logger.error("Bad file id {}", fileId);
+			throw new IllegalArgumentException("Bad file id: " + fileId);
 		}
-		return this.serverFileDao.find(id);
+		logger.debug("Find file by id {}", fileId);
+		return this.serverFileDao.find(fileId);
 	}
 
 	@Override
-	public List<ServerFile> findFilesByCandidateId(final long candidateId) {
-		if (candidateId < 1) {
-			throw new IllegalArgumentException("candidateId: " + candidateId);
-		}
-		return this.serverFileDao.findByCandidateId(candidateId);
+	public List<ServerFile> findFilesByCandidate(final Candidate candidate) {
+		Objects.requireNonNull(candidate);
+		logger.debug("Find files by candidate {}", candidate);
+		return this.serverFileDao.findByCandidate(candidate);
 	}
 
 	@Override
-	public List<JobCandidature> findJobCandidaturesByCandidateId(final long candidateId) {
-		if (candidateId < 1) {
-			throw new IllegalArgumentException();
-		}
-		return this.jobCandidatureDao.findByCandidateId(candidateId);
+	public List<JobCandidature> findJobCandidaturesByCandidate(final Candidate candidate) {
+		Objects.requireNonNull(candidate);
+		logger.debug("Find job candidatures by candidate {}", candidate);
+		return this.jobCandidatureDao.findByCandidate(candidate);
 	}
 
 	@Override
@@ -96,11 +99,13 @@ public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> imp
 		if (numberOfCandidates < 1) {
 			throw new IllegalArgumentException("numberOfCandidates: " + numberOfCandidates);
 		}
+		logger.debug("Find last added candidates");
 		return this.candidateDao.findLastAddedCandidates(numberOfCandidates);
 	}
 
 	@Override
 	public long findNumberOfCandidates() {
+		logger.debug("Find total number of candidates");
 		return this.candidateDao.findNumberOfCandidates();
 	}
 
@@ -113,7 +118,9 @@ public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> imp
 	@Audited(action = ActionType.INSERT)
 	public void insert(final Candidate candidate) {
 		Objects.requireNonNull(candidate);
+		logger.debug("Insert candidate {}", candidate);
 		if (this.candidateDao.emailExists(candidate.getEmail())) {
+			logger.warn("The email {} is in use", candidate.getEmail());
 			throw new ValidationException("email");
 		}
 		this.candidateDao.insert(candidate);
@@ -125,6 +132,8 @@ public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> imp
 
 	@Override
 	public void removeFile(final ServerFile file) {
+		Objects.requireNonNull(file);
+		logger.debug("Removing file {}", file);
 		this.serverFileDao.delete(file);
 	}
 
@@ -132,8 +141,10 @@ public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> imp
 	@Audited(action = ActionType.UPDATE)
 	public Candidate update(final Candidate candidate) {
 		Objects.requireNonNull(candidate);
+		logger.debug("Update candidate {}", candidate);
 		final Candidate candidateInRepository = this.candidateDao.find(candidate.getId());
 		if (this.isDuplicatedEmail(candidate, candidateInRepository)) {
+			logger.warn("The email {} is in use", candidate.getEmail());
 			throw new ValidationException("Email duplicated");
 		}
 		return this.candidateDao.update(candidate);
@@ -142,6 +153,7 @@ public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> imp
 	@Override
 	public ServerFile updateFile(final ServerFile file) {
 		Objects.requireNonNull(file);
+		logger.debug("Update file {}", file);
 		return this.serverFileDao.update(file);
 	}
 }

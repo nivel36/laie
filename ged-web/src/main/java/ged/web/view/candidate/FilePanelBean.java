@@ -75,7 +75,7 @@ public class FilePanelBean extends AbstractBean {
 		final String candidateIdValue = this.getValueFromGetParameters("candidateId");
 		final Long candidateId = Long.parseLong(candidateIdValue);
 		this.candidate = this.candidateService.find(candidateId);
-		this.files = this.candidateService.findFilesByCandidateId(candidateId);
+		this.files = this.candidateService.findFilesByCandidate(this.candidate);
 		this.checkLopdFile();
 	}
 

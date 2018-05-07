@@ -27,15 +27,14 @@ public class ClientDaoJpa extends AbstractDaoJpa<Client> implements ClientDao {
 
 	@Override
 	public Client findByName(final String clientName) {
-		Objects.requireNonNull(clientName);
-		Client client;
 		try {
-			client = this.findByQuery(Client.class, "Client.findByName", map("name", clientName));
-		} catch (final NoResultException e) {
-			logger.debug("No client found", e);
-			client = null;
+			Objects.requireNonNull(clientName);
+			return this.findByQuery(Client.class, "Client.findByName", map("name", clientName));
 		}
-		return client;
+		catch (final NoResultException e) {
+			logger.debug("No client found", e);
+			return null;
+		}
 	}
 
 	@Override
@@ -45,6 +44,6 @@ public class ClientDaoJpa extends AbstractDaoJpa<Client> implements ClientDao {
 
 	@Override
 	public List<Client> search(final String searchText) {
-		return getPersistenceFacade().search(Client.class, searchText, "name");
+		return this.getPersistenceFacade().search(Client.class, searchText, "name");
 	}
 }

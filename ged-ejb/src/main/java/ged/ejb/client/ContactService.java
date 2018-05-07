@@ -6,6 +6,6 @@ import ged.ejb.core.AuditedService;
 
 public interface ContactService extends AuditedService<Contact> {
 
-	List<Contact> findByClientId(long clientId);
+	List<Contact> findContactsByClientId(long clientId);
 
 }

@@ -6,6 +6,6 @@ import ged.ejb.core.model.Dao;
 
 public interface ContactDao extends Dao<Contact> {
 
-	List<Contact> findByClientId(long clientId);
+	List<Contact> findContactsByClientId(long clientId);
 
 }

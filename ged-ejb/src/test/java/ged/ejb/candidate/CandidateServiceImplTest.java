@@ -68,14 +68,14 @@ public class CandidateServiceImplTest {
 	@Test
 	public void findFileByWrongIdTest() {
 		this.thrown.expect(IllegalArgumentException.class);
-		this.candidateServiceImpl.findFile(0);
+		this.candidateServiceImpl.findFileByFileId(0);
 	}
 
 	@Test
 	public void findFileTest() {
 		final ServerFile mockedUploadedServerFile = Mockito.mock(ServerFile.class);
 		Mockito.when(this.uploadedServerFileDao.find(1L)).thenReturn(mockedUploadedServerFile);
-		final ServerFile uploadedServerFileFromRepository = this.candidateServiceImpl.findFile(1L);
+		final ServerFile uploadedServerFileFromRepository = this.candidateServiceImpl.findFileByFileId(1L);
 		Assert.assertEquals(mockedUploadedServerFile, uploadedServerFileFromRepository);
 	}
 

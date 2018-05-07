@@ -188,12 +188,12 @@
 		]]></query>
 	</named-query>
 	
-	<named-query name="JobOffer.findByCandidateId">
+	<named-query name="JobOffer.findByCandidate">
 		<query><![CDATA[
 			SELECT j
 			FROM JobOffer j
 			INNER JOIN j.jobCandidatures jc 
-			WHERE jc.candidate.id = :candidateId
+			WHERE jc.candidate = :candidate
 		]]></query>
 	</named-query>
 	
@@ -257,11 +257,11 @@
 		]]></query>
 	</named-query>
 	
-	<named-query name="ServerFile.findByCandidateId">
+	<named-query name="ServerFile.findByCandidate">
 		<query><![CDATA[
 			SELECT s 
 			FROM ServerFile s 
-			WHERE s.candidate.id = :candidateId
+			WHERE s.candidate = :candidate
 		]]></query>
 	</named-query>
 

@@ -3,7 +3,9 @@ package ged.ejb.job.offer;
 import static ged.ejb.core.util.Parameters.map;
 
 import java.util.List;
+import java.util.Objects;
 
+import ged.ejb.candidate.Candidate;
 import ged.ejb.core.model.AbstractDaoJpa;
 import ged.ejb.core.model.Repository;
 
@@ -11,11 +13,9 @@ import ged.ejb.core.model.Repository;
 public class JobCandidatureDaoJpa extends AbstractDaoJpa<JobCandidature> implements JobCandidatureDao {
 
 	@Override
-	public List<JobCandidature> findByCandidateId(final long candidateId) {
-		if (candidateId < 1) {
-			throw new IllegalArgumentException();
-		}
-		return this.findByQuery(JobCandidature.class, "JobCandidature.findByCandidateId", map("candidateId", candidateId), 0, 0);
+	public List<JobCandidature> findByCandidate(final Candidate candidate) {
+		Objects.requireNonNull(candidate);
+		return this.findByQuery(JobCandidature.class, "JobCandidature.findByCandidate", map("candidate", candidate), 0, 0);
 	}
 
 	@Override

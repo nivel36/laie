@@ -45,7 +45,7 @@ public class JobOfferEditBean extends AbstractBean {
 	public void clientChangedListener() {
 		final String clientName = this.jobOffer.getClient().getName();
 		logger.trace("CLIENT name changed to {}", clientName);
-		this.newClient = !this.clientService.clientExist(clientName);
+		this.newClient = !this.clientService.clientExists(clientName);
 	}
 
 	public JobOffer getJobOffer() {
