@@ -6,6 +6,6 @@ public interface ClientDao extends Dao<Client> {
 
 	boolean clientExists(final String clientName);
 
-	Client findByName(final String clientName);
+	Client findClientByName(final String clientName);
 
 }

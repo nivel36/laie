@@ -117,11 +117,11 @@
 		]]></query>
 	</named-query>
 	
-	<named-query name="Contact.findByClientId">
+	<named-query name="Contact.findByClient">
 		<query><![CDATA[
 			SELECT c 
 			FROM Contact c 
-			WHERE c.client.id = :clientId
+			WHERE c.client = :client
 		]]></query>
 	</named-query>
 

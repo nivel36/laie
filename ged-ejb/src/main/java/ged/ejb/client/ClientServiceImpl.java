@@ -22,7 +22,9 @@ public class ClientServiceImpl extends AbstratctAuditedService<Client> implement
 
 	@Inject
 	public ClientServiceImpl(@Repository final ClientDao clientDao) {
+		Objects.requireNonNull(clientDao);
 		this.clientDao = clientDao;
+		logger.trace("ClientServiceImpl initiated");
 	}
 
 	@Override
@@ -33,10 +35,10 @@ public class ClientServiceImpl extends AbstratctAuditedService<Client> implement
 	}
 
 	@Override
-	public Client findByName(final String clientName) {
+	public Client findClientByName(final String clientName) {
 		Objects.requireNonNull(clientName);
 		ClientServiceImpl.logger.debug("Find client with name {}", clientName);
-		return this.clientDao.findByName(clientName);
+		return this.clientDao.findClientByName(clientName);
 	}
 
 	@Override

@@ -6,5 +6,5 @@ public interface ClientService extends AuditedService<Client> {
 
 	boolean clientExists(final String clientName);
 
-	Client findByName(final String clientName);
+	Client findClientByName(final String clientName);
 }

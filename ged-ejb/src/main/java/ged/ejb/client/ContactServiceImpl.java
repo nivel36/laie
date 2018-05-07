@@ -25,15 +25,14 @@ public class ContactServiceImpl extends AbstratctAuditedService<Contact> impleme
 	public ContactServiceImpl(@Repository final ContactDao contactDao) {
 		Objects.requireNonNull(contactDao);
 		this.contactDao = contactDao;
+		logger.trace("ContactServiceImpl initiated");
 	}
 
 	@Override
-	public List<Contact> findContactsByClientId(final long clientId) {
-		if (clientId < 1) {
-			logger.error("Bad client id {}", clientId);
-			throw new IllegalArgumentException("Bad client id " + clientId);
-		}
-		return this.contactDao.findContactsByClientId(clientId);
+	public List<Contact> findContactsByClient(final Client client) {
+		Objects.requireNonNull(client);
+		logger.debug("Find contacts by client {}", client);
+		return this.contactDao.findContactsByClient(client);
 	}
 
 	@Override

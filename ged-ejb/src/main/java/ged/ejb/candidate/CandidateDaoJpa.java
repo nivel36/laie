@@ -43,6 +43,7 @@ public class CandidateDaoJpa extends AbstractDaoJpa<Candidate> implements Candid
 			return this.findByQuery(Candidate.class, "Candidate.findByJobOffer", map("jobOffer", jobOffer), 0, 0);
 		}
 		catch (final NoResultException e) {
+			logger.debug("No candidates found", e);
 			return new ArrayList<>();
 		}
 	}
