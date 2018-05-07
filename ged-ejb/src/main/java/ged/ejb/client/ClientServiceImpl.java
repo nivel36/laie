@@ -29,7 +29,7 @@ public class ClientServiceImpl extends AbstratctAuditedService<Client> implement
 	public boolean clientExist(final String clientName) {
 		Objects.requireNonNull(clientName);
 		logger.debug("Look for client {} in database", clientName);
-		return this.clientDao.clientExist(clientName);
+		return this.clientDao.clientExists(clientName);
 	}
 
 	@Override

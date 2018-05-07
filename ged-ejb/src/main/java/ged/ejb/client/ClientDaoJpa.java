@@ -20,7 +20,7 @@ public class ClientDaoJpa extends AbstractDaoJpa<Client> implements ClientDao {
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	@Override
-	public boolean clientExist(final String clientName) {
+	public boolean clientExists(final String clientName) {
 		Objects.requireNonNull(clientName);
 		return (boolean) this.findByQuery("Client.clientExist", map("name", clientName));
 	}
