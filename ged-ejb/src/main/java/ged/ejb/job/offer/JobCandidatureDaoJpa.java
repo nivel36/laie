@@ -19,23 +19,16 @@ public class JobCandidatureDaoJpa extends AbstractDaoJpa<JobCandidature> impleme
 	}
 
 	@Override
-	public List<JobCandidature> findByJobOfferId(final long jobOfferId) {
-		if (jobOfferId < 1) {
-			throw new IllegalArgumentException();
-		}
-		return this.findByQuery(JobCandidature.class, "JobCandidature.findByJobOfferId", map("jobOfferId", jobOfferId), 0, 0);
+	public List<JobCandidature> findByJobOffer(final JobOffer jobOffer) {
+		Objects.requireNonNull(jobOffer);
+		return this.findByQuery(JobCandidature.class, "JobCandidature.findByJobOffer", map("jobOffer", jobOffer), 0, 0);
 	}
 
 	@Override
-	public JobCandidature findByJobOfferIdAndCandidateId(final long jobOfferId, final long candidateId) {
-		if (candidateId < 1) {
-			throw new IllegalArgumentException();
-		}
-		if (jobOfferId < 1) {
-			throw new IllegalArgumentException();
-		}
-		return this.findByQuery(JobCandidature.class, "JobCandidature.findByJobOfferIdAndCandidateId",
-				map("jobOfferId", jobOfferId).and("candidateId", candidateId));
+	public JobCandidature findByJobOfferAndCandidate(final JobOffer jobOffer, final Candidate candidate) {
+		Objects.requireNonNull(jobOffer);
+		Objects.requireNonNull(candidate);
+		return this.findByQuery(JobCandidature.class, "JobCandidature.findByJobOfferAndCandidate", map("jobOffer", jobOffer).and("candidate", candidate));
 	}
 
 	@Override

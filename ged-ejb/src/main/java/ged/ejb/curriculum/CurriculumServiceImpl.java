@@ -3,12 +3,14 @@ package ged.ejb.curriculum;
 import java.lang.invoke.MethodHandles;
 import java.util.List;
 import java.util.Objects;
-import org.slf4j.LoggerFactory;
-import org.slf4j.Logger;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import ged.ejb.candidate.Candidate;
 import ged.ejb.core.AbstractService;
 import ged.ejb.core.model.Dao;
 import ged.ejb.core.model.Repository;
@@ -39,13 +41,10 @@ public class CurriculumServiceImpl extends AbstractService<Curriculum> implement
 	}
 
 	@Override
-	public Curriculum findByCandidateId(final long id) {
-		Objects.requireNonNull(id);
-		if (id < 1) {
-			throw new IllegalArgumentException("id: " + id);
-		}
-		logger.debug("Find curriculum by candidate id {}", id);
-		return this.curriculumDao.findByCandidateId(id);
+	public Curriculum findByCandidate(final Candidate candidate) {
+		Objects.requireNonNull(candidate);
+		logger.debug("Find curriculum by candidate  {}", candidate);
+		return this.curriculumDao.findByCandidate(candidate);
 	}
 
 	@Override

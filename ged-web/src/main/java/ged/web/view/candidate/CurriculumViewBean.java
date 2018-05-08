@@ -11,6 +11,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import ged.ejb.candidate.Candidate;
+import ged.ejb.candidate.CandidateService;
 import ged.ejb.curriculum.Curriculum;
 import ged.ejb.curriculum.CurriculumService;
 import ged.ejb.curriculum.Education;
@@ -27,6 +28,9 @@ public class CurriculumViewBean extends AbstractBean {
 	private static final long serialVersionUID = -5942086439519787220L;
 
 	private Candidate candidate;
+
+	@Inject
+	private transient CandidateService candidateService;
 
 	private Curriculum curriculum;
 
@@ -80,11 +84,14 @@ public class CurriculumViewBean extends AbstractBean {
 		if (this.id != null) {
 			try {
 				final long candidateId = Long.parseLong(this.id);
-				this.curriculum = this.curriculumService.findByCandidateId(candidateId);
+				this.candidate = this.candidateService.find(candidateId);
+				if (this.candidate == null) {
+					throw new PageNotFoundException();
+				}
+				this.curriculum = this.curriculumService.findByCandidate(this.candidate);
 				if (this.curriculum == null) {
 					throw new PageNotFoundException();
 				}
-				this.candidate = this.curriculum.getCandidate();
 				this.jobExperiences = new ArrayList<>(this.curriculum.getJobExperiences());
 				this.skills = new ArrayList<>(this.curriculum.getSkills());
 				this.education = new ArrayList<>(this.curriculum.getEducation());

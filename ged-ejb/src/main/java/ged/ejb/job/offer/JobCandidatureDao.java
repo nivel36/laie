@@ -9,7 +9,7 @@ public interface JobCandidatureDao extends Dao<JobCandidature> {
 
 	List<JobCandidature> findByCandidate(Candidate candidate);
 
-	List<JobCandidature> findByJobOfferId(long jobOfferId);
+	List<JobCandidature> findByJobOffer(JobOffer jobOffer);
 
-	JobCandidature findByJobOfferIdAndCandidateId(long jobOfferId, long candidateId);
+	JobCandidature findByJobOfferAndCandidate(JobOffer jobOffer, Candidate candidate);
 }

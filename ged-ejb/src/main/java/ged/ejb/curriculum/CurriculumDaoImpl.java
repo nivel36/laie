@@ -1,9 +1,10 @@
 package ged.ejb.curriculum;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import static ged.ejb.core.util.Parameters.map;
 
+import java.util.List;
+
+import ged.ejb.candidate.Candidate;
 import ged.ejb.core.model.AbstractDaoJpa;
 import ged.ejb.core.model.Repository;
 
@@ -21,10 +22,8 @@ public class CurriculumDaoImpl extends AbstractDaoJpa<Curriculum> implements Cur
 	}
 
 	@Override
-	public Curriculum findByCandidateId(final long candidateId) {
-		final Map<String, Object> parameters = new HashMap<>();
-		parameters.put("candidateId", candidateId);
-		return this.findByQuery(Curriculum.class, "Curriculum.findByCandidateId", parameters);
+	public Curriculum findByCandidate(final Candidate candidate) {
+		return this.findByQuery(Curriculum.class, "Curriculum.findByCandidate", map("candidate", candidate));
 	}
 
 	@Override

@@ -46,6 +46,7 @@ public class JobOfferServiceImpl extends AbstratctAuditedService<JobOffer> imple
 		this.jobCandidatureDao = jobCandidatureDao;
 		this.jobOfferDao = jobOfferDao;
 		this.jobMeetingDao = jobMeetingDao;
+		logger.trace("JobOfferServiceImpl initiated");
 	}
 
 	@Override
@@ -63,10 +64,10 @@ public class JobOfferServiceImpl extends AbstratctAuditedService<JobOffer> imple
 	public void addJobCandidatures(final JobOffer jobOffer, final List<Candidate> candidates) {
 		Objects.requireNonNull(jobOffer);
 		Objects.requireNonNull(candidates);
+		logger.debug("Add job candidatures to jobOffer {}", jobOffer);
 		for (final Candidate candidate : candidates) {
 			this.addJobCandidature(jobOffer, candidate);
 		}
-
 	}
 
 	@Override
@@ -78,6 +79,7 @@ public class JobOfferServiceImpl extends AbstratctAuditedService<JobOffer> imple
 
 	@Override
 	public List<JobOffer> findAllJobOffersByOwner(final User owner) {
+		Objects.requireNonNull(owner);
 		logger.debug("Find all job Offers of the owner {}", owner.getFullName());
 		return this.jobOfferDao.findAllByOwner(owner);
 	}
@@ -91,12 +93,14 @@ public class JobOfferServiceImpl extends AbstratctAuditedService<JobOffer> imple
 
 	@Override
 	public List<JobOffer> findJobOffersByClient(final Client client) {
+		Objects.requireNonNull(client);
 		logger.debug("Find all job Offers of the client  {}", client);
 		return this.jobOfferDao.findJobOffersByClient(client);
 	}
 
 	@Override
 	public List<JobOffer> findLastJobOffers(final User owner) {
+		Objects.requireNonNull(owner);
 		logger.debug("Find last job Offers of the owner {}", owner.getFullName());
 		return this.jobOfferDao.findLastJobOffers(owner);
 	}
@@ -131,7 +135,7 @@ public class JobOfferServiceImpl extends AbstratctAuditedService<JobOffer> imple
 		Objects.requireNonNull(jobOffer);
 		Objects.requireNonNull(candidate);
 		logger.debug("Remove job candidature of candidate {} to job offer {}", candidate.getFullName(), jobOffer.getName());
-		final JobCandidature jobCandidature = this.jobCandidatureDao.findByJobOfferIdAndCandidateId(jobOffer.getId(), candidate.getId());
+		final JobCandidature jobCandidature = this.jobCandidatureDao.findByJobOfferAndCandidate(jobOffer, candidate);
 		this.jobCandidatureDao.delete(jobCandidature);
 	}
 
