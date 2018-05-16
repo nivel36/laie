@@ -1,45 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:i18n="http://legion.com/i18n">
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:i18n="http://legion.com/i18n"
+	xmlns:cc="http://java.sun.com/jsf/composite/components">
 
 	<ui:include src="/faces/jobOffer/jobOfferDialog.xhtml" />
 	<ui:include src="/faces/jobOffer/jobOfferSearchDialog.xhtml" />
-
-	<h:form id="jobOffersForm">
-		<p:panel header="#{i18n['job.job_offers']}" id="jobOffers">
-			<div class="ui-g">
-				<div class="ui-g-12">
-					<p:dataTable var="jobOffer" value="#{jobOfferPanelBean.jobOffers}" emptyMessage="#{i18n['job.no_jobs_found']}" reflow="true" paginator="true"
-						paginatorPosition="bottom" rows="#{sessionBean.rowsPerPage}" sortBy="#{jobOffer.name}" sortOrder="ascending">
-						<p:column headerText="#{i18n['job.name']}">
-							<h:link value="#{jobOffer.name}" outcome="/faces/jobOffer/jobOffer">
-								<f:param name="jobOfferId" value="#{jobOffer.id}" />
-							</h:link>
-						</p:column>
-						<p:column headerText="#{i18n['job.date_closed']}">
-							<h:outputText value="#{jobOffer.dateClosed}">
-								<f:convertDateTime pattern="dd / MM / yyyy" type="localDate" />
-							</h:outputText>
-						</p:column>
-						<p:column headerText="#{i18n['job.owner']}">
-							<h:link value="#{jobOffer.owner.fullName}" outcome="/faces/user/user">
-								<f:param name="userId" value="#{jobOffer.owner.id}" />
-							</h:link>
-						</p:column>
-					</p:dataTable>
-				</div>
-			</div>
-			<div class="pull-right">
-				<p:commandButton value="#{i18n['action.new']}" actionListener="#{jobOfferDialogBean.openDialog}" process="@this" update="newJobOfferForm"
-					styleClass="btn-primary" rendered="#{jobOfferPanelBean.newJobOfferVisible}">
-					<f:attribute name="client" value="#{jobOfferPanelBean.client}" />
-				</p:commandButton>
-				<p:commandButton value="#{i18n['action.add']}" actionListener="#{jobOfferSearchDialogBean.openDialog}" process="@this" update="jobOfferSearchDialogForm"
-					styleClass="btn-primary" rendered="#{jobOfferPanelBean.addJobOfferVisible}">
-					<f:attribute name="updateField" value="jobOffersForm" />
-					<f:attribute name="callback" value="#{jobOfferPanelBean}" />
-				</p:commandButton>
-			</div>
-		</p:panel>
-	</h:form>
+	<cc:jobOffers id="jobOffers" jobOffers="#{jobOffersPanelBean.jobOffers}">
+		<p:commandButton value="#{i18n['action.new']}" actionListener="#{jobOfferDialogBean.openDialog}" process="@this" update="newJobOfferForm"
+			styleClass="btn-primary" rendered="#{jobOfferPanelBean.newJobOfferVisible}">
+			<f:attribute name="client" value="#{jobOfferPanelBean.client}" />
+		</p:commandButton>
+		<p:commandButton value="#{i18n['action.add']}" actionListener="#{jobOfferSearchDialogBean.openDialog}" process="@this" update="jobOfferSearchDialogForm"
+			styleClass="btn-primary" rendered="#{jobOfferPanelBean.addJobOfferVisible}">
+			<f:attribute name="updateField" value="jobOffersForm" />
+			<f:attribute name="callback" value="#{jobOfferPanelBean}" />
+		</p:commandButton>
+	</cc:jobOffers>
 </ui:composition>
