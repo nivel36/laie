@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://legion.com/i18n" xmlns:p="http://primefaces.org/ui">
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://legion.com/i18n" xmlns:p="http://primefaces.org/ui"
+	xmlns:cc="http://java.sun.com/jsf/composite/components">
 
 	<h:form id="clientForm">
 		<p:dialog id="clientDlg" header="#{clientDialogBean.newClient ? i18n['client.new_client'] : clientDialogBean.client.name}" dynamic="true" closable="true"
@@ -8,39 +9,19 @@
 			<p:ajax event="close" listener="#{clientDialogBean.closeDialog}" resetValues="true" />
 			<div class="ui-g">
 				<div class="ui-g-12 ui-md-6">
-					<div class="form-group">
-						<p:outputLabel value="#{i18n['client.name']}" for="name" />
-						<p:inputText id="name" value="#{clientDialogBean.client.name}" required="true" />
-						<p:message for="name" />
-					</div>
+					<cc:inputText name="name" label="#{i18n['client.name']}" value="#{clientDialogBean.client.name}" required="true" />
 				</div>
 				<div class="ui-g-12 ui-md-6">
-					<div class="form-group">
-						<p:outputLabel value="#{i18n['client.cif']}" for="cif" />
-						<p:inputText id="cif" value="#{clientDialogBean.client.cif}" required="true" />
-						<p:message for="cif" />
-					</div>
+					<cc:inputText name="cif" label="#{i18n['client.cif']}" value="#{clientDialogBean.client.cif}" required="true" />
 				</div>
 				<div class="ui-g-12 ui-md-6">
-					<div class="form-group">
-						<p:outputLabel value="#{i18n['client.phoneNumber']}" for="phone_number" />
-						<p:inputText id="phone_number" value="#{clientDialogBean.client.phoneNumber}" />
-						<p:message for="phone_number" />
-					</div>
+					<cc:inputText name="phoneNumber" label="#{i18n['client.phone_number']}" value="#{clientDialogBean.client.phoneNumber}" />
 				</div>
 				<div class="ui-g-12 ui-md-6">
-					<div class="form-group">
-						<p:outputLabel value="#{i18n['client.city']}" for="city" />
-						<p:inputText id="city" value="#{clientDialogBean.client.address.city}" />
-						<p:message for="city" />
-					</div>
+					<cc:inputText name="city" label="#{i18n['client.city']}" value="#{clientDialogBean.client.address.city}" />
 				</div>
 				<div class="ui-g-12 ui-md-6">
-					<div class="form-group">
-						<p:outputLabel value="#{i18n['client.state']}" for="state" />
-						<p:inputText id="state" value="#{clientDialogBean.client.address.state}" />
-						<p:message for="state" />
-					</div>
+					<cc:inputText name="state" label="#{i18n['client.state']}" value="#{clientDialogBean.client.address.state}" />
 				</div>
 			</div>
 			<f:facet name="footer">
