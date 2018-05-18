@@ -5,6 +5,7 @@
 
 	<ui:include src="/faces/jobOffer/jobOfferDialog.xhtml" />
 	<ui:include src="/faces/jobOffer/jobOfferSearchDialog.xhtml" />
+	
 	<cc:jobOffers id="jobOffers" jobOffers="#{jobOffersPanelBean.jobOffers}">
 		<p:commandButton value="#{i18n['action.new']}" actionListener="#{jobOfferDialogBean.openDialog}" process="@this" update="newJobOfferForm"
 			styleClass="btn-primary" rendered="#{jobOfferPanelBean.newJobOfferVisible}">

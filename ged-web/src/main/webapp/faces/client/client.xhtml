@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:i18n="http://legion.com/i18n" template="/WEB-INF/templates/default.xhtml">
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:i18n="http://legion.com/i18n"
+	xmlns:cc="http://java.sun.com/jsf/composite/components" template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
 		<title>#{i18n['client.client']}</title>
@@ -9,10 +10,6 @@
 	<ui:param name="selectedMenu" value="clients" />
 
 	<ui:define name="content">
-		<f:metadata>
-			<f:viewParam name="clientId" value="#{clientBean.clientId}" converter="javax.faces.Long" />
-			<f:viewAction action="#{clientBean.init}" />
-		</f:metadata>
 
 		<ui:include src="/faces/client/clientDialog.xhtml" />
 
@@ -68,10 +65,22 @@
 				</h:form>
 			</div>
 			<div class="ui-g-12 ui-xl-6">
-				<ui:include src="/faces/client/contactPanel.xhtml" />
+				<ui:include src="/faces/client/contactDialog.xhtml" />
+				<cc:contacts contacts="#{clientBean.contacts}">
+					<p:commandButton value="#{i18n['action.new']}" actionListener="#{contactDialogBean.openDialog}" process="@this" update="contactForm"
+						styleClass="btn-primary">
+						<f:attribute name="client" value="#{clientBean.client}" />
+					</p:commandButton>
+				</cc:contacts>
 			</div>
 			<div class="ui-g-12 ui-xl-6">
-				<ui:include src="/faces/jobOffer/jobOfferPanel.xhtml" />
+				<ui:include src="/faces/jobOffer/jobOfferDialog.xhtml" />
+				<cc:jobOffers id="jobOffers" jobOffers="#{clientBean.jobOffers}">
+					<p:commandButton value="#{i18n['action.new']}" actionListener="#{jobOfferDialogBean.openDialog}" process="@this" update="newJobOfferForm"
+						styleClass="btn-primary">
+						<f:attribute name="client" value="#{clientBean.client}" />
+					</p:commandButton>
+				</cc:jobOffers>
 			</div>
 		</div>
 	</ui:define>

@@ -1,7 +1,9 @@
 package ged.web.view.client;
 
 import java.lang.invoke.MethodHandles;
+import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -11,10 +13,13 @@ import org.slf4j.LoggerFactory;
 
 import ged.ejb.client.Client;
 import ged.ejb.client.ClientService;
+import ged.ejb.client.Contact;
+import ged.ejb.client.ContactService;
 import ged.ejb.core.Address;
+import ged.ejb.job.offer.JobOffer;
+import ged.ejb.job.offer.JobOfferService;
 import ged.web.core.CloseDialogListener;
 import ged.web.core.PageNotFoundException;
-import ged.web.core.util.Message;
 import ged.web.core.view.AbstractBean;
 
 @Named
@@ -27,43 +32,68 @@ public class ClientBean extends AbstractBean implements CloseDialogListener {
 
 	private Client client;
 
-	private Long clientId;
-
 	@Inject
 	private transient ClientService clientService;
 
+	private List<Contact> contacts;
+
+	@Inject
+	private transient ContactService contactService;
+
+	private List<JobOffer> jobOffers;
+
+	@Inject
+	private transient JobOfferService jobOfferService;
+
 	public void export() {
+	}
+
+	private Client findClient(final Long clientId) {
+		this.client = this.clientService.find(clientId);
+		if (this.client == null) {
+			logger.error("Client not found");
+			throw new PageNotFoundException();
+		}
+		if (this.client.getAddress() == null) {
+			this.client.setAddress(new Address());
+		}
+		return this.client;
+	}
+
+	private Long getClienIdFromGetParameter() {
+		try {
+			final String clientIdValue = this.getValueFromGetParameters("clientId");
+			if (clientIdValue == null) {
+				logger.error("ClientId is null");
+				throw new PageNotFoundException();
+			}
+			return Long.parseLong(clientIdValue);
+		}
+		catch (final NumberFormatException e) {
+			logger.error("ClientId is not a number");
+			throw new PageNotFoundException();
+		}
 	}
 
 	public Client getClient() {
 		return this.client;
 	}
 
-	public Long getClientId() {
-		return this.clientId;
+	public List<Contact> getContacts() {
+		return this.contacts;
 	}
 
-	/**
-	 * Not using @PostConstruct because the view is a GET based form.
-	 */
+	public List<JobOffer> getJobOffers() {
+		return this.jobOffers;
+	}
+
+	@PostConstruct
 	public void init() {
 		logger.trace("Init ClientBean");
-		if (this.clientId == null) {
-			logger.error("ClientId is null");
-			throw new PageNotFoundException();
-		}
-		this.client = this.clientService.find(this.clientId);
-		if (this.client == null) {
-			logger.error("Client mot found");
-			throw new PageNotFoundException();
-		}
-		if (this.client.getAddress() == null) {
-			this.client.setAddress(new Address());
-		}
-		if (this.client.isDeleted()) {
-			logger.warn("Client was erased");
-			Message.addWarning("message.erased_entity", "message.erased_entity");
-		}
+		final Long clientId = this.getClienIdFromGetParameter();
+		this.client = this.findClient(clientId);
+		this.jobOffers = this.jobOfferService.findJobOffersByClient(this.client);
+		this.contacts = this.contactService.findContactsByClient(this.client);
 	}
 
 	public boolean isUserHasPermissionToEdit() {
@@ -79,11 +109,15 @@ public class ClientBean extends AbstractBean implements CloseDialogListener {
 		this.client = client;
 	}
 
-	public void setClientId(final Long clientId) {
-		this.clientId = clientId;
-	}
-
 	public void setClientService(final ClientService clientService) {
 		this.clientService = clientService;
+	}
+
+	public void setContactService(final ContactService contactService) {
+		this.contactService = contactService;
+	}
+
+	public void setJobOfferService(final JobOfferService jobOfferService) {
+		this.jobOfferService = jobOfferService;
 	}
 }
