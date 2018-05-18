@@ -35,6 +35,11 @@ public class ClientServiceImpl extends AbstratctAuditedService<Client> implement
 	}
 
 	@Override
+	public Client findAllClientDataByClientId(final long clientId) {
+		return this.clientDao.findAllClientDataByClientId(clientId);
+	}
+
+	@Override
 	public Client findClientByName(final String clientName) {
 		Objects.requireNonNull(clientName);
 		ClientServiceImpl.logger.debug("Find client with name {}", clientName);

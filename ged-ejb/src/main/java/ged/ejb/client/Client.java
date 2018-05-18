@@ -1,6 +1,5 @@
 package ged.ejb.client;
 
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -42,7 +41,7 @@ public class Client extends AbstractAuditedEntity implements Ownerable {
 
 	@ContainedIn
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "client", orphanRemoval = true)
-	private List<JobOffer> jobOffers;
+	private Set<JobOffer> jobOffers;
 
 	@Field
 	@Column(length = 128, unique = true, nullable = false)
@@ -88,7 +87,7 @@ public class Client extends AbstractAuditedEntity implements Ownerable {
 		return this.contacts;
 	}
 
-	public List<JobOffer> getJobOffers() {
+	public Set<JobOffer> getJobOffers() {
 		return this.jobOffers;
 	}
 
@@ -122,7 +121,7 @@ public class Client extends AbstractAuditedEntity implements Ownerable {
 		this.contacts = contacts;
 	}
 
-	public void setJobOffers(final List<JobOffer> jobOffers) {
+	public void setJobOffers(final Set<JobOffer> jobOffers) {
 		this.jobOffers = jobOffers;
 	}
 

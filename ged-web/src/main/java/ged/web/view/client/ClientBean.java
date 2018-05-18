@@ -1,6 +1,7 @@
 package ged.web.view.client;
 
 import java.lang.invoke.MethodHandles;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -14,10 +15,8 @@ import org.slf4j.LoggerFactory;
 import ged.ejb.client.Client;
 import ged.ejb.client.ClientService;
 import ged.ejb.client.Contact;
-import ged.ejb.client.ContactService;
 import ged.ejb.core.Address;
 import ged.ejb.job.offer.JobOffer;
-import ged.ejb.job.offer.JobOfferService;
 import ged.web.core.CloseDialogListener;
 import ged.web.core.PageNotFoundException;
 import ged.web.core.view.AbstractBean;
@@ -35,21 +34,11 @@ public class ClientBean extends AbstractBean implements CloseDialogListener {
 	@Inject
 	private transient ClientService clientService;
 
-	private List<Contact> contacts;
-
-	@Inject
-	private transient ContactService contactService;
-
-	private List<JobOffer> jobOffers;
-
-	@Inject
-	private transient JobOfferService jobOfferService;
-
 	public void export() {
 	}
 
 	private Client findClient(final Long clientId) {
-		this.client = this.clientService.find(clientId);
+		this.client = this.clientService.findAllClientDataByClientId(clientId);
 		if (this.client == null) {
 			logger.error("Client not found");
 			throw new PageNotFoundException();
@@ -80,11 +69,11 @@ public class ClientBean extends AbstractBean implements CloseDialogListener {
 	}
 
 	public List<Contact> getContacts() {
-		return this.contacts;
+		return new ArrayList<>(this.client.getContacts());
 	}
 
 	public List<JobOffer> getJobOffers() {
-		return this.jobOffers;
+		return new ArrayList<>(this.client.getJobOffers());
 	}
 
 	@PostConstruct
@@ -92,8 +81,6 @@ public class ClientBean extends AbstractBean implements CloseDialogListener {
 		logger.trace("Init ClientBean");
 		final Long clientId = this.getClienIdFromGetParameter();
 		this.client = this.findClient(clientId);
-		this.jobOffers = this.jobOfferService.findJobOffersByClient(this.client);
-		this.contacts = this.contactService.findContactsByClient(this.client);
 	}
 
 	public boolean isUserHasPermissionToEdit() {
@@ -111,13 +98,5 @@ public class ClientBean extends AbstractBean implements CloseDialogListener {
 
 	public void setClientService(final ClientService clientService) {
 		this.clientService = clientService;
-	}
-
-	public void setContactService(final ContactService contactService) {
-		this.contactService = contactService;
-	}
-
-	public void setJobOfferService(final JobOfferService jobOfferService) {
-		this.jobOfferService = jobOfferService;
 	}
 }

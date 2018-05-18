@@ -26,6 +26,11 @@ public class ClientDaoJpa extends AbstractDaoJpa<Client> implements ClientDao {
 	}
 
 	@Override
+	public Client findAllClientDataByClientId(final long clientId) {
+		return this.findByQuery(Client.class, "Client.findByClientId", map("clientId", clientId));
+	}
+
+	@Override
 	public Client findClientByName(final String clientName) {
 		try {
 			Objects.requireNonNull(clientName);

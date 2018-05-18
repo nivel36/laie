@@ -100,6 +100,16 @@
 			FROM Candidate c
 		]]></query>
 	</named-query>
+	
+		<named-query name="Client.findByClientId">
+		<query><![CDATA[
+			SELECT c 
+			FROM Client c 
+			LEFT JOIN FETCH c.contacts
+			LEFT JOIN FETCH c.jobOffers
+			WHERE c.id = :clientId
+		]]></query>
+	</named-query>
 
 	<named-query name="Client.findByName">
 		<query><![CDATA[
