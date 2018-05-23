@@ -1,0 +1,24 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:i18n="http://legion.com/i18n"
+	xmlns:composite="http://java.sun.com/jsf/composite">
+
+<composite:interface>
+	<composite:attribute name="candidate" required="true" />
+</composite:interface>
+
+<composite:implementation>
+	<p:link outcome="/faces/candidate/candidate">
+		<f:param name="candidateId" value="#{cc.attr.candidate.id}" />
+		<div class="user-minicard">
+			<div class="user-image">
+				<p:graphicImage class="image" value="/images/#{cc.attr.candidate.imageFileName}" rendered="#{not empty cc.attr.candidate.imageFileName}" />
+				<p:graphicImage class="image" value="/resources/img/default-avatar.png" rendered="#{empty cc.attr.candidate.imageFileName}" />
+			</div>
+			<div class="user-info">
+				<div class="name">#{cc.attr.candidate}</div>
+				<div class="position">#{cc.attr.candidate.jobProfile}</div>
+			</div>
+		</div>
+	</p:link>
+</composite:implementation>
+</html>

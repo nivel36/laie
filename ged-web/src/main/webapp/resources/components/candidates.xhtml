@@ -1,0 +1,23 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:i18n="http://legion.com/i18n" xmlns:cc="http://java.sun.com/jsf/composite/components"
+	xmlns:composite="http://java.sun.com/jsf/composite">
+
+<composite:interface>
+	<composite:attribute name="candidates" required="true" />
+</composite:interface>
+
+<composite:implementation>
+		<p:panel id="candidates" header="#{i18n['candidate.candidates']}">
+			<div class="ui-g">
+				<ui:repeat var="candidate" value="#{cc.attrs.candidates}" varStatus="status">
+					<div class="ui-g-12 ui-md-4 ui-lg-6">
+						<cc:candidateCard candidate="#{candidate}" />
+					</div>
+				</ui:repeat>
+			</div>
+			<div class="pull-right">
+				<composite:insertChildren />
+			</div>
+		</p:panel>
+</composite:implementation>
+</html>

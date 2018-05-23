@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://legion.com/i18n" xmlns:p="http://primefaces.org/ui" template="/WEB-INF/templates/default.xhtml">
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://legion.com/i18n" xmlns:p="http://primefaces.org/ui"
+	xmlns:cc="http://java.sun.com/jsf/composite/components" template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
 		<title>#{i18n['job.job_offer']}</title>
@@ -9,11 +10,6 @@
 	<ui:param name="selectedMenu" value="offers" />
 
 	<ui:define name="content">
-		<f:metadata>
-			<f:viewParam name="jobOfferId" value="#{jobOfferBean.jobOfferId}" converter="javax.faces.Long" />
-			<f:viewAction action="#{jobOfferBean.init}" />
-		</f:metadata>
-		
 		<ui:include src="/faces/jobOffer/jobOfferDialog.xhtml" />
 
 		<div class="ui-g">
@@ -87,13 +83,20 @@
 				</h:form>
 			</div>
 			<div class="ui-g-12 ui-md-12 ui-lg-6 ui-xl-4">
-				<ui:include src="/faces/candidate/candidatePanel.xhtml" />
+				<ui:include src="/faces/candidate/candidateSelectDialog.xhtml" />
+				<h:form>
+					<cc:candidates candidates="#{jobOfferBean.candidates}">
+						<p:commandButton value="#{i18n['action.add']}" actionListener="#{candidateSelectDialogBean.openDialog}" process="@this" update="candidateSelectForm">
+							<f:attribute name="callback" value="#{candidatePanelBean}" />
+							<f:attribute name="updateField" value="candidatesForm" />
+						</p:commandButton>
+					</cc:candidates>
+				</h:form>
 			</div>
 		</div>
 		<div class="ui-g">
 			<div class="ui-g-12 ui-md-12 ui-lg-6">
 				<p:panel header="#{i18n['job_meeting.conducted_job_meetings']}">
-
 				</p:panel>
 			</div>
 			<div class="ui-g-12 ui-md-12 ui-lg-6">

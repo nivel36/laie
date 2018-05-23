@@ -198,6 +198,15 @@
 		]]></query>
 	</named-query>
 	
+	<named-query name="JobOffer.findAllByOwner">
+		<query><![CDATA[
+			SELECT j 
+			FROM JobOffer j 
+			WHERE j.owner = :owner 
+			AND j.deleted <> TRUE
+		]]></query>
+	</named-query>
+	
 	<named-query name="JobOffer.findByCandidate">
 		<query><![CDATA[
 			SELECT j
@@ -206,7 +215,6 @@
 			WHERE jc.candidate = :candidate
 		]]></query>
 	</named-query>
-	
 
 	<named-query name="JobOffer.findByClient">
 		<query><![CDATA[
@@ -221,15 +229,6 @@
 			SELECT j 
 			FROM JobOffer j 
 			WHERE j.name = :name
-		]]></query>
-	</named-query>
-
-	<named-query name="JobOffer.findAllByOwner">
-		<query><![CDATA[
-			SELECT j 
-			FROM JobOffer j 
-			WHERE j.owner = :owner 
-			AND j.deleted <> TRUE
 		]]></query>
 	</named-query>
 

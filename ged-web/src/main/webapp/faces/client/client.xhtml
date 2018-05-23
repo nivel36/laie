@@ -66,21 +66,25 @@
 			</div>
 			<div class="ui-g-12 ui-xl-6">
 				<ui:include src="/faces/client/contactDialog.xhtml" />
-				<cc:contacts contacts="#{clientBean.contacts}">
-					<p:commandButton value="#{i18n['action.new']}" actionListener="#{contactDialogBean.openDialog}" process="@this" update="contactForm"
-						styleClass="btn-primary">
-						<f:attribute name="client" value="#{clientBean.client}" />
-					</p:commandButton>
-				</cc:contacts>
+				<h:form id="contactsForm">
+					<cc:contacts contacts="#{clientBean.contacts}">
+						<p:commandButton value="#{i18n['action.new']}" actionListener="#{contactDialogBean.openDialog}" process="@this" update="contactForm"
+							styleClass="btn-primary">
+							<f:attribute name="client" value="#{clientBean.client}" />
+						</p:commandButton>
+					</cc:contacts>
+				</h:form>
 			</div>
 			<div class="ui-g-12 ui-xl-6">
 				<ui:include src="/faces/jobOffer/jobOfferDialog.xhtml" />
-				<cc:jobOffers id="jobOffers" jobOffers="#{clientBean.jobOffers}">
-					<p:commandButton value="#{i18n['action.new']}" actionListener="#{jobOfferDialogBean.openDialog}" process="@this" update="newJobOfferForm"
-						styleClass="btn-primary">
-						<f:attribute name="client" value="#{clientBean.client}" />
-					</p:commandButton>
-				</cc:jobOffers>
+				<h:form id="jobOffersForm">
+					<cc:jobOffers id="jobOffers" jobOffers="#{clientBean.jobOffers}">
+						<p:commandButton value="#{i18n['action.new']}" actionListener="#{jobOfferDialogBean.openDialog}" process="@this" update="newJobOfferForm"
+							styleClass="btn-primary">
+							<f:attribute name="client" value="#{clientBean.client}" />
+						</p:commandButton>
+					</cc:jobOffers>
+				</h:form>
 			</div>
 		</div>
 	</ui:define>

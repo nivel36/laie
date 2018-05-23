@@ -1,9 +1,8 @@
 package ged.ejb.job.offer;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -58,7 +57,7 @@ public class JobOffer extends AbstractAuditedEntity implements Ownerable {
 	private String description;
 
 	@OneToMany(mappedBy = "jobOffer", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<JobCandidature> jobCandidatures;
+	private Set<JobCandidature> jobCandidatures;
 
 	@NotNull
 	@Column(length = 128, nullable = false)
@@ -80,15 +79,6 @@ public class JobOffer extends AbstractAuditedEntity implements Ownerable {
 	@Column(nullable = false, length = 64)
 	@NotNull
 	private String state;
-
-	public void addJobCandidature(final JobCandidature jobCandidature) {
-		Objects.requireNonNull(jobCandidature);
-		if (this.jobCandidatures == null) {
-			this.jobCandidatures = new ArrayList<>();
-		}
-		jobCandidature.setJobOffer(this);
-		this.jobCandidatures.add(jobCandidature);
-	}
 
 	@Override
 	public boolean equals(final Object obj) {
@@ -137,7 +127,7 @@ public class JobOffer extends AbstractAuditedEntity implements Ownerable {
 		return this.description;
 	}
 
-	public List<JobCandidature> getJobCandidatures() {
+	public Set<JobCandidature> getJobCandidatures() {
 		return this.jobCandidatures;
 	}
 
@@ -165,11 +155,6 @@ public class JobOffer extends AbstractAuditedEntity implements Ownerable {
 	@Override
 	public int hashCode() {
 		return Objects.hash(this.dateOpened, this.name, this.places);
-	}
-
-	public void removeJobCandidature(final JobCandidature jobCandidature) {
-		Objects.requireNonNull(jobCandidature);
-		this.jobCandidatures.remove(jobCandidature);
 	}
 
 	public void setCity(final String city) {
@@ -204,7 +189,7 @@ public class JobOffer extends AbstractAuditedEntity implements Ownerable {
 		this.description = description;
 	}
 
-	public void setJobCandidatures(final List<JobCandidature> jobCandidatures) {
+	public void setJobCandidatures(final Set<JobCandidature> jobCandidatures) {
 		this.jobCandidatures = jobCandidatures;
 	}
 

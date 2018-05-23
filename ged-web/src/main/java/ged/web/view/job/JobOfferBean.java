@@ -1,7 +1,9 @@
 package ged.web.view.job;
 
 import java.lang.invoke.MethodHandles;
+import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -9,6 +11,8 @@ import javax.inject.Named;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import ged.ejb.candidate.Candidate;
+import ged.ejb.candidate.CandidateService;
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
 import ged.web.core.CloseDialogListener;
@@ -23,33 +27,48 @@ public class JobOfferBean extends AbstractBean implements CloseDialogListener {
 
 	private static final long serialVersionUID = -1200840678252895578L;
 
-	private JobOffer jobOffer;
+	private List<Candidate> candidates;
 
-	private Long jobOfferId;
+	@Inject
+	private CandidateService candidateService;
+
+	private JobOffer jobOffer;
 
 	@Inject
 	private transient JobOfferService jobService;
+
+	public List<Candidate> getCandidates() {
+		return this.candidates;
+	}
 
 	public JobOffer getJobOffer() {
 		return this.jobOffer;
 	}
 
-	public Long getJobOfferId() {
-		return this.jobOfferId;
+	private Long getJoBofferIdFromGetParameter() {
+		try {
+			final String jobOfferIdValue = this.getValueFromGetParameters("jobOfferId");
+			if (jobOfferIdValue == null) {
+				logger.error("JobOfferId is null");
+				throw new PageNotFoundException();
+			}
+			return Long.parseLong(jobOfferIdValue);
+		}
+		catch (final NumberFormatException e) {
+			logger.error("JobOfferId is not a number");
+			throw new PageNotFoundException();
+		}
 	}
 
-	/**
-	 * Not using @PostConstruct because the view is a GET based form.
-	 */
+	@PostConstruct
 	public void init() {
 		logger.trace("JobOfferBean Init");
-		if (this.jobOfferId == null) {
-			throw new PageNotFoundException("JobOfferId is null");
-		}
-		this.jobOffer = this.jobService.find(this.jobOfferId);
+		final Long jobOfferId = this.getJoBofferIdFromGetParameter();
+		this.jobOffer = this.jobService.find(jobOfferId);
 		if (this.jobOffer == null) {
 			throw new PageNotFoundException("Bad jobOfferId");
 		}
+		this.candidates = this.candidateService.findCandidatesByJobOffer(this.jobOffer);
 	}
 
 	// boolean -> is[name]
@@ -65,9 +84,4 @@ public class JobOfferBean extends AbstractBean implements CloseDialogListener {
 	public void setJobOffer(final JobOffer jobOffer) {
 		this.jobOffer = jobOffer;
 	}
-
-	public void setJobOfferId(final Long jobOfferId) {
-		this.jobOfferId = jobOfferId;
-	}
-
 }
