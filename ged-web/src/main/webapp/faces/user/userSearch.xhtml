@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://legion.com/i18n"
-	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/templates/default.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://legion.com/i18n" xmlns:p="http://primefaces.org/ui" template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
 		<title>#{i18n['user.users']}</title>
@@ -79,30 +78,24 @@
 
 								</div>
 								<div class="ui-md-12 ui-lg-4">
-									<p:commandButton value="#{i18n['action.search']}" action="#{userSearchBean.search}" execute="searchUserPanel"
-										update="@form" styleClass="btn-primary" />
-									<p:commandButton styleClass="btn-gray" value="#{i18n['action.clean']}" action="#{userSearchBean.clean}"
-										update="@form" />
+									<p:commandButton value="#{i18n['action.search']}" action="#{userSearchBean.search}" execute="searchUserPanel" update="@form" styleClass="btn-primary" />
+									<p:commandButton styleClass="btn-gray" value="#{i18n['action.clean']}" action="#{userSearchBean.clean}" update="@form" />
 								</div>
 							</div>
 						</div>
 						<div class="searchResults">
 							<p:dataTable var="user" id="users" value="#{userSearchBean.users}" emptyMessage="#{i18n['user.no_users_found']}" reflow="true" paginator="true"
-								paginatorPosition="bottom" rows="#{sessionBean.rowsPerPage}" selectionMode="single"
-								selection="#{userSearchBean.selectedUser}" rowKey="#{user.id}" sortBy="#{user.fullName}"
-								sortOrder="ascending">
+								paginatorPosition="bottom" rows="#{sessionBean.rowsPerPage}" sortBy="#{user.fullName}" sortOrder="ascending">
 
-								<p:ajax event="rowSelect" listener="#{userSearchBean.onUserSelect}" update="@form" />
-								
 								<p:column>
-									<p:graphicImage class="image image-icon" value="/images/#{user.imageFileName}"
-										rendered="#{not empty user.imageFileName}" />
-									<p:graphicImage class="image image-icon" value="/resources/img/default-avatar.png"
-										rendered="#{empty user.imageFileName}" />
+									<p:graphicImage class="image image-icon" value="/images/#{user.imageFileName}" rendered="#{not empty user.imageFileName}" />
+									<p:graphicImage class="image image-icon" value="/resources/img/default-avatar.png" rendered="#{empty user.imageFileName}" />
 								</p:column>
 
 								<p:column headerText="#{i18n['user.name']}" sortBy="#{user.fullName}">
-									<h:outputText value="#{user.fullName}" />
+									<h:link value="#{user.fullName}" outcome="/faces/user/user">
+										<f:param name="userId" value="#{user.id}" />
+									</h:link>
 								</p:column>
 
 								<p:column headerText="#{i18n['user.email']}" sortBy="#{user.email}">
@@ -150,17 +143,13 @@
 				<p:panel id="lastActions" header="#{i18n['user.last_actions']}">
 					<ul>
 						<ui:repeat var="action" value="#{userSearchBean.actions}">
-							<li>
-								<h:link value="#{action.user}" outcome="user">
+							<li><h:link value="#{action.user}" outcome="user">
 									<f:param name="id" value="#{action.user.id}" />
-								</h:link>
-								<h:outputText value=" " /> 
-								<h:outputFormat value="#{i18n:translate(action.actionPerformed)}" rendered="#{action.actionPerformed == 'LOGIN'}" />
-								<h:outputText	value="#{i18n:translate(action.actionPerformed)}" rendered="#{action.actionPerformed != 'LOGIN'}" /> 
-								<h:outputFormat value="#{i18n:translate(action.entityClass)}" rendered="#{action.actionPerformed != 'LOGIN'}">
+								</h:link> <h:outputText value=" " /> <h:outputFormat value="#{i18n:translate(action.actionPerformed)}" rendered="#{action.actionPerformed == 'LOGIN'}" /> <h:outputText
+									value="#{i18n:translate(action.actionPerformed)}" rendered="#{action.actionPerformed != 'LOGIN'}" /> <h:outputFormat
+									value="#{i18n:translate(action.entityClass)}" rendered="#{action.actionPerformed != 'LOGIN'}">
 									<f:param value="#{action.text}" />
-								</h:outputFormat>
-							</li>
+								</h:outputFormat></li>
 						</ui:repeat>
 					</ul>
 				</p:panel>

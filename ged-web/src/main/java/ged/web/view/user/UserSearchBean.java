@@ -1,6 +1,5 @@
 package ged.web.view.user;
 
-import java.io.IOException;
 import java.lang.invoke.MethodHandles;
 import java.util.List;
 
@@ -39,8 +38,6 @@ public class UserSearchBean extends AbstractBean {
 
 	private String searchText;
 
-	private User selectedUser;
-
 	private List<User> users;
 
 	@Inject
@@ -51,7 +48,7 @@ public class UserSearchBean extends AbstractBean {
 	public void clean() {
 		logger.debug("Cleaning search fields");
 		this.searchText = null;
-		search();
+		this.search();
 	}
 
 	public void findUsersInTeam() {
@@ -93,10 +90,6 @@ public class UserSearchBean extends AbstractBean {
 		return this.searchText;
 	}
 
-	public User getSelectedUser() {
-		return this.selectedUser;
-	}
-
 	public List<User> getUsers() {
 		return this.users;
 	}
@@ -108,7 +101,7 @@ public class UserSearchBean extends AbstractBean {
 	@PostConstruct
 	public void init() {
 		logger.trace("Init UserSearchBean");
-		search();
+		this.search();
 		this.actions = this.actionService.findLastActions();
 		this.usersOnlineLastWeek = this.userService.findUsersOnlineLastWeek();
 		this.numberOfUsersOfflineLastMonth = this.userService.numberOfUsersOfflineLastMonth();
@@ -121,22 +114,12 @@ public class UserSearchBean extends AbstractBean {
 		return "user?faces-redirect=true";
 	}
 
-	public void onUserSelect() {
-		try {
-			final String context = this.externalContext.getContextName();
-			final StringBuilder url = new StringBuilder();
-			url.append("/").append(context).append("/faces/user/user.xhtml?id=").append(this.selectedUser.getId());
-			this.externalContext.redirect(url.toString());
-		} catch (final IOException e) {
-			logger.error("Unable to redirect to page");
-		}
-	}
-
 	public void search() {
 		logger.debug("Searching for users");
 		if (this.searchText == null) {
 			this.users = this.userService.findAll();
-		} else {
+		}
+		else {
 			this.users = this.userService.search(this.searchText);
 		}
 	}
@@ -147,10 +130,6 @@ public class UserSearchBean extends AbstractBean {
 
 	public void setSearchText(final String searchText) {
 		this.searchText = searchText;
-	}
-
-	public void setSelectedUser(final User selectedUser) {
-		this.selectedUser = selectedUser;
 	}
 
 	public void setUsers(final List<User> users) {
