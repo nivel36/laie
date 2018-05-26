@@ -61,12 +61,7 @@ public class JobOfferDialogBean extends AbstractDialogBean implements CloseDialo
 	}
 
 	private Client getClientFromAttributes() {
-		final Client clientFromAttributes = this.getAttribute("client");
-		if (clientFromAttributes == null) {
-			logger.error("Null client", this.client);
-			throw new IllegalStateException("Null client");
-		}
-		return clientFromAttributes;
+		return this.getAttribute("client");
 	}
 
 	public JobOffer getJobOffer() {
