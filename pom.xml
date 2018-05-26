@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>igochan</groupId>
 	<artifactId>ged</artifactId>
-	<version>0.3.0-SNAPSHOT</version>
+	<version>0.4.0</version>
 	<packaging>pom</packaging>
 	<name>ged</name>
 	<modules>
@@ -17,6 +17,7 @@
 		<timestamp>${maven.build.timestamp}</timestamp>
 		<maven.build.timestamp.format>dd-MM-yyyy HH:mm</maven.build.timestamp.format>
 		<ged.version>${project.version}</ged.version>
+		
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<javaee-api.version>8.0</javaee-api.version>
 		<junit.version>4.12</junit.version>

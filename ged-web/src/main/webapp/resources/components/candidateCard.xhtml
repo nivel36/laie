@@ -8,15 +8,15 @@
 
 <composite:implementation>
 	<p:link outcome="/faces/candidate/candidate">
-		<f:param name="candidateId" value="#{cc.attr.candidate.id}" />
+		<f:param name="candidateId" value="#{cc.attrs.candidate.id}" />
 		<div class="user-minicard">
 			<div class="user-image">
-				<p:graphicImage class="image" value="/images/#{cc.attr.candidate.imageFileName}" rendered="#{not empty cc.attr.candidate.imageFileName}" />
-				<p:graphicImage class="image" value="/resources/img/default-avatar.png" rendered="#{empty cc.attr.candidate.imageFileName}" />
+				<p:graphicImage class="image" value="/images/#{cc.attrs.candidate.imageFileName}" rendered="#{not empty cc.attrs.candidate.imageFileName}" />
+				<p:graphicImage class="image" value="/resources/img/default-avatar.png" rendered="#{empty cc.attrs.candidate.imageFileName}" />
 			</div>
 			<div class="user-info">
-				<div class="name">#{cc.attr.candidate}</div>
-				<div class="position">#{cc.attr.candidate.jobProfile}</div>
+				<div class="name">#{cc.attrs.candidate}</div>
+				<div class="position">#{cc.attrs.candidate.jobProfile}</div>
 			</div>
 		</div>
 	</p:link>

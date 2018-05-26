@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>igochan</groupId>
 		<artifactId>ged</artifactId>
-		<version>0.3.0-SNAPSHOT</version>
+		<version>0.4.0</version>
 		<relativePath>..</relativePath>
 	</parent>
 	<artifactId>ged-web</artifactId>
@@ -72,6 +72,15 @@
 		<plugins>
 			<plugin>
 				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<webResources>
+						<resource>
+							<directory>src/config</directory>
+							<filtering>true</filtering>
+							<targetPath>WEB-INF/classes/ged</targetPath>
+						</resource>
+					</webResources>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

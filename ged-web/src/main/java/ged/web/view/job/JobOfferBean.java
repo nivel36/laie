@@ -21,7 +21,40 @@ import ged.web.core.view.AbstractBean;
 
 @Named
 @ViewScoped
-public class JobOfferBean extends AbstractBean implements CloseDialogListener {
+public class JobOfferBean extends AbstractBean {
+
+	private class CandidateSelectDialogCloseEvent implements CloseDialogListener {
+
+		private final JobOfferBean parent;
+
+		public CandidateSelectDialogCloseEvent(final JobOfferBean parent) {
+			this.parent = parent;
+		}
+
+		@Override
+		public void onCloseDialog(final Object value) {
+			@SuppressWarnings("unchecked")
+			final List<Candidate> selectedCandidates = (List<Candidate>) value;
+			for (final Candidate candidate : selectedCandidates) {
+				this.parent.jobService.addJobCandidature(this.parent.jobOffer, candidate);
+				this.parent.candidates.add(candidate);
+			}
+		}
+	}
+
+	private class JobOfferDialogCloseEvent implements CloseDialogListener {
+
+		private final JobOfferBean parent;
+
+		public JobOfferDialogCloseEvent(final JobOfferBean parent) {
+			this.parent = parent;
+		}
+
+		@Override
+		public void onCloseDialog(final Object value) {
+			this.parent.jobOffer = ((JobOffer) value);
+		}
+	}
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
@@ -29,10 +62,14 @@ public class JobOfferBean extends AbstractBean implements CloseDialogListener {
 
 	private List<Candidate> candidates;
 
+	private final CandidateSelectDialogCloseEvent candidateSelectDialogCloseEvent = new CandidateSelectDialogCloseEvent(this);
+
 	@Inject
 	private CandidateService candidateService;
 
 	private JobOffer jobOffer;
+
+	private final JobOfferDialogCloseEvent jobOfferDialogCloseEvent = new JobOfferDialogCloseEvent(this);
 
 	@Inject
 	private transient JobOfferService jobService;
@@ -41,8 +78,16 @@ public class JobOfferBean extends AbstractBean implements CloseDialogListener {
 		return this.candidates;
 	}
 
+	public CandidateSelectDialogCloseEvent getCandidateSelectDialogCloseEvent() {
+		return this.candidateSelectDialogCloseEvent;
+	}
+
 	public JobOffer getJobOffer() {
 		return this.jobOffer;
+	}
+
+	public JobOfferDialogCloseEvent getJobOfferDialogCloseEvent() {
+		return this.jobOfferDialogCloseEvent;
 	}
 
 	private Long getJoBofferIdFromGetParameter() {
@@ -74,11 +119,6 @@ public class JobOfferBean extends AbstractBean implements CloseDialogListener {
 	// boolean -> is[name]
 	public boolean isUserHasPermissionToEditJobOffer() {
 		return this.userHasPermissionToEdit(this.jobOffer);
-	}
-
-	@Override
-	public void onCloseDialog(final Object value) {
-		this.jobOffer = (JobOffer) value;
 	}
 
 	public void setJobOffer(final JobOffer jobOffer) {

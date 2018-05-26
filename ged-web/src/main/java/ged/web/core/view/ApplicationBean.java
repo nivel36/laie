@@ -16,10 +16,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ged.ejb.core.Cache;
-import ged.ejb.core.util.ConfigurationProperty;
 import ged.ejb.curriculum.LanguageLevel;
 import ged.ejb.curriculum.SkillLevel;
 import ged.ejb.user.role.Role;
+import ged.web.core.util.WebConfigurationProperty;
 
 @ApplicationScoped
 @Named
@@ -30,7 +30,7 @@ public class ApplicationBean extends AbstractBean {
 	private static final long serialVersionUID = 6394915115616408285L;
 
 	@Inject
-	@ConfigurationProperty(value = "ged.buildtime")
+	@WebConfigurationProperty(value = "ged.buildtime")
 	private String buildtime;
 
 	@Inject
@@ -39,7 +39,7 @@ public class ApplicationBean extends AbstractBean {
 	private List<Locale> locales = new ArrayList<>();
 
 	@Inject
-	@ConfigurationProperty(value = "ged.version")
+	@WebConfigurationProperty(value = "ged.version")
 	private String version;
 
 	public String getBuildtime() {
