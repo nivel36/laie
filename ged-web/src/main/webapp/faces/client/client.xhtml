@@ -11,8 +11,6 @@
 
 	<ui:define name="content">
 
-		<ui:include src="/faces/client/clientDialog.xhtml" />
-
 		<div class="ui-g">
 			<div class="ui-g-12 ui-xl-6">
 				<h:form id="clientViewForm">
@@ -55,33 +53,27 @@
 
 						<h:panelGroup rendered="#{clientBean.userHasPermissionToEdit}" styleClass="pull-right">
 							<p:commandButton id="exportExcel" value="#{i18n['action.export']}" action="#{clientBean.export}" icon="fa fa-file-excel-o" />
-							<p:commandButton id="editClient" value="#{i18n['action.edit']}" actionListener="#{clientDialogBean.openDialog}" update="clientForm">
-								<f:attribute name="client" value="#{clientBean.client}" />
-								<f:attribute name="updateField" value="clientViewForm" />
-								<f:attribute name="callback" value="#{clientBean}" />
+							<p:commandButton value="#{i18n['action.edit']}" actionListener="#{clientBean.openDialog}" styleClass="btn-primary">
+								<p:ajax event="dialogReturn" listener="#{clientBean.onCloseClientDialog}" update="clientViewForm growl" />
 							</p:commandButton>
 						</h:panelGroup>
 					</p:panel>
 				</h:form>
 			</div>
 			<div class="ui-g-12 ui-xl-6">
-				<ui:include src="/faces/client/contactDialog.xhtml" />
 				<h:form id="contactsForm">
 					<cc:contacts contacts="#{clientBean.contacts}">
-						<p:commandButton value="#{i18n['action.new']}" actionListener="#{contactDialogBean.openDialog}" process="@this" update="contactForm"
-							styleClass="btn-primary">
-							<f:attribute name="client" value="#{clientBean.client}" />
+						<p:commandButton value="#{i18n['action.new']}" actionListener="#{clientBean.openContactDialog}" process="@this">
+							<p:ajax event="dialogReturn" update="@form" listener="#{clientBean.onCloseContactDialog}" />
 						</p:commandButton>
 					</cc:contacts>
 				</h:form>
 			</div>
 			<div class="ui-g-12 ui-xl-6">
-				<ui:include src="/faces/jobOffer/jobOfferDialog.xhtml" />
 				<h:form id="jobOffersForm">
 					<cc:jobOffers id="jobOffers" jobOffers="#{clientBean.jobOffers}">
-						<p:commandButton value="#{i18n['action.new']}" actionListener="#{jobOfferDialogBean.openDialog}" process="@this" update="newJobOfferForm"
-							styleClass="btn-primary">
-							<f:attribute name="client" value="#{clientBean.client}" />
+						<p:commandButton value="#{i18n['action.new']}" actionListener="#{clientBean.openJobOfferDialog}" process="@this">
+							<p:ajax event="dialogReturn" listener="#{clientBean.onCloseJobOfferDialog}" />
 						</p:commandButton>
 					</cc:jobOffers>
 				</h:form>

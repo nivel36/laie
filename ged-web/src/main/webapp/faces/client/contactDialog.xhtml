@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://legion.com/i18n" xmlns:p="http://primefaces.org/ui">
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:i18n="http://legion.com/i18n"
+	xmlns:cc="http://java.sun.com/jsf/composite/components" template="/WEB-INF/templates/dialog.xhtml">
 
-	<h:form id="contactForm">
-		<p:dialog id="contactDlg" header="#{i18n['contact.new_contact']}" closable="false" modal="true" resizable="false" responsive="true"
-			visible="#{contactDialogBean.showDialog}" dynamic="true" styleClass="medium">
+	<ui:define name="title">
+		<title>#{contactDialogBean.newContact ? i18n['contact.new_contact'] : contactDialogBean.contact.name}</title>
+	</ui:define>
 
+	<ui:define name="content">
+		<h:form id="contactForm">
 			<div class="ui-g">
 				<div class="ui-g-12 ui-md-6">
 					<div class="form-group">
@@ -43,14 +46,14 @@
 					</div>
 				</div>
 			</div>
-			<f:facet name="footer">
-				<div class="form-action-primary">
-					<p:commandButton value="#{i18n['action.cancel']}" action="#{contactDialogBean.closeDialog}" process="@this" update="@form" styleClass="btn-gray">
-						<p:resetInput target="@form" />
-					</p:commandButton>
-					<p:commandButton value="#{i18n['action.save']}" action="#{contactDialogBean.save}" update="@form growl" />
+			<div class="ui-g">
+				<div class="ui-g-12">
+					<div class="form-action-primary">
+						<p:commandButton value="#{i18n['action.cancel']}" action="#{contactDialogBean.closeDialog}" process="@this" styleClass="btn-gray" />
+						<p:commandButton value="#{i18n['action.save']}" action="#{contactDialogBean.save}" update="@form" />
+					</div>
 				</div>
-			</f:facet>
-		</p:dialog>
-	</h:form>
+			</div>
+		</h:form>
+	</ui:define>
 </ui:composition>

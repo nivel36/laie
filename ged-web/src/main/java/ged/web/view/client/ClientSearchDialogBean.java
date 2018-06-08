@@ -3,11 +3,11 @@ package ged.web.view.client;
 import java.lang.invoke.MethodHandles;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.omnifaces.util.Ajax;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,12 +38,6 @@ public class ClientSearchDialogBean extends AbstractDialogBean {
 		this.search();
 	}
 
-	@Override
-	protected void dispose() {
-		this.searchText = null;
-		this.selectedClient = null;
-	}
-
 	public List<Client> getClients() {
 		return this.clients;
 	}
@@ -56,16 +50,14 @@ public class ClientSearchDialogBean extends AbstractDialogBean {
 		return this.selectedClient;
 	}
 
-	@Override
+	@PostConstruct
 	public void init() {
 		logger.trace("Init ClientSearchDialogBean");
 		this.clients = this.clientService.search(this.searchText);
 	}
 
 	public void onClientSelect() {
-		this.callback.onCloseDialog(this.selectedClient);
-		this.closeDialog();
-		Ajax.update(this.updateField);
+		this.closeDialog(this.selectedClient);
 	}
 
 	public void search() {

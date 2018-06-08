@@ -2,6 +2,9 @@ package ged.web.core.view;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.application.FacesMessage.Severity;
@@ -10,6 +13,8 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
 import javax.inject.Inject;
+
+import org.primefaces.PrimeFaces;
 
 import ged.ejb.core.model.Ownerable;
 import ged.ejb.user.User;
@@ -93,6 +98,17 @@ public abstract class AbstractBean implements Serializable {
 
 	public String getValueFromGetParameters(final String key) {
 		return this.externalContext.getRequestParameterMap().get(key);
+	}
+
+	protected void openDialog(final String name, final Map<String, List<String>> params) {
+		final Map<String, Object> options = new HashMap<>();
+		options.put("modal", true);
+		options.put("resizable", false);
+		options.put("responsive", true);
+		options.put("dynamic", true);
+		options.put("contentWidth", "100%");
+		options.put("height", "auto");
+		PrimeFaces.current().dialog().openDynamic(name, options, params);
 	}
 
 	public void setApplicationBean(final ApplicationBean applicationBean) {

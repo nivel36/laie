@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://legion.com/i18n" xmlns:p="http://primefaces.org/ui">
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:i18n="http://legion.com/i18n"
+	xmlns:cc="http://java.sun.com/jsf/composite/components" template="/WEB-INF/templates/dialog.xhtml">
 
-	<h:form id="clientSearchDialogForm">
-		<p:dialog id="clientSearchDlg" header="#{i18n['client.clients']}" modal="true" resizable="false" responsive="true" closable="true"
-			visible="#{clientSearchDialogBean.showDialog}">
-			<p:ajax event="close" listener="#{clientSearchDialogBean.closeDialog}" resetValues="true" />
-
+	<ui:define name="title">
+		<title>#{i18n['client.clients']}</title>
+	</ui:define>
+	<ui:define name="content">
+		<h:form id="clientsSearchForm">
 			<div class="ui-g">
 				<div class="ui-g-12 ui-md-6">
 					<div class="ui-inputgroup">
@@ -55,12 +56,10 @@
 			<div class="ui-g">
 				<div class="ui-g-12">
 					<div class="form-action-primary">
-						<p:commandButton value="#{i18n['action.cancel']}" action="#{clientSearchDialogBean.closeDialog}" process="@this" update="@form" styleClass="btn-gray">
-							<p:resetInput target="@form" />
-						</p:commandButton>
+						<p:commandButton value="#{i18n['action.cancel']}" action="#{clientSearchDialogBean.closeDialog}" process="@this" styleClass="btn-gray" />
 					</div>
 				</div>
 			</div>
-		</p:dialog>
-	</h:form>
+		</h:form>
+	</ui:define>
 </ui:composition>

@@ -2,11 +2,10 @@ package ged.web.view.job;
 
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-
-import org.omnifaces.util.Ajax;
 
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
@@ -32,13 +31,6 @@ public class JobOfferSearchDialogBean extends AbstractDialogBean {
 		this.search();
 	}
 
-	@Override
-	protected void dispose() {
-		this.selectedJobOffers = null;
-		this.searchText = null;
-		this.jobOffers = null;
-	}
-
 	public List<JobOffer> getJobOffers() {
 		return this.jobOffers;
 	}
@@ -51,8 +43,8 @@ public class JobOfferSearchDialogBean extends AbstractDialogBean {
 		return this.selectedJobOffers;
 	}
 
-	@Override
-	protected void init() {
+	@PostConstruct
+	public void init() {
 		this.search();
 	}
 
@@ -61,9 +53,7 @@ public class JobOfferSearchDialogBean extends AbstractDialogBean {
 	}
 
 	public void select() {
-		this.callback.onCloseDialog(this.selectedJobOffers);
-		this.closeDialog();
-		Ajax.update("jobOfferSearchDialogForm", this.updateField);
+		this.closeDialog(this.selectedJobOffers);
 	}
 
 	public void setJobOfferService(final JobOfferService jobOfferService) {

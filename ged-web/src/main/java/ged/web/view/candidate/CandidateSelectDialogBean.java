@@ -3,11 +3,11 @@ package ged.web.view.candidate;
 import java.lang.invoke.MethodHandles;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.omnifaces.util.Ajax;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,13 +37,6 @@ public class CandidateSelectDialogBean extends AbstractDialogBean {
 		this.search();
 	}
 
-	@Override
-	protected void dispose() {
-		this.searchText = null;
-		this.selectedCandidates = null;
-		this.candidates = null;
-	}
-
 	public List<Candidate> getCandidates() {
 		return this.candidates;
 	}
@@ -56,7 +49,7 @@ public class CandidateSelectDialogBean extends AbstractDialogBean {
 		return this.selectedCandidates;
 	}
 
-	@Override
+	@PostConstruct
 	public void init() {
 		this.search();
 	}
@@ -67,9 +60,7 @@ public class CandidateSelectDialogBean extends AbstractDialogBean {
 	}
 
 	public void select() {
-		this.callback.onCloseDialog(this.selectedCandidates);
-		Ajax.update("candidateSelectForm", this.updateField);
-		this.closeDialog();
+		this.closeDialog(this.selectedCandidates);
 	}
 
 	public void setCandidateService(final CandidateService candidateService) {

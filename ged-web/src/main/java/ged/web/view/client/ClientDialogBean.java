@@ -1,16 +1,12 @@
 package ged.web.view.client;
 
-import static ged.ejb.core.util.Parameters.map;
-import static ged.web.core.util.Navigate.to;
-import static ged.web.core.util.Page.CLIENT;
-
 import java.lang.invoke.MethodHandles;
 
+import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.omnifaces.util.Ajax;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,28 +36,31 @@ public class ClientDialogBean extends AbstractDialogBean {
 		return newClient;
 	}
 
-	@Override
-	protected void dispose() {
-		logger.trace("ClientDialog closed");
-		this.client = null;
-	}
-
 	public Client getClient() {
 		return this.client;
 	}
 
-	@Override
-	protected void init() {
+	@PostConstruct
+	public void init() {
 		logger.trace("ClientDialog oppened");
-		this.client = this.getAttribute("client");
-		if (this.client == null) {
+		final Long clientId = this.getIdFromParameters("clientId");
+		if (clientId != null) {
+			this.client = this.clientService.find(clientId);
+			if (this.client == null) {
+				throw new IllegalStateException();
+			}
+			if (this.client.getAddress() == null) {
+				this.client.setAddress(new Address());
+			}
+		}
+		else {
 			this.client = this.buildNewClient();
 		}
 	}
 
 	private void insertClient() {
 		this.clientService.insert(this.client);
-		to(CLIENT).withParams(map("clientId", this.client.getId())).doGet();
+		this.closeDialog(this.client);
 	}
 
 	public boolean isNewClient() {
@@ -90,8 +89,6 @@ public class ClientDialogBean extends AbstractDialogBean {
 			throw new GedPermissionException();
 		}
 		this.client = this.clientService.update(this.client);
-		this.callback.onCloseDialog(this.client);
-		Ajax.update("clientForm", this.updateField);
-		this.closeDialog();
+		this.closeDialog(this.client);
 	}
 }

@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://legion.com/i18n" xmlns:p="http://primefaces.org/ui"
-	xmlns:cc="http://java.sun.com/jsf/composite/components">
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:i18n="http://legion.com/i18n"
+	xmlns:cc="http://java.sun.com/jsf/composite/components" template="/WEB-INF/templates/dialog.xhtml">
 
-	<h:form id="clientForm">
-		<p:dialog id="clientDlg" header="#{clientDialogBean.newClient ? i18n['client.new_client'] : clientDialogBean.client.name}" dynamic="true" closable="true"
-			modal="true" resizable="false" responsive="true" styleClass="medium" visible="#{clientDialogBean.showDialog}">
-			<p:ajax event="close" listener="#{clientDialogBean.closeDialog}" resetValues="true" />
+	<ui:define name="title">
+		<title>#{clientDialogBean.newClient ? i18n['client.new_client'] : clientDialogBean.client.name}</title>
+	</ui:define>
+
+	<ui:define name="content">
+		<h:form id="clientForm">
 			<div class="ui-g">
 				<div class="ui-g-12 ui-md-6">
 					<cc:inputText name="name" label="#{i18n['client.name']}" value="#{clientDialogBean.client.name}" required="true" />
@@ -24,14 +26,14 @@
 					<cc:inputText name="state" label="#{i18n['client.state']}" value="#{clientDialogBean.client.address.state}" />
 				</div>
 			</div>
-			<f:facet name="footer">
-				<div class="form-action-primary">
-					<p:commandButton value="#{i18n['action.cancel']}" action="#{clientDialogBean.closeDialog}" process="@this" update="@form" styleClass="btn-gray">
-						<p:resetInput target="@form" />
-					</p:commandButton>
-					<p:commandButton value="#{i18n['action.save']}" action="#{clientDialogBean.save}" update="@form growl" />
+			<div class="ui-g">
+				<div class="ui-g-12">
+					<div class="form-action-primary">
+						<p:commandButton value="#{i18n['action.cancel']}" action="#{clientDialogBean.closeDialog}" process="@this" styleClass="btn-gray" />
+						<p:commandButton value="#{i18n['action.save']}" action="#{clientDialogBean.save}" />
+					</div>
 				</div>
-			</f:facet>
-		</p:dialog>
-	</h:form>
+			</div>
+		</h:form>
+	</ui:define>
 </ui:composition>

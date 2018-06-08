@@ -12,6 +12,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -55,11 +56,6 @@ public class CandidateDialogBean extends AbstractDialogBean {
 		return newCandidate;
 	}
 
-	@Override
-	protected void dispose() {
-		this.candidate = null;
-	}
-
 	public Candidate getCandidate() {
 		return this.candidate;
 	}
@@ -89,8 +85,8 @@ public class CandidateDialogBean extends AbstractDialogBean {
 		return candidateTags;
 	}
 
-	@Override
-	protected void init() {
+	@PostConstruct
+	public void init() {
 		this.candidate = this.getAttribute("candidate");
 		if (this.candidate == null) {
 			this.candidate = this.buildNewCandidate();

@@ -3972,6 +3972,13 @@ body .ui-state-disabled {
 	color: gray;
 }
 
+body .ui-df-content {
+	width: 746px !important;
+	max-width: 100%;
+	overflow: auto;
+    max-height: 100%;
+}
+
 body .ui-dialog {
 	border-radius: 3px;
 	max-width: 100%;
@@ -3996,7 +4003,7 @@ body .ui-dialog .ui-dialog-title {
 	font-size: 16px;
 }
 
-body .ui-dialog .ui-dialog-content {
+body .ui-dialog-content {
 	padding: 15px;
 }
 
@@ -4219,12 +4226,16 @@ body .ui-widget-content.ui-datatable-odd {
 	background-color: #f9f9f9;
 }
 
+body .form-group{
+	width: 100%;
+	overflow: auto;
+}
+
 body .form-group .ui-outputlabel {
 	font-weight: bold;
 	font-size: 12px;
 	position: relative;
 	padding-bottom: 5px;
-	color: #424242;
 	width: 100%;
 	float: left;
 	display: block;

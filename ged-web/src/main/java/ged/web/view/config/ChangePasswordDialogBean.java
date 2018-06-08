@@ -71,13 +71,6 @@ public class ChangePasswordDialogBean extends AbstractDialogBean {
 		return this.userService.update(user);
 	}
 
-	@Override
-	protected void dispose() {
-		this.password = null;
-		this.repeatPassword = null;
-		this.newPassword = null;
-	}
-
 	public String getNewPassword() {
 		return this.newPassword;
 	}
@@ -111,10 +104,6 @@ public class ChangePasswordDialogBean extends AbstractDialogBean {
 			logger.error("Can't find hash algorithm", ex);
 		}
 		return output;
-	}
-
-	@Override
-	protected void init() {
 	}
 
 	public void setNewPassword(final String newPassword) {

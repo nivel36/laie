@@ -1,11 +1,8 @@
 package ged.web.view.client;
 
-import static ged.ejb.core.util.Parameters.map;
-import static ged.web.core.util.Navigate.to;
-import static ged.web.core.util.Page.CLIENT;
-
 import java.lang.invoke.MethodHandles;
 
+import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -14,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ged.ejb.client.Client;
+import ged.ejb.client.ClientService;
 import ged.ejb.client.Contact;
 import ged.ejb.client.ContactService;
 import ged.web.core.view.AbstractDialogBean;
@@ -26,13 +24,17 @@ public class ContactDialogBean extends AbstractDialogBean {
 
 	private static final long serialVersionUID = 8611792798437280352L;
 
+	@Inject
+	private transient ClientService clientService;
+
 	private Contact contact;
 
 	@Inject
 	private transient ContactService contactService;
 
 	private Contact buildContact() {
-		final Client client = this.getAttribute("client");
+		final Long clientId = this.getIdFromParameters("clientId");
+		final Client client = this.clientService.find(clientId);
 		if (client == null) {
 			logger.error("Null client");
 			throw new IllegalStateException("Null client");
@@ -43,29 +45,34 @@ public class ContactDialogBean extends AbstractDialogBean {
 		return newContact;
 	}
 
-	@Override
-	protected void dispose() {
-		logger.trace("ContactDialog closed");
-		this.contact = null;
-	}
-
 	public Contact getContact() {
 		return this.contact;
 	}
 
-	@Override
-	protected void init() {
+	@PostConstruct
+	public void init() {
 		logger.trace("ContactDialog oppened");
-		this.contact = this.getAttribute("contact");
-		if (this.contact == null) {
+		final Long contactId = this.getIdFromParameters("contactId");
+		if (contactId != null) {
+			this.contact = this.contactService.find(contactId);
+			if (this.contact == null) {
+				logger.error("Null contact");
+				throw new IllegalStateException("Null contact");
+			}
+		}
+		else {
 			this.contact = this.buildContact();
 		}
+	}
+
+	public boolean isNewContact() {
+		return this.contact.getId() == 0;
 	}
 
 	public void save() {
 		logger.debug("ContactDialog save action performed");
 		this.contactService.insert(this.contact);
-		to(CLIENT).withParams(map("clientId", this.contact.getClient().getId())).doGet();
+		this.closeDialog(this.contact);
 	}
 
 	public void setContact(final Contact contact) {

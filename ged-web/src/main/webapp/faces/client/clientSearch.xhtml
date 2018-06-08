@@ -11,8 +11,6 @@
 
 	<ui:define name="content">
 
-		<ui:include src="/faces/client/clientDialog.xhtml" />
-
 		<div class="ui-g">
 			<div class="ui-g-12">
 				<h:form id="clientSearchForm">
@@ -30,7 +28,9 @@
 							<div class="ui-g-12 ui-md-6">
 								<div class="pull-right">
 									<p:commandButton value="#{i18n['action.export']}" action="#{clientSearchBean.clean}" icon="fa fa-file-excel-o" />
-									<p:commandButton value="#{i18n['action.new']}" actionListener="#{clientDialogBean.openDialog}" update="clientForm" styleClass="btn-primary" />
+									<p:commandButton value="#{i18n['action.new']}" actionListener="#{clientSearchBean.openNewClientDialog}" styleClass="btn-primary">
+										<p:ajax event="dialogReturn" listener="#{clientSearchBean.onCloseClientDialog}" />
+									</p:commandButton>
 								</div>
 							</div>
 						</div>
