@@ -3996,7 +3996,7 @@ body .ui-dialog .ui-dialog-titlebar {
 }
 
 body .ui-dialog .ui-dialog-title {
-	padding: 8px 15px;
+	padding: 11px 0px 8px 15px;
 	margin: 0;
 	color: white;
 	font-size: 16px;
@@ -4475,6 +4475,12 @@ body .ui-selectonemenu .ui-selectonemenu-trigger {
 	right: 0;
 	top: 0;
 	padding: 3px 3px;
+}
+
+body .ui-selectonemenu .ui-selectonemenu-trigger .ui-icon {
+	position: relative;
+    margin: auto;
+    padding: 4px 0px;
 }
 
 body .ui-panel {
