@@ -6,7 +6,6 @@ import static ged.web.core.util.Page.JOB_OFFER;
 
 import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -40,7 +39,7 @@ public class ClientBean extends AbstractBean {
 
 	@SuppressWarnings("cdi-ambiguous-dependency")
 	@Inject
-	@Param
+	@Param(required = true)
 	private Long clientId;
 
 	@Inject
@@ -67,16 +66,13 @@ public class ClientBean extends AbstractBean {
 	public void init() {
 		logger.trace("Init ClientBean");
 		this.client = this.clientService.findAllClientDataByClientId(this.clientId);
-
 		if (this.client == null) {
 			logger.error("Client not found");
 			throw new PageNotFoundException();
 		}
-
 		if (this.client.getAddress() == null) {
 			this.client.setAddress(new Address());
 		}
-
 		this.contacts = new ArrayList<>(this.client.getContacts());
 	}
 
@@ -105,28 +101,19 @@ public class ClientBean extends AbstractBean {
 		}
 	}
 
-	public void openContactDialog() {
-		final Map<String, List<String>> params = new HashMap<>();
-		final ArrayList<String> param = new ArrayList<>();
-		param.add(String.valueOf(this.clientId));
-		params.put("clientId", param);
-		this.openDialog("contactDialog", params);
+	public void openClientDialog() {
+		final Map<String, List<String>> params = this.buildDialogParameter("clientId", String.valueOf(this.clientId));
+		this.openDialog("/faces/client/clientDialog", params);
 	}
 
-	public void openDialog() {
-		final Map<String, List<String>> params = new HashMap<>();
-		final ArrayList<String> param = new ArrayList<>();
-		param.add(String.valueOf(this.clientId));
-		params.put("clientId", param);
-		this.openDialog("clientDialog", params);
+	public void openContactDialog() {
+		final Map<String, List<String>> params = this.buildDialogParameter("clientId", String.valueOf(this.clientId));
+		this.openDialog("/faces/client/contactDialog", params);
 	}
 
 	public void openJobOfferDialog() {
-		final Map<String, List<String>> params = new HashMap<>();
-		final ArrayList<String> param = new ArrayList<>();
-		param.add(String.valueOf(this.clientId));
-		params.put("clientId", param);
-		this.openDialog("jobOfferDialog", params);
+		final Map<String, List<String>> params = this.buildDialogParameter("clientId", String.valueOf(this.clientId));
+		this.openDialog("/faces/jobOffer/jobOfferDialog", params);
 	}
 
 	public void setClient(final Client client) {

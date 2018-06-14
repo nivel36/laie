@@ -3973,7 +3973,6 @@ body .ui-state-disabled {
 }
 
 body .ui-df-content {
-	width: 746px !important;
 	max-width: 100%;
 	overflow: auto;
     max-height: 100%;

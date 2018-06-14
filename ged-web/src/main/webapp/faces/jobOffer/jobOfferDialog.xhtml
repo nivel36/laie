@@ -1,19 +1,16 @@
-
-<?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:i18n="http://legion.com/i18n"
 	xmlns:cc="http://java.sun.com/jsf/composite/components" template="/WEB-INF/templates/dialog.xhtml">
 
 	<ui:define name="title">
-		<title>#{jobOfferDialogBean.newJobOffer ? i18n['job.new_job'] : jobOfferDialogBean.jobOffer.name}</title>
+		<title>#{jobOfferDialogBean.newJobOffer ? i18n['job.new_job_offer'] : jobOfferDialogBean.jobOffer.name}</title>
 	</ui:define>
 
 	<ui:define name="content">
-
 		<h:form id="newJobOfferForm">
 			<div class="ui-g">
 				<div class="ui-g-12 ui-md-6">
-					<cc:inputText name="name" label="#{i18n['job.name']}" value="#{jobOfferDialogBean.jobOffer.name}" required="true">
+					<cc:inputText name="name" label="#{i18n['job.name']}" value="#{jobOfferDialogBean.jobOffer.name}" required="true" />
 				</div>
 				<div class="ui-g-12 ui-md-6">
 					<h:panelGroup id="clientGroup" layout="block" styleClass="form-group">
@@ -30,7 +27,7 @@
 					</h:panelGroup>
 				</div>
 				<div class="ui-g-12 ui-md-6">
-					<cc:inputText name="places" label="#{i18n['job.places']}" value="#{jobOfferDialogBean.jobOffer.places}">
+					<cc:inputText name="places" label="#{i18n['job.places']}" value="#{jobOfferDialogBean.jobOffer.places}" />
 				</div>
 				<div class="ui-g-12">
 					<div class="form-group">
@@ -66,7 +63,7 @@
 			</div>
 			<div class="form-action-primary">
 				<p:commandButton value="#{i18n['action.cancel']}" action="#{jobOfferDialogBean.closeDialog}" process="@this" styleClass="btn-gray" />
-				<p:commandButton value="#{i18n['action.save']}" action="#{jobOfferDialogBean.save}" update="@form growl" styleClass="btn-primary" />
+				<p:commandButton value="#{i18n['action.save']}" action="#{jobOfferDialogBean.save}" update="@form" styleClass="btn-primary" />
 			</div>
 		</h:form>
 	</ui:define>

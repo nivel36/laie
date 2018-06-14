@@ -53,7 +53,7 @@
 
 						<h:panelGroup rendered="#{clientBean.userHasPermissionToEdit}" styleClass="pull-right">
 							<p:commandButton id="exportExcel" value="#{i18n['action.export']}" action="#{clientBean.export}" icon="fa fa-file-excel-o" />
-							<p:commandButton value="#{i18n['action.edit']}" actionListener="#{clientBean.openDialog}" styleClass="btn-primary">
+							<p:commandButton value="#{i18n['action.edit']}" actionListener="#{clientBean.openClientDialog}" styleClass="btn-primary">
 								<p:ajax event="dialogReturn" listener="#{clientBean.onCloseClientDialog}" update="clientViewForm growl" />
 							</p:commandButton>
 						</h:panelGroup>

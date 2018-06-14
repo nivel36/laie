@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://legion.com/i18n" xmlns:p="http://primefaces.org/ui">
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:i18n="http://legion.com/i18n"
+	xmlns:cc="http://java.sun.com/jsf/composite/components" template="/WEB-INF/templates/dialog.xhtml">
 
-	<h:form id="candidateSelectForm">
-		<p:dialog modal="true" widgetVar="candidateSelectDlg" resizable="false" responsive="true" header="#{i18n['candidate.candidates']}" visible="#{candidateSelectDialogBean.showDialog}">
+	<ui:define name="title">
+		<title>#{i18n['candidate.candidates']}</title>
+	</ui:define>
+
+	<ui:define name="content">
+		<h:form id="candidateSelectForm">
 			<div class="searchForm">
 				<div class="ui-g">
 					<div class="ui-md-8">
@@ -20,7 +25,7 @@
 					rowKey="#{candidate.id}" sortBy="#{candidate.fullName}" sortOrder="ascending">
 
 					<p:column selectionMode="multiple" style="width:16px;text-align:center" />
-					
+
 					<p:column>
 						<p:graphicImage class="image image-icon" value="/images/#{candidate.imageFileName}" rendered="#{not empty candidate.imageFileName}" />
 						<p:graphicImage class="image image-icon" value="/resources/img/default-avatar.png" rendered="#{empty candidate.imageFileName}" />
@@ -51,15 +56,13 @@
 				</p:dataTable>
 				<div class="ui-g">
 					<div class="ui-g-12">
-						<div class="pull-right">
-							<p:commandButton value="#{i18n['action.cancel']}" actionListener="#{candidateSelectDialogBean.closeDialog}" process="@this" update="@form" styleClass="btn-gray">
-								<p:resetInput target="@form" />
-							</p:commandButton>
-							<p:commandButton value="#{i18n['action.select']}" action="#{candidateSelectDialogBean.select}" update="@form growl"/>
+						<div class="form-action-primary">
+							<p:commandButton value="#{i18n['action.cancel']}" actionListener="#{candidateSelectDialogBean.closeDialog}" process="@this" styleClass="btn-gray" />
+							<p:commandButton value="#{i18n['action.select']}" action="#{candidateSelectDialogBean.select}" update="@form" />
 						</div>
 					</div>
 				</div>
 			</div>
-		</p:dialog>
-	</h:form>
+		</h:form>
+	</ui:define>
 </ui:composition>

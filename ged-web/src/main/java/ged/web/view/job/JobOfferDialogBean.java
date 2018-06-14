@@ -39,8 +39,6 @@ public class JobOfferDialogBean extends AbstractDialogBean {
 
 	private JobOffer buildNewJobOffer() {
 		final JobOffer newJobOffer = new JobOffer();
-		final Client client = this.getClientFromAttributes();
-		newJobOffer.setClient(client);
 		final User user = this.sessionBean.getUser();
 		newJobOffer.setOwner(user);
 		return newJobOffer;
@@ -71,12 +69,16 @@ public class JobOfferDialogBean extends AbstractDialogBean {
 	@PostConstruct
 	public void init() {
 		logger.debug("JobOfferDialogBean init");
-		JobOffer newJobOffer = this.getAttribute("jobOffer");
-		if (newJobOffer == null) {
-			newJobOffer = this.buildNewJobOffer();
+		final Long jobOfferId = this.getIdFromParameters("jobOfferId");
+		if (jobOfferId == null) {
+			this.jobOffer = this.buildNewJobOffer();
+			final Client client = this.getClientFromAttributes();
+			this.jobOffer.setClient(client);
 		}
-		this.jobOffer = newJobOffer;
-		this.client = newJobOffer.getClient();
+		else {
+			this.jobOffer = this.jobOfferService.find(jobOfferId);
+		}
+		this.client = this.jobOffer.getClient();
 	}
 
 	private void insertJobOffer() {
@@ -99,7 +101,7 @@ public class JobOfferDialogBean extends AbstractDialogBean {
 	}
 
 	public void openClientSearchDialog() {
-		this.openDialog("clientSearch", null);
+		this.openBigDialog("/faces/client/clientSearchDialog", null);
 	}
 
 	public void save() {

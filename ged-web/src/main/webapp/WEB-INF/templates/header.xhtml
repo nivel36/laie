@@ -6,7 +6,7 @@
 			<nav id="userMenu">
 				<ul>
 					<li><h:outputText value="#{sessionBean.user}" styleClass="name" /></li>
-					<li><h:commandLink value="#{i18n['menu.config']}" action="/faces/config/configIndex?faces-redirect=true"
+					<li><h:commandLink value="#{i18n['menu.config']}" action="/faces/config/config?faces-redirect=true"
 							styleClass="config" /></li>
 					<li><h:commandLink value="#{i18n['user.logout']}" action="#{loginBean.logout}" styleClass="logout" /></li>
 				</ul>

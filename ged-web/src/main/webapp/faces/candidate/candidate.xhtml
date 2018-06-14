@@ -10,9 +10,6 @@
 	<ui:param name="selectedMenu" value="candidates" />
 
 	<ui:define name="content">
-
-		<ui:include src="/faces/candidate/candidateDialog.xhtml" />
-
 		<div class="ui-g">
 			<div class="ui-g-12 ui-lg-12 ui-xl-7">
 				<p:panel header="#{candidateBean.candidate}">
@@ -123,9 +120,8 @@
 								<div class="ui-g">
 									<div class="ui-g-12">
 										<div class="form-action-primary">
-											<p:commandButton styleClass="btn-primary" value="#{i18n['action.edit']}" actionListener="#{candidateDialogBean.openDialog}" process="@this"
-												update="candidateForm">
-												<f:attribute name="candidate" value="#{candidateBean.candidate}" />
+											<p:commandButton value="#{i18n['action.edit']}" actionListener="#{candidateBean.openCandidateDialog}" styleClass="btn-primary">
+												<p:ajax event="dialogReturn" listener="#{candidateBean.onCloseCandidateDialog}" update="@form" />
 											</p:commandButton>
 										</div>
 									</div>
@@ -149,13 +145,10 @@
 			</div>
 
 			<div class="ui-g-12 ui-lg-6 ui-xl-6">
-				<ui:include src="/faces/jobOffer/jobOfferSearchDialog.xhtml" />
 				<h:form id="jobOffersForm">
 					<cc:jobOffers id="jobOffers" jobOffers="#{candidateBean.jobOffers}">
-						<p:commandButton value="#{i18n['action.add']}" actionListener="#{jobOfferSearchDialogBean.openDialog}" process="@this" update="jobOfferSearchDialogForm"
-							styleClass="btn-primary">
-							<f:attribute name="updateField" value="jobOffersForm" />
-							<f:attribute name="callback" value="#{candidateBean}" />
+						<p:commandButton value="#{i18n['action.add']}" actionListener="#{candidateBean.openSelectJobOfferDialog}" styleClass="btn-primary">
+							<p:ajax event="dialogReturn" listener="#{candidateBean.onCloseSelectJobOfferDialog}" update="@form" />
 						</p:commandButton>
 					</cc:jobOffers>
 				</h:form>

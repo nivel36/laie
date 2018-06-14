@@ -18,7 +18,7 @@ import ged.web.core.view.AbstractBean;
 
 @Named
 @ViewScoped
-public class ConfigIndexBean extends AbstractBean {
+public class ConfigBean extends AbstractBean {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
@@ -28,10 +28,6 @@ public class ConfigIndexBean extends AbstractBean {
 
 	@Inject
 	private transient UserService userService;
-
-	public void setUserService(UserService userService) {
-		this.userService = userService;
-	}
 
 	private void changeSessionUser() {
 		this.sessionBean.setUser(this.user);
@@ -49,18 +45,26 @@ public class ConfigIndexBean extends AbstractBean {
 		this.user = this.sessionBean.getUser();
 	}
 
+	public void openChangePasswordDialog() {
+		this.openDialog("/faces/config/changePasswordDialog");
+	}
+
 	public void save() {
 		logger.debug("Save user action performed");
 		final long userId = this.user.getId();
 		if (userId == this.sessionBean.getUser().getId()) {
-			changeSessionUser();
+			this.changeSessionUser();
 		}
 		this.user = this.userService.update(this.user);
 		this.sessionBean.setUser(this.user);
-		addMessage(FacesMessage.SEVERITY_INFO, "action.save_action_performed", "action.save_action_performed");
+		this.addMessage(FacesMessage.SEVERITY_INFO, "action.save_action_performed", "action.save_action_performed");
 	}
 
 	public void setUser(final User user) {
 		this.user = user;
+	}
+
+	public void setUserService(final UserService userService) {
+		this.userService = userService;
 	}
 }

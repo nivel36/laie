@@ -1,6 +1,7 @@
 package ged.web.core.view;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -86,6 +87,25 @@ public abstract class AbstractBean implements Serializable {
 		}
 	}
 
+	protected Map<String, List<String>> buildDialogParameter(final String name, final String value) {
+		final Map<String, List<String>> params = new HashMap<>();
+		final ArrayList<String> param = new ArrayList<>();
+		param.add(value);
+		params.put(name, param);
+		return params;
+	}
+
+	private Map<String, Object> buildDialogParameters() {
+		final Map<String, Object> options = new HashMap<>();
+		options.put("modal", true);
+		options.put("resizable", false);
+		options.put("responsive", true);
+		options.put("dynamic", true);
+		options.put("contentWidth", "100%");
+		options.put("height", "auto");
+		return options;
+	}
+
 	@SuppressWarnings("unchecked")
 	public <T> T getValueFromFlash(final String key) {
 		if (this.flash.containsKey(key)) {
@@ -100,14 +120,23 @@ public abstract class AbstractBean implements Serializable {
 		return this.externalContext.getRequestParameterMap().get(key);
 	}
 
+	protected void openBigDialog(final String name) {
+		this.openBigDialog(name, null);
+	}
+
+	protected void openBigDialog(final String name, final Map<String, List<String>> params) {
+		final Map<String, Object> options = this.buildDialogParameters();
+		options.put("width", "1024");
+		PrimeFaces.current().dialog().openDynamic(name, options, params);
+	}
+
+	protected void openDialog(final String name) {
+		this.openDialog(name, null);
+	}
+
 	protected void openDialog(final String name, final Map<String, List<String>> params) {
-		final Map<String, Object> options = new HashMap<>();
-		options.put("modal", true);
-		options.put("resizable", false);
-		options.put("responsive", true);
-		options.put("dynamic", true);
-		options.put("contentWidth", "100%");
-		options.put("height", "auto");
+		final Map<String, Object> options = this.buildDialogParameters();
+		options.put("width", "746");
 		PrimeFaces.current().dialog().openDynamic(name, options, params);
 	}
 

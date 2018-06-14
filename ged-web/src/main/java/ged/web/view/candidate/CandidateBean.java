@@ -9,6 +9,8 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.omnifaces.cdi.Param;
+import org.primefaces.event.SelectEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,19 +20,23 @@ import ged.ejb.core.Address;
 import ged.ejb.core.tag.Tag;
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
-import ged.web.core.CloseDialogListener;
 import ged.web.core.PageNotFoundException;
 import ged.web.core.view.AbstractBean;
 
 @Named
 @ViewScoped
-public class CandidateBean extends AbstractBean implements CloseDialogListener {
+public class CandidateBean extends AbstractBean {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	private static final long serialVersionUID = 1577879781927493283L;
 
 	private Candidate candidate;
+
+	@SuppressWarnings("cdi-ambiguous-dependency")
+	@Inject
+	@Param(required = true)
+	private Long candidateId;
 
 	@Inject
 	private transient CandidateService candidateService;
@@ -46,21 +52,6 @@ public class CandidateBean extends AbstractBean implements CloseDialogListener {
 		return this.candidate;
 	}
 
-	private Long getCandidateIdFromGetParameter() {
-		try {
-			final String candidateIdValue = this.getValueFromGetParameters("candidateId");
-			if (candidateIdValue == null) {
-				logger.error("CandidateId is null");
-				throw new PageNotFoundException();
-			}
-			return Long.parseLong(candidateIdValue);
-		}
-		catch (final NumberFormatException e) {
-			logger.error("CandidateId is not a number");
-			throw new PageNotFoundException();
-		}
-	}
-
 	public List<JobOffer> getJobOffers() {
 		return this.jobOffers;
 	}
@@ -72,8 +63,7 @@ public class CandidateBean extends AbstractBean implements CloseDialogListener {
 	@PostConstruct
 	public void init() {
 		logger.trace("CandidateBean init");
-		final Long candidateId = this.getCandidateIdFromGetParameter();
-		this.candidate = this.candidateService.find(candidateId);
+		this.candidate = this.candidateService.find(this.candidateId);
 		if (this.candidate == null) {
 			throw new PageNotFoundException();
 		}
@@ -86,18 +76,36 @@ public class CandidateBean extends AbstractBean implements CloseDialogListener {
 		this.jobOffers = this.jobOfferService.findJobOffersByCandidate(this.candidate);
 	}
 
-	@Override
-	public void onCloseDialog(final Object value) {
+	public void onCloseCandidateDialog(final SelectEvent event) {
+		final Candidate candidateFromDialog = (Candidate) event.getObject();
+		if (candidateFromDialog != null) {
+			this.candidate = candidateFromDialog;
+		}
+	}
+
+	public void onCloseSelectJobOfferDialog(final SelectEvent event) {
 		@SuppressWarnings("unchecked")
-		final List<JobOffer> selectedJobOffers = (List<JobOffer>) value;
+		final List<JobOffer> selectedJobOffers = (List<JobOffer>) event.getObject();
 		for (final JobOffer jobOffer : selectedJobOffers) {
 			this.jobOfferService.addJobCandidature(jobOffer, this.candidate);
 			this.jobOffers.add(jobOffer);
 		}
 	}
 
+	public void openCandidateDialog() {
+		this.openDialog("/faces/candidate/candidateDialog", this.buildDialogParameter("candidateId", String.valueOf(this.candidateId)));
+	}
+
+	public void openSelectJobOfferDialog() {
+		this.openBigDialog("/faces/jobOffer/jobOfferSelectDialog");
+	}
+
 	public void setCandidate(final Candidate candidate) {
 		this.candidate = candidate;
+	}
+
+	public void setCandidateId(final Long candidateId) {
+		this.candidateId = candidateId;
 	}
 
 	public void setCandidateService(final CandidateService candidateService) {

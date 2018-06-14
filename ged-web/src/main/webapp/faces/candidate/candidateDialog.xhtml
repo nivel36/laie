@@ -15,7 +15,7 @@
 					<div class="user-card">
 						<p:outputPanel layout="block" id="userImage" styleClass="user-image">
 							<p:fileUpload id="uploadImage" styleClass="uploadImageButton" fileUploadListener="#{candidateDialogBean.uploadImage}" mode="advanced"
-								dragDropSupport="false" update="userImage growl" auto="true" label="#{i18n['action.add']}" />
+								dragDropSupport="false" update="userImage" auto="true" label="#{i18n['action.add']}" />
 							<h:outputLabel for="uploadImage_input">
 								<p:graphicImage styleClass="selectable image" value="/images/#{candidateDialogBean.candidate.imageFileName}"
 									rendered="#{not empty candidateDialogBean.candidate.imageFileName}" />
@@ -24,7 +24,7 @@
 						</p:outputPanel>
 						<div class="user-rating">
 							<p:rating value="#{candidateDialogBean.candidate.rating}" cancel="false">
-								<p:ajax event="rate" listener="#{candidateDialogBean.onrate}" update="growl" />
+								<p:ajax event="rate" listener="#{candidateDialogBean.onrate}" update="" />
 							</p:rating>
 						</div>
 					</div>
@@ -131,7 +131,7 @@
 
 			<div class="form-action-primary">
 				<p:commandButton value="#{i18n['action.cancel']}" action="#{candidateDialogBean.closeDialog}" process="@this" styleClass="btn-gray" />
-				<p:commandButton value="#{i18n['action.save']}" action="#{candidateDialogBean.save}" update="@form growl" />
+				<p:commandButton value="#{i18n['action.save']}" action="#{candidateDialogBean.save}" update="@form" />
 			</div>
 		</h:form>
 	</ui:define>

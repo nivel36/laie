@@ -1,5 +1,9 @@
 package ged.web.view.job;
 
+import static ged.ejb.core.util.Parameters.map;
+import static ged.web.core.util.Navigate.to;
+import static ged.web.core.util.Page.JOB_OFFER;
+
 import java.lang.invoke.MethodHandles;
 import java.util.List;
 
@@ -8,6 +12,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.primefaces.event.SelectEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,6 +52,17 @@ public class JobOfferSearchBean extends AbstractBean {
 	public void init() {
 		logger.trace("JobOfferSearchBean init");
 		this.search();
+	}
+
+	public void onCloseJobOfferDialog(final SelectEvent event) {
+		final JobOffer jobOffer = (JobOffer) event.getObject();
+		if (jobOffer != null) {
+			to(JOB_OFFER).withParams(map("jobOfferId", jobOffer.getId())).doGet();
+		}
+	}
+
+	public void openJobOfferDialog() {
+		this.openDialog("/faces/jobOffer/jobOfferDialog");
 	}
 
 	public void search() {

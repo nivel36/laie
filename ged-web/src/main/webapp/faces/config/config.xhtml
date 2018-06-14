@@ -20,21 +20,21 @@
 									<div class="ui-g-12 ui-lg-6">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['config.name']}" />
-											<p:inputText id="name" value="#{configIndexBean.user.name}" label="#{i18n['config.name']}" required="true" />
+											<p:inputText id="name" value="#{configBean.user.name}" label="#{i18n['config.name']}" required="true" />
 											<h:message for="name" errorClass="error" />
 										</div>
 									</div>
 									<div class="ui-g-12 ui-lg-6">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['config.surname']}" />
-											<p:inputText id="surname" value="#{configIndexBean.user.surname}" label="#{i18n['config.surname']}" required="true" />
+											<p:inputText id="surname" value="#{configBean.user.surname}" label="#{i18n['config.surname']}" required="true" />
 											<h:message for="surname" errorClass="error" />
 										</div>
 									</div>
 									<div class="ui-g-12 ui-lg-6">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['config.email']}" />
-											<p:inputText id="email" value="#{configIndexBean.user.email}" label="#{i18n['config.email']}" required="true" />
+											<p:inputText id="email" value="#{configBean.user.email}" label="#{i18n['config.email']}" required="true" />
 											<h:message for="email" errorClass="error" />
 										</div>
 									</div>
@@ -42,9 +42,8 @@
 								<div class="ui-g">
 									<div class="ui-g-12">
 										<div class="form-action-primary">
-											<p:commandButton value="#{i18n['config.change_password']}" actionListener="#{changePasswordDialogBean.openDialog}" update="changePasswordDialogForm"
-												process="@this" />
-											<p:commandButton value="#{i18n['action.save']}" action="#{configIndexBean.save}" update="growl" />
+											<p:commandButton value="#{i18n['config.change_password']}" actionListener="#{configBean.openChangePasswordDialog}" process="@this" />
+											<p:commandButton value="#{i18n['action.save']}" action="#{configBean.save}" update="growl" />
 										</div>
 									</div>
 								</div>
@@ -67,7 +66,7 @@
 							<div class="ui-g-12 ui-lg-6">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['config.rows_per_page']}" />
-									<p:selectOneMenu value="#{configIndexBean.user.rowsPerPage}">
+									<p:selectOneMenu value="#{configBean.user.rowsPerPage}">
 										<f:selectItem itemValue="5" itemLabel="5" />
 										<f:selectItem itemValue="10" itemLabel="10" />
 										<f:selectItem itemValue="25" itemLabel="25" />
@@ -78,7 +77,7 @@
 							<div class="ui-g-12 ui-lg-6">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['config.language']}" />
-									<p:selectOneMenu id="language" value="#{configIndexBean.user.language}" style="text-transform: capitalize">
+									<p:selectOneMenu id="language" value="#{configBean.user.language}" style="text-transform: capitalize">
 										<f:selectItems var="locale" value="#{applicationBean.locales}" itemValue="#{locale.language}" itemLabel="#{locale.displayLanguage}" />
 									</p:selectOneMenu>
 								</div>
@@ -87,7 +86,7 @@
 						<div class="ui-g">
 							<div class="ui-g-12">
 								<div class="form-action-primary">
-									<p:commandButton value="#{i18n['action.save']}" action="#{configIndexBean.save}" update="@all" />
+									<p:commandButton value="#{i18n['action.save']}" action="#{configBean.save}" update="@all" />
 								</div>
 							</div>
 						</div>

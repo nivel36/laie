@@ -1,9 +1,5 @@
 package ged.web.view.candidate;
 
-import static ged.ejb.core.util.Parameters.map;
-import static ged.web.core.util.Navigate.to;
-import static ged.web.core.util.Page.CANDIDATE;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UncheckedIOException;
@@ -87,7 +83,8 @@ public class CandidateDialogBean extends AbstractDialogBean {
 
 	@PostConstruct
 	public void init() {
-		this.candidate = this.getAttribute("candidate");
+		final Long candidateId = this.getIdFromParameters("candidateId");
+		this.candidate = this.candidateService.find(candidateId);
 		if (this.candidate == null) {
 			this.candidate = this.buildNewCandidate();
 		}
@@ -109,12 +106,11 @@ public class CandidateDialogBean extends AbstractDialogBean {
 	public void save() {
 		if (this.candidate.getId() == 0) {
 			this.insertCandidate();
-			to(CANDIDATE).withParams(map("candidateId", this.candidate.getId())).doGet();
 		}
 		else {
 			this.updateCandidate();
-			to(CANDIDATE).withParams(map("candidateId", this.candidate.getId())).doGet();
 		}
+		this.closeDialog(this.candidate);
 	}
 
 	public void setCandidate(final Candidate candidate) {
