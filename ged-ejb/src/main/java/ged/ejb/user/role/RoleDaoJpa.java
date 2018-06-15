@@ -33,8 +33,8 @@ public class RoleDaoJpa extends AbstractDaoJpa<Role> implements RoleDao {
 
 	@Override
 	public List<Role> findSubordinateRoles(final Role role) {
+		Objects.requireNonNull(role);
 		try {
-			Objects.requireNonNull(role);
 			return this.findByQuery(Role.class, "Role.findSubordinateRoles", map("antecessor", role), 0, 0);
 		}
 		catch (final NoResultException e) {
