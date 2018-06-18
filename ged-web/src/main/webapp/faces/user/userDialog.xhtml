@@ -4,7 +4,7 @@
 	xmlns:cc="http://java.sun.com/jsf/composite/components" template="/WEB-INF/templates/dialog.xhtml">
 
 	<ui:define name="title">
-		<title>#{userDialogBean.newUser ? i18n['user.user'] : userDialogBean.user}"</title>
+		<title>#{userDialogBean.newUser ? i18n['user.user'] : userDialogBean.user}</title>
 	</ui:define>
 
 	<ui:define name="content">
@@ -27,49 +27,29 @@
 
 				<div class="ui-g-12 ui-lg-9 ui-xl-10">
 					<div class="ui-g">
-						<div class="ui-g-12 ui-md-4">
-							<div class="form-group">
-								<p:outputLabel value="#{i18n['user.name']}" for="name" />
-								<p:inputText id="name" value="#{userDialogBean.user.name}" required="true" />
-							</div>
-							<h:message for="name" errorClass="error" />
+						<div class="ui-g-12 ui-md-6">
+							<cc:inputText name="name" label="#{i18n['user.name']}" value="#{userDialogBean.user.name}" required="true" />
 						</div>
 
-						<div class="ui-g-12 ui-md-4">
-							<div class="form-group">
-								<p:outputLabel value="#{i18n['user.surname']}" for="surname" />
-								<p:inputText id="surname" value="#{userDialogBean.user.surname}" required="true" />
-							</div>
-							<h:message for="surname" errorClass="error" />
+						<div class="ui-g-12 ui-md-6">
+							<cc:inputText name="surname" label="#{i18n['user.surname']}" value="#{userDialogBean.user.surname}" required="true" />
 						</div>
 
-						<div class="ui-g-12 ui-md-4">
-							<div class="form-group">
-								<p:outputLabel value="#{i18n['user.email']}" for="email" />
-								<p:inputText id="email" value="#{userDialogBean.user.email}" />
-							</div>
-							<h:message for="email" errorClass="error" />
+						<div class="ui-g-12 ui-md-6">
+							<cc:inputText name="email" label="#{i18n['user.email']}" value="#{userDialogBean.user.email}" required="true" />
 						</div>
 
-						<div class="ui-g-12 ui-md-4">
-							<div class="form-group">
-								<p:outputLabel value="#{i18n['user.phone_number']}" for="phone_number" />
-								<p:inputText id="phone_number" value="#{userDialogBean.user.phoneNumber}" />
-							</div>
-							<h:message for="phone_number" errorClass="error" />
+						<div class="ui-g-12 ui-md-6">
+							<cc:inputText name="phone_number" label="#{i18n['user.phone_number']}" value="#{userDialogBean.user.phoneNumber}" />
 						</div>
 
-						<div class="ui-g-12 ui-md-4">
-							<div class="form-group">
-								<p:outputLabel value="#{i18n['user.role']}" for="role" />
-								<p:selectOneMenu id="role" value="#{userDialogBean.user.role}" validator="#{userDialogBean.validateRole}">
-									<f:selectItems var="role" itemValue="#{role}" value="#{applicationBean.roles}" itemLabel="#{i18n:translate(role.name)}" />
-								</p:selectOneMenu>
-							</div>
-							<h:message for="role" errorClass="error" />
+						<div class="ui-g-12 ui-md-6">
+							<cc:selectOneMenu name="role" label="#{i18n['user.role']}" value="#{userDialogBean.user.role}" validator="#{userDialogBean.validateRole}">
+								<f:selectItems var="role" itemValue="#{role}" value="#{applicationBean.roles}" itemLabel="#{i18n:translate(role.name)}" />
+							</cc:selectOneMenu>
 						</div>
 
-						<div class="ui-sm-12 ui-md-4">
+						<div class="ui-sm-12 ui-md-6">
 							<div class="form-group">
 								<p:outputLabel value="#{i18n['user.manager']}" for="manager" />
 								<p:autoComplete id="manager" value="#{userDialogBean.manager}" completeMethod="#{userDialogBean.completeManager}" var="manager"
@@ -86,19 +66,15 @@
 							<h:message for="manager" errorClass="error" />
 						</div>
 
-						<div class="ui-g-12 ui-md-4">
-							<div class="form-group">
-								<p:outputLabel value="#{i18n['user.date_of_join']}" for="date_of_join" />
-								<p:calendar id="date_of_join" value="#{userDialogBean.user.dateOfJoin}" />
-							</div>
-							<h:message for="date_of_join" errorClass="error" />
+						<div class="ui-g-12 ui-md-6">
+							<cc:calendar name="date_of_join" label="#{i18n['user.date_of_join']}" value="#{userDialogBean.user.dateOfJoin}" />
 						</div>
 					</div>
 
 					<div class="ui-g">
 						<div class="ui-g-12">
 							<div class="form-action-primary">
-								<p:commandButton styleClass="btn-primary" value="#{i18n['action.save']}" action="#{userDialogBean.save}" />
+								<p:commandButton styleClass="btn-primary" value="#{i18n['action.save']}" action="#{userDialogBean.save}" update="@form growl" />
 								<p:commandButton styleClass="btn-gray" value="#{i18n['action.cancel']}" action="#{userDialogBean.closeDialog}" process="@this" />
 							</div>
 						</div>
@@ -106,6 +82,5 @@
 				</div>
 			</div>
 		</h:form>
-
 	</ui:define>
 </ui:composition>

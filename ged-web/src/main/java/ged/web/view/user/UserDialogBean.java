@@ -99,11 +99,11 @@ public class UserDialogBean extends AbstractDialogBean {
 		logger.debug("Save user action performed");
 		if (this.user.getId() == 0) {
 			this.insertUser();
+			this.closeDialog(this.user);
 		}
 		else {
 			this.updateUser();
 		}
-		this.closeDialog(this.user);
 	}
 
 	public void setFileUploadService(final FileUploadService fileUploadService) {
@@ -131,6 +131,7 @@ public class UserDialogBean extends AbstractDialogBean {
 		try {
 			this.user.setManager(this.manager);
 			this.user = this.userService.update(this.user);
+			this.closeDialog(this.user);
 		}
 		catch (final EJBException e) {
 			if (e.getCause() instanceof UserException) {
