@@ -1,5 +1,9 @@
 package ged.web.view.candidate;
 
+import static ged.ejb.core.util.Parameters.map;
+import static ged.web.core.util.Navigate.to;
+import static ged.web.core.util.Page.CURRICULUM;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -16,10 +20,6 @@ import ged.ejb.curriculum.Education;
 import ged.ejb.curriculum.JobExperience;
 import ged.ejb.curriculum.Language;
 import ged.ejb.curriculum.Skill;
-
-import static ged.ejb.core.util.Parameters.*;
-import static ged.web.core.util.Navigate.*;
-import static ged.web.core.util.Page.*;
 import ged.web.core.view.AbstractBean;
 
 @Named
@@ -67,8 +67,8 @@ public class CurriculumEditBean extends AbstractBean {
 		this.skills.add(skill);
 	}
 
-	public String cancel() {
-		return to(CURRICULUM).withParams(map("id", this.curriculum.getCandidate().getId())).toUrl();
+	public void cancel() {
+		to(CURRICULUM).withParams(map("id", this.curriculum.getCandidate().getId())).doGet();
 	}
 
 	public Curriculum getCurriculum() {
@@ -95,7 +95,8 @@ public class CurriculumEditBean extends AbstractBean {
 	public void init() {
 		if (this.flash.containsKey(CURRICULUM_KEY)) {
 			this.curriculum = (Curriculum) this.flash.get(CURRICULUM_KEY);
-		} else {
+		}
+		else {
 			this.curriculum = new Curriculum();
 		}
 		if (this.curriculum.getSkills() == null) {
@@ -140,13 +141,13 @@ public class CurriculumEditBean extends AbstractBean {
 		this.skills.remove(skill);
 	}
 
-	public String save() {
-		this.curriculum.setEducation(listToSet(this.education));
-		this.curriculum.setLanguages(listToSet(this.languages));
-		this.curriculum.setJobExperiences(listToSet(this.jobExperiences));
-		this.curriculum.setSkills(listToSet(this.skills));
+	public void save() {
+		this.curriculum.setEducation(this.listToSet(this.education));
+		this.curriculum.setLanguages(this.listToSet(this.languages));
+		this.curriculum.setJobExperiences(this.listToSet(this.jobExperiences));
+		this.curriculum.setSkills(this.listToSet(this.skills));
 		this.curriculumService.insert(this.curriculum);
-		return to(CURRICULUM).withParams(map("id", this.curriculum.getCandidate().getId())).toUrl();
+		to(CURRICULUM).withParams(map("id", this.curriculum.getCandidate().getId())).doGet();
 	}
 
 	public void setCurriculum(final Curriculum curriculum) {

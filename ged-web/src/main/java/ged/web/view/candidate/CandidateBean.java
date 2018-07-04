@@ -18,6 +18,7 @@ import ged.ejb.candidate.Candidate;
 import ged.ejb.candidate.CandidateService;
 import ged.ejb.core.Address;
 import ged.ejb.core.tag.Tag;
+import ged.ejb.curriculum.Curriculum;
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
 import ged.web.core.PageNotFoundException;
@@ -41,6 +42,8 @@ public class CandidateBean extends AbstractBean {
 	@Inject
 	private transient CandidateService candidateService;
 
+	private List<Curriculum> curricula;
+
 	private List<JobOffer> jobOffers;
 
 	@Inject
@@ -50,6 +53,10 @@ public class CandidateBean extends AbstractBean {
 
 	public Candidate getCandidate() {
 		return this.candidate;
+	}
+
+	public List<Curriculum> getCurricula() {
+		return this.curricula;
 	}
 
 	public List<JobOffer> getJobOffers() {
@@ -83,6 +90,13 @@ public class CandidateBean extends AbstractBean {
 		}
 	}
 
+	public void onCloseCurriculumDialog(final SelectEvent event) {
+		final Curriculum curriculumFromDialog = (Curriculum) event.getObject();
+		if (curriculumFromDialog != null) {
+			this.curricula.add(curriculumFromDialog);
+		}
+	}
+
 	public void onCloseSelectJobOfferDialog(final SelectEvent event) {
 		@SuppressWarnings("unchecked")
 		final List<JobOffer> selectedJobOffers = (List<JobOffer>) event.getObject();
@@ -94,6 +108,10 @@ public class CandidateBean extends AbstractBean {
 
 	public void openCandidateDialog() {
 		this.openDialog("/faces/candidate/candidateDialog", this.buildDialogParameter("candidateId", String.valueOf(this.candidateId)));
+	}
+
+	public void openCurriculumDialog() {
+		this.openBigDialog("/faces/candidate/curriculumDialog", this.buildDialogParameter("candidateId", String.valueOf(this.candidateId)));
 	}
 
 	public void openSelectJobOfferDialog() {

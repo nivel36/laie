@@ -1,9 +1,13 @@
 package ged.web.view.user;
 
+import static ged.ejb.core.util.Parameters.map;
+import static ged.web.core.util.Navigate.to;
+import static ged.web.core.util.Page.USER;
+import static ged.web.core.util.Page.USER_EDIT;
+
 import java.io.IOException;
 import java.lang.invoke.MethodHandles;
 import java.util.List;
-import java.util.Objects;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -12,7 +16,6 @@ import javax.inject.Named;
 
 import org.omnifaces.cdi.Param;
 import org.omnifaces.util.Faces;
-import org.primefaces.event.SelectEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -50,6 +53,10 @@ public class UserBean extends AbstractBean {
 	@Inject
 	private transient UserService userService;
 
+	public void editUser() {
+		to(USER_EDIT).withParams(map("user", this.user)).doPost();
+	}
+
 	public void export() throws IOException {
 		final UserReport userReport = new UserReport(this.user, this.jobOffers);
 		Faces.sendFile(userReport.create(), true);
@@ -85,16 +92,8 @@ public class UserBean extends AbstractBean {
 		}
 	}
 
-	public void onCloseUserDialog(final SelectEvent event) {
-		Objects.requireNonNull(event);
-		final User userFromDialog = (User) event.getObject();
-		if (userFromDialog != null) {
-			this.user = userFromDialog;
-		}
-	}
-
-	public void openUserDialog() {
-		this.openDialog("/faces/user/userDialog", this.buildDialogParameter("userId", String.valueOf(this.userId)));
+	public void newUser() {
+		to(USER).doPost();
 	}
 
 	public void setJobOfferService(final JobOfferService jobOfferService) {

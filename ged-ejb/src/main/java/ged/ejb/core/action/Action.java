@@ -5,6 +5,7 @@ import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+
 import ged.ejb.core.model.AbstractRecordEntity;
 
 @Entity
@@ -39,11 +40,11 @@ public class Action extends AbstractRecordEntity {
 		if (!super.equals(obj)) {
 			return false;
 		}
-		if (getClass() != obj.getClass()) {
+		if (this.getClass() != obj.getClass()) {
 			return false;
 		}
 		final Action other = (Action) obj;
-		return Objects.equals(this.actionPerformed, other.actionPerformed) && Objects.equals(this.date, other.date);
+		return super.equals(other) && Objects.equals(this.actionPerformed, other.actionPerformed) && Objects.equals(this.date, other.date);
 	}
 
 	public String getActionPerformed() {
@@ -56,7 +57,7 @@ public class Action extends AbstractRecordEntity {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(this.actionPerformed, this.date);
+		return Objects.hash(super.hashCode(), this.actionPerformed, this.date);
 	}
 
 	public void setActionPerformed(final String actionPerformed) {

@@ -11,6 +11,15 @@
 
 	<ui:define name="content">
 		<div class="ui-g">
+			<div class="ui-g-12 ui-xl-8">
+				<p:breadCrumb homeDisplay="text">
+					<p:menuitem value="#{i18n['menu.index']}" url="/faces/index.xhtml" />
+					<p:menuitem value="#{i18n['user.users']}" url="/faces/user/userSearch.xhtml" />
+					<p:menuitem value="#{userBean.user}" disabled="true" />
+				</p:breadCrumb>
+			</div>
+		</div>
+		<div class="ui-g">
 			<div class="ui-g-12 ui-lg-12 ui-xl-7">
 				<h:form>
 					<p:panel header="#{userBean.user}">
@@ -73,7 +82,9 @@
 									<div class="ui-g-12 ui-md-4">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['user.date_of_join']}" for="date_of_join" />
-											<p:calendar id="date_of_join" value="#{userBean.user.dateOfJoin}" readonly="true" disabled="true" />
+											<p:calendar id="date_of_join" value="#{userBean.user.dateOfJoin}" readonly="true" disabled="true" pattern="dd/MM/yyyy">
+												<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
+											</p:calendar>
 										</div>
 									</div>
 								</div>
@@ -82,9 +93,7 @@
 									<div class="ui-g-12">
 
 										<div class="form-action-primary">
-											<p:commandButton styleClass="btn-primary" value="#{i18n['action.edit']}" action="#{userBean.openUserDialog}">
-												<p:ajax event="dialogReturn" update="@form" listener="#{userBean.onCloseUserDialog}" />
-											</p:commandButton>
+											<p:commandButton value="#{i18n['action.edit']}" action="#{userBean.editUser}" process="@this" styleClass="btn-primary" />
 											<p:commandButton id="exportExcel" icon="fa fa-file-excel-o" value="#{i18n['action.export']}" action="#{userBean.export}" />
 										</div>
 									</div>

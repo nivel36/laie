@@ -9,6 +9,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
@@ -72,9 +74,9 @@ public class JobOffer extends AbstractAuditedEntity implements Ownerable {
 	@NotNull
 	private Integer places = 1;
 
-	@ManyToOne
-	@JoinColumn(name = "recruiterId", nullable = true)
-	private User recruiter;
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinTable(name = "job_user", joinColumns = @JoinColumn(name = "job_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
+	private Set<User> recruiters;
 
 	@Column(nullable = false, length = 64)
 	@NotNull
@@ -144,8 +146,8 @@ public class JobOffer extends AbstractAuditedEntity implements Ownerable {
 		return this.places;
 	}
 
-	public User getRecruiter() {
-		return this.recruiter;
+	public Set<User> getRecruiters() {
+		return this.recruiters;
 	}
 
 	public String getState() {
@@ -206,8 +208,8 @@ public class JobOffer extends AbstractAuditedEntity implements Ownerable {
 		this.places = places;
 	}
 
-	public void setRecruiter(final User recruiter) {
-		this.recruiter = recruiter;
+	public void setRecruiters(final Set<User> recruiters) {
+		this.recruiters = recruiters;
 	}
 
 	public void setState(final String state) {

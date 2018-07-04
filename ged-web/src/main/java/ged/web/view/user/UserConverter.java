@@ -11,7 +11,7 @@ import javax.inject.Inject;
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
 
-@FacesConverter(forClass = User.class)
+@FacesConverter(managed = true, forClass = User.class)
 public class UserConverter implements Converter<User> {
 
 	@Inject
@@ -23,10 +23,8 @@ public class UserConverter implements Converter<User> {
 			return null;
 		}
 		final List<User> users = this.userService.search(value);
-		for (final User user : users) {
-			if (user.getFullName().equals(value)) {
-				return user;
-			}
+		if (users.size() == 1) {
+			return users.get(0);
 		}
 		return null;
 	}
@@ -34,5 +32,9 @@ public class UserConverter implements Converter<User> {
 	@Override
 	public String getAsString(final FacesContext context, final UIComponent component, final User value) {
 		return value.getFullName();
+	}
+
+	public void setUserService(final UserService userService) {
+		this.userService = userService;
 	}
 }

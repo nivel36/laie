@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
-	template="/WEB-INF/templates/default.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
 		<title>Ged</title>
@@ -54,55 +53,55 @@
 				</div>
 			</div>
 		</div>
-			<div class="ui-g">
-				<div class="ui-g-12 ui-lg-6">
-					<p:panel header="#{i18n['index.last_offers']}">
-						<div class="ui-g">
-							<div class="ui-g-12">
-								<h:outputText value="#{i18n['job.no_jobs_found']}" rendered="#{empty indexBean.jobOffers}" styleClass="text" />
-								<ui:repeat var="jobOffer" value="${indexBean.jobOffers}">
-									<h:panelGroup layout="block" styleClass="textBlock">
-										<h:outputText value="#{jobOffer.client.name} - #{jobOffer.name}" />
-									</h:panelGroup>
-									<br />
-								</ui:repeat>
+		<div class="ui-g">
+			<div class="ui-g-12 ui-lg-6">
+				<p:panel header="#{i18n['index.last_offers']}">
+					<div class="ui-g">
+						<div class="ui-g-12">
+							<h:outputText value="#{i18n['job.no_jobs_found']}" rendered="#{empty indexBean.jobOffers}" styleClass="text" />
+							<ui:repeat var="jobOffer" value="${indexBean.jobOffers}">
+								<h:panelGroup layout="block" styleClass="textBlock">
+									<h:outputText value="#{jobOffer.client.name} - #{jobOffer.name}" />
+								</h:panelGroup>
+								<br />
+							</ui:repeat>
+						</div>
+					</div>
+					<div class="ui-g">
+						<div class="ui-g-12">
+							<div class="form-action-primary">
+								<p:commandButton value="#{i18n['action.new']}" action="/faces/jobOffer/jobOfferEdit.xhtml?faces-redirect=true" />
 							</div>
 						</div>
-						<div class="ui-g">
-							<div class="ui-g-12">
-								<div class="form-action-primary">
-									<p:commandButton value="#{i18n['action.new']}" action="/faces/jobOffer/jobOfferEdit.xhtml?faces-redirect=true" />
-								</div>
-							</div>
-						</div>
-					</p:panel>
-				</div>
-				<ui:include src="/faces/candidate/candidateListPanel.xhtml" />
+					</div>
+				</p:panel>
 			</div>
-			<div class="ui-g">
-				<div class="ui-g-12 ui-lg-6">
-					<p:panel header="#{i18n['index.last_reports']}">
-						<div class="ui-g">
-							<div class="ui-g-12">
-								<div class="form-action-primary">
-									<p:commandButton value="#{i18n['action.new']}" action="#{jobOfferViewBean.edit}" />
-								</div>
+			<ui:include src="/faces/candidate/candidateListPanel.xhtml" />
+		</div>
+		<div class="ui-g">
+			<div class="ui-g-12 ui-lg-6">
+				<p:panel header="#{i18n['index.last_reports']}">
+					<div class="ui-g">
+						<div class="ui-g-12">
+							<div class="form-action-primary">
+								<p:commandButton value="#{i18n['action.new']}" action="#{jobOfferViewBean.edit}" />
 							</div>
 						</div>
-					</p:panel>
-				</div>
+					</div>
+				</p:panel>
+			</div>
 
-				<div class="ui-g-12 ui-lg-6">
-					<p:panel header="#{i18n['index.scheudele']}">
-						<div class="ui-g">
-							<div class="ui-g-12">
-								<div class="form-action-primary">
-									<p:commandButton value="#{i18n['action.new']}" action="#{jobOfferViewBean.edit}" />
-								</div>
+			<div class="ui-g-12 ui-lg-6">
+				<p:panel header="#{i18n['index.scheudele']}">
+					<div class="ui-g">
+						<div class="ui-g-12">
+							<div class="form-action-primary">
+								<p:commandButton value="#{i18n['action.new']}" action="#{jobOfferViewBean.edit}" />
 							</div>
 						</div>
-					</p:panel>
-				</div>
+					</div>
+				</p:panel>
 			</div>
+		</div>
 	</ui:define>
 </ui:composition>

@@ -11,10 +11,10 @@ import javax.inject.Named;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ged.ejb.core.action.Action;
-import ged.ejb.core.action.ActionService;
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
+import ged.web.core.util.Navigate;
+import ged.web.core.util.Page;
 import ged.web.core.view.AbstractBean;
 
 @Named
@@ -25,17 +25,6 @@ public class UserSearchBean extends AbstractBean {
 
 	private static final long serialVersionUID = 2434819723782902618L;
 
-	private List<Action> actions;
-
-	@Inject
-	private ActionService actionService;
-
-	private long numberOfUsersInTeam;
-
-	private long numberOfUsersOfflineLastMonth;
-
-	private long numberOfUsersOnlineLastWeek;
-
 	private String searchText;
 
 	private List<User> users;
@@ -43,47 +32,10 @@ public class UserSearchBean extends AbstractBean {
 	@Inject
 	private transient UserService userService;
 
-	private List<User> usersOnlineLastWeek;
-
 	public void clean() {
 		logger.debug("Cleaning search fields");
 		this.searchText = null;
 		this.search();
-	}
-
-	public void findUsersInTeam() {
-		this.users = this.userService.findSubordinateUsers(this.sessionBean.getUser());
-	}
-
-	public void findUsersOffline() {
-		this.users = this.userService.findUsersOfflineLastMonth();
-	}
-
-	public void findUsersOnline() {
-		this.users = this.userService.findUsersOnlineLastWeek();
-	}
-
-	public List<Action> getActions() {
-		return this.actions;
-	}
-
-	public int getNumberOfUsers() {
-		if (this.users == null) {
-			return 0;
-		}
-		return this.users.size();
-	}
-
-	public long getNumberOfUsersInTeam() {
-		return this.numberOfUsersInTeam;
-	}
-
-	public long getNumberOfUsersOfflineLastMonth() {
-		return this.numberOfUsersOfflineLastMonth;
-	}
-
-	public long getNumberOfUsersOnlineLastWeek() {
-		return this.numberOfUsersOnlineLastWeek;
 	}
 
 	public String getSearchText() {
@@ -94,24 +46,14 @@ public class UserSearchBean extends AbstractBean {
 		return this.users;
 	}
 
-	public List<User> getUsersOnlineLastWeek() {
-		return this.usersOnlineLastWeek;
-	}
-
 	@PostConstruct
 	public void init() {
 		logger.trace("Init UserSearchBean");
 		this.search();
-		this.actions = this.actionService.findLastActions();
-		this.usersOnlineLastWeek = this.userService.findUsersOnlineLastWeek();
-		this.numberOfUsersOfflineLastMonth = this.userService.numberOfUsersOfflineLastMonth();
-		this.numberOfUsersOnlineLastWeek = this.userService.numberOfUsersOnlineLastWeek();
-		this.numberOfUsersInTeam = this.userService.numberOfUsersInTeam(this.sessionBean.getUser());
 	}
 
-	public String newUser() {
-		logger.debug("Creating a new user");
-		return "user?faces-redirect=true";
+	public void newUser() {
+		Navigate.to(Page.USER_EDIT).doPost();
 	}
 
 	public void search() {
@@ -122,10 +64,6 @@ public class UserSearchBean extends AbstractBean {
 		else {
 			this.users = this.userService.search(this.searchText);
 		}
-	}
-
-	public void setActionService(final ActionService actionService) {
-		this.actionService = actionService;
 	}
 
 	public void setSearchText(final String searchText) {

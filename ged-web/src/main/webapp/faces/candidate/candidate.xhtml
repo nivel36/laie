@@ -11,6 +11,15 @@
 
 	<ui:define name="content">
 		<div class="ui-g">
+			<div class="ui-g-12">
+				<p:breadCrumb homeDisplay="text">
+					<p:menuitem value="#{i18n['menu.index']}" url="/faces/index.xhtml" />
+					<p:menuitem value="#{i18n['candidate.candidates']}" url="/faces/candidate/candidateSearch.xhtml"  />
+					<p:menuitem value="#{candidateBean.candidate}" disabled="true" />
+				</p:breadCrumb>
+			</div>
+		</div>
+		<div class="ui-g">
 			<div class="ui-g-12 ui-lg-12 ui-xl-7">
 				<p:panel header="#{candidateBean.candidate}">
 					<h:form id="candidatePanelForm">
@@ -133,15 +142,19 @@
 			</div>
 
 			<div class="ui-g-12 ui-lg-6 ui-xl-5">
-				<p:panel header="#{i18n['curriculum.curricula']}">
-					<div class="ui-g">
-						<div class="ui-g-12">
-							<div class="form-action-primary">
-								<p:button value="#{i18n['action.new']}" outcome="/faces/candidate/curriculumEdit" />
+				<h:form id="curriculaForm">
+					<p:panel header="#{i18n['curriculum.curricula']}">
+						<div class="ui-g">
+							<div class="ui-g-12">
+								<div class="form-action-primary">
+									<p:button value="#{i18n['action.add']}" outcome="curriculumEdit" styleClass="btn-primary">
+										<f:param name="candidateId" value="#{candidateBean.candidate.id}" />
+									</p:button>
+								</div>
 							</div>
 						</div>
-					</div>
-				</p:panel>
+					</p:panel>
+				</h:form>
 			</div>
 
 			<div class="ui-g-12 ui-lg-6 ui-xl-6">

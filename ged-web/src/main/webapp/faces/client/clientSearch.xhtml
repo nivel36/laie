@@ -10,6 +10,14 @@
 	<ui:param name="selectedMenu" value="clients" />
 
 	<ui:define name="content">
+		<div class="ui-g">
+			<div class="ui-g-12">
+				<p:breadCrumb homeDisplay="text">
+					<p:menuitem value="#{i18n['menu.index']}" url="/faces/index.xhtml" />
+					<p:menuitem value="#{i18n['client.clients']}" disabled="true" />
+				</p:breadCrumb>
+			</div>
+		</div>
 
 		<div class="ui-g">
 			<div class="ui-g-12">
@@ -20,7 +28,7 @@
 							<div class="ui-g-12 ui-md-6">
 								<div class="ui-inputgroup">
 									<p:inputText id="searchText" value="#{clientSearchBean.searchText}" />
-									<p:commandButton id="cleanSearchTextAction" action="#{clientSearchBean.clean}" update="@form" styleClass="btn-gray" icon="fa fa-times"
+									<p:commandButton id="cleanSearchTextAction" action="#{clientSearchBean.clean}" update="@form" icon="fa fa-times" styleClass="btn-gray"
 										rendered="#{not empty clientSearchBean.searchText}" />
 									<p:commandButton id="searchAction" action="#{clientSearchBean.search}" update="@form" icon="fa fa-search" />
 								</div>

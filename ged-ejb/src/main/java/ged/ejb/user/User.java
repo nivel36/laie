@@ -4,11 +4,15 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
@@ -49,8 +53,9 @@ public class User extends AbstractAuditedEntity {
 	@Column(length = 128, nullable = true, unique = true)
 	private String imageFileName;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "owner", orphanRemoval = false)
-	private List<JobOffer> jobOffers;
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinTable(name = "job_user", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "job_id"))
+	private Set<JobOffer> jobOffers;
 
 	@NotNull
 	@Column(length = 2, nullable = false)
@@ -142,7 +147,7 @@ public class User extends AbstractAuditedEntity {
 		return this.imageFileName;
 	}
 
-	public List<JobOffer> getJobOffers() {
+	public Set<JobOffer> getJobOffers() {
 		return this.jobOffers;
 	}
 
@@ -237,7 +242,7 @@ public class User extends AbstractAuditedEntity {
 		this.imageFileName = imageFileName;
 	}
 
-	public void setJobOffers(final List<JobOffer> jobOffers) {
+	public void setJobOffers(final Set<JobOffer> jobOffers) {
 		this.jobOffers = jobOffers;
 	}
 

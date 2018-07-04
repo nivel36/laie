@@ -26,7 +26,7 @@ body .ui-icon {
 }
 
 .ui-icon-triangle-1-e:before {
-	content: "";
+	content: "\f0da";
 }
 
 .ui-icon-triangle-1-s:before {
@@ -1818,7 +1818,7 @@ body .ui-icon {
 }
 
 .ui-icon-home:before {
-	content: "";
+	content: "\f015";
 }
 
 .ui-icon-hot-tub:before {
@@ -3965,7 +3965,7 @@ body .ui-paginator .ui-paginator-page.ui-state-active {
 
 a {
 	text-decoration: none;
-	color: black;
+	color: #444;
 }
 
 body .ui-state-disabled {
@@ -3975,14 +3975,14 @@ body .ui-state-disabled {
 body .ui-df-content {
 	max-width: 100%;
 	overflow: auto;
-    max-height: 100%;
+	max-height: 100%;
 }
 
 body .ui-dialog {
 	border-radius: 3px;
 	max-width: 100%;
 	overflow: auto;
-    max-height: 100%;
+	max-height: 100%;
 }
 
 body .ui-dialog.medium {
@@ -4014,16 +4014,19 @@ body .ui-dialog .ui-dialog-footer {
 	padding: 15px;
 }
 
-body .ui-dialog .ui-dialog-titlebar-close.ui-state-hover{
-	background:  rgba(255, 0, 0, 0.8);
+body .ui-dialog .ui-dialog-titlebar-close.ui-state-hover {
+	background: rgba(255, 0, 0, 0.8);
 }
 
-body .ui-dialog .ui-dialog-titlebar-close, .ui-dialog .ui-dialog-titlebar-minimize, .ui-dialog .ui-dialog-titlebar-maximize,body .ui-dialog .ui-dialog-titlebar-close.ui-state-hover, .ui-dialog .ui-dialog-titlebar-minimize.ui-state-hover, .ui-dialog .ui-dialog-titlebar-maximize.ui-state-hover {
-    float: right;
-    margin: 0;
-    top: 0;
+body .ui-dialog .ui-dialog-titlebar-close, .ui-dialog .ui-dialog-titlebar-minimize,
+	.ui-dialog .ui-dialog-titlebar-maximize, body .ui-dialog .ui-dialog-titlebar-close.ui-state-hover,
+	.ui-dialog .ui-dialog-titlebar-minimize.ui-state-hover, .ui-dialog .ui-dialog-titlebar-maximize.ui-state-hover
+	{
+	float: right;
+	margin: 0;
+	top: 0;
 	padding: 10px 15px;
-    cursor: pointer;
+	cursor: pointer;
 }
 
 body .ui-dialog-mask {
@@ -4165,7 +4168,6 @@ body .ui-datatable table  .ui-state-highlight {
 	background: transparent;
 }
 
-
 body .ui-datatable thead th {
 	text-align: left;
 }
@@ -4225,7 +4227,7 @@ body .ui-widget-content.ui-datatable-odd {
 	background-color: #f9f9f9;
 }
 
-body .form-group{
+body .form-group {
 	width: 100%;
 	overflow: auto;
 }
@@ -4236,7 +4238,6 @@ body .form-group .ui-outputlabel {
 	position: relative;
 	padding-bottom: 5px;
 	width: 100%;
-	float: left;
 	display: block;
 	color: #424242;
 }
@@ -4308,11 +4309,11 @@ body .ui-inputgroup .ui-inputgroup-addon, .ui-inputgroup .ui-inputgroup-addon-ch
 }
 
 body .ui-inputgroup>.ui-inputtext:not (:first-child ), .ui-inputgroup>.ui-password:not 
-	(:first-child ), .ui-inputgroup>.ui-inputnumber:not
+	 (:first-child ), .ui-inputgroup>.ui-inputnumber:not
 	 (:first-child ) >.ui-inputtext, .ui-inputgroup>.ui-inputmask:not (:first-child 
-	), .ui-inputgroup>.ui-calendar:not (:first-child
+	 ), .ui-inputgroup>.ui-calendar:not (:first-child
 	 ) >.ui-inputfield, .ui-inputgroup>.ui-selectonemenu:not (:first-child 
-	), .ui-inputgroup>.ui-selectonebutton:not (:first-child
+	 ), .ui-inputgroup>.ui-selectonebutton:not (:first-child
 	 ) >.ui-button {
 	border-top-left-radius: 0;
 	border-bottom-left-radius: 0;
@@ -4321,6 +4322,26 @@ body .ui-inputgroup>.ui-inputtext:not (:first-child ), .ui-inputgroup>.ui-passwo
 
 body .ui-inputgroup .ui-inputtext, .ui-inputgroup .ui-password {
 	padding-left: .5em;
+}
+
+body .ql-toolbar {
+	background-color: white;
+}
+
+body .ql-editor {
+	background-color: white;
+}
+
+body .ql-editor {
+	min-height: 100px; 
+}
+
+body .ql-editor strong {
+	font-weight: 600;
+}
+
+body .ql-editor italic {
+	font-style: italic;
 }
 
 body .ui-inputfield {
@@ -4479,21 +4500,20 @@ body .ui-selectonemenu .ui-selectonemenu-trigger {
 
 body .ui-selectonemenu .ui-selectonemenu-trigger .ui-icon {
 	position: relative;
-    margin: auto;
-    padding: 4px 0px;
+	margin: auto;
+	padding: 4px 0px;
 }
 
 body .ui-panel {
 	display: inline-block;
 	position: relative;
 	width: 100%;
-	padding: 10px;
+	padding: 0px;
 	border: 1px solid #BDBDBD;
 }
 
 body .ui-panel .ui-panel-titlebar {
-	padding: 0px 5px 8px 0px;
-	border-bottom: 1px solid #CCCCCC;
+	padding: 10px
 }
 
 body .ui-panel.with-tabs .ui-panel-titlebar {
@@ -4504,10 +4524,12 @@ body .ui-panel.with-tabs .ui-panel-titlebar {
 
 body .ui-panel .ui-panel-titlebar .ui-panel-title {
 	margin: 0;
-	text-transform: uppercase;
 	color: #5b9bd1;
 	font-size: 14px;
-	font-weight: 800;
+	font-weight: 600;
+	padding: 0 0 8px 5px;
+	border-bottom: 1px solid #BDBDBD;
+	display: block;
 }
 
 body .ui-panel .ui-panel-titlebar .ui-panel-titlebar-icon {
@@ -4527,7 +4549,7 @@ body .ui-panel .ui-panel-titlebar .ui-panel-titlebar-icon:hover {
 
 body .ui-panel .ui-panel-content {
 	box-sizing: border-box;
-	padding: 5px 0px;
+	padding: 15px 10px;
 }
 
 body .ui-panel .ui-panel-footer {
@@ -4612,7 +4634,7 @@ body .ui-button, body button.ui-button {
 }
 
 body .ui-button:hover, body button.ui-button:hover {
-	box-shadow: none;	
+	box-shadow: none;
 }
 
 body .ui-button-text-icon-left .ui-button-text {
@@ -4701,7 +4723,7 @@ body .ui-chkbox .ui-chkbox-box .ui-chkbox-icon {
 }
 
 body .ui-chips {
-	width:100%;
+	width: 100%;
 }
 
 body .ui-chips-container {
@@ -4766,17 +4788,17 @@ body .ui-tabs-panels .ui-tabs-panel {
 	animation: ripple-animation 2s;
 }
 
-@keyframes ripple-animation {
-	from { 
-		transform:scale(1);
-		opacity: 0.4;
-	}
-	to {
-		transform: scale(100);
-		opacity: 0;
-	}
+@
+keyframes ripple-animation {from { transform:scale(1);
+	opacity: 0.4;
 }
 
+to {
+	transform: scale(100);
+	opacity: 0;
+}
+
+}
 .ui-selected {
 	background-color: #ffc107;
 	color: black;
@@ -4826,6 +4848,42 @@ body .ui-picklist-buttons .ui-icon-arrow-1-s:before {
 
 body .ui-picklist-buttons .ui-icon-arrowstop-1-s:before {
 	padding-left: 3px;
+}
+
+body .ui-breadcrumb {
+	margin: 0px;
+	border: 0px;
+	padding: 5px 10px;
+	border: 1px solid #BDBDBD;
+	background: white;
+}
+
+body .ui-breadcrumb .ui-breadcrumb-chevron {
+	vertical-align: baseline;
+	padding-top: 4px;
+}
+
+body .ui-breadcrumb .ui-icon {
+	display: inline;
+}
+
+body .ui-breadcrumb ul li .ui-menuitem-link, body .ui-breadcrumb ul li a.ui-icon-home.ui-menuitem-link
+	 {
+	display: block;
+	padding: 5px 10px 5px 5px;
+	margin: 0px;
+}
+
+body .ui-breadcrumb ul li .ui-menuitem-text {
+	display: inline;
+	color: #5b9bd1;
+	font-weight: 600;
+	font-size: 14px;
+	padding-left:5px;
+}
+
+body .ui-breadcrumb ul li .ui-state-disabled .ui-menuitem-text {
+	color: #888;
 }
 
 body .ui-message-error {

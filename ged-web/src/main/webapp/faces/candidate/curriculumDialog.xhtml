@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:i18n="http://legion.com/i18n"
+	xmlns:cc="http://java.sun.com/jsf/composite/components" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" template="/WEB-INF/templates/dialog.xhtml">
+
+	<ui:define name="title">
+		<title>#{i18n['curriculum.curriculum']}</title>
+	</ui:define>
+
+	<ui:define name="content">
+		<h:form id="curriculumDialogForm">
+
+			<p:tabView>
+				<p:tab title="#{i18n['curriculum.job_profile']}">
+
+
+					<div class="ui-g">
+						<div class="ui-g-12 ui-md-4">
+							<div class="form-group">
+								<p:outputLabel value="#{i18n['curriculum.job_profile']}" />
+								<p:inputText id="jobProfile" value="#{curriculumDialogBean.curriculum.jobProfile}" required="true" />
+							</div>
+							<h:message for="jobProfile" errorClass="error" />
+						</div>
+					</div>
+				</p:tab>
+
+				<p:tab title="#{i18n['curriculum.education']}">
+					<!-- EDUCATION -->
+					<h:panelGroup layout="block" id="educationPanel">
+						<ui:repeat value="#{curriculumDialogBean.education}" var="education" id="repeatedPanel">
+							<h:panelGroup layout="block" class="repeatedPanel">
+								<div class="ui-g">
+									<div class="ui-g-12 ui-md-4">
+										<div class="form-group">
+											<p:outputLabel value="#{i18n['education.degree']}" />
+											<p:inputText id="degree" value="#{education.degree}" required="true" />
+										</div>
+										<h:message for="degree" errorClass="error" />
+									</div>
+									<div class="ui-g-12 ui-md-4">
+										<div class="form-group">
+											<p:outputLabel value="#{i18n['education.school']}" />
+											<p:inputText id="school" value="#{education.school}" required="true" />
+										</div>
+										<h:message for="school" errorClass="error" />
+									</div>
+									<div class="ui-g-12 ui-md-4">
+										<div class="form-group">
+											<p:outputLabel value="#{i18n['education.from_date']}" />
+											<p:inputText id="fromDate" value="#{education.fromDate}" label="#{i18n['education.from_date']}">
+												<f:convertDateTime pattern="MM / yyyy" />
+											</p:inputText>
+										</div>
+										<h:message for="fromDate" errorClass="error" />
+									</div>
+									<div class="ui-g-12 ui-md-4">
+										<div class="form-group">
+											<p:outputLabel value="#{i18n['education.to_date']}" />
+											<p:inputText id="toDate" value="#{education.toDate}" disabled="#{education.stillStudying}">
+												<f:convertDateTime pattern="MM / yyyy" />
+											</p:inputText>
+										</div>
+										<h:message for="toDate" errorClass="error" />
+									</div>
+
+									<div class="ui-g-12 ui-md-4">
+										<div class="form-group">
+											<p:outputLabel value="#{i18n['education.still_studying']}" />
+											<p:selectBooleanCheckbox value="#{education.stillStudying}" id="stillStudying">
+												<f:ajax render="toDate" />
+											</p:selectBooleanCheckbox>
+										</div>
+									</div>
+
+									<div class="ui-g-12 ui-md-4">
+										<div class="form-group">
+											<p:outputLabel value="#{i18n['education.description']}" />
+											<p:inputTextarea value="#{education.description}" id="description" label="#{i18n['education.description']}" />
+										</div>
+									</div>
+								</div>
+								<div class="ui-g">
+									<div class="ui-g-12">
+										<div class="form-action-primary">
+											<p:commandButton styleClass="btn-gray" value="#{i18n['action.remove']}" action="#{curriculumDialogBean.removeEducation(education)}" process="@this"
+												update="@form" />
+										</div>
+									</div>
+								</div>
+							</h:panelGroup>
+						</ui:repeat>
+
+						<div class="ui-g">
+							<div class="ui-g-12">
+								<div class="form-action-primary">
+									<p:commandButton value="#{i18n['action.add']}" action="#{curriculumDialogBean.addEducation}" process="educationPanel" update="educationPanel" />
+								</div>
+							</div>
+						</div>
+					</h:panelGroup>
+				</p:tab>
+
+				<!-- JOB EXPERIENCE -->
+				<p:tab title="#{i18n['curriculum.job_experiences']}">
+					<h:panelGroup layout="block" id="jobExperiences">
+						<ui:repeat value="#{curriculumDialogBean.jobExperiences}" var="jobExperience" id="jobExperience">
+							<h:panelGroup layout="block" class="repeatedPanel">
+								<div class="ui-g">
+									<div class="ui-md-12 ui-lg-6 ui-xl-4">
+										<div class="form-group">
+											<p:outputLabel value="#{i18n['job_experience.company_name']}" />
+											<p:inputText id="companyName" value="#{jobExperience.companyName}" required="true" />
+										</div>
+										<h:message for="companyName" errorClass="error" />
+									</div>
+
+									<div class="ui-md-12 ui-lg-6 ui-xl-4">
+										<div class="form-group">
+											<p:outputLabel value="#{i18n['job_experience.job_position']}" />
+											<p:inputText id="jobPosition" value="#{jobExperience.jobPosition}" required="true" />
+										</div>
+										<h:message for="jobPosition" errorClass="error" />
+									</div>
+
+									<div class="ui-md-12 ui-lg-6 ui-xl-4">
+										<div class="form-group">
+											<p:outputLabel value="#{i18n['job_experience.from_date']}" />
+											<p:inputText id="from" value="#{jobExperience.fromDate}">
+												<f:convertDateTime pattern="MM / yyyy" />
+											</p:inputText>
+										</div>
+									</div>
+
+									<div class="ui-md-12 ui-lg-6 ui-xl-4">
+										<div class="form-group">
+											<p:outputLabel value="#{i18n['job_experience.to_date']}" />
+											<p:inputText id="toDate" value="#{jobExperience.toDate}" disabled="#{jobExperience.stillWorking}">
+												<f:convertDateTime pattern="MM / yyyy" />
+											</p:inputText>
+										</div>
+									</div>
+
+									<div class="ui-md-12 ui-lg-6 ui-xl-4">
+										<div class="form-group">
+											<p:outputLabel value="#{i18n['job_experience.still_working']}" />
+											<p:selectBooleanCheckbox value="#{jobExperience.stillWorking}" id="stillWorking">
+												<f:ajax render="toDate" />
+											</p:selectBooleanCheckbox>
+										</div>
+									</div>
+
+									<div class="ui-md-12 ui-lg-6 ui-xl-4">
+										<div class="form-group">
+											<p:outputLabel value="#{i18n['job_experience.description']}" />
+											<p:inputTextarea id="description" value="#{jobExperience.description}" required="true" />
+										</div>
+										<h:message for="description" errorClass="error" />
+									</div>
+								</div>
+
+								<div class="ui-g">
+									<div class="ui-g-12">
+										<div class="form-action-primary">
+											<p:commandButton styleClass="btn-gray" value="#{i18n['action.remove']}" action="#{curriculumDialogBean.removeJobExperience(jobExperience)}"
+												update="jobExperiences" process="@this" />
+										</div>
+									</div>
+								</div>
+							</h:panelGroup>
+						</ui:repeat>
+						<div class="ui-g">
+							<div class="ui-g-12">
+								<div class="form-action-primary">
+									<p:commandButton value="#{i18n['action.add']}" action="#{curriculumDialogBean.addJobExperience}" update="jobExperiences"
+										process="jobExperiences" />
+								</div>
+							</div>
+						</div>
+					</h:panelGroup>
+				</p:tab>
+				<p:tab title="#{i18n['curriculum.languages']}">
+
+					<h:panelGroup layout="block" id="languages">
+						<ui:repeat value="#{curriculumDialogBean.languages}" var="language" varStatus="current" id="language">
+							<h:panelGroup layout="block" class="repeatedPanel">
+
+								<div class="ui-g">
+									<div class="ui-md-12 ui-lg-6 ui-xl-4">
+										<div class="form-group">
+											<p:outputLabel value="#{i18n['language.language']}" />
+											<p:inputText id="languageName" value="#{language.languageName}" required="true" />
+										</div>
+										<h:message for="languageName" errorClass="error" />
+									</div>
+
+									<div class="ui-md-12 ui-lg-6 ui-xl-4">
+										<div class="form-group">
+											<p:outputLabel value="#{i18n['language.read']}" />
+											<p:selectOneMenu id="read" value="#{language.read}">
+												<f:selectItems var="languageLevel" itemValue="#{languageLevel.name}" value="#{applicationBean.languageLevels}"
+													itemLabel="#{i18n:translate(languageLevel.name)}" />
+											</p:selectOneMenu>
+										</div>
+									</div>
+
+									<div class="ui-md-12 ui-lg-6 ui-xl-4">
+										<div class="form-group">
+											<p:outputLabel value="#{i18n['language.speak']}" />
+											<p:selectOneMenu id="speak" value="#{language.speak}">
+												<f:selectItems var="languageLevel" itemValue="#{languageLevel.name}" value="#{applicationBean.languageLevels}"
+													itemLabel="#{i18n:translate(languageLevel.name)}" />
+											</p:selectOneMenu>
+										</div>
+									</div>
+
+									<div class="ui-md-12 ui-lg-6 ui-xl-4">
+										<div class="form-group">
+											<p:outputLabel value="#{i18n['language.write']}" />
+											<p:selectOneMenu id="write" value="#{language.write}">
+												<f:selectItems var="languageLevel" itemValue="#{languageLevel.name}" value="#{applicationBean.languageLevels}" />
+											</p:selectOneMenu>
+										</div>
+									</div>
+								</div>
+								<div class="ui-g">
+									<div class="ui-g-12">
+										<div class="form-action-primary">
+											<p:commandButton styleClass="btn-gray" value="#{i18n['action.remove']}" action="#{curriculumDialogBean.removeLanguage(language)}"
+												update="languages" process="@this" />
+										</div>
+									</div>
+								</div>
+							</h:panelGroup>
+						</ui:repeat>
+						<div class="ui-g">
+							<div class="ui-g-12">
+								<div class="form-action-primary">
+									<p:commandButton value="#{i18n['action.add']}" action="#{curriculumDialogBean.addLanguage}" update="languages" process="languages" />
+								</div>
+							</div>
+						</div>
+					</h:panelGroup>
+				</p:tab>
+				<p:tab title="#{i18n['curriculum.skills']}">
+					<!-- SKILLS -->
+					<h:panelGroup layout="block" id="skills">
+						<ui:repeat value="#{curriculumDialogBean.skills}" var="skill" id="skill">
+							<h:panelGroup layout="block" class="repeatedPanel">
+
+								<div class="ui-g">
+									<div class="ui-md-12 ui-lg-6 ui-xl-4">
+										<div class="form-group">
+											<p:inputText id="name" value="#{skill.name}" label="#{i18n['skill.name']}" required="true" />
+										</div>
+									</div>
+
+									<div class="ui-md-12 ui-lg-6 ui-xl-4">
+										<div class="form-group">
+											<p:selectOneMenu id="level" value="#{skill.level}" label="#{curriculumDialogBean.skills}">
+												<f:selectItems var="skillLevel" itemValue="#{skillLevel.name}" value="#{applicationBean.skillLevels}" itemLabel="#{i18n:translate(skillLevel.name)}" />
+											</p:selectOneMenu>
+										</div>
+									</div>
+								</div>
+
+								<div class="ui-g">
+									<div class="ui-g-12">
+										<div class="form-action-primary">
+											<p:commandButton styleClass="btn-gray" value="#{i18n['action.remove']}" action="#{curriculumDialogBean.removeSkill(skill)}" update="skills"
+												process="@this" />
+										</div>
+									</div>
+								</div>
+							</h:panelGroup>
+						</ui:repeat>
+
+						<div class="ui-g">
+							<div class="ui-g-12">
+								<div class="form-action-primary">
+									<p:commandButton value="#{i18n['action.add']}" action="#{curriculumDialogBean.addSkill}" process="skills" update="skills" />
+								</div>
+							</div>
+						</div>
+					</h:panelGroup>
+				</p:tab>
+
+				<div class="ui-g">
+					<div class="ui-g-12">
+						<div class="form-action-primary">
+							<p:commandButton value="#{i18n['action.save']}" action="#{curriculumDialogBean.save}" update="growl" />
+							<p:commandButton styleClass="btn-gray" value="#{i18n['action.cancel']}" action="#{curriculumDialogBean.cancel}" process="@this" />
+						</div>
+					</div>
+				</div>
+			</p:tabView>
+		</h:form>
+	</ui:define>
+</ui:composition>

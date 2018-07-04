@@ -11,6 +11,16 @@
 
 	<ui:define name="content">
 		<div class="ui-g">
+			<div class="ui-g-12">
+				<p:breadCrumb homeDisplay="text">
+					<p:menuitem value="#{i18n['menu.index']}" url="/faces/index.xhtml" />
+					<p:menuitem value="#{i18n['job.job_offers']}" url="/faces/jobOffer/jobOfferSearch.xhtml" />
+					<p:menuitem value="#{jobOfferBean.jobOffer.name}" disabled="true" />
+				</p:breadCrumb>
+			</div>
+		</div>
+
+		<div class="ui-g">
 			<div class="ui-g-12 ui-xl-6">
 				<h:form id="jobOfferViewForm">
 					<p:panel header="#{i18n['job.job_offer']}">

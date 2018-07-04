@@ -11,7 +11,6 @@ import java.util.MissingResourceException;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
-import javax.faces.application.Application;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -34,9 +33,6 @@ public class I18nBean extends AbstractBean {
 	private static final String SPANISH = "es";
 
 	@Inject
-	private Application application;
-
-	@Inject
 	private I18nService i18nService;
 
 	private Map<String, Map<String, String>> i18nTexts;
@@ -49,10 +45,12 @@ public class I18nBean extends AbstractBean {
 		String translatedText;
 		if (this.i18nTexts.get(language).containsKey(key)) {
 			translatedText = this.i18nTexts.get(language).get(key);
-		} else {
+		}
+		else {
 			try {
 				translatedText = Translate.message(key);
-			} catch (final MissingResourceException e) {
+			}
+			catch (final MissingResourceException e) {
 				translatedText = "?" + key + "?";
 			}
 		}
@@ -60,10 +58,11 @@ public class I18nBean extends AbstractBean {
 	}
 
 	private String getLanguageFromDefaultLocale() {
-		final Locale defaultLocale = this.application.getDefaultLocale();
+		final Locale defaultLocale = this.facesContext.getApplication().getDefaultLocale();
 		if (defaultLocale == null) {
 			return SPANISH;
-		} else {
+		}
+		else {
 			return defaultLocale.getLanguage();
 		}
 	}
@@ -71,8 +70,8 @@ public class I18nBean extends AbstractBean {
 	@PostConstruct
 	public void init() {
 		logger.debug("I18nBean init");
-		loadLocales();
-		loadI18nText();
+		this.loadLocales();
+		this.loadI18nText();
 	}
 
 	private void loadI18nText() {
@@ -87,13 +86,13 @@ public class I18nBean extends AbstractBean {
 	}
 
 	private void loadLocales() {
-		final Iterator<Locale> supportedLocales = this.application.getSupportedLocales();
+		final Iterator<Locale> supportedLocales = this.facesContext.getApplication().getSupportedLocales();
 		this.locales = new ArrayList<>();
 		while (supportedLocales.hasNext()) {
 			final String language = supportedLocales.next().getLanguage();
 			this.locales.add(language);
 		}
-		final String language = getLanguageFromDefaultLocale();
+		final String language = this.getLanguageFromDefaultLocale();
 		this.locales.add(language);
 	}
 }

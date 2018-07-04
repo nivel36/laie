@@ -1,0 +1,131 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:i18n="http://legion.com/i18n"
+	xmlns:cc="http://java.sun.com/jsf/composite/components" template="/WEB-INF/templates/default.xhtml">
+
+	<ui:define name="title">
+		<title>#{jobOfferEditBean.newJobOffer ? i18n['job.new_job_offer'] : jobOfferEditBean.jobOffer.name}</title>
+	</ui:define>
+
+	<ui:param name="selectedMenu" value="offers" />
+
+	<ui:define name="content">
+		<div class="ui-g">
+			<div class="ui-g-12 ui-xl-8">
+				<p:breadCrumb homeDisplay="text">
+					<p:menuitem value="#{i18n['menu.index']}" url="/faces/index.xhtml" />
+					<p:menuitem value="#{i18n['job.job_offers']}" url="/faces/jobOffer/jobOfferSearch.xhtml" />
+					<p:menuitem value="#{jobOfferEditBean.newJobOffer ? i18n['job.new_job_offer'] : jobOfferEditBean.jobOffer.name}" disabled="true" />
+				</p:breadCrumb>
+			</div>
+		</div>
+
+		<div class="ui-g">
+			<div class="ui-g-12 ui-xl-8">
+				<h:form id="newJobOfferForm">
+					<p:panel header="#{jobOfferEditBean.newJobOffer ? i18n['job.new_job_offer'] : jobOfferEditBean.jobOffer.name}">
+						<div class="ui-g">
+							<div class="ui-g-12">
+								<cc:inputText name="name" label="#{i18n['job.name']}" value="#{jobOfferEditBean.jobOffer.name}" required="true" />
+							</div>
+							<div class="ui-g-12 ui-md-6">
+								<h:panelGroup id="clientGroup" layout="block" styleClass="form-group">
+									<p:outputLabel for="client" value="#{i18n['job.client']}" />
+									<div class="ui-inputgroup">
+										<p:inputText id="client" value="#{jobOfferEditBean.client.name}" required="true" />
+										<p:commandButton action="#{jobOfferEditBean.cleanClient}" process="@this" update="clientGroup" styleClass="btn-gray" icon="fa fa-times"
+											rendered="#{not empty jobOfferEditBean.client.name}" />
+										<p:commandButton icon="fa fa-search" styleClass="green-button" actionListener="#{jobOfferEditBean.openClientSearchDialog}" process="@this">
+											<p:ajax event="dialogReturn" listener="#{jobOfferEditBean.onCloseClientSearchDialog}" update="clientGroup" />
+										</p:commandButton>
+									</div>
+									<p:message for="client" />
+								</h:panelGroup>
+							</div>
+							<div class="ui-g-12 ui-md-6">
+								<cc:inputText name="places" label="#{i18n['job.places']}" value="#{jobOfferEditBean.jobOffer.places}" />
+							</div>
+							<div class="ui-g-12 ui-md-6">
+								<div class="form-group">
+									<p:outputLabel for="dateOpened" value="#{i18n['job.date_opened']}" />
+									<p:calendar id="dateOpened" value="#{jobOfferEditBean.jobOffer.dateOpened}" pattern="dd/MM/yyyy">
+										<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
+									</p:calendar>
+									<p:message for="dateOpened" />
+								</div>
+							</div>
+							<div class="ui-g-12 ui-md-6">
+								<div class="form-group">
+									<p:outputLabel for="dateClosed" value="#{i18n['job.date_closed']}" />
+									<p:calendar id="dateClosed" value="#{jobOfferEditBean.jobOffer.dateClosed}" pattern="dd/MM/yyyy">
+										<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
+									</p:calendar>
+									<p:message for="dateClosed" />
+								</div>
+							</div>
+							<div class="ui-g-12 ui-md-6">
+								<cc:inputText name="city" label="#{i18n['job.city']}" value="#{jobOfferEditBean.jobOffer.city}" required="true" />
+							</div>
+							<div class="ui-g-12 ui-md-6">
+								<cc:inputText name="state" label="#{i18n['job.state']}" value="#{jobOfferEditBean.jobOffer.state}" required="true" />
+							</div>
+							<div class="ui-g-12 ui-md-6">
+								<cc:inputText name="owner" label="#{i18n['job.owner']}" value="#{jobOfferEditBean.jobOffer.owner}" required="true" />
+							</div>
+							<div class="ui-g-12 ui-md-6">
+								<div class="form-group">
+									<p:outputLabel value="#{i18n['job.recruiters']}" for="recruiters" />
+									<p:chips id="recruiters" value="#{jobOfferEditBean.recruiters}" />
+								</div>
+
+							</div>
+							<div class="ui-g-12">
+								<div class="form-group">
+									<p:outputLabel for="description" value="#{i18n['job.description']}" />
+									<p:textEditor id="description" value="#{jobOfferEditBean.jobOffer.description}">
+										<f:facet name="toolbar">
+											<span class="ql-formats">
+												<button class="ql-bold"></button>
+												<button class="ql-italic"></button>
+												<button class="ql-underline"></button>
+											</span>
+											<span class="ql-formats"> <select class="ql-color" /> <select class="ql-background" />
+											</span>
+											<span class="ql-formats">
+												<button class="ql-script" value="sub" />
+												<button class="ql-script" value="super" />
+											</span>
+											<span class="ql-formats">
+												<button class="ql-header" value="1" />
+												<button class="ql-header" value="2" />
+												<button class="ql-blockquote" />
+												<button class="ql-code-block" />
+											</span>
+											<span class="ql-formats">
+												<button class="ql-list" value="ordered" />
+												<button class="ql-list" value="bullet" />
+												<button class="ql-indent" value="-1" />
+												<button class="ql-indent" value="+1" />
+											</span>
+											<span class="ql-formats">
+												<button class="ql-direction" value="rtl" /> <select class="ql-align" />
+											</span>
+											<span class="ql-formats">
+												<button class="ql-clean" />
+											</span>
+										</f:facet>
+									</p:textEditor>
+									<p:message for="description" />
+								</div>
+							</div>
+
+						</div>
+						<div class="form-action-primary">
+							<p:commandButton value="#{i18n['action.cancel']}" action="#{jobOfferEditBean.closeDialog}" process="@this" styleClass="btn-gray" />
+							<p:commandButton value="#{i18n['action.save']}" action="#{jobOfferEditBean.save}" update="@form" styleClass="btn-primary" />
+						</div>
+					</p:panel>
+				</h:form>
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>

@@ -13,7 +13,9 @@
 <composite:implementation>
 	<div class="form-group">
 		<p:outputLabel value="#{cc.attrs.label}" for="#{cc.attrs.name}" />
-		<p:calendar id="#{cc.attrs.name}" value="#{cc.attrs.value}" required="#{cc.attrs.required}" />
+		<p:calendar id="#{cc.attrs.name}" value="#{cc.attrs.value}" required="#{cc.attrs.required}" pattern="dd/MM/yyyy">
+			<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
+		</p:calendar>
 		<p:message for="#{cc.attrs.name}" />
 	</div>
 </composite:implementation>

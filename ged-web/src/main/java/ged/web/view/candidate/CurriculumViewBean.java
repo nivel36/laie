@@ -47,9 +47,9 @@ public class CurriculumViewBean extends AbstractBean {
 
 	private List<Skill> skills;
 
-	public String editCurriculum() {
+	public void editCurriculum() {
 		this.flash.put("curriculum", this.curriculum);
-		return to(CURRICULUM).toUrl();
+		to(CURRICULUM).doGet();
 	}
 
 	public Candidate getCandidate() {

@@ -53,7 +53,8 @@ public class PersistenceFacadeJpa implements PersistenceFacade {
 		logger.debug("Delete entity class {} with id {}", type, entity.getId());
 		if (this.em.contains(entity)) {
 			this.em.remove(entity);
-		} else {
+		}
+		else {
 			final T attachedEntity = this.em.getReference(type, entity.getId());
 			this.em.remove(attachedEntity);
 		}
@@ -103,8 +104,7 @@ public class PersistenceFacadeJpa implements PersistenceFacade {
 	 * java.lang.String, java.util.Map)
 	 */
 	@Override
-	public <E> E findByQuery(final Class<E> entityClass, final String namedQuery,
-			final Map<String, Object> parameters) {
+	public <E> E findByQuery(final Class<E> entityClass, final String namedQuery, final Map<String, Object> parameters) {
 		Objects.requireNonNull(entityClass);
 		Objects.requireNonNull(namedQuery);
 		logger.debug("Find entity {} by named query {}", entityClass, namedQuery);
@@ -121,8 +121,8 @@ public class PersistenceFacadeJpa implements PersistenceFacade {
 	 * java.lang.String, java.util.Map, java.lang.Integer, java.lang.Integer)
 	 */
 	@Override
-	public <E> List<E> findByQuery(final Class<E> entityClass, final String namedQuery,
-			final Map<String, Object> parameters, final Integer pageSize, final Integer pageNum) {
+	public <E> List<E> findByQuery(final Class<E> entityClass, final String namedQuery, final Map<String, Object> parameters, final Integer pageSize,
+			final Integer pageNum) {
 		Objects.requireNonNull(entityClass);
 		Objects.requireNonNull(namedQuery);
 		logger.debug("Find entities {} by named query {}", entityClass, namedQuery);
@@ -183,7 +183,8 @@ public class PersistenceFacadeJpa implements PersistenceFacade {
 		if ((pageSize != null) && (pageSize > 0)) {
 			logger.trace("Page size {}", pageSize);
 			query.setMaxResults(pageSize);
-		} else if ((pageSize == null) || (pageSize == 0)) {
+		}
+		else if ((pageSize == null) || (pageSize == 0)) {
 			logger.trace("Setting max result to {}", RES_LIMIT);
 			query.setMaxResults(RES_LIMIT);
 		}
@@ -201,8 +202,7 @@ public class PersistenceFacadeJpa implements PersistenceFacade {
 
 	@Override
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public <T extends Identificable> List<T> search(final Class<T> type, final String searchText,
-			final String... fields) {
+	public <T extends Identificable> List<T> search(final Class<T> type, final String searchText, final String... fields) {
 		final FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(this.getEm());
 		final QueryBuilder qb = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(type).get();
 		final BooleanJunction<BooleanJunction> bj = qb.bool();
@@ -222,7 +222,8 @@ public class PersistenceFacadeJpa implements PersistenceFacade {
 		final Query persistenceQuery;
 		if (bj.isEmpty()) {
 			persistenceQuery = fullTextEntityManager.createFullTextQuery(qb.all().createQuery(), type);
-		} else {
+		}
+		else {
 			persistenceQuery = fullTextEntityManager.createFullTextQuery(bj.createQuery(), type);
 		}
 		persistenceQuery.setHint(CACHE_STORE_MODE, CacheStoreMode.REFRESH);
@@ -243,7 +244,8 @@ public class PersistenceFacadeJpa implements PersistenceFacade {
 		logger.debug("Update entity of class {} and id {}", entity.getClass(), entity.getId());
 		if (this.em.contains(entity)) {
 			return entity;
-		} else {
+		}
+		else {
 			return this.em.merge(entity);
 		}
 	}

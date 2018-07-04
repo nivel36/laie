@@ -10,6 +10,15 @@
 	<ui:param name="selectedMenu" value="clients" />
 
 	<ui:define name="content">
+		<div class="ui-g">
+			<div class="ui-g-12">
+				<p:breadCrumb homeDisplay="text">
+					<p:menuitem value="#{i18n['menu.index']}" url="/faces/index.xhtml" />
+					<p:menuitem value="#{i18n['client.clients']}" url="/faces/client/clientSearch.xhtml" />
+					<p:menuitem value="#{clientBean.client.name}" disabled="true" />
+				</p:breadCrumb>
+			</div>
+		</div>
 
 		<div class="ui-g">
 			<div class="ui-g-12 ui-xl-6">
@@ -50,13 +59,16 @@
 								</div>
 							</div>
 						</div>
-
-						<h:panelGroup rendered="#{clientBean.userHasPermissionToEdit}" styleClass="pull-right">
-							<p:commandButton id="exportExcel" value="#{i18n['action.export']}" action="#{clientBean.export}" icon="fa fa-file-excel-o" />
-							<p:commandButton value="#{i18n['action.edit']}" actionListener="#{clientBean.openClientDialog}" styleClass="btn-primary">
-								<p:ajax event="dialogReturn" listener="#{clientBean.onCloseClientDialog}" update="clientViewForm growl" />
-							</p:commandButton>
-						</h:panelGroup>
+						<div class="ui-g">
+							<div class="ui-g-12">
+								<div class="form-action-primary">
+									<p:commandButton id="exportExcel" value="#{i18n['action.export']}" action="#{clientBean.export}" icon="fa fa-file-excel-o" />
+									<p:commandButton value="#{i18n['action.edit']}" actionListener="#{clientBean.openClientDialog}" styleClass="btn-primary">
+										<p:ajax event="dialogReturn" listener="#{clientBean.onCloseClientDialog}" update="clientViewForm growl" />
+									</p:commandButton>
+								</div>
+							</div>
+						</div>
 					</p:panel>
 				</h:form>
 			</div>

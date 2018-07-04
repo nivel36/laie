@@ -6,13 +6,8 @@ import java.lang.invoke.MethodHandles;
 import java.util.Properties;
 
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.InjectionPoint;
-import javax.faces.application.Application;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
-import javax.faces.context.Flash;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,30 +29,6 @@ public class WebResources {
 			logger.error("Property file not found", e);
 			throw new UncheckedIOException(e);
 		}
-	}
-
-	@Produces
-	@RequestScoped
-	public Application produceApplication() {
-		return FacesContext.getCurrentInstance().getApplication();
-	}
-
-	@Produces
-	@RequestScoped
-	public ExternalContext produceExternalContext() {
-		return FacesContext.getCurrentInstance().getExternalContext();
-	}
-
-	@Produces
-	@RequestScoped
-	public FacesContext produceFacesContext() {
-		return FacesContext.getCurrentInstance();
-	}
-
-	@Produces
-	@RequestScoped
-	public Flash produceFlash() {
-		return FacesContext.getCurrentInstance().getExternalContext().getFlash();
 	}
 
 	@Produces

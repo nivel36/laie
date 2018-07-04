@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:i18n="http://legion.com/i18n"
+	xmlns:cc="http://java.sun.com/jsf/composite/components" template="/WEB-INF/templates/default.xhtml">
+
+	<ui:define name="title">
+		<title>#{userEditBean.newUser ? i18n['user.new_user'] : userEditBean.user}</title>
+	</ui:define>
+
+	<ui:define name="content">
+		<div class="ui-g">
+			<div class="ui-g-12 ui-xl-8">
+				<p:breadCrumb homeDisplay="text">
+					<p:menuitem value="#{i18n['menu.index']}" url="/faces/index.xhtml" />
+					<p:menuitem value="#{i18n['user.users']}" url="/faces/user/userSearch.xhtml" />
+					<p:menuitem value="#{userEditBean.newUser ? i18n['user.new_user'] : userEditBean.user}" disabled="true" />
+				</p:breadCrumb>
+			</div>
+		</div>
+		<div class="ui-g">
+			<div class="ui-g-12 ui-xl-8">
+				<h:form id="userPanelForm" enctype="multipart/form-data">
+					<p:panel header="#{userEditBean.newUser ? i18n['user.new_user'] : userEditBean.user}">
+						<div class="ui-g">
+							<div class="ui-g-12 ui-lg-3 ui-xl-2">
+								<div class="user-card">
+									<p:outputPanel layout="block" id="userImage" styleClass="user-image">
+										<p:fileUpload id="uploadImage" styleClass="uploadImageButton" fileUploadListener="#{userEditBean.uploadImage}" mode="advanced" dragDropSupport="false"
+											update="userImage" auto="true" label="#{i18n['action.add']}" />
+										<h:outputLabel for="uploadImage_input">
+											<p:graphicImage styleClass="selectable image" value="/images/#{userEditBean.user.imageFileName}"
+												rendered="#{not empty userEditBean.user.imageFileName}" />
+											<p:graphicImage styleClass="selectable image" value="/resources/img/default-avatar.png" rendered="#{empty userEditBean.user.imageFileName}" />
+										</h:outputLabel>
+									</p:outputPanel>
+								</div>
+							</div>
+
+							<div class="ui-g-12 ui-lg-9 ui-xl-10">
+								<div class="ui-g">
+									<div class="ui-g-12 ui-md-6">
+										<cc:inputText name="name" label="#{i18n['user.name']}" value="#{userEditBean.user.name}" required="true" />
+									</div>
+
+									<div class="ui-g-12 ui-md-6">
+										<cc:inputText name="surname" label="#{i18n['user.surname']}" value="#{userEditBean.user.surname}" required="true" />
+									</div>
+
+									<div class="ui-g-12 ui-md-6">
+										<cc:inputText name="email" label="#{i18n['user.email']}" value="#{userEditBean.user.email}" required="true" />
+									</div>
+
+									<div class="ui-g-12 ui-md-6">
+										<cc:inputText name="phone_number" label="#{i18n['user.phone_number']}" value="#{userEditBean.user.phoneNumber}" />
+									</div>
+
+									<div class="ui-g-12 ui-md-6">
+										<cc:selectOneMenu name="role" label="#{i18n['user.role']}" value="#{userEditBean.user.role}" validator="#{userEditBean.validateRole}">
+											<f:selectItems var="role" itemValue="#{role}" value="#{applicationBean.roles}" itemLabel="#{i18n:translate(role.name)}" />
+										</cc:selectOneMenu>
+									</div>
+
+									<div class="ui-sm-12 ui-md-6">
+										<div class="form-group">
+											<p:outputLabel value="#{i18n['user.manager']}" for="manager" />
+											<p:autoComplete id="manager" value="#{userEditBean.manager}" completeMethod="#{userEditBean.completeManager}" var="manager"
+												itemLabel="#{manager.fullName}" itemValue="#{manager}" forceSelection="true" validator="#{userEditBean.validateManager}">
+												<p:column styleClass="user-select image">
+													<p:graphicImage class="image image-icon" value="/images/#{manager.imageFileName}" rendered="#{not empty manager.imageFileName}" />
+													<p:graphicImage class="image image-icon" value="/resources/img/default-avatar.png" rendered="#{empty manager.imageFileName}" />
+												</p:column>
+												<p:column styleClass="user-select name">
+													<h:outputText value="#{manager.fullName}" />
+												</p:column>
+											</p:autoComplete>
+										</div>
+										<h:message for="manager" errorClass="error" />
+									</div>
+
+									<div class="ui-g-12 ui-md-6">
+										<cc:calendar name="date_of_join" label="#{i18n['user.date_of_join']}" value="#{userEditBean.user.dateOfJoin}" />
+									</div>
+								</div>
+
+								<div class="ui-g">
+									<div class="ui-g-12">
+										<div class="form-action-primary">
+											<p:commandButton styleClass="btn-gray" value="#{i18n['action.cancel']}" action="#{userEditBean.cancel}" process="@this" />
+											<p:commandButton styleClass="btn-primary" value="#{i18n['action.save']}" action="#{userEditBean.save}" process="@form" update="@form growl" />
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</p:panel>
+				</h:form>
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>

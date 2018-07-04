@@ -1,7 +1,6 @@
 package ged.web.view.candidate;
 
-import static ged.web.core.util.Navigate.to;
-import static ged.web.core.util.Page.CANDIDATE;
+import static ged.web.core.util.Page.CANDIDATE_EDIT;
 
 import java.io.Serializable;
 import java.lang.invoke.MethodHandles;
@@ -49,7 +48,7 @@ public class CandidateListPanelBean implements Serializable {
 
 	public String newCandidate() {
 		logger.debug("New candidate");
-		return to(CANDIDATE).toUrl();
+		return CANDIDATE_EDIT.url() + "?faces-redirect=true";
 	}
 
 	public void setCandidateService(final CandidateService candidateService) {

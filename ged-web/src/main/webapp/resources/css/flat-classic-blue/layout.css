@@ -72,23 +72,12 @@ Complement color
 	width: 100%;
 	position: relative;
 	overflow: auto;
-	float: left;
 	width: 100%;
+	padding: 15px;
 }
 
 #content {
 }
 
 #aside {
-}
-
-
-.row {
-	widht: 100%;
-	overflow: auto;
-}
-
-.half {
-	widht: 50%;
-	overflow: auto;
 }

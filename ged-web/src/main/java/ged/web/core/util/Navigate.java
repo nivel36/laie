@@ -26,19 +26,21 @@ public class Navigate {
 	}
 
 	private String buildQueryParams() {
-		if (this.params != null && this.params.size() != 0) {
+		if ((this.params != null) && (this.params.size() != 0)) {
 			final StringBuilder stringBuilder = new StringBuilder();
 			final Set<Entry<String, Object>> entriesSet = this.params.entrySet();
 			for (final Entry<String, Object> entry : entriesSet) {
 				if (stringBuilder.length() == 0) {
 					stringBuilder.append("?");
-				} else {
+				}
+				else {
 					stringBuilder.append("&");
 				}
 				stringBuilder.append(entry.getKey()).append("=").append(entry.getValue().toString());
 			}
 			return stringBuilder.toString();
-		} else {
+		}
+		else {
 			return null;
 		}
 	}
@@ -49,9 +51,10 @@ public class Navigate {
 			final ExternalContext externalContext = facesContext.getExternalContext();
 			final String contextName = externalContext.getContextName();
 			final StringBuilder url = new StringBuilder("/");
-			url.append(contextName).append(this.page.url()).append(".xhtml").append(buildQueryParams());
+			url.append(contextName).append(this.page.url()).append(".xhtml").append(this.buildQueryParams());
 			externalContext.redirect(url.toString());
-		} catch (final IOException e) {
+		}
+		catch (final IOException e) {
 			throw new NavigationException("Unable to go to " + this.page, e);
 		}
 	}
@@ -59,18 +62,11 @@ public class Navigate {
 	public void doPost() {
 		final FacesContext fc = FacesContext.getCurrentInstance();
 		final NavigationHandler nav = fc.getApplication().getNavigationHandler();
-		nav.handleNavigation(fc, null, toUrl());
-		fc.renderResponse();
-	}
-
-	public String toUrl() {
-		String queryParams = buildQueryParams();
-		if (queryParams == null) {
-			queryParams = "?" + FACES_REDIRECT;
-		} else {
-			queryParams = queryParams + "&" + FACES_REDIRECT;
+		if ((this.params != null) && (this.params.size() > 0)) {
+			fc.getExternalContext().getFlash().putAll(this.params);
 		}
-		return this.page.url() + queryParams;
+		nav.handleNavigation(fc, null, this.page.url() + "?" + FACES_REDIRECT);
+		fc.renderResponse();
 	}
 
 	public Navigate withParams(final Map<String, Object> params) {

@@ -20,7 +20,7 @@ body {
 	margin: 0px auto;
 	height: 100%;
 	width: 100%;
-	background-color: #f2f2f2;
+	background-color: #eaeaea;
 }
 
 footer {
@@ -227,7 +227,6 @@ h4 {
 }
 
 .login-page .card-login.ui-panel .ui-panel-titlebar {
-	padding-top: 25px;
 	border: 0px;
 	text-align: center;
 }
@@ -235,6 +234,7 @@ h4 {
 .login-page .card-login.ui-panel .ui-panel-titlebar .ui-panel-title {
 	font-size: 25px;
 	font-weight: 400;
+	border: 0px;
 }
 
 .login-page .card-login.ui-panel .ui-panel-content {

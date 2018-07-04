@@ -9,6 +9,20 @@
 	<ui:param name="selectedMenu" value="offers" />
 
 	<ui:define name="content">
+		<div class="ui-g">
+			<div class="ui-g-12 ui-md-8">
+				<p:breadCrumb homeDisplay="text">
+					<p:menuitem value="#{i18n['menu.index']}" url="/faces/index.xhtml" />
+					<p:menuitem value="#{i18n['job.job_offers']}" disabled="true" />
+				</p:breadCrumb>
+			</div>
+			<div class="ui-g-12 ui-md-4">
+				<div class="pull-right">
+					<p:commandButton value="#{i18n['action.export']}" action="#{clientSearchBean.clean}" icon="fa fa-file-excel-o" rendered="#{not empty jobOfferSearchBean.jobOffers}" />
+					<p:commandButton value="#{i18n['action.new']}" action="#{jobOfferSearchBean.newJobOffer}" process="@this" styleClass="btn-primary" />
+				</div>
+			</div>
+		</div>
 
 		<div class="ui-g">
 			<div class="ui-g-12">
@@ -21,14 +35,6 @@
 									<p:commandButton id="cleanSearchTextAction" action="#{jobOfferSearchBean.clean}" update="@form" styleClass="btn-gray" icon="fa fa-times"
 										rendered="#{not empty jobOfferSearchBean.searchText}" />
 									<p:commandButton id="searchAction" action="#{jobOfferSearchBean.search}" update="@form" icon="fa fa-search" />
-								</div>
-							</div>
-							<div class="ui-g-12 ui-md-6 ui-lg-8">
-								<div class="pull-right">
-									<p:commandButton value="#{i18n['action.export']}" action="#{clientSearchBean.clean}" icon="fa fa-file-excel-o" />
-									<p:commandButton value="#{i18n['action.new']}" actionListener="#{jobOfferSearchBean.openJobOfferDialog}" styleClass="btn-primary">
-										<p:ajax event="dialogReturn" listener="#{jobOfferSearchBean.onCloseJobOfferDialog}" />
-									</p:commandButton>
 								</div>
 							</div>
 						</div>
@@ -57,6 +63,9 @@
 										<h:outputText value="#{jobOffer.dateClosed}">
 											<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
 										</h:outputText>
+									</p:column>
+									<p:column headerText="#{i18n['job.places']}">
+										<h:outputText value="#{jobOffer.places}" />
 									</p:column>
 									<p:column headerText="#{i18n['user.owner']}" sortBy="#{i18n['user.owner']}">
 										<h:link value="#{jobOffer.owner.fullName}" outcome="/faces/user/user">

@@ -1,7 +1,13 @@
 package ged.web.view.user;
 
+import static ged.ejb.core.util.Parameters.map;
+import static ged.web.core.util.Navigate.to;
+import static ged.web.core.util.Page.USER;
+import static ged.web.core.util.Page.USER_SEARCH;
+
 import java.io.IOException;
 import java.lang.invoke.MethodHandles;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -25,11 +31,11 @@ import ged.ejb.user.UserService;
 import ged.ejb.user.role.Role;
 import ged.ejb.user.role.RoleService;
 import ged.web.core.util.Translate;
-import ged.web.core.view.AbstractDialogBean;
+import ged.web.core.view.AbstractBean;
 
 @Named
 @ViewScoped
-public class UserDialogBean extends AbstractDialogBean {
+public class UserEditBean extends AbstractBean {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
@@ -48,12 +54,30 @@ public class UserDialogBean extends AbstractDialogBean {
 	@Inject
 	private transient UserService userService;
 
-	public User buildNewUser() {
-		return new User();
+	private User buildUser() {
+		User user = this.getValueFromFlash("user");
+		if (user == null) {
+			user = new User();
+		}
+		return user;
+	}
+
+	public void cancel() {
+		if (this.user.getId() == 0) {
+			to(USER_SEARCH).doPost();
+		}
+		else {
+			to(USER).withParams(map("userId", this.user.getId())).doGet();
+		}
 	}
 
 	public List<User> completeManager(final String query) {
-		return this.userService.search(query);
+		if (query.trim().length() > 2) {
+			return this.userService.search(query);
+		}
+		else {
+			return new ArrayList<>();
+		}
 	}
 
 	public User getManager() {
@@ -66,17 +90,8 @@ public class UserDialogBean extends AbstractDialogBean {
 
 	@PostConstruct
 	public void init() {
-		final Long userId = this.getIdFromParameters("userId");
-		if (userId != null) {
-			this.user = this.userService.find(userId);
-			if (this.user == null) {
-				throw new IllegalStateException();
-			}
-			this.manager = this.user.getManager();
-		}
-		else {
-			this.user = this.buildNewUser();
-		}
+		this.user = this.buildUser();
+		this.manager = this.user.getManager();
 	}
 
 	private void insertUser() {
@@ -99,11 +114,11 @@ public class UserDialogBean extends AbstractDialogBean {
 		logger.debug("Save user action performed");
 		if (this.user.getId() == 0) {
 			this.insertUser();
-			this.closeDialog(this.user);
 		}
 		else {
 			this.updateUser();
 		}
+		to(USER).withParams(map("userId", this.user.getId())).doGet();
 	}
 
 	public void setFileUploadService(final FileUploadService fileUploadService) {
@@ -131,7 +146,6 @@ public class UserDialogBean extends AbstractDialogBean {
 		try {
 			this.user.setManager(this.manager);
 			this.user = this.userService.update(this.user);
-			this.closeDialog(this.user);
 		}
 		catch (final EJBException e) {
 			if (e.getCause() instanceof UserException) {
@@ -157,10 +171,8 @@ public class UserDialogBean extends AbstractDialogBean {
 		}
 		final String email = (String) value;
 		if (value.equals(this.user.getEmail())) {
-			// Si el valor del email es el mismo que el que estamos validando
-			// es porque estamos actualizando un valor (que no es el email)
-			// y no hace falta que validemos si el registro existe (que por otra
-			// parte sí lo estará)
+			// Si los emails son iguales es porque no lo estamos actualizando por lo que no
+			// hace validación
 			return;
 		}
 		if (this.userService.emailExists(email)) {

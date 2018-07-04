@@ -3,6 +3,7 @@ package ged.web.core.util;
 public enum Page {
 
 	CANDIDATE("/faces/candidate/candidate"),
+	CANDIDATE_EDIT("/faces/candidate/candidateEdit"),
 	CANDIDATE_SEARCH("/faces/candidate/candidateSearch"),
 	CANDIDATE_SELECT("/faces/candidate/candidateSelect"),
 	CURRICULUM("/faces/candidate/curriculum"),
@@ -16,6 +17,7 @@ public enum Page {
 	JOB_OFFER_SEARCH("/faces/jobOffer/jobOfferSearch"),
 	LOGIN("/login"),
 	USER("/faces/user/user"),
+	USER_EDIT("/faces/user/userEdit"),
 	USER_SEARCH("/faces/user/userSearch"),
 	REPORT("/faces/report/reportSearch"),
 	MAINTENANCE("/faces/maintenance/maintenanceIndex"),

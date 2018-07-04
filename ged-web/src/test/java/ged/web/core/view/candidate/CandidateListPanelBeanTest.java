@@ -26,7 +26,7 @@ public class CandidateListPanelBeanTest {
 	@Test
 	public void initTest() {
 		Mockito.when(this.candidateService.findNumberOfCandidates()).thenReturn(1L);
-		Mockito.when(this.candidateService.findLastAddedCandidates(6)).thenReturn(mockCandidates());
+		Mockito.when(this.candidateService.findLastAddedCandidates(6)).thenReturn(this.mockCandidates());
 		this.candidateListPanelBean.init();
 		Assert.assertEquals(1, this.candidateListPanelBean.getNumberOfCandidates());
 		Assert.assertEquals(1, this.candidateListPanelBean.getLastAddedCandidates().size());
@@ -42,7 +42,7 @@ public class CandidateListPanelBeanTest {
 
 	private List<Candidate> mockCandidates() {
 		final List<Candidate> candidates = new ArrayList<>();
-		final Candidate candidate = mockCandidate();
+		final Candidate candidate = this.mockCandidate();
 		candidates.add(candidate);
 		return candidates;
 	}
@@ -50,7 +50,7 @@ public class CandidateListPanelBeanTest {
 	@Test
 	public void newCanidateTest() {
 		final String newCandidateUrl = this.candidateListPanelBean.newCandidate();
-		Assert.assertEquals("/faces/candidate/candidate?faces-redirect=true", newCandidateUrl);
+		Assert.assertEquals("/faces/candidate/candidateEdit?faces-redirect=true", newCandidateUrl);
 	}
 
 	@Before

@@ -9,53 +9,18 @@
 	<ui:param name="selectedMenu" value="candidates" />
 
 	<ui:define name="content">
-		<div class="stats">
-			<div class="ui-g">
-				<div class="ui-g-12 ui-md-6 ui-lg-3">
-					<div class="card card-stats" tabindex="1">
-						<div class="card-header"></div>
-						<div class="card-body">
-							<p class="card-category">#{i18n['candidate.candidates']}</p>
-							<span class="number">#{candidateListPanelBean.numberOfCandidates}</span>
-						</div>
-						<div class="card-footer"></div>
-					</div>
-				</div>
-				<div class="ui-g-12 ui-md-6 ui-lg-3">
-					<div class="card card-stats" tabindex="2">
-						<div class="card-header"></div>
-						<div class="card-body">
-							<p class="card-category">Clientes</p>
-							<span class="number">2</span>
-						</div>
-						<div class="card-footer"></div>
-					</div>
-				</div>
-				<div class="ui-g-12 ui-md-6 ui-lg-3">
-					<div class="card card-stats" tabindex="3">
-						<div class="card-header"></div>
-						<div class="card-body">
-							<p class="card-category">Ofertas de empleo</p>
-							<span class="number">4</span>
-						</div>
-						<div class="card-footer"></div>
-					</div>
-				</div>
-				<div class="ui-g-12 ui-md-6 ui-lg-3">
-					<div class="card card-stats" tabindex="4">
-						<div class="card-header"></div>
-						<div class="card-body">
-							<p class="card-category">Ofertas cerradas</p>
-							<span class="number">10</span>
-						</div>
-						<div class="card-footer"></div>
-					</div>
-				</div>
+		<div class="ui-g">
+			<div class="ui-g-12">
+				<p:breadCrumb homeDisplay="text">
+					<p:menuitem value="#{i18n['menu.index']}" url="/faces/index.xhtml" />
+					<p:menuitem value="#{i18n['candidate.candidates']}" disabled="true" />
+				</p:breadCrumb>
 			</div>
 		</div>
+		
 
 		<div class="ui-g">
-			<div class="ui-g-12 ui-xl-8">
+			<div class="ui-g-12">
 				<h:form id="searchForm">
 					<p:panel id="searchUserPanel" header="#{i18n['candidate.search']}">
 						<div class="searchForm">
@@ -111,7 +76,6 @@
 					</p:panel>
 				</h:form>
 			</div>
-			<ui:include src="/faces/candidate/candidateListPanel.xhtml" />
 		</div>
 	</ui:define>
 </ui:composition>

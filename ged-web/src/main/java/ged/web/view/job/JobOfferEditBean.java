@@ -1,6 +1,8 @@
 package ged.web.view.job;
 
 import java.lang.invoke.MethodHandles;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -16,12 +18,13 @@ import ged.ejb.client.ClientService;
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
 import ged.ejb.user.User;
+import ged.ejb.user.UserService;
 import ged.web.core.GedPermissionException;
 import ged.web.core.view.AbstractDialogBean;
 
 @Named
 @ViewScoped
-public class JobOfferDialogBean extends AbstractDialogBean {
+public class JobOfferEditBean extends AbstractDialogBean {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
@@ -36,6 +39,11 @@ public class JobOfferDialogBean extends AbstractDialogBean {
 
 	@Inject
 	private transient JobOfferService jobOfferService;
+
+	private List<User> recruiters;
+
+	@Inject
+	private transient UserService userService;
 
 	private JobOffer buildNewJobOffer() {
 		final JobOffer newJobOffer = new JobOffer();
@@ -66,6 +74,10 @@ public class JobOfferDialogBean extends AbstractDialogBean {
 		return this.jobOffer;
 	}
 
+	public List<User> getRecruiters() {
+		return this.recruiters;
+	}
+
 	@PostConstruct
 	public void init() {
 		logger.debug("JobOfferDialogBean init");
@@ -74,9 +86,12 @@ public class JobOfferDialogBean extends AbstractDialogBean {
 			this.jobOffer = this.buildNewJobOffer();
 			final Client client = this.getClientFromAttributes();
 			this.jobOffer.setClient(client);
+			this.userService.findSubordinateUsers(this.sessionBean.getUser());
+			this.setRecruiters(this.userService.findSubordinateUsers(this.sessionBean.getUser()));
 		}
 		else {
 			this.jobOffer = this.jobOfferService.find(jobOfferId);
+			this.recruiters = new ArrayList<>(this.jobOffer.getRecruiters());
 		}
 		this.client = this.jobOffer.getClient();
 	}
@@ -125,6 +140,14 @@ public class JobOfferDialogBean extends AbstractDialogBean {
 
 	public void setJobOfferService(final JobOfferService jobOfferService) {
 		this.jobOfferService = jobOfferService;
+	}
+
+	public void setRecruiters(final List<User> recruiters) {
+		this.recruiters = recruiters;
+	}
+
+	public void setUserService(final UserService userService) {
+		this.userService = userService;
 	}
 
 	private void updateJobOffer() {
