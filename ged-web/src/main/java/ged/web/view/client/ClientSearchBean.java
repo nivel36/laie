@@ -16,7 +16,7 @@ import ged.ejb.client.Client;
 import ged.ejb.client.ClientService;
 import ged.ejb.core.util.Parameters;
 import ged.web.core.util.Navigate;
-import ged.web.core.util.Page;
+import ged.web.core.util.PageEnum;
 import ged.web.core.view.AbstractBean;
 
 @Named
@@ -57,7 +57,7 @@ public class ClientSearchBean extends AbstractBean {
 	public void onCloseClientDialog(final SelectEvent e) {
 		final Client client = (Client) e.getObject();
 		if (client != null) {
-			Navigate.to(Page.CLIENT).withParams(Parameters.map("clientId", client.getId())).doGet();
+			Navigate.to(PageEnum.CLIENT).withParams(Parameters.map("clientId", client.getId())).doGet();
 		}
 	}
 

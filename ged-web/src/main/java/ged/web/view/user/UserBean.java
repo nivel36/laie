@@ -1,9 +1,8 @@
 package ged.web.view.user;
 
-import static ged.ejb.core.util.Parameters.map;
 import static ged.web.core.util.Navigate.to;
-import static ged.web.core.util.Page.USER;
-import static ged.web.core.util.Page.USER_EDIT;
+import static ged.web.core.util.Page.Type.GET;
+import static ged.web.core.util.PageEnum.USER;
 
 import java.io.IOException;
 import java.lang.invoke.MethodHandles;
@@ -25,6 +24,7 @@ import ged.ejb.user.User;
 import ged.ejb.user.UserService;
 import ged.web.core.PageNotFoundException;
 import ged.web.core.util.Message;
+import ged.web.core.util.Page;
 import ged.web.core.view.AbstractBean;
 import ged.web.reports.UserReport;
 
@@ -34,7 +34,13 @@ public class UserBean extends AbstractBean {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
+	private static Page page = new Page("/faces/user/user", GET);
+
 	private static final long serialVersionUID = -2187385732087309689L;
+
+	public static void go(final String id) {
+		page.go("userId", id);
+	}
 
 	private List<JobOffer> jobOffers;
 
@@ -54,7 +60,7 @@ public class UserBean extends AbstractBean {
 	private transient UserService userService;
 
 	public void editUser() {
-		to(USER_EDIT).withParams(map("user", this.user)).doPost();
+		this.flash.put("user", this.user);
 	}
 
 	public void export() throws IOException {

@@ -1,35 +1,37 @@
 package ged.web.core.util;
 
-public enum Page {
+import ged.ejb.core.util.Parameters;
 
-	CANDIDATE("/faces/candidate/candidate"),
-	CANDIDATE_EDIT("/faces/candidate/candidateEdit"),
-	CANDIDATE_SEARCH("/faces/candidate/candidateSearch"),
-	CANDIDATE_SELECT("/faces/candidate/candidateSelect"),
-	CURRICULUM("/faces/candidate/curriculum"),
-	CLIENT("/faces/client/client"),
-	CLIENT_SEARCH("/faces/client/clientSearch"),
-	CONTACT("/faces/client/contact"),
-	CONTACT_EDIT("/faces/client/contactEdit"),
-	INDEX("/faces/index"),
-	JOB_OFFER("/faces/jobOffer/jobOffer"),
-	JOB_OFFER_EDIT("/faces/jobOffer/jobOfferEdit"),
-	JOB_OFFER_SEARCH("/faces/jobOffer/jobOfferSearch"),
-	LOGIN("/login"),
-	USER("/faces/user/user"),
-	USER_EDIT("/faces/user/userEdit"),
-	USER_SEARCH("/faces/user/userSearch"),
-	REPORT("/faces/report/reportSearch"),
-	MAINTENANCE("/faces/maintenance/maintenanceIndex"),
-	ISABEL("/faces/isabel/isabel");
+public class Page {
 
-	private String url;
+	public enum Type {
+		GET, POST
+	};
 
-	Page(final String url) {
+	private final Type type;
+
+	private final String url;
+
+	public Page(final String url, final Type type) {
 		this.url = url;
+		this.type = type;
 	}
 
-	public String url() {
-		return this.url;
+	public void go() {
+		if (this.type == Type.POST) {
+			Navigate.to(this.url).doPost();
+		}
+		else {
+			Navigate.to(this.url).doGet();
+		}
+	}
+
+	public void go(final String id, final Object value) {
+		if (this.type == Type.POST) {
+			Navigate.to(this.url).withParams(Parameters.map(id, value)).doPost();
+		}
+		else {
+			Navigate.to(this.url).withParams(Parameters.map(id, value)).doGet();
+		}
 	}
 }

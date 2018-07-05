@@ -19,7 +19,7 @@
 			</div>
 			<div class="ui-g-12 ui-md-4">
 				<div class="pull-right">
-					<p:commandButton value="#{i18n['action.new']}" action="#{userSearchBean.newUser}" process="@this" styleClass="btn-primary" />
+					<p:commandButton value="#{i18n['action.new']}" action="userEdit?faces-redirect=true" process="@this" styleClass="btn-primary" />
 				</div>
 			</div>
 		</div>
@@ -48,7 +48,7 @@
 							</p:column>
 
 							<p:column headerText="#{i18n['user.name']}" sortBy="#{user.fullName}">
-								<h:link value="#{user.fullName}" outcome="/faces/user/user">
+								<h:link value="#{user.fullName}" outcome="user">
 									<f:param name="userId" value="#{user.id}" />
 								</h:link>
 							</p:column>
@@ -62,7 +62,7 @@
 							</p:column>
 
 							<p:column headerText="#{i18n['user.manager']}" sortBy="#{user.manager}">
-								<h:link value="#{user.manager.fullName}" outcome="/faces/user/user" rendered="#{not empty user.manager}">
+								<h:link value="#{user.manager.fullName}" outcome="user" rendered="#{not empty user.manager}">
 									<f:param name="userId" value="#{user.manager.id}" />
 								</h:link>
 							</p:column>

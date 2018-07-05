@@ -64,7 +64,7 @@
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['user.manager']}" for="manager" />
 											<p:autoComplete id="manager" value="#{userEditBean.manager}" completeMethod="#{userEditBean.completeManager}" var="manager"
-												itemLabel="#{manager.fullName}" itemValue="#{manager}" forceSelection="true" validator="#{userEditBean.validateManager}">
+												itemLabel="#{manager.fullName}" itemValue="#{manager}" forceSelection="true">
 												<p:column styleClass="user-select image">
 													<p:graphicImage class="image image-icon" value="/images/#{manager.imageFileName}" rendered="#{not empty manager.imageFileName}" />
 													<p:graphicImage class="image image-icon" value="/resources/img/default-avatar.png" rendered="#{empty manager.imageFileName}" />
@@ -85,7 +85,10 @@
 								<div class="ui-g">
 									<div class="ui-g-12">
 										<div class="form-action-primary">
-											<p:commandButton styleClass="btn-gray" value="#{i18n['action.cancel']}" action="#{userEditBean.cancel}" process="@this" />
+											<p:button styleClass="btn-gray" value="#{i18n['action.cancel']}" outcome="userSearch" rendered="#{userEditBean.newUser}" />
+											<p:button styleClass="btn-gray" value="#{i18n['action.cancel']}" outcome="user" rendered="#{not userEditBean.newUser}">
+												<f:param name="userId" value="#{userEditBean.user.id}" />
+											</p:button>
 											<p:commandButton styleClass="btn-primary" value="#{i18n['action.save']}" action="#{userEditBean.save}" process="@form" update="@form growl" />
 										</div>
 									</div>

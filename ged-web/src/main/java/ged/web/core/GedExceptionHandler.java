@@ -1,8 +1,8 @@
 package ged.web.core;
 
 import static ged.web.core.util.Navigate.to;
-import static ged.web.core.util.Page.INDEX;
-import static ged.web.core.util.Page.LOGIN;
+import static ged.web.core.util.PageEnum.INDEX;
+import static ged.web.core.util.PageEnum.LOGIN;
 
 import java.lang.invoke.MethodHandles;
 import java.util.Iterator;

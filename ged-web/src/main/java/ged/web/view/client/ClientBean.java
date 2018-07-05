@@ -2,7 +2,7 @@ package ged.web.view.client;
 
 import static ged.ejb.core.util.Parameters.map;
 import static ged.web.core.util.Navigate.to;
-import static ged.web.core.util.Page.JOB_OFFER;
+import static ged.web.core.util.PageEnum.JOB_OFFER;
 
 import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;

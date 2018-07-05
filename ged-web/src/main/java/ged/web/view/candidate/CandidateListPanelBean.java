@@ -1,6 +1,6 @@
 package ged.web.view.candidate;
 
-import static ged.web.core.util.Page.CANDIDATE_EDIT;
+import static ged.web.core.util.PageEnum.CANDIDATE_EDIT;
 
 import java.io.Serializable;
 import java.lang.invoke.MethodHandles;

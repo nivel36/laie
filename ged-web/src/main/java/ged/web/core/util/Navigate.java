@@ -13,16 +13,20 @@ public class Navigate {
 
 	public static final String FACES_REDIRECT = "faces-redirect=true";
 
-	public static Navigate to(final Page page) {
-		return new Navigate(page);
+	public static Navigate to(final PageEnum page) {
+		return new Navigate(page.url());
 	}
 
-	private final Page page;
+	public static Navigate to(final String url) {
+		return new Navigate(url);
+	}
 
 	private Map<String, Object> params;
 
-	private Navigate(final Page page) {
-		this.page = page;
+	private final String url;
+
+	private Navigate(final String url) {
+		this.url = url;
 	}
 
 	private String buildQueryParams() {
@@ -51,11 +55,11 @@ public class Navigate {
 			final ExternalContext externalContext = facesContext.getExternalContext();
 			final String contextName = externalContext.getContextName();
 			final StringBuilder url = new StringBuilder("/");
-			url.append(contextName).append(this.page.url()).append(".xhtml").append(this.buildQueryParams());
+			url.append(contextName).append(this.url).append(".xhtml").append(this.buildQueryParams());
 			externalContext.redirect(url.toString());
 		}
 		catch (final IOException e) {
-			throw new NavigationException("Unable to go to " + this.page, e);
+			throw new NavigationException("Unable to go to " + this.url, e);
 		}
 	}
 
@@ -65,7 +69,7 @@ public class Navigate {
 		if ((this.params != null) && (this.params.size() > 0)) {
 			fc.getExternalContext().getFlash().putAll(this.params);
 		}
-		nav.handleNavigation(fc, null, this.page.url() + "?" + FACES_REDIRECT);
+		nav.handleNavigation(fc, null, this.url + "?" + FACES_REDIRECT);
 		fc.renderResponse();
 	}
 

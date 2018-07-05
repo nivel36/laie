@@ -1,7 +1,7 @@
 package ged.web.view.candidate;
 
 import static ged.web.core.util.Navigate.to;
-import static ged.web.core.util.Page.CURRICULUM;
+import static ged.web.core.util.PageEnum.CURRICULUM;
 
 import java.util.ArrayList;
 import java.util.List;

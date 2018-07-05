@@ -1,10 +1,5 @@
 package ged.web.view.user;
 
-import static ged.ejb.core.util.Parameters.map;
-import static ged.web.core.util.Navigate.to;
-import static ged.web.core.util.Page.USER;
-import static ged.web.core.util.Page.USER_SEARCH;
-
 import java.io.IOException;
 import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
@@ -54,26 +49,11 @@ public class UserEditBean extends AbstractBean {
 	@Inject
 	private transient UserService userService;
 
-	private User buildUser() {
-		User user = this.getValueFromFlash("user");
-		if (user == null) {
-			user = new User();
-		}
-		return user;
-	}
-
-	public void cancel() {
-		if (this.user.getId() == 0) {
-			to(USER_SEARCH).doPost();
-		}
-		else {
-			to(USER).withParams(map("userId", this.user.getId())).doGet();
-		}
-	}
-
 	public List<User> completeManager(final String query) {
 		if (query.trim().length() > 2) {
-			return this.userService.search(query);
+			final List<User> managers = this.userService.search(query);
+			managers.remove(this.user);
+			return managers;
 		}
 		else {
 			return new ArrayList<>();
@@ -90,17 +70,20 @@ public class UserEditBean extends AbstractBean {
 
 	@PostConstruct
 	public void init() {
-		this.user = this.buildUser();
+		this.user = this.getValueFromFlash("user");
+		if (this.user == null) {
+			this.user = new User();
+		}
 		this.manager = this.user.getManager();
 	}
 
 	private void insertUser() {
-		this.user.setManager(this.manager);
 		this.userService.insert(this.user);
 	}
 
 	private boolean isAvalidRole(final Role userRole, final Role managerRole) {
 		if (userRole.getName().equals(managerRole.getName())) {
+			// Got the same role.
 			return true;
 		}
 		return this.roleService.isASubordinateRole(managerRole, userRole);
@@ -110,15 +93,17 @@ public class UserEditBean extends AbstractBean {
 		return this.user.getId() == 0;
 	}
 
-	public void save() {
+	public String save() {
 		logger.debug("Save user action performed");
+		this.user.setManager(this.manager);
 		if (this.user.getId() == 0) {
 			this.insertUser();
 		}
 		else {
 			this.updateUser();
 		}
-		to(USER).withParams(map("userId", this.user.getId())).doGet();
+		return String.format("/faces/user/user?userId=%d&faces-redirect=true", this.user.getId());
+
 	}
 
 	public void setFileUploadService(final FileUploadService fileUploadService) {
@@ -144,7 +129,6 @@ public class UserEditBean extends AbstractBean {
 	private void updateUser() {
 		logger.debug("Update user action performed");
 		try {
-			this.user.setManager(this.manager);
 			this.user = this.userService.update(this.user);
 		}
 		catch (final EJBException e) {
@@ -178,18 +162,6 @@ public class UserEditBean extends AbstractBean {
 		if (this.userService.emailExists(email)) {
 			logger.debug("The email exists");
 			final String msg = Translate.message("user.error.email_exists");
-			throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg));
-		}
-	}
-
-	public void validateManager(final FacesContext context, final UIComponent component, final Object value) {
-		if (value == null) {
-			return;
-		}
-		final User managerToValidate = (User) value;
-		if (managerToValidate.equals(this.user)) {
-			logger.debug("USER can't be his/her manager");
-			final String msg = Translate.message("user.error.manager");
 			throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg));
 		}
 	}

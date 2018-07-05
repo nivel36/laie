@@ -1,13 +1,13 @@
 package ged.web.core.view;
 
-import static ged.web.core.util.Page.CANDIDATE_SEARCH;
-import static ged.web.core.util.Page.CLIENT_SEARCH;
-import static ged.web.core.util.Page.INDEX;
-import static ged.web.core.util.Page.ISABEL;
-import static ged.web.core.util.Page.JOB_OFFER_SEARCH;
-import static ged.web.core.util.Page.MAINTENANCE;
-import static ged.web.core.util.Page.REPORT;
-import static ged.web.core.util.Page.USER_SEARCH;
+import static ged.web.core.util.PageEnum.CANDIDATE_SEARCH;
+import static ged.web.core.util.PageEnum.CLIENT_SEARCH;
+import static ged.web.core.util.PageEnum.INDEX;
+import static ged.web.core.util.PageEnum.ISABEL;
+import static ged.web.core.util.PageEnum.JOB_OFFER_SEARCH;
+import static ged.web.core.util.PageEnum.MAINTENANCE;
+import static ged.web.core.util.PageEnum.REPORT;
+import static ged.web.core.util.PageEnum.USER_SEARCH;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;

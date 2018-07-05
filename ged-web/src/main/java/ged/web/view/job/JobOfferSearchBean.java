@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
 import ged.web.core.util.Navigate;
-import ged.web.core.util.Page;
+import ged.web.core.util.PageEnum;
 import ged.web.core.view.AbstractBean;
 
 @Named
@@ -52,7 +52,7 @@ public class JobOfferSearchBean extends AbstractBean {
 	}
 
 	public void newJobOffer() {
-		Navigate.to(Page.JOB_OFFER_EDIT).doPost();
+		Navigate.to(PageEnum.JOB_OFFER_EDIT).doPost();
 	}
 
 	public void search() {

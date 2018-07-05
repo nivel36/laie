@@ -8,7 +8,7 @@ import static ged.web.core.util.Navigate.to;
 import java.util.ArrayList;
 import java.util.List;
 
-import static ged.web.core.util.Page.CANDIDATE;
+import static ged.web.core.util.PageEnum.CANDIDATE;
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
