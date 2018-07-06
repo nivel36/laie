@@ -1,9 +1,12 @@
 package ged.web.view.user;
 
+import static javax.faces.application.FacesMessage.SEVERITY_ERROR;
+
 import java.io.IOException;
 import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJBException;
@@ -25,7 +28,6 @@ import ged.ejb.user.UserException;
 import ged.ejb.user.UserService;
 import ged.ejb.user.role.Role;
 import ged.ejb.user.role.RoleService;
-import ged.web.core.util.Translate;
 import ged.web.core.view.AbstractBean;
 
 @Named
@@ -39,8 +41,6 @@ public class UserEditBean extends AbstractBean {
 	@Inject
 	private transient FileUploadService fileUploadService;
 
-	private User manager;
-
 	@Inject
 	private transient RoleService roleService;
 
@@ -50,18 +50,12 @@ public class UserEditBean extends AbstractBean {
 	private transient UserService userService;
 
 	public List<User> completeManager(final String query) {
-		if (query.trim().length() > 2) {
-			final List<User> managers = this.userService.search(query);
-			managers.remove(this.user);
-			return managers;
-		}
-		else {
+		if ((query == null) || (query.trim().length() < 3)) {
 			return new ArrayList<>();
 		}
-	}
-
-	public User getManager() {
-		return this.manager;
+		final List<User> managers = this.userService.search(query);
+		managers.remove(this.user);
+		return managers;
 	}
 
 	public User getUser() {
@@ -70,11 +64,11 @@ public class UserEditBean extends AbstractBean {
 
 	@PostConstruct
 	public void init() {
+		logger.debug("UserEditBean init");
 		this.user = this.getValueFromFlash("user");
 		if (this.user == null) {
 			this.user = new User();
 		}
-		this.manager = this.user.getManager();
 	}
 
 	private void insertUser() {
@@ -83,35 +77,35 @@ public class UserEditBean extends AbstractBean {
 
 	private boolean isAvalidRole(final Role userRole, final Role managerRole) {
 		if (userRole.getName().equals(managerRole.getName())) {
-			// Got the same role.
+			// They got the same role.
 			return true;
 		}
 		return this.roleService.isASubordinateRole(managerRole, userRole);
 	}
 
 	public boolean isNewUser() {
+		if (this.user == null) {
+			throw new IllegalStateException("Null user");
+		}
 		return this.user.getId() == 0;
 	}
 
 	public String save() {
 		logger.debug("Save user action performed");
-		this.user.setManager(this.manager);
+		if (this.user == null) {
+			throw new IllegalStateException("Null user");
+		}
 		if (this.user.getId() == 0) {
 			this.insertUser();
 		}
 		else {
 			this.updateUser();
 		}
-		return String.format("/faces/user/user?userId=%d&faces-redirect=true", this.user.getId());
-
+		return "/faces/user/user?faces-redirect=true&userId=" + this.user.getId();
 	}
 
 	public void setFileUploadService(final FileUploadService fileUploadService) {
 		this.fileUploadService = fileUploadService;
-	}
-
-	public void setManager(final User manager) {
-		this.manager = manager;
 	}
 
 	public void setRoleService(final RoleService roleService) {
@@ -127,15 +121,15 @@ public class UserEditBean extends AbstractBean {
 	}
 
 	private void updateUser() {
-		logger.debug("Update user action performed");
 		try {
 			this.user = this.userService.update(this.user);
 		}
 		catch (final EJBException e) {
 			if (e.getCause() instanceof UserException) {
+				logger.error("Trying to change the role to the last admin on the app");
 				final Role admin = this.roleService.findAdmin();
 				this.user.setRole(admin);
-				this.addMessage(FacesMessage.SEVERITY_ERROR, "user.error.last_admin", "user.error.last_admin");
+				this.addMessage(SEVERITY_ERROR, "user.error.last_admin", "user.error.last_admin");
 			}
 			else {
 				throw e;
@@ -144,8 +138,13 @@ public class UserEditBean extends AbstractBean {
 	}
 
 	public void uploadImage(final FileUploadEvent event) throws IOException {
+		Objects.requireNonNull(event);
+		if (event.getFile() == null) {
+			return;
+		}
 		final String uuid = this.fileUploadService.uploadImage(event.getFile().getInputstream());
 		this.user.setImageFileName(uuid);
+
 	}
 
 	public void validateEmail(final FacesContext context, final UIComponent component, final Object value) {
@@ -155,26 +154,31 @@ public class UserEditBean extends AbstractBean {
 		}
 		final String email = (String) value;
 		if (value.equals(this.user.getEmail())) {
-			// Si los emails son iguales es porque no lo estamos actualizando por lo que no
-			// hace validación
+			// If the old and the new email are equals, the user is not updating the email.
 			return;
 		}
 		if (this.userService.emailExists(email)) {
-			logger.debug("The email exists");
-			final String msg = Translate.message("user.error.email_exists");
-			throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg));
+			logger.debug("Validation error. The email {} exists", email);
+			final String msg = this.translator.message("user.error.email_exists");
+			throw new ValidatorException(new FacesMessage(SEVERITY_ERROR, msg, msg));
 		}
 	}
 
 	public void validateRole(final FacesContext context, final UIComponent component, final Object value) {
-		if ((this.manager == null) || (this.manager.getEmail() == null)) {
+		if (value == null) {
+			return;
+		}
+		final User manager = this.user.getManager();
+		if ((manager == null) || (manager.getEmail() == null)) {
+			// No manager setted, all roles are OK.
 			return;
 		}
 		final Role userRole = (Role) value;
-		final Role managerRole = this.manager.getRole();
+		final Role managerRole = manager.getRole();
 		if (!this.isAvalidRole(userRole, managerRole)) {
-			final String msg = Translate.message("user.error.role");
-			throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg));
+			logger.debug("Validation error. The role {} for user {} is invalid", userRole.getName(), this.user.getName());
+			final String msg = this.translator.message("user.error.role");
+			throw new ValidatorException(new FacesMessage(SEVERITY_ERROR, msg, msg));
 		}
 	}
 }

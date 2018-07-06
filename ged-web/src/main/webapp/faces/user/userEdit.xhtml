@@ -47,7 +47,11 @@
 									</div>
 
 									<div class="ui-g-12 ui-md-6">
-										<cc:inputText name="email" label="#{i18n['user.email']}" value="#{userEditBean.user.email}" required="true" />
+										<div class="form-group">
+											<p:outputLabel value="#{i18n['user.email']}" for="email" />
+											<p:inputText id="email" value="#{userEditBean.user.email}" required="true" validator="#{userEditBean.validateEmail}"/>
+											<p:message for="email" />
+										</div>
 									</div>
 
 									<div class="ui-g-12 ui-md-6">
@@ -63,7 +67,7 @@
 									<div class="ui-sm-12 ui-md-6">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['user.manager']}" for="manager" />
-											<p:autoComplete id="manager" value="#{userEditBean.manager}" completeMethod="#{userEditBean.completeManager}" var="manager"
+											<p:autoComplete id="manager" value="#{userEditBean.user.manager}" completeMethod="#{userEditBean.completeManager}" var="manager"
 												itemLabel="#{manager.fullName}" itemValue="#{manager}" forceSelection="true">
 												<p:column styleClass="user-select image">
 													<p:graphicImage class="image image-icon" value="/images/#{manager.imageFileName}" rendered="#{not empty manager.imageFileName}" />

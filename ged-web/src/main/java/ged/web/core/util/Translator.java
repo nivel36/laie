@@ -7,11 +7,11 @@ import java.util.ResourceBundle;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 
-public class Translate {
+public class Translator {
 
 	private static final String FILE_NAME = "ged.i18n";
 
-	private static Locale getLocale() {
+	private Locale getLocale() {
 		final UIViewRoot uIViewRoot = FacesContext.getCurrentInstance().getViewRoot();
 		final Locale locale;
 		if (uIViewRoot != null) {
@@ -23,26 +23,23 @@ public class Translate {
 		return locale;
 	}
 
-	private static ResourceBundle getResourceBundle(final String filename) {
-		final Locale locale = getLocale();
+	private ResourceBundle getResourceBundle(final String filename) {
+		final Locale locale = this.getLocale();
 		return ResourceBundle.getBundle(filename, locale);
 	}
 
-	public static String message(final String message) {
-		final ResourceBundle bundle = getResourceBundle(FILE_NAME);
+	public String message(final String message) {
+		final ResourceBundle bundle = this.getResourceBundle(FILE_NAME);
 		return bundle.getString(message);
 	}
 
-	public static String message(final String message, final Object[] params) {
-		final ResourceBundle bundle = getResourceBundle(FILE_NAME);
+	public String message(final String message, final Object[] params) {
+		final ResourceBundle bundle = this.getResourceBundle(FILE_NAME);
 		String text = bundle.getString(message);
 		if (params != null) {
-			final MessageFormat mf = new MessageFormat(text, getLocale());
+			final MessageFormat mf = new MessageFormat(text, this.getLocale());
 			text = mf.format(params, new StringBuffer(), null).toString();
 		}
 		return text;
-	}
-
-	private Translate() {
 	}
 }

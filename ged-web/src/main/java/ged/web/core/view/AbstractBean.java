@@ -19,7 +19,7 @@ import org.primefaces.PrimeFaces;
 
 import ged.ejb.core.model.Ownerable;
 import ged.ejb.user.User;
-import ged.web.core.util.Translate;
+import ged.web.core.util.Translator;
 
 public abstract class AbstractBean implements Serializable {
 
@@ -39,6 +39,9 @@ public abstract class AbstractBean implements Serializable {
 
 	@Inject
 	protected transient SessionBean sessionBean;
+
+	@Inject
+	protected transient Translator translator;
 
 	protected void addErrorToField(final UIComponent component, final String message) {
 		this.addMessage(component, FacesMessage.SEVERITY_ERROR, message, message, null);
@@ -69,8 +72,8 @@ public abstract class AbstractBean implements Serializable {
 	}
 
 	private void addMessage(final UIComponent component, final Severity severity, final String title, final String message, final Object[] params) {
-		final String translatedTitle = Translate.message(title, params);
-		final String translatedMessage = Translate.message(message, params);
+		final String translatedTitle = this.translator.message(title, params);
+		final String translatedMessage = this.translator.message(message, params);
 		final FacesMessage facesMessage = new FacesMessage(severity, translatedTitle, translatedMessage);
 		if (component == null) {
 			this.facesContext.addMessage(null, facesMessage);
@@ -150,6 +153,10 @@ public abstract class AbstractBean implements Serializable {
 
 	public void setSessionBean(final SessionBean sessionBean) {
 		this.sessionBean = sessionBean;
+	}
+
+	public void setTranslator(final Translator translator) {
+		this.translator = translator;
 	}
 
 	protected boolean userHasPermissionToEdit(final Ownerable entity) {
