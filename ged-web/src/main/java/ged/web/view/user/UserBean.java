@@ -1,9 +1,5 @@
 package ged.web.view.user;
 
-import static ged.web.core.util.Navigate.to;
-import static ged.web.core.util.Page.Type.GET;
-import static ged.web.core.util.PageEnum.USER;
-
 import java.io.IOException;
 import java.lang.invoke.MethodHandles;
 import java.util.List;
@@ -22,9 +18,7 @@ import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
-import ged.web.core.PageNotFoundException;
 import ged.web.core.util.Message;
-import ged.web.core.util.Page;
 import ged.web.core.view.AbstractBean;
 import ged.web.reports.UserReport;
 
@@ -34,13 +28,7 @@ public class UserBean extends AbstractBean {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
-	private static Page page = new Page("/faces/user/user", GET);
-
 	private static final long serialVersionUID = -2187385732087309689L;
-
-	public static void go(final String id) {
-		page.go("userId", id);
-	}
 
 	private List<JobOffer> jobOffers;
 
@@ -49,12 +37,10 @@ public class UserBean extends AbstractBean {
 
 	private List<User> team;
 
-	private User user;
-
 	@SuppressWarnings("cdi-ambiguous-dependency")
-	@Param(required = true)
 	@Inject
-	private Long userId;
+	@Param(name = "userId", required = true)
+	private User user;
 
 	@Inject
 	private transient UserService userService;
@@ -72,10 +58,6 @@ public class UserBean extends AbstractBean {
 		return this.jobOffers;
 	}
 
-	public User getManager() {
-		return this.user.getManager();
-	}
-
 	public List<User> getTeam() {
 		return this.team;
 	}
@@ -86,20 +68,12 @@ public class UserBean extends AbstractBean {
 
 	@PostConstruct
 	public void init() {
-		logger.trace("UserBean init");
-		this.user = this.userService.find(this.userId);
-		if (this.user == null) {
-			throw new PageNotFoundException();
-		}
+		logger.debug("UserBean init");
 		this.team = this.userService.findSubordinateUsers(this.user);
 		this.jobOffers = this.jobOfferService.findAllJobOffersByOwner(this.user);
 		if (this.user.isDeleted()) {
 			Message.addWarning("message.erased_entity", "message.erased_entity");
 		}
-	}
-
-	public void newUser() {
-		to(USER).doPost();
 	}
 
 	public void setJobOfferService(final JobOfferService jobOfferService) {

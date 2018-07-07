@@ -2,7 +2,9 @@ package ged.ejb.user.role;
 
 import java.util.List;
 
-public interface RoleService {
+import ged.ejb.core.Service;
+
+public interface RoleService extends Service<Role> {
 
 	Role findAdmin();
 

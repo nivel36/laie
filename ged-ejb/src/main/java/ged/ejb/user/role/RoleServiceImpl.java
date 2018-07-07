@@ -10,10 +10,12 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import ged.ejb.core.AbstractService;
+import ged.ejb.core.model.Dao;
 import ged.ejb.core.model.Repository;
 
 @Stateless
-public class RoleServiceImpl implements RoleService {
+public class RoleServiceImpl extends AbstractService<Role> implements RoleService {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
@@ -44,6 +46,11 @@ public class RoleServiceImpl implements RoleService {
 	public List<Role> findSubordinateRoles(final Role manager) {
 		logger.debug("Find subordinate roles of role {}", manager.getName());
 		return this.roleDao.findSubordinateRoles(manager);
+	}
+
+	@Override
+	protected Dao<Role> getDao() {
+		return this.roleDao;
 	}
 
 	@Override

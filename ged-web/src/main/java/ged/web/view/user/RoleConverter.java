@@ -1,37 +1,40 @@
 package ged.web.view.user;
 
-import java.util.List;
-import java.util.NoSuchElementException;
-
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
+import javax.faces.convert.ConverterException;
 import javax.faces.convert.FacesConverter;
+import javax.inject.Inject;
 
 import ged.ejb.user.role.Role;
-import ged.web.core.view.ApplicationBean;
+import ged.ejb.user.role.RoleService;
 
-@FacesConverter(forClass = Role.class)
+@FacesConverter(managed = true, forClass = Role.class)
 public class RoleConverter implements Converter<Role> {
 
-	protected ApplicationBean getAppBean() {
-		final FacesContext context = FacesContext.getCurrentInstance();
-		return context.getApplication().evaluateExpressionGet(context, "#{applicationBean}", ApplicationBean.class);
-	}
+	@Inject
+	private RoleService roleService;
 
 	@Override
 	public Role getAsObject(final FacesContext context, final UIComponent component, final String value) {
-		final List<Role> roles = this.getAppBean().getRoles();
-		for (final Role role : roles) {
-			if (role.getName().equals(value)) {
-				return role;
-			}
+		if (value == null) {
+			return null;
 		}
-		throw new NoSuchElementException(value);
+		try {
+			final long roleId = Long.parseLong(value);
+			return this.roleService.find(roleId);
+		}
+		catch (final NumberFormatException e) {
+			throw new ConverterException(value + " is not a valid id");
+		}
 	}
 
 	@Override
 	public String getAsString(final FacesContext context, final UIComponent component, final Role value) {
-		return value.getName();
+		if (value == null) {
+			return null;
+		}
+		return String.valueOf(value.getId());
 	}
 }

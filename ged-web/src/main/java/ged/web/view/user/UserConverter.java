@@ -1,10 +1,9 @@
 package ged.web.view.user;
 
-import java.util.List;
-
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
+import javax.faces.convert.ConverterException;
 import javax.faces.convert.FacesConverter;
 import javax.inject.Inject;
 
@@ -19,19 +18,24 @@ public class UserConverter implements Converter<User> {
 
 	@Override
 	public User getAsObject(final FacesContext context, final UIComponent component, final String value) {
-		if ((value == null) || value.trim().equals("")) {
+		if (value == null) {
 			return null;
 		}
-		final List<User> users = this.userService.search(value);
-		if (users.size() == 1) {
-			return users.get(0);
+		try {
+			final long userId = Long.parseLong(value);
+			return this.userService.find(userId);
 		}
-		return null;
+		catch (final NumberFormatException e) {
+			throw new ConverterException(value + " is not a valid id");
+		}
 	}
 
 	@Override
 	public String getAsString(final FacesContext context, final UIComponent component, final User value) {
-		return value.getFullName();
+		if (value == null) {
+			return null;
+		}
+		return String.valueOf(value.getId());
 	}
 
 	public void setUserService(final UserService userService) {
