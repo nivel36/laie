@@ -37,4 +37,8 @@ public class RoleConverter implements Converter<Role> {
 		}
 		return String.valueOf(value.getId());
 	}
+
+	public void setRoleService(final RoleService roleService) {
+		this.roleService = roleService;
+	}
 }
