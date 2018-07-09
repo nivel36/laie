@@ -13,12 +13,11 @@ import org.slf4j.LoggerFactory;
 import ged.ejb.client.Client;
 import ged.ejb.client.ClientService;
 import ged.ejb.core.Address;
-import ged.web.core.GedPermissionException;
 import ged.web.core.view.AbstractDialogBean;
 
 @Named
 @ViewScoped
-public class ClientDialogBean extends AbstractDialogBean {
+public class ClientEditBean extends AbstractDialogBean {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
@@ -43,34 +42,24 @@ public class ClientDialogBean extends AbstractDialogBean {
 	@PostConstruct
 	public void init() {
 		logger.trace("ClientDialog oppened");
-		final Long clientId = this.getIdFromParameters("clientId");
-		if (clientId != null) {
-			this.client = this.clientService.find(clientId);
-			if (this.client == null) {
-				throw new IllegalStateException();
-			}
-			if (this.client.getAddress() == null) {
-				this.client.setAddress(new Address());
-			}
-		}
-		else {
+		this.client = this.getValueFromFlash("client");
+		if (this.client == null) {
 			this.client = this.buildNewClient();
 		}
 	}
 
 	private void insertClient() {
 		this.clientService.insert(this.client);
-		this.closeDialog(this.client);
 	}
 
 	public boolean isNewClient() {
 		if (this.client == null) {
-			return true;
+			throw new IllegalStateException("Null client");
 		}
 		return this.client.getId() == 0;
 	}
 
-	public void save() {
+	public String save() {
 		logger.debug("ClientDialog save action performed");
 		if (this.isNewClient()) {
 			this.insertClient();
@@ -78,6 +67,7 @@ public class ClientDialogBean extends AbstractDialogBean {
 		else {
 			this.updateClient();
 		}
+		return "/faces/client/client?faces-redirect=true&clientId=" + this.client.getId();
 	}
 
 	public void setClientService(final ClientService clientService) {
@@ -85,10 +75,6 @@ public class ClientDialogBean extends AbstractDialogBean {
 	}
 
 	private void updateClient() {
-		if (!this.userHasPermissionToEdit(this.client)) {
-			throw new GedPermissionException();
-		}
 		this.client = this.clientService.update(this.client);
-		this.closeDialog(this.client);
 	}
 }

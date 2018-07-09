@@ -20,7 +20,7 @@
 		<div class="ui-g">
 			<div class="ui-g-12 ui-xl-8">
 				<h:form id="userPanelForm" enctype="multipart/form-data">
-					<p:panel header="#{userEditBean.newUser ? i18n['user.new_user'] : userEditBean.user}">
+					<p:panel header="#{userEditBean.newUser ? i18n['user.new_user'] : userEditBean.user.fullName}">
 						<div class="ui-g">
 							<div class="ui-g-12 ui-lg-3 ui-xl-2">
 								<div class="user-card">

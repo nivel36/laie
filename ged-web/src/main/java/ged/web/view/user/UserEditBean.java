@@ -92,10 +92,7 @@ public class UserEditBean extends AbstractBean {
 
 	public String save() {
 		logger.debug("Save user action performed");
-		if (this.user == null) {
-			throw new IllegalStateException("Null user");
-		}
-		if (this.user.getId() == 0) {
+		if (this.isNewUser()) {
 			this.insertUser();
 		}
 		else {

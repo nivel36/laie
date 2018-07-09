@@ -63,9 +63,7 @@
 							<div class="ui-g-12">
 								<div class="form-action-primary">
 									<p:commandButton id="exportExcel" value="#{i18n['action.export']}" action="#{clientBean.export}" icon="fa fa-file-excel-o" />
-									<p:commandButton value="#{i18n['action.edit']}" actionListener="#{clientBean.openClientDialog}" styleClass="btn-primary">
-										<p:ajax event="dialogReturn" listener="#{clientBean.onCloseClientDialog}" update="clientViewForm growl" />
-									</p:commandButton>
+									<p:commandButton value="#{i18n['action.edit']}" process="@this" actionListener="#{clientBean.editClient}" action="/faces/client/clientEdit" styleClass="btn-primary" />
 								</div>
 							</div>
 						</div>

@@ -46,7 +46,7 @@ public class UserBean extends AbstractBean {
 	private transient UserService userService;
 
 	public void editUser() {
-		this.flash.put("user", this.user);
+		this.putValueToFlash("user", this.user);
 	}
 
 	public void export() throws IOException {

@@ -20,11 +20,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ged.ejb.client.Client;
-import ged.ejb.client.ClientService;
 import ged.ejb.client.Contact;
 import ged.ejb.core.Address;
 import ged.ejb.job.offer.JobOffer;
-import ged.web.core.PageNotFoundException;
+import ged.ejb.job.offer.JobOfferService;
 import ged.web.core.view.AbstractBean;
 
 @Named
@@ -35,17 +34,21 @@ public class ClientBean extends AbstractBean {
 
 	private static final long serialVersionUID = 1412905869664752048L;
 
-	private Client client;
-
 	@SuppressWarnings("cdi-ambiguous-dependency")
 	@Inject
-	@Param(required = true)
-	private Long clientId;
-
-	@Inject
-	private transient ClientService clientService;
+	@Param(name = "clientId", required = true)
+	private Client client;
 
 	private List<Contact> contacts;
+
+	private List<JobOffer> jobOffers;
+
+	@Inject
+	private transient JobOfferService jobOfferService;
+
+	public void editClient() {
+		this.putValueToFlash("client", this.client);
+	}
 
 	public void export() {
 	}
@@ -59,32 +62,21 @@ public class ClientBean extends AbstractBean {
 	}
 
 	public List<JobOffer> getJobOffers() {
-		return new ArrayList<>(this.client.getJobOffers());
+		return this.jobOffers;
 	}
 
 	@PostConstruct
 	public void init() {
 		logger.trace("Init ClientBean");
-		this.client = this.clientService.findAllClientDataByClientId(this.clientId);
-		if (this.client == null) {
-			logger.error("Client not found");
-			throw new PageNotFoundException();
-		}
 		if (this.client.getAddress() == null) {
 			this.client.setAddress(new Address());
 		}
 		this.contacts = new ArrayList<>(this.client.getContacts());
+		this.jobOffers = this.jobOfferService.findJobOffersByClient(this.client);
 	}
 
 	public boolean isUserHasPermissionToEdit() {
 		return this.userHasPermissionToEdit(this.client);
-	}
-
-	public void onCloseClientDialog(final SelectEvent event) {
-		final Client clientFromDialog = (Client) event.getObject();
-		if (clientFromDialog != null) {
-			this.client = clientFromDialog;
-		}
 	}
 
 	public void onCloseContactDialog(final SelectEvent e) {
@@ -101,18 +93,13 @@ public class ClientBean extends AbstractBean {
 		}
 	}
 
-	public void openClientDialog() {
-		final Map<String, List<String>> params = this.buildDialogParameter("clientId", String.valueOf(this.clientId));
-		this.openDialog("/faces/client/clientDialog", params);
-	}
-
 	public void openContactDialog() {
-		final Map<String, List<String>> params = this.buildDialogParameter("clientId", String.valueOf(this.clientId));
+		final Map<String, List<String>> params = this.buildDialogParameter("clientId", String.valueOf(this.client.getId()));
 		this.openDialog("/faces/client/contactDialog", params);
 	}
 
 	public void openJobOfferDialog() {
-		final Map<String, List<String>> params = this.buildDialogParameter("clientId", String.valueOf(this.clientId));
+		final Map<String, List<String>> params = this.buildDialogParameter("clientId", String.valueOf(this.client.getId()));
 		this.openDialog("/faces/jobOffer/jobOfferDialog", params);
 	}
 
@@ -120,11 +107,7 @@ public class ClientBean extends AbstractBean {
 		this.client = client;
 	}
 
-	public void setClientId(final Long clientId) {
-		this.clientId = clientId;
-	}
-
-	public void setClientService(final ClientService clientService) {
-		this.clientService = clientService;
+	public void setJobOfferService(final JobOfferService jobOfferService) {
+		this.jobOfferService = jobOfferService;
 	}
 }

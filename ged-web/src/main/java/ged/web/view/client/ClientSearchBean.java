@@ -8,15 +8,11 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.primefaces.event.SelectEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ged.ejb.client.Client;
 import ged.ejb.client.ClientService;
-import ged.ejb.core.util.Parameters;
-import ged.web.core.util.Navigate;
-import ged.web.core.util.PageEnum;
 import ged.web.core.view.AbstractBean;
 
 @Named
@@ -51,18 +47,7 @@ public class ClientSearchBean extends AbstractBean {
 	@PostConstruct
 	public void init() {
 		logger.trace("Init ClientSearchBean");
-		this.clients = this.clientService.search(this.searchText);
-	}
-
-	public void onCloseClientDialog(final SelectEvent e) {
-		final Client client = (Client) e.getObject();
-		if (client != null) {
-			Navigate.to(PageEnum.CLIENT).withParams(Parameters.map("clientId", client.getId())).doGet();
-		}
-	}
-
-	public void openNewClientDialog() {
-		this.openDialog("clientDialog", null);
+		this.search();
 	}
 
 	public void search() {

@@ -143,6 +143,10 @@ public abstract class AbstractBean implements Serializable {
 		PrimeFaces.current().dialog().openDynamic(name, options, params);
 	}
 
+	public void putValueToFlash(final String key, final Object value) {
+		this.flash.put(key, value);
+	}
+
 	public void setApplicationBean(final ApplicationBean applicationBean) {
 		this.applicationBean = applicationBean;
 	}

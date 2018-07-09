@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:af="http://java.sun.com/jsf/composite/afaces"
-	template="/WEB-INF/templates/default.xhtml">
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
 		<title>#{i18n['client.clients']}</title>
@@ -11,11 +10,17 @@
 
 	<ui:define name="content">
 		<div class="ui-g">
-			<div class="ui-g-12">
+			<div class="ui-g-12 ui-md-8">
 				<p:breadCrumb homeDisplay="text">
 					<p:menuitem value="#{i18n['menu.index']}" url="/faces/index.xhtml" />
 					<p:menuitem value="#{i18n['client.clients']}" disabled="true" />
 				</p:breadCrumb>
+			</div>
+			<div class="ui-g-12 ui-md-4">
+				<div class="pull-right">
+					<p:commandButton value="#{i18n['action.export']}" action="#{clientSearchBean.clean}" process="@this" icon="fa fa-file-excel-o" />
+					<p:button value="#{i18n['action.new']}" outcome="clientEdit" styleClass="btn-primary" />
+				</div>
 			</div>
 		</div>
 
@@ -31,14 +36,6 @@
 									<p:commandButton id="cleanSearchTextAction" action="#{clientSearchBean.clean}" update="@form" icon="fa fa-times" styleClass="btn-gray"
 										rendered="#{not empty clientSearchBean.searchText}" />
 									<p:commandButton id="searchAction" action="#{clientSearchBean.search}" update="@form" icon="fa fa-search" />
-								</div>
-							</div>
-							<div class="ui-g-12 ui-md-6">
-								<div class="pull-right">
-									<p:commandButton value="#{i18n['action.export']}" action="#{clientSearchBean.clean}" icon="fa fa-file-excel-o" />
-									<p:commandButton value="#{i18n['action.new']}" actionListener="#{clientSearchBean.openNewClientDialog}" styleClass="btn-primary">
-										<p:ajax event="dialogReturn" listener="#{clientSearchBean.onCloseClientDialog}" />
-									</p:commandButton>
 								</div>
 							</div>
 						</div>
