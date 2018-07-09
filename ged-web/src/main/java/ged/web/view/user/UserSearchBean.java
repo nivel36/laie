@@ -1,7 +1,5 @@
 package ged.web.view.user;
 
-import static ged.web.core.util.Page.Type.POST;
-
 import java.lang.invoke.MethodHandles;
 import java.util.List;
 
@@ -15,7 +13,6 @@ import org.slf4j.LoggerFactory;
 
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
-import ged.web.core.util.Page;
 import ged.web.core.view.AbstractBean;
 
 @Named
@@ -24,13 +21,7 @@ public class UserSearchBean extends AbstractBean {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
-	private static Page page = new Page("/faces/user/userSearch", POST);
-
 	private static final long serialVersionUID = 2434819723782902618L;
-
-	public static void go() {
-		page.go();
-	}
 
 	private String searchText;
 
@@ -61,12 +52,7 @@ public class UserSearchBean extends AbstractBean {
 
 	public void search() {
 		logger.debug("Searching for users");
-		if (this.searchText == null) {
-			this.users = this.userService.findAll();
-		}
-		else {
-			this.users = this.userService.search(this.searchText);
-		}
+		this.users = this.userService.search(this.searchText);
 	}
 
 	public void setSearchText(final String searchText) {
