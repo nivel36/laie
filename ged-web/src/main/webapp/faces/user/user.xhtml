@@ -75,7 +75,7 @@
 									<div class="ui-sm-12 ui-md-4">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['user.manager']}" for="manager" />
-											<p:inputText id="manager" value="#{userBean.user.manager}" readonly="true" />
+											<p:inputText id="manager" value="#{userBean.user.manager.fullName}" readonly="true" />
 										</div>
 									</div>
 
@@ -151,7 +151,7 @@
 								<h:outputText value="#{i18n['action.action']}" />
 							</f:facet>
 							<h:link value="#{i18n['action.view']}" outcome="/faces/jobOffer/jobOfferView">
-								<f:param name="id" value="#{jobOffer.id}" />
+								<f:param name="jobOfferId" value="#{jobOffer.id}" />
 							</h:link>
 						</h:column>
 					</p:dataTable>

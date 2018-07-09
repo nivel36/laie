@@ -68,7 +68,7 @@
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['user.manager']}" for="manager" />
 											<p:autoComplete id="manager" value="#{userEditBean.user.manager}" completeMethod="#{userEditBean.completeManager}" var="manager"
-												itemLabel="#{manager.fullName}" itemValue="#{manager.id}" forceSelection="true">
+												itemLabel="#{manager.fullName}" itemValue="#{manager}" forceSelection="true">
 												<p:column styleClass="user-select image">
 													<p:graphicImage class="image image-icon" value="/images/#{manager.imageFileName}" rendered="#{not empty manager.imageFileName}" />
 													<p:graphicImage class="image image-icon" value="/resources/img/default-avatar.png" rendered="#{empty manager.imageFileName}" />

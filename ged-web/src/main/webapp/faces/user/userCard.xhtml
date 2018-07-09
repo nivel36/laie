@@ -3,7 +3,7 @@
 	xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui"
 	xmlns:i18n="http://legion.com/i18n">
 	<p:link outcome="user">
-		<f:param name="id" value="#{user.id}" />
+		<f:param name="userId" value="#{user.id}" />
 		<div class="user-minicard">
 			<div class="user-image">
 				<p:graphicImage class="image" value="/images/#{user.imageFileName}" rendered="#{not empty user.imageFileName}" />
