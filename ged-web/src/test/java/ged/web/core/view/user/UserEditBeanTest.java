@@ -52,6 +52,17 @@ public class UserEditBeanTest {
 	private UserService userService;
 
 	@Test
+	public void cleanManagerTest() {
+		final User user = new User();
+		final User manager = new User();
+		user.setManager(manager);
+		this.userEditBean.setUser(user);
+
+		this.userEditBean.cleanManager();
+		Assert.assertNull(this.userEditBean.getUser().getManager());
+	}
+
+	@Test
 	public void completeManagerNullTest() {
 		final List<User> managers = this.userEditBean.completeManager(null);
 		Assert.assertEquals(0, managers.size());
