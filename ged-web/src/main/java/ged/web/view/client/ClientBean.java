@@ -1,9 +1,5 @@
 package ged.web.view.client;
 
-import static ged.ejb.core.util.Parameters.map;
-import static ged.web.core.util.Navigate.to;
-import static ged.web.core.util.PageEnum.JOB_OFFER;
-
 import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
 import java.util.List;
@@ -79,6 +75,12 @@ public class ClientBean extends AbstractBean {
 		return this.userHasPermissionToEdit(this.client);
 	}
 
+	public void newJobOffer() {
+		final JobOffer newJobOffer = new JobOffer();
+		newJobOffer.setClient(this.client);
+		this.putValueToFlash("jobOffer", newJobOffer);
+	}
+
 	public void onCloseContactDialog(final SelectEvent e) {
 		final Contact newContact = (Contact) e.getObject();
 		if (newContact != null) {
@@ -86,21 +88,9 @@ public class ClientBean extends AbstractBean {
 		}
 	}
 
-	public void onCloseJobOfferDialog(final SelectEvent e) {
-		final JobOffer newJobOffer = (JobOffer) e.getObject();
-		if (newJobOffer != null) {
-			to(JOB_OFFER).withParams(map("jobOfferId", newJobOffer.getId())).doGet();
-		}
-	}
-
 	public void openContactDialog() {
 		final Map<String, List<String>> params = this.buildDialogParameter("clientId", String.valueOf(this.client.getId()));
 		this.openDialog("/faces/client/contactDialog", params);
-	}
-
-	public void openJobOfferDialog() {
-		final Map<String, List<String>> params = this.buildDialogParameter("clientId", String.valueOf(this.client.getId()));
-		this.openDialog("/faces/jobOffer/jobOfferDialog", params);
 	}
 
 	public void setClient(final Client client) {

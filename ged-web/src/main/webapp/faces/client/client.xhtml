@@ -82,9 +82,7 @@
 			<div class="ui-g-12 ui-xl-6">
 				<h:form id="jobOffersForm">
 					<cc:jobOffers id="jobOffers" jobOffers="#{clientBean.jobOffers}">
-						<p:commandButton value="#{i18n['action.new']}" actionListener="#{clientBean.openJobOfferDialog}" process="@this">
-							<p:ajax event="dialogReturn" listener="#{clientBean.onCloseJobOfferDialog}" />
-						</p:commandButton>
+						<p:commandButton value="#{i18n['action.new']}" actionListener="#{clientBean.newJobOffer}" action="/faces/jobOffer/jobOfferEdit?faces-redirect=true" process="@this" />						
 					</cc:jobOffers>
 				</h:form>
 			</div>

@@ -31,9 +31,9 @@
 								<h:panelGroup id="clientGroup" layout="block" styleClass="form-group">
 									<p:outputLabel for="client" value="#{i18n['job.client']}" />
 									<div class="ui-inputgroup">
-										<p:inputText id="client" value="#{jobOfferEditBean.client.name}" required="true" />
+										<p:inputText id="client" value="#{jobOfferEditBean.jobOffer.client.name}" required="true" />
 										<p:commandButton action="#{jobOfferEditBean.cleanClient}" process="@this" update="clientGroup" styleClass="btn-gray" icon="fa fa-times"
-											rendered="#{not empty jobOfferEditBean.client.name}" />
+											rendered="#{not empty jobOfferEditBean.jobOffer.client.name}" />
 										<p:commandButton icon="fa fa-search" styleClass="green-button" actionListener="#{jobOfferEditBean.openClientSearchDialog}" process="@this">
 											<p:ajax event="dialogReturn" listener="#{jobOfferEditBean.onCloseClientSearchDialog}" update="clientGroup" />
 										</p:commandButton>
@@ -69,7 +69,7 @@
 								<cc:inputText name="state" label="#{i18n['job.state']}" value="#{jobOfferEditBean.jobOffer.state}" required="true" />
 							</div>
 							<div class="ui-g-12 ui-md-6">
-								<cc:inputText name="owner" label="#{i18n['job.owner']}" value="#{jobOfferEditBean.jobOffer.owner}" required="true" />
+								<cc:inputText name="owner" label="#{i18n['job.owner']}" value="#{jobOfferEditBean.jobOffer.owner.fullName}" required="true" />
 							</div>
 							<div class="ui-g-12 ui-md-6">
 								<div class="form-group">

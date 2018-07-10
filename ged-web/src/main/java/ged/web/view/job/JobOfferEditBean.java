@@ -14,7 +14,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ged.ejb.client.Client;
-import ged.ejb.client.ClientService;
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
 import ged.ejb.user.User;
@@ -30,11 +29,6 @@ public class JobOfferEditBean extends AbstractDialogBean {
 
 	private static final long serialVersionUID = -4373329969104383876L;
 
-	private Client client;
-
-	@Inject
-	private transient ClientService clientService;
-
 	private JobOffer jobOffer;
 
 	@Inject
@@ -45,29 +39,8 @@ public class JobOfferEditBean extends AbstractDialogBean {
 	@Inject
 	private transient UserService userService;
 
-	private JobOffer buildNewJobOffer() {
-		final JobOffer newJobOffer = new JobOffer();
-		final User user = this.sessionBean.getUser();
-		newJobOffer.setOwner(user);
-		return newJobOffer;
-	}
-
 	public void cleanClient() {
-		this.client = new Client();
-	}
-
-	public Client getClient() {
-		return this.client;
-	}
-
-	private Client getClientFromAttributes() {
-		final Long clientId = this.getIdFromParameters("clientId");
-		if (clientId == null) {
-			return null;
-		}
-		else {
-			return this.clientService.find(clientId);
-		}
+		this.jobOffer.setClient(new Client());
 	}
 
 	public JobOffer getJobOffer() {
@@ -81,19 +54,19 @@ public class JobOfferEditBean extends AbstractDialogBean {
 	@PostConstruct
 	public void init() {
 		logger.debug("JobOfferDialogBean init");
-		final Long jobOfferId = this.getIdFromParameters("jobOfferId");
-		if (jobOfferId == null) {
-			this.jobOffer = this.buildNewJobOffer();
-			final Client client = this.getClientFromAttributes();
-			this.jobOffer.setClient(client);
-			this.userService.findSubordinateUsers(this.sessionBean.getUser());
-			this.setRecruiters(this.userService.findSubordinateUsers(this.sessionBean.getUser()));
+		this.jobOffer = this.getValueFromFlash("jobOffer");
+		if ((this.jobOffer == null)) {
+			this.jobOffer = new JobOffer();
+		}
+		if (this.isNewJobOffer()) {
+			final User user = this.sessionBean.getUser();
+			this.jobOffer.setOwner(user);
+			final List<User> recruiters = this.userService.findSubordinateUsers(user);
+			this.setRecruiters(recruiters);
 		}
 		else {
-			this.jobOffer = this.jobOfferService.find(jobOfferId);
 			this.recruiters = new ArrayList<>(this.jobOffer.getRecruiters());
 		}
-		this.client = this.jobOffer.getClient();
 	}
 
 	private void insertJobOffer() {
@@ -111,7 +84,7 @@ public class JobOfferEditBean extends AbstractDialogBean {
 	public void onCloseClientSearchDialog(final SelectEvent e) {
 		final Client clientFromDialog = (Client) e.getObject();
 		if (clientFromDialog != null) {
-			this.client = clientFromDialog;
+			this.jobOffer.setClient(clientFromDialog);
 		}
 	}
 
@@ -120,18 +93,12 @@ public class JobOfferEditBean extends AbstractDialogBean {
 	}
 
 	public void save() {
-		this.jobOffer.setClient(this.client);
-		if (this.jobOffer.getId() == 0) {
+		if (this.isNewJobOffer()) {
 			this.insertJobOffer();
 		}
 		else {
 			this.updateJobOffer();
 		}
-		this.closeDialog(this.jobOffer);
-	}
-
-	public void setClient(final Client client) {
-		this.client = client;
 	}
 
 	public void setJobOffer(final JobOffer jobOffer) {
