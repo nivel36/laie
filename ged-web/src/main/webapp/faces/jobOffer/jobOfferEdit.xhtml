@@ -83,8 +83,8 @@
 											</p:column>
 											<p:ajax event="itemSelect" update="ownerGroup" process="owner" />
 										</p:autoComplete>
-										<p:commandButton id="cleanOwnerAction" action="#{jobOfferEditBean.cleanOwner}" process="@this" update="ownerGroup" styleClass="btn-gray" icon="fa fa-times"
-											rendered="#{not empty jobOfferEditBean.jobOffer.owner}" />
+										<p:commandButton id="cleanOwnerAction" action="#{jobOfferEditBean.cleanOwner}" process="@this" update="ownerGroup" styleClass="btn-gray"
+											icon="fa fa-times" rendered="#{not empty jobOfferEditBean.jobOffer.owner}" />
 									</div>
 									<p:message for="owner" />
 								</h:panelGroup>
