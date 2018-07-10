@@ -43,6 +43,10 @@ public class JobOfferEditBean extends AbstractDialogBean {
 		this.jobOffer.setClient(new Client());
 	}
 
+	public void cleanOwner() {
+		this.jobOffer.setOwner(null);
+	}
+
 	public JobOffer getJobOffer() {
 		return this.jobOffer;
 	}
@@ -92,13 +96,21 @@ public class JobOfferEditBean extends AbstractDialogBean {
 		this.openBigDialog("/faces/client/clientSearchDialog", null);
 	}
 
-	public void save() {
+	public String save() {
 		if (this.isNewJobOffer()) {
 			this.insertJobOffer();
 		}
 		else {
 			this.updateJobOffer();
 		}
+		return "/faces/jobOffer/jobOffer?faces-redirect=true&jobOfferId=" + this.jobOffer.getId();
+	}
+
+	public List<User> searchOwner(final String query) {
+		if ((query == null) || (query.trim().length() < 3)) {
+			return new ArrayList<>();
+		}
+		return this.userService.search(query);
 	}
 
 	public void setJobOffer(final JobOffer jobOffer) {

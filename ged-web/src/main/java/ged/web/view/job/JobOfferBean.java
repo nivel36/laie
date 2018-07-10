@@ -2,7 +2,6 @@ package ged.web.view.job;
 
 import java.lang.invoke.MethodHandles;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -44,6 +43,11 @@ public class JobOfferBean extends AbstractBean {
 	@Inject
 	private transient JobOfferService jobService;
 
+	public void editJobOffer() {
+		this.putValueToFlash("jobOffer", this.jobOffer);
+
+	}
+
 	public List<Candidate> getCandidates() {
 		return this.candidates;
 	}
@@ -67,13 +71,6 @@ public class JobOfferBean extends AbstractBean {
 		return this.userHasPermissionToEdit(this.jobOffer);
 	}
 
-	public void onCloseJobOfferDialog(final SelectEvent event) {
-		final JobOffer jobOfferFromDialog = (JobOffer) event.getObject();
-		if (jobOfferFromDialog != null) {
-			this.jobOffer = jobOfferFromDialog;
-		}
-	}
-
 	public void onCloseSelectCandidateDialog(final SelectEvent event) {
 		@SuppressWarnings("unchecked")
 		final List<Candidate> selectedCandidates = (List<Candidate>) event.getObject();
@@ -81,11 +78,6 @@ public class JobOfferBean extends AbstractBean {
 			this.jobService.addJobCandidature(this.jobOffer, candidate);
 			this.candidates.add(candidate);
 		}
-	}
-
-	public void openJobOfferDialog() {
-		final Map<String, List<String>> params = this.buildDialogParameter("jobOfferId", String.valueOf(this.jobOfferId));
-		this.openDialog("/faces/jobOffer/jobOfferDialog", params);
 	}
 
 	public void openSelectCandidatesDialog() {

@@ -49,7 +49,7 @@
 									<div class="ui-g-12 ui-md-6">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['user.email']}" for="email" />
-											<p:inputText id="email" value="#{userEditBean.user.email}" required="true" validator="#{userEditBean.validateEmail}"/>
+											<p:inputText id="email" value="#{userEditBean.user.email}" required="true" validator="#{userEditBean.validateEmail}" />
 											<p:message for="email" />
 										</div>
 									</div>
@@ -65,20 +65,25 @@
 									</div>
 
 									<div class="ui-sm-12 ui-md-6">
-										<div class="form-group">
+										<h:panelGroup id="managerGroup" layout="block" styleClass="form-group">
 											<p:outputLabel value="#{i18n['user.manager']}" for="manager" />
-											<p:autoComplete id="manager" value="#{userEditBean.user.manager}" completeMethod="#{userEditBean.completeManager}" var="manager"
-												itemLabel="#{manager.fullName}" itemValue="#{manager}" forceSelection="true">
-												<p:column styleClass="user-select image">
-													<p:graphicImage class="image image-icon" value="/images/#{manager.imageFileName}" rendered="#{not empty manager.imageFileName}" />
-													<p:graphicImage class="image image-icon" value="/resources/img/default-avatar.png" rendered="#{empty manager.imageFileName}" />
-												</p:column>
-												<p:column styleClass="user-select name">
-													<h:outputText value="#{manager.fullName}" />
-												</p:column>
-											</p:autoComplete>
-										</div>
-										<h:message for="manager" errorClass="error" />
+											<div class="ui-inputgroup">
+												<p:autoComplete id="manager" value="#{userEditBean.user.manager}" completeMethod="#{userEditBean.completeManager}" var="manager"
+													itemLabel="#{manager.fullName}" itemValue="#{manager}" forceSelection="true">
+													<p:column styleClass="user-select image">
+														<p:graphicImage class="image image-icon" value="/images/#{manager.imageFileName}" rendered="#{not empty manager.imageFileName}" />
+														<p:graphicImage class="image image-icon" value="/resources/img/default-avatar.png" rendered="#{empty manager.imageFileName}" />
+													</p:column>
+													<p:column styleClass="user-select name">
+														<h:outputText value="#{manager.fullName}" />
+													</p:column>
+													<p:ajax event="itemSelect" update="managerGroup" process="manager" />
+												</p:autoComplete>
+												<p:commandButton id="cleanManagerAction" action="#{userEditBean.cleanManager}" process="@this" update="managerGroup" styleClass="btn-gray"
+													icon="fa fa-times" rendered="#{not empty userEditBean.user.manager}" />
+											</div>
+											<h:message for="manager" errorClass="error" />
+										</h:panelGroup>
 									</div>
 
 									<div class="ui-g-12 ui-md-6">

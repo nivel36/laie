@@ -49,6 +49,10 @@ public class UserEditBean extends AbstractBean {
 	@Inject
 	private transient UserService userService;
 
+	public void cleanManager() {
+		this.user.setManager(null);
+	}
+
 	public List<User> completeManager(final String query) {
 		if ((query == null) || (query.trim().length() < 3)) {
 			return new ArrayList<>();

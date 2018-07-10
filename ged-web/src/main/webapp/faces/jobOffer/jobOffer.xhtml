@@ -79,11 +79,14 @@
 							</div>
 						</div>
 
-						<div class="pull-right">
-							<p:commandButton id="exportExcel" value="#{i18n['action.export']}" action="#" icon="fa fa-file-excel-o" />
-							<p:commandButton id="editJobOffer" value="#{i18n['action.edit']}" actionListener="#{jobOfferBean.openJobOfferDialog}" styleClass="btn-primary">
-								<p:ajax event="dialogReturn" listener="#{jobOfferBean.onCloseJobOfferDialog}" update="@form" />
-							</p:commandButton>
+						<div class="ui-g">
+							<div class="ui-g-12">
+								<div class="form-action-primary">
+									<p:commandButton id="exportExcel" value="#{i18n['action.export']}" action="#" icon="fa fa-file-excel-o" />
+									<p:commandButton id="editJobOffer" value="#{i18n['action.edit']}" actionListener="#{jobOfferBean.editJobOffer}"
+										action="jobOfferEdit?faces-redirect=true" styleClass="btn-primary" />
+								</div>
+							</div>
 						</div>
 					</p:panel>
 				</h:form>

@@ -21,7 +21,7 @@
 
 		<div class="ui-g">
 			<div class="ui-g-12 ui-xl-8">
-				<h:form id="newJobOfferForm">
+				<h:form id="jobOfferForm">
 					<p:panel header="#{jobOfferEditBean.newJobOffer ? i18n['job.new_job_offer'] : jobOfferEditBean.jobOffer.name}">
 						<div class="ui-g">
 							<div class="ui-g-12">
@@ -69,14 +69,31 @@
 								<cc:inputText name="state" label="#{i18n['job.state']}" value="#{jobOfferEditBean.jobOffer.state}" required="true" />
 							</div>
 							<div class="ui-g-12 ui-md-6">
-								<cc:inputText name="owner" label="#{i18n['job.owner']}" value="#{jobOfferEditBean.jobOffer.owner.fullName}" required="true" />
+								<h:panelGroup id="ownerGroup" layout="block" styleClass="form-group">
+									<p:outputLabel value="#{i18n['job.owner']}" for="owner" />
+									<div class="ui-inputgroup">
+										<p:autoComplete id="owner" value="#{jobOfferEditBean.jobOffer.owner}" completeMethod="#{jobOfferEditBean.searchOwner}" var="owner"
+											itemLabel="#{owner.fullName}" itemValue="#{owner}" forceSelection="true">
+											<p:column styleClass="user-select image">
+												<p:graphicImage class="image image-icon" value="/images/#{owner.imageFileName}" rendered="#{not empty owner.imageFileName}" />
+												<p:graphicImage class="image image-icon" value="/resources/img/default-avatar.png" rendered="#{empty owner.imageFileName}" />
+											</p:column>
+											<p:column styleClass="user-select name">
+												<h:outputText value="#{owner.fullName}" />
+											</p:column>
+											<p:ajax event="itemSelect" update="ownerGroup" process="owner" />
+										</p:autoComplete>
+										<p:commandButton id="cleanOwnerAction" action="#{jobOfferEditBean.cleanOwner}" process="@this" update="ownerGroup" styleClass="btn-gray" icon="fa fa-times"
+											rendered="#{not empty jobOfferEditBean.jobOffer.owner}" />
+									</div>
+									<p:message for="owner" />
+								</h:panelGroup>
 							</div>
 							<div class="ui-g-12 ui-md-6">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['job.recruiters']}" for="recruiters" />
 									<p:chips id="recruiters" value="#{jobOfferEditBean.recruiters}" />
 								</div>
-
 							</div>
 							<div class="ui-g-12">
 								<div class="form-group">
@@ -120,7 +137,10 @@
 
 						</div>
 						<div class="form-action-primary">
-							<p:commandButton value="#{i18n['action.cancel']}" action="#{jobOfferEditBean.closeDialog}" process="@this" styleClass="btn-gray" />
+							<p:button styleClass="btn-gray" value="#{i18n['action.cancel']}" outcome="jobOfferSearch" rendered="#{jobOfferEditBean.newJobOffer}" />
+							<p:button styleClass="btn-gray" value="#{i18n['action.cancel']}" outcome="jobOffer" rendered="#{not jobOfferEditBean.newJobOffer}">
+								<f:param name="jobOfferId" value="#{jobOfferEditBean.jobOffer.id}" />
+							</p:button>
 							<p:commandButton value="#{i18n['action.save']}" action="#{jobOfferEditBean.save}" update="@form" styleClass="btn-primary" />
 						</div>
 					</p:panel>
