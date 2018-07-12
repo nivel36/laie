@@ -65,8 +65,8 @@ public class JobOfferEditBean extends AbstractDialogBean {
 		if (this.isNewJobOffer()) {
 			final User user = this.sessionBean.getUser();
 			this.jobOffer.setOwner(user);
-			final List<User> recruiters = this.userService.findSubordinateUsers(user);
-			this.setRecruiters(recruiters);
+			final List<User> subordinateUsers = this.userService.findSubordinateUsers(user);
+			this.setRecruiters(subordinateUsers);
 		}
 		else {
 			this.recruiters = new ArrayList<>(this.jobOffer.getRecruiters());

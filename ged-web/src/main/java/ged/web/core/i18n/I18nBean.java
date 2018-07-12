@@ -17,7 +17,6 @@ import org.slf4j.LoggerFactory;
 
 import ged.ejb.core.i18n.I18nService;
 import ged.ejb.core.i18n.I18nString;
-import ged.web.core.util.Translator;
 import ged.web.core.view.AbstractBean;
 
 @Named
@@ -34,9 +33,6 @@ public class I18nBean extends AbstractBean {
 	private transient I18nService i18nService;
 
 	private final List<String> locales = new ArrayList<>();
-
-	@Inject
-	private transient Translator translator;
 
 	public String getI18nText(final String key, final String language) {
 		try {
