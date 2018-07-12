@@ -1,9 +1,8 @@
 package ged.ejb.core.i18n;
 
-import java.util.List;
+import ged.ejb.core.Service;
 
-public interface I18nService {
+public interface I18nService extends Service<I18nString> {
 
-	public List<I18nString> findAll();
-
+	I18nString find(String key, String locale);
 }

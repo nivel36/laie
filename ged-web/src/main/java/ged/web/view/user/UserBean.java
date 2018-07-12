@@ -87,4 +87,8 @@ public class UserBean extends AbstractBean {
 	public void setUserService(final UserService userService) {
 		this.userService = userService;
 	}
+
+	public void uploadImage() {
+
+	}
 }

@@ -148,6 +148,15 @@
 		]]></query>
 	</named-query>
 	
+		<named-query name="I18n.findByKeyAndLocale">
+		<query><![CDATA[
+			SELECT i 
+			FROM I18nString i  
+			WHERE i.key = :key
+			AND i.locale= :locale
+		]]></query>
+	</named-query>
+	
 	<named-query name="JobCandidature.findByJobOffer">
 		<query><![CDATA[
 			SELECT j 

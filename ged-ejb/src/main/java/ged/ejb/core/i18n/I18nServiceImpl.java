@@ -1,32 +1,24 @@
 package ged.ejb.core.i18n;
 
-import java.util.List;
-
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
+
+import ged.ejb.core.AbstractService;
+import ged.ejb.core.model.Dao;
 
 @Stateless
-public class I18nServiceImpl implements I18nService {
-
-	private final EntityManager entityManager;
+public class I18nServiceImpl extends AbstractService<I18nString> implements I18nService {
 
 	@Inject
-	public I18nServiceImpl(final EntityManager entityManager) {
-		this.entityManager = entityManager;
+	private I18nDao i18nDao;
+
+	@Override
+	public I18nString find(final String key, final String locale) {
+		return this.i18nDao.find(key, locale);
 	}
 
 	@Override
-	public List<I18nString> findAll() {
-		final CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
-		final CriteriaQuery<I18nString> cq = cb.createQuery(I18nString.class);
-		final Root<I18nString> root = cq.from(I18nString.class);
-		final CriteriaQuery<I18nString> all = cq.select(root);
-		final TypedQuery<I18nString> query = this.entityManager.createQuery(all);
-		return query.getResultList();
+	protected Dao<I18nString> getDao() {
+		return this.i18nDao;
 	}
 }

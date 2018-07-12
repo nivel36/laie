@@ -2,11 +2,9 @@ package ged.web.core.i18n;
 
 import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.MissingResourceException;
 
 import javax.annotation.PostConstruct;
@@ -19,7 +17,7 @@ import org.slf4j.LoggerFactory;
 
 import ged.ejb.core.i18n.I18nService;
 import ged.ejb.core.i18n.I18nString;
-import ged.web.core.util.Translate;
+import ged.web.core.util.Translator;
 import ged.web.core.view.AbstractBean;
 
 @Named
@@ -33,32 +31,30 @@ public class I18nBean extends AbstractBean {
 	private static final String SPANISH = "es";
 
 	@Inject
-	private I18nService i18nService;
+	private transient I18nService i18nService;
 
-	private Map<String, Map<String, String>> i18nTexts;
+	private final List<String> locales = new ArrayList<>();
 
-	private List<String> locales;
+	@Inject
+	private transient Translator translator;
 
-	// TODO: problemas: Si se añade o modifica un registro en la tabla de i18n
-	// esto no funciona.
 	public String getI18nText(final String key, final String language) {
-		String translatedText;
-		if (this.i18nTexts.get(language).containsKey(key)) {
-			translatedText = this.i18nTexts.get(language).get(key);
+		try {
+			return this.translator.message(key);
 		}
-		else {
-			try {
-				translatedText = Translate.message(key);
+		catch (final MissingResourceException e) {
+			final I18nString message = this.i18nService.find(key, language);
+			if (message != null) {
+				return message.getText();
 			}
-			catch (final MissingResourceException e) {
-				translatedText = "?" + key + "?";
+			else {
+				return "?" + key + "?";
 			}
 		}
-		return translatedText;
 	}
 
 	private String getLanguageFromDefaultLocale() {
-		final Locale defaultLocale = this.facesContext.getApplication().getDefaultLocale();
+		final Locale defaultLocale = this.application.getDefaultLocale();
 		if (defaultLocale == null) {
 			return SPANISH;
 		}
@@ -71,28 +67,16 @@ public class I18nBean extends AbstractBean {
 	public void init() {
 		logger.debug("I18nBean init");
 		this.loadLocales();
-		this.loadI18nText();
-	}
-
-	private void loadI18nText() {
-		this.i18nTexts = new HashMap<>();
-		for (final String locale : this.locales) {
-			this.i18nTexts.put(locale, new HashMap<String, String>());
-		}
-		final List<I18nString> allI18nText = this.i18nService.findAll();
-		for (final I18nString i18nText : allI18nText) {
-			this.i18nTexts.get(i18nText.getLocale()).put(i18nText.getKey(), i18nText.getText());
-		}
 	}
 
 	private void loadLocales() {
-		final Iterator<Locale> supportedLocales = this.facesContext.getApplication().getSupportedLocales();
-		this.locales = new ArrayList<>();
+		String language = this.getLanguageFromDefaultLocale();
+		this.locales.add(language);
+
+		final Iterator<Locale> supportedLocales = this.application.getSupportedLocales();
 		while (supportedLocales.hasNext()) {
-			final String language = supportedLocales.next().getLanguage();
+			language = supportedLocales.next().getLanguage();
 			this.locales.add(language);
 		}
-		final String language = this.getLanguageFromDefaultLocale();
-		this.locales.add(language);
 	}
 }
