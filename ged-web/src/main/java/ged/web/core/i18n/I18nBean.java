@@ -50,7 +50,7 @@ public class I18nBean extends AbstractBean {
 	}
 
 	private String getLanguageFromDefaultLocale() {
-		final Locale defaultLocale = this.application.getDefaultLocale();
+		final Locale defaultLocale = this.facesContext.getApplication().getDefaultLocale();
 		if (defaultLocale == null) {
 			return SPANISH;
 		}
@@ -69,7 +69,7 @@ public class I18nBean extends AbstractBean {
 		String language = this.getLanguageFromDefaultLocale();
 		this.locales.add(language);
 
-		final Iterator<Locale> supportedLocales = this.application.getSupportedLocales();
+		final Iterator<Locale> supportedLocales = this.facesContext.getApplication().getSupportedLocales();
 		while (supportedLocales.hasNext()) {
 			language = supportedLocales.next().getLanguage();
 			this.locales.add(language);

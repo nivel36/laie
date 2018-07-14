@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.faces.application.Application;
 import javax.faces.application.FacesMessage;
 import javax.faces.application.FacesMessage.Severity;
 import javax.faces.component.UIComponent;
@@ -25,9 +24,6 @@ import ged.web.core.util.Translator;
 public abstract class AbstractBean implements Serializable {
 
 	private static final long serialVersionUID = -647915087403140904L;
-
-	@Inject
-	protected transient Application application;
 
 	@Inject
 	protected transient ApplicationBean applicationBean;
