@@ -27,7 +27,7 @@ import ged.web.core.view.AbstractDialogBean;
 
 @Named
 @ViewScoped
-public class CandidateDialogBean extends AbstractDialogBean {
+public class CandidateEditBean extends AbstractDialogBean {
 
 	private static final long serialVersionUID = -7336942836739051499L;
 
@@ -83,8 +83,7 @@ public class CandidateDialogBean extends AbstractDialogBean {
 
 	@PostConstruct
 	public void init() {
-		final Long candidateId = this.getIdFromParameters("candidateId");
-		this.candidate = this.candidateService.find(candidateId);
+		this.candidate = this.getValueFromFlash("candidate");
 		if (this.candidate == null) {
 			this.candidate = this.buildNewCandidate();
 		}
@@ -98,19 +97,24 @@ public class CandidateDialogBean extends AbstractDialogBean {
 		this.candidateService.insert(this.candidate);
 	}
 
+	public boolean isNewCandidate() {
+		return this.candidate.getId() == 0;
+
+	}
+
 	public void onrate(final RateEvent rateEvent) {
 		final Integer rate = (Integer) rateEvent.getRating();
 		this.candidate.setRating(rate);
 	}
 
-	public void save() {
-		if (this.candidate.getId() == 0) {
+	public String save() {
+		if (this.isNewCandidate()) {
 			this.insertCandidate();
 		}
 		else {
 			this.updateCandidate();
 		}
-		this.closeDialog(this.candidate);
+		return "/faces/candidate/candidate?faces-redirect=true&candidateId=" + this.candidate.getId();
 	}
 
 	public void setCandidate(final Candidate candidate) {

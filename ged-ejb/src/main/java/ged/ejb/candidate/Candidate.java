@@ -1,6 +1,7 @@
 package ged.ejb.candidate;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -103,7 +104,7 @@ public class Candidate extends AbstractAuditedEntity implements Ownerable {
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name = "candidate_tag", joinColumns = @JoinColumn(name = "candidate_id"), inverseJoinColumns = @JoinColumn(name = "tag_id"))
 	@IndexedEmbedded
-	private Set<Tag> tags;
+	private Set<Tag> tags = new HashSet<>();
 
 	@Override
 	public boolean equals(final Object obj) {

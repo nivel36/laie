@@ -14,7 +14,7 @@
 			<div class="ui-g-12">
 				<p:breadCrumb homeDisplay="text">
 					<p:menuitem value="#{i18n['menu.index']}" url="/faces/index.xhtml" />
-					<p:menuitem value="#{i18n['candidate.candidates']}" url="/faces/candidate/candidateSearch.xhtml"  />
+					<p:menuitem value="#{i18n['candidate.candidates']}" url="/faces/candidate/candidateSearch.xhtml" />
 					<p:menuitem value="#{candidateBean.candidate}" disabled="true" />
 				</p:breadCrumb>
 			</div>
@@ -129,9 +129,8 @@
 								<div class="ui-g">
 									<div class="ui-g-12">
 										<div class="form-action-primary">
-											<p:commandButton value="#{i18n['action.edit']}" actionListener="#{candidateBean.openCandidateDialog}" styleClass="btn-primary">
-												<p:ajax event="dialogReturn" listener="#{candidateBean.onCloseCandidateDialog}" update="@form" />
-											</p:commandButton>
+											<p:commandButton value="#{i18n['action.edit']}" process="@this" actionListener="#{candidateBean.editCandidate}" action="/faces/candidate/candidateEdit"
+												styleClass="btn-primary" />
 										</div>
 									</div>
 								</div>

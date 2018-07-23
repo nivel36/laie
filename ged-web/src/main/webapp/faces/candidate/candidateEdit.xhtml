@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:i18n="http://legion.com/i18n"
+	xmlns:cc="http://java.sun.com/jsf/composite/components" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" template="/WEB-INF/templates/default.xhtml">
+
+	<ui:define name="title">
+		<title>#{i18n['candidate.new_candidate']}</title>
+	</ui:define>
+
+	<ui:define name="content">
+		<div class="ui-g">
+			<div class="ui-g-12 ui-xl-8">
+				<p:breadCrumb homeDisplay="text">
+					<p:menuitem value="#{i18n['menu.index']}" url="/faces/index.xhtml" />
+					<p:menuitem value="#{i18n['candidate.candidates']}" url="/faces/candidate/candidateSearch.xhtml" />
+					<p:menuitem value="#{candidateEditBean.newCandidate ? i18n['candidate.new_candidate'] : candidateEditBean.candidate.name}" disabled="true" />
+				</p:breadCrumb>
+			</div>
+		</div>
+
+		<div class="ui-g">
+			<div class="ui-g-12 ui-xl-8">
+				<h:form id="candidateForm">
+					<p:panel header="#{candidateEditBean.newCandidate  ? i18n['candidate.new_candidate'] : candidateEditBean.candidate.name}">
+						<div class="ui-g">
+							<div class="ui-g-12 ui-md-6">
+								<div class="user-card">
+									<p:outputPanel layout="block" id="userImage" styleClass="user-image">
+										<p:fileUpload id="uploadImage" styleClass="uploadImageButton" fileUploadListener="#{candidateEditBean.uploadImage}" mode="advanced"
+											dragDropSupport="false" update="userImage" auto="true" label="#{i18n['action.add']}" />
+										<h:outputLabel for="uploadImage_input">
+											<p:graphicImage styleClass="selectable image" value="/images/#{candidateEditBean.candidate.imageFileName}"
+												rendered="#{not empty candidateEditBean.candidate.imageFileName}" />
+											<p:graphicImage styleClass="selectable image" value="/resources/img/default-avatar.png" rendered="#{empty candidateEditBean.candidate.imageFileName}" />
+										</h:outputLabel>
+									</p:outputPanel>
+									<div class="user-rating">
+										<p:rating value="#{candidateEditBean.candidate.rating}" cancel="false">
+											<p:ajax event="rate" listener="#{candidateEditBean.onrate}" update="" />
+										</p:rating>
+									</div>
+								</div>
+							</div>
+							<div class="ui-g-12 ui-md-6">
+								<div class="form-group">
+									<p:outputLabel value="#{i18n['tag.tags']}" for="tags" />
+									<p:chips id="tags" value="#{candidateEditBean.tags}" label="#{i18n['candidate.tags']}" />
+								</div>
+							</div>
+
+							<div class="ui-g-12 ui-md-6">
+								<div class="form-group">
+									<p:outputLabel value="#{i18n['candidate.name']}" for="name" />
+									<p:inputText id="name" value="#{candidateEditBean.candidate.name}" required="true" />
+									<p:message for="name" />
+								</div>
+							</div>
+
+							<div class="ui-g-12 ui-md-6">
+								<div class="form-group">
+									<p:outputLabel value="#{i18n['candidate.surname']}" for="surname" />
+									<p:inputText id="surname" value="#{candidateEditBean.candidate.surname}" required="true" />
+									<p:message for="surname" />
+								</div>
+							</div>
+
+							<div class="ui-g-12 ui-md-6">
+								<div class="form-group">
+									<p:outputLabel value="#{i18n['candidate.bornDate']}" for="bornDate" />
+									<p:calendar id="bornDate" value="#{candidateEditBean.candidate.bornDate}" yearRange="c-100:c0" navigator="true" />
+									<p:message for="bornDate" />
+								</div>
+							</div>
+						</div>
+						<div class="ui-g">
+							<div class="ui-g-12 ui-md-6">
+								<div class="form-group">
+									<p:outputLabel value="#{i18n['candidate.phone_number']}" for="phoneNumber" />
+									<p:inputText id="phoneNumber" value="#{candidateEditBean.candidate.phoneNumber}" required="true" />
+									<p:message for="phoneNumber" />
+								</div>
+							</div>
+
+							<div class="ui-g-12 ui-md-6">
+								<div class="form-group">
+									<p:outputLabel value="#{i18n['candidate.email']}" for="email" />
+									<p:inputText id="email" pt:type="email" value="#{candidateEditBean.candidate.email}" required="true" />
+									<p:message for="email" />
+								</div>
+							</div>
+
+							<div class="ui-g-12 ui-md-6">
+								<div class="form-group">
+									<p:outputLabel value="#{i18n['candidate.skype']}" for="skype" />
+									<p:inputText id="skype" pt:type="skype" value="#{candidateEditBean.candidate.skype}" />
+									<p:message for="skype" />
+								</div>
+							</div>
+						</div>
+
+						<div class="ui-g">
+							<div class="ui-g-12 ui-md-6">
+								<div class="form-group">
+									<p:outputLabel value="#{i18n['address.city']}" for="city" />
+									<p:inputText id="city" value="#{candidateEditBean.candidate.address.city}" />
+									<p:message for="city" />
+								</div>
+							</div>
+
+							<div class="ui-g-12 ui-md-6">
+								<div class="form-group">
+									<p:outputLabel value="#{i18n['address.state']}" for="state" />
+									<p:inputText id="state" value="#{candidateEditBean.candidate.address.state}" />
+									<p:message for="state" />
+								</div>
+							</div>
+						</div>
+						<div class="ui-g">
+							<div class="ui-g-12 ui-md-6">
+								<div class="form-group">
+									<p:outputLabel value="#{i18n['candidate.jobProfile']}" for="jobProfile" />
+									<p:inputText id="jobProfile" value="#{candidateEditBean.candidate.jobProfile}" required="true" />
+									<p:message for="jobProfile" />
+								</div>
+							</div>
+
+							<div class="ui-g-12 ui-md-6">
+								<div class="form-group">
+									<p:outputLabel value="#{i18n['candidate.salary']}" for="salary" />
+									<p:inputText id="salary" value="#{candidateEditBean.candidate.salary}" />
+									<p:message for="salary" />
+								</div>
+							</div>
+
+							<div class="ui-g-12 ui-md-6">
+								<div class="form-group">
+									<p:outputLabel value="#{i18n['candidate.expected_salary']}" for="expected_salary" />
+									<p:inputText id="expected_salary" value="#{candidateEditBean.candidate.expectedSalary}" label="#{i18n['candidate.expected_salary']}" />
+									<p:message for="expected_salary" />
+								</div>
+							</div>
+						</div>
+
+						<div class="form-action-primary">
+							<p:button styleClass="btn-gray" value="#{i18n['action.cancel']}" outcome="candidateSearch" rendered="#{candidateEditBean.newCandidate}" />
+							<p:button styleClass="btn-gray" value="#{i18n['action.cancel']}" outcome="candidate" rendered="#{not candidateEditBean.newCandidate}">
+								<f:param name="candidateId" value="#{candidateEditBean.candidate.id}" />
+							</p:button>
+							<p:commandButton value="#{i18n['action.save']}" action="#{candidateEditBean.save}" process="@form" update="@form growl" />
+						</div>
+					</p:panel>
+				</h:form>
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>

@@ -51,6 +51,10 @@ public class CandidateBean extends AbstractBean {
 
 	private final List<String> tags = new ArrayList<>();
 
+	public void editCandidate() {
+		this.putValueToFlash("candidate", this.candidate);
+	}
+
 	public Candidate getCandidate() {
 		return this.candidate;
 	}
@@ -83,13 +87,6 @@ public class CandidateBean extends AbstractBean {
 		this.jobOffers = this.jobOfferService.findJobOffersByCandidate(this.candidate);
 	}
 
-	public void onCloseCandidateDialog(final SelectEvent event) {
-		final Candidate candidateFromDialog = (Candidate) event.getObject();
-		if (candidateFromDialog != null) {
-			this.candidate = candidateFromDialog;
-		}
-	}
-
 	public void onCloseCurriculumDialog(final SelectEvent event) {
 		final Curriculum curriculumFromDialog = (Curriculum) event.getObject();
 		if (curriculumFromDialog != null) {
@@ -104,10 +101,6 @@ public class CandidateBean extends AbstractBean {
 			this.jobOfferService.addJobCandidature(jobOffer, this.candidate);
 			this.jobOffers.add(jobOffer);
 		}
-	}
-
-	public void openCandidateDialog() {
-		this.openDialog("/faces/candidate/candidateDialog", this.buildDialogParameter("candidateId", String.valueOf(this.candidateId)));
 	}
 
 	public void openCurriculumDialog() {

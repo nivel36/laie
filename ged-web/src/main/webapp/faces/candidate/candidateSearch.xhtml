@@ -10,14 +10,19 @@
 
 	<ui:define name="content">
 		<div class="ui-g">
-			<div class="ui-g-12">
+			<div class="ui-g-12 ui-xl-8">
 				<p:breadCrumb homeDisplay="text">
 					<p:menuitem value="#{i18n['menu.index']}" url="/faces/index.xhtml" />
 					<p:menuitem value="#{i18n['candidate.candidates']}" disabled="true" />
 				</p:breadCrumb>
 			</div>
+			<div class="ui-g-12 ui-md-4">
+				<div class="pull-right">
+					<p:commandButton value="#{i18n['action.export']}" action="#{candidateSearchBean.clean}" process="@this" icon="fa fa-file-excel-o" />
+					<p:button value="#{i18n['action.new']}" outcome="candidateEdit" styleClass="btn-primary" />
+				</div>
+			</div>
 		</div>
-		
 
 		<div class="ui-g">
 			<div class="ui-g-12">
