@@ -1,41 +1,22 @@
 package ged.web.view.user;
 
-import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
-import javax.faces.convert.Converter;
-import javax.faces.convert.ConverterException;
 import javax.faces.convert.FacesConverter;
 import javax.inject.Inject;
 
+import ged.ejb.core.Service;
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
+import ged.web.core.view.AbstractConverter;
 
 @FacesConverter(managed = true, forClass = User.class)
-public class UserConverter implements Converter<User> {
+public class UserConverter extends AbstractConverter<User> {
 
 	@Inject
 	private UserService userService;
 
 	@Override
-	public User getAsObject(final FacesContext context, final UIComponent component, final String value) {
-		if (value == null) {
-			return null;
-		}
-		try {
-			final long userId = Long.parseLong(value);
-			return this.userService.find(userId);
-		}
-		catch (final NumberFormatException e) {
-			throw new ConverterException(value + " is not a valid id");
-		}
-	}
-
-	@Override
-	public String getAsString(final FacesContext context, final UIComponent component, final User value) {
-		if (value == null) {
-			return null;
-		}
-		return String.valueOf(value.getId());
+	protected Service<User> getService() {
+		return this.userService;
 	}
 
 	public void setUserService(final UserService userService) {

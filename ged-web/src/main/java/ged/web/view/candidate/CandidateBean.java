@@ -15,13 +15,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ged.ejb.candidate.Candidate;
-import ged.ejb.candidate.CandidateService;
 import ged.ejb.core.Address;
 import ged.ejb.core.tag.Tag;
 import ged.ejb.curriculum.Curriculum;
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
-import ged.web.core.PageNotFoundException;
 import ged.web.core.view.AbstractBean;
 
 @Named
@@ -32,15 +30,10 @@ public class CandidateBean extends AbstractBean {
 
 	private static final long serialVersionUID = 1577879781927493283L;
 
-	private Candidate candidate;
-
 	@SuppressWarnings("cdi-ambiguous-dependency")
 	@Inject
-	@Param(required = true)
-	private Long candidateId;
-
-	@Inject
-	private transient CandidateService candidateService;
+	@Param(name = "candidateId", required = true)
+	private Candidate candidate;
 
 	private List<Curriculum> curricula;
 
@@ -74,10 +67,6 @@ public class CandidateBean extends AbstractBean {
 	@PostConstruct
 	public void init() {
 		logger.trace("CandidateBean init");
-		this.candidate = this.candidateService.find(this.candidateId);
-		if (this.candidate == null) {
-			throw new PageNotFoundException();
-		}
 		if (this.candidate.getAddress() == null) {
 			this.candidate.setAddress(new Address());
 		}
@@ -104,7 +93,7 @@ public class CandidateBean extends AbstractBean {
 	}
 
 	public void openCurriculumDialog() {
-		this.openBigDialog("/faces/candidate/curriculumDialog", this.buildDialogParameter("candidateId", String.valueOf(this.candidateId)));
+		this.openBigDialog("/faces/candidate/curriculumDialog", this.buildDialogParameter("candidateId", String.valueOf(this.candidate.getId())));
 	}
 
 	public void openSelectJobOfferDialog() {
@@ -113,14 +102,6 @@ public class CandidateBean extends AbstractBean {
 
 	public void setCandidate(final Candidate candidate) {
 		this.candidate = candidate;
-	}
-
-	public void setCandidateId(final Long candidateId) {
-		this.candidateId = candidateId;
-	}
-
-	public void setCandidateService(final CandidateService candidateService) {
-		this.candidateService = candidateService;
 	}
 
 	public void setJobOfferService(final JobOfferService jobOfferService) {

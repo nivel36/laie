@@ -44,7 +44,8 @@
 							<div class="ui-g-12 ui-md-6">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['tag.tags']}" for="tags" />
-									<p:chips id="tags" value="#{candidateEditBean.tags}" label="#{i18n['candidate.tags']}" />
+									<p:chips id="tags" value="#{candidateEditBean.tags}" label="#{i18n['candidateEditBean.tags']}" converter="stringConverter" />
+									<p:message for="tags" />
 								</div>
 							</div>
 
