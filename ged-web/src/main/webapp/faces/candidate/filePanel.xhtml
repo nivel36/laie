@@ -20,7 +20,7 @@
 						</p:column>
 
 						<p:column>
-							<p:commandButton icon="fa fa-trash" styleClass="btn-gray" action="#{filePanelBean.removeFile(file)}" update="growl file_form" />
+							<p:commandButton icon="fa fa-trash" styleClass="btn-gray" action="#{filePanelBean.removeFile(file)}" process="@this" update="@form growl " />
 						</p:column>
 					</p:dataTable>
 				</div>
@@ -29,7 +29,7 @@
 			<div class="ui-g">
 				<div class="ui-g-12">
 					<div class="form-action-primary">
-						<p:fileUpload id="uploadFile" fileUploadListener="#{filePanelBean.uploadFile}" mode="advanced" dragDropSupport="false" update="file_form growl"
+						<p:fileUpload id="uploadFile" fileUploadListener="#{filePanelBean.uploadFile}" mode="advanced" dragDropSupport="false" update="@form growl"
 							auto="true" label="#{i18n['action.add']}" disabled="#{filePanelBean.files.size() gt 6}" />
 					</div>
 				</div>

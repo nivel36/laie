@@ -13,7 +13,7 @@
 				<p:breadCrumb homeDisplay="text">
 					<p:menuitem value="#{i18n['menu.index']}" url="/faces/index.xhtml" />
 					<p:menuitem value="#{i18n['candidate.candidates']}" url="/faces/candidate/candidateSearch.xhtml" />
-					<p:menuitem value="#{candidateEditBean.newCandidate ? i18n['candidate.new_candidate'] : candidateEditBean.candidate.name}" disabled="true" />
+					<p:menuitem value="#{candidateEditBean.newCandidate ? i18n['candidate.new_candidate'] : candidateEditBean.candidate.fullName}" disabled="true" />
 				</p:breadCrumb>
 			</div>
 		</div>
@@ -21,7 +21,7 @@
 		<div class="ui-g">
 			<div class="ui-g-12 ui-xl-8">
 				<h:form id="candidateForm">
-					<p:panel header="#{candidateEditBean.newCandidate  ? i18n['candidate.new_candidate'] : candidateEditBean.candidate.name}">
+					<p:panel header="#{candidateEditBean.newCandidate ? i18n['candidate.new_candidate'] : candidateEditBean.candidate.fullName}">
 						<div class="ui-g">
 							<div class="ui-g-12 ui-md-6">
 								<div class="user-card">
@@ -41,6 +41,8 @@
 									</div>
 								</div>
 							</div>
+							
+							
 							<div class="ui-g-12 ui-md-6">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['tag.tags']}" for="tags" />
@@ -49,6 +51,14 @@
 								</div>
 							</div>
 
+							<div class="ui-g-12 ui-md-6">
+								<div class="form-group">
+									<p:outputLabel value="#{i18n['candidate.jobProfile']}" for="jobProfile" />
+									<p:inputText id="jobProfile" value="#{candidateEditBean.candidate.jobProfile}" required="true" />
+									<p:message for="jobProfile" />
+								</div>
+							</div>
+							
 							<div class="ui-g-12 ui-md-6">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['candidate.name']}" for="name" />
@@ -116,15 +126,8 @@
 								</div>
 							</div>
 						</div>
-						<div class="ui-g">
-							<div class="ui-g-12 ui-md-6">
-								<div class="form-group">
-									<p:outputLabel value="#{i18n['candidate.jobProfile']}" for="jobProfile" />
-									<p:inputText id="jobProfile" value="#{candidateEditBean.candidate.jobProfile}" required="true" />
-									<p:message for="jobProfile" />
-								</div>
-							</div>
 
+						<div class="ui-g">
 							<div class="ui-g-12 ui-md-6">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['candidate.salary']}" for="salary" />
