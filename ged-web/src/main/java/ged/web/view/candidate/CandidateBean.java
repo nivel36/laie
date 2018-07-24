@@ -18,6 +18,7 @@ import ged.ejb.candidate.Candidate;
 import ged.ejb.core.Address;
 import ged.ejb.core.tag.Tag;
 import ged.ejb.curriculum.Curriculum;
+import ged.ejb.curriculum.CurriculumService;
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
 import ged.web.core.view.AbstractBean;
@@ -35,7 +36,10 @@ public class CandidateBean extends AbstractBean {
 	@Param(name = "candidateId", required = true)
 	private Candidate candidate;
 
-	private List<Curriculum> curricula;
+	private Curriculum curriculum;
+
+	@Inject
+	private transient CurriculumService curriculumService;
 
 	private List<JobOffer> jobOffers;
 
@@ -48,12 +52,16 @@ public class CandidateBean extends AbstractBean {
 		this.putValueToFlash("candidate", this.candidate);
 	}
 
+	public void editCurriculum() {
+		this.putValueToFlash("curriculum", this.curriculum);
+	}
+
 	public Candidate getCandidate() {
 		return this.candidate;
 	}
 
-	public List<Curriculum> getCurricula() {
-		return this.curricula;
+	public Curriculum getCurriculum() {
+		return this.curriculum;
 	}
 
 	public List<JobOffer> getJobOffers() {
@@ -74,13 +82,7 @@ public class CandidateBean extends AbstractBean {
 			this.tags.add(tag.getLabel());
 		}
 		this.jobOffers = this.jobOfferService.findJobOffersByCandidate(this.candidate);
-	}
-
-	public void onCloseCurriculumDialog(final SelectEvent event) {
-		final Curriculum curriculumFromDialog = (Curriculum) event.getObject();
-		if (curriculumFromDialog != null) {
-			this.curricula.add(curriculumFromDialog);
-		}
+		this.curriculum = this.curriculumService.findByCandidate(this.candidate);
 	}
 
 	public void onCloseSelectJobOfferDialog(final SelectEvent event) {
@@ -92,16 +94,16 @@ public class CandidateBean extends AbstractBean {
 		}
 	}
 
-	public void openCurriculumDialog() {
-		this.openBigDialog("/faces/candidate/curriculumDialog", this.buildDialogParameter("candidateId", String.valueOf(this.candidate.getId())));
-	}
-
 	public void openSelectJobOfferDialog() {
 		this.openBigDialog("/faces/jobOffer/jobOfferSelectDialog");
 	}
 
 	public void setCandidate(final Candidate candidate) {
 		this.candidate = candidate;
+	}
+
+	public void setCurriculumService(final CurriculumService curriculumService) {
+		this.curriculumService = curriculumService;
 	}
 
 	public void setJobOfferService(final JobOfferService jobOfferService) {

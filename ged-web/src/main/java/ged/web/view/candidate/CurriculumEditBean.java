@@ -1,9 +1,5 @@
 package ged.web.view.candidate;
 
-import static ged.ejb.core.util.Parameters.map;
-import static ged.web.core.util.Navigate.to;
-import static ged.web.core.util.PageEnum.CURRICULUM;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -67,8 +63,8 @@ public class CurriculumEditBean extends AbstractBean {
 		this.skills.add(skill);
 	}
 
-	public void cancel() {
-		to(CURRICULUM).withParams(map("id", this.curriculum.getCandidate().getId())).doGet();
+	public String cancel() {
+		return "/faces/candidate/candidate?faces-redirect=true&candidateId=" + this.curriculum.getCandidate().getId();
 	}
 
 	public Curriculum getCurriculum() {
@@ -141,13 +137,19 @@ public class CurriculumEditBean extends AbstractBean {
 		this.skills.remove(skill);
 	}
 
-	public void save() {
+	public String save() {
 		this.curriculum.setEducation(this.listToSet(this.education));
 		this.curriculum.setLanguages(this.listToSet(this.languages));
 		this.curriculum.setJobExperiences(this.listToSet(this.jobExperiences));
 		this.curriculum.setSkills(this.listToSet(this.skills));
-		this.curriculumService.insert(this.curriculum);
-		to(CURRICULUM).withParams(map("id", this.curriculum.getCandidate().getId())).doGet();
+
+		if (this.curriculum.getId() == 0) {
+			this.curriculumService.insert(this.curriculum);
+		}
+		else {
+			this.curriculum = this.curriculumService.update(this.curriculum);
+		}
+		return "/faces/candidate/candidate?faces-redirect=true&candidateId=" + this.curriculum.getCandidate().getId();
 	}
 
 	public void setCurriculum(final Curriculum curriculum) {

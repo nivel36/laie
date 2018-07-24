@@ -4,7 +4,6 @@ import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
@@ -31,9 +30,6 @@ public class Curriculum extends AbstractAuditedEntity {
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "curriculum", orphanRemoval = true)
 	private Set<Language> languages;
-
-	@Column(length = 256)
-	private String jobProfile;
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "curriculum", orphanRemoval = true)
 	private Set<Skill> skills;
@@ -101,10 +97,6 @@ public class Curriculum extends AbstractAuditedEntity {
 		return this.languages.size();
 	}
 
-	public String getJobProfile() {
-		return this.jobProfile;
-	}
-
 	public Set<Skill> getSkills() {
 		return this.skills;
 	}
@@ -150,17 +142,13 @@ public class Curriculum extends AbstractAuditedEntity {
 		this.languages = languages;
 	}
 
-	public void setJobProfile(final String jobProfile) {
-		this.jobProfile = jobProfile;
-	}
-
 	public void setSkills(final Set<Skill> skills) {
 		this.skills = skills;
 	}
 
 	@Override
 	public String toString() {
-		return "Curriculum [education=" + this.education + ", jobExperiences=" + this.jobExperiences + ", languages="
-				+ this.languages + ", skills=" + this.skills + "]";
+		return "Curriculum [education=" + this.education + ", jobExperiences=" + this.jobExperiences + ", languages=" + this.languages + ", skills="
+				+ this.skills + "]";
 	}
 }

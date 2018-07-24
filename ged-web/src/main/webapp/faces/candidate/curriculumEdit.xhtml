@@ -10,23 +10,121 @@
 
 	<ui:define name="content">
 		<h:form id="form">
-			<h1 class="header">#{curriculumEditBean.curriculum.candidate}</h1>
-
 			<div class="ui-g">
-				<div class="ui-g-12 ui-lg-8 ui-xl-6">
+				<div class="ui-g-12 ui-lg-8">
 					<p:panel header="#{i18n['curriculum.curriculum']}">
+						<!-- JOB EXPERIENCE -->
+						<h2>#{i18n['curriculum.job_experiences']}</h2>
+						<h:panelGroup layout="block" id="jobExperiences">
+							<ui:repeat value="#{curriculumEditBean.jobExperiences}" var="jobExperience" id="jobExperience">
+								<h:panelGroup layout="block" class="repeatedPanel">
+									<div class="ui-g">
+										<div class="ui-g-12 ui-md-6">
+											<div class="form-group">
+												<p:outputLabel value="#{i18n['job_experience.company_name']}" />
+												<p:inputText id="companyName" value="#{jobExperience.companyName}" required="true" />
+											</div>
+											<h:message for="companyName" errorClass="error" />
+										</div>
 
-						<!-- PROFILE -->
-						<h2>#{i18n['curriculum.job_profile']}</h2>
-						<div class="ui-g">
-							<div class="ui-g-12 ui-md-6">
-								<div class="form-group">
-									<p:outputLabel value="#{i18n['curriculum.job_profile']}" />
-									<p:inputText id="jobProfile" value="#{curriculumEditBean.curriculum.jobProfile}" required="true" />
+										<div class="ui-g-12 ui-md-6">
+											<div class="form-group">
+												<p:outputLabel value="#{i18n['job_experience.job_position']}" />
+												<p:inputText id="jobPosition" value="#{jobExperience.jobPosition}" required="true" />
+											</div>
+											<h:message for="jobPosition" errorClass="error" />
+										</div>
+									</div>
+									<div class="ui-g">
+										<div class="ui-g-12 ui-md-4">
+											<div class="form-group">
+												<p:outputLabel value="#{i18n['job_experience.from_date']}" />
+												<p:calendar id="fromDate" value="#{jobExperience.fromDate}" pattern="dd/MM/yyyy">
+													<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
+												</p:calendar>
+											</div>
+										</div>
+
+										<div class="ui-g-12 ui-md-4">
+											<div class="form-group">
+												<p:outputLabel value="#{i18n['job_experience.to_date']}" />
+												<p:calendar id="toDate" value="#{jobExperience.toDate}" pattern="dd/MM/yyyy" disabled="#{jobExperience.stillWorking}">
+													<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
+												</p:calendar>
+											</div>
+										</div>
+
+										<div class="ui-g-12 ui-md-4">
+											<div class="form-group">
+												<p:outputLabel value="#{i18n['job_experience.still_working']}" />
+												<p:selectBooleanCheckbox value="#{jobExperience.stillWorking}" id="stillWorking">
+													<f:ajax render="toDate" />
+												</p:selectBooleanCheckbox>
+											</div>
+										</div>
+									</div>
+									<div class="ui-g">
+
+										<div class="ui-g-12">
+											<div class="form-group">
+												<p:outputLabel value="#{i18n['job_experience.description']}" />
+												<p:textEditor id="description" value="#{jobExperience.description}">
+													<f:facet name="toolbar">
+														<span class="ql-formats">
+															<button class="ql-bold"></button>
+															<button class="ql-italic"></button>
+															<button class="ql-underline"></button>
+														</span>
+														<span class="ql-formats"> <select class="ql-color" /> <select class="ql-background" />
+														</span>
+														<span class="ql-formats">
+															<button class="ql-script" value="sub" />
+															<button class="ql-script" value="super" />
+														</span>
+														<span class="ql-formats">
+															<button class="ql-header" value="1" />
+															<button class="ql-header" value="2" />
+															<button class="ql-blockquote" />
+															<button class="ql-code-block" />
+														</span>
+														<span class="ql-formats">
+															<button class="ql-list" value="ordered" />
+															<button class="ql-list" value="bullet" />
+															<button class="ql-indent" value="-1" />
+															<button class="ql-indent" value="+1" />
+														</span>
+														<span class="ql-formats">
+															<button class="ql-direction" value="rtl" /> <select class="ql-align" />
+														</span>
+														<span class="ql-formats">
+															<button class="ql-clean" />
+														</span>
+													</f:facet>
+												</p:textEditor>
+												<h:message for="description" errorClass="error" />
+											</div>
+										</div>
+									</div>
+
+									<div class="ui-g">
+										<div class="ui-g-12">
+											<div class="form-action-primary">
+												<p:commandButton styleClass="btn-gray" value="#{i18n['action.remove']}" action="#{curriculumEditBean.removeJobExperience(jobExperience)}"
+													update="form:jobExperiences" process="@this" />
+											</div>
+										</div>
+									</div>
+								</h:panelGroup>
+							</ui:repeat>
+							<div class="ui-g">
+								<div class="ui-g-12">
+									<div class="form-action-primary">
+										<p:commandButton value="#{i18n['action.add']}" action="#{curriculumEditBean.addJobExperience}" update="form:jobExperiences"
+											process="form:jobExperiences" />
+									</div>
 								</div>
-								<h:message for="jobProfile" errorClass="error" />
 							</div>
-						</div>
+						</h:panelGroup>
 
 						<!-- EDUCATION -->
 						<h2>#{i18n['curriculum.education']}</h2>
@@ -51,18 +149,18 @@
 										<div class="ui-g-12 ui-md-6">
 											<div class="form-group">
 												<p:outputLabel value="#{i18n['education.from_date']}" />
-												<p:inputText id="fromDate" value="#{education.fromDate}" label="#{i18n['education.from_date']}">
-													<f:convertDateTime pattern="MM / yyyy" />
-												</p:inputText>
+												<p:calendar id="fromDate" value="#{education.fromDate}" pattern="dd/MM/yyyy">
+													<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
+												</p:calendar>
 											</div>
 											<h:message for="fromDate" errorClass="error" />
 										</div>
 										<div class="ui-g-12 ui-md-6">
 											<div class="form-group">
 												<p:outputLabel value="#{i18n['education.to_date']}" />
-												<p:inputText id="toDate" value="#{education.toDate}" disabled="#{education.stillStudying}">
-													<f:convertDateTime pattern="MM / yyyy" />
-												</p:inputText>
+												<p:calendar id="toDate" value="#{education.toDate}" pattern="dd/MM/yyyy" disabled="#{education.stillStudying}">
+													<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
+												</p:calendar>
 											</div>
 											<h:message for="toDate" errorClass="error" />
 										</div>
@@ -98,83 +196,6 @@
 								<div class="ui-g-12">
 									<div class="form-action-primary">
 										<p:commandButton value="#{i18n['action.add']}" action="#{curriculumEditBean.addEducation}" process="form:educationPanel" update="form:educationPanel" />
-									</div>
-								</div>
-							</div>
-						</h:panelGroup>
-						<!-- JOB EXPERIENCE -->
-						<h2>#{i18n['curriculum.job_experiences']}</h2>
-						<h:panelGroup layout="block" id="jobExperiences">
-							<ui:repeat value="#{curriculumEditBean.jobExperiences}" var="jobExperience" id="jobExperience">
-								<h:panelGroup layout="block" class="repeatedPanel">
-									<div class="ui-g">
-										<div class="ui-g-12 ui-md-6">
-											<div class="form-group">
-												<p:outputLabel value="#{i18n['job_experience.company_name']}" />
-												<p:inputText id="companyName" value="#{jobExperience.companyName}" required="true" />
-											</div>
-											<h:message for="companyName" errorClass="error" />
-										</div>
-
-										<div class="ui-g-12 ui-md-6">
-											<div class="form-group">
-												<p:outputLabel value="#{i18n['job_experience.job_position']}" />
-												<p:inputText id="jobPosition" value="#{jobExperience.jobPosition}" required="true" />
-											</div>
-											<h:message for="jobPosition" errorClass="error" />
-										</div>
-
-										<div class="ui-g-12 ui-md-6">
-											<div class="form-group">
-												<p:outputLabel value="#{i18n['job_experience.from_date']}" />
-												<p:inputText id="from" value="#{jobExperience.fromDate}">
-													<f:convertDateTime pattern="MM / yyyy" />
-												</p:inputText>
-											</div>
-										</div>
-
-										<div class="ui-g-12 ui-md-6">
-											<div class="form-group">
-												<p:outputLabel value="#{i18n['job_experience.to_date']}" />
-												<p:inputText id="toDate" value="#{jobExperience.toDate}" disabled="#{jobExperience.stillWorking}">
-													<f:convertDateTime pattern="MM / yyyy" />
-												</p:inputText>
-											</div>
-										</div>
-
-										<div class="ui-g-12 ui-md-6">
-											<div class="form-group">
-												<p:outputLabel value="#{i18n['job_experience.still_working']}" />
-												<p:selectBooleanCheckbox value="#{jobExperience.stillWorking}" id="stillWorking">
-													<f:ajax render="toDate" />
-												</p:selectBooleanCheckbox>
-											</div>
-										</div>
-
-										<div class="ui-g-12 ui-md-6">
-											<div class="form-group">
-												<p:outputLabel value="#{i18n['job_experience.description']}" />
-												<p:inputTextarea id="description" value="#{jobExperience.description}" required="true" />
-											</div>
-											<h:message for="description" errorClass="error" />
-										</div>
-									</div>
-
-									<div class="ui-g">
-										<div class="ui-g-12">
-											<div class="form-action-primary">
-												<p:commandButton styleClass="btn-gray" value="#{i18n['action.remove']}" action="#{curriculumEditBean.removeJobExperience(jobExperience)}"
-													update="form:jobExperiences" process="@this" />
-											</div>
-										</div>
-									</div>
-								</h:panelGroup>
-							</ui:repeat>
-							<div class="ui-g">
-								<div class="ui-g-12">
-									<div class="form-action-primary">
-										<p:commandButton value="#{i18n['action.add']}" action="#{curriculumEditBean.addJobExperience}" update="form:jobExperiences"
-											process="form:jobExperiences" />
 									</div>
 								</div>
 							</div>
@@ -288,7 +309,7 @@
 						<div class="ui-g">
 							<div class="ui-g-12">
 								<div class="form-action-primary">
-									<p:commandButton value="#{i18n['action.save']}" action="#{curriculumEditBean.save}" update="growl" />
+									<p:commandButton value="#{i18n['action.save']}" action="#{curriculumEditBean.save}" process="@form" update="@form growl" />
 									<p:commandButton styleClass="btn-gray" value="#{i18n['action.cancel']}" action="#{curriculumEditBean.cancel}" process="@this" />
 								</div>
 							</div>
