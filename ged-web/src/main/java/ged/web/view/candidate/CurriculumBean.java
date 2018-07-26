@@ -6,10 +6,14 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
+
+import org.omnifaces.cdi.Param;
 
 import ged.ejb.candidate.Candidate;
 import ged.ejb.curriculum.Curriculum;
+import ged.ejb.curriculum.CurriculumService;
 import ged.ejb.curriculum.Education;
 import ged.ejb.curriculum.JobExperience;
 import ged.ejb.curriculum.Language;
@@ -22,9 +26,15 @@ public class CurriculumBean extends AbstractBean {
 
 	private static final long serialVersionUID = -5942086439519787220L;
 
+	@SuppressWarnings("cdi-ambiguous-dependency")
+	@Inject
+	@Param(name = "candidateId", required = true)
 	private Candidate candidate;
 
 	private Curriculum curriculum;
+
+	@Inject
+	private transient CurriculumService curriculumService;
 
 	private final List<Education> education = new ArrayList<>();
 
@@ -60,8 +70,7 @@ public class CurriculumBean extends AbstractBean {
 
 	@PostConstruct
 	public void init() {
-		this.curriculum = this.getValueFromFlash("curriculum");
-		this.candidate = this.getValueFromFlash("candidate");
+		this.curriculum = this.curriculumService.findByCandidate(this.candidate);
 		if (this.curriculum == null) {
 			this.curriculum = new Curriculum();
 		}
@@ -81,5 +90,9 @@ public class CurriculumBean extends AbstractBean {
 		this.education.addAll(this.curriculum.getEducation());
 		this.jobExperiences.addAll(this.curriculum.getJobExperiences());
 		this.languages.addAll(this.curriculum.getLanguages());
+	}
+
+	public void setCurriculumService(final CurriculumService curriculumService) {
+		this.curriculumService = curriculumService;
 	}
 }
