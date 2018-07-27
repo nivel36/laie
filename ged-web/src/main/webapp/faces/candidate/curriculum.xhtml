@@ -14,19 +14,63 @@
 			<div class="ui-g-12 ui-lg-12 ui-xl-7">
 				<h:form id="form">
 					<p:panel header="#{i18n['curriculum.curriculum']}">
+						<div class="mainSection">
+							<!-- JOB EXPERIENCE -->
+							<h2>#{i18n['curriculum.job_experiences']}</h2>
+							<span class="cvAction"> <p:commandButton icon="fa fa-plus">
+								</p:commandButton>
+							</span>
+							<ui:repeat value="#{curriculumBean.jobExperiences}" var="jobExperience" id="jobExperience">
+								<div class="section">
+									<span class="cvAction"> <p:commandButton icon="fa fa-pencil" styleClass="cvAction btn-gray">
+										</p:commandButton>
+									</span>
+									<h3>#{jobExperience.jobPosition}</h3>
+									<h4>#{jobExperience.companyName}</h4>
+									<h4>
+										<h:outputText value="#{jobExperience.fromDate}">
+											<f:convertDateTime type="localDate" pattern="MM/yyyy" />
+										</h:outputText>
+										-
+										<h:outputText value="#{jobExperience.toDate}" rendered="#{not jobExperience.stillWorking}">
+											<f:convertDateTime type="localDate" pattern="MM/yyyy" />
+										</h:outputText>
 
-						<!-- JOB EXPERIENCE -->
-						<h2>#{i18n['curriculum.job_experiences']}</h2>
-						<ui:repeat value="#{curriculumBean.jobExperiences}" var="jobExperience" id="jobExperience">
-							<h3>#{jobExperience.jobPosition}</h3>
-							<h4>#{jobExperience.companyName}</h4>
-							<h4>
-								<h:outputText value="#{jobExperience.fromDate}" />
-								-
-								<h:outputText value="#{jobExperience.toDate}" />
-							</h4>
-							<h:outputText value="#{jobExperience.description}" />
-						</ui:repeat>
+										<h:outputText value="#{i18n['job_experience.still_working']}" rendered="#{jobExperience.stillWorking}" />
+									</h4>
+									<p class="jobDescription">
+										<h:outputText value="#{jobExperience.description}" />
+									</p>
+								</div>
+							</ui:repeat>
+						</div>
+						<div class="mainSection">
+							<!-- Education -->
+							<h2>#{i18n['curriculum.education']}</h2>
+							<span class="cvAction"> <p:commandButton icon="fa fa-plus">
+								</p:commandButton>
+							</span>
+							<ui:repeat value="#{curriculumBean.education}" var="education" id="education">
+								<div class="section">
+									<span class="cvAction"> <p:commandButton icon="fa fa-pencil" styleClass="cvAction btn-gray">
+										</p:commandButton>
+									</span>
+									<h3>#{education.degree}</h3>
+									<h4>#{education.description}</h4>
+									<h4>
+										<h:outputText value="#{education.fromDate}">
+											<f:convertDateTime type="localDate" pattern="MM/yyyy" />
+										</h:outputText>
+										-
+										<h:outputText value="#{education.toDate}" rendered="#{not education.stillStudying}">
+											<f:convertDateTime type="localDate" pattern="MM/yyyy" />
+										</h:outputText>
+
+										<h:outputText value="#{i18n['education.still_studying']}" rendered="education.stillStudying}" />
+									</h4>
+								</div>
+							</ui:repeat>
+						</div>
 					</p:panel>
 				</h:form>
 			</div>

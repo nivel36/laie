@@ -4549,7 +4549,7 @@ body .ui-panel .ui-panel-titlebar .ui-panel-titlebar-icon:hover {
 
 body .ui-panel .ui-panel-content {
 	box-sizing: border-box;
-	padding: 15px 10px;
+	padding: 24px;
 }
 
 body .ui-panel .ui-panel-footer {
