@@ -53,8 +53,10 @@ h4 {
 }
 
 .mainSection {
-	margin-bottom: 24px;
+	padding-bottom: 24px;
+	margin-top: 24px;
 	position: relative;
+	border-bottom: 1px solid #999999;
 }
 
 .section {

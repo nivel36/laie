@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html" template="/WEB-INF/templates/default.xhtml" xmlns:p="http://primefaces.org/ui">
+	xmlns:h="http://java.sun.com/jsf/html" template="/WEB-INF/templates/default.xhtml" xmlns:p="http://primefaces.org/ui" xmlns:i18n="http://legion.com/i18n">
 
 	<ui:define name="title">
 		<title>#{i18n['curriculum.curriculum']}</title>
@@ -17,13 +17,11 @@
 						<div class="mainSection">
 							<!-- JOB EXPERIENCE -->
 							<h2>#{i18n['curriculum.job_experiences']}</h2>
-							<span class="cvAction"> <p:commandButton icon="fa fa-plus">
-								</p:commandButton>
+							<span class="cvAction"> <p:commandButton icon="fa fa-plus" styleClass="btn-transparent" />
 							</span>
 							<ui:repeat value="#{curriculumBean.jobExperiences}" var="jobExperience" id="jobExperience">
 								<div class="section">
-									<span class="cvAction"> <p:commandButton icon="fa fa-pencil" styleClass="cvAction btn-gray">
-										</p:commandButton>
+									<span class="cvAction"> <p:commandButton icon="fa fa-pencil" styleClass="btn-transparent" />
 									</span>
 									<h3>#{jobExperience.jobPosition}</h3>
 									<h4>#{jobExperience.companyName}</h4>
@@ -47,13 +45,11 @@
 						<div class="mainSection">
 							<!-- Education -->
 							<h2>#{i18n['curriculum.education']}</h2>
-							<span class="cvAction"> <p:commandButton icon="fa fa-plus">
-								</p:commandButton>
+							<span class="cvAction"> <p:commandButton icon="fa fa-plus" styleClass="btn-transparent" />
 							</span>
 							<ui:repeat value="#{curriculumBean.education}" var="education" id="education">
 								<div class="section">
-									<span class="cvAction"> <p:commandButton icon="fa fa-pencil" styleClass="cvAction btn-gray">
-										</p:commandButton>
+									<span class="cvAction"> <p:commandButton icon="fa fa-pencil" styleClass="btn-transparent" />
 									</span>
 									<h3>#{education.degree}</h3>
 									<h4>#{education.description}</h4>
@@ -68,6 +64,36 @@
 
 										<h:outputText value="#{i18n['education.still_studying']}" rendered="education.stillStudying}" />
 									</h4>
+								</div>
+							</ui:repeat>
+						</div>
+
+						<div class="mainSection">
+							<!-- Skills -->
+							<h2>#{i18n['curriculum.languages']}</h2>
+							<span class="cvAction"> <p:commandButton icon="fa fa-plus" styleClass="btn-transparent" />
+							</span>
+							<ui:repeat value="#{curriculumBean.languages}" var="language" id="language">
+								<div class="section">
+									<span class="cvAction"> <p:commandButton icon="fa fa-pencil" styleClass="btn-transparent" />
+									</span>
+									<h3>#{language.languageName}</h3>
+									<h4>#{i18n:translate(language.speak)}</h4>
+								</div>
+							</ui:repeat>
+						</div>
+
+						<div class="mainSection">
+							<!-- Skills -->
+							<h2>#{i18n['curriculum.skills']}</h2>
+							<span class="cvAction"> <p:commandButton icon="fa fa-plus" styleClass="btn-transparent" />
+							</span>
+							<ui:repeat value="#{curriculumBean.skills}" var="skill" id="skill">
+								<div class="section">
+									<span class="cvAction"> <p:commandButton icon="fa fa-pencil" styleClass="btn-transparent" />
+									</span>
+									<h3>#{skill.name}</h3>
+									<h4>#{i18n:translate(skill.level)}</h4>
 								</div>
 							</ui:repeat>
 						</div>

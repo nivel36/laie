@@ -4695,6 +4695,23 @@ body .ui-button.btn-primary {
 	background: #5b9bd1;
 }
 
+body .ui-button.btn-transparent.ui-state-hover {
+	color: #999999;
+}
+
+body .ui-button.btn-transparent.ui-state-hover .ui-icon{
+	color: #999999;
+}
+
+body .ui-button.btn-transparent {
+	background: transparent;
+	color: #bbbbbb;
+}
+
+body .ui-button.btn-transparent .ui-icon{
+	color: #bbbbbb;
+}
+
 body .ui-button.btn-primary.ui-state-hover {
 	background: #3b7bb1;
 }
