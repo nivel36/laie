@@ -1,6 +1,7 @@
 package ged.ejb.curriculum;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
 import javax.persistence.Column;
@@ -48,14 +49,14 @@ public class JobExperience extends AbstractAuditedEntity {
 		if (obj == null) {
 			return false;
 		}
-		if (getClass() != obj.getClass()) {
+		if (this.getClass() != obj.getClass()) {
 			return false;
 		}
 		final JobExperience other = (JobExperience) obj;
 		return Objects.equals(this.companyName, other.companyName) && Objects.equals(this.curriculum, other.curriculum)
 				&& Objects.equals(this.description, other.description) && Objects.equals(this.fromDate, other.fromDate)
-				&& Objects.equals(this.jobPosition, other.jobPosition)
-				&& Objects.equals(this.stillWorking, other.stillWorking) && Objects.equals(this.toDate, other.toDate);
+				&& Objects.equals(this.jobPosition, other.jobPosition) && Objects.equals(this.stillWorking, other.stillWorking)
+				&& Objects.equals(this.toDate, other.toDate);
 	}
 
 	public String getCompanyName() {
@@ -78,6 +79,15 @@ public class JobExperience extends AbstractAuditedEntity {
 		return this.jobPosition;
 	}
 
+	public long getMonthsWorked() {
+		if (this.stillWorking) {
+			return ChronoUnit.MONTHS.between(this.fromDate, LocalDate.now());
+		}
+		else {
+			return ChronoUnit.MONTHS.between(this.fromDate, this.toDate);
+		}
+	}
+
 	public Boolean getStillWorking() {
 		return this.stillWorking;
 	}
@@ -86,10 +96,18 @@ public class JobExperience extends AbstractAuditedEntity {
 		return this.toDate;
 	}
 
+	public long getYearsWorked() {
+		if (this.stillWorking) {
+			return ChronoUnit.YEARS.between(this.fromDate, LocalDate.now());
+		}
+		else {
+			return ChronoUnit.YEARS.between(this.fromDate, this.toDate);
+		}
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(this.companyName, this.curriculum, this.description, this.fromDate, this.jobPosition,
-				this.stillWorking, this.toDate);
+		return Objects.hash(this.companyName, this.curriculum, this.description, this.fromDate, this.jobPosition, this.stillWorking, this.toDate);
 	}
 
 	public void setCompanyName(final String companyName) {
@@ -122,8 +140,7 @@ public class JobExperience extends AbstractAuditedEntity {
 
 	@Override
 	public String toString() {
-		return "JobExperience [companyName=" + this.companyName + ", description=" + this.description + ", fromDate="
-				+ this.fromDate + ", jobPosition=" + this.jobPosition + ", stillWorking=" + this.stillWorking
-				+ ", toDate=" + this.toDate + "]";
+		return "JobExperience [companyName=" + this.companyName + ", description=" + this.description + ", fromDate=" + this.fromDate + ", jobPosition="
+				+ this.jobPosition + ", stillWorking=" + this.stillWorking + ", toDate=" + this.toDate + "]";
 	}
 }

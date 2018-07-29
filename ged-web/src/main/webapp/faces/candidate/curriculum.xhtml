@@ -35,6 +35,9 @@
 										</h:outputText>
 
 										<h:outputText value="#{i18n['job_experience.still_working']}" rendered="#{jobExperience.stillWorking}" />
+
+										(#{jobExperience.yearsWorked} #{jobExperience.yearsWorked > 1 ? i18n['job.years']:i18n['job.year']} #{jobExperience.monthsWorked%12}
+										#{jobExperience.monthsWorked%12>1 ? i18n['job.months']:i18n['job.month']})
 									</h4>
 									<p class="jobDescription">
 										<h:outputText value="#{jobExperience.description}" />
