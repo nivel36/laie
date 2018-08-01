@@ -21,7 +21,9 @@
 							</span>
 							<ui:repeat value="#{curriculumBean.jobExperiences}" var="jobExperience" id="jobExperience">
 								<div class="section">
-									<span class="cvAction"> <p:commandButton icon="fa fa-pencil" styleClass="btn-transparent" />
+									<span class="cvAction"> <p:commandButton icon="fa fa-pencil" styleClass="btn-transparent" >
+									<f:ajax event="onDialogReturn" update="@form" />
+									</p:commandButton>
 									</span>
 									<h3>#{jobExperience.jobPosition}</h3>
 									<h4>#{jobExperience.companyName}</h4>

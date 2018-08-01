@@ -129,7 +129,7 @@
 								<div class="ui-g">
 									<div class="ui-g-12">
 										<div class="form-action-primary">
-											<p:button value="#{i18n['curriculum.curriculum']}" outcome="curriculum" styleClass="btn-primary">
+											<p:button value="#{i18n['curriculum.curriculum']}" outcome="/faces/curriculum/curriculum" styleClass="btn-primary">
 												<f:param name="candidateId" value="#{candidateBean.candidate.id}" />
 											</p:button>
 											<p:commandButton value="#{i18n['action.edit']}" process="@this" actionListener="#{candidateBean.editCandidate}"

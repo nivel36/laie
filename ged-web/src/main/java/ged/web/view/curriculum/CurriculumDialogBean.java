@@ -1,4 +1,4 @@
-package ged.web.view.candidate;
+package ged.web.view.curriculum;
 
 import static ged.ejb.core.util.Parameters.map;
 import static ged.web.core.util.Navigate.to;

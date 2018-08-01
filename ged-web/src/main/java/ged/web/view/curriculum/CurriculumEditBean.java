@@ -1,4 +1,4 @@
-package ged.web.view.candidate;
+package ged.web.view.curriculum;
 
 import java.util.ArrayList;
 import java.util.HashSet;

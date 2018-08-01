@@ -1,4 +1,4 @@
-package ged.web.view.candidate;
+package ged.web.view.curriculum;
 
 import java.io.File;
 import java.io.FileInputStream;
