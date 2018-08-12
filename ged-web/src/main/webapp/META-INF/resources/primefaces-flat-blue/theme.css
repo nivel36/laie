@@ -4688,6 +4688,14 @@ body .ui-button.btn-gray.ui-state-hover {
 	background: #797979;
 }
 
+body .ui-button.btn-red {
+	background: #f55a4e;
+}
+
+body .ui-button.btn-red.ui-state-hover {
+	background: #f2291a;
+}
+
 body .ui-button.btn-primary {
 	background: #5b9bd1;
 }

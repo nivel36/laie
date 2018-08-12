@@ -101,7 +101,7 @@
 					<div class="form-action-primary">
 						<p:commandButton styleClass="btn-gray" value="#{i18n['action.cancel']}" actionListener="#{jobExperienceDialogBean.closeDialog}" process="@this"
 							update="@form" />
-						<p:commandButton styleClass="btn-gray" value="#{i18n['action.delete']}" action="#{jobExperienceDialogBean.delete}" process="@this"
+						<p:commandButton styleClass="btn-red" value="#{i18n['action.delete']}" action="#{jobExperienceDialogBean.delete}" process="@this"
 							rendered="#{not jobExperienceDialogBean.newJobExperience}" />
 						<p:commandButton styleClass="btn-primary" value="#{i18n['action.save']}" action="#{jobExperienceDialogBean.save}" process="@form" update="@form" />
 					</div>
