@@ -12,7 +12,7 @@ public abstract class AbstractDialogBean extends AbstractBean {
 		this.closeDialog(null);
 	}
 
-	public void closeDialog(final Object value) {
+	protected void closeDialog(final Object value) {
 		PrimeFaces.current().dialog().closeDynamic(value);
 	}
 

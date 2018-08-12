@@ -3985,10 +3985,6 @@ body .ui-dialog {
 	max-height: 100%;
 }
 
-body .ui-dialog.medium {
-	width: 746px !important;
-}
-
 body .ui-dialog .ui-dialog-titlebar {
 	background: #2d353c;
 	padding: 0px;

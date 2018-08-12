@@ -4,67 +4,105 @@
 	xmlns:cc="http://java.sun.com/jsf/composite/components" template="/WEB-INF/templates/dialog.xhtml">
 
 	<ui:define name="title">
-		<title>#{i18n['candidate.candidates']}</title>
+		<title>#{i18n['job_experience.job_experience']}</title>
 	</ui:define>
 
 	<ui:define name="content">
-		<div class="ui-g">
-			<div class="ui-g-12">
-				<div class="form-group">
-					<p:outputLabel value="#{i18n['education.degree']}" />
-					<p:inputText id="degree" value="#{education.degree}" required="true" />
+		<h:form>
+			<div class="ui-g">
+				<div class="ui-g-12 ui-md-6">
+					<div class="form-group">
+						<p:outputLabel value="#{i18n['job_experience.company_name']}" />
+						<p:inputText id="companyName" value="#{jobExperienceDialogBean.jobExperience.companyName}" required="true" />
+					</div>
+					<h:message for="companyName" errorClass="error" />
 				</div>
-				<h:message for="degree" errorClass="error" />
-			</div>
-			<div class="ui-g-12">
-				<div class="form-group">
-					<p:outputLabel value="#{i18n['education.school']}" />
-					<p:inputText id="school" value="#{education.school}" required="true" />
-				</div>
-				<h:message for="school" errorClass="error" />
-			</div>
-			<div class="ui-g-12">
-				<div class="form-group">
-					<p:outputLabel value="#{i18n['education.from_date']}" />
-					<p:inputText id="fromDate" value="#{education.fromDate}" label="#{i18n['education.from_date']}">
-						<f:convertDateTime pattern="MM / yyyy" />
-					</p:inputText>
-				</div>
-				<h:message for="fromDate" errorClass="error" />
-			</div>
-			<div class="ui-g-12">
-				<div class="form-group">
-					<p:outputLabel value="#{i18n['education.to_date']}" />
-					<p:inputText id="toDate" value="#{education.toDate}" disabled="#{education.stillStudying}">
-						<f:convertDateTime pattern="MM / yyyy" />
-					</p:inputText>
-				</div>
-				<h:message for="toDate" errorClass="error" />
-			</div>
 
-			<div class="ui-g-12">
-				<div class="form-group">
-					<p:outputLabel value="#{i18n['education.still_studying']}" />
-					<p:selectBooleanCheckbox value="#{education.stillStudying}" id="stillStudying">
-						<f:ajax render="toDate" />
-					</p:selectBooleanCheckbox>
+				<div class="ui-g-12 ui-md-6">
+					<div class="form-group">
+						<p:outputLabel value="#{i18n['job_experience.job_position']}" />
+						<p:inputText id="jobPosition" value="#{jobExperienceDialogBean.jobExperience.jobPosition}" required="true" />
+					</div>
+					<h:message for="jobPosition" errorClass="error" />
 				</div>
 			</div>
+			<div class="ui-g">
+				<div class="ui-g-12 ui-md-4">
+					<div class="form-group">
+						<p:outputLabel value="#{i18n['job_experience.from_date']}" />
+						<p:calendar id="fromDate" value="#{jobExperienceDialogBean.jobExperience.fromDate}" pattern="dd/MM/yyyy">
+							<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
+						</p:calendar>
+					</div>
+				</div>
 
-			<div class="ui-g-12">
-				<div class="form-group">
-					<p:outputLabel value="#{i18n['education.description']}" />
-					<p:inputTextarea value="#{education.description}" id="description" label="#{i18n['education.description']}" />
+				<div class="ui-g-12 ui-md-4">
+					<div class="form-group">
+						<p:outputLabel value="#{i18n['job_experience.to_date']}" />
+						<p:calendar id="toDate" value="#{jobExperienceDialogBean.jobExperience.toDate}" pattern="dd/MM/yyyy" disabled="#{jobExperienceDialogBean.jobExperience.stillWorking}">
+							<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
+						</p:calendar>
+					</div>
+				</div>
+
+				<div class="ui-g-12 ui-md-4">
+					<div class="form-group">
+						<p:outputLabel value="#{i18n['job_experience.still_working']}" />
+						<p:selectBooleanCheckbox value="#{jobExperienceDialogBean.jobExperience.stillWorking}" id="stillWorking">
+							<f:ajax render="toDate" />
+						</p:selectBooleanCheckbox>
+					</div>
 				</div>
 			</div>
-		</div>
-		<div class="ui-g">
-			<div class="ui-g-12">
-				<div class="form-action-primary">
-					<p:commandButton styleClass="btn-gray" value="#{i18n['action.remove']}" action="#{curriculumDialogBean.removeEducation(education)}" process="@this"
-						update="@form" />
+			<div class="ui-g">
+				<div class="ui-g-12">
+					<div class="form-group">
+						<p:outputLabel value="#{i18n['job_experience.description']}" />
+						<p:textEditor id="description" value="#{jobExperienceDialogBean.jobExperience.description}">
+							<f:facet name="toolbar">
+								<span class="ql-formats">
+									<button class="ql-bold"></button>
+									<button class="ql-italic"></button>
+									<button class="ql-underline"></button>
+								</span>
+								<span class="ql-formats"> <select class="ql-color" /> <select class="ql-background" />
+								</span>
+								<span class="ql-formats">
+									<button class="ql-script" value="sub" />
+									<button class="ql-script" value="super" />
+								</span>
+								<span class="ql-formats">
+									<button class="ql-header" value="1" />
+									<button class="ql-header" value="2" />
+									<button class="ql-blockquote" />
+									<button class="ql-code-block" />
+								</span>
+								<span class="ql-formats">
+									<button class="ql-list" value="ordered" />
+									<button class="ql-list" value="bullet" />
+									<button class="ql-indent" value="-1" />
+									<button class="ql-indent" value="+1" />
+								</span>
+								<span class="ql-formats">
+									<button class="ql-direction" value="rtl" /> <select class="ql-align" />
+								</span>
+								<span class="ql-formats">
+									<button class="ql-clean" />
+								</span>
+							</f:facet>
+						</p:textEditor>
+						<h:message for="description" errorClass="error" />
+					</div>
 				</div>
 			</div>
-		</div>
+			<div class="ui-g">
+				<div class="ui-g-12">
+					<div class="form-action-primary">
+						<p:commandButton styleClass="btn-gray" value="#{i18n['action.cancel']}" actionListener="#{jobExperienceDialogBean.closeDialog}" process="@this"
+							update="@form" />
+					</div>
+				</div>
+			</div>
+		</h:form>
 	</ui:define>
 </ui:composition>

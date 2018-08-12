@@ -2,9 +2,11 @@ package ged.web.view.curriculum;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
-import ged.ejb.curriculum.JobExperience;
+import ged.ejb.curriculum.jobexperience.JobExperience;
+import ged.ejb.curriculum.jobexperience.JobExperienceService;
 import ged.web.core.view.AbstractDialogBean;
 
 @Named
@@ -15,9 +17,39 @@ public class JobExperienceDialogBean extends AbstractDialogBean {
 
 	private JobExperience jobExperience;
 
+	@Inject
+	private transient JobExperienceService jobExperienceService;
+
+	public JobExperience getJobExperience() {
+		return this.jobExperience;
+	}
+
 	@PostConstruct
 	public void init() {
-		final long jobExperienceId = this.getIdFromParameters("jobExperienceId");
+		final Long jobExperienceId = this.getIdFromParameters("jobExperienceId");
+		if (jobExperienceId != null) {
+			this.jobExperience = this.jobExperienceService.find(jobExperienceId);
+		}
+		if (this.jobExperience == null) {
+			this.jobExperience = new JobExperience();
+		}
+	}
 
+	public void save() {
+		if (this.jobExperience.getId() == 0) {
+			this.jobExperienceService.insert(this.jobExperience);
+		}
+		else {
+			this.jobExperience = this.jobExperienceService.update(this.jobExperience);
+		}
+		this.closeDialog(this.jobExperience);
+	}
+
+	public void setJobExperience(final JobExperience jobExperience) {
+		this.jobExperience = jobExperience;
+	}
+
+	public void setJobExperienceService(final JobExperienceService jobExperienceService) {
+		this.jobExperienceService = jobExperienceService;
 	}
 }

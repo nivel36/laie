@@ -10,14 +10,15 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.omnifaces.cdi.Param;
+import org.primefaces.event.SelectEvent;
 
 import ged.ejb.candidate.Candidate;
 import ged.ejb.curriculum.Curriculum;
 import ged.ejb.curriculum.CurriculumService;
 import ged.ejb.curriculum.Education;
-import ged.ejb.curriculum.JobExperience;
 import ged.ejb.curriculum.Language;
 import ged.ejb.curriculum.Skill;
+import ged.ejb.curriculum.jobexperience.JobExperience;
 import ged.web.core.view.AbstractBean;
 
 @Named
@@ -43,6 +44,10 @@ public class CurriculumBean extends AbstractBean {
 	private final List<Language> languages = new ArrayList<>();
 
 	private final List<Skill> skills = new ArrayList<>();
+
+	public void editJobExperience(final JobExperience jobExperience) {
+		this.openDialog("jobExperienceDialog", this.buildDialogParameter("jobExperienceId", String.valueOf(jobExperience.getId())));
+	}
 
 	public Candidate getCandidate() {
 		return this.candidate;
@@ -90,6 +95,23 @@ public class CurriculumBean extends AbstractBean {
 		this.education.addAll(this.curriculum.getEducation());
 		this.jobExperiences.addAll(this.curriculum.getJobExperiences());
 		this.languages.addAll(this.curriculum.getLanguages());
+	}
+
+	public void onEditJobExperience(final SelectEvent event) {
+		final JobExperience returnedJobExperience = (JobExperience) event.getObject();
+		if (returnedJobExperience == null) {
+			return;
+		}
+		boolean isANewJobExperience = true;
+		for (JobExperience jobExperience : this.jobExperiences) {
+			if (jobExperience.getId() == returnedJobExperience.getId()) {
+				jobExperience = returnedJobExperience;
+				isANewJobExperience = false;
+			}
+		}
+		if (isANewJobExperience) {
+			this.jobExperiences.add(returnedJobExperience);
+		}
 	}
 
 	public void setCurriculumService(final CurriculumService curriculumService) {

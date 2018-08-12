@@ -12,6 +12,7 @@ import javax.validation.constraints.NotNull;
 
 import ged.ejb.candidate.Candidate;
 import ged.ejb.core.model.AbstractAuditedEntity;
+import ged.ejb.curriculum.jobexperience.JobExperience;
 
 @Entity
 public class Curriculum extends AbstractAuditedEntity {

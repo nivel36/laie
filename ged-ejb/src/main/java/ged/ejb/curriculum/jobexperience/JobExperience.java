@@ -1,4 +1,4 @@
-package ged.ejb.curriculum;
+package ged.ejb.curriculum.jobexperience;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -11,13 +11,19 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+
 import ged.ejb.core.model.AbstractAuditedEntity;
+import ged.ejb.curriculum.Curriculum;
 
 @Entity
+@Indexed
 public class JobExperience extends AbstractAuditedEntity {
 
 	private static final long serialVersionUID = -2578992834584255548L;
 
+	@Field
 	@NotNull
 	@Column(length = 128, nullable = false)
 	private String companyName;
@@ -27,6 +33,7 @@ public class JobExperience extends AbstractAuditedEntity {
 	@JoinColumn(name = "curriculumId", nullable = false)
 	private Curriculum curriculum;
 
+	@Field
 	@NotNull
 	@Lob
 	@Column(nullable = false)
@@ -34,6 +41,7 @@ public class JobExperience extends AbstractAuditedEntity {
 
 	private LocalDate fromDate;
 
+	@Field
 	@Column(length = 256)
 	private String jobPosition;
 
