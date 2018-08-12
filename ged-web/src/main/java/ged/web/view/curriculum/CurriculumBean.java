@@ -1,6 +1,7 @@
 package ged.web.view.curriculum;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 
@@ -99,10 +100,20 @@ public class CurriculumBean extends AbstractBean {
 		this.education.addAll(this.curriculum.getEducation());
 		this.jobExperiences.addAll(this.curriculum.getJobExperiences());
 		this.languages.addAll(this.curriculum.getLanguages());
+		this.orderJobExperiencesByDate();
+	}
+
+	public void newJobExperience() {
+		this.openDialog("jobExperienceDialog", this.buildDialogParameter("curriculumId", String.valueOf(this.curriculum.getId())));
 	}
 
 	public void onEditJobExperience(final SelectEvent event) {
 		this.jobExperiences = this.jobExperienceService.findByCurriculum(this.curriculum);
+		this.orderJobExperiencesByDate();
+	}
+
+	public void orderJobExperiencesByDate() {
+		this.jobExperiences.sort(Comparator.comparing(JobExperience::getFromDate).reversed());
 	}
 
 	public void setCurriculumService(final CurriculumService curriculumService) {

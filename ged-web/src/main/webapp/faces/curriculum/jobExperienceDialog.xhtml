@@ -14,23 +14,23 @@
 					<div class="form-group">
 						<p:outputLabel value="#{i18n['job_experience.company_name']}" />
 						<p:inputText id="companyName" value="#{jobExperienceDialogBean.jobExperience.companyName}" required="true" />
+						<p:message for="companyName" />
 					</div>
-					<h:message for="companyName" errorClass="error" />
 				</div>
 
 				<div class="ui-g-12 ui-md-6">
 					<div class="form-group">
 						<p:outputLabel value="#{i18n['job_experience.job_position']}" />
 						<p:inputText id="jobPosition" value="#{jobExperienceDialogBean.jobExperience.jobPosition}" required="true" />
+						<p:message for="jobPosition" />
 					</div>
-					<h:message for="jobPosition" errorClass="error" />
 				</div>
 			</div>
 			<div class="ui-g">
 				<div class="ui-g-12 ui-md-4">
 					<div class="form-group">
 						<p:outputLabel value="#{i18n['job_experience.from_date']}" />
-						<p:calendar id="fromDate" value="#{jobExperienceDialogBean.jobExperience.fromDate}" pattern="dd/MM/yyyy">
+						<p:calendar id="fromDate" value="#{jobExperienceDialogBean.jobExperience.fromDate}" pattern="dd/MM/yyyy" navigator="true">
 							<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
 						</p:calendar>
 					</div>
@@ -92,7 +92,7 @@
 								</span>
 							</f:facet>
 						</p:textEditor>
-						<h:message for="description" errorClass="error" />
+						<p:message for="description" />
 					</div>
 				</div>
 			</div>
@@ -103,7 +103,7 @@
 							update="@form" />
 						<p:commandButton styleClass="btn-gray" value="#{i18n['action.delete']}" action="#{jobExperienceDialogBean.delete}" process="@this"
 							rendered="#{not jobExperienceDialogBean.newJobExperience}" />
-						<p:commandButton value="#{i18n['action.save']}" action="#{jobExperienceDialogBean.save}" process="@form" update="@form" />
+						<p:commandButton styleClass="btn-primary" value="#{i18n['action.save']}" action="#{jobExperienceDialogBean.save}" process="@form" update="@form" />
 					</div>
 				</div>
 			</div>
