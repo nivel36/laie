@@ -112,6 +112,14 @@ body ul li {
 	box-shadow: 0 8px 10px rgba(0, 0, 0, .25);
 }
 
+.page_header .menu ul {
+	margin: 0px;
+}
+
+.page_header .menu li {
+	list-style: none;
+}
+
 .page_header .menu li a {
 	display: block;
 	font-size: 1.2em;
