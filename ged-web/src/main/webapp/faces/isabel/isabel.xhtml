@@ -22,7 +22,7 @@
 						<div class="ui-g">
 							<div class="ui-g-12">
 								<div class="form-action-primary">
-									<p:commandButton value="Guardar" />
+									<p:commandButton value="Guardar" action="#{isabelBean.save}" process="@form" update="@form growl" />
 								</div>
 							</div>
 						</div>
