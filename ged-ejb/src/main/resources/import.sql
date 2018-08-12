@@ -106,4 +106,12 @@ insert into CANDIDATE( id, version, name, surname, phoneNumber, email, city, cou
 
 insert into CLIENT( id, version, name, cif, ownerId, phoneNumber, deleted) values (1000, 0, 'F.C. Barcelona', 'A0000000', 901, '935551414', false);
 
+insert into EXPORT( id, version, exportName) values (1100, 0, 'USERS');
+insert into EXPORT( id, version, exportName) values (1101, 0, 'CANDIDATES');
+
+insert into EXPORTFIELD( id, version, exportId, fieldName, sortOrder, literalId, disabled) values (1200, 0, 1100, 'NAME',      1, 'user.name',     false);
+insert into EXPORTFIELD( id, version, exportId, fieldName, sortOrder, literalId, disabled) values (1201, 0, 1100, 'SURNAME',   2, 'user.surname',  false);
+insert into EXPORTFIELD( id, version, exportId, fieldName, sortOrder, literalId, disabled) values (1202, 0, 1100, 'MAIL',      3, 'user.email',    false);
+insert into EXPORTFIELD( id, version, exportId, fieldName, sortOrder, literalId, disabled) values (1203, 0, 1100, 'DISABLED', -1, 'user.disabled', true );
+
 ALTER SEQUENCE HIBERNATE_SEQUENCE RESTART with 2000;
