@@ -19,11 +19,11 @@
 							<h2>#{i18n['curriculum.job_experiences']}</h2>
 							<span class="cvAction"> <p:commandButton icon="fa fa-plus" styleClass="btn-transparent" />
 							</span>
-							<ui:repeat value="#{curriculumBean.jobExperiences}" var="jobExperience" id="jobExperience" varStatus="varStatus" >
+							<ui:repeat value="#{curriculumBean.jobExperiences}" var="jobExperience" id="jobExperience" varStatus="varStatus">
 								<div class="section">
 									<span class="cvAction"> <p:commandButton icon="fa fa-pencil" styleClass="btn-transparent"
 											action="#{curriculumBean.editJobExperience(jobExperience)}" process="@this">
-											<p:ajax event="dialogReturn" listener="#{curriculumBean.onEditJobExperience}" update=":form:jobExperiences" />
+											<p:ajax event="dialogReturn" listener="#{curriculumBean.onEditJobExperience}" update="form:jobExperiences" />
 										</p:commandButton>
 									</span>
 									<h3>#{jobExperience.jobPosition}</h3>
@@ -42,9 +42,9 @@
 										(#{jobExperience.yearsWorked} #{jobExperience.yearsWorked > 1 ? i18n['job.years']:i18n['job.year']} #{jobExperience.monthsWorked%12}
 										#{jobExperience.monthsWorked%12>1 ? i18n['job.months']:i18n['job.month']})
 									</h4>
-									<p class="jobDescription">
-										<h:outputText value="#{jobExperience.description}" />
-									</p>
+
+									<h:outputText value="#{jobExperience.description}" escape="false" styleClass="jobDescription"/>
+
 								</div>
 							</ui:repeat>
 						</h:panelGroup>

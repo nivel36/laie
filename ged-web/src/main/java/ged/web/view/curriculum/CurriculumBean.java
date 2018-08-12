@@ -19,6 +19,7 @@ import ged.ejb.curriculum.Education;
 import ged.ejb.curriculum.Language;
 import ged.ejb.curriculum.Skill;
 import ged.ejb.curriculum.jobexperience.JobExperience;
+import ged.ejb.curriculum.jobexperience.JobExperienceService;
 import ged.web.core.view.AbstractBean;
 
 @Named
@@ -39,7 +40,10 @@ public class CurriculumBean extends AbstractBean {
 
 	private final List<Education> education = new ArrayList<>();
 
-	private final List<JobExperience> jobExperiences = new ArrayList<>();
+	private List<JobExperience> jobExperiences = new ArrayList<>();
+
+	@Inject
+	private transient JobExperienceService jobExperienceService;
 
 	private final List<Language> languages = new ArrayList<>();
 
@@ -102,16 +106,7 @@ public class CurriculumBean extends AbstractBean {
 		if (returnedJobExperience == null) {
 			return;
 		}
-		boolean isANewJobExperience = true;
-		for (JobExperience jobExperience : this.jobExperiences) {
-			if (jobExperience.getId() == returnedJobExperience.getId()) {
-				jobExperience = returnedJobExperience;
-				isANewJobExperience = false;
-			}
-		}
-		if (isANewJobExperience) {
-			this.jobExperiences.add(returnedJobExperience);
-		}
+		this.jobExperiences = this.jobExperienceService.findByCurriculum(this.curriculum);
 	}
 
 	public void setCurriculumService(final CurriculumService curriculumService) {

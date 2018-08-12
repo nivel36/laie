@@ -5,7 +5,7 @@ import java.util.Objects;
 import ged.ejb.core.action.Action.ActionType;
 import ged.ejb.core.model.AbstractAuditedEntity;
 
-public abstract class AbstratctAuditedService<T extends AbstractAuditedEntity> extends AbstractService<T>
+public abstract class AbstractAuditedService<T extends AbstractAuditedEntity> extends AbstractService<T>
 		implements AuditedService<T> {
 
 	@Override

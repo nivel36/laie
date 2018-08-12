@@ -67,6 +67,31 @@ h4 {
 .jobDescription {
 	position: relative;
 	padding-top: 16px;
+	display: block;
+}
+
+body strong {
+	font-weight: 800;
+}
+
+body italic, body em {
+	font-style: italic;
+}
+
+body u {
+	text-decoration: underline;
+}
+
+body .ql-indent-1 {
+	margin-left: 20px;
+}
+
+body ul {
+	margin-left: 20px;
+}
+
+body ul li {
+	list-style: disc;
 }
 
 .cvAction {

@@ -4340,14 +4340,6 @@ body .ql-editor {
 	min-height: 100px; 
 }
 
-body .ql-editor strong {
-	font-weight: 600;
-}
-
-body .ql-editor italic {
-	font-style: italic;
-}
-
 body .ui-inputfield {
 	outline: medium none;
 	background-color: white;

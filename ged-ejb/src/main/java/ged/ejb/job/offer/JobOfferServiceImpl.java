@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 import ged.ejb.candidate.Candidate;
 import ged.ejb.client.Client;
 import ged.ejb.client.ClientService;
-import ged.ejb.core.AbstratctAuditedService;
+import ged.ejb.core.AbstractAuditedService;
 import ged.ejb.core.Audited;
 import ged.ejb.core.action.Action.ActionType;
 import ged.ejb.core.model.Dao;
@@ -23,7 +23,7 @@ import ged.ejb.job.meeting.JobMeetingDao;
 import ged.ejb.user.User;
 
 @Stateless
-public class JobOfferServiceImpl extends AbstratctAuditedService<JobOffer> implements JobOfferService {
+public class JobOfferServiceImpl extends AbstractAuditedService<JobOffer> implements JobOfferService {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 

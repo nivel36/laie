@@ -10,12 +10,12 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ged.ejb.core.AbstratctAuditedService;
+import ged.ejb.core.AbstractAuditedService;
 import ged.ejb.core.model.Dao;
 import ged.ejb.core.model.Repository;
 
 @Stateless
-public class ContactServiceImpl extends AbstratctAuditedService<Contact> implements ContactService {
+public class ContactServiceImpl extends AbstractAuditedService<Contact> implements ContactService {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 

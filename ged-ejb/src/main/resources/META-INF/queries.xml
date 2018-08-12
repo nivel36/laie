@@ -181,6 +181,14 @@
 			AND j.jobOffer = :jobOffer
 		]]></query>
 	</named-query>
+	
+		<named-query name="JobExperience.findByCurriculum">
+		<query><![CDATA[
+			SELECT j 
+			FROM JobExperience j
+			WHERE j.curriculum = :curriculum 
+		]]></query>
+	</named-query>
 
 	<named-query name="JobMeeting.findPlannedJobMeetings">
 		<query><![CDATA[

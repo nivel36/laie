@@ -11,7 +11,7 @@ import javax.validation.ValidationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ged.ejb.core.AbstratctAuditedService;
+import ged.ejb.core.AbstractAuditedService;
 import ged.ejb.core.Audited;
 import ged.ejb.core.action.Action.ActionType;
 import ged.ejb.core.file.ServerFile;
@@ -23,7 +23,7 @@ import ged.ejb.job.offer.JobCandidatureDao;
 import ged.ejb.job.offer.JobOffer;
 
 @Stateless
-public class CandidateServiceImpl extends AbstratctAuditedService<Candidate> implements CandidateService {
+public class CandidateServiceImpl extends AbstractAuditedService<Candidate> implements CandidateService {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
