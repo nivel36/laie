@@ -3991,7 +3991,15 @@ body .ui-dialog .ui-dialog-titlebar {
 	margin: 0px;
 }
 
-body .ui-dialog .ui-dialog-title {
+body  .ui-dialog-content .ql-container {
+	height: 150px;
+}
+
+body  .ui-dialog-content .textArea {
+	height: 200px;
+}
+
+body .ui-dialog-content .ui-dialog-title {
 	padding: 11px 0px 8px 15px;
 	margin: 0;
 	color: white;
