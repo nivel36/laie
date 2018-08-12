@@ -102,10 +102,6 @@ public class CurriculumBean extends AbstractBean {
 	}
 
 	public void onEditJobExperience(final SelectEvent event) {
-		final JobExperience returnedJobExperience = (JobExperience) event.getObject();
-		if (returnedJobExperience == null) {
-			return;
-		}
 		this.jobExperiences = this.jobExperienceService.findByCurriculum(this.curriculum);
 	}
 

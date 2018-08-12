@@ -3,7 +3,6 @@ package ged.ejb.curriculum;
 import java.util.Objects;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
@@ -23,16 +22,16 @@ public class Curriculum extends AbstractAuditedEntity {
 	@OneToOne(fetch = FetchType.EAGER, mappedBy = "curriculum")
 	private Candidate candidate;
 
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "curriculum", orphanRemoval = true)
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "curriculum", orphanRemoval = true)
 	private Set<Education> education;
 
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "curriculum", orphanRemoval = true)
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "curriculum", orphanRemoval = true)
 	private Set<JobExperience> jobExperiences;
 
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "curriculum", orphanRemoval = true)
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "curriculum", orphanRemoval = true)
 	private Set<Language> languages;
 
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "curriculum", orphanRemoval = true)
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "curriculum", orphanRemoval = true)
 	private Set<Skill> skills;
 
 	public void addEducation(final Education education) {
