@@ -47,6 +47,7 @@ public class PersistenceFacadeJpa implements PersistenceFacade {
 	@Override
 	public <T extends Identificable> void delete(final Class<T> type, final T entity) {
 		Objects.requireNonNull(entity);
+		Objects.requireNonNull(type);
 		if (entity.getId() == 0) {
 			throw new IllegalStateException();
 		}
@@ -55,8 +56,7 @@ public class PersistenceFacadeJpa implements PersistenceFacade {
 			this.em.remove(entity);
 		}
 		else {
-			final T attachedEntity = this.em.getReference(type, entity.getId());
-			this.em.remove(attachedEntity);
+			this.em.remove(this.em.merge(entity));
 		}
 	}
 

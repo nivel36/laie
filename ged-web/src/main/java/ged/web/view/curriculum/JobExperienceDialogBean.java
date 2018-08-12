@@ -20,6 +20,13 @@ public class JobExperienceDialogBean extends AbstractDialogBean {
 	@Inject
 	private transient JobExperienceService jobExperienceService;
 
+	public void delete() {
+		if (!this.isNewJobExperience()) {
+			this.jobExperienceService.delete(this.jobExperience);
+		}
+		this.closeDialog();
+	}
+
 	public JobExperience getJobExperience() {
 		return this.jobExperience;
 	}
@@ -35,8 +42,12 @@ public class JobExperienceDialogBean extends AbstractDialogBean {
 		}
 	}
 
+	public boolean isNewJobExperience() {
+		return this.jobExperience.getId() == 0;
+	}
+
 	public void save() {
-		if (this.jobExperience.getId() == 0) {
+		if (this.isNewJobExperience()) {
 			this.jobExperienceService.insert(this.jobExperience);
 		}
 		else {
