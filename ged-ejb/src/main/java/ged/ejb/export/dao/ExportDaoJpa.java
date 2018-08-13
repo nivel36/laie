@@ -1,4 +1,4 @@
-package ged.ejb.export;
+package ged.ejb.export.dao;
 
 import static ged.ejb.core.util.Parameters.map;
 
@@ -7,7 +7,8 @@ import java.util.Objects;
 
 import ged.ejb.core.model.AbstractDaoJpa;
 import ged.ejb.core.model.Repository;
-import ged.ejb.export.ExportConstants.FindExportByExportName;
+import ged.ejb.export.entity.Export;
+import ged.ejb.export.util.ExportConstants.FindExportByExportName;
 
 @Repository
 public class ExportDaoJpa extends AbstractDaoJpa<Export> implements ExportDao {

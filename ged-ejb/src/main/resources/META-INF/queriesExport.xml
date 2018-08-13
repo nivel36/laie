@@ -4,7 +4,7 @@
         http://xmlns.jcp.org/xml/ns/persistence/orm_2_1.xsd"
 	version="2.1">
 	
-		<named-query name="Export.findByExportName">
+	<named-query name="Export.findByExportName">
 		<query><![CDATA[
 			SELECT e 
 			FROM Export e 
@@ -12,13 +12,4 @@
 		]]></query>
 	</named-query>
 
-	<named-query name="ExportField.findAllByExport">
-		<query><![CDATA[
-			SELECT f 
-			FROM ExportField f 
-			WHERE f.export = :export 
-			AND f.disabled = false
-			ORDER BY f.sortOrder ASC
-		]]></query>
-	</named-query>
 </entity-mappings>

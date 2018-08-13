@@ -1,4 +1,4 @@
-package ged.ejb.export;
+package ged.ejb.export.entity;
 
 import java.util.Objects;
 import java.util.Set;
@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 
 import ged.ejb.core.model.AbstractEntity;
 
@@ -20,7 +21,12 @@ public class Export extends AbstractEntity {
 	private String exportName;
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "export", orphanRemoval = true)
+	@OrderBy("sortOrder asc")
 	private Set<ExportField> exportField;
+	
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "export", orphanRemoval = true)
+	@OrderBy("sortOrder asc")
+	private Set<ExportDefinition> exportDefinition;
 	
 	public String getExportName() {
 		return exportName;
@@ -36,6 +42,14 @@ public class Export extends AbstractEntity {
 
 	public void setExportField(Set<ExportField> exportField) {
 		this.exportField = exportField;
+	}
+
+	public Set<ExportDefinition> getExportDefinition() {
+		return exportDefinition;
+	}
+
+	public void setExportDefinition(Set<ExportDefinition> exportDefinition) {
+		this.exportDefinition = exportDefinition;
 	}
 	
 	@Override

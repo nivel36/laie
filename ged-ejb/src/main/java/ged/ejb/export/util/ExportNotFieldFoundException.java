@@ -1,4 +1,4 @@
-package ged.ejb.export;
+package ged.ejb.export.util;
 
 import java.util.Objects;
 

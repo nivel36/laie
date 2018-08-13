@@ -1,4 +1,4 @@
-package ged.ejb.export;
+package ged.ejb.export.util;
 
 public interface ExportConstants {
 
@@ -6,13 +6,6 @@ public interface ExportConstants {
 		String QUERY_NAME = "Export.findByExportName";
 		interface Params {
 			String EXPORT_NAME = "exportName";
-		}
-	}
-	
-	interface FindFieldsByExport {
-		String QUERY_NAME = "ExportField.findAllByExport";
-		interface Params {
-			String EXPORT = "export";
 		}
 	}
 }

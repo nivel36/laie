@@ -1,11 +1,13 @@
-package ged.ejb.export;
+package ged.ejb.export.entity;
 
 import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 import ged.ejb.core.model.AbstractEntity;
 
@@ -15,6 +17,7 @@ public class ExportField extends AbstractEntity {
 	private static final long serialVersionUID = 2230780249719376394L;
 
 	// TODO ivmedina unique export-fieldName
+	// TODO ivmedina unique export-sortOrder
 	
 	@ManyToOne
 	@JoinColumn(name = "exportId", nullable = false)
@@ -32,6 +35,9 @@ public class ExportField extends AbstractEntity {
 	@Column(nullable = false)
 	private boolean disabled;
 
+	@OneToOne(fetch = FetchType.EAGER, mappedBy = "exportField")
+	private ExportDefinition exportDefinition;
+	
 	public Export getExport() {
 		return export;
 	}
@@ -72,6 +78,15 @@ public class ExportField extends AbstractEntity {
 		this.literalId = literalId;
 	}
 
+
+	public ExportDefinition getExportDefinition() {
+		return exportDefinition;
+	}
+
+	public void setExportDefinition(ExportDefinition exportDefinition) {
+		this.exportDefinition = exportDefinition;
+	}
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(this.export, this.fieldName);
