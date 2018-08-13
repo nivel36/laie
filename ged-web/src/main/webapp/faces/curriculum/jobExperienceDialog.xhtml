@@ -30,19 +30,28 @@
 				<div class="ui-g-12 ui-md-4">
 					<div class="form-group">
 						<p:outputLabel value="#{i18n['job_experience.from_date']}" />
-						<p:calendar id="fromDate" value="#{jobExperienceDialogBean.jobExperience.fromDate}" pattern="dd/MM/yyyy" navigator="true">
-							<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
-						</p:calendar>
+						<p:selectOneMenu id="startMonth" value="#{jobExperienceDialogBean.jobExperience.startMonth}">
+							<f:selectItem itemLabel="#{i18n['date.month']}" itemValue="" />
+							<f:selectItems var="month" value="#{combo.months}" itemValue="#{combo.months.indexOf(month)+1}" itemLabel="#{month}" />
+						</p:selectOneMenu>
+						<p:selectOneMenu id="startYear" value="#{jobExperienceDialogBean.jobExperience.startYear}">
+							<f:selectItem itemLabel="#{i18n['date.year']}" itemValue="" />
+							<f:selectItems var="year" value="#{combo.years}" itemValue="#{year}" itemLabel="#{year}" />
+						</p:selectOneMenu>
 					</div>
 				</div>
 
 				<div class="ui-g-12 ui-md-4">
 					<div class="form-group">
 						<p:outputLabel value="#{i18n['job_experience.to_date']}" />
-						<p:calendar id="toDate" value="#{jobExperienceDialogBean.jobExperience.toDate}" pattern="dd/MM/yyyy"
-							disabled="#{jobExperienceDialogBean.jobExperience.stillWorking}">
-							<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
-						</p:calendar>
+						<p:selectOneMenu id="endMonth" value="#{jobExperienceDialogBean.jobExperience.endMonth}" disabled="#{jobExperienceDialogBean.jobExperience.stillWorking}">
+							<f:selectItem itemLabel="#{i18n['date.month']}" itemValue="" />
+							<f:selectItems var="month" value="#{combo.months}" itemValue="#{combo.months.indexOf(month)+1}" itemLabel="#{month}" />
+						</p:selectOneMenu>
+						<p:selectOneMenu id="endYear" value="#{jobExperienceDialogBean.jobExperience.endYear}" disabled="#{jobExperienceDialogBean.jobExperience.stillWorking}">
+							<f:selectItem itemLabel="#{i18n['date.year']}" itemValue="" />
+							<f:selectItems var="year" value="#{combo.years}" itemValue="#{year}" itemLabel="#{year}" />
+						</p:selectOneMenu>
 					</div>
 				</div>
 
@@ -50,7 +59,7 @@
 					<div class="form-group">
 						<p:outputLabel value="#{i18n['job_experience.still_working']}" />
 						<p:selectBooleanCheckbox value="#{jobExperienceDialogBean.jobExperience.stillWorking}" id="stillWorking">
-							<f:ajax render="toDate" />
+							<f:ajax render="endMonth endYear" />
 						</p:selectBooleanCheckbox>
 					</div>
 				</div>

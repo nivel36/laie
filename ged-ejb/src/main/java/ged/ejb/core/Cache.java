@@ -6,7 +6,6 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.inject.Named;
 
 import ged.ejb.curriculum.CurriculumService;
 import ged.ejb.curriculum.LanguageLevel;
@@ -14,21 +13,20 @@ import ged.ejb.curriculum.SkillLevel;
 import ged.ejb.user.role.Role;
 import ged.ejb.user.role.RoleService;
 
-@Named
 @ApplicationScoped
 public class Cache implements Serializable {
 
 	private static final long serialVersionUID = -8778037668334921574L;
 
 	@Inject
-	private CurriculumService curriculumService;
+	private transient CurriculumService curriculumService;
 
 	private List<LanguageLevel> languageLevels;
 
 	private List<Role> roles;
 
 	@Inject
-	private RoleService roleService;
+	private transient RoleService roleService;
 
 	private List<SkillLevel> skillLevels;
 

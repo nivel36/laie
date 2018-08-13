@@ -1,7 +1,6 @@
 package ged.ejb.curriculum.jobexperience;
 
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
 import javax.persistence.Column;
@@ -39,15 +38,19 @@ public class JobExperience extends AbstractEntity {
 	@Column(nullable = false)
 	private String description;
 
-	private LocalDate fromDate;
+	private Integer endMonth;
+
+	private Integer endYear;
 
 	@Field
 	@Column(length = 256)
 	private String jobPosition;
 
-	private Boolean stillWorking;
+	private Integer startMonth;
 
-	private LocalDate toDate;
+	private Integer startYear;
+
+	private Boolean stillWorking;
 
 	@Override
 	public boolean equals(final Object obj) {
@@ -62,9 +65,10 @@ public class JobExperience extends AbstractEntity {
 		}
 		final JobExperience other = (JobExperience) obj;
 		return Objects.equals(this.companyName, other.companyName) && Objects.equals(this.curriculum, other.curriculum)
-				&& Objects.equals(this.description, other.description) && Objects.equals(this.fromDate, other.fromDate)
-				&& Objects.equals(this.jobPosition, other.jobPosition) && Objects.equals(this.stillWorking, other.stillWorking)
-				&& Objects.equals(this.toDate, other.toDate);
+				&& Objects.equals(this.description, other.description) && Objects.equals(this.startMonth, other.startMonth)
+				&& Objects.equals(this.startYear, other.startYear) && Objects.equals(this.jobPosition, other.jobPosition)
+				&& Objects.equals(this.stillWorking, other.stillWorking) && Objects.equals(this.endMonth, other.endMonth)
+				&& Objects.equals(this.endYear, other.endYear);
 	}
 
 	public String getCompanyName() {
@@ -79,43 +83,59 @@ public class JobExperience extends AbstractEntity {
 		return this.description;
 	}
 
-	public LocalDate getFromDate() {
-		return this.fromDate;
+	public Integer getEndMonth() {
+		return this.endMonth;
+	}
+
+	public Integer getEndYear() {
+		return this.endYear;
 	}
 
 	public String getJobPosition() {
 		return this.jobPosition;
 	}
 
-	public long getMonthsWorked() {
+	public int getMonthsWorked() {
+		int monthsWorked;
 		if (this.stillWorking) {
-			return ChronoUnit.MONTHS.between(this.fromDate, LocalDate.now());
+			monthsWorked = LocalDate.now().getMonth().getValue() - this.startMonth;
 		}
 		else {
-			return ChronoUnit.MONTHS.between(this.fromDate, this.toDate);
+			monthsWorked = this.endMonth - this.startMonth;
 		}
+		if (monthsWorked < 0) {
+			return 12 + monthsWorked;
+		}
+		else {
+			return monthsWorked;
+		}
+	}
+
+	public Integer getStartMonth() {
+		return this.startMonth;
+	}
+
+	public Integer getStartYear() {
+		return this.startYear;
 	}
 
 	public Boolean getStillWorking() {
 		return this.stillWorking;
 	}
 
-	public LocalDate getToDate() {
-		return this.toDate;
-	}
-
-	public long getYearsWorked() {
+	public int getYearsWorked() {
 		if (this.stillWorking) {
-			return ChronoUnit.YEARS.between(this.fromDate, LocalDate.now());
+			return LocalDate.now().getYear() - this.startYear;
 		}
 		else {
-			return ChronoUnit.YEARS.between(this.fromDate, this.toDate);
+			return this.endYear - this.startYear;
 		}
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(this.companyName, this.curriculum, this.description, this.fromDate, this.jobPosition, this.stillWorking, this.toDate);
+		return Objects.hash(this.companyName, this.curriculum, this.description, this.startMonth, this.startYear, this.jobPosition, this.stillWorking,
+				this.endMonth, this.endYear);
 	}
 
 	public void setCompanyName(final String companyName) {
@@ -130,25 +150,27 @@ public class JobExperience extends AbstractEntity {
 		this.description = description;
 	}
 
-	public void setFromDate(final LocalDate fromDate) {
-		this.fromDate = fromDate;
+	public void setEndMonth(final Integer endMonth) {
+		this.endMonth = endMonth;
+	}
+
+	public void setEndYear(final Integer endYear) {
+		this.endYear = endYear;
 	}
 
 	public void setJobPosition(final String jobPosition) {
 		this.jobPosition = jobPosition;
 	}
 
+	public void setStartMonth(final Integer startMonth) {
+		this.startMonth = startMonth;
+	}
+
+	public void setStartYear(final Integer startYear) {
+		this.startYear = startYear;
+	}
+
 	public void setStillWorking(final Boolean stillWorking) {
 		this.stillWorking = stillWorking;
-	}
-
-	public void setToDate(final LocalDate toDate) {
-		this.toDate = toDate;
-	}
-
-	@Override
-	public String toString() {
-		return "JobExperience [companyName=" + this.companyName + ", description=" + this.description + ", fromDate=" + this.fromDate + ", jobPosition="
-				+ this.jobPosition + ", stillWorking=" + this.stillWorking + ", toDate=" + this.toDate + "]";
 	}
 }

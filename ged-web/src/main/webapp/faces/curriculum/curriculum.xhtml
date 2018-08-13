@@ -17,8 +17,8 @@
 						<h:panelGroup styleClass="mainSection" id="jobExperiences" layout="block">
 							<!-- JOB EXPERIENCE -->
 							<h2>#{i18n['curriculum.job_experiences']}</h2>
-							<span class="cvAction"> <p:commandButton icon="fa fa-plus" styleClass="btn-transparent"
-									action="#{curriculumBean.newJobExperience}" process="@this">
+							<span class="cvAction"> <p:commandButton icon="fa fa-plus" styleClass="btn-transparent" action="#{curriculumBean.newJobExperience}"
+									process="@this">
 									<p:ajax event="dialogReturn" listener="#{curriculumBean.onEditJobExperience}" update="form:jobExperiences" />
 								</p:commandButton>
 							</span>
@@ -32,18 +32,16 @@
 									<h3>#{jobExperience.jobPosition}</h3>
 									<h4>#{jobExperience.companyName}</h4>
 									<h4>
-										<h:outputText value="#{jobExperience.fromDate}">
-											<f:convertDateTime type="localDate" pattern="MM/yyyy" />
-										</h:outputText>
+										<h:panelGroup>
+											<h:outputText value="#{jobExperience.startMonth}" />/<h:outputText value="#{jobExperience.startYear}" />
+										</h:panelGroup>
 										-
-										<h:outputText value="#{jobExperience.toDate}" rendered="#{not jobExperience.stillWorking}">
-											<f:convertDateTime type="localDate" pattern="MM/yyyy" />
-										</h:outputText>
+										<h:panelGroup rendered="#{not jobExperience.stillWorking}">
+											<h:outputText value="#{jobExperience.endMonth}" />/<h:outputText value="#{jobExperience.endYear}" />
+										</h:panelGroup>
 
 										<h:outputText value="#{i18n['job_experience.still_working']}" rendered="#{jobExperience.stillWorking}" />
-
-										(#{jobExperience.yearsWorked} #{jobExperience.yearsWorked > 1 ? i18n['job.years']:i18n['job.year']} #{jobExperience.monthsWorked%12}
-										#{jobExperience.monthsWorked%12>1 ? i18n['job.months']:i18n['job.month']})
+										(#{jobExperience.yearsWorked} #{jobExperience.yearsWorked > 1 ? i18n['job.years']:i18n['job.year']} - #{jobExperience.monthsWorked} #{jobExperience.monthsWorked>1 ? i18n['job.months']:i18n['job.month']})
 									</h4>
 
 									<h:outputText value="#{jobExperience.description}" escape="false" styleClass="jobDescription" />

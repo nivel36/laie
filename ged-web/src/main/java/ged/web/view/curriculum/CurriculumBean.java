@@ -113,7 +113,7 @@ public class CurriculumBean extends AbstractBean {
 	}
 
 	public void orderJobExperiencesByDate() {
-		this.jobExperiences.sort(Comparator.comparing(JobExperience::getFromDate).reversed());
+		this.jobExperiences.sort(Comparator.comparing(JobExperience::getStartYear).reversed());
 	}
 
 	public void setCurriculumService(final CurriculumService curriculumService) {
