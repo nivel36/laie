@@ -114,4 +114,6 @@ insert into EXPORTFIELD( id, version, exportId, fieldName, sortOrder, literalId,
 insert into EXPORTFIELD( id, version, exportId, fieldName, sortOrder, literalId, disabled) values (1202, 0, 1100, 'MAIL',      3, 'user.email',    false);
 insert into EXPORTFIELD( id, version, exportId, fieldName, sortOrder, literalId, disabled) values (1203, 0, 1100, 'DISABLED', -1, 'user.disabled', true );
 
+insert into EXPORTDEFINITION (id, version, exportId, exportFieldId, sortOrder) values (1300, 0, 1100, 1201, 1);
+
 ALTER SEQUENCE HIBERNATE_SEQUENCE RESTART with 2000;
