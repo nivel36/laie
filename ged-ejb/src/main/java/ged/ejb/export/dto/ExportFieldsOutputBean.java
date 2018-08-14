@@ -30,14 +30,11 @@ public class ExportFieldsOutputBean {
 		
 		private final String literalId;
 		
-		private final int sortOrder;
-		
-		public ExportFieldItem(final long idField, final String literalId, final int sortOrder) {
+		public ExportFieldItem(final long idField, final String literalId) {
 			super();
 			Objects.requireNonNull(literalId);
 			this.idField = idField;
 			this.literalId = literalId;
-			this.sortOrder = sortOrder;
 		}
 
 		public long getIdField() {
@@ -46,10 +43,6 @@ public class ExportFieldsOutputBean {
 
 		public String getLiteralId() {
 			return literalId;
-		}
-
-		public int getSortOrder() {
-			return sortOrder;
 		}
 	}
 }

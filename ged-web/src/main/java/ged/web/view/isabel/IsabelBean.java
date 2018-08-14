@@ -64,7 +64,8 @@ public class IsabelBean extends AbstractBean {
 		for (ExportViewItemI item: currentTarget) {
 			list.add(new SaveDefinitionItem(((ExportFieldItem) item.getItem()).getIdField(), i++));
 		}
-		getExportService().saveDefinition(EXPORT_NAME, new ExportSaveDefinitionInputBean(list));
+		getExportService().saveDefinition(new ExportSaveDefinitionInputBean(EXPORT_NAME, list));
+		initialize(EXPORT_NAME);
 	}
 	
 	public DualListModel<ExportViewItemI> getModel() {

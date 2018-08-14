@@ -45,7 +45,7 @@ public class ExportServiceImpl extends AbstractService<Export> implements Export
 	@Override
 	public ExportFieldsOutputBean findFieldsByExport(final String exportName) {
 		Objects.requireNonNull(exportName);
-		final Export export = exportDao.findByExportName(exportName);
+		final Export export = getExportDao().findByExportName(exportName);
 		final Set<ExportField> result = export.getExportField();
 		if (result.isEmpty()) {
 			throw new ExportNotFieldFoundException(exportName);
@@ -53,7 +53,7 @@ public class ExportServiceImpl extends AbstractService<Export> implements Export
 		final List<ExportFieldItem> list = new ArrayList<>();
 		for (ExportField item: result) {
 			if (!item.isDisabled() && item.getExportDefinition() == null) {
-				list.add(new ExportFieldItem(item.getId(), item.getLiteralId(), item.getSortOrder()));
+				list.add(new ExportFieldItem(item.getId(), item.getLiteralId()));
 			}
 		}
 		return new ExportFieldsOutputBean(export.getId(), list);
@@ -62,19 +62,19 @@ public class ExportServiceImpl extends AbstractService<Export> implements Export
 	@Override
 	public ExportFieldsOutputBean findDefinitionByExport(final String exportName) {
 		Objects.requireNonNull(exportName);
-		final Export export = exportDao.findByExportName(exportName);
+		final Export export = getExportDao().findByExportName(exportName);
 		final Set<ExportDefinition> result = export.getExportDefinition();
 		final List<ExportFieldItem> list = new ArrayList<>();
 		for (ExportDefinition item: result) {
-			list.add(new ExportFieldItem(item.getExportField().getId(), item.getExportField().getLiteralId(), item.getSortOrder()));
+			list.add(new ExportFieldItem(item.getExportField().getId(), item.getExportField().getLiteralId()));
 		}
 		return new ExportFieldsOutputBean(export.getId(), list);
 	}
 	
 	@Override
-	public void saveDefinition(final String exportName, final ExportSaveDefinitionInputBean newDefinition) {
+	public void saveDefinition(final ExportSaveDefinitionInputBean newDefinition) {
 		Objects.requireNonNull(newDefinition);
-		final Export export = exportDao.findByExportName(exportName);
+		final Export export = getExportDao().findByExportName(newDefinition.getExportName());
 		final Map<Long, ExportField> fieldMap = toExportFieldMap(export.getExportField());
 		final Map<Long, ExportDefinition> defMap = toExportDefinitionMap(export.getExportDefinition());
 		final Set<Long> defSet = toExportDefinitionSet(export.getExportDefinition());
@@ -136,5 +136,9 @@ public class ExportServiceImpl extends AbstractService<Export> implements Export
 	@Override
 	protected Dao<Export> getDao() {
 		return this.exportDao;
+	}
+
+	private ExportDao getExportDao() {
+		return exportDao;
 	}
 }

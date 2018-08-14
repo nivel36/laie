@@ -5,12 +5,20 @@ import java.util.Objects;
 
 public class ExportSaveDefinitionInputBean {
 
+	private final String exportName;
+	
 	private final List<SaveDefinitionItem> list;
 	
-	public ExportSaveDefinitionInputBean(final List<SaveDefinitionItem> list) {
+	public ExportSaveDefinitionInputBean(final String exportName, final List<SaveDefinitionItem> list) {
 		super();
+		Objects.requireNonNull(exportName);
 		Objects.requireNonNull(list);
+		this.exportName = exportName;
 		this.list = list;
+	}
+
+	public String getExportName() {
+		return exportName;
 	}
 	
 	public List<SaveDefinitionItem> getList() {
