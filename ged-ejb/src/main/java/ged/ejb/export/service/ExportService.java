@@ -11,5 +11,5 @@ public interface ExportService extends Service<Export> {
 	
 	ExportFieldsOutputBean findDefinitionByExport(String exportName);
 	
-	void saveDefinition(String exportName, ExportSaveDefinitionInputBean target);
+	void saveDefinition(ExportSaveDefinitionInputBean target);
 }
