@@ -1,6 +1,8 @@
 package ged.ejb.curriculum.jobexperience;
 
 import java.time.LocalDate;
+import java.time.YearMonth;
+import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
 import javax.persistence.Column;
@@ -38,17 +40,13 @@ public class JobExperience extends AbstractEntity {
 	@Column(nullable = false)
 	private String description;
 
-	private Integer endMonth;
-
-	private Integer endYear;
+	private YearMonth endDate;
 
 	@Field
 	@Column(length = 256)
 	private String jobPosition;
 
-	private Integer startMonth;
-
-	private Integer startYear;
+	private YearMonth startDate;
 
 	private Boolean stillWorking;
 
@@ -65,10 +63,9 @@ public class JobExperience extends AbstractEntity {
 		}
 		final JobExperience other = (JobExperience) obj;
 		return Objects.equals(this.companyName, other.companyName) && Objects.equals(this.curriculum, other.curriculum)
-				&& Objects.equals(this.description, other.description) && Objects.equals(this.startMonth, other.startMonth)
-				&& Objects.equals(this.startYear, other.startYear) && Objects.equals(this.jobPosition, other.jobPosition)
-				&& Objects.equals(this.stillWorking, other.stillWorking) && Objects.equals(this.endMonth, other.endMonth)
-				&& Objects.equals(this.endYear, other.endYear);
+				&& Objects.equals(this.description, other.description) && Objects.equals(this.startDate, other.startDate)
+				&& Objects.equals(this.jobPosition, other.jobPosition) && Objects.equals(this.stillWorking, other.stillWorking)
+				&& Objects.equals(this.endDate, other.endDate);
 	}
 
 	public String getCompanyName() {
@@ -83,59 +80,40 @@ public class JobExperience extends AbstractEntity {
 		return this.description;
 	}
 
-	public Integer getEndMonth() {
-		return this.endMonth;
-	}
-
-	public Integer getEndYear() {
-		return this.endYear;
+	public YearMonth getEndDate() {
+		return this.endDate;
 	}
 
 	public String getJobPosition() {
 		return this.jobPosition;
 	}
 
-	public int getMonthsWorked() {
-		int monthsWorked;
+	public Long getMonthsWorked() {
+		if (this.startDate == null) {
+			return null;
+		}
+		if ((this.startDate != null) && (this.stillWorking == null) && (this.endDate == null)) {
+			throw new IllegalStateException();
+		}
 		if (this.stillWorking) {
-			monthsWorked = LocalDate.now().getMonth().getValue() - this.startMonth;
+			return ChronoUnit.MONTHS.between(this.startDate, LocalDate.now());
 		}
 		else {
-			monthsWorked = this.endMonth - this.startMonth;
-		}
-		if (monthsWorked < 0) {
-			return 12 + monthsWorked;
-		}
-		else {
-			return monthsWorked;
+			return ChronoUnit.MONTHS.between(this.startDate, this.endDate);
 		}
 	}
 
-	public Integer getStartMonth() {
-		return this.startMonth;
-	}
-
-	public Integer getStartYear() {
-		return this.startYear;
+	public YearMonth getStartDate() {
+		return this.startDate;
 	}
 
 	public Boolean getStillWorking() {
 		return this.stillWorking;
 	}
 
-	public int getYearsWorked() {
-		if (this.stillWorking) {
-			return LocalDate.now().getYear() - this.startYear;
-		}
-		else {
-			return this.endYear - this.startYear;
-		}
-	}
-
 	@Override
 	public int hashCode() {
-		return Objects.hash(this.companyName, this.curriculum, this.description, this.startMonth, this.startYear, this.jobPosition, this.stillWorking,
-				this.endMonth, this.endYear);
+		return Objects.hash(this.companyName, this.curriculum, this.description, this.startDate, this.jobPosition, this.stillWorking, this.endDate);
 	}
 
 	public void setCompanyName(final String companyName) {
@@ -150,24 +128,16 @@ public class JobExperience extends AbstractEntity {
 		this.description = description;
 	}
 
-	public void setEndMonth(final Integer endMonth) {
-		this.endMonth = endMonth;
-	}
-
-	public void setEndYear(final Integer endYear) {
-		this.endYear = endYear;
+	public void setEndDate(final YearMonth endDate) {
+		this.endDate = endDate;
 	}
 
 	public void setJobPosition(final String jobPosition) {
 		this.jobPosition = jobPosition;
 	}
 
-	public void setStartMonth(final Integer startMonth) {
-		this.startMonth = startMonth;
-	}
-
-	public void setStartYear(final Integer startYear) {
-		this.startYear = startYear;
+	public void setStartDate(final YearMonth startDate) {
+		this.startDate = startDate;
 	}
 
 	public void setStillWorking(final Boolean stillWorking) {

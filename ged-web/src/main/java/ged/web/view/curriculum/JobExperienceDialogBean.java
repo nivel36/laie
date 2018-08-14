@@ -1,5 +1,7 @@
 package ged.web.view.curriculum;
 
+import java.time.YearMonth;
+
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -20,10 +22,22 @@ public class JobExperienceDialogBean extends AbstractDialogBean {
 	@Inject
 	private transient CurriculumService curriculumService;
 
+	private Integer endMonth;
+
+	private Integer endYear;
+
 	private JobExperience jobExperience;
 
 	@Inject
 	private transient JobExperienceService jobExperienceService;
+
+	private Integer startMonth;
+
+	private Integer startYear;
+
+	private YearMonth buildYearMonth(final int year, final int month) {
+		return YearMonth.of(year, month);
+	}
 
 	public void delete() {
 		if (!this.isNewJobExperience()) {
@@ -32,8 +46,24 @@ public class JobExperienceDialogBean extends AbstractDialogBean {
 		this.closeDialog();
 	}
 
+	public Integer getEndMonth() {
+		return this.endMonth;
+	}
+
+	public Integer getEndYear() {
+		return this.endYear;
+	}
+
 	public JobExperience getJobExperience() {
 		return this.jobExperience;
+	}
+
+	public Integer getStartMonth() {
+		return this.startMonth;
+	}
+
+	public Integer getStartYear() {
+		return this.startYear;
 	}
 
 	@PostConstruct
@@ -48,6 +78,15 @@ public class JobExperienceDialogBean extends AbstractDialogBean {
 			this.jobExperience = new JobExperience();
 			this.jobExperience.setCurriculum(curriculum);
 		}
+
+		if (this.jobExperience.getStartDate() != null) {
+			this.startYear = this.jobExperience.getStartDate().getYear();
+			this.startMonth = this.jobExperience.getStartDate().getMonthValue();
+		}
+		if (this.jobExperience.getEndDate() != null) {
+			this.endYear = this.jobExperience.getEndDate().getYear();
+			this.endMonth = this.jobExperience.getEndDate().getMonthValue();
+		}
 	}
 
 	public boolean isNewJobExperience() {
@@ -55,6 +94,14 @@ public class JobExperienceDialogBean extends AbstractDialogBean {
 	}
 
 	public void save() {
+		if ((this.endYear != null) && (this.endMonth != null)) {
+			final YearMonth endDate = this.buildYearMonth(this.endYear, this.endMonth);
+			this.jobExperience.setEndDate(endDate);
+		}
+		if ((this.startYear != null) && (this.startMonth != null)) {
+			final YearMonth startDate = this.buildYearMonth(this.startYear, this.startMonth);
+			this.jobExperience.setStartDate(startDate);
+		}
 		if (this.isNewJobExperience()) {
 			this.jobExperienceService.insert(this.jobExperience);
 		}
@@ -68,11 +115,27 @@ public class JobExperienceDialogBean extends AbstractDialogBean {
 		this.curriculumService = curriculumService;
 	}
 
+	public void setEndMonth(final Integer endMonth) {
+		this.endMonth = endMonth;
+	}
+
+	public void setEndYear(final Integer endYear) {
+		this.endYear = endYear;
+	}
+
 	public void setJobExperience(final JobExperience jobExperience) {
 		this.jobExperience = jobExperience;
 	}
 
 	public void setJobExperienceService(final JobExperienceService jobExperienceService) {
 		this.jobExperienceService = jobExperienceService;
+	}
+
+	public void setStartMonth(final Integer startMonth) {
+		this.startMonth = startMonth;
+	}
+
+	public void setStartYear(final Integer startYear) {
+		this.startYear = startYear;
 	}
 }

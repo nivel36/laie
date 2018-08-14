@@ -33,15 +33,25 @@
 									<h4>#{jobExperience.companyName}</h4>
 									<h4>
 										<h:panelGroup>
-											<h:outputText value="#{jobExperience.startMonth}" />/<h:outputText value="#{jobExperience.startYear}" />
+											<h:outputText value="#{jobExperience.startDate}">
+												<f:convertDateTime type="localDate" pattern="MM / yyyy" />
+											</h:outputText>
 										</h:panelGroup>
 										-
 										<h:panelGroup rendered="#{not jobExperience.stillWorking}">
-											<h:outputText value="#{jobExperience.endMonth}" />/<h:outputText value="#{jobExperience.endYear}" />
+											<h:outputText value="#{jobExperience.endDate}" />
 										</h:panelGroup>
 
 										<h:outputText value="#{i18n['job_experience.still_working']}" rendered="#{jobExperience.stillWorking}" />
-										(#{jobExperience.yearsWorked} #{jobExperience.yearsWorked > 1 ? i18n['job.years']:i18n['job.year']} - #{jobExperience.monthsWorked} #{jobExperience.monthsWorked>1 ? i18n['job.months']:i18n['job.month']})
+										(
+										<h:panelGroup rendered="#{(jobExperience.monthsWorked - jobExperience.monthsWorked%12)/12 gt 0}">
+											<h:outputText value="#{(jobExperience.monthsWorked - jobExperience.monthsWorked%12)/12}">
+												<f:convertNumber maxFractionDigits="0" />
+											</h:outputText> #{(jobExperience.monthsWorked - jobExperience.monthsWorked%12)/12 gt 1 ? i18n['date.years'] : i18n['date.year']} </h:panelGroup>
+										<h:panelGroup rendered="#{jobExperience.monthsWorked%12 gt 0}" >
+											<h:outputText value="#{jobExperience.monthsWorked%12}" /> #{jobExperience.monthsWorked%12 gt 1 ? i18n['date.months'] : i18n['date.month']}
+										</h:panelGroup>
+										)
 									</h4>
 
 									<h:outputText value="#{jobExperience.description}" escape="false" styleClass="jobDescription" />

@@ -17,7 +17,7 @@ insert into JOBCANDIDATURESTATE( id, version, name, description ) values ( 131, 
 
 insert into CURRICULUM( id, version, deleted ) values (301, 0,  false);
 
-insert into EDUCATION( id, version, curriculumId, degree, description,  fromDate, school, stillStudying, toDate, deleted) values( 401, 0, 301, 'Licenciado en Matemáticas', 'Licenciado en Matemáticas por la universidad de Barcelona',  DATE '2000-10-01', 'Universitat de Barcelona', false, DATE '2012-12-01', false);
+insert into EDUCATION( id, version, curriculumId, degree, description,  fromDate, school, stillStudying, toDate, deleted) values( 401, 0, 301, 'Licenciado en Matemáticas', 'Licenciado en Matemáticas por la universidad de Barcelona',  null, 'Universitat de Barcelona', false, null, false);
 insert into EDUCATION( id, version, curriculumId, degree, description,  fromDate, school, stillStudying, toDate, deleted) values( 402, 0, 301, 'Bachillerato', null,  DATE '1988-10-01', 'IES Thalassa', false, DATE '1996-06-01', false);
 
 insert into LANGUAGE( id, version, curriculumId, languageName, read, speak, write, deleted ) values( 501, 0, 301, 'Castellano', 'native', 'native', 'native', false );
@@ -34,7 +34,7 @@ insert into SKILL( id, version, curriculumId, name, level, deleted ) values( 607
 insert into SKILL( id, version, curriculumId, name, level, deleted ) values( 608, 0, 301, 'HTML5', 'high', false);
 insert into SKILL( id, version, curriculumId, name, level, deleted ) values( 609, 0, 301, 'Javascript', 'high', false);
 
-insert into JOBEXPERIENCE( id, version, curriculumId, companyName, description, startYear, startMonth, jobPosition, stillWorking, endYear, endMonth) values (701, 0, 301, 'Alten', 'Desarrollo de la herramienta para Gas Natural Fenosa con el que se dará cobertura a todas las actividades asociadas al proceso de expansión de la red y provisión de servicio en todos los ámbitos geográficos donde el grupo Gas Natural Fenosa (GNF) desarrolla sus negocios de distribución de gas natural y electricidad. Puesto de Arquitecto JEE desarrollando las siguientes tareas:' , 2010, 11, 'Arquitecto JAVA', true, null, null);
+insert into JOBEXPERIENCE( id, version, curriculumId, companyName, description, startDate, jobPosition, stillWorking, endDate) values (701, 0, 301, 'Alten', 'Desarrollo de la herramienta para Gas Natural Fenosa con el que se dará cobertura a todas las actividades asociadas al proceso de expansión de la red y provisión de servicio en todos los ámbitos geográficos donde el grupo Gas Natural Fenosa (GNF) desarrolla sus negocios de distribución de gas natural y electricidad. Puesto de Arquitecto JEE desarrollando las siguientes tareas:' , CAST('aced00057372000d6a6176612e74696d652e536572955d84ba1b2248b20c0000787077060c000007da0378' AS VARBINARY(255)) , 'Arquitecto JAVA', true, null );
 
 insert into I18NSTRING( id, version, locale, key, text ) values( 800, 0, 'es', 'all_day', 'Jornada completa' );
 insert into I18NSTRING( id, version, locale, key, text ) values( 801, 0, 'ca', 'all_day', 'Jornada completa' );
