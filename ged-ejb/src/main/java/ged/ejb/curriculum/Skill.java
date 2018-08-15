@@ -29,6 +29,7 @@ public class Skill extends AbstractAuditedEntity {
 	private String name;
 
 	
+	@Override
 	public boolean equals(final Object obj) {
 		if (this == obj) {
 			return true;
@@ -56,6 +57,7 @@ public class Skill extends AbstractAuditedEntity {
 	}
 
 	
+	@Override
 	public int hashCode() {
 		return Objects.hash(level, name);
 	}
@@ -73,6 +75,7 @@ public class Skill extends AbstractAuditedEntity {
 	}
 
 	
+	@Override
 	public String toString() {
 		return "Skill [level=" + this.level + ", name=" + this.name + "]";
 	}

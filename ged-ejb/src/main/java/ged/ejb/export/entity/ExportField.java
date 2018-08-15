@@ -88,11 +88,13 @@ public class ExportField extends AbstractEntity {
 	}
 	
 	
+	@Override
 	public int hashCode() {
 		return Objects.hash(this.export, this.fieldName);
 	}
 
 	
+	@Override
 	public boolean equals(Object obj) {
 		if (obj == null) {
 			return false;

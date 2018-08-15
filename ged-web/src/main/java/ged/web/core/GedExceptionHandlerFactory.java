@@ -10,6 +10,7 @@ public class GedExceptionHandlerFactory extends ExceptionHandlerFactory {
 	}
 
 	
+	@Override
 	public ExceptionHandler getExceptionHandler() {
 		return new GedExceptionHandler(this.getWrapped().getExceptionHandler());
 	}

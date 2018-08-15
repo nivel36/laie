@@ -53,11 +53,13 @@ public class Export extends AbstractEntity {
 	}
 	
 	
+	@Override
 	public int hashCode() {
 		return Objects.hash(this.exportName);
 	}
 	
 	
+	@Override
 	public boolean equals(final Object obj) {
 		if (obj == null) {
 			return false;

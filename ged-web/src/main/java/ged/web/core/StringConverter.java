@@ -14,11 +14,13 @@ import javax.faces.convert.FacesConverter;
 public class StringConverter implements Converter<String> {
 
 	
+	@Override
 	public String getAsObject(final FacesContext context, final UIComponent component, final String value) {
 		return value;
 	}
 
 	
+	@Override
 	public String getAsString(final FacesContext context, final UIComponent component, final String value) {
 		return value;
 	}

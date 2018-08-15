@@ -63,11 +63,13 @@ public class CandidateDao extends AbstractDao<Candidate> {
 	}
 
 	
+	@Override
 	public Class<Candidate> getType() {
 		return Candidate.class;
 	}
 
 	
+	@Override
 	public List<Candidate> search(final String searchText) {
 		return this.getPersistenceFacade().search(Candidate.class, searchText, "name", "surname", "jobProfile", "tags.label");
 	}

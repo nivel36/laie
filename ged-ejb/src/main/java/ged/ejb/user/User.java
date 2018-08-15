@@ -105,6 +105,7 @@ public class User extends AbstractAuditedEntity {
 	}
 
 	
+	@Override
 	public boolean equals(final Object obj) {
 		if (obj == null) {
 			return false;
@@ -188,6 +189,7 @@ public class User extends AbstractAuditedEntity {
 	}
 
 	
+	@Override
 	public int hashCode() {
 		return Objects.hash(this.email);
 	}
@@ -283,6 +285,7 @@ public class User extends AbstractAuditedEntity {
 	}
 
 	
+	@Override
 	public String toString() {
 		return this.getFullName();
 	}

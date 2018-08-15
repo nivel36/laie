@@ -44,6 +44,7 @@ public class ClientDao extends AbstractDao<Client> {
 		return Client.class;
 	}
 
+	@Override
 	public List<Client> search(final String searchText) {
 		return this.getPersistenceFacade().search(Client.class, searchText, "name");
 	}

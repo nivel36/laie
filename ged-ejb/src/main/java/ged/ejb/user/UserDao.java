@@ -152,6 +152,7 @@ public final class UserDao extends AbstractDao<User> {
 		return this.findByQuery(Long.class, "User.numberOfUsersOnline", this.mapDates(start, end));
 	}
 
+	@Override
 	public List<User> search(final String searchText) {
 		return this.getPersistenceFacade().search(User.class, searchText, "name", "surname", "email");
 	}

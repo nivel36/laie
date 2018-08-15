@@ -38,6 +38,7 @@ public class Language extends AbstractAuditedEntity {
 	private String write;
 
 	
+	@Override
 	public boolean equals(final Object obj) {
 		if (this == obj) {
 			return true;
@@ -74,6 +75,7 @@ public class Language extends AbstractAuditedEntity {
 	}
 
 	
+	@Override
 	public int hashCode() {
 		return Objects.hash(languageName, read, speak, write);
 	}
@@ -99,6 +101,7 @@ public class Language extends AbstractAuditedEntity {
 	}
 
 	
+	@Override
 	public String toString() {
 		return "Language [languageName=" + this.languageName + ", speak=" + this.speak + ", write=" + this.write
 				+ ", read=" + this.read + "]";

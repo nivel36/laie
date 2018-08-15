@@ -28,6 +28,7 @@ public class GedExceptionHandler extends ExceptionHandlerWrapper {
 	}
 
 	
+	@Override
 	public Throwable getRootCause(final Throwable exception) {
 		if (exception.getCause() == null) {
 			return exception;
@@ -48,6 +49,7 @@ public class GedExceptionHandler extends ExceptionHandlerWrapper {
 	}
 
 	
+	@Override
 	public void handle() {
 		final ExceptionQueuedEvent event = this.getRootEvent();
 		if (event != null) {

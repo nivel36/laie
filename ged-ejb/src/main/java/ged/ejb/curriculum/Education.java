@@ -39,6 +39,7 @@ public class Education extends AbstractAuditedEntity {
 	private LocalDate toDate;
 
 	
+	@Override
 	public boolean equals(final Object obj) {
 		if (this == obj) {
 			return true;
@@ -84,6 +85,7 @@ public class Education extends AbstractAuditedEntity {
 	}
 
 	
+	@Override
 	public int hashCode() {
 		return Objects.hash(this.degree, this.description, this.fromDate, this.stillStudying, this.toDate);
 	}
@@ -117,6 +119,7 @@ public class Education extends AbstractAuditedEntity {
 	}
 
 	
+	@Override
 	public String toString() {
 		return "Education [degree=" + this.degree + ", description=" + this.description + ", fromDate=" + this.fromDate + ", school="
 				+ this.school + ", stillStudying=" + this.stillStudying + ", toDate=" + this.toDate + "]";

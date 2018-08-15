@@ -48,6 +48,7 @@ public class Contact extends AbstractAuditedEntity {
 	private String surname;
 
 	
+	@Override
 	public boolean equals(final Object obj) {
 		if (this == obj) {
 			return true;
@@ -95,6 +96,7 @@ public class Contact extends AbstractAuditedEntity {
 	}
 
 	
+	@Override
 	public int hashCode() {
 		return Objects.hash(this.email);
 	}
@@ -128,6 +130,7 @@ public class Contact extends AbstractAuditedEntity {
 	}
 
 	
+	@Override
 	public String toString() {
 		return this.getFullName();
 	}

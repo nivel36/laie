@@ -23,6 +23,7 @@ public class ExportDao extends AbstractDao<Export> {
 		return Export.class;
 	}
 
+	@Override
 	public List<Export> search(final String searchText) {
 		throw new UnsupportedOperationException();
 	}

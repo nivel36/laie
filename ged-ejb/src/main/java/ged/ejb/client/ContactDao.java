@@ -21,6 +21,7 @@ public class ContactDao extends AbstractDao<Contact> {
 		return Contact.class;
 	}
 
+	@Override
 	public List<Contact> search(final String searchText) {
 		Objects.requireNonNull(searchText);
 		return this.getPersistenceFacade().search(Contact.class, searchText, "name", "email");

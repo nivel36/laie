@@ -28,6 +28,7 @@ public class CurriculumDao extends AbstractDao<Curriculum> {
 		return Curriculum.class;
 	}
 
+	@Override
 	public List<Curriculum> search(final String searchText) {
 		throw new UnsupportedOperationException();
 	}
