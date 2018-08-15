@@ -35,7 +35,7 @@ public class Address implements Serializable {
 	@Column(length = 5)
 	private String zipCode;
 
-	@Override
+	
 	public boolean equals(final Object obj) {
 		if (this == obj) {
 			return true;
@@ -85,7 +85,7 @@ public class Address implements Serializable {
 		return this.zipCode;
 	}
 
-	@Override
+	
 	public int hashCode() {
 		return Objects.hash(this.city, this.country, this.door, this.number, this.state, this.storey, this.street,
 				this.zipCode);
@@ -127,7 +127,7 @@ public class Address implements Serializable {
 		this.zipCode = zipCode;
 	}
 
-	@Override
+	
 	public String toString() {
 		final String eol = System.getProperty("line.separator");
 		final StringBuilder sb = new StringBuilder();

@@ -23,7 +23,7 @@ import ged.ejb.job.offer.JobOffer;
 @RunWith(MockitoJUnitRunner.class)
 public class CandidateDaoJpaTest {
 
-	private CandidateDaoJpa candidateDaoJpa;
+	private CandidateDao candidateDaoJpa;
 
 	@Mock
 	private PersistenceFacade persistenceFacade;
@@ -99,7 +99,7 @@ public class CandidateDaoJpaTest {
 
 	@Before
 	public void setUp() {
-		this.candidateDaoJpa = new CandidateDaoJpa();
+		this.candidateDaoJpa = new CandidateDao();
 		this.candidateDaoJpa.setPersistenceFacade(this.persistenceFacade);
 	}
 }

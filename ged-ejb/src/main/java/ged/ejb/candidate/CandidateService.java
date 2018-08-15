@@ -1,31 +1,156 @@
 package ged.ejb.candidate;
 
+import java.lang.invoke.MethodHandles;
 import java.util.List;
+import java.util.Objects;
 
-import ged.ejb.core.AuditedService;
+import javax.ejb.Stateless;
+import javax.inject.Inject;
+import javax.validation.ValidationException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import ged.ejb.core.AbstractAuditedService;
+import ged.ejb.core.Audited;
+import ged.ejb.core.action.Action.ActionType;
 import ged.ejb.core.file.ServerFile;
+import ged.ejb.core.file.ServerFileDao;
+import ged.ejb.core.model.AbstractDao;
+import ged.ejb.core.model.Repository;
 import ged.ejb.job.offer.JobCandidature;
+import ged.ejb.job.offer.JobCandidatureDao;
 import ged.ejb.job.offer.JobOffer;
 
-public interface CandidateService extends AuditedService<Candidate> {
+@Stateless
+public class CandidateService extends AbstractAuditedService<Candidate> {
 
-	void addFileToCandidate(Candidate candidate, ServerFile file);
+	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
-	Candidate findAllCandidateDataByCandidateId(long candidateId);
+	@Inject
+	@Repository
+	private CandidateDao candidateDao;
 
-	List<Candidate> findCandidatesByJobOffer(JobOffer jobOffer);
+	@Inject
+	@Repository
+	private JobCandidatureDao jobCandidatureDao;
 
-	ServerFile findFileByFileId(long fileId);
+	@Inject
+	@Repository
+	private ServerFileDao serverFileDao;
 
-	List<ServerFile> findFilesByCandidate(Candidate candidate);
+	public void addFileToCandidate(final Candidate candidate, final ServerFile file) {
+		Objects.requireNonNull(file);
+		Objects.requireNonNull(candidate);
+		logger.debug("Adding file {} to candidate  {}", file, candidate);
+		file.setCandidate(candidate);
+		this.serverFileDao.insert(file);
+	}
 
-	List<JobCandidature> findJobCandidaturesByCandidate(Candidate candidate);
+	public Candidate findAllCandidateDataByCandidateId(final long candidateId) {
+		if (candidateId < 1) {
+			logger.error("Bad candidate id {}", candidateId);
+			throw new IllegalArgumentException("Bad candidate id: " + candidateId);
+		}
+		logger.debug("Find all candidate data with id {}", candidateId);
+		return this.candidateDao.findAllCandidateDataById(candidateId);
+	}
 
-	List<Candidate> findLastAddedCandidates(int numberOfCandidates);
+	public List<Candidate> findCandidatesByJobOffer(final JobOffer jobOffer) {
+		Objects.requireNonNull(jobOffer);
+		logger.debug("Find candidates by jobOffer {} ", jobOffer);
+		return this.candidateDao.findCandidatesByJobOffer(jobOffer);
+	}
 
-	long findNumberOfCandidates();
+	public ServerFile findFileByFileId(final long fileId) {
+		if (fileId < 1) {
+			logger.error("Bad file id {}", fileId);
+			throw new IllegalArgumentException("Bad file id: " + fileId);
+		}
+		logger.debug("Find file by id {}", fileId);
+		return this.serverFileDao.find(fileId);
+	}
 
-	void removeFile(ServerFile file);
+	public List<ServerFile> findFilesByCandidate(final Candidate candidate) {
+		Objects.requireNonNull(candidate);
+		logger.debug("Find files by candidate {}", candidate);
+		return this.serverFileDao.findByCandidate(candidate);
+	}
 
-	ServerFile updateFile(ServerFile file);
+	public List<JobCandidature> findJobCandidaturesByCandidate(final Candidate candidate) {
+		Objects.requireNonNull(candidate);
+		logger.debug("Find job candidatures by candidate {}", candidate);
+		return this.jobCandidatureDao.findByCandidate(candidate);
+	}
+
+	public List<Candidate> findLastAddedCandidates(final int numberOfCandidates) {
+		if (numberOfCandidates < 1) {
+			throw new IllegalArgumentException("numberOfCandidates: " + numberOfCandidates);
+		}
+		logger.debug("Find last added candidates");
+		return this.candidateDao.findLastAddedCandidates(numberOfCandidates);
+	}
+
+	public long findNumberOfCandidates() {
+		logger.debug("Find total number of candidates");
+		return this.candidateDao.findNumberOfCandidates();
+	}
+
+	@Override
+	public AbstractDao<Candidate> getDao() {
+		return this.candidateDao;
+	}
+
+	@Override
+	@Audited(action = ActionType.INSERT)
+	public void insert(final Candidate candidate) {
+		Objects.requireNonNull(candidate);
+		logger.debug("Insert candidate {}", candidate);
+		if (this.candidateDao.emailExists(candidate.getEmail())) {
+			logger.warn("The email {} is in use", candidate.getEmail());
+			throw new ValidationException("email");
+		}
+		this.candidateDao.insert(candidate);
+	}
+
+	private boolean isDuplicatedEmail(final Candidate candidate, final Candidate candidateInRepository) {
+		return !candidate.getEmail().equals(candidateInRepository.getEmail()) && this.candidateDao.emailExists(candidate.getEmail());
+	}
+
+	public void removeFile(final ServerFile file) {
+		Objects.requireNonNull(file);
+		logger.debug("Removing file {}", file);
+		this.serverFileDao.delete(file);
+	}
+
+	public void setCandidateDao(final CandidateDao candidateDao) {
+		this.candidateDao = candidateDao;
+	}
+
+	public void setJobCandidatureDao(final JobCandidatureDao jobCandidatureDao) {
+		this.jobCandidatureDao = jobCandidatureDao;
+	}
+
+	public void setServerFileDao(final ServerFileDao serverFileDao) {
+		this.serverFileDao = serverFileDao;
+	}
+
+	@Override
+	@Audited(action = ActionType.UPDATE)
+	public Candidate update(final Candidate candidate) {
+		Objects.requireNonNull(candidate);
+		logger.debug("Update candidate {}", candidate);
+		final Candidate candidateInRepository = this.candidateDao.find(candidate.getId());
+		if (this.isDuplicatedEmail(candidate, candidateInRepository)) {
+			logger.warn("The email {} is in use", candidate.getEmail());
+			throw new ValidationException("Email duplicated");
+		}
+		return this.candidateDao.update(candidate);
+	}
+
+	public ServerFile updateFile(final ServerFile file) {
+		Objects.requireNonNull(file);
+		logger.debug("Update file {}", file);
+		return this.serverFileDao.update(file);
+	}
 }

@@ -36,7 +36,7 @@ public class DefaultExceptionHandler extends AbstractExceptionMapper implements 
 		return builder.build();
 	}
 
-	@Override
+	
 	public Response toResponse(final Exception e) {
 		Response response;
 		if (e instanceof ConstraintViolationException) {

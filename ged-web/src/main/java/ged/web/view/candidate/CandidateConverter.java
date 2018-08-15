@@ -5,7 +5,7 @@ import javax.inject.Inject;
 
 import ged.ejb.candidate.Candidate;
 import ged.ejb.candidate.CandidateService;
-import ged.ejb.core.Service;
+import ged.ejb.core.AbstractService;
 import ged.web.core.view.AbstractConverter;
 
 @FacesConverter(managed = true, forClass = Candidate.class)
@@ -15,7 +15,7 @@ public class CandidateConverter extends AbstractConverter<Candidate> {
 	private CandidateService candidateService;
 
 	@Override
-	protected Service<Candidate> getService() {
+	protected AbstractService<Candidate> getService() {
 		return this.candidateService;
 	}
 

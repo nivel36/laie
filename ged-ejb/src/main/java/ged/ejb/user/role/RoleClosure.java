@@ -23,7 +23,7 @@ public class RoleClosure extends AbstractEntity {
 
 	private int pathLength;
 
-	@Override
+	
 	public boolean equals(final Object obj) {
 		if (this == obj) {
 			return true;
@@ -51,7 +51,7 @@ public class RoleClosure extends AbstractEntity {
 		return this.pathLength;
 	}
 
-	@Override
+	
 	public int hashCode() {
 		return Objects.hash(this.antecessor, this.descendant, this.pathLength);
 	}

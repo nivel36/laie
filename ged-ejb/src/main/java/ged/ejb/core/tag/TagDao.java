@@ -1,7 +1,19 @@
 package ged.ejb.core.tag;
 
-import ged.ejb.core.model.Dao;
+import java.util.List;
 
-public interface TagDao extends Dao<Tag> {
+import ged.ejb.core.model.AbstractDao;
+import ged.ejb.core.model.Repository;
 
+@Repository
+public class TagDao extends AbstractDao<Tag> {
+
+	@Override
+	protected Class<Tag> getType() {
+		return Tag.class;
+	}
+
+	public final List<Tag> search(final String searchText) {
+		return this.getPersistenceFacade().search(Tag.class, searchText, "label");
+	}
 }

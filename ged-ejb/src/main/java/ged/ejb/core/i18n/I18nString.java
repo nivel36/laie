@@ -52,12 +52,12 @@ public class I18nString extends AbstractEntity {
 		this.text = text;
 	}
 
-	@Override
+	
 	public int hashCode() {
 		return Objects.hash(key, locale);
 	}
 
-	@Override
+	
 	public boolean equals(Object obj) {
 		if ( obj == null ) {
 			return false;
@@ -75,7 +75,7 @@ public class I18nString extends AbstractEntity {
 		return Objects.equals(this.key, other.key) && Objects.equals(this.locale, other.locale);
 	}
 
-	@Override
+	
 	public String toString() {
 		return text;
 	}

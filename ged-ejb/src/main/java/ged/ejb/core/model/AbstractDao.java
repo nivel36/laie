@@ -6,19 +6,17 @@ import java.util.Objects;
 
 import javax.inject.Inject;
 
-public abstract class AbstractDaoJpa<T extends AbstractEntity> implements Dao<T> {
+public abstract class AbstractDao<T extends AbstractEntity> {
 
 	@Inject
 	@Repository
 	private PersistenceFacade persistenceFacade;
 
-	@Override
 	public void delete(final T entity) {
 		Objects.requireNonNull(entity);
 		this.persistenceFacade.delete(this.getType(), entity);
 	}
 
-	@Override
 	public T find(final long id) {
 		if (id <= 0) {
 			throw new IllegalArgumentException("id: " + id);
@@ -26,7 +24,6 @@ public abstract class AbstractDaoJpa<T extends AbstractEntity> implements Dao<T>
 		return this.persistenceFacade.find(this.getType(), id);
 	}
 
-	@Override
 	public List<T> findAll() {
 		return this.persistenceFacade.findAll(this.getType());
 	}
@@ -42,20 +39,18 @@ public abstract class AbstractDaoJpa<T extends AbstractEntity> implements Dao<T>
 		return this.persistenceFacade.findByQuery(entityClass, namedQuery, null);
 	}
 
-	protected <E> List<E> findByQuery(final Class<E> entityClass, final String namedQuery, final Integer pageSize,
-			final Integer pageNum) {
+	protected <E> List<E> findByQuery(final Class<E> entityClass, final String namedQuery, final Integer pageSize, final Integer pageNum) {
 		return this.findByQuery(entityClass, namedQuery, null, pageSize, pageNum);
 	}
 
-	protected <E> E findByQuery(final Class<E> entityClass, final String namedQuery,
-			final Map<String, Object> parameters) {
+	protected <E> E findByQuery(final Class<E> entityClass, final String namedQuery, final Map<String, Object> parameters) {
 		Objects.requireNonNull(entityClass);
 		Objects.requireNonNull(namedQuery);
 		return this.persistenceFacade.findByQuery(entityClass, namedQuery, parameters);
 	}
 
-	protected <E> List<E> findByQuery(final Class<E> entityClass, final String namedQuery,
-			final Map<String, Object> parameters, final Integer pageSize, final Integer pageNum) {
+	protected <E> List<E> findByQuery(final Class<E> entityClass, final String namedQuery, final Map<String, Object> parameters, final Integer pageSize,
+			final Integer pageNum) {
 		Objects.requireNonNull(entityClass);
 		Objects.requireNonNull(namedQuery);
 		return this.persistenceFacade.findByQuery(entityClass, namedQuery, parameters, pageSize, pageNum);
@@ -76,18 +71,18 @@ public abstract class AbstractDaoJpa<T extends AbstractEntity> implements Dao<T>
 
 	protected abstract Class<T> getType();
 
-	@Override
 	public void insert(final T entity) {
 		Objects.requireNonNull(entity);
 		this.persistenceFacade.insert(entity);
 	}
+
+	public abstract List<T> search(final String searchText);
 
 	public void setPersistenceFacade(final PersistenceFacade persistenceFacade) {
 		Objects.requireNonNull(persistenceFacade);
 		this.persistenceFacade = persistenceFacade;
 	}
 
-	@Override
 	public T update(final T entity) {
 		Objects.requireNonNull(entity);
 		return this.persistenceFacade.update(entity);

@@ -106,7 +106,7 @@ public class Candidate extends AbstractAuditedEntity implements Ownerable {
 	@IndexedEmbedded
 	private Set<Tag> tags = new HashSet<>();
 
-	@Override
+	
 	public boolean equals(final Object obj) {
 		if (obj == null) {
 			return false;
@@ -177,7 +177,7 @@ public class Candidate extends AbstractAuditedEntity implements Ownerable {
 		return this.name;
 	}
 
-	@Override
+	
 	public User getOwner() {
 		return this.owner;
 	}
@@ -206,7 +206,7 @@ public class Candidate extends AbstractAuditedEntity implements Ownerable {
 		return this.tags;
 	}
 
-	@Override
+	
 	public int hashCode() {
 		return Objects.hash(this.email, this.name, this.phoneNumber, this.surname);
 	}
@@ -259,7 +259,7 @@ public class Candidate extends AbstractAuditedEntity implements Ownerable {
 		this.name = name;
 	}
 
-	@Override
+	
 	public void setOwner(final User owner) {
 		this.owner = owner;
 	}
@@ -288,7 +288,7 @@ public class Candidate extends AbstractAuditedEntity implements Ownerable {
 		this.tags = tags;
 	}
 
-	@Override
+	
 	public String toString() {
 		return this.getFullName();
 	}

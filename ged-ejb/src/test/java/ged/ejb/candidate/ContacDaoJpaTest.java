@@ -15,13 +15,13 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import ged.ejb.client.Contact;
-import ged.ejb.client.ContactDaoJpa;
+import ged.ejb.client.ContactDao;
 import ged.ejb.core.model.PersistenceFacade;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ContacDaoJpaTest {
 
-	private ContactDaoJpa contactDaoJpa;
+	private ContactDao contactDaoJpa;
 
 	@Mock
 	private PersistenceFacade persistenceFacade;
@@ -50,7 +50,7 @@ public class ContacDaoJpaTest {
 
 	@Before
 	public void setUp() {
-		this.contactDaoJpa = new ContactDaoJpa();
+		this.contactDaoJpa = new ContactDao();
 		this.contactDaoJpa.setPersistenceFacade(this.persistenceFacade);
 	}
 

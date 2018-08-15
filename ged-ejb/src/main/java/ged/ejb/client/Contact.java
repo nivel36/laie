@@ -47,7 +47,7 @@ public class Contact extends AbstractAuditedEntity {
 	@Field
 	private String surname;
 
-	@Override
+	
 	public boolean equals(final Object obj) {
 		if (this == obj) {
 			return true;
@@ -94,7 +94,7 @@ public class Contact extends AbstractAuditedEntity {
 		return this.surname;
 	}
 
-	@Override
+	
 	public int hashCode() {
 		return Objects.hash(this.email);
 	}
@@ -127,7 +127,7 @@ public class Contact extends AbstractAuditedEntity {
 		this.surname = surname;
 	}
 
-	@Override
+	
 	public String toString() {
 		return this.getFullName();
 	}

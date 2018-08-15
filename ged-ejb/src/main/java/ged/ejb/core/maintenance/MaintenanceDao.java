@@ -1,7 +1,19 @@
 package ged.ejb.core.maintenance;
 
-import ged.ejb.core.model.Dao;
+import java.util.List;
 
-public interface MaintenanceDao extends Dao<AbstractEnumEntity> {
+import ged.ejb.core.model.AbstractDao;
+import ged.ejb.core.model.Repository;
 
+@Repository
+public class MaintenanceDao extends AbstractDao<AbstractEnumEntity> {
+
+	@Override
+	public Class<AbstractEnumEntity> getType() {
+		return AbstractEnumEntity.class;
+	}
+
+	public List<AbstractEnumEntity> search(final String searchText) {
+		throw new UnsupportedOperationException();
+	}
 }

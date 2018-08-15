@@ -19,7 +19,7 @@ public class ImageServlet extends FileServlet {
 	@ConfigurationProperty("image.directory")
 	private String folderPath;
 
-	@Override
+	
 	protected File getFile(final HttpServletRequest request) {
 		final String pathInfo = request.getPathInfo();
 		if ((pathInfo == null) || pathInfo.isEmpty() || "/".equals(pathInfo)) {

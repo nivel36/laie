@@ -22,7 +22,7 @@ public class UserMapper implements AbstractMapper<User, UserDto> {
 		this.roleService = roleService;
 	}
 
-	@Override
+	
 	public User mapDto(final UserDto userDto) {
 		if (userDto == null) {
 			return null;
@@ -47,7 +47,7 @@ public class UserMapper implements AbstractMapper<User, UserDto> {
 		return user;
 	}
 
-	@Override
+	
 	public UserDto mapEntity(final User user) {
 		if (user == null) {
 			return null;

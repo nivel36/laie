@@ -36,7 +36,7 @@ public class UserDto implements Dto {
 	@NotNull
 	private String surname;
 
-	@Override
+	
 	public boolean equals(final Object obj) {
 		if (this == obj) {
 			return true;
@@ -98,7 +98,7 @@ public class UserDto implements Dto {
 		return this.surname;
 	}
 
-	@Override
+	
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;

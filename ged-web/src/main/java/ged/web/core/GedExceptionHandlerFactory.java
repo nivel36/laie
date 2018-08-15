@@ -9,7 +9,7 @@ public class GedExceptionHandlerFactory extends ExceptionHandlerFactory {
 		super(parent);
 	}
 
-	@Override
+	
 	public ExceptionHandler getExceptionHandler() {
 		return new GedExceptionHandler(this.getWrapped().getExceptionHandler());
 	}

@@ -3,7 +3,7 @@ package ged.web.view.user;
 import javax.faces.convert.FacesConverter;
 import javax.inject.Inject;
 
-import ged.ejb.core.Service;
+import ged.ejb.core.AbstractService;
 import ged.ejb.user.role.Role;
 import ged.ejb.user.role.RoleService;
 import ged.web.core.view.AbstractConverter;
@@ -15,7 +15,7 @@ public class RoleConverter extends AbstractConverter<Role> {
 	private RoleService roleService;
 
 	@Override
-	protected Service<Role> getService() {
+	protected AbstractService<Role> getService() {
 		return this.roleService;
 	}
 

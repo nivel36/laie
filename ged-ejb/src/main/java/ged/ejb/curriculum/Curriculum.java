@@ -54,7 +54,7 @@ public class Curriculum extends AbstractAuditedEntity {
 		this.skills.add(skill);
 	}
 
-	@Override
+	
 	public boolean equals(final Object obj) {
 		if (this == obj) {
 			return true;
@@ -105,7 +105,7 @@ public class Curriculum extends AbstractAuditedEntity {
 		return this.skills.size();
 	}
 
-	@Override
+	
 	public int hashCode() {
 		return Objects.hash(this.candidate);
 	}
@@ -146,7 +146,7 @@ public class Curriculum extends AbstractAuditedEntity {
 		this.skills = skills;
 	}
 
-	@Override
+	
 	public String toString() {
 		return "Curriculum [education=" + this.education + ", jobExperiences=" + this.jobExperiences + ", languages=" + this.languages + ", skills="
 				+ this.skills + "]";

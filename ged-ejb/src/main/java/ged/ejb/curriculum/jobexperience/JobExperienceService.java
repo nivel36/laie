@@ -1,12 +1,60 @@
 package ged.ejb.curriculum.jobexperience;
 
 import java.util.List;
+import java.util.Objects;
 
-import ged.ejb.core.Service;
+import javax.ejb.Stateless;
+import javax.inject.Inject;
+
+import ged.ejb.core.AbstractService;
+import ged.ejb.core.model.AbstractDao;
+import ged.ejb.core.model.Repository;
 import ged.ejb.curriculum.Curriculum;
 
-public interface JobExperienceService extends Service<JobExperience> {
+@Stateless
+public class JobExperienceService extends AbstractService<JobExperience> {
 
-	List<JobExperience> findByCurriculum(Curriculum curriculum);
+	@Inject
+	@Repository
+	private JobExperienceDao jobExperienceDao;
 
+	public List<JobExperience> findByCurriculum(final Curriculum curriculum) {
+		Objects.requireNonNull(curriculum);
+		return this.jobExperienceDao.findByCurriculum(curriculum);
+	}
+
+	@Override
+	protected AbstractDao<JobExperience> getDao() {
+		return this.jobExperienceDao;
+	}
+
+	@Override
+	public void insert(final JobExperience jobExperience) {
+		Objects.requireNonNull(jobExperience);
+		this.validateDates(jobExperience);
+		super.insert(jobExperience);
+	}
+
+	public void setJobExperienceDao(final JobExperienceDao jobExperienceDao) {
+		this.jobExperienceDao = jobExperienceDao;
+	}
+
+	@Override
+	public JobExperience update(final JobExperience jobExperience) {
+		Objects.requireNonNull(jobExperience);
+		this.validateDates(jobExperience);
+		return super.update(jobExperience);
+	}
+
+	private void validateDates(final JobExperience jobExperience) {
+		if (jobExperience.getStartDate() == null) {
+			throw new IllegalStateException("Start date is null");
+		}
+		if ((jobExperience.getEndDate() == null) && !jobExperience.isStillWorking()) {
+			throw new IllegalStateException("End date is null");
+		}
+		if (jobExperience.getEndDate().isBefore(jobExperience.getStartDate())) {
+			throw new IllegalStateException("End date cannot be beofere start date");
+		}
+	}
 }

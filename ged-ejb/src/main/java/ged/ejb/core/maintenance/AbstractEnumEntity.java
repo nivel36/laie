@@ -21,7 +21,7 @@ public abstract class AbstractEnumEntity extends AbstractEntity implements EnumE
 	@Column(length = 64)
 	private String name;
 
-	@Override
+	
 	public boolean equals(final Object obj) {
 		if (this == obj) {
 			return true;
@@ -36,27 +36,27 @@ public abstract class AbstractEnumEntity extends AbstractEntity implements EnumE
 		return Objects.equals(this.description, other.description) && Objects.equals(this.name, other.name);
 	}
 
-	@Override
+	
 	public String getDescription() {
 		return this.description;
 	}
 
-	@Override
+	
 	public String getName() {
 		return this.name;
 	}
 
-	@Override
+	
 	public int hashCode() {
 		return Objects.hash(this.description, this.name);
 	}
 
-	@Override
+	
 	public void setDescription(final String description) {
 		this.description = description;
 	}
 
-	@Override
+	
 	public void setName(final String name) {
 		this.name = name;
 	}

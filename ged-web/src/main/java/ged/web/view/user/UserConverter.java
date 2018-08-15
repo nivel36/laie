@@ -3,7 +3,7 @@ package ged.web.view.user;
 import javax.faces.convert.FacesConverter;
 import javax.inject.Inject;
 
-import ged.ejb.core.Service;
+import ged.ejb.core.AbstractService;
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
 import ged.web.core.view.AbstractConverter;
@@ -15,7 +15,7 @@ public class UserConverter extends AbstractConverter<User> {
 	private UserService userService;
 
 	@Override
-	protected Service<User> getService() {
+	protected AbstractService<User> getService() {
 		return this.userService;
 	}
 

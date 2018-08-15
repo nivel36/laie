@@ -28,7 +28,7 @@ public class Role extends AbstractEntity {
 		this.name = roleName;
 	}
 
-	@Override
+	
 	public boolean equals(final Object obj) {
 		if( obj == null ) {
 			return false;
@@ -54,7 +54,7 @@ public class Role extends AbstractEntity {
 		return this.parentRole;
 	}
 
-	@Override
+	
 	public int hashCode() {
 		return Objects.hash(this.name);
 	}
@@ -67,7 +67,7 @@ public class Role extends AbstractEntity {
 		this.parentRole = parentRole;
 	}
 
-	@Override
+	
 	public String toString() {
 		return this.name;
 	}

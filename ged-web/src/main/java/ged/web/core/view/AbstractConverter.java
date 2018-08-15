@@ -5,10 +5,10 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 
-import ged.ejb.core.Service;
-import ged.ejb.core.model.Identificable;
+import ged.ejb.core.AbstractService;
+import ged.ejb.core.model.AbstractEntity;
 
-public abstract class AbstractConverter<T extends Identificable> implements Converter<T> {
+public abstract class AbstractConverter<T extends AbstractEntity> implements Converter<T> {
 
 	@Override
 	public T getAsObject(final FacesContext context, final UIComponent component, final String value) {
@@ -32,5 +32,5 @@ public abstract class AbstractConverter<T extends Identificable> implements Conv
 		return String.valueOf(value.getId());
 	}
 
-	protected abstract Service<T> getService();
+	protected abstract AbstractService<T> getService();
 }

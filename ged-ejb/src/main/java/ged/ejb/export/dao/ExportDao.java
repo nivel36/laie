@@ -1,9 +1,29 @@
 package ged.ejb.export.dao;
 
-import ged.ejb.core.model.Dao;
+import static ged.ejb.core.util.Parameters.map;
+
+import java.util.List;
+import java.util.Objects;
+
+import ged.ejb.core.model.AbstractDao;
+import ged.ejb.core.model.Repository;
 import ged.ejb.export.entity.Export;
+import ged.ejb.export.util.ExportConstants.FindExportByExportName;
 
-public interface ExportDao extends Dao<Export> {
+@Repository
+public class ExportDao extends AbstractDao<Export> {
 
-	Export findByExportName(final String exportName);
+	public Export findByExportName(final String exportName) {
+		Objects.nonNull(exportName);
+		return this.findByQuery(Export.class, FindExportByExportName.QUERY_NAME, map(FindExportByExportName.Params.EXPORT_NAME, exportName));
+	}
+
+	@Override
+	protected Class<Export> getType() {
+		return Export.class;
+	}
+
+	public List<Export> search(final String searchText) {
+		throw new UnsupportedOperationException();
+	}
 }

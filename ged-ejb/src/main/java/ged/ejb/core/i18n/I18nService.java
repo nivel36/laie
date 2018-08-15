@@ -1,8 +1,25 @@
 package ged.ejb.core.i18n;
 
-import ged.ejb.core.Service;
+import javax.ejb.Stateless;
+import javax.inject.Inject;
 
-public interface I18nService extends Service<I18nString> {
+import ged.ejb.core.AbstractService;
+import ged.ejb.core.model.AbstractDao;
+import ged.ejb.core.model.Repository;
 
-	I18nString find(String key, String locale);
+@Stateless
+public class I18nService extends AbstractService<I18nString> {
+
+	@Inject
+	@Repository
+	private I18nDao i18nDao;
+
+	public I18nString find(final String key, final String locale) {
+		return this.i18nDao.find(key, locale);
+	}
+
+	@Override
+	protected AbstractDao<I18nString> getDao() {
+		return this.i18nDao;
+	}
 }

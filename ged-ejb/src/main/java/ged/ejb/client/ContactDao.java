@@ -1,11 +1,28 @@
 package ged.ejb.client;
 
+import static ged.ejb.core.util.Parameters.map;
+
 import java.util.List;
+import java.util.Objects;
 
-import ged.ejb.core.model.Dao;
+import ged.ejb.core.model.AbstractDao;
+import ged.ejb.core.model.Repository;
 
-public interface ContactDao extends Dao<Contact> {
+@Repository
+public class ContactDao extends AbstractDao<Contact> {
 
-	List<Contact> findContactsByClient(Client client);
+	public List<Contact> findContactsByClient(final Client client) {
+		Objects.requireNonNull(client);
+		return this.getPersistenceFacade().findByQuery(Contact.class, "Contact.findByClient", map("client", client), 0, 0);
+	}
 
+	@Override
+	protected Class<Contact> getType() {
+		return Contact.class;
+	}
+
+	public List<Contact> search(final String searchText) {
+		Objects.requireNonNull(searchText);
+		return this.getPersistenceFacade().search(Contact.class, searchText, "name", "email");
+	}
 }

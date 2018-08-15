@@ -22,12 +22,12 @@ public final class ExportViewTargetItem implements ExportViewItemI {
 		this.item = item;
 	}
 	
-	@Override
+	
 	public String getLabel() {
 		return label;
 	}
 
-	@Override
+	
 	public ExportDefinition getItem() {
 		return item;
 	}
@@ -36,7 +36,7 @@ public final class ExportViewTargetItem implements ExportViewItemI {
 		return translator;
 	}
 
-	@Override
+	
 	public String toString() {
 		return "ExportViewTargetItem [label=" + label + "]";
 	}

@@ -55,12 +55,12 @@ public class ExportDefinition extends AbstractEntity {
 		this.sortOrder = sortOrder;
 	}
 	
-	@Override
+	
 	public int hashCode() {
 		return Objects.hash(this.export, this.exportField);
 	}
 	
-	@Override
+	
 	public boolean equals(final Object obj) {
 		if (obj == null) {
 			return false;

@@ -3,7 +3,7 @@ package ged.web.view.candidate;
 import javax.faces.convert.FacesConverter;
 import javax.inject.Inject;
 
-import ged.ejb.core.Service;
+import ged.ejb.core.AbstractService;
 import ged.ejb.core.tag.Tag;
 import ged.ejb.core.tag.TagService;
 import ged.web.core.view.AbstractConverter;
@@ -15,7 +15,7 @@ public class TagConverter extends AbstractConverter<Tag> {
 	private TagService tagService;
 
 	@Override
-	protected Service<Tag> getService() {
+	protected AbstractService<Tag> getService() {
 		return this.tagService;
 	}
 

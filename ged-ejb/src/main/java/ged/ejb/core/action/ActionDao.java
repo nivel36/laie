@@ -1,13 +1,32 @@
 package ged.ejb.core.action;
 
-import java.util.List;
+import static ged.ejb.core.util.Parameters.map;
 
-import ged.ejb.core.model.Dao;
+import java.util.List;
+import java.util.Objects;
+
+import ged.ejb.core.model.AbstractDao;
+import ged.ejb.core.model.Repository;
 import ged.ejb.user.User;
 
-public interface ActionDao extends Dao< Action> {
+@Repository
+public class ActionDao extends AbstractDao<Action> {
 
-	List<Action> findAllByUser(final User user);
-	
-	List<Action> findLastActions();
+	public List<Action> findAllByUser(final User user) {
+		Objects.requireNonNull(user);
+		return this.findByQuery(Action.class, "Action.findAllByUser", map("user", user), 10, 0);
+	}
+
+	public List<Action> findLastActions() {
+		return this.findByQuery(Action.class, "Action.findLastActions", 25, 0);
+	}
+
+	@Override
+	public Class<Action> getType() {
+		return Action.class;
+	}
+
+	public List<Action> search(final String searchText) {
+		throw new UnsupportedOperationException();
+	}
 }

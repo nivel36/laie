@@ -29,7 +29,7 @@ public class UserDaoJpaTest {
 	@Rule
 	public ExpectedException thrown = ExpectedException.none();
 
-	private UserDaoJpa userDaoJpa;
+	private UserDao userDaoJpa;
 
 	@Test
 	public void emailExistNullValueTest() {
@@ -297,7 +297,7 @@ public class UserDaoJpaTest {
 
 	@Before
 	public void setUp() {
-		this.userDaoJpa = new UserDaoJpa();
+		this.userDaoJpa = new UserDao();
 		this.userDaoJpa.setPersistenceFacade(this.persistenceFacade);
 	}
 

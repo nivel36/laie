@@ -58,7 +58,7 @@ public class CandidateDto implements Dto {
 	@NotNull
 	private String surname;
 
-	@Override
+	
 	public boolean equals(final Object obj) {
 		if (this == obj) {
 			return true;
@@ -142,7 +142,7 @@ public class CandidateDto implements Dto {
 		return this.surname;
 	}
 
-	@Override
+	
 	public int hashCode() {
 		return Objects.hash(this.email, this.name, this.phoneNumber, this.surname);
 	}

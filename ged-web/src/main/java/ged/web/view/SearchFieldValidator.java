@@ -29,7 +29,7 @@ public class SearchFieldValidator implements Validator<String> {
 		return bundle.getString(message);
 	}
 
-	@Override
+	
 	public void validate(final FacesContext context, final UIComponent component, final String value) {
 		if ((value != null) && (value.length() < 3)) {
 			logger.warn("Search value is too short");

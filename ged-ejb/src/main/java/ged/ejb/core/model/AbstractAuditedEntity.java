@@ -38,7 +38,7 @@ public abstract class AbstractAuditedEntity extends AbstractEntity implements Au
 	@JoinColumn(name = "userId")
 	private User user;
 
-	@Override
+	
 	public boolean equals(final Object obj) {
 		if (this == obj) {
 			return true;
@@ -52,27 +52,27 @@ public abstract class AbstractAuditedEntity extends AbstractEntity implements Au
 		return super.equals(obj);
 	}
 
-	@Override
+	
 	public User getUser() {
 		return this.user;
 	}
 
-	@Override
+	
 	public int hashCode() {
 		return super.hashCode();
 	}
 
-	@Override
+	
 	public boolean isDeleted() {
 		return this.deleted;
 	}
 
-	@Override
+	
 	public void setDeleted(final boolean deleted) {
 		this.deleted = deleted;
 	}
 
-	@Override
+	
 	public void setUser(final User user) {
 		this.user = user;
 	}

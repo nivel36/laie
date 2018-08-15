@@ -82,7 +82,7 @@ public class JobOffer extends AbstractAuditedEntity implements Ownerable {
 	@NotNull
 	private String state;
 
-	@Override
+	
 	public boolean equals(final Object obj) {
 		if (this == obj) {
 			return true;
@@ -137,7 +137,7 @@ public class JobOffer extends AbstractAuditedEntity implements Ownerable {
 		return this.name;
 	}
 
-	@Override
+	
 	public User getOwner() {
 		return this.owner;
 	}
@@ -154,7 +154,7 @@ public class JobOffer extends AbstractAuditedEntity implements Ownerable {
 		return this.state;
 	}
 
-	@Override
+	
 	public int hashCode() {
 		return Objects.hash(this.dateOpened, this.name, this.places);
 	}
@@ -199,7 +199,7 @@ public class JobOffer extends AbstractAuditedEntity implements Ownerable {
 		this.name = name;
 	}
 
-	@Override
+	
 	public void setOwner(final User owner) {
 		this.owner = owner;
 	}
@@ -216,7 +216,7 @@ public class JobOffer extends AbstractAuditedEntity implements Ownerable {
 		this.state = state;
 	}
 
-	@Override
+	
 	public String toString() {
 		return this.name + "-" + this.client.getName();
 	}

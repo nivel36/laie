@@ -13,12 +13,12 @@ import javax.servlet.http.HttpServletResponse;
 @WebFilter(filterName = "HTML5CorsFilter", urlPatterns = { "/app/*" })
 public class CorsFilter implements javax.servlet.Filter {
 
-	@Override
+	
 	public void destroy() {
 		// do nothing
 	}
 
-	@Override
+	
 	public void doFilter(final ServletRequest request, final ServletResponse response, final FilterChain chain)
 			throws IOException, ServletException {
 		final HttpServletResponse res = (HttpServletResponse) response;
@@ -28,7 +28,7 @@ public class CorsFilter implements javax.servlet.Filter {
 		chain.doFilter(request, response);
 	}
 
-	@Override
+	
 	public void init(final FilterConfig filterConfig) throws ServletException {
 		// do nothing
 	}

@@ -21,81 +21,81 @@ import ged.ejb.job.offer.JobCandidatureDao;
 import ged.ejb.job.offer.JobOffer;
 
 @RunWith(MockitoJUnitRunner.class)
-public class CandidateServiceImplTest {
+public class CandidateServiceTest {
 
 	@Mock
 	private CandidateDao candidateDao;
 
-	private CandidateServiceImpl candidateServiceImpl;
+	private CandidateService candidateService;
 
 	@Mock
 	private JobCandidatureDao jobCandidatureDao;
 
+	@Mock
+	private ServerFileDao serverFileDao;
+
 	@Rule
 	public ExpectedException thrown = ExpectedException.none();
-
-	@Mock
-	private ServerFileDao uploadedServerFileDao;
 
 	@Test
 	public void findAllByJobOfferTest() {
 		final JobOffer jobOffer = new JobOffer();
 		Mockito.when(this.candidateDao.findCandidatesByJobOffer(jobOffer)).thenReturn(new ArrayList<>());
-		final List<Candidate> candidatesFromRepository = this.candidateServiceImpl.findCandidatesByJobOffer(jobOffer);
+		final List<Candidate> candidatesFromRepository = this.candidateService.findCandidatesByJobOffer(jobOffer);
 		Assert.assertEquals(0, candidatesFromRepository.size());
 	}
 
 	@Test
 	public void findAllByNullJobOfferTest() {
 		this.thrown.expect(NullPointerException.class);
-		this.candidateServiceImpl.findCandidatesByJobOffer(null);
+		this.candidateService.findCandidatesByJobOffer(null);
 	}
 
 	@Test
 	public void findCandidateAndFilesByWrongIdTest() {
 		this.thrown.expect(IllegalArgumentException.class);
-		this.candidateServiceImpl.findAllCandidateDataByCandidateId(0);
+		this.candidateService.findAllCandidateDataByCandidateId(0);
 	}
 
 	@Test
 	public void findCandidateAndFilesTest() {
 		final Candidate mockedCandidate = Mockito.mock(Candidate.class);
 		Mockito.when(this.candidateDao.findAllCandidateDataById(1L)).thenReturn(mockedCandidate);
-		final Candidate candidateFromRepository = this.candidateServiceImpl.findAllCandidateDataByCandidateId(1L);
+		final Candidate candidateFromRepository = this.candidateService.findAllCandidateDataByCandidateId(1L);
 		Assert.assertNotNull(candidateFromRepository);
 	}
 
 	@Test
 	public void findFileByWrongIdTest() {
 		this.thrown.expect(IllegalArgumentException.class);
-		this.candidateServiceImpl.findFileByFileId(0);
+		this.candidateService.findFileByFileId(0);
 	}
 
 	@Test
 	public void findFileTest() {
 		final ServerFile mockedUploadedServerFile = Mockito.mock(ServerFile.class);
-		Mockito.when(this.uploadedServerFileDao.find(1L)).thenReturn(mockedUploadedServerFile);
-		final ServerFile uploadedServerFileFromRepository = this.candidateServiceImpl.findFileByFileId(1L);
-		Assert.assertEquals(mockedUploadedServerFile, uploadedServerFileFromRepository);
+		Mockito.when(this.serverFileDao.find(1L)).thenReturn(mockedUploadedServerFile);
+		final ServerFile serverFileFromRepository = this.candidateService.findFileByFileId(1L);
+		Assert.assertEquals(mockedUploadedServerFile, serverFileFromRepository);
 	}
 
 	@Test
 	public void findLastAddedCandidatesByWrongNumberTest() {
 		this.thrown.expect(IllegalArgumentException.class);
-		this.candidateServiceImpl.findLastAddedCandidates(-1);
+		this.candidateService.findLastAddedCandidates(-1);
 	}
 
 	@Test
 	public void findLastAddedCandidatesTest() {
 		Mockito.when(this.candidateDao.findLastAddedCandidates(1)).thenReturn(new ArrayList<>());
-		final List<Candidate> candidatesFromRepository = this.candidateServiceImpl.findLastAddedCandidates(1);
+		final List<Candidate> candidatesFromRepository = this.candidateService.findLastAddedCandidates(1);
 		Assert.assertEquals(0, candidatesFromRepository.size());
 	}
 
 	@Test
 	public void findNumberOfCandidatesTest() {
 		Mockito.when(this.candidateDao.findNumberOfCandidates()).thenReturn(1L);
-		final long numberOfCandidates = this.candidateServiceImpl.findNumberOfCandidates();
+		final long numberOfCandidates = this.candidateService.findNumberOfCandidates();
 		Assert.assertEquals(1, numberOfCandidates);
 	}
 
@@ -105,26 +105,26 @@ public class CandidateServiceImplTest {
 		candidate.setEmail("aaron@test.com");
 		Mockito.when(this.candidateDao.emailExists(candidate.getEmail())).thenReturn(true);
 		this.thrown.expect(ValidationException.class);
-		this.candidateServiceImpl.insert(candidate);
+		this.candidateService.insert(candidate);
 	}
 
 	@Test
 	public void insertFileNullTest() {
 		this.thrown.expect(NullPointerException.class);
-		this.candidateServiceImpl.addFileToCandidate(null, null);
+		this.candidateService.addFileToCandidate(null, null);
 	}
 
 	@Test
 	public void insertFileTest() {
 		final ServerFile mockedUploadedServerFile = Mockito.mock(ServerFile.class);
 		final Candidate mockedCandidate = Mockito.mock(Candidate.class);
-		this.candidateServiceImpl.addFileToCandidate(mockedCandidate, mockedUploadedServerFile);
+		this.candidateService.addFileToCandidate(mockedCandidate, mockedUploadedServerFile);
 	}
 
 	@Test
 	public void insertNullTest() {
 		this.thrown.expect(NullPointerException.class);
-		this.candidateServiceImpl.insert(null);
+		this.candidateService.insert(null);
 	}
 
 	@Test
@@ -132,12 +132,15 @@ public class CandidateServiceImplTest {
 		final Candidate candidate = new Candidate();
 		candidate.setEmail("aaron@test.com");
 		Mockito.when(this.candidateDao.emailExists(candidate.getEmail())).thenReturn(false);
-		this.candidateServiceImpl.insert(candidate);
+		this.candidateService.insert(candidate);
 	}
 
 	@Before
 	public void setUp() {
-		this.candidateServiceImpl = new CandidateServiceImpl(this.candidateDao, this.uploadedServerFileDao, this.jobCandidatureDao);
+		this.candidateService = new CandidateService();
+		this.candidateService.setCandidateDao(this.candidateDao);
+		this.candidateService.setJobCandidatureDao(this.jobCandidatureDao);
+		this.candidateService.setServerFileDao(this.serverFileDao);
 	}
 
 	@Test
@@ -149,27 +152,27 @@ public class CandidateServiceImplTest {
 		Mockito.when(this.candidateDao.find(candidate.getId())).thenReturn(Mockito.mock(Candidate.class));
 		Mockito.when(this.candidateDao.update(candidate)).thenReturn(candidate);
 		this.thrown.expect(ValidationException.class);
-		this.candidateServiceImpl.update(candidate);
+		this.candidateService.update(candidate);
 	}
 
 	@Test
 	public void updateFileTest() {
 		final ServerFile mockedUploadedServerFile = Mockito.mock(ServerFile.class);
-		Mockito.when(this.uploadedServerFileDao.update(mockedUploadedServerFile)).thenReturn(mockedUploadedServerFile);
-		final ServerFile uploadedServerFileFromRepository = this.candidateServiceImpl.updateFile(mockedUploadedServerFile);
+		Mockito.when(this.serverFileDao.update(mockedUploadedServerFile)).thenReturn(mockedUploadedServerFile);
+		final ServerFile uploadedServerFileFromRepository = this.candidateService.updateFile(mockedUploadedServerFile);
 		Assert.assertEquals(mockedUploadedServerFile, uploadedServerFileFromRepository);
 	}
 
 	@Test
 	public void updateNullFileTest() {
 		this.thrown.expect(NullPointerException.class);
-		this.candidateServiceImpl.updateFile(null);
+		this.candidateService.updateFile(null);
 	}
 
 	@Test
 	public void updateNullTest() {
 		this.thrown.expect(NullPointerException.class);
-		this.candidateServiceImpl.update(null);
+		this.candidateService.update(null);
 	}
 
 	@Test
@@ -180,7 +183,7 @@ public class CandidateServiceImplTest {
 		Mockito.when(this.candidateDao.emailExists(candidate.getEmail())).thenReturn(false);
 		Mockito.when(this.candidateDao.find(candidate.getId())).thenReturn(candidate);
 		Mockito.when(this.candidateDao.update(candidate)).thenReturn(candidate);
-		final Candidate candidateFromRepository = this.candidateServiceImpl.update(candidate);
+		final Candidate candidateFromRepository = this.candidateService.update(candidate);
 		Assert.assertEquals(candidate, candidateFromRepository);
 	}
 }
