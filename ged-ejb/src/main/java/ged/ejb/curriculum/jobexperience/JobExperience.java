@@ -48,7 +48,9 @@ public class JobExperience extends AbstractEntity {
 
 	private YearMonth startDate;
 
-	private Boolean stillWorking;
+	@NotNull
+	@Column(nullable = false)
+	private boolean stillWorking;
 
 	@Override
 	public boolean equals(final Object obj) {
@@ -89,10 +91,8 @@ public class JobExperience extends AbstractEntity {
 	}
 
 	public Long getMonthsWorked() {
-		if (this.startDate == null) {
-			return null;
-		}
-		if ((this.startDate != null) && (this.stillWorking == null) && (this.endDate == null)) {
+		Objects.requireNonNull(this.startDate);
+		if ((this.stillWorking == false) && (this.endDate == null)) {
 			throw new IllegalStateException();
 		}
 		if (this.stillWorking) {
@@ -107,13 +107,13 @@ public class JobExperience extends AbstractEntity {
 		return this.startDate;
 	}
 
-	public Boolean getStillWorking() {
-		return this.stillWorking;
-	}
-
 	@Override
 	public int hashCode() {
 		return Objects.hash(this.companyName, this.curriculum, this.description, this.startDate, this.jobPosition, this.stillWorking, this.endDate);
+	}
+
+	public boolean isStillWorking() {
+		return this.stillWorking;
 	}
 
 	public void setCompanyName(final String companyName) {
@@ -140,7 +140,7 @@ public class JobExperience extends AbstractEntity {
 		this.startDate = startDate;
 	}
 
-	public void setStillWorking(final Boolean stillWorking) {
+	public void setStillWorking(final boolean stillWorking) {
 		this.stillWorking = stillWorking;
 	}
 }

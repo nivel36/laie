@@ -6,6 +6,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.validation.constraints.NotNull;
 
 import ged.ejb.curriculum.Curriculum;
 import ged.ejb.curriculum.CurriculumService;
@@ -22,8 +23,10 @@ public class JobExperienceDialogBean extends AbstractDialogBean {
 	@Inject
 	private transient CurriculumService curriculumService;
 
+	@NotNull
 	private Integer endMonth;
 
+	@NotNull
 	private Integer endYear;
 
 	private JobExperience jobExperience;
@@ -31,8 +34,10 @@ public class JobExperienceDialogBean extends AbstractDialogBean {
 	@Inject
 	private transient JobExperienceService jobExperienceService;
 
+	@NotNull
 	private Integer startMonth;
 
+	@NotNull
 	private Integer startYear;
 
 	private YearMonth buildYearMonth(final int year, final int month) {
@@ -76,6 +81,7 @@ public class JobExperienceDialogBean extends AbstractDialogBean {
 			final Long curriculumId = this.getIdFromParameters("curriculumId");
 			final Curriculum curriculum = this.curriculumService.find(curriculumId);
 			this.jobExperience = new JobExperience();
+			this.jobExperience.setStillWorking(Boolean.TRUE);
 			this.jobExperience.setCurriculum(curriculum);
 		}
 

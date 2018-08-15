@@ -31,4 +31,30 @@ public class JobExperienceServiceImpl extends AbstractService<JobExperience> imp
 	protected Dao<JobExperience> getDao() {
 		return this.jobExperienceDao;
 	}
+
+	@Override
+	public void insert(final JobExperience jobExperience) {
+		Objects.requireNonNull(jobExperience);
+		this.validateDates(jobExperience);
+		super.insert(jobExperience);
+	}
+
+	@Override
+	public JobExperience update(final JobExperience jobExperience) {
+		Objects.requireNonNull(jobExperience);
+		this.validateDates(jobExperience);
+		return super.update(jobExperience);
+	}
+
+	private void validateDates(final JobExperience jobExperience) {
+		if (jobExperience.getStartDate() == null) {
+			throw new IllegalStateException("Start date is null");
+		}
+		if ((jobExperience.getEndDate() == null) && !jobExperience.isStillWorking()) {
+			throw new IllegalStateException("End date is null");
+		}
+		if (jobExperience.getEndDate().isBefore(jobExperience.getStartDate())) {
+			throw new IllegalStateException("End date cannot be beofere start date");
+		}
+	}
 }

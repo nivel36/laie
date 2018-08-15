@@ -39,7 +39,9 @@
 										</h:panelGroup>
 										-
 										<h:panelGroup rendered="#{not jobExperience.stillWorking}">
-											<h:outputText value="#{jobExperience.endDate}" />
+											<h:outputText value="#{jobExperience.endDate}">
+												<f:convertDateTime type="localDate" pattern="MM / yyyy" />
+											</h:outputText>
 										</h:panelGroup>
 
 										<h:outputText value="#{i18n['job_experience.still_working']}" rendered="#{jobExperience.stillWorking}" />
@@ -48,7 +50,7 @@
 											<h:outputText value="#{(jobExperience.monthsWorked - jobExperience.monthsWorked%12)/12}">
 												<f:convertNumber maxFractionDigits="0" />
 											</h:outputText> #{(jobExperience.monthsWorked - jobExperience.monthsWorked%12)/12 gt 1 ? i18n['date.years'] : i18n['date.year']} </h:panelGroup>
-										<h:panelGroup rendered="#{jobExperience.monthsWorked%12 gt 0}" >
+										<h:panelGroup rendered="#{jobExperience.monthsWorked%12 gt 0}">
 											<h:outputText value="#{jobExperience.monthsWorked%12}" /> #{jobExperience.monthsWorked%12 gt 1 ? i18n['date.months'] : i18n['date.month']}
 										</h:panelGroup>
 										)
