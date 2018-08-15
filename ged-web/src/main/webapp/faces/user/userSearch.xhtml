@@ -19,7 +19,7 @@
 			</div>
 			<div class="ui-g-12 ui-md-4">
 				<div class="pull-right">
-					<p:commandButton value="#{i18n['action.export']}" action="userEdit?faces-redirect=true" process="@this" icon="fa fa-file-excel-o" />
+					<p:commandButton value="#{i18n['action.export']}" action="#{userSearch.export}" process="@this" icon="fa fa-file-excel-o" />
 					<p:commandButton value="#{i18n['action.new']}" action="userEdit?faces-redirect=true" process="@this" styleClass="btn-primary" />
 				</div>
 			</div>

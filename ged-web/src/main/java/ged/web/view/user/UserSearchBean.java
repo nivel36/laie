@@ -55,6 +55,11 @@ public class UserSearchBean extends AbstractBean {
 		this.users = this.userService.search(this.searchText);
 	}
 
+	public void export() {
+		// TODO ivmedina
+		System.out.println("hola mundo");
+	}
+	
 	public void setSearchText(final String searchText) {
 		this.searchText = searchText;
 	}

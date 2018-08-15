@@ -33,9 +33,6 @@ public class IsabelBean extends AbstractBean {
 	@Inject
 	private transient ExportService exportService;
 	
-	@Inject
-	private transient Translator translator;
-	
 	private DualListModel<ExportViewItemI> model;
 	
 	@PostConstruct
