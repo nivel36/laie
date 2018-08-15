@@ -17,8 +17,8 @@ insert into JOBCANDIDATURESTATE( id, version, name, description ) values ( 131, 
 
 insert into CURRICULUM( id, version, deleted ) values (301, 0,  false);
 
-insert into EDUCATION( id, version, curriculumId, degree, description,  fromDate, school, stillStudying, toDate, deleted) values( 401, 0, 301, 'Licenciado en Matemáticas', 'Licenciado en Matemáticas por la universidad de Barcelona',  null, 'Universitat de Barcelona', false, null, false);
-insert into EDUCATION( id, version, curriculumId, degree, description,  fromDate, school, stillStudying, toDate, deleted) values( 402, 0, 301, 'Bachillerato', null,  DATE '1988-10-01', 'IES Thalassa', false, DATE '1996-06-01', false);
+insert into EDUCATION( id, version, curriculumId, degree, description,  startYear, school, stillStudying, endYear, deleted) values( 401, 0, 301, 'Licenciado en Matemáticas', 'Licenciado en Matemáticas por la universidad de Barcelona', 2000, 'Universitat de Barcelona', false, 2010, false);
+insert into EDUCATION( id, version, curriculumId, degree, description,  startYear, school, stillStudying, endYear, deleted) values( 402, 0, 301, 'Bachillerato', null,  1988, 'IES Thalassa', false, 1992, false);
 
 insert into LANGUAGE( id, version, curriculumId, languageName, read, speak, write, deleted ) values( 501, 0, 301, 'Castellano', 'native', 'native', 'native', false );
 insert into LANGUAGE( id, version, curriculumId, languageName, read, speak, write, deleted ) values( 502, 0, 301, 'Català', 'native', 'native', 'native', false );

@@ -1,6 +1,5 @@
-package ged.ejb.curriculum;
+package ged.ejb.curriculum.education;
 
-import java.time.LocalDate;
 import java.util.Objects;
 
 import javax.persistence.Column;
@@ -9,9 +8,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+
 import ged.ejb.core.model.AbstractAuditedEntity;
+import ged.ejb.curriculum.Curriculum;
 
 @Entity
+@Indexed
 public class Education extends AbstractAuditedEntity {
 
 	private static final long serialVersionUID = 5584224215756841045L;
@@ -25,20 +29,22 @@ public class Education extends AbstractAuditedEntity {
 	@Column(length = 128, nullable = false)
 	private String degree;
 
+	@Field
 	@Column(length = 512)
 	private String description;
 
-	private LocalDate fromDate;
+	private Integer endYear;
 
 	@NotNull
 	@Column(length = 128, nullable = false)
 	private String school;
 
-	private Boolean stillStudying;
+	private Integer startYear;
 
-	private LocalDate toDate;
+	@NotNull
+	@Column(nullable = false)
+	private boolean stillStudying;
 
-	
 	@Override
 	public boolean equals(final Object obj) {
 		if (this == obj) {
@@ -47,13 +53,13 @@ public class Education extends AbstractAuditedEntity {
 		if (obj == null) {
 			return false;
 		}
-		if (getClass() != obj.getClass()) {
+		if (this.getClass() != obj.getClass()) {
 			return false;
 		}
 		final Education other = (Education) obj;
 		return Objects.equals(this.degree, other.degree) && Objects.equals(this.description, other.description)
-				&& Objects.equals(this.fromDate, other.fromDate)
-				&& Objects.equals(this.stillStudying, other.stillStudying) && Objects.equals(this.toDate, other.toDate);
+				&& Objects.equals(this.startYear, other.startYear) && Objects.equals(this.stillStudying, other.stillStudying)
+				&& Objects.equals(this.endYear, other.endYear);
 	}
 
 	public Curriculum getCurriculum() {
@@ -68,26 +74,25 @@ public class Education extends AbstractAuditedEntity {
 		return this.description;
 	}
 
-	public LocalDate getFromDate() {
-		return this.fromDate;
+	public Integer getEndYear() {
+		return this.endYear;
 	}
 
 	public String getSchool() {
 		return this.school;
 	}
 
-	public Boolean getStillStudying() {
-		return this.stillStudying;
+	public Integer getStartYear() {
+		return this.startYear;
 	}
 
-	public LocalDate getToDate() {
-		return this.toDate;
-	}
-
-	
 	@Override
 	public int hashCode() {
-		return Objects.hash(this.degree, this.description, this.fromDate, this.stillStudying, this.toDate);
+		return Objects.hash(this.degree, this.description, this.startYear, this.stillStudying, this.endYear);
+	}
+
+	public boolean isStillStudying() {
+		return this.stillStudying;
 	}
 
 	public void setCurriculum(final Curriculum curriculum) {
@@ -102,26 +107,19 @@ public class Education extends AbstractAuditedEntity {
 		this.description = description;
 	}
 
-	public void setFromDate(final LocalDate fromDate) {
-		this.fromDate = fromDate;
+	public void setEndYear(final Integer endYear) {
+		this.endYear = endYear;
 	}
 
 	public void setSchool(final String school) {
 		this.school = school;
 	}
 
-	public void setStillStudying(final Boolean stillStudying) {
+	public void setStartYear(final Integer startYear) {
+		this.startYear = startYear;
+	}
+
+	public void setStillStudying(final boolean stillStudying) {
 		this.stillStudying = stillStudying;
-	}
-
-	public void setToDate(final LocalDate toDate) {
-		this.toDate = toDate;
-	}
-
-	
-	@Override
-	public String toString() {
-		return "Education [degree=" + this.degree + ", description=" + this.description + ", fromDate=" + this.fromDate + ", school="
-				+ this.school + ", stillStudying=" + this.stillStudying + ", toDate=" + this.toDate + "]";
 	}
 }

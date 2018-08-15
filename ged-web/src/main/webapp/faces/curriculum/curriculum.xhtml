@@ -61,31 +61,33 @@
 								</div>
 							</ui:repeat>
 						</h:panelGroup>
-						<div class="mainSection">
+						<h:panelGroup styleClass="mainSection" id="educations" layout="block">
 							<!-- Education -->
 							<h2>#{i18n['curriculum.education']}</h2>
-							<span class="cvAction"> <p:commandButton icon="fa fa-plus" styleClass="btn-transparent" />
+							<span class="cvAction">  <p:commandButton icon="fa fa-plus" styleClass="btn-transparent" action="#{curriculumBean.newEducation}"
+									process="@this">
+									<p:ajax event="dialogReturn" listener="#{curriculumBean.onEditEducation}" update="form:education" />
+								</p:commandButton>
 							</span>
 							<ui:repeat value="#{curriculumBean.education}" var="education" id="education">
 								<div class="section">
-									<span class="cvAction"> <p:commandButton icon="fa fa-pencil" styleClass="btn-transparent" />
+									<span class="cvAction"> <p:commandButton icon="fa fa-pencil" styleClass="btn-transparent"
+											action="#{curriculumBean.editEducation(education)}" process="@this">
+											<p:ajax event="dialogReturn" listener="#{curriculumBean.onEditEducation}" update="form:education" />
+										</p:commandButton>
 									</span>
 									<h3>#{education.degree}</h3>
 									<h4>#{education.description}</h4>
 									<h4>
-										<h:outputText value="#{education.fromDate}">
-											<f:convertDateTime type="localDate" pattern="MM/yyyy" />
-										</h:outputText>
+										<h:outputText value="#{education.startYear}" />
 										-
-										<h:outputText value="#{education.toDate}" rendered="#{not education.stillStudying}">
-											<f:convertDateTime type="localDate" pattern="MM/yyyy" />
-										</h:outputText>
+										<h:outputText value="#{education.endYear}" rendered="#{not education.stillStudying}" />
 
 										<h:outputText value="#{i18n['education.still_studying']}" rendered="education.stillStudying}" />
 									</h4>
 								</div>
 							</ui:repeat>
-						</div>
+						</h:panelGroup>
 
 						<div class="mainSection">
 							<!-- Skills -->

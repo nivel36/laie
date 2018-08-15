@@ -19,7 +19,7 @@ import ged.web.core.view.AbstractDialogBean;
 
 @Named
 @ViewScoped
-public class JobExperienceDialogBean extends AbstractDialogBean {
+public class JobExperienceBean extends AbstractDialogBean {
 
 	private static final long serialVersionUID = -2896828087283592020L;
 
@@ -84,7 +84,7 @@ public class JobExperienceDialogBean extends AbstractDialogBean {
 			final Long curriculumId = this.getIdFromParameters("curriculumId");
 			final Curriculum curriculum = this.curriculumService.find(curriculumId);
 			this.jobExperience = new JobExperience();
-			this.jobExperience.setStillWorking(Boolean.TRUE);
+			this.jobExperience.setStillWorking(true);
 			this.jobExperience.setCurriculum(curriculum);
 		}
 

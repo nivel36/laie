@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <entity-mappings xmlns="http://xmlns.jcp.org/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence/orm
-        http://xmlns.jcp.org/xml/ns/persistence/orm_2_1.xsd"
-	version="2.1">
+        http://xmlns.jcp.org/xml/ns/persistence/orm_2_1.xsd" version="2.1">
 
 	<named-query name="Action.findAllByUser">
 		<query><![CDATA[
@@ -85,7 +84,7 @@
 			ORDER BY c.id DESC
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="Candidate.emailExists">
 		<query><![CDATA[
 			SELECT CASE WHEN (COUNT(c) > 0) THEN TRUE ELSE FALSE END
@@ -100,8 +99,8 @@
 			FROM Candidate c
 		]]></query>
 	</named-query>
-	
-		<named-query name="Client.findByClientId">
+
+	<named-query name="Client.findByClientId">
 		<query><![CDATA[
 			SELECT c 
 			FROM Client c 
@@ -126,7 +125,7 @@
 			WHERE c.name = :name
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="Contact.findByClient">
 		<query><![CDATA[
 			SELECT c 
@@ -148,7 +147,17 @@
 		]]></query>
 	</named-query>
 	
-		<named-query name="I18n.findByKeyAndLocale">
+	<named-query name="Education.findByCurriculum">
+		<query><![CDATA[
+			SELECT e 
+			FROM Education e
+			WHERE e.curriculum = :curriculum 
+		]]></query>
+	</named-query>
+	
+	Education.findByCurriculum
+
+	<named-query name="I18n.findByKeyAndLocale">
 		<query><![CDATA[
 			SELECT i 
 			FROM I18nString i  
@@ -156,7 +165,7 @@
 			AND i.locale= :locale
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="JobCandidature.findByJobOffer">
 		<query><![CDATA[
 			SELECT j 
@@ -164,7 +173,7 @@
 			WHERE j.jobOffer.id = :jobOfferId
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="JobCandidature.findByCandidate">
 		<query><![CDATA[
 			SELECT j 
@@ -181,8 +190,8 @@
 			AND j.jobOffer = :jobOffer
 		]]></query>
 	</named-query>
-	
-		<named-query name="JobExperience.findByCurriculum">
+
+	<named-query name="JobExperience.findByCurriculum">
 		<query><![CDATA[
 			SELECT j 
 			FROM JobExperience j
@@ -214,7 +223,7 @@
 			WHERE j.user = :user
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="JobOffer.findAllByOwner">
 		<query><![CDATA[
 			SELECT j 
@@ -223,7 +232,7 @@
 			AND j.deleted <> TRUE
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="JobOffer.findByCandidate">
 		<query><![CDATA[
 			SELECT j
@@ -265,7 +274,7 @@
 			WHERE r.name = 'ADMIN'
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="Role.findRoleByName">
 		<query><![CDATA[
 			SELECT r 
@@ -282,7 +291,7 @@
 			WHERE rc.antecessor = :antecessor
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="ServerFile.findByCandidate">
 		<query><![CDATA[
 			SELECT s 
@@ -380,7 +389,7 @@
 			WHERE u.lastConnection BETWEEN :start and :end
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="User.numberOfUsersInTeam">
 		<query><![CDATA[
 			SELECT COUNT (u) 

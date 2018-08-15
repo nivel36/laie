@@ -4,7 +4,7 @@
 	xmlns:cc="http://java.sun.com/jsf/composite/components" template="/WEB-INF/templates/dialog.xhtml">
 
 	<ui:define name="title">
-		<title>#{i18n['job_experience.job_experience']}</title>
+		<title>#{i18n['education.education']}</title>
 	</ui:define>
 
 	<ui:define name="content">
@@ -12,30 +12,24 @@
 			<div class="ui-g">
 				<div class="ui-g-12 ui-md-6">
 					<div class="form-group">
-						<p:outputLabel value="#{i18n['job_experience.company_name']}" />
-						<p:inputText id="companyName" value="#{jobExperienceBean.jobExperience.companyName}" required="true" />
-						<p:message for="companyName" />
+						<p:outputLabel value="#{i18n['education.degree']}" />
+						<p:inputText id="degree" value="#{educationBean.education.degree}" required="true" />
+						<p:message for="degree" />
 					</div>
 				</div>
-
 				<div class="ui-g-12 ui-md-6">
 					<div class="form-group">
-						<p:outputLabel value="#{i18n['job_experience.job_position']}" />
-						<p:inputText id="jobPosition" value="#{jobExperienceBean.jobExperience.jobPosition}" required="true" />
-						<p:message for="jobPosition" />
+						<p:outputLabel value="#{i18n['education.school']}" />
+						<p:inputText id="school" value="#{educationBean.education.school}" required="true" />
+						<p:message for="school" />
 					</div>
 				</div>
 			</div>
 			<div class="ui-g">
 				<div class="ui-g-12 ui-md-5">
 					<div class="form-group">
-						<p:outputLabel value="#{i18n['job_experience.from_date']}" />
-						<p:selectOneMenu id="startMonth" value="#{jobExperienceBean.startMonth}" required="true">
-							<f:selectItem itemLabel="#{i18n['date.month']}" itemValue="" />
-							<f:selectItems var="month" value="#{combo.months}" itemValue="#{combo.months.indexOf(month)+1}" itemLabel="#{month}" />
-						</p:selectOneMenu>
-						<p:message for="startMonth" />
-						<p:selectOneMenu id="startYear" value="#{jobExperienceBean.startYear}" required="true">
+						<p:outputLabel value="#{i18n['education.from_date']}" />
+						<p:selectOneMenu id="startYear" value="#{educationBean.education.startYear}" required="true">
 							<f:selectItem itemLabel="#{i18n['date.year']}" itemValue="" />
 							<f:selectItems var="year" value="#{combo.years}" itemValue="#{year}" itemLabel="#{year}" />
 						</p:selectOneMenu>
@@ -45,28 +39,21 @@
 
 				<div class="ui-g-12 ui-md-5">
 					<h:panelGroup id="endDate" class="form-group" layout="block">
-						<p:outputLabel value="#{i18n['job_experience.to_date']}" rendered="#{not jobExperienceBean.jobExperience.stillWorking}" />
-						<p:selectOneMenu id="endMonth" value="#{jobExperienceBean.endMonth}" rendered="#{not jobExperienceBean.jobExperience.stillWorking}"
-							required="true">
-							<f:selectItem itemLabel="#{i18n['date.month']}" itemValue="" />
-							<f:selectItems var="month" value="#{combo.months}" itemValue="#{combo.months.indexOf(month)+1}" itemLabel="#{month}" />
-						</p:selectOneMenu>
-						<p:message for="endMonth" />
-						<p:selectOneMenu id="endYear" value="#{jobExperienceBean.endYear}" rendered="#{not jobExperienceBean.jobExperience.stillWorking}"
-							required="true">
+						<p:outputLabel value="#{i18n['education.to_date']}" rendered="#{not educationBean.education.stillStudying}" />
+						<p:selectOneMenu id="endYear" value="#{educationBean.education.endYear}" rendered="#{not educationBean.education.stillStudying}" required="true">
 							<f:selectItem itemLabel="#{i18n['date.year']}" itemValue="" />
 							<f:selectItems var="year" value="#{combo.years}" itemValue="#{year}" itemLabel="#{year}" />
 						</p:selectOneMenu>
 						<p:message for="endYear" />
-						<o:validateMultiple id="validationDates" components="startMonth startYear endMonth endYear stillWorking"
-							validator="#{jobExperienceBean.validateDates}" message="#{i18n['job_experience.error.dates']}" showMessageFor="endYear" />
+						<o:validateMultiple id="validationDates" components="startYear endYear stillStudying" validator="#{educationBean.validateDates}"
+							message="#{i18n['education.error.dates']}" showMessageFor="endYear" />
 					</h:panelGroup>
 				</div>
 
 				<div class="ui-g-12 ui-md-2">
 					<div class="form-group">
-						<p:outputLabel value="#{i18n['job_experience.still_working']}" />
-						<p:selectBooleanCheckbox value="#{jobExperienceBean.jobExperience.stillWorking}" id="stillWorking">
+						<p:outputLabel value="#{i18n['education.still_studying']}" />
+						<p:selectBooleanCheckbox value="#{educationBean.education.stillStudying}" id="stillStudying">
 							<f:ajax render="endDate" />
 						</p:selectBooleanCheckbox>
 					</div>
@@ -75,8 +62,8 @@
 			<div class="ui-g">
 				<div class="ui-g-12">
 					<div class="form-group">
-						<p:outputLabel value="#{i18n['job_experience.description']}" />
-						<p:textEditor id="description" value="#{jobExperienceBean.jobExperience.description}" styleClass="textArea">
+						<p:outputLabel value="#{i18n['education.description']}" />
+						<p:textEditor id="description" value="#{educationBean.education.description}" styleClass="textArea">
 							<f:facet name="toolbar">
 								<span class="ql-formats">
 									<button class="ql-bold"></button>
@@ -116,11 +103,10 @@
 			<div class="ui-g">
 				<div class="ui-g-12">
 					<div class="form-action-primary">
-						<p:commandButton styleClass="btn-gray" value="#{i18n['action.cancel']}" actionListener="#{jobExperienceBean.closeDialog}" process="@this"
-							update="@form" />
-						<p:commandButton styleClass="btn-red" value="#{i18n['action.delete']}" action="#{jobExperienceBean.delete}" process="@this"
-							rendered="#{not jobExperienceBean.newJobExperience}" />
-						<p:commandButton styleClass="btn-primary" value="#{i18n['action.save']}" action="#{jobExperienceBean.save}" process="@form" update="@form" />
+						<p:commandButton styleClass="btn-gray" value="#{i18n['action.cancel']}" actionListener="#{educationBean.closeDialog}" process="@this" update="@form" />
+						<p:commandButton styleClass="btn-red" value="#{i18n['action.delete']}" action="#{educationBean.delete}" process="@this"
+							rendered="#{not educationBean.newEducation}" />
+						<p:commandButton styleClass="btn-primary" value="#{i18n['action.save']}" action="#{educationBean.save}" process="@form" update="@form" />
 					</div>
 				</div>
 			</div>

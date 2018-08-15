@@ -16,9 +16,10 @@ import org.primefaces.event.SelectEvent;
 import ged.ejb.candidate.Candidate;
 import ged.ejb.curriculum.Curriculum;
 import ged.ejb.curriculum.CurriculumService;
-import ged.ejb.curriculum.Education;
 import ged.ejb.curriculum.Language;
 import ged.ejb.curriculum.Skill;
+import ged.ejb.curriculum.education.Education;
+import ged.ejb.curriculum.education.EducationService;
 import ged.ejb.curriculum.jobexperience.JobExperience;
 import ged.ejb.curriculum.jobexperience.JobExperienceService;
 import ged.web.core.view.AbstractBean;
@@ -39,7 +40,10 @@ public class CurriculumBean extends AbstractBean {
 	@Inject
 	private transient CurriculumService curriculumService;
 
-	private final List<Education> education = new ArrayList<>();
+	private List<Education> education = new ArrayList<>();
+
+	@Inject
+	private transient EducationService educationService;
 
 	private List<JobExperience> jobExperiences = new ArrayList<>();
 
@@ -49,6 +53,10 @@ public class CurriculumBean extends AbstractBean {
 	private final List<Language> languages = new ArrayList<>();
 
 	private final List<Skill> skills = new ArrayList<>();
+
+	public void editEducation(final Education education) {
+		this.openDialog("educationDialog", this.buildDialogParameter("educationId", String.valueOf(education.getId())));
+	}
 
 	public void editJobExperience(final JobExperience jobExperience) {
 		this.openDialog("jobExperienceDialog", this.buildDialogParameter("jobExperienceId", String.valueOf(jobExperience.getId())));
@@ -103,13 +111,26 @@ public class CurriculumBean extends AbstractBean {
 		this.orderJobExperiencesByDate();
 	}
 
+	public void newEducation() {
+		this.openDialog("educationDialog", this.buildDialogParameter("curriculumId", String.valueOf(this.curriculum.getId())));
+	}
+
 	public void newJobExperience() {
 		this.openDialog("jobExperienceDialog", this.buildDialogParameter("curriculumId", String.valueOf(this.curriculum.getId())));
+	}
+
+	public void onEditEducation(final SelectEvent event) {
+		this.education = this.educationService.findByCurriculum(this.curriculum);
+		this.orderEducationByDate();
 	}
 
 	public void onEditJobExperience(final SelectEvent event) {
 		this.jobExperiences = this.jobExperienceService.findByCurriculum(this.curriculum);
 		this.orderJobExperiencesByDate();
+	}
+
+	public void orderEducationByDate() {
+		this.education.sort(Comparator.comparing(Education::getStartYear).reversed());
 	}
 
 	public void orderJobExperiencesByDate() {
