@@ -66,18 +66,18 @@
 							<h2>#{i18n['curriculum.education']}</h2>
 							<span class="cvAction">  <p:commandButton icon="fa fa-plus" styleClass="btn-transparent" action="#{curriculumBean.newEducation}"
 									process="@this">
-									<p:ajax event="dialogReturn" listener="#{curriculumBean.onEditEducation}" update="form:education" />
+									<p:ajax event="dialogReturn" listener="#{curriculumBean.onEditEducation}" update="form:educations" />
 								</p:commandButton>
 							</span>
 							<ui:repeat value="#{curriculumBean.education}" var="education" id="education">
 								<div class="section">
 									<span class="cvAction"> <p:commandButton icon="fa fa-pencil" styleClass="btn-transparent"
 											action="#{curriculumBean.editEducation(education)}" process="@this">
-											<p:ajax event="dialogReturn" listener="#{curriculumBean.onEditEducation}" update="form:education" />
+											<p:ajax event="dialogReturn" listener="#{curriculumBean.onEditEducation}" update="form:educations" />
 										</p:commandButton>
 									</span>
 									<h3>#{education.degree}</h3>
-									<h4>#{education.description}</h4>
+									<h4>#{education.school}</h4>
 									<h4>
 										<h:outputText value="#{education.startYear}" />
 										-
@@ -85,6 +85,7 @@
 
 										<h:outputText value="#{i18n['education.still_studying']}" rendered="education.stillStudying}" />
 									</h4>
+									<h:outputText value="#{education.description}" escape="false" styleClass="educationDescription" />
 								</div>
 							</ui:repeat>
 						</h:panelGroup>
