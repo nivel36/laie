@@ -155,8 +155,6 @@
 		]]></query>
 	</named-query>
 	
-	Education.findByCurriculum
-
 	<named-query name="I18n.findByKeyAndLocale">
 		<query><![CDATA[
 			SELECT i 
