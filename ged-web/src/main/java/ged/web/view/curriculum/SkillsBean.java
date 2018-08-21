@@ -2,7 +2,6 @@ package ged.web.view.curriculum;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -39,7 +38,7 @@ public class SkillsBean extends AbstractDialogBean {
 		skill.setName(this.skillName);
 		skill.setCurriculum(this.curriculum);
 		this.curriculum.addSkill(skill);
-		this.curriculum = this.curriculumService.update(this.curriculum);
+		this.saveCurriculum();
 		this.skillName = null;
 		this.buildSkills();
 	}
@@ -62,9 +61,22 @@ public class SkillsBean extends AbstractDialogBean {
 	@PostConstruct
 	public void init() {
 		final Long curriculumId = this.getIdFromParameters("curriculumId");
-		Objects.requireNonNull(curriculumId);
-		this.curriculum = this.curriculumService.find(curriculumId);
+		if (curriculumId == null) {
+			this.curriculum = new Curriculum();
+		}
+		else {
+			this.curriculum = this.curriculumService.find(curriculumId);
+		}
 		this.buildSkills();
+	}
+
+	private void saveCurriculum() {
+		if (this.curriculum.getId() == 0) {
+			this.curriculum = this.curriculumService.update(this.curriculum);
+		}
+		else {
+			this.curriculumService.insert(this.curriculum);
+		}
 	}
 
 	public void setCurriculumService(final CurriculumService curriculumService) {

@@ -4,6 +4,8 @@ import static ged.ejb.core.util.Parameters.map;
 
 import java.util.List;
 
+import javax.persistence.NoResultException;
+
 import ged.ejb.candidate.Candidate;
 import ged.ejb.core.model.AbstractDao;
 import ged.ejb.core.model.Repository;
@@ -22,7 +24,12 @@ public class CurriculumDao extends AbstractDao<Curriculum> {
 	}
 
 	public Curriculum findByCandidate(final Candidate candidate) {
-		return this.findByQuery(Curriculum.class, "Curriculum.findByCandidate", map("candidate", candidate));
+		try {
+			return this.findByQuery(Curriculum.class, "Curriculum.findByCandidate", map("candidate", candidate));
+		}
+		catch (final NoResultException e) {
+			return null;
+		}
 	}
 
 	@Override
