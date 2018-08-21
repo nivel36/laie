@@ -1,4 +1,4 @@
-package ged.ejb.curriculum;
+package ged.ejb.curriculum.language;
 
 import javax.persistence.Entity;
 

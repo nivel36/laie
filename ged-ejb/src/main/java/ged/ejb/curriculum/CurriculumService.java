@@ -14,6 +14,8 @@ import ged.ejb.candidate.Candidate;
 import ged.ejb.core.AbstractService;
 import ged.ejb.core.model.AbstractDao;
 import ged.ejb.core.model.Repository;
+import ged.ejb.curriculum.language.LanguageLevel;
+import ged.ejb.curriculum.skills.SkillLevel;
 
 @Stateless
 public class CurriculumService extends AbstractService<Curriculum> {

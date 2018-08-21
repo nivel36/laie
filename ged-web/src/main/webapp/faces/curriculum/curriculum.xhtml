@@ -64,15 +64,14 @@
 						<h:panelGroup styleClass="mainSection" id="educations" layout="block">
 							<!-- Education -->
 							<h2>#{i18n['curriculum.education']}</h2>
-							<span class="cvAction">  <p:commandButton icon="fa fa-plus" styleClass="btn-transparent" action="#{curriculumBean.newEducation}"
-									process="@this">
+							<span class="cvAction"> <p:commandButton icon="fa fa-plus" styleClass="btn-transparent" action="#{curriculumBean.newEducation}" process="@this">
 									<p:ajax event="dialogReturn" listener="#{curriculumBean.onEditEducation}" update="form:educations" />
 								</p:commandButton>
 							</span>
 							<ui:repeat value="#{curriculumBean.education}" var="education" id="education">
 								<div class="section">
-									<span class="cvAction"> <p:commandButton icon="fa fa-pencil" styleClass="btn-transparent"
-											action="#{curriculumBean.editEducation(education)}" process="@this">
+									<span class="cvAction"> <p:commandButton icon="fa fa-pencil" styleClass="btn-transparent" action="#{curriculumBean.editEducation(education)}"
+											process="@this">
 											<p:ajax event="dialogReturn" listener="#{curriculumBean.onEditEducation}" update="form:educations" />
 										</p:commandButton>
 									</span>
@@ -90,34 +89,35 @@
 							</ui:repeat>
 						</h:panelGroup>
 
-						<div class="mainSection">
+						<h:panelGroup styleClass="mainSection" id="languages" layout="block">
 							<!-- Skills -->
 							<h2>#{i18n['curriculum.languages']}</h2>
-							<span class="cvAction"> <p:commandButton icon="fa fa-plus" styleClass="btn-transparent" />
-							</span>
+							<span class="cvAction"><p:commandButton icon="fa fa-plus" styleClass="btn-transparent" action="#{curriculumBean.newLanguage}" process="@this">
+									<p:ajax event="dialogReturn" listener="#{curriculumBean.onEditEducation}" update="form:languages" />
+								</p:commandButton> </span>
 							<ui:repeat value="#{curriculumBean.languages}" var="language" id="language">
 								<div class="section">
-									<span class="cvAction"> <p:commandButton icon="fa fa-pencil" styleClass="btn-transparent" />
+									<span class="cvAction"> <p:commandButton icon="fa fa-pencil" styleClass="btn-transparent" action="#{curriculumBean.editLanguage(language)}"
+											process="@this">
+											<p:ajax event="dialogReturn" listener="#{curriculumBean.onEditLanguage}" update="form:languages" />
+										</p:commandButton>
 									</span>
-									<h3>#{language.languageName}</h3>
-									<h4>#{i18n:translate(language.speak)}</h4>
+									<h3>#{language.name}</h3>
+									<h4>#{i18n:translate(language.level)}</h4>
 								</div>
 							</ui:repeat>
-						</div>
+						</h:panelGroup>
 
 						<div class="mainSection">
 							<!-- Skills -->
 							<h2>#{i18n['curriculum.skills']}</h2>
-							<span class="cvAction"> <p:commandButton icon="fa fa-plus" styleClass="btn-transparent" />
+							<span class="cvAction"> <p:commandButton icon="fa fa-plus" styleClass="btn-transparent" action="#{curriculumBean.newSkill}" process="@this">
+									<p:ajax event="dialogReturn" listener="#{curriculumBean.onEditSkill}" update="form:languages" />
+								</p:commandButton>
 							</span>
-							<ui:repeat value="#{curriculumBean.skills}" var="skill" id="skill">
-								<div class="section">
-									<span class="cvAction"> <p:commandButton icon="fa fa-pencil" styleClass="btn-transparent" />
-									</span>
-									<h3>#{skill.name}</h3>
-									<h4>#{i18n:translate(skill.level)}</h4>
-								</div>
-							</ui:repeat>
+							<div class="section">
+								<p:chips value="#{curriculumBean.skills}" converter="stringConverter" disabled="true"/>
+							</div>
 						</div>
 					</p:panel>
 				</h:form>

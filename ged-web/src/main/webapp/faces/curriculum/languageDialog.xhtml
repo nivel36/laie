@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:i18n="http://legion.com/i18n" xmlns:o="http://omnifaces.org/ui"
+	xmlns:cc="http://java.sun.com/jsf/composite/components" template="/WEB-INF/templates/dialog.xhtml">
+
+	<ui:define name="title">
+		<title>#{i18n['language.language']}</title>
+	</ui:define>
+
+	<ui:define name="content">
+		<h:form>
+
+			<div class="ui-g">
+				<div class="ui-g-12 ui-md-6">
+					<div class="form-group">
+						<p:outputLabel value="#{i18n['language.language']}" />
+						<p:inputText id="language" value="#{languageBean.language.name}" required="true" />
+						<p:message for="language" />
+					</div>
+				</div>
+				<div class="ui-g-12 ui-md-6">
+					<div class="form-group">
+						<p:outputLabel value="#{i18n['language.level']}"  />
+						<p:selectOneMenu id="level" value="#{languageBean.language.level}" required="true">
+							<f:selectItem itemLabel="#{i18n['language.level']}" itemValue="" />
+							<f:selectItems var="languageLevel" itemValue="#{languageLevel.name}" value="#{applicationBean.languageLevels}"
+														itemLabel="#{i18n:translate(languageLevel.name)}" />							
+						</p:selectOneMenu>
+						<p:message for="level" />
+					</div>
+				</div>
+			</div>
+			<div class="ui-g">
+				<div class="ui-g-12">
+					<div class="form-action-primary">
+						<p:commandButton styleClass="btn-gray" value="#{i18n['action.cancel']}" actionListener="#{languageBean.closeDialog}" process="@this" update="@form" />
+						<p:commandButton styleClass="btn-red" value="#{i18n['action.delete']}" action="#{languageBean.delete}" process="@this"
+							rendered="#{not languageBean.newLanguage}" />
+						<p:commandButton styleClass="btn-primary" value="#{i18n['action.save']}" action="#{languageBean.save}" process="@form" update="@form" />
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

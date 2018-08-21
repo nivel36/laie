@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:i18n="http://legion.com/i18n" xmlns:o="http://omnifaces.org/ui"
+	xmlns:cc="http://java.sun.com/jsf/composite/components" template="/WEB-INF/templates/dialog.xhtml">
+
+	<ui:define name="title">
+		<title>#{i18n['skill.skills']}</title>
+	</ui:define>
+
+	<ui:define name="content">
+		<h:form>
+			<div class="ui-g">
+				<div class="ui-g-12">
+					<div class="form-group">
+						<p:outputLabel value="#{i18n['skill.skill']}" />
+						<div class="ui-inputgroup">
+							<p:inputText id="skill" value="#{skillsBean.skillName}" />
+							<p:commandButton id="addSkill" action="#{skillsBean.addSkill}" process="@form" update="@form" styleClass="btn-green" icon="fa fa-plus" />
+						</div>
+						<p:message for="skill" />
+					</div>
+				</div>
+				<div class="ui-g-12">
+					<p:chips value="#{skillsBean.skills}" converter="stringConverter" disabled="true" />
+				</div>
+			</div>
+			<div class="ui-g">
+				<div class="ui-g-12">
+					<div class="form-action-primary">
+						<p:commandButton styleClass="btn-gray" value="#{i18n['action.close']}" actionListener="#{skillsBean.closeDialog}" process="@this" update="@form" />
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

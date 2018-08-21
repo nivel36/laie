@@ -16,8 +16,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ged.ejb.core.Cache;
-import ged.ejb.curriculum.LanguageLevel;
-import ged.ejb.curriculum.SkillLevel;
+import ged.ejb.curriculum.language.LanguageLevel;
+import ged.ejb.curriculum.skills.SkillLevel;
 import ged.ejb.user.role.Role;
 import ged.web.core.util.WebConfigurationProperty;
 

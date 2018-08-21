@@ -8,8 +8,8 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import ged.ejb.curriculum.CurriculumService;
-import ged.ejb.curriculum.LanguageLevel;
-import ged.ejb.curriculum.SkillLevel;
+import ged.ejb.curriculum.language.LanguageLevel;
+import ged.ejb.curriculum.skills.SkillLevel;
 import ged.ejb.user.role.Role;
 import ged.ejb.user.role.RoleService;
 

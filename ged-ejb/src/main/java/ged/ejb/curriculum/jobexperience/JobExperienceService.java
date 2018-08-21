@@ -1,6 +1,5 @@
 package ged.ejb.curriculum.jobexperience;
 
-import java.util.List;
 import java.util.Objects;
 
 import javax.ejb.Stateless;
@@ -9,7 +8,6 @@ import javax.inject.Inject;
 import ged.ejb.core.AbstractService;
 import ged.ejb.core.model.AbstractDao;
 import ged.ejb.core.model.Repository;
-import ged.ejb.curriculum.Curriculum;
 
 @Stateless
 public class JobExperienceService extends AbstractService<JobExperience> {
@@ -17,11 +15,6 @@ public class JobExperienceService extends AbstractService<JobExperience> {
 	@Inject
 	@Repository
 	private JobExperienceDao jobExperienceDao;
-
-	public List<JobExperience> findByCurriculum(final Curriculum curriculum) {
-		Objects.requireNonNull(curriculum);
-		return this.jobExperienceDao.findByCurriculum(curriculum);
-	}
 
 	@Override
 	protected AbstractDao<JobExperience> getDao() {

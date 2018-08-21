@@ -3,6 +3,7 @@ package ged.ejb.curriculum;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
@@ -13,6 +14,8 @@ import ged.ejb.candidate.Candidate;
 import ged.ejb.core.model.AbstractAuditedEntity;
 import ged.ejb.curriculum.education.Education;
 import ged.ejb.curriculum.jobexperience.JobExperience;
+import ged.ejb.curriculum.language.Language;
+import ged.ejb.curriculum.skills.Skill;
 
 @Entity
 public class Curriculum extends AbstractAuditedEntity {
@@ -32,7 +35,7 @@ public class Curriculum extends AbstractAuditedEntity {
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "curriculum", orphanRemoval = true)
 	private Set<Language> languages;
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "curriculum", orphanRemoval = true)
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "curriculum", orphanRemoval = true)
 	private Set<Skill> skills;
 
 	public void addEducation(final Education education) {
@@ -55,7 +58,6 @@ public class Curriculum extends AbstractAuditedEntity {
 		this.skills.add(skill);
 	}
 
-	
 	@Override
 	public boolean equals(final Object obj) {
 		if (this == obj) {
@@ -107,7 +109,6 @@ public class Curriculum extends AbstractAuditedEntity {
 		return this.skills.size();
 	}
 
-	
 	@Override
 	public int hashCode() {
 		return Objects.hash(this.candidate);
@@ -149,7 +150,6 @@ public class Curriculum extends AbstractAuditedEntity {
 		this.skills = skills;
 	}
 
-	
 	@Override
 	public String toString() {
 		return "Curriculum [education=" + this.education + ", jobExperiences=" + this.jobExperiences + ", languages=" + this.languages + ", skills="

@@ -17,22 +17,18 @@ insert into JOBCANDIDATURESTATE( id, version, name, description ) values ( 131, 
 
 insert into CURRICULUM( id, version, deleted ) values (301, 0,  false);
 
-insert into EDUCATION( id, version, curriculumId, degree, description,  startYear, school, stillStudying, endYear, deleted) values( 401, 0, 301, 'Licenciado en Matemáticas', 'Licenciado en Matemáticas por la universidad de Barcelona', 2000, 'Universitat de Barcelona', false, 2010, false);
-insert into EDUCATION( id, version, curriculumId, degree, description,  startYear, school, stillStudying, endYear, deleted) values( 402, 0, 301, 'Bachillerato', null,  1988, 'IES Thalassa', false, 1992, false);
+insert into EDUCATION( id, version, curriculumId, degree, description,  startYear, school, stillStudying, endYear) values( 401, 0, 301, 'Licenciado en Matemáticas', 'Licenciado en Matemáticas por la universidad de Barcelona', 2000, 'Universitat de Barcelona', false, 2010);
+insert into EDUCATION( id, version, curriculumId, degree, description,  startYear, school, stillStudying, endYear) values( 402, 0, 301, 'Bachillerato', null,  1988, 'IES Thalassa', false, 1992);
 
-insert into LANGUAGE( id, version, curriculumId, languageName, read, speak, write, deleted ) values( 501, 0, 301, 'Castellano', 'native', 'native', 'native', false );
-insert into LANGUAGE( id, version, curriculumId, languageName, read, speak, write, deleted ) values( 502, 0, 301, 'Català', 'native', 'native', 'native', false );
-insert into LANGUAGE( id, version, curriculumId, languageName, read, speak, write, deleted ) values( 503, 0, 301, 'English', 'high', 'low', 'medium', false );
+insert into LANGUAGE( id, version, curriculumId, name, level ) values( 501, 0, 301, 'Castellano', 'native' );
+insert into LANGUAGE( id, version, curriculumId, name, level ) values( 502, 0, 301, 'Català', 'native' );
+insert into LANGUAGE( id, version, curriculumId, name, level ) values( 503, 0, 301, 'English', 'high' );
 
-insert into SKILL( id, version, curriculumId, name, level, deleted ) values( 601, 0, 301, 'Java', 'high', false);
-insert into SKILL( id, version, curriculumId, name, level, deleted ) values( 602, 0, 301, 'Spring', 'high', false);
-insert into SKILL( id, version, curriculumId, name, level, deleted ) values( 603, 0, 301, 'Hibernate', 'high', false);
-insert into SKILL( id, version, curriculumId, name, level, deleted ) values( 604, 0, 301, 'JSF', 'high', false);
-insert into SKILL( id, version, curriculumId, name, level, deleted ) values( 605, 0, 301, 'JEE', 'high', false);
-insert into SKILL( id, version, curriculumId, name, level, deleted ) values( 606, 0, 301, 'C', 'high', false);
-insert into SKILL( id, version, curriculumId, name, level, deleted ) values( 607, 0, 301, 'C++', 'high', false);
-insert into SKILL( id, version, curriculumId, name, level, deleted ) values( 608, 0, 301, 'HTML5', 'high', false);
-insert into SKILL( id, version, curriculumId, name, level, deleted ) values( 609, 0, 301, 'Javascript', 'high', false);
+insert into SKILL( id, version, curriculumId, name ) values( 601, 0, 301, 'Java');
+insert into SKILL( id, version, curriculumId, name ) values( 602, 0, 301, 'Spring');
+insert into SKILL( id, version, curriculumId, name ) values( 603, 0, 301, 'Hibernate');
+insert into SKILL( id, version, curriculumId, name ) values( 604, 0, 301, 'JSF');
+insert into SKILL( id, version, curriculumId, name ) values( 605, 0, 301, 'JEE');
 
 insert into JOBEXPERIENCE( id, version, curriculumId, companyName, description, startDate, jobPosition, stillWorking, endDate) values (701, 0, 301, 'Alten', 'Desarrollo de la herramienta para Gas Natural Fenosa con el que se dará cobertura a todas las actividades asociadas al proceso de expansión de la red y provisión de servicio en todos los ámbitos geográficos donde el grupo Gas Natural Fenosa (GNF) desarrolla sus negocios de distribución de gas natural y electricidad. Puesto de Arquitecto JEE desarrollando las siguientes tareas:' , CAST('aced00057372000d6a6176612e74696d652e536572955d84ba1b2248b20c0000787077060c000007da0378' AS VARBINARY(255)) , 'Arquitecto JAVA', true, null );
 

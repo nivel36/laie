@@ -1,4 +1,4 @@
-package ged.ejb.curriculum;
+package ged.ejb.curriculum.skills;
 
 import javax.persistence.Entity;
 

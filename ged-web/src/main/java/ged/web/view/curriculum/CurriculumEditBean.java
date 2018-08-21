@@ -12,10 +12,10 @@ import javax.inject.Named;
 
 import ged.ejb.curriculum.Curriculum;
 import ged.ejb.curriculum.CurriculumService;
-import ged.ejb.curriculum.Language;
-import ged.ejb.curriculum.Skill;
 import ged.ejb.curriculum.education.Education;
 import ged.ejb.curriculum.jobexperience.JobExperience;
+import ged.ejb.curriculum.language.Language;
+import ged.ejb.curriculum.skills.Skill;
 import ged.web.core.view.AbstractBean;
 
 @Named

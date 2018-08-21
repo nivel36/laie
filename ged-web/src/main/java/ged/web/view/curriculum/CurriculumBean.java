@@ -16,12 +16,10 @@ import org.primefaces.event.SelectEvent;
 import ged.ejb.candidate.Candidate;
 import ged.ejb.curriculum.Curriculum;
 import ged.ejb.curriculum.CurriculumService;
-import ged.ejb.curriculum.Language;
-import ged.ejb.curriculum.Skill;
 import ged.ejb.curriculum.education.Education;
-import ged.ejb.curriculum.education.EducationService;
 import ged.ejb.curriculum.jobexperience.JobExperience;
-import ged.ejb.curriculum.jobexperience.JobExperienceService;
+import ged.ejb.curriculum.language.Language;
+import ged.ejb.curriculum.skills.Skill;
 import ged.web.core.view.AbstractBean;
 
 @Named
@@ -40,19 +38,13 @@ public class CurriculumBean extends AbstractBean {
 	@Inject
 	private transient CurriculumService curriculumService;
 
-	private List<Education> education = new ArrayList<>();
+	private List<Education> education;
 
-	@Inject
-	private transient EducationService educationService;
+	private List<JobExperience> jobExperiences;
 
-	private List<JobExperience> jobExperiences = new ArrayList<>();
+	private List<Language> languages;
 
-	@Inject
-	private transient JobExperienceService jobExperienceService;
-
-	private final List<Language> languages = new ArrayList<>();
-
-	private final List<Skill> skills = new ArrayList<>();
+	private List<String> skills;
 
 	public void editEducation(final Education education) {
 		this.openDialog("educationDialog", this.buildDialogParameter("educationId", String.valueOf(education.getId())));
@@ -60,6 +52,10 @@ public class CurriculumBean extends AbstractBean {
 
 	public void editJobExperience(final JobExperience jobExperience) {
 		this.openDialog("jobExperienceDialog", this.buildDialogParameter("jobExperienceId", String.valueOf(jobExperience.getId())));
+	}
+
+	public void editLanguage(final Language language) {
+		this.openDialog("languageDialog", this.buildDialogParameter("languageId", String.valueOf(language.getId())));
 	}
 
 	public Candidate getCandidate() {
@@ -82,7 +78,7 @@ public class CurriculumBean extends AbstractBean {
 		return this.languages;
 	}
 
-	public List<Skill> getSkills() {
+	public List<String> getSkills() {
 		return this.skills;
 	}
 
@@ -104,11 +100,15 @@ public class CurriculumBean extends AbstractBean {
 		if (this.curriculum.getLanguages() == null) {
 			this.curriculum.setLanguages(new HashSet<Language>());
 		}
-		this.skills.addAll(this.curriculum.getSkills());
-		this.education.addAll(this.curriculum.getEducation());
-		this.jobExperiences.addAll(this.curriculum.getJobExperiences());
-		this.languages.addAll(this.curriculum.getLanguages());
+		this.skills = new ArrayList<>();
+		for (final Skill skill : this.curriculum.getSkills()) {
+			this.skills.add(skill.getName());
+		}
+		this.education = new ArrayList<>(this.curriculum.getEducation());
+		this.jobExperiences = new ArrayList<>(this.curriculum.getJobExperiences());
+		this.languages = new ArrayList<>(this.curriculum.getLanguages());
 		this.orderJobExperiencesByDate();
+		this.orderEducationByDate();
 	}
 
 	public void newEducation() {
@@ -119,14 +119,32 @@ public class CurriculumBean extends AbstractBean {
 		this.openDialog("jobExperienceDialog", this.buildDialogParameter("curriculumId", String.valueOf(this.curriculum.getId())));
 	}
 
+	public void newLanguage() {
+		this.openDialog("languageDialog", this.buildDialogParameter("curriculumId", String.valueOf(this.curriculum.getId())));
+	}
+
+	public void newSkill() {
+		this.openDialog("skillsDialog", this.buildDialogParameter("curriculumId", String.valueOf(this.curriculum.getId())));
+	}
+
 	public void onEditEducation(final SelectEvent event) {
-		this.education = this.educationService.findByCurriculum(this.curriculum);
-		this.orderEducationByDate();
+		this.init();
 	}
 
 	public void onEditJobExperience(final SelectEvent event) {
-		this.jobExperiences = this.jobExperienceService.findByCurriculum(this.curriculum);
-		this.orderJobExperiencesByDate();
+		this.init();
+	}
+
+	public void onEditLanguage(final SelectEvent event) {
+		this.init();
+	}
+
+	public void onEditSkill(final SelectEvent event) {
+		this.init();
+	}
+
+	public void onEditSkills(final SelectEvent event) {
+		this.init();
 	}
 
 	public void orderEducationByDate() {

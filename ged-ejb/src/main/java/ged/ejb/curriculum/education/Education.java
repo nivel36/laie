@@ -11,12 +11,12 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 
-import ged.ejb.core.model.AbstractAuditedEntity;
+import ged.ejb.core.model.AbstractEntity;
 import ged.ejb.curriculum.Curriculum;
 
 @Entity
 @Indexed
-public class Education extends AbstractAuditedEntity {
+public class Education extends AbstractEntity {
 
 	private static final long serialVersionUID = 5584224215756841045L;
 

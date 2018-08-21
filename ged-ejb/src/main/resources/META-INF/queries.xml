@@ -147,14 +147,6 @@
 		]]></query>
 	</named-query>
 	
-	<named-query name="Education.findByCurriculum">
-		<query><![CDATA[
-			SELECT e 
-			FROM Education e
-			WHERE e.curriculum = :curriculum 
-		]]></query>
-	</named-query>
-	
 	<named-query name="I18n.findByKeyAndLocale">
 		<query><![CDATA[
 			SELECT i 
@@ -186,14 +178,6 @@
 			FROM JobCandidature j 
 			WHERE j.candidate = :candidate 
 			AND j.jobOffer = :jobOffer
-		]]></query>
-	</named-query>
-
-	<named-query name="JobExperience.findByCurriculum">
-		<query><![CDATA[
-			SELECT j 
-			FROM JobExperience j
-			WHERE j.curriculum = :curriculum 
 		]]></query>
 	</named-query>
 
