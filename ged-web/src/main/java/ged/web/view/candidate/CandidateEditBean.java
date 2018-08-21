@@ -92,14 +92,8 @@ public class CandidateEditBean extends AbstractDialogBean {
 		}
 	}
 
-	private void insertCandidate() {
-		this.candidate.setTags(this.getTagsFromStringList(this.tags));
-		this.candidateService.insert(this.candidate);
-	}
-
 	public boolean isNewCandidate() {
 		return this.candidate.getId() == 0;
-
 	}
 
 	public void onrate(final RateEvent rateEvent) {
@@ -108,12 +102,8 @@ public class CandidateEditBean extends AbstractDialogBean {
 	}
 
 	public String save() {
-		if (this.isNewCandidate()) {
-			this.insertCandidate();
-		}
-		else {
-			this.updateCandidate();
-		}
+		this.candidate.setTags(this.getTagsFromStringList(this.tags));
+		this.candidate = this.candidateService.save(this.candidate);
 		return "/faces/candidate/candidate?faces-redirect=true&candidateId=" + this.candidate.getId();
 	}
 
@@ -127,11 +117,6 @@ public class CandidateEditBean extends AbstractDialogBean {
 
 	public void setTags(final List<String> tags) {
 		this.tags = tags;
-	}
-
-	private void updateCandidate() {
-		this.candidate.setTags(this.getTagsFromStringList(this.tags));
-		this.candidate = this.candidateService.update(this.candidate);
 	}
 
 	public void uploadImage(final FileUploadEvent event) {

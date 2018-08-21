@@ -60,12 +60,7 @@ public class EducationBean extends AbstractDialogBean {
 	}
 
 	public void save() {
-		if (this.isNewEducation()) {
-			this.educationService.insert(this.education);
-		}
-		else {
-			this.education = this.educationService.update(this.education);
-		}
+		this.education = this.educationService.save(this.education);
 		this.closeDialog(this.education);
 	}
 

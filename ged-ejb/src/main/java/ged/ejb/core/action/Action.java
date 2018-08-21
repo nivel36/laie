@@ -12,7 +12,7 @@ import ged.ejb.core.model.AbstractRecordEntity;
 public class Action extends AbstractRecordEntity {
 
 	public enum ActionType {
-		DELETE, INSERT, LOGIN, UNDELETE, UPDATE
+		DELETE, LOGIN, SAVE, UNDELETE
 	}
 
 	private static final long serialVersionUID = -3095037007290696579L;
@@ -29,7 +29,7 @@ public class Action extends AbstractRecordEntity {
 		super(entityClass, entityId, text);
 	}
 
-	
+	@Override
 	public boolean equals(final Object obj) {
 		if (obj == null) {
 			return false;
@@ -55,7 +55,7 @@ public class Action extends AbstractRecordEntity {
 		return this.date;
 	}
 
-	
+	@Override
 	public int hashCode() {
 		return Objects.hash(super.hashCode(), this.actionPerformed, this.date);
 	}

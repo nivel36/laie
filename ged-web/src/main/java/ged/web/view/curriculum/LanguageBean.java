@@ -55,12 +55,7 @@ public class LanguageBean extends AbstractDialogBean {
 	}
 
 	public void save() {
-		if (this.isNewLanguage()) {
-			this.languageService.insert(this.language);
-		}
-		else {
-			this.language = this.languageService.update(this.language);
-		}
+		this.language = this.languageService.save(this.language);
 		this.closeDialog(this.language);
 	}
 

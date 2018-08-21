@@ -154,13 +154,7 @@ public class CurriculumDialogBean extends AbstractDialogBean {
 		this.curriculum.setLanguages(this.listToSet(this.languages));
 		this.curriculum.setJobExperiences(this.listToSet(this.jobExperiences));
 		this.curriculum.setSkills(this.listToSet(this.skills));
-
-		if (this.curriculum.getId() == 0) {
-			this.curriculumService.insert(this.curriculum);
-		}
-		else {
-			this.curriculumService.update(this.curriculum);
-		}
+		this.curriculumService.save(this.curriculum);
 		this.closeDialog(this.curriculum);
 	}
 

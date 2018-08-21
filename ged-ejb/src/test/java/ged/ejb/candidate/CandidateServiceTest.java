@@ -105,7 +105,7 @@ public class CandidateServiceTest {
 		candidate.setEmail("aaron@test.com");
 		Mockito.when(this.candidateDao.emailExists(candidate.getEmail())).thenReturn(true);
 		this.thrown.expect(ValidationException.class);
-		this.candidateService.insert(candidate);
+		this.candidateService.save(candidate);
 	}
 
 	@Test
@@ -124,7 +124,7 @@ public class CandidateServiceTest {
 	@Test
 	public void insertNullTest() {
 		this.thrown.expect(NullPointerException.class);
-		this.candidateService.insert(null);
+		this.candidateService.save(null);
 	}
 
 	@Test
@@ -132,7 +132,7 @@ public class CandidateServiceTest {
 		final Candidate candidate = new Candidate();
 		candidate.setEmail("aaron@test.com");
 		Mockito.when(this.candidateDao.emailExists(candidate.getEmail())).thenReturn(false);
-		this.candidateService.insert(candidate);
+		this.candidateService.save(candidate);
 	}
 
 	@Before
@@ -150,15 +150,15 @@ public class CandidateServiceTest {
 		candidate.setId(1L);
 		Mockito.when(this.candidateDao.emailExists(candidate.getEmail())).thenReturn(true);
 		Mockito.when(this.candidateDao.find(candidate.getId())).thenReturn(Mockito.mock(Candidate.class));
-		Mockito.when(this.candidateDao.update(candidate)).thenReturn(candidate);
+		Mockito.when(this.candidateDao.save(candidate)).thenReturn(candidate);
 		this.thrown.expect(ValidationException.class);
-		this.candidateService.update(candidate);
+		this.candidateService.save(candidate);
 	}
 
 	@Test
 	public void updateFileTest() {
 		final ServerFile mockedUploadedServerFile = Mockito.mock(ServerFile.class);
-		Mockito.when(this.serverFileDao.update(mockedUploadedServerFile)).thenReturn(mockedUploadedServerFile);
+		Mockito.when(this.serverFileDao.save(mockedUploadedServerFile)).thenReturn(mockedUploadedServerFile);
 		final ServerFile uploadedServerFileFromRepository = this.candidateService.updateFile(mockedUploadedServerFile);
 		Assert.assertEquals(mockedUploadedServerFile, uploadedServerFileFromRepository);
 	}
@@ -172,7 +172,7 @@ public class CandidateServiceTest {
 	@Test
 	public void updateNullTest() {
 		this.thrown.expect(NullPointerException.class);
-		this.candidateService.update(null);
+		this.candidateService.save(null);
 	}
 
 	@Test
@@ -182,8 +182,8 @@ public class CandidateServiceTest {
 		candidate.setId(1L);
 		Mockito.when(this.candidateDao.emailExists(candidate.getEmail())).thenReturn(false);
 		Mockito.when(this.candidateDao.find(candidate.getId())).thenReturn(candidate);
-		Mockito.when(this.candidateDao.update(candidate)).thenReturn(candidate);
-		final Candidate candidateFromRepository = this.candidateService.update(candidate);
+		Mockito.when(this.candidateDao.save(candidate)).thenReturn(candidate);
+		final Candidate candidateFromRepository = this.candidateService.save(candidate);
 		Assert.assertEquals(candidate, candidateFromRepository);
 	}
 }

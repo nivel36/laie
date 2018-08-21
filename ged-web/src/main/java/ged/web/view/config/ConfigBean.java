@@ -55,7 +55,7 @@ public class ConfigBean extends AbstractBean {
 		if (userId == this.sessionBean.getUser().getId()) {
 			this.changeSessionUser();
 		}
-		this.user = this.userService.update(this.user);
+		this.user = this.userService.save(this.user);
 		this.sessionBean.setUser(this.user);
 		this.addMessage(FacesMessage.SEVERITY_INFO, "action.save_action_performed", "action.save_action_performed");
 	}

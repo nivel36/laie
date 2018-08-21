@@ -44,7 +44,7 @@ public class CandidateService extends AbstractAuditedService<Candidate> {
 		Objects.requireNonNull(candidate);
 		logger.debug("Adding file {} to candidate  {}", file, candidate);
 		file.setCandidate(candidate);
-		this.serverFileDao.insert(file);
+		this.serverFileDao.save(file);
 	}
 
 	public Candidate findAllCandidateDataByCandidateId(final long candidateId) {
@@ -101,18 +101,6 @@ public class CandidateService extends AbstractAuditedService<Candidate> {
 		return this.candidateDao;
 	}
 
-	@Override
-	@Audited(action = ActionType.INSERT)
-	public void insert(final Candidate candidate) {
-		Objects.requireNonNull(candidate);
-		logger.debug("Insert candidate {}", candidate);
-		if (this.candidateDao.emailExists(candidate.getEmail())) {
-			logger.warn("The email {} is in use", candidate.getEmail());
-			throw new ValidationException("email");
-		}
-		this.candidateDao.insert(candidate);
-	}
-
 	private boolean isDuplicatedEmail(final Candidate candidate, final Candidate candidateInRepository) {
 		return !candidate.getEmail().equals(candidateInRepository.getEmail()) && this.candidateDao.emailExists(candidate.getEmail());
 	}
@@ -121,6 +109,28 @@ public class CandidateService extends AbstractAuditedService<Candidate> {
 		Objects.requireNonNull(file);
 		logger.debug("Removing file {}", file);
 		this.serverFileDao.delete(file);
+	}
+
+	@Override
+	@Audited(action = ActionType.SAVE)
+	public Candidate save(final Candidate candidate) {
+		Objects.requireNonNull(candidate);
+		if (candidate.getId() != 0) {
+			logger.debug("Update candidate {}", candidate);
+			final Candidate candidateInRepository = this.candidateDao.find(candidate.getId());
+			if (this.isDuplicatedEmail(candidate, candidateInRepository)) {
+				logger.warn("The email {} is in use", candidate.getEmail());
+				throw new ValidationException("Email duplicated");
+			}
+		}
+		else {
+			logger.debug("Insert candidate {}", candidate);
+			if (this.candidateDao.emailExists(candidate.getEmail())) {
+				logger.warn("The email {} is in use", candidate.getEmail());
+				throw new ValidationException("email");
+			}
+		}
+		return this.candidateDao.save(candidate);
 	}
 
 	public void setCandidateDao(final CandidateDao candidateDao) {
@@ -135,22 +145,9 @@ public class CandidateService extends AbstractAuditedService<Candidate> {
 		this.serverFileDao = serverFileDao;
 	}
 
-	@Override
-	@Audited(action = ActionType.UPDATE)
-	public Candidate update(final Candidate candidate) {
-		Objects.requireNonNull(candidate);
-		logger.debug("Update candidate {}", candidate);
-		final Candidate candidateInRepository = this.candidateDao.find(candidate.getId());
-		if (this.isDuplicatedEmail(candidate, candidateInRepository)) {
-			logger.warn("The email {} is in use", candidate.getEmail());
-			throw new ValidationException("Email duplicated");
-		}
-		return this.candidateDao.update(candidate);
-	}
-
 	public ServerFile updateFile(final ServerFile file) {
 		Objects.requireNonNull(file);
 		logger.debug("Update file {}", file);
-		return this.serverFileDao.update(file);
+		return this.serverFileDao.save(file);
 	}
 }

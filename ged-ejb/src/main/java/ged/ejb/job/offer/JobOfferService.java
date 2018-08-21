@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
 
 import ged.ejb.candidate.Candidate;
 import ged.ejb.client.Client;
-import ged.ejb.client.ClientService;
 import ged.ejb.core.AbstractAuditedService;
 import ged.ejb.core.Audited;
 import ged.ejb.core.action.Action.ActionType;
@@ -26,9 +25,6 @@ import ged.ejb.user.User;
 public class JobOfferService extends AbstractAuditedService<JobOffer> {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
-
-	@Inject
-	private ClientService clientService;
 
 	@Inject
 	@Repository
@@ -49,7 +45,7 @@ public class JobOfferService extends AbstractAuditedService<JobOffer> {
 		final JobCandidature jobCandidature = new JobCandidature();
 		jobCandidature.setCandidate(candidate);
 		jobCandidature.setJobOffer(jobOffer);
-		this.jobCandidatureDao.insert(jobCandidature);
+		this.jobCandidatureDao.save(jobCandidature);
 	}
 
 	public void addJobCandidatures(final JobOffer jobOffer, final List<Candidate> candidates) {
@@ -64,7 +60,7 @@ public class JobOfferService extends AbstractAuditedService<JobOffer> {
 	public void addJobMeeting(final JobMeeting jobMeeting) {
 		Objects.requireNonNull(jobMeeting);
 		logger.debug("Add Job meeting {}", jobMeeting.getDescription());
-		this.jobMeetingDao.insert(jobMeeting);
+		this.jobMeetingDao.save(jobMeeting);
 	}
 
 	public List<JobOffer> findAllJobOffersByOwner(final User owner) {
@@ -96,26 +92,6 @@ public class JobOfferService extends AbstractAuditedService<JobOffer> {
 		return this.jobOfferDao;
 	}
 
-	@Override
-	@Audited(action = ActionType.INSERT)
-	public void insert(final JobOffer jobOffer) {
-		Objects.requireNonNull(jobOffer);
-		logger.debug("Insert job offer {}", jobOffer.getDescription());
-		this.putClientOnJobOffer(jobOffer);
-		this.getDao().insert(jobOffer);
-	}
-
-	private void putClientOnJobOffer(final JobOffer jobOffer) {
-		Client client = this.clientService.findClientByName(jobOffer.getClient().getName());
-		if (client == null) {
-			client = jobOffer.getClient();
-			this.clientService.update(client);
-		}
-		else {
-			jobOffer.setClient(client);
-		}
-	}
-
 	public void removeJobCandidature(final JobOffer jobOffer, final Candidate candidate) {
 		Objects.requireNonNull(jobOffer);
 		Objects.requireNonNull(candidate);
@@ -124,8 +100,12 @@ public class JobOfferService extends AbstractAuditedService<JobOffer> {
 		this.jobCandidatureDao.delete(jobCandidature);
 	}
 
-	public void setClientService(final ClientService clientService) {
-		this.clientService = clientService;
+	@Override
+	@Audited(action = ActionType.SAVE)
+	public JobOffer save(final JobOffer jobOffer) {
+		Objects.requireNonNull(jobOffer);
+		logger.debug("SAVE job offer {}", jobOffer.getDescription());
+		return this.getDao().save(jobOffer);
 	}
 
 	public void setJobCandidatureDao(final JobCandidatureDao jobCandidatureDao) {
@@ -138,13 +118,5 @@ public class JobOfferService extends AbstractAuditedService<JobOffer> {
 
 	public void setJobOfferDao(final JobOfferDao jobOfferDao) {
 		this.jobOfferDao = jobOfferDao;
-	}
-
-	@Override
-	@Audited(action = ActionType.UPDATE)
-	public JobOffer update(final JobOffer jobOffer) {
-		Objects.requireNonNull(jobOffer);
-		logger.debug("Update job offer {}", jobOffer.getDescription());
-		return this.getDao().update(jobOffer);
 	}
 }

@@ -111,12 +111,7 @@ public class JobExperienceBean extends AbstractDialogBean {
 			final YearMonth startDate = this.buildYearMonth(this.startYear, this.startMonth);
 			this.jobExperience.setStartDate(startDate);
 		}
-		if (this.isNewJobExperience()) {
-			this.jobExperienceService.insert(this.jobExperience);
-		}
-		else {
-			this.jobExperience = this.jobExperienceService.update(this.jobExperience);
-		}
+		this.jobExperience = this.jobExperienceService.save(this.jobExperience);
 		this.closeDialog(this.jobExperience);
 	}
 

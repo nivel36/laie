@@ -144,22 +144,14 @@ public class UserEditBeanTest {
 		final User user = new User();
 		user.setEmail("abel@test.com");
 		this.userEditBean.setUser(user);
-
-		Mockito.doAnswer(invocation -> {
-			final Object[] args = invocation.getArguments();
-			((User) args[0]).setId(1L);
-			return null;
-		}).when(this.userService).insert(user);
-
+		final User savedUser = new User();
+		savedUser.setEmail("abel@test.com");
+		this.userEditBean.setUser(savedUser);
+		savedUser.setId(1L);
+		Mockito.when(this.userService.save(user)).thenReturn(savedUser);
 		this.userEditBean.save();
-		Assert.assertEquals("abel@test.com", user.getEmail());
-		Assert.assertEquals(1L, user.getId());
-	}
-
-	@Test
-	public void saveNullUserTest() {
-		this.thrown.expect(IllegalStateException.class);
-		this.userEditBean.save();
+		Assert.assertEquals("abel@test.com", this.userEditBean.getUser().getEmail());
+		Assert.assertEquals(1L, this.userEditBean.getUser().getId());
 	}
 
 	@Test
@@ -173,7 +165,7 @@ public class UserEditBeanTest {
 		updatedUser.setEmail("abel@test.com");
 		updatedUser.setId(1L);
 
-		Mockito.when(this.userService.update(user)).thenReturn(updatedUser);
+		Mockito.when(this.userService.save(user)).thenReturn(updatedUser);
 
 		this.userEditBean.save();
 

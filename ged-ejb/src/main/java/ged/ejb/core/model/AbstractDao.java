@@ -71,9 +71,15 @@ public abstract class AbstractDao<T extends AbstractEntity> {
 
 	protected abstract Class<T> getType();
 
-	public void insert(final T entity) {
+	public T save(final T entity) {
 		Objects.requireNonNull(entity);
-		this.persistenceFacade.insert(entity);
+		if (entity.getId() == 0) {
+			this.persistenceFacade.insert(entity);
+			return entity;
+		}
+		else {
+			return this.persistenceFacade.update(entity);
+		}
 	}
 
 	public abstract List<T> search(final String searchText);
@@ -81,10 +87,5 @@ public abstract class AbstractDao<T extends AbstractEntity> {
 	public void setPersistenceFacade(final PersistenceFacade persistenceFacade) {
 		Objects.requireNonNull(persistenceFacade);
 		this.persistenceFacade = persistenceFacade;
-	}
-
-	public T update(final T entity) {
-		Objects.requireNonNull(entity);
-		return this.persistenceFacade.update(entity);
 	}
 }

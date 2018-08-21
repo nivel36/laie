@@ -17,7 +17,7 @@ import ged.ejb.core.action.Action.ActionType;
 import ged.ejb.core.model.Auditable;
 
 @Interceptor
-@Audited(action = ActionType.INSERT)
+@Audited(action = ActionType.SAVE)
 public class InsertInterceptor extends AbstractInterceptor {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
@@ -27,8 +27,7 @@ public class InsertInterceptor extends AbstractInterceptor {
 	private final Event<Auditable> prePersistEvent;
 
 	@Inject
-	public InsertInterceptor(@PostPersist final Event<Auditable> postPersistEvent,
-			@PrePersist final Event<Auditable> prePersistEvent) {
+	public InsertInterceptor(@PostPersist final Event<Auditable> postPersistEvent, @PrePersist final Event<Auditable> prePersistEvent) {
 		Objects.requireNonNull(postPersistEvent);
 		Objects.requireNonNull(prePersistEvent);
 		this.postPersistEvent = postPersistEvent;
@@ -37,7 +36,7 @@ public class InsertInterceptor extends AbstractInterceptor {
 
 	@AroundInvoke
 	public Object fireEvent(final InvocationContext joinPoint) throws Exception {
-		final Auditable auditedEntity = getAuditedEntity(joinPoint);
+		final Auditable auditedEntity = this.getAuditedEntity(joinPoint);
 		logger.trace("Insert event fired");
 		this.prePersistEvent.fire(auditedEntity);
 		final Object returnObject = joinPoint.proceed();

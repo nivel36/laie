@@ -74,7 +74,7 @@ public class ActionService extends AbstractService<Action> {
 	public void insertAction(@PostPersist @Observes final AbstractAuditedEntity auditedEntity) {
 		Objects.requireNonNull(auditedEntity);
 		logger.debug("Insert action class {} with id {} for user {}", auditedEntity.getClass().getName(), auditedEntity.getId(), auditedEntity.getUser());
-		this.insertAction(auditedEntity, ActionType.INSERT);
+		this.insertAction(auditedEntity, ActionType.SAVE);
 	}
 
 	private void insertAction(final AbstractAuditedEntity auditedEntity, final ActionType actionType) {
@@ -83,7 +83,7 @@ public class ActionService extends AbstractService<Action> {
 		action.setDate(LocalDateTime.now());
 		final User user = this.userService.findUserByEmail(this.sessionContext.getCallerPrincipal().getName());
 		action.setUser(user);
-		this.insert(action);
+		this.save(action);
 	}
 
 	public void loginAction(@PostLogin @Observes final String email) {
@@ -114,6 +114,6 @@ public class ActionService extends AbstractService<Action> {
 	public void updateAction(@PostUpdate @Observes final AbstractAuditedEntity auditedEntity) {
 		Objects.requireNonNull(auditedEntity);
 		logger.debug("Update action class {} with id {} for user {}", auditedEntity.getClass().getName(), auditedEntity.getId(), auditedEntity.getUser());
-		this.insertAction(auditedEntity, ActionType.UPDATE);
+		this.insertAction(auditedEntity, ActionType.SAVE);
 	}
 }

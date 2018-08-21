@@ -32,15 +32,14 @@ public class BookmarksBean extends AbstractBean {
 	private transient BookmarkService bookmarkService;
 
 	public void add(final AbstractAuditedEntity entity) {
-		BookmarksBean.logger.debug("Adding bookmark {} for user {}",
-				 entity, this.sessionBean.getUser().getEmail() );
-		final Bookmark bookmark = createBookmark(entity);
+		BookmarksBean.logger.debug("Adding bookmark {} for user {}", entity, this.sessionBean.getUser().getEmail());
+		Bookmark bookmark = this.createBookmark(entity);
 		if (this.bookmarks.size() > 9) {
 			BookmarksBean.logger.warn("Bookmark full for user {}", this.sessionBean.getUser().getEmail());
 			Message.addError("Bookmark full", "Bookmark full");
 			return;
 		}
-		this.bookmarkService.update(bookmark);
+		bookmark = this.bookmarkService.save(bookmark);
 		this.bookmarks.add(bookmark);
 	}
 
@@ -70,21 +69,21 @@ public class BookmarksBean extends AbstractBean {
 	private String getUrl(final Bookmark bookmark) {
 		final String entityClass = bookmark.getEntityClass();
 		final String className = entityClass.substring(0, 1).toLowerCase() + entityClass.substring(1);
-		return buildUrl(className) + bookmark.getEntityId();
+		return this.buildUrl(className) + bookmark.getEntityId();
 	}
 
 	public String go(final Bookmark bookmark) {
-		final String url = getUrl(bookmark);
+		final String url = this.getUrl(bookmark);
 		return url + "&faces-redirect=true";
 	}
 
 	@PostConstruct
 	public void init() {
-		findAllBookmarks();
+		this.findAllBookmarks();
 	}
 
 	public boolean isBookmarked(final AbstractAuditedEntity entity) {
-		final Bookmark bookmark = createBookmark(entity);
+		final Bookmark bookmark = this.createBookmark(entity);
 		return this.bookmarks.contains(bookmark);
 	}
 
@@ -93,7 +92,7 @@ public class BookmarksBean extends AbstractBean {
 		final String className = entity.getClass().getSimpleName();
 		final long id = entity.getId();
 		this.bookmarkService.delete(user, className, id);
-		findAllBookmarks();
+		this.findAllBookmarks();
 	}
 
 	public void setBookmarkService(final BookmarkService bookmarkService) {

@@ -3,8 +3,8 @@ package ged.ejb.core;
 import java.util.List;
 import java.util.Objects;
 
-import ged.ejb.core.model.AbstractEntity;
 import ged.ejb.core.model.AbstractDao;
+import ged.ejb.core.model.AbstractEntity;
 
 public abstract class AbstractService<T extends AbstractEntity> {
 
@@ -24,17 +24,12 @@ public abstract class AbstractService<T extends AbstractEntity> {
 
 	protected abstract AbstractDao<T> getDao();
 
-	public void insert(final T entity) {
+	public T save(final T entity) {
 		Objects.requireNonNull(entity);
-		this.getDao().insert(entity);
+		return this.getDao().save(entity);
 	}
 
 	public List<T> search(final String searchText) {
 		return this.getDao().search(searchText);
-	}
-
-	public T update(final T entity) {
-		Objects.requireNonNull(entity);
-		return this.getDao().update(entity);
 	}
 }

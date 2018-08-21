@@ -48,10 +48,6 @@ public class ClientEditBean extends AbstractDialogBean {
 		}
 	}
 
-	private void insertClient() {
-		this.clientService.insert(this.client);
-	}
-
 	public boolean isNewClient() {
 		if (this.client == null) {
 			throw new IllegalStateException("Null client");
@@ -61,12 +57,7 @@ public class ClientEditBean extends AbstractDialogBean {
 
 	public String save() {
 		logger.debug("ClientDialog save action performed");
-		if (this.isNewClient()) {
-			this.insertClient();
-		}
-		else {
-			this.updateClient();
-		}
+		this.client = this.clientService.save(this.client);
 		return "/faces/client/client?faces-redirect=true&clientId=" + this.client.getId();
 	}
 
@@ -74,7 +65,4 @@ public class ClientEditBean extends AbstractDialogBean {
 		this.clientService = clientService;
 	}
 
-	private void updateClient() {
-		this.client = this.clientService.update(this.client);
-	}
 }

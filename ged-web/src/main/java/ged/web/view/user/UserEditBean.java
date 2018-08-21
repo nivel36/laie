@@ -75,10 +75,6 @@ public class UserEditBean extends AbstractBean {
 		}
 	}
 
-	private void insertUser() {
-		this.userService.insert(this.user);
-	}
-
 	private boolean isAvalidRole(final Role userRole, final Role managerRole) {
 		if (userRole.getName().equals(managerRole.getName())) {
 			// They got the same role.
@@ -96,11 +92,19 @@ public class UserEditBean extends AbstractBean {
 
 	public String save() {
 		logger.debug("Save user action performed");
-		if (this.isNewUser()) {
-			this.insertUser();
+		try {
+			this.user = this.userService.save(this.user);
 		}
-		else {
-			this.updateUser();
+		catch (final EJBException e) {
+			if (e.getCause() instanceof UserException) {
+				logger.error("Trying to change the role to the last admin on the app");
+				final Role admin = this.roleService.findAdmin();
+				this.user.setRole(admin);
+				this.addMessage(SEVERITY_ERROR, "user.error.last_admin", "user.error.last_admin");
+			}
+			else {
+				throw e;
+			}
 		}
 		return "/faces/user/user?faces-redirect=true&userId=" + this.user.getId();
 	}
@@ -119,23 +123,6 @@ public class UserEditBean extends AbstractBean {
 
 	public void setUserService(final UserService userService) {
 		this.userService = userService;
-	}
-
-	private void updateUser() {
-		try {
-			this.user = this.userService.update(this.user);
-		}
-		catch (final EJBException e) {
-			if (e.getCause() instanceof UserException) {
-				logger.error("Trying to change the role to the last admin on the app");
-				final Role admin = this.roleService.findAdmin();
-				this.user.setRole(admin);
-				this.addMessage(SEVERITY_ERROR, "user.error.last_admin", "user.error.last_admin");
-			}
-			else {
-				throw e;
-			}
-		}
 	}
 
 	public void uploadImage(final FileUploadEvent event) throws IOException {

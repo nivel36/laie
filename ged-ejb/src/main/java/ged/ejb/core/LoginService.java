@@ -19,7 +19,7 @@ public class LoginService {
 	public User login(final String email) {
 		final User user = this.userSerivce.findUserByEmail(email);
 		user.setLastConnection(LocalDateTime.now());
-		return this.userSerivce.update(user);
+		return this.userSerivce.save(user);
 	}
 
 	public void setUserSerivce(final UserService userSerivce) {

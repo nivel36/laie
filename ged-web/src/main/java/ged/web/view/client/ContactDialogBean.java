@@ -71,7 +71,7 @@ public class ContactDialogBean extends AbstractDialogBean {
 
 	public void save() {
 		logger.debug("ContactDialog save action performed");
-		this.contactService.insert(this.contact);
+		this.contactService.save(this.contact);
 		this.closeDialog(this.contact);
 	}
 

@@ -142,13 +142,7 @@ public class CurriculumEditBean extends AbstractBean {
 		this.curriculum.setLanguages(this.listToSet(this.languages));
 		this.curriculum.setJobExperiences(this.listToSet(this.jobExperiences));
 		this.curriculum.setSkills(this.listToSet(this.skills));
-
-		if (this.curriculum.getId() == 0) {
-			this.curriculumService.insert(this.curriculum);
-		}
-		else {
-			this.curriculum = this.curriculumService.update(this.curriculum);
-		}
+		this.curriculum = this.curriculumService.save(this.curriculum);
 		return "/faces/candidate/candidate?faces-redirect=true&candidateId=" + this.curriculum.getCandidate().getId();
 	}
 

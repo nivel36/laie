@@ -76,28 +76,6 @@ public class UserService extends AbstractAuditedService<User> {
 		return LocalDateTime.now().minusDays(7);
 	}
 
-	@Override
-	public void insert(final User user) {
-		logger.debug("Insert user {}", user.getEmail());
-		if (user.equals(user.getManager())) {
-			logger.warn("The user {} can't be his/her manager", user.getEmail());
-			throw new IllegalStateException("User can't be his/her manager");
-		}
-		if (this.findUserByEmail(user.getEmail()) != null) {
-			throw new ValidationException("Email exists");
-		}
-		if (user.getLanguage() == null) {
-			user.setLanguage("ES");
-		}
-		if (user.getRowsPerPage() == 0) {
-			user.setRowsPerPage(25);
-		}
-		if ((user.getPassword() == null) || (user.getPassword().length == 0)) {
-			user.setPassword("M+SzETkPtT+deVQNIScBEXivvfozSne5QqIqyWICLv0=".toCharArray());
-		}
-		this.userDao.insert(user);
-	}
-
 	private boolean isDeletingAdmin(final User user) {
 		return user.isDeleted() && user.isAdmin();
 	}
@@ -126,21 +104,40 @@ public class UserService extends AbstractAuditedService<User> {
 		return this.userDao.numberOfUsersOnline(oneWeekAgo, today);
 	}
 
-	public void setUserDao(final UserDao userDao) {
-		this.userDao = userDao;
+	@Override
+	public User save(final User user) {
+		if (user.getId() == 0) {
+			if (user.equals(user.getManager())) {
+				logger.warn("The user {} can't be his/her manager", user.getEmail());
+				throw new IllegalStateException("User can't be his/her manager");
+			}
+			if (this.findUserByEmail(user.getEmail()) != null) {
+				throw new ValidationException("Email exists");
+			}
+			if (user.getLanguage() == null) {
+				user.setLanguage("ES");
+			}
+			if (user.getRowsPerPage() == 0) {
+				user.setRowsPerPage(25);
+			}
+			if ((user.getPassword() == null) || (user.getPassword().length == 0)) {
+				user.setPassword("M+SzETkPtT+deVQNIScBEXivvfozSne5QqIqyWICLv0=".toCharArray());
+			}
+		}
+		else {
+			if (this.isLastAdminOnApp(user)) {
+				logger.warn("Can't change user {} role. Last Admin on app", user.getEmail());
+				throw new UserException("Can't change user role. Last Admin on app");
+			}
+			if (this.isDeletingAdmin(user)) {
+				logger.warn("Can't delete user {}. User is Admin", user.getEmail());
+				throw new UserException("Can't delete user. User is Admin");
+			}
+		}
+		return this.userDao.save(user);
 	}
 
-	@Override
-	public User update(final User user) {
-		if (this.isLastAdminOnApp(user)) {
-			logger.warn("Can't change user {} role. Last Admin on app", user.getEmail());
-			throw new UserException("Can't change user role. Last Admin on app");
-		}
-		if (this.isDeletingAdmin(user)) {
-			logger.warn("Can't delete user {}. User is Admin", user.getEmail());
-			throw new UserException("Can't delete user. User is Admin");
-		}
-		logger.debug("Update user {}", user.getEmail());
-		return this.userDao.update(user);
+	public void setUserDao(final UserDao userDao) {
+		this.userDao = userDao;
 	}
 }

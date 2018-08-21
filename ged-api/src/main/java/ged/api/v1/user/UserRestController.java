@@ -54,7 +54,7 @@ public class UserRestController extends AbstractRestController {
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<UserDto> findAll() {
 		final List<User> users = this.userService.findAll();
-		return createUserDtoListFromUserList(users);
+		return this.createUserDtoListFromUserList(users);
 	}
 
 	@POST
@@ -63,7 +63,7 @@ public class UserRestController extends AbstractRestController {
 	public Response insert(@Valid final UserDto userDto) {
 		Response.ResponseBuilder builder;
 		final User user = this.userMapper.mapDto(userDto);
-		final User savedUser = this.userService.update(user);
+		final User savedUser = this.userService.save(user);
 		final UserDto returnedUserDto = this.userMapper.mapEntity(savedUser);
 		builder = Response.status(Response.Status.OK).entity(returnedUserDto);
 		return builder.build();

@@ -18,7 +18,6 @@ import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
-import ged.web.core.GedPermissionException;
 import ged.web.core.view.AbstractDialogBean;
 
 @Named
@@ -61,8 +60,6 @@ public class JobOfferEditBean extends AbstractDialogBean {
 		this.jobOffer = this.getValueFromFlash("jobOffer");
 		if ((this.jobOffer == null)) {
 			this.jobOffer = new JobOffer();
-		}
-		if (this.isNewJobOffer()) {
 			final User user = this.sessionBean.getUser();
 			this.jobOffer.setOwner(user);
 			final List<User> subordinateUsers = this.userService.findSubordinateUsers(user);
@@ -71,10 +68,6 @@ public class JobOfferEditBean extends AbstractDialogBean {
 		else {
 			this.recruiters = new ArrayList<>(this.jobOffer.getRecruiters());
 		}
-	}
-
-	private void insertJobOffer() {
-		this.jobOfferService.insert(this.jobOffer);
 	}
 
 	public boolean isNewJobOffer() {
@@ -97,12 +90,7 @@ public class JobOfferEditBean extends AbstractDialogBean {
 	}
 
 	public String save() {
-		if (this.isNewJobOffer()) {
-			this.insertJobOffer();
-		}
-		else {
-			this.updateJobOffer();
-		}
+		this.jobOffer = this.jobOfferService.save(this.jobOffer);
 		return "/faces/jobOffer/jobOffer?faces-redirect=true&jobOfferId=" + this.jobOffer.getId();
 	}
 
@@ -127,12 +115,5 @@ public class JobOfferEditBean extends AbstractDialogBean {
 
 	public void setUserService(final UserService userService) {
 		this.userService = userService;
-	}
-
-	private void updateJobOffer() {
-		if (!this.isUserHasPermissionToEditJobOffer()) {
-			throw new GedPermissionException();
-		}
-		this.jobOffer = this.jobOfferService.update(this.jobOffer);
 	}
 }

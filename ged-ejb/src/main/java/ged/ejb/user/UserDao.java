@@ -90,15 +90,6 @@ public final class UserDao extends AbstractDao<User> {
 		return User.class;
 	}
 
-	@Override
-	public void insert(final User user) {
-		Objects.requireNonNull(user);
-		this.getPersistenceFacade().insert(user);
-		if (user.getManager() != null) {
-			this.insertUserClosures(user);
-		}
-	}
-
 	private void insertUserClosure(final User antecessor, final User descendant, final int pathLength) {
 		logger.trace("Insert in user closure table. Antecessor {}, descendant {}, pathLength {}", antecessor, descendant, pathLength);
 		final UserClosure newUserClosure = new UserClosure();
@@ -153,28 +144,36 @@ public final class UserDao extends AbstractDao<User> {
 	}
 
 	@Override
-	public List<User> search(final String searchText) {
-		return this.getPersistenceFacade().search(User.class, searchText, "name", "surname", "email");
+	public User save(final User user) {
+		if (user.getId() == 0) {
+			this.getPersistenceFacade().insert(user);
+			if (user.getManager() != null) {
+				this.insertUserClosures(user);
+			}
+		}
+		else {
+			Objects.requireNonNull(user);
+			final User userInDatabase = this.find(user.getId());
+			if (userInDatabase == null) {
+				logger.error("User don't exists");
+				throw new IllegalStateException();
+			}
+			if (this.isAddingManager(user, userInDatabase)) {
+				this.insertUserClosures(user);
+			}
+			else if (this.isRemovingManager(user, userInDatabase)) {
+				this.deleteUserClosures(userInDatabase);
+			}
+			else if (this.isChangingManager(user, userInDatabase)) {
+				this.deleteUserClosures(userInDatabase);
+				this.insertUserClosures(user);
+			}
+		}
+		return this.getPersistenceFacade().update(user);
 	}
 
 	@Override
-	public User update(final User user) {
-		Objects.requireNonNull(user);
-		final User userInDatabase = this.find(user.getId());
-		if (userInDatabase == null) {
-			logger.error("User don't exists");
-			throw new IllegalStateException();
-		}
-		if (this.isAddingManager(user, userInDatabase)) {
-			this.insertUserClosures(user);
-		}
-		else if (this.isRemovingManager(user, userInDatabase)) {
-			this.deleteUserClosures(userInDatabase);
-		}
-		else if (this.isChangingManager(user, userInDatabase)) {
-			this.deleteUserClosures(userInDatabase);
-			this.insertUserClosures(user);
-		}
-		return this.getPersistenceFacade().update(user);
+	public List<User> search(final String searchText) {
+		return this.getPersistenceFacade().search(User.class, searchText, "name", "surname", "email");
 	}
 }

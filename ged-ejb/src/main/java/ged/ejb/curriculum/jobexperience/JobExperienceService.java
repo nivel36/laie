@@ -22,21 +22,14 @@ public class JobExperienceService extends AbstractService<JobExperience> {
 	}
 
 	@Override
-	public void insert(final JobExperience jobExperience) {
+	public JobExperience save(final JobExperience jobExperience) {
 		Objects.requireNonNull(jobExperience);
 		this.validateDates(jobExperience);
-		super.insert(jobExperience);
+		return super.save(jobExperience);
 	}
 
 	public void setJobExperienceDao(final JobExperienceDao jobExperienceDao) {
 		this.jobExperienceDao = jobExperienceDao;
-	}
-
-	@Override
-	public JobExperience update(final JobExperience jobExperience) {
-		Objects.requireNonNull(jobExperience);
-		this.validateDates(jobExperience);
-		return super.update(jobExperience);
 	}
 
 	private void validateDates(final JobExperience jobExperience) {

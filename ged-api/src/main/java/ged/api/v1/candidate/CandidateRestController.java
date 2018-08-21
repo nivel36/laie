@@ -59,7 +59,7 @@ public class CandidateRestController extends AbstractRestController {
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<CandidateDto> findAll() {
 		final List<Candidate> candidates = this.candidateService.findAll();
-		return convertToCandidateDtoList(candidates);
+		return this.convertToCandidateDtoList(candidates);
 	}
 
 	@POST
@@ -68,7 +68,7 @@ public class CandidateRestController extends AbstractRestController {
 	public Response insert(@Valid final CandidateDto candidateDto) {
 		Response.ResponseBuilder builder = null;
 		final Candidate candidateToInsert = this.candidateMapper.mapDto(candidateDto);
-		this.candidateService.update(candidateToInsert);
+		this.candidateService.save(candidateToInsert);
 		builder = Response.ok();
 		return builder.build();
 	}
@@ -78,7 +78,7 @@ public class CandidateRestController extends AbstractRestController {
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<CandidateDto> search(@QueryParam("searchText") final String searchText) {
 		final List<Candidate> candidates = this.candidateService.search(searchText);
-		return convertToCandidateDtoList(candidates);
+		return this.convertToCandidateDtoList(candidates);
 	}
 
 	public void setCandidateService(final CandidateService candidateService) {

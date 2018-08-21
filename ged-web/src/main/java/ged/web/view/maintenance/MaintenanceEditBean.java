@@ -45,6 +45,6 @@ public class MaintenanceEditBean extends AbstractBean {
 	}
 
 	public void save() {
-		this.maintenanceService.update(this.enumEntity);
+		this.enumEntity = this.maintenanceService.save(this.enumEntity);
 	}
 }

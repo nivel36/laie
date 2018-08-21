@@ -71,12 +71,7 @@ public class SkillsBean extends AbstractDialogBean {
 	}
 
 	private void saveCurriculum() {
-		if (this.curriculum.getId() == 0) {
-			this.curriculum = this.curriculumService.update(this.curriculum);
-		}
-		else {
-			this.curriculumService.insert(this.curriculum);
-		}
+		this.curriculum = this.curriculumService.save(this.curriculum);
 	}
 
 	public void setCurriculumService(final CurriculumService curriculumService) {

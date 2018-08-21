@@ -68,7 +68,7 @@ public class ChangePasswordDialogBean extends AbstractDialogBean {
 		final String hash = this.hashPassword(this.newPassword);
 		Objects.requireNonNull(hash);
 		user.setPassword(hash.toCharArray());
-		return this.userService.update(user);
+		return this.userService.save(user);
 	}
 
 	public String getNewPassword() {

@@ -170,7 +170,7 @@ public class UserDaoJpaTest {
 	@Test
 	public void insertNullUserTest() {
 		this.thrown.expect(NullPointerException.class);
-		this.userDaoJpa.insert(null);
+		this.userDaoJpa.save(null);
 	}
 
 	@Test
@@ -192,13 +192,13 @@ public class UserDaoJpaTest {
 
 		when(this.persistenceFacade.findByQuery(UserClosure.class, "UserClosure.findAntecessorsUserClosuresById", map("id", user.getId()), 0, 0))
 				.thenReturn(userClosures);
-		this.userDaoJpa.insert(user);
+		this.userDaoJpa.save(user);
 	}
 
 	@Test
 	public void insertUserWithoutManagerTest() {
 		final User user = new User();
-		this.userDaoJpa.insert(user);
+		this.userDaoJpa.save(user);
 	}
 
 	@Test
@@ -304,6 +304,6 @@ public class UserDaoJpaTest {
 	@Test
 	public void updateNullTest() {
 		this.thrown.expect(NullPointerException.class);
-		this.userDaoJpa.update(null);
+		this.userDaoJpa.save(null);
 	}
 }
