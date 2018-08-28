@@ -15,11 +15,17 @@ import org.slf4j.LoggerFactory;
 import ged.ejb.core.AbstractAuditedService;
 import ged.ejb.core.model.AbstractDao;
 import ged.ejb.core.model.Repository;
+import ged.ejb.user.role.Role;
+import ged.ejb.user.role.RoleDao;
 
 @Stateless
 public class UserService extends AbstractAuditedService<User> {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
+
+	@Inject
+	@Repository
+	private RoleDao roleDao;
 
 	@Inject
 	@Repository
@@ -37,6 +43,15 @@ public class UserService extends AbstractAuditedService<User> {
 		return emailExists;
 	}
 
+	public List<Role> findAllRoles() {
+		return this.roleDao.findAll();
+	}
+
+	public Role findRoleByName(final String roleName) {
+		Objects.requireNonNull(roleName);
+		return this.roleDao.findRoleByName(roleName);
+	}
+
 	public List<User> findSubordinateUsers(final User user) {
 		Objects.requireNonNull(user);
 		logger.debug("Find subordinate users of user {}", user.getEmail());
@@ -51,15 +66,15 @@ public class UserService extends AbstractAuditedService<User> {
 
 	public List<User> findUsersOfflineLastMonth() {
 		logger.debug("Find users offline last month");
-		final LocalDateTime oneMonthAgo = this.getOneMonthAgo();
 		final LocalDateTime today = LocalDateTime.now();
+		final LocalDateTime oneMonthAgo = today.minusMonths(1);
 		return this.userDao.findUsersOffline(oneMonthAgo, today);
 	}
 
 	public List<User> findUsersOnlineLastWeek() {
 		logger.debug("Find users online last week");
-		final LocalDateTime oneWeekAgo = this.getOneWeekAgo();
 		final LocalDateTime today = LocalDateTime.now();
+		final LocalDateTime oneWeekAgo = today.minusDays(7);
 		return this.userDao.findUsersOnline(oneWeekAgo, today);
 	}
 
@@ -68,21 +83,43 @@ public class UserService extends AbstractAuditedService<User> {
 		return this.userDao;
 	}
 
-	private LocalDateTime getOneMonthAgo() {
-		return LocalDateTime.now().minusMonths(1);
+	private boolean hasValidManagerRole(final User user) {
+		final User manager = user.getManager();
+		if (manager != null) {
+			if (!this.isASubordinateRole(manager.getRole(), user.getRole())) {
+				return false;
+			}
+		}
+		return true;
 	}
 
-	private LocalDateTime getOneWeekAgo() {
-		return LocalDateTime.now().minusDays(7);
+	private boolean hasValidSubordinateRoles(final User user) {
+		final List<User> subordinateUsers = this.findSubordinateUsers(user);
+		for (final User subordinateUser : subordinateUsers) {
+			if (!this.isASubordinateRole(user.getRole(), subordinateUser.getRole())) {
+				return false;
+			}
+		}
+		return true;
 	}
 
-	private boolean isDeletingAdmin(final User user) {
-		return user.isDeleted() && user.isAdmin();
+	public boolean isASubordinateRole(final Role manager, final Role role) {
+		Objects.requireNonNull(manager);
+		Objects.requireNonNull(role);
+		final List<Role> subordinateRoles = this.roleDao.findSubordinateRoles(manager);
+		for (final Role subordinateRole : subordinateRoles) {
+			if (subordinateRole.equals(role)) {
+				logger.debug("Role {} is a subordinate role of {}", role.getName(), manager.getName());
+				return true;
+			}
+		}
+		logger.debug("Role {} isn't a subordinate role of {}", role.getName(), manager.getName());
+		return false;
 	}
 
-	private boolean isLastAdminOnApp(final User user) {
-		final User userInDataBase = this.find(user.getId());
-		return userInDataBase.isAdmin() && !user.isAdmin() && !this.userDao.existsMoreThanOneAdmin();
+	private boolean isDuplicateEmail(final User user) {
+		final User repositoryUser = this.findUserByEmail(user.getEmail());
+		return (repositoryUser != null) && !repositoryUser.equals(user);
 	}
 
 	public long numberOfUsersInTeam(final User user) {
@@ -92,49 +129,40 @@ public class UserService extends AbstractAuditedService<User> {
 
 	public long numberOfUsersOfflineLastMonth() {
 		logger.debug("Find number of users offline last month");
-		final LocalDateTime oneMonthAgo = this.getOneMonthAgo();
 		final LocalDateTime today = LocalDateTime.now();
+		final LocalDateTime oneMonthAgo = today.minusMonths(1);
 		return this.userDao.numberOfUsersOffline(oneMonthAgo, today);
 	}
 
 	public long numberOfUsersOnlineLastWeek() {
 		logger.debug("Find number of users online last week");
-		final LocalDateTime oneWeekAgo = this.getOneWeekAgo();
 		final LocalDateTime today = LocalDateTime.now();
+		final LocalDateTime oneWeekAgo = today.minusDays(7);
 		return this.userDao.numberOfUsersOnline(oneWeekAgo, today);
 	}
 
 	@Override
 	public User save(final User user) {
-		if (user.getId() == 0) {
-			if (user.equals(user.getManager())) {
-				logger.warn("The user {} can't be his/her manager", user.getEmail());
-				throw new IllegalStateException("User can't be his/her manager");
-			}
-			if (this.findUserByEmail(user.getEmail()) != null) {
-				throw new ValidationException("Email exists");
-			}
-			if (user.getLanguage() == null) {
-				user.setLanguage("ES");
-			}
-			if (user.getRowsPerPage() == 0) {
-				user.setRowsPerPage(25);
-			}
-			if ((user.getPassword() == null) || (user.getPassword().length == 0)) {
-				user.setPassword("M+SzETkPtT+deVQNIScBEXivvfozSne5QqIqyWICLv0=".toCharArray());
-			}
+		Objects.requireNonNull(user);
+		if (user.equals(user.getManager())) {
+			logger.warn("The user {} can't be his/her manager", user.getEmail());
+			throw new IllegalStateException("User can't be his/her manager");
 		}
-		else {
-			if (this.isLastAdminOnApp(user)) {
-				logger.warn("Can't change user {} role. Last Admin on app", user.getEmail());
-				throw new UserException("Can't change user role. Last Admin on app");
-			}
-			if (this.isDeletingAdmin(user)) {
-				logger.warn("Can't delete user {}. User is Admin", user.getEmail());
-				throw new UserException("Can't delete user. User is Admin");
-			}
+		if (this.isDuplicateEmail(user)) {
+			logger.warn("The email {} alredy in use", user.getEmail());
+			throw new ValidationException("Email exists");
+		}
+		if (!this.hasValidSubordinateRoles(user)) {
+			throw new IllegalStateException();
+		}
+		if (!this.hasValidManagerRole(user)) {
+			throw new IllegalStateException();
 		}
 		return this.userDao.save(user);
+	}
+
+	public void setRoleDao(final RoleDao roleDao) {
+		this.roleDao = roleDao;
 	}
 
 	public void setUserDao(final UserDao userDao) {

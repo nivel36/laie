@@ -7,22 +7,14 @@ import ged.api.v1.mapper.Mapper;
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
 import ged.ejb.user.role.Role;
-import ged.ejb.user.role.RoleService;
 
 @Mapper
 public class UserMapper implements AbstractMapper<User, UserDto> {
 
-	private final RoleService roleService;
-
-	private final UserService userService;
-
 	@Inject
-	public UserMapper(final RoleService roleService, final UserService userService) {
-		this.userService = userService;
-		this.roleService = roleService;
-	}
+	private UserService userService;
 
-	
+	@Override
 	public User mapDto(final UserDto userDto) {
 		if (userDto == null) {
 			return null;
@@ -40,14 +32,14 @@ public class UserMapper implements AbstractMapper<User, UserDto> {
 		user.setName(userDto.getName());
 		user.setPhoneNumber(userDto.getPhoneNumber());
 		if (userDto.getRoleName() != null) {
-			final Role role = this.roleService.findRoleByName(userDto.getRoleName());
+			final Role role = this.userService.findRoleByName(userDto.getRoleName());
 			user.setRole(role);
 		}
 		user.setSurname(userDto.getSurname());
 		return user;
 	}
 
-	
+	@Override
 	public UserDto mapEntity(final User user) {
 		if (user == null) {
 			return null;
@@ -66,5 +58,9 @@ public class UserMapper implements AbstractMapper<User, UserDto> {
 		userDto.setRoleName(user.getRole().getName());
 		userDto.setSurname(user.getSurname());
 		return userDto;
+	}
+
+	public void setUserService(final UserService userService) {
+		this.userService = userService;
 	}
 }

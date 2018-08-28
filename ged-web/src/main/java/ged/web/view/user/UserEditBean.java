@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Objects;
 
 import javax.annotation.PostConstruct;
-import javax.ejb.EJBException;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -19,15 +18,14 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.UploadedFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ged.ejb.core.FileUploadService;
 import ged.ejb.user.User;
-import ged.ejb.user.UserException;
 import ged.ejb.user.UserService;
 import ged.ejb.user.role.Role;
-import ged.ejb.user.role.RoleService;
 import ged.web.core.view.AbstractBean;
 
 @Named
@@ -38,16 +36,26 @@ public class UserEditBean extends AbstractBean {
 
 	private static final long serialVersionUID = -2187385732087309689L;
 
-	@Inject
-	private transient FileUploadService fileUploadService;
+	private String cancelUrl;
 
 	@Inject
-	private transient RoleService roleService;
+	private transient FileUploadService fileUploadService;
 
 	private User user;
 
 	@Inject
 	private transient UserService userService;
+
+	private void buildUser() {
+		this.user = new User();
+		this.user.setLanguage("ES");
+		this.user.setRowsPerPage(25);
+		this.user.setPassword("M+SzETkPtT+deVQNIScBEXivvfozSne5QqIqyWICLv0=".toCharArray());
+	}
+
+	public String cancel() {
+		return this.cancelUrl;
+	}
 
 	public void cleanManager() {
 		this.user.setManager(null);
@@ -71,7 +79,11 @@ public class UserEditBean extends AbstractBean {
 		logger.debug("UserEditBean init");
 		this.user = this.getValueFromFlash("user");
 		if (this.user == null) {
-			this.user = new User();
+			this.buildUser();
+			this.cancelUrl = "/faces/user/userSearch";
+		}
+		else {
+			this.cancelUrl = "/faces/user/user?faces-redirect=true&userId=" + this.user.getId();
 		}
 	}
 
@@ -80,41 +92,17 @@ public class UserEditBean extends AbstractBean {
 			// They got the same role.
 			return true;
 		}
-		return this.roleService.isASubordinateRole(managerRole, userRole);
-	}
-
-	public boolean isNewUser() {
-		if (this.user == null) {
-			throw new IllegalStateException("Null user");
-		}
-		return this.user.getId() == 0;
+		return this.userService.isASubordinateRole(managerRole, userRole);
 	}
 
 	public String save() {
 		logger.debug("Save user action performed");
-		try {
-			this.user = this.userService.save(this.user);
-		}
-		catch (final EJBException e) {
-			if (e.getCause() instanceof UserException) {
-				logger.error("Trying to change the role to the last admin on the app");
-				final Role admin = this.roleService.findAdmin();
-				this.user.setRole(admin);
-				this.addMessage(SEVERITY_ERROR, "user.error.last_admin", "user.error.last_admin");
-			}
-			else {
-				throw e;
-			}
-		}
+		this.user = this.userService.save(this.user);
 		return "/faces/user/user?faces-redirect=true&userId=" + this.user.getId();
 	}
 
 	public void setFileUploadService(final FileUploadService fileUploadService) {
 		this.fileUploadService = fileUploadService;
-	}
-
-	public void setRoleService(final RoleService roleService) {
-		this.roleService = roleService;
 	}
 
 	public void setUser(final User user) {
@@ -127,12 +115,12 @@ public class UserEditBean extends AbstractBean {
 
 	public void uploadImage(final FileUploadEvent event) throws IOException {
 		Objects.requireNonNull(event);
-		if (event.getFile() == null) {
+		final UploadedFile uploadedFile = event.getFile();
+		if (uploadedFile == null) {
 			return;
 		}
-		final String uuid = this.fileUploadService.uploadImage(event.getFile().getInputstream());
+		final String uuid = this.fileUploadService.uploadImage(uploadedFile.getInputstream());
 		this.user.setImageFileName(uuid);
-
 	}
 
 	public void validateEmail(final FacesContext context, final UIComponent component, final Object value) {
@@ -140,13 +128,13 @@ public class UserEditBean extends AbstractBean {
 		if (value == null) {
 			return;
 		}
-		final String email = (String) value;
+		final String userEmail = (String) value;
 		if (value.equals(this.user.getEmail())) {
 			// If the old and the new email are equals, the user is not updating the email.
 			return;
 		}
-		if (this.userService.emailExists(email)) {
-			logger.debug("Validation error. The email {} exists", email);
+		if (this.userService.emailExists(userEmail)) {
+			logger.warn("Email {} exists", userEmail);
 			final String msg = this.translator.message("user.error.email_exists");
 			throw new ValidatorException(new FacesMessage(SEVERITY_ERROR, msg, msg));
 		}
@@ -164,7 +152,7 @@ public class UserEditBean extends AbstractBean {
 		final Role userRole = (Role) value;
 		final Role managerRole = manager.getRole();
 		if (!this.isAvalidRole(userRole, managerRole)) {
-			logger.debug("Validation error. The role {} for user {} is invalid", userRole.getName(), this.user.getName());
+			logger.warn("Role {} for user {} is invalid", userRole.getName(), this.user.getName());
 			final String msg = this.translator.message("user.error.role");
 			throw new ValidatorException(new FacesMessage(SEVERITY_ERROR, msg, msg));
 		}

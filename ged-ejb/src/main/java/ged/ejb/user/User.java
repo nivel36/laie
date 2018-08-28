@@ -104,7 +104,6 @@ public class User extends AbstractAuditedEntity {
 		this.bookmarks.add(bookmark);
 	}
 
-	
 	@Override
 	public boolean equals(final Object obj) {
 		if (obj == null) {
@@ -117,7 +116,7 @@ public class User extends AbstractAuditedEntity {
 			return false;
 		}
 		final User other = (User) obj;
-		return Objects.equals(this.email, other.email);
+		return Objects.equals(this.email, other.email) && Objects.equals(this.name, other.email) && Objects.equals(this.email, other.email);
 	}
 
 	public List<Action> getActions() {
@@ -141,6 +140,10 @@ public class User extends AbstractAuditedEntity {
 	}
 
 	public String getFullName() {
+		if (this.name == null) {
+			return null;
+		}
+
 		return this.name + " " + this.surname;
 	}
 
@@ -188,7 +191,6 @@ public class User extends AbstractAuditedEntity {
 		return this.surname;
 	}
 
-	
 	@Override
 	public int hashCode() {
 		return Objects.hash(this.email);
@@ -199,15 +201,10 @@ public class User extends AbstractAuditedEntity {
 	}
 
 	public boolean isAdmin() {
+		if (this.role == null) {
+			return false;
+		}
 		return "ADMIN".equals(this.role.getName());
-	}
-
-	public boolean isRecruiter() {
-		return "RECRUITER".equals(this.role.getName());
-	}
-
-	public boolean isRecruiterAdmin() {
-		return "RECRUITER_ADMIN".equals(this.role.getName());
 	}
 
 	public void removeAction(final Action action) {
@@ -284,7 +281,6 @@ public class User extends AbstractAuditedEntity {
 		this.surname = surname;
 	}
 
-	
 	@Override
 	public String toString() {
 		return this.getFullName();

@@ -24,7 +24,6 @@ import ged.ejb.core.FileUploadService;
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
 import ged.ejb.user.role.Role;
-import ged.ejb.user.role.RoleService;
 import ged.web.core.util.Translator;
 import ged.web.view.user.UserEditBean;
 
@@ -37,9 +36,6 @@ public class UserEditBeanTest {
 	@Mock
 	private Flash flash;
 
-	@Mock
-	private RoleService roleService;
-
 	@Rule
 	public ExpectedException thrown = ExpectedException.none();
 
@@ -50,6 +46,25 @@ public class UserEditBeanTest {
 
 	@Mock
 	private UserService userService;
+
+	@Test
+	public void cancelEditUserTest() {
+		final User user = new User();
+		user.setEmail("abel@test.com");
+		user.setId(1L);
+		Mockito.when(this.flash.containsKey("user")).thenReturn(true);
+		Mockito.when(this.flash.get("user")).thenReturn(user);
+		this.userEditBean.init();
+		final String url = this.userEditBean.cancel();
+		Assert.assertEquals("/faces/user/user?faces-redirect=true&userId=1", url);
+	}
+
+	@Test
+	public void cancelNewUserTest() {
+		this.userEditBean.init();
+		final String url = this.userEditBean.cancel();
+		Assert.assertEquals("/faces/user/userSearch", url);
+	}
 
 	@Test
 	public void cleanManagerTest() {
@@ -108,29 +123,6 @@ public class UserEditBeanTest {
 		Assert.assertEquals("abel@test.com", this.userEditBean.getUser().getEmail());
 	}
 
-	@Test
-	public void isNewUserFalseTest() {
-		final User user = new User();
-		user.setId(1L);
-		this.userEditBean.setUser(user);
-		final boolean newUser = this.userEditBean.isNewUser();
-		Assert.assertEquals(false, newUser);
-	}
-
-	@Test
-	public void isNewUserNullUserTest() {
-		this.thrown.expect(IllegalStateException.class);
-		this.userEditBean.isNewUser();
-	}
-
-	@Test
-	public void isNewUserTrueTest() {
-		final User user = new User();
-		this.userEditBean.setUser(user);
-		final boolean newUser = this.userEditBean.isNewUser();
-		Assert.assertEquals(true, newUser);
-	}
-
 	private List<User> mockListOfUsers() {
 		final List<User> mockedManagers = new ArrayList<>();
 		final User manager = new User();
@@ -146,7 +138,6 @@ public class UserEditBeanTest {
 		this.userEditBean.setUser(user);
 		final User savedUser = new User();
 		savedUser.setEmail("abel@test.com");
-		this.userEditBean.setUser(savedUser);
 		savedUser.setId(1L);
 		Mockito.when(this.userService.save(user)).thenReturn(savedUser);
 		this.userEditBean.save();
@@ -177,7 +168,6 @@ public class UserEditBeanTest {
 	public void setUp() {
 		this.userEditBean = new UserEditBean();
 		this.userEditBean.setFileUploadService(this.fileUploadService);
-		this.userEditBean.setRoleService(this.roleService);
 		this.userEditBean.setUserService(this.userService);
 		this.userEditBean.setFlash(this.flash);
 		this.userEditBean.setTranslator(this.translator);
@@ -280,7 +270,7 @@ public class UserEditBeanTest {
 
 		this.userEditBean.setUser(user);
 		Mockito.when(this.translator.message("user.error.role")).thenReturn("Error message");
-		Mockito.when(this.roleService.isASubordinateRole(subordinate, admin)).thenReturn(false);
+		Mockito.when(this.userService.isASubordinateRole(subordinate, admin)).thenReturn(false);
 		this.thrown.expect(ValidatorException.class);
 		this.userEditBean.validateRole(null, null, admin);
 	}
@@ -307,7 +297,7 @@ public class UserEditBeanTest {
 		this.userEditBean.setUser(user);
 
 		user.setManager(manager);
-		Mockito.when(this.roleService.isASubordinateRole(admin, subordinate)).thenReturn(true);
+		Mockito.when(this.userService.isASubordinateRole(admin, subordinate)).thenReturn(true);
 		this.userEditBean.validateRole(null, null, subordinate);
 	}
 

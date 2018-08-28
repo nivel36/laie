@@ -75,7 +75,7 @@ public class JobOfferEditBean extends AbstractDialogBean {
 	}
 
 	public boolean isUserHasPermissionToEditJobOffer() {
-		return this.userHasPermissionToEdit(this.jobOffer);
+		return this.hasPermissionToEdit(this.sessionBean.getUser(), this.jobOffer);
 	}
 
 	public void onCloseClientSearchDialog(final SelectEvent e) {

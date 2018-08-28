@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:i18n="http://legion.com/i18n"
-	xmlns:cc="http://java.sun.com/jsf/composite/components" template="/WEB-INF/templates/default.xhtml">
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:i18n="http://legion.com/i18n" template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
-		<title>#{userEditBean.newUser ? i18n['user.new_user'] : userEditBean.user}</title>
+		<title>#{empty userEditBean.user.fullName ? i18n['user.new_user'] : userEditBean.user.fullName}</title>
 	</ui:define>
 
 	<ui:define name="content">
@@ -13,14 +12,14 @@
 				<p:breadCrumb homeDisplay="text">
 					<p:menuitem value="#{i18n['menu.index']}" url="/faces/index.xhtml" />
 					<p:menuitem value="#{i18n['user.users']}" url="/faces/user/userSearch.xhtml" />
-					<p:menuitem value="#{userEditBean.newUser ? i18n['user.new_user'] : userEditBean.user}" disabled="true" />
+					<p:menuitem value="#{empty userEditBean.user.fullName ? i18n['user.new_user'] : userEditBean.user.fullName}" disabled="true" />
 				</p:breadCrumb>
 			</div>
 		</div>
 		<div class="ui-g">
 			<div class="ui-g-12 ui-xl-8">
 				<h:form id="userPanelForm" enctype="multipart/form-data">
-					<p:panel header="#{userEditBean.newUser ? i18n['user.new_user'] : userEditBean.user.fullName}">
+					<p:panel header="#{empty userEditBean.user.fullName ? i18n['user.new_user'] : userEditBean.user.fullName}">
 						<div class="ui-g">
 							<div class="ui-g-12 ui-lg-3 ui-xl-2">
 								<div class="user-card">
@@ -39,11 +38,19 @@
 							<div class="ui-g-12 ui-lg-9 ui-xl-10">
 								<div class="ui-g">
 									<div class="ui-g-12 ui-md-6">
-										<cc:inputText name="name" label="#{i18n['user.name']}" value="#{userEditBean.user.name}" required="true" />
+										<div class="form-group">
+											<p:outputLabel value="#{i18n['user.name']}" for="name" />
+											<p:inputText id="name" value="#{userEditBean.user.name}" required="true" />
+											<p:message for="name" />
+										</div>
 									</div>
 
 									<div class="ui-g-12 ui-md-6">
-										<cc:inputText name="surname" label="#{i18n['user.surname']}" value="#{userEditBean.user.surname}" required="true" />
+										<div class="form-group">
+											<p:outputLabel value="#{i18n['user.surname']}" for="surname" />
+											<p:inputText id="surname" value="#{userEditBean.user.surname}" required="true" />
+											<p:message for="surname" />
+										</div>
 									</div>
 
 									<div class="ui-g-12 ui-md-6">
@@ -55,17 +62,25 @@
 									</div>
 
 									<div class="ui-g-12 ui-md-6">
-										<cc:inputText name="phone_number" label="#{i18n['user.phone_number']}" value="#{userEditBean.user.phoneNumber}" />
+										<div class="form-group">
+											<p:outputLabel value="#{i18n['user.phone_number']}" for="phone_number" />
+											<p:inputText id="phone_number" value="#{userEditBean.user.phoneNumber}" />
+											<p:message for="phone_number" />
+										</div>
 									</div>
 
 									<div class="ui-g-12 ui-md-6">
-										<cc:selectOneMenu name="role" label="#{i18n['user.role']}" value="#{userEditBean.user.role}" validator="#{userEditBean.validateRole}">
-											<f:selectItems var="role" itemValue="#{role}" value="#{applicationBean.roles}" itemLabel="#{i18n:translate(role.name)}" />
-										</cc:selectOneMenu>
+										<div class="form-group">
+											<p:outputLabel value="#{i18n['user.role']}" for="role" />
+											<p:selectOneMenu id="role" value="#{userEditBean.user.role}" validator="#{userEditBean.validateRole}">
+												<f:selectItems var="role" itemValue="#{role}" value="#{applicationBean.roles}" itemLabel="#{i18n:translate(role.name)}" />
+											</p:selectOneMenu>
+											<p:message for="role" />
+										</div>
 									</div>
 
 									<div class="ui-sm-12 ui-md-6">
-										<h:panelGroup id="managerGroup" layout="block" styleClass="form-group">
+										<h:panelGroup id="managerGroup" layout="block" styleClass="form-group" rendered="#{not userEditBean.user.admin}">
 											<p:outputLabel value="#{i18n['user.manager']}" for="manager" />
 											<div class="ui-inputgroup">
 												<p:autoComplete id="manager" value="#{userEditBean.user.manager}" completeMethod="#{userEditBean.completeManager}" var="manager"
@@ -87,17 +102,20 @@
 									</div>
 
 									<div class="ui-g-12 ui-md-6">
-										<cc:calendar name="date_of_join" label="#{i18n['user.date_of_join']}" value="#{userEditBean.user.dateOfJoin}" />
+										<div class="form-group">
+											<p:outputLabel value="#{i18n['user.date_of_join']}" for="date_of_join" />
+											<p:calendar id="date_of_join" value="#{userEditBean.user.dateOfJoin}" required="#{cc.attrs.required}" pattern="dd/MM/yyyy">
+												<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
+											</p:calendar>
+											<p:message for="date_of_join" />
+										</div>
 									</div>
 								</div>
 
 								<div class="ui-g">
 									<div class="ui-g-12">
 										<div class="form-action-primary">
-											<p:button styleClass="btn-gray" value="#{i18n['action.cancel']}" outcome="userSearch" rendered="#{userEditBean.newUser}" />
-											<p:button styleClass="btn-gray" value="#{i18n['action.cancel']}" outcome="user" rendered="#{not userEditBean.newUser}">
-												<f:param name="userId" value="#{userEditBean.user.id}" />
-											</p:button>
+											<p:commandButton styleClass="btn-gray" value="#{i18n['action.cancel']}" action="#{userEditBean.cancel}" immediate="true" />
 											<p:commandButton styleClass="btn-primary" value="#{i18n['action.save']}" action="#{userEditBean.save}" process="@form" update="@form growl" />
 										</div>
 									</div>

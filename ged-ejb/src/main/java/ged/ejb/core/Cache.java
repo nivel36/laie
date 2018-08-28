@@ -10,8 +10,8 @@ import javax.inject.Inject;
 import ged.ejb.curriculum.CurriculumService;
 import ged.ejb.curriculum.language.LanguageLevel;
 import ged.ejb.curriculum.skills.SkillLevel;
+import ged.ejb.user.UserService;
 import ged.ejb.user.role.Role;
-import ged.ejb.user.role.RoleService;
 
 @ApplicationScoped
 public class Cache implements Serializable {
@@ -25,10 +25,10 @@ public class Cache implements Serializable {
 
 	private List<Role> roles;
 
-	@Inject
-	private transient RoleService roleService;
-
 	private List<SkillLevel> skillLevels;
+
+	@Inject
+	private transient UserService userService;
 
 	public List<LanguageLevel> getLanguageLevels() {
 		return this.languageLevels;
@@ -46,6 +46,6 @@ public class Cache implements Serializable {
 	public void init() {
 		this.skillLevels = this.curriculumService.findAllSkillLevels();
 		this.languageLevels = this.curriculumService.findAllLanguageLevels();
-		this.roles = this.roleService.findAllRoles();
+		this.roles = this.userService.findAllRoles();
 	}
 }

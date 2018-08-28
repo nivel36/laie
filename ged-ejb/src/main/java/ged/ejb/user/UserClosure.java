@@ -2,6 +2,7 @@ package ged.ejb.user;
 
 import java.util.Objects;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -21,9 +22,19 @@ public class UserClosure extends AbstractEntity {
 	@JoinColumn(name = "descendant_id", nullable = false)
 	private User descendant;
 
-	private int pathLength;
+	@Column(nullable = false)
+	private Integer pathLength;
 
-	
+	public UserClosure() {
+
+	}
+
+	public UserClosure(final User antecessor, final User descendant, final Integer pathLength) {
+		this.antecessor = antecessor;
+		this.descendant = descendant;
+		this.pathLength = pathLength;
+	}
+
 	@Override
 	public boolean equals(final Object obj) {
 		if (this == obj) {
@@ -48,11 +59,10 @@ public class UserClosure extends AbstractEntity {
 		return this.descendant;
 	}
 
-	public int getPathLength() {
+	public Integer getPathLength() {
 		return this.pathLength;
 	}
 
-	
 	@Override
 	public int hashCode() {
 		return Objects.hash(this.antecessor, this.descendant, this.pathLength);
@@ -66,7 +76,7 @@ public class UserClosure extends AbstractEntity {
 		this.descendant = descendant;
 	}
 
-	public void setPathLength(final int pathLength) {
+	public void setPathLength(final Integer pathLength) {
 		this.pathLength = pathLength;
 	}
 }

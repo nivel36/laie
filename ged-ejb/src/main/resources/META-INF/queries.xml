@@ -310,15 +310,6 @@
 		]]></query>
 	</named-query>
 
-	<named-query name="User.findAll">
-		<query><![CDATA[
-			SELECT u
-			FROM User u
-			LEFT JOIN FETCH u.role
-		]]>
-		</query>
-	</named-query>
-
 	<named-query name="User.findByNameAndSurname">
 		<query><![CDATA[
 			SELECT u

@@ -123,6 +123,17 @@ public abstract class AbstractBean implements Serializable {
 		return this.externalContext.getRequestParameterMap().get(key);
 	}
 
+	protected boolean hasPermissionToEdit(final User user, final Ownerable entity) {
+		final User owner = entity.getOwner();
+		if (user.isAdmin()) {
+			return true;
+		}
+		if (owner.equals(user)) {
+			return true;
+		}
+		return this.sessionBean.getTeam().contains(user);
+	}
+
 	protected void openBigDialog(final String name) {
 		this.openBigDialog(name, null);
 	}
@@ -161,17 +172,5 @@ public abstract class AbstractBean implements Serializable {
 
 	public void setTranslator(final Translator translator) {
 		this.translator = translator;
-	}
-
-	protected boolean userHasPermissionToEdit(final Ownerable entity) {
-		final User owner = entity.getOwner();
-		final User user = this.sessionBean.getUser();
-		if (user.isAdmin() || user.isRecruiterAdmin()) {
-			return true;
-		}
-		if (owner.equals(user)) {
-			return true;
-		}
-		return this.sessionBean.getTeam().contains(user);
 	}
 }

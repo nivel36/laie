@@ -14,13 +14,9 @@ import org.mockito.runners.MockitoJUnitRunner;
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
 import ged.ejb.user.role.Role;
-import ged.ejb.user.role.RoleService;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserMapperTest {
-
-	@Mock
-	private RoleService roleService;
 
 	private UserMapper userMapper;
 
@@ -35,7 +31,7 @@ public class UserMapperTest {
 
 		final Role adminRole = new Role();
 		adminRole.setName("ADMIN");
-		Mockito.when(this.roleService.findRoleByName("ADMIN")).thenReturn(adminRole);
+		Mockito.when(this.userService.findRoleByName("ADMIN")).thenReturn(adminRole);
 		final UserDto userDto = this.mockUserDto();
 
 		final User user = this.userMapper.mapDto(userDto);
@@ -119,6 +115,7 @@ public class UserMapperTest {
 
 	@Before
 	public void setUp() {
-		this.userMapper = new UserMapper(this.roleService, this.userService);
+		this.userMapper = new UserMapper();
+		this.userMapper.setUserService(this.userService);
 	}
 }
