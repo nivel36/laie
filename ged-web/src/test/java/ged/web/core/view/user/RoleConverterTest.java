@@ -28,12 +28,6 @@ public class RoleConverterTest {
 	private UserService userService;
 
 	@Test
-	public void getAsObjectInvalidTest() {
-		this.thrown.expect(ConverterException.class);
-		this.roleConverter.getAsObject(null, null, "qwq");
-	}
-
-	@Test
 	public void getAsObjectNotFoundTest() {
 		final Role roleFromDatabase = new Role();
 		roleFromDatabase.setId(1L);
