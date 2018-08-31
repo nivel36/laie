@@ -1,83 +1,97 @@
 package ged.api.v1.user;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.mockito.Mockito.when;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
 import ged.ejb.user.role.Role;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class UserMapperTest {
+
+	@Nested
+	class MapDto {
+
+		@Test
+		public void mapDtoShouldReturnAnEntity() {
+			final User boss = new User();
+			boss.setEmail("boss@test.com");
+			when(userService.findUserByEmail("boss@test.com")).thenReturn(boss);
+
+			final Role adminRole = new Role();
+			adminRole.setName("ADMIN");
+			when(userService.findRoleByName("ADMIN")).thenReturn(adminRole);
+
+			final UserDto userDto = mockUserDto();
+
+			final User user = userMapper.mapDto(userDto);
+
+			assertNotNull(user);
+			assertEquals(userDto.getDateOfJoin(), user.getDateOfJoin());
+			assertEquals(userDto.getEmail(), user.getEmail());
+			assertEquals(userDto.getImageFileName(), user.getImageFileName());
+			assertEquals(userDto.getLanguage(), user.getLanguage());
+			assertEquals(userDto.getLastConnection(), user.getLastConnection());
+			assertEquals(userDto.getManagerEmail(), user.getManager().getEmail());
+			assertEquals(userDto.getName(), user.getName());
+			assertEquals(userDto.getPhoneNumber(), user.getPhoneNumber());
+			assertEquals(userDto.getRoleName(), user.getRole().getName());
+			assertEquals(userDto.getSurname(), user.getSurname());
+		}
+
+		@Test
+		public void nullDtoShouldReturnNullEntity() {
+			final User user = userMapper.mapDto(null);
+			assertNull(user);
+		}
+	}
+
+	@Nested
+	class MapEntity {
+
+		@Test
+		public void mapEntityShouldReturnDto() {
+			final User user = mockUser();
+
+			final UserDto userDto = userMapper.mapEntity(user);
+
+			assertNotNull(userDto);
+			assertEquals(user.getDateOfJoin(), userDto.getDateOfJoin());
+			assertEquals(user.getEmail(), userDto.getEmail());
+			assertEquals(user.getImageFileName(), userDto.getImageFileName());
+			assertEquals(user.getLanguage(), userDto.getLanguage());
+			assertEquals(user.getLastConnection(), userDto.getLastConnection());
+			assertEquals(user.getManager().getEmail(), userDto.getManagerEmail());
+			assertEquals(user.getName(), userDto.getName());
+			assertEquals(user.getPhoneNumber(), userDto.getPhoneNumber());
+			assertEquals(user.getRole().getName(), userDto.getRoleName());
+			assertEquals(user.getSurname(), userDto.getSurname());
+		}
+
+		@Test
+		public void nullEntityShouldReturnNullDto() {
+			final UserDto userDto = userMapper.mapEntity(null);
+			assertNull(userDto);
+		}
+	}
 
 	private UserMapper userMapper;
 
 	@Mock
 	private UserService userService;
-
-	@Test
-	public void mapDtoTest() {
-		final User boss = new User();
-		boss.setEmail("boss@test.com");
-		Mockito.when(this.userService.findUserByEmail("boss@test.com")).thenReturn(boss);
-
-		final Role adminRole = new Role();
-		adminRole.setName("ADMIN");
-		Mockito.when(this.userService.findRoleByName("ADMIN")).thenReturn(adminRole);
-		final UserDto userDto = this.mockUserDto();
-
-		final User user = this.userMapper.mapDto(userDto);
-
-		Assert.assertNotNull(user);
-		Assert.assertEquals(userDto.getDateOfJoin(), user.getDateOfJoin());
-		Assert.assertEquals(userDto.getEmail(), user.getEmail());
-		Assert.assertEquals(userDto.getImageFileName(), user.getImageFileName());
-		Assert.assertEquals(userDto.getLanguage(), user.getLanguage());
-		Assert.assertEquals(userDto.getLastConnection(), user.getLastConnection());
-		Assert.assertEquals(userDto.getManagerEmail(), user.getManager().getEmail());
-		Assert.assertEquals(userDto.getName(), user.getName());
-		Assert.assertEquals(userDto.getPhoneNumber(), user.getPhoneNumber());
-		Assert.assertEquals(userDto.getRoleName(), user.getRole().getName());
-		Assert.assertEquals(userDto.getSurname(), user.getSurname());
-	}
-
-	public void mapEntityTest() {
-		final User user = this.mockUser();
-
-		final UserDto userDto = this.userMapper.mapEntity(user);
-
-		Assert.assertNotNull(userDto);
-		Assert.assertEquals(user.getDateOfJoin(), userDto.getDateOfJoin());
-		Assert.assertEquals(user.getEmail(), userDto.getEmail());
-		Assert.assertEquals(user.getImageFileName(), userDto.getImageFileName());
-		Assert.assertEquals(user.getLanguage(), userDto.getLanguage());
-		Assert.assertEquals(user.getLastConnection(), userDto.getLastConnection());
-		Assert.assertEquals(user.getManager().getEmail(), userDto.getManagerEmail());
-		Assert.assertEquals(user.getName(), userDto.getName());
-		Assert.assertEquals(user.getPhoneNumber(), userDto.getPhoneNumber());
-		Assert.assertEquals(user.getRole().getName(), userDto.getRoleName());
-		Assert.assertEquals(user.getSurname(), userDto.getSurname());
-	}
-
-	@Test
-	public void mapNullDtoTest() {
-		final User user = this.userMapper.mapDto(null);
-		Assert.assertNull(user);
-	}
-
-	@Test
-	public void mapNullEntityTest() {
-		final UserDto userDto = this.userMapper.mapEntity(null);
-		Assert.assertNull(userDto);
-	}
 
 	private User mockUser() {
 		final User user = new User();
@@ -113,9 +127,9 @@ public class UserMapperTest {
 		return userDto;
 	}
 
-	@Before
+	@BeforeEach
 	public void setUp() {
-		this.userMapper = new UserMapper();
-		this.userMapper.setUserService(this.userService);
+		userMapper = new UserMapper();
+		userMapper.setUserService(userService);
 	}
 }

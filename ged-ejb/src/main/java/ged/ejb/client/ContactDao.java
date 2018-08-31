@@ -13,7 +13,8 @@ public class ContactDao extends AbstractDao<Contact> {
 
 	public List<Contact> findContactsByClient(final Client client) {
 		Objects.requireNonNull(client);
-		return this.getPersistenceFacade().findByQuery(Contact.class, "Contact.findByClient", map("client", client), 0, 0);
+		return this.getPersistenceFacade().findByQuery(Contact.class, "Contact.findByClient", map("client", client), 0,
+				0);
 	}
 
 	@Override
@@ -23,7 +24,6 @@ public class ContactDao extends AbstractDao<Contact> {
 
 	@Override
 	public List<Contact> search(final String searchText) {
-		Objects.requireNonNull(searchText);
-		return this.getPersistenceFacade().search(Contact.class, searchText, "name", "email");
+		return this.getPersistenceFacade().search(Contact.class, searchText, "name", "surname", "email");
 	}
 }

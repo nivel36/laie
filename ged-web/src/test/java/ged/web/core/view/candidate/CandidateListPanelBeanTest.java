@@ -1,21 +1,22 @@
 package ged.web.core.view.candidate;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import ged.ejb.candidate.Candidate;
 import ged.ejb.candidate.CandidateService;
 import ged.web.view.candidate.CandidateListPanelBean;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class CandidateListPanelBeanTest {
 
 	private CandidateListPanelBean candidateListPanelBean;
@@ -25,11 +26,11 @@ public class CandidateListPanelBeanTest {
 
 	@Test
 	public void initTest() {
-		Mockito.when(this.candidateService.findNumberOfCandidates()).thenReturn(1L);
-		Mockito.when(this.candidateService.findLastAddedCandidates(6)).thenReturn(this.mockCandidates());
+		when(this.candidateService.findNumberOfCandidates()).thenReturn(1L);
+		when(this.candidateService.findLastAddedCandidates(6)).thenReturn(this.mockCandidates());
 		this.candidateListPanelBean.init();
-		Assert.assertEquals(1, this.candidateListPanelBean.getNumberOfCandidates());
-		Assert.assertEquals(1, this.candidateListPanelBean.getLastAddedCandidates().size());
+		assertEquals(1, this.candidateListPanelBean.getNumberOfCandidates());
+		assertEquals(1, this.candidateListPanelBean.getLastAddedCandidates().size());
 	}
 
 	private Candidate mockCandidate() {
@@ -50,10 +51,10 @@ public class CandidateListPanelBeanTest {
 	@Test
 	public void newCanidateTest() {
 		final String newCandidateUrl = this.candidateListPanelBean.newCandidate();
-		Assert.assertEquals("/faces/candidate/candidateEdit?faces-redirect=true", newCandidateUrl);
+		assertEquals("/faces/candidate/candidateEdit?faces-redirect=true", newCandidateUrl);
 	}
 
-	@Before
+	@BeforeEach
 	public void setUp() {
 		this.candidateListPanelBean = new CandidateListPanelBean();
 		this.candidateListPanelBean.setCandidateService(this.candidateService);

@@ -1,21 +1,22 @@
 package ged.web.core.view.candidate;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import ged.ejb.candidate.Candidate;
 import ged.ejb.candidate.CandidateService;
 import ged.web.view.candidate.CandidateSearchBean;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class CandidateSearchBeanTest {
 
 	private CandidateSearchBean candidateSearchBean;
@@ -25,11 +26,11 @@ public class CandidateSearchBeanTest {
 
 	@Test
 	public void cleanTest() {
-		Mockito.when(this.candidateService.search(null)).thenReturn(mockCandidates());
+		when(this.candidateService.search(null)).thenReturn(mockCandidates());
 		this.candidateSearchBean.setSearchText("Aaron");
 		this.candidateSearchBean.clean();
-		Assert.assertEquals(null, this.candidateSearchBean.getSearchText());
-		Assert.assertEquals(1, this.candidateSearchBean.getCandidates().size());
+		assertEquals(null, this.candidateSearchBean.getSearchText());
+		assertEquals(1, this.candidateSearchBean.getCandidates().size());
 	}
 
 	private Candidate mockCandidate() {
@@ -49,14 +50,14 @@ public class CandidateSearchBeanTest {
 
 	@Test
 	public void searchTest() {
-		Mockito.when(this.candidateService.search("Aaron")).thenReturn(mockCandidates());
+		when(this.candidateService.search("Aaron")).thenReturn(mockCandidates());
 		this.candidateSearchBean.setSearchText("Aaron");
 		this.candidateSearchBean.search();
-		Assert.assertEquals("Aaron", this.candidateSearchBean.getSearchText());
-		Assert.assertEquals(1, this.candidateSearchBean.getCandidates().size());
+		assertEquals("Aaron", this.candidateSearchBean.getSearchText());
+		assertEquals(1, this.candidateSearchBean.getCandidates().size());
 	}
 
-	@Before
+	@BeforeEach
 	public void setUp() {
 		this.candidateSearchBean = new CandidateSearchBean();
 		this.candidateSearchBean.setCandidateService(this.candidateService);

@@ -1,22 +1,23 @@
 package ged.web.core.view.user;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.context.Flash;
-import javax.faces.validator.ValidatorException;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 
@@ -27,7 +28,7 @@ import ged.ejb.user.role.Role;
 import ged.web.core.util.Translator;
 import ged.web.view.user.UserEditBean;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class UserEditBeanTest {
 
 	@Mock
@@ -35,9 +36,6 @@ public class UserEditBeanTest {
 
 	@Mock
 	private Flash flash;
-
-	@Rule
-	public ExpectedException thrown = ExpectedException.none();
 
 	@Mock
 	private Translator translator;
@@ -52,18 +50,18 @@ public class UserEditBeanTest {
 		final User user = new User();
 		user.setEmail("abel@test.com");
 		user.setId(1L);
-		Mockito.when(this.flash.containsKey("user")).thenReturn(true);
-		Mockito.when(this.flash.get("user")).thenReturn(user);
+		when(this.flash.containsKey("user")).thenReturn(true);
+		when(this.flash.get("user")).thenReturn(user);
 		this.userEditBean.init();
 		final String url = this.userEditBean.cancel();
-		Assert.assertEquals("/faces/user/user?faces-redirect=true&userId=1", url);
+		assertEquals("/faces/user/user?faces-redirect=true&userId=1", url);
 	}
 
 	@Test
 	public void cancelNewUserTest() {
 		this.userEditBean.init();
 		final String url = this.userEditBean.cancel();
-		Assert.assertEquals("/faces/user/userSearch", url);
+		assertEquals("/faces/user/userSearch", url);
 	}
 
 	@Test
@@ -74,19 +72,19 @@ public class UserEditBeanTest {
 		this.userEditBean.setUser(user);
 
 		this.userEditBean.cleanManager();
-		Assert.assertNull(this.userEditBean.getUser().getManager());
+		assertNull(this.userEditBean.getUser().getManager());
 	}
 
 	@Test
 	public void completeManagerNullTest() {
 		final List<User> managers = this.userEditBean.completeManager(null);
-		Assert.assertEquals(0, managers.size());
+		assertEquals(0, managers.size());
 	}
 
 	@Test
 	public void completeManagerShortStringTest() {
 		final List<User> managers = this.userEditBean.completeManager("as");
-		Assert.assertEquals(0, managers.size());
+		assertEquals(0, managers.size());
 	}
 
 	@Test
@@ -94,8 +92,8 @@ public class UserEditBeanTest {
 		final List<User> mockedManagers = this.mockListOfUsers();
 		Mockito.when(this.userService.search("Abe")).thenReturn(mockedManagers);
 		final List<User> managers = this.userEditBean.completeManager("Abe");
-		Assert.assertEquals(1, managers.size());
-		Assert.assertEquals("abel@test.com", managers.get(0).getEmail());
+		assertEquals(1, managers.size());
+		assertEquals("abel@test.com", managers.get(0).getEmail());
 	}
 
 	@Test
@@ -104,23 +102,23 @@ public class UserEditBeanTest {
 		user.setEmail("abel@test.com");
 		this.userEditBean.setUser(user);
 		final User returnedUser = this.userEditBean.getUser();
-		Assert.assertEquals(user, returnedUser);
+		assertEquals(user, returnedUser);
 	}
 
 	@Test
 	public void initNewUserTest() {
 		this.userEditBean.init();
-		Assert.assertNull(this.userEditBean.getUser().getEmail());
+		assertNull(this.userEditBean.getUser().getEmail());
 	}
 
 	@Test
 	public void initTest() {
 		final User user = new User();
 		user.setEmail("abel@test.com");
-		Mockito.when(this.flash.containsKey("user")).thenReturn(true);
-		Mockito.when(this.flash.get("user")).thenReturn(user);
+		when(this.flash.containsKey("user")).thenReturn(true);
+		when(this.flash.get("user")).thenReturn(user);
 		this.userEditBean.init();
-		Assert.assertEquals("abel@test.com", this.userEditBean.getUser().getEmail());
+		assertEquals("abel@test.com", this.userEditBean.getUser().getEmail());
 	}
 
 	private List<User> mockListOfUsers() {
@@ -141,8 +139,8 @@ public class UserEditBeanTest {
 		savedUser.setId(1L);
 		Mockito.when(this.userService.save(user)).thenReturn(savedUser);
 		this.userEditBean.save();
-		Assert.assertEquals("abel@test.com", this.userEditBean.getUser().getEmail());
-		Assert.assertEquals(1L, this.userEditBean.getUser().getId());
+		assertEquals("abel@test.com", this.userEditBean.getUser().getEmail());
+		assertEquals(1L, this.userEditBean.getUser().getId());
 	}
 
 	@Test
@@ -160,11 +158,11 @@ public class UserEditBeanTest {
 
 		this.userEditBean.save();
 
-		Assert.assertEquals("abel@test.com", updatedUser.getEmail());
-		Assert.assertEquals(1L, updatedUser.getId());
+		assertEquals("abel@test.com", updatedUser.getEmail());
+		assertEquals(1L, updatedUser.getId());
 	}
 
-	@Before
+	@BeforeEach
 	public void setUp() {
 		this.userEditBean = new UserEditBean();
 		this.userEditBean.setFileUploadService(this.fileUploadService);
@@ -180,12 +178,12 @@ public class UserEditBeanTest {
 		this.userEditBean.setUser(user);
 		final FileUploadEvent event = Mockito.mock(FileUploadEvent.class);
 		this.userEditBean.uploadImage(event);
-		Assert.assertNull(user.getImageFileName());
+		assertNull(user.getImageFileName());
 	}
 
 	@Test
 	public void uploadImageNullTest() throws IOException {
-		this.thrown.expect(NullPointerException.class);
+		
 		this.userEditBean.uploadImage(null);
 	}
 
@@ -194,15 +192,15 @@ public class UserEditBeanTest {
 		final User user = new User();
 		user.setEmail("abel@test.com");
 		this.userEditBean.setUser(user);
-		final FileUploadEvent event = Mockito.mock(FileUploadEvent.class);
-		final UploadedFile file = Mockito.mock(UploadedFile.class);
+		final FileUploadEvent event = mock(FileUploadEvent.class);
+		final UploadedFile file = mock(UploadedFile.class);
 		Mockito.when(event.getFile()).thenReturn(file);
-		final InputStream is = Mockito.mock(InputStream.class);
+		final InputStream is = mock(InputStream.class);
 		Mockito.when(event.getFile().getInputstream()).thenReturn(is);
 		Mockito.when(this.fileUploadService.uploadImage(is)).thenReturn("a0");
 
 		this.userEditBean.uploadImage(event);
-		Assert.assertEquals("a0", user.getImageFileName());
+		assertEquals("a0", user.getImageFileName());
 	}
 
 	@Test
@@ -210,9 +208,8 @@ public class UserEditBeanTest {
 		final User user = new User();
 		user.setEmail("blai@test.com");
 		this.userEditBean.setUser(user);
-		Mockito.when(this.userService.emailExists("abel@test.com")).thenReturn(true);
-		Mockito.when(this.translator.message("user.error.email_exists")).thenReturn("Error message");
-		this.thrown.expect(ValidatorException.class);
+		when(this.userService.emailExists("abel@test.com")).thenReturn(true);
+		when(this.translator.message("user.error.email_exists")).thenReturn("Error message");
 		this.userEditBean.validateEmail(null, null, "abel@test.com");
 	}
 
@@ -221,7 +218,7 @@ public class UserEditBeanTest {
 		final User user = new User();
 		user.setEmail("abel@test.com");
 		this.userEditBean.setUser(user);
-		Mockito.when(this.userService.emailExists("abel@test.com")).thenReturn(true);
+		when(this.userService.emailExists("abel@test.com")).thenReturn(true);
 		this.userEditBean.validateEmail(null, null, "abel@test.com");
 	}
 
@@ -235,7 +232,7 @@ public class UserEditBeanTest {
 		final User user = new User();
 		user.setEmail("blai@test.com");
 		this.userEditBean.setUser(user);
-		Mockito.when(this.userService.emailExists("abel@test.com")).thenReturn(false);
+		when(this.userService.emailExists("abel@test.com")).thenReturn(false);
 		this.userEditBean.validateEmail(null, null, "abel@test.com");
 	}
 
@@ -269,9 +266,9 @@ public class UserEditBeanTest {
 		manager.setEmail("abel@test.com");
 
 		this.userEditBean.setUser(user);
-		Mockito.when(this.translator.message("user.error.role")).thenReturn("Error message");
-		Mockito.when(this.userService.isASubordinateRole(subordinate, admin)).thenReturn(false);
-		this.thrown.expect(ValidatorException.class);
+		when(this.translator.message("user.error.role")).thenReturn("Error message");
+		when(this.userService.isASubordinateRole(subordinate, admin)).thenReturn(false);
+		
 		this.userEditBean.validateRole(null, null, admin);
 	}
 

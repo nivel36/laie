@@ -9,9 +9,12 @@ import static ged.web.core.util.PageEnum.MAINTENANCE;
 import static ged.web.core.util.PageEnum.REPORT;
 import static ged.web.core.util.PageEnum.USER_SEARCH;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+
 
 public class MenuBeanTest {
 
@@ -20,46 +23,46 @@ public class MenuBeanTest {
 	@Test
 	public void gotoCandidatesTest() {
 		final String url = this.menuBean.gotoCandidates();
-		Assert.assertEquals(CANDIDATE_SEARCH.url() + "?" + FACES_REDIRECT, url);
+		assertEquals(CANDIDATE_SEARCH.url() + "?" + FACES_REDIRECT, url);
 	}
 
 	@Test
 	public void gotoClientsTest() {
 		final String url = this.menuBean.gotoClients();
-		Assert.assertEquals(CLIENT_SEARCH.url() + "?" + FACES_REDIRECT, url);
+		assertEquals(CLIENT_SEARCH.url() + "?" + FACES_REDIRECT, url);
 	}
 
 	@Test
 	public void gotoIndexTest() {
 		final String url = this.menuBean.gotoIndex();
-		Assert.assertEquals(INDEX.url() + "?" + FACES_REDIRECT, url);
+		assertEquals(INDEX.url() + "?" + FACES_REDIRECT, url);
 	}
 
 	@Test
 	public void gotoJobOffersTest() {
 		final String url = this.menuBean.gotoJobOffers();
-		Assert.assertEquals(JOB_OFFER_SEARCH.url() + "?" + FACES_REDIRECT, url);
+		assertEquals(JOB_OFFER_SEARCH.url() + "?" + FACES_REDIRECT, url);
 	}
 
 	@Test
 	public void gotoMaintenancesTest() {
 		final String url = this.menuBean.gotoMaintenances();
-		Assert.assertEquals(MAINTENANCE.url() + "?" + FACES_REDIRECT, url);
+		assertEquals(MAINTENANCE.url() + "?" + FACES_REDIRECT, url);
 	}
 
 	@Test
 	public void gotoReportsTest() {
 		final String url = this.menuBean.gotoReports();
-		Assert.assertEquals(REPORT.url() + "?" + FACES_REDIRECT, url);
+		assertEquals(REPORT.url() + "?" + FACES_REDIRECT, url);
 	}
 
 	@Test
 	public void gotoUsersTest() {
 		final String url = this.menuBean.gotoUsers();
-		Assert.assertEquals(USER_SEARCH.url() + "?" + FACES_REDIRECT, url);
+		assertEquals(USER_SEARCH.url() + "?" + FACES_REDIRECT, url);
 	}
 
-	@Before
+	@BeforeEach
 	public void setUp() {
 		this.menuBean = new MenuBean();
 	}
