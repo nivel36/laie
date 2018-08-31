@@ -1,26 +1,21 @@
 package ged.web.core.view.user;
 
-import javax.faces.convert.ConverterException;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
 import ged.web.view.user.UserConverter;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class UserConverterTest {
-
-	@Rule
-	public ExpectedException thrown = ExpectedException.none();
 
 	private UserConverter userConverter;
 
@@ -29,7 +24,6 @@ public class UserConverterTest {
 
 	@Test
 	public void getAsObjectInvalidTest() {
-		this.thrown.expect(ConverterException.class);
 		this.userConverter.getAsObject(null, null, "qwq");
 	}
 
@@ -40,13 +34,13 @@ public class UserConverterTest {
 		userFromDatabase.setEmail("abel@test.com");
 		Mockito.when(this.userService.find(1L)).thenReturn(userFromDatabase);
 		final User user = this.userConverter.getAsObject(null, null, "2");
-		Assert.assertNull(user);
+		assertNull(user);
 	}
 
 	@Test
 	public void getAsObjectNullTest() {
 		final User user = this.userConverter.getAsObject(null, null, null);
-		Assert.assertNull(user);
+		assertNull(user);
 	}
 
 	@Test
@@ -56,13 +50,13 @@ public class UserConverterTest {
 		userFromDatabase.setEmail("abel@test.com");
 		Mockito.when(this.userService.find(1L)).thenReturn(userFromDatabase);
 		final User user = this.userConverter.getAsObject(null, null, "1");
-		Assert.assertEquals(userFromDatabase, user);
+		assertEquals(userFromDatabase, user);
 	}
 
 	@Test
 	public void getAsStringNullTest() {
 		final String value = this.userConverter.getAsString(null, null, null);
-		Assert.assertNull(value);
+		assertNull(value);
 	}
 
 	@Test
@@ -70,10 +64,10 @@ public class UserConverterTest {
 		final User user = new User();
 		user.setId(1L);
 		final String value = this.userConverter.getAsString(null, null, user);
-		Assert.assertEquals("1", value);
+		assertEquals("1", value);
 	}
 
-	@Before
+	@BeforeEach
 	public void setUp() {
 		this.userConverter = new UserConverter();
 		this.userConverter.setUserService(this.userService);

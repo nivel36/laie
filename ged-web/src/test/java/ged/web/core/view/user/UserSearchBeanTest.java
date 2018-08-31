@@ -1,16 +1,17 @@
 package ged.web.core.view.user;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import ged.ejb.user.UserService;
 import ged.web.view.user.UserSearchBean;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class UserSearchBeanTest {
 
 	private UserSearchBean userSearchBean;
@@ -23,10 +24,10 @@ public class UserSearchBeanTest {
 		this.userSearchBean.setSearchText("abel");
 		this.userSearchBean.clean();
 		final String searchText = this.userSearchBean.getSearchText();
-		Assert.assertNull(searchText);
+		assertNull(searchText);
 	}
 
-	@Before
+	@BeforeEach
 	public void setUp() {
 		this.userSearchBean = new UserSearchBean();
 		this.userSearchBean.setUserService(this.userService);
