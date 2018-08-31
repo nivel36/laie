@@ -21,7 +21,7 @@
 				<h:form id="userPanelForm" enctype="multipart/form-data">
 					<p:panel header="#{empty userEditBean.user.fullName ? i18n['user.new_user'] : userEditBean.user.fullName}">
 						<div class="ui-g">
-							<div class="ui-g-12 ui-lg-3 ui-xl-2">
+							<div class="ui-g-12 ui-lg-3">
 								<div class="user-card">
 									<p:outputPanel layout="block" id="userImage" styleClass="user-image">
 										<p:fileUpload id="uploadImage" styleClass="uploadImageButton" fileUploadListener="#{userEditBean.uploadImage}" mode="advanced" dragDropSupport="false"
@@ -35,7 +35,7 @@
 								</div>
 							</div>
 
-							<div class="ui-g-12 ui-lg-9 ui-xl-10">
+							<div class="ui-g-12 ui-lg-9">
 								<div class="ui-g">
 									<div class="ui-g-12 ui-md-6">
 										<div class="form-group">
@@ -83,7 +83,7 @@
 										<h:panelGroup id="managerGroup" layout="block" styleClass="form-group" rendered="#{not userEditBean.user.admin}">
 											<p:outputLabel value="#{i18n['user.manager']}" for="manager" />
 											<div class="ui-inputgroup">
-												<p:autoComplete id="manager" value="#{userEditBean.user.manager}" completeMethod="#{userEditBean.completeManager}" var="manager"
+												<p:autoComplete id="manager" value="#{userEditBean.user.manager}" completeMethod="#{userEditBean.searchManager}" var="manager"
 													itemLabel="#{manager.fullName}" itemValue="#{manager}" forceSelection="true">
 													<p:column styleClass="user-select image">
 														<p:graphicImage class="image image-icon" value="/images/#{manager.imageFileName}" rendered="#{not empty manager.imageFileName}" />
@@ -115,7 +115,7 @@
 								<div class="ui-g">
 									<div class="ui-g-12">
 										<div class="form-action-primary">
-											<p:commandButton styleClass="btn-gray" value="#{i18n['action.cancel']}" action="#{userEditBean.cancel}" immediate="true" />
+											<p:commandButton styleClass="btn-gray" value="#{i18n['action.cancel']}" action="#{userEditBean.cancel}" process="@this" />
 											<p:commandButton styleClass="btn-primary" value="#{i18n['action.save']}" action="#{userEditBean.save}" process="@form" update="@form growl" />
 										</div>
 									</div>

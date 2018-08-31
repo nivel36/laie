@@ -123,7 +123,8 @@ public abstract class AbstractBean implements Serializable {
 		return this.externalContext.getRequestParameterMap().get(key);
 	}
 
-	protected boolean hasPermissionToEdit(final User user, final Ownerable entity) {
+	protected boolean hasPermissionToEdit(final Ownerable entity) {
+		final User user = this.sessionBean.getUser();
 		final User owner = entity.getOwner();
 		if (user.isAdmin()) {
 			return true;

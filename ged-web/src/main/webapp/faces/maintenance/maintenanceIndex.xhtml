@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://legion.com/i18n"
-	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/templates/default.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://legion.com/i18n" xmlns:p="http://primefaces.org/ui" template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
 		<title>#{i18n['maintenance.maintenances']}</title>
@@ -12,21 +11,14 @@
 	<ui:define name="content">
 		<div class="ui-g">
 			<div class="ui-g-12 ui-md-4">
-				<p:panel header="#{i18n['maintenance.skill_knowdeleges']}">
+				<p:panel header="#{i18n['role.roles']}">
 					<h:form>
 						<div class="ui-g">
 							<div class="ui-g-12">
-								<p:selectOneMenu id="skillKnowdelege" label="#{i18n['skill.level']}" styleClass="largeInput">
-									<f:selectItems var="skillLevel" itemValue="#{skillLevel.name}" value="#{applicationBean.skillLevels}"
-										itemLabel="#{i18n:translate(skillLevel.name)}" />
-								</p:selectOneMenu>
-							</div>
-						</div>
-						<div class="ui-g">
-							<div class="ui-g-12">
-								<div class="form-action-primary">
-									<p:commandButton  value="#{i18n['action.new']}" />
-									<p:commandButton value="#{i18n['action.modify']}" />
+								<div class="form-group">
+									<p:outputLabel value="#{i18n['role.name']}" for="name" />
+									<p:inputText id="name" value="#{roleBean.role.name}" required="true" />
+									<p:message for="name" />
 								</div>
 							</div>
 						</div>
@@ -48,7 +40,7 @@
 						<div class="ui-g">
 							<div class="ui-g-12">
 								<div class="form-action-primary">
-									<p:commandButton  value="#{i18n['action.new']}" />
+									<p:commandButton value="#{i18n['action.new']}" />
 									<p:commandButton value="#{i18n['action.modify']}" />
 								</div>
 							</div>

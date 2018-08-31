@@ -72,7 +72,7 @@ public class ClientBean extends AbstractBean {
 	}
 
 	public boolean isUserHasPermissionToEdit() {
-		return this.hasPermissionToEdit(this.sessionBean.getUser(), this.client);
+		return this.hasPermissionToEdit(this.client);
 	}
 
 	public void newJobOffer() {

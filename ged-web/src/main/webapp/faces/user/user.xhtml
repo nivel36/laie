@@ -20,11 +20,11 @@
 			</div>
 		</div>
 		<div class="ui-g">
-			<div class="ui-g-12 ui-lg-12 ui-xl-7">
+			<div class="ui-g-12 ui-lg-12 ui-xl-8">
 				<h:form>
 					<p:panel header="#{userBean.user}">
 						<div class="ui-g">
-							<div class="ui-g-12 ui-lg-3 ui-xl-2">
+							<div class="ui-g-12 ui-lg-3">
 								<div class="user-card">
 									<p:outputPanel layout="block" id="userImage" styleClass="user-image">
 										<p:graphicImage styleClass="image" value="/images/#{userBean.user.imageFileName}" rendered="#{not empty userBean.user.imageFileName}" />
@@ -33,37 +33,37 @@
 								</div>
 							</div>
 
-							<div class="ui-g-12 ui-lg-9 ui-xl-10">
+							<div class="ui-g-12 ui-lg-9">
 								<div class="ui-g">
-									<div class="ui-g-12 ui-md-4">
+									<div class="ui-g-12 ui-md-6">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['user.name']}" for="name" />
 											<p:inputText id="name" value="#{userBean.user.name}" required="true" readonly="true" />
 										</div>
 									</div>
 
-									<div class="ui-g-12 ui-md-4">
+									<div class="ui-g-12 ui-md-6">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['user.surname']}" for="surname" />
 											<p:inputText id="surname" value="#{userBean.user.surname}" required="true" readonly="true" />
 										</div>
 									</div>
 
-									<div class="ui-g-12 ui-md-4">
+									<div class="ui-g-12 ui-md-6">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['user.email']}" for="email" />
 											<p:inputText id="email" value="#{userBean.user.email}" readonly="true" />
 										</div>
 									</div>
 
-									<div class="ui-g-12 ui-md-4">
+									<div class="ui-g-12 ui-md-6">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['user.phone_number']}" for="phone_number" />
 											<p:inputText id="phone_number" value="#{userBean.user.phoneNumber}" readonly="true" />
 										</div>
 									</div>
 
-									<div class="ui-g-12 ui-md-4">
+									<div class="ui-g-12 ui-md-6">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['user.role']}" for="role" />
 											<p:selectOneMenu id="role" name="role" value="#{userBean.user.role}" disabled="true">
@@ -72,14 +72,14 @@
 										</div>
 									</div>
 
-									<div class="ui-sm-12 ui-md-4">
-										<div class="form-group">
+									<h:panelGroup layout="block" styleClass="ui-sm-12 ui-md-6" rendered="#{not userBean.user.admin}">
+										<h:panelGroup lalayout="block" styleClass="formGroup" rendered="#{not userBean.user.admin}">
 											<p:outputLabel value="#{i18n['user.manager']}" for="manager" />
 											<p:inputText id="manager" value="#{userBean.user.manager.fullName}" readonly="true" />
-										</div>
-									</div>
+										</h:panelGroup>
+									</h:panelGroup>
 
-									<div class="ui-g-12 ui-md-4">
+									<div class="ui-g-12 ui-md-6">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['user.date_of_join']}" for="date_of_join" />
 											<p:calendar id="date_of_join" value="#{userBean.user.dateOfJoin}" readonly="true" disabled="true" pattern="dd/MM/yyyy">
@@ -91,9 +91,9 @@
 
 								<div class="ui-g">
 									<div class="ui-g-12">
-
 										<div class="form-action-primary">
-											<p:commandButton value="#{i18n['action.edit']}" actionListener="#{userBean.editUser}" action="userEdit?faces-redirect=true" process="@this" styleClass="btn-primary" />
+											<p:commandButton value="#{i18n['action.edit']}" actionListener="#{userBean.editUser}" action="userEdit?faces-redirect=true" process="@this"
+												styleClass="btn-primary" />
 											<p:commandButton id="exportExcel" icon="fa fa-file-excel-o" value="#{i18n['action.export']}" action="#{userBean.export}" />
 										</div>
 									</div>
@@ -104,7 +104,7 @@
 				</h:form>
 			</div>
 
-			<div class="ui-g-12 ui-lg-6 ui-xl-5">
+			<div class="ui-g-12 ui-lg-6 ui-xl-4">
 				<p:panel header="#{i18n['user.team']}">
 					<h:panelGroup layout="block" rendered="#{empty userBean.team}">
 						<span class="message">#{i18n['user.no_team']}</span>

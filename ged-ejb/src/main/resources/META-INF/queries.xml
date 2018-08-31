@@ -265,15 +265,6 @@
 		]]></query>
 	</named-query>
 
-	<named-query name="Role.findSubordinateRoles">
-		<query><![CDATA[
-			SELECT r 
-			FROM RoleClosure rc 
-			JOIN rc.descendant r 
-			WHERE rc.antecessor = :antecessor
-		]]></query>
-	</named-query>
-
 	<named-query name="ServerFile.findByCandidate">
 		<query><![CDATA[
 			SELECT s 

@@ -68,24 +68,8 @@ insert into I18NSTRING( id, version, locale, key, text ) values( 861, 0, 'ca', '
 insert into I18NSTRING( id, version, locale, key, text ) values( 864, 0, 'es', 'closed', 'Cerrada' );
 insert into I18NSTRING( id, version, locale, key, text ) values( 865, 0, 'ca', 'closed', 'Tancada' );
 
-insert into ROLE( id, version, name, parentRoleId ) values( 911, 0, 'ADMIN', null );
-insert into ROLE( id, version, name, parentRoleId ) values( 913, 0, 'RECRUITER_ADMIN', 911 );
-insert into ROLE( id, version, name, parentRoleId ) values( 912, 0, 'RECRUITER', 913 );
-insert into ROLE( id, version, name, parentRoleId ) values( 915, 0, 'TECHNIC_ADMIN', 911 );
-insert into ROLE( id, version, name, parentRoleId ) values( 914, 0, 'TECHNIC', 915 );
-insert into ROLE( id, version, name, parentRoleId ) values( 916, 0, 'PROJECT_MANAGER', 911 );
-
-insert into ROLECLOSURE( id, version, antecessor_id, descendant_id, pathLength ) values( 925, 0, 911, 911, 0 );
-insert into ROLECLOSURE( id, version, antecessor_id, descendant_id, pathLength ) values( 926, 0, 911, 912, 2 );
-insert into ROLECLOSURE( id, version, antecessor_id, descendant_id, pathLength ) values( 927, 0, 911, 913, 1 );
-insert into ROLECLOSURE( id, version, antecessor_id, descendant_id, pathLength ) values( 928, 0, 911, 914, 2 );
-insert into ROLECLOSURE( id, version, antecessor_id, descendant_id, pathLength ) values( 929, 0, 911, 915, 1 );
-insert into ROLECLOSURE( id, version, antecessor_id, descendant_id, pathLength ) values( 930, 0, 912, 912, 0 );
-insert into ROLECLOSURE( id, version, antecessor_id, descendant_id, pathLength ) values( 931, 0, 913, 913, 0 );
-insert into ROLECLOSURE( id, version, antecessor_id, descendant_id, pathLength ) values( 932, 0, 913, 912, 1 );
-insert into ROLECLOSURE( id, version, antecessor_id, descendant_id, pathLength ) values( 933, 0, 914, 914, 0 );
-insert into ROLECLOSURE( id, version, antecessor_id, descendant_id, pathLength ) values( 934, 0, 915, 915, 0 );
-insert into ROLECLOSURE( id, version, antecessor_id, descendant_id, pathLength ) values( 935, 0, 915, 914, 1 );
+insert into ROLE( id, version, name ) values( 911, 0, 'ADMIN' );
+insert into ROLE( id, version, name ) values( 912, 0, 'USER' );
 
 insert into USER( id, version, email, language, name, rowsPerPage, surname, password, roleId, deleted, imageFileName ) values( 901, 0, 'abel.ferrer.jimenez@gmail.com', 'es', 'Abel', 25, 'Ferrer', 'jGl25bVBBBW96Qi9Te4V37Fnqchz/Eu4qB9vKrRIqRg=', 911, false, null);
 insert into USER( id, version, email, language, name, rowsPerPage, surname, password, roleId, deleted, imageFileName ) values( 902, 0, 'isabel.vallejo.medina@gmail.com', 'es', 'Isabel', 25, 'Vallejo', 'jGl25bVBBBW96Qi9Te4V37Fnqchz/Eu4qB9vKrRIqRg=', 911, false, null);

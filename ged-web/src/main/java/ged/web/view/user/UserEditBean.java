@@ -17,6 +17,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.omnifaces.util.Faces;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 import org.slf4j.Logger;
@@ -61,15 +62,6 @@ public class UserEditBean extends AbstractBean {
 		this.user.setManager(null);
 	}
 
-	public List<User> completeManager(final String query) {
-		if ((query == null) || (query.trim().length() < 3)) {
-			return new ArrayList<>();
-		}
-		final List<User> managers = this.userService.search(query);
-		managers.remove(this.user);
-		return managers;
-	}
-
 	public User getUser() {
 		return this.user;
 	}
@@ -78,12 +70,25 @@ public class UserEditBean extends AbstractBean {
 	public void init() {
 		logger.debug("UserEditBean init");
 		this.user = this.getValueFromFlash("user");
+		final User loggedUser = this.sessionBean.getUser();
 		if (this.user == null) {
-			this.buildUser();
-			this.cancelUrl = "/faces/user/userSearch";
+			if (loggedUser.isAdmin()) {
+				this.buildUser();
+				this.cancelUrl = "/faces/user/userSearch";
+			}
+			else {
+				logger.warn("User {} hasn't got priviliges to add a new user", loggedUser);
+				Faces.redirect("/faces/user/userSearch");
+			}
 		}
 		else {
-			this.cancelUrl = "/faces/user/user?faces-redirect=true&userId=" + this.user.getId();
+			if (this.hasPermissionToEdit(this.user)) {
+				this.cancelUrl = "/faces/user/user?faces-redirect=true&userId=" + this.user.getId();
+			}
+			else {
+				logger.warn("User {} hasn't got priviliges to edit user {}", loggedUser, this.user);
+				Faces.redirect("/faces/user/userSearch");
+			}
 		}
 	}
 
@@ -99,6 +104,15 @@ public class UserEditBean extends AbstractBean {
 		logger.debug("Save user action performed");
 		this.user = this.userService.save(this.user);
 		return "/faces/user/user?faces-redirect=true&userId=" + this.user.getId();
+	}
+
+	public List<User> searchManager(final String query) {
+		if ((query == null) || (query.trim().length() < 3)) {
+			return new ArrayList<>();
+		}
+		final List<User> managers = this.userService.search(query);
+		managers.remove(this.user);
+		return managers;
 	}
 
 	public void setFileUploadService(final FileUploadService fileUploadService) {

@@ -26,7 +26,7 @@ import ged.ejb.user.User;
 @Analyzer(definition = "stdAnalyzer")
 @MappedSuperclass
 @EntityListeners(AuditedListener.class)
-public abstract class AbstractAuditedEntity extends AbstractEntity implements Auditable, Erasable {
+public abstract class AbstractAuditedEntity extends AbstractEntity implements Auditable, Erasable, Ownerable {
 
 	private static final long serialVersionUID = 6203444960560029390L;
 
@@ -34,11 +34,13 @@ public abstract class AbstractAuditedEntity extends AbstractEntity implements Au
 	@Field
 	private boolean deleted;
 
+	private User owner;
+
 	@ManyToOne
 	@JoinColumn(name = "userId")
 	private User user;
 
-	
+	@Override
 	public boolean equals(final Object obj) {
 		if (this == obj) {
 			return true;
@@ -52,27 +54,37 @@ public abstract class AbstractAuditedEntity extends AbstractEntity implements Au
 		return super.equals(obj);
 	}
 
-	
+	@Override
+	public User getOwner() {
+		return this.owner;
+	}
+
+	@Override
 	public User getUser() {
 		return this.user;
 	}
 
-	
+	@Override
 	public int hashCode() {
 		return super.hashCode();
 	}
 
-	
+	@Override
 	public boolean isDeleted() {
 		return this.deleted;
 	}
 
-	
+	@Override
 	public void setDeleted(final boolean deleted) {
 		this.deleted = deleted;
 	}
 
-	
+	@Override
+	public void setOwner(final User owner) {
+		this.owner = owner;
+	}
+
+	@Override
 	public void setUser(final User user) {
 		this.user = user;
 	}

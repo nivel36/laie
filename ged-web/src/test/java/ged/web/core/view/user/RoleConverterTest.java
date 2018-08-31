@@ -1,7 +1,5 @@
 package ged.web.core.view.user;
 
-import javax.faces.convert.ConverterException;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
