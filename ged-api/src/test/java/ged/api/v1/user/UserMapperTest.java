@@ -31,9 +31,9 @@ public class UserMapperTest {
 			boss.setEmail("boss@test.com");
 			when(userService.findUserByEmail("boss@test.com")).thenReturn(boss);
 
-			final Role adminRole = new Role();
-			adminRole.setName("ADMIN");
-			when(userService.findRoleByName("ADMIN")).thenReturn(adminRole);
+			final Role role = mockRole();
+
+			when(userService.findRoleByName(Role.USER)).thenReturn(role);
 
 			final UserDto userDto = mockUserDto();
 
@@ -93,6 +93,13 @@ public class UserMapperTest {
 	@Mock
 	private UserService userService;
 
+	private Role mockRole() {
+		final Role role = new Role();
+		role.setName(Role.USER);
+		role.setId(1L);
+		return role;
+	}
+
 	private User mockUser() {
 		final User user = new User();
 		user.setDateOfJoin(LocalDate.now());
@@ -100,15 +107,14 @@ public class UserMapperTest {
 		user.setImageFileName("1");
 		user.setLanguage("ES");
 		user.setLastConnection(LocalDateTime.now());
+		user.setName("Aaron");
+		user.setPhoneNumber("123456789");
+		user.setRole(mockRole());
+		user.setSurname("Smith");
+
 		final User manager = new User();
 		manager.setEmail("boss@test.com");
 		user.setManager(manager);
-		user.setName("Aaron");
-		user.setPhoneNumber("123456789");
-		final Role role = new Role();
-		role.setName("ADMIN");
-		user.setRole(role);
-		user.setSurname("Smith");
 		return user;
 	}
 
@@ -122,7 +128,7 @@ public class UserMapperTest {
 		userDto.setManagerEmail("boss@test.com");
 		userDto.setName("Aaron");
 		userDto.setPhoneNumber("123456789");
-		userDto.setRoleName("ADMIN");
+		userDto.setRoleName(Role.USER);
 		userDto.setSurname("Smith");
 		return userDto;
 	}

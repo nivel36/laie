@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -19,19 +20,35 @@ import ged.web.view.candidate.CandidateSearchBean;
 @ExtendWith(MockitoExtension.class)
 public class CandidateSearchBeanTest {
 
+	@Nested
+	class Clean {
+
+		@Test
+		public void shouldReturnCandidate() {
+			when(candidateService.search(null)).thenReturn(mockCandidates());
+			candidateSearchBean.setSearchText("Aaron");
+			candidateSearchBean.clean();
+			assertEquals(null, candidateSearchBean.getSearchText());
+			assertEquals(1, candidateSearchBean.getCandidates().size());
+		}
+	}
+
+	@Nested
+	class Search {
+		@Test
+		public void validTextshouldReturnCandidate() {
+			when(candidateService.search("Aaron")).thenReturn(mockCandidates());
+			candidateSearchBean.setSearchText("Aaron");
+			candidateSearchBean.search();
+			assertEquals("Aaron", candidateSearchBean.getSearchText());
+			assertEquals(1, candidateSearchBean.getCandidates().size());
+		}
+	}
+
 	private CandidateSearchBean candidateSearchBean;
 
 	@Mock
 	private CandidateService candidateService;
-
-	@Test
-	public void cleanTest() {
-		when(this.candidateService.search(null)).thenReturn(mockCandidates());
-		this.candidateSearchBean.setSearchText("Aaron");
-		this.candidateSearchBean.clean();
-		assertEquals(null, this.candidateSearchBean.getSearchText());
-		assertEquals(1, this.candidateSearchBean.getCandidates().size());
-	}
 
 	private Candidate mockCandidate() {
 		final Candidate candidate = new Candidate();
@@ -46,15 +63,6 @@ public class CandidateSearchBeanTest {
 		final Candidate candidate = mockCandidate();
 		candidates.add(candidate);
 		return candidates;
-	}
-
-	@Test
-	public void searchTest() {
-		when(this.candidateService.search("Aaron")).thenReturn(mockCandidates());
-		this.candidateSearchBean.setSearchText("Aaron");
-		this.candidateSearchBean.search();
-		assertEquals("Aaron", this.candidateSearchBean.getSearchText());
-		assertEquals(1, this.candidateSearchBean.getCandidates().size());
 	}
 
 	@BeforeEach

@@ -49,7 +49,7 @@ public class CandidateService extends AbstractAuditedService<Candidate> {
 
 	public Candidate findAllCandidateDataByCandidateId(final long candidateId) {
 		if (candidateId < 1) {
-			logger.error("Bad candidate id {}", candidateId);
+			logger.warn("Bad candidate id {}", candidateId);
 			throw new IllegalArgumentException("Bad candidate id: " + candidateId);
 		}
 		logger.debug("Find all candidate data with id {}", candidateId);
@@ -64,7 +64,7 @@ public class CandidateService extends AbstractAuditedService<Candidate> {
 
 	public ServerFile findFileByFileId(final long fileId) {
 		if (fileId < 1) {
-			logger.error("Bad file id {}", fileId);
+			logger.warn("Bad file id {}", fileId);
 			throw new IllegalArgumentException("Bad file id: " + fileId);
 		}
 		logger.debug("Find file by id {}", fileId);

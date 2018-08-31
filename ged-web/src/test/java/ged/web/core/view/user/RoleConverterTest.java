@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -17,49 +18,62 @@ import ged.web.view.user.RoleConverter;
 @ExtendWith(MockitoExtension.class)
 public class RoleConverterTest {
 
+	@Nested
+	class GetAsObject {
+
+		@Test
+		public void foundRoleShouldReturnRole() {
+			final Role roleFromDatabase = mockRole();
+
+			when(userService.findRoleByName(Role.ADMIN)).thenReturn(roleFromDatabase);
+
+			final Role role = roleConverter.getAsObject(null, null, Role.ADMIN);
+			assertEquals(roleFromDatabase, role);
+		}
+
+		@Test
+		public void nullStringShouldReturnNull() {
+			final Role role = roleConverter.getAsObject(null, null, null);
+			assertNull(role);
+		}
+
+		@Test
+		public void roleNotFoundShouldReturnNull() {
+			when(userService.findRoleByName(Role.USER)).thenReturn(null);
+
+			final Role role = roleConverter.getAsObject(null, null, Role.USER);
+			assertNull(role);
+		}
+	}
+
+	@Nested
+	class GetAsString {
+
+		@Test
+		public void nullRoleShouldReturnNull() {
+			final String value = roleConverter.getAsString(null, null, null);
+			assertNull(value);
+		}
+
+		@Test
+		public void validRoleShouldReturnRoleName() {
+			final Role role = mockRole();
+
+			final String value = roleConverter.getAsString(null, null, role);
+			assertEquals(Role.ADMIN, value);
+		}
+	}
+
 	private RoleConverter roleConverter;
 
 	@Mock
 	private UserService userService;
 
-	@Test
-	public void getAsObjectNotFoundTest() {
-		final Role roleFromDatabase = new Role();
-		roleFromDatabase.setId(1L);
-		roleFromDatabase.setName("ADMIN");
-		when(this.userService.findRoleByName("ADMIN")).thenReturn(roleFromDatabase);
-		final Role role = this.roleConverter.getAsObject(null, null, "USER");
-		assertNull(role);
-	}
-
-	@Test
-	public void getAsObjectNullTest() {
-		final Role role = this.roleConverter.getAsObject(null, null, null);
-		assertNull(role);
-	}
-
-	@Test
-	public void getAsObjectTest() {
-		final Role roleFromDatabase = new Role();
-		roleFromDatabase.setId(1L);
-		roleFromDatabase.setName("ADMIN");
-		when(this.userService.findRoleByName("ADMIN")).thenReturn(roleFromDatabase);
-		final Role role = this.roleConverter.getAsObject(null, null, "ADMIN");
-		assertEquals(roleFromDatabase, role);
-	}
-
-	@Test
-	public void getAsStringNullTest() {
-		final String value = this.roleConverter.getAsString(null, null, null);
-		assertNull(value);
-	}
-
-	@Test
-	public void getAsStringValidTest() {
+	private Role mockRole() {
 		final Role role = new Role();
-		role.setName("ADMIN");
-		final String value = this.roleConverter.getAsString(null, null, role);
-		assertEquals("ADMIN", value);
+		role.setId(1L);
+		role.setName(Role.ADMIN);
+		return role;
 	}
 
 	@BeforeEach

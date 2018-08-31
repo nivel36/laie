@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -19,19 +20,34 @@ import ged.web.view.candidate.CandidateListPanelBean;
 @ExtendWith(MockitoExtension.class)
 public class CandidateListPanelBeanTest {
 
+	@Nested
+	class Init {
+
+		@Test
+		public void shouldBeOk() {
+			when(candidateService.findNumberOfCandidates()).thenReturn(1L);
+			when(candidateService.findLastAddedCandidates(6)).thenReturn(mockCandidates());
+
+			candidateListPanelBean.init();
+			assertEquals(1, candidateListPanelBean.getNumberOfCandidates());
+			assertEquals(1, candidateListPanelBean.getLastAddedCandidates().size());
+		}
+	}
+
+	@Nested
+	class NewCandidate {
+
+		@Test
+		public void shouldReturnCandidateEditUrl() {
+			final String newCandidateUrl = candidateListPanelBean.newCandidate();
+			assertEquals("/faces/candidate/candidateEdit?faces-redirect=true", newCandidateUrl);
+		}
+	}
+
 	private CandidateListPanelBean candidateListPanelBean;
 
 	@Mock
 	private CandidateService candidateService;
-
-	@Test
-	public void initTest() {
-		when(this.candidateService.findNumberOfCandidates()).thenReturn(1L);
-		when(this.candidateService.findLastAddedCandidates(6)).thenReturn(this.mockCandidates());
-		this.candidateListPanelBean.init();
-		assertEquals(1, this.candidateListPanelBean.getNumberOfCandidates());
-		assertEquals(1, this.candidateListPanelBean.getLastAddedCandidates().size());
-	}
 
 	private Candidate mockCandidate() {
 		final Candidate candidate = new Candidate();
@@ -46,12 +62,6 @@ public class CandidateListPanelBeanTest {
 		final Candidate candidate = this.mockCandidate();
 		candidates.add(candidate);
 		return candidates;
-	}
-
-	@Test
-	public void newCanidateTest() {
-		final String newCandidateUrl = this.candidateListPanelBean.newCandidate();
-		assertEquals("/faces/candidate/candidateEdit?faces-redirect=true", newCandidateUrl);
 	}
 
 	@BeforeEach

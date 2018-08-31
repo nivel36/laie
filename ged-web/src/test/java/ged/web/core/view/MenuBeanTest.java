@@ -8,62 +8,59 @@ import static ged.web.core.util.PageEnum.JOB_OFFER_SEARCH;
 import static ged.web.core.util.PageEnum.MAINTENANCE;
 import static ged.web.core.util.PageEnum.REPORT;
 import static ged.web.core.util.PageEnum.USER_SEARCH;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-
-
 public class MenuBeanTest {
 
 	private MenuBean menuBean;
 
+	@BeforeEach
+	public void setUp() {
+		this.menuBean = new MenuBean();
+	}
+
 	@Test
-	public void gotoCandidatesTest() {
+	public void shouldReturnCandidateSearchUrl() {
 		final String url = this.menuBean.gotoCandidates();
 		assertEquals(CANDIDATE_SEARCH.url() + "?" + FACES_REDIRECT, url);
 	}
 
 	@Test
-	public void gotoClientsTest() {
+	public void shouldReturnClientSearchUrl() {
 		final String url = this.menuBean.gotoClients();
 		assertEquals(CLIENT_SEARCH.url() + "?" + FACES_REDIRECT, url);
 	}
 
 	@Test
-	public void gotoIndexTest() {
+	public void shouldReturnIndexUrl() {
 		final String url = this.menuBean.gotoIndex();
 		assertEquals(INDEX.url() + "?" + FACES_REDIRECT, url);
 	}
 
 	@Test
-	public void gotoJobOffersTest() {
+	public void shouldReturnJobOfferSearchUrl() {
 		final String url = this.menuBean.gotoJobOffers();
 		assertEquals(JOB_OFFER_SEARCH.url() + "?" + FACES_REDIRECT, url);
 	}
 
 	@Test
-	public void gotoMaintenancesTest() {
+	public void shouldReturnMaintenanceUrl() {
 		final String url = this.menuBean.gotoMaintenances();
 		assertEquals(MAINTENANCE.url() + "?" + FACES_REDIRECT, url);
 	}
 
 	@Test
-	public void gotoReportsTest() {
+	public void shouldReturnReportsUrl() {
 		final String url = this.menuBean.gotoReports();
 		assertEquals(REPORT.url() + "?" + FACES_REDIRECT, url);
 	}
 
 	@Test
-	public void gotoUsersTest() {
+	public void shouldReturnUserSearchUrl() {
 		final String url = this.menuBean.gotoUsers();
 		assertEquals(USER_SEARCH.url() + "?" + FACES_REDIRECT, url);
-	}
-
-	@BeforeEach
-	public void setUp() {
-		this.menuBean = new MenuBean();
 	}
 }
