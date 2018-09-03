@@ -1,7 +1,6 @@
 package ged.web.view.config;
 
 import java.lang.invoke.MethodHandles;
-import java.util.Locale;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -30,9 +29,7 @@ public class ConfigBean extends AbstractBean {
 	private transient UserService userService;
 
 	private void changeSessionUser() {
-		this.sessionBean.setUser(this.user);
-		this.sessionBean.setLocale(new Locale(this.user.getLanguage()));
-		this.sessionBean.setRowsPerPage(this.user.getRowsPerPage());
+		this.sessionUser.refresh();
 	}
 
 	public User getUser() {
@@ -42,7 +39,7 @@ public class ConfigBean extends AbstractBean {
 	@PostConstruct
 	public void init() {
 		logger.trace("Init ConfigIndexBean");
-		this.user = this.sessionBean.get();
+		this.user = this.sessionUser.get();
 	}
 
 	public void openChangePasswordDialog() {
@@ -52,11 +49,11 @@ public class ConfigBean extends AbstractBean {
 	public void save() {
 		logger.debug("Save user action performed");
 		final long userId = this.user.getId();
-		if (userId == this.sessionBean.get().getId()) {
+		if (userId == this.sessionUser.get().getId()) {
 			this.changeSessionUser();
 		}
 		this.user = this.userService.save(this.user);
-		this.sessionBean.setUser(this.user);
+		this.sessionUser.refresh();
 		this.addMessage(FacesMessage.SEVERITY_INFO, "action.save_action_performed", "action.save_action_performed");
 	}
 

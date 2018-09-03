@@ -51,7 +51,7 @@ public class IndexBean extends AbstractBean {
 
 	@PostConstruct
 	public void init() {
-		final User user = this.sessionBean.get();
+		final User user = this.sessionUser.get();
 		this.jobOffers = this.jobService.findLastJobOffers(user);
 		this.candidates = new ArrayList<>();
 		this.schedule = new LazyScheduleModel();

@@ -27,7 +27,7 @@ public class SessionUser implements Serializable {
 	private List<User> team;
 
 	private User user;
-	
+
 	@Inject
 	private transient FacesContext facesContext;
 
@@ -54,7 +54,7 @@ public class SessionUser implements Serializable {
 	public User get() {
 		return this.user;
 	}
-	
+
 	public boolean isAdmin() {
 		return user.isAdmin();
 	}
@@ -62,15 +62,19 @@ public class SessionUser implements Serializable {
 	@PostConstruct
 	public void init() {
 		final String username = this.facesContext.getExternalContext().getRemoteUser();
+		loadUserData(username);
+	}
+
+	private void loadUserData(final String username) {
 		this.user = userService.findUserByEmail(username);
 		this.locale = new Locale(this.user.getLanguage());
 		this.team = userService.findSubordinateUsers(this.user);
 	}
-	
+
 	public boolean hasPermissionToEdit(final Ownerable entity) {
 		Objects.requireNonNull(entity);
 		Objects.requireNonNull(entity.getOwner());
-		
+
 		if (isAdmin()) {
 			return true;
 		}
@@ -81,16 +85,8 @@ public class SessionUser implements Serializable {
 		return getTeam().contains(owner);
 	}
 
-	public void setLocale(final Locale locale) {
-		this.locale = locale;
-	}
-
-	public void setRowsPerPage(final int rowsPerPage) {
-		this.user.setRowsPerPage(rowsPerPage);
-	}
-
-	public void setUser(final User user) {
-		this.user = user;
+	public void refresh() {
+		loadUserData(user.getEmail());
 	}
 
 	public void setUserService(final UserService userService) {

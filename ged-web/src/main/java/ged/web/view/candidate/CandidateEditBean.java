@@ -48,7 +48,7 @@ public class CandidateEditBean extends AbstractDialogBean {
 		final Candidate newCandidate = new Candidate();
 		final Address address = new Address();
 		newCandidate.setAddress(address);
-		newCandidate.setOwner(this.sessionBean.get());
+		newCandidate.setOwner(this.sessionUser.get());
 		return newCandidate;
 	}
 
