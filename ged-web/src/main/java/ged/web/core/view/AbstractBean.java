@@ -17,8 +17,6 @@ import javax.inject.Inject;
 
 import org.primefaces.PrimeFaces;
 
-import ged.ejb.core.model.Ownerable;
-import ged.ejb.user.User;
 import ged.web.core.util.Translator;
 
 public abstract class AbstractBean implements Serializable {
@@ -121,18 +119,6 @@ public abstract class AbstractBean implements Serializable {
 
 	public String getValueFromGetParameters(final String key) {
 		return this.externalContext.getRequestParameterMap().get(key);
-	}
-
-	protected boolean hasPermissionToEdit(final Ownerable entity) {
-		final User user = this.sessionBean.getUser();
-		final User owner = entity.getOwner();
-		if (user.isAdmin()) {
-			return true;
-		}
-		if (owner.equals(user)) {
-			return true;
-		}
-		return this.sessionBean.getTeam().contains(user);
 	}
 
 	protected void openBigDialog(final String name) {

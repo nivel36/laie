@@ -17,7 +17,6 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.omnifaces.util.Faces;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 import org.slf4j.Logger;
@@ -26,7 +25,6 @@ import org.slf4j.LoggerFactory;
 import ged.ejb.core.FileUploadService;
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
-import ged.ejb.user.role.Role;
 import ged.web.core.view.AbstractBean;
 
 @Named
@@ -62,6 +60,16 @@ public class UserEditBean extends AbstractBean {
 		this.user.setManager(null);
 	}
 
+	private void editUser() {
+		if (this.sessionBean.hasPermissionToEdit(this.user)) {
+			this.cancelUrl = "/faces/user/user?faces-redirect=true&userId=" + this.user.getId();
+		}
+		else {
+			logger.error("User {} hasn't got priviliges to edit user {}", this.sessionBean.getUser(), this.user);
+			throw new SecurityException();
+		}
+	}
+
 	public User getUser() {
 		return this.user;
 	}
@@ -70,34 +78,24 @@ public class UserEditBean extends AbstractBean {
 	public void init() {
 		logger.debug("UserEditBean init");
 		this.user = this.getValueFromFlash("user");
-		final User loggedUser = this.sessionBean.getUser();
 		if (this.user == null) {
-			if (loggedUser.isAdmin()) {
-				this.buildUser();
-				this.cancelUrl = "/faces/user/userSearch";
-			}
-			else {
-				logger.warn("User {} hasn't got priviliges to add a new user", loggedUser);
-				Faces.redirect("/faces/user/userSearch");
-			}
+			newUser();
 		}
 		else {
-			if (this.hasPermissionToEdit(this.user)) {
-				this.cancelUrl = "/faces/user/user?faces-redirect=true&userId=" + this.user.getId();
-			}
-			else {
-				logger.warn("User {} hasn't got priviliges to edit user {}", loggedUser, this.user);
-				Faces.redirect("/faces/user/userSearch");
-			}
+			editUser();
 		}
 	}
 
-	private boolean isAvalidRole(final Role userRole, final Role managerRole) {
-		if (userRole.getName().equals(managerRole.getName())) {
-			// They got the same role.
-			return true;
+	private void newUser() {
+		final User loggedUser = this.sessionBean.getUser();
+		if (loggedUser.isAdmin()) {
+			this.buildUser();
+			this.cancelUrl = "/faces/user/userSearch";
 		}
-		return this.userService.isASubordinateRole(managerRole, userRole);
+		else {
+			logger.error("User {} hasn't got priviliges to add a new user", loggedUser);
+			throw new SecurityException();
+		}
 	}
 
 	public String save() {
@@ -150,24 +148,6 @@ public class UserEditBean extends AbstractBean {
 		if (this.userService.emailExists(userEmail)) {
 			logger.warn("Email {} exists", userEmail);
 			final String msg = this.translator.message("user.error.email_exists");
-			throw new ValidatorException(new FacesMessage(SEVERITY_ERROR, msg, msg));
-		}
-	}
-
-	public void validateRole(final FacesContext context, final UIComponent component, final Object value) {
-		if (value == null) {
-			return;
-		}
-		final User manager = this.user.getManager();
-		if ((manager == null) || (manager.getEmail() == null)) {
-			// No manager setted, all roles are OK.
-			return;
-		}
-		final Role userRole = (Role) value;
-		final Role managerRole = manager.getRole();
-		if (!this.isAvalidRole(userRole, managerRole)) {
-			logger.warn("Role {} for user {} is invalid", userRole.getName(), this.user.getName());
-			final String msg = this.translator.message("user.error.role");
 			throw new ValidatorException(new FacesMessage(SEVERITY_ERROR, msg, msg));
 		}
 	}

@@ -9,6 +9,7 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import ged.ejb.core.model.Ownerable;
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
 
@@ -46,6 +47,17 @@ public class SessionBean extends AbstractBean {
 
 	public User getUser() {
 		return this.user;
+	}
+
+	public boolean hasPermissionToEdit(final Ownerable entity) {
+		final User owner = entity.getOwner();
+		if (user.isAdmin()) {
+			return true;
+		}
+		if (owner.equals(user)) {
+			return true;
+		}
+		return this.sessionBean.getTeam().contains(user);
 	}
 
 	@PostConstruct
