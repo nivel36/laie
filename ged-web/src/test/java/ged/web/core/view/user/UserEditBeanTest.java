@@ -101,6 +101,7 @@ public class UserEditBeanTest {
 			userEditBean.setUser(user);
 
 			final User savedUser = mockUser();
+			when(sessionUser.hasPermissionToEdit(user)).thenReturn(true);
 			when(userService.save(user)).thenReturn(savedUser);
 
 			userEditBean.save();
@@ -114,7 +115,8 @@ public class UserEditBeanTest {
 			userEditBean.setUser(user);
 
 			final User updatedUser = mockUser();
-
+			
+			when(sessionUser.hasPermissionToEdit(user)).thenReturn(true);
 			when(userService.save(user)).thenReturn(updatedUser);
 
 			userEditBean.save();

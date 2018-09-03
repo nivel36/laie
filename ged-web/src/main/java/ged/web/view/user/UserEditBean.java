@@ -61,13 +61,11 @@ public class UserEditBean extends AbstractBean {
 	}
 
 	private void editUser() {
-		if (this.sessionUser.hasPermissionToEdit(this.user)) {
-			this.cancelUrl = "/faces/user/user?faces-redirect=true&userId=" + this.user.getId();
-		}
-		else {
+		if (!sessionUser.hasPermissionToEdit(this.user)) {
 			logger.error("User {} hasn't got priviliges to edit user {}", this.sessionUser.get(), this.user);
 			throw new SecurityException();
 		}
+		this.cancelUrl = "/faces/user/user?faces-redirect=true&userId=" + this.user.getId();
 	}
 
 	public User getUser() {
@@ -80,25 +78,26 @@ public class UserEditBean extends AbstractBean {
 		this.user = this.getValueFromFlash("user");
 		if (this.user == null) {
 			newUser();
-		}
-		else {
+		} else {
 			editUser();
 		}
 	}
 
 	private void newUser() {
-		if (this.sessionUser.isAdmin()) {
-			this.buildUser();
-			this.cancelUrl = "/faces/user/userSearch";
-		}
-		else {
+		if (!this.sessionUser.isAdmin()) {
 			logger.error("User {} hasn't got priviliges to add a new user", sessionUser);
 			throw new SecurityException();
 		}
+		this.buildUser();
+		this.cancelUrl = "/faces/user/userSearch";
 	}
 
 	public String save() {
 		logger.debug("Save user action performed");
+		if (!sessionUser.hasPermissionToEdit(this.user)) {
+			logger.error("User {} hasn't got priviliges to edit user {}", this.sessionUser.get(), this.user);
+			throw new SecurityException();
+		}
 		this.user = this.userService.save(this.user);
 		return "/faces/user/user?faces-redirect=true&userId=" + this.user.getId();
 	}
@@ -140,7 +139,7 @@ public class UserEditBean extends AbstractBean {
 			return;
 		}
 		final String userEmail = (String) value;
-		if (value.equals(this.user.getEmail())) {
+		if (userEmail.equals(this.user.getEmail())) {
 			// If the old and the new email are equals, the user is not updating the email.
 			return;
 		}
