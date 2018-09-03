@@ -17,8 +17,6 @@ import javax.inject.Inject;
 
 import org.primefaces.PrimeFaces;
 
-import ged.ejb.core.model.Ownerable;
-import ged.ejb.user.User;
 import ged.web.core.util.Translator;
 
 public abstract class AbstractBean implements Serializable {
@@ -38,7 +36,7 @@ public abstract class AbstractBean implements Serializable {
 	protected transient Flash flash;
 
 	@Inject
-	protected transient SessionBean sessionBean;
+	protected transient SessionUser sessionBean;
 
 	@Inject
 	protected transient Translator translator;
@@ -123,17 +121,6 @@ public abstract class AbstractBean implements Serializable {
 		return this.externalContext.getRequestParameterMap().get(key);
 	}
 
-	protected boolean hasPermissionToEdit(final User user, final Ownerable entity) {
-		final User owner = entity.getOwner();
-		if (user.isAdmin()) {
-			return true;
-		}
-		if (owner.equals(user)) {
-			return true;
-		}
-		return this.sessionBean.getTeam().contains(user);
-	}
-
 	protected void openBigDialog(final String name) {
 		this.openBigDialog(name, null);
 	}
@@ -166,7 +153,7 @@ public abstract class AbstractBean implements Serializable {
 		this.flash = flash;
 	}
 
-	public void setSessionBean(final SessionBean sessionBean) {
+	public void setSessionBean(final SessionUser sessionBean) {
 		this.sessionBean = sessionBean;
 	}
 

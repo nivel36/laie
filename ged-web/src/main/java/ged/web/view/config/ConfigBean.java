@@ -42,7 +42,7 @@ public class ConfigBean extends AbstractBean {
 	@PostConstruct
 	public void init() {
 		logger.trace("Init ConfigIndexBean");
-		this.user = this.sessionBean.getUser();
+		this.user = this.sessionBean.get();
 	}
 
 	public void openChangePasswordDialog() {
@@ -52,7 +52,7 @@ public class ConfigBean extends AbstractBean {
 	public void save() {
 		logger.debug("Save user action performed");
 		final long userId = this.user.getId();
-		if (userId == this.sessionBean.getUser().getId()) {
+		if (userId == this.sessionBean.get().getId()) {
 			this.changeSessionUser();
 		}
 		this.user = this.userService.save(this.user);

@@ -60,7 +60,7 @@ public class JobOfferEditBean extends AbstractDialogBean {
 		this.jobOffer = this.getValueFromFlash("jobOffer");
 		if ((this.jobOffer == null)) {
 			this.jobOffer = new JobOffer();
-			final User user = this.sessionBean.getUser();
+			final User user = this.sessionBean.get();
 			this.jobOffer.setOwner(user);
 			final List<User> subordinateUsers = this.userService.findSubordinateUsers(user);
 			this.setRecruiters(subordinateUsers);
@@ -75,7 +75,7 @@ public class JobOfferEditBean extends AbstractDialogBean {
 	}
 
 	public boolean isUserHasPermissionToEditJobOffer() {
-		return this.hasPermissionToEdit(this.sessionBean.getUser(), this.jobOffer);
+		return sessionBean.hasPermissionToEdit(this.jobOffer);
 	}
 
 	public void onCloseClientSearchDialog(final SelectEvent e) {
