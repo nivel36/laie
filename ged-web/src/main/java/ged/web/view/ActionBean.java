@@ -33,7 +33,7 @@ public class ActionBean extends AbstractBean {
 	}
 
 	private void findAllActions() {
-		this.actions = this.actionService.findAllByUser(this.sessionBean.getUser());
+		this.actions = this.actionService.findAllByUser(this.sessionUser.get());
 	}
 
 	public List<Action> getActions() {

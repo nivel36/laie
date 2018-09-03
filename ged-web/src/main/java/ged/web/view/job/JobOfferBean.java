@@ -68,7 +68,7 @@ public class JobOfferBean extends AbstractBean {
 
 	// boolean -> is[name]
 	public boolean isUserHasPermissionToEditJobOffer() {
-		return this.hasPermissionToEdit(this.jobOffer);
+		return sessionUser.hasPermissionToEdit(this.jobOffer);
 	}
 
 	public void onCloseSelectCandidateDialog(final SelectEvent event) {

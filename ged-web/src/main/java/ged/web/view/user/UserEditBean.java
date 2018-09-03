@@ -61,11 +61,11 @@ public class UserEditBean extends AbstractBean {
 	}
 
 	private void editUser() {
-		if (this.sessionBean.hasPermissionToEdit(this.user)) {
+		if (this.sessionUser.hasPermissionToEdit(this.user)) {
 			this.cancelUrl = "/faces/user/user?faces-redirect=true&userId=" + this.user.getId();
 		}
 		else {
-			logger.error("User {} hasn't got priviliges to edit user {}", this.sessionBean.getUser(), this.user);
+			logger.error("User {} hasn't got priviliges to edit user {}", this.sessionUser.get(), this.user);
 			throw new SecurityException();
 		}
 	}
@@ -87,7 +87,7 @@ public class UserEditBean extends AbstractBean {
 	}
 
 	private void newUser() {
-		final User loggedUser = this.sessionBean.getUser();
+		final User loggedUser = this.sessionUser.get();
 		if (loggedUser.isAdmin()) {
 			this.buildUser();
 			this.cancelUrl = "/faces/user/userSearch";

@@ -36,7 +36,7 @@ public abstract class AbstractBean implements Serializable {
 	protected transient Flash flash;
 
 	@Inject
-	protected transient SessionBean sessionBean;
+	protected transient SessionUser sessionUser;
 
 	@Inject
 	protected transient Translator translator;
@@ -153,8 +153,8 @@ public abstract class AbstractBean implements Serializable {
 		this.flash = flash;
 	}
 
-	public void setSessionBean(final SessionBean sessionBean) {
-		this.sessionBean = sessionBean;
+	public void setSessionBean(final SessionUser sessionBean) {
+		this.sessionUser = sessionBean;
 	}
 
 	public void setTranslator(final Translator translator) {

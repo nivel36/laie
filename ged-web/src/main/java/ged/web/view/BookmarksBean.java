@@ -32,10 +32,10 @@ public class BookmarksBean extends AbstractBean {
 	private transient BookmarkService bookmarkService;
 
 	public void add(final AbstractAuditedEntity entity) {
-		BookmarksBean.logger.debug("Adding bookmark {} for user {}", entity, this.sessionBean.getUser().getEmail());
+		BookmarksBean.logger.debug("Adding bookmark {} for user {}", entity, this.sessionUser.get().getEmail());
 		Bookmark bookmark = this.createBookmark(entity);
 		if (this.bookmarks.size() > 9) {
-			BookmarksBean.logger.warn("Bookmark full for user {}", this.sessionBean.getUser().getEmail());
+			BookmarksBean.logger.warn("Bookmark full for user {}", this.sessionUser.get().getEmail());
 			Message.addError("Bookmark full", "Bookmark full");
 			return;
 		}
@@ -54,12 +54,12 @@ public class BookmarksBean extends AbstractBean {
 		bookmark.setEntityClass(entity.getClass().getSimpleName());
 		bookmark.setEntityId(entity.getId());
 		bookmark.setText(entity.toString());
-		bookmark.setUser(this.sessionBean.getUser());
+		bookmark.setUser(this.sessionUser.get());
 		return bookmark;
 	}
 
 	private void findAllBookmarks() {
-		this.bookmarks = this.bookmarkService.findAllByUser(this.sessionBean.getUser());
+		this.bookmarks = this.bookmarkService.findAllByUser(this.sessionUser.get());
 	}
 
 	public List<Bookmark> getBookmarks() {
@@ -88,7 +88,7 @@ public class BookmarksBean extends AbstractBean {
 	}
 
 	public void remove(final AbstractAuditedEntity entity) {
-		final User user = this.sessionBean.getUser();
+		final User user = this.sessionUser.get();
 		final String className = entity.getClass().getSimpleName();
 		final long id = entity.getId();
 		this.bookmarkService.delete(user, className, id);

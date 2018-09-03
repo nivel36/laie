@@ -30,7 +30,7 @@ public class ClientEditBean extends AbstractDialogBean {
 
 	private Client buildNewClient() {
 		final Client newClient = new Client();
-		newClient.setOwner(this.sessionBean.getUser());
+		newClient.setOwner(this.sessionUser.get());
 		newClient.setAddress(new Address());
 		return newClient;
 	}

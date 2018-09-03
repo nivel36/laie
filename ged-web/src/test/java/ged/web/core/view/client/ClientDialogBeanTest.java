@@ -6,7 +6,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import ged.ejb.client.ClientService;
-import ged.web.core.view.SessionBean;
+import ged.web.core.view.SessionUser;
 import ged.web.view.client.ClientEditBean;
 
 @ExtendWith(MockitoExtension.class)
@@ -18,7 +18,7 @@ public class ClientDialogBeanTest {
 	private ClientService clientService;
 
 	@Mock
-	private SessionBean sessionBean;
+	private SessionUser sessionBean;
 
 	@BeforeEach
 	public void setUp() {

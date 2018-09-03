@@ -57,7 +57,7 @@ public class SessionBean extends AbstractBean {
 		if (owner.equals(user)) {
 			return true;
 		}
-		return this.sessionBean.getTeam().contains(user);
+		return this.getTeam().contains(user);
 	}
 
 	@PostConstruct
