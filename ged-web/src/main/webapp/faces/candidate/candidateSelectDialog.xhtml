@@ -21,7 +21,7 @@
 			</div>
 			<div class="searchResults">
 				<p:dataTable var="candidate" id="candidates" value="#{candidateSelectDialogBean.candidates}" emptyMessage="#{i18n['candidate.no_candidates_found']}"
-					reflow="true" paginator="true" paginatorPosition="bottom" selection="#{candidateSelectDialogBean.selectedCandidates}" rows="#{sessionBean.rowsPerPage}"
+					reflow="true" paginator="true" paginatorPosition="bottom" selection="#{candidateSelectDialogBean.selectedCandidates}" rows="#{sessionUser.rowsPerPage}"
 					rowKey="#{candidate.id}" sortBy="#{candidate.fullName}" sortOrder="ascending">
 
 					<p:column selectionMode="multiple" style="width:16px;text-align:center" />

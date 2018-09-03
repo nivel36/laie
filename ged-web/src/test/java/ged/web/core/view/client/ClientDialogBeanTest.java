@@ -18,12 +18,12 @@ public class ClientDialogBeanTest {
 	private ClientService clientService;
 
 	@Mock
-	private SessionUser sessionBean;
+	private SessionUser sessionUser;
 
 	@BeforeEach
 	public void setUp() {
 		this.clientDialogBean = new ClientEditBean();
 		this.clientDialogBean.setClientService(this.clientService);
-		this.clientDialogBean.setSessionBean(this.sessionBean);
+		this.clientDialogBean.setSessionUser(this.sessionUser);
 	}
 }

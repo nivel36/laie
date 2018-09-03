@@ -12,7 +12,7 @@
 		<div class="ui-g">
 			<div class="ui-g-12">
 				<p:dataTable var="jobOffer" value="#{cc.attrs.jobOffers}" emptyMessage="#{i18n['job.no_jobs_found']}" reflow="true" paginator="true"
-					paginatorPosition="bottom" rows="#{sessionBean.rowsPerPage}" sortBy="#{jobOffer.name}" sortOrder="ascending">
+					paginatorPosition="bottom" rows="#{sessionUser.rowsPerPage}" sortBy="#{jobOffer.name}" sortOrder="ascending">
 					<p:column headerText="#{i18n['job.name']}">
 						<h:link value="#{jobOffer.name}" outcome="/faces/jobOffer/jobOffer">
 							<f:param name="jobOfferId" value="#{jobOffer.id}" />

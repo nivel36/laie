@@ -131,7 +131,7 @@
 			<div class="ui-g-12 ui-md-12 ui-lg-6">
 				<p:panel header="#{i18n['job.job_offers']}">
 					<p:dataTable var="jobOffer" value="#{userBean.jobOffers}" emptyMessage="#{i18n['user.no_users_found']}" reflow="true" paginator="true"
-						paginatorPosition="bottom" rows="#{sessionBean.rowsPerPage}">
+						paginatorPosition="bottom" rows="#{sessionUser.rowsPerPage}">
 						<h:column>
 							<f:facet name="header">
 								<h:outputText value="#{i18n['job.name']}" />

@@ -4,7 +4,7 @@
 		<p:panel header="#{i18n['file.files']}">
 			<div class="ui-g">
 				<div class="ui-g-12">
-					<p:dataTable var="file" id="files" value="#{filePanelBean.files}" emptyMessage="#{i18n['file.no_files']}" reflow="true" rows="#{sessionBean.rowsPerPage}"
+					<p:dataTable var="file" id="files" value="#{filePanelBean.files}" emptyMessage="#{i18n['file.no_files']}" reflow="true" rows="#{sessionUser.rowsPerPage}"
 						rowKey="#{file.id}">
 
 						<p:column headerText="#{i18n['file.name']}">

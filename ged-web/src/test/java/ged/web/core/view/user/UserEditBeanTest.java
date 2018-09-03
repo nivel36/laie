@@ -279,6 +279,6 @@ public class UserEditBeanTest {
 		this.userEditBean.setUserService(this.userService);
 		this.userEditBean.setFlash(this.flash);
 		this.userEditBean.setTranslator(this.translator);
-		userEditBean.setSessionBean(sessionUser);
+		userEditBean.setSessionUser(sessionUser);
 	}
 }

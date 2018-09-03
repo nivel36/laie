@@ -42,7 +42,7 @@
 						<div class="ui-g">
 							<div class="ui-g-12">
 								<p:dataTable var="jobOffer" value="#{jobOfferSearchBean.jobOffers}" emptyMessage="#{i18n['job.no_jobs_found']}" reflow="true" paginator="true"
-									paginatorPosition="bottom" rows="#{sessionBean.rowsPerPage}">
+									paginatorPosition="bottom" rows="#{sessionUser.rowsPerPage}">
 
 									<p:column headerText="#{i18n['job.name']}" sortBy="#{jobOffer.name}">
 										<h:link value="#{jobOffer.name}" outcome="/faces/jobOffer/jobOffer">

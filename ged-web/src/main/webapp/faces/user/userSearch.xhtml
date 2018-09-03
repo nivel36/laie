@@ -41,7 +41,7 @@
 							</div>
 						</div>
 						<p:dataTable var="user" id="users" value="#{userSearchBean.users}" emptyMessage="#{i18n['user.no_users_found']}" reflow="true" paginator="true"
-							paginatorPosition="bottom" rows="#{sessionBean.rowsPerPage}" sortBy="#{user.fullName}" sortOrder="ascending">
+							paginatorPosition="bottom" rows="#{sessionUser.rowsPerPage}" sortBy="#{user.fullName}" sortOrder="ascending">
 
 							<p:column>
 								<p:graphicImage class="image image-icon" value="/images/#{user.imageFileName}" rendered="#{not empty user.imageFileName}" />

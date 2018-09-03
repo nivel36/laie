@@ -153,8 +153,8 @@ public abstract class AbstractBean implements Serializable {
 		this.flash = flash;
 	}
 
-	public void setSessionBean(final SessionUser sessionBean) {
-		this.sessionUser = sessionBean;
+	public void setSessionUser(final SessionUser sessionUser) {
+		this.sessionUser = sessionUser;
 	}
 
 	public void setTranslator(final Translator translator) {

@@ -23,7 +23,7 @@
 			<div class="ui-g">
 				<div class="ui-g-12">
 					<p:dataTable var="jobOffer" value="#{jobOfferSearchDialogBean.jobOffers}" emptyMessage="#{i18n['job.no_jobs_found']}" reflow="true" paginator="true"
-						rowKey="#{jobOffer.id}" paginatorPosition="bottom" rows="#{sessionBean.rowsPerPage}" selection="#{jobOfferSearchDialogBean.selectedJobOffers}">
+						rowKey="#{jobOffer.id}" paginatorPosition="bottom" rows="#{sessionUser.rowsPerPage}" selection="#{jobOfferSearchDialogBean.selectedJobOffers}">
 
 						<p:column selectionMode="multiple" style="width:16px;text-align:center" />
 

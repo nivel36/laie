@@ -21,7 +21,7 @@
 			<div class="ui-g">
 				<div class="ui-g-12">
 					<p:dataTable var="client" id="clients" value="#{clientSearchDialogBean.clients}" emptyMessage="#{i18n['client.no_clients_found']}" reflow="true"
-						paginator="true" paginatorPosition="bottom" rows="#{sessionBean.rowsPerPage}" selectionMode="single" selection="#{clientSearchDialogBean.selectedClient}"
+						paginator="true" paginatorPosition="bottom" rows="#{sessionUser.rowsPerPage}" selectionMode="single" selection="#{clientSearchDialogBean.selectedClient}"
 						rowKey="#{client.id}" sortBy="#{client.name}" sortOrder="ascending">
 
 						<p:ajax event="rowSelect" listener="#{clientSearchDialogBean.onClientSelect}" update="@form" resetValues="true" />

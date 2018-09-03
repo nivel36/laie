@@ -11,15 +11,15 @@ public final class I18nFaceletsFunction {
 		return context.getApplication().evaluateExpressionGet(context, "#{i18nBean}", I18nBean.class);
 	}
 
-	private static SessionUser getSessionBean() {
+	private static SessionUser getSessionUser() {
 		final FacesContext context = FacesContext.getCurrentInstance();
-		return context.getApplication().evaluateExpressionGet(context, "#{sessionBean}", SessionUser.class);
+		return context.getApplication().evaluateExpressionGet(context, "#{sessionUser}", SessionUser.class);
 	}
 
 	public static String translate(final String key) {
 		final I18nBean i18nBean = getI18nBeanBean();
-		final SessionUser sessionBean = getSessionBean();
-		final String language = sessionBean.getLocale().getLanguage();
+		final SessionUser sessionUser = getSessionUser();
+		final String language = sessionUser.getLocale().getLanguage();
 		return i18nBean.getI18nText(key, language);
 	}
 
