@@ -87,13 +87,12 @@ public class UserEditBean extends AbstractBean {
 	}
 
 	private void newUser() {
-		final User loggedUser = this.sessionUser.get();
-		if (loggedUser.isAdmin()) {
+		if (this.sessionUser.isAdmin()) {
 			this.buildUser();
 			this.cancelUrl = "/faces/user/userSearch";
 		}
 		else {
-			logger.error("User {} hasn't got priviliges to add a new user", loggedUser);
+			logger.error("User {} hasn't got priviliges to add a new user", sessionUser);
 			throw new SecurityException();
 		}
 	}

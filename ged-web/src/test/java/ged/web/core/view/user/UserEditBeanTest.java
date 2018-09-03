@@ -28,6 +28,7 @@ import ged.ejb.core.FileUploadService;
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
 import ged.web.core.util.Translator;
+import ged.web.core.view.SessionUser;
 import ged.web.view.user.UserEditBean;
 
 @ExtendWith(MockitoExtension.class)
@@ -41,7 +42,7 @@ public class UserEditBeanTest {
 			final User user = mockUser();
 			when(flash.containsKey("user")).thenReturn(true);
 			when(flash.get("user")).thenReturn(user);
-
+			when(sessionUser.hasPermissionToEdit(user)).thenReturn(true);
 			userEditBean.init();
 
 			final String url = userEditBean.cancel();
@@ -50,6 +51,7 @@ public class UserEditBeanTest {
 
 		@Test
 		public void newUserShouldReturnUserSearchUrl() {
+			when(sessionUser.isAdmin()).thenReturn(true);
 			userEditBean.init();
 			final String url = userEditBean.cancel();
 			assertEquals("/faces/user/userSearch", url);
@@ -73,14 +75,17 @@ public class UserEditBeanTest {
 
 		@Test
 		public void newUserShouldHaveNullEmail() {
+			when(sessionUser.isAdmin()).thenReturn(true);
 			userEditBean.init();
 			assertNull(userEditBean.getUser().getEmail());
 		}
 
 		@Test
 		public void updateUserShouldHavelEmail() {
+			final User mockUser = mockUser();
 			when(flash.containsKey("user")).thenReturn(true);
-			when(flash.get("user")).thenReturn(mockUser());
+			when(flash.get("user")).thenReturn(mockUser);
+			when(sessionUser.hasPermissionToEdit(mockUser)).thenReturn(true);
 			userEditBean.init();
 
 			assertEquals("abel@test.com", userEditBean.getUser().getEmail());
@@ -238,6 +243,9 @@ public class UserEditBeanTest {
 	private Flash flash;
 
 	@Mock
+	private SessionUser sessionUser;
+
+	@Mock
 	private Translator translator;
 
 	private UserEditBean userEditBean;
@@ -271,5 +279,6 @@ public class UserEditBeanTest {
 		this.userEditBean.setUserService(this.userService);
 		this.userEditBean.setFlash(this.flash);
 		this.userEditBean.setTranslator(this.translator);
+		userEditBean.setSessionBean(sessionUser);
 	}
 }
