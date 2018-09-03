@@ -4,15 +4,11 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
@@ -21,11 +17,8 @@ import javax.validation.constraints.Pattern;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 
-import ged.ejb.client.Client;
-import ged.ejb.core.action.Action;
 import ged.ejb.core.bookmark.Bookmark;
 import ged.ejb.core.model.AbstractAuditedEntity;
-import ged.ejb.job.offer.JobOffer;
 import ged.ejb.user.role.Role;
 
 @Entity
@@ -35,13 +28,7 @@ public class User extends AbstractAuditedEntity {
 	private static final long serialVersionUID = 5920907439877095636L;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user", orphanRemoval = true)
-	private List<Action> actions;
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user", orphanRemoval = true)
 	private List<Bookmark> bookmarks;
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "owner", orphanRemoval = false)
-	private List<Client> clients;
 
 	private LocalDate dateOfJoin;
 
@@ -52,10 +39,6 @@ public class User extends AbstractAuditedEntity {
 
 	@Column(length = 128, nullable = true, unique = true)
 	private String imageFileName;
-
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinTable(name = "job_user", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "job_id"))
-	private Set<JobOffer> jobOffers;
 
 	@NotNull
 	@Column(length = 2, nullable = false)
@@ -94,11 +77,6 @@ public class User extends AbstractAuditedEntity {
 	@Field
 	private String surname;
 
-	public void addAction(final Action action) {
-		Objects.requireNonNull(action);
-		this.actions.add(action);
-	}
-
 	public void addBookmark(final Bookmark bookmark) {
 		Objects.requireNonNull(bookmark);
 		this.bookmarks.add(bookmark);
@@ -119,16 +97,8 @@ public class User extends AbstractAuditedEntity {
 		return Objects.equals(this.email, other.email) && Objects.equals(this.name, other.email) && Objects.equals(this.email, other.email);
 	}
 
-	public List<Action> getActions() {
-		return this.actions;
-	}
-
 	public List<Bookmark> getBookmarks() {
 		return this.bookmarks;
-	}
-
-	public List<Client> getClients() {
-		return this.clients;
 	}
 
 	public LocalDate getDateOfJoin() {
@@ -143,16 +113,11 @@ public class User extends AbstractAuditedEntity {
 		if (this.name == null) {
 			return null;
 		}
-
 		return this.name + " " + this.surname;
 	}
 
 	public String getImageFileName() {
 		return this.imageFileName;
-	}
-
-	public Set<JobOffer> getJobOffers() {
-		return this.jobOffers;
 	}
 
 	public String getLanguage() {
@@ -204,12 +169,7 @@ public class User extends AbstractAuditedEntity {
 		if (this.role == null) {
 			return false;
 		}
-		return "ADMIN".equals(this.role.getName());
-	}
-
-	public void removeAction(final Action action) {
-		Objects.requireNonNull(action);
-		this.actions.remove(action);
+		return Role.ADMIN.equals(this.role.getName());
 	}
 
 	public void removeBookmark(final Bookmark bookmark) {
@@ -217,16 +177,8 @@ public class User extends AbstractAuditedEntity {
 		this.bookmarks.remove(bookmark);
 	}
 
-	public void setActions(final List<Action> actions) {
-		this.actions = actions;
-	}
-
 	public void setBookmarks(final List<Bookmark> bookmarks) {
 		this.bookmarks = bookmarks;
-	}
-
-	public void setClients(final List<Client> clients) {
-		this.clients = clients;
 	}
 
 	public void setDateOfJoin(final LocalDate dateOfJoin) {
@@ -239,10 +191,6 @@ public class User extends AbstractAuditedEntity {
 
 	public void setImageFileName(final String imageFileName) {
 		this.imageFileName = imageFileName;
-	}
-
-	public void setJobOffers(final Set<JobOffer> jobOffers) {
-		this.jobOffers = jobOffers;
 	}
 
 	public void setLanguage(final String language) {

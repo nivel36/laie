@@ -8,8 +8,6 @@ import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -21,7 +19,6 @@ import org.hibernate.search.annotations.Indexed;
 import ged.ejb.core.Address;
 import ged.ejb.core.model.AbstractAuditedEntity;
 import ged.ejb.job.offer.JobOffer;
-import ged.ejb.user.User;
 
 @Entity
 @Indexed
@@ -46,11 +43,6 @@ public class Client extends AbstractAuditedEntity {
 	@Column(length = 128, unique = true, nullable = false)
 	@NotNull
 	private String name;
-
-	@NotNull
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "ownerId", nullable = false)
-	private User owner;
 
 	@Pattern(regexp = "(?:[+]?(?:[0-9]{1,5}|\\x28[0-9]{1,5}\\x29)[ ]?)?[0-9]{2}(?:[0-9][ ]?){6}[0-9]")
 	@Column(length = 12)
@@ -94,11 +86,6 @@ public class Client extends AbstractAuditedEntity {
 		return this.name;
 	}
 
-	@Override
-	public User getOwner() {
-		return this.owner;
-	}
-
 	public String getPhoneNumber() {
 		return this.phoneNumber;
 	}
@@ -126,11 +113,6 @@ public class Client extends AbstractAuditedEntity {
 
 	public void setName(final String name) {
 		this.name = name;
-	}
-
-	@Override
-	public void setOwner(final User owner) {
-		this.owner = owner;
 	}
 
 	public void setPhoneNumber(final String phoneNumber) {

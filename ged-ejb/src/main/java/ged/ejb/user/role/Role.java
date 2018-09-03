@@ -10,7 +10,7 @@ import ged.ejb.core.model.AbstractEntity;
 @Entity
 public class Role extends AbstractEntity {
 
-	public static String ADMIN = "ADNMIN";
+	public static String ADMIN = "ADMIN";
 
 	private static final long serialVersionUID = 5722113796215191203L;
 

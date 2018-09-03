@@ -44,7 +44,7 @@ public class JobMeeting extends AbstractAuditedEntity {
 	@Column(length = 128, nullable = false)
 	private String result;
 
-	
+	@Override
 	public boolean equals(final Object obj) {
 		if (obj == null) {
 			return false;
@@ -59,10 +59,8 @@ public class JobMeeting extends AbstractAuditedEntity {
 			return false;
 		}
 		final JobMeeting other = (JobMeeting) obj;
-		return Objects.equals(this.dateConducted, other.dateConducted)
-				&& Objects.equals(this.datePlanned, other.datePlanned)
-				&& Objects.equals(this.description, other.description)
-				&& Objects.equals(this.jobCandidature, other.jobCandidature)
+		return Objects.equals(this.dateConducted, other.dateConducted) && Objects.equals(this.datePlanned, other.datePlanned)
+				&& Objects.equals(this.description, other.description) && Objects.equals(this.jobCandidature, other.jobCandidature)
 				&& Objects.equals(this.result, other.result);
 	}
 
@@ -90,7 +88,7 @@ public class JobMeeting extends AbstractAuditedEntity {
 		return this.result;
 	}
 
-	
+	@Override
 	public int hashCode() {
 		return Objects.hash(this.dateConducted, this.datePlanned, this.description, this.jobCandidature, this.result);
 	}

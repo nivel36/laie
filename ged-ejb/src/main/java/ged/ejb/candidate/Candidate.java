@@ -14,7 +14,6 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.Min;
@@ -28,15 +27,13 @@ import org.hibernate.search.annotations.IndexedEmbedded;
 import ged.ejb.core.Address;
 import ged.ejb.core.file.ServerFile;
 import ged.ejb.core.model.AbstractAuditedEntity;
-import ged.ejb.core.model.Ownerable;
 import ged.ejb.core.tag.Tag;
 import ged.ejb.curriculum.Curriculum;
 import ged.ejb.job.offer.JobCandidature;
-import ged.ejb.user.User;
 
 @Entity
 @Indexed
-public class Candidate extends AbstractAuditedEntity implements Ownerable {
+public class Candidate extends AbstractAuditedEntity {
 
 	private static final long serialVersionUID = 1305321530927456159L;
 
@@ -80,11 +77,6 @@ public class Candidate extends AbstractAuditedEntity implements Ownerable {
 	private String name;
 
 	@NotNull
-	@ManyToOne
-	@JoinColumn(name = "ownerId", nullable = false)
-	private User owner;
-
-	@NotNull
 	@Pattern(regexp = "(?:[+]?(?:[0-9]{1,5}|\\x28[0-9]{1,5}\\x29)[ ]?)?[0-9]{2}(?:[0-9][ ]?){6}[0-9]")
 	@Column(length = 12, nullable = false)
 	private String phoneNumber;
@@ -106,7 +98,6 @@ public class Candidate extends AbstractAuditedEntity implements Ownerable {
 	@IndexedEmbedded
 	private Set<Tag> tags = new HashSet<>();
 
-	
 	@Override
 	public boolean equals(final Object obj) {
 		if (obj == null) {
@@ -178,12 +169,6 @@ public class Candidate extends AbstractAuditedEntity implements Ownerable {
 		return this.name;
 	}
 
-	
-	@Override
-	public User getOwner() {
-		return this.owner;
-	}
-
 	public String getPhoneNumber() {
 		return this.phoneNumber;
 	}
@@ -208,7 +193,6 @@ public class Candidate extends AbstractAuditedEntity implements Ownerable {
 		return this.tags;
 	}
 
-	
 	@Override
 	public int hashCode() {
 		return Objects.hash(this.email, this.name, this.phoneNumber, this.surname);
@@ -262,12 +246,6 @@ public class Candidate extends AbstractAuditedEntity implements Ownerable {
 		this.name = name;
 	}
 
-	
-	@Override
-	public void setOwner(final User owner) {
-		this.owner = owner;
-	}
-
 	public void setPhoneNumber(final String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
@@ -292,7 +270,6 @@ public class Candidate extends AbstractAuditedEntity implements Ownerable {
 		this.tags = tags;
 	}
 
-	
 	@Override
 	public String toString() {
 		return this.getFullName();

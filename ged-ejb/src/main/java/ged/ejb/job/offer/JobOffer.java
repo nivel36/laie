@@ -22,12 +22,11 @@ import org.hibernate.search.annotations.IndexedEmbedded;
 import ged.ejb.client.Client;
 import ged.ejb.core.i18n.I18n;
 import ged.ejb.core.model.AbstractAuditedEntity;
-import ged.ejb.core.model.Ownerable;
 import ged.ejb.user.User;
 
 @Entity
 @Indexed
-public class JobOffer extends AbstractAuditedEntity implements Ownerable {
+public class JobOffer extends AbstractAuditedEntity {
 
 	private static final long serialVersionUID = 5579321864799956403L;
 
@@ -67,11 +66,6 @@ public class JobOffer extends AbstractAuditedEntity implements Ownerable {
 	private String name;
 
 	@NotNull
-	@ManyToOne
-	@JoinColumn(name = "ownerId", nullable = false)
-	private User owner;
-
-	@NotNull
 	private Integer places = 1;
 
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -82,7 +76,7 @@ public class JobOffer extends AbstractAuditedEntity implements Ownerable {
 	@NotNull
 	private String state;
 
-	
+	@Override
 	public boolean equals(final Object obj) {
 		if (this == obj) {
 			return true;
@@ -137,11 +131,6 @@ public class JobOffer extends AbstractAuditedEntity implements Ownerable {
 		return this.name;
 	}
 
-	
-	public User getOwner() {
-		return this.owner;
-	}
-
 	public Integer getPlaces() {
 		return this.places;
 	}
@@ -154,7 +143,7 @@ public class JobOffer extends AbstractAuditedEntity implements Ownerable {
 		return this.state;
 	}
 
-	
+	@Override
 	public int hashCode() {
 		return Objects.hash(this.dateOpened, this.name, this.places);
 	}
@@ -199,11 +188,6 @@ public class JobOffer extends AbstractAuditedEntity implements Ownerable {
 		this.name = name;
 	}
 
-	
-	public void setOwner(final User owner) {
-		this.owner = owner;
-	}
-
 	public void setPlaces(final Integer places) {
 		this.places = places;
 	}
@@ -216,7 +200,7 @@ public class JobOffer extends AbstractAuditedEntity implements Ownerable {
 		this.state = state;
 	}
 
-	
+	@Override
 	public String toString() {
 		return this.name + "-" + this.client.getName();
 	}

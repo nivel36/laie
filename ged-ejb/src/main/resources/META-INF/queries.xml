@@ -198,11 +198,11 @@
 		]]></query>
 	</named-query>
 
-	<named-query name="JobMeeting.findByUserAndCandidate">
+	<named-query name="JobMeeting.findByOwner">
 		<query><![CDATA[
 			SELECT j 
 			FROM JobMeeting j 
-			WHERE j.user = :user
+			WHERE j.owner = :owner
 		]]></query>
 	</named-query>
 
