@@ -76,7 +76,11 @@ public class SessionUser implements Serializable {
 		if (user.equals(owner)) {
 			return true;
 		}
-		return getTeam().contains(owner);
+		return isSubordinate(owner);
+	}
+
+	public boolean isSubordinate(final User subordinate) {
+		return getTeam().contains(subordinate);
 	}
 
 	public void refresh() {
