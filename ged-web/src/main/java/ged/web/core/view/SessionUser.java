@@ -83,10 +83,10 @@ public class SessionUser implements Serializable {
 		}
 		final User owner = entity.getOwner();
 		Objects.requireNonNull(owner);
-		return isSessionUserTheOwnerOrHisManager(owner);
+		return isOwnerOrHisManager(owner);
 	}
 
-	private boolean isSessionUserTheOwnerOrHisManager(final User owner) {
+	private boolean isOwnerOrHisManager(final User owner) {
 		if (user.equals(owner)) {
 			return true;
 		}
