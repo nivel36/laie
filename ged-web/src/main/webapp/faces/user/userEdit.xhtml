@@ -72,7 +72,7 @@
 									<div class="ui-g-12 ui-md-6">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['user.role']}" for="role" />
-											<p:selectOneMenu id="role" value="#{userEditBean.user.role}" validator="#{userEditBean.validateRole}">
+											<p:selectOneMenu id="role" value="#{userEditBean.user.role}" >
 												<f:selectItems var="role" itemValue="#{role}" value="#{applicationBean.roles}" itemLabel="#{i18n:translate(role.name)}" />
 											</p:selectOneMenu>
 											<p:message for="role" />
