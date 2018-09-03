@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.ResourceBundle;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
@@ -36,11 +35,6 @@ public class SessionUser implements Serializable {
 
 	public Locale getLocale() {
 		return this.locale;
-	}
-
-	private ResourceBundle getResourceBundle(final String filename) {
-		final Locale facesLocale = facesContext.getViewRoot().getLocale();
-		return ResourceBundle.getBundle(filename, facesLocale);
 	}
 
 	public int getRowsPerPage() {
@@ -91,10 +85,5 @@ public class SessionUser implements Serializable {
 
 	public void setUserService(final UserService userService) {
 		this.userService = userService;
-	}
-
-	protected String translate(final String message) {
-		final ResourceBundle bundle = this.getResourceBundle("ged.i18n");
-		return bundle.getString(message);
 	}
 }
