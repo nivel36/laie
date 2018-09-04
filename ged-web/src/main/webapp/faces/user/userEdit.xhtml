@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:i18n="http://legion.com/i18n" template="/WEB-INF/templates/default.xhtml">
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:i18n="http://legion.com/i18n" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
 		<title>#{empty userEditBean.user.fullName ? i18n['user.new_user'] : userEditBean.user.fullName}</title>
@@ -40,7 +41,7 @@
 									<div class="ui-g-12 ui-md-6">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['user.name']}" for="name" />
-											<p:inputText id="name" value="#{userEditBean.user.name}" required="true" />
+											<p:inputText id="name" value="#{userEditBean.user.name}" required="true" autocomplete="false" />
 											<p:message for="name" />
 										</div>
 									</div>
@@ -48,7 +49,7 @@
 									<div class="ui-g-12 ui-md-6">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['user.surname']}" for="surname" />
-											<p:inputText id="surname" value="#{userEditBean.user.surname}" required="true" />
+											<p:inputText id="surname" value="#{userEditBean.user.surname}" required="true" autocomplete="false" />
 											<p:message for="surname" />
 										</div>
 									</div>
@@ -56,7 +57,7 @@
 									<div class="ui-g-12 ui-md-6">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['user.email']}" for="email" />
-											<p:inputText id="email" value="#{userEditBean.user.email}" required="true" validator="#{userEditBean.validateEmail}" />
+											<p:inputText id="email" value="#{userEditBean.user.email}" required="true" validator="#{userEditBean.validateEmail}" autocomplete="false" />
 											<p:message for="email" />
 										</div>
 									</div>
@@ -64,7 +65,7 @@
 									<div class="ui-g-12 ui-md-6">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['user.phone_number']}" for="phone_number" />
-											<p:inputText id="phone_number" value="#{userEditBean.user.phoneNumber}" />
+											<p:inputText id="phone_number" value="#{userEditBean.user.phoneNumber}" autocomplete="false" />
 											<p:message for="phone_number" />
 										</div>
 									</div>
@@ -72,7 +73,11 @@
 									<div class="ui-g-12 ui-md-6">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['user.role']}" for="role" />
-											<p:selectOneMenu id="role" value="#{userEditBean.user.role}" >
+											<p:selectOneMenu id="role" value="#{userEditBean.user.role}" required="true" styleClass="required">
+												<p:ajax event="change" update="managerGroup role" process="role" listener="#{userEditBean.changeRoleListener}"/>
+												<c:if test="#{empty userEditBean.user.role}">
+													<f:selectItem />
+												</c:if>
 												<f:selectItems var="role" itemValue="#{role}" value="#{applicationBean.roles}" itemLabel="#{i18n:translate(role.name)}" />
 											</p:selectOneMenu>
 											<p:message for="role" />
@@ -80,31 +85,33 @@
 									</div>
 
 									<div class="ui-sm-12 ui-md-6">
-										<h:panelGroup id="managerGroup" layout="block" styleClass="form-group" rendered="#{not userEditBean.user.admin}">
-											<p:outputLabel value="#{i18n['user.manager']}" for="manager" />
-											<div class="ui-inputgroup">
-												<p:autoComplete id="manager" value="#{userEditBean.user.manager}" completeMethod="#{userEditBean.searchManager}" var="manager"
-													itemLabel="#{manager.fullName}" itemValue="#{manager}" forceSelection="true">
-													<p:column styleClass="user-select image">
-														<p:graphicImage class="image image-icon" value="/images/#{manager.imageFileName}" rendered="#{not empty manager.imageFileName}" />
-														<p:graphicImage class="image image-icon" value="/resources/img/default-avatar.png" rendered="#{empty manager.imageFileName}" />
-													</p:column>
-													<p:column styleClass="user-select name">
-														<h:outputText value="#{manager.fullName}" />
-													</p:column>
-													<p:ajax event="itemSelect" update="managerGroup" process="manager" />
-												</p:autoComplete>
-												<p:commandButton id="cleanManagerAction" action="#{userEditBean.cleanManager}" process="@this" update="managerGroup" styleClass="btn-gray"
-													icon="fa fa-times" rendered="#{not empty userEditBean.user.manager}" />
-											</div>
-											<h:message for="manager" errorClass="error" />
+										<h:panelGroup id="managerGroup" layout="block" styleClass="form-group">
+											<h:panelGroup layout="block" rendered="#{not userEditBean.user.admin}">
+												<p:outputLabel value="#{i18n['user.manager']}" for="manager" />
+												<div class="ui-inputgroup">
+													<p:autoComplete id="manager" value="#{userEditBean.user.manager}" completeMethod="#{userEditBean.searchManager}" var="manager"
+														itemLabel="#{manager.fullName}" itemValue="#{manager}" forceSelection="true">
+														<p:column styleClass="user-select image">
+															<p:graphicImage class="image image-icon" value="/images/#{manager.imageFileName}" rendered="#{not empty manager.imageFileName}" />
+															<p:graphicImage class="image image-icon" value="/resources/img/default-avatar.png" rendered="#{empty manager.imageFileName}" />
+														</p:column>
+														<p:column styleClass="user-select name">
+															<h:outputText value="#{manager.fullName}" />
+														</p:column>
+														<p:ajax event="itemSelect" update="managerGroup" process="manager" />
+													</p:autoComplete>
+													<p:commandButton id="cleanManagerAction" action="#{userEditBean.cleanManager}" process="@this" update="managerGroup" styleClass="btn-gray"
+														icon="fa fa-times" rendered="#{not empty userEditBean.user.manager}" />
+												</div>
+												<h:message for="manager" errorClass="error" />
+											</h:panelGroup>
 										</h:panelGroup>
 									</div>
 
 									<div class="ui-g-12 ui-md-6">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['user.date_of_join']}" for="date_of_join" />
-											<p:calendar id="date_of_join" value="#{userEditBean.user.dateOfJoin}" required="#{cc.attrs.required}" pattern="dd/MM/yyyy">
+											<p:calendar id="date_of_join" value="#{userEditBean.user.dateOfJoin}" required="#{cc.attrs.required}" pattern="dd/MM/yyyy" autocomplete="false">
 												<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
 											</p:calendar>
 											<p:message for="date_of_join" />

@@ -56,6 +56,12 @@ public class UserEditBean extends AbstractBean {
 		return this.cancelUrl;
 	}
 
+	public void changeRoleListener() {
+		if (user.isAdmin()) {
+			cleanManager();
+		}
+	}
+
 	public void cleanManager() {
 		this.user.setManager(null);
 	}
@@ -78,7 +84,8 @@ public class UserEditBean extends AbstractBean {
 		this.user = this.getValueFromFlash("user");
 		if (this.user == null) {
 			newUser();
-		} else {
+		}
+		else {
 			editUser();
 		}
 	}

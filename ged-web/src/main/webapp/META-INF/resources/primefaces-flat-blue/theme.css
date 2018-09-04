@@ -4286,8 +4286,8 @@ body .ui-inputgroup .ui-inputgroup-addon:first-child, .ui-inputgroup .ui-inputgr
 	border-bottom-left-radius: 4px;
 }
 
-body .ui-inputgroup .ui-inputgroup-addon:last-child, .ui-inputgroup .ui-inputgroup-addon-checkbox:last-child
-	{
+body .ui-inputgroup .ui-inputgroup-addon:last-child,
+body .ui-inputgroup .ui-inputgroup-addon-checkbox:last-child {
 	border-top-right-radius: 4px;
 	border-bottom-right-radius: 4px;
 }
@@ -4297,7 +4297,8 @@ body .ui-inputgroup .ui-inputgroup-addon {
 	font-size: 15px
 }
 
-body .ui-inputgroup .ui-inputgroup-addon, .ui-inputgroup .ui-inputgroup-addon-checkbox
+body .ui-inputgroup .ui-inputgroup-addon, 
+body .ui-inputgroup .ui-inputgroup-addon-checkbox
 	{
 	display: inline-block;
 	text-align: center;
@@ -4306,26 +4307,27 @@ body .ui-inputgroup .ui-inputgroup-addon, .ui-inputgroup .ui-inputgroup-addon-ch
 	border-style: solid;
 }
 
-body .ui-inputgroup .ui-inputgroup-addon, .ui-inputgroup .ui-inputgroup-addon-checkbox
-	{
+body .ui-inputgroup .ui-inputgroup-addon, 
+body .ui-inputgroup .ui-inputgroup-addon-checkbox {
 	border-color: #d6d6d6;
 	background-color: #f0f0f0;
 	color: #222;
 }
 
-body .ui-inputgroup>.ui-inputtext:not (:first-child ), .ui-inputgroup>.ui-password:not 
-	 (:first-child ), .ui-inputgroup>.ui-inputnumber:not
-	 (:first-child ) >.ui-inputtext, .ui-inputgroup>.ui-inputmask:not (:first-child 
-	 ), .ui-inputgroup>.ui-calendar:not (:first-child
-	 ) >.ui-inputfield, .ui-inputgroup>.ui-selectonemenu:not (:first-child 
-	 ), .ui-inputgroup>.ui-selectonebutton:not (:first-child
-	 ) >.ui-button {
+body .ui-inputgroup>.ui-inputtext:not (:first-child ), 
+body .ui-inputgroup>.ui-password:not(:first-child ),
+body .ui-inputgroup>.ui-inputnumber:not(:first-child ) >.ui-inputtext,
+body .ui-inputgroup>.ui-inputmask:not (:first-child),
+body .ui-inputgroup>.ui-calendar:not (:first-child ) >.ui-inputfield,
+body .ui-inputgroup>.ui-selectonemenu:not (:first-child),
+body .ui-inputgroup>.ui-selectonebutton:not (:first-child) >.ui-button {
 	border-top-left-radius: 0;
 	border-bottom-left-radius: 0;
 	border-left: 0 none;
 }
 
-body .ui-inputgroup .ui-inputtext, .ui-inputgroup .ui-password {
+body .ui-inputgroup .ui-inputtext,
+body .ui-inputgroup .ui-password  {
 	padding-left: .5em;
 }
 
@@ -4354,13 +4356,15 @@ body .ui-inputfield {
 	height: 30px;
 }
 
-body .ui-inputfield.ui-state-error, body .ui-inputtext[aria-required="true"].ui-state-error,
-	body .ui-inputtext[data-p-required="true"].ui-state-error {
+body .ui-inputfield.ui-state-error, 
+body .ui-inputtext[aria-required="true"].ui-state-error,
+body .ui-inputtext[data-p-required="true"].ui-state-error, 
+body .ui-selectonemenu.ui-state-error  {
 	border: 1px solid red;
 }
 
-body .ui-inputfield.ui-state-disabled, body .ui-state-disabled .ui-inputfield
-	{
+body .ui-inputfield.ui-state-disabled, 
+body .ui-state-disabled .ui-inputfield 	{
 	background: #f2f2f2;
 }
 
@@ -4368,8 +4372,8 @@ body .ui-inputfield.ui-state-focus {
 	box-shadow: 0 0 5px #5b9bd1;
 }
 
-body .ui-inputfield.ui-state-disabled.ui-state-focus, body .ui-inputfield[aria-readonly="true"].ui-state-focus
-	{
+body .ui-inputfield.ui-state-disabled.ui-state-focus, 
+body .ui-inputfield[aria-readonly="true"].ui-state-focus {
 	box-shadow: none;
 }
 
@@ -4381,8 +4385,9 @@ body .ui-calendar .ui-inputfield {
 	width: 100%;
 }
 
-body .ui-inputtext[aria-required="true"], body .ui-inputtext[data-p-required="true"]
-	{
+body .ui-inputtext[aria-required="true"], 
+body .ui-inputtext[data-p-required="true"],
+body .ui-selectonemenu.required {
 	border-left: 2px solid #a2aab8;
 }
 
