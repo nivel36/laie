@@ -30,10 +30,6 @@ public class UserDao extends AbstractDao<User> {
 		}
 	}
 
-	public boolean existsMoreThanOneAdmin() {
-		return this.findByQuery(Boolean.class, "User.existsMoreThanOneAdmin");
-	}
-
 	private List<UserClosure> findAntecessorsUserClosures(final User user) {
 		return this.findByQuery(UserClosure.class, "UserClosure.findAntecessorsUserClosuresById", map("id", user.getId()), 0, 0);
 	}
@@ -125,23 +121,6 @@ public class UserDao extends AbstractDao<User> {
 
 	private Parameters mapDates(final LocalDateTime start, final LocalDateTime end) {
 		return map("start", start).and("end", end);
-	}
-
-	public long numberOfUsersInTeam(final User user) {
-		Objects.requireNonNull(user);
-		return this.findByQuery(Long.class, "User.numberOfUsersInTeam", map("id", user.getId()));
-	}
-
-	public long numberOfUsersOffline(final LocalDateTime start, final LocalDateTime end) {
-		this.validateDates(start, end);
-		return this.findByQuery(Long.class, "User.numberOfUsersOffline", this.mapDates(start, end));
-	}
-
-	public long numberOfUsersOnline(final LocalDateTime start, final LocalDateTime end) {
-		Objects.requireNonNull(start);
-		Objects.requireNonNull(end);
-		this.validateDates(start, end);
-		return this.findByQuery(Long.class, "User.numberOfUsersOnline", this.mapDates(start, end));
 	}
 
 	@Override

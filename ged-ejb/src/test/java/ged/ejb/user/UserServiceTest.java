@@ -1,8 +1,8 @@
 package ged.ejb.user;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-
-import javax.validation.ValidationException;
+import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -20,6 +20,7 @@ public class UserServiceTest {
 	@Nested
 	class Save {
 
+		@Test
 		public void adminWithManagerShouldThrowIllegalStateException() {
 			assertThrows(IllegalStateException.class, () -> {
 				final User manager = mockUser(2L, "abel@test.com", null);
@@ -28,8 +29,21 @@ public class UserServiceTest {
 				adminRole.setName(Role.ADMIN);
 				user.setRole(adminRole);
 				user.setManager(user);
+
 				userService.save(user);
 			});
+		}
+
+		@Test
+		public void adminWithoutManagerShouldReturnUser() {
+			final User user = mockUser(1L, "abel@test.com", null);
+			final Role adminRole = new Role();
+			adminRole.setName(Role.ADMIN);
+			user.setRole(adminRole);
+			when(userDao.save(user)).thenReturn(user);
+
+			final User returnedUser = userService.save(user);
+			assertEquals(returnedUser, user);
 		}
 
 		@Test
@@ -39,6 +53,7 @@ public class UserServiceTest {
 			});
 		}
 
+		@Test
 		public void usersOwnManagerShouldThrowIllegalStateException() {
 			assertThrows(IllegalStateException.class, () -> {
 				final User user = mockUser(null, "abel@test.com", null);
@@ -46,15 +61,6 @@ public class UserServiceTest {
 				userService.save(user);
 			});
 		}
-
-		public void userWithDuplicatedEmailShouldThrowValidationException() {
-			assertThrows(ValidationException.class, () -> {
-				final User user = mockUser(null, "abel@test.com", null);
-				user.setManager(user);
-				userService.save(user);
-			});
-		}
-
 	}
 
 	@Mock
@@ -81,5 +87,4 @@ public class UserServiceTest {
 		this.userService.setUserDao(userDao);
 		this.userService.setRoleDao(roleDao);
 	}
-
 }

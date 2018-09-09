@@ -197,18 +197,18 @@ public class UserDaoTest {
 
 		@Test
 		public void duplicatedEmailShouldReturnTrue() {
-			when(persistenceFacade.findByQuery(Boolean.class, "User.existsMoreThanOneAdmin", null)).thenReturn(Boolean.TRUE);
+			when(persistenceFacade.findByQuery(Boolean.class, "User.emailExists", map("email", "abel@test.com"))).thenReturn(Boolean.TRUE);
 
-			final boolean result = userDao.existsMoreThanOneAdmin();
+			final boolean result = userDao.isEmailInUse("abel@test.com");
 			assertTrue(result);
 		}
 
 		@Test
 		public void nonDuplicatedEmailShouldReturnFalse() {
-			when(persistenceFacade.findByQuery(Boolean.class, "User.emailExists", map("email", "aaron@test.com"))).thenReturn(Boolean.TRUE);
+			when(persistenceFacade.findByQuery(Boolean.class, "User.emailExists", map("email", "abel@test.com"))).thenReturn(Boolean.FALSE);
 
-			final boolean result = userDao.isEmailInUse("aaron@test.com");
-			assertTrue(result);
+			final boolean result = userDao.isEmailInUse("abel@test.com");
+			assertEquals(Boolean.FALSE, result);
 		}
 
 		@Test

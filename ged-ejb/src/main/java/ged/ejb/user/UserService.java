@@ -72,7 +72,7 @@ public class UserService extends AbstractAuditedService<User> {
 
 	private boolean hasValidManagerRole(final User user) {
 		final User manager = user.getManager();
-		if ((manager != null) || user.isAdmin()) {
+		if ((manager != null) && user.isAdmin()) {
 			return false;
 		}
 		return true;
@@ -106,25 +106,6 @@ public class UserService extends AbstractAuditedService<User> {
 		Objects.requireNonNull(email);
 		logger.debug("Testing if email {} is in use", email);
 		return this.userDao.isEmailInUse(email);
-	}
-
-	public long numberOfUsersInTeam(final User user) {
-		logger.debug("Find number of users in team of {}", user.getEmail());
-		return this.userDao.numberOfUsersInTeam(user);
-	}
-
-	public long numberOfUsersOfflineLastMonth() {
-		logger.debug("Find number of users offline last month");
-		final LocalDateTime today = LocalDateTime.now();
-		final LocalDateTime oneMonthAgo = today.minusMonths(1);
-		return this.userDao.numberOfUsersOffline(oneMonthAgo, today);
-	}
-
-	public long numberOfUsersOnlineLastWeek() {
-		logger.debug("Find number of users online last week");
-		final LocalDateTime today = LocalDateTime.now();
-		final LocalDateTime oneWeekAgo = today.minusDays(7);
-		return this.userDao.numberOfUsersOnline(oneWeekAgo, today);
 	}
 
 	@Override
