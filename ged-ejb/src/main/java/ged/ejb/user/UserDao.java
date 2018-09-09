@@ -35,8 +35,8 @@ public class UserDao extends AbstractDao<User> {
 	}
 
 	public List<User> findSubordinateUsers(final User user) {
+		Objects.requireNonNull(user);
 		try {
-			Objects.requireNonNull(user);
 			return this.findByQuery(User.class, "User.findSubordinateUsers", map("id", user.getId()), 0, 0);
 		}
 		catch (final NoResultException e) {
@@ -46,8 +46,8 @@ public class UserDao extends AbstractDao<User> {
 	}
 
 	public User findUserByEmail(final String email) {
+		Objects.requireNonNull(email);
 		try {
-			Objects.requireNonNull(email);
 			return this.findByQuery(User.class, "User.findByEmail", map("email", email));
 		}
 		catch (final NoResultException e) {

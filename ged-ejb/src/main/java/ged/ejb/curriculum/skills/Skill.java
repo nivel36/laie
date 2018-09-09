@@ -34,14 +34,22 @@ public class Skill extends AbstractEntity {
 		if (this == obj) {
 			return true;
 		}
-		if (obj == null) {
+		if (!super.equals(obj)) {
 			return false;
 		}
-		if (this.getClass() != obj.getClass()) {
+		if (getClass() != obj.getClass()) {
 			return false;
 		}
 		final Skill other = (Skill) obj;
-		return Objects.equals(this.name, other.name);
+		if (name == null) {
+			if (other.name != null) {
+				return false;
+			}
+		}
+		else if (!name.equals(other.name)) {
+			return false;
+		}
+		return true;
 	}
 
 	public Curriculum getCurriculum() {
@@ -50,6 +58,11 @@ public class Skill extends AbstractEntity {
 
 	public String getName() {
 		return this.name;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(name);
 	}
 
 	public void setCurriculum(final Curriculum curriculum) {

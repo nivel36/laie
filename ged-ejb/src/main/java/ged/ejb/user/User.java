@@ -94,7 +94,7 @@ public class User extends AbstractAuditedEntity {
 			return false;
 		}
 		final User other = (User) obj;
-		return Objects.equals(this.email, other.email) && Objects.equals(this.name, other.email) && Objects.equals(this.email, other.email);
+		return Objects.equals(this.email, other.email) && Objects.equals(this.surname, other.surname) && Objects.equals(this.name, other.name);
 	}
 
 	public List<Bookmark> getBookmarks() {
