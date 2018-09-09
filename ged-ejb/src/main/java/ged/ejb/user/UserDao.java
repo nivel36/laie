@@ -18,7 +18,7 @@ import ged.ejb.core.model.Repository;
 import ged.ejb.core.util.Parameters;
 
 @Repository
-public final class UserDao extends AbstractDao<User> {
+public class UserDao extends AbstractDao<User> {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
@@ -76,6 +76,9 @@ public final class UserDao extends AbstractDao<User> {
 	}
 
 	private void insertUser(final User user) {
+		if (isEmailInUse(user.getEmail())) {
+			throw new DuplicateEmailException();
+		}
 		this.getPersistenceFacade().insert(user);
 		if (user.getManager() != null) {
 			this.insertUserClosures(user);
@@ -105,7 +108,13 @@ public final class UserDao extends AbstractDao<User> {
 		return (userInDatabase.getManager() != null) && (user.getManager() != null) && !user.getManager().equals(userInDatabase.getManager());
 	}
 
-	public boolean isDuplicatedEmail(final String email) {
+	private boolean isDuplicateEmail(final User user) {
+		Objects.requireNonNull(user);
+		final User repositoryUser = this.findUserByEmail(user.getEmail());
+		return (repositoryUser != null) && !(repositoryUser.getId() == user.getId());
+	}
+
+	public boolean isEmailInUse(final String email) {
 		Objects.requireNonNull(email);
 		return this.findByQuery(Boolean.class, "User.emailExists", map("email", email));
 	}
@@ -153,6 +162,9 @@ public final class UserDao extends AbstractDao<User> {
 	}
 
 	private User updateUser(final User user) {
+		if (isDuplicateEmail(user)) {
+			throw new DuplicateEmailException();
+		}
 		this.updateUserClosures(user);
 		return this.getPersistenceFacade().update(user);
 	}

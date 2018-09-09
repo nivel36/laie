@@ -7,7 +7,6 @@ import java.util.Objects;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.validation.ValidationException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,18 +29,6 @@ public class UserService extends AbstractAuditedService<User> {
 	@Inject
 	@Repository
 	private UserDao userDao;
-
-	public boolean emailExists(final String email) {
-		Objects.requireNonNull(email);
-		final boolean emailExists = this.userDao.isDuplicatedEmail(email);
-		if (emailExists) {
-			logger.debug("The email {} exists on database", email);
-		}
-		else {
-			logger.debug("The email {} doesn't exists on database", email);
-		}
-		return emailExists;
-	}
 
 	public List<Role> findAllRoles() {
 		return this.roleDao.findAll();
@@ -85,10 +72,8 @@ public class UserService extends AbstractAuditedService<User> {
 
 	private boolean hasValidManagerRole(final User user) {
 		final User manager = user.getManager();
-		if (manager != null) {
-			if (!this.isASubordinateRole(manager.getRole(), user.getRole())) {
-				return false;
-			}
+		if ((manager != null) || user.isAdmin()) {
+			return false;
 		}
 		return true;
 	}
@@ -117,9 +102,10 @@ public class UserService extends AbstractAuditedService<User> {
 		return false;
 	}
 
-	private boolean isDuplicateEmail(final User user) {
-		final User repositoryUser = this.findUserByEmail(user.getEmail());
-		return (repositoryUser != null) && !repositoryUser.equals(user);
+	public boolean isEmailInUse(final String email) {
+		Objects.requireNonNull(email);
+		logger.debug("Testing if email {} is in use", email);
+		return this.userDao.isEmailInUse(email);
 	}
 
 	public long numberOfUsersInTeam(final User user) {
@@ -147,10 +133,6 @@ public class UserService extends AbstractAuditedService<User> {
 		if (user.equals(user.getManager())) {
 			logger.warn("The user {} can't be his/her manager", user.getEmail());
 			throw new IllegalStateException("User can't be his/her manager");
-		}
-		if (this.isDuplicateEmail(user)) {
-			logger.warn("The email {} alredy in use", user.getEmail());
-			throw new ValidationException("Email exists");
 		}
 		if (!this.hasValidSubordinateRoles(user)) {
 			throw new IllegalStateException();

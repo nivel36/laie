@@ -32,7 +32,7 @@ public class UserDaoTest {
 		public void shouldReturnAList() {
 			when(persistenceFacade.findAll(User.class)).thenReturn(new ArrayList<User>());
 
-			final List<User> users = userDaoJpa.findAll();
+			final List<User> users = userDao.findAll();
 			assertEquals(0, users.size());
 		}
 	}
@@ -43,38 +43,32 @@ public class UserDaoTest {
 		@Test
 		public void nullUserShouldThrowNullPointerException() {
 			assertThrows(NullPointerException.class, () -> {
-				userDaoJpa.findSubordinateUsers(null);
+				userDao.findSubordinateUsers(null);
 			});
 		}
 
 		@Test
 		public void userWithoutSubordinatesShouldReturnAnEmptyList() {
-			final User user = new User();
-			user.setId(1L);
+			final User user = mockUser(1L, "abel@test.com", null);
 
-			when(persistenceFacade.findByQuery(User.class, "User.findSubordinateUsers", map("id", 1L), 0, 0))
-					.thenThrow(new NoResultException());
+			when(persistenceFacade.findByQuery(User.class, "User.findSubordinateUsers", map("id", 1L), 0, 0)).thenThrow(new NoResultException());
 
-			final List<User> subordinateUsersFromDataBases = userDaoJpa.findSubordinateUsers(user);
+			final List<User> subordinateUsersFromDataBases = userDao.findSubordinateUsers(user);
 			assertEquals(0, subordinateUsersFromDataBases.size());
 		}
 
 		@Test
 		public void userWithSuborinatesShouldReturnListOfSubordinates() {
-			final User user = new User();
-			user.setId(1L);
+			final User manager = mockUser(1L, "abel@test.com", null);
 
-			final User subordinateUser = new User();
-			subordinateUser.setId(2L);
-			subordinateUser.setManager(user);
+			final User subordinate = mockUser(2L, "bernard@test.com", manager);
 
 			final List<User> subordinateUsers = new ArrayList<>();
-			subordinateUsers.add(subordinateUser);
+			subordinateUsers.add(subordinate);
 
-			when(persistenceFacade.findByQuery(User.class, "User.findSubordinateUsers", map("id", 1L), 0, 0))
-					.thenReturn(subordinateUsers);
+			when(persistenceFacade.findByQuery(User.class, "User.findSubordinateUsers", map("id", 1L), 0, 0)).thenReturn(subordinateUsers);
 
-			final List<User> subordinateUsersFromDataBase = userDaoJpa.findSubordinateUsers(user);
+			final List<User> subordinateUsersFromDataBase = userDao.findSubordinateUsers(manager);
 			assertEquals(1, subordinateUsersFromDataBase.size());
 		}
 	}
@@ -85,28 +79,25 @@ public class UserDaoTest {
 		@Test
 		public void nullEmailShouldThrowNullPointerException() {
 			assertThrows(NullPointerException.class, () -> {
-				userDaoJpa.findUserByEmail(null);
+				userDao.findUserByEmail(null);
 			});
 		}
 
 		@Test
 		public void userFoundShouldReturnUser() {
-			final User user = new User();
-			user.setEmail("aaron@test.com");
+			final User user = mockUser(1L, "abel@test.com", null);
 
-			when(persistenceFacade.findByQuery(User.class, "User.findByEmail", map("email", "aaron@test.com")))
-					.thenReturn(user);
+			when(persistenceFacade.findByQuery(User.class, "User.findByEmail", map("email", "abel@test.com"))).thenReturn(user);
 
-			final User userInDataBase = userDaoJpa.findUserByEmail("aaron@test.com");
+			final User userInDataBase = userDao.findUserByEmail("abel@test.com");
 			assertEquals(user, userInDataBase);
 		}
 
 		@Test
 		public void userNotFoundShouldReturnNull() {
-			when(persistenceFacade.findByQuery(User.class, "User.findByEmail", map("email", "aaron@test.com")))
-					.thenThrow(new NoResultException());
+			when(persistenceFacade.findByQuery(User.class, "User.findByEmail", map("email", "abel@test.com"))).thenThrow(new NoResultException());
 
-			final User userInDataBase = userDaoJpa.findUserByEmail("aaron@test.com");
+			final User userInDataBase = userDao.findUserByEmail("abel@test.com");
 			assertNull(userInDataBase);
 		}
 	}
@@ -117,21 +108,21 @@ public class UserDaoTest {
 		@Test
 		public void nullDatesShouldThrowNullPointerException() {
 			assertThrows(NullPointerException.class, () -> {
-				userDaoJpa.findUsersOffline(null, null);
+				userDao.findUsersOffline(null, null);
 			});
 		}
 
 		@Test
 		public void nullEndDateShouldThrowNullPointerException() {
 			assertThrows(NullPointerException.class, () -> {
-				userDaoJpa.findUsersOffline(LocalDateTime.now(), null);
+				userDao.findUsersOffline(LocalDateTime.now(), null);
 			});
 		}
 
 		@Test
 		public void nullStartDateShouldThrowNullPointerException() {
 			assertThrows(NullPointerException.class, () -> {
-				userDaoJpa.findUsersOffline(null, LocalDateTime.now());
+				userDao.findUsersOffline(null, LocalDateTime.now());
 			});
 		}
 
@@ -140,10 +131,9 @@ public class UserDaoTest {
 			final LocalDateTime start = LocalDateTime.now();
 			final LocalDateTime end = start.plusDays(1);
 
-			when(persistenceFacade.findByQuery(User.class, "User.findUsersOffline", map("start", start).and("end", end),
-					0, 0)).thenReturn(new ArrayList<>());
+			when(persistenceFacade.findByQuery(User.class, "User.findUsersOffline", map("start", start).and("end", end), 0, 0)).thenReturn(new ArrayList<>());
 
-			final List<User> usersInDataBase = userDaoJpa.findUsersOffline(start, end);
+			final List<User> usersInDataBase = userDao.findUsersOffline(start, end);
 			assertEquals(0, usersInDataBase.size());
 		}
 
@@ -152,7 +142,7 @@ public class UserDaoTest {
 			assertThrows(IllegalStateException.class, () -> {
 				final LocalDateTime start = LocalDateTime.now();
 				final LocalDateTime end = start.minusDays(1);
-				userDaoJpa.findUsersOffline(start, end);
+				userDao.findUsersOffline(start, end);
 			});
 		}
 	}
@@ -163,21 +153,21 @@ public class UserDaoTest {
 		@Test
 		public void nullDatesShouldThrowNullPointerException() {
 			assertThrows(NullPointerException.class, () -> {
-				userDaoJpa.findUsersOnline(null, null);
+				userDao.findUsersOnline(null, null);
 			});
 		}
 
 		@Test
 		public void nullEndDateShouldThrowNullPointerException() {
 			assertThrows(NullPointerException.class, () -> {
-				userDaoJpa.findUsersOnline(LocalDateTime.now(), null);
+				userDao.findUsersOnline(LocalDateTime.now(), null);
 			});
 		}
 
 		@Test
 		public void nullStartDateShouldThrowNullPointerException() {
 			assertThrows(NullPointerException.class, () -> {
-				userDaoJpa.findUsersOnline(null, LocalDateTime.now());
+				userDao.findUsersOnline(null, LocalDateTime.now());
 			});
 		}
 
@@ -186,10 +176,9 @@ public class UserDaoTest {
 			final LocalDateTime start = LocalDateTime.now();
 			final LocalDateTime end = start.plusDays(1);
 
-			when(persistenceFacade.findByQuery(User.class, "User.findUsersOnline", map("start", start).and("end", end),
-					0, 0)).thenReturn(new ArrayList<>());
+			when(persistenceFacade.findByQuery(User.class, "User.findUsersOnline", map("start", start).and("end", end), 0, 0)).thenReturn(new ArrayList<>());
 
-			final List<User> usersInDataBase = userDaoJpa.findUsersOnline(start, end);
+			final List<User> usersInDataBase = userDao.findUsersOnline(start, end);
 			assertEquals(0, usersInDataBase.size());
 		}
 
@@ -198,7 +187,7 @@ public class UserDaoTest {
 			assertThrows(IllegalStateException.class, () -> {
 				final LocalDateTime start = LocalDateTime.now();
 				final LocalDateTime end = start.minusDays(1);
-				userDaoJpa.findUsersOnline(start, end);
+				userDao.findUsersOnline(start, end);
 			});
 		}
 	}
@@ -208,26 +197,24 @@ public class UserDaoTest {
 
 		@Test
 		public void duplicatedEmailShouldReturnTrue() {
-			when(persistenceFacade.findByQuery(Boolean.class, "User.existsMoreThanOneAdmin", null))
-					.thenReturn(Boolean.TRUE);
+			when(persistenceFacade.findByQuery(Boolean.class, "User.existsMoreThanOneAdmin", null)).thenReturn(Boolean.TRUE);
 
-			final boolean result = userDaoJpa.existsMoreThanOneAdmin();
+			final boolean result = userDao.existsMoreThanOneAdmin();
 			assertTrue(result);
 		}
 
 		@Test
 		public void nonDuplicatedEmailShouldReturnFalse() {
-			when(persistenceFacade.findByQuery(Boolean.class, "User.emailExists", map("email", "aaron@test.com")))
-					.thenReturn(Boolean.TRUE);
+			when(persistenceFacade.findByQuery(Boolean.class, "User.emailExists", map("email", "aaron@test.com"))).thenReturn(Boolean.TRUE);
 
-			final boolean result = userDaoJpa.isDuplicatedEmail("aaron@test.com");
+			final boolean result = userDao.isEmailInUse("aaron@test.com");
 			assertTrue(result);
 		}
 
 		@Test
 		public void nullEmailShouldThrowNullPointerException() {
 			assertThrows(NullPointerException.class, () -> {
-				userDaoJpa.isDuplicatedEmail(null);
+				userDao.isEmailInUse(null);
 			});
 		}
 	}
@@ -237,38 +224,29 @@ public class UserDaoTest {
 
 		@Test
 		public void insertUserWithManagerShouldReturnUser() {
-			final User admin = new User();
-			admin.setId(1L);
+			final User manager = mockUser(1L, "abel@test.com", null);
+			final User subordinate = mockUser(null, "bernat@test.com", manager);
 
-			final User manager = new User();
-			manager.setId(2L);
-			manager.setManager(admin);
+			when(persistenceFacade.findByQuery(Boolean.class, "User.emailExists", map("email", subordinate.getEmail()))).thenReturn(Boolean.FALSE);
 
-			final User user = new User();
-			user.setManager(manager);
-
-			final UserClosure userClosure = new UserClosure();
-			userClosure.setAntecessor(admin);
-			userClosure.setDescendant(manager);
-
-			final List<UserClosure> userClosures = new ArrayList<>();
-			userClosures.add(userClosure);
-
-			User returnedUser = userDaoJpa.save(user);
-			assertEquals(user, returnedUser);
+			final User returnedUser = userDao.save(subordinate);
+			assertEquals(subordinate, returnedUser);
 		}
 
 		@Test
 		public void insertUserWithoutManagerShouldReturnUser() {
-			final User user = new User();
-			User returnedUser = userDaoJpa.save(user);
+			final User user = mockUser(null, "abel@test.com", null);
+
+			when(persistenceFacade.findByQuery(Boolean.class, "User.emailExists", map("email", user.getEmail()))).thenReturn(Boolean.FALSE);
+
+			final User returnedUser = userDao.save(user);
 			assertEquals(user, returnedUser);
 		}
 
 		@Test
 		public void nullUserShouldThrowNulllPointerException() {
 			assertThrows(NullPointerException.class, () -> {
-				userDaoJpa.save(null);
+				userDao.save(null);
 			});
 		}
 	}
@@ -279,24 +257,23 @@ public class UserDaoTest {
 		@Test
 		public void emptyTextShouldReturnList() {
 			when(persistenceFacade.search(User.class, "", "name", "surname", "email")).thenReturn(new ArrayList<>());
-			final List<User> users = userDaoJpa.search("");
+			final List<User> users = userDao.search("");
 			assertEquals(0, users.size());
 		}
 
 		@Test
 		public void nullTextShouldReturnList() {
 			when(persistenceFacade.search(User.class, null, "name", "surname", "email")).thenReturn(new ArrayList<>());
-			
-			final List<User> users = userDaoJpa.search(null);
+
+			final List<User> users = userDao.search(null);
 			assertEquals(0, users.size());
 		}
 
 		@Test
 		public void validTextshouldReturnList() {
-			when(persistenceFacade.search(User.class, "aaron", "name", "surname", "email"))
-					.thenReturn(new ArrayList<>());
-			
-			final List<User> users = userDaoJpa.search("aaron");
+			when(persistenceFacade.search(User.class, "aaron", "name", "surname", "email")).thenReturn(new ArrayList<>());
+
+			final List<User> users = userDao.search("aaron");
 			assertEquals(0, users.size());
 		}
 	}
@@ -304,11 +281,21 @@ public class UserDaoTest {
 	@Mock
 	private PersistenceFacade persistenceFacade;
 
-	private UserDao userDaoJpa;
+	private UserDao userDao;
+
+	private User mockUser(final Long id, final String email, final User manager) {
+		final User user = new User();
+		if (id != null) {
+			user.setId(id);
+		}
+		user.setEmail(email);
+		user.setManager(manager);
+		return user;
+	}
 
 	@BeforeEach
 	public void setUp() {
-		this.userDaoJpa = new UserDao();
-		this.userDaoJpa.setPersistenceFacade(this.persistenceFacade);
+		this.userDao = new UserDao();
+		this.userDao.setPersistenceFacade(this.persistenceFacade);
 	}
 }

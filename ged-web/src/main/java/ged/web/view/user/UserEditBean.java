@@ -23,6 +23,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ged.ejb.core.FileUploadService;
+import ged.ejb.user.DuplicateEmailException;
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
 import ged.web.core.view.AbstractBean;
@@ -37,6 +38,8 @@ public class UserEditBean extends AbstractBean {
 
 	private String cancelUrl;
 
+	private UIComponent emailComponent;
+
 	@Inject
 	private transient FileUploadService fileUploadService;
 
@@ -50,6 +53,7 @@ public class UserEditBean extends AbstractBean {
 		this.user.setLanguage("ES");
 		this.user.setRowsPerPage(25);
 		this.user.setPassword("M+SzETkPtT+deVQNIScBEXivvfozSne5QqIqyWICLv0=".toCharArray());
+		this.user.setOwner(this.user);
 	}
 
 	public String cancel() {
@@ -72,6 +76,10 @@ public class UserEditBean extends AbstractBean {
 			throw new SecurityException();
 		}
 		this.cancelUrl = "/faces/user/user?faces-redirect=true&userId=" + this.user.getId();
+	}
+
+	public UIComponent getEmailComponent() {
+		return emailComponent;
 	}
 
 	public User getUser() {
@@ -105,8 +113,14 @@ public class UserEditBean extends AbstractBean {
 			logger.error("User {} hasn't got priviliges to edit user {}", this.sessionUser.get(), this.user);
 			throw new SecurityException();
 		}
-		this.user = this.userService.save(this.user);
-		return "/faces/user/user?faces-redirect=true&userId=" + this.user.getId();
+		try {
+			this.user = this.userService.save(this.user);
+			return "/faces/user/user?faces-redirect=true&userId=" + this.user.getId();
+		}
+		catch (final DuplicateEmailException e) {
+			addErrorToField(emailComponent, "user.error.email_exists");
+			return "";
+		}
 	}
 
 	public List<User> searchManager(final String query) {
@@ -116,6 +130,10 @@ public class UserEditBean extends AbstractBean {
 		final List<User> managers = this.userService.search(query);
 		managers.remove(this.user);
 		return managers;
+	}
+
+	public void setEmailComponent(final UIComponent emailComponent) {
+		this.emailComponent = emailComponent;
 	}
 
 	public void setFileUploadService(final FileUploadService fileUploadService) {
@@ -150,7 +168,7 @@ public class UserEditBean extends AbstractBean {
 			// If the old and the new email are equals, the user is not updating the email.
 			return;
 		}
-		if (this.userService.emailExists(userEmail)) {
+		if (this.userService.isEmailInUse(userEmail)) {
 			logger.warn("Email {} exists", userEmail);
 			final String msg = this.translator.message("user.error.email_exists");
 			throw new ValidatorException(new FacesMessage(SEVERITY_ERROR, msg, msg));

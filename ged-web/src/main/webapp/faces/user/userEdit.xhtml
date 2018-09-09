@@ -41,7 +41,7 @@
 									<div class="ui-g-12 ui-md-6">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['user.name']}" for="name" />
-											<p:inputText id="name" value="#{userEditBean.user.name}" required="true" autocomplete="false" />
+											<p:inputText id="name" value="#{userEditBean.user.name}" required="true" />
 											<p:message for="name" />
 										</div>
 									</div>
@@ -49,7 +49,7 @@
 									<div class="ui-g-12 ui-md-6">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['user.surname']}" for="surname" />
-											<p:inputText id="surname" value="#{userEditBean.user.surname}" required="true" autocomplete="false" />
+											<p:inputText id="surname" value="#{userEditBean.user.surname}" required="true"  />
 											<p:message for="surname" />
 										</div>
 									</div>
@@ -57,7 +57,7 @@
 									<div class="ui-g-12 ui-md-6">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['user.email']}" for="email" />
-											<p:inputText id="email" value="#{userEditBean.user.email}" required="true" validator="#{userEditBean.validateEmail}" autocomplete="false" />
+											<p:inputText id="email" value="#{userEditBean.user.email}" required="true" validator="#{userEditBean.validateEmail}" binding="#{userEditBean.emailComponent}" />
 											<p:message for="email" />
 										</div>
 									</div>
@@ -65,7 +65,7 @@
 									<div class="ui-g-12 ui-md-6">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['user.phone_number']}" for="phone_number" />
-											<p:inputText id="phone_number" value="#{userEditBean.user.phoneNumber}" autocomplete="false" />
+											<p:inputText id="phone_number" value="#{userEditBean.user.phoneNumber}" />
 											<p:message for="phone_number" />
 										</div>
 									</div>
@@ -111,7 +111,7 @@
 									<div class="ui-g-12 ui-md-6">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['user.date_of_join']}" for="date_of_join" />
-											<p:calendar id="date_of_join" value="#{userEditBean.user.dateOfJoin}" required="#{cc.attrs.required}" pattern="dd/MM/yyyy" autocomplete="false">
+											<p:calendar id="date_of_join" value="#{userEditBean.user.dateOfJoin}" required="#{cc.attrs.required}" pattern="dd/MM/yyyy" >
 												<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
 											</p:calendar>
 											<p:message for="date_of_join" />

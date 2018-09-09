@@ -212,7 +212,7 @@ public class UserEditBeanTest {
 			assertThrows(ValidatorException.class, () -> {
 				userEditBean.setUser(mockUser());
 
-				when(userService.emailExists("bernard@test.com")).thenReturn(true);
+				when(userService.isEmailInUse("bernard@test.com")).thenReturn(true);
 				when(translator.message("user.error.email_exists")).thenReturn("Error message");
 
 				userEditBean.validateEmail(null, null, "bernard@test.com");
@@ -222,7 +222,7 @@ public class UserEditBeanTest {
 		@Test
 		public void changeEmailToNonDuplicatedEmailShoulbBeOk() {
 			userEditBean.setUser(mockUser());
-			when(userService.emailExists("another.email@test.com")).thenReturn(false);
+			when(userService.isEmailInUse("another.email@test.com")).thenReturn(false);
 			userEditBean.validateEmail(null, null, "another.email@test.com");
 		}
 
