@@ -23,11 +23,13 @@ public final class ExportViewItem implements ExportViewItemI {
 	}
 	
 	
+	@Override
 	public String getLabel() {
 		return label;
 	}
 
 	
+	@Override
 	public ExportFieldItem getItem() {
 		return item;
 	}
@@ -37,6 +39,7 @@ public final class ExportViewItem implements ExportViewItemI {
 	}
 
 	
+	@Override
 	public String toString() {
 		return "ExportViewItem [label=" + label + "]";
 	}

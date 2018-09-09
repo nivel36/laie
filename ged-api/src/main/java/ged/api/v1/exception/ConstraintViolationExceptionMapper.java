@@ -10,6 +10,7 @@ public class ConstraintViolationExceptionMapper extends AbstractExceptionMapper
 		implements ExceptionMapper<ConstraintViolationException> {
 
 	
+	@Override
 	public Response toResponse(final ConstraintViolationException e) {
 		Response.ResponseBuilder builder;
 		builder = this.createViolationResponse(e.getConstraintViolations());

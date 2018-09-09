@@ -17,6 +17,7 @@ public abstract class AbstractLookupEntityConverter<T extends AbstractEnumEntity
 	}
 
 	
+	@Override
 	public T getAsObject(final FacesContext context, final UIComponent component, final String value) {
 		final List<T> elements = this.getListElements();
 		for (final T element : elements) {
@@ -28,6 +29,7 @@ public abstract class AbstractLookupEntityConverter<T extends AbstractEnumEntity
 	}
 
 	
+	@Override
 	public String getAsString(final FacesContext context, final UIComponent component, final T value) {
 		return value.toString();
 	}
