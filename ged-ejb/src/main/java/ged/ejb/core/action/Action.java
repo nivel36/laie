@@ -44,7 +44,7 @@ public class Action extends AbstractRecordEntity {
 			return false;
 		}
 		final Action other = (Action) obj;
-		return super.equals(other) && Objects.equals(this.actionPerformed, other.actionPerformed) && Objects.equals(this.date, other.date);
+		return Objects.equals(this.actionPerformed, other.actionPerformed) && Objects.equals(this.date, other.date);
 	}
 
 	public String getActionPerformed() {
