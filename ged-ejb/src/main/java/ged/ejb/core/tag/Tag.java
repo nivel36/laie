@@ -32,6 +32,7 @@ public class Tag extends AbstractEntity {
 	private String label;
 
 	
+	@Override
 	public boolean equals(final Object obj) {
 		if (obj == null) {
 			return false;
@@ -58,6 +59,7 @@ public class Tag extends AbstractEntity {
 	}
 
 	
+	@Override
 	public int hashCode() {
 		return Objects.hash(this.label);
 	}
@@ -71,6 +73,7 @@ public class Tag extends AbstractEntity {
 	}
 
 	
+	@Override
 	public String toString() {
 		return this.label;
 	}

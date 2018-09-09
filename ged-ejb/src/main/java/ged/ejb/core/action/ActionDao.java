@@ -26,6 +26,7 @@ public class ActionDao extends AbstractDao<Action> {
 		return Action.class;
 	}
 
+	@Override
 	public List<Action> search(final String searchText) {
 		throw new UnsupportedOperationException();
 	}

@@ -40,6 +40,7 @@ public class JobCandidature extends AbstractAuditedEntity {
 	private JobOffer jobOffer;
 
 	
+	@Override
 	public boolean equals(final Object obj) {
 		if (this == obj) {
 			return true;
@@ -71,6 +72,7 @@ public class JobCandidature extends AbstractAuditedEntity {
 	}
 
 	
+	@Override
 	public int hashCode() {
 		return Objects.hash(this.candidate, this.jobOffer);
 	}
@@ -92,6 +94,7 @@ public class JobCandidature extends AbstractAuditedEntity {
 	}
 
 	
+	@Override
 	public String toString() {
 		return "JobCandidature [jobOffer=" + this.jobOffer + ", candidate=" + this.candidate + ", jobMeetings=" + this.jobMeetings + "]";
 	}

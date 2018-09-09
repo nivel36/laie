@@ -33,7 +33,7 @@ public class ServerFile extends AbstractEntity {
 
 	private String uuid;
 
-	
+	@Override
 	public boolean equals(final Object obj) {
 		if (obj == null) {
 			return false;
@@ -71,7 +71,7 @@ public class ServerFile extends AbstractEntity {
 		return this.uuid;
 	}
 
-	
+	@Override
 	public int hashCode() {
 		return Objects.hash(this.uuid);
 	}
