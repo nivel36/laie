@@ -8,6 +8,7 @@ import static org.mockito.Mockito.when;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,10 +75,16 @@ public class UserEditBeanTest {
 	class Init {
 
 		@Test
-		public void newUserShouldHaveNullEmail() {
+		public void newUserShouldHaveDefaultValuesNonNull() {
 			when(sessionUser.isAdmin()).thenReturn(true);
 			userEditBean.init();
-			assertNull(userEditBean.getUser().getEmail());
+			final User user = userEditBean.getUser();
+
+			assertNull(user.getEmail());
+			assertEquals(LocalDate.now(), user.getDateOfJoin());
+			assertEquals("ES", user.getLanguage());
+			assertEquals(25, user.getRowsPerPage());
+			assertNull(user.getLastConnection());
 		}
 
 		@Test
@@ -115,7 +122,7 @@ public class UserEditBeanTest {
 			userEditBean.setUser(user);
 
 			final User updatedUser = mockUser();
-			
+
 			when(sessionUser.hasPermissionToEdit(user)).thenReturn(true);
 			when(userService.save(user)).thenReturn(updatedUser);
 

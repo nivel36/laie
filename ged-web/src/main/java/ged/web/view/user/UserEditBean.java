@@ -4,6 +4,7 @@ import static javax.faces.application.FacesMessage.SEVERITY_ERROR;
 
 import java.io.IOException;
 import java.lang.invoke.MethodHandles;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -53,6 +54,7 @@ public class UserEditBean extends AbstractBean {
 		this.user.setLanguage("ES");
 		this.user.setRowsPerPage(25);
 		this.user.setPassword("M+SzETkPtT+deVQNIScBEXivvfozSne5QqIqyWICLv0=".toCharArray());
+		this.user.setDateOfJoin(LocalDate.now());
 		this.user.setOwner(this.user);
 	}
 
