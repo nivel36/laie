@@ -5,6 +5,7 @@ import javax.persistence.EntityListeners;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
+import javax.validation.constraints.NotNull;
 
 import org.apache.lucene.analysis.core.LowerCaseFilterFactory;
 import org.apache.lucene.analysis.core.WhitespaceTokenizerFactory;
@@ -26,7 +27,7 @@ import ged.ejb.user.User;
 @Analyzer(definition = "stdAnalyzer")
 @MappedSuperclass
 @EntityListeners(AuditedListener.class)
-public abstract class AbstractAuditedEntity extends AbstractEntity implements Auditable, Erasable, Ownerable {
+public abstract class AbstractAuditedEntity extends AbstractEntity implements Erasable, Ownerable {
 
 	private static final long serialVersionUID = 6203444960560029390L;
 
@@ -34,11 +35,10 @@ public abstract class AbstractAuditedEntity extends AbstractEntity implements Au
 	@Field
 	private boolean deleted;
 
-	private User owner;
-
+	@NotNull
 	@ManyToOne
-	@JoinColumn(name = "userId")
-	private User user;
+	@JoinColumn(name = "ownerId", nullable = false)
+	private User owner;
 
 	@Override
 	public boolean equals(final Object obj) {
@@ -60,11 +60,6 @@ public abstract class AbstractAuditedEntity extends AbstractEntity implements Au
 	}
 
 	@Override
-	public User getUser() {
-		return this.user;
-	}
-
-	@Override
 	public int hashCode() {
 		return super.hashCode();
 	}
@@ -82,10 +77,5 @@ public abstract class AbstractAuditedEntity extends AbstractEntity implements Au
 	@Override
 	public void setOwner(final User owner) {
 		this.owner = owner;
-	}
-
-	@Override
-	public void setUser(final User user) {
-		this.user = user;
 	}
 }

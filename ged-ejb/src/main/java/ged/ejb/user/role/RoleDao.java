@@ -45,6 +45,7 @@ public class RoleDao extends AbstractDao<Role> {
 		return Role.class;
 	}
 
+	@Override
 	public List<Role> search(final String searchText) {
 		throw new UnsupportedOperationException();
 	}

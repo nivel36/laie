@@ -13,6 +13,7 @@ public class MaintenanceDao extends AbstractDao<AbstractEnumEntity> {
 		return AbstractEnumEntity.class;
 	}
 
+	@Override
 	public List<AbstractEnumEntity> search(final String searchText) {
 		throw new UnsupportedOperationException();
 	}

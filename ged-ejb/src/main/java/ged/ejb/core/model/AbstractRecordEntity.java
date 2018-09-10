@@ -35,6 +35,7 @@ public class AbstractRecordEntity extends AbstractEntity {
 	}
 
 	
+	@Override
 	public boolean equals(final Object obj) {
 		if (obj == null) {
 			return false;
@@ -83,6 +84,7 @@ public class AbstractRecordEntity extends AbstractEntity {
 	}
 
 	
+	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
@@ -109,6 +111,7 @@ public class AbstractRecordEntity extends AbstractEntity {
 	}
 
 	
+	@Override
 	public String toString() {
 		return this.text;
 	}

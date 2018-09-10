@@ -13,6 +13,7 @@ public class TagDao extends AbstractDao<Tag> {
 		return Tag.class;
 	}
 
+	@Override
 	public final List<Tag> search(final String searchText) {
 		return this.getPersistenceFacade().search(Tag.class, searchText, "label");
 	}

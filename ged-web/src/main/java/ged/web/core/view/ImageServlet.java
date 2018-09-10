@@ -20,6 +20,7 @@ public class ImageServlet extends FileServlet {
 	private String folderPath;
 
 	
+	@Override
 	protected File getFile(final HttpServletRequest request) {
 		final String pathInfo = request.getPathInfo();
 		if ((pathInfo == null) || pathInfo.isEmpty() || "/".equals(pathInfo)) {

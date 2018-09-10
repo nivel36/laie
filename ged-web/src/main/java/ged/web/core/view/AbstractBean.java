@@ -108,7 +108,7 @@ public abstract class AbstractBean implements Serializable {
 	}
 
 	@SuppressWarnings("unchecked")
-	public <T> T getValueFromFlash(final String key) {
+	protected <T> T getValueFromFlash(final String key) {
 		if (this.flash.containsKey(key)) {
 			return (T) this.flash.get(key);
 		}
@@ -117,7 +117,7 @@ public abstract class AbstractBean implements Serializable {
 		}
 	}
 
-	public String getValueFromGetParameters(final String key) {
+	protected String getValueFromGetParameters(final String key) {
 		return this.externalContext.getRequestParameterMap().get(key);
 	}
 
@@ -141,7 +141,7 @@ public abstract class AbstractBean implements Serializable {
 		PrimeFaces.current().dialog().openDynamic(name, options, params);
 	}
 
-	public void putValueToFlash(final String key, final Object value) {
+	protected void putValueToFlash(final String key, final Object value) {
 		this.flash.put(key, value);
 	}
 

@@ -22,6 +22,7 @@ public class CandidateMapper implements AbstractMapper<Candidate, CandidateDto> 
 	}
 
 	
+	@Override
 	public Candidate mapDto(final CandidateDto candidateDto) {
 		if (candidateDto == null) {
 			return null;
@@ -50,6 +51,7 @@ public class CandidateMapper implements AbstractMapper<Candidate, CandidateDto> 
 	}
 
 	
+	@Override
 	public CandidateDto mapEntity(final Candidate candidate) {
 		Objects.requireNonNull(candidate);
 		Objects.requireNonNull(candidate.getAddress());

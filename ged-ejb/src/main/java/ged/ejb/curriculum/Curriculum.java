@@ -11,14 +11,14 @@ import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
 import ged.ejb.candidate.Candidate;
-import ged.ejb.core.model.AbstractAuditedEntity;
+import ged.ejb.core.model.AbstractEntity;
 import ged.ejb.curriculum.education.Education;
 import ged.ejb.curriculum.jobexperience.JobExperience;
 import ged.ejb.curriculum.language.Language;
 import ged.ejb.curriculum.skills.Skill;
 
 @Entity
-public class Curriculum extends AbstractAuditedEntity {
+public class Curriculum extends AbstractEntity {
 
 	private static final long serialVersionUID = 5171402772798965261L;
 

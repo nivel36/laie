@@ -15,7 +15,7 @@ insert into LANGUAGELEVEL( id, version, name, description ) values ( 123, 0, 'na
 insert into JOBCANDIDATURESTATE( id, version, name, description ) values ( 130, 0, 'open', 'open.description');
 insert into JOBCANDIDATURESTATE( id, version, name, description ) values ( 131, 0, 'closed', 'closed.description');
 
-insert into CURRICULUM( id, version, deleted ) values (301, 0,  false);
+insert into CURRICULUM( id, version) values (301, 0);
 
 insert into EDUCATION( id, version, curriculumId, degree, description,  startYear, school, stillStudying, endYear) values( 401, 0, 301, 'Licenciado en Matemáticas', 'Licenciado en Matemáticas por la universidad de Barcelona', 2000, 'Universitat de Barcelona', false, 2010);
 insert into EDUCATION( id, version, curriculumId, degree, description,  startYear, school, stillStudying, endYear) values( 402, 0, 301, 'Bachillerato', null,  1988, 'IES Thalassa', false, 1992);
@@ -71,8 +71,8 @@ insert into I18NSTRING( id, version, locale, key, text ) values( 865, 0, 'ca', '
 insert into ROLE( id, version, name ) values( 911, 0, 'ADMIN' );
 insert into ROLE( id, version, name ) values( 912, 0, 'USER' );
 
-insert into USER( id, version, email, language, name, rowsPerPage, surname, password, roleId, deleted, imageFileName ) values( 901, 0, 'abel.ferrer.jimenez@gmail.com', 'es', 'Abel', 25, 'Ferrer', 'jGl25bVBBBW96Qi9Te4V37Fnqchz/Eu4qB9vKrRIqRg=', 911, false, null);
-insert into USER( id, version, email, language, name, rowsPerPage, surname, password, roleId, deleted, imageFileName ) values( 902, 0, 'isabel.vallejo.medina@gmail.com', 'es', 'Isabel', 25, 'Vallejo', 'jGl25bVBBBW96Qi9Te4V37Fnqchz/Eu4qB9vKrRIqRg=', 911, false, null);
+insert into USER( id, version, email, language, name, rowsPerPage, surname, password, roleId, deleted, imageFileName, ownerId ) values( 901, 0, 'abel.ferrer.jimenez@gmail.com', 'es', 'Abel', 25, 'Ferrer', 'jGl25bVBBBW96Qi9Te4V37Fnqchz/Eu4qB9vKrRIqRg=', 911, false, null, 901);
+insert into USER( id, version, email, language, name, rowsPerPage, surname, password, roleId, deleted, imageFileName, ownerId ) values( 902, 0, 'isabel.vallejo.medina@gmail.com', 'es', 'Isabel', 25, 'Vallejo', 'jGl25bVBBBW96Qi9Te4V37Fnqchz/Eu4qB9vKrRIqRg=', 911, false, null, 902);
 
 insert into USERCLOSURE( id, version, antecessor_id, descendant_id, pathLength ) values( 970, 0, 901, 901, 0 );
 insert into USERCLOSURE( id, version, antecessor_id, descendant_id, pathLength ) values( 971, 0, 902, 902, 0 );

@@ -43,7 +43,7 @@ public class ActionService extends AbstractService<Action> {
 
 	public void deleteAction(@PostDelete @Observes final AbstractAuditedEntity auditedEntity) {
 		Objects.requireNonNull(auditedEntity);
-		logger.debug("Delete action class {} with id {} for user {}", auditedEntity.getClass().getName(), auditedEntity.getId(), auditedEntity.getUser());
+		logger.debug("Delete action class {} with id {} ", auditedEntity.getClass().getName(), auditedEntity.getId());
 		this.insertAction(auditedEntity, ActionType.DELETE);
 	}
 
@@ -73,7 +73,7 @@ public class ActionService extends AbstractService<Action> {
 
 	public void insertAction(@PostPersist @Observes final AbstractAuditedEntity auditedEntity) {
 		Objects.requireNonNull(auditedEntity);
-		logger.debug("Insert action class {} with id {} for user {}", auditedEntity.getClass().getName(), auditedEntity.getId(), auditedEntity.getUser());
+		logger.debug("Insert action class {} with id {}", auditedEntity.getClass().getName(), auditedEntity.getId());
 		this.insertAction(auditedEntity, ActionType.SAVE);
 	}
 
@@ -107,13 +107,13 @@ public class ActionService extends AbstractService<Action> {
 
 	public void undeleteAction(@PostUndelete @Observes final AbstractAuditedEntity auditedEntity) {
 		Objects.requireNonNull(auditedEntity);
-		logger.debug("Undelete action class {} with id {} for user {}", auditedEntity.getClass().getName(), auditedEntity.getId(), auditedEntity.getUser());
+		logger.debug("Undelete action class {} with id {} ", auditedEntity.getClass().getName(), auditedEntity.getId());
 		this.insertAction(auditedEntity, ActionType.UNDELETE);
 	}
 
 	public void updateAction(@PostUpdate @Observes final AbstractAuditedEntity auditedEntity) {
 		Objects.requireNonNull(auditedEntity);
-		logger.debug("Update action class {} with id {} for user {}", auditedEntity.getClass().getName(), auditedEntity.getId(), auditedEntity.getUser());
+		logger.debug("Update action class {} with id {}", auditedEntity.getClass().getName(), auditedEntity.getId());
 		this.insertAction(auditedEntity, ActionType.SAVE);
 	}
 }

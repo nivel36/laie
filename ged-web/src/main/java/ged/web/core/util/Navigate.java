@@ -54,9 +54,9 @@ public class Navigate {
 			final FacesContext facesContext = FacesContext.getCurrentInstance();
 			final ExternalContext externalContext = facesContext.getExternalContext();
 			final String contextName = externalContext.getContextName();
-			final StringBuilder url = new StringBuilder("/");
-			url.append(contextName).append(this.url).append(".xhtml").append(this.buildQueryParams());
-			externalContext.redirect(url.toString());
+			final StringBuilder fullUrl = new StringBuilder("/");
+			fullUrl.append(contextName).append(this.url).append(".xhtml").append(this.buildQueryParams());
+			externalContext.redirect(fullUrl.toString());
 		}
 		catch (final IOException e) {
 			throw new NavigationException("Unable to go to " + this.url, e);

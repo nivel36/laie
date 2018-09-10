@@ -23,9 +23,12 @@ import ged.ejb.user.UserService;
 @SessionScoped
 public class SessionUser implements Serializable {
 
-	private static final long serialVersionUID = -8079836415042166193L;
-	
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
+
+	private static final long serialVersionUID = -8079836415042166193L;
+
+	@Inject
+	private transient ExternalContext externalContext;
 
 	private Locale locale;
 
@@ -34,14 +37,11 @@ public class SessionUser implements Serializable {
 	private User user;
 
 	@Inject
-	private transient ExternalContext externalContext;
-
-	public void setExternalContext(ExternalContext externalContext) {
-		this.externalContext = externalContext;
-	}
-
-	@Inject
 	private transient UserService userService;
+
+	public User get() {
+		return this.user;
+	}
 
 	public Locale getLocale() {
 		return this.locale;
@@ -55,27 +55,6 @@ public class SessionUser implements Serializable {
 		return this.team;
 	}
 
-	public User get() {
-		return this.user;
-	}
-
-	public boolean isAdmin() {
-		return user.isAdmin();
-	}
-
-	@PostConstruct
-	public void init() {
-		final String email = externalContext.getRemoteUser();
-		logger.info("User {} has init his/her session", email);
-		loadUserData(email);
-	}
-
-	private void loadUserData(final String email) {
-		this.user = userService.findUserByEmail(email);
-		this.locale = new Locale(this.user.getLanguage());
-		this.team = userService.findSubordinateUsers(this.user);
-	}
-
 	public boolean hasPermissionToEdit(final Ownerable entity) {
 		Objects.requireNonNull(entity);
 		if (isAdmin()) {
@@ -86,11 +65,15 @@ public class SessionUser implements Serializable {
 		return isOwnerOrHisManager(owner);
 	}
 
-	private boolean isOwnerOrHisManager(final User owner) {
-		if (user.equals(owner)) {
-			return true;
-		}
-		return isManagerOf(owner);
+	@PostConstruct
+	public void init() {
+		final String email = externalContext.getRemoteUser();
+		logger.info("User {} has init his/her session", email);
+		loadUserData(email);
+	}
+
+	public boolean isAdmin() {
+		return user.isAdmin();
 	}
 
 	public boolean isManagerOf(final User subordinate) {
@@ -98,12 +81,34 @@ public class SessionUser implements Serializable {
 		return getTeam().contains(subordinate);
 	}
 
+	private boolean isOwnerOrHisManager(final User owner) {
+		if (user.equals(owner)) {
+			return true;
+		}
+		return isManagerOf(owner);
+	}
+
+	private void loadUserData(final String email) {
+		this.user = userService.findUserByEmail(email);
+		this.locale = new Locale(this.user.getLanguage());
+		this.team = userService.findSubordinateUsers(this.user);
+	}
+
 	public void refresh() {
 		logger.trace("Refreshing session for user {}", user.getEmail());
 		loadUserData(user.getEmail());
 	}
 
+	public void setExternalContext(final ExternalContext externalContext) {
+		this.externalContext = externalContext;
+	}
+
 	public void setUserService(final UserService userService) {
 		this.userService = userService;
+	}
+
+	@Override
+	public String toString() {
+		return user.getFullName();
 	}
 }

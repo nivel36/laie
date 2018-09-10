@@ -53,6 +53,7 @@ public class JobExperience extends AbstractEntity {
 	private boolean stillWorking;
 
 	
+	@Override
 	public boolean equals(final Object obj) {
 		if (this == obj) {
 			return true;
@@ -108,6 +109,7 @@ public class JobExperience extends AbstractEntity {
 	}
 
 	
+	@Override
 	public int hashCode() {
 		return Objects.hash(this.companyName, this.curriculum, this.description, this.startDate, this.jobPosition, this.stillWorking, this.endDate);
 	}

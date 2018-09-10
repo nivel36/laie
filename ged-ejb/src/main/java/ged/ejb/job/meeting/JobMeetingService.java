@@ -24,24 +24,24 @@ public class JobMeetingService extends AbstractAuditedService<JobMeeting> {
 	@Repository
 	private JobMeetingDao jobMeetingDao;
 
-	public List<JobMeeting> findByUser(final User user) {
-		Objects.requireNonNull(user);
-		logger.debug("Find job meetings by user {} in database", user);
-		return this.jobMeetingDao.findByUser(user);
+	public List<JobMeeting> findByOwner(final User owner) {
+		Objects.requireNonNull(owner);
+		logger.debug("Find job meetings by owner {} in database", owner);
+		return this.jobMeetingDao.findByOwner(owner);
 	}
 
-	public List<JobMeeting> findByUserAndCandidate(final User user, final Candidate candidate) {
-		Objects.requireNonNull(user);
+	public List<JobMeeting> findByOwnerAndCandidate(final User owner, final Candidate candidate) {
+		Objects.requireNonNull(owner);
 		Objects.requireNonNull(candidate);
-		logger.debug("Find job meetings by user {} and candidate {} in database", user, candidate);
-		return this.jobMeetingDao.findByUserAndCandidate(user, candidate);
+		logger.debug("Find job meetings by owner {} and candidate {} in database", owner, candidate);
+		return this.jobMeetingDao.findByOwnerAndCandidate(owner, candidate);
 	}
 
-	public List<JobMeeting> findByUserAndClient(final User user, final Client client) {
-		Objects.requireNonNull(user);
+	public List<JobMeeting> findByOwnerAndClient(final User owner, final Client client) {
+		Objects.requireNonNull(owner);
 		Objects.requireNonNull(client);
-		logger.debug("Find job meetings by user {} and client {} in database", user, client);
-		return this.jobMeetingDao.findByUserAndClient(user, client);
+		logger.debug("Find job meetings by owner {} and client {} in database", owner, client);
+		return this.jobMeetingDao.findByOwnerAndClient(owner, client);
 	}
 
 	@Override

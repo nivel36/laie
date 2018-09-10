@@ -33,6 +33,7 @@ public class JobCandidatureDao extends AbstractDao<JobCandidature> {
 		return JobCandidature.class;
 	}
 
+	@Override
 	public List<JobCandidature> search(final String searchText) {
 		throw new UnsupportedOperationException();
 	}
