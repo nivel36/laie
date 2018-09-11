@@ -23,6 +23,7 @@ import javax.security.enterprise.authentication.mechanism.http.AuthenticationPar
 import javax.security.enterprise.credential.UsernamePasswordCredential;
 import javax.servlet.http.HttpSession;
 
+import org.omnifaces.cdi.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,6 +47,10 @@ public class LoginBean extends AbstractBean {
 
 	@Inject
 	private LoginService loginService;
+
+	@Inject
+	@Param(name = "continue") // Defined in @LoginToContinue of KickoffFormAuthenticationMechanism.
+	private boolean loginToContinue;
 
 	private transient String password;
 
@@ -100,7 +105,7 @@ public class LoginBean extends AbstractBean {
 	public void login() {
 		logger.debug("Username {} login", this.username);
 		loginService.login(this.username);
-		authenticate(withParams().credential(new UsernamePasswordCredential(username, password)).newAuthentication(true));
+		authenticate(withParams().credential(new UsernamePasswordCredential(username, password)).newAuthentication(!loginToContinue));
 	}
 
 	public String logout() {
