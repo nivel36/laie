@@ -1,22 +1,34 @@
 package ged.web.view;
 
+import static javax.security.enterprise.AuthenticationStatus.SEND_CONTINUE;
+import static javax.security.enterprise.AuthenticationStatus.SEND_FAILURE;
+import static javax.security.enterprise.authentication.mechanism.http.AuthenticationParameters.withParams;
+import static org.omnifaces.util.Faces.getRequest;
+import static org.omnifaces.util.Faces.getResponse;
+import static org.omnifaces.util.Faces.responseComplete;
+import static org.omnifaces.util.Faces.validationFailed;
+import static org.omnifaces.util.Messages.addGlobalError;
+
 import java.lang.invoke.MethodHandles;
 import java.util.Locale;
-import org.slf4j.LoggerFactory;
-import org.slf4j.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
-import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
+import javax.security.enterprise.AuthenticationStatus;
+import javax.security.enterprise.SecurityContext;
+import javax.security.enterprise.authentication.mechanism.http.AuthenticationParameters;
+import javax.security.enterprise.credential.UsernamePasswordCredential;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import ged.ejb.core.LoginService;
-import ged.web.core.util.Translate;
+import ged.web.core.util.Navigate;
+import ged.web.core.util.PageEnum;
 import ged.web.core.view.AbstractBean;
 
 @Named
@@ -26,7 +38,10 @@ public class LoginBean extends AbstractBean {
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	private static final long serialVersionUID = 8364578958730650005L;
-	
+
+	@Inject
+	private transient ExternalContext externalContext;
+
 	private Locale locale;
 
 	@Inject
@@ -34,7 +49,30 @@ public class LoginBean extends AbstractBean {
 
 	private transient String password;
 
+	@SuppressWarnings("cdi-ambiguous-dependency")
+	@Inject
+	private SecurityContext securityContext;
+
 	private String username;
+
+	private void authenticate(final AuthenticationParameters parameters) {
+		try {
+			final AuthenticationStatus status = securityContext.authenticate(getRequest(), getResponse(), parameters);
+
+			if (status == SEND_FAILURE) {
+				addGlobalError("auth.message.error.failure");
+				validationFailed();
+			}
+			else if (status == SEND_CONTINUE) {
+				responseComplete(); // Prevent JSF from rendering a response so authentication mechanism can
+									// continue.
+				Navigate.to(PageEnum.INDEX);
+			}
+		}
+		catch (final Throwable e) {
+			e.printStackTrace();
+		}
+	}
 
 	public Locale getLocale() {
 		return this.locale;
@@ -51,24 +89,18 @@ public class LoginBean extends AbstractBean {
 	@PostConstruct
 	public void init() {
 		logger.debug("LOGIN Bean init");
+		final String username = externalContext.getRemoteUser();
+		if (username != null) {
+			logger.warn("User {} alredy logged", username);
+			Navigate.to(PageEnum.INDEX);
+		}
 		this.locale = this.facesContext.getApplication().getDefaultLocale();
 	}
 
-	public String login() {
+	public void login() {
 		logger.debug("Username {} login", this.username);
-		final ExternalContext externalContext = this.facesContext.getExternalContext();
-		final HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
-		try {
-			request.login(this.username, this.password);
-			loginService.login(this.username);
-			return "/faces/index?faces-redirect=true";
-		} catch (final ServletException e) {
-			logger.warn("Bad login credentials", e);
-			final String message = Translate.message("login.error.unknow_login");
-			final FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, message, null);
-			this.facesContext.addMessage(null, facesMessage);
-			return null;
-		}
+		loginService.login(this.username);
+		authenticate(withParams().credential(new UsernamePasswordCredential(username, password)).newAuthentication(true));
 	}
 
 	public String logout() {
@@ -83,7 +115,7 @@ public class LoginBean extends AbstractBean {
 		this.locale = locale;
 	}
 
-	public void setLoginService(LoginService loginService) {
+	public void setLoginService(final LoginService loginService) {
 		this.loginService = loginService;
 	}
 

@@ -72,7 +72,14 @@ public class SessionUser implements Serializable {
 		loadUserData(email);
 	}
 
+	public boolean isActive() {
+		return user != null;
+	}
+
 	public boolean isAdmin() {
+		if (!isActive()) {
+			return false;
+		}
 		return user.isAdmin();
 	}
 
@@ -109,6 +116,9 @@ public class SessionUser implements Serializable {
 
 	@Override
 	public String toString() {
+		if (!isActive()) {
+			return null;
+		}
 		return user.getFullName();
 	}
 }
