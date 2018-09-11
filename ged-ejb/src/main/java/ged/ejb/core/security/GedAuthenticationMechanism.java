@@ -4,16 +4,20 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.security.enterprise.AuthenticationException;
 import javax.security.enterprise.AuthenticationStatus;
-import javax.security.enterprise.authentication.mechanism.http.FormAuthenticationMechanismDefinition;
+import javax.security.enterprise.authentication.mechanism.http.AutoApplySession;
 import javax.security.enterprise.authentication.mechanism.http.HttpAuthenticationMechanism;
 import javax.security.enterprise.authentication.mechanism.http.HttpMessageContext;
 import javax.security.enterprise.authentication.mechanism.http.LoginToContinue;
+import javax.security.enterprise.authentication.mechanism.http.RememberMe;
 import javax.security.enterprise.credential.Credential;
 import javax.security.enterprise.identitystore.IdentityStore;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@FormAuthenticationMechanismDefinition(loginToContinue = @LoginToContinue(loginPage = "/login?continue=true", errorPage = "", useForwardToLogin = false))
+@AutoApplySession // For "Is user already logged-in?"
+@RememberMe(cookieSecureOnly = false, // Remove this when login is served over HTTPS.
+		cookieMaxAgeSeconds = 60 * 60 * 24 * 14) // 14 days.
+@LoginToContinue(loginPage = "/login.xhtml", errorPage = "", useForwardToLogin = false)
 @ApplicationScoped
 public class GedAuthenticationMechanism implements HttpAuthenticationMechanism {
 
