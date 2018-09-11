@@ -99,7 +99,7 @@ public class LoginBean extends AbstractBean {
 
 	public void login() {
 		logger.debug("Username {} login", this.username);
-		loginService.login(this.username);
+		loginService.saveLastConnection(this.username);
 		authenticate(withParams().credential(new UsernamePasswordCredential(username, password)).newAuthentication(true));
 	}
 

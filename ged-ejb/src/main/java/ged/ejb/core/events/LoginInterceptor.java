@@ -40,9 +40,6 @@ public class LoginInterceptor extends AbstractInterceptor {
 
 	protected String getEmail(final InvocationContext joinPoint) {
 		final Object[] parameters = joinPoint.getParameters();
-		if (parameters.length != 1) {
-			throw new IllegalArgumentException("Arguments: " + parameters.length);
-		}
 		final Object entityObject = parameters[0];
 		if (!(entityObject instanceof String)) {
 			throw new IllegalArgumentException("Not user entity");

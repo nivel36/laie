@@ -20,7 +20,7 @@ public class LoginService {
 	private UserService userService;
 
 	@Audited(action = ActionType.LOGIN)
-	public User login(final String email) {
+	public User saveLastConnection(final String email) {
 		final User user = this.userService.findUserByEmail(email);
 		user.setLastConnection(LocalDateTime.now());
 		return this.userService.save(user);
