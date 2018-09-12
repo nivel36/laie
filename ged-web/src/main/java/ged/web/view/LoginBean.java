@@ -56,22 +56,16 @@ public class LoginBean extends AbstractBean {
 	private String username;
 
 	private void authenticate(final AuthenticationParameters parameters) {
-		try {
-			final AuthenticationStatus status = securityContext.authenticate(getRequest(), getResponse(), parameters);
+		final AuthenticationStatus status = securityContext.authenticate(getRequest(), getResponse(), parameters);
 
-			if (status == SEND_FAILURE) {
-				addGlobalError("auth.message.error.failure");
-				validationFailed();
-			}
-			else if (status == SEND_CONTINUE) {
-				responseComplete(); // Prevent JSF from rendering a response so authentication mechanism can
-									// continue.
-				Navigate.to(PageEnum.INDEX);
-			}
+		if (status == SEND_FAILURE) {
+			addGlobalError("auth.message.error.failure");
+			validationFailed();
+		} else if (status == SEND_CONTINUE) {
+			responseComplete(); // Prevent JSF from rendering a response so authentication mechanism can
+								// continue.
 		}
-		catch (final Throwable e) {
-			e.printStackTrace();
-		}
+		Navigate.to(PageEnum.INDEX).doPost();
 	}
 
 	public Locale getLocale() {
@@ -100,7 +94,8 @@ public class LoginBean extends AbstractBean {
 	public void login() {
 		logger.debug("Username {} login", this.username);
 		loginService.saveLastConnection(this.username);
-		authenticate(withParams().credential(new UsernamePasswordCredential(username, password)).newAuthentication(true));
+		authenticate(
+				withParams().credential(new UsernamePasswordCredential(username, password)).newAuthentication(true));
 	}
 
 	public String logout() {

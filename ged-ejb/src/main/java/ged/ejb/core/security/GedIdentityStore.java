@@ -46,6 +46,4 @@ public class GedIdentityStore implements IdentityStore {
 		roles.add(user.getRole().toString());
 		return new CredentialValidationResult(new GedCallerPrincipal(user), roles);
 	}
-
-
 }

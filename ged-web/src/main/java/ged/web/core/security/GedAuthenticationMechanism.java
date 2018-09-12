@@ -1,4 +1,4 @@
-package ged.ejb.core.security;
+package ged.web.core.security;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
