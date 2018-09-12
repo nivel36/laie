@@ -72,12 +72,12 @@
 										</div>
 									</div>
 
-									<h:panelGroup layout="block" styleClass="ui-sm-12 ui-md-6" rendered="#{not userBean.user.admin}">
-										<h:panelGroup lalayout="block" styleClass="formGroup" rendered="#{not userBean.user.admin}">
+									<div class="ui-g-12 ui-md-6">
+										<div class="form-group">
 											<p:outputLabel value="#{i18n['user.manager']}" for="manager" />
 											<p:inputText id="manager" value="#{userBean.user.manager.fullName}" readonly="true" />
-										</h:panelGroup>
-									</h:panelGroup>
+										</div>
+									</div>
 
 									<div class="ui-g-12 ui-md-6">
 										<div class="form-group">
