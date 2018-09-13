@@ -57,6 +57,17 @@
 						<generateApplicationXml>true</generateApplicationXml>
 					</configuration>
 			</plugin>
+			<plugin>
+                <groupId>org.wildfly.plugins</groupId>
+                <artifactId>wildfly-maven-plugin</artifactId>
+                <version>1.2.2.Final</version>
+                <configuration>
+                    <hostname>${wildfly-hostname}</hostname>
+                    <port>${wildfly-port}</port>
+                    <username>${wildfly-username}</username>
+                    <password>${wildfly-password}</password>
+                </configuration>
+            </plugin>
 		</plugins>
 	</build>
 </project>

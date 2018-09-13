@@ -32,17 +32,35 @@ public class ContactDialogBean extends AbstractDialogBean {
 	@Inject
 	private transient ContactService contactService;
 
-	private Contact buildContact() {
+	private Contact buildNewContact(final Client client) {
+		final Contact newContact = new Contact();
+		newContact.setClient(client);
+		newContact.setPhoneNumber(client.getPhoneNumber());
+		newContact.setOwner(client.getOwner());
+		return newContact;
+	}
+
+	private void createNewContact() {
 		final Long clientId = this.getIdFromParameters("clientId");
+		final Client client = findClientFromDatabase(clientId);
+		this.contact = this.buildNewContact(client);
+	}
+
+	private Client findClientFromDatabase(final Long clientId) {
 		final Client client = this.clientService.find(clientId);
 		if (client == null) {
 			logger.error("Null client");
 			throw new IllegalStateException("Null client");
 		}
-		final Contact newContact = new Contact();
-		newContact.setClient(client);
-		newContact.setPhoneNumber(client.getPhoneNumber());
-		return newContact;
+		return client;
+	}
+
+	private void findContactFromDatabase(final Long contactId) {
+		this.contact = this.contactService.find(contactId);
+		if (this.contact == null) {
+			logger.error("Null contact");
+			throw new IllegalStateException("Null contact");
+		}
 	}
 
 	public Contact getContact() {
@@ -54,14 +72,10 @@ public class ContactDialogBean extends AbstractDialogBean {
 		logger.trace("ContactDialog oppened");
 		final Long contactId = this.getIdFromParameters("contactId");
 		if (contactId != null) {
-			this.contact = this.contactService.find(contactId);
-			if (this.contact == null) {
-				logger.error("Null contact");
-				throw new IllegalStateException("Null contact");
-			}
+			findContactFromDatabase(contactId);
 		}
 		else {
-			this.contact = this.buildContact();
+			createNewContact();
 		}
 	}
 

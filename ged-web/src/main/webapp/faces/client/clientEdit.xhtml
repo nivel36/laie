@@ -18,7 +18,7 @@
 			</div>
 		</div>
 		<div class="ui-g">
-			<div class="ui-g-12 ui-xl-8">
+			<div class="ui-g-12 ui-xl-6">
 				<h:form id="clientForm">
 					<p:panel header="#{clientEditBean.newClient ? i18n['client.new_client'] : clientEditBean.client.name}">
 						<div class="ui-g">
@@ -28,9 +28,13 @@
 							<div class="ui-g-12 ui-md-6">
 								<cc:inputText name="cif" label="#{i18n['client.cif']}" value="#{clientEditBean.client.cif}" required="true" />
 							</div>
+						</div>
+						<div class="ui-g">
 							<div class="ui-g-12 ui-md-6">
 								<cc:inputText name="phoneNumber" label="#{i18n['client.phone_number']}" value="#{clientEditBean.client.phoneNumber}" />
 							</div>
+						</div>
+						<div class="ui-g">
 							<div class="ui-g-12 ui-md-6">
 								<cc:inputText name="city" label="#{i18n['client.city']}" value="#{clientEditBean.client.address.city}" />
 							</div>
