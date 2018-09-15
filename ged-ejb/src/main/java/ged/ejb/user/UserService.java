@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import ged.ejb.core.AbstractAuditedService;
 import ged.ejb.core.model.AbstractDao;
 import ged.ejb.core.model.Repository;
+import ged.ejb.core.security.Securized;
 import ged.ejb.user.role.Role;
 import ged.ejb.user.role.RoleDao;
 
@@ -78,50 +79,31 @@ public class UserService extends AbstractAuditedService<User> {
 		return true;
 	}
 
-	private boolean hasValidSubordinateRoles(final User user) {
-		final List<User> subordinateUsers = this.findSubordinateUsers(user);
-		for (final User subordinateUser : subordinateUsers) {
-			if (!this.isASubordinateRole(user.getRole(), subordinateUser.getRole())) {
-				return false;
-			}
-		}
-		return true;
-	}
-
-	public boolean isASubordinateRole(final Role manager, final Role role) {
-		Objects.requireNonNull(manager);
-		Objects.requireNonNull(role);
-		final List<Role> subordinateRoles = this.roleDao.findSubordinateRoles(manager);
-		for (final Role subordinateRole : subordinateRoles) {
-			if (subordinateRole.equals(role)) {
-				logger.debug("Role {} is a subordinate role of {}", role.getName(), manager.getName());
-				return true;
-			}
-		}
-		logger.debug("Role {} isn't a subordinate role of {}", role.getName(), manager.getName());
-		return false;
-	}
-
 	public boolean isEmailInUse(final String email) {
 		Objects.requireNonNull(email);
 		logger.debug("Testing if email {} is in use", email);
 		return this.userDao.isEmailInUse(email);
 	}
 
+	public boolean isSubordinateUser(final User manager, final User subordinate) {
+		Objects.requireNonNull(manager);
+		Objects.requireNonNull(subordinate);
+		logger.debug("Testing if user {} is manager of the user {}", manager.getEmail(), subordinate.getEmail());
+		return findSubordinateUsers(manager).contains(subordinate);
+	}
+
 	@Override
+	@Securized
 	public User save(final User user) {
 		Objects.requireNonNull(user);
 		if (user.equals(user.getManager())) {
 			logger.warn("The user {} can't be his/her manager", user.getEmail());
 			throw new IllegalStateException("User can't be his/her manager");
 		}
-		if (!this.hasValidSubordinateRoles(user)) {
-			throw new IllegalStateException();
-		}
 		if (!this.hasValidManagerRole(user)) {
 			throw new IllegalStateException();
 		}
-		return this.userDao.save(user);
+		return super.save(user);
 	}
 
 	public void setRoleDao(final RoleDao roleDao) {

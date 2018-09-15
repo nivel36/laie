@@ -72,7 +72,7 @@ public class UserEditBean extends AbstractBean {
 		this.user.setManager(null);
 	}
 
-	private void editUser() {
+	private void editUserInit() {
 		if (!sessionUser.hasPermissionToEdit(this.user)) {
 			logger.error("User {} hasn't got priviliges to edit user {}", this.sessionUser.get(), this.user);
 			throw new SecurityException();
@@ -93,14 +93,14 @@ public class UserEditBean extends AbstractBean {
 		logger.debug("UserEditBean init");
 		this.user = this.getValueFromFlash("user");
 		if (this.user == null) {
-			newUser();
+			newUserInit();
 		}
 		else {
-			editUser();
+			editUserInit();
 		}
 	}
 
-	private void newUser() {
+	private void newUserInit() {
 		if (!this.sessionUser.isAdmin()) {
 			logger.error("User {} hasn't got priviliges to add a new user", sessionUser);
 			throw new SecurityException();

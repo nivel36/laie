@@ -13,8 +13,6 @@ import org.slf4j.LoggerFactory;
 import ged.ejb.candidate.Candidate;
 import ged.ejb.client.Client;
 import ged.ejb.core.AbstractAuditedService;
-import ged.ejb.core.Audited;
-import ged.ejb.core.action.Action.ActionType;
 import ged.ejb.core.model.AbstractDao;
 import ged.ejb.core.model.Repository;
 import ged.ejb.job.meeting.JobMeeting;
@@ -101,7 +99,6 @@ public class JobOfferService extends AbstractAuditedService<JobOffer> {
 	}
 
 	@Override
-	@Audited(action = ActionType.SAVE)
 	public JobOffer save(final JobOffer jobOffer) {
 		Objects.requireNonNull(jobOffer);
 		logger.debug("SAVE job offer {}", jobOffer.getDescription());

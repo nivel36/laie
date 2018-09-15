@@ -12,8 +12,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ged.ejb.core.AbstractAuditedService;
-import ged.ejb.core.Audited;
-import ged.ejb.core.action.Action.ActionType;
 import ged.ejb.core.file.ServerFile;
 import ged.ejb.core.file.ServerFileDao;
 import ged.ejb.core.model.AbstractDao;
@@ -112,7 +110,6 @@ public class CandidateService extends AbstractAuditedService<Candidate> {
 	}
 
 	@Override
-	@Audited(action = ActionType.SAVE)
 	public Candidate save(final Candidate candidate) {
 		Objects.requireNonNull(candidate);
 		if (candidate.getId() != 0) {
