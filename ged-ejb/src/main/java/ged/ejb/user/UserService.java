@@ -37,30 +37,31 @@ public class UserService extends AbstractAuditedService<User> {
 
 	public Role findRoleByName(final String roleName) {
 		Objects.requireNonNull(roleName);
+		logger.debug("Finding role by name {}", roleName);
 		return this.roleDao.findRoleByName(roleName);
 	}
 
 	public List<User> findSubordinateUsers(final User user) {
 		Objects.requireNonNull(user);
-		logger.debug("Find subordinate users of user {}", user.getEmail());
+		logger.debug("Finding subordinate users of user {}", user.getEmail());
 		return this.userDao.findSubordinateUsers(user);
 	}
 
 	public User findUserByEmail(final String email) {
 		Objects.requireNonNull(email);
-		logger.debug("Find user by email {}", email);
+		logger.debug("Finding user by email {}", email);
 		return this.userDao.findUserByEmail(email);
 	}
 
 	public List<User> findUsersOfflineLastMonth() {
-		logger.debug("Find users offline last month");
+		logger.debug("Finding users offline last month");
 		final LocalDateTime today = LocalDateTime.now();
 		final LocalDateTime oneMonthAgo = today.minusMonths(1);
 		return this.userDao.findUsersOffline(oneMonthAgo, today);
 	}
 
 	public List<User> findUsersOnlineLastWeek() {
-		logger.debug("Find users online last week");
+		logger.debug("Finding users online last week");
 		final LocalDateTime today = LocalDateTime.now();
 		final LocalDateTime oneWeekAgo = today.minusDays(7);
 		return this.userDao.findUsersOnline(oneWeekAgo, today);
@@ -71,9 +72,9 @@ public class UserService extends AbstractAuditedService<User> {
 		return this.userDao;
 	}
 
-	private boolean hasValidManagerRole(final User user) {
+	private boolean hasValidManager(final User user) {
 		final User manager = user.getManager();
-		if ((manager != null) && user.isAdmin()) {
+		if (user.isAdmin() && (manager != null)) {
 			return false;
 		}
 		return true;
@@ -96,11 +97,13 @@ public class UserService extends AbstractAuditedService<User> {
 	@Securized
 	public User save(final User user) {
 		Objects.requireNonNull(user);
+		logger.debug("Saving user {}", user.getEmail());
 		if (user.equals(user.getManager())) {
 			logger.warn("The user {} can't be his/her manager", user.getEmail());
 			throw new IllegalStateException("User can't be his/her manager");
 		}
-		if (!this.hasValidManagerRole(user)) {
+		if (!this.hasValidManager(user)) {
+			logger.warn("The user {} has an admin role but has {} as a manager", user.getEmail(), user.getManager().getRole());
 			throw new IllegalStateException();
 		}
 		return super.save(user);
