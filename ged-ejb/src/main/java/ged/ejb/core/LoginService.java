@@ -12,18 +12,20 @@ import javax.security.auth.login.LoginException;
 import javax.xml.bind.DatatypeConverter;
 
 import ged.ejb.core.action.Action.ActionType;
+import ged.ejb.core.model.Repository;
 import ged.ejb.user.User;
-import ged.ejb.user.UserService;
+import ged.ejb.user.UserDao;
 
 @Stateless
 public class LoginService {
 
 	@Inject
-	private UserService userService;
+	@Repository
+	private UserDao userDao;
 
 	@Audited(action = ActionType.LOGIN)
 	public User login(final String email, final String password) {
-		final User user = this.userService.findUserByEmail(email);
+		final User user = this.userDao.findUserByEmail(email);
 		try {
 			final byte[] hashPassword = MessageDigest.getInstance("SHA-256").digest(password.getBytes(StandardCharsets.UTF_8));
 
@@ -33,7 +35,7 @@ public class LoginService {
 				throw new LoginException();
 			}
 			user.setLastConnection(LocalDateTime.now());
-			return this.userService.save(user);
+			return this.userDao.save(user);
 		}
 		catch (NoSuchAlgorithmException | LoginException e) {
 			throw new BadLoginException();
@@ -42,12 +44,13 @@ public class LoginService {
 
 	@Audited(action = ActionType.LOGIN)
 	public User saveLastConnection(final String email) {
-		final User user = this.userService.findUserByEmail(email);
+		final User user = this.userDao.findUserByEmail(email);
 		user.setLastConnection(LocalDateTime.now());
-		return this.userService.save(user);
+		return this.userDao.save(user);
 	}
 
-	public void setUserSerivce(final UserService userSerivce) {
-		this.userService = userSerivce;
+	public void setUserDao(final UserDao userDao) {
+		this.userDao = userDao;
 	}
+
 }

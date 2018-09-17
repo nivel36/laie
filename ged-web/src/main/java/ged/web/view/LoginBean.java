@@ -61,7 +61,8 @@ public class LoginBean extends AbstractBean {
 		if (status == SEND_FAILURE) {
 			addGlobalError("auth.message.error.failure");
 			validationFailed();
-		} else if (status == SEND_CONTINUE) {
+		}
+		else if (status == SEND_CONTINUE) {
 			responseComplete(); // Prevent JSF from rendering a response so authentication mechanism can
 								// continue.
 		}
@@ -93,9 +94,8 @@ public class LoginBean extends AbstractBean {
 
 	public void login() {
 		logger.debug("Username {} login", this.username);
+		authenticate(withParams().credential(new UsernamePasswordCredential(username, password)).newAuthentication(true));
 		loginService.saveLastConnection(this.username);
-		authenticate(
-				withParams().credential(new UsernamePasswordCredential(username, password)).newAuthentication(true));
 	}
 
 	public String logout() {
