@@ -41,7 +41,7 @@ public class ClientEditBean extends AbstractDialogBean {
 
 	@PostConstruct
 	public void init() {
-		logger.trace("ClientDialog oppened");
+		logger.trace("Client {} edit init", client.getName());
 		this.client = this.getValueFromFlash("client");
 		if (this.client == null) {
 			this.client = this.buildNewClient();
@@ -56,7 +56,7 @@ public class ClientEditBean extends AbstractDialogBean {
 	}
 
 	public String save() {
-		logger.debug("ClientDialog save action performed");
+		logger.debug("Save client action performed");
 		this.client = this.clientService.save(this.client);
 		return "/faces/client/client?faces-redirect=true&clientId=" + this.client.getId();
 	}
@@ -64,5 +64,4 @@ public class ClientEditBean extends AbstractDialogBean {
 	public void setClientService(final ClientService clientService) {
 		this.clientService = clientService;
 	}
-
 }

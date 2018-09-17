@@ -59,20 +59,24 @@ public class UserEditBean extends AbstractBean {
 	}
 
 	public String cancel() {
+		logger.debug("Cancel edit action performed");
 		return this.cancelUrl;
 	}
 
 	public void changeRoleListener() {
+		logger.trace("Change role listener triggered");
 		if (user.isAdmin()) {
 			cleanManager();
 		}
 	}
 
 	public void cleanManager() {
+		logger.debug("Clean manager action performed");
 		this.user.setManager(null);
 	}
 
 	private void editUserInit() {
+		logger.debug("User {} edit init", user.getEmail());
 		if (!sessionUser.hasPermissionToEdit(this.user)) {
 			logger.error("User {} hasn't got priviliges to edit user {}", this.sessionUser.get(), this.user);
 			throw new SecurityException();
@@ -90,7 +94,6 @@ public class UserEditBean extends AbstractBean {
 
 	@PostConstruct
 	public void init() {
-		logger.debug("UserEditBean init");
 		this.user = this.getValueFromFlash("user");
 		if (this.user == null) {
 			newUserInit();
@@ -101,6 +104,7 @@ public class UserEditBean extends AbstractBean {
 	}
 
 	private void newUserInit() {
+		logger.debug("New user edit init");
 		if (!this.sessionUser.isAdmin()) {
 			logger.error("User {} hasn't got priviliges to add a new user", sessionUser);
 			throw new SecurityException();
@@ -126,6 +130,7 @@ public class UserEditBean extends AbstractBean {
 	}
 
 	public List<User> searchManager(final String query) {
+		logger.trace("Searching for manager with the string {}", query);
 		if ((query == null) || (query.trim().length() < 3)) {
 			return new ArrayList<>();
 		}
@@ -152,6 +157,7 @@ public class UserEditBean extends AbstractBean {
 
 	public void uploadImage(final FileUploadEvent event) throws IOException {
 		Objects.requireNonNull(event);
+		logger.debug("Upload user image action performed");
 		final UploadedFile uploadedFile = event.getFile();
 		if (uploadedFile == null) {
 			return;
@@ -161,11 +167,11 @@ public class UserEditBean extends AbstractBean {
 	}
 
 	public void validateEmail(final FacesContext context, final UIComponent component, final Object value) {
-		logger.debug("Checking email");
 		if (value == null) {
 			return;
 		}
 		final String userEmail = (String) value;
+		logger.debug("Validating email {}", userEmail);
 		if (userEmail.equals(this.user.getEmail())) {
 			// If the old and the new email are equals, the user is not updating the email.
 			return;

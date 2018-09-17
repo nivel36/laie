@@ -24,17 +24,22 @@ public class ClientService extends AbstractAuditedService<Client> {
 
 	public boolean clientExists(final String clientName) {
 		Objects.requireNonNull(clientName);
-		logger.debug("Look for client {} in database", clientName);
+		logger.debug("Testing if client {} exists in database", clientName);
 		return this.clientDao.clientExists(clientName);
 	}
 
 	public Client findAllClientDataByClientId(final long clientId) {
+		if (clientId < 0) {
+			logger.warn("Bad client id {}", clientId);
+			throw new IllegalArgumentException();
+		}
+		logger.debug("Finding all client data by id {}", clientId);
 		return this.clientDao.findAllClientDataByClientId(clientId);
 	}
 
 	public Client findClientByName(final String clientName) {
 		Objects.requireNonNull(clientName);
-		ClientService.logger.debug("Find client with name {}", clientName);
+		logger.debug("Finding client by name {}", clientName);
 		return this.clientDao.findClientByName(clientName);
 	}
 

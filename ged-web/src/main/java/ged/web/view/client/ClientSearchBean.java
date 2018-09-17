@@ -31,7 +31,7 @@ public class ClientSearchBean extends AbstractBean {
 	private String searchText;
 
 	public void clean() {
-		logger.debug("Clean action performed");
+		logger.debug("Clean search text action performed");
 		this.searchText = null;
 		this.search();
 	}
@@ -46,12 +46,12 @@ public class ClientSearchBean extends AbstractBean {
 
 	@PostConstruct
 	public void init() {
-		logger.trace("Init ClientSearchBean");
+		logger.trace("Client search init");
 		this.search();
 	}
 
 	public void search() {
-		logger.debug("Searching for client action performed");
+		logger.debug("Search clients action performed");
 		this.clients = this.clientService.search(this.searchText);
 	}
 

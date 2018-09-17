@@ -25,7 +25,7 @@ public class ContactService extends AbstractAuditedService<Contact> {
 
 	public List<Contact> findContactsByClient(final Client client) {
 		Objects.requireNonNull(client);
-		logger.debug("Find contacts by client {}", client);
+		logger.debug("Finding contacts by client {}", client);
 		return this.contactDao.findContactsByClient(client);
 	}
 

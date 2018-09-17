@@ -76,7 +76,7 @@
 			<div class="ui-g-12 ui-xl-6">
 				<h:form id="contactsForm">
 					<cc:contacts contacts="#{clientBean.contacts}">
-						<p:commandButton value="#{i18n['action.new']}" actionListener="#{clientBean.openContactDialog}" process="@this">
+						<p:commandButton value="#{i18n['action.new']}" actionListener="#{clientBean.newContact}" process="@this">
 							<p:ajax event="dialogReturn" update="@form" listener="#{clientBean.onCloseContactDialog}" />
 						</p:commandButton>
 					</cc:contacts>

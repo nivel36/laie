@@ -1,5 +1,7 @@
 package ged.web.core.view;
 
+import static org.omnifaces.util.Faces.validationFailed;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -43,6 +45,7 @@ public abstract class AbstractBean implements Serializable {
 
 	protected void addErrorToField(final UIComponent component, final String message) {
 		this.addMessage(component, FacesMessage.SEVERITY_ERROR, message, message, null);
+		validationFailed();
 	}
 
 	protected void addInfoMessage(final String message) {

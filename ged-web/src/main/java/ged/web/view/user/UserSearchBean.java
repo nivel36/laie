@@ -31,9 +31,15 @@ public class UserSearchBean extends AbstractBean {
 	private transient UserService userService;
 
 	public void clean() {
-		logger.debug("Cleaning search fields");
+		logger.debug("Clean search field action performed");
 		this.searchText = null;
 		this.search();
+	}
+
+	public void export() {
+		logger.debug("Export users action performed");
+		// TODO ivmedina
+		System.out.println("hola mundo");
 	}
 
 	public String getSearchText() {
@@ -46,20 +52,15 @@ public class UserSearchBean extends AbstractBean {
 
 	@PostConstruct
 	public void init() {
-		logger.trace("Init UserSearchBean");
+		logger.trace("User search init");
 		this.search();
 	}
 
 	public void search() {
-		logger.debug("Searching for users");
+		logger.debug("Search users action performed");
 		this.users = this.userService.search(this.searchText);
 	}
 
-	public void export() {
-		// TODO ivmedina
-		System.out.println("hola mundo");
-	}
-	
 	public void setSearchText(final String searchText) {
 		this.searchText = searchText;
 	}

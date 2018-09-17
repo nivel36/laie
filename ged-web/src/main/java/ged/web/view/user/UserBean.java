@@ -46,10 +46,12 @@ public class UserBean extends AbstractBean {
 	private transient UserService userService;
 
 	public void editUser() {
+		logger.debug("Edit user action performed");
 		this.putValueToFlash("user", this.user);
 	}
 
 	public void export() throws IOException {
+		logger.debug("Export user action performed");
 		final UserReport userReport = new UserReport(this.user, this.jobOffers);
 		Faces.sendFile(userReport.create(), true);
 	}
@@ -68,10 +70,11 @@ public class UserBean extends AbstractBean {
 
 	@PostConstruct
 	public void init() {
-		logger.debug("UserBean init");
+		logger.debug("User {} init", user.getEmail());
 		this.team = this.userService.findSubordinateUsers(this.user);
 		this.jobOffers = this.jobOfferService.findAllJobOffersByOwner(this.user);
 		if (this.user.isDeleted()) {
+			logger.warn("User is deleted");
 			Message.addWarning("message.erased_entity", "message.erased_entity");
 		}
 	}
@@ -86,9 +89,5 @@ public class UserBean extends AbstractBean {
 
 	public void setUserService(final UserService userService) {
 		this.userService = userService;
-	}
-
-	public void uploadImage() {
-
 	}
 }

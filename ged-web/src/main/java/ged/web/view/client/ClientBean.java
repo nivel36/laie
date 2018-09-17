@@ -43,6 +43,7 @@ public class ClientBean extends AbstractBean {
 	private transient JobOfferService jobOfferService;
 
 	public void editClient() {
+		logger.debug("Edit client action performed");
 		this.putValueToFlash("client", this.client);
 	}
 
@@ -63,7 +64,7 @@ public class ClientBean extends AbstractBean {
 
 	@PostConstruct
 	public void init() {
-		logger.trace("Init ClientBean");
+		logger.trace("Client {} init");
 		if (this.client.getAddress() == null) {
 			this.client.setAddress(new Address());
 		}
@@ -71,11 +72,18 @@ public class ClientBean extends AbstractBean {
 		this.jobOffers = this.jobOfferService.findJobOffersByClient(this.client);
 	}
 
-	public boolean isUserHasPermissionToEdit() {
+	public boolean isEditable() {
 		return sessionUser.hasPermissionToEdit(this.client);
 	}
 
+	public void newContact() {
+		logger.debug("New contact action performed");
+		final Map<String, List<String>> params = this.buildDialogParameter("clientId", String.valueOf(this.client.getId()));
+		this.openDialog("/faces/client/contactDialog", params);
+	}
+
 	public void newJobOffer() {
+		logger.debug("New job offer action performed");
 		final JobOffer newJobOffer = new JobOffer();
 		newJobOffer.setClient(this.client);
 		this.putValueToFlash("jobOffer", newJobOffer);
@@ -84,13 +92,9 @@ public class ClientBean extends AbstractBean {
 	public void onCloseContactDialog(final SelectEvent e) {
 		final Contact newContact = (Contact) e.getObject();
 		if (newContact != null) {
+			logger.trace("New contact {} added", newContact.getEmail());
 			this.contacts.add(newContact);
 		}
-	}
-
-	public void openContactDialog() {
-		final Map<String, List<String>> params = this.buildDialogParameter("clientId", String.valueOf(this.client.getId()));
-		this.openDialog("/faces/client/contactDialog", params);
 	}
 
 	public void setClient(final Client client) {

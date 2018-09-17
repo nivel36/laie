@@ -15,6 +15,7 @@ public abstract class AbstractAuditedService<T extends AbstractAuditedEntity> ex
 		super.save(entity);
 	}
 
+	@Securized
 	@Override
 	public T save(final T entity) {
 		Objects.requireNonNull(entity);

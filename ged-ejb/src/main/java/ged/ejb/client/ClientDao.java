@@ -25,12 +25,16 @@ public class ClientDao extends AbstractDao<Client> {
 	}
 
 	public Client findAllClientDataByClientId(final long clientId) {
+		if (clientId < 0) {
+			logger.warn("Bad client id {}", clientId);
+			throw new IllegalArgumentException();
+		}
 		return this.findByQuery(Client.class, "Client.findByClientId", map("clientId", clientId));
 	}
 
 	public Client findClientByName(final String clientName) {
+		Objects.requireNonNull(clientName);
 		try {
-			Objects.requireNonNull(clientName);
 			return this.findByQuery(Client.class, "Client.findByName", map("name", clientName));
 		}
 		catch (final NoResultException e) {
