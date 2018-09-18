@@ -48,7 +48,7 @@
 								</div>
 							</p:tab>
 							<p:tab title="#{i18n['user.avatar']}">
-								<p:photoCam widgetVar="pc" listener="#{userBean.uploadImage}" update="photo" />
+								<p:photoCam widgetVar="pc"  update="photo" />
 								<p:commandButton type="button" value="Capture" onclick="PF('pc').capture()" />
 								<p:outputPanel id="photo">
 									<p:graphicImage name="#{userBean.user.imageFileName}" rendered="#{not empty userBean.user.imageFileName}" />

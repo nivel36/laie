@@ -35,16 +35,22 @@ public class ClientEditBean extends AbstractDialogBean {
 		return newClient;
 	}
 
+	private void editClientInit() {
+		logger.debug("Client {} edit init", client.getName());
+	}
+
 	public Client getClient() {
 		return this.client;
 	}
 
 	@PostConstruct
 	public void init() {
-		logger.trace("Client {} edit init", client.getName());
 		this.client = this.getValueFromFlash("client");
 		if (this.client == null) {
-			this.client = this.buildNewClient();
+			newClientInit();
+		}
+		else {
+			editClientInit();
 		}
 	}
 
@@ -53,6 +59,11 @@ public class ClientEditBean extends AbstractDialogBean {
 			throw new IllegalStateException("Null client");
 		}
 		return this.client.getId() == 0;
+	}
+
+	private void newClientInit() {
+		logger.debug("New client init");
+		this.client = this.buildNewClient();
 	}
 
 	public String save() {

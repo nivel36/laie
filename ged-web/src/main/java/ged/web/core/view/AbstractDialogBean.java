@@ -1,7 +1,5 @@
 package ged.web.core.view;
 
-import java.util.Objects;
-
 import org.primefaces.PrimeFaces;
 
 public abstract class AbstractDialogBean extends AbstractBean {
@@ -16,22 +14,4 @@ public abstract class AbstractDialogBean extends AbstractBean {
 		PrimeFaces.current().dialog().closeDynamic(value);
 	}
 
-	@SuppressWarnings("unchecked")
-	protected <T> T getAttribute(final String key) {
-		Objects.requireNonNull(key);
-		return (T) this.externalContext.getRequestParameterMap().get(key);
-	}
-
-	protected Long getIdFromParameters(final String idName) {
-		try {
-			final String idValue = this.getAttribute(idName);
-			if (idValue == null) {
-				return null;
-			}
-			return Long.parseLong(idValue);
-		}
-		catch (final NumberFormatException e) {
-			throw new IllegalStateException();
-		}
-	}
 }

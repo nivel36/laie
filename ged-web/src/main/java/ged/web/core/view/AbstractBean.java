@@ -110,6 +110,19 @@ public abstract class AbstractBean implements Serializable {
 		return options;
 	}
 
+	protected Long getIdFromParameters(final String idName) {
+		try {
+			final String idValue = this.getValueFromGetParameters(idName);
+			if (idValue == null) {
+				return null;
+			}
+			return Long.parseLong(idValue);
+		}
+		catch (final NumberFormatException e) {
+			throw new IllegalStateException();
+		}
+	}
+
 	@SuppressWarnings("unchecked")
 	protected <T> T getValueFromFlash(final String key) {
 		if (this.flash.containsKey(key)) {

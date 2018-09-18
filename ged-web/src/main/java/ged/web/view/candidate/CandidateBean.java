@@ -74,7 +74,7 @@ public class CandidateBean extends AbstractBean {
 
 	@PostConstruct
 	public void init() {
-		logger.trace("CandidateBean init");
+		logger.trace("Candidate {} init", candidate);
 		if (this.candidate.getAddress() == null) {
 			this.candidate.setAddress(new Address());
 		}
