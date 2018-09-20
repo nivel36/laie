@@ -269,7 +269,7 @@ body nav li:hover a, body button:hover {
 
 .login-page .content {
 	padding-top: 20vh;
-	width: 400px;
+	max-width: 12cm;
 	margin: 0 auto;
 }
 
