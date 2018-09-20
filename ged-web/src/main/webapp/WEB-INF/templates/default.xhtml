@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
 
 <f:view contentType="text/html" locale="#{sessionUser.locale}">
 	<h:head>
@@ -9,39 +12,37 @@
 			<title>GED</title>
 		</ui:insert>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+		<meta http-equiv="Cache-Control"
+			content="no-cache, no-store, must-revalidate" />
 		<meta http-equiv="Pragma" content="no-cache" />
 		<meta http-equiv="Expires" content="-1" />
 		<script>{"describedby":"form"}</script>
 		<h:outputStylesheet name="css/reset.css" />
-		<h:outputStylesheet name="css/flat-classic-blue/layout.css" />
 		<h:outputStylesheet name="css/flat-classic-blue/components.css" />
 	</h:head>
 
 	<h:body>
-		<div class="wrapper">
-			<header class="page_header">
-				<ui:insert name="header">
-					<ui:decorate template="header.xhtml" />
+		<header>
+			<ui:insert name="header">
+				<ui:decorate template="header.xhtml" />
+			</ui:insert>
+		</header>
+		<div id="main-panel">
+			<p:growl id="growl" globalOnly="true" />
+			<aside>
+				<ui:insert name="aside">
+					<ui:include src="aside.xhtml" />
 				</ui:insert>
-			</header>
-			<div class="ui-g" id="main-panel">
-				<p:growl id="growl" globalOnly="true" />
-				<div class="ui-g-12 ui-md-6 ui-lg-3 ui-xl-2" id="aside">
-					<ui:insert name="aside">
-						<ui:include src="aside.xhtml" />
-					</ui:insert>
-				</div>
-				<div class="ui-g-12 ui-lg-9 ui-xl-10" id="content">
-					<ui:insert name="content" />
-					<footer>
-						<ui:insert name="footer">
-							<ui:include src="footer.xhtml" />
-						</ui:insert>
-					</footer>
-				</div>
+			</aside>
+			<div id="content">
+				<ui:insert name="content" />
 			</div>
 		</div>
+		<footer>
+			<ui:insert name="footer">
+				<ui:include src="footer.xhtml" />
+			</ui:insert>
+		</footer>
 	</h:body>
 </f:view>
 </html>

@@ -1,73 +1,96 @@
 @charset "UTF-8";
-/* azul#133BA9 */
-html {
-	height: 100%;
+
+/**
+ * Colors: 
+ * 
+ * background: #eaeaea
+ * text-color: #666666
+ * title-background: #F4F5F9
+ * title-color: #444444
+ * selected-background: #5b9bd1
+ * selected-color: #ffffff
+ */
+* {
+	box-sizing: border-box;
 }
 
-body, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4 {
+html * {
 	font-family: "Helvetica", "Arial", sans-serif;
 }
 
 body {
-	font-size: 14px;
 	min-height: 100%;
 	height: 100%;
+	font-size: 14px;
+	background: #eaeaea;
 }
 
-.wrapper {
-	font: normal 12px "Roboto", "Helvetica", "Arial", sans-serif;
+body header {
+	width: 100%;
+	position: relative;
+	background: #F4F5F9;
+	color: #444444;
+	overflow: hidden;
+}
+
+body #main-panel {
+	width: 100%;
+	position: relative;
 	overflow: auto;
-	margin: 0px auto;
-	height: 100%;
-	width: 100%;
-	background-color: #eaeaea;
 }
 
-footer {
-	padding: 1em;
-	text-align: center;
+body #main-panel aside {
+	width: 300px;
+	position: relative;
+	overflow: auto;
+	padding: 1em 0em 0em 1em;
 	float: left;
-	width: 100%;
-	color: 999999;
+}
+
+body #main-panel #content {
+	position: relative;
+	overflow: hidden;
+	padding: 1em 1em 0em 0em;
+}
+
+body footer {
+	padding: 1em;
+	font-size: 0.5em;
+	text-align: center;
+	color: #666666;
 }
 
 h1 {
-	font-size: 1.3em;
+	font-size: 1.5em;
 	font-weight: bold;
-	padding: 5px 0px;
+	padding: 0.5em 0;
 }
 
 h2 {
-	font-size: 20px;
-	line-height: 28px;
+	font-size: 1.3em;
+	line-height: 2em;
 }
 
 h3 {
-	font-size: 16px;
+	font-size: 1.2em;
 	font-weight: 600;
 }
 
 h4 {
 	font-size: 1.2em;
-	padding-top: 2px;
+	padding-top: 0.2em;
 }
 
 .mainSection {
-	padding-bottom: 24px;
-	margin-bottom: 24px;
+	padding-bottom: 2em;
+	margin-bottom: 2em;
 	position: relative;
 	border-bottom: 1px solid #999999;
 }
 
 .section {
 	position: relative;
-	margin: 24px 0px 0px 24px;
-}
-
-.jobDescription, .educationDescription {
-	position: relative;
-	padding-top: 16px;
-	display: block;
+	margin: 2em 0em 0em 2em;
 }
 
 body strong {
@@ -83,137 +106,131 @@ body u {
 }
 
 body .ql-indent-1 {
-	margin-left: 20px;
+	margin-left: 1.5em;
 }
 
 body ul {
-	margin-left: 20px;
+	margin-left: 1.5em;
 }
 
 body ul li {
 	list-style: disc;
 }
 
-.cvAction {
-	position: absolute;
-	top: 0px;
-	right: 0px;
+body a {
+	text-decoration: none;
 }
 
 /************************************
- *  HEADER
+ *  nav
  ************************************/
-.page_header .menu {
-	width: 100%;
-	position: relative;
-	background: #F4F5F9;
-	overflow: auto;
-	position: relative;
-	box-shadow: 0 8px 10px rgba(0, 0, 0, .25);
+body>header {
+	box-shadow: 0 0.5em 0.6em rgba(0, 0, 0, .25);
 }
 
-.page_header .menu ul {
-	margin: 0px;
+body header nav ul {
+	list-style-type: none;
+	margin: 0em;
 }
 
-.page_header .menu li {
+body header nav li {
 	list-style: none;
-}
-
-.page_header .menu li a {
-	display: block;
-	font-size: 1.2em;
-	text-decoration: none;
-	color: #444;
-	height: 34px;
-}
-
-.page_header .menu li {
+	font-size: 1em;
 	text-align: center;
-	line-height: 2.8em;
+	line-height: 2em;
 	float: left;
-	width: 130px;
-	border-bottom: 3px solid #5b9bd1;
-	margin-right: 3px;
+	margin-right: 0.25em;
 }
 
-.page_header .menu li .selected {
+body header nav .menu li {
+	list-style: none;
+	font-size: 1em;
+	text-align: center;
+	line-height: 2em;
+	float: left;
+	margin-right: 0.25em;
+}
+
+body header nav li a {
+	display: block;
+}
+
+body header nav .menu li a {
+	padding: 0.3em 1em;
+}
+
+body .selected {
 	background: #5b9bd1;
 	color: white;
 }
 
-.page_header .menu li:hover {
+body nav li:hover a, body button:hover {
 	transition: all 0.2s ease-in;
-	background-color: #e4e4e4;
+	background-color: rgba(0, 0, 0, .05);
 }
 
-.page_header .menu li:hover a {
-	transition: all 0.2s ease-in;
+.navbarUtilityForm {
+	float: right;
+} 
+
+.navbarUtilityForm li a {
+	padding: 0.3em 0.5em;
 }
 
-.page_header .logout, .config {
-	font-size: 0;
-	text-decoration: none;
+.navbarUtilityForm .name {
+	padding: 0.3em 1em;
+	display: block;
 }
 
-.page_header .config:before {
-	font-size: 16px;
+.navbarUtilityForm .logout, .navbarUtilityForm .config {
+	text-indent: -9999px;
+	line-height: 0;
+}
+
+.navbarUtilityForm .config:after {
+	text-indent: 0;
+	line-height: 2em;
+	display: block;
 	content: "\f013";
 	font-family: FontAwesome;
-	color: #424242;
 }
 
-.page_header .logout:before {
-	font-size: 16px;
+.navbarUtilityForm .logout:after {
+	text-indent: 0;
+	line-height: 2em;
+	display: block;
 	content: "\f011";
 	font-family: FontAwesome;
-	color: #424242;
 }
 
-.page_header #userMenu {
-	position: absolute;
-	top: 10px;
-	right: 3px;
-	display: inline-block;
-	z-index: 1;
-}
-
-.page_header #userMenu li {
-	display: block;
-	cursor: pointer;
-	padding: 0 10px 0 0;
-	float: left;
-}
-
-.page_header #userMenu .name {
-	display: block;
-	float: left;
-	font-size: 1em;
-	line-height: 16px;
-}
-
-@media ( max-width : 1124px) {
-	.page_header .menu .menu_text {
+@media(max-width: 1124px){
+	body header nav .menu .menu_text {
 		display: none;
 	}
-	.page_header .menu li {
-		width: 40px;
-	}
-	.page_header .menu .menu_icon {
-		padding: 10px;
-	}
+}
+
+.cvAction {
+	position: absolute;
+	top: 0em;
+	right: 0em;
 }
 
 .image.image-icon {
-	width: 32px;
-	height: 32px;
+	width: 2.5em;
+	height: 2.5em;
 	border-radius: 50%;
 	object-fit: cover;
 }
 
+.jobDescription, .educationDescription {
+	position: relative;
+	padding-top: 1em;
+	display: block;
+}
+
 .ui-widget-content .image-icon {
-	width: 36px;
-	height: 36px;
+	width: 2.6em;
+	height: 2.6em;
 }
 
 .text {
@@ -223,7 +240,7 @@ body ul li {
 
 .form-group {
 	overflow: auto;
-	padding: 0px 7px 15px 7px;
+	padding: 0em 7px 15px 7px;
 	position: relative;
 }
 
@@ -405,17 +422,32 @@ body ul li {
 	animation: color-me-in 1s;
 }
 
-@keyframes color-me-in { 
-	0% {
-		background-color: #d1e7cc;
-	}
-	100%
-	{
-		background: #effffc;
-		background-color: 1s ease-out;
-	}
+@
+keyframes color-me-in { 0% {
+	background-color: #d1e7cc;
 }
 
+100%
+{
+background
+:
+ 
+#effffc
+;
+
+		
+background-color
+:
+ 
+1
+s
+ 
+ease-out
+;
+
+	
+}
+}
 .card.card-stats .card-header {
 	font-size: 30px;
 	float: left;
@@ -488,12 +520,12 @@ body ul li {
 	font-family: FontAwesome;
 	font-size: 10px;
 	content: "\f095";
-	color: #32c5d2; 
+	color: #32c5d2;
 	padding: 0px 3px 0px 5px;
 }
 
 .card.contact .container .contact-info .email {
-	display: block; 
+	display: block;
 	float: left;
 	min-width: 50%;
 }
@@ -502,7 +534,7 @@ body ul li {
 	font-family: FontAwesome;
 	font-size: 10px;
 	content: "\f0e0";
-	color: #32c5d2; 
+	color: #32c5d2;
 	padding: 0px 3px 0px 5px;
 }
 
