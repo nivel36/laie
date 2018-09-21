@@ -3,6 +3,8 @@ package ged.web.view.user;
 import static javax.faces.application.FacesMessage.SEVERITY_ERROR;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.UncheckedIOException;
 import java.lang.invoke.MethodHandles;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -155,15 +157,20 @@ public class UserEditBean extends AbstractBean {
 		this.userService = userService;
 	}
 
-	public void uploadImage(final FileUploadEvent event) throws IOException {
+	public void uploadImage(final FileUploadEvent event) {
 		Objects.requireNonNull(event);
 		logger.debug("Upload user image action performed");
 		final UploadedFile uploadedFile = event.getFile();
 		if (uploadedFile == null) {
 			return;
 		}
-		final String uuid = this.fileUploadService.uploadImage(uploadedFile.getInputstream());
-		this.user.setImageFileName(uuid);
+		try (InputStream inputStream = uploadedFile.getInputstream()) {
+			final String uuid = this.fileUploadService.uploadImage(inputStream);
+			this.user.setImageFileName(uuid);
+		}
+		catch (final IOException e) {
+			throw new UncheckedIOException(e);
+		}
 	}
 
 	public void validateEmail(final FacesContext context, final UIComponent component, final Object value) {
@@ -171,7 +178,7 @@ public class UserEditBean extends AbstractBean {
 			return;
 		}
 		final String userEmail = (String) value;
-		logger.debug("Validating email {}", userEmail);
+		logger.trace("Validating email {}", userEmail);
 		if (userEmail.equals(this.user.getEmail())) {
 			// If the old and the new email are equals, the user is not updating the email.
 			return;
