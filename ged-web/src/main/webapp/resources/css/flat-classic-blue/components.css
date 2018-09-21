@@ -160,13 +160,13 @@ body header nav .menu li a {
 }
 
 body .selected {
-	background: #5b9bd1;
+	background: #5b9bd1 !important;
 	color: white;
 }
 
-body nav li:hover a, body button:hover {
+body nav li:hover a {
 	transition: all 0.2s ease-in;
-	background-color: rgba(0, 0, 0, .05);
+	background-color: #dbdce0;
 }
 
 .navbarUtilityForm {
