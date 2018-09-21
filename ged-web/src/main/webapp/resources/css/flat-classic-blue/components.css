@@ -135,20 +135,8 @@ body header nav ul {
 
 body header nav li {
 	list-style: none;
-	font-size: 1em;
-	text-align: center;
 	line-height: 2em;
 	float: left;
-	margin-right: 0.25em;
-}
-
-body header nav .menu li {
-	list-style: none;
-	font-size: 1em;
-	text-align: center;
-	line-height: 2em;
-	float: left;
-	margin-right: 0.25em;
 }
 
 body header nav li a {
