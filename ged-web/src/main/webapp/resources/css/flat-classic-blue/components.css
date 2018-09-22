@@ -10,12 +10,9 @@
  * selected-background: #5b9bd1
  * selected-color: #ffffff
  */
+ 
 * {
 	box-sizing: border-box;
-}
-
-html * {
-	font-family: "Helvetica", "Arial", sans-serif;
 }
 
 body {
@@ -23,6 +20,7 @@ body {
 	height: 100%;
 	font-size: 14px;
 	background: #eaeaea;
+	font-family: "Helvetica", "Arial", sans-serif;
 }
 
 body header {
@@ -91,6 +89,11 @@ h4 {
 .section {
 	position: relative;
 	margin: 2em 0em 0em 2em;
+}
+
+body a {
+	text-decoration: none;
+	color: #444;
 }
 
 body strong {

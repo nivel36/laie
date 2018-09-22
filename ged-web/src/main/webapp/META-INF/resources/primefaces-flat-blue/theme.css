@@ -1,19 +1,13 @@
 @charset "UTF-8";
 
-*::after, *::before {
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	box-sizing: border-box;
-}
-
 body .ui-autocomplete-panel .ui-autocomplete-table th, body .ui-autocomplete-panel .ui-autocomplete-table td
 	{
-	padding: 4px;
+	padding: 0.25em;
 }
 
 body .ui-icon {
 	font-family: FontAwesome;
-	font-size: 16px;
+	font-size: 1em;
 	text-indent: 0px;
 }
 
@@ -115,21 +109,16 @@ body .ui-paginator .ui-paginator-last:before {
 
 body .ui-paginator {
 	font-family: FontAwesome;
-	font-size: 14px;
-	margin-top: 10px;
+	font-size: 1em;
+	margin-top: 0.8em;
 }
 
 body .ui-paginator .ui-paginator-page.ui-state-active {
-	background-color: #3598DC;
+	background-color: #5b9bd1;
 	border-radius: 50%;
-	width: 24px;
-	line-height: 20px;
+	width: 1.75em;
+	line-height: 1.5em;
 	color: white;
-}
-
-a {
-	text-decoration: none;
-	color: #444;
 }
 
 body .ui-state-disabled {
