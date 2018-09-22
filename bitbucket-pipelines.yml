@@ -16,3 +16,5 @@ pipelines:
             - maven
           script:
             - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar -Dsonar.host.url=https://sonarcloud.io -Dsonar.organization=$SONAR_KEY -Dsonar.login=$SONAR_TOKEN
+          deploy:
+            - mvn wildfly:deploy -wildfly.hostname=http://wildfly14-ged.a3c1.starter-us-west-1.openshiftapps.com/ -wildfly.port=80 -wildfly.username=$WILDFLY_USER -wildfly.password=$WILDFLY_PASSWORD
