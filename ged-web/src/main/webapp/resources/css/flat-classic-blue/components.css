@@ -4,11 +4,13 @@
  * Colors: 
  * 
  * background: #eaeaea
+ * panel-backgroud: #fafafa
  * text-color: #666666
  * title-background: #F4F5F9
  * title-color: #444444
  * selected-background: #5b9bd1
  * selected-color: #ffffff
+ * selected-complementary: #5bd1cc
  */
  
 * {
@@ -21,6 +23,7 @@ body {
 	font-size: 14px;
 	background: #eaeaea;
 	font-family: "Helvetica", "Arial", sans-serif;
+	color: #666666;
 }
 
 body header {
