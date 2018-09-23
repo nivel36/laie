@@ -648,6 +648,7 @@ body .ui-panel {
 	width: 100%;
 	padding: 0px;
 	border: 1px solid #BDBDBD;
+	box-shadow: 0.1em 0.1em 0.3em rgba(0, 0, 0, .25);
 }
 
 body .ui-panel .ui-panel-titlebar {
@@ -758,7 +759,7 @@ body .ui-fileupload-content {
 }
 
 body .ui-button, body button.ui-button {
-	background: #32c5d2;
+	background: #5bd1cc;
 	color: #fff;
 	height: 30px;
 	font-size: 14px;
@@ -768,6 +769,7 @@ body .ui-button, body button.ui-button {
 	overflow: hidden;
 	font-weight: bold;
 	transition: 0.1s;
+	box-shadow: 0.1em 0.1em 0.3em rgba(0, 0, 0, .25);
 }
 
 body .ui-button:hover, body button.ui-button:hover {
@@ -816,17 +818,16 @@ body .ui-button.ui-state-disabled {
 	background: #c9c9c9;
 }
 
-
 body .ui-button.ui-state-hover {
-	background: #2499a3;
+	background: #51bcb7;
 }
 
 body .ui-button.btn-gray {
-	background: #bababa;
+	background: #afafaf;
 }
 
 body .ui-button.btn-gray.ui-state-hover {
-	background: #797979;
+	background: #9d9d9d;
 }
 
 body .ui-button.btn-red {
@@ -859,7 +860,7 @@ body .ui-button.btn-transparent .ui-icon{
 }
 
 body .ui-button.btn-primary.ui-state-hover {
-	background: #3b7bb1;
+	background: #518bbc;
 }
 
 body .ui-button.medium {
