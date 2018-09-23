@@ -94,11 +94,6 @@ h4 {
 	margin: 2em 0em 0em 2em;
 }
 
-body a {
-	text-decoration: none;
-	color: #444;
-}
-
 body strong {
 	font-weight: 800;
 }
@@ -125,6 +120,11 @@ body ul li {
 
 body a {
 	text-decoration: none;
+	color: #444444;
+}
+
+body a:visited {
+	color: #444444;
 }
 
 /************************************
@@ -204,6 +204,10 @@ body nav li:hover a {
 
 @media(max-width: 1124px){
 	body header nav .menu .menu_text {
+		display: none;
+	}
+	
+	body #main-panel aside {
 		display: none;
 	}
 }
@@ -389,13 +393,11 @@ body nav li:hover a {
 }
 
 .user-minicard .user-info .name {
-	font-weight: 500;
-	font-size: 13px;
+	font-weight: 600;
 }
 
 .user-minicard .user-info .position {
 	font-weight: 400;
-	font-size: 11px;
 	color: #999999;
 }
 
@@ -449,12 +451,21 @@ body nav li:hover a {
 	cursor: pointer;
 }
 
+.selectable.image {
+	box-shadow: 1px 1px 3px rgba(0, 0, 0, .25);
+	transition: all 0.2s ease-in;
+}
+
+.selectable.image:hover {
+	box-shadow: none;
+}
+
 .uploadImageButton {
 	display: none;
 }
 
 .card.contact {
-	transition: 0.1s;
+	transition: all 0.2s ease-in;
 	border: 1px solid #cccccc;
 	position: relative;
 	overflow: auto;

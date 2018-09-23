@@ -9,7 +9,7 @@
 
 	<ui:define name="content">
 		<div class="ui-g">
-			<div class="ui-g-12 ui-xl-8">
+			<div class="ui-g-12">
 				<p:breadCrumb homeDisplay="text">
 					<p:menuitem value="#{i18n['menu.index']}" url="/faces/index.xhtml" />
 					<p:menuitem value="#{i18n['user.users']}" url="/faces/user/userSearch.xhtml" />
@@ -49,7 +49,7 @@
 									<div class="ui-g-12 ui-md-6">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['user.surname']}" for="surname" />
-											<p:inputText id="surname" value="#{userEditBean.user.surname}" required="true"  />
+											<p:inputText id="surname" value="#{userEditBean.user.surname}" required="true" />
 											<p:message for="surname" />
 										</div>
 									</div>
@@ -57,7 +57,8 @@
 									<div class="ui-g-12 ui-md-6">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['user.email']}" for="email" />
-											<p:inputText id="email" value="#{userEditBean.user.email}" required="true" validator="#{userEditBean.validateEmail}" binding="#{userEditBean.emailComponent}" />
+											<p:inputText id="email" value="#{userEditBean.user.email}" required="true" validator="#{userEditBean.validateEmail}"
+												binding="#{userEditBean.emailComponent}" />
 											<p:message for="email" />
 										</div>
 									</div>
@@ -74,7 +75,7 @@
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['user.role']}" for="role" />
 											<p:selectOneMenu id="role" value="#{userEditBean.user.role}" required="true" styleClass="required">
-												<p:ajax event="change" update="managerGroup role" process="role" listener="#{userEditBean.changeRoleListener}"/>
+												<p:ajax event="change" update="manager role" process="role" listener="#{userEditBean.changeRoleListener}" />
 												<c:if test="#{empty userEditBean.user.role}">
 													<f:selectItem />
 												</c:if>
@@ -85,33 +86,31 @@
 									</div>
 
 									<div class="ui-sm-12 ui-md-6">
-										<h:panelGroup id="managerGroup" layout="block" styleClass="form-group">
-											<h:panelGroup layout="block" rendered="#{not userEditBean.user.admin}">
-												<p:outputLabel value="#{i18n['user.manager']}" for="manager" />
-												<div class="ui-inputgroup">
-													<p:autoComplete id="manager" value="#{userEditBean.user.manager}" completeMethod="#{userEditBean.searchManager}" var="manager"
-														itemLabel="#{manager.fullName}" itemValue="#{manager}" forceSelection="true">
-														<p:column styleClass="user-select image">
-															<p:graphicImage class="image image-icon" value="/images/#{manager.imageFileName}" rendered="#{not empty manager.imageFileName}" />
-															<p:graphicImage class="image image-icon" value="/resources/img/default-avatar.png" rendered="#{empty manager.imageFileName}" />
-														</p:column>
-														<p:column styleClass="user-select name">
-															<h:outputText value="#{manager.fullName}" />
-														</p:column>
-														<p:ajax event="itemSelect" update="managerGroup" process="manager" />
-													</p:autoComplete>
-													<p:commandButton id="cleanManagerAction" action="#{userEditBean.cleanManager}" process="@this" update="managerGroup" styleClass="btn-gray"
-														icon="fa fa-times" rendered="#{not empty userEditBean.user.manager}" />
-												</div>
-												<h:message for="manager" errorClass="error" />
-											</h:panelGroup>
-										</h:panelGroup>
+										<div class="form-group">
+											<p:outputLabel value="#{i18n['user.manager']}" for="manager" />
+											<div class="ui-inputgroup">
+												<p:autoComplete id="manager" value="#{userEditBean.user.manager}" completeMethod="#{userEditBean.searchManager}" var="manager"
+													itemLabel="#{manager.fullName}" itemValue="#{manager}" forceSelection="true" disabled="#{userEditBean.user.admin or empty userEditBean.user.role }">
+													<p:column styleClass="user-select image">
+														<p:graphicImage class="image image-icon" value="/images/#{manager.imageFileName}" rendered="#{not empty manager.imageFileName}" />
+														<p:graphicImage class="image image-icon" value="/resources/img/default-avatar.png" rendered="#{empty manager.imageFileName}" />
+													</p:column>
+													<p:column styleClass="user-select name">
+														<h:outputText value="#{manager.fullName}" />
+													</p:column>
+													<p:ajax event="itemSelect" update="manager" process="manager" />
+												</p:autoComplete>
+												<p:commandButton id="cleanManagerAction" action="#{userEditBean.cleanManager}" process="@this" update="manager" styleClass="btn-gray"
+													icon="fa fa-times" rendered="#{not empty userEditBean.user.manager}" />
+											</div>
+											<p:message for="manager" />
+										</div>
 									</div>
 
 									<div class="ui-g-12 ui-md-6">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['user.date_of_join']}" for="date_of_join" />
-											<p:calendar id="date_of_join" value="#{userEditBean.user.dateOfJoin}" required="#{cc.attrs.required}" pattern="dd/MM/yyyy" >
+											<p:calendar id="date_of_join" value="#{userEditBean.user.dateOfJoin}" required="#{cc.attrs.required}" pattern="dd/MM/yyyy">
 												<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
 											</p:calendar>
 											<p:message for="date_of_join" />

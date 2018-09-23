@@ -11,32 +11,35 @@
 	<ui:define name="content">
 
 		<div class="ui-g">
-			<div class="ui-g-12 ui-md-8">
+			<div class="ui-g-12">
 				<p:breadCrumb homeDisplay="text">
 					<p:menuitem value="#{i18n['menu.index']}" url="/faces/index.xhtml" />
 					<p:menuitem value="#{i18n['user.users']}" disabled="true" />
 				</p:breadCrumb>
 			</div>
-			<div class="ui-g-12 ui-md-4">
-				<div class="pull-right">
-					<p:commandButton value="#{i18n['action.export']}" action="#{userSearch.export}" process="@this" icon="fa fa-file-excel-o" />
-					<p:commandButton value="#{i18n['action.new']}" action="userEdit?faces-redirect=true" process="@this" styleClass="btn-primary" />
-				</div>
-			</div>
+
 		</div>
 		<div class="ui-g">
 			<div class="ui-g-12">
 				<h:form id="form">
 					<p:defaultCommand target="searchAction" />
 					<p:panel id="searchUserPanel" header="#{i18n['user.search']}">
-						<div class="ui-g">
-							<div class="ui-md-12 ui-lg-4">
-								<div class="ui-inputgroup">
-									<p:inputText id="searchText" value="#{userSearchBean.searchText}" />
-									<p:commandButton id="cleanSearchTextAction" action="#{userSearchBean.clean}" process="@this" update="@form" styleClass="btn-gray" icon="fa fa-times"
-										rendered="#{not empty userSearchBean.searchText}" />
-									<p:commandButton id="searchAction" action="#{userSearchBean.search}" process="searchUserPanel" update="@form" styleClass="green-button"
-										icon="fa fa-search" />
+						<div class="searchForm">
+							<div class="ui-g">
+								<div class="ui-md-12 ui-lg-6 ui-xl-4">
+									<div class="ui-inputgroup">
+										<p:inputText id="searchText" value="#{userSearchBean.searchText}" />
+										<p:commandButton id="cleanSearchTextAction" action="#{userSearchBean.clean}" process="@this" update="@form" styleClass="btn-gray" icon="fa fa-times"
+											rendered="#{not empty userSearchBean.searchText}" />
+										<p:commandButton id="searchAction" action="#{userSearchBean.search}" process="searchUserPanel" update="@form" styleClass="green-button"
+											icon="fa fa-search" />
+									</div>
+								</div>
+								<div class="ui-g-12 ui-lg-6 ui-xl-8">
+									<div class="pull-right">
+										<p:commandButton value="#{i18n['action.export']}" action="#{userSearch.export}" process="@this" icon="fa fa-file-excel-o" />
+										<p:commandButton value="#{i18n['action.new']}" action="userEdit?faces-redirect=true" process="@this" styleClass="btn-primary" />
+									</div>
 								</div>
 							</div>
 						</div>
@@ -68,6 +71,9 @@
 								</h:link>
 							</p:column>
 						</p:dataTable>
+						<div class="ui-g">
+						
+						</div>
 					</p:panel>
 				</h:form>
 			</div>

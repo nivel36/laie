@@ -678,12 +678,11 @@ body .ui-panel .ui-panel-titlebar .ui-panel-titlebar-icon:hover {
 }
 
 body .ui-panel .ui-panel-content {
-	box-sizing: border-box;
-	padding: 24px;
+	padding: 1em;
 }
 
 body .ui-panel .ui-panel-footer {
-	padding: 8px 14px;
+	padding: 0.5em 1em;
 	border: 0 none;
 	border-top: 1px solid #eaeaea;
 	margin: 0;
@@ -760,7 +759,9 @@ body .ui-button, body button.ui-button {
 	overflow: hidden;
 	font-weight: bold;
 	transition: 0.1s;
-	box-shadow: 0.1em 0.1em 0.3em rgba(0, 0, 0, .25);
+	box-shadow: 2px 2px 3px rgba(0, 0, 0, .25);
+	margin: 0.1em;
+	border-radius: 1px;
 }
 
 body .ui-button:hover, body button.ui-button:hover {
@@ -768,7 +769,7 @@ body .ui-button:hover, body button.ui-button:hover {
 }
 
 body .ui-button-text-icon-left .ui-button-text {
-	padding: .3em 1em .3em 1.3em;
+	padding: 0 0 0 1em;
 }
 
 body .ui-button-text-only .ui-button-text {
@@ -995,6 +996,7 @@ body .ui-breadcrumb {
 	padding: 5px 10px;
 	border: 1px solid #BDBDBD;
 	background: white;
+	box-shadow: 1px 1px 3px rgba(0, 0, 0, .25);
 }
 
 body .ui-breadcrumb .ui-breadcrumb-chevron {

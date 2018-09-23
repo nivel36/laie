@@ -11,7 +11,7 @@
 
 	<ui:define name="content">
 		<div class="ui-g">
-			<div class="ui-g-12 ui-xl-8">
+			<div class="ui-g-12">
 				<p:breadCrumb homeDisplay="text">
 					<p:menuitem value="#{i18n['menu.index']}" url="/faces/index.xhtml" />
 					<p:menuitem value="#{i18n['user.users']}" url="/faces/user/userSearch.xhtml" />
@@ -92,9 +92,9 @@
 								<div class="ui-g">
 									<div class="ui-g-12">
 										<div class="form-action-primary">
+											<p:commandButton id="exportExcel" icon="fa fa-file-excel-o" value="#{i18n['action.export']}" action="#{userBean.export}" />
 											<p:commandButton value="#{i18n['action.edit']}" actionListener="#{userBean.editUser}" action="userEdit?faces-redirect=true" process="@this"
 												styleClass="btn-primary" />
-											<p:commandButton id="exportExcel" icon="fa fa-file-excel-o" value="#{i18n['action.export']}" action="#{userBean.export}" />
 										</div>
 									</div>
 								</div>
