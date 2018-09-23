@@ -43,36 +43,37 @@
 								</div>
 							</div>
 						</div>
-						<p:dataTable var="user" id="users" value="#{userSearchBean.users}" emptyMessage="#{i18n['user.no_users_found']}" reflow="true" paginator="true"
-							paginatorPosition="bottom" rows="#{sessionUser.rowsPerPage}" sortBy="#{user.fullName}" sortOrder="ascending">
-
-							<p:column>
-								<p:graphicImage class="image image-icon" value="/images/#{user.imageFileName}" rendered="#{not empty user.imageFileName}" />
-								<p:graphicImage class="image image-icon" value="/resources/img/default-avatar.png" rendered="#{empty user.imageFileName}" />
-							</p:column>
-
-							<p:column headerText="#{i18n['user.name']}" sortBy="#{user.fullName}">
-								<h:link value="#{user.fullName}" outcome="user">
-									<f:param name="userId" value="#{user.id}" />
-								</h:link>
-							</p:column>
-
-							<p:column headerText="#{i18n['user.email']}" sortBy="#{user.email}">
-								<h:outputText value="#{user.email}" />
-							</p:column>
-
-							<p:column headerText="#{i18n['user.role']}" sortBy="#{i18n:translate(user.role.name)}">
-								<h:outputText value="#{i18n:translate(user.role.name)}" />
-							</p:column>
-
-							<p:column headerText="#{i18n['user.manager']}" sortBy="#{user.manager}">
-								<h:link value="#{user.manager.fullName}" outcome="user" rendered="#{not empty user.manager}">
-									<f:param name="userId" value="#{user.manager.id}" />
-								</h:link>
-							</p:column>
-						</p:dataTable>
 						<div class="ui-g">
-						
+							<div class="ui-g-12">
+								<p:dataTable var="user" id="users" value="#{userSearchBean.users}" emptyMessage="#{i18n['user.no_users_found']}" reflow="true" paginator="true"
+									paginatorPosition="bottom" rows="#{sessionUser.rowsPerPage}" sortBy="#{user.fullName}" sortOrder="ascending">
+
+									<p:column>
+										<p:graphicImage class="image image-icon" value="/images/#{user.imageFileName}" rendered="#{not empty user.imageFileName}" />
+										<p:graphicImage class="image image-icon" value="/resources/img/default-avatar.png" rendered="#{empty user.imageFileName}" />
+									</p:column>
+
+									<p:column headerText="#{i18n['user.name']}" sortBy="#{user.fullName}">
+										<h:link value="#{user.fullName}" outcome="user">
+											<f:param name="userId" value="#{user.id}" />
+										</h:link>
+									</p:column>
+
+									<p:column headerText="#{i18n['user.email']}" sortBy="#{user.email}">
+										<h:outputText value="#{user.email}" />
+									</p:column>
+
+									<p:column headerText="#{i18n['user.role']}" sortBy="#{i18n:translate(user.role.name)}">
+										<h:outputText value="#{i18n:translate(user.role.name)}" />
+									</p:column>
+
+									<p:column headerText="#{i18n['user.manager']}" sortBy="#{user.manager}">
+										<h:link value="#{user.manager.fullName}" outcome="user" rendered="#{not empty user.manager}">
+											<f:param name="userId" value="#{user.manager.id}" />
+										</h:link>
+									</p:column>
+								</p:dataTable>
+							</div>
 						</div>
 					</p:panel>
 				</h:form>
