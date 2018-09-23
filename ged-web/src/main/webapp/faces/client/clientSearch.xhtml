@@ -10,17 +10,11 @@
 
 	<ui:define name="content">
 		<div class="ui-g">
-			<div class="ui-g-12 ui-md-8">
+			<div class="ui-g-12">
 				<p:breadCrumb homeDisplay="text">
 					<p:menuitem value="#{i18n['menu.index']}" url="/faces/index.xhtml" />
 					<p:menuitem value="#{i18n['client.clients']}" disabled="true" />
 				</p:breadCrumb>
-			</div>
-			<div class="ui-g-12 ui-md-4">
-				<div class="pull-right">
-					<p:commandButton value="#{i18n['action.export']}" action="#{clientSearchBean.clean}" process="@this" icon="fa fa-file-excel-o" />
-					<p:button value="#{i18n['action.new']}" outcome="clientEdit" styleClass="btn-primary" />
-				</div>
 			</div>
 		</div>
 
@@ -29,13 +23,21 @@
 				<h:form id="clientSearchForm">
 					<p:defaultCommand target="searchAction" />
 					<p:panel id="searchPanel" header="#{i18n['client.clients']}">
-						<div class="ui-g">
-							<div class="ui-g-12 ui-md-6">
-								<div class="ui-inputgroup">
-									<p:inputText id="searchText" value="#{clientSearchBean.searchText}" />
-									<p:commandButton id="cleanSearchTextAction" action="#{clientSearchBean.clean}" update="@form" icon="fa fa-times" styleClass="btn-gray"
-										rendered="#{not empty clientSearchBean.searchText}" />
-									<p:commandButton id="searchAction" action="#{clientSearchBean.search}" update="@form" icon="fa fa-search" />
+						<div class="searchForm">
+							<div class="ui-g">
+								<div class="ui-md-12 ui-lg-6 ui-xl-4">
+									<div class="ui-inputgroup">
+										<p:inputText id="searchText" value="#{clientSearchBean.searchText}" />
+										<p:commandButton id="cleanSearchTextAction" action="#{clientSearchBean.clean}" update="@form" icon="fa fa-times" styleClass="btn-gray"
+											rendered="#{not empty clientSearchBean.searchText}" />
+										<p:commandButton id="searchAction" action="#{clientSearchBean.search}" update="@form" icon="fa fa-search" />
+									</div>
+								</div>
+								<div class="ui-g-12 ui-lg-6 ui-xl-8">
+									<div class="pull-right">
+										<p:commandButton value="#{i18n['action.export']}" action="#{clientSearchBean.clean}" process="@this" icon="fa fa-file-excel-o" />
+										<p:button value="#{i18n['action.new']}" outcome="clientEdit" styleClass="btn-primary" />
+									</div>
 								</div>
 							</div>
 						</div>
