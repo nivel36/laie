@@ -149,7 +149,12 @@ body header nav li a {
 	display: block;
 }
 
+body header nav li a .menu_text {
+	padding-left: 0.3em;
+}
+
 body header nav .menu li a {
+	font-weight: 500;
 	padding: 0.3em 1em;
 }
 
