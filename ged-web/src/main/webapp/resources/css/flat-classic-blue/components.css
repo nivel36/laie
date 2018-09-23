@@ -8,9 +8,9 @@
  * text-color: #666666
  * title-background: #F4F5F9
  * title-color: #444444
- * selected-background: #5b9bd1
+ * selected-background: #1976d2
  * selected-color: #ffffff
- * selected-complementary: #5bd1cc
+ * selected-complementary: #19d2d2
  */
  
 * {
@@ -159,7 +159,7 @@ body header nav .menu li a {
 }
 
 body .selected {
-	background: #5b9bd1 !important;
+	background: #1976d2 !important;
 	color: white;
 }
 
