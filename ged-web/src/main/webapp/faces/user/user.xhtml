@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://legion.com/i18n" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:p="http://primefaces.org/ui"
-	xmlns:cc="http://java.sun.com/jsf/composite/components"	template="/WEB-INF/templates/default.xhtml">
+	xmlns:cc="http://java.sun.com/jsf/composite/components" template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
 		<title>#{i18n['user.user']}</title>
@@ -20,7 +20,7 @@
 			</div>
 		</div>
 		<div class="ui-g">
-			<div class="ui-g-12 ui-lg-12 ui-xl-8">
+			<div class="ui-g-12 ui-lg-12 ui-xl-7">
 				<h:form>
 					<p:panel header="#{userBean.user}">
 						<div class="ui-g">
@@ -104,10 +104,9 @@
 				</h:form>
 			</div>
 
-			<div class="ui-g-12 ui-lg-6 ui-xl-4">
+			<div class="ui-g-12 ui-lg-8 ui-xl-5">
 				<h:form id="userTeamForm">
-					<cc:users users="#{userBean.team}">
-					</cc:users>
+					<cc:users users="#{userBean.team}" />
 				</h:form>
 
 			</div>
@@ -118,33 +117,9 @@
 				</p:panel>
 			</div>
 			<div class="ui-g-12 ui-md-12 ui-lg-6">
-				<p:panel header="#{i18n['job.job_offers']}">
-					<p:dataTable var="jobOffer" value="#{userBean.jobOffers}" emptyMessage="#{i18n['user.no_users_found']}" reflow="true" paginator="true"
-						paginatorPosition="bottom" rows="#{sessionUser.rowsPerPage}">
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="#{i18n['job.name']}" />
-							</f:facet>
-							<h:outputText value="#{jobOffer.name}" />
-						</h:column>
-
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="#{i18n['job.client']}" />
-							</f:facet>
-							<h:outputText value="#{jobOffer.client.name}" />
-						</h:column>
-
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="#{i18n['action.action']}" />
-							</f:facet>
-							<h:link value="#{i18n['action.view']}" outcome="/faces/jobOffer/jobOfferView">
-								<f:param name="jobOfferId" value="#{jobOffer.id}" />
-							</h:link>
-						</h:column>
-					</p:dataTable>
-				</p:panel>
+				<h:form id="jobOffersForm">
+					<cc:jobOffers jobOffers="#{userBean.jobOffers}" />
+				</h:form>
 			</div>
 		</div>
 	</ui:define>

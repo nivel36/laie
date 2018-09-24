@@ -10,7 +10,7 @@
 <composite:implementation>
 	<p:panel id="contacts" header="#{i18n['user.users']}">
 		<p:dataGrid layout="grid" var="user" value="#{cc.attrs.users}" emptyMessage="#{i18n['user.no_team']}" paginator="true"
-			paginatorPosition="bottom">
+			paginatorPosition="bottom" columns="2" rows="6">
 			<ui:include src="/faces/user/userCard.xhtml">
 				<ui:param name="user" value="#{user}" />
 			</ui:include>

@@ -67,7 +67,7 @@
 										<h:outputText value="#{i18n:translate(user.role.name)}" />
 									</p:column>
 
-									<p:column headerText="#{i18n['user.manager']}" sortBy="#{user.manager}">
+									<p:column headerText="#{i18n['user.manager']}" sortBy="#{user.manager.fullName}">
 										<h:link value="#{user.manager.fullName}" outcome="user" rendered="#{not empty user.manager}">
 											<f:param name="userId" value="#{user.manager.id}" />
 										</h:link>
