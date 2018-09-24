@@ -10,36 +10,34 @@
 
 	<ui:define name="content">
 		<div class="ui-g">
-			<div class="ui-g-12 ui-xl-8">
+			<div class="ui-g-12">
 				<p:breadCrumb homeDisplay="text">
 					<p:menuitem value="#{i18n['menu.index']}" url="/faces/index.xhtml" />
 					<p:menuitem value="#{i18n['candidate.candidates']}" disabled="true" />
 				</p:breadCrumb>
 			</div>
-			<div class="ui-g-12 ui-md-4">
-				<div class="pull-right">
-					<p:commandButton value="#{i18n['action.export']}" action="#{candidateSearchBean.clean}" process="@this" icon="fa fa-file-excel-o" />
-					<p:button value="#{i18n['action.new']}" outcome="candidateEdit" styleClass="btn-primary" />
-				</div>
-			</div>
 		</div>
 
 		<div class="ui-g">
 			<div class="ui-g-12">
-				<h:form id="searchForm">
+				<h:form id="candidateSearchForm">
+					<p:defaultCommand target="searchAction" />
 					<p:panel id="searchUserPanel" header="#{i18n['candidate.search']}">
 						<div class="searchForm">
 							<div class="ui-g">
-								<div class="ui-md-12 ui-lg-4">
+								<div class="ui-md-12 ui-lg-6 ui-xl-4">
 									<div class="ui-inputgroup">
 										<p:inputText id="searchText" value="#{candidateSearchBean.searchText}" />
-										<p:commandButton icon="fa fa-search" styleClass="green-button" action="#{candidateSearchBean.searchPlus}" update="@form" process="searchUserPanel" />
+										<p:commandButton id="cleanSearchTextAction" action="#{candidateSearchBean.clean}" process="@this" update="@form" icon="fa fa-times"
+											styleClass="btn-gray" rendered="#{not empty candidateSearchBean.searchText}" />
+										<p:commandButton id="searchAction" action="#{candidateSearchBean.search}" process="@this searchText" update="@form" icon="fa fa-search" />
 									</div>
 								</div>
-								<div class="ui-md-12 ui-lg-4">
-									<p:commandButton value="#{i18n['action.search']}" styleClass="btn-primary" action="#{candidateSearchBean.search}" update="@form"
-										process="searchUserPanel" />
-									<p:commandButton value="#{i18n['action.clean']}" action="#{candidateSearchBean.clean}" update="@form" styleClass="btn-gray" />
+								<div class="ui-g-12 ui-lg-6 ui-xl-8">
+									<div class="pull-right">
+										<p:commandButton value="#{i18n['action.export']}" action="#{candidateSearchBean.clean}" process="@this" icon="fa fa-file-excel-o" />
+										<p:button value="#{i18n['action.new']}" outcome="candidateEdit" styleClass="btn-primary" />
+									</div>
 								</div>
 							</div>
 						</div>
