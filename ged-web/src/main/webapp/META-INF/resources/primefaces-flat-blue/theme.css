@@ -339,6 +339,11 @@ body .ui-datatable .ui-datatable-data tr:hover {
 	background-color: #e1e1e1;
 }
 
+body .ui-datatable .ui-datatable-data tr:hover.ui-state-highlight {
+	transition: all 0.2s ease-in;
+	background-color: #4e9cea;
+}
+
 body .ui-datatable .ui-column-title {
 	line-height: 1.5em;
 	vertical-align: middle;
@@ -859,7 +864,11 @@ body .ui-chkbox .ui-chkbox-box {
 }
 
 body .ui-chkbox .ui-chkbox-box .ui-chkbox-icon {
-	color: #1976d2;
+	color: #19d2d2;
+}
+
+body .ui-chkbox .ui-chkbox-box.ui-state-active {
+	background: white;	
 }
 
 body .ui-chips {

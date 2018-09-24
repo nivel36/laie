@@ -46,6 +46,11 @@ public class JobOfferEditBean extends AbstractDialogBean {
 		this.jobOffer.setOwner(null);
 	}
 
+	private void editJobOfferInit() {
+		logger.debug("Edit job offer {} init", jobOffer);
+		this.recruiters = new ArrayList<>(this.jobOffer.getRecruiters());
+	}
+
 	public JobOffer getJobOffer() {
 		return this.jobOffer;
 	}
@@ -56,17 +61,12 @@ public class JobOfferEditBean extends AbstractDialogBean {
 
 	@PostConstruct
 	public void init() {
-		logger.debug("JobOfferDialogBean init");
 		this.jobOffer = this.getValueFromFlash("jobOffer");
 		if ((this.jobOffer == null)) {
-			this.jobOffer = new JobOffer();
-			final User user = this.sessionUser.get();
-			this.jobOffer.setOwner(user);
-			final List<User> subordinateUsers = this.userService.findSubordinateUsers(user);
-			this.setRecruiters(subordinateUsers);
+			newJobOfferInit();
 		}
 		else {
-			this.recruiters = new ArrayList<>(this.jobOffer.getRecruiters());
+			editJobOfferInit();
 		}
 	}
 
@@ -76,6 +76,17 @@ public class JobOfferEditBean extends AbstractDialogBean {
 
 	public boolean isUserHasPermissionToEditJobOffer() {
 		return sessionUser.hasPermissionToEdit(this.jobOffer);
+	}
+
+	private void newJobOfferInit() {
+		logger.debug("New job offer init");
+		this.jobOffer = new JobOffer();
+		final User user = this.sessionUser.get();
+		this.jobOffer.setOwner(user);
+		final List<User> subordinateUsers = this.userService.findSubordinateUsers(user);
+		this.setRecruiters(subordinateUsers);
+		final Client client = this.getValueFromFlash("client");
+		this.jobOffer.setClient(client);
 	}
 
 	public void onCloseClientSearchDialog(final SelectEvent e) {

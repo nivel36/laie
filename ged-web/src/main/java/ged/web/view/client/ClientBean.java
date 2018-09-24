@@ -84,9 +84,7 @@ public class ClientBean extends AbstractBean {
 
 	public void newJobOffer() {
 		logger.debug("New job offer action performed");
-		final JobOffer newJobOffer = new JobOffer();
-		newJobOffer.setClient(this.client);
-		this.putValueToFlash("jobOffer", newJobOffer);
+		this.putValueToFlash("client", client);
 	}
 
 	public void onCloseContactDialog(final SelectEvent e) {

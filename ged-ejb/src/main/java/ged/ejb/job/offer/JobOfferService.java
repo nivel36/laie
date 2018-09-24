@@ -93,7 +93,7 @@ public class JobOfferService extends AbstractAuditedService<JobOffer> {
 	public void removeJobCandidature(final JobOffer jobOffer, final Candidate candidate) {
 		Objects.requireNonNull(jobOffer);
 		Objects.requireNonNull(candidate);
-		logger.debug("Remove job candidature of candidate {} to job offer {}", candidate.getFullName(), jobOffer.getName());
+		logger.debug("Remove job candidature of candidate {} to job offer {}", candidate.getFullName(), jobOffer);
 		final JobCandidature jobCandidature = this.jobCandidatureDao.findByJobOfferAndCandidate(jobOffer, candidate);
 		this.jobCandidatureDao.delete(jobCandidature);
 	}
@@ -101,7 +101,7 @@ public class JobOfferService extends AbstractAuditedService<JobOffer> {
 	@Override
 	public JobOffer save(final JobOffer jobOffer) {
 		Objects.requireNonNull(jobOffer);
-		logger.debug("SAVE job offer {}", jobOffer.getDescription());
+		logger.debug("Save job offer {}", jobOffer);
 		return this.getDao().save(jobOffer);
 	}
 

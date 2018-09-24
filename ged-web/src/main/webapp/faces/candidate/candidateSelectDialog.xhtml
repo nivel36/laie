@@ -58,7 +58,7 @@
 					<div class="ui-g-12">
 						<div class="form-action-primary">
 							<p:commandButton value="#{i18n['action.cancel']}" actionListener="#{candidateSelectDialogBean.closeDialog}" process="@this" styleClass="btn-gray" />
-							<p:commandButton value="#{i18n['action.select']}" action="#{candidateSelectDialogBean.select}" update="@form" />
+							<p:commandButton value="#{i18n['action.select']}" action="#{candidateSelectDialogBean.select}" update="@form" process="@form"/>
 						</div>
 					</div>
 				</div>

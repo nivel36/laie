@@ -13,12 +13,12 @@ import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
 import ged.ejb.candidate.Candidate;
-import ged.ejb.core.model.AbstractAuditedEntity;
+import ged.ejb.core.model.AbstractEntity;
 import ged.ejb.job.meeting.JobMeeting;
 
 @Entity
 @Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "jobOfferId", "candidateId" }) })
-public class JobCandidature extends AbstractAuditedEntity {
+public class JobCandidature extends AbstractEntity {
 
 	private static final long serialVersionUID = 4596378123715515824L;
 
@@ -39,7 +39,6 @@ public class JobCandidature extends AbstractAuditedEntity {
 	@JoinColumn(name = "jobOfferId", nullable = false)
 	private JobOffer jobOffer;
 
-	
 	@Override
 	public boolean equals(final Object obj) {
 		if (this == obj) {
@@ -71,7 +70,6 @@ public class JobCandidature extends AbstractAuditedEntity {
 		return this.jobOffer;
 	}
 
-	
 	@Override
 	public int hashCode() {
 		return Objects.hash(this.candidate, this.jobOffer);
@@ -93,7 +91,6 @@ public class JobCandidature extends AbstractAuditedEntity {
 		this.jobOffer = jobOffer;
 	}
 
-	
 	@Override
 	public String toString() {
 		return "JobCandidature [jobOffer=" + this.jobOffer + ", candidate=" + this.candidate + ", jobMeetings=" + this.jobMeetings + "]";

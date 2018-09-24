@@ -35,7 +35,7 @@ public class JobOffer extends AbstractAuditedEntity {
 	@Field
 	private String city;
 
-	@ManyToOne(cascade = CascadeType.PERSIST)
+	@ManyToOne
 	@JoinColumn(name = "clientId", nullable = true)
 	@IndexedEmbedded
 	private Client client;
