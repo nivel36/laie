@@ -1,7 +1,11 @@
 package ged.web.view.job;
 
 import java.lang.invoke.MethodHandles;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -45,7 +49,6 @@ public class JobOfferBean extends AbstractBean {
 
 	public void editJobOffer() {
 		this.putValueToFlash("jobOffer", this.jobOffer);
-
 	}
 
 	public List<Candidate> getCandidates() {
@@ -81,7 +84,15 @@ public class JobOfferBean extends AbstractBean {
 	}
 
 	public void openSelectCandidatesDialog() {
-		this.openBigDialog("/faces/candidate/candidateSelectDialog");
+		if (candidates.size() != 0) {
+			final String candidateIds = candidates.stream().map(entity -> String.valueOf(entity.getId())).collect(Collectors.joining("|"));
+			final Map<String, List<String>> parameters = new HashMap<>();
+			parameters.put("jobCandiatesId", Arrays.asList(candidateIds));
+			this.openBigDialog("/faces/candidate/candidateSelectDialog", parameters);
+		}
+		else {
+			this.openBigDialog("/faces/candidate/candidateSelectDialog");
+		}
 	}
 
 	public void setJobOffer(final JobOffer jobOffer) {

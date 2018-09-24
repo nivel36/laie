@@ -1,7 +1,9 @@
 package ged.web.view.candidate;
 
 import java.lang.invoke.MethodHandles;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -28,6 +30,8 @@ public class CandidateSelectDialogBean extends AbstractDialogBean {
 	@Inject
 	protected transient CandidateService candidateService;
 
+	private final List<Long> candidateToRemoveIds = new ArrayList<>();
+
 	private String searchText;
 
 	private List<Candidate> selectedCandidates;
@@ -51,12 +55,20 @@ public class CandidateSelectDialogBean extends AbstractDialogBean {
 
 	@PostConstruct
 	public void init() {
-		this.search();
+		final String jobCandidatesIdParameter = externalContext.getRequestParameterMap().get("jobCandiatesId");
+		if ((jobCandidatesIdParameter != null)) {
+			final String[] ids = externalContext.getRequestParameterMap().get("jobCandiatesId").split("\\|");
+			for (final String id : ids) {
+				candidateToRemoveIds.add(Long.valueOf(id));
+			}
+		}
+		search();
 	}
 
 	public void search() {
 		logger.debug("Searching for candidates");
-		this.candidates = this.candidateService.search(this.searchText);
+		this.candidates = this.candidateService.search(this.searchText).stream().filter(e -> !candidateToRemoveIds.contains(e.getId()))
+				.collect(Collectors.toList());
 	}
 
 	public void select() {
