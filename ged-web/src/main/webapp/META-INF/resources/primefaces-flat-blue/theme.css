@@ -774,7 +774,11 @@ body .ui-button:hover, body button.ui-button:hover {
 }
 
 body .ui-button-text-icon-left .ui-button-text {
-	padding: 0 0 0 1em;
+	padding: .4em 1em .3em 1em;
+}
+
+body .ui-button-text-icon-left .ui-icon {
+	margin-top: -5px;
 }
 
 body .ui-button-text-only .ui-button-text {
