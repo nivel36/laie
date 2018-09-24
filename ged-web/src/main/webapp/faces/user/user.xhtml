@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://legion.com/i18n" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:p="http://primefaces.org/ui"
-	template="/WEB-INF/templates/default.xhtml">
+	xmlns:cc="http://java.sun.com/jsf/composite/components"	template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
 		<title>#{i18n['user.user']}</title>
@@ -105,22 +105,11 @@
 			</div>
 
 			<div class="ui-g-12 ui-lg-6 ui-xl-4">
-				<p:panel header="#{i18n['user.team']}">
-					<h:panelGroup layout="block" rendered="#{empty userBean.team}">
-						<span class="message">#{i18n['user.no_team']}</span>
-					</h:panelGroup>
-					<h:panelGroup layout="block" rendered="#{not empty userBean.team}">
-						<div class="ui-g">
-							<ui:repeat var="userTeamMember" value="#{userBean.team}" varStatus="status">
-								<div class="ui-g-12 ui-md-6">
-									<ui:include src="userCard.xhtml">
-										<ui:param name="user" value="#{userTeamMember}" />
-									</ui:include>
-								</div>
-							</ui:repeat>
-						</div>
-					</h:panelGroup>
-				</p:panel>
+				<h:form id="userTeamForm">
+					<cc:users users="#{userBean.team}">
+					</cc:users>
+				</h:form>
+
 			</div>
 
 			<div class="ui-g-12 ui-md-12 ui-lg-6 ui-xl-6">

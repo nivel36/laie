@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:i18n="http://legion.com/i18n"
+	xmlns:composite="http://java.sun.com/jsf/composite">
+
+<composite:interface>
+	<composite:attribute name="users" required="true" />
+</composite:interface>
+
+<composite:implementation>
+	<p:panel id="contacts" header="#{i18n['user.users']}">
+		<p:dataGrid layout="grid" var="user" value="#{cc.attrs.users}" emptyMessage="#{i18n['user.no_team']}" paginator="true"
+			paginatorPosition="bottom">
+			<ui:include src="/faces/user/userCard.xhtml">
+				<ui:param name="user" value="#{user}" />
+			</ui:include>
+		</p:dataGrid>
+		<div class="ui-g">
+			<div class="ui-g-12">
+				<div class="form-action-primary">
+					<composite:insertChildren />
+				</div>
+			</div>
+		</div>
+	</p:panel>
+</composite:implementation>
+</html>
