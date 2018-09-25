@@ -5,23 +5,17 @@
 
 <composite:interface>
 	<composite:attribute name="candidates" required="true" />
+	<composite:attribute name="title" />
 </composite:interface>
 
 <composite:implementation>
-	<p:panel id="candidates" header="#{i18n['candidate.candidates']}">
-		<div class="ui-g">
-			<ui:repeat var="candidate" value="#{cc.attrs.candidates}" varStatus="status">
-				<div class="ui-g-12 ui-md-4 ui-lg-6">
-					<cc:candidateCard candidate="#{candidate}" />
-				</div>
-			</ui:repeat>
-		</div>
-		<div class="ui-g">
-			<div class="ui-g-12">
-				<div class="form-action-primary">
-					<composite:insertChildren />
-				</div>
-			</div>
+	<p:panel id="candidates" header="#{empty cc.attrs.title ? i18n['candidate.candidates'] : cc.attrs.title}">
+		<p:dataGrid layout="grid" var="candidate" value="#{cc.attrs.candidates}" emptyMessage="#{i18n['candidate.no_candidates_found']}" paginator="true"
+			paginatorPosition="bottom" columns="2" rows="6">
+			<cc:candidateCard candidate="#{candidate}" />
+		</p:dataGrid>
+		<div class="form-action-primary">
+			<composite:insertChildren />
 		</div>
 	</p:panel>
 </composite:implementation>

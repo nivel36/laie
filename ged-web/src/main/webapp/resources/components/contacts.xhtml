@@ -5,10 +5,11 @@
 
 <composite:interface>
 	<composite:attribute name="contacts" required="true" />
+	<composite:attribute name="title" />
 </composite:interface>
 
 <composite:implementation>
-	<p:panel id="contacts" header="#{i18n['client.contacts']}">
+	<p:panel id="contacts" header="#{empty cc.attrs.title ? i18n['client.contacts'] : cc.attrs.title}">
 		<p:dataGrid layout="grid" var="contact" value="#{cc.attrs.contacts}" emptyMessage="#{i18n['client.no_contacts_found']}" paginator="true"
 			paginatorPosition="bottom">
 			<div class="card contact">
@@ -25,12 +26,8 @@
 				</div>
 			</div>
 		</p:dataGrid>
-		<div class="ui-g">
-			<div class="ui-g-12">
-				<div class="form-action-primary">
-					<composite:insertChildren />
-				</div>
-			</div>
+		<div class="form-action-primary">
+			<composite:insertChildren />
 		</div>
 	</p:panel>
 </composite:implementation>

@@ -304,11 +304,8 @@ body nav li:hover a {
 	display: inline;
 }
 
-
-
 .form-action-primary {
 	text-align: right;
-	padding: 0px 7px;
 }
 
 .searchForm {

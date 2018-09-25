@@ -5,22 +5,19 @@
 
 <composite:interface>
 	<composite:attribute name="users" required="true" />
+	<composite:attribute name="title" />
 </composite:interface>
 
 <composite:implementation>
-	<p:panel id="contacts" header="#{i18n['user.users']}">
-		<p:dataGrid layout="grid" var="user" value="#{cc.attrs.users}" emptyMessage="#{i18n['user.no_team']}" paginator="true"
-			paginatorPosition="bottom" columns="2" rows="6">
+	<p:panel id="users"  header="#{empty cc.attrs.title ? i18n['user.users'] : cc.attrs.title}">
+		<p:dataGrid layout="grid" var="user" value="#{cc.attrs.users}" emptyMessage="#{i18n['user.no_team']}" paginator="true" paginatorPosition="bottom" columns="2"
+			rows="6">
 			<ui:include src="/faces/user/userCard.xhtml">
 				<ui:param name="user" value="#{user}" />
 			</ui:include>
 		</p:dataGrid>
-		<div class="ui-g">
-			<div class="ui-g-12">
-				<div class="form-action-primary">
-					<composite:insertChildren />
-				</div>
-			</div>
+		<div class="form-action-primary">
+			<composite:insertChildren />
 		</div>
 	</p:panel>
 </composite:implementation>
