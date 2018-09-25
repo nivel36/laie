@@ -38,7 +38,8 @@ public class CandidateDao extends AbstractDao<Candidate> {
 		try {
 			Objects.requireNonNull(jobOffer);
 			return this.findByQuery(Candidate.class, "Candidate.findByJobOffer", map("jobOffer", jobOffer), 0, 0);
-		} catch (final NoResultException e) {
+		}
+		catch (final NoResultException e) {
 			logger.debug("No candidates found", e);
 			return new ArrayList<>();
 		}
@@ -63,7 +64,6 @@ public class CandidateDao extends AbstractDao<Candidate> {
 
 	@Override
 	public List<Candidate> search(final String searchText) {
-		return this.getPersistenceFacade().search(Candidate.class, searchText, "name", "surname", "jobProfile",
-				"tags.label");
+		return this.getPersistenceFacade().search(Candidate.class, searchText, "name", "surname", "jobProfile", "tags.label");
 	}
 }

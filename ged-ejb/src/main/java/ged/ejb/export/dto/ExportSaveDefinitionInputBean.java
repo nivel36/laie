@@ -6,9 +6,9 @@ import java.util.Objects;
 public class ExportSaveDefinitionInputBean {
 
 	private final String exportName;
-	
+
 	private final List<SaveDefinitionItem> list;
-	
+
 	public ExportSaveDefinitionInputBean(final String exportName, final List<SaveDefinitionItem> list) {
 		super();
 		Objects.requireNonNull(exportName);
@@ -20,15 +20,15 @@ public class ExportSaveDefinitionInputBean {
 	public String getExportName() {
 		return exportName;
 	}
-	
+
 	public List<SaveDefinitionItem> getList() {
 		return list;
 	}
-	
+
 	public static class SaveDefinitionItem {
 
 		private final long idField;
-		
+
 		private final int sortOrder;
 
 		public SaveDefinitionItem(final long idField, final int sortOrder) {

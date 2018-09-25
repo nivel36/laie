@@ -18,7 +18,6 @@ public class JobCandidatureState extends AbstractEnumEntity {
 	@OneToMany
 	private List<JobCandidatureState> previousStates;
 
-	
 	@Override
 	public boolean equals(final Object obj) {
 		if (this == obj) {
@@ -41,7 +40,6 @@ public class JobCandidatureState extends AbstractEnumEntity {
 		return this.previousStates;
 	}
 
-	
 	@Override
 	public int hashCode() {
 		return super.hashCode();

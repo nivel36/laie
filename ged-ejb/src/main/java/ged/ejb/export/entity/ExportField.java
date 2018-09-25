@@ -18,26 +18,26 @@ public class ExportField extends AbstractEntity {
 
 	// TODO ivmedina unique export-fieldName
 	// TODO ivmedina unique export-sortOrder
-	
+
 	@ManyToOne
 	@JoinColumn(name = "exportId", nullable = false)
 	private Export export;
-	
+
 	@Column(length = 50, nullable = false)
 	private String fieldName;
-	
+
 	@Column(scale = 6, precision = 0, nullable = false)
 	private int sortOrder;
-	
+
 	@Column(length = 50, nullable = false)
 	private String literalId;
-	
+
 	@Column(nullable = false)
 	private boolean disabled;
 
 	@OneToOne(fetch = FetchType.EAGER, mappedBy = "exportField")
 	private ExportDefinition exportDefinition;
-	
+
 	public Export getExport() {
 		return export;
 	}
@@ -45,7 +45,7 @@ public class ExportField extends AbstractEntity {
 	public void setExport(Export export) {
 		this.export = export;
 	}
-	
+
 	public String getFieldName() {
 		return fieldName;
 	}
@@ -61,7 +61,7 @@ public class ExportField extends AbstractEntity {
 	public void setSortOrder(int sortOrder) {
 		this.sortOrder = sortOrder;
 	}
-	
+
 	public boolean isDisabled() {
 		return disabled;
 	}
@@ -69,7 +69,7 @@ public class ExportField extends AbstractEntity {
 	public void setDisabled(boolean disabled) {
 		this.disabled = disabled;
 	}
-	
+
 	public String getLiteralId() {
 		return literalId;
 	}
@@ -78,7 +78,6 @@ public class ExportField extends AbstractEntity {
 		this.literalId = literalId;
 	}
 
-
 	public ExportDefinition getExportDefinition() {
 		return exportDefinition;
 	}
@@ -86,14 +85,12 @@ public class ExportField extends AbstractEntity {
 	public void setExportDefinition(ExportDefinition exportDefinition) {
 		this.exportDefinition = exportDefinition;
 	}
-	
-	
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(this.export, this.fieldName);
 	}
 
-	
 	@Override
 	public boolean equals(Object obj) {
 		if (obj == null) {

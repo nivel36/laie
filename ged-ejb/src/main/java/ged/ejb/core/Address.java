@@ -35,7 +35,6 @@ public class Address implements Serializable {
 	@Column(length = 5)
 	private String zipCode;
 
-	
 	@Override
 	public boolean equals(final Object obj) {
 		if (this == obj) {
@@ -48,9 +47,8 @@ public class Address implements Serializable {
 			return false;
 		}
 		final Address other = (Address) obj;
-		return Objects.equals(this.city, other.city) && Objects.equals(this.country, other.country)
-				&& Objects.equals(this.door, other.door) && Objects.equals(this.number, other.number)
-				&& Objects.equals(this.state, other.state) && Objects.equals(this.storey, other.storey)
+		return Objects.equals(this.city, other.city) && Objects.equals(this.country, other.country) && Objects.equals(this.door, other.door)
+				&& Objects.equals(this.number, other.number) && Objects.equals(this.state, other.state) && Objects.equals(this.storey, other.storey)
 				&& Objects.equals(this.street, other.street) && Objects.equals(this.zipCode, other.zipCode);
 	}
 
@@ -86,11 +84,9 @@ public class Address implements Serializable {
 		return this.zipCode;
 	}
 
-	
 	@Override
 	public int hashCode() {
-		return Objects.hash(this.city, this.country, this.door, this.number, this.state, this.storey, this.street,
-				this.zipCode);
+		return Objects.hash(this.city, this.country, this.door, this.number, this.state, this.storey, this.street, this.zipCode);
 	}
 
 	private boolean isNotEmpty(final String string) {
@@ -129,7 +125,6 @@ public class Address implements Serializable {
 		this.zipCode = zipCode;
 	}
 
-	
 	@Override
 	public String toString() {
 		final String eol = System.getProperty("line.separator");

@@ -52,7 +52,6 @@ public class JobExperience extends AbstractEntity {
 	@Column(nullable = false)
 	private boolean stillWorking;
 
-	
 	@Override
 	public boolean equals(final Object obj) {
 		if (this == obj) {
@@ -108,7 +107,6 @@ public class JobExperience extends AbstractEntity {
 		return this.startDate;
 	}
 
-	
 	@Override
 	public int hashCode() {
 		return Objects.hash(this.companyName, this.curriculum, this.description, this.startDate, this.jobPosition, this.stillWorking, this.endDate);

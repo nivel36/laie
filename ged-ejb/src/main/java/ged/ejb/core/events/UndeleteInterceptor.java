@@ -27,8 +27,7 @@ public class UndeleteInterceptor extends AbstractInterceptor {
 	private final Event<Auditable> preUndeleteEvent;
 
 	@Inject
-	public UndeleteInterceptor(@PreUpdate final Event<Auditable> preUndeleteEvent,
-			@PostUpdate final Event<Auditable> postUndeleteEvent) {
+	public UndeleteInterceptor(@PreUpdate final Event<Auditable> preUndeleteEvent, @PostUpdate final Event<Auditable> postUndeleteEvent) {
 		Objects.requireNonNull(preUndeleteEvent);
 		Objects.requireNonNull(postUndeleteEvent);
 		this.preUndeleteEvent = preUndeleteEvent;

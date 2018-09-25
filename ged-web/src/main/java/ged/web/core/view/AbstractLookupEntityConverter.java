@@ -16,7 +16,6 @@ public abstract class AbstractLookupEntityConverter<T extends AbstractEnumEntity
 		return context.getApplication().evaluateExpressionGet(context, "#{applicationBean}", ApplicationBean.class);
 	}
 
-	
 	@Override
 	public T getAsObject(final FacesContext context, final UIComponent component, final String value) {
 		final List<T> elements = this.getListElements();
@@ -28,7 +27,6 @@ public abstract class AbstractLookupEntityConverter<T extends AbstractEnumEntity
 		throw new NoSuchElementException(value);
 	}
 
-	
 	@Override
 	public String getAsString(final FacesContext context, final UIComponent component, final T value) {
 		return value.toString();

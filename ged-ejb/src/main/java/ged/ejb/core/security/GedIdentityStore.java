@@ -16,10 +16,10 @@ import ged.ejb.user.User;
 import ged.ejb.user.UserService;
 
 public class GedIdentityStore implements IdentityStore {
-	
+
 	@Inject
 	private UserService userService;
-	
+
 	@Inject
 	private LoginService loginService;
 

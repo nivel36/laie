@@ -54,7 +54,8 @@ public class GlobalSearchBean extends AbstractBean {
 	public void search() {
 		if (this.text == null || this.text.length() < 3) {
 			Message.addWarning("error.search.camp_to_short", "error.search.camp_to_short");
-		} else {
+		}
+		else {
 			this.users = this.userService.search(this.text);
 			this.jobOffers = this.jobService.search(this.text);
 		}

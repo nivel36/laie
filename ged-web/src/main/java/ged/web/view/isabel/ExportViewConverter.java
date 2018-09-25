@@ -14,7 +14,6 @@ import org.primefaces.model.DualListModel;
 @FacesConverter("exportViewConverter")
 public class ExportViewConverter implements Converter<ExportViewItemI> {
 
-	
 	@Override
 	public ExportViewItemI getAsObject(final FacesContext context, final UIComponent component, final String id) {
 		try {
@@ -25,23 +24,24 @@ public class ExportViewConverter implements Converter<ExportViewItemI> {
 				item = getObjectFromList(dualList.getTarget(), id);
 			}
 			return item;
-		} catch (ClassCastException cce) {
+		}
+		catch (ClassCastException cce) {
 			throw new ConverterException();
 		}
 	}
 
-	
 	@Override
 	public String getAsString(final FacesContext context, final UIComponent component, final ExportViewItemI value) {
 		if (value == null) {
 			return "";
-		} else {
+		}
+		else {
 			return value.getLabel();
 		}
 	}
-	
+
 	private ExportViewItemI getObjectFromList(final List<?> list, final String id) {
-		for (final Object item: list) {
+		for (final Object item : list) {
 			final ExportViewItemI viewItem = (ExportViewItemI) item;
 			if (viewItem.getLabel().equals(id)) {
 				return viewItem;

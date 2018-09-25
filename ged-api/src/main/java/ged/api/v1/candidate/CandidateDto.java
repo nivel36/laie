@@ -58,7 +58,6 @@ public class CandidateDto implements Dto {
 	@NotNull
 	private String surname;
 
-	
 	@Override
 	public boolean equals(final Object obj) {
 		if (this == obj) {
@@ -71,8 +70,8 @@ public class CandidateDto implements Dto {
 			return false;
 		}
 		final CandidateDto other = (CandidateDto) obj;
-		return Objects.equals(this.email, other.email) && Objects.equals(this.name, other.name)
-				&& Objects.equals(this.phoneNumber, other.phoneNumber) && Objects.equals(this.surname, other.surname);
+		return Objects.equals(this.email, other.email) && Objects.equals(this.name, other.name) && Objects.equals(this.phoneNumber, other.phoneNumber)
+				&& Objects.equals(this.surname, other.surname);
 	}
 
 	public LocalDate getBornDate() {
@@ -143,7 +142,6 @@ public class CandidateDto implements Dto {
 		return this.surname;
 	}
 
-	
 	@Override
 	public int hashCode() {
 		return Objects.hash(this.email, this.name, this.phoneNumber, this.surname);

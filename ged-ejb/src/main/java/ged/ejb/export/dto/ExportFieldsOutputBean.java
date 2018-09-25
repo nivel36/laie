@@ -6,30 +6,30 @@ import java.util.Objects;
 public class ExportFieldsOutputBean {
 
 	private final long idExport;
-	
+
 	private final List<ExportFieldItem> list;
-	
+
 	public ExportFieldsOutputBean(final long idExport, final List<ExportFieldItem> list) {
 		super();
 		Objects.requireNonNull(list);
 		this.idExport = idExport;
 		this.list = list;
 	}
-	
+
 	public long getIdExport() {
 		return idExport;
 	}
-	
+
 	public List<ExportFieldItem> getList() {
 		return list;
 	}
-	
+
 	public static class ExportFieldItem {
-	
+
 		private final long idField;
-		
+
 		private final String literalId;
-		
+
 		public ExportFieldItem(final long idField, final String literalId) {
 			super();
 			Objects.requireNonNull(literalId);

@@ -21,7 +21,6 @@ public class CandidateMapper implements AbstractMapper<Candidate, CandidateDto> 
 		this.userService = userService;
 	}
 
-	
 	@Override
 	public Candidate mapDto(final CandidateDto candidateDto) {
 		if (candidateDto == null) {
@@ -50,7 +49,6 @@ public class CandidateMapper implements AbstractMapper<Candidate, CandidateDto> 
 		return candidate;
 	}
 
-	
 	@Override
 	public CandidateDto mapEntity(final Candidate candidate) {
 		Objects.requireNonNull(candidate);

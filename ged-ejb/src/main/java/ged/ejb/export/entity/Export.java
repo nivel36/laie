@@ -23,11 +23,11 @@ public class Export extends AbstractEntity {
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "export", orphanRemoval = true)
 	@OrderBy("sortOrder asc")
 	private Set<ExportField> exportField;
-	
+
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "export", orphanRemoval = true)
 	@OrderBy("sortOrder asc")
 	private Set<ExportDefinition> exportDefinition;
-	
+
 	public String getExportName() {
 		return exportName;
 	}
@@ -51,14 +51,12 @@ public class Export extends AbstractEntity {
 	public void setExportDefinition(Set<ExportDefinition> exportDefinition) {
 		this.exportDefinition = exportDefinition;
 	}
-	
-	
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(this.exportName);
 	}
-	
-	
+
 	@Override
 	public boolean equals(final Object obj) {
 		if (obj == null) {

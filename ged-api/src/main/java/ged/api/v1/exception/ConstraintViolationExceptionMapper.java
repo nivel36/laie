@@ -6,10 +6,8 @@ import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
 @Provider
-public class ConstraintViolationExceptionMapper extends AbstractExceptionMapper
-		implements ExceptionMapper<ConstraintViolationException> {
+public class ConstraintViolationExceptionMapper extends AbstractExceptionMapper implements ExceptionMapper<ConstraintViolationException> {
 
-	
 	@Override
 	public Response toResponse(final ConstraintViolationException e) {
 		Response.ResponseBuilder builder;

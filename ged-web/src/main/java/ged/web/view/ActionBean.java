@@ -22,10 +22,6 @@ public class ActionBean extends AbstractBean {
 	@Inject
 	private transient ActionService actionService;
 
-	public void setActionService(ActionService actionService) {
-		this.actionService = actionService;
-	}
-
 	private String buildUrl(final String className) {
 		final StringBuilder sb = new StringBuilder();
 		sb.append("/faces/").append(className).append("/").append(className).append("View.xhtml").append("?id=");
@@ -54,5 +50,9 @@ public class ActionBean extends AbstractBean {
 	@PostConstruct
 	public void init() {
 		findAllActions();
+	}
+
+	public void setActionService(ActionService actionService) {
+		this.actionService = actionService;
 	}
 }

@@ -20,7 +20,6 @@ public abstract class AbstractEntity implements Identificable, Serializable {
 	@Version
 	protected long version;
 
-	
 	@Override
 	public boolean equals(final Object obj) {
 		if (this == obj) {
@@ -36,7 +35,6 @@ public abstract class AbstractEntity implements Identificable, Serializable {
 		return other.id == this.id;
 	}
 
-	
 	@Override
 	public long getId() {
 		return this.id;
@@ -46,13 +44,11 @@ public abstract class AbstractEntity implements Identificable, Serializable {
 		return this.version;
 	}
 
-	
 	@Override
 	public int hashCode() {
 		return Objects.hash(this.id);
 	}
 
-	
 	@Override
 	public void setId(final long id) {
 		this.id = id;

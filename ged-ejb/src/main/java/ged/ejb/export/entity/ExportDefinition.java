@@ -19,15 +19,15 @@ public class ExportDefinition extends AbstractEntity {
 
 	// TODO ivmedina unique export-exportField
 	// TODO ivmedina unique export-sortOrder
-	
+
 	@ManyToOne
 	@JoinColumn(name = "exportId", nullable = false)
 	private Export export;
-	
+
 	@OneToOne(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, orphanRemoval = true)
 	@JoinColumn(name = "exportFieldId", nullable = false, unique = true)
 	private ExportField exportField;
-	
+
 	@Column(scale = 6, precision = 0, nullable = false)
 	private int sortOrder;
 
@@ -54,14 +54,12 @@ public class ExportDefinition extends AbstractEntity {
 	public void setSortOrder(int sortOrder) {
 		this.sortOrder = sortOrder;
 	}
-	
-	
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(this.export, this.exportField);
 	}
-	
-	
+
 	@Override
 	public boolean equals(final Object obj) {
 		if (obj == null) {

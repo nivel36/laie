@@ -36,22 +36,25 @@ public class DefaultExceptionHandler extends AbstractExceptionMapper implements 
 		return builder.build();
 	}
 
-	
 	@Override
 	public Response toResponse(final Exception e) {
 		Response response;
 		if (e instanceof ConstraintViolationException) {
 			response = this.mapContraintViolationException((ConstraintViolationException) e);
-		} else if (e instanceof ValidationException) {
+		}
+		else if (e instanceof ValidationException) {
 			response = this.mapValidationException((ValidationException) e);
-		} else if (e instanceof EJBException) {
+		}
+		else if (e instanceof EJBException) {
 			final Exception rootException = ((EJBException) e).getCausedByException();
 			if (rootException != null) {
 				response = this.toResponse(rootException);
-			} else {
+			}
+			else {
 				response = this.mapException(e);
 			}
-		} else {
+		}
+		else {
 			response = this.mapException(e);
 		}
 		return response;

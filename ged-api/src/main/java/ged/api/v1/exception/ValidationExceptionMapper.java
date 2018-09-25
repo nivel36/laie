@@ -10,7 +10,6 @@ import ged.api.v1.ErrorResponseDto;
 @Provider
 public class ValidationExceptionMapper extends AbstractExceptionMapper implements ExceptionMapper<ValidationException> {
 
-	
 	@Override
 	public Response toResponse(final ValidationException e) {
 		Response.ResponseBuilder builder;
