@@ -17,15 +17,13 @@
 						<h:panelGroup styleClass="mainSection" id="jobExperiences" layout="block">
 							<!-- JOB EXPERIENCE -->
 							<h2>#{i18n['curriculum.job_experiences']}</h2>
-							<span class="cvAction"> <p:commandButton icon="fa fa-plus" styleClass="btn-transparent" action="#{curriculumBean.newJobExperience}"
-									process="@this">
+							<span class="cvAction"> <p:commandButton icon="fa fa-plus" action="#{curriculumBean.newJobExperience}" process="@this">
 									<p:ajax event="dialogReturn" listener="#{curriculumBean.onEditJobExperience}" update="form:jobExperiences" />
 								</p:commandButton>
 							</span>
 							<ui:repeat value="#{curriculumBean.jobExperiences}" var="jobExperience" id="jobExperience" varStatus="varStatus">
 								<div class="section">
-									<span class="cvAction"> <p:commandButton icon="fa fa-pencil" styleClass="btn-transparent"
-											action="#{curriculumBean.editJobExperience(jobExperience)}" process="@this">
+									<span class="cvAction"> <p:commandButton icon="fa fa-pencil" action="#{curriculumBean.editJobExperience(jobExperience)}" process="@this">
 											<p:ajax event="dialogReturn" listener="#{curriculumBean.onEditJobExperience}" update="form:jobExperiences" />
 										</p:commandButton>
 									</span>
@@ -64,14 +62,13 @@
 						<h:panelGroup styleClass="mainSection" id="educations" layout="block">
 							<!-- Education -->
 							<h2>#{i18n['curriculum.education']}</h2>
-							<span class="cvAction"> <p:commandButton icon="fa fa-plus" styleClass="btn-transparent" action="#{curriculumBean.newEducation}" process="@this">
+							<span class="cvAction"> <p:commandButton icon="fa fa-plus" action="#{curriculumBean.newEducation}" process="@this">
 									<p:ajax event="dialogReturn" listener="#{curriculumBean.onEditEducation}" update="form:educations" />
 								</p:commandButton>
 							</span>
 							<ui:repeat value="#{curriculumBean.education}" var="education" id="education">
 								<div class="section">
-									<span class="cvAction"> <p:commandButton icon="fa fa-pencil" styleClass="btn-transparent" action="#{curriculumBean.editEducation(education)}"
-											process="@this">
+									<span class="cvAction"> <p:commandButton icon="fa fa-pencil" action="#{curriculumBean.editEducation(education)}" process="@this">
 											<p:ajax event="dialogReturn" listener="#{curriculumBean.onEditEducation}" update="form:educations" />
 										</p:commandButton>
 									</span>
@@ -92,13 +89,12 @@
 						<h:panelGroup styleClass="mainSection" id="languages" layout="block">
 							<!-- Skills -->
 							<h2>#{i18n['curriculum.languages']}</h2>
-							<span class="cvAction"><p:commandButton icon="fa fa-plus" styleClass="btn-transparent" action="#{curriculumBean.newLanguage}" process="@this">
+							<span class="cvAction"><p:commandButton icon="fa fa-plus" action="#{curriculumBean.newLanguage}" process="@this">
 									<p:ajax event="dialogReturn" listener="#{curriculumBean.onEditEducation}" update="form:languages" />
 								</p:commandButton> </span>
 							<ui:repeat value="#{curriculumBean.languages}" var="language" id="language">
 								<div class="section">
-									<span class="cvAction"> <p:commandButton icon="fa fa-pencil" styleClass="btn-transparent" action="#{curriculumBean.editLanguage(language)}"
-											process="@this">
+									<span class="cvAction"> <p:commandButton icon="fa fa-pencil" action="#{curriculumBean.editLanguage(language)}" process="@this">
 											<p:ajax event="dialogReturn" listener="#{curriculumBean.onEditLanguage}" update="form:languages" />
 										</p:commandButton>
 									</span>
@@ -111,12 +107,12 @@
 						<div class="mainSection">
 							<!-- Skills -->
 							<h2>#{i18n['curriculum.skills']}</h2>
-							<span class="cvAction"> <p:commandButton icon="fa fa-plus" styleClass="btn-transparent" action="#{curriculumBean.newSkill}" process="@this">
+							<span class="cvAction"> <p:commandButton icon="fa fa-plus" action="#{curriculumBean.newSkill}" process="@this">
 									<p:ajax event="dialogReturn" listener="#{curriculumBean.onEditSkill}" update="form:languages" />
 								</p:commandButton>
 							</span>
 							<div class="section">
-								<p:chips value="#{curriculumBean.skills}" converter="stringConverter" disabled="true"/>
+								<p:chips value="#{curriculumBean.skills}" converter="stringConverter" disabled="true" />
 							</div>
 						</div>
 					</p:panel>
