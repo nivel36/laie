@@ -1,7 +1,6 @@
 package ged.ejb.core.model;
 
 import javax.persistence.Column;
-import javax.persistence.EntityListeners;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
