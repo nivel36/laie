@@ -1,7 +1,6 @@
 package ged.ejb.core.model;
 
 import javax.persistence.Column;
-import javax.persistence.EntityListeners;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
@@ -26,7 +25,6 @@ import ged.ejb.user.User;
 				@Parameter(name = "maxGramSize", value = "20") }) })
 @Analyzer(definition = "stdAnalyzer")
 @MappedSuperclass
-@EntityListeners(AuditedListener.class)
 public abstract class AbstractAuditedEntity extends AbstractEntity implements Erasable, Ownerable {
 
 	private static final long serialVersionUID = 6203444960560029390L;
