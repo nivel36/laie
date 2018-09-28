@@ -51,7 +51,7 @@
 				<ul>
 					<li><h:outputText value="#{sessionUser}" styleClass="name" /></li>
 					<li><h:commandLink value="#{i18n['menu.config']}"
-							action="#{loginBean.logout}" styleClass="config" /></li>
+							action="/faces/config/config?faces-redirect=true" styleClass="config" /></li>
 					<li><h:commandLink value="#{i18n['user.logout']}"
 							action="#{loginBean.logout}" styleClass="logout" /></li>
 				</ul>

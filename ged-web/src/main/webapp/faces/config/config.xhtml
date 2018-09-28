@@ -51,7 +51,7 @@
 								<p:photoCam widgetVar="pc"  update="photo" />
 								<p:commandButton type="button" value="Capture" onclick="PF('pc').capture()" />
 								<p:outputPanel id="photo">
-									<p:graphicImage name="#{userBean.user.imageFileName}" rendered="#{not empty userBean.user.imageFileName}" />
+									<p:graphicImage name="#{configBean.user.imageFileName}" rendered="#{not empty configBean.user.imageFileName}" />
 								</p:outputPanel>
 							</p:tab>
 						</p:tabView>

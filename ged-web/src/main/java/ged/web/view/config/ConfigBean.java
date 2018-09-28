@@ -38,8 +38,8 @@ public class ConfigBean extends AbstractBean {
 
 	@PostConstruct
 	public void init() {
-		logger.trace("Init ConfigIndexBean");
 		this.user = this.sessionUser.get();
+		logger.debug("Config user {} init", user.getEmail());
 	}
 
 	public void openChangePasswordDialog() {
