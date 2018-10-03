@@ -13,6 +13,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.primefaces.PrimeFaces;
 import org.primefaces.event.CaptureEvent;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
@@ -90,6 +91,10 @@ public class ChangePictureBean extends AbstractBean {
 
 	public void setUserService(final UserService userService) {
 		this.userService = userService;
+	}
+	
+	public void close() {
+		PrimeFaces.current().dialog().closeDynamic(null);
 	}
 
 	public void showCamera() {

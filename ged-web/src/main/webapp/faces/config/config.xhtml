@@ -24,7 +24,7 @@
 									<p:commandButton id="changePicture" style="display: none;"
 										actionListener="#{configBean.openChangePictureDialog}"
 										process="@this">
-										<p:ajax event="dialogReturn" update="userImage" />
+										<p:ajax event="dialogReturn" update="userImage" listener="#{configBean.init}" />
 									</p:commandButton>
 									<h:outputLabel for="changePicture">
 										<p:graphicImage styleClass="selectable image"
