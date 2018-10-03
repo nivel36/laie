@@ -91,7 +91,11 @@
 		<servlet-name>Faces Servlet</servlet-name>
 		<url-pattern>*.xhtml</url-pattern>
 	</servlet-mapping>
-	
+
+	<mime-mapping>
+		<extension>swf</extension>
+		<mime-type>photocam/webcam.swf</mime-type>
+	</mime-mapping>	
 	<mime-mapping>
 		<extension>eot</extension>
 		<mime-type>application/vnd.ms-fontobject</mime-type>

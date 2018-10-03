@@ -155,7 +155,8 @@ body .ui-dialog-titlebar .ui-dialog-title {
 }
 
 body .ui-dialog-content {
-	padding: 15px;
+	padding: 1em;
+	height: 100%;
 }
 
 body .ui-dialog .ui-icon {

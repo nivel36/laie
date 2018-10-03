@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:i18n="http://ged.com/i18n"
+	xmlns:cc="http://java.sun.com/jsf/composite/components" template="/WEB-INF/templates/dialog.xhtml">
+
+	<ui:define name="title">
+		<title>#{i18n['config.change_picture']}</title>
+	</ui:define>
+
+	<ui:define name="content">
+		<h:form>
+			<div class="changePicture">
+				<p:imageCropper id="cropImage" value="#{changePictureBean.croppedImage}" image="/images/#{changePictureBean.user.imageFileName}"
+					rendered="#{not empty changePictureBean.user.imageFileName}" initialCoords="0,0,200,250" />
+				<p:graphicImage styleClass="image" value="/resources/img/default-avatar.png" rendered="#{empty changePictureBean.user.imageFileName}" />
+			</div>
+			<div class="form-action-primary">
+				<p:fileUpload id="uploadImage" styleClass="uploadImageButton" fileUploadListener="#{changePictureBean.uploadImage}" mode="advanced" dragDropSupport="false"
+					update="@form" auto="true" label="#{i18n['action.add']}" />
+				<p:commandButton value="#{i18n['action.crop']}" action="#{changePictureBean.cropImage}" process="@form" update="@form" />
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

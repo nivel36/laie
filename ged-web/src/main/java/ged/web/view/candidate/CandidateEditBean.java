@@ -121,6 +121,7 @@ public class CandidateEditBean extends AbstractDialogBean {
 
 	public void uploadImage(final FileUploadEvent event) {
 		final UploadedFile uploadedFile = event.getFile();
+
 		try (InputStream inputStream = uploadedFile.getInputstream()) {
 			final String uuid = this.fileUploadService.uploadImage(inputStream);
 			this.candidate.setImageFileName(uuid);

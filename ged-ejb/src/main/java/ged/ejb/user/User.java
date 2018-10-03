@@ -70,7 +70,7 @@ public class User extends AbstractAuditedEntity {
 
 	@NotNull
 	@Column(nullable = false)
-	private int rowsPerPage;
+	private int rowsPerPage = 10;
 
 	@NotNull
 	@Column(length = 64, nullable = false)
