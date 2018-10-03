@@ -11,13 +11,19 @@
 		<h:form>
 			<div class="changePicture">
 				<p:imageCropper id="cropImage" value="#{changePictureBean.croppedImage}" image="/images/#{changePictureBean.user.imageFileName}"
-					rendered="#{not empty changePictureBean.user.imageFileName}" initialCoords="0,0,200,250" />
-				<p:graphicImage styleClass="image" value="/resources/img/default-avatar.png" rendered="#{empty changePictureBean.user.imageFileName}" />
+					rendered="#{changePictureBean.showingCroppedImage}" initialCoords="0,0,200,250" />
+				<p:graphicImage styleClass="image" value="/resources/img/default-avatar.png" rendered="#{empty changePictureBean.user.imageFileName  and changePictureBean.showingImage}" />
+				<p:graphicImage styleClass="image" value="/images/#{changePictureBean.user.imageFileName}" rendered="#{not empty changePictureBean.user.imageFileName and changePictureBean.showingImage}" />
+				<p:photoCam widgetVar="pc" listener="#{changePictureBean.onCapture}" update="@form" rendered="#{changePictureBean.showingCamera}"/>
 			</div>
 			<div class="form-action-primary">
 				<p:fileUpload id="uploadImage" styleClass="uploadImageButton" fileUploadListener="#{changePictureBean.uploadImage}" mode="advanced" dragDropSupport="false"
-					update="@form" auto="true" label="#{i18n['action.add']}" />
-				<p:commandButton value="#{i18n['action.crop']}" action="#{changePictureBean.cropImage}" process="@form" update="@form" />
+					update="@form" auto="true" label="#{i18n['action.add']}" rendered="#{changePictureBean.showingImage}" />
+				<p:commandButton value="#{i18n['action.crop']}" action="#{changePictureBean.cropImage}" process="@form" update="@form" rendered="#{changePictureBean.showingCroppedImage}" />
+				<p:commandButton value="#{i18n['action.capture']}" onclick="PF('pc').capture()" process="@form" update="@form" rendered="#{changePictureBean.showingCamera}" />
+				<p:commandButton value="#{i18n['changeImage.camera']}" action="#{changePictureBean.showCamera}" process="@form" update="@form" rendered="#{changePictureBean.showingImage}" />
+				<p:commandButton value="#{i18n['changeImage.cropImage']}" action="#{changePictureBean.showCroppedImage}" process="@form" update="@form" rendered="#{changePictureBean.showingImage}" />
+				<p:commandButton value="#{i18n['action.cancel']}" action="#{changePictureBean.cancel}" process="@form" update="@form" rendered="#{not changePictureBean.showingImage}"/> 
 			</div>
 		</h:form>
 	</ui:define>
