@@ -1,30 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:i18n="http://ged.com/i18n"
-	xmlns:cc="http://java.sun.com/jsf/composite/components" template="/WEB-INF/templates/dialog.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" xmlns:i18n="http://ged.com/i18n"
+	xmlns:cc="http://java.sun.com/jsf/composite/components"
+	template="/WEB-INF/templates/dialog.xhtml">
 
 	<ui:define name="title">
 		<title>#{i18n['config.change_picture']}</title>
 	</ui:define>
 
 	<ui:define name="content">
-		<h:form>
-			<div class="changePicture">
-				<p:imageCropper id="cropImage" value="#{changePictureBean.croppedImage}" image="/images/#{changePictureBean.user.imageFileName}"
-					rendered="#{changePictureBean.showingCroppedImage}" initialCoords="0,0,200,250" />
-				<p:graphicImage styleClass="image" value="/resources/img/default-avatar.png" rendered="#{empty changePictureBean.user.imageFileName  and changePictureBean.showingImage}" />
-				<p:graphicImage styleClass="image" value="/images/#{changePictureBean.user.imageFileName}" rendered="#{not empty changePictureBean.user.imageFileName and changePictureBean.showingImage}" />
-				<p:photoCam widgetVar="pc" listener="#{changePictureBean.onCapture}" update="@form" rendered="#{changePictureBean.showingCamera}"/>
-			</div>
-			<div class="form-action-primary">
-				<p:fileUpload id="uploadImage" styleClass="uploadImageButton" fileUploadListener="#{changePictureBean.uploadImage}" mode="advanced" dragDropSupport="false"
-					update="@form" auto="true" label="#{i18n['action.add']}" rendered="#{changePictureBean.showingImage}" />
-				<p:commandButton value="#{i18n['action.crop']}" action="#{changePictureBean.cropImage}" process="@form" update="@form" rendered="#{changePictureBean.showingCroppedImage}" />
-				<p:commandButton value="#{i18n['action.capture']}" onclick="PF('pc').capture()" process="@form" update="@form" rendered="#{changePictureBean.showingCamera}" />
-				<p:commandButton value="#{i18n['changeImage.camera']}" action="#{changePictureBean.showCamera}" process="@form" update="@form" rendered="#{changePictureBean.showingImage}" />
-				<p:commandButton value="#{i18n['changeImage.cropImage']}" action="#{changePictureBean.showCroppedImage}" process="@form" update="@form" rendered="#{changePictureBean.showingImage}" />
-				<p:commandButton value="#{i18n['action.cancel']}" action="#{changePictureBean.cancel}" process="@form" update="@form" rendered="#{not changePictureBean.showingImage}"/> 
-			</div>
-		</h:form>
+		<h:panelGroup id="changeImage">
+			<h:panelGroup rendered="#{changePictureBean.showingImage}">
+				<h:form id="imageForm">
+					<div class="changePicture">
+						<p:graphicImage styleClass="image"
+							value="/resources/img/default-avatar.png"
+							rendered="#{empty changePictureBean.user.imageFileName}" />
+						<p:graphicImage styleClass="image"
+							value="/images/#{changePictureBean.user.imageFileName}"
+							rendered="#{not empty changePictureBean.user.imageFileName}" />
+					</div>
+					<div class="form-action-primary">
+						<p:commandButton value="#{i18n['changeImage.camera']}"
+							action="#{changePictureBean.showCamera}" process="@this"
+							update="changeImage" />
+						<p:commandButton value="#{i18n['changeImage.cropImage']}"
+							action="#{changePictureBean.showCroppedImage}" process="@this"
+							update="changeImage" />
+					</div>
+				</h:form>
+			</h:panelGroup>
+			<h:panelGroup rendered="#{changePictureBean.showingCamera}">
+				<h:form id="cameraForm">
+					<div class="changePicture">
+						<p:photoCam widgetVar="pc"
+							listener="#{changePictureBean.onCapture}" update="@form" />
+					</div>
+					<div class="form-action-primary">
+						<p:commandButton value="#{i18n['action.capture']}"
+							onclick="PF('pc').capture()" process="@form" update="changeImage" />
+						<p:commandButton value="#{i18n['action.cancel']}"
+							action="#{changePictureBean.cancel}" process="@this"
+							update="changeImage" />
+					</div>
+				</h:form>
+			</h:panelGroup>
+		</h:panelGroup>
 	</ui:define>
 </ui:composition>

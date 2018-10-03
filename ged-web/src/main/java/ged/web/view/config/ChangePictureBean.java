@@ -15,7 +15,6 @@ import javax.inject.Named;
 
 import org.primefaces.event.CaptureEvent;
 import org.primefaces.event.FileUploadEvent;
-import org.primefaces.model.CroppedImage;
 import org.primefaces.model.UploadedFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,12 +32,8 @@ public class ChangePictureBean extends AbstractBean {
 
 	private static final long serialVersionUID = -4692285273689581632L;
 
-	private CroppedImage croppedImage;
-	
 	private boolean showingCamera;
-	
-	private boolean showingCroppedImage;
-	
+
 	private boolean showingImage;
 
 	@Inject
@@ -49,23 +44,8 @@ public class ChangePictureBean extends AbstractBean {
 	@Inject
 	private transient UserService userService;
 
-	public void cropImage() {
-		if (croppedImage == null) {
-			return;
-		}
-		logger.debug("Upload cropped user image action performed");
-		try (InputStream inputStream = new ByteArrayInputStream(croppedImage.getBytes())) {
-			final String uuid = this.fileUploadService.uploadImage(inputStream);
-			this.user.setImageFileName(uuid);
-			user = userService.save(user);
-		}
-		catch (final IOException e) {
-			throw new UncheckedIOException(e);
-		}
-	}
-
-	public CroppedImage getCroppedImage() {
-		return croppedImage;
+	public void cancel() {
+		showImage();
 	}
 
 	public User getUser() {
@@ -83,33 +63,26 @@ public class ChangePictureBean extends AbstractBean {
 		return showingCamera;
 	}
 
-	public boolean isShowingCroppedImage() {
-		return showingCroppedImage;
-	}
-
 	public boolean isShowingImage() {
 		return showingImage;
 	}
 
-	public void setCroppedImage(final CroppedImage croppedImage) {
-		this.croppedImage = croppedImage;
+	public void onCapture(CaptureEvent captureEvent) {
+		byte[] data = captureEvent.getData();
+		try (InputStream inputStream = new ByteArrayInputStream(data)) {
+			String imageFileName = fileUploadService.uploadImage(inputStream);
+			user.setImageFileName(imageFileName);
+			user = userService.save(user);
+			sessionUser.refresh();
+			showImage();
+		} catch (IOException e) {
+			throw new FacesException("Error in writing captured image.", e);
+		}
 	}
 
 	public void setFileUploadService(final FileUploadService fileUploadService) {
 		this.fileUploadService = fileUploadService;
 	}
-	
-	 public void onCapture(CaptureEvent captureEvent) {
-	        byte[] data = captureEvent.getData();
-	        try(InputStream inputStream = new ByteArrayInputStream(data) ) {
-	        	String imageFileName = fileUploadService.uploadImage(inputStream);
-	        	user.setImageFileName(imageFileName);
-	        	user = userService.save(user);
-	        }
-	        catch(IOException e) {
-	            throw new FacesException("Error in writing captured image.", e);
-	        }
-	    }
 
 	public void setUser(final User user) {
 		this.user = user;
@@ -118,25 +91,14 @@ public class ChangePictureBean extends AbstractBean {
 	public void setUserService(final UserService userService) {
 		this.userService = userService;
 	}
-	public void cancel() {
-		showImage();
-	}
 
 	public void showCamera() {
 		this.showingCamera = true;
-		this.showingCroppedImage = false;
-		this.showingImage = false;
-	}
-
-	public void showCroppedImage() {
-		this.showingCamera = false;
-		this.showingCroppedImage = true;
 		this.showingImage = false;
 	}
 
 	public void showImage() {
 		this.showingCamera = false;
-		this.showingCroppedImage = false;
 		this.showingImage = true;
 	}
 
@@ -150,8 +112,8 @@ public class ChangePictureBean extends AbstractBean {
 		try (InputStream inputStream = uploadedFile.getInputstream()) {
 			final String uuid = this.fileUploadService.uploadImage(inputStream);
 			this.user.setImageFileName(uuid);
-		}
-		catch (final IOException e) {
+			user = userService.save(user);
+		} catch (final IOException e) {
 			throw new UncheckedIOException(e);
 		}
 	}
