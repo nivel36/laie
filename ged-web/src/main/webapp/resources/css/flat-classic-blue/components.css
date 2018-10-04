@@ -262,7 +262,11 @@ body nav li:hover a {
 	padding: 10px 25px;
 }
 
-.changePicture img{
+.userImage, .userCamera {
+	text-align: center;
+}
+
+.userImage img{
 	width: 256px !important; 
 	object-fit: cover;
 }

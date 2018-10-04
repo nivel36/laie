@@ -12,10 +12,10 @@
 	</ui:define>
 
 	<ui:define name="content">
-		<h:panelGroup id="changeImage">
-			<h:panelGroup rendered="#{changePictureBean.showingImage}">
+		<p:tabView dynamic="true" orientation="left">
+			<p:tab title="#{i18n['changeImage.image']}">
 				<h:form id="imageForm">
-					<div class="changePicture">
+					<div class="userImage">
 						<p:graphicImage styleClass="image"
 							value="/resources/img/default-avatar.png"
 							rendered="#{empty changePictureBean.user.imageFileName}" />
@@ -24,30 +24,25 @@
 							rendered="#{not empty changePictureBean.user.imageFileName}" />
 					</div>
 					<div class="form-action-primary">
-						<p:commandButton value="#{i18n['changeImage.camera']}"
-							action="#{changePictureBean.showCamera}" process="@this"
-							update="changeImage" />
 						<p:commandButton value="#{i18n['action.close']}"
-							action="#{changePictureBean.close}" process="@this"
-							update="changeImage" />
+							action="#{changePictureBean.close}" process="@this" />
 					</div>
 				</h:form>
-			</h:panelGroup>
-			<h:panelGroup rendered="#{changePictureBean.showingCamera}">
+			</p:tab>
+			<p:tab title="#{i18n['changeImage.camera']}">
 				<h:form id="cameraForm">
-					<div class="changePicture">
+					<div class="userCamera">
 						<p:photoCam widgetVar="pc"
 							listener="#{changePictureBean.onCapture}" update="@form" />
 					</div>
 					<div class="form-action-primary">
 						<p:commandButton value="#{i18n['action.capture']}"
-							onclick="PF('pc').capture()" process="@form" update="changeImage" />
-						<p:commandButton value="#{i18n['action.cancel']}"
-							action="#{changePictureBean.cancel}" process="@this"
-							update="changeImage" />
+							onclick="PF('pc').capture()" process="@form" update="@form" />
+						<p:commandButton value="#{i18n['action.close']}"
+							action="#{changePictureBean.close}" process="@this" />
 					</div>
 				</h:form>
-			</h:panelGroup>
-		</h:panelGroup>
+			</p:tab>
+		</p:tabView>
 	</ui:define>
 </ui:composition>

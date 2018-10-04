@@ -33,10 +33,6 @@ public class ChangePictureBean extends AbstractBean {
 
 	private static final long serialVersionUID = -4692285273689581632L;
 
-	private boolean showingCamera;
-
-	private boolean showingImage;
-
 	@Inject
 	private transient FileUploadService fileUploadService;
 
@@ -45,38 +41,28 @@ public class ChangePictureBean extends AbstractBean {
 	@Inject
 	private transient UserService userService;
 
-	public void cancel() {
-		showImage();
+	public void close() {
+		PrimeFaces.current().dialog().closeDynamic(null);
 	}
 
 	public User getUser() {
-		return user;
+		return this.user;
 	}
 
 	@PostConstruct
 	public void init() {
 		final Long userId = this.getIdFromParameters("userId");
 		this.user = this.userService.find(userId);
-		showImage();
 	}
 
-	public boolean isShowingCamera() {
-		return showingCamera;
-	}
-
-	public boolean isShowingImage() {
-		return showingImage;
-	}
-
-	public void onCapture(CaptureEvent captureEvent) {
-		byte[] data = captureEvent.getData();
+	public void onCapture(final CaptureEvent captureEvent) {
+		Objects.requireNonNull(captureEvent);
+		logger.debug("Capture user image from camara action performed");
+		final byte[] data = captureEvent.getData();
+		Objects.requireNonNull(data);
 		try (InputStream inputStream = new ByteArrayInputStream(data)) {
-			String imageFileName = fileUploadService.uploadImage(inputStream);
-			user.setImageFileName(imageFileName);
-			user = userService.save(user);
-			sessionUser.refresh();
-			showImage();
-		} catch (IOException e) {
+			changeUserImage(inputStream);
+		} catch (final IOException e) {
 			throw new FacesException("Error in writing captured image.", e);
 		}
 	}
@@ -92,34 +78,23 @@ public class ChangePictureBean extends AbstractBean {
 	public void setUserService(final UserService userService) {
 		this.userService = userService;
 	}
-	
-	public void close() {
-		PrimeFaces.current().dialog().closeDynamic(null);
-	}
-
-	public void showCamera() {
-		this.showingCamera = true;
-		this.showingImage = false;
-	}
-
-	public void showImage() {
-		this.showingCamera = false;
-		this.showingImage = true;
-	}
 
 	public void uploadImage(final FileUploadEvent event) {
 		Objects.requireNonNull(event);
 		logger.debug("Upload user image action performed");
 		final UploadedFile uploadedFile = event.getFile();
-		if (uploadedFile == null) {
-			return;
-		}
+		Objects.requireNonNull(uploadedFile);
 		try (InputStream inputStream = uploadedFile.getInputstream()) {
-			final String uuid = this.fileUploadService.uploadImage(inputStream);
-			this.user.setImageFileName(uuid);
-			user = userService.save(user);
+			changeUserImage(inputStream);
 		} catch (final IOException e) {
 			throw new UncheckedIOException(e);
 		}
+	}
+
+	private void changeUserImage(InputStream inputStream) {
+		final String uuid = this.fileUploadService.uploadImage(inputStream);
+		this.user.setImageFileName(uuid);
+		this.user = this.userService.save(this.user);
+		this.sessionUser.refresh();
 	}
 }
