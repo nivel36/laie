@@ -1,5 +1,10 @@
 @charset "UTF-8";
 
+@font-face {
+font-family: "Roboto";
+src: url("#{resource['fonts:Roboto-Regular.ttf']}") format("truetype");
+}
+
 /**
  * Colors: 
  * 
@@ -26,7 +31,7 @@ body {
 	height: 100%;
 	font-size: 14px;
 	background: #eaeaea;
-	font-family: "Helvetica", "Arial", sans-serif;
+	font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
 	color: #666666;
 }
 

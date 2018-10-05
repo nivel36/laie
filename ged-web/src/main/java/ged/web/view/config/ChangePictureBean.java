@@ -41,6 +41,17 @@ public class ChangePictureBean extends AbstractBean {
 	@Inject
 	private transient UserService userService;
 
+	public void apply() {
+		this.user = this.userService.save(this.user);
+		this.sessionUser.refresh();
+		PrimeFaces.current().dialog().closeDynamic(null);
+	}
+
+	private void changeUserImage(final InputStream inputStream) {
+		final String uuid = this.fileUploadService.uploadImage(inputStream);
+		this.user.setImageFileName(uuid);
+	}
+
 	public void close() {
 		PrimeFaces.current().dialog().closeDynamic(null);
 	}
@@ -62,7 +73,8 @@ public class ChangePictureBean extends AbstractBean {
 		Objects.requireNonNull(data);
 		try (InputStream inputStream = new ByteArrayInputStream(data)) {
 			changeUserImage(inputStream);
-		} catch (final IOException e) {
+		}
+		catch (final IOException e) {
 			throw new FacesException("Error in writing captured image.", e);
 		}
 	}
@@ -86,15 +98,9 @@ public class ChangePictureBean extends AbstractBean {
 		Objects.requireNonNull(uploadedFile);
 		try (InputStream inputStream = uploadedFile.getInputstream()) {
 			changeUserImage(inputStream);
-		} catch (final IOException e) {
+		}
+		catch (final IOException e) {
 			throw new UncheckedIOException(e);
 		}
-	}
-
-	private void changeUserImage(InputStream inputStream) {
-		final String uuid = this.fileUploadService.uploadImage(inputStream);
-		this.user.setImageFileName(uuid);
-		this.user = this.userService.save(this.user);
-		this.sessionUser.refresh();
 	}
 }

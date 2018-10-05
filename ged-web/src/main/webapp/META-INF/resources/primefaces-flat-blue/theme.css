@@ -383,11 +383,9 @@ body .form-group {
 }
 
 body .form-group .ui-outputlabel {
-	font-weight: bold;
-	font-size: 12px;
+	font-size: 0.9em;
 	position: relative;
-	padding-bottom: 5px;
-	width: 100%;
+	padding-bottom: 0.4em;
 	display: block;
 	color: #424242;
 }

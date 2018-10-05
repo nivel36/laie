@@ -18,7 +18,7 @@
 					<div class="form-action-primary">
 						<p:fileUpload id="uploadImage" fileUploadListener="#{changePictureBean.uploadImage}" mode="advanced" dragDropSupport="false"
 							update="@form" auto="true" label="#{i18n['changeImage.change_image']}" />
-						<p:commandButton value="#{i18n['action.close']}" action="#{changePictureBean.close}" process="@this" />
+						<p:commandButton value="#{i18n['action.apply']}" action="#{changePictureBean.apply}" process="@this" />
 					</div>
 				</h:form>
 			</p:tab>
@@ -29,7 +29,6 @@
 					</div>
 					<div class="form-action-primary">
 						<p:commandButton value="#{i18n['action.capture']}" onclick="PF('pc').capture()" process="@form" update="@form" />
-						<p:commandButton value="#{i18n['action.close']}" action="#{changePictureBean.close}" process="@this" />
 					</div>
 				</h:form>
 			</p:tab>
