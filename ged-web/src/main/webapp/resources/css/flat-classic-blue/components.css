@@ -30,6 +30,10 @@ body {
 	color: #666666;
 }
 
+a {
+	color: #444444;
+}
+
 body header {
 	width: 100%;
 	position: relative;
@@ -124,7 +128,6 @@ body ul li {
 
 body a {
 	text-decoration: none;
-	color: #444444;
 }
 
 body a:visited {
@@ -242,6 +245,10 @@ body nav li:hover a {
 	transition: all 300ms linear;
 }
 
+.invisible {
+	display: none !important;
+}
+
 .login-page .card-login.card-hidden {
 	opacity: 0;
 	transform: translate3d(0, -60px, 0);
@@ -264,6 +271,7 @@ body nav li:hover a {
 
 .userImage, .userCamera {
 	text-align: center;
+	padding: 1em;
 }
 
 .userImage img{

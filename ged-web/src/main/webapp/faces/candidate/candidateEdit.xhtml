@@ -26,7 +26,7 @@
 							<div class="ui-g-12 ui-md-6">
 								<div class="user-card">
 									<p:outputPanel layout="block" id="userImage" styleClass="user-image">
-										<p:fileUpload id="uploadImage" styleClass="uploadImageButton" fileUploadListener="#{candidateEditBean.uploadImage}" mode="advanced"
+										<p:fileUpload id="uploadImage" styleClass="invisible uploadImageButton" fileUploadListener="#{candidateEditBean.uploadImage}" mode="advanced"
 											dragDropSupport="false" update="userImage" auto="true" label="#{i18n['action.add']}" />
 										<h:outputLabel for="uploadImage_input">
 											<p:graphicImage styleClass="selectable image" value="/images/#{candidateEditBean.candidate.imageFileName}"

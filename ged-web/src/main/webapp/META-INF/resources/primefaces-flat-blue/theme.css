@@ -115,7 +115,11 @@ body .ui-paginator {
 
 body .ui-state-active {
 	background-color: #1976d2;
-	color: white;
+	color: #ffffff;
+}
+
+body .ui-state-active a {
+	color: #ffffff;
 }
 
 body .ui-paginator .ui-paginator-page.ui-state-active {
@@ -656,6 +660,8 @@ body .ui-panel .ui-panel-titlebar {
 	background: #1976d2;
 	border-top-left-radius: 3px;
 	border-top-right-radius: 3px;
+	font-size: 1.1em;
+	line-height: 1.5em;
 }
 
 body .ui-panel.with-tabs .ui-panel-titlebar {
@@ -665,10 +671,8 @@ body .ui-panel.with-tabs .ui-panel-titlebar {
 }
 
 body .ui-panel .ui-panel-titlebar .ui-panel-title {
-	color: white;
-	line-height: 1.6em;
+	color: #ffffff;
 	margin: 0;
-	font-weight: 500;
 }
 
 body .ui-panel .ui-panel-titlebar .ui-panel-titlebar-icon {
@@ -757,8 +761,8 @@ body .ui-fileupload-content {
 body .ui-button, body button.ui-button {
 	background: #19d2d2;
 	color: #fff;
-	height: 30px;
-	font-size: 14px;
+	height: 2em;
+	font-size: 1em;
 	padding: 0px 10px;
 	cursor: pointer;
 	border: 0px;
@@ -779,15 +783,11 @@ body .ui-button-text-icon-left .ui-button-text {
 }
 
 body .ui-button-text-icon-left .ui-icon {
-	margin-top: -5px;
+	margin-top: -6px;
 }
 
 body .ui-button-text-only .ui-button-text {
 	padding: 0.2em 0.4em;
-}
-
-body .ui-button .ui-button-text {
-	line-height: 20px;
 }
 
 body .ui-button.ui-button-icon-only {
@@ -797,8 +797,8 @@ body .ui-button.ui-button-icon-only {
 }
 
 body .ui-datatable-data .ui-button-icon-only .ui-icon.fa {
-	font-size: 14px;
-	height: 18px;
+	font-size: 1em;
+	height: 1.3em;
 }
 
 body .ui-button-icon-only .ui-icon.fa, body .ui-button-text-icon-left .ui-icon.fa,
@@ -1044,4 +1044,14 @@ body .ui-message-error .ui-message-error-detail {
 	font-weight: normal;
 	font-size: 0.9em;
 	margin-left: 2px;
+}
+
+body .ui-fileupload, body .ui-fileupload-buttonbar {
+	display: inline-flex;
+	padding: 0;
+	margin: 0;
+}
+
+body .ui-fileupload-buttonbar .ui-fileupload-choose input {
+	display: none;
 }
