@@ -331,7 +331,8 @@ body nav li:hover a {
 }
 
 .form-action-primary {
-	text-align: right;
+	display: flex;
+	 justify-content: flex-end
 }
 
 .searchForm {
