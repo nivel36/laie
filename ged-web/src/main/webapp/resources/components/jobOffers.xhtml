@@ -28,9 +28,9 @@
 				</h:link>
 			</p:column>
 		</p:dataTable>
-		<div class="form-action-primary">
+		<h:panelGroup styleClass="form-action-primary" rendered="#{cc.childCount != 0}">
 			<composite:insertChildren />
-		</div>
+		</h:panelGroup>
 	</p:panel>
 </composite:implementation>
 </html>

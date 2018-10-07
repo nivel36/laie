@@ -377,11 +377,6 @@ body .ui-datatable .ui-datatable-data td a:hover {
 	text-decoration: underline;
 }
 
-body .form-group {
-	width: 100%;
-	overflow: auto;
-}
-
 body .form-group .ui-outputlabel {
 	font-size: 0.9em;
 	position: relative;
@@ -486,14 +481,14 @@ body .ql-editor {
 body .ui-inputfield {
 	outline: medium none;
 	background-color: white;
-	font-size: 13px;
+	font-size: 1em;
 	border: 1px solid #c2cad8;
 	overflow: auto;
 	color: #777777;
 	float: left;
 	display: block;
 	width: 100%;
-	height: 30px;
+	height: 2.2em;
 }
 
 body .ui-inputfield.ui-state-error, body .ui-inputtext[aria-required="true"].ui-state-error,
@@ -759,7 +754,7 @@ body .ui-fileupload-content {
 body .ui-button, body button.ui-button {
 	background: #19d2d2;
 	color: #fff;
-	height: 2em;
+	height: 2.2em;
 	font-size: 1em;
 	padding: 0px 10px;
 	cursor: pointer;

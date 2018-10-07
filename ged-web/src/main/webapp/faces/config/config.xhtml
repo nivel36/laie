@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui"
-	template="/WEB-INF/templates/default.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
 		<title>#{i18n['config.config']}</title>
@@ -13,60 +9,47 @@
 	<ui:param name="selectedMenu" value="config" />
 
 	<ui:define name="content">
-		<div class="ui-g">
-			<div class="ui-g-12 ui-xl-6">
+		<div class="grid">
+			<div class="col-12">
 				<h:form>
 					<p:panel id="configPanel" header="#{i18n['config.user_data']}">
-						<div class="ui-g">
-							<div class="ui-g-12">
-								<p:outputPanel layout="block" id="userImage"
-									styleClass="user-image">
-									<p:commandButton id="changePicture" style="display: none;"
-										actionListener="#{configBean.openChangePictureDialog}"
-										process="@this">
+						<div class="grid">
+							<div class="col-12">
+								<p:outputPanel layout="block" id="userImage" styleClass="user-image">
+									<p:commandButton id="changePicture" style="display: none;" actionListener="#{configBean.openChangePictureDialog}" process="@this">
 										<p:ajax event="dialogReturn" update="userImage" listener="#{configBean.init}" />
 									</p:commandButton>
 									<h:outputLabel for="changePicture">
-										<p:graphicImage styleClass="selectable image"
-											value="/images/#{configBean.user.imageFileName}"
-											rendered="#{not empty configBean.user.imageFileName}" />
-										<p:graphicImage styleClass="selectable image"
-											value="/resources/img/default-avatar.png"
-											rendered="#{empty configBean.user.imageFileName}" />
+										<p:graphicImage styleClass="selectable image" value="/images/#{configBean.user.imageFileName}" rendered="#{not empty configBean.user.imageFileName}" />
+										<p:graphicImage styleClass="selectable image" value="/resources/img/default-avatar.png" rendered="#{empty configBean.user.imageFileName}" />
 									</h:outputLabel>
 								</p:outputPanel>
 							</div>
-							<div class="ui-g-12 ui-lg-6">
+							<div class="col-12 md-6">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['config.name']}" />
-									<p:inputText id="name" value="#{configBean.user.name}"
-										label="#{i18n['config.name']}" required="true" />
+									<p:inputText id="name" value="#{configBean.user.name}" label="#{i18n['config.name']}" required="true" />
 									<p:message for="name" />
 								</div>
 							</div>
-							<div class="ui-g-12 ui-lg-6">
+							<div class="col-12 md-6">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['config.surname']}" />
-									<p:inputText id="surname" value="#{configBean.user.surname}"
-										label="#{i18n['config.surname']}" required="true" />
+									<p:inputText id="surname" value="#{configBean.user.surname}" label="#{i18n['config.surname']}" required="true" />
 									<p:message for="surname" />
 								</div>
 							</div>
-							<div class="ui-g-12 ui-lg-6">
+							<div class="col-12 md-6">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['config.email']}" />
-									<p:inputText id="email" value="#{configBean.user.email}"
-										label="#{i18n['config.email']}" required="true" />
+									<p:inputText id="email" value="#{configBean.user.email}" label="#{i18n['config.email']}" required="true" />
 									<p:message for="email" />
 								</div>
 							</div>
-						</div>
-						<div class="ui-g">
-							<div class="ui-g-12 ui-lg-6">
+							<div class="col-12 md-6">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['config.rows_per_page']}" />
-									<p:selectOneMenu value="#{configBean.user.rowsPerPage}"
-										converter="javax.faces.Integer">
+									<p:selectOneMenu value="#{configBean.user.rowsPerPage}" converter="javax.faces.Integer">
 										<f:selectItem itemValue="5" itemLabel="5" />
 										<f:selectItem itemValue="10" itemLabel="10" />
 										<f:selectItem itemValue="25" itemLabel="25" />
@@ -74,30 +57,21 @@
 								</div>
 							</div>
 
-							<div class="ui-g-12 ui-lg-6">
+							<div class="col-12 md-6">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['config.language']}" />
-									<p:selectOneMenu id="language"
-										value="#{configBean.user.language}"
-										style="text-transform: capitalize" converter="stringConverter">
-										<f:selectItems var="locale" value="#{applicationBean.locales}"
-											itemValue="#{locale.language}"
-											itemLabel="#{locale.displayLanguage}" />
-										<f:ajax event="change" render="@all"
-											listener="#{configBean.changeLocaleListener}" />
+									<p:selectOneMenu id="language" value="#{configBean.user.language}" style="text-transform: capitalize" converter="stringConverter">
+										<f:selectItems var="locale" value="#{applicationBean.locales}" itemValue="#{locale.language}" itemLabel="#{locale.displayLanguage}" />
+										<f:ajax event="change" render="@all" listener="#{configBean.changeLocaleListener}" />
 									</p:selectOneMenu>
 								</div>
 							</div>
 						</div>
-						<div class="ui-g">
-							<div class="ui-g-12">
+						<div class="grid">
+							<div class="col-12">
 								<div class="form-action-primary">
-									<p:commandButton value="#{i18n['config.change_password']}"
-										actionListener="#{configBean.openChangePasswordDialog}"
-										process="@this" />
-									<p:commandButton value="#{i18n['action.save']}"
-										action="#{configBean.save}" process="@form"
-										update="@form growl" />
+									<p:commandButton value="#{i18n['config.change_password']}" actionListener="#{configBean.openChangePasswordDialog}" process="@this" />
+									<p:commandButton value="#{i18n['action.save']}" action="#{configBean.save}" process="@form" update="@form growl" />
 								</div>
 							</div>
 						</div>

@@ -10,21 +10,20 @@
 	<ui:param name="selectedMenu" value="users" />
 
 	<ui:define name="content">
-		<div class="ui-g">
-			<div class="ui-g-12">
+		<div class="grid">
+			<div class="col-12">
 				<p:breadCrumb homeDisplay="text">
 					<p:menuitem value="#{i18n['menu.index']}" url="/faces/index.xhtml" />
 					<p:menuitem value="#{i18n['user.users']}" url="/faces/user/userSearch.xhtml" />
 					<p:menuitem value="#{userBean.user}" disabled="true" />
 				</p:breadCrumb>
 			</div>
-		</div>
-		<div class="ui-g">
-			<div class="ui-g-12 ui-lg-12 ui-xl-7">
+
+			<div class="col-12 lg-12 xl-7">
 				<h:form>
 					<p:panel header="#{userBean.user}">
-						<div class="ui-g">
-							<div class="ui-g-12 ui-lg-3">
+						<div class="grid">
+							<div class="col-12 lg-3">
 								<div class="user-card">
 									<p:outputPanel layout="block" id="userImage" styleClass="user-image">
 										<p:graphicImage styleClass="image" value="/images/#{userBean.user.imageFileName}" rendered="#{not empty userBean.user.imageFileName}" />
@@ -33,37 +32,37 @@
 								</div>
 							</div>
 
-							<div class="ui-g-12 ui-lg-9">
-								<div class="ui-g">
-									<div class="ui-g-12 ui-md-6">
+							<div class="col-12 lg-9">
+								<div class="grid">
+									<div class="col-12 md-6">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['user.name']}" for="name" />
 											<p:inputText id="name" value="#{userBean.user.name}" required="true" readonly="true" />
 										</div>
 									</div>
 
-									<div class="ui-g-12 ui-md-6">
+									<div class="col-12 md-6">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['user.surname']}" for="surname" />
 											<p:inputText id="surname" value="#{userBean.user.surname}" required="true" readonly="true" />
 										</div>
 									</div>
 
-									<div class="ui-g-12 ui-md-6">
+									<div class="col-12 md-6">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['user.email']}" for="email" />
 											<p:inputText id="email" value="#{userBean.user.email}" readonly="true" />
 										</div>
 									</div>
 
-									<div class="ui-g-12 ui-md-6">
+									<div class="col-12 md-6">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['user.phone_number']}" for="phone_number" />
 											<p:inputText id="phone_number" value="#{userBean.user.phoneNumber}" readonly="true" />
 										</div>
 									</div>
 
-									<div class="ui-g-12 ui-md-6">
+									<div class="col-12 md-6">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['user.role']}" for="role" />
 											<p:selectOneMenu id="role" name="role" value="#{userBean.user.role}" disabled="true">
@@ -72,14 +71,14 @@
 										</div>
 									</div>
 
-									<div class="ui-g-12 ui-md-6">
+									<div class="col-12 md-6">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['user.manager']}" for="manager" />
 											<p:inputText id="manager" value="#{userBean.user.manager.fullName}" readonly="true" />
 										</div>
 									</div>
 
-									<div class="ui-g-12 ui-md-6">
+									<div class="col-12 md-6">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['user.date_of_join']}" for="date_of_join" />
 											<p:calendar id="date_of_join" value="#{userBean.user.dateOfJoin}" readonly="true" disabled="true" pattern="dd/MM/yyyy">
@@ -89,8 +88,8 @@
 									</div>
 								</div>
 
-								<div class="ui-g">
-									<div class="ui-g-12">
+								<div class="grid">
+									<div class="col-12">
 										<div class="form-action-primary">
 											<p:commandButton id="exportExcel" icon="fa fa-file-excel-o" value="#{i18n['action.export']}" action="#{userBean.export}" />
 											<p:commandButton value="#{i18n['action.edit']}" actionListener="#{userBean.editUser}" action="userEdit?faces-redirect=true" process="@this"
@@ -104,19 +103,17 @@
 				</h:form>
 			</div>
 
-			<div class="ui-g-12 ui-lg-8 ui-xl-5">
+			<div class="col-12 lg-8 xl-5">
 				<h:form id="userTeamForm">
 					<cc:users users="#{userBean.team}" />
 				</h:form>
-
 			</div>
 
-			<div class="ui-g-12 ui-md-12 ui-lg-6 ui-xl-6">
-				<p:panel header="#{i18n['job_meeting.planned_job_meetings']}">
-
-				</p:panel>
+			<div class="col-12 md-12 lg-6 xl-6">
+				<p:panel header="#{i18n['job_meeting.planned_job_meetings']}" />
 			</div>
-			<div class="ui-g-12 ui-md-12 ui-lg-6">
+			
+			<div class="col-12 md-12 lg-6">
 				<h:form id="jobOffersForm">
 					<cc:jobOffers jobOffers="#{userBean.jobOffers}" />
 				</h:form>

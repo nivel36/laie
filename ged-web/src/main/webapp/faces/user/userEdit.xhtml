@@ -8,25 +8,23 @@
 	</ui:define>
 
 	<ui:define name="content">
-		<div class="ui-g">
-			<div class="ui-g-12">
+		<div class="grid">
+			<div class="col-12">
 				<p:breadCrumb homeDisplay="text">
 					<p:menuitem value="#{i18n['menu.index']}" url="/faces/index.xhtml" />
 					<p:menuitem value="#{i18n['user.users']}" url="/faces/user/userSearch.xhtml" />
 					<p:menuitem value="#{empty userEditBean.user.fullName ? i18n['user.new_user'] : userEditBean.user.fullName}" disabled="true" />
 				</p:breadCrumb>
 			</div>
-		</div>
-		<div class="ui-g">
-			<div class="ui-g-12 ui-xl-8">
+			<div class="col-12">
 				<h:form id="userPanelForm" enctype="multipart/form-data">
 					<p:panel header="#{empty userEditBean.user.fullName ? i18n['user.new_user'] : userEditBean.user.fullName}">
-						<div class="ui-g">
-							<div class="ui-g-12 ui-lg-3">
+						<div class="grid">
+							<div class="col-12 lg-3">
 								<div class="user-card">
 									<p:outputPanel layout="block" id="userImage" styleClass="user-image">
-										<p:fileUpload id="uploadImage" styleClass="invisible uploadImageButton" fileUploadListener="#{userEditBean.uploadImage}" mode="advanced" dragDropSupport="false"
-											update="userImage" auto="true" label="#{i18n['action.add']}" />
+										<p:fileUpload id="uploadImage" styleClass="invisible uploadImageButton" fileUploadListener="#{userEditBean.uploadImage}" mode="advanced"
+											dragDropSupport="false" update="userImage" auto="true" label="#{i18n['action.add']}" />
 										<h:outputLabel for="uploadImage_input">
 											<p:graphicImage styleClass="selectable image" value="/images/#{userEditBean.user.imageFileName}"
 												rendered="#{not empty userEditBean.user.imageFileName}" />
@@ -36,9 +34,9 @@
 								</div>
 							</div>
 
-							<div class="ui-g-12 ui-lg-9">
-								<div class="ui-g">
-									<div class="ui-g-12 ui-md-6">
+							<div class="col-12 lg-9">
+								<div class="grid">
+									<div class="col-12 md-6">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['user.name']}" for="name" />
 											<p:inputText id="name" value="#{userEditBean.user.name}" required="true" />
@@ -46,7 +44,7 @@
 										</div>
 									</div>
 
-									<div class="ui-g-12 ui-md-6">
+									<div class="col-12 md-6">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['user.surname']}" for="surname" />
 											<p:inputText id="surname" value="#{userEditBean.user.surname}" required="true" />
@@ -54,7 +52,7 @@
 										</div>
 									</div>
 
-									<div class="ui-g-12 ui-md-6">
+									<div class="col-12 md-6">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['user.email']}" for="email" />
 											<p:inputText id="email" value="#{userEditBean.user.email}" required="true" validator="#{userEditBean.validateEmail}"
@@ -63,7 +61,7 @@
 										</div>
 									</div>
 
-									<div class="ui-g-12 ui-md-6">
+									<div class="col-12 md-6">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['user.phone_number']}" for="phone_number" />
 											<p:inputText id="phone_number" value="#{userEditBean.user.phoneNumber}" />
@@ -71,7 +69,7 @@
 										</div>
 									</div>
 
-									<div class="ui-g-12 ui-md-6">
+									<div class="col-12 md-6">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['user.role']}" for="role" />
 											<p:selectOneMenu id="role" value="#{userEditBean.user.role}" required="true" styleClass="required">
@@ -85,7 +83,7 @@
 										</div>
 									</div>
 
-									<div class="ui-sm-12 ui-md-6">
+									<div class="sm-12 md-6">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['user.manager']}" for="manager" />
 											<div class="ui-inputgroup">
@@ -107,7 +105,7 @@
 										</div>
 									</div>
 
-									<div class="ui-g-12 ui-md-6">
+									<div class="col-12 md-6">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['user.date_of_join']}" for="date_of_join" />
 											<p:calendar id="date_of_join" value="#{userEditBean.user.dateOfJoin}" required="#{cc.attrs.required}" pattern="dd/MM/yyyy">
@@ -116,10 +114,8 @@
 											<p:message for="date_of_join" />
 										</div>
 									</div>
-								</div>
 
-								<div class="ui-g">
-									<div class="ui-g-12">
+									<div class="col-12">
 										<div class="form-action-primary">
 											<p:commandButton styleClass="btn-gray" value="#{i18n['action.cancel']}" action="#{userEditBean.cancel}" process="@this" />
 											<p:commandButton styleClass="btn-primary" value="#{i18n['action.save']}" action="#{userEditBean.save}" process="@form" update="@form growl" />

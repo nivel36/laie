@@ -48,23 +48,18 @@ body header {
 }
 
 body #main-panel {
+	display: flex;
 	width: 100%;
-	position: relative;
-	overflow: auto;
 }
 
 body #main-panel aside {
 	width: 300px;
-	position: relative;
-	overflow: auto;
-	padding: 1em 0em 0em 1em;
-	float: left;
+	padding: 1em 0.5em;
 }
 
 body #main-panel #content {
-	position: relative;
-	overflow: hidden;
-	padding: 1em 1em 0em 0em;
+	padding: 1em 0.5em;
+	flex: 1;
 }
 
 body footer {
@@ -95,11 +90,8 @@ h4 {
 	padding-top: 0.2em;
 }
 
-.mainSection {
-	padding-bottom: 2em;
-	margin-bottom: 2em;
-	position: relative;
-	border-bottom: 1px solid #999999;
+.main-panel {
+	padding: 1em;
 }
 
 .section {
@@ -214,7 +206,7 @@ body nav li:hover a {
 	font-family: FontAwesome;
 }
 
-@media(max-width: 1124px){
+@media(max-width: 1200px){
 	body header nav .menu .menu_text {
 		display: none;
 	}
@@ -314,8 +306,8 @@ body nav li:hover a {
 }
 
 .form-group {
+	padding: 0em 0.6em 1.2em 0.6em;
 	overflow: auto;
-	padding: 0em 7px 15px 7px;
 	position: relative;
 }
 
@@ -332,7 +324,8 @@ body nav li:hover a {
 
 .form-action-primary {
 	display: flex;
-	 justify-content: flex-end
+	justify-content: flex-end;
+	padding: 0.6em;
 }
 
 .searchForm {
@@ -340,9 +333,8 @@ body nav li:hover a {
 }
 
 .form-action {
-	padding: 10px;
-	text-align: center;
-	overflow: auto;
+	display: flex;
+	justify-content: flex-end;
 }
 
 .user-select.image {
