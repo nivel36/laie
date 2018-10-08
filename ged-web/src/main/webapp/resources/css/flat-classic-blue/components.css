@@ -90,6 +90,13 @@ h4 {
 	padding-top: 0.2em;
 }
 
+.mainSection {
+	padding-bottom: 2em;
+	margin-bottom: 2em;
+	position: relative;
+	border-bottom: 1px solid #999999;
+}
+
 .main-panel {
 	padding: 1em;
 }

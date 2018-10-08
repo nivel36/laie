@@ -1,48 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:jsf="http://xmlns.jcp.org/jsf" xmlns:p="http://primefaces.org/ui">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:jsf="http://xmlns.jcp.org/jsf" xmlns:p="http://primefaces.org/ui">
 
 	<nav>
 		<div class="nav-header"></div>
 		<div class="menu">
 			<h:form id="menuForm">
 				<ul>
-					<li><a jsf:action="#{menuBean.gotoIndex}"
-						jsf:styleClass="#{selectedMenu eq 'index' ? 'selected': ''}"><span
-							class="menu_icon"><em class="fa fa-home" /></span> <span
-							class="menu_text">#{i18n['menu.index']}</span></a></li>
-					<li><a jsf:action="#{menuBean.gotoCandidates}"
-						jsf:styleClass="#{selectedMenu eq 'candidates' ? 'selected': ''}"><span
-							class="menu_icon"><em class="fa fa-users" /></span> <span
-							class="menu_text">#{i18n['menu.candidates']}</span></a></li>
-					<li><a jsf:action="#{menuBean.gotoJobOffers}"
-						jsf:styleClass="#{selectedMenu eq 'offers' ? 'selected': ''}"><span
-							class="menu_icon"><em class="fa fa-suitcase" /></span> <span
-							class="menu_text">#{i18n['menu.offers']}</span></a></li>
-					<li><a jsf:action="#{menuBean.gotoClients}"
-						jsf:styleClass="#{selectedMenu eq 'clients' ? 'selected': ''}"><span
-							class="menu_icon"><em class="fa fa-industry" /></span> <span
-							class="menu_text">#{i18n['menu.clients']}</span></a></li>
-					<li><a jsf:action="#{menuBean.gotoReports}"
-						jsf:styleClass="#{selectedMenu eq 'reports' ? 'selected': ''}"><span
-							class="menu_icon"><em class="fa fa-bar-chart" /></span> <span
-							class="menu_text">#{i18n['menu.reports']}</span></a></li>
-					<li><a jsf:action="#{menuBean.gotoUsers}"
-						jsf:rendered="#{request.isUserInRole('ADMIN')}"
-						jsf:styleClass="#{selectedMenu eq 'users' ? 'selected': ''}"><span
-							class="menu_icon"><em class="fa fa-user" /></span> <span
-							class="menu_text">#{i18n['menu.users']}</span></a></li>
-					<li><a jsf:action="#{menuBean.gotoMaintenances}"
-						jsf:styleClass="#{selectedMenu eq 'maintenances' ? 'selected': ''}"><span
-							class="menu_icon"><em class="fa fa-cogs" /></span> <span
-							class="menu_text">#{i18n['menu.maintenances']}</span></a></li>
-					<li><a jsf:action="#{menuBean.gotoIsabel}"
-						jsf:styleClass="#{selectedMenu eq 'isabel' ? 'selected': ''}"><span
-							class="menu_icon"><em class="fa fa-cogs" /></span> <span
-							class="menu_text">Isabel</span></a></li>
+					<li><a jsf:action="#{menuBean.gotoIndex}" jsf:styleClass="#{selectedMenu eq 'index' ? 'selected': ''}"><span class="menu_icon"><em
+								class="fa fa-home" /></span> <span class="menu_text">#{i18n['menu.index']}</span></a></li>
+					<li><a jsf:action="#{menuBean.gotoCandidates}" jsf:styleClass="#{selectedMenu eq 'candidates' ? 'selected': ''}"><span class="menu_icon"><em
+								class="fa fa-users" /></span> <span class="menu_text">#{i18n['menu.candidates']}</span></a></li>
+					<li><a jsf:action="#{menuBean.gotoJobOffers}" jsf:styleClass="#{selectedMenu eq 'offers' ? 'selected': ''}"><span class="menu_icon"><em
+								class="fa fa-suitcase" /></span> <span class="menu_text">#{i18n['menu.offers']}</span></a></li>
+					<li><a jsf:action="#{menuBean.gotoClients}" jsf:styleClass="#{selectedMenu eq 'clients' ? 'selected': ''}"><span class="menu_icon"><em
+								class="fa fa-industry" /></span> <span class="menu_text">#{i18n['menu.clients']}</span></a></li>
+					<li><a jsf:action="#{menuBean.gotoReports}" jsf:styleClass="#{selectedMenu eq 'reports' ? 'selected': ''}"><span class="menu_icon"><em
+								class="fa fa-bar-chart" /></span> <span class="menu_text">#{i18n['menu.reports']}</span></a></li>
+					<li><a jsf:action="#{menuBean.gotoUsers}" jsf:styleClass="#{selectedMenu eq 'users' ? 'selected': ''}"><span class="menu_icon"><em
+								class="fa fa-user" /></span> <span class="menu_text">#{i18n['menu.users']}</span></a></li>
+					<li><a jsf:action="#{menuBean.gotoMaintenances}" jsf:styleClass="#{selectedMenu eq 'maintenances' ? 'selected': ''}"><span class="menu_icon"><em
+								class="fa fa-cogs" /></span> <span class="menu_text">#{i18n['menu.maintenances']}</span></a></li>
+					<li><a jsf:action="#{menuBean.gotoIsabel}" jsf:styleClass="#{selectedMenu eq 'isabel' ? 'selected': ''}"><span class="menu_icon"><em
+								class="fa fa-cogs" /></span> <span class="menu_text">Isabel</span></a></li>
 				</ul>
 			</h:form>
 		</div>
@@ -50,10 +30,8 @@
 			<h:form class="navbarUtilityForm">
 				<ul>
 					<li><h:outputText value="#{sessionUser}" styleClass="name" /></li>
-					<li><h:commandLink value="#{i18n['menu.config']}"
-							action="/faces/config/config?faces-redirect=true" styleClass="config" /></li>
-					<li><h:commandLink value="#{i18n['user.logout']}"
-							action="#{loginBean.logout}" styleClass="logout" /></li>
+					<li><h:commandLink value="#{i18n['menu.config']}" action="/faces/config/config?faces-redirect=true" styleClass="config" /></li>
+					<li><h:commandLink value="#{i18n['user.logout']}" action="#{loginBean.logout}" styleClass="logout" /></li>
 				</ul>
 			</h:form>
 		</div>

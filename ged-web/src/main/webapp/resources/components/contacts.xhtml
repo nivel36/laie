@@ -25,7 +25,7 @@
 				</div>
 			</div>
 		</p:dataGrid>
-		<h:panelGroup styleClass="form-action-primary" rendered="#{cc.childCount != 0}">
+		<h:panelGroup styleClass="form-action-primary" rendered="#{component.findComponent('children').childCount != 0}">
 			<composite:insertChildren />
 		</h:panelGroup>
 	</p:panel>

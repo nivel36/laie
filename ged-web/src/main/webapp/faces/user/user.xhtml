@@ -91,9 +91,10 @@
 								<div class="grid">
 									<div class="col-12">
 										<div class="form-action-primary">
-											<p:commandButton id="exportExcel" icon="fa fa-file-excel-o" value="#{i18n['action.export']}" action="#{userBean.export}" />
+											<p:commandButton id="exportExcel" icon="fa fa-file-excel-o" value="#{i18n['action.export']}" action="#{userBean.export}"
+												rendered="#{sessionUser.hasPermissionToEdit(userBean.user)}" />
 											<p:commandButton value="#{i18n['action.edit']}" actionListener="#{userBean.editUser}" action="userEdit?faces-redirect=true" process="@this"
-												styleClass="btn-primary" />
+												styleClass="btn-primary" rendered="#{sessionUser.admin}" />
 										</div>
 									</div>
 								</div>
@@ -112,7 +113,7 @@
 			<div class="col-12 md-12 lg-6 xl-6">
 				<p:panel header="#{i18n['job_meeting.planned_job_meetings']}" />
 			</div>
-			
+
 			<div class="col-12 md-12 lg-6">
 				<h:form id="jobOffersForm">
 					<cc:jobOffers jobOffers="#{userBean.jobOffers}" />
