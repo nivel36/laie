@@ -38,6 +38,14 @@ public class JobCandidature extends AbstractEntity {
 	@ManyToOne
 	@JoinColumn(name = "jobOfferId", nullable = false)
 	private JobOffer jobOffer;
+	
+	public JobCandidature() {
+	}
+	
+	public JobCandidature(final Candidate candidate, final JobOffer jobOffer) {
+		this.candidate = candidate;
+		this.jobOffer = jobOffer;
+	}
 
 	@Override
 	public boolean equals(final Object obj) {
