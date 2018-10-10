@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:i18n="http://ged.com/i18n"
+	xmlns:cc="http://java.sun.com/jsf/composite/components" xmlns:composite="http://java.sun.com/jsf/composite">
+
+<composite:interface>
+	<composite:attribute name="jobCandidatures" required="true" />
+	<composite:attribute name="title" />
+</composite:interface>
+
+<composite:implementation>
+	<p:panel id="jobCandidatures" header="#{empty cc.attrs.title ? i18n['job_candidature.job_candidatures'] : cc.attrs.title}">
+		<p:dataTable var="jobCabdidature" value="#{cc.attrs.jobCandidatures}" emptyMessage="#{i18n['job_candidature.no_job_candidatures_found']}" reflow="true" paginator="true"
+			paginatorPosition="bottom" rows="#{sessionUser.rowsPerPage}" sortBy="#{jobOffer.name}" sortOrder="ascending">
+			<p:column headerText="#{i18n['job_candidature.job_offer']}">
+				<h:link value="#{jobCandidature.jobOffer.name}" outcome="/faces/jobOffer/jobOffer">
+					<f:param name="jobOfferId" value="#{jobCandidature.jobOffer.id}" />
+				</h:link>
+			</p:column>
+			<p:column headerText="#{i18n['job_candidature.client']}">
+				<h:link value="#{jobCandidature.jobOffer.client.name}" outcome="/faces/client/client">
+					<f:param name="clientId" value="#{jobCandidature.jobOffer.client.id}" />
+				</h:link>
+			</p:column>
+			<p:column headerText="#{i18n['job_candidature.state']}">
+				<h:outputText value="#{jobCandidature.state}" />
+			</p:column>
+			<p:column headerText="#{i18n['job_candidature.owner']}">
+				<h:link value="#{jobCandidature.owner.fullName}" outcome="/faces/user/user">
+					<f:param name="userId" value="#{jobCandidaturer.owner.id}" />
+				</h:link>
+			</p:column>
+		</p:dataTable>
+		<h:panelGroup styleClass="form-action-primary" rendered="#{component.findComponent('children').childCount != 0}">
+			<composite:insertChildren />
+		</h:panelGroup>
+	</p:panel>
+</composite:implementation>
