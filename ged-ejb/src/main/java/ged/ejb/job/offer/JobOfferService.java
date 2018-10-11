@@ -106,6 +106,11 @@ public class JobOfferService extends AbstractAuditedService<JobOffer> {
 		logger.debug("Save job offer {}", jobOffer);
 		return this.getDao().save(jobOffer);
 	}
+	
+	public List<JobCandidature> findJobCandituresByJobOffer(final JobOffer jobOffer) {
+		Objects.requireNonNull(jobOffer);
+		return jobCandidatureDao.findByJobOffer(jobOffer);
+	}
 
 	public void setJobCandidatureDao(final JobCandidatureDao jobCandidatureDao) {
 		this.jobCandidatureDao = jobCandidatureDao;

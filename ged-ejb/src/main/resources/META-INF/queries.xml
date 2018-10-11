@@ -160,7 +160,7 @@
 		<query><![CDATA[
 			SELECT j 
 			FROM JobCandidature j 
-			WHERE j.jobOffer.id = :jobOfferId
+			WHERE j.jobOffer = :jobOffer
 		]]></query>
 	</named-query>
 
@@ -168,7 +168,7 @@
 		<query><![CDATA[
 			SELECT j 
 			FROM JobCandidature j 
-			WHERE j.candidate.id = :candidateId 
+			WHERE j.candidate = :candidate 
 		]]></query>
 	</named-query>
 
