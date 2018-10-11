@@ -93,7 +93,7 @@
 			</div>
 			<div class="ui-g-12 ui-md-12 ui-lg-6 ui-xl-4">
 				<h:form id="candidatesForm">
-					<cc:jobCandidatures jobCandidatures="#{jobOfferBean.jobCandidatures}">
+					<cc:jobCandidatures jobCandidatures="#{jobOfferBean.jobCandidatures}" showJobOffer="false">
 						<p:commandButton value="#{i18n['action.add']}" actionListener="#{jobOfferBean.openSelectCandidatesDialog}" process="@this">
 							<p:ajax event="dialogReturn" listener="#{jobOfferBean.onCloseSelectCandidateDialog}" update="@form" />
 						</p:commandButton>
