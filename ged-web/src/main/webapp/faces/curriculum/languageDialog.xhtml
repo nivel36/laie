@@ -10,15 +10,15 @@
 	<ui:define name="content">
 		<h:form>
 
-			<div class="ui-g">
-				<div class="ui-g-12 ui-md-6">
+			<div class="grid">
+				<div class="col-12 md-6">
 					<div class="form-group">
 						<p:outputLabel value="#{i18n['language.language']}" />
 						<p:inputText id="language" value="#{languageBean.language.name}" required="true" />
 						<p:message for="language" />
 					</div>
 				</div>
-				<div class="ui-g-12 ui-md-6">
+				<div class="col-12 md-6">
 					<div class="form-group">
 						<p:outputLabel value="#{i18n['language.level']}"  />
 						<p:selectOneMenu id="level" value="#{languageBean.language.level}" required="true">
@@ -29,9 +29,8 @@
 						<p:message for="level" />
 					</div>
 				</div>
-			</div>
-			<div class="ui-g">
-				<div class="ui-g-12">
+
+				<div class="col-12">
 					<div class="form-action-primary">
 						<p:commandButton styleClass="btn-gray" value="#{i18n['action.cancel']}" actionListener="#{languageBean.closeDialog}" process="@this" update="@form" />
 						<p:commandButton styleClass="btn-red" value="#{i18n['action.delete']}" action="#{languageBean.delete}" process="@this"

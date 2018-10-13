@@ -8,22 +8,20 @@
 	</ui:define>
 
 	<ui:define name="content">
-		<div class="ui-g">
-			<div class="ui-g-12 ui-xl-8">
+		<div class="grid">
+			<div class="col-12 xl-8">
 				<p:breadCrumb homeDisplay="text">
 					<p:menuitem value="#{i18n['menu.index']}" url="/faces/index.xhtml" />
 					<p:menuitem value="#{i18n['candidate.candidates']}" url="/faces/candidate/candidateSearch.xhtml" />
 					<p:menuitem value="#{candidateEditBean.newCandidate ? i18n['candidate.new_candidate'] : candidateEditBean.candidate.fullName}" disabled="true" />
 				</p:breadCrumb>
 			</div>
-		</div>
-
-		<div class="ui-g">
-			<div class="ui-g-12 ui-xl-8">
+			
+			<div class="col-12 xl-8">
 				<h:form id="candidateForm">
 					<p:panel header="#{candidateEditBean.newCandidate ? i18n['candidate.new_candidate'] : candidateEditBean.candidate.fullName}">
-						<div class="ui-g">
-							<div class="ui-g-12 ui-md-6">
+						<div class="grid">
+							<div class="col-12 md-6">
 								<div class="user-card">
 									<p:outputPanel layout="block" id="userImage" styleClass="user-image">
 										<p:fileUpload id="uploadImage" styleClass="invisible uploadImageButton" fileUploadListener="#{candidateEditBean.uploadImage}" mode="advanced"
@@ -42,8 +40,7 @@
 								</div>
 							</div>
 							
-							
-							<div class="ui-g-12 ui-md-6">
+							<div class="col-12 md-6">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['tag.tags']}" for="tags" />
 									<p:chips id="tags" value="#{candidateEditBean.tags}" label="#{i18n['candidateEditBean.tags']}" converter="stringConverter" />
@@ -51,7 +48,7 @@
 								</div>
 							</div>
 
-							<div class="ui-g-12 ui-md-6">
+							<div class="col-12 md-6">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['candidate.jobProfile']}" for="jobProfile" />
 									<p:inputText id="jobProfile" value="#{candidateEditBean.candidate.jobProfile}" required="true" />
@@ -59,7 +56,7 @@
 								</div>
 							</div>
 							
-							<div class="ui-g-12 ui-md-6">
+							<div class="col-12 md-6">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['candidate.name']}" for="name" />
 									<p:inputText id="name" value="#{candidateEditBean.candidate.name}" required="true" />
@@ -67,7 +64,7 @@
 								</div>
 							</div>
 
-							<div class="ui-g-12 ui-md-6">
+							<div class="col-12 md-6">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['candidate.surname']}" for="surname" />
 									<p:inputText id="surname" value="#{candidateEditBean.candidate.surname}" required="true" />
@@ -75,16 +72,15 @@
 								</div>
 							</div>
 
-							<div class="ui-g-12 ui-md-6">
+							<div class="col-12 md-6">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['candidate.bornDate']}" for="bornDate" />
 									<p:calendar id="bornDate" value="#{candidateEditBean.candidate.bornDate}" yearRange="c-100:c0" navigator="true" />
 									<p:message for="bornDate" />
 								</div>
 							</div>
-						</div>
-						<div class="ui-g">
-							<div class="ui-g-12 ui-md-6">
+
+							<div class="col-12 md-6">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['candidate.phone_number']}" for="phoneNumber" />
 									<p:inputText id="phoneNumber" value="#{candidateEditBean.candidate.phoneNumber}" required="true" />
@@ -92,7 +88,7 @@
 								</div>
 							</div>
 
-							<div class="ui-g-12 ui-md-6">
+							<div class="col-12 md-6">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['candidate.email']}" for="email" />
 									<p:inputText id="email" pt:type="email" value="#{candidateEditBean.candidate.email}" required="true" />
@@ -100,17 +96,15 @@
 								</div>
 							</div>
 
-							<div class="ui-g-12 ui-md-6">
+							<div class="col-12 md-6">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['candidate.skype']}" for="skype" />
 									<p:inputText id="skype" pt:type="skype" value="#{candidateEditBean.candidate.skype}" />
 									<p:message for="skype" />
 								</div>
 							</div>
-						</div>
-
-						<div class="ui-g">
-							<div class="ui-g-12 ui-md-6">
+			
+							<div class="col-12 md-6">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['address.city']}" for="city" />
 									<p:inputText id="city" value="#{candidateEditBean.candidate.address.city}" />
@@ -118,17 +112,15 @@
 								</div>
 							</div>
 
-							<div class="ui-g-12 ui-md-6">
+							<div class="col-12 md-6">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['address.state']}" for="state" />
 									<p:inputText id="state" value="#{candidateEditBean.candidate.address.state}" />
 									<p:message for="state" />
 								</div>
 							</div>
-						</div>
-
-						<div class="ui-g">
-							<div class="ui-g-12 ui-md-6">
+			
+							<div class="col-12 md-6">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['candidate.salary']}" for="salary" />
 									<p:inputText id="salary" value="#{candidateEditBean.candidate.salary}" />
@@ -136,7 +128,7 @@
 								</div>
 							</div>
 
-							<div class="ui-g-12 ui-md-6">
+							<div class="col-12 md-6">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['candidate.expected_salary']}" for="expected_salary" />
 									<p:inputText id="expected_salary" value="#{candidateEditBean.candidate.expectedSalary}" label="#{i18n['candidate.expected_salary']}" />

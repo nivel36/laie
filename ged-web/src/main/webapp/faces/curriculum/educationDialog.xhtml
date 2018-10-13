@@ -9,24 +9,23 @@
 
 	<ui:define name="content">
 		<h:form>
-			<div class="ui-g">
-				<div class="ui-g-12 ui-md-6">
+			<div class="grid">
+				<div class="col-12 md-6">
 					<div class="form-group">
 						<p:outputLabel value="#{i18n['education.degree']}" />
 						<p:inputText id="degree" value="#{educationBean.education.degree}" required="true" />
 						<p:message for="degree" />
 					</div>
 				</div>
-				<div class="ui-g-12 ui-md-6">
+				<div class="col-12 md-6">
 					<div class="form-group">
 						<p:outputLabel value="#{i18n['education.school']}" />
 						<p:inputText id="school" value="#{educationBean.education.school}" required="true" />
 						<p:message for="school" />
 					</div>
 				</div>
-			</div>
-			<div class="ui-g">
-				<div class="ui-g-12 ui-md-5">
+
+				<div class="col-12 md-5">
 					<div class="form-group">
 						<p:outputLabel value="#{i18n['education.from_date']}" />
 						<p:selectOneMenu id="startYear" value="#{educationBean.education.startYear}" required="true">
@@ -37,7 +36,7 @@
 					</div>
 				</div>
 
-				<div class="ui-g-12 ui-md-5">
+				<div class="col-12 md-5">
 					<h:panelGroup id="endDate" class="form-group" layout="block">
 						<p:outputLabel value="#{i18n['education.to_date']}" rendered="#{not educationBean.education.stillStudying}" />
 						<p:selectOneMenu id="endYear" value="#{educationBean.education.endYear}" rendered="#{not educationBean.education.stillStudying}" required="true">
@@ -50,7 +49,7 @@
 					</h:panelGroup>
 				</div>
 
-				<div class="ui-g-12 ui-md-2">
+				<div class="col-12 md-2">
 					<div class="form-group">
 						<p:outputLabel value="#{i18n['education.still_studying']}" />
 						<p:selectBooleanCheckbox value="#{educationBean.education.stillStudying}" id="stillStudying">
@@ -58,9 +57,8 @@
 						</p:selectBooleanCheckbox>
 					</div>
 				</div>
-			</div>
-			<div class="ui-g">
-				<div class="ui-g-12">
+
+				<div class="col-12">
 					<div class="form-group">
 						<p:outputLabel value="#{i18n['education.description']}" />
 						<p:textEditor id="description" value="#{educationBean.education.description}" styleClass="textArea">
@@ -99,9 +97,8 @@
 						<p:message for="description" />
 					</div>
 				</div>
-			</div>
-			<div class="ui-g">
-				<div class="ui-g-12">
+
+				<div class="col-12">
 					<div class="form-action-primary">
 						<p:commandButton styleClass="btn-gray" value="#{i18n['action.cancel']}" actionListener="#{educationBean.closeDialog}" process="@this" update="@form" />
 						<p:commandButton styleClass="btn-red" value="#{i18n['action.delete']}" action="#{educationBean.delete}" process="@this"

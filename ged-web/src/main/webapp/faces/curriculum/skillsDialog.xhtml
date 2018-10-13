@@ -9,8 +9,8 @@
 
 	<ui:define name="content">
 		<h:form>
-			<div class="ui-g">
-				<div class="ui-g-12">
+			<div class="grid">
+				<div class="col-12">
 					<div class="form-group">
 						<p:outputLabel value="#{i18n['skill.skill']}" />
 						<div class="ui-inputgroup">
@@ -20,12 +20,10 @@
 						<p:message for="skill" />
 					</div>
 				</div>
-				<div class="ui-g-12">
+				<div class="col-12">
 					<p:chips value="#{skillsBean.skills}" converter="stringConverter" disabled="true" />
 				</div>
-			</div>
-			<div class="ui-g">
-				<div class="ui-g-12">
+				<div class="col-12">
 					<div class="form-action-primary">
 						<p:commandButton styleClass="btn-gray" value="#{i18n['action.close']}" actionListener="#{skillsBean.closeDialog}" process="@this" update="@form" />
 					</div>

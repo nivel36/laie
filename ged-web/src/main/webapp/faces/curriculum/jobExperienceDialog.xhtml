@@ -9,8 +9,8 @@
 
 	<ui:define name="content">
 		<h:form>
-			<div class="ui-g">
-				<div class="ui-g-12 ui-md-6">
+			<div class="grid">
+				<div class="col-12 md-6">
 					<div class="form-group">
 						<p:outputLabel value="#{i18n['job_experience.company_name']}" />
 						<p:inputText id="companyName" value="#{jobExperienceBean.jobExperience.companyName}" required="true" />
@@ -18,16 +18,15 @@
 					</div>
 				</div>
 
-				<div class="ui-g-12 ui-md-6">
+				<div class="col-12 md-6">
 					<div class="form-group">
 						<p:outputLabel value="#{i18n['job_experience.job_position']}" />
 						<p:inputText id="jobPosition" value="#{jobExperienceBean.jobExperience.jobPosition}" required="true" />
 						<p:message for="jobPosition" />
 					</div>
 				</div>
-			</div>
-			<div class="ui-g">
-				<div class="ui-g-12 ui-md-5">
+
+				<div class="col-12 md-5">
 					<div class="form-group">
 						<p:outputLabel value="#{i18n['job_experience.from_date']}" />
 						<p:selectOneMenu id="startMonth" value="#{jobExperienceBean.startMonth}" required="true">
@@ -43,7 +42,7 @@
 					</div>
 				</div>
 
-				<div class="ui-g-12 ui-md-5">
+				<div class="col-12 md-5">
 					<h:panelGroup id="endDate" class="form-group" layout="block">
 						<p:outputLabel value="#{i18n['job_experience.to_date']}" rendered="#{not jobExperienceBean.jobExperience.stillWorking}" />
 						<p:selectOneMenu id="endMonth" value="#{jobExperienceBean.endMonth}" rendered="#{not jobExperienceBean.jobExperience.stillWorking}"
@@ -63,7 +62,7 @@
 					</h:panelGroup>
 				</div>
 
-				<div class="ui-g-12 ui-md-2">
+				<div class="col-12 md-2">
 					<div class="form-group">
 						<p:outputLabel value="#{i18n['job_experience.still_working']}" />
 						<p:selectBooleanCheckbox value="#{jobExperienceBean.jobExperience.stillWorking}" id="stillWorking">
@@ -71,9 +70,8 @@
 						</p:selectBooleanCheckbox>
 					</div>
 				</div>
-			</div>
-			<div class="ui-g">
-				<div class="ui-g-12">
+
+				<div class="col-12">
 					<div class="form-group">
 						<p:outputLabel value="#{i18n['job_experience.description']}" />
 						<p:textEditor id="description" value="#{jobExperienceBean.jobExperience.description}" styleClass="textArea">
@@ -112,9 +110,8 @@
 						<p:message for="description" />
 					</div>
 				</div>
-			</div>
-			<div class="ui-g">
-				<div class="ui-g-12">
+
+				<div class="col-12">
 					<div class="form-action-primary">
 						<p:commandButton styleClass="btn-gray" value="#{i18n['action.cancel']}" actionListener="#{jobExperienceBean.closeDialog}" process="@this"
 							update="@form" />

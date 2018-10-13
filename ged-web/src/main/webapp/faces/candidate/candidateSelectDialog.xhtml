@@ -10,8 +10,8 @@
 	<ui:define name="content">
 		<h:form id="candidateSelectForm">
 			<div class="searchForm">
-				<div class="ui-g">
-					<div class="ui-md-8">
+				<div class="grid">
+					<div class="md-8">
 						<div class="ui-inputgroup">
 							<p:inputText id="searchText" value="#{candidateSelectDialogBean.searchText}" />
 							<p:commandButton icon="fa fa-search" styleClass="green-button" action="#{candidateSelectDialogBean.search}" update="@form" process="@form" />
@@ -54,15 +54,13 @@
 					<p:column headerText="#{i18n['candidate.state']}">
 					</p:column>
 				</p:dataTable>
-				<div class="ui-g">
-					<div class="ui-g-12">
-						<div class="form-action-primary">
-							<p:commandButton value="#{i18n['action.cancel']}" actionListener="#{candidateSelectDialogBean.closeDialog}" process="@this" styleClass="btn-gray" />
-							<p:commandButton value="#{i18n['action.select']}" action="#{candidateSelectDialogBean.select}" update="@form" process="@form"/>
-						</div>
-					</div>
+
+				<div class="form-action-primary">
+					<p:commandButton value="#{i18n['action.cancel']}" actionListener="#{candidateSelectDialogBean.closeDialog}" process="@this" styleClass="btn-gray" />
+					<p:commandButton value="#{i18n['action.select']}" action="#{candidateSelectDialogBean.select}" update="@form" process="@form" />
 				</div>
 			</div>
+
 		</h:form>
 	</ui:define>
 </ui:composition>

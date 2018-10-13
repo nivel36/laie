@@ -9,23 +9,21 @@
 	<ui:param name="selectedMenu" value="candidates" />
 
 	<ui:define name="content">
-		<div class="ui-g">
-			<div class="ui-g-12">
+		<div class="grid">
+			<div class="col-12">
 				<p:breadCrumb homeDisplay="text">
 					<p:menuitem value="#{i18n['menu.index']}" url="/faces/index.xhtml" />
 					<p:menuitem value="#{i18n['candidate.candidates']}" disabled="true" />
 				</p:breadCrumb>
 			</div>
-		</div>
 
-		<div class="ui-g">
-			<div class="ui-g-12">
+			<div class="col-12">
 				<h:form id="candidateSearchForm">
 					<p:defaultCommand target="searchAction" />
 					<p:panel id="searchUserPanel" header="#{i18n['candidate.search']}">
 						<div class="searchForm">
-							<div class="ui-g">
-								<div class="ui-md-12 ui-lg-6 ui-xl-4">
+							<div class="grid">
+								<div class="md-12 lg-6 xl-4">
 									<div class="ui-inputgroup">
 										<p:inputText id="searchText" value="#{candidateSearchBean.searchText}" />
 										<p:commandButton id="cleanSearchTextAction" action="#{candidateSearchBean.clean}" process="@this" update="@form" icon="fa fa-times"
@@ -33,8 +31,8 @@
 										<p:commandButton id="searchAction" action="#{candidateSearchBean.search}" process="@this searchText" update="@form" icon="fa fa-search" />
 									</div>
 								</div>
-								<div class="ui-g-12 ui-lg-6 ui-xl-8">
-									<div class="pull-right">
+								<div class="md-12 lg-6 xl-8">
+									<div class="form-action">
 										<p:commandButton value="#{i18n['action.export']}" action="#{candidateSearchBean.clean}" process="@this" icon="fa fa-file-excel-o" />
 										<p:button value="#{i18n['action.new']}" outcome="candidateEdit" styleClass="btn-primary" />
 									</div>
