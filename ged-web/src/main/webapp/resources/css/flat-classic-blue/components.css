@@ -428,8 +428,7 @@ body nav li:hover a {
 	display: inline-block;
 	position: relative;
 	width: 100%;
-	margin: 5px 0px 0px 0px;
-	padding: 15px;
+	padding: 1em;
 	border: 1px solid #BDBDBD;
 	background: white;
 }

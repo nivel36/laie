@@ -11,8 +11,8 @@
 
 	<ui:define name="content">
 		<div class="stats">
-			<div class="ui-g">
-				<div class="ui-g-12 ui-md-6 ui-lg-3">
+			<div class="grid">
+				<div class="col-12 md-6 lg-3">
 					<div class="card card-stats">
 						<div class="card-header"></div>
 						<div class="card-body">
@@ -22,7 +22,7 @@
 						<div class="card-footer"></div>
 					</div>
 				</div>
-				<div class="ui-g-12 ui-md-6 ui-lg-3">
+				<div class="col-12 md-6 lg-3">
 					<div class="card card-stats">
 						<div class="card-header"></div>
 						<div class="card-body">
@@ -32,7 +32,7 @@
 						<div class="card-footer"></div>
 					</div>
 				</div>
-				<div class="ui-g-12 ui-md-6 ui-lg-3">
+				<div class="col-12 md-6 lg-3">
 					<div class="card card-stats">
 						<div class="card-header"></div>
 						<div class="card-body">
@@ -42,7 +42,7 @@
 						<div class="card-footer"></div>
 					</div>
 				</div>
-				<div class="ui-g-12 ui-md-6 ui-lg-3">
+				<div class="col-12 md-6 lg-3">
 					<div class="card card-stats">
 						<div class="card-header"></div>
 						<div class="card-body">
@@ -52,43 +52,42 @@
 						<div class="card-footer"></div>
 					</div>
 				</div>
-			</div>
-		</div>
-		<div class="ui-g">
-			<div class="ui-g-12 ui-lg-6">
-				<cc:jobOffers jobOffers="#{indexBean.jobOffers}">
-					<p:commandButton value="#{i18n['action.new']}" action="/faces/jobOffer/jobOfferEdit.xhtml?faces-redirect=true" />
-				</cc:jobOffers>
-			</div>
-			<div class="ui-g-12 ui-lg-6">
-				<cc:candidates candidates="#{indexBean.candidates}" title="#{i18n['candidate.last_candidates']}">
-					<p:commandButton value="#{i18n['action.new']}" action="/faces/candidate/candidateEdit.xhtml?faces-redirect=true" />
-				</cc:candidates>
-			</div>
-		</div>
-		<div class="ui-g">
-			<div class="ui-g-12 ui-lg-6">
-				<p:panel header="#{i18n['index.last_reports']}">
-					<div class="ui-g">
-						<div class="ui-g-12">
-							<div class="form-action-primary">
-								<p:commandButton value="#{i18n['action.new']}" action="#{jobOfferViewBean.edit}" />
-							</div>
-						</div>
-					</div>
-				</p:panel>
-			</div>
 
-			<div class="ui-g-12 ui-lg-6">
-				<p:panel header="#{i18n['index.scheudele']}">
-					<div class="ui-g">
-						<div class="ui-g-12">
-							<div class="form-action-primary">
-								<p:commandButton value="#{i18n['action.new']}" action="#{jobOfferViewBean.edit}" />
+
+				<div class="col-12 lg-6">
+					<cc:jobOffers jobOffers="#{indexBean.jobOffers}">
+						<p:commandButton value="#{i18n['action.new']}" action="/faces/jobOffer/jobOfferEdit.xhtml?faces-redirect=true" />
+					</cc:jobOffers>
+				</div>
+				<div class="col-12 lg-6">
+					<cc:candidates candidates="#{indexBean.candidates}" title="#{i18n['candidate.last_candidates']}">
+						<p:commandButton value="#{i18n['action.new']}" action="/faces/candidate/candidateEdit.xhtml?faces-redirect=true" />
+					</cc:candidates>
+				</div>
+
+				<div class="ui-g-12 ui-lg-6">
+					<p:panel header="#{i18n['index.last_reports']}">
+						<div class="ui-g">
+							<div class="ui-g-12">
+								<div class="form-action-primary">
+									<p:commandButton value="#{i18n['action.new']}" action="#{jobOfferViewBean.edit}" />
+								</div>
 							</div>
 						</div>
-					</div>
-				</p:panel>
+					</p:panel>
+				</div>
+
+				<div class="ui-g-12 ui-lg-6">
+					<p:panel header="#{i18n['index.scheudele']}">
+						<div class="ui-g">
+							<div class="ui-g-12">
+								<div class="form-action-primary">
+									<p:commandButton value="#{i18n['action.new']}" action="#{jobOfferViewBean.edit}" />
+								</div>
+							</div>
+						</div>
+					</p:panel>
+				</div>
 			</div>
 		</div>
 	</ui:define>
