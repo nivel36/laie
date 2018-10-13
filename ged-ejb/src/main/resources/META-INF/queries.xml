@@ -146,7 +146,7 @@
 			WHERE c.candidate = :candidate
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="I18n.findByKeyAndLocale">
 		<query><![CDATA[
 			SELECT i 
@@ -160,6 +160,8 @@
 		<query><![CDATA[
 			SELECT j 
 			FROM JobCandidature j 
+			LEFT JOIN FETCH j.candidate
+			LEFT JOIN FETCH j.jobOffer
 			WHERE j.jobOffer = :jobOffer
 		]]></query>
 	</named-query>

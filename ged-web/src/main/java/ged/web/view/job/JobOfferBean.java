@@ -41,7 +41,6 @@ public class JobOfferBean extends AbstractBean {
 	@Inject
 	private Long jobOfferId;
 
-
 	@Inject
 	private transient JobOfferService jobService;
 
@@ -66,7 +65,6 @@ public class JobOfferBean extends AbstractBean {
 		}
 		this.jobCandidatures = this.jobService.findJobCandituresByJobOffer(jobOffer);
 	}
-
 
 	// boolean -> is[name]
 	public boolean isUserHasPermissionToEditJobOffer() {
@@ -98,11 +96,11 @@ public class JobOfferBean extends AbstractBean {
 		this.jobOffer = jobOffer;
 	}
 
-	public void setJobOfferId(Long jobOfferId) {
+	public void setJobOfferId(final Long jobOfferId) {
 		this.jobOfferId = jobOfferId;
 	}
 
-	public void setJobService(JobOfferService jobService) {
+	public void setJobService(final JobOfferService jobService) {
 		this.jobService = jobService;
 	}
 }

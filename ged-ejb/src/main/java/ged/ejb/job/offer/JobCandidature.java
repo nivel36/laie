@@ -38,10 +38,12 @@ public class JobCandidature extends AbstractEntity {
 	@ManyToOne
 	@JoinColumn(name = "jobOfferId", nullable = false)
 	private JobOffer jobOffer;
-	
+
+	private String state;
+
 	public JobCandidature() {
 	}
-	
+
 	public JobCandidature(final Candidate candidate, final JobOffer jobOffer) {
 		this.candidate = candidate;
 		this.jobOffer = jobOffer;
@@ -78,6 +80,10 @@ public class JobCandidature extends AbstractEntity {
 		return this.jobOffer;
 	}
 
+	public String getState() {
+		return state;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(this.candidate, this.jobOffer);
@@ -99,8 +105,12 @@ public class JobCandidature extends AbstractEntity {
 		this.jobOffer = jobOffer;
 	}
 
+	public void setState(final String state) {
+		this.state = state;
+	}
+
 	@Override
 	public String toString() {
-		return "JobCandidature [jobOffer=" + this.jobOffer + ", candidate=" + this.candidate + ", jobMeetings=" + this.jobMeetings + "]";
+		return candidate.getFullName() + "-" + jobOffer;
 	}
 }
