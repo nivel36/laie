@@ -264,13 +264,13 @@ body nav li:hover a {
 }
 
 .login-page .card-login.ui-panel .ui-panel-titlebar .ui-panel-title {
-	font-size: 25px;
+	font-size: 2em;
 	font-weight: 400;
 	border: 0px;
 }
 
 .login-page .card-login.ui-panel .ui-panel-content {
-	padding: 10px 25px;
+	padding: 2em;
 }
 
 .userImage, .userCamera {
