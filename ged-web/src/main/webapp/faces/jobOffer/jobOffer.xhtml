@@ -10,40 +10,38 @@
 	<ui:param name="selectedMenu" value="offers" />
 
 	<ui:define name="content">
-		<div class="ui-g">
-			<div class="ui-g-12">
+		<div class="grid">
+			<div class="col-12">
 				<p:breadCrumb homeDisplay="text">
 					<p:menuitem value="#{i18n['menu.index']}" url="/faces/index.xhtml" />
 					<p:menuitem value="#{i18n['job.job_offers']}" url="/faces/jobOffer/jobOfferSearch.xhtml" />
 					<p:menuitem value="#{jobOfferBean.jobOffer.name}" disabled="true" />
 				</p:breadCrumb>
 			</div>
-		</div>
-
-		<div class="ui-g">
-			<div class="ui-g-12 ui-xl-6">
+			
+			<div class="col-12 xl-6">
 				<h:form id="jobOfferViewForm">
 					<p:panel header="#{i18n['job.job_offer']}">
-						<div class="ui-g">
-							<div class="ui-g-12 ui-lg-6 ui-xl-4">
+						<div class="grid">
+							<div class="col-12 lg-6 xl-4">
 								<div class="form-group">
 									<p:outputLabel for="name" value="#{i18n['job.name']}" />
 									<p:inputText id="name" value="#{jobOfferBean.jobOffer.name}" readonly="true" />
 								</div>
 							</div>
-							<div class="ui-g-12 ui-lg-6 ui-xl-4">
+							<div class="col-12 lg-6 xl-4">
 								<div class="form-group">
 									<p:outputLabel for="client" value="#{i18n['job.client']}" />
 									<p:inputText id="client" value="#{jobOfferBean.jobOffer.client.name}" readonly="true" />
 								</div>
 							</div>
-							<div class="ui-g-12 ui-lg-6 ui-xl-4">
+							<div class="col-12 lg-6 xl-4">
 								<div class="form-group">
 									<p:outputLabel for="places" value="#{i18n['job.places']}" />
 									<p:inputText id="places" value="#{jobOfferBean.jobOffer.places}" readonly="true" />
 								</div>
 							</div>
-							<div class="ui-g-12 ui-lg-6 ui-xl-4">
+							<div class="col-12 lg-6 xl-4">
 								<div class="form-group">
 									<p:outputLabel for="dateOpened" value="#{i18n['job.date_opened']}" />
 									<p:calendar id="dateOpened" value="#{jobOfferBean.jobOffer.dateOpened}" readonly="true" pattern="dd/MM/yyyy">
@@ -51,7 +49,7 @@
 									</p:calendar>
 								</div>
 							</div>
-							<div class="ui-g-12 ui-lg-6 ui-xl-4">
+							<div class="col-12 lg-6 xl-4">
 								<div class="form-group">
 									<p:outputLabel for="dateClosed" value="#{i18n['job.date_closed']}" />
 									<p:calendar id="dateClosed" value="#{jobOfferBean.jobOffer.dateClosed}" readonly="true" pattern="dd/MM/yyyy">
@@ -59,28 +57,26 @@
 									</p:calendar>
 								</div>
 							</div>
-							<div class="ui-g-12 ui-lg-6 ui-xl-4">
+							<div class="col-12 lg-6 xl-4">
 								<div class="form-group">
 									<p:outputLabel for="city" value="#{i18n['address.city']}" />
 									<p:inputText id="city" value="#{jobOfferBean.jobOffer.city}" readonly="true" />
 								</div>
 							</div>
-							<div class="ui-g-12 ui-lg-6 ui-xl-4">
+							<div class="col-12 lg-6 xl-4">
 								<div class="form-group">
 									<p:outputLabel for="state" value="#{i18n['address.state']}" />
 									<p:inputText id="state" value="#{jobOfferBean.jobOffer.state}" readonly="true" />
 								</div>
 							</div>
-							<div class="ui-g-12">
+							<div class="col-12">
 								<div class="form-group">
 									<p:outputLabel for="description" value="#{i18n['job.description']}" />
 									<p:inputTextarea id="description" value="#{jobOfferBean.jobOffer.description}" readonly="true" />
 								</div>
 							</div>
-						</div>
-
-						<div class="ui-g">
-							<div class="ui-g-12">
+							
+							<div class="col-12">
 								<div class="form-action-primary">
 									<p:commandButton id="exportExcel" value="#{i18n['action.export']}" action="#" icon="fa fa-file-excel-o" />
 									<p:commandButton id="editJobOffer" value="#{i18n['action.edit']}" actionListener="#{jobOfferBean.editJobOffer}"
@@ -91,7 +87,7 @@
 					</p:panel>
 				</h:form>
 			</div>
-			<div class="ui-g-12 ui-md-12 ui-lg-6 ui-xl-4">
+			<div class="col-12 md-12 lg-6 xl-4">
 				<h:form id="candidatesForm">
 					<cc:jobCandidatures jobCandidatures="#{jobOfferBean.jobCandidatures}" showJobOffer="false">
 						<p:commandButton value="#{i18n['action.add']}" actionListener="#{jobOfferBean.openSelectCandidatesDialog}" process="@this">
@@ -100,13 +96,12 @@
 					</cc:jobCandidatures>
 				</h:form>
 			</div>
-		</div>
-		<div class="ui-g">
-			<div class="ui-g-12 ui-md-12 ui-lg-6">
+
+			<div class="col-12 md-12 lg-6">
 				<p:panel header="#{i18n['job_meeting.conducted_job_meetings']}">
 				</p:panel>
 			</div>
-			<div class="ui-g-12 ui-md-12 ui-lg-6">
+			<div class="col-12 md-12 lg-6">
 				<p:panel header="#{i18n['job_meeting.planned_job_meetings']}">
 
 				</p:panel>

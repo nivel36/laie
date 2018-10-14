@@ -10,17 +10,17 @@
 	<ui:param name="selectedMenu" value="isabel" />
 
 	<ui:define name="content">
-		<div class="ui-g">
-			<div class="ui-g-12 ui-md-8">
+		<div class="grid">
+			<div class="col-12 md-8">
 				<p:panel header="Exportacion">
 					<h:form>
-						<div class="ui-g">
-							<div class="ui-g-12">
+						<div class="grid">
+							<div class="col-12">
 								<p:pickList value="#{isabelBean.model}" var="item" converter="exportViewConverter" itemLabel="#{item.label}" itemValue="#{item}" showTargetControls="true" update="@form growl" />
 							</div>
 						</div>
-						<div class="ui-g">
-							<div class="ui-g-12">
+						<div class="grid">
+							<div class="col-12">
 								<div class="form-action-primary">
 									<p:commandButton value="Guardar" action="#{isabelBean.save}" process="@form" update="@form growl" />
 								</div>

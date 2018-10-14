@@ -9,25 +9,23 @@
 	<ui:param name="selectedMenu" value="offers" />
 
 	<ui:define name="content">
-		<div class="ui-g">
-			<div class="ui-g-12 ui-xl-8">
+		<div class="grid">
+			<div class="col-12 xl-8">
 				<p:breadCrumb homeDisplay="text">
 					<p:menuitem value="#{i18n['menu.index']}" url="/faces/index.xhtml" />
 					<p:menuitem value="#{i18n['job.job_offers']}" url="/faces/jobOffer/jobOfferSearch.xhtml" />
 					<p:menuitem value="#{jobOfferEditBean.newJobOffer ? i18n['job.new_job_offer'] : jobOfferEditBean.jobOffer.name}" disabled="true" />
 				</p:breadCrumb>
 			</div>
-		</div>
-
-		<div class="ui-g">
-			<div class="ui-g-12 ui-xl-8">
+			
+			<div class="col-12 xl-8">
 				<h:form id="jobOfferForm">
 					<p:panel header="#{jobOfferEditBean.newJobOffer ? i18n['job.new_job_offer'] : jobOfferEditBean.jobOffer.name}">
-						<div class="ui-g">
-							<div class="ui-g-12">
+						<div class="grid">
+							<div class="col-12">
 								<cc:inputText name="name" label="#{i18n['job.name']}" value="#{jobOfferEditBean.jobOffer.name}" required="true" />
 							</div>
-							<div class="ui-g-12 ui-md-6">
+							<div class="col-12 md-6">
 								<h:panelGroup id="clientGroup" layout="block" styleClass="form-group">
 									<p:outputLabel for="client" value="#{i18n['job.client']}" />
 									<div class="ui-inputgroup">
@@ -41,10 +39,10 @@
 									<p:message for="client" />
 								</h:panelGroup>
 							</div>
-							<div class="ui-g-12 ui-md-6">
+							<div class="col-12 md-6">
 								<cc:inputText name="places" label="#{i18n['job.places']}" value="#{jobOfferEditBean.jobOffer.places}" />
 							</div>
-							<div class="ui-g-12 ui-md-6">
+							<div class="col-12 md-6">
 								<div class="form-group">
 									<p:outputLabel for="dateOpened" value="#{i18n['job.date_opened']}" />
 									<p:calendar id="dateOpened" value="#{jobOfferEditBean.jobOffer.dateOpened}" pattern="dd/MM/yyyy">
@@ -53,7 +51,7 @@
 									<p:message for="dateOpened" />
 								</div>
 							</div>
-							<div class="ui-g-12 ui-md-6">
+							<div class="col-12 md-6">
 								<div class="form-group">
 									<p:outputLabel for="dateClosed" value="#{i18n['job.date_closed']}" />
 									<p:calendar id="dateClosed" value="#{jobOfferEditBean.jobOffer.dateClosed}" pattern="dd/MM/yyyy">
@@ -62,13 +60,13 @@
 									<p:message for="dateClosed" />
 								</div>
 							</div>
-							<div class="ui-g-12 ui-md-6">
+							<div class="col-12 md-6">
 								<cc:inputText name="city" label="#{i18n['job.city']}" value="#{jobOfferEditBean.jobOffer.city}" required="true" />
 							</div>
-							<div class="ui-g-12 ui-md-6">
+							<div class="col-12 md-6">
 								<cc:inputText name="state" label="#{i18n['job.state']}" value="#{jobOfferEditBean.jobOffer.state}" required="true" />
 							</div>
-							<div class="ui-g-12 ui-md-6">
+							<div class="col-12 md-6">
 								<h:panelGroup id="ownerGroup" layout="block" styleClass="form-group">
 									<p:outputLabel value="#{i18n['job.owner']}" for="owner" />
 									<div class="ui-inputgroup">
@@ -89,13 +87,13 @@
 									<p:message for="owner" />
 								</h:panelGroup>
 							</div>
-							<div class="ui-g-12 ui-md-6">
+							<div class="col-12 md-6">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['job.recruiters']}" for="recruiters" />
 									<p:chips id="recruiters" value="#{jobOfferEditBean.recruiters}" />
 								</div>
 							</div>
-							<div class="ui-g-12">
+							<div class="col-12">
 								<div class="form-group">
 									<p:outputLabel for="description" value="#{i18n['job.description']}" />
 									<p:textEditor id="description" value="#{jobOfferEditBean.jobOffer.description}">
@@ -134,7 +132,6 @@
 									<p:message for="description" />
 								</div>
 							</div>
-
 						</div>
 						<div class="form-action-primary">
 							<p:button styleClass="btn-gray" value="#{i18n['action.cancel']}" outcome="jobOfferSearch" rendered="#{jobOfferEditBean.newJobOffer}" />
