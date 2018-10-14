@@ -27,8 +27,19 @@
 				</h:link>
 			</p:column>
 
+			<p:column  rendered="#{cc.attrs.showCandidate}">
+				<p:graphicImage class="image image-icon" value="/images/#{jobCandidature.candidate.imageFileName}" rendered="#{not empty jobCandidature.candidate.imageFileName}" />
+				<p:graphicImage class="image image-icon" value="/resources/img/default-avatar.png" rendered="#{empty jobCandidature.candidate.imageFileName}" />
+			</p:column>
+
 			<p:column headerText="#{i18n['job_candidature.candidate']}" rendered="#{cc.attrs.showCandidate}">
-				<h:outputText value="#{jobCandidature.candidate.fullName}" />
+				<h:link value="#{jobCandidature.candidate.fullName}" outcome="/faces/candidate/candidate">
+					<f:param name="candidateId" value="#{jobCandidature.candidate.id}" />
+				</h:link>
+			</p:column>
+
+			<p:column headerText="#{i18n['candidate.rating']}" rendered="#{cc.attrs.showCandidate}">
+				<p:rating value="#{jobCandidature.candidate.rating}" cancel="false" readonly="true" />
 			</p:column>
 
 			<p:column headerText="#{i18n['job_candidature.state']}">
