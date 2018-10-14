@@ -8,42 +8,38 @@
 	</ui:define>
 
 	<ui:define name="content">
-		<div class="ui-g">
-			<div class="ui-g-12 ui-xl-8">
+		<div class="grid">
+			<div class="col-12 xl-8">
 				<p:breadCrumb homeDisplay="text">
 					<p:menuitem value="#{i18n['menu.index']}" url="/faces/index.xhtml" />
 					<p:menuitem value="#{i18n['client.clients']}" url="/faces/client/clientSearch.xhtml" />
 					<p:menuitem value="#{clientEditBean.newClient ? i18n['client.new_client'] : clientEditBean.client.name}" disabled="true" />
 				</p:breadCrumb>
 			</div>
-		</div>
-		<div class="ui-g">
-			<div class="ui-g-12 ui-xl-6">
+			
+			<div class="col-12 xl-6">
 				<h:form id="clientForm">
 					<p:panel header="#{clientEditBean.newClient ? i18n['client.new_client'] : clientEditBean.client.name}">
-						<div class="ui-g">
-							<div class="ui-g-12 ui-md-6">
+						<div class="grid">
+							<div class="col-12 md-6">
 								<cc:inputText name="name" label="#{i18n['client.name']}" value="#{clientEditBean.client.name}" required="true" />
 							</div>
-							<div class="ui-g-12 ui-md-6">
+							<div class="col-12 md-6">
 								<cc:inputText name="cif" label="#{i18n['client.cif']}" value="#{clientEditBean.client.cif}" required="true" />
 							</div>
-						</div>
-						<div class="ui-g">
-							<div class="ui-g-12 ui-md-6">
+
+							<div class="col-12 md-6">
 								<cc:inputText name="phoneNumber" label="#{i18n['client.phone_number']}" value="#{clientEditBean.client.phoneNumber}" />
 							</div>
-						</div>
-						<div class="ui-g">
-							<div class="ui-g-12 ui-md-6">
+
+							<div class="col-12 md-6">
 								<cc:inputText name="city" label="#{i18n['client.city']}" value="#{clientEditBean.client.address.city}" />
 							</div>
-							<div class="ui-g-12 ui-md-6">
+							<div class="col-12 md-6">
 								<cc:inputText name="state" label="#{i18n['client.state']}" value="#{clientEditBean.client.address.state}" />
 							</div>
-						</div>
-						<div class="ui-g">
-							<div class="ui-g-12">
+
+							<div class="col-12">
 								<div class="form-action-primary">
 									<p:button styleClass="btn-gray" value="#{i18n['action.cancel']}" outcome="clientSearch" rendered="#{clientEditBean.newClient}" />
 									<p:button styleClass="btn-gray" value="#{i18n['action.cancel']}" outcome="client" rendered="#{not clientEditBean.newClient}">

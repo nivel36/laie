@@ -10,59 +10,54 @@
 	<ui:param name="selectedMenu" value="clients" />
 
 	<ui:define name="content">
-		<div class="ui-g">
-			<div class="ui-g-12">
+		<div class="grid">
+			<div class="col-12">
 				<p:breadCrumb homeDisplay="text">
 					<p:menuitem value="#{i18n['menu.index']}" url="/faces/index.xhtml" />
 					<p:menuitem value="#{i18n['client.clients']}" url="/faces/client/clientSearch.xhtml" />
 					<p:menuitem value="#{clientBean.client.name}" disabled="true" />
 				</p:breadCrumb>
 			</div>
-		</div>
-
-		<div class="ui-g">
-			<div class="ui-g-12 ui-xl-6">
+			
+			<div class="col-12 xl-6">
 				<h:form id="clientViewForm">
 					<input type="hidden" id="clientId" value="#{clientBean.client.id}" />
 					<p:panel header="#{clientBean.client}" id="client">
-						<div class="ui-g">
-							<div class="ui-g-12 ui-md-6">
+						<div class="grid">
+							<div class="col-12 md-6">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['client.name']}" for="name" />
 									<p:inputText id="name" value="#{clientBean.client.name}" readonly="true" />
 								</div>
 							</div>
-							<div class="ui-g-12 ui-md-6">
+							<div class="col-12 md-6">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['client.cif']}" for="cif" />
 									<p:inputText id="cif" value="#{clientBean.client.cif}" readonly="true" />
 								</div>
 							</div>
-						</div>
-						<div class="ui-g">
-							<div class="ui-g-12 ui-md-6">
+
+							<div class="col-12 md-6">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['client.phone_number']}" for="phoneNumber" />
 									<p:inputText id="phoneNumber" value="#{clientBean.client.phoneNumber}" readonly="true" />
 								</div>
 							</div>
-						</div>
-						<div class="ui-g">
-							<div class="ui-g-12 ui-md-6">
+
+							<div class="col-12 md-6">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['client.city']}" for="city" />
 									<p:inputText id="city" value="#{clientBean.client.address.city}" readonly="true" />
 								</div>
 							</div>
-							<div class="ui-g-12 ui-md-6">
+							<div class="col-12 md-6">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['client.state']}" for="state" />
 									<p:inputText id="state" value="#{clientBean.client.address.state}" readonly="true" />
 								</div>
 							</div>
-						</div>
-						<div class="ui-g">
-							<div class="ui-g-12">
+	
+							<div class="col-12">
 								<div class="form-action-primary">
 									<p:commandButton id="exportExcel" value="#{i18n['action.export']}" action="#{clientBean.export}" icon="fa fa-file-excel-o" />
 									<p:commandButton value="#{i18n['action.edit']}" process="@this" actionListener="#{clientBean.editClient}" action="/faces/client/clientEdit"
@@ -73,7 +68,7 @@
 					</p:panel>
 				</h:form>
 			</div>
-			<div class="ui-g-12 ui-xl-6">
+			<div class="col-12 xl-6">
 				<h:form id="contactsForm">
 					<cc:contacts contacts="#{clientBean.contacts}">
 						<p:commandButton value="#{i18n['action.new']}" actionListener="#{clientBean.newContact}" process="@this">
@@ -82,7 +77,7 @@
 					</cc:contacts>
 				</h:form>
 			</div>
-			<div class="ui-g-12 ui-xl-6">
+			<div class="col-12 xl-6">
 				<h:form id="jobOffersForm">
 					<cc:jobOffers id="jobOffers" jobOffers="#{clientBean.jobOffers}">
 						<p:commandButton value="#{i18n['action.new']}" actionListener="#{clientBean.newJobOffer}" action="/faces/jobOffer/jobOfferEdit?faces-redirect=true"

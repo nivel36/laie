@@ -8,8 +8,8 @@
 	</ui:define>
 	<ui:define name="content">
 		<h:form id="clientsSearchForm">
-			<div class="ui-g">
-				<div class="ui-g-12 ui-md-6">
+			<div class="grid">
+				<div class="col-12 md-6">
 					<div class="ui-inputgroup">
 						<p:inputText id="searchText" value="#{clientSearchDialogBean.searchText}" />
 						<p:commandButton id="cleanSearchTextAction" action="#{clientSearchDialogBean.clean}" update="@form" styleClass="btn-gray" icon="fa fa-times"
@@ -17,9 +17,7 @@
 						<p:commandButton id="searchAction" action="#{clientSearchDialogBean.search}" update="@form" icon="fa fa-search" />
 					</div>
 				</div>
-			</div>
-			<div class="ui-g">
-				<div class="ui-g-12">
+				<div class="col-12">
 					<p:dataTable var="client" id="clients" value="#{clientSearchDialogBean.clients}" emptyMessage="#{i18n['client.no_clients_found']}" reflow="true"
 						paginator="true" paginatorPosition="bottom" rows="#{sessionUser.rowsPerPage}" selectionMode="single" selection="#{clientSearchDialogBean.selectedClient}"
 						rowKey="#{client.id}" sortBy="#{client.name}" sortOrder="ascending">
@@ -51,10 +49,8 @@
 						</p:column>
 					</p:dataTable>
 				</div>
-			</div>
-
-			<div class="ui-g">
-				<div class="ui-g-12">
+		
+				<div class="col-12">
 					<div class="form-action-primary">
 						<p:commandButton value="#{i18n['action.cancel']}" action="#{clientSearchDialogBean.cancel}" process="@this" styleClass="btn-gray" />
 					</div>

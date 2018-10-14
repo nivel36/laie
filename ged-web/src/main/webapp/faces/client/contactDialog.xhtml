@@ -9,45 +9,44 @@
 
 	<ui:define name="content">
 		<h:form id="contactForm">
-			<div class="ui-g">
-				<div class="ui-g-12 ui-md-6">
+			<div class="grid">
+				<div class="col-12 md-6">
 					<div class="form-group">
 						<p:outputLabel value="#{i18n['contact.name']}" for="name" />
 						<p:inputText id="name" value="#{contactDialogBean.contact.name}" required="true" />
 						<p:message for="name" />
 					</div>
 				</div>
-				<div class="ui-g-12 ui-md-6">
+				<div class="col-12 md-6">
 					<div class="form-group">
 						<p:outputLabel value="#{i18n['contact.surname']}" for="surname" />
 						<p:inputText id="surname" value="#{contactDialogBean.contact.surname}" required="true" />
 						<p:message for="surname" />
 					</div>
 				</div>
-				<div class="ui-g-12 ui-md-6">
+				<div class="col-12 md-6">
 					<div class="form-group">
 						<p:outputLabel value="#{i18n['contact.position']}" for="position" />
 						<p:inputText id="position" value="#{contactDialogBean.contact.position}" />
 						<p:message for="position" />
 					</div>
 				</div>
-				<div class="ui-g-12 ui-md-6">
+				<div class="col-12 md-6">
 					<div class="form-group">
 						<p:outputLabel value="#{i18n['contact.email']}" for="email" />
 						<p:inputText id="email" value="#{contactDialogBean.contact.email}" required="true" />
 						<p:message for="email" />
 					</div>
 				</div>
-				<div class="ui-g-12 ui-md-6">
+				<div class="col-12 md-6">
 					<div class="form-group">
 						<p:outputLabel value="#{i18n['contact.phoneNumber']}" for="phone_number" />
 						<p:inputText id="phone_number" value="#{contactDialogBean.contact.phoneNumber}" />
 						<p:message for="phone_number" />
 					</div>
 				</div>
-			</div>
-			<div class="ui-g">
-				<div class="ui-g-12">
+
+				<div class="col-12">
 					<div class="form-action-primary">
 						<p:commandButton value="#{i18n['action.cancel']}" action="#{contactDialogBean.closeDialog}" process="@this" styleClass="btn-gray" />
 						<p:commandButton value="#{i18n['action.save']}" action="#{contactDialogBean.save}" update="@form" />
