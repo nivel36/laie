@@ -37,22 +37,10 @@
 										<cc:inputText name="places" label="#{i18n['job.places']}" value="#{jobOfferEditBean.jobOffer.places}" />
 									</div>
 									<div class="col-12 md-6">
-										<div class="form-group">
-											<p:outputLabel for="dateOpened" value="#{i18n['job.date_opened']}" />
-											<p:calendar id="dateOpened" value="#{jobOfferEditBean.jobOffer.dateOpened}" pattern="dd/MM/yyyy">
-												<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
-											</p:calendar>
-											<p:message for="dateOpened" />
-										</div>
+										<cc:calendar id="dateOpened" name="dateOpened" label="#{i18n['job.date_opened']}" value="#{jobOfferEditBean.jobOffer.dateOpened}" />
 									</div>
 									<div class="col-12 md-6">
-										<div class="form-group">
-											<p:outputLabel for="dateClosed" value="#{i18n['job.date_closed']}" />
-											<p:calendar id="dateClosed" value="#{jobOfferEditBean.jobOffer.dateClosed}" pattern="dd/MM/yyyy">
-												<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
-											</p:calendar>
-											<p:message for="dateClosed" />
-										</div>
+										<cc:calendar id="dateClosed" name="dateClosed" label="#{i18n['job.date_closed']}" value="#{jobOfferEditBean.jobOffer.dateClosed}" />
 									</div>
 									<div class="col-12 md-6">
 										<cc:inputText name="city" label="#{i18n['job.city']}" value="#{jobOfferEditBean.jobOffer.city}" required="true" />
@@ -93,45 +81,8 @@
 									</div>
 								</div>
 							</div>
-
 							<div class="col-12">
-								<div class="form-group">
-									<p:outputLabel for="description" value="#{i18n['job.description']}" />
-									<p:textEditor id="description" value="#{jobOfferEditBean.jobOffer.description}">
-										<f:facet name="toolbar">
-											<span class="ql-formats">
-												<button class="ql-bold"></button>
-												<button class="ql-italic"></button>
-												<button class="ql-underline"></button>
-											</span>
-											<span class="ql-formats"> <select class="ql-color" /> <select class="ql-background" />
-											</span>
-											<span class="ql-formats">
-												<button class="ql-script" value="sub" />
-												<button class="ql-script" value="super" />
-											</span>
-											<span class="ql-formats">
-												<button class="ql-header" value="1" />
-												<button class="ql-header" value="2" />
-												<button class="ql-blockquote" />
-												<button class="ql-code-block" />
-											</span>
-											<span class="ql-formats">
-												<button class="ql-list" value="ordered" />
-												<button class="ql-list" value="bullet" />
-												<button class="ql-indent" value="-1" />
-												<button class="ql-indent" value="+1" />
-											</span>
-											<span class="ql-formats">
-												<button class="ql-direction" value="rtl" /> <select class="ql-align" />
-											</span>
-											<span class="ql-formats">
-												<button class="ql-clean" />
-											</span>
-										</f:facet>
-									</p:textEditor>
-									<p:message for="description" />
-								</div>
+								<cc:richText id="description" name="description" label="#{i18n['job.description']}" value="#{jobOfferEditBean.jobOffer.description}" />
 							</div>
 						</div>
 						<div class="form-action-primary">
@@ -139,7 +90,7 @@
 							<p:button styleClass="btn-gray" value="#{i18n['action.cancel']}" outcome="jobOffer" rendered="#{not jobOfferEditBean.newJobOffer}">
 								<f:param name="jobOfferId" value="#{jobOfferEditBean.jobOffer.id}" />
 							</p:button>
-							<p:commandButton value="#{i18n['action.save']}" action="#{jobOfferEditBean.save}" update="@form" styleClass="btn-primary" />
+							<p:commandButton value="#{i18n['action.save']}" action="#{jobOfferEditBean.save}" process="@form" update="@form" styleClass="btn-primary" />
 						</div>
 					</p:panel>
 				</h:form>
