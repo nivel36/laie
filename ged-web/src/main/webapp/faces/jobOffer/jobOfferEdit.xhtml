@@ -53,25 +53,8 @@
 							<div class="col-12 xl-4">
 								<div class="grid">
 									<div class="col-12 md-6 xl-12">
-										<h:panelGroup id="ownerGroup" layout="block" styleClass="form-group">
-											<p:outputLabel value="#{i18n['job.owner']}" for="owner" />
-											<div class="ui-inputgroup">
-												<p:autoComplete id="owner" value="#{jobOfferEditBean.jobOffer.owner}" completeMethod="#{jobOfferEditBean.searchOwner}" var="owner"
-													itemLabel="#{owner.fullName}" itemValue="#{owner}" forceSelection="true">
-													<p:column styleClass="user-select image">
-														<p:graphicImage class="image image-icon" value="/images/#{owner.imageFileName}" rendered="#{not empty owner.imageFileName}" />
-														<p:graphicImage class="image image-icon" value="/resources/img/default-avatar.png" rendered="#{empty owner.imageFileName}" />
-													</p:column>
-													<p:column styleClass="user-select name">
-														<h:outputText value="#{owner.fullName}" />
-													</p:column>
-													<p:ajax event="itemSelect" update="ownerGroup" process="owner" />
-												</p:autoComplete>
-												<p:commandButton id="cleanOwnerAction" action="#{jobOfferEditBean.cleanOwner}" process="@this" update="ownerGroup" styleClass="btn-gray"
-													icon="fa fa-times" rendered="#{not empty jobOfferEditBean.jobOffer.owner}" />
-											</div>
-											<p:message for="owner" />
-										</h:panelGroup>
+										<cc:inputUser id="owner" name="owner" label="#{i18n['job.owner']}" value="#{jobOfferEditBean.jobOffer.owner}"
+											completeMethod="#{jobOfferEditBean.searchOwner}" cleanAction="#{jobOfferEditBean.cleanOwner}" />
 									</div>
 									<div class="col-12 md-6 xl-12">
 										<div class="form-group">
