@@ -7,13 +7,14 @@
 	<composite:attribute name="name" required="true" />
 	<composite:attribute name="label" required="true" />
 	<composite:attribute name="value" required="true" />
+	<composite:attribute name="yearRange" />
 	<composite:attribute name="required" />
 </composite:interface>
 
 <composite:implementation>
 	<div class="form-group">
 		<p:outputLabel value="#{cc.attrs.label}" for="#{cc.attrs.name}" />
-		<p:calendar id="#{cc.attrs.name}" value="#{cc.attrs.value}" required="#{cc.attrs.required}" pattern="dd/MM/yyyy">
+		<p:calendar id="#{cc.attrs.name}" value="#{cc.attrs.value}" required="#{cc.attrs.required}" pattern="dd/MM/yyyy" yearRange="#{cc.attrs.yearRange}" navigator="true">
 			<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
 		</p:calendar>
 		<p:message for="#{cc.attrs.name}" />
