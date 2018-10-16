@@ -10,6 +10,7 @@
 		<meta http-equiv="Expires" content="-1" />
 		<script>{"describedby":"form"}</script>
 		<h:outputStylesheet name="css/reset.css" />
+		<h:outputStylesheet name="css/flexgrid.css" />
 		<h:outputStylesheet name="css/flat-classic-blue/components.css" />
 </h:head>
 <h:body>
@@ -18,24 +19,20 @@
 		<div class="content">
 			<h:form id="form">
 				<p:panel styleClass="card-login card-hidden" header="${i18n['login.login']}">
-					<div class="ui-g">
-						<div class="ui-g-12">
+					<div class="grid">
+						<div class="col-12">
 							<div class="ui-inputgroup">
 								<span class="ui-inputgroup-addon"> <em class="fa fa-user" /></span>
 								<p:inputText id="username" value="#{loginBean.username}" />
 							</div>
 						</div>
-					</div>
-					<div class="ui-g">
-						<div class="ui-g-12">
+						<div class="col-12">
 							<div class="ui-inputgroup">
 								<span class="ui-inputgroup-addon"> <em class="fa fa-lock" /></span>
 								<p:password id="password" value="#{loginBean.password}" />
 							</div>
 						</div>
-					</div>
-					<div class="ui-g">
-						<div class="ui-g-12">
+						<div class="col-12">
 							<div class="form-action-primary">
 								<p:commandButton action="#{loginBean.login}" value="${i18n['login.enter']}" />
 							</div>

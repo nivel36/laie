@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:i18n="http://legion.com/i18n"
-	xmlns:composite="http://java.sun.com/jsf/composite">
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:i18n="http://ged.com/i18n" xmlns:composite="http://java.sun.com/jsf/composite">
 
 <composite:interface>
 	<composite:attribute name="name" required="true" />
 	<composite:attribute name="label" required="true" />
 	<composite:attribute name="value" required="true" />
 	<composite:attribute name="required" />
-	<composite:editableValueHolder name="name" targets="id"/>
-	<composite:attribute name="validator" method-signature="void Action(javax.faces.context.FacesContext, javax.faces.component.UIComponent,Object)"/>
+	<composite:editableValueHolder name="name" targets="id" />
+	<composite:attribute name="validator" method-signature="void Action(javax.faces.context.FacesContext, javax.faces.component.UIComponent,Object)" />
 </composite:interface>
 
 <composite:implementation>

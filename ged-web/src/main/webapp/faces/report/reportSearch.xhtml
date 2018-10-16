@@ -3,16 +3,12 @@
 	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
 	template="/WEB-INF/templates/default.xhtml" xmlns:p="http://primefaces.org/ui">
 
-	<ui:define name="title">
-		<title>LEGION</title>
-	</ui:define>
-
 	<ui:param name="selectedMenu" value="reports" />
 
 	<ui:define name="content">
 		<h:form>
-			<div class="ui-g">
-				<div class="ui-g-12">
+			<div class="grid">
+				<div class="col-12">
 					<p:panel header="#{i18n['report.reports']}">
 					</p:panel>
 				</div>

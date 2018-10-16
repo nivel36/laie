@@ -3,6 +3,7 @@ package ged.ejb.core;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UncheckedIOException;
@@ -64,6 +65,16 @@ public class FileUploadService {
 	public String uploadFile(final InputStream inputStream) {
 		Objects.requireNonNull(inputStream);
 		return this.upload(this.fileDirectory, inputStream);
+	}
+
+	public String uploadImage(final File image) {
+		try (InputStream inputStream = new FileInputStream(image)) {
+			Objects.requireNonNull(inputStream);
+			return this.upload(this.imageDirectory, inputStream);
+		}
+		catch (final IOException e) {
+			throw new UncheckedIOException(e);
+		}
 	}
 
 	public String uploadImage(final InputStream inputStream) {

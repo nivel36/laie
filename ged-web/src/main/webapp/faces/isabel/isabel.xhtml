@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://legion.com/i18n"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://ged.com/i18n"
 	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
@@ -10,17 +10,17 @@
 	<ui:param name="selectedMenu" value="isabel" />
 
 	<ui:define name="content">
-		<div class="ui-g">
-			<div class="ui-g-12 ui-md-8">
+		<div class="grid">
+			<div class="col-12 md-8">
 				<p:panel header="Exportacion">
 					<h:form>
-						<div class="ui-g">
-							<div class="ui-g-12">
+						<div class="grid">
+							<div class="col-12">
 								<p:pickList value="#{isabelBean.model}" var="item" converter="exportViewConverter" itemLabel="#{item.label}" itemValue="#{item}" showTargetControls="true" update="@form growl" />
 							</div>
 						</div>
-						<div class="ui-g">
-							<div class="ui-g-12">
+						<div class="grid">
+							<div class="col-12">
 								<div class="form-action-primary">
 									<p:commandButton value="Guardar" action="#{isabelBean.save}" process="@form" update="@form growl" />
 								</div>

@@ -1,5 +1,10 @@
 @charset "UTF-8";
 
+@font-face {
+font-family: "Roboto";
+src: url("#{resource['fonts:Roboto-Regular.ttf']}") format("truetype");
+}
+
 /**
  * Colors: 
  * 
@@ -17,13 +22,21 @@
 	box-sizing: border-box;
 }
 
+html {
+	height: 100%;
+}
+
 body {
 	min-height: 100%;
 	height: 100%;
 	font-size: 14px;
 	background: #eaeaea;
-	font-family: "Helvetica", "Arial", sans-serif;
+	font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
 	color: #666666;
+}
+
+a {
+	color: #444444;
 }
 
 body header {
@@ -35,23 +48,18 @@ body header {
 }
 
 body #main-panel {
+	display: flex;
 	width: 100%;
-	position: relative;
-	overflow: auto;
 }
 
 body #main-panel aside {
 	width: 300px;
-	position: relative;
-	overflow: auto;
-	padding: 1em 0em 0em 1em;
-	float: left;
+	padding: 1em 0.5em;
 }
 
 body #main-panel #content {
-	position: relative;
-	overflow: hidden;
-	padding: 1em 1em 0em 0em;
+	padding: 1em 0.5em;
+	flex: 1;
 }
 
 body footer {
@@ -89,6 +97,10 @@ h4 {
 	border-bottom: 1px solid #999999;
 }
 
+.main-panel {
+	padding: 1em;
+}
+
 .section {
 	position: relative;
 	margin: 2em 0em 0em 2em;
@@ -120,7 +132,6 @@ body ul li {
 
 body a {
 	text-decoration: none;
-	color: #444444;
 }
 
 body a:visited {
@@ -202,7 +213,7 @@ body nav li:hover a {
 	font-family: FontAwesome;
 }
 
-@media(max-width: 1124px){
+@media(max-width: 1200px){
 	body header nav .menu .menu_text {
 		display: none;
 	}
@@ -238,6 +249,10 @@ body nav li:hover a {
 	transition: all 300ms linear;
 }
 
+.invisible {
+	display: none !important;
+}
+
 .login-page .card-login.card-hidden {
 	opacity: 0;
 	transform: translate3d(0, -60px, 0);
@@ -249,13 +264,23 @@ body nav li:hover a {
 }
 
 .login-page .card-login.ui-panel .ui-panel-titlebar .ui-panel-title {
-	font-size: 25px;
+	font-size: 2em;
 	font-weight: 400;
 	border: 0px;
 }
 
 .login-page .card-login.ui-panel .ui-panel-content {
-	padding: 10px 25px;
+	padding: 2em;
+}
+
+.userImage, .userCamera {
+	text-align: center;
+	padding: 1em;
+}
+
+.userImage img{
+	width: 256px !important; 
+	object-fit: cover;
 }
 
 .cvAction {
@@ -288,8 +313,8 @@ body nav li:hover a {
 }
 
 .form-group {
+	padding: 0em 0.6em 1.2em 0.6em;
 	overflow: auto;
-	padding: 0em 7px 15px 7px;
 	position: relative;
 }
 
@@ -305,7 +330,9 @@ body nav li:hover a {
 }
 
 .form-action-primary {
-	text-align: right;
+	display: flex;
+	justify-content: flex-end;
+	padding: 0.6em;
 }
 
 .searchForm {
@@ -313,9 +340,8 @@ body nav li:hover a {
 }
 
 .form-action {
-	padding: 10px;
-	text-align: center;
-	overflow: auto;
+	display: flex;
+	justify-content: flex-end;
 }
 
 .user-select.image {
@@ -334,12 +360,12 @@ body nav li:hover a {
 	padding: 0px;
 }
 
-.user-card .user-image {
-	padding: 5px 10px;
+.user-image {
+	padding: 0.5em 1em;
 	text-align: center;
 }
 
-.user-card .user-image .image {
+.user-image .image {
 	width: 129px;
 	height: 129px;
 	border-radius: 50%;
@@ -402,8 +428,7 @@ body nav li:hover a {
 	display: inline-block;
 	position: relative;
 	width: 100%;
-	margin: 5px 0px 0px 0px;
-	padding: 15px;
+	padding: 1em;
 	border: 1px solid #BDBDBD;
 	background: white;
 }

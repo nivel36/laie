@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:i18n="http://ged.com/i18n"
+	xmlns:cc="http://java.sun.com/jsf/composite/components" xmlns:composite="http://java.sun.com/jsf/composite">
+
+<composite:interface>
+	<composite:attribute name="jobCandidatures" required="true" />
+	<composite:attribute name="showCandidate" default="true" />
+	<composite:attribute name="showJobOffer" default="true" />
+	<composite:attribute name="title" />
+</composite:interface>
+
+<composite:implementation>
+	<p:panel id="jobCandidatures" header="#{empty cc.attrs.title ? i18n['job_candidature.job_candidatures'] : cc.attrs.title}">
+		<p:dataTable var="jobCandidature" value="#{cc.attrs.jobCandidatures}" emptyMessage="#{i18n['job_candidature.no_job_candidatures_found']}" reflow="true"
+			paginator="true" paginatorPosition="bottom" rows="#{sessionUser.rowsPerPage}" sortBy="#{jobOffer.name}" sortOrder="ascending">
+
+			<p:column headerText="#{i18n['job_candidature.job_offer']}" rendered="#{cc.attrs.showJobOffer}">
+				<h:link value="#{jobCandidature.jobOffer.name}" outcome="/faces/jobOffer/jobOffer">
+					<f:param name="jobOfferId" value="#{jobCandidature.jobOffer.id}" />
+				</h:link>
+			</p:column>
+
+			<p:column headerText="#{i18n['job_candidature.client']}" rendered="#{cc.attrs.showJobOffer}">
+				<h:link value="#{jobCandidature.jobOffer.client.name}" outcome="/faces/client/client">
+					<f:param name="clientId" value="#{jobCandidature.jobOffer.client.id}" />
+				</h:link>
+			</p:column>
+
+			<p:column  rendered="#{cc.attrs.showCandidate}">
+				<p:graphicImage class="image image-icon" value="/images/#{jobCandidature.candidate.imageFileName}" rendered="#{not empty jobCandidature.candidate.imageFileName}" />
+				<p:graphicImage class="image image-icon" value="/resources/img/default-avatar.png" rendered="#{empty jobCandidature.candidate.imageFileName}" />
+			</p:column>
+
+			<p:column headerText="#{i18n['job_candidature.candidate']}" rendered="#{cc.attrs.showCandidate}">
+				<h:link value="#{jobCandidature.candidate.fullName}" outcome="/faces/candidate/candidate">
+					<f:param name="candidateId" value="#{jobCandidature.candidate.id}" />
+				</h:link>
+			</p:column>
+
+			<p:column headerText="#{i18n['candidate.rating']}" rendered="#{cc.attrs.showCandidate}">
+				<p:rating value="#{jobCandidature.candidate.rating}" cancel="false" readonly="true" />
+			</p:column>
+
+			<p:column headerText="#{i18n['job_candidature.state']}">
+				<h:outputText value="#{jobCandidature.state}" />
+			</p:column>
+		</p:dataTable>
+
+		<h:panelGroup styleClass="form-action-primary" rendered="#{component.findComponent('children').childCount != 0}">
+			<composite:insertChildren />
+		</h:panelGroup>
+	</p:panel>
+</composite:implementation>
+</html>

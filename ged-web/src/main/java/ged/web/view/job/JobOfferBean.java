@@ -18,7 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ged.ejb.candidate.Candidate;
-import ged.ejb.candidate.CandidateService;
+import ged.ejb.job.offer.JobCandidature;
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
 import ged.web.core.PageNotFoundException;
@@ -32,10 +32,7 @@ public class JobOfferBean extends AbstractBean {
 
 	private static final long serialVersionUID = -1200840678252895578L;
 
-	private List<Candidate> candidates;
-
-	@Inject
-	private transient CandidateService candidateService;
+	private List<JobCandidature> jobCandidatures;
 
 	private JobOffer jobOffer;
 
@@ -51,8 +48,8 @@ public class JobOfferBean extends AbstractBean {
 		this.putValueToFlash("jobOffer", this.jobOffer);
 	}
 
-	public List<Candidate> getCandidates() {
-		return this.candidates;
+	public List<JobCandidature> getJobCandidatures() {
+		return jobCandidatures;
 	}
 
 	public JobOffer getJobOffer() {
@@ -66,7 +63,7 @@ public class JobOfferBean extends AbstractBean {
 		if (this.jobOffer == null) {
 			throw new PageNotFoundException("Bad jobOfferId");
 		}
-		this.candidates = this.candidateService.findCandidatesByJobOffer(this.jobOffer);
+		this.jobCandidatures = this.jobService.findJobCandituresByJobOffer(jobOffer);
 	}
 
 	// boolean -> is[name]
@@ -78,14 +75,14 @@ public class JobOfferBean extends AbstractBean {
 		@SuppressWarnings("unchecked")
 		final List<Candidate> selectedCandidates = (List<Candidate>) event.getObject();
 		for (final Candidate candidate : selectedCandidates) {
-			this.jobService.addJobCandidature(this.jobOffer, candidate);
-			this.candidates.add(candidate);
+			final JobCandidature jobCandidature = this.jobService.addJobCandidature(this.jobOffer, candidate);
+			this.jobCandidatures.add(jobCandidature);
 		}
 	}
 
 	public void openSelectCandidatesDialog() {
-		if (candidates.size() != 0) {
-			final String candidateIds = candidates.stream().map(entity -> String.valueOf(entity.getId())).collect(Collectors.joining("|"));
+		if (jobCandidatures.size() != 0) {
+			final String candidateIds = jobCandidatures.stream().map(jc -> String.valueOf(jc.getCandidate().getId())).collect(Collectors.joining("|"));
 			final Map<String, List<String>> parameters = new HashMap<>();
 			parameters.put("jobCandiatesId", Arrays.asList(candidateIds));
 			this.openBigDialog("/faces/candidate/candidateSelectDialog", parameters);
@@ -97,5 +94,13 @@ public class JobOfferBean extends AbstractBean {
 
 	public void setJobOffer(final JobOffer jobOffer) {
 		this.jobOffer = jobOffer;
+	}
+
+	public void setJobOfferId(final Long jobOfferId) {
+		this.jobOfferId = jobOfferId;
+	}
+
+	public void setJobService(final JobOfferService jobService) {
+		this.jobService = jobService;
 	}
 }

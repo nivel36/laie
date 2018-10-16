@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://legion.com/i18n" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://ged.com/i18n" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:p="http://primefaces.org/ui"
 	xmlns:cc="http://java.sun.com/jsf/composite/components" template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
@@ -10,21 +10,19 @@
 	<ui:param name="selectedMenu" value="candidates" />
 
 	<ui:define name="content">
-		<div class="ui-g">
-			<div class="ui-g-12">
+		<div class="grid">
+			<div class="col-12">
 				<p:breadCrumb homeDisplay="text">
 					<p:menuitem value="#{i18n['menu.index']}" url="/faces/index.xhtml" />
 					<p:menuitem value="#{i18n['candidate.candidates']}" url="/faces/candidate/candidateSearch.xhtml" />
 					<p:menuitem value="#{candidateBean.candidate}" disabled="true" />
 				</p:breadCrumb>
 			</div>
-		</div>
-		<div class="ui-g">
-			<div class="ui-g-12 ui-lg-12 ui-xl-7">
+			<div class="col-12 lg-12 xl-7">
 				<p:panel header="#{candidateBean.candidate}">
 					<h:form id="candidatePanelForm">
-						<div class="ui-g">
-							<div class="ui-g-12 ui-lg-3 ui-xl-2">
+						<div class="grid">
+							<div class="col-12 lg-3 xl-2">
 								<div class="user-card">
 									<p:outputPanel layout="block" id="userImage" styleClass="user-image">
 										<p:graphicImage styleClass="image" value="/images/#{candidateBean.candidate.imageFileName}"
@@ -35,90 +33,86 @@
 										<p:rating value="#{candidateBean.candidate.rating}" cancel="false" readonly="true" />
 									</div>
 								</div>
-								<div class="ui-g-12">
+								<div class="col-12">
 									<div class="form-group">
 										<h:outputText styleClass="text" value="#{i18n['candidate.message.no_tags']}" rendered="#{empty candidateBean.tags}" />
 									</div>
 								</div>
 							</div>
 
-							<div class="ui-g-12 ui-lg-9 ui-xl-10">
-								<div class="ui-g">
-									<div class="ui-g-12 ui-md-4">
+							<div class="col-12 lg-9 xl-10">
+								<div class="grid">
+									<div class="col-12 md-6">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['candidate.name']}" for="name" />
 											<p:inputText id="name" value="#{candidateBean.candidate.name}" required="true" readonly="true" />
 										</div>
 									</div>
 
-									<div class="ui-g-12 ui-md-4">
+									<div class="col-12 md-6">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['candidate.surname']}" for="surname" />
 											<p:inputText id="surname" value="#{candidateBean.candidate.surname}" required="true" readonly="true" />
 										</div>
 									</div>
 
-									<div class="ui-g-12 ui-md-4">
+									<div class="col-12 md-6">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['candidate.bornDate']}" for="bornDate" />
 											<p:calendar id="bornDate" value="#{candidateBean.candidate.bornDate}" disabled="true" yearRange="c-100:c0" navigator="true" />
 										</div>
 									</div>
-								</div>
-								<div class="ui-g">
-									<div class="ui-g-12 ui-md-4">
+
+									<div class="col-12 md-6">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['candidate.phone_number']}" for="phoneNumber" />
 											<p:inputText id="phoneNumber" value="#{candidateBean.candidate.phoneNumber}" required="true" readonly="true" />
 										</div>
 									</div>
 
-									<div class="ui-g-12 ui-md-4">
+									<div class="col-12 md-6">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['candidate.email']}" for="email" />
 											<p:inputText id="email" pt:type="email" value="#{candidateBean.candidate.email}" required="true" readonly="true" />
 										</div>
 									</div>
 
-									<div class="ui-g-12 ui-md-4">
+									<div class="col-12 md-6">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['candidate.skype']}" for="skype" />
 											<p:inputText id="skype" pt:type="skype" value="#{candidateBean.candidate.skype}" readonly="true" />
 										</div>
 									</div>
-								</div>
 
-								<div class="ui-g">
-									<div class="ui-g-12 ui-md-4">
+									<div class="col-12 md-6">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['address.city']}" for="city" />
 											<p:inputText id="city" value="#{candidateBean.candidate.address.city}" readonly="true" />
 										</div>
 									</div>
 
-									<div class="ui-g-12 ui-md-4">
+									<div class="col-12 md-6">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['address.state']}" for="state" />
 											<p:inputText id="state" value="#{candidateBean.candidate.address.state}" readonly="true" />
 										</div>
 									</div>
-								</div>
-								<div class="ui-g">
-									<div class="ui-g-12 ui-md-4">
+			
+									<div class="col-12 md-6">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['candidate.jobProfile']}" for="jobProfile" />
 											<p:inputText id="jobProfile" value="#{candidateBean.candidate.jobProfile}" required="true" readonly="true" />
 										</div>
 									</div>
 
-									<div class="ui-g-12 ui-md-4">
+									<div class="col-12 md-6">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['candidate.salary']}" for="salary" />
 											<p:inputText id="salary" value="#{candidateBean.candidate.salary}" readonly="true" />
 										</div>
 									</div>
 
-									<div class="ui-g-12 ui-md-4">
+									<div class="col-12 md-6">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['candidate.expected_salary']}" for="expected_salary" />
 											<p:inputText id="expected_salary" value="#{candidateBean.candidate.expectedSalary}" label="#{i18n['candidate.expected_salary']}" readonly="true" />
@@ -126,8 +120,8 @@
 									</div>
 
 								</div>
-								<div class="ui-g">
-									<div class="ui-g-12">
+								<div class="grid">
+									<div class="col-12">
 										<div class="form-action-primary">
 											<p:button value="#{i18n['curriculum.curriculum']}" outcome="/faces/curriculum/curriculum" styleClass="btn-primary">
 												<f:param name="candidateId" value="#{candidateBean.candidate.id}" />
@@ -143,7 +137,7 @@
 				</p:panel>
 			</div>
 
-			<div class="ui-g-12 ui-lg-6 ui-xl-6">
+			<div class="col-12 lg-6 xl-6">
 				<h:form id="jobOffersForm">
 					<cc:jobOffers id="jobOffers" jobOffers="#{candidateBean.jobOffers}">
 						<p:commandButton value="#{i18n['action.add']}" actionListener="#{candidateBean.openSelectJobOfferDialog}" styleClass="btn-primary">
@@ -153,7 +147,7 @@
 				</h:form>
 			</div>
 
-			<div class="ui-g-12 ui-lg-6 ui-xl-5">
+			<div class="col-12 lg-6 xl-5">
 				<ui:include src="/faces/candidate/filePanel.xhtml" />
 			</div>
 		</div>

@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:i18n="http://legion.com/i18n"
-	xmlns:composite="http://java.sun.com/jsf/composite">
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:i18n="http://ged.com/i18n" xmlns:composite="http://java.sun.com/jsf/composite">
 
 <composite:interface>
 	<composite:attribute name="contacts" required="true" />
@@ -26,9 +25,9 @@
 				</div>
 			</div>
 		</p:dataGrid>
-		<div class="form-action-primary">
+		<h:panelGroup styleClass="form-action-primary" rendered="#{component.findComponent('children').childCount != 0}">
 			<composite:insertChildren />
-		</div>
+		</h:panelGroup>
 	</p:panel>
 </composite:implementation>
 </html>

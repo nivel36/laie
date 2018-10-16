@@ -1,6 +1,7 @@
 package ged.ejb.job.offer;
 
 import java.lang.invoke.MethodHandles;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -36,23 +37,24 @@ public class JobOfferService extends AbstractAuditedService<JobOffer> {
 	@Repository
 	private JobOfferDao jobOfferDao;
 
-	public void addJobCandidature(final JobOffer jobOffer, final Candidate candidate) {
+	public JobCandidature addJobCandidature(final JobOffer jobOffer, final Candidate candidate) {
 		Objects.requireNonNull(jobOffer);
 		Objects.requireNonNull(candidate);
-		logger.debug("Add Job Candidature of candidate {} to jobOffer {}", candidate.getFullName(), jobOffer.getName());
-		final JobCandidature jobCandidature = new JobCandidature();
-		jobCandidature.setCandidate(candidate);
-		jobCandidature.setJobOffer(jobOffer);
-		this.jobCandidatureDao.save(jobCandidature);
+		logger.debug("Add Job Candidature of candidate {} to jobOffer {}", candidate.getFullName(), jobOffer);
+		final JobCandidature jobCandidature = new JobCandidature(candidate, jobOffer);
+		return this.jobCandidatureDao.save(jobCandidature);
 	}
 
-	public void addJobCandidatures(final JobOffer jobOffer, final List<Candidate> candidates) {
+	public List<JobCandidature> addJobCandidatures(final JobOffer jobOffer, final List<Candidate> candidates) {
 		Objects.requireNonNull(jobOffer);
 		Objects.requireNonNull(candidates);
 		logger.debug("Add job candidatures to jobOffer {}", jobOffer);
+		final List<JobCandidature> jobCandidatures = new ArrayList<>();
 		for (final Candidate candidate : candidates) {
-			this.addJobCandidature(jobOffer, candidate);
+			final JobCandidature jobCandidature = this.addJobCandidature(jobOffer, candidate);
+			jobCandidatures.add(jobCandidature);
 		}
+		return jobCandidatures;
 	}
 
 	public void addJobMeeting(final JobMeeting jobMeeting) {
@@ -103,6 +105,11 @@ public class JobOfferService extends AbstractAuditedService<JobOffer> {
 		Objects.requireNonNull(jobOffer);
 		logger.debug("Save job offer {}", jobOffer);
 		return this.getDao().save(jobOffer);
+	}
+	
+	public List<JobCandidature> findJobCandituresByJobOffer(final JobOffer jobOffer) {
+		Objects.requireNonNull(jobOffer);
+		return jobCandidatureDao.findByJobOffer(jobOffer);
 	}
 
 	public void setJobCandidatureDao(final JobCandidatureDao jobCandidatureDao) {

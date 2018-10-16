@@ -8,7 +8,6 @@ import javax.faces.convert.FacesConverter;
 /**
  * Workaround for https://github.com/javaserverfaces/mojarra/issues/4367
  *
- * @author Abel
  */
 @FacesConverter("stringConverter")
 public class StringConverter implements Converter<String> {

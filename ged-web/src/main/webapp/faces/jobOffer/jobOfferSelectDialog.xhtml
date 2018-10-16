@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:i18n="http://legion.com/i18n"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:i18n="http://ged.com/i18n"
 	xmlns:cc="http://java.sun.com/jsf/composite/components" template="/WEB-INF/templates/dialog.xhtml">
 
 	<ui:define name="title">
@@ -9,8 +9,8 @@
 
 	<ui:define name="content">
 		<h:form id="jobOfferSearchDialogForm">
-			<div class="ui-g">
-				<div class="ui-g-12 ui-md-6 ui-lg-4">
+			<div class="grid">
+				<div class="col-12 md-6 lg-4">
 					<div class="ui-inputgroup">
 						<p:inputText id="searchText" value="#{jobOfferSearchDialogBean.searchText}" />
 						<p:commandButton id="cleanSearchTextAction" action="#{jobOfferSearchDialogBean.clean}" update="@form" styleClass="btn-gray" icon="fa fa-times"
@@ -18,10 +18,8 @@
 						<p:commandButton id="searchAction" action="#{jobOfferSearchDialogBean.search}" update="@form" icon="fa fa-search" />
 					</div>
 				</div>
-			</div>
-
-			<div class="ui-g">
-				<div class="ui-g-12">
+				
+				<div class="col-12">
 					<p:dataTable var="jobOffer" value="#{jobOfferSearchDialogBean.jobOffers}" emptyMessage="#{i18n['job.no_jobs_found']}" reflow="true" paginator="true"
 						rowKey="#{jobOffer.id}" paginatorPosition="bottom" rows="#{sessionUser.rowsPerPage}" selection="#{jobOfferSearchDialogBean.selectedJobOffers}">
 
@@ -48,9 +46,8 @@
 						</p:column>
 					</p:dataTable>
 				</div>
-			</div>
-			<div class="ui-g">
-				<div class="ui-g-12">
+				
+				<div class="col-12">
 					<div class="pull-right">
 						<p:commandButton value="#{i18n['action.cancel']}" actionListener="#{jobOfferSearchDialogBean.closeDialog}" process="@this" styleClass="btn-gray" />
 						<p:commandButton value="#{i18n['action.select']}" action="#{jobOfferSearchDialogBean.select}" update="@form" />
