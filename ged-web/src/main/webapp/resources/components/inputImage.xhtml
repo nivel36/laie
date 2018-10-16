@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" xmlns:i18n="http://ged.com/i18n"
+	xmlns:composite="http://java.sun.com/jsf/composite">
+
+<composite:interface>
+	<composite:attribute name="name" required="true" />
+	<composite:attribute name="label" required="true" />
+	<composite:attribute name="value" required="true" />
+	<composite:attribute name="fileUploadListener"  method-signature="void listener(org.primefaces.event.FileUploadEvent)" required="true" />
+	<composite:attribute name="required" />
+</composite:interface>
+
+<composite:implementation>
+	<div class="user-card">
+		<p:outputPanel layout="block" id="#{cc.attrs.label}" styleClass="user-image">
+			<p:fileUpload id="#{cc.attrs.name}" styleClass="invisible uploadImageButton" fileUploadListener="#{userEditBean.uploadImage}" mode="advanced"
+				dragDropSupport="false" update="userImage" auto="true" />
+			<h:outputLabel for="uploadImage_input">
+				<p:graphicImage styleClass="selectable image" value="/images/#{cc.attrs.value}"	rendered="#{not empty cc.attrs.value}" />
+				<p:graphicImage styleClass="selectable image" value="/resources/img/default-avatar.png"	rendered="#{empty cc.attrs.value}" />
+			</h:outputLabel>
+		</p:outputPanel>
+	</div>
+</composite:implementation>
+</html>
