@@ -38,14 +38,6 @@ public class JobOfferEditBean extends AbstractDialogBean {
 	@Inject
 	private transient UserService userService;
 
-	public void cleanClient() {
-		this.jobOffer.setClient(new Client());
-	}
-
-	public void cleanOwner() {
-		this.jobOffer.setOwner(null);
-	}
-
 	private void editJobOfferInit() {
 		logger.debug("Edit job offer {} init", jobOffer);
 		this.recruiters = new ArrayList<>(this.jobOffer.getRecruiters());

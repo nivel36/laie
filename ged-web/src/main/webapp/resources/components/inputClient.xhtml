@@ -7,7 +7,6 @@
 	<composite:attribute name="label" required="true" />
 	<composite:attribute name="value" required="true" />
 	<composite:attribute name="openAction"  method-signature="void action()" required="true"/>
-	<composite:attribute name="cleanAction" method-signature="void action()" required="true"/>
 	<composite:clientBehavior name="dialogReturn" event="dialogReturn" targets="openSearchDialogButton" />
 	<composite:attribute name="required" />
 </composite:interface>
@@ -17,8 +16,9 @@
 		<p:outputLabel value="#{cc.attrs.label}" for="#{cc.attrs.name}" />
 		<div class="ui-inputgroup">
 			<p:inputText id="#{cc.attrs.name}" value="#{cc.attrs.value}" required="#{cc.attrs.required}" />
-			<p:commandButton action="#{cc.attrs.cleanAction}" process="@this" update="inputGroup" styleClass="btn-gray" icon="fa fa-times"
-				rendered="#{not empty cc.attrs.value}" />
+			<p:commandButton process="@this" update="inputGroup" styleClass="btn-gray" icon="fa fa-times" rendered="#{not empty cc.attrs.value}" >
+				<p:resetInput target="#{cc.attrs.name}" />
+			</p:commandButton>
 			<p:commandButton id="openSearchDialogButton" icon="fa fa-search" styleClass="green-button" actionListener="#{cc.attrs.openAction}" process="@this" />
 		</div>
 		<p:message for="#{cc.attrs.name}" />

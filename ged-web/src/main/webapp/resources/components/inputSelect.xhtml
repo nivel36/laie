@@ -4,30 +4,27 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui" xmlns:i18n="http://ged.com/i18n"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
 	xmlns:composite="http://java.sun.com/jsf/composite">
 
 <composite:interface>
 	<composite:attribute name="name" required="true" />
 	<composite:attribute name="label" required="true" />
 	<composite:attribute name="value" required="true" />
+		<composite:clientBehavior name="change" event="change" targets="#{cc.attrs.name}" />
 	<composite:attribute name="required" />
 </composite:interface>
 
 <composite:implementation>
 	<div class="form-group">
 		<p:outputLabel value="#{cc.attrs.value}" for="#{cc.attrs.name}" />
-		<p:selectOneMenu id=""#{cc.attrs.name}"" value="#{userEditBean.user.role}"
-			required="true" styleClass="required">
-			<p:ajax event="change" update="manager role" process="role"
-				listener="#{userEditBean.changeRoleListener}" />
-			<c:if test="#{empty userEditBean.user.role}">
+		<p:selectOneMenu id="#{cc.attrs.name}" value="#{userEditBean.user.role}" required="true">
+			<c:if test="#{empty cc.attrs.value}">
 				<f:selectItem />
 			</c:if>
-			<f:selectItems var="role" itemValue="#{role}"
-				value="#{applicationBean.roles}"
-				itemLabel="#{i18n:translate(role.name)}" />
+			<composite:insertChildren />
 		</p:selectOneMenu>
-		<p:message for=""#{cc.attrs.name}"" />
+		<p:message for="#{cc.attrs.name}" />
 	</div>
 </composite:implementation>
 </html>

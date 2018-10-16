@@ -159,20 +159,6 @@ public class UserEditBeanTest {
 		}
 	}
 
-	class ShouldReturnNullManager {
-
-		@Test
-		public void cleanManagerTest() {
-			final User user = mockUser();
-			final User manager = new User();
-			user.setManager(manager);
-			userEditBean.setUser(user);
-
-			userEditBean.cleanManager();
-			assertNull(userEditBean.getUser().getManager());
-		}
-	}
-
 	@Nested
 	class UploadImage {
 

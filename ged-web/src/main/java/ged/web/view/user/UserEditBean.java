@@ -68,13 +68,8 @@ public class UserEditBean extends AbstractBean {
 	public void changeRoleListener() {
 		logger.trace("Change role listener triggered");
 		if (user.isAdmin()) {
-			cleanManager();
+			this.user.setManager(null);
 		}
-	}
-
-	public void cleanManager() {
-		logger.debug("Clean manager action performed");
-		this.user.setManager(null);
 	}
 
 	private void editUserInit() {

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:i18n="http://ged.com/i18n" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:i18n="http://ged.com/i18n" 
 	xmlns:cc="http://java.sun.com/jsf/composite/components" template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
@@ -43,22 +43,14 @@
 									</div>
 
 									<div class="col-12 md-6">
-										<div class="form-group">
-											<p:outputLabel value="#{i18n['user.role']}" for="role" />
-											<p:selectOneMenu id="role" value="#{userEditBean.user.role}" required="true" styleClass="required">
-												<p:ajax event="change" update="manager role" process="role" listener="#{userEditBean.changeRoleListener}" />
-												<c:if test="#{empty userEditBean.user.role}">
-													<f:selectItem />
-												</c:if>
-												<f:selectItems var="role" itemValue="#{role}" value="#{applicationBean.roles}" itemLabel="#{i18n:translate(role.name)}" />
-											</p:selectOneMenu>
-											<p:message for="role" />
-										</div>
+										<cc:inputSelect id="role" name="role" value="#{userEditBean.user.role}" label="#{i18n['user.role']}" required="true">
+											<f:selectItems var="role" itemValue="#{role}" value="#{applicationBean.roles}" itemLabel="#{i18n:translate(role.name)}" />
+											<p:ajax event="change" update="manager role" process="role" listener="#{userEditBean.changeRoleListener}" />
+										</cc:inputSelect>
 									</div>
 
 									<div class="sm-12 md-6">
-										<cc:inputUser id="manager" name="manager" label="#{i18n['user.manager']}" value="#{userEditBean.user.manager}" completeMethod="#{userEditBean.searchManager}" 
-										cleanAction="#{userEditBean.cleanManager}" />
+										<cc:inputUser id="manager" name="manager" label="#{i18n['user.manager']}" value="#{userEditBean.user.manager}" completeMethod="#{userEditBean.searchManager}" />
 									</div>
 
 									<div class="col-12 md-6">

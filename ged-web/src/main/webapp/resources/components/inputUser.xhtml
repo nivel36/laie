@@ -7,7 +7,6 @@
 	<composite:attribute name="label" required="true" />
 	<composite:attribute name="value" required="true" />
 	<composite:attribute name="completeMethod" method-signature="void function(java.lang.String)" required="true" />
-	<composite:attribute name="cleanAction" method-signature="void action()" required="true" />
 	<composite:attribute name="required" />
 </composite:interface>
 
@@ -26,8 +25,9 @@
 				</p:column>
 				<p:ajax event="itemSelect" update="userGroup" process="#{cc.attrs.name}" />
 			</p:autoComplete>
-			<p:commandButton id="cleanUserButton" action="#{cc.attrs.cleanAction}" process="@this" update="userGroup" styleClass="btn-gray" icon="fa fa-times"
-				rendered="#{not empty cc.attrs.value}" />
+			<p:commandButton id="cleanUserButton" process="@this" update="userGroup" styleClass="btn-gray" icon="fa fa-times" rendered="#{not empty cc.attrs.value}" >
+				<p:resetInput target="#{cc.attrs.name}" />
+			</p:commandButton>
 		</div>
 		<p:message for="#{cc.attrs.name}" />
 	</h:panelGroup>
