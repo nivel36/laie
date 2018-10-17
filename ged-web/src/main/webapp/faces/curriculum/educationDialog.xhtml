@@ -11,91 +11,18 @@
 		<h:form>
 			<div class="grid">
 				<div class="col-12 md-6">
-					<div class="form-group">
-						<p:outputLabel value="#{i18n['education.degree']}" />
-						<p:inputText id="degree" value="#{educationBean.education.degree}" required="true" />
-						<p:message for="degree" />
-					</div>
+					<cc:inputText id="degree" name="degree" label="#{i18n['education.degree']}" value="#{educationBean.education.degree}" required="true" />
 				</div>
 				<div class="col-12 md-6">
-					<div class="form-group">
-						<p:outputLabel value="#{i18n['education.school']}" />
-						<p:inputText id="school" value="#{educationBean.education.school}" required="true" />
-						<p:message for="school" />
-					</div>
-				</div>
-
-				<div class="col-12 md-5">
-					<div class="form-group">
-						<p:outputLabel value="#{i18n['education.from_date']}" />
-						<p:selectOneMenu id="startYear" value="#{educationBean.education.startYear}" required="true">
-							<f:selectItem itemLabel="#{i18n['date.year']}" itemValue="" />
-							<f:selectItems var="year" value="#{combo.years}" itemValue="#{year}" itemLabel="#{year}" />
-						</p:selectOneMenu>
-						<p:message for="startYear" />
-					</div>
-				</div>
-
-				<div class="col-12 md-5">
-					<h:panelGroup id="endDate" class="form-group" layout="block">
-						<p:outputLabel value="#{i18n['education.to_date']}" rendered="#{not educationBean.education.stillStudying}" />
-						<p:selectOneMenu id="endYear" value="#{educationBean.education.endYear}" rendered="#{not educationBean.education.stillStudying}" required="true">
-							<f:selectItem itemLabel="#{i18n['date.year']}" itemValue="" />
-							<f:selectItems var="year" value="#{combo.years}" itemValue="#{year}" itemLabel="#{year}" />
-						</p:selectOneMenu>
-						<p:message for="endYear" />
-						<o:validateMultiple id="validationDates" components="startYear endYear stillStudying" validator="#{educationBean.validateDates}"
-							message="#{i18n['education.error.dates']}" showMessageFor="endYear" />
-					</h:panelGroup>
-				</div>
-
-				<div class="col-12 md-2">
-					<div class="form-group">
-						<p:outputLabel value="#{i18n['education.still_studying']}" />
-						<p:selectBooleanCheckbox value="#{educationBean.education.stillStudying}" id="stillStudying">
-							<f:ajax render="endDate" />
-						</p:selectBooleanCheckbox>
-					</div>
+					<cc:inputText id="school" name="school" label="#{i18n['education.school']}" value="#{educationBean.education.school}" required="true" />
 				</div>
 
 				<div class="col-12">
-					<div class="form-group">
-						<p:outputLabel value="#{i18n['education.description']}" />
-						<p:textEditor id="description" value="#{educationBean.education.description}" styleClass="textArea">
-							<f:facet name="toolbar">
-								<span class="ql-formats">
-									<button class="ql-bold"></button>
-									<button class="ql-italic"></button>
-									<button class="ql-underline"></button>
-								</span>
-								<span class="ql-formats"> <select class="ql-color" /> <select class="ql-background" />
-								</span>
-								<span class="ql-formats">
-									<button class="ql-script" value="sub" />
-									<button class="ql-script" value="super" />
-								</span>
-								<span class="ql-formats">
-									<button class="ql-header" value="1" />
-									<button class="ql-header" value="2" />
-									<button class="ql-blockquote" />
-									<button class="ql-code-block" />
-								</span>
-								<span class="ql-formats">
-									<button class="ql-list" value="ordered" />
-									<button class="ql-list" value="bullet" />
-									<button class="ql-indent" value="-1" />
-									<button class="ql-indent" value="+1" />
-								</span>
-								<span class="ql-formats">
-									<button class="ql-direction" value="rtl" /> <select class="ql-align" />
-								</span>
-								<span class="ql-formats">
-									<button class="ql-clean" />
-								</span>
-							</f:facet>
-						</p:textEditor>
-						<p:message for="description" />
-					</div>
+					<cc:inputDateRange startYear="{educationBean.education.startYear}" endYear="{educationBean.education.startYear}" still="#{educationBean.education.stillStudying} "/>
+				</div>
+					
+				<div class="col-12">
+					<cc:richText id="description" name="description" label="#{i18n['education.description']}" value="#{educationBean.education.description}"/>
 				</div>
 
 				<div class="col-12">

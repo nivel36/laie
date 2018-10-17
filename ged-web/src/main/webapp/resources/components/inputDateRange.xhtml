@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" xmlns:i18n="http://ged.com/i18n"
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:composite="http://java.sun.com/jsf/composite">
+
+<composite:interface componentType="inputDateRange">
+	<composite:attribute name="startYear" required="true" />
+	<composite:attribute name="endYear" required="true" />
+	<composite:attribute name="still" />
+	<composite:attribute name="required" />
+</composite:interface>
+
+<composite:implementation>
+	<div class="grid">
+		<div class="col-12 md-5">
+			<div class="form-group">
+				<p:outputLabel value="#{i18n['education.from_date']}" />
+				<p:selectOneMenu id="startYear" value="#{cc.attr.startYear}" required="true">
+					<f:selectItem itemLabel="#{i18n['date.year']}" itemValue="" />
+					<f:selectItems var="year" value="#{years}" 	itemValue="#{year}" itemLabel="#{year}" />
+				</p:selectOneMenu>
+				<p:message for="startYear" />
+			</div>
+		</div>
+
+		<div class="col-12 md-5">
+			<h:panelGroup id="endDate" class="form-group" layout="block">
+				<p:outputLabel value="#{i18n['education.to_date']}" rendered="#{not cc.attr.still}" />
+				<p:selectOneMenu id="endYear" value="#{cc.attr.endYear}" rendered="#{not cc.attr.still}" required="true">
+					<f:selectItem itemLabel="#{i18n['date.year']}" itemValue="" />
+					<f:selectItems var="year" value="#{years}" itemValue="#{year}" itemLabel="#{year}" />
+				</p:selectOneMenu>
+				<p:message for="endYear" />
+			</h:panelGroup>
+		</div>
+
+		<div class="col-12 md-2">
+			<div class="form-group">
+				<p:outputLabel value="#{i18n['education.still_studying']}" />
+				<p:selectBooleanCheckbox value="#{cc.attr.still}" id="still">
+					<f:ajax render="endDate" />
+				</p:selectBooleanCheckbox>
+			</div>
+		</div>
+	</div>
+
+	<o:validateMultiple id="validationDates" components="startYear endYear stillStudying" validator="#{validateDates}" message="#{i18n['education.error.dates']}" showMessageFor="endYear" />
+</composite:implementation>
+</html>
