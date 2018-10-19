@@ -3,7 +3,7 @@
 	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:i18n="http://ged.com/i18n" xmlns:composite="http://java.sun.com/jsf/composite">
 
 <composite:interface>
-	<composite:attribute name="name" required="true" />
+	<composite:attribute name="name" />
 	<composite:attribute name="label" required="true" />
 	<composite:attribute name="value" required="true" />
 	<composite:attribute name="completeMethod" method-signature="void function(java.lang.String)" required="true" />
@@ -12,9 +12,9 @@
 
 <composite:implementation>
 	<h:panelGroup id="userGroup" layout="block" styleClass="form-group">
-		<p:outputLabel value="#{cc.attrs.label}" for="#{cc.attrs.name}" />
+		<p:outputLabel value="#{cc.attrs.label}" for="inputUser" />
 		<div class="ui-inputgroup">
-			<p:autoComplete id="#{cc.attrs.name}" value="#{cc.attrs.value}" completeMethod="#{cc.attrs.completeMethod}" var="user" itemLabel="#{user.fullName}"
+			<p:autoComplete id="inputUser" value="#{cc.attrs.value}" completeMethod="#{cc.attrs.completeMethod}" var="user" itemLabel="#{user.fullName}"
 				itemValue="#{user}" forceSelection="true">
 				<p:column styleClass="user-select image">
 					<p:graphicImage class="image image-icon" value="/images/#{user.imageFileName}" rendered="#{not empty user.imageFileName}" />
@@ -29,7 +29,7 @@
 				<p:resetInput target="#{cc.attrs.name}" />
 			</p:commandButton>
 		</div>
-		<p:message for="#{cc.attrs.name}" />
+		<p:message for="inputUser" />
 	</h:panelGroup>
 </composite:implementation>
 </html>

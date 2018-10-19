@@ -11,20 +11,20 @@
 	<composite:attribute name="name" required="true" />
 	<composite:attribute name="label" required="true" />
 	<composite:attribute name="value" required="true" />
-		<composite:clientBehavior name="change" event="change" targets="#{cc.attrs.name}" />
+	<composite:clientBehavior name="change" event="change" targets="#{cc.attrs.name}" />
 	<composite:attribute name="required" />
 </composite:interface>
 
 <composite:implementation>
 	<div class="form-group">
-		<p:outputLabel value="#{cc.attrs.value}" for="#{cc.attrs.name}" />
-		<p:selectOneMenu id="#{cc.attrs.name}" value="#{userEditBean.user.role}" required="true">
+		<p:outputLabel value="#{cc.attrs.label}" for="selectOneMenu" />
+		<p:selectOneMenu id="selectOneMenu" name="#{cc.attrs.name}" value="#{cc.attrs.value}" required="#{cc.attrs.required}">
 			<c:if test="#{empty cc.attrs.value}">
 				<f:selectItem />
 			</c:if>
 			<composite:insertChildren />
 		</p:selectOneMenu>
-		<p:message for="#{cc.attrs.name}" />
+		<p:message for="selectOneMenu" />
 	</div>
 </composite:implementation>
 </html>

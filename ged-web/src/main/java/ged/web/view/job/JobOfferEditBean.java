@@ -73,10 +73,23 @@ public class JobOfferEditBean extends AbstractDialogBean {
 	private void newJobOfferInit() {
 		logger.debug("New job offer init");
 		this.jobOffer = new JobOffer();
-		final User user = this.sessionUser.get();
-		this.jobOffer.setOwner(user);
+		final User user = setSessionUserAsOwner();
+		setSubordinateUsersAsRecruiters(user);		
+		setClientFromFlash();
+	}
+
+	private void setSubordinateUsersAsRecruiters(final User user) {
 		final List<User> subordinateUsers = this.userService.findSubordinateUsers(user);
 		this.setRecruiters(subordinateUsers);
+	}
+
+	private User setSessionUserAsOwner() {
+		final User user = this.sessionUser.get();
+		this.jobOffer.setOwner(user);
+		return user;
+	}
+
+	private void setClientFromFlash() {
 		final Client client = this.getValueFromFlash("client");
 		this.jobOffer.setClient(client);
 	}

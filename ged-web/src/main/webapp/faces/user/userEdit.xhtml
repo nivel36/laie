@@ -27,33 +27,33 @@
 
 							<div class="col-12 lg-9">
 								<div class="grid">
-									<div class="col-12 md-6">
+									<div class="col-12 sm-6">
 										<cc:inputText id="name" name="name" label="#{i18n['user.name']}" value="#{userEditBean.user.name}" required="true" />
 									</div>
-									<div class="col-12 md-6">
+									<div class="col-12 sm-6">
 										<cc:inputText id="surname" name="surname" label="#{i18n['user.surname']}" value="#{userEditBean.user.surname}" required="true" />
 									</div>
 
-									<div class="col-12 md-6">
+									<div class="col-12 sm-6">
 										<cc:inputText id="email" name="email" label="#{i18n['user.email']}" value="#{userEditBean.user.email}" required="true" />
 									</div>
 
-									<div class="col-12 md-6">
+									<div class="col-12 sm-6">
 										<cc:inputText id="phone_number" name="phone_number" label="#{i18n['user.phone_number']}" value="#{userEditBean.user.phoneNumber}" />
 									</div>
 
-									<div class="col-12 md-6">
+									<div class="col-12 sm-6">
 										<cc:inputSelect id="role" name="role" value="#{userEditBean.user.role}" label="#{i18n['user.role']}" required="true">
 											<f:selectItems var="role" itemValue="#{role}" value="#{applicationBean.roles}" itemLabel="#{i18n:translate(role.name)}" />
 											<p:ajax event="change" update="manager role" process="role" listener="#{userEditBean.changeRoleListener}" />
 										</cc:inputSelect>
 									</div>
 
-									<div class="sm-12 md-6">
+									<div class="col-12 sm-6">
 										<cc:inputUser id="manager" name="manager" label="#{i18n['user.manager']}" value="#{userEditBean.user.manager}" completeMethod="#{userEditBean.searchManager}" />
 									</div>
 
-									<div class="col-12 md-6">
+									<div class="col-12 sm-6">
 										<cc:calendar id="date_of_join" name="date_of_join" label="#{i18n['user.date_of_join']}" value="#{userEditBean.user.dateOfJoin}"/>
 									</div>
 

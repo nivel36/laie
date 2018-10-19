@@ -9,7 +9,7 @@
 
 	<ui:define name="content">
 		<div class="grid">
-			<div class="col-12 xl-8">
+			<div class="col-12">
 				<p:breadCrumb homeDisplay="text">
 					<p:menuitem value="#{i18n['menu.index']}" url="/faces/index.xhtml" />
 					<p:menuitem value="#{i18n['client.clients']}" url="/faces/client/clientSearch.xhtml" />
@@ -17,28 +17,25 @@
 				</p:breadCrumb>
 			</div>
 			
-			<div class="col-12 xl-6">
+			<div class="col-12">
 				<h:form id="clientForm">
 					<p:panel header="#{clientEditBean.newClient ? i18n['client.new_client'] : clientEditBean.client.name}">
 						<div class="grid">
-							<div class="col-12 md-6">
-								<cc:inputText name="name" label="#{i18n['client.name']}" value="#{clientEditBean.client.name}" required="true" />
+							<div class="col-12 sm-6">
+								<cc:inputText id="name" label="#{i18n['client.name']}" value="#{clientEditBean.client.name}" required="true" />
 							</div>
-							<div class="col-12 md-6">
-								<cc:inputText name="cif" label="#{i18n['client.cif']}" value="#{clientEditBean.client.cif}" required="true" />
+							<div class="col-12 sm-6">
+								<cc:inputText id="cif" label="#{i18n['client.cif']}" value="#{clientEditBean.client.cif}" required="true" />
 							</div>
-
-							<div class="col-12 md-6">
-								<cc:inputText name="phoneNumber" label="#{i18n['client.phone_number']}" value="#{clientEditBean.client.phoneNumber}" />
+							<div class="col-12 sm-6">
+								<cc:inputText id="phoneNumber" label="#{i18n['client.phone_number']}" value="#{clientEditBean.client.phoneNumber}" />
 							</div>
-
-							<div class="col-12 md-6">
-								<cc:inputText name="city" label="#{i18n['client.city']}" value="#{clientEditBean.client.address.city}" />
+							<div class="col-12 sm-6">
+								<cc:inputText id="city" label="#{i18n['client.city']}" value="#{clientEditBean.client.address.city}" />
 							</div>
-							<div class="col-12 md-6">
-								<cc:inputText name="state" label="#{i18n['client.state']}" value="#{clientEditBean.client.address.state}" />
+							<div class="col-12 sm-6">
+								<cc:inputText id="state" label="#{i18n['client.state']}" value="#{clientEditBean.client.address.state}" />
 							</div>
-
 							<div class="col-12">
 								<div class="form-action-primary">
 									<p:button styleClass="btn-gray" value="#{i18n['action.cancel']}" outcome="clientSearch" rendered="#{clientEditBean.newClient}" />

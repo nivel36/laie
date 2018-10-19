@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:i18n="http://ged.com/i18n" xmlns:composite="http://java.sun.com/jsf/composite">
+
+<composite:interface>
+	<composite:attribute name="name" />
+	<composite:attribute name="label" required="true" />
+	<composite:attribute name="value" required="true" />
+	<composite:attribute name="min" />
+	<composite:attribute name="max" />
+	<composite:attribute name="required" />
+</composite:interface>
+
+<composite:implementation>
+	<div class="form-group">
+		<p:outputLabel value="#{cc.attrs.label}" for="inputNumber" />
+		<p:spinner id="inputNumber" name="#{cc.attrs.name}" value="#{cc.attrs.value}" required="#{cc.attrs.required}" min="#{cc.attrs.min}" max="#{cc.attrs.max}" />
+		<p:message for="inputNumber" />
+	</div>
+</composite:implementation>
+</html>

@@ -10,42 +10,21 @@
 	<ui:define name="content">
 		<h:form id="contactForm">
 			<div class="grid">
-				<div class="col-12 md-6">
-					<div class="form-group">
-						<p:outputLabel value="#{i18n['contact.name']}" for="name" />
-						<p:inputText id="name" value="#{contactDialogBean.contact.name}" required="true" />
-						<p:message for="name" />
-					</div>
+				<div class="col-12 sm-6">
+					<cc:inputText id="name" label="#{i18n['contact.name']}" value="#{contactDialogBean.contact.name}" required="true" />
 				</div>
-				<div class="col-12 md-6">
-					<div class="form-group">
-						<p:outputLabel value="#{i18n['contact.surname']}" for="surname" />
-						<p:inputText id="surname" value="#{contactDialogBean.contact.surname}" required="true" />
-						<p:message for="surname" />
-					</div>
+				<div class="col-12 sm-6">
+					<cc:inputText id="surname" label="#{i18n['contact.surname']}" value="#{contactDialogBean.contact.surname}" required="true" />
 				</div>
-				<div class="col-12 md-6">
-					<div class="form-group">
-						<p:outputLabel value="#{i18n['contact.position']}" for="position" />
-						<p:inputText id="position" value="#{contactDialogBean.contact.position}" />
-						<p:message for="position" />
-					</div>
+				<div class="col-12 sm-6">
+					<cc:inputText id="position" label="#{i18n['contact.position']}" value="#{contactDialogBean.contact.position}" />
 				</div>
-				<div class="col-12 md-6">
-					<div class="form-group">
-						<p:outputLabel value="#{i18n['contact.email']}" for="email" />
-						<p:inputText id="email" value="#{contactDialogBean.contact.email}" required="true" />
-						<p:message for="email" />
-					</div>
+				<div class="col-12 sm-6">
+					<cc:inputText id="email" label="#{i18n['contact.email']}" value="#{contactDialogBean.contact.email}" />
 				</div>
-				<div class="col-12 md-6">
-					<div class="form-group">
-						<p:outputLabel value="#{i18n['contact.phoneNumber']}" for="phone_number" />
-						<p:inputText id="phone_number" value="#{contactDialogBean.contact.phoneNumber}" />
-						<p:message for="phone_number" />
-					</div>
+				<div class="col-12 sm-6">
+					<cc:inputText id="phone_number" label="#{i18n['contact.phone_number']}" value="#{contactDialogBean.contact.phoneNumber}" />
 				</div>
-
 				<div class="col-12">
 					<div class="form-action-primary">
 						<p:commandButton value="#{i18n['action.cancel']}" action="#{contactDialogBean.closeDialog}" process="@this" styleClass="btn-gray" />

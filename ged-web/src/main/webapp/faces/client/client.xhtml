@@ -19,38 +19,38 @@
 				</p:breadCrumb>
 			</div>
 			
-			<div class="col-12 xl-6">
+			<div class="col-12">
 				<h:form id="clientViewForm">
 					<input type="hidden" id="clientId" value="#{clientBean.client.id}" />
 					<p:panel header="#{clientBean.client}" id="client">
 						<div class="grid">
-							<div class="col-12 md-6">
+							<div class="col-12 sm-6">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['client.name']}" for="name" />
 									<p:inputText id="name" value="#{clientBean.client.name}" readonly="true" />
 								</div>
 							</div>
-							<div class="col-12 md-6">
+							<div class="col-12 sm-6">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['client.cif']}" for="cif" />
 									<p:inputText id="cif" value="#{clientBean.client.cif}" readonly="true" />
 								</div>
 							</div>
 
-							<div class="col-12 md-6">
+							<div class="col-12 sm-6">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['client.phone_number']}" for="phoneNumber" />
 									<p:inputText id="phoneNumber" value="#{clientBean.client.phoneNumber}" readonly="true" />
 								</div>
 							</div>
 
-							<div class="col-12 md-6">
+							<div class="col-12 sm-6">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['client.city']}" for="city" />
 									<p:inputText id="city" value="#{clientBean.client.address.city}" readonly="true" />
 								</div>
 							</div>
-							<div class="col-12 md-6">
+							<div class="col-12 sm-6">
 								<div class="form-group">
 									<p:outputLabel value="#{i18n['client.state']}" for="state" />
 									<p:inputText id="state" value="#{clientBean.client.address.state}" readonly="true" />
@@ -68,7 +68,7 @@
 					</p:panel>
 				</h:form>
 			</div>
-			<div class="col-12 xl-6">
+			<div class="col-12">
 				<h:form id="contactsForm">
 					<cc:contacts contacts="#{clientBean.contacts}">
 						<p:commandButton value="#{i18n['action.new']}" actionListener="#{clientBean.newContact}" process="@this">
@@ -77,7 +77,7 @@
 					</cc:contacts>
 				</h:form>
 			</div>
-			<div class="col-12 xl-6">
+			<div class="col-12">
 				<h:form id="jobOffersForm">
 					<cc:jobOffers id="jobOffers" jobOffers="#{clientBean.jobOffers}">
 						<p:commandButton value="#{i18n['action.new']}" actionListener="#{clientBean.newJobOffer}" action="/faces/jobOffer/jobOfferEdit?faces-redirect=true"
