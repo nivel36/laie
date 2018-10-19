@@ -10,19 +10,7 @@
 
 	<ui:define name="content">
 		<div class="grid">
-			<div class="col-12 md-4">
-				<p:panel header="#{i18n['role.roles']}">
-					<h:form>
-						<div class="form-group">
-							<p:outputLabel value="#{i18n['role.name']}" for="name" />
-							<p:inputText id="name" value="#{roleBean.role.name}" required="true" />
-							<p:message for="name" />
-						</div>
-					</h:form>
-				</p:panel>
-			</div>
-
-			<div class="col-12 -md-4">
+			<div class="col-12 sm-6 md-4">
 				<p:panel header="#{i18n['maintenance.language_knowdeleges']}">
 					<h:form>
 						<p:selectOneMenu id="languageKnowdelege" label="#{i18n['language.level']}">
