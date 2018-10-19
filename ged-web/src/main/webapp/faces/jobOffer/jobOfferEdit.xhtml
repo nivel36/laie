@@ -29,7 +29,7 @@
 								<div class="grid">
 									<div class="col-12 md-6">
 										<cc:inputClient id="client" label="#{i18n['job.client']}" value="#{jobOfferEditBean.jobOffer.client.name}"
-											openAction="#{jobOfferEditBean.openClientSearchDialog}" cleanAction="#{jobOfferEditBean.cleanClient}" required="true">
+											openAction="#{jobOfferEditBean.openClientSearchDialog}" required="true">
 											<p:ajax event="dialogReturn" listener="#{jobOfferEditBean.onCloseClientSearchDialog}" process="@this" update="@form" />
 										</cc:inputClient>
 									</div>
