@@ -15,11 +15,12 @@
 </composite:interface>
 
 <composite:implementation>
+<div class="input-date-range">
 	<div class="grid">
-		<div class="col-12 md-5">
+		<div class="col-5">
 			<div class="form-group">
 				<p:outputLabel value="#{i18n['education.from_date']}" />
-				<p:selectOneMenu id="startYear" value="#{cc.attr.startYear}" required="true">
+				<p:selectOneMenu id="startYear" value="#{cc.attrs.startYear}" required="true">
 					<f:selectItem itemLabel="#{i18n['date.year']}" itemValue="" />
 					<f:selectItems var="year" value="#{years}" 	itemValue="#{year}" itemLabel="#{year}" />
 				</p:selectOneMenu>
@@ -27,10 +28,10 @@
 			</div>
 		</div>
 
-		<div class="col-12 md-5">
+		<div class="col-5">
 			<h:panelGroup id="endDate" class="form-group" layout="block">
-				<p:outputLabel value="#{i18n['education.to_date']}" rendered="#{not cc.attr.still}" />
-				<p:selectOneMenu id="endYear" value="#{cc.attr.endYear}" rendered="#{not cc.attr.still}" required="true">
+				<p:outputLabel value="#{i18n['education.to_date']}" rendered="#{not cc.attrs.still}" />
+				<p:selectOneMenu id="endYear" value="#{cc.attrs.endYear}" rendered="#{not cc.attrs.still}" required="true">
 					<f:selectItem itemLabel="#{i18n['date.year']}" itemValue="" />
 					<f:selectItems var="year" value="#{years}" itemValue="#{year}" itemLabel="#{year}" />
 				</p:selectOneMenu>
@@ -38,10 +39,10 @@
 			</h:panelGroup>
 		</div>
 
-		<div class="col-12 md-2">
+		<div class="col-2">
 			<div class="form-group">
 				<p:outputLabel value="#{i18n['education.still_studying']}" />
-				<p:selectBooleanCheckbox value="#{cc.attr.still}" id="still">
+				<p:selectBooleanCheckbox value="#{cc.attrs.still}" id="still">
 					<f:ajax render="endDate" />
 				</p:selectBooleanCheckbox>
 			</div>
@@ -49,5 +50,6 @@
 	</div>
 
 	<o:validateMultiple id="validationDates" components="startYear endYear stillStudying" validator="#{validateDates}" message="#{i18n['education.error.dates']}" showMessageFor="endYear" />
+</div>
 </composite:implementation>
 </html>

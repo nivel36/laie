@@ -3,7 +3,7 @@
 	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:i18n="http://ged.com/i18n" xmlns:composite="http://java.sun.com/jsf/composite">
 
 <composite:interface>
-	<composite:attribute name="name" required="true" />
+	<composite:attribute name="name" />
 	<composite:attribute name="label" required="true" />
 	<composite:attribute name="value" required="true" />
 	<composite:attribute name="required" />
@@ -11,8 +11,8 @@
 
 <composite:implementation>
 	<div class="form-group">
-		<p:outputLabel value="#{cc.attrs.label}" for="#{cc.attrs.name}" />
-		<p:textEditor id="#{cc.attrs.name}" value="#{cc.attrs.value}" required="#{cc.attrs.required}">
+		<p:outputLabel value="#{cc.attrs.label}" for="textArea" />
+		<p:textEditor id="textArea" value="#{cc.attrs.value}" required="#{cc.attrs.required}">
 			<f:facet name="toolbar">
 				<span class="ql-formats">
 					<button class="ql-bold"></button>
@@ -45,7 +45,7 @@
 				</span>
 			</f:facet>
 		</p:textEditor>
-		<p:message for="#{cc.attrs.name}" />
+		<p:message for="textArea" />
 	</div>
 </composite:implementation>
 </html>

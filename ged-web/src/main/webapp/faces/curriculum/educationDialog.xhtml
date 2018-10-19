@@ -11,18 +11,18 @@
 		<h:form>
 			<div class="grid">
 				<div class="col-12 md-6">
-					<cc:inputText id="degree" name="degree" label="#{i18n['education.degree']}" value="#{educationBean.education.degree}" required="true" />
+					<cc:inputText id="degree" label="#{i18n['education.degree']}" value="#{educationBean.education.degree}" required="true" />
 				</div>
 				<div class="col-12 md-6">
-					<cc:inputText id="school" name="school" label="#{i18n['education.school']}" value="#{educationBean.education.school}" required="true" />
+					<cc:inputText id="school" label="#{i18n['education.school']}" value="#{educationBean.education.school}" required="true" />
 				</div>
 
 				<div class="col-12">
-					<cc:inputDateRange startYear="{educationBean.education.startYear}" endYear="{educationBean.education.startYear}" still="#{educationBean.education.stillStudying} "/>
+					<cc:inputDateRange id="years" startYear="{educationBean.education.startYear}" endYear="{educationBean.education.startYear}" still="#{educationBean.education.stillStudying} "/>
 				</div>
 					
 				<div class="col-12">
-					<cc:richText id="description" name="description" label="#{i18n['education.description']}" value="#{educationBean.education.description}"/>
+					<cc:richText id="description" label="#{i18n['education.description']}" value="#{educationBean.education.description}"/>
 				</div>
 
 				<div class="col-12">
