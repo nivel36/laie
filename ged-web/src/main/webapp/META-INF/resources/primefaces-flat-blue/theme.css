@@ -398,6 +398,30 @@ body .form-group .ui-inputgroup {
 	width: 100%;
 }
 
+body .ui-spinner .ui-spinner-input {
+	padding-right: 25px;
+}
+
+body .ui-spinner .ui-spinner-button {
+    height: 50%;
+    z-index: 100;
+}
+
+body .ui-spinner .ui-spinner-button.ui-spinner-up {
+	border-top-right-radius: 4px;
+}
+
+body .ui-spinner .ui-spinner-button.ui-spinner-down {
+	border-bottom-right-radius: 4px;
+}
+
+body .ui-spinner .ui-spinner-button .ui-button-text {
+    margin-left: -4px;
+	overflow: auto;
+	position: relative;
+	margin-top: 4px;
+}
+
 body .ui-inputgroup .ui-button.ui-button-icon-only:last-child {
 	border-top-right-radius: 4px;
 	border-bottom-right-radius: 4px;
@@ -478,6 +502,15 @@ body .ql-editor {
 	min-height: 100px;
 }
 
+body .ui-spinner {
+	width: 100%;
+}
+
+body .ui-spinner .ui-inputfield {
+	border-bottom-right-radius: 4px;
+	border-top-right-radius: 4px; 
+}
+
 body .ui-inputfield {
 	outline: medium none;
 	background-color: white;
@@ -492,7 +525,7 @@ body .ui-inputfield {
 }
 
 body .ui-inputfield.ui-state-error, body .ui-inputtext[aria-required="true"].ui-state-error,
-	body .ui-inputtext[data-p-required="true"].ui-state-error, body .ui-selectonemenu.ui-state-error
+	body .ui-inputtext[data-p-required="true"].ui-state-error, body .ui-selectonemenu.ui-state-error, 
 	{
 	border: 1px solid red;
 }
