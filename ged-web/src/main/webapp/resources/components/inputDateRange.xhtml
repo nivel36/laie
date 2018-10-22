@@ -1,10 +1,6 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui" xmlns:i18n="http://ged.com/i18n"
-	xmlns:o="http://omnifaces.org/ui"
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:i18n="http://ged.com/i18n" xmlns:o="http://omnifaces.org/ui"
 	xmlns:composite="http://java.sun.com/jsf/composite">
 
 <composite:interface componentType="inputDateRange">
@@ -17,14 +13,17 @@
 </composite:interface>
 
 <composite:implementation>
-<div class="input-date-range">
 	<div class="grid">
 		<div class="col-5">
 			<div class="form-group">
 				<p:outputLabel value="#{i18n['education.from_date']}" />
 				<p:selectOneMenu id="startYear" value="#{cc.attrs.startYear}" required="true">
 					<f:selectItem itemLabel="#{i18n['date.year']}" itemValue="" />
+<<<<<<< HEAD
 					<f:selectItems var="year" value="#{cc.years}" 	itemValue="#{year}" itemLabel="#{year}" />
+=======
+					<f:selectItems var="year" value="#{years}" itemValue="#{year}" itemLabel="#{year}" />
+>>>>>>> branch 'develop' of https://aferrer74@bitbucket.org/ged_team/ged.git
 				</p:selectOneMenu>
 				<p:message for="startYear" />
 			</div>
@@ -49,9 +48,8 @@
 				</p:selectBooleanCheckbox>
 			</div>
 		</div>
+		<o:validateMultiple id="validationDates" components="startYear endYear stillStudying" validator="#{validateDates}" message="#{i18n['education.error.dates']}"
+			showMessageFor="endYear" />
 	</div>
-
-	<o:validateMultiple id="validationDates" components="startYear endYear stillStudying" validator="#{validateDates}" message="#{i18n['education.error.dates']}" showMessageFor="endYear" />
-</div>
 </composite:implementation>
 </html>
