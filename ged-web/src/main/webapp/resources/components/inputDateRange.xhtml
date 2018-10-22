@@ -19,11 +19,7 @@
 				<p:outputLabel value="#{i18n['education.from_date']}" />
 				<p:selectOneMenu id="startYear" value="#{cc.attrs.startYear}" required="true">
 					<f:selectItem itemLabel="#{i18n['date.year']}" itemValue="" />
-<<<<<<< HEAD
 					<f:selectItems var="year" value="#{cc.years}" 	itemValue="#{year}" itemLabel="#{year}" />
-=======
-					<f:selectItems var="year" value="#{years}" itemValue="#{year}" itemLabel="#{year}" />
->>>>>>> branch 'develop' of https://aferrer74@bitbucket.org/ged_team/ged.git
 				</p:selectOneMenu>
 				<p:message for="startYear" />
 			</div>
