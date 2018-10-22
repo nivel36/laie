@@ -7,14 +7,24 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javax.faces.component.FacesComponent;
+import javax.faces.component.NamingContainer;
 import javax.faces.component.UIInput;
+import javax.faces.component.UINamingContainer;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 
-@FacesComponent(value="inputDateRange")
-public class InputDateRange extends UIInput {
+@FacesComponent(value = "inputDateRange")
+public class InputDateRange extends UIInput implements NamingContainer {
 
 	private static final String FILE_NAME = "ged.i18n";
+
+	private Integer getMaxYear() {
+		return (Integer) getAttributes().get("maxYear");
+	}
+	
+	private Integer getMinYear() {
+		return (Integer) getAttributes().get("minYear");
+	}
 
 	private static Locale getLocale() {
 		final UIViewRoot uIViewRoot = FacesContext.getCurrentInstance().getViewRoot();
@@ -57,12 +67,17 @@ public class InputDateRange extends UIInput {
 
 	private void buildYearsCombo() {
 		int presentYear = LocalDate.now().getYear();
-		int minRange = presentYear - 50;
-		int maxRange = presentYear + 50;
+		int minRange = presentYear - getMinYear();
+		int maxRange = presentYear + getMaxYear();
 		this.years = new ArrayList<>();
-		for (int i = minRange; i < maxRange; i++) {
-			this.years.add(presentYear);
+		for (int i = maxRange; i > minRange; i--) {
+			this.years.add(i);
 		}
+	}
+
+	@Override
+	public String getFamily() {
+		return UINamingContainer.COMPONENT_FAMILY;
 	}
 
 	public List<String> getMonths() {
@@ -72,8 +87,9 @@ public class InputDateRange extends UIInput {
 	public List<Integer> getYears() {
 		return this.years;
 	}
-	
-	public boolean validateDates(final FacesContext context, final List<UIInput> components, final List<Object> values) {
+
+	public boolean validateDates(final FacesContext context, final List<UIInput> components,
+			final List<Object> values) {
 		boolean inputStillWorking = false;
 		Integer inputStartYear = null;
 		Integer inputEndYear = null;
@@ -84,15 +100,12 @@ public class InputDateRange extends UIInput {
 			if (component.getId().equals("stillWorking")) {
 				if (values.get(i) == null) {
 					inputStillWorking = false;
-				}
-				else {
+				} else {
 					inputStillWorking = (Boolean) values.get(i);
 				}
-			}
-			else if (component.getId().equals("startYear")) {
+			} else if (component.getId().equals("startYear")) {
 				inputStartYear = (Integer) values.get(i);
-			}
-			else if (component.getId().equals("endYear")) {
+			} else if (component.getId().equals("endYear")) {
 				inputEndYear = (Integer) values.get(i);
 			}
 		}
