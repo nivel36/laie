@@ -4,10 +4,10 @@
 	xmlns:composite="http://java.sun.com/jsf/composite">
 
 <composite:interface componentType="inputDateRange">
-	<composite:attribute name="startYear" required="true" />
-	<composite:attribute name="endYear" required="true" />
-	<composite:attribute name="maxYear" required="false" default="0" />
-	<composite:attribute name="minYear" required="false" default="20" />
+	<composite:attribute name="fromYear" type="java.lang.Integer" required="true" />
+	<composite:attribute name="toYear" type="java.lang.Integer" required="true" />
+	<composite:attribute name="maxYear" type="java.lang.Integer" required="false" default="0" />
+	<composite:attribute name="minYear" type="java.lang.Integer" required="false" default="20" />
 	<composite:attribute name="still" />
 	<composite:attribute name="required" />
 </composite:interface>
@@ -17,22 +17,22 @@
 		<div class="col-5">
 			<div class="form-group">
 				<p:outputLabel value="#{i18n['education.from_date']}" />
-				<p:selectOneMenu id="startYear" value="#{cc.attrs.startYear}" required="true">
+				<p:selectOneMenu id="fromYear" value="#{cc.attrs.fromYear}" required="true">
 					<f:selectItem itemLabel="#{i18n['date.year']}" itemValue="" />
-					<f:selectItems var="year" value="#{cc.years}" 	itemValue="#{year}" itemLabel="#{year}" />
+					<f:selectItems var="year" value="#{cc.years}" itemValue="#{year}" itemLabel="#{year}" />
 				</p:selectOneMenu>
-				<p:message for="startYear" />
+				<p:message for="fromYear" />
 			</div>
 		</div>
 
 		<div class="col-5">
 			<h:panelGroup id="endDate" class="form-group" layout="block">
 				<p:outputLabel value="#{i18n['education.to_date']}" rendered="#{not cc.attrs.still}" />
-				<p:selectOneMenu id="endYear" value="#{cc.attrs.endYear}" rendered="#{not cc.attrs.still}" required="true">
+				<p:selectOneMenu id="toYear" value="#{cc.attrs.toYear}" rendered="#{not cc.attrs.still}" required="true">
 					<f:selectItem itemLabel="#{i18n['date.year']}" itemValue="" />
 					<f:selectItems var="year" value="#{cc.years}" itemValue="#{year}" itemLabel="#{year}" />
 				</p:selectOneMenu>
-				<p:message for="endYear" />
+				<p:message for="toYear" />
 			</h:panelGroup>
 		</div>
 

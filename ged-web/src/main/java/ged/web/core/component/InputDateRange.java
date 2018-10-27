@@ -1,5 +1,6 @@
 package ged.web.core.component;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Locale;
@@ -17,7 +18,50 @@ public class InputDateRange extends UIInput implements NamingContainer {
 
 	private static final String FILE_NAME = "ged.i18n";
 
-	private static Locale getLocale() {
+	private UIInput fromMonth;
+
+	private UIInput fromYear;
+
+	private UIInput toMonth;
+
+	private UIInput toYear;
+
+	private String[] buildMonthsCombo() {
+		final String[] months = new String[12];
+		for (int i = 1; i < 13; i++) {
+			final String nameOfMonth = message("date.month." + i);
+			months[i - 1] = nameOfMonth;
+		}
+		return months;
+	}
+
+	private Integer[] buildYearsCombo(final int minYear, final int maxYear) {
+		final int presentYear = LocalDate.now().getYear();
+		final int minRange = presentYear - minYear;
+		final int maxRange = presentYear + maxYear;
+		final int range = maxRange - minRange;
+		final Integer[] years = new Integer[range];
+		for (int i = 0; i < range; i++) {
+			years[i] = minRange + i;
+		}
+		return years;
+	}
+
+	@Override
+	public void encodeBegin(final FacesContext context) throws IOException {
+		final int maxYear = (int) getAttributes().get("maxYear");
+		final int minYear = (int) getAttributes().get("minYear");
+		setMonths(buildMonthsCombo());
+		setYears(buildYearsCombo(minYear, maxYear));
+		super.encodeBegin(context);
+	}
+
+	@Override
+	public String getFamily() {
+		return UINamingContainer.COMPONENT_FAMILY;
+	}
+
+	private Locale getLocale() {
 		final UIViewRoot uIViewRoot = FacesContext.getCurrentInstance().getViewRoot();
 		final Locale locale;
 		if (uIViewRoot != null) {
@@ -29,73 +73,25 @@ public class InputDateRange extends UIInput implements NamingContainer {
 		return locale;
 	}
 
-	private static ResourceBundle getResourceBundle(final String filename) {
+	public String[] getMonths() {
+		return (String[]) getStateHelper().get("months");
+	}
+
+	private ResourceBundle getResourceBundle(final String filename) {
 		final Locale locale = getLocale();
 		return ResourceBundle.getBundle(filename, locale);
-	}
-
-	private static String message(final String message) {
-		final ResourceBundle bundle = getResourceBundle(FILE_NAME);
-		return bundle.getString(message);
-	}
-
-	private UIInput fromMonth;
-
-	private UIInput fromYear;
-
-	private UIInput toMonth;
-
-	private UIInput toYear;
-
-	public InputDateRange() {
-		super();
-		buildMonthsCombo();
-		buildYearsCombo();
-	}
-
-	private String[] buildMonthsCombo() {
-		final String[] months = new String[12];
-		for (int i = 0; i < 12; i++) {
-			final String nameOfMonth = message("date.month." + i);
-			months[i] = nameOfMonth;
-		}
-		return months;
-	}
-
-	private Integer[] buildYearsCombo() {
-		final int presentYear = LocalDate.now().getYear();
-		final int minRange = presentYear - 50;
-		final int maxRange = presentYear + 50;
-		final int range = maxRange - minRange;
-		final Integer[] years = new Integer[range];
-		for (int i = 0; i < range; i++) {
-			years[i] = minRange + i;
-		}
-		return years;
-	}
-
-	@Override
-	public String getFamily() {
-		return UINamingContainer.COMPONENT_FAMILY;
-	}
-
-	private Integer getMaxYear() {
-		return (Integer) getAttributes().get("maxYear");
-	}
-
-	private Integer getMinYear() {
-		return (Integer) getAttributes().get("minYear");
-	}
-
-	public Integer[] getMonths() {
-		return (Integer[]) getStateHelper().get("months");
 	}
 
 	public Integer[] getYears() {
 		return (Integer[]) getStateHelper().get("years");
 	}
 
-	public void setMonths(final Integer[] months) {
+	private String message(final String message) {
+		final ResourceBundle bundle = getResourceBundle(FILE_NAME);
+		return bundle.getString(message);
+	}
+
+	public void setMonths(final String[] months) {
 		getStateHelper().put("months", months);
 	}
 
@@ -119,10 +115,10 @@ public class InputDateRange extends UIInput implements NamingContainer {
 					inputStillWorking = (Boolean) values.get(i);
 				}
 			}
-			else if (component.getId().equals("startYear")) {
+			else if (component.getId().equals("fromYear")) {
 				inputStartYear = (Integer) values.get(i);
 			}
-			else if (component.getId().equals("endYear")) {
+			else if (component.getId().equals("toYear")) {
 				inputEndYear = (Integer) values.get(i);
 			}
 		}
