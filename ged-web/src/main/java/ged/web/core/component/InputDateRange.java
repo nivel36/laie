@@ -17,14 +17,6 @@ public class InputDateRange extends UIInput implements NamingContainer {
 
 	private static final String FILE_NAME = "ged.i18n";
 
-	private Integer getMaxYear() {
-		return (Integer) getAttributes().get("maxYear");
-	}
-	
-	private Integer getMinYear() {
-		return (Integer) getAttributes().get("minYear");
-	}
-
 	private static Locale getLocale() {
 		final UIViewRoot uIViewRoot = FacesContext.getCurrentInstance().getViewRoot();
 		final Locale locale;
@@ -70,7 +62,6 @@ public class InputDateRange extends UIInput implements NamingContainer {
 		return months;
 	}
 
-<<<<<<< HEAD
 	private Integer[] buildYearsCombo() {
 		final int presentYear = LocalDate.now().getYear();
 		final int minRange = presentYear - 50;
@@ -79,38 +70,31 @@ public class InputDateRange extends UIInput implements NamingContainer {
 		final Integer[] years = new Integer[range];
 		for (int i = 0; i < range; i++) {
 			years[i] = minRange + i;
-=======
-	private void buildYearsCombo() {
-		int presentYear = LocalDate.now().getYear();
-		int minRange = presentYear - getMinYear();
-		int maxRange = presentYear + getMaxYear();
-		this.years = new ArrayList<>();
-		for (int i = maxRange; i > minRange; i--) {
-			this.years.add(i);
->>>>>>> branch 'develop' of https://aferrer74@bitbucket.org/ged_team/ged.git
 		}
 		return years;
 	}
 
-<<<<<<< HEAD
-	public Integer[] getMonths() {
-		return (Integer[]) getStateHelper().get("months");
-=======
 	@Override
 	public String getFamily() {
 		return UINamingContainer.COMPONENT_FAMILY;
 	}
 
-	public List<String> getMonths() {
-		return this.months;
->>>>>>> branch 'develop' of https://aferrer74@bitbucket.org/ged_team/ged.git
+	private Integer getMaxYear() {
+		return (Integer) getAttributes().get("maxYear");
+	}
+
+	private Integer getMinYear() {
+		return (Integer) getAttributes().get("minYear");
+	}
+
+	public Integer[] getMonths() {
+		return (Integer[]) getStateHelper().get("months");
 	}
 
 	public Integer[] getYears() {
 		return (Integer[]) getStateHelper().get("years");
 	}
 
-<<<<<<< HEAD
 	public void setMonths(final Integer[] months) {
 		getStateHelper().put("months", months);
 	}
@@ -120,10 +104,6 @@ public class InputDateRange extends UIInput implements NamingContainer {
 	}
 
 	public boolean validateDates(final FacesContext context, final List<UIInput> components, final List<Object> values) {
-=======
-	public boolean validateDates(final FacesContext context, final List<UIInput> components,
-			final List<Object> values) {
->>>>>>> branch 'develop' of https://aferrer74@bitbucket.org/ged_team/ged.git
 		boolean inputStillWorking = false;
 		Integer inputStartYear = null;
 		Integer inputEndYear = null;
@@ -134,12 +114,15 @@ public class InputDateRange extends UIInput implements NamingContainer {
 			if (component.getId().equals("stillWorking")) {
 				if (values.get(i) == null) {
 					inputStillWorking = false;
-				} else {
+				}
+				else {
 					inputStillWorking = (Boolean) values.get(i);
 				}
-			} else if (component.getId().equals("startYear")) {
+			}
+			else if (component.getId().equals("startYear")) {
 				inputStartYear = (Integer) values.get(i);
-			} else if (component.getId().equals("endYear")) {
+			}
+			else if (component.getId().equals("endYear")) {
 				inputEndYear = (Integer) values.get(i);
 			}
 		}
