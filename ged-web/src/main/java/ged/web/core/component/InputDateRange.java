@@ -1,18 +1,18 @@
 package ged.web.core.component;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javax.faces.component.FacesComponent;
+import javax.faces.component.NamingContainer;
 import javax.faces.component.UIInput;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 
-@FacesComponent(value="inputDateRange")
-public class InputDateRange extends UIInput {
+@FacesComponent(value = "inputDateRange")
+public class InputDateRange extends UIInput implements NamingContainer {
 
 	private static final String FILE_NAME = "ged.i18n";
 
@@ -21,7 +21,8 @@ public class InputDateRange extends UIInput {
 		final Locale locale;
 		if (uIViewRoot != null) {
 			locale = uIViewRoot.getLocale();
-		} else {
+		}
+		else {
 			locale = Locale.ENGLISH;
 		}
 		return locale;
@@ -37,9 +38,13 @@ public class InputDateRange extends UIInput {
 		return bundle.getString(message);
 	}
 
-	private List<String> months;
+	private UIInput fromMonth;
 
-	private List<Integer> years;
+	private UIInput fromYear;
+
+	private UIInput toMonth;
+
+	private UIInput toYear;
 
 	public InputDateRange() {
 		super();
@@ -47,32 +52,43 @@ public class InputDateRange extends UIInput {
 		buildYearsCombo();
 	}
 
-	private void buildMonthsCombo() {
-		this.months = new ArrayList<>();
-		for (int i = 1; i < 13; i++) {
+	private String[] buildMonthsCombo() {
+		final String[] months = new String[12];
+		for (int i = 0; i < 12; i++) {
 			final String nameOfMonth = message("date.month." + i);
-			this.months.add(nameOfMonth);
+			months[i] = nameOfMonth;
 		}
+		return months;
 	}
 
-	private void buildYearsCombo() {
-		int presentYear = LocalDate.now().getYear();
-		int minRange = presentYear - 50;
-		int maxRange = presentYear + 50;
-		this.years = new ArrayList<>();
-		for (int i = minRange; i < maxRange; i++) {
-			this.years.add(presentYear);
+	private Integer[] buildYearsCombo() {
+		final int presentYear = LocalDate.now().getYear();
+		final int minRange = presentYear - 50;
+		final int maxRange = presentYear + 50;
+		final int range = maxRange - minRange;
+		final Integer[] years = new Integer[range];
+		for (int i = 0; i < range; i++) {
+			years[i] = minRange + i;
 		}
+		return years;
 	}
 
-	public List<String> getMonths() {
-		return this.months;
+	public Integer[] getMonths() {
+		return (Integer[]) getStateHelper().get("months");
 	}
 
-	public List<Integer> getYears() {
-		return this.years;
+	public Integer[] getYears() {
+		return (Integer[]) getStateHelper().get("years");
 	}
-	
+
+	public void setMonths(final Integer[] months) {
+		getStateHelper().put("months", months);
+	}
+
+	public void setYears(final Integer[] years) {
+		getStateHelper().put("years", years);
+	}
+
 	public boolean validateDates(final FacesContext context, final List<UIInput> components, final List<Object> values) {
 		boolean inputStillWorking = false;
 		Integer inputStartYear = null;
