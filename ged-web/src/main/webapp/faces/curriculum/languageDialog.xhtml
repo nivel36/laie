@@ -12,22 +12,15 @@
 
 			<div class="grid">
 				<div class="col-12 md-6">
-					<div class="form-group">
-						<p:outputLabel value="#{i18n['language.language']}" />
-						<p:inputText id="language" value="#{languageBean.language.name}" required="true" />
-						<p:message for="language" />
-					</div>
+					<cc:inputText id="languageName" label="#{i18n['language.language']}" value="#{languageBean.language.name}" required="true" />
 				</div>
+
 				<div class="col-12 md-6">
-					<div class="form-group">
-						<p:outputLabel value="#{i18n['language.level']}"  />
-						<p:selectOneMenu id="level" value="#{languageBean.language.level}" required="true">
-							<f:selectItem itemLabel="#{i18n['language.level']}" itemValue="" />
-							<f:selectItems var="languageLevel" itemValue="#{languageLevel.name}" value="#{applicationBean.languageLevels}"
-														itemLabel="#{i18n:translate(languageLevel.name)}" />							
-						</p:selectOneMenu>
-						<p:message for="level" />
-					</div>
+					<cc:inputSelect name="" label="#{i18n['language.level']}" value="#{languageBean.language.level}" required="true">
+						<f:selectItem itemLabel="#{i18n['language.level']}" itemValue="" />
+						<f:selectItems var="languageLevel" itemValue="#{languageLevel.name}" value="#{applicationBean.languageLevels}"
+							itemLabel="#{i18n:translate(languageLevel.name)}" />
+					</cc:inputSelect>
 				</div>
 
 				<div class="col-12">

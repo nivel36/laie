@@ -8,10 +8,10 @@
 	xmlns:composite="http://java.sun.com/jsf/composite">
 
 <composite:interface>
-	<composite:attribute name="name" required="true" />
+	<composite:attribute name="name" />
 	<composite:attribute name="label" required="true" />
 	<composite:attribute name="value" required="true" />
-	<composite:clientBehavior name="change" event="change" targets="#{cc.attrs.name}" />
+	<composite:clientBehavior name="change" event="change" targets="selectOneMenu" />
 	<composite:attribute name="required" />
 </composite:interface>
 
