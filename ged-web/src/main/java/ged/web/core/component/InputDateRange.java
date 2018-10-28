@@ -18,14 +18,6 @@ public class InputDateRange extends UIInput implements NamingContainer {
 
 	private static final String FILE_NAME = "ged.i18n";
 
-	private UIInput fromMonth;
-
-	private UIInput fromYear;
-
-	private UIInput toMonth;
-
-	private UIInput toYear;
-
 	private String[] buildMonthsCombo() {
 		final String[] months = new String[12];
 		for (int i = 1; i < 13; i++) {
@@ -35,22 +27,21 @@ public class InputDateRange extends UIInput implements NamingContainer {
 		return months;
 	}
 
-	private Integer[] buildYearsCombo(final int minYear, final int maxYear) {
+	private Integer[] buildYearsCombo(final int minusYear, final int plusYear) {
 		final int presentYear = LocalDate.now().getYear();
-		final int minRange = presentYear - minYear;
-		final int maxRange = presentYear + maxYear;
-		final int range = maxRange - minRange;
+		final int range = (plusYear + minusYear);
+		final int maxYear = presentYear + plusYear;
 		final Integer[] years = new Integer[range];
 		for (int i = 0; i < range; i++) {
-			years[i] = minRange + i;
+			years[i] = maxYear - i;
 		}
 		return years;
 	}
 
 	@Override
 	public void encodeBegin(final FacesContext context) throws IOException {
-		final int maxYear = (int) getAttributes().get("maxYear");
-		final int minYear = (int) getAttributes().get("minYear");
+		final int maxYear = (int) getAttributes().get("plusYear");
+		final int minYear = (int) getAttributes().get("minusYear");
 		setMonths(buildMonthsCombo());
 		setYears(buildYearsCombo(minYear, maxYear));
 		super.encodeBegin(context);

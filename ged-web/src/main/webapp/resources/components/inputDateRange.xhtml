@@ -6,8 +6,8 @@
 <composite:interface componentType="inputDateRange">
 	<composite:attribute name="fromYear" type="java.lang.Integer" required="true" />
 	<composite:attribute name="toYear" type="java.lang.Integer" required="true" />
-	<composite:attribute name="maxYear" type="java.lang.Integer" required="false" default="0" />
-	<composite:attribute name="minYear" type="java.lang.Integer" required="false" default="20" />
+	<composite:attribute name="plusYear" type="java.lang.Integer" required="false" default="0" />
+	<composite:attribute name="minusYear" type="java.lang.Integer" required="false" default="20" />
 	<composite:attribute name="still" />
 	<composite:attribute name="required" />
 </composite:interface>
@@ -44,8 +44,8 @@
 				</p:selectBooleanCheckbox>
 			</div>
 		</div>
-		<o:validateMultiple id="validationDates" components="startYear endYear stillStudying" validator="#{validateDates}" message="#{i18n['education.error.dates']}"
-			showMessageFor="endYear" />
+		<o:validateMultiple id="validationDates" components="fromYear toYear still" validator="#{cc.validateDates}" message="#{i18n['education.error.dates']}"
+			showMessageFor="toYear" />
 	</div>
 </composite:implementation>
 </html>
