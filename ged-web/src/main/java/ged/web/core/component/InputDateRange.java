@@ -16,13 +16,39 @@ import javax.faces.context.FacesContext;
 @FacesComponent(value = "inputDateRange")
 public class InputDateRange extends UIInput implements NamingContainer {
 
+	public class Month {
+
+		private String monthName;
+
+		private Integer monthNumber;
+
+		public String getMonthName() {
+			return monthName;
+		}
+
+		public Integer getMonthNumber() {
+			return monthNumber;
+		}
+
+		public void setMonthName(final String monthName) {
+			this.monthName = monthName;
+		}
+
+		public void setMonthNumber(final Integer monthNumber) {
+			this.monthNumber = monthNumber;
+		}
+
+	}
+
 	private static final String FILE_NAME = "ged.i18n";
 
-	private String[] buildMonthsCombo() {
-		final String[] months = new String[12];
+	private Month[] buildMonthsCombo() {
+		final Month[] months = new Month[12];
 		for (int i = 1; i < 13; i++) {
-			final String nameOfMonth = message("date.month." + i);
-			months[i - 1] = nameOfMonth;
+			final Month month = new Month();
+			month.setMonthName(message("date.month." + i));
+			month.setMonthNumber(i);
+			months[i - 1] = month;
 		}
 		return months;
 	}
@@ -64,8 +90,8 @@ public class InputDateRange extends UIInput implements NamingContainer {
 		return locale;
 	}
 
-	public String[] getMonths() {
-		return (String[]) getStateHelper().get("months");
+	public Month[] getMonths() {
+		return (Month[]) getStateHelper().get("months");
 	}
 
 	private ResourceBundle getResourceBundle(final String filename) {
@@ -82,7 +108,7 @@ public class InputDateRange extends UIInput implements NamingContainer {
 		return bundle.getString(message);
 	}
 
-	public void setMonths(final String[] months) {
+	public void setMonths(final Month[] months) {
 		getStateHelper().put("months", months);
 	}
 
