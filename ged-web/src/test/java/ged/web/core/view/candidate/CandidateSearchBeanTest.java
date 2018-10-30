@@ -21,19 +21,6 @@ import ged.web.view.candidate.CandidateSearchBean;
 public class CandidateSearchBeanTest {
 
 	@Nested
-	class Clean {
-
-		@Test
-		public void shouldReturnCandidate() {
-			when(candidateService.search(null)).thenReturn(mockCandidates());
-			candidateSearchBean.setSearchText("Aaron");
-			candidateSearchBean.clean();
-			assertEquals(null, candidateSearchBean.getSearchText());
-			assertEquals(1, candidateSearchBean.getCandidates().size());
-		}
-	}
-
-	@Nested
 	class Search {
 		@Test
 		public void validTextshouldReturnCandidate() {

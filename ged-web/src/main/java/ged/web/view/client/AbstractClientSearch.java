@@ -26,12 +26,6 @@ public class AbstractClientSearch extends AbstractBean {
 
 	private String searchText;
 
-	public void clean() {
-		logger.debug("Clean search text action performed");
-		this.searchText = null;
-		this.search();
-	}
-
 	public List<Client> getClients() {
 		return clients;
 	}

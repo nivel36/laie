@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/WEB-INF/templates/default.xhtml">
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
 		<title>#{i18n['job.job_offer']}</title>
@@ -16,24 +17,19 @@
 					<p:menuitem value="#{i18n['job.job_offers']}" disabled="true" />
 				</p:breadCrumb>
 			</div>
-			
+
 			<div class="col-12">
 				<h:form id="jobOfferSearchform">
-				<p:defaultCommand target="searchAction" />
+					<p:defaultCommand target="searchAction" />
 					<p:panel header="#{i18n['job.job_offers']}" id="searchPanel">
 						<div class="searchForm">
 							<div class="grid">
 								<div class="md-12 lg-6 xl-4">
-									<div class="ui-inputgroup">
-										<p:inputText id="searchText" value="#{jobOfferSearchBean.searchText}" />
-										<p:commandButton id="cleanSearchTextAction" action="#{jobOfferSearchBean.clean}" process="@this" update="@form" styleClass="btn-gray" icon="fa fa-times"
-											rendered="#{not empty jobOfferSearchBean.searchText}" />
-										<p:commandButton id="searchAction" action="#{jobOfferSearchBean.search}" process="@this searchText" update="@form" icon="fa fa-search" />
-									</div>
+									<cc:inputSearch searchText="#{jobOfferSearchBean.searchText}" searchAction="#{jobOfferSearchBean.search}" update="@form" />
 								</div>
 								<div class="col-12 lg-6 xl-8">
 									<div class="form-action">
-										<p:commandButton value="#{i18n['action.export']}" action="#{clientSearchBean.clean}" icon="fa fa-file-excel-o"
+										<p:commandButton value="#{i18n['action.export']}" action="#{clientSearchBean.search}" icon="fa fa-file-excel-o"
 											rendered="#{not empty jobOfferSearchBean.jobOffers}" />
 										<p:commandButton value="#{i18n['action.new']}" action="#{jobOfferSearchBean.newJobOffer}" process="@this" styleClass="btn-primary" />
 									</div>

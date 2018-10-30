@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/WEB-INF/templates/default.xhtml">
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
 		<title>#{i18n['client.clients']}</title>
@@ -23,16 +23,11 @@
 					<p:panel id="searchPanel" header="#{i18n['client.clients']}">
 						<div class="grid">
 							<div class="col-12 md-8 lg-6 xl-4">
-								<div class="ui-inputgroup">
-									<p:inputText id="searchText" value="#{clientSearchBean.searchText}" />
-									<p:commandButton id="cleanSearchTextAction" action="#{clientSearchBean.clean}" process="@this" update="@form" icon="fa fa-times" styleClass="btn-gray"
-										rendered="#{not empty clientSearchBean.searchText}" />
-									<p:commandButton id="searchAction" action="#{clientSearchBean.search}" process="@this searchText" update="@form" icon="fa fa-search" />
-								</div>
+								<cc:inputSearch searchText="#{clientSearchBean.searchText}" searchAction="#{clientSearchBean.search}" update="@form" />
 							</div>
 							<div class="col-12 md-4 lg-6 xl-8">
 								<div class="form-action">
-									<p:commandButton value="#{i18n['action.export']}" action="#{clientSearchBean.clean}" process="@this" icon="fa fa-file-excel-o"
+									<p:commandButton value="#{i18n['action.export']}" action="#{clientSearchBean.search}" process="@this" icon="fa fa-file-excel-o"
 										rendered="#{not empty clientSearchBean.clients}" />
 									<p:button value="#{i18n['action.new']}" outcome="clientEdit" styleClass="btn-primary" />
 								</div>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:i18n="http://ged.com/i18n"
-	xmlns:cc="http://java.sun.com/jsf/composite/components" template="/WEB-INF/templates/dialog.xhtml">
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" template="/WEB-INF/templates/dialog.xhtml">
 
 	<ui:define name="title">
 		<title>#{i18n['client.clients']}</title>
@@ -10,12 +10,7 @@
 		<h:form id="clientsSearchForm">
 			<div class="grid">
 				<div class="col-12 md-6">
-					<div class="ui-inputgroup">
-						<p:inputText id="searchText" value="#{clientSearchDialogBean.searchText}" />
-						<p:commandButton id="cleanSearchTextAction" action="#{clientSearchDialogBean.clean}" update="@form" styleClass="btn-gray" icon="fa fa-times"
-							rendered="#{not empty clientSearchDialogBean.searchText}" />
-						<p:commandButton id="searchAction" action="#{clientSearchDialogBean.search}" update="@form" icon="fa fa-search" />
-					</div>
+					<cc:inputSearch searchText="#{clientSearchDialogBean.searchText}" searchAction="#{clientSearchDialogBean.search}" update="@form" />
 				</div>
 				<div class="col-12">
 					<p:dataTable var="client" id="clients" value="#{clientSearchDialogBean.clients}" emptyMessage="#{i18n['client.no_clients_found']}" reflow="true"
@@ -49,7 +44,7 @@
 						</p:column>
 					</p:dataTable>
 				</div>
-		
+
 				<div class="col-12">
 					<div class="form-action-primary">
 						<p:commandButton value="#{i18n['action.cancel']}" action="#{clientSearchDialogBean.cancel}" process="@this" styleClass="btn-gray" />

@@ -32,11 +32,6 @@ public class JobOfferSearchBean extends AbstractBean {
 
 	private String searchText;
 
-	public void clean() {
-		this.searchText = null;
-		this.search();
-	}
-
 	public List<JobOffer> getJobOffers() {
 		return this.jobOffers;
 	}

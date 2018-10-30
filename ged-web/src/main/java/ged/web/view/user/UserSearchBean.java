@@ -30,12 +30,6 @@ public class UserSearchBean extends AbstractBean {
 	@Inject
 	private transient UserService userService;
 
-	public void clean() {
-		logger.debug("Clean search field action performed");
-		this.searchText = null;
-		this.search();
-	}
-
 	public void export() {
 		logger.debug("Export users action performed");
 		// TODO ivmedina

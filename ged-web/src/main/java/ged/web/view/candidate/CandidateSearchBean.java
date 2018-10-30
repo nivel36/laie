@@ -30,11 +30,6 @@ public class CandidateSearchBean extends AbstractBean {
 
 	private String searchText;
 
-	public void clean() {
-		this.searchText = null;
-		search();
-	}
-
 	public List<Candidate> getCandidates() {
 		return this.candidates;
 	}
