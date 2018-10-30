@@ -16,7 +16,7 @@
 		<p:outputLabel value="#{cc.attrs.label}" for="inputClient" />
 		<div class="ui-inputgroup">
 			<p:inputText id="inputClient" value="#{cc.attrs.value}" required="#{cc.attrs.required}" />
-			<p:commandButton process="@this" update="inputGroup" styleClass="btn-gray" icon="fa fa-times" rendered="#{not empty cc.attrs.value}" >
+			<p:commandButton process="@this" update="#{cc.clientId}" styleClass="btn-gray" icon="fa fa-times" rendered="#{not empty cc.attrs.value}" >
 				<p:resetInput target="#{cc.attrs.name}" />
 			</p:commandButton>
 			<p:commandButton id="openSearchDialogButton" icon="fa fa-search" styleClass="green-button" actionListener="#{cc.attrs.openAction}" process="@this" />

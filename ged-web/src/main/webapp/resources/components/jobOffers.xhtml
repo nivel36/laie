@@ -8,8 +8,8 @@
 </composite:interface>
 
 <composite:implementation>
-	<h:panelGroup id="#{cc.clientId}" layout="block" styleClass="jobOffers">
-		<p:panel id="jobOffers" header="#{empty cc.attrs.title ? i18n['job.job_offers'] : cc.attrs.title}">
+	<h:panelGroup  layout="block" styleClass="jobOffers">
+		<p:panel header="#{empty cc.attrs.title ? i18n['job.job_offers'] : cc.attrs.title}">
 			<p:dataTable var="jobOffer" value="#{cc.attrs.jobOffers}" emptyMessage="#{i18n['job.no_jobs_found']}" reflow="true" paginator="true"
 				paginatorPosition="bottom" rows="#{sessionUser.rowsPerPage}" sortBy="#{jobOffer.name}" sortOrder="ascending">
 				<p:column headerText="#{i18n['job.name']}">
