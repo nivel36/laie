@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:i18n="http://ged.com/i18n"
-	xmlns:composite="http://xmlns.jcp.org/jsf/composite">
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:i18n="http://ged.com/i18n" xmlns:composite="http://xmlns.jcp.org/jsf/composite">
 
 <composite:interface>
 	<composite:attribute name="jobOffers" required="true" />
@@ -9,28 +8,30 @@
 </composite:interface>
 
 <composite:implementation>
-	<p:panel  id="jobOffers" header="#{empty cc.attrs.title ? i18n['job.job_offers'] : cc.attrs.title}">
-		<p:dataTable var="jobOffer" value="#{cc.attrs.jobOffers}" emptyMessage="#{i18n['job.no_jobs_found']}" reflow="true" paginator="true"
-			paginatorPosition="bottom" rows="#{sessionUser.rowsPerPage}" sortBy="#{jobOffer.name}" sortOrder="ascending">
-			<p:column headerText="#{i18n['job.name']}">
-				<h:link value="#{jobOffer.name}" outcome="/faces/jobOffer/jobOffer">
-					<f:param name="jobOfferId" value="#{jobOffer.id}" />
-				</h:link>
-			</p:column>
-			<p:column headerText="#{i18n['job.date_closed']}">
-				<h:outputText value="#{jobOffer.dateClosed}">
-					<f:convertDateTime pattern="dd / MM / yyyy" type="localDate" />
-				</h:outputText>
-			</p:column>
-			<p:column headerText="#{i18n['job.owner']}">
-				<h:link value="#{jobOffer.owner.fullName}" outcome="/faces/user/user">
-					<f:param name="userId" value="#{jobOffer.owner.id}" />
-				</h:link>
-			</p:column>
-		</p:dataTable>
-		<h:panelGroup styleClass="form-action-primary" rendered="#{component.findComponent('children').childCount != 0}">
-			<composite:insertChildren />
-		</h:panelGroup>
-	</p:panel>
+	<h:panelGroup id="#{cc.clientId}" layout="block" styleClass="jobOffers">
+		<p:panel id="jobOffers" header="#{empty cc.attrs.title ? i18n['job.job_offers'] : cc.attrs.title}">
+			<p:dataTable var="jobOffer" value="#{cc.attrs.jobOffers}" emptyMessage="#{i18n['job.no_jobs_found']}" reflow="true" paginator="true"
+				paginatorPosition="bottom" rows="#{sessionUser.rowsPerPage}" sortBy="#{jobOffer.name}" sortOrder="ascending">
+				<p:column headerText="#{i18n['job.name']}">
+					<h:link value="#{jobOffer.name}" outcome="/faces/jobOffer/jobOffer">
+						<f:param name="jobOfferId" value="#{jobOffer.id}" />
+					</h:link>
+				</p:column>
+				<p:column headerText="#{i18n['job.date_closed']}">
+					<h:outputText value="#{jobOffer.dateClosed}">
+						<f:convertDateTime pattern="dd / MM / yyyy" type="localDate" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="#{i18n['job.owner']}">
+					<h:link value="#{jobOffer.owner.fullName}" outcome="/faces/user/user">
+						<f:param name="userId" value="#{jobOffer.owner.id}" />
+					</h:link>
+				</p:column>
+			</p:dataTable>
+			<h:panelGroup styleClass="form-action-primary" rendered="#{component.findComponent('children').childCount != 0}">
+				<composite:insertChildren />
+			</h:panelGroup>
+		</p:panel>
+	</h:panelGroup>
 </composite:implementation>
 </html>

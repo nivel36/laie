@@ -12,12 +12,12 @@
 </composite:interface>
 
 <composite:implementation>
-	<div class="form-group">
+	<h:panelGroup id="#{cc.clientId}" layout="block" styleClass="form-group">
 		<p:outputLabel value="#{cc.attrs.label}" for="id" />
 		<p:selectOneMenu id="id" value="#{cc.attrs.value}" validator="#{cc.attrs.validator}">
 			<composite:insertChildren />
 		</p:selectOneMenu>
 		<p:message for="id" />
-	</div>
+	</h:panelGroup>
 </composite:implementation>
 </html>

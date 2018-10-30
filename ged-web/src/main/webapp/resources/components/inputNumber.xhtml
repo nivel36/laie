@@ -6,16 +6,16 @@
 	<composite:attribute name="name" />
 	<composite:attribute name="label" required="true" />
 	<composite:attribute name="value" required="true" />
-	<composite:attribute name="min" default="0"/>
+	<composite:attribute name="min" default="0" />
 	<composite:attribute name="max" default="100" />
 	<composite:attribute name="required" />
 </composite:interface>
 
 <composite:implementation>
-	<div class="form-group">
+	<h:panelGroup id="#{cc.clientId}" layout="block" styleClass="form-group">
 		<p:outputLabel value="#{cc.attrs.label}" for="inputNumber" />
 		<p:spinner id="inputNumber" name="#{cc.attrs.name}" value="#{cc.attrs.value}" required="#{cc.attrs.required}" min="#{cc.attrs.min}" max="#{cc.attrs.max}" />
 		<p:message for="inputNumber" />
-	</div>
+	</h:panelGroup>
 </composite:implementation>
 </html>

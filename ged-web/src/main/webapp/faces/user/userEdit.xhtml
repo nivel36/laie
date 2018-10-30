@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:i18n="http://ged.com/i18n" 
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:i18n="http://ged.com/i18n"
 	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
@@ -20,9 +20,9 @@
 				<h:form id="userPanelForm" enctype="multipart/form-data">
 					<p:panel header="#{empty userEditBean.user.fullName ? i18n['user.new_user'] : userEditBean.user.fullName}">
 						<div class="grid">
-						
+
 							<div class="col-12 lg-3">
-								<cc:inputImage id="userImage" value="#{userEditBean.user.imageFileName}" fileUploadListener="#{userEditBean.uploadImage}"/>
+								<cc:inputImage id="userImage" value="#{userEditBean.user.imageFileName}" fileUploadListener="#{userEditBean.uploadImage}" />
 							</div>
 
 							<div class="col-12 lg-9">
@@ -45,16 +45,16 @@
 									<div class="col-12 sm-6">
 										<cc:inputSelect id="role" name="role" value="#{userEditBean.user.role}" label="#{i18n['user.role']}" required="true">
 											<f:selectItems var="role" itemValue="#{role}" value="#{applicationBean.roles}" itemLabel="#{i18n:translate(role.name)}" />
-											<p:ajax event="change" update="manager role" process="role" listener="#{userEditBean.changeRoleListener}" />
+											<p:ajax event="change" update="role manager" process="role" listener="#{userEditBean.changeRoleListener}" />
 										</cc:inputSelect>
 									</div>
 
 									<div class="col-12 sm-6">
-										<cc:inputUser id="manager" name="manager" label="#{i18n['user.manager']}" value="#{userEditBean.user.manager}" completeMethod="#{userEditBean.searchManager}" />
+										<cc:inputUser id="manager" label="#{i18n['user.manager']}" value="#{userEditBean.user.manager}" completeMethod="#{userEditBean.searchManager}" />
 									</div>
 
 									<div class="col-12 sm-6">
-										<cc:calendar id="date_of_join" name="date_of_join" label="#{i18n['user.date_of_join']}" value="#{userEditBean.user.dateOfJoin}"/>
+										<cc:calendar id="date_of_join" name="date_of_join" label="#{i18n['user.date_of_join']}" value="#{userEditBean.user.dateOfJoin}" />
 									</div>
 
 									<div class="col-12">

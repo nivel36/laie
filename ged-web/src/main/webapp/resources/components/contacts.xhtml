@@ -8,26 +8,28 @@
 </composite:interface>
 
 <composite:implementation>
-	<p:panel id="contacts" header="#{empty cc.attrs.title ? i18n['client.contacts'] : cc.attrs.title}">
-		<p:dataGrid layout="grid" var="contact" value="#{cc.attrs.contacts}" emptyMessage="#{i18n['client.no_contacts_found']}" paginator="true"
-			paginatorPosition="bottom">
-			<div class="card contact">
-				<div class="image">
-					<p:graphicImage class="image image-icon" value="/resources/img/default-avatar.png" />
-				</div>
-				<div class="container">
-					<h4>#{contact.fullName}</h4>
-					<h5>#{contact.position}</h5>
-					<div class="contact-info">
-						<p class="email">#{contact.email}</p>
-						<p class="phone">#{contact.phoneNumber}</p>
+	<h:panelGroup id="#{cc.clientId}" layout="block" styleClass="contacts">
+		<p:panel id="contacts" header="#{empty cc.attrs.title ? i18n['client.contacts'] : cc.attrs.title}">
+			<p:dataGrid layout="grid" var="contact" value="#{cc.attrs.contacts}" emptyMessage="#{i18n['client.no_contacts_found']}" paginator="true"
+				paginatorPosition="bottom">
+				<div class="card contact">
+					<div class="image">
+						<p:graphicImage class="image image-icon" value="/resources/img/default-avatar.png" />
+					</div>
+					<div class="container">
+						<h4>#{contact.fullName}</h4>
+						<h5>#{contact.position}</h5>
+						<div class="contact-info">
+							<p class="email">#{contact.email}</p>
+							<p class="phone">#{contact.phoneNumber}</p>
+						</div>
 					</div>
 				</div>
-			</div>
-		</p:dataGrid>
-		<h:panelGroup styleClass="form-action-primary" rendered="#{component.findComponent('children').childCount != 0}">
-			<composite:insertChildren />
-		</h:panelGroup>
-	</p:panel>
+			</p:dataGrid>
+			<h:panelGroup styleClass="form-action-primary" rendered="#{component.findComponent('children').childCount != 0}">
+				<composite:insertChildren />
+			</h:panelGroup>
+		</p:panel>
+	</h:panelGroup>
 </composite:implementation>
 </html>

@@ -7,18 +7,20 @@
 </composite:interface>
 
 <composite:implementation>
-	<p:link outcome="/faces/candidate/candidate">
-		<f:param name="candidateId" value="#{cc.attrs.candidate.id}" />
-		<div class="user-minicard">
-			<div class="user-image">
-				<p:graphicImage class="image" value="/images/#{cc.attrs.candidate.imageFileName}" rendered="#{not empty cc.attrs.candidate.imageFileName}" />
-				<p:graphicImage class="image" value="/resources/img/default-avatar.png" rendered="#{empty cc.attrs.candidate.imageFileName}" />
+	<h:panelGroup id="#{cc.clientId}" layout="block" styleClass="candidateCard">
+		<p:link outcome="/faces/candidate/candidate">
+			<f:param name="candidateId" value="#{cc.attrs.candidate.id}" />
+			<div class="user-minicard">
+				<div class="user-image">
+					<p:graphicImage class="image" value="/images/#{cc.attrs.candidate.imageFileName}" rendered="#{not empty cc.attrs.candidate.imageFileName}" />
+					<p:graphicImage class="image" value="/resources/img/default-avatar.png" rendered="#{empty cc.attrs.candidate.imageFileName}" />
+				</div>
+				<div class="user-info">
+					<div class="name">#{cc.attrs.candidate}</div>
+					<div class="position">#{cc.attrs.candidate.jobProfile}</div>
+				</div>
 			</div>
-			<div class="user-info">
-				<div class="name">#{cc.attrs.candidate}</div>
-				<div class="position">#{cc.attrs.candidate.jobProfile}</div>
-			</div>
-		</div>
-	</p:link>
+		</p:link>
+	</h:panelGroup>
 </composite:implementation>
 </html>

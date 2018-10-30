@@ -9,14 +9,16 @@
 </composite:interface>
 
 <composite:implementation>
-	<p:panel id="candidates" header="#{empty cc.attrs.title ? i18n['candidate.candidates'] : cc.attrs.title}">
-		<p:dataGrid layout="grid" var="candidate" value="#{cc.attrs.candidates}" emptyMessage="#{i18n['candidate.no_candidates_found']}" paginator="true"
-			paginatorPosition="bottom" columns="2" rows="6">
-			<cc:candidateCard candidate="#{candidate}" />
-		</p:dataGrid>
-		<h:panelGroup styleClass="form-action-primary" rendered="#{component.findComponent('children').childCount != 0}">
-			<composite:insertChildren />
-		</h:panelGroup>
-	</p:panel>
+	<h:panelGroup id="#{cc.clientId}" layout="block" styleClass="candidates">
+		<p:panel id="candidates" header="#{empty cc.attrs.title ? i18n['candidate.candidates'] : cc.attrs.title}">
+			<p:dataGrid layout="grid" var="candidate" value="#{cc.attrs.candidates}" emptyMessage="#{i18n['candidate.no_candidates_found']}" paginator="true"
+				paginatorPosition="bottom" columns="2" rows="6">
+				<cc:candidateCard candidate="#{candidate}" />
+			</p:dataGrid>
+			<h:panelGroup styleClass="form-action-primary" rendered="#{component.findComponent('children').childCount != 0}">
+				<composite:insertChildren />
+			</h:panelGroup>
+		</p:panel>
+	</h:panelGroup>
 </composite:implementation>
 </html>

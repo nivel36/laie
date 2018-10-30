@@ -11,7 +11,7 @@
 </composite:interface>
 
 <composite:implementation>
-	<h:panelGroup id="userGroup" layout="block" styleClass="form-group">
+	<h:panelGroup id="#{cc.clientId}" layout="block" styleClass="form-group">
 		<p:outputLabel value="#{cc.attrs.label}" for="inputUser" />
 		<div class="ui-inputgroup">
 			<p:autoComplete id="inputUser" value="#{cc.attrs.value}" completeMethod="#{cc.attrs.completeMethod}" var="user" itemLabel="#{user.fullName}"
@@ -23,9 +23,9 @@
 				<p:column styleClass="user-select name">
 					<h:outputText value="#{user.fullName}" />
 				</p:column>
-				<p:ajax event="itemSelect" update="userGroup" process="#{cc.attrs.name}" />
+				<p:ajax event="itemSelect" update="#{cc.clientId}" process="#{cc.attrs.name}" />
 			</p:autoComplete>
-			<p:commandButton id="cleanUserButton" process="@this" update="userGroup" styleClass="btn-gray" icon="fa fa-times" rendered="#{not empty cc.attrs.value}" >
+			<p:commandButton id="cleanUserButton" process="@this" update="#{cc.clientId}" styleClass="btn-gray" icon="fa fa-times" rendered="#{not empty cc.attrs.value}" >
 				<p:resetInput target="#{cc.attrs.name}" />
 			</p:commandButton>
 		</div>

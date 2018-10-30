@@ -12,7 +12,7 @@
 </composite:interface>
 
 <composite:implementation>
-	<h:panelGroup id="inputGroup" layout="block" styleClass="form-group">
+	<h:panelGroup id="#{cc.clientId}" layout="block" styleClass="form-group">
 		<p:outputLabel value="#{cc.attrs.label}" for="inputClient" />
 		<div class="ui-inputgroup">
 			<p:inputText id="inputClient" value="#{cc.attrs.value}" required="#{cc.attrs.required}" />

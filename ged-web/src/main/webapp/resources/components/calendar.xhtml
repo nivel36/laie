@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:i18n="http://ged.com/i18n"
-	xmlns:composite="http://xmlns.jcp.org/jsf/composite">
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:i18n="http://ged.com/i18n" xmlns:composite="http://xmlns.jcp.org/jsf/composite">
 
 <composite:interface>
 	<composite:attribute name="name" />
@@ -12,12 +11,12 @@
 </composite:interface>
 
 <composite:implementation>
-	<div class="form-group">
+	<h:panelGroup id="#{cc.clientId}" layout="block" styleClass="form-group">
 		<p:outputLabel value="#{cc.attrs.label}" for="calendar" />
 		<p:calendar id="calendar" value="#{cc.attrs.value}" required="#{cc.attrs.required}" pattern="dd/MM/yyyy" yearRange="#{cc.attrs.yearRange}" navigator="true">
 			<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
 		</p:calendar>
 		<p:message for="calendar" />
-	</div>
+	</h:panelGroup>
 </composite:implementation>
 </html>

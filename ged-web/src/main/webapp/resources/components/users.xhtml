@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:i18n="http://ged.com/i18n"
-	xmlns:composite="http://xmlns.jcp.org/jsf/composite">
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:i18n="http://ged.com/i18n" xmlns:composite="http://xmlns.jcp.org/jsf/composite">
 
 <composite:interface>
 	<composite:attribute name="users" required="true" />
@@ -9,16 +8,18 @@
 </composite:interface>
 
 <composite:implementation>
-	<p:panel id="users" header="#{empty cc.attrs.title ? i18n['user.users'] : cc.attrs.title}">
-		<p:dataGrid layout="grid" var="user" value="#{cc.attrs.users}" emptyMessage="#{i18n['user.no_team']}" paginator="true" paginatorPosition="bottom" columns="2"
-			rows="6">
-			<ui:include src="/faces/user/userCard.xhtml">
-				<ui:param name="user" value="#{user}" />
-			</ui:include>
-		</p:dataGrid>
-		<h:panelGroup styleClass="form-action-primary" rendered="#{component.findComponent('children').childCount != 0}">
-			<composite:insertChildren />
-		</h:panelGroup>
-	</p:panel>
+	<h:panelGroup id="#{cc.clientId}" layout="block" styleClass="users">
+		<p:panel id="users" header="#{empty cc.attrs.title ? i18n['user.users'] : cc.attrs.title}">
+			<p:dataGrid layout="grid" var="user" value="#{cc.attrs.users}" emptyMessage="#{i18n['user.no_team']}" paginator="true" paginatorPosition="bottom" columns="2"
+				rows="6">
+				<ui:include src="/faces/user/userCard.xhtml">
+					<ui:param name="user" value="#{user}" />
+				</ui:include>
+			</p:dataGrid>
+			<h:panelGroup styleClass="form-action-primary" rendered="#{component.findComponent('children').childCount != 0}">
+				<composite:insertChildren />
+			</h:panelGroup>
+		</p:panel>
+	</h:panelGroup>
 </composite:implementation>
 </html>

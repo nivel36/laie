@@ -10,10 +10,10 @@
 </composite:interface>
 
 <composite:implementation>
-	<div class="form-group">
+	<h:panelGroup id="#{cc.clientId}" layout="block" styleClass="form-group">
 		<p:outputLabel value="#{cc.attrs.label}" for="inputText" />
 		<p:inputText id="inputText" name="#{cc.attrs.name}" value="#{cc.attrs.value}" required="#{cc.attrs.required}" />
 		<p:message for="inputText" />
-	</div>
+	</h:panelGroup>
 </composite:implementation>
 </html>
