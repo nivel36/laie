@@ -12,10 +12,10 @@
 	</composite:interface>
 
 	<composite:implementation>
-		<h:panelGroup id="#{cc.clientId}" layout="block" styleClass="form-group">
+		<div id="#{cc.clientId}" class="form-group">
 			<p:outputLabel value="#{cc.attrs.label}" for="inputNumber" />
 			<p:spinner id="inputNumber" name="#{cc.attrs.name}" value="#{cc.attrs.value}" required="#{cc.attrs.required}" min="#{cc.attrs.min}" max="#{cc.attrs.max}" />
 			<p:message for="inputNumber" />
-		</h:panelGroup>
+		</div>
 	</composite:implementation>
 </ui:component>

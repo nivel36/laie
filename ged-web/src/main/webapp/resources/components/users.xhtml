@@ -8,7 +8,7 @@
 	</composite:interface>
 
 	<composite:implementation>
-		<h:panelGroup id="#{cc.clientId}" layout="block" styleClass="users">
+		<div id="#{cc.clientId}" class="users">
 			<p:panel id="users" header="#{empty cc.attrs.title ? i18n['user.users'] : cc.attrs.title}">
 				<p:dataGrid layout="grid" var="user" value="#{cc.attrs.users}" emptyMessage="#{i18n['user.no_team']}" paginator="true" paginatorPosition="bottom"
 					columns="2" rows="6">
@@ -20,6 +20,6 @@
 					<composite:insertChildren />
 				</h:panelGroup>
 			</p:panel>
-		</h:panelGroup>
+		</div>
 	</composite:implementation>
 </ui:component>

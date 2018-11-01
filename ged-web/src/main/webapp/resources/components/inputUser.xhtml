@@ -11,7 +11,7 @@
 	</composite:interface>
 
 	<composite:implementation>
-		<h:panelGroup id="#{cc.clientId}" layout="block" styleClass="form-group">
+		<div id="#{cc.clientId}" class="form-group">
 			<p:outputLabel value="#{cc.attrs.label}" for="inputUser" />
 			<div class="ui-inputgroup">
 				<p:autoComplete id="inputUser" value="#{cc.attrs.value}" completeMethod="#{cc.attrs.completeMethod}" var="user" itemLabel="#{user.fullName}"
@@ -31,6 +31,6 @@
 				</p:commandButton>
 			</div>
 			<p:message for="inputUser" />
-		</h:panelGroup>
+		</div>
 	</composite:implementation>
 </ui:component>

@@ -15,7 +15,7 @@
 	</composite:interface>
 
 	<composite:implementation>
-		<h:panelGroup id="#{cc.clientId}" layout="block" styleClass="inputDateRange">
+		<div id="#{cc.clientId}" class="inputDateRange">
 			<div class="grid">
 				<div class="col-5">
 					<div class="form-group">
@@ -58,6 +58,6 @@
 				<o:validateMultiple id="validationDates" components="fromYear toYear still" validator="#{cc.validateDates}" message="#{i18n['education.error.dates']}"
 					showMessageFor="toYear" />
 			</div>
-		</h:panelGroup>
+		</div>
 	</composite:implementation>
 </ui:component>

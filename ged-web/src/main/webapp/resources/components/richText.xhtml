@@ -10,7 +10,7 @@
 	</composite:interface>
 
 	<composite:implementation>
-		<h:panelGroup id="#{cc.clientId}" layout="block" styleClass="form-group">
+		<div id="#{cc.clientId}" class="form-group">
 			<p:outputLabel value="#{cc.attrs.label}" for="textArea" />
 			<p:textEditor id="textArea" value="#{cc.attrs.value}" required="#{cc.attrs.required}">
 				<f:facet name="toolbar">
@@ -46,6 +46,6 @@
 				</f:facet>
 			</p:textEditor>
 			<p:message for="textArea" />
-		</h:panelGroup>
+		</div>
 	</composite:implementation>
 </ui:component>

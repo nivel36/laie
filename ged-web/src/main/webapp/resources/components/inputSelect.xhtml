@@ -11,7 +11,7 @@
 	</composite:interface>
 
 	<composite:implementation>
-		<h:panelGroup id="#{cc.clientId}" layout="block" styleClass="form-group">
+		<div id="#{cc.clientId}" class="form-group">
 			<p:outputLabel value="#{cc.attrs.label}" for="selectOneMenu" />
 			<p:selectOneMenu id="selectOneMenu" name="#{cc.attrs.name}" value="#{cc.attrs.value}" required="#{cc.attrs.required}">
 				<c:if test="#{empty cc.attrs.value}">
@@ -20,6 +20,6 @@
 				<composite:insertChildren />
 			</p:selectOneMenu>
 			<p:message for="selectOneMenu" />
-		</h:panelGroup>
+		</div>
 	</composite:implementation>
 </ui:component>

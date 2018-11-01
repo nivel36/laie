@@ -12,8 +12,8 @@
 	</composite:interface>
 
 	<composite:implementation>
-		<h:panelGroup id="#{cc.clientId}" layout="block" styleClass="form-group">
-			<p:outputLabel value="#{cc.attrs.label}" for="inputClient" />
+		<div id="#{cc.clientId}" class="form-group">
+			<p:outputLabel value="#{cc.attrs.label}" for="inputClient" id="label" />
 			<div class="ui-inputgroup">
 				<p:inputText id="inputClient" value="#{cc.attrs.value}" required="#{cc.attrs.required}" />
 				<p:commandButton process="@this" update="#{cc.clientId}" styleClass="btn-gray" icon="fa fa-times" rendered="#{not empty cc.attrs.value}">
@@ -21,7 +21,7 @@
 				</p:commandButton>
 				<p:commandButton id="openSearchDialogButton" icon="fa fa-search" styleClass="green-button" actionListener="#{cc.attrs.openAction}" process="@this" />
 			</div>
-			<p:message for="inputClient" />
-		</h:panelGroup>
+			<p:message for="inputClient" id="message" />
+		</div>
 	</composite:implementation>
 </ui:component>

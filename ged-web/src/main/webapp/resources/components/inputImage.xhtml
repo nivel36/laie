@@ -7,7 +7,7 @@
 	</composite:interface>
 
 	<composite:implementation>
-		<h:panelGroup id="#{cc.clientId}" layout="block" styleClass="inputImage">
+		<div id="#{cc.clientId}" class="inputImage">
 			<p:outputPanel layout="block" id="inputImage" styleClass="user-image">
 				<p:fileUpload id="inputImage_fileUpload" styleClass="invisible uploadImageButton" fileUploadListener="#{cc.attrs.fileUploadListener}" mode="advanced"
 					dragDropSupport="false" update="inputImage" auto="true" />
@@ -16,6 +16,6 @@
 					<p:graphicImage styleClass="selectable image" value="/resources/img/default-avatar.png" rendered="#{empty cc.attrs.value}" />
 				</h:outputLabel>
 			</p:outputPanel>
-		</h:panelGroup>
+		</div>
 	</composite:implementation>
 </ui:component>

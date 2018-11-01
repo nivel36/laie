@@ -10,7 +10,7 @@
 	</composite:interface>
 
 	<composite:implementation>
-		<h:panelGroup id="#{cc.clientId}" layout="block" styleClass="jobCandidatures">
+		<div id="#{cc.clientId}" class="jobCandidatures">
 			<p:panel id="jobCandidatures" header="#{empty cc.attrs.title ? i18n['job_candidature.job_candidatures'] : cc.attrs.title}">
 				<p:dataTable var="jobCandidature" value="#{cc.attrs.jobCandidatures}" emptyMessage="#{i18n['job_candidature.no_job_candidatures_found']}" reflow="true"
 					paginator="true" paginatorPosition="bottom" rows="#{sessionUser.rowsPerPage}" sortBy="#{jobOffer.name}" sortOrder="ascending">
@@ -52,6 +52,6 @@
 					<composite:insertChildren />
 				</h:panelGroup>
 			</p:panel>
-		</h:panelGroup>
+		</div>
 	</composite:implementation>
 </ui:component>

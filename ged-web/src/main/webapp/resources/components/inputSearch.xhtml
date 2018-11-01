@@ -10,7 +10,7 @@
 	</composite:interface>
 
 	<composite:implementation>
-		<h:panelGroup id="#{cc.clientId}" layout="block" styleClass="form-group">
+		<div id="#{cc.clientId}" class="form-group">
 			<p:defaultCommand target="searchButton" />
 			<div class="ui-inputgroup">
 				<p:inputText id="searchText" value="#{cc.attrs.searchText}" binding="#{cc.searchInputText}" />
@@ -18,6 +18,6 @@
 				<p:commandButton id="searchButton" action="#{cc.attrs.searchAction}" process="@this searchText" styleClass="green-button" icon="fa fa-search"
 					binding="#{cc.searchCommandButton}" update="#{cc.attrs.update}" />
 			</div>
-		</h:panelGroup>
+		</div>
 	</composite:implementation>
 </ui:component>
