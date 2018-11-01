@@ -88,6 +88,9 @@ public class CandidateBean extends AbstractBean {
 	public void onCloseSelectJobOfferDialog(final SelectEvent event) {
 		@SuppressWarnings("unchecked")
 		final List<JobOffer> selectedJobOffers = (List<JobOffer>) event.getObject();
+		if (selectedJobOffers == null) {
+			return;
+		}
 		for (final JobOffer jobOffer : selectedJobOffers) {
 			this.jobOfferService.addJobCandidature(jobOffer, this.candidate);
 			this.jobOffers.add(jobOffer);
