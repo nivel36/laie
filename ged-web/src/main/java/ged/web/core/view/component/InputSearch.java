@@ -1,4 +1,4 @@
-package ged.web.core.component;
+package ged.web.core.view.component;
 
 import javax.faces.component.FacesComponent;
 import javax.faces.component.NamingContainer;

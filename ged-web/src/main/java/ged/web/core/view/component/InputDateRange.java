@@ -1,4 +1,4 @@
-package ged.web.core.component;
+package ged.web.core.view.component;
 
 import java.io.IOException;
 import java.time.LocalDate;

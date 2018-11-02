@@ -1,6 +1,7 @@
 package ged.ejb.core.model;
 
 import java.lang.invoke.MethodHandles;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -181,7 +182,13 @@ public class PersistenceFacade {
 			persistenceQuery = fullTextEntityManager.createFullTextQuery(bj.createQuery(), type);
 		}
 		persistenceQuery.setHint(CACHE_STORE_MODE, CacheStoreMode.REFRESH);
-		return persistenceQuery.getResultList();
+		final List<T> results = persistenceQuery.getResultList();
+		if (results instanceof ArrayList) {
+			return results;
+		}
+		else {
+			return new ArrayList<>(results);
+		}
 	}
 
 	public <T extends Identificable> T update(final T entity) {

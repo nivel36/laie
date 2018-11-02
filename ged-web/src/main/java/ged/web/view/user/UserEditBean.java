@@ -26,7 +26,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ged.ejb.core.FileUploadService;
-import ged.ejb.user.DuplicateEmailException;
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
 import ged.web.core.view.AbstractBean;
@@ -40,8 +39,6 @@ public class UserEditBean extends AbstractBean {
 	private static final long serialVersionUID = -2187385732087309689L;
 
 	private String cancelUrl;
-
-	private UIComponent emailComponent;
 
 	@Inject
 	private transient FileUploadService fileUploadService;
@@ -81,10 +78,6 @@ public class UserEditBean extends AbstractBean {
 		this.cancelUrl = "/faces/user/user?faces-redirect=true&userId=" + this.user.getId();
 	}
 
-	public UIComponent getEmailComponent() {
-		return emailComponent;
-	}
-
 	public User getUser() {
 		return this.user;
 	}
@@ -116,14 +109,8 @@ public class UserEditBean extends AbstractBean {
 			logger.error("User {} hasn't got priviliges to edit user {}", this.sessionUser.get(), this.user);
 			throw new SecurityException();
 		}
-		try {
-			this.user = this.userService.save(this.user);
-			return "/faces/user/user?faces-redirect=true&userId=" + this.user.getId();
-		}
-		catch (final DuplicateEmailException e) {
-			addErrorToField(emailComponent, "user.error.email_exists");
-			return "";
-		}
+		this.user = this.userService.save(this.user);
+		return "/faces/user/user?faces-redirect=true&userId=" + this.user.getId();
 	}
 
 	public List<User> searchManager(final String query) {
@@ -134,10 +121,6 @@ public class UserEditBean extends AbstractBean {
 		final List<User> managers = this.userService.search(query);
 		managers.remove(this.user);
 		return managers;
-	}
-
-	public void setEmailComponent(final UIComponent emailComponent) {
-		this.emailComponent = emailComponent;
 	}
 
 	public void setFileUploadService(final FileUploadService fileUploadService) {

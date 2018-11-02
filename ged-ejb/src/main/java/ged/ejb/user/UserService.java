@@ -100,11 +100,11 @@ public class UserService extends AbstractAuditedService<User> {
 		logger.debug("Saving user {}", user.getEmail());
 		if (user.equals(user.getManager())) {
 			logger.warn("The user {} can't be his/her manager", user.getEmail());
-			throw new IllegalStateException("User can't be his/her manager");
+			throw new BadManagerException("User can't be his/her manager");
 		}
 		if (!this.hasValidManager(user)) {
 			logger.warn("The user {} has an admin role but has {} as a manager", user.getEmail(), user.getManager().getRole());
-			throw new IllegalStateException();
+			throw new BadManagerException("Admins can't have a manager");
 		}
 		return super.save(user);
 	}

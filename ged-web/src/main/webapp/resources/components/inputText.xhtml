@@ -3,16 +3,19 @@
 	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:o="http://omnifaces.org/ui" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">rg/jsf/composite">
 
 <composite:interface>
-		<composite:attribute name="name" />
 		<composite:attribute name="label" required="true" />
-		<composite:attribute name="value" required="true" />
+		<composite:attribute name="name" />
 		<composite:attribute name="required" />
+		<composite:attribute name="validator" targets="inputText" />
+		<composite:attribute name="value" required="true" />
 	</composite:interface>
 
 	<composite:implementation>
 		<div id="#{cc.clientId}" class="form-group">
 			<p:outputLabel value="#{cc.attrs.label}" for="inputText" id="label" />
-			<p:inputText id="inputText" name="#{cc.attrs.name}" value="#{cc.attrs.value}" required="#{cc.attrs.required}" />
+			<p:inputText id="inputText" name="#{cc.attrs.name}" value="#{cc.attrs.value}" required="#{cc.attrs.required}">
+				<composite:insertChildren />
+			</p:inputText>
 			<p:message for="inputText" id="message" />
 		</div>
 	</composite:implementation>

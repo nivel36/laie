@@ -35,7 +35,7 @@
 									</div>
 
 									<div class="col-12 sm-6">
-										<cc:inputText id="email" label="#{i18n['user.email']}" value="#{userEditBean.user.email}" required="true" />
+										<cc:inputText id="email" label="#{i18n['user.email']}" value="#{userEditBean.user.email}" required="true" validator="#{userEditBean.validateEmail}" />
 									</div>
 
 									<div class="col-12 sm-6">
