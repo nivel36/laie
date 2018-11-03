@@ -22,7 +22,7 @@ public class UserServiceTest {
 
 		@Test
 		public void adminWithManagerShouldThrowIllegalStateException() {
-			assertThrows(IllegalStateException.class, () -> {
+			assertThrows(BadManagerException.class, () -> {
 				final User manager = mockUser(2L, "abel@test.com", null);
 				final User user = mockUser(null, "bernat@test.com", manager);
 				final Role adminRole = new Role();
@@ -55,7 +55,7 @@ public class UserServiceTest {
 
 		@Test
 		public void usersOwnManagerShouldThrowIllegalStateException() {
-			assertThrows(IllegalStateException.class, () -> {
+			assertThrows(BadManagerException.class, () -> {
 				final User user = mockUser(null, "abel@test.com", null);
 				user.setManager(user);
 				userService.save(user);
