@@ -23,14 +23,14 @@
 					<p:panel header="#{jobOfferEditBean.newJobOffer ? i18n['job.new_job_offer'] : jobOfferEditBean.jobOffer.name}">
 						<div class="grid">
 							<div class="col-12 xl-8">
-								<cc:inputText name="name" label="#{i18n['job.name']}" value="#{jobOfferEditBean.jobOffer.name}" required="true" />
+								<cc:inputText label="#{i18n['job.name']}" value="#{jobOfferEditBean.jobOffer.name}" required="true" />
 							</div>
 							<div class="col-12 xl-8">
 								<div class="grid">
 									<div class="col-12 md-6">
-										<cc:inputClient id="client" label="#{i18n['job.client']}" value="#{jobOfferEditBean.jobOffer.client.name}"
-											openAction="#{jobOfferEditBean.openClientSearchDialog}" required="true">
-											<p:ajax event="dialogReturn" listener="#{jobOfferEditBean.onCloseClientSearchDialog}" process="@this" update="@form" />
+										<cc:inputClient id="client" label="#{i18n['job.client']}" value="#{jobOfferEditBean.jobOffer.client.toString()}"
+											search="#{jobOfferEditBean.openClientSearchDialog}" required="true" >
+											<p:ajax event="dialogReturn" listener="#{jobOfferEditBean.onCloseClientSearchDialog}" process="@this" update="client" />
 										</cc:inputClient>
 									</div>
 									<div class="col-12 md-6">
@@ -53,7 +53,7 @@
 							<div class="col-12 xl-4">
 								<div class="grid">
 									<div class="col-12 md-6 xl-12">
-										<cc:inputUser id="owner" name="owner" label="#{i18n['job.owner']}" value="#{jobOfferEditBean.jobOffer.owner}"
+										<cc:inputUser id="owner" label="#{i18n['job.owner']}" value="#{jobOfferEditBean.jobOffer.owner}"
 											completeMethod="#{jobOfferEditBean.searchOwner}" />
 									</div>
 									<div class="col-12 md-6 xl-12">

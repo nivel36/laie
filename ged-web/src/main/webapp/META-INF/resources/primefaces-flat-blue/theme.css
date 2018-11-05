@@ -525,7 +525,7 @@ body .ui-inputfield {
 }
 
 body .ui-inputfield.ui-state-error, body .ui-inputtext[aria-required="true"].ui-state-error,
-	body .ui-inputtext[data-p-required="true"].ui-state-error, body .ui-selectonemenu.ui-state-error, 
+	body .ui-inputtext[data-p-required="true"].ui-state-error, body .ui-selectonemenu.ui-state-error 
 	{
 	border: 1px solid red;
 }
@@ -545,14 +545,13 @@ body .ui-inputfield.ui-state-disabled.ui-state-focus, body .ui-inputfield[aria-r
 }
 
 body .ui-inputfield[aria-readonly="true"] {
-	background: #f2f2f2;
 }
 
 body .ui-calendar .ui-inputfield {
 	width: 100%;
 }
 
-body .ui-inputtext[aria-required="true"], body .ui-inputtext[data-p-required="true"],
+body .ui-inputfield[aria-required="true"], body .ui-inputtext[data-p-required="true"],
 	body .ui-selectonemenu.required {
 	border-left: 2px solid #a2aab8;
 }
@@ -795,13 +794,8 @@ body .ui-button, body button.ui-button {
 	overflow: hidden;
 	font-weight: bold;
 	transition: 0.1s;
-	box-shadow: 2px 2px 3px rgba(0, 0, 0, .25);
 	margin: 0.1em;
 	border-radius: 1px;
-}
-
-body .ui-button:hover, body button.ui-button:hover {
-	box-shadow: none;
 }
 
 body .ui-button-text-icon-left .ui-button-text {

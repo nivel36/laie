@@ -74,24 +74,8 @@ public class JobOfferEditBean extends AbstractDialogBean {
 		logger.debug("New job offer init");
 		this.jobOffer = new JobOffer();
 		final User user = setSessionUserAsOwner();
-		setSubordinateUsersAsRecruiters(user);		
+		setSubordinateUsersAsRecruiters(user);
 		setClientFromFlash();
-	}
-
-	private void setSubordinateUsersAsRecruiters(final User user) {
-		final List<User> subordinateUsers = this.userService.findSubordinateUsers(user);
-		this.setRecruiters(subordinateUsers);
-	}
-
-	private User setSessionUserAsOwner() {
-		final User user = this.sessionUser.get();
-		this.jobOffer.setOwner(user);
-		return user;
-	}
-
-	private void setClientFromFlash() {
-		final Client client = this.getValueFromFlash("client");
-		this.jobOffer.setClient(client);
 	}
 
 	public void onCloseClientSearchDialog(final SelectEvent e) {
@@ -117,6 +101,11 @@ public class JobOfferEditBean extends AbstractDialogBean {
 		return this.userService.search(query);
 	}
 
+	private void setClientFromFlash() {
+		final Client client = this.getValueFromFlash("client");
+		this.jobOffer.setClient(client);
+	}
+
 	public void setJobOffer(final JobOffer jobOffer) {
 		this.jobOffer = jobOffer;
 	}
@@ -127,6 +116,17 @@ public class JobOfferEditBean extends AbstractDialogBean {
 
 	public void setRecruiters(final List<User> recruiters) {
 		this.recruiters = recruiters;
+	}
+
+	private User setSessionUserAsOwner() {
+		final User user = this.sessionUser.get();
+		this.jobOffer.setOwner(user);
+		return user;
+	}
+
+	private void setSubordinateUsersAsRecruiters(final User user) {
+		final List<User> subordinateUsers = this.userService.findSubordinateUsers(user);
+		this.setRecruiters(subordinateUsers);
 	}
 
 	public void setUserService(final UserService userService) {

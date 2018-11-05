@@ -3,20 +3,20 @@
 	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:o="http://omnifaces.org/ui" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
 	<composite:interface>
-		<composite:attribute name="name" />
 		<composite:attribute name="label" required="true" />
 		<composite:attribute name="value" required="true" />
-		<composite:attribute name="yearRange" />
-		<composite:attribute name="required" />
+		<composite:attribute name="yearRange" default="c-5:c+1" />
+		<composite:attribute name="required" default="false" />
+		<composite:attribute name="validator" targets="calendar" />
 	</composite:interface>
 
 	<composite:implementation>
 		<div id="#{cc.clientId}" class="form-group">
-			<p:outputLabel value="#{cc.attrs.label}" for="calendar" />
-			<p:calendar id="calendar" value="#{cc.attrs.value}" required="#{cc.attrs.required}" pattern="dd/MM/yyyy" yearRange="#{cc.attrs.yearRange}" navigator="true">
+			<p:outputLabel id="label" for="calendar" value="#{cc.attrs.label}" />
+			<p:calendar id="calendar" value="#{cc.attrs.value}" pattern="dd/MM/yyyy" navigator="true" yearRange="#{cc.attrs.yearRange}" required="#{cc.attrs.required}" >
 				<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
 			</p:calendar>
-			<p:message for="calendar" />
+			<p:message id="message" for="calendar" />
 		</div>
 	</composite:implementation>
 </ui:component>

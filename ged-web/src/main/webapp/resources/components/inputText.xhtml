@@ -1,22 +1,20 @@
-<ui:component xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:composite="http://xmlns.jcp.org/jsf/composite"
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:o="http://omnifaces.org/ui" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">rg/jsf/composite">
+<ui:component xmlns="http://www.w3.org/1999/xhtml" xmlns:composite="http://xmlns.jcp.org/jsf/composite" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:o="http://omnifaces.org/ui" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
-<composite:interface>
+	<composite:interface>
 		<composite:attribute name="label" required="true" />
-		<composite:attribute name="name" />
-		<composite:attribute name="required" />
-		<composite:attribute name="validator" targets="inputText" />
+		<composite:attribute name="required" default="false" />
+		<composite:attribute name="validator" targets="input-text" />
 		<composite:attribute name="value" required="true" />
+		<composite:editableValueHolder name="input-text" />
 	</composite:interface>
 
 	<composite:implementation>
 		<div id="#{cc.clientId}" class="form-group">
-			<p:outputLabel value="#{cc.attrs.label}" for="inputText" id="label" />
-			<p:inputText id="inputText" name="#{cc.attrs.name}" value="#{cc.attrs.value}" required="#{cc.attrs.required}">
-				<composite:insertChildren />
-			</p:inputText>
-			<p:message for="inputText" id="message" />
+			<p:outputLabel id="label" for="input-text" value="#{cc.attrs.label}" />
+			<p:inputText id="input-text" value="#{cc.attrs.value}" required="#{cc.attrs.required}" />
+			<p:message id="message" for="input-text" />
 		</div>
 	</composite:implementation>
 </ui:component>

@@ -3,11 +3,11 @@
 	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:o="http://omnifaces.org/ui" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
 	<composite:interface>
-		<composite:attribute name="candidate" required="true" />
+		<composite:attribute name="candidate" type="ged.ejb.candidate.Candidate" required="true" />
 	</composite:interface>
 
 	<composite:implementation>
-		<div id="#{cc.clientId}" class="candidateCard">
+		<div id="#{cc.clientId}" class="candidate-card">
 			<p:link outcome="/faces/candidate/candidate">
 				<f:param name="candidateId" value="#{cc.attrs.candidate.id}" />
 				<div class="user-minicard">

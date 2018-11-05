@@ -37,7 +37,6 @@ public class InputDateRange extends UIInput implements NamingContainer {
 		public void setMonthNumber(final Integer monthNumber) {
 			this.monthNumber = monthNumber;
 		}
-
 	}
 
 	private static final String FILE_NAME = "ged.i18n";
