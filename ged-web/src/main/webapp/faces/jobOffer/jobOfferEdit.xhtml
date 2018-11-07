@@ -58,7 +58,7 @@
 									<div class="col-12 md-6 xl-12">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['job.recruiters']}" for="recruiters" />
-											<p:chips id="recruiters" value="#{jobOfferEditBean.recruiters}" />
+											<p:chips id="recruiters" value="#{jobOfferEditBean.recruiters}" label="#{jobOfferEditBean.recruiters}" converter="stringConverter" />
 										</div>
 									</div>
 								</div>

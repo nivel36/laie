@@ -33,21 +33,24 @@ public class JobOfferEditBean extends AbstractDialogBean {
 	@Inject
 	private transient JobOfferService jobOfferService;
 
-	private List<User> recruiters;
+	private List<String> recruiters;
 
 	@Inject
 	private transient UserService userService;
 
 	private void editJobOfferInit() {
 		logger.debug("Edit job offer {} init", jobOffer);
-		this.recruiters = new ArrayList<>(this.jobOffer.getRecruiters());
+		this.recruiters = new ArrayList<>();
+		for (final User recruiter : jobOffer.getRecruiters()) {
+			recruiters.add(recruiter.getFullName());
+		}
 	}
 
 	public JobOffer getJobOffer() {
 		return this.jobOffer;
 	}
 
-	public List<User> getRecruiters() {
+	public List<String> getRecruiters() {
 		return this.recruiters;
 	}
 
@@ -114,7 +117,7 @@ public class JobOfferEditBean extends AbstractDialogBean {
 		this.jobOfferService = jobOfferService;
 	}
 
-	public void setRecruiters(final List<User> recruiters) {
+	public void setRecruiters(final List<String> recruiters) {
 		this.recruiters = recruiters;
 	}
 
@@ -126,7 +129,11 @@ public class JobOfferEditBean extends AbstractDialogBean {
 
 	private void setSubordinateUsersAsRecruiters(final User user) {
 		final List<User> subordinateUsers = this.userService.findSubordinateUsers(user);
-		this.setRecruiters(subordinateUsers);
+		recruiters = new ArrayList<>();
+		recruiters.add(sessionUser.get().getFullName());
+		for (final User subordinate : subordinateUsers) {
+			recruiters.add(subordinate.getFullName());
+		}
 	}
 
 	public void setUserService(final UserService userService) {
