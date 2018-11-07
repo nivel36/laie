@@ -22,30 +22,9 @@ public class InputClient extends UIInput implements NamingContainer {
 	}
 
 	@Override
-	public void encodeBegin(final FacesContext context) throws IOException {
+	public void encodeEnd(final FacesContext context) throws IOException {
 		processCleanButton();
-		super.encodeBegin(context);
-	}
-
-	private void processCleanButton() {
-		if (isInputValueSet()) {
-			showCleanButton();
-		}
-		else {
-			hideCleanButton();
-		}
-	}
-
-	private boolean isInputValueSet() {
-		return input.getValue() != null;
-	}
-
-	private void hideCleanButton() {
-		cleanButton.setRendered(false);
-	}
-
-	private void showCleanButton() {
-		cleanButton.setRendered(true);
+		super.encodeEnd(context);
 	}
 
 	public UICommand getCleanButton() {
@@ -61,11 +40,32 @@ public class InputClient extends UIInput implements NamingContainer {
 		return input;
 	}
 
+	private void hideCleanButton() {
+		cleanButton.setRendered(false);
+	}
+
+	private boolean isInputValueSet() {
+		return input.getValue() != null;
+	}
+
+	private void processCleanButton() {
+		if (isInputValueSet()) {
+			showCleanButton();
+		}
+		else {
+			hideCleanButton();
+		}
+	}
+
 	public void setCleanButton(final UICommand cleanButton) {
 		this.cleanButton = cleanButton;
 	}
 
 	public void setInput(final UIInput input) {
 		this.input = input;
+	}
+
+	private void showCleanButton() {
+		cleanButton.setRendered(true);
 	}
 }
