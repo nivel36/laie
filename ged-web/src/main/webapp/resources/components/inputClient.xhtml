@@ -14,12 +14,16 @@
 	<composite:implementation>
 		<div id="#{cc.clientId}" class="form-group">
 			<p:outputLabel id="label" for="input-client" value="#{cc.attrs.label}" />
-			<h:panelGroup id="input-group" styleClass="ui-inputgroup" layout="block">
-				<p:inputText id="input-client" value="#{cc.attrs.value}" binding="#{cc.input}" required="#{cc.attrs.required}" readonly="true" />
-				<p:commandButton id="clean" action="#{cc.clean}" process="@this" update="input-client" styleClass="btn-gray" icon="fa fa-times"
-					rendered="#{not empty cc.attrs.value}" />
-				<p:commandButton id="search" actionListener="#{cc.attrs.search}" process="@this" icon="fa fa-search" styleClass="green-button" />
-			</h:panelGroup>
+			<div class="ui-inputgroup">
+				<p:inputText id="input-client" value="#{cc.attrs.value}" required="#{cc.attrs.required}" binding="#{cc.input}" readonly="#{facesContext.renderResponse}">
+					<f:converter converterId="toStringConverter" />
+				</p:inputText>
+				<p:commandButton id="clean" action="#{cc.clean}" process="@this" update="#{cc.clientId}" styleClass="btn-gray" icon="fa fa-times"
+					binding="#{cc.cleanButton}" />
+				<p:commandButton id="search" action="#{cc.attrs.search}" process="@this" icon="fa fa-search" styleClass="green-button">
+					<p:resetInput target="input-client" />
+				</p:commandButton>
+			</div>
 			<p:message id="message" for="input-client" />
 		</div>
 	</composite:implementation>

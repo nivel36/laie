@@ -28,9 +28,9 @@
 							<div class="col-12 xl-8">
 								<div class="grid">
 									<div class="col-12 md-6">
-										<cc:inputClient id="client" label="#{i18n['job.client']}" value="#{jobOfferEditBean.jobOffer.client.toString()}"
-											search="#{jobOfferEditBean.openClientSearchDialog}" required="true" >
-											<p:ajax event="dialogReturn" listener="#{jobOfferEditBean.onCloseClientSearchDialog}" process="@this" update="client" />
+										<cc:inputClient id="client" label="#{i18n['job.client']}" value="#{jobOfferEditBean.jobOffer.client}"
+											search="#{jobOfferEditBean.openClientSearchDialog}" required="true">
+											<p:ajax event="dialogReturn" listener="#{jobOfferEditBean.onCloseClientSearchDialog}" update="client" />
 										</cc:inputClient>
 									</div>
 									<div class="col-12 md-6">
@@ -53,8 +53,7 @@
 							<div class="col-12 xl-4">
 								<div class="grid">
 									<div class="col-12 md-6 xl-12">
-										<cc:inputUser id="owner" label="#{i18n['job.owner']}" value="#{jobOfferEditBean.jobOffer.owner}"
-											completeMethod="#{jobOfferEditBean.searchOwner}" />
+										<cc:inputUser id="owner" label="#{i18n['job.owner']}" value="#{jobOfferEditBean.jobOffer.owner}" completeMethod="#{jobOfferEditBean.searchOwner}" />
 									</div>
 									<div class="col-12 md-6 xl-12">
 										<div class="form-group">

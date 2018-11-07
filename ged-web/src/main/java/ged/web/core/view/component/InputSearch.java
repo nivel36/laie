@@ -41,5 +41,4 @@ public class InputSearch extends UIInput implements NamingContainer {
 	public void setSearchInputText(final UIInput searchInputText) {
 		this.searchInputText = searchInputText;
 	}
-
 }
