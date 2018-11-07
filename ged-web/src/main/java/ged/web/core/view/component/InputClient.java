@@ -9,6 +9,10 @@ import javax.faces.component.UIInput;
 import javax.faces.component.UINamingContainer;
 import javax.faces.context.FacesContext;
 
+//TODO: Bug -> Seleccionas un valor, lo eliminas,
+// le das a guardar para que salga el error de valor requerido,
+// le das a buscar y cierras el dialogo sin seleccionar un valor.
+// El campo mostrará el primer valor seleccionado en el paso 1
 @FacesComponent(value = "inputClient")
 public class InputClient extends UIInput implements NamingContainer {
 
@@ -22,9 +26,9 @@ public class InputClient extends UIInput implements NamingContainer {
 	}
 
 	@Override
-	public void encodeEnd(final FacesContext context) throws IOException {
+	public void encodeBegin(final FacesContext context) throws IOException {
+		super.encodeBegin(context);
 		processCleanButton();
-		super.encodeEnd(context);
 	}
 
 	public UICommand getCleanButton() {

@@ -22,8 +22,13 @@ public class InputUser extends UIInput implements NamingContainer {
 	}
 
 	@Override
-	public void encodeEnd(final FacesContext context) throws IOException {
+	public void encodeBegin(final FacesContext context) throws IOException {
+		super.encodeBegin(context);
 		processCleanButton();
+	}
+
+	@Override
+	public void encodeEnd(final FacesContext context) throws IOException {
 		super.encodeEnd(context);
 	}
 
