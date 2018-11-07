@@ -535,18 +535,6 @@ body .ui-inputfield.ui-state-disabled, body .ui-state-disabled .ui-inputfield
 	background: #f2f2f2;
 }
 
-body .ui-inputfield.ui-state-focus {
-	box-shadow: 0 0 5px #1976d2;
-}
-
-body .ui-inputfield.ui-state-disabled.ui-state-focus, body .ui-inputfield[aria-readonly="true"].ui-state-focus
-	{
-	box-shadow: none;
-}
-
-body .ui-inputfield[aria-readonly="true"] {
-}
-
 body .ui-calendar .ui-inputfield {
 	width: 100%;
 }
