@@ -64,15 +64,6 @@ insert into I18NSTRING( id, version, locale, key, text ) values( 836, 0, 'ca', '
 insert into I18NSTRING( id, version, locale, key, text ) values( 840, 0, 'es', 'contrato_indefinido_fijos_discontinuos.description', 'Es el que se concierta para realizar trabajos que tengan el carácter de fijos discontinuos y no se repitan en fechas ciertas, dentro del volumen normal de actividad de la empresa.A efectos de prestaciones por desempleo, también se consideran trabajadores fijos discontinuos los que desarrollen trabajos fijos y periódicos que se repiten en fechas ciertas.' );
 insert into I18NSTRING( id, version, locale, key, text ) values( 841, 0, 'ca', 'contrato_indefinido_fijos_discontinuos.description', 'Es el que se concierta para realizar trabajos que tengan el carácter de fijos discontinuos y no se repitan en fechas ciertas, dentro del volumen normal de actividad de la empresa.A efectos de prestaciones por desempleo, también se consideran trabajadores fijos discontinuos los que desarrollen trabajos fijos y periódicos que se repiten en fechas ciertas.' );
 
-insert into I18NSTRING( id, version, locale, key, text ) values( 851, 0, 'es', 'curriculum', 'Curriculum vitae' );
-insert into I18NSTRING( id, version, locale, key, text ) values( 852, 0, 'ca', 'curriculum', 'Curriculum vitae' );
-insert into I18NSTRING( id, version, locale, key, text ) values( 853, 0, 'es', 'lopd', 'LOPD' );
-insert into I18NSTRING( id, version, locale, key, text ) values( 854, 0, 'ca', 'lopd', 'LOPD' );
-insert into I18NSTRING( id, version, locale, key, text ) values( 855, 0, 'es', 'edited_curriculum', 'Curriculum editado' );
-insert into I18NSTRING( id, version, locale, key, text ) values( 856, 0, 'ca', 'edited_curriculum', 'Curriculum editat' );
-insert into I18NSTRING( id, version, locale, key, text ) values( 857, 0, 'es', 'other', 'Otro' );
-insert into I18NSTRING( id, version, locale, key, text ) values( 858, 0, 'ca', 'other', 'Altre' );
-
 insert into I18NSTRING( id, version, locale, key, text ) values( 860, 0, 'es', 'open', 'Abierta' );
 insert into I18NSTRING( id, version, locale, key, text ) values( 861, 0, 'ca', 'open', 'Oberta' );
 insert into I18NSTRING( id, version, locale, key, text ) values( 862, 0, 'es', 'closed', 'Cerrada' );
