@@ -44,7 +44,7 @@
 
 									<div class="col-12 sm-6">
 										<cc:inputSelect id="role" value="#{userEditBean.user.role}" label="#{i18n['user.role']}" required="true">
-											<f:selectItems var="role" itemValue="#{role}" value="#{applicationBean.roles}" itemLabel="#{i18n:translate(role.name)}" />
+											<f:selectItems value="#{roles.list}" var="role" itemValue="#{role}" itemLabel="#{i18n:translate(role.name)}" />
 											<p:ajax event="change" update="role userPanelForm:manager" process="role" listener="#{userEditBean.changeRoleListener}" />
 										</cc:inputSelect>
 									</div>

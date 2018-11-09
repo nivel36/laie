@@ -535,6 +535,10 @@ body .ui-inputfield.ui-state-disabled, body .ui-state-disabled .ui-inputfield
 	background: #f2f2f2;
 }
 
+body .ui-inputfield.ui-state-focus {
+	border-color: #7c889c;
+}
+
 body .ui-calendar .ui-inputfield {
 	width: 100%;
 }

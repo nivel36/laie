@@ -14,8 +14,7 @@
 				<p:panel header="#{i18n['maintenance.language_knowdeleges']}">
 					<h:form>
 						<p:selectOneMenu id="languageKnowdelege" label="#{i18n['language.level']}">
-							<f:selectItems var="languageLevel" itemValue="#{languageLevel.name}" value="#{applicationBean.languageLevels}"
-								itemLabel="#{i18n:translate(languageLevel.name)}" />
+							<f:selectItems value="#{languageLevels.list}" var="languageLevel" itemValue="#{languageLevel.name}" itemLabel="#{i18n:translate(languageLevel.name)}" />
 						</p:selectOneMenu>
 						<div class="form-action-primary">
 							<p:commandButton value="#{i18n['action.new']}" />

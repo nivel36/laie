@@ -13,6 +13,7 @@ import javax.persistence.NoResultException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import ged.ejb.candidate.Origin;
 import ged.ejb.core.model.AbstractDao;
 import ged.ejb.core.model.Repository;
 import ged.ejb.core.util.Parameters;
@@ -28,6 +29,10 @@ public class UserDao extends AbstractDao<User> {
 		for (final UserClosure userClosure : userClosures) {
 			this.getPersistenceFacade().delete(UserClosure.class, userClosure);
 		}
+	}
+
+	public List<Origin> findAllOrigins() {
+		return this.getPersistenceFacade().findAll(Origin.class);
 	}
 
 	private List<UserClosure> findAntecessorsUserClosures(final User user) {

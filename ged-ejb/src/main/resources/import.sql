@@ -3,17 +3,18 @@ insert into CONTRACTTYPE( id, version, name, description) values ( 2, 0, 'contra
 
 insert into CONTRACTDURATION( id, version, name, description ) values ( 101, 0, 'one_year', 'one_year.description');
 
-insert into SKILLLEVEL( id, version, name, description ) values ( 110, 0, 'high', 'high.description');
-insert into SKILLLEVEL( id, version, name, description ) values ( 111, 0, 'medium', 'medium.description');
-insert into SKILLLEVEL( id, version, name, description ) values ( 112, 0, 'low', 'low.description');
+insert into ORIGIN( id, version, code ) values ( 110, 0, 'infojobs');
+insert into ORIGIN( id, version, code ) values ( 111, 0, 'linkedin');
+insert into ORIGIN( id, version, code ) values ( 112, 0, 'reference');
+insert into ORIGIN( id, version, code ) values ( 113, 0, 'other');
 
-insert into LANGUAGELEVEL( id, version, name, description ) values ( 120, 0, 'high', 'high.description');
-insert into LANGUAGELEVEL( id, version, name, description ) values ( 121, 0, 'medium', 'medium.description');
-insert into LANGUAGELEVEL( id, version, name, description ) values ( 122, 0, 'low', 'low.description');
-insert into LANGUAGELEVEL( id, version, name, description ) values ( 123, 0, 'native', 'native.description');
+insert into LANGUAGELEVEL( id, version, name ) values ( 120, 0, 'high');
+insert into LANGUAGELEVEL( id, version, name ) values ( 121, 0, 'medium');
+insert into LANGUAGELEVEL( id, version, name ) values ( 122, 0, 'low');
+insert into LANGUAGELEVEL( id, version, name ) values ( 123, 0, 'native');
 
-insert into JOBCANDIDATURESTATE( id, version, name, description ) values ( 130, 0, 'open', 'open.description');
-insert into JOBCANDIDATURESTATE( id, version, name, description ) values ( 131, 0, 'closed', 'closed.description');
+insert into JOBCANDIDATURESTATE( id, version, name ) values ( 130, 0, 'open');
+insert into JOBCANDIDATURESTATE( id, version, name ) values ( 131, 0, 'closed');
 
 insert into CURRICULUM( id, version) values (301, 0);
 
@@ -44,6 +45,15 @@ insert into I18NSTRING( id, version, locale, key, text ) values( 816, 0, 'es', '
 insert into I18NSTRING( id, version, locale, key, text ) values( 820, 0, 'ca', 'native', 'Natiu' );
 insert into I18NSTRING( id, version, locale, key, text ) values( 821, 0, 'es', 'native', 'Nativo' );
 
+insert into I18NSTRING( id, version, locale, key, text ) values( 750, 0, 'ca', 'infojobs', 'Infojobs' );
+insert into I18NSTRING( id, version, locale, key, text ) values( 751, 0, 'es', 'infojobs', 'Infojobs' );
+insert into I18NSTRING( id, version, locale, key, text ) values( 752, 0, 'ca', 'linkedin', 'LinkedIn' );
+insert into I18NSTRING( id, version, locale, key, text ) values( 753, 0, 'es', 'linkedin', 'LinkedIn' );
+insert into I18NSTRING( id, version, locale, key, text ) values( 754, 0, 'ca', 'reference', 'Referència' );
+insert into I18NSTRING( id, version, locale, key, text ) values( 755, 0, 'es', 'reference', 'Referencia' );
+insert into I18NSTRING( id, version, locale, key, text ) values( 756, 0, 'ca', 'other', 'Altre' );
+insert into I18NSTRING( id, version, locale, key, text ) values( 757, 0, 'es', 'other', 'Otro' );
+
 insert into I18NSTRING( id, version, locale, key, text ) values( 825, 0, 'es', 'contrato_indefinido', 'Contrato indefinido' );
 insert into I18NSTRING( id, version, locale, key, text ) values( 826, 0, 'ca', 'contrato_indefinido', 'Contracte indefinit' );
 insert into I18NSTRING( id, version, locale, key, text ) values( 830, 0, 'es', 'contrato_indefinido.description', 'Es aquel que se concierta sin establecer límites de tiempo en la prestación de los servicios, en cuanto a la duración del contrato.' );
@@ -65,8 +75,8 @@ insert into I18NSTRING( id, version, locale, key, text ) values( 858, 0, 'ca', '
 
 insert into I18NSTRING( id, version, locale, key, text ) values( 860, 0, 'es', 'open', 'Abierta' );
 insert into I18NSTRING( id, version, locale, key, text ) values( 861, 0, 'ca', 'open', 'Oberta' );
-insert into I18NSTRING( id, version, locale, key, text ) values( 864, 0, 'es', 'closed', 'Cerrada' );
-insert into I18NSTRING( id, version, locale, key, text ) values( 865, 0, 'ca', 'closed', 'Tancada' );
+insert into I18NSTRING( id, version, locale, key, text ) values( 862, 0, 'es', 'closed', 'Cerrada' );
+insert into I18NSTRING( id, version, locale, key, text ) values( 863, 0, 'ca', 'closed', 'Tancada' );
 
 insert into ROLE( id, version, name ) values( 911, 0, 'ADMIN' );
 insert into ROLE( id, version, name ) values( 912, 0, 'USER' );

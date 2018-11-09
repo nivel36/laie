@@ -76,6 +76,9 @@ public class Candidate extends AbstractAuditedEntity {
 	@Field
 	private String name;
 
+	@OneToOne(cascade = CascadeType.ALL)
+	private Origin origin;
+
 	@NotNull
 	@Pattern(regexp = "(?:[+]?(?:[0-9]{1,5}|\\x28[0-9]{1,5}\\x29)[ ]?)?[0-9]{2}(?:[0-9][ ]?){6}[0-9]")
 	@Column(length = 12, nullable = false)
@@ -169,6 +172,10 @@ public class Candidate extends AbstractAuditedEntity {
 		return this.name;
 	}
 
+	public Origin getOrigin() {
+		return origin;
+	}
+
 	public String getPhoneNumber() {
 		return this.phoneNumber;
 	}
@@ -244,6 +251,10 @@ public class Candidate extends AbstractAuditedEntity {
 
 	public void setName(final String name) {
 		this.name = name;
+	}
+
+	public void setOrigin(final Origin origin) {
+		this.origin = origin;
 	}
 
 	public void setPhoneNumber(final String phoneNumber) {

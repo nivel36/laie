@@ -18,8 +18,7 @@
 				<div class="col-12 md-6">
 					<cc:inputSelect name="" label="#{i18n['language.level']}" value="#{languageBean.language.level}" required="true">
 						<f:selectItem itemLabel="#{i18n['language.level']}" itemValue="" />
-						<f:selectItems var="languageLevel" itemValue="#{languageLevel.name}" value="#{applicationBean.languageLevels}"
-							itemLabel="#{i18n:translate(languageLevel.name)}" />
+						<f:selectItems value="#{languageLevels.list}" var="languageLevel" itemValue="#{languageLevel.name}" itemLabel="#{i18n:translate(languageLevel.name)}" />
 					</cc:inputSelect>
 				</div>
 

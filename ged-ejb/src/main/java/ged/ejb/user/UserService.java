@@ -11,6 +11,7 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import ged.ejb.candidate.Origin;
 import ged.ejb.core.AbstractAuditedService;
 import ged.ejb.core.model.AbstractDao;
 import ged.ejb.core.model.Repository;
@@ -30,6 +31,10 @@ public class UserService extends AbstractAuditedService<User> {
 	@Inject
 	@Repository
 	private UserDao userDao;
+
+	public List<Origin> findAllOrigins() {
+		return this.userDao.findAllOrigins();
+	}
 
 	public List<Role> findAllRoles() {
 		return this.roleDao.findAll();

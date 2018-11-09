@@ -15,10 +15,6 @@ import javax.inject.Named;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ged.ejb.core.Cache;
-import ged.ejb.curriculum.language.LanguageLevel;
-import ged.ejb.curriculum.skills.SkillLevel;
-import ged.ejb.user.role.Role;
 import ged.web.core.util.WebConfigurationProperty;
 
 @ApplicationScoped
@@ -33,9 +29,6 @@ public class ApplicationBean extends AbstractBean {
 	@WebConfigurationProperty(value = "ged.buildtime")
 	private String buildtime;
 
-	@Inject
-	private Cache cache;
-
 	private List<Locale> locales = new ArrayList<>();
 
 	@Inject
@@ -46,20 +39,8 @@ public class ApplicationBean extends AbstractBean {
 		return this.buildtime;
 	}
 
-	public List<LanguageLevel> getLanguageLevels() {
-		return this.cache.getLanguageLevels();
-	}
-
 	public List<Locale> getLocales() {
 		return this.locales;
-	}
-
-	public List<Role> getRoles() {
-		return this.cache.getRoles();
-	}
-
-	public List<SkillLevel> getSkillLevels() {
-		return this.cache.getSkillLevels();
 	}
 
 	public String getVersion() {
