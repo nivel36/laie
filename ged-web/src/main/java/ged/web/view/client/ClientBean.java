@@ -64,7 +64,7 @@ public class ClientBean extends AbstractBean {
 
 	@PostConstruct
 	public void init() {
-		logger.trace("Client {} init");
+		logger.trace("Client {} init", this.client);
 		if (this.client.getAddress() == null) {
 			this.client.setAddress(new Address());
 		}

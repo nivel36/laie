@@ -117,7 +117,7 @@ public class SessionUser implements Serializable {
 	@Override
 	public String toString() {
 		if (!isActive()) {
-			return null;
+			return "";
 		}
 		return user.getFullName();
 	}
