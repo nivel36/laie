@@ -389,11 +389,11 @@ body .ui-outputlabel .ui-outputlabel-rfi {
 	display: none;
 }
 
-body .ui-inputgroup {
+body .inputgroup {
 	display: flex;
 }
 
-body .form-group .ui-inputgroup {
+body .form-group .inputgroup {
 	float: left;
 	width: 100%;
 }
@@ -422,12 +422,12 @@ body .ui-spinner .ui-spinner-button .ui-button-text {
 	margin-top: 4px;
 }
 
-body .ui-inputgroup .ui-button.ui-button-icon-only:last-child {
+body .inputgroup .ui-button.ui-button-icon-only:last-child {
 	border-top-right-radius: 4px;
 	border-bottom-right-radius: 4px;
 }
 
-body .ui-inputgroup .ui-button, body .ui-inputgroup .ui-button.ui-button-icon-only
+body .inputgroup .ui-button, body .inputgroup .ui-button.ui-button-icon-only
 	{
 	margin: 0;
 	border-radius: 0;
@@ -435,31 +435,31 @@ body .ui-inputgroup .ui-button, body .ui-inputgroup .ui-button.ui-button-icon-on
 	border-bottom-right-radius: 0px;
 }
 
-body .ui-inputgroup .ui-button {
+body .inputgroup .ui-button {
 	margin-right: 0;
 	border-radius: 0;
 	border-top-right-radius: 0px;
 	border-bottom-right-radius: 0px;
 }
 
-body .ui-inputgroup .ui-inputgroup-addon:first-child, .ui-inputgroup .ui-inputgroup-addon-checkbox:first-child
+body .inputgroup .inputgroup-addon:first-child, .inputgroup .inputgroup-addon-checkbox:first-child
 	{
 	border-top-left-radius: 4px;
 	border-bottom-left-radius: 4px;
 }
 
-body .ui-inputgroup .ui-inputgroup-addon:last-child, body .ui-inputgroup .ui-inputgroup-addon-checkbox:last-child
+body .inputgroup .inputgroup-addon:last-child, body .inputgroup .inputgroup-addon-checkbox:last-child
 	{
 	border-top-right-radius: 4px;
 	border-bottom-right-radius: 4px;
 }
 
-body .ui-inputgroup .ui-inputgroup-addon {
+body .inputgroup .inputgroup-addon {
 	padding: 4px 4px 3px 4px;
 	font-size: 15px
 }
 
-body .ui-inputgroup .ui-inputgroup-addon, body .ui-inputgroup .ui-inputgroup-addon-checkbox
+body .inputgroup .inputgroup-addon, body .inputgroup .inputgroup-addon-checkbox
 	{
 	display: inline-block;
 	text-align: center;
@@ -468,25 +468,25 @@ body .ui-inputgroup .ui-inputgroup-addon, body .ui-inputgroup .ui-inputgroup-add
 	border-style: solid;
 }
 
-body .ui-inputgroup .ui-inputgroup-addon, body .ui-inputgroup .ui-inputgroup-addon-checkbox
+body .inputgroup .inputgroup-addon, body .inputgroup .inputgroup-addon-checkbox
 	{
 	border-color: #d6d6d6;
 	background-color: #f0f0f0;
 	color: #222;
 }
 
-body .ui-inputgroup>.ui-inputtext:not (:first-child ), body .ui-inputgroup>.ui-password:not
-	(:first-child ), body .ui-inputgroup>.ui-inputnumber:not (:first-child 
-	) >.ui-inputtext, body .ui-inputgroup>.ui-inputmask:not (:first-child ),
-	body .ui-inputgroup>.ui-calendar:not (:first-child ) >.ui-inputfield,
-	body .ui-inputgroup>.ui-selectonemenu:not (:first-child ), body .ui-inputgroup>.ui-selectonebutton:not 
+body .inputgroup>.ui-inputtext:not (:first-child ), body .inputgroup>.ui-password:not
+	(:first-child ), body .inputgroup>.ui-inputnumber:not (:first-child 
+	) >.ui-inputtext, body .inputgroup>.ui-inputmask:not (:first-child ),
+	body .inputgroup>.ui-calendar:not (:first-child ) >.ui-inputfield,
+	body .inputgroup>.ui-selectonemenu:not (:first-child ), body .inputgroup>.ui-selectonebutton:not 
 	(:first-child ) >.ui-button {
 	border-top-left-radius: 0;
 	border-bottom-left-radius: 0;
 	border-left: 0 none;
 }
 
-body .ui-inputgroup .ui-inputtext, body .ui-inputgroup .ui-password {
+body .inputgroup .ui-inputtext, body .inputgroup .ui-password {
 	padding-left: .5em;
 }
 

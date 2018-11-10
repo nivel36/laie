@@ -11,7 +11,7 @@
 		<h:form id="jobOfferSearchDialogForm">
 			<div class="grid">
 				<div class="col-12 md-6 lg-4">
-					<div class="ui-inputgroup">
+					<div class="inputgroup">
 						<p:inputText id="searchText" value="#{jobOfferSearchDialogBean.searchText}" />
 						<p:commandButton id="cleanSearchTextAction" action="#{jobOfferSearchDialogBean.clean}" update="@form" styleClass="btn-gray" icon="fa fa-times"
 							rendered="#{not empty jobOfferSearchDialogBean.searchText}" />

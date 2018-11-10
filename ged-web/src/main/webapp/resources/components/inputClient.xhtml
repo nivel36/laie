@@ -14,8 +14,9 @@
 	<composite:implementation>
 		<div id="#{cc.clientId}" class="form-group">
 			<p:outputLabel id="label" for="input-client" value="#{cc.attrs.label}" />
-			<div class="ui-inputgroup">
-				<p:inputText id="input-client" value="#{cc.attrs.value}" required="#{cc.attrs.required}" binding="#{cc.input}" readonly="#{facesContext.renderResponse}">
+			<div class="inputgroup">
+				<h:inputHidden value="#{cc.attrs.value}" />
+				<p:inputText id="input-client" value="#{cc.attrs.value}" required="#{cc.attrs.required}" binding="#{cc.input}" disabled="true" styleClass="input-client" >
 					<f:converter converterId="toStringConverter" />
 				</p:inputText>
 				<p:commandButton id="clean" action="#{cc.clean}" process="@this" update="#{cc.clientId}" styleClass="btn-gray" icon="fa fa-times"

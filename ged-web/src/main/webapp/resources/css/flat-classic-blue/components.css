@@ -296,6 +296,10 @@ body nav li:hover a {
 	object-fit: cover;
 }
 
+body .ui-inputfield.ui-state-disabled.input-client {
+	background: white;	
+}
+
 .jobDescription, .educationDescription {
 	position: relative;
 	padding-top: 1em;
