@@ -18,31 +18,34 @@ import ged.ejb.user.UserService;
 public class GedIdentityStore implements IdentityStore {
 
 	@Inject
-	private UserService userService;
-
-	@Inject
 	private LoginService loginService;
 
-	public void setUserService(UserService userService) {
+	@Inject
+	private UserService userService;
+
+	public void setUserService(final UserService userService) {
 		this.userService = userService;
 	}
 
 	@Override
-	public CredentialValidationResult validate(Credential credential) {
+	public CredentialValidationResult validate(final Credential credential) {
 		Supplier<User> userSupplier = null;
 
 		if (credential instanceof UsernamePasswordCredential) {
-			String email = ((UsernamePasswordCredential) credential).getCaller();
-			String password = ((UsernamePasswordCredential) credential).getPasswordAsString();
+			final String email = ((UsernamePasswordCredential) credential).getCaller();
+			final String password = ((UsernamePasswordCredential) credential).getPasswordAsString();
 			userSupplier = () -> loginService.login(email, password);
 		}
 		else if (credential instanceof CallerOnlyCredential) {
-			String email = ((CallerOnlyCredential) credential).getCaller();
+			final String email = ((CallerOnlyCredential) credential).getCaller();
 			userSupplier = () -> userService.findUserByEmail(email);
 		}
+		else {
+			throw new SecurityException();
+		}
 
-		User user = userSupplier.get();
-		Set<String> roles = new HashSet<>();
+		final User user = userSupplier.get();
+		final Set<String> roles = new HashSet<>();
 		roles.add(user.getRole().toString());
 		return new CredentialValidationResult(new GedCallerPrincipal(user), roles);
 	}

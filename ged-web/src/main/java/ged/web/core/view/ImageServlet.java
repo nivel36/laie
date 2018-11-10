@@ -22,6 +22,9 @@ public class ImageServlet extends FileServlet {
 	@Override
 	protected File getFile(final HttpServletRequest request) {
 		final String pathInfo = request.getPathInfo();
+		if (!pathInfo.matches("[a-zA-Z0-9-#-/]++")) {
+			throw new IllegalArgumentException();
+		}
 		if ((pathInfo == null) || pathInfo.isEmpty() || "/".equals(pathInfo)) {
 			throw new IllegalArgumentException();
 		}

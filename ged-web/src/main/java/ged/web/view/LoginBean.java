@@ -39,9 +39,6 @@ public class LoginBean extends AbstractBean {
 
 	private static final long serialVersionUID = 8364578958730650005L;
 
-	@Inject
-	private transient ExternalContext externalContext;
-
 	private Locale locale;
 
 	@Inject
