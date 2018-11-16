@@ -6,7 +6,7 @@
 		<composite:attribute name="label" required="true" />
 		<composite:attribute name="required" type="java.lang.Boolean" default="false" />
 		<composite:attribute name="search" method-signature="void action()" required="true" />
-		<composite:attribute name="value" required="true" />
+		<composite:attribute name="value" type="ged.ejb.client.Client" required="true" />
 		<composite:clientBehavior name="dialogReturn" event="dialogReturn" targets="search" />
 		<composite:editableValueHolder name="input-client" />
 	</composite:interface>
@@ -15,10 +15,7 @@
 		<div id="#{cc.clientId}" class="form-group">
 			<p:outputLabel id="label" for="input-client" value="#{cc.attrs.label}" />
 			<div class="inputgroup">
-				<h:inputHidden value="#{cc.attrs.value}" />
-				<p:inputText id="input-client" value="#{cc.attrs.value}" required="#{cc.attrs.required}" binding="#{cc.input}" disabled="true" styleClass="input-client" >
-					<f:converter converterId="toStringConverter" />
-				</p:inputText>
+				<p:inputText id="input-client" value="#{cc.attrs.value.name}" required="#{cc.attrs.required}" binding="#{cc.input}" styleClass="input-client" />
 				<p:commandButton id="clean" action="#{cc.clean}" process="@this" update="#{cc.clientId}" styleClass="btn-gray" icon="fa fa-times"
 					binding="#{cc.cleanButton}" />
 				<p:commandButton id="search" action="#{cc.attrs.search}" process="@this" icon="fa fa-search" styleClass="green-button">

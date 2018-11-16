@@ -36,7 +36,8 @@ public class JobOffer extends AbstractAuditedEntity {
 	private String city;
 
 	@ManyToOne
-	@JoinColumn(name = "clientId", nullable = true)
+	@JoinColumn(name = "clientId", nullable = false)
+	@NotNull
 	@IndexedEmbedded
 	private Client client;
 

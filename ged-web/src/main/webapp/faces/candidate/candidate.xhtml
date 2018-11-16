@@ -97,7 +97,7 @@
 											<p:inputText id="state" value="#{candidateBean.candidate.address.state}" readonly="true" />
 										</div>
 									</div>
-			
+
 									<div class="col-12 md-6">
 										<div class="form-group">
 											<p:outputLabel value="#{i18n['candidate.jobProfile']}" for="jobProfile" />
@@ -140,7 +140,7 @@
 			<div class="col-12 lg-6">
 				<h:form id="jobOffersForm">
 					<cc:jobOffers id="jobOffers" jobOffers="#{candidateBean.jobOffers}">
-						<p:commandButton value="#{i18n['action.add']}" actionListener="#{candidateBean.openSelectJobOfferDialog}" styleClass="btn-primary">
+						<p:commandButton value="#{i18n['action.add']}" process="@this" actionListener="#{candidateBean.openSelectJobOfferDialog}" styleClass="btn-primary" >
 							<p:ajax event="dialogReturn" listener="#{candidateBean.onCloseSelectJobOfferDialog}" update="@form" />
 						</p:commandButton>
 					</cc:jobOffers>
