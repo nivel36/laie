@@ -4,7 +4,7 @@
 
 	<composite:interface componentType="inputUser">
 		<composite:attribute name="label" required="true" />
-		<composite:attribute name="value" required="true" />
+		<composite:attribute name="value" type="ged.ejb.user.User" required="true" />
 		<composite:attribute name="completeMethod" method-signature="void function(java.lang.String)" required="true" />
 		<composite:attribute name="required" type="java.lang.Boolean" default="false" />
 	</composite:interface>
