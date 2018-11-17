@@ -16,18 +16,18 @@ import javax.faces.context.FacesContext;
 @FacesComponent(value = "inputDateRange")
 public class InputDateRange extends UIInput implements NamingContainer {
 
-	public class Month {
+	public static class Month {
 
 		private String monthName;
 
 		private Integer monthNumber;
 
 		public String getMonthName() {
-			return monthName;
+			return this.monthName;
 		}
 
 		public Integer getMonthNumber() {
-			return monthNumber;
+			return this.monthNumber;
 		}
 
 		public void setMonthName(final String monthName) {
@@ -45,7 +45,7 @@ public class InputDateRange extends UIInput implements NamingContainer {
 		final Month[] months = new Month[12];
 		for (int i = 1; i < 13; i++) {
 			final Month month = new Month();
-			month.setMonthName(message("date.month." + i));
+			month.setMonthName(this.message("date.month." + i));
 			month.setMonthNumber(i);
 			months[i - 1] = month;
 		}
@@ -65,10 +65,10 @@ public class InputDateRange extends UIInput implements NamingContainer {
 
 	@Override
 	public void encodeBegin(final FacesContext context) throws IOException {
-		final int maxYear = (int) getAttributes().get("plusYear");
-		final int minYear = (int) getAttributes().get("minusYear");
-		setMonths(buildMonthsCombo());
-		setYears(buildYearsCombo(minYear, maxYear));
+		final int maxYear = (int) this.getAttributes().get("plusYear");
+		final int minYear = (int) this.getAttributes().get("minusYear");
+		this.setMonths(this.buildMonthsCombo());
+		this.setYears(this.buildYearsCombo(minYear, maxYear));
 		super.encodeBegin(context);
 	}
 
@@ -90,29 +90,29 @@ public class InputDateRange extends UIInput implements NamingContainer {
 	}
 
 	public Month[] getMonths() {
-		return (Month[]) getStateHelper().get("months");
+		return (Month[]) this.getStateHelper().get("months");
 	}
 
 	private ResourceBundle getResourceBundle(final String filename) {
-		final Locale locale = getLocale();
+		final Locale locale = this.getLocale();
 		return ResourceBundle.getBundle(filename, locale);
 	}
 
 	public Integer[] getYears() {
-		return (Integer[]) getStateHelper().get("years");
+		return (Integer[]) this.getStateHelper().get("years");
 	}
 
 	private String message(final String message) {
-		final ResourceBundle bundle = getResourceBundle(FILE_NAME);
+		final ResourceBundle bundle = this.getResourceBundle(InputDateRange.FILE_NAME);
 		return bundle.getString(message);
 	}
 
 	public void setMonths(final Month[] months) {
-		getStateHelper().put("months", months);
+		this.getStateHelper().put("months", months);
 	}
 
 	public void setYears(final Integer[] years) {
-		getStateHelper().put("years", years);
+		this.getStateHelper().put("years", years);
 	}
 
 	public boolean validateDates(final FacesContext context, final List<UIInput> components, final List<Object> values) {
@@ -123,6 +123,7 @@ public class InputDateRange extends UIInput implements NamingContainer {
 		final int size = components.size();
 		for (int i = 0; i < size; i++) {
 			final UIInput component = components.get(i);
+
 			if (component.getId().equals("stillWorking")) {
 				if (values.get(i) == null) {
 					inputStillWorking = false;
@@ -138,13 +139,13 @@ public class InputDateRange extends UIInput implements NamingContainer {
 				inputEndYear = (Integer) values.get(i);
 			}
 		}
+
 		if (inputStillWorking) {
 			return true;
 		}
-		if ((inputStartYear - inputEndYear) > 0) {
+		if ((inputStartYear != null) && (inputEndYear != null) && ((inputStartYear - inputEndYear) > 0)) {
 			return false;
 		}
 		return true;
 	}
-
 }

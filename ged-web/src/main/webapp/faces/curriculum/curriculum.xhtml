@@ -47,10 +47,17 @@
 										<h:panelGroup rendered="#{(jobExperience.monthsWorked - jobExperience.monthsWorked%12)/12 gt 0}">
 											<h:outputText value="#{(jobExperience.monthsWorked - jobExperience.monthsWorked%12)/12}">
 												<f:convertNumber maxFractionDigits="0" />
-											</h:outputText> #{(jobExperience.monthsWorked - jobExperience.monthsWorked%12)/12 gt 1 ? i18n['date.years'] : i18n['date.year']} </h:panelGroup>
-										<h:panelGroup rendered="#{jobExperience.monthsWorked%12 gt 0}">
-											<h:outputText value="#{jobExperience.monthsWorked%12}" /> #{jobExperience.monthsWorked%12 gt 1 ? i18n['date.months'] : i18n['date.month']}
+											</h:outputText>
+											<h:outputText value=" #{(jobExperience.monthsWorked - jobExperience.monthsWorked%12)/12 gt 1 ? i18n['date.years'] : i18n['date.year']}" />
 										</h:panelGroup>
+										<h:outputText value=" #{i18n['date.and']}  "
+											rendered="#{jobExperience.monthsWorked%12 gt 0 and (jobExperience.monthsWorked - jobExperience.monthsWorked%12)/12 gt 0}" />
+										<h:panelGroup rendered="#{jobExperience.monthsWorked%12 gt 0}">
+											<h:outputText value="#{jobExperience.monthsWorked%12}" />
+											<h:outputText value=" #{jobExperience.monthsWorked%12 gt 1 ? i18n['date.months'] : i18n['date.month']}" />
+										</h:panelGroup>
+										<h:outputText value=" #{i18n['date.days']} "
+											rendered="#{jobExperience.monthsWorked%12 eq 0 and (jobExperience.monthsWorked - jobExperience.monthsWorked%12)/12 eq 0}" />
 										)
 									</h4>
 

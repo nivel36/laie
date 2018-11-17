@@ -39,7 +39,7 @@ public class JobExperienceService extends AbstractService<JobExperience> {
 		if ((jobExperience.getEndDate() == null) && !jobExperience.isStillWorking()) {
 			throw new IllegalStateException("End date is null");
 		}
-		if (jobExperience.getEndDate().isBefore(jobExperience.getStartDate())) {
+		if (!jobExperience.isStillWorking() && jobExperience.getEndDate().isBefore(jobExperience.getStartDate())) {
 			throw new IllegalStateException("End date cannot be beofere start date");
 		}
 	}
