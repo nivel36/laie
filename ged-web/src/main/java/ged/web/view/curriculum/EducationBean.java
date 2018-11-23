@@ -26,9 +26,7 @@ public class EducationBean extends AbstractDialogBean {
 	private transient EducationService educationService;
 
 	public void delete() {
-		if (!this.isNewEducation()) {
-			this.educationService.delete(this.education);
-		}
+		this.educationService.delete(this.education);
 		this.closeDialog();
 	}
 
@@ -42,11 +40,11 @@ public class EducationBean extends AbstractDialogBean {
 		if (eduationId != null) {
 			this.education = this.educationService.find(eduationId);
 		}
-		if (this.education == null) {
+		else {
 			final Long curriculumId = this.getIdFromParameters("curriculumId");
 			final Curriculum curriculum = this.curriculumService.find(curriculumId);
 			this.education = new Education();
-			this.education.setStillStudying(true);
+			this.education.setStillStudying(false);
 			this.education.setCurriculum(curriculum);
 		}
 	}

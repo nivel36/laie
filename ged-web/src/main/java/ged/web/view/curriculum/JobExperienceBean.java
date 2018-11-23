@@ -84,7 +84,7 @@ public class JobExperienceBean extends AbstractDialogBean {
 			final Long curriculumId = this.getIdFromParameters("curriculumId");
 			final Curriculum curriculum = this.curriculumService.find(curriculumId);
 			this.jobExperience = new JobExperience();
-			this.jobExperience.setStillWorking(true);
+			this.jobExperience.setStillWorking(false);
 			this.jobExperience.setCurriculum(curriculum);
 		}
 

@@ -11,7 +11,7 @@
 		<composite:attribute name="minusYear" type="java.lang.Integer" required="false" default="20" />
 		<composite:attribute name="showMonths" type="java.lang.Boolean" required="false" default="false" />
 		<composite:attribute name="still" />
-		<composite:attribute name="required" />
+		<composite:attribute name="required" type="java.lang.Boolean" required="false" default="false" />
 	</composite:interface>
 
 	<composite:implementation>
@@ -20,11 +20,11 @@
 				<div class="col-5">
 					<div class="form-group">
 						<p:outputLabel value="#{i18n['education.from_date']}" />
-						<p:selectOneMenu id="fromMonth" value="#{cc.attrs.fromMonth}" required="#{cc.attrs.showMonths}" rendered="#{cc.attrs.showMonths}">
+						<p:selectOneMenu id="fromMonth" value="#{cc.attrs.fromMonth}" required="#{cc.attrs.required}" rendered="#{cc.attrs.showMonths}">
 							<f:selectItem itemLabel="#{i18n['date.month']}" itemValue="" />
 							<f:selectItems var="month" value="#{cc.months}" itemValue="#{month.monthNumber}" itemLabel="#{month.monthName}" />
 						</p:selectOneMenu>
-						<p:selectOneMenu id="fromYear" value="#{cc.attrs.fromYear}" required="true">
+						<p:selectOneMenu id="fromYear" value="#{cc.attrs.fromYear}" required="#{cc.attrs.required}">
 							<f:selectItem itemLabel="#{i18n['date.year']}" itemValue="" />
 							<f:selectItems var="year" value="#{cc.years}" itemValue="#{year}" itemLabel="#{year}" />
 						</p:selectOneMenu>
@@ -35,11 +35,11 @@
 				<div class="col-5">
 					<h:panelGroup id="endDate" class="form-group" layout="block">
 						<p:outputLabel value="#{i18n['education.to_date']}" rendered="#{not cc.attrs.still}" />
-						<p:selectOneMenu id="toMonth" value="#{cc.attrs.toMonth}" required="#{cc.attrs.showMonths}" rendered="#{cc.attrs.showMonths and not cc.attrs.still}">
+						<p:selectOneMenu id="toMonth" value="#{cc.attrs.toMonth}" required="#{cc.attrs.required}" rendered="#{cc.attrs.showMonths and not cc.attrs.still}">
 							<f:selectItem itemLabel="#{i18n['date.month']}" itemValue="" />
 							<f:selectItems var="month" value="#{cc.months}" itemValue="#{month.monthNumber}" itemLabel="#{month.monthName}" />
 						</p:selectOneMenu>
-						<p:selectOneMenu id="toYear" value="#{cc.attrs.toYear}" rendered="#{not cc.attrs.still}" required="true">
+						<p:selectOneMenu id="toYear" value="#{cc.attrs.toYear}" rendered="#{not cc.attrs.still}" required="#{cc.attrs.required}">
 							<f:selectItem itemLabel="#{i18n['date.year']}" itemValue="" />
 							<f:selectItems var="year" value="#{cc.years}" itemValue="#{year}" itemLabel="#{year}" />
 						</p:selectOneMenu>
