@@ -76,16 +76,6 @@ public class UserDao extends AbstractDao<User> {
 		return User.class;
 	}
 
-	private void insertUser(final User user) {
-		if (isEmailInUse(user.getEmail())) {
-			throw new DuplicateEmailException();
-		}
-		this.getPersistenceFacade().insert(user);
-		if (user.getManager() != null) {
-			this.insertUserClosures(user);
-		}
-	}
-
 	private void insertUserClosure(final User antecessor, final User descendant, final int pathLength) {
 		logger.trace("Insert in user closure table. Antecessor {}, descendant {}, pathLength {}", antecessor.getEmail(), descendant.getEmail(), pathLength);
 		final UserClosure newUserClosure = new UserClosure(antecessor, descendant, pathLength);
@@ -129,28 +119,34 @@ public class UserDao extends AbstractDao<User> {
 	}
 
 	@Override
-	public User save(final User user) {
-		Objects.requireNonNull(user);
-		if (user.getId() == 0) {
-			this.insertUser(user);
-			return user;
+	protected void postInsert(final User user) {
+		if (user.getManager() != null) {
+			this.insertUserClosures(user);
 		}
-		else {
-			return this.updateUser(user);
+	}
+
+	@Override
+	protected void postUpdate(final User user) {
+		this.updateUserClosures(user);
+	}
+
+	@Override
+	protected void preInsert(final User user) {
+		if (isEmailInUse(user.getEmail())) {
+			throw new DuplicateEmailException();
+		}
+	}
+
+	@Override
+	protected void preUpdate(final User user) {
+		if (isDuplicateEmail(user)) {
+			throw new DuplicateEmailException();
 		}
 	}
 
 	@Override
 	public List<User> search(final String searchText) {
 		return this.getPersistenceFacade().search(User.class, searchText, "name", "surname", "email");
-	}
-
-	private User updateUser(final User user) {
-		if (isDuplicateEmail(user)) {
-			throw new DuplicateEmailException();
-		}
-		this.updateUserClosures(user);
-		return this.getPersistenceFacade().update(user);
 	}
 
 	private void updateUserClosures(final User user) {

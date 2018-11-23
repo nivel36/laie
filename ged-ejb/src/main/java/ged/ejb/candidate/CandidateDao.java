@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.NoResultException;
+import javax.validation.ValidationException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -60,6 +61,27 @@ public class CandidateDao extends AbstractDao<Candidate> {
 	@Override
 	public Class<Candidate> getType() {
 		return Candidate.class;
+	}
+
+	private boolean isDuplicatedEmail(final Candidate candidate, final Candidate candidateInRepository) {
+		return !candidate.getEmail().equals(candidateInRepository.getEmail()) && this.emailExists(candidate.getEmail());
+	}
+
+	@Override
+	protected void preInsert(final Candidate candidate) {
+		if (this.emailExists(candidate.getEmail())) {
+			logger.warn("The email {} is in use", candidate.getEmail());
+			throw new ValidationException("email");
+		}
+	}
+
+	@Override
+	protected void preUpdate(final Candidate candidate) {
+		final Candidate candidateInRepository = this.find(candidate.getId());
+		if (this.isDuplicatedEmail(candidate, candidateInRepository)) {
+			logger.warn("The email {} is in use", candidate.getEmail());
+			throw new ValidationException("Email duplicated");
+		}
 	}
 
 	@Override

@@ -71,14 +71,32 @@ public abstract class AbstractDao<T extends AbstractEntity> {
 
 	protected abstract Class<T> getType();
 
+	protected T insert(final T entity) {
+		preInsert(entity);
+		this.persistenceFacade.insert(entity);
+		postInsert(entity);
+		return entity;
+	}
+
+	protected void postInsert(final T entity) {
+	}
+
+	protected void postUpdate(final T entity) {
+	}
+
+	protected void preInsert(final T entity) {
+	}
+
+	protected void preUpdate(final T entity) {
+	}
+
 	public T save(final T entity) {
 		Objects.requireNonNull(entity);
 		if (entity.getId() == 0) {
-			this.persistenceFacade.insert(entity);
-			return entity;
+			return insert(entity);
 		}
 		else {
-			return this.persistenceFacade.update(entity);
+			return update(entity);
 		}
 	}
 
@@ -87,5 +105,12 @@ public abstract class AbstractDao<T extends AbstractEntity> {
 	public void setPersistenceFacade(final PersistenceFacade persistenceFacade) {
 		Objects.requireNonNull(persistenceFacade);
 		this.persistenceFacade = persistenceFacade;
+	}
+
+	protected T update(final T entity) {
+		preUpdate(entity);
+		final T updatedEntity = this.persistenceFacade.update(entity);
+		postUpdate(entity);
+		return updatedEntity;
 	}
 }
