@@ -9,8 +9,6 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.validation.ValidationException;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -26,26 +24,27 @@ import ged.ejb.job.offer.JobOffer;
 @ExtendWith(MockitoExtension.class)
 public class CandidateServiceTest {
 
-	@Mock
-	private CandidateDao candidateDao;
+	@Nested
+	class AddFileToCandidate {
 
-	private CandidateService candidateService;
+		@Test
+		public void nullParametersShouldThrowNullPointerException() {
+			assertThrows(NullPointerException.class, () -> {
+				candidateService.addFileToCandidate(null, null);
+			});
+		}
 
-	@Mock
-	private JobCandidatureDao jobCandidatureDao;
+		@Test
+		public void shouldBeOk() {
+			final ServerFile mockedUploadedServerFile = mock(ServerFile.class);
 
-	@Mock
-	private ServerFileDao serverFileDao;
+			final Candidate mockedCandidate = mock(Candidate.class);
+			candidateService.addFileToCandidate(mockedCandidate, mockedUploadedServerFile);
+		}
+	}
 
 	@Nested
 	class FindAllByJobOffer {
-
-		@Test
-		public void nullJobOfferShouldReturnNullPointerException() {
-			assertThrows(NullPointerException.class, () -> {
-				candidateService.findCandidatesByJobOffer(null);
-			});
-		}
 
 		@Test
 		public void findAllByJobOfferTest() {
@@ -55,6 +54,13 @@ public class CandidateServiceTest {
 
 			final List<Candidate> candidatesFromRepository = candidateService.findCandidatesByJobOffer(jobOffer);
 			assertEquals(0, candidatesFromRepository.size());
+		}
+
+		@Test
+		public void nullJobOfferShouldReturnNullPointerException() {
+			assertThrows(NullPointerException.class, () -> {
+				candidateService.findCandidatesByJobOffer(null);
+			});
 		}
 	}
 
@@ -132,87 +138,14 @@ public class CandidateServiceTest {
 	}
 
 	@Nested
-	class Save {
-
-		@Test
-		public void updateCandidateShouldReturnSavedCandidate() {
-			final Candidate candidate = new Candidate();
-			candidate.setEmail("aaron@test.com");
-			candidate.setId(1L);
-
-			when(candidateDao.find(candidate.getId())).thenReturn(candidate);
-			when(candidateDao.save(candidate)).thenReturn(candidate);
-
-			final Candidate savedCandidate = candidateService.save(candidate);
-			assertEquals(candidate, savedCandidate);
-		}
-
-		@Test
-		public void updateCandidateWhithDuplicatedEmailShouldThrowValidationException() {
-			assertThrows(ValidationException.class, () -> {
-				final Candidate candidate = new Candidate();
-				candidate.setEmail("aaron@test.com");
-				candidate.setId(1L);
-
-				when(candidateDao.emailExists(candidate.getEmail())).thenReturn(true);
-				when(candidateDao.find(candidate.getId())).thenReturn(mock(Candidate.class));
-				
-				candidateService.save(candidate);
-			});
-		}
-
-		@Test
-		public void nullCandidateShouldReturnNullPointerException() {
-			assertThrows(NullPointerException.class, () -> {
-				candidateService.save(null);
-			});
-		}
-
-		@Test
-		public void insertNewCandidateShouldReturnSavedCandidate() {
-			final Candidate candidate = new Candidate();
-			candidate.setEmail("aaron@test.com");
-
-			when(candidateDao.emailExists(candidate.getEmail())).thenReturn(false);
-			when(candidateDao.save(candidate)).thenReturn(candidate);
-			
-			Candidate savedCandidate = candidateService.save(candidate);
-			assertEquals(candidate, savedCandidate);
-		}
-
-		@Test
-		public void inserCandidateWithDuplicateEmailShouldThrowValidationException() {
-			assertThrows(ValidationException.class, () -> {
-				final Candidate candidate = new Candidate();
-				candidate.setEmail("aaron@test.com");
-
-				when(candidateDao.emailExists(candidate.getEmail())).thenReturn(true);
-				candidateService.save(candidate);
-			});
-		}
-	}
-
-	@Nested
-	class AddFileToCandidate {
-
-		@Test
-		public void nullParametersShouldThrowNullPointerException() {
-			assertThrows(NullPointerException.class, () -> {
-				candidateService.addFileToCandidate(null, null);
-			});
-		}
-
-		@Test
-		public void shouldBeOk() {
-			final ServerFile mockedUploadedServerFile = mock(ServerFile.class);
-
-			final Candidate mockedCandidate = mock(Candidate.class);
-			candidateService.addFileToCandidate(mockedCandidate, mockedUploadedServerFile);
-		}
-	}
-
-	@Nested
 	class UpdateFile {
+
+		@Test
+		public void nullServerFileShouldThrowNullPointerException() {
+			assertThrows(NullPointerException.class, () -> {
+				candidateService.updateFile(null);
+			});
+		}
 
 		@Test
 		public void updateFileTest() {
@@ -223,14 +156,18 @@ public class CandidateServiceTest {
 			final ServerFile updatedServerFile = candidateService.updateFile(mockedServerFile);
 			assertEquals(mockedServerFile, updatedServerFile);
 		}
-
-		@Test
-		public void nullServerFileShouldThrowNullPointerException() {
-			assertThrows(NullPointerException.class, () -> {
-				candidateService.updateFile(null);
-			});
-		}
 	}
+
+	@Mock
+	private CandidateDao candidateDao;
+
+	private CandidateService candidateService;
+
+	@Mock
+	private JobCandidatureDao jobCandidatureDao;
+
+	@Mock
+	private ServerFileDao serverFileDao;
 
 	@BeforeEach
 	public void setUp() {
