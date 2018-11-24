@@ -37,7 +37,7 @@ public class PersistenceFacade {
 		this.em = em;
 	}
 
-	public <T extends Identificable> void delete(final Class<T> type, final T entity) {
+	public <T extends Identifiable> void delete(final Class<T> type, final T entity) {
 		Objects.requireNonNull(entity);
 		Objects.requireNonNull(type);
 		if (entity.getId() == 0) {
@@ -52,7 +52,7 @@ public class PersistenceFacade {
 		}
 	}
 
-	public <T extends Identificable> T find(final Class<T> type, final long id) {
+	public <T extends Identifiable> T find(final Class<T> type, final long id) {
 		Objects.requireNonNull(id);
 		logger.debug("Find class {} by id {}", type, id);
 		return this.em.find(type, id);
@@ -111,7 +111,7 @@ public class PersistenceFacade {
 		return this.em;
 	}
 
-	public <T extends Identificable> void insert(final T entity) {
+	public <T extends Identifiable> void insert(final T entity) {
 		Objects.requireNonNull(entity);
 		if (entity.getId() != 0) {
 			throw new IllegalStateException();
@@ -137,7 +137,7 @@ public class PersistenceFacade {
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public <T extends Identificable> List<T> search(final Class<T> type, final String searchText, final String... fields) {
+	public <T extends Identifiable> List<T> search(final Class<T> type, final String searchText, final String... fields) {
 		final FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(this.getEm());
 		final QueryBuilder qb = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(type).get();
 		final BooleanJunction<BooleanJunction> bj = qb.bool();
@@ -171,7 +171,7 @@ public class PersistenceFacade {
 		}
 	}
 
-	public <T extends Identificable> T update(final T entity) {
+	public <T extends Identifiable> T update(final T entity) {
 		Objects.requireNonNull(entity);
 		if (entity.getId() == 0) {
 			throw new IllegalStateException();

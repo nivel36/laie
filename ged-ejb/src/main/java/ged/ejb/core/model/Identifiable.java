@@ -1,6 +1,6 @@
 package ged.ejb.core.model;
 
-public interface Identificable {
+public interface Identifiable {
 
 	long getId();
 
