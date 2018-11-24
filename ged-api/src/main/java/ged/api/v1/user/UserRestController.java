@@ -17,6 +17,7 @@ import javax.ws.rs.core.Response;
 
 import ged.api.v1.AbstractRestController;
 import ged.api.v1.mapper.Mapper;
+import ged.ejb.core.model.Page;
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
 import io.swagger.annotations.Api;
@@ -53,7 +54,7 @@ public class UserRestController extends AbstractRestController {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<UserDto> findAll() {
-		final List<User> users = this.userService.findAll();
+		final List<User> users = this.userService.findAll(Page.ALL);
 		return this.createUserDtoListFromUserList(users);
 	}
 

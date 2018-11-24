@@ -5,6 +5,7 @@ import java.util.Objects;
 
 import ged.ejb.core.model.AbstractDao;
 import ged.ejb.core.model.AbstractEntity;
+import ged.ejb.core.model.Page;
 
 public abstract class AbstractService<T extends AbstractEntity> {
 
@@ -18,7 +19,8 @@ public abstract class AbstractService<T extends AbstractEntity> {
 		return this.getDao().find(id);
 	}
 
-	public List<T> findAll() {
+	public List<T> findAll(final Page page) {
+		Objects.requireNonNull(page);
 		return this.getDao().findAll();
 	}
 

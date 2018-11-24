@@ -20,6 +20,7 @@ import ged.api.v1.AbstractRestController;
 import ged.api.v1.mapper.Mapper;
 import ged.ejb.candidate.Candidate;
 import ged.ejb.candidate.CandidateService;
+import ged.ejb.core.model.Page;
 import ged.ejb.user.UserService;
 import io.swagger.annotations.Api;
 
@@ -58,7 +59,7 @@ public class CandidateRestController extends AbstractRestController {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<CandidateDto> findAll() {
-		final List<Candidate> candidates = this.candidateService.findAll();
+		final List<Candidate> candidates = this.candidateService.findAll(Page.ALL);
 		return this.convertToCandidateDtoList(candidates);
 	}
 
