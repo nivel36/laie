@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ged.ejb.core.model.AbstractDao;
+import ged.ejb.core.model.Page;
 import ged.ejb.core.model.Repository;
 import ged.ejb.user.User;
 
@@ -22,7 +23,7 @@ public class BookmarkDao extends AbstractDao<Bookmark> {
 		final Map<String, Object> parameters = new HashMap<>();
 		parameters.put("entityClass", entityClass);
 		parameters.put("entityId", entityId);
-		return this.findByQuery(this.getType(), "Bookmark.findAllByClassAndId", parameters, 0, 0);
+		return this.findByQuery(this.getType(), "Bookmark.findAllByClassAndId", parameters, Page.ALL);
 	}
 
 	public Bookmark find(final User user, final String entityClass, final long entityId) {
@@ -38,7 +39,7 @@ public class BookmarkDao extends AbstractDao<Bookmark> {
 		logger.debug("Buscando todos los Bookmarks del usuario {}", user.getFullName());
 		final Map<String, Object> parameters = new HashMap<>();
 		parameters.put("user", user);
-		return this.findByQuery(this.getType(), "Bookmark.findAllByUser", parameters, 0, 0);
+		return this.findByQuery(this.getType(), "Bookmark.findAllByUser", parameters, Page.ALL);
 	}
 
 	@Override

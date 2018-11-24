@@ -8,6 +8,7 @@ import java.util.Objects;
 import ged.ejb.candidate.Candidate;
 import ged.ejb.client.Client;
 import ged.ejb.core.model.AbstractDao;
+import ged.ejb.core.model.Page;
 import ged.ejb.core.model.Repository;
 import ged.ejb.user.User;
 
@@ -16,19 +17,19 @@ public class JobMeetingDao extends AbstractDao<JobMeeting> {
 
 	public List<JobMeeting> findByOwner(final User owner) {
 		Objects.requireNonNull(owner);
-		return this.findByQuery(JobMeeting.class, "JobMeeting.findByOwner", map("owner", owner), 0, 0);
+		return this.findByQuery(JobMeeting.class, "JobMeeting.findByOwner", map("owner", owner), Page.ALL);
 	}
 
 	public List<JobMeeting> findByOwnerAndCandidate(final User owner, final Candidate candidate) {
 		Objects.requireNonNull(owner);
 		Objects.requireNonNull(candidate);
-		return this.findByQuery(JobMeeting.class, "JobMeeting.findByOwnerAndCandidate", map("owner", owner).and("candidate", candidate), 0, 0);
+		return this.findByQuery(JobMeeting.class, "JobMeeting.findByOwnerAndCandidate", map("owner", owner).and("candidate", candidate), Page.ALL);
 	}
 
 	public List<JobMeeting> findByOwnerAndClient(final User owner, final Client client) {
 		Objects.requireNonNull(owner);
 		Objects.requireNonNull(client);
-		return this.findByQuery(JobMeeting.class, "JobMeeting.findByOwnerAndClient", map("owner", owner).and("client", client), 0, 0);
+		return this.findByQuery(JobMeeting.class, "JobMeeting.findByOwnerAndClient", map("owner", owner).and("client", client), Page.ALL);
 	}
 
 	@Override

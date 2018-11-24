@@ -50,16 +50,16 @@ public class CandidateServiceTest {
 		public void findAllByJobOfferTest() {
 			final JobOffer jobOffer = new JobOffer();
 
-			when(candidateDao.findCandidatesByJobOffer(jobOffer)).thenReturn(new ArrayList<>());
+			when(candidateDao.findCandidates(jobOffer)).thenReturn(new ArrayList<>());
 
-			final List<Candidate> candidatesFromRepository = candidateService.findCandidatesByJobOffer(jobOffer);
+			final List<Candidate> candidatesFromRepository = candidateService.findCandidates(jobOffer);
 			assertEquals(0, candidatesFromRepository.size());
 		}
 
 		@Test
 		public void nullJobOfferShouldReturnNullPointerException() {
 			assertThrows(NullPointerException.class, () -> {
-				candidateService.findCandidatesByJobOffer(null);
+				candidateService.findCandidates(null);
 			});
 		}
 	}
@@ -70,7 +70,7 @@ public class CandidateServiceTest {
 		@Test
 		public void badIdShouldThrowIllegalArgumentException() {
 			assertThrows(IllegalArgumentException.class, () -> {
-				candidateService.findAllCandidateDataByCandidateId(0);
+				candidateService.findCandidateData(0);
 			});
 		}
 
@@ -78,9 +78,9 @@ public class CandidateServiceTest {
 		public void validIdShouldReturnCandidate() {
 			final Candidate mockedCandidate = mock(Candidate.class);
 
-			when(candidateDao.findAllCandidateDataById(1L)).thenReturn(mockedCandidate);
+			when(candidateDao.findCandidateData(1L)).thenReturn(mockedCandidate);
 
-			final Candidate candidateFromRepository = candidateService.findAllCandidateDataByCandidateId(1L);
+			final Candidate candidateFromRepository = candidateService.findCandidateData(1L);
 			assertNotNull(candidateFromRepository);
 		}
 	}
@@ -91,7 +91,7 @@ public class CandidateServiceTest {
 		@Test
 		public void badIdShouldThrowIllegalArgumentExpcetion() {
 			assertThrows(IllegalArgumentException.class, () -> {
-				candidateService.findFileByFileId(0);
+				candidateService.findFile(0);
 			});
 		}
 
@@ -101,7 +101,7 @@ public class CandidateServiceTest {
 
 			when(serverFileDao.find(1L)).thenReturn(mockedUploadedServerFile);
 
-			final ServerFile serverFileFromRepository = candidateService.findFileByFileId(1L);
+			final ServerFile serverFileFromRepository = candidateService.findFile(1L);
 			assertEquals(mockedUploadedServerFile, serverFileFromRepository);
 		}
 	}

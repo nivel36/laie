@@ -30,9 +30,6 @@ public class PersistenceFacade {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
-	// max number of results
-	private static final int RES_LIMIT = 150;
-
 	private final EntityManager em;
 
 	@Inject
@@ -68,15 +65,15 @@ public class PersistenceFacade {
 		final CriteriaQuery<E> cq = cb.createQuery(type);
 		final Root<E> root = cq.from(type);
 		final CriteriaQuery<E> all = cq.select(root);
-		return this.findByCriteria(all, null, null);
+		return this.findByCriteria(all, null);
 	}
 
-	private <E> List<E> findByCriteria(final CriteriaQuery<E> cq, final Integer pageSize, final Integer pageNum) {
+	private <E> List<E> findByCriteria(final CriteriaQuery<E> cq, final Page page) {
 		Objects.requireNonNull(cq);
 		logger.debug("Find entities by criteria");
 		final TypedQuery<E> query = this.em.createQuery(cq);
 		query.setHint(CACHE_STORE_MODE, CacheStoreMode.REFRESH);
-		this.paginate(pageSize, pageNum, query);
+		this.paginate(page, query);
 		return query.getResultList();
 	}
 
@@ -90,15 +87,14 @@ public class PersistenceFacade {
 		return query.getSingleResult();
 	}
 
-	public <E> List<E> findByQuery(final Class<E> entityClass, final String namedQuery, final Map<String, Object> parameters, final Integer pageSize,
-			final Integer pageNum) {
+	public <E> List<E> findByQuery(final Class<E> entityClass, final String namedQuery, final Map<String, Object> parameters, final Page page) {
 		Objects.requireNonNull(entityClass);
 		Objects.requireNonNull(namedQuery);
 		logger.debug("Find entities {} by named query {}", entityClass, namedQuery);
 		final TypedQuery<E> query = this.em.createNamedQuery(namedQuery, entityClass);
 		query.setHint(CACHE_STORE_MODE, CacheStoreMode.REFRESH);
 		this.parametrize(parameters, query);
-		this.paginate(pageSize, pageNum, query);
+		this.paginate(page, query);
 		return query.getResultList();
 	}
 
@@ -125,25 +121,9 @@ public class PersistenceFacade {
 		logger.debug("Innserted entity has the id {}", entity.getId());
 	}
 
-	private void paginate(final Integer pageSize, final Integer pageNum, final Query query) {
-		if ((pageNum != null) && (pageNum < 0)) {
-			throw new IllegalArgumentException("pageNum: " + pageNum);
-		}
-		if ((pageSize != null) && (pageSize < 0)) {
-			throw new IllegalArgumentException("pageSize: " + pageSize);
-		}
-		logger.trace("Page number {}", pageNum);
-		if ((pageSize != null) && (pageNum != null)) {
-			query.setFirstResult(pageNum * pageSize);
-		}
-		if ((pageSize != null) && (pageSize > 0)) {
-			logger.trace("Page size {}", pageSize);
-			query.setMaxResults(pageSize);
-		}
-		else if ((pageSize == null) || (pageSize == 0)) {
-			logger.trace("Setting max result to {}", RES_LIMIT);
-			query.setMaxResults(RES_LIMIT);
-		}
+	private void paginate(final Page page, final Query query) {
+		query.setFirstResult(page.getOffSet());
+		query.setMaxResults(page.getLimit());
 	}
 
 	private void parametrize(final Map<String, Object> parameters, final Query query) {

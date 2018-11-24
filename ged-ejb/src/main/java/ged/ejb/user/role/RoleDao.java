@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ged.ejb.core.model.AbstractDao;
+import ged.ejb.core.model.Page;
 import ged.ejb.core.model.Repository;
 
 @Repository
@@ -32,7 +33,7 @@ public class RoleDao extends AbstractDao<Role> {
 	public List<Role> findSubordinateRoles(final Role role) {
 		Objects.requireNonNull(role);
 		try {
-			return this.findByQuery(Role.class, "Role.findSubordinateRoles", map("antecessor", role), 0, 0);
+			return this.findByQuery(Role.class, "Role.findSubordinateRoles", map("antecessor", role), Page.ALL);
 		}
 		catch (final NoResultException e) {
 			logger.debug("No subordinate roles for role {}", role.getName(), e);

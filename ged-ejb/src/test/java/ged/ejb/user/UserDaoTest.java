@@ -20,6 +20,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import ged.ejb.core.model.Page;
 import ged.ejb.core.model.PersistenceFacade;
 
 @ExtendWith(MockitoExtension.class)
@@ -51,7 +52,7 @@ public class UserDaoTest {
 		public void userWithoutSubordinatesShouldReturnAnEmptyList() {
 			final User user = mockUser(1L, "abel@test.com", null);
 
-			when(persistenceFacade.findByQuery(User.class, "User.findSubordinateUsers", map("id", 1L), 0, 0)).thenThrow(new NoResultException());
+			when(persistenceFacade.findByQuery(User.class, "User.findSubordinateUsers", map("id", 1L), Page.ALL)).thenThrow(new NoResultException());
 
 			final List<User> subordinateUsersFromDataBases = userDao.findSubordinateUsers(user);
 			assertEquals(0, subordinateUsersFromDataBases.size());
@@ -66,7 +67,7 @@ public class UserDaoTest {
 			final List<User> subordinateUsers = new ArrayList<>();
 			subordinateUsers.add(subordinate);
 
-			when(persistenceFacade.findByQuery(User.class, "User.findSubordinateUsers", map("id", 1L), 0, 0)).thenReturn(subordinateUsers);
+			when(persistenceFacade.findByQuery(User.class, "User.findSubordinateUsers", map("id", 1L), Page.ALL)).thenReturn(subordinateUsers);
 
 			final List<User> subordinateUsersFromDataBase = userDao.findSubordinateUsers(manager);
 			assertEquals(1, subordinateUsersFromDataBase.size());
@@ -131,7 +132,8 @@ public class UserDaoTest {
 			final LocalDateTime start = LocalDateTime.now();
 			final LocalDateTime end = start.plusDays(1);
 
-			when(persistenceFacade.findByQuery(User.class, "User.findUsersOffline", map("start", start).and("end", end), 0, 0)).thenReturn(new ArrayList<>());
+			when(persistenceFacade.findByQuery(User.class, "User.findUsersOffline", map("start", start).and("end", end), Page.ALL))
+					.thenReturn(new ArrayList<>());
 
 			final List<User> usersInDataBase = userDao.findUsersOffline(start, end);
 			assertEquals(0, usersInDataBase.size());
@@ -176,7 +178,8 @@ public class UserDaoTest {
 			final LocalDateTime start = LocalDateTime.now();
 			final LocalDateTime end = start.plusDays(1);
 
-			when(persistenceFacade.findByQuery(User.class, "User.findUsersOnline", map("start", start).and("end", end), 0, 0)).thenReturn(new ArrayList<>());
+			when(persistenceFacade.findByQuery(User.class, "User.findUsersOnline", map("start", start).and("end", end), Page.ALL))
+					.thenReturn(new ArrayList<>());
 
 			final List<User> usersInDataBase = userDao.findUsersOnline(start, end);
 			assertEquals(0, usersInDataBase.size());

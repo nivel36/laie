@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 
 import ged.ejb.candidate.Origin;
 import ged.ejb.core.model.AbstractDao;
+import ged.ejb.core.model.Page;
 import ged.ejb.core.model.Repository;
 import ged.ejb.core.util.Parameters;
 
@@ -36,13 +37,13 @@ public class UserDao extends AbstractDao<User> {
 	}
 
 	private List<UserClosure> findAntecessorsUserClosures(final User user) {
-		return this.findByQuery(UserClosure.class, "UserClosure.findAntecessorsUserClosuresById", map("id", user.getId()), 0, 0);
+		return this.findByQuery(UserClosure.class, "UserClosure.findAntecessorsUserClosuresById", map("id", user.getId()), Page.ALL);
 	}
 
 	public List<User> findSubordinateUsers(final User user) {
 		Objects.requireNonNull(user);
 		try {
-			return this.findByQuery(User.class, "User.findSubordinateUsers", map("id", user.getId()), 0, 0);
+			return this.findByQuery(User.class, "User.findSubordinateUsers", map("id", user.getId()), Page.ALL);
 		}
 		catch (final NoResultException e) {
 			logger.trace("No subordinate users for user {} found", user.getEmail(), e);
@@ -63,12 +64,12 @@ public class UserDao extends AbstractDao<User> {
 
 	public List<User> findUsersOffline(final LocalDateTime start, final LocalDateTime end) {
 		this.validateDates(start, end);
-		return this.findByQuery(User.class, "User.findUsersOffline", this.mapDates(start, end), 0, 0);
+		return this.findByQuery(User.class, "User.findUsersOffline", this.mapDates(start, end), Page.ALL);
 	}
 
 	public List<User> findUsersOnline(final LocalDateTime start, final LocalDateTime end) {
 		this.validateDates(start, end);
-		return this.findByQuery(User.class, "User.findUsersOnline", this.mapDates(start, end), 0, 0);
+		return this.findByQuery(User.class, "User.findUsersOnline", this.mapDates(start, end), Page.ALL);
 	}
 
 	@Override

@@ -44,22 +44,22 @@ public class CandidateService extends AbstractAuditedService<Candidate> {
 		this.serverFileDao.save(file);
 	}
 
-	public Candidate findAllCandidateDataByCandidateId(final long candidateId) {
+	public Candidate findCandidateData(final long candidateId) {
 		if (candidateId < 1) {
 			logger.warn("Bad candidate id {}", candidateId);
 			throw new IllegalArgumentException("Bad candidate id: " + candidateId);
 		}
 		logger.debug("Find all candidate data with id {}", candidateId);
-		return this.candidateDao.findAllCandidateDataById(candidateId);
+		return this.candidateDao.findCandidateData(candidateId);
 	}
 
-	public List<Candidate> findCandidatesByJobOffer(final JobOffer jobOffer) {
+	public List<Candidate> findCandidates(final JobOffer jobOffer) {
 		Objects.requireNonNull(jobOffer);
 		logger.debug("Find candidates by jobOffer {} ", jobOffer);
-		return this.candidateDao.findCandidatesByJobOffer(jobOffer);
+		return this.candidateDao.findCandidates(jobOffer);
 	}
 
-	public ServerFile findFileByFileId(final long fileId) {
+	public ServerFile findFile(final long fileId) {
 		if (fileId < 1) {
 			logger.warn("Bad file id {}", fileId);
 			throw new IllegalArgumentException("Bad file id: " + fileId);
@@ -68,13 +68,13 @@ public class CandidateService extends AbstractAuditedService<Candidate> {
 		return this.serverFileDao.find(fileId);
 	}
 
-	public List<ServerFile> findFilesByCandidate(final Candidate candidate) {
+	public List<ServerFile> findFiles(final Candidate candidate) {
 		Objects.requireNonNull(candidate);
 		logger.debug("Find files by candidate {}", candidate);
 		return this.serverFileDao.findByCandidate(candidate);
 	}
 
-	public List<JobCandidature> findJobCandidaturesByCandidate(final Candidate candidate) {
+	public List<JobCandidature> findJobCandidatures(final Candidate candidate) {
 		Objects.requireNonNull(candidate);
 		logger.debug("Find job candidatures by candidate {}", candidate);
 		return this.jobCandidatureDao.findByCandidate(candidate);

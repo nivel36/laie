@@ -7,6 +7,7 @@ import java.util.Objects;
 
 import ged.ejb.candidate.Candidate;
 import ged.ejb.core.model.AbstractDao;
+import ged.ejb.core.model.Page;
 import ged.ejb.core.model.Repository;
 
 @Repository
@@ -14,12 +15,12 @@ public class JobCandidatureDao extends AbstractDao<JobCandidature> {
 
 	public List<JobCandidature> findByCandidate(final Candidate candidate) {
 		Objects.requireNonNull(candidate);
-		return this.findByQuery(JobCandidature.class, "JobCandidature.findByCandidate", map("candidate", candidate), 0, 0);
+		return this.findByQuery(JobCandidature.class, "JobCandidature.findByCandidate", map("candidate", candidate), Page.ALL);
 	}
 
 	public List<JobCandidature> findByJobOffer(final JobOffer jobOffer) {
 		Objects.requireNonNull(jobOffer);
-		return this.findByQuery(JobCandidature.class, "JobCandidature.findByJobOffer", map("jobOffer", jobOffer), 0, 0);
+		return this.findByQuery(JobCandidature.class, "JobCandidature.findByJobOffer", map("jobOffer", jobOffer), Page.ALL);
 	}
 
 	public JobCandidature findByJobOfferAndCandidate(final JobOffer jobOffer, final Candidate candidate) {

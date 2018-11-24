@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import ged.ejb.candidate.Candidate;
 import ged.ejb.client.Client;
 import ged.ejb.core.model.AbstractDao;
+import ged.ejb.core.model.Page;
 import ged.ejb.core.model.Repository;
 import ged.ejb.user.User;
 
@@ -22,23 +23,23 @@ public class JobOfferDao extends AbstractDao<JobOffer> {
 
 	public List<JobOffer> findAllByOwner(final User owner) {
 		Objects.requireNonNull(owner);
-		return this.findByQuery(JobOffer.class, "JobOffer.findAllByOwner", map("owner", owner), 0, 0);
+		return this.findByQuery(JobOffer.class, "JobOffer.findAllByOwner", map("owner", owner), Page.ALL);
 	}
 
 	public List<JobOffer> findJobOffersByCandidate(final Candidate candidate) {
 		Objects.requireNonNull(candidate);
 		logger.debug("SELECT  job offers by candidate {}", candidate);
-		return this.findByQuery(JobOffer.class, "JobOffer.findByCandidate", map("candidate", candidate), 0, 0);
+		return this.findByQuery(JobOffer.class, "JobOffer.findByCandidate", map("candidate", candidate), Page.ALL);
 	}
 
 	public List<JobOffer> findJobOffersByClient(final Client client) {
 		Objects.requireNonNull(client);
 		logger.debug("SELECT  job offers by client {}", client);
-		return this.findByQuery(JobOffer.class, "JobOffer.findByClient", map("client", client), 0, 0);
+		return this.findByQuery(JobOffer.class, "JobOffer.findByClient", map("client", client), Page.ALL);
 	}
 
 	public List<JobOffer> findLastJobOffers(final User owner) {
-		return this.findByQuery(JobOffer.class, "JobOffer.findLastJobOffers", map("owner", owner), 0, 0);
+		return this.findByQuery(JobOffer.class, "JobOffer.findLastJobOffers", map("owner", owner), Page.ALL);
 	}
 
 	@Override

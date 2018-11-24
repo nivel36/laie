@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ged.ejb.core.model.AbstractDao;
+import ged.ejb.core.model.Page;
 import ged.ejb.core.model.Repository;
 import ged.ejb.job.offer.JobOffer;
 
@@ -27,7 +28,7 @@ public class CandidateDao extends AbstractDao<Candidate> {
 		return this.findByQuery(Boolean.class, "Candidate.emailExists", map("email", email));
 	}
 
-	public Candidate findAllCandidateDataById(final long candidateId) {
+	public Candidate findCandidateData(final long candidateId) {
 		if (candidateId < 1) {
 			logger.warn("Bad candidate id: {}", candidateId);
 			throw new IllegalArgumentException("Bad candidate id " + candidateId);
@@ -35,10 +36,10 @@ public class CandidateDao extends AbstractDao<Candidate> {
 		return this.findByQuery(Candidate.class, "Candidate.findAllDataById", map("id", candidateId));
 	}
 
-	public List<Candidate> findCandidatesByJobOffer(final JobOffer jobOffer) {
+	public List<Candidate> findCandidates(final JobOffer jobOffer) {
 		try {
 			Objects.requireNonNull(jobOffer);
-			return this.findByQuery(Candidate.class, "Candidate.findByJobOffer", map("jobOffer", jobOffer), 0, 0);
+			return this.findByQuery(Candidate.class, "Candidate.findByJobOffer", map("jobOffer", jobOffer), Page.ALL);
 		}
 		catch (final NoResultException e) {
 			logger.debug("No candidates found", e);
@@ -51,7 +52,7 @@ public class CandidateDao extends AbstractDao<Candidate> {
 			logger.warn("Bad number of candidates {}", numberOfCandidates);
 			throw new IllegalArgumentException("Bad number of candidates: " + numberOfCandidates);
 		}
-		return this.findByQuery(Candidate.class, "Candidate.findLastAddedCandidates", null, numberOfCandidates, null);
+		return this.findByQuery(Candidate.class, "Candidate.findLastAddedCandidates", null, Page.of(1, numberOfCandidates));
 	}
 
 	public long findNumberOfCandidates() {
@@ -63,22 +64,24 @@ public class CandidateDao extends AbstractDao<Candidate> {
 		return Candidate.class;
 	}
 
-	private boolean isDuplicatedEmail(final Candidate candidate, final Candidate candidateInRepository) {
-		return !candidate.getEmail().equals(candidateInRepository.getEmail()) && this.emailExists(candidate.getEmail());
+	private boolean isDuplicatedEmail(final String emailToInsert, final String emailInRepository) {
+		final boolean candidateHasChangedHisEmail = !emailToInsert.equals(emailInRepository);
+		final boolean newEmailAlredyExists = this.emailExists(emailToInsert);
+		return candidateHasChangedHisEmail && newEmailAlredyExists;
 	}
 
 	@Override
 	protected void preInsert(final Candidate candidate) {
 		if (this.emailExists(candidate.getEmail())) {
 			logger.warn("The email {} is in use", candidate.getEmail());
-			throw new ValidationException("email");
+			throw new ValidationException("Email duplicated");
 		}
 	}
 
 	@Override
 	protected void preUpdate(final Candidate candidate) {
 		final Candidate candidateInRepository = this.find(candidate.getId());
-		if (this.isDuplicatedEmail(candidate, candidateInRepository)) {
+		if (this.isDuplicatedEmail(candidate.getEmail(), candidateInRepository.getEmail())) {
 			logger.warn("The email {} is in use", candidate.getEmail());
 			throw new ValidationException("Email duplicated");
 		}
