@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 
 import ged.ejb.candidate.Candidate;
 import ged.ejb.candidate.CandidateService;
+import ged.ejb.core.model.Page;
 import ged.web.core.view.AbstractBean;
 
 @Named
@@ -45,7 +46,7 @@ public class CandidateSearchBean extends AbstractBean {
 
 	public void search() {
 		logger.debug("Searching for candidates");
-		this.candidates = this.candidateService.search(this.searchText);
+		this.candidates = this.candidateService.search(this.searchText, Page.ALL);
 	}
 
 	public void setCandidateService(final CandidateService candidateService) {

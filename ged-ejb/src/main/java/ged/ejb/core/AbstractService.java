@@ -21,7 +21,7 @@ public abstract class AbstractService<T extends AbstractEntity> {
 
 	public List<T> findAll(final Page page) {
 		Objects.requireNonNull(page);
-		return this.getDao().findAll();
+		return this.getDao().findAll(page);
 	}
 
 	protected abstract AbstractDao<T> getDao();
@@ -31,7 +31,7 @@ public abstract class AbstractService<T extends AbstractEntity> {
 		return this.getDao().save(entity);
 	}
 
-	public List<T> search(final String searchText) {
-		return this.getDao().search(searchText);
+	public List<T> search(final String searchText, final Page page) {
+		return this.getDao().search(searchText, page);
 	}
 }

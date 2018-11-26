@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Objects;
 
 import ged.ejb.core.model.AbstractDao;
+import ged.ejb.core.model.Page;
 import ged.ejb.core.model.Repository;
 import ged.ejb.export.entity.Export;
 import ged.ejb.export.util.ExportConstants.FindExportByExportName;
@@ -24,7 +25,7 @@ public class ExportDao extends AbstractDao<Export> {
 	}
 
 	@Override
-	public List<Export> search(final String searchText) {
+	public List<Export> search(final String searchText, final Page page) {
 		throw new UnsupportedOperationException();
 	}
 }

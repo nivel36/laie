@@ -15,6 +15,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import ged.ejb.candidate.Candidate;
 import ged.ejb.candidate.CandidateService;
+import ged.ejb.core.model.Page;
 import ged.web.view.candidate.CandidateSearchBean;
 
 @ExtendWith(MockitoExtension.class)
@@ -24,7 +25,7 @@ public class CandidateSearchBeanTest {
 	class Search {
 		@Test
 		public void validTextshouldReturnCandidate() {
-			when(candidateService.search("Aaron")).thenReturn(mockCandidates());
+			when(candidateService.search("Aaron", Page.ALL)).thenReturn(mockCandidates());
 			candidateSearchBean.setSearchText("Aaron");
 			candidateSearchBean.search();
 			assertEquals("Aaron", candidateSearchBean.getSearchText());

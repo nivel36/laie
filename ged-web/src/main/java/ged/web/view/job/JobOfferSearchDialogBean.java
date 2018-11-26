@@ -7,6 +7,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import ged.ejb.core.model.Page;
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
 import ged.web.core.view.AbstractDialogBean;
@@ -49,7 +50,7 @@ public class JobOfferSearchDialogBean extends AbstractDialogBean {
 	}
 
 	public void search() {
-		this.jobOffers = this.jobOfferService.search(this.searchText);
+		this.jobOffers = this.jobOfferService.search(this.searchText, Page.ALL);
 	}
 
 	public void select() {

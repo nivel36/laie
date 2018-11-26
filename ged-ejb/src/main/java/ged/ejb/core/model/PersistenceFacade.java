@@ -58,18 +58,19 @@ public class PersistenceFacade {
 		return this.em.find(type, id);
 	}
 
-	public <E> List<E> findAll(final Class<E> type) {
+	public <E> List<E> findAll(final Class<E> type, final Page page) {
 		Objects.requireNonNull(type);
 		logger.debug("Find all entities of class {}", type);
 		final CriteriaBuilder cb = this.em.getCriteriaBuilder();
 		final CriteriaQuery<E> cq = cb.createQuery(type);
 		final Root<E> root = cq.from(type);
 		final CriteriaQuery<E> all = cq.select(root);
-		return this.findByCriteria(all, null);
+		return this.findByCriteria(all, page);
 	}
 
 	private <E> List<E> findByCriteria(final CriteriaQuery<E> cq, final Page page) {
 		Objects.requireNonNull(cq);
+		Objects.requireNonNull(page);
 		logger.debug("Find entities by criteria");
 		final TypedQuery<E> query = this.em.createQuery(cq);
 		query.setHint(CACHE_STORE_MODE, CacheStoreMode.REFRESH);
@@ -90,6 +91,7 @@ public class PersistenceFacade {
 	public <E> List<E> findByQuery(final Class<E> entityClass, final String namedQuery, final Map<String, Object> parameters, final Page page) {
 		Objects.requireNonNull(entityClass);
 		Objects.requireNonNull(namedQuery);
+		Objects.requireNonNull(page);
 		logger.debug("Find entities {} by named query {}", entityClass, namedQuery);
 		final TypedQuery<E> query = this.em.createNamedQuery(namedQuery, entityClass);
 		query.setHint(CACHE_STORE_MODE, CacheStoreMode.REFRESH);
@@ -137,7 +139,7 @@ public class PersistenceFacade {
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public <T extends Identifiable> List<T> search(final Class<T> type, final String searchText, final String... fields) {
+	public <T extends Identifiable> List<T> search(final Page page, final Class<T> type, final String searchText, final String... fields) {
 		final FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(this.getEm());
 		final QueryBuilder qb = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(type).get();
 		final BooleanJunction<BooleanJunction> bj = qb.bool();
@@ -162,6 +164,7 @@ public class PersistenceFacade {
 			persistenceQuery = fullTextEntityManager.createFullTextQuery(bj.createQuery(), type);
 		}
 		persistenceQuery.setHint(CACHE_STORE_MODE, CacheStoreMode.REFRESH);
+		paginate(page, persistenceQuery);
 		final List<T> results = persistenceQuery.getResultList();
 		if (results instanceof ArrayList) {
 			return results;

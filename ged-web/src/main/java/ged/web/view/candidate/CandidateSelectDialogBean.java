@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 
 import ged.ejb.candidate.Candidate;
 import ged.ejb.candidate.CandidateService;
+import ged.ejb.core.model.Page;
 import ged.web.core.view.AbstractDialogBean;
 
 @Named
@@ -67,7 +68,7 @@ public class CandidateSelectDialogBean extends AbstractDialogBean {
 
 	public void search() {
 		logger.debug("Searching for candidates");
-		this.candidates = this.candidateService.search(this.searchText).stream().filter(e -> !candidateToRemoveIds.contains(e.getId()))
+		this.candidates = this.candidateService.search(this.searchText, Page.ALL).stream().filter(e -> !candidateToRemoveIds.contains(e.getId()))
 				.collect(Collectors.toList());
 	}
 

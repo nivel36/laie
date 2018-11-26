@@ -48,7 +48,7 @@ public class JobOfferDao extends AbstractDao<JobOffer> {
 	}
 
 	@Override
-	public List<JobOffer> search(final String searchText) {
-		return this.getPersistenceFacade().search(JobOffer.class, searchText, "name", "client.name");
+	public List<JobOffer> search(final String searchText, final Page page) {
+		return this.getPersistenceFacade().search(page, JobOffer.class, searchText, "name", "client.name");
 	}
 }

@@ -11,6 +11,7 @@ import javax.inject.Named;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import ged.ejb.core.model.Page;
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
 import ged.web.core.util.Navigate;
@@ -52,7 +53,7 @@ public class JobOfferSearchBean extends AbstractBean {
 
 	public void search() {
 		logger.debug("Search job offer action performed");
-		this.jobOffers = this.jobOfferService.search(this.searchText);
+		this.jobOffers = this.jobOfferService.search(this.searchText, Page.ALL);
 		this.addWarningMessageIfMaxSearchResultsHaveBeenReached(this.jobOffers);
 	}
 

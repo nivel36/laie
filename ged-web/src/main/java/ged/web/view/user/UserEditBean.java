@@ -26,6 +26,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ged.ejb.core.FileUploadService;
+import ged.ejb.core.model.Page;
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
 import ged.web.core.view.AbstractBean;
@@ -118,7 +119,7 @@ public class UserEditBean extends AbstractBean {
 		if ((query == null) || (query.trim().length() < 3)) {
 			return new ArrayList<>();
 		}
-		final List<User> managers = this.userService.search(query);
+		final List<User> managers = this.userService.search(query, Page.ALL);
 		managers.remove(this.user);
 		return managers;
 	}

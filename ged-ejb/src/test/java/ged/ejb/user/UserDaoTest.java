@@ -31,9 +31,9 @@ public class UserDaoTest {
 
 		@Test
 		public void shouldReturnAList() {
-			when(persistenceFacade.findAll(User.class)).thenReturn(new ArrayList<User>());
+			when(persistenceFacade.findAll(User.class, Page.ALL)).thenReturn(new ArrayList<User>());
 
-			final List<User> users = userDao.findAll();
+			final List<User> users = userDao.findAll(Page.ALL);
 			assertEquals(0, users.size());
 		}
 	}
@@ -259,24 +259,24 @@ public class UserDaoTest {
 
 		@Test
 		public void emptyTextShouldReturnList() {
-			when(persistenceFacade.search(User.class, "", "name", "surname", "email")).thenReturn(new ArrayList<>());
-			final List<User> users = userDao.search("");
+			when(persistenceFacade.search(Page.ALL, User.class, "", "name", "surname", "email")).thenReturn(new ArrayList<>());
+			final List<User> users = userDao.search("", Page.ALL);
 			assertEquals(0, users.size());
 		}
 
 		@Test
 		public void nullTextShouldReturnList() {
-			when(persistenceFacade.search(User.class, null, "name", "surname", "email")).thenReturn(new ArrayList<>());
+			when(persistenceFacade.search(Page.ALL, User.class, null, "name", "surname", "email")).thenReturn(new ArrayList<>());
 
-			final List<User> users = userDao.search(null);
+			final List<User> users = userDao.search(null, Page.ALL);
 			assertEquals(0, users.size());
 		}
 
 		@Test
 		public void validTextshouldReturnList() {
-			when(persistenceFacade.search(User.class, "aaron", "name", "surname", "email")).thenReturn(new ArrayList<>());
+			when(persistenceFacade.search(Page.ALL, User.class, "aaron", "name", "surname", "email")).thenReturn(new ArrayList<>());
 
-			final List<User> users = userDao.search("aaron");
+			final List<User> users = userDao.search("aaron", Page.ALL);
 			assertEquals(0, users.size());
 		}
 	}

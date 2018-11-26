@@ -11,6 +11,7 @@ import javax.inject.Named;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import ged.ejb.core.model.Page;
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
 import ged.web.core.view.AbstractBean;
@@ -52,7 +53,7 @@ public class UserSearchBean extends AbstractBean {
 
 	public void search() {
 		logger.debug("Search users action performed");
-		this.users = this.userService.search(this.searchText);
+		this.users = this.userService.search(this.searchText, Page.ALL);
 	}
 
 	public void setSearchText(final String searchText) {

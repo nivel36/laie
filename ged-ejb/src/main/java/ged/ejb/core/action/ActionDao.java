@@ -28,7 +28,7 @@ public class ActionDao extends AbstractDao<Action> {
 	}
 
 	@Override
-	public List<Action> search(final String searchText) {
+	public List<Action> search(final String searchText, final Page page) {
 		throw new UnsupportedOperationException();
 	}
 }

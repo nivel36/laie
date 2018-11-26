@@ -30,4 +30,8 @@ public class LanguageLevels implements Serializable {
 	public void init() {
 		this.languageLevels = this.curriculumService.findAllLanguageLevels();
 	}
+
+	public void setCurriculumService(final CurriculumService curriculumService) {
+		this.curriculumService = curriculumService;
+	}
 }

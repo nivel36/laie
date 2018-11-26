@@ -8,6 +8,7 @@ import javax.persistence.NoResultException;
 
 import ged.ejb.candidate.Candidate;
 import ged.ejb.core.model.AbstractDao;
+import ged.ejb.core.model.Page;
 import ged.ejb.core.model.Repository;
 import ged.ejb.curriculum.language.LanguageLevel;
 import ged.ejb.curriculum.skills.SkillLevel;
@@ -16,11 +17,11 @@ import ged.ejb.curriculum.skills.SkillLevel;
 public class CurriculumDao extends AbstractDao<Curriculum> {
 
 	public List<LanguageLevel> findAllLanguageLevels() {
-		return this.findAll(LanguageLevel.class);
+		return this.findAll(LanguageLevel.class, Page.ALL);
 	}
 
 	public List<SkillLevel> findAllSkillLevels() {
-		return this.findAll(SkillLevel.class);
+		return this.findAll(SkillLevel.class, Page.ALL);
 	}
 
 	public Curriculum findByCandidate(final Candidate candidate) {
@@ -38,7 +39,7 @@ public class CurriculumDao extends AbstractDao<Curriculum> {
 	}
 
 	@Override
-	public List<Curriculum> search(final String searchText) {
+	public List<Curriculum> search(final String searchText, final Page page) {
 		throw new UnsupportedOperationException();
 	}
 }

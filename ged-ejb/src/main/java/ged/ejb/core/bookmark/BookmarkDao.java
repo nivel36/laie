@@ -48,7 +48,7 @@ public class BookmarkDao extends AbstractDao<Bookmark> {
 	}
 
 	@Override
-	public List<Bookmark> search(final String searchText) {
+	public List<Bookmark> search(final String searchText, final Page page) {
 		throw new UnsupportedOperationException();
 	}
 }

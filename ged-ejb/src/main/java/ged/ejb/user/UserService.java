@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import ged.ejb.candidate.Origin;
 import ged.ejb.core.AbstractAuditedService;
 import ged.ejb.core.model.AbstractDao;
+import ged.ejb.core.model.Page;
 import ged.ejb.core.model.Repository;
 import ged.ejb.core.security.Securized;
 import ged.ejb.user.role.Role;
@@ -37,7 +38,7 @@ public class UserService extends AbstractAuditedService<User> {
 	}
 
 	public List<Role> findAllRoles() {
-		return this.roleDao.findAll();
+		return this.roleDao.findAll(Page.ALL);
 	}
 
 	public Role findRoleByName(final String roleName) {

@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ged.ejb.core.model.AbstractDao;
+import ged.ejb.core.model.Page;
 import ged.ejb.core.model.Repository;
 
 @Repository
@@ -49,7 +50,7 @@ public class ClientDao extends AbstractDao<Client> {
 	}
 
 	@Override
-	public List<Client> search(final String searchText) {
-		return this.getPersistenceFacade().search(Client.class, searchText, "name");
+	public List<Client> search(final String searchText, final Page page) {
+		return this.getPersistenceFacade().search(page, Client.class, searchText, "name");
 	}
 }

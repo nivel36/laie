@@ -8,6 +8,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import ged.ejb.core.model.Page;
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
 import ged.ejb.user.User;
@@ -52,12 +53,12 @@ public class GlobalSearchBean extends AbstractBean {
 	}
 
 	public void search() {
-		if (this.text == null || this.text.length() < 3) {
+		if ((this.text == null) || (this.text.length() < 3)) {
 			Message.addWarning("error.search.camp_to_short", "error.search.camp_to_short");
 		}
 		else {
-			this.users = this.userService.search(this.text);
-			this.jobOffers = this.jobService.search(this.text);
+			this.users = this.userService.search(this.text, Page.ALL);
+			this.jobOffers = this.jobService.search(this.text, Page.ALL);
 		}
 	}
 

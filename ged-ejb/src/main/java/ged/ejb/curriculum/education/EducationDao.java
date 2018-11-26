@@ -3,6 +3,7 @@ package ged.ejb.curriculum.education;
 import java.util.List;
 
 import ged.ejb.core.model.AbstractDao;
+import ged.ejb.core.model.Page;
 import ged.ejb.core.model.Repository;
 
 @Repository
@@ -14,7 +15,7 @@ public class EducationDao extends AbstractDao<Education> {
 	}
 
 	@Override
-	public List<Education> search(final String searchText) {
-		return this.getPersistenceFacade().search(Education.class, searchText, "description");
+	public List<Education> search(final String searchText, final Page page) {
+		return this.getPersistenceFacade().search(page, Education.class, searchText, "description");
 	}
 }

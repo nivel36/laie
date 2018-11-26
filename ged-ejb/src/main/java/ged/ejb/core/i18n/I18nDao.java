@@ -3,6 +3,7 @@ package ged.ejb.core.i18n;
 import java.util.List;
 
 import ged.ejb.core.model.AbstractDao;
+import ged.ejb.core.model.Page;
 import ged.ejb.core.model.Repository;
 import ged.ejb.core.util.Parameters;
 
@@ -19,7 +20,7 @@ public class I18nDao extends AbstractDao<I18nString> {
 	}
 
 	@Override
-	public List<I18nString> search(final String searchText) {
-		return this.getPersistenceFacade().search(I18nString.class, searchText, "text");
+	public List<I18nString> search(final String searchText, final Page page) {
+		return this.getPersistenceFacade().search(page, I18nString.class, searchText, "text");
 	}
 }

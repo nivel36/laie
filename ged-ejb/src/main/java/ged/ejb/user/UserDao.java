@@ -33,7 +33,7 @@ public class UserDao extends AbstractDao<User> {
 	}
 
 	public List<Origin> findAllOrigins() {
-		return this.getPersistenceFacade().findAll(Origin.class);
+		return this.getPersistenceFacade().findAll(Origin.class, Page.ALL);
 	}
 
 	private List<UserClosure> findAntecessorsUserClosures(final User user) {
@@ -146,8 +146,8 @@ public class UserDao extends AbstractDao<User> {
 	}
 
 	@Override
-	public List<User> search(final String searchText) {
-		return this.getPersistenceFacade().search(User.class, searchText, "name", "surname", "email");
+	public List<User> search(final String searchText, final Page page) {
+		return this.getPersistenceFacade().search(page, User.class, searchText, "name", "surname", "email");
 	}
 
 	private void updateUserClosures(final User user) {

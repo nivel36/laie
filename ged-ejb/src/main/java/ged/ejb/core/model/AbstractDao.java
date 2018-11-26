@@ -24,13 +24,13 @@ public abstract class AbstractDao<T extends AbstractEntity> {
 		return this.persistenceFacade.find(this.getType(), id);
 	}
 
-	public List<T> findAll() {
-		return this.persistenceFacade.findAll(this.getType());
+	public <E> List<E> findAll(final Class<E> type, final Page page) {
+		Objects.requireNonNull(type);
+		return this.persistenceFacade.findAll(type, page);
 	}
 
-	public <E> List<E> findAll(final Class<E> type) {
-		Objects.requireNonNull(type);
-		return this.persistenceFacade.findAll(type);
+	public List<T> findAll(final Page page) {
+		return this.persistenceFacade.findAll(this.getType(), page);
 	}
 
 	protected <E> E findByQuery(final Class<E> entityClass, final String namedQuery) {
@@ -95,7 +95,7 @@ public abstract class AbstractDao<T extends AbstractEntity> {
 		}
 	}
 
-	public abstract List<T> search(final String searchText);
+	public abstract List<T> search(String searchText, Page page);
 
 	public void setPersistenceFacade(final PersistenceFacade persistenceFacade) {
 		Objects.requireNonNull(persistenceFacade);

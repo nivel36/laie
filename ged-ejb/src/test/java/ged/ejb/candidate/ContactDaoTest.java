@@ -15,32 +15,27 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import ged.ejb.client.Contact;
 import ged.ejb.client.ContactDao;
+import ged.ejb.core.model.Page;
 import ged.ejb.core.model.PersistenceFacade;
 
 @ExtendWith(MockitoExtension.class)
 public class ContactDaoTest {
-
-	private ContactDao contactDao;
-
-	@Mock
-	private PersistenceFacade persistenceFacade;
 
 	@Nested
 	class Search {
 
 		@Test
 		public void emptyTextShouldReturnList() {
-			when(persistenceFacade.search(Contact.class, "", "name", "surname", "email")).thenReturn(new ArrayList<>());
-			final List<Contact> users = contactDao.search("");
+			when(persistenceFacade.search(Page.ALL, Contact.class, "", "name", "surname", "email")).thenReturn(new ArrayList<>());
+			final List<Contact> users = contactDao.search("", Page.ALL);
 			assertEquals(0, users.size());
 		}
 
 		@Test
 		public void nullTextShouldReturnList() {
-			when(persistenceFacade.search(Contact.class, null, "name", "surname", "email"))
-					.thenReturn(new ArrayList<>());
+			when(persistenceFacade.search(Page.ALL, Contact.class, null, "name", "surname", "email")).thenReturn(new ArrayList<>());
 
-			final List<Contact> users = contactDao.search(null);
+			final List<Contact> users = contactDao.search(null, Page.ALL);
 			assertEquals(0, users.size());
 		}
 
@@ -53,12 +48,17 @@ public class ContactDaoTest {
 			final List<Contact> contacts = new ArrayList<>();
 			contacts.add(contact);
 
-			when(persistenceFacade.search(Contact.class, "Aaron", "name", "surname", "email")).thenReturn(contacts);
+			when(persistenceFacade.search(Page.ALL, Contact.class, "Aaron", "name", "surname", "email")).thenReturn(contacts);
 
-			final List<Contact> returnedContacts = contactDao.search("Aaron");
+			final List<Contact> returnedContacts = contactDao.search("Aaron", Page.ALL);
 			assertEquals("Smith", returnedContacts.get(0).getSurname());
 		}
 	}
+
+	private ContactDao contactDao;
+
+	@Mock
+	private PersistenceFacade persistenceFacade;
 
 	@BeforeEach
 	public void setUp() {

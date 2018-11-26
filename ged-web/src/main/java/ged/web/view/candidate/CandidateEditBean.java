@@ -22,6 +22,7 @@ import ged.ejb.candidate.CandidateService;
 import ged.ejb.candidate.Origin;
 import ged.ejb.core.Address;
 import ged.ejb.core.FileUploadService;
+import ged.ejb.core.model.Page;
 import ged.ejb.core.tag.Tag;
 import ged.ejb.core.tag.TagService;
 import ged.web.core.view.AbstractDialogBean;
@@ -68,7 +69,7 @@ public class CandidateEditBean extends AbstractDialogBean {
 		}
 		final Set<Tag> candidateTags = new HashSet<>();
 		for (final String label : labels) {
-			final List<Tag> tagsFoundInDataBase = this.tagService.search(label);
+			final List<Tag> tagsFoundInDataBase = this.tagService.search(label, Page.ALL);
 			final Tag tag;
 			if (tagsFoundInDataBase.size() == 1) {
 				tag = tagsFoundInDataBase.get(0);

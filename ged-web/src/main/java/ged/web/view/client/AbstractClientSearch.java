@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 
 import ged.ejb.client.Client;
 import ged.ejb.client.ClientService;
+import ged.ejb.core.model.Page;
 import ged.web.core.view.AbstractBean;
 
 public class AbstractClientSearch extends AbstractBean {
@@ -37,12 +38,12 @@ public class AbstractClientSearch extends AbstractBean {
 	@PostConstruct
 	public void init() {
 		logger.debug("Client search dialog init");
-		this.clients = this.clientService.search(this.searchText);
+		this.clients = this.clientService.search(this.searchText, Page.ALL);
 	}
 
 	public void search() {
 		logger.debug("Search clients action performed");
-		this.clients = this.clientService.search(this.searchText);
+		this.clients = this.clientService.search(this.searchText, Page.ALL);
 	}
 
 	public void setClientService(final ClientService clientService) {

@@ -26,6 +26,7 @@ import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 
 import ged.ejb.core.FileUploadService;
+import ged.ejb.core.model.Page;
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
 import ged.web.core.util.Translator;
@@ -151,7 +152,7 @@ public class UserEditBeanTest {
 		@Test
 		public void validSearchShouldReturnUserList() {
 			final List<User> mockedManagers = mockListOfUsers();
-			Mockito.when(userService.search("Abe")).thenReturn(mockedManagers);
+			Mockito.when(userService.search("Abe", Page.ALL)).thenReturn(mockedManagers);
 
 			final List<User> managers = userEditBean.searchManager("Abe");
 
