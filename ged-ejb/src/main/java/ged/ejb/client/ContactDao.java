@@ -23,7 +23,7 @@ public class ContactDao extends AbstractDao<Contact> {
 	}
 
 	@Override
-	public List<Contact> search(final String searchText, final Page page) {
-		return this.getPersistenceFacade().search(page, Contact.class, searchText, "name", "surname", "email");
+	public String[] searchFields() {
+		return new String[] { "name", "surname", "email" };
 	}
 }

@@ -3,7 +3,6 @@ package ged.ejb.client;
 import static ged.ejb.core.util.Parameters.map;
 
 import java.lang.invoke.MethodHandles;
-import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.NoResultException;
@@ -12,7 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ged.ejb.core.model.AbstractDao;
-import ged.ejb.core.model.Page;
 import ged.ejb.core.model.Repository;
 
 @Repository
@@ -50,7 +48,7 @@ public class ClientDao extends AbstractDao<Client> {
 	}
 
 	@Override
-	public List<Client> search(final String searchText, final Page page) {
-		return this.getPersistenceFacade().search(page, Client.class, searchText, "name");
+	public String[] searchFields() {
+		return new String[] { "name" };
 	}
 }

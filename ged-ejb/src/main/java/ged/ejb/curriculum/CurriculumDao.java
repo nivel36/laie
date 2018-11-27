@@ -39,7 +39,7 @@ public class CurriculumDao extends AbstractDao<Curriculum> {
 	}
 
 	@Override
-	public List<Curriculum> search(final String searchText, final Page page) {
-		throw new UnsupportedOperationException();
+	public String[] searchFields() {
+		return new String[] {};
 	}
 }

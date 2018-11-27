@@ -259,14 +259,14 @@ public class UserDaoTest {
 
 		@Test
 		public void emptyTextShouldReturnList() {
-			when(persistenceFacade.search(Page.ALL, User.class, "", "name", "surname", "email")).thenReturn(new ArrayList<>());
+			when(persistenceFacade.search(User.class, Page.ALL, null, "", "name", "surname", "email")).thenReturn(new ArrayList<>());
 			final List<User> users = userDao.search("", Page.ALL);
 			assertEquals(0, users.size());
 		}
 
 		@Test
 		public void nullTextShouldReturnList() {
-			when(persistenceFacade.search(Page.ALL, User.class, null, "name", "surname", "email")).thenReturn(new ArrayList<>());
+			when(persistenceFacade.search(User.class, Page.ALL, null, null, "name", "surname", "email")).thenReturn(new ArrayList<>());
 
 			final List<User> users = userDao.search(null, Page.ALL);
 			assertEquals(0, users.size());
@@ -274,7 +274,7 @@ public class UserDaoTest {
 
 		@Test
 		public void validTextshouldReturnList() {
-			when(persistenceFacade.search(Page.ALL, User.class, "aaron", "name", "surname", "email")).thenReturn(new ArrayList<>());
+			when(persistenceFacade.search(User.class, Page.ALL, null, "aaron", "name", "surname", "email")).thenReturn(new ArrayList<>());
 
 			final List<User> users = userDao.search("aaron", Page.ALL);
 			assertEquals(0, users.size());

@@ -6,6 +6,7 @@ import java.util.Objects;
 import ged.ejb.core.model.AbstractDao;
 import ged.ejb.core.model.AbstractEntity;
 import ged.ejb.core.model.Page;
+import ged.ejb.core.model.SortOrder;
 
 public abstract class AbstractService<T extends AbstractEntity> {
 
@@ -33,5 +34,13 @@ public abstract class AbstractService<T extends AbstractEntity> {
 
 	public List<T> search(final String searchText, final Page page) {
 		return this.getDao().search(searchText, page);
+	}
+
+	public List<T> search(final String searchText, final Page page, final List<SortOrder> sortOrders) {
+		return this.getDao().search(searchText, page, sortOrders);
+	}
+
+	public List<T> search(final String searchText, final Page page, final SortOrder sortOrder) {
+		return this.getDao().search(searchText, page, sortOrder);
 	}
 }

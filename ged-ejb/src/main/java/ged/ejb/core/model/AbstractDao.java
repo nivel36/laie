@@ -1,5 +1,6 @@
 package ged.ejb.core.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -95,7 +96,22 @@ public abstract class AbstractDao<T extends AbstractEntity> {
 		}
 	}
 
-	public abstract List<T> search(String searchText, Page page);
+	public List<T> search(final String searchText, final Page page) {
+		return this.search(searchText, page, new ArrayList<SortOrder>());
+
+	}
+
+	public List<T> search(final String searchText, final Page page, final List<SortOrder> sortOrders) {
+		return this.persistenceFacade.search(getType(), page, sortOrders, searchText, searchFields());
+	}
+
+	public List<T> search(final String searchText, final Page page, final SortOrder sortOrder) {
+		final List<SortOrder> sortOrders = new ArrayList<>();
+		sortOrders.add(sortOrder);
+		return this.search(searchText, page, sortOrders);
+	}
+
+	public abstract String[] searchFields();
 
 	public void setPersistenceFacade(final PersistenceFacade persistenceFacade) {
 		Objects.requireNonNull(persistenceFacade);

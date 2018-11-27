@@ -16,10 +16,13 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
+import org.apache.lucene.search.Sort;
 import org.hibernate.search.jpa.FullTextEntityManager;
+import org.hibernate.search.jpa.FullTextQuery;
 import org.hibernate.search.jpa.Search;
 import org.hibernate.search.query.dsl.BooleanJunction;
 import org.hibernate.search.query.dsl.QueryBuilder;
+import org.hibernate.search.query.dsl.sort.SortFieldContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -139,7 +142,8 @@ public class PersistenceFacade {
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public <T extends Identifiable> List<T> search(final Page page, final Class<T> type, final String searchText, final String... fields) {
+	public <T extends Identifiable> List<T> search(final Class<T> type, final Page page, final List<SortOrder> sortOrders, final String searchText,
+			final String... fields) {
 		final FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(this.getEm());
 		final QueryBuilder qb = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(type).get();
 		final BooleanJunction<BooleanJunction> bj = qb.bool();
@@ -156,16 +160,36 @@ public class PersistenceFacade {
 			}
 		}
 
-		final Query persistenceQuery;
+		final FullTextQuery fullTextQuery;
+		org.apache.lucene.search.Query luceneQuery;
 		if (bj.isEmpty()) {
-			persistenceQuery = fullTextEntityManager.createFullTextQuery(qb.all().createQuery(), type);
+			luceneQuery = qb.all().createQuery();
 		}
 		else {
-			persistenceQuery = fullTextEntityManager.createFullTextQuery(bj.createQuery(), type);
+			luceneQuery = bj.createQuery();
 		}
-		persistenceQuery.setHint(CACHE_STORE_MODE, CacheStoreMode.REFRESH);
-		paginate(page, persistenceQuery);
-		final List<T> results = persistenceQuery.getResultList();
+
+		fullTextQuery = fullTextEntityManager.createFullTextQuery(luceneQuery, type);
+		paginate(page, fullTextQuery);
+		fullTextQuery.setHint(CACHE_STORE_MODE, CacheStoreMode.REFRESH);
+
+		if ((sortOrders != null) && !sortOrders.isEmpty()) {
+			final int orderSize = sortOrders.size();
+			final SortFieldContext sfc = qb.sort().byField(sortOrders.get(0).getField());
+			if (sortOrders.get(0).isDescending()) {
+				sfc.asc();
+			}
+			for (int i = 1; i < orderSize; i++) {
+				sfc.andByField(sortOrders.get(i).getField());
+				if (sortOrders.get(0).isDescending()) {
+					sfc.asc();
+				}
+			}
+			final Sort sort = sfc.createSort();
+			fullTextQuery.setSort(sort);
+		}
+
+		final List<T> results = fullTextQuery.getResultList();
 		if (results instanceof ArrayList) {
 			return results;
 		}

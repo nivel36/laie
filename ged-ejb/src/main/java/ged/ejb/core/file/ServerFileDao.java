@@ -24,7 +24,7 @@ public class ServerFileDao extends AbstractDao<ServerFile> {
 	}
 
 	@Override
-	public List<ServerFile> search(final String searchText, final Page page) {
-		throw new UnsupportedOperationException();
+	public String[] searchFields() {
+		return new String[] {};
 	}
 }

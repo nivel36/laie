@@ -146,8 +146,8 @@ public class UserDao extends AbstractDao<User> {
 	}
 
 	@Override
-	public List<User> search(final String searchText, final Page page) {
-		return this.getPersistenceFacade().search(page, User.class, searchText, "name", "surname", "email");
+	public String[] searchFields() {
+		return new String[] { "name", "surname", "email" };
 	}
 
 	private void updateUserClosures(final User user) {
