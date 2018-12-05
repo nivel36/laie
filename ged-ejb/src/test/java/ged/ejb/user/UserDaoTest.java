@@ -22,6 +22,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import ged.ejb.core.model.Page;
 import ged.ejb.core.model.PersistenceFacade;
+import ged.ejb.core.model.SortOrder;
 
 @ExtendWith(MockitoExtension.class)
 public class UserDaoTest {
@@ -259,14 +260,14 @@ public class UserDaoTest {
 
 		@Test
 		public void emptyTextShouldReturnList() {
-			when(persistenceFacade.search(User.class, Page.ALL, null, "", "name", "surname", "email")).thenReturn(new ArrayList<>());
+			when(persistenceFacade.search(User.class, Page.ALL, new ArrayList<SortOrder>(), "", "name", "surname", "email")).thenReturn(new ArrayList<>());
 			final List<User> users = userDao.search("", Page.ALL);
 			assertEquals(0, users.size());
 		}
 
 		@Test
 		public void nullTextShouldReturnList() {
-			when(persistenceFacade.search(User.class, Page.ALL, null, null, "name", "surname", "email")).thenReturn(new ArrayList<>());
+			when(persistenceFacade.search(User.class, Page.ALL, new ArrayList<SortOrder>(), null, "name", "surname", "email")).thenReturn(new ArrayList<>());
 
 			final List<User> users = userDao.search(null, Page.ALL);
 			assertEquals(0, users.size());
@@ -274,7 +275,7 @@ public class UserDaoTest {
 
 		@Test
 		public void validTextshouldReturnList() {
-			when(persistenceFacade.search(User.class, Page.ALL, null, "aaron", "name", "surname", "email")).thenReturn(new ArrayList<>());
+			when(persistenceFacade.search(User.class, Page.ALL, new ArrayList<SortOrder>(), "aaron", "name", "surname", "email")).thenReturn(new ArrayList<>());
 
 			final List<User> users = userDao.search("aaron", Page.ALL);
 			assertEquals(0, users.size());
