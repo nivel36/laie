@@ -2,10 +2,9 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:jsf="http://xmlns.jcp.org/jsf" xmlns:p="http://primefaces.org/ui">
 
-	<nav>
-		<div class="nav-header"></div>
-		<div class="menu">
-			<h:form id="menuForm">
+	<nav class="navbar">
+		<div class="navbar-menu">
+			<h:form>
 				<ul>
 					<li><a jsf:action="#{menuBean.gotoIndex}" jsf:styleClass="#{selectedMenu eq 'index' ? 'selected': ''}"><span class="menu_icon"><em
 								class="fa fa-home" /></span> <span class="menu_text">#{i18n['menu.index']}</span></a></li>
@@ -26,8 +25,19 @@
 				</ul>
 			</h:form>
 		</div>
+		<div class="navbar-search">
+			<h:form id="headerSearchForm" onkeypress="if (event.keyCode == 13) { document.getElementById('headerSearchForm:searchButton').click(); return false; }">
+				<p:inputText placeholder="#{i18n['menu.search']}" binding="#{inputSearch}">
+					<f:ajax execute="@this" event="keyup" render="searchButton" />
+				</p:inputText>
+				<h:link id="searchButton" outcome="/faces/globalSearch" styleClass="navbar-search-icon">
+					<i class="fa fa-search" />
+					<f:param name="searchText" value="#{empty inputSearch.value ? '' : inputSearch.value}" />
+				</h:link>
+			</h:form>
+		</div>
 		<div class="navbar-utility">
-			<h:form class="navbarUtilityForm">
+			<h:form>
 				<ul>
 					<li><h:outputText value="#{sessionUser}" styleClass="name" /></li>
 					<li><h:commandLink value="#{i18n['menu.config']}" action="/faces/config/config?faces-redirect=true" styleClass="config" /></li>

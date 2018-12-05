@@ -1,6 +1,5 @@
 package ged.web.view;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -8,6 +7,12 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.omnifaces.cdi.Param;
+
+import ged.ejb.candidate.Candidate;
+import ged.ejb.candidate.CandidateService;
+import ged.ejb.client.Client;
+import ged.ejb.client.ClientService;
 import ged.ejb.core.model.Page;
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
@@ -22,24 +27,41 @@ public class GlobalSearchBean extends AbstractBean {
 
 	private static final long serialVersionUID = 8268523301916849175L;
 
+	private List<Candidate> candidates;
+
+	@Inject
+	private transient CandidateService candidateService;
+
+	private List<Client> clients;
+
+	@Inject
+	private transient ClientService clientService;
+
 	private List<JobOffer> jobOffers;
 
 	@Inject
 	private transient JobOfferService jobService;
 
-	private String text;
+	@SuppressWarnings("cdi-ambiguous-dependency")
+	@Inject
+	@Param(name = "searchText", required = true)
+	private String searchText;
 
 	private List<User> users;
 
 	@Inject
 	private transient UserService userService;
 
-	public List<JobOffer> getJobOffers() {
-		return this.jobOffers;
+	public List<Candidate> getCandidates() {
+		return candidates;
 	}
 
-	public String getText() {
-		return this.text;
+	public List<Client> getClients() {
+		return clients;
+	}
+
+	public List<JobOffer> getJobOffers() {
+		return this.jobOffers;
 	}
 
 	public List<User> getUsers() {
@@ -48,26 +70,35 @@ public class GlobalSearchBean extends AbstractBean {
 
 	@PostConstruct
 	public void init() {
-		this.users = new ArrayList<>();
-		this.jobOffers = new ArrayList<>();
+		search();
 	}
 
 	public void search() {
-		if ((this.text == null) || (this.text.length() < 3)) {
+		if ((this.searchText == null) || (this.searchText.length() < 3)) {
 			Message.addWarning("error.search.camp_to_short", "error.search.camp_to_short");
 		}
 		else {
-			this.users = this.userService.search(this.text, Page.ALL);
-			this.jobOffers = this.jobService.search(this.text, Page.ALL);
+			this.users = this.userService.search(this.searchText, Page.ALL);
+			this.jobOffers = this.jobService.search(this.searchText, Page.ALL);
+			this.candidates = this.candidateService.search(this.searchText, Page.ALL);
+			this.clients = this.clientService.search(this.searchText, Page.ALL);
 		}
+	}
+
+	public void setCandidateService(final CandidateService candidateService) {
+		this.candidateService = candidateService;
+	}
+
+	public void setClientService(final ClientService clientService) {
+		this.clientService = clientService;
 	}
 
 	public void setJobService(final JobOfferService jobService) {
 		this.jobService = jobService;
 	}
 
-	public void setText(final String text) {
-		this.text = text;
+	public void setSearchText(final String searchText) {
+		this.searchText = searchText;
 	}
 
 	public void setUserService(final UserService userService) {

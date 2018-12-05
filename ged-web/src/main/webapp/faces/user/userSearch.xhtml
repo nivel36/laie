@@ -44,7 +44,7 @@
 									</p:column>
 
 									<p:column headerText="#{i18n['user.name']}" sortBy="#{user.fullName}">
-										<h:link value="#{user.fullName}" outcome="user">
+										<h:link value="#{user.fullName}" outcome="/user/user">
 											<f:param name="userId" value="#{user.id}" />
 										</h:link>
 									</p:column>

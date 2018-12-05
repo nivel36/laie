@@ -4,11 +4,12 @@
 
 	<composite:interface>
 		<composite:attribute name="users" required="true" />
+		<composite:attribute name="rendered" required="false" />
 		<composite:attribute name="title" />
 	</composite:interface>
 
 	<composite:implementation>
-		<div id="#{cc.clientId}" class="users">
+		<h:panelGroup id="#{cc.clientId}" class="users" rendered="#{cc.attrs.rendered}">
 			<p:panel id="users" header="#{empty cc.attrs.title ? i18n['user.users'] : cc.attrs.title}">
 				<p:dataGrid layout="grid" var="user" value="#{cc.attrs.users}" emptyMessage="#{i18n['user.no_team']}" paginator="true" paginatorPosition="bottom"
 					columns="2" rows="6">
@@ -20,6 +21,6 @@
 					<composite:insertChildren />
 				</h:panelGroup>
 			</p:panel>
-		</div>
+		</h:panelGroup>
 	</composite:implementation>
 </ui:component>

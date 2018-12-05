@@ -39,13 +39,6 @@ a {
 	color: #444444;
 }
 
-body header {
-	width: 100%;
-	position: relative;
-	background: #F4F5F9;
-	color: #444444;
-	overflow: hidden;
-}
 
 body #main-panel {
 	display: flex;
@@ -145,63 +138,88 @@ body a:visited {
 /************************************
  *  nav
  ************************************/
-body>header {
-	box-shadow: 0 0.5em 0.6em rgba(0, 0, 0, .25);
+
+.navbar {
+	display: flex;
+	background: black;
+	color: white;
+	justify-content: space-between;
+	align-items: center; 
 }
 
-body header nav ul {
+.navbar a {
+	color: white;
+}
+
+.navbar ul {
+	display: inline-flex;
 	list-style-type: none;
 	margin: 0em;
 }
 
-body header nav li {
+.navbar li {
 	list-style: none;
 	line-height: 2em;
-	float: left;
 }
 
-body header nav li a {
-	display: block;
+.navbar li a {
+	display: flex;
 }
 
-body header nav li a .menu_text {
+.navbar li a .menu_text {
 	padding-left: 0.3em;
 }
 
-body header nav .menu li a {
+.navbar .navbar-menu li a {
 	font-weight: 500;
 	padding: 0.3em 1em;
 }
 
-body .selected {
-	background: #1976d2 !important;
-	color: white;
+.navbar .navbar-menu .selected {
+	background: #1976d2;
 }
 
-body nav li:hover a {
+.navbar li:hover a {
 	transition: all 0.2s ease-in;
-	background-color: #dbdce0;
+	background-color: #3c3d44;
 }
 
-.navbarUtilityForm {
+.navbar-search {
+	display: inline-flex;
+}
+
+.navbar-search .ui-inputtext {
+	padding-right: 2em;
+}
+
+.navbar-search .navbar-search-icon {
+ 	float: right;
+ 	margin-right: 6px;
+ 	margin-top: -22px;
+ 	position: relative;
+ 	z-index: 2;
+ 	color: grey;
+}
+
+.navbar-utility {
 	float: right;
 } 
 
-.navbarUtilityForm li a {
-	padding: 0.3em 0.5em;
+.navbar-utility li a {
+	padding: 0.3em 1em;
 }
 
-.navbarUtilityForm .name {
+.navbar-utility .name {
 	padding: 0.3em 1em;
 	display: block;
 }
 
-.navbarUtilityForm .logout, .navbarUtilityForm .config {
+.navbar-utility .logout, .navbar-utility .config {
 	text-indent: -9999px;
 	line-height: 0;
 }
 
-.navbarUtilityForm .config:after {
+.navbar-utility .config:after {
 	text-indent: 0;
 	line-height: 2em;
 	display: block;
@@ -209,7 +227,7 @@ body nav li:hover a {
 	font-family: FontAwesome;
 }
 
-.navbarUtilityForm .logout:after {
+.navbar-utility .logout:after {
 	text-indent: 0;
 	line-height: 2em;
 	display: block;
@@ -217,8 +235,8 @@ body nav li:hover a {
 	font-family: FontAwesome;
 }
 
-@media(max-width: 1200px){
-	body header nav .menu .menu_text {
+@media(max-width: 1250px){
+	body header .navbar-menu .menu_text {
 		display: none;
 	}
 	

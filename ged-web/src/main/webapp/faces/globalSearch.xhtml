@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:i18n="http://ged.com/i18n" xmlns:p="http://primefaces.org/ui"
-	template="/WEB-INF/templates/default.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://ged.com/i18n" xmlns:p="http://primefaces.org/ui" template="/WEB-INF/templates/default.xhtml"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components">
 
 	<ui:define name="title">
 		<title>#{i18n['job.search_results']}</title>
@@ -13,106 +10,8 @@
 	<ui:param name="selectedMenu" value="index" />
 
 	<ui:define name="content">
-
-		<f:metadata>
-			<f:viewParam name="text" value="#{globalSearchBean.text}" />
-			<f:viewAction action="#{globalSearchBean.search}" />
-		</f:metadata>
-
-		<p:panel styleClass="magenta" header="#{i18n['user.users']}"
-			rendered="#{not empty globalSearchBean.users}">
-			<h:form id="userSearchForm">
-				<p:dataTable var="user" value="#{globalSearchBean.users}"
-					reflow="true" paginator="true" paginatorPosition="bottom"
-					rows="#{sessionUser.rowsPerPage}">
-					<h:column>
-						<f:facet name="header">
-							<h:outputText value="#{i18n['user.name']}" />
-						</f:facet>
-						<h:outputText value="#{user.fullName}" />
-					</h:column>
-
-					<h:column>
-						<f:facet name="header">
-							<h:outputText value="#{i18n['user.email']}" />
-						</f:facet>
-						<h:outputText value="#{user.email}" />
-					</h:column>
-
-					<h:column>
-						<f:facet name="header">
-							<h:outputText value="#{i18n['user.role']}" />
-						</f:facet>
-						<h:outputText value="#{i18n:translate(user.role.name)}" />
-					</h:column>
-					<h:column>
-						<f:facet name="header">
-							<h:outputText value="Action" />
-						</f:facet>
-						<h:link value="#{i18n['action.view']}"
-							outcome="/faces/user/user">
-							<f:param name="id" value="#{user.id}" />
-						</h:link>
-					</h:column>
-				</p:dataTable>
-			</h:form>
-		</p:panel>
-
-		<p:panel styleClass="yellow" header="#{i18n['user.users']}"
-			rendered="#{not empty globalSearchBean.jobOffers}">
-			<h:form id="jobOfferForm">
-				<p:dataTable var="jobOffer" value="#{globalSearchBean.jobOffers}"
-					reflow="true" paginator="true" paginatorPosition="bottom"
-					rows="#{sessionUser.rowsPerPage}">
-					<h:column>
-						<f:facet name="header">
-							<h:outputText value="#{i18n['job.name']}" />
-						</f:facet>
-						<h:outputText value="#{jobOffer.name}" />
-					</h:column>
-
-					<h:column>
-						<f:facet name="header">
-							<h:outputText value="#{i18n['job.client']}" />
-						</f:facet>
-						<h:outputText value="#{jobOffer.client.name}" />
-					</h:column>
-
-					<h:column>
-						<f:facet name="header">
-							<h:outputText value="#{i18n['job.date_opened']}" />
-						</f:facet>
-						<h:outputText value="#{jobOffer.dateOpened}">
-							<f:convertDateTime pattern="MM / yyyy" />
-						</h:outputText>
-					</h:column>
-
-					<h:column>
-						<f:facet name="header">
-							<h:outputText value="#{i18n['job.date_closed']}" />
-						</f:facet>
-						<h:outputText value="#{jobOffer.dateClosed}">
-							<f:convertDateTime pattern="MM / yyyy" />
-						</h:outputText>
-					</h:column>
-
-					<h:column>
-						<f:facet name="header">
-							<h:outputText value="#{i18n['user.owner']}" />
-						</f:facet>
-						<h:outputText value="#{jobOffer.owner}" />
-					</h:column>
-
-					<h:column>
-						<f:facet name="header">
-							<h:outputText value="Action" />
-						</f:facet>
-						<h:link value="Ver" outcome="/faces/jobOffer/jobOfferView">
-							<f:param name="id" value="#{jobOffer.id}" />
-						</h:link>
-					</h:column>
-				</p:dataTable>
-			</h:form>
-		</p:panel>
+		<cc:users users="#{globalSearchBean.users}" rendered="#{not empty globalSearchBean.users}"></cc:users>
+		<cc:jobOffers jobOffers="#{globalSearchBean.jobOffers}" rendered="#{not empty globalSearchBean.jobOffers}"></cc:jobOffers>
+		<cc:candidates candidates="#{globalSearchBean.candidates}" rendered="#{not empty globalSearchBean.candidates}"></cc:candidates>
 	</ui:define>
 </ui:composition>
