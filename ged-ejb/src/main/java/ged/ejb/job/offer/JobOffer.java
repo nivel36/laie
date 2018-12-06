@@ -13,6 +13,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.search.annotations.Field;
@@ -26,6 +27,7 @@ import ged.ejb.user.User;
 
 @Entity
 @Indexed
+@Table(name = "JOB_OFFER")
 public class JobOffer extends AbstractAuditedEntity {
 
 	private static final long serialVersionUID = 5579321864799956403L;
@@ -73,9 +75,9 @@ public class JobOffer extends AbstractAuditedEntity {
 	@JoinTable(name = "job_user", joinColumns = @JoinColumn(name = "job_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
 	private Set<User> recruiters;
 
-	@Column(nullable = false, length = 64)
 	@NotNull
-	private String state;
+	@ManyToOne
+	private JobOfferState state;
 
 	@Override
 	public boolean equals(final Object obj) {
@@ -140,7 +142,7 @@ public class JobOffer extends AbstractAuditedEntity {
 		return this.recruiters;
 	}
 
-	public String getState() {
+	public JobOfferState getState() {
 		return this.state;
 	}
 
@@ -197,7 +199,7 @@ public class JobOffer extends AbstractAuditedEntity {
 		this.recruiters = recruiters;
 	}
 
-	public void setState(final String state) {
+	public void setState(final JobOfferState state) {
 		this.state = state;
 	}
 

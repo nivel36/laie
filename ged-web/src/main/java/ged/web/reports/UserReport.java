@@ -46,7 +46,7 @@ public class UserReport extends AbstractReport {
 		Row row = sheet.createRow(1);
 		Cell cell = row.createCell(1);
 		cell.setCellValue("Nombre:");
-		cell.setCellStyle(getBoldStyle(this.wb));
+		cell.setCellStyle(this.getBoldStyle(this.wb));
 		cell = row.createCell(2);
 		cell.setCellValue(this.user.getFullName());
 		cell.setCellStyle(createBorderedStyle(this.wb));
@@ -54,7 +54,7 @@ public class UserReport extends AbstractReport {
 		row = sheet.createRow(2);
 		cell = row.createCell(1);
 		cell.setCellValue("Email:");
-		cell.setCellStyle(getBoldStyle(this.wb));
+		cell.setCellStyle(this.getBoldStyle(this.wb));
 		cell = row.createCell(2);
 		cell.setCellValue(this.user.getEmail());
 		cell.setCellStyle(createBorderedStyle(this.wb));
@@ -62,7 +62,7 @@ public class UserReport extends AbstractReport {
 		row = sheet.createRow(3);
 		cell = row.createCell(1);
 		cell.setCellValue("Responsable:");
-		cell.setCellStyle(getBoldStyle(this.wb));
+		cell.setCellStyle(this.getBoldStyle(this.wb));
 		cell = row.createCell(2);
 		if (this.user.getManager() != null) {
 			cell.setCellValue(this.user.getManager().getFullName());
@@ -72,28 +72,28 @@ public class UserReport extends AbstractReport {
 		row = sheet.createRow(6);
 		cell = row.createCell(1);
 		cell.setCellValue("Cliente");
-		cell.setCellStyle(getHeaderStyle(this.wb));
+		cell.setCellStyle(this.getHeaderStyle(this.wb));
 		cell = row.createCell(2);
 		cell.setCellValue("Nombre");
-		cell.setCellStyle(getHeaderStyle(this.wb));
+		cell.setCellStyle(this.getHeaderStyle(this.wb));
 		cell = row.createCell(3);
 		cell.setCellValue("Fecha apertura");
-		cell.setCellStyle(getHeaderStyle(this.wb));
+		cell.setCellStyle(this.getHeaderStyle(this.wb));
 		cell = row.createCell(4);
 		cell.setCellValue("Fecha cierre");
-		cell.setCellStyle(getHeaderStyle(this.wb));
+		cell.setCellStyle(this.getHeaderStyle(this.wb));
 		cell = row.createCell(5);
 		cell.setCellValue("Plazas");
-		cell.setCellStyle(getHeaderStyle(this.wb));
+		cell.setCellStyle(this.getHeaderStyle(this.wb));
 		cell = row.createCell(6);
 		cell.setCellValue("Ciudad");
-		cell.setCellStyle(getHeaderStyle(this.wb));
+		cell.setCellStyle(this.getHeaderStyle(this.wb));
 		cell = row.createCell(7);
 		cell.setCellValue("Provincia");
-		cell.setCellStyle(getHeaderStyle(this.wb));
+		cell.setCellStyle(this.getHeaderStyle(this.wb));
 		cell = row.createCell(8);
 		cell.setCellValue("Descripción");
-		cell.setCellStyle(getHeaderStyle(this.wb));
+		cell.setCellStyle(this.getHeaderStyle(this.wb));
 		int i = 7;
 		final DataFormat df = this.wb.createDataFormat();
 		for (final JobOffer jobOffer : this.jobOffers) {
@@ -115,7 +115,7 @@ public class UserReport extends AbstractReport {
 			cell = row.createCell(6);
 			cell.setCellValue(jobOffer.getCity());
 			cell = row.createCell(7);
-			cell.setCellValue(jobOffer.getState());
+			cell.setCellValue(jobOffer.getState().getName());
 			cell = row.createCell(8);
 			cell.setCellValue(jobOffer.getDescription());
 		}
@@ -129,7 +129,7 @@ public class UserReport extends AbstractReport {
 		sheet.autoSizeColumn(7);
 		sheet.autoSizeColumn(8);
 
-		return createFile();
+		return this.createFile();
 	}
 
 	private CellStyle getBoldStyle(final Workbook wb) {

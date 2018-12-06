@@ -15,11 +15,11 @@ public abstract class AbstractEnumEntity extends AbstractEntity implements EnumE
 
 	@I18n
 	@Column(length = 64)
-	private String description;
+	protected String description;
 
 	@I18n
 	@Column(length = 64)
-	private String name;
+	protected String name;
 
 	@Override
 	public boolean equals(final Object obj) {
@@ -29,11 +29,11 @@ public abstract class AbstractEnumEntity extends AbstractEntity implements EnumE
 		if (!super.equals(obj)) {
 			return false;
 		}
-		if (getClass() != obj.getClass()) {
+		if (this.getClass() != obj.getClass()) {
 			return false;
 		}
 		final AbstractEnumEntity other = (AbstractEnumEntity) obj;
-		return Objects.equals(this.description, other.description) && Objects.equals(this.name, other.name);
+		return Objects.equals(this.name, other.name);
 	}
 
 	@Override
@@ -48,7 +48,7 @@ public abstract class AbstractEnumEntity extends AbstractEntity implements EnumE
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(this.description, this.name);
+		return Objects.hash(this.name);
 	}
 
 	@Override
@@ -59,5 +59,10 @@ public abstract class AbstractEnumEntity extends AbstractEntity implements EnumE
 	@Override
 	public void setName(final String name) {
 		this.name = name;
+	}
+
+	@Override
+	public String toString() {
+		return this.name;
 	}
 }

@@ -6,10 +6,10 @@ import javax.persistence.Table;
 import ged.ejb.core.maintenance.AbstractEnumEntity;
 
 @Entity
-@Table(name = "JOB_CANDIDATURE_STATE")
-public class JobCandidatureState extends AbstractEnumEntity {
+@Table(name = "JOB_OFFER_STATE")
+public class JobOfferState extends AbstractEnumEntity {
 
-	private static final long serialVersionUID = -4388524806296516306L;
+	private static final long serialVersionUID = -4884212859752082844L;
 
 	@Override
 	public boolean equals(final Object obj) {
@@ -29,4 +29,5 @@ public class JobCandidatureState extends AbstractEnumEntity {
 	public int hashCode() {
 		return super.hashCode();
 	}
+
 }
