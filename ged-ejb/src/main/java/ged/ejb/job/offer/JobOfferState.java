@@ -11,6 +11,12 @@ public class JobOfferState extends AbstractEnumEntity {
 
 	private static final long serialVersionUID = -4884212859752082844L;
 
+	private String color;
+
+	private boolean first;
+
+	private boolean last;
+
 	@Override
 	public boolean equals(final Object obj) {
 		if (this == obj) {
@@ -25,9 +31,32 @@ public class JobOfferState extends AbstractEnumEntity {
 		return super.equals(obj);
 	}
 
+	public String getColor() {
+		return this.color;
+	}
+
 	@Override
 	public int hashCode() {
 		return super.hashCode();
 	}
 
+	public boolean isFirst() {
+		return this.first;
+	}
+
+	public boolean isLast() {
+		return this.last;
+	}
+
+	public void setColor(final String color) {
+		this.color = color;
+	}
+
+	public void setFirst(final boolean first) {
+		this.first = first;
+	}
+
+	public void setLast(final boolean last) {
+		this.last = last;
+	}
 }

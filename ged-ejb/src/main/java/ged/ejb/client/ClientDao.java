@@ -31,6 +31,17 @@ public class ClientDao extends AbstractDao<Client> {
 		return this.findByQuery(Client.class, "Client.findByClientId", map("clientId", clientId));
 	}
 
+	public Client findClientByCif(final String cif) {
+		Objects.requireNonNull(cif);
+		try {
+			return this.findByQuery(Client.class, "Client.findByCif", map("cif", cif));
+		}
+		catch (final NoResultException e) {
+			logger.debug("No client found", e);
+			return null;
+		}
+	}
+
 	public Client findClientByName(final String clientName) {
 		Objects.requireNonNull(clientName);
 		try {

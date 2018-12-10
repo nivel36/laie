@@ -1,11 +1,12 @@
 insert into CONTRACTTYPE( id, version, name, description) values ( 1, 0, 'contrato_indefinido','contrato_indefinido.description');
 insert into CONTRACTTYPE( id, version, name, description) values ( 2, 0, 'contrato_indefinido_fijos_discontinuos','contrato_indefinido_fijos_discontinuos.description');
 
-insert into JOB_OFFER_STATE( id, version, name, color) values (10, 0, 'job_offer_state.opened', 'green');
-insert into JOB_OFFER_STATE( id, version, name, color) values (11, 0, 'job_offer_state.closed', 'red');
-insert into JOB_OFFER_STATE( id, version, name, color) values (12, 0, 'job_offer_state.cancelled', 'red');
-insert into JOB_OFFER_STATE( id, version, name, color) values (13, 0, 'job_offer_state.finished', 'green');
-insert into JOB_OFFER_STATE( id, version, name, color) values (14, 0, 'job_offer_state.paused', 'yellow');
+insert into JOB_OFFER_STATE( id, version, name, first, last, color) values (10, 0, 'job_offer_state.opened', true, false,'green');
+insert into JOB_OFFER_STATE( id, version, name, first, last, color) values (11, 0, 'job_offer_state.closed', false, false, 'red');
+insert into JOB_OFFER_STATE( id, version, name, first, last, color) values (12, 0, 'job_offer_state.cancelled', false, true, 'red');
+insert into JOB_OFFER_STATE( id, version, name, first, last, color) values (13, 0, 'job_offer_state.finished', false, true, 'green');
+insert into JOB_OFFER_STATE( id, version, name, first, last, color) values (14, 0, 'job_offer_state.paused', false, false, 'yellow');
+insert into JOB_OFFER_STATE( id, version, name, first, last, color) values (15, 0, 'job_offer_state.created', false, false, 'yellow');
 
 insert into CONTRACTDURATION( id, version, name, description ) values ( 101, 0, 'one_year', 'one_year.description');
 
@@ -19,13 +20,13 @@ insert into LANGUAGELEVEL( id, version, name ) values ( 121, 0, 'medium');
 insert into LANGUAGELEVEL( id, version, name ) values ( 122, 0, 'low');
 insert into LANGUAGELEVEL( id, version, name ) values ( 123, 0, 'native');
 
-insert into JOB_CANDIDATURE_STATE( id, version, name, color ) values ( 130, 0, 'job_candidature_state.not_contacted', 'green');
-insert into JOB_CANDIDATURE_STATE( id, version, name, color ) values ( 131, 0, 'job_candidature_state.contacted', 'green');
-insert into JOB_CANDIDATURE_STATE( id, version, name, color ) values ( 132, 0, 'job_candidature_state.submitted', 'green');
-insert into JOB_CANDIDATURE_STATE( id, version, name, color ) values ( 133, 0, 'job_candidature_state.declined', 'green');
-insert into JOB_CANDIDATURE_STATE( id, version, name, color ) values ( 134, 0, 'job_candidature_state.interviewed', 'green');
-insert into JOB_CANDIDATURE_STATE( id, version, name, color ) values ( 135, 0, 'job_candidature_state.offered', 'green');
-insert into JOB_CANDIDATURE_STATE( id, version, name, color ) values ( 135, 0, 'job_candidature_state.approved', 'green');
+insert into JOB_CANDIDATURE_STATE( id, version, name, first, last, color ) values ( 130, 0, 'job_candidature_state.not_contacted', true, false, 'green');
+insert into JOB_CANDIDATURE_STATE( id, version, name, first, last, color ) values ( 131, 0, 'job_candidature_state.contacted', false, false,  'green');
+insert into JOB_CANDIDATURE_STATE( id, version, name, first, last, color ) values ( 132, 0, 'job_candidature_state.submitted', false, false,  'green');
+insert into JOB_CANDIDATURE_STATE( id, version, name, first, last, color ) values ( 133, 0, 'job_candidature_state.declined', false, true,  'green');
+insert into JOB_CANDIDATURE_STATE( id, version, name, first, last, color ) values ( 134, 0, 'job_candidature_state.interviewed', false, false,  'green');
+insert into JOB_CANDIDATURE_STATE( id, version, name, first, last, color ) values ( 135, 0, 'job_candidature_state.offered', false, false,  'green');
+insert into JOB_CANDIDATURE_STATE( id, version, name, first, last, color ) values ( 136, 0, 'job_candidature_state.approved', false, true,  'green');
 
 insert into CURRICULUM( id, version) values (301, 0);
 

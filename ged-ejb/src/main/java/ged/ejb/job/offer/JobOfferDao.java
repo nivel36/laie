@@ -26,15 +26,23 @@ public class JobOfferDao extends AbstractDao<JobOffer> {
 		return this.findByQuery(JobOffer.class, "JobOffer.findAllByOwner", map("owner", owner), Page.ALL);
 	}
 
+	public List<JobOfferState> findAllJobOfferStates() {
+		return this.getPersistenceFacade().findAll(JobOfferState.class, Page.ALL);
+	}
+
+	public JobOfferState findFirstJobOfferState() {
+		return this.findByQuery(JobOfferState.class, "JobOfferState.findFirst");
+	}
+
 	public List<JobOffer> findJobOffersByCandidate(final Candidate candidate) {
 		Objects.requireNonNull(candidate);
-		logger.debug("SELECT  job offers by candidate {}", candidate);
+		logger.debug("SELECT job offers by candidate {}", candidate);
 		return this.findByQuery(JobOffer.class, "JobOffer.findByCandidate", map("candidate", candidate), Page.ALL);
 	}
 
 	public List<JobOffer> findJobOffersByClient(final Client client) {
 		Objects.requireNonNull(client);
-		logger.debug("SELECT  job offers by client {}", client);
+		logger.debug("SELECT job offers by client {}", client);
 		return this.findByQuery(JobOffer.class, "JobOffer.findByClient", map("client", client), Page.ALL);
 	}
 

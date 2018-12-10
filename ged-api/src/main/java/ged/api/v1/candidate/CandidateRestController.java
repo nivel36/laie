@@ -12,7 +12,6 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -25,7 +24,7 @@ import ged.ejb.user.UserService;
 import io.swagger.annotations.Api;
 
 @Path("candidate")
-@Api
+@Api("candidate")
 @ApplicationScoped
 public class CandidateRestController extends AbstractRestController {
 
@@ -75,9 +74,9 @@ public class CandidateRestController extends AbstractRestController {
 	}
 
 	@GET
-	@Path("/search")
+	@Path("/search/{searchText}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<CandidateDto> search(@QueryParam("searchText") final String searchText) {
+	public List<CandidateDto> search(@PathParam("searchText") final String searchText) {
 		final List<Candidate> candidates = this.candidateService.search(searchText, Page.ALL);
 		return this.convertToCandidateDtoList(candidates);
 	}

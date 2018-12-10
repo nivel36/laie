@@ -51,7 +51,9 @@ public class CandidateMapper implements AbstractMapper<Candidate, CandidateDto> 
 
 	@Override
 	public CandidateDto mapEntity(final Candidate candidate) {
-		Objects.requireNonNull(candidate);
+		if (candidate == null) {
+			return null;
+		}
 		Objects.requireNonNull(candidate.getAddress());
 		Objects.requireNonNull(candidate.getOwner());
 		final CandidateDto candidateDto = new CandidateDto();

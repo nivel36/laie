@@ -1,4 +1,4 @@
 # GED
 
 ## Api
-Swagger -> /api/v1/
+Swagger -> /api/

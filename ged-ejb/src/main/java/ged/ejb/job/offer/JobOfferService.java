@@ -63,10 +63,21 @@ public class JobOfferService extends AbstractAuditedService<JobOffer> {
 		this.jobMeetingDao.save(jobMeeting);
 	}
 
+	public JobOffer create(final JobOffer jobOffer) {
+		final JobOfferState state = this.jobOfferDao.findFirstJobOfferState();
+		jobOffer.setState(state);
+		return this.save(jobOffer);
+	}
+
 	public List<JobOffer> findAllJobOffersByOwner(final User owner) {
 		Objects.requireNonNull(owner);
 		logger.debug("Find all job Offers of the owner {}", owner.getFullName());
 		return this.jobOfferDao.findAllByOwner(owner);
+	}
+
+	public List<JobCandidature> findJobCandituresByJobOffer(final JobOffer jobOffer) {
+		Objects.requireNonNull(jobOffer);
+		return this.jobCandidatureDao.findByJobOffer(jobOffer);
 	}
 
 	public List<JobOffer> findJobOffersByCandidate(final Candidate candidate) {
@@ -105,11 +116,6 @@ public class JobOfferService extends AbstractAuditedService<JobOffer> {
 		Objects.requireNonNull(jobOffer);
 		logger.debug("Save job offer {}", jobOffer);
 		return this.getDao().save(jobOffer);
-	}
-	
-	public List<JobCandidature> findJobCandituresByJobOffer(final JobOffer jobOffer) {
-		Objects.requireNonNull(jobOffer);
-		return jobCandidatureDao.findByJobOffer(jobOffer);
 	}
 
 	public void setJobCandidatureDao(final JobCandidatureDao jobCandidatureDao) {

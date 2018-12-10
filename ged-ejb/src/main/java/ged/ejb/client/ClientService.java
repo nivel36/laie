@@ -37,6 +37,12 @@ public class ClientService extends AbstractAuditedService<Client> {
 		return this.clientDao.findAllClientDataByClientId(clientId);
 	}
 
+	public Client findClientByCif(final String cif) {
+		Objects.requireNonNull(cif);
+		logger.debug("Finding client by cif {}", cif);
+		return this.clientDao.findClientByCif(cif);
+	}
+
 	public Client findClientByName(final String clientName) {
 		Objects.requireNonNull(clientName);
 		logger.debug("Finding client by name {}", clientName);
