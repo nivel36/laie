@@ -251,6 +251,14 @@
 		]]></query>
 	</named-query>
 
+	<named-query name="JobOfferState.findFirst">
+		<query><![CDATA[
+			SELECT j 
+			FROM JobOfferState j 
+			WHERE j.first = true
+		]]></query>
+	</named-query>
+
 	<named-query name="Role.findAdmin">
 		<query><![CDATA[
 			SELECT r 

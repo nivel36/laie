@@ -65,7 +65,7 @@ public class JobOfferService extends AbstractAuditedService<JobOffer> {
 
 	public JobOffer create(final JobOffer jobOffer) {
 		final JobOfferState state = this.jobOfferDao.findFirstJobOfferState();
-		jobOffer.setState(state);
+		jobOffer.setJobOfferState(state);
 		return this.save(jobOffer);
 	}
 

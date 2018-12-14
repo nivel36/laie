@@ -64,6 +64,10 @@ public class JobOffer extends AbstractAuditedEntity {
 	private Set<JobCandidature> jobCandidatures;
 
 	@NotNull
+	@ManyToOne
+	private JobOfferState jobOfferState;
+
+	@NotNull
 	@Column(length = 128, nullable = false)
 	@Field
 	private String name;
@@ -75,9 +79,7 @@ public class JobOffer extends AbstractAuditedEntity {
 	@JoinTable(name = "job_user", joinColumns = @JoinColumn(name = "job_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
 	private Set<User> recruiters;
 
-	@NotNull
-	@ManyToOne
-	private JobOfferState state;
+	private String state;
 
 	@Override
 	public boolean equals(final Object obj) {
@@ -130,6 +132,10 @@ public class JobOffer extends AbstractAuditedEntity {
 		return this.jobCandidatures;
 	}
 
+	public JobOfferState getJobOfferState() {
+		return this.jobOfferState;
+	}
+
 	public String getName() {
 		return this.name;
 	}
@@ -142,7 +148,7 @@ public class JobOffer extends AbstractAuditedEntity {
 		return this.recruiters;
 	}
 
-	public JobOfferState getState() {
+	public String getState() {
 		return this.state;
 	}
 
@@ -187,6 +193,10 @@ public class JobOffer extends AbstractAuditedEntity {
 		this.jobCandidatures = jobCandidatures;
 	}
 
+	public void setJobOfferState(final JobOfferState jobOfferState) {
+		this.jobOfferState = jobOfferState;
+	}
+
 	public void setName(final String name) {
 		this.name = name;
 	}
@@ -199,7 +209,7 @@ public class JobOffer extends AbstractAuditedEntity {
 		this.recruiters = recruiters;
 	}
 
-	public void setState(final JobOfferState state) {
+	public void setState(final String state) {
 		this.state = state;
 	}
 

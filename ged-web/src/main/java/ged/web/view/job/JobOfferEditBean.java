@@ -40,10 +40,10 @@ public class JobOfferEditBean extends AbstractDialogBean {
 	private transient UserService userService;
 
 	private void editJobOfferInit() {
-		logger.debug("Edit job offer {} init", jobOffer);
+		logger.debug("Edit job offer {} init", this.jobOffer);
 		this.recruiters = new ArrayList<>();
-		for (final User recruiter : jobOffer.getRecruiters()) {
-			recruiters.add(recruiter.getFullName());
+		for (final User recruiter : this.jobOffer.getRecruiters()) {
+			this.recruiters.add(recruiter.getFullName());
 		}
 	}
 
@@ -59,10 +59,10 @@ public class JobOfferEditBean extends AbstractDialogBean {
 	public void init() {
 		this.jobOffer = this.getValueFromFlash("jobOffer");
 		if ((this.jobOffer == null)) {
-			newJobOfferInit();
+			this.newJobOfferInit();
 		}
 		else {
-			editJobOfferInit();
+			this.editJobOfferInit();
 		}
 	}
 
@@ -71,15 +71,15 @@ public class JobOfferEditBean extends AbstractDialogBean {
 	}
 
 	public boolean isUserHasPermissionToEditJobOffer() {
-		return sessionUser.hasPermissionToEdit(this.jobOffer);
+		return this.sessionUser.hasPermissionToEdit(this.jobOffer);
 	}
 
 	private void newJobOfferInit() {
 		logger.debug("New job offer init");
 		this.jobOffer = new JobOffer();
-		final User user = setSessionUserAsOwner();
-		setSubordinateUsersAsRecruiters(user);
-		setClientFromFlash();
+		final User user = this.setSessionUserAsOwner();
+		this.setSubordinateUsersAsRecruiters(user);
+		this.setClientFromFlash();
 	}
 
 	public void onCloseClientSearchDialog(final SelectEvent e) {
@@ -94,7 +94,12 @@ public class JobOfferEditBean extends AbstractDialogBean {
 	}
 
 	public String save() {
-		this.jobOffer = this.jobOfferService.save(this.jobOffer);
+		if (this.isNewJobOffer()) {
+			this.jobOffer = this.jobOfferService.create(this.jobOffer);
+		}
+		else {
+			this.jobOffer = this.jobOfferService.save(this.jobOffer);
+		}
 		return "/faces/jobOffer/jobOffer?faces-redirect=true&jobOfferId=" + this.jobOffer.getId();
 	}
 
@@ -130,10 +135,10 @@ public class JobOfferEditBean extends AbstractDialogBean {
 
 	private void setSubordinateUsersAsRecruiters(final User user) {
 		final List<User> subordinateUsers = this.userService.findSubordinateUsers(user);
-		recruiters = new ArrayList<>();
-		recruiters.add(sessionUser.get().getFullName());
+		this.recruiters = new ArrayList<>();
+		this.recruiters.add(this.sessionUser.get().getFullName());
 		for (final User subordinate : subordinateUsers) {
-			recruiters.add(subordinate.getFullName());
+			this.recruiters.add(subordinate.getFullName());
 		}
 	}
 
