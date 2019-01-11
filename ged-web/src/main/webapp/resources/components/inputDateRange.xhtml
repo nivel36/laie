@@ -15,11 +15,11 @@
 	</composite:interface>
 
 	<composite:implementation>
-		<div id="#{cc.clientId}" class="inputDateRange">
+		<div id="#{cc.clientId}" class="input-date-range input-group">
 			<div class="grid">
 				<div class="col-5">
 					<div class="form-group">
-						<p:outputLabel value="#{i18n['education.from_date']}" />
+						<p:outputLabel value="#{i18n['education.from_date']}" styleClass="label" />
 						<p:selectOneMenu id="fromMonth" value="#{cc.attrs.fromMonth}" required="#{cc.attrs.required}" rendered="#{cc.attrs.showMonths}">
 							<f:selectItem itemLabel="#{i18n['date.month']}" itemValue="" />
 							<f:selectItems var="month" value="#{cc.months}" itemValue="#{month.monthNumber}" itemLabel="#{month.monthName}" />

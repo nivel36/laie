@@ -8,6 +8,9 @@ import ged.ejb.core.util.Parameters;
 public class I18nDao extends AbstractDao<I18nString> {
 
 	public I18nString find(final String key, final String locale) {
+		if ((key == null) || key.isEmpty()) {
+			return null;
+		}
 		return this.findByQuery(I18nString.class, "I18n.findByKeyAndLocale", Parameters.map("key", key).and("locale", locale));
 	}
 

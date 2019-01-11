@@ -7,14 +7,17 @@
 		<composite:attribute name="required" default="false" />
 		<composite:attribute name="validator" targets="input-text" />
 		<composite:attribute name="value" required="true" />
+		<composite:attribute name="inputStyleClass" required="false" />
 		<composite:editableValueHolder name="input-text" />
 	</composite:interface>
 
 	<composite:implementation>
-		<div id="#{cc.clientId}" class="form-group">
-			<p:outputLabel id="label" for="input-text" value="#{cc.attrs.label}" />
-			<p:inputText id="input-text" value="#{cc.attrs.value}" required="#{cc.attrs.required}" />
-			<p:message id="message" for="input-text" />
+		<div id="#{cc.clientId}" class="input-text input-group" >
+			<p:outputLabel id="label" for="input-text" value="#{cc.attrs.label}" styleClass="label" />
+			<div class="input">
+				<p:inputText id="input-text" value="#{cc.attrs.value}" required="#{cc.attrs.required}" styleClass="#{cc.attrs.inputStyleClass}" />
+				<p:message id="message" for="input-text" />
+			</div>
 		</div>
 	</composite:implementation>
 </ui:component>

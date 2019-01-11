@@ -23,7 +23,7 @@ public class Origin extends AbstractEntity {
 		if (!super.equals(obj)) {
 			return false;
 		}
-		if (getClass() != obj.getClass()) {
+		if (this.getClass() != obj.getClass()) {
 			return false;
 		}
 		final Origin other = (Origin) obj;
@@ -31,16 +31,16 @@ public class Origin extends AbstractEntity {
 	}
 
 	public String getCode() {
-		return code;
+		return this.code;
 	}
 
 	public String getOther() {
-		return other;
+		return this.other;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(code, other);
+		return Objects.hash(this.code, this.other);
 	}
 
 	public void setCode(final String code) {
@@ -49,5 +49,15 @@ public class Origin extends AbstractEntity {
 
 	public void setOther(final String other) {
 		this.other = other;
+	}
+
+	@Override
+	public String toString() {
+		if (this.other != null) {
+			return this.other;
+		}
+		else {
+			return this.code;
+		}
 	}
 }

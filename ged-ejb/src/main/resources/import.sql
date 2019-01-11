@@ -13,7 +13,6 @@ insert into CONTRACTDURATION( id, version, name, description ) values ( 101, 0, 
 insert into ORIGIN( id, version, code ) values ( 110, 0, 'infojobs');
 insert into ORIGIN( id, version, code ) values ( 111, 0, 'linkedin');
 insert into ORIGIN( id, version, code ) values ( 112, 0, 'reference');
-insert into ORIGIN( id, version, code ) values ( 113, 0, 'other');
 
 insert into LANGUAGELEVEL( id, version, name ) values ( 120, 0, 'high');
 insert into LANGUAGELEVEL( id, version, name ) values ( 121, 0, 'medium');
@@ -63,8 +62,6 @@ insert into I18NSTRING( id, version, locale, key, text ) values( 752, 0, 'ca', '
 insert into I18NSTRING( id, version, locale, key, text ) values( 753, 0, 'es', 'linkedin', 'LinkedIn' );
 insert into I18NSTRING( id, version, locale, key, text ) values( 754, 0, 'ca', 'reference', 'Referència' );
 insert into I18NSTRING( id, version, locale, key, text ) values( 755, 0, 'es', 'reference', 'Referencia' );
-insert into I18NSTRING( id, version, locale, key, text ) values( 756, 0, 'ca', 'other', 'Altre' );
-insert into I18NSTRING( id, version, locale, key, text ) values( 757, 0, 'es', 'other', 'Otro' );
 
 insert into I18NSTRING( id, version, locale, key, text ) values( 825, 0, 'es', 'contrato_indefinido', 'Contrato indefinido' );
 insert into I18NSTRING( id, version, locale, key, text ) values( 826, 0, 'ca', 'contrato_indefinido', 'Contracte indefinit' );

@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
@@ -8,14 +7,10 @@
 		<ui:insert name="title">
 			<title>Ged</title>
 		</ui:insert>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-		<meta http-equiv="Pragma" content="no-cache" />
-		<meta http-equiv="Expires" content="-1" />
-		<script>{"describedby":"form"}</script>
+		<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+		<meta name="viewport" content="width=device-width,maximum-scale=2" />
 		<h:outputStylesheet name="css/reset.css" />
 		<h:outputStylesheet name="css/flat-classic-blue/components.css" />
-		<h:outputStylesheet name="css/flexgrid.css" />
 	</h:head>
 
 	<h:body>
@@ -24,8 +19,13 @@
 				<ui:decorate template="header.xhtml" />
 			</ui:insert>
 		</header>
-		<div id="main-panel">
+		<div id="main">
 			<p:growl id="growl" globalOnly="true" />
+			<div id="aside">
+				<ui:insert name="aside">
+					<ui:include src="aside.xhtml" />
+				</ui:insert>
+			</div>
 			<div id="content">
 				<ui:insert name="content" />
 			</div>

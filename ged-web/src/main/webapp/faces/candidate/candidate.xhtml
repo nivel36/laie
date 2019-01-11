@@ -10,146 +10,72 @@
 	<ui:param name="selectedMenu" value="candidates" />
 
 	<ui:define name="content">
-		<div class="grid">
-			<div class="col-12">
-				<p:breadCrumb homeDisplay="text">
-					<p:menuitem value="#{i18n['menu.index']}" url="/faces/index.xhtml" />
-					<p:menuitem value="#{i18n['candidate.candidates']}" url="/faces/candidate/candidateSearch.xhtml" />
-					<p:menuitem value="#{candidateBean.candidate}" disabled="true" />
-				</p:breadCrumb>
-			</div>
-			<div class="col-12">
-				<p:panel header="#{candidateBean.candidate}">
-					<h:form id="candidatePanelForm">
-						<div class="grid">
-							<div class="col-12 lg-3 xl-2">
-								<div class="user-card">
-									<p:outputPanel layout="block" id="userImage" styleClass="user-image">
-										<p:graphicImage styleClass="image" value="/images/#{candidateBean.candidate.imageFileName}"
-											rendered="#{not empty candidateBean.candidate.imageFileName}" />
-										<p:graphicImage styleClass="image" value="/resources/img/default-avatar.png" rendered="#{empty candidateBean.candidate.imageFileName}" />
-									</p:outputPanel>
-									<div class="user-rating">
-										<p:rating value="#{candidateBean.candidate.rating}" cancel="false" readonly="true" />
-									</div>
-								</div>
-								<div class="col-12">
-									<div class="form-group">
-										<h:outputText styleClass="text" value="#{i18n['candidate.message.no_tags']}" rendered="#{empty candidateBean.tags}" />
-									</div>
-								</div>
-							</div>
+		<p:breadCrumb styleClass="breadcrumb">
+			<p:menuitem value="#{i18n['candidate.candidates']}" url="/faces/candidate/candidateSearch.xhtml" />
+			<p:menuitem value="#{candidateBean.candidate.fullName}" disabled="true" />
+		</p:breadCrumb>
 
-							<div class="col-12 lg-9 xl-10">
-								<div class="grid">
-									<div class="col-12 md-6">
-										<div class="form-group">
-											<p:outputLabel value="#{i18n['candidate.name']}" for="name" />
-											<p:inputText id="name" value="#{candidateBean.candidate.name}" required="true" readonly="true" />
-										</div>
-									</div>
+		<div class="candidate panel">
+			<header>
+				<div class="personal-data">
+					<div class="candidate-image">
+						<p:graphicImage styleClass="user-image" value="/images/#{candidateBean.candidate.imageFileName}"
+							rendered="#{not empty candidateBean.candidate.imageFileName}" />
+						<p:graphicImage styleClass="user-image" value="/resources/img/default-avatar.png" rendered="#{empty candidateBean.candidate.imageFileName}" />
+					</div>
+					<div class="candidate-data">
+						<div class="name">#{candidateBean.candidate.fullName}</div>
+						<div class="job-profile">#{candidateBean.candidate.jobProfile}</div>
+						<h:panelGroup layout="block" styleClass="data borndate" rendered="#{not empty candidateBean.candidate.bornDate}">
+							<span class="icon"><i class="fa fa-calendar"></i></span>
+							<span class="text">#{candidateBean.candidate.bornDate}</span>
+						</h:panelGroup>
+						<h:panelGroup layout="block" styleClass="data location" rendered="#{not empty candidateBean.candidate.address.city}">
+							<span class="icon"><i class="fa fa-map-marker"></i></span>
+							<span class="text">#{candidateBean.candidate.address.city} (#{candidateBean.candidate.address.state})</span>
+						</h:panelGroup>
+					</div>
+				</div>
+				<div class="candidate-data">
+					<div class="section">#{i18n['candidate.contact_information']}</div>
 
-									<div class="col-12 md-6">
-										<div class="form-group">
-											<p:outputLabel value="#{i18n['candidate.surname']}" for="surname" />
-											<p:inputText id="surname" value="#{candidateBean.candidate.surname}" required="true" readonly="true" />
-										</div>
-									</div>
+					<div class="data email">
+						<span class="icon"><i class="fa fa-envelope"></i></span><span class="text">#{candidateBean.candidate.email}</span>
+					</div>
+					<div class="data phone">
+						<span class="icon"><i class="fa fa-phone"></i></span><span class="text">#{candidateBean.candidate.phoneNumber}</span>
+					</div>
+					<h:panelGroup layout="block" styleClass="data skype" rendered="#{not empty candidateBean.candidate.skype}">
+						<span class="icon"><i class="fa fa-skype"></i></span>
+						<span class="text">#{candidateBean.candidate.skype}</span>
+					</h:panelGroup>
+					<h:panelGroup layout="block" styleClass="data linkedin" rendered="#{not empty candidateBean.candidate.linkedinProfileUrl}">
+						<span class="icon"><i class="fa fa-linkedin"></i></span>
+						<span class="text"><a href="#{candidateBean.candidate.linkedinProfileUrl}" target="new">#{candidateBean.candidate.linkedinProfileUrl}</a></span>
+					</h:panelGroup>
+				</div>
+				<div class="candidate-data">
+					<div class="section">#{i18n['candidate.job_information']}</div>
 
-									<div class="col-12 md-6">
-										<div class="form-group">
-											<p:outputLabel value="#{i18n['candidate.bornDate']}" for="bornDate" />
-											<p:calendar id="bornDate" value="#{candidateBean.candidate.bornDate}" disabled="true" yearRange="c-100:c0" navigator="true" />
-										</div>
-									</div>
-
-									<div class="col-12 md-6">
-										<div class="form-group">
-											<p:outputLabel value="#{i18n['candidate.phone_number']}" for="phoneNumber" />
-											<p:inputText id="phoneNumber" value="#{candidateBean.candidate.phoneNumber}" required="true" readonly="true" />
-										</div>
-									</div>
-
-									<div class="col-12 md-6">
-										<div class="form-group">
-											<p:outputLabel value="#{i18n['candidate.email']}" for="email" />
-											<p:inputText id="email" pt:type="email" value="#{candidateBean.candidate.email}" required="true" readonly="true" />
-										</div>
-									</div>
-
-									<div class="col-12 md-6">
-										<div class="form-group">
-											<p:outputLabel value="#{i18n['candidate.skype']}" for="skype" />
-											<p:inputText id="skype" pt:type="skype" value="#{candidateBean.candidate.skype}" readonly="true" />
-										</div>
-									</div>
-
-									<div class="col-12 md-6">
-										<div class="form-group">
-											<p:outputLabel value="#{i18n['address.city']}" for="city" />
-											<p:inputText id="city" value="#{candidateBean.candidate.address.city}" readonly="true" />
-										</div>
-									</div>
-
-									<div class="col-12 md-6">
-										<div class="form-group">
-											<p:outputLabel value="#{i18n['address.state']}" for="state" />
-											<p:inputText id="state" value="#{candidateBean.candidate.address.state}" readonly="true" />
-										</div>
-									</div>
-
-									<div class="col-12 md-6">
-										<div class="form-group">
-											<p:outputLabel value="#{i18n['candidate.jobProfile']}" for="jobProfile" />
-											<p:inputText id="jobProfile" value="#{candidateBean.candidate.jobProfile}" required="true" readonly="true" />
-										</div>
-									</div>
-
-									<div class="col-12 md-6">
-										<div class="form-group">
-											<p:outputLabel value="#{i18n['candidate.salary']}" for="salary" />
-											<p:inputText id="salary" value="#{candidateBean.candidate.salary}" readonly="true" />
-										</div>
-									</div>
-
-									<div class="col-12 md-6">
-										<div class="form-group">
-											<p:outputLabel value="#{i18n['candidate.expected_salary']}" for="expected_salary" />
-											<p:inputText id="expected_salary" value="#{candidateBean.candidate.expectedSalary}" label="#{i18n['candidate.expected_salary']}" readonly="true" />
-										</div>
-									</div>
-
-								</div>
-								<div class="grid">
-									<div class="col-12">
-										<div class="form-action-primary">
-											<p:button value="#{i18n['curriculum.curriculum']}" outcome="/faces/curriculum/curriculum" styleClass="btn-primary">
-												<f:param name="candidateId" value="#{candidateBean.candidate.id}" />
-											</p:button>
-											<p:commandButton value="#{i18n['action.edit']}" process="@this" actionListener="#{candidateBean.editCandidate}"
-												action="/faces/candidate/candidateEdit?faces-redirect=true" styleClass="btn-primary" />
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</h:form>
-				</p:panel>
-			</div>
-
-			<div class="col-12 lg-6">
-				<h:form id="jobOffersForm">
-					<cc:jobOffers id="jobOffers" jobOffers="#{candidateBean.jobOffers}">
-						<p:commandButton value="#{i18n['action.add']}" process="@this" actionListener="#{candidateBean.openSelectJobOfferDialog}" styleClass="btn-primary" >
-							<p:ajax event="dialogReturn" listener="#{candidateBean.onCloseSelectJobOfferDialog}" update="@form" />
-						</p:commandButton>
-					</cc:jobOffers>
-				</h:form>
-			</div>
-
-			<div class="col-12 lg-6">
-				<ui:include src="/faces/candidate/filePanel.xhtml" />
-			</div>
+					<div class="data origin">
+						<span class="label">#{i18n['candidate.origin']}: </span><span class="text">#{i18n:translate(candidateBean.candidate.origin)}</span>
+					</div>
+					<div class="data salary">
+						<span class="label">#{i18n['candidate.salary']}: </span><span class="text">#{candidateBean.candidate.salary} €</span>
+					</div>
+					<div class="data expected-salary">
+						<span class="label">#{i18n['candidate.expected_salary']}: </span><span class="text">#{candidateBean.candidate.expectedSalary} €</span>
+					</div>
+				</div>
+				<div class="buttons">
+					<p:commandButton value="#{i18n['action.export']}" process="@this" actionListener="#{candidateBean.editCandidate}"
+						action="/faces/candidate/candidateEdit?faces-redirect=true" />
+					<p:commandButton value="#{i18n['action.edit']}" process="@this" actionListener="#{candidateBean.editCandidate}"
+						action="/faces/candidate/candidateEdit?faces-redirect=true" />
+				</div>
+			</header>
+			<div class="content"></div>
+			<footer></footer>
 		</div>
 	</ui:define>
 </ui:composition>

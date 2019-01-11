@@ -11,12 +11,16 @@
 	</composite:interface>
 
 	<composite:implementation>
-		<div id="#{cc.clientId}" class="form-group">
-			<p:outputLabel id="label" for="calendar" value="#{cc.attrs.label}" />
-			<p:calendar id="calendar" value="#{cc.attrs.value}" pattern="dd/MM/yyyy" navigator="true" yearRange="#{cc.attrs.yearRange}" required="#{cc.attrs.required}" >
-				<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
-			</p:calendar>
-			<p:message id="message" for="calendar" />
+		<div id="#{cc.clientId}" class="input-group input-calendar">
+			<p:outputLabel id="label" for="calendar" value="#{cc.attrs.label}" styleClass="label" />
+			<div class="input">
+				<p:calendar id="calendar" value="#{cc.attrs.value}" pattern="dd/MM/yyyy" navigator="true" yearRange="#{cc.attrs.yearRange}" required="#{cc.attrs.required}"
+					styleClass="input">
+					<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
+				</p:calendar>
+				<i class="fa fa-calendar" aria-hidden="true"></i>
+				<p:message id="message" for="calendar" />
+			</div>
 		</div>
 	</composite:implementation>
 </ui:component>

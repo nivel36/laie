@@ -10,68 +10,60 @@
 	<ui:param name="selectedMenu" value="candidates" />
 
 	<ui:define name="content">
-		<div class="grid">
-			<div class="col-12">
-				<p:breadCrumb homeDisplay="text">
-					<p:menuitem value="#{i18n['menu.index']}" url="/faces/index.xhtml" />
-					<p:menuitem value="#{i18n['candidate.candidates']}" disabled="true" />
-				</p:breadCrumb>
-			</div>
+		<p:breadCrumb styleClass="breadcrumb">
+			<p:menuitem value="#{i18n['candidate.candidates']}" disabled="true" />
+		</p:breadCrumb>
 
-			<div class="col-12">
-				<h:form id="candidateSearchForm">
-					<p:panel id="searchUserPanel" header="#{i18n['candidate.search']}">
-						<div class="searchForm">
-							<div class="grid">
-								<div class="md-12 lg-6 xl-4">
-									<cc:inputSearch searchText="#{candidateSearchBean.searchText}" searchAction="#{candidateSearchBean.search}" update="@form" />
-								</div>
-								<div class="md-12 lg-6 xl-8">
-									<div class="form-action">
-										<p:commandButton value="#{i18n['action.export']}" action="#{candidateSearchBean.search}" process="@this" icon="fa fa-file-excel-o" />
-										<p:button value="#{i18n['action.new']}" outcome="candidateEdit" styleClass="btn-primary" />
-									</div>
-								</div>
-							</div>
+		<h:form id="candidateSearchForm">
+			<div class="search-panel">
+				<div class="search-panel-content">
+					<header>
+						<h2>#{i18n['candidate.search']}</h2>
+					</header>
+					<div class="content">
+						<div class="searchbar">
+							<cc:inputSearch searchText="#{candidateSearchBean.searchText}" searchAction="#{candidateSearchBean.search}" update="@form" />
 						</div>
-						<div class="searchResults">
-							<p:dataTable var="candidate" id="candidates" value="#{candidateSearchBean.candidates}" emptyMessage="#{i18n['candidate.no_candidates_found']}"
-								reflow="true" paginator="true" paginatorPosition="bottom" rows="#{sessionUser.rowsPerPage}" sortBy="#{candidate.fullName}" sortOrder="ascending">
-
-								<p:column>
-									<p:graphicImage class="image image-icon" value="/images/#{candidate.imageFileName}" rendered="#{not empty candidate.imageFileName}" />
-									<p:graphicImage class="image image-icon" value="/resources/img/default-avatar.png" rendered="#{empty candidate.imageFileName}" />
-								</p:column>
-
-								<p:column headerText="#{i18n['candidate.name']}" sortBy="#{candidate.name}">
-									<h:link value="#{candidate.fullName}" outcome="/faces/candidate/candidate">
-										<f:param name="candidateId" value="#{candidate.id}" />
-									</h:link>
-								</p:column>
-
-								<p:column headerText="#{i18n['candidate.jobProfile']}" sortBy="#{candidate.jobProfile}">
-									<h:outputText value="#{candidate.jobProfile}" />
-								</p:column>
-
-								<p:column headerText="#{i18n['candidate.email']}">
-									<h:outputText value="#{candidate.email}" />
-								</p:column>
-
-								<p:column headerText="#{i18n['candidate.phone_number']}">
-									<h:outputText value="#{candidate.phoneNumber}" />
-								</p:column>
-
-								<p:column headerText="#{i18n['candidate.rating']}" sortBy="#{candidate.rating}">
-									<p:rating value="#{candidate.rating}" cancel="false" readonly="true" />
-								</p:column>
-
-								<p:column headerText="#{i18n['candidate.state']}">
-								</p:column>
-							</p:dataTable>
-						</div>
-					</p:panel>
-				</h:form>
+					</div>
+				</div>
 			</div>
-		</div>
+			<div class="panel search-results">
+				<header>
+					<p:commandButton value="#{i18n['action.export']}" action="#{candidateSearchBean.search}" process="@this" icon="fa-file-excel-o" styleClass="btn-primary" />
+					<p:button value="#{i18n['action.new']}" outcome="candidateEdit" styleClass="btn-primary" />
+				</header>
+				<p:dataTable var="candidate" id="candidates" value="#{candidateSearchBean.candidates}" emptyMessage="#{i18n['candidate.no_candidates_found']}" reflow="true"
+					paginator="true" paginatorPosition="bottom" rows="#{sessionUser.rowsPerPage}" sortBy="#{candidate.fullName}" sortOrder="ascending">
+
+					<p:column>
+						<p:graphicImage class="image image-icon" value="/images/#{candidate.imageFileName}" rendered="#{not empty candidate.imageFileName}" />
+						<p:graphicImage class="image image-icon" value="/resources/img/default-avatar.png" rendered="#{empty candidate.imageFileName}" />
+					</p:column>
+
+					<p:column headerText="#{i18n['candidate.name']}" sortBy="#{candidate.name}">
+						<h:link value="#{candidate.fullName}" outcome="/faces/candidate/candidate">
+							<f:param name="candidateId" value="#{candidate.id}" />
+						</h:link>
+					</p:column>
+
+					<p:column headerText="#{i18n['candidate.jobProfile']}" sortBy="#{candidate.jobProfile}">
+						<h:outputText value="#{candidate.jobProfile}" />
+					</p:column>
+
+					<p:column headerText="#{i18n['candidate.email']}">
+						<h:outputText value="#{candidate.email}" />
+					</p:column>
+
+					<p:column headerText="#{i18n['candidate.phone_number']}">
+						<h:outputText value="#{candidate.phoneNumber}" />
+					</p:column>
+
+					<p:column headerText="#{i18n['candidate.rating']}" sortBy="#{candidate.rating}">
+						<p:rating value="#{candidate.rating}" cancel="false" readonly="true" />
+					</p:column>
+
+				</p:dataTable>
+			</div>
+		</h:form>
 	</ui:define>
 </ui:composition>

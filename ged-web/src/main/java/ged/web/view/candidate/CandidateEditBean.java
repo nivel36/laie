@@ -19,7 +19,6 @@ import org.primefaces.model.UploadedFile;
 
 import ged.ejb.candidate.Candidate;
 import ged.ejb.candidate.CandidateService;
-import ged.ejb.candidate.Origin;
 import ged.ejb.core.Address;
 import ged.ejb.core.FileUploadService;
 import ged.ejb.core.model.Page;
@@ -89,9 +88,6 @@ public class CandidateEditBean extends AbstractDialogBean {
 		if (this.candidate == null) {
 			this.candidate = this.buildNewCandidate();
 		}
-		if (this.candidate.getOrigin() == null) {
-			this.candidate.setOrigin(new Origin());
-		}
 		for (final Tag tag : this.candidate.getTags()) {
 			this.tags.add(tag.getLabel());
 		}
@@ -99,13 +95,6 @@ public class CandidateEditBean extends AbstractDialogBean {
 
 	public boolean isNewCandidate() {
 		return this.candidate.getId() == 0;
-	}
-
-	public void onChangeOrigin() {
-		final Origin origin = this.candidate.getOrigin();
-		if (!origin.getCode().equals("other")) {
-			origin.setOther(null);
-		}
 	}
 
 	public void onrate(final RateEvent rateEvent) {

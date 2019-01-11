@@ -1,0 +1,18 @@
+<ui:component xmlns="http://www.w3.org/1999/xhtml" xmlns:composite="http://xmlns.jcp.org/jsf/composite" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:o="http://omnifaces.org/ui" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+	<composite:interface>
+		<composite:attribute name="value" required="true" />
+		<composite:attribute name="completeMethod" method-signature="void function(java.lang.String)" required="true" />
+		<composite:editableValueHolder name="input-tag" />
+	</composite:interface>
+
+	<composite:implementation>
+		<div id="#{cc.clientId}" class="tags">
+			<p:autoComplete id="input-tag" cc.attrs.value}" completeMethod="#{cc.attrs.completeMethod}" var="tag" itemLabel="#{tag.label}"
+					itemValue="#{user}" forceSelection="true" required="#{cc.attrs.required}" binding="#{cc.input}">
+			<p:chips id="tags" value="#{candidateEditBean.tags}" label="#{i18n['candidateEditBean.tags']}" converter="stringConverter"  />
+		</div>
+	</composite:implementation>
+</ui:component>

@@ -18,22 +18,17 @@ public class InputUser extends UIInput implements NamingContainer {
 
 	public void clean() {
 		this.input.setValue(null);
-		hideCleanButton();
+		this.hideCleanButton();
 	}
 
 	@Override
 	public void encodeBegin(final FacesContext context) throws IOException {
 		super.encodeBegin(context);
-		processCleanButton();
-	}
-
-	@Override
-	public void encodeEnd(final FacesContext context) throws IOException {
-		super.encodeEnd(context);
+		this.processCleanButton();
 	}
 
 	public UICommand getCleanButton() {
-		return cleanButton;
+		return this.cleanButton;
 	}
 
 	@Override
@@ -42,23 +37,23 @@ public class InputUser extends UIInput implements NamingContainer {
 	}
 
 	public UIInput getInput() {
-		return input;
+		return this.input;
 	}
 
 	private void hideCleanButton() {
-		cleanButton.setRendered(false);
+		this.cleanButton.setRendered(false);
 	}
 
 	private boolean isInputValueSet() {
-		return input.getValue() != null;
+		return this.input.getValue() != null;
 	}
 
 	private void processCleanButton() {
-		if (isInputValueSet()) {
-			showCleanButton();
+		if (this.isInputValueSet()) {
+			this.showCleanButton();
 		}
 		else {
-			hideCleanButton();
+			this.hideCleanButton();
 		}
 	}
 
@@ -71,6 +66,6 @@ public class InputUser extends UIInput implements NamingContainer {
 	}
 
 	private void showCleanButton() {
-		cleanButton.setRendered(true);
+		this.cleanButton.setRendered(true);
 	}
 }
