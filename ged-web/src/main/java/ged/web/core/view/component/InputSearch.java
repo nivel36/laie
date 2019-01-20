@@ -17,7 +17,7 @@ public class InputSearch extends UIInput implements NamingContainer {
 
 	public void clean() {
 		this.searchInputText.setValue(null);
-		final ActionEvent action = new ActionEvent(searchCommandButton);
+		final ActionEvent action = new ActionEvent(this.searchCommandButton);
 		action.queue();
 	}
 
@@ -27,11 +27,11 @@ public class InputSearch extends UIInput implements NamingContainer {
 	}
 
 	public CommandButton getSearchCommandButton() {
-		return searchCommandButton;
+		return this.searchCommandButton;
 	}
 
 	public UIInput getSearchInputText() {
-		return searchInputText;
+		return this.searchInputText;
 	}
 
 	public void setSearchCommandButton(final CommandButton searchCommandButton) {

@@ -7,8 +7,8 @@
 		<composite:attribute name="label" required="true" />
 		<composite:attribute name="value" required="true" />
 		<composite:clientBehavior name="change" event="change" targets="selectOneMenu-group" />
-		<composite:attribute name="required" />
-		<composite:attribute name="other" required="false" default="false" />
+		<composite:attribute name="required" type="boolean" />
+		<composite:attribute name="other" required="false" default="false" type="boolean" />
 	</composite:interface>
 
 	<composite:implementation>

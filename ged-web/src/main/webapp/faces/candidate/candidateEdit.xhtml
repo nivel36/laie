@@ -77,7 +77,7 @@
 						<p:button styleClass="btn-gray" value="#{i18n['action.cancel']}" outcome="candidate" rendered="#{not candidateEditBean.newCandidate}">
 							<f:param name="candidateId" value="#{candidateEditBean.candidate.id}" />
 						</p:button>
-						<p:commandButton styleClass="btn-primary" value="#{i18n['action.save']}" action="#{candidateEditBean.save}" process="@form" update="@form growl" />
+						<p:commandButton value="#{i18n['action.save']}" action="#{candidateEditBean.save}" process="@form" update="@form growl" />
 					</div>
 				</footer>
 			</div>

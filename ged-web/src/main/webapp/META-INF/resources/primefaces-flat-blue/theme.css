@@ -74,11 +74,23 @@ body .ui-icon {
 	content: "\f00d";
 }
 
+/*Button*/
+body .ui-button {
+	font-size: 0.9em;
+	min-width: 5.5em;
+}
+
+body .ui-button.ui-button-icon-only {
+	font-size: 1em;
+	min-width: auto;
+}
+
 body .ui-button, body .ui-button.ui-button-icon-only {
-	border: 0px;
 	display: inline-flex;
+	background-color: #69abe2;
+	border: 1px solid #59a2df;
 	margin: 0;
-	padding: 0 1em;
+	padding: 0.6em;
 	justify-content: center;
 	align-items: center;
 	position: relative;
@@ -91,32 +103,35 @@ body .ui-button.ui-button-icon-only .ui-button-text {
 body .ui-button .ui-icon, body .ui-button.ui-button-icon-only .ui-icon,
 	body .ui-button-text-icon-left .ui-icon {
 	margin: 0;
-	padding: 0;
-	display: inline-flex;
 	left: auto;
 	top: auto;
 	position: relative;
+	padding: 0em 0.2em;
+	color: white;
+	display: inline-flex;
+	text-shadow: 1px 1px rgba(0, 0, 0, 0.2);
 }
 
 body .ui-button .ui-button-text {
-	display: flex;
 	text-transform: uppercase;
 	font-weight: 600;
 	font-size: 0.8em;
-	padding: 0.7em 0.2em;
+	padding: 0em 0.2em;
+	color: white;
+	text-shadow: 1px 1px rgba(0, 0, 0, 0.2);
 }
 
 body .ui-button.ui-state-hover {
-	background: #3e94db;
+	background: #4999dc;
 }
 
 body .ui-button.btn-gray {
 	background: #afafaf;
-	text-shadow: 1px 1px #8f8f8f;
+	border: 1px solid #929292;
 }
 
 body .ui-button.btn-gray.ui-state-hover {
-	background: #9d9d9d;
+	background: #888888;
 }
 
 body .ui-breadcrumb ul li .ui-menuitem-link {
@@ -368,7 +383,7 @@ body .ui-state-active a {
 
 body .ui-paginator .ui-paginator-page.ui-state-active {
 	border-radius: 50%;
-	background-color: #59a2df;
+	background-color: #5fabf1;
 }
 
 body .ui-selectonemenu {

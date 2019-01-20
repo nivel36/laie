@@ -54,19 +54,6 @@
 						<span class="text"><a href="#{candidateBean.candidate.linkedinProfileUrl}" target="new">#{candidateBean.candidate.linkedinProfileUrl}</a></span>
 					</h:panelGroup>
 				</div>
-				<div class="candidate-data">
-					<div class="section">#{i18n['candidate.job_information']}</div>
-
-					<div class="data origin">
-						<span class="label">#{i18n['candidate.origin']}: </span><span class="text">#{i18n:translate(candidateBean.candidate.origin)}</span>
-					</div>
-					<div class="data salary">
-						<span class="label">#{i18n['candidate.salary']}: </span><span class="text">#{candidateBean.candidate.salary} €</span>
-					</div>
-					<div class="data expected-salary">
-						<span class="label">#{i18n['candidate.expected_salary']}: </span><span class="text">#{candidateBean.candidate.expectedSalary} €</span>
-					</div>
-				</div>
 				<div class="buttons">
 					<p:commandButton value="#{i18n['action.export']}" process="@this" actionListener="#{candidateBean.editCandidate}"
 						action="/faces/candidate/candidateEdit?faces-redirect=true" />
@@ -74,7 +61,26 @@
 						action="/faces/candidate/candidateEdit?faces-redirect=true" />
 				</div>
 			</header>
-			<div class="content"></div>
+			<div class="content">
+				<div class="panel">
+					<header>
+						<h4>#{i18n['candidate.job_information']}</h4>
+					</header>
+					<div class="content">
+						<div class="candidate-data">
+							<div class="data origin">
+								<span class="label">#{i18n['candidate.origin']}: </span><span class="text">#{i18n:translate(candidateBean.candidate.origin)}</span>
+							</div>
+							<div class="data salary">
+								<span class="label">#{i18n['candidate.salary']}: </span><span class="text">#{candidateBean.candidate.salary} €</span>
+							</div>
+							<div class="data expected-salary">
+								<span class="label">#{i18n['candidate.expected_salary']}: </span><span class="text">#{candidateBean.candidate.expectedSalary} €</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 			<footer></footer>
 		</div>
 	</ui:define>

@@ -65,14 +65,14 @@ public class UserEditBean extends AbstractBean {
 
 	public void changeRoleListener() {
 		logger.trace("Change role listener triggered");
-		if (user.isAdmin()) {
+		if (this.user.isAdmin()) {
 			this.user.setManager(null);
 		}
 	}
 
 	private void editUserInit() {
-		logger.debug("User {} edit init", user.getEmail());
-		if (!sessionUser.hasPermissionToEdit(this.user)) {
+		logger.debug("User {} edit init", this.user.getEmail());
+		if (!this.sessionUser.hasPermissionToEdit(this.user)) {
 			logger.error("User {} hasn't got priviliges to edit user {}", this.sessionUser.get(), this.user);
 			throw new SecurityException();
 		}
@@ -87,17 +87,21 @@ public class UserEditBean extends AbstractBean {
 	public void init() {
 		this.user = this.getValueFromFlash("user");
 		if (this.user == null) {
-			newUserInit();
+			this.newUserInit();
 		}
 		else {
-			editUserInit();
+			this.editUserInit();
 		}
+	}
+
+	public boolean isNewUser() {
+		return this.user.getId() == 0;
 	}
 
 	private void newUserInit() {
 		logger.debug("New user edit init");
 		if (!this.sessionUser.isAdmin()) {
-			logger.error("User {} hasn't got priviliges to add a new user", sessionUser);
+			logger.error("User {} hasn't got priviliges to add a new user", this.sessionUser);
 			throw new SecurityException();
 		}
 		this.buildUser();
@@ -106,7 +110,7 @@ public class UserEditBean extends AbstractBean {
 
 	public String save() {
 		logger.debug("Save user action performed");
-		if (!sessionUser.hasPermissionToEdit(this.user)) {
+		if (!this.sessionUser.hasPermissionToEdit(this.user)) {
 			logger.error("User {} hasn't got priviliges to edit user {}", this.sessionUser.get(), this.user);
 			throw new SecurityException();
 		}

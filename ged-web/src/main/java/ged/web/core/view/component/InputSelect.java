@@ -13,7 +13,7 @@ import javax.faces.component.UISelectOne;
 import javax.faces.context.FacesContext;
 
 @FacesComponent(value = "inputSelect")
-public class inputSelect extends UIInput implements NamingContainer {
+public class InputSelect extends UIInput implements NamingContainer {
 
 	private UIInput inputHidden;
 

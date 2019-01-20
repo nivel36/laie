@@ -327,19 +327,6 @@ body .input-search .clean-search-button {
 	border-bottom: 1px solid #c2cad8;
 }
 
-body .btn-icon {
-	background: linear-gradient(to right, rgba(252, 252, 252, 1) 0%,
-		rgba(246, 246, 246, 1) 47%, rgba(241, 243, 246, 1) 100%);
-	color: #737c93;
-	text-shadow: 1px 1px white;
-	height: 2.5em;
-	width: 3em;
-}
-
-body .input-search .btn-icon:hover {
-	background: #e1e6ec;
-}
-
 .input-group {
 	display: flex;
 	padding: 0.3em 0.5em;
@@ -385,7 +372,14 @@ body .input-search .btn-icon:hover {
 
 .panel>header h2 {
 	font-size: 2em;
+	color: #5c617b;
+	text-shadow: 1px 1px white;
+	margin: 0;
 	line-height: 1.5em;
+}
+
+.panel>header h4 {
+	font-size: 1.5em;
 	color: #5c617b;
 	text-shadow: 1px 1px white;
 	margin: 0;
@@ -410,17 +404,6 @@ body .input-search .btn-icon:hover {
 	justify-content: flex-end;
 }
 
-.panel>footer .buttons .ui-button {
-	padding: 0.2em;
-}
-
-.search-results .btn-primary {
-	background: #f7faff;
-	border: 1px solid #bdc7d2;
-	border-radius: 3px;
-	color: #8c94a7;
-}
-
 .search-panel {
 	padding: 2em;
 	background: #e0e3ed;
@@ -431,18 +414,18 @@ body .input-search .btn-icon:hover {
 .search-panel-content {
 	flex-direction: column;
 	background: #ffffff;
-	border-radius: 8px;
+	border-radius: 5px;
 	border: 1px solid #c2c2d3;
 	display: flex;
 }
 
 .search-panel-content>header {
-	border-top-left-radius: 8px;
-	border-top-right-radius: 8px;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
 	background: linear-gradient(to right, rgba(242, 243, 247, 1) 0%,
 		rgba(246, 246, 246, 1) 47%, rgba(236, 238, 243, 1) 100%);
 	border-bottom: 1px solid #bfceda;
-	border-top: 1px solid white;
+	border-top: 5px solid #5fabf1;
 	padding: 1em;
 	display: flex;
 }
@@ -479,38 +462,6 @@ body .input-search .btn-icon:hover {
 
 .candidate.panel>header {
 	background: #e0e3ed;
-}
-
-.candidate.panel>header .ui-button {
-	background: #ecf0f5;
-	color: #5f7389;
-	text-shadow: 1px 1px white;
-	border-left: 1px solid #bcc6d1;
-	border-right: 0px;
-	border-bottom: 1px solid #bcc6d1;
-	border-top: 1px solid #bcc6d1;
-	border-bottom: 1px solid #bcc6d1;
-	border-bottom: 1px solid #bcc6d1;
-}
-
-.candidate.panel>header .ui-button:first-child {
-	border-left: 1px solid #bcc6d1;
-	border-top-left-radius: 4px;
-	border-bottom-left-radius: 4px;
-}
-
-.candidate.panel>header .ui-button:last-child {
-	border-right: 1px solid #bcc6d1;
-	border-top-right-radius: 4px;
-	border-bottom-right-radius: 4px;
-}
-
-.candidate.panel>header .ui-button:hover {
-	background: #d6dee9;
-}
-
-.candidate.panel .buttons {
-	text-align: right;
 }
 
 .candidate.panel .buttons {

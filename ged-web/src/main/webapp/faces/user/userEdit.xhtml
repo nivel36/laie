@@ -8,67 +8,50 @@
 	</ui:define>
 
 	<ui:define name="content">
-		<div class="grid">
-			<div class="col-12">
-				<p:breadCrumb homeDisplay="text">
-					<p:menuitem value="#{i18n['menu.index']}" url="/faces/index.xhtml" />
-					<p:menuitem value="#{i18n['user.users']}" url="/faces/user/userSearch.xhtml" />
-					<p:menuitem value="#{empty userEditBean.user.fullName ? i18n['user.new_user'] : userEditBean.user.fullName}" disabled="true" />
-				</p:breadCrumb>
-			</div>
-			<div class="col-12">
-				<h:form id="userPanelForm" enctype="multipart/form-data">
-					<p:panel header="#{empty userEditBean.user.fullName ? i18n['user.new_user'] : userEditBean.user.fullName}">
-						<div class="grid">
 
-							<div class="col-12 lg-3">
-								<cc:inputImage id="userImage" value="#{userEditBean.user.imageFileName}" fileUploadListener="#{userEditBean.uploadImage}" />
-							</div>
+		<p:breadCrumb styleClass="breadcrumb">
+			<p:menuitem value="#{i18n['user.users']}" url="/faces/user/userSearch.xhtml" />
+			<p:menuitem value="#{userEditBean.user.fullName}" url="/faces/user/userSearch.xhtml" rendered="#{not userEditBean.newUser}" />
+			<p:menuitem value="#{userEditBean.newUser ? i18n['user.new_user'] : i18n['user.user_edit']}" disabled="true" />
+		</p:breadCrumb>
 
-							<div class="col-12 lg-9">
-								<div class="grid">
-									<div class="col-12 sm-6">
-										<cc:inputText id="name" label="#{i18n['user.name']}" value="#{userEditBean.user.name}" required="true" />
-									</div>
-									<div class="col-12 sm-6">
-										<cc:inputText id="surname" label="#{i18n['user.surname']}" value="#{userEditBean.user.surname}" required="true" />
-									</div>
-
-									<div class="col-12 sm-6">
-										<cc:inputText id="email" label="#{i18n['user.email']}" value="#{userEditBean.user.email}" required="true" validator="#{userEditBean.validateEmail}" />
-									</div>
-
-									<div class="col-12 sm-6">
-										<cc:inputText id="phone_number" label="#{i18n['user.phone_number']}" value="#{userEditBean.user.phoneNumber}" />
-									</div>
-
-									<div class="col-12 sm-6">
-										<cc:inputSelect id="role" value="#{userEditBean.user.role}" label="#{i18n['user.role']}" required="true">
-											<f:selectItems value="#{roles.list}" var="role" itemValue="#{role}" itemLabel="#{i18n:translate(role.name)}" />
-											<p:ajax event="change" update="role userPanelForm:manager" process="role" listener="#{userEditBean.changeRoleListener}" />
-										</cc:inputSelect>
-									</div>
-
-									<div class="col-12 sm-6">
-										<cc:inputUser id="manager" label="#{i18n['user.manager']}" value="#{userEditBean.user.manager}" completeMethod="#{userEditBean.searchManager}" />
-									</div>
-
-									<div class="col-12 sm-6">
-										<cc:calendar id="date_of_join" label="#{i18n['user.date_of_join']}" value="#{userEditBean.user.dateOfJoin}" />
-									</div>
-
-									<div class="col-12">
-										<div class="form-action-primary">
-											<p:commandButton styleClass="btn-gray" value="#{i18n['action.cancel']}" action="#{userEditBean.cancel}" process="@this" />
-											<p:commandButton styleClass="btn-primary" value="#{i18n['action.save']}" action="#{userEditBean.save}" process="@form" update="@form growl" />
-										</div>
-									</div>
-								</div>
-							</div>
+		<h:form id="userPanelForm" enctype="multipart/form-data">
+			<div class="panel">
+				<header>
+					<h2>#{empty userEditBean.user.fullName ? i18n['user.new_user'] : userEditBean.user.fullName}</h2>
+				</header>
+				<div class="content">
+					<div class="multi-column">
+						<div class="column candidate-metadata" style="flex-grow: 1">
+							<cc:inputImage id="userImage" value="#{userEditBean.user.imageFileName}" fileUploadListener="#{userEditBean.uploadImage}" />
 						</div>
-					</p:panel>
-				</h:form>
+						<div class="column" style="flex-grow: 3">
+							<cc:inputText id="name" label="#{i18n['user.name']}" value="#{userEditBean.user.name}" required="true" />
+
+							<cc:inputText id="surname" label="#{i18n['user.surname']}" value="#{userEditBean.user.surname}" required="true" />
+
+							<cc:inputText id="email" label="#{i18n['user.email']}" value="#{userEditBean.user.email}" required="true" validator="#{userEditBean.validateEmail}" />
+
+							<cc:inputText id="phone_number" label="#{i18n['user.phone_number']}" value="#{userEditBean.user.phoneNumber}" />
+
+							<cc:inputSelect id="role" value="#{userEditBean.user.role}" label="#{i18n['user.role']}" required="true">
+								<f:selectItems value="#{roles.list}" var="role" itemValue="#{role}" itemLabel="#{i18n:translate(role.name)}" />
+								<p:ajax event="change" update="role manager" process="role" listener="#{userEditBean.changeRoleListener}" />
+							</cc:inputSelect>
+
+							<cc:inputUser id="manager" label="#{iinput18n['user.manager']}" value="#{userEditBean.user.manager}" completeMethod="#{userEditBean.searchManager}" />
+
+							<cc:calendar id="date_of_join" label="#{i18n['user.date_of_join']}" value="#{userEditBean.user.dateOfJoin}" />
+						</div>
+					</div>
+				</div>
+				<footer>
+					<div class="buttons">
+						<p:commandButton styleClass="btn-gray" value="#{i18n['action.cancel']}" action="#{userEditBean.cancel}" process="@this" />
+						<p:commandButton styleClass="btn-primary" value="#{i18n['action.save']}" action="#{userEditBean.save}" process="@form" update="@form growl" />
+					</div>
+				</footer>
 			</div>
-		</div>
+		</h:form>
 	</ui:define>
 </ui:composition>
