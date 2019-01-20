@@ -39,7 +39,7 @@
 								<p:ajax event="change" update="role manager" process="role" listener="#{userEditBean.changeRoleListener}" />
 							</cc:inputSelect>
 
-							<cc:inputUser id="manager" label="#{iinput18n['user.manager']}" value="#{userEditBean.user.manager}" completeMethod="#{userEditBean.searchManager}" />
+							<cc:inputUser id="manager" label="#{i18n['user.manager']}" value="#{userEditBean.user.manager}" completeMethod="#{userEditBean.searchManager}" />
 
 							<cc:calendar id="date_of_join" label="#{i18n['user.date_of_join']}" value="#{userEditBean.user.dateOfJoin}" />
 						</div>

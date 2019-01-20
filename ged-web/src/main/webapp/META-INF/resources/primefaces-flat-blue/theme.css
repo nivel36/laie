@@ -74,6 +74,10 @@ body .ui-icon {
 	content: "\f00d";
 }
 
+body .ui-autocomplete {
+	width: 100%;
+}
+
 /*Button*/
 body .ui-button {
 	font-size: 0.9em;
@@ -329,7 +333,7 @@ body .ui-datepicker .ui-datepicker-calendar a.ui-state-active {
 	color: white;
 }
 
-body .ui-inputtext, body .ui-inputfield.hasDatepicker {
+body .ui-inputtext, body .ui-inputfield.hasDatepicker, body .ui-autocomplete-input {
 	outline: medium none;
 	background: white;
 	font-size: 1em;
@@ -387,6 +391,8 @@ body .ui-paginator .ui-paginator-page.ui-state-active {
 }
 
 body .ui-selectonemenu {
+	display: flex;
+	align-items: center;
 	outline: medium none;
 	background-color: white;
 	font-size: 1em;
@@ -430,11 +436,6 @@ body .ui-selectonemenu-item.ui-state-hover {
 body .ui-selectonemenu-item.ui-state-highlight {
 	border-radius: 3px;
 	background-color: #1976d2;
-}
-
-body .ui-selectonemenu {
-	display: flex;
-	align-items: center;
 }
 
 body .ui-message-error {

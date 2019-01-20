@@ -10,9 +10,9 @@
 	</composite:interface>
 
 	<composite:implementation>
-		<div id="#{cc.clientId}" class="form-group">
-			<p:outputLabel id="label" value="#{cc.attrs.label}" for="input-user" />
-			<div class="inputgroup">
+		<div id="#{cc.clientId}" class="input-user input-group">
+			<p:outputLabel id="label" value="#{cc.attrs.label}" for="input-user" styleClass="label" />
+			<div class="input">
 				<p:autoComplete id="input-user" value="#{cc.attrs.value}" completeMethod="#{cc.attrs.completeMethod}" var="user" itemLabel="#{user.fullName}"
 					itemValue="#{user}" forceSelection="true" required="#{cc.attrs.required}" binding="#{cc.input}">
 					<p:column styleClass="user-select image">

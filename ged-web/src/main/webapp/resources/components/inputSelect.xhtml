@@ -13,9 +13,8 @@
 
 	<composite:implementation>
 		<div id="#{cc.clientId}" class="input-select input-group">
-			<p:outputLabel value="#{cc.attrs.label}" for="selectOneMenu" styleClass="label" />
+			<p:outputLabel id="label" value="#{cc.attrs.label}" for="selectOneMenu" styleClass="label" />
 			<div class="input">
-
 				<c:if test="#{cc.attrs.other}">
 					<h:panelGroup id="selectOneMenu-group" style="display:flex; width:100%;">
 						<p:selectOneMenu id="selectOneMenu" name="#{cc.attrs.name}" required="#{cc.attrs.required}" binding="#{cc.selectInput}">

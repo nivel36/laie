@@ -294,7 +294,7 @@ body .breadcrumb ul li.ui-breadcrumb-chevron {
 	margin-left: -1.5em;
 }
 
-.input-text .input, .input-select .input {
+.input-text .input, .input-select .input, .input-user .input {
 	width: 220px;
 }
 
