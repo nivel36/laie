@@ -78,6 +78,33 @@ body .ui-autocomplete {
 	width: 100%;
 }
 
+body .ui-autocomplete {
+	width: 100%;
+}
+
+body .ui-autocomplete-panel {
+	display: flex;
+	background: white;
+}
+
+body .ui-autocomplete-panel .ui-autocomplete-table {
+	border: 1px solid #c2cad8;
+}
+
+body .ui-autocomplete-panel .ui-autocomplete-table tr {
+	border: 0px;
+	display: flex;
+	flex-direction: row;
+}
+
+body .ui-autocomplete-panel .ui-autocomplete-table td {
+	border: 0px;
+	display: flex;
+	align-items: center;
+}
+
+
+
 /*Button*/
 body .ui-button {
 	font-size: 0.9em;
@@ -436,6 +463,10 @@ body .ui-selectonemenu-item.ui-state-hover {
 body .ui-selectonemenu-item.ui-state-highlight {
 	border-radius: 3px;
 	background-color: #1976d2;
+}
+
+body .ui-shadow {
+	box-shadow: 0px 0px 3px rgba(1, 1, 1, 0.5);
 }
 
 body .ui-message-error {

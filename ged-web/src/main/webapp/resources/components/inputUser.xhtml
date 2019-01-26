@@ -24,7 +24,7 @@
 					</p:column>
 					<p:ajax event="itemSelect" update="#{cc.clientId}" process="input-user" />
 				</p:autoComplete>
-				<p:commandButton id="cleanButton" process="@this" update="#{cc.clientId}" action="#{cc.clean}" styleClass="btn-gray" icon="fa fa-times"
+				<p:commandButton id="cleanButton" process="@this" update="#{cc.clientId}" action="#{cc.clean}" styleClass="btn-inner" icon="fa fa-times"
 					binding="#{cc.cleanButton}" />
 			</div>
 			<p:message id="message" for="input-user" />

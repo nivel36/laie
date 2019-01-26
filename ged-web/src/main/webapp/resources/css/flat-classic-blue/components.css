@@ -266,6 +266,16 @@ body .breadcrumb ul li.ui-breadcrumb-chevron {
 	justify-content: flex-end;
 }
 
+body .input .btn-inner {
+	margin: -2.25em;
+	background-color: transparent;
+	border: 0px;
+}
+
+body  .input .btn-inner .ui-icon {
+	color: #7a869b;
+}
+
 .input-image {
 	padding: 0.5em 1em;
 	text-align: center;
@@ -282,6 +292,8 @@ body .breadcrumb ul li.ui-breadcrumb-chevron {
 
 .input-calendar .input {
 	width: 120px;
+	display: flex;
+	flex-direction: row;
 }
 
 .input-calendar .input .ui-inputfield {
