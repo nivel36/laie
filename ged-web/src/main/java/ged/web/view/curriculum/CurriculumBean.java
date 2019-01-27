@@ -28,7 +28,6 @@ public class CurriculumBean extends AbstractBean {
 
 	private static final long serialVersionUID = -5942086439519787220L;
 
-	@SuppressWarnings("cdi-ambiguous-dependency")
 	@Inject
 	@Param(name = "candidateId", required = true)
 	private Candidate candidate;
@@ -47,15 +46,16 @@ public class CurriculumBean extends AbstractBean {
 	private List<String> skills;
 
 	public void editEducation(final Education education) {
-		this.openDialog("educationDialog", this.buildDialogParameter("educationId", String.valueOf(education.getId())));
+		this.openDialog("educationDialog", buildDialogParameter("educationId", String.valueOf(education.getId())));
 	}
 
 	public void editJobExperience(final JobExperience jobExperience) {
-		this.openDialog("jobExperienceDialog", this.buildDialogParameter("jobExperienceId", String.valueOf(jobExperience.getId())));
+		this.openDialog("jobExperienceDialog",
+				buildDialogParameter("jobExperienceId", String.valueOf(jobExperience.getId())));
 	}
 
 	public void editLanguage(final Language language) {
-		this.openDialog("languageDialog", this.buildDialogParameter("languageId", String.valueOf(language.getId())));
+		this.openDialog("languageDialog", buildDialogParameter("languageId", String.valueOf(language.getId())));
 	}
 
 	public Candidate getCandidate() {
@@ -107,44 +107,47 @@ public class CurriculumBean extends AbstractBean {
 		this.education = new ArrayList<>(this.curriculum.getEducation());
 		this.jobExperiences = new ArrayList<>(this.curriculum.getJobExperiences());
 		this.languages = new ArrayList<>(this.curriculum.getLanguages());
-		this.orderJobExperiencesByDate();
-		this.orderEducationByDate();
+		orderJobExperiencesByDate();
+		orderEducationByDate();
 	}
 
 	public void newEducation() {
-		this.openDialog("educationDialog", this.buildDialogParameter("curriculumId", String.valueOf(this.curriculum.getId())));
+		this.openDialog("educationDialog",
+				buildDialogParameter("curriculumId", String.valueOf(this.curriculum.getId())));
 	}
 
 	public void newJobExperience() {
-		this.openDialog("jobExperienceDialog", this.buildDialogParameter("curriculumId", String.valueOf(this.curriculum.getId())));
+		this.openDialog("jobExperienceDialog",
+				buildDialogParameter("curriculumId", String.valueOf(this.curriculum.getId())));
 	}
 
 	public void newLanguage() {
-		this.openDialog("languageDialog", this.buildDialogParameter("curriculumId", String.valueOf(this.curriculum.getId())));
+		this.openDialog("languageDialog",
+				buildDialogParameter("curriculumId", String.valueOf(this.curriculum.getId())));
 	}
 
 	public void newSkill() {
-		this.openDialog("skillsDialog", this.buildDialogParameter("curriculumId", String.valueOf(this.curriculum.getId())));
+		this.openDialog("skillsDialog", buildDialogParameter("curriculumId", String.valueOf(this.curriculum.getId())));
 	}
 
 	public void onEditEducation(final SelectEvent event) {
-		this.init();
+		init();
 	}
 
 	public void onEditJobExperience(final SelectEvent event) {
-		this.init();
+		init();
 	}
 
 	public void onEditLanguage(final SelectEvent event) {
-		this.init();
+		init();
 	}
 
 	public void onEditSkill(final SelectEvent event) {
-		this.init();
+		init();
 	}
 
 	public void onEditSkills(final SelectEvent event) {
-		this.init();
+		init();
 	}
 
 	public void orderEducationByDate() {

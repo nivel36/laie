@@ -42,7 +42,6 @@ public class GlobalSearchBean extends AbstractBean {
 	@Inject
 	private transient JobOfferService jobService;
 
-	@SuppressWarnings("cdi-ambiguous-dependency")
 	@Inject
 	@Param(name = "searchText", required = true)
 	private String searchText;
@@ -53,11 +52,11 @@ public class GlobalSearchBean extends AbstractBean {
 	private transient UserService userService;
 
 	public List<Candidate> getCandidates() {
-		return candidates;
+		return this.candidates;
 	}
 
 	public List<Client> getClients() {
-		return clients;
+		return this.clients;
 	}
 
 	public List<JobOffer> getJobOffers() {
@@ -74,10 +73,9 @@ public class GlobalSearchBean extends AbstractBean {
 	}
 
 	public void search() {
-		if ((this.searchText == null) || (this.searchText.length() < 3)) {
+		if (this.searchText == null || this.searchText.length() < 3) {
 			Message.addWarning("error.search.camp_to_short", "error.search.camp_to_short");
-		}
-		else {
+		} else {
 			this.users = this.userService.search(this.searchText, Page.ALL);
 			this.jobOffers = this.jobService.search(this.searchText, Page.ALL);
 			this.candidates = this.candidateService.search(this.searchText, Page.ALL);

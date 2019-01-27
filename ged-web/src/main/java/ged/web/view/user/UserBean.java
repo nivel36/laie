@@ -37,7 +37,6 @@ public class UserBean extends AbstractBean {
 
 	private List<User> team;
 
-	@SuppressWarnings("cdi-ambiguous-dependency")
 	@Inject
 	@Param(name = "userId", required = true)
 	private User user;
@@ -47,7 +46,7 @@ public class UserBean extends AbstractBean {
 
 	public void editUser() {
 		logger.debug("Edit user action performed");
-		this.putValueToFlash("user", this.user);
+		putValueToFlash("user", this.user);
 	}
 
 	public void export() throws IOException {
@@ -70,7 +69,7 @@ public class UserBean extends AbstractBean {
 
 	@PostConstruct
 	public void init() {
-		logger.debug("User {} init", user.getEmail());
+		logger.debug("User {} init", this.user.getEmail());
 		this.team = this.userService.findSubordinateUsers(this.user);
 		this.jobOffers = this.jobOfferService.findAllJobOffersByOwner(this.user);
 		if (this.user.isDeleted()) {

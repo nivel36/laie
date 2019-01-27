@@ -36,7 +36,6 @@ public class JobOfferBean extends AbstractBean {
 
 	private JobOffer jobOffer;
 
-	@SuppressWarnings("cdi-ambiguous-dependency")
 	@Param(required = true)
 	@Inject
 	private Long jobOfferId;
@@ -45,11 +44,11 @@ public class JobOfferBean extends AbstractBean {
 	private transient JobOfferService jobService;
 
 	public void editJobOffer() {
-		this.putValueToFlash("jobOffer", this.jobOffer);
+		putValueToFlash("jobOffer", this.jobOffer);
 	}
 
 	public List<JobCandidature> getJobCandidatures() {
-		return jobCandidatures;
+		return this.jobCandidatures;
 	}
 
 	public JobOffer getJobOffer() {
@@ -63,12 +62,12 @@ public class JobOfferBean extends AbstractBean {
 		if (this.jobOffer == null) {
 			throw new PageNotFoundException("Bad jobOfferId");
 		}
-		this.jobCandidatures = this.jobService.findJobCandituresByJobOffer(jobOffer);
+		this.jobCandidatures = this.jobService.findJobCandituresByJobOffer(this.jobOffer);
 	}
 
 	// boolean -> is[name]
 	public boolean isUserHasPermissionToEditJobOffer() {
-		return sessionUser.hasPermissionToEdit(this.jobOffer);
+		return this.sessionUser.hasPermissionToEdit(this.jobOffer);
 	}
 
 	public void onCloseSelectCandidateDialog(final SelectEvent event) {
@@ -81,13 +80,13 @@ public class JobOfferBean extends AbstractBean {
 	}
 
 	public void openSelectCandidatesDialog() {
-		if (jobCandidatures.size() != 0) {
-			final String candidateIds = jobCandidatures.stream().map(jc -> String.valueOf(jc.getCandidate().getId())).collect(Collectors.joining("|"));
+		if (this.jobCandidatures.size() != 0) {
+			final String candidateIds = this.jobCandidatures.stream().map(jc -> String.valueOf(jc.getCandidate().getId()))
+					.collect(Collectors.joining("|"));
 			final Map<String, List<String>> parameters = new HashMap<>();
 			parameters.put("jobCandiatesId", Arrays.asList(candidateIds));
 			this.openBigDialog("/faces/candidate/candidateSelectDialog", parameters);
-		}
-		else {
+		} else {
 			this.openBigDialog("/faces/candidate/candidateSelectDialog");
 		}
 	}

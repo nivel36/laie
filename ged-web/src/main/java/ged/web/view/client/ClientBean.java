@@ -30,7 +30,6 @@ public class ClientBean extends AbstractBean {
 
 	private static final long serialVersionUID = 1412905869664752048L;
 
-	@SuppressWarnings("cdi-ambiguous-dependency")
 	@Inject
 	@Param(name = "clientId", required = true)
 	private Client client;
@@ -44,7 +43,7 @@ public class ClientBean extends AbstractBean {
 
 	public void editClient() {
 		logger.debug("Edit client action performed");
-		this.putValueToFlash("client", this.client);
+		putValueToFlash("client", this.client);
 	}
 
 	public void export() {
@@ -73,18 +72,19 @@ public class ClientBean extends AbstractBean {
 	}
 
 	public boolean isEditable() {
-		return sessionUser.hasPermissionToEdit(this.client);
+		return this.sessionUser.hasPermissionToEdit(this.client);
 	}
 
 	public void newContact() {
 		logger.debug("New contact action performed");
-		final Map<String, List<String>> params = this.buildDialogParameter("clientId", String.valueOf(this.client.getId()));
+		final Map<String, List<String>> params = buildDialogParameter("clientId",
+				String.valueOf(this.client.getId()));
 		this.openDialog("/faces/client/contactDialog", params);
 	}
 
 	public void newJobOffer() {
 		logger.debug("New job offer action performed");
-		this.putValueToFlash("client", client);
+		putValueToFlash("client", this.client);
 	}
 
 	public void onCloseContactDialog(final SelectEvent e) {

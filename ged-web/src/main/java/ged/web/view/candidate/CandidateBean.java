@@ -31,7 +31,6 @@ public class CandidateBean extends AbstractBean {
 
 	private static final long serialVersionUID = 1577879781927493283L;
 
-	@SuppressWarnings("cdi-ambiguous-dependency")
 	@Inject
 	@Param(name = "candidateId", required = true)
 	private Candidate candidate;
@@ -49,11 +48,11 @@ public class CandidateBean extends AbstractBean {
 	private final List<String> tags = new ArrayList<>();
 
 	public void editCandidate() {
-		this.putValueToFlash("candidate", this.candidate);
+		putValueToFlash("candidate", this.candidate);
 	}
 
 	public void editCurriculum() {
-		this.putValueToFlash("curriculum", this.curriculum);
+		putValueToFlash("curriculum", this.curriculum);
 	}
 
 	public Candidate getCandidate() {
@@ -74,7 +73,7 @@ public class CandidateBean extends AbstractBean {
 
 	@PostConstruct
 	public void init() {
-		logger.trace("Candidate {} init", candidate);
+		logger.trace("Candidate {} init", this.candidate);
 		if (this.candidate.getAddress() == null) {
 			this.candidate.setAddress(new Address());
 		}

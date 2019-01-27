@@ -46,20 +46,18 @@ public class LoginBean extends AbstractBean {
 
 	private transient String password;
 
-	@SuppressWarnings("cdi-ambiguous-dependency")
 	@Inject
 	private SecurityContext securityContext;
 
 	private String username;
 
 	private void authenticate(final AuthenticationParameters parameters) {
-		final AuthenticationStatus status = securityContext.authenticate(getRequest(), getResponse(), parameters);
+		final AuthenticationStatus status = this.securityContext.authenticate(getRequest(), getResponse(), parameters);
 
 		if (status == SEND_FAILURE) {
 			addGlobalError("auth.message.error.failure");
 			validationFailed();
-		}
-		else if (status == SEND_CONTINUE) {
+		} else if (status == SEND_CONTINUE) {
 			responseComplete(); // Prevent JSF from rendering a response so authentication mechanism can
 								// continue.
 		}
@@ -81,7 +79,7 @@ public class LoginBean extends AbstractBean {
 	@PostConstruct
 	public void init() {
 		logger.debug("LOGIN Bean init");
-		final String username = externalContext.getRemoteUser();
+		final String username = this.externalContext.getRemoteUser();
 		if (username != null) {
 			logger.warn("User {} alredy logged", username);
 			Navigate.to(PageEnum.INDEX);
@@ -91,8 +89,9 @@ public class LoginBean extends AbstractBean {
 
 	public void login() {
 		logger.debug("Username {} login", this.username);
-		authenticate(withParams().credential(new UsernamePasswordCredential(username, password)).newAuthentication(true));
-		loginService.saveLastConnection(this.username);
+		authenticate(
+				withParams().credential(new UsernamePasswordCredential(this.username, this.password)).newAuthentication(true));
+		this.loginService.saveLastConnection(this.username);
 	}
 
 	public String logout() {
