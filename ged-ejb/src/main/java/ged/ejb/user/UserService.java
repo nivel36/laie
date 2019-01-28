@@ -11,12 +11,10 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ged.ejb.candidate.Origin;
 import ged.ejb.core.AbstractAuditedService;
 import ged.ejb.core.model.AbstractDao;
 import ged.ejb.core.model.Page;
 import ged.ejb.core.model.Repository;
-import ged.ejb.core.security.Securized;
 import ged.ejb.user.role.Role;
 import ged.ejb.user.role.RoleDao;
 
@@ -32,10 +30,6 @@ public class UserService extends AbstractAuditedService<User> {
 	@Inject
 	@Repository
 	private UserDao userDao;
-
-	public List<Origin> findAllOrigins() {
-		return this.userDao.findAllOrigins();
-	}
 
 	public List<Role> findAllRoles() {
 		return this.roleDao.findAll(Page.ALL);
@@ -80,7 +74,7 @@ public class UserService extends AbstractAuditedService<User> {
 
 	private boolean hasValidManager(final User user) {
 		final User manager = user.getManager();
-		if (user.isAdmin() && (manager != null)) {
+		if (user.isAdmin() && manager != null) {
 			return false;
 		}
 		return true;
@@ -100,7 +94,6 @@ public class UserService extends AbstractAuditedService<User> {
 	}
 
 	@Override
-	@Securized
 	public User save(final User user) {
 		Objects.requireNonNull(user);
 		logger.debug("Saving user {}", user.getEmail());
@@ -108,8 +101,9 @@ public class UserService extends AbstractAuditedService<User> {
 			logger.warn("The user {} can't be his/her manager", user.getEmail());
 			throw new BadManagerException("User can't be his/her manager");
 		}
-		if (!this.hasValidManager(user)) {
-			logger.warn("The user {} has an admin role but has {} as a manager", user.getEmail(), user.getManager().getRole());
+		if (!hasValidManager(user)) {
+			logger.warn("The user {} has an admin role but has {} as a manager", user.getEmail(),
+					user.getManager().getRole());
 			throw new BadManagerException("Admins can't have a manager");
 		}
 		return super.save(user);
