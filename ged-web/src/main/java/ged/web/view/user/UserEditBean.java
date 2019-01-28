@@ -65,7 +65,7 @@ public class UserEditBean extends AbstractBean {
 
 	public void changeRoleListener() {
 		logger.trace("Change role listener triggered");
-		if (this.user.isAdmin()) {
+		if (isAdmin()) {
 			this.user.setManager(null);
 		}
 	}
@@ -87,11 +87,14 @@ public class UserEditBean extends AbstractBean {
 	public void init() {
 		this.user = this.getValueFromFlash("user");
 		if (this.user == null) {
-			this.newUserInit();
+			newUserInit();
+		} else {
+			editUserInit();
 		}
-		else {
-			this.editUserInit();
-		}
+	}
+
+	public boolean isAdmin() {
+		return this.user.isAdmin();
 	}
 
 	public boolean isNewUser() {
@@ -104,7 +107,7 @@ public class UserEditBean extends AbstractBean {
 			logger.error("User {} hasn't got priviliges to add a new user", this.sessionUser);
 			throw new SecurityException();
 		}
-		this.buildUser();
+		buildUser();
 		this.cancelUrl = "/faces/user/userSearch";
 	}
 
@@ -120,7 +123,7 @@ public class UserEditBean extends AbstractBean {
 
 	public List<User> searchManager(final String query) {
 		logger.trace("Searching for manager with the string {}", query);
-		if ((query == null) || (query.trim().length() < 3)) {
+		if (query == null || query.trim().length() < 3) {
 			return new ArrayList<>();
 		}
 		final List<User> managers = this.userService.search(query, Page.ALL);
@@ -150,8 +153,7 @@ public class UserEditBean extends AbstractBean {
 		try (InputStream inputStream = uploadedFile.getInputstream()) {
 			final String uuid = this.fileUploadService.uploadImage(inputStream);
 			this.user.setImageFileName(uuid);
-		}
-		catch (final IOException e) {
+		} catch (final IOException e) {
 			throw new UncheckedIOException(e);
 		}
 	}

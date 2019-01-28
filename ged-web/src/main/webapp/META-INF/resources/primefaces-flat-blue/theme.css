@@ -78,10 +78,6 @@ body .ui-autocomplete {
 	width: 100%;
 }
 
-body .ui-autocomplete {
-	width: 100%;
-}
-
 body .ui-autocomplete-panel {
 	display: flex;
 	background: white;
@@ -102,8 +98,6 @@ body .ui-autocomplete-panel .ui-autocomplete-table td {
 	display: flex;
 	align-items: center;
 }
-
-
 
 /*Button*/
 body .ui-button {
@@ -369,6 +363,10 @@ body .ui-inputtext, body .ui-inputfield.hasDatepicker, body .ui-autocomplete-inp
 	width: 100%;
 	border-radius: 4px;
 	padding: 0.5em;
+}
+
+body .ui-inputtext.ui-state-disabled, body .ui-inputfield.hasDatepicker.ui-state-disabled, body .ui-autocomplete-input.ui-state-disabled {
+	background: #efefef;
 }
 
 body .ui-datatable .ui-paginator {

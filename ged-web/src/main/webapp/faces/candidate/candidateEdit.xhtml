@@ -21,7 +21,7 @@
 				</header>
 				<div class="content">
 					<div class="multi-column">
-						<div class="column candidate-metadata" style="flex-grow: 1">
+						<div class="column candidate-metadata">
 							<cc:inputImage id="candidate_image" value="#{candidateEditBean.candidate.imageFileName}" fileUploadListener="#{candidateEditBean.uploadImage}" />
 							<div class="candidate-rating" style="text-align: center;">
 								<p:rating value="#{candidateEditBean.candidate.rating}" cancel="false">
@@ -32,7 +32,7 @@
 								<p:chips id="tags" value="#{candidateEditBean.tags}" label="#{i18n['candidateEditBean.tags']}" converter="stringConverter" style-class="tags" />
 							</div>
 						</div>
-						<div class="column" style="flex-grow: 3">
+						<div class="column">
 							<h3>#{i18n['candidate.personal_information']}</h3>
 
 							<cc:inputText id="name" label="#{i18n['candidate.name']}" value="#{candidateEditBean.candidate.name}" required="true" />
