@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,9 +31,9 @@ public class UserDaoTest {
 
 		@Test
 		public void shouldReturnAList() {
-			when(persistenceFacade.findAll(User.class, Page.ALL)).thenReturn(new ArrayList<User>());
+			when(UserDaoTest.this.persistenceFacade.findAll(User.class, Page.ALL)).thenReturn(new ArrayList<User>());
 
-			final List<User> users = userDao.findAll(Page.ALL);
+			final List<User> users = UserDaoTest.this.userDao.findAll(Page.ALL);
 			assertEquals(0, users.size());
 		}
 	}
@@ -45,7 +44,7 @@ public class UserDaoTest {
 		@Test
 		public void nullUserShouldThrowNullPointerException() {
 			assertThrows(NullPointerException.class, () -> {
-				userDao.findSubordinateUsers(null);
+				UserDaoTest.this.userDao.findSubordinateUsers(null);
 			});
 		}
 
@@ -53,9 +52,10 @@ public class UserDaoTest {
 		public void userWithoutSubordinatesShouldReturnAnEmptyList() {
 			final User user = mockUser(1L, "abel@test.com", null);
 
-			when(persistenceFacade.findByQuery(User.class, "User.findSubordinateUsers", map("id", 1L), Page.ALL)).thenThrow(new NoResultException());
+			when(UserDaoTest.this.persistenceFacade.findByQuery(User.class, "User.findSubordinateUsers", map("id", 1L),
+					Page.ALL)).thenThrow(new NoResultException());
 
-			final List<User> subordinateUsersFromDataBases = userDao.findSubordinateUsers(user);
+			final List<User> subordinateUsersFromDataBases = UserDaoTest.this.userDao.findSubordinateUsers(user);
 			assertEquals(0, subordinateUsersFromDataBases.size());
 		}
 
@@ -68,9 +68,10 @@ public class UserDaoTest {
 			final List<User> subordinateUsers = new ArrayList<>();
 			subordinateUsers.add(subordinate);
 
-			when(persistenceFacade.findByQuery(User.class, "User.findSubordinateUsers", map("id", 1L), Page.ALL)).thenReturn(subordinateUsers);
+			when(UserDaoTest.this.persistenceFacade.findByQuery(User.class, "User.findSubordinateUsers", map("id", 1L),
+					Page.ALL)).thenReturn(subordinateUsers);
 
-			final List<User> subordinateUsersFromDataBase = userDao.findSubordinateUsers(manager);
+			final List<User> subordinateUsersFromDataBase = UserDaoTest.this.userDao.findSubordinateUsers(manager);
 			assertEquals(1, subordinateUsersFromDataBase.size());
 		}
 	}
@@ -81,7 +82,7 @@ public class UserDaoTest {
 		@Test
 		public void nullEmailShouldThrowNullPointerException() {
 			assertThrows(NullPointerException.class, () -> {
-				userDao.findUserByEmail(null);
+				UserDaoTest.this.userDao.findUserByEmail(null);
 			});
 		}
 
@@ -89,110 +90,20 @@ public class UserDaoTest {
 		public void userFoundShouldReturnUser() {
 			final User user = mockUser(1L, "abel@test.com", null);
 
-			when(persistenceFacade.findByQuery(User.class, "User.findByEmail", map("email", "abel@test.com"))).thenReturn(user);
+			when(UserDaoTest.this.persistenceFacade.findByQuery(User.class, "User.findByEmail",
+					map("email", "abel@test.com"))).thenReturn(user);
 
-			final User userInDataBase = userDao.findUserByEmail("abel@test.com");
+			final User userInDataBase = UserDaoTest.this.userDao.findUserByEmail("abel@test.com");
 			assertEquals(user, userInDataBase);
 		}
 
 		@Test
 		public void userNotFoundShouldReturnNull() {
-			when(persistenceFacade.findByQuery(User.class, "User.findByEmail", map("email", "abel@test.com"))).thenThrow(new NoResultException());
+			when(UserDaoTest.this.persistenceFacade.findByQuery(User.class, "User.findByEmail",
+					map("email", "abel@test.com"))).thenThrow(new NoResultException());
 
-			final User userInDataBase = userDao.findUserByEmail("abel@test.com");
+			final User userInDataBase = UserDaoTest.this.userDao.findUserByEmail("abel@test.com");
 			assertNull(userInDataBase);
-		}
-	}
-
-	@Nested
-	class FndUsersOffline {
-
-		@Test
-		public void nullDatesShouldThrowNullPointerException() {
-			assertThrows(NullPointerException.class, () -> {
-				userDao.findUsersOffline(null, null);
-			});
-		}
-
-		@Test
-		public void nullEndDateShouldThrowNullPointerException() {
-			assertThrows(NullPointerException.class, () -> {
-				userDao.findUsersOffline(LocalDateTime.now(), null);
-			});
-		}
-
-		@Test
-		public void nullStartDateShouldThrowNullPointerException() {
-			assertThrows(NullPointerException.class, () -> {
-				userDao.findUsersOffline(null, LocalDateTime.now());
-			});
-		}
-
-		@Test
-		public void shouldReturnAList() {
-			final LocalDateTime start = LocalDateTime.now();
-			final LocalDateTime end = start.plusDays(1);
-
-			when(persistenceFacade.findByQuery(User.class, "User.findUsersOffline", map("start", start).and("end", end), Page.ALL))
-					.thenReturn(new ArrayList<>());
-
-			final List<User> usersInDataBase = userDao.findUsersOffline(start, end);
-			assertEquals(0, usersInDataBase.size());
-		}
-
-		@Test
-		public void startDateAfterEndDateShouldThrowIllegalStateException() {
-			assertThrows(IllegalStateException.class, () -> {
-				final LocalDateTime start = LocalDateTime.now();
-				final LocalDateTime end = start.minusDays(1);
-				userDao.findUsersOffline(start, end);
-			});
-		}
-	}
-
-	@Nested
-	class FndUsersOnline {
-
-		@Test
-		public void nullDatesShouldThrowNullPointerException() {
-			assertThrows(NullPointerException.class, () -> {
-				userDao.findUsersOnline(null, null);
-			});
-		}
-
-		@Test
-		public void nullEndDateShouldThrowNullPointerException() {
-			assertThrows(NullPointerException.class, () -> {
-				userDao.findUsersOnline(LocalDateTime.now(), null);
-			});
-		}
-
-		@Test
-		public void nullStartDateShouldThrowNullPointerException() {
-			assertThrows(NullPointerException.class, () -> {
-				userDao.findUsersOnline(null, LocalDateTime.now());
-			});
-		}
-
-		@Test
-		public void shouldReturnAList() {
-			final LocalDateTime start = LocalDateTime.now();
-			final LocalDateTime end = start.plusDays(1);
-
-			when(persistenceFacade.findByQuery(User.class, "User.findUsersOnline", map("start", start).and("end", end), Page.ALL))
-					.thenReturn(new ArrayList<>());
-
-			final List<User> usersInDataBase = userDao.findUsersOnline(start, end);
-			assertEquals(0, usersInDataBase.size());
-		}
-
-		@Test
-		public void startDateAfterEndDateShouldThrowIllegalStateException() {
-			assertThrows(IllegalStateException.class, () -> {
-				final LocalDateTime start = LocalDateTime.now();
-				final LocalDateTime end = start.minusDays(1);
-				userDao.findUsersOnline(start, end);
-			});
 		}
 	}
 
@@ -201,24 +112,26 @@ public class UserDaoTest {
 
 		@Test
 		public void duplicatedEmailShouldReturnTrue() {
-			when(persistenceFacade.findByQuery(Boolean.class, "User.emailExists", map("email", "abel@test.com"))).thenReturn(Boolean.TRUE);
+			when(UserDaoTest.this.persistenceFacade.findByQuery(Boolean.class, "User.emailExists",
+					map("email", "abel@test.com"))).thenReturn(Boolean.TRUE);
 
-			final boolean result = userDao.isEmailInUse("abel@test.com");
+			final boolean result = UserDaoTest.this.userDao.isEmailInUse("abel@test.com");
 			assertTrue(result);
 		}
 
 		@Test
 		public void nonDuplicatedEmailShouldReturnFalse() {
-			when(persistenceFacade.findByQuery(Boolean.class, "User.emailExists", map("email", "abel@test.com"))).thenReturn(Boolean.FALSE);
+			when(UserDaoTest.this.persistenceFacade.findByQuery(Boolean.class, "User.emailExists",
+					map("email", "abel@test.com"))).thenReturn(Boolean.FALSE);
 
-			final boolean result = userDao.isEmailInUse("abel@test.com");
+			final boolean result = UserDaoTest.this.userDao.isEmailInUse("abel@test.com");
 			assertEquals(Boolean.FALSE, result);
 		}
 
 		@Test
 		public void nullEmailShouldThrowNullPointerException() {
 			assertThrows(NullPointerException.class, () -> {
-				userDao.isEmailInUse(null);
+				UserDaoTest.this.userDao.isEmailInUse(null);
 			});
 		}
 	}
@@ -231,9 +144,10 @@ public class UserDaoTest {
 			final User manager = mockUser(1L, "abel@test.com", null);
 			final User subordinate = mockUser(null, "bernat@test.com", manager);
 
-			when(persistenceFacade.findByQuery(Boolean.class, "User.emailExists", map("email", subordinate.getEmail()))).thenReturn(Boolean.FALSE);
+			when(UserDaoTest.this.persistenceFacade.findByQuery(Boolean.class, "User.emailExists",
+					map("email", subordinate.getEmail()))).thenReturn(Boolean.FALSE);
 
-			final User returnedUser = userDao.save(subordinate);
+			final User returnedUser = UserDaoTest.this.userDao.save(subordinate);
 			assertEquals(subordinate, returnedUser);
 		}
 
@@ -241,17 +155,43 @@ public class UserDaoTest {
 		public void insertUserWithoutManagerShouldReturnUser() {
 			final User user = mockUser(null, "abel@test.com", null);
 
-			when(persistenceFacade.findByQuery(Boolean.class, "User.emailExists", map("email", user.getEmail()))).thenReturn(Boolean.FALSE);
+			when(UserDaoTest.this.persistenceFacade.findByQuery(Boolean.class, "User.emailExists",
+					map("email", user.getEmail()))).thenReturn(Boolean.FALSE);
 
-			final User returnedUser = userDao.save(user);
+			final User returnedUser = UserDaoTest.this.userDao.save(user);
 			assertEquals(user, returnedUser);
 		}
 
 		@Test
 		public void nullUserShouldThrowNulllPointerException() {
 			assertThrows(NullPointerException.class, () -> {
-				userDao.save(null);
+				UserDaoTest.this.userDao.save(null);
 			});
+		}
+
+		@Test
+		public void updateUserWithDuplicatedEmailShouldThrowDuplicateEmailException() {
+			final User user = mockUser(1L, "abel@test.com", null);
+			final User userWithSameEmail = mockUser(2L, "abel@test.com", null);
+			when(UserDaoTest.this.persistenceFacade.findByQuery(User.class, "User.findByEmail",
+					map("email", "abel@test.com"))).thenReturn(userWithSameEmail);
+
+			assertThrows(DuplicateEmailException.class, () -> {
+				UserDaoTest.this.userDao.save(user);
+			});
+		}
+
+		@Test
+		public void updateUserWithNewManagerShouldReturnUser() {
+			final User userInDatabase = mockUser(1L, "abel@test.com", null);
+			final User manager = mockUser(2L, "bernat@test.com", null);
+			final User userToUpdate = mockUser(1L, "abel@test.com", manager);
+			when(UserDaoTest.this.persistenceFacade.findByQuery(User.class, "User.findByEmail",
+					map("email", "abel@test.com"))).thenReturn(userInDatabase);
+
+			when(UserDaoTest.this.persistenceFacade.find(User.class, 1L)).thenReturn(userInDatabase);
+
+			UserDaoTest.this.userDao.save(userToUpdate);
 		}
 	}
 
@@ -260,24 +200,27 @@ public class UserDaoTest {
 
 		@Test
 		public void emptyTextShouldReturnList() {
-			when(persistenceFacade.search(User.class, Page.ALL, new ArrayList<SortOrder>(), "", "name", "surname", "email")).thenReturn(new ArrayList<>());
-			final List<User> users = userDao.search("", Page.ALL);
+			when(UserDaoTest.this.persistenceFacade.search(User.class, Page.ALL, new ArrayList<SortOrder>(), "", "name",
+					"surname", "email")).thenReturn(new ArrayList<>());
+			final List<User> users = UserDaoTest.this.userDao.search("", Page.ALL);
 			assertEquals(0, users.size());
 		}
 
 		@Test
 		public void nullTextShouldReturnList() {
-			when(persistenceFacade.search(User.class, Page.ALL, new ArrayList<SortOrder>(), null, "name", "surname", "email")).thenReturn(new ArrayList<>());
+			when(UserDaoTest.this.persistenceFacade.search(User.class, Page.ALL, new ArrayList<SortOrder>(), null,
+					"name", "surname", "email")).thenReturn(new ArrayList<>());
 
-			final List<User> users = userDao.search(null, Page.ALL);
+			final List<User> users = UserDaoTest.this.userDao.search(null, Page.ALL);
 			assertEquals(0, users.size());
 		}
 
 		@Test
 		public void validTextshouldReturnList() {
-			when(persistenceFacade.search(User.class, Page.ALL, new ArrayList<SortOrder>(), "aaron", "name", "surname", "email")).thenReturn(new ArrayList<>());
+			when(UserDaoTest.this.persistenceFacade.search(User.class, Page.ALL, new ArrayList<SortOrder>(), "aaron",
+					"name", "surname", "email")).thenReturn(new ArrayList<>());
 
-			final List<User> users = userDao.search("aaron", Page.ALL);
+			final List<User> users = UserDaoTest.this.userDao.search("aaron", Page.ALL);
 			assertEquals(0, users.size());
 		}
 	}

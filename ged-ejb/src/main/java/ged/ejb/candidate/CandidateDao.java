@@ -28,6 +28,10 @@ public class CandidateDao extends AbstractDao<Candidate> {
 		return this.findByQuery(Boolean.class, "Candidate.emailExists", map("email", email));
 	}
 
+	public List<Origin> findAllOrigins() {
+		return getPersistenceFacade().findAll(Origin.class, Page.ALL);
+	}
+
 	public Candidate findCandidateData(final long candidateId) {
 		if (candidateId < 1) {
 			logger.warn("Bad candidate id: {}", candidateId);
@@ -40,8 +44,7 @@ public class CandidateDao extends AbstractDao<Candidate> {
 		try {
 			Objects.requireNonNull(jobOffer);
 			return this.findByQuery(Candidate.class, "Candidate.findByJobOffer", map("jobOffer", jobOffer), Page.ALL);
-		}
-		catch (final NoResultException e) {
+		} catch (final NoResultException e) {
 			logger.debug("No candidates found", e);
 			return new ArrayList<>();
 		}
@@ -52,7 +55,8 @@ public class CandidateDao extends AbstractDao<Candidate> {
 			logger.warn("Bad number of candidates {}", numberOfCandidates);
 			throw new IllegalArgumentException("Bad number of candidates: " + numberOfCandidates);
 		}
-		return this.findByQuery(Candidate.class, "Candidate.findLastAddedCandidates", null, Page.of(1, numberOfCandidates));
+		return this.findByQuery(Candidate.class, "Candidate.findLastAddedCandidates", null,
+				Page.of(1, numberOfCandidates));
 	}
 
 	public long findNumberOfCandidates() {
@@ -66,13 +70,13 @@ public class CandidateDao extends AbstractDao<Candidate> {
 
 	private boolean isDuplicatedEmail(final String emailToInsert, final String emailInRepository) {
 		final boolean candidateHasChangedHisEmail = !emailToInsert.equals(emailInRepository);
-		final boolean newEmailAlredyExists = this.emailExists(emailToInsert);
+		final boolean newEmailAlredyExists = emailExists(emailToInsert);
 		return candidateHasChangedHisEmail && newEmailAlredyExists;
 	}
 
 	@Override
 	protected void preInsert(final Candidate candidate) {
-		if (this.emailExists(candidate.getEmail())) {
+		if (emailExists(candidate.getEmail())) {
 			logger.warn("The email {} is in use", candidate.getEmail());
 			throw new ValidationException("Email duplicated");
 		}
@@ -80,8 +84,8 @@ public class CandidateDao extends AbstractDao<Candidate> {
 
 	@Override
 	protected void preUpdate(final Candidate candidate) {
-		final Candidate candidateInRepository = this.find(candidate.getId());
-		if (this.isDuplicatedEmail(candidate.getEmail(), candidateInRepository.getEmail())) {
+		final Candidate candidateInRepository = find(candidate.getId());
+		if (isDuplicatedEmail(candidate.getEmail(), candidateInRepository.getEmail())) {
 			logger.warn("The email {} is in use", candidate.getEmail());
 			throw new ValidationException("Email duplicated");
 		}

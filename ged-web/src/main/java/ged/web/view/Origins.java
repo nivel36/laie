@@ -8,8 +8,8 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import ged.ejb.candidate.CandidateService;
 import ged.ejb.candidate.Origin;
-import ged.ejb.user.UserService;
 
 @Named
 @ApplicationScoped
@@ -17,22 +17,22 @@ public class Origins implements Serializable {
 
 	private static final long serialVersionUID = -2279622649333101152L;
 
+	@Inject
+	private transient CandidateService candidateService;
+
 	private List<Origin> listOfOrigins;
 
-	@Inject
-	private transient UserService userService;
-
 	public List<Origin> getList() {
-		return listOfOrigins;
+		return this.listOfOrigins;
 	}
 
 	@PostConstruct
 	public void init() {
-		listOfOrigins = userService.findAllOrigins();
+		this.listOfOrigins = this.candidateService.findAllOrigins();
 	}
 
-	public void setUserService(final UserService userService) {
-		this.userService = userService;
+	public void setCandidateService(final CandidateService candidateService) {
+		this.candidateService = candidateService;
 	}
 
 }

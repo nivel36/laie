@@ -44,6 +44,10 @@ public class CandidateService extends AbstractAuditedService<Candidate> {
 		this.serverFileDao.save(file);
 	}
 
+	public List<Origin> findAllOrigins() {
+		return this.candidateDao.findAllOrigins();
+	}
+
 	public Candidate findCandidateData(final long candidateId) {
 		if (candidateId < 1) {
 			logger.warn("Bad candidate id {}", candidateId);

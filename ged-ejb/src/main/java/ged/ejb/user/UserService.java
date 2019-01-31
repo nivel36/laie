@@ -1,7 +1,6 @@
 package ged.ejb.user;
 
 import java.lang.invoke.MethodHandles;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -51,20 +50,6 @@ public class UserService extends AbstractAuditedService<User> {
 		Objects.requireNonNull(email);
 		logger.debug("Finding user by email {}", email);
 		return this.userDao.findUserByEmail(email);
-	}
-
-	public List<User> findUsersOfflineLastMonth() {
-		logger.debug("Finding users offline last month");
-		final LocalDateTime today = LocalDateTime.now();
-		final LocalDateTime oneMonthAgo = today.minusMonths(1);
-		return this.userDao.findUsersOffline(oneMonthAgo, today);
-	}
-
-	public List<User> findUsersOnlineLastWeek() {
-		logger.debug("Finding users online last week");
-		final LocalDateTime today = LocalDateTime.now();
-		final LocalDateTime oneWeekAgo = today.minusDays(7);
-		return this.userDao.findUsersOnline(oneWeekAgo, today);
 	}
 
 	@Override

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://ged.com/i18n" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:p="http://primefaces.org/ui"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://ged.com/i18n"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:p="http://primefaces.org/ui"
 	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
@@ -10,93 +11,43 @@
 	<ui:param name="selectedMenu" value="users" />
 
 	<ui:define name="content">
-		<p:breadCrumb styleClass="breadcrumb" >
+		<p:breadCrumb styleClass="breadcrumb">
 			<p:menuitem value="#{i18n['menu.index']}" url="/faces/index.xhtml" />
 			<p:menuitem value="#{i18n['user.users']}" url="/faces/user/userSearch.xhtml" />
 			<p:menuitem value="#{userBean.user}" disabled="true" />
 		</p:breadCrumb>
 
 		<h:form>
-			<p:panel header="#{userBean.user}">
-				<div class="grid">
-					<div class="col-12 lg-3">
-						<div class="user-card">
-							<p:outputPanel layout="block" id="userImage" styleClass="user-image">
-								<p:graphicImage styleClass="image" value="/images/#{userBean.user.imageFileName}" rendered="#{not empty userBean.user.imageFileName}" />
-								<p:graphicImage styleClass="image" value="/resources/img/default-avatar.png" rendered="#{empty userBean.user.imageFileName}" />
-							</p:outputPanel>
+			<div class="candidate panel">
+				<header>
+					<div class="personal-data">
+						<div class="candidate-image">
+							<p:graphicImage styleClass="user-image" value="/images/#{userBean.user.imageFileName}"
+								rendered="#{not empty userBean.user.imageFileName}" />
+							<p:graphicImage styleClass="user-image" value="/resources/img/default-avatar.png"
+								rendered="#{empty userBean.user.imageFileName}" />
+						</div>
+						<div class="candidate-data">
+							<div class="name">#{userBean.user.fullName}</div>
+							<div class="job-profile">#{i18n:translate(userBean.user.role)}</div>
+							<div class="data email">
+								<span class="icon"><i class="fa fa-envelope"></i></span><span class="text">#{userBean.user.email}</span>
+							</div>
+							<h:panelGroup layout="block" styleClass="data phone" rendered="#{not empty userBean.user.phoneNumber}">
+								<span class="icon"><i class="fa fa-phone"></i></span><span class="text">#{userBean.user.phoneNumber}</span>
+							</h:panelGroup>
 						</div>
 					</div>
 
-					<div class="col-12 lg-9">
-						<div class="grid">
-							<div class="col-12 md-6">
-								<div class="form-group">
-									<p:outputLabel value="#{i18n['user.name']}" for="name" />
-									<p:inputText id="name" value="#{userBean.user.name}" required="true" readonly="true" />
-								</div>
-							</div>
-
-							<div class="col-12 md-6">
-								<div class="form-group">
-									<p:outputLabel value="#{i18n['user.surname']}" for="surname" />
-									<p:inputText id="surname" value="#{userBean.user.surname}" required="true" readonly="true" />
-								</div>
-							</div>
-
-							<div class="col-12 md-6">
-								<div class="form-group">
-									<p:outputLabel value="#{i18n['user.email']}" for="email" />
-									<p:inputText id="email" value="#{userBean.user.email}" readonly="true" />
-								</div>
-							</div>
-
-							<div class="col-12 md-6">
-								<div class="form-group">
-									<p:outputLabel value="#{i18n['user.phone_number']}" for="phone_number" />
-									<p:inputText id="phone_number" value="#{userBean.user.phoneNumber}" readonly="true" />
-								</div>
-							</div>
-
-							<div class="col-12 md-6">
-								<div class="form-group">
-									<p:outputLabel value="#{i18n['user.role']}" for="role" />
-									<p:selectOneMenu id="role" name="role" value="#{userBean.user.role}" disabled="true">
-										<f:selectItems value="#{roles.list}" var="role" itemValue="#{role}" itemLabel="#{i18n:translate(role.name)}" />
-									</p:selectOneMenu>
-								</div>
-							</div>
-
-							<div class="col-12 md-6">
-								<div class="form-group">
-									<p:outputLabel value="#{i18n['user.manager']}" for="manager" />
-									<p:inputText id="manager" value="#{userBean.user.manager.fullName}" readonly="true" />
-								</div>
-							</div>
-
-							<div class="col-12 md-6">
-								<div class="form-group">
-									<p:outputLabel value="#{i18n['user.date_of_join']}" for="date_of_join" />
-									<p:calendar id="date_of_join" value="#{userBean.user.dateOfJoin}" readonly="true" disabled="true" pattern="dd/MM/yyyy">
-										<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
-									</p:calendar>
-								</div>
-							</div>
-						</div>
-
-						<div class="grid">
-							<div class="col-12">
-								<div class="form-action-primary">
-									<p:commandButton id="exportExcel" icon="fa fa-file-excel-o" value="#{i18n['action.export']}" action="#{userBean.export}"
-										rendered="#{sessionUser.hasPermissionToEdit(userBean.user)}" />
-									<p:commandButton value="#{i18n['action.edit']}" actionListener="#{userBean.editUser}" action="userEdit?faces-redirect=true" process="@this"
-										styleClass="btn-primary" rendered="#{sessionUser.admin}" />
-								</div>
-							</div>
-						</div>
+					<div class="buttons">
+						<p:commandButton value="#{i18n['action.export']}" process="@this" actionListener="#{userBean.editUser}"
+							action="/faces/user/userEdit?faces-redirect=true" />
+						<p:commandButton value="#{i18n['action.edit']}" process="@this" actionListener="#{userBean.editUser}"
+							action="/faces/user/userEdit?faces-redirect=true" />
 					</div>
-				</div>
-			</p:panel>
+				</header>
+
+			</div>
 		</h:form>
 
 		<div class="col-12 lg-6">
