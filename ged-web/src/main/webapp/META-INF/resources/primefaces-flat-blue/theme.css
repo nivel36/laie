@@ -355,7 +355,7 @@ body .ui-datepicker .ui-datepicker-calendar a.ui-state-active {
 	color: white;
 }
 
-body .ui-inputtext, body .ui-inputfield.hasDatepicker, body .ui-autocomplete-input {
+body .ui-inputtext, body .ui-inputfield.hasDatepicker, body .ui-autocomplete-input, body .ui-password {
 	outline: medium none;
 	background: white;
 	font-size: 1em;

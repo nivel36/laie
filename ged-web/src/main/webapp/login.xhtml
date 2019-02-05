@@ -4,59 +4,46 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
 <h:head>
 	<title>${i18n['login.login']}</title>
-		<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
-		<meta name="viewport" content="width=device-width,maximum-scale=2" />
-		<h:outputStylesheet name="css/reset.css" />
-		<h:outputStylesheet name="css/flat-classic-blue/components.css" />
+	<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+	<meta name="viewport" content="width=device-width,maximum-scale=2" />
+	<h:outputStylesheet name="css/reset.css" />
+	<h:outputStylesheet name="css/flat-classic-blue/components.css" />
 </h:head>
 <h:body>
 	<p:growl id="msg" sticky="true" />
-	<div class="full-page login-page" data-image="/web/resources/img/loginbg.jpg">
+	<div class="full-page login-page">
 		<div class="content">
-			<h:form id="form">
-				<p:panel styleClass="card-login card-hidden" header="${i18n['login.login']}">
-					<div class="grid">
-						<div class="col-12">
-							<div class="inputgroup">
-								<span class="inputgroup-addon"> <em class="fa fa-user" /></span>
-								<p:inputText id="username" value="#{loginBean.username}" />
+			<h:form>
+				<div class="login panel">
+					<div class="panel-content">
+						<div class="multi-column">
+							<div class="column" style="flex: 1">
+								<h2>Lorem Ipsum</h2>
+								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+									dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+									commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+									pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
+									laborum.</p>
 							</div>
-						</div>
-						<div class="col-12">
-							<div class="inputgroup">
-								<span class="inputgroup-addon"> <em class="fa fa-lock" /></span>
-								<p:password id="password" value="#{loginBean.password}" />
-							</div>
-						</div>
-						<div class="col-12">
-							<div class="form-action-primary">
-								<p:commandButton action="#{loginBean.login}" value="${i18n['login.enter']}" />
+							<div class="column" style="flex: 1">
+							<h2>${i18n['login.login']}</h2>
+								<div class="input-text input-group">
+									<span class="input-group-addon"><em class="fa fa-user" /></span>
+									<p:inputText id="username" value="#{loginBean.username}" />
+								</div>
+								<div class="input-text input-group">
+									<span class="input-group-addon"><em class="fa fa-lock" /></span>
+									<p:password id="password" value="#{loginBean.password}" />
+								</div>
 							</div>
 						</div>
 					</div>
-				</p:panel>
+					<div class="panel-footer">
+						<p:commandButton action="#{loginBean.login}" value="${i18n['login.enter']}" />
+					</div>
+				</div>
 			</h:form>
 		</div>
 	</div>
 </h:body>
-<h:outputScript library="js" name="ged.js" />
-<script type="text/javascript">
-login = {
-	checkFullPageBackgroundImage: function(){
-	    $page = $('.full-page');
-	    image_src = $page.data('image');
-	    if(image_src !== undefined){
-	        image_container = '<div class="full-page-background" style="background-image: url(' + image_src + ') "/>'
-	        $page.append(image_container);
-	    }
-	}
-}
-
-$().ready(function() {
-    login.checkFullPageBackgroundImage();
-    setTimeout(function() {
-        $('.ui-panel').removeClass('card-hidden');
-    }, 800)
-});
-</script>
 </html>

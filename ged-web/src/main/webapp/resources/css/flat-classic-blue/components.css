@@ -346,6 +346,10 @@ body .input-search .clean-search-button {
 	flex-direction: row;
 }
 
+.input-group .input-group-addon {
+	padding: 0 0.4em;
+}
+
 .input-group .input {
 	display: flex;
 	align-items: center;
@@ -373,7 +377,7 @@ body .input-search .clean-search-button {
 	border-right: 1px solid #bfceda;
 }
 
-.panel>header {
+.panel>header, .panel-header {
 	background: linear-gradient(to right, rgba(242, 243, 247, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(236, 238, 243, 1) 100%);
 	border-bottom: 1px solid #bfceda;
 	padding: 1.2em;
@@ -381,12 +385,13 @@ body .input-search .clean-search-button {
 	justify-content: space-between
 }
 
-.panel>header h2 {
+.panel>header h2, .panel h2 {
 	font-size: 2em;
 	color: #5c617b;
 	text-shadow: 1px 1px white;
 	margin: 0;
 	line-height: 1.5em;
+	padding-bottom: 1em;
 }
 
 .panel>header h4 {
@@ -396,17 +401,17 @@ body .input-search .clean-search-button {
 	margin: 0;
 }
 
-.panel>header a {
+.panel>header a, .panel-header a {
 	color: #7a869b;
 	display: inline-flex;
 }
 
-.panel .content {
+.panel .content, .panel-content {
 	border-bottom: 1px solid #bfceda;
 	padding: 0;
 }
 
-.panel>footer {
+.panel>footer, .panel-footer {
 	display: flex;
 	background: #eef1f8;
 	border-top: 1px solid white;
@@ -565,4 +570,55 @@ body .input-search .clean-search-button {
 .candidate-data .label {
 	font-weight: 600;
 	padding-right: 0.2em;
+}
+
+.full-page {
+	display: flex;
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	top: 0;
+	left: 0;
+	background-size: cover;
+	background-position: center;
+}
+
+.login-page {
+	background-image: url("#{request.contextPath}/resources/img/loginbg.jpg");
+}
+
+.login-page .content {
+	padding-top: 20vh;
+	margin: 0 auto;
+}
+
+.invisible {
+	display: none !important;
+}
+
+.login-page .card-login.card-hidden {
+	opacity: 0;
+	transform: translate3d(0, -60px, 0);
+}
+
+.login-page .card-login.ui-panel .ui-panel-titlebar {
+	border: 0px;
+	text-align: center;
+}
+
+.login-page .card-login.ui-panel .ui-panel-titlebar .ui-panel-title {
+	font-size: 2em;
+	font-weight: 400;
+	border: 0px;
+}
+
+.login-page .card-login.ui-panel .ui-panel-content {
+	padding: 2em;
+}
+
+.login.panel {
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+	border-top: 4px solid #8000ff;
+	max-width: 800px; 
 }
