@@ -19,7 +19,7 @@
 
 		<h:form>
 			<div class="candidate panel">
-				<header>
+				<div class="panel-header">
 					<div class="personal-data">
 						<div class="candidate-image">
 							<p:graphicImage styleClass="user-image" value="/images/#{userBean.user.imageFileName}"
@@ -34,18 +34,19 @@
 								<span class="icon"><i class="fa fa-envelope"></i></span><span class="text">#{userBean.user.email}</span>
 							</div>
 							<h:panelGroup layout="block" styleClass="data phone" rendered="#{not empty userBean.user.phoneNumber}">
-								<span class="icon"><i class="fa fa-phone"></i></span><span class="text">#{userBean.user.phoneNumber}</span>
+								<span class="icon"><i class="fa fa-phone"></i></span>
+								<span class="text">#{userBean.user.phoneNumber}</span>
 							</h:panelGroup>
 						</div>
 					</div>
 
 					<div class="buttons">
 						<p:commandButton value="#{i18n['action.export']}" process="@this" actionListener="#{userBean.editUser}"
-							action="/faces/user/userEdit?faces-redirect=true" />
+							icon="fa-file-excel-o" action="/faces/user/userEdit?faces-redirect=true" />
 						<p:commandButton value="#{i18n['action.edit']}" process="@this" actionListener="#{userBean.editUser}"
 							action="/faces/user/userEdit?faces-redirect=true" />
 					</div>
-				</header>
+				</div>
 
 			</div>
 		</h:form>
