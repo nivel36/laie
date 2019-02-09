@@ -5,11 +5,11 @@
 	<p:link outcome="/faces/user/user">
 		<f:param name="userId" value="#{user.id}" />
 		<div class="user-minicard">
-			<div class="user-image">
+			<div class="user-minicard-image">
 				<p:graphicImage class="image" value="/images/#{user.imageFileName}" rendered="#{not empty user.imageFileName}" />
 				<p:graphicImage class="image" value="/resources/img/default-avatar.png" rendered="#{empty user.imageFileName}" />
 			</div>
-			<div class="user-info">
+			<div class="user-minicard-info">
 				<div class="name">#{user}</div>
 				<div class="position">#{i18n:translate(user.role.name)}</div>
 			</div>

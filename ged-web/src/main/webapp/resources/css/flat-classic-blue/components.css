@@ -30,7 +30,7 @@ h1, h2, h3, h4 {
 
 h1 {
 	font-size: 2em;
-	padding-bottom: 0.3em;
+	padding: 0.5em 0;
 }
 
 h2 {
@@ -237,24 +237,12 @@ body .breadcrumb ul li.ui-breadcrumb-chevron {
 	color: #b6bdcf;
 }
 
-.multi-column {
-	display: flex;
-	flex-direction: row;
-}
-
-.column {
-	padding: 2em;
-	display: flex;
-	flex-direction: column;
-}
-
-.column.candidate-metadata {
+.candidate-metadata {
 	justify-content: center;
 	background: #f8f9fb;
 	border-right: 1px solid #bfceda;
-	margin-left: -2em;
-	margin-top: -2em;
-	margin-bottom: -2em;
+	height: 100%;
+	padding: 2em 0.2em;
 }
 
 .candidate-metadata .candidate-rating {
@@ -423,10 +411,7 @@ body .input-search .clean-search-button {
 
 .panel {
 	display: flex;
-	flex-direction: column;
-	padding: 0;
-	margin: 0;
-	width: 100%;
+	flex-flow: row wrap;
 	background: #ffffff;
 	border-top: 1px solid white;
 	border-bottom: 1px solid #bfceda;
@@ -434,19 +419,21 @@ body .input-search .clean-search-button {
 	border-right: 1px solid #bfceda;
 }
 
+.panel>* {
+	flex: 1 100%;
+}
+
 .panel-header {
 	background: linear-gradient(to right, rgba(242, 243, 247, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(236, 238, 243, 1) 100%);
 	border-bottom: 1px solid #bfceda;
-	padding: 1.2em;
-	display: flex;
-	justify-content: space-between
+	padding: 0.3em 1.2em;
+	justify-content: space-between;
 }
 
-.panel-header h4 {
-	font-size: 1.5em;
-	color: #5c617b;
-	text-shadow: 1px 1px white;
-	margin: 0;
+.panel-aside {
+	flex: 1 auto;
+	order: 1;
+	border-bottom: 1px solid #bfceda;
 }
 
 .panel-header a {
@@ -455,12 +442,14 @@ body .input-search .clean-search-button {
 }
 
 .panel-content {
-	border-bottom: 1px solid #bfceda;
+	flex: 9 0px;
+	order: 2;
 	padding: 2em;
+	border-bottom: 1px solid #bfceda;
 }
 
 .panel-footer {
-	display: flex;
+	order: 3;
 	background: #eef1f8;
 	border-top: 1px solid white;
 	padding: 1em;
@@ -562,8 +551,10 @@ body .input-search .clean-search-button {
 
 .buttons {
 	display: flex;
-	justify-content: space-between;
+	flex: 1;
+	justify-content: end;
 	align-items: flex-start;
+	justify-content: end;
 }
 
 .candidate.panel .candidate-data .name {
@@ -584,6 +575,8 @@ body .input-search .clean-search-button {
 
 .candidate.panel .personal-data {
 	display: flex;
+	flex: 1;
+	padding: 0.9em 0;
 }
 
 .candidate-data {
@@ -648,4 +641,36 @@ body .input-search .clean-search-button {
 
 .invisible {
 	display: none !important;
+}
+
+.user-minicard {
+	width: 100%;
+	margin: 5px;
+	overflow: auto;
+}
+
+.user-minicard-image {
+	float: left;
+	padding-right: 5px;
+}
+
+.user-minicard-image .image {
+	image-orientation: from-image;
+	border-radius: 50%;
+	object-fit: cover;
+	width: 48px;
+	height: 48px;
+}
+
+.user-minicard-info {
+	padding: 0px 10px;
+}
+
+.user-minicard-info .name {
+	font-weight: 600;
+}
+
+.user-minicard-info .position {
+	font-weight: 400;
+	color: #999999;
 }
