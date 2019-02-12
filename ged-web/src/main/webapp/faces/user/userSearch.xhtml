@@ -13,16 +13,19 @@
 	<ui:define name="content">
 
 		<p:breadCrumb styleClass="breadcrumb">
+			<p:menuitem value="#{i18n['menu.index']}" url="/faces/index.xhtml" />
 			<p:menuitem value="#{i18n['user.users']}" disabled="true" />
 		</p:breadCrumb>
 		<h:form>
 			<div class="search">
-				<div class="search-header">
-					<span class="search-header-title">#{i18n['user.search']}</span>
-				</div>
-				<div class="search-content">
-					<div class="searchbar">
-						<cc:inputSearch searchText="#{userSearchBean.searchText}" searchAction="#{userSearchBean.search}" update="@form" />
+				<div class="dialog blue">
+					<div class="dialog-header">
+						<h3>#{i18n['user.search']}</h3>
+					</div>
+					<div class="dialog-content">
+						<div class="searchbar">
+							<cc:inputSearch searchText="#{userSearchBean.searchText}" searchAction="#{userSearchBean.search}" update="@form" />
+						</div>
 					</div>
 				</div>
 			</div>

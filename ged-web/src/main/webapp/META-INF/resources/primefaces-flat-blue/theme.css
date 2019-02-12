@@ -370,12 +370,15 @@ body .ui-inputtext.ui-state-disabled, body .ui-inputfield.hasDatepicker.ui-state
 	background: #efefef;
 }
 
-body .ui-datatable .ui-paginator {
+body  .ui-paginator {
 	font-family: FontAwesome;
 	font-size: 1em;
+	padding: 0.4em;
+}
+
+body .ui-datatable .ui-paginator {
 	background: linear-gradient(to bottom, rgba(243, 245, 248, 1) 0%,
 		rgba(246, 246, 246, 1) 48%, rgba(237, 237, 237, 1) 100%);
-	padding: 0.4em;
 }
 
 body .ui-paginator>a {

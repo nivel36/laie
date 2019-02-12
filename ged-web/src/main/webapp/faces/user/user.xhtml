@@ -17,53 +17,56 @@
 			<p:menuitem value="#{userBean.user}" disabled="true" />
 		</p:breadCrumb>
 
-		<h:form>
-			<div class="candidate panel">
-				<header>
-					<div class="personal-data">
-						<div class="candidate-image">
-							<p:graphicImage styleClass="user-image" value="/images/#{userBean.user.imageFileName}"
-								rendered="#{not empty userBean.user.imageFileName}" />
-							<p:graphicImage styleClass="user-image" value="/resources/img/default-avatar.png"
-								rendered="#{empty userBean.user.imageFileName}" />
-						</div>
-						<div class="candidate-data">
-							<div class="name">#{userBean.user.fullName}</div>
-							<div class="job-profile">#{i18n:translate(userBean.user.role)}</div>
-							<div class="data email">
-								<span class="icon"><i class="fa fa-envelope"></i></span><span class="text">#{userBean.user.email}</span>
-							</div>
-							<h:panelGroup layout="block" styleClass="data phone" rendered="#{not empty userBean.user.phoneNumber}">
-								<span class="icon"><i class="fa fa-phone"></i></span><span class="text">#{userBean.user.phoneNumber}</span>
-							</h:panelGroup>
-						</div>
-					</div>
 
-					<div class="buttons">
-						<p:commandButton value="#{i18n['action.export']}" process="@this" actionListener="#{userBean.editUser}"
-							action="/faces/user/userEdit?faces-redirect=true" />
-						<p:commandButton value="#{i18n['action.edit']}" process="@this" actionListener="#{userBean.editUser}"
-							action="/faces/user/userEdit?faces-redirect=true" />
+		<div class="candidate panel">
+			<div class="panel-header">
+				<div class="panel-header-data">
+					<div class="candidate-image">
+						<p:graphicImage styleClass="user-image" value="/images/#{userBean.user.imageFileName}"
+							rendered="#{not empty userBean.user.imageFileName}" />
+						<p:graphicImage styleClass="user-image" value="/resources/img/default-avatar.png"
+							rendered="#{empty userBean.user.imageFileName}" />
 					</div>
-				</header>
-
+				</div>
+				<div class="panel-header-data">
+					<div class="name">#{userBean.user.fullName}</div>
+					<div class="job-profile">#{i18n:translate(userBean.user.role)}</div>
+					<div class="data email">
+						<div class="icon">
+							<i class="fa fa-envelope"></i>
+						</div>
+						<div class="text">#{userBean.user.email}</div>
+					</div>
+					<h:panelGroup layout="block" styleClass="data phone" rendered="#{not empty userBean.user.phoneNumber}">
+						<span class="icon"><i class="fa fa-phone"></i></span>
+						<span class="text">#{userBean.user.phoneNumber}</span>
+					</h:panelGroup>
+				</div>
+				<div class="panel-header-buttons">
+					<p:commandButton value="#{i18n['action.export']}" process="@this" actionListener="#{userBean.editUser}"
+						icon="fa-file-excel-o" action="/faces/user/userEdit?faces-redirect=true" />
+					<p:commandButton value="#{i18n['action.edit']}" process="@this" actionListener="#{userBean.editUser}"
+						action="/faces/user/userEdit?faces-redirect=true" />
+				</div>
 			</div>
-		</h:form>
-
-		<div class="col-12 lg-6">
-			<h:form id="userTeamForm">
-				<cc:users users="#{userBean.team}" />
-			</h:form>
 		</div>
+		<div class="grid nogutter">
+			<div class="col-12 lg-6">
+				<h:form id="userTeamForm">
+					<cc:users users="#{userBean.team}" title="#{i18n['user.team']}" />
+				</h:form>
+			</div>
+			<div class="col-12 lg-6">
+				<h:form id="jobMeetingsForm">
+					<cc:jobMeetings />
+				</h:form>
+			</div>
 
-		<div class="col-12 lg-6">
-			<p:panel header="#{i18n['job_meeting.planned_job_meetings']}" />
-		</div>
-
-		<div class="col-12 lg-12">
-			<h:form id="jobOffersForm">
-				<cc:jobOffers jobOffers="#{userBean.jobOffers}" />
-			</h:form>
+			<div class="col-12 lg-12">
+				<h:form id="jobOffersForm">
+					<cc:jobOffers jobOffers="#{userBean.jobOffers}" />
+				</h:form>
+			</div>
 		</div>
 	</ui:define>
 </ui:composition>

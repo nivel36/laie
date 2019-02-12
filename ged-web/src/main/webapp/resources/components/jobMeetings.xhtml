@@ -4,26 +4,20 @@
 	xmlns:o="http://omnifaces.org/ui" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
 	<composite:interface>
-		<composite:attribute name="users" required="true" />
+		<composite:attribute name="jobmeetings" />
 		<composite:attribute name="rendered" required="false" />
 		<composite:attribute name="title" />
 	</composite:interface>
 
 	<composite:implementation>
-		<h:panelGroup id="#{cc.clientId}" class="users" rendered="#{cc.attrs.rendered}">
+		<h:panelGroup id="#{cc.clientId}" class="jobMeetings" rendered="#{cc.attrs.rendered}">
 			<div class="panel">
 				<div class="panel-header">
-					<h2>#{empty cc.attrs.title ? i18n['user.users'] : cc.attrs.title}</h2>
+					<h2>#{empty cc.attrs.title ? i18n['job_meeting.planned_job_meetings'] : cc.attrs.title}</h2>
 				</div>
-				<p:dataGrid layout="grid" var="user" value="#{cc.attrs.users}" emptyMessage="#{i18n['user.no_team']}"
-					paginator="true" paginatorPosition="bottom" columns="2" rows="6">
-					<ui:include src="/faces/user/userCard.xhtml">
-						<ui:param name="user" value="#{user}" />
-					</ui:include>
-				</p:dataGrid>
-				<h:panelGroup styleClass="form-action-primary" rendered="#{component.findComponent('children').childCount > 1}">
-					<composite:insertChildren />
-				</h:panelGroup>
+				<div class="panel-content">
+					
+				</div>
 			</div>
 		</h:panelGroup>
 	</composite:implementation>
