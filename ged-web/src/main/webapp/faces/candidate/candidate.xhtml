@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://ged.com/i18n" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:p="http://primefaces.org/ui"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://ged.com/i18n"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:p="http://primefaces.org/ui"
 	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
@@ -15,29 +16,29 @@
 			<p:menuitem value="#{candidateBean.candidate.fullName}" disabled="true" />
 		</p:breadCrumb>
 
+
 		<div class="candidate panel">
-			<header>
+			<div class="panel-header">
 				<div class="personal-data">
 					<div class="candidate-image">
 						<p:graphicImage styleClass="user-image" value="/images/#{candidateBean.candidate.imageFileName}"
 							rendered="#{not empty candidateBean.candidate.imageFileName}" />
-						<p:graphicImage styleClass="user-image" value="/resources/img/default-avatar.png" rendered="#{empty candidateBean.candidate.imageFileName}" />
-					</div>
-					<div class="candidate-data">
-						<div class="name">#{candidateBean.candidate.fullName}</div>
-						<div class="job-profile">#{candidateBean.candidate.jobProfile}</div>
-						<h:panelGroup layout="block" styleClass="data borndate" rendered="#{not empty candidateBean.candidate.bornDate}">
-							<span class="icon"><i class="fa fa-calendar"></i></span>
-							<span class="text">#{candidateBean.candidate.bornDate}</span>
-						</h:panelGroup>
-						<h:panelGroup layout="block" styleClass="data location" rendered="#{not empty candidateBean.candidate.address.city}">
-							<span class="icon"><i class="fa fa-map-marker"></i></span>
-							<span class="text">#{candidateBean.candidate.address.city} (#{candidateBean.candidate.address.state})</span>
-						</h:panelGroup>
+						<p:graphicImage styleClass="user-image" value="/resources/img/default-avatar.png"
+							rendered="#{empty candidateBean.candidate.imageFileName}" />
 					</div>
 				</div>
 				<div class="candidate-data">
-					<div class="section">#{i18n['candidate.contact_information']}</div>
+					<div class="name">#{candidateBean.candidate.fullName}</div>
+					<div class="job-profile">#{candidateBean.candidate.jobProfile}</div>
+					<h:panelGroup layout="block" styleClass="data borndate" rendered="#{not empty candidateBean.candidate.bornDate}">
+						<span class="icon"><i class="fa fa-calendar"></i></span>
+						<span class="text">#{candidateBean.candidate.bornDate}</span>
+					</h:panelGroup>
+					<h:panelGroup layout="block" styleClass="data location"
+						rendered="#{not empty candidateBean.candidate.address.city}">
+						<span class="icon"><i class="fa fa-map-marker"></i></span>
+						<span class="text">#{candidateBean.candidate.address.city} (#{candidateBean.candidate.address.state})</span>
+					</h:panelGroup>
 
 					<div class="data email">
 						<span class="icon"><i class="fa fa-envelope"></i></span><span class="text">#{candidateBean.candidate.email}</span>
@@ -49,39 +50,34 @@
 						<span class="icon"><i class="fa fa-skype"></i></span>
 						<span class="text">#{candidateBean.candidate.skype}</span>
 					</h:panelGroup>
-					<h:panelGroup layout="block" styleClass="data linkedin" rendered="#{not empty candidateBean.candidate.linkedinProfileUrl}">
+					<h:panelGroup layout="block" styleClass="data linkedin"
+						rendered="#{not empty candidateBean.candidate.linkedinProfileUrl}">
 						<span class="icon"><i class="fa fa-linkedin"></i></span>
 						<span class="text"><a href="#{candidateBean.candidate.linkedinProfileUrl}" target="new">#{candidateBean.candidate.linkedinProfileUrl}</a></span>
 					</h:panelGroup>
 				</div>
 				<div class="buttons">
-					<p:commandButton value="#{i18n['action.export']}" process="@this" actionListener="#{candidateBean.editCandidate}"
-						action="/faces/candidate/candidateEdit?faces-redirect=true" />
-					<p:commandButton value="#{i18n['action.edit']}" process="@this" actionListener="#{candidateBean.editCandidate}"
-						action="/faces/candidate/candidateEdit?faces-redirect=true" />
+					<h:form>
+						<p:commandButton value="#{i18n['action.export']}" process="@this" actionListener="#{candidateBean.editCandidate}"
+							action="/faces/candidate/candidateEdit?faces-redirect=true" />
+						<p:commandButton value="#{i18n['action.edit']}" process="@this" actionListener="#{candidateBean.editCandidate}"
+							action="/faces/candidate/candidateEdit?faces-redirect=true" />
+					</h:form>
 				</div>
-			</header>
-			<div class="content">
-				<div class="panel">
-					<header>
-						<h4>#{i18n['candidate.job_information']}</h4>
-					</header>
-					<div class="content">
-						<div class="candidate-data">
-							<div class="data origin">
-								<span class="label">#{i18n['candidate.origin']}: </span><span class="text">#{i18n:translate(candidateBean.candidate.origin)}</span>
-							</div>
-							<div class="data salary">
-								<span class="label">#{i18n['candidate.salary']}: </span><span class="text">#{candidateBean.candidate.salary} €</span>
-							</div>
-							<div class="data expected-salary">
-								<span class="label">#{i18n['candidate.expected_salary']}: </span><span class="text">#{candidateBean.candidate.expectedSalary} €</span>
-							</div>
-						</div>
+				<div class="candidate-data">
+					<div class="data origin">
+						<span class="label">#{i18n['candidate.origin']}: </span><span class="text">#{i18n:translate(candidateBean.candidate.origin)}</span>
+					</div>
+					<div class="data salary">
+						<span class="label">#{i18n['candidate.salary']}: </span><span class="text">#{candidateBean.candidate.salary}
+							€</span>
+					</div>
+					<div class="data expected-salary">
+						<span class="label">#{i18n['candidate.expected_salary']}: </span><span class="text">#{candidateBean.candidate.expectedSalary}
+							€</span>
 					</div>
 				</div>
 			</div>
-			<footer></footer>
 		</div>
 	</ui:define>
 </ui:composition>

@@ -424,21 +424,30 @@ body .input-search .clean-search-button {
 }
 
 .panel-header {
+	display: flex;
 	background: linear-gradient(to right, rgba(242, 243, 247, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(236, 238, 243, 1) 100%);
 	border-bottom: 1px solid #bfceda;
-	padding: 0.3em 1.2em;
-	justify-content: space-between;
+	padding: 1.2em;
+}
+
+.panel-header a {
+	color: #7a869b;
+	display: inline-flex;
+}
+
+.panel-header-title {
+}
+
+.panel-header-buttons {
+	display: flex;
+	align-items: flex-start;
+	justify-content: end;
 }
 
 .panel-aside {
 	flex: 1 auto;
 	order: 1;
 	border-bottom: 1px solid #bfceda;
-}
-
-.panel-header a {
-	color: #7a869b;
-	display: inline-flex;
 }
 
 .panel-content {
@@ -541,10 +550,6 @@ body .input-search .clean-search-button {
 	width: 220px;
 }
 
-.candidate.panel .candidate-data {
-	padding-left: 1em;
-}
-
 .candidate .panel-header {
 	background: #e0e3ed;
 }
@@ -557,49 +562,77 @@ body .input-search .clean-search-button {
 	justify-content: end;
 }
 
-.candidate.panel .candidate-data .name {
+.panel-header-data {
+	display: flex;
+	flex-direction: column;
+	padding-right: 1em;
+}
+
+.panel-header-data .data {
+	display: flex;
+	padding: 0.3em 0;
+}
+
+.panel-header-data .data .icon {
+	padding-right: 1em;
+}
+
+.panel-header-data .data .text {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	max-width: 200px;
+}
+
+.panel-header-buttons {
+	display: flex;
+	flex: 1 100%;
+	justify-content: flex-end;
+}
+
+.candidate.panel .candidate-data {
+	display: flex;
+	flex-direction: column;
+}
+
+.candidate .panel-header-data .name {
 	font-size: 1.5em;
 	text-shadow: 1px 1px white;
 	padding-bottom: 0.4em;
 }
 
-.candidate.panel .candidate-data .job-profile {
+.candidate .panel-header-data .job-profile {
 	font-size: 1em;
 	padding-bottom: 0.6em;
 }
 
-.candidate.panel .candidate-data .section {
+.candidate .panel-header-data .section {
 	font-size: 1.2em;
 	padding-bottom: 0.4em;
 }
 
-.candidate.panel .personal-data {
+.candidate .personal-data {
 	display: flex;
+	flex-direction: column;
 	flex: 1;
 	padding: 0.9em 0;
 }
 
+
 .candidate-data {
 	align-items: baseline;
 	line-height: 1.5em;
+	display: flex;
 }
 
-.candidate-data .data {
-	padding-left: 0.3em;
+.panel-header-data .data {
+	padding-left: 0.2em;
 	display: flex;
 	font-size: 0.9em;
 }
 
-.candidate-data .icon {
-	width: 1.2em;
-	padding-right: 0.3em;
-}
+.panel-header-data .icon {
 
-.candidate-data .text {
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	max-width: 200px;
 }
 
 .candidate-data .text a {
