@@ -24,17 +24,21 @@ public class ExportFieldsOutputBean {
 		return list;
 	}
 
-	public static class ExportFieldItem {
+	public static final class ExportFieldItem {
 
 		private final long idField;
 
 		private final String literalId;
+		
+		private final String acquiredClass;
 
-		public ExportFieldItem(final long idField, final String literalId) {
+		public ExportFieldItem(final long idField, final String literalId, final String acquiredClass) {
 			super();
 			Objects.requireNonNull(literalId);
+			Objects.requireNonNull(acquiredClass);
 			this.idField = idField;
 			this.literalId = literalId;
+			this.acquiredClass = acquiredClass;
 		}
 
 		public long getIdField() {
@@ -43,6 +47,10 @@ public class ExportFieldsOutputBean {
 
 		public String getLiteralId() {
 			return literalId;
+		}
+
+		public String getAcquiredClass() {
+			return acquiredClass;
 		}
 	}
 }

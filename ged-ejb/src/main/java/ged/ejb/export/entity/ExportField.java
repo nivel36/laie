@@ -31,6 +31,9 @@ public class ExportField extends AbstractEntity {
 
 	@Column(length = 50, nullable = false)
 	private String literalId;
+	
+	@Column(length = 200, nullable = false)
+	private String acquirerClass;
 
 	@Column(nullable = false)
 	private boolean disabled;
@@ -86,6 +89,14 @@ public class ExportField extends AbstractEntity {
 		this.exportDefinition = exportDefinition;
 	}
 
+	public String getAcquirerClass() {
+		return acquirerClass;
+	}
+
+	public void setAcquirerClass(String acquirerClass) {
+		this.acquirerClass = acquirerClass;
+	}
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(this.export, this.fieldName);

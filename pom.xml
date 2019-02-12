@@ -7,6 +7,7 @@
 	<packaging>pom</packaging>
 	<name>ged</name>
 	<modules>
+<!-- 	<module>ged-commons-excel</module> -->
 		<module>ged-ear</module>
 		<module>ged-ejb</module>
 		<module>ged-api</module>
@@ -29,7 +30,6 @@
 		<font-awesome.version>4.5.0</font-awesome.version>
 		<pdfbox.version>1.8.6</pdfbox.version>
 		<slf4j.version>1.7.22</slf4j.version>
-		<poi.version>3.14</poi.version>
 		<xml.bind.version>2.2.11</xml.bind.version>
 		<javax.activation.version>1.1.1</javax.activation.version>
 		<omnifaces.version>3.0</omnifaces.version>
@@ -136,12 +136,6 @@
 			</dependency>
 
 			<dependency>
-				<groupId>org.apache.poi</groupId>
-				<artifactId>poi</artifactId>
-				<version>${poi.version}</version>
-			</dependency>
-
-			<dependency>
 				<groupId>commons-fileupload</groupId>
 				<artifactId>commons-fileupload</artifactId>
 				<version>${commons-fileupload.version}</version>
@@ -208,6 +202,14 @@
 					</dependency>
 				</dependencies>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+	    		<artifactId>maven-compiler-plugin</artifactId>
+	    		<version>3.8.0</version>
+	    		<configuration>
+	        		<release>11</release>
+	    		</configuration>
+			</plugin>			
 		</plugins>
 
 		<pluginManagement>

@@ -1,19 +1,31 @@
 package ged.web.view.user;
 
+import java.io.File;
+import java.io.IOException;
 import java.lang.invoke.MethodHandles;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.omnifaces.util.Faces;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ged.ejb.core.model.Page;
+import ged.ejb.export.acquirer.ExportData;
+import ged.ejb.export.acquirer.ExportData.Item;
+import ged.ejb.export.service.ExportService;
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
+import ged.excel.write.ExcelData;
+import ged.excel.write.ExcelData.ItemData;
+import ged.excel.write.GenerateReport;
+import ged.web.core.util.Translator;
 import ged.web.core.view.AbstractBean;
 
 @Named
@@ -30,13 +42,46 @@ public class UserSearchBean extends AbstractBean {
 
 	@Inject
 	private transient UserService userService;
+	
+	@Inject
+	private transient ExportService exportService;
 
 	public void export() {
 		logger.debug("Export users action performed");
 		// TODO ivmedina
-		System.out.println("hola mundo");
+		Objects.requireNonNull(getUsers()); // TODO ivmedina revisar
+		final ExportData exportData = getExportService().getExportUsersData(getUsers());
+		Objects.requireNonNull(exportData);
+		final ExcelData excelData = toExcelData(exportData);
+		byte[] bytes;
+		try {
+			bytes = GenerateReport.generate(excelData);
+			Faces.sendFile(bytes, "nombre.xlsx", true);
+			System.out.println(excelData);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
-
+	
+	private ExcelData toExcelData(final ExportData exportData) {
+		final List<String> literals = new ArrayList<String>();
+		for (String item: exportData.getIdLabels()) {
+			final String literal = getTranslator().message(item);
+			Objects.requireNonNull(literal);
+			literals.add(literal);
+		}
+		final List<ItemData> values = new ArrayList<ItemData>();
+		for (Item item: exportData.getItems()) {
+			final ItemData itemData = new ItemData();
+			for (Object value: item.getValue()) {
+				itemData.add(value);
+			}
+			values.add(itemData);
+		}
+		return new ExcelData(literals, values);
+	}
+	
 	public String getSearchText() {
 		return this.searchText;
 	}
@@ -66,5 +111,17 @@ public class UserSearchBean extends AbstractBean {
 
 	public void setUserService(final UserService userService) {
 		this.userService = userService;
+	}
+
+	public ExportService getExportService() {
+		return exportService;
+	}
+
+	public void setExportService(ExportService exportService) {
+		this.exportService = exportService;
+	}
+	
+	private Translator getTranslator() {
+		return translator;
 	}
 }

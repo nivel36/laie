@@ -4,10 +4,13 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.DataFormat;
+import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -20,13 +23,13 @@ public class UserReport extends AbstractReport {
 
 	private static CellStyle createBorderedStyle(final Workbook wb) {
 		final CellStyle style = wb.createCellStyle();
-		style.setBorderRight(CellStyle.BORDER_THIN);
+		style.setBorderRight(BorderStyle.THIN);
 		style.setRightBorderColor(IndexedColors.BLACK.getIndex());
-		style.setBorderBottom(CellStyle.BORDER_THIN);
+		style.setBorderBottom(BorderStyle.THIN);
 		style.setBottomBorderColor(IndexedColors.BLACK.getIndex());
-		style.setBorderLeft(CellStyle.BORDER_THIN);
+		style.setBorderLeft(BorderStyle.THIN);
 		style.setLeftBorderColor(IndexedColors.BLACK.getIndex());
-		style.setBorderTop(CellStyle.BORDER_THIN);
+		style.setBorderTop(BorderStyle.THIN);
 		style.setTopBorderColor(IndexedColors.BLACK.getIndex());
 		return style;
 	}
@@ -135,7 +138,7 @@ public class UserReport extends AbstractReport {
 	private CellStyle getBoldStyle(final Workbook wb) {
 		CellStyle style;
 		final Font headerFont = wb.createFont();
-		headerFont.setBoldweight(Font.BOLDWEIGHT_BOLD);
+		headerFont.setBold(true);
 		style = createBorderedStyle(wb);
 		style.setFont(headerFont);
 		return style;
@@ -144,11 +147,11 @@ public class UserReport extends AbstractReport {
 	private CellStyle getHeaderStyle(final Workbook wb) {
 		CellStyle style;
 		final Font headerFont = wb.createFont();
-		headerFont.setBoldweight(Font.BOLDWEIGHT_BOLD);
+		headerFont.setBold(true);
 		style = createBorderedStyle(wb);
-		style.setAlignment(CellStyle.ALIGN_CENTER);
+		style.setAlignment(HorizontalAlignment.CENTER);
 		style.setFillForegroundColor(IndexedColors.LIGHT_CORNFLOWER_BLUE.getIndex());
-		style.setFillPattern(CellStyle.SOLID_FOREGROUND);
+		style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 		style.setFont(headerFont);
 		return style;
 	}
