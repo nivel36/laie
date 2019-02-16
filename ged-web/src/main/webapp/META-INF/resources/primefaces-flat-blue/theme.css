@@ -571,3 +571,19 @@ body .ui-panel .ui-panel-footer {
 	margin: 0;
 	justify-content: flex-end;
 }
+
+body .ui-picklist {
+	display: flex;
+	align-items: center;
+}
+
+body .ui-picklist .ui-picklist-list-wrapper {
+	border: 1px solid #bfceda;
+	padding: 0.4em;
+	border-radius: 5px;
+}
+
+body .ui-picklist .ui-picklist-buttons {
+	height: auto;
+	padding: 1em;
+}
