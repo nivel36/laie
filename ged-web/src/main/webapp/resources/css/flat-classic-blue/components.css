@@ -39,15 +39,16 @@ h2 {
 }
 
 h3 {
-	font-size: 0.9em;
+	font-size: 1.3em;
+	padding: 0.3em 0;
 	text-transform: uppercase;
 }
 
 h4 {
 	font-size: 1.2em;
-	padding: 1em 0em 0.2em 0em;
+	padding: 0.3em 0;
 	border-bottom: 1px solid #cfcfcf;
-	margin: 0.2em 0em 1em 0em;
+	margin-bottom: 1em;
 }
 
 /************************************
@@ -547,7 +548,6 @@ body .input-search .clean-search-button {
 
 .tags {
 	display: flex;
-	width: 220px;
 }
 
 .candidate .panel-header {
@@ -574,7 +574,7 @@ body .input-search .clean-search-button {
 }
 
 .panel-header-data .data .icon {
-	padding-right: 1em;
+	width: 2em;
 }
 
 .panel-header-data .data .text {
@@ -588,6 +588,10 @@ body .input-search .clean-search-button {
 	display: flex;
 	flex: 1 100%;
 	justify-content: flex-end;
+}
+
+.panel-header-content {
+	display: flex;
 }
 
 .candidate.panel .candidate-data {
@@ -634,6 +638,27 @@ body .input-search .clean-search-button {
 .panel-header-data .icon {
 
 }
+
+.panel-content-data .data {
+	display: flex;
+	flex-direction: column;
+	padding: 0.2em 0 0.8em 0;
+}
+
+.panel-content-data .data >* {
+	flex: 1 100%;
+}
+
+.panel-content-data .data .label {
+	padding: 0em 0 0.3em 0;
+	font-size: 0.8em;
+}
+
+.panel-content-data .data .text {
+	font-size: 1.1em;
+}
+
+
 
 .candidate-data .text a {
 	display: block;

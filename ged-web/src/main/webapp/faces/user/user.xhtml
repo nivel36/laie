@@ -32,10 +32,7 @@
 					<div class="name">#{userBean.user.fullName}</div>
 					<div class="job-profile">#{i18n:translate(userBean.user.role)}</div>
 					<div class="data email">
-						<div class="icon">
-							<i class="fa fa-envelope"></i>
-						</div>
-						<div class="text">#{userBean.user.email}</div>
+						<span class="icon"><i class="fa fa-envelope"></i></span><span class="text">#{userBean.user.email}</span>
 					</div>
 					<h:panelGroup layout="block" styleClass="data phone" rendered="#{not empty userBean.user.phoneNumber}">
 						<span class="icon"><i class="fa fa-phone"></i></span>
