@@ -1,6 +1,7 @@
-<ui:component xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:composite="http://xmlns.jcp.org/jsf/composite"
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:o="http://omnifaces.org/ui" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+<ui:component xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
+	xmlns:composite="http://xmlns.jcp.org/jsf/composite" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	xmlns:o="http://omnifaces.org/ui" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
 	<composite:interface>
 		<composite:attribute name="jobCandidatures" required="true" />
@@ -11,9 +12,13 @@
 
 	<composite:implementation>
 		<div id="#{cc.clientId}" class="jobCandidatures">
-			<p:panel id="jobCandidatures" header="#{empty cc.attrs.title ? i18n['job_candidature.job_candidatures'] : cc.attrs.title}">
-				<p:dataTable var="jobCandidature" value="#{cc.attrs.jobCandidatures}" emptyMessage="#{i18n['job_candidature.no_job_candidatures_found']}" reflow="true"
-					paginator="true" paginatorPosition="bottom" rows="#{sessionUser.rowsPerPage}" sortBy="#{jobOffer.name}" sortOrder="ascending">
+			<div class="panel">
+				<div class="panel-header">
+					<h2>#{empty cc.attrs.title ? i18n['job_candidature.job_candidatures'] : cc.attrs.title}</h2>
+				</div>
+				<p:dataTable var="jobCandidature" value="#{cc.attrs.jobCandidatures}"
+					emptyMessage="#{i18n['job_candidature.no_job_candidatures_found']}" reflow="true" paginator="true"
+					paginatorPosition="bottom" rows="#{sessionUser.rowsPerPage}" sortBy="#{jobOffer.name}" sortOrder="ascending">
 
 					<p:column headerText="#{i18n['job_candidature.job_offer']}" rendered="#{cc.attrs.showJobOffer}">
 						<h:link value="#{jobCandidature.jobOffer.name}" outcome="/faces/jobOffer/jobOffer">
@@ -30,7 +35,8 @@
 					<p:column rendered="#{cc.attrs.showCandidate}">
 						<p:graphicImage class="image image-icon" value="/images/#{jobCandidature.candidate.imageFileName}"
 							rendered="#{not empty jobCandidature.candidate.imageFileName}" />
-						<p:graphicImage class="image image-icon" value="/resources/img/default-avatar.png" rendered="#{empty jobCandidature.candidate.imageFileName}" />
+						<p:graphicImage class="image image-icon" value="/resources/img/default-avatar.png"
+							rendered="#{empty jobCandidature.candidate.imageFileName}" />
 					</p:column>
 
 					<p:column headerText="#{i18n['job_candidature.candidate']}" rendered="#{cc.attrs.showCandidate}">
@@ -48,10 +54,10 @@
 					</p:column>
 				</p:dataTable>
 
-				<h:panelGroup styleClass="form-action-primary" rendered="#{component.findComponent('children').childCount != 0}">
+				<h:panelGroup styleClass="form-action-primary" rendered="#{component.findComponent('children').childCount > 1}">
 					<composite:insertChildren />
 				</h:panelGroup>
-			</p:panel>
+			</div>
 		</div>
 	</composite:implementation>
 </ui:component>

@@ -16,93 +16,153 @@
 			<p:menuitem value="#{candidateBean.candidate.fullName}" disabled="true" />
 		</p:breadCrumb>
 
-		<div class="candidate panel">
-			<div class="panel-header">
-				<div class="panel-header-data">
-					<div class="candidate-image">
-						<p:graphicImage styleClass="user-image" value="/images/#{candidateBean.candidate.imageFileName}"
-							rendered="#{not empty candidateBean.candidate.imageFileName}" />
-						<p:graphicImage styleClass="user-image" value="/resources/img/default-avatar.png"
-							rendered="#{empty candidateBean.candidate.imageFileName}" />
-					</div>
-				</div>
-				<div class="panel-header-data">
-					<div class="name">#{candidateBean.candidate.fullName}</div>
-					<div class="job-profile">#{candidateBean.candidate.jobProfile}</div>
+		<div class="grid nogutter">
+			<div class="col-12 sm-8">
+				<div class="candidate panel">
+					<div class="panel-header">
+						<div class="panel-header-data">
+							<div class="candidate-image">
+								<p:graphicImage styleClass="user-image" value="/images/#{candidateBean.candidate.imageFileName}"
+									rendered="#{not empty candidateBean.candidate.imageFileName}" />
+								<p:graphicImage styleClass="user-image" value="/resources/img/default-avatar.png"
+									rendered="#{empty candidateBean.candidate.imageFileName}" />
+							</div>
+						</div>
+						<div class="panel-header-data">
+							<div class="name">#{candidateBean.candidate.fullName}</div>
+							<div class="job-profile">#{candidateBean.candidate.jobProfile}</div>
 
-					<div class="data email">
-						<span class="icon"><i class="fa fa-envelope"></i></span><span class="text">#{candidateBean.candidate.email}</span>
-					</div>
-					<div class="data phone">
-						<span class="icon"><i class="fa fa-phone"></i></span><span class="text">#{candidateBean.candidate.phoneNumber}</span>
-					</div>
-					<h:panelGroup layout="block" styleClass="data skype" rendered="#{not empty candidateBean.candidate.skype}">
-						<span class="icon"><i class="fa fa-skype"></i></span>
-						<span class="text">#{candidateBean.candidate.skype}</span>
-					</h:panelGroup>
-					<h:panelGroup layout="block" styleClass="data linkedin"
-						rendered="#{not empty candidateBean.candidate.linkedinProfileUrl}">
-						<span class="icon"><i class="fa fa-linkedin"></i></span>
-						<span class="text"><a href="#{candidateBean.candidate.linkedinProfileUrl}" target="new">#{candidateBean.candidate.linkedinProfileUrl}</a></span>
-					</h:panelGroup>
-				</div>
-				<div class="panel-header-buttons">
-					<h:form>
-						<p:commandButton value="#{i18n['action.export']}" process="@this" actionListener="#{candidateBean.editCandidate}"
-							action="/faces/candidate/candidateEdit?faces-redirect=true" />
-						<p:commandButton value="#{i18n['action.edit']}" process="@this" actionListener="#{candidateBean.editCandidate}"
-							action="/faces/candidate/candidateEdit?faces-redirect=true" />
-					</h:form>
-				</div>
+							<div class="data email">
+								<div class="icon">
+									<i class="fa fa-envelope"></i>
+								</div>
+								<div class="text">#{candidateBean.candidate.email}</div>
+							</div>
+							<div class="data phone">
+								<div class="icon">
+									<i class="fa fa-phone"></i>
+								</div>
+								<div class="text">#{candidateBean.candidate.phoneNumber}</div>
+							</div>
+							<h:panelGroup layout="block" styleClass="data skype" rendered="#{not empty candidateBean.candidate.skype}">
+								<div class="icon">
+									<i class="fa fa-skype"></i>
+								</div>
+								<div class="text">#{candidateBean.candidate.skype}</div>
+							</h:panelGroup>
+							<h:panelGroup layout="block" styleClass="data linkedin"
+								rendered="#{not empty candidateBean.candidate.linkedinProfileUrl}">
+								<div class="icon">
+									<i class="fa fa-linkedin"></i>
+								</div>
+								<div class="text">
+									<a href="#{candidateBean.candidate.linkedinProfileUrl}" target="new">#{candidateBean.candidate.linkedinProfileUrl}</a>
+								</div>
+							</h:panelGroup>
+						</div>
+						<div class="panel-header-buttons">
+							<h:form>
+								<p:button value="#{i18n['curriculum.curriculum']}" outcome="/faces/curriculum/curriculum"
+									styleClass="btn-primary">
+									<f:param name="candidateId" value="#{candidateBean.candidate.id}" />
+								</p:button>
+								<p:commandButton value="#{i18n['action.export']}" process="@this"
+									actionListener="#{candidateBean.editCandidate}" action="/faces/candidate/candidateEdit?faces-redirect=true" />
+								<p:commandButton value="#{i18n['action.edit']}" process="@this" actionListener="#{candidateBean.editCandidate}"
+									action="/faces/candidate/candidateEdit?faces-redirect=true" />
+							</h:form>
+						</div>
 
+					</div>
+					<div class="panel-content">
+						<div class="panel-content-data">
+							<div class="grid">
+								<div class="col-12 sm-6">
+									<h4>#{i18n['candidate.personal_information']}</h4>
+									<div class="data location">
+										<div class="label">#{i18n['candidate.city']}</div>
+										<div class="text">#{candidateBean.candidate.address.city} (#{candidateBean.candidate.address.state})</div>
+									</div>
+									<div class="data born-date">
+										<div class="label">#{i18n['candidate.bornDate']}</div>
+										<h:panelGroup layout="block" styleClass="text" rendered="#{not empty candidateBean.candidate.bornDate}">
+											<h:outputText value="#{candidateBean.candidate.bornDate}">
+												<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
+											</h:outputText>
+										</h:panelGroup>
+										<h:panelGroup layout="block" styleClass="text" rendered="#{empty candidateBean.candidate.bornDate}"> --- </h:panelGroup>
+									</div>
+								</div>
+								<div class="col-12 sm-6">
+									<h4>#{i18n['candidate.contact_information']}</h4>
+									<div class="data origin">
+										<div class="label">#{i18n['candidate.origin']}</div>
+										<h:panelGroup layout="block" styleClass="text" rendered="#{not empty candidateBean.candidate.origin}">#{i18n:translate(candidateBean.candidate.origin)}</h:panelGroup>
+										<h:panelGroup layout="block" styleClass="text" rendered="#{empty candidateBean.candidate.origin}"> --- </h:panelGroup>
+									</div>
+									<div class="data salary">
+										<div class="label">#{i18n['candidate.salary']}</div>
+										<h:panelGroup layout="block" styleClass="text" rendered="#{not empty candidateBean.candidate.salary}">#{candidateBean.candidate.salary} €</h:panelGroup>
+										<h:panelGroup layout="block" styleClass="text" rendered="#{empty candidateBean.candidate.salary}"> --- </h:panelGroup>
+									</div>
+									<div class="data expected-salary">
+										<div class="label">#{i18n['candidate.expected_salary']}</div>
+										<h:panelGroup layout="block" styleClass="text" rendered="#{not empty candidateBean.candidate.expectedSalary}">#{candidateBean.candidate.expectedSalary} €</h:panelGroup>
+										<h:panelGroup layout="block" styleClass="text" rendered="#{empty candidateBean.candidate.expectedSalary}"> --- </h:panelGroup>
+									</div>
+								</div>
+								<div class="col-12">
+									<h4>#{i18n['candidate.metadata']}</h4>
+									<div class="data rating">
+										<div class="label">#{i18n['candidate.rating']}</div>
+										<div class="text">
+											<p:rating value="#{candidateBean.candidate.rating}" cancel="false" readonly="true" />
+										</div>
+									</div>
+									<div class="data tags">
+										<div class="label">#{i18n['candidate.tags']}</div>
+										<div class="text">
+											<p:chips id="tags" value="#{candidateBean.tags}" label="#{i18n['candidateBean.tags']}"
+												converter="stringConverter" style-class="tags" readonly="true" />
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
-			<div class="panel-content">
-				<div class="panel-content-data">
-					<div class="grid">
-						<div class="col-12 sm-6">
-							<h4>#{i18n['candidate.personal_information']}</h4>
-							<div class="data location">
-								<div class="label">#{i18n['candidate.city']}</div>
-								<div class="text">#{candidateBean.candidate.address.city} (#{candidateBean.candidate.address.state})</div>
-							</div>
-							<div class="data born-date">
-								<div class="label">#{i18n['candidate.bornDate']}</div>
-								<div class="text">#{candidateBean.candidate.bornDate}</div>
-							</div>
+			<div class="col-12 sm-4">
+				<h:form id="file_form" enctype="multipart/form-data">
+					<div class="inner panel">
+						<div class="panel-header">
+							<h3>#{i18n['file.files']}</h3>
 						</div>
-						<div class="col-12 sm-6">
-							<h4>#{i18n['candidate.contact_information']}</h4>
-							<div class="data origin">
-								<div class="label">#{i18n['candidate.origin']}</div>
-								<div class="text">#{i18n:translate(candidateBean.candidate.origin)}</div>
-							</div>
-							<div class="data salary">
-								<div class="label">#{i18n['candidate.salary']}</div>
-								<div class="text">#{candidateBean.candidate.salary} €</div>
-							</div>
-							<div class="data expected-salary">
-								<div class="label">#{i18n['candidate.expected_salary']}</div>
-								<div class="text">#{candidateBean.candidate.expectedSalary} €</div>
-							</div>
-						</div>
-						<div class="col-12">
-							<h4>#{i18n['candidate.metadata']}</h4>
-							<div class="data rating">
-								<div class="label">#{i18n['candidate.rating']}</div>
-								<div class="text">
-									<p:rating value="#{candidateBean.candidate.rating}" cancel="false" readonly="true" />
-								</div>
-							</div>
-							<div class="data tags">
-								<div class="label">#{i18n['candidate.tags']}</div>
-								<div class="text">
-									<p:chips id="tags" value="#{candidateBean.tags}" label="#{i18n['candidateBean.tags']}"
-										converter="stringConverter" style-class="tags" readonly="true" />
-								</div>
-							</div>
+						<p:dataTable var="file" id="files" value="#{filePanelBean.files}" emptyMessage="#{i18n['file.no_files']}"
+							reflow="true" rows="#{sessionUser.rowsPerPage}" rowKey="#{file.id}">
+
+							<p:column headerText="#{i18n['file.name']}">
+								<h:commandLink action="#{filePanelBean.openFile(file)}">
+									<h:outputText value="#{file.name}" />
+								</h:commandLink>
+							</p:column>
+
+							<p:column>
+								<p:commandButton icon="fa fa-trash" styleClass="btn-gray" action="#{filePanelBean.removeFile(file)}"
+									process="@this" update="@form growl " />
+							</p:column>
+						</p:dataTable>
+
+						<div class="panel-footer">
+							<p:fileUpload id="uploadFile" fileUploadListener="#{filePanelBean.uploadFile}" mode="advanced"
+								dragDropSupport="false" update="@form growl" auto="true" label="#{i18n['action.add']}"
+								disabled="#{filePanelBean.files.size() gt 6}" />
 						</div>
 					</div>
-				</div>
+				</h:form>
+			</div>
+			<div class="col-12 sm-6">
+				<cc:jobCandidatures jobCandidatures="#{candidateBean.jobOffers}" showCandidate="false"></cc:jobCandidatures>
 			</div>
 		</div>
 	</ui:define>
