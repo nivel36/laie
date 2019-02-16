@@ -403,12 +403,12 @@ body .ui-paginator .ui-paginator-last:before {
 	content: "\f101";
 }
 
-body .ui-state-active {
+body .ui-paginator .ui-state-active {
 	background-color: #ecf0f5;
 	color: #ffffff;
 }
 
-body .ui-state-active a {
+body .ui-paginator .ui-state-active a {
 	color: #ffffff;
 }
 
