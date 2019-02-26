@@ -725,6 +725,7 @@ body .input-search .clean-search-button {
 }
 
 .user-minicard-info .name {
+	color: #999999;
 	font-weight: 600;
 }
 
