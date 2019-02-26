@@ -7,11 +7,12 @@
 		<composite:attribute name="users" required="true" />
 		<composite:attribute name="rendered" required="false" />
 		<composite:attribute name="title" />
+		<composite:attribute name="styleClass" required="false" default="" />
 	</composite:interface>
 
 	<composite:implementation>
 		<h:panelGroup id="#{cc.clientId}" class="users" rendered="#{cc.attrs.rendered}">
-			<div class="panel">
+			<div class="panel #{cc.attrs.styleClass}">
 				<div class="panel-header">
 					<h2>#{empty cc.attrs.title ? i18n['user.users'] : cc.attrs.title}</h2>
 				</div>
