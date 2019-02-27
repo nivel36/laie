@@ -22,60 +22,40 @@
 		</p:breadCrumb>
 
 
-		<h:form id="clientViewForm">
-			<input type="hidden" id="clientId" value="#{clientBean.client.id}" />
-			<div class="panel">
-				<div class="panel-header">
-					<div class="panel-header-title">
-						<h2>#{clientBean.client}</h2>
+		<div class="grid nogutter">
+			<div class="col-12 sm-8">
+				<div class="panel">
+					<div class="panel-header">
+						<div class="panel-header-title">
+							<h2>#{clientBean.client}</h2>
+						</div>
+						<div class="panel-header-buttons">
+							<p:commandButton value="#{i18n['action.export']}" process="@this" actionListener="#{clientBean.editClient}"
+								icon="fa-file-excel-o" action="/faces/client/clientEdit?faces-redirect=true" />
+							<p:commandButton value="#{i18n['action.edit']}" process="@this" actionListener="#{clientBean.editClient}"
+								action="/faces/client/clientEdit?faces-redirect=true" />
+						</div>
 					</div>
-					<div class="panel-header-buttons">
-						<p:commandButton value="#{i18n['action.export']}" process="@this" actionListener="#{clientBean.editClient}"
-							icon="fa-file-excel-o" action="/faces/client/clientEdit?faces-redirect=true" />
-						<p:commandButton value="#{i18n['action.edit']}" process="@this" actionListener="#{clientBean.editClient}"
-							action="/faces/client/clientEdit?faces-redirect=true" />
-					</div>
-				</div>
-				<div class="panel-content">
-					<div class="grid">
-						<div class="col-12 sm-6">
-							<div class="form-group">
-								<p:outputLabel value="#{i18n['client.name']}" for="name" />
-								<p:inputText id="name" value="#{clientBean.client.name}" readonly="true" />
-							</div>
-						</div>
-						<div class="col-12 sm-6">
-							<div class="form-group">
-								<p:outputLabel value="#{i18n['client.cif']}" for="cif" />
-								<p:inputText id="cif" value="#{clientBean.client.cif}" readonly="true" />
-							</div>
-						</div>
+					<div class="panel-content">
+						<div class="panel-content-data">
+							<div class="grid">
+								<div class="col-12 sm-6">
+									<cc:outputText label="#{i18n['client.cif']}" value="#{clientBean.client.cif}" styleClass="cif" />
+								</div>
+								<div class="col-12 sm-6">
+									<cc:outputText label="#{i18n['client.phone_number']}" value="#{clientBean.client.phoneNumber}"
+										styleClass="phone_number" />
 
-						<div class="col-12 sm-6">
-							<div class="form-group">
-								<p:outputLabel value="#{i18n['client.phone_number']}" for="phoneNumber" />
-								<p:inputText id="phoneNumber" value="#{clientBean.client.phoneNumber}" readonly="true" />
-							</div>
-						</div>
+									<cc:outputText label="#{i18n['client.city']}" value="#{clientBean.client.address.city}" styleClass="city" />
 
-						<div class="col-12 sm-6">
-							<div class="form-group">
-								<p:outputLabel value="#{i18n['client.city']}" for="city" />
-								<p:inputText id="city" value="#{clientBean.client.address.city}" readonly="true" />
-							</div>
-						</div>
-						<div class="col-12 sm-6">
-							<div class="form-group">
-								<p:outputLabel value="#{i18n['client.state']}" for="state" />
-								<p:inputText id="state" value="#{clientBean.client.address.state}" readonly="true" />
+									<cc:outputText label="#{i18n['client.state']}" value="#{clientBean.client.address.state}" styleClass="state" />
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 
-		</h:form>
-		<div class="grid nogutter">
 			<div class="col-12 sm-6">
 				<h:form id="contactsForm">
 					<cc:contacts contacts="#{clientBean.contacts}">

@@ -27,9 +27,14 @@
 				<div class="panel-content">
 					<div class="grid">
 						<div class="col-12 sm-6">
+							<h3>#{i18n['client.client_information']}</h3>
 							<cc:inputText id="name" label="#{i18n['client.name']}" value="#{clientEditBean.client.name}" required="true" />
 
 							<cc:inputText id="cif" label="#{i18n['client.cif']}" value="#{clientEditBean.client.cif}" required="true" />
+
+						</div>
+						<div class="col-12 sm-6">
+							<h3>#{i18n['client.contact_information']}</h3>
 
 							<cc:inputText id="phoneNumber" label="#{i18n['client.phone_number']}"
 								value="#{clientEditBean.client.phoneNumber}" />
@@ -40,18 +45,18 @@
 						</div>
 					</div>
 				</div>
-				<div class="panel-footer">
-					<div class="buttons">
-						<p:button styleClass="btn-gray" value="#{i18n['action.cancel']}" outcome="clientSearch"
-							rendered="#{clientEditBean.newClient}" />
-						<p:button styleClass="btn-gray" value="#{i18n['action.cancel']}" outcome="client"
-							rendered="#{not clientEditBean.newClient}">
-							<f:param name="clientId" value="#{clientEditBean.client.id}" />
-						</p:button>
-						<p:commandButton styleClass="btn-primary" value="#{i18n['action.save']}" action="#{clientEditBean.save}"
-							process="@form" update="@form growl" />
+			</div>
+			<div class="panel-footer">
+				<div class="buttons">
+					<p:button styleClass="btn-gray" value="#{i18n['action.cancel']}" outcome="clientSearch"
+						rendered="#{clientEditBean.newClient}" />
+					<p:button styleClass="btn-gray" value="#{i18n['action.cancel']}" outcome="client"
+						rendered="#{not clientEditBean.newClient}">
+						<f:param name="clientId" value="#{clientEditBean.client.id}" />
+					</p:button>
+					<p:commandButton styleClass="btn-primary" value="#{i18n['action.save']}" action="#{clientEditBean.save}"
+						process="@form" update="@form growl" />
 
-					</div>
 				</div>
 			</div>
 		</h:form>

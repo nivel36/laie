@@ -440,7 +440,7 @@ body .input-search .clean-search-button {
 }
 
 .panel-header-title {
-	
+	flex: 1 100%;
 }
 
 .panel-header-buttons {

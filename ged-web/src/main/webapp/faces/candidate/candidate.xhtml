@@ -79,37 +79,23 @@
 							<div class="grid">
 								<div class="col-12 sm-6">
 									<h4>#{i18n['candidate.personal_information']}</h4>
-									<div class="data location">
-										<div class="label">#{i18n['candidate.city']}</div>
-										<div class="text">#{candidateBean.candidate.address.city} (#{candidateBean.candidate.address.state})</div>
-									</div>
-									<div class="data born-date">
-										<div class="label">#{i18n['candidate.bornDate']}</div>
-										<h:panelGroup layout="block" styleClass="text" rendered="#{not empty candidateBean.candidate.bornDate}">
-											<h:outputText value="#{candidateBean.candidate.bornDate}">
-												<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
-											</h:outputText>
-										</h:panelGroup>
-										<h:panelGroup layout="block" styleClass="text" rendered="#{empty candidateBean.candidate.bornDate}"> --- </h:panelGroup>
-									</div>
+
+									<cc:outputText label="#{i18n['candidate.city']}"
+										value="#{candidateBean.candidate.address.city} (#{candidateBean.candidate.address.state})" />
+
+									<cc:outputText label="#{i18n['candidate.bornDate']}" value="#{candidateBean.candidate.bornDate}">
+										<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" for="element" />
+									</cc:outputText>
 								</div>
 								<div class="col-12 sm-6">
 									<h4>#{i18n['candidate.contact_information']}</h4>
-									<div class="data origin">
-										<div class="label">#{i18n['candidate.origin']}</div>
-										<h:panelGroup layout="block" styleClass="text" rendered="#{not empty candidateBean.candidate.origin}">#{i18n:translate(candidateBean.candidate.origin)}</h:panelGroup>
-										<h:panelGroup layout="block" styleClass="text" rendered="#{empty candidateBean.candidate.origin}"> --- </h:panelGroup>
-									</div>
-									<div class="data salary">
-										<div class="label">#{i18n['candidate.salary']}</div>
-										<h:panelGroup layout="block" styleClass="text" rendered="#{not empty candidateBean.candidate.salary}">#{candidateBean.candidate.salary} €</h:panelGroup>
-										<h:panelGroup layout="block" styleClass="text" rendered="#{empty candidateBean.candidate.salary}"> --- </h:panelGroup>
-									</div>
-									<div class="data expected-salary">
-										<div class="label">#{i18n['candidate.expected_salary']}</div>
-										<h:panelGroup layout="block" styleClass="text" rendered="#{not empty candidateBean.candidate.expectedSalary}">#{candidateBean.candidate.expectedSalary} €</h:panelGroup>
-										<h:panelGroup layout="block" styleClass="text" rendered="#{empty candidateBean.candidate.expectedSalary}"> --- </h:panelGroup>
-									</div>
+
+									<cc:outputText label="#{i18n['candidate.origin']}" value="#{i18n:translate(candidateBean.candidate.origin)}" />
+									
+									<cc:outputText label="#{i18n['candidate.salary']}" value="#{candidateBean.candidate.salary}" />
+									
+									<cc:outputText label="#{i18n['candidate.expected_salary']}" value="#{candidateBean.candidate.expectedSalary}" />
+									
 								</div>
 								<div class="col-12">
 									<h4>#{i18n['candidate.metadata']}</h4>
