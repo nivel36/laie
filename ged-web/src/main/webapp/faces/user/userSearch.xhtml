@@ -40,7 +40,7 @@
 				</div>
 				<div class="search-result-content">
 					<p:dataTable var="user" id="users" value="#{userSearchBean.users}" emptyMessage="#{i18n['user.no_users_found']}"
-						reflow="true" paginator="true" paginatorPosition="bottom" rows="#{sessionUser.rowsPerPage}"
+						reflow="true" paginator="true" paginatorPosition="bottom" paginatorTemplate="{PageLinks}" rows="#{sessionUser.rowsPerPage}"
 						sortBy="#{user.fullName}" sortOrder="ascending">
 
 						<p:column>

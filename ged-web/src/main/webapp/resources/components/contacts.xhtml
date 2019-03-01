@@ -1,35 +1,42 @@
-<ui:component xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:composite="http://xmlns.jcp.org/jsf/composite"
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:o="http://omnifaces.org/ui" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+<ui:component xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
+	xmlns:composite="http://xmlns.jcp.org/jsf/composite" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	xmlns:o="http://omnifaces.org/ui" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
 	<composite:interface>
 		<composite:attribute name="contacts" type="java.util.List" required="true" />
 		<composite:attribute name="title" />
+		<composite:attribute name="styleClass" required="false" default="" />
 	</composite:interface>
 
 	<composite:implementation>
 		<div id="#{cc.clientId}" class="contacts">
-			<p:panel id="contacts" header="#{empty cc.attrs.title ? i18n['client.contacts'] : cc.attrs.title}">
-				<p:dataGrid layout="grid" var="contact" value="#{cc.attrs.contacts}" emptyMessage="#{i18n['client.no_contacts_found']}" paginator="true"
-					paginatorPosition="bottom">
-					<div class="card contact">
-						<div class="image">
-							<p:graphicImage class="image image-icon" value="/resources/img/default-avatar.png" />
-						</div>
-						<div class="container">
-							<h4>#{contact.fullName}</h4>
-							<h5>#{contact.position}</h5>
-							<div class="contact-info">
-								<p class="email">#{contact.email}</p>
-								<p class="phone">#{contact.phoneNumber}</p>
+			<div class="panel #{cc.attrs.styleClass}">
+				<div class="panel-header">
+					<h2>#{empty cc.attrs.title ? i18n['client.contacts'] : cc.attrs.title}</h2>
+				</div>
+				<div class="panel-content">
+					<p:dataGrid layout="grid" var="contact" value="#{cc.attrs.contacts}"
+						emptyMessage="#{i18n['client.no_contacts_found']}" paginator="true" paginatorPosition="bottom">
+						<div class="card contact">
+							<div class="image">
+								<p:graphicImage class="image image-icon" value="/resources/img/default-avatar.png" />
+							</div>
+							<div class="container">
+								<h4>#{contact.fullName}</h4>
+								<h5>#{contact.position}</h5>
+								<div class="contact-info">
+									<p class="email">#{contact.email}</p>
+									<p class="phone">#{contact.phoneNumber}</p>
+								</div>
 							</div>
 						</div>
-					</div>
-				</p:dataGrid>
-				<h:panelGroup styleClass="form-action-primary" rendered="#{component.findComponent('children').childCount != 0}">
+					</p:dataGrid>
+				</div>
+				<h:panelGroup styleClass="panel-footer" rendered="#{component.findComponent('children').childCount != 0}">
 					<composite:insertChildren />
 				</h:panelGroup>
-			</p:panel>
+			</div>
 		</div>
 	</composite:implementation>
 </ui:component>

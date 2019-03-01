@@ -17,7 +17,7 @@
 					<h2>#{empty cc.attrs.title ? i18n['user.users'] : cc.attrs.title}</h2>
 				</div>
 				<p:dataGrid layout="grid" var="user" value="#{cc.attrs.users}" emptyMessage="#{i18n['user.no_team']}"
-					paginator="true" paginatorPosition="bottom" columns="2" rows="6">
+					paginator="true" paginatorPosition="bottom" columns="2" rows="6" paginatorTemplate="{PageLinks}">
 					<ui:include src="/faces/user/userCard.xhtml">
 						<ui:param name="user" value="#{user}" />
 					</ui:include>

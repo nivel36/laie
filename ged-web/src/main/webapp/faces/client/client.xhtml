@@ -55,10 +55,9 @@
 					</div>
 				</div>
 			</div>
-
-			<div class="col-12 sm-6">
+			<div class="col-12 sm-4">
 				<h:form id="contactsForm">
-					<cc:contacts contacts="#{clientBean.contacts}">
+					<cc:contacts contacts="#{clientBean.contacts}" styleClass="inner">
 						<p:commandButton value="#{i18n['action.new']}" actionListener="#{clientBean.newContact}" process="@this">
 							<p:ajax event="dialogReturn" update="@form" listener="#{clientBean.onCloseContactDialog}" />
 						</p:commandButton>

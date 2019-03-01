@@ -15,29 +15,29 @@
 				<div class="panel-header">
 					<h2>#{empty cc.attrs.title ? i18n['job.job_offers'] : cc.attrs.title}</h2>
 				</div>
-				
-					<p:dataTable var="jobOffer" value="#{cc.attrs.jobOffers}" emptyMessage="#{i18n['job.no_jobs_found']}" reflow="true"
-						paginator="true" paginatorPosition="bottom" rows="#{sessionUser.rowsPerPage}" sortBy="#{jobOffer.name}"
-						sortOrder="ascending">
-						<p:column headerText="#{i18n['job.name']}">
-							<h:link value="#{jobOffer.name}" outcome="/faces/jobOffer/jobOffer">
-								<f:param name="jobOfferId" value="#{jobOffer.id}" />
-							</h:link>
-						</p:column>
-						<p:column headerText="#{i18n['job.date_closed']}">
-							<h:outputText value="#{jobOffer.dateClosed}">
-								<f:convertDateTime pattern="dd / MM / yyyy" type="localDate" />
-							</h:outputText>
-						</p:column>
-						<p:column headerText="#{i18n['job.owner']}">
-							<h:link value="#{jobOffer.owner.fullName}" outcome="/faces/user/user">
-								<f:param name="userId" value="#{jobOffer.owner.id}" />
-							</h:link>
-						</p:column>
-					</p:dataTable>
-					<h:panelGroup styleClass="form-action-primary" rendered="#{component.findComponent('children').childCount > 1}">
-						<composite:insertChildren />
-					</h:panelGroup>
+
+				<p:dataTable var="jobOffer" value="#{cc.attrs.jobOffers}" emptyMessage="#{i18n['job.no_jobs_found']}" reflow="true"
+					paginator="true" paginatorPosition="bottom" paginatorTemplate="{PageLinks}" rows="#{sessionUser.rowsPerPage}" sortBy="#{jobOffer.name}"
+					sortOrder="ascending">
+					<p:column headerText="#{i18n['job.name']}">
+						<h:link value="#{jobOffer.name}" outcome="/faces/jobOffer/jobOffer">
+							<f:param name="jobOfferId" value="#{jobOffer.id}" />
+						</h:link>
+					</p:column>
+					<p:column headerText="#{i18n['job.date_closed']}">
+						<h:outputText value="#{jobOffer.dateClosed}">
+							<f:convertDateTime pattern="dd / MM / yyyy" type="localDate" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="#{i18n['job.owner']}">
+						<h:link value="#{jobOffer.owner.fullName}" outcome="/faces/user/user">
+							<f:param name="userId" value="#{jobOffer.owner.id}" />
+						</h:link>
+					</p:column>
+				</p:dataTable>
+				<h:panelGroup styleClass="panel-footer" rendered="#{component.findComponent('children').childCount != 0}">
+					<composite:insertChildren />
+				</h:panelGroup>
 			</div>
 		</h:panelGroup>
 	</composite:implementation>
