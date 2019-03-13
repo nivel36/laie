@@ -12,20 +12,21 @@
 
 	<composite:implementation>
 		<h:panelGroup id="#{cc.clientId}" class="users" rendered="#{cc.attrs.rendered}">
-			<div class="panel #{cc.attrs.styleClass}">
-				<div class="panel-header">
-					<h2>#{empty cc.attrs.title ? i18n['user.users'] : cc.attrs.title}</h2>
-				</div>
+			<p:panel header="#{empty cc.attrs.title ? i18n['user.users'] : cc.attrs.title}" styleClass="#{cc.attrs.styleClass}">
 				<p:dataGrid layout="grid" var="user" value="#{cc.attrs.users}" emptyMessage="#{i18n['user.no_team']}"
 					paginator="true" paginatorPosition="bottom" columns="2" rows="6" paginatorTemplate="{PageLinks}">
 					<ui:include src="/faces/user/userCard.xhtml">
 						<ui:param name="user" value="#{user}" />
 					</ui:include>
 				</p:dataGrid>
-				<h:panelGroup styleClass="form-action-primary" rendered="#{component.findComponent('children').childCount > 1}">
-					<composite:insertChildren />
+				<h:panelGroup rendered="#{component.findComponent('children').childCount > 1}">
+					<f:facet name="footer">
+						<h:panelGroup id="children" styleClass="form-action-primary">
+							<composite:insertChildren />
+						</h:panelGroup>
+					</f:facet>
 				</h:panelGroup>
-			</div>
+			</p:panel>
 		</h:panelGroup>
 	</composite:implementation>
 </ui:component>

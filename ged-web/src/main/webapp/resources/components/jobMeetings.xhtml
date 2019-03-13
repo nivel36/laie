@@ -11,14 +11,7 @@
 
 	<composite:implementation>
 		<h:panelGroup id="#{cc.clientId}" class="jobMeetings" rendered="#{cc.attrs.rendered}">
-			<div class="panel">
-				<div class="panel-header">
-					<h2>#{empty cc.attrs.title ? i18n['job_meeting.planned_job_meetings'] : cc.attrs.title}</h2>
-				</div>
-				<div class="panel-content">
-					
-				</div>
-			</div>
+			<p:panel header="#{empty cc.attrs.title ? i18n['job_meeting.planned_job_meetings'] : cc.attrs.title}"></p:panel>
 		</h:panelGroup>
 	</composite:implementation>
 </ui:component>

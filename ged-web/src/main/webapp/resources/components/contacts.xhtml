@@ -11,32 +11,32 @@
 
 	<composite:implementation>
 		<div id="#{cc.clientId}" class="contacts">
-			<div class="panel #{cc.attrs.styleClass}">
-				<div class="panel-header">
-					<h2>#{empty cc.attrs.title ? i18n['client.contacts'] : cc.attrs.title}</h2>
-				</div>
-				<div class="panel-content">
-					<p:dataGrid layout="grid" var="contact" value="#{cc.attrs.contacts}"
-						emptyMessage="#{i18n['client.no_contacts_found']}" paginator="true" paginatorPosition="bottom">
-						<div class="card contact">
-							<div class="image">
-								<p:graphicImage class="image image-icon" value="/resources/img/default-avatar.png" />
-							</div>
-							<div class="container">
-								<h4>#{contact.fullName}</h4>
-								<h5>#{contact.position}</h5>
-								<div class="contact-info">
-									<p class="email">#{contact.email}</p>
-									<p class="phone">#{contact.phoneNumber}</p>
-								</div>
+			<p:panel styleClass="#{cc.attrs.styleClass}"
+				header="#{empty cc.attrs.title ? i18n['client.contacts'] : cc.attrs.title}">
+
+				<p:dataGrid layout="grid" var="contact" value="#{cc.attrs.contacts}"
+					emptyMessage="#{i18n['client.no_contacts_found']}" paginator="true" paginatorPosition="bottom">
+					<div class="card contact">
+						<div class="image">
+							<p:graphicImage class="image image-icon" value="/resources/img/default-avatar.png" />
+						</div>
+						<div class="container">
+							<h4>#{contact.fullName}</h4>
+							<h5>#{contact.position}</h5>
+							<div class="contact-info">
+								<p class="email">#{contact.email}</p>
+								<p class="phone">#{contact.phoneNumber}</p>
 							</div>
 						</div>
-					</p:dataGrid>
-				</div>
-				<h:panelGroup styleClass="panel-footer" rendered="#{component.findComponent('children').childCount != 0}">
-					<composite:insertChildren />
-				</h:panelGroup>
-			</div>
+					</div>
+				</p:dataGrid>
+								
+				<f:facet name="footer">
+					<h:panelGroup id="children" styleClass="form-action-primary">
+						<composite:insertChildren />
+					</h:panelGroup>
+				</f:facet>
+			</p:panel>
 		</div>
 	</composite:implementation>
 </ui:component>

@@ -11,14 +11,10 @@
 
 	<composite:implementation>
 		<h:panelGroup id="#{cc.clientId}" class="jobOffers" rendered="#{cc.attrs.rendered}">
-			<div class="panel">
-				<div class="panel-header">
-					<h2>#{empty cc.attrs.title ? i18n['job.job_offers'] : cc.attrs.title}</h2>
-				</div>
-
+			<p:panel header="#{empty cc.attrs.title ? i18n['job.job_offers'] : cc.attrs.title}">
 				<p:dataTable var="jobOffer" value="#{cc.attrs.jobOffers}" emptyMessage="#{i18n['job.no_jobs_found']}" reflow="true"
-					paginator="true" paginatorPosition="bottom" paginatorTemplate="{PageLinks}" rows="#{sessionUser.rowsPerPage}" sortBy="#{jobOffer.name}"
-					sortOrder="ascending">
+					paginator="true" paginatorPosition="bottom" paginatorTemplate="{PageLinks}" rows="#{sessionUser.rowsPerPage}"
+					sortBy="#{jobOffer.name}" sortOrder="ascending">
 					<p:column headerText="#{i18n['job.name']}">
 						<h:link value="#{jobOffer.name}" outcome="/faces/jobOffer/jobOffer">
 							<f:param name="jobOfferId" value="#{jobOffer.id}" />
@@ -35,10 +31,10 @@
 						</h:link>
 					</p:column>
 				</p:dataTable>
-				<h:panelGroup styleClass="panel-footer" rendered="#{component.findComponent('children').childCount != 0}">
+				<h:panelGroup styleClass="panel-footer" rendered="#{component.findComponent('children').childCount > 1}">
 					<composite:insertChildren />
 				</h:panelGroup>
-			</div>
+			</p:panel>
 		</h:panelGroup>
 	</composite:implementation>
 </ui:component>

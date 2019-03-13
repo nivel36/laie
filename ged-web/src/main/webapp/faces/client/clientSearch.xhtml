@@ -16,63 +16,51 @@
 		</p:breadCrumb>
 
 		<h:form id="clientSearchForm">
-			<div class="search">
-				<div class="dialog blue">
-					<div class="dialog-header">
-						<h3>#{i18n['client.search']}</h3>
-					</div>
-					<div class="dialog-content">
-						<div class="searchbar">
-							<cc:inputSearch searchText="#{clientSearchBean.searchText}" searchAction="#{clientSearchBean.search}"
-								update="@form" />
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="search-result">
-				<div class="search-result-header">
-					<div class="search-result-header-title">#{i18n['client.clients']}</div>
-					<div class="search-result-header-buttons">
+			<p:panel header="#{i18n['client.search']}">
+				<div class="panel-content">
+
+					<cc:inputSearch searchText="#{clientSearchBean.searchText}" searchAction="#{clientSearchBean.search}"
+						update="@form" />
+					<div class="buttons">
 						<p:commandButton value="#{i18n['action.export']}" action="#{clientSearchBean.search}" process="@this"
 							icon="fa-file-excel-o" rendered="#{not empty clientSearchBean.clients}" styleClass="btn-primary" />
 						<p:button value="#{i18n['action.new']}" outcome="clientEdit" styleClass="btn-primary" />
 					</div>
 				</div>
-				<div class="search-result-content">
-					<p:dataTable var="client" id="clients" value="#{clientSearchBean.clients}"
-						emptyMessage="#{i18n['client.no_clients_found']}" reflow="true" paginator="true" paginatorPosition="bottom"
-						rows="#{sessionUser.rowsPerPage}" sortBy="#{client.name}" sortOrder="ascending">
 
-						<p:column headerText="#{i18n['client.name']}" sortBy="#{client.name}">
-							<h:link value="#{client.name}" outcome="/faces/client/client">
-								<f:param name="clientId" value="#{client.id}" />
-							</h:link>
-						</p:column>
+				<p:dataTable var="client" id="clients" value="#{clientSearchBean.clients}"
+					emptyMessage="#{i18n['client.no_clients_found']}" reflow="true" paginator="true" paginatorPosition="bottom"
+					rows="#{sessionUser.rowsPerPage}" sortBy="#{client.name}" sortOrder="ascending">
 
-						<p:column headerText="#{i18n['client.phone_number']}" sortBy="#{client.phoneNumber}">
-							<h:outputText value="#{client.phoneNumber}" />
-						</p:column>
+					<p:column headerText="#{i18n['client.name']}" sortBy="#{client.name}">
+						<h:link value="#{client.name}" outcome="/faces/client/client">
+							<f:param name="clientId" value="#{client.id}" />
+						</h:link>
+					</p:column>
 
-						<p:column headerText="#{i18n['client.cif']}" sortBy="#{client.cif}">
-							<h:outputText value="#{client.cif}" />
-						</p:column>
+					<p:column headerText="#{i18n['client.phone_number']}" sortBy="#{client.phoneNumber}">
+						<h:outputText value="#{client.phoneNumber}" />
+					</p:column>
 
-						<p:column headerText="#{i18n['client.city']}" sortBy="#{client.address.city}">
-							<h:outputText value="#{client.address.city}" />
-						</p:column>
+					<p:column headerText="#{i18n['client.cif']}" sortBy="#{client.cif}">
+						<h:outputText value="#{client.cif}" />
+					</p:column>
 
-						<p:column headerText="#{i18n['client.state']}" sortBy="#{client.address.state}">
-							<h:outputText value="#{client.address.state}" />
-						</p:column>
+					<p:column headerText="#{i18n['client.city']}" sortBy="#{client.address.city}">
+						<h:outputText value="#{client.address.city}" />
+					</p:column>
 
-						<p:column headerText="#{i18n['client.owner']}" sortBy="#{client.owner.fullName}">
-							<h:link value="#{client.owner.fullName}" outcome="/faces/user/user">
-								<f:param name="userId" value="#{client.owner.id}" />
-							</h:link>
-						</p:column>
-					</p:dataTable>
-				</div>
-			</div>
+					<p:column headerText="#{i18n['client.state']}" sortBy="#{client.address.state}">
+						<h:outputText value="#{client.address.state}" />
+					</p:column>
+
+					<p:column headerText="#{i18n['client.owner']}" sortBy="#{client.owner.fullName}">
+						<h:link value="#{client.owner.fullName}" outcome="/faces/user/user">
+							<f:param name="userId" value="#{client.owner.id}" />
+						</h:link>
+					</p:column>
+				</p:dataTable>
+			</p:panel>
 		</h:form>
 	</ui:define>
 </ui:composition>

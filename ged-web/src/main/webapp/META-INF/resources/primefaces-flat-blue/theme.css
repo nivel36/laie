@@ -368,7 +368,7 @@ body .ui-inputtext.ui-state-disabled, body .ui-inputfield.hasDatepicker.ui-state
 	background: #efefef;
 }
 
-body .ui-paginator,  body .ui-datatable .ui-paginator, body .ui-datagrid .ui-paginator{
+body .ui-paginator, body .ui-datatable .ui-paginator, body .ui-datagrid .ui-paginator {
 	font-family: FontAwesome;
 	font-size: 1em;
 	padding: 0.4em;
@@ -541,15 +541,17 @@ body .ui-panel {
 }
 
 body .ui-panel .ui-panel-titlebar {
-	background: #eef1f8;
+	display: flex;
+	background: linear-gradient(to right, rgba(242, 243, 247, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(236, 238, 243, 1) 100%);
 	border-bottom: 1px solid #bfceda;
-	font-size: 2em;
-	line-height: 1.5em;
-	padding: .3em 0.7em .3em;
+	padding: 0.7em;
 }
 
 body .ui-panel .ui-panel-titlebar .ui-panel-title {
-	color: #5c617b;
+	font-size: 1.3em;
+	padding: 0.3em 0;
+	font-weight: bold;
+	color: #737c93;
 	text-shadow: 1px 1px white;
 	margin: 0;
 }
