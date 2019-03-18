@@ -14,7 +14,6 @@ import ged.ejb.core.AbstractAuditedService;
 import ged.ejb.core.model.AbstractDao;
 import ged.ejb.core.model.Page;
 import ged.ejb.core.model.Repository;
-import ged.ejb.core.profiler.Profile;
 import ged.ejb.user.role.Role;
 import ged.ejb.user.role.RoleDao;
 
@@ -35,7 +34,6 @@ public class UserService extends AbstractAuditedService<User> {
 		return this.roleDao.findAll(Page.ALL);
 	}
 
-	@Profile
 	public Role findRoleByName(final String roleName) {
 		Objects.requireNonNull(roleName);
 		logger.debug("Finding role by name {}", roleName);
@@ -48,7 +46,6 @@ public class UserService extends AbstractAuditedService<User> {
 		return this.userDao.findSubordinateUsers(user);
 	}
 
-	@Profile
 	public User findUserByEmail(final String email) {
 		Objects.requireNonNull(email);
 		logger.debug("Finding user by email {}", email);

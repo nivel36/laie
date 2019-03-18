@@ -14,7 +14,6 @@ import org.omnifaces.util.Faces;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ged.ejb.core.profiler.Profile;
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
 import ged.ejb.user.User;
@@ -45,7 +44,6 @@ public class UserBean extends AbstractBean {
 	@Inject
 	private transient UserService userService;
 
-	@Profile(id = "Editar usuario")
 	public void editUser() {
 		logger.debug("Edit user action performed");
 		putValueToFlash("user", this.user);
