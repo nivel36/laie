@@ -12,21 +12,26 @@
 
 	<composite:implementation>
 		<h:panelGroup id="#{cc.clientId}" class="users" rendered="#{cc.attrs.rendered}">
-			<p:panel header="#{empty cc.attrs.title ? i18n['user.users'] : cc.attrs.title}" styleClass="#{cc.attrs.styleClass}">
-				<p:dataGrid layout="grid" var="user" value="#{cc.attrs.users}" emptyMessage="#{i18n['user.no_team']}"
-					paginator="true" paginatorPosition="bottom" columns="2" rows="6" paginatorTemplate="{PageLinks}">
-					<ui:include src="/faces/user/userCard.xhtml">
-						<ui:param name="user" value="#{user}" />
-					</ui:include>
-				</p:dataGrid>
+			<div class="panel #{cc.attrs.styleClass}">
+				<div class="panel-header">
+					<div class="panel-header-title">#{empty cc.attrs.title ? i18n['user.users'] : cc.attrs.title}</div>
+				</div>
+				<div class="panel-content">
+					<p:dataGrid layout="grid" var="user" value="#{cc.attrs.users}" emptyMessage="#{i18n['user.no_team']}"
+						paginator="true" paginatorPosition="bottom" columns="2" rows="6" paginatorTemplate="{PageLinks}">
+						<ui:include src="/faces/user/userCard.xhtml">
+							<ui:param name="user" value="#{user}" />
+						</ui:include>
+					</p:dataGrid>
+				</div>
 				<h:panelGroup rendered="#{component.findComponent('children').childCount > 1}">
-					<f:facet name="footer">
+					<div class="panel-footer">
 						<h:panelGroup id="children" styleClass="form-action-primary">
 							<composite:insertChildren />
 						</h:panelGroup>
-					</f:facet>
+					</div>
 				</h:panelGroup>
-			</p:panel>
+			</div>
 		</h:panelGroup>
 	</composite:implementation>
 </ui:component>

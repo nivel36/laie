@@ -77,8 +77,7 @@ public class ClientBean extends AbstractBean {
 
 	public void newContact() {
 		logger.debug("New contact action performed");
-		final Map<String, List<String>> params = buildDialogParameter("clientId",
-				String.valueOf(this.client.getId()));
+		final Map<String, List<String>> params = buildDialogParameter("clientId", String.valueOf(this.client.getId()));
 		this.openDialog("/faces/client/contactDialog", params);
 	}
 

@@ -19,15 +19,13 @@
 
 		<div class="grid nogutter">
 			<div class="col-12 sm-8">
-				<div class="candidate panel">
+				<div class="panel user">
 					<div class="panel-header">
 						<div class="panel-header-data">
-							<div class="candidate-image">
 								<p:graphicImage styleClass="user-image" value="/images/#{userBean.user.imageFileName}"
 									rendered="#{not empty userBean.user.imageFileName}" />
 								<p:graphicImage styleClass="user-image" value="/resources/img/default-avatar.png"
 									rendered="#{empty userBean.user.imageFileName}" />
-							</div>
 						</div>
 						<div class="panel-header-data">
 							<div class="name">#{userBean.user.fullName}</div>
@@ -40,7 +38,7 @@
 								<span class="text">#{userBean.user.phoneNumber}</span>
 							</h:panelGroup>
 						</div>
-						<div class="panel-header-buttons">
+						<div class="panel-buttons">
 							<p:commandButton value="#{i18n['action.export']}" process="@this" actionListener="#{userBean.editUser}"
 								icon="fa-file-excel-o" action="/faces/user/userEdit?faces-redirect=true" />
 							<p:commandButton value="#{i18n['action.edit']}" process="@this" actionListener="#{userBean.editUser}"

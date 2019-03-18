@@ -21,7 +21,8 @@
 		<h:form id="userForm" enctype="multipart/form-data">
 			<div class="panel">
 				<div class="panel-header">
-					<h2>#{empty userEditBean.user.fullName ? i18n['user.new_user'] : userEditBean.user.fullName}</h2>
+					<div class="panel-header-title">#{empty userEditBean.user.fullName ? i18n['user.new_user'] :
+						userEditBean.user.fullName}</div>
 				</div>
 				<div class="panel-aside">
 					<div class="candidate-metadata">
@@ -29,7 +30,7 @@
 							fileUploadListener="#{userEditBean.uploadImage}" />
 					</div>
 				</div>
-				<div class="panel-content">
+				<div class="panel-content panel-content-data">
 					<div class="grid">
 						<div class="col-12 sm-5">
 							<h3>#{i18n['user.personal_information']}</h3>
@@ -61,7 +62,7 @@
 					</div>
 				</div>
 				<div class="panel-footer">
-					<div class="buttons">
+					<div class="panel-buttons">
 						<p:commandButton styleClass="btn-gray" value="#{i18n['action.cancel']}" action="#{userEditBean.cancel}"
 							process="@this" />
 						<p:commandButton styleClass="btn-primary" value="#{i18n['action.save']}" action="#{userEditBean.save}"
