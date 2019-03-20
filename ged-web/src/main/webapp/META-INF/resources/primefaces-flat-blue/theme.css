@@ -213,6 +213,13 @@ body .ui-chips-container .ui-chips-token .ui-icon {
 	display: none;
 }
 
+body .ui-datatable, body .ui-datatable .ui-datatable-tablewrapper {
+	display: flex;
+	flex-direction: column;
+	flex: 1 100%;
+	order: 2;
+}
+
 body .ui-datatable table {
 	table-layout: auto;
 	font-size: 0.9em;
@@ -373,6 +380,12 @@ body .ui-paginator, body .ui-datatable .ui-paginator, body .ui-datagrid .ui-pagi
 	font-size: 1em;
 	padding: 0.4em;
 	background: white;
+	display: flex;
+	justify-content: center;
+}
+
+body .ui-paginator.ui-paginator-bottom {
+	order: 2;
 }
 
 body .ui-paginator>a {

@@ -18,65 +18,56 @@
 		</p:breadCrumb>
 
 		<div class="grid nogutter">
-			<div class="col-12 sm-8">
-				<div class="panel user">
-					<div class="panel-header">
-						<div class="panel-header-data">
-								<p:graphicImage styleClass="user-image" value="/images/#{userBean.user.imageFileName}"
-									rendered="#{not empty userBean.user.imageFileName}" />
-								<p:graphicImage styleClass="user-image" value="/resources/img/default-avatar.png"
-									rendered="#{empty userBean.user.imageFileName}" />
+			<div class="panel user col-12 sm-8">
+				<div class="panel-header">
+					<div class="panel-header-data">
+						<p:graphicImage styleClass="user-image" value="/images/#{userBean.user.imageFileName}"
+							rendered="#{not empty userBean.user.imageFileName}" />
+						<p:graphicImage styleClass="user-image" value="/resources/img/default-avatar.png"
+							rendered="#{empty userBean.user.imageFileName}" />
+					</div>
+					<div class="panel-header-data">
+						<div class="name">#{userBean.user.fullName}</div>
+						<div class="job-profile">#{i18n:translate(userBean.user.role)}</div>
+						<div class="data email">
+							<span class="icon"><i class="fa fa-envelope"></i></span><span class="text">#{userBean.user.email}</span>
 						</div>
-						<div class="panel-header-data">
-							<div class="name">#{userBean.user.fullName}</div>
-							<div class="job-profile">#{i18n:translate(userBean.user.role)}</div>
-							<div class="data email">
-								<span class="icon"><i class="fa fa-envelope"></i></span><span class="text">#{userBean.user.email}</span>
-							</div>
-							<h:panelGroup layout="block" styleClass="data phone" rendered="#{not empty userBean.user.phoneNumber}">
-								<span class="icon"><i class="fa fa-phone"></i></span>
-								<span class="text">#{userBean.user.phoneNumber}</span>
+						<h:panelGroup layout="block" styleClass="data phone" rendered="#{not empty userBean.user.phoneNumber}">
+							<span class="icon"><i class="fa fa-phone"></i></span>
+							<span class="text">#{userBean.user.phoneNumber}</span>
+						</h:panelGroup>
+					</div>
+					<div class="panel-buttons">
+						<p:commandButton value="#{i18n['action.export']}" process="@this" actionListener="#{userBean.editUser}"
+							icon="fa-file-excel-o" action="/faces/user/userEdit?faces-redirect=true" />
+						<p:commandButton value="#{i18n['action.edit']}" process="@this" actionListener="#{userBean.editUser}"
+							action="/faces/user/userEdit?faces-redirect=true" />
+					</div>
+				</div>
+				<div class="panel-content panel-content-data">
+					<div class="grid">
+						<div class="data manager col-12 sm-6">
+							<div class="label">#{i18n['user.manager']}</div>
+							<h:panelGroup layout="block" styleClass="name" rendered="#{empty userBean.user.manager}"> --- </h:panelGroup>
+							<h:panelGroup class="user-minicard" rendered="#{not empty userBean.user.manager}">
+								<p:link outcome="/faces/user/user">
+									<f:param name="userId" value="#{userBean.user.manager.id}" />
+									<div class="user-minicard-image">
+										<p:graphicImage class="image" value="/images/#{userBean.user.manager.imageFileName}"
+											rendered="#{not empty userBean.user.manager.imageFileName}" />
+										<p:graphicImage class="image" value="/resources/img/default-avatar.png"
+											rendered="#{empty userBean.user.manager.imageFileName}" />
+									</div>
+									<div class="user-minicard-info">
+										<h:panelGroup layout="block" styleClass="name" rendered="#{not empty userBean.user.manager}">#{userBean.user.manager}</h:panelGroup>
+									</div>
+								</p:link>
 							</h:panelGroup>
 						</div>
-						<div class="panel-buttons">
-							<p:commandButton value="#{i18n['action.export']}" process="@this" actionListener="#{userBean.editUser}"
-								icon="fa-file-excel-o" action="/faces/user/userEdit?faces-redirect=true" />
-							<p:commandButton value="#{i18n['action.edit']}" process="@this" actionListener="#{userBean.editUser}"
-								action="/faces/user/userEdit?faces-redirect=true" />
-						</div>
-					</div>
-					<div class="panel-content">
-						<div class="panel-content-data">
-							<div class="grid">
-								<div class="col-12 sm-6">
-									<div class="data manager">
-										<div class="label">#{i18n['user.manager']}</div>
-										<h:panelGroup layout="block" styleClass="name" rendered="#{empty userBean.user.manager}"> --- </h:panelGroup>
-											<h:panelGroup class="user-minicard" rendered="#{not empty userBean.user.manager}">
-											<p:link outcome="/faces/user/user">
-												<f:param name="userId" value="#{userBean.user.manager.id}" />
-												<div class="user-minicard-image">
-													<p:graphicImage class="image" value="/images/#{userBean.user.manager.imageFileName}"
-														rendered="#{not empty userBean.user.manager.imageFileName}" />
-													<p:graphicImage class="image" value="/resources/img/default-avatar.png"
-														rendered="#{empty userBean.user.manager.imageFileName}" />
-												</div>
-												<div class="user-minicard-info">
-													<h:panelGroup layout="block" styleClass="name" rendered="#{not empty userBean.user.manager}">#{userBean.user.manager}</h:panelGroup>
-												</div>
-											</p:link>
-										</h:panelGroup>
-										
-									</div>
-								</div>
-								<div class="col-12 sm-6">
-									<div class="data date_of_join">
-										<div class="label">#{i18n['user.date_of_join']}</div>
-										<h:panelGroup layout="block" styleClass="text" rendered="#{not empty userBean.user.dateOfJoin}">#{userBean.user.dateOfJoin}</h:panelGroup>
-										<h:panelGroup layout="block" styleClass="text" rendered="#{empty userBean.user.dateOfJoin}"> --- </h:panelGroup>
-									</div>
-								</div>
-							</div>
+						<div class="data date_of_join col-12 sm-6">
+							<div class="label">#{i18n['user.date_of_join']}</div>
+							<h:panelGroup layout="block" styleClass="text" rendered="#{not empty userBean.user.dateOfJoin}">#{userBean.user.dateOfJoin}</h:panelGroup>
+							<h:panelGroup layout="block" styleClass="text" rendered="#{empty userBean.user.dateOfJoin}"> --- </h:panelGroup>
 						</div>
 					</div>
 				</div>

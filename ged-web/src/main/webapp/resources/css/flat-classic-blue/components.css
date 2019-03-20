@@ -40,7 +40,7 @@ h2 {
 
 h3 {
 	font-size: 1em;
-	padding: 0.2em 0;
+	padding: 0.2em 0 1em 0;
 	text-transform: uppercase;
 }
 
@@ -412,10 +412,10 @@ body .input-search .clean-search-button {
 	border-bottom: 1px solid #bfceda;
 	border-left: 1px solid white;
 	border-right: 1px solid #bfceda;
+	align-items: stretch;
 }
 
 .panel>* {
-	display: flex;
 	flex: 1 100%;
 }
 
@@ -424,6 +424,7 @@ body .input-search .clean-search-button {
 	border-bottom: 1px solid #bfceda;
 	padding: 0;
 	margin: 0;
+	display: flex;
 }
 
 .panel-header a {
@@ -452,7 +453,7 @@ body .input-search .clean-search-button {
 }
 
 .panel-aside {
-	flex: 1 10%;
+	flex: 1 0 0;
 	border-bottom: 1px solid #bfceda;
 }
 
