@@ -6,32 +6,30 @@
 	<composite:interface>
 		<composite:attribute name="users" required="true" />
 		<composite:attribute name="rendered" required="false" />
-		<composite:attribute name="title" />
 		<composite:attribute name="styleClass" required="false" default="" />
+		<composite:attribute name="title" required="false" default="#{i18n['user.users']}" />
 	</composite:interface>
 
 	<composite:implementation>
-		<h:panelGroup id="#{cc.clientId}" class="users" rendered="#{cc.attrs.rendered}">
-			<div class="panel #{cc.attrs.styleClass}">
-				<div class="panel-header">
-					<div class="panel-header-title">#{empty cc.attrs.title ? i18n['user.users'] : cc.attrs.title}</div>
-				</div>
-				<div class="panel-content">
-					<p:dataGrid layout="grid" var="user" value="#{cc.attrs.users}" emptyMessage="#{i18n['user.no_team']}"
-						paginator="true" paginatorPosition="bottom" columns="2" rows="6" paginatorTemplate="{PageLinks}">
-						<ui:include src="/faces/user/userCard.xhtml">
-							<ui:param name="user" value="#{user}" />
-						</ui:include>
-					</p:dataGrid>
-				</div>
-				<h:panelGroup rendered="#{component.findComponent('children').childCount > 1}">
-					<div class="panel-footer">
-						<h:panelGroup id="children" styleClass="form-action-primary">
-							<composite:insertChildren />
-						</h:panelGroup>
-					</div>
-				</h:panelGroup>
+		<h:panelGroup id="#{cc.clientId}" layout="block" styleClass="panel users #{cc.attrs.styleClass}"
+			rendered="#{cc.attrs.rendered}">
+			<div class="panel-header">
+				<div class="panel-header-title">#{cc.attrs.title}</div>
 			</div>
+			<div class="panel-content">
+				<p:dataGrid layout="grid" var="user" value="#{cc.attrs.users}" emptyMessage="#{i18n['user.no_team']}"
+					paginator="true" paginatorPosition="bottom" columns="2" rows="6" paginatorTemplate="{PageLinks}">
+					<ui:include src="/faces/user/userCard.xhtml">
+						<ui:param name="user" value="#{user}" />
+					</ui:include>
+				</p:dataGrid>
+			</div>
+			<h:panelGroup layout="block" styleClass="panel-footer"
+				rendered="#{component.findComponent('children').childCount > 0}">
+				<div id="children" class="panel-buttons">
+					<composite:insertChildren />
+				</div>
+			</h:panelGroup>
 		</h:panelGroup>
 	</composite:implementation>
 </ui:component>

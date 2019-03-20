@@ -7,15 +7,18 @@
 		<composite:attribute name="jobCandidatures" required="true" />
 		<composite:attribute name="showCandidate" default="true" />
 		<composite:attribute name="showJobOffer" default="true" />
-		<composite:attribute name="title" />
+		<composite:attribute name="rendered" required="false" />
+		<composite:attribute name="styleClass" required="false" default="" />
+		<composite:attribute name="title" required="false" default="#{i18n['job_candidature.job_candidatures']}" />
 	</composite:interface>
 
 	<composite:implementation>
-		<div id="#{cc.clientId}" class="jobCandidatures">
-			<div class="panel">
-				<div class="panel-header">
-					<h2>#{empty cc.attrs.title ? i18n['job_candidature.job_candidatures'] : cc.attrs.title}</h2>
-				</div>
+		<h:panelGroup id="#{cc.clientId}" layout="block" styleClass="jobOffers panel #{cc.attrs.styleClass}"
+			rendered="#{cc.attrs.rendered}">
+			<div class="panel-header">
+				<div class="panel-header-title">#{cc.attrs.title}</div>
+			</div>
+			<div class="panel-content">
 				<p:dataTable var="jobCandidature" value="#{cc.attrs.jobCandidatures}"
 					emptyMessage="#{i18n['job_candidature.no_job_candidatures_found']}" reflow="true" paginator="true"
 					paginatorPosition="bottom" rows="#{sessionUser.rowsPerPage}" sortBy="#{jobOffer.name}" sortOrder="ascending">
@@ -53,11 +56,13 @@
 						<h:outputText value="#{jobCandidature.state}" />
 					</p:column>
 				</p:dataTable>
+			</div>
 
-				<h:panelGroup styleClass="form-action-primary" rendered="#{component.findComponent('children').childCount > 1}">
+			<h:panelGroup layout="block" class="panel-footer" rendered="#{component.findComponent('children').childCount > 0}">
+				<h:panelGroup id="children" styleClass="panel-buttons">
 					<composite:insertChildren />
 				</h:panelGroup>
-			</div>
-		</div>
+			</h:panelGroup>
+		</h:panelGroup>
 	</composite:implementation>
 </ui:component>

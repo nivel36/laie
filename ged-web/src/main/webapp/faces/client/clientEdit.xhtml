@@ -22,9 +22,9 @@
 		<h:form id="clientForm">
 			<div class="panel">
 				<div class="panel-header">
-					<h2>#{clientEditBean.newClient ? i18n['client.new_client'] : clientEditBean.client.name}</h2>
+					<div class="panel-header-title">#{clientEditBean.newClient ? i18n['client.new_client'] : clientEditBean.client.name}</div>
 				</div>
-				<div class="panel-content">
+				<div class="panel-content panel-content-data">
 					<div class="grid">
 						<div class="col-12 sm-6">
 							<h3>#{i18n['client.client_information']}</h3>
@@ -47,7 +47,7 @@
 				</div>
 			</div>
 			<div class="panel-footer">
-				<div class="buttons">
+				<div class="panel-buttons">
 					<p:button styleClass="btn-gray" value="#{i18n['action.cancel']}" outcome="clientSearch"
 						rendered="#{clientEditBean.newClient}" />
 					<p:button styleClass="btn-gray" value="#{i18n['action.cancel']}" outcome="client"
