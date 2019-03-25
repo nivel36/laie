@@ -18,7 +18,7 @@
 		</p:breadCrumb>
 
 		<div class="grid nogutter">
-			<div class="panel user col-12 sm-8">
+			<div class="panel user col-12 xl-8">
 				<div class="panel-header">
 					<div class="panel-header-data">
 						<p:graphicImage styleClass="user-image" value="/images/#{userBean.user.imageFileName}"
@@ -66,13 +66,17 @@
 						</div>
 						<div class="data date_of_join col-12 sm-6">
 							<div class="label">#{i18n['user.date_of_join']}</div>
-							<h:panelGroup layout="block" styleClass="text" rendered="#{not empty userBean.user.dateOfJoin}">#{userBean.user.dateOfJoin}</h:panelGroup>
+							<h:panelGroup layout="block" styleClass="text" rendered="#{not empty userBean.user.dateOfJoin}">
+								<h:outputText value="#{userBean.user.dateOfJoin}">
+									<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
+								</h:outputText>
+							</h:panelGroup>
 							<h:panelGroup layout="block" styleClass="text" rendered="#{empty userBean.user.dateOfJoin}"> --- </h:panelGroup>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="col-12 sm-4">
+			<div class="col-12 lg-12 xl-4">
 				<h:form id="userTeamForm">
 					<cc:users users="#{userBean.team}" title="#{i18n['user.team']}" />
 				</h:form>
@@ -82,7 +86,7 @@
 					<cc:jobOffers jobOffers="#{userBean.jobOffers}" />
 				</h:form>
 			</div>
-			<div class="col-12 lg-6">
+			<div class="col-12 lg-12 xl-6">
 				<h:form id="jobMeetingsForm">
 					<cc:jobMeetings />
 				</h:form>

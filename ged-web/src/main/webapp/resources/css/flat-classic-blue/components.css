@@ -111,7 +111,7 @@ h4 {
 	body header .navbar-menu .menu_text {
 		display: none;
 	}
-	body #main-panel aside {
+	body #main #aside {
 		display: none;
 	}
 }
@@ -179,7 +179,7 @@ body footer .version span {
 
 #aside {
 	display: flex;
-	width: 300px;
+	width: 280px;
 	border-top: 1px solid white;
 	border-bottom: 1px solid #bfceda;
 	border-left: 1px solid white;
@@ -299,7 +299,7 @@ body  .input .btn-inner .ui-icon {
 }
 
 .input-text .input, .input-select .input, .input-user .input {
-	width: 220px;
+	flex: 1 1 67%;
 }
 
 .input-number .input {
@@ -336,6 +336,7 @@ body .input-search .clean-search-button {
 	padding: 0.5em;
 	align-items: center;
 	flex-direction: row;
+	max-width: 440px;
 }
 
 .input-group .input-group-addon {
@@ -353,7 +354,7 @@ body .input-search .clean-search-button {
 }
 
 .input-group .label {
-	width: 180px;
+	flex: 0 1 33%;
 }
 
 .dialog.purple {
