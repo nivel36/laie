@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://ged.com/i18n"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:p="http://primefaces.org/ui"
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" template="/WEB-INF/templates/default.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://ged.com/i18n"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
 		<title>#{i18n['user.user']}</title>
@@ -13,34 +17,36 @@
 	<ui:define name="content">
 		<p:breadCrumb styleClass="breadcrumb">
 			<p:menuitem value="#{i18n['menu.index']}" url="/faces/index.xhtml" />
-			<p:menuitem value="#{i18n['user.users']}" url="/faces/user/userSearch.xhtml" />
+			<p:menuitem value="#{i18n['user.users']}"
+				url="/faces/user/userSearch.xhtml" />
 			<p:menuitem value="#{userBean.user}" disabled="true" />
 		</p:breadCrumb>
 
 		<div class="grid nogutter">
 			<div class="panel user col-12 xl-8">
 				<div class="panel-header">
-					<div class="panel-header-data">
-						<p:graphicImage styleClass="user-image" value="/images/#{userBean.user.imageFileName}"
-							rendered="#{not empty userBean.user.imageFileName}" />
-						<p:graphicImage styleClass="user-image" value="/resources/img/default-avatar.png"
-							rendered="#{empty userBean.user.imageFileName}" />
+					<div class="panel-header-image">
+						<cc:avatar imageFileName="#{userBean.user.imageFileName}" />
 					</div>
 					<div class="panel-header-data">
 						<div class="name">#{userBean.user.fullName}</div>
 						<div class="job-profile">#{i18n:translate(userBean.user.role)}</div>
 						<div class="data email">
-							<span class="icon"><i class="fa fa-envelope"></i></span><span class="text">#{userBean.user.email}</span>
+							<span class="icon"><i class="fa fa-envelope"></i></span><span
+								class="text">#{userBean.user.email}</span>
 						</div>
-						<h:panelGroup layout="block" styleClass="data phone" rendered="#{not empty userBean.user.phoneNumber}">
+						<h:panelGroup layout="block" styleClass="data phone"
+							rendered="#{not empty userBean.user.phoneNumber}">
 							<span class="icon"><i class="fa fa-phone"></i></span>
 							<span class="text">#{userBean.user.phoneNumber}</span>
 						</h:panelGroup>
 					</div>
 					<div class="panel-buttons">
-						<p:commandButton value="#{i18n['action.export']}" process="@this" actionListener="#{userBean.editUser}"
-							icon="fa-file-excel-o" action="/faces/user/userEdit?faces-redirect=true" />
-						<p:commandButton value="#{i18n['action.edit']}" process="@this" actionListener="#{userBean.editUser}"
+						<p:commandButton value="#{i18n['action.export']}" process="@this"
+							actionListener="#{userBean.editUser}" icon="fa-file-excel-o"
+							action="/faces/user/userEdit?faces-redirect=true" />
+						<p:commandButton value="#{i18n['action.edit']}" process="@this"
+							actionListener="#{userBean.editUser}"
 							action="/faces/user/userEdit?faces-redirect=true" />
 					</div>
 				</div>
@@ -48,30 +54,33 @@
 					<div class="grid">
 						<div class="data manager col-12 sm-6">
 							<div class="label">#{i18n['user.manager']}</div>
-							<h:panelGroup layout="block" styleClass="name" rendered="#{empty userBean.user.manager}"> --- </h:panelGroup>
-							<h:panelGroup class="user-minicard" rendered="#{not empty userBean.user.manager}">
+							<h:panelGroup layout="block" styleClass="name"
+								rendered="#{empty userBean.user.manager}"> --- </h:panelGroup>
+							<h:panelGroup class="user-minicard"
+								rendered="#{not empty userBean.user.manager}">
 								<p:link outcome="/faces/user/user">
 									<f:param name="userId" value="#{userBean.user.manager.id}" />
 									<div class="user-minicard-image">
-										<p:graphicImage class="image" value="/images/#{userBean.user.manager.imageFileName}"
+										<p:graphicImage class="image"
+											value="/images/#{userBean.user.manager.imageFileName}"
 											rendered="#{not empty userBean.user.manager.imageFileName}" />
-										<p:graphicImage class="image" value="/resources/img/default-avatar.png"
+										<p:graphicImage class="image"
+											value="/resources/img/default-avatar.png"
 											rendered="#{empty userBean.user.manager.imageFileName}" />
 									</div>
 									<div class="user-minicard-info">
-										<h:panelGroup layout="block" styleClass="name" rendered="#{not empty userBean.user.manager}">#{userBean.user.manager}</h:panelGroup>
+										<h:panelGroup layout="block" styleClass="name"
+											rendered="#{not empty userBean.user.manager}">#{userBean.user.manager}</h:panelGroup>
 									</div>
 								</p:link>
 							</h:panelGroup>
 						</div>
 						<div class="data date_of_join col-12 sm-6">
-							<div class="label">#{i18n['user.date_of_join']}</div>
-							<h:panelGroup layout="block" styleClass="text" rendered="#{not empty userBean.user.dateOfJoin}">
-								<h:outputText value="#{userBean.user.dateOfJoin}">
-									<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
-								</h:outputText>
-							</h:panelGroup>
-							<h:panelGroup layout="block" styleClass="text" rendered="#{empty userBean.user.dateOfJoin}"> --- </h:panelGroup>
+							<cc:outputText label="#{i18n['user.date_of_join']}"
+								value="#{userBean.user.dateOfJoin}">
+								<f:convertDateTime type="localDate" pattern="dd/MM/yyyy"
+									for="element" />
+							</cc:outputText>
 						</div>
 					</div>
 				</div>

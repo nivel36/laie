@@ -17,7 +17,10 @@ public final class I18nFaceletsFunction {
 	}
 
 	public static String translate(final String key) {
-		final I18nBean i18nBean = getI18nBeanBean();
+		if(key == null || key.isBlank()) {
+			return null;
+		}
+ 		final I18nBean  i18nBean = getI18nBeanBean();
 		final SessionUser sessionUser = getSessionUser();
 		final String language = sessionUser.getLocale().getLanguage();
 		return i18nBean.getI18nText(key, language);

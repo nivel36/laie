@@ -272,7 +272,7 @@ body  .input .btn-inner .ui-icon {
 	text-align: center;
 }
 
-.input-image .image, .user-image {
+.input-image .image, .avatar .image {
 	width: 128px;
 	height: 128px;
 	border-radius: 3px;
@@ -448,7 +448,7 @@ body .input-search .clean-search-button {
 .panel-buttons {
 	align-items: flex-start;
 	display: flex;
-	flex: 1 100%;
+	flex: 1 1 auto;
 	justify-content: flex-end;
 	padding: 10px;
 }
@@ -582,6 +582,7 @@ body .input-search .clean-search-button {
 	display: flex;
 	flex-direction: column;
 	padding: 1em;
+	flex: 1 1 auto;
 }
 
 .panel-header-data .data .icon {
@@ -594,6 +595,12 @@ body .input-search .clean-search-button {
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	overflow: hidden;
+}
+
+.panel-header-image {
+	display: flex;
+	flex-direction: column;
+	padding: 1em;
 }
 
 .panel-header-content {
@@ -718,7 +725,7 @@ body .input-search .clean-search-button {
 
 .user-minicard-image .image {
 	image-orientation: from-image;
-	border-radius: 50%;
+	border-radius: 5px;
 	object-fit: cover;
 	width: 48px;
 	height: 48px;
