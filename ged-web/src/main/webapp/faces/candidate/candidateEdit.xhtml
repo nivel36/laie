@@ -23,7 +23,8 @@
 		<h:form id="candidateForm">
 			<div class="panel">
 				<div class="panel-header">
-					<h2>#{candidateEditBean.newCandidate ? i18n['candidate.new_candidate'] : candidateEditBean.candidate.fullName}</h2>
+					<div class="panel-header-title">#{candidateEditBean.newCandidate ? i18n['candidate.new_candidate'] :
+						candidateEditBean.candidate.fullName}</div>
 				</div>
 				<div class="panel-aside">
 					<div class="column candidate-metadata">
@@ -40,7 +41,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="panel-content">
+				<div class="panel-content panel-content-data">
 					<div class="grid">
 						<div class="col-12 sm-6">
 							<h4>#{i18n['candidate.personal_information']}</h4>
@@ -94,7 +95,7 @@
 				</div>
 
 				<div class="panel-footer">
-					<div class="buttons">
+					<div class="panel-buttons">
 						<p:button styleClass="btn-gray" value="#{i18n['action.cancel']}" outcome="candidateSearch"
 							rendered="#{candidateEditBean.newCandidate}" />
 						<p:button styleClass="btn-gray" value="#{i18n['action.cancel']}" outcome="candidate"
