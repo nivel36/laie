@@ -12,9 +12,9 @@
 	</composite:interface>
 
 	<composite:implementation>
-		<div id="#{cc.clientId}" class="form-group">
-			<p:outputLabel id="label" for="input-client" value="#{cc.attrs.label}" />
-			<div class="inputgroup">
+		<div id="#{cc.clientId}" class="input-clitn input-group">
+			<p:outputLabel id="label" for="input-client" value="#{cc.attrs.label}"  styleClass="label" />
+			<div class="input-group">
 				<p:inputText id="input-client" value="#{empty cc.attrs.value ? null : cc.attrs.value.name}" required="#{cc.attrs.required}" binding="#{cc.input}"
 					styleClass="input-client" />
 				<p:commandButton id="clean" action="#{cc.clean}" process="@this" update="#{cc.clientId}" styleClass="btn-gray" icon="fa fa-times"
@@ -22,8 +22,8 @@
 				<p:commandButton id="search" action="#{cc.attrs.search}" process="@this" icon="fa fa-search" styleClass="green-button">
 					<p:resetInput target="input-client" />
 				</p:commandButton>
+				<p:message id="message" for="input-client" />
 			</div>
-			<p:message id="message" for="input-client" />
 		</div>
 	</composite:implementation>
 </ui:component>

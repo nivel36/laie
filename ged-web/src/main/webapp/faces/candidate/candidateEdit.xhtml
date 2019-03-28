@@ -13,7 +13,7 @@
 		<p:breadCrumb styleClass="breadcrumb">
 			<p:menuitem value="#{i18n['menu.index']}" url="/faces/index.xhtml" />
 			<p:menuitem value="#{i18n['candidate.candidates']}" url="/faces/candidate/candidateSearch.xhtml" />
-			<p:menuitem value="#{candidateEditBean.candidate.fullName}" url="/faces/candidate/candidateSearch.xhtml"
+			<p:menuitem value="#{candidateEditBean.candidate.fullName}" url="/faces/candidate/candidate.xhtml?candidateId=#{candidateEditBean.candidate.id}"
 				rendered="#{not candidateEditBean.newCandidate}" />
 			<p:menuitem
 				value="#{candidateEditBean.newCandidate ? i18n['candidate.new_candidate'] : i18n['candidate.candidate_edit']}"

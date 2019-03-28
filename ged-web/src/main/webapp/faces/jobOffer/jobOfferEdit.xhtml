@@ -1,10 +1,14 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
-	xmlns:i18n="http://ged.com/i18n" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" xmlns:i18n="http://ged.com/i18n"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
 	template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
-		<title>#{jobOfferEditBean.newJobOffer ? i18n['job.new_job_offer'] : jobOfferEditBean.jobOffer.name}</title>
+		<title>#{jobOfferEditBean.newJobOffer ?
+			i18n['job.new_job_offer'] : jobOfferEditBean.jobOffer.name}</title>
 	</ui:define>
 
 	<ui:param name="selectedMenu" value="offers" />
@@ -13,67 +17,88 @@
 
 		<p:breadCrumb styleClass="breadcrumb">
 			<p:menuitem value="#{i18n['menu.index']}" url="/faces/index.xhtml" />
-			<p:menuitem value="#{i18n['job.job_offers']}" url="/faces/jobOffer/jobOfferSearch.xhtml" />
+			<p:menuitem value="#{i18n['job.job_offers']}"
+				url="/faces/jobOffer/jobOfferSearch.xhtml" />
 			<p:menuitem value="#{jobOfferEditBean.jobOffer}"
-				url="/faces/job/jobOffer.xhtml?jobId=#{jobOfferEditBean.jobOffer.id}" rendered="#{not jobOfferEditBean.newJobOffer}" />
-			<p:menuitem value="#{jobOfferEditBean.newJobOffer ? i18n['job.new_job_offer'] : i18n['user.edit_job']}"
+				url="/faces/job/jobOffer.xhtml?jobId=#{jobOfferEditBean.jobOffer.id}"
+				rendered="#{not jobOfferEditBean.newJobOffer}" />
+			<p:menuitem
+				value="#{jobOfferEditBean.newJobOffer ? i18n['job.new_job_offer'] : i18n['user.edit_job']}"
 				disabled="true" />
 		</p:breadCrumb>
 		<h:form id="jobOfferForm">
 			<div class="panel">
 				<div class="panel-header">
-					<h2>#{jobOfferEditBean.newJobOffer ? i18n['job.new_job_offer'] : jobOfferEditBean.jobOffer.name}</h2>
+					<div class="panel-header-title">
+						#{jobOfferEditBean.newJobOffer ? i18n['job.new_job_offer'] :
+						jobOfferEditBean.jobOffer.name}</div>
 				</div>
-				<div class="panel-content">
-					<div class="col-12">
-						<div class="panel-content">
-							<div class="grid">
-								<div class="col-12 sm-6">
-									<cc:inputText label="#{i18n['job.name']}" value="#{jobOfferEditBean.jobOffer.name}" required="true" />
+				<div class="panel-content panel-content-data">
+					<div class="grid">
+						<div class="col-12 sm-6">
+							<h3>#{i18n['user.personal_information']}</h3>
+							
+							<cc:inputText label="#{i18n['job.name']}"
+								value="#{jobOfferEditBean.jobOffer.name}" required="true" />
 
-									<cc:inputClient id="client" label="#{i18n['job.client']}" value="#{jobOfferEditBean.jobOffer.client}"
-										search="#{jobOfferEditBean.openClientSearchDialog}" required="true">
-										<p:ajax event="dialogReturn" listener="#{jobOfferEditBean.onCloseClientSearchDialog}" update="client" />
-									</cc:inputClient>
+							<cc:inputClient id="client" label="#{i18n['job.client']}"
+								value="#{jobOfferEditBean.jobOffer.client}"
+								search="#{jobOfferEditBean.openClientSearchDialog}"
+								required="true">
+								<p:ajax event="dialogReturn"
+									listener="#{jobOfferEditBean.onCloseClientSearchDialog}"
+									update="client" />
+							</cc:inputClient>
 
-									<cc:inputNumber id="places" min="0" label="#{i18n['job.places']}" value="#{jobOfferEditBean.jobOffer.places}" />
+							<cc:inputNumber id="places" min="0" label="#{i18n['job.places']}"
+								value="#{jobOfferEditBean.jobOffer.places}" />
 
-									<cc:calendar id="dateOpened" label="#{i18n['job.date_opened']}" value="#{jobOfferEditBean.jobOffer.dateOpened}" />
+							<cc:calendar id="dateOpened" label="#{i18n['job.date_opened']}"
+								value="#{jobOfferEditBean.jobOffer.dateOpened}" />
 
-									<cc:calendar id="dateClosed" label="#{i18n['job.date_closed']}" value="#{jobOfferEditBean.jobOffer.dateClosed}" />
+							<cc:calendar id="dateClosed" label="#{i18n['job.date_closed']}"
+								value="#{jobOfferEditBean.jobOffer.dateClosed}" />
 
-									<cc:inputText id="city" label="#{i18n['job.city']}" value="#{jobOfferEditBean.jobOffer.city}" required="true" />
+							<cc:inputText id="city" label="#{i18n['job.city']}"
+								value="#{jobOfferEditBean.jobOffer.city}" required="true" />
 
-									<cc:inputText id="state" label="#{i18n['job.state']}" value="#{jobOfferEditBean.jobOffer.state}"
-										required="true" />
-								</div>
-							</div>
+							<cc:inputText id="state" label="#{i18n['job.state']}"
+								value="#{jobOfferEditBean.jobOffer.state}" required="true" />
 						</div>
 						<div class="col-12 sm-6">
-							<cc:inputUser id="owner" label="#{i18n['job.owner']}" value="#{jobOfferEditBean.jobOffer.owner}"
+							<h3>#{i18n['user.personal_information']}</h3>
+							<cc:inputUser id="owner" label="#{i18n['job.owner']}"
+								value="#{jobOfferEditBean.jobOffer.owner}"
 								completeMethod="#{jobOfferEditBean.searchOwner}" />
 							<div class="form-group">
-								<p:outputLabel value="#{i18n['job.recruiters']}" for="recruiters" />
-								<p:chips id="recruiters" value="#{jobOfferEditBean.recruiters}" label="#{jobOfferEditBean.recruiters}"
+								<p:outputLabel value="#{i18n['job.recruiters']}"
+									for="recruiters" />
+								<p:chips id="recruiters" value="#{jobOfferEditBean.recruiters}"
+									label="#{jobOfferEditBean.recruiters}"
 									converter="stringConverter" />
 							</div>
 						</div>
 						<div class="col-12">
-							<cc:richText id="description" name="description" label="#{i18n['job.description']}"
+							<h3>#{i18n['user.personal_information']}</h3>
+							<cc:richText id="description" name="description"
+								label="#{i18n['job.description']}"
 								value="#{jobOfferEditBean.jobOffer.description}" />
 						</div>
 					</div>
-					<div class="panel-footer">
-						<div class="buttons">
-							<p:button styleClass="btn-gray" value="#{i18n['action.cancel']}" outcome="jobOfferSearch"
-								rendered="#{jobOfferEditBean.newJobOffer}" />
-							<p:button styleClass="btn-gray" value="#{i18n['action.cancel']}" outcome="jobOffer"
-								rendered="#{not jobOfferEditBean.newJobOffer}">
-								<f:param name="jobOfferId" value="#{jobOfferEditBean.jobOffer.id}" />
-							</p:button>
-							<p:commandButton value="#{i18n['action.save']}" action="#{jobOfferEditBean.save}" process="@form" update="@form"
-								styleClass="btn-primary" />
-						</div>
+				</div>
+				<div class="panel-footer">
+					<div class="panel-buttons">
+						<p:button styleClass="btn-gray" value="#{i18n['action.cancel']}"
+							outcome="jobOfferSearch"
+							rendered="#{jobOfferEditBean.newJobOffer}" />
+						<p:button styleClass="btn-gray" value="#{i18n['action.cancel']}"
+							outcome="jobOffer" rendered="#{not jobOfferEditBean.newJobOffer}">
+							<f:param name="jobOfferId"
+								value="#{jobOfferEditBean.jobOffer.id}" />
+						</p:button>
+						<p:commandButton value="#{i18n['action.save']}"
+							action="#{jobOfferEditBean.save}" process="@form" update="@form"
+							styleClass="btn-primary" />
 					</div>
 				</div>
 			</div>

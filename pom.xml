@@ -24,7 +24,7 @@
 		<ged.version>${project.version}</ged.version>
 
 		<javaee-api.version>8.0</javaee-api.version>
-		<primefaces.version>6.2</primefaces.version>
+		<primefaces.version>7.0</primefaces.version>
 		<hibernate-search.version>5.10.3.Final</hibernate-search.version>
 		<infinispan.version>9.4.6.Final</infinispan.version>
 		<font-awesome.version>4.5.0</font-awesome.version>

@@ -121,6 +121,11 @@ body .ui-button, body .ui-button.ui-button-icon-only {
 	position: relative;
 }
 
+body .ui-fileupload-buttonbar {
+	margin: 0;
+	padding: 0;
+}
+
 body .ui-button.ui-button-icon-only .ui-button-text {
 	display: none;
 }

@@ -24,7 +24,7 @@
 		</p:breadCrumb>
 
 		<div class="grid nogutter">
-			<div class="panel candidate col-12 sm-8">
+			<div class="panel candidate col-12 lg-8">
 				<div class="panel-header">
 					<div class="panel-header-image">
 						<cc:avatar
@@ -83,7 +83,7 @@
 				<div class="panel-content">
 					<div class="panel-content-data">
 						<div class="grid">
-							<div class="col-12 sm-6">
+							<div class="col-12 md-6">
 								<h4>#{i18n['candidate.personal_information']}</h4>
 
 								<cc:outputText label="#{i18n['candidate.city']}"
@@ -95,7 +95,7 @@
 										for="element" />
 								</cc:outputText>
 							</div>
-							<div class="col-12 sm-6">
+							<div class="col-12 md-6">
 								<h4>#{i18n['candidate.contact_information']}</h4>
 
 								<cc:outputText label="#{i18n['candidate.origin']}"
@@ -131,42 +131,46 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-12 sm-4">
+			<div class="col-12 lg-4">
 				<h:form id="file_form" enctype="multipart/form-data">
-					<div class="inner panel">
+					<div class="panel">
 						<div class="panel-header">
-							<h3>#{i18n['file.files']}</h3>
+							<div class="panel-header-title">#{i18n['file.files']}</div>
 						</div>
-						<p:dataTable var="file" id="files" value="#{filePanelBean.files}"
-							emptyMessage="#{i18n['file.no_files']}" reflow="true"
-							rows="#{sessionUser.rowsPerPage}" rowKey="#{file.id}">
+						<div class="panel-content">
+							<p:dataTable var="file" id="files" value="#{filePanelBean.files}"
+								emptyMessage="#{i18n['file.no_files']}" reflow="true"
+								rows="#{sessionUser.rowsPerPage}" rowKey="#{file.id}">
 
-							<p:column headerText="#{i18n['file.name']}">
-								<h:commandLink action="#{filePanelBean.openFile(file)}">
-									<h:outputText value="#{file.name}" />
-								</h:commandLink>
-							</p:column>
+								<p:column headerText="#{i18n['file.name']}">
+									<h:commandLink action="#{filePanelBean.openFile(file)}">
+										<h:outputText value="#{file.name}" />
+									</h:commandLink>
+								</p:column>
 
-							<p:column>
-								<p:commandButton icon="fa fa-trash" styleClass="btn-gray"
-									action="#{filePanelBean.removeFile(file)}" process="@this"
-									update="@form growl " />
-							</p:column>
-						</p:dataTable>
+								<p:column>
+									<p:commandButton icon="fa fa-trash" styleClass="btn-gray"
+										action="#{filePanelBean.removeFile(file)}" process="@this"
+										update="@form growl " />
+								</p:column>
+							</p:dataTable>
+						</div>
 
 						<div class="panel-footer">
-							<p:fileUpload id="uploadFile"
-								fileUploadListener="#{filePanelBean.uploadFile}" mode="advanced"
-								dragDropSupport="false" update="@form growl" auto="true"
-								label="#{i18n['action.add']}"
-								disabled="#{filePanelBean.files.size() gt 6}" />
+							<div class="panel-buttons">
+								<p:fileUpload id="uploadFile"
+									fileUploadListener="#{filePanelBean.uploadFile}"
+									mode="advanced" dragDropSupport="false" update="@form growl"
+									auto="true" label="#{i18n['action.add']}"
+									disabled="#{filePanelBean.files.size() gt 6}" />
+							</div>
 						</div>
 					</div>
 				</h:form>
 			</div>
-			<div class="col-12 sm-6">
+			<div class="col-12 xl-6">
 				<cc:jobCandidatures jobCandidatures="#{candidateBean.jobOffers}"
-					showCandidate="false"></cc:jobCandidatures>
+					showCandidate="false" />
 			</div>
 		</div>
 	</ui:define>
