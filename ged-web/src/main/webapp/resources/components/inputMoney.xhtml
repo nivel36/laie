@@ -1,6 +1,12 @@
-<ui:component xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:composite="http://xmlns.jcp.org/jsf/composite"
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:o="http://omnifaces.org/ui" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+<ui:component xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:composite="http://xmlns.jcp.org/jsf/composite" 
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	xmlns:o="http://omnifaces.org/ui" 
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
 	<composite:interface>
 		<composite:attribute name="name" />
@@ -9,16 +15,21 @@
 		<composite:attribute name="min" default="0" />
 		<composite:attribute name="max" default="100" />
 		<composite:attribute name="required" />
+		<composite:attribute name="styleClass" required="false" default="" />
 	</composite:interface>
 
 	<composite:implementation>
-		<div id="#{cc.clientId}" class="input-number input-group">
-			<p:outputLabel value="#{cc.attrs.label}" for="inputNumber" styleClass="label" />
+		<h:panelGroup id="#{cc.clientId}" layout="block" sytleClass="input-group input-number #{cc.attrs.styleClass}">
+			<div class="label">
+				<p:outputLabel value="#{cc.attrs.label}" for="inputNumber" />
+			</div>
 			<div class="input">
-				<p:inputNumber id="inputNumber" name="#{cc.attrs.name}" value="#{cc.attrs.value}" required="#{cc.attrs.required}" min="#{cc.attrs.min}"
-					max="#{cc.attrs.max}" symbol=" €" symbolPosition="s" inputStyle="text-align: right"/>
+				<p:inputNumber id="inputNumber" name="#{cc.attrs.name}" value="#{cc.attrs.value}" required="#{cc.attrs.required}"
+					min="#{cc.attrs.min}" max="#{cc.attrs.max}" symbol=" €" symbolPosition="s" inputStyle="text-align: right" />
+			</div>
+			<div class="message-error">
 				<p:message for="inputNumber" />
 			</div>
-		</div>
+		</h:panelGroup>
 	</composite:implementation>
 </ui:component>

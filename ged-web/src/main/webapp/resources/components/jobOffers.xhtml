@@ -1,7 +1,12 @@
-<ui:component xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
-	xmlns:composite="http://xmlns.jcp.org/jsf/composite" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
-	xmlns:o="http://omnifaces.org/ui" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+<ui:component xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:composite="http://xmlns.jcp.org/jsf/composite" 
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	xmlns:o="http://omnifaces.org/ui" 
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
 	<composite:interface>
 		<composite:attribute name="jobOffers" required="true" />
@@ -11,38 +16,40 @@
 	</composite:interface>
 
 	<composite:implementation>
-		<h:panelGroup id="#{cc.clientId}" layout="block" styleClass="jobOffers panel #{cc.attrs.styleClass}"
+		<h:panelGroup id="#{cc.clientId}" layout="block" styleClass="jobOffers #{cc.attrs.styleClass}"
 			rendered="#{cc.attrs.rendered}">
-			<div class="panel-header">
-				<div class="panel-header-title">#{cc.attrs.title}</div>
-			</div>
-			<div class="panel-content">
-				<p:dataTable var="jobOffer" value="#{cc.attrs.jobOffers}" emptyMessage="#{i18n['job.no_jobs_found']}" reflow="true"
-					paginator="true" paginatorPosition="bottom" paginatorTemplate="{PageLinks}" rows="#{sessionUser.rowsPerPage}"
-					sortBy="#{jobOffer.name}" sortOrder="ascending">
-					<p:column headerText="#{i18n['job.name']}">
-						<h:link value="#{jobOffer.name}" outcome="/faces/jobOffer/jobOffer">
-							<f:param name="jobOfferId" value="#{jobOffer.id}" />
-						</h:link>
-					</p:column>
-					<p:column headerText="#{i18n['job.date_closed']}">
-						<h:outputText value="#{jobOffer.dateClosed}">
-							<f:convertDateTime pattern="dd / MM / yyyy" type="localDate" />
-						</h:outputText>
-					</p:column>
-					<p:column headerText="#{i18n['job.owner']}">
-						<h:link value="#{jobOffer.owner.fullName}" outcome="/faces/user/user">
-							<f:param name="userId" value="#{jobOffer.owner.id}" />
-						</h:link>
-					</p:column>
-				</p:dataTable>
-			</div>
-			<h:panelGroup layout="block" styleClass="panel-footer"
-				rendered="#{component.findComponent('children').childCount > 0}">
-				<h:panelGroup id="children" styleClass="panel-buttons">
-					<composite:insertChildren />
+			<div class="panel">
+				<div class="panel-header">
+					<div class="panel-header-title">#{cc.attrs.title}</div>
+				</div>
+				<div class="panel-content">
+					<p:dataTable var="jobOffer" value="#{cc.attrs.jobOffers}" emptyMessage="#{i18n['job.no_jobs_found']}" reflow="true"
+						paginator="true" paginatorPosition="bottom" paginatorTemplate="{PageLinks}" rows="#{sessionUser.rowsPerPage}"
+						sortBy="#{jobOffer.name}" sortOrder="ascending">
+						<p:column headerText="#{i18n['job.name']}">
+							<h:link value="#{jobOffer.name}" outcome="/faces/jobOffer/jobOffer">
+								<f:param name="jobOfferId" value="#{jobOffer.id}" />
+							</h:link>
+						</p:column>
+						<p:column headerText="#{i18n['job.date_closed']}">
+							<h:outputText value="#{jobOffer.dateClosed}">
+								<f:convertDateTime pattern="dd / MM / yyyy" type="localDate" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="#{i18n['job.owner']}">
+							<h:link value="#{jobOffer.owner.fullName}" outcome="/faces/user/user">
+								<f:param name="userId" value="#{jobOffer.owner.id}" />
+							</h:link>
+						</p:column>
+					</p:dataTable>
+				</div>
+				<h:panelGroup layout="block" styleClass="panel-footer"
+					rendered="#{component.findComponent('children').childCount > 0}">
+					<h:panelGroup id="children" styleClass="panel-buttons">
+						<composite:insertChildren />
+					</h:panelGroup>
 				</h:panelGroup>
-			</h:panelGroup>
+			</div>
 		</h:panelGroup>
 	</composite:implementation>
 </ui:component>

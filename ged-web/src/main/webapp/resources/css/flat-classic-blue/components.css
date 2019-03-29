@@ -343,10 +343,9 @@ body .input-search .clean-search-button {
 	padding: 0 0.4em;
 }
 
-.input-group .input {
+.input-group  .input {
 	display: flex;
 	align-items: center;
-	flex-wrap: wrap;
 }
 
 .input-group .input .small {
