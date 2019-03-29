@@ -12,9 +12,9 @@
 	</composite:interface>
 
 	<composite:implementation>
-		<div id="#{cc.clientId}" class="input-clitn input-group">
+		<div id="#{cc.clientId}" class="input-client input-group">
 			<p:outputLabel id="label" for="input-client" value="#{cc.attrs.label}"  styleClass="label" />
-			<div class="input-group">
+			<div class="input">
 				<p:inputText id="input-client" value="#{empty cc.attrs.value ? null : cc.attrs.value.name}" required="#{cc.attrs.required}" binding="#{cc.input}"
 					styleClass="input-client" />
 				<p:commandButton id="clean" action="#{cc.clean}" process="@this" update="#{cc.clientId}" styleClass="btn-gray" icon="fa fa-times"
