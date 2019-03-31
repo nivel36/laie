@@ -102,7 +102,6 @@ body .ui-autocomplete-panel .ui-autocomplete-table td {
 /*Button*/
 body .ui-button {
 	font-size: 0.9em;
-	min-width: 5.5em;
 }
 
 body .ui-button.ui-button-icon-only {
@@ -118,7 +117,6 @@ body .ui-button, body .ui-button.ui-button-icon-only {
 	padding: 0.6em;
 	justify-content: center;
 	align-items: center;
-	position: relative;
 }
 
 body .ui-fileupload-buttonbar {
@@ -364,7 +362,8 @@ body .ui-datepicker .ui-datepicker-calendar a.ui-state-active {
 	color: white;
 }
 
-body .ui-inputtext, body .ui-inputfield.hasDatepicker, body .ui-autocomplete-input, body .ui-password {
+body .ui-inputtext, body .ui-inputfield.hasDatepicker, body .ui-autocomplete-input, body .ui-password, body .ui-spinner-input
+	{
 	outline: medium none;
 	background: white;
 	font-size: 1em;
@@ -602,4 +601,14 @@ body .ui-picklist .ui-picklist-list-wrapper {
 body .ui-picklist .ui-picklist-buttons {
 	height: auto;
 	padding: 1em;
+}
+
+body .ui-spinner {
+	display: flex;
+}
+
+body .ui-spinner .ui-spinner-button {
+	height: 50%;
+	width: 16px;
+	margin-left: 16px;
 }
