@@ -14,7 +14,7 @@
 	</composite:interface>
 
 	<composite:implementation>
-		<h:panelGroup id="#{cc.clientId}" class="user-minicard" rendered="#{not empty cc.attrs.rendered}">
+		<h:panelGroup class="user-minicard" rendered="#{not empty cc.attrs.rendered}">
 			<p:link outcome="/faces/user/user">
 				<f:param name="userId" value="#{cc.attrs.user.id}" />
 				<cc:avatar styleClass="user-minicard-image" imageFileName="#{cc.attrs.user.imageFileName}" />

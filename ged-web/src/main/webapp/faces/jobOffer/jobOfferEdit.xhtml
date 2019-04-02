@@ -16,7 +16,7 @@
 			<p:menuitem value="#{i18n['job.job_offers']}" url="/faces/jobOffer/jobOfferSearch.xhtml" />
 			<p:menuitem value="#{jobOfferEditBean.jobOffer}"
 				url="/faces/job/jobOffer.xhtml?jobId=#{jobOfferEditBean.jobOffer.id}" rendered="#{not jobOfferEditBean.newJobOffer}" />
-			<p:menuitem value="#{jobOfferEditBean.newJobOffer ? i18n['job.new_job_offer'] : i18n['user.edit_job']}"
+			<p:menuitem value="#{jobOfferEditBean.newJobOffer ? i18n['job.new_job_offer'] : i18n['job.edit_job']}"
 				disabled="true" />
 		</p:breadCrumb>
 		<h:form id="jobOfferForm">

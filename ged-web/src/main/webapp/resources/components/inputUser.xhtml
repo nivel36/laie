@@ -18,7 +18,7 @@
 	</composite:interface>
 
 	<composite:implementation>
-		<h:panelGroup id="#{cc.clientId}" layout="block" styleClass="input-user input-group #{cc.attrs.styleClass}">
+		<h:panelGroup id="input-user-component" layout="block" styleClass="input-user input-group #{cc.attrs.styleClass}">
 			<div class="label">
 				<p:outputLabel id="label" value="#{cc.attrs.label}" for="input-user" />
 			</div>
@@ -35,9 +35,9 @@
 					<p:column styleClass="user-select name">
 						<h:outputText value="#{user.fullName}" />
 					</p:column>
-					<p:ajax event="itemSelect" update="#{cc.clientId}" process="input-user" />
+					<p:ajax event="itemSelect" update="input-user-component" process="input-user" />
 				</p:autoComplete>
-				<p:commandButton id="cleanButton" process="@this" update="#{cc.clientId}" action="#{cc.clean}"
+				<p:commandButton id="cleanButton" process="@this" update="input-user-component" action="#{cc.clean}"
 					styleClass="btn-inner" icon="fa fa-times" binding="#{cc.cleanButton}" />
 			</div>
 			<div class="message-error">

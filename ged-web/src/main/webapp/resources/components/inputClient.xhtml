@@ -19,14 +19,14 @@
 	</composite:interface>
 
 	<composite:implementation>
-		<h:panelGroup id="#{cc.clientId}" layout="block" styleClass="input-client input-group #{cc.attrs.styleClass}">
+		<h:panelGroup id="inputClient" layout="block" styleClass="input-client input-group #{cc.attrs.styleClass}">
 			<div class="label">
 				<p:outputLabel id="label" for="input-client" value="#{cc.attrs.label}" />
 			</div>
 			<div class="input">
 				<p:inputText id="input-client" value="#{empty cc.attrs.value ? null : cc.attrs.value.name}"
 					required="#{cc.attrs.required}" binding="#{cc.input}" styleClass="input-client" />
-				<p:commandButton id="clean" action="#{cc.clean}" process="@this" update="#{cc.clientId}" styleClass="btn-gray"
+				<p:commandButton id="clean" action="#{cc.clean}" process="@this" update="inputClient" styleClass="btn-gray"
 					icon="fa fa-times" binding="#{cc.cleanButton}" />
 				<p:commandButton id="search" action="#{cc.attrs.search}" process="@this" icon="fa fa-search"
 					styleClass="green-button">

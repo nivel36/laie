@@ -17,7 +17,7 @@
 	</composite:interface>
 
 	<composite:implementation>
-		<h:panelGroup id="#{cc.clientId}" layout="block" styleClass="input-group input-search #{cc.attrs.styleClass}" >
+		<h:panelGroup layout="block" styleClass="input-group input-search #{cc.attrs.styleClass}" >
 			<p:defaultCommand target="searchButton" />
 			<div class="input">
 				<p:inputText id="searchText" value="#{cc.attrs.searchText}" binding="#{cc.searchInputText}" />

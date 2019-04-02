@@ -343,8 +343,8 @@ body .input-search .clean-search-button {
 	display: flex;
 	padding: 0.5em;
 	align-items: center;
-	flex-direction: row;
 	max-width: 440px;
+	flex-flow: row wrap;
 }
 
 .input-group .input-group-addon {
@@ -362,6 +362,11 @@ body .input-search .clean-search-button {
 
 .input-group .label {
 	flex: 0 1 33%;
+}
+
+.input-group .message-error {
+	flex: 1 100%;
+	margin-left: 33%;
 }
 
 .dialog.purple {

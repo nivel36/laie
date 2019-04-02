@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://ged.com/i18n" xmlns:p="http://primefaces.org/ui"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://ged.com/i18n"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:p="http://primefaces.org/ui"
 	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
@@ -10,87 +11,71 @@
 	<ui:param name="selectedMenu" value="offers" />
 
 	<ui:define name="content">
-		<div class="grid">
-			<div class="col-12">
-				<p:breadCrumb homeDisplay="text">
-					<p:menuitem value="#{i18n['menu.index']}" url="/faces/index.xhtml" />
-					<p:menuitem value="#{i18n['job.job_offers']}" url="/faces/jobOffer/jobOfferSearch.xhtml" />
-					<p:menuitem value="#{jobOfferBean.jobOffer.name}" disabled="true" />
-				</p:breadCrumb>
-			</div>
-			
-			<div class="col-12">
+		<p:breadCrumb styleClass="breadcrumb">
+			<p:menuitem value="#{i18n['menu.index']}" url="/faces/index.xhtml" />
+			<p:menuitem value="#{i18n['job.job_offers']}" url="/faces/jobOffer/jobOfferSearch.xhtml" />
+			<p:menuitem value="#{jobOfferBean.jobOffer.name}" disabled="true" />
+		</p:breadCrumb>
+		<div class="grid nogutter">
+			<div class="panel user col-12 xl-8">
 				<h:form id="jobOfferViewForm">
-					<p:panel header="#{i18n['job.job_offer']}">
-						<div class="grid">
-							<div class="col-12 lg-6 xl-4">
-								<div class="form-group">
-									<p:outputLabel for="name" value="#{i18n['job.name']}" />
-									<p:inputText id="name" value="#{jobOfferBean.jobOffer.name}" readonly="true" />
-								</div>
+					<div class="panel">
+						<div class="panel-header">
+							<div class="panel-header-data">
+								<div class="panel-header-title">#{i18n['job.job_offer']}</div>
 							</div>
-							<div class="col-12 lg-6 xl-4">
-								<div class="form-group">
-									<p:outputLabel for="client" value="#{i18n['job.client']}" />
-									<p:inputText id="client" value="#{jobOfferBean.jobOffer.client.name}" readonly="true" />
-								</div>
+							<div class="panel-buttons">
+								<p:commandButton id="exportExcel" value="#{i18n['action.export']}" action="#" icon="fa fa-file-excel-o" />
+								<p:commandButton id="editJobOffer" value="#{i18n['action.edit']}" actionListener="#{jobOfferBean.editJobOffer}"
+									action="jobOfferEdit?faces-redirect=true" styleClass="btn-primary" />
 							</div>
-							<div class="col-12 lg-6 xl-4">
-								<div class="form-group">
-									<p:outputLabel for="places" value="#{i18n['job.places']}" />
-									<p:inputText id="places" value="#{jobOfferBean.jobOffer.places}" readonly="true" />
+						</div>
+						<div class="panel-content panel-content-data">
+							<div class="grid">
+								<div class="col-12 lg-6 xl-4">
+									<cc:outputText label="#{i18n['job.name']}" value="#{jobOfferBean.jobOffer.name}" />
 								</div>
-							</div>
-							<div class="col-12 lg-6 xl-4">
-								<div class="form-group">
-									<p:outputLabel for="dateOpened" value="#{i18n['job.date_opened']}" />
-									<p:calendar id="dateOpened" value="#{jobOfferBean.jobOffer.dateOpened}" readonly="true" pattern="dd/MM/yyyy">
-										<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
-									</p:calendar>
+								<div class="col-12 lg-6 xl-4">
+									<cc:outputText label="#{i18n['job.client']}" value="#{jobOfferBean.jobOffer.client.name}" />
 								</div>
-							</div>
-							<div class="col-12 lg-6 xl-4">
-								<div class="form-group">
-									<p:outputLabel for="dateClosed" value="#{i18n['job.date_closed']}" />
-									<p:calendar id="dateClosed" value="#{jobOfferBean.jobOffer.dateClosed}" readonly="true" pattern="dd/MM/yyyy">
-										<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
-									</p:calendar>
+								<div class="col-12 lg-6 xl-4">
+									<cc:outputText label="#{i18n['job.places']}" value="#{jobOfferBean.jobOffer.places}" />
 								</div>
-							</div>
-							<div class="col-12 lg-6 xl-4">
-								<div class="form-group">
-									<p:outputLabel for="city" value="#{i18n['address.city']}" />
-									<p:inputText id="city" value="#{jobOfferBean.jobOffer.city}" readonly="true" />
+								<div class="col-12 lg-6 xl-4">
+									<cc:outputText label="#{i18n['job.date_opened']}" value="#{jobOfferBean.jobOffer.dateOpened}">
+										<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" for="element" />
+									</cc:outputText>
 								</div>
-							</div>
-							<div class="col-12 lg-6 xl-4">
-								<div class="form-group">
-									<p:outputLabel for="state" value="#{i18n['address.state']}" />
-									<p:inputText id="state" value="#{jobOfferBean.jobOffer.state}" readonly="true" />
+								<div class="col-12 lg-6 xl-4">
+									<cc:outputText label="#{i18n['job.date_closed']}" value="#{jobOfferBean.jobOffer.dateClosed}">
+										<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" for="element" />
+									</cc:outputText>
 								</div>
-							</div>
-							<div class="col-12">
-								<div class="form-group">
-									<p:outputLabel for="description" value="#{i18n['job.description']}" />
-									<p:inputTextarea id="description" value="#{jobOfferBean.jobOffer.description}" readonly="true" />
+								<div class="col-12 lg-6 xl-4">
+									<cc:outputText label="#{i18n['address.city']}" value="#{jobOfferBean.jobOffer.city}" />
+
 								</div>
-							</div>
-							
-							<div class="col-12">
-								<div class="form-action-primary">
-									<p:commandButton id="exportExcel" value="#{i18n['action.export']}" action="#" icon="fa fa-file-excel-o" />
-									<p:commandButton id="editJobOffer" value="#{i18n['action.edit']}" actionListener="#{jobOfferBean.editJobOffer}"
-										action="jobOfferEdit?faces-redirect=true" styleClass="btn-primary" />
+								<div class="col-12 lg-6 xl-4">
+									<cc:outputText label="#{i18n['address.state']}" value="#{jobOfferBean.jobOffer.state}" />
+
+								</div>
+								<div class="col-12">
+									<cc:outputText label="#{i18n['job.description']}" value="#{jobOfferBean.jobOffer.description}" />
+								</div>
+
+								<div class="col-12">
+									<div class="form-action-primary"></div>
 								</div>
 							</div>
 						</div>
-					</p:panel>
+					</div>
 				</h:form>
 			</div>
 			<div class="col-12">
 				<h:form id="candidatesForm">
 					<cc:jobCandidatures jobCandidatures="#{jobOfferBean.jobCandidatures}" showJobOffer="false">
-						<p:commandButton value="#{i18n['action.add']}" actionListener="#{jobOfferBean.openSelectCandidatesDialog}" process="@this">
+						<p:commandButton value="#{i18n['action.add']}" actionListener="#{jobOfferBean.openSelectCandidatesDialog}"
+							process="@this">
 							<p:ajax event="dialogReturn" listener="#{jobOfferBean.onCloseSelectCandidateDialog}" update="@form" />
 						</p:commandButton>
 					</cc:jobCandidatures>

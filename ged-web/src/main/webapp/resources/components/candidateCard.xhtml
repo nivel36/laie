@@ -14,7 +14,7 @@
 	</composite:interface>
 
 	<composite:implementation>
-		<h:panelGroup id="#{cc.clientId}" layout="block" sytleClass="candidate-card #{cc.attrs.styleClass}">
+		<h:panelGroup layout="block" sytleClass="candidate-card #{cc.attrs.styleClass}">
 			<p:link outcome="/faces/candidate/candidate">
 				<f:param name="candidateId" value="#{cc.attrs.candidate.id}" />
 				<div class="user-minicard">
