@@ -23,12 +23,11 @@ import javax.security.enterprise.authentication.mechanism.http.AuthenticationPar
 import javax.security.enterprise.credential.UsernamePasswordCredential;
 import javax.servlet.http.HttpSession;
 
+import org.omnifaces.util.Faces;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ged.ejb.core.LoginService;
-import ged.web.core.util.Navigate;
-import ged.web.core.util.PageEnum;
 import ged.web.core.view.AbstractBean;
 
 @Named
@@ -54,13 +53,13 @@ public class LoginBean extends AbstractBean {
 	private void authenticate(final AuthenticationParameters parameters) {
 		final AuthenticationStatus status = this.securityContext.authenticate(getRequest(), getResponse(), parameters);
 		if (status == SEND_FAILURE) {
+			logger.info("Validation failed for username {}", this.username);
 			addGlobalError("auth.message.error.failure");
 			validationFailed();
 		} else if (status == SEND_CONTINUE) {
 			responseComplete(); // Prevent JSF from rendering a response so authentication mechanism can
 								// continue.
 		}
-		Navigate.to(PageEnum.INDEX).doPost();
 	}
 
 	public Locale getLocale() {
@@ -77,25 +76,30 @@ public class LoginBean extends AbstractBean {
 
 	@PostConstruct
 	public void init() {
-		logger.trace("LOGIN Bean init");
+		logger.trace("Login init");
 		final String username = this.externalContext.getRemoteUser();
 		if (username != null) {
 			logger.warn("User {} alredy logged", username);
-			
-			Navigate.to(PageEnum.INDEX);
+			Faces.redirect("/faces/index");
 		}
+		setDefaultLocale();
+	}
+
+	private void setDefaultLocale() {
 		this.locale = this.facesContext.getApplication().getDefaultLocale();
 	}
 
-	public void login() {
-		logger.debug("Username {} login", this.username);
-		authenticate(
-				withParams().credential(new UsernamePasswordCredential(this.username, this.password)).newAuthentication(true));
+	public String login() {
+		logger.debug("User {} login", this.username);
+		final UsernamePasswordCredential credential = new UsernamePasswordCredential(this.username, this.password);
+		final AuthenticationParameters authenticationParameters = withParams().credential(credential).newAuthentication(true);
+		authenticate(authenticationParameters);
 		this.loginService.saveLastConnection(this.username);
+		return "/login?faces-redirect=true";
 	}
 
 	public String logout() {
-		logger.debug("Username {} logout", this.username);
+		logger.debug("User {} logout", this.username);
 		final ExternalContext externalContext = this.facesContext.getExternalContext();
 		final HttpSession session = (HttpSession) externalContext.getSession(true);
 		session.invalidate();
