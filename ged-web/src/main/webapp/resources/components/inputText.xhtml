@@ -9,7 +9,8 @@
 	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
 	<composite:interface>
-		<composite:attribute name="label" required="true" />
+		<composite:attribute name="labelIcon" required="false" />
+		<composite:attribute name="label" required="false" />
 		<composite:attribute name="required" default="false" />
 		<composite:attribute name="rendered" default="true" />
 		<composite:attribute name="validator" targets="input-text" />
@@ -21,9 +22,12 @@
 	<composite:implementation>
 		<h:panelGroup layout="block" styleClass="input-group input-text #{cc.attrs.styleClass}"
 			rendered="#{cc.attrs.rendered}">
-			<div class="label">
+			<h:panelGroup layout="block" styleClass="label-icon icon" rendered="#{not empty cc.attrs.labelIcon}">
+				<em class="fa  #{cc.attrs.labelIcon}" />
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="label" rendered="#{not empty cc.attrs.label}">
 				<p:outputLabel id="label" for="input-text" value="#{cc.attrs.label}" />
-			</div>
+			</h:panelGroup>
 			<div class="input">
 				<p:inputText id="input-text" value="#{cc.attrs.value}" required="#{cc.attrs.required}"
 					styleClass="#{cc.attrs.inputStyleClass}" />

@@ -135,10 +135,7 @@ h4 {
 body>footer {
 	justify-content: center;
 	width: 100%;
-	background: linear-gradient(to bottom, rgba(243, 245, 248, 1) 0%, rgba(246, 246, 246, 1) 48%, rgba(237, 237, 237, 1)
-		100%);
 	display: flex;
-	border-top: 1px solid #bfceda;
 }
 
 body>footer .version {
@@ -149,30 +146,10 @@ body>footer .version {
 	border-right: 1px solid #bfceda;
 }
 
-.footer-icons {
-	display: flex;
-}
-
-.footer-icon {
-	text-align: center;
-	width: 2em;
-	background: linear-gradient(to bottom, rgba(243, 245, 248, 1) 0%, rgba(246, 246, 246, 1) 48%, rgba(237, 237, 237, 1)
-		100%);
-	padding: 0.3em;
-	font-size: 1.2em;
-	border-left: 1px solid white;
-	border-right: 1px solid #bfceda;
-	cursor: pointer;
-}
-
-.footer-icon:hover {
-	background: #e7eaf1;
-}
 
 body footer .version span {
 	font-size: 0.8em;
 	color: #848b9d;
-	text-shadow: 1px 1px white;
 }
 
 #aside {
@@ -364,12 +341,20 @@ body .input-search .clean-search-button {
 	flex: 0 1 33%;
 }
 
+.input-group .labelIcon {
+	flex: 0 1 auto;
+}
+
+.icon {
+	padding: 5px;
+}
+
 .input-group .message-error {
 	flex: 1 100%;
 	margin-left: 33%;
 }
 
-.dialog.purple {
+.dialog.login {
 	border-top: 6px solid #8000ff;
 }
 

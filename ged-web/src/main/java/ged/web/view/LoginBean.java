@@ -53,7 +53,6 @@ public class LoginBean extends AbstractBean {
 
 	private void authenticate(final AuthenticationParameters parameters) {
 		final AuthenticationStatus status = this.securityContext.authenticate(getRequest(), getResponse(), parameters);
-
 		if (status == SEND_FAILURE) {
 			addGlobalError("auth.message.error.failure");
 			validationFailed();
@@ -78,7 +77,7 @@ public class LoginBean extends AbstractBean {
 
 	@PostConstruct
 	public void init() {
-		logger.debug("LOGIN Bean init");
+		logger.trace("LOGIN Bean init");
 		final String username = this.externalContext.getRemoteUser();
 		if (username != null) {
 			logger.warn("User {} alredy logged", username);
