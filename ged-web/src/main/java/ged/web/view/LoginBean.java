@@ -81,6 +81,7 @@ public class LoginBean extends AbstractBean {
 		final String username = this.externalContext.getRemoteUser();
 		if (username != null) {
 			logger.warn("User {} alredy logged", username);
+			
 			Navigate.to(PageEnum.INDEX);
 		}
 		this.locale = this.facesContext.getApplication().getDefaultLocale();
