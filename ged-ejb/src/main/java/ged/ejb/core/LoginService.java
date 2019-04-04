@@ -28,9 +28,7 @@ public class LoginService {
 		final User user = this.userDao.findUserByEmail(email);
 		try {
 			final byte[] hashPassword = MessageDigest.getInstance("SHA-256").digest(password.getBytes(StandardCharsets.UTF_8));
-
 			final char[] hashBase64Password = DatatypeConverter.printBase64Binary(hashPassword).toCharArray();
-
 			if (!Arrays.equals(user.getPassword(), hashBase64Password)) {
 				throw new LoginException();
 			}
@@ -40,13 +38,6 @@ public class LoginService {
 		catch (NoSuchAlgorithmException | LoginException e) {
 			throw new BadLoginException();
 		}
-	}
-
-	@Audited(action = ActionType.LOGIN)
-	public User saveLastConnection(final String email) {
-		final User user = this.userDao.findUserByEmail(email);
-		user.setLastConnection(LocalDateTime.now());
-		return this.userDao.save(user);
 	}
 
 	public void setUserDao(final UserDao userDao) {

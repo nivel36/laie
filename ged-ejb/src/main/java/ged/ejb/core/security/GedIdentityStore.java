@@ -25,6 +25,10 @@ public class GedIdentityStore implements IdentityStore {
 	public void setUserService(final UserService userService) {
 		this.userService = userService;
 	}
+	
+	public void setLoginService(final LoginService loginService) {
+		this.loginService = loginService;
+	}
 
 	@Override
 	public CredentialValidationResult validate(final Credential credential) {
