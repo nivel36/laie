@@ -11,7 +11,6 @@ import java.util.Locale;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
-import javax.faces.context.ExternalContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.security.enterprise.AuthenticationStatus;
@@ -69,19 +68,18 @@ public class LoginBean extends AbstractBean {
 		return this.username;
 	}
 
+	private void gotoIndex() {
+		Navigate.to(PageEnum.INDEX).doPost();
+	}
+
 	@PostConstruct
 	public void init() {
 		logger.trace("Login init");
-		final String username = this.externalContext.getRemoteUser();
-		if (username != null) {
+		if (sessionUser.isActive()) {
 			logger.warn("User {} alredy logged", username);
-			Navigate.to(PageEnum.INDEX).doPost();
+			gotoIndex();
 		}
 		setDefaultLocale();
-	}
-
-	private void setDefaultLocale() {
-		this.locale = this.facesContext.getApplication().getDefaultLocale();
 	}
 
 	public void login() {
@@ -89,14 +87,21 @@ public class LoginBean extends AbstractBean {
 		final UsernamePasswordCredential credential = new UsernamePasswordCredential(this.username, this.password);
 		final AuthenticationParameters parameters = withParams().credential(credential).newAuthentication(true);
 		authenticate(parameters);
-		Navigate.to(PageEnum.INDEX).doPost();
+		gotoIndex();
 	}
 
 	public void logout() {
 		logger.debug("User {} logout", this.username);
-		final ExternalContext externalContext = this.facesContext.getExternalContext();
+		invalidateSession();
+	}
+
+	private void invalidateSession() {
 		final HttpSession session = (HttpSession) externalContext.getSession(true);
 		session.invalidate();
+	}
+
+	private void setDefaultLocale() {
+		this.locale = this.facesContext.getApplication().getDefaultLocale();
 	}
 
 	public void setLocale(final Locale locale) {
