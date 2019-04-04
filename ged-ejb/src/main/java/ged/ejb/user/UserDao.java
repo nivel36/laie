@@ -3,9 +3,11 @@ package ged.ejb.user;
 import static ged.ejb.core.util.Parameters.map;
 
 import java.lang.invoke.MethodHandles;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 
 import javax.persistence.NoResultException;
 
@@ -20,6 +22,8 @@ import ged.ejb.core.model.Repository;
 public class UserDao extends AbstractDao<User> {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
+	
+	private static final Random RANDOM = new SecureRandom();
 
 	private void deleteUserClosures(final User user) {
 		logger.trace("Delete user closures for user {}", user.getEmail());
@@ -113,9 +117,16 @@ public class UserDao extends AbstractDao<User> {
 
 	@Override
 	protected void preInsert(final User user) {
+		user.getCredential().setSalt(getSalt());
 		if (isEmailInUse(user.getEmail())) {
 			throw new DuplicateEmailException();
 		}
+	}
+	
+	private byte[] getSalt() {
+		byte[] salt = new byte[16];
+		RANDOM.nextBytes(salt);
+		return salt;
 	}
 
 	@Override

@@ -53,7 +53,6 @@ public class UserEditBean extends AbstractBean {
 		this.user = new User();
 		this.user.setLanguage("ES");
 		this.user.setRowsPerPage(25);
-		this.user.setPassword("M+SzETkPtT+deVQNIScBEXivvfozSne5QqIqyWICLv0=".toCharArray());
 		this.user.setDateOfJoin(LocalDate.now());
 		this.user.setOwner(this.user);
 	}

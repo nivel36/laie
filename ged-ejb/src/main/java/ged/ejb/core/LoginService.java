@@ -24,24 +24,34 @@ public class LoginService {
 	private UserDao userDao;
 
 	@Audited(action = ActionType.LOGIN)
-	public User login(final String email, final String password) {
+	public User login(final String email, final String password) throws LoginException {
 		final User user = this.userDao.findUserByEmail(email);
+		final byte[] salt = user.getCredential().getSalt();
 		try {
-			final byte[] hashPassword = MessageDigest.getInstance("SHA-256").digest(password.getBytes(StandardCharsets.UTF_8));
+			final byte[] hashPassword = digestPassword(password, salt);
 			final char[] hashBase64Password = DatatypeConverter.printBase64Binary(hashPassword).toCharArray();
-			if (!Arrays.equals(user.getPassword(), hashBase64Password)) {
-				throw new LoginException();
+			System.out.println(hashBase64Password.toString());
+			if (passwordMatch(user.getCredential().getPassword(), hashBase64Password)) {
+				throw new LoginException("Passwords doesn't match");
 			}
 			user.setLastConnection(LocalDateTime.now());
 			return this.userDao.save(user);
+		} catch (NoSuchAlgorithmException  e) {
+			 throw new SecurityException(e);
 		}
-		catch (NoSuchAlgorithmException | LoginException e) {
-			throw new BadLoginException();
-		}
+	}
+
+	private boolean passwordMatch(final char[] storedPassword, final char[] hashBase64Password) {
+		return !Arrays.equals(storedPassword, hashBase64Password);
+	}
+
+	private byte[] digestPassword(final String password, byte[] salt) throws NoSuchAlgorithmException {
+		MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
+		messageDigest.update(salt);
+		return messageDigest.digest(password.getBytes(StandardCharsets.UTF_8));
 	}
 
 	public void setUserDao(final UserDao userDao) {
 		this.userDao = userDao;
 	}
-
 }

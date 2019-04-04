@@ -82,6 +82,11 @@ public class UserService extends AbstractAuditedService<User> {
 	public User save(final User user) {
 		Objects.requireNonNull(user);
 		logger.debug("Saving user {}", user.getEmail());
+		validateManager(user);
+		return super.save(user);
+	}
+
+	private void validateManager(final User user) {
 		if (user.equals(user.getManager())) {
 			logger.warn("The user {} can't be his/her manager", user.getEmail());
 			throw new BadManagerException("User can't be his/her manager");
@@ -91,7 +96,6 @@ public class UserService extends AbstractAuditedService<User> {
 					user.getManager().getRole());
 			throw new BadManagerException("Admins can't have a manager");
 		}
-		return super.save(user);
 	}
 
 	public void setRoleDao(final RoleDao roleDao) {

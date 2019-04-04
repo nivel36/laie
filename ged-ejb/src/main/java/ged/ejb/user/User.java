@@ -49,15 +49,13 @@ public class User extends AbstractAuditedEntity {
 	@ManyToOne
 	@JoinColumn(name = "managerId", nullable = true)
 	private User manager;
+	
+	private Credential credential;
 
 	@NotNull
 	@Column(length = 64, nullable = false)
 	@Field
 	private String name;
-
-	@NotNull
-	@Column(length = 64, nullable = false)
-	private char[] password;
 
 	@Pattern(regexp = "(?:[+]?(?:[0-9]{1,5}|\\x28[0-9]{1,5}\\x29)[ ]?)?[0-9]{2}(?:[0-9][ ]?){6}[0-9]")
 	@Column(length = 12)
@@ -101,6 +99,10 @@ public class User extends AbstractAuditedEntity {
 		return this.bookmarks;
 	}
 
+	public Credential getCredential() {
+		return credential;
+	}
+
 	public LocalDate getDateOfJoin() {
 		return this.dateOfJoin;
 	}
@@ -134,10 +136,6 @@ public class User extends AbstractAuditedEntity {
 
 	public String getName() {
 		return this.name;
-	}
-
-	public char[] getPassword() {
-		return this.password;
 	}
 
 	public String getPhoneNumber() {
@@ -181,6 +179,10 @@ public class User extends AbstractAuditedEntity {
 		this.bookmarks = bookmarks;
 	}
 
+	public void setCredential(Credential credential) {
+		this.credential = credential;
+	}
+
 	public void setDateOfJoin(final LocalDate dateOfJoin) {
 		this.dateOfJoin = dateOfJoin;
 	}
@@ -207,10 +209,6 @@ public class User extends AbstractAuditedEntity {
 
 	public void setName(final String name) {
 		this.name = name;
-	}
-
-	public void setPassword(final char[] password) {
-		this.password = password;
 	}
 
 	public void setPhoneNumber(final String phoneNumber) {

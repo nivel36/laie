@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.inject.Inject;
+import javax.security.auth.login.LoginException;
 import javax.security.enterprise.credential.CallerOnlyCredential;
 import javax.security.enterprise.credential.Credential;
 import javax.security.enterprise.credential.UsernamePasswordCredential;
@@ -34,9 +35,13 @@ public class GedIdentityStore implements IdentityStore {
 	public CredentialValidationResult validate(final Credential credential) {
 		final User user;
 		if (credential instanceof UsernamePasswordCredential) {
-			final String email = ((UsernamePasswordCredential) credential).getCaller();
-			final String password = ((UsernamePasswordCredential) credential).getPasswordAsString();
-			user = loginService.login(email, password);
+			try {
+				final String email = ((UsernamePasswordCredential) credential).getCaller();
+				final String password = ((UsernamePasswordCredential) credential).getPasswordAsString();
+				user = loginService.login(email, password);
+			} catch (LoginException e) {
+				throw new SecurityException("Bad Login", e);
+			}
 		}
 		else if (credential instanceof CallerOnlyCredential) {
 			final String email = ((CallerOnlyCredential) credential).getCaller();

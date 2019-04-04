@@ -46,7 +46,7 @@ public class ChangePasswordDialogBean extends AbstractDialogBean {
 		logger.debug("Change password action performed");
 		final String output = this.hashPassword(this.password);
 		final User user = this.sessionUser.get();
-		if (String.valueOf(user.getPassword()).equals(output)) {
+		if (String.valueOf(user.getCredential().getPassword()).equals(output)) {
 			if (this.newPassword.equals(this.repeatPassword)) {
 				this.changePassword(user);
 				this.sessionUser.refresh();
@@ -68,7 +68,7 @@ public class ChangePasswordDialogBean extends AbstractDialogBean {
 	private User changePassword(final User user) {
 		final String hash = this.hashPassword(this.newPassword);
 		Objects.requireNonNull(hash);
-		user.setPassword(hash.toCharArray());
+		user.getCredential().setPassword(hash.toCharArray());
 		return this.userService.save(user);
 	}
 
