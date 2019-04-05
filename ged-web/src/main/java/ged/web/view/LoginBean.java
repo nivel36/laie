@@ -75,7 +75,8 @@ public class LoginBean extends AbstractBean {
 	@PostConstruct
 	public void init() {
 		logger.trace("Login init");
-		if (sessionUser.isActive()) {
+		final String username = this.externalContext.getRemoteUser();
+		if (username != null) {
 			logger.warn("User {} alredy logged", username);
 			gotoIndex();
 		}

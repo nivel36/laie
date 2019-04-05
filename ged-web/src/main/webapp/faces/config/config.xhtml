@@ -20,7 +20,8 @@
 				</div>
 				<div class="panel-aside">
 					<div class="candidate-metadata">
-						<cc:inputImage id="userImage" value="#{configBean.user.imageFileName}" fileUploadListener="#{configBean.init}" />
+						<cc:inputImage id="userImage" value="#{configBean.user.imageFileName}"
+							fileUploadListener="#{configBean.uploadImage}" allowCamera="true" captureListener="#{configBean.captureImage}" />
 					</div>
 				</div>
 				<div class="panel-content panel-content-data">
@@ -28,28 +29,29 @@
 						<div class="col-12 sm-6">
 							<cc:inputText label="#{i18n['config.name']}" id="name" value="#{configBean.user.name}" required="true" />
 						</div>
-					</div>
-					<div class="col-12 md-6">
-						<cc:inputText label="#{i18n['config.surname']}" id="surname" value="#{configBean.user.surname}" required="true" />
-					</div>
-					<div class="col-12 md-6">
-						<cc:inputText label="#{i18n['config.email']}" id="email" value="#{configBean.user.email}" required="true" />
-					</div>
-					<div class="col-12 md-6">
-						<cc:inputSelect label="#{i18n['config.rows_per_page']}" value="#{configBean.user.rowsPerPage}"
-							converter="javax.faces.Integer">
-							<f:selectItem itemValue="5" itemLabel="5" />
-							<f:selectItem itemValue="10" itemLabel="10" />
-							<f:selectItem itemValue="25" itemLabel="25" />
-						</cc:inputSelect>
-					</div>
-					<div class="col-12 md-6">
-						<cc:inputSelect label="#{i18n['config.language']}" value="#{configBean.user.language}" converter="stringConverter">
-							<f:selectItems var="locale" value="#{applicationBean.locales}" itemValue="#{locale.language}"
-								itemLabel="#{locale.displayLanguage}" />
-							<f:ajax event="change" render="@all" listener="#{configBean.changeLocaleListener}" />
-						</cc:inputSelect>
 
+						<div class="col-12 md-6">
+							<cc:inputText label="#{i18n['config.surname']}" id="surname" value="#{configBean.user.surname}" required="true" />
+						</div>
+						<div class="col-12 md-6">
+							<cc:inputText label="#{i18n['config.email']}" id="email" value="#{configBean.user.email}" required="true" />
+						</div>
+						<div class="col-12 md-6">
+							<cc:inputSelect label="#{i18n['config.rows_per_page']}" value="#{configBean.user.rowsPerPage}"
+								converter="javax.faces.Integer">
+								<f:selectItem itemValue="5" itemLabel="5" />
+								<f:selectItem itemValue="10" itemLabel="10" />
+								<f:selectItem itemValue="25" itemLabel="25" />
+							</cc:inputSelect>
+						</div>
+						<div class="col-12 md-6">
+							<cc:inputSelect label="#{i18n['config.language']}" value="#{configBean.user.language}"
+								converter="stringConverter">
+								<f:selectItems var="locale" value="#{applicationBean.locales}" itemValue="#{locale.language}"
+									itemLabel="#{locale.displayLanguage}" />
+								<f:ajax event="change" render="@all" listener="#{configBean.changeLocaleListener}" />
+							</cc:inputSelect>
+						</div>
 					</div>
 				</div>
 				<div class="panel-footer">

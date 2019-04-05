@@ -114,7 +114,8 @@ body .ui-button, body .ui-button.ui-button-icon-only {
 	background-color: #69abe2;
 	border: 1px solid #59a2df;
 	margin: 0;
-	padding: 0.6em;
+	padding: 5px;
+	width: auto;
 	justify-content: center;
 	align-items: center;
 }
@@ -176,13 +177,21 @@ body .ui-breadcrumb .ui-breadcrumb-chevron {
 }
 
 body .ui-chips {
+	cursor: default;
+}
+
+body .ui-chips-container {
+	outline: medium none;
+	background: white;
+	border: 1px solid #c2cad8;
+	color: #777777;
+	width: 100%;
 	font-size: 0.8em;
 }
 
-body .ui-chips-container, body .ui-chips-container.ui-state-disabled {
+body .ui-chips-container.ui-state-disabled {
 	border: 1px solid transparent;
 	background: transparent;
-	width: 100%;
 }
 
 body .ui-chips-container .ui-chips-token {
@@ -192,6 +201,11 @@ body .ui-chips-container .ui-chips-token {
 	background: #59a2df;
 	color: white;
 	text-shadow: 1px 1px #509ede;
+	cursor: pointer;
+}
+
+body .ui-chips-container.ui-state-disabled .ui-chips-token {
+	cursor: default;
 }
 
 body .ui-chips-token .ui-chips-token-label {
@@ -361,6 +375,33 @@ body .ui-datepicker .ui-datepicker-calendar a.ui-state-active {
 	background: #1976d2;
 	color: white;
 }
+
+body .ui-dialog {
+	background: white;
+	border-radius: 6px;
+	border: 1px solid #ababab;
+}
+
+body .ui-dialog .ui-dialog-titlebar {
+	border-top-left-radius: 6px;
+	border-top-right-radius: 6px;
+	background: linear-gradient(to right, rgba(242, 243, 247, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(236, 238, 243, 1) 100%);
+	border-bottom: 1px solid #bfceda;
+	padding: 0;
+	margin: 0;
+	display: flex;	
+}
+
+body .ui-dialog .ui-dialog-titlebar .ui-dialog-title {
+	flex: 1 1 100%;
+}
+
+body .ui-dialog .ui-dialog-titlebar .ui-dialog-titlebar-close {
+	background: #ababab;
+	color: white;
+	padding: 8px 12px;
+}
+
 
 body .ui-inputtext, body .ui-inputfield.hasDatepicker, body .ui-autocomplete-input, body .ui-password, body .ui-spinner-input
 	{

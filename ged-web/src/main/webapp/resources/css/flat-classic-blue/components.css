@@ -257,8 +257,8 @@ body .input> *:last-child {
 }
 
 .input-image {
-	padding: 0.5em 1em;
 	text-align: center;
+	position: relative;
 }
 
 .input-image .image, .avatar .image {
@@ -269,6 +269,12 @@ body .input> *:last-child {
 	box-shadow: 0px 0px 3px rgba(1, 1, 1, 0.5);
 	object-fit: cover;
 	image-orientation: from-image;
+}
+
+.input-image .camera-button {
+	position: absolute;
+	right: 0;
+	bottom: 0;
 }
 
 .input-calendar .input {
@@ -287,7 +293,7 @@ body .input> *:last-child {
 	margin-left: -1.5em;
 }
 
-.input-text .input, .input-select .input, .input-user .input, .input-client .input {
+.input-text .input, .input-select .input, .input-user .input, .input-client .input,  .input-tag .input {
 	flex: 1 1 67%;
 }
 

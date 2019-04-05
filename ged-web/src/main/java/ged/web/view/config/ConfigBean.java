@@ -1,5 +1,6 @@
 package ged.web.view.config;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UncheckedIOException;
@@ -13,6 +14,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.primefaces.event.CaptureEvent;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 import org.slf4j.Logger;
@@ -55,7 +57,7 @@ public class ConfigBean extends AbstractBean {
 	public void init() {
 		this.user = this.sessionUser.get();
 		sessionUser.refresh();
-		logger.debug("Config user {} init", user.getEmail());
+		logger.trace("Config user {} init", user.getEmail());
 	}
 
 	public void openChangePasswordDialog() {
@@ -67,7 +69,7 @@ public class ConfigBean extends AbstractBean {
 	}
 
 	public void save() {
-		logger.debug("Save user action performed");
+		logger.debug("Save user {} action performed", user);
 		final long userId = this.user.getId();
 		if (userId == this.sessionUser.get().getId()) {
 			this.changeSessionUser();
@@ -87,12 +89,28 @@ public class ConfigBean extends AbstractBean {
 
 	public void uploadImage(final FileUploadEvent event) {
 		Objects.requireNonNull(event);
-		logger.debug("Upload user image action performed");
+		logger.debug("Upload user {} image action performed", user);
 		final UploadedFile uploadedFile = event.getFile();
 		if (uploadedFile == null) {
 			return;
 		}
 		try (InputStream inputStream = uploadedFile.getInputstream()) {
+			final String uuid = this.fileUploadService.uploadImage(inputStream);
+			this.user.setImageFileName(uuid);
+		}
+		catch (final IOException e) {
+			throw new UncheckedIOException(e);
+		}
+	}
+	
+	public void captureImage(final CaptureEvent event) {
+		Objects.requireNonNull(event);
+		logger.debug("Upload camera image action performed");
+		 byte[] data = event.getData();
+		if (data == null) {
+			return;
+		}
+		try (InputStream inputStream = new ByteArrayInputStream(data);) {
 			final String uuid = this.fileUploadService.uploadImage(inputStream);
 			this.user.setImageFileName(uuid);
 		}
