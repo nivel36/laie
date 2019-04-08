@@ -45,7 +45,7 @@ public class ConfigBean extends AbstractBean {
 		facesContext.getViewRoot().setLocale(new Locale(user.getLanguage()));
 	}
 
-	private void changeSessionUser() {
+	private void refreshSessionUser() {
 		this.sessionUser.refresh();
 	}
 
@@ -55,27 +55,25 @@ public class ConfigBean extends AbstractBean {
 
 	@PostConstruct
 	public void init() {
+		refreshSessionUser();
 		this.user = this.sessionUser.get();
-		sessionUser.refresh();
 		logger.trace("Config user {} init", user.getEmail());
 	}
 
 	public void openChangePasswordDialog() {
-		this.openDialog("/faces/config/changePasswordDialog", this.buildDialogParameter("userId", String.valueOf(this.user.getId())));
+		this.openDialog("/faces/config/changePasswordDialog",
+				this.buildDialogParameter("userId", String.valueOf(this.user.getId())));
 	}
 
 	public void openChangePictureDialog() {
-		this.openDialog("/faces/config/changePictureDialog", this.buildDialogParameter("userId", String.valueOf(this.user.getId())));
+		this.openDialog("/faces/config/changePictureDialog",
+				this.buildDialogParameter("userId", String.valueOf(this.user.getId())));
 	}
 
 	public void save() {
 		logger.debug("Save user {} action performed", user);
-		final long userId = this.user.getId();
-		if (userId == this.sessionUser.get().getId()) {
-			this.changeSessionUser();
-		}
 		this.user = this.userService.save(this.user);
-		this.sessionUser.refresh();
+		this.refreshSessionUser();
 		this.addMessage(FacesMessage.SEVERITY_INFO, "action.save_action_performed", "action.save_action_performed");
 	}
 
@@ -97,24 +95,22 @@ public class ConfigBean extends AbstractBean {
 		try (InputStream inputStream = uploadedFile.getInputstream()) {
 			final String uuid = this.fileUploadService.uploadImage(inputStream);
 			this.user.setImageFileName(uuid);
-		}
-		catch (final IOException e) {
+		} catch (final IOException e) {
 			throw new UncheckedIOException(e);
 		}
 	}
-	
+
 	public void captureImage(final CaptureEvent event) {
 		Objects.requireNonNull(event);
-		logger.debug("Upload camera image action performed");
-		 byte[] data = event.getData();
+		logger.debug("Upload camera image for user {} action performed", user);
+		byte[] data = event.getData();
 		if (data == null) {
 			return;
 		}
 		try (InputStream inputStream = new ByteArrayInputStream(data);) {
 			final String uuid = this.fileUploadService.uploadImage(inputStream);
 			this.user.setImageFileName(uuid);
-		}
-		catch (final IOException e) {
+		} catch (final IOException e) {
 			throw new UncheckedIOException(e);
 		}
 	}
