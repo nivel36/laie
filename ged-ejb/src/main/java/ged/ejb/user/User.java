@@ -68,7 +68,7 @@ public class User extends AbstractAuditedEntity {
 
 	@NotNull
 	@Column(nullable = false)
-	private int rowsPerPage = 10;
+	private Integer rowsPerPage = 10;
 
 	@NotNull
 	@Column(length = 64, nullable = false)
@@ -146,7 +146,7 @@ public class User extends AbstractAuditedEntity {
 		return this.role;
 	}
 
-	public int getRowsPerPage() {
+	public Integer getRowsPerPage() {
 		return this.rowsPerPage;
 	}
 
@@ -219,7 +219,7 @@ public class User extends AbstractAuditedEntity {
 		this.role = role;
 	}
 
-	public void setRowsPerPage(final int rowsPerPage) {
+	public void setRowsPerPage(final Integer rowsPerPage) {
 		this.rowsPerPage = rowsPerPage;
 	}
 

@@ -27,24 +27,25 @@
 				<div class="panel-content panel-content-data">
 					<div class="grid">
 						<div class="col-12 sm-6">
-							<cc:inputText label="#{i18n['config.name']}" id="name" value="#{configBean.user.name}" required="true" />
-						</div>
 
-						<div class="col-12 md-6">
+							<h3>#{i18n['user.personal_information']}</h3>
+							<cc:inputText label="#{i18n['config.name']}" id="name" value="#{configBean.user.name}" required="true" />
+
 							<cc:inputText label="#{i18n['config.surname']}" id="surname" value="#{configBean.user.surname}" required="true" />
-						</div>
-						<div class="col-12 md-6">
+
 							<cc:inputText label="#{i18n['config.email']}" id="email" value="#{configBean.user.email}" required="true" />
 						</div>
 						<div class="col-12 md-6">
+
+							<h3>#{i18n['user.personal_information']}</h3>
+
 							<cc:inputSelect label="#{i18n['config.rows_per_page']}" value="#{configBean.user.rowsPerPage}"
 								converter="javax.faces.Integer">
 								<f:selectItem itemValue="5" itemLabel="5" />
 								<f:selectItem itemValue="10" itemLabel="10" />
 								<f:selectItem itemValue="25" itemLabel="25" />
 							</cc:inputSelect>
-						</div>
-						<div class="col-12 md-6">
+
 							<cc:inputSelect label="#{i18n['config.language']}" value="#{configBean.user.language}"
 								converter="stringConverter">
 								<f:selectItems var="locale" value="#{applicationBean.locales}" itemValue="#{locale.language}"

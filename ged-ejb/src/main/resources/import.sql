@@ -81,8 +81,8 @@ insert into I18NSTRING( id, version, locale, key, text ) values( 863, 0, 'ca', '
 insert into ROLE( id, version, name ) values( 911, 0, 'ADMIN' );
 insert into ROLE( id, version, name ) values( 912, 0, 'USER' );
 
-insert into USER( id, version, email, language, name, rowsPerPage, surname, password, roleId, deleted, imageFileName, ownerId ) values( 901, 0, 'abel.ferrer.jimenez@gmail.com', 'es', 'Abel', 10, 'Ferrer', 'jGl25bVBBBW96Qi9Te4V37Fnqchz/Eu4qB9vKrRIqRg=', 911, false, null, 901);
-insert into USER( id, version, email, language, name, rowsPerPage, surname, password, roleId, deleted, imageFileName, ownerId ) values( 902, 0, 'isabel.vallejo.medina@gmail.com', 'es', 'Isabel', 10, 'Vallejo', 'jGl25bVBBBW96Qi9Te4V37Fnqchz/Eu4qB9vKrRIqRg=', 911, false, null, 902);
+insert into USER( id, version, email, language, name, rowsPerPage, surname, password, salt, roleId, deleted, imageFileName, ownerId ) values( 901, 0, 'abel.ferrer.jimenez@gmail.com', 'es', 'Abel', 10, 'Ferrer', 'Fq+1CgapWKzsLtqdcCgxObx7c3LiHMg/YZzPFp5ueVY=', 'FFFFFF', 911, false, null, 901);
+insert into USER( id, version, email, language, name, rowsPerPage, surname, password, salt, roleId, deleted, imageFileName, ownerId ) values( 902, 0, 'isabel.vallejo.medina@gmail.com', 'es', 'Isabel', 10, 'Vallejo', 'Fq+1CgapWKzsLtqdcCgxObx7c3LiHMg/YZzPFp5ueVY=', 'FFFFFF', 911, false, null, 902);
 
 insert into USERCLOSURE( id, version, antecessor_id, descendant_id, pathLength ) values( 970, 0, 901, 901, 0 );
 insert into USERCLOSURE( id, version, antecessor_id, descendant_id, pathLength ) values( 971, 0, 902, 902, 0 );

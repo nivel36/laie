@@ -84,7 +84,7 @@ public class UserEditBeanTest {
 			assertNull(user.getEmail());
 			assertEquals(LocalDate.now(), user.getDateOfJoin());
 			assertEquals("ES", user.getLanguage());
-			assertEquals(25, user.getRowsPerPage());
+			assertEquals(Integer.valueOf(25), user.getRowsPerPage());
 			assertNull(user.getLastConnection());
 		}
 

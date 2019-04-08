@@ -7,11 +7,11 @@
 		<composite:attribute name="name" />
 		<composite:attribute name="label" required="true" />
 		<composite:attribute name="value" required="true" />
-		<composite:clientBehavior name="change" event="change" targets="selectOneMenu" />
-		<composite:attribute name="required" type="boolean" default="false" />
+		<composite:attribute name="required" default="false" type="boolean" />
 		<composite:attribute name="rendered" default="true" />
-		<composite:attribute name="other" required="false" default="false" type="boolean" />
-		<composite:attribute name="styleClass" required="false" default="" />
+		<composite:attribute name="other" default="false" type="boolean" />
+		<composite:attribute name="styleClass" default="" />
+		<composite:clientBehavior name="change" event="change" targets="selectOneMenu" />
 	</composite:interface>
 
 	<composite:implementation>
@@ -22,21 +22,20 @@
 			</div>
 			<div class="input">
 				<c:if test="#{cc.attrs.other}">
-					<h:panelGroup id="selectOneMenu-group" style="display:flex; width:100%;">
-						<p:selectOneMenu id="selectOneMenu" name="#{cc.attrs.name}" required="#{cc.attrs.required}"
-							binding="#{cc.selectInput}">
-							<f:selectItem />
-							<composite:insertChildren />
-							<f:selectItem itemLabel="#{i18n['select.other']}" itemValue="other" />
-							<p:ajax event="change" process="@this" update="selectOneMenu-group" listener="#{cc.onChangeSelectValue}" />
-						</p:selectOneMenu>
-						<p:inputText id="other" binding="#{cc.otherInputText}" />
-					</h:panelGroup>
+					<p:selectOneMenu id="selectOneMenu" name="#{cc.attrs.name}" required="#{cc.attrs.required}"
+						binding="#{cc.selectInput}">
+						<f:selectItem />
+						<composite:insertChildren />
+						<f:selectItem itemLabel="#{i18n['select.other']}" itemValue="other" />
+						<p:ajax event="change" process="@this" update="@parent" listener="#{cc.onChangeSelectValue}" />
+					</p:selectOneMenu>
+					<p:inputText id="other" binding="#{cc.otherInputText}" />
 					<h:inputHidden value="#{cc.attrs.value}" binding="#{cc.inputHidden}" />
 				</c:if>
 
 				<c:if test="#{not cc.attrs.other}">
-					<p:selectOneMenu id="selectOneMenu" name="#{cc.attrs.name}" value="#{cc.attrs.value}" required="#{cc.attrs.required}">
+					<p:selectOneMenu id="selectOneMenu" name="#{cc.attrs.name}" value="#{cc.attrs.value}"
+						required="#{cc.attrs.required}">
 						<f:selectItem />
 						<composite:insertChildren />
 					</p:selectOneMenu>
