@@ -411,6 +411,10 @@ body .ui-inputfield {
 	width: 100%;
 }
 
+body .ui-inputfield.hasDatepicker {
+	cursor: pointer;
+}
+
 body .ui-inputtext.ui-state-disabled, body .ui-inputfield.hasDatepicker.ui-state-disabled, body .ui-autocomplete-input.ui-state-disabled
 	{
 	background: #efefef;
@@ -623,6 +627,19 @@ body .ui-picklist .ui-picklist-buttons {
 	padding: 1em;
 }
 
+body .ui-selectonemenu .ui-selectonemenu-label {
+	display: flex;
+	border: 0;
+	white-space: nowrap;
+	overflow: hidden;
+	font-weight: normal;
+	width: 100%;
+	height: 100%;
+	justify-content: flex-end;
+	padding-right: 34px;
+	align-items: center;
+}
+
 body .ui-spinner {
 	display: flex;
 }
@@ -632,3 +649,4 @@ body .ui-spinner .ui-spinner-button {
 	width: 16px;
 	margin-left: 16px;
 }
+
