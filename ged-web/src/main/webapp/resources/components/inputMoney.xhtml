@@ -25,7 +25,8 @@
 			</div>
 			<div class="input-container">
 				<p:inputNumber id="inputNumber" name="#{cc.attrs.name}" value="#{cc.attrs.value}" required="#{cc.attrs.required}"
-					min="#{cc.attrs.min}" max="#{cc.attrs.max}" symbol=" €" symbolPosition="s" styleClass="input input-money" />
+					min="#{cc.attrs.min}" max="#{cc.attrs.max}" styleClass="input input-money" />
+				<i class="icon fa fa-euro" aria-hidden="true"></i>
 			</div>
 			<div class="message-container">
 				<p:message id="message" for="inputNumber" styleClass="message-error"/>

@@ -15,13 +15,13 @@
 	</composite:interface>
 
 	<composite:implementation>
-		<h:panelGroup layout="block" styleClass="input-group input-group-select #{cc.attrs.styleClass}"
+		<h:panelGroup id="input-select" layout="block" styleClass="input-group input-group-select #{cc.attrs.styleClass}"
 			rendered="#{cc.attrs.rendered}">
 			<div class="label-container">
 				<p:outputLabel id="label" value="#{cc.attrs.label}" for="selectOneMenu" styleClass="label" />
 			</div>
-			<div class="input-container">
-				<c:if test="#{cc.attrs.other}">
+			<c:if test="#{cc.attrs.other}">
+				<div class="input-container">
 					<p:selectOneMenu id="selectOneMenu" name="#{cc.attrs.name}" required="#{cc.attrs.required}"
 						binding="#{cc.selectInput}" styleClass="input input-select">
 						<f:selectItem />
@@ -30,19 +30,22 @@
 						<p:ajax event="change" process="@this" update="@parent" listener="#{cc.onChangeSelectValue}" />
 					</p:selectOneMenu>
 					<p:inputText id="other" binding="#{cc.otherInputText}" styleClass="input input-text" />
-					<h:inputHidden value="#{cc.attrs.value}" binding="#{cc.inputHidden}" />
-				</c:if>
+					</div>
+				<h:inputHidden value="#{cc.attrs.value}" binding="#{cc.inputHidden}" />
+			</c:if>
 
-				<c:if test="#{not cc.attrs.other}">
+			<c:if test="#{not cc.attrs.other}">
+				<div class="input-container">
 					<p:selectOneMenu id="selectOneMenu" name="#{cc.attrs.name}" value="#{cc.attrs.value}"
 						required="#{cc.attrs.required}" styleClass="input input-select">
 						<f:selectItem />
 						<composite:insertChildren />
 					</p:selectOneMenu>
-				</c:if>
-			</div>
+				</div>
+			</c:if>
+
 			<div class="message-container">
-				<p:message for="selectOneMenu" styleClass="message-error"/>
+				<p:message for="selectOneMenu" styleClass="message-error" />
 			</div>
 		</h:panelGroup>
 	</composite:implementation>

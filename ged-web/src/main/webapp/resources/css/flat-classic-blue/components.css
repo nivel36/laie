@@ -238,11 +238,8 @@ body .breadcrumb ul li.ui-breadcrumb-chevron {
 
 body .input {
 	flex: 1 1 auto;
-	outline: medium none;
-	font-size: 1em;
 	border: 1px solid #c2cad8;
 	color: #777777;
-	width: 100%;
 	padding-left: 0.5em;
 	padding-right: 0.5em;
 	height: 34px;
@@ -364,20 +361,23 @@ body .input-search .clean-search-button {
 	flex: 0 1 auto;
 }
 
-.icon {
-	padding: 9px;
+body button.icon, .icon {
 	width: 34px;
 	height: 34px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
 }
 
 .calendar {
 	cursor: pointer;
 }
 
-.input-group-calendar .icon {
+.input-group-calendar .icon, .input-group-money .icon  {
 	border-right: 1px solid #c2cad8;
 	border-top: 1px solid #c2cad8;
 	border-bottom: 1px solid #c2cad8;
+	background: #f6f6f6;
 }
 
 .input-group .message-container {
