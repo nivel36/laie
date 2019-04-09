@@ -102,6 +102,7 @@ body .ui-autocomplete-panel .ui-autocomplete-table td {
 /*Button*/
 body .ui-button {
 	font-size: 0.9em;
+	height: 34px;
 }
 
 body .ui-button.ui-button-icon-only {
@@ -114,7 +115,7 @@ body .ui-button, body .ui-button.ui-button-icon-only {
 	background-color: #69abe2;
 	border: 1px solid #59a2df;
 	margin: 0;
-	padding: 5px;
+	padding: 8px;
 	width: auto;
 	justify-content: center;
 	align-items: center;
@@ -178,6 +179,7 @@ body .ui-breadcrumb .ui-breadcrumb-chevron {
 
 body .ui-chips {
 	cursor: default;
+	width: 100%;
 }
 
 body .ui-chips-container {
@@ -402,6 +404,9 @@ body .ui-dialog .ui-dialog-titlebar .ui-dialog-titlebar-close {
 	padding: 8px 12px;
 }
 
+body .ui-inputfield {
+	height: 34px;
+}
 
 body .ui-inputtext, body .ui-inputfield.hasDatepicker, body .ui-autocomplete-input, body .ui-password, body .ui-spinner-input
 	{
