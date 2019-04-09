@@ -19,7 +19,7 @@
 	</composite:interface>
 
 	<composite:implementation>
-		<h:panelGroup layout="block" styleClass="input-group input-calendar #{cc.attrs.styleClass}"
+		<h:panelGroup layout="block" styleClass="input-group input-group-calendar #{cc.attrs.styleClass}"
 			rendered="#{cc.attrs.rendered}">
 			<div class="label-container">
 				<p:outputLabel id="label" for="calendar" value="#{cc.attrs.label}" styleClass="label" />
@@ -29,7 +29,7 @@
 					yearRange="#{cc.attrs.yearRange}" required="#{cc.attrs.required}" styleClass="input calendar">
 					<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
 				</p:calendar>
-				<i class="fa fa-calendar" aria-hidden="true"></i>
+				<i class="icon fa fa-calendar" aria-hidden="true"></i>
 			</div>
 			<div class="message-container">
 				<p:message id="message" for="calendar" styleClass="message-error" />

@@ -15,7 +15,7 @@
 	</composite:interface>
 
 	<composite:implementation>
-		<h:panelGroup layout="block" styleClass="input-group input-select #{cc.attrs.styleClass}"
+		<h:panelGroup layout="block" styleClass="input-group input-group-select #{cc.attrs.styleClass}"
 			rendered="#{cc.attrs.rendered}">
 			<div class="label-container">
 				<p:outputLabel id="label" value="#{cc.attrs.label}" for="selectOneMenu" styleClass="label" />
@@ -29,7 +29,7 @@
 						<f:selectItem itemLabel="#{i18n['select.other']}" itemValue="other" />
 						<p:ajax event="change" process="@this" update="@parent" listener="#{cc.onChangeSelectValue}" />
 					</p:selectOneMenu>
-					<p:inputText id="other" binding="#{cc.otherInputText}" />
+					<p:inputText id="other" binding="#{cc.otherInputText}" styleClass="input input-text" />
 					<h:inputHidden value="#{cc.attrs.value}" binding="#{cc.inputHidden}" />
 				</c:if>
 
