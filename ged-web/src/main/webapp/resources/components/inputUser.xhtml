@@ -19,13 +19,13 @@
 
 	<composite:implementation>
 		<h:panelGroup id="input-user-component" layout="block" styleClass="input-user input-group #{cc.attrs.styleClass}">
-			<div class="label">
-				<p:outputLabel id="label" value="#{cc.attrs.label}" for="input-user" />
+			<div class="label-container">
+				<p:outputLabel id="label" value="#{cc.attrs.label}" for="input-user" styleClass="label"/>
 			</div>
-			<div class="input">
+			<div class="input-container">
 				<p:autoComplete id="input-user" value="#{cc.attrs.value}" completeMethod="#{cc.attrs.completeMethod}" var="user"
 					itemLabel="#{user.fullName}" itemValue="#{user}" forceSelection="true" required="#{cc.attrs.required}"
-					binding="#{cc.input}" disabled="#{cc.attrs.disabled}">
+					binding="#{cc.input}" disabled="#{cc.attrs.disabled}" styleClass="input input-user">
 					<p:column styleClass="user-select image">
 						<p:graphicImage class="image image-icon" value="/images/#{user.imageFileName}"
 							rendered="#{not empty user.imageFileName}" />
@@ -40,8 +40,8 @@
 				<p:commandButton id="cleanButton" process="@this" update="input-user-component" action="#{cc.clean}"
 					styleClass="btn-inner" icon="fa fa-times" binding="#{cc.cleanButton}" />
 			</div>
-			<div class="message-error">
-				<p:message id="message" for="input-user" />
+			<div class="message-container">
+				<p:message id="message" for="input-user" styleClass="message-error"/>
 			</div>
 		</h:panelGroup>
 	</composite:implementation>

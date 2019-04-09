@@ -21,18 +21,18 @@
 	<composite:implementation>
 		<h:panelGroup layout="block" styleClass="input-group input-calendar #{cc.attrs.styleClass}"
 			rendered="#{cc.attrs.rendered}">
-			<div class="label">
+			<div class="label-container">
 				<p:outputLabel id="label" for="calendar" value="#{cc.attrs.label}" styleClass="label" />
 			</div>
-			<div class="input">
+			<div class="input-container">
 				<p:calendar id="calendar" value="#{cc.attrs.value}" pattern="dd/MM/yyyy" navigator="true"
-					yearRange="#{cc.attrs.yearRange}" required="#{cc.attrs.required}" styleClass="input">
+					yearRange="#{cc.attrs.yearRange}" required="#{cc.attrs.required}" styleClass="input calendar">
 					<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
 				</p:calendar>
 				<i class="fa fa-calendar" aria-hidden="true"></i>
 			</div>
-			<div class="message-error">
-				<p:message id="message" for="calendar" />
+			<div class="message-container">
+				<p:message id="message" for="calendar" styleClass="message-error" />
 			</div>
 		</h:panelGroup>
 	</composite:implementation>

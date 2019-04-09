@@ -20,12 +20,12 @@
 
 	<composite:implementation>
 		<h:panelGroup id="inputClient" layout="block" styleClass="input-client input-group #{cc.attrs.styleClass}">
-			<div class="label">
-				<p:outputLabel id="label" for="input-client" value="#{cc.attrs.label}" />
+			<div class="label-container">
+				<p:outputLabel id="label" for="input-client" value="#{cc.attrs.label}" styleClass="label" />
 			</div>
-			<div class="input">
+			<div class="input-container">
 				<p:inputText id="input-client" value="#{empty cc.attrs.value ? null : cc.attrs.value.name}"
-					required="#{cc.attrs.required}" binding="#{cc.input}" styleClass="input-client" />
+					required="#{cc.attrs.required}" binding="#{cc.input}" styleClass="input input-client" />
 				<p:commandButton id="clean" action="#{cc.clean}" process="@this" update="inputClient" styleClass="btn-gray"
 					icon="fa fa-times" binding="#{cc.cleanButton}" />
 				<p:commandButton id="search" action="#{cc.attrs.search}" process="@this" icon="fa fa-search"
@@ -33,8 +33,8 @@
 					<p:resetInput target="input-client" />
 				</p:commandButton>
 			</div>
-			<div class="message-error">
-				<p:message id="message" for="input-client" />
+			<div class="message-container">
+				<p:message id="message" for="input-client" styleClass="message-error"/>
 			</div>
 		</h:panelGroup>
 	</composite:implementation>

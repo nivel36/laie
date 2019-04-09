@@ -15,15 +15,15 @@
 
 	<composite:implementation>
 		<h:panelGroup layout="block" styleClass="input-group input-number #{cc.attrs.styleClass}">
-			<div class="label">
-				<p:outputLabel value="#{cc.attrs.label}" for="inputNumber" />
+			<div class="label-container">
+				<p:outputLabel value="#{cc.attrs.label}" for="inputNumber" styleClass="label" />
 			</div>
-			<div class="input">
+			<div class="input-container">
 				<p:spinner id="inputNumber" name="#{cc.attrs.name}" value="#{cc.attrs.value}" required="#{cc.attrs.required}"
-					min="#{cc.attrs.min}" max="#{cc.attrs.max}" />
+					min="#{cc.attrs.min}" max="#{cc.attrs.max}" styleClass="input input-number" />
 			</div>
-			<div class="message-error">
-				<p:message for="inputNumber" />
+			<div class="message-container">
+				<p:message id="message" for="inputNumber" styleClass="message-error" />
 			</div>
 		</h:panelGroup>
 	</composite:implementation>

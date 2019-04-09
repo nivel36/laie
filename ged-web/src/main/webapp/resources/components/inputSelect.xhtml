@@ -17,13 +17,13 @@
 	<composite:implementation>
 		<h:panelGroup layout="block" styleClass="input-group input-select #{cc.attrs.styleClass}"
 			rendered="#{cc.attrs.rendered}">
-			<div class="label">
-				<p:outputLabel id="label" value="#{cc.attrs.label}" for="selectOneMenu" />
+			<div class="label-container">
+				<p:outputLabel id="label" value="#{cc.attrs.label}" for="selectOneMenu" styleClass="label" />
 			</div>
-			<div class="input">
+			<div class="input-container">
 				<c:if test="#{cc.attrs.other}">
 					<p:selectOneMenu id="selectOneMenu" name="#{cc.attrs.name}" required="#{cc.attrs.required}"
-						binding="#{cc.selectInput}">
+						binding="#{cc.selectInput}" styleClass="input input-select">
 						<f:selectItem />
 						<composite:insertChildren />
 						<f:selectItem itemLabel="#{i18n['select.other']}" itemValue="other" />
@@ -35,14 +35,14 @@
 
 				<c:if test="#{not cc.attrs.other}">
 					<p:selectOneMenu id="selectOneMenu" name="#{cc.attrs.name}" value="#{cc.attrs.value}"
-						required="#{cc.attrs.required}">
+						required="#{cc.attrs.required}" styleClass="input input-select">
 						<f:selectItem />
 						<composite:insertChildren />
 					</p:selectOneMenu>
 				</c:if>
 			</div>
-			<div class="message-error">
-				<p:message for="selectOneMenu" />
+			<div class="message-container">
+				<p:message for="selectOneMenu" styleClass="message-error"/>
 			</div>
 		</h:panelGroup>
 	</composite:implementation>
