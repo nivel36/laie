@@ -238,18 +238,20 @@ body .breadcrumb ul li.ui-breadcrumb-chevron {
 
 body .input {
 	flex: 1 1 auto;
-	border: 1px solid #c2cad8;
 	color: #777777;
-	padding-left: 0.5em;
-	padding-right: 0.5em;
 	height: 34px;
 	display: flex;
 	align-items: center;
+	border: 1px solid #c2cad8;
+	padding: 0.5em;
+}
+
+input[type="text"]:disabled {
+  background: #efefef;
 }
 
 .input.input-number {
 	padding-right: 25px;
-	
 }
 
 .input.input-number, .input.input-money, .input.input-select {
@@ -259,6 +261,15 @@ body .input {
 .input.input-tag {
 	height: auto;
 	min-height: 34px;
+}
+
+.input.input-user {
+	padding: 0;
+}
+
+.input.input-user input[type="text"]{
+	padding: 0.5em;
+	overflow: hidden;
 }
 
 .input-container> *:first-child {
