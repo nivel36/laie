@@ -35,10 +35,7 @@
 								<p:ajax event="rate" listener="#{candidateEditBean.onrate}" update="" />
 							</p:rating>
 						</div>
-						<div class="tags candidate-tags">
-							<p:chips id="tags" value="#{candidateEditBean.tags}" label="#{i18n['candidateEditBean.tags']}"
-								converter="stringConverter" style-class="tags" />
-						</div>
+						<cc:inputTag value="#{candidateEditBean.tags}" tagLabel="#{i18n['candidateEditBean.tags']}" />
 					</div>
 				</div>
 				<div class="panel-content panel-content-data">
