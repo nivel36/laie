@@ -247,15 +247,21 @@ body .input {
 	align-items: center;
 }
 
-body .input.input-number {
+.input.input-number {
 	padding-right: 25px;
+	
 }
 
-body .input-number, body .input-money, body .input-select {
+.input.input-number, .input.input-money, .input.input-select {
 	text-align: right;
 }
 
-body .input-container> *:first-child {
+.input.input-tag {
+	height: auto;
+	min-height: 34px;
+}
+
+.input-container> *:first-child {
 	border-bottom-left-radius: 4px;
 	border-top-left-radius: 4px;
 } 
@@ -346,7 +352,7 @@ body .input-search .clean-search-button {
 .input-group  .input-container {
 	display: flex;
 	align-items: center;
-	flex: 1 1 auto;
+	flex: 1 1 67%;
 }
 
 .input-group .input-container .small {

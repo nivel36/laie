@@ -177,11 +177,6 @@ body .ui-breadcrumb .ui-breadcrumb-chevron {
 	margin: 0;
 }
 
-body .ui-chips {
-	cursor: default;
-	width: 100%;
-}
-
 body .ui-chips-container {
 	outline: medium none;
 	background: white;
@@ -409,6 +404,9 @@ body .ui-inputfield {
 	margin: 0;
 	padding: 0;
 	width: 100%;
+	color: inherit;
+	justify-content: inherit;
+	text-align: inherit;
 }
 
 body .ui-inputfield.hasDatepicker {
