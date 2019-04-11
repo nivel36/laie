@@ -30,13 +30,13 @@
 						paginatorPosition="bottom" rows="#{sessionUser.rowsPerPage}" sortBy="#{jobOffer.name}" sortOrder="ascending">
 
 						<p:column headerText="#{i18n['job_candidature.job_offer']}" rendered="#{cc.attrs.showJobOffer}">
-							<h:link value="#{jobCandidature.jobOffer.name}" outcome="/faces/jobOffer/jobOffer">
+							<h:link value="#{jobCandidature.jobOffer.name}" outcome="/jobOffer/jobOffer">
 								<f:param name="jobOfferId" value="#{jobCandidature.jobOffer.id}" />
 							</h:link>
 						</p:column>
 
 						<p:column headerText="#{i18n['job_candidature.client']}" rendered="#{cc.attrs.showJobOffer}">
-							<h:link value="#{jobCandidature.jobOffer.client.name}" outcome="/faces/client/client">
+							<h:link value="#{jobCandidature.jobOffer.client.name}" outcome="/client/client">
 								<f:param name="clientId" value="#{jobCandidature.jobOffer.client.id}" />
 							</h:link>
 						</p:column>
@@ -49,7 +49,7 @@
 						</p:column>
 
 						<p:column headerText="#{i18n['job_candidature.candidate']}" rendered="#{cc.attrs.showCandidate}">
-							<h:link value="#{jobCandidature.candidate.fullName}" outcome="/faces/candidate/candidate">
+							<h:link value="#{jobCandidature.candidate.fullName}" outcome="/candidate/candidate">
 								<f:param name="candidateId" value="#{jobCandidature.candidate.id}" />
 							</h:link>
 						</p:column>

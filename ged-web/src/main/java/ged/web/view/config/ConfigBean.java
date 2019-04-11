@@ -61,12 +61,12 @@ public class ConfigBean extends AbstractBean {
 	}
 
 	public void openChangePasswordDialog() {
-		this.openDialog("/faces/config/changePasswordDialog",
+		this.openDialog("/config/changePasswordDialog",
 				this.buildDialogParameter("userId", String.valueOf(this.user.getId())));
 	}
 
 	public void openChangePictureDialog() {
-		this.openDialog("/faces/config/changePictureDialog",
+		this.openDialog("/config/changePictureDialog",
 				this.buildDialogParameter("userId", String.valueOf(this.user.getId())));
 	}
 

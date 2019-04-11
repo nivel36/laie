@@ -97,7 +97,7 @@ public class CandidateBean extends AbstractBean {
 	}
 
 	public void openSelectJobOfferDialog() {
-		this.openBigDialog("/faces/jobOffer/jobOfferSelectDialog");
+		this.openBigDialog("/jobOffer/jobOfferSelectDialog");
 	}
 
 	public void setCandidate(final Candidate candidate) {

@@ -2,25 +2,25 @@ package ged.web.core.util;
 
 public enum PageEnum {
 
-	CANDIDATE("/faces/candidate/candidate"), //
-	CANDIDATE_EDIT("/faces/candidate/candidateEdit"), //
-	CANDIDATE_SEARCH("/faces/candidate/candidateSearch"), //
-	CANDIDATE_SELECT("/faces/candidate/candidateSelect"), //
-	CLIENT("/faces/client/client"), //
-	CLIENT_SEARCH("/faces/client/clientSearch"), //
-	CONTACT("/faces/client/contact"), //
-	CONTACT_EDIT("/faces/client/contactEdit"), //
-	CURRICULUM("/faces/candidate/curriculum"), //
-	INDEX("/faces/index"), //
-	ISABEL("/faces/isabel/isabel"), //
-	JOB_OFFER("/faces/jobOffer/jobOffer"), //
-	JOB_OFFER_EDIT("/faces/jobOffer/jobOfferEdit"), //
-	JOB_OFFER_SEARCH("/faces/jobOffer/jobOfferSearch"), LOGIN("/login"), //
-	MAINTENANCE("/faces/maintenance/maintenanceIndex"), //
-	REPORT("/faces/report/reportSearch"), //
-	USER("/faces/user/user"), //
-	USER_EDIT("/faces/user/userEdit"), //
-	USER_SEARCH("/faces/user/userSearch");
+	CANDIDATE("/candidate/candidate"), //
+	CANDIDATE_EDIT("/candidate/candidateEdit"), //
+	CANDIDATE_SEARCH("/candidate/candidateSearch"), //
+	CANDIDATE_SELECT("/candidate/candidateSelect"), //
+	CLIENT("/client/client"), //
+	CLIENT_SEARCH("/client/clientSearch"), //
+	CONTACT("/client/contact"), //
+	CONTACT_EDIT("/client/contactEdit"), //
+	CURRICULUM("/candidate/curriculum"), //
+	INDEX("/index"), //
+	ISABEL("/isabel/isabel"), //
+	JOB_OFFER("/jobOffer/jobOffer"), //
+	JOB_OFFER_EDIT("/jobOffer/jobOfferEdit"), //
+	JOB_OFFER_SEARCH("/jobOffer/jobOfferSearch"), LOGIN("/login"), //
+	MAINTENANCE("/maintenance/maintenanceIndex"), //
+	REPORT("/report/reportSearch"), //
+	USER("/user/user"), //
+	USER_EDIT("/user/userEdit"), //
+	USER_SEARCH("/user/userSearch");
 
 	private String url;
 

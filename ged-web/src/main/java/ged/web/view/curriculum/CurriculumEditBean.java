@@ -64,7 +64,7 @@ public class CurriculumEditBean extends AbstractBean {
 	}
 
 	public String cancel() {
-		return "/faces/candidate/candidate?faces-redirect=true&candidateId=" + this.curriculum.getCandidate().getId();
+		return "/candidate/candidate?faces-redirect=true&candidateId=" + this.curriculum.getCandidate().getId();
 	}
 
 	public Curriculum getCurriculum() {
@@ -143,7 +143,7 @@ public class CurriculumEditBean extends AbstractBean {
 		this.curriculum.setJobExperiences(this.listToSet(this.jobExperiences));
 		this.curriculum.setSkills(this.listToSet(this.skills));
 		this.curriculum = this.curriculumService.save(this.curriculum);
-		return "/faces/candidate/candidate?faces-redirect=true&candidateId=" + this.curriculum.getCandidate().getId();
+		return "/candidate/candidate?faces-redirect=true&candidateId=" + this.curriculum.getCandidate().getId();
 	}
 
 	public void setCurriculum(final Curriculum curriculum) {

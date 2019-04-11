@@ -105,7 +105,7 @@ public class CandidateEditBean extends AbstractDialogBean {
 	public String save() {
 		this.candidate.setTags(this.getTagsFromStringList(this.tags));
 		this.candidate = this.candidateService.save(this.candidate);
-		return "/faces/candidate/candidate?faces-redirect=true&candidateId=" + this.candidate.getId();
+		return "/candidate/candidate?faces-redirect=true&candidateId=" + this.candidate.getId();
 	}
 
 	public void setCandidate(final Candidate candidate) {

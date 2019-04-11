@@ -21,7 +21,7 @@
 						paginator="true" paginatorPosition="bottom" paginatorTemplate="{PageLinks}" rows="#{sessionUser.rowsPerPage}"
 						sortBy="#{jobOffer.name}" sortOrder="ascending">
 						<p:column headerText="#{i18n['job.name']}">
-							<h:link value="#{jobOffer.name}" outcome="/faces/jobOffer/jobOffer">
+							<h:link value="#{jobOffer.name}" outcome="/jobOffer/jobOffer">
 								<f:param name="jobOfferId" value="#{jobOffer.id}" />
 							</h:link>
 						</p:column>
@@ -31,7 +31,7 @@
 							</h:outputText>
 						</p:column>
 						<p:column headerText="#{i18n['job.owner']}">
-							<h:link value="#{jobOffer.owner.fullName}" outcome="/faces/user/user">
+							<h:link value="#{jobOffer.owner.fullName}" outcome="/user/user">
 								<f:param name="userId" value="#{jobOffer.owner.id}" />
 							</h:link>
 						</p:column>

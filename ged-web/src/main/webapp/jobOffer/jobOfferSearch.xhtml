@@ -11,7 +11,7 @@
 
 	<ui:define name="content">
 		<p:breadCrumb styleClass="breadcrumb">
-			<p:menuitem value="#{i18n['menu.index']}" url="/faces/index.xhtml" />
+			<p:menuitem value="#{i18n['menu.index']}" url="/index.xhtml" />
 			<p:menuitem value="#{i18n['job.job_offers']}" disabled="true" />
 		</p:breadCrumb>
 
@@ -34,12 +34,12 @@
 						reflow="true" paginator="true" paginatorPosition="bottom" rows="#{sessionUser.rowsPerPage}">
 
 						<p:column headerText="#{i18n['job.name']}" sortBy="#{jobOffer.name}">
-							<h:link value="#{jobOffer.name}" outcome="/faces/jobOffer/jobOffer">
+							<h:link value="#{jobOffer.name}" outcome="/jobOffer/jobOffer">
 								<f:param name="jobOfferId" value="#{jobOffer.id}" />
 							</h:link>
 						</p:column>
 						<p:column headerText="#{i18n['job.client']}" sortBy="#{jobOffer.client.name}">
-							<h:link value="#{jobOffer.client.name}" outcome="/faces/client/client">
+							<h:link value="#{jobOffer.client.name}" outcome="/client/client">
 								<f:param name="clientId" value="#{jobOffer.client.id}" />
 							</h:link>
 						</p:column>
@@ -57,7 +57,7 @@
 							<h:outputText value="#{jobOffer.places}" />
 						</p:column>
 						<p:column headerText="#{i18n['user.owner']}" sortBy="#{user.owner.fullName}">
-							<h:link value="#{jobOffer.owner.fullName}" outcome="/faces/user/user">
+							<h:link value="#{jobOffer.owner.fullName}" outcome="/user/user">
 								<f:param name="userId" value="#{jobOffer.owner.id}" />
 							</h:link>
 						</p:column>

@@ -28,7 +28,7 @@
 						rows="#{sessionUser.rowsPerPage}" sortBy="#{client.name}" sortOrder="ascending">
 
 						<p:column headerText="#{i18n['client.name']}" sortBy="#{client.name}">
-							<h:link value="#{client.name}" outcome="/faces/client/client">
+							<h:link value="#{client.name}" outcome="/client/client">
 								<f:param name="clientId" value="#{client.id}" />
 							</h:link>
 						</p:column>
@@ -50,7 +50,7 @@
 						</p:column>
 
 						<p:column headerText="#{i18n['client.owner']}" sortBy="#{client.owner.fullName}">
-							<h:link value="#{client.owner.fullName}" outcome="/faces/user/user">
+							<h:link value="#{client.owner.fullName}" outcome="/user/user">
 								<f:param name="userId" value="#{client.owner.id}" />
 							</h:link>
 						</p:column>

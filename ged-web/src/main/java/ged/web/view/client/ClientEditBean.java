@@ -69,7 +69,7 @@ public class ClientEditBean extends AbstractDialogBean {
 	public String save() {
 		logger.debug("Save client action performed");
 		this.client = this.clientService.save(this.client);
-		return "/faces/client/client?faces-redirect=true&clientId=" + this.client.getId();
+		return "/client/client?faces-redirect=true&clientId=" + this.client.getId();
 	}
 
 	public void setClientService(final ClientService clientService) {

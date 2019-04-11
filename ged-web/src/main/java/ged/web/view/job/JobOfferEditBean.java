@@ -90,7 +90,7 @@ public class JobOfferEditBean extends AbstractDialogBean {
 	}
 
 	public void openClientSearchDialog() {
-		this.openBigDialog("/faces/client/clientSearchDialog", null);
+		this.openBigDialog("/client/clientSearchDialog", null);
 	}
 
 	public String save() {
@@ -100,7 +100,7 @@ public class JobOfferEditBean extends AbstractDialogBean {
 		else {
 			this.jobOffer = this.jobOfferService.save(this.jobOffer);
 		}
-		return "/faces/jobOffer/jobOffer?faces-redirect=true&jobOfferId=" + this.jobOffer.getId();
+		return "/jobOffer/jobOffer?faces-redirect=true&jobOfferId=" + this.jobOffer.getId();
 	}
 
 	public List<User> searchOwner(final String query) {

@@ -12,7 +12,7 @@
 	<ui:define name="content">
 
 		<p:breadCrumb styleClass="breadcrumb">
-			<p:menuitem value="#{i18n['menu.index']}" url="/faces/index.xhtml" />
+			<p:menuitem value="#{i18n['menu.index']}" url="/index.xhtml" />
 			<p:menuitem value="#{i18n['candidate.candidates']}" disabled="true" />
 		</p:breadCrumb>
 
@@ -45,7 +45,7 @@
 					</p:column>
 
 					<p:column headerText="#{i18n['candidate.name']}" sortBy="#{candidate.name}">
-						<h:link value="#{candidate.fullName}" outcome="/faces/candidate/candidate">
+						<h:link value="#{candidate.fullName}" outcome="/candidate/candidate">
 							<f:param name="candidateId" value="#{candidate.id}" />
 						</h:link>
 					</p:column>

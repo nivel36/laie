@@ -16,9 +16,9 @@
 
 	<ui:define name="content">
 		<p:breadCrumb styleClass="breadcrumb">
-			<p:menuitem value="#{i18n['menu.index']}" url="/faces/index.xhtml" />
+			<p:menuitem value="#{i18n['menu.index']}" url="/index.xhtml" />
 			<p:menuitem value="#{i18n['candidate.candidates']}"
-				url="/faces/candidate/candidateSearch.xhtml" />
+				url="/candidate/candidateSearch.xhtml" />
 			<p:menuitem value="#{candidateBean.candidate.fullName}"
 				disabled="true" />
 		</p:breadCrumb>
@@ -67,16 +67,16 @@
 					<div class="panel-buttons">
 						<h:form>
 							<p:button value="#{i18n['curriculum.curriculum']}"
-								outcome="/faces/curriculum/curriculum" styleClass="btn-primary">
+								outcome="/curriculum/curriculum" styleClass="btn-primary">
 								<f:param name="candidateId"
 									value="#{candidateBean.candidate.id}" />
 							</p:button>
 							<p:commandButton value="#{i18n['action.export']}" process="@this"
 								actionListener="#{candidateBean.editCandidate}"
-								action="/faces/candidate/candidateEdit?faces-redirect=true" />
+								action="/candidate/candidateEdit?faces-redirect=true" />
 							<p:commandButton value="#{i18n['action.edit']}" process="@this"
 								actionListener="#{candidateBean.editCandidate}"
-								action="/faces/candidate/candidateEdit?faces-redirect=true" />
+								action="/candidate/candidateEdit?faces-redirect=true" />
 						</h:form>
 					</div>
 				</div>

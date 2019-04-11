@@ -85,9 +85,9 @@ public class JobOfferBean extends AbstractBean {
 					.collect(Collectors.joining("|"));
 			final Map<String, List<String>> parameters = new HashMap<>();
 			parameters.put("jobCandiatesId", Arrays.asList(candidateIds));
-			this.openBigDialog("/faces/candidate/candidateSelectDialog", parameters);
+			this.openBigDialog("/candidate/candidateSelectDialog", parameters);
 		} else {
-			this.openBigDialog("/faces/candidate/candidateSelectDialog");
+			this.openBigDialog("/candidate/candidateSelectDialog");
 		}
 	}
 

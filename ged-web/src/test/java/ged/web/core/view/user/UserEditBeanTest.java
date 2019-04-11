@@ -48,7 +48,7 @@ public class UserEditBeanTest {
 			userEditBean.init();
 
 			final String url = userEditBean.cancel();
-			assertEquals("/faces/user/user?faces-redirect=true&userId=1", url);
+			assertEquals("/user/user?faces-redirect=true&userId=1", url);
 		}
 
 		@Test
@@ -56,7 +56,7 @@ public class UserEditBeanTest {
 			when(sessionUser.isAdmin()).thenReturn(true);
 			userEditBean.init();
 			final String url = userEditBean.cancel();
-			assertEquals("/faces/user/userSearch", url);
+			assertEquals("/user/userSearch", url);
 		}
 	}
 

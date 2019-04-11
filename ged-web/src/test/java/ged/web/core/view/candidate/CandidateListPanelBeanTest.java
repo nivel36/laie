@@ -40,7 +40,7 @@ public class CandidateListPanelBeanTest {
 		@Test
 		public void shouldReturnCandidateEditUrl() {
 			final String newCandidateUrl = candidateListPanelBean.newCandidate();
-			assertEquals("/faces/candidate/candidateEdit?faces-redirect=true", newCandidateUrl);
+			assertEquals("/candidate/candidateEdit?faces-redirect=true", newCandidateUrl);
 		}
 	}
 

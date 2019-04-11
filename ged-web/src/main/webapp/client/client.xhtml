@@ -13,8 +13,8 @@
 
 	<ui:define name="content">
 		<p:breadCrumb styleClass="breadcrumb">
-			<p:menuitem value="#{i18n['menu.index']}" url="/faces/index.xhtml" />
-			<p:menuitem value="#{i18n['client.clients']}" url="/faces/client/clientSearch.xhtml" />
+			<p:menuitem value="#{i18n['menu.index']}" url="/index.xhtml" />
+			<p:menuitem value="#{i18n['client.clients']}" url="/client/clientSearch.xhtml" />
 			<p:menuitem value="#{clientBean.client.name}"  disabled="true" />
 		</p:breadCrumb>
 
@@ -26,9 +26,9 @@
 						<div class="panel-header-title">#{clientBean.client}</div>
 						<div class="panel-buttons">
 							<p:commandButton value="#{i18n['action.export']}" process="@this" actionListener="#{clientBean.editClient}"
-								icon="fa-file-excel-o" action="/faces/client/clientEdit?faces-redirect=true" />
+								icon="fa-file-excel-o" action="/client/clientEdit?faces-redirect=true" />
 							<p:commandButton value="#{i18n['action.edit']}" process="@this" actionListener="#{clientBean.editClient}"
-								action="/faces/client/clientEdit?faces-redirect=true" />
+								action="/client/clientEdit?faces-redirect=true" />
 						</div>
 					</div>
 					<div class="panel-content panel-content-data grid">
@@ -59,7 +59,7 @@
 				<h:form id="jobOffersForm">
 					<cc:jobOffers id="jobOffers" jobOffers="#{clientBean.jobOffers}">
 						<p:commandButton value="#{i18n['action.new']}" actionListener="#{clientBean.newJobOffer}"
-							action="/faces/jobOffer/jobOfferEdit?faces-redirect=true" process="@this" />
+							action="/jobOffer/jobOfferEdit?faces-redirect=true" process="@this" />
 					</cc:jobOffers>
 				</h:form>
 			</div>

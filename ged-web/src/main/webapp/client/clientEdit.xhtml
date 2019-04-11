@@ -11,10 +11,10 @@
 
 	<ui:define name="content">
 		<p:breadCrumb styleClass="breadcrumb">
-			<p:menuitem value="#{i18n['menu.index']}" url="/faces/index.xhtml" />
-			<p:menuitem value="#{i18n['client.clients']}" url="/faces/client/clientSearch.xhtml" />
+			<p:menuitem value="#{i18n['menu.index']}" url="/index.xhtml" />
+			<p:menuitem value="#{i18n['client.clients']}" url="/client/clientSearch.xhtml" />
 			<p:menuitem value="#{clientEditBean.client.name}"
-				url="/faces/client/client.xhtml?clientId=#{clientEditBean.client.id}" rendered="#{not clientEditBean.newClient}" />
+				url="/client/client.xhtml?clientId=#{clientEditBean.client.id}" rendered="#{not clientEditBean.newClient}" />
 			<p:menuitem value="#{clientEditBean.newClient ? i18n['client.new_client'] : clientEditBean.client.name}"
 				disabled="true" />
 		</p:breadCrumb>

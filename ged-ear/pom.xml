@@ -48,7 +48,7 @@
 						<webModule>
 							<groupId>igochan</groupId>
 							<artifactId>ged-web</artifactId>
-							<contextRoot>/web</contextRoot>
+							<contextRoot>/</contextRoot>
 						</webModule>
 						<ejbModule>
 							<groupId>igochan</groupId>

@@ -45,7 +45,7 @@ public class BookmarksBean extends AbstractBean {
 
 	private String buildUrl(final String className) {
 		final StringBuilder sb = new StringBuilder();
-		sb.append("/faces/").append(className).append("/").append(className).append("View.xhtml").append("?id=");
+		sb.append("/").append(className).append("/").append(className).append("View.xhtml").append("?id=");
 		return sb.toString();
 	}
 
