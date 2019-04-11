@@ -378,7 +378,7 @@ body .input-search .clean-search-button {
 	flex: 0 1 auto;
 }
 
-body button.icon, .icon {
+body .input-group button.icon, .input-group .icon {
 	width: 34px;
 	height: 34px;
 	display: inline-flex;

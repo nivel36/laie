@@ -541,6 +541,7 @@ body .ui-selectonemenu-item.ui-state-hover {
 body .ui-selectonemenu-item.ui-state-highlight {
 	border-radius: 3px;
 	background-color: #1976d2;
+	color: white;
 }
 
 body .ui-message-error {
