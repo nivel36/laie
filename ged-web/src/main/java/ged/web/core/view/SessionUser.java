@@ -11,6 +11,7 @@ import javax.enterprise.context.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -112,6 +113,16 @@ public class SessionUser implements Serializable {
 
 	public void setUserService(final UserService userService) {
 		this.userService = userService;
+	}
+	
+	public void exit() {
+		logger.debug("User {} logout", this.user);
+		invalidateSession();
+	}
+
+	private void invalidateSession() {
+		final HttpSession session = (HttpSession) externalContext.getSession(true);
+		session.invalidate();
 	}
 
 	@Override

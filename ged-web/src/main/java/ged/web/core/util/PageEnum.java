@@ -15,7 +15,8 @@ public enum PageEnum {
 	ISABEL("/isabel/isabel"), //
 	JOB_OFFER("/jobOffer/jobOffer"), //
 	JOB_OFFER_EDIT("/jobOffer/jobOfferEdit"), //
-	JOB_OFFER_SEARCH("/jobOffer/jobOfferSearch"), LOGIN("/login"), //
+	JOB_OFFER_SEARCH("/jobOffer/jobOfferSearch"),//
+	LOGIN("/login"), //
 	MAINTENANCE("/maintenance/maintenanceIndex"), //
 	REPORT("/report/reportSearch"), //
 	USER("/user/user"), //

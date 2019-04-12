@@ -12,7 +12,7 @@
 	<h:outputStylesheet name="css/flat-classic-blue/components.css" />
 </h:head>
 <h:body>
-	<p:growl id="msg" sticky="true" />
+	<p:growl id="growl" globalOnly="true"/>
 	<div class="full-page login-page">
 		<div class="content">
 			<h:form>
@@ -21,12 +21,12 @@
 						<div class="panel-header-title">${i18n['login.login']}</div>
 					</div>
 					<div class="panel-content panel-content-data">
-						<cc:inputText id="username" labelIcon="fa-user" value="#{loginBean.username}" />
-						<cc:inputPassword id="password" labelIcon="fa-lock" value="#{loginBean.password}" />
+						<cc:inputText id="username" labelIcon="fa-user" value="#{loginBean.username}" required="true"/>
+						<cc:inputPassword id="password" labelIcon="fa-lock" value="#{loginBean.password}" required="true"/>
 					</div>
 					<div class="panel-footer">
 						<div class="panel-buttons">
-							<p:commandButton action="#{loginBean.login}" value="${i18n['login.enter']}" />
+							<p:commandButton action="#{loginBean.login}" value="${i18n['login.enter']}" update="@form growl"/>
 						</div>
 					</div>
 				</div>

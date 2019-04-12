@@ -2,6 +2,7 @@ package ged.web.core.util;
 
 import java.text.MessageFormat;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 import javax.faces.component.UIViewRoot;
@@ -34,6 +35,7 @@ public class Translator {
 	}
 
 	public String message(final String message, final Object[] params) {
+		Objects.requireNonNull(message);
 		final ResourceBundle bundle = this.getResourceBundle(FILE_NAME);
 		String text = bundle.getString(message);
 		if (params != null) {

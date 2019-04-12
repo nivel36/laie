@@ -493,6 +493,10 @@ body .ui-growl .ui-growl-item-container {
 	opacity: .95;
 }
 
+body .ui-growl .ui-growl-image {
+	display: none;
+} 
+
 body .ui-growl-item {
 	flex: 1 100%;
 	display: flex;
@@ -510,6 +514,11 @@ body .ui-growl-icon-close {
 	right: 1em;
 	cursor: pointer;
 	right: 1em;
+}
+
+body .ui-growl .ui-growl-item-container.ui-growl-error{
+	background-color: #e18080;
+	color: white;
 }
 
 body .ui-selectonemenu .ui-selectonemenu-trigger {

@@ -1,5 +1,7 @@
 package ged.ejb.core.security;
 
+import static javax.security.enterprise.identitystore.CredentialValidationResult.NOT_VALIDATED_RESULT;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -40,7 +42,7 @@ public class GedIdentityStore implements IdentityStore {
 				final String password = ((UsernamePasswordCredential) credential).getPasswordAsString();
 				user = loginService.login(email, password);
 			} catch (LoginException e) {
-				throw new SecurityException("Bad Login", e);
+				  return NOT_VALIDATED_RESULT;
 			}
 		}
 		else if (credential instanceof CallerOnlyCredential) {
@@ -48,7 +50,7 @@ public class GedIdentityStore implements IdentityStore {
 			user = userService.findUserByEmail(email);
 		}
 		else {
-			throw new SecurityException();
+			 return NOT_VALIDATED_RESULT;
 		}
 
 		final Set<String> roles = new HashSet<>();
