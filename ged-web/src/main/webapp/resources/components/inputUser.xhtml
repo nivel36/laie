@@ -1,47 +1,46 @@
-<ui:component xmlns="http://www.w3.org/1999/xhtml" 
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html" 
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:composite="http://xmlns.jcp.org/jsf/composite" 
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
-	xmlns:o="http://omnifaces.org/ui" 
-	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+<ui:component xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
+	xmlns:composite="http://xmlns.jcp.org/jsf/composite" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	xmlns:o="http://omnifaces.org/ui" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
 	<composite:interface componentType="inputUser">
 		<composite:attribute name="label" required="true" />
 		<composite:attribute name="value" type="ged.ejb.user.User" required="true" />
 		<composite:attribute name="completeMethod" method-signature="void function(java.lang.String)" required="true" />
 		<composite:attribute name="required" type="java.lang.Boolean" default="false" />
+		<composite:attribute name="rendered" default="true" />
 		<composite:attribute name="disabled" type="java.lang.Boolean" default="false" />
 		<composite:attribute name="styleClass" required="false" default="" />
+		<composite:editableValueHolder name="input-text" />
 	</composite:interface>
 
 	<composite:implementation>
-		<h:panelGroup id="input-user-component" layout="block" styleClass="input-user input-group #{cc.attrs.styleClass}">
-			<div class="label-container">
-				<p:outputLabel id="label" value="#{cc.attrs.label}" for="input-user" styleClass="label"/>
-			</div>
-			<div class="input-container">
-				<p:autoComplete id="input-user" value="#{cc.attrs.value}" completeMethod="#{cc.attrs.completeMethod}" var="user"
-					itemLabel="#{user.fullName}" itemValue="#{user}" forceSelection="true" required="#{cc.attrs.required}"
-					binding="#{cc.input}" disabled="#{cc.attrs.disabled}" styleClass="input input-user">
-					<p:column styleClass="user-select image">
-						<p:graphicImage class="image image-icon" value="/images/#{user.imageFileName}"
-							rendered="#{not empty user.imageFileName}" />
-						<p:graphicImage class="image image-icon" value="/resources/img/default-avatar.png"
-							rendered="#{empty user.imageFileName}" />
-					</p:column>
-					<p:column styleClass="user-select name">
-						<h:outputText value="#{user.fullName}" />
-					</p:column>
-					<p:ajax event="itemSelect" update="input-user-component" process="input-user" />
-				</p:autoComplete>
-				<p:commandButton id="cleanButton" process="@this" update="input-user-component" action="#{cc.clean}"
-					styleClass="btn-inner" icon="fa fa-times" binding="#{cc.cleanButton}" />
-			</div>
-			<div class="message-container">
-				<p:message id="message" for="input-user" styleClass="message-error"/>
+		<h:panelGroup layout="block" rendered="#{cc.attrs.rendered}">
+			<div id="#{cc.clientId}" class="input-user input-group #{cc.attrs.styleClass}">
+				<div class="label-container">
+					<p:outputLabel id="label" value="#{cc.attrs.label}" for="input" styleClass="label" />
+				</div>
+				<h:panelGroup layout="block" id="input-container" class="input-container">
+					<p:autoComplete id="input" value="#{cc.attrs.value}" completeMethod="#{cc.attrs.completeMethod}" var="user"
+						itemLabel="#{user.fullName}" itemValue="#{user}" forceSelection="true" required="#{cc.attrs.required}"
+						binding="#{cc.input}" disabled="#{cc.attrs.disabled}" styleClass="input input-user">
+						<p:column styleClass="user-select image">
+							<p:graphicImage class="image image-icon" value="/images/#{user.imageFileName}"
+								rendered="#{not empty user.imageFileName}" />
+							<p:graphicImage class="image image-icon" value="/resources/img/default-avatar.png"
+								rendered="#{empty user.imageFileName}" />
+						</p:column>
+						<p:column styleClass="user-select name">
+							<h:outputText value="#{user.fullName}" />
+						</p:column>
+						<p:ajax event="itemSelect" update="@parent" process="input" />
+					</p:autoComplete>
+					<p:commandButton id="cleanButton" process="@this" update="@parent" action="#{cc.clean}" styleClass="btn-inner"
+						icon="fa fa-times" binding="#{cc.cleanButton}" />
+				</h:panelGroup>
+				<div class="message-container">
+					<p:message id="message" for="input" styleClass="message-error" />
+				</div>
 			</div>
 		</h:panelGroup>
 	</composite:implementation>
