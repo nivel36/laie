@@ -13,6 +13,11 @@
 
 	<ui:define name="content">
 
+		<p:breadCrumb styleClass="breadcrumb">
+			<p:menuitem value="#{i18n['menu.index']}" url="/index.xhtml" />
+			<p:menuitem value="#{i18n['config.config']}" disabled="true" />
+		</p:breadCrumb>
+
 		<h:form>
 			<div class="panel">
 				<div class="panel-header">
@@ -27,38 +32,30 @@
 				<div class="panel-content panel-content-data">
 					<div class="grid">
 						<div class="col-12 sm-6">
-
 							<h3>#{i18n['config.personal_information']}</h3>
 							<cc:inputText label="#{i18n['config.name']}" id="name" value="#{configBean.user.name}" required="true" />
-
 							<cc:inputText label="#{i18n['config.surname']}" id="surname" value="#{configBean.user.surname}" required="true" />
-
 							<cc:inputText label="#{i18n['config.email']}" id="email" value="#{configBean.user.email}" required="true" />
 						</div>
 						<div class="col-12 md-6">
-
 							<h3>#{i18n['config.config_data']}</h3>
-
-							<cc:inputSelect label="#{i18n['config.rows_per_page']}" value="#{configBean.user.rowsPerPage}"
-								converter="javax.faces.Integer">
+							<cc:inputSelect label="#{i18n['config.rows_per_page']}" value="#{configBean.user.rowsPerPage}">
 								<f:selectItem itemValue="5" itemLabel="5" />
 								<f:selectItem itemValue="10" itemLabel="10" />
 								<f:selectItem itemValue="25" itemLabel="25" />
 							</cc:inputSelect>
-
-							<cc:inputSelect label="#{i18n['config.language']}" value="#{configBean.user.language}"
-								converter="stringConverter">
+							<cc:inputSelect label="#{i18n['config.language']}" value="#{configBean.user.language}" styleClass="locales">
 								<f:selectItems var="locale" value="#{applicationBean.locales}" itemValue="#{locale.language}"
 									itemLabel="#{locale.displayLanguage}" />
-								<f:ajax event="change" render="@all" listener="#{configBean.changeLocaleListener}" />
+								<f:ajax event="change" render="@all" listener="#{configBean.changeLocale}" />
 							</cc:inputSelect>
 						</div>
 					</div>
 				</div>
 				<div class="panel-footer">
 					<div class="panel-buttons">
-						<p:commandButton value="#{i18n['config.change_password']}" actionListener="#{configBean.openChangePasswordDialog}"
-							process="@this" />
+						<p:commandButton value="#{i18n['config.change_password']}" process="@this"
+							action="/changePassword.xhtml?faces-redirect=true" />
 						<p:commandButton value="#{i18n['action.save']}" action="#{configBean.save}" process="@form" update="@form growl" />
 					</div>
 				</div>

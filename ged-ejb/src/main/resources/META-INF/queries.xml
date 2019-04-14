@@ -329,6 +329,14 @@
 			OR (:surname IS NOT NULL AND u.surname = :surname)
 		]]></query>
 	</named-query>
+	
+		<named-query name="User.findUserCredential">
+		<query><![CDATA[
+			SELECT u.credential 
+			FROM User u 
+			WHERE u.id = :id
+		]]></query>
+	</named-query>
 
 	<named-query name="User.findUsersOffline">
 		<query><![CDATA[

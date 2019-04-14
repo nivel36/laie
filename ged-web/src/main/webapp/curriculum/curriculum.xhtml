@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html" template="/WEB-INF/templates/default.xhtml" xmlns:p="http://primefaces.org/ui" xmlns:i18n="http://ged.com/i18n">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+	template="/WEB-INF/templates/default.xhtml" xmlns:p="http://primefaces.org/ui" xmlns:i18n="http://ged.com/i18n">
 
 	<ui:define name="title">
 		<title>#{i18n['curriculum.curriculum']}</title>
@@ -24,7 +25,8 @@
 							</div>
 							<ui:repeat value="#{curriculumBean.jobExperiences}" var="jobExperience" id="jobExperience" varStatus="varStatus">
 								<div class="section">
-									<span class="cvAction"> <p:commandButton icon="fa fa-pencil" action="#{curriculumBean.editJobExperience(jobExperience)}" process="@this">
+									<span class="cvAction"> <p:commandButton icon="fa fa-pencil"
+											action="#{curriculumBean.editJobExperience(jobExperience)}" process="@this">
 											<p:ajax event="dialogReturn" listener="#{curriculumBean.onEditJobExperience}" update="form:jobExperiences" />
 										</p:commandButton>
 									</span>
@@ -49,7 +51,8 @@
 											<h:outputText value="#{(jobExperience.monthsWorked - jobExperience.monthsWorked%12)/12}">
 												<f:convertNumber maxFractionDigits="0" />
 											</h:outputText>
-											<h:outputText value=" #{(jobExperience.monthsWorked - jobExperience.monthsWorked%12)/12 gt 1 ? i18n['date.years'] : i18n['date.year']}" />
+											<h:outputText
+												value=" #{(jobExperience.monthsWorked - jobExperience.monthsWorked%12)/12 gt 1 ? i18n['date.years'] : i18n['date.year']}" />
 										</h:panelGroup>
 										<h:outputText value=" #{i18n['date.and']}  "
 											rendered="#{jobExperience.monthsWorked%12 gt 0 and (jobExperience.monthsWorked - jobExperience.monthsWorked%12)/12 gt 0}" />
@@ -77,7 +80,8 @@
 							</div>
 							<ui:repeat value="#{curriculumBean.education}" var="education" id="education">
 								<div class="section">
-									<span class="cvAction"> <p:commandButton icon="fa fa-pencil" action="#{curriculumBean.editEducation(education)}" process="@this">
+									<span class="cvAction"> <p:commandButton icon="fa fa-pencil"
+											action="#{curriculumBean.editEducation(education)}" process="@this">
 											<p:ajax event="dialogReturn" listener="#{curriculumBean.onEditEducation}" update="form:educations" />
 										</p:commandButton>
 									</span>
@@ -105,7 +109,8 @@
 							</div>
 							<ui:repeat value="#{curriculumBean.languages}" var="language" id="language">
 								<div class="section">
-									<span class="cvAction"> <p:commandButton icon="fa fa-pencil" action="#{curriculumBean.editLanguage(language)}" process="@this">
+									<span class="cvAction"> <p:commandButton icon="fa fa-pencil"
+											action="#{curriculumBean.editLanguage(language)}" process="@this">
 											<p:ajax event="dialogReturn" listener="#{curriculumBean.onEditLanguage}" update="form:languages" />
 										</p:commandButton>
 									</span>

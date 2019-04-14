@@ -22,7 +22,7 @@ import ged.ejb.core.model.Repository;
 public class UserDao extends AbstractDao<User> {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
-	
+
 	private static final Random RANDOM = new SecureRandom();
 
 	private void deleteUserClosures(final User user) {
@@ -56,6 +56,17 @@ public class UserDao extends AbstractDao<User> {
 			logger.trace("No users with email {} found", email, e);
 			return null;
 		}
+	}
+
+	public Credential findUserCredential(final User user) {
+		Objects.requireNonNull(user);
+		return this.findByQuery(Credential.class, "User.findUserCredential", map("id", user.getId()));
+	}
+
+	private byte[] getSalt() {
+		final byte[] salt = new byte[16];
+		RANDOM.nextBytes(salt);
+		return salt;
 	}
 
 	@Override
@@ -121,12 +132,6 @@ public class UserDao extends AbstractDao<User> {
 		if (isEmailInUse(user.getEmail())) {
 			throw new DuplicateEmailException();
 		}
-	}
-	
-	private byte[] getSalt() {
-		byte[] salt = new byte[16];
-		RANDOM.nextBytes(salt);
-		return salt;
 	}
 
 	@Override

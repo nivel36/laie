@@ -52,6 +52,12 @@ public class UserService extends AbstractAuditedService<User> {
 		return this.userDao.findUserByEmail(email);
 	}
 
+	public Credential findUserCredential(final User user) {
+		Objects.requireNonNull(user);
+		logger.debug("Finding user credential for user {}", user);
+		return this.userDao.findUserCredential(user);
+	}
+
 	@Override
 	protected AbstractDao<User> getDao() {
 		return this.userDao;
@@ -86,6 +92,14 @@ public class UserService extends AbstractAuditedService<User> {
 		return super.save(user);
 	}
 
+	public void setRoleDao(final RoleDao roleDao) {
+		this.roleDao = roleDao;
+	}
+
+	public void setUserDao(final UserDao userDao) {
+		this.userDao = userDao;
+	}
+
 	private void validateManager(final User user) {
 		if (user.equals(user.getManager())) {
 			logger.warn("The user {} can't be his/her manager", user.getEmail());
@@ -96,13 +110,5 @@ public class UserService extends AbstractAuditedService<User> {
 					user.getManager().getRole());
 			throw new BadManagerException("Admins can't have a manager");
 		}
-	}
-
-	public void setRoleDao(final RoleDao roleDao) {
-		this.roleDao = roleDao;
-	}
-
-	public void setUserDao(final UserDao userDao) {
-		this.userDao = userDao;
 	}
 }

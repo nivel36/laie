@@ -796,3 +796,7 @@ body .input-group button.icon, .input-group .icon {
 	font-weight: 400;
 	color: #999999;
 }
+
+.locales {
+	text-transform: capitalize;
+}

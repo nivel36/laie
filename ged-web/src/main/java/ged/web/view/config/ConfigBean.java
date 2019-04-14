@@ -41,12 +41,25 @@ public class ConfigBean extends AbstractBean {
 	@Inject
 	private transient UserService userService;
 
-	public void changeLocaleListener() {
-		facesContext.getViewRoot().setLocale(new Locale(user.getLanguage()));
+	public void captureImage(final CaptureEvent event) {
+		Objects.requireNonNull(event);
+		logger.debug("Action: Upload camera image for user {}", this.user);
+		final byte[] data = event.getData();
+		if (data == null) {
+			return;
+		}
+		try (InputStream inputStream = new ByteArrayInputStream(data);) {
+			final String uuid = this.fileUploadService.uploadImage(inputStream);
+			this.user.setImageFileName(uuid);
+		} catch (final IOException e) {
+			throw new UncheckedIOException(e);
+		}
 	}
 
-	private void refreshSessionUser() {
-		this.sessionUser.refresh();
+	public void changeLocale() {
+		final Locale newLocale = new Locale(this.user.getLanguage());
+		logger.debug("Action: Changed locale to {} for user {}", newLocale, this.user);
+		this.facesContext.getViewRoot().setLocale(newLocale);
 	}
 
 	public User getUser() {
@@ -57,57 +70,43 @@ public class ConfigBean extends AbstractBean {
 	public void init() {
 		refreshSessionUser();
 		this.user = this.sessionUser.get();
-		logger.trace("Config user {} init", user.getEmail());
+		logger.debug("Config user {}", this.user.getEmail());
 	}
 
 	public void openChangePasswordDialog() {
 		this.openDialog("/config/changePasswordDialog",
-				this.buildDialogParameter("userId", String.valueOf(this.user.getId())));
+				buildDialogParameter("userId", String.valueOf(this.user.getId())));
 	}
 
-	public void openChangePictureDialog() {
-		this.openDialog("/config/changePictureDialog",
-				this.buildDialogParameter("userId", String.valueOf(this.user.getId())));
+	private void refreshSessionUser() {
+		this.sessionUser.refresh();
 	}
 
 	public void save() {
-		logger.debug("Save user {} action performed", user);
+		logger.debug("Action: Save user {} data", this.user);
 		this.user = this.userService.save(this.user);
-		this.refreshSessionUser();
+		refreshSessionUser();
 		this.addMessage(FacesMessage.SEVERITY_INFO, "action.save_action_performed", "action.save_action_performed");
 	}
 
 	public void setUser(final User user) {
+		Objects.requireNonNull(user);
 		this.user = user;
 	}
 
 	public void setUserService(final UserService userService) {
+		Objects.requireNonNull(userService);
 		this.userService = userService;
 	}
 
 	public void uploadImage(final FileUploadEvent event) {
 		Objects.requireNonNull(event);
-		logger.debug("Upload user {} image action performed", user);
+		logger.debug("Action: Upload user {} image", this.user);
 		final UploadedFile uploadedFile = event.getFile();
 		if (uploadedFile == null) {
 			return;
 		}
 		try (InputStream inputStream = uploadedFile.getInputstream()) {
-			final String uuid = this.fileUploadService.uploadImage(inputStream);
-			this.user.setImageFileName(uuid);
-		} catch (final IOException e) {
-			throw new UncheckedIOException(e);
-		}
-	}
-
-	public void captureImage(final CaptureEvent event) {
-		Objects.requireNonNull(event);
-		logger.debug("Upload camera image for user {} action performed", user);
-		byte[] data = event.getData();
-		if (data == null) {
-			return;
-		}
-		try (InputStream inputStream = new ByteArrayInputStream(data);) {
 			final String uuid = this.fileUploadService.uploadImage(inputStream);
 			this.user.setImageFileName(uuid);
 		} catch (final IOException e) {
