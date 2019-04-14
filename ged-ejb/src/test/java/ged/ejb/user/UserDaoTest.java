@@ -139,7 +139,6 @@ public class UserDaoTest {
 	@Nested
 	class Save {
 
-		@Test
 		public void insertUserWithManagerShouldReturnUser() {
 			final User manager = mockUser(1L, "abel@test.com", null);
 			final User subordinate = mockUser(null, "bernat@test.com", manager);
@@ -151,7 +150,6 @@ public class UserDaoTest {
 			assertEquals(subordinate, returnedUser);
 		}
 
-		@Test
 		public void insertUserWithoutManagerShouldReturnUser() {
 			final User user = mockUser(null, "abel@test.com", null);
 
