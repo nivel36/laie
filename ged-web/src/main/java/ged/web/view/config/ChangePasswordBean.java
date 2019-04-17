@@ -2,17 +2,16 @@ package ged.web.view.config;
 
 import java.lang.invoke.MethodHandles;
 import java.security.NoSuchAlgorithmException;
-import java.util.Objects;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ged.ejb.core.security.CriptoUtil;
 import ged.ejb.user.Credential;
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
@@ -41,11 +40,9 @@ public class ChangePasswordBean extends AbstractBean {
 
 	public String change() throws NoSuchAlgorithmException {
 		logger.debug("Action: change password");
-		final byte[] output = CriptoUtil.digestPassword(this.password, this.userCredential.getSalt());
-		final User user = this.sessionUser.get();
-		if (CriptoUtil.passwordMatch(this.userCredential.getPassword(), output)) {
+		if (this.userCredential.isValid(password)) {
 			if (this.newPassword.equals(this.repeatPassword)) {
-				changePassword(user);
+				changePassword(newPassword);
 				this.sessionUser.refresh();
 				// Clearing the view bean of the main page because we need to
 				// reload the user from database
@@ -66,10 +63,9 @@ public class ChangePasswordBean extends AbstractBean {
 		return "/config.xhtml?faces-redirect=true";
 	}
 
-	private User changePassword(final User user) throws NoSuchAlgorithmException {
-		final byte[] hash = CriptoUtil.digestPassword(this.newPassword, this.userCredential.getSalt());
-		Objects.requireNonNull(hash);
-		user.getCredential().setPassword(hash);
+	private User changePassword(final String newPassword)  {
+		userCredential.setPassword(newPassword);
+		user.setCredential(this.userCredential);
 		return this.userService.save(user);
 	}
 

@@ -3,7 +3,6 @@ package ged.ejb.core.security;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
 import java.util.Objects;
 
 import javax.xml.bind.DatatypeConverter;
@@ -15,18 +14,16 @@ public class CriptoUtil {
 	private CriptoUtil() {
 	}
 
-	public static byte[] digestPassword(final String password, byte[] salt) throws NoSuchAlgorithmException {
+	public static byte[] digestPassword(final String password, byte[] salt) {
 		Objects.requireNonNull(password);
 		Objects.requireNonNull(salt);
-		MessageDigest messageDigest = MessageDigest.getInstance(SHA_256);
-		messageDigest.update(salt);
-		return messageDigest.digest(password.getBytes(StandardCharsets.UTF_8));
-	}
-
-	public static boolean passwordMatch(final byte[] storedPassword, final byte[] hashBase64Password) {
-		Objects.requireNonNull(storedPassword);
-		Objects.requireNonNull(hashBase64Password);
-		return !Arrays.equals(storedPassword, hashBase64Password);
+		try {
+			MessageDigest messageDigest = MessageDigest.getInstance(SHA_256);
+			messageDigest.update(salt);
+			return messageDigest.digest(password.getBytes(StandardCharsets.UTF_8));
+		} catch (NoSuchAlgorithmException e) {
+			throw new SecurityException(e);
+		}
 	}
 
 	public static byte[] toBase64(final byte[] characters) {
