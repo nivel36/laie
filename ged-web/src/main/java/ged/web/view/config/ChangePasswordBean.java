@@ -41,7 +41,7 @@ public class ChangePasswordBean extends AbstractBean {
 
 	public String change() throws NoSuchAlgorithmException {
 		logger.debug("Action: change password");
-		final char[] output = CriptoUtil.hashBase64Password(this.password, this.userCredential.getSalt());
+		final byte[] output = CriptoUtil.digestPassword(this.password, this.userCredential.getSalt());
 		final User user = this.sessionUser.get();
 		if (CriptoUtil.passwordMatch(this.userCredential.getPassword(), output)) {
 			if (this.newPassword.equals(this.repeatPassword)) {
@@ -67,7 +67,7 @@ public class ChangePasswordBean extends AbstractBean {
 	}
 
 	private User changePassword(final User user) throws NoSuchAlgorithmException {
-		final char[] hash = CriptoUtil.hashBase64Password(this.newPassword, this.userCredential.getSalt());
+		final byte[] hash = CriptoUtil.digestPassword(this.newPassword, this.userCredential.getSalt());
 		Objects.requireNonNull(hash);
 		user.getCredential().setPassword(hash);
 		return this.userService.save(user);

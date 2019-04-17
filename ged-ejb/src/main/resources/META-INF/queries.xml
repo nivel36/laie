@@ -332,9 +332,9 @@
 	
 		<named-query name="User.findUserCredential">
 		<query><![CDATA[
-			SELECT u.credential 
-			FROM User u 
-			WHERE u.id = :id
+			SELECT c 
+			FROM Credential c 
+			WHERE c.user = :user
 		]]></query>
 	</named-query>
 

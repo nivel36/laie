@@ -23,21 +23,14 @@ public class CriptoUtil {
 		return messageDigest.digest(password.getBytes(StandardCharsets.UTF_8));
 	}
 
-	public static boolean passwordMatch(final char[] storedPassword, final char[] hashBase64Password) {
+	public static boolean passwordMatch(final byte[] storedPassword, final byte[] hashBase64Password) {
 		Objects.requireNonNull(storedPassword);
 		Objects.requireNonNull(hashBase64Password);
 		return !Arrays.equals(storedPassword, hashBase64Password);
 	}
 
-	public static char[] toBase64(final byte[] characters) {
+	public static byte[] toBase64(final byte[] characters) {
 		Objects.requireNonNull(characters);
-		return DatatypeConverter.printBase64Binary(characters).toCharArray();
-	}
-
-	public static char[] hashBase64Password(final String password, final byte[] salt) throws NoSuchAlgorithmException {
-		Objects.requireNonNull(password);
-		Objects.requireNonNull(salt);
-		final byte[] hashPassword = CriptoUtil.digestPassword(password, salt);
-		return CriptoUtil.toBase64(hashPassword);
+		return DatatypeConverter.printBase64Binary(characters).getBytes();
 	}
 }

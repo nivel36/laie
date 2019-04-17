@@ -5,12 +5,14 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
@@ -50,6 +52,7 @@ public class User extends AbstractAuditedEntity {
 	@JoinColumn(name = "managerId", nullable = true)
 	private User manager;
 	
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Credential credential;
 
 	@NotNull

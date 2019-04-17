@@ -60,7 +60,7 @@ public class UserDao extends AbstractDao<User> {
 
 	public Credential findUserCredential(final User user) {
 		Objects.requireNonNull(user);
-		return this.findByQuery(Credential.class, "User.findUserCredential", map("id", user.getId()));
+		return this.findByQuery(Credential.class, "User.findUserCredential", map("user", user));
 	}
 
 	private byte[] getSalt() {
