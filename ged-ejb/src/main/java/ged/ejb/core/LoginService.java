@@ -26,7 +26,7 @@ public class LoginService {
 		Objects.requireNonNull(password);
 		final User user = this.userDao.findUserByEmail(email);
 		final Credential credential = this.userDao.findUserCredential(user);
-		if (credential.isValid(password)) {
+		if (!credential.isValid(password)) {
 			throw new LoginException("Passwords doesn't match");
 		}
 		user.setLastConnection(LocalDateTime.now());

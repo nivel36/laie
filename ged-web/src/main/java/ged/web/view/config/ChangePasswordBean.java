@@ -1,7 +1,6 @@
 package ged.web.view.config;
 
 import java.lang.invoke.MethodHandles;
-import java.security.NoSuchAlgorithmException;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -38,34 +37,38 @@ public class ChangePasswordBean extends AbstractBean {
 	@Inject
 	private transient UserService userService;
 
-	public String change() throws NoSuchAlgorithmException {
+	public String change() {
 		logger.debug("Action: change password");
-		if (this.userCredential.isValid(password)) {
-			if (this.newPassword.equals(this.repeatPassword)) {
-				changePassword(newPassword);
-				this.sessionUser.refresh();
-				// Clearing the view bean of the main page because we need to
-				// reload the user from database
-				this.facesContext.getViewRoot().getViewMap().clear();
-				this.addMessage(FacesMessage.SEVERITY_INFO, "action.save_action_performed",
-						"action.save_action_performed");
-			} else {
-				this.addMessage(FacesMessage.SEVERITY_ERROR, "login.error.password_not_equals",
-						"login.error.password_not_equals");
-				this.facesContext.validationFailed();
-				return null;
-			}
-		} else {
+
+		if (!isValidPassword()) {
 			this.addMessage(FacesMessage.SEVERITY_ERROR, "login.error.bad_password", "login.error.bad_password");
 			this.facesContext.validationFailed();
 			return null;
 		}
+
+		if (!inputPasswordsAreEquals()) {
+			this.addMessage(FacesMessage.SEVERITY_ERROR, "login.error.password_not_equals",
+					"login.error.password_not_equals");
+			this.facesContext.validationFailed();
+			return null;
+		}
+
+		changePassword(newPassword);
+		this.sessionUser.refresh();
 		return "/config.xhtml?faces-redirect=true";
 	}
 
-	private User changePassword(final String newPassword)  {
+	private boolean inputPasswordsAreEquals() {
+		return this.newPassword.equals(this.repeatPassword);
+	}
+
+	private boolean isValidPassword() {
+		return this.userCredential.isValid(password);
+	}
+
+	private User changePassword(final String newPassword) {
 		userCredential.setPassword(newPassword);
-		user.setCredential(this.userCredential);
+		user.setCredential(userCredential);
 		return this.userService.save(user);
 	}
 
@@ -83,6 +86,7 @@ public class ChangePasswordBean extends AbstractBean {
 
 	@PostConstruct
 	public void init() {
+		this.user = this.sessionUser.get();
 		this.userCredential = this.userService.findUserCredential(this.user);
 	}
 

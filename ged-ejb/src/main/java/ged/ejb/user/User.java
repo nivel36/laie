@@ -51,8 +51,9 @@ public class User extends AbstractAuditedEntity {
 	@ManyToOne
 	@JoinColumn(name = "managerId", nullable = true)
 	private User manager;
-	
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+
+	@NotNull
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, optional = false, mappedBy="user")
 	private Credential credential;
 
 	@NotNull
@@ -95,7 +96,8 @@ public class User extends AbstractAuditedEntity {
 			return false;
 		}
 		final User other = (User) obj;
-		return Objects.equals(this.email, other.email) && Objects.equals(this.surname, other.surname) && Objects.equals(this.name, other.name);
+		return Objects.equals(this.email, other.email) && Objects.equals(this.surname, other.surname)
+				&& Objects.equals(this.name, other.name);
 	}
 
 	public List<Bookmark> getBookmarks() {
