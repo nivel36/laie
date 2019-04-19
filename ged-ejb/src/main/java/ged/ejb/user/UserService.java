@@ -1,16 +1,20 @@
 package ged.ejb.user;
 
 import java.lang.invoke.MethodHandles;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.security.auth.login.LoginException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ged.ejb.core.AbstractAuditedService;
+import ged.ejb.core.Audited;
+import ged.ejb.core.action.Action.ActionType;
 import ged.ejb.core.model.AbstractDao;
 import ged.ejb.core.model.Page;
 import ged.ejb.core.model.Repository;
@@ -30,6 +34,11 @@ public class UserService extends AbstractAuditedService<User> {
 	@Repository
 	private UserDao userDao;
 
+	public void changePassword(final User user, final String newPassword) {
+		user.addNewCredential(newPassword);
+		this.userDao.save(user);
+	}
+
 	public List<Role> findAllRoles() {
 		return this.roleDao.findAll(Page.ALL);
 	}
@@ -46,16 +55,16 @@ public class UserService extends AbstractAuditedService<User> {
 		return this.userDao.findSubordinateUsers(user);
 	}
 
+	public User findUserAndCredentials(final String email) {
+		Objects.requireNonNull(email);
+		logger.debug("Finding user credential for user {}", email);
+		return this.userDao.findUserAndCredentials(email);
+	}
+
 	public User findUserByEmail(final String email) {
 		Objects.requireNonNull(email);
 		logger.debug("Finding user by email {}", email);
 		return this.userDao.findUserByEmail(email);
-	}
-
-	public Credential findUserCredential(final User user) {
-		Objects.requireNonNull(user);
-		logger.debug("Finding user credential for user {}", user);
-		return this.userDao.findUserCredential(user);
 	}
 
 	@Override
@@ -82,6 +91,22 @@ public class UserService extends AbstractAuditedService<User> {
 		Objects.requireNonNull(subordinate);
 		logger.debug("Testing if user {} is manager of the user {}", manager.getEmail(), subordinate.getEmail());
 		return findSubordinateUsers(manager).contains(subordinate);
+	}
+
+	@Audited(action = ActionType.LOGIN)
+	public User login(final String email, final String password) throws LoginException {
+		Objects.requireNonNull(email);
+		Objects.requireNonNull(password);
+		final User user = this.userDao.findUserAndCredentials(email);
+		if (user == null) {
+			throw new LoginException("Invalid email");
+		}
+		final Credential credential = user.getCredential();
+		if (!credential.isValid(password)) {
+			throw new LoginException("Passwords doesn't match");
+		}
+		user.setLastConnection(LocalDateTime.now());
+		return this.userDao.save(user);
 	}
 
 	@Override

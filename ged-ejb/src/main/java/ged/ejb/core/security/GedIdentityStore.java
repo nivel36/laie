@@ -13,24 +13,16 @@ import javax.security.enterprise.credential.UsernamePasswordCredential;
 import javax.security.enterprise.identitystore.CredentialValidationResult;
 import javax.security.enterprise.identitystore.IdentityStore;
 
-import ged.ejb.core.LoginService;
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
 
 public class GedIdentityStore implements IdentityStore {
 
 	@Inject
-	private LoginService loginService;
-
-	@Inject
 	private UserService userService;
 
 	public void setUserService(final UserService userService) {
 		this.userService = userService;
-	}
-	
-	public void setLoginService(final LoginService loginService) {
-		this.loginService = loginService;
 	}
 
 	@Override
@@ -40,17 +32,15 @@ public class GedIdentityStore implements IdentityStore {
 			try {
 				final String email = ((UsernamePasswordCredential) credential).getCaller();
 				final String password = ((UsernamePasswordCredential) credential).getPasswordAsString();
-				user = loginService.login(email, password);
-			} catch (LoginException e) {
-				  return NOT_VALIDATED_RESULT;
+				user = this.userService.login(email, password);
+			} catch (final LoginException e) {
+				return NOT_VALIDATED_RESULT;
 			}
-		}
-		else if (credential instanceof CallerOnlyCredential) {
+		} else if (credential instanceof CallerOnlyCredential) {
 			final String email = ((CallerOnlyCredential) credential).getCaller();
-			user = userService.findUserByEmail(email);
-		}
-		else {
-			 return NOT_VALIDATED_RESULT;
+			user = this.userService.findUserByEmail(email);
+		} else {
+			return NOT_VALIDATED_RESULT;
 		}
 
 		final Set<String> roles = new HashSet<>();

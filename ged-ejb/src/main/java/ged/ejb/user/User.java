@@ -2,8 +2,9 @@ package ged.ejb.user;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -12,7 +13,6 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
@@ -30,7 +30,10 @@ public class User extends AbstractAuditedEntity {
 	private static final long serialVersionUID = 5920907439877095636L;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user", orphanRemoval = true)
-	private List<Bookmark> bookmarks;
+	private Set<Bookmark> bookmarks = new HashSet<>();
+
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user", orphanRemoval = true)
+	private Set<Credential> credentials = new HashSet<>();
 
 	private LocalDate dateOfJoin;
 
@@ -51,10 +54,6 @@ public class User extends AbstractAuditedEntity {
 	@ManyToOne
 	@JoinColumn(name = "managerId", nullable = true)
 	private User manager;
-
-	@NotNull
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, optional = false, mappedBy="user")
-	private Credential credential;
 
 	@NotNull
 	@Column(length = 64, nullable = false)
@@ -84,6 +83,17 @@ public class User extends AbstractAuditedEntity {
 		this.bookmarks.add(bookmark);
 	}
 
+	public void addNewCredential(final String password) {
+		for (final Credential credential : this.credentials) {
+			if (!credential.isExpired()) {
+				credential.expire();
+				break;
+			}
+		}
+		final Credential newCredential = new Credential(this, password);
+		this.credentials.add(newCredential);
+	}
+
 	@Override
 	public boolean equals(final Object obj) {
 		if (obj == null) {
@@ -96,16 +106,24 @@ public class User extends AbstractAuditedEntity {
 			return false;
 		}
 		final User other = (User) obj;
-		return Objects.equals(this.email, other.email) && Objects.equals(this.surname, other.surname)
-				&& Objects.equals(this.name, other.name);
+		return Objects.equals(this.email, other.email);
 	}
 
-	public List<Bookmark> getBookmarks() {
+	public Set<Bookmark> getBookmarks() {
 		return this.bookmarks;
 	}
 
 	public Credential getCredential() {
-		return credential;
+		for (final Credential credential : this.credentials) {
+			if (!credential.isExpired()) {
+				return credential;
+			}
+		}
+		return null;
+	}
+
+	public Set<Credential> getCredentials() {
+		return this.credentials;
 	}
 
 	public LocalDate getDateOfJoin() {
@@ -180,12 +198,8 @@ public class User extends AbstractAuditedEntity {
 		this.bookmarks.remove(bookmark);
 	}
 
-	public void setBookmarks(final List<Bookmark> bookmarks) {
+	public void setBookmarks(final Set<Bookmark> bookmarks) {
 		this.bookmarks = bookmarks;
-	}
-
-	public void setCredential(Credential credential) {
-		this.credential = credential;
 	}
 
 	public void setDateOfJoin(final LocalDate dateOfJoin) {
@@ -234,6 +248,6 @@ public class User extends AbstractAuditedEntity {
 
 	@Override
 	public String toString() {
-		return this.getFullName();
+		return getFullName();
 	}
 }

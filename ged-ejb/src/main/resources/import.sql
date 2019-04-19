@@ -42,7 +42,7 @@ insert into SKILL( id, version, curriculumId, name ) values( 603, 0, 301, 'Hiber
 insert into SKILL( id, version, curriculumId, name ) values( 604, 0, 301, 'JSF');
 insert into SKILL( id, version, curriculumId, name ) values( 605, 0, 301, 'JEE');
 
-insert into JOBEXPERIENCE( id, version, curriculumId, companyName, description, startDate, jobPosition, stillWorking, endDate) values (701, 0, 301, 'Alten', 'Desarrollo de la herramienta para Gas Natural Fenosa con el que se dará cobertura a todas las actividades asociadas al proceso de expansión de la red y provisión de servicio en todos los ámbitos geográficos donde el grupo Gas Natural Fenosa (GNF) desarrolla sus negocios de distribución de gas natural y electricidad. Puesto de Arquitecto JEE desarrollando las siguientes tareas:' , CAST('aced00057372000d6a6176612e74696d652e536572955d84ba1b2248b20c0000787077060c000007da0378' AS VARBINARY(255)) , 'Arquitecto JAVA', true, null );
+insert into JOBEXPERIENCE( id, version, curriculumId, companyName, description, startDate, jobPosition, stillWorking, endDate) values (701, 0, 301, 'Alten', 'Desarrollo de la herramienta para Gas Natural Fenosa con el que se dará cobertura a todas las actividades asociadas al proceso de expansión de la red y provisión de servicio en todos los ámbitos geográficos donde el grupo Gas Natural Fenosa (GNF) desarrolla sus negocios de distribución de gas natural y electricidad. Puesto de Arquitecto JEE desarrollando las siguientes tareas:', CAST('aced00057372000d6a6176612e74696d652e536572955d84ba1b2248b20c0000787077060c000007da0378' AS VARBINARY(255)), 'Arquitecto JAVA', true, null );
 
 insert into I18NSTRING( id, version, locale, key, text ) values( 800, 0, 'es', 'all_day', 'Jornada completa' );
 insert into I18NSTRING( id, version, locale, key, text ) values( 801, 0, 'ca', 'all_day', 'Jornada completa' );
@@ -82,9 +82,9 @@ insert into ROLE( id, version, name ) values( 911, 0, 'ADMIN' );
 insert into ROLE( id, version, name ) values( 912, 0, 'USER' );
 
 insert into USER( id, version, email, language, name, rowsPerPage, surname, roleId, deleted, imageFileName, ownerId ) values( 901, 0, 'abel.ferrer.jimenez@gmail.com', 'es', 'Abel', 10, 'Ferrer', 911, false, null, 901);
-insert into CREDENTIAL( id, version, password, salt, userId ) values( 903, 0, '16AFB50A06A958ACEC2EDA9D70283139BC7B7372E21CC83F619CCF169E6E7956', 'FFFFFF', 901);
+insert into CREDENTIAL( id, version, hashPassword, salt, userId, created ) values( 903, 0, '16AFB50A06A958ACEC2EDA9D70283139BC7B7372E21CC83F619CCF169E6E7956', 'FFFFFF', 901, (TO_DATE('17/12/2015', 'DD/MM/YYYY')));
 insert into USER( id, version, email, language, name, rowsPerPage, surname, roleId, deleted, imageFileName, ownerId ) values( 902, 0, 'isabel.vallejo.medina@gmail.com', 'es', 'Isabel', 10, 'Vallejo', 911, false, null, 902);
-insert into CREDENTIAL( id, version, password, salt, userId ) values( 904, 0, '16AFB50A06A958ACEC2EDA9D70283139BC7B7372E21CC83F619CCF169E6E7956', 'FFFFFF', 902);
+insert into CREDENTIAL( id, version, hashPassword, salt, userId, created ) values( 904, 0, '16AFB50A06A958ACEC2EDA9D70283139BC7B7372E21CC83F619CCF169E6E7956', 'FFFFFF', 902, (TO_DATE('17/12/2015', 'DD/MM/YYYY')));
 
 insert into USERCLOSURE( id, version, antecessor_id, descendant_id, pathLength ) values( 970, 0, 901, 901, 0 );
 insert into USERCLOSURE( id, version, antecessor_id, descendant_id, pathLength ) values( 971, 0, 902, 902, 0 );

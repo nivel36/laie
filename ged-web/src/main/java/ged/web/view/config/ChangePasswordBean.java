@@ -39,37 +39,20 @@ public class ChangePasswordBean extends AbstractBean {
 
 	public String change() {
 		logger.debug("Action: change password");
-
 		if (!isValidPassword()) {
 			this.addMessage(FacesMessage.SEVERITY_ERROR, "login.error.bad_password", "login.error.bad_password");
 			this.facesContext.validationFailed();
 			return null;
 		}
-
 		if (!inputPasswordsAreEquals()) {
 			this.addMessage(FacesMessage.SEVERITY_ERROR, "login.error.password_not_equals",
 					"login.error.password_not_equals");
 			this.facesContext.validationFailed();
 			return null;
 		}
-
-		changePassword(newPassword);
+		this.userService.changePassword(this.user, this.newPassword);
 		this.sessionUser.refresh();
 		return "/config.xhtml?faces-redirect=true";
-	}
-
-	private boolean inputPasswordsAreEquals() {
-		return this.newPassword.equals(this.repeatPassword);
-	}
-
-	private boolean isValidPassword() {
-		return this.userCredential.isValid(password);
-	}
-
-	private User changePassword(final String newPassword) {
-		userCredential.setPassword(newPassword);
-		user.setCredential(userCredential);
-		return this.userService.save(user);
 	}
 
 	public String getNewPassword() {
@@ -86,8 +69,16 @@ public class ChangePasswordBean extends AbstractBean {
 
 	@PostConstruct
 	public void init() {
-		this.user = this.sessionUser.get();
-		this.userCredential = this.userService.findUserCredential(this.user);
+		this.user = this.userService.findUserAndCredentials(this.sessionUser.get().getEmail());
+		this.userCredential = this.user.getCredential();
+	}
+
+	private boolean inputPasswordsAreEquals() {
+		return this.newPassword.equals(this.repeatPassword);
+	}
+
+	private boolean isValidPassword() {
+		return this.userCredential.isValid(this.password);
 	}
 
 	public void setNewPassword(final String newPassword) {

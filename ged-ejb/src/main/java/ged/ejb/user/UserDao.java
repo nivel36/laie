@@ -44,6 +44,11 @@ public class UserDao extends AbstractDao<User> {
 		}
 	}
 
+	public User findUserAndCredentials(final String email) {
+		Objects.requireNonNull(email);
+		return this.findByQuery(User.class, "User.findUserAndCredentials", map("email", email));
+	}
+
 	public User findUserByEmail(final String email) {
 		Objects.requireNonNull(email);
 		try {
@@ -52,11 +57,6 @@ public class UserDao extends AbstractDao<User> {
 			logger.trace("No users with email {} found", email, e);
 			return null;
 		}
-	}
-
-	public Credential findUserCredential(final User user) {
-		Objects.requireNonNull(user);
-		return this.findByQuery(Credential.class, "User.findUserCredential", map("user", user));
 	}
 
 	@Override

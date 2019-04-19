@@ -1,7 +1,9 @@
 package ged.ejb.user;
 
 import java.security.SecureRandom;
+import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.Random;
 
 import javax.persistence.Column;
@@ -24,13 +26,18 @@ public class Credential extends AbstractEntity {
 
 	private static final long serialVersionUID = 8026493839739887015L;
 
+	@NotNull
+	private LocalDate created;
+
+	private LocalDate expired;
+
 	@Column(length = 32, nullable = false)
 	@NotNull
-	private byte[] password;
+	private byte[] hashPassword = new byte[32];
 
 	@Column(length = 16, nullable = false)
 	@NotNull
-	private byte[] salt;
+	private byte[] salt = new byte[16];
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "userId", nullable = true)
@@ -38,22 +45,46 @@ public class Credential extends AbstractEntity {
 	@NotNull
 	private User user;
 
-	public void setPassword(String password) {
-		this.password = CriptoUtil.digestPassword(password, getSalt());
+	public Credential() {
+
 	}
 
-	public void setUser(User user) {
-		user.setCredential(this);
-		this.user = user;
+	public Credential(final User user, final String password) {
+		Objects.requireNonNull(user);
+		Objects.requireNonNull(password);
+		setPassword(password);
+		setUser(user);
 	}
 
-	public boolean isValid(String password) {
-		return Arrays.equals(this.password, CriptoUtil.digestPassword(password, salt));
+	private byte[] buildHashPassword(final String password) {
+		return CriptoUtil.digestPassword(password, this.salt);
 	}
 
-	private byte[] getSalt() {
+	public void expire() {
+		this.expired = LocalDate.now();
+	}
+
+	private byte[] getRandomSalt() {
 		final byte[] salt = new byte[16];
 		RANDOM.nextBytes(salt);
 		return salt;
+	}
+
+	public boolean isExpired() {
+		return this.expired != null;
+	}
+
+	public boolean isValid(final String password) {
+		return Arrays.equals(this.hashPassword, buildHashPassword(password));
+	}
+
+	public void setPassword(final String password) {
+		this.created = LocalDate.now();
+		this.salt = getRandomSalt();
+		this.hashPassword = buildHashPassword(password);
+	}
+
+	public void setUser(final User user) {
+		this.user = user;
 	}
 }
