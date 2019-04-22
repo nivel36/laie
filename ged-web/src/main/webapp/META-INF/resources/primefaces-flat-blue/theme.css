@@ -99,18 +99,14 @@ body .ui-autocomplete-panel .ui-autocomplete-table td {
 	align-items: center;
 }
 
-/*Button*/
-body .ui-button {
-	font-size: 0.9em;
-	height: 34px;
-}
-
 body .ui-button.ui-button-icon-only {
 	font-size: 1em;
 	min-width: auto;
 }
 
 body .ui-button, body .ui-button.ui-button-icon-only {
+	height: 30px;
+	font-size: 0.9em;
 	display: inline-flex;
 	background-color: #69abe2;
 	border: 1px solid #59a2df;
@@ -653,7 +649,7 @@ body .ui-spinner {
 	display: flex;
 }
 
-body .ui-spinner .ui-spinner-button {
+body .input-group .ui-spinner .ui-spinner-button {
 	height: 50%;
 	width: 16px;
 	margin-left: 16px;
