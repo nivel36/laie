@@ -27,7 +27,7 @@
 								<p:commandButton value="#{i18n['action.export']}" process="@this" actionListener="#{clientBean.editClient}" icon="fa-file-excel-o"
 									action="/client/clientEdit?faces-redirect=true" />
 								<p:commandButton value="#{i18n['action.edit']}" process="@this" actionListener="#{clientBean.editClient}"
-									action="/client/clientEdit?faces-redirect=true" />
+									action="//client/clientEdit?faces-redirect=true" />
 							</div>
 						</div>
 					</h:form>
@@ -48,7 +48,7 @@
 			<div class="col-12 sm-4">
 				<h:form id="contactsForm">
 					<cc:contacts contacts="#{clientBean.contacts}">
-						<p:commandButton value="#{i18n['action.new']}" action="#{clientBean.newContact}" process="@this" />
+						<p:commandButton value="#{i18n['action.new']}" actionListener="#{clientBean.newContact}" action="/client/contactEdit?faces-redirect=true" process="@this"/>
 					</cc:contacts>
 				</h:form>
 			</div>

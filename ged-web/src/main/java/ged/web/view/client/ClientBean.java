@@ -73,9 +73,8 @@ public class ClientBean extends AbstractBean {
 		return this.sessionUser.hasPermissionToEdit(this.client);
 	}
 
-	public String newContact() {
+	public void newContact() {
 		this.putValueToFlash("client", this.client);
-		return "editContact.xhtml?faces-redirect=true";
 	}
 
 	public void newJobOffer() {

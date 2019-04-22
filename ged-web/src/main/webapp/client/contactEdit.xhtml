@@ -13,13 +13,13 @@
 			<p:menuitem value="#{i18n['menu.index']}" url="/index.xhtml" />
 			<p:menuitem value="#{i18n['client.clients']}" url="/client/clientSearch.xhtml" />
 			<p:menuitem value="#{contactEditBean.client.name}" url="/client/client.xhtml?clientId=#{contactEditBean.client.id}" />
-			<p:menuitem value="#{contactEditBean.newContact ? i18n['contact.new_contact'] : contactEditBean.contact.name}" disabled="true" />
+			<p:menuitem value="#{contactEditBean.newContact ? i18n['contact.new_contact'] : contactEditBean.contact.fullName}" disabled="true" />
 		</p:breadCrumb>
 
 		<h:form id="contactForm">
 			<div class="panel">
 				<div class="panel-header">
-					<div class="panel-header-title">#{empty userEditBean.user.fullName ? i18n['user.new_user'] : userEditBean.user.fullName}</div>
+					<div class="panel-header-title">#{contactEditBean.newContact ? i18n['contact.new_contact'] : contactEditBean.contact.fullName}</div>
 				</div>
 				<div class="panel-content panel-content-data">
 					<div class="grid">
@@ -38,7 +38,9 @@
 				</div>
 				<div class="panel-footer">
 					<div class="panel-buttons">
-						<p:commandButton value="#{i18n['action.cancel']}" action="/client/client.xhtml?clientId=#{contactEditBean.client.id}" process="@this" styleClass="btn-gray" />
+						<p:button styleClass="btn-gray" value="#{i18n['action.cancel']}" outcome="client">
+							<f:param name="clientId" value="#{contactEditBean.client.id}" />
+						</p:button>
 						<p:commandButton value="#{i18n['action.save']}" action="#{contactEditBean.save}" update="@form" />
 					</div>
 				</div>
