@@ -23,9 +23,9 @@ public class UserDao extends AbstractDao<User> {
 
 	private void deleteUserClosures(final User user) {
 		logger.trace("Delete user closures for user {}", user.getEmail());
-		final List<UserClosure> userClosures = findAntecessorsUserClosures(user);
+		final List<UserClosure> userClosures = this.findAntecessorsUserClosures(user);
 		for (final UserClosure userClosure : userClosures) {
-			getPersistenceFacade().delete(UserClosure.class, userClosure);
+			this.getPersistenceFacade().delete(UserClosure.class, userClosure);
 		}
 	}
 
@@ -44,9 +44,9 @@ public class UserDao extends AbstractDao<User> {
 		}
 	}
 
-	public User findUserAndCredentials(final String email) {
+	public User findUserAndCredential(final String email) {
 		Objects.requireNonNull(email);
-		return this.findByQuery(User.class, "User.findUserAndCredentials", map("email", email));
+		return this.findByQuery(User.class, "User.findUserAndCredential", map("email", email));
 	}
 
 	public User findUserByEmail(final String email) {
@@ -68,31 +68,31 @@ public class UserDao extends AbstractDao<User> {
 		logger.trace("Insert in user closure table. Antecessor {}, descendant {}, pathLength {}", antecessor.getEmail(),
 				descendant.getEmail(), pathLength);
 		final UserClosure newUserClosure = new UserClosure(antecessor, descendant, pathLength);
-		getPersistenceFacade().insert(newUserClosure);
+		this.getPersistenceFacade().insert(newUserClosure);
 	}
 
 	private void insertUserClosures(final User user) {
 		logger.trace("Insert user closures for user {}", user.getEmail());
-		final List<UserClosure> userClosures = findAntecessorsUserClosures(user.getManager());
+		final List<UserClosure> userClosures = this.findAntecessorsUserClosures(user.getManager());
 		for (final UserClosure userClosure : userClosures) {
-			insertUserClosure(userClosure.getAntecessor(), user, userClosure.getPathLength() + 1);
+			this.insertUserClosure(userClosure.getAntecessor(), user, userClosure.getPathLength() + 1);
 		}
-		insertUserClosure(user, user, 0);
+		this.insertUserClosure(user, user, 0);
 	}
 
 	private boolean isAddingManager(final User user, final User userInDatabase) {
-		return userInDatabase.getManager() == null && user.getManager() != null;
+		return (userInDatabase.getManager() == null) && (user.getManager() != null);
 	}
 
 	private boolean isChangingManager(final User user, final User userInDatabase) {
-		return userInDatabase.getManager() != null && user.getManager() != null
+		return (userInDatabase.getManager() != null) && (user.getManager() != null)
 				&& !user.getManager().equals(userInDatabase.getManager());
 	}
 
 	private boolean isDuplicateEmail(final User user) {
 		Objects.requireNonNull(user);
-		final User repositoryUser = findUserByEmail(user.getEmail());
-		return repositoryUser != null && !(repositoryUser.getId() == user.getId());
+		final User repositoryUser = this.findUserByEmail(user.getEmail());
+		return (repositoryUser != null) && !(repositoryUser.getId() == user.getId());
 	}
 
 	public boolean isEmailInUse(final String email) {
@@ -101,31 +101,31 @@ public class UserDao extends AbstractDao<User> {
 	}
 
 	private boolean isRemovingManager(final User user, final User userInDatabase) {
-		return userInDatabase.getManager() != null && user.getManager() == null;
+		return (userInDatabase.getManager() != null) && (user.getManager() == null);
 	}
 
 	@Override
 	protected void postInsert(final User user) {
 		if (user.getManager() != null) {
-			insertUserClosures(user);
+			this.insertUserClosures(user);
 		}
 	}
 
 	@Override
 	protected void postUpdate(final User user) {
-		updateUserClosures(user);
+		this.updateUserClosures(user);
 	}
 
 	@Override
 	protected void preInsert(final User user) {
-		if (isEmailInUse(user.getEmail())) {
+		if (this.isEmailInUse(user.getEmail())) {
 			throw new DuplicateEmailException();
 		}
 	}
 
 	@Override
 	protected void preUpdate(final User user) {
-		if (isDuplicateEmail(user)) {
+		if (this.isDuplicateEmail(user)) {
 			throw new DuplicateEmailException();
 		}
 	}
@@ -136,18 +136,18 @@ public class UserDao extends AbstractDao<User> {
 	}
 
 	private void updateUserClosures(final User user) {
-		final User userInDatabase = find(user.getId());
+		final User userInDatabase = this.find(user.getId());
 		if (userInDatabase == null) {
 			logger.warn("User doesn't exists");
 			throw new IllegalStateException();
 		}
-		if (isAddingManager(user, userInDatabase)) {
-			insertUserClosures(user);
-		} else if (isRemovingManager(user, userInDatabase)) {
-			deleteUserClosures(userInDatabase);
-		} else if (isChangingManager(user, userInDatabase)) {
-			deleteUserClosures(userInDatabase);
-			insertUserClosures(user);
+		if (this.isAddingManager(user, userInDatabase)) {
+			this.insertUserClosures(user);
+		} else if (this.isRemovingManager(user, userInDatabase)) {
+			this.deleteUserClosures(userInDatabase);
+		} else if (this.isChangingManager(user, userInDatabase)) {
+			this.deleteUserClosures(userInDatabase);
+			this.insertUserClosures(user);
 		}
 	}
 }

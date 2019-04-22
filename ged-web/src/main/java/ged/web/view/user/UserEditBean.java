@@ -27,6 +27,7 @@ import org.slf4j.LoggerFactory;
 
 import ged.ejb.core.FileUploadService;
 import ged.ejb.core.model.Page;
+import ged.ejb.user.Credential;
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
 import ged.web.core.view.AbstractBean;
@@ -49,12 +50,15 @@ public class UserEditBean extends AbstractBean {
 	@Inject
 	private transient UserService userService;
 
-	private void buildUser() {
-		this.user = new User();
-		this.user.setLanguage("ES");
-		this.user.setRowsPerPage(25);
-		this.user.setDateOfJoin(LocalDate.now());
-		this.user.setOwner(this.user);
+	private User buildNewUser() {
+		final User newUser = new User();
+		newUser.setLanguage("ES");
+		newUser.setRowsPerPage(25);
+		newUser.setDateOfJoin(LocalDate.now());
+		newUser.setOwner(this.user);
+		final Credential newCredential = new Credential(newUser, "password");
+		newUser.setCredential(newCredential);
+		return newUser;
 	}
 
 	public String cancel() {
@@ -64,7 +68,7 @@ public class UserEditBean extends AbstractBean {
 
 	public void changeRoleListener() {
 		logger.trace("Change role listener triggered");
-		if (isAdmin()) {
+		if (this.isAdmin()) {
 			this.user.setManager(null);
 		}
 	}
@@ -86,9 +90,9 @@ public class UserEditBean extends AbstractBean {
 	public void init() {
 		this.user = this.getValueFromFlash("user");
 		if (this.user == null) {
-			newUserInit();
+			this.newUserInit();
 		} else {
-			editUserInit();
+			this.editUserInit();
 		}
 	}
 
@@ -106,7 +110,7 @@ public class UserEditBean extends AbstractBean {
 			logger.error("User {} hasn't got priviliges to add a new user", this.sessionUser);
 			throw new SecurityException();
 		}
-		buildUser();
+		this.user = this.buildNewUser();
 		this.cancelUrl = "/user/userSearch";
 	}
 
@@ -122,7 +126,7 @@ public class UserEditBean extends AbstractBean {
 
 	public List<User> searchManager(final String query) {
 		logger.trace("Searching for manager with the string {}", query);
-		if (query == null || query.trim().length() < 3) {
+		if ((query == null) || (query.trim().length() < 3)) {
 			return new ArrayList<>();
 		}
 		final List<User> managers = this.userService.search(query, Page.ALL);

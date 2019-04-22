@@ -330,11 +330,11 @@
 		]]></query>
 	</named-query>
 	
-	<named-query name="User.findUserAndCredentials">
+	<named-query name="User.findUserAndCredential">
 		<query><![CDATA[
-			SELECT u 
+			SELECT u
 			FROM User u
-			LEFT JOIN FETCH u.credentials 
+			LEFT JOIN FETCH u.credential
 			WHERE u.email = :email
 		]]></query>
 	</named-query>

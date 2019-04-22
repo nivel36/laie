@@ -39,12 +39,12 @@ public class ChangePasswordBean extends AbstractBean {
 
 	public String change() {
 		logger.debug("Action: change password");
-		if (!isValidPassword()) {
+		if (!this.isValidPassword()) {
 			this.addMessage(FacesMessage.SEVERITY_ERROR, "login.error.bad_password", "login.error.bad_password");
 			this.facesContext.validationFailed();
 			return null;
 		}
-		if (!inputPasswordsAreEquals()) {
+		if (!this.inputPasswordsAreEquals()) {
 			this.addMessage(FacesMessage.SEVERITY_ERROR, "login.error.password_not_equals",
 					"login.error.password_not_equals");
 			this.facesContext.validationFailed();
@@ -69,7 +69,7 @@ public class ChangePasswordBean extends AbstractBean {
 
 	@PostConstruct
 	public void init() {
-		this.user = this.userService.findUserAndCredentials(this.sessionUser.get().getEmail());
+		this.user = this.userService.findUserAndCredential(this.sessionUser.get().getEmail());
 		this.userCredential = this.user.getCredential();
 	}
 

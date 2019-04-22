@@ -13,6 +13,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
@@ -32,8 +33,9 @@ public class User extends AbstractAuditedEntity {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user", orphanRemoval = true)
 	private Set<Bookmark> bookmarks = new HashSet<>();
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user", orphanRemoval = true)
-	private Set<Credential> credentials = new HashSet<>();
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user", optional = false, orphanRemoval = true)
+	@NotNull
+	private Credential credential;
 
 	private LocalDate dateOfJoin;
 
@@ -83,17 +85,6 @@ public class User extends AbstractAuditedEntity {
 		this.bookmarks.add(bookmark);
 	}
 
-	public void addNewCredential(final String password) {
-		for (final Credential credential : this.credentials) {
-			if (!credential.isExpired()) {
-				credential.expire();
-				break;
-			}
-		}
-		final Credential newCredential = new Credential(this, password);
-		this.credentials.add(newCredential);
-	}
-
 	@Override
 	public boolean equals(final Object obj) {
 		if (obj == null) {
@@ -114,16 +105,7 @@ public class User extends AbstractAuditedEntity {
 	}
 
 	public Credential getCredential() {
-		for (final Credential credential : this.credentials) {
-			if (!credential.isExpired()) {
-				return credential;
-			}
-		}
-		return null;
-	}
-
-	public Set<Credential> getCredentials() {
-		return this.credentials;
+		return this.credential;
 	}
 
 	public LocalDate getDateOfJoin() {
@@ -202,6 +184,10 @@ public class User extends AbstractAuditedEntity {
 		this.bookmarks = bookmarks;
 	}
 
+	public void setCredential(final Credential credential) {
+		this.credential = credential;
+	}
+
 	public void setDateOfJoin(final LocalDate dateOfJoin) {
 		this.dateOfJoin = dateOfJoin;
 	}
@@ -248,6 +234,6 @@ public class User extends AbstractAuditedEntity {
 
 	@Override
 	public String toString() {
-		return getFullName();
+		return this.getFullName();
 	}
 }

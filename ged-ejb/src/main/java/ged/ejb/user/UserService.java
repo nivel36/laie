@@ -35,7 +35,7 @@ public class UserService extends AbstractAuditedService<User> {
 	private UserDao userDao;
 
 	public void changePassword(final User user, final String newPassword) {
-		user.addNewCredential(newPassword);
+		user.getCredential().setPassword(newPassword);
 		this.userDao.save(user);
 	}
 
@@ -55,10 +55,10 @@ public class UserService extends AbstractAuditedService<User> {
 		return this.userDao.findSubordinateUsers(user);
 	}
 
-	public User findUserAndCredentials(final String email) {
+	public User findUserAndCredential(final String email) {
 		Objects.requireNonNull(email);
 		logger.debug("Finding user credential for user {}", email);
-		return this.userDao.findUserAndCredentials(email);
+		return this.userDao.findUserAndCredential(email);
 	}
 
 	public User findUserByEmail(final String email) {
@@ -74,7 +74,7 @@ public class UserService extends AbstractAuditedService<User> {
 
 	private boolean hasValidManager(final User user) {
 		final User manager = user.getManager();
-		if (user.isAdmin() && manager != null) {
+		if (user.isAdmin() && (manager != null)) {
 			return false;
 		}
 		return true;
@@ -90,14 +90,14 @@ public class UserService extends AbstractAuditedService<User> {
 		Objects.requireNonNull(manager);
 		Objects.requireNonNull(subordinate);
 		logger.debug("Testing if user {} is manager of the user {}", manager.getEmail(), subordinate.getEmail());
-		return findSubordinateUsers(manager).contains(subordinate);
+		return this.findSubordinateUsers(manager).contains(subordinate);
 	}
 
 	@Audited(action = ActionType.LOGIN)
 	public User login(final String email, final String password) throws LoginException {
 		Objects.requireNonNull(email);
 		Objects.requireNonNull(password);
-		final User user = this.userDao.findUserAndCredentials(email);
+		final User user = this.userDao.findUserAndCredential(email);
 		if (user == null) {
 			throw new LoginException("Invalid email");
 		}
@@ -113,7 +113,7 @@ public class UserService extends AbstractAuditedService<User> {
 	public User save(final User user) {
 		Objects.requireNonNull(user);
 		logger.debug("Saving user {}", user.getEmail());
-		validateManager(user);
+		this.validateManager(user);
 		return super.save(user);
 	}
 
@@ -130,7 +130,7 @@ public class UserService extends AbstractAuditedService<User> {
 			logger.warn("The user {} can't be his/her manager", user.getEmail());
 			throw new BadManagerException("User can't be his/her manager");
 		}
-		if (!hasValidManager(user)) {
+		if (!this.hasValidManager(user)) {
 			logger.warn("The user {} has an admin role but has {} as a manager", user.getEmail(),
 					user.getManager().getRole());
 			throw new BadManagerException("Admins can't have a manager");
