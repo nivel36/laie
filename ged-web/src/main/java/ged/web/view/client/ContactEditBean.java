@@ -11,21 +11,19 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ged.ejb.client.Client;
-import ged.ejb.client.ClientService;
 import ged.ejb.client.Contact;
 import ged.ejb.client.ContactService;
-import ged.web.core.view.AbstractDialogBean;
+import ged.web.core.view.AbstractBean;
 
 @Named
 @ViewScoped
-public class ContactDialogBean extends AbstractDialogBean {
+public class ContactEditBean extends AbstractBean {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	private static final long serialVersionUID = 8611792798437280352L;
 
-	@Inject
-	private transient ClientService clientService;
+	private Client client;
 
 	private Contact contact;
 
@@ -40,27 +38,8 @@ public class ContactDialogBean extends AbstractDialogBean {
 		return newContact;
 	}
 
-	private void createNewContact() {
-		final Long clientId = this.getIdFromParameters("clientId");
-		final Client client = findClientFromDatabase(clientId);
-		this.contact = this.buildNewContact(client);
-	}
-
-	private Client findClientFromDatabase(final Long clientId) {
-		final Client client = this.clientService.find(clientId);
-		if (client == null) {
-			logger.error("Null client");
-			throw new IllegalStateException("Null client");
-		}
-		return client;
-	}
-
-	private void findContactFromDatabase(final Long contactId) {
-		this.contact = this.contactService.find(contactId);
-		if (this.contact == null) {
-			logger.error("Null contact");
-			throw new IllegalStateException("Null contact");
-		}
+	public Client getClient() {
+		return this.client;
 	}
 
 	public Contact getContact() {
@@ -69,13 +48,10 @@ public class ContactDialogBean extends AbstractDialogBean {
 
 	@PostConstruct
 	public void init() {
-		logger.trace("ContactDialog oppened");
-		final Long contactId = this.getIdFromParameters("contactId");
-		if (contactId != null) {
-			findContactFromDatabase(contactId);
-		}
-		else {
-			createNewContact();
+		this.client = this.getValueFromFlash("client");
+		this.contact = this.getValueFromFlash("contact");
+		if (this.contact == null) {
+			this.contact = this.buildNewContact(this.client);
 		}
 	}
 
@@ -86,7 +62,6 @@ public class ContactDialogBean extends AbstractDialogBean {
 	public void save() {
 		logger.debug("ContactDialog save action performed");
 		this.contactService.save(this.contact);
-		this.closeDialog(this.contact);
 	}
 
 	public void setContact(final Contact contact) {

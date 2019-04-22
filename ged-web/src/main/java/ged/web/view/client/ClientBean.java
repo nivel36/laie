@@ -3,7 +3,6 @@ package ged.web.view.client;
 import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -11,7 +10,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.omnifaces.cdi.Param;
-import org.primefaces.event.SelectEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,7 +41,7 @@ public class ClientBean extends AbstractBean {
 
 	public void editClient() {
 		logger.debug("Edit client action performed");
-		putValueToFlash("client", this.client);
+		this.putValueToFlash("client", this.client);
 	}
 
 	public void export() {
@@ -75,23 +73,14 @@ public class ClientBean extends AbstractBean {
 		return this.sessionUser.hasPermissionToEdit(this.client);
 	}
 
-	public void newContact() {
-		logger.debug("New contact action performed");
-		final Map<String, List<String>> params = buildDialogParameter("clientId", String.valueOf(this.client.getId()));
-		this.openDialog("/client/contactDialog", params);
+	public String newContact() {
+		this.putValueToFlash("client", this.client);
+		return "editContact.xhtml?faces-redirect=true";
 	}
 
 	public void newJobOffer() {
 		logger.debug("New job offer action performed");
-		putValueToFlash("client", this.client);
-	}
-
-	public void onCloseContactDialog(final SelectEvent e) {
-		final Contact newContact = (Contact) e.getObject();
-		if (newContact != null) {
-			logger.trace("New contact {} added", newContact.getEmail());
-			this.contacts.add(newContact);
-		}
+		this.putValueToFlash("client", this.client);
 	}
 
 	public void setClient(final Client client) {

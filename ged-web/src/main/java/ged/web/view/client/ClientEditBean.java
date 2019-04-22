@@ -36,7 +36,7 @@ public class ClientEditBean extends AbstractDialogBean {
 	}
 
 	private void editClientInit() {
-		logger.debug("Client {} edit init", client.getName());
+		logger.debug("Client {} edit init", this.client.getName());
 	}
 
 	public Client getClient() {
@@ -47,10 +47,9 @@ public class ClientEditBean extends AbstractDialogBean {
 	public void init() {
 		this.client = this.getValueFromFlash("client");
 		if (this.client == null) {
-			newClientInit();
-		}
-		else {
-			editClientInit();
+			this.newClientInit();
+		} else {
+			this.editClientInit();
 		}
 	}
 
