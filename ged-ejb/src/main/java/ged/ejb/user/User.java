@@ -120,7 +120,7 @@ public class User extends AbstractAuditedEntity {
 		if (this.name == null) {
 			return null;
 		}
-		return this.name + " " + this.surname;
+		return new StringBuilder(this.name).append(" ").append(this.surname).toString();
 	}
 
 	public String getImageFileName() {
