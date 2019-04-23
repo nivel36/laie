@@ -24,21 +24,21 @@ import ged.web.reports.UserReport;
 
 @Named
 @ViewScoped
-public class UserBean extends AbstractBean {
+public class UserViewBean extends AbstractBean {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	private static final long serialVersionUID = -2187385732087309689L;
 
 	private List<JobOffer> jobOffers;
-
+	
 	@Inject
 	private transient JobOfferService jobOfferService;
 
 	private List<User> team;
 
 	@Inject
-	@Param(name = "userId", required = true)
+	@Param(pathIndex=0, required = true)
 	private User user;
 
 	@Inject

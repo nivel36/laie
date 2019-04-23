@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 @AutoApplySession // For "Is user already logged-in?"
 @RememberMe(cookieSecureOnly = false, // Remove this when login is served over HTTPS.
 		cookieMaxAgeSeconds = 60 * 60 * 24 * 14) // 14 days.
-@LoginToContinue(loginPage = "/login.xhtml", errorPage = "", useForwardToLogin = false)
+@LoginToContinue(loginPage = "/login", errorPage = "", useForwardToLogin = false)
 @ApplicationScoped
 public class GedAuthenticationMechanism implements HttpAuthenticationMechanism {
 

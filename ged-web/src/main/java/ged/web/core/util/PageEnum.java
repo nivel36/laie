@@ -19,9 +19,10 @@ public enum PageEnum {
 	LOGIN("/login"), //
 	MAINTENANCE("/maintenance/maintenanceIndex"), //
 	REPORT("/report/reportSearch"), //
-	USER("/user/user"), //
-	USER_EDIT("/user/userEdit"), //
-	USER_SEARCH("/user/userSearch");
+	USER("/user/view"), //
+	USER_EDIT("/user/edit"), //
+	USER_ADD("/user/add"), //
+	USER_SEARCH("/user/search");
 
 	private String url;
 

@@ -2,7 +2,7 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://ged.com/i18n"
 	xmlns:p="http://primefaces.org/ui" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
-	template="/WEB-INF/templates/default.xhtml">
+	xmlns:o="http://omnifaces.org/ui" xmlns:of="http://omnifaces.org/functions" template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
 		<title>#{i18n['user.users']}</title>
@@ -15,7 +15,7 @@
 			<p:menuitem value="#{i18n['menu.index']}" url="/index.xhtml" />
 			<p:menuitem value="#{i18n['user.users']}" disabled="true" />
 		</p:breadCrumb>
-		<h:form>
+		<o:form>
 			<div class="panel">
 				<div class="panel-header">
 					<div class="panel-header-title">#{i18n['user.search']}</div>
@@ -26,10 +26,9 @@
 						<div class="panel-buttons">
 							<p:commandButton value="#{i18n['action.export']}" action="#{userSearchBean.search}" process="@this"
 								icon="fa-file-excel-o" styleClass="btn-primary" />
-							<p:button value="#{i18n['action.new']}" outcome="userEdit" styleClass="btn-primary" />
+							<p:button value="#{i18n['action.new']}" outcome="edit" styleClass="btn-primary" />
 						</div>
 					</div>
-
 
 					<p:dataTable var="user" id="users" value="#{userSearchBean.users}" emptyMessage="#{i18n['user.no_users_found']}"
 						reflow="true" paginator="true" paginatorPosition="bottom" paginatorTemplate="{PageLinks}"
@@ -43,9 +42,7 @@
 						</p:column>
 
 						<p:column headerText="#{i18n['user.name']}" sortBy="#{user.fullName}">
-							<h:link value="#{user.fullName}" outcome="/user/user">
-								<f:param name="userId" value="#{user.id}" />
-							</h:link>
+							<h:link value="#{user.fullName}" outcome="view"  />
 						</p:column>
 
 						<p:column headerText="#{i18n['user.email']}" sortBy="#{user.email}">
@@ -64,6 +61,6 @@
 					</p:dataTable>
 				</div>
 			</div>
-		</h:form>
+		</o:form>
 	</ui:define>
 </ui:composition>

@@ -8,8 +8,7 @@
 	<security-constraint>
 		<web-resource-collection>
 			<web-resource-name>Unprotected</web-resource-name>
-			<url-pattern>/login.xhtml</url-pattern>
-			<url-pattern>/index.xhtm</url-pattern>
+			<url-pattern>/login</url-pattern>
 			<url-pattern>/javax.faces.resource/*</url-pattern>
 			<url-pattern>/resources/img/*</url-pattern>
 		</web-resource-collection>
@@ -75,6 +74,10 @@
 		<!-- This can be removed when using OmniFaces 2.6.3 -->
 		<param-name>org.omnifaces.FACES_VIEWS_VIEW_HANDLER_MODE</param-name>
 		<param-value>BUILD_WITH_PARENT_QUERY_PARAMETERS</param-value>
+	</context-param>
+	<context-param>
+    	<param-name>org.omnifaces.FACES_VIEWS_SCAN_PATHS</param-name>
+    	<param-value>/*.xhtml/*</param-value>
 	</context-param>
 	<context-param>
 		<param-name>primefaces.FONT_AWESOME</param-name>
