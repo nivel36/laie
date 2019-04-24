@@ -14,7 +14,7 @@ public class Navigate {
 	public static final String FACES_REDIRECT = "faces-redirect=true";
 
 	public static Navigate to(final PageEnum page) {
-		return new Navigate(page.url());
+		return new Navigate(page.getUrl());
 	}
 
 	public static Navigate to(final String url) {

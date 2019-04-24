@@ -48,7 +48,7 @@ public class CandidateListPanelBean implements Serializable {
 
 	public String newCandidate() {
 		logger.debug("New candidate");
-		return CANDIDATE_EDIT.url() + "?faces-redirect=true";
+		return CANDIDATE_EDIT.getUrl() + "?faces-redirect=true";
 	}
 
 	public void setCandidateService(final CandidateService candidateService) {

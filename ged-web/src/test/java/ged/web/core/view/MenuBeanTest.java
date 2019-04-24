@@ -25,42 +25,42 @@ public class MenuBeanTest {
 	@Test
 	public void shouldReturnCandidateSearchUrl() {
 		final String url = this.menuBean.gotoCandidates();
-		assertEquals(CANDIDATE_SEARCH.url() + "?" + FACES_REDIRECT, url);
+		assertEquals(CANDIDATE_SEARCH.getUrl() + "?" + FACES_REDIRECT, url);
 	}
 
 	@Test
 	public void shouldReturnClientSearchUrl() {
 		final String url = this.menuBean.gotoClients();
-		assertEquals(CLIENT_SEARCH.url() + "?" + FACES_REDIRECT, url);
+		assertEquals(CLIENT_SEARCH.getUrl() + "?" + FACES_REDIRECT, url);
 	}
 
 	@Test
 	public void shouldReturnIndexUrl() {
 		final String url = this.menuBean.gotoIndex();
-		assertEquals(INDEX.url() + "?" + FACES_REDIRECT, url);
+		assertEquals(INDEX.getUrl() + "?" + FACES_REDIRECT, url);
 	}
 
 	@Test
 	public void shouldReturnJobOfferSearchUrl() {
 		final String url = this.menuBean.gotoJobOffers();
-		assertEquals(JOB_OFFER_SEARCH.url() + "?" + FACES_REDIRECT, url);
+		assertEquals(JOB_OFFER_SEARCH.getUrl() + "?" + FACES_REDIRECT, url);
 	}
 
 	@Test
 	public void shouldReturnMaintenanceUrl() {
 		final String url = this.menuBean.gotoMaintenances();
-		assertEquals(MAINTENANCE.url() + "?" + FACES_REDIRECT, url);
+		assertEquals(MAINTENANCE.getUrl() + "?" + FACES_REDIRECT, url);
 	}
 
 	@Test
 	public void shouldReturnReportsUrl() {
 		final String url = this.menuBean.gotoReports();
-		assertEquals(REPORT.url() + "?" + FACES_REDIRECT, url);
+		assertEquals(REPORT.getUrl() + "?" + FACES_REDIRECT, url);
 	}
 
 	@Test
 	public void shouldReturnUserSearchUrl() {
 		final String url = this.menuBean.gotoUsers();
-		assertEquals(USER_SEARCH.url() + "?" + FACES_REDIRECT, url);
+		assertEquals(USER_SEARCH.getUrl() + "?" + FACES_REDIRECT, url);
 	}
 }

@@ -1,7 +1,9 @@
 package ged.web.core.util;
 
-public enum PageEnum {
+import ged.ejb.core.model.Identifiable;
 
+public enum PageEnum {
+	
 	CANDIDATE("/candidate/candidate"), //
 	CANDIDATE_EDIT("/candidate/candidateEdit"), //
 	CANDIDATE_SEARCH("/candidate/candidateSearch"), //
@@ -15,7 +17,7 @@ public enum PageEnum {
 	ISABEL("/isabel/isabel"), //
 	JOB_OFFER("/jobOffer/jobOffer"), //
 	JOB_OFFER_EDIT("/jobOffer/jobOfferEdit"), //
-	JOB_OFFER_SEARCH("/jobOffer/jobOfferSearch"),//
+	JOB_OFFER_SEARCH("/jobOffer/jobOfferSearch"), //
 	LOGIN("/login"), //
 	MAINTENANCE("/maintenance/maintenanceIndex"), //
 	REPORT("/report/reportSearch"), //
@@ -24,13 +26,27 @@ public enum PageEnum {
 	USER_ADD("/user/add"), //
 	USER_SEARCH("/user/search");
 
+	private final static String REDIRECT = "faces-redirect=true";
+	
 	private String url;
 
 	PageEnum(final String url) {
 		this.url = url;
 	}
 
-	public String url() {
+	public String getUrl() {
 		return this.url;
+	}
+	
+	public String getUrl(Identifiable id) {
+		return new StringBuilder(this.url).append("?id=").append(id.getId()).toString();
+	}
+
+	public String getRedirectUrl() {
+		return new StringBuilder(this.url).append("?").append(REDIRECT).toString();
+	}
+	
+	public String getRedirectUrl(Identifiable id) {
+		return new StringBuilder(this.url).append("?").append(REDIRECT).append("&id=").append(id.getId()).toString();
 	}
 }

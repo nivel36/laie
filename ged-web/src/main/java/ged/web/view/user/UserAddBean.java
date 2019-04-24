@@ -30,6 +30,7 @@ import ged.ejb.core.model.Page;
 import ged.ejb.user.Credential;
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
+import ged.web.core.util.PageEnum;
 import ged.web.core.view.AbstractBean;
 
 @Named
@@ -39,8 +40,6 @@ public class UserAddBean extends AbstractBean {
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	private static final long serialVersionUID = -2187385732087309689L;
-
-	private String cancelUrl;
 
 	@Inject
 	private transient FileUploadService fileUploadService;
@@ -62,8 +61,8 @@ public class UserAddBean extends AbstractBean {
 	}
 
 	public String cancel() {
-		logger.debug("Cancel edit action performed");
-		return this.cancelUrl;
+		logger.debug("Cancel new user action performed");
+		return PageEnum.USER_SEARCH.getRedirectUrl();
 	}
 
 	public void changeRoleListener() {
@@ -73,54 +72,31 @@ public class UserAddBean extends AbstractBean {
 		}
 	}
 
-	private void editUserInit() {
-		logger.debug("User {} edit init", this.user.getEmail());
-		if (!this.sessionUser.hasPermissionToEdit(this.user)) {
-			logger.error("User {} hasn't got priviliges to edit user {}", this.sessionUser.get(), this.user);
-			throw new SecurityException();
-		}
-		this.cancelUrl = "/user/user?faces-redirect=true&userId=" + this.user.getId();
-	}
-
 	public User getUser() {
 		return this.user;
 	}
 
 	@PostConstruct
 	public void init() {
-		this.user = this.getValueFromFlash("user");
-		if (this.user == null) {
-			this.newUserInit();
-		} else {
-			this.editUserInit();
+		logger.debug("New user init");
+		if (!this.sessionUser.isAdmin()) {
+			logger.error("User {} hasn't got priviliges to add a new user", this.sessionUser);
+			throw new SecurityException();
 		}
+		this.user = this.buildNewUser();
 	}
 
 	public boolean isAdmin() {
 		return this.user.isAdmin();
 	}
 
-	public boolean isNewUser() {
-		return this.user.getId() == 0;
-	}
-
-	private void newUserInit() {
-		logger.debug("New user edit init");
-		if (!this.sessionUser.isAdmin()) {
-			logger.error("User {} hasn't got priviliges to add a new user", this.sessionUser);
-			throw new SecurityException();
-		}
-		this.user = this.buildNewUser();
-		this.cancelUrl = "/user/userSearch";
-	}
-
 	public String save() {
-		logger.debug("Save user action performed");
-		if (!this.sessionUser.hasPermissionToEdit(this.user)) {
-			logger.error("User {} hasn't got priviliges to edit user {}", this.sessionUser.get(), this.user);
-			throw new SecurityException();
-		}
+		logger.debug("Create new user action performed");
 		this.user = this.userService.save(this.user);
+		return userViewUrl();
+	}
+
+	private String userViewUrl() {
 		return "/user/user?faces-redirect=true&userId=" + this.user.getId();
 	}
 

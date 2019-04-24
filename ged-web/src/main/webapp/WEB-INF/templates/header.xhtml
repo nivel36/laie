@@ -8,7 +8,7 @@
 				<ul>
 					<li><a jsf:action="#{menuBean.gotoIndex}" jsf:styleClass="#{selectedMenu eq 'index' ? 'selected': ''}"><span class="menu_icon"><em
 								class="fa fa-home" /></span> <span class="menu_text">#{i18n['menu.index']}</span></a></li>
-					<li><a jsf:action="#{menuBean.gotoCandidates}" jsf:styleClass="#{selectedMenu eq 'candidates' ? 'selected': ''}"><span class="menu_icon"><em
+					<li><a jsf:action="#{Page.CANDIDATE_SEARCH.getRedirectUrl()}" jsf:styleClass="#{selectedMenu eq 'candidates' ? 'selected': ''}"><span class="menu_icon"><em
 								class="fa fa-users" /></span> <span class="menu_text">#{i18n['menu.candidates']}</span></a></li>
 					<li><a jsf:action="#{menuBean.gotoJobOffers}" jsf:styleClass="#{selectedMenu eq 'offers' ? 'selected': ''}"><span class="menu_icon"><em
 								class="fa fa-suitcase" /></span> <span class="menu_text">#{i18n['menu.offers']}</span></a></li>

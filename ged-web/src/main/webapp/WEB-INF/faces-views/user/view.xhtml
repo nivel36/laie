@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://ged.com/i18n"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
-	template="/WEB-INF/templates/default.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://ged.com/i18n"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:p="http://primefaces.org/ui"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions" template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
 		<title>#{i18n['user.user']}</title>
@@ -17,7 +14,7 @@
 	<ui:define name="content">
 		<p:breadCrumb styleClass="breadcrumb">
 			<p:menuitem value="#{i18n['menu.index']}" url="/index.xhtml" />
-			<p:menuitem value="#{i18n['user.users']}" url="/user/userSearch.xhtml" />
+			<p:menuitem value="#{i18n['user.users']}" url="/user/search.xhtml" />
 			<p:menuitem value="#{userViewBean.user}" disabled="true" />
 		</p:breadCrumb>
 
@@ -38,12 +35,14 @@
 							<span class="text">#{userViewBean.user.phoneNumber}</span>
 						</h:panelGroup>
 					</div>
-					<div class="panel-buttons">
-						<p:commandButton value="#{i18n['action.export']}" process="@this" actionListener="#{userViewBean.editUser}"
-							icon="fa-file-excel-o" action="/user/userEdit?faces-redirect=true" />
-						<p:commandButton value="#{i18n['action.edit']}" process="@this" actionListener="#{userViewBean.editUser}"
-							action="/user/userEdit?faces-redirect=true" />
-					</div>
+					<o:form>
+						<div class="panel-buttons">
+							<p:commandButton value="#{i18n['action.export']}" process="@this" actionListener="#{userViewBean.editUser}"
+								icon="fa-file-excel-o" action="/user/edit?faces-redirect=true" />
+							<p:commandButton value="#{i18n['action.edit']}" process="@this" actionListener="#{userViewBean.editUser}"
+								action="/user/edit?faces-redirect=true" />
+						</div>
+					</o:form>
 				</div>
 				<div class="panel-content panel-content-data">
 					<div class="grid">

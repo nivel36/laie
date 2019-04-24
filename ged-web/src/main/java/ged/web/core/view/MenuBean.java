@@ -21,34 +21,34 @@ public class MenuBean extends AbstractBean {
 	private static final long serialVersionUID = 334119408975744799L;
 
 	public String gotoCandidates() {
-		return CANDIDATE_SEARCH.url() + FACES_REDIRECT;
+		return CANDIDATE_SEARCH.getUrl() + FACES_REDIRECT;
 	}
 
 	public String gotoClients() {
-		return CLIENT_SEARCH.url() + FACES_REDIRECT;
+		return CLIENT_SEARCH.getUrl() + FACES_REDIRECT;
 	}
 
 	public String gotoIndex() {
-		return INDEX.url() + FACES_REDIRECT;
+		return INDEX.getUrl() + FACES_REDIRECT;
 	}
 
 	public String gotoIsabel() {
-		return ISABEL.url() + FACES_REDIRECT;
+		return ISABEL.getUrl() + FACES_REDIRECT;
 	}
 
 	public String gotoJobOffers() {
-		return JOB_OFFER_SEARCH.url() + FACES_REDIRECT;
+		return JOB_OFFER_SEARCH.getUrl() + FACES_REDIRECT;
 	}
 
 	public String gotoMaintenances() {
-		return MAINTENANCE.url() + FACES_REDIRECT;
+		return MAINTENANCE.getUrl() + FACES_REDIRECT;
 	}
 
 	public String gotoReports() {
-		return REPORT.url() + FACES_REDIRECT;
+		return REPORT.getUrl() + FACES_REDIRECT;
 	}
 
 	public String gotoUsers() {
-		return USER_SEARCH.url() + FACES_REDIRECT;
+		return USER_SEARCH.getUrl() + FACES_REDIRECT;
 	}
 }

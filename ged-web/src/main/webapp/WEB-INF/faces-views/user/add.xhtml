@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://ged.com/i18n"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:p="http://primefaces.org/ui"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions" template="/WEB-INF/templates/default.xhtml">
+	
+	<ui:define name="title">
+		<title>#{empty addEditBean.user.fullName ? i18n['user.new_user'] : addEditBean.user.fullName}</title>
+	</ui:define>
+
+	<ui:define name="content">
+
+		<p:breadCrumb styleClass="breadcrumb">
+			<p:menuitem value="#{i18n['menu.index']}" url="/index.xhtml" />
+			<p:menuitem value="#{i18n['user.users']}" url="/user/search.xhtml" />
+			<p:menuitem value="i18n['user.new_user']" disabled="true" />
+		</p:breadCrumb>
+
+		<h:form id="userForm" enctype="multipart/form-data">
+			<div class="panel">
+				<div class="panel-header">
+					<div class="panel-header-title">#{i18n['user.new_user']}</div>
+				</div>
+				<div class="panel-aside">
+					<div class="candidate-metadata">
+						<cc:inputImage id="userImage" value="#{addEditBean.user.imageFileName}"
+							fileUploadListener="#{addEditBean.uploadImage}" />
+					</div>
+				</div>
+				<div class="panel-content panel-content-data">
+					<div class="grid">
+						<div class="col-12 sm-6">
+							<h3>#{i18n['user.personal_information']}</h3>
+							<cc:inputText id="name" label="#{i18n['user.name']}" value="#{addEditBean.user.name}" required="true" />
+
+							<cc:inputText id="surname" label="#{i18n['user.surname']}" value="#{addEditBean.user.surname}" required="true" />
+
+							<cc:inputText id="email" label="#{i18n['user.email']}" value="#{addEditBean.user.email}" required="true"
+								validator="#{addEditBean.validateEmail}" />
+
+							<cc:inputText id="phone_number" label="#{i18n['user.phone_number']}" value="#{addEditBean.user.phoneNumber}" />
+						</div>
+
+						<div class="col-12 sm-6">
+
+							<h3>#{i18n['user.professional_information']}</h3>
+
+							<cc:inputSelect id="role" value="#{addEditBean.user.role}" label="#{i18n['user.role']}" required="true">
+								<f:selectItems value="#{roles.list}" var="role" itemValue="#{role}" itemLabel="#{i18n:translate(role.name)}" />
+								<p:ajax event="change" update=":userForm:role :userForm:manager" process=":userForm:role"
+									listener="#{addEditBean.changeRoleListener}" />
+							</cc:inputSelect>
+
+							<cc:inputUser id="manager" label="#{i18n['user.manager']}" value="#{addEditBean.user.manager}"
+								completeMethod="#{addEditBean.searchManager}" disabled="#{addEditBean.isAdmin()}" />
+
+							<cc:calendar id="date_of_join" label="#{i18n['user.date_of_join']}" value="#{addEditBean.user.dateOfJoin}" />
+						</div>
+					</div>
+				</div>
+				<div class="panel-footer">
+					<div class="panel-buttons">
+						<p:commandButton styleClass="btn-gray" value="#{i18n['action.cancel']}" action="#{addEditBean.cancel}"
+							process="@this" />
+						<p:commandButton styleClass="btn-primary" value="#{i18n['action.save']}" action="#{addEditBean.save}"
+							process="@form" update="@form growl" />
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

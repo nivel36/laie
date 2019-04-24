@@ -38,7 +38,7 @@ public class UserViewBean extends AbstractBean {
 	private List<User> team;
 
 	@Inject
-	@Param(pathIndex=0, required = true)
+	@Param(name="id", required = true)
 	private User user;
 
 	@Inject
