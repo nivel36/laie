@@ -1,0 +1,50 @@
+package ged.web.view.user;
+
+import java.lang.invoke.MethodHandles;
+import java.time.LocalDate;
+
+import javax.annotation.PostConstruct;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import ged.ejb.user.Credential;
+import ged.ejb.user.User;
+
+@Named
+@ViewScoped
+public class AddUserBean extends AbstractUserBean {
+
+	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
+
+	private static final long serialVersionUID = -2187385732087309689L;
+
+	private User buildNewUser() {
+		final User newUser = new User();
+		newUser.setLanguage("ES");
+		newUser.setRowsPerPage(25);
+		newUser.setDateOfJoin(LocalDate.now());
+		newUser.setOwner(this.user);
+		final Credential newCredential = new Credential(newUser, "password");
+		newUser.setCredential(newCredential);
+		return newUser;
+	}
+
+	@PostConstruct
+	public void init() {
+		logger.debug("New user init");
+		if (!this.sessionUser.isAdmin()) {
+			logger.error("User {} hasn't got priviliges to add a new user", this.sessionUser);
+			throw new SecurityException();
+		}
+		this.user = this.buildNewUser();
+	}
+	
+	public String save() {
+		logger.debug("Create new user action performed");
+		this.user = this.userService.save(this.user);
+		return userUrl();
+	}
+}

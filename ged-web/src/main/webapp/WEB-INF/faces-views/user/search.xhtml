@@ -13,7 +13,7 @@
 
 	<ui:define name="content">
 		<p:breadCrumb styleClass="breadcrumb">
-			<p:menuitem value="#{i18n['menu.index']}" url="/index.xhtml" />
+			<p:menuitem value="#{i18n['menu.index']}" url="#{Page.INDEX.getUrl()}" />
 			<p:menuitem value="#{i18n['user.users']}" disabled="true" />
 		</p:breadCrumb>
 		<o:form>
@@ -23,15 +23,15 @@
 				</div>
 				<div class="panel-content">
 					<div class="panel-content-data">
-						<cc:inputSearch searchText="#{userSearchBean.searchText}" searchAction="#{userSearchBean.search}" update="@form" />
+						<cc:inputSearch searchText="#{searchUserBean.searchText}" searchAction="#{searchUserBean.search}" update="@form" />
 						<div class="panel-buttons">
-							<p:commandButton value="#{i18n['action.export']}" action="#{userSearchBean.search}" process="@this"
+							<p:commandButton value="#{i18n['action.export']}" action="#{searchUserBean.search}" process="@this"
 								icon="fa-file-excel-o" styleClass="btn-primary" />
-							<p:button value="#{i18n['action.new']}" outcome="edit" styleClass="btn-primary" />
+							<p:button value="#{i18n['action.new']}" outcome="#{Page.USER_ADD.getUrl()}" styleClass="btn-primary" />
 						</div>
 					</div>
 
-					<p:dataTable var="user" id="users" value="#{userSearchBean.users}" emptyMessage="#{i18n['user.no_users_found']}"
+					<p:dataTable var="user" id="users" value="#{searchUserBean.users}" emptyMessage="#{i18n['user.no_users_found']}"
 						reflow="true" paginator="true" paginatorPosition="bottom" paginatorTemplate="{PageLinks}"
 						rows="#{sessionUser.rowsPerPage}" sortBy="#{user.fullName}" sortOrder="ascending">
 
@@ -43,7 +43,7 @@
 						</p:column>
 
 						<p:column headerText="#{i18n['user.name']}" sortBy="#{user.fullName}">
-							<h:link value="#{user.fullName}" outcome="view">
+							<h:link value="#{user.fullName}" outcome="#{Page.USER.getUrl()}">
 								<f:param name="id" value="#{user.id}" />
 							</h:link>
 						</p:column>
@@ -57,7 +57,7 @@
 						</p:column>
 
 						<p:column headerText="#{i18n['user.manager']}" sortBy="#{user.manager.fullName}">
-							<h:link value="#{user.manager.fullName}" outcome="user" rendered="#{not empty user.manager}">
+							<h:link value="#{user.manager.fullName}" outcome="#{Page.USER.getUrl()}" rendered="#{not empty user.manager}">
 								<f:param name="userId" value="#{user.manager.id}" />
 							</h:link>
 						</p:column>

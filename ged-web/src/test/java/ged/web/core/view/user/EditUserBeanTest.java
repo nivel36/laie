@@ -8,7 +8,6 @@ import static org.mockito.Mockito.when;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,34 +30,10 @@ import ged.ejb.user.User;
 import ged.ejb.user.UserService;
 import ged.web.core.util.Translator;
 import ged.web.core.view.SessionUser;
-import ged.web.view.user.UserEditBean;
+import ged.web.view.user.EditUserBean;
 
 @ExtendWith(MockitoExtension.class)
-public class UserEditBeanTest {
-
-	@Nested
-	class Cancel {
-
-		@Test
-		public void cancelUserShouldReturnUserUrl() {
-			final User user = mockUser();
-			when(flash.containsKey("user")).thenReturn(true);
-			when(flash.get("user")).thenReturn(user);
-			when(sessionUser.hasPermissionToEdit(user)).thenReturn(true);
-			userEditBean.init();
-
-			final String url = userEditBean.cancel();
-			assertEquals("/user/user?faces-redirect=true&userId=1", url);
-		}
-
-		@Test
-		public void newUserShouldReturnUserSearchUrl() {
-			when(sessionUser.isAdmin()).thenReturn(true);
-			userEditBean.init();
-			final String url = userEditBean.cancel();
-			assertEquals("/user/userSearch", url);
-		}
-	}
+public class EditUserBeanTest {
 
 	@Nested
 	class GetUser {
@@ -76,19 +51,6 @@ public class UserEditBeanTest {
 	class Init {
 
 		@Test
-		public void newUserShouldHaveDefaultValuesNonNull() {
-			when(sessionUser.isAdmin()).thenReturn(true);
-			userEditBean.init();
-			final User user = userEditBean.getUser();
-
-			assertNull(user.getEmail());
-			assertEquals(LocalDate.now(), user.getDateOfJoin());
-			assertEquals("ES", user.getLanguage());
-			assertEquals(Integer.valueOf(25), user.getRowsPerPage());
-			assertNull(user.getLastConnection());
-		}
-
-		@Test
 		public void updateUserShouldHavelEmail() {
 			final User mockUser = mockUser();
 			when(flash.containsKey("user")).thenReturn(true);
@@ -104,21 +66,7 @@ public class UserEditBeanTest {
 	class Save {
 
 		@Test
-		public void newUserShouldBeOk() {
-			final User user = mockNewUser();
-			userEditBean.setUser(user);
-
-			final User savedUser = mockUser();
-			when(sessionUser.hasPermissionToEdit(user)).thenReturn(true);
-			when(userService.save(user)).thenReturn(savedUser);
-
-			userEditBean.save();
-			assertEquals("abel@test.com", userEditBean.getUser().getEmail());
-			assertEquals(1L, userEditBean.getUser().getId());
-		}
-
-		@Test
-		public void updateUserShouldBeOk() {
+		public void userShouldBeOk() {
 			final User user = mockUser();
 			userEditBean.setUser(user);
 
@@ -244,7 +192,7 @@ public class UserEditBeanTest {
 	@Mock
 	private Translator translator;
 
-	private UserEditBean userEditBean;
+	private EditUserBean userEditBean;
 
 	@Mock
 	private UserService userService;
@@ -253,12 +201,6 @@ public class UserEditBeanTest {
 		final List<User> users = new ArrayList<>();
 		users.add(mockUser());
 		return users;
-	}
-
-	private User mockNewUser() {
-		final User user = new User();
-		user.setEmail("abel@test.com");
-		return user;
 	}
 
 	private User mockUser() {
@@ -270,7 +212,7 @@ public class UserEditBeanTest {
 
 	@BeforeEach
 	public void setUp() {
-		this.userEditBean = new UserEditBean();
+		this.userEditBean = new EditUserBean();
 		this.userEditBean.setFileUploadService(this.fileUploadService);
 		this.userEditBean.setUserService(this.userService);
 		this.userEditBean.setFlash(this.flash);

@@ -12,6 +12,7 @@ public enum PageEnum {
 	CLIENT_SEARCH("/client/clientSearch"), //
 	CONTACT("/client/contact"), //
 	CONTACT_EDIT("/client/contactEdit"), //
+	CONFIG("/config"), //
 	CURRICULUM("/candidate/curriculum"), //
 	INDEX("/index"), //
 	ISABEL("/isabel/isabel"), //

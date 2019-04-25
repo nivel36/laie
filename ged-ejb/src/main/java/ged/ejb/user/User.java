@@ -167,6 +167,10 @@ public class User extends AbstractAuditedEntity {
 	public boolean hasRole(final String roleName) {
 		return this.role.getName().equals(roleName);
 	}
+	
+	public boolean isManaged() {
+		return this.manager != null;
+	}
 
 	public boolean isAdmin() {
 		if (this.role == null) {

@@ -13,34 +13,34 @@
 
 	<ui:define name="content">
 		<p:breadCrumb styleClass="breadcrumb">
-			<p:menuitem value="#{i18n['menu.index']}" url="/index.xhtml" />
-			<p:menuitem value="#{i18n['user.users']}" url="/user/search.xhtml" />
-			<p:menuitem value="#{userViewBean.user}" disabled="true" />
+			<p:menuitem value="#{i18n['menu.index']}" url="#{Page.INDEX.getUrl()}" />
+			<p:menuitem value="#{i18n['user.users']}" url="#{Page.USER_SEARCH.getUrl()}" />
+			<p:menuitem value="#{viewUserBean.user}" disabled="true" />
 		</p:breadCrumb>
 
 		<div class="grid nogutter">
 			<div class="panel user col-12 xl-8">
 				<div class="panel-header">
 					<div class="panel-header-image">
-						<cc:avatar imageFileName="#{userViewBean.user.imageFileName}" />
+						<cc:avatar imageFileName="#{viewUserBean.user.imageFileName}" />
 					</div>
 					<div class="panel-header-data">
-						<div class="name">#{userViewBean.user.fullName}</div>
-						<div class="job-profile">#{i18n:translate(userViewBean.user.role)}</div>
+						<div class="name">#{viewUserBean.user.fullName}</div>
+						<div class="job-profile">#{i18n:translate(viewUserBean.user.role)}</div>
 						<div class="data email">
-							<span class="icon"><i class="fa fa-envelope"></i></span><span class="text">#{userViewBean.user.email}</span>
+							<span class="icon"><i class="fa fa-envelope"></i></span><span class="text">#{viewUserBean.user.email}</span>
 						</div>
-						<h:panelGroup layout="block" styleClass="data phone" rendered="#{not empty userViewBean.user.phoneNumber}">
+						<h:panelGroup layout="block" styleClass="data phone" rendered="#{not empty viewUserBean.user.phoneNumber}">
 							<span class="icon"><i class="fa fa-phone"></i></span>
-							<span class="text">#{userViewBean.user.phoneNumber}</span>
+							<span class="text">#{viewUserBean.user.phoneNumber}</span>
 						</h:panelGroup>
 					</div>
 					<o:form>
 						<div class="panel-buttons">
-							<p:commandButton value="#{i18n['action.export']}" process="@this" actionListener="#{userViewBean.editUser}"
-								icon="fa-file-excel-o" action="/user/edit?faces-redirect=true" />
-							<p:commandButton value="#{i18n['action.edit']}" process="@this" actionListener="#{userViewBean.editUser}"
-								action="/user/edit?faces-redirect=true" />
+							<p:commandButton value="#{i18n['action.export']}" process="@this" actionListener="#{viewUserBean.editUser}"
+								icon="fa-file-excel-o" action="#{Page.USER_EDIT.getRedirectUrl()}" />
+							<p:commandButton value="#{i18n['action.edit']}" process="@this" actionListener="#{viewUserBean.editUser}"
+								action="#{Page.USER_EDIT.getRedirectUrl()}" />
 						</div>
 					</o:form>
 				</div>
@@ -48,24 +48,24 @@
 					<div class="grid">
 						<div class="data manager col-12 sm-6">
 							<div class="label">#{i18n['user.manager']}</div>
-							<h:panelGroup layout="block" styleClass="name" rendered="#{empty userViewBean.user.manager}"> --- </h:panelGroup>
-							<h:panelGroup class="user-minicard" rendered="#{not empty userViewBean.user.manager}">
-								<p:link outcome="/user/user">
-									<f:param name="userId" value="#{userViewBean.user.manager.id}" />
+							<h:panelGroup layout="block" styleClass="name" rendered="#{not viewUserBean.user.managed}"> --- </h:panelGroup>
+							<h:panelGroup class="user-minicard" rendered="#{viewUserBean.user.managed}">
+								<p:link outcome="#{Page.USER_SVIEW.getUrl()}">
+									<f:param name="id" value="#{viewUserBean.user.manager.id}" />
 									<div class="user-minicard-image">
-										<p:graphicImage class="image" value="/images/#{userViewBean.user.manager.imageFileName}"
-											rendered="#{not empty userViewBean.user.manager.imageFileName}" />
+										<p:graphicImage class="image" value="/images/#{viewUserBean.user.manager.imageFileName}"
+											rendered="#{not empty viewUserBean.user.manager.imageFileName}" />
 										<p:graphicImage class="image" value="/resources/img/default-avatar.png"
-											rendered="#{empty userViewBean.user.manager.imageFileName}" />
+											rendered="#{empty viewUserBean.user.manager.imageFileName}" />
 									</div>
 									<div class="user-minicard-info">
-										<h:panelGroup layout="block" styleClass="name" rendered="#{not empty userViewBean.user.manager}">#{userViewBean.user.manager}</h:panelGroup>
+										<h:panelGroup layout="block" styleClass="name" rendered="#{!viewUserBean.user.managed}">#{viewUserBean.user.manager}</h:panelGroup>
 									</div>
 								</p:link>
 							</h:panelGroup>
 						</div>
 						<div class="data date_of_join col-12 sm-6">
-							<cc:outputText label="#{i18n['user.date_of_join']}" value="#{userViewBean.user.dateOfJoin}">
+							<cc:outputText label="#{i18n['user.date_of_join']}" value="#{viewUserBean.user.dateOfJoin}">
 								<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" for="element" />
 							</cc:outputText>
 						</div>
@@ -74,12 +74,12 @@
 			</div>
 			<div class="col-12 lg-12 xl-4">
 				<h:form id="userTeamForm">
-					<cc:users users="#{userViewBean.team}" title="#{i18n['user.team']}" />
+					<cc:users users="#{viewUserBean.team}" title="#{i18n['user.team']}" />
 				</h:form>
 			</div>
 			<div class="col-12 lg-12">
 				<h:form id="jobOffersForm">
-					<cc:jobOffers jobOffers="#{userViewBean.jobOffers}" />
+					<cc:jobOffers jobOffers="#{viewUserBean.jobOffers}" />
 				</h:form>
 			</div>
 			<div class="col-12 lg-12 xl-6">

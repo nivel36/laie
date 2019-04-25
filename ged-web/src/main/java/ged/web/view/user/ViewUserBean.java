@@ -24,7 +24,7 @@ import ged.web.reports.UserReport;
 
 @Named
 @ViewScoped
-public class UserViewBean extends AbstractBean {
+public class ViewUserBean extends AbstractBean {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 

@@ -6,21 +6,21 @@
 		<div class="navbar-menu">
 			<h:form>
 				<ul>
-					<li><a jsf:action="#{menuBean.gotoIndex}" jsf:styleClass="#{selectedMenu eq 'index' ? 'selected': ''}"><span class="menu_icon"><em
+					<li><a jsf:action="#{Page.INDEX.getRedirectUrl()}" jsf:styleClass="#{selectedMenu eq 'index' ? 'selected': ''}"><span class="menu_icon"><em
 								class="fa fa-home" /></span> <span class="menu_text">#{i18n['menu.index']}</span></a></li>
 					<li><a jsf:action="#{Page.CANDIDATE_SEARCH.getRedirectUrl()}" jsf:styleClass="#{selectedMenu eq 'candidates' ? 'selected': ''}"><span class="menu_icon"><em
 								class="fa fa-users" /></span> <span class="menu_text">#{i18n['menu.candidates']}</span></a></li>
-					<li><a jsf:action="#{menuBean.gotoJobOffers}" jsf:styleClass="#{selectedMenu eq 'offers' ? 'selected': ''}"><span class="menu_icon"><em
+					<li><a jsf:action="#{Page.JOB_OFFER_SEARCH.getRedirectUrl()}" jsf:styleClass="#{selectedMenu eq 'offers' ? 'selected': ''}"><span class="menu_icon"><em
 								class="fa fa-suitcase" /></span> <span class="menu_text">#{i18n['menu.offers']}</span></a></li>
-					<li><a jsf:action="#{menuBean.gotoClients}" jsf:styleClass="#{selectedMenu eq 'clients' ? 'selected': ''}"><span class="menu_icon"><em
+					<li><a jsf:action="#{Page.CLIENT_SEARCH.getRedirectUrl()}" jsf:styleClass="#{selectedMenu eq 'clients' ? 'selected': ''}"><span class="menu_icon"><em
 								class="fa fa-industry" /></span> <span class="menu_text">#{i18n['menu.clients']}</span></a></li>
-					<li><a jsf:action="#{menuBean.gotoReports}" jsf:styleClass="#{selectedMenu eq 'reports' ? 'selected': ''}"><span class="menu_icon"><em
+					<li><a jsf:action="#{Page.REPORT.getRedirectUrl()}" jsf:styleClass="#{selectedMenu eq 'reports' ? 'selected': ''}"><span class="menu_icon"><em
 								class="fa fa-bar-chart" /></span> <span class="menu_text">#{i18n['menu.reports']}</span></a></li>
-					<li><a jsf:action="#{menuBean.gotoUsers}" jsf:styleClass="#{selectedMenu eq 'users' ? 'selected': ''}"><span class="menu_icon"><em
+					<li><a jsf:action="#{Page.USER_SEARCH.getRedirectUrl()}" jsf:styleClass="#{selectedMenu eq 'users' ? 'selected': ''}"><span class="menu_icon"><em
 								class="fa fa-user" /></span> <span class="menu_text">#{i18n['menu.users']}</span></a></li>
-					<li><a jsf:action="#{menuBean.gotoMaintenances}" jsf:styleClass="#{selectedMenu eq 'maintenances' ? 'selected': ''}"><span class="menu_icon"><em
+					<li><a jsf:action="#{Page.MAINTENANCE.getRedirectUrl()}" jsf:styleClass="#{selectedMenu eq 'maintenances' ? 'selected': ''}"><span class="menu_icon"><em
 								class="fa fa-cogs" /></span> <span class="menu_text">#{i18n['menu.maintenances']}</span></a></li>
-					<li><a jsf:action="#{menuBean.gotoIsabel}" jsf:styleClass="#{selectedMenu eq 'isabel' ? 'selected': ''}"><span class="menu_icon"><em
+					<li><a jsf:action="#{Page.ISABEL.getRedirectUrl()}" jsf:styleClass="#{selectedMenu eq 'isabel' ? 'selected': ''}"><span class="menu_icon"><em
 								class="fa fa-cogs" /></span> <span class="menu_text">Isabel</span></a></li>
 				</ul>
 			</h:form>
@@ -29,7 +29,7 @@
 			<h:form>
 				<ul>
 					<li><h:outputText value="#{sessionUser}" styleClass="name" /></li>
-					<li><a jsf:action="/config?faces-redirect=true" jsf:styleClass="#{config}"><span class="menu_icon"><em class="fa fa-cog" /></span></a></li>
+					<li><a jsf:action="Page.CONFIG.getRedirectUrl()" jsf:styleClass="#{config}"><span class="menu_icon"><em class="fa fa-cog" /></span></a></li>
 					<li><a jsf:action="#{sessionUser.exit}" jsf:styleClass="#{logout}"><span class="menu_icon"><em class="fa fa-power-off" /></span></a></li>
 				</ul>
 			</h:form>
