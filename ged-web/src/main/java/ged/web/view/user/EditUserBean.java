@@ -2,7 +2,6 @@ package ged.web.view.user;
 
 import java.lang.invoke.MethodHandles;
 
-import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
@@ -19,12 +18,12 @@ public class EditUserBean extends AbstractUserBean {
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	private static final long serialVersionUID = -2187385732087309689L;
-
-	@PostConstruct
+	
 	public void init() {
 		this.user = this.getValueFromFlash("user");
 		if (this.user == null) {
 			Navigate.to(PageEnum.USER_SEARCH).doGet();
+			return;
 		}
 		logger.debug("User {} edit init", this.user.getEmail());
 		this.putValueToFlash("user", user); // prevent errors if f5/reload is pressed

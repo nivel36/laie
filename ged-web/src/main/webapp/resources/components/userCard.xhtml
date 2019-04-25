@@ -15,8 +15,8 @@
 
 	<composite:implementation>
 		<h:panelGroup class="user-minicard" rendered="#{not empty cc.attrs.rendered}">
-			<p:link outcome="/user/user">
-				<f:param name="userId" value="#{cc.attrs.user.id}" />
+			<p:link outcome="#{Page.USER.getUrl()}">
+				<f:param name="id" value="#{cc.attrs.user.id}" />
 				<cc:avatar styleClass="user-minicard-image" imageFileName="#{cc.attrs.user.imageFileName}" />
 				<div class="user-minicard-info">
 					<h:panelGroup layout="block" styleClass="name">#{cc.attrs.user}</h:panelGroup>

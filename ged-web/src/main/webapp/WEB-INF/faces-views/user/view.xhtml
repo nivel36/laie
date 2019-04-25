@@ -13,8 +13,8 @@
 
 	<ui:define name="content">
 		<p:breadCrumb styleClass="breadcrumb">
-			<p:menuitem value="#{i18n['menu.index']}" url="#{Page.INDEX.getUrl()}" />
-			<p:menuitem value="#{i18n['user.users']}" url="#{Page.USER_SEARCH.getUrl()}" />
+			<p:menuitem value="#{i18n['menu.index']}" outcome="#{Page.INDEX.getUrl()}" />
+			<p:menuitem value="#{i18n['user.users']}" outcome="#{Page.USER_SEARCH.getUrl()}" />
 			<p:menuitem value="#{viewUserBean.user}" disabled="true" />
 		</p:breadCrumb>
 
@@ -50,7 +50,7 @@
 							<div class="label">#{i18n['user.manager']}</div>
 							<h:panelGroup layout="block" styleClass="name" rendered="#{not viewUserBean.user.managed}"> --- </h:panelGroup>
 							<h:panelGroup class="user-minicard" rendered="#{viewUserBean.user.managed}">
-								<p:link outcome="#{Page.USER_SVIEW.getUrl()}">
+								<p:link outcome="#{Page.USER.getUrl()}">
 									<f:param name="id" value="#{viewUserBean.user.manager.id}" />
 									<div class="user-minicard-image">
 										<p:graphicImage class="image" value="/images/#{viewUserBean.user.manager.imageFileName}"
@@ -59,7 +59,7 @@
 											rendered="#{empty viewUserBean.user.manager.imageFileName}" />
 									</div>
 									<div class="user-minicard-info">
-										<h:panelGroup layout="block" styleClass="name" rendered="#{!viewUserBean.user.managed}">#{viewUserBean.user.manager}</h:panelGroup>
+										<h:panelGroup layout="block" styleClass="name" rendered="#{viewUserBean.user.managed}">#{viewUserBean.user.manager}</h:panelGroup>
 									</div>
 								</p:link>
 							</h:panelGroup>

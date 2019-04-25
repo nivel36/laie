@@ -6,23 +6,29 @@
 	xmlns:of="http://omnifaces.org/functions" template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
-		<title>#{empty editUserBean.user.fullName ? i18n['user.new_user'] : editUserBean.user.fullName}</title>
+		<title>#{editUserBean.user.fullName}</title>
 	</ui:define>
+
+	<f:metadata>
+		<p:importConstants type="ged.web.core.util.PageEnum" var="Page" />
+		<f:viewAction action="#{editUserBean.init}" />
+	</f:metadata>
 
 	<ui:define name="content">
 
 		<p:breadCrumb styleClass="breadcrumb">
-			<p:menuitem value="#{i18n['menu.index']}" url="#{Page.INDEX.getUrl()}" />
-			<p:menuitem value="#{i18n['user.users']}" url="#{Page.USER_SEARCH.getUrl()}" />
-			<p:menuitem value="#{editUserBean.user.fullName}" url="#{Page.USER.getUrl(editUserBean.user)}" />
+			<p:menuitem value="#{i18n['menu.index']}" outcome="#{Page.INDEX.getUrl()}" />
+			<p:menuitem value="#{i18n['user.users']}" outcome="#{Page.USER_SEARCH.getUrl()}" />
+			<p:menuitem value="#{editUserBean.user.fullName}" outcome="#{Page.USER.getUrl()}">
+				<f:param name="id" value="#{editUserBean.user.id}" />
+			</p:menuitem>
 			<p:menuitem value="#{i18n['user.edit_user']}" disabled="true" />
 		</p:breadCrumb>
 
 		<h:form id="userForm" enctype="multipart/form-data">
 			<div class="panel">
 				<div class="panel-header">
-					<div class="panel-header-title">#{empty editUserBean.user.fullName ? i18n['user.new_user'] :
-						editUserBean.user.fullName}</div>
+					<div class="panel-header-title">#{editUserBean.user.fullName}</div>
 				</div>
 				<div class="panel-aside">
 					<div class="candidate-metadata">
@@ -63,8 +69,7 @@
 				</div>
 				<div class="panel-footer">
 					<div class="panel-buttons">
-						<p:button styleClass="btn-gray" value="#{i18n['action.cancel']}"
-							outcome="#{Page.USER.getUrl(editUserBean.user)}" />
+						<p:button styleClass="btn-gray" value="#{i18n['action.cancel']}" outcome="#{Page.USER.getUrl(editUserBean.user)}" />
 						<p:commandButton styleClass="btn-primary" value="#{i18n['action.save']}" action="#{editUserBean.save}"
 							process="@form" update="@form growl" />
 					</div>

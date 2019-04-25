@@ -31,8 +31,8 @@
 							</h:outputText>
 						</p:column>
 						<p:column headerText="#{i18n['job.owner']}">
-							<h:link value="#{jobOffer.owner.fullName}" outcome="/user/user">
-								<f:param name="userId" value="#{jobOffer.owner.id}" />
+							<h:link value="#{jobOffer.owner.fullName}" outcome="#{Page.USER_SEARCH.getUrl()}">
+								<f:param name="id" value="#{jobOffer.owner.id}" />
 							</h:link>
 						</p:column>
 					</p:dataTable>

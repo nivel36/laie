@@ -45,7 +45,7 @@ public class Navigate {
 			return stringBuilder.toString();
 		}
 		else {
-			return null;
+			return "";
 		}
 	}
 
@@ -53,9 +53,7 @@ public class Navigate {
 		try {
 			final FacesContext facesContext = FacesContext.getCurrentInstance();
 			final ExternalContext externalContext = facesContext.getExternalContext();
-			final String contextName = externalContext.getContextName();
-			final StringBuilder fullUrl = new StringBuilder("/");
-			fullUrl.append(contextName).append(this.url).append(".xhtml").append(this.buildQueryParams());
+			final StringBuilder fullUrl = new StringBuilder(this.url).append(this.buildQueryParams());
 			externalContext.redirect(fullUrl.toString());
 		}
 		catch (final IOException e) {

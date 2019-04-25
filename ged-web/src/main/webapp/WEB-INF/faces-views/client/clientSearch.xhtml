@@ -57,8 +57,8 @@
 						</p:column>
 
 						<p:column headerText="#{i18n['client.owner']}" sortBy="#{client.owner.fullName}">
-							<h:link value="#{client.owner.fullName}" outcome="/user/user">
-								<f:param name="userId" value="#{client.owner.id}" />
+							<h:link value="#{client.owner.fullName}" outcome="#{Page.USER_SEARCH.getUrl()}">
+								<f:param name="id" value="#{client.owner.id}" />
 							</h:link>
 						</p:column>
 					</p:dataTable>

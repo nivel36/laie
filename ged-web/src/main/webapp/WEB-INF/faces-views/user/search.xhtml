@@ -13,9 +13,10 @@
 
 	<ui:define name="content">
 		<p:breadCrumb styleClass="breadcrumb">
-			<p:menuitem value="#{i18n['menu.index']}" url="#{Page.INDEX.getUrl()}" />
+			<p:menuitem value="#{i18n['menu.index']}" outcome="#{Page.INDEX.getUrl()}" />
 			<p:menuitem value="#{i18n['user.users']}" disabled="true" />
 		</p:breadCrumb>
+
 		<o:form>
 			<div class="panel">
 				<div class="panel-header">
@@ -58,7 +59,7 @@
 
 						<p:column headerText="#{i18n['user.manager']}" sortBy="#{user.manager.fullName}">
 							<h:link value="#{user.manager.fullName}" outcome="#{Page.USER.getUrl()}" rendered="#{not empty user.manager}">
-								<f:param name="userId" value="#{user.manager.id}" />
+								<f:param name="id" value="#{user.manager.id}" />
 							</h:link>
 						</p:column>
 					</p:dataTable>

@@ -6,14 +6,14 @@
 	xmlns:of="http://omnifaces.org/functions" template="/WEB-INF/templates/default.xhtml">
 	
 	<ui:define name="title">
-		<title>#{empty addUserBean.user.fullName ? i18n['user.new_user'] : addUserBean.user.fullName}</title>
+		<title>#{i18n['user.new_user']}</title>
 	</ui:define>
 
 	<ui:define name="content">
 
 		<p:breadCrumb styleClass="breadcrumb">
-			<p:menuitem value="#{i18n['menu.index']}" url="#{Page.INDEX.getUrl()}" />
-			<p:menuitem value="#{i18n['user.users']}" url="#{Page.USER_SEARCH.getUrl()}" />
+			<p:menuitem value="#{i18n['menu.index']}" outcome="#{Page.INDEX.getUrl()}" />
+			<p:menuitem value="#{i18n['user.users']}" outcome="#{Page.USER_SEARCH.getUrl()}" />
 			<p:menuitem value="#{i18n['user.new_user']}" disabled="true" />
 		</p:breadCrumb>
 
@@ -53,7 +53,7 @@
 							</cc:inputSelect>
 
 							<cc:inputUser id="manager" label="#{i18n['user.manager']}" value="#{addUserBean.user.manager}"
-								completeMethod="#{addUserBean.searchManager}" disabled="#{addUserBean.isAdmin()}" />
+								completeMethod="#{addUserBean.searchManager}" disabled="#{addUserBean.user.isAdmin()}" />
 
 							<cc:calendar id="date_of_join" label="#{i18n['user.date_of_join']}" value="#{addUserBean.user.dateOfJoin}" />
 						</div>

@@ -26,7 +26,7 @@ public class AddUserBean extends AbstractUserBean {
 		newUser.setLanguage("ES");
 		newUser.setRowsPerPage(25);
 		newUser.setDateOfJoin(LocalDate.now());
-		newUser.setOwner(this.user);
+		newUser.setOwner(this.sessionUser.get());
 		final Credential newCredential = new Credential(newUser, "password");
 		newUser.setCredential(newCredential);
 		return newUser;
