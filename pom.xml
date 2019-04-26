@@ -24,7 +24,7 @@
 
 		<javaee-api.version>8.0</javaee-api.version>
 		<primefaces.version>7.0</primefaces.version>
-		<hibernate-search.version>5.10.5.Final</hibernate-search.version>
+		<hibernate-search.version>5.11.1.Final</hibernate-search.version>
 		<infinispan.version>9.4.8.Final</infinispan.version>
 		<font-awesome.version>4.5.0</font-awesome.version>
 		<pdfbox.version>1.8.6</pdfbox.version>

@@ -10,7 +10,6 @@ import javax.inject.Named;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ged.ejb.user.Credential;
 import ged.ejb.user.User;
 
 @Named
@@ -27,8 +26,7 @@ public class AddUserBean extends AbstractUserBean {
 		newUser.setRowsPerPage(25);
 		newUser.setDateOfJoin(LocalDate.now());
 		newUser.setOwner(this.sessionUser.get());
-		final Credential newCredential = new Credential(newUser, "password");
-		newUser.setCredential(newCredential);
+		newUser.newCredential("pasword");
 		return newUser;
 	}
 
@@ -41,10 +39,10 @@ public class AddUserBean extends AbstractUserBean {
 		}
 		this.user = this.buildNewUser();
 	}
-	
+
 	public String save() {
 		logger.debug("Create new user action performed");
 		this.user = this.userService.save(this.user);
-		return userUrl();
+		return this.userUrl();
 	}
 }

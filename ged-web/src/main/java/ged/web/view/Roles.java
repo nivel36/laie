@@ -1,14 +1,13 @@
 package ged.web.view;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
 import javax.inject.Named;
 
-import ged.ejb.user.UserService;
 import ged.ejb.user.role.Role;
 
 @Named
@@ -19,15 +18,12 @@ public class Roles implements Serializable {
 
 	private List<Role> listOfRoles;
 
-	@Inject
-	private transient UserService userService;
-
 	public List<Role> getList() {
-		return listOfRoles;
+		return this.listOfRoles;
 	}
 
 	@PostConstruct
 	public void init() {
-		listOfRoles = userService.findAllRoles();
+		this.listOfRoles = Arrays.asList(Role.values());
 	}
 }

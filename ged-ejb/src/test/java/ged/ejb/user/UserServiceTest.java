@@ -15,7 +15,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import ged.ejb.user.role.Role;
-import ged.ejb.user.role.RoleDao;
 
 @ExtendWith(MockitoExtension.class)
 public class UserServiceTest {
@@ -71,9 +70,7 @@ public class UserServiceTest {
 		public void adminWithManagerShouldThrowIllegalStateException() {
 			final User manager = UserServiceTest.this.mockUser(2L, "abel@test.com", null);
 			final User user = UserServiceTest.this.mockUser(null, "bernat@test.com", manager);
-			final Role adminRole = new Role();
-			adminRole.setName(Role.ADMIN);
-			user.setRole(adminRole);
+			user.setRole(Role.ADMIN);
 			user.setManager(user);
 
 			assertThrows(BadManagerException.class, () -> {
@@ -84,9 +81,7 @@ public class UserServiceTest {
 		@Test
 		public void adminWithoutManagerShouldReturnUser() {
 			final User user = UserServiceTest.this.mockUser(1L, "abel@test.com", null);
-			final Role adminRole = new Role();
-			adminRole.setName(Role.ADMIN);
-			user.setRole(adminRole);
+			user.setRole(Role.ADMIN);
 			when(UserServiceTest.this.userDao.save(user)).thenReturn(user);
 
 			final User returnedUser = UserServiceTest.this.userService.save(user);
@@ -111,9 +106,6 @@ public class UserServiceTest {
 	}
 
 	@Mock
-	private RoleDao roleDao;
-
-	@Mock
 	private UserDao userDao;
 
 	private UserService userService;
@@ -125,7 +117,7 @@ public class UserServiceTest {
 		}
 		user.setEmail(email);
 		user.setManager(manager);
-		user.setCredential(new Credential(user, "password"));
+		user.newCredential("password");
 		return user;
 	}
 
@@ -133,6 +125,5 @@ public class UserServiceTest {
 	public void setUp() {
 		this.userService = new UserService();
 		this.userService.setUserDao(this.userDao);
-		this.userService.setRoleDao(this.roleDao);
 	}
 }

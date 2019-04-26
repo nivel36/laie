@@ -259,22 +259,6 @@
 		]]></query>
 	</named-query>
 
-	<named-query name="Role.findAdmin">
-		<query><![CDATA[
-			SELECT r 
-			FROM Role r
-			WHERE r.name = 'ADMIN'
-		]]></query>
-	</named-query>
-
-	<named-query name="Role.findRoleByName">
-		<query><![CDATA[
-			SELECT r 
-			FROM Role r 
-			WHERE r.name = :name
-		]]></query>
-	</named-query>
-
 	<named-query name="ServerFile.findByCandidate">
 		<query><![CDATA[
 			SELECT s 
@@ -287,7 +271,6 @@
 		<query><![CDATA[
 			SELECT u 
 			FROM User u 
-			LEFT JOIN FETCH u.role 
 			WHERE u.id = :id
 		]]></query>
 	</named-query>
@@ -296,7 +279,6 @@
 		<query><![CDATA[
 			SELECT u 
 			FROM User u 
-			LEFT JOIN FETCH u.role 
 			WHERE u.email = :email
 		]]></query>
 	</named-query>
@@ -315,7 +297,6 @@
 		<query><![CDATA[
 			SELECT u
 			FROM User u
-			LEFT JOIN FETCH u.role
 			WHERE (:name IS NOT NULL AND u.name = :name)
 			OR (:surname IS NOT NULL AND u.surname = :surname)
 		]]></query>
@@ -387,7 +368,7 @@
 		<query><![CDATA[
 			SELECT CASE WHEN (COUNT(u) > 1) THEN TRUE ELSE FALSE END 
 			FROM User u 
-			WHERE u.role.name = 'ADMIN'
+			WHERE u.role = ged.ejb.user.role.Role.ADMIN
 		]]></query>
 	</named-query>
 

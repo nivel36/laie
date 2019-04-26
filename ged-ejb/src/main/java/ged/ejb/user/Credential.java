@@ -8,13 +8,7 @@ import java.util.Random;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
-
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import ged.ejb.core.model.AbstractEntity;
 import ged.ejb.core.security.CriptoUtil;
@@ -39,21 +33,13 @@ public class Credential extends AbstractEntity {
 	@NotNull
 	private byte[] salt = new byte[16];
 
-	@Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
-	@NotNull
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "userId", nullable = false, unique = true)
-	private User user;
-
 	public Credential() {
 
 	}
 
-	public Credential(final User user, final String password) {
-		Objects.requireNonNull(user);
+	public Credential(final String password) {
 		Objects.requireNonNull(password);
-		this.setPassword(password);
-		this.setUser(user);
+		this.newCredential(password);
 	}
 
 	private byte[] buildHashPassword(final String password) {
@@ -75,16 +61,18 @@ public class Credential extends AbstractEntity {
 	}
 
 	public boolean isValid(final String password) {
+		Objects.requireNonNull(password);
 		return Arrays.equals(this.hashPassword, this.buildHashPassword(password));
 	}
 
-	public void setPassword(final String password) {
+	private void newCredential(final String password) {
 		this.created = LocalDate.now();
 		this.salt = this.getRandomSalt();
 		this.hashPassword = this.buildHashPassword(password);
 	}
 
-	public void setUser(final User user) {
-		this.user = user;
+	public void setPassword(final String password) {
+		Objects.requireNonNull(password);
+		this.newCredential(password);
 	}
 }

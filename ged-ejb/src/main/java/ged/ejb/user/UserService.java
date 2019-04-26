@@ -16,10 +16,7 @@ import ged.ejb.core.AbstractAuditedService;
 import ged.ejb.core.Audited;
 import ged.ejb.core.action.Action.ActionType;
 import ged.ejb.core.model.AbstractDao;
-import ged.ejb.core.model.Page;
 import ged.ejb.core.model.Repository;
-import ged.ejb.user.role.Role;
-import ged.ejb.user.role.RoleDao;
 
 @Stateless
 public class UserService extends AbstractAuditedService<User> {
@@ -28,25 +25,11 @@ public class UserService extends AbstractAuditedService<User> {
 
 	@Inject
 	@Repository
-	private RoleDao roleDao;
-
-	@Inject
-	@Repository
 	private UserDao userDao;
 
 	public void changePassword(final User user, final String newPassword) {
 		user.getCredential().setPassword(newPassword);
 		this.userDao.save(user);
-	}
-
-	public List<Role> findAllRoles() {
-		return this.roleDao.findAll(Page.ALL);
-	}
-
-	public Role findRoleByName(final String roleName) {
-		Objects.requireNonNull(roleName);
-		logger.debug("Finding role by name {}", roleName);
-		return this.roleDao.findRoleByName(roleName);
 	}
 
 	public List<User> findSubordinateUsers(final User user) {
@@ -115,10 +98,6 @@ public class UserService extends AbstractAuditedService<User> {
 		logger.debug("Saving user {}", user.getEmail());
 		this.validateManager(user);
 		return super.save(user);
-	}
-
-	public void setRoleDao(final RoleDao roleDao) {
-		this.roleDao = roleDao;
 	}
 
 	public void setUserDao(final UserDao userDao) {

@@ -9,6 +9,8 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -33,7 +35,8 @@ public class User extends AbstractAuditedEntity {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user", orphanRemoval = true)
 	private Set<Bookmark> bookmarks = new HashSet<>();
 
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user", optional = false, orphanRemoval = true)
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false, orphanRemoval = true)
+	@JoinColumn(name = "credentialId", unique = true, nullable = false, updatable = false)
 	@NotNull
 	private Credential credential;
 
@@ -67,8 +70,8 @@ public class User extends AbstractAuditedEntity {
 	private String phoneNumber;
 
 	@NotNull
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "roleId", nullable = false)
+	@Enumerated(EnumType.STRING)
+	@Column(length = 8)
 	private Role role;
 
 	@NotNull
@@ -164,19 +167,24 @@ public class User extends AbstractAuditedEntity {
 		return Objects.hash(this.email);
 	}
 
-	public boolean hasRole(final String roleName) {
-		return this.role.getName().equals(roleName);
-	}
-	
-	public boolean isManaged() {
-		return this.manager != null;
+	public boolean hasRole(final Role role) {
+		Objects.requireNonNull(role);
+		return role.equals(this.role);
 	}
 
 	public boolean isAdmin() {
 		if (this.role == null) {
 			return false;
 		}
-		return Role.ADMIN.equals(this.role.getName());
+		return this.hasRole(Role.ADMIN);
+	}
+
+	public boolean isManaged() {
+		return this.manager != null;
+	}
+
+	public void newCredential(final String password) {
+		this.credential = new Credential(password);
 	}
 
 	public void removeBookmark(final Bookmark bookmark) {

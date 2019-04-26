@@ -19,7 +19,6 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
@@ -40,9 +39,9 @@ public class EditUserBeanTest {
 
 		@Test
 		public void getUserTest() {
-			final User user = mockUser();
-			userEditBean.setUser(user);
-			final User returnedUser = userEditBean.getUser();
+			final User user = EditUserBeanTest.this.mockUser();
+			EditUserBeanTest.this.userEditBean.setUser(user);
+			final User returnedUser = EditUserBeanTest.this.userEditBean.getUser();
 			assertEquals(user, returnedUser);
 		}
 	}
@@ -52,13 +51,13 @@ public class EditUserBeanTest {
 
 		@Test
 		public void updateUserShouldHavelEmail() {
-			final User mockUser = mockUser();
-			when(flash.containsKey("user")).thenReturn(true);
-			when(flash.get("user")).thenReturn(mockUser);
-			when(sessionUser.hasPermissionToEdit(mockUser)).thenReturn(true);
-			userEditBean.init();
+			final User mockUser = EditUserBeanTest.this.mockUser();
+			when(EditUserBeanTest.this.flash.containsKey("user")).thenReturn(true);
+			when(EditUserBeanTest.this.flash.get("user")).thenReturn(mockUser);
+			when(EditUserBeanTest.this.sessionUser.hasPermissionToEdit(mockUser)).thenReturn(true);
+			EditUserBeanTest.this.userEditBean.init();
 
-			assertEquals("abel@test.com", userEditBean.getUser().getEmail());
+			assertEquals("abel@test.com", EditUserBeanTest.this.userEditBean.getUser().getEmail());
 		}
 	}
 
@@ -67,15 +66,15 @@ public class EditUserBeanTest {
 
 		@Test
 		public void userShouldBeOk() {
-			final User user = mockUser();
-			userEditBean.setUser(user);
+			final User user = EditUserBeanTest.this.mockUser();
+			EditUserBeanTest.this.userEditBean.setUser(user);
 
-			final User updatedUser = mockUser();
+			final User updatedUser = EditUserBeanTest.this.mockUser();
 
-			when(sessionUser.hasPermissionToEdit(user)).thenReturn(true);
-			when(userService.save(user)).thenReturn(updatedUser);
+			when(EditUserBeanTest.this.sessionUser.hasPermissionToEdit(user)).thenReturn(true);
+			when(EditUserBeanTest.this.userService.save(user)).thenReturn(updatedUser);
 
-			userEditBean.save();
+			EditUserBeanTest.this.userEditBean.save();
 
 			assertEquals("abel@test.com", updatedUser.getEmail());
 			assertEquals(1L, updatedUser.getId());
@@ -87,22 +86,22 @@ public class EditUserBeanTest {
 
 		@Test
 		public void nullSearchShouldReturnEmptyList() {
-			final List<User> managers = userEditBean.searchManager(null);
+			final List<User> managers = EditUserBeanTest.this.userEditBean.searchManager(null);
 			assertEquals(0, managers.size());
 		}
 
 		@Test
 		public void shortTextSearchShouldReturnEmptyList() {
-			final List<User> managers = userEditBean.searchManager("as");
+			final List<User> managers = EditUserBeanTest.this.userEditBean.searchManager("as");
 			assertEquals(0, managers.size());
 		}
 
 		@Test
 		public void validSearchShouldReturnUserList() {
-			final List<User> mockedManagers = mockListOfUsers();
-			Mockito.when(userService.search("Abe", Page.ALL)).thenReturn(mockedManagers);
+			final List<User> mockedManagers = EditUserBeanTest.this.mockListOfUsers();
+			when(EditUserBeanTest.this.userService.search("Abe", Page.ALL)).thenReturn(mockedManagers);
 
-			final List<User> managers = userEditBean.searchManager("Abe");
+			final List<User> managers = EditUserBeanTest.this.userEditBean.searchManager("Abe");
 
 			assertEquals("abel@test.com", managers.get(0).getEmail());
 		}
@@ -113,35 +112,35 @@ public class EditUserBeanTest {
 
 		@Test
 		public void emptyFileShouldNotSetImageNameToUser() throws IOException {
-			final User user = mockUser();
+			final User user = EditUserBeanTest.this.mockUser();
 			user.setEmail("abel@test.com");
-			userEditBean.setUser(user);
+			EditUserBeanTest.this.userEditBean.setUser(user);
 
 			final FileUploadEvent event = mock(FileUploadEvent.class);
-			userEditBean.uploadImage(event);
+			EditUserBeanTest.this.userEditBean.uploadImage(event);
 			assertNull(user.getImageFileName());
 		}
 
 		@Test
 		public void nullEventShouldThrowNullPointerException() throws IOException {
 			assertThrows(NullPointerException.class, () -> {
-				userEditBean.uploadImage(null);
+				EditUserBeanTest.this.userEditBean.uploadImage(null);
 			});
 		}
 
 		@Test
 		public void uploadImageShouldSetImageNameToUserObject() throws IOException {
-			final User user = mockUser();
-			userEditBean.setUser(user);
+			final User user = EditUserBeanTest.this.mockUser();
+			EditUserBeanTest.this.userEditBean.setUser(user);
 
 			final FileUploadEvent event = mock(FileUploadEvent.class);
 			final UploadedFile file = mock(UploadedFile.class);
 			when(event.getFile()).thenReturn(file);
 			final InputStream is = mock(InputStream.class);
 			when(event.getFile().getInputstream()).thenReturn(is);
-			when(fileUploadService.uploadImage(is)).thenReturn("uuidImageName");
+			when(EditUserBeanTest.this.fileUploadService.uploadImage(is)).thenReturn("uuidImageName");
 
-			userEditBean.uploadImage(event);
+			EditUserBeanTest.this.userEditBean.uploadImage(event);
 			assertEquals("uuidImageName", user.getImageFileName());
 		}
 	}
@@ -152,31 +151,31 @@ public class EditUserBeanTest {
 		@Test
 		public void changeEmailToDuplicatedEmailShouldThrowValidatorException() {
 			assertThrows(ValidatorException.class, () -> {
-				userEditBean.setUser(mockUser());
+				EditUserBeanTest.this.userEditBean.setUser(EditUserBeanTest.this.mockUser());
 
-				when(userService.isEmailInUse("bernard@test.com")).thenReturn(true);
-				when(translator.message("user.error.email_exists")).thenReturn("Error message");
+				when(EditUserBeanTest.this.userService.isEmailInUse("bernard@test.com")).thenReturn(true);
+				when(EditUserBeanTest.this.translator.message("user.error.email_exists")).thenReturn("Error message");
 
-				userEditBean.validateEmail(null, null, "bernard@test.com");
+				EditUserBeanTest.this.userEditBean.validateEmail(null, null, "bernard@test.com");
 			});
 		}
 
 		@Test
 		public void changeEmailToNonDuplicatedEmailShoulbBeOk() {
-			userEditBean.setUser(mockUser());
-			when(userService.isEmailInUse("another.email@test.com")).thenReturn(false);
-			userEditBean.validateEmail(null, null, "another.email@test.com");
+			EditUserBeanTest.this.userEditBean.setUser(EditUserBeanTest.this.mockUser());
+			when(EditUserBeanTest.this.userService.isEmailInUse("another.email@test.com")).thenReturn(false);
+			EditUserBeanTest.this.userEditBean.validateEmail(null, null, "another.email@test.com");
 		}
 
 		@Test
 		public void nullEmailShouldBeOk() {
-			userEditBean.validateEmail(null, null, null);
+			EditUserBeanTest.this.userEditBean.validateEmail(null, null, null);
 		}
 
 		@Test
 		public void unmodifiedEmailShouldBeOk() {
-			userEditBean.setUser(mockUser());
-			userEditBean.validateEmail(null, null, "abel@test.com");
+			EditUserBeanTest.this.userEditBean.setUser(EditUserBeanTest.this.mockUser());
+			EditUserBeanTest.this.userEditBean.validateEmail(null, null, "abel@test.com");
 		}
 	}
 
@@ -199,7 +198,7 @@ public class EditUserBeanTest {
 
 	private List<User> mockListOfUsers() {
 		final List<User> users = new ArrayList<>();
-		users.add(mockUser());
+		users.add(this.mockUser());
 		return users;
 	}
 
@@ -217,6 +216,6 @@ public class EditUserBeanTest {
 		this.userEditBean.setUserService(this.userService);
 		this.userEditBean.setFlash(this.flash);
 		this.userEditBean.setTranslator(this.translator);
-		userEditBean.setSessionUser(sessionUser);
+		this.userEditBean.setSessionUser(this.sessionUser);
 	}
 }
