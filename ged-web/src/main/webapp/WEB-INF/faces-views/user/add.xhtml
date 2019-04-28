@@ -47,7 +47,7 @@
 							<h3>#{i18n['user.professional_information']}</h3>
 
 							<cc:inputSelect id="role" value="#{addUserBean.user.role}" label="#{i18n['user.role']}" required="true">
-								<f:selectItems value="#{roles.list}" var="role" itemValue="#{role}" itemLabel="#{i18n:translate(role.name)}" />
+								<f:selectItems value="#{roles.list}" var="role" itemValue="#{role}" itemLabel="#{i18n:translate(role)}" />
 								<p:ajax event="change" update=":userForm:role :userForm:manager" process=":userForm:role"
 									listener="#{addUserBean.changeRoleListener}" />
 							</cc:inputSelect>

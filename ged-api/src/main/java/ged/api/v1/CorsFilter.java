@@ -19,7 +19,8 @@ public class CorsFilter implements javax.servlet.Filter {
 	}
 
 	@Override
-	public void doFilter(final ServletRequest request, final ServletResponse response, final FilterChain chain) throws IOException, ServletException {
+	public void doFilter(final ServletRequest request, final ServletResponse response, final FilterChain chain)
+			throws IOException, ServletException {
 		final HttpServletResponse res = (HttpServletResponse) response;
 		res.addHeader("Access-Control-Allow-Origin", "*");
 		res.addHeader("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT");

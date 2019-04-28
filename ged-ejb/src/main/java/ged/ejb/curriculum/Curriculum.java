@@ -152,7 +152,7 @@ public class Curriculum extends AbstractEntity {
 
 	@Override
 	public String toString() {
-		return "Curriculum [education=" + this.education + ", jobExperiences=" + this.jobExperiences + ", languages=" + this.languages + ", skills="
-				+ this.skills + "]";
+		return "Curriculum [education=" + this.education + ", jobExperiences=" + this.jobExperiences + ", languages="
+				+ this.languages + ", skills=" + this.skills + "]";
 	}
 }

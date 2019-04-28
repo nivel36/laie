@@ -55,8 +55,7 @@ public class Origin extends AbstractEntity {
 	public String toString() {
 		if (this.other != null) {
 			return this.other;
-		}
-		else {
+		} else {
 			return this.code;
 		}
 	}

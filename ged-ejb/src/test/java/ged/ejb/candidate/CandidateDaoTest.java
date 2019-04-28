@@ -30,7 +30,8 @@ public class CandidateDaoTest {
 
 		@Test
 		public void emailExistShouldReturnCandidate() {
-			when(persistenceFacade.findByQuery(Boolean.class, "Candidate.emailExists", map("email", "aaron@test.com"))).thenReturn(Boolean.TRUE);
+			when(persistenceFacade.findByQuery(Boolean.class, "Candidate.emailExists", map("email", "aaron@test.com")))
+					.thenReturn(Boolean.TRUE);
 
 			final boolean result = candidateDao.emailExists("aaron@test.com");
 			assertTrue(result);
@@ -51,7 +52,8 @@ public class CandidateDaoTest {
 		public void jobOfferWithCandidatesShouldReturnList() {
 			final JobOffer jobOffer = new JobOffer();
 
-			when(persistenceFacade.findByQuery(Candidate.class, "Candidate.findByJobOffer", map("jobOffer", jobOffer), Page.ALL)).thenReturn(mockCandidates());
+			when(persistenceFacade.findByQuery(Candidate.class, "Candidate.findByJobOffer", map("jobOffer", jobOffer),
+					Page.ALL)).thenReturn(mockCandidates());
 
 			final List<Candidate> candidatesFromRepository = candidateDao.findCandidates(jobOffer);
 			assertEquals("aaron.douglas@test.com", candidatesFromRepository.get(0).getEmail());
@@ -61,8 +63,8 @@ public class CandidateDaoTest {
 		public void jobOfferWithoutCandidatesShouldReturnEmptyList() {
 			final JobOffer jobOffer = new JobOffer();
 
-			when(persistenceFacade.findByQuery(Candidate.class, "Candidate.findByJobOffer", map("jobOffer", jobOffer), Page.ALL))
-					.thenThrow(new NoResultException());
+			when(persistenceFacade.findByQuery(Candidate.class, "Candidate.findByJobOffer", map("jobOffer", jobOffer),
+					Page.ALL)).thenThrow(new NoResultException());
 
 			final List<Candidate> candidates = candidateDao.findCandidates(jobOffer);
 			assertEquals(0, candidates.size());
@@ -90,7 +92,8 @@ public class CandidateDaoTest {
 		public void validIdShouldReturnCandidateAndHisData() {
 			final Candidate mockedCandidate = mockCandidate();
 
-			when(persistenceFacade.findByQuery(Candidate.class, "Candidate.findAllDataById", map("id", 1L))).thenReturn(mockedCandidate);
+			when(persistenceFacade.findByQuery(Candidate.class, "Candidate.findAllDataById", map("id", 1L)))
+					.thenReturn(mockedCandidate);
 
 			final Candidate candidateFromRepository = candidateDao.findCandidateData(1L);
 			assertEquals(mockedCandidate, candidateFromRepository);

@@ -15,7 +15,8 @@ public class GedPermissionException extends RuntimeException {
 		super(message, cause);
 	}
 
-	public GedPermissionException(final String message, final Throwable cause, final boolean enableSuppression, final boolean writableStackTrace) {
+	public GedPermissionException(final String message, final Throwable cause, final boolean enableSuppression,
+			final boolean writableStackTrace) {
 		super(message, cause, enableSuppression, writableStackTrace);
 	}
 

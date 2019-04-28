@@ -44,14 +44,14 @@ public class StartupConfig {
 	private void indexerInit() throws InterruptedException {
 		try {
 			this.indexer.index();
-		}
-		catch (final InterruptedException e) {
+		} catch (final InterruptedException e) {
 			logger.error("Indexer fail", e);
 			throw e;
 		}
 	}
 
-	public void init(@Observes @Initialized(ApplicationScoped.class) final ServletContext context) throws InterruptedException, IOException {
+	public void init(@Observes @Initialized(ApplicationScoped.class) final ServletContext context)
+			throws InterruptedException, IOException {
 		logger.info("Setting up application");
 		createAppDirectories();
 		indexerInit();

@@ -113,8 +113,8 @@ public class Candidate extends AbstractAuditedEntity {
 			return false;
 		}
 		final Candidate other = (Candidate) obj;
-		return Objects.equals(this.email, other.email) && Objects.equals(this.name, other.name) && Objects.equals(this.phoneNumber, other.phoneNumber)
-				&& Objects.equals(this.surname, other.surname);
+		return Objects.equals(this.email, other.email) && Objects.equals(this.name, other.name)
+				&& Objects.equals(this.phoneNumber, other.phoneNumber) && Objects.equals(this.surname, other.surname);
 	}
 
 	public Address getAddress() {

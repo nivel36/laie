@@ -1,7 +1,6 @@
-<ui:component xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
-	xmlns:composite="http://xmlns.jcp.org/jsf/composite" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
-	xmlns:o="http://omnifaces.org/ui" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+<ui:component xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:composite="http://xmlns.jcp.org/jsf/composite"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:o="http://omnifaces.org/ui" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
 	<composite:interface componentType="inputUser">
 		<composite:attribute name="label" required="true" />
@@ -22,21 +21,19 @@
 				</div>
 				<h:panelGroup layout="block" id="input-container" class="input-container">
 					<p:autoComplete id="input" value="#{cc.attrs.value}" completeMethod="#{cc.attrs.completeMethod}" var="user"
-						itemLabel="#{user.fullName}" itemValue="#{user}" forceSelection="true" required="#{cc.attrs.required}"
-						binding="#{cc.input}" disabled="#{cc.attrs.disabled}" styleClass="input input-user">
+						itemLabel="#{user.fullName}" itemValue="#{user}" forceSelection="true" required="#{cc.attrs.required}" binding="#{cc.input}"
+						disabled="#{cc.attrs.disabled}" styleClass="input input-user">
 						<p:column styleClass="user-select image">
-							<p:graphicImage class="image image-icon" value="/images/#{user.imageFileName}"
-								rendered="#{not empty user.imageFileName}" />
-							<p:graphicImage class="image image-icon" value="/resources/img/default-avatar.png"
-								rendered="#{empty user.imageFileName}" />
+							<p:graphicImage class="image image-icon" value="/images/#{user.imageFileName}" rendered="#{not empty user.imageFileName}" />
+							<p:graphicImage class="image image-icon" value="/resources/img/default-avatar.png" rendered="#{empty user.imageFileName}" />
 						</p:column>
 						<p:column styleClass="user-select name">
 							<h:outputText value="#{user.fullName}" />
 						</p:column>
 						<p:ajax event="itemSelect" update="@parent" process="input" />
 					</p:autoComplete>
-					<p:commandButton id="cleanButton" process="@this" update="@parent" action="#{cc.clean}" styleClass="btn-inner"
-						icon="fa fa-times" binding="#{cc.cleanButton}" />
+					<p:commandButton id="cleanButton" process="@this" update="@parent" action="#{cc.clean}" styleClass="btn-inner" icon="fa fa-times"
+						binding="#{cc.cleanButton}" />
 				</h:panelGroup>
 				<div class="message-container">
 					<p:message id="message" for="input" styleClass="message-error" />

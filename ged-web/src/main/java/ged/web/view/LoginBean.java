@@ -53,8 +53,7 @@ public class LoginBean extends AbstractBean {
 			// Prevent JSF from rendering a response so authentication mechanism can
 			// continue.
 			facesContext.responseComplete();
-		}
-		else  if (status == SUCCESS) {
+		} else if (status == SUCCESS) {
 			gotoIndex();
 		}
 	}

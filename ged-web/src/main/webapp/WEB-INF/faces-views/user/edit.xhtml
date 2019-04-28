@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://ged.com/i18n"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:p="http://primefaces.org/ui"
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:o="http://omnifaces.org/ui"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://ged.com/i18n" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:p="http://primefaces.org/ui" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:o="http://omnifaces.org/ui"
 	xmlns:of="http://omnifaces.org/functions" template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
@@ -32,8 +31,7 @@
 				</div>
 				<div class="panel-aside">
 					<div class="candidate-metadata">
-						<cc:inputImage id="userImage" value="#{editUserBean.user.imageFileName}"
-							fileUploadListener="#{editUserBean.uploadImage}" />
+						<cc:inputImage id="userImage" value="#{editUserBean.user.imageFileName}" fileUploadListener="#{editUserBean.uploadImage}" />
 					</div>
 				</div>
 				<div class="panel-content panel-content-data">
@@ -55,8 +53,8 @@
 							<h3>#{i18n['user.professional_information']}</h3>
 
 							<cc:inputSelect id="role" value="#{editUserBean.user.role}" label="#{i18n['user.role']}" required="true">
-								<f:selectItems value="#{roles.list}" var="role" itemValue="#{role}" itemLabel="#{i18n:translate(role.name)}" />
-								<p:ajax event="change" update=":userForm:role :userForm:manager" process=":userForm:role"
+								<f:selectItems value="#{roles.list}" var="role" itemValue="#{role}" itemLabel="#{i18n:translate(role)}" />
+								<p:ajax event="change" process=":userForm:role" update=":userForm:role :userForm:manager"
 									listener="#{editUserBean.changeRoleListener}" />
 							</cc:inputSelect>
 
@@ -70,8 +68,8 @@
 				<div class="panel-footer">
 					<div class="panel-buttons">
 						<p:button styleClass="btn-gray" value="#{i18n['action.cancel']}" outcome="#{Page.USER.getUrl(editUserBean.user)}" />
-						<p:commandButton styleClass="btn-primary" value="#{i18n['action.save']}" action="#{editUserBean.save}"
-							process="@form" update="@form growl" />
+						<p:commandButton styleClass="btn-primary" value="#{i18n['action.save']}" action="#{editUserBean.save}" process="@form"
+							update="@form growl" />
 					</div>
 				</div>
 			</div>

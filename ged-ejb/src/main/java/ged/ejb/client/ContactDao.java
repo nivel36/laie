@@ -14,7 +14,8 @@ public class ContactDao extends AbstractDao<Contact> {
 
 	public List<Contact> findContactsByClient(final Client client) {
 		Objects.requireNonNull(client);
-		return this.getPersistenceFacade().findByQuery(Contact.class, "Contact.findByClient", map("client", client), Page.ALL);
+		return this.getPersistenceFacade().findByQuery(Contact.class, "Contact.findByClient", map("client", client),
+				Page.ALL);
 	}
 
 	@Override

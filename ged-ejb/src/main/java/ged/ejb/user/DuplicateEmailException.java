@@ -15,7 +15,8 @@ public class DuplicateEmailException extends RuntimeException {
 		super(message, cause);
 	}
 
-	public DuplicateEmailException(final String message, final Throwable cause, final boolean enableSuppression, final boolean writableStackTrace) {
+	public DuplicateEmailException(final String message, final Throwable cause, final boolean enableSuppression,
+			final boolean writableStackTrace) {
 		super(message, cause, enableSuppression, writableStackTrace);
 	}
 

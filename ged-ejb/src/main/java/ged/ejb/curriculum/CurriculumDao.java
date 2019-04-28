@@ -27,8 +27,7 @@ public class CurriculumDao extends AbstractDao<Curriculum> {
 	public Curriculum findByCandidate(final Candidate candidate) {
 		try {
 			return this.findByQuery(Curriculum.class, "Curriculum.findByCandidate", map("candidate", candidate));
-		}
-		catch (final NoResultException e) {
+		} catch (final NoResultException e) {
 			return null;
 		}
 	}
