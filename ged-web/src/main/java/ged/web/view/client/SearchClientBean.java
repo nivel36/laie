@@ -5,7 +5,7 @@ import javax.inject.Named;
 
 @Named
 @ViewScoped
-public class ClientSearchBean extends AbstractClientSearch {
+public class SearchClientBean extends AbstractClientSearch {
 
 	private static final long serialVersionUID = 2434819723782902618L;
 

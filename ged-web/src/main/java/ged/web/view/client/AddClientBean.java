@@ -13,11 +13,12 @@ import org.slf4j.LoggerFactory;
 import ged.ejb.client.Client;
 import ged.ejb.client.ClientService;
 import ged.ejb.core.Address;
-import ged.web.core.view.AbstractDialogBean;
+import ged.web.core.util.PageEnum;
+import ged.web.core.view.AbstractBean;
 
 @Named
 @ViewScoped
-public class ClientEditBean extends AbstractDialogBean {
+public class AddClientBean extends AbstractBean {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
@@ -68,7 +69,7 @@ public class ClientEditBean extends AbstractDialogBean {
 	public String save() {
 		logger.debug("Save client action performed");
 		this.client = this.clientService.save(this.client);
-		return "/client/client?faces-redirect=true&clientId=" + this.client.getId();
+		return PageEnum.CLIENT.getRedirectUrl(this.client);
 	}
 
 	public void setClientService(final ClientService clientService) {

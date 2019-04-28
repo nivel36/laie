@@ -1,4 +1,4 @@
-package ged.web.view.client;
+package ged.web.view.client.contact;
 
 import java.lang.invoke.MethodHandles;
 

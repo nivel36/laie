@@ -22,14 +22,14 @@ import ged.web.core.view.AbstractBean;
 
 @Named
 @ViewScoped
-public class ClientBean extends AbstractBean {
+public class ViewClientBean extends AbstractBean {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	private static final long serialVersionUID = 1412905869664752048L;
 
 	@Inject
-	@Param(name = "clientId", required = true)
+	@Param(name = "id", required = true)
 	private Client client;
 
 	private List<Contact> contacts;
