@@ -53,8 +53,8 @@
 							<h:outputText value="#{user.email}" />
 						</p:column>
 
-						<p:column headerText="#{i18n['user.role']}" sortBy="#{i18n:translate(user.role.name)}">
-							<h:outputText value="#{i18n:translate(user.role.name)}" />
+						<p:column headerText="#{i18n['user.role']}" sortBy="#{i18n:translate(user.role)}">
+							<h:outputText value="#{i18n:translate(user.role)}" />
 						</p:column>
 
 						<p:column headerText="#{i18n['user.manager']}" sortBy="#{user.manager.fullName}">

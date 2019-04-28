@@ -13,8 +13,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ged.ejb.core.AbstractAuditedService;
-import ged.ejb.core.Audited;
-import ged.ejb.core.action.Action.ActionType;
 import ged.ejb.core.model.AbstractDao;
 import ged.ejb.core.model.Repository;
 
@@ -76,7 +74,6 @@ public class UserService extends AbstractAuditedService<User> {
 		return this.findSubordinateUsers(manager).contains(subordinate);
 	}
 
-	@Audited(action = ActionType.LOGIN)
 	public User login(final String email, final String password) throws LoginException {
 		Objects.requireNonNull(email);
 		Objects.requireNonNull(password);

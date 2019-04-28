@@ -19,6 +19,10 @@ import ged.ejb.core.model.Repository;
 @Repository
 public class UserDao extends AbstractDao<User> {
 
+	private static final String EMAIL = "email";
+
+	private static final String ID = "id";
+
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	private void deleteUserClosures(final User user) {
@@ -30,14 +34,14 @@ public class UserDao extends AbstractDao<User> {
 	}
 
 	private List<UserClosure> findAntecessorsUserClosures(final User user) {
-		return this.findByQuery(UserClosure.class, "UserClosure.findAntecessorsUserClosuresById",
-				map("id", user.getId()), Page.ALL);
+		return this.findByQuery(UserClosure.class, "UserClosure.findAntecessorsUserClosuresById", map(ID, user.getId()),
+				Page.ALL);
 	}
 
 	public List<User> findSubordinateUsers(final User user) {
 		Objects.requireNonNull(user);
 		try {
-			return this.findByQuery(User.class, "User.findSubordinateUsers", map("id", user.getId()), Page.ALL);
+			return this.findByQuery(User.class, "User.findSubordinateUsers", map(ID, user.getId()), Page.ALL);
 		} catch (final NoResultException e) {
 			logger.trace("No subordinate users for user {} found", user.getEmail(), e);
 			return new ArrayList<>();
@@ -46,15 +50,20 @@ public class UserDao extends AbstractDao<User> {
 
 	public User findUserAndCredential(final String email) {
 		Objects.requireNonNull(email);
-		return this.findByQuery(User.class, "User.findUserAndCredential", map("email", email));
+		try {
+			return this.findByQuery(User.class, "User.findUserAndCredential", map(EMAIL, email));
+		} catch (final NoResultException exception) {
+			logger.trace("No users for email {} found", email);
+			return null;
+		}
 	}
 
 	public User findUserByEmail(final String email) {
 		Objects.requireNonNull(email);
 		try {
-			return this.findByQuery(User.class, "User.findByEmail", map("email", email));
+			return this.findByQuery(User.class, "User.findByEmail", map(EMAIL, email));
 		} catch (final NoResultException e) {
-			logger.trace("No users with email {} found", email, e);
+			logger.trace("No user for email {} found", email);
 			return null;
 		}
 	}
@@ -97,7 +106,7 @@ public class UserDao extends AbstractDao<User> {
 
 	public boolean isEmailInUse(final String email) {
 		Objects.requireNonNull(email);
-		return this.findByQuery(Boolean.class, "User.emailExists", map("email", email));
+		return this.findByQuery(Boolean.class, "User.emailExists", map(EMAIL, email));
 	}
 
 	private boolean isRemovingManager(final User user, final User userInDatabase) {
@@ -132,7 +141,7 @@ public class UserDao extends AbstractDao<User> {
 
 	@Override
 	public String[] searchFields() {
-		return new String[] { "name", "surname", "email" };
+		return new String[] { "name", "surname", EMAIL };
 	}
 
 	private void updateUserClosures(final User user) {
