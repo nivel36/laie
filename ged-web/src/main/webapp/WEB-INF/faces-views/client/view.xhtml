@@ -49,7 +49,7 @@
 			<div class="col-12 sm-4">
 				<h:form id="contactsForm">
 					<cc:contacts contacts="#{viewClientBean.contacts}">
-						<p:commandButton value="#{i18n['action.new']}" actionListener="#{viewClientBean.newContact}" action="#{Page.CONTACT_ADD.getUrl()}"
+						<p:commandButton value="#{i18n['action.new']}" actionListener="#{viewClientBean.newContact}" action="#{Page.CONTACT_ADD.getRedirectUrl()}"
 							process="@this" />
 					</cc:contacts>
 				</h:form>

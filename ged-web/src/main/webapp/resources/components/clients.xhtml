@@ -28,8 +28,8 @@
 						rows="#{sessionUser.rowsPerPage}" sortBy="#{client.name}" sortOrder="ascending">
 
 						<p:column headerText="#{i18n['client.name']}" sortBy="#{client.name}">
-							<h:link value="#{client.name}" outcome="/client/client">
-								<f:param name="clientId" value="#{client.id}" />
+							<h:link value="#{client.name}" outcome="#{Page.CLIENT.getUrl()}">
+								<f:param name="id" value="#{client.id}" />
 							</h:link>
 						</p:column>
 
