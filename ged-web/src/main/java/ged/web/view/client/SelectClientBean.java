@@ -13,7 +13,7 @@ import ged.ejb.client.Client;
 
 @Named
 @ViewScoped
-public class ClientSearchDialogBean extends AbstractClientSearch {
+public class SelectClientBean extends AbstractClientSearch {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 

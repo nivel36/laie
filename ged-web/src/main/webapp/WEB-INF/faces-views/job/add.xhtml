@@ -1,0 +1,75 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
+	xmlns:i18n="http://ged.com/i18n" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	template="/WEB-INF/templates/default.xhtml">
+
+	<ui:define name="title">
+		<title>#{i18n['job.new_job_offer']}</title>
+	</ui:define>
+
+	<ui:param name="selectedMenu" value="offers" />
+
+	<ui:define name="content">
+
+		<p:breadCrumb styleClass="breadcrumb">
+			<p:menuitem value="#{i18n['menu.index']}" outcome="#{Page.INDEX.getUrl()}" />
+			<p:menuitem value="#{i18n['job.job_offers']}" outcome="#{Page.JOB_SEARCH.getUrl()}" />
+			<p:menuitem value="#{i18n['job.new_job_offer']}" disabled="true" />
+		</p:breadCrumb>
+
+		<h:form id="jobOfferForm">
+			<div class="panel">
+				<div class="panel-header">
+					<div class="panel-header-title">#{i18n['job.new_job_offer']}</div>
+				</div>
+				<div class="panel-content panel-content-data">
+					<div class="grid">
+						<div class="col-12 sm-6">
+							<h3>#{i18n['user.personal_information']}</h3>
+
+							<cc:inputText label="#{i18n['job.name']}" value="#{addJobBean.jobOffer.name}" required="true" />
+
+							<cc:inputClient id="client" label="#{i18n['job.client']}" value="#{addJobBean.jobOffer.client}"
+								search="#{addJobBean.openClientSearchDialog}" required="true">
+								<p:ajax event="dialogReturn" listener="#{addJobBean.onCloseClientSearchDialog}" update="client" />
+							</cc:inputClient>
+
+							<cc:inputNumber id="places" min="0" label="#{i18n['job.places']}" value="#{addJobBean.jobOffer.places}" />
+
+							<cc:calendar id="dateOpened" label="#{i18n['job.date_opened']}" value="#{addJobBean.jobOffer.dateOpened}" />
+
+							<cc:calendar id="dateClosed" label="#{i18n['job.date_closed']}" value="#{addJobBean.jobOffer.dateClosed}" />
+
+						</div>
+						<div class="col-12 sm-6">
+							<h3>#{i18n['user.personal_information']}</h3>
+							
+							<cc:inputText id="city" label="#{i18n['job.city']}" value="#{addJobBean.jobOffer.city}" required="true" />
+
+							<cc:inputText id="state" label="#{i18n['job.state']}" value="#{addJobBean.jobOffer.state}" required="true" />
+							
+
+							<cc:inputUser id="owner" label="#{i18n['job.owner']}" value="#{addJobBean.jobOffer.owner}"
+								completeMethod="#{addJobBean.searchOwner}" />
+
+							<cc:inputTag id="recruiters" label="#{i18n['job.recruiters']}" value="#{addJobBean.recruiters}"
+								tagLabel="#{addJobBean.recruiters}" />
+						</div>
+						<div class="col-12">
+							<h3>#{i18n['user.personal_information']}</h3>
+							<cc:richText id="description" name="description" label="#{i18n['job.description']}"
+								value="#{addJobBean.jobOffer.description}" />
+						</div>
+					</div>
+				</div>
+				<div class="panel-footer">
+					<div class="panel-buttons">
+						<p:button styleClass="btn-gray" value="#{i18n['action.cancel']}" outcome="#{Page.JOB_SEARCH.getUrl()}" />
+						<p:commandButton value="#{i18n['action.save']}" action="#{addJobBean.save}" process="@form" update="@form growl"
+							styleClass="btn-primary" />
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

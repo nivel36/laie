@@ -4,10 +4,11 @@ import ged.ejb.core.model.Identifiable;
 
 public enum PageEnum {
 
-	CANDIDATE("/candidate/candidate"), //
-	CANDIDATE_EDIT("/candidate/candidateEdit"), //
-	CANDIDATE_SEARCH("/candidate/candidateSearch"), //
-	CANDIDATE_SELECT("/candidate/candidateSelect"), //
+	CANDIDATE("/candidate/view"), //
+	CANDIDATE_ADD("/candidate/add"), //
+	CANDIDATE_EDIT("/candidate/edit"), //
+	CANDIDATE_SEARCH("/candidate/search"), //
+	CANDIDATE_SELECT("/candidate/select"), //
 	CLIENT("/client/view"), //
 	CLIENT_ADD("/client/add"), //
 	CLIENT_EDIT("/client/edit"), //
@@ -15,15 +16,16 @@ public enum PageEnum {
 	CONFIG("/config"), //
 	CONTACT_ADD("/client/contact/add"), //
 	CONTACT_EDIT("/client/contact/edit"), //
-	CURRICULUM("/candidate/curriculum"), //
+	CURRICULUM_EDIT("/candidate/curriculum/edit"), //
 	INDEX("/index"), //
 	ISABEL("/isabel/isabel"), //
-	JOB_OFFER("/jobOffer/jobOffer"), //
-	JOB_OFFER_EDIT("/jobOffer/jobOfferEdit"), //
-	JOB_OFFER_SEARCH("/jobOffer/jobOfferSearch"), //
+	JOB("/job/view"), //
+	JOB_ADD("/job/add"), //
+	JOB_EDIT("/job/edit"), //
+	JOB_SEARCH("/job/search"), //
 	LOGIN("/login"), //
-	MAINTENANCE("/maintenance/maintenanceIndex"), //
-	REPORT("/report/reportSearch"), //
+	MAINTENANCE("/maintenance/index"), //
+	REPORT("/report/search"), //
 	USER("/user/view"), //
 	USER_ADD("/user/add"), //
 	USER_EDIT("/user/edit"), //

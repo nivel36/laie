@@ -15,6 +15,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import ged.ejb.candidate.Candidate;
 import ged.ejb.candidate.CandidateService;
+import ged.web.core.util.PageEnum;
 import ged.web.view.candidate.CandidateListPanelBean;
 
 @ExtendWith(MockitoExtension.class)
@@ -40,7 +41,7 @@ public class CandidateListPanelBeanTest {
 		@Test
 		public void shouldReturnCandidateEditUrl() {
 			final String newCandidateUrl = candidateListPanelBean.newCandidate();
-			assertEquals("/candidate/candidateEdit?faces-redirect=true", newCandidateUrl);
+			assertEquals(PageEnum.CANDIDATE_ADD.getRedirectUrl(), newCandidateUrl);
 		}
 	}
 

@@ -2,7 +2,7 @@ package ged.web.view.curriculum;
 
 import static ged.ejb.core.util.Parameters.map;
 import static ged.web.core.util.Navigate.to;
-import static ged.web.core.util.PageEnum.CURRICULUM;
+import static ged.web.core.util.PageEnum.CURRICULUM_EDIT;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -71,7 +71,7 @@ public class CurriculumDialogBean extends AbstractDialogBean {
 	}
 
 	public void cancel() {
-		to(CURRICULUM).withParams(map("id", this.curriculum.getCandidate().getId())).doGet();
+		to(CURRICULUM_EDIT).withParams(map("id", this.curriculum.getCandidate().getId())).doGet();
 	}
 
 	public Curriculum getCurriculum() {

@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:i18n="http://ged.com/i18n"
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" template="/WEB-INF/templates/dialog.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
+	xmlns:i18n="http://ged.com/i18n" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
 		<title>#{i18n['client.clients']}</title>
@@ -10,14 +10,14 @@
 		<h:form id="clientsSearchForm">
 			<div class="grid">
 				<div class="col-12 md-6">
-					<cc:inputSearch searchText="#{clientSearchDialogBean.searchText}" searchAction="#{clientSearchDialogBean.search}" update="@form" />
+					<cc:inputSearch searchText="#{selectClientBean.searchText}" searchAction="#{selectClientBean.search}" update="@form" />
 				</div>
 				<div class="col-12">
-					<p:dataTable var="client" id="clients" value="#{clientSearchDialogBean.clients}" emptyMessage="#{i18n['client.no_clients_found']}" reflow="true"
-						paginator="true" paginatorPosition="bottom" rows="#{sessionUser.rowsPerPage}" selectionMode="single" selection="#{clientSearchDialogBean.selectedClient}"
+					<p:dataTable var="client" id="clients" value="#{selectClientBean.clients}" emptyMessage="#{i18n['client.no_clients_found']}" reflow="true"
+						paginator="true" paginatorPosition="bottom" rows="#{sessionUser.rowsPerPage}" selectionMode="single" selection="#{selectClientBean.selectedClient}"
 						rowKey="#{client.id}" sortBy="#{client.name}" sortOrder="ascending">
 
-						<p:ajax event="rowSelect" listener="#{clientSearchDialogBean.onClientSelect}" update="@form" resetValues="true" />
+						<p:ajax event="rowSelect" listener="#{selectClientBean.onClientSelect}" update="@form" resetValues="true" />
 
 						<p:column headerText="#{i18n['client.name']}" sortBy="#{client.name}">
 							<h:outputText value="#{client.name}" />
@@ -47,7 +47,7 @@
 
 				<div class="col-12">
 					<div class="form-action-primary">
-						<p:commandButton value="#{i18n['action.cancel']}" action="#{clientSearchDialogBean.cancel}" process="@this" styleClass="btn-gray" />
+						<p:commandButton value="#{i18n['action.cancel']}" action="#{selectClientBean.cancel}" process="@this" styleClass="btn-gray" />
 					</div>
 				</div>
 			</div>

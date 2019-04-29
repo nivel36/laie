@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
+	xmlns:i18n="http://ged.com/i18n" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	template="/WEB-INF/templates/default.xhtml">
+
+	<ui:define name="title">
+		<title>#{candidateEditBean.newCandidate ? i18n['candidate.new_candidate'] : i18n['candidate.candidate_edit']}</title>
+	</ui:define>
+
+	<ui:define name="content">
+
+		<p:breadCrumb styleClass="breadcrumb">
+			<p:menuitem value="#{i18n['menu.index']}" url="/index.xhtml" />
+			<p:menuitem value="#{i18n['candidate.candidates']}" url="/candidate/candidateSearch.xhtml" />
+			<p:menuitem value="#{candidateEditBean.candidate.fullName}" url="/candidate/candidate.xhtml?candidateId=#{candidateEditBean.candidate.id}"
+				rendered="#{not candidateEditBean.newCandidate}" />
+			<p:menuitem
+				value="#{candidateEditBean.newCandidate ? i18n['candidate.new_candidate'] : i18n['candidate.candidate_edit']}"
+				disabled="true" />
+		</p:breadCrumb>
+
+		<h:form id="candidateForm">
+			<div class="panel">
+				<div class="panel-header">
+					<div class="panel-header-title">#{candidateEditBean.newCandidate ? i18n['candidate.new_candidate'] :
+						candidateEditBean.candidate.fullName}</div>
+				</div>
+				<div class="panel-aside">
+					<div class="column candidate-metadata">
+						<cc:inputImage id="candidate_image" value="#{candidateEditBean.candidate.imageFileName}"
+							fileUploadListener="#{candidateEditBean.uploadImage}" />
+						<div class="candidate-rating" style="text-align: center;">
+							<p:rating value="#{candidateEditBean.candidate.rating}" cancel="false">
+								<p:ajax event="rate" listener="#{candidateEditBean.onrate}" update="" />
+							</p:rating>
+						</div>
+						<cc:inputTag value="#{candidateEditBean.tags}" tagLabel="#{i18n['candidateEditBean.tags']}" />
+					</div>
+				</div>
+				<div class="panel-content panel-content-data">
+					<div class="grid">
+						<div class="col-12 sm-6">
+							<h4>#{i18n['candidate.personal_information']}</h4>
+
+							<cc:inputText id="name" label="#{i18n['candidate.name']}" value="#{candidateEditBean.candidate.name}"
+								required="true" />
+
+							<cc:inputText id="surname" label="#{i18n['candidate.surname']}" value="#{candidateEditBean.candidate.surname}"
+								required="true" />
+
+							<cc:calendar id="born_date" label="#{i18n['candidate.bornDate']}" value="#{candidateEditBean.candidate.bornDate}"
+								yearRange="c-100:c0" />
+
+							<cc:inputText id="city" label="#{i18n['candidate.city']}" value="#{candidateEditBean.candidate.address.city}" />
+
+							<cc:inputText id="state" label="#{i18n['candidate.state']}" value="#{candidateEditBean.candidate.address.state}" />
+						</div>
+
+						<div class="col-12 sm-6">
+							<h4>#{i18n['candidate.contact_information']}</h4>
+
+							<cc:inputText id="phone_number" label="#{i18n['candidate.phone_number']}"
+								value="#{candidateEditBean.candidate.phoneNumber}" styleClass="small" />
+
+							<cc:inputText id="email" label="#{i18n['candidate.email']}" value="#{candidateEditBean.candidate.email}" />
+
+							<cc:inputText id="skype" label="#{i18n['candidate.skype']}" value="#{candidateEditBean.candidate.skype}" />
+
+							<cc:inputText id="linkedin" label="#{i18n['candidate.linkedin']}"
+								value="#{candidateEditBean.candidate.linkedinProfileUrl}" />
+						</div>
+
+
+						<div class="col-12 sm-6">
+							<h4>#{i18n['candidate.job_information']}</h4>
+
+							<cc:inputText id="jobProfile" label="#{i18n['candidate.jobProfile']}"
+								value="#{candidateEditBean.candidate.jobProfile}" required="true" />
+
+							<cc:inputSelect label="#{i18n['candidate.origin']}" value="#{candidateEditBean.candidate.origin}" other="true">
+								<f:selectItems value="#{origins.list}" var="origin" itemValue="#{origin.code}"
+									itemLabel="#{i18n:translate(origin.code)}" />
+							</cc:inputSelect>
+
+							<cc:inputMoney id="salary" label="#{i18n['candidate.salary']}" value="#{candidateEditBean.candidate.salary}" />
+
+							<cc:inputMoney id="expected_salary" label="#{i18n['candidate.expected_salary']}"
+								value="#{candidateEditBean.candidate.expectedSalary}" />
+						</div>
+					</div>
+				</div>
+
+				<div class="panel-footer">
+					<div class="panel-buttons">
+						<p:button styleClass="btn-gray" value="#{i18n['action.cancel']}" outcome="candidateSearch"
+							rendered="#{candidateEditBean.newCandidate}" />
+						<p:button styleClass="btn-gray" value="#{i18n['action.cancel']}" outcome="candidate"
+							rendered="#{not candidateEditBean.newCandidate}">
+							<f:param name="candidateId" value="#{candidateEditBean.candidate.id}" />
+						</p:button>
+						<p:commandButton value="#{i18n['action.save']}" action="#{candidateEditBean.save}" process="@form"
+							update="@form growl" />
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

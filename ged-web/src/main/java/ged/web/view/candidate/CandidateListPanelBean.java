@@ -1,7 +1,5 @@
 package ged.web.view.candidate;
 
-import static ged.web.core.util.PageEnum.CANDIDATE_EDIT;
-
 import java.io.Serializable;
 import java.lang.invoke.MethodHandles;
 import java.util.List;
@@ -16,6 +14,7 @@ import org.slf4j.LoggerFactory;
 
 import ged.ejb.candidate.Candidate;
 import ged.ejb.candidate.CandidateService;
+import ged.web.core.util.PageEnum;
 
 @Named
 @ViewScoped
@@ -48,7 +47,7 @@ public class CandidateListPanelBean implements Serializable {
 
 	public String newCandidate() {
 		logger.debug("New candidate");
-		return CANDIDATE_EDIT.getUrl() + "?faces-redirect=true";
+		return PageEnum.CANDIDATE_ADD.getRedirectUrl();
 	}
 
 	public void setCandidateService(final CandidateService candidateService) {

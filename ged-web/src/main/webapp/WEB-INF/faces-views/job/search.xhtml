@@ -11,7 +11,7 @@
 
 	<ui:define name="content">
 		<p:breadCrumb styleClass="breadcrumb">
-			<p:menuitem value="#{i18n['menu.index']}" url="/index.xhtml" />
+			<p:menuitem value="#{i18n['menu.index']}" outcome="#{Page.INDEX.getUrl()}" />
 			<p:menuitem value="#{i18n['job.job_offers']}" disabled="true" />
 		</p:breadCrumb>
 
@@ -22,25 +22,25 @@
 				</div>
 				<div class="panel-content">
 					<div class="panel-content-data">
-						<cc:inputSearch searchText="#{jobOfferSearchBean.searchText}" searchAction="#{jobOfferSearchBean.search}"
+						<cc:inputSearch searchText="#{searchJobBean.searchText}" searchAction="#{searchJobBean.search}"
 							update="@form" />
 						<div class="panel-buttons">
-							<p:commandButton value="#{i18n['action.export']}" action="#{jobOfferSearchBean.search}" process="@this"
+							<p:commandButton value="#{i18n['action.export']}" action="#{searchJobBean.search}" process="@this"
 								icon="fa-file-excel-o" styleClass="btn-primary" />
-							<p:button value="#{i18n['action.new']}" outcome="jobOfferEdit" styleClass="btn-primary" />
+							<p:button value="#{i18n['action.new']}" outcome="#{Page.JOB_ADD.getUrl()}" styleClass="btn-primary" />
 						</div>
 					</div>
-					<p:dataTable var="jobOffer" value="#{jobOfferSearchBean.jobOffers}" emptyMessage="#{i18n['job.no_jobs_found']}"
+					<p:dataTable var="jobOffer" value="#{searchJobBean.jobOffers}" emptyMessage="#{i18n['job.no_jobs_found']}"
 						reflow="true" paginator="true" paginatorPosition="bottom" rows="#{sessionUser.rowsPerPage}">
 
 						<p:column headerText="#{i18n['job.name']}" sortBy="#{jobOffer.name}">
-							<h:link value="#{jobOffer.name}" outcome="/jobOffer/jobOffer">
-								<f:param name="jobOfferId" value="#{jobOffer.id}" />
+							<h:link value="#{jobOffer.name}" outcome="#{Page.JOB.getUrl()}">
+								<f:param name="id" value="#{jobOffer.id}" />
 							</h:link>
 						</p:column>
 						<p:column headerText="#{i18n['job.client']}" sortBy="#{jobOffer.client.name}">
-							<h:link value="#{jobOffer.client.name}" outcome="/client/client">
-								<f:param name="clientId" value="#{jobOffer.client.id}" />
+							<h:link value="#{jobOffer.client.name}" outcome="#{Page.CLIENT.getUrl()}">
+								<f:param name="id" value="#{jobOffer.client.id}" />
 							</h:link>
 						</p:column>
 						<p:column headerText="#{i18n['job.date_opened']}" sortBy="#{jobOffer.dateOpened}">
@@ -57,7 +57,7 @@
 							<h:outputText value="#{jobOffer.places}" />
 						</p:column>
 						<p:column headerText="#{i18n['user.owner']}" sortBy="#{user.owner.fullName}">
-							<h:link value="#{jobOffer.owner.fullName}" outcome="#{Page.USER_SEARCH.getUrl()}">
+							<h:link value="#{jobOffer.owner.fullName}" outcome="#{Page.USER.getUrl()}">
 								<f:param name="id" value="#{jobOffer.owner.id}" />
 							</h:link>
 						</p:column>

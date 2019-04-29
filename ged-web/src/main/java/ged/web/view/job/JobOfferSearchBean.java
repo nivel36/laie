@@ -48,7 +48,7 @@ public class JobOfferSearchBean extends AbstractBean {
 	}
 
 	public void newJobOffer() {
-		Navigate.to(PageEnum.JOB_OFFER_EDIT).doPost();
+		Navigate.to(PageEnum.JOB_EDIT).doPost();
 	}
 
 	public void search() {

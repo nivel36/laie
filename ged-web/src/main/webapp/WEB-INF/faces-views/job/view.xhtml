@@ -12,9 +12,9 @@
 
 	<ui:define name="content">
 		<p:breadCrumb styleClass="breadcrumb">
-			<p:menuitem value="#{i18n['menu.index']}" url="/index.xhtml" />
-			<p:menuitem value="#{i18n['job.job_offers']}" url="/jobOffer/jobOfferSearch.xhtml" />
-			<p:menuitem value="#{jobOfferBean.jobOffer.name}" disabled="true" />
+					<p:menuitem value="#{i18n['menu.index']}" outcome="#{Page.INDEX.getUrl()}" />
+			<p:menuitem value="#{i18n['job.job_offers']}" outcome="#{Page.JOB_SEARCH.getUrl()}" />
+			<p:menuitem value="#{jobViewBean.jobOffer.name}" disabled="true" />
 		</p:breadCrumb>
 		<div class="grid nogutter">
 			<div class="panel user col-12 xl-8">
@@ -26,41 +26,41 @@
 							</div>
 							<div class="panel-buttons">
 								<p:commandButton id="exportExcel" value="#{i18n['action.export']}" action="#" icon="fa fa-file-excel-o" />
-								<p:commandButton id="editJobOffer" value="#{i18n['action.edit']}" actionListener="#{jobOfferBean.editJobOffer}"
-									action="jobOfferEdit?faces-redirect=true" styleClass="btn-primary" />
+								<p:commandButton id="editJobOffer" value="#{i18n['action.edit']}" actionListener="#{jobViewBean.editJobOffer}"
+									action="#{Page.JOB_EDIT.getRedirectUrl()}" styleClass="btn-primary" />
 							</div>
 						</div>
 						<div class="panel-content panel-content-data">
 							<div class="grid">
 								<div class="col-12 lg-6 xl-4">
-									<cc:outputText label="#{i18n['job.name']}" value="#{jobOfferBean.jobOffer.name}" />
+									<cc:outputText label="#{i18n['job.name']}" value="#{jobViewBean.jobOffer.name}" />
 								</div>
 								<div class="col-12 lg-6 xl-4">
-									<cc:outputText label="#{i18n['job.client']}" value="#{jobOfferBean.jobOffer.client.name}" />
+									<cc:outputText label="#{i18n['job.client']}" value="#{jobViewBean.jobOffer.client.name}" />
 								</div>
 								<div class="col-12 lg-6 xl-4">
-									<cc:outputText label="#{i18n['job.places']}" value="#{jobOfferBean.jobOffer.places}" />
+									<cc:outputText label="#{i18n['job.places']}" value="#{jobViewBean.jobOffer.places}" />
 								</div>
 								<div class="col-12 lg-6 xl-4">
-									<cc:outputText label="#{i18n['job.date_opened']}" value="#{jobOfferBean.jobOffer.dateOpened}">
+									<cc:outputText label="#{i18n['job.date_opened']}" value="#{jobViewBean.jobOffer.dateOpened}">
 										<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" for="element" />
 									</cc:outputText>
 								</div>
 								<div class="col-12 lg-6 xl-4">
-									<cc:outputText label="#{i18n['job.date_closed']}" value="#{jobOfferBean.jobOffer.dateClosed}">
+									<cc:outputText label="#{i18n['job.date_closed']}" value="#{jobViewBean.jobOffer.dateClosed}">
 										<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" for="element" />
 									</cc:outputText>
 								</div>
 								<div class="col-12 lg-6 xl-4">
-									<cc:outputText label="#{i18n['address.city']}" value="#{jobOfferBean.jobOffer.city}" />
+									<cc:outputText label="#{i18n['address.city']}" value="#{jobViewBean.jobOffer.city}" />
 
 								</div>
 								<div class="col-12 lg-6 xl-4">
-									<cc:outputText label="#{i18n['address.state']}" value="#{jobOfferBean.jobOffer.state}" />
+									<cc:outputText label="#{i18n['address.state']}" value="#{jobViewBean.jobOffer.state}" />
 
 								</div>
 								<div class="col-12">
-									<cc:outputText label="#{i18n['job.description']}" value="#{jobOfferBean.jobOffer.description}" />
+									<cc:outputText label="#{i18n['job.description']}" value="#{jobViewBean.jobOffer.description}" />
 								</div>
 
 								<div class="col-12">
@@ -73,10 +73,10 @@
 			</div>
 			<div class="col-12">
 				<h:form id="candidatesForm">
-					<cc:jobCandidatures jobCandidatures="#{jobOfferBean.jobCandidatures}" showJobOffer="false">
-						<p:commandButton value="#{i18n['action.add']}" actionListener="#{jobOfferBean.openSelectCandidatesDialog}"
+					<cc:jobCandidatures jobCandidatures="#{jobViewBean.jobCandidatures}" showJobOffer="false">
+						<p:commandButton value="#{i18n['action.add']}" actionListener="#{jobViewBean.openSelectCandidatesDialog}"
 							process="@this">
-							<p:ajax event="dialogReturn" listener="#{jobOfferBean.onCloseSelectCandidateDialog}" update="@form" />
+							<p:ajax event="dialogReturn" listener="#{jobViewBean.onCloseSelectCandidateDialog}" update="@form" />
 						</p:commandButton>
 					</cc:jobCandidatures>
 				</h:form>
