@@ -6,15 +6,26 @@
 	<ui:define name="title">
 		<title>#{i18n['client.clients']}</title>
 	</ui:define>
+
 	<ui:define name="content">
+		<p:breadCrumb styleClass="breadcrumb">
+			<p:menuitem value="#{i18n['menu.index']}" outcome="#{Page.INDEX.getUrl()}" />
+		</p:breadCrumb>
+		
 		<h:form id="clientsSearchForm">
-			<div class="grid">
-				<div class="col-12 md-6">
-					<cc:inputSearch searchText="#{selectClientBean.searchText}" searchAction="#{selectClientBean.search}" update="@form" />
+			<div class="panel">
+				<div class="panel-header">
+					<div class="panel-header-title">#{i18n['client.select']}</div>
 				</div>
-				<div class="col-12">
-					<p:dataTable var="client" id="clients" value="#{selectClientBean.clients}" emptyMessage="#{i18n['client.no_clients_found']}" reflow="true"
-						paginator="true" paginatorPosition="bottom" rows="#{sessionUser.rowsPerPage}" selectionMode="single" selection="#{selectClientBean.selectedClient}"
+				<div class="panel-content">
+					<div class="panel-content-data">
+						<cc:inputSearch searchText="#{selectClientBean.searchText}" searchAction="#{selectClientBean.search}"
+							update="@form" />
+					</div>
+
+					<p:dataTable var="client" id="clients" value="#{selectClientBean.clients}"
+						emptyMessage="#{i18n['client.no_clients_found']}" reflow="true" paginator="true" paginatorPosition="bottom"
+						rows="#{sessionUser.rowsPerPage}" selectionMode="single" selection="#{selectClientBean.selectedClient}"
 						rowKey="#{client.id}" sortBy="#{client.name}" sortOrder="ascending">
 
 						<p:ajax event="rowSelect" listener="#{selectClientBean.onClientSelect}" update="@form" resetValues="true" />
@@ -43,11 +54,12 @@
 							<h:outputText value="#{client.owner.fullName}" />
 						</p:column>
 					</p:dataTable>
-				</div>
 
-				<div class="col-12">
-					<div class="form-action-primary">
-						<p:commandButton value="#{i18n['action.cancel']}" action="#{selectClientBean.cancel}" process="@this" styleClass="btn-gray" />
+					<div class="panel-footer">
+						<div class="panel-buttons">
+							<p:commandButton value="#{i18n['action.cancel']}" action="#{selectClientBean.cancel}" process="@this"
+								styleClass="btn-gray" />
+						</div>
 					</div>
 				</div>
 			</div>

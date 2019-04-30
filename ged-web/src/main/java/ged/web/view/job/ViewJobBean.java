@@ -26,7 +26,7 @@ import ged.web.core.view.AbstractBean;
 
 @Named
 @ViewScoped
-public class JobOfferBean extends AbstractBean {
+public class ViewJobBean extends AbstractBean {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 

@@ -30,8 +30,7 @@
 							<cc:inputText label="#{i18n['job.name']}" value="#{addJobBean.jobOffer.name}" required="true" />
 
 							<cc:inputClient id="client" label="#{i18n['job.client']}" value="#{addJobBean.jobOffer.client}"
-								search="#{addJobBean.openClientSearchDialog}" required="true">
-								<p:ajax event="dialogReturn" listener="#{addJobBean.onCloseClientSearchDialog}" update="client" />
+								search="#{addJobBean.searchClient()}" required="true">
 							</cc:inputClient>
 
 							<cc:inputNumber id="places" min="0" label="#{i18n['job.places']}" value="#{addJobBean.jobOffer.places}" />
@@ -47,7 +46,6 @@
 							<cc:inputText id="city" label="#{i18n['job.city']}" value="#{addJobBean.jobOffer.city}" required="true" />
 
 							<cc:inputText id="state" label="#{i18n['job.state']}" value="#{addJobBean.jobOffer.state}" required="true" />
-							
 
 							<cc:inputUser id="owner" label="#{i18n['job.owner']}" value="#{addJobBean.jobOffer.owner}"
 								completeMethod="#{addJobBean.searchOwner}" />

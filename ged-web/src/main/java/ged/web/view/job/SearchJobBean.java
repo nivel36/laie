@@ -20,7 +20,7 @@ import ged.web.core.view.AbstractBean;
 
 @Named
 @ViewScoped
-public class JobOfferSearchBean extends AbstractBean {
+public class SearchJobBean extends AbstractBean {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 

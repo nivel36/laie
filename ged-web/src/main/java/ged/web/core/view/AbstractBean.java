@@ -160,6 +160,10 @@ public abstract class AbstractBean implements Serializable {
 	protected void putValueToFlash(final String key, final Object value) {
 		this.flash.put(key, value);
 	}
+	
+	protected boolean flashContainsKey(final String key) {
+		return this.flash.containsKey(key);
+	}
 
 	public void setApplicationBean(final ApplicationBean applicationBean) {
 		this.applicationBean = applicationBean;

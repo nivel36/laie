@@ -13,6 +13,7 @@ public enum PageEnum {
 	CLIENT_ADD("/client/add"), //
 	CLIENT_EDIT("/client/edit"), //
 	CLIENT_SEARCH("/client/search"), //
+	CLIENT_SELECT("/client/select"), //
 	CONFIG("/config"), //
 	CONTACT_ADD("/client/contact/add"), //
 	CONTACT_EDIT("/client/contact/edit"), //

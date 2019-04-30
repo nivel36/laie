@@ -14,7 +14,7 @@ import ged.web.core.view.AbstractDialogBean;
 
 @Named
 @ViewScoped
-public class JobOfferSearchDialogBean extends AbstractDialogBean {
+public class SelectJobBean extends AbstractDialogBean {
 
 	private static final long serialVersionUID = 2489802687772948858L;
 

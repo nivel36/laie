@@ -1,20 +1,14 @@
-<ui:component xmlns="http://www.w3.org/1999/xhtml" 
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html" 
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:composite="http://xmlns.jcp.org/jsf/composite" 
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
-	xmlns:o="http://omnifaces.org/ui" 
-	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+<ui:component xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
+	xmlns:composite="http://xmlns.jcp.org/jsf/composite" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	xmlns:o="http://omnifaces.org/ui" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
 	<composite:interface componentType="inputClient">
 		<composite:attribute name="label" required="true" />
 		<composite:attribute name="required" type="java.lang.Boolean" default="false" />
-		<composite:attribute name="search" method-signature="void action()" required="true" />
 		<composite:attribute name="value" type="ged.ejb.client.Client" required="true" />
 		<composite:attribute name="styleClass" required="false" default="" />
-		<composite:clientBehavior name="dialogReturn" event="dialogReturn" targets="search" />
+		<composite:attribute name="search" method-signature="void function(java.lang.String)" required="true" />
 		<composite:editableValueHolder name="input-client" />
 	</composite:interface>
 
@@ -28,13 +22,12 @@
 					required="#{cc.attrs.required}" binding="#{cc.input}" styleClass="input input-client" />
 				<p:commandButton id="clean" action="#{cc.clean}" process="@this" update="inputClient" styleClass="btn-gray"
 					icon="fa fa-times" binding="#{cc.cleanButton}" />
-				<p:commandButton id="search" action="#{cc.attrs.search}" process="@this" icon="fa fa-search"
-					styleClass="icon">
+				<p:commandButton id="search" action="#{cc.attrs.search}" process="@this" icon="fa fa-search" styleClass="icon">
 					<p:resetInput target="input-client" />
 				</p:commandButton>
 			</div>
 			<div class="message-container">
-				<p:message id="message" for="input-client" styleClass="message-error"/>
+				<p:message id="message" for="input-client" styleClass="message-error" />
 			</div>
 		</h:panelGroup>
 	</composite:implementation>
