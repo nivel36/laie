@@ -29,7 +29,7 @@
 			<h:form>
 				<ul>
 					<li><h:outputText value="#{sessionUser}" styleClass="name" /></li>
-					<li><a jsf:action="Page.CONFIG.getRedirectUrl()" jsf:styleClass="#{config}"><span class="menu_icon"><em class="fa fa-cog" /></span></a></li>
+					<li><a jsf:action="#{Page.CONFIG.getRedirectUrl()}" jsf:styleClass="#{config}"><span class="menu_icon"><em class="fa fa-cog" /></span></a></li>
 					<li><a jsf:action="#{sessionUser.exit}" jsf:styleClass="#{logout}"><span class="menu_icon"><em class="fa fa-power-off" /></span></a></li>
 				</ul>
 			</h:form>
