@@ -12,6 +12,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.omnifaces.cdi.Param;
 import org.omnifaces.util.Faces;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
@@ -29,6 +30,8 @@ public class FilePanelBean extends AbstractBean {
 
 	private static final long serialVersionUID = 6244684784788818815L;
 
+	@Inject
+	@Param(name = "id", required = true)
 	private Candidate candidate;
 
 	@Inject
@@ -72,9 +75,6 @@ public class FilePanelBean extends AbstractBean {
 
 	@PostConstruct
 	public void init() {
-		final String candidateIdValue = this.getValueFromGetParameters("candidateId");
-		final Long candidateId = Long.parseLong(candidateIdValue);
-		this.candidate = this.candidateService.find(candidateId);
 		this.files = this.candidateService.findFiles(this.candidate);
 		this.checkLopdFile();
 	}
@@ -111,8 +111,7 @@ public class FilePanelBean extends AbstractBean {
 			this.candidateService.addFileToCandidate(this.candidate, file);
 			this.files.add(file);
 			this.addInfoMessage("file.message.upload", "file.message.upload", fileName);
-		}
-		catch (final IOException e) {
+		} catch (final IOException e) {
 			throw new UncheckedIOException(e);
 		}
 	}

@@ -32,7 +32,7 @@ public class CandidateBean extends AbstractBean {
 	private static final long serialVersionUID = 1577879781927493283L;
 
 	@Inject
-	@Param(name = "candidateId", required = true)
+	@Param(name = "id", required = true)
 	private Candidate candidate;
 
 	private Curriculum curriculum;
@@ -48,11 +48,11 @@ public class CandidateBean extends AbstractBean {
 	private final List<String> tags = new ArrayList<>();
 
 	public void editCandidate() {
-		putValueToFlash("candidate", this.candidate);
+		this.putValueToFlash("candidate", this.candidate);
 	}
 
 	public void editCurriculum() {
-		putValueToFlash("curriculum", this.curriculum);
+		this.putValueToFlash("curriculum", this.curriculum);
 	}
 
 	public Candidate getCandidate() {
