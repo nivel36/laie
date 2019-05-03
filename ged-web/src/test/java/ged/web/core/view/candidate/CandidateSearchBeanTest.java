@@ -16,7 +16,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import ged.ejb.candidate.Candidate;
 import ged.ejb.candidate.CandidateService;
 import ged.ejb.core.model.Page;
-import ged.web.view.candidate.CandidateSearchBean;
+import ged.web.view.candidate.SearchCandidateBean;
 
 @ExtendWith(MockitoExtension.class)
 public class CandidateSearchBeanTest {
@@ -33,7 +33,7 @@ public class CandidateSearchBeanTest {
 		}
 	}
 
-	private CandidateSearchBean candidateSearchBean;
+	private SearchCandidateBean candidateSearchBean;
 
 	@Mock
 	private CandidateService candidateService;
@@ -55,7 +55,7 @@ public class CandidateSearchBeanTest {
 
 	@BeforeEach
 	public void setUp() {
-		this.candidateSearchBean = new CandidateSearchBean();
+		this.candidateSearchBean = new SearchCandidateBean();
 		this.candidateSearchBean.setCandidateService(this.candidateService);
 	}
 }

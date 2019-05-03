@@ -30,13 +30,17 @@ public class AddUserBean extends AbstractUserBean {
 		return newUser;
 	}
 
-	@PostConstruct
-	public void init() {
-		logger.debug("New user init");
+	private void checkAddPermission() {
 		if (!this.sessionUser.isAdmin()) {
 			logger.error("User {} hasn't got priviliges to add a new user", this.sessionUser);
 			throw new SecurityException();
 		}
+	}
+
+	@PostConstruct
+	public void init() {
+		logger.trace("New user init");
+		this.checkAddPermission();
 		this.user = this.buildNewUser();
 	}
 

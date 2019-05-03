@@ -13,17 +13,17 @@
 				<div class="grid">
 					<div class="md-8">
 						<div class="inputgroup">
-							<p:inputText id="searchText" value="#{candidateSelectDialogBean.searchText}" />
-							<p:commandButton icon="fa fa-search" styleClass="green-button" action="#{candidateSelectDialogBean.search}" update="@form"
+							<p:inputText id="searchText" value="#{selectCandidateBean.searchText}" />
+							<p:commandButton icon="fa fa-search" styleClass="green-button" action="#{selectCandidateBean.search}" update="@form"
 								process="@form" />
 						</div>
 					</div>
 				</div>
 			</div>
 			<div class="searchResults">
-				<p:dataTable var="candidate" id="candidates" value="#{candidateSelectDialogBean.candidates}"
+				<p:dataTable var="candidate" id="candidates" value="#{selectCandidateBean.candidates}"
 					emptyMessage="#{i18n['candidate.no_candidates_found']}" reflow="true" paginator="true" paginatorPosition="bottom"
-					selection="#{candidateSelectDialogBean.selectedCandidates}" rows="#{sessionUser.rowsPerPage}" rowKey="#{candidate.id}"
+					selection="#{selectCandidateBean.selectedCandidates}" rows="#{sessionUser.rowsPerPage}" rowKey="#{candidate.id}"
 					sortBy="#{candidate.fullName}" sortOrder="ascending">
 
 					<p:column selectionMode="multiple" style="width:16px;text-align:center" />
@@ -58,9 +58,9 @@
 				</p:dataTable>
 
 				<div class="form-action-primary">
-					<p:commandButton value="#{i18n['action.cancel']}" actionListener="#{candidateSelectDialogBean.closeDialog}" process="@this"
+					<p:commandButton value="#{i18n['action.cancel']}" actionListener="#{selectCandidateBean.closeDialog}" process="@this"
 						styleClass="btn-gray" />
-					<p:commandButton value="#{i18n['action.select']}" action="#{candidateSelectDialogBean.select}" update="@form" process="@form" />
+					<p:commandButton value="#{i18n['action.select']}" action="#{selectCandidateBean.select}" update="@form" process="@form" />
 				</div>
 			</div>
 

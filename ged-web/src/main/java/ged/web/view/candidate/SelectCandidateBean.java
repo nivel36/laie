@@ -20,7 +20,7 @@ import ged.web.core.view.AbstractDialogBean;
 
 @Named
 @ViewScoped
-public class CandidateSelectDialogBean extends AbstractDialogBean {
+public class SelectCandidateBean extends AbstractDialogBean {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 

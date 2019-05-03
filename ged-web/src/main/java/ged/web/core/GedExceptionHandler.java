@@ -32,13 +32,13 @@ public class GedExceptionHandler extends ExceptionHandlerWrapper {
 		if (exception.getCause() == null) {
 			return exception;
 		} else {
-			return getRootCause(exception.getCause());
+			return this.getRootCause(exception.getCause());
 		}
 	}
 
 	private ExceptionQueuedEvent getRootEvent() {
 		ExceptionQueuedEvent lastEvent = null;
-		final Iterator<ExceptionQueuedEvent> iterator = getUnhandledExceptionQueuedEvents().iterator();
+		final Iterator<ExceptionQueuedEvent> iterator = this.getUnhandledExceptionQueuedEvents().iterator();
 		while (iterator.hasNext()) {
 			lastEvent = iterator.next();
 			iterator.remove();
@@ -48,21 +48,23 @@ public class GedExceptionHandler extends ExceptionHandlerWrapper {
 
 	@Override
 	public void handle() {
-		final ExceptionQueuedEvent event = getRootEvent();
+		final ExceptionQueuedEvent event = this.getRootEvent();
 		if (event != null) {
 			final ExceptionQueuedEventContext context = (ExceptionQueuedEventContext) event.getSource();
 			final Throwable exception = context.getException();
 			logger.debug("Handling exception", exception);
-			this.handle(getRootCause(exception));
+			this.handle(this.getRootCause(exception));
 		}
-		getWrapped().handle();
+		this.getWrapped().handle();
 	}
 
 	private void handle(final Throwable exception) {
 		if (exception instanceof ViewExpiredException) {
 			to(LOGIN).doPost();
 		} else if (exception instanceof PageNotFoundException) {
-			to(INDEX).doPost();
+			to(INDEX).doGet();
+		} else if (exception instanceof IllegalPageStateException) {
+			to(INDEX).doGet();
 		} else if (exception instanceof OptimisticLockException) {
 			Message.addError("warning.optimistick_lock.message", "warning.optimistick_lock.message");
 		} else {

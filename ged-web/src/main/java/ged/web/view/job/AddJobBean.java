@@ -1,8 +1,9 @@
 package ged.web.view.job;
 
 import java.lang.invoke.MethodHandles;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
@@ -22,27 +23,37 @@ public class AddJobBean extends AbstractJobBean {
 
 	private static final long serialVersionUID = -4373329969104383876L;
 
-	@PostConstruct
-	public void init() {
-		logger.debug("New job offer init");
-		if (this.flashContainsKey("saveState")) {
-			this.jobOffer = this.getValueFromFlash("state");
-		} else {
-			this.jobOffer = new JobOffer();
+	private JobOffer buildNewJobOffer() {
+		final JobOffer newJobOffer = new JobOffer();
+		newJobOffer.setOwner(this.sessionUser.get());
+		newJobOffer.setClient(this.getValueFromFlash("client"));
+		return newJobOffer;
+	}
+
+	private void fillRecruiters(final User user) {
+		final List<User> subordinateUsers = this.userService.findSubordinateUsers(user);
+		this.recruiters = new ArrayList<>();
+		this.recruiters.add(this.sessionUser.get().getFullName());
+		for (final User subordinate : subordinateUsers) {
+			this.recruiters.add(subordinate.getFullName());
 		}
-		final User user = this.setSessionUserAsOwner();
-		this.setSubordinateUsersAsRecruiters(user);
-		this.setClientFromFlash();
+	}
+
+	public void init() {
+		logger.trace("New job offer init");
+		this.jobOffer = this.buildNewJobOffer();
+		this.fillRecruiters(this.sessionUser.get());
 	}
 
 	public String save() {
+		logger.debug("Create new client action performed");
 		this.jobOffer = this.jobOfferService.create(this.jobOffer);
-		return jobUrl();
+		return this.jobUrl();
 	}
 
 	public void searchClient() {
-		putValueToFlash("state", this.jobOffer);
-		putValueToFlash("url", PageEnum.JOB_ADD.getRedirectUrl());
+		this.putValueToFlash("state", this.jobOffer);
+		this.putValueToFlash("url", PageEnum.JOB_ADD.getRedirectUrl());
 		Navigate.to(PageEnum.CLIENT_SELECT).doPost();
 	}
 }

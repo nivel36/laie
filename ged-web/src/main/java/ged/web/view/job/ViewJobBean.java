@@ -1,5 +1,6 @@
 package ged.web.view.job;
 
+import java.io.IOException;
 import java.lang.invoke.MethodHandles;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -22,6 +23,7 @@ import ged.ejb.job.offer.JobCandidature;
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
 import ged.web.core.PageNotFoundException;
+import ged.web.core.util.PageEnum;
 import ged.web.core.view.AbstractBean;
 
 @Named
@@ -34,17 +36,19 @@ public class ViewJobBean extends AbstractBean {
 
 	private List<JobCandidature> jobCandidatures;
 
-	private JobOffer jobOffer;
-
-	@Param(required = true)
 	@Inject
-	private Long jobOfferId;
+	@Param(name = "id", required = true)
+	private JobOffer jobOffer;
 
 	@Inject
 	private transient JobOfferService jobService;
 
 	public void editJobOffer() {
-		putValueToFlash("jobOffer", this.jobOffer);
+		this.putValueToFlash("jobOffer", this.jobOffer);
+	}
+
+	public void export() throws IOException {
+		logger.debug("Export jobs action performed");
 	}
 
 	public List<JobCandidature> getJobCandidatures() {
@@ -57,16 +61,14 @@ public class ViewJobBean extends AbstractBean {
 
 	@PostConstruct
 	public void init() {
-		logger.trace("JobOfferBean Init");
-		this.jobOffer = this.jobService.find(this.jobOfferId);
+		logger.trace("JobOffer {} init", this.jobOffer);
 		if (this.jobOffer == null) {
 			throw new PageNotFoundException("Bad jobOfferId");
 		}
 		this.jobCandidatures = this.jobService.findJobCandituresByJobOffer(this.jobOffer);
 	}
 
-	// boolean -> is[name]
-	public boolean isUserHasPermissionToEditJobOffer() {
+	public boolean isEditable() {
 		return this.sessionUser.hasPermissionToEdit(this.jobOffer);
 	}
 
@@ -81,22 +83,18 @@ public class ViewJobBean extends AbstractBean {
 
 	public void openSelectCandidatesDialog() {
 		if (this.jobCandidatures.size() != 0) {
-			final String candidateIds = this.jobCandidatures.stream().map(jc -> String.valueOf(jc.getCandidate().getId()))
-					.collect(Collectors.joining("|"));
+			final String candidateIds = this.jobCandidatures.stream()
+					.map(jc -> String.valueOf(jc.getCandidate().getId())).collect(Collectors.joining("|"));
 			final Map<String, List<String>> parameters = new HashMap<>();
 			parameters.put("jobCandiatesId", Arrays.asList(candidateIds));
-			this.openBigDialog("/candidate/candidateSelectDialog", parameters);
+			this.openBigDialog(PageEnum.CANDIDATE_SELECT.getUrl(), parameters);
 		} else {
-			this.openBigDialog("/candidate/candidateSelectDialog");
+			this.openBigDialog(PageEnum.CANDIDATE_SELECT.getUrl());
 		}
 	}
 
 	public void setJobOffer(final JobOffer jobOffer) {
 		this.jobOffer = jobOffer;
-	}
-
-	public void setJobOfferId(final Long jobOfferId) {
-		this.jobOfferId = jobOfferId;
 	}
 
 	public void setJobService(final JobOfferService jobService) {

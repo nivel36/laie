@@ -29,12 +29,13 @@ public class AddClientBean extends AbstractClientBean {
 
 	@PostConstruct
 	public void init() {
+		logger.trace("New client init");
 		this.client = this.buildNewClient();
 	}
 
 	public String save() {
-		logger.debug("Save client action performed");
+		logger.debug("Create new client action performed");
 		this.client = this.clientService.save(this.client);
-		return gotoClientPage();
+		return this.clientUrl();
 	}
 }

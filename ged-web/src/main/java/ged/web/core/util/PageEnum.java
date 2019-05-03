@@ -24,6 +24,7 @@ public enum PageEnum {
 	JOB_ADD("/job/add"), //
 	JOB_EDIT("/job/edit"), //
 	JOB_SEARCH("/job/search"), //
+	JOB_SELECT("/job/select"), //
 	LOGIN("/login"), //
 	MAINTENANCE("/maintenance/index"), //
 	REPORT("/report/search"), //

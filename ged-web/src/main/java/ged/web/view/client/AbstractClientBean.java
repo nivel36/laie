@@ -20,7 +20,7 @@ public abstract class AbstractClientBean extends AbstractBean {
 		return this.client;
 	}
 
-	protected String gotoClientPage() {
+	protected String clientUrl() {
 		return PageEnum.CLIENT.getRedirectUrl(this.client);
 	}
 

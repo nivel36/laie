@@ -31,14 +31,14 @@ public class ViewUserBean extends AbstractBean {
 	private static final long serialVersionUID = -2187385732087309689L;
 
 	private List<JobOffer> jobOffers;
-	
+
 	@Inject
 	private transient JobOfferService jobOfferService;
 
 	private List<User> team;
 
 	@Inject
-	@Param(name="id", required = true)
+	@Param(name = "id", required = true)
 	private User user;
 
 	@Inject
@@ -46,7 +46,7 @@ public class ViewUserBean extends AbstractBean {
 
 	public void editUser() {
 		logger.debug("Edit user action performed");
-		putValueToFlash("user", this.user);
+		this.putValueToFlash("user", this.user);
 	}
 
 	public void export() throws IOException {
@@ -69,13 +69,17 @@ public class ViewUserBean extends AbstractBean {
 
 	@PostConstruct
 	public void init() {
-		logger.debug("User {} init", this.user.getEmail());
+		logger.trace("User {} init", this.user);
 		this.team = this.userService.findSubordinateUsers(this.user);
 		this.jobOffers = this.jobOfferService.findAllJobOffersByOwner(this.user);
 		if (this.user.isDeleted()) {
 			logger.warn("User is deleted");
 			Message.addWarning("message.erased_entity", "message.erased_entity");
 		}
+	}
+
+	public boolean isEditable() {
+		return this.sessionUser.hasPermissionToEdit(this.user);
 	}
 
 	public void setJobOfferService(final JobOfferService jobOfferService) {

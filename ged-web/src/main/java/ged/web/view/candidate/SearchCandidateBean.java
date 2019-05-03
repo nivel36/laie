@@ -18,7 +18,7 @@ import ged.web.core.view.AbstractBean;
 
 @Named
 @ViewScoped
-public class CandidateSearchBean extends AbstractBean {
+public class SearchCandidateBean extends AbstractBean {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
@@ -41,12 +41,14 @@ public class CandidateSearchBean extends AbstractBean {
 
 	@PostConstruct
 	public void init() {
-		search();
+		logger.trace("Search candidate init");
+		this.search();
 	}
 
 	public void search() {
-		logger.debug("Searching for candidates");
+		logger.debug("Search candidates action performed");
 		this.candidates = this.candidateService.search(this.searchText, Page.ALL);
+		this.addWarningMessageIfMaxSearchResultsHaveBeenReached(this.candidates);
 	}
 
 	public void setCandidateService(final CandidateService candidateService) {

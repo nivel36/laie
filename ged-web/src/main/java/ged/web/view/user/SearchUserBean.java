@@ -33,8 +33,6 @@ public class SearchUserBean extends AbstractBean {
 
 	public void export() {
 		logger.debug("Export users action performed");
-		// TODO ivmedina
-		System.out.println("hola mundo");
 	}
 
 	public String getSearchText() {
@@ -54,6 +52,7 @@ public class SearchUserBean extends AbstractBean {
 	public void search() {
 		logger.debug("Search users action performed");
 		this.users = this.userService.search(this.searchText, Page.ALL);
+		this.addWarningMessageIfMaxSearchResultsHaveBeenReached(this.users);
 	}
 
 	public void setSearchText(final String searchText) {

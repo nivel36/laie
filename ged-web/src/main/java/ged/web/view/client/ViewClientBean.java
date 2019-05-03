@@ -1,5 +1,6 @@
 package ged.web.view.client;
 
+import java.io.IOException;
 import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +45,8 @@ public class ViewClientBean extends AbstractBean {
 		this.putValueToFlash("client", this.client);
 	}
 
-	public void export() {
+	public void export() throws IOException {
+		logger.debug("Export clients action performed");
 	}
 
 	public Client getClient() {

@@ -1,5 +1,6 @@
 package ged.web.view.candidate;
 
+import java.io.IOException;
 import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,11 +22,12 @@ import ged.ejb.curriculum.Curriculum;
 import ged.ejb.curriculum.CurriculumService;
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
+import ged.web.core.util.PageEnum;
 import ged.web.core.view.AbstractBean;
 
 @Named
 @ViewScoped
-public class CandidateBean extends AbstractBean {
+public class ViewCandidateBean extends AbstractBean {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
@@ -55,6 +57,16 @@ public class CandidateBean extends AbstractBean {
 		this.putValueToFlash("curriculum", this.curriculum);
 	}
 
+	public void export() throws IOException {
+		logger.debug("Export candidates action performed");
+	}
+
+	private void fillTags() {
+		for (final Tag tag : this.candidate.getTags()) {
+			this.tags.add(tag.getLabel());
+		}
+	}
+
 	public Candidate getCandidate() {
 		return this.candidate;
 	}
@@ -77,11 +89,13 @@ public class CandidateBean extends AbstractBean {
 		if (this.candidate.getAddress() == null) {
 			this.candidate.setAddress(new Address());
 		}
-		for (final Tag tag : this.candidate.getTags()) {
-			this.tags.add(tag.getLabel());
-		}
+		this.fillTags();
 		this.jobOffers = this.jobOfferService.findJobOffersByCandidate(this.candidate);
 		this.curriculum = this.curriculumService.findByCandidate(this.candidate);
+	}
+
+	public boolean isEditable() {
+		return this.sessionUser.hasPermissionToEdit(this.candidate);
 	}
 
 	public void onCloseSelectJobOfferDialog(final SelectEvent event) {
@@ -97,7 +111,7 @@ public class CandidateBean extends AbstractBean {
 	}
 
 	public void openSelectJobOfferDialog() {
-		this.openBigDialog("/jobOffer/jobOfferSelectDialog");
+		this.openBigDialog(PageEnum.JOB_SELECT.getUrl());
 	}
 
 	public void setCandidate(final Candidate candidate) {
