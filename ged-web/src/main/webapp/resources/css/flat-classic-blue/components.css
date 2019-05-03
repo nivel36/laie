@@ -372,15 +372,12 @@ body .input-search .clean-search-button {
 .input-group  .input-container {
 	display: flex;
 	align-items: center;
-	flex: 1 1 67%;
-}
-
-.input-group .input-container .small {
-	width: 100px;
+	flex: 1 1 auto;
 }
 
 .input-group .label-container {
-	flex: 0 1 33%;
+	display: flex;
+	width: 150px;
 }
 
 .input-group .labelIcon {
@@ -408,7 +405,7 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button 
 
 .input-group .message-container {
 	flex: 1 100%;
-	margin-left: 33%;
+	margin-left: 150px;
 }
 
 .dialog.login {
