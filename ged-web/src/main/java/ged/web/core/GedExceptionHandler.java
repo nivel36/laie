@@ -60,7 +60,7 @@ public class GedExceptionHandler extends ExceptionHandlerWrapper {
 
 	private void handle(final Throwable exception) {
 		if (exception instanceof ViewExpiredException) {
-			to(LOGIN).doPost();
+			to(LOGIN).doGet();
 		} else if (exception instanceof PageNotFoundException) {
 			to(INDEX).doGet();
 		} else if (exception instanceof IllegalPageStateException) {

@@ -10,75 +10,32 @@
 	<ui:param name="selectedMenu" value="index" />
 
 	<ui:define name="content">
-		<div class="stats">
-			<div class="grid">
-				<div class="col-12 md-6 lg-3">
-					<div class="card card-stats">
-						<div class="card-header"></div>
-						<div class="card-body">
-							<p class="card-category">#{i18n['candidate.candidates']}</p>
-							<span class="number">#{candidateListPanelBean.numberOfCandidates}</span>
-						</div>
-						<div class="card-footer"></div>
-					</div>
-				</div>
-				<div class="col-12 md-6 lg-3">
-					<div class="card card-stats">
-						<div class="card-header"></div>
-						<div class="card-body">
-							<p class="card-category">Clientes</p>
-							<span class="number">2</span>
-						</div>
-						<div class="card-footer"></div>
-					</div>
-				</div>
-				<div class="col-12 md-6 lg-3">
-					<div class="card card-stats">
-						<div class="card-header"></div>
-						<div class="card-body">
-							<p class="card-category">Ofertas de empleo</p>
-							<span class="number">4</span>
-						</div>
-						<div class="card-footer"></div>
-					</div>
-				</div>
-				<div class="col-12 md-6 lg-3">
-					<div class="card card-stats">
-						<div class="card-header"></div>
-						<div class="card-body">
-							<p class="card-category">Ofertas cerradas</p>
-							<span class="number">10</span>
-						</div>
-						<div class="card-footer"></div>
-					</div>
-				</div>
+		<div class="grid">
+			<div class="col-12 lg-6">
+				<cc:jobOffers jobOffers="#{indexBean.jobOffers}">
+					<p:button value="#{i18n['action.new']}" outcome="#{Page.JOB_ADD.getUrl()}" />
+				</cc:jobOffers>
+			</div>
+			<div class="col-12 lg-6">
+				<cc:candidates candidates="#{indexBean.candidates}" title="#{i18n['candidate.last_candidates']}">
+					<p:button value="#{i18n['action.new']}" outcome="#{Page.CANDIDATE_ADD.getUrl()}" />
+				</cc:candidates>
+			</div>
 
-				<div class="col-12 lg-6">
-					<cc:jobOffers jobOffers="#{indexBean.jobOffers}">
-						<p:commandButton value="#{i18n['action.new']}" action="/jobOffer/jobOfferEdit.xhtml?faces-redirect=true" />
-					</cc:jobOffers>
-				</div>
-				<div class="col-12 lg-6">
-					<cc:candidates candidates="#{indexBean.candidates}" title="#{i18n['candidate.last_candidates']}">
-						<p:commandButton value="#{i18n['action.new']}" action="/candidate/candidateEdit.xhtml?faces-redirect=true" />
-					</cc:candidates>
-				</div>
+			<div class="col-12 lg-6">
+				<p:panel header="#{i18n['index.last_reports']}">
+					<div class="form-action-primary">
+						<p:button value="#{i18n['action.new']}" outcome="#{Page.CANDIDATE_ADD.getUrl()}" />
+					</div>
+				</p:panel>
+			</div>
 
-				<div class="col-12 lg-6">
-					<p:panel header="#{i18n['index.last_reports']}">
-						<div class="form-action-primary">
-							<p:commandButton value="#{i18n['action.new']}" action="#{jobOfferViewBean.edit}" />
-						</div>
-					</p:panel>
-				</div>
-
-				<div class="col-12 lg-6">
-					<p:panel header="#{i18n['index.scheudele']}">
-						<div class="form-action-primary">
-							<p:commandButton value="#{i18n['action.new']}" action="#{jobOfferViewBean.edit}" />
-						</div>
-					</p:panel>
-				</div>
+			<div class="col-12 lg-6">
+				<p:panel header="#{i18n['index.scheudele']}">
+					<div class="form-action-primary">
+						<p:button value="#{i18n['action.new']}" outcome="#{Page.CANDIDATE_ADD.getUrl()}" />
+					</div>
+				</p:panel>
 			</div>
 		</div>
 	</ui:define>

@@ -1,5 +1,6 @@
 package ged.web.view.candidate;
 
+import java.io.IOException;
 import java.lang.invoke.MethodHandles;
 import java.util.List;
 
@@ -30,6 +31,10 @@ public class SearchCandidateBean extends AbstractBean {
 	protected transient CandidateService candidateService;
 
 	private String searchText;
+
+	public void export() throws IOException {
+		logger.debug("Export candidates action performed");
+	}
 
 	public List<Candidate> getCandidates() {
 		return this.candidates;

@@ -1,5 +1,6 @@
 package ged.web.view.job;
 
+import java.io.IOException;
 import java.lang.invoke.MethodHandles;
 import java.util.List;
 
@@ -30,6 +31,10 @@ public class SearchJobBean extends AbstractBean {
 	private transient JobOfferService jobOfferService;
 
 	private String searchText;
+
+	public void export() throws IOException {
+		logger.debug("Export jobs action performed");
+	}
 
 	public List<JobOffer> getJobOffers() {
 		return this.jobOffers;

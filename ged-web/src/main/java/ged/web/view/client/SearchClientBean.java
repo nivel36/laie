@@ -1,5 +1,6 @@
 package ged.web.view.client;
 
+import java.io.IOException;
 import java.lang.invoke.MethodHandles;
 import java.util.List;
 
@@ -30,6 +31,10 @@ public class SearchClientBean extends AbstractBean {
 	private transient ClientService clientService;
 
 	private String searchText;
+
+	public void export() throws IOException {
+		logger.debug("Export clients action performed");
+	}
 
 	public List<Client> getClients() {
 		return this.clients;
