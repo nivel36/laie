@@ -22,7 +22,8 @@ import ged.ejb.candidate.Candidate;
 import ged.ejb.job.offer.JobCandidature;
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
-import ged.web.core.PageNotFoundException;
+import ged.web.core.IllegalPageStateException;
+import ged.web.core.util.Message;
 import ged.web.core.util.PageEnum;
 import ged.web.core.view.AbstractBean;
 
@@ -34,6 +35,8 @@ public class ViewJobBean extends AbstractBean {
 
 	private static final long serialVersionUID = -1200840678252895578L;
 
+	private boolean editable;
+
 	private List<JobCandidature> jobCandidatures;
 
 	@Inject
@@ -44,11 +47,12 @@ public class ViewJobBean extends AbstractBean {
 	private transient JobOfferService jobService;
 
 	public void editJobOffer() {
+		logger.debug("Edit job offer action performed");
 		this.putValueToFlash("jobOffer", this.jobOffer);
 	}
 
 	public void export() throws IOException {
-		logger.debug("Export jobs action performed");
+		logger.debug("Export job action performed");
 	}
 
 	public List<JobCandidature> getJobCandidatures() {
@@ -61,15 +65,20 @@ public class ViewJobBean extends AbstractBean {
 
 	@PostConstruct
 	public void init() {
-		logger.trace("JobOffer {} init", this.jobOffer);
 		if (this.jobOffer == null) {
-			throw new PageNotFoundException("Bad jobOfferId");
+			throw new IllegalPageStateException();
 		}
+		logger.trace("JobOffer {} init", this.jobOffer);
 		this.jobCandidatures = this.jobService.findJobCandituresByJobOffer(this.jobOffer);
+		if (this.jobOffer.isDeleted()) {
+			logger.warn("Job offer is deleted");
+			Message.addWarning("message.erased_entity", "message.erased_entity");
+		}
+		this.editable = this.sessionUser.hasPermissionToEdit(this.jobOffer);
 	}
 
 	public boolean isEditable() {
-		return this.sessionUser.hasPermissionToEdit(this.jobOffer);
+		return this.editable;
 	}
 
 	public void onCloseSelectCandidateDialog(final SelectEvent event) {
@@ -81,7 +90,8 @@ public class ViewJobBean extends AbstractBean {
 		}
 	}
 
-	public void openSelectCandidatesDialog() {
+	public void selectCandidates() {
+		logger.debug("Select candidates action performed");
 		if (this.jobCandidatures.size() != 0) {
 			final String candidateIds = this.jobCandidatures.stream()
 					.map(jc -> String.valueOf(jc.getCandidate().getId())).collect(Collectors.joining("|"));

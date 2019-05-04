@@ -22,6 +22,8 @@ import ged.ejb.curriculum.Curriculum;
 import ged.ejb.curriculum.CurriculumService;
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
+import ged.web.core.IllegalPageStateException;
+import ged.web.core.util.Message;
 import ged.web.core.util.PageEnum;
 import ged.web.core.view.AbstractBean;
 
@@ -42,6 +44,8 @@ public class ViewCandidateBean extends AbstractBean {
 	@Inject
 	private transient CurriculumService curriculumService;
 
+	private boolean editable;
+
 	private List<JobOffer> jobOffers;
 
 	@Inject
@@ -50,15 +54,17 @@ public class ViewCandidateBean extends AbstractBean {
 	private final List<String> tags = new ArrayList<>();
 
 	public void editCandidate() {
+		logger.debug("Edit candidate action performed");
 		this.putValueToFlash("candidate", this.candidate);
 	}
 
 	public void editCurriculum() {
+		logger.debug("Edit curriculum action performed");
 		this.putValueToFlash("curriculum", this.curriculum);
 	}
 
 	public void export() throws IOException {
-		logger.debug("Export candidates action performed");
+		logger.debug("Export candidate action performed");
 	}
 
 	private void fillTags() {
@@ -85,6 +91,9 @@ public class ViewCandidateBean extends AbstractBean {
 
 	@PostConstruct
 	public void init() {
+		if (this.candidate == null) {
+			throw new IllegalPageStateException();
+		}
 		logger.trace("Candidate {} init", this.candidate);
 		if (this.candidate.getAddress() == null) {
 			this.candidate.setAddress(new Address());
@@ -92,10 +101,15 @@ public class ViewCandidateBean extends AbstractBean {
 		this.fillTags();
 		this.jobOffers = this.jobOfferService.findJobOffersByCandidate(this.candidate);
 		this.curriculum = this.curriculumService.findByCandidate(this.candidate);
+		if (this.candidate.isDeleted()) {
+			logger.warn("Candidate is deleted");
+			Message.addWarning("message.erased_entity", "message.erased_entity");
+		}
+		this.editable = this.sessionUser.hasPermissionToEdit(this.candidate);
 	}
 
 	public boolean isEditable() {
-		return this.sessionUser.hasPermissionToEdit(this.candidate);
+		return this.editable;
 	}
 
 	public void onCloseSelectJobOfferDialog(final SelectEvent event) {
@@ -110,7 +124,8 @@ public class ViewCandidateBean extends AbstractBean {
 		}
 	}
 
-	public void openSelectJobOfferDialog() {
+	public void selectJobOffer() {
+		logger.debug("Select job action performed");
 		this.openBigDialog(PageEnum.JOB_SELECT.getUrl());
 	}
 

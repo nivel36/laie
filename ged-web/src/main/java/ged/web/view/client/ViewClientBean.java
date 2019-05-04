@@ -19,6 +19,8 @@ import ged.ejb.client.Contact;
 import ged.ejb.core.Address;
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
+import ged.web.core.IllegalPageStateException;
+import ged.web.core.util.Message;
 import ged.web.core.view.AbstractBean;
 
 @Named
@@ -35,6 +37,8 @@ public class ViewClientBean extends AbstractBean {
 
 	private List<Contact> contacts;
 
+	private boolean editable;
+
 	private List<JobOffer> jobOffers;
 
 	@Inject
@@ -46,7 +50,7 @@ public class ViewClientBean extends AbstractBean {
 	}
 
 	public void export() throws IOException {
-		logger.debug("Export clients action performed");
+		logger.debug("Export client action performed");
 	}
 
 	public Client getClient() {
@@ -63,19 +67,28 @@ public class ViewClientBean extends AbstractBean {
 
 	@PostConstruct
 	public void init() {
+		if (this.client == null) {
+			throw new IllegalPageStateException();
+		}
 		logger.trace("Client {} init", this.client);
 		if (this.client.getAddress() == null) {
 			this.client.setAddress(new Address());
 		}
 		this.contacts = new ArrayList<>(this.client.getContacts());
 		this.jobOffers = this.jobOfferService.findJobOffersByClient(this.client);
+		if (this.client.isDeleted()) {
+			logger.warn("Client is deleted");
+			Message.addWarning("message.erased_entity", "message.erased_entity");
+		}
+		this.editable = this.sessionUser.hasPermissionToEdit(this.client);
 	}
 
 	public boolean isEditable() {
-		return this.sessionUser.hasPermissionToEdit(this.client);
+		return this.editable;
 	}
 
 	public void newContact() {
+		logger.debug("New contact action performed");
 		this.putValueToFlash("client", this.client);
 	}
 

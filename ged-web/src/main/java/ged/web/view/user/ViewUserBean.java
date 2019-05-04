@@ -18,6 +18,7 @@ import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
+import ged.web.core.IllegalPageStateException;
 import ged.web.core.util.Message;
 import ged.web.core.view.AbstractBean;
 import ged.web.reports.UserReport;
@@ -29,6 +30,8 @@ public class ViewUserBean extends AbstractBean {
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	private static final long serialVersionUID = -2187385732087309689L;
+
+	private boolean editable;
 
 	private List<JobOffer> jobOffers;
 
@@ -69,6 +72,9 @@ public class ViewUserBean extends AbstractBean {
 
 	@PostConstruct
 	public void init() {
+		if (this.user == null) {
+			throw new IllegalPageStateException();
+		}
 		logger.trace("User {} init", this.user);
 		this.team = this.userService.findSubordinateUsers(this.user);
 		this.jobOffers = this.jobOfferService.findAllJobOffersByOwner(this.user);
@@ -76,10 +82,11 @@ public class ViewUserBean extends AbstractBean {
 			logger.warn("User is deleted");
 			Message.addWarning("message.erased_entity", "message.erased_entity");
 		}
+		this.editable = this.sessionUser.hasPermissionToEdit(this.user);
 	}
 
 	public boolean isEditable() {
-		return this.sessionUser.hasPermissionToEdit(this.user);
+		return this.editable;
 	}
 
 	public void setJobOfferService(final JobOfferService jobOfferService) {
