@@ -27,7 +27,6 @@
 								<div class="section">
 									<span class="cvAction"> <p:commandButton icon="fa fa-pencil"
 											action="#{curriculumBean.editJobExperience(jobExperience)}" process="@this">
-											<p:ajax event="dialogReturn" listener="#{curriculumBean.onEditJobExperience}" update="form:jobExperiences" />
 										</p:commandButton>
 									</span>
 									<h3>#{jobExperience.jobPosition}</h3>

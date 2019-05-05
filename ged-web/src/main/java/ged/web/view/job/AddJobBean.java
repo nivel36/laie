@@ -4,6 +4,7 @@ import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
@@ -12,7 +13,6 @@ import org.slf4j.LoggerFactory;
 
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.user.User;
-import ged.web.core.util.Navigate;
 import ged.web.core.util.PageEnum;
 
 @Named
@@ -39,6 +39,7 @@ public class AddJobBean extends AbstractJobBean {
 		}
 	}
 
+	@PostConstruct
 	public void init() {
 		logger.trace("New job offer init");
 		this.jobOffer = this.buildNewJobOffer();
@@ -52,8 +53,6 @@ public class AddJobBean extends AbstractJobBean {
 	}
 
 	public void searchClient() {
-		this.putValueToFlash("state", this.jobOffer);
-		this.putValueToFlash("url", PageEnum.JOB_ADD.getRedirectUrl());
-		Navigate.to(PageEnum.CLIENT_SELECT).doPost();
+		this.openBigDialog(PageEnum.CLIENT_SELECT.getUrl());
 	}
 }

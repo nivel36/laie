@@ -57,7 +57,7 @@
 			<div class="col-12 sm-6">
 				<h:form id="jobOffersForm">
 					<cc:jobOffers id="jobOffers" jobOffers="#{viewClientBean.jobOffers}">
-						<p:commandButton value="#{i18n['action.new']}" actionListener="#{viewClientBean.newJobOffer}" action="#{Page.JOB_ADD.getUrl()}"
+						<p:commandButton value="#{i18n['action.new']}" actionListener="#{viewClientBean.newJobOffer}" action="#{Page.JOB_ADD.getRedirectUrl()}"
 							process="@this" />
 					</cc:jobOffers>
 				</h:form>
