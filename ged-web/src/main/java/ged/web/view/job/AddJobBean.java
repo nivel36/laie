@@ -8,9 +8,11 @@ import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
+import org.primefaces.event.SelectEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import ged.ejb.client.Client;
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.user.User;
 import ged.web.core.util.PageEnum;
@@ -44,6 +46,14 @@ public class AddJobBean extends AbstractJobBean {
 		logger.trace("New job offer init");
 		this.jobOffer = this.buildNewJobOffer();
 		this.fillRecruiters(this.sessionUser.get());
+	}
+
+	public void onClientSelect(final SelectEvent event) {
+		final Object selectedObject = event.getObject();
+		if (selectedObject != null) {
+			final Client client = (Client) selectedObject;
+			this.jobOffer.setClient(client);
+		}
 	}
 
 	public String save() {

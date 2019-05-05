@@ -386,7 +386,15 @@ body .ui-dialog .ui-dialog-titlebar {
 }
 
 body .ui-dialog .ui-dialog-titlebar .ui-dialog-title {
-	flex: 1 1 100%;
+	display: flex;
+	flex: 1 100%;
+	font-weight: bold;
+	color: #737c93;
+	text-shadow: 1px 1px white;
+	margin: 0;
+	font-size: 1.3em;
+	padding: 10px;
+	align-items: center;
 }
 
 body .ui-dialog .ui-dialog-titlebar .ui-dialog-titlebar-close {

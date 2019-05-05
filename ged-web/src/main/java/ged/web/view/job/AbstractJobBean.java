@@ -35,10 +35,6 @@ public abstract class AbstractJobBean extends AbstractBean {
 		return this.recruiters;
 	}
 
-	public boolean isUserHasPermissionToEditJobOffer() {
-		return this.sessionUser.hasPermissionToEdit(this.jobOffer);
-	}
-
 	protected String jobUrl() {
 		return PageEnum.JOB.getRedirectUrl(this.jobOffer);
 	}
@@ -65,5 +61,4 @@ public abstract class AbstractJobBean extends AbstractBean {
 	public void setUserService(final UserService userService) {
 		this.userService = userService;
 	}
-
 }
