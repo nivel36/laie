@@ -53,14 +53,16 @@ public class ViewCandidateBean extends AbstractBean {
 
 	private final List<String> tags = new ArrayList<>();
 
-	public void editCandidate() {
+	public String editCandidate() {
 		logger.debug("Edit candidate action performed");
 		this.putValueToFlash("candidate", this.candidate);
+		return PageEnum.CANDIDATE_EDIT.getRedirectUrl();
 	}
 
-	public void editCurriculum() {
+	public String editCurriculum() {
 		logger.debug("Edit curriculum action performed");
 		this.putValueToFlash("curriculum", this.curriculum);
+		return PageEnum.CURRICULUM_EDIT.getRedirectUrl();
 	}
 
 	public void export() throws IOException {
@@ -101,11 +103,15 @@ public class ViewCandidateBean extends AbstractBean {
 		this.fillTags();
 		this.jobOffers = this.jobOfferService.findJobOffersByCandidate(this.candidate);
 		this.curriculum = this.curriculumService.findByCandidate(this.candidate);
+		checkDeleted();
+		this.editable = this.sessionUser.hasPermissionToEdit(this.candidate);
+	}
+
+	private void checkDeleted() {
 		if (this.candidate.isDeleted()) {
 			logger.warn("Candidate is deleted");
 			Message.addWarning("message.erased_entity", "message.erased_entity");
 		}
-		this.editable = this.sessionUser.hasPermissionToEdit(this.candidate);
 	}
 
 	public boolean isEditable() {

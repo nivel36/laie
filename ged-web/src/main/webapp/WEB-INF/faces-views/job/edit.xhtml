@@ -68,8 +68,7 @@
 						<p:button styleClass="btn-gray" value="#{i18n['action.cancel']}" outcome="#{Page.JOB.getUrl()}">
 							<f:param name="id" value="#{editJobBean.jobOffer.id}" />
 						</p:button>
-						<p:commandButton value="#{i18n['action.save']}" action="#{editJobBean.save}" process="@form" update="@form growl"
-							styleClass="btn-primary" />
+						<p:commandButton value="#{i18n['action.save']}" action="#{editJobBean.save}" process="@form" update="@form growl" />
 					</div>
 				</div>
 			</div>

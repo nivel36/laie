@@ -46,9 +46,10 @@ public class ViewJobBean extends AbstractBean {
 	@Inject
 	private transient JobOfferService jobService;
 
-	public void editJobOffer() {
+	public String editJobOffer() {
 		logger.debug("Edit job offer action performed");
 		this.putValueToFlash("jobOffer", this.jobOffer);
+		return PageEnum.JOB_EDIT.getRedirectUrl();
 	}
 
 	public void export() throws IOException {
@@ -70,11 +71,15 @@ public class ViewJobBean extends AbstractBean {
 		}
 		logger.trace("JobOffer {} init", this.jobOffer);
 		this.jobCandidatures = this.jobService.findJobCandituresByJobOffer(this.jobOffer);
+		checkDeleted();
+		this.editable = this.sessionUser.hasPermissionToEdit(this.jobOffer);
+	}
+
+	private void checkDeleted() {
 		if (this.jobOffer.isDeleted()) {
 			logger.warn("Job offer is deleted");
 			Message.addWarning("message.erased_entity", "message.erased_entity");
 		}
-		this.editable = this.sessionUser.hasPermissionToEdit(this.jobOffer);
 	}
 
 	public boolean isEditable() {
@@ -93,8 +98,8 @@ public class ViewJobBean extends AbstractBean {
 	public void selectCandidates() {
 		logger.debug("Select candidates action performed");
 		if (this.jobCandidatures.size() != 0) {
-			final String candidateIds = this.jobCandidatures.stream()
-					.map(jc -> String.valueOf(jc.getCandidate().getId())).collect(Collectors.joining("|"));
+			final String candidateIds = this.jobCandidatures.stream().map(this::getCandidateIdAsString)
+					.collect(Collectors.joining("|"));
 			final Map<String, List<String>> parameters = new HashMap<>();
 			parameters.put("jobCandiatesId", Arrays.asList(candidateIds));
 			this.openBigDialog(PageEnum.CANDIDATE_SELECT.getUrl(), parameters);
@@ -109,5 +114,9 @@ public class ViewJobBean extends AbstractBean {
 
 	public void setJobService(final JobOfferService jobService) {
 		this.jobService = jobService;
+	}
+
+	private String getCandidateIdAsString(JobCandidature jobCandidature) {
+		return String.valueOf(jobCandidature.getCandidate().getId());
 	}
 }

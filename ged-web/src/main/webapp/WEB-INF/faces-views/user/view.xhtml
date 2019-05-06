@@ -35,14 +35,13 @@
 							<span class="text">#{viewUserBean.user.phoneNumber}</span>
 						</h:panelGroup>
 					</div>
-					<o:form>
+					<h:form>
 						<div class="panel-buttons">
-							<p:commandButton value="#{i18n['action.export']}" process="@this" actionListener="#{viewUserBean.editUser}"
-								icon="fa-file-excel-o" action="#{Page.USER_EDIT.getRedirectUrl()}" />
-							<p:commandButton value="#{i18n['action.edit']}" process="@this" actionListener="#{viewUserBean.editUser}"
-								action="#{Page.USER_EDIT.getRedirectUrl()}" />
+							<p:commandButton value="#{i18n['action.export']}" process="@this" action="#{viewUserBean.export}"
+								icon="fa-file-excel-o" />
+							<p:commandButton value="#{i18n['action.edit']}" process="@this" action="#{viewUserBean.editUser}" />
 						</div>
-					</o:form>
+					</h:form>
 				</div>
 				<div class="panel-content panel-content-data">
 					<div class="grid">

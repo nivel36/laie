@@ -21,6 +21,7 @@ import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
 import ged.web.core.IllegalPageStateException;
 import ged.web.core.util.Message;
+import ged.web.core.util.PageEnum;
 import ged.web.core.view.AbstractBean;
 
 @Named
@@ -44,9 +45,10 @@ public class ViewClientBean extends AbstractBean {
 	@Inject
 	private transient JobOfferService jobOfferService;
 
-	public void editClient() {
+	public String editClient() {
 		logger.debug("Edit client action performed");
 		this.putValueToFlash("client", this.client);
+		return PageEnum.CLIENT_EDIT.getRedirectUrl();
 	}
 
 	public void export() throws IOException {
@@ -76,11 +78,15 @@ public class ViewClientBean extends AbstractBean {
 		}
 		this.contacts = new ArrayList<>(this.client.getContacts());
 		this.jobOffers = this.jobOfferService.findJobOffersByClient(this.client);
+		checkDeleted();
+		this.editable = this.sessionUser.hasPermissionToEdit(this.client);
+	}
+
+	private void checkDeleted() {
 		if (this.client.isDeleted()) {
 			logger.warn("Client is deleted");
 			Message.addWarning("message.erased_entity", "message.erased_entity");
 		}
-		this.editable = this.sessionUser.hasPermissionToEdit(this.client);
 	}
 
 	public boolean isEditable() {

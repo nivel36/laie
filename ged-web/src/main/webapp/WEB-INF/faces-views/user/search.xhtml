@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://ged.com/i18n" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
-	xmlns:p="http://primefaces.org/ui" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:o="http://omnifaces.org/ui"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://ged.com/i18n"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:p="http://primefaces.org/ui"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:o="http://omnifaces.org/ui"
 	xmlns:of="http://omnifaces.org/functions" template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
@@ -25,19 +26,21 @@
 					<div class="panel-content-data">
 						<cc:inputSearch searchText="#{searchUserBean.searchText}" searchAction="#{searchUserBean.search}" update="@form" />
 						<div class="panel-buttons">
-							<p:commandButton value="#{i18n['action.export']}" action="#{searchUserBean.export}" process="@this" icon="fa-file-excel-o"
-								styleClass="btn-primary" />
-							<p:button value="#{i18n['action.new']}" outcome="#{Page.USER_ADD.getUrl()}" styleClass="btn-primary" />
+							<p:commandButton value="#{i18n['action.export']}" action="#{searchUserBean.export}" process="@this"
+								icon="fa-file-excel-o" />
+							<p:button value="#{i18n['action.new']}" outcome="#{Page.USER_ADD.getUrl()}" />
 						</div>
 					</div>
 
-					<p:dataTable var="user" id="users" value="#{searchUserBean.users}" emptyMessage="#{i18n['user.no_users_found']}" reflow="true"
-						paginator="true" paginatorPosition="bottom" paginatorTemplate="{PageLinks}" rows="#{sessionUser.rowsPerPage}"
-						sortBy="#{user.fullName}" sortOrder="ascending">
+					<p:dataTable var="user" id="users" value="#{searchUserBean.users}" emptyMessage="#{i18n['user.no_users_found']}"
+						reflow="true" paginator="true" paginatorPosition="bottom" paginatorTemplate="{PageLinks}"
+						rows="#{sessionUser.rowsPerPage}" sortBy="#{user.fullName}" sortOrder="ascending">
 
 						<p:column>
-							<p:graphicImage class="image image-icon" value="/images/#{user.imageFileName}" rendered="#{not empty user.imageFileName}" />
-							<p:graphicImage class="image image-icon" value="/resources/img/default-avatar.png" rendered="#{empty user.imageFileName}" />
+							<p:graphicImage class="image image-icon" value="/images/#{user.imageFileName}"
+								rendered="#{not empty user.imageFileName}" />
+							<p:graphicImage class="image image-icon" value="/resources/img/default-avatar.png"
+								rendered="#{empty user.imageFileName}" />
 						</p:column>
 
 						<p:column headerText="#{i18n['user.name']}" sortBy="#{user.fullName}">

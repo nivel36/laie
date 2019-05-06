@@ -2,14 +2,15 @@ package ged.web.view.client;
 
 import java.lang.invoke.MethodHandles;
 
+import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
+import org.primefaces.PrimeFaces;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ged.ejb.client.Client;
-import ged.web.core.util.Navigate;
 
 @Named
 @ViewScoped
@@ -21,19 +22,9 @@ public class SelectClientBean extends AbstractClientSearch {
 
 	private Client selectedClient;
 
-	private String returnUrl;
-
+	@PostConstruct
 	public void init() {
-		this.returnUrl = getValueFromFlash("url");
-		refreshState();
-	}
-
-	public void refreshState() {
-		this.putValueToFlash("state", this.getValueFromFlash("state"));
-	}
-
-	public String cancel() {
-		return returnUrl;
+		search();
 	}
 
 	public Client getSelectedClient() {
@@ -42,8 +33,7 @@ public class SelectClientBean extends AbstractClientSearch {
 
 	public void onClientSelect() {
 		logger.debug("Select client action performed");
-		this.putValueToFlash("client", selectedClient);
-		Navigate.to(returnUrl);
+		PrimeFaces.current().dialog().closeDynamic(selectedClient);
 	}
 
 	public void setSelectedClient(final Client selectedClient) {

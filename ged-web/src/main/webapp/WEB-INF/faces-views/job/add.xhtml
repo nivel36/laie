@@ -43,7 +43,7 @@
 						</div>
 						<div class="col-12 sm-6">
 							<h3>#{i18n['user.personal_information']}</h3>
-							
+
 							<cc:inputText id="city" label="#{i18n['job.city']}" value="#{addJobBean.jobOffer.city}" required="true" />
 
 							<cc:inputText id="state" label="#{i18n['job.state']}" value="#{addJobBean.jobOffer.state}" required="true" />
@@ -64,8 +64,7 @@
 				<div class="panel-footer">
 					<div class="panel-buttons">
 						<p:button styleClass="btn-gray" value="#{i18n['action.cancel']}" outcome="#{Page.JOB_SEARCH.getUrl()}" />
-						<p:commandButton value="#{i18n['action.save']}" action="#{addJobBean.save}" process="@form" update="@form growl"
-							styleClass="btn-primary" />
+						<p:commandButton value="#{i18n['action.save']}" action="#{addJobBean.save}" process="@form" update="@form growl" />
 					</div>
 				</div>
 			</div>

@@ -4,7 +4,7 @@
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:p="http://primefaces.org/ui"
 	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:o="http://omnifaces.org/ui"
 	xmlns:of="http://omnifaces.org/functions" template="/WEB-INF/templates/default.xhtml">
-	
+
 	<ui:define name="title">
 		<title>#{i18n['user.new_user']}</title>
 	</ui:define>
@@ -61,9 +61,8 @@
 				</div>
 				<div class="panel-footer">
 					<div class="panel-buttons">
-						<p:button styleClass="btn-gray" value="#{i18n['action.cancel']}" outcome="#{Page.USER_SEARCH.getUrl()}"	/>
-						<p:commandButton styleClass="btn-primary" value="#{i18n['action.save']}" action="#{addUserBean.save}"
-							process="@form" update="@form growl" />
+						<p:button styleClass="btn-gray" value="#{i18n['action.cancel']}" outcome="#{Page.USER_SEARCH.getUrl()}" />
+						<p:commandButton value="#{i18n['action.save']}" action="#{addUserBean.save}" process="@form" update="@form growl" />
 					</div>
 				</div>
 			</div>
