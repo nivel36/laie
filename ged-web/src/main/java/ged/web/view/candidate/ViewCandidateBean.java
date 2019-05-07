@@ -61,8 +61,8 @@ public class ViewCandidateBean extends AbstractBean {
 
 	public String editCurriculum() {
 		logger.debug("Edit curriculum action performed");
-		this.putValueToFlash("curriculum", this.curriculum);
-		return PageEnum.CURRICULUM_EDIT.getRedirectUrl();
+		this.putValueToFlash("candidate", this.candidate);
+		return PageEnum.CURRICULUM.getRedirectUrl();
 	}
 
 	public void export() throws IOException {

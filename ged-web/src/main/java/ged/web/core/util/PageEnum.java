@@ -17,7 +17,7 @@ public enum PageEnum {
 	CONFIG("/config"), //
 	CONTACT_ADD("/client/contact/add"), //
 	CONTACT_EDIT("/client/contact/edit"), //
-	CURRICULUM_EDIT("/candidate/curriculum/edit"), //
+	CURRICULUM("/candidate/curriculum"), //
 	INDEX("/index"), //
 	ISABEL("/isabel/isabel"), //
 	JOB("/job/view"), //

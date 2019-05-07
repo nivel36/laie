@@ -10,7 +10,6 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.omnifaces.cdi.Param;
 import org.primefaces.event.SelectEvent;
 
 import ged.ejb.candidate.Candidate;
@@ -28,8 +27,6 @@ public class CurriculumBean extends AbstractBean {
 
 	private static final long serialVersionUID = -5942086439519787220L;
 
-	@Inject
-	@Param(name = "candidateId", required = true)
 	private Candidate candidate;
 
 	private Curriculum curriculum;
@@ -84,6 +81,7 @@ public class CurriculumBean extends AbstractBean {
 
 	@PostConstruct
 	public void init() {
+		this.candidate = this.getValueFromFlash("candidate");
 		this.curriculum = this.curriculumService.findByCandidate(this.candidate);
 		if (this.curriculum == null) {
 			this.curriculum = new Curriculum();
