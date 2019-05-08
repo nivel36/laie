@@ -30,8 +30,8 @@
 						paginatorPosition="bottom" rows="#{sessionUser.rowsPerPage}" sortBy="#{jobOffer.name}" sortOrder="ascending">
 
 						<p:column headerText="#{i18n['job_candidature.job_offer']}" rendered="#{cc.attrs.showJobOffer}">
-							<h:link value="#{jobCandidature.jobOffer.name}" outcome="/jobOffer/jobOffer">
-								<f:param name="jobOfferId" value="#{jobCandidature.jobOffer.id}" />
+							<h:link value="#{jobCandidature.jobOffer.name}" outcome="#{Page.JOB.getUrl()}">
+								<f:param name="id" value="#{jobCandidature.jobOffer.id}" />
 							</h:link>
 						</p:column>
 
@@ -49,8 +49,8 @@
 						</p:column>
 
 						<p:column headerText="#{i18n['job_candidature.candidate']}" rendered="#{cc.attrs.showCandidate}">
-							<h:link value="#{jobCandidature.candidate.fullName}" outcome="/candidate/candidate">
-								<f:param name="candidateId" value="#{jobCandidature.candidate.id}" />
+							<h:link value="#{jobCandidature.candidate.fullName}" outcome="#{Page.CANDIDATE.getUrl()}">
+								<f:param name="id" value="#{jobCandidature.candidate.id}" />
 							</h:link>
 						</p:column>
 

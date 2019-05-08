@@ -20,6 +20,7 @@ import ged.ejb.core.Address;
 import ged.ejb.core.tag.Tag;
 import ged.ejb.curriculum.Curriculum;
 import ged.ejb.curriculum.CurriculumService;
+import ged.ejb.job.offer.JobCandidature;
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
 import ged.web.core.IllegalPageStateException;
@@ -46,7 +47,7 @@ public class ViewCandidateBean extends AbstractBean {
 
 	private boolean editable;
 
-	private List<JobOffer> jobOffers;
+	private List<JobCandidature> jobCandidatures;
 
 	@Inject
 	private transient JobOfferService jobOfferService;
@@ -83,8 +84,8 @@ public class ViewCandidateBean extends AbstractBean {
 		return this.curriculum;
 	}
 
-	public List<JobOffer> getJobOffers() {
-		return this.jobOffers;
+	public List<JobCandidature> getJobCandidatures() {
+		return this.jobCandidatures;
 	}
 
 	public List<String> getTags() {
@@ -101,7 +102,7 @@ public class ViewCandidateBean extends AbstractBean {
 			this.candidate.setAddress(new Address());
 		}
 		this.fillTags();
-		this.jobOffers = this.jobOfferService.findJobOffersByCandidate(this.candidate);
+		this.jobCandidatures = this.jobOfferService.findJobCandidatures(candidate);
 		this.curriculum = this.curriculumService.findByCandidate(this.candidate);
 		checkDeleted();
 		this.editable = this.sessionUser.hasPermissionToEdit(this.candidate);
@@ -125,8 +126,8 @@ public class ViewCandidateBean extends AbstractBean {
 			return;
 		}
 		for (final JobOffer jobOffer : selectedJobOffers) {
-			this.jobOfferService.addJobCandidature(jobOffer, this.candidate);
-			this.jobOffers.add(jobOffer);
+			final JobCandidature jobCandidature = this.jobOfferService.addJobCandidature(jobOffer, this.candidate);
+			jobCandidatures.add(jobCandidature);
 		}
 	}
 

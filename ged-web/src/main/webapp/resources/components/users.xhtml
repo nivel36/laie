@@ -1,13 +1,8 @@
-<ui:component xmlns="http://www.w3.org/1999/xhtml" 
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html" 
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:composite="http://xmlns.jcp.org/jsf/composite" 
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
-	xmlns:o="http://omnifaces.org/ui" 
-	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
-	
+<ui:component xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
+	xmlns:composite="http://xmlns.jcp.org/jsf/composite" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	xmlns:o="http://omnifaces.org/ui" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
 	<composite:interface>
 		<composite:attribute name="users" required="true" />
 		<composite:attribute name="rendered" required="false" />
@@ -16,8 +11,7 @@
 	</composite:interface>
 
 	<composite:implementation>
-		<h:panelGroup layout="block" styleClass="users #{cc.attrs.styleClass}"
-			rendered="#{cc.attrs.rendered}">
+		<h:panelGroup layout="block" styleClass="users #{cc.attrs.styleClass}" rendered="#{cc.attrs.rendered}">
 			<div class="panel">
 				<div class="panel-header">
 					<div class="panel-header-title">#{cc.attrs.title}</div>

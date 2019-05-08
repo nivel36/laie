@@ -21,8 +21,8 @@
 						paginator="true" paginatorPosition="bottom" paginatorTemplate="{PageLinks}" rows="#{sessionUser.rowsPerPage}"
 						sortBy="#{jobOffer.name}" sortOrder="ascending">
 						<p:column headerText="#{i18n['job.name']}">
-							<h:link value="#{jobOffer.name}" outcome="/jobOffer/jobOffer">
-								<f:param name="jobOfferId" value="#{jobOffer.id}" />
+							<h:link value="#{jobOffer.name}" outcome="#{Page.JOB.getUrl()}">
+								<f:param name="id" value="#{jobOffer.id}" />
 							</h:link>
 						</p:column>
 						<p:column headerText="#{i18n['job.date_closed']}">

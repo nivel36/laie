@@ -91,6 +91,12 @@ public class JobOfferService extends AbstractAuditedService<JobOffer> {
 		logger.debug("Find all job Offers of the client  {}", client);
 		return this.jobOfferDao.findJobOffersByClient(client);
 	}
+	
+	public List<JobCandidature> findJobCandidatures(final Candidate candidate) {
+		Objects.requireNonNull(candidate);
+		logger.debug("Find all job candidatures of the candiudate  {}", candidate);
+		return this.jobCandidatureDao.findByCandidate(candidate);
+	}
 
 	public List<JobOffer> findLastJobOffers(final User owner) {
 		Objects.requireNonNull(owner);
