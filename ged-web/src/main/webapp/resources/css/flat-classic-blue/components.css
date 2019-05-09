@@ -297,12 +297,12 @@ body .input-container> *:last-child {
 	color: #7a869b;
 }
 
-.input-image {
+.input-avatar {
 	text-align: center;
 	position: relative;
 }
 
-.input-image .image, .avatar .image {
+.input-avatar .image, .avatar .image {
 	width: 128px;
 	height: 128px;
 	border-radius: 3px;
@@ -310,9 +310,10 @@ body .input-container> *:last-child {
 	box-shadow: 0px 0px 3px rgba(1, 1, 1, 0.5);
 	object-fit: cover;
 	image-orientation: from-image;
+	cursor: pointer;
 }
 
-.input-image .camera-button {
+.input-avatar .camera-button {
 	position: absolute;
 	right: 0;
 	bottom: 0;

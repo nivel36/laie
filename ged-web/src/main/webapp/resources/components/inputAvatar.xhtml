@@ -16,16 +16,16 @@
 	<composite:implementation>
 		<h:panelGroup rendered="#{cc.attrs.rendered}">
 			<div id="#{cc.clientId}" class="input-avatar #{cc.attrs.styleClass}">
-				<p:fileUpload id="inputImage_fileUpload" styleClass="invisible" fileUploadListener="#{cc.attrs.fileUploadListener}"
-					mode="advanced" dragDropSupport="false" update="inputImage" auto="true" />
-				<h:outputLabel id="inputImage_image" for="inputImage_fileUpload_input">
+				<p:fileUpload id="fileUpload" styleClass="invisible" fileUploadListener="#{cc.attrs.fileUploadListener}"
+					mode="advanced" dragDropSupport="false" update="#{cc.clientId}" auto="true" />
+				<h:outputLabel for="fileUpload_input">
 					<cc:avatar imageFileName="#{cc.attrs.value}" />
 				</h:outputLabel>
 				<c:if test="#{cc.attrs.allowCamera}">
 					<p:commandButton id="cameraButton" icon="fa-camera" onclick="PF('cameraDialog').show();"
 						styleClass="camera-button icon" />
 					<p:dialog widgetVar="cameraDialog" closable="true" dynamic="true" modal="true">
-						<p:photoCam widgetVar="camera" listener="#{cc.attrs.captureListener}" update="inputImage" />
+						<p:photoCam widgetVar="camera" listener="#{cc.attrs.captureListener}" update="#{cc.clientId}" />
 						<p:commandButton type="button" value="Capture" onclick="PF('camera').capture()" />
 					</p:dialog>
 				</c:if>
