@@ -17,13 +17,13 @@
 		<h:panelGroup rendered="#{cc.attrs.rendered}">
 			<div id="#{cc.clientId}" class="input-avatar #{cc.attrs.styleClass}">
 				<p:fileUpload id="fileUpload" styleClass="invisible" fileUploadListener="#{cc.attrs.fileUploadListener}"
-					mode="advanced" dragDropSupport="false" update="#{cc.clientId}" auto="true" />
+					mode="advanced" dragDropSupport="false" process="@this" update="#{cc.clientId}" auto="true" />
 				<h:outputLabel for="fileUpload_input">
 					<cc:avatar imageFileName="#{cc.attrs.value}" />
 				</h:outputLabel>
 				<c:if test="#{cc.attrs.allowCamera}">
 					<p:commandButton id="cameraButton" icon="fa-camera" onclick="PF('cameraDialog').show();"
-						styleClass="camera-button icon" />
+						styleClass="camera-button icon" process="@this" />
 					<p:dialog widgetVar="cameraDialog" closable="true" dynamic="true" modal="true">
 						<p:photoCam widgetVar="camera" listener="#{cc.attrs.captureListener}" update="#{cc.clientId}" />
 						<p:commandButton type="button" value="Capture" onclick="PF('camera').capture()" />
