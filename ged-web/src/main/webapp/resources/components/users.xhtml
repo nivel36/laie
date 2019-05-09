@@ -11,8 +11,8 @@
 	</composite:interface>
 
 	<composite:implementation>
-		<h:panelGroup layout="block" styleClass="users #{cc.attrs.styleClass}" rendered="#{cc.attrs.rendered}">
-			<div class="panel">
+		<h:panelGroup layout="block" rendered="#{cc.attrs.rendered}">
+			<div id="#{cc.clientId}" class="panel users #{cc.attrs.styleClass}">
 				<div class="panel-header">
 					<div class="panel-header-title">#{cc.attrs.title}</div>
 				</div>

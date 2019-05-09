@@ -10,10 +10,12 @@
 	</composite:interface>
 
 	<composite:implementation>
-		<h:panelGroup layout="block" styleClass="avatar #{cc.attrs.styleClass}">
-			<p:graphicImage class="image" value="/images/#{cc.attrs.imageFileName}"
-				rendered="#{not empty cc.attrs.imageFileName}" />
-			<p:graphicImage class="image" value="/resources/img/default-avatar.png" rendered="#{empty cc.attrs.imageFileName}" />
+		<h:panelGroup layout="block" rendered="#{cc.attrs.rendered}">
+			<div id="#{cc.clientId}" class="avatar #{cc.attrs.styleClass}">
+				<p:graphicImage class="image" value="/images/#{cc.attrs.imageFileName}"
+					rendered="#{not empty cc.attrs.imageFileName}" />
+				<p:graphicImage class="image" value="/resources/img/default-avatar.png" rendered="#{empty cc.attrs.imageFileName}" />
+			</div>
 		</h:panelGroup>
 	</composite:implementation>
 </ui:component>

@@ -13,6 +13,7 @@ import org.primefaces.model.LazyScheduleModel;
 import org.primefaces.model.ScheduleModel;
 
 import ged.ejb.candidate.Candidate;
+import ged.ejb.candidate.CandidateService;
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
 import ged.ejb.user.User;
@@ -30,6 +31,9 @@ public class IndexBean extends AbstractBean {
 
 	@Inject
 	private transient JobOfferService jobService;
+	
+	@Inject
+	private transient CandidateService candidateService;
 
 	private transient ScheduleModel schedule;
 
@@ -53,7 +57,7 @@ public class IndexBean extends AbstractBean {
 	public void init() {
 		final User user = this.sessionUser.get();
 		this.jobOffers = this.jobService.findLastJobOffers(user);
-		this.candidates = new ArrayList<>();
+		this.candidates = this.candidateService.findLastAddedCandidates(10);
 		this.schedule = new LazyScheduleModel();
 	}
 

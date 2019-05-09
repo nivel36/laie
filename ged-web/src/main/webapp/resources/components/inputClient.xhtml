@@ -6,6 +6,7 @@
 	<composite:interface componentType="inputClient">
 		<composite:attribute name="label" required="true" />
 		<composite:attribute name="required" type="java.lang.Boolean" default="false" />
+		<composite:attribute name="rendered" required="false" />
 		<composite:attribute name="value" type="ged.ejb.client.Client" required="true" />
 		<composite:attribute name="styleClass" required="false" default="" />
 		<composite:clientBehavior name="dialogReturn" event="dialogReturn" targets="search" />
@@ -14,21 +15,23 @@
 	</composite:interface>
 
 	<composite:implementation>
-		<h:panelGroup id="inputClient" layout="block" styleClass="input-client input-group #{cc.attrs.styleClass}">
-			<div class="label-container">
-				<p:outputLabel id="label" for="input-client" value="#{cc.attrs.label}" styleClass="label" />
-			</div>
-			<div class="input-container">
-				<p:inputText id="input-client" value="#{empty cc.attrs.value ? null : cc.attrs.value.name}"
-					required="#{cc.attrs.required}" binding="#{cc.input}" styleClass="input input-client" />
-				<p:commandButton id="clean" action="#{cc.clean}" process="@this" update="inputClient" styleClass="btn-gray"
-					icon="fa fa-times" binding="#{cc.cleanButton}" />
-				<p:commandButton id="search" action="#{cc.attrs.search}" process="@this" icon="fa fa-search" styleClass="icon">
-					<p:resetInput target="input-client" />
-				</p:commandButton>
-			</div>
-			<div class="message-container">
-				<p:message id="message" for="input-client" styleClass="message-error" />
+		<h:panelGroup layout="block" rendered="#{cc.attrs.rendered}">
+			<div id="#{cc.clientId}" class="input-client input-group #{cc.attrs.styleClass}">
+				<div class="label-container">
+					<p:outputLabel id="label" for="input-client" value="#{cc.attrs.label}" styleClass="label" />
+				</div>
+				<div class="input-container">
+					<p:inputText id="input-client" value="#{empty cc.attrs.value ? null : cc.attrs.value.name}"
+						required="#{cc.attrs.required}" binding="#{cc.input}" styleClass="input input-client" />
+					<p:commandButton id="clean" action="#{cc.clean}" process="@this" update="inputClient" styleClass="btn-gray"
+						icon="fa fa-times" binding="#{cc.cleanButton}" />
+					<p:commandButton id="search" action="#{cc.attrs.search}" process="@this" icon="fa fa-search" styleClass="icon">
+						<p:resetInput target="input-client" />
+					</p:commandButton>
+				</div>
+				<div class="message-container">
+					<p:message id="message" for="input-client" styleClass="message-error" />
+				</div>
 			</div>
 		</h:panelGroup>
 	</composite:implementation>

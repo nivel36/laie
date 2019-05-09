@@ -4,7 +4,6 @@
 	xmlns:o="http://omnifaces.org/ui" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
 	<composite:interface componentType="inputSelect">
-		<composite:attribute name="name" />
 		<composite:attribute name="label" required="true" />
 		<composite:attribute name="value" required="true" />
 		<composite:attribute name="required" default="false" type="boolean" />
@@ -33,7 +32,6 @@
 					</div>
 					<h:inputHidden value="#{cc.attrs.value}" binding="#{cc.inputHidden}" />
 				</c:if>
-
 				<c:if test="#{not cc.attrs.other}">
 					<div class="input-container">
 						<p:selectOneMenu id="selectOneMenu" name="#{cc.attrs.name}" value="#{cc.attrs.value}"
@@ -43,7 +41,6 @@
 						</p:selectOneMenu>
 					</div>
 				</c:if>
-
 				<div class="message-container">
 					<p:message for="selectOneMenu" styleClass="message-error" />
 				</div>

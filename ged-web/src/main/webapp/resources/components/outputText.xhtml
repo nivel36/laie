@@ -11,11 +11,11 @@
 	</composite:interface>
 
 	<composite:implementation>
-		<div class="data  #{cc.attrs.styleClass}">
+		<div id="#{cc.clientId}" class="data #{cc.attrs.styleClass}">
 			<div class="label-container">
 				<span class="label">#{cc.attrs.label}</span>
 			</div>
-			<div class="text-continer">
+			<div class="text-container">
 				<h:outputText id="text" value="#{cc.attrs.value}" styleClass="text" rendered="#{not empty cc.attrs.value}" />
 				<h:outputText id="emptyText" value="---" styleClass="text" rendered="#{empty cc.attrs.value}" />
 			</div>
