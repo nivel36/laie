@@ -52,7 +52,7 @@ public class GedExceptionHandler extends ExceptionHandlerWrapper {
 		if (event != null) {
 			final ExceptionQueuedEventContext context = (ExceptionQueuedEventContext) event.getSource();
 			final Throwable exception = context.getException();
-			logger.debug("Handling exception", exception);
+			logger.error("Handling exception", exception);
 			this.handle(this.getRootCause(exception));
 		}
 		this.getWrapped().handle();
