@@ -3,7 +3,6 @@ package ged.web.view.client;
 import java.lang.invoke.MethodHandles;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
@@ -33,12 +32,6 @@ public class AbstractClientSearch extends AbstractBean {
 
 	public String getSearchText() {
 		return searchText;
-	}
-
-	@PostConstruct
-	public void init() {
-		logger.debug("Client search dialog init");
-		this.clients = this.clientService.search(this.searchText, Page.ALL);
 	}
 
 	public void search() {

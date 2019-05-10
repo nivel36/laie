@@ -46,7 +46,8 @@
 						<p:button styleClass="btn-gray" value="#{i18n['action.cancel']}" outcome="#{Page.CLIENT.getUrl()}">
 							<f:param name="id" value="#{addContactBean.client.id}" />
 						</p:button>
-						<p:commandButton value="#{i18n['action.save']}" action="#{addContactBean.save}" process="@form growl" update="@form" />
+						<p:commandButton value="#{i18n['action.save']}" action="#{addContactBean.save}" process="@form growl"
+							update="@form" />
 					</div>
 				</div>
 			</div>

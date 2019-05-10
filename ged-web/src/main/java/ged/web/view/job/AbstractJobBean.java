@@ -5,6 +5,9 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.primefaces.event.SelectEvent;
+
+import ged.ejb.client.Client;
 import ged.ejb.core.model.Page;
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
@@ -37,6 +40,18 @@ public abstract class AbstractJobBean extends AbstractBean {
 
 	protected String jobUrl() {
 		return PageEnum.JOB.getRedirectUrl(this.jobOffer);
+	}
+
+	public void onClientSelect(final SelectEvent event) {
+		final Object selectedObject = event.getObject();
+		if (selectedObject != null) {
+			final Client client = (Client) selectedObject;
+			this.jobOffer.setClient(client);
+		}
+	}
+
+	public void searchClient() {
+		this.openBigDialog(PageEnum.CLIENT_SELECT.getUrl());
 	}
 
 	public List<User> searchOwner(final String query) {

@@ -5,7 +5,7 @@
 	template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
-		<title>#{clientEditBean.newClient ? i18n['client.new_client'] : clientEditBean.client.name}</title>
+		<title>#{clientEditBean.client.name}</title>
 	</ui:define>
 
 	<ui:define name="content">
@@ -13,13 +13,13 @@
 			<p:menuitem value="#{i18n['menu.index']}" url="/index.xhtml" />
 			<p:menuitem value="#{i18n['client.clients']}" url="/client/clientSearch.xhtml" />
 			<p:menuitem value="#{contactEditBean.client.name}" url="/client/client.xhtml?clientId=#{contactEditBean.client.id}" />
-			<p:menuitem value="#{contactEditBean.newContact ? i18n['contact.new_contact'] : contactEditBean.contact.fullName}" disabled="true" />
+			<p:menuitem value="#{contactEditBean.contact.fullName}" disabled="true" />
 		</p:breadCrumb>
 
 		<h:form id="contactForm">
 			<div class="panel">
 				<div class="panel-header">
-					<div class="panel-header-title">#{contactEditBean.newContact ? i18n['contact.new_contact'] : contactEditBean.contact.fullName}</div>
+					<div class="panel-header-title">#{contactEditBean.contact.fullName}</div>
 				</div>
 				<div class="panel-content panel-content-data">
 					<div class="grid">
@@ -38,8 +38,8 @@
 				</div>
 				<div class="panel-footer">
 					<div class="panel-buttons">
-						<p:button styleClass="btn-gray" value="#{i18n['action.cancel']}" outcome="client">
-							<f:param name="clientId" value="#{contactEditBean.client.id}" />
+						<p:button styleClass="btn-gray" value="#{i18n['action.cancel']}" outcome="#{PageEnum.CLIENT.getUrl()}">
+							<f:param name="id" value="#{contactEditBean.client.id}" />
 						</p:button>
 						<p:commandButton value="#{i18n['action.save']}" action="#{contactEditBean.save}" update="@form" />
 					</div>

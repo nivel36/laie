@@ -22,13 +22,18 @@ public class SelectClientBean extends AbstractClientSearch {
 
 	private Client selectedClient;
 
-	@PostConstruct
-	public void init() {
-		search();
+	public void cancel() {
+		PrimeFaces.current().dialog().closeDynamic(null);
 	}
-
+	
 	public Client getSelectedClient() {
 		return this.selectedClient;
+	}
+	
+	@PostConstruct
+	public void init() {
+		logger.debug("Client select init");
+		search();
 	}
 
 	public void onClientSelect() {

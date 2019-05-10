@@ -58,8 +58,9 @@
 					</div>
 					<h:form>
 						<div class="panel-buttons">
-							<p:commandButton value="#{i18n['curriculum.curriculum']}" process="@this"
-								action="#{viewCandidateBean.editCurriculum}" />
+							<p:button value="#{i18n['curriculum.curriculum']}" process="@this" outcome="#{Page.CURRICULUM.getUrl()}">
+								<f:param name="id" value="#{viewCandidateBean.candidate.id}" />
+							</p:button>
 							<p:commandButton value="#{i18n['action.export']}" process="@this" action="#{viewCandidateBean.export}"
 								icon="fa-file-excel-o" />
 							<p:commandButton value="#{i18n['action.edit']}" process="@this" action="#{viewCandidateBean.editCandidate}" />

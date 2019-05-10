@@ -10,6 +10,8 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.omnifaces.cdi.Param;
+
 import ged.ejb.candidate.Candidate;
 import ged.ejb.curriculum.Curriculum;
 import ged.ejb.curriculum.CurriculumService;
@@ -25,8 +27,12 @@ import ged.web.core.view.AbstractBean;
 @ViewScoped
 public class CurriculumBean extends AbstractBean {
 
+	private static final String CURRICULUM_KEY = "curriculum";
+
 	private static final long serialVersionUID = -5942086439519787220L;
 
+	@Inject
+	@Param(name = "id", required = true)
 	private Candidate candidate;
 
 	private Curriculum curriculum;
@@ -42,9 +48,9 @@ public class CurriculumBean extends AbstractBean {
 
 	private List<String> skills;
 
-	public void editEducation(final Education education) {
-		this.openDialog("curriculum/educationDialog",
-				buildDialogParameter("educationId", String.valueOf(education.getId())));
+	public String editEducation(final Education education) {
+		this.putValueToFlash("education", education);
+		return PageEnum.CURRICULUM_EDUCATION.getRedirectUrl();
 	}
 	
 	public String editJobExperience(final JobExperience jobExperience) {
@@ -52,11 +58,11 @@ public class CurriculumBean extends AbstractBean {
 		return PageEnum.CURRICULUM_JOB_EXPERIENCE.getRedirectUrl();
 	}
 
-	public void editLanguage(final Language language) {
-		this.openDialog("curriculum/languageDialog",
-				buildDialogParameter("languageId", String.valueOf(language.getId())));
+	public String editLanguage(final Language language) {
+		this.putValueToFlash("language", language);
+		return PageEnum.CURRICULUM_LANGUAGE.getRedirectUrl();
 	}
-
+	
 	public Candidate getCandidate() {
 		return this.candidate;
 	}
@@ -83,7 +89,6 @@ public class CurriculumBean extends AbstractBean {
 
 	@PostConstruct
 	public void init() {
-		this.candidate = this.getValueFromFlash("candidate");
 		if (candidate == null) {
 			throw new IllegalPageStateException();
 		}
@@ -114,31 +119,31 @@ public class CurriculumBean extends AbstractBean {
 		orderEducationByDate();
 	}
 
-	public void newEducation() {
-		this.openDialog("curriculum/educationDialog",
-				buildDialogParameter("curriculumId", String.valueOf(this.curriculum.getId())));
+	public String newEducation() {
+		this.putValueToFlash(CURRICULUM_KEY, this.curriculum);
+		return PageEnum.CURRICULUM_EDUCATION.getRedirectUrl();
 	}
 
 	public String newJobExperience() {
-		this.putValueToFlash("curriculum", this.curriculum);
+		this.putValueToFlash(CURRICULUM_KEY, this.curriculum);
 		return PageEnum.CURRICULUM_JOB_EXPERIENCE.getRedirectUrl();
 	}
 
-	public void newLanguage() {
-		this.openDialog("curriculum/languageDialog",
-				buildDialogParameter("curriculumId", String.valueOf(this.curriculum.getId())));
+	public String newLanguage() {
+		this.putValueToFlash(CURRICULUM_KEY, this.curriculum);
+		return PageEnum.CURRICULUM_LANGUAGE.getRedirectUrl();
 	}
 
-	public void newSkill() {
-		this.openDialog("curriculum/skillsDialog",
-				buildDialogParameter("curriculumId", String.valueOf(this.curriculum.getId())));
+	public String newSkill() {
+		this.putValueToFlash(CURRICULUM_KEY, this.curriculum);
+		return PageEnum.CURRICULUM_SKILLS.getRedirectUrl();
 	}
 
-	public void orderEducationByDate() {
+	private void orderEducationByDate() {
 		this.education.sort(Comparator.comparing(Education::getStartYear).reversed());
 	}
 
-	public void orderJobExperiencesByDate() {
+	private void orderJobExperiencesByDate() {
 		this.jobExperiences.sort(Comparator.comparing(JobExperience::getStartDate).reversed());
 	}
 
