@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://ged.com/i18n"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:p="http://primefaces.org/ui"
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:o="http://omnifaces.org/ui"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://ged.com/i18n" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:p="http://primefaces.org/ui" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:o="http://omnifaces.org/ui"
 	xmlns:of="http://omnifaces.org/functions" template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
@@ -11,34 +10,36 @@
 
 	<ui:define name="content">
 		<h:form>
-			<div class="grid">
-				<div class="col-12 md-6">
-					<cc:inputText id="degree" label="#{i18n['job_experience.company_name']}"
-						value="#{jobExperienceBean.jobExperience.companyName}" required="true" />
-				</div>
+			<div class="grid nogutter">
+				<div class="panel curriculum col-12 sm-8">
+					<div class="panel-header">
+						<div class="panel-header-title"></div>
+					</div>
+					<div class="panel-content">
+						<div class="panel-content-data">
+							<cc:inputText id="degree" label="#{i18n['job_experience.company_name']}" value="#{jobExperienceBean.jobExperience.companyName}"
+								required="true" />
 
-				<div class="col-12 md-6">
-					<cc:inputText id="jobPosition" label="#{i18n['job_experience.job_position']}"
-						value="#{jobExperienceBean.jobExperience.jobPosition}" required="true" />
-				</div>
+							<cc:inputText id="jobPosition" label="#{i18n['job_experience.job_position']}" value="#{jobExperienceBean.jobExperience.jobPosition}"
+								required="true" />
 
-				<div class="col-12">
-					<cc:inputDateRange fromYear="#{jobExperienceBean.startYear}" toYear="#{jobExperienceBean.endYear}"
-						still="#{jobExperienceBean.jobExperience.stillWorking}" fromMonth="#{jobExperienceBean.startMonth}"
-						toMonth="#{jobExperienceBean.endMonth}" showMonths="true" />
-				</div>
+							<cc:inputDateRange fromYear="#{jobExperienceBean.startYear}" toYear="#{jobExperienceBean.endYear}"
+								still="#{jobExperienceBean.jobExperience.stillWorking}" fromMonth="#{jobExperienceBean.startMonth}"
+								toMonth="#{jobExperienceBean.endMonth}" showMonths="true" />
 
-				<div class="col-12">
-					<cc:richText id="description" label="#{i18n['job_experience.description']}"
-						value="#{jobExperienceBean.jobExperience.description}" />
-				</div>
+							<cc:richText id="description" label="#{i18n['job_experience.description']}" value="#{jobExperienceBean.jobExperience.description}" />
+						</div>
+					</div>
 
-				<div class="col-12">
-					<div class="form-action-primary">
-						<p:commandButton value="#{i18n['action.cancel']}" actionListener="#{jobExperienceBean.cancel}" process="@this" />
-						<p:commandButton value="#{i18n['action.delete']}" action="#{jobExperienceBean.delete}" process="@this"
-							rendered="#{not jobExperienceBean.newJobExperience}" />
-						<p:commandButton value="#{i18n['action.save']}" action="#{jobExperienceBean.save}" process="@form" update="@form" />
+					<div class="panel-footer">
+						<div class="panel-buttons">
+							<p:button value="#{i18n['action.cancel']}" outcome="#{Page.CURRICULUM.getUrl()}">
+								<f:param name="id" value="#{jobExperienceBean.jobExperience.curriculum.candidate.id}" />
+							</p:button>
+							<p:commandButton value="#{i18n['action.delete']}" action="#{jobExperienceBean.delete}" process="@this"
+								rendered="#{not jobExperienceBean.newJobExperience}" />
+							<p:commandButton value="#{i18n['action.save']}" action="#{jobExperienceBean.save}" process="@form" update="@form" />
+						</div>
 					</div>
 				</div>
 			</div>

@@ -21,9 +21,9 @@ import ged.web.core.view.AbstractDialogBean;
 @ViewScoped
 public class JobExperienceBean extends AbstractDialogBean {
 
-	private static final String JOB_EXPERIENCE_KEY = "jobExperience";
-
 	private static final String CURRICULUM_KEY = "curriculum";
+
+	private static final String JOB_EXPERIENCE_KEY = "jobExperience";
 
 	private static final long serialVersionUID = -2896828087283592020L;
 
@@ -43,6 +43,11 @@ public class JobExperienceBean extends AbstractDialogBean {
 
 	@NotNull
 	private Integer startYear;
+
+	public String cancel() {
+		this.putValueToFlash(CURRICULUM_KEY, this.jobExperience.getCurriculum());
+		return PageEnum.CURRICULUM.getRedirectUrl();
+	}
 
 	public String delete() {
 		if (!this.isNewJobExperience()) {
@@ -71,17 +76,12 @@ public class JobExperienceBean extends AbstractDialogBean {
 	public Integer getStartYear() {
 		return this.startYear;
 	}
-	
-	public String cancel() {
-		this.putValueToFlash(CURRICULUM_KEY, this.jobExperience.getCurriculum());
-		return PageEnum.CURRICULUM.getRedirectUrl();
-	}
 
 	@PostConstruct
 	public void init() {
 		this.jobExperience = this.getValueFromFlash(JOB_EXPERIENCE_KEY);
 		if (this.jobExperience == null) {
-			final Curriculum curriculum = getValueFromFlash(CURRICULUM_KEY);
+			final Curriculum curriculum = this.getValueFromFlash(CURRICULUM_KEY);
 			this.jobExperience = new JobExperience();
 			this.jobExperience.setStillWorking(false);
 			this.jobExperience.setCurriculum(curriculum);

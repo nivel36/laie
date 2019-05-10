@@ -52,7 +52,7 @@ public class CurriculumBean extends AbstractBean {
 		this.putValueToFlash("education", education);
 		return PageEnum.CURRICULUM_EDUCATION.getRedirectUrl();
 	}
-	
+
 	public String editJobExperience(final JobExperience jobExperience) {
 		this.putValueToFlash("jobExperience", jobExperience);
 		return PageEnum.CURRICULUM_JOB_EXPERIENCE.getRedirectUrl();
@@ -62,7 +62,7 @@ public class CurriculumBean extends AbstractBean {
 		this.putValueToFlash("language", language);
 		return PageEnum.CURRICULUM_LANGUAGE.getRedirectUrl();
 	}
-	
+
 	public Candidate getCandidate() {
 		return this.candidate;
 	}
@@ -89,7 +89,7 @@ public class CurriculumBean extends AbstractBean {
 
 	@PostConstruct
 	public void init() {
-		if (candidate == null) {
+		if (this.candidate == null) {
 			throw new IllegalPageStateException();
 		}
 		this.curriculum = this.curriculumService.findByCandidate(this.candidate);
@@ -115,8 +115,8 @@ public class CurriculumBean extends AbstractBean {
 		this.education = new ArrayList<>(this.curriculum.getEducation());
 		this.jobExperiences = new ArrayList<>(this.curriculum.getJobExperiences());
 		this.languages = new ArrayList<>(this.curriculum.getLanguages());
-		orderJobExperiencesByDate();
-		orderEducationByDate();
+		this.orderJobExperiencesByDate();
+		this.orderEducationByDate();
 	}
 
 	public String newEducation() {
