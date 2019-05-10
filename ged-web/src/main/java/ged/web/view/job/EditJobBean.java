@@ -16,7 +16,7 @@ import ged.web.core.IllegalPageStateException;
 @ViewScoped
 public class EditJobBean extends AbstractJobBean {
 
-	private static final String JOB_KEY = "job";
+	private static final String JOB_OFFER_KEY = "jobOffer";
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
@@ -44,10 +44,10 @@ public class EditJobBean extends AbstractJobBean {
 
 	@PostConstruct
 	public void init() {
-		this.jobOffer = this.getValueFromFlash(JOB_KEY);
+		this.jobOffer = this.getValueFromFlash(JOB_OFFER_KEY);
 		this.checkNonNullJobOffer();
 		this.checkEditPermission();
-		this.putValueToFlash(JOB_KEY, this.jobOffer); // prevent errors if f5/reload is pressed
+		this.putValueToFlash(JOB_OFFER_KEY, this.jobOffer); // prevent errors if f5/reload is pressed
 		logger.trace("Edit job offer {} init", this.jobOffer);
 		this.fillRecruiters();
 	}

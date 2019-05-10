@@ -6,7 +6,7 @@
 	xmlns:of="http://omnifaces.org/functions" template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
-		<title>#{i18n['client.client']}</title>
+		<title>#{i18n['client.client']} - #{viewClientBean.client.name}</title>
 	</ui:define>
 
 	<ui:param name="selectedMenu" value="clients" />

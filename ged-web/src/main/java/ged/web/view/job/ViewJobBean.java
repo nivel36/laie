@@ -31,6 +31,8 @@ import ged.web.core.view.AbstractBean;
 @ViewScoped
 public class ViewJobBean extends AbstractBean {
 
+	private static final String JOB_OFFER_KEY = "jobOffer";
+
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	private static final long serialVersionUID = -1200840678252895578L;
@@ -46,14 +48,25 @@ public class ViewJobBean extends AbstractBean {
 	@Inject
 	private transient JobOfferService jobService;
 
+	private void checkDeleted() {
+		if (this.jobOffer.isDeleted()) {
+			logger.warn("Job offer is deleted");
+			Message.addWarning("message.erased_entity", "message.erased_entity");
+		}
+	}
+
 	public String editJobOffer() {
 		logger.debug("Edit job offer action performed");
-		this.putValueToFlash("jobOffer", this.jobOffer);
+		this.putValueToFlash(JOB_OFFER_KEY, this.jobOffer);
 		return PageEnum.JOB_EDIT.getRedirectUrl();
 	}
 
 	public void export() throws IOException {
 		logger.debug("Export job action performed");
+	}
+
+	private String getCandidateIdAsString(final JobCandidature jobCandidature) {
+		return String.valueOf(jobCandidature.getCandidate().getId());
 	}
 
 	public List<JobCandidature> getJobCandidatures() {
@@ -71,15 +84,8 @@ public class ViewJobBean extends AbstractBean {
 		}
 		logger.trace("JobOffer {} init", this.jobOffer);
 		this.jobCandidatures = this.jobService.findJobCandituresByJobOffer(this.jobOffer);
-		checkDeleted();
+		this.checkDeleted();
 		this.editable = this.sessionUser.hasPermissionToEdit(this.jobOffer);
-	}
-
-	private void checkDeleted() {
-		if (this.jobOffer.isDeleted()) {
-			logger.warn("Job offer is deleted");
-			Message.addWarning("message.erased_entity", "message.erased_entity");
-		}
 	}
 
 	public boolean isEditable() {
@@ -114,9 +120,5 @@ public class ViewJobBean extends AbstractBean {
 
 	public void setJobService(final JobOfferService jobService) {
 		this.jobService = jobService;
-	}
-
-	private String getCandidateIdAsString(JobCandidature jobCandidature) {
-		return String.valueOf(jobCandidature.getCandidate().getId());
 	}
 }

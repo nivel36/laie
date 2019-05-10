@@ -23,7 +23,7 @@
 				<div class="input-container">
 					<p:inputText id="input-client" value="#{empty cc.attrs.value ? null : cc.attrs.value.name}"
 						required="#{cc.attrs.required}" binding="#{cc.input}" styleClass="input input-client" />
-					<p:commandButton id="clean" action="#{cc.clean}" process="@this" update="inputClient" styleClass="btn-gray"
+					<p:commandButton id="clean" action="#{cc.clean}" process="@this" update="@parent" styleClass="btn-gray"
 						icon="fa fa-times" binding="#{cc.cleanButton}" />
 					<p:commandButton id="search" action="#{cc.attrs.search}" process="@this" icon="fa fa-search" styleClass="icon">
 						<p:resetInput target="input-client" />

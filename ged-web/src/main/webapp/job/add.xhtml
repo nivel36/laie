@@ -31,7 +31,7 @@
 
 							<cc:inputClient id="client" label="#{i18n['job.client']}" value="#{addJobBean.jobOffer.client}"
 								search="#{addJobBean.searchClient()}" required="true">
-								<p:ajax event="dialogReturn" listener="#{addJobBean.onClientSelect}" update="@parent" />
+								<p:ajax event="dialogReturn" listener="#{addJobBean.onClientSelect}" update="client" />
 							</cc:inputClient>
 
 							<cc:inputNumber id="places" min="0" label="#{i18n['job.places']}" value="#{addJobBean.jobOffer.places}" />

@@ -4,7 +4,7 @@
 	template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
-		<title>#{editJobBean.jobOffer.name}</title>
+		<title>#{i18n['job.edit_job']} - #{editJobBean.jobOffer.name}</title>
 	</ui:define>
 
 	<ui:param name="selectedMenu" value="offers" />
