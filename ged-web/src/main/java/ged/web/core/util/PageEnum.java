@@ -37,13 +37,15 @@ public enum PageEnum {
 	USER_ADD("/user/add"), //
 	USER_EDIT("/user/edit"), //
 	USER_SEARCH("/user/search");
+	
+	private static final String XHTML = ".xhtml";
 
 	private final static String REDIRECT = "faces-redirect=true";
 
 	private String url;
 
 	PageEnum(final String url) {
-		this.url = url;
+		this.url = url + XHTML;
 	}
 
 	public String getRedirectUrl() {
