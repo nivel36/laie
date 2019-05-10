@@ -10,8 +10,6 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.primefaces.event.SelectEvent;
-
 import ged.ejb.candidate.Candidate;
 import ged.ejb.curriculum.Curriculum;
 import ged.ejb.curriculum.CurriculumService;
@@ -19,6 +17,8 @@ import ged.ejb.curriculum.education.Education;
 import ged.ejb.curriculum.jobexperience.JobExperience;
 import ged.ejb.curriculum.language.Language;
 import ged.ejb.curriculum.skills.Skill;
+import ged.web.core.IllegalPageStateException;
+import ged.web.core.util.PageEnum;
 import ged.web.core.view.AbstractBean;
 
 @Named
@@ -43,16 +43,18 @@ public class CurriculumBean extends AbstractBean {
 	private List<String> skills;
 
 	public void editEducation(final Education education) {
-		this.openDialog("educationDialog", buildDialogParameter("educationId", String.valueOf(education.getId())));
+		this.openDialog("curriculum/educationDialog",
+				buildDialogParameter("educationId", String.valueOf(education.getId())));
 	}
-
-	public void editJobExperience(final JobExperience jobExperience) {
-		this.openDialog("jobExperienceDialog",
-				buildDialogParameter("jobExperienceId", String.valueOf(jobExperience.getId())));
+	
+	public String editJobExperience(final JobExperience jobExperience) {
+		this.putValueToFlash("jobExperience", jobExperience);
+		return PageEnum.CURRICULUM_JOB_EXPERIENCE.getRedirectUrl();
 	}
 
 	public void editLanguage(final Language language) {
-		this.openDialog("languageDialog", buildDialogParameter("languageId", String.valueOf(language.getId())));
+		this.openDialog("curriculum/languageDialog",
+				buildDialogParameter("languageId", String.valueOf(language.getId())));
 	}
 
 	public Candidate getCandidate() {
@@ -82,6 +84,9 @@ public class CurriculumBean extends AbstractBean {
 	@PostConstruct
 	public void init() {
 		this.candidate = this.getValueFromFlash("candidate");
+		if (candidate == null) {
+			throw new IllegalPageStateException();
+		}
 		this.curriculum = this.curriculumService.findByCandidate(this.candidate);
 		if (this.curriculum == null) {
 			this.curriculum = new Curriculum();
@@ -110,42 +115,23 @@ public class CurriculumBean extends AbstractBean {
 	}
 
 	public void newEducation() {
-		this.openDialog("educationDialog",
+		this.openDialog("curriculum/educationDialog",
 				buildDialogParameter("curriculumId", String.valueOf(this.curriculum.getId())));
 	}
 
-	public void newJobExperience() {
-		this.openDialog("jobExperienceDialog",
-				buildDialogParameter("curriculumId", String.valueOf(this.curriculum.getId())));
+	public String newJobExperience() {
+		this.putValueToFlash("curriculum", this.curriculum);
+		return PageEnum.CURRICULUM_JOB_EXPERIENCE.getRedirectUrl();
 	}
 
 	public void newLanguage() {
-		this.openDialog("languageDialog",
+		this.openDialog("curriculum/languageDialog",
 				buildDialogParameter("curriculumId", String.valueOf(this.curriculum.getId())));
 	}
 
 	public void newSkill() {
-		this.openDialog("skillsDialog", buildDialogParameter("curriculumId", String.valueOf(this.curriculum.getId())));
-	}
-
-	public void onEditEducation(final SelectEvent event) {
-		init();
-	}
-
-	public void onEditJobExperience(final SelectEvent event) {
-		init();
-	}
-
-	public void onEditLanguage(final SelectEvent event) {
-		init();
-	}
-
-	public void onEditSkill(final SelectEvent event) {
-		init();
-	}
-
-	public void onEditSkills(final SelectEvent event) {
-		init();
+		this.openDialog("curriculum/skillsDialog",
+				buildDialogParameter("curriculumId", String.valueOf(this.curriculum.getId())));
 	}
 
 	public void orderEducationByDate() {

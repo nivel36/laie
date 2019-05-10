@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
-	template="/WEB-INF/templates/default.xhtml" xmlns:p="http://primefaces.org/ui" xmlns:i18n="http://ged.com/i18n">
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://ged.com/i18n"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:p="http://primefaces.org/ui"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions" template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
 		<title>#{i18n['curriculum.curriculum']}</title>
@@ -10,6 +12,15 @@
 	<ui:param name="selectedMenu" value="candidates" />
 
 	<ui:define name="content">
+		<p:breadCrumb styleClass="breadcrumb">
+			<p:menuitem value="#{i18n['menu.index']}" outcome="#{Page.INDEX.getUrl()}" />
+			<p:menuitem value="#{i18n['candidate.candidates']}" outcome="#{Page.CANDIDATE_SEARCH.getUrl()}" />
+			<p:menuitem value="#{curriculumBean.candidate.fullName}" outcome="#{Page.CANDIDATE.getUrl()}">
+				<f:param name="id" value="#{curriculumBean.candidate.id}" />
+			</p:menuitem>
+			<p:menuitem value="#{i18n['curriculum.curriculum']}" disabled="true" />
+		</p:breadCrumb>
+
 		<h:form id="form">
 			<div class="panel">
 				<div class="panel-header">
@@ -20,16 +31,14 @@
 						<!-- JOB EXPERIENCE -->
 						<h2>#{i18n['curriculum.job_experiences']}</h2>
 						<div class="cvAction">
-							<p:commandButton icon="fa fa-plus" action="#{curriculumBean.newJobExperience}" process="@this">
-								<p:ajax event="dialogReturn" listener="#{curriculumBean.onEditJobExperience}" update="form:jobExperiences" />
-							</p:commandButton>
+							<p:commandButton icon="fa fa-plus" action="#{curriculumBean.newJobExperience}" process="@this" />
 						</div>
 						<ui:repeat value="#{curriculumBean.jobExperiences}" var="jobExperience" id="jobExperience" varStatus="varStatus">
 							<div class="section">
-								<span class="cvAction"> <p:commandButton icon="fa fa-pencil"
-										action="#{curriculumBean.editJobExperience(jobExperience)}" process="@this">
-									</p:commandButton>
-								</span>
+								<div class="cvAction">
+									<p:commandButton icon="fa fa-pencil" action="#{curriculumBean.editJobExperience(jobExperience)}"
+										process="@this" />
+								</div>
 								<h3>#{jobExperience.jobPosition}</h3>
 								<h4>#{jobExperience.companyName}</h4>
 								<h4>

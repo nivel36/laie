@@ -9,6 +9,7 @@ public enum PageEnum {
 	CANDIDATE_EDIT("/candidate/edit"), //
 	CANDIDATE_SEARCH("/candidate/search"), //
 	CANDIDATE_SELECT("/candidate/select"), //
+	CHANGE_PASSWORD("/changePassword"), //
 	CLIENT("/client/view"), //
 	CLIENT_ADD("/client/add"), //
 	CLIENT_EDIT("/client/edit"), //
@@ -18,6 +19,10 @@ public enum PageEnum {
 	CONTACT_ADD("/client/contact/add"), //
 	CONTACT_EDIT("/client/contact/edit"), //
 	CURRICULUM("/candidate/curriculum"), //
+	CURRICULUM_JOB_EXPERIENCE("/candidate/curriculum/jobExperience"), //
+	CURRICULUM_LANGUAGE("/candidate/curriculum/language"), //
+	CURRICULUM_EDUCATION("/candidate/curriculum/education"), //
+	CURRICULUM_SKILLS("/candidate/curriculum/skills"), //
 	INDEX("/index"), //
 	ISABEL("/isabel/isabel"), //
 	JOB("/job/view"), //

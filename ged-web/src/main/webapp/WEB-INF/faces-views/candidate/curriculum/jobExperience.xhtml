@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
-	xmlns:i18n="http://ged.com/i18n" xmlns:o="http://omnifaces.org/ui"
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" template="/WEB-INF/templates/dialog.xhtml">
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://ged.com/i18n"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:p="http://primefaces.org/ui"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions" template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
 		<title>#{i18n['job_experience.job_experience']}</title>
@@ -34,8 +35,7 @@
 
 				<div class="col-12">
 					<div class="form-action-primary">
-						<p:commandButton value="#{i18n['action.cancel']}" actionListener="#{jobExperienceBean.closeDialog}"
-							process="@this" update="@form" />
+						<p:commandButton value="#{i18n['action.cancel']}" actionListener="#{jobExperienceBean.cancel}" process="@this" />
 						<p:commandButton value="#{i18n['action.delete']}" action="#{jobExperienceBean.delete}" process="@this"
 							rendered="#{not jobExperienceBean.newJobExperience}" />
 						<p:commandButton value="#{i18n['action.save']}" action="#{jobExperienceBean.save}" process="@form" update="@form" />

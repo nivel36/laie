@@ -70,12 +70,6 @@
 		<param-value>resources.application</param-value>
 	</context-param>
 	<context-param>
-		<!-- Workaround for disappearing PF DF ?pfdlgcid= parameter -->
-		<!-- This can be removed when using OmniFaces 2.6.3 -->
-		<param-name>org.omnifaces.FACES_VIEWS_VIEW_HANDLER_MODE</param-name>
-		<param-value>BUILD_WITH_PARENT_QUERY_PARAMETERS</param-value>
-	</context-param>
-	<context-param>
     	<param-name>org.omnifaces.FACES_VIEWS_SCAN_PATHS</param-name>
     	<param-value>/*.xhtml/*</param-value>
 	</context-param>
