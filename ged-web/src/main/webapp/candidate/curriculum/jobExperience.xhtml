@@ -23,9 +23,7 @@
 							<cc:inputText id="jobPosition" label="#{i18n['job_experience.job_position']}" value="#{jobExperienceBean.jobExperience.jobPosition}"
 								required="true" />
 
-							<cc:inputDateRange fromYear="#{jobExperienceBean.startYear}" toYear="#{jobExperienceBean.endYear}"
-								still="#{jobExperienceBean.jobExperience.stillWorking}" fromMonth="#{jobExperienceBean.startMonth}"
-								toMonth="#{jobExperienceBean.endMonth}" showMonths="true" />
+							<cc:inputYearMonth id="fromDate" label="#{i18n['education.from_date']}" value="#{jobExperienceBean.fromDate}" />
 
 							<cc:richText id="description" label="#{i18n['job_experience.description']}" value="#{jobExperienceBean.jobExperience.description}" />
 						</div>
