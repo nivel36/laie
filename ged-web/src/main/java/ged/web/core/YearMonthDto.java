@@ -1,8 +1,11 @@
 package ged.web.core;
 
+import java.io.Serializable;
 import java.time.YearMonth;
 
-public class YearMonthDto {
+public class YearMonthDto implements Serializable {
+
+	private static final long serialVersionUID = 8244823973608903911L;
 
 	public static YearMonthDto from(final YearMonth yearMonth) {
 		final YearMonthDto dto = new YearMonthDto();

@@ -146,8 +146,29 @@ public class PersistenceFacade {
 			final String... fields) {
 		final FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(this.getEm());
 		final QueryBuilder qb = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(type).get();
-		final BooleanJunction<BooleanJunction> bj = qb.bool();
+		
+		final BooleanJunction<BooleanJunction> bj = createPredicate(searchText, qb, fields);
 
+		final FullTextQuery fullTextQuery = fullTextEntityManager.createFullTextQuery(createLuceneQuery(qb, bj), type);
+		paginate(page, fullTextQuery);
+		fullTextQuery.setHint(CACHE_STORE_MODE, CacheStoreMode.REFRESH);
+
+		sortQuery(sortOrders, qb, fullTextQuery);
+
+		final List<T> results = fullTextQuery.getResultList();
+		if (results instanceof ArrayList) {
+			return results;
+		}
+		else {
+			return new ArrayList<>(results);
+		}
+	}
+
+	@SuppressWarnings("rawtypes")
+	private BooleanJunction<BooleanJunction> createPredicate(final String searchText, final QueryBuilder qb,
+			final String... fields) {
+		final BooleanJunction<BooleanJunction> bj = qb.bool();
+		
 		if (searchText != null) {
 			final List<String> searchValues = Arrays.asList(searchText.split("\\s"));
 			for (final String searchValue : searchValues) {
@@ -159,8 +180,12 @@ public class PersistenceFacade {
 				bj.must(fieldBj.createQuery());
 			}
 		}
+		return bj;
+	}
 
-		final FullTextQuery fullTextQuery;
+	@SuppressWarnings("rawtypes")
+	private org.apache.lucene.search.Query createLuceneQuery(final QueryBuilder qb,
+			final BooleanJunction<BooleanJunction> bj) {
 		org.apache.lucene.search.Query luceneQuery;
 		if (bj.isEmpty()) {
 			luceneQuery = qb.all().createQuery();
@@ -168,11 +193,10 @@ public class PersistenceFacade {
 		else {
 			luceneQuery = bj.createQuery();
 		}
+		return luceneQuery;
+	}
 
-		fullTextQuery = fullTextEntityManager.createFullTextQuery(luceneQuery, type);
-		paginate(page, fullTextQuery);
-		fullTextQuery.setHint(CACHE_STORE_MODE, CacheStoreMode.REFRESH);
-
+	private void sortQuery(final List<SortOrder> sortOrders, final QueryBuilder qb, final FullTextQuery fullTextQuery) {
 		if ((sortOrders != null) && !sortOrders.isEmpty()) {
 			final int orderSize = sortOrders.size();
 			final SortFieldContext sfc = qb.sort().byField(sortOrders.get(0).getField());
@@ -187,14 +211,6 @@ public class PersistenceFacade {
 			}
 			final Sort sort = sfc.createSort();
 			fullTextQuery.setSort(sort);
-		}
-
-		final List<T> results = fullTextQuery.getResultList();
-		if (results instanceof ArrayList) {
-			return results;
-		}
-		else {
-			return new ArrayList<>(results);
 		}
 	}
 

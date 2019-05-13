@@ -31,11 +31,12 @@ public class AddJobBean extends AbstractJobBean {
 
 	private void fillRecruiters(final User user) {
 		final List<User> subordinateUsers = this.userService.findSubordinateUsers(user);
-		this.recruiters = new ArrayList<>();
-		this.recruiters.add(this.sessionUser.get().getFullName());
+		List<String> recruitersName = new ArrayList<>();
+		recruitersName.add(this.sessionUser.get().getFullName());
 		for (final User subordinate : subordinateUsers) {
-			this.recruiters.add(subordinate.getFullName());
+			recruitersName.add(subordinate.getFullName());
 		}
+		this.setRecruiters(recruitersName);
 	}
 
 	@PostConstruct

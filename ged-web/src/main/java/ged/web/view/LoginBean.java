@@ -77,9 +77,9 @@ public class LoginBean extends AbstractBean {
 	@PostConstruct
 	public void init() {
 		logger.trace("Login init");
-		final String username = this.externalContext.getRemoteUser();
-		if (username != null) {
-			logger.warn("User {} alredy logged", username);
+		final String remoteUser = this.externalContext.getRemoteUser();
+		if (remoteUser != null) {
+			logger.warn("User {} alredy logged", remoteUser);
 			gotoIndex();
 		}
 		setDefaultLocale();

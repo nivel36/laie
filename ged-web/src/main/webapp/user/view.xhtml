@@ -28,10 +28,10 @@
 						<div class="name">#{viewUserBean.user.fullName}</div>
 						<div class="job-profile">#{i18n:translate(viewUserBean.user.role)}</div>
 						<div class="data email">
-							<span class="icon"><i class="fa fa-envelope"></i></span><span class="text">#{viewUserBean.user.email}</span>
+							<span class="icon"><em class="fa fa-envelope"></em></span><span class="text">#{viewUserBean.user.email}</span>
 						</div>
 						<h:panelGroup layout="block" styleClass="data phone" rendered="#{not empty viewUserBean.user.phoneNumber}">
-							<span class="icon"><i class="fa fa-phone"></i></span>
+							<span class="icon"><em class="fa fa-phone"></em></span>
 							<span class="text">#{viewUserBean.user.phoneNumber}</span>
 						</h:panelGroup>
 					</div>

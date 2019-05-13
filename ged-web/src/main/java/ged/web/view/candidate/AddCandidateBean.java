@@ -35,13 +35,13 @@ public class AddCandidateBean extends AbstractCandidateBean {
 		logger.trace("New candidate init");
 		this.candidate = this.buildNewCandidate();
 		for (final Tag tag : this.candidate.getTags()) {
-			this.tags.add(tag.getLabel());
+			this.getTags().add(tag.getLabel());
 		}
 	}
 
 	public String save() {
 		logger.debug("Create new candidate action performed");
-		this.candidate.setTags(this.getTagsFromStringList(this.tags));
+		this.candidate.setTags(this.getTagsFromStringList(this.getTags()));
 		this.candidate = this.candidateService.save(this.candidate);
 		return this.candidateUrl();
 	}

@@ -38,9 +38,6 @@ public class InputDateRange extends UIInput implements NamingContainer {
 		if (inputStillWorking) {
 			return true;
 		}
-		if ((inputStartYear != null) && (inputEndYear != null) && ((inputStartYear - inputEndYear) > 0)) {
-			return false;
-		}
-		return true;
+		return !((inputStartYear != null) && (inputEndYear != null) && ((inputStartYear - inputEndYear) > 0));
 	}
 }

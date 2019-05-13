@@ -38,7 +38,7 @@ public class EditJobBean extends AbstractJobBean {
 
 	private void fillRecruiters() {
 		for (final User recruiter : this.jobOffer.getRecruiters()) {
-			this.recruiters.add(recruiter.getFullName());
+			this.getRecruiters().add(recruiter.getFullName());
 		}
 	}
 

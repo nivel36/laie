@@ -36,7 +36,7 @@ public abstract class AbstractCandidateBean extends AbstractBean {
 	@Inject
 	protected transient FileUploadService fileUploadService;
 
-	protected List<String> tags = new ArrayList<>();
+	private List<String> tags = new ArrayList<>();
 
 	@Inject
 	protected transient TagService tagService;

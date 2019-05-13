@@ -28,6 +28,8 @@ import ged.web.core.view.AbstractBean;
 @ViewScoped
 public class ViewClientBean extends AbstractBean {
 
+	private static final String CLIENT_KEY = "client";
+
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	private static final long serialVersionUID = 1412905869664752048L;
@@ -47,7 +49,7 @@ public class ViewClientBean extends AbstractBean {
 
 	public String editClient() {
 		logger.debug("Edit client action performed");
-		this.putValueToFlash("client", this.client);
+		this.putValueToFlash(CLIENT_KEY, this.client);
 		return PageEnum.CLIENT_EDIT.getRedirectUrl();
 	}
 
@@ -95,12 +97,12 @@ public class ViewClientBean extends AbstractBean {
 
 	public void newContact() {
 		logger.debug("New contact action performed");
-		this.putValueToFlash("client", this.client);
+		this.putValueToFlash(CLIENT_KEY, this.client);
 	}
 
 	public void newJobOffer() {
 		logger.debug("New job offer action performed");
-		this.putValueToFlash("client", this.client);
+		this.putValueToFlash(CLIENT_KEY, this.client);
 	}
 
 	public void setClient(final Client client) {

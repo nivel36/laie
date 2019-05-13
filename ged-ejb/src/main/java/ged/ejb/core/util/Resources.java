@@ -1,7 +1,6 @@
 package ged.ejb.core.util;
 
 import java.io.IOException;
-import java.io.UncheckedIOException;
 import java.lang.invoke.MethodHandles;
 import java.util.Properties;
 
@@ -33,7 +32,6 @@ public class Resources {
 		}
 		catch (final IOException e) {
 			logger.error("Property file not found", e);
-			throw new UncheckedIOException(e);
 		}
 	}
 

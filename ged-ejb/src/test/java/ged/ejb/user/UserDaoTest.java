@@ -189,7 +189,8 @@ public class UserDaoTest {
 
 			when(UserDaoTest.this.persistenceFacade.find(User.class, 1L)).thenReturn(userInDatabase);
 
-			UserDaoTest.this.userDao.save(userToUpdate);
+			final User updatedUser = UserDaoTest.this.userDao.save(userToUpdate);
+			assertNull(updatedUser);
 		}
 	}
 

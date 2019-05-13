@@ -143,9 +143,6 @@ public class JobExperienceBean extends AbstractDialogBean {
 		}
 		final YearMonth startDate = YearMonth.of(inputStartYear, inputStartMonth);
 		final YearMonth endDate = YearMonth.of(inputEndYear, inputEndMonth);
-		if (startDate.isAfter(endDate)) {
-			return false;
-		}
-		return true;
+		return (startDate.isBefore(endDate));
 	}
 }

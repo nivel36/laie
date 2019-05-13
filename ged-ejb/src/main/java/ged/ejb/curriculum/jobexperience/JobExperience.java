@@ -92,7 +92,7 @@ public class JobExperience extends AbstractEntity {
 
 	public Long getMonthsWorked() {
 		Objects.requireNonNull(this.startDate);
-		if ((this.stillWorking == false) && (this.endDate == null)) {
+		if ((!this.stillWorking) && (this.endDate == null)) {
 			throw new IllegalStateException();
 		}
 		if (this.stillWorking) {

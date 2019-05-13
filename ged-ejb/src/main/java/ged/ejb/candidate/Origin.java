@@ -26,8 +26,8 @@ public class Origin extends AbstractEntity {
 		if (this.getClass() != obj.getClass()) {
 			return false;
 		}
-		final Origin other = (Origin) obj;
-		return Objects.equals(other.code, this.code) && Objects.equals(other.other, this.other);
+		final Origin otherOrigin = (Origin) obj;
+		return Objects.equals(otherOrigin.code, this.code) && Objects.equals(otherOrigin.other, this.other);
 	}
 
 	public String getCode() {

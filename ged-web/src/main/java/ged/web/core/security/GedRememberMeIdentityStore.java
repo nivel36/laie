@@ -18,6 +18,7 @@ public class GedRememberMeIdentityStore implements RememberMeIdentityStore {
 
 	@Override
 	public void removeLoginToken(final String token) {
+		// do nothing
 	}
 
 	@Override
