@@ -13,6 +13,12 @@ public class YearMonthDto implements Serializable {
 		dto.year = Integer.valueOf(yearMonth.getYear());
 		return dto;
 	}
+	
+	public YearMonthDto() {}
+	public YearMonthDto(Integer month, Integer year) {
+		this.month = month;
+		this.year = year;
+	}
 
 	private Integer month;
 

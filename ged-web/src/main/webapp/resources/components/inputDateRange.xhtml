@@ -3,15 +3,13 @@
 	xmlns:composite="http://xmlns.jcp.org/jsf/composite" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
 	xmlns:o="http://omnifaces.org/ui" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
-	<composite:interface componentType="inputDateRange">
+	<composite:interface>
 		<composite:attribute name="styleClass" required="false" default="" />
-		<composite:attribute name="fromYear" type="java.lang.Integer" required="true" />
-		<composite:attribute name="toYear" type="java.lang.Integer" required="true" />
-		<composite:attribute name="fromMonth" type="java.lang.Integer" />
-		<composite:attribute name="toMonth" type="java.lang.Integer" />
+		<composite:attribute name="fromDate" type="ged.web.core.YearMonthDto" required="true" />
+		<composite:attribute name="toDate" type="ged.web.core.YearMonthDto" required="true" />
 		<composite:attribute name="plusYear" type="java.lang.Integer" required="false" default="0" />
 		<composite:attribute name="minusYear" type="java.lang.Integer" required="false" default="20" />
-		<composite:attribute name="showMonths" type="java.lang.Boolean" required="false" default="false" />
+		<composite:attribute name="showMonths" type="java.lang.Boolean" required="false" default="true" />
 		<composite:attribute name="still" />
 		<composite:attribute name="required" type="java.lang.Boolean" required="false" default="false" />
 		<composite:attribute name="rendered" type="java.lang.Boolean" required="false" default="true" />
@@ -19,25 +17,21 @@
 
 	<composite:implementation>
 		<h:panelGroup layout="block" rendered="#{cc.attrs.rendered}">
-			<div id="#{cc.clientId}" class="input-date-range input-group #{cc.attrs.styleClass}">
+			<div id="#{cc.clientId}" class="input-date-range #{cc.attrs.styleClass}">
+
 				<div class="from-date">
-					<cc:inputYearMonth id="fromDate" label="#{i18n['education.from_date']}" month="#{cc.attrs.fromMonth}" year="#{cc.attrs.fromYear}"
+					<cc:inputYearMonth id="fromDate" label="#{i18n['education.from_date']}" value="#{cc.attrs.fromDate}"
 						required="#{cc.attrs.required}" showMonths="#{cc.attrs.showMonths}" />
 				</div>
 				<div class="to-date">
-					<cc:inputYearMonth id="toDate" label="#{i18n['education.to_date']}" month="#{cc.attrs.toMonth}" year="#{cc.attrs.toYear}"
-						required="#{cc.attrs.required}" showMonths="#{cc.attrs.showMonths}" />
+					<cc:inputYearMonth id="toDate" label="#{i18n['education.to_date']}" value="#{cc.attrs.toDate}"
+						required="#{cc.attrs.required}" showMonths="#{cc.attrs.showMonths}" rendered="#{cc.attrs.still}" />
 				</div>
 				<div class="still">
-					<div class="form-group">
-						<p:outputLabel value="#{i18n['education.still_studying']}" />
-						<p:selectBooleanCheckbox value="#{cc.attrs.still}" id="still">
-							<f:ajax render="toDate" />
-						</p:selectBooleanCheckbox>
-					</div>
+					<cc:inputCheckbox id="still" label="#{i18n['education.still_studying']}" value="#{cc.attrs.still}">
+						<f:ajax event="change" render="toDate" />
+					</cc:inputCheckbox>
 				</div>
-				<o:validateMultiple id="validationDates" components="fromYear toYear still" validator="#{cc.validateDates}"
-					message="#{i18n['education.error.dates']}" showMessageFor="toYear" />
 			</div>
 		</h:panelGroup>
 	</composite:implementation>

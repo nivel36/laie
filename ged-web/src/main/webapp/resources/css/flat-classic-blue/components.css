@@ -250,6 +250,13 @@ input[type="text"]:disabled {
   background: #efefef;
 }
 
+.input.input-checkbox {
+	flex: 0 0 16px;
+	height: 16px;
+	padding: 0;
+}
+
+
 .input.input-number {
 	padding-right: 25px;
 }

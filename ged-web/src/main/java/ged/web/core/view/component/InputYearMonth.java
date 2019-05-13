@@ -12,8 +12,30 @@ import javax.faces.component.UINamingContainer;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 
+import ged.web.core.YearMonthDto;
+
 @FacesComponent(value = "inputYearMonth")
-public class InputYearMonth  extends UIInput implements NamingContainer {
+public class InputYearMonth extends UIInput implements NamingContainer {
+
+	private Integer year;
+
+	private Integer month;
+
+	public Integer getYear() {
+		return year;
+	}
+
+	public void setYear(Integer year) {
+		this.year = year;
+	}
+
+	public Integer getMonth() {
+		return month;
+	}
+
+	public void setMonth(Integer month) {
+		this.month = month;
+	}
 
 	public static class Month {
 
@@ -81,8 +103,7 @@ public class InputYearMonth  extends UIInput implements NamingContainer {
 		final Locale locale;
 		if (uIViewRoot != null) {
 			locale = uIViewRoot.getLocale();
-		}
-		else {
+		} else {
 			locale = Locale.ENGLISH;
 		}
 		return locale;
@@ -90,6 +111,11 @@ public class InputYearMonth  extends UIInput implements NamingContainer {
 
 	public Month[] getMonths() {
 		return (Month[]) this.getStateHelper().get("months");
+	}
+
+	@Override
+	public Object getSubmittedValue() {
+		return new YearMonthDto(month, year);
 	}
 
 	private ResourceBundle getResourceBundle(final String filename) {
