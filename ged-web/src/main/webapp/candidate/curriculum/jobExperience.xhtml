@@ -10,7 +10,7 @@
 	</ui:define>
 
 	<ui:define name="content">
-		<h:form>
+		<h:form id="jobExperience">
 			<div class="grid nogutter">
 				<div class="panel curriculum col-12 sm-8">
 					<div class="panel-header">
@@ -26,11 +26,13 @@
 
 							<cc:inputYearMonth id="fromDate" label="#{i18n['education.from_date']}" value="#{jobExperienceBean.fromDate}" />
 
-							<cc:inputYearMonth id="toDate" label="#{i18n['education.to_date']}" value="#{jobExperienceBean.toDate}"
-								rendered="#{not jobExperienceBean.stillWorking}" />
+							<h:panelGroup layout="block" id="toDateWrapper">
+								<cc:inputYearMonth id="toDate" label="#{i18n['education.to_date']}" value="#{jobExperienceBean.toDate}"
+									rendered="#{not jobExperienceBean.stillWorking}" />
+							</h:panelGroup>
 
 							<cc:inputCheckbox id="still" label="#{i18n['job.still_working']}" value="#{jobExperienceBean.stillWorking}">
-								<f:ajax event="change" render="toDate" />
+								<f:ajax event="change" render="jobExperience:toDateWrapper" />
 							</cc:inputCheckbox>
 
 							<cc:richText id="description" label="#{i18n['job_experience.description']}"
@@ -40,7 +42,7 @@
 
 					<div class="panel-footer">
 						<div class="panel-buttons">
-							<p:button value="#{i18n['action.cancel']}" outcome="#{Page.CURRICULUM.getUrl()}" >
+							<p:button value="#{i18n['action.cancel']}" outcome="#{Page.CURRICULUM.getUrl()}">
 								<f:param name="id" value="#{jobExperienceBean.jobExperience.curriculum.candidate.id}" />
 							</p:button>
 							<p:commandButton value="#{i18n['action.delete']}" action="#{jobExperienceBean.delete}" process="@this"
