@@ -5,20 +5,17 @@
 
 	<composite:interface>
 		<composite:attribute name="user" type="ged.ejb.user.User" required="true" />
-		<composite:attribute name="rendered" required="false" />
 	</composite:interface>
 
 	<composite:implementation>
-		<h:panelGroup rendered="#{cc.attrs.rendered}">
-			<div id="#{cc.clientId}" class="user-minicard">
-				<p:link outcome="#{Page.USER.getUrl()}">
-					<f:param name="id" value="#{cc.attrs.user.id}" />
-					<cc:avatar styleClass="user-minicard-image" imageFileName="#{cc.attrs.user.imageFileName}" />
-					<div class="user-minicard-info">
-						<h:panelGroup layout="block" styleClass="name">#{cc.attrs.user}</h:panelGroup>
-					</div>
-				</p:link>
-			</div>
-		</h:panelGroup>
+		<div id="#{cc.clientId}" class="user-minicard">
+			<p:link outcome="#{Page.USER.getUrl()}">
+				<f:param name="id" value="#{cc.attrs.user.id}" />
+				<cc:avatar styleClass="user-minicard-image" imageFileName="#{cc.attrs.user.imageFileName}" />
+				<div class="user-minicard-info">
+					<h:panelGroup layout="block" styleClass="name">#{cc.attrs.user}</h:panelGroup>
+				</div>
+			</p:link>
+		</div>
 	</composite:implementation>
 </ui:component>

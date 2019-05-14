@@ -8,28 +8,25 @@
 		<composite:attribute name="value" required="true" />
 		<composite:attribute name="yearRange" default="c-5:c+1" />
 		<composite:attribute name="required" default="false" />
-		<composite:attribute name="rendered" default="true" />
 		<composite:attribute name="validator" targets="calendar" />
 		<composite:attribute name="styleClass" required="false" default="" />
 	</composite:interface>
 
 	<composite:implementation>
-		<h:panelGroup layout="block" rendered="#{cc.attrs.rendered}">
-			<div id="#{cc.clientId}" class="input-group input-group-calendar #{cc.attrs.styleClass}">
-				<div class="label-container">
-					<p:outputLabel id="label" for="calendar" value="#{cc.attrs.label}" styleClass="label" />
-				</div>
-				<div class="input-container">
-					<p:calendar id="calendar" value="#{cc.attrs.value}" pattern="dd/MM/yyyy" navigator="true"
-						yearRange="#{cc.attrs.yearRange}" required="#{cc.attrs.required}" styleClass="input calendar">
-						<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
-					</p:calendar>
-					<i class="icon fa fa-calendar" aria-hidden="true"></i>
-				</div>
-				<div class="message-container">
-					<p:message id="message" for="calendar" styleClass="message-error" />
-				</div>
+		<div id="#{cc.clientId}" class="input-group input-group-calendar #{cc.attrs.styleClass}">
+			<div class="label-container">
+				<p:outputLabel id="label" for="calendar" value="#{cc.attrs.label}" styleClass="label" />
 			</div>
-		</h:panelGroup>
+			<div class="input-container">
+				<p:calendar id="calendar" value="#{cc.attrs.value}" pattern="dd/MM/yyyy" navigator="true"
+					yearRange="#{cc.attrs.yearRange}" required="#{cc.attrs.required}" styleClass="input calendar">
+					<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
+				</p:calendar>
+				<i class="icon fa fa-calendar" aria-hidden="true"></i>
+			</div>
+			<div class="message-container">
+				<p:message id="message" for="calendar" styleClass="message-error" />
+			</div>
+		</div>
 	</composite:implementation>
 </ui:component>

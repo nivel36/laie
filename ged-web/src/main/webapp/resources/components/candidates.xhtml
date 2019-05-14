@@ -5,30 +5,27 @@
 
 	<composite:interface>
 		<composite:attribute name="candidates" type="java.util.List" required="true" />
-		<composite:attribute name="rendered" required="false" />
 		<composite:attribute name="styleClass" required="false" default="" />
 		<composite:attribute name="title" required="false" default="#{i18n['candidate.candidates']}" />
 	</composite:interface>
 
 	<composite:implementation>
-		<h:panelGroup layout="block" rendered="#{cc.attrs.rendered}">
-			<div class="panel job-offers #{cc.attrs.styleClass}">
-				<div class="panel-header">
-					<div class="panel-header-title">#{cc.attrs.title}</div>
-				</div>
-				<div class="panel-content">
-					<p:dataGrid layout="grid" var="candidate" value="#{cc.attrs.candidates}"
-						emptyMessage="#{i18n['candidate.no_candidates_found']}" paginator="true" paginatorPosition="bottom" columns="2"
-						rows="6">
-						<cc:candidateCard candidate="#{candidate}" />
-					</p:dataGrid>
-				</div>
-				<h:panelGroup layout="block" class="panel-footer" rendered="#{component.findComponent('children').childCount > 0}">
-					<h:panelGroup id="children" styleClass="panel-buttons">
-						<composite:insertChildren />
-					</h:panelGroup>
-				</h:panelGroup>
+		<div class="panel job-offers #{cc.attrs.styleClass}">
+			<div class="panel-header">
+				<div class="panel-header-title">#{cc.attrs.title}</div>
 			</div>
-		</h:panelGroup>
+			<div class="panel-content">
+				<p:dataGrid layout="grid" var="candidate" value="#{cc.attrs.candidates}"
+					emptyMessage="#{i18n['candidate.no_candidates_found']}" paginator="true" paginatorPosition="bottom" columns="2"
+					rows="6">
+					<cc:candidateCard candidate="#{candidate}" />
+				</p:dataGrid>
+			</div>
+			<h:panelGroup layout="block" class="panel-footer" rendered="#{component.findComponent('children').childCount > 0}">
+				<h:panelGroup id="children" styleClass="panel-buttons">
+					<composite:insertChildren />
+				</h:panelGroup>
+			</h:panelGroup>
+		</div>
 	</composite:implementation>
 </ui:component>

@@ -6,25 +6,22 @@
 	<composite:interface>
 		<composite:attribute name="candidate" type="ged.ejb.candidate.Candidate" required="true" />
 		<composite:attribute name="styleClass" required="false" default="" />
-		<composite:attribute name="rendered" required="false" default="false" />
 	</composite:interface>
 
 	<composite:implementation>
-		<h:panelGroup layout="block" rendered="#{cc.attrs.rendered}">
-			<div id="#{cc.clientId}" class="candidate-card #{cc.attrs.styleClass}">
-				<p:link outcome="#{Page.CANDIDATE.getUrl()}">
-					<f:param name="id" value="#{cc.attrs.candidate.id}" />
-					<div class="user-minicard">
-						<div class="user-image">
-							<cc:avatar imageFileName="#{cc.attrs.candidate.imageFileName}" />
-						</div>
-						<div class="user-info">
-							<div class="name">#{cc.attrs.candidate}</div>
-							<div class="position">#{cc.attrs.candidate.jobProfile}</div>
-						</div>
+		<div id="#{cc.clientId}" class="candidate-card #{cc.attrs.styleClass}">
+			<p:link outcome="#{Page.CANDIDATE.getUrl()}">
+				<f:param name="id" value="#{cc.attrs.candidate.id}" />
+				<div class="user-minicard">
+					<div class="user-image">
+						<cc:avatar imageFileName="#{cc.attrs.candidate.imageFileName}" />
 					</div>
-				</p:link>
-			</div>
-		</h:panelGroup>
+					<div class="user-info">
+						<div class="name">#{cc.attrs.candidate}</div>
+						<div class="position">#{cc.attrs.candidate.jobProfile}</div>
+					</div>
+				</div>
+			</p:link>
+		</div>
 	</composite:implementation>
 </ui:component>
