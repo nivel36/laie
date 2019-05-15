@@ -28,17 +28,17 @@
 					</div>
 					<div class="panel-content">
 						<div class="panel-content-data">
-							<h:panelGroup styleClass="mainSection" id="jobExperiences" layout="block">
+							<h:panelGroup styleClass="section" id="jobExperiences" layout="block">
+
 								<!-- JOB EXPERIENCE -->
-								<h2>#{i18n['curriculum.job_experiences']}</h2>
-								<div class="cvAction">
-									<p:commandButton icon="fa fa-plus" action="#{curriculumBean.newJobExperience}" process="@this" />
+								<div class="section-header">
+									<h2>#{i18n['curriculum.job_experiences']}</h2>
+									<div class="panel-buttons">
+										<p:commandButton value="#{i18n['action.new']}" action="#{curriculumBean.newJobExperience}" process="@this" />
+									</div>
 								</div>
 								<ui:repeat value="#{curriculumBean.jobExperiences}" var="jobExperience" id="jobExperience" varStatus="varStatus">
-									<div class="section">
-										<div class="cvAction">
-											<p:commandButton icon="fa fa-pencil" action="#{curriculumBean.editJobExperience(jobExperience)}" process="@this" />
-										</div>
+									<div class="section-content">
 										<h3>#{jobExperience.jobPosition}</h3>
 										<h4>#{jobExperience.companyName}</h4>
 										<h4>
@@ -76,20 +76,22 @@
 
 										<h:outputText value="#{jobExperience.description}" escape="false" styleClass="jobDescription" />
 
+										<div class="panel-buttons">
+											<p:commandButton value="#{i18n['action.edit']}" action="#{curriculumBean.editJobExperience(jobExperience)}" process="@this" />
+										</div>
 									</div>
 								</ui:repeat>
 							</h:panelGroup>
-							<h:panelGroup styleClass="mainSection" id="educations" layout="block">
+							<h:panelGroup styleClass="setion" id="educations" layout="block">
 								<!-- Education -->
-								<h2>#{i18n['curriculum.education']}</h2>
-								<div class="cvAction">
-									<p:commandButton icon="fa fa-plus" action="#{curriculumBean.newEducation}" process="@this" />
+								<div class="section-header">
+									<h2>#{i18n['curriculum.education']}</h2>
+									<div class="panel-buttons">
+										<p:commandButton value="#{i18n['action.new']}" action="#{curriculumBean.newEducation}" process="@this" />
+									</div>
 								</div>
 								<ui:repeat value="#{curriculumBean.education}" var="education" id="education">
-									<div class="section">
-										<div class="cvAction">
-											<p:commandButton icon="fa fa-pencil" action="#{curriculumBean.editEducation(education)}" process="@this" />
-										</div>
+									<div class="section-content">
 										<h3>#{education.degree}</h3>
 										<h4>#{education.school}</h4>
 										<h4>
@@ -100,23 +102,29 @@
 											<h:outputText value="#{i18n['education.still_studying']}" rendered="#{education.stillStudying}" />
 										</h4>
 										<h:outputText value="#{education.description}" escape="false" styleClass="educationDescription" />
+
+										<div class="panel-buttons">
+											<p:commandButton value="#{i18n['action.edit']}" action="#{curriculumBean.editEducation(education)}" process="@this" />
+										</div>
 									</div>
 								</ui:repeat>
 							</h:panelGroup>
 
-							<h:panelGroup styleClass="mainSection" id="languages" layout="block">
+							<h:panelGroup styleClass="section" id="languages" layout="block">
 								<!-- Skills -->
-								<h2>#{i18n['curriculum.languages']}</h2>
-								<div class="cvAction">
-									<p:commandButton icon="fa fa-plus" action="#{curriculumBean.newLanguage}" process="@this" />
+								<div class="section">
+									<h2>#{i18n['curriculum.languages']}</h2>
+									<div class="panel-buttons">
+										<p:commandButton value="#{i18n['action.new']}" action="#{curriculumBean.newLanguage}" process="@this" />
+									</div>
 								</div>
 								<ui:repeat value="#{curriculumBean.languages}" var="language" id="language">
-									<div class="section">
-										<div class="cvAction">
-											<p:commandButton icon="fa fa-pencil" action="#{curriculumBean.editLanguage(language)}" process="@this" />
-										</div>
+									<div class="section-content">
 										<h3>#{language.name}</h3>
 										<h4>#{i18n:translate(language.level)}</h4>
+										<div class="panel-buttons">
+											<p:commandButton value="#{i18n['action.edit']}" action="#{curriculumBean.editLanguage(language)}" process="@this" />
+										</div>
 									</div>
 								</ui:repeat>
 							</h:panelGroup>

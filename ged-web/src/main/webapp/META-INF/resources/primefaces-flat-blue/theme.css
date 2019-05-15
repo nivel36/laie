@@ -104,6 +104,10 @@ body .ui-button.ui-button-icon-only {
 	min-width: auto;
 }
 
+body .ui-button {
+	min-width: 80px;
+}
+
 body .ui-button, body .ui-button.ui-button-icon-only {
 	height: 30px;
 	font-size: 0.9em;

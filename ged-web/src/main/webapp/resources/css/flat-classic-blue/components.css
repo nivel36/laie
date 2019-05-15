@@ -146,7 +146,6 @@ body>footer .version {
 	border-right: 1px solid #bfceda;
 }
 
-
 body footer .version span {
 	font-size: 0.8em;
 	color: #848b9d;
@@ -177,8 +176,8 @@ body footer .version span {
 }
 
 body .breadcrumb {
-	background: linear-gradient(to bottom, rgba(243, 245, 248, 1) 0%, rgba(246, 246, 246, 1) 48%, rgba(237, 237, 237, 1)
-		100%);
+	background: linear-gradient(to bottom, rgba(243, 245, 248, 1) 0%,
+		rgba(246, 246, 246, 1) 48%, rgba(237, 237, 237, 1) 100%);
 	border-top: 1px solid white;
 	border-bottom: 1px solid #bfceda;
 	border-left: 1px solid white;
@@ -235,7 +234,6 @@ body .breadcrumb ul li.ui-breadcrumb-chevron {
 /************************************
  *  input
  ************************************/
-
 body .input {
 	flex: 1 1 auto;
 	color: #777777;
@@ -247,7 +245,7 @@ body .input {
 }
 
 input[type="text"]:disabled {
-  background: #efefef;
+	background: #efefef;
 }
 
 .input.input-checkbox {
@@ -255,7 +253,6 @@ input[type="text"]:disabled {
 	height: 16px;
 	padding: 0;
 }
-
 
 .input.input-number {
 	padding-right: 25px;
@@ -279,20 +276,20 @@ input[type="text"]:disabled {
 	overflow: hidden;
 }
 
-.input.input-user input[type="text"]{
+.input.input-user input[type="text"] {
 	padding: 0.5em;
 	overflow: hidden;
 }
 
-.input-container> *:first-child {
+.input-container>*:first-child {
 	border-bottom-left-radius: 4px;
 	border-top-left-radius: 4px;
-} 
+}
 
-body .input-container> *:last-child {
+body .input-container>*:last-child {
 	border-bottom-right-radius: 4px;
 	border-top-right-radius: 4px;
-} 
+}
 
 .input .btn-inner {
 	margin: -2.25em;
@@ -395,7 +392,8 @@ body .input-search .clean-search-button {
 	flex: 0 1 auto;
 }
 
-body .input-group button.icon, .input-group .icon, body .input-group .ui-button {
+body .input-group button.icon, .input-group .icon, body .input-group .ui-button
+	{
 	width: 34px;
 	height: 34px;
 	display: inline-flex;
@@ -407,7 +405,7 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button 
 	cursor: pointer;
 }
 
-.input-group-calendar .icon, .input-group-money .icon  {
+.input-group-calendar .icon, .input-group-money .icon {
 	border-right: 1px solid #c2cad8;
 	border-top: 1px solid #c2cad8;
 	border-bottom: 1px solid #c2cad8;
@@ -444,7 +442,8 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button 
 }
 
 .dialog-header {
-	background: linear-gradient(to right, rgba(242, 243, 247, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(236, 238, 243, 1) 100%);
+	background: linear-gradient(to right, rgba(242, 243, 247, 1) 0%,
+		rgba(246, 246, 246, 1) 47%, rgba(236, 238, 243, 1) 100%);
 	border-bottom: 1px solid #bfceda;
 	padding: 0.3em 1.2em;
 	display: flex;
@@ -483,7 +482,8 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button 
 }
 
 .panel-header {
-	background: linear-gradient(to right, rgba(242, 243, 247, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(236, 238, 243, 1) 100%);
+	background: linear-gradient(to right, rgba(242, 243, 247, 1) 0%,
+		rgba(246, 246, 246, 1) 47%, rgba(236, 238, 243, 1) 100%);
 	border-bottom: 1px solid #bfceda;
 	padding: 0;
 	margin: 0;
@@ -571,7 +571,8 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button 
 .search-header {
 	border-top-left-radius: 5px;
 	border-top-right-radius: 5px;
-	background: linear-gradient(to right, rgba(242, 243, 247, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(236, 238, 243, 1) 100%);
+	background: linear-gradient(to right, rgba(242, 243, 247, 1) 0%,
+		rgba(246, 246, 246, 1) 47%, rgba(236, 238, 243, 1) 100%);
 	border-left: 1px solid #c2c2d3;
 	border-right: 1px solid #c2c2d3;
 	border-top: 5px solid #5fabf1;
@@ -603,7 +604,8 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button 
 }
 
 .search-result-header {
-	background: linear-gradient(to right, rgba(242, 243, 247, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(236, 238, 243, 1) 100%);
+	background: linear-gradient(to right, rgba(242, 243, 247, 1) 0%,
+		rgba(246, 246, 246, 1) 47%, rgba(236, 238, 243, 1) 100%);
 	border-bottom: 1px solid #bfceda;
 	padding: 1em;
 	display: flex;
@@ -688,7 +690,8 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button 
 	padding-bottom: 0.6em;
 }
 
-.candidate .panel-header-data .section, .user .panel-header-data .section {
+.candidate .panel-header-data .section, .user .panel-header-data .section
+	{
 	font-size: 1.2em;
 	padding-bottom: 0.4em;
 }
@@ -761,7 +764,8 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button 
 }
 
 .login-page {
-	background-image: url("#{request.contextPath}/resources/img/loginbg.jpg");
+	background-image:
+		url("#{request.contextPath}/resources/img/loginbg.jpg");
 }
 
 .login-page .content {
@@ -812,4 +816,13 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button 
 
 .locales {
 	text-transform: capitalize;
+}
+
+.section {
+	display: flex;
+	flex-direction: column;
+}
+
+.section-header {
+	display: flex;
 }
