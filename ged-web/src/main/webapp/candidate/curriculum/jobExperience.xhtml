@@ -12,7 +12,7 @@
 	<ui:define name="content">
 		<h:form id="jobExperience">
 			<div class="grid nogutter">
-				<div class="panel curriculum col-12 sm-8">
+				<div class="panel curriculum col-12 xl-8">
 					<div class="panel-header">
 						<div class="panel-header-title"></div>
 					</div>
@@ -24,10 +24,10 @@
 							<cc:inputText id="jobPosition" label="#{i18n['job_experience.job_position']}"
 								value="#{jobExperienceBean.jobExperience.jobPosition}" required="true" />
 
-							<cc:inputYearMonth id="fromDate" label="#{i18n['education.from_date']}" value="#{jobExperienceBean.fromDate}" />
+							<cc:inputYearMonth id="fromDate" label="#{i18n['job.from_date']}" value="#{jobExperienceBean.fromDate}" />
 
 							<h:panelGroup layout="block" id="toDateWrapper">
-								<cc:inputYearMonth id="toDate" label="#{i18n['education.to_date']}" value="#{jobExperienceBean.toDate}"
+								<cc:inputYearMonth id="toDate" label="#{i18n['job.to_date']}" value="#{jobExperienceBean.toDate}"
 									rendered="#{not jobExperienceBean.stillWorking}" />
 							</h:panelGroup>
 

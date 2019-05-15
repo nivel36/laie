@@ -6,9 +6,9 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import ged.ejb.curriculum.Curriculum;
-import ged.ejb.curriculum.CurriculumService;
 import ged.ejb.curriculum.education.Education;
 import ged.ejb.curriculum.education.EducationService;
+import ged.web.core.util.PageEnum;
 import ged.web.core.view.AbstractDialogBean;
 
 @Named
@@ -17,49 +17,51 @@ public class EducationBean extends AbstractDialogBean {
 
 	private static final long serialVersionUID = -7120837113945432637L;
 
-	@Inject
-	private transient CurriculumService curriculumService;
+	private static final String CURRICULUM_KEY = "curriculum";
+
+	private static final String EDUCATION_KEY = "education";
 
 	private Education education;
 
 	@Inject
 	private transient EducationService educationService;
 
-	public void delete() {
+	public String delete() {
 		this.educationService.delete(this.education);
-		this.closeDialog();
+		return curriculumUrl();
 	}
 
 	public Education getEducation() {
 		return this.education;
 	}
 
+	private String curriculumUrl() {
+		return PageEnum.CURRICULUM.getRedirectUrl(this.education.getCurriculum().getCandidate());
+	}
+
 	@PostConstruct
 	public void init() {
-		final Long eduationId = this.getIdFromParameters("educationId");
-		if (eduationId != null) {
-			this.education = this.educationService.find(eduationId);
+		this.education = initEducation();
+	}
+
+	public Education initEducation() {
+		Education education = this.getValueFromFlash(EDUCATION_KEY);
+		if (education == null) {
+			final Curriculum curriculum = this.getValueFromFlash(CURRICULUM_KEY);
+			education = new Education();
+			education.setStillStudying(false);
+			education.setCurriculum(curriculum);
 		}
-		else {
-			final Long curriculumId = this.getIdFromParameters("curriculumId");
-			final Curriculum curriculum = this.curriculumService.find(curriculumId);
-			this.education = new Education();
-			this.education.setStillStudying(false);
-			this.education.setCurriculum(curriculum);
-		}
+		return education;
 	}
 
 	public boolean isNewEducation() {
 		return this.education.getId() == 0;
 	}
 
-	public void save() {
+	public String save() {
 		this.education = this.educationService.save(this.education);
-		this.closeDialog(this.education);
-	}
-
-	public void setCurriculumService(final CurriculumService curriculumService) {
-		this.curriculumService = curriculumService;
+		return curriculumUrl();
 	}
 
 	public void setEducation(final Education education) {

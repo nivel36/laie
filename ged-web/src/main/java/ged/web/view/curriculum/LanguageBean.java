@@ -6,9 +6,9 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import ged.ejb.curriculum.Curriculum;
-import ged.ejb.curriculum.CurriculumService;
 import ged.ejb.curriculum.language.Language;
 import ged.ejb.curriculum.language.LanguageService;
+import ged.web.core.util.PageEnum;
 import ged.web.core.view.AbstractDialogBean;
 
 @Named
@@ -17,49 +17,53 @@ public class LanguageBean extends AbstractDialogBean {
 
 	private static final long serialVersionUID = -3985331305200647310L;
 
-	@Inject
-	private transient CurriculumService curriculumService;
+	private static final String CURRICULUM_KEY = "curriculum";
+
+	private static final String LANGUAGE_KEY = "language";
 
 	private Language language;
 
 	@Inject
 	private transient LanguageService languageService;
 
-	public void delete() {
-		if (!this.isNewLanguage()) {
-			this.languageService.delete(this.language);
-			this.closeDialog();
-		}
+	public String delete() {
+		this.languageService.delete(this.language);
+		return curriculumUrl();
 	}
 
 	public Language getLanguage() {
 		return this.language;
 	}
 
+	private Language initLanguage() {
+		Language language = this.getValueFromFlash(LANGUAGE_KEY);
+		if (language == null) {
+			final Curriculum curriculum = this.getValueFromFlash(CURRICULUM_KEY);
+			language = new Language();
+			language.setCurriculum(curriculum);
+		}
+		return language;
+	}
+
 	@PostConstruct
 	public void init() {
-		final Long languageId = this.getIdFromParameters("languageId");
-		if (languageId != null) {
-			this.language = this.languageService.find(languageId);
-		}
-		if (this.language == null) {
-			final Long curriculumId = this.getIdFromParameters("curriculumId");
-			final Curriculum curriculum = this.curriculumService.find(curriculumId);
-			this.language = new Language();
-			this.language.setCurriculum(curriculum);
-		}
+		this.language = initLanguage();
 	}
 
 	public boolean isNewLanguage() {
 		return this.language.getId() == 0;
 	}
 
-	public void save() {
+	public String save() {
 		this.language = this.languageService.save(this.language);
-		this.closeDialog(this.language);
+		return curriculumUrl();
 	}
 
 	public void setLanguage(final Language language) {
 		this.language = language;
+	}
+
+	private String curriculumUrl() {
+		return PageEnum.CURRICULUM.getRedirectUrl(this.language.getCurriculum().getCandidate());
 	}
 }

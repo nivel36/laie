@@ -10,29 +10,34 @@
 	</ui:define>
 
 	<ui:define name="content">
-		<h:form>
+		<h:form id="language">
+			<div class="grid nogutter">
+				<div class="panel curriculum col-12 xl-8">
+					<div class="panel-header">
+						<div class="panel-header-title"></div>
+					</div>
+					<div class="panel-content">
+						<div class="panel-content-data">
+							<cc:inputText id="languageName" label="#{i18n['language.language']}" value="#{languageBean.language.name}"
+								required="true" />
 
-			<div class="grid">
-				<div class="col-12 md-6">
-					<cc:inputText id="languageName" label="#{i18n['language.language']}" value="#{languageBean.language.name}"
-						required="true" />
-				</div>
+							<cc:inputSelect label="#{i18n['language.level']}" value="#{languageBean.language.level}" required="true">
+								<f:selectItem itemLabel="#{i18n['language.level']}" itemValue="" />
+								<f:selectItems value="#{languageLevels.list}" var="languageLevel" itemValue="#{languageLevel.name}"
+									itemLabel="#{i18n:translate(languageLevel.name)}" />
+							</cc:inputSelect>
+						</div>
 
-				<div class="col-12 md-6">
-					<cc:inputSelect name="" label="#{i18n['language.level']}" value="#{languageBean.language.level}" required="true">
-						<f:selectItem itemLabel="#{i18n['language.level']}" itemValue="" />
-						<f:selectItems value="#{languageLevels.list}" var="languageLevel" itemValue="#{languageLevel.name}"
-							itemLabel="#{i18n:translate(languageLevel.name)}" />
-					</cc:inputSelect>
-				</div>
-
-				<div class="col-12">
-					<div class="form-action-primary">
-						<p:commandButton value="#{i18n['action.cancel']}" actionListener="#{languageBean.closeDialog}" process="@this"
-							update="@form" />
-						<p:commandButton value="#{i18n['action.delete']}" action="#{languageBean.delete}" process="@this"
-							rendered="#{not languageBean.newLanguage}" />
-						<p:commandButton value="#{i18n['action.save']}" action="#{languageBean.save}" process="@form" update="@form" />
+						<div class="panel-footer">
+							<div class="panel-buttons">
+								<p:button value="#{i18n['action.cancel']}" outcome="#{Page.CURRICULUM.getUrl()}">
+									<f:param name="id" value="#{languageBean.language.curriculum.candidate.id}" />
+								</p:button>
+								<p:commandButton value="#{i18n['action.delete']}" action="#{languageBean.delete}" process="@this"
+									rendered="#{not languageBean.newLanguage}" />
+								<p:commandButton value="#{i18n['action.save']}" action="#{languageBean.save}" process="@form" update="@form" />
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>

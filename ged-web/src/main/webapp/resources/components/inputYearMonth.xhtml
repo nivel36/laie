@@ -8,7 +8,6 @@
 		<composite:attribute name="label" required="false" />
 		<composite:attribute name="required" type="java.lang.Boolean" default="false" />
 		<composite:attribute name="disabled" type="java.lang.Boolean" default="false" />
-		<composite:attribute name="validator" targets="input-text" />
 		<composite:attribute name="value" type="ged.web.core.YearMonthDto" required="true" />
 		<composite:attribute name="plusYear" type="java.lang.Integer" required="false" default="0" />
 		<composite:attribute name="minusYear" type="java.lang.Integer" required="false" default="20" />
@@ -24,12 +23,12 @@
 				<p:outputLabel id="label" for="month" value="#{cc.attrs.label}" styleClass="label" />
 			</h:panelGroup>
 			<div class="input-container">
-				<p:selectOneMenu id="month" value="#{cc.month}" required="#{cc.attrs.required}" styleClass="input input-select"
+				<p:selectOneMenu id="month" value="#{cc.attrs.value.month}" required="#{cc.attrs.required}" styleClass="input input-select"
 					disabled="#{cc.attrs.disabled}">
 					<f:selectItem itemLabel="#{i18n['date.month']}" itemValue="" />
 					<f:selectItems var="month" value="#{cc.months}" itemValue="#{month.monthNumber}" itemLabel="#{month.monthName}" />
 				</p:selectOneMenu>
-				<p:selectOneMenu id="year" value="#{cc.year}" required="#{cc.attrs.required}" styleClass="input input-select"
+				<p:selectOneMenu id="year" value="#{cc.attrs.value.year}" required="#{cc.attrs.required}" styleClass="input input-select"
 					disabled="#{cc.attrs.disabled}">
 					<f:selectItem itemLabel="#{i18n['date.year']}" itemValue="" />
 					<f:selectItems var="year" value="#{cc.years}" itemValue="#{year}" itemLabel="#{year}" />
