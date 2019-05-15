@@ -383,7 +383,7 @@ body .input-search .clean-search-button {
 .input-group  .input-container {
 	display: flex;
 	align-items: center;
-	flex: 1 1 auto;
+	flex: 1;
 }
 
 .input-group .label-container {

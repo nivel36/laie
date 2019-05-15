@@ -14,7 +14,7 @@
 	<ui:define name="content">
 
 		<p:breadCrumb styleClass="breadcrumb">
-			<p:menuitem value="#{i18n['menu.index']}" url="/index.xhtml" />
+			<p:menuitem value="#{i18n['menu.index']}" outcome="#{Page.INDEX.getUrl()}" />
 			<p:menuitem value="#{i18n['config.config']}" disabled="true" />
 		</p:breadCrumb>
 
@@ -55,7 +55,7 @@
 				<div class="panel-footer">
 					<div class="panel-buttons">
 						<p:commandButton value="#{i18n['config.change_password']}" process="@this"
-							action="#{Page.CHANGE_PASSWORD.getRedirectURL()}" />
+							action="#{Page.CHANGE_PASSWORD.getRedirectUrl()}" />
 						<p:commandButton value="#{i18n['action.save']}" action="#{configBean.save}" process="@form" update="@form growl" />
 					</div>
 				</div>
