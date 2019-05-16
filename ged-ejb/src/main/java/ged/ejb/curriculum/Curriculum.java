@@ -12,10 +12,6 @@ import javax.validation.constraints.NotNull;
 
 import ged.ejb.candidate.Candidate;
 import ged.ejb.core.model.AbstractEntity;
-import ged.ejb.curriculum.education.Education;
-import ged.ejb.curriculum.jobexperience.JobExperience;
-import ged.ejb.curriculum.language.Language;
-import ged.ejb.curriculum.skills.Skill;
 
 @Entity
 public class Curriculum extends AbstractEntity {
@@ -26,13 +22,13 @@ public class Curriculum extends AbstractEntity {
 	@OneToOne(fetch = FetchType.EAGER, mappedBy = "curriculum")
 	private Candidate candidate;
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "curriculum", orphanRemoval = true)
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "curriculum", orphanRemoval = true)
 	private Set<Education> education;
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "curriculum", orphanRemoval = true)
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "curriculum", orphanRemoval = true)
 	private Set<JobExperience> jobExperiences;
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "curriculum", orphanRemoval = true)
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "curriculum", orphanRemoval = true)
 	private Set<Language> languages;
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "curriculum", orphanRemoval = true)

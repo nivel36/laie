@@ -10,8 +10,6 @@ import ged.ejb.candidate.Candidate;
 import ged.ejb.core.model.AbstractDao;
 import ged.ejb.core.model.Page;
 import ged.ejb.core.model.Repository;
-import ged.ejb.curriculum.language.LanguageLevel;
-import ged.ejb.curriculum.skills.SkillLevel;
 
 @Repository
 public class CurriculumDao extends AbstractDao<Curriculum> {

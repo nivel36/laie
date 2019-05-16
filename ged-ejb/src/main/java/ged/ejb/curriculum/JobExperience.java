@@ -1,4 +1,4 @@
-package ged.ejb.curriculum.jobexperience;
+package ged.ejb.curriculum;
 
 import java.time.LocalDate;
 import java.time.YearMonth;
@@ -16,7 +16,6 @@ import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 
 import ged.ejb.core.model.AbstractEntity;
-import ged.ejb.curriculum.Curriculum;
 
 @Entity
 @Indexed

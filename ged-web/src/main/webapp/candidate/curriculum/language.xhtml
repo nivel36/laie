@@ -10,31 +10,47 @@
 	</ui:define>
 
 	<ui:define name="content">
+		<p:breadCrumb styleClass="breadcrumb">
+			<p:menuitem value="#{i18n['menu.index']}" outcome="#{Page.INDEX.getUrl()}" />
+			<p:menuitem value="#{i18n['candidate.candidates']}" outcome="#{Page.CANDIDATE_SEARCH.getUrl()}" />
+			<p:menuitem value="#{languageBean.curriculum.candidate.fullName}" outcome="#{Page.CANDIDATE.getUrl()}">
+				<f:param name="id" value="#{languageBean.curriculum.candidate.id}" />
+			</p:menuitem>
+			<p:menuitem value="#{i18n['curriculum.curriculum']}" outcome="#{Page.CURRICULUM.getUrl()}">
+				<f:param name="id" value="#{languageBean.curriculum.candidate.id}" />
+			</p:menuitem>
+			<p:menuitem value="#{i18n['language.language']}" disabled="true" />
+		</p:breadCrumb>
+
 		<h:form id="language">
 			<div class="grid nogutter">
 				<div class="panel curriculum col-12 xl-8">
 					<div class="panel-header">
-						<div class="panel-header-title"></div>
+						<div class="panel-header-title">#{i18n['language.language']}</div>
 					</div>
 					<div class="panel-content">
 						<div class="panel-content-data">
-							<cc:inputText id="languageName" label="#{i18n['language.language']}" value="#{languageBean.language.name}"
-								required="true" />
-
-							<cc:inputSelect label="#{i18n['language.level']}" value="#{languageBean.language.level}" required="true">
-								<f:selectItem itemLabel="#{i18n['language.level']}" itemValue="" />
-								<f:selectItems value="#{languageLevels.list}" var="languageLevel" itemValue="#{languageLevel.name}"
-									itemLabel="#{i18n:translate(languageLevel.name)}" />
-							</cc:inputSelect>
+							<ui:repeat var="language" value="#{languageBean.languages}">
+								<div class="input-group">
+									<div class="input-container">
+										<p:inputText id="input-text" value="#{language.name}" required="true" styleClass="input input-text" />
+										<p:selectOneMenu id="selectOneMenu" required="true" styleClass="input input-select" value="#{language.level}">
+											<f:selectItems value="#{languageBean.languageLevels}" var="languageLevel" itemValue="#{languageLevel.name}"
+												itemLabel="#{i18n:translate(languageLevel.name)}" />
+										</p:selectOneMenu>
+									</div>
+									<div class="message-container">
+										<p:message id="message" for="input-text" styleClass="message-error" />
+									</div>
+								</div>
+							</ui:repeat>
 						</div>
 
 						<div class="panel-footer">
 							<div class="panel-buttons">
-								<p:button value="#{i18n['action.cancel']}" outcome="#{Page.CURRICULUM.getUrl()}">
-									<f:param name="id" value="#{languageBean.language.curriculum.candidate.id}" />
+								<p:button value="#{i18n['action.cancel']}" outcome="#{Page.CURRICULUM.getUrl()}" styleClass="btn-gray">
+									<f:param name="id" value="#{languageBean.curriculum.candidate.id}" />
 								</p:button>
-								<p:commandButton value="#{i18n['action.delete']}" action="#{languageBean.delete}" process="@this"
-									rendered="#{not languageBean.newLanguage}" />
 								<p:commandButton value="#{i18n['action.save']}" action="#{languageBean.save}" process="@form" update="@form" />
 							</div>
 						</div>

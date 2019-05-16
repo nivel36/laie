@@ -1,69 +1,72 @@
 package ged.web.view.curriculum;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import ged.ejb.curriculum.Curriculum;
-import ged.ejb.curriculum.language.Language;
-import ged.ejb.curriculum.language.LanguageService;
+import ged.ejb.curriculum.CurriculumService;
+import ged.ejb.curriculum.Language;
+import ged.ejb.curriculum.LanguageLevel;
 import ged.web.core.util.PageEnum;
-import ged.web.core.view.AbstractDialogBean;
+import ged.web.core.view.AbstractBean;
 
 @Named
 @ViewScoped
-public class LanguageBean extends AbstractDialogBean {
-
-	private static final long serialVersionUID = -3985331305200647310L;
+public class LanguageBean extends AbstractBean {
 
 	private static final String CURRICULUM_KEY = "curriculum";
 
-	private static final String LANGUAGE_KEY = "language";
+	private static final long serialVersionUID = -3985331305200647310L;
 
-	private Language language;
-
+	private Curriculum curriculum;
+	
 	@Inject
-	private transient LanguageService languageService;
+	private transient CurriculumService curriculumService;
 
-	public String delete() {
-		this.languageService.delete(this.language);
-		return curriculumUrl();
+	private List<LanguageLevel> languageLevels;
+
+	private List<Language> languages;
+
+	private String curriculumUrl() {
+		return PageEnum.CURRICULUM.getRedirectUrl(this.curriculum.getCandidate());
 	}
 
-	public Language getLanguage() {
-		return this.language;
+	public Curriculum getCurriculum() {
+		return curriculum;
 	}
 
-	private Language initLanguage() {
-		Language language = this.getValueFromFlash(LANGUAGE_KEY);
-		if (language == null) {
-			final Curriculum curriculum = this.getValueFromFlash(CURRICULUM_KEY);
-			language = new Language();
-			language.setCurriculum(curriculum);
-		}
-		return language;
+	public List<LanguageLevel> getLanguageLevels() {
+		return languageLevels;
+	}
+
+	public List<Language> getLanguages() {
+		return languages;
 	}
 
 	@PostConstruct
 	public void init() {
-		this.language = initLanguage();
-	}
-
-	public boolean isNewLanguage() {
-		return this.language.getId() == 0;
+		this.curriculum = this.getValueFromFlash(CURRICULUM_KEY);
+		this.languageLevels = curriculumService.findAllLanguageLevels();
+		this.languages = new ArrayList<>(this.curriculum.getLanguages());
 	}
 
 	public String save() {
-		this.language = this.languageService.save(this.language);
+		this.curriculum.setLanguages(new HashSet<Language>(languages));
+		this.curriculumService.save(this.curriculum);	
 		return curriculumUrl();
 	}
 
-	public void setLanguage(final Language language) {
-		this.language = language;
+	public void setCurriculumService(CurriculumService curriculumService) {
+		this.curriculumService = curriculumService;
 	}
 
-	private String curriculumUrl() {
-		return PageEnum.CURRICULUM.getRedirectUrl(this.language.getCurriculum().getCandidate());
+	public void setLanguages(List<Language> languages) {
+		this.languages = languages;
 	}
 }

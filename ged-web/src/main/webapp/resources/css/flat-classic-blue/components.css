@@ -631,7 +631,8 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button
 	flex: 1;
 }
 
-.candidate .panel-header, .user .panel-header {
+.curriculum .panel-header, .candidate .panel-header, .user .panel-header
+	{
 	background: #e0e3ed;
 }
 
@@ -679,24 +680,27 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button
 	flex-direction: column;
 }
 
-.candidate .panel-header-data .name, .user .panel-header-data .name {
+.curriculum .panel-header-data .name, .candidate .panel-header-data .name,
+	.user .panel-header-data .name {
 	font-size: 1.5em;
 	text-shadow: 1px 1px white;
 	padding-bottom: 0.4em;
 }
 
-.candidate .panel-header-data .job-profile {
+.curriculum .panel-header-data .job-profile, .candidate .panel-header-data .job-profile
+	{
 	font-size: 1em;
 	padding-bottom: 0.6em;
 }
 
-.candidate .panel-header-data .section, .user .panel-header-data .section
-	{
+.curricukum .panel-header-data .section, .candidate .panel-header-data .section,
+	.user .panel-header-data .section {
 	font-size: 1.2em;
 	padding-bottom: 0.4em;
 }
 
-.candidate .personal-data, .user .personal-data {
+.curriculum .personal-data, .candidate .personal-data, .user .personal-data
+	{
 	display: flex;
 	flex-direction: column;
 	flex: 1;
@@ -750,6 +754,14 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button
 .candidate-data .label, .user-data .label {
 	font-weight: 600;
 	padding-right: 0.2em;
+}
+
+.curriculum .section {
+	border-bottom: 1px solid gray;
+}
+
+.curriculum .section:last-child {
+	border-bottom: 0px;
 }
 
 .full-page {
@@ -821,8 +833,68 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button
 .section {
 	display: flex;
 	flex-direction: column;
+	padding: 2em 0;
 }
 
 .section-header {
 	display: flex;
+	height: 4em;
+}
+
+.section-title {
+	color: #737c93;
+	margin: 0;
+	font-size: 1.3em;
+	padding: 0.5em 0em;
+}
+
+.section.education .degree {
+	color: #000000;
+	line-height: 2em;
+	margin: 0;
+	font-size: 1.3em;
+}
+
+.section.education .school, .section.jobExperience .date-range {
+	color: #737c93;
+	margin: 0;
+	font-size: 1.2em;
+}
+
+.section.education .educationDescription {
+	display: flex;
+	margin-top: 1em;
+	line-height: 1.2em;
+}
+
+.section.jobExperience .job_position {
+	color: #000000;
+	line-height: 2em;
+	margin: 0;
+	font-size: 1.3em;
+}
+
+.section.jobExperience .company, .section.jobExperience .date-range {
+	color: #737c93;
+	margin: 0;
+	font-size: 1.2em;
+}
+
+.section.jobExperience .jobDescription {
+	display: flex;
+	margin-top: 1em;
+	line-height: 1.2em;
+}
+
+.section.language .language_name {
+	font-size: 1.1em;
+	display: inline-flex;
+	line-height: 1.8em;
+	min-width: 100px;
+	color: #000000;
+}
+
+.section.language .language_level {
+	font-size: 1.1em;
+	line-height: 1.8em;
 }

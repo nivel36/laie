@@ -9,15 +9,15 @@ import javax.inject.Named;
 import javax.validation.constraints.NotNull;
 
 import ged.ejb.curriculum.Curriculum;
-import ged.ejb.curriculum.jobexperience.JobExperience;
-import ged.ejb.curriculum.jobexperience.JobExperienceService;
+import ged.ejb.curriculum.CurriculumService;
+import ged.ejb.curriculum.JobExperience;
 import ged.web.core.YearMonthDto;
 import ged.web.core.util.PageEnum;
-import ged.web.core.view.AbstractDialogBean;
+import ged.web.core.view.AbstractBean;
 
 @Named
 @ViewScoped
-public class JobExperienceBean extends AbstractDialogBean {
+public class JobExperienceBean extends AbstractBean {
 
 	private static final String CURRICULUM_KEY = "curriculum";
 
@@ -25,26 +25,28 @@ public class JobExperienceBean extends AbstractDialogBean {
 
 	private static final long serialVersionUID = -2896828087283592020L;
 
+	private Curriculum curriculum;
+
+	@Inject
+	private transient CurriculumService curriculumService;
+
 	@NotNull
 	private YearMonthDto fromDate;
 
 	private JobExperience jobExperience;
-
-	@Inject
-	private transient JobExperienceService jobExperienceService;
 
 	private boolean stillWorking;
 
 	@NotNull
 	private YearMonthDto toDate;
 
-	public String delete() {
-		this.jobExperienceService.delete(this.jobExperience);
-		return curriculumUrl();
-	}
-
 	private String curriculumUrl() {
 		return PageEnum.CURRICULUM.getRedirectUrl(this.jobExperience.getCurriculum().getCandidate());
+	}
+
+	public String delete() {
+		this.curriculumService.save(this.curriculum);
+		return curriculumUrl();
 	}
 
 	public YearMonthDto getFromDate() {
@@ -59,6 +61,18 @@ public class JobExperienceBean extends AbstractDialogBean {
 		return this.toDate;
 	}
 
+	@PostConstruct
+	public void init() {
+		this.curriculum = this.getValueFromFlash(CURRICULUM_KEY);
+		this.jobExperience = initJobExperience();
+		this.fromDate = initFromDate();
+		this.toDate = initToDate();
+		this.stillWorking = this.jobExperience.isStillWorking();
+		if(!isNewJobExperience()) {
+			this.curriculum.removeJobExperience(jobExperience);
+		}
+	}
+
 	public YearMonthDto initFromDate() {
 		YearMonth fromDate = this.jobExperience.getStartDate();
 		if (fromDate != null) {
@@ -66,6 +80,16 @@ public class JobExperienceBean extends AbstractDialogBean {
 		} else {
 			return new YearMonthDto();
 		}
+	}
+
+	public JobExperience initJobExperience() {
+		JobExperience jobExperience = this.getValueFromFlash(JOB_EXPERIENCE_KEY);
+		if (jobExperience == null) {
+			jobExperience = new JobExperience();
+			jobExperience.setStillWorking(false);
+			jobExperience.setCurriculum(this.curriculum);
+		}
+		return jobExperience;
 	}
 
 	public YearMonthDto initToDate() {
@@ -77,25 +101,6 @@ public class JobExperienceBean extends AbstractDialogBean {
 		}
 	}
 
-	public JobExperience initJobExperience() {
-		JobExperience jobExperience = this.getValueFromFlash(JOB_EXPERIENCE_KEY);
-		if (jobExperience == null) {
-			final Curriculum curriculum = this.getValueFromFlash(CURRICULUM_KEY);
-			jobExperience = new JobExperience();
-			jobExperience.setStillWorking(false);
-			jobExperience.setCurriculum(curriculum);
-		}
-		return jobExperience;
-	}
-
-	@PostConstruct
-	public void init() {
-		this.jobExperience = initJobExperience();
-		this.fromDate = initFromDate();
-		this.toDate = initToDate();
-		this.stillWorking = this.jobExperience.isStillWorking();
-	}
-
 	public boolean isNewJobExperience() {
 		return this.jobExperience.getId() == 0;
 	}
@@ -105,17 +110,14 @@ public class JobExperienceBean extends AbstractDialogBean {
 	}
 
 	public String save() {
-		if (this.stillWorking) {
-			this.jobExperience.setEndDate(null);
-		} else {
-			final YearMonth endDate = YearMonth.of(this.toDate.getYear(), this.toDate.getMonth());
-			this.jobExperience.setEndDate(endDate);
-		}
-		final YearMonth startDate = YearMonth.of(this.fromDate.getYear(), this.fromDate.getMonth());
-		this.jobExperience.setStartDate(startDate);
-		this.jobExperience.setStillWorking(stillWorking);
-		this.jobExperience = this.jobExperienceService.save(this.jobExperience);
+		updateJobExperienceData();
+		this.curriculum.addJobExperience(this.jobExperience);
+		this.curriculumService.save(this.curriculum);
 		return curriculumUrl();
+	}
+
+	public void setCurriculumService(CurriculumService curriculumService) {
+		this.curriculumService = curriculumService;
 	}
 
 	public void setFromDate(final YearMonthDto fromDate) {
@@ -126,15 +128,23 @@ public class JobExperienceBean extends AbstractDialogBean {
 		this.jobExperience = jobExperience;
 	}
 
-	public void setJobExperienceService(final JobExperienceService jobExperienceService) {
-		this.jobExperienceService = jobExperienceService;
-	}
-
 	public void setStillWorking(boolean stillWorking) {
 		this.stillWorking = stillWorking;
 	}
 
 	public void setToDate(final YearMonthDto toDate) {
 		this.toDate = toDate;
+	}
+
+	private void updateJobExperienceData() {
+		if (this.stillWorking) {
+			this.jobExperience.setEndDate(null);
+		} else {
+			final YearMonth endDate = YearMonth.of(this.toDate.getYear(), this.toDate.getMonth());
+			this.jobExperience.setEndDate(endDate);
+		}
+		final YearMonth startDate = YearMonth.of(this.fromDate.getYear(), this.fromDate.getMonth());
+		this.jobExperience.setStartDate(startDate);
+		this.jobExperience.setStillWorking(stillWorking);
 	}
 }

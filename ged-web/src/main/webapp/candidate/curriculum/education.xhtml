@@ -24,11 +24,15 @@
 							required="true" />
 
 						<cc:inputSelect id="fromDate" label="#{i18n['education.from_date']}" value="#{educationBean.education.startYear}">
+							<f:selectItem itemLabel="#{i18n['date.year']}" itemValue="" />
+							<f:selectItems var="year" value="#{educationBean.years}" itemValue="#{year}" itemLabel="#{year}" />
 						</cc:inputSelect>
 
 						<h:panelGroup layout="block" id="toDateWrapper">
 							<cc:inputSelect id="toDate" label="#{i18n['education.to_date']}" value="#{educationBean.education.endYear}"
 								rendered="#{not educationBean.education.stillStudying}">
+								<f:selectItem itemLabel="#{i18n['date.year']}" itemValue="" />
+								<f:selectItems var="year" value="#{educationBean.years}" itemValue="#{year}" itemLabel="#{year}" />
 							</cc:inputSelect>
 						</h:panelGroup>
 
@@ -42,7 +46,7 @@
 
 					<div class="panel-footer">
 						<div class="panel-buttons">
-							<p:button value="#{i18n['action.cancel']}" outcome="#{Page.CURRICULUM.getUrl()}">
+							<p:button value="#{i18n['action.cancel']}" outcome="#{Page.CURRICULUM.getUrl()}" styleClass="btn-gray" > 
 								<f:param name="id" value="#{educationBean.education.curriculum.candidate.id}" />
 							</p:button>
 							<p:commandButton value="#{i18n['action.delete']}" action="#{educationBean.delete}" process="@this"

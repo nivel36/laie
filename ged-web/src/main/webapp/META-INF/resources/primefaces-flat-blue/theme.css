@@ -541,6 +541,17 @@ body .ui-growl .ui-growl-item-container.ui-growl-error {
 	color: white;
 }
 
+body .ui-selectonemenu {
+    display: inline-block;
+    position: relative;
+    width: auto;
+    zoom: 1;
+    cursor: pointer;
+    padding-right: 22px;
+    vertical-align: top;
+    width: 100%;
+}
+
 body .ui-selectonemenu .ui-selectonemenu-trigger {
 	display: flex;
 	align-items: center;

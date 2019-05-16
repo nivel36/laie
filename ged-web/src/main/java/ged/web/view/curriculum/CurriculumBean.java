@@ -15,10 +15,10 @@ import org.omnifaces.cdi.Param;
 import ged.ejb.candidate.Candidate;
 import ged.ejb.curriculum.Curriculum;
 import ged.ejb.curriculum.CurriculumService;
-import ged.ejb.curriculum.education.Education;
-import ged.ejb.curriculum.jobexperience.JobExperience;
-import ged.ejb.curriculum.language.Language;
-import ged.ejb.curriculum.skills.Skill;
+import ged.ejb.curriculum.Education;
+import ged.ejb.curriculum.JobExperience;
+import ged.ejb.curriculum.Language;
+import ged.ejb.curriculum.Skill;
 import ged.web.core.IllegalPageStateException;
 import ged.web.core.util.PageEnum;
 import ged.web.core.view.AbstractBean;
@@ -50,17 +50,24 @@ public class CurriculumBean extends AbstractBean {
 
 	public String editEducation(final Education education) {
 		this.putValueToFlash("education", education);
+		this.putValueToFlash(CURRICULUM_KEY, curriculum);
 		return PageEnum.CURRICULUM_EDUCATION.getRedirectUrl();
 	}
 
 	public String editJobExperience(final JobExperience jobExperience) {
 		this.putValueToFlash("jobExperience", jobExperience);
+		this.putValueToFlash(CURRICULUM_KEY, curriculum);
 		return PageEnum.CURRICULUM_JOB_EXPERIENCE.getRedirectUrl();
 	}
 
-	public String editLanguage(final Language language) {
-		this.putValueToFlash("language", language);
+	public String editLanguages() {
+		this.putValueToFlash(CURRICULUM_KEY, curriculum);
 		return PageEnum.CURRICULUM_LANGUAGE.getRedirectUrl();
+	}
+	
+	public String editSkills() {
+		this.putValueToFlash(CURRICULUM_KEY, curriculum);
+		return PageEnum.CURRICULUM_SKILLS.getRedirectUrl();
 	}
 
 	public Candidate getCandidate() {

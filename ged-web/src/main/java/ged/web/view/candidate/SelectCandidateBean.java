@@ -10,17 +10,18 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.primefaces.PrimeFaces;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ged.ejb.candidate.Candidate;
 import ged.ejb.candidate.CandidateService;
 import ged.ejb.core.model.Page;
-import ged.web.core.view.AbstractDialogBean;
+import ged.web.core.view.AbstractBean;
 
 @Named
 @ViewScoped
-public class SelectCandidateBean extends AbstractDialogBean {
+public class SelectCandidateBean extends AbstractBean {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
@@ -73,7 +74,7 @@ public class SelectCandidateBean extends AbstractDialogBean {
 	}
 
 	public void select() {
-		this.closeDialog(this.selectedCandidates);
+		PrimeFaces.current().dialog().closeDynamic(this.selectedCandidates);
 	}
 
 	public void setCandidateService(final CandidateService candidateService) {
