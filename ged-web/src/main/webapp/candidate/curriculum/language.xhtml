@@ -29,7 +29,7 @@
 					</div>
 					<div class="panel-content">
 						<div class="panel-content-data">
-							<ui:repeat var="language" value="#{languageBean.languages}" id="language" >
+							<ui:repeat var="language" value="#{languageBean.languages}">
 								<h:panelGroup id="input-language" layout="block" styleClass="input-group">
 									<div class="input-container">
 										<p:inputText id="input-text" value="#{language.name}" required="true" styleClass="input input-text" />
@@ -37,7 +37,7 @@
 											<f:selectItems value="#{languageBean.languageLevels}" var="languageLevel" itemValue="#{languageLevel.name}"
 												itemLabel="#{i18n:translate(languageLevel.name)}" />
 										</p:selectOneMenu>
-										<p:commandButton icon="fa fa-trash" action="#{languageBean.delete(language)}" process="@this" update="input-language" />
+										<p:commandButton icon="fa fa-trash" action="#{languageBean.deleteLanguage(language)}" process="@this" update="input-language" />
 									</div>
 									<div class="message-container">
 										<p:message id="message" for="input-text" styleClass="message-error" />
@@ -45,7 +45,7 @@
 								</h:panelGroup>
 							</ui:repeat>
 							<div class="panel-buttons">
-								<p:commandButton value="#{i18n['action.new']}" action="#{languageBean.newLanguage}" process="@this" update="@form" />
+								<p:commandButton value="#{i18n['action.new']}" action="#{languageBean.newLanguage}" process="@form" update="@form" />
 							</div>
 						</div>
 
