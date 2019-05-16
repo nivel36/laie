@@ -104,6 +104,10 @@ body .ui-button.ui-button-icon-only {
 	min-width: auto;
 }
 
+body .ui-button.ui-spinner-button {
+	min-width: auto;
+}
+
 body .ui-button {
 	min-width: 80px;
 }

@@ -485,7 +485,7 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button
 	background: linear-gradient(to right, rgba(242, 243, 247, 1) 0%,
 		rgba(246, 246, 246, 1) 47%, rgba(236, 238, 243, 1) 100%);
 	border-bottom: 1px solid #bfceda;
-	padding: 0;
+	padding: 0px;
 	margin: 0;
 	min-height: 52px;
 	display: flex;
@@ -502,9 +502,9 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button
 	font-weight: bold;
 	color: #737c93;
 	text-shadow: 1px 1px white;
-	margin: 0;
+	margin: 10px;
 	font-size: 1.3em;
-	padding: 10px;
+	padding: 0px;
 	align-items: center;
 }
 
@@ -647,7 +647,7 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button
 .panel-header-data {
 	display: flex;
 	flex-direction: column;
-	padding: 1em;
+	padding: 20px;
 	flex: 1 1 auto;
 }
 
@@ -656,7 +656,7 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button
 }
 
 .panel-header-data .data .text {
-	max-width: 20em;
+	max-width: 10em;
 	line-height: 1.2em;
 	overflow: hidden;
 	white-space: nowrap;
@@ -668,7 +668,7 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button
 .panel-header-image {
 	display: flex;
 	flex-direction: column;
-	padding: 1em;
+	padding: 10px;
 }
 
 .panel-header-content {
@@ -833,7 +833,15 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button
 .section {
 	display: flex;
 	flex-direction: column;
-	padding: 2em 0;
+	padding: 20px 0;
+}
+
+.section:first-child {
+	padding-top: 0;
+}
+
+.section:last-child {
+	padding-bottom: 0;
 }
 
 .section-header {
@@ -845,7 +853,7 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button
 	color: #737c93;
 	margin: 0;
 	font-size: 1.3em;
-	padding: 0.5em 0em;
+	padding: 10px 0em;
 }
 
 .section.education .degree {

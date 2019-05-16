@@ -25,7 +25,7 @@ public class LanguageBean extends AbstractBean {
 	private static final long serialVersionUID = -3985331305200647310L;
 
 	private Curriculum curriculum;
-	
+
 	@Inject
 	private transient CurriculumService curriculumService;
 
@@ -37,36 +37,44 @@ public class LanguageBean extends AbstractBean {
 		return PageEnum.CURRICULUM.getRedirectUrl(this.curriculum.getCandidate());
 	}
 
+	public void deleteLanguage(final Language language) {
+		this.languages.remove(language);
+	}
+
 	public Curriculum getCurriculum() {
-		return curriculum;
+		return this.curriculum;
 	}
 
 	public List<LanguageLevel> getLanguageLevels() {
-		return languageLevels;
+		return this.languageLevels;
 	}
 
 	public List<Language> getLanguages() {
-		return languages;
+		return this.languages;
 	}
 
 	@PostConstruct
 	public void init() {
 		this.curriculum = this.getValueFromFlash(CURRICULUM_KEY);
-		this.languageLevels = curriculumService.findAllLanguageLevels();
+		this.languageLevels = this.curriculumService.findAllLanguageLevels();
 		this.languages = new ArrayList<>(this.curriculum.getLanguages());
 	}
 
-	public String save() {
-		this.curriculum.setLanguages(new HashSet<Language>(languages));
-		this.curriculumService.save(this.curriculum);	
-		return curriculumUrl();
+	public void newLanguage() {
+		this.languages.add(new Language());
 	}
 
-	public void setCurriculumService(CurriculumService curriculumService) {
+	public String save() {
+		this.curriculum.setLanguages(new HashSet<Language>(this.languages));
+		this.curriculumService.save(this.curriculum);
+		return this.curriculumUrl();
+	}
+
+	public void setCurriculumService(final CurriculumService curriculumService) {
 		this.curriculumService = curriculumService;
 	}
 
-	public void setLanguages(List<Language> languages) {
+	public void setLanguages(final List<Language> languages) {
 		this.languages = languages;
 	}
 }

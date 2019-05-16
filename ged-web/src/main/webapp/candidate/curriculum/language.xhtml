@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://ged.com/i18n"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:p="http://primefaces.org/ui"
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:o="http://omnifaces.org/ui"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://ged.com/i18n" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:p="http://primefaces.org/ui" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:o="http://omnifaces.org/ui"
 	xmlns:of="http://omnifaces.org/functions" template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
@@ -30,20 +29,24 @@
 					</div>
 					<div class="panel-content">
 						<div class="panel-content-data">
-							<ui:repeat var="language" value="#{languageBean.languages}">
-								<div class="input-group">
+							<ui:repeat var="language" value="#{languageBean.languages}" id="language" >
+								<h:panelGroup id="input-language" layout="block" styleClass="input-group">
 									<div class="input-container">
 										<p:inputText id="input-text" value="#{language.name}" required="true" styleClass="input input-text" />
 										<p:selectOneMenu id="selectOneMenu" required="true" styleClass="input input-select" value="#{language.level}">
 											<f:selectItems value="#{languageBean.languageLevels}" var="languageLevel" itemValue="#{languageLevel.name}"
 												itemLabel="#{i18n:translate(languageLevel.name)}" />
 										</p:selectOneMenu>
+										<p:commandButton icon="fa fa-trash" action="#{languageBean.delete(language)}" process="@this" update="input-language" />
 									</div>
 									<div class="message-container">
 										<p:message id="message" for="input-text" styleClass="message-error" />
 									</div>
-								</div>
+								</h:panelGroup>
 							</ui:repeat>
+							<div class="panel-buttons">
+								<p:commandButton value="#{i18n['action.new']}" action="#{languageBean.newLanguage}" process="@this" update="@form" />
+							</div>
 						</div>
 
 						<div class="panel-footer">

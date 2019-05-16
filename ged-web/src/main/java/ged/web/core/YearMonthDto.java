@@ -16,16 +16,16 @@ public class YearMonthDto implements Serializable {
 		return dto;
 	}
 	
-	public YearMonthDto() {}
+	private Integer month;
 	
+	private Integer year;
+
+	public YearMonthDto() {}
+
 	public YearMonthDto(Integer month, Integer year) {
 		this.month = month;
 		this.year = year;
 	}
-
-	private Integer month;
-
-	private Integer year;
 
 	public Integer getMonth() {
 		return this.month;
