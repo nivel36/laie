@@ -3,7 +3,6 @@ package ged.web.view.candidate;
 import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -27,16 +26,20 @@ public class SelectCandidateBean extends AbstractBean {
 
 	private static final long serialVersionUID = 8503929833968698420L;
 
+	private final List<Long> alredySelected = new ArrayList<>();
+
 	private List<Candidate> candidates;
 
 	@Inject
 	protected transient CandidateService candidateService;
 
-	private final List<Long> candidateToRemoveIds = new ArrayList<>();
-
 	private String searchText;
 
 	private List<Candidate> selectedCandidates;
+
+	public void cancel() {
+		PrimeFaces.current().dialog().closeDynamic(null);
+	}
 
 	public void clean() {
 		this.searchText = null;
@@ -57,20 +60,23 @@ public class SelectCandidateBean extends AbstractBean {
 
 	@PostConstruct
 	public void init() {
-		final String jobCandidatesIdParameter = externalContext.getRequestParameterMap().get("jobCandiatesId");
-		if ((jobCandidatesIdParameter != null)) {
-			final String[] ids = externalContext.getRequestParameterMap().get("jobCandiatesId").split("\\|");
+		final String jobCandidatesIdParameter = this.externalContext.getRequestParameterMap().get("jobCandiatesId");
+		if (jobCandidatesIdParameter != null) {
+			final String[] ids = this.externalContext.getRequestParameterMap().get("jobCandiatesId").split("\\|");
 			for (final String id : ids) {
-				candidateToRemoveIds.add(Long.valueOf(id));
+				this.alredySelected.add(Long.valueOf(id));
 			}
 		}
-		search();
+		this.search();
+	}
+
+	public boolean isAlredySelected(final Long id) {
+		return this.alredySelected.contains(id);
 	}
 
 	public void search() {
 		logger.debug("Searching for candidates");
-		this.candidates = this.candidateService.search(this.searchText, Page.ALL).stream().filter(e -> !candidateToRemoveIds.contains(e.getId()))
-				.collect(Collectors.toList());
+		this.candidates = this.candidateService.search(this.searchText, Page.ALL);
 	}
 
 	public void select() {
