@@ -743,6 +743,38 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button
 	font-size: 1.1em;
 }
 
+.candidate-card {
+	display: flex;
+	flex-direction: row;
+	padding: 5px;
+}
+
+.candidate-card .image {
+	image-orientation: from-image;
+	border-radius: 5px;
+	object-fit: cover;
+	width: 48px;
+	height: 48px;
+	box-shadow: none;
+	border: 0px;
+}
+
+.candidate-card .info {
+	display: flex;
+	padding-left: 5px;
+	flex-direction: column;
+}
+
+.candidate-card .info .name {
+	color: black;
+	line-height: 1.5em;
+}
+
+.candidate-card .info .position {
+	color: #737c93;
+	font-size: 0.9em;
+}
+
 .candidate-data .text a, .user-data .text a {
 	display: block;
 	white-space: nowrap;

@@ -102,6 +102,7 @@ public class CurriculumBean extends AbstractBean {
 		this.curriculum = this.curriculumService.findByCandidate(this.candidate);
 		if (this.curriculum == null) {
 			this.curriculum = new Curriculum();
+			this.curriculum.setCandidate(candidate);
 		}
 		if (this.curriculum.getSkills() == null) {
 			this.curriculum.setSkills(new HashSet<Skill>());
