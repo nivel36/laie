@@ -29,23 +29,30 @@
 					</div>
 					<div class="panel-content">
 						<div class="panel-content-data">
-							<ui:repeat var="language" value="#{languageBean.languages}">
-								<h:panelGroup id="input-language" layout="block" styleClass="input-group">
-									<div class="input-container">
-										<p:inputText id="input-text" value="#{language.name}" required="true" styleClass="input input-text" />
-										<p:selectOneMenu id="selectOneMenu" required="true" styleClass="input input-select" value="#{language.level}">
-											<f:selectItems value="#{languageBean.languageLevels}" var="languageLevel" itemValue="#{languageLevel.name}"
-												itemLabel="#{i18n:translate(languageLevel.name)}" />
-										</p:selectOneMenu>
-										<p:commandButton icon="fa fa-trash" action="#{languageBean.deleteLanguage(language)}" process="@this" update="input-language" />
+							<h:panelGroup styleClass="language section" id="languages" layout="block">
+								<ui:repeat var="language" value="#{languageBean.languages}">
+									<p>
+										<span class="language_name">#{language.name}</span> <span class="language_level">#{i18n:translate(language.level)}</span>
+										<p:commandButton icon="fa fa-trash" action="#{languageBean.deleteLanguage(language)}" process="@this" update="@form" />
+									</p>
+								</ui:repeat>
+							</h:panelGroup>
+
+							<div class="input-group">
+								<div class="input-container">
+									<p:inputText id="input-text" value="#{languageBean.languageName}" required="true" styleClass="input input-text" />
+									<p:selectOneMenu id="selectOneMenu" required="true" styleClass="input input-select" value="#{languageBean.languageLevel}">
+										<f:selectItem />
+										<f:selectItems value="#{languageBean.languageLevels}" var="languageLevel" itemValue="#{languageLevel.name}"
+											itemLabel="#{i18n:translate(languageLevel.name)}" />
+									</p:selectOneMenu>
+									<div class="panel-buttons">
+										<p:commandButton value="#{i18n['action.new']}" action="#{languageBean.newLanguage}" process="@form" update="@form" />
 									</div>
-									<div class="message-container">
-										<p:message id="message" for="input-text" styleClass="message-error" />
-									</div>
-								</h:panelGroup>
-							</ui:repeat>
-							<div class="panel-buttons">
-								<p:commandButton value="#{i18n['action.new']}" action="#{languageBean.newLanguage}" process="@form" update="@form" />
+								</div>
+								<div class="message-container">
+									<p:message id="message" for="input-text" styleClass="message-error" />
+								</div>
 							</div>
 						</div>
 
@@ -54,7 +61,7 @@
 								<p:button value="#{i18n['action.cancel']}" outcome="#{Page.CURRICULUM.getUrl()}" styleClass="btn-gray">
 									<f:param name="id" value="#{languageBean.curriculum.candidate.id}" />
 								</p:button>
-								<p:commandButton value="#{i18n['action.save']}" action="#{languageBean.save}" process="@form" update="@form" />
+								<p:commandButton value="#{i18n['action.save']}" action="#{languageBean.save}" process="@this" update="@form" />
 							</div>
 						</div>
 					</div>

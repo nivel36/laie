@@ -937,4 +937,6 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button
 .section.language .language_level {
 	font-size: 1.1em;
 	line-height: 1.8em;
+	min-width: 100px;
+	display: inline-flex;
 }

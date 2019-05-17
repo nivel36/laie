@@ -13,6 +13,7 @@ import ged.ejb.curriculum.Curriculum;
 import ged.ejb.curriculum.CurriculumService;
 import ged.ejb.curriculum.Language;
 import ged.ejb.curriculum.LanguageLevel;
+import ged.web.core.IllegalPageStateException;
 import ged.web.core.util.PageEnum;
 import ged.web.core.view.AbstractBean;
 
@@ -29,7 +30,11 @@ public class LanguageBean extends AbstractBean {
 	@Inject
 	private transient CurriculumService curriculumService;
 
+	private String languageLevel;
+
 	private List<LanguageLevel> languageLevels;
+
+	private String languageName;
 
 	private List<Language> languages;
 
@@ -45,8 +50,16 @@ public class LanguageBean extends AbstractBean {
 		return this.curriculum;
 	}
 
+	public String getLanguageLevel() {
+		return this.languageLevel;
+	}
+
 	public List<LanguageLevel> getLanguageLevels() {
 		return this.languageLevels;
+	}
+
+	public String getLanguageName() {
+		return this.languageName;
 	}
 
 	public List<Language> getLanguages() {
@@ -56,12 +69,20 @@ public class LanguageBean extends AbstractBean {
 	@PostConstruct
 	public void init() {
 		this.curriculum = this.getValueFromFlash(CURRICULUM_KEY);
+		if (this.curriculum == null) {
+			throw new IllegalPageStateException("Null curriculum");
+		}
 		this.languageLevels = this.curriculumService.findAllLanguageLevels();
 		this.languages = new ArrayList<>(this.curriculum.getLanguages());
 	}
 
 	public void newLanguage() {
-		this.languages.add(new Language());
+		final Language newLanguage = new Language();
+		newLanguage.setName(this.languageName);
+		newLanguage.setLevel(this.languageLevel);
+		this.languages.add(newLanguage);
+		this.languageName = null;
+		this.languageLevel = null;
 	}
 
 	public String save() {
@@ -72,6 +93,14 @@ public class LanguageBean extends AbstractBean {
 
 	public void setCurriculumService(final CurriculumService curriculumService) {
 		this.curriculumService = curriculumService;
+	}
+
+	public void setLanguageLevel(final String languageLevel) {
+		this.languageLevel = languageLevel;
+	}
+
+	public void setLanguageName(final String languageName) {
+		this.languageName = languageName;
 	}
 
 	public void setLanguages(final List<Language> languages) {
