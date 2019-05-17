@@ -42,8 +42,7 @@ public class Candidate extends AbstractAuditedEntity {
 
 	private LocalDate bornDate;
 
-	@OneToOne(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, orphanRemoval = true)
-	@JoinColumn(name = "curriculumId", nullable = true, unique = true)
+	@OneToOne(fetch = FetchType.EAGER, mappedBy = "candidate")
 	private Curriculum curriculum;
 
 	@Pattern(regexp = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$")

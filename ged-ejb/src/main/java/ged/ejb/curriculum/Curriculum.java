@@ -6,6 +6,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
@@ -19,7 +20,8 @@ public class Curriculum extends AbstractEntity {
 	private static final long serialVersionUID = 5171402772798965261L;
 
 	@NotNull
-	@OneToOne(fetch = FetchType.EAGER, mappedBy = "curriculum")
+	@OneToOne(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, orphanRemoval = true)
+	@JoinColumn(name = "candidateId", nullable = false)
 	private Candidate candidate;
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "curriculum", orphanRemoval = true)
