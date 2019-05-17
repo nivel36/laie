@@ -405,9 +405,28 @@ body .ui-dialog-mask {
 }
 
 body .ui-dialog {
+
+}
+
+body .ui-dialog .ui-dialog-content {
+	max-height: 100%;
+	display: flex;
+}
+
+body .ui-dialog .ui-dialog-content.ui-df-content {
+	padding: 0;
+	margin: 0;
+	display: flex;
+	max-height: 100%;
+}
+
+body .ui-dialog {
 	background: white;
 	border-radius: 0px;
 	border: 1px solid #ababab;
+	max-width: 100%;
+	overflow: auto;
+	max-height: 100%;
 }
 
 body .ui-dialog .ui-dialog-titlebar {
@@ -436,6 +455,7 @@ body .ui-dialog .ui-dialog-titlebar .ui-dialog-titlebar-close {
 	color: white;
 	padding: 8px 12px;
 }
+
 
 body .ui-inputfield {
 	border: 0px;
