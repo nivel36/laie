@@ -22,6 +22,7 @@
 						<h:link value="#{jobOffer.name}" outcome="#{Page.JOB.getUrl()}">
 							<f:param name="id" value="#{jobOffer.id}" />
 						</h:link>
+						<span class="job_address">#{jobOffer.city} (#{jobOffer.state})</span>
 					</p:column>
 					<p:column headerText="#{i18n['job.date_closed']}">
 						<h:outputText value="#{jobOffer.dateClosed}">

@@ -940,3 +940,8 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button
 	min-width: 100px;
 	display: inline-flex;
 }
+
+
+.job_address {
+	color: #959bac;
+}

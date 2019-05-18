@@ -24,6 +24,7 @@
 						<h:link value="#{jobCandidature.jobOffer.name}" outcome="#{Page.JOB.getUrl()}">
 							<f:param name="id" value="#{jobCandidature.jobOffer.id}" />
 						</h:link>
+						<span class="job_address">#{jobCandidature.jobOffer.city} (#{jobCandidature.jobOffer.state})</span>
 					</p:column>
 					<p:column headerText="#{i18n['job_candidature.client']}" rendered="#{cc.attrs.showJobOffer}">
 						<h:link value="#{jobCandidature.jobOffer.client.name}" outcome="#{Page.CLIENT.getUrl()}">

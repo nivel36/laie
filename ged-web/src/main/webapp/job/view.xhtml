@@ -18,7 +18,7 @@
 		</p:breadCrumb>
 
 		<div class="grid nogutter">
-			<div class="panel job col-12 xl-8">
+			<div class="panel job col-12 xl-6">
 				<div class="panel-header">
 					<div class="panel-header-title">#{i18n['job.job_offer']}</div>
 					<h:form>
@@ -63,7 +63,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-12">
+			<div class="col-12 xl-6">
 				<h:form id="candidatesForm">
 					<cc:jobCandidatures jobCandidatures="#{viewJobBean.jobCandidatures}" showJobOffer="false">
 						<p:commandButton value="#{i18n['action.add']}" action="#{viewJobBean.selectCandidates}" process="@this">
@@ -73,7 +73,7 @@
 				</h:form>
 			</div>
 
-			<div class="col-12 md-12 lg-6">
+			<div class="col-12 xl-6">
 				<p:panel header="#{i18n['job_meeting.conducted_job_meetings']}">
 				</p:panel>
 			</div>
