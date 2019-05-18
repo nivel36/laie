@@ -24,11 +24,6 @@ public class CurriculumService extends AbstractService<Curriculum> {
 	@Repository
 	private CurriculumDao curriculumDao;
 
-	public List<LanguageLevel> findAllLanguageLevels() {
-		logger.debug("Find all the language levels");
-		return this.curriculumDao.findAllLanguageLevels();
-	}
-
 	public List<SkillLevel> findAllSkillLevels() {
 		logger.debug("Find all the skill levels");
 		return this.curriculumDao.findAllSkillLevels();

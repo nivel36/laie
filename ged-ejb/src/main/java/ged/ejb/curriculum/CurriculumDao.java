@@ -14,10 +14,6 @@ import ged.ejb.core.model.Repository;
 @Repository
 public class CurriculumDao extends AbstractDao<Curriculum> {
 
-	public List<LanguageLevel> findAllLanguageLevels() {
-		return this.findAll(LanguageLevel.class, Page.ALL);
-	}
-
 	public List<SkillLevel> findAllSkillLevels() {
 		return this.findAll(SkillLevel.class, Page.ALL);
 	}

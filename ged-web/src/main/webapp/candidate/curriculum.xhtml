@@ -151,7 +151,7 @@
 								<div class="section-content">
 									<ui:repeat value="#{curriculumBean.languages}" var="language" id="language">
 										<p>
-											<span class="language_name">#{language.name}</span> <span class="language_level">#{i18n:translate(language.level)}</span>
+											<span class="language_name">#{language.name}</span> <span class="language_level">#{i18n[language.level]}</span>
 										</p>
 									</ui:repeat>
 									<div class="panel-buttons">

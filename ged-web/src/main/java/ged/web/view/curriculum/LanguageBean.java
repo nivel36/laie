@@ -1,6 +1,7 @@
 package ged.web.view.curriculum;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 
@@ -72,7 +73,7 @@ public class LanguageBean extends AbstractBean {
 		if (this.curriculum == null) {
 			throw new IllegalPageStateException("Null curriculum");
 		}
-		this.languageLevels = this.curriculumService.findAllLanguageLevels();
+		this.languageLevels = Arrays.asList(LanguageLevel.values());
 		this.languages = new ArrayList<>(this.curriculum.getLanguages());
 	}
 

@@ -48,9 +48,9 @@ insert into CURRICULUM( id, version, candidateId) values (301, 0, 201);
 insert into EDUCATION( id, version, curriculumId, degree, description,  startYear, school, stillStudying, endYear) values( 401, 0, 301, 'Licenciado en Matemáticas', 'Licenciado en Matemáticas por la universidad de Barcelona', 2000, 'Universitat de Barcelona', false, 2010);
 insert into EDUCATION( id, version, curriculumId, degree, description,  startYear, school, stillStudying, endYear) values( 402, 0, 301, 'Bachillerato', null,  1988, 'IES Thalassa', false, 1992);
 
-insert into LANGUAGE( id, version, curriculumId, name, level ) values( 501, 0, 301, 'Castellano', 'native' );
-insert into LANGUAGE( id, version, curriculumId, name, level ) values( 502, 0, 301, 'Català', 'native' );
-insert into LANGUAGE( id, version, curriculumId, name, level ) values( 503, 0, 301, 'English', 'high' );
+insert into LANGUAGE( id, version, curriculumId, name, level ) values( 501, 0, 301, 'Castellano', 'NATIVE' );
+insert into LANGUAGE( id, version, curriculumId, name, level ) values( 502, 0, 301, 'Català', 'NATIVE' );
+insert into LANGUAGE( id, version, curriculumId, name, level ) values( 503, 0, 301, 'English', 'HIGH' );
 
 insert into SKILL( id, version, curriculumId, name ) values( 601, 0, 301, 'Java');
 insert into SKILL( id, version, curriculumId, name ) values( 602, 0, 301, 'Spring');
@@ -62,15 +62,6 @@ insert into JOBEXPERIENCE( id, version, curriculumId, companyName, description, 
 
 insert into I18NSTRING( id, version, locale, key, text ) values( 800, 0, 'es', 'all_day', 'Jornada completa' );
 insert into I18NSTRING( id, version, locale, key, text ) values( 801, 0, 'ca', 'all_day', 'Jornada completa' );
-
-insert into I18NSTRING( id, version, locale, key, text ) values( 805, 0, 'ca', 'high', 'Alt' );
-insert into I18NSTRING( id, version, locale, key, text ) values( 806, 0, 'es', 'high', 'Alto' );
-insert into I18NSTRING( id, version, locale, key, text ) values( 810, 0, 'ca', 'medium', 'Mitjà' );
-insert into I18NSTRING( id, version, locale, key, text ) values( 811, 0, 'es', 'medium', 'Medio' );
-insert into I18NSTRING( id, version, locale, key, text ) values( 815, 0, 'ca', 'low', 'Baix' );
-insert into I18NSTRING( id, version, locale, key, text ) values( 816, 0, 'es', 'low', 'Bajo' );
-insert into I18NSTRING( id, version, locale, key, text ) values( 820, 0, 'ca', 'native', 'Natiu' );
-insert into I18NSTRING( id, version, locale, key, text ) values( 821, 0, 'es', 'native', 'Nativo' );
 
 insert into I18NSTRING( id, version, locale, key, text ) values( 750, 0, 'ca', 'infojobs', 'Infojobs' );
 insert into I18NSTRING( id, version, locale, key, text ) values( 751, 0, 'es', 'infojobs', 'Infojobs' );
