@@ -14,11 +14,6 @@ insert into ORIGIN( id, version, code ) values ( 110, 0, 'infojobs');
 insert into ORIGIN( id, version, code ) values ( 111, 0, 'linkedin');
 insert into ORIGIN( id, version, code ) values ( 112, 0, 'reference');
 
-insert into LANGUAGELEVEL( id, version, name ) values ( 120, 0, 'high');
-insert into LANGUAGELEVEL( id, version, name ) values ( 121, 0, 'medium');
-insert into LANGUAGELEVEL( id, version, name ) values ( 122, 0, 'low');
-insert into LANGUAGELEVEL( id, version, name ) values ( 123, 0, 'native');
-
 insert into JOB_CANDIDATURE_STATE( id, version, name, first, last, color ) values ( 130, 0, 'job_candidature_state.not_contacted', true, false, 'green');
 insert into JOB_CANDIDATURE_STATE( id, version, name, first, last, color ) values ( 131, 0, 'job_candidature_state.contacted', false, false,  'green');
 insert into JOB_CANDIDATURE_STATE( id, version, name, first, last, color ) values ( 132, 0, 'job_candidature_state.submitted', false, false,  'green');
@@ -34,7 +29,6 @@ insert into USER( id, version, email, language, name, rowsPerPage, surname, role
 
 insert into USERCLOSURE( id, version, antecessor_id, descendant_id, pathLength ) values( 970, 0, 901, 901, 0 );
 insert into USERCLOSURE( id, version, antecessor_id, descendant_id, pathLength ) values( 971, 0, 902, 902, 0 );
-
 
 insert into CANDIDATE( id, version, name, surname, phoneNumber, email, city, country, door, number, state, storey, street, zipCode, jobProfile, ownerId, deleted) values ( 201, 0, 'Abel', 'Ferrer Jiménez','685555276', 'abel.ferrer.jimenez@gmail.com', 'Barcelona', 'España','1','85', 'Barcelona', 'Principal', 'Bailén', '08809', 'Arquitecto', 901, false);
 insert into CANDIDATE( id, version, name, surname, phoneNumber, email, city, country, door, number, state, storey, street, zipCode, jobProfile, ownerId, deleted) values ( 202, 0, 'Luís', 'González Sánchez','685555277', 'lgonzalez@gmail.com', 'Madrid', 'España','2','85', 'Madrid', '2', 'Miraflores', '80809', 'Programador JEE', 901, false);

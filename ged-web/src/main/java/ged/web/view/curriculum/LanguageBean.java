@@ -81,6 +81,7 @@ public class LanguageBean extends AbstractBean {
 		final Language newLanguage = new Language();
 		newLanguage.setName(this.languageName);
 		newLanguage.setLevel(this.languageLevel);
+		newLanguage.setCurriculum(this.curriculum);
 		this.languages.add(newLanguage);
 		this.languageName = null;
 		this.languageLevel = null;
