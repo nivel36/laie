@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
-	xmlns:composite="http://xmlns.jcp.org/jsf/composite" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
-	xmlns:o="http://omnifaces.org/ui" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:composite="http://xmlns.jcp.org/jsf/composite"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:o="http://omnifaces.org/ui" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
 	template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
 		<title>#{clientEditBean.newClient ? i18n['client.new_client'] : clientEditBean.client.name}</title>
 	</ui:define>
 
-	<ui:define name="content">
+
+	<ui:define name="breadcrumb">
 		<p:breadCrumb styleClass="breadcrumb">
 			<p:menuitem value="#{i18n['menu.index']}" outcome="#{Page.INDEX.getUrl()}" />
 			<p:menuitem value="#{i18n['client.clients']}" outcome="#{Page.CLIENT_SEARCH.getUrl()}" />
@@ -18,7 +18,9 @@
 			</p:menuitem>
 			<p:menuitem value="#{i18n['contact.new_contact']}" disabled="true" />
 		</p:breadCrumb>
+	</ui:define>
 
+	<ui:define name="content">
 		<h:form id="contactForm">
 			<div class="panel">
 				<div class="panel-header">
@@ -29,15 +31,13 @@
 						<div class="col-12 sm-6">
 							<cc:inputText id="name" label="#{i18n['contact.name']}" value="#{addContactBean.contact.name}" required="true" />
 
-							<cc:inputText id="surname" label="#{i18n['contact.surname']}" value="#{addContactBean.contact.surname}"
-								required="true" />
+							<cc:inputText id="surname" label="#{i18n['contact.surname']}" value="#{addContactBean.contact.surname}" required="true" />
 
 							<cc:inputText id="position" label="#{i18n['contact.position']}" value="#{addContactBean.contact.position}" />
 
 							<cc:inputText id="email" label="#{i18n['contact.email']}" value="#{addContactBean.contact.email}" />
 
-							<cc:inputText id="phone_number" label="#{i18n['contact.phone_number']}"
-								value="#{addContactBean.contact.phoneNumber}" />
+							<cc:inputText id="phone_number" label="#{i18n['contact.phone_number']}" value="#{addContactBean.contact.phoneNumber}" />
 						</div>
 					</div>
 				</div>
@@ -46,8 +46,7 @@
 						<p:button styleClass="btn-gray" value="#{i18n['action.cancel']}" outcome="#{Page.CLIENT.getUrl()}">
 							<f:param name="id" value="#{addContactBean.client.id}" />
 						</p:button>
-						<p:commandButton value="#{i18n['action.save']}" action="#{addContactBean.save}" process="@form growl"
-							update="@form" />
+						<p:commandButton value="#{i18n['action.save']}" action="#{addContactBean.save}" process="@form growl" update="@form" />
 					</div>
 				</div>
 			</div>

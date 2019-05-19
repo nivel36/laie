@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
-	xmlns:composite="http://xmlns.jcp.org/jsf/composite" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
-	xmlns:o="http://omnifaces.org/ui" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:composite="http://xmlns.jcp.org/jsf/composite"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:o="http://omnifaces.org/ui" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
 	template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
@@ -11,13 +10,14 @@
 
 	<ui:param name="selectedMenu" value="config" />
 
-	<ui:define name="content">
-
+	<ui:define name="breadcrumb">
 		<p:breadCrumb styleClass="breadcrumb">
 			<p:menuitem value="#{i18n['menu.index']}" outcome="#{Page.INDEX.getUrl()}" />
 			<p:menuitem value="#{i18n['config.config']}" disabled="true" />
 		</p:breadCrumb>
+	</ui:define>
 
+	<ui:define name="content">
 		<h:form enctype="multipart/form-data">
 			<div class="panel">
 				<div class="panel-header">
@@ -25,8 +25,8 @@
 				</div>
 				<div class="panel-aside">
 					<div class="candidate-metadata">
-						<cc:inputAvatar id="user-image" value="#{configBean.user.imageFileName}"
-							fileUploadListener="#{configBean.uploadImage}" allowCamera="true" captureListener="#{configBean.captureImage}" />
+						<cc:inputAvatar id="user-image" value="#{configBean.user.imageFileName}" fileUploadListener="#{configBean.uploadImage}"
+							allowCamera="true" captureListener="#{configBean.captureImage}" />
 					</div>
 				</div>
 				<div class="panel-content panel-content-data">
@@ -45,8 +45,7 @@
 								<f:selectItem itemValue="25" itemLabel="25" />
 							</cc:inputSelect>
 							<cc:inputSelect label="#{i18n['config.language']}" value="#{configBean.user.language}" styleClass="locales">
-								<f:selectItems var="locale" value="#{applicationBean.locales}" itemValue="#{locale.language}"
-									itemLabel="#{locale.displayLanguage}" />
+								<f:selectItems var="locale" value="#{applicationBean.locales}" itemValue="#{locale.language}" itemLabel="#{locale.displayLanguage}" />
 								<f:ajax event="change" render="@all" listener="#{configBean.changeLocale}" />
 							</cc:inputSelect>
 						</div>
@@ -54,8 +53,7 @@
 				</div>
 				<div class="panel-footer">
 					<div class="panel-buttons">
-						<p:commandButton value="#{i18n['config.change_password']}" process="@this"
-							action="#{Page.CHANGE_PASSWORD.getRedirectUrl()}" />
+						<p:commandButton value="#{i18n['config.change_password']}" process="@this" action="#{Page.CHANGE_PASSWORD.getRedirectUrl()}" />
 						<p:commandButton value="#{i18n['action.save']}" action="#{configBean.save}" process="@form" update="@form growl" />
 					</div>
 				</div>

@@ -10,12 +10,14 @@
 
 	<ui:param name="selectedMenu" value="candidates" />
 
-	<ui:define name="content">
+	<ui:define name="breadcrumb">
 		<p:breadCrumb styleClass="breadcrumb">
 			<p:menuitem value="#{i18n['menu.index']}" outcome="#{Page.INDEX.getUrl()}" />
 			<p:menuitem value="#{i18n['candidate.candidates']}" disabled="true" />
 		</p:breadCrumb>
+	</ui:define>
 
+	<ui:define name="content">
 		<h:form id="candidateSearchForm">
 			<div class="panel">
 				<div class="panel-header">
@@ -25,8 +27,7 @@
 					<div class="panel-content-data">
 						<cc:inputSearch searchText="#{searchCandidateBean.searchText}" searchAction="#{searchCandidateBean.search}" update="@form" />
 						<div class="panel-buttons">
-							<p:commandButton value="#{i18n['action.export']}" action="#{searchCandidateBean.export}" process="@this" icon="fa-file-excel-o"
-								 />
+							<p:commandButton value="#{i18n['action.export']}" action="#{searchCandidateBean.export}" process="@this" icon="fa-file-excel-o" />
 							<p:button value="#{i18n['action.new']}" outcome="#{Page.CANDIDATE_ADD.getUrl()}" />
 						</div>
 					</div>

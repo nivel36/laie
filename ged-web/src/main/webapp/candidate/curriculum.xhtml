@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://ged.com/i18n"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:p="http://primefaces.org/ui"
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:o="http://omnifaces.org/ui"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://ged.com/i18n" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:p="http://primefaces.org/ui" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:o="http://omnifaces.org/ui"
 	xmlns:of="http://omnifaces.org/functions" template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
@@ -11,7 +10,7 @@
 
 	<ui:param name="selectedMenu" value="candidates" />
 
-	<ui:define name="content">
+	<ui:define name="breadcrumb">
 		<p:breadCrumb styleClass="breadcrumb">
 			<p:menuitem value="#{i18n['menu.index']}" outcome="#{Page.INDEX.getUrl()}" />
 			<p:menuitem value="#{i18n['candidate.candidates']}" outcome="#{Page.CANDIDATE_SEARCH.getUrl()}" />
@@ -20,7 +19,9 @@
 			</p:menuitem>
 			<p:menuitem value="#{i18n['curriculum.curriculum']}" disabled="true" />
 		</p:breadCrumb>
+	</ui:define>
 
+	<ui:define name="content">
 		<h:form id="form">
 			<div class="grid nogutter">
 				<div class="panel curriculum col-12 xl-8">
@@ -50,8 +51,7 @@
 								</div>
 								<div class="text">#{curriculumBean.candidate.skype}</div>
 							</h:panelGroup>
-							<h:panelGroup layout="block" styleClass="data linkedin"
-								rendered="#{not empty curriculumBean.candidate.linkedinProfileUrl}">
+							<h:panelGroup layout="block" styleClass="data linkedin" rendered="#{not empty curriculumBean.candidate.linkedinProfileUrl}">
 								<div class="icon">
 									<em class="fa fa-linkedin"></em>
 								</div>
@@ -88,28 +88,26 @@
 													<h:outputText value="#{jobExperience.endDate}">
 														<f:convertDateTime type="localDate" pattern="MM / yyyy" />
 													</h:outputText>
-												</h:panelGroup> <h:outputText value="#{i18n['job_experience.still_working']}" rendered="#{jobExperience.stillWorking}" />
-												<h:outputText value=" ( " /> <h:panelGroup
-													rendered="#{(jobExperience.monthsWorked - jobExperience.monthsWorked%12)/12 gt 0}">
+												</h:panelGroup> <h:outputText value="#{i18n['job_experience.still_working']}" rendered="#{jobExperience.stillWorking}" /> <h:outputText
+													value=" ( " /> <h:panelGroup rendered="#{(jobExperience.monthsWorked - jobExperience.monthsWorked%12)/12 gt 0}">
 													<h:outputText value="#{(jobExperience.monthsWorked - jobExperience.monthsWorked%12)/12}">
 														<f:convertNumber maxFractionDigits="0" />
 													</h:outputText>
 													<h:outputText
 														value=" #{(jobExperience.monthsWorked - jobExperience.monthsWorked%12)/12 gt 1 ? i18n['date.years'] : i18n['date.year']}" />
 												</h:panelGroup> <h:outputText value=" #{i18n['date.and']}  "
-													rendered="#{jobExperience.monthsWorked%12 gt 0 and (jobExperience.monthsWorked - jobExperience.monthsWorked%12)/12 gt 0}" />
-												<h:panelGroup rendered="#{jobExperience.monthsWorked%12 gt 0}">
+													rendered="#{jobExperience.monthsWorked%12 gt 0 and (jobExperience.monthsWorked - jobExperience.monthsWorked%12)/12 gt 0}" /> <h:panelGroup
+													rendered="#{jobExperience.monthsWorked%12 gt 0}">
 													<h:outputText value="#{jobExperience.monthsWorked%12}" />
 													<h:outputText value=" #{jobExperience.monthsWorked%12 gt 1 ? i18n['date.months'] : i18n['date.month']}" />
 												</h:panelGroup> <h:outputText value=" #{i18n['date.days']} "
-													rendered="#{jobExperience.monthsWorked%12 eq 0 and (jobExperience.monthsWorked - jobExperience.monthsWorked%12)/12 eq 0}" />
-												<h:outputText value=" ) " /> </span>
+													rendered="#{jobExperience.monthsWorked%12 eq 0 and (jobExperience.monthsWorked - jobExperience.monthsWorked%12)/12 eq 0}" /> <h:outputText
+													value=" ) " /> </span>
 										</p>
 
 										<h:outputText value="#{jobExperience.description}" escape="false" styleClass="jobDescription" />
 										<div class="panel-buttons">
-											<p:commandButton value="#{i18n['action.edit']}" action="#{curriculumBean.editJobExperience(jobExperience)}"
-												process="@this" />
+											<p:commandButton value="#{i18n['action.edit']}" action="#{curriculumBean.editJobExperience(jobExperience)}" process="@this" />
 										</div>
 									</div>
 								</ui:repeat>
@@ -127,18 +125,16 @@
 											<span class="degree">#{education.degree}</span>
 										</p>
 										<p>
-											<span class="school">#{education.school}</span> · <span class="date-range"> <h:outputText
-													value="#{education.startYear}" /> - <h:outputText value="#{education.endYear}"
-													rendered="#{not education.stillStudying}" /> <h:outputText value="#{i18n['education.still_studying']}"
-													rendered="#{education.stillStudying}" />
+											<span class="school">#{education.school}</span> · <span class="date-range"> <h:outputText value="#{education.startYear}" />
+												- <h:outputText value="#{education.endYear}" rendered="#{not education.stillStudying}" /> <h:outputText
+													value="#{i18n['education.still_studying']}" rendered="#{education.stillStudying}" />
 											</span>
 										</p>
 
 										<h:outputText value="#{education.description}" escape="false" styleClass="educationDescription" />
 
 										<div class="panel-buttons">
-											<p:commandButton value="#{i18n['action.edit']}" action="#{curriculumBean.editEducation(education)}"
-												process="@this" />
+											<p:commandButton value="#{i18n['action.edit']}" action="#{curriculumBean.editEducation(education)}" process="@this" />
 										</div>
 									</div>
 								</ui:repeat>

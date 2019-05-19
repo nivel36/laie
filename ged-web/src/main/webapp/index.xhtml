@@ -9,6 +9,12 @@
 
 	<ui:param name="selectedMenu" value="index" />
 
+	<ui:define name="breadcrumb">
+		<p:breadCrumb styleClass="breadcrumb">
+			<p:menuitem value="#{i18n['menu.index']}" disabled="true" />
+		</p:breadCrumb>
+	</ui:define>
+
 	<ui:define name="content">
 		<div class="grid">
 			<div class="col-12 lg-6">

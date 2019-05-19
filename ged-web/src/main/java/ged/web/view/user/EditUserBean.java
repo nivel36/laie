@@ -2,6 +2,7 @@ package ged.web.view.user;
 
 import java.lang.invoke.MethodHandles;
 
+import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
@@ -34,6 +35,7 @@ public class EditUserBean extends AbstractUserBean {
 		}
 	}
 
+	@PostConstruct
 	public void init() {
 		this.user = this.getValueFromFlash(USER_KEY);
 		this.checkNonNullUser();

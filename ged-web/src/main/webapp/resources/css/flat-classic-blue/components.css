@@ -164,7 +164,15 @@ body footer .version span {
 #content {
 	display: flex;
 	flex-direction: column;
+	flex: 1 auto;
+	padding: 1em;
+}
+
+#breadcrumb {
+	display: flex;
+	flex-direction: column;
 	flex: 1;
+	padding: 0;
 }
 
 /************************************
@@ -369,6 +377,10 @@ body .input-search .clean-search-button {
 	flex-flow: row wrap;
 }
 
+.input-group.input-search-group {
+	flex: 3 3 auto;
+}
+
 .input-group.input-group-text-area {
 	max-width: none;
 }
@@ -533,7 +545,8 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button
 }
 
 .panel-content-data {
-	padding: 2em;
+	display: flex;
+	padding: 20px;
 }
 
 .panel-footer {
@@ -545,87 +558,6 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button
 	justify-content: flex-end;
 }
 
-.search {
-	padding: 2em;
-	background: #e0e3ed;
-	display: flex;
-	flex-direction: column;
-}
-
-.search-content {
-	flex-direction: column;
-	background: #ffffff;
-	border-bottom-left-radius: 5px;
-	border-bottom-right-radius: 5px;
-	border: 1px solid #c2c2d3;
-	display: flex;
-	padding: 1em;
-}
-
-.search-content .searchbar {
-	width: 350px;
-	display: flex;
-	flex-direction: row;
-}
-
-.search-header {
-	border-top-left-radius: 5px;
-	border-top-right-radius: 5px;
-	background: linear-gradient(to right, rgba(242, 243, 247, 1) 0%,
-		rgba(246, 246, 246, 1) 47%, rgba(236, 238, 243, 1) 100%);
-	border-left: 1px solid #c2c2d3;
-	border-right: 1px solid #c2c2d3;
-	border-top: 5px solid #5fabf1;
-	padding: 1em;
-	display: flex;
-}
-
-.search-header-title {
-	font-weight: bold;
-	font-size: 0.9em;
-	line-height: 1em;
-	color: #737c93;
-	text-shadow: 1px 1px white;
-	margin: 0;
-	text-transform: uppercase;
-}
-
-.search-result {
-	display: flex;
-	flex-direction: column;
-	padding: 0;
-	margin: 0;
-	width: 100%;
-	background: #ffffff;
-	border-top: 1px solid white;
-	border-bottom: 1px solid #bfceda;
-	border-left: 1px solid white;
-	border-right: 1px solid #bfceda;
-}
-
-.search-result-header {
-	background: linear-gradient(to right, rgba(242, 243, 247, 1) 0%,
-		rgba(246, 246, 246, 1) 47%, rgba(236, 238, 243, 1) 100%);
-	border-bottom: 1px solid #bfceda;
-	padding: 1em;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-}
-
-.search-result-header-buttons {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-}
-
-.search-result-header-title {
-	font-size: 1.3em;
-	color: #5c617b;
-	text-shadow: 1px 1px white;
-	margin: 0;
-}
-
 .tags {
 	display: flex;
 	flex: 1;
@@ -634,14 +566,6 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button
 .curriculum .panel-header, .candidate .panel-header, .user .panel-header
 	{
 	background: #e0e3ed;
-}
-
-.buttons {
-	display: flex;
-	flex: 1;
-	justify-content: end;
-	align-items: flex-start;
-	justify-content: end;
 }
 
 .panel-header-data {
@@ -656,7 +580,6 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button
 }
 
 .panel-header-data .data .text {
-	max-width: 10em;
 	line-height: 1.2em;
 	overflow: hidden;
 	white-space: nowrap;
@@ -941,7 +864,16 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button
 	display: inline-flex;
 }
 
+.section.actions {
+	padding: 10px;
+}
 
 .job_address {
 	color: #959bac;
+}
+
+.wrapper {
+	display: flex;
+	flex: 1 100%;
+	flex-flow: column wrap;
 }

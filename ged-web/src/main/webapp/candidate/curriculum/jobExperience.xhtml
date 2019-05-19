@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://ged.com/i18n"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:p="http://primefaces.org/ui"
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:o="http://omnifaces.org/ui"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://ged.com/i18n" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:p="http://primefaces.org/ui" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:o="http://omnifaces.org/ui"
 	xmlns:of="http://omnifaces.org/functions" template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
 		<title>#{i18n['job_experience.job_experience']}</title>
 	</ui:define>
 
-	<ui:define name="content">
+	<ui:define name="breadcrumb">
 		<p:breadCrumb styleClass="breadcrumb">
 			<p:menuitem value="#{i18n['menu.index']}" outcome="#{Page.INDEX.getUrl()}" />
 			<p:menuitem value="#{i18n['candidate.candidates']}" outcome="#{Page.CANDIDATE_SEARCH.getUrl()}" />
-			<p:menuitem value="#{jobExperienceBean.jobExperience.curriculum.candidate.fullName}"
-				outcome="#{Page.CANDIDATE.getUrl()}">
+			<p:menuitem value="#{jobExperienceBean.jobExperience.curriculum.candidate.fullName}" outcome="#{Page.CANDIDATE.getUrl()}">
 				<f:param name="id" value="#{jobExperienceBean.jobExperience.curriculum.candidate.id}" />
 			</p:menuitem>
 			<p:menuitem value="#{i18n['curriculum.curriculum']}" outcome="#{Page.CURRICULUM.getUrl()}">
@@ -22,6 +20,9 @@
 			</p:menuitem>
 			<p:menuitem value="#{i18n['job_experience.job_experience']}" disabled="true" />
 		</p:breadCrumb>
+	</ui:define>
+	
+	<ui:define name="content">
 
 		<h:form id="jobExperience">
 			<div class="grid nogutter">
@@ -31,14 +32,13 @@
 					</div>
 					<div class="panel-content">
 						<div class="panel-content-data">
-							<cc:inputText id="degree" label="#{i18n['job_experience.company_name']}"
-								value="#{jobExperienceBean.jobExperience.companyName}" required="true" />
-
-							<cc:inputText id="jobPosition" label="#{i18n['job_experience.job_position']}"
-								value="#{jobExperienceBean.jobExperience.jobPosition}" required="true" />
-
-							<cc:inputYearMonth id="fromDate" label="#{i18n['job.from_date']}" value="#{jobExperienceBean.fromDate}"
+							<cc:inputText id="degree" label="#{i18n['job_experience.company_name']}" value="#{jobExperienceBean.jobExperience.companyName}"
 								required="true" />
+
+							<cc:inputText id="jobPosition" label="#{i18n['job_experience.job_position']}" value="#{jobExperienceBean.jobExperience.jobPosition}"
+								required="true" />
+
+							<cc:inputYearMonth id="fromDate" label="#{i18n['job.from_date']}" value="#{jobExperienceBean.fromDate}" required="true" />
 
 							<h:panelGroup layout="block" id="toDateWrapper">
 								<cc:inputYearMonth id="toDate" label="#{i18n['job.to_date']}" value="#{jobExperienceBean.toDate}"
@@ -49,8 +49,7 @@
 								<f:ajax event="change" render="jobExperience:toDateWrapper" />
 							</cc:inputCheckbox>
 
-							<cc:richText id="description" label="#{i18n['job_experience.description']}"
-								value="#{jobExperienceBean.jobExperience.description}" />
+							<cc:richText id="description" label="#{i18n['job_experience.description']}" value="#{jobExperienceBean.jobExperience.description}" />
 						</div>
 					</div>
 
