@@ -1,15 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://ged.com/i18n"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:p="http://primefaces.org/ui"
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:o="http://omnifaces.org/ui"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://ged.com/i18n" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:p="http://primefaces.org/ui" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:o="http://omnifaces.org/ui"
 	xmlns:of="http://omnifaces.org/functions" template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
 		<title>#{i18n['education.education']}</title>
 	</ui:define>
-	
+
 	<ui:define name="breadcrumb">
+		<p:breadCrumb styleClass="breadcrumb">
+			<p:menuitem value="#{i18n['menu.index']}" outcome="#{Page.INDEX.getUrl()}" />
+			<p:menuitem value="#{i18n['candidate.candidates']}" outcome="#{Page.CANDIDATE_SEARCH.getUrl()}" />
+			<p:menuitem value="#{educationBean.curriculum.candidate.fullName}" outcome="#{Page.CANDIDATE.getUrl()}">
+				<f:param name="id" value="#{educationBean.curriculum.candidate.id}" />
+			</p:menuitem>
+			<p:menuitem value="#{i18n['curriculum.curriculum']}" outcome="#{Page.CURRICULUM.getUrl()}">
+				<f:param name="id" value="#{educationBean.curriculum.candidate.id}" />
+			</p:menuitem>
+			<p:menuitem value="#{i18n['education.education']}" disabled="true" />
+		</p:breadCrumb>
 	</ui:define>
 
 	<ui:define name="content">
@@ -20,11 +30,9 @@
 						<div class="panel-header-title"></div>
 					</div>
 					<div class="panel-content">
-						<cc:inputText id="degree" label="#{i18n['education.degree']}" value="#{educationBean.education.degree}"
-							required="true" />
+						<cc:inputText id="degree" label="#{i18n['education.degree']}" value="#{educationBean.education.degree}" required="true" />
 
-						<cc:inputText id="school" label="#{i18n['education.school']}" value="#{educationBean.education.school}"
-							required="true" />
+						<cc:inputText id="school" label="#{i18n['education.school']}" value="#{educationBean.education.school}" required="true" />
 
 						<cc:inputSelect id="fromDate" label="#{i18n['education.from_date']}" value="#{educationBean.education.startYear}">
 							<f:selectItem itemLabel="#{i18n['date.year']}" itemValue="" />
@@ -39,17 +47,15 @@
 							</cc:inputSelect>
 						</h:panelGroup>
 
-						<cc:inputCheckbox id="still" label="#{i18n['job.still_working']}" value="#{jobExperienceBean.stillWorking}">
-							<f:ajax event="change" render="jobExperience:toDateWrapper" />
+						<f:ajax event="change" render="jobExperience:toDateWrapper" />
 						</cc:inputCheckbox>
 
-						<cc:richText id="description" label="#{i18n['education.description']}"
-							value="#{educationBean.education.description}" />
+						<cc:richText id="description" label="#{i18n['education.description']}" value="#{educationBean.education.description}" />
 					</div>
 
 					<div class="panel-footer">
 						<div class="panel-buttons">
-							<p:button value="#{i18n['action.cancel']}" outcome="#{Page.CURRICULUM.getUrl()}" styleClass="btn-gray" > 
+							<p:button value="#{i18n['action.cancel']}" outcome="#{Page.CURRICULUM.getUrl()}" styleClass="btn-gray">
 								<f:param name="id" value="#{educationBean.education.curriculum.candidate.id}" />
 							</p:button>
 							<p:commandButton value="#{i18n['action.delete']}" action="#{educationBean.delete}" process="@this"

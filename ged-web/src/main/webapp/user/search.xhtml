@@ -5,7 +5,7 @@
 	xmlns:of="http://omnifaces.org/functions" template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
-		<title>#{i18n['user.search']}</title>
+		<title>#{i18n['user.users']}</title>
 	</ui:define>
 
 	<ui:param name="selectedMenu" value="users" />
@@ -17,7 +17,7 @@
 	<ui:define name="breadcrumb">
 		<p:breadCrumb styleClass="breadcrumb">
 			<p:menuitem value="#{i18n['menu.index']}" outcome="#{Page.INDEX.getUrl()}" />
-			<p:menuitem value="#{i18n['user.search']}" disabled="true" />
+			<p:menuitem value="#{i18n['user.users']}" disabled="true" />
 		</p:breadCrumb>
 	</ui:define>
 

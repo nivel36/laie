@@ -12,16 +12,16 @@
 		<p:breadCrumb styleClass="breadcrumb">
 			<p:menuitem value="#{i18n['menu.index']}" outcome="#{Page.INDEX.getUrl()}" />
 			<p:menuitem value="#{i18n['candidate.candidates']}" outcome="#{Page.CANDIDATE_SEARCH.getUrl()}" />
-			<p:menuitem value="#{jobExperienceBean.jobExperience.curriculum.candidate.fullName}" outcome="#{Page.CANDIDATE.getUrl()}">
-				<f:param name="id" value="#{jobExperienceBean.jobExperience.curriculum.candidate.id}" />
+			<p:menuitem value="#{jobExperienceBean.curriculum.candidate.fullName}" outcome="#{Page.CANDIDATE.getUrl()}">
+				<f:param name="id" value="#{jobExperienceBean.curriculum.candidate.id}" />
 			</p:menuitem>
 			<p:menuitem value="#{i18n['curriculum.curriculum']}" outcome="#{Page.CURRICULUM.getUrl()}">
-				<f:param name="id" value="#{jobExperienceBean.jobExperience.curriculum.candidate.id}" />
+				<f:param name="id" value="#{jobExperienceBean.curriculum.candidate.id}" />
 			</p:menuitem>
 			<p:menuitem value="#{i18n['job_experience.job_experience']}" disabled="true" />
 		</p:breadCrumb>
 	</ui:define>
-	
+
 	<ui:define name="content">
 
 		<h:form id="jobExperience">

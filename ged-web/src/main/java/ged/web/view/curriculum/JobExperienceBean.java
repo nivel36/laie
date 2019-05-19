@@ -46,7 +46,11 @@ public class JobExperienceBean extends AbstractBean {
 
 	public String delete() {
 		this.curriculumService.save(this.curriculum);
-		return curriculumUrl();
+		return this.curriculumUrl();
+	}
+
+	public Curriculum getCurriculum() {
+		return this.curriculum;
 	}
 
 	public YearMonthDto getFromDate() {
@@ -64,17 +68,17 @@ public class JobExperienceBean extends AbstractBean {
 	@PostConstruct
 	public void init() {
 		this.curriculum = this.getValueFromFlash(CURRICULUM_KEY);
-		this.jobExperience = initJobExperience();
-		this.fromDate = initFromDate();
-		this.toDate = initToDate();
+		this.jobExperience = this.initJobExperience();
+		this.fromDate = this.initFromDate();
+		this.toDate = this.initToDate();
 		this.stillWorking = this.jobExperience.isStillWorking();
-		if(!isNewJobExperience()) {
-			this.curriculum.removeJobExperience(jobExperience);
+		if (!this.isNewJobExperience()) {
+			this.curriculum.removeJobExperience(this.jobExperience);
 		}
 	}
 
 	public YearMonthDto initFromDate() {
-		YearMonth fromDate = this.jobExperience.getStartDate();
+		final YearMonth fromDate = this.jobExperience.getStartDate();
 		if (fromDate != null) {
 			return YearMonthDto.of(fromDate);
 		} else {
@@ -93,7 +97,7 @@ public class JobExperienceBean extends AbstractBean {
 	}
 
 	public YearMonthDto initToDate() {
-		YearMonth toDate = this.jobExperience.getEndDate();
+		final YearMonth toDate = this.jobExperience.getEndDate();
 		if (toDate != null) {
 			return YearMonthDto.of(toDate);
 		} else {
@@ -106,17 +110,17 @@ public class JobExperienceBean extends AbstractBean {
 	}
 
 	public boolean isStillWorking() {
-		return stillWorking;
+		return this.stillWorking;
 	}
 
 	public String save() {
-		updateJobExperienceData();
+		this.updateJobExperienceData();
 		this.curriculum.addJobExperience(this.jobExperience);
 		this.curriculumService.save(this.curriculum);
-		return curriculumUrl();
+		return this.curriculumUrl();
 	}
 
-	public void setCurriculumService(CurriculumService curriculumService) {
+	public void setCurriculumService(final CurriculumService curriculumService) {
 		this.curriculumService = curriculumService;
 	}
 
@@ -128,7 +132,7 @@ public class JobExperienceBean extends AbstractBean {
 		this.jobExperience = jobExperience;
 	}
 
-	public void setStillWorking(boolean stillWorking) {
+	public void setStillWorking(final boolean stillWorking) {
 		this.stillWorking = stillWorking;
 	}
 
@@ -145,6 +149,6 @@ public class JobExperienceBean extends AbstractBean {
 		}
 		final YearMonth startDate = YearMonth.of(this.fromDate.getYear(), this.fromDate.getMonth());
 		this.jobExperience.setStartDate(startDate);
-		this.jobExperience.setStillWorking(stillWorking);
+		this.jobExperience.setStillWorking(this.stillWorking);
 	}
 }

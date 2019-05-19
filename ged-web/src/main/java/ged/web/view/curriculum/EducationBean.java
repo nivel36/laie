@@ -19,59 +19,55 @@ import ged.web.core.view.AbstractBean;
 @ViewScoped
 public class EducationBean extends AbstractBean {
 
-	private static final long serialVersionUID = -7120837113945432637L;
-
-	private static final String EDUCATION_KEY = "education";
-	
 	private static final String CURRICULUM_KEY = "curriculum";
 
-	private Education education;
+	private static final String EDUCATION_KEY = "education";
 
-	private List<Integer> years;
-	
+	private static final long serialVersionUID = -7120837113945432637L;
+
 	private Curriculum curriculum;
 
 	@Inject
 	private transient CurriculumService curriculumService;
 
+	private Education education;
+
+	private List<Integer> years;
+
+	private String curriculumUrl() {
+		return PageEnum.CURRICULUM.getRedirectUrl(this.education.getCurriculum().getCandidate());
+	}
+
 	public String delete() {
-		this.curriculumService.save(curriculum);
-		return curriculumUrl();
+		this.curriculumService.save(this.curriculum);
+		return this.curriculumUrl();
+	}
+
+	public Curriculum getCurriculum() {
+		return this.curriculum;
 	}
 
 	public Education getEducation() {
 		return this.education;
 	}
 
-	private String curriculumUrl() {
-		return PageEnum.CURRICULUM.getRedirectUrl(this.education.getCurriculum().getCandidate());
+	public List<Integer> getYears() {
+		return this.years;
 	}
 
 	@PostConstruct
 	public void init() {
-		this.education = initEducation();
-		this.years = initYears();
-		this.curriculum = initCurriculum();
+		this.education = this.initEducation();
+		this.years = this.initYears();
+		this.curriculum = this.initCurriculum();
 	}
 
-	public List<Integer> initYears() {
-		List<Integer> years = new ArrayList<Integer>();
-		for (int i = 1950; i < LocalDate.now().getYear(); i++) {
-			years.add(Integer.valueOf(i));
-		}
-		return years;
-	}
-	
 	private Curriculum initCurriculum() {
-		Curriculum curriculum = getValueFromFlash(CURRICULUM_KEY);
-		if(isNewEducation()) {
-			curriculum.removeEducation(education);
+		final Curriculum curriculum = this.getValueFromFlash(CURRICULUM_KEY);
+		if (this.isNewEducation()) {
+			curriculum.removeEducation(this.education);
 		}
 		return curriculum;
-	}
-
-	public List<Integer> getYears() {
-		return years;
 	}
 
 	public Education initEducation() {
@@ -84,6 +80,14 @@ public class EducationBean extends AbstractBean {
 		return education;
 	}
 
+	public List<Integer> initYears() {
+		final List<Integer> years = new ArrayList<Integer>();
+		for (int i = 1950; i < LocalDate.now().getYear(); i++) {
+			years.add(Integer.valueOf(i));
+		}
+		return years;
+	}
+
 	public boolean isNewEducation() {
 		return this.education.getId() == 0;
 	}
@@ -91,14 +95,14 @@ public class EducationBean extends AbstractBean {
 	public String save() {
 		this.curriculum.addEducation(this.education);
 		this.curriculumService.save(this.curriculum);
-		return curriculumUrl();
+		return this.curriculumUrl();
+	}
+
+	public void setCurriculumService(final CurriculumService curriculumService) {
+		this.curriculumService = curriculumService;
 	}
 
 	public void setEducation(final Education education) {
 		this.education = education;
-	}
-
-	public void setCurriculumService(CurriculumService curriculumService) {
-		this.curriculumService = curriculumService;
 	}
 }
