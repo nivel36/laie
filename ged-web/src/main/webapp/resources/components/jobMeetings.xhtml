@@ -5,24 +5,21 @@
 
 	<composite:interface>
 		<composite:attribute name="jobmeetings" type="java.util.List" />
-		<composite:attribute name="rendered" required="false" />
 		<composite:attribute name="styleClass" required="false" default="" />
 		<composite:attribute name="title" required="false" default="#{i18n['job_meeting.planned_job_meetings']}" />
 	</composite:interface>
 
 	<composite:implementation>
-		<h:panelGroup layout="block" rendered="#{cc.attrs.rendered}">
-			<div id="#{cc.clientId}" class="panel job-meetings #{cc.attrs.styleClass}">
-				<div class="panel-header">
-					<div class="panel-header-title">#{cc.attrs.title}</div>
-				</div>
-				<div class="panel-content"></div>
-				<h:panelGroup layout="block" class="panel-footer" rendered="#{component.findComponent('children').childCount > 0}">
-					<h:panelGroup id="children" styleClass="panel-buttons">
-						<composite:insertChildren />
-					</h:panelGroup>
-				</h:panelGroup>
+		<div id="#{cc.clientId}" class="panel job-meetings #{cc.attrs.styleClass}">
+			<div class="panel-header">
+				<div class="panel-header-title">#{cc.attrs.title}</div>
 			</div>
-		</h:panelGroup>
+			<div class="panel-content"></div>
+			<h:panelGroup layout="block" class="panel-footer" rendered="#{component.findComponent('children').childCount > 0}">
+				<h:panelGroup id="children" styleClass="panel-buttons">
+					<composite:insertChildren />
+				</h:panelGroup>
+			</h:panelGroup>
+		</div>
 	</composite:implementation>
 </ui:component>

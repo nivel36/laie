@@ -15,21 +15,23 @@ import ged.ejb.user.User;
 @Repository
 public class JobMeetingDao extends AbstractDao<JobMeeting> {
 
+	private static final String OWNER = "owner";
+
 	public List<JobMeeting> findByOwner(final User owner) {
 		Objects.requireNonNull(owner);
-		return this.findByQuery(JobMeeting.class, "JobMeeting.findByOwner", map("owner", owner), Page.ALL);
+		return this.findByQuery(JobMeeting.class, "JobMeeting.findByOwner", map(OWNER, owner), Page.ALL);
 	}
 
 	public List<JobMeeting> findByOwnerAndCandidate(final User owner, final Candidate candidate) {
 		Objects.requireNonNull(owner);
 		Objects.requireNonNull(candidate);
-		return this.findByQuery(JobMeeting.class, "JobMeeting.findByOwnerAndCandidate", map("owner", owner).and("candidate", candidate), Page.ALL);
+		return this.findByQuery(JobMeeting.class, "JobMeeting.findByOwnerAndCandidate", map(OWNER, owner).and("candidate", candidate), Page.ALL);
 	}
 
 	public List<JobMeeting> findByOwnerAndClient(final User owner, final Client client) {
 		Objects.requireNonNull(owner);
 		Objects.requireNonNull(client);
-		return this.findByQuery(JobMeeting.class, "JobMeeting.findByOwnerAndClient", map("owner", owner).and("client", client), Page.ALL);
+		return this.findByQuery(JobMeeting.class, "JobMeeting.findByOwnerAndClient", map(OWNER, owner).and("client", client), Page.ALL);
 	}
 
 	@Override

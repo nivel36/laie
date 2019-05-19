@@ -8,12 +8,27 @@
 		<title>#{i18n['job_experience.job_experience']}</title>
 	</ui:define>
 
+	<ui:define name="breadcrumb">
+		<p:breadCrumb styleClass="breadcrumb">
+			<p:menuitem value="#{i18n['menu.index']}" outcome="#{Page.INDEX.getUrl()}" />
+			<p:menuitem value="#{i18n['candidate.candidates']}" outcome="#{Page.CANDIDATE_SEARCH.getUrl()}" />
+			<p:menuitem value="#{jobExperienceBean.curriculum.candidate.fullName}" outcome="#{Page.CANDIDATE.getUrl()}">
+				<f:param name="id" value="#{jobExperienceBean.curriculum.candidate.id}" />
+			</p:menuitem>
+			<p:menuitem value="#{i18n['curriculum.curriculum']}" outcome="#{Page.CURRICULUM.getUrl()}">
+				<f:param name="id" value="#{jobExperienceBean.curriculum.candidate.id}" />
+			</p:menuitem>
+			<p:menuitem value="#{i18n['job_experience.job_experience']}" disabled="true" />
+		</p:breadCrumb>
+	</ui:define>
+
 	<ui:define name="content">
-		<h:form>
+
+		<h:form id="jobExperience">
 			<div class="grid nogutter">
-				<div class="panel curriculum col-12 sm-8">
+				<div class="panel curriculum col-12 xl-8">
 					<div class="panel-header">
-						<div class="panel-header-title"></div>
+						<div class="panel-header-title">#{i18n['job_experience.job_experience']}</div>
 					</div>
 					<div class="panel-content">
 						<div class="panel-content-data">
@@ -23,7 +38,16 @@
 							<cc:inputText id="jobPosition" label="#{i18n['job_experience.job_position']}" value="#{jobExperienceBean.jobExperience.jobPosition}"
 								required="true" />
 
-							<cc:inputYearMonth id="fromDate" label="#{i18n['education.from_date']}" value="#{jobExperienceBean.fromDate}" />
+							<cc:inputYearMonth id="fromDate" label="#{i18n['job.from_date']}" value="#{jobExperienceBean.fromDate}" required="true" />
+
+							<h:panelGroup layout="block" id="toDateWrapper">
+								<cc:inputYearMonth id="toDate" label="#{i18n['job.to_date']}" value="#{jobExperienceBean.toDate}"
+									rendered="#{not jobExperienceBean.stillWorking}" />
+							</h:panelGroup>
+
+							<cc:inputCheckbox id="still" label="#{i18n['job.still_working']}" value="#{jobExperienceBean.stillWorking}">
+								<f:ajax event="change" render="jobExperience:toDateWrapper" />
+							</cc:inputCheckbox>
 
 							<cc:richText id="description" label="#{i18n['job_experience.description']}" value="#{jobExperienceBean.jobExperience.description}" />
 						</div>
@@ -31,7 +55,7 @@
 
 					<div class="panel-footer">
 						<div class="panel-buttons">
-							<p:button value="#{i18n['action.cancel']}" outcome="#{Page.CURRICULUM.getUrl()}">
+							<p:button value="#{i18n['action.cancel']}" outcome="#{Page.CURRICULUM.getUrl()}" styleClass="btn-gray">
 								<f:param name="id" value="#{jobExperienceBean.jobExperience.curriculum.candidate.id}" />
 							</p:button>
 							<p:commandButton value="#{i18n['action.delete']}" action="#{jobExperienceBean.delete}" process="@this"

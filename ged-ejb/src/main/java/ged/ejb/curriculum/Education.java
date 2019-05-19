@@ -1,4 +1,4 @@
-package ged.ejb.curriculum.education;
+package ged.ejb.curriculum;
 
 import java.util.Objects;
 
@@ -12,7 +12,6 @@ import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 
 import ged.ejb.core.model.AbstractEntity;
-import ged.ejb.curriculum.Curriculum;
 
 @Entity
 @Indexed

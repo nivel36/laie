@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://ged.com/i18n"
-	xmlns:p="http://primefaces.org/ui" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://ged.com/i18n" xmlns:p="http://primefaces.org/ui"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components">
 
 <h:head>
 	<title>${i18n['login.login']}</title>
@@ -12,7 +12,7 @@
 	<h:outputStylesheet name="css/flat-classic-blue/components.css" />
 </h:head>
 <h:body>
-	<p:growl id="growl" globalOnly="true"/>
+	<p:growl id="growl" globalOnly="true" />
 	<div class="full-page login-page">
 		<div class="content">
 			<h:form>
@@ -20,13 +20,15 @@
 					<div class="panel-header">
 						<div class="panel-header-title">${i18n['login.login']}</div>
 					</div>
-					<div class="panel-content panel-content-data">
-						<cc:inputText id="username" labelIcon="fa-user" value="#{loginBean.username}" required="true"/>
-						<cc:inputPassword id="password" labelIcon="fa-lock" value="#{loginBean.password}" required="true"/>
+					<div class="panel-content panel-content-data grid">
+						<div class="col-12">
+							<cc:inputText id="username" labelIcon="fa-user" value="#{loginBean.username}" required="true" />
+							<cc:inputPassword id="password" labelIcon="fa-lock" value="#{loginBean.password}" required="true" />
+						</div>
 					</div>
 					<div class="panel-footer">
 						<div class="panel-buttons">
-							<p:commandButton action="#{loginBean.login}" value="${i18n['login.enter']}" update="@form growl"/>
+							<p:commandButton action="#{loginBean.login}" value="${i18n['login.enter']}" update="@form growl" />
 						</div>
 					</div>
 				</div>

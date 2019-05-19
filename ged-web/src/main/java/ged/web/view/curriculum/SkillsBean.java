@@ -10,12 +10,12 @@ import javax.inject.Named;
 
 import ged.ejb.curriculum.Curriculum;
 import ged.ejb.curriculum.CurriculumService;
-import ged.ejb.curriculum.skills.Skill;
-import ged.web.core.view.AbstractDialogBean;
+import ged.ejb.curriculum.Skill;
+import ged.web.core.view.AbstractBean;
 
 @Named
 @ViewScoped
-public class SkillsBean extends AbstractDialogBean {
+public class SkillsBean extends AbstractBean {
 
 	private static final long serialVersionUID = -5470807754278944272L;
 

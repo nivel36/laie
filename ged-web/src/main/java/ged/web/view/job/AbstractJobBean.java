@@ -25,7 +25,7 @@ public abstract class AbstractJobBean extends AbstractBean {
 	@Inject
 	protected transient JobOfferService jobOfferService;
 
-	protected List<String> recruiters = new ArrayList<>();
+	private List<String> recruiters = new ArrayList<>();
 
 	@Inject
 	protected transient UserService userService;

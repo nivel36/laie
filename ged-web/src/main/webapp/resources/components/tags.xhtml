@@ -12,12 +12,11 @@
 	</composite:interface>
 
 	<composite:implementation>
-		<h:panelGroup layout="block" rendered="#{cc.attrs.rendered}">
-			<div id="#{cc.clientId}" class="tags #{cc.attrs.styleClass}">
-				<p:autoComplete id="input-tag" completeMethod="#{cc.attrs.completeMethod}" var="tag" itemLabel="#{tag.label}"
-					itemValue="#{user}" forceSelection="true" required="#{cc.attrs.required}" binding="#{cc.input}">
-					<p:chips id="tags" value="#{candidateEditBean.tags}" label="#{i18n['candidateEditBean.tags']}"
-						converter="stringConverter" />
-			</div>
+		<div id="#{cc.clientId}" class="tags #{cc.attrs.styleClass}">
+			<p:autoComplete id="input-tag" completeMethod="#{cc.attrs.completeMethod}" var="tag" itemLabel="#{tag.label}"
+				itemValue="#{user}" forceSelection="true" required="#{cc.attrs.required}" binding="#{cc.input}" />
+			<p:chips id="tags" value="#{candidateEditBean.tags}" label="#{i18n['candidateEditBean.tags']}"
+				converter="stringConverter" />
+		</div>
 	</composite:implementation>
 </ui:component>

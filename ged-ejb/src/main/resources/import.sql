@@ -14,11 +14,6 @@ insert into ORIGIN( id, version, code ) values ( 110, 0, 'infojobs');
 insert into ORIGIN( id, version, code ) values ( 111, 0, 'linkedin');
 insert into ORIGIN( id, version, code ) values ( 112, 0, 'reference');
 
-insert into LANGUAGELEVEL( id, version, name ) values ( 120, 0, 'high');
-insert into LANGUAGELEVEL( id, version, name ) values ( 121, 0, 'medium');
-insert into LANGUAGELEVEL( id, version, name ) values ( 122, 0, 'low');
-insert into LANGUAGELEVEL( id, version, name ) values ( 123, 0, 'native');
-
 insert into JOB_CANDIDATURE_STATE( id, version, name, first, last, color ) values ( 130, 0, 'job_candidature_state.not_contacted', true, false, 'green');
 insert into JOB_CANDIDATURE_STATE( id, version, name, first, last, color ) values ( 131, 0, 'job_candidature_state.contacted', false, false,  'green');
 insert into JOB_CANDIDATURE_STATE( id, version, name, first, last, color ) values ( 132, 0, 'job_candidature_state.submitted', false, false,  'green');
@@ -27,14 +22,29 @@ insert into JOB_CANDIDATURE_STATE( id, version, name, first, last, color ) value
 insert into JOB_CANDIDATURE_STATE( id, version, name, first, last, color ) values ( 135, 0, 'job_candidature_state.offered', false, false,  'green');
 insert into JOB_CANDIDATURE_STATE( id, version, name, first, last, color ) values ( 136, 0, 'job_candidature_state.approved', false, true,  'green');
 
-insert into CURRICULUM( id, version) values (301, 0);
+insert into CREDENTIAL( id, version, hashPassword, salt, created ) values( 903, 0, '16AFB50A06A958ACEC2EDA9D70283139BC7B7372E21CC83F619CCF169E6E7956', 'FFFFFF', (TO_DATE('17/12/2015', 'DD/MM/YYYY')));
+insert into USER( id, version, email, language, name, rowsPerPage, surname, role, deleted, imageFileName, ownerId, credentialId ) values( 901, 0, 'abel.ferrer.jimenez@gmail.com', 'es', 'Abel', 10, 'Ferrer', 'ADMIN', false, null, 901, 903);
+insert into CREDENTIAL( id, version, hashPassword, salt, created ) values( 904, 0, '16AFB50A06A958ACEC2EDA9D70283139BC7B7372E21CC83F619CCF169E6E7956', 'FFFFFF', (TO_DATE('17/12/2015', 'DD/MM/YYYY')));
+insert into USER( id, version, email, language, name, rowsPerPage, surname, role, deleted, imageFileName, ownerId, credentialId ) values( 902, 0, 'isabel.vallejo.medina@gmail.com', 'es', 'Isabel', 10, 'Vallejo', 'ADMIN', false, null, 902, 904);
+
+insert into USERCLOSURE( id, version, antecessor_id, descendant_id, pathLength ) values( 970, 0, 901, 901, 0 );
+insert into USERCLOSURE( id, version, antecessor_id, descendant_id, pathLength ) values( 971, 0, 902, 902, 0 );
+
+insert into CANDIDATE( id, version, name, surname, phoneNumber, email, city, country, door, number, state, storey, street, zipCode, jobProfile, ownerId, deleted) values ( 201, 0, 'Abel', 'Ferrer Jiménez','685555276', 'abel.ferrer.jimenez@gmail.com', 'Barcelona', 'España','1','85', 'Barcelona', 'Principal', 'Bailén', '08809', 'Arquitecto', 901, false);
+insert into CANDIDATE( id, version, name, surname, phoneNumber, email, city, country, door, number, state, storey, street, zipCode, jobProfile, ownerId, deleted) values ( 202, 0, 'Luís', 'González Sánchez','685555277', 'lgonzalez@gmail.com', 'Madrid', 'España','2','85', 'Madrid', '2', 'Miraflores', '80809', 'Programador JEE', 901, false);
+insert into CANDIDATE( id, version, name, surname, phoneNumber, email, city, country, door, number, state, storey, street, zipCode, jobProfile, ownerId, deleted) values ( 203, 0, 'Juan', 'Ayuso Pérez','685555278', 'ayuson32@gmail.com', 'Valencia', 'España','2','85', 'Valencia', '1', 'Horchata', '02809', 'Analista Java', 901, false);
+insert into CANDIDATE( id, version, name, surname, phoneNumber, email, city, country, door, number, state, storey, street, zipCode, jobProfile, ownerId, deleted) values ( 204, 0, 'Pedro', 'Gallardo Navarro','685555279', 'pedrito@gmail.com', 'Masnou', 'España','3','85', 'Barcelona', '3', 'Plaça Catalunya', '08328', 'Programador', 901, false);
+insert into CANDIDATE( id, version, name, surname, phoneNumber, email, city, country, door, number, state, storey, street, zipCode, jobProfile, ownerId, deleted) values ( 205, 0, 'Gonzalo', 'León Cuellar','685555280', 'gonzo73@gmail.com', 'Lugo', 'España','1','85', 'Lugo', '3', 'España', '02809', 'Programador', 901, false);
+insert into CANDIDATE( id, version, name, surname, phoneNumber, email, city, country, door, number, state, storey, street, zipCode, jobProfile, ownerId, deleted) values ( 206, 0, 'Antonio', 'García Collado','685555281', 'agc2@gmail.com', 'Pontevedra', 'España','2','85', 'Pontevedra', 'Principal', 'Luguense', '01809', 'Programador Junior', 901, false);
+
+insert into CURRICULUM( id, version, candidateId) values (301, 0, 201);
 
 insert into EDUCATION( id, version, curriculumId, degree, description,  startYear, school, stillStudying, endYear) values( 401, 0, 301, 'Licenciado en Matemáticas', 'Licenciado en Matemáticas por la universidad de Barcelona', 2000, 'Universitat de Barcelona', false, 2010);
 insert into EDUCATION( id, version, curriculumId, degree, description,  startYear, school, stillStudying, endYear) values( 402, 0, 301, 'Bachillerato', null,  1988, 'IES Thalassa', false, 1992);
 
-insert into LANGUAGE( id, version, curriculumId, name, level ) values( 501, 0, 301, 'Castellano', 'native' );
-insert into LANGUAGE( id, version, curriculumId, name, level ) values( 502, 0, 301, 'Català', 'native' );
-insert into LANGUAGE( id, version, curriculumId, name, level ) values( 503, 0, 301, 'English', 'high' );
+insert into LANGUAGE( id, version, curriculumId, name, level ) values( 501, 0, 301, 'Castellano', 'NATIVE' );
+insert into LANGUAGE( id, version, curriculumId, name, level ) values( 502, 0, 301, 'Català', 'NATIVE' );
+insert into LANGUAGE( id, version, curriculumId, name, level ) values( 503, 0, 301, 'English', 'HIGH' );
 
 insert into SKILL( id, version, curriculumId, name ) values( 601, 0, 301, 'Java');
 insert into SKILL( id, version, curriculumId, name ) values( 602, 0, 301, 'Spring');
@@ -46,15 +56,6 @@ insert into JOBEXPERIENCE( id, version, curriculumId, companyName, description, 
 
 insert into I18NSTRING( id, version, locale, key, text ) values( 800, 0, 'es', 'all_day', 'Jornada completa' );
 insert into I18NSTRING( id, version, locale, key, text ) values( 801, 0, 'ca', 'all_day', 'Jornada completa' );
-
-insert into I18NSTRING( id, version, locale, key, text ) values( 805, 0, 'ca', 'high', 'Alt' );
-insert into I18NSTRING( id, version, locale, key, text ) values( 806, 0, 'es', 'high', 'Alto' );
-insert into I18NSTRING( id, version, locale, key, text ) values( 810, 0, 'ca', 'medium', 'Mitjà' );
-insert into I18NSTRING( id, version, locale, key, text ) values( 811, 0, 'es', 'medium', 'Medio' );
-insert into I18NSTRING( id, version, locale, key, text ) values( 815, 0, 'ca', 'low', 'Baix' );
-insert into I18NSTRING( id, version, locale, key, text ) values( 816, 0, 'es', 'low', 'Bajo' );
-insert into I18NSTRING( id, version, locale, key, text ) values( 820, 0, 'ca', 'native', 'Natiu' );
-insert into I18NSTRING( id, version, locale, key, text ) values( 821, 0, 'es', 'native', 'Nativo' );
 
 insert into I18NSTRING( id, version, locale, key, text ) values( 750, 0, 'ca', 'infojobs', 'Infojobs' );
 insert into I18NSTRING( id, version, locale, key, text ) values( 751, 0, 'es', 'infojobs', 'Infojobs' );
@@ -77,21 +78,6 @@ insert into I18NSTRING( id, version, locale, key, text ) values( 860, 0, 'es', '
 insert into I18NSTRING( id, version, locale, key, text ) values( 861, 0, 'ca', 'open', 'Oberta' );
 insert into I18NSTRING( id, version, locale, key, text ) values( 862, 0, 'es', 'closed', 'Cerrada' );
 insert into I18NSTRING( id, version, locale, key, text ) values( 863, 0, 'ca', 'closed', 'Tancada' );
-
-insert into CREDENTIAL( id, version, hashPassword, salt, created ) values( 903, 0, '16AFB50A06A958ACEC2EDA9D70283139BC7B7372E21CC83F619CCF169E6E7956', 'FFFFFF', (TO_DATE('17/12/2015', 'DD/MM/YYYY')));
-insert into USER( id, version, email, language, name, rowsPerPage, surname, role, deleted, imageFileName, ownerId, credentialId ) values( 901, 0, 'abel.ferrer.jimenez@gmail.com', 'es', 'Abel', 10, 'Ferrer', 'ADMIN', false, null, 901, 903);
-insert into CREDENTIAL( id, version, hashPassword, salt, created ) values( 904, 0, '16AFB50A06A958ACEC2EDA9D70283139BC7B7372E21CC83F619CCF169E6E7956', 'FFFFFF', (TO_DATE('17/12/2015', 'DD/MM/YYYY')));
-insert into USER( id, version, email, language, name, rowsPerPage, surname, role, deleted, imageFileName, ownerId, credentialId ) values( 902, 0, 'isabel.vallejo.medina@gmail.com', 'es', 'Isabel', 10, 'Vallejo', 'ADMIN', false, null, 902, 904);
-
-insert into USERCLOSURE( id, version, antecessor_id, descendant_id, pathLength ) values( 970, 0, 901, 901, 0 );
-insert into USERCLOSURE( id, version, antecessor_id, descendant_id, pathLength ) values( 971, 0, 902, 902, 0 );
-
-insert into CANDIDATE( id, version, name, surname, phoneNumber, email, city, country, door, number, state, storey, street, zipCode, jobProfile, curriculumId, ownerId, deleted) values ( 201, 0, 'Abel', 'Ferrer Jiménez','685555276', 'abel.ferrer.jimenez@gmail.com', 'Barcelona', 'España','1','85', 'Barcelona', 'Principal', 'Bailén', '08809', 'Arquitecto', 301, 901, false);
-insert into CANDIDATE( id, version, name, surname, phoneNumber, email, city, country, door, number, state, storey, street, zipCode, jobProfile, curriculumId, ownerId, deleted) values ( 202, 0, 'Luís', 'González Sánchez','685555277', 'lgonzalez@gmail.com', 'Madrid', 'España','2','85', 'Madrid', '2', 'Miraflores', '80809', 'Programador JEE', NULL, 901, false);
-insert into CANDIDATE( id, version, name, surname, phoneNumber, email, city, country, door, number, state, storey, street, zipCode, jobProfile, curriculumId, ownerId, deleted) values ( 203, 0, 'Juan', 'Ayuso Pérez','685555278', 'ayuson32@gmail.com', 'Valencia', 'España','2','85', 'Valencia', '1', 'Horchata', '02809', 'Analista Java', NULL, 901, false);
-insert into CANDIDATE( id, version, name, surname, phoneNumber, email, city, country, door, number, state, storey, street, zipCode, jobProfile, curriculumId, ownerId, deleted) values ( 204, 0, 'Pedro', 'Gallardo Navarro','685555279', 'pedrito@gmail.com', 'Masnou', 'España','3','85', 'Barcelona', '3', 'Plaça Catalunya', '08328', 'Programador', NULL, 901, false);
-insert into CANDIDATE( id, version, name, surname, phoneNumber, email, city, country, door, number, state, storey, street, zipCode, jobProfile, curriculumId, ownerId, deleted) values ( 205, 0, 'Gonzalo', 'León Cuellar','685555280', 'gonzo73@gmail.com', 'Lugo', 'España','1','85', 'Lugo', '3', 'España', '02809', 'Programador', NULL, 901, false);
-insert into CANDIDATE( id, version, name, surname, phoneNumber, email, city, country, door, number, state, storey, street, zipCode, jobProfile, curriculumId, ownerId, deleted) values ( 206, 0, 'Antonio', 'García Collado','685555281', 'agc2@gmail.com', 'Pontevedra', 'España','2','85', 'Pontevedra', 'Principal', 'Luguense', '01809', 'Programador Junior', NULL, 901, false);
 
 insert into CLIENT( id, version, name, cif, ownerId, phoneNumber, deleted) values (1000, 0, 'F.C. Barcelona', 'A0000000', 901, '935551414', false);
 

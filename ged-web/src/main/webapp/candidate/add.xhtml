@@ -7,14 +7,15 @@
 		<title>#{i18n['candidate.new_candidate']}</title>
 	</ui:define>
 
-	<ui:define name="content">
-
+	<ui:define name="breadcrumb">
 		<p:breadCrumb styleClass="breadcrumb">
 			<p:menuitem value="#{i18n['menu.index']}" outcome="#{Page.INDEX.getUrl()}" />
 			<p:menuitem value="#{i18n['candidate.candidates']}" outcome="#{Page.CANDIDATE_SEARCH.getUrl()}" />
 			<p:menuitem value="#{i18n['candidate.new_candidate']}" disabled="true" />
 		</p:breadCrumb>
+	</ui:define>
 
+	<ui:define name="content">
 		<h:form id="candidateForm">
 			<div class="panel">
 				<div class="panel-header">
@@ -41,8 +42,7 @@
 
 							<cc:inputText id="surname" label="#{i18n['candidate.surname']}" value="#{addCandidateBean.candidate.surname}" required="true" />
 
-							<cc:calendar id="born_date" label="#{i18n['candidate.bornDate']}" value="#{addCandidateBean.candidate.bornDate}"
-								yearRange="c-100:c0" />
+							<cc:calendar id="born_date" label="#{i18n['candidate.bornDate']}" value="#{addCandidateBean.candidate.bornDate}" yearRange="c-100:c0" />
 
 							<cc:inputText id="city" label="#{i18n['candidate.city']}" value="#{addCandidateBean.candidate.address.city}" />
 
@@ -75,8 +75,7 @@
 
 							<cc:inputMoney id="salary" label="#{i18n['candidate.salary']}" value="#{addCandidateBean.candidate.salary}" />
 
-							<cc:inputMoney id="expected_salary" label="#{i18n['candidate.expected_salary']}"
-								value="#{addCandidateBean.candidate.expectedSalary}" />
+							<cc:inputMoney id="expected_salary" label="#{i18n['candidate.expected_salary']}" value="#{addCandidateBean.candidate.expectedSalary}" />
 						</div>
 					</div>
 				</div>

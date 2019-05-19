@@ -2,7 +2,7 @@ package ged.ejb.core.model;
 
 public class Page {
 
-	public final static Page ALL = Page.of(1, 150);
+	public static final Page ALL = Page.of(1, 150);
 
 	public static Page of(final int pageNumber, final int pageSize) {
 		return new Page(pageNumber, pageSize);

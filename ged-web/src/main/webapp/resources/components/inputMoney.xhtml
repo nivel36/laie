@@ -14,20 +14,18 @@
 	</composite:interface>
 
 	<composite:implementation>
-		<h:panelGroup layout="block" rendered="#{cc.attrs.rendered}">
-			<div id="#{cc.clientId}" class="input-group input-group-money #{cc.attrs.styleClass}">
-				<div class="label-container">
-					<p:outputLabel value="#{cc.attrs.label}" for="inputNumber" styleClass="label" />
-				</div>
-				<div class="input-container">
-					<p:inputNumber id="inputNumber" name="#{cc.attrs.name}" value="#{cc.attrs.value}" required="#{cc.attrs.required}"
-						min="#{cc.attrs.min}" max="#{cc.attrs.max}" styleClass="input input-money" />
-					<i class="icon fa fa-euro" aria-hidden="true"></i>
-				</div>
-				<div class="message-container">
-					<p:message id="message" for="inputNumber" styleClass="message-error" />
-				</div>
+		<div id="#{cc.clientId}" class="input-group input-group-money #{cc.attrs.styleClass}">
+			<div class="label-container">
+				<p:outputLabel value="#{cc.attrs.label}" for="inputNumber" styleClass="label" />
 			</div>
-		</h:panelGroup>
+			<div class="input-container">
+				<p:inputNumber id="inputNumber" name="#{cc.attrs.name}" value="#{cc.attrs.value}" required="#{cc.attrs.required}"
+					min="#{cc.attrs.min}" max="#{cc.attrs.max}" styleClass="input input-money" />
+				<i class="icon fa fa-euro" aria-hidden="true"></i>
+			</div>
+			<div class="message-container">
+				<p:message id="message" for="inputNumber" styleClass="message-error" />
+			</div>
+		</div>
 	</composite:implementation>
 </ui:component>

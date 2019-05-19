@@ -6,30 +6,28 @@
 	<composite:interface>
 		<composite:attribute name="labelIcon" required="false" />
 		<composite:attribute name="label" required="false" />
-		<composite:attribute name="tagLabel" required="false" />
 		<composite:attribute name="required" default="false" />
-		<composite:attribute name="validator" targets="input-text" />
+		<composite:attribute name="validator" targets="input-checkbox" />
 		<composite:attribute name="value" required="true" />
 		<composite:attribute name="styleClass" required="false" default="" />
-		<composite:attribute name="inputStyleClass" required="false" default="" />
-		<composite:editableValueHolder name="input-text" />
+		<composite:editableValueHolder name="input-checkbox" />
+		<composite:clientBehavior name="change" targets="input-checkbox" event="change" />
 	</composite:interface>
 
 	<composite:implementation>
-		<div id="#{cc.clientId}" class="input-group input-group-tag #{cc.attrs.styleClass}">
-			<h:panelGroup layout="block" styleClass="label-container label-icon-container"
-				rendered="#{not empty cc.attrs.labelIcon}">
-				<em class="icon fa #{cc.attrs.labelIcon}" />
+		<div id="#{cc.clientId}" class="input-group input-group-checkbox #{cc.attrs.styleClass}">
+			<h:panelGroup layout="block" styleClass="label-icon-container" rendered="#{not empty cc.attrs.labelIcon}">
+				<em class="label-icon icon fa #{cc.attrs.labelIcon}" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="label-container" rendered="#{not empty cc.attrs.label}">
-				<p:outputLabel id="label" for="input-tag" value="#{cc.attrs.label}" styleClass="label" />
+				<p:outputLabel id="label" for="input-checkbox" value="#{cc.attrs.label}" styleClass="label" />
 			</h:panelGroup>
 			<div class="input-container">
-				<p:chips id="input-tag" value="#{cc.attrs.value}" label="#{cc.attrs.tagLabel}" required="#{cc.attrs.required}"
-					converter="stringConverter" styleClass="input input-tag #{cc.attrs.inputStyleClass}" />
+				<p:selectBooleanCheckbox id="input-checkbox" value="#{cc.attrs.value}" required="#{cc.attrs.required}"
+					styleClass="input input-checkbox #{cc.attrs.inputStyleClass}" />
 			</div>
 			<div class="message-container">
-				<p:message id="message" for="input-tag" styleClass="message-error" />
+				<p:message id="message" for="input-checkbox" styleClass="message-error" />
 			</div>
 		</div>
 	</composite:implementation>

@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://ged.com/i18n"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:p="http://primefaces.org/ui"
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:o="http://omnifaces.org/ui"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://ged.com/i18n" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:p="http://primefaces.org/ui" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:o="http://omnifaces.org/ui"
 	xmlns:of="http://omnifaces.org/functions" template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
@@ -11,12 +10,14 @@
 
 	<ui:param name="selectedMenu" value="clients" />
 
-	<ui:define name="content">
+	<ui:define name="breadcrumb">
 		<p:breadCrumb styleClass="breadcrumb">
 			<p:menuitem value="#{i18n['menu.index']}" outcome="#{Page.INDEX.getUrl()}" />
 			<p:menuitem value="#{i18n['client.clients']}" disabled="true" />
 		</p:breadCrumb>
+	</ui:define>
 
+	<ui:define name="content">
 		<h:form id="clientSearchForm">
 			<div class="panel">
 				<div class="panel-header">
@@ -24,18 +25,17 @@
 				</div>
 				<div class="panel-content">
 					<div class="panel-content-data">
-						<cc:inputSearch searchText="#{searchClientBean.searchText}" searchAction="#{searchClientBean.search}"
-							update="@form" />
+						<cc:inputSearch searchText="#{searchClientBean.searchText}" searchAction="#{searchClientBean.search}" update="@form" />
 						<div class="panel-buttons">
-							<p:commandButton value="#{i18n['action.export']}" action="#{searchClientBean.export}" process="@this"
-								icon="fa-file-excel-o" rendered="#{not empty searchClientBean.clients}" />
+							<p:commandButton value="#{i18n['action.export']}" action="#{searchClientBean.export}" process="@this" icon="fa-file-excel-o"
+								rendered="#{not empty searchClientBean.clients}" />
 							<p:button value="#{i18n['action.new']}" outcome="#{Page.CLIENT_ADD.getUrl()}" />
 						</div>
 					</div>
 
-					<p:dataTable var="client" id="clients" value="#{searchClientBean.clients}"
-						emptyMessage="#{i18n['client.no_clients_found']}" reflow="true" paginator="true" paginatorPosition="bottom"
-						rows="#{sessionUser.rowsPerPage}" sortBy="#{client.name}" sortOrder="ascending">
+					<p:dataTable var="client" id="clients" value="#{searchClientBean.clients}" emptyMessage="#{i18n['client.no_clients_found']}"
+						reflow="true" paginator="true" paginatorPosition="bottom" rows="#{sessionUser.rowsPerPage}" sortBy="#{client.name}"
+						sortOrder="ascending">
 
 						<p:column headerText="#{i18n['client.name']}" sortBy="#{client.name}">
 							<h:link value="#{client.name}" outcome="#{Page.CLIENT.getUrl()}">

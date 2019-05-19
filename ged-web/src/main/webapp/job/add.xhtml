@@ -1,7 +1,6 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
-	xmlns:i18n="http://ged.com/i18n" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
-	template="/WEB-INF/templates/default.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:i18n="http://ged.com/i18n"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
 		<title>#{i18n['job.new_job_offer']}</title>
@@ -9,14 +8,15 @@
 
 	<ui:param name="selectedMenu" value="offers" />
 
-	<ui:define name="content">
-
+	<ui:define name="breadcrumb">
 		<p:breadCrumb styleClass="breadcrumb">
 			<p:menuitem value="#{i18n['menu.index']}" outcome="#{Page.INDEX.getUrl()}" />
 			<p:menuitem value="#{i18n['job.job_offers']}" outcome="#{Page.JOB_SEARCH.getUrl()}" />
 			<p:menuitem value="#{i18n['job.new_job_offer']}" disabled="true" />
 		</p:breadCrumb>
+	</ui:define>
 
+	<ui:define name="content">
 		<h:form id="jobOfferForm">
 			<div class="panel">
 				<div class="panel-header">
@@ -29,8 +29,8 @@
 
 							<cc:inputText label="#{i18n['job.name']}" value="#{addJobBean.jobOffer.name}" required="true" />
 
-							<cc:inputClient id="client" label="#{i18n['job.client']}" value="#{addJobBean.jobOffer.client}"
-								search="#{addJobBean.searchClient()}" required="true">
+							<cc:inputClient id="client" label="#{i18n['job.client']}" value="#{addJobBean.jobOffer.client}" search="#{addJobBean.searchClient()}"
+								required="true">
 								<p:ajax event="dialogReturn" listener="#{addJobBean.onClientSelect}" update="client" />
 							</cc:inputClient>
 
@@ -48,16 +48,13 @@
 
 							<cc:inputText id="state" label="#{i18n['job.state']}" value="#{addJobBean.jobOffer.state}" required="true" />
 
-							<cc:inputUser id="owner" label="#{i18n['job.owner']}" value="#{addJobBean.jobOffer.owner}"
-								completeMethod="#{addJobBean.searchOwner}" />
+							<cc:inputUser id="owner" label="#{i18n['job.owner']}" value="#{addJobBean.jobOffer.owner}" completeMethod="#{addJobBean.searchOwner}" />
 
-							<cc:inputTag id="recruiters" label="#{i18n['job.recruiters']}" value="#{addJobBean.recruiters}"
-								tagLabel="#{addJobBean.recruiters}" />
+							<cc:inputTag id="recruiters" label="#{i18n['job.recruiters']}" value="#{addJobBean.recruiters}" tagLabel="#{addJobBean.recruiters}" />
 						</div>
 						<div class="col-12">
 							<h3>#{i18n['user.personal_information']}</h3>
-							<cc:richText id="description" name="description" label="#{i18n['job.description']}"
-								value="#{addJobBean.jobOffer.description}" />
+							<cc:richText id="description" name="description" label="#{i18n['job.description']}" value="#{addJobBean.jobOffer.description}" />
 						</div>
 					</div>
 				</div>

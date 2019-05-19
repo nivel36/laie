@@ -55,10 +55,7 @@ public class UserService extends AbstractAuditedService<User> {
 
 	private boolean hasValidManager(final User user) {
 		final User manager = user.getManager();
-		if (user.isAdmin() && (manager != null)) {
-			return false;
-		}
-		return true;
+		return !(user.isAdmin() && (manager != null));
 	}
 
 	public boolean isEmailInUse(final String email) {

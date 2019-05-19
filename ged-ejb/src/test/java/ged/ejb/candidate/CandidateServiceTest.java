@@ -36,10 +36,12 @@ public class CandidateServiceTest {
 
 		@Test
 		public void shouldBeOk() {
-			final ServerFile mockedUploadedServerFile = mock(ServerFile.class);
-
+			final ServerFile file = new ServerFile();
 			final Candidate mockedCandidate = mock(Candidate.class);
-			candidateService.addFileToCandidate(mockedCandidate, mockedUploadedServerFile);
+			
+			candidateService.addFileToCandidate(mockedCandidate, file);
+
+			assertNotNull(file.getCandidate());
 		}
 	}
 

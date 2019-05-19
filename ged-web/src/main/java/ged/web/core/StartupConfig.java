@@ -45,8 +45,8 @@ public class StartupConfig {
 		try {
 			this.indexer.index();
 		} catch (final InterruptedException e) {
-			logger.error("Indexer fail", e);
-			throw e;
+			logger.error("Indexer failed", e);
+			Thread.currentThread().interrupt();
 		}
 	}
 

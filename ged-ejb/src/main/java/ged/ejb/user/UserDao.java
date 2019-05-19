@@ -101,7 +101,7 @@ public class UserDao extends AbstractDao<User> {
 	private boolean isDuplicateEmail(final User user) {
 		Objects.requireNonNull(user);
 		final User repositoryUser = this.findUserByEmail(user.getEmail());
-		return (repositoryUser != null) && !(repositoryUser.getId() == user.getId());
+		return (repositoryUser != null) && (repositoryUser.getId() != user.getId());
 	}
 
 	public boolean isEmailInUse(final String email) {

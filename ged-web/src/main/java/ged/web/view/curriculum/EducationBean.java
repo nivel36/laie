@@ -1,5 +1,9 @@
 package ged.web.view.curriculum;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -7,55 +11,91 @@ import javax.inject.Named;
 
 import ged.ejb.curriculum.Curriculum;
 import ged.ejb.curriculum.CurriculumService;
-import ged.ejb.curriculum.education.Education;
-import ged.ejb.curriculum.education.EducationService;
-import ged.web.core.view.AbstractDialogBean;
+import ged.ejb.curriculum.Education;
+import ged.web.core.util.PageEnum;
+import ged.web.core.view.AbstractBean;
 
 @Named
 @ViewScoped
-public class EducationBean extends AbstractDialogBean {
+public class EducationBean extends AbstractBean {
+
+	private static final String CURRICULUM_KEY = "curriculum";
+
+	private static final String EDUCATION_KEY = "education";
 
 	private static final long serialVersionUID = -7120837113945432637L;
+
+	private Curriculum curriculum;
 
 	@Inject
 	private transient CurriculumService curriculumService;
 
 	private Education education;
 
-	@Inject
-	private transient EducationService educationService;
+	private List<Integer> years;
 
-	public void delete() {
-		this.educationService.delete(this.education);
-		this.closeDialog();
+	private String curriculumUrl() {
+		return PageEnum.CURRICULUM.getRedirectUrl(this.education.getCurriculum().getCandidate());
+	}
+
+	public String delete() {
+		this.curriculumService.save(this.curriculum);
+		return this.curriculumUrl();
+	}
+
+	public Curriculum getCurriculum() {
+		return this.curriculum;
 	}
 
 	public Education getEducation() {
 		return this.education;
 	}
 
+	public List<Integer> getYears() {
+		return this.years;
+	}
+
 	@PostConstruct
 	public void init() {
-		final Long eduationId = this.getIdFromParameters("educationId");
-		if (eduationId != null) {
-			this.education = this.educationService.find(eduationId);
+		this.education = this.initEducation();
+		this.years = this.initYears();
+		this.curriculum = this.initCurriculum();
+	}
+
+	private Curriculum initCurriculum() {
+		final Curriculum curriculum = this.getValueFromFlash(CURRICULUM_KEY);
+		if (this.isNewEducation()) {
+			curriculum.removeEducation(this.education);
 		}
-		else {
-			final Long curriculumId = this.getIdFromParameters("curriculumId");
-			final Curriculum curriculum = this.curriculumService.find(curriculumId);
-			this.education = new Education();
-			this.education.setStillStudying(false);
-			this.education.setCurriculum(curriculum);
+		return curriculum;
+	}
+
+	public Education initEducation() {
+		Education education = this.getValueFromFlash(EDUCATION_KEY);
+		if (education == null) {
+			education = new Education();
+			education.setStillStudying(false);
+			education.setCurriculum(this.curriculum);
 		}
+		return education;
+	}
+
+	public List<Integer> initYears() {
+		final List<Integer> years = new ArrayList<Integer>();
+		for (int i = 1950; i < LocalDate.now().getYear(); i++) {
+			years.add(Integer.valueOf(i));
+		}
+		return years;
 	}
 
 	public boolean isNewEducation() {
 		return this.education.getId() == 0;
 	}
 
-	public void save() {
-		this.education = this.educationService.save(this.education);
-		this.closeDialog(this.education);
+	public String save() {
+		this.curriculum.addEducation(this.education);
+		this.curriculumService.save(this.curriculum);
+		return this.curriculumUrl();
 	}
 
 	public void setCurriculumService(final CurriculumService curriculumService) {
@@ -64,9 +104,5 @@ public class EducationBean extends AbstractDialogBean {
 
 	public void setEducation(final Education education) {
 		this.education = education;
-	}
-
-	public void setEducationService(final EducationService educationService) {
-		this.educationService = educationService;
 	}
 }

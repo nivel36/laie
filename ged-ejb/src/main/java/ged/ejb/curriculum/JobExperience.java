@@ -1,4 +1,4 @@
-package ged.ejb.curriculum.jobexperience;
+package ged.ejb.curriculum;
 
 import java.time.LocalDate;
 import java.time.YearMonth;
@@ -16,7 +16,6 @@ import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 
 import ged.ejb.core.model.AbstractEntity;
-import ged.ejb.curriculum.Curriculum;
 
 @Entity
 @Indexed
@@ -35,21 +34,18 @@ public class JobExperience extends AbstractEntity {
 	private Curriculum curriculum;
 
 	@Field
-	@NotNull
 	@Lob
-	@Column(nullable = false)
 	private String description;
 
 	private YearMonth endDate;
 
+	@NotNull
 	@Field
-	@Column(length = 256)
+	@Column(length = 256, nullable = false)
 	private String jobPosition;
 
 	private YearMonth startDate;
 
-	@NotNull
-	@Column(nullable = false)
 	private boolean stillWorking;
 
 	@Override
@@ -65,9 +61,10 @@ public class JobExperience extends AbstractEntity {
 		}
 		final JobExperience other = (JobExperience) obj;
 		return Objects.equals(this.companyName, other.companyName) && Objects.equals(this.curriculum, other.curriculum)
-				&& Objects.equals(this.description, other.description) && Objects.equals(this.startDate, other.startDate)
-				&& Objects.equals(this.jobPosition, other.jobPosition) && Objects.equals(this.stillWorking, other.stillWorking)
-				&& Objects.equals(this.endDate, other.endDate);
+				&& Objects.equals(this.description, other.description)
+				&& Objects.equals(this.startDate, other.startDate)
+				&& Objects.equals(this.jobPosition, other.jobPosition)
+				&& Objects.equals(this.stillWorking, other.stillWorking) && Objects.equals(this.endDate, other.endDate);
 	}
 
 	public String getCompanyName() {
@@ -92,13 +89,12 @@ public class JobExperience extends AbstractEntity {
 
 	public Long getMonthsWorked() {
 		Objects.requireNonNull(this.startDate);
-		if ((this.stillWorking == false) && (this.endDate == null)) {
+		if ((!this.stillWorking) && (this.endDate == null)) {
 			throw new IllegalStateException();
 		}
 		if (this.stillWorking) {
 			return ChronoUnit.MONTHS.between(this.startDate, LocalDate.now());
-		}
-		else {
+		} else {
 			return ChronoUnit.MONTHS.between(this.startDate, this.endDate);
 		}
 	}
@@ -109,7 +105,8 @@ public class JobExperience extends AbstractEntity {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(this.companyName, this.curriculum, this.description, this.startDate, this.jobPosition, this.stillWorking, this.endDate);
+		return Objects.hash(this.companyName, this.curriculum, this.description, this.startDate, this.jobPosition,
+				this.stillWorking, this.endDate);
 	}
 
 	public boolean isStillWorking() {

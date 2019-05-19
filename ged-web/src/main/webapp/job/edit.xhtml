@@ -1,7 +1,6 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
-	xmlns:i18n="http://ged.com/i18n" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
-	template="/WEB-INF/templates/default.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:i18n="http://ged.com/i18n"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
 		<title>#{i18n['job.edit_job']} - #{editJobBean.jobOffer.name}</title>
@@ -9,8 +8,7 @@
 
 	<ui:param name="selectedMenu" value="offers" />
 
-	<ui:define name="content">
-
+	<ui:define name="breadcrumb">
 		<p:breadCrumb styleClass="breadcrumb">
 			<p:menuitem value="#{i18n['menu.index']}" outcome="#{Page.INDEX.getUrl()}" />
 			<p:menuitem value="#{i18n['job.job_offers']}" outcome="#{Page.JOB_SEARCH.getUrl()}" />
@@ -19,7 +17,9 @@
 			</p:menuitem>
 			<p:menuitem value="#{i18n['job.edit_job']}" disabled="true" />
 		</p:breadCrumb>
+	</ui:define>
 
+	<ui:define name="content">
 		<h:form id="jobOfferForm">
 			<div class="panel">
 				<div class="panel-header">
@@ -53,13 +53,11 @@
 							<cc:inputUser id="owner" label="#{i18n['job.owner']}" value="#{editJobBean.jobOffer.owner}"
 								completeMethod="#{editJobBean.searchOwner}" />
 
-							<cc:inputTag id="recruiters" label="#{i18n['job.recruiters']}" value="#{editJobBean.recruiters}"
-								tagLabel="#{editJobBean.recruiters}" />
+							<cc:inputTag id="recruiters" label="#{i18n['job.recruiters']}" value="#{editJobBean.recruiters}" tagLabel="#{editJobBean.recruiters}" />
 						</div>
 						<div class="col-12">
 							<h3>#{i18n['user.personal_information']}</h3>
-							<cc:richText id="description" name="description" label="#{i18n['job.description']}"
-								value="#{editJobBean.jobOffer.description}" />
+							<cc:richText id="description" name="description" label="#{i18n['job.description']}" value="#{editJobBean.jobOffer.description}" />
 						</div>
 					</div>
 				</div>

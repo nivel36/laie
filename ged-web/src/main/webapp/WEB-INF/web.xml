@@ -95,6 +95,10 @@
 		<url-pattern>*.xhtml</url-pattern>
 	</servlet-mapping>
 
+	<welcome-file-list>
+		<welcome-file>index.xhtml</welcome-file>
+	</welcome-file-list>
+
 	<mime-mapping>
 		<extension>swf</extension>
 		<mime-type>photocam/webcam.swf</mime-type>

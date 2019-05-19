@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://ged.com/i18n"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:p="http://primefaces.org/ui"
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:o="http://omnifaces.org/ui"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://ged.com/i18n" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:p="http://primefaces.org/ui" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:o="http://omnifaces.org/ui"
 	xmlns:of="http://omnifaces.org/functions" template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
@@ -11,40 +10,45 @@
 
 	<ui:param name="selectedMenu" value="users" />
 
-	<ui:define name="content">
+	<ui:define name="actions">
+		<p:button value="#{i18n['user.new_user']}" outcome="#{Page.USER_ADD.getUrl()}" />
+	</ui:define>
+
+	<ui:define name="breadcrumb">
 		<p:breadCrumb styleClass="breadcrumb">
 			<p:menuitem value="#{i18n['menu.index']}" outcome="#{Page.INDEX.getUrl()}" />
 			<p:menuitem value="#{i18n['user.users']}" outcome="#{Page.USER_SEARCH.getUrl()}" />
 			<p:menuitem value="#{viewUserBean.user}" disabled="true" />
 		</p:breadCrumb>
+	</ui:define>
 
-		<div class="grid nogutter">
-			<div class="panel user col-12 xl-8">
-				<div class="panel-header">
-					<div class="panel-header-image">
-						<cc:avatar imageFileName="#{viewUserBean.user.imageFileName}" />
-					</div>
-					<div class="panel-header-data">
-						<div class="name">#{viewUserBean.user.fullName}</div>
-						<div class="job-profile">#{i18n:translate(viewUserBean.user.role)}</div>
-						<div class="data email">
-							<span class="icon"><i class="fa fa-envelope"></i></span><span class="text">#{viewUserBean.user.email}</span>
+	<ui:define name="content">
+		<div class="grid">
+			<div class="col-12 xl-8">
+				<div class="panel">
+					<div class="panel-header">
+						<div class="panel-header-image">
+							<cc:avatar imageFileName="#{viewUserBean.user.imageFileName}" />
 						</div>
-						<h:panelGroup layout="block" styleClass="data phone" rendered="#{not empty viewUserBean.user.phoneNumber}">
-							<span class="icon"><i class="fa fa-phone"></i></span>
-							<span class="text">#{viewUserBean.user.phoneNumber}</span>
-						</h:panelGroup>
-					</div>
-					<h:form>
-						<div class="panel-buttons">
-							<p:commandButton value="#{i18n['action.export']}" process="@this" action="#{viewUserBean.export}"
-								icon="fa-file-excel-o" />
-							<p:commandButton value="#{i18n['action.edit']}" process="@this" action="#{viewUserBean.editUser}" />
+						<div class="panel-header-data">
+							<div class="name">#{viewUserBean.user.fullName}</div>
+							<div class="job-profile">#{i18n:translate(viewUserBean.user.role)}</div>
+							<div class="data email">
+								<span class="icon"><em class="fa fa-envelope"></em></span><span class="text">#{viewUserBean.user.email}</span>
+							</div>
+							<h:panelGroup layout="block" styleClass="data phone" rendered="#{not empty viewUserBean.user.phoneNumber}">
+								<span class="icon"><em class="fa fa-phone"></em></span>
+								<span class="text">#{viewUserBean.user.phoneNumber}</span>
+							</h:panelGroup>
 						</div>
-					</h:form>
-				</div>
-				<div class="panel-content panel-content-data">
-					<div class="grid">
+						<h:form>
+							<div class="panel-buttons">
+								<p:commandButton value="#{i18n['action.export']}" process="@this" action="#{viewUserBean.export}" icon="fa-file-excel-o" />
+								<p:commandButton value="#{i18n['action.edit']}" process="@this" action="#{viewUserBean.editUser}" />
+							</div>
+						</h:form>
+					</div>
+					<div class="panel-content panel-content-data grid">
 						<div class="data manager col-12 sm-6">
 							<div class="label">#{i18n['user.manager']}</div>
 							<h:panelGroup layout="block" styleClass="name" rendered="#{not viewUserBean.user.managed}"> --- </h:panelGroup>

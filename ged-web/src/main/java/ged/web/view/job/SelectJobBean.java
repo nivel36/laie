@@ -7,14 +7,16 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.primefaces.PrimeFaces;
+
 import ged.ejb.core.model.Page;
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
-import ged.web.core.view.AbstractDialogBean;
+import ged.web.core.view.AbstractBean;
 
 @Named
 @ViewScoped
-public class SelectJobBean extends AbstractDialogBean {
+public class SelectJobBean extends AbstractBean {
 
 	private static final long serialVersionUID = 2489802687772948858L;
 
@@ -54,7 +56,7 @@ public class SelectJobBean extends AbstractDialogBean {
 	}
 
 	public void select() {
-		this.closeDialog(this.selectedJobOffers);
+		PrimeFaces.current().dialog().closeDynamic(this.selectedJobOffers);
 	}
 
 	public void setJobOfferService(final JobOfferService jobOfferService) {

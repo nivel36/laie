@@ -27,18 +27,23 @@ public class Credential extends AbstractEntity {
 
 	@Column(length = 32, nullable = false)
 	@NotNull
-	private byte[] hashPassword = new byte[32];
+	private byte[] hashPassword;
 
 	@Column(length = 16, nullable = false)
 	@NotNull
-	private byte[] salt = new byte[16];
+	private byte[] salt;
 
 	public Credential() {
-
+		this.hashPassword = new byte[32];
+		this.salt = new byte[16];
+		this.created = LocalDate.now();
 	}
 
 	public Credential(final String password) {
 		Objects.requireNonNull(password);
+		this.hashPassword = new byte[32];
+		this.salt = new byte[16];
+		this.created = LocalDate.now();
 		this.newCredential(password);
 	}
 
@@ -51,9 +56,26 @@ public class Credential extends AbstractEntity {
 	}
 
 	private byte[] getRandomSalt() {
-		final byte[] salt = new byte[16];
-		RANDOM.nextBytes(salt);
-		return salt;
+		final byte[] randmoSalt = new byte[16];
+		RANDOM.nextBytes(randmoSalt);
+		return randmoSalt;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(hashPassword, salt);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Credential other = (Credential) obj;
+		return Objects.equals(hashPassword, other.hashPassword) && Objects.equals(salt, other.salt);
 	}
 
 	public boolean isExpired() {
@@ -66,7 +88,6 @@ public class Credential extends AbstractEntity {
 	}
 
 	private void newCredential(final String password) {
-		this.created = LocalDate.now();
 		this.salt = this.getRandomSalt();
 		this.hashPassword = this.buildHashPassword(password);
 	}

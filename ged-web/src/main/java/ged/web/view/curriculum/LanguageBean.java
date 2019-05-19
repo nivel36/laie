@@ -1,5 +1,10 @@
 package ged.web.view.curriculum;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -7,59 +12,100 @@ import javax.inject.Named;
 
 import ged.ejb.curriculum.Curriculum;
 import ged.ejb.curriculum.CurriculumService;
-import ged.ejb.curriculum.language.Language;
-import ged.ejb.curriculum.language.LanguageService;
-import ged.web.core.view.AbstractDialogBean;
+import ged.ejb.curriculum.Language;
+import ged.ejb.curriculum.LanguageLevel;
+import ged.web.core.IllegalPageStateException;
+import ged.web.core.util.PageEnum;
+import ged.web.core.view.AbstractBean;
 
 @Named
 @ViewScoped
-public class LanguageBean extends AbstractDialogBean {
+public class LanguageBean extends AbstractBean {
+
+	private static final String CURRICULUM_KEY = "curriculum";
 
 	private static final long serialVersionUID = -3985331305200647310L;
+
+	private Curriculum curriculum;
 
 	@Inject
 	private transient CurriculumService curriculumService;
 
-	private Language language;
+	private String languageLevel;
 
-	@Inject
-	private transient LanguageService languageService;
+	private List<LanguageLevel> languageLevels;
 
-	public void delete() {
-		if (!this.isNewLanguage()) {
-			this.languageService.delete(this.language);
-			this.closeDialog();
-		}
+	private String languageName;
+
+	private List<Language> languages;
+
+	private String curriculumUrl() {
+		return PageEnum.CURRICULUM.getRedirectUrl(this.curriculum.getCandidate());
 	}
 
-	public Language getLanguage() {
-		return this.language;
+	public void deleteLanguage(final Language language) {
+		this.languages.remove(language);
+	}
+
+	public Curriculum getCurriculum() {
+		return this.curriculum;
+	}
+
+	public String getLanguageLevel() {
+		return this.languageLevel;
+	}
+
+	public List<LanguageLevel> getLanguageLevels() {
+		return this.languageLevels;
+	}
+
+	public String getLanguageName() {
+		return this.languageName;
+	}
+
+	public List<Language> getLanguages() {
+		return this.languages;
 	}
 
 	@PostConstruct
 	public void init() {
-		final Long languageId = this.getIdFromParameters("languageId");
-		if (languageId != null) {
-			this.language = this.languageService.find(languageId);
+		this.curriculum = this.getValueFromFlash(CURRICULUM_KEY);
+		if (this.curriculum == null) {
+			throw new IllegalPageStateException("Null curriculum");
 		}
-		if (this.language == null) {
-			final Long curriculumId = this.getIdFromParameters("curriculumId");
-			final Curriculum curriculum = this.curriculumService.find(curriculumId);
-			this.language = new Language();
-			this.language.setCurriculum(curriculum);
-		}
+		this.languageLevels = Arrays.asList(LanguageLevel.values());
+		this.languages = new ArrayList<>(this.curriculum.getLanguages());
 	}
 
-	public boolean isNewLanguage() {
-		return this.language.getId() == 0;
+	public void newLanguage() {
+		final Language newLanguage = new Language();
+		newLanguage.setName(this.languageName);
+		newLanguage.setLevel(this.languageLevel);
+		newLanguage.setCurriculum(this.curriculum);
+		this.languages.add(newLanguage);
+		this.languageName = null;
+		this.languageLevel = null;
 	}
 
-	public void save() {
-		this.language = this.languageService.save(this.language);
-		this.closeDialog(this.language);
+	public String save() {
+		this.curriculum.setLanguages(new HashSet<Language>(this.languages));
+		this.curriculumService.save(this.curriculum);
+		return this.curriculumUrl();
 	}
 
-	public void setLanguage(final Language language) {
-		this.language = language;
+	public void setCurriculumService(final CurriculumService curriculumService) {
+		this.curriculumService = curriculumService;
+	}
+
+	public void setLanguageLevel(final String languageLevel) {
+		this.languageLevel = languageLevel;
+	}
+
+	public void setLanguageName(final String languageName) {
+		this.languageName = languageName;
+	}
+
+	public void setLanguages(final List<Language> languages) {
+		this.languages = languages;
 	}
 }

@@ -60,7 +60,7 @@ public class UserConverterTest {
 			final User user = mockUser();
 
 			final String value = userConverter.getAsString(null, null, user);
-			assertEquals(value, "1");
+			assertEquals("1", value);
 		}
 	}
 

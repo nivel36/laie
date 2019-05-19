@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://ged.com/i18n"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:p="http://primefaces.org/ui"
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:o="http://omnifaces.org/ui"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://ged.com/i18n" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:p="http://primefaces.org/ui" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:o="http://omnifaces.org/ui"
 	xmlns:of="http://omnifaces.org/functions" template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
 		<title>#{i18n['user.edit_user']} - #{editUserBean.user.fullName}</title>
 	</ui:define>
 
-	<f:metadata>
-		<p:importConstants type="ged.web.core.util.PageEnum" var="Page" />
-		<f:viewAction action="#{editUserBean.init}" />
-	</f:metadata>
+	<ui:param name="selectedMenu" value="users" />
 
-	<ui:define name="content">
+	<ui:define name="actions">
+		<p:button value="#{i18n['user.new_user']}" outcome="#{Page.USER_ADD.getUrl()}" />
+	</ui:define>
 
+	<ui:define name="breadcrumb">
 		<p:breadCrumb styleClass="breadcrumb">
 			<p:menuitem value="#{i18n['menu.index']}" outcome="#{Page.INDEX.getUrl()}" />
 			<p:menuitem value="#{i18n['user.users']}" outcome="#{Page.USER_SEARCH.getUrl()}" />
@@ -24,16 +23,14 @@
 			</p:menuitem>
 			<p:menuitem value="#{i18n['user.edit_user']}" disabled="true" />
 		</p:breadCrumb>
+	</ui:define>
 
+	<ui:define name="content">
 		<h:form id="userForm" enctype="multipart/form-data">
 			<div class="panel">
-				<div class="panel-header">
-					<div class="panel-header-title">#{editUserBean.user.fullName}</div>
-				</div>
 				<div class="panel-aside">
 					<div class="candidate-metadata">
-						<cc:inputAvatar id="userImage" value="#{editUserBean.user.imageFileName}"
-							fileUploadListener="#{editUserBean.uploadImage}" />
+						<cc:inputAvatar id="userImage" value="#{editUserBean.user.imageFileName}" fileUploadListener="#{editUserBean.uploadImage}" />
 					</div>
 				</div>
 				<div class="panel-content panel-content-data">

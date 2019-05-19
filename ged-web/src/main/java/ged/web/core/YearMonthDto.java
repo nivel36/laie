@@ -1,19 +1,31 @@
 package ged.web.core;
 
+import java.io.Serializable;
 import java.time.YearMonth;
+import java.util.Objects;
 
-public class YearMonthDto {
+public class YearMonthDto implements Serializable {
 
-	public static YearMonthDto from(final YearMonth yearMonth) {
+	private static final long serialVersionUID = 8244823973608903911L;
+
+	public static YearMonthDto of(final YearMonth yearMonth) {
+		Objects.requireNonNull(yearMonth);
 		final YearMonthDto dto = new YearMonthDto();
 		dto.month = Integer.valueOf(yearMonth.getMonthValue());
 		dto.year = Integer.valueOf(yearMonth.getYear());
 		return dto;
 	}
-
+	
 	private Integer month;
-
+	
 	private Integer year;
+
+	public YearMonthDto() {}
+
+	public YearMonthDto(Integer month, Integer year) {
+		this.month = month;
+		this.year = year;
+	}
 
 	public Integer getMonth() {
 		return this.month;

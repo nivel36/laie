@@ -103,7 +103,7 @@ public class ViewJobBean extends AbstractBean {
 
 	public void selectCandidates() {
 		logger.debug("Select candidates action performed");
-		if (this.jobCandidatures.size() != 0) {
+		if (!this.jobCandidatures.isEmpty()) {
 			final String candidateIds = this.jobCandidatures.stream().map(this::getCandidateIdAsString)
 					.collect(Collectors.joining("|"));
 			final Map<String, List<String>> parameters = new HashMap<>();

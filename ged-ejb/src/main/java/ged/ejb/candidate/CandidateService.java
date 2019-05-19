@@ -37,6 +37,7 @@ public class CandidateService extends AbstractAuditedService<Candidate> {
 	private ServerFileDao serverFileDao;
 
 	public void addFileToCandidate(final Candidate candidate, final ServerFile file) {
+		//TODO: revisar
 		Objects.requireNonNull(file);
 		Objects.requireNonNull(candidate);
 		logger.debug("Adding file {} to candidate  {}", file, candidate);

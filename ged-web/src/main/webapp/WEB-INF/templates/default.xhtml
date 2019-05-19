@@ -16,7 +16,7 @@
 
 	<h:body>
 		<f:metadata>
-			<p:importConstants type="ged.web.core.util.PageEnum" var="Page"/>
+			<p:importConstants type="ged.web.core.util.PageEnum" var="Page" />
 		</f:metadata>
 		<header>
 			<ui:insert name="header">
@@ -30,8 +30,13 @@
 					<ui:include src="aside.xhtml" />
 				</ui:insert>
 			</div>
-			<div id="content">
-				<ui:insert name="content" />
+			<div class="wrapper">
+				<div id="breadcrumb">
+					<ui:insert name="breadcrumb" />
+				</div>
+				<div id="content">
+					<ui:insert name="content" />
+				</div>
 			</div>
 		</div>
 		<footer>

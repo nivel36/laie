@@ -1,38 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://ged.com/i18n"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:p="http://primefaces.org/ui"
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:o="http://omnifaces.org/ui"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://ged.com/i18n" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:p="http://primefaces.org/ui" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:o="http://omnifaces.org/ui"
 	xmlns:of="http://omnifaces.org/functions" template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
 		<title>#{i18n['language.language']}</title>
 	</ui:define>
 
+	<ui:define name="breadcrumb">
+		<p:breadCrumb styleClass="breadcrumb">
+			<p:menuitem value="#{i18n['menu.index']}" outcome="#{Page.INDEX.getUrl()}" />
+			<p:menuitem value="#{i18n['candidate.candidates']}" outcome="#{Page.CANDIDATE_SEARCH.getUrl()}" />
+			<p:menuitem value="#{languageBean.curriculum.candidate.fullName}" outcome="#{Page.CANDIDATE.getUrl()}">
+				<f:param name="id" value="#{languageBean.curriculum.candidate.id}" />
+			</p:menuitem>
+			<p:menuitem value="#{i18n['curriculum.curriculum']}" outcome="#{Page.CURRICULUM.getUrl()}">
+				<f:param name="id" value="#{languageBean.curriculum.candidate.id}" />
+			</p:menuitem>
+			<p:menuitem value="#{i18n['language.language']}" disabled="true" />
+		</p:breadCrumb>
+	</ui:define>
+
 	<ui:define name="content">
-		<h:form>
+		<h:form id="language">
+			<div class="grid nogutter">
+				<div class="panel curriculum col-12 xl-8">
+					<div class="panel-header">
+						<div class="panel-header-title">#{i18n['language.language']}</div>
+					</div>
+					<div class="panel-content">
+						<div class="panel-content-data">
+							<h:panelGroup styleClass="language section" id="languages" layout="block">
+								<ui:repeat var="language" value="#{languageBean.languages}">
+									<p>
+										<span class="language_name">#{language.name}</span> <span class="language_level">#{i18n[language.level]}</span>
+										<p:commandButton icon="fa fa-trash" action="#{languageBean.deleteLanguage(language)}" process="@this" update="@form" />
+									</p>
+								</ui:repeat>
+							</h:panelGroup>
 
-			<div class="grid">
-				<div class="col-12 md-6">
-					<cc:inputText id="languageName" label="#{i18n['language.language']}" value="#{languageBean.language.name}"
-						required="true" />
-				</div>
+							<div class="input-group">
+								<div class="input-container">
+									<p:inputText id="input-text" value="#{languageBean.languageName}" required="true" styleClass="input input-text" />
+									<p:selectOneMenu id="selectOneMenu" required="true" styleClass="input input-select" value="#{languageBean.languageLevel}">
+										<f:selectItem />
+										<f:selectItems value="#{languageBean.languageLevels}" var="languageLevel" itemValue="#{languageLevel}"
+											itemLabel="#{i18n[languageLevel]}" />
+									</p:selectOneMenu>
+									<div class="panel-buttons">
+										<p:commandButton value="#{i18n['action.add']}" action="#{languageBean.newLanguage}" process="@form" update="@form" />
+									</div>
+								</div>
+								<div class="message-container">
+									<p:message id="message" for="input-text" styleClass="message-error" />
+								</div>
+							</div>
+						</div>
 
-				<div class="col-12 md-6">
-					<cc:inputSelect name="" label="#{i18n['language.level']}" value="#{languageBean.language.level}" required="true">
-						<f:selectItem itemLabel="#{i18n['language.level']}" itemValue="" />
-						<f:selectItems value="#{languageLevels.list}" var="languageLevel" itemValue="#{languageLevel.name}"
-							itemLabel="#{i18n:translate(languageLevel.name)}" />
-					</cc:inputSelect>
-				</div>
-
-				<div class="col-12">
-					<div class="form-action-primary">
-						<p:commandButton value="#{i18n['action.cancel']}" actionListener="#{languageBean.closeDialog}" process="@this"
-							update="@form" />
-						<p:commandButton value="#{i18n['action.delete']}" action="#{languageBean.delete}" process="@this"
-							rendered="#{not languageBean.newLanguage}" />
-						<p:commandButton value="#{i18n['action.save']}" action="#{languageBean.save}" process="@form" update="@form" />
+						<div class="panel-footer">
+							<div class="panel-buttons">
+								<p:button value="#{i18n['action.cancel']}" outcome="#{Page.CURRICULUM.getUrl()}" styleClass="btn-gray">
+									<f:param name="id" value="#{languageBean.curriculum.candidate.id}" />
+								</p:button>
+								<p:commandButton value="#{i18n['action.save']}" action="#{languageBean.save}" process="@this" update="@form" />
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
