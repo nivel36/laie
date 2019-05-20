@@ -27,7 +27,7 @@ public class IndexBean extends AbstractBean {
 	private List<Candidate> candidates;
 
 	private List<JobOffer> jobOffers;
-
+	
 	@Inject
 	private transient JobOfferService jobService;
 	

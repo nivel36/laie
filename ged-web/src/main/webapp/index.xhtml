@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
-	template="/WEB-INF/templates/default.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
 		<title>Ged</title>
@@ -19,29 +19,44 @@
 		<div class="grid">
 			<div class="col-12 lg-6">
 				<cc:jobOffers jobOffers="#{indexBean.jobOffers}">
-					<p:button value="#{i18n['action.new']}" outcome="#{Page.JOB_ADD.getUrl()}" />
+					<p:button value="#{i18n['job.new_job_offer']}" outcome="#{Page.JOB_ADD.getUrl()}" />
 				</cc:jobOffers>
 			</div>
 			<div class="col-12 lg-6">
 				<cc:candidates candidates="#{indexBean.candidates}" title="#{i18n['candidate.last_candidates']}">
-					<p:button value="#{i18n['action.new']}" outcome="#{Page.CANDIDATE_ADD.getUrl()}" />
+					<p:button value="#{i18n['candidate.new_candidate']}" outcome="#{Page.CANDIDATE_ADD.getUrl()}" />
 				</cc:candidates>
 			</div>
 
-			<div class="col-12 lg-6">
-				<p:panel header="#{i18n['index.last_reports']}">
-					<div class="form-action-primary">
-						<p:button value="#{i18n['action.new']}" outcome="#{Page.CANDIDATE_ADD.getUrl()}" />
+			<div class="col-12 xl-4">
+				<div class="panel">
+					<div class="panel-header">
+						<div class="panel-header-title">#{i18n['index.last_reports']}</div>
 					</div>
-				</p:panel>
+					<div class="panel-content">
+						<div class="panel-content-data">
+						
+						</div>
+					</div>
+				</div>
 			</div>
 
-			<div class="col-12 lg-6">
-				<p:panel header="#{i18n['index.scheudele']}">
-					<div class="form-action-primary">
-						<p:button value="#{i18n['action.new']}" outcome="#{Page.CANDIDATE_ADD.getUrl()}" />
+			<div class="col-12 xl-8">
+				<div class="panel">
+					<div class="panel-header">
+						<div class="panel-header-title">#{i18n['index.scheudele']}</div>
 					</div>
-				</p:panel>
+					<div class="panel-content">
+						<div class="panel-content-data">
+							<p:schedule id="scheduleLocale" value="#{indexBean.schedule}" locale="es" />
+						</div>
+					</div>
+					<div class="panel-footer">
+						<div class="panel-buttons">
+							<p:button value="#{i18n['action.new']}" outcome="#{Page.CANDIDATE_ADD.getUrl()}" />
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</ui:define>

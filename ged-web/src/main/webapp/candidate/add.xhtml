@@ -6,7 +6,7 @@
 	<ui:define name="title">
 		<title>#{i18n['candidate.new_candidate']}</title>
 	</ui:define>
-
+	
 	<ui:define name="breadcrumb">
 		<p:breadCrumb styleClass="breadcrumb">
 			<p:menuitem value="#{i18n['menu.index']}" outcome="#{Page.INDEX.getUrl()}" />
@@ -18,12 +18,9 @@
 	<ui:define name="content">
 		<h:form id="candidateForm">
 			<div class="panel">
-				<div class="panel-header">
-					<div class="panel-header-title">#{i18n['candidate.new_candidate']}</div>
-				</div>
 				<div class="panel-aside">
 					<div class="column candidate-metadata">
-						<cc:inputImage id="candidate_image" value="#{addCandidateBean.candidate.imageFileName}"
+						<cc:inputAvatar id="candidate_image" value="#{addCandidateBean.candidate.imageFileName}"
 							fileUploadListener="#{addCandidateBean.uploadImage}" />
 						<div class="candidate-rating" style="text-align: center;">
 							<p:rating value="#{addCandidateBean.candidate.rating}" cancel="false">

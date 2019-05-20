@@ -165,7 +165,6 @@ body footer .version span {
 	display: flex;
 	flex-direction: column;
 	flex: 1 auto;
-	padding: 1em;
 }
 
 #breadcrumb {
@@ -538,14 +537,13 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button
 }
 
 .panel-content {
-	flex: 9 0px;
 	padding: 0;
 	margin: 0;
 	border-bottom: 1px solid #bfceda;
+	flex: 5 0px;
 }
 
 .panel-content-data {
-	display: flex;
 	padding: 20px;
 }
 
