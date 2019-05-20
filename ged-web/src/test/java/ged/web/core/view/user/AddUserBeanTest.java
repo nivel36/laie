@@ -27,6 +27,7 @@ import org.primefaces.model.UploadedFile;
 
 import ged.ejb.core.FileUploadService;
 import ged.ejb.core.model.Page;
+import ged.ejb.core.model.SearchResult;
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
 import ged.web.core.util.Translator;
@@ -35,7 +36,7 @@ import ged.web.view.user.AddUserBean;
 
 @ExtendWith(MockitoExtension.class)
 public class AddUserBeanTest {
-	
+
 	@Nested
 	class GetUser {
 
@@ -100,7 +101,8 @@ public class AddUserBeanTest {
 		@Test
 		public void validSearchShouldReturnUserList() {
 			final List<User> mockedManagers = mockListOfUsers();
-			Mockito.when(userService.search("Abe", Page.ALL)).thenReturn(mockedManagers);
+			SearchResult<User> searchResult = new SearchResult<>(mockedManagers, mockedManagers.size());
+			Mockito.when(userService.search("Abe", Page.ALL)).thenReturn(searchResult);
 
 			final List<User> managers = addUserBean.searchManager("Abe");
 

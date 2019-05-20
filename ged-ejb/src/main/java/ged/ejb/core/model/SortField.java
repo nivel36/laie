@@ -1,17 +1,17 @@
 package ged.ejb.core.model;
 
-public class SortOrder {
+public class SortField {
 
 	private boolean descending;
 
 	private final String field;
 
-	public SortOrder(final String field) {
+	public SortField(final String field) {
 		super();
 		this.field = field;
 	}
 
-	public SortOrder(final String field, final boolean descending) {
+	public SortField(final String field, final boolean descending) {
 		super();
 		this.field = field;
 		this.descending = descending;

@@ -68,7 +68,7 @@ public abstract class AbstractCandidateBean extends AbstractBean {
 		}
 		final Set<Tag> candidateTags = new HashSet<>();
 		for (final String label : labels) {
-			final List<Tag> tagsFoundInDataBase = this.tagService.search(label, Page.ALL);
+			final List<Tag> tagsFoundInDataBase = this.tagService.search(label, Page.ALL).getResultData();
 			final Tag tag;
 			if (tagsFoundInDataBase.size() == 1) {
 				tag = tagsFoundInDataBase.get(0);

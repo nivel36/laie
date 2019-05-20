@@ -23,6 +23,7 @@ import javax.validation.constraints.Pattern;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.IndexedEmbedded;
+import org.hibernate.search.annotations.SortableField;
 
 import ged.ejb.core.Address;
 import ged.ejb.core.file.ServerFile;
@@ -65,6 +66,7 @@ public class Candidate extends AbstractAuditedEntity {
 	@NotNull
 	@Column(length = 64, nullable = false)
 	@Field
+	@SortableField
 	private String jobProfile;
 
 	private String linkedinProfileUrl;
@@ -72,6 +74,7 @@ public class Candidate extends AbstractAuditedEntity {
 	@NotNull
 	@Column(length = 32, nullable = false)
 	@Field
+	@SortableField
 	private String name;
 
 	private String origin;

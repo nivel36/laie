@@ -54,7 +54,7 @@ public abstract class AbstractUserBean extends AbstractBean {
 		if ((query == null) || (query.trim().length() < 3)) {
 			return new ArrayList<>();
 		}
-		final List<User> managers = this.userService.search(query, Page.ALL);
+		final List<User> managers = this.userService.search(query, Page.ALL).getResultData();
 		managers.remove(this.user);
 		return managers;
 	}

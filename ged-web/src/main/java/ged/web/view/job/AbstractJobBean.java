@@ -58,7 +58,7 @@ public abstract class AbstractJobBean extends AbstractBean {
 		if ((query == null) || (query.trim().length() < 3)) {
 			return new ArrayList<>();
 		}
-		return this.userService.search(query, Page.ALL);
+		return this.userService.search(query, Page.ALL).getResultData();
 	}
 
 	public void setJobOffer(final JobOffer jobOffer) {

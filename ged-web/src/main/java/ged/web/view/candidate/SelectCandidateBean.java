@@ -76,7 +76,7 @@ public class SelectCandidateBean extends AbstractBean {
 
 	public void search() {
 		logger.debug("Searching for candidates");
-		this.candidates = this.candidateService.search(this.searchText, Page.ALL);
+		this.candidates = this.candidateService.search(this.searchText, Page.ALL).getResultData();
 	}
 
 	public void select() {

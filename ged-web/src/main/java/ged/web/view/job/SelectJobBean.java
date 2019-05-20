@@ -52,7 +52,7 @@ public class SelectJobBean extends AbstractBean {
 	}
 
 	public void search() {
-		this.jobOffers = this.jobOfferService.search(this.searchText, Page.ALL);
+		this.jobOffers = this.jobOfferService.search(this.searchText, Page.ALL).getResultData();
 	}
 
 	public void select() {

@@ -51,7 +51,7 @@ public class SearchUserBean extends AbstractBean {
 
 	public void search() {
 		logger.debug("Search users action performed");
-		this.users = this.userService.search(this.searchText, Page.ALL);
+		this.users = this.userService.search(this.searchText, Page.ALL).getResultData();
 		this.addWarningMessageIfMaxSearchResultsHaveBeenReached(this.users);
 	}
 

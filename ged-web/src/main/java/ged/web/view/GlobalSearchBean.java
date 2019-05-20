@@ -76,10 +76,10 @@ public class GlobalSearchBean extends AbstractBean {
 		if (this.searchText == null || this.searchText.length() < 3) {
 			Message.addWarning("error.search.camp_to_short", "error.search.camp_to_short");
 		} else {
-			this.users = this.userService.search(this.searchText, Page.ALL);
-			this.jobOffers = this.jobService.search(this.searchText, Page.ALL);
-			this.candidates = this.candidateService.search(this.searchText, Page.ALL);
-			this.clients = this.clientService.search(this.searchText, Page.ALL);
+			this.users = this.userService.search(this.searchText, Page.ALL).getResultData();
+			this.jobOffers = this.jobService.search(this.searchText, Page.ALL).getResultData();
+			this.candidates = this.candidateService.search(this.searchText, Page.ALL).getResultData();
+			this.clients = this.clientService.search(this.searchText, Page.ALL).getResultData();
 		}
 	}
 

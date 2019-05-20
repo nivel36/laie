@@ -25,6 +25,7 @@ import org.primefaces.model.UploadedFile;
 
 import ged.ejb.core.FileUploadService;
 import ged.ejb.core.model.Page;
+import ged.ejb.core.model.SearchResult;
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
 import ged.web.core.util.Translator;
@@ -99,7 +100,8 @@ public class EditUserBeanTest {
 		@Test
 		public void validSearchShouldReturnUserList() {
 			final List<User> mockedManagers = EditUserBeanTest.this.mockListOfUsers();
-			when(EditUserBeanTest.this.userService.search("Abe", Page.ALL)).thenReturn(mockedManagers);
+			SearchResult<User> searchResult = new SearchResult<>(mockedManagers,mockedManagers.size());
+			when(EditUserBeanTest.this.userService.search("Abe", Page.ALL)).thenReturn(searchResult);
 
 			final List<User> managers = EditUserBeanTest.this.userEditBean.searchManager("Abe");
 

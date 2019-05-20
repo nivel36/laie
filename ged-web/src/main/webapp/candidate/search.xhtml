@@ -34,9 +34,9 @@
 								icon="fa-file-excel-o" />
 						</div>
 					</div>
-					<p:dataTable var="candidate" id="candidates" value="#{searchCandidateBean.candidates}"
+					<p:dataTable var="candidate" id="candidates" value="#{searchCandidateBean.candidateLazyDataModel}"
 						emptyMessage="#{i18n['candidate.no_candidates_found']}" reflow="true" paginator="true" paginatorPosition="bottom"
-						rows="#{sessionUser.rowsPerPage}" sortBy="#{candidate.fullName}" sortOrder="ascending">
+						rows="#{sessionUser.rowsPerPage}" sortBy="#{candidate.name}" sortOrder="ascending" lazy="true">
 
 						<p:column>
 							<p:graphicImage class="image image-icon" value="/images/#{candidate.imageFileName}"

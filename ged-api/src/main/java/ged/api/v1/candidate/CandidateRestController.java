@@ -77,7 +77,7 @@ public class CandidateRestController extends AbstractRestController {
 	@Path("/search/{searchText}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<CandidateDto> search(@PathParam("searchText") final String searchText) {
-		final List<Candidate> candidates = this.candidateService.search(searchText, Page.ALL);
+		final List<Candidate> candidates = this.candidateService.search(searchText, Page.ALL).getResultData();
 		return this.convertToCandidateDtoList(candidates);
 	}
 

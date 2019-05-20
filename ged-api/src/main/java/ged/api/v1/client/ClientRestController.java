@@ -66,7 +66,7 @@ public class ClientRestController extends AbstractRestController {
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<ClientDto> search(@PathParam("searchText") final String searchText, @QueryParam("pageNumber") final int pageNumber,
 			@QueryParam("pageSize") final int pageSize) {
-		final List<Client> clients = this.clientService.search(searchText, Page.of(pageNumber, pageSize));
+		final List<Client> clients = this.clientService.search(searchText, Page.of(pageNumber, pageSize)).getResultData();
 		return this.convertToClientDtoList(clients);
 	}
 }

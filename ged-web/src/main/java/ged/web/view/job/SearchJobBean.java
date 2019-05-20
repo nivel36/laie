@@ -52,7 +52,7 @@ public class SearchJobBean extends AbstractBean {
 
 	public void search() {
 		logger.debug("Search job offer action performed");
-		this.jobOffers = this.jobOfferService.search(this.searchText, Page.ALL);
+		this.jobOffers = this.jobOfferService.search(this.searchText, Page.ALL).getResultData();
 		this.addWarningMessageIfMaxSearchResultsHaveBeenReached(this.jobOffers);
 	}
 

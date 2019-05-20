@@ -21,7 +21,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import ged.ejb.core.model.Page;
 import ged.ejb.core.model.PersistenceFacade;
-import ged.ejb.core.model.SortOrder;
+import ged.ejb.core.model.SearchResult;
+import ged.ejb.core.model.SortField;
 
 @ExtendWith(MockitoExtension.class)
 public class UserDaoTest {
@@ -30,7 +31,7 @@ public class UserDaoTest {
 	class FindAll {
 
 		@Test
-		public void shouldReturnAList() {
+		public void shouldReturnAList() {	
 			when(UserDaoTest.this.persistenceFacade.findAll(User.class, Page.ALL)).thenReturn(new ArrayList<User>());
 
 			final List<User> users = UserDaoTest.this.userDao.findAll(Page.ALL);
@@ -199,27 +200,30 @@ public class UserDaoTest {
 
 		@Test
 		public void emptyTextShouldReturnList() {
-			when(UserDaoTest.this.persistenceFacade.search(User.class, Page.ALL, new ArrayList<SortOrder>(), "", "name",
-					"surname", "email")).thenReturn(new ArrayList<>());
-			final List<User> users = UserDaoTest.this.userDao.search("", Page.ALL);
+			final SearchResult<User> searchResult = new SearchResult<>(new ArrayList<>(), 0);
+			when(UserDaoTest.this.persistenceFacade.search(User.class, Page.ALL, new ArrayList<SortField>(), "", "name",
+					"surname", "email")).thenReturn(searchResult);
+			final List<User> users = UserDaoTest.this.userDao.search("", Page.ALL).getResultData();
 			assertEquals(0, users.size());
 		}
 
 		@Test
 		public void nullTextShouldReturnList() {
-			when(UserDaoTest.this.persistenceFacade.search(User.class, Page.ALL, new ArrayList<SortOrder>(), null,
-					"name", "surname", "email")).thenReturn(new ArrayList<>());
+			final SearchResult<User> searchResult = new SearchResult<>(new ArrayList<>(), 0);
+			when(UserDaoTest.this.persistenceFacade.search(User.class, Page.ALL, new ArrayList<SortField>(), null,
+					"name", "surname", "email")).thenReturn(searchResult);
 
-			final List<User> users = UserDaoTest.this.userDao.search(null, Page.ALL);
+			final List<User> users = UserDaoTest.this.userDao.search(null, Page.ALL).getResultData();
 			assertEquals(0, users.size());
 		}
 
 		@Test
 		public void validTextshouldReturnList() {
-			when(UserDaoTest.this.persistenceFacade.search(User.class, Page.ALL, new ArrayList<SortOrder>(), "aaron",
-					"name", "surname", "email")).thenReturn(new ArrayList<>());
+			final SearchResult<User> searchResult = new SearchResult<>(new ArrayList<>(), 0);
+			when(UserDaoTest.this.persistenceFacade.search(User.class, Page.ALL, new ArrayList<SortField>(), "aaron",
+					"name", "surname", "email")).thenReturn(searchResult);
 
-			final List<User> users = UserDaoTest.this.userDao.search("aaron", Page.ALL);
+			final List<User> users = UserDaoTest.this.userDao.search("aaron", Page.ALL).getResultData();
 			assertEquals(0, users.size());
 		}
 	}

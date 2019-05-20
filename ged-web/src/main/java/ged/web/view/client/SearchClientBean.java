@@ -52,7 +52,7 @@ public class SearchClientBean extends AbstractBean {
 
 	public void search() {
 		logger.debug("Search clients action performed");
-		this.clients = this.clientService.search(this.searchText, Page.ALL);
+		this.clients = this.clientService.search(this.searchText, Page.ALL).getResultData();
 		this.addWarningMessageIfMaxSearchResultsHaveBeenReached(this.clients);
 	}
 

@@ -161,6 +161,7 @@ body footer .version span {
 	display: flex;
 	flex-direction: column;
 	flex: 1 auto;
+	overflow: hidden;
 }
 
 #breadcrumb {
