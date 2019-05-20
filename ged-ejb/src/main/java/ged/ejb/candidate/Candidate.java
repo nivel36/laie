@@ -83,6 +83,8 @@ public class Candidate extends AbstractAuditedEntity {
 	@Column(length = 12, nullable = false)
 	private String phoneNumber;
 
+	@Field
+	@SortableField
 	private Integer rating;
 
 	private Integer salary;

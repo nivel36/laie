@@ -22,35 +22,38 @@ public class CandidateLazyDataModel extends LazyDataModel<Candidate> {
 
 	private String searchText;
 
-	public void setSearchText(String searchText) {
-		this.searchText = searchText;
-	}
-
-	public CandidateLazyDataModel(CandidateService candidateService) {
+	public CandidateLazyDataModel(final CandidateService candidateService) {
 		Objects.requireNonNull(candidateService, "CandidateService can't be null");
 		this.candidateSerivce = candidateService;
 	}
 
 	@Override
-	public List<Candidate> load(int first, int pageSize, String sortField, SortOrder sortOrder,
-			Map<String, Object> filters) {
-		final Page page = new Page(first + 1, pageSize);
-		SearchResult<Candidate> searchResult = candidateSerivce.search(searchText, page, new SortField(sortField, sortOrder == SortOrder.DESCENDING));
-		this.setRowCount(searchResult.getCount());
-		return searchResult.getResultData();
+	public Candidate getRowData(final String rowKey) {
+		return this.candidateSerivce.find(Integer.parseInt(rowKey));
 	}
 
-	public List<Candidate> load(int first, int pageSize, List<SortMeta> multiSortMeta, Map<String, Object> filters) {
+	@Override
+	public Object getRowKey(final Candidate candidate) {
+		return candidate.getId();
+	}
+
+	@Override
+	public List<Candidate> load(final int first, final int pageSize, final List<SortMeta> multiSortMeta,
+			final Map<String, Object> filters) {
 		throw new UnsupportedOperationException("Lazy loading is not implemented.");
 	}
 
 	@Override
-	public Candidate getRowData(String rowKey) {
-		throw new UnsupportedOperationException();
+	public List<Candidate> load(final int first, final int pageSize, final String sortField, final SortOrder sortOrder,
+			final Map<String, Object> filters) {
+		final Page page = new Page(first, first + pageSize);
+		final SearchResult<Candidate> searchResult = this.candidateSerivce.search(this.searchText, page,
+				new SortField(sortField, sortOrder == SortOrder.DESCENDING));
+		this.setRowCount(searchResult.getCount());
+		return searchResult.getResultData();
 	}
 
-	@Override
-	public Object getRowKey(Candidate object) {
-		throw new UnsupportedOperationException();
+	public void setSearchText(final String searchText) {
+		this.searchText = searchText;
 	}
 }

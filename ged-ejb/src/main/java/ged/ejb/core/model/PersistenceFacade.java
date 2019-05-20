@@ -40,6 +40,37 @@ public class PersistenceFacade {
 		this.em = em;
 	}
 
+	@SuppressWarnings("rawtypes")
+	private org.apache.lucene.search.Query createLuceneQuery(final QueryBuilder qb,
+			final BooleanJunction<BooleanJunction> bj) {
+		org.apache.lucene.search.Query luceneQuery;
+		if (bj.isEmpty()) {
+			luceneQuery = qb.all().createQuery();
+		} else {
+			luceneQuery = bj.createQuery();
+		}
+		return luceneQuery;
+	}
+
+	@SuppressWarnings("rawtypes")
+	private BooleanJunction<BooleanJunction> createPredicate(final String searchText, final QueryBuilder qb,
+			final String... fields) {
+		final BooleanJunction<BooleanJunction> bj = qb.bool();
+
+		if (searchText != null) {
+			final List<String> searchValues = Arrays.asList(searchText.split("\\s"));
+			for (final String searchValue : searchValues) {
+				if (searchValue == null) {
+					continue;
+				}
+				final BooleanJunction<BooleanJunction> fieldBj = qb.bool();
+				fieldBj.should(qb.keyword().onFields(fields).matching(searchValue).createQuery());
+				bj.must(fieldBj.createQuery());
+			}
+		}
+		return bj;
+	}
+
 	public <T extends Identifiable> void delete(final Class<T> type, final T entity) {
 		Objects.requireNonNull(entity);
 		Objects.requireNonNull(type);
@@ -117,6 +148,10 @@ public class PersistenceFacade {
 		return this.em;
 	}
 
+	private boolean hasSortFields(final List<SortField> sortFields) {
+		return (sortFields != null) && !sortFields.isEmpty();
+	}
+
 	public <T extends Identifiable> void insert(final T entity) {
 		Objects.requireNonNull(entity);
 		if (entity.getId() != 0) {
@@ -128,7 +163,7 @@ public class PersistenceFacade {
 	}
 
 	private void paginate(final Page page, final Query query) {
-		query.setFirstResult(page.getOffSet());
+		query.setFirstResult(page.getOffset());
 		query.setMaxResults(page.getLimit());
 	}
 
@@ -145,17 +180,18 @@ public class PersistenceFacade {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public <T extends Identifiable> SearchResult<T> search(final Class<T> type, final Page page,
 			final List<SortField> sortFields, final String searchText, final String... fields) {
-		
+
 		final FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(this.getEm());
 		final QueryBuilder qb = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(type).get();
 
-		final BooleanJunction<BooleanJunction> bj = createPredicate(searchText, qb, fields);
+		final BooleanJunction<BooleanJunction> bj = this.createPredicate(searchText, qb, fields);
 
-		final FullTextQuery fullTextQuery = fullTextEntityManager.createFullTextQuery(createLuceneQuery(qb, bj), type);
-		paginate(page, fullTextQuery);
+		final FullTextQuery fullTextQuery = fullTextEntityManager.createFullTextQuery(this.createLuceneQuery(qb, bj),
+				type);
+		this.paginate(page, fullTextQuery);
 		fullTextQuery.setHint(CACHE_STORE_MODE, CacheStoreMode.REFRESH);
 
-		sortQuery(sortFields, qb, fullTextQuery);
+		this.sortQuery(sortFields, qb, fullTextQuery);
 
 		final List<T> results = fullTextQuery.getResultList();
 		if (results instanceof ArrayList) {
@@ -166,63 +202,26 @@ public class PersistenceFacade {
 		}
 	}
 
-	@SuppressWarnings("rawtypes")
-	private BooleanJunction<BooleanJunction> createPredicate(final String searchText, final QueryBuilder qb,
-			final String... fields) {
-		final BooleanJunction<BooleanJunction> bj = qb.bool();
-
-		if (searchText != null) {
-			final List<String> searchValues = Arrays.asList(searchText.split("\\s"));
-			for (final String searchValue : searchValues) {
-				if (searchValue == null) {
-					continue;
-				}
-				final BooleanJunction<BooleanJunction> fieldBj = qb.bool();
-				fieldBj.should(qb.keyword().onFields(fields).matching(searchValue).createQuery());
-				bj.must(fieldBj.createQuery());
-			}
-		}
-		return bj;
-	}
-
-	@SuppressWarnings("rawtypes")
-	private org.apache.lucene.search.Query createLuceneQuery(final QueryBuilder qb,
-			final BooleanJunction<BooleanJunction> bj) {
-		org.apache.lucene.search.Query luceneQuery;
-		if (bj.isEmpty()) {
-			luceneQuery = qb.all().createQuery();
-		} else {
-			luceneQuery = bj.createQuery();
-		}
-		return luceneQuery;
-	}
-
 	private void sortQuery(final List<SortField> sortFields, final QueryBuilder qb, final FullTextQuery fullTextQuery) {
-		if (hasSortFields(sortFields)) {
+		if (this.hasSortFields(sortFields)) {
 			final int orderSize = sortFields.size();
 			final SortFieldContext sfc = qb.sort().byField(sortFields.get(0).getField());
 			if (sortFields.get(0).isDescending()) {
 				sfc.asc();
-			}
-			else {
+			} else {
 				sfc.desc();
 			}
 			for (int i = 1; i < orderSize; i++) {
 				sfc.andByField(sortFields.get(i).getField());
 				if (sortFields.get(0).isDescending()) {
 					sfc.asc();
-				}
-				else {
+				} else {
 					sfc.desc();
 				}
 			}
 			final Sort sort = sfc.createSort();
 			fullTextQuery.setSort(sort);
 		}
-	}
-
-	private boolean hasSortFields(final List<SortField> sortFields) {
-		return (sortFields != null) && !sortFields.isEmpty();
 	}
 
 	public <T extends Identifiable> T update(final T entity) {

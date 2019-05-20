@@ -36,7 +36,7 @@
 					</div>
 					<p:dataTable var="candidate" id="candidates" value="#{searchCandidateBean.candidateLazyDataModel}"
 						emptyMessage="#{i18n['candidate.no_candidates_found']}" reflow="true" paginator="true" paginatorPosition="bottom"
-						rows="#{sessionUser.rowsPerPage}" sortBy="#{candidate.name}" sortOrder="ascending" lazy="true">
+						rows="#{sessionUser.rowsPerPage}" sortBy="#{candidate.name}" sortOrder="descending" lazy="true">
 
 						<p:column>
 							<p:graphicImage class="image image-icon" value="/images/#{candidate.imageFileName}"
@@ -66,7 +66,7 @@
 						<p:column headerText="#{i18n['candidate.rating']}" sortBy="#{candidate.rating}">
 							<p:rating value="#{candidate.rating}" cancel="false" readonly="true" />
 						</p:column>
-
+						
 					</p:dataTable>
 				</div>
 			</div>

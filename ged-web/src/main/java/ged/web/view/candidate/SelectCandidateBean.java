@@ -15,7 +15,6 @@ import org.slf4j.LoggerFactory;
 
 import ged.ejb.candidate.Candidate;
 import ged.ejb.candidate.CandidateService;
-import ged.ejb.core.model.Page;
 import ged.web.core.view.AbstractBean;
 
 @Named
@@ -28,7 +27,7 @@ public class SelectCandidateBean extends AbstractBean {
 
 	private final List<Long> alredySelected = new ArrayList<>();
 
-	private List<Candidate> candidates;
+	private CandidateLazyDataModel candidateLazyDataModel;
 
 	@Inject
 	protected transient CandidateService candidateService;
@@ -46,8 +45,8 @@ public class SelectCandidateBean extends AbstractBean {
 		this.search();
 	}
 
-	public List<Candidate> getCandidates() {
-		return this.candidates;
+	public CandidateLazyDataModel getCandidateLazyDataModel() {
+		return this.candidateLazyDataModel;
 	}
 
 	public String getSearchText() {
@@ -67,7 +66,7 @@ public class SelectCandidateBean extends AbstractBean {
 				this.alredySelected.add(Long.valueOf(id));
 			}
 		}
-		this.search();
+		this.candidateLazyDataModel = new CandidateLazyDataModel(this.candidateService);
 	}
 
 	public boolean isAlredySelected(final Long id) {
@@ -76,7 +75,7 @@ public class SelectCandidateBean extends AbstractBean {
 
 	public void search() {
 		logger.debug("Searching for candidates");
-		this.candidates = this.candidateService.search(this.searchText, Page.ALL).getResultData();
+		this.candidateLazyDataModel.setSearchText(this.searchText);
 	}
 
 	public void select() {

@@ -15,10 +15,10 @@
 						<cc:inputSearch searchText="#{selectClientBean.searchText}" searchAction="#{selectCandidateBean.search}" update="@form" />
 					</div>
 
-					<p:dataTable var="candidate" id="candidates" value="#{selectCandidateBean.candidates}"
+					<p:dataTable var="candidate" id="candidates" value="#{selectCandidateBean.candidateLazyDataModel}"
 						emptyMessage="#{i18n['candidate.no_candidates_found']}" reflow="true" paginator="true" paginatorPosition="bottom"
 						selection="#{selectCandidateBean.selectedCandidates}" disabledSelection="#{selectCandidateBean.isAlredySelected(candidate.id)}"
-						rows="#{sessionUser.rowsPerPage}" rowKey="#{candidate.id}" sortBy="#{candidate.fullName}" sortOrder="ascending">
+						rows="#{sessionUser.rowsPerPage}" sortBy="#{candidate.name}" sortOrder="descending" lazy="true">
 
 						<p:column selectionMode="multiple" style="width:16px;text-align:center" />
 
@@ -27,7 +27,7 @@
 							<p:graphicImage class="image image-icon" value="/resources/img/default-avatar.png" rendered="#{empty candidate.imageFileName}" />
 						</p:column>
 
-						<p:column headerText="#{i18n['candidate.name']}" sortBy="#{candidate.fullName}">
+						<p:column headerText="#{i18n['candidate.name']}" sortBy="#{candidate.name}">
 							<h:outputText value="#{candidate.fullName}" />
 						</p:column>
 
