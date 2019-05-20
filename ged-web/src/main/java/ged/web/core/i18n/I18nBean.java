@@ -44,7 +44,7 @@ public class I18nBean extends AbstractBean {
 				return message.getText();
 			}
 			else {
-				return "?" + key + "?";
+				return key;
 			}
 		}
 	}
