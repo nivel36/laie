@@ -51,6 +51,25 @@ h4 {
 	margin-bottom: 1em;
 }
 
+body>footer {
+	justify-content: center;
+	width: 100%;
+	display: flex;
+}
+
+body>footer .version {
+	flex: 1;
+	text-align: center;
+	padding: 0.5em;
+	border-left: 1px solid white;
+	border-right: 1px solid #bfceda;
+}
+
+body footer .version span {
+	font-size: 0.8em;
+	color: #848b9d;
+}
+
 /************************************
  *  nav
  ************************************/
@@ -120,35 +139,12 @@ h4 {
 	display: none;
 }
 
-.selectable {
-	cursor: pointer;
-}
-
 .image-icon {
 	height: 32px;
 	width: 32px;
 	object-fit: cover;
 	border-radius: 4px;
 	image-orientation: from-image;
-}
-
-body>footer {
-	justify-content: center;
-	width: 100%;
-	display: flex;
-}
-
-body>footer .version {
-	flex: 1;
-	text-align: center;
-	padding: 0.5em;
-	border-left: 1px solid white;
-	border-right: 1px solid #bfceda;
-}
-
-body footer .version span {
-	font-size: 0.8em;
-	color: #848b9d;
 }
 
 #aside {
@@ -504,7 +500,6 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button
 
 .panel-header a {
 	color: #7a869b;
-	display: inline-flex;
 }
 
 .panel-header-title {
