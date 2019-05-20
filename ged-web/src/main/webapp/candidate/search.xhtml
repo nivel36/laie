@@ -34,7 +34,6 @@
 								icon="fa-file-excel-o" />
 						</div>
 					</div>
-
 					<p:dataTable var="candidate" id="candidates" value="#{searchCandidateBean.candidates}"
 						emptyMessage="#{i18n['candidate.no_candidates_found']}" reflow="true" paginator="true" paginatorPosition="bottom"
 						rows="#{sessionUser.rowsPerPage}" sortBy="#{candidate.fullName}" sortOrder="ascending">

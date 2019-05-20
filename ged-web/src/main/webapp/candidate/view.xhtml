@@ -10,6 +10,11 @@
 	</ui:define>
 
 	<ui:param name="selectedMenu" value="candidates" />
+	
+	<ui:define name="actions">
+		<p:button value="#{i18n['candidate.new_candidate']}" outcome="#{Page.CANDIDATE_ADD.getUrl()}" />
+	</ui:define>
+	
 
 	<ui:define name="breadcrumb">
 		<p:breadCrumb styleClass="breadcrumb">
@@ -70,47 +75,44 @@
 					</h:form>
 				</div>
 				<div class="panel-content">
-					<div class="panel-content-data">
-						<div class="grid">
-							<div class="col-12 md-6">
-								<h4>#{i18n['candidate.personal_information']}</h4>
+					<div class="panel-content-data grid nogutter">
+						<div class="col-12 md-6">
+							<h4>#{i18n['candidate.personal_information']}</h4>
 
-								<cc:outputText label="#{i18n['candidate.city']}"
-									value="#{viewCandidateBean.candidate.address.city} (#{viewCandidateBean.candidate.address.state})" />
+							<cc:outputText label="#{i18n['candidate.city']}"
+								value="#{viewCandidateBean.candidate.address.city} (#{viewCandidateBean.candidate.address.state})" />
 
-								<cc:outputText label="#{i18n['candidate.bornDate']}" value="#{viewCandidateBean.candidate.bornDate}">
-									<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" for="element" />
-								</cc:outputText>
-							</div>
-							<div class="col-12 md-6">
-								<h4>#{i18n['candidate.contact_information']}</h4>
+							<cc:outputText label="#{i18n['candidate.bornDate']}" value="#{viewCandidateBean.candidate.bornDate}">
+								<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" for="element" />
+							</cc:outputText>
+						</div>
+						<div class="col-12 md-6">
+							<h4>#{i18n['candidate.contact_information']}</h4>
 
-								<cc:outputText label="#{i18n['candidate.origin']}" value="#{i18n:translate(viewCandidateBean.candidate.origin)}" />
+							<cc:outputText label="#{i18n['candidate.origin']}" value="#{i18n:translate(viewCandidateBean.candidate.origin)}" />
 
-								<cc:outputText label="#{i18n['candidate.salary']}" value="#{viewCandidateBean.candidate.salary}">
-									<f:convertNumber for="text" currencyCode="EUR" maxFractionDigits="0" type="currency" />
-								</cc:outputText>
+							<cc:outputText label="#{i18n['candidate.salary']}" value="#{viewCandidateBean.candidate.salary}">
+								<f:convertNumber for="text" currencyCode="EUR" maxFractionDigits="0" type="currency" />
+							</cc:outputText>
 
-								<cc:outputText label="#{i18n['candidate.expected_salary']}"
-									value="#{viewCandidateBean.candidate.expectedSalary}">
-									<f:convertNumber for="text" currencyCode="EUR" maxFractionDigits="0" type="currency" />
-								</cc:outputText>
+							<cc:outputText label="#{i18n['candidate.expected_salary']}" value="#{viewCandidateBean.candidate.expectedSalary}">
+								<f:convertNumber for="text" currencyCode="EUR" maxFractionDigits="0" type="currency" />
+							</cc:outputText>
 
-							</div>
-							<div class="col-12">
-								<h4>#{i18n['candidate.metadata']}</h4>
-								<div class="data rating">
-									<div class="label">#{i18n['candidate.rating']}</div>
-									<div class="text">
-										<p:rating value="#{viewCandidateBean.candidate.rating}" cancel="false" readonly="true" />
-									</div>
+						</div>
+						<div class="col-12">
+							<h4>#{i18n['candidate.metadata']}</h4>
+							<div class="data rating">
+								<div class="label">#{i18n['candidate.rating']}</div>
+								<div class="text">
+									<p:rating value="#{viewCandidateBean.candidate.rating}" cancel="false" readonly="true" />
 								</div>
-								<div class="data tags">
-									<div class="label">#{i18n['candidate.tags']}</div>
-									<div class="text">
-										<p:chips id="tags" value="#{viewCandidateBean.tags}" label="#{i18n['viewCandidateBean.tags']}"
-											converter="stringConverter" style-class="tags" disabled="true" />
-									</div>
+							</div>
+							<div class="data tags">
+								<div class="label">#{i18n['candidate.tags']}</div>
+								<div class="text">
+									<p:chips id="tags" value="#{viewCandidateBean.tags}" label="#{i18n['viewCandidateBean.tags']}"
+										converter="stringConverter" style-class="tags" disabled="true" />
 								</div>
 							</div>
 						</div>

@@ -535,11 +535,14 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button
 	padding: 0;
 	margin: 0;
 	border-bottom: 1px solid #bfceda;
-	flex: 5 0px;
+	flex: 5 0;
+	display: flex;
+	flex-flow:  column nowrap;
 }
 
 .panel-content-data {
 	padding: 20px;
+	display: flex;
 }
 
 .panel-footer {
