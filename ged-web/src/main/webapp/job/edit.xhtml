@@ -3,7 +3,7 @@
 	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
-		<title>#{i18n['job.edit_job']} - #{editJobBean.jobOffer.name}</title>
+		<title>#{i18n['job.edit_job']} - #{editJobView.jobOffer.name}</title>
 	</ui:define>
 
 	<ui:param name="selectedMenu" value="offers" />
@@ -12,8 +12,8 @@
 		<p:breadCrumb styleClass="breadcrumb">
 			<p:menuitem value="#{i18n['menu.index']}" outcome="#{Page.INDEX.getUrl()}" />
 			<p:menuitem value="#{i18n['job.job_offers']}" outcome="#{Page.JOB_SEARCH.getUrl()}" />
-			<p:menuitem value="#{editJobBean.jobOffer}" outcome="#{Page.JOB.getUrl()}">
-				<f:param name="id" value="#{editJobBean.jobOffer.id}" />
+			<p:menuitem value="#{editJobView.jobOffer}" outcome="#{Page.JOB.getUrl()}">
+				<f:param name="id" value="#{editJobView.jobOffer.id}" />
 			</p:menuitem>
 			<p:menuitem value="#{i18n['job.edit_job']}" disabled="true" />
 		</p:breadCrumb>
@@ -27,43 +27,43 @@
 						<div class="col-12 sm-6">
 							<h3>#{i18n['user.personal_information']}</h3>
 
-							<cc:inputText label="#{i18n['job.name']}" value="#{editJobBean.jobOffer.name}" required="true" />
+							<cc:inputText label="#{i18n['job.name']}" value="#{editJobView.jobOffer.name}" required="true" />
 
-							<cc:inputClient id="client" label="#{i18n['job.client']}" value="#{editJobBean.jobOffer.client}"
-								search="#{editJobBean.searchClient()}" required="true">
-								<p:ajax event="dialogReturn" listener="#{editJobBean.onClientSelect}" update="client" />
+							<cc:inputClient id="client" label="#{i18n['job.client']}" value="#{editJobView.jobOffer.client}"
+								search="#{editJobView.searchClient()}" required="true">
+								<p:ajax event="dialogReturn" listener="#{editJobView.onClientSelect}" update="client" />
 							</cc:inputClient>
 
-							<cc:inputNumber id="places" min="0" label="#{i18n['job.places']}" value="#{editJobBean.jobOffer.places}" />
+							<cc:inputNumber id="places" min="0" label="#{i18n['job.places']}" value="#{editJobView.jobOffer.places}" />
 
-							<cc:calendar id="dateOpened" label="#{i18n['job.date_opened']}" value="#{editJobBean.jobOffer.dateOpened}" />
+							<cc:calendar id="dateOpened" label="#{i18n['job.date_opened']}" value="#{editJobView.jobOffer.dateOpened}" />
 
-							<cc:calendar id="dateClosed" label="#{i18n['job.date_closed']}" value="#{editJobBean.jobOffer.dateClosed}" />
+							<cc:calendar id="dateClosed" label="#{i18n['job.date_closed']}" value="#{editJobView.jobOffer.dateClosed}" />
 
-							<cc:inputText id="city" label="#{i18n['job.city']}" value="#{editJobBean.jobOffer.city}" required="true" />
+							<cc:inputText id="city" label="#{i18n['job.city']}" value="#{editJobView.jobOffer.city}" required="true" />
 
-							<cc:inputText id="state" label="#{i18n['job.state']}" value="#{editJobBean.jobOffer.state}" required="true" />
+							<cc:inputText id="state" label="#{i18n['job.state']}" value="#{editJobView.jobOffer.state}" required="true" />
 						</div>
 						<div class="col-12 sm-6">
 							<h3>#{i18n['user.personal_information']}</h3>
 
-							<cc:inputUser id="owner" label="#{i18n['job.owner']}" value="#{editJobBean.jobOffer.owner}"
-								completeMethod="#{editJobBean.searchOwner}" />
+							<cc:inputUser id="owner" label="#{i18n['job.owner']}" value="#{editJobView.jobOffer.owner}"
+								completeMethod="#{editJobView.searchOwner}" />
 
-							<cc:inputTag id="recruiters" label="#{i18n['job.recruiters']}" value="#{editJobBean.recruiters}" tagLabel="#{editJobBean.recruiters}" />
+							<cc:inputTag id="recruiters" label="#{i18n['job.recruiters']}" value="#{editJobView.recruiters}" tagLabel="#{editJobView.recruiters}" />
 						</div>
 						<div class="col-12">
 							<h3>#{i18n['user.personal_information']}</h3>
-							<cc:richText id="description" name="description" label="#{i18n['job.description']}" value="#{editJobBean.jobOffer.description}" />
+							<cc:richText id="description" name="description" label="#{i18n['job.description']}" value="#{editJobView.jobOffer.description}" />
 						</div>
 					</div>
 				</div>
 				<div class="panel-footer">
 					<div class="panel-buttons">
 						<p:button styleClass="btn-gray" value="#{i18n['action.cancel']}" outcome="#{Page.JOB.getUrl()}">
-							<f:param name="id" value="#{editJobBean.jobOffer.id}" />
+							<f:param name="id" value="#{editJobView.jobOffer.id}" />
 						</p:button>
-						<p:commandButton value="#{i18n['action.save']}" action="#{editJobBean.save}" process="@form" update="@form growl" />
+						<p:commandButton value="#{i18n['action.save']}" action="#{editJobView.save}" process="@form" update="@form growl" />
 					</div>
 				</div>
 			</div>

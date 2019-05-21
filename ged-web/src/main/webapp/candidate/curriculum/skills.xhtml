@@ -16,18 +16,18 @@
 					<div class="form-group">
 						<p:outputLabel value="#{i18n['skill.skill']}" />
 						<div class="inputgroup">
-							<p:inputText id="skill" value="#{skillsBean.skillName}" />
-							<p:commandButton id="addSkill" action="#{skillsBean.addSkill}" process="@form" update="@form" styleClass="btn-green" icon="fa fa-plus" />
+							<p:inputText id="skill" value="#{skillsView.skillName}" />
+							<p:commandButton id="addSkill" action="#{skillsView.addSkill}" process="@form" update="@form" styleClass="btn-green" icon="fa fa-plus" />
 						</div>
 						<p:message for="skill" />
 					</div>
 				</div>
 				<div class="col-12">
-					<p:chips value="#{skillsBean.skills}" converter="stringConverter" disabled="true" />
+					<p:chips value="#{skillsView.skills}" converter="stringConverter" disabled="true" />
 				</div>
 				<div class="col-12">
 					<div class="form-action-primary">
-						<p:commandButton styleClass="btn-gray" value="#{i18n['action.close']}" actionListener="#{skillsBean.closeDialog}" process="@this" update="@form" />
+						<p:commandButton styleClass="btn-gray" value="#{i18n['action.close']}" actionListener="#{skillsView.closeDialog}" process="@this" update="@form" />
 					</div>
 				</div>
 			</div>

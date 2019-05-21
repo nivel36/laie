@@ -12,16 +12,16 @@
 			<div class="grid">
 				<div class="col-12 md-6 lg-4">
 					<div class="inputgroup">
-						<p:inputText id="searchText" value="#{jobOfferSearchDialogBean.searchText}" />
-						<p:commandButton id="cleanSearchTextAction" action="#{jobOfferSearchDialogBean.clean}" update="@form" styleClass="btn-gray" icon="fa fa-times"
-							rendered="#{not empty jobOfferSearchDialogBean.searchText}" />
-						<p:commandButton id="searchAction" action="#{jobOfferSearchDialogBean.search}" update="@form" icon="fa fa-search" />
+						<p:inputText id="searchText" value="#{jobOfferSearchDialogView.searchText}" />
+						<p:commandButton id="cleanSearchTextAction" action="#{jobOfferSearchDialogView.clean}" update="@form" styleClass="btn-gray" icon="fa fa-times"
+							rendered="#{not empty jobOfferSearchDialogView.searchText}" />
+						<p:commandButton id="searchAction" action="#{jobOfferSearchDialogView.search}" update="@form" icon="fa fa-search" />
 					</div>
 				</div>
 				
 				<div class="col-12">
-					<p:dataTable var="jobOffer" value="#{jobOfferSearchDialogBean.jobOffers}" emptyMessage="#{i18n['job.no_jobs_found']}" reflow="true" paginator="true"
-						rowKey="#{jobOffer.id}" paginatorPosition="bottom" rows="#{sessionUser.rowsPerPage}" selection="#{jobOfferSearchDialogBean.selectedJobOffers}">
+					<p:dataTable var="jobOffer" value="#{jobOfferSearchDialogView.jobOffers}" emptyMessage="#{i18n['job.no_jobs_found']}" reflow="true" paginator="true"
+						rowKey="#{jobOffer.id}" paginatorPosition="bottom" rows="#{sessionUser.rowsPerPage}" selection="#{jobOfferSearchDialogView.selectedJobOffers}">
 
 						<p:column selectionMode="multiple" style="width:16px;text-align:center" />
 
@@ -49,8 +49,8 @@
 				
 				<div class="col-12">
 					<div class="pull-right">
-						<p:commandButton value="#{i18n['action.cancel']}" actionListener="#{jobOfferSearchDialogBean.closeDialog}" process="@this" styleClass="btn-gray" />
-						<p:commandButton value="#{i18n['action.select']}" action="#{jobOfferSearchDialogBean.select}" update="@form" />
+						<p:commandButton value="#{i18n['action.cancel']}" actionListener="#{jobOfferSearchDialogView.closeDialog}" process="@this" styleClass="btn-gray" />
+						<p:commandButton value="#{i18n['action.select']}" action="#{jobOfferSearchDialogView.select}" update="@form" />
 					</div>
 				</div>
 			</div>

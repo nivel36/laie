@@ -6,9 +6,9 @@ import ged.web.core.view.SessionUser;
 
 public final class I18nFaceletsFunction {
 
-	private static I18nBean getI18nBeanBean() {
+	private static I18nView getI18nView() {
 		final FacesContext context = FacesContext.getCurrentInstance();
-		return context.getApplication().evaluateExpressionGet(context, "#{i18nBean}", I18nBean.class);
+		return context.getApplication().evaluateExpressionGet(context, "#{i18nView}", I18nView.class);
 	}
 
 	private static SessionUser getSessionUser() {
@@ -20,10 +20,10 @@ public final class I18nFaceletsFunction {
 		if(key == null || key.isBlank()) {
 			return null;
 		}
- 		final I18nBean  i18nBean = getI18nBeanBean();
+ 		final I18nView  i18nView = getI18nView();
 		final SessionUser sessionUser = getSessionUser();
 		final String language = sessionUser.getLocale().getLanguage();
-		return i18nBean.getI18nText(key, language);
+		return i18nView.getI18nText(key, language);
 	}
 
 	private I18nFaceletsFunction() {

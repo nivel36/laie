@@ -5,7 +5,7 @@
 	xmlns:of="http://omnifaces.org/functions" template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
-		<title>#{i18n['job.job_offer']} - {viewJobBean.jobOffer.name}</title>
+		<title>#{i18n['job.job_offer']} - {viewJobView.jobOffer.name}</title>
 	</ui:define>
 
 	<ui:param name="selectedMenu" value="offers" />
@@ -14,7 +14,7 @@
 		<p:breadCrumb styleClass="breadcrumb">
 			<p:menuitem value="#{i18n['menu.index']}" outcome="#{Page.INDEX.getUrl()}" />
 			<p:menuitem value="#{i18n['job.job_offers']}" outcome="#{Page.JOB_SEARCH.getUrl()}" />
-			<p:menuitem value="#{viewJobBean.jobOffer.name}" disabled="true" />
+			<p:menuitem value="#{viewJobView.jobOffer.name}" disabled="true" />
 		</p:breadCrumb>
 	</ui:define>
 
@@ -25,51 +25,51 @@
 					<div class="panel-header-title">#{i18n['job.job_offer']}</div>
 					<h:form>
 						<div class="panel-buttons">
-							<p:commandButton value="#{i18n['action.export']}" action="#{viewJobBean.export}" icon="fa-file-excel-o" />
-							<p:commandButton value="#{i18n['action.edit']}" action="#{viewJobBean.editJobOffer}" />
+							<p:commandButton value="#{i18n['action.export']}" action="#{viewJobView.export}" icon="fa-file-excel-o" />
+							<p:commandButton value="#{i18n['action.edit']}" action="#{viewJobView.editJobOffer}" />
 						</div>
 					</h:form>
 				</div>
 				<div class="panel-content panel-content-data">
 					<div class="grid">
 						<div class="col-12 lg-6 xl-4">
-							<cc:outputText label="#{i18n['job.name']}" value="#{viewJobBean.jobOffer.name}" />
+							<cc:outputText label="#{i18n['job.name']}" value="#{viewJobView.jobOffer.name}" />
 						</div>
 						<div class="col-12 lg-6 xl-4">
-							<cc:outputText label="#{i18n['job.client']}" value="#{viewJobBean.jobOffer.client.name}" />
+							<cc:outputText label="#{i18n['job.client']}" value="#{viewJobView.jobOffer.client.name}" />
 						</div>
 						<div class="col-12 lg-6 xl-4">
-							<cc:outputText label="#{i18n['job.places']}" value="#{viewJobBean.jobOffer.places}" />
+							<cc:outputText label="#{i18n['job.places']}" value="#{viewJobView.jobOffer.places}" />
 						</div>
 						<div class="col-12 lg-6 xl-4">
-							<cc:outputText label="#{i18n['job.date_opened']}" value="#{viewJobBean.jobOffer.dateOpened}">
+							<cc:outputText label="#{i18n['job.date_opened']}" value="#{viewJobView.jobOffer.dateOpened}">
 								<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" for="element" />
 							</cc:outputText>
 						</div>
 						<div class="col-12 lg-6 xl-4">
-							<cc:outputText label="#{i18n['job.date_closed']}" value="#{viewJobBean.jobOffer.dateClosed}">
+							<cc:outputText label="#{i18n['job.date_closed']}" value="#{viewJobView.jobOffer.dateClosed}">
 								<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" for="element" />
 							</cc:outputText>
 						</div>
 						<div class="col-12 lg-6 xl-4">
-							<cc:outputText label="#{i18n['address.city']}" value="#{viewJobBean.jobOffer.city}" />
+							<cc:outputText label="#{i18n['address.city']}" value="#{viewJobView.jobOffer.city}" />
 
 						</div>
 						<div class="col-12 lg-6 xl-4">
-							<cc:outputText label="#{i18n['address.state']}" value="#{viewJobBean.jobOffer.state}" />
+							<cc:outputText label="#{i18n['address.state']}" value="#{viewJobView.jobOffer.state}" />
 
 						</div>
 						<div class="col-12">
-							<cc:outputText label="#{i18n['job.description']}" value="#{viewJobBean.jobOffer.description}" />
+							<cc:outputText label="#{i18n['job.description']}" value="#{viewJobView.jobOffer.description}" />
 						</div>
 					</div>
 				</div>
 			</div>
 			<div class="col-12 xl-6">
 				<h:form id="candidatesForm">
-					<cc:jobCandidatures jobCandidatures="#{viewJobBean.jobCandidatures}" showJobOffer="false">
-						<p:commandButton value="#{i18n['action.add']}" action="#{viewJobBean.selectCandidates}" process="@this">
-							<p:ajax event="dialogReturn" listener="#{viewJobBean.onCloseSelectCandidateDialog}" update="@form" />
+					<cc:jobCandidatures jobCandidatures="#{viewJobView.jobCandidatures}" showJobOffer="false">
+						<p:commandButton value="#{i18n['action.add']}" action="#{viewJobView.selectCandidates}" process="@this">
+							<p:ajax event="dialogReturn" listener="#{viewJobView.onCloseSelectCandidateDialog}" update="@form" />
 						</p:commandButton>
 					</cc:jobCandidatures>
 				</h:form>

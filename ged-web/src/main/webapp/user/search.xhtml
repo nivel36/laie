@@ -26,13 +26,13 @@
 			<div class="panel">
 				<div class="panel-content">
 					<div class="panel-content-data">
-						<cc:inputSearch searchText="#{searchUserBean.searchText}" searchAction="#{searchUserBean.search}" update="@form" />
+						<cc:inputSearch searchText="#{searchUserView.searchText}" searchAction="#{searchUserView.search}" update="@form" />
 						<div class="panel-buttons">
-							<p:commandButton value="#{i18n['action.export']}" action="#{searchUserBean.export}" process="@this" icon="fa-file-excel-o" />
+							<p:commandButton value="#{i18n['action.export']}" action="#{searchUserView.export}" process="@this" icon="fa-file-excel-o" />
 						</div>
 					</div>
 
-					<p:dataTable var="user" id="users" value="#{searchUserBean.users}" emptyMessage="#{i18n['user.no_users_found']}" reflow="true"
+					<p:dataTable var="user" id="users" value="#{searchUserView.users}" emptyMessage="#{i18n['user.no_users_found']}" reflow="true"
 						paginator="true" paginatorPosition="bottom" paginatorTemplate="{PageLinks}" rows="#{sessionUser.rowsPerPage}"
 						sortBy="#{user.fullName}" sortOrder="ascending">
 

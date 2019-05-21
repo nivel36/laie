@@ -5,15 +5,15 @@
 	template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
-		<title>#{clientEditBean.client.name}</title>
+		<title>#{clientEditView.client.name}</title>
 	</ui:define>
 
 	<ui:define name="breadcrumb">
 		<p:breadCrumb styleClass="breadcrumb">
 			<p:menuitem value="#{i18n['menu.index']}" url="/index.xhtml" />
 			<p:menuitem value="#{i18n['client.clients']}" url="/client/clientSearch.xhtml" />
-			<p:menuitem value="#{contactEditBean.client.name}" url="/client/client.xhtml?clientId=#{contactEditBean.client.id}" />
-			<p:menuitem value="#{contactEditBean.contact.fullName}" disabled="true" />
+			<p:menuitem value="#{contactEditView.client.name}" url="/client/client.xhtml?clientId=#{contactEditView.client.id}" />
+			<p:menuitem value="#{contactEditView.contact.fullName}" disabled="true" />
 		</p:breadCrumb>
 	</ui:define>
 
@@ -23,24 +23,24 @@
 				<div class="panel-content panel-content-data">
 					<div class="grid">
 						<div class="col-12 sm-6">
-							<cc:inputText id="name" label="#{i18n['contact.name']}" value="#{contactEditBean.contact.name}" required="true" />
+							<cc:inputText id="name" label="#{i18n['contact.name']}" value="#{contactEditView.contact.name}" required="true" />
 
-							<cc:inputText id="surname" label="#{i18n['contact.surname']}" value="#{contactEditBean.contact.surname}" required="true" />
+							<cc:inputText id="surname" label="#{i18n['contact.surname']}" value="#{contactEditView.contact.surname}" required="true" />
 
-							<cc:inputText id="position" label="#{i18n['contact.position']}" value="#{contactEditBean.contact.position}" />
+							<cc:inputText id="position" label="#{i18n['contact.position']}" value="#{contactEditView.contact.position}" />
 
-							<cc:inputText id="email" label="#{i18n['contact.email']}" value="#{contactEditBean.contact.email}" />
+							<cc:inputText id="email" label="#{i18n['contact.email']}" value="#{contactEditView.contact.email}" />
 
-							<cc:inputText id="phone_number" label="#{i18n['contact.phone_number']}" value="#{contactEditBean.contact.phoneNumber}" />
+							<cc:inputText id="phone_number" label="#{i18n['contact.phone_number']}" value="#{contactEditView.contact.phoneNumber}" />
 						</div>
 					</div>
 				</div>
 				<div class="panel-footer">
 					<div class="panel-buttons">
 						<p:button styleClass="btn-gray" value="#{i18n['action.cancel']}" outcome="#{PageEnum.CLIENT.getUrl()}">
-							<f:param name="id" value="#{contactEditBean.client.id}" />
+							<f:param name="id" value="#{contactEditView.client.id}" />
 						</p:button>
-						<p:commandButton value="#{i18n['action.save']}" action="#{contactEditBean.save}" update="@form" />
+						<p:commandButton value="#{i18n['action.save']}" action="#{contactEditView.save}" update="@form" />
 					</div>
 				</div>
 			</div>
