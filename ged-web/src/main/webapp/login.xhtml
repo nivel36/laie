@@ -22,13 +22,13 @@
 					</div>
 					<div class="panel-content panel-content-data grid">
 						<div class="col-12">
-							<cc:inputText id="username" labelIcon="fa-user" value="#{loginBean.username}" required="true" />
-							<cc:inputPassword id="password" labelIcon="fa-lock" value="#{loginBean.password}" required="true" />
+							<cc:inputText id="username" labelIcon="fa-user" value="#{loginView.username}" required="true" />
+							<cc:inputPassword id="password" labelIcon="fa-lock" value="#{loginView.password}" required="true" />
 						</div>
 					</div>
 					<div class="panel-footer">
 						<div class="panel-buttons">
-							<p:commandButton action="#{loginBean.login}" value="${i18n['login.enter']}" update="@form growl" />
+							<p:commandButton action="#{loginView.login}" value="${i18n['login.enter']}" update="@form growl" />
 						</div>
 					</div>
 				</div>

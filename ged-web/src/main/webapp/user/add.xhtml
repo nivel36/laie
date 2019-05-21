@@ -27,44 +27,44 @@
 			<div class="panel">
 				<div class="panel-aside">
 					<div class="candidate-metadata">
-						<cc:inputAvatar id="userImage" value="#{addUserBean.user.imageFileName}" fileUploadListener="#{addUserBean.uploadImage}" />
+						<cc:inputAvatar id="userImage" value="#{addUserView.user.imageFileName}" fileUploadListener="#{addUserView.uploadImage}" />
 					</div>
 				</div>
 				<div class="panel-content panel-content-data">
 					<div class="grid">
 						<div class="col-12 sm-6">
 							<h3>#{i18n['user.personal_information']}</h3>
-							<cc:inputText id="name" label="#{i18n['user.name']}" value="#{addUserBean.user.name}" required="true" />
+							<cc:inputText id="name" label="#{i18n['user.name']}" value="#{addUserView.user.name}" required="true" />
 
-							<cc:inputText id="surname" label="#{i18n['user.surname']}" value="#{addUserBean.user.surname}" required="true" />
+							<cc:inputText id="surname" label="#{i18n['user.surname']}" value="#{addUserView.user.surname}" required="true" />
 
-							<cc:inputText id="email" label="#{i18n['user.email']}" value="#{addUserBean.user.email}" required="true"
-								validator="#{addUserBean.validateEmail}" />
+							<cc:inputText id="email" label="#{i18n['user.email']}" value="#{addUserView.user.email}" required="true"
+								validator="#{addUserView.validateEmail}" />
 
-							<cc:inputText id="phone_number" label="#{i18n['user.phone_number']}" value="#{addUserBean.user.phoneNumber}" />
+							<cc:inputText id="phone_number" label="#{i18n['user.phone_number']}" value="#{addUserView.user.phoneNumber}" />
 						</div>
 
 						<div class="col-12 sm-6">
 
 							<h3>#{i18n['user.professional_information']}</h3>
 
-							<cc:inputSelect id="role" value="#{addUserBean.user.role}" label="#{i18n['user.role']}" required="true">
+							<cc:inputSelect id="role" value="#{addUserView.user.role}" label="#{i18n['user.role']}" required="true">
 								<f:selectItems value="#{roles.list}" var="role" itemValue="#{role}" itemLabel="#{i18n:translate(role)}" />
 								<p:ajax event="change" update=":userForm:role :userForm:manager" process=":userForm:role"
-									listener="#{addUserBean.changeRoleListener}" />
+									listener="#{addUserView.changeRoleListener}" />
 							</cc:inputSelect>
 
-							<cc:inputUser id="manager" label="#{i18n['user.manager']}" value="#{addUserBean.user.manager}"
-								completeMethod="#{addUserBean.searchManager}" disabled="#{addUserBean.user.isAdmin()}" />
+							<cc:inputUser id="manager" label="#{i18n['user.manager']}" value="#{addUserView.user.manager}"
+								completeMethod="#{addUserView.searchManager}" disabled="#{addUserView.user.isAdmin()}" />
 
-							<cc:calendar id="date_of_join" label="#{i18n['user.date_of_join']}" value="#{addUserBean.user.dateOfJoin}" />
+							<cc:calendar id="date_of_join" label="#{i18n['user.date_of_join']}" value="#{addUserView.user.dateOfJoin}" />
 						</div>
 					</div>
 				</div>
 				<div class="panel-footer">
 					<div class="panel-buttons">
 						<p:button styleClass="btn-gray" value="#{i18n['action.cancel']}" outcome="#{Page.USER_SEARCH.getUrl()}" />
-						<p:commandButton value="#{i18n['action.save']}" action="#{addUserBean.save}" process="@form" update="@form growl" />
+						<p:commandButton value="#{i18n['action.save']}" action="#{addUserView.save}" process="@form" update="@form growl" />
 					</div>
 				</div>
 			</div>

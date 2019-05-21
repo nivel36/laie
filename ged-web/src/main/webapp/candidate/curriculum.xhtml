@@ -5,7 +5,7 @@
 	xmlns:of="http://omnifaces.org/functions" template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
-		<title>#{i18n['curriculum.curriculum']} - #{curriculumBean.candidate.fullName}</title>
+		<title>#{i18n['curriculum.curriculum']} - #{curriculumView.candidate.fullName}</title>
 	</ui:define>
 
 	<ui:param name="selectedMenu" value="candidates" />
@@ -14,8 +14,8 @@
 		<p:breadCrumb styleClass="breadcrumb">
 			<p:menuitem value="#{i18n['menu.index']}" outcome="#{Page.INDEX.getUrl()}" />
 			<p:menuitem value="#{i18n['candidate.candidates']}" outcome="#{Page.CANDIDATE_SEARCH.getUrl()}" />
-			<p:menuitem value="#{curriculumBean.candidate.fullName}" outcome="#{Page.CANDIDATE.getUrl()}">
-				<f:param name="id" value="#{curriculumBean.candidate.id}" />
+			<p:menuitem value="#{curriculumView.candidate.fullName}" outcome="#{Page.CANDIDATE.getUrl()}">
+				<f:param name="id" value="#{curriculumView.candidate.id}" />
 			</p:menuitem>
 			<p:menuitem value="#{i18n['curriculum.curriculum']}" disabled="true" />
 		</p:breadCrumb>
@@ -27,42 +27,42 @@
 				<div class="panel curriculum col-12 xl-8">
 					<div class="panel-header">
 						<div class="panel-header-image">
-							<cc:avatar imageFileName="#{curriculumBean.candidate.imageFileName}" />
+							<cc:avatar imageFileName="#{curriculumView.candidate.imageFileName}" />
 						</div>
 						<div class="panel-header-data">
-							<div class="name">#{curriculumBean.candidate.fullName}</div>
-							<div class="job-profile">#{curriculumBean.candidate.jobProfile}</div>
+							<div class="name">#{curriculumView.candidate.fullName}</div>
+							<div class="job-profile">#{curriculumView.candidate.jobProfile}</div>
 
 							<div class="data email">
 								<div class="icon">
 									<em class="fa fa-envelope"></em>
 								</div>
-								<div class="text">#{curriculumBean.candidate.email}</div>
+								<div class="text">#{curriculumView.candidate.email}</div>
 							</div>
 							<div class="data phone">
 								<div class="icon">
 									<em class="fa fa-phone"></em>
 								</div>
-								<div class="text">#{curriculumBean.candidate.phoneNumber}</div>
+								<div class="text">#{curriculumView.candidate.phoneNumber}</div>
 							</div>
-							<h:panelGroup layout="block" styleClass="data skype" rendered="#{not empty curriculumBean.candidate.skype}">
+							<h:panelGroup layout="block" styleClass="data skype" rendered="#{not empty curriculumView.candidate.skype}">
 								<div class="icon">
 									<em class="fa fa-skype"></em>
 								</div>
-								<div class="text">#{curriculumBean.candidate.skype}</div>
+								<div class="text">#{curriculumView.candidate.skype}</div>
 							</h:panelGroup>
-							<h:panelGroup layout="block" styleClass="data linkedin" rendered="#{not empty curriculumBean.candidate.linkedinProfileUrl}">
+							<h:panelGroup layout="block" styleClass="data linkedin" rendered="#{not empty curriculumView.candidate.linkedinProfileUrl}">
 								<div class="icon">
 									<em class="fa fa-linkedin"></em>
 								</div>
 								<div class="text">
-									<a href="#{curriculumBean.candidate.linkedinProfileUrl}" target="new">#{curriculumBean.candidate.linkedinProfileUrl}</a>
+									<a href="#{curriculumView.candidate.linkedinProfileUrl}" target="new">#{curriculumView.candidate.linkedinProfileUrl}</a>
 								</div>
 							</h:panelGroup>
 						</div>
 						<div class="panel-buttons">
 							<p:button value="#{i18n['action.back']}" outcome="#{Page.CANDIDATE.getUrl()}">
-								<f:param name="id" value="#{curriculumBean.candidate.id}" />
+								<f:param name="id" value="#{curriculumView.candidate.id}" />
 							</p:button>
 						</div>
 					</div>
@@ -72,10 +72,10 @@
 								<div class="section-header">
 									<div class="section-title">#{i18n['curriculum.job_experiences']}</div>
 									<div class="panel-buttons">
-										<p:commandButton value="#{i18n['action.new']}" action="#{curriculumBean.newJobExperience}" process="@this" />
+										<p:commandButton value="#{i18n['action.new']}" action="#{curriculumView.newJobExperience}" process="@this" />
 									</div>
 								</div>
-								<ui:repeat value="#{curriculumBean.jobExperiences}" var="jobExperience" id="jobExperience" varStatus="varStatus">
+								<ui:repeat value="#{curriculumView.jobExperiences}" var="jobExperience" id="jobExperience" varStatus="varStatus">
 									<div class="section-content">
 										<p>
 											<span class="job_position">#{jobExperience.jobPosition}</span>
@@ -107,7 +107,7 @@
 
 										<h:outputText value="#{jobExperience.description}" escape="false" styleClass="jobDescription" />
 										<div class="panel-buttons">
-											<p:commandButton value="#{i18n['action.edit']}" action="#{curriculumBean.editJobExperience(jobExperience)}" process="@this" />
+											<p:commandButton value="#{i18n['action.edit']}" action="#{curriculumView.editJobExperience(jobExperience)}" process="@this" />
 										</div>
 									</div>
 								</ui:repeat>
@@ -116,10 +116,10 @@
 								<div class="section-header">
 									<div class="section-title">#{i18n['curriculum.education']}</div>
 									<div class="panel-buttons">
-										<p:commandButton value="#{i18n['action.new']}" action="#{curriculumBean.newEducation}" process="@this" />
+										<p:commandButton value="#{i18n['action.new']}" action="#{curriculumView.newEducation}" process="@this" />
 									</div>
 								</div>
-								<ui:repeat value="#{curriculumBean.education}" var="education" id="education">
+								<ui:repeat value="#{curriculumView.education}" var="education" id="education">
 									<div class="section-content">
 										<p>
 											<span class="degree">#{education.degree}</span>
@@ -134,7 +134,7 @@
 										<h:outputText value="#{education.description}" escape="false" styleClass="educationDescription" />
 
 										<div class="panel-buttons">
-											<p:commandButton value="#{i18n['action.edit']}" action="#{curriculumBean.editEducation(education)}" process="@this" />
+											<p:commandButton value="#{i18n['action.edit']}" action="#{curriculumView.editEducation(education)}" process="@this" />
 										</div>
 									</div>
 								</ui:repeat>
@@ -145,13 +145,13 @@
 									<div class="section-title">#{i18n['curriculum.languages']}</div>
 								</div>
 								<div class="section-content">
-									<ui:repeat value="#{curriculumBean.languages}" var="language" id="language">
+									<ui:repeat value="#{curriculumView.languages}" var="language" id="language">
 										<p>
 											<span class="language_name">#{language.name}</span> <span class="language_level">#{i18n[language.level]}</span>
 										</p>
 									</ui:repeat>
 									<div class="panel-buttons">
-										<p:commandButton value="#{i18n['action.edit']}" action="#{curriculumBean.editLanguages}" process="@this" />
+										<p:commandButton value="#{i18n['action.edit']}" action="#{curriculumView.editLanguages}" process="@this" />
 									</div>
 								</div>
 							</h:panelGroup>
@@ -160,10 +160,10 @@
 								<!-- Skills -->
 								<div class="section-title">#{i18n['curriculum.skills']}</div>
 								<div class="section-content">
-									<p:chips value="#{curriculumBean.skills}" converter="stringConverter" disabled="true" />
+									<p:chips value="#{curriculumView.skills}" converter="stringConverter" disabled="true" />
 								</div>
 								<div class="panel-buttons">
-									<p:commandButton value="#{i18n['action.edit']}" action="#{curriculumBean.editSkills}" process="@this" />
+									<p:commandButton value="#{i18n['action.edit']}" action="#{curriculumView.editSkills}" process="@this" />
 								</div>
 							</h:panelGroup>
 						</div>
@@ -171,7 +171,7 @@
 					<div class="panel-footer">
 						<div class="panel-buttons">
 							<p:button value="#{i18n['action.back']}" outcome="#{Page.CANDIDATE.getUrl()}">
-								<f:param name="id" value="#{curriculumBean.candidate.id}" />
+								<f:param name="id" value="#{curriculumView.candidate.id}" />
 							</p:button>
 						</div>
 					</div>
