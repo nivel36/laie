@@ -2,40 +2,28 @@ package ged.ejb.core.model;
 
 public class Page {
 
-	public static final Page ALL = Page.of(1, 150);
+	public static final Page ALL = new Page (0, 150);
 
-	public static Page of(final int pageNumber, final int pageSize) {
-		return new Page(pageNumber, pageSize);
-	}
+	private final int offset;
 
-	private final int pageNumber;
+	private final int limit;
 
-	private final int pageSize;
-
-	public Page(final int pageNumber, final int pageSize) {
-		if (pageNumber < 1) {
-			throw new IllegalArgumentException("pageNum: " + pageNumber);
+	public Page(final int offset,final int limit) {
+		if (offset < 1) {
+			throw new IllegalArgumentException("offset: " + offset);
 		}
-		if (pageSize < 1) {
-			throw new IllegalArgumentException("pageSize: " + pageSize);
+		if (limit < 1) {
+			throw new IllegalArgumentException("limit: " + limit);
 		}
-		this.pageNumber = pageNumber;
-		this.pageSize = pageSize;
+		this.offset = offset;
+		this.limit = limit;
 	}
 
 	public int getLimit() {
-		return pageNumber * pageSize;
+		return limit;
 	}
 
-	public int getOffSet() {
-		return (pageNumber - 1) * pageSize;
-	}
-
-	public int getPageNumber() {
-		return pageNumber;
-	}
-
-	public int getPageSize() {
-		return pageSize;
+	public int getOffset() {
+		return offset;
 	}
 }

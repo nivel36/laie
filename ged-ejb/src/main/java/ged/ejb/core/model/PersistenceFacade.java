@@ -128,7 +128,7 @@ public class PersistenceFacade {
 	}
 
 	private void paginate(final Page page, final Query query) {
-		query.setFirstResult(page.getOffSet());
+		query.setFirstResult(page.getOffset());
 		query.setMaxResults(page.getLimit());
 	}
 

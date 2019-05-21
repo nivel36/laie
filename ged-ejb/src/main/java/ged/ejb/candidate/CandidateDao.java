@@ -56,7 +56,7 @@ public class CandidateDao extends AbstractDao<Candidate> {
 			throw new IllegalArgumentException("Bad number of candidates: " + numberOfCandidates);
 		}
 		return this.findByQuery(Candidate.class, "Candidate.findLastAddedCandidates", null,
-				Page.of(1, numberOfCandidates));
+				new Page(0, numberOfCandidates));
 	}
 
 	public long findNumberOfCandidates() {

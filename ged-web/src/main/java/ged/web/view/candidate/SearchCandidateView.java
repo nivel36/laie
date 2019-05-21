@@ -22,7 +22,7 @@ public class SearchCandidateView extends AbstractView {
 
 	private static final long serialVersionUID = 2434819723782902618L;
 	
-	private CandidateLazyDataModel candidateLazyDataModel;
+	private CandidateLazyDataModel candidates;
 
 	@Inject
 	protected transient CandidateService candidateService;
@@ -33,8 +33,8 @@ public class SearchCandidateView extends AbstractView {
 		logger.debug("Export candidates action performed");
 	}
 
-	public CandidateLazyDataModel getCandidateLazyDataModel() {
-		return candidateLazyDataModel;
+	public CandidateLazyDataModel getCandidates() {
+		return candidates;
 	}
 
 	public String getSearchText() {
@@ -44,12 +44,12 @@ public class SearchCandidateView extends AbstractView {
 	@PostConstruct
 	public void init() {
 		logger.trace("Search candidate init");
-		candidateLazyDataModel = new CandidateLazyDataModel(candidateService);
+		candidates = new CandidateLazyDataModel(candidateService);
 	}
 
 	public void search() {
 		logger.debug("Search candidates action performed");
-		candidateLazyDataModel.setSearchText(searchText);
+		candidates.setSearchText(searchText);
 	}
 
 	public void setCandidateService(final CandidateService candidateService) {

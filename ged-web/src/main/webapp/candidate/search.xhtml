@@ -34,7 +34,7 @@
 								icon="fa-file-excel-o" />
 						</div>
 					</div>
-					<p:dataTable var="candidate" id="candidates" value="#{searchCandidateView.candidateLazyDataModel}"
+					<p:dataTable var="candidate" id="candidates" value="#{searchCandidateView.candidates}"
 						emptyMessage="#{i18n['candidate.no_candidates_found']}" reflow="true" paginator="true" paginatorPosition="bottom"
 						rows="#{sessionUser.rowsPerPage}" sortBy="#{candidate.name}" sortOrder="ascending" lazy="true">
 
