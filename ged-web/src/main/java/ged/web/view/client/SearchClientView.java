@@ -2,7 +2,6 @@ package ged.web.view.client;
 
 import java.io.IOException;
 import java.lang.invoke.MethodHandles;
-import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -12,9 +11,7 @@ import javax.inject.Named;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ged.ejb.client.Client;
 import ged.ejb.client.ClientService;
-import ged.ejb.core.model.Page;
 import ged.web.core.view.AbstractView;
 
 @Named
@@ -25,7 +22,7 @@ public class SearchClientView extends AbstractView {
 
 	private static final long serialVersionUID = 2434819723782902618L;
 
-	private List<Client> clients;
+	private ClientLazyDataModel clients;
 
 	@Inject
 	private transient ClientService clientService;
@@ -36,7 +33,7 @@ public class SearchClientView extends AbstractView {
 		logger.debug("Export clients action performed");
 	}
 
-	public List<Client> getClients() {
+	public ClientLazyDataModel getClients() {
 		return this.clients;
 	}
 
@@ -47,13 +44,12 @@ public class SearchClientView extends AbstractView {
 	@PostConstruct
 	public void init() {
 		logger.debug("Client search init");
-		this.search();
+		clients = new ClientLazyDataModel(clientService);
 	}
 
 	public void search() {
 		logger.debug("Search clients action performed");
-		this.clients = this.clientService.search(this.searchText, Page.ALL).getResultData();
-		this.addWarningMessageIfMaxSearchResultsHaveBeenReached(this.clients);
+		clients.setSearchText(searchText);
 	}
 
 	public void setClientService(final ClientService clientService) {

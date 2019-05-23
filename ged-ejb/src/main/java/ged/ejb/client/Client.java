@@ -12,9 +12,14 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
+import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.ContainedIn;
 import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Fields;
+import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.SortableField;
+import org.hibernate.search.annotations.Store;
 
 import ged.ejb.core.Address;
 import ged.ejb.core.model.AbstractAuditedEntity;
@@ -29,7 +34,7 @@ public class Client extends AbstractAuditedEntity {
 	@Embedded
 	private Address address;
 
-	@Column(length = 10, unique = true, nullable = true)
+	@Column(unique = true)
 	private String cif;
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "client", orphanRemoval = true)
@@ -39,13 +44,13 @@ public class Client extends AbstractAuditedEntity {
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "client", orphanRemoval = true)
 	private Set<JobOffer> jobOffers;
 
-	@Field
-	@Column(length = 128, unique = true, nullable = false)
 	@NotNull
+	@Column(unique = true, nullable = false)
+	@Fields({ @Field(name = "_name"), @Field(name = "name", analyze = Analyze.NO, store = Store.NO, index = Index.NO) })
+	@SortableField(forField = "name")
 	private String name;
 
 	@Pattern(regexp = "(?:[+]?(?:[0-9]{1,5}|\\x28[0-9]{1,5}\\x29)[ ]?)?[0-9]{2}(?:[0-9][ ]?){6}[0-9]")
-	@Column(length = 12)
 	private String phoneNumber;
 
 	@Override

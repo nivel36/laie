@@ -1,7 +1,6 @@
 package ged.web.view.user;
 
 import java.lang.invoke.MethodHandles;
-import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -11,8 +10,6 @@ import javax.inject.Named;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ged.ejb.core.model.Page;
-import ged.ejb.user.User;
 import ged.ejb.user.UserService;
 import ged.web.core.view.AbstractView;
 
@@ -26,7 +23,7 @@ public class SearchUserView extends AbstractView {
 
 	private String searchText;
 
-	private List<User> users;
+	private UserLazyDataModel users;
 
 	@Inject
 	private transient UserService userService;
@@ -39,27 +36,27 @@ public class SearchUserView extends AbstractView {
 		return this.searchText;
 	}
 
-	public List<User> getUsers() {
+	public UserLazyDataModel getUsers() {
 		return this.users;
 	}
 
 	@PostConstruct
 	public void init() {
 		logger.trace("User search init");
+		users = new UserLazyDataModel(userService);
 		this.search();
 	}
 
 	public void search() {
 		logger.debug("Search users action performed");
-		this.users = this.userService.search(this.searchText, Page.ALL).getResultData();
-		this.addWarningMessageIfMaxSearchResultsHaveBeenReached(this.users);
+		users.setSearchText(searchText);
 	}
 
 	public void setSearchText(final String searchText) {
 		this.searchText = searchText;
 	}
 
-	public void setUsers(final List<User> users) {
+	public void setUsers(final UserLazyDataModel users) {
 		this.users = users;
 	}
 

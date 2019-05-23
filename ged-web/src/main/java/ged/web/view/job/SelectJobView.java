@@ -9,7 +9,6 @@ import javax.inject.Named;
 
 import org.primefaces.PrimeFaces;
 
-import ged.ejb.core.model.Page;
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
 import ged.web.core.view.AbstractView;
@@ -20,7 +19,7 @@ public class SelectJobView extends AbstractView {
 
 	private static final long serialVersionUID = 2489802687772948858L;
 
-	private List<JobOffer> jobOffers;
+	private JobOfferLazyDataModel jobOffers;
 
 	@Inject
 	private JobOfferService jobOfferService;
@@ -34,7 +33,7 @@ public class SelectJobView extends AbstractView {
 		this.search();
 	}
 
-	public List<JobOffer> getJobOffers() {
+	public JobOfferLazyDataModel getJobOffers() {
 		return this.jobOffers;
 	}
 
@@ -48,11 +47,11 @@ public class SelectJobView extends AbstractView {
 
 	@PostConstruct
 	public void init() {
-		this.search();
+		jobOffers = new JobOfferLazyDataModel(this.jobOfferService);
 	}
 
 	public void search() {
-		this.jobOffers = this.jobOfferService.search(this.searchText, Page.ALL).getResultData();
+		this.jobOffers.setSearchText(searchText);
 	}
 
 	public void select() {

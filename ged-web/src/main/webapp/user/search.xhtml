@@ -34,14 +34,14 @@
 
 					<p:dataTable var="user" id="users" value="#{searchUserView.users}" emptyMessage="#{i18n['user.no_users_found']}" reflow="true"
 						paginator="true" paginatorPosition="bottom" paginatorTemplate="{PageLinks}" rows="#{sessionUser.rowsPerPage}"
-						sortBy="#{user.fullName}" sortOrder="ascending">
+						sortBy="#{user.name}" sortOrder="descending" lazy="true">
 
 						<p:column>
 							<p:graphicImage class="image image-icon" value="/images/#{user.imageFileName}" rendered="#{not empty user.imageFileName}" />
 							<p:graphicImage class="image image-icon" value="/resources/img/default-avatar.png" rendered="#{empty user.imageFileName}" />
 						</p:column>
 
-						<p:column headerText="#{i18n['user.name']}" sortBy="#{user.fullName}">
+						<p:column headerText="#{i18n['user.name']}" sortBy="#{user.name}">
 							<h:link value="#{user.fullName}" outcome="#{Page.USER.getUrl()}">
 								<f:param name="id" value="#{user.id}" />
 							</h:link>

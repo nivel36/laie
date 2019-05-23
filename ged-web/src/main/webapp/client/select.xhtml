@@ -19,7 +19,7 @@
 					<p:dataTable var="client" id="clients" value="#{selectClientView.clients}"
 						emptyMessage="#{i18n['client.no_clients_found']}" reflow="true" paginator="true" paginatorPosition="bottom"
 						rows="#{sessionUser.rowsPerPage}" selectionMode="single" selection="#{selectClientView.selectedClient}"
-						rowKey="#{client.id}" sortBy="#{client.name}" sortOrder="ascending">
+						rowKey="#{client.id}" sortBy="#{client.name}" sortOrder="descending" lazy="true">
 
 						<p:ajax event="rowSelect" listener="#{selectClientView.onClientSelect}" update="@form" resetValues="true" />
 

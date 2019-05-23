@@ -4,6 +4,8 @@ import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
@@ -11,7 +13,6 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 
-import ged.ejb.core.i18n.I18n;
 import ged.ejb.core.model.AbstractEntity;
 
 @Indexed
@@ -26,12 +27,21 @@ public class Language extends AbstractEntity {
 	private Curriculum curriculum;
 
 	@NotNull
-	@I18n
-	private String level;
+	@Enumerated(EnumType.STRING)
+	@Column(nullable=false)
+	private LanguageLevel level;
 
-	@Field
+	public LanguageLevel getLevel() {
+		return level;
+	}
+
+	public void setLevel(LanguageLevel level) {
+		this.level = level;
+	}
+
 	@NotNull
-	@Column(nullable = false, length = 64)
+	@Column(nullable = false)
+	@Field
 	private String name;
 
 	@Override
@@ -53,9 +63,6 @@ public class Language extends AbstractEntity {
 		return this.curriculum;
 	}
 
-	public String getLevel() {
-		return this.level;
-	}
 
 	public String getName() {
 		return this.name;
@@ -68,10 +75,6 @@ public class Language extends AbstractEntity {
 
 	public void setCurriculum(final Curriculum curriculum) {
 		this.curriculum = curriculum;
-	}
-
-	public void setLevel(final String level) {
-		this.level = level;
 	}
 
 	public void setName(final String name) {

@@ -80,7 +80,7 @@ public class LanguageView extends AbstractView {
 	public void newLanguage() {
 		final Language newLanguage = new Language();
 		newLanguage.setName(this.languageName);
-		newLanguage.setLevel(this.languageLevel);
+		newLanguage.setLevel(LanguageLevel.valueOf(languageLevel));
 		newLanguage.setCurriculum(this.curriculum);
 		this.languages.add(newLanguage);
 		this.languageName = null;

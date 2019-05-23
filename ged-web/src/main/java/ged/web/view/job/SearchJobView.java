@@ -2,7 +2,6 @@ package ged.web.view.job;
 
 import java.io.IOException;
 import java.lang.invoke.MethodHandles;
-import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -12,8 +11,6 @@ import javax.inject.Named;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ged.ejb.core.model.Page;
-import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
 import ged.web.core.view.AbstractView;
 
@@ -25,7 +22,7 @@ public class SearchJobView extends AbstractView {
 
 	private static final long serialVersionUID = 8777365288968792501L;
 
-	private List<JobOffer> jobOffers;
+	private JobOfferLazyDataModel jobOffers;
 
 	@Inject
 	private transient JobOfferService jobOfferService;
@@ -36,7 +33,7 @@ public class SearchJobView extends AbstractView {
 		logger.debug("Export jobs action performed");
 	}
 
-	public List<JobOffer> getJobOffers() {
+	public JobOfferLazyDataModel getJobOffers() {
 		return this.jobOffers;
 	}
 
@@ -47,13 +44,12 @@ public class SearchJobView extends AbstractView {
 	@PostConstruct
 	public void init() {
 		logger.trace("JobOffer search init");
-		this.search();
+		jobOffers = new JobOfferLazyDataModel(jobOfferService);
 	}
 
 	public void search() {
 		logger.debug("Search job offer action performed");
-		this.jobOffers = this.jobOfferService.search(this.searchText, Page.ALL).getResultData();
-		this.addWarningMessageIfMaxSearchResultsHaveBeenReached(this.jobOffers);
+		this.jobOffers.setSearchText(searchText);
 	}
 
 	public void setJobOfferService(final JobOfferService jobOfferService) {

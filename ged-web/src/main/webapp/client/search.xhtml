@@ -35,7 +35,7 @@
 
 					<p:dataTable var="client" id="clients" value="#{searchClientView.clients}" emptyMessage="#{i18n['client.no_clients_found']}"
 						reflow="true" paginator="true" paginatorPosition="bottom" rows="#{sessionUser.rowsPerPage}" sortBy="#{client.name}"
-						sortOrder="ascending">
+						sortOrder="descending" lazy="true">
 
 						<p:column headerText="#{i18n['client.name']}" sortBy="#{client.name}">
 							<h:link value="#{client.name}" outcome="#{Page.CLIENT.getUrl()}">

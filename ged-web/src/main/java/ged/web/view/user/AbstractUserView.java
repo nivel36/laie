@@ -110,5 +110,4 @@ public abstract class AbstractUserView extends AbstractView {
 	protected String userUrl() {
 		return PageEnum.USER.getRedirectUrl(this.user);
 	}
-
 }

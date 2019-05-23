@@ -58,6 +58,6 @@ public class ClientDao extends AbstractDao<Client> {
 
 	@Override
 	public String[] searchFields() {
-		return new String[] { "name" };
+		return new String[] { "_name" };
 	}
 }
