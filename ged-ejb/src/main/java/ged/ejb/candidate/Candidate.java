@@ -20,10 +20,14 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
+import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Fields;
+import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.SortableField;
+import org.hibernate.search.annotations.Store;
 
 import ged.ejb.core.Address;
 import ged.ejb.core.file.ServerFile;
@@ -65,16 +69,16 @@ public class Candidate extends AbstractAuditedEntity {
 
 	@NotNull
 	@Column(length = 64, nullable = false)
-	@Field
-	@SortableField
+	@Fields({ @Field(name = "_jobProfile"), @Field(name = "jobProfile", analyze = Analyze.NO, store = Store.NO, index = Index.NO) })
+	@SortableField(forField = "jobProfile")
 	private String jobProfile;
 
 	private String linkedinProfileUrl;
 
 	@NotNull
 	@Column(length = 32, nullable = false)
-	@Field
-	@SortableField
+	@Fields({  @Field(name = "_name"), @Field(name = "name", analyze = Analyze.NO, store = Store.NO, index = Index.NO) })
+	@SortableField(forField = "name")
 	private String name;
 
 	private String origin;
@@ -83,7 +87,7 @@ public class Candidate extends AbstractAuditedEntity {
 	@Column(length = 12, nullable = false)
 	private String phoneNumber;
 
-	@Field
+	@Field(analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField
 	private Integer rating;
 
@@ -94,7 +98,9 @@ public class Candidate extends AbstractAuditedEntity {
 
 	@NotNull
 	@Column(length = 64, nullable = false)
-	@Field
+	@Fields({ @Field(name = "_surname"),
+			@Field(name = "surname", analyze = Analyze.NO, store = Store.NO, index = Index.NO) })
+	@SortableField(forField = "surname")
 	private String surname;
 
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)

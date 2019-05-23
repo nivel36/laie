@@ -1,6 +1,7 @@
 package ged.web.view.candidate;
 
 import java.lang.invoke.MethodHandles;
+import java.util.ArrayList;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -11,7 +12,6 @@ import org.slf4j.LoggerFactory;
 
 import ged.ejb.candidate.Candidate;
 import ged.ejb.core.Address;
-import ged.ejb.core.tag.Tag;
 
 @Named
 @ViewScoped
@@ -20,9 +20,8 @@ public class AddCandidateView extends AbstractCandidateView {
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	private static final long serialVersionUID = 7552627372149481763L;
-
-	@Override
-	public Candidate buildNewCandidate() {
+	
+	private Candidate initCandidate() {
 		final Candidate newCandidate = new Candidate();
 		final Address address = new Address();
 		newCandidate.setAddress(address);
@@ -33,10 +32,8 @@ public class AddCandidateView extends AbstractCandidateView {
 	@PostConstruct
 	public void init() {
 		logger.trace("New candidate init");
-		this.candidate = this.buildNewCandidate();
-		for (final Tag tag : this.candidate.getTags()) {
-			this.getTags().add(tag.getLabel());
-		}
+		this.candidate = this.initCandidate();
+		this.tags = new ArrayList<>();
 	}
 
 	public String save() {

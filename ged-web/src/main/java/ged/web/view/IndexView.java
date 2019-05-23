@@ -13,6 +13,7 @@ import org.primefaces.model.ScheduleModel;
 
 import ged.ejb.candidate.Candidate;
 import ged.ejb.candidate.CandidateService;
+import ged.ejb.core.model.Page;
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
 import ged.ejb.user.User;
@@ -56,7 +57,7 @@ public class IndexView extends AbstractView {
 	public void init() {
 		final User user = this.sessionUser.get();
 		this.jobOffers = this.jobService.findLastJobOffers(user);
-		this.candidates = this.candidateService.findLastAddedCandidates(10);
+		this.candidates = this.candidateService.search(null, new Page(0,10)).getResultData();
 		this.schedule = new LazyScheduleModel();
 	}
 

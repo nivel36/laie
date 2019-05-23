@@ -1,6 +1,8 @@
 package ged.web.view.candidate;
 
 import java.lang.invoke.MethodHandles;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -36,10 +38,12 @@ public class EditCandidateView extends AbstractCandidateView {
 		}
 	}
 
-	private void fillTags() {
+	private List<String> initTags() {
+		List<String> tagNames = new ArrayList<>();
 		for (final Tag tag : this.candidate.getTags()) {
-			this.getTags().add(tag.getLabel());
+			tagNames.add(tag.getLabel());
 		}
+		return tags;
 	}
 
 	@PostConstruct
@@ -49,7 +53,7 @@ public class EditCandidateView extends AbstractCandidateView {
 		this.checkEditPermission();
 		logger.trace("Candidate {} edit init", this.candidate);
 		this.putValueToFlash(CANDIDATE_KEY, this.candidate); // prevent errors if f5/reload is pressed
-		this.fillTags();
+		this.tags = initTags();
 	}
 
 	public String save() {

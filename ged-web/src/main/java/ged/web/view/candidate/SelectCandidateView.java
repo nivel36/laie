@@ -15,7 +15,6 @@ import org.slf4j.LoggerFactory;
 
 import ged.ejb.candidate.Candidate;
 import ged.ejb.candidate.CandidateService;
-import ged.ejb.core.model.Page;
 import ged.web.core.view.AbstractView;
 
 @Named
@@ -26,9 +25,9 @@ public class SelectCandidateView extends AbstractView {
 
 	private static final long serialVersionUID = 8503929833968698420L;
 
-	private final List<Long> alredySelected = new ArrayList<>();
+	private List<Long> alredySelected;
 
-	private List<Candidate> candidates;
+	private CandidateLazyDataModel candidates;
 
 	@Inject
 	protected transient CandidateService candidateService;
@@ -41,15 +40,6 @@ public class SelectCandidateView extends AbstractView {
 		PrimeFaces.current().dialog().closeDynamic(null);
 	}
 
-	public void clean() {
-		this.searchText = null;
-		this.search();
-	}
-
-	public List<Candidate> getCandidates() {
-		return this.candidates;
-	}
-
 	public String getSearchText() {
 		return this.searchText;
 	}
@@ -60,14 +50,25 @@ public class SelectCandidateView extends AbstractView {
 
 	@PostConstruct
 	public void init() {
+		logger.trace("Select candidate init");
+		candidates = initCandidates();
+		this.alredySelected = initAlredySelectedCandidates();
+	}
+
+	private CandidateLazyDataModel initCandidates() {
+		return new CandidateLazyDataModel(candidateService);
+	}
+	
+	private List<Long> initAlredySelectedCandidates() {
+		List<Long> candidateIds = new ArrayList<Long>();
 		final String jobCandidatesIdParameter = this.externalContext.getRequestParameterMap().get("jobCandiatesId");
 		if (jobCandidatesIdParameter != null) {
-			final String[] ids = this.externalContext.getRequestParameterMap().get("jobCandiatesId").split("\\|");
+			final String[] ids = jobCandidatesIdParameter.split("\\|");
 			for (final String id : ids) {
-				this.alredySelected.add(Long.valueOf(id));
+				candidateIds.add(Long.valueOf(id));
 			}
 		}
-		this.search();
+		return candidateIds;
 	}
 
 	public boolean isAlredySelected(final Long id) {
@@ -76,7 +77,7 @@ public class SelectCandidateView extends AbstractView {
 
 	public void search() {
 		logger.debug("Searching for candidates");
-		this.candidates = this.candidateService.search(this.searchText, Page.ALL).getResultData();
+		this.candidates.setSearchText(searchText);
 	}
 
 	public void select() {

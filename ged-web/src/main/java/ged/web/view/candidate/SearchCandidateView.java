@@ -44,7 +44,11 @@ public class SearchCandidateView extends AbstractView {
 	@PostConstruct
 	public void init() {
 		logger.trace("Search candidate init");
-		candidates = new CandidateLazyDataModel(candidateService);
+		candidates = initCandidates();
+	}
+
+	private CandidateLazyDataModel initCandidates() {
+		return new CandidateLazyDataModel(candidateService);
 	}
 
 	public void search() {

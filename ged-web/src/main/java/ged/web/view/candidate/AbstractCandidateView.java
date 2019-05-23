@@ -3,7 +3,6 @@ package ged.web.view.candidate;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UncheckedIOException;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -16,9 +15,7 @@ import org.primefaces.model.UploadedFile;
 
 import ged.ejb.candidate.Candidate;
 import ged.ejb.candidate.CandidateService;
-import ged.ejb.core.Address;
 import ged.ejb.core.FileUploadService;
-import ged.ejb.core.model.Page;
 import ged.ejb.core.tag.Tag;
 import ged.ejb.core.tag.TagService;
 import ged.web.core.util.PageEnum;
@@ -36,18 +33,10 @@ public abstract class AbstractCandidateView extends AbstractView {
 	@Inject
 	protected transient FileUploadService fileUploadService;
 
-	private List<String> tags = new ArrayList<>();
+	protected List<String> tags;
 
 	@Inject
 	protected transient TagService tagService;
-
-	public Candidate buildNewCandidate() {
-		final Candidate newCandidate = new Candidate();
-		final Address address = new Address();
-		newCandidate.setAddress(address);
-		newCandidate.setOwner(this.sessionUser.get());
-		return newCandidate;
-	}
 
 	protected String candidateUrl() {
 		return PageEnum.CANDIDATE.getRedirectUrl(this.candidate);
@@ -68,15 +57,12 @@ public abstract class AbstractCandidateView extends AbstractView {
 		}
 		final Set<Tag> candidateTags = new HashSet<>();
 		for (final String label : labels) {
-			final List<Tag> tagsFoundInDataBase = this.tagService.search(label, Page.ALL).getResultData();
-			final Tag tag;
-			if (tagsFoundInDataBase.size() == 1) {
-				tag = tagsFoundInDataBase.get(0);
+			final Tag tagFoundInDataBase = this.tagService.findByName(label);
+			if (tagFoundInDataBase != null) {
+				candidateTags.add(tagFoundInDataBase);
 			} else {
-				tag = new Tag();
-				tag.setLabel(label);
+				candidateTags.add(new Tag(label));
 			}
-			candidateTags.add(tag);
 		}
 		return candidateTags;
 	}
@@ -107,5 +93,4 @@ public abstract class AbstractCandidateView extends AbstractView {
 			throw new UncheckedIOException(e);
 		}
 	}
-
 }

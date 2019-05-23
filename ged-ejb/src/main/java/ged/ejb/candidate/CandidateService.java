@@ -85,19 +85,6 @@ public class CandidateService extends AbstractAuditedService<Candidate> {
 		return this.jobCandidatureDao.findByCandidate(candidate);
 	}
 
-	public List<Candidate> findLastAddedCandidates(final int numberOfCandidates) {
-		if (numberOfCandidates < 1) {
-			throw new IllegalArgumentException("numberOfCandidates: " + numberOfCandidates);
-		}
-		logger.debug("Find last added candidates");
-		return this.candidateDao.findLastAddedCandidates(numberOfCandidates);
-	}
-
-	public long findNumberOfCandidates() {
-		logger.debug("Find total number of candidates");
-		return this.candidateDao.findNumberOfCandidates();
-	}
-
 	@Override
 	public AbstractDao<Candidate> getDao() {
 		return this.candidateDao;

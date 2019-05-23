@@ -20,9 +20,10 @@ import org.hibernate.search.annotations.TokenizerDef;
 import ged.ejb.user.User;
 
 @AnalyzerDef(name = "stdAnalyzer", tokenizer = @TokenizerDef(factory = WhitespaceTokenizerFactory.class), filters = {
-		@TokenFilterDef(factory = LowerCaseFilterFactory.class), @TokenFilterDef(factory = ASCIIFoldingFilterFactory.class),
-		@TokenFilterDef(factory = EdgeNGramFilterFactory.class, params = { @Parameter(name = "minGramSize", value = "3"),
-				@Parameter(name = "maxGramSize", value = "20") }) })
+		@TokenFilterDef(factory = LowerCaseFilterFactory.class),
+		@TokenFilterDef(factory = ASCIIFoldingFilterFactory.class),
+		@TokenFilterDef(factory = EdgeNGramFilterFactory.class, params = {
+				@Parameter(name = "minGramSize", value = "3"), @Parameter(name = "maxGramSize", value = "10") }) })
 @Analyzer(definition = "stdAnalyzer")
 @MappedSuperclass
 public abstract class AbstractAuditedEntity extends AbstractEntity implements Erasable, Ownerable {
