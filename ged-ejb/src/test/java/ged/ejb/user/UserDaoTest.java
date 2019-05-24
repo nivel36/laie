@@ -21,8 +21,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import ged.ejb.core.model.Page;
 import ged.ejb.core.model.PersistenceFacade;
-import ged.ejb.core.model.SearchResult;
-import ged.ejb.core.model.SortField;
 
 @ExtendWith(MockitoExtension.class)
 public class UserDaoTest {
@@ -31,7 +29,7 @@ public class UserDaoTest {
 	class FindAll {
 
 		@Test
-		public void shouldReturnAList() {	
+		public void shouldReturnAList() {
 			when(UserDaoTest.this.persistenceFacade.findAll(User.class, Page.ALL)).thenReturn(new ArrayList<User>());
 
 			final List<User> users = UserDaoTest.this.userDao.findAll(Page.ALL);
@@ -51,7 +49,7 @@ public class UserDaoTest {
 
 		@Test
 		public void userWithoutSubordinatesShouldReturnAnEmptyList() {
-			final User user = mockUser(1L, "abel@test.com", null);
+			final User user = UserDaoTest.this.mockUser(1L, "abel@test.com", null);
 
 			when(UserDaoTest.this.persistenceFacade.findByQuery(User.class, "User.findSubordinateUsers", map("id", 1L),
 					Page.ALL)).thenThrow(new NoResultException());
@@ -62,9 +60,9 @@ public class UserDaoTest {
 
 		@Test
 		public void userWithSuborinatesShouldReturnListOfSubordinates() {
-			final User manager = mockUser(1L, "abel@test.com", null);
+			final User manager = UserDaoTest.this.mockUser(1L, "abel@test.com", null);
 
-			final User subordinate = mockUser(2L, "bernard@test.com", manager);
+			final User subordinate = UserDaoTest.this.mockUser(2L, "bernard@test.com", manager);
 
 			final List<User> subordinateUsers = new ArrayList<>();
 			subordinateUsers.add(subordinate);
@@ -89,7 +87,7 @@ public class UserDaoTest {
 
 		@Test
 		public void userFoundShouldReturnUser() {
-			final User user = mockUser(1L, "abel@test.com", null);
+			final User user = UserDaoTest.this.mockUser(1L, "abel@test.com", null);
 
 			when(UserDaoTest.this.persistenceFacade.findByQuery(User.class, "User.findByEmail",
 					map("email", "abel@test.com"))).thenReturn(user);
@@ -141,8 +139,8 @@ public class UserDaoTest {
 	class Save {
 
 		public void insertUserWithManagerShouldReturnUser() {
-			final User manager = mockUser(1L, "abel@test.com", null);
-			final User subordinate = mockUser(null, "bernat@test.com", manager);
+			final User manager = UserDaoTest.this.mockUser(1L, "abel@test.com", null);
+			final User subordinate = UserDaoTest.this.mockUser(null, "bernat@test.com", manager);
 
 			when(UserDaoTest.this.persistenceFacade.findByQuery(Boolean.class, "User.emailExists",
 					map("email", subordinate.getEmail()))).thenReturn(Boolean.FALSE);
@@ -152,7 +150,7 @@ public class UserDaoTest {
 		}
 
 		public void insertUserWithoutManagerShouldReturnUser() {
-			final User user = mockUser(null, "abel@test.com", null);
+			final User user = UserDaoTest.this.mockUser(null, "abel@test.com", null);
 
 			when(UserDaoTest.this.persistenceFacade.findByQuery(Boolean.class, "User.emailExists",
 					map("email", user.getEmail()))).thenReturn(Boolean.FALSE);
@@ -170,8 +168,8 @@ public class UserDaoTest {
 
 		@Test
 		public void updateUserWithDuplicatedEmailShouldThrowDuplicateEmailException() {
-			final User user = mockUser(1L, "abel@test.com", null);
-			final User userWithSameEmail = mockUser(2L, "abel@test.com", null);
+			final User user = UserDaoTest.this.mockUser(1L, "abel@test.com", null);
+			final User userWithSameEmail = UserDaoTest.this.mockUser(2L, "abel@test.com", null);
 			when(UserDaoTest.this.persistenceFacade.findByQuery(User.class, "User.findByEmail",
 					map("email", "abel@test.com"))).thenReturn(userWithSameEmail);
 
@@ -182,9 +180,9 @@ public class UserDaoTest {
 
 		@Test
 		public void updateUserWithNewManagerShouldReturnUser() {
-			final User userInDatabase = mockUser(1L, "abel@test.com", null);
-			final User manager = mockUser(2L, "bernat@test.com", null);
-			final User userToUpdate = mockUser(1L, "abel@test.com", manager);
+			final User userInDatabase = UserDaoTest.this.mockUser(1L, "abel@test.com", null);
+			final User manager = UserDaoTest.this.mockUser(2L, "bernat@test.com", null);
+			final User userToUpdate = UserDaoTest.this.mockUser(1L, "abel@test.com", manager);
 			when(UserDaoTest.this.persistenceFacade.findByQuery(User.class, "User.findByEmail",
 					map("email", "abel@test.com"))).thenReturn(userInDatabase);
 
@@ -192,39 +190,6 @@ public class UserDaoTest {
 
 			final User updatedUser = UserDaoTest.this.userDao.save(userToUpdate);
 			assertNull(updatedUser);
-		}
-	}
-
-	@Nested
-	class Search {
-
-		@Test
-		public void emptyTextShouldReturnList() {
-			final SearchResult<User> searchResult = new SearchResult<>(new ArrayList<>(), 0);
-			when(UserDaoTest.this.persistenceFacade.search(User.class, Page.ALL, new ArrayList<SortField>(), "", "name",
-					"surname", "email")).thenReturn(searchResult);
-			final List<User> users = UserDaoTest.this.userDao.search("", Page.ALL).getResultData();
-			assertEquals(0, users.size());
-		}
-
-		@Test
-		public void nullTextShouldReturnList() {
-			final SearchResult<User> searchResult = new SearchResult<>(new ArrayList<>(), 0);
-			when(UserDaoTest.this.persistenceFacade.search(User.class, Page.ALL, new ArrayList<SortField>(), null,
-					"name", "surname", "email")).thenReturn(searchResult);
-
-			final List<User> users = UserDaoTest.this.userDao.search(null, Page.ALL).getResultData();
-			assertEquals(0, users.size());
-		}
-
-		@Test
-		public void validTextshouldReturnList() {
-			final SearchResult<User> searchResult = new SearchResult<>(new ArrayList<>(), 0);
-			when(UserDaoTest.this.persistenceFacade.search(User.class, Page.ALL, new ArrayList<SortField>(), "aaron",
-					"name", "surname", "email")).thenReturn(searchResult);
-
-			final List<User> users = UserDaoTest.this.userDao.search("aaron", Page.ALL).getResultData();
-			assertEquals(0, users.size());
 		}
 	}
 
