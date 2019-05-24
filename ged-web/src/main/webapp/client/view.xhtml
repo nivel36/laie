@@ -10,6 +10,10 @@
 
 	<ui:param name="selectedMenu" value="clients" />
 
+	<ui:define name="actions">
+		<p:button value="#{i18n['client.new_client']}" outcome="#{Page.CLIENT_ADD.getUrl()}" />
+	</ui:define>
+
 	<ui:define name="breadcrumb">
 		<p:breadCrumb styleClass="breadcrumb">
 			<p:menuitem value="#{i18n['menu.index']}" outcome="#{Page.INDEX.getUrl()}" />

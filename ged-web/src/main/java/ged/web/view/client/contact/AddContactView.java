@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import ged.ejb.client.Client;
 import ged.ejb.client.Contact;
 import ged.ejb.client.ContactService;
+import ged.web.core.util.PageEnum;
 import ged.web.core.view.AbstractView;
 
 @Named
@@ -55,8 +56,10 @@ public class AddContactView extends AbstractView {
 		}
 	}
 
-	public void save() {
+	public String save() {
 		this.contactService.save(this.contact);
+		return PageEnum.CLIENT.getRedirectUrl(this.client);
+
 	}
 
 	public void setContact(final Contact contact) {

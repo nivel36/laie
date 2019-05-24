@@ -18,9 +18,6 @@
 				<p:dataGrid layout="grid" var="contact" value="#{cc.attrs.contacts}"
 					emptyMessage="#{i18n['client.no_contacts_found']}" paginator="true" paginatorPosition="bottom">
 					<div class="card contact">
-						<div class="image">
-							<p:graphicImage class="image image-icon" value="/resources/img/default-avatar.png" />
-						</div>
 						<div class="container">
 							<h4>#{contact.fullName}</h4>
 							<h5>#{contact.position}</h5>

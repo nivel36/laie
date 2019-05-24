@@ -9,6 +9,10 @@
 	</ui:define>
 
 	<ui:param name="selectedMenu" value="offers" />
+	
+	<ui:define name="actions">
+		<p:button value="#{i18n['job.new_job_offer']}" outcome="#{Page.JOB_ADD.getUrl()}" />
+	</ui:define>
 
 	<ui:define name="breadcrumb">
 		<p:breadCrumb styleClass="breadcrumb">

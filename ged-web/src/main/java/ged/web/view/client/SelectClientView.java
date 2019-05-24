@@ -24,42 +24,50 @@ public class SelectClientView extends AbstractView {
 	private static final long serialVersionUID = -9105788652207124873L;
 
 	private ClientLazyDataModel clients;
-	
+
 	@Inject
 	private ClientService clientService;
-	
+
 	private String searchText;
-	
+
 	private Client selectedClient;
 
 	public void cancel() {
 		PrimeFaces.current().dialog().closeDynamic(null);
 	}
 
+	public ClientLazyDataModel getClients() {
+		return this.clients;
+	}
+
 	public String getSearchText() {
-		return searchText;
+		return this.searchText;
 	}
 
 	public Client getSelectedClient() {
 		return this.selectedClient;
 	}
-	
+
 	@PostConstruct
 	public void init() {
 		logger.debug("Client select init");
-		clients = new ClientLazyDataModel(clientService);
-	}
-	
-	public void onClientSelect() {
-		logger.debug("Select client action performed");
-		PrimeFaces.current().dialog().closeDynamic(selectedClient);
-	}
-	
-	public void search() {
-		clients.setSearchText(searchText);
+		this.clients = new ClientLazyDataModel(this.clientService);
 	}
 
-	public void setSearchText(String searchText) {
+	public void onClientSelect() {
+		logger.debug("Select client action performed");
+		PrimeFaces.current().dialog().closeDynamic(this.selectedClient);
+	}
+
+	public void search() {
+		this.clients.setSearchText(this.searchText);
+	}
+
+	public void setClientService(final ClientService clientService) {
+		this.clientService = clientService;
+	}
+
+	public void setSearchText(final String searchText) {
 		this.searchText = searchText;
 	}
 

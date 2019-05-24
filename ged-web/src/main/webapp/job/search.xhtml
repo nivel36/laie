@@ -9,6 +9,10 @@
 	</ui:define>
 
 	<ui:param name="selectedMenu" value="offers" />
+	
+	<ui:define name="actions">
+		<p:button value="#{i18n['job.new_job_offer']}" outcome="#{Page.JOB_ADD.getUrl()}" />
+	</ui:define>
 
 	<ui:define name="breadcrumb">
 		<p:breadCrumb styleClass="breadcrumb">
@@ -25,7 +29,6 @@
 						<cc:inputSearch searchText="#{searchJobView.searchText}" searchAction="#{searchJobView.search}" update="@form" />
 						<div class="panel-buttons">
 							<p:commandButton value="#{i18n['action.export']}" action="#{searchJobView.export}" process="@this" icon="fa-file-excel-o" />
-							<p:button value="#{i18n['action.new']}" outcome="#{Page.JOB_ADD.getUrl()}" />
 						</div>
 					</div>
 
