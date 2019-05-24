@@ -75,6 +75,12 @@ public class JobOfferService extends AbstractService<JobOffer> {
 		return this.jobOfferDao.findAllByOwner(owner);
 	}
 
+	public List<JobCandidature> findJobCandidatures(final Candidate candidate) {
+		Objects.requireNonNull(candidate);
+		logger.debug("Find all job candidatures of the candiudate  {}", candidate);
+		return this.jobCandidatureDao.findByCandidate(candidate);
+	}
+
 	public List<JobCandidature> findJobCandituresByJobOffer(final JobOffer jobOffer) {
 		Objects.requireNonNull(jobOffer);
 		return this.jobCandidatureDao.findByJobOffer(jobOffer);
@@ -85,17 +91,11 @@ public class JobOfferService extends AbstractService<JobOffer> {
 		logger.debug("Find all job Offers of the candidate  {}", candidate);
 		return this.jobOfferDao.findJobOffersByCandidate(candidate);
 	}
-
+	
 	public List<JobOffer> findJobOffersByClient(final Client client) {
 		Objects.requireNonNull(client);
 		logger.debug("Find all job Offers of the client  {}", client);
 		return this.jobOfferDao.findJobOffersByClient(client);
-	}
-	
-	public List<JobCandidature> findJobCandidatures(final Candidate candidate) {
-		Objects.requireNonNull(candidate);
-		logger.debug("Find all job candidatures of the candiudate  {}", candidate);
-		return this.jobCandidatureDao.findByCandidate(candidate);
 	}
 
 	public List<JobOffer> findLastJobOffers(final User owner) {

@@ -37,36 +37,6 @@ public class Client extends AbstractEntity implements Ownerable, Erasable {
 
 	private static final long serialVersionUID = -5319357138994738654L;
 	
-	@Column(nullable = false)
-	@Field
-	private boolean deleted;
-
-	@NotNull
-	@ManyToOne
-	@JoinColumn(name = "ownerId", nullable = false)
-	@IndexedEmbedded
-	private User owner;
-
-	@Override
-	public User getOwner() {
-		return this.owner;
-	}
-	
-	@Override
-	public boolean isDeleted() {
-		return this.deleted;
-	}
-
-	@Override
-	public void setDeleted(final boolean deleted) {
-		this.deleted = deleted;
-	}
-
-	@Override
-	public void setOwner(final User owner) {
-		this.owner = owner;
-	}
-
 	@Embedded
 	@IndexedEmbedded
 	private Address address;
@@ -76,6 +46,10 @@ public class Client extends AbstractEntity implements Ownerable, Erasable {
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "client", orphanRemoval = true)
 	private Set<Contact> contacts;
+	
+	@Column(nullable = false)
+	@Field
+	private boolean deleted;
 
 	@ContainedIn
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "client", orphanRemoval = true)
@@ -86,6 +60,12 @@ public class Client extends AbstractEntity implements Ownerable, Erasable {
 	@Fields({ @Field(name = "_name"), @Field(name = "name", analyze = Analyze.NO, store = Store.NO, index = Index.NO) })
 	@SortableField(forField = "name")
 	private String name;
+
+	@NotNull
+	@ManyToOne
+	@JoinColumn(name = "ownerId", nullable = false)
+	@IndexedEmbedded
+	private User owner;
 
 	@Pattern(regexp = "(?:[+]?(?:[0-9]{1,5}|\\x28[0-9]{1,5}\\x29)[ ]?)?[0-9]{2}(?:[0-9][ ]?){6}[0-9]")
 	private String phoneNumber;
@@ -128,6 +108,11 @@ public class Client extends AbstractEntity implements Ownerable, Erasable {
 		return this.name;
 	}
 
+	@Override
+	public User getOwner() {
+		return this.owner;
+	}
+
 	public String getPhoneNumber() {
 		return this.phoneNumber;
 	}
@@ -135,6 +120,11 @@ public class Client extends AbstractEntity implements Ownerable, Erasable {
 	@Override
 	public int hashCode() {
 		return Objects.hash(this.name);
+	}
+
+	@Override
+	public boolean isDeleted() {
+		return this.deleted;
 	}
 
 	public void setAddress(final Address address) {
@@ -149,12 +139,22 @@ public class Client extends AbstractEntity implements Ownerable, Erasable {
 		this.contacts = contacts;
 	}
 
+	@Override
+	public void setDeleted(final boolean deleted) {
+		this.deleted = deleted;
+	}
+
 	public void setJobOffers(final Set<JobOffer> jobOffers) {
 		this.jobOffers = jobOffers;
 	}
 
 	public void setName(final String name) {
 		this.name = name;
+	}
+
+	@Override
+	public void setOwner(final User owner) {
+		this.owner = owner;
 	}
 
 	public void setPhoneNumber(final String phoneNumber) {

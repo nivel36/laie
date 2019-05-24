@@ -45,36 +45,6 @@ import ged.ejb.user.User;
 public class Candidate extends AbstractEntity implements Erasable, Ownerable {
 
 	private static final long serialVersionUID = 1305321530927456159L;
-	
-	@Column(nullable = false)
-	@Field
-	private boolean deleted;
-
-	@NotNull
-	@ManyToOne
-	@JoinColumn(name = "ownerId", nullable = false)
-	@IndexedEmbedded
-	private User owner;
-
-	@Override
-	public User getOwner() {
-		return this.owner;
-	}
-	
-	@Override
-	public boolean isDeleted() {
-		return this.deleted;
-	}
-
-	@Override
-	public void setDeleted(final boolean deleted) {
-		this.deleted = deleted;
-	}
-
-	@Override
-	public void setOwner(final User owner) {
-		this.owner = owner;
-	}
 
 	@Embedded
 	private Address address;
@@ -84,8 +54,13 @@ public class Candidate extends AbstractEntity implements Erasable, Ownerable {
 	@OneToOne(fetch = FetchType.EAGER, mappedBy = "candidate")
 	private Curriculum curriculum;
 
+	@Column(nullable = false)
+	@Field
+	private boolean deleted;
+
+	@NotNull
 	@Pattern(regexp = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$")
-	@Column(length = 64, unique = true, nullable = false)
+	@Column(unique = true, nullable = false)
 	private String email;
 
 	@Min(0)
@@ -102,23 +77,30 @@ public class Candidate extends AbstractEntity implements Erasable, Ownerable {
 	private List<JobCandidature> jobCandidatures;
 
 	@NotNull
-	@Column(length = 64, nullable = false)
-	@Fields({ @Field(name = "_jobProfile"), @Field(name = "jobProfile", analyze = Analyze.NO, store = Store.NO, index = Index.NO) })
+	@Column(nullable = false)
+	@Fields({ @Field(name = "_jobProfile"),
+			@Field(name = "jobProfile", analyze = Analyze.NO, store = Store.NO, index = Index.NO) })
 	@SortableField(forField = "jobProfile")
 	private String jobProfile;
 
 	private String linkedinProfileUrl;
 
 	@NotNull
-	@Column(length = 32, nullable = false)
-	@Fields({  @Field(name = "_name"), @Field(name = "name", analyze = Analyze.NO, store = Store.NO, index = Index.NO) })
+	@Column(nullable = false)
+	@Fields({ @Field(name = "_name"), @Field(name = "name", analyze = Analyze.NO, store = Store.NO, index = Index.NO) })
 	@SortableField(forField = "name")
 	private String name;
 
 	private String origin;
 
+	@NotNull
+	@ManyToOne
+	@JoinColumn(name = "ownerId", nullable = false)
+	@IndexedEmbedded
+	private User owner;
+
 	@Pattern(regexp = "(?:[+]?(?:[0-9]{1,5}|\\x28[0-9]{1,5}\\x29)[ ]?)?[0-9]{2}(?:[0-9][ ]?){6}[0-9]")
-	@Column(length = 12, nullable = false)
+	@Column(nullable = false)
 	private String phoneNumber;
 
 	@Field(analyze = Analyze.NO, store = Store.NO, index = Index.NO)
@@ -127,11 +109,10 @@ public class Candidate extends AbstractEntity implements Erasable, Ownerable {
 
 	private Integer salary;
 
-	@Column(length = 128)
 	private String skype;
 
 	@NotNull
-	@Column(length = 64, nullable = false)
+	@Column(nullable = false)
 	@Fields({ @Field(name = "_surname"),
 			@Field(name = "surname", analyze = Analyze.NO, store = Store.NO, index = Index.NO) })
 	@SortableField(forField = "surname")
@@ -217,6 +198,11 @@ public class Candidate extends AbstractEntity implements Erasable, Ownerable {
 		return this.origin;
 	}
 
+	@Override
+	public User getOwner() {
+		return this.owner;
+	}
+
 	public String getPhoneNumber() {
 		return this.phoneNumber;
 	}
@@ -246,6 +232,11 @@ public class Candidate extends AbstractEntity implements Erasable, Ownerable {
 		return Objects.hash(this.email, this.name, this.phoneNumber, this.surname);
 	}
 
+	@Override
+	public boolean isDeleted() {
+		return this.deleted;
+	}
+
 	public void setAddress(final Address address) {
 		this.address = address;
 	}
@@ -256,6 +247,11 @@ public class Candidate extends AbstractEntity implements Erasable, Ownerable {
 
 	public void setCurriculum(final Curriculum curriculum) {
 		this.curriculum = curriculum;
+	}
+
+	@Override
+	public void setDeleted(final boolean deleted) {
+		this.deleted = deleted;
 	}
 
 	public void setEmail(final String email) {
@@ -296,6 +292,11 @@ public class Candidate extends AbstractEntity implements Erasable, Ownerable {
 
 	public void setOrigin(final String origin) {
 		this.origin = origin;
+	}
+
+	@Override
+	public void setOwner(final User owner) {
+		this.owner = owner;
 	}
 
 	public void setPhoneNumber(final String phoneNumber) {

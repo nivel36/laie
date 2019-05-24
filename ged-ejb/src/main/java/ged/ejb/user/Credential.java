@@ -51,6 +51,18 @@ public class Credential extends AbstractEntity {
 		return CriptoUtil.digestPassword(password, this.salt);
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Credential other = (Credential) obj;
+		return Objects.equals(hashPassword, other.hashPassword) && Objects.equals(salt, other.salt);
+	}
+
 	public void expire() {
 		this.expired = LocalDate.now();
 	}
@@ -64,18 +76,6 @@ public class Credential extends AbstractEntity {
 	@Override
 	public int hashCode() {
 		return Objects.hash(hashPassword, salt);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (!super.equals(obj))
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Credential other = (Credential) obj;
-		return Objects.equals(hashPassword, other.hashPassword) && Objects.equals(salt, other.salt);
 	}
 
 	public boolean isExpired() {

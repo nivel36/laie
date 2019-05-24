@@ -34,36 +34,6 @@ public class JobOffer extends AbstractEntity implements Erasable, Ownerable {
 
 	private static final long serialVersionUID = 5579321864799956403L;
 	
-	@Column(nullable = false)
-	@Field
-	private boolean deleted;
-
-	@NotNull
-	@ManyToOne
-	@JoinColumn(name = "ownerId", nullable = false)
-	@IndexedEmbedded
-	private User owner;
-
-	@Override
-	public User getOwner() {
-		return this.owner;
-	}
-	
-	@Override
-	public boolean isDeleted() {
-		return this.deleted;
-	}
-
-	@Override
-	public void setDeleted(final boolean deleted) {
-		this.deleted = deleted;
-	}
-
-	@Override
-	public void setOwner(final User owner) {
-		this.owner = owner;
-	}
-
 	@Column(nullable = false, length = 64)
 	@NotNull
 	@Field
@@ -77,7 +47,7 @@ public class JobOffer extends AbstractEntity implements Erasable, Ownerable {
 
 	@I18n
 	private String contractDuration;
-
+	
 	@I18n
 	private String contractType;
 
@@ -87,6 +57,10 @@ public class JobOffer extends AbstractEntity implements Erasable, Ownerable {
 	private LocalDate dateClosed;
 
 	private LocalDate dateOpened;
+
+	@Column(nullable = false)
+	@Field
+	private boolean deleted;
 
 	@Column(length = 1024)
 	@Field
@@ -103,6 +77,12 @@ public class JobOffer extends AbstractEntity implements Erasable, Ownerable {
 	@Column(length = 128, nullable = false)
 	@Field
 	private String name;
+
+	@NotNull
+	@ManyToOne
+	@JoinColumn(name = "ownerId", nullable = false)
+	@IndexedEmbedded
+	private User owner;
 
 	@NotNull
 	private Integer places = 1;
@@ -172,6 +152,11 @@ public class JobOffer extends AbstractEntity implements Erasable, Ownerable {
 		return this.name;
 	}
 
+	@Override
+	public User getOwner() {
+		return this.owner;
+	}
+
 	public Integer getPlaces() {
 		return this.places;
 	}
@@ -187,6 +172,11 @@ public class JobOffer extends AbstractEntity implements Erasable, Ownerable {
 	@Override
 	public int hashCode() {
 		return Objects.hash(this.dateOpened, this.name, this.places);
+	}
+
+	@Override
+	public boolean isDeleted() {
+		return this.deleted;
 	}
 
 	public void setCity(final String city) {
@@ -217,6 +207,11 @@ public class JobOffer extends AbstractEntity implements Erasable, Ownerable {
 		this.dateOpened = dateOpened;
 	}
 
+	@Override
+	public void setDeleted(final boolean deleted) {
+		this.deleted = deleted;
+	}
+
 	public void setDescription(final String description) {
 		this.description = description;
 	}
@@ -231,6 +226,11 @@ public class JobOffer extends AbstractEntity implements Erasable, Ownerable {
 
 	public void setName(final String name) {
 		this.name = name;
+	}
+
+	@Override
+	public void setOwner(final User owner) {
+		this.owner = owner;
 	}
 
 	public void setPlaces(final Integer places) {

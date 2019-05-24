@@ -11,9 +11,6 @@ public class CriptoUtil {
 
 	private static final String SHA_256 = "SHA-256";
 
-	private CriptoUtil() {
-	}
-
 	public static byte[] digestPassword(final String password, byte[] salt) {
 		Objects.requireNonNull(password);
 		Objects.requireNonNull(salt);
@@ -29,5 +26,8 @@ public class CriptoUtil {
 	public static byte[] toBase64(final byte[] characters) {
 		Objects.requireNonNull(characters);
 		return DatatypeConverter.printBase64Binary(characters).getBytes();
+	}
+
+	private CriptoUtil() {
 	}
 }

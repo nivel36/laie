@@ -31,14 +31,6 @@ public class Language extends AbstractEntity {
 	@Column(nullable=false)
 	private LanguageLevel level;
 
-	public LanguageLevel getLevel() {
-		return level;
-	}
-
-	public void setLevel(LanguageLevel level) {
-		this.level = level;
-	}
-
 	@NotNull
 	@Column(nullable = false)
 	@Field
@@ -63,10 +55,14 @@ public class Language extends AbstractEntity {
 		return this.curriculum;
 	}
 
+	public LanguageLevel getLevel() {
+		return level;
+	}
 
 	public String getName() {
 		return this.name;
 	}
+
 
 	@Override
 	public int hashCode() {
@@ -75,6 +71,10 @@ public class Language extends AbstractEntity {
 
 	public void setCurriculum(final Curriculum curriculum) {
 		this.curriculum = curriculum;
+	}
+
+	public void setLevel(LanguageLevel level) {
+		this.level = level;
 	}
 
 	public void setName(final String name) {
