@@ -11,6 +11,7 @@ import javax.inject.Named;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import ged.ejb.core.Address;
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.user.User;
 
@@ -26,12 +27,13 @@ public class AddJobView extends AbstractJobView {
 		final JobOffer newJobOffer = new JobOffer();
 		newJobOffer.setOwner(this.sessionUser.get());
 		newJobOffer.setClient(this.getValueFromFlash("client"));
+		newJobOffer.setAddress(new Address());
 		return newJobOffer;
 	}
 
 	private void fillRecruiters(final User user) {
 		final List<User> subordinateUsers = this.userService.findSubordinateUsers(user);
-		List<String> recruitersName = new ArrayList<>();
+		final List<String> recruitersName = new ArrayList<>();
 		recruitersName.add(this.sessionUser.get().getFullName());
 		for (final User subordinate : subordinateUsers) {
 			recruitersName.add(subordinate.getFullName());

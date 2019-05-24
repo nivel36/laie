@@ -6,6 +6,7 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -16,11 +17,17 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Fields;
+import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.IndexedEmbedded;
+import org.hibernate.search.annotations.SortableField;
+import org.hibernate.search.annotations.Store;
 
 import ged.ejb.client.Client;
+import ged.ejb.core.Address;
 import ged.ejb.core.i18n.I18n;
 import ged.ejb.core.model.AbstractEntity;
 import ged.ejb.core.model.Erasable;
@@ -33,11 +40,10 @@ import ged.ejb.user.User;
 public class JobOffer extends AbstractEntity implements Erasable, Ownerable {
 
 	private static final long serialVersionUID = 5579321864799956403L;
-	
-	@Column(nullable = false, length = 64)
-	@NotNull
-	@Field
-	private String city;
+
+	@Embedded
+	@IndexedEmbedded
+	private Address address;
 
 	@ManyToOne
 	@JoinColumn(name = "clientId", nullable = false)
@@ -47,22 +53,22 @@ public class JobOffer extends AbstractEntity implements Erasable, Ownerable {
 
 	@I18n
 	private String contractDuration;
-	
+
 	@I18n
 	private String contractType;
 
-	@Column(length = 64)
-	private String country;
-
+	@Field(analyze = Analyze.NO)
+	@SortableField
 	private LocalDate dateClosed;
 
+	@Field(analyze = Analyze.NO)
+	@SortableField
 	private LocalDate dateOpened;
 
 	@Column(nullable = false)
 	@Field
 	private boolean deleted;
 
-	@Column(length = 1024)
 	@Field
 	private String description;
 
@@ -74,8 +80,9 @@ public class JobOffer extends AbstractEntity implements Erasable, Ownerable {
 	private JobOfferState jobOfferState;
 
 	@NotNull
-	@Column(length = 128, nullable = false)
-	@Field
+	@Column(nullable = false)
+	@Fields({ @Field(name = "_name"), @Field(name = "name", analyze = Analyze.NO, store = Store.NO, index = Index.NO) })
+	@SortableField(forField = "name")
 	private String name;
 
 	@NotNull
@@ -91,8 +98,6 @@ public class JobOffer extends AbstractEntity implements Erasable, Ownerable {
 	@JoinTable(name = "job_user", joinColumns = @JoinColumn(name = "job_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
 	private Set<User> recruiters;
 
-	private String state;
-
 	@Override
 	public boolean equals(final Object obj) {
 		if (this == obj) {
@@ -105,11 +110,12 @@ public class JobOffer extends AbstractEntity implements Erasable, Ownerable {
 			return false;
 		}
 		final JobOffer other = (JobOffer) obj;
-		return Objects.equals(this.dateOpened, other.dateOpened) && Objects.equals(this.name, other.name) && Objects.equals(this.places, other.places);
+		return Objects.equals(this.dateOpened, other.dateOpened) && Objects.equals(this.name, other.name)
+				&& Objects.equals(this.places, other.places);
 	}
 
-	public String getCity() {
-		return this.city;
+	public Address getAddress() {
+		return this.address;
 	}
 
 	public Client getClient() {
@@ -122,10 +128,6 @@ public class JobOffer extends AbstractEntity implements Erasable, Ownerable {
 
 	public String getContractType() {
 		return this.contractType;
-	}
-
-	public String getCountry() {
-		return this.country;
 	}
 
 	public LocalDate getDateClosed() {
@@ -165,10 +167,6 @@ public class JobOffer extends AbstractEntity implements Erasable, Ownerable {
 		return this.recruiters;
 	}
 
-	public String getState() {
-		return this.state;
-	}
-
 	@Override
 	public int hashCode() {
 		return Objects.hash(this.dateOpened, this.name, this.places);
@@ -179,8 +177,8 @@ public class JobOffer extends AbstractEntity implements Erasable, Ownerable {
 		return this.deleted;
 	}
 
-	public void setCity(final String city) {
-		this.city = city;
+	public void setAddress(final Address address) {
+		this.address = address;
 	}
 
 	public void setClient(final Client client) {
@@ -193,10 +191,6 @@ public class JobOffer extends AbstractEntity implements Erasable, Ownerable {
 
 	public void setContractType(final String contractType) {
 		this.contractType = contractType;
-	}
-
-	public void setCountry(final String country) {
-		this.country = country;
 	}
 
 	public void setDateClosed(final LocalDate dateClosed) {
@@ -239,10 +233,6 @@ public class JobOffer extends AbstractEntity implements Erasable, Ownerable {
 
 	public void setRecruiters(final Set<User> recruiters) {
 		this.recruiters = recruiters;
-	}
-
-	public void setState(final String state) {
-		this.state = state;
 	}
 
 	@Override

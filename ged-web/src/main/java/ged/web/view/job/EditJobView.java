@@ -9,6 +9,7 @@ import javax.inject.Named;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import ged.ejb.core.Address;
 import ged.ejb.user.User;
 import ged.web.core.IllegalPageStateException;
 
@@ -47,6 +48,9 @@ public class EditJobView extends AbstractJobView {
 		this.jobOffer = this.getValueFromFlash(JOB_OFFER_KEY);
 		this.checkNonNullJobOffer();
 		this.checkEditPermission();
+		if (this.jobOffer.getAddress() == null) {
+			this.jobOffer.setAddress(new Address());
+		}
 		this.putValueToFlash(JOB_OFFER_KEY, this.jobOffer); // prevent errors if f5/reload is pressed
 		logger.trace("Edit job offer {} init", this.jobOffer);
 		this.fillRecruiters();

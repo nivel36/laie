@@ -40,9 +40,9 @@
 
 							<cc:calendar id="dateClosed" label="#{i18n['job.date_closed']}" value="#{editJobView.jobOffer.dateClosed}" />
 
-							<cc:inputText id="city" label="#{i18n['job.city']}" value="#{editJobView.jobOffer.city}" required="true" />
+							<cc:inputText id="city" label="#{i18n['job.city']}" value="#{editJobView.jobOffer.address.city}" required="true" />
 
-							<cc:inputText id="state" label="#{i18n['job.state']}" value="#{editJobView.jobOffer.state}" required="true" />
+							<cc:inputText id="state" label="#{i18n['job.state']}" value="#{editJobView.jobOffer.address.state}" required="true" />
 						</div>
 						<div class="col-12 sm-6">
 							<h3>#{i18n['user.personal_information']}</h3>

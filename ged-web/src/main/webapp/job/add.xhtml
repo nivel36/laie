@@ -44,9 +44,9 @@
 						<div class="col-12 sm-6">
 							<h3>#{i18n['user.personal_information']}</h3>
 
-							<cc:inputText id="city" label="#{i18n['job.city']}" value="#{addJobView.jobOffer.city}" required="true" />
+							<cc:inputText id="city" label="#{i18n['job.city']}" value="#{addJobView.jobOffer.address.city}" required="true" />
 
-							<cc:inputText id="state" label="#{i18n['job.state']}" value="#{addJobView.jobOffer.state}" required="true" />
+							<cc:inputText id="state" label="#{i18n['job.state']}" value="#{addJobView.jobOffer.address.state}" required="true" />
 
 							<cc:inputUser id="owner" label="#{i18n['job.owner']}" value="#{addJobView.jobOffer.owner}" completeMethod="#{addJobView.searchOwner}" />
 
