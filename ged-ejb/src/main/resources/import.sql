@@ -23,9 +23,9 @@ insert into JOB_CANDIDATURE_STATE( id, version, name, first, last, color ) value
 insert into JOB_CANDIDATURE_STATE( id, version, name, first, last, color ) values ( 136, 0, 'job_candidature_state.approved', false, true,  'green');
 
 insert into CREDENTIAL( id, version, hashPassword, salt, created ) values( 903, 0, '16AFB50A06A958ACEC2EDA9D70283139BC7B7372E21CC83F619CCF169E6E7956', 'FFFFFF', (TO_DATE('17/12/2015', 'DD/MM/YYYY')));
-insert into USER( id, version, email, language, name, rowsPerPage, surname, role, deleted, imageFileName, ownerId, credentialId ) values( 901, 0, 'abel.ferrer.jimenez@gmail.com', 'es', 'Abel', 10, 'Ferrer', 'ADMIN', false, null, 901, 903);
+insert into USER( id, version, email, language, name, rowsPerPage, surname, role, imageFileName, credentialId ) values( 901, 0, 'abel.ferrer.jimenez@gmail.com', 'es', 'Abel', 10, 'Ferrer', 'ADMIN', null, 903);
 insert into CREDENTIAL( id, version, hashPassword, salt, created ) values( 904, 0, '16AFB50A06A958ACEC2EDA9D70283139BC7B7372E21CC83F619CCF169E6E7956', 'FFFFFF', (TO_DATE('17/12/2015', 'DD/MM/YYYY')));
-insert into USER( id, version, email, language, name, rowsPerPage, surname, role, deleted, imageFileName, ownerId, credentialId ) values( 902, 0, 'isabel.vallejo.medina@gmail.com', 'es', 'Isabel', 10, 'Vallejo', 'ADMIN', false, null, 902, 904);
+insert into USER( id, version, email, language, name, rowsPerPage, surname, role, imageFileName, credentialId ) values( 902, 0, 'isabel.vallejo.medina@gmail.com', 'es', 'Isabel', 10, 'Vallejo', 'ADMIN', null, 904);
 
 insert into USERCLOSURE( id, version, antecessor_id, descendant_id, pathLength ) values( 970, 0, 901, 901, 0 );
 insert into USERCLOSURE( id, version, antecessor_id, descendant_id, pathLength ) values( 971, 0, 902, 902, 0 );

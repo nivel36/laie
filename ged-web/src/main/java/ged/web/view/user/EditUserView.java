@@ -22,7 +22,7 @@ public class EditUserView extends AbstractUserView {
 	private static final String USER_KEY = "user";
 
 	private void checkEditPermission() {
-		if (!this.sessionUser.hasPermissionToEdit(this.user)) {
+		if (!this.sessionUser.isAdmin()) {
 			logger.error("User {} hasn't got priviliges to edit user {}", this.sessionUser.get(), this.user);
 			throw new SecurityException();
 		}

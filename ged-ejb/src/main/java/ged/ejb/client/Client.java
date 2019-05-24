@@ -18,6 +18,7 @@ import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Fields;
 import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.SortableField;
 import org.hibernate.search.annotations.Store;
 
@@ -32,6 +33,7 @@ public class Client extends AbstractAuditedEntity {
 	private static final long serialVersionUID = -5319357138994738654L;
 
 	@Embedded
+	@IndexedEmbedded
 	private Address address;
 
 	@Column(unique = true)

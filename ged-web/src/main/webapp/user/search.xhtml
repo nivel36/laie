@@ -47,15 +47,15 @@
 							</h:link>
 						</p:column>
 
-						<p:column headerText="#{i18n['user.email']}" sortBy="#{user.email}">
+						<p:column headerText="#{i18n['user.email']}">
 							<h:outputText value="#{user.email}" />
 						</p:column>
 
-						<p:column headerText="#{i18n['user.role']}" sortBy="#{i18n:translate(user.role)}">
+						<p:column headerText="#{i18n['user.role']}">
 							<h:outputText value="#{i18n:translate(user.role)}" />
 						</p:column>
 
-						<p:column headerText="#{i18n['user.manager']}" sortBy="#{user.manager.fullName}">
+						<p:column headerText="#{i18n['user.manager']}">
 							<h:link value="#{user.manager.fullName}" outcome="#{Page.USER.getUrl()}" rendered="#{not empty user.manager}">
 								<f:param name="id" value="#{user.manager.id}" />
 							</h:link>

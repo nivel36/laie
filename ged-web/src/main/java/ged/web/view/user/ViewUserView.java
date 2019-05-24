@@ -19,7 +19,6 @@ import ged.ejb.job.offer.JobOfferService;
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
 import ged.web.core.IllegalPageStateException;
-import ged.web.core.util.Message;
 import ged.web.core.util.PageEnum;
 import ged.web.core.view.AbstractView;
 import ged.web.reports.UserReport;
@@ -80,15 +79,7 @@ public class ViewUserView extends AbstractView {
 		logger.trace("User {} init", this.user);
 		this.team = this.userService.findSubordinateUsers(this.user);
 		this.jobOffers = this.jobOfferService.findAllJobOffersByOwner(this.user);
-		checkDeleted();
-		this.editable = this.sessionUser.hasPermissionToEdit(this.user);
-	}
-
-	private void checkDeleted() {
-		if (this.user.isDeleted()) {
-			logger.warn("User is deleted");
-			Message.addWarning("message.erased_entity", "message.erased_entity");
-		}
+		this.editable = this.sessionUser.isAdmin();
 	}
 
 	public boolean isEditable() {

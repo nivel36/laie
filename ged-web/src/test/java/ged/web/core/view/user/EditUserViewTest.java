@@ -55,7 +55,7 @@ public class EditUserViewTest {
 			final User mockUser = EditUserViewTest.this.mockUser();
 			when(EditUserViewTest.this.flash.containsKey("user")).thenReturn(true);
 			when(EditUserViewTest.this.flash.get("user")).thenReturn(mockUser);
-			when(EditUserViewTest.this.sessionUser.hasPermissionToEdit(mockUser)).thenReturn(true);
+			when(EditUserViewTest.this.sessionUser.isAdmin()).thenReturn(true);
 			EditUserViewTest.this.userEditView.init();
 
 			assertEquals("abel@test.com", EditUserViewTest.this.userEditView.getUser().getEmail());
@@ -72,7 +72,7 @@ public class EditUserViewTest {
 
 			final User updatedUser = EditUserViewTest.this.mockUser();
 
-			when(EditUserViewTest.this.sessionUser.hasPermissionToEdit(user)).thenReturn(true);
+			when(EditUserViewTest.this.sessionUser.isAdmin()).thenReturn(true);
 			when(EditUserViewTest.this.userService.save(user)).thenReturn(updatedUser);
 
 			EditUserViewTest.this.userEditView.save();

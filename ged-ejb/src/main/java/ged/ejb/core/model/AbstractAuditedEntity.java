@@ -13,6 +13,7 @@ import org.apache.lucene.analysis.ngram.EdgeNGramFilterFactory;
 import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.AnalyzerDef;
 import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.Parameter;
 import org.hibernate.search.annotations.TokenFilterDef;
 import org.hibernate.search.annotations.TokenizerDef;
@@ -37,6 +38,7 @@ public abstract class AbstractAuditedEntity extends AbstractEntity implements Er
 	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "ownerId", nullable = false)
+	@IndexedEmbedded
 	private User owner;
 
 	@Override

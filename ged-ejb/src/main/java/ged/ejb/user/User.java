@@ -28,12 +28,12 @@ import org.hibernate.search.annotations.SortableField;
 import org.hibernate.search.annotations.Store;
 
 import ged.ejb.core.bookmark.Bookmark;
-import ged.ejb.core.model.AbstractAuditedEntity;
+import ged.ejb.core.model.AbstractEntity;
 import ged.ejb.user.role.Role;
 
 @Entity
 @Indexed
-public class User extends AbstractAuditedEntity {
+public class User extends AbstractEntity {
 
 	private static final long serialVersionUID = 5920907439877095636L;
 
@@ -49,9 +49,6 @@ public class User extends AbstractAuditedEntity {
 
 	@NotNull
 	@Column(nullable = false, unique = true)
-	@Fields({ @Field(name = "_email"),
-			@Field(name = "email", analyze = Analyze.NO, store = Store.NO, index = Index.NO) })
-	@SortableField(forField = "email")
 	private String email;
 
 	@Column(unique = true)

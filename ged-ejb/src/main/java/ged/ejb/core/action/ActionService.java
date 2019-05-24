@@ -90,7 +90,7 @@ public class ActionService extends AbstractService<Action> {
 		Objects.requireNonNull(email);
 		logger.debug("Login user {}", email);
 		final User user = this.userService.findUserByEmail(email);
-		this.insertAction(user, ActionType.LOGIN);
+//		this.insertAction(user, ActionType.LOGIN);
 	}
 
 	public void setActionDao(final ActionDao actionDao) {
