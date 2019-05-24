@@ -34,7 +34,6 @@ public class AddContactView extends AbstractView {
 		final Contact newContact = new Contact();
 		newContact.setClient(client);
 		newContact.setPhoneNumber(client.getPhoneNumber());
-		newContact.setOwner(client.getOwner());
 		return newContact;
 	}
 

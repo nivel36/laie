@@ -200,14 +200,6 @@
 		]]></query>
 	</named-query>
 
-	<named-query name="JobMeeting.findByOwner">
-		<query><![CDATA[
-			SELECT j 
-			FROM JobMeeting j 
-			WHERE j.owner = :owner
-		]]></query>
-	</named-query>
-
 	<named-query name="JobOffer.findAllByOwner">
 		<query><![CDATA[
 			SELECT j 

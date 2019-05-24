@@ -13,13 +13,14 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
-import ged.ejb.core.model.AbstractAuditedEntity;
+import ged.ejb.core.model.AbstractEntity;
+import ged.ejb.core.model.Ownerable;
 import ged.ejb.job.offer.JobCandidature;
 import ged.ejb.user.User;
 
 @Entity
 @Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "jobCandidatureId", "datePlanned" }) })
-public class JobMeeting extends AbstractAuditedEntity {
+public class JobMeeting extends AbstractEntity {
 
 	private static final long serialVersionUID = 3394583186288921090L;
 

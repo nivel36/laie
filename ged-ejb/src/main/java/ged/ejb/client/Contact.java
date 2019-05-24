@@ -11,10 +11,10 @@ import javax.validation.constraints.Pattern;
 
 import org.hibernate.search.annotations.Field;
 
-import ged.ejb.core.model.AbstractAuditedEntity;
+import ged.ejb.core.model.AbstractEntity;
 
 @Entity
-public class Contact extends AbstractAuditedEntity {
+public class Contact extends AbstractEntity {
 
 	private static final long serialVersionUID = -5910261570364209778L;
 

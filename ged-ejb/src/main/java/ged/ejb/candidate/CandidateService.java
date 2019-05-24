@@ -10,7 +10,7 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ged.ejb.core.AbstractAuditedService;
+import ged.ejb.core.AbstractService;
 import ged.ejb.core.file.ServerFile;
 import ged.ejb.core.file.ServerFileDao;
 import ged.ejb.core.model.AbstractDao;
@@ -20,7 +20,7 @@ import ged.ejb.job.offer.JobCandidatureDao;
 import ged.ejb.job.offer.JobOffer;
 
 @Stateless
-public class CandidateService extends AbstractAuditedService<Candidate> {
+public class CandidateService extends AbstractService<Candidate> {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 

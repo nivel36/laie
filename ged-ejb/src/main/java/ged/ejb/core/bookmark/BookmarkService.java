@@ -14,8 +14,8 @@ import org.slf4j.LoggerFactory;
 
 import ged.ejb.core.AbstractService;
 import ged.ejb.core.events.PostDelete;
-import ged.ejb.core.model.AbstractAuditedEntity;
 import ged.ejb.core.model.AbstractDao;
+import ged.ejb.core.model.AbstractEntity;
 import ged.ejb.core.model.Repository;
 import ged.ejb.user.User;
 
@@ -33,7 +33,7 @@ public class BookmarkService extends AbstractService<Bookmark> {
 		this.delete(bookmark);
 	}
 
-	public void deleteIfExists(@Observes @PostDelete final AbstractAuditedEntity entity) {
+	public void deleteIfExists(@Observes @PostDelete final AbstractEntity entity) {
 		Objects.requireNonNull(entity);
 		final List<Bookmark> bookmarks = this.bookmarkDao.find(entity.getClass().getSimpleName(), entity.getId());
 		for (final Bookmark bookmark : bookmarks) {

@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 
 import ged.ejb.core.bookmark.Bookmark;
 import ged.ejb.core.bookmark.BookmarkService;
-import ged.ejb.core.model.AbstractAuditedEntity;
+import ged.ejb.core.model.AbstractEntity;
 import ged.ejb.user.User;
 import ged.web.core.util.Message;
 import ged.web.core.view.AbstractView;
@@ -31,7 +31,7 @@ public class BookmarksView extends AbstractView {
 	@Inject
 	private transient BookmarkService bookmarkService;
 
-	public void add(final AbstractAuditedEntity entity) {
+	public void add(final AbstractEntity entity) {
 		BookmarksView.logger.debug("Adding bookmark {} for user {}", entity, this.sessionUser.get().getEmail());
 		Bookmark bookmark = this.createBookmark(entity);
 		if (this.bookmarks.size() > 9) {
@@ -49,7 +49,7 @@ public class BookmarksView extends AbstractView {
 		return sb.toString();
 	}
 
-	private Bookmark createBookmark(final AbstractAuditedEntity entity) {
+	private Bookmark createBookmark(final AbstractEntity entity) {
 		final Bookmark bookmark = new Bookmark();
 		bookmark.setEntityClass(entity.getClass().getSimpleName());
 		bookmark.setEntityId(entity.getId());
@@ -82,12 +82,12 @@ public class BookmarksView extends AbstractView {
 		this.findAllBookmarks();
 	}
 
-	public boolean isBookmarked(final AbstractAuditedEntity entity) {
+	public boolean isBookmarked(final AbstractEntity entity) {
 		final Bookmark bookmark = this.createBookmark(entity);
 		return this.bookmarks.contains(bookmark);
 	}
 
-	public void remove(final AbstractAuditedEntity entity) {
+	public void remove(final AbstractEntity entity) {
 		final User user = this.sessionUser.get();
 		final String className = entity.getClass().getSimpleName();
 		final long id = entity.getId();

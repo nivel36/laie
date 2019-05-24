@@ -14,6 +14,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.Min;
@@ -31,16 +32,49 @@ import org.hibernate.search.annotations.Store;
 
 import ged.ejb.core.Address;
 import ged.ejb.core.file.ServerFile;
-import ged.ejb.core.model.AbstractAuditedEntity;
+import ged.ejb.core.model.AbstractEntity;
+import ged.ejb.core.model.Erasable;
+import ged.ejb.core.model.Ownerable;
 import ged.ejb.core.tag.Tag;
 import ged.ejb.curriculum.Curriculum;
 import ged.ejb.job.offer.JobCandidature;
+import ged.ejb.user.User;
 
 @Entity
 @Indexed
-public class Candidate extends AbstractAuditedEntity {
+public class Candidate extends AbstractEntity implements Erasable, Ownerable {
 
 	private static final long serialVersionUID = 1305321530927456159L;
+	
+	@Column(nullable = false)
+	@Field
+	private boolean deleted;
+
+	@NotNull
+	@ManyToOne
+	@JoinColumn(name = "ownerId", nullable = false)
+	@IndexedEmbedded
+	private User owner;
+
+	@Override
+	public User getOwner() {
+		return this.owner;
+	}
+	
+	@Override
+	public boolean isDeleted() {
+		return this.deleted;
+	}
+
+	@Override
+	public void setDeleted(final boolean deleted) {
+		this.deleted = deleted;
+	}
+
+	@Override
+	public void setOwner(final User owner) {
+		this.owner = owner;
+	}
 
 	@Embedded
 	private Address address;

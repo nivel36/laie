@@ -22,15 +22,47 @@ import org.hibernate.search.annotations.IndexedEmbedded;
 
 import ged.ejb.client.Client;
 import ged.ejb.core.i18n.I18n;
-import ged.ejb.core.model.AbstractAuditedEntity;
+import ged.ejb.core.model.AbstractEntity;
+import ged.ejb.core.model.Erasable;
+import ged.ejb.core.model.Ownerable;
 import ged.ejb.user.User;
 
 @Entity
 @Indexed
 @Table(name = "JOB_OFFER")
-public class JobOffer extends AbstractAuditedEntity {
+public class JobOffer extends AbstractEntity implements Erasable, Ownerable {
 
 	private static final long serialVersionUID = 5579321864799956403L;
+	
+	@Column(nullable = false)
+	@Field
+	private boolean deleted;
+
+	@NotNull
+	@ManyToOne
+	@JoinColumn(name = "ownerId", nullable = false)
+	@IndexedEmbedded
+	private User owner;
+
+	@Override
+	public User getOwner() {
+		return this.owner;
+	}
+	
+	@Override
+	public boolean isDeleted() {
+		return this.deleted;
+	}
+
+	@Override
+	public void setDeleted(final boolean deleted) {
+		this.deleted = deleted;
+	}
+
+	@Override
+	public void setOwner(final User owner) {
+		this.owner = owner;
+	}
 
 	@Column(nullable = false, length = 64)
 	@NotNull

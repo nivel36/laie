@@ -8,6 +8,8 @@ import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -23,14 +25,47 @@ import org.hibernate.search.annotations.SortableField;
 import org.hibernate.search.annotations.Store;
 
 import ged.ejb.core.Address;
-import ged.ejb.core.model.AbstractAuditedEntity;
+import ged.ejb.core.model.AbstractEntity;
+import ged.ejb.core.model.Erasable;
+import ged.ejb.core.model.Ownerable;
 import ged.ejb.job.offer.JobOffer;
+import ged.ejb.user.User;
 
 @Entity
 @Indexed
-public class Client extends AbstractAuditedEntity {
+public class Client extends AbstractEntity implements Ownerable, Erasable {
 
 	private static final long serialVersionUID = -5319357138994738654L;
+	
+	@Column(nullable = false)
+	@Field
+	private boolean deleted;
+
+	@NotNull
+	@ManyToOne
+	@JoinColumn(name = "ownerId", nullable = false)
+	@IndexedEmbedded
+	private User owner;
+
+	@Override
+	public User getOwner() {
+		return this.owner;
+	}
+	
+	@Override
+	public boolean isDeleted() {
+		return this.deleted;
+	}
+
+	@Override
+	public void setDeleted(final boolean deleted) {
+		this.deleted = deleted;
+	}
+
+	@Override
+	public void setOwner(final User owner) {
+		this.owner = owner;
+	}
 
 	@Embedded
 	@IndexedEmbedded
