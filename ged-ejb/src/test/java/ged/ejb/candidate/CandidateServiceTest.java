@@ -109,37 +109,6 @@ public class CandidateServiceTest {
 	}
 
 	@Nested
-	class FindLastAddedCandidates {
-
-		@Test
-		public void badNumberShouldThrowIllegalArgumentExpcetion() {
-			assertThrows(IllegalArgumentException.class, () -> {
-				candidateService.findLastAddedCandidates(-1);
-			});
-		}
-
-		@Test
-		public void validNumberShouldReturnListOfCandidates() {
-			when(candidateDao.findLastAddedCandidates(1)).thenReturn(new ArrayList<>());
-
-			final List<Candidate> candidatesFromRepository = candidateService.findLastAddedCandidates(1);
-			assertEquals(0, candidatesFromRepository.size());
-		}
-	}
-
-	@Nested
-	class FindNumberOfCandidates {
-
-		@Test
-		public void shouldReturnNumberOfCandidates() {
-			when(candidateDao.findNumberOfCandidates()).thenReturn(1L);
-
-			final long numberOfCandidates = candidateService.findNumberOfCandidates();
-			assertEquals(1, numberOfCandidates);
-		}
-	}
-
-	@Nested
 	class UpdateFile {
 
 		@Test

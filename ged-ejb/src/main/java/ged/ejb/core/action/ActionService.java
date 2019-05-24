@@ -21,7 +21,7 @@ import ged.ejb.core.events.PostLogin;
 import ged.ejb.core.events.PostPersist;
 import ged.ejb.core.events.PostUndelete;
 import ged.ejb.core.events.PostUpdate;
-import ged.ejb.core.model.AbstractAuditedEntity;
+import ged.ejb.core.model.AbstractEntity;
 import ged.ejb.core.model.Repository;
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
@@ -41,7 +41,7 @@ public class ActionService extends AbstractService<Action> {
 	@Inject
 	private UserService userService;
 
-	public void deleteAction(@PostDelete @Observes final AbstractAuditedEntity auditedEntity) {
+	public void deleteAction(@PostDelete @Observes final AbstractEntity auditedEntity) {
 		Objects.requireNonNull(auditedEntity);
 		logger.debug("Delete action class {} with id {} ", auditedEntity.getClass().getName(), auditedEntity.getId());
 		this.insertAction(auditedEntity, ActionType.DELETE);
@@ -58,7 +58,7 @@ public class ActionService extends AbstractService<Action> {
 		return this.actionDao.findLastActions();
 	}
 
-	private Action getActionFromEntity(final AbstractAuditedEntity auditedEntity) {
+	private Action getActionFromEntity(final AbstractEntity auditedEntity) {
 		final Action action = new Action();
 		action.setEntityId(auditedEntity.getId());
 		action.setEntityClass(auditedEntity.getClass().getSimpleName());
@@ -71,13 +71,13 @@ public class ActionService extends AbstractService<Action> {
 		return this.actionDao;
 	}
 
-	public void insertAction(@PostPersist @Observes final AbstractAuditedEntity auditedEntity) {
+	public void insertAction(@PostPersist @Observes final AbstractEntity auditedEntity) {
 		Objects.requireNonNull(auditedEntity);
 		logger.debug("Insert action class {} with id {}", auditedEntity.getClass().getName(), auditedEntity.getId());
 		this.insertAction(auditedEntity, ActionType.SAVE);
 	}
 
-	private void insertAction(final AbstractAuditedEntity auditedEntity, final ActionType actionType) {
+	private void insertAction(final AbstractEntity auditedEntity, final ActionType actionType) {
 		final Action action = this.getActionFromEntity(auditedEntity);
 		action.setActionPerformed(actionType.name());
 		action.setDate(LocalDateTime.now());
@@ -90,7 +90,7 @@ public class ActionService extends AbstractService<Action> {
 		Objects.requireNonNull(email);
 		logger.debug("Login user {}", email);
 		final User user = this.userService.findUserByEmail(email);
-		this.insertAction(user, ActionType.LOGIN);
+//		this.insertAction(user, ActionType.LOGIN);
 	}
 
 	public void setActionDao(final ActionDao actionDao) {
@@ -105,13 +105,13 @@ public class ActionService extends AbstractService<Action> {
 		this.userService = userService;
 	}
 
-	public void undeleteAction(@PostUndelete @Observes final AbstractAuditedEntity auditedEntity) {
+	public void undeleteAction(@PostUndelete @Observes final AbstractEntity auditedEntity) {
 		Objects.requireNonNull(auditedEntity);
 		logger.debug("Undelete action class {} with id {} ", auditedEntity.getClass().getName(), auditedEntity.getId());
 		this.insertAction(auditedEntity, ActionType.UNDELETE);
 	}
 
-	public void updateAction(@PostUpdate @Observes final AbstractAuditedEntity auditedEntity) {
+	public void updateAction(@PostUpdate @Observes final AbstractEntity auditedEntity) {
 		Objects.requireNonNull(auditedEntity);
 		logger.debug("Update action class {} with id {}", auditedEntity.getClass().getName(), auditedEntity.getId());
 		this.insertAction(auditedEntity, ActionType.SAVE);

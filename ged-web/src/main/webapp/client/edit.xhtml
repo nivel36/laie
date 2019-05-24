@@ -5,15 +5,15 @@
 	template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
-		<title>#{i18n['client.edit_client']} - #{editClientBean.client.name}</title>
+		<title>#{i18n['client.edit_client']} - #{editClientView.client.name}</title>
 	</ui:define>
 
 	<ui:define name="breadcrumb">
 		<p:breadCrumb styleClass="breadcrumb">
 			<p:menuitem value="#{i18n['menu.index']}" outcome="#{Page.INDEX.getUrl()}" />
 			<p:menuitem value="#{i18n['client.clients']}" outcome="#{Page.CLIENT_SEARCH.getUrl()}" />
-			<p:menuitem value="#{editClientBean.client.name}" outcome="#{Page.CLIENT.getUrl()}">
-				<f:param name="id" value="#{clientBean.id}" />
+			<p:menuitem value="#{editClientView.client.name}" outcome="#{Page.CLIENT.getUrl()}">
+				<f:param name="id" value="#{editClientView.client.id}" />
 			</p:menuitem>
 			<p:menuitem value="#{i18n['client.edit']}" disabled="true" />
 		</p:breadCrumb>
@@ -22,25 +22,22 @@
 	<ui:define name="content">
 		<h:form id="clientForm">
 			<div class="panel">
-				<div class="panel-header">
-					<div class="panel-header-title">#{editClientBean.client.name}</div>
-				</div>
 				<div class="panel-content panel-content-data">
 					<div class="grid">
 						<div class="col-12 sm-6">
 							<h3>#{i18n['client.client_information']}</h3>
-							<cc:inputText id="name" label="#{i18n['client.name']}" value="#{editClientBean.client.name}" required="true" />
+							<cc:inputText id="name" label="#{i18n['client.name']}" value="#{editClientView.client.name}" required="true" />
 
-							<cc:inputText id="cif" label="#{i18n['client.cif']}" value="#{editClientBean.client.cif}" required="true" />
+							<cc:inputText id="cif" label="#{i18n['client.cif']}" value="#{editClientView.client.cif}" required="true" />
 						</div>
 						<div class="col-12 sm-6">
 							<h3>#{i18n['client.contact_information']}</h3>
 
-							<cc:inputText id="phoneNumber" label="#{i18n['client.phone_number']}" value="#{editClientBean.client.phoneNumber}" />
+							<cc:inputText id="phoneNumber" label="#{i18n['client.phone_number']}" value="#{editClientView.client.phoneNumber}" />
 
-							<cc:inputText id="city" label="#{i18n['client.city']}" value="#{editClientBean.client.address.city}" />
+							<cc:inputText id="city" label="#{i18n['client.city']}" value="#{editClientView.client.address.city}" />
 
-							<cc:inputText id="state" label="#{i18n['client.state']}" value="#{editClientBean.client.address.state}" />
+							<cc:inputText id="state" label="#{i18n['client.state']}" value="#{editClientView.client.address.state}" />
 						</div>
 					</div>
 				</div>
@@ -48,9 +45,9 @@
 			<div class="panel-footer">
 				<div class="panel-buttons">
 					<p:button styleClass="btn-gray" value="#{i18n['action.cancel']}" outcome="#{Page.CLIENT.getUrl()}">
-						<f:param name="id" value="#{editClientBean.client.id}" />
+						<f:param name="id" value="#{editClientView.client.id}" />
 					</p:button>
-					<p:commandButton value="#{i18n['action.save']}" action="#{editClientBean.save}" process="@form" update="@form growl" />
+					<p:commandButton value="#{i18n['action.save']}" action="#{editClientView.save}" process="@form" update="@form growl" />
 				</div>
 			</div>
 		</h:form>

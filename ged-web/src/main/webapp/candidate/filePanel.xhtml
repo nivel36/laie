@@ -4,31 +4,31 @@
 		<p:panel header="#{i18n['file.files']}">
 			<div class="grid">
 				<div class="col-12">
-					<p:dataTable var="file" id="files" value="#{filePanelBean.files}" emptyMessage="#{i18n['file.no_files']}" reflow="true" rows="#{sessionUser.rowsPerPage}"
+					<p:dataTable var="file" id="files" value="#{filePanelView.files}" emptyMessage="#{i18n['file.no_files']}" reflow="true" rows="#{sessionUser.rowsPerPage}"
 						rowKey="#{file.id}">
 
 						<p:column headerText="#{i18n['file.name']}">
-							<h:commandLink action="#{filePanelBean.openFile(file)}">
+							<h:commandLink action="#{filePanelView.openFile(file)}">
 								<h:outputText value="#{file.name}" />
 							</h:commandLink>
 						</p:column>
 
 						<p:column headerText="#{i18n['file.lopd']}">
 							<p:selectBooleanCheckbox value="#{file.lopd}">
-								<p:ajax event="change" listener="#{filePanelBean.updateFile(file)}" update="growl file_form" />
+								<p:ajax event="change" listener="#{filePanelView.updateFile(file)}" update="growl file_form" />
 							</p:selectBooleanCheckbox>
 						</p:column>
 
 						<p:column>
-							<p:commandButton icon="fa fa-trash" styleClass="btn-gray" action="#{filePanelBean.removeFile(file)}" process="@this" update="@form growl " />
+							<p:commandButton icon="fa fa-trash" styleClass="btn-gray" action="#{filePanelView.removeFile(file)}" process="@this" update="@form growl " />
 						</p:column>
 					</p:dataTable>
 				</div>
 
 				<div class="col-12">
 					<div class="form-action-primary">
-						<p:fileUpload id="uploadFile" fileUploadListener="#{filePanelBean.uploadFile}" mode="advanced" dragDropSupport="false" update="@form growl"
-							auto="true" label="#{i18n['action.add']}" disabled="#{filePanelBean.files.size() gt 6}" />
+						<p:fileUpload id="uploadFile" fileUploadListener="#{filePanelView.uploadFile}" mode="advanced" dragDropSupport="false" update="@form growl"
+							auto="true" label="#{i18n['action.add']}" disabled="#{filePanelView.files.size() gt 6}" />
 					</div>
 				</div>
 			</div>

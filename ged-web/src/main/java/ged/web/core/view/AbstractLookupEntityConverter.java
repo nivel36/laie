@@ -11,9 +11,9 @@ import ged.ejb.core.maintenance.AbstractEnumEntity;
 
 public abstract class AbstractLookupEntityConverter<T extends AbstractEnumEntity> implements Converter<T> {
 
-	protected ApplicationBean getAppBean() {
+	protected ApplicationView getAppView() {
 		final FacesContext context = FacesContext.getCurrentInstance();
-		return context.getApplication().evaluateExpressionGet(context, "#{applicationBean}", ApplicationBean.class);
+		return context.getApplication().evaluateExpressionGet(context, "#{applicationView}", ApplicationView.class);
 	}
 
 	@Override

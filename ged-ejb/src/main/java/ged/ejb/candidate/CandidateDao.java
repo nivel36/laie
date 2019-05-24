@@ -50,18 +50,6 @@ public class CandidateDao extends AbstractDao<Candidate> {
 		}
 	}
 
-	public List<Candidate> findLastAddedCandidates(final int numberOfCandidates) {
-		if (numberOfCandidates < 1) {
-			logger.warn("Bad number of candidates {}", numberOfCandidates);
-			throw new IllegalArgumentException("Bad number of candidates: " + numberOfCandidates);
-		}
-		return this.findByQuery(Candidate.class, "Candidate.findLastAddedCandidates", null,
-				Page.of(1, numberOfCandidates));
-	}
-
-	public long findNumberOfCandidates() {
-		return (long) this.findByQuery("Candidate.numberOfCandidates", null);
-	}
 
 	@Override
 	public Class<Candidate> getType() {
@@ -93,6 +81,6 @@ public class CandidateDao extends AbstractDao<Candidate> {
 
 	@Override
 	public String[] searchFields() {
-		return new String[] { "name", "surname", "jobProfile", "tags.label" };
+		return new String[] { "_name", "_surname", "_jobProfile", "tags.label" };
 	}
 }

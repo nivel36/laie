@@ -7,22 +7,14 @@
 	</ui:define>
 
 	<ui:param name="selectedMenu" value="maintenances" />
+	
+		<ui:define name="breadcrumb">
+		<p:breadCrumb styleClass="breadcrumb">
+			<p:menuitem value="#{i18n['menu.index']}" outcome="#{Page.INDEX.getUrl()}" />
+			<p:menuitem value="#{i18n['maintenance.maintenances']}" disabled="true" />
+		</p:breadCrumb>
+	</ui:define>
 
 	<ui:define name="content">
-		<div class="grid">
-			<div class="col-12 sm-6 md-4">
-				<p:panel header="#{i18n['maintenance.language_knowdeleges']}">
-					<h:form>
-						<p:selectOneMenu id="languageKnowdelege" label="#{i18n['language.level']}">
-							<f:selectItems value="#{languageLevels.list}" var="languageLevel" itemValue="#{languageLevel.name}" itemLabel="#{i18n:translate(languageLevel.name)}" />
-						</p:selectOneMenu>
-						<div class="form-action-primary">
-							<p:commandButton value="#{i18n['action.new']}" />
-							<p:commandButton value="#{i18n['action.modify']}" />
-						</div>
-					</h:form>
-				</p:panel>
-			</div>
-		</div>
 	</ui:define>
 </ui:composition>

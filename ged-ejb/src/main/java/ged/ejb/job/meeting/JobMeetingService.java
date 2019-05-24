@@ -11,12 +11,12 @@ import org.slf4j.LoggerFactory;
 
 import ged.ejb.candidate.Candidate;
 import ged.ejb.client.Client;
-import ged.ejb.core.AbstractAuditedService;
+import ged.ejb.core.AbstractService;
 import ged.ejb.core.model.AbstractDao;
 import ged.ejb.core.model.Repository;
 import ged.ejb.user.User;
 
-public class JobMeetingService extends AbstractAuditedService<JobMeeting> {
+public class JobMeetingService extends AbstractService<JobMeeting> {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 

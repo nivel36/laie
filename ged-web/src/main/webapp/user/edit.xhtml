@@ -5,7 +5,7 @@
 	xmlns:of="http://omnifaces.org/functions" template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
-		<title>#{i18n['user.edit_user']} - #{editUserBean.user.fullName}</title>
+		<title>#{i18n['user.edit_user']} - #{editUserView.user.fullName}</title>
 	</ui:define>
 
 	<ui:param name="selectedMenu" value="users" />
@@ -18,8 +18,8 @@
 		<p:breadCrumb styleClass="breadcrumb">
 			<p:menuitem value="#{i18n['menu.index']}" outcome="#{Page.INDEX.getUrl()}" />
 			<p:menuitem value="#{i18n['user.users']}" outcome="#{Page.USER_SEARCH.getUrl()}" />
-			<p:menuitem value="#{editUserBean.user.fullName}" outcome="#{Page.USER.getUrl()}">
-				<f:param name="id" value="#{editUserBean.user.id}" />
+			<p:menuitem value="#{editUserView.user.fullName}" outcome="#{Page.USER.getUrl()}">
+				<f:param name="id" value="#{editUserView.user.id}" />
 			</p:menuitem>
 			<p:menuitem value="#{i18n['user.edit_user']}" disabled="true" />
 		</p:breadCrumb>
@@ -30,44 +30,44 @@
 			<div class="panel">
 				<div class="panel-aside">
 					<div class="candidate-metadata">
-						<cc:inputAvatar id="userImage" value="#{editUserBean.user.imageFileName}" fileUploadListener="#{editUserBean.uploadImage}" />
+						<cc:inputAvatar id="userImage" value="#{editUserView.user.imageFileName}" fileUploadListener="#{editUserView.uploadImage}" />
 					</div>
 				</div>
 				<div class="panel-content panel-content-data">
 					<div class="grid">
 						<div class="col-12 sm-6">
 							<h3>#{i18n['user.personal_information']}</h3>
-							<cc:inputText id="name" label="#{i18n['user.name']}" value="#{editUserBean.user.name}" required="true" />
+							<cc:inputText id="name" label="#{i18n['user.name']}" value="#{editUserView.user.name}" required="true" />
 
-							<cc:inputText id="surname" label="#{i18n['user.surname']}" value="#{editUserBean.user.surname}" required="true" />
+							<cc:inputText id="surname" label="#{i18n['user.surname']}" value="#{editUserView.user.surname}" required="true" />
 
-							<cc:inputText id="email" label="#{i18n['user.email']}" value="#{editUserBean.user.email}" required="true"
-								validator="#{editUserBean.validateEmail}" />
+							<cc:inputText id="email" label="#{i18n['user.email']}" value="#{editUserView.user.email}" required="true"
+								validator="#{editUserView.validateEmail}" />
 
-							<cc:inputText id="phone_number" label="#{i18n['user.phone_number']}" value="#{editUserBean.user.phoneNumber}" />
+							<cc:inputText id="phone_number" label="#{i18n['user.phone_number']}" value="#{editUserView.user.phoneNumber}" />
 						</div>
 
 						<div class="col-12 sm-6">
 
 							<h3>#{i18n['user.professional_information']}</h3>
 
-							<cc:inputSelect id="role" value="#{editUserBean.user.role}" label="#{i18n['user.role']}" required="true">
+							<cc:inputSelect id="role" value="#{editUserView.user.role}" label="#{i18n['user.role']}" required="true">
 								<f:selectItems value="#{roles.list}" var="role" itemValue="#{role}" itemLabel="#{i18n:translate(role)}" />
 								<p:ajax event="change" process=":userForm:role" update=":userForm:role :userForm:manager"
-									listener="#{editUserBean.changeRoleListener}" />
+									listener="#{editUserView.changeRoleListener}" />
 							</cc:inputSelect>
 
-							<cc:inputUser id="manager" label="#{i18n['user.manager']}" value="#{editUserBean.user.manager}"
-								completeMethod="#{editUserBean.searchManager}" disabled="#{editUserBean.user.admin}" />
+							<cc:inputUser id="manager" label="#{i18n['user.manager']}" value="#{editUserView.user.manager}"
+								completeMethod="#{editUserView.searchManager}" disabled="#{editUserView.user.admin}" />
 
-							<cc:calendar id="date_of_join" label="#{i18n['user.date_of_join']}" value="#{editUserBean.user.dateOfJoin}" />
+							<cc:calendar id="date_of_join" label="#{i18n['user.date_of_join']}" value="#{editUserView.user.dateOfJoin}" />
 						</div>
 					</div>
 				</div>
 				<div class="panel-footer">
 					<div class="panel-buttons">
-						<p:button styleClass="btn-gray" value="#{i18n['action.cancel']}" outcome="#{Page.USER.getUrl(editUserBean.user)}" />
-						<p:commandButton value="#{i18n['action.save']}" action="#{editUserBean.save}" process="@form" update="@form growl" />
+						<p:button styleClass="btn-gray" value="#{i18n['action.cancel']}" outcome="#{Page.USER.getUrl(editUserView.user)}" />
+						<p:commandButton value="#{i18n['action.save']}" action="#{editUserView.save}" process="@form" update="@form growl" />
 					</div>
 				</div>
 			</div>

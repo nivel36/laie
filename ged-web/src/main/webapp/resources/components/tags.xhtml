@@ -15,7 +15,7 @@
 		<div id="#{cc.clientId}" class="tags #{cc.attrs.styleClass}">
 			<p:autoComplete id="input-tag" completeMethod="#{cc.attrs.completeMethod}" var="tag" itemLabel="#{tag.label}"
 				itemValue="#{user}" forceSelection="true" required="#{cc.attrs.required}" binding="#{cc.input}" />
-			<p:chips id="tags" value="#{candidateEditBean.tags}" label="#{i18n['candidateEditBean.tags']}"
+			<p:chips id="tags" value="#{candidateEditView.tags}" label="#{i18n['candidateEditView.tags']}"
 				converter="stringConverter" />
 		</div>
 	</composite:implementation>

@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 
 import ged.ejb.candidate.Candidate;
 import ged.ejb.client.Client;
-import ged.ejb.core.AbstractAuditedService;
+import ged.ejb.core.AbstractService;
 import ged.ejb.core.model.AbstractDao;
 import ged.ejb.core.model.Repository;
 import ged.ejb.job.meeting.JobMeeting;
@@ -21,7 +21,7 @@ import ged.ejb.job.meeting.JobMeetingDao;
 import ged.ejb.user.User;
 
 @Stateless
-public class JobOfferService extends AbstractAuditedService<JobOffer> {
+public class JobOfferService extends AbstractService<JobOffer> {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
@@ -75,6 +75,12 @@ public class JobOfferService extends AbstractAuditedService<JobOffer> {
 		return this.jobOfferDao.findAllByOwner(owner);
 	}
 
+	public List<JobCandidature> findJobCandidatures(final Candidate candidate) {
+		Objects.requireNonNull(candidate);
+		logger.debug("Find all job candidatures of the candiudate  {}", candidate);
+		return this.jobCandidatureDao.findByCandidate(candidate);
+	}
+
 	public List<JobCandidature> findJobCandituresByJobOffer(final JobOffer jobOffer) {
 		Objects.requireNonNull(jobOffer);
 		return this.jobCandidatureDao.findByJobOffer(jobOffer);
@@ -85,17 +91,11 @@ public class JobOfferService extends AbstractAuditedService<JobOffer> {
 		logger.debug("Find all job Offers of the candidate  {}", candidate);
 		return this.jobOfferDao.findJobOffersByCandidate(candidate);
 	}
-
+	
 	public List<JobOffer> findJobOffersByClient(final Client client) {
 		Objects.requireNonNull(client);
 		logger.debug("Find all job Offers of the client  {}", client);
 		return this.jobOfferDao.findJobOffersByClient(client);
-	}
-	
-	public List<JobCandidature> findJobCandidatures(final Candidate candidate) {
-		Objects.requireNonNull(candidate);
-		logger.debug("Find all job candidatures of the candiudate  {}", candidate);
-		return this.jobCandidatureDao.findByCandidate(candidate);
 	}
 
 	public List<JobOffer> findLastJobOffers(final User owner) {

@@ -17,18 +17,21 @@
 			<div class="panel-content">
 				<p:dataTable var="jobOffer" value="#{cc.attrs.jobOffers}" emptyMessage="#{i18n['job.no_jobs_found']}" reflow="true"
 					paginator="true" paginatorPosition="bottom" paginatorTemplate="{PageLinks}" rows="#{sessionUser.rowsPerPage}"
-					sortBy="#{jobOffer.name}" sortOrder="ascending">
+					sortBy="#{jobOffer.name}" sortOrder="descending">
+					
 					<p:column headerText="#{i18n['job.name']}">
 						<h:link value="#{jobOffer.name}" outcome="#{Page.JOB.getUrl()}">
 							<f:param name="id" value="#{jobOffer.id}" />
 						</h:link>
-						<span class="job_address">#{jobOffer.city} (#{jobOffer.state})</span>
+						<span class="job_address">#{jobOffer.address.city} (#{jobOffer.address.state})</span>
 					</p:column>
+					
 					<p:column headerText="#{i18n['job.date_closed']}">
 						<h:outputText value="#{jobOffer.dateClosed}">
 							<f:convertDateTime pattern="dd / MM / yyyy" type="localDate" />
 						</h:outputText>
 					</p:column>
+					
 					<p:column headerText="#{i18n['job.owner']}">
 						<h:link value="#{jobOffer.owner.fullName}" outcome="#{Page.USER_SEARCH.getUrl()}">
 							<f:param name="id" value="#{jobOffer.owner.id}" />

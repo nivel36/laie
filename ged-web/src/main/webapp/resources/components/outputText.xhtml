@@ -7,7 +7,7 @@
 		<composite:attribute name="label" required="true" />
 		<composite:attribute name="value" required="true" />
 		<composite:attribute name="styleClass" required="false" default="" />
-		<composite:editableValueHolder name="element" targets="text" />
+		<composite:editableValueHolder name="text" targets="text" />
 	</composite:interface>
 
 	<composite:implementation>
@@ -17,7 +17,7 @@
 			</div>
 			<div class="text-container">
 				<h:outputText id="text" value="#{cc.attrs.value}" styleClass="text" rendered="#{not empty cc.attrs.value}" />
-				<h:outputText id="emptyText" value="---" styleClass="text" rendered="#{empty cc.attrs.value}" />
+				<h:outputText id="emptyText" value="---" styleClass="text" rendered="#{empty cc.attrs.value}"  />
 			</div>
 		</div>
 	</composite:implementation>

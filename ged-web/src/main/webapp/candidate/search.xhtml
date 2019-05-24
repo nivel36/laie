@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://ged.com/i18n" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
-	xmlns:p="http://primefaces.org/ui" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:o="http://omnifaces.org/ui"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://ged.com/i18n"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:p="http://primefaces.org/ui"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:o="http://omnifaces.org/ui"
 	xmlns:of="http://omnifaces.org/functions" template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
@@ -9,6 +10,10 @@
 	</ui:define>
 
 	<ui:param name="selectedMenu" value="candidates" />
+
+	<ui:define name="actions">
+		<p:button value="#{i18n['candidate.new_candidate']}" outcome="#{Page.CANDIDATE_ADD.getUrl()}" />
+	</ui:define>
 
 	<ui:define name="breadcrumb">
 		<p:breadCrumb styleClass="breadcrumb">
@@ -20,25 +25,24 @@
 	<ui:define name="content">
 		<h:form id="candidateSearchForm">
 			<div class="panel">
-				<div class="panel-header">
-					<div class="panel-header-title">#{i18n['candidate.search']}</div>
-				</div>
 				<div class="panel-content">
 					<div class="panel-content-data">
-						<cc:inputSearch searchText="#{searchCandidateBean.searchText}" searchAction="#{searchCandidateBean.search}" update="@form" />
+						<cc:inputSearch searchText="#{searchCandidateView.searchText}" searchAction="#{searchCandidateView.search}"
+							update="@form" />
 						<div class="panel-buttons">
-							<p:commandButton value="#{i18n['action.export']}" action="#{searchCandidateBean.export}" process="@this" icon="fa-file-excel-o" />
-							<p:button value="#{i18n['action.new']}" outcome="#{Page.CANDIDATE_ADD.getUrl()}" />
+							<p:commandButton value="#{i18n['action.export']}" action="#{searchCandidateView.export}" process="@this"
+								icon="fa-file-excel-o" />
 						</div>
 					</div>
-
-					<p:dataTable var="candidate" id="candidates" value="#{searchCandidateBean.candidates}"
+					<p:dataTable var="candidate" id="candidates" value="#{searchCandidateView.candidates}"
 						emptyMessage="#{i18n['candidate.no_candidates_found']}" reflow="true" paginator="true" paginatorPosition="bottom"
-						rows="#{sessionUser.rowsPerPage}" sortBy="#{candidate.fullName}" sortOrder="ascending">
+						rows="#{sessionUser.rowsPerPage}" sortBy="#{candidate.name}" sortOrder="descending" lazy="true">
 
 						<p:column>
-							<p:graphicImage class="image image-icon" value="/images/#{candidate.imageFileName}" rendered="#{not empty candidate.imageFileName}" />
-							<p:graphicImage class="image image-icon" value="/resources/img/default-avatar.png" rendered="#{empty candidate.imageFileName}" />
+							<p:graphicImage class="image image-icon" value="/images/#{candidate.imageFileName}"
+								rendered="#{not empty candidate.imageFileName}" />
+							<p:graphicImage class="image image-icon" value="/resources/img/default-avatar.png"
+								rendered="#{empty candidate.imageFileName}" />
 						</p:column>
 
 						<p:column headerText="#{i18n['candidate.name']}" sortBy="#{candidate.name}">
@@ -62,7 +66,7 @@
 						<p:column headerText="#{i18n['candidate.rating']}" sortBy="#{candidate.rating}">
 							<p:rating value="#{candidate.rating}" cancel="false" readonly="true" />
 						</p:column>
-
+						
 					</p:dataTable>
 				</div>
 			</div>

@@ -141,7 +141,7 @@ public class UserDao extends AbstractDao<User> {
 
 	@Override
 	public String[] searchFields() {
-		return new String[] { "name", "surname", EMAIL };
+		return new String[] { "_name", "_surname", "_email" };
 	}
 
 	private void updateUserClosures(final User user) {

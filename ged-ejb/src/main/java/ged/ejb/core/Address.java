@@ -3,36 +3,38 @@ package ged.ejb.core;
 import java.io.Serializable;
 import java.util.Objects;
 
-import javax.persistence.Column;
 import javax.persistence.Embeddable;
+
+import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Fields;
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.SortableField;
+import org.hibernate.search.annotations.Store;
 
 @Embeddable
 public class Address implements Serializable {
 
 	private static final long serialVersionUID = 2907479775923990369L;
 
-	@Column(length = 64)
+	@Fields({ @Field(name = "_city"), @Field(name = "city", analyze = Analyze.NO, store = Store.NO, index = Index.NO) })
+	@SortableField(forField = "city")
 	private String city;
 
-	@Column(length = 64)
 	private String country;
 
-	@Column(length = 16)
 	private String door;
 
-	@Column(length = 16)
 	private String number;
 
-	@Column(length = 64)
+	@Fields({ @Field(name = "_state"), @Field(name = "state", analyze = Analyze.NO, store = Store.NO, index = Index.NO) })
+	@SortableField(forField = "state")
 	private String state;
 
-	@Column(length = 16)
 	private String storey;
 
-	@Column(length = 128)
 	private String street;
 
-	@Column(length = 5)
 	private String zipCode;
 
 	@Override

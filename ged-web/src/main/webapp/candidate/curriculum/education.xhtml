@@ -12,11 +12,11 @@
 		<p:breadCrumb styleClass="breadcrumb">
 			<p:menuitem value="#{i18n['menu.index']}" outcome="#{Page.INDEX.getUrl()}" />
 			<p:menuitem value="#{i18n['candidate.candidates']}" outcome="#{Page.CANDIDATE_SEARCH.getUrl()}" />
-			<p:menuitem value="#{educationBean.curriculum.candidate.fullName}" outcome="#{Page.CANDIDATE.getUrl()}">
-				<f:param name="id" value="#{educationBean.curriculum.candidate.id}" />
+			<p:menuitem value="#{educationView.curriculum.candidate.fullName}" outcome="#{Page.CANDIDATE.getUrl()}">
+				<f:param name="id" value="#{educationView.curriculum.candidate.id}" />
 			</p:menuitem>
 			<p:menuitem value="#{i18n['curriculum.curriculum']}" outcome="#{Page.CURRICULUM.getUrl()}">
-				<f:param name="id" value="#{educationBean.curriculum.candidate.id}" />
+				<f:param name="id" value="#{educationView.curriculum.candidate.id}" />
 			</p:menuitem>
 			<p:menuitem value="#{i18n['education.education']}" disabled="true" />
 		</p:breadCrumb>
@@ -30,37 +30,37 @@
 						<div class="panel-header-title"></div>
 					</div>
 					<div class="panel-content">
-						<cc:inputText id="degree" label="#{i18n['education.degree']}" value="#{educationBean.education.degree}" required="true" />
+						<cc:inputText id="degree" label="#{i18n['education.degree']}" value="#{educationView.education.degree}" required="true" />
 
-						<cc:inputText id="school" label="#{i18n['education.school']}" value="#{educationBean.education.school}" required="true" />
+						<cc:inputText id="school" label="#{i18n['education.school']}" value="#{educationView.education.school}" required="true" />
 
-						<cc:inputSelect id="fromDate" label="#{i18n['education.from_date']}" value="#{educationBean.education.startYear}">
+						<cc:inputSelect id="fromDate" label="#{i18n['education.from_date']}" value="#{educationView.education.startYear}">
 							<f:selectItem itemLabel="#{i18n['date.year']}" itemValue="" />
-							<f:selectItems var="year" value="#{educationBean.years}" itemValue="#{year}" itemLabel="#{year}" />
+							<f:selectItems var="year" value="#{educationView.years}" itemValue="#{year}" itemLabel="#{year}" />
 						</cc:inputSelect>
 
 						<h:panelGroup layout="block" id="toDateWrapper">
-							<cc:inputSelect id="toDate" label="#{i18n['education.to_date']}" value="#{educationBean.education.endYear}"
-								rendered="#{not educationBean.education.stillStudying}">
+							<cc:inputSelect id="toDate" label="#{i18n['education.to_date']}" value="#{educationView.education.endYear}"
+								rendered="#{not educationView.education.stillStudying}">
 								<f:selectItem itemLabel="#{i18n['date.year']}" itemValue="" />
-								<f:selectItems var="year" value="#{educationBean.years}" itemValue="#{year}" itemLabel="#{year}" />
+								<f:selectItems var="year" value="#{educationView.years}" itemValue="#{year}" itemLabel="#{year}" />
 							</cc:inputSelect>
 						</h:panelGroup>
 
 						<f:ajax event="change" render="jobExperience:toDateWrapper" />
 						</cc:inputCheckbox>
 
-						<cc:richText id="description" label="#{i18n['education.description']}" value="#{educationBean.education.description}" />
+						<cc:richText id="description" label="#{i18n['education.description']}" value="#{educationView.education.description}" />
 					</div>
 
 					<div class="panel-footer">
 						<div class="panel-buttons">
 							<p:button value="#{i18n['action.cancel']}" outcome="#{Page.CURRICULUM.getUrl()}" styleClass="btn-gray">
-								<f:param name="id" value="#{educationBean.education.curriculum.candidate.id}" />
+								<f:param name="id" value="#{educationView.education.curriculum.candidate.id}" />
 							</p:button>
-							<p:commandButton value="#{i18n['action.delete']}" action="#{educationBean.delete}" process="@this"
-								rendered="#{not educationBean.newEducation}" />
-							<p:commandButton value="#{i18n['action.save']}" action="#{educationBean.save}" process="@form" update="@form" />
+							<p:commandButton value="#{i18n['action.delete']}" action="#{educationView.delete}" process="@this"
+								rendered="#{not educationView.newEducation}" />
+							<p:commandButton value="#{i18n['action.save']}" action="#{educationView.save}" process="@form" update="@form" />
 						</div>
 					</div>
 				</div>

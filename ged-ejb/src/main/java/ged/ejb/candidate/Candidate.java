@@ -14,26 +14,35 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
+import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Fields;
+import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.IndexedEmbedded;
+import org.hibernate.search.annotations.SortableField;
+import org.hibernate.search.annotations.Store;
 
 import ged.ejb.core.Address;
 import ged.ejb.core.file.ServerFile;
-import ged.ejb.core.model.AbstractAuditedEntity;
+import ged.ejb.core.model.AbstractEntity;
+import ged.ejb.core.model.Erasable;
+import ged.ejb.core.model.Ownerable;
 import ged.ejb.core.tag.Tag;
 import ged.ejb.curriculum.Curriculum;
 import ged.ejb.job.offer.JobCandidature;
+import ged.ejb.user.User;
 
 @Entity
 @Indexed
-public class Candidate extends AbstractAuditedEntity {
+public class Candidate extends AbstractEntity implements Erasable, Ownerable {
 
 	private static final long serialVersionUID = 1305321530927456159L;
 
@@ -45,8 +54,13 @@ public class Candidate extends AbstractAuditedEntity {
 	@OneToOne(fetch = FetchType.EAGER, mappedBy = "candidate")
 	private Curriculum curriculum;
 
+	@Column(nullable = false)
+	@Field
+	private boolean deleted;
+
+	@NotNull
 	@Pattern(regexp = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$")
-	@Column(length = 64, unique = true, nullable = false)
+	@Column(unique = true, nullable = false)
 	private String email;
 
 	@Min(0)
@@ -63,33 +77,45 @@ public class Candidate extends AbstractAuditedEntity {
 	private List<JobCandidature> jobCandidatures;
 
 	@NotNull
-	@Column(length = 64, nullable = false)
-	@Field
+	@Column(nullable = false)
+	@Fields({ @Field(name = "_jobProfile"),
+			@Field(name = "jobProfile", analyze = Analyze.NO, store = Store.NO, index = Index.NO) })
+	@SortableField(forField = "jobProfile")
 	private String jobProfile;
 
 	private String linkedinProfileUrl;
 
 	@NotNull
-	@Column(length = 32, nullable = false)
-	@Field
+	@Column(nullable = false)
+	@Fields({ @Field(name = "_name"), @Field(name = "name", analyze = Analyze.NO, store = Store.NO, index = Index.NO) })
+	@SortableField(forField = "name")
 	private String name;
 
 	private String origin;
 
+	@NotNull
+	@ManyToOne
+	@JoinColumn(name = "ownerId", nullable = false)
+	@IndexedEmbedded
+	private User owner;
+
 	@Pattern(regexp = "(?:[+]?(?:[0-9]{1,5}|\\x28[0-9]{1,5}\\x29)[ ]?)?[0-9]{2}(?:[0-9][ ]?){6}[0-9]")
-	@Column(length = 12, nullable = false)
+	@Column(nullable = false)
 	private String phoneNumber;
 
+	@Field(analyze = Analyze.NO, store = Store.NO, index = Index.NO)
+	@SortableField
 	private Integer rating;
 
 	private Integer salary;
 
-	@Column(length = 128)
 	private String skype;
 
 	@NotNull
-	@Column(length = 64, nullable = false)
-	@Field
+	@Column(nullable = false)
+	@Fields({ @Field(name = "_surname"),
+			@Field(name = "surname", analyze = Analyze.NO, store = Store.NO, index = Index.NO) })
+	@SortableField(forField = "surname")
 	private String surname;
 
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -172,6 +198,11 @@ public class Candidate extends AbstractAuditedEntity {
 		return this.origin;
 	}
 
+	@Override
+	public User getOwner() {
+		return this.owner;
+	}
+
 	public String getPhoneNumber() {
 		return this.phoneNumber;
 	}
@@ -201,6 +232,11 @@ public class Candidate extends AbstractAuditedEntity {
 		return Objects.hash(this.email, this.name, this.phoneNumber, this.surname);
 	}
 
+	@Override
+	public boolean isDeleted() {
+		return this.deleted;
+	}
+
 	public void setAddress(final Address address) {
 		this.address = address;
 	}
@@ -211,6 +247,11 @@ public class Candidate extends AbstractAuditedEntity {
 
 	public void setCurriculum(final Curriculum curriculum) {
 		this.curriculum = curriculum;
+	}
+
+	@Override
+	public void setDeleted(final boolean deleted) {
+		this.deleted = deleted;
 	}
 
 	public void setEmail(final String email) {
@@ -251,6 +292,11 @@ public class Candidate extends AbstractAuditedEntity {
 
 	public void setOrigin(final String origin) {
 		this.origin = origin;
+	}
+
+	@Override
+	public void setOwner(final User owner) {
+		this.owner = owner;
 	}
 
 	public void setPhoneNumber(final String phoneNumber) {

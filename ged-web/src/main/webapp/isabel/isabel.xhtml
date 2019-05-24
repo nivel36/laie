@@ -16,12 +16,12 @@
 					<h2>Exportacion</h2>
 				</div>
 				<div class="panel-content">
-					<p:pickList value="#{isabelBean.model}" var="item" converter="exportViewConverter" itemLabel="#{item.label}"
+					<p:pickList value="#{isabelView.model}" var="item" converter="exportViewConverter" itemLabel="#{item.label}"
 						itemValue="#{item}" showTargetControls="true" update="@form growl" />
 				</div>
 				<div class="panel-footer">
 					<div class="panel-buttons">
-						<p:commandButton value="Guardar" action="#{isabelBean.save}" process="@form" update="@form growl" />
+						<p:commandButton value="Guardar" action="#{isabelView.save}" process="@form" update="@form growl" />
 					</div>
 				</div>
 			</h:form>

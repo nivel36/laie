@@ -96,17 +96,17 @@ public abstract class AbstractDao<T extends AbstractEntity> {
 		}
 	}
 
-	public List<T> search(final String searchText, final Page page) {
-		return this.search(searchText, page, new ArrayList<SortOrder>());
+	public SearchResult<T> search(final String searchText, final Page page) {
+		return this.search(searchText, page, new ArrayList<SortField>());
 
 	}
 
-	public List<T> search(final String searchText, final Page page, final List<SortOrder> sortOrders) {
+	public SearchResult<T> search(final String searchText, final Page page, final List<SortField> sortOrders) {
 		return this.persistenceFacade.search(getType(), page, sortOrders, searchText, searchFields());
 	}
 
-	public List<T> search(final String searchText, final Page page, final SortOrder sortOrder) {
-		final List<SortOrder> sortOrders = new ArrayList<>();
+	public SearchResult<T> search(final String searchText, final Page page, final SortField sortOrder) {
+		final List<SortField> sortOrders = new ArrayList<>();
 		sortOrders.add(sortOrder);
 		return this.search(searchText, page, sortOrders);
 	}

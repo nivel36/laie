@@ -10,7 +10,7 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ged.ejb.core.AbstractAuditedService;
+import ged.ejb.core.AbstractService;
 import ged.ejb.core.file.ServerFile;
 import ged.ejb.core.file.ServerFileDao;
 import ged.ejb.core.model.AbstractDao;
@@ -20,7 +20,7 @@ import ged.ejb.job.offer.JobCandidatureDao;
 import ged.ejb.job.offer.JobOffer;
 
 @Stateless
-public class CandidateService extends AbstractAuditedService<Candidate> {
+public class CandidateService extends AbstractService<Candidate> {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
@@ -83,19 +83,6 @@ public class CandidateService extends AbstractAuditedService<Candidate> {
 		Objects.requireNonNull(candidate);
 		logger.debug("Find job candidatures by candidate {}", candidate);
 		return this.jobCandidatureDao.findByCandidate(candidate);
-	}
-
-	public List<Candidate> findLastAddedCandidates(final int numberOfCandidates) {
-		if (numberOfCandidates < 1) {
-			throw new IllegalArgumentException("numberOfCandidates: " + numberOfCandidates);
-		}
-		logger.debug("Find last added candidates");
-		return this.candidateDao.findLastAddedCandidates(numberOfCandidates);
-	}
-
-	public long findNumberOfCandidates() {
-		logger.debug("Find total number of candidates");
-		return this.candidateDao.findNumberOfCandidates();
 	}
 
 	@Override

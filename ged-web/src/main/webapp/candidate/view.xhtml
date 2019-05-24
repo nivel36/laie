@@ -1,20 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://ged.com/i18n" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
-	xmlns:p="http://primefaces.org/ui" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:o="http://omnifaces.org/ui"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://ged.com/i18n"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:p="http://primefaces.org/ui"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:o="http://omnifaces.org/ui"
 	xmlns:of="http://omnifaces.org/functions" template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
-		<title>#{i18n['candidate.candidate']} - #{viewCandidateBean.candidate.fullName}</title>
+		<title>#{i18n['candidate.candidate']} - #{viewCandidateView.candidate.fullName}</title>
 	</ui:define>
 
 	<ui:param name="selectedMenu" value="candidates" />
+	
+	<ui:define name="actions">
+		<p:button value="#{i18n['candidate.new_candidate']}" outcome="#{Page.CANDIDATE_ADD.getUrl()}" />
+	</ui:define>
+	
 
 	<ui:define name="breadcrumb">
 		<p:breadCrumb styleClass="breadcrumb">
 			<p:menuitem value="#{i18n['menu.index']}" outcome="#{Page.INDEX.getUrl()}" />
 			<p:menuitem value="#{i18n['candidate.candidates']}" outcome="#{Page.CANDIDATE_SEARCH.getUrl()}" />
-			<p:menuitem value="#{viewCandidateBean.candidate.fullName}" disabled="true" />
+			<p:menuitem value="#{viewCandidateView.candidate.fullName}" disabled="true" />
 		</p:breadCrumb>
 	</ui:define>
 
@@ -23,86 +29,90 @@
 			<div class="panel candidate col-12 xl-8">
 				<div class="panel-header">
 					<div class="panel-header-image">
-						<cc:avatar imageFileName="#{viewCandidateBean.candidate.imageFileName}" />
+						<cc:avatar imageFileName="#{viewCandidateView.candidate.imageFileName}" />
 					</div>
 					<div class="panel-header-data">
-						<div class="name">#{viewCandidateBean.candidate.fullName}</div>
-						<div class="job-profile">#{viewCandidateBean.candidate.jobProfile}</div>
+						<div class="name">#{viewCandidateView.candidate.fullName}</div>
+						<div class="job-profile">#{viewCandidateView.candidate.jobProfile}</div>
 
 						<div class="data email">
 							<div class="icon">
 								<em class="fa fa-envelope"></em>
 							</div>
-							<div class="text">#{viewCandidateBean.candidate.email}</div>
+							<div class="text">#{viewCandidateView.candidate.email}</div>
 						</div>
 						<div class="data phone">
 							<div class="icon">
 								<em class="fa fa-phone"></em>
 							</div>
-							<div class="text">#{viewCandidateBean.candidate.phoneNumber}</div>
+							<div class="text">#{viewCandidateView.candidate.phoneNumber}</div>
 						</div>
-						<h:panelGroup layout="block" styleClass="data skype" rendered="#{not empty viewCandidateBean.candidate.skype}">
+						<h:panelGroup layout="block" styleClass="data skype" rendered="#{not empty viewCandidateView.candidate.skype}">
 							<div class="icon">
 								<em class="fa fa-skype"></em>
 							</div>
-							<div class="text">#{viewCandidateBean.candidate.skype}</div>
+							<div class="text">#{viewCandidateView.candidate.skype}</div>
 						</h:panelGroup>
-						<h:panelGroup layout="block" styleClass="data linkedin" rendered="#{not empty viewCandidateBean.candidate.linkedinProfileUrl}">
+						<h:panelGroup layout="block" styleClass="data linkedin"
+							rendered="#{not empty viewCandidateView.candidate.linkedinProfileUrl}">
 							<div class="icon">
 								<em class="fa fa-linkedin"></em>
 							</div>
 							<div class="text">
-								<a href="#{viewCandidateBean.candidate.linkedinProfileUrl}" target="new">#{viewCandidateBean.candidate.linkedinProfileUrl}</a>
+								<a href="#{viewCandidateView.candidate.linkedinProfileUrl}" target="new">#{viewCandidateView.candidate.linkedinProfileUrl}</a>
 							</div>
 						</h:panelGroup>
 					</div>
 					<h:form>
 						<div class="panel-buttons">
 							<p:button value="#{i18n['curriculum.curriculum']}" process="@this" outcome="#{Page.CURRICULUM.getUrl()}">
-								<f:param name="id" value="#{viewCandidateBean.candidate.id}" />
+								<f:param name="id" value="#{viewCandidateView.candidate.id}" />
 							</p:button>
-							<p:commandButton value="#{i18n['action.export']}" process="@this" action="#{viewCandidateBean.export}" icon="fa-file-excel-o" />
-							<p:commandButton value="#{i18n['action.edit']}" process="@this" action="#{viewCandidateBean.editCandidate}" />
+							<p:commandButton value="#{i18n['action.export']}" process="@this" action="#{viewCandidateView.export}"
+								icon="fa-file-excel-o" />
+							<p:commandButton value="#{i18n['action.edit']}" process="@this" action="#{viewCandidateView.editCandidate}" />
 						</div>
 					</h:form>
 				</div>
 				<div class="panel-content">
-					<div class="panel-content-data">
-						<div class="grid">
-							<div class="col-12 md-6">
-								<h4>#{i18n['candidate.personal_information']}</h4>
+					<div class="panel-content-data grid nogutter">
+						<div class="col-12 md-6">
+							<h4>#{i18n['candidate.personal_information']}</h4>
 
-								<cc:outputText label="#{i18n['candidate.city']}"
-									value="#{viewCandidateBean.candidate.address.city} (#{viewCandidateBean.candidate.address.state})" />
+							<cc:outputText label="#{i18n['candidate.city']}"
+								value="#{viewCandidateView.candidate.address.city} (#{viewCandidateView.candidate.address.state})" />
 
-								<cc:outputText label="#{i18n['candidate.bornDate']}" value="#{viewCandidateBean.candidate.bornDate}">
-									<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" for="element" />
-								</cc:outputText>
-							</div>
-							<div class="col-12 md-6">
-								<h4>#{i18n['candidate.contact_information']}</h4>
+							<cc:outputText label="#{i18n['candidate.bornDate']}" value="#{viewCandidateView.candidate.bornDate}">
+								<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" for="element" />
+							</cc:outputText>
+						</div>
+						<div class="col-12 md-6">
+							<h4>#{i18n['candidate.contact_information']}</h4>
 
-								<cc:outputText label="#{i18n['candidate.origin']}" value="#{i18n:translate(viewCandidateBean.candidate.origin)}" />
+							<cc:outputText label="#{i18n['candidate.origin']}" value="#{i18n:translate(viewCandidateView.candidate.origin)}" />
 
-								<cc:outputText label="#{i18n['candidate.salary']}" value="#{viewCandidateBean.candidate.salary}" />
+							<cc:outputText label="#{i18n['candidate.salary']}" value="#{viewCandidateView.candidate.salary}">
+								<f:convertNumber for="text" currencyCode="EUR" maxFractionDigits="0" type="currency" />
+							</cc:outputText>
 
-								<cc:outputText label="#{i18n['candidate.expected_salary']}" value="#{viewCandidateBean.candidate.expectedSalary}" />
+							<cc:outputText label="#{i18n['candidate.expected_salary']}" value="#{viewCandidateView.candidate.expectedSalary}">
+								<f:convertNumber for="text" currencyCode="EUR" maxFractionDigits="0" type="currency" />
+							</cc:outputText>
 
-							</div>
-							<div class="col-12">
-								<h4>#{i18n['candidate.metadata']}</h4>
-								<div class="data rating">
-									<div class="label">#{i18n['candidate.rating']}</div>
-									<div class="text">
-										<p:rating value="#{viewCandidateBean.candidate.rating}" cancel="false" readonly="true" />
-									</div>
+						</div>
+						<div class="col-12">
+							<h4>#{i18n['candidate.metadata']}</h4>
+							<div class="data rating">
+								<div class="label">#{i18n['candidate.rating']}</div>
+								<div class="text">
+									<p:rating value="#{viewCandidateView.candidate.rating}" cancel="false" readonly="true" />
 								</div>
-								<div class="data tags">
-									<div class="label">#{i18n['candidate.tags']}</div>
-									<div class="text">
-										<p:chips id="tags" value="#{viewCandidateBean.tags}" label="#{i18n['viewCandidateBean.tags']}" converter="stringConverter"
-											style-class="tags" disabled="true" />
-									</div>
+							</div>
+							<div class="data tags">
+								<div class="label">#{i18n['candidate.tags']}</div>
+								<div class="text">
+									<p:chips id="tags" value="#{viewCandidateView.tags}" label="#{i18n['viewCandidateView.tags']}"
+										converter="stringConverter" style-class="tags" disabled="true" />
 								</div>
 							</div>
 						</div>
@@ -116,33 +126,34 @@
 							<div class="panel-header-title">#{i18n['file.files']}</div>
 						</div>
 						<div class="panel-content">
-							<p:dataTable var="file" id="files" value="#{filePanelBean.files}" emptyMessage="#{i18n['file.no_files']}" reflow="true"
-								rows="#{sessionUser.rowsPerPage}" rowKey="#{file.id}">
+							<p:dataTable var="file" id="files" value="#{filePanelView.files}" emptyMessage="#{i18n['file.no_files']}"
+								reflow="true" rows="#{sessionUser.rowsPerPage}" rowKey="#{file.id}">
 
 								<p:column headerText="#{i18n['file.name']}">
-									<h:commandLink action="#{filePanelBean.openFile(file)}">
+									<h:commandLink action="#{filePanelView.openFile(file)}">
 										<h:outputText value="#{file.name}" />
 									</h:commandLink>
 								</p:column>
 
 								<p:column>
-									<p:commandButton icon="fa fa-trash" styleClass="btn-gray" action="#{filePanelBean.removeFile(file)}" process="@this"
-										update="@form growl " />
+									<p:commandButton icon="fa fa-trash" styleClass="btn-gray" action="#{filePanelView.removeFile(file)}"
+										process="@this" update="@form growl " />
 								</p:column>
 							</p:dataTable>
 						</div>
 
 						<div class="panel-footer">
 							<div class="panel-buttons">
-								<p:fileUpload id="uploadFile" fileUploadListener="#{filePanelBean.uploadFile}" mode="advanced" dragDropSupport="false"
-									update="@form growl" auto="true" label="#{i18n['action.add']}" disabled="#{filePanelBean.files.size() gt 6}" />
+								<p:fileUpload id="uploadFile" fileUploadListener="#{filePanelView.uploadFile}" mode="advanced"
+									dragDropSupport="false" update="@form growl" auto="true" label="#{i18n['action.add']}"
+									disabled="#{filePanelView.files.size() gt 6}" />
 							</div>
 						</div>
 					</div>
 				</h:form>
 			</div>
 			<div class="col-12 lg-6">
-				<cc:jobCandidatures jobCandidatures="#{viewCandidateBean.jobCandidatures}" showCandidate="false" />
+				<cc:jobCandidatures jobCandidatures="#{viewCandidateView.jobCandidatures}" showCandidate="false" />
 			</div>
 		</div>
 	</ui:define>

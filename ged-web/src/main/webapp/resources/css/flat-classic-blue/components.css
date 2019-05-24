@@ -51,6 +51,25 @@ h4 {
 	margin-bottom: 1em;
 }
 
+body>footer {
+	justify-content: center;
+	width: 100%;
+	display: flex;
+}
+
+body>footer .version {
+	flex: 1;
+	text-align: center;
+	padding: 0.5em;
+	border-left: 1px solid white;
+	border-right: 1px solid #bfceda;
+}
+
+body footer .version span {
+	font-size: 0.8em;
+	color: #848b9d;
+}
+
 /************************************
  *  nav
  ************************************/
@@ -120,35 +139,12 @@ h4 {
 	display: none;
 }
 
-.selectable {
-	cursor: pointer;
-}
-
 .image-icon {
 	height: 32px;
 	width: 32px;
 	object-fit: cover;
 	border-radius: 4px;
 	image-orientation: from-image;
-}
-
-body>footer {
-	justify-content: center;
-	width: 100%;
-	display: flex;
-}
-
-body>footer .version {
-	flex: 1;
-	text-align: center;
-	padding: 0.5em;
-	border-left: 1px solid white;
-	border-right: 1px solid #bfceda;
-}
-
-body footer .version span {
-	font-size: 0.8em;
-	color: #848b9d;
 }
 
 #aside {
@@ -165,7 +161,7 @@ body footer .version span {
 	display: flex;
 	flex-direction: column;
 	flex: 1 auto;
-	padding: 1em;
+	overflow: hidden;
 }
 
 #breadcrumb {
@@ -231,6 +227,7 @@ body .breadcrumb ul li.ui-breadcrumb-chevron {
 
 .candidate-metadata .candidate-rating {
 	padding: 1em;
+	text-align: center;
 }
 
 .form-action-primary {
@@ -310,8 +307,8 @@ body .input-container>*:last-child {
 }
 
 .input-avatar {
-	text-align: center;
 	position: relative;
+	text-align: center;
 }
 
 .input-avatar .image, .avatar .image {
@@ -505,7 +502,6 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button
 
 .panel-header a {
 	color: #7a869b;
-	display: inline-flex;
 }
 
 .panel-header-title {
@@ -529,7 +525,7 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button
 }
 
 .panel-aside {
-	flex: 1 0 0;
+	flex: 0;
 	border-bottom: 1px solid #bfceda;
 }
 
@@ -538,15 +534,17 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button
 }
 
 .panel-content {
-	flex: 9 0px;
 	padding: 0;
 	margin: 0;
 	border-bottom: 1px solid #bfceda;
+	flex: 5 0;
+	display: flex;
+	flex-flow:  column nowrap;
 }
 
 .panel-content-data {
-	display: flex;
 	padding: 20px;
+	display: flex;
 }
 
 .panel-footer {

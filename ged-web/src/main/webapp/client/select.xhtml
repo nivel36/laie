@@ -13,15 +13,15 @@
 			<div class="panel">
 				<div class="panel-content">
 					<div class="panel-content-data">
-						<cc:inputSearch searchText="#{selectClientBean.searchText}" searchAction="#{selectClientBean.search}"
+						<cc:inputSearch searchText="#{selectClientView.searchText}" searchAction="#{selectClientView.search}"
 							update="@form" />
 					</div>
-					<p:dataTable var="client" id="clients" value="#{selectClientBean.clients}"
+					<p:dataTable var="client" id="clients" value="#{selectClientView.clients}"
 						emptyMessage="#{i18n['client.no_clients_found']}" reflow="true" paginator="true" paginatorPosition="bottom"
-						rows="#{sessionUser.rowsPerPage}" selectionMode="single" selection="#{selectClientBean.selectedClient}"
-						rowKey="#{client.id}" sortBy="#{client.name}" sortOrder="ascending">
+						rows="#{sessionUser.rowsPerPage}" selectionMode="single" selection="#{selectClientView.selectedClient}"
+						rowKey="#{client.id}" sortBy="#{client.name}" sortOrder="descending" lazy="true">
 
-						<p:ajax event="rowSelect" listener="#{selectClientBean.onClientSelect}" update="@form" resetValues="true" />
+						<p:ajax event="rowSelect" listener="#{selectClientView.onClientSelect}" update="@form" resetValues="true" />
 
 						<p:column headerText="#{i18n['client.name']}" sortBy="#{client.name}">
 							<h:outputText value="#{client.name}" />
@@ -50,7 +50,7 @@
 
 					<div class="panel-footer">
 						<div class="panel-buttons">
-							<p:commandButton value="#{i18n['action.cancel']}" action="#{selectClientBean.cancel}" process="@this"
+							<p:commandButton value="#{i18n['action.cancel']}" action="#{selectClientView.cancel}" process="@this"
 								styleClass="btn-gray" />
 						</div>
 					</div>

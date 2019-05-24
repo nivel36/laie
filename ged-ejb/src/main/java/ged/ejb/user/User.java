@@ -19,16 +19,21 @@ import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
+import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Fields;
+import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.SortableField;
+import org.hibernate.search.annotations.Store;
 
 import ged.ejb.core.bookmark.Bookmark;
-import ged.ejb.core.model.AbstractAuditedEntity;
+import ged.ejb.core.model.AbstractEntity;
 import ged.ejb.user.role.Role;
 
 @Entity
 @Indexed
-public class User extends AbstractAuditedEntity {
+public class User extends AbstractEntity {
 
 	private static final long serialVersionUID = 5920907439877095636L;
 
@@ -43,35 +48,34 @@ public class User extends AbstractAuditedEntity {
 	private LocalDate dateOfJoin;
 
 	@NotNull
-	@Column(length = 128, nullable = false, unique = true)
-	@Field
+	@Column(nullable = false, unique = true)
 	private String email;
 
-	@Column(length = 128, nullable = true, unique = true)
+	@Column(unique = true)
 	private String imageFileName;
 
 	@NotNull
-	@Column(length = 2, nullable = false)
+	@Column(nullable = false)
 	private String language;
 
 	private LocalDateTime lastConnection;
 
 	@ManyToOne
-	@JoinColumn(name = "managerId", nullable = true)
+	@JoinColumn(name = "managerId")
 	private User manager;
 
 	@NotNull
-	@Column(length = 64, nullable = false)
-	@Field
+	@Column(nullable = false)
+	@Fields({ @Field(name = "_name"), @Field(name = "name", analyze = Analyze.NO, store = Store.NO, index = Index.NO) })
+	@SortableField(forField = "name")
 	private String name;
 
 	@Pattern(regexp = "(?:[+]?(?:[0-9]{1,5}|\\x28[0-9]{1,5}\\x29)[ ]?)?[0-9]{2}(?:[0-9][ ]?){6}[0-9]")
-	@Column(length = 12)
 	private String phoneNumber;
 
 	@NotNull
 	@Enumerated(EnumType.STRING)
-	@Column(length = 8)
+	@Column(nullable = false)
 	private Role role;
 
 	@NotNull
@@ -79,8 +83,10 @@ public class User extends AbstractAuditedEntity {
 	private Integer rowsPerPage = 10;
 
 	@NotNull
-	@Column(length = 64, nullable = false)
-	@Field
+	@Column(nullable = false)
+	@Fields({ @Field(name = "_surname"),
+			@Field(name = "surname", analyze = Analyze.NO, store = Store.NO, index = Index.NO) })
+	@SortableField(forField = "surname")
 	private String surname;
 
 	public void addBookmark(final Bookmark bookmark) {
