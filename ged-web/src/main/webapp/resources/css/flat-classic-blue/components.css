@@ -227,6 +227,7 @@ body .breadcrumb ul li.ui-breadcrumb-chevron {
 
 .candidate-metadata .candidate-rating {
 	padding: 1em;
+	text-align: center;
 }
 
 .form-action-primary {
@@ -306,8 +307,8 @@ body .input-container>*:last-child {
 }
 
 .input-avatar {
-	text-align: center;
 	position: relative;
+	text-align: center;
 }
 
 .input-avatar .image, .avatar .image {
@@ -524,7 +525,7 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button
 }
 
 .panel-aside {
-	flex: 1 0 0;
+	flex: 0;
 	border-bottom: 1px solid #bfceda;
 }
 

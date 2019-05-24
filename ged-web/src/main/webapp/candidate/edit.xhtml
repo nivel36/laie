@@ -25,7 +25,7 @@
 					<div class="column candidate-metadata">
 						<cc:inputAvatar id="candidate_image" value="#{editCandidateView.candidate.imageFileName}"
 							fileUploadListener="#{editCandidateView.uploadImage}" />
-						<div class="candidate-rating" style="text-align: center;">
+						<div class="candidate-rating">
 							<p:rating value="#{editCandidateView.candidate.rating}" cancel="false">
 								<p:ajax event="rate" listener="#{editCandidateView.onrate}" update="" />
 							</p:rating>
