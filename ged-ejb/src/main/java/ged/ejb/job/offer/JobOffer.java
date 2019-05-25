@@ -81,7 +81,8 @@ public class JobOffer extends AbstractEntity implements Erasable, Ownerable {
 
 	@NotNull
 	@Column(nullable = false)
-	@Fields({ @Field(name = "_name"), @Field(name = "name", analyze = Analyze.NO, store = Store.NO, index = Index.NO) })
+	@Field(name = "_name")
+	@Field(name = "name", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField(forField = "name")
 	private String name;
 

@@ -17,7 +17,6 @@ import javax.validation.constraints.Pattern;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.ContainedIn;
 import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Fields;
 import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.IndexedEmbedded;
@@ -36,7 +35,7 @@ import ged.ejb.user.User;
 public class Client extends AbstractEntity implements Ownerable, Erasable {
 
 	private static final long serialVersionUID = -5319357138994738654L;
-	
+
 	@Embedded
 	@IndexedEmbedded
 	private Address address;
@@ -46,7 +45,7 @@ public class Client extends AbstractEntity implements Ownerable, Erasable {
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "client", orphanRemoval = true)
 	private Set<Contact> contacts;
-	
+
 	@Column(nullable = false)
 	@Field
 	private boolean deleted;
@@ -57,7 +56,8 @@ public class Client extends AbstractEntity implements Ownerable, Erasable {
 
 	@NotNull
 	@Column(unique = true, nullable = false)
-	@Fields({ @Field(name = "_name"), @Field(name = "name", analyze = Analyze.NO, store = Store.NO, index = Index.NO) })
+	@Field(name = "_name")
+	@Field(name = "name", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField(forField = "name")
 	private String name;
 

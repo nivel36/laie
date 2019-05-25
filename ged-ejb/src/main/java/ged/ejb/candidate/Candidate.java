@@ -23,7 +23,6 @@ import javax.validation.constraints.Pattern;
 
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Fields;
 import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.IndexedEmbedded;
@@ -78,8 +77,8 @@ public class Candidate extends AbstractEntity implements Erasable, Ownerable {
 
 	@NotNull
 	@Column(nullable = false)
-	@Fields({ @Field(name = "_jobProfile"),
-			@Field(name = "jobProfile", analyze = Analyze.NO, store = Store.NO, index = Index.NO) })
+	@Field(name = "_jobProfile")
+	@Field(name = "jobProfile", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField(forField = "jobProfile")
 	private String jobProfile;
 
@@ -87,7 +86,8 @@ public class Candidate extends AbstractEntity implements Erasable, Ownerable {
 
 	@NotNull
 	@Column(nullable = false)
-	@Fields({ @Field(name = "_name"), @Field(name = "name", analyze = Analyze.NO, store = Store.NO, index = Index.NO) })
+	@Field(name = "_name")
+	@Field(name = "name", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField(forField = "name")
 	private String name;
 
@@ -113,8 +113,8 @@ public class Candidate extends AbstractEntity implements Erasable, Ownerable {
 
 	@NotNull
 	@Column(nullable = false)
-	@Fields({ @Field(name = "_surname"),
-			@Field(name = "surname", analyze = Analyze.NO, store = Store.NO, index = Index.NO) })
+	@Field(name = "_surname")
+	@Field(name = "surname", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField(forField = "surname")
 	private String surname;
 

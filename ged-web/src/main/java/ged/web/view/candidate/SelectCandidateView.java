@@ -60,7 +60,7 @@ public class SelectCandidateView extends AbstractView {
 	}
 
 	private List<Long> initAlredySelectedCandidates() {
-		final List<Long> candidateIds = new ArrayList<Long>();
+		final List<Long> candidateIds = new ArrayList<>();
 		final String jobCandidatesIdParameter = this.externalContext.getRequestParameterMap().get("jobCandiatesId");
 		if (jobCandidatesIdParameter != null) {
 			final String[] ids = jobCandidatesIdParameter.split("\\|");

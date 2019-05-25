@@ -33,7 +33,7 @@ public abstract class AbstractCandidateView extends AbstractView {
 	@Inject
 	protected transient FileUploadService fileUploadService;
 
-	protected List<String> tags;
+	private List<String> tags;
 
 	@Inject
 	protected transient TagService tagService;

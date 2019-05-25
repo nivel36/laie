@@ -11,7 +11,7 @@ public class UserLazyDataModel extends AbstractLazyDataModel<User> {
 
 	private static final long serialVersionUID = -6174281645045027550L;
 	
-	private UserService userService;
+	private transient UserService userService;
 
 	public UserLazyDataModel(final UserService userService) {
 		Objects.requireNonNull(userService, "UserService can't be null");

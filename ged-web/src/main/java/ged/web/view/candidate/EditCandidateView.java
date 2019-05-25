@@ -38,12 +38,12 @@ public class EditCandidateView extends AbstractCandidateView {
 		}
 	}
 
-	private List<String> initTags() {
+	private void initTags() {
 		List<String> tagNames = new ArrayList<>();
 		for (final Tag tag : this.candidate.getTags()) {
 			tagNames.add(tag.getLabel());
 		}
-		return tags;
+		this.setTags(tagNames);
 	}
 
 	@PostConstruct
@@ -53,7 +53,7 @@ public class EditCandidateView extends AbstractCandidateView {
 		this.checkEditPermission();
 		logger.trace("Candidate {} edit init", this.candidate);
 		this.putValueToFlash(CANDIDATE_KEY, this.candidate); // prevent errors if f5/reload is pressed
-		this.tags = initTags();
+		initTags();
 	}
 
 	public String save() {

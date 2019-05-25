@@ -7,7 +7,6 @@ import javax.persistence.Embeddable;
 
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Fields;
 import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.SortableField;
 import org.hibernate.search.annotations.Store;
@@ -17,7 +16,8 @@ public class Address implements Serializable {
 
 	private static final long serialVersionUID = 2907479775923990369L;
 
-	@Fields({ @Field(name = "_city"), @Field(name = "city", analyze = Analyze.NO, store = Store.NO, index = Index.NO) })
+	@Field(name = "_city")
+	@Field(name = "city", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField(forField = "city")
 	private String city;
 
@@ -27,7 +27,8 @@ public class Address implements Serializable {
 
 	private String number;
 
-	@Fields({ @Field(name = "_state"), @Field(name = "state", analyze = Analyze.NO, store = Store.NO, index = Index.NO) })
+	@Field(name = "_state")
+	@Field(name = "state", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField(forField = "state")
 	private String state;
 

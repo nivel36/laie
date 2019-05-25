@@ -33,7 +33,7 @@ public class AddCandidateView extends AbstractCandidateView {
 	public void init() {
 		logger.trace("New candidate init");
 		this.candidate = this.initCandidate();
-		this.tags = new ArrayList<>();
+		this.setTags(new ArrayList<>());
 	}
 
 	public String save() {

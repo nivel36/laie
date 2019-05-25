@@ -11,7 +11,7 @@ public class ContactLazyDataModel extends AbstractLazyDataModel<Contact> {
 
 	private static final long serialVersionUID = -7990024695503848209L;
 	
-	private ContactService contactService;
+	private transient ContactService contactService;
 
 	public ContactLazyDataModel(final ContactService contactService) {
 		Objects.requireNonNull(contactService, "ContactService can't be null");

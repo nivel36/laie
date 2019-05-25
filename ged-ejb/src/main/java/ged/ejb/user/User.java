@@ -66,7 +66,8 @@ public class User extends AbstractEntity {
 
 	@NotNull
 	@Column(nullable = false)
-	@Fields({ @Field(name = "_name"), @Field(name = "name", analyze = Analyze.NO, store = Store.NO, index = Index.NO) })
+	@Field(name = "_name")
+	@Field(name = "name", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField(forField = "name")
 	private String name;
 
@@ -84,8 +85,8 @@ public class User extends AbstractEntity {
 
 	@NotNull
 	@Column(nullable = false)
-	@Fields({ @Field(name = "_surname"),
-			@Field(name = "surname", analyze = Analyze.NO, store = Store.NO, index = Index.NO) })
+	@Field(name = "_surname")
+	@Field(name = "surname", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField(forField = "surname")
 	private String surname;
 
