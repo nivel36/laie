@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://ged.com/i18n" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
-	xmlns:p="http://primefaces.org/ui" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:o="http://omnifaces.org/ui"
-	xmlns:of="http://omnifaces.org/functions" template="/WEB-INF/templates/default.xhtml">
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://ged.com/i18n" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:p="http://primefaces.org/ui"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:o="http://omnifaces.org/ui" xmlns:of="http://omnifaces.org/functions"
+	template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
 		<title>#{i18n['job.job_offer']} - {viewJobView.jobOffer.name}</title>
 	</ui:define>
 
 	<ui:param name="selectedMenu" value="offers" />
-	
+
 	<ui:define name="actions">
 		<p:button value="#{i18n['job.new_job_offer']}" outcome="#{Page.JOB_ADD.getUrl()}" />
 	</ui:define>
@@ -58,11 +58,11 @@
 							</div>
 							<div class="col-12 lg-6 xl-4">
 								<cc:outputText label="#{i18n['address.city']}" value="#{viewJobView.jobOffer.address.city}" />
-	
+
 							</div>
 							<div class="col-12 lg-6 xl-4">
 								<cc:outputText label="#{i18n['address.state']}" value="#{viewJobView.jobOffer.address.state}" />
-	
+
 							</div>
 							<div class="col-12">
 								<cc:outputText label="#{i18n['job.description']}" value="#{viewJobView.jobOffer.description}" />
