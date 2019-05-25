@@ -1,15 +1,19 @@
 package ged.ejb.job.offer;
 
+import java.util.Objects;
+
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-import ged.ejb.core.maintenance.AbstractEnumEntity;
+import ged.ejb.core.model.AbstractEntity;
 
 @Entity
 @Table(name = "JOB_CANDIDATURE_STATE")
-public class JobCandidatureState extends AbstractEnumEntity {
+public class JobCandidatureState extends AbstractEntity {
 
 	private static final long serialVersionUID = -4388524806296516306L;
+
+	private String name;
 
 	private String color;
 
@@ -28,16 +32,21 @@ public class JobCandidatureState extends AbstractEnumEntity {
 		if (this.getClass() != obj.getClass()) {
 			return false;
 		}
-		return super.equals(obj);
+		final JobCandidatureState other = (JobCandidatureState) obj;
+		return Objects.equals(this.name, other.name);
 	}
 
 	public String getColor() {
 		return this.color;
 	}
 
+	public String getName() {
+		return this.name;
+	}
+
 	@Override
 	public int hashCode() {
-		return super.hashCode();
+		return Objects.hashCode(this.name);
 	}
 
 	public boolean isFirst() {
@@ -58,5 +67,9 @@ public class JobCandidatureState extends AbstractEnumEntity {
 
 	public void setLast(final boolean last) {
 		this.last = last;
+	}
+
+	public void setName(final String name) {
+		this.name = name;
 	}
 }

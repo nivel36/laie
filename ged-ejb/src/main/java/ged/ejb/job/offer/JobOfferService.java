@@ -41,7 +41,9 @@ public class JobOfferService extends AbstractService<JobOffer> {
 		Objects.requireNonNull(jobOffer);
 		Objects.requireNonNull(candidate);
 		logger.debug("Add Job Candidature of candidate {} to jobOffer {}", candidate.getFullName(), jobOffer);
+		final JobCandidatureState firstJobCandidatureState = this.jobCandidatureDao.findFirstJobCandidature();
 		final JobCandidature jobCandidature = new JobCandidature(candidate, jobOffer);
+		jobCandidature.setJobCandidatureState(firstJobCandidatureState);
 		return this.jobCandidatureDao.save(jobCandidature);
 	}
 
@@ -91,7 +93,7 @@ public class JobOfferService extends AbstractService<JobOffer> {
 		logger.debug("Find all job Offers of the candidate  {}", candidate);
 		return this.jobOfferDao.findJobOffersByCandidate(candidate);
 	}
-	
+
 	public List<JobOffer> findJobOffersByClient(final Client client) {
 		Objects.requireNonNull(client);
 		logger.debug("Find all job Offers of the client  {}", client);

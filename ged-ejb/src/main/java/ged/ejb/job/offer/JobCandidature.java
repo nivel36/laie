@@ -39,8 +39,6 @@ public class JobCandidature extends AbstractEntity {
 	@JoinColumn(name = "jobOfferId", nullable = false)
 	private JobOffer jobOffer;
 
-	private String state;
-
 	public JobCandidature() {
 	}
 
@@ -80,10 +78,6 @@ public class JobCandidature extends AbstractEntity {
 		return this.jobOffer;
 	}
 
-	public String getState() {
-		return state;
-	}
-
 	@Override
 	public int hashCode() {
 		return Objects.hash(this.candidate, this.jobOffer);
@@ -105,12 +99,8 @@ public class JobCandidature extends AbstractEntity {
 		this.jobOffer = jobOffer;
 	}
 
-	public void setState(final String state) {
-		this.state = state;
-	}
-
 	@Override
 	public String toString() {
-		return candidate.getFullName() + "-" + jobOffer;
+		return this.candidate.getFullName() + "-" + this.jobOffer;
 	}
 }

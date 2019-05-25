@@ -1,7 +1,7 @@
 <ui:component xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
 	xmlns:composite="http://xmlns.jcp.org/jsf/composite" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
-	xmlns:o="http://omnifaces.org/ui" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+	xmlns:o="http://omnifaces.org/ui" xmlns:i18n="http://ged.com/i18n" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
 	<composite:interface>
 		<composite:attribute name="jobCandidatures" required="true" />
@@ -46,7 +46,7 @@
 						<p:rating value="#{jobCandidature.candidate.rating}" cancel="false" readonly="true" />
 					</p:column>
 					<p:column headerText="#{i18n['job_candidature.state']}">
-						<h:outputText value="#{jobCandidature.state}" />
+						<h:outputText value="#{i18n:translate(jobCandidature.jobCandidatureState.name)}" />
 					</p:column>
 				</p:dataTable>
 			</div>

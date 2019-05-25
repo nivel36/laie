@@ -64,15 +64,21 @@ insert into I18NSTRING( id, version, locale, key, text ) values( 753, 0, 'es', '
 insert into I18NSTRING( id, version, locale, key, text ) values( 754, 0, 'ca', 'reference', 'Referència' );
 insert into I18NSTRING( id, version, locale, key, text ) values( 755, 0, 'es', 'reference', 'Referencia' );
 
-insert into I18NSTRING( id, version, locale, key, text ) values( 825, 0, 'es', 'contrato_indefinido', 'Contrato indefinido' );
-insert into I18NSTRING( id, version, locale, key, text ) values( 826, 0, 'ca', 'contrato_indefinido', 'Contracte indefinit' );
-insert into I18NSTRING( id, version, locale, key, text ) values( 830, 0, 'es', 'contrato_indefinido.description', 'Es aquel que se concierta sin establecer límites de tiempo en la prestación de los servicios, en cuanto a la duración del contrato.' );
-insert into I18NSTRING( id, version, locale, key, text ) values( 831, 0, 'ca', 'contrato_indefinido.description', 'Es aquel que se concierta sin establecer límites de tiempo en la prestación de los servicios, en cuanto a la duración del contrato.' );
+insert into I18NSTRING( id, version, locale, key, text ) values( 825, 0, 'es', 'job_candidature_state.not_contacted', 'Sin contactar' );
+insert into I18NSTRING( id, version, locale, key, text ) values( 826, 0, 'ca', 'job_candidature_state.not_contacted', 'Sense contactar' );
+insert into I18NSTRING( id, version, locale, key, text ) values( 830, 0, 'es', 'job_candidature_state.contacted', 'Contactado' );
+insert into I18NSTRING( id, version, locale, key, text ) values( 831, 0, 'ca', 'job_candidature_state.contacted', 'Contactat' );
+insert into I18NSTRING( id, version, locale, key, text ) values( 835, 0, 'es', 'job_candidature_state.submitted', 'Enviada' );
+insert into I18NSTRING( id, version, locale, key, text ) values( 836, 0, 'ca', 'job_candidature_state.submitted', 'Enviada' );
+insert into I18NSTRING( id, version, locale, key, text ) values( 840, 0, 'es', 'job_candidature_state.declined', 'Rechazada' );
+insert into I18NSTRING( id, version, locale, key, text ) values( 841, 0, 'ca', 'job_candidature_state.declined', 'Refusada' );
+insert into I18NSTRING( id, version, locale, key, text ) values( 845, 0, 'es', 'job_candidature_state.interviewed', 'Entrevistado' );
+insert into I18NSTRING( id, version, locale, key, text ) values( 846, 0, 'ca', 'job_candidature_state.interviewed', 'Entrevistado' );
+insert into I18NSTRING( id, version, locale, key, text ) values( 850, 0, 'es', 'job_candidature_state.offered', 'Ofrecido' );
+insert into I18NSTRING( id, version, locale, key, text ) values( 851, 0, 'ca', 'job_candidature_state.offered', 'Oferigut' );
+insert into I18NSTRING( id, version, locale, key, text ) values( 855, 0, 'es', 'job_candidature_state.approved', 'Aprobado' );
+insert into I18NSTRING( id, version, locale, key, text ) values( 856, 0, 'ca', 'job_candidature_state.approved', 'Aprovat' );
 
-insert into I18NSTRING( id, version, locale, key, text ) values( 835, 0, 'es', 'contrato_indefinido_fijos_discontinuos', 'Contrato indefinido de fijos discontinuos' );
-insert into I18NSTRING( id, version, locale, key, text ) values( 836, 0, 'ca', 'contrato_indefinido_fijos_discontinuos', 'Contrato indefinido de fijos discontinuos' );
-insert into I18NSTRING( id, version, locale, key, text ) values( 840, 0, 'es', 'contrato_indefinido_fijos_discontinuos.description', 'Es el que se concierta para realizar trabajos que tengan el carácter de fijos discontinuos y no se repitan en fechas ciertas, dentro del volumen normal de actividad de la empresa.A efectos de prestaciones por desempleo, también se consideran trabajadores fijos discontinuos los que desarrollen trabajos fijos y periódicos que se repiten en fechas ciertas.' );
-insert into I18NSTRING( id, version, locale, key, text ) values( 841, 0, 'ca', 'contrato_indefinido_fijos_discontinuos.description', 'Es el que se concierta para realizar trabajos que tengan el carácter de fijos discontinuos y no se repitan en fechas ciertas, dentro del volumen normal de actividad de la empresa.A efectos de prestaciones por desempleo, también se consideran trabajadores fijos discontinuos los que desarrollen trabajos fijos y periódicos que se repiten en fechas ciertas.' );
 
 insert into I18NSTRING( id, version, locale, key, text ) values( 860, 0, 'es', 'open', 'Abierta' );
 insert into I18NSTRING( id, version, locale, key, text ) values( 861, 0, 'ca', 'open', 'Oberta' );
