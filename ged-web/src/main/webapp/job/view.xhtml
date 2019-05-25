@@ -24,47 +24,49 @@
 
 	<ui:define name="content">
 		<div class="grid nogutter">
-			<div class="panel job col-12 xl-6">
-				<div class="panel-header">
-					<div class="panel-header-title">#{i18n['job.job_offer']}</div>
-					<h:form>
-						<div class="panel-buttons">
-							<p:commandButton value="#{i18n['action.export']}" action="#{viewJobView.export}" icon="fa-file-excel-o" />
-							<p:commandButton value="#{i18n['action.edit']}" action="#{viewJobView.editJobOffer}" />
-						</div>
-					</h:form>
-				</div>
-				<div class="panel-content panel-content-data">
-					<div class="grid">
-						<div class="col-12 lg-6 xl-4">
-							<cc:outputText label="#{i18n['job.name']}" value="#{viewJobView.jobOffer.name}" />
-						</div>
-						<div class="col-12 lg-6 xl-4">
-							<cc:outputText label="#{i18n['job.client']}" value="#{viewJobView.jobOffer.client.name}" />
-						</div>
-						<div class="col-12 lg-6 xl-4">
-							<cc:outputText label="#{i18n['job.places']}" value="#{viewJobView.jobOffer.places}" />
-						</div>
-						<div class="col-12 lg-6 xl-4">
-							<cc:outputText label="#{i18n['job.date_opened']}" value="#{viewJobView.jobOffer.dateOpened}">
-								<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" for="element" />
-							</cc:outputText>
-						</div>
-						<div class="col-12 lg-6 xl-4">
-							<cc:outputText label="#{i18n['job.date_closed']}" value="#{viewJobView.jobOffer.dateClosed}">
-								<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" for="element" />
-							</cc:outputText>
-						</div>
-						<div class="col-12 lg-6 xl-4">
-							<cc:outputText label="#{i18n['address.city']}" value="#{viewJobView.jobOffer.address.city}" />
-
-						</div>
-						<div class="col-12 lg-6 xl-4">
-							<cc:outputText label="#{i18n['address.state']}" value="#{viewJobView.jobOffer.address.state}" />
-
-						</div>
-						<div class="col-12">
-							<cc:outputText label="#{i18n['job.description']}" value="#{viewJobView.jobOffer.description}" />
+			<div class="col-12 xl-6">
+				<div class="panel job">
+					<div class="panel-header">
+						<div class="panel-header-title">#{i18n['job.job_offer']}</div>
+						<h:form>
+							<div class="panel-buttons">
+								<p:commandButton value="#{i18n['action.export']}" action="#{viewJobView.export}" icon="fa-file-excel-o" />
+								<p:commandButton value="#{i18n['action.edit']}" action="#{viewJobView.editJobOffer}" />
+							</div>
+						</h:form>
+					</div>
+					<div class="panel-content panel-content-data">
+						<div class="grid">
+							<div class="col-12 lg-6 xl-4">
+								<cc:outputText label="#{i18n['job.name']}" value="#{viewJobView.jobOffer.name}" />
+							</div>
+							<div class="col-12 lg-6 xl-4">
+								<cc:outputText label="#{i18n['job.client']}" value="#{viewJobView.jobOffer.client.name}" />
+							</div>
+							<div class="col-12 lg-6 xl-4">
+								<cc:outputText label="#{i18n['job.places']}" value="#{viewJobView.jobOffer.places}" />
+							</div>
+							<div class="col-12 lg-6 xl-4">
+								<cc:outputText label="#{i18n['job.date_opened']}" value="#{viewJobView.jobOffer.dateOpened}">
+									<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" for="element" />
+								</cc:outputText>
+							</div>
+							<div class="col-12 lg-6 xl-4">
+								<cc:outputText label="#{i18n['job.date_closed']}" value="#{viewJobView.jobOffer.dateClosed}">
+									<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" for="element" />
+								</cc:outputText>
+							</div>
+							<div class="col-12 lg-6 xl-4">
+								<cc:outputText label="#{i18n['address.city']}" value="#{viewJobView.jobOffer.address.city}" />
+	
+							</div>
+							<div class="col-12 lg-6 xl-4">
+								<cc:outputText label="#{i18n['address.state']}" value="#{viewJobView.jobOffer.address.state}" />
+	
+							</div>
+							<div class="col-12">
+								<cc:outputText label="#{i18n['job.description']}" value="#{viewJobView.jobOffer.description}" />
+							</div>
 						</div>
 					</div>
 				</div>

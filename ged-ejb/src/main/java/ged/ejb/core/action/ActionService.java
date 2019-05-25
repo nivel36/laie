@@ -17,7 +17,6 @@ import org.slf4j.LoggerFactory;
 import ged.ejb.core.AbstractService;
 import ged.ejb.core.action.Action.ActionType;
 import ged.ejb.core.events.PostDelete;
-import ged.ejb.core.events.PostLogin;
 import ged.ejb.core.events.PostPersist;
 import ged.ejb.core.events.PostUndelete;
 import ged.ejb.core.events.PostUpdate;
@@ -84,13 +83,6 @@ public class ActionService extends AbstractService<Action> {
 		final User user = this.userService.findUserByEmail(this.sessionContext.getCallerPrincipal().getName());
 		action.setUser(user);
 		this.save(action);
-	}
-
-	public void loginAction(@PostLogin @Observes final String email) {
-		Objects.requireNonNull(email);
-		logger.debug("Login user {}", email);
-		final User user = this.userService.findUserByEmail(email);
-//		this.insertAction(user, ActionType.LOGIN);
 	}
 
 	public void setActionDao(final ActionDao actionDao) {
