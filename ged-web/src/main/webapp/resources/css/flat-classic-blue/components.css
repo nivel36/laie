@@ -566,6 +566,10 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button
 	background: #e0e3ed;
 }
 
+.curriculum .panel-content-data {
+	flex-direction: column;
+}
+
 .panel-header-data {
 	display: flex;
 	flex-direction: column;

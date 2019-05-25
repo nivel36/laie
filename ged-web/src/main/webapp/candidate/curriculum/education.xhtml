@@ -26,37 +26,37 @@
 		<h:form id="education">
 			<div class="grid nogutter">
 				<div class="panel curriculum col-12 xl-8">
-					<div class="panel-header">
-						<div class="panel-header-title"></div>
-					</div>
 					<div class="panel-content">
-						<cc:inputText id="degree" label="#{i18n['education.degree']}" value="#{educationView.education.degree}" required="true" />
+						<div class="panel-content-data">
+							<cc:inputText id="degree" label="#{i18n['education.degree']}" value="#{educationView.education.degree}" required="true" />
 
-						<cc:inputText id="school" label="#{i18n['education.school']}" value="#{educationView.education.school}" required="true" />
+							<cc:inputText id="school" label="#{i18n['education.school']}" value="#{educationView.education.school}" required="true" />
 
-						<cc:inputSelect id="fromDate" label="#{i18n['education.from_date']}" value="#{educationView.education.startYear}">
-							<f:selectItem itemLabel="#{i18n['date.year']}" itemValue="" />
-							<f:selectItems var="year" value="#{educationView.years}" itemValue="#{year}" itemLabel="#{year}" />
-						</cc:inputSelect>
-
-						<h:panelGroup layout="block" id="toDateWrapper">
-							<cc:inputSelect id="toDate" label="#{i18n['education.to_date']}" value="#{educationView.education.endYear}"
-								rendered="#{not educationView.education.stillStudying}">
+							<cc:inputSelect id="fromDate" label="#{i18n['education.from_date']}" value="#{educationView.education.startYear}">
 								<f:selectItem itemLabel="#{i18n['date.year']}" itemValue="" />
 								<f:selectItems var="year" value="#{educationView.years}" itemValue="#{year}" itemLabel="#{year}" />
 							</cc:inputSelect>
-						</h:panelGroup>
 
-						<f:ajax event="change" render="jobExperience:toDateWrapper" />
-						</cc:inputCheckbox>
+							<h:panelGroup layout="block" id="toDateWrapper">
+								<cc:inputSelect id="toDate" label="#{i18n['education.to_date']}" value="#{educationView.education.endYear}"
+									rendered="#{not educationView.education.stillStudying}">
+									<f:selectItem itemLabel="#{i18n['date.year']}" itemValue="" />
+									<f:selectItems var="year" value="#{educationView.years}" itemValue="#{year}" itemLabel="#{year}" />
+								</cc:inputSelect>
+							</h:panelGroup>
 
-						<cc:richText id="description" label="#{i18n['education.description']}" value="#{educationView.education.description}" />
+							<cc:inputCheckbox id="still" label="#{i18n['job.still_working']}" value="#{jobExperienceBean.stillWorking}">
+								<f:ajax event="change" render="jobExperience:toDateWrapper" />
+							</cc:inputCheckbox>
+
+							<cc:richText id="description" label="#{i18n['education.description']}" value="#{educationView.education.description}" />
+						</div>
 					</div>
 
 					<div class="panel-footer">
 						<div class="panel-buttons">
 							<p:button value="#{i18n['action.cancel']}" outcome="#{Page.CURRICULUM.getUrl()}" styleClass="btn-gray">
-								<f:param name="id" value="#{educationView.education.curriculum.candidate.id}" />
+								<f:param name="id" value="#{educationView.curriculum.candidate.id}" />
 							</p:button>
 							<p:commandButton value="#{i18n['action.delete']}" action="#{educationView.delete}" process="@this"
 								rendered="#{not educationView.newEducation}" />

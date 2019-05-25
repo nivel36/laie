@@ -55,7 +55,7 @@ public class Candidate extends AbstractEntity implements Erasable, Ownerable {
 	private Curriculum curriculum;
 
 	@Column(nullable = false)
-	@Field
+	@Field(analyze = Analyze.NO)
 	private boolean deleted;
 
 	@NotNull

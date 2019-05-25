@@ -27,9 +27,6 @@
 		<h:form id="jobExperience">
 			<div class="grid nogutter">
 				<div class="panel curriculum col-12 xl-8">
-					<div class="panel-header">
-						<div class="panel-header-title">#{i18n['job_experience.job_experience']}</div>
-					</div>
 					<div class="panel-content">
 						<div class="panel-content-data">
 							<cc:inputText id="degree" label="#{i18n['job_experience.company_name']}" value="#{jobExperienceView.jobExperience.companyName}"
@@ -56,7 +53,7 @@
 					<div class="panel-footer">
 						<div class="panel-buttons">
 							<p:button value="#{i18n['action.cancel']}" outcome="#{Page.CURRICULUM.getUrl()}" styleClass="btn-gray">
-								<f:param name="id" value="#{jobExperienceView.jobExperience.curriculum.candidate.id}" />
+								<f:param name="id" value="#{jobExperienceView.curriculum.candidate.id}" />
 							</p:button>
 							<p:commandButton value="#{i18n['action.delete']}" action="#{jobExperienceView.delete}" process="@this"
 								rendered="#{not jobExperienceView.newJobExperience}" />
