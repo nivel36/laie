@@ -430,8 +430,7 @@ body .ui-dialog {
 }
 
 body .ui-dialog .ui-dialog-titlebar {
-	background: linear-gradient(to right, rgba(242, 243, 247, 1) 0%,
-		rgba(246, 246, 246, 1) 47%, rgba(236, 238, 243, 1) 100%);
+	background: #3d4f69;
 	border-bottom: 1px solid #bfceda;
 	padding: 0;
 	margin: 0;
@@ -442,8 +441,7 @@ body .ui-dialog .ui-dialog-titlebar .ui-dialog-title {
 	display: flex;
 	flex: 1 100%;
 	font-weight: bold;
-	color: #737c93;
-	text-shadow: 1px 1px white;
+	color: white;
 	margin: 0;
 	font-size: 1.1em;
 	padding: 10px;
