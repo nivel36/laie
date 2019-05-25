@@ -57,7 +57,7 @@ public abstract class AbstractCandidateView extends AbstractView {
 		}
 		final Set<Tag> candidateTags = new HashSet<>();
 		for (final String label : labels) {
-			final Tag tagFoundInDataBase = this.tagService.findByName(label);
+			final Tag tagFoundInDataBase = this.tagService.findByLabel(label);
 			if (tagFoundInDataBase != null) {
 				candidateTags.add(tagFoundInDataBase);
 			} else {

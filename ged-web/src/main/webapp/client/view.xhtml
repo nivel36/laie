@@ -50,7 +50,7 @@
 			<div class="col-12 sm-4">
 				<h:form id="contactsForm">
 					<cc:contacts contacts="#{viewClientView.contacts}">
-						<p:commandButton value="#{i18n['action.new']}" actionListener="#{viewClientView.newContact}"
+						<p:commandButton value="#{i18n['contact.new_contact']}" actionListener="#{viewClientView.newContact}"
 							action="#{Page.CONTACT_ADD.getRedirectUrl()}" process="@this" />
 					</cc:contacts>
 				</h:form>
@@ -58,7 +58,7 @@
 			<div class="col-12 sm-6">
 				<h:form id="jobOffersForm">
 					<cc:jobOffers id="jobOffers" jobOffers="#{viewClientView.jobOffers}">
-						<p:commandButton value="#{i18n['action.new']}" actionListener="#{viewClientView.newJobOffer}"
+						<p:commandButton value="#{i18n['job.new_job_offer']}" actionListener="#{viewClientView.newJobOffer}"
 							action="#{Page.JOB_ADD.getRedirectUrl()}" process="@this" />
 					</cc:jobOffers>
 				</h:form>

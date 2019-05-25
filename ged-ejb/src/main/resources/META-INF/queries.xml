@@ -250,6 +250,14 @@
 			WHERE j.first = true
 		]]></query>
 	</named-query>
+	
+	<named-query name="Tag.findByLabel">
+		<query><![CDATA[
+			SELECT t 
+			FROM Tag t 
+			WHERE t.label = :label
+		]]></query>
+	</named-query>
 
 	<named-query name="ServerFile.findByCandidate">
 		<query><![CDATA[

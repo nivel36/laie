@@ -10,9 +10,9 @@ import ged.ejb.core.model.Repository;
 @Repository
 public class TagDao extends AbstractDao<Tag> {
 
-	public Tag findByName(String name) {
-		Objects.requireNonNull(name, "Name can't be null");
-		return this.getPersistenceFacade().findByQuery(Tag.class, "Tag.findByName", map("name", name));
+	public Tag findByLabel(final String label) {
+		Objects.requireNonNull(label, "Label can't be null");
+		return this.getPersistenceFacade().findByQuery(Tag.class, "Tag.findByLabel", map("label", label));
 	}
 
 	@Override
