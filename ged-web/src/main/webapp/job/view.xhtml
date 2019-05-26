@@ -44,6 +44,9 @@
 								<cc:outputText label="#{i18n['job.client']}" value="#{viewJobView.jobOffer.client.name}" />
 							</div>
 							<div class="col-12 lg-6 xl-4">
+								<div class="tag #{viewJobView.jobOffer.jobOfferState.color}">#{i18n:translate(viewJobView.jobOffer.jobOfferState.name)}</div>
+							</div>
+							<div class="col-12 lg-6 xl-4">
 								<cc:outputText label="#{i18n['job.places']}" value="#{viewJobView.jobOffer.places}" />
 							</div>
 							<div class="col-12 lg-6 xl-4">
@@ -62,7 +65,6 @@
 							</div>
 							<div class="col-12 lg-6 xl-4">
 								<cc:outputText label="#{i18n['address.state']}" value="#{viewJobView.jobOffer.address.state}" />
-
 							</div>
 							<div class="col-12">
 								<cc:outputText label="#{i18n['job.description']}" value="#{viewJobView.jobOffer.description}" />
