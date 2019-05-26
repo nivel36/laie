@@ -1,12 +1,12 @@
 insert into CONTRACTTYPE( id, version, name, description) values ( 1, 0, 'contrato_indefinido','contrato_indefinido.description');
 insert into CONTRACTTYPE( id, version, name, description) values ( 2, 0, 'contrato_indefinido_fijos_discontinuos','contrato_indefinido_fijos_discontinuos.description');
 
-insert into JOB_OFFER_STATE( id, version, name, first, last, color) values (10, 0, 'job_offer_state.opened', true, false,'green');
+insert into JOB_OFFER_STATE( id, version, name, first, last, color) values (10, 0, 'job_offer_state.opened', false, false,'green');
 insert into JOB_OFFER_STATE( id, version, name, first, last, color) values (11, 0, 'job_offer_state.closed', false, false, 'red');
-insert into JOB_OFFER_STATE( id, version, name, first, last, color) values (12, 0, 'job_offer_state.cancelled', false, true, 'red');
-insert into JOB_OFFER_STATE( id, version, name, first, last, color) values (13, 0, 'job_offer_state.finished', false, true, 'green');
-insert into JOB_OFFER_STATE( id, version, name, first, last, color) values (14, 0, 'job_offer_state.paused', false, false, 'yellow');
-insert into JOB_OFFER_STATE( id, version, name, first, last, color) values (15, 0, 'job_offer_state.created', false, false, 'yellow');
+insert into JOB_OFFER_STATE( id, version, name, first, last, color) values (12, 0, 'job_offer_state.cancelled', false, true, 'brown');
+insert into JOB_OFFER_STATE( id, version, name, first, last, color) values (13, 0, 'job_offer_state.finished', false, true, 'blue');
+insert into JOB_OFFER_STATE( id, version, name, first, last, color) values (14, 0, 'job_offer_state.paused', false, false, 'blueviolet');
+insert into JOB_OFFER_STATE( id, version, name, first, last, color) values (15, 0, 'job_offer_state.created', true, false, 'cornflowerblue');
 
 insert into CONTRACTDURATION( id, version, name, description ) values ( 101, 0, 'one_year', 'one_year.description');
 
@@ -15,12 +15,12 @@ insert into ORIGIN( id, version, code ) values ( 111, 0, 'linkedin');
 insert into ORIGIN( id, version, code ) values ( 112, 0, 'reference');
 
 insert into JOB_CANDIDATURE_STATE( id, version, name, first, last, color ) values ( 130, 0, 'job_candidature_state.not_contacted', true, false, 'green');
-insert into JOB_CANDIDATURE_STATE( id, version, name, first, last, color ) values ( 131, 0, 'job_candidature_state.contacted', false, false,  'green');
-insert into JOB_CANDIDATURE_STATE( id, version, name, first, last, color ) values ( 132, 0, 'job_candidature_state.submitted', false, false,  'green');
-insert into JOB_CANDIDATURE_STATE( id, version, name, first, last, color ) values ( 133, 0, 'job_candidature_state.declined', false, true,  'green');
-insert into JOB_CANDIDATURE_STATE( id, version, name, first, last, color ) values ( 134, 0, 'job_candidature_state.interviewed', false, false,  'green');
-insert into JOB_CANDIDATURE_STATE( id, version, name, first, last, color ) values ( 135, 0, 'job_candidature_state.offered', false, false,  'green');
-insert into JOB_CANDIDATURE_STATE( id, version, name, first, last, color ) values ( 136, 0, 'job_candidature_state.approved', false, true,  'green');
+insert into JOB_CANDIDATURE_STATE( id, version, name, first, last, color ) values ( 131, 0, 'job_candidature_state.contacted', false, false,  'blue');
+insert into JOB_CANDIDATURE_STATE( id, version, name, first, last, color ) values ( 132, 0, 'job_candidature_state.submitted', false, false,  'brown');
+insert into JOB_CANDIDATURE_STATE( id, version, name, first, last, color ) values ( 133, 0, 'job_candidature_state.declined', false, true,  'red');
+insert into JOB_CANDIDATURE_STATE( id, version, name, first, last, color ) values ( 134, 0, 'job_candidature_state.interviewed', false, false,  'blueviolet');
+insert into JOB_CANDIDATURE_STATE( id, version, name, first, last, color ) values ( 135, 0, 'job_candidature_state.offered', false, false,  'cornflowerblue');
+insert into JOB_CANDIDATURE_STATE( id, version, name, first, last, color ) values ( 136, 0, 'job_candidature_state.approved', false, true,  'gray');
 
 insert into CREDENTIAL( id, version, hashPassword, salt, created ) values( 903, 0, '16AFB50A06A958ACEC2EDA9D70283139BC7B7372E21CC83F619CCF169E6E7956', 'FFFFFF', (TO_DATE('17/12/2015', 'DD/MM/YYYY')));
 insert into USER( id, version, email, language, name, rowsPerPage, surname, role, imageFileName, credentialId ) values( 901, 0, 'abel.ferrer.jimenez@gmail.com', 'es', 'Abel', 10, 'Ferrer', 'ADMIN', null, 903);
@@ -80,10 +80,18 @@ insert into I18NSTRING( id, version, locale, key, text ) values( 855, 0, 'es', '
 insert into I18NSTRING( id, version, locale, key, text ) values( 856, 0, 'ca', 'job_candidature_state.approved', 'Aprovat' );
 
 
-insert into I18NSTRING( id, version, locale, key, text ) values( 860, 0, 'es', 'open', 'Abierta' );
-insert into I18NSTRING( id, version, locale, key, text ) values( 861, 0, 'ca', 'open', 'Oberta' );
-insert into I18NSTRING( id, version, locale, key, text ) values( 862, 0, 'es', 'closed', 'Cerrada' );
-insert into I18NSTRING( id, version, locale, key, text ) values( 863, 0, 'ca', 'closed', 'Tancada' );
+insert into I18NSTRING( id, version, locale, key, text ) values( 860, 0, 'es', 'job_offer_state.opened', 'Abierta' );
+insert into I18NSTRING( id, version, locale, key, text ) values( 861, 0, 'ca', 'job_offer_state.opened', 'Oberta' );
+insert into I18NSTRING( id, version, locale, key, text ) values( 865, 0, 'es', 'job_offer_state.closed', 'Cerrada' );
+insert into I18NSTRING( id, version, locale, key, text ) values( 866, 0, 'ca', 'job_offer_state.closed', 'Tancada' );
+insert into I18NSTRING( id, version, locale, key, text ) values( 870, 0, 'es', 'job_offer_state.cancelled', 'Cancelada' );
+insert into I18NSTRING( id, version, locale, key, text ) values( 871, 0, 'ca', 'job_offer_state.cancelled', 'Cancel·lada' );
+insert into I18NSTRING( id, version, locale, key, text ) values( 875, 0, 'es', 'job_offer_state.finished', 'Finalizada' );
+insert into I18NSTRING( id, version, locale, key, text ) values( 876, 0, 'ca', 'job_offer_state.finished', 'Finalitzada' );
+insert into I18NSTRING( id, version, locale, key, text ) values( 880, 0, 'es', 'job_offer_state.paused', 'Pausada' );
+insert into I18NSTRING( id, version, locale, key, text ) values( 881, 0, 'ca', 'job_offer_state.paused', 'Pausada' );
+insert into I18NSTRING( id, version, locale, key, text ) values( 895, 0, 'es', 'job_offer_state.created', 'Creada' );
+insert into I18NSTRING( id, version, locale, key, text ) values( 896, 0, 'ca', 'job_offer_state.created', 'Creada' );
 
 insert into CLIENT( id, version, name, cif, ownerId, phoneNumber, deleted) values (1000, 0, 'F.C. Barcelona', 'A0000000', 901, '935551414', false);
 

@@ -13,6 +13,10 @@ import ged.ejb.core.model.Repository;
 @Repository
 public class JobCandidatureDao extends AbstractDao<JobCandidature> {
 
+	public List<JobCandidatureState> findAllJobCandidatureStates() {
+		return this.getPersistenceFacade().findAll(JobCandidatureState.class, Page.ALL);
+	}
+
 	public List<JobCandidature> findByCandidate(final Candidate candidate) {
 		Objects.requireNonNull(candidate);
 		return this.findByQuery(JobCandidature.class, "JobCandidature.findByCandidate", map("candidate", candidate),

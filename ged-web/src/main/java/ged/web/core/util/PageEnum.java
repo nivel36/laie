@@ -31,13 +31,14 @@ public enum PageEnum {
 	JOB_SEARCH("/job/search"), //
 	JOB_SELECT("/job/select"), //
 	LOGIN("/login"), //
-	MAINTENANCE("/maintenance/index"), //
+	MAINTENANCE("/maintenance"), //
+	MAINTENANCE_JOB_CANDIDATURE_STATES("/maintenance/jobCandidatureStates"), //
 	REPORT("/report/search"), //
 	USER("/user/view"), //
 	USER_ADD("/user/add"), //
 	USER_EDIT("/user/edit"), //
 	USER_SEARCH("/user/search");
-	
+
 	private static final String XHTML = ".xhtml";
 
 	private final static String REDIRECT = "faces-redirect=true";

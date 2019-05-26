@@ -180,8 +180,7 @@ body footer .version span {
 }
 
 body .breadcrumb {
-	background: linear-gradient(to bottom, rgba(243, 245, 248, 1) 0%,
-		rgba(246, 246, 246, 1) 48%, rgba(237, 237, 237, 1) 100%);
+	background: linear-gradient(to bottom, rgba(243, 245, 248, 1) 0%, rgba(246, 246, 246, 1) 48%, rgba(237, 237, 237, 1) 100%);
 	border-top: 1px solid white;
 	border-bottom: 1px solid #bfceda;
 	border-left: 1px solid white;
@@ -401,8 +400,7 @@ body .input-search .clean-search-button {
 	flex: 0 1 auto;
 }
 
-body .input-group button.icon, .input-group .icon, body .input-group .ui-button
-	{
+body .input-group button.icon, .input-group .icon, body .input-group .ui-button {
 	width: 34px;
 	height: 34px;
 	display: inline-flex;
@@ -451,8 +449,7 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button
 }
 
 .dialog-header {
-	background: linear-gradient(to right, rgba(242, 243, 247, 1) 0%,
-		rgba(246, 246, 246, 1) 47%, rgba(236, 238, 243, 1) 100%);
+	background: linear-gradient(to right, rgba(242, 243, 247, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(236, 238, 243, 1) 100%);
 	border-bottom: 1px solid #bfceda;
 	padding: 0.3em 1.2em;
 	display: flex;
@@ -491,8 +488,7 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button
 }
 
 .panel-header {
-	background: linear-gradient(to right, rgba(242, 243, 247, 1) 0%,
-		rgba(246, 246, 246, 1) 47%, rgba(236, 238, 243, 1) 100%);
+	background: linear-gradient(to right, rgba(242, 243, 247, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(236, 238, 243, 1) 100%);
 	border-bottom: 1px solid #bfceda;
 	padding: 0px;
 	margin: 0;
@@ -539,7 +535,7 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button
 	border-bottom: 1px solid #bfceda;
 	flex: 5 0;
 	display: flex;
-	flex-flow:  column nowrap;
+	flex-flow: column nowrap;
 }
 
 .panel-content-data {
@@ -561,8 +557,7 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button
 	flex: 1;
 }
 
-.curriculum .panel-header, .candidate .panel-header, .user .panel-header
-	{
+.curriculum .panel-header, .candidate .panel-header, .user .panel-header {
 	background: #e0e3ed;
 }
 
@@ -605,27 +600,23 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button
 	flex-direction: column;
 }
 
-.curriculum .panel-header-data .name, .candidate .panel-header-data .name,
-	.user .panel-header-data .name {
+.curriculum .panel-header-data .name, .candidate .panel-header-data .name, .user .panel-header-data .name {
 	font-size: 1.5em;
 	text-shadow: 1px 1px white;
 	padding-bottom: 0.4em;
 }
 
-.curriculum .panel-header-data .job-profile, .candidate .panel-header-data .job-profile
-	{
+.curriculum .panel-header-data .job-profile, .candidate .panel-header-data .job-profile {
 	font-size: 1em;
 	padding-bottom: 0.6em;
 }
 
-.curricukum .panel-header-data .section, .candidate .panel-header-data .section,
-	.user .panel-header-data .section {
+.curricukum .panel-header-data .section, .candidate .panel-header-data .section, .user .panel-header-data .section {
 	font-size: 1.2em;
 	padding-bottom: 0.4em;
 }
 
-.curriculum .personal-data, .candidate .personal-data, .user .personal-data
-	{
+.curriculum .personal-data, .candidate .personal-data, .user .personal-data {
 	display: flex;
 	flex-direction: column;
 	flex: 1;
@@ -733,8 +724,7 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button
 }
 
 .login-page {
-	background-image:
-		url("#{request.contextPath}/resources/img/loginbg.jpg");
+	background-image: url("#{request.contextPath}/resources/img/loginbg.jpg");
 }
 
 .login-page .content {
@@ -872,6 +862,48 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button
 
 .job_address {
 	color: #959bac;
+}
+
+.tag {
+	min-width: 80px;
+	border-radius: 3px;
+	color: white;
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+	padding: 0 10px;
+	height: 25px;
+	font-size: 0.9em;
+	margin: 5px;
+}
+
+.tag.green {
+	background-color: green;
+}
+
+.tag.red {
+	background-color: red;
+}
+
+.tag.brown {
+	background-color: brown;
+}
+
+.tag.blue {
+	background-color: blue;
+}
+
+.tag.blueviolet {
+	background-color: blueviolet;
+}
+
+.tag.cornflowerblue {
+	background-color: cornflowerblue;
+}
+
+.tag-list {
+	display: flex;
+	flex-direction: column;
 }
 
 .wrapper {

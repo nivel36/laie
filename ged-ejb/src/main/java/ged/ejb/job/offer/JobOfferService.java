@@ -71,6 +71,10 @@ public class JobOfferService extends AbstractService<JobOffer> {
 		return this.save(jobOffer);
 	}
 
+	public List<JobCandidatureState> findAllJobCandidatureStates() {
+		return this.jobCandidatureDao.findAllJobCandidatureStates();
+	}
+
 	public List<JobOffer> findAllJobOffersByOwner(final User owner) {
 		Objects.requireNonNull(owner);
 		logger.debug("Find all job Offers of the owner {}", owner.getFullName());

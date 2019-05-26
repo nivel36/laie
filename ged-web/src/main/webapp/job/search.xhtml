@@ -9,7 +9,7 @@
 	</ui:define>
 
 	<ui:param name="selectedMenu" value="offers" />
-	
+
 	<ui:define name="actions">
 		<p:button value="#{i18n['job.new_job_offer']}" outcome="#{Page.JOB_ADD.getUrl()}" />
 	</ui:define>
@@ -69,6 +69,10 @@
 							<h:link value="#{jobOffer.owner.fullName}" outcome="#{Page.USER.getUrl()}">
 								<f:param name="id" value="#{jobOffer.owner.id}" />
 							</h:link>
+						</p:column>
+
+						<p:column headerText="#{i18n['job.job_offer_state']}">
+							<div class="tag #{jobOffer.jobOfferState.color}">#{i18n:translate(jobOffer.jobOfferState.name)}</div>
 						</p:column>
 					</p:dataTable>
 				</div>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://ged.com/i18n" xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/default.xhtml">
+
+	<ui:define name="title">
+		<title>#{i18n['maintenance.maintenances']}</title>
+	</ui:define>
+
+	<ui:param name="selectedMenu" value="maintenances" />
+
+	<ui:define name="breadcrumb">
+		<p:breadCrumb styleClass="breadcrumb">
+			<p:menuitem value="#{i18n['menu.index']}" outcome="#{Page.INDEX.getUrl()}" />
+			<p:menuitem value="#{i18n['maintenance.maintenances']}" outcome="#{Page.MAINTENANCE.getUrl()}" />
+			<p:menuitem value="#{i18n['job_candidature.job_candidature_states']}" disabled="true" />
+		</p:breadCrumb>
+	</ui:define>
+
+	<ui:define name="content">
+		<div class="panel">
+			<div class="panel-content">
+				<div class="panel-content-data">
+					<div class="tag-list">
+						<ui:repeat var="jobCandidatureState" value="#{jobCandidatureStatesMaintenanceView.states}">
+							<div class="tag #{jobCandidatureState.color}">#{i18n:translate(jobCandidatureState.name)}</div>
+						</ui:repeat>
+					</div>
+				</div>
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>
