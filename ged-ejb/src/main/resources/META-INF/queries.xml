@@ -3,24 +3,6 @@
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence/orm
         http://xmlns.jcp.org/xml/ns/persistence/orm_2_1.xsd" version="2.1">
 
-	<named-query name="Action.findAllByUser">
-		<query><![CDATA[
-			SELECT a 
-			FROM Action a 
-			WHERE a.user = :user 
-			ORDER BY a.date DESC
-		]]></query>
-	</named-query>
-
-	<named-query name="Action.findLastActions">
-		<query><![CDATA[
-			SELECT a 
-			FROM Action a
-			LEFT JOIN a.user u
-			ORDER BY a.date DESC
-		]]></query>
-	</named-query>
-
 	<named-query name="Bookmark.find">
 		<query><![CDATA[
 			SELECT b 
