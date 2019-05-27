@@ -33,6 +33,7 @@ public enum PageEnum {
 	LOGIN("/login"), //
 	MAINTENANCE("/maintenance"), //
 	MAINTENANCE_JOB_CANDIDATURE_STATES("/maintenance/jobCandidatureStates"), //
+	MAINTENANCE_JOB_OFFER_STATES("/maintenance/jobOfferStates"), //
 	REPORT("/report/search"), //
 	USER("/user/view"), //
 	USER_ADD("/user/add"), //

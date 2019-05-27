@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://ged.com/i18n" xmlns:p="http://primefaces.org/ui"
-	template="/WEB-INF/templates/default.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://ged.com/i18n"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
 		<title>#{i18n['maintenance.maintenances']}</title>
@@ -23,8 +23,10 @@
 					<div class="col-12 lg-12 xl-6">
 						<h2>#{i18n['job_candidature.job_candidatures']}</h2>
 						<ul>
-							<h:link outcome="#{Page.MAINTENANCE_JOB_CANDIDATURE_STATES.getUrl()}" value="#{i18n['job_candidature.job_candidature_states']}"
-								styleClass="link" />
+							<li><h:link outcome="#{Page.MAINTENANCE_JOB_CANDIDATURE_STATES.getUrl()}"
+									value="#{i18n['job_candidature.job_candidature_states']}" styleClass="link" /></li>
+							<li><h:link outcome="#{Page.MAINTENANCE_JOB_OFFER_STATES.getUrl()}" value="#{i18n['job.job_offer_states']}"
+									styleClass="link" /></li>
 						</ul>
 					</div>
 				</div>

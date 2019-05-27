@@ -4,7 +4,7 @@
 	template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
-		<title>#{i18n['job_candidature.job_candidature_states']}</title>
+		<title>#{i18n['job.job_offer_states']}</title>
 	</ui:define>
 
 	<ui:param name="selectedMenu" value="maintenances" />
@@ -13,7 +13,7 @@
 		<p:breadCrumb styleClass="breadcrumb">
 			<p:menuitem value="#{i18n['menu.index']}" outcome="#{Page.INDEX.getUrl()}" />
 			<p:menuitem value="#{i18n['maintenance.maintenances']}" outcome="#{Page.MAINTENANCE.getUrl()}" />
-			<p:menuitem value="#{i18n['job_candidature.job_candidature_states']}" disabled="true" />
+			<p:menuitem value="#{i18n['job.job_offer_states']}" disabled="true" />
 		</p:breadCrumb>
 	</ui:define>
 
@@ -22,8 +22,8 @@
 			<div class="panel-content">
 				<div class="panel-content-data">
 					<div class="tag-list">
-						<ui:repeat var="jobCandidatureState" value="#{jobCandidatureStatesMaintenanceView.states}">
-							<div class="tag #{jobCandidatureState.color}">#{i18n:translate(jobCandidatureState.name)}</div>
+						<ui:repeat var="jobOfferState" value="#{jobOfferStatesMaintenanceView.states}">
+							<div class="tag #{jobOfferState.color}">#{i18n:translate(jobOfferState.name)}</div>
 						</ui:repeat>
 					</div>
 				</div>

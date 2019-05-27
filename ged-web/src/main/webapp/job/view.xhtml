@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://ged.com/i18n" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:p="http://primefaces.org/ui"
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:o="http://omnifaces.org/ui" xmlns:of="http://omnifaces.org/functions"
-	template="/WEB-INF/templates/default.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://ged.com/i18n"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:p="http://primefaces.org/ui"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions" template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
 		<title>#{i18n['job.job_offer']} - {viewJobView.jobOffer.name}</title>
@@ -44,7 +45,12 @@
 								<cc:outputText label="#{i18n['job.client']}" value="#{viewJobView.jobOffer.client.name}" />
 							</div>
 							<div class="col-12 lg-6 xl-4">
-								<div class="tag #{viewJobView.jobOffer.jobOfferState.color}">#{i18n:translate(viewJobView.jobOffer.jobOfferState.name)}</div>
+								<div class="state">
+									<p:commandLink action="#{viewJobView.editJobOffer}" styleClass="state_button">
+										<span class="tag #{viewJobView.jobOffer.jobOfferState.color}">#{i18n:translate(viewJobView.jobOffer.jobOfferState.name)}</span>
+										<i class="icon fa fa-pencil"></i>
+									</p:commandLink>
+								</div>
 							</div>
 							<div class="col-12 lg-6 xl-4">
 								<cc:outputText label="#{i18n['job.places']}" value="#{viewJobView.jobOffer.places}" />

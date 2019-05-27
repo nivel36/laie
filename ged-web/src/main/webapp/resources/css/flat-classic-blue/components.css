@@ -235,6 +235,16 @@ body .breadcrumb ul li.ui-breadcrumb-chevron {
 	justify-content: flex-end;
 }
 
+.link {
+	padding: 5px 0px;
+	display: inline-flex;
+	color: #848b9d;
+}
+
+.link:hover {
+	color: #b4b8c2;
+}
+
 /************************************
  *  input
  ************************************/
@@ -777,6 +787,15 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button 
 	text-transform: capitalize;
 }
 
+.state_button .icon {
+	color: #7a869b;
+	display: none;
+}
+
+.state_button:hover .icon {
+	display: inline-flex;
+}
+
 .section {
 	display: flex;
 	flex-direction: column;
@@ -899,6 +918,14 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button 
 
 .tag.cornflowerblue {
 	background-color: cornflowerblue;
+}
+
+.tag.darkslateblue {
+	background-color: darkslateblue;
+}
+
+.tag.dimgray {
+	background-color: dimgray;
 }
 
 .tag-list {

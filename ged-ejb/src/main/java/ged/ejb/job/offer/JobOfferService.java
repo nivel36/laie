@@ -70,6 +70,10 @@ public class JobOfferService extends AbstractService<JobOffer> {
 		jobOffer.setJobOfferState(state);
 		return this.save(jobOffer);
 	}
+	
+	public List<JobOfferState> findAllJobOfferStates() {
+		return this.jobOfferDao.findAllJobOfferStates();
+	}
 
 	public List<JobCandidatureState> findAllJobCandidatureStates() {
 		return this.jobCandidatureDao.findAllJobCandidatureStates();
