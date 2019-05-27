@@ -1,14 +1,9 @@
-insert into CONTRACTTYPE( id, version, name, description) values ( 1, 0, 'contrato_indefinido','contrato_indefinido.description');
-insert into CONTRACTTYPE( id, version, name, description) values ( 2, 0, 'contrato_indefinido_fijos_discontinuos','contrato_indefinido_fijos_discontinuos.description');
-
 insert into JOB_OFFER_STATE( id, version, name, first, last, color) values (10, 0, 'job_offer_state.opened', false, false,'green');
 insert into JOB_OFFER_STATE( id, version, name, first, last, color) values (11, 0, 'job_offer_state.closed', false, false, 'red');
 insert into JOB_OFFER_STATE( id, version, name, first, last, color) values (12, 0, 'job_offer_state.cancelled', false, true, 'brown');
 insert into JOB_OFFER_STATE( id, version, name, first, last, color) values (13, 0, 'job_offer_state.finished', false, true, 'blue');
 insert into JOB_OFFER_STATE( id, version, name, first, last, color) values (14, 0, 'job_offer_state.paused', false, false, 'blueviolet');
 insert into JOB_OFFER_STATE( id, version, name, first, last, color) values (15, 0, 'job_offer_state.created', true, false, 'cornflowerblue');
-
-insert into CONTRACTDURATION( id, version, name, description ) values ( 101, 0, 'one_year', 'one_year.description');
 
 insert into ORIGIN( id, version, code ) values ( 110, 0, 'infojobs');
 insert into ORIGIN( id, version, code ) values ( 111, 0, 'linkedin');
