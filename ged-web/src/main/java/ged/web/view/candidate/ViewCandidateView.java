@@ -22,8 +22,8 @@ import ged.ejb.core.tag.Tag;
 import ged.ejb.curriculum.Curriculum;
 import ged.ejb.curriculum.CurriculumService;
 import ged.ejb.job.candidature.JobCandidature;
+import ged.ejb.job.candidature.JobCandidatureService;
 import ged.ejb.job.offer.JobOffer;
-import ged.ejb.job.offer.JobOfferService;
 import ged.web.core.IllegalPageStateException;
 import ged.web.core.util.Message;
 import ged.web.core.util.PageEnum;
@@ -51,10 +51,10 @@ public class ViewCandidateView extends AbstractView {
 	private List<JobCandidature> jobCandidatures;
 	
 	@Inject
-	private transient JobOfferService jobOfferService;
+	private transient JobCandidatureService jobCandidatureService;
 
 	private final List<String> tags = new ArrayList<>();
-
+	
 	private void checkDeleted() {
 		if (this.candidate.isDeleted()) {
 			logger.warn("Candidate is deleted");
@@ -104,7 +104,7 @@ public class ViewCandidateView extends AbstractView {
 			this.candidate.setAddress(new Address());
 		}
 		this.fillTags();
-		this.jobCandidatures = this.jobOfferService.findJobCandidatures(candidate, Page.ALL);
+		this.jobCandidatures = this.jobCandidatureService.findJobCandidatures(candidate, Page.ALL);
 		this.curriculum = this.curriculumService.findByCandidate(this.candidate);
 		checkDeleted();
 		this.editable = this.sessionUser.hasPermissionToEdit(this.candidate);
@@ -121,7 +121,7 @@ public class ViewCandidateView extends AbstractView {
 			return;
 		}
 		for (final JobOffer jobOffer : selectedJobOffers) {
-			final JobCandidature jobCandidature = this.jobOfferService.addJobCandidature(jobOffer, this.candidate);
+			final JobCandidature jobCandidature = this.jobCandidatureService.addJobCandidature(jobOffer, this.candidate);
 			jobCandidatures.add(jobCandidature);
 		}
 	}
@@ -139,7 +139,8 @@ public class ViewCandidateView extends AbstractView {
 		this.curriculumService = curriculumService;
 	}
 
-	public void setJobOfferService(JobOfferService jobOfferService) {
-		this.jobOfferService = jobOfferService;
+	public void setJobCandidatureService(JobCandidatureService jobCandidatureService) {
+		this.jobCandidatureService = jobCandidatureService;
 	}
+
 }

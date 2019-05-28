@@ -11,8 +11,8 @@ import javax.inject.Named;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import ged.ejb.job.candidature.JobCandidatureService;
 import ged.ejb.job.candidature.JobCandidatureState;
-import ged.ejb.job.offer.JobOfferService;
 import ged.web.core.view.AbstractView;
 
 @Named
@@ -26,7 +26,7 @@ public class JobCandidatureStatesMaintenanceView extends AbstractView {
 	private List<JobCandidatureState> states;
 
 	@Inject
-	private transient JobOfferService jobOfferService;
+	private transient JobCandidatureService jobCandidatureService;
 
 	public List<JobCandidatureState> getStates() {
 		return this.states;
@@ -35,11 +35,11 @@ public class JobCandidatureStatesMaintenanceView extends AbstractView {
 	@PostConstruct
 	public void init() {
 		logger.trace("Job candidature states maintenances init");
-		this.states = this.jobOfferService.findJobCandidatureStates();
+		this.states = this.jobCandidatureService.findJobCandidatureStates();
 	}
 
-	public void setJobOfferService(final JobOfferService jobOfferService) {
-		this.jobOfferService = jobOfferService;
+	public void setJobOfferService(final JobCandidatureService jobCandidatureService) {
+		this.jobCandidatureService = jobCandidatureService;
 	}
 
 }

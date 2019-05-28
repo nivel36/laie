@@ -21,8 +21,8 @@ import org.slf4j.LoggerFactory;
 import ged.ejb.candidate.Candidate;
 import ged.ejb.core.model.Page;
 import ged.ejb.job.candidature.JobCandidature;
+import ged.ejb.job.candidature.JobCandidatureService;
 import ged.ejb.job.offer.JobOffer;
-import ged.ejb.job.offer.JobOfferService;
 import ged.web.core.IllegalPageStateException;
 import ged.web.core.util.PageEnum;
 import ged.web.core.view.AbstractView;
@@ -44,9 +44,9 @@ public class ViewJobView extends AbstractView {
 	@Inject
 	@Param(name = "id", required = true)
 	private JobOffer jobOffer;
-
+	
 	@Inject
-	private transient JobOfferService jobService;
+	private transient JobCandidatureService jobCandidatureService;
 
 	public String editJobOffer() {
 		logger.debug("Edit job offer action performed");
@@ -76,7 +76,7 @@ public class ViewJobView extends AbstractView {
 			throw new IllegalPageStateException();
 		}
 		logger.trace("JobOffer {} init", this.jobOffer);
-		this.jobCandidatures = this.jobService.findJobCanditures(this.jobOffer, Page.ALL);
+		this.jobCandidatures = this.jobCandidatureService.findJobCanditures(this.jobOffer, Page.ALL);
 		this.editable = this.sessionUser.hasPermissionToEdit(this.jobOffer);
 	}
 
@@ -88,7 +88,7 @@ public class ViewJobView extends AbstractView {
 		@SuppressWarnings("unchecked")
 		final List<Candidate> selectedCandidates = (List<Candidate>) event.getObject();
 		for (final Candidate candidate : selectedCandidates) {
-			final JobCandidature jobCandidature = this.jobService.addJobCandidature(this.jobOffer, candidate);
+			final JobCandidature jobCandidature = this.jobCandidatureService.addJobCandidature(this.jobOffer, candidate);
 			this.jobCandidatures.add(jobCandidature);
 		}
 	}
@@ -108,9 +108,5 @@ public class ViewJobView extends AbstractView {
 
 	public void setJobOffer(final JobOffer jobOffer) {
 		this.jobOffer = jobOffer;
-	}
-
-	public void setJobService(final JobOfferService jobService) {
-		this.jobService = jobService;
 	}
 }
