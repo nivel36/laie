@@ -1,4 +1,4 @@
-package ged.ejb.job.offer;
+package ged.ejb.job.candidature;
 
 import java.util.List;
 import java.util.Objects;
@@ -15,6 +15,7 @@ import javax.validation.constraints.NotNull;
 import ged.ejb.candidate.Candidate;
 import ged.ejb.core.model.AbstractEntity;
 import ged.ejb.job.meeting.JobMeeting;
+import ged.ejb.job.offer.JobOffer;
 
 @Entity
 @Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "jobOfferId", "candidateId" }) })

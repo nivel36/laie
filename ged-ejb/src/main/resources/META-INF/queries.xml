@@ -195,7 +195,6 @@
 			SELECT j 
 			FROM JobOffer j 
 			WHERE j.owner = :owner 
-			AND j.deleted <> TRUE
 		]]></query>
 	</named-query>
 

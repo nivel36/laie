@@ -36,7 +36,7 @@ import ged.ejb.core.model.Erasable;
 import ged.ejb.core.model.Ownerable;
 import ged.ejb.core.tag.Tag;
 import ged.ejb.curriculum.Curriculum;
-import ged.ejb.job.offer.JobCandidature;
+import ged.ejb.job.candidature.JobCandidature;
 import ged.ejb.user.User;
 
 @Entity

@@ -18,7 +18,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import ged.ejb.core.file.ServerFile;
 import ged.ejb.core.file.ServerFileDao;
-import ged.ejb.job.offer.JobCandidatureDao;
+import ged.ejb.core.model.Page;
+import ged.ejb.job.candidature.JobCandidatureDao;
 import ged.ejb.job.offer.JobOffer;
 
 @ExtendWith(MockitoExtension.class)
@@ -52,16 +53,16 @@ public class CandidateServiceTest {
 		public void findAllByJobOfferTest() {
 			final JobOffer jobOffer = new JobOffer();
 
-			when(candidateDao.findCandidates(jobOffer)).thenReturn(new ArrayList<>());
+			when(candidateDao.findCandidates(jobOffer, Page.ALL)).thenReturn(new ArrayList<>());
 
-			final List<Candidate> candidatesFromRepository = candidateService.findCandidates(jobOffer);
+			final List<Candidate> candidatesFromRepository = candidateService.findCandidates(jobOffer, Page.ALL);
 			assertEquals(0, candidatesFromRepository.size());
 		}
 
 		@Test
 		public void nullJobOfferShouldReturnNullPointerException() {
 			assertThrows(NullPointerException.class, () -> {
-				candidateService.findCandidates(null);
+				candidateService.findCandidates(null, Page.ALL);
 			});
 		}
 	}
@@ -144,7 +145,6 @@ public class CandidateServiceTest {
 	public void setUp() {
 		this.candidateService = new CandidateService();
 		this.candidateService.setCandidateDao(this.candidateDao);
-		this.candidateService.setJobCandidatureDao(this.jobCandidatureDao);
 		this.candidateService.setServerFileDao(this.serverFileDao);
 	}
 }

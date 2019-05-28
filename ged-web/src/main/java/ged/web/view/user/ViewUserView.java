@@ -14,6 +14,7 @@ import org.omnifaces.util.Faces;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import ged.ejb.core.model.Page;
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
 import ged.ejb.user.User;
@@ -78,7 +79,7 @@ public class ViewUserView extends AbstractView {
 		}
 		logger.trace("User {} init", this.user);
 		this.team = this.userService.findSubordinateUsers(this.user);
-		this.jobOffers = this.jobOfferService.findAllJobOffersByOwner(this.user);
+		this.jobOffers = this.jobOfferService.findJobOffers(this.user, Page.ALL);
 		this.editable = this.sessionUser.isAdmin();
 	}
 

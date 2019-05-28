@@ -55,7 +55,7 @@ public class CandidateDaoTest {
 			when(persistenceFacade.findByQuery(Candidate.class, "Candidate.findByJobOffer", map("jobOffer", jobOffer),
 					Page.ALL)).thenReturn(mockCandidates());
 
-			final List<Candidate> candidatesFromRepository = candidateDao.findCandidates(jobOffer);
+			final List<Candidate> candidatesFromRepository = candidateDao.findCandidates(jobOffer, Page.ALL);
 			assertEquals("aaron.douglas@test.com", candidatesFromRepository.get(0).getEmail());
 		}
 
@@ -66,14 +66,14 @@ public class CandidateDaoTest {
 			when(persistenceFacade.findByQuery(Candidate.class, "Candidate.findByJobOffer", map("jobOffer", jobOffer),
 					Page.ALL)).thenThrow(new NoResultException());
 
-			final List<Candidate> candidates = candidateDao.findCandidates(jobOffer);
+			final List<Candidate> candidates = candidateDao.findCandidates(jobOffer, Page.ALL);
 			assertEquals(0, candidates.size());
 		}
 
 		@Test
 		public void nullJobOfferShouldReturnNullPointerException() {
 			assertThrows(NullPointerException.class, () -> {
-				candidateDao.findCandidates(null);
+				candidateDao.findCandidates(null, Page.ALL);
 			});
 		}
 	}

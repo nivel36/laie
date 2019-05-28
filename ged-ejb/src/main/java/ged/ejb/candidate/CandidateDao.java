@@ -34,18 +34,18 @@ public class CandidateDao extends AbstractDao<Candidate> {
 
 	public Candidate findCandidateData(final long candidateId) {
 		if (candidateId < 1) {
-			logger.warn("Bad candidate id: {}", candidateId);
+			logger.error("Bad candidate id: {}", candidateId);
 			throw new IllegalArgumentException("Bad candidate id " + candidateId);
 		}
 		return this.findByQuery(Candidate.class, "Candidate.findAllDataById", map("id", candidateId));
 	}
 
-	public List<Candidate> findCandidates(final JobOffer jobOffer) {
+	public List<Candidate> findCandidates(final JobOffer jobOffer, final Page page) {
+		Objects.requireNonNull(jobOffer);
+		Objects.requireNonNull(page);
 		try {
-			Objects.requireNonNull(jobOffer);
-			return this.findByQuery(Candidate.class, "Candidate.findByJobOffer", map("jobOffer", jobOffer), Page.ALL);
+			return this.findByQuery(Candidate.class, "Candidate.findByJobOffer", map("jobOffer", jobOffer), page);
 		} catch (final NoResultException e) {
-			logger.debug("No candidates found", e);
 			return new ArrayList<>();
 		}
 	}

@@ -1,4 +1,4 @@
-package ged.ejb.job.offer;
+package ged.ejb.job.candidature;
 
 import java.util.Objects;
 

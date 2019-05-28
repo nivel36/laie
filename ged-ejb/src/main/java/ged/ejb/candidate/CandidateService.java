@@ -14,9 +14,9 @@ import ged.ejb.core.AbstractService;
 import ged.ejb.core.file.ServerFile;
 import ged.ejb.core.file.ServerFileDao;
 import ged.ejb.core.model.AbstractDao;
+import ged.ejb.core.model.Page;
 import ged.ejb.core.model.Repository;
-import ged.ejb.job.offer.JobCandidature;
-import ged.ejb.job.offer.JobCandidatureDao;
+import ged.ejb.job.candidature.JobCandidatureDao;
 import ged.ejb.job.offer.JobOffer;
 
 @Stateless
@@ -37,7 +37,6 @@ public class CandidateService extends AbstractService<Candidate> {
 	private ServerFileDao serverFileDao;
 
 	public void addFileToCandidate(final Candidate candidate, final ServerFile file) {
-		//TODO: revisar
 		Objects.requireNonNull(file);
 		Objects.requireNonNull(candidate);
 		logger.debug("Adding file {} to candidate  {}", file, candidate);
@@ -58,10 +57,10 @@ public class CandidateService extends AbstractService<Candidate> {
 		return this.candidateDao.findCandidateData(candidateId);
 	}
 
-	public List<Candidate> findCandidates(final JobOffer jobOffer) {
+	public List<Candidate> findCandidates(final JobOffer jobOffer, final Page page) {
 		Objects.requireNonNull(jobOffer);
 		logger.debug("Find candidates by jobOffer {} ", jobOffer);
-		return this.candidateDao.findCandidates(jobOffer);
+		return this.candidateDao.findCandidates(jobOffer, page);
 	}
 
 	public ServerFile findFile(final long fileId) {
@@ -79,12 +78,6 @@ public class CandidateService extends AbstractService<Candidate> {
 		return this.serverFileDao.findByCandidate(candidate);
 	}
 
-	public List<JobCandidature> findJobCandidatures(final Candidate candidate) {
-		Objects.requireNonNull(candidate);
-		logger.debug("Find job candidatures by candidate {}", candidate);
-		return this.jobCandidatureDao.findByCandidate(candidate);
-	}
-
 	@Override
 	public AbstractDao<Candidate> getDao() {
 		return this.candidateDao;
@@ -100,9 +93,6 @@ public class CandidateService extends AbstractService<Candidate> {
 		this.candidateDao = candidateDao;
 	}
 
-	public void setJobCandidatureDao(final JobCandidatureDao jobCandidatureDao) {
-		this.jobCandidatureDao = jobCandidatureDao;
-	}
 
 	public void setServerFileDao(final ServerFileDao serverFileDao) {
 		this.serverFileDao = serverFileDao;

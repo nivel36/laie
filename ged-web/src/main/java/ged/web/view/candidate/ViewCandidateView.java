@@ -17,10 +17,11 @@ import org.slf4j.LoggerFactory;
 
 import ged.ejb.candidate.Candidate;
 import ged.ejb.core.Address;
+import ged.ejb.core.model.Page;
 import ged.ejb.core.tag.Tag;
 import ged.ejb.curriculum.Curriculum;
 import ged.ejb.curriculum.CurriculumService;
-import ged.ejb.job.offer.JobCandidature;
+import ged.ejb.job.candidature.JobCandidature;
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
 import ged.web.core.IllegalPageStateException;
@@ -48,11 +49,18 @@ public class ViewCandidateView extends AbstractView {
 	private boolean editable;
 
 	private List<JobCandidature> jobCandidatures;
-
+	
 	@Inject
 	private transient JobOfferService jobOfferService;
 
 	private final List<String> tags = new ArrayList<>();
+
+	private void checkDeleted() {
+		if (this.candidate.isDeleted()) {
+			logger.warn("Candidate is deleted");
+			Message.addWarning("message.erased_entity", "message.erased_entity");
+		}
+	}
 
 	public String editCandidate() {
 		logger.debug("Edit candidate action performed");
@@ -96,17 +104,10 @@ public class ViewCandidateView extends AbstractView {
 			this.candidate.setAddress(new Address());
 		}
 		this.fillTags();
-		this.jobCandidatures = this.jobOfferService.findJobCandidatures(candidate);
+		this.jobCandidatures = this.jobOfferService.findJobCandidatures(candidate, Page.ALL);
 		this.curriculum = this.curriculumService.findByCandidate(this.candidate);
 		checkDeleted();
 		this.editable = this.sessionUser.hasPermissionToEdit(this.candidate);
-	}
-
-	private void checkDeleted() {
-		if (this.candidate.isDeleted()) {
-			logger.warn("Candidate is deleted");
-			Message.addWarning("message.erased_entity", "message.erased_entity");
-		}
 	}
 
 	public boolean isEditable() {
@@ -138,7 +139,7 @@ public class ViewCandidateView extends AbstractView {
 		this.curriculumService = curriculumService;
 	}
 
-	public void setJobOfferService(final JobOfferService jobOfferService) {
+	public void setJobOfferService(JobOfferService jobOfferService) {
 		this.jobOfferService = jobOfferService;
 	}
 }

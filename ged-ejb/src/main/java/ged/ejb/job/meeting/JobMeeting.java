@@ -14,7 +14,7 @@ import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
 import ged.ejb.core.model.AbstractEntity;
-import ged.ejb.job.offer.JobCandidature;
+import ged.ejb.job.candidature.JobCandidature;
 import ged.ejb.user.User;
 
 @Entity

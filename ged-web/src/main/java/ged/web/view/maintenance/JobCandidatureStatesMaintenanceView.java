@@ -11,7 +11,7 @@ import javax.inject.Named;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ged.ejb.job.offer.JobCandidatureState;
+import ged.ejb.job.candidature.JobCandidatureState;
 import ged.ejb.job.offer.JobOfferService;
 import ged.web.core.view.AbstractView;
 
@@ -35,7 +35,7 @@ public class JobCandidatureStatesMaintenanceView extends AbstractView {
 	@PostConstruct
 	public void init() {
 		logger.trace("Job candidature states maintenances init");
-		this.states = this.jobOfferService.findAllJobCandidatureStates();
+		this.states = this.jobOfferService.findJobCandidatureStates();
 	}
 
 	public void setJobOfferService(final JobOfferService jobOfferService) {
