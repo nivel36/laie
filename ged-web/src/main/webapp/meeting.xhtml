@@ -12,18 +12,18 @@
 	<ui:param name="selectedMenu" value="calendar" />
 
 	<ui:define name="actions">
-		<p:button value="#{i18n['calendar.new_event']}" outcome="#{Page.CALENDAR_NEW_EVENT.getUrl()}" />
+		<p:button value="#{i18n['job_meeting.add_job_meeting']}" outcome="#{Page.MEETING_ADD.getUrl()}" />
 	</ui:define>
 
 	<ui:define name="breadcrumb">
 		<p:breadCrumb styleClass="breadcrumb">
 			<p:menuitem value="#{i18n['menu.index']}" outcome="#{Page.INDEX.getUrl()}" />
-			<p:menuitem value="#{i18n['calendar.calendar']}" disabled="true" />
+			<p:menuitem value="#{i18n['job_meeting.job_meetings']}" disabled="true" />
 		</p:breadCrumb>
 	</ui:define>
 
 	<ui:define name="content">
-		<h:form enctype="multipart/form-data">
+		<h:form>
 			<div class="panel">
 				<div class="panel-content panel-content-data">
 					<p:schedule id="scheduleLocale" value="#{indexView.schedule}" locale="es" />

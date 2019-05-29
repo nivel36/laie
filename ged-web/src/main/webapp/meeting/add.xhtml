@@ -14,8 +14,8 @@
 	<ui:define name="breadcrumb">
 		<p:breadCrumb styleClass="breadcrumb">
 			<p:menuitem value="#{i18n['menu.index']}" outcome="#{Page.INDEX.getUrl()}" />
-			<p:menuitem value="#{i18n['calendar.calendar']}" outcome="#{Page.CALENDAR.getUrl()}" />
-			<p:menuitem value="#{i18n['calendar.new_event']}" disabled="true" />
+			<p:menuitem value="#{i18n['job_meeting.job_meetings']}" outcome="#{Page.MEETING.getUrl()}" />
+			<p:menuitem value="#{i18n['job_meeting.add_job_meeting']}" disabled="true" />
 		</p:breadCrumb>
 	</ui:define>
 
@@ -27,7 +27,7 @@
 					<cc:calendar label="Fecha" value="" />
 					<cc:inputText label="Lugar" value="" />
 					<cc:inputText label="Personas" value="" />
-					<cc:inputText label="Descripcion" value="" />
+					<cc:richText label="Descripcion" value="" />
 				</div>
 			</div>
 		</h:form>

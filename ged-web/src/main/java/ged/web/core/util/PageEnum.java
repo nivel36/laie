@@ -9,8 +9,8 @@ public enum PageEnum {
 	CANDIDATE_EDIT("/candidate/edit"), //
 	CANDIDATE_SEARCH("/candidate/search"), //
 	CANDIDATE_SELECT("/candidate/select"), //
-	CALENDAR("/calendar"), //
-	CALENDAR_NEW_EVENT("/calendar/newEvent"), //
+	MEETING("/meeting"), //
+	MEETING_ADD("/meeting/add"), //
 	CHANGE_PASSWORD("/changePassword"), //
 	CLIENT("/client/view"), //
 	CLIENT_ADD("/client/add"), //
