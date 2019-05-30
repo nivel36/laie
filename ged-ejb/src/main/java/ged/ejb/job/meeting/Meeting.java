@@ -13,26 +13,26 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.search.annotations.IndexedEmbedded;
+
 import ged.ejb.core.model.AbstractEntity;
+import ged.ejb.core.model.Ownerable;
 import ged.ejb.job.candidature.JobCandidature;
 import ged.ejb.user.User;
 
 @Entity
 @Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "jobCandidatureId", "datePlanned" }) })
-public class JobMeeting extends AbstractEntity {
+public class Meeting extends AbstractEntity implements Ownerable {
 
 	private static final long serialVersionUID = 3394583186288921090L;
 
 	@OneToMany
 	private List<User> attendees;
 
-	private LocalDateTime dateConducted;
-
 	@NotNull
 	@Column(nullable = false)
 	private LocalDateTime datePlanned;
 
-	@Column(length = 1024)
 	private String description;
 
 	@NotNull
@@ -40,8 +40,14 @@ public class JobMeeting extends AbstractEntity {
 	@JoinColumn(name = "jobCandidatureId", nullable = false)
 	private JobCandidature jobCandidature;
 
+	private MeetingType meetingType;
+
 	@NotNull
-	@Column(length = 128, nullable = false)
+	@ManyToOne
+	@JoinColumn(name = "ownerId", nullable = false)
+	@IndexedEmbedded
+	private User owner;
+
 	private String result;
 
 	@Override
@@ -58,18 +64,15 @@ public class JobMeeting extends AbstractEntity {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		final JobMeeting other = (JobMeeting) obj;
-		return Objects.equals(this.dateConducted, other.dateConducted) && Objects.equals(this.datePlanned, other.datePlanned)
-				&& Objects.equals(this.description, other.description) && Objects.equals(this.jobCandidature, other.jobCandidature)
+		final Meeting other = (Meeting) obj;
+		return Objects.equals(this.datePlanned, other.datePlanned)
+				&& Objects.equals(this.description, other.description)
+				&& Objects.equals(this.jobCandidature, other.jobCandidature)
 				&& Objects.equals(this.result, other.result);
 	}
 
 	public List<User> getAttendees() {
 		return this.attendees;
-	}
-
-	public LocalDateTime getDateConducted() {
-		return this.dateConducted;
 	}
 
 	public LocalDateTime getDatePlanned() {
@@ -84,21 +87,26 @@ public class JobMeeting extends AbstractEntity {
 		return this.jobCandidature;
 	}
 
+	public MeetingType getJobMeetingType() {
+		return meetingType;
+	}
+
+	@Override
+	public User getOwner() {
+		return owner;
+	}
+
 	public String getResult() {
 		return this.result;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(this.dateConducted, this.datePlanned, this.description, this.jobCandidature, this.result);
+		return Objects.hash(this.datePlanned, this.description, this.jobCandidature, this.result);
 	}
 
 	public void setAttendees(final List<User> attendees) {
 		this.attendees = attendees;
-	}
-
-	public void setDateConducted(final LocalDateTime dateConducted) {
-		this.dateConducted = dateConducted;
 	}
 
 	public void setDatePlanned(final LocalDateTime datePlanned) {
@@ -111,6 +119,15 @@ public class JobMeeting extends AbstractEntity {
 
 	public void setJobCandidature(final JobCandidature jobCandidature) {
 		this.jobCandidature = jobCandidature;
+	}
+
+	public void setJobMeetingType(MeetingType meetingType) {
+		this.meetingType = meetingType;
+	}
+
+	@Override
+	public void setOwner(User owner) {
+		this.owner = owner;
 	}
 
 	public void setResult(final String result) {

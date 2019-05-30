@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
 
 import ged.ejb.candidate.Candidate;
 import ged.ejb.core.model.AbstractEntity;
-import ged.ejb.job.meeting.JobMeeting;
+import ged.ejb.job.meeting.Meeting;
 import ged.ejb.job.offer.JobOffer;
 
 @Entity
@@ -33,7 +33,7 @@ public class JobCandidature extends AbstractEntity {
 	private JobCandidatureState jobCandidatureState;
 
 	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "jobCandidature", orphanRemoval = true)
-	private List<JobMeeting> jobMeetings;
+	private List<Meeting> meetings;
 
 	@NotNull
 	@ManyToOne
@@ -71,8 +71,8 @@ public class JobCandidature extends AbstractEntity {
 		return this.jobCandidatureState;
 	}
 
-	public List<JobMeeting> getJobMeetings() {
-		return this.jobMeetings;
+	public List<Meeting> getJobMeetings() {
+		return this.meetings;
 	}
 
 	public JobOffer getJobOffer() {
@@ -92,8 +92,8 @@ public class JobCandidature extends AbstractEntity {
 		this.jobCandidatureState = jobCandidatureState;
 	}
 
-	public void setJobMeetings(final List<JobMeeting> jobMeetings) {
-		this.jobMeetings = jobMeetings;
+	public void setJobMeetings(final List<Meeting> meetings) {
+		this.meetings = meetings;
 	}
 
 	public void setJobOffer(final JobOffer jobOffer) {

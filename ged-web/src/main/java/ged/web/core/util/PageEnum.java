@@ -9,7 +9,7 @@ public enum PageEnum {
 	CANDIDATE_EDIT("/candidate/edit"), //
 	CANDIDATE_SEARCH("/candidate/search"), //
 	CANDIDATE_SELECT("/candidate/select"), //
-	MEETING("/meeting"), //
+	MEETING_SEARCH("/meeting/search"), //
 	MEETING_ADD("/meeting/add"), //
 	CHANGE_PASSWORD("/changePassword"), //
 	CLIENT("/client/view"), //

@@ -173,20 +173,37 @@
 		]]></query>
 	</named-query>
 
-	<named-query name="JobMeeting.findPlannedJobMeetings">
+	<named-query name="Meeting.findByOwner">
 		<query><![CDATA[
-			SELECT j 
-			FROM JobMeeting j 
-			WHERE j.datePlanned IS NOT NULL
-			AND j.dateConducted IS NULL
+			SELECT m 
+			FROM Meeting m 
+			WHERE m.owner = :owner
+		]]></query>
+	</named-query>
+	
+	<named-query name="Meeting.findByCandidate">
+		<query><![CDATA[
+			SELECT m 
+			FROM Meeting m
+			LEFT JOIN FETCH m.jobCandidature 
+			WHERE m.jobCandidature.candidate = :candidate
+		]]></query>
+	</named-query>
+	
+	<named-query name="Meeting.findByJobOffer">
+		<query><![CDATA[
+			SELECT m 
+			FROM Meeting m
+			LEFT JOIN FETCH m.jobCandidature 
+			WHERE m.jobCandidature.jobOffer = :jobOffer
 		]]></query>
 	</named-query>
 
-	<named-query name="JobMeeting.findConductedJobMeetings">
+	<named-query name="Meeting.findPlannedMeetings">
 		<query><![CDATA[
 			SELECT j 
-			FROM JobMeeting j 
-			WHERE j.dateConducted IS NOT NULL
+			FROM Meeting j 
+			WHERE j.datePlanned IS NOT NULL 
 		]]></query>
 	</named-query>
 

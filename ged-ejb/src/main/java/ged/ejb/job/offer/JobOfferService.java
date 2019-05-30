@@ -16,8 +16,8 @@ import ged.ejb.core.AbstractService;
 import ged.ejb.core.model.AbstractDao;
 import ged.ejb.core.model.Page;
 import ged.ejb.core.model.Repository;
-import ged.ejb.job.meeting.JobMeeting;
-import ged.ejb.job.meeting.JobMeetingDao;
+import ged.ejb.job.meeting.Meeting;
+import ged.ejb.job.meeting.MeetingDao;
 import ged.ejb.user.User;
 
 @Stateless
@@ -27,16 +27,16 @@ public class JobOfferService extends AbstractService<JobOffer> {
 
 	@Inject
 	@Repository
-	private JobMeetingDao jobMeetingDao;
+	private MeetingDao meetingDao;
 
 	@Inject
 	@Repository
 	private JobOfferDao jobOfferDao;
 
-	public void addJobMeeting(final JobMeeting jobMeeting) {
-		Objects.requireNonNull(jobMeeting, "JobMeeting can't be null");
-		logger.debug("Add Job meeting {}", jobMeeting.getDescription());
-		this.jobMeetingDao.save(jobMeeting);
+	public void addJobMeeting(final Meeting meeting) {
+		Objects.requireNonNull(meeting, "Meeting can't be null");
+		logger.debug("Add Job meeting {}", meeting.getDescription());
+		this.meetingDao.save(meeting);
 	}
 
 	public JobOffer newJobOffer(final JobOffer jobOffer) {
@@ -78,9 +78,9 @@ public class JobOfferService extends AbstractService<JobOffer> {
 		return this.jobOfferDao;
 	}
 
-	public void setJobMeetingDao(final JobMeetingDao jobMeetingDao) {
-		Objects.requireNonNull(jobMeetingDao, "JobMeetingDao can't be null");
-		this.jobMeetingDao = jobMeetingDao;
+	public void setJobMeetingDao(final MeetingDao meetingDao) {
+		Objects.requireNonNull(meetingDao, "MeetingDao can't be null");
+		this.meetingDao = meetingDao;
 	}
 
 	public void setJobOfferDao(final JobOfferDao jobOfferDao) {
