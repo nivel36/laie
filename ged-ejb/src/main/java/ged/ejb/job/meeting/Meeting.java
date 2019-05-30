@@ -1,8 +1,10 @@
 package ged.ejb.job.meeting;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,7 +29,9 @@ public class Meeting extends AbstractEntity implements Ownerable {
 	private static final long serialVersionUID = 3394583186288921090L;
 
 	@OneToMany
-	private List<User> attendees;
+	private Set<User> attendees = new HashSet<>();
+	
+	private String location;
 
 	@NotNull
 	@Column(nullable = false)
@@ -71,7 +75,7 @@ public class Meeting extends AbstractEntity implements Ownerable {
 				&& Objects.equals(this.result, other.result);
 	}
 
-	public List<User> getAttendees() {
+	public Set<User> getAttendees() {
 		return this.attendees;
 	}
 
@@ -105,8 +109,24 @@ public class Meeting extends AbstractEntity implements Ownerable {
 		return Objects.hash(this.datePlanned, this.description, this.jobCandidature, this.result);
 	}
 
-	public void setAttendees(final List<User> attendees) {
+	public void setAttendees(final Set<User> attendees) {
 		this.attendees = attendees;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	public MeetingType getMeetingType() {
+		return meetingType;
+	}
+
+	public void setMeetingType(MeetingType meetingType) {
+		this.meetingType = meetingType;
 	}
 
 	public void setDatePlanned(final LocalDateTime datePlanned) {

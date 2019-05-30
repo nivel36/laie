@@ -14,8 +14,8 @@
 	<ui:define name="breadcrumb">
 		<p:breadCrumb styleClass="breadcrumb">
 			<p:menuitem value="#{i18n['menu.index']}" outcome="#{Page.INDEX.getUrl()}" />
-			<p:menuitem value="#{i18n['job_meeting.job_meetings']}" outcome="#{Page.MEETING.getUrl()}" />
-			<p:menuitem value="#{i18n['job_meeting.add_job_meeting']}" disabled="true" />
+			<p:menuitem value="#{i18n['meeting.job_meetings']}" outcome="#{Page.MEETING.getUrl()}" />
+			<p:menuitem value="#{i18n['meeting.add_job_meeting']}" disabled="true" />
 		</p:breadCrumb>
 	</ui:define>
 
@@ -23,11 +23,11 @@
 		<h:form>
 			<div class="panel">
 				<div class="panel-content panel-content-data">
-					<cc:inputText label="Nombre" value="" />
-					<cc:calendar label="Fecha" value="" />
-					<cc:inputText label="Lugar" value="" />
-					<cc:inputText label="Personas" value="" />
-					<cc:richText label="Descripcion" value="" />
+					<cc:calendar label="#{i18n['meeting.date_planned']}" value="#{addMeetingView.meeting.datePlanned}" />
+					<cc:inputText label="#{i18n['meeting.type']}" value="#{addMeetingView.meeting.type}"/>
+					<cc:inputText label="#{i18n['meeting.location']}" value="#{addMeetingView.meeting.location}"/>
+					<cc:inputText label="#{i18n['meeting.attendees']}" value="#{addMeetingView.meeting.attendees}" />
+					<cc:richText label="#{i18n['meeting.description']}" value="#{addMeetingView.meeting.description}" />
 				</div>
 			</div>
 		</h:form>
