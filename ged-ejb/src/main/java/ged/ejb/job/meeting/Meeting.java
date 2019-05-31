@@ -2,7 +2,6 @@ package ged.ejb.job.meeting;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
