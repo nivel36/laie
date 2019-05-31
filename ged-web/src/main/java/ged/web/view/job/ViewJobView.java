@@ -51,7 +51,7 @@ public class ViewJobView extends AbstractView {
 	public String editJobOffer() {
 		logger.debug("Edit job offer action performed");
 		this.putValueToFlash(JOB_OFFER_KEY, this.jobOffer);
-		return PageEnum.JOB_EDIT.getRedirectUrl();
+		return PageEnum.JOB_EDIT.getUrl();
 	}
 
 	public void export() throws IOException {

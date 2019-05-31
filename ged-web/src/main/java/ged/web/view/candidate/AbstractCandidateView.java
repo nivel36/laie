@@ -39,7 +39,7 @@ public abstract class AbstractCandidateView extends AbstractView {
 	protected transient TagService tagService;
 
 	protected String candidateUrl() {
-		return PageEnum.CANDIDATE.getRedirectUrl(this.candidate);
+		return PageEnum.CANDIDATE.getUrl(this.candidate);
 	}
 
 	public Candidate getCandidate() {

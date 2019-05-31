@@ -50,7 +50,7 @@
 				</div>
 				<div class="panel-footer">
 					<div class="panel-buttons">
-						<p:commandButton value="#{i18n['config.change_password']}" process="@this" action="#{Page.CHANGE_PASSWORD.getRedirectUrl()}" />
+						<p:commandButton value="#{i18n['config.change_password']}" process="@this" action="#{Page.CHANGE_PASSWORD.getUrl()}" />
 						<p:commandButton value="#{i18n['action.save']}" action="#{configView.save}" process="@form" update="@form growl" />
 					</div>
 				</div>

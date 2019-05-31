@@ -41,7 +41,7 @@ public class JobExperienceView extends AbstractView {
 	private YearMonthDto toDate;
 
 	private String curriculumUrl() {
-		return PageEnum.CURRICULUM.getRedirectUrl(this.jobExperience.getCurriculum().getCandidate());
+		return PageEnum.CURRICULUM.getUrl(this.jobExperience.getCurriculum().getCandidate());
 	}
 
 	public String delete() {

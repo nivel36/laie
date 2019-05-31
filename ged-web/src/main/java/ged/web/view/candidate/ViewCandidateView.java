@@ -65,7 +65,7 @@ public class ViewCandidateView extends AbstractView {
 	public String editCandidate() {
 		logger.debug("Edit candidate action performed");
 		this.putValueToFlash("candidate", this.candidate);
-		return PageEnum.CANDIDATE_EDIT.getRedirectUrl();
+		return PageEnum.CANDIDATE_EDIT.getUrl();
 	}
 
 	public void export() throws IOException {
