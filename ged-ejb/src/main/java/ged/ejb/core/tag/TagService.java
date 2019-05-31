@@ -2,12 +2,14 @@ package ged.ejb.core.tag;
 
 import java.util.Objects;
 
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import ged.ejb.core.AbstractService;
 import ged.ejb.core.model.AbstractDao;
 import ged.ejb.core.model.Repository;
 
+@Stateless
 public class TagService extends AbstractService<Tag> {
 
 	@Inject
