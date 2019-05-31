@@ -23,40 +23,8 @@
 				<p:outputLabel id="label" for="input-text-area" value="#{cc.attrs.label}" styleClass="label" />
 			</h:panelGroup>
 			<div class="input-container">
-				<p:textEditor id="input-text-area" value="#{cc.attrs.value}" required="#{cc.attrs.required}"
-					styleClass="input-text-area">
-					<f:facet name="toolbar">
-						<span class="ql-formats">
-							<button class="ql-bold" />
-							<button class="ql-italic" />
-							<button class="ql-underline" />
-						</span>
-						<span class="ql-formats"> <select class="ql-color" /> <select class="ql-background" />
-						</span>
-						<span class="ql-formats">
-							<button class="ql-script" value="sub" />
-							<button class="ql-script" value="super" />
-						</span>
-						<span class="ql-formats">
-							<button class="ql-header" value="1" />
-							<button class="ql-header" value="2" />
-							<button class="ql-blockquote" />
-							<button class="ql-code-block" />
-						</span>
-						<span class="ql-formats">
-							<button class="ql-list" value="ordered" />
-							<button class="ql-list" value="bullet" />
-							<button class="ql-indent" value="-1" />
-							<button class="ql-indent" value="+1" />
-						</span>
-						<span class="ql-formats">
-							<button class="ql-direction" value="rtl" /> <select class="ql-align" />
-						</span>
-						<span class="ql-formats">
-							<button class="ql-clean" />
-						</span>
-					</f:facet>
-				</p:textEditor>
+				<p:inputTextarea id="input-text-area" value="#{cc.attrs.value}" required="#{cc.attrs.required}"
+					styleClass="input input-text-area" autoResize="false" />
 			</div>
 			<div class="message-container">
 				<p:message id="message" for="input-text-area" styleClass="message-error" />

@@ -16,6 +16,7 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.search.annotations.IndexedEmbedded;
 
+import ged.ejb.client.Contact;
 import ged.ejb.core.model.AbstractEntity;
 import ged.ejb.core.model.Ownerable;
 import ged.ejb.job.candidature.JobCandidature;
