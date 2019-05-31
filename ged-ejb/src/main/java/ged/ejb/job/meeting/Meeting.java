@@ -18,6 +18,7 @@ import org.hibernate.search.annotations.IndexedEmbedded;
 
 import ged.ejb.core.model.AbstractEntity;
 import ged.ejb.core.model.Ownerable;
+import ged.ejb.core.model.Person;
 import ged.ejb.job.candidature.JobCandidature;
 import ged.ejb.user.User;
 
@@ -28,7 +29,7 @@ public class Meeting extends AbstractEntity implements Ownerable {
 	private static final long serialVersionUID = 3394583186288921090L;
 
 	@OneToMany
-	private Set<User> attendees = new HashSet<>();
+	private Set<Person> attendees = new HashSet<>();
 	
 	private String location;
 
@@ -74,7 +75,7 @@ public class Meeting extends AbstractEntity implements Ownerable {
 				&& Objects.equals(this.result, other.result);
 	}
 
-	public Set<User> getAttendees() {
+	public Set<Person> getAttendees() {
 		return this.attendees;
 	}
 
@@ -108,7 +109,7 @@ public class Meeting extends AbstractEntity implements Ownerable {
 		return Objects.hash(this.datePlanned, this.description, this.jobCandidature, this.result);
 	}
 
-	public void setAttendees(final Set<User> attendees) {
+	public void setAttendees(final Set<Person> attendees) {
 		this.attendees = attendees;
 	}
 
