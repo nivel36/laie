@@ -17,22 +17,16 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 
-import org.hibernate.search.annotations.Analyze;
-import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Indexed;
-import org.hibernate.search.annotations.SortableField;
-import org.hibernate.search.annotations.Store;
 
 import ged.ejb.core.bookmark.Bookmark;
-import ged.ejb.core.model.AbstractEntity;
+import ged.ejb.core.model.Person;
 import ged.ejb.user.role.Role;
 
 @Entity
 @Indexed
-public class User extends AbstractEntity {
+public class User extends Person {
 
 	private static final long serialVersionUID = 5920907439877095636L;
 
@@ -47,13 +41,6 @@ public class User extends AbstractEntity {
 	private LocalDate dateOfJoin;
 
 	@NotNull
-	@Column(nullable = false, unique = true)
-	private String email;
-
-	@Column(unique = true)
-	private String imageFileName;
-
-	@NotNull
 	@Column(nullable = false)
 	private String language;
 
@@ -64,16 +51,6 @@ public class User extends AbstractEntity {
 	private User manager;
 
 	@NotNull
-	@Column(nullable = false)
-	@Field(name = "_name")
-	@Field(name = "name", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
-	@SortableField(forField = "name")
-	private String name;
-
-	@Pattern(regexp = "(?:[+]?(?:[0-9]{1,5}|\\x28[0-9]{1,5}\\x29)[ ]?)?[0-9]{2}(?:[0-9][ ]?){6}[0-9]")
-	private String phoneNumber;
-
-	@NotNull
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
 	private Role role;
@@ -82,32 +59,11 @@ public class User extends AbstractEntity {
 	@Column(nullable = false)
 	private Integer rowsPerPage = 10;
 
-	@NotNull
-	@Column(nullable = false)
-	@Field(name = "_surname")
-	@Field(name = "surname", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
-	@SortableField(forField = "surname")
-	private String surname;
-
 	public void addBookmark(final Bookmark bookmark) {
 		Objects.requireNonNull(bookmark);
 		this.bookmarks.add(bookmark);
 	}
 
-	@Override
-	public boolean equals(final Object obj) {
-		if (obj == null) {
-			return false;
-		}
-		if (this == obj) {
-			return true;
-		}
-		if (this.getClass() != obj.getClass()) {
-			return false;
-		}
-		final User other = (User) obj;
-		return Objects.equals(this.email, other.email);
-	}
 
 	public Set<Bookmark> getBookmarks() {
 		return this.bookmarks;
@@ -119,21 +75,6 @@ public class User extends AbstractEntity {
 
 	public LocalDate getDateOfJoin() {
 		return this.dateOfJoin;
-	}
-
-	public String getEmail() {
-		return this.email;
-	}
-
-	public String getFullName() {
-		if (this.name == null) {
-			return null;
-		}
-		return new StringBuilder(this.name).append(" ").append(this.surname).toString();
-	}
-
-	public String getImageFileName() {
-		return this.imageFileName;
 	}
 
 	public String getLanguage() {
@@ -148,29 +89,12 @@ public class User extends AbstractEntity {
 		return this.manager;
 	}
 
-	public String getName() {
-		return this.name;
-	}
-
-	public String getPhoneNumber() {
-		return this.phoneNumber;
-	}
-
 	public Role getRole() {
 		return this.role;
 	}
 
 	public Integer getRowsPerPage() {
 		return this.rowsPerPage;
-	}
-
-	public String getSurname() {
-		return this.surname;
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(this.email);
 	}
 
 	public boolean hasRole(final Role role) {
@@ -210,14 +134,6 @@ public class User extends AbstractEntity {
 		this.dateOfJoin = dateOfJoin;
 	}
 
-	public void setEmail(final String email) {
-		this.email = email;
-	}
-
-	public void setImageFileName(final String imageFileName) {
-		this.imageFileName = imageFileName;
-	}
-
 	public void setLanguage(final String language) {
 		this.language = language;
 	}
@@ -230,28 +146,11 @@ public class User extends AbstractEntity {
 		this.manager = manager;
 	}
 
-	public void setName(final String name) {
-		this.name = name;
-	}
-
-	public void setPhoneNumber(final String phoneNumber) {
-		this.phoneNumber = phoneNumber;
-	}
-
 	public void setRole(final Role role) {
 		this.role = role;
 	}
 
 	public void setRowsPerPage(final Integer rowsPerPage) {
 		this.rowsPerPage = rowsPerPage;
-	}
-
-	public void setSurname(final String surname) {
-		this.surname = surname;
-	}
-
-	@Override
-	public String toString() {
-		return this.getFullName();
 	}
 }

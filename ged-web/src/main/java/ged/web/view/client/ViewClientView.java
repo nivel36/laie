@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 
 import ged.ejb.client.Client;
 import ged.ejb.client.Contact;
-import ged.ejb.core.Address;
+import ged.ejb.core.model.Address;
 import ged.ejb.core.model.Page;
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;

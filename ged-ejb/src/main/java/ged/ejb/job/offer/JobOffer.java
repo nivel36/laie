@@ -27,8 +27,8 @@ import org.hibernate.search.annotations.SortableField;
 import org.hibernate.search.annotations.Store;
 
 import ged.ejb.client.Client;
-import ged.ejb.core.Address;
 import ged.ejb.core.model.AbstractEntity;
+import ged.ejb.core.model.Address;
 import ged.ejb.core.model.Ownerable;
 import ged.ejb.job.candidature.JobCandidature;
 import ged.ejb.user.User;

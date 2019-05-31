@@ -1,4 +1,4 @@
-package ged.ejb.core;
+package ged.ejb.core.model;
 
 import java.io.Serializable;
 import java.util.Objects;

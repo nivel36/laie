@@ -9,7 +9,7 @@ import javax.inject.Named;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ged.ejb.core.Address;
+import ged.ejb.core.model.Address;
 import ged.ejb.user.User;
 import ged.web.core.IllegalPageStateException;
 

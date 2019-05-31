@@ -16,7 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ged.ejb.candidate.Candidate;
-import ged.ejb.core.Address;
+import ged.ejb.core.model.Address;
 import ged.ejb.core.model.Page;
 import ged.ejb.core.tag.Tag;
 import ged.ejb.curriculum.Curriculum;
@@ -25,7 +25,6 @@ import ged.ejb.job.candidature.JobCandidature;
 import ged.ejb.job.candidature.JobCandidatureService;
 import ged.ejb.job.offer.JobOffer;
 import ged.web.core.IllegalPageStateException;
-import ged.web.core.util.Message;
 import ged.web.core.util.PageEnum;
 import ged.web.core.view.AbstractView;
 
@@ -55,13 +54,6 @@ public class ViewCandidateView extends AbstractView {
 
 	private final List<String> tags = new ArrayList<>();
 	
-	private void checkDeleted() {
-		if (this.candidate.isDeleted()) {
-			logger.warn("Candidate is deleted");
-			Message.addWarning("message.erased_entity", "message.erased_entity");
-		}
-	}
-
 	public String editCandidate() {
 		logger.debug("Edit candidate action performed");
 		this.putValueToFlash("candidate", this.candidate);
@@ -106,7 +98,6 @@ public class ViewCandidateView extends AbstractView {
 		this.fillTags();
 		this.jobCandidatures = this.jobCandidatureService.findJobCandidatures(candidate, Page.ALL);
 		this.curriculum = this.curriculumService.findByCandidate(this.candidate);
-		checkDeleted();
 		this.editable = this.sessionUser.hasPermissionToEdit(this.candidate);
 	}
 

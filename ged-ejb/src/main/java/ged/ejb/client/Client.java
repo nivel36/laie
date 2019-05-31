@@ -23,8 +23,8 @@ import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.SortableField;
 import org.hibernate.search.annotations.Store;
 
-import ged.ejb.core.Address;
 import ged.ejb.core.model.AbstractEntity;
+import ged.ejb.core.model.Address;
 import ged.ejb.core.model.Erasable;
 import ged.ejb.core.model.Ownerable;
 import ged.ejb.job.offer.JobOffer;
