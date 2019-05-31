@@ -1,13 +1,9 @@
 package ged.ejb.core.bookmark;
 
-import java.lang.invoke.MethodHandles;
 import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import ged.ejb.core.AbstractService;
 import ged.ejb.core.model.AbstractDao;
@@ -16,8 +12,6 @@ import ged.ejb.user.User;
 
 @Stateless
 public class BookmarkService extends AbstractService<Bookmark> {
-
-	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	@Inject
 	@Repository
