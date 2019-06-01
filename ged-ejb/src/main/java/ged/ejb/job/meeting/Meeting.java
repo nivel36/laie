@@ -30,7 +30,7 @@ public class Meeting extends AbstractEntity implements Ownerable {
 
 	@OneToMany
 	private Set<Person> attendees = new HashSet<>();
-	
+
 	private String location;
 
 	@NotNull
@@ -54,6 +54,10 @@ public class Meeting extends AbstractEntity implements Ownerable {
 
 	private String result;
 
+	public void addAttendee(final Person attendee) {
+		this.attendees.add(attendee);
+	}
+
 	@Override
 	public boolean equals(final Object obj) {
 		if (obj == null) {
@@ -65,7 +69,7 @@ public class Meeting extends AbstractEntity implements Ownerable {
 		if (!super.equals(obj)) {
 			return false;
 		}
-		if (getClass() != obj.getClass()) {
+		if (this.getClass() != obj.getClass()) {
 			return false;
 		}
 		final Meeting other = (Meeting) obj;
@@ -92,12 +96,20 @@ public class Meeting extends AbstractEntity implements Ownerable {
 	}
 
 	public MeetingType getJobMeetingType() {
-		return meetingType;
+		return this.meetingType;
+	}
+
+	public String getLocation() {
+		return this.location;
+	}
+
+	public MeetingType getMeetingType() {
+		return this.meetingType;
 	}
 
 	@Override
 	public User getOwner() {
-		return owner;
+		return this.owner;
 	}
 
 	public String getResult() {
@@ -109,24 +121,12 @@ public class Meeting extends AbstractEntity implements Ownerable {
 		return Objects.hash(this.datePlanned, this.description, this.jobCandidature, this.result);
 	}
 
+	public void removeAttendee(final Person attendee) {
+		this.attendees.remove(attendee);
+	}
+
 	public void setAttendees(final Set<Person> attendees) {
 		this.attendees = attendees;
-	}
-
-	public String getLocation() {
-		return location;
-	}
-
-	public void setLocation(String location) {
-		this.location = location;
-	}
-
-	public MeetingType getMeetingType() {
-		return meetingType;
-	}
-
-	public void setMeetingType(MeetingType meetingType) {
-		this.meetingType = meetingType;
 	}
 
 	public void setDatePlanned(final LocalDateTime datePlanned) {
@@ -141,12 +141,20 @@ public class Meeting extends AbstractEntity implements Ownerable {
 		this.jobCandidature = jobCandidature;
 	}
 
-	public void setJobMeetingType(MeetingType meetingType) {
+	public void setJobMeetingType(final MeetingType meetingType) {
+		this.meetingType = meetingType;
+	}
+
+	public void setLocation(final String location) {
+		this.location = location;
+	}
+
+	public void setMeetingType(final MeetingType meetingType) {
 		this.meetingType = meetingType;
 	}
 
 	@Override
-	public void setOwner(User owner) {
+	public void setOwner(final User owner) {
 		this.owner = owner;
 	}
 

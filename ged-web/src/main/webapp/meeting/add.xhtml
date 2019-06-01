@@ -39,6 +39,12 @@
 						</div>
 					</div>
 				</div>
+				<div class="panel-footer">
+					<div class="panel-buttons">
+						<p:button value="#{i18n['action.cancel']}" outcome="#{Page.MEETING_SEARCH.getUrl()}" styleClass="btn-gray" />
+						<p:commandButton value="#{i18n['action.save']}" action="#{addMeetingView.save}" process="@form" update="@form" />
+					</div>
+				</div>
 			</div>
 		</h:form>
 	</ui:define>

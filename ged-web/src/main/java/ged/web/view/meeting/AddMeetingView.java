@@ -17,7 +17,7 @@ import ged.web.core.view.AbstractView;
 public class AddMeetingView extends AbstractView {
 
 	private static final long serialVersionUID = 7690002057596615051L;
-	
+
 	private Meeting meeting;
 
 	private transient MeetingService meetingService;
@@ -25,25 +25,22 @@ public class AddMeetingView extends AbstractView {
 	private List<MeetingType> meetingTypes;
 
 	public Meeting getMeeting() {
-		return meeting;
-	}
-	
-	public void save() {
-		meetingService.save(meeting);
+		return this.meeting;
 	}
 
 	public List<MeetingType> getMeetingTypes() {
-		return meetingTypes;
+		return this.meetingTypes;
 	}
 
 	@PostConstruct
 	public void init() {
-		this.meeting = initMeeting();
-		this.meetingTypes = initMeetingTypes();
+		this.meeting = this.initMeeting();
+		this.meetingTypes = this.initMeetingTypes();
 	}
 
 	private Meeting initMeeting() {
-		Meeting newMeeting = new Meeting();
+		final Meeting newMeeting = new Meeting();
+		newMeeting.addAttendee(this.sessionUser.get());
 		return newMeeting;
 	}
 
@@ -51,11 +48,15 @@ public class AddMeetingView extends AbstractView {
 		return Arrays.asList(MeetingType.values());
 	}
 
-	public void setMeeting(Meeting meeting) {
+	public void save() {
+		this.meetingService.save(this.meeting);
+	}
+
+	public void setMeeting(final Meeting meeting) {
 		this.meeting = meeting;
 	}
 
-	public void setMeetingService(MeetingService meetingService) {
+	public void setMeetingService(final MeetingService meetingService) {
 		this.meetingService = meetingService;
 	}
 }
