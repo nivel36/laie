@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
-	xmlns:composite="http://xmlns.jcp.org/jsf/composite" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
-	xmlns:o="http://omnifaces.org/ui" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:composite="http://xmlns.jcp.org/jsf/composite"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:o="http://omnifaces.org/ui" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
 	template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
@@ -25,14 +24,17 @@
 				<div class="panel-content panel-content-data">
 					<div class="grid">
 						<div class="col-12 lg-7">
-						<h4>#{i18n['meeting.header.details']}</h4>
+							<h4>#{i18n['meeting.header.details']}</h4>
 							<cc:calendar label="#{i18n['meeting.date_planned']}" value="#{addMeetingView.meeting.datePlanned}" />
-							<cc:inputText label="#{i18n['meeting.type']}" value="#{addMeetingView.meeting.meetingType}" />
+							<cc:inputSelect label="#{i18n['meeting.type']}" value="#{addMeetingView.meeting.meetingType}">
+								<f:selectItem />
+								<f:selectItems value="#{addMeetingView.meetingTypes}" var="meetingType" itemValue="#{meetingType}" itemLabel="#{i18n[meetingType]}" />
+							</cc:inputSelect>
 							<cc:inputText label="#{i18n['meeting.location']}" value="#{addMeetingView.meeting.location}" />
 							<cc:richText label="#{i18n['meeting.description']}" value="#{addMeetingView.meeting.description}" />
 						</div>
 						<div class="col-12 lg-5">
-						<h4>#{i18n['meeting.header.attendees']}</h4>
+							<h4>#{i18n['meeting.header.attendees']}</h4>
 							<cc:inputText value="#{addMeetingView.meeting.attendees}" />
 						</div>
 					</div>
