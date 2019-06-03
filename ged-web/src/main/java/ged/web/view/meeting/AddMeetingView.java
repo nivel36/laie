@@ -1,5 +1,6 @@
 package ged.web.view.meeting;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -7,6 +8,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
+import ged.ejb.core.model.Person;
 import ged.ejb.job.meeting.Meeting;
 import ged.ejb.job.meeting.MeetingService;
 import ged.ejb.job.meeting.MeetingType;
@@ -24,6 +26,12 @@ public class AddMeetingView extends AbstractView {
 
 	private List<MeetingType> meetingTypes;
 
+	private List<Person> attendees;
+
+	public List<Person> getAttendees() {
+		return this.attendees;
+	}
+
 	public Meeting getMeeting() {
 		return this.meeting;
 	}
@@ -36,6 +44,13 @@ public class AddMeetingView extends AbstractView {
 	public void init() {
 		this.meeting = this.initMeeting();
 		this.meetingTypes = this.initMeetingTypes();
+		this.attendees = this.initAttendees();
+	}
+
+	private List<Person> initAttendees() {
+		final List<Person> attendees = new ArrayList<Person>();
+		attendees.addAll(this.meeting.getAttendees());
+		return this.attendees;
 	}
 
 	private Meeting initMeeting() {
@@ -50,6 +65,10 @@ public class AddMeetingView extends AbstractView {
 
 	public void save() {
 		this.meetingService.save(this.meeting);
+	}
+
+	public void setAttendees(final List<Person> attendees) {
+		this.attendees = attendees;
 	}
 
 	public void setMeeting(final Meeting meeting) {

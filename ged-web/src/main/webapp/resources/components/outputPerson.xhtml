@@ -1,0 +1,19 @@
+<ui:component xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:composite="http://xmlns.jcp.org/jsf/composite"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:o="http://omnifaces.org/ui" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+	<composite:interface>
+		<composite:attribute name="person" type="ged.ejb.core.model.Person" required="true" />
+		<composite:attribute name="styleClass" required="false" default="" />
+	</composite:interface>
+
+	<composite:implementation>
+		<div id="#{cc.clientId}" class="output output-person #{cc.attrs.styleClass}">
+			<cc:avatar styleClass="avatar-minicard-image" imageFileName="#{cc.attrs.person.imageFileName}" />
+			<div class="person-data">
+				<div class="name">#{cc.attrs.user.fullName}</div>
+				<div class="email">#{cc.attrs.user.eamil}</div>
+			</div>
+		</div>
+	</composite:implementation>
+</ui:component>
