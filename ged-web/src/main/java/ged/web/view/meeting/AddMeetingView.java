@@ -20,18 +20,18 @@ public class AddMeetingView extends AbstractView {
 
 	private static final long serialVersionUID = 7690002057596615051L;
 
+	private List<Person> attendees;
+
 	private Meeting meeting;
 
 	private transient MeetingService meetingService;
 
 	private List<MeetingType> meetingTypes;
 
-	private List<Person> attendees;
-
 	public List<Person> getAttendees() {
 		return this.attendees;
 	}
-
+	
 	public Meeting getMeeting() {
 		return this.meeting;
 	}
@@ -48,9 +48,9 @@ public class AddMeetingView extends AbstractView {
 	}
 
 	private List<Person> initAttendees() {
-		final List<Person> attendees = new ArrayList<Person>();
-		attendees.addAll(this.meeting.getAttendees());
-		return this.attendees;
+		final List<Person> attendeeList = new ArrayList<Person>();
+		attendeeList.addAll(this.meeting.getAttendees());
+		return attendeeList;
 	}
 
 	private Meeting initMeeting() {
@@ -61,6 +61,10 @@ public class AddMeetingView extends AbstractView {
 
 	private List<MeetingType> initMeetingTypes() {
 		return Arrays.asList(MeetingType.values());
+	}
+
+	public void removeAttendde(final Person person) {
+		attendees.remove(person);
 	}
 
 	public void save() {

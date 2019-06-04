@@ -887,6 +887,52 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button 
 	color: #959bac;
 }
 
+.attendees {
+	padding: 0.5em;
+	display: flex;
+}
+
+.attendee {
+	display: flex;
+	flex: 1 1 100%;
+	justify-content: space-between;
+}
+
+.attendee .remove-attendee {
+	display: none !important;
+}
+
+.attendee:hover {
+	background: #e4f0fa;
+}
+
+.attendee:hover .remove-attendee {
+	display: inline-flex !important;
+}
+
+.person {
+	display: flex;
+}
+
+.person .avatar .image {
+	width: 52px;
+	height: 52px;
+	border: 3px solid white;
+}
+
+.person .person-data {
+	padding: 5px 10px;
+}
+
+.person .person-data .name {
+	color: black;
+	font-size: 1.1em;	
+}
+
+.person .person-data .email {
+	font-size: 0.9em;	
+}
+
 .tag {
 	min-width: 80px;
 	border-radius: 3px;
