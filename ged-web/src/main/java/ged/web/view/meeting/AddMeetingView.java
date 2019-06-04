@@ -31,7 +31,7 @@ public class AddMeetingView extends AbstractView {
 	public List<Person> getAttendees() {
 		return this.attendees;
 	}
-	
+
 	public Meeting getMeeting() {
 		return this.meeting;
 	}
@@ -63,8 +63,8 @@ public class AddMeetingView extends AbstractView {
 		return Arrays.asList(MeetingType.values());
 	}
 
-	public void removeAttendde(final Person person) {
-		attendees.remove(person);
+	public void removeAttendee(final Person person) {
+		this.attendees.remove(person);
 	}
 
 	public void save() {
