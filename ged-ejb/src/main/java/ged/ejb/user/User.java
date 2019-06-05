@@ -21,7 +21,7 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.search.annotations.Indexed;
 
 import ged.ejb.core.bookmark.Bookmark;
-import ged.ejb.core.model.Person;
+import ged.ejb.person.Person;
 import ged.ejb.user.role.Role;
 
 @Entity

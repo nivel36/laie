@@ -30,10 +30,10 @@ import org.hibernate.search.annotations.Store;
 import ged.ejb.core.file.ServerFile;
 import ged.ejb.core.model.Address;
 import ged.ejb.core.model.Ownerable;
-import ged.ejb.core.model.Person;
 import ged.ejb.core.tag.Tag;
 import ged.ejb.curriculum.Curriculum;
 import ged.ejb.job.candidature.JobCandidature;
+import ged.ejb.person.Person;
 import ged.ejb.user.User;
 
 @Entity

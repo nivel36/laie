@@ -5,7 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import ged.ejb.core.model.Person;
+import ged.ejb.person.Person;
 
 @Entity
 public class Contact extends Person {

@@ -1,4 +1,4 @@
-package ged.ejb.core.model;
+package ged.ejb.person;
 
 import java.util.Objects;
 
@@ -15,6 +15,8 @@ import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.SortableField;
 import org.hibernate.search.annotations.Store;
+
+import ged.ejb.core.model.AbstractEntity;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)

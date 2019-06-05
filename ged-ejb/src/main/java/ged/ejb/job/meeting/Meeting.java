@@ -18,8 +18,8 @@ import org.hibernate.search.annotations.IndexedEmbedded;
 
 import ged.ejb.core.model.AbstractEntity;
 import ged.ejb.core.model.Ownerable;
-import ged.ejb.core.model.Person;
 import ged.ejb.job.candidature.JobCandidature;
+import ged.ejb.person.Person;
 import ged.ejb.user.User;
 
 @Entity

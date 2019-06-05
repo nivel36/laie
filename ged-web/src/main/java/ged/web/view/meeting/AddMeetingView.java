@@ -1,26 +1,52 @@
 package ged.web.view.meeting;
 
+import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
-import ged.ejb.core.model.Person;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import ged.ejb.core.model.Page;
 import ged.ejb.job.meeting.Meeting;
 import ged.ejb.job.meeting.MeetingService;
 import ged.ejb.job.meeting.MeetingType;
+import ged.ejb.person.Person;
+import ged.ejb.person.PersonService;
 import ged.web.core.view.AbstractView;
 
 @Named
 @ViewScoped
 public class AddMeetingView extends AbstractView {
 
+	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
+
 	private static final long serialVersionUID = 7690002057596615051L;
 
 	private List<Person> attendees;
+
+	private Person attendee;
+
+	public Person getAttendee() {
+		return attendee;
+	}
+
+	public void setAttendee(Person attendee) {
+		this.attendee = attendee;
+	}
+
+	@Inject
+	private transient PersonService personService;
+
+	public void setPersonService(PersonService personService) {
+		this.personService = personService;
+	}
 
 	private Meeting meeting;
 
@@ -30,6 +56,11 @@ public class AddMeetingView extends AbstractView {
 
 	public List<Person> getAttendees() {
 		return this.attendees;
+	}
+
+	public void addAttendee() {
+		attendees.add(attendee);
+		attendee = null;
 	}
 
 	public Meeting getMeeting() {
@@ -81,5 +112,12 @@ public class AddMeetingView extends AbstractView {
 
 	public void setMeetingService(final MeetingService meetingService) {
 		this.meetingService = meetingService;
+	}
+
+	public List<Person> searchPerson(final String query) {
+		logger.trace("Searching for person with the string {}", query);
+		final List<Person> persons = this.personService.search(query, Page.ALL).getResultData();
+		persons.removeAll(attendees);
+		return persons;
 	}
 }
