@@ -6,6 +6,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -16,6 +17,8 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.search.annotations.IndexedEmbedded;
 
+import ged.ejb.candidate.Candidate;
+import ged.ejb.client.Contact;
 import ged.ejb.core.model.AbstractEntity;
 import ged.ejb.core.model.Ownerable;
 import ged.ejb.job.candidature.JobCandidature;
@@ -29,9 +32,18 @@ public class Meeting extends AbstractEntity implements Ownerable {
 	private static final long serialVersionUID = 3394583186288921090L;
 
 	@OneToMany
-	private Set<Person> attendees = new HashSet<>();
+	private Set<Candidate> candidateAttendees = new HashSet<>();
 
-	private String location;
+	@OneToMany
+	private Set<Contact> contactAttendees = new HashSet<>();
+
+	public Set<Contact> getContactAttendees() {
+		return contactAttendees;
+	}
+
+	public void setContactAttendees(Set<Contact> contactAttendees) {
+		this.contactAttendees = contactAttendees;
+	}
 
 	@NotNull
 	@Column(nullable = false)
@@ -44,7 +56,12 @@ public class Meeting extends AbstractEntity implements Ownerable {
 	@JoinColumn(name = "jobCandidatureId", nullable = false)
 	private JobCandidature jobCandidature;
 
+	private String location;
+
 	private MeetingType meetingType;
+
+	@ElementCollection
+	private Set<String> otherAttendees = new HashSet<>();
 
 	@NotNull
 	@ManyToOne
@@ -54,10 +71,23 @@ public class Meeting extends AbstractEntity implements Ownerable {
 
 	private String result;
 
-	public void addAttendee(final Person attendee) {
-		this.attendees.add(attendee);
+	@OneToMany
+	private Set<User> userAttendees = new HashSet<>();
+
+	public void addAttendee(final Person person) {
+		if (person instanceof User) {
+			userAttendees.add((User) person);
+		} else if (person instanceof Candidate) {
+			candidateAttendees.add((Candidate) person);
+		} else if (person instanceof Contact) {
+			contactAttendees.add((Contact) person);
+		}
 	}
 
+	public void addOtherAttendee(final String name) {
+		otherAttendees.add(name);
+	}
+	
 	@Override
 	public boolean equals(final Object obj) {
 		if (obj == null) {
@@ -78,11 +108,11 @@ public class Meeting extends AbstractEntity implements Ownerable {
 				&& Objects.equals(this.jobCandidature, other.jobCandidature)
 				&& Objects.equals(this.result, other.result);
 	}
-
-	public Set<Person> getAttendees() {
-		return this.attendees;
+	
+	public Set<Candidate> getCandidateAttendees() {
+		return candidateAttendees;
 	}
-
+	
 	public LocalDateTime getDatePlanned() {
 		return this.datePlanned;
 	}
@@ -107,6 +137,10 @@ public class Meeting extends AbstractEntity implements Ownerable {
 		return this.meetingType;
 	}
 
+	public Set<String> getOtherAttendees() {
+		return otherAttendees;
+	}
+
 	@Override
 	public User getOwner() {
 		return this.owner;
@@ -116,17 +150,31 @@ public class Meeting extends AbstractEntity implements Ownerable {
 		return this.result;
 	}
 
+	public Set<User> getUserAttendees() {
+		return userAttendees;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(this.datePlanned, this.description, this.jobCandidature, this.result);
 	}
 
-	public void removeAttendee(final Person attendee) {
-		this.attendees.remove(attendee);
+	public void removeAttendee(final Person person) {
+		if (person instanceof User) {
+			userAttendees.remove((User) person);
+		} else if (person instanceof Candidate) {
+			candidateAttendees.remove((Candidate) person);
+		} else if (person instanceof Contact) {
+			contactAttendees.remove((Contact) person);
+		}
 	}
 
-	public void setAttendees(final Set<Person> attendees) {
-		this.attendees = attendees;
+	public void removeOtherAttendee(final String name) {
+		otherAttendees.remove(name);
+	}
+
+	public void setCandidateAttendees(Set<Candidate> candidateAttendees) {
+		this.candidateAttendees = candidateAttendees;
 	}
 
 	public void setDatePlanned(final LocalDateTime datePlanned) {
@@ -153,6 +201,10 @@ public class Meeting extends AbstractEntity implements Ownerable {
 		this.meetingType = meetingType;
 	}
 
+	public void setOtherAttendees(Set<String> otherAttendees) {
+		this.otherAttendees = otherAttendees;
+	}
+
 	@Override
 	public void setOwner(final User owner) {
 		this.owner = owner;
@@ -160,5 +212,9 @@ public class Meeting extends AbstractEntity implements Ownerable {
 
 	public void setResult(final String result) {
 		this.result = result;
+	}
+
+	public void setUserAttendees(Set<User> userAttendees) {
+		this.userAttendees = userAttendees;
 	}
 }

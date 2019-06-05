@@ -5,9 +5,12 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import org.hibernate.search.annotations.Indexed;
+
 import ged.ejb.person.Person;
 
 @Entity
+@Indexed
 public class Contact extends Person {
 
 	private static final long serialVersionUID = -5910261570364209778L;

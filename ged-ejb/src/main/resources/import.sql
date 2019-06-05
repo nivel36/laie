@@ -52,30 +52,21 @@ insert into I18NSTRING( id, version, locale, key, text ) values( 306, 0, 'es', '
 insert into I18NSTRING( id, version, locale, key, text ) values( 310, 0, 'ca', 'reference', 'Referència' );
 insert into I18NSTRING( id, version, locale, key, text ) values( 311, 0, 'es', 'reference', 'Referencia' );
 
-insert into PERSON( id, version, dtype, name, surname, phoneNumber, email) values ( 500, 0, 'USER', 'Abel', 'Ferrer Jiménez','685555276', 'abel.ferrer.jimenez@gmail.com');
-insert into PERSON( id, version, dtype, name, surname, phoneNumber, email) values ( 501, 0, 'USER', 'Isabel', 'Vallejo Medina','685555276', 'isabel.vallejo.medina@gmail.com');
-insert into PERSON( id, version, dtype, name, surname, phoneNumber, email) values ( 510, 0, 'CANDIDATE', 'Abel', 'Ferrer Jiménez','685555276', 'aferrer@gmail.com');
-insert into PERSON( id, version, dtype, name, surname, phoneNumber, email) values ( 511, 0, 'CANDIDATE', 'Luís', 'González Sánchez','685555277', 'lgonzalez@gmail.com');
-insert into PERSON( id, version, dtype, name, surname, phoneNumber, email) values ( 512, 0, 'CANDIDATE', 'Juan', 'Ayuso Pérez','685555278', 'ayuson32@gmail.com');
-insert into PERSON( id, version, dtype, name, surname, phoneNumber, email) values ( 513, 0, 'CANDIDATE', 'Pedro', 'Gallardo Navarro','685555279', 'pedrito@gmail.com');
-insert into PERSON( id, version, dtype, name, surname, phoneNumber, email) values ( 514, 0, 'CANDIDATE', 'Gonzalo', 'León Cuellar','685555280', 'gonzo73@gmail.com');
-insert into PERSON( id, version, dtype, name, surname, phoneNumber, email) values ( 515, 0, 'CANDIDATE', 'Antonio', 'García Collado','685555281', 'agc2@gmail.com');
-
 insert into CREDENTIAL( id, version, hashPassword, salt, created ) values( 600, 0, '16AFB50A06A958ACEC2EDA9D70283139BC7B7372E21CC83F619CCF169E6E7956', 'FFFFFF', (TO_DATE('17/12/2015', 'DD/MM/YYYY')));
 insert into CREDENTIAL( id, version, hashPassword, salt, created ) values( 601, 0, '16AFB50A06A958ACEC2EDA9D70283139BC7B7372E21CC83F619CCF169E6E7956', 'FFFFFF', (TO_DATE('17/12/2015', 'DD/MM/YYYY')));
 
-insert into USER( id, language, rowsPerPage, role, credentialId ) values( 500, 'es', 10, 'ADMIN', 600);
-insert into USER( id, language, rowsPerPage, role, credentialId ) values( 501, 'es', 10, 'ADMIN', 601);
+insert into USER( id, version, name, surname, phoneNumber, email, language, rowsPerPage, role, credentialId ) values( 500, 0, 'Abel', 'Ferrer Jiménez','685555276', 'abel.ferrer.jimenez@gmail.com', 'es', 10, 'ADMIN', 600);
+insert into USER( id, version, name, surname, phoneNumber, email, language, rowsPerPage, role, credentialId ) values( 501, 0, 'Isabel', 'Vallejo Medina','685555276', 'isabel.vallejo.medina@gmail.com', 'es', 10, 'ADMIN', 601);
 
 insert into USERCLOSURE( id, version, antecessor_id, descendant_id, pathLength ) values( 700, 0, 500, 500, 0 );
 insert into USERCLOSURE( id, version, antecessor_id, descendant_id, pathLength ) values( 701, 0, 501, 501, 0 );
 
-insert into CANDIDATE( id, city, country, door, number, state, storey, street, zipCode, jobProfile, ownerId) values ( 510, 'Barcelona', 'España','1','85', 'Barcelona', 'Principal', 'Bailén', '08809', 'Arquitecto', 500);
-insert into CANDIDATE( id, city, country, door, number, state, storey, street, zipCode, jobProfile, ownerId) values ( 511, 'Madrid', 'España','2','85', 'Madrid', '2', 'Miraflores', '80809', 'Programador JEE', 500);
-insert into CANDIDATE( id, city, country, door, number, state, storey, street, zipCode, jobProfile, ownerId) values ( 512, 'Valencia', 'España','2','85', 'Valencia', '1', 'Horchata', '02809', 'Analista Java', 500);
-insert into CANDIDATE( id, city, country, door, number, state, storey, street, zipCode, jobProfile, ownerId) values ( 513, 'Masnou', 'España','3','85', 'Barcelona', '3', 'Plaça Catalunya', '08328', 'Programador', 500);
-insert into CANDIDATE( id, city, country, door, number, state, storey, street, zipCode, jobProfile, ownerId) values ( 514, 'Lugo', 'España','1','85', 'Lugo', '3', 'España', '02809', 'Programador', 500);
-insert into CANDIDATE( id, city, country, door, number, state, storey, street, zipCode, jobProfile, ownerId) values ( 515, 'Pontevedra', 'España','2','85', 'Pontevedra', 'Principal', 'Luguense', '01809', 'Programador Junior', 501);
+insert into CANDIDATE( id, version, name, surname, phoneNumber, email, city, country, door, number, state, storey, street, zipCode, jobProfile, ownerId) values ( 510, 0, 'Abel', 'Ferrer Jiménez','685555276', 'aferrer@gmail.com', 'Barcelona', 'España','1','85', 'Barcelona', 'Principal', 'Bailén', '08809', 'Arquitecto', 500);
+insert into CANDIDATE( id, version, name, surname, phoneNumber, email, city, country, door, number, state, storey, street, zipCode, jobProfile, ownerId) values ( 511, 0, 'Luís', 'González Sánchez','685555277', 'lgonzalez@gmail.com', 'Madrid', 'España','2','85', 'Madrid', '2', 'Miraflores', '80809', 'Programador JEE', 500);
+insert into CANDIDATE( id, version, name, surname, phoneNumber, email, city, country, door, number, state, storey, street, zipCode, jobProfile, ownerId) values ( 512, 0, 'Juan', 'Ayuso Pérez','685555278', 'ayuson32@gmail.com', 'Valencia', 'España','2','85', 'Valencia', '1', 'Horchata', '02809', 'Analista Java', 500);
+insert into CANDIDATE( id, version, name, surname, phoneNumber, email, city, country, door, number, state, storey, street, zipCode, jobProfile, ownerId) values ( 513, 0, 'Pedro', 'Gallardo Navarro','685555279', 'pedrito@gmail.com', 'Masnou', 'España','3','85', 'Barcelona', '3', 'Plaça Catalunya', '08328', 'Programador', 500);
+insert into CANDIDATE( id, version, name, surname, phoneNumber, email, city, country, door, number, state, storey, street, zipCode, jobProfile, ownerId) values ( 514, 0, 'Gonzalo', 'León Cuellar','685555280', 'gonzo73@gmail.com', 'Lugo', 'España','1','85', 'Lugo', '3', 'España', '02809', 'Programador', 500);
+insert into CANDIDATE( id, version, name, surname, phoneNumber, email, city, country, door, number, state, storey, street, zipCode, jobProfile, ownerId) values ( 515, 0, 'Antonio', 'García Collado','685555281', 'agc2@gmail.com', 'Pontevedra', 'España','2','85', 'Pontevedra', 'Principal', 'Luguense', '01809', 'Programador Junior', 501);
 
 insert into CURRICULUM( id, version, candidateId) values (801, 0, 510);
 

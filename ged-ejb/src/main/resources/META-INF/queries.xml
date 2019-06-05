@@ -256,7 +256,7 @@
 			WHERE j.first = true
 		]]></query>
 	</named-query>
-	
+		
 	<named-query name="Tag.findByLabel">
 		<query><![CDATA[
 			SELECT t 

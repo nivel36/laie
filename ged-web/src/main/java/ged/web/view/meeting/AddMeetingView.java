@@ -13,12 +13,14 @@ import javax.inject.Named;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import ged.ejb.candidate.CandidateService;
+import ged.ejb.client.ContactService;
 import ged.ejb.core.model.Page;
 import ged.ejb.job.meeting.Meeting;
 import ged.ejb.job.meeting.MeetingService;
 import ged.ejb.job.meeting.MeetingType;
 import ged.ejb.person.Person;
-import ged.ejb.person.PersonService;
+import ged.ejb.user.UserService;
 import ged.web.core.view.AbstractView;
 
 @Named
@@ -29,24 +31,15 @@ public class AddMeetingView extends AbstractView {
 
 	private static final long serialVersionUID = 7690002057596615051L;
 
-	private List<Person> attendees;
-
 	private Person attendee;
 
-	public Person getAttendee() {
-		return attendee;
-	}
-
-	public void setAttendee(Person attendee) {
-		this.attendee = attendee;
-	}
+	private List<Person> attendees;
 
 	@Inject
-	private transient PersonService personService;
+	private transient CandidateService candidateService;
 
-	public void setPersonService(PersonService personService) {
-		this.personService = personService;
-	}
+	@Inject
+	private transient ContactService contactService;
 
 	private Meeting meeting;
 
@@ -54,13 +47,20 @@ public class AddMeetingView extends AbstractView {
 
 	private List<MeetingType> meetingTypes;
 
-	public List<Person> getAttendees() {
-		return this.attendees;
-	}
+	@Inject
+	private transient UserService userService;
 
 	public void addAttendee() {
 		attendees.add(attendee);
 		attendee = null;
+	}
+
+	public Person getAttendee() {
+		return attendee;
+	}
+
+	public List<Person> getAttendees() {
+		return this.attendees;
 	}
 
 	public Meeting getMeeting() {
@@ -80,7 +80,9 @@ public class AddMeetingView extends AbstractView {
 
 	private List<Person> initAttendees() {
 		final List<Person> attendeeList = new ArrayList<Person>();
-		attendeeList.addAll(this.meeting.getAttendees());
+		attendeeList.addAll(this.meeting.getUserAttendees());
+		attendeeList.addAll(this.meeting.getContactAttendees());
+		attendeeList.addAll(this.meeting.getCandidateAttendees());
 		return attendeeList;
 	}
 
@@ -102,8 +104,29 @@ public class AddMeetingView extends AbstractView {
 		this.meetingService.save(this.meeting);
 	}
 
+	public List<Person> searchPerson(final String query) {
+		logger.trace("Searching for person with the string {}", query);
+		final List<Person> personsFound = new ArrayList<>();
+		personsFound.addAll(candidateService.search(query, Page.of(0, 10)).getResultData());
+		personsFound.addAll(userService.search(query, Page.of(0, 10)).getResultData());
+		personsFound.addAll(contactService.search(query, Page.of(0, 10)).getResultData());
+		return personsFound;
+	}
+
+	public void setAttendee(Person attendee) {
+		this.attendee = attendee;
+	}
+
 	public void setAttendees(final List<Person> attendees) {
 		this.attendees = attendees;
+	}
+
+	public void setCandidateService(CandidateService candidateService) {
+		this.candidateService = candidateService;
+	}
+
+	public void setContactService(ContactService contactService) {
+		this.contactService = contactService;
 	}
 
 	public void setMeeting(final Meeting meeting) {
@@ -114,10 +137,7 @@ public class AddMeetingView extends AbstractView {
 		this.meetingService = meetingService;
 	}
 
-	public List<Person> searchPerson(final String query) {
-		logger.trace("Searching for person with the string {}", query);
-		final List<Person> persons = this.personService.search(query, Page.ALL).getResultData();
-		persons.removeAll(attendees);
-		return persons;
+	public void setUserService(UserService userService) {
+		this.userService = userService;
 	}
 }

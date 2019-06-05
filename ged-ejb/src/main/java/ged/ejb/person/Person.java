@@ -3,10 +3,9 @@ package ged.ejb.person;
 import java.util.Objects;
 
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
@@ -18,9 +17,8 @@ import org.hibernate.search.annotations.Store;
 
 import ged.ejb.core.model.AbstractEntity;
 
-@Entity
-@Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorColumn
+@MappedSuperclass
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Person extends AbstractEntity {
 
 	private static final long serialVersionUID = 1256626229385088883L;
