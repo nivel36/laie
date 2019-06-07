@@ -455,10 +455,15 @@ body .ui-dialog .ui-dialog-titlebar .ui-dialog-titlebar-close {
 }
 
 
-body .ui-autocomplete .ui-inputfield, body .ui-spinner .ui-inputfield, body .ui-calendar .ui-inputfield, body .ui-inputnumber .ui-inputfield {
+body .ui-autocomplete .ui-inputfield, body .ui-calendar .ui-inputfield,  body .ui-inputnumber .ui-inputfield {
 	padding: 0.5em;
 	border: 1px solid #c2cad8;
 }
+
+ body .ui-spinner .ui-inputfield  {
+ 	padding: 0.5em 25px 0.5em 0.5em;
+	border: 1px solid #c2cad8;
+ }
 
 body .ui-inputfield {
 	border: 0px;
