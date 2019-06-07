@@ -23,8 +23,7 @@
 						<p:column selectionMode="multiple" style="width:16px;text-align:center" />
 
 						<p:column>
-							<p:graphicImage class="image image-icon" value="/images/#{candidate.imageFileName}" rendered="#{not empty candidate.imageFileName}" />
-							<p:graphicImage class="image image-icon" value="/resources/img/default-avatar.png" rendered="#{empty candidate.imageFileName}" />
+							<cc:avatar value="#{candidate.imageFileName}" styleClass="image-icon" />
 						</p:column>
 
 						<p:column headerText="#{i18n['candidate.name']}" sortBy="#{candidate.name}">

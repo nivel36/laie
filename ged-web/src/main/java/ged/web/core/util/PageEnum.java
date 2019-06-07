@@ -40,7 +40,8 @@ public enum PageEnum {
 	USER("/user/view"), //
 	USER_ADD("/user/add"), //
 	USER_EDIT("/user/edit", true), //
-	USER_SEARCH("/user/search");
+	USER_SEARCH("/user/search"), //
+	USER_SELECT("/user/select");
 
 	private static final String XHTML = ".xhtml";
 
@@ -54,12 +55,12 @@ public enum PageEnum {
 		this(url, false);
 	}
 
-	PageEnum(final String url, boolean isPost) {
+	PageEnum(final String url, final boolean isPost) {
 		this.url = url + XHTML;
 	}
 
 	public String getUrl() {
-		if (isPost) {
+		if (this.isPost) {
 			return new StringBuilder(this.url).append("?").append(REDIRECT).toString();
 		} else {
 			return this.url;
@@ -67,8 +68,8 @@ public enum PageEnum {
 	}
 
 	public String getUrl(final Identifiable id) {
-		StringBuilder urlBuilder = new StringBuilder(this.url).append("?id=").append(id.getId());
-		if (isPost) {
+		final StringBuilder urlBuilder = new StringBuilder(this.url).append("?id=").append(id.getId());
+		if (this.isPost) {
 			urlBuilder.append("&").append(REDIRECT);
 		}
 		return urlBuilder.toString();

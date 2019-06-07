@@ -21,7 +21,7 @@
 			<p:menuitem value="#{i18n['user.new_user']}" disabled="true" />
 		</p:breadCrumb>
 	</ui:define>
-	
+
 	<ui:define name="content">
 		<h:form id="userForm" enctype="multipart/form-data">
 			<div class="panel">
@@ -55,7 +55,9 @@
 							</cc:inputSelect>
 
 							<cc:inputUser id="manager" label="#{i18n['user.manager']}" value="#{addUserView.user.manager}"
-								completeMethod="#{addUserView.searchManager}" disabled="#{addUserView.user.isAdmin()}" />
+								completeMethod="#{addUserView.queryManager}" disabled="#{addUserView.user.isAdmin()}" search="#{addUserView.searchManager}">
+								<p:ajax event="dialogReturn" listener="#{addUserView.onManagerSelect}" update="manager" />
+							</cc:inputUser>
 
 							<cc:calendar id="date_of_join" label="#{i18n['user.date_of_join']}" value="#{addUserView.user.dateOfJoin}" />
 						</div>

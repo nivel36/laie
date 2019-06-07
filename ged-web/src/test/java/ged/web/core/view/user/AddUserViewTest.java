@@ -88,13 +88,13 @@ public class AddUserViewTest {
 
 		@Test
 		public void nullSearchShouldReturnEmptyList() {
-			final List<User> managers = addUserView.searchManager(null);
+			final List<User> managers = addUserView.queryManager(null);
 			assertEquals(0, managers.size());
 		}
 
 		@Test
 		public void shortTextSearchShouldReturnEmptyList() {
-			final List<User> managers = addUserView.searchManager("as");
+			final List<User> managers = addUserView.queryManager("as");
 			assertEquals(0, managers.size());
 		}
 
@@ -104,7 +104,7 @@ public class AddUserViewTest {
 			SearchResult<User> searchResult = new SearchResult<>(mockedManagers, mockedManagers.size());
 			Mockito.when(userService.search("Abe", Page.ALL)).thenReturn(searchResult);
 
-			final List<User> managers = addUserView.searchManager("Abe");
+			final List<User> managers = addUserView.queryManager("Abe");
 
 			assertEquals("abel@test.com", managers.get(0).getEmail());
 		}

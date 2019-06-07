@@ -87,13 +87,13 @@ public class EditUserViewTest {
 
 		@Test
 		public void nullSearchShouldReturnEmptyList() {
-			final List<User> managers = EditUserViewTest.this.userEditView.searchManager(null);
+			final List<User> managers = EditUserViewTest.this.userEditView.queryManager(null);
 			assertEquals(0, managers.size());
 		}
 
 		@Test
 		public void shortTextSearchShouldReturnEmptyList() {
-			final List<User> managers = EditUserViewTest.this.userEditView.searchManager("as");
+			final List<User> managers = EditUserViewTest.this.userEditView.queryManager("as");
 			assertEquals(0, managers.size());
 		}
 
@@ -103,7 +103,7 @@ public class EditUserViewTest {
 			SearchResult<User> searchResult = new SearchResult<>(mockedManagers,mockedManagers.size());
 			when(EditUserViewTest.this.userService.search("Abe", Page.ALL)).thenReturn(searchResult);
 
-			final List<User> managers = EditUserViewTest.this.userEditView.searchManager("Abe");
+			final List<User> managers = EditUserViewTest.this.userEditView.queryManager("Abe");
 
 			assertEquals("abel@test.com", managers.get(0).getEmail());
 		}

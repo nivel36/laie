@@ -4,8 +4,7 @@
 		<f:param name="candidateId" value="#{candidate.id}" />
 		<div class="user-minicard">
 			<div class="user-image">
-				<p:graphicImage class="image" value="/images/#{candidate.imageFileName}" rendered="#{not empty candidate.imageFileName}" />
-				<p:graphicImage class="image" value="/resources/img/default-avatar.png" rendered="#{empty candidate.imageFileName}" />
+				<cc:avatar value="#{candidate.imageFileName}" />
 			</div>
 			<div class="user-info">
 				<div class="name">#{candidate}</div>

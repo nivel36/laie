@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:i18n="http://ged.com/i18n"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" template="/WEB-INF/templates/dialog.xhtml">
+
+	<ui:define name="title">
+		<title>#{i18n['user.users']}</title>
+	</ui:define>
+
+	<ui:define name="content">
+		<h:form id="userSelectForm">
+			<div class="panel">
+				<div class="panel-content">
+					<div class="panel-content-data">
+						<cc:inputSearch searchText="#{selectUserView.searchText}" searchAction="#{selectUserView.search}" update="@form" />
+					</div>
+
+					<p:dataTable var="user" id="users" value="#{selectUserView.users}" emptyMessage="#{i18n['user.no_users_found']}" reflow="true"
+						paginator="true" paginatorPosition="bottom" paginatorTemplate="{PageLinks}" rows="#{sessionUser.rowsPerPage}" selectionMode="single"
+						selection="#{selectUserView.selectedUser}" sortBy="#{user.name}" sortOrder="descending" lazy="true">
+
+						<p:ajax event="rowSelect" listener="#{selectUserView.onUserSelect}" update="@form" resetValues="true" />
+
+						<p:column>
+							<cc:avatar value="#{user.imageFileName}" styleClass="image-icon" />
+						</p:column>
+
+						<p:column headerText="#{i18n['user.name']}" sortBy="#{user.name}">
+							<h:outputText value="#{user.fullName}" />
+						</p:column>
+
+						<p:column headerText="#{i18n['user.email']}">
+							<h:outputText value="#{user.email}" />
+						</p:column>
+
+						<p:column headerText="#{i18n['user.role']}">
+							<h:outputText value="#{i18n:translate(user.role)}" />
+						</p:column>
+
+						<p:column headerText="#{i18n['user.manager']}">
+							<h:outputText value="#{user.manager.fullName}" />
+						</p:column>
+
+					</p:dataTable>
+
+					<div class="panel-footer">
+						<div class="panel-buttons">
+							<p:commandButton value="#{i18n['action.cancel']}" action="#{selectUserView.cancel}" process="@this" styleClass="btn-gray" />
+						</div>
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

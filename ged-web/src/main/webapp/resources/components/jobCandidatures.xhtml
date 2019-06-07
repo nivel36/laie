@@ -32,10 +32,7 @@
 						</h:link>
 					</p:column>
 					<p:column rendered="#{cc.attrs.showCandidate}">
-						<p:graphicImage class="image image-icon" value="/images/#{jobCandidature.candidate.imageFileName}"
-							rendered="#{not empty jobCandidature.candidate.imageFileName}" />
-						<p:graphicImage class="image image-icon" value="/resources/img/default-avatar.png"
-							rendered="#{empty jobCandidature.candidate.imageFileName}" />
+						<cc:avatar value="#{jobCandidature.candidate.imageFileName}" styleClass="image-icon" />
 					</p:column>
 					<p:column headerText="#{i18n['job_candidature.candidate']}" rendered="#{cc.attrs.showCandidate}">
 						<h:link value="#{jobCandidature.candidate.fullName}" outcome="#{Page.CANDIDATE.getUrl()}">

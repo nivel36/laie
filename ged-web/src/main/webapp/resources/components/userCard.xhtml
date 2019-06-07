@@ -11,7 +11,7 @@
 		<div id="#{cc.clientId}" class="user-minicard">
 			<p:link outcome="#{Page.USER.getUrl()}">
 				<f:param name="id" value="#{cc.attrs.user.id}" />
-				<cc:avatar styleClass="user-minicard-image" imageFileName="#{cc.attrs.user.imageFileName}" />
+				<cc:avatar styleClass="user-minicard-image" value="#{cc.attrs.user.imageFileName}" />
 				<div class="user-minicard-info">
 					<h:panelGroup layout="block" styleClass="name">#{cc.attrs.user}</h:panelGroup>
 				</div>

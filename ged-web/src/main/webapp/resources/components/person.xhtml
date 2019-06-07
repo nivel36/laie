@@ -9,7 +9,7 @@
 
 	<composite:implementation>
 		<div id="#{cc.clientId}" class="person #{cc.attrs.styleClass}">
-			<cc:avatar imageFileName="#{cc.attrs.value.imageFileName}" />
+			<cc:avatar value="#{cc.attrs.value.imageFileName}" />
 			<div class="person-data">
 				<div class="name">#{cc.attrs.value.fullName}</div>
 				<div class="email">#{cc.attrs.value.email}</div>

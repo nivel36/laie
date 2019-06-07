@@ -17,7 +17,7 @@
 			<p:fileUpload id="fileUpload" styleClass="invisible" fileUploadListener="#{cc.attrs.fileUploadListener}"
 				mode="advanced" dragDropSupport="false" process="@this" update="#{cc.clientId}" auto="true" />
 			<h:outputLabel for="fileUpload_input">
-				<cc:avatar imageFileName="#{cc.attrs.value}" />
+				<cc:avatar value="#{cc.attrs.value}" />
 			</h:outputLabel>
 			<c:if test="#{cc.attrs.allowCamera}">
 				<p:commandButton id="cameraButton" icon="fa-camera" onclick="PF('cameraDialog').show();"

@@ -339,6 +339,12 @@ body .input-container>*:last-child {
 	image-orientation: from-image;
 }
 
+.avatar.image-icon .image {
+	width: 32px;
+	height: 32px;
+	border: 2px solid white;
+}
+
 .input-avatar .image {
 	cursor: pointer;
 }

@@ -13,7 +13,7 @@
 			<p:link outcome="#{Page.CANDIDATE.getUrl()}" styleClass="candidate-card">
 				<f:param name="id" value="#{cc.attrs.candidate.id}" />
 				<div class="image">
-					<cc:avatar imageFileName="#{cc.attrs.candidate.imageFileName}" />
+					<cc:avatar value="#{cc.attrs.candidate.imageFileName}" />
 				</div>
 				<div class="info">
 					<div class="name">#{cc.attrs.candidate}</div>
