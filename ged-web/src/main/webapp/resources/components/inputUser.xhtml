@@ -10,7 +10,7 @@
 		<composite:attribute name="required" type="java.lang.Boolean" default="false" />
 		<composite:attribute name="disabled" type="java.lang.Boolean" default="false" />
 		<composite:attribute name="styleClass" required="false" default="" />
-		<composite:editableValueHolder name="input-text" />
+		<composite:editableValueHolder name="input" />
 	</composite:interface>
 
 	<composite:implementation>
@@ -18,10 +18,10 @@
 			<div class="label-container">
 				<p:outputLabel id="label" value="#{cc.attrs.label}" for="input" styleClass="label" />
 			</div>
-			<h:panelGroup layout="block" id="input-container" class="input-container">
-				<p:autoComplete id="input" value="#{cc.attrs.value}" completeMethod="#{cc.attrs.completeMethod}" var="user"
-					itemLabel="#{user.fullName}" itemValue="#{user}" forceSelection="true" required="#{cc.attrs.required}"
-					binding="#{cc.input}" disabled="#{cc.attrs.disabled}" styleClass="input input-user">
+			<div class="input-container">
+				<p:autoComplete id="input" value="#{cc.attrs.value}" required="#{cc.attrs.required}" binding="#{cc.input}"
+					styleClass="input input-user" completeMethod="#{cc.attrs.completeMethod}" forceSelection="true" minQueryLength="3"
+					var="user" itemLabel="#{user.fullName}" itemValue="#{user}" disabled="#{cc.attrs.disabled}">
 					<p:column styleClass="user-select image">
 						<p:graphicImage class="image image-icon" value="/images/#{user.imageFileName}"
 							rendered="#{not empty user.imageFileName}" />
@@ -31,11 +31,11 @@
 					<p:column styleClass="user-select name">
 						<h:outputText value="#{user.fullName}" />
 					</p:column>
-					<p:ajax event="itemSelect" update="@parent" process="input" />
+					<p:ajax event="itemSelect" update="#{cc.clientId}" process="input" />
 				</p:autoComplete>
-				<p:commandButton id="cleanButton" process="@this" update="@parent" action="#{cc.clean}" styleClass="btn-inner"
-					icon="fa fa-times" binding="#{cc.cleanButton}" />
-			</h:panelGroup>
+				<p:commandButton id="cleanButton" process="@this" update="#{cc.clientId}" action="#{cc.clean}"
+					styleClass="btn-inner" icon="fa fa-times" binding="#{cc.cleanButton}" />
+			</div>
 			<div class="message-container">
 				<p:message id="message" for="input" styleClass="message-error" />
 			</div>

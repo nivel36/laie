@@ -27,7 +27,7 @@
 							<cc:inputText label="#{i18n['job.name']}" value="#{addJobView.jobOffer.name}" required="true" />
 
 							<cc:inputClient id="client" label="#{i18n['job.client']}" value="#{addJobView.jobOffer.client}" search="#{addJobView.searchClient()}"
-								required="true">
+								completeMethod="#{addJobView.completeClient}" required="true">
 								<p:ajax event="dialogReturn" listener="#{addJobView.onClientSelect}" update="client" />
 							</cc:inputClient>
 

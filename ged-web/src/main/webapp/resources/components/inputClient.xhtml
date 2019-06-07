@@ -7,28 +7,36 @@
 		<composite:attribute name="label" required="true" />
 		<composite:attribute name="required" type="java.lang.Boolean" default="false" />
 		<composite:attribute name="value" type="ged.ejb.client.Client" required="true" />
+		<composite:attribute name="disabled" type="java.lang.Boolean" default="false" />
 		<composite:attribute name="styleClass" required="false" default="" />
 		<composite:clientBehavior name="dialogReturn" event="dialogReturn" targets="search" />
-		<composite:attribute name="search" method-signature="void function(java.lang.String)" required="true" />
-		<composite:editableValueHolder name="input-client" />
+		<composite:attribute name="search" method-signature="void function()" required="true" />
+		<composite:attribute name="completeMethod" method-signature="void function(java.lang.String)" required="true" />
+		<composite:editableValueHolder name="input" />
 	</composite:interface>
 
 	<composite:implementation>
 		<div id="#{cc.clientId}" class="input-client input-group #{cc.attrs.styleClass}">
 			<div class="label-container">
-				<p:outputLabel id="label" for="input-client" value="#{cc.attrs.label}" styleClass="label" />
+				<p:outputLabel id="label" for="input" value="#{cc.attrs.label}" styleClass="label" />
 			</div>
 			<div class="input-container">
-				<p:inputText id="input-client" value="#{empty cc.attrs.value ? null : cc.attrs.value.name}"
-					required="#{cc.attrs.required}" binding="#{cc.input}" styleClass="input input-client" />
-				<p:commandButton id="clean" action="#{cc.clean}" process="@this" update="@parent" styleClass="btn-gray"
+				<p:autoComplete id="input" value="#{cc.attrs.value}" required="#{cc.attrs.required}" binding="#{cc.input}"
+					styleClass="input input-client" completeMethod="#{cc.attrs.completeMethod}" forceSelection="true"
+					minQueryLength="3" itemValue="#{client}" var="client" itemLabel="#{client.name}" disabled="#{cc.attrs.disabled}">
+					<p:column>
+						<h:outputText value="#{client.name}" />
+					</p:column>
+					<p:ajax event="itemSelect" update="#{cc.clientId}" process="input" />
+				</p:autoComplete>
+				<p:commandButton id="clean" action="#{cc.clean}" process="@this" update="#{cc.clientId}" styleClass="btn-gray"
 					icon="fa fa-times" binding="#{cc.cleanButton}" />
 				<p:commandButton id="search" action="#{cc.attrs.search}" process="@this" icon="fa fa-search" styleClass="icon">
-					<p:resetInput target="input-client" />
+					<p:resetInput target="input" />
 				</p:commandButton>
 			</div>
 			<div class="message-container">
-				<p:message id="message" for="input-client" styleClass="message-error" />
+				<p:message id="message" for="input" styleClass="message-error" />
 			</div>
 		</div>
 	</composite:implementation>

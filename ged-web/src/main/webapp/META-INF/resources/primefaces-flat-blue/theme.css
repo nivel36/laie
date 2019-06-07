@@ -455,15 +455,21 @@ body .ui-dialog .ui-dialog-titlebar .ui-dialog-titlebar-close {
 }
 
 
+body .ui-autocomplete .ui-inputfield, body .ui-spinner .ui-inputfield, body .ui-calendar .ui-inputfield, body .ui-inputnumber .ui-inputfield {
+	padding: 0.5em;
+	border: 1px solid #c2cad8;
+}
+
 body .ui-inputfield {
 	border: 0px;
-	margin: 0;
 	padding: 0;
 	height: 100%;
 	width: 100%;
 	color: inherit;
 	justify-content: inherit;
 	text-align: inherit;
+	border-bottom-left-radius: 4px;
+	border-top-left-radius: 4px;
 }
 
 body .ui-inputfield.hasDatepicker {

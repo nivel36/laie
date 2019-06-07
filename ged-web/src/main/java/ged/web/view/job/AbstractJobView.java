@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import org.primefaces.event.SelectEvent;
 
 import ged.ejb.client.Client;
+import ged.ejb.client.ClientService;
 import ged.ejb.core.model.Page;
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
@@ -20,15 +21,22 @@ public abstract class AbstractJobView extends AbstractView {
 
 	private static final long serialVersionUID = 747123354355904789L;
 
-	protected JobOffer jobOffer;
+	@Inject
+	protected transient ClientService clientService;
 
+	protected JobOffer jobOffer;
+	
 	@Inject
 	protected transient JobOfferService jobOfferService;
 
 	private List<String> recruiters = new ArrayList<>();
-
+	
 	@Inject
 	protected transient UserService userService;
+
+	public List<Client> completeClient(String query) {
+		return clientService.search(query, Page.of(0,10)).getResultData();
+	}
 
 	public JobOffer getJobOffer() {
 		return this.jobOffer;
