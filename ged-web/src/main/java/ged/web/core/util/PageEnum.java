@@ -60,19 +60,27 @@ public enum PageEnum {
 		this.isPost = isPost;
 	}
 
+	public String getRedirectedUrl() {
+		return new StringBuilder(this.url).append("?").append(REDIRECT).toString();
+	}
+
+	public String getRedirectedUrl(final Identifiable id) {
+		return new StringBuilder(this.url).append("?id=").append(id.getId()).append("&").append(REDIRECT).toString();
+	}
+
 	public String getUrl() {
 		if (this.isPost) {
-			return new StringBuilder(this.url).append("?").append(REDIRECT).toString();
+			return this.getRedirectedUrl();
 		} else {
 			return this.url;
 		}
 	}
 
 	public String getUrl(final Identifiable id) {
-		final StringBuilder urlBuilder = new StringBuilder(this.url).append("?id=").append(id.getId());
 		if (this.isPost) {
-			urlBuilder.append("&").append(REDIRECT);
+			return this.getRedirectedUrl(id);
+		} else {
+			return new StringBuilder(this.url).append("?id=").append(id.getId()).toString();
 		}
-		return urlBuilder.toString();
 	}
 }

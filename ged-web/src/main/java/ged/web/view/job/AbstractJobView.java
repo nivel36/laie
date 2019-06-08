@@ -47,7 +47,7 @@ public abstract class AbstractJobView extends AbstractView {
 	}
 
 	protected String jobUrl() {
-		return PageEnum.JOB.getUrl(this.jobOffer);
+		return PageEnum.JOB.getRedirectedUrl(this.jobOffer);
 	}
 
 	public void onClientSelect(final SelectEvent event) {
