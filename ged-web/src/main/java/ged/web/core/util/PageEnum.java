@@ -57,6 +57,7 @@ public enum PageEnum {
 
 	PageEnum(final String url, final boolean isPost) {
 		this.url = url + XHTML;
+		this.isPost = isPost;
 	}
 
 	public String getUrl() {
