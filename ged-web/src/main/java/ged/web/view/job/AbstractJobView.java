@@ -25,17 +25,17 @@ public abstract class AbstractJobView extends AbstractView {
 	protected transient ClientService clientService;
 
 	protected JobOffer jobOffer;
-	
+
 	@Inject
 	protected transient JobOfferService jobOfferService;
 
 	private List<String> recruiters = new ArrayList<>();
-	
+
 	@Inject
 	protected transient UserService userService;
 
-	public List<Client> completeClient(String query) {
-		return clientService.search(query, Page.of(0,10)).getResultData();
+	public List<Client> completeClient(final String query) {
+		return this.clientService.search(query, Page.of(0, 10)).getResultData();
 	}
 
 	public JobOffer getJobOffer() {
@@ -58,15 +58,24 @@ public abstract class AbstractJobView extends AbstractView {
 		}
 	}
 
+	public void onOwnerSelect(final SelectEvent event) {
+		final Object selectedObject = event.getObject();
+		if (selectedObject != null) {
+			final User owner = (User) selectedObject;
+			this.jobOffer.setOwner(owner);
+		}
+	}
+
+	public List<User> queryOwner(final String query) {
+		return this.userService.search(query, Page.ALL).getResultData();
+	}
+
 	public void searchClient() {
 		this.openBigDialog(PageEnum.CLIENT_SELECT.getUrl());
 	}
 
-	public List<User> searchOwner(final String query) {
-		if ((query == null) || (query.trim().length() < 3)) {
-			return new ArrayList<>();
-		}
-		return this.userService.search(query, Page.ALL).getResultData();
+	public void searchOwner() {
+		this.openBigDialog(PageEnum.USER_SELECT.getUrl());
 	}
 
 	public void setJobOffer(final JobOffer jobOffer) {
