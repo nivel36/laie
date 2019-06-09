@@ -29,7 +29,7 @@ public abstract class AbstractJobView extends AbstractView {
 	@Inject
 	protected transient JobOfferService jobOfferService;
 
-	private List<String> recruiters = new ArrayList<>();
+	private List<User> recruiters = new ArrayList<>();
 
 	@Inject
 	protected transient UserService userService;
@@ -42,7 +42,7 @@ public abstract class AbstractJobView extends AbstractView {
 		return this.jobOffer;
 	}
 
-	public List<String> getRecruiters() {
+	public List<User> getRecruiters() {
 		return this.recruiters;
 	}
 
@@ -70,11 +70,22 @@ public abstract class AbstractJobView extends AbstractView {
 		return this.userService.search(query, Page.ALL).getResultData();
 	}
 
+	public List<User> queryRecruiter(final String query) {
+		final List<User> searchRecruiter = this.userService.search(query, Page.ALL).getResultData();
+		searchRecruiter.removeAll(this.recruiters);
+		searchRecruiter.remove(this.jobOffer.getOwner());
+		return searchRecruiter;
+	}
+
 	public void searchClient() {
 		this.openBigDialog(PageEnum.CLIENT_SELECT.getUrl());
 	}
 
 	public void searchOwner() {
+		this.openBigDialog(PageEnum.USER_SELECT.getUrl());
+	}
+
+	public void searchRecruiter() {
 		this.openBigDialog(PageEnum.USER_SELECT.getUrl());
 	}
 
@@ -86,7 +97,7 @@ public abstract class AbstractJobView extends AbstractView {
 		this.jobOfferService = jobOfferService;
 	}
 
-	public void setRecruiters(final List<String> recruiters) {
+	public void setRecruiters(final List<User> recruiters) {
 		this.recruiters = recruiters;
 	}
 

@@ -1,7 +1,6 @@
 package ged.web.view.job;
 
 import java.lang.invoke.MethodHandles;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -33,12 +32,9 @@ public class AddJobView extends AbstractJobView {
 
 	private void fillRecruiters(final User user) {
 		final List<User> subordinateUsers = this.userService.findSubordinateUsers(user);
-		final List<String> recruitersName = new ArrayList<>();
-		recruitersName.add(this.sessionUser.get().getFullName());
 		for (final User subordinate : subordinateUsers) {
-			recruitersName.add(subordinate.getFullName());
+			this.getRecruiters().add(subordinate);
 		}
-		this.setRecruiters(recruitersName);
 	}
 
 	@PostConstruct
@@ -50,6 +46,7 @@ public class AddJobView extends AbstractJobView {
 
 	public String save() {
 		logger.debug("Create new client action performed");
+		this.jobOffer.setRecruiters(this.getRecruiters());
 		this.jobOffer = this.jobOfferService.newJobOffer(this.jobOffer);
 		return this.jobUrl();
 	}

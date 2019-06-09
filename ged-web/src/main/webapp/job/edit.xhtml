@@ -29,8 +29,8 @@
 
 							<cc:inputText label="#{i18n['job.name']}" value="#{editJobView.jobOffer.name}" required="true" />
 
-							<cc:inputClient id="client" label="#{i18n['job.client']}" value="#{editJobView.jobOffer.client}" search="#{editJobView.searchClient()}"
-								completeMethod="#{editJobView.completeClient}" required="true">
+							<cc:inputClient id="client" label="#{i18n['job.client']}" value="#{editJobView.jobOffer.client}"
+								search="#{editJobView.searchClient()}" completeMethod="#{editJobView.completeClient}" required="true">
 								<p:ajax event="dialogReturn" listener="#{editJobView.onClientSelect}" update="client" />
 							</cc:inputClient>
 
@@ -39,20 +39,21 @@
 							<cc:calendar id="dateOpened" label="#{i18n['job.date_opened']}" value="#{editJobView.jobOffer.dateOpened}" />
 
 							<cc:calendar id="dateClosed" label="#{i18n['job.date_closed']}" value="#{editJobView.jobOffer.dateClosed}" />
+						</div>
+						
+						<div class="col-12 sm-6">
+							<h3>#{i18n['user.personal_information']}</h3>
 
 							<cc:inputText id="city" label="#{i18n['job.city']}" value="#{editJobView.jobOffer.address.city}" required="true" />
 
 							<cc:inputText id="state" label="#{i18n['job.state']}" value="#{editJobView.jobOffer.address.state}" required="true" />
-						</div>
-						<div class="col-12 sm-6">
-							<h3>#{i18n['user.personal_information']}</h3>
 
-							<cc:inputUser id="owner" label="#{i18n['job.owner']}" value="#{editJobView.jobOffer.owner}" completeMethod="#{editJobView.queryOwner}"
-								search="#{editJobView.searchOwner}">
-								<p:ajax event="dialogReturn" listener="#{editJobView.onOwnerSelect}" update="owner" />
-							</cc:inputUser>
 
-							<cc:inputTag id="recruiters" label="#{i18n['job.recruiters']}" value="#{editJobView.recruiters}" tagLabel="#{editJobView.recruiters}" />
+							<cc:inputUser id="owner" label="#{i18n['job.owner']}" value="#{editJobView.jobOffer.owner}"
+								completeMethod="#{editJobView.queryOwner}" search="#{editJobView.searchOwner}" />
+
+							<cc:inputUsers id="recruiters" label="#{i18n['job.recruiters']}" completeMethod="#{editJobView.queryRecruiter}"
+								search="#{editJobView.searchRecruiter}" value="#{editJobView.recruiters}" />
 						</div>
 						<div class="col-12">
 							<h3>#{i18n['user.personal_information']}</h3>

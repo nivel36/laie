@@ -1,6 +1,8 @@
 package ged.ejb.job.offer;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -85,7 +87,7 @@ public class JobOffer extends AbstractEntity implements Ownerable {
 	@NotNull
 	private Integer places = 1;
 
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "job_user", joinColumns = @JoinColumn(name = "job_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
 	private Set<User> recruiters;
 
@@ -194,6 +196,16 @@ public class JobOffer extends AbstractEntity implements Ownerable {
 
 	public void setPlaces(final Integer places) {
 		this.places = places;
+	}
+
+	public void setRecruiters(final List<User> users) {
+		this.recruiters = new HashSet<User>();
+		if (users == null || users.isEmpty()) {
+			return;
+		}
+		for (final User user : users) {
+			this.recruiters.add(user);
+		}
 	}
 
 	public void setRecruiters(final Set<User> recruiters) {

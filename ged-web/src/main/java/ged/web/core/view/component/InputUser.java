@@ -9,6 +9,10 @@ import javax.faces.component.UIInput;
 import javax.faces.component.UINamingContainer;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.event.SelectEvent;
+
+import ged.ejb.user.User;
+
 @FacesComponent(value = "inputUser")
 public class InputUser extends UIInput implements NamingContainer {
 
@@ -48,11 +52,18 @@ public class InputUser extends UIInput implements NamingContainer {
 		return this.input.getValue() != null;
 	}
 
+	public void onDialogReturn(final SelectEvent event) {
+		final Object selectedObject = event.getObject();
+		if (selectedObject != null) {
+			final User user = (User) selectedObject;
+			this.input.setValue(user);
+		}
+	}
+
 	private void processCleanButton() {
 		if (this.isInputValueSet()) {
 			this.showCleanButton();
-		}
-		else {
+		} else {
 			this.hideCleanButton();
 		}
 	}

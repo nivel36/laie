@@ -251,7 +251,7 @@ body .breadcrumb ul li.ui-breadcrumb-chevron {
 body .input {
 	flex: 1 1 auto;
 	color: #777777;
-	height: 34px;
+	min-height: 34px;
 	display: flex;
 	align-items: center;
 	border: 1px solid #c2cad8;
@@ -412,7 +412,6 @@ body .input-search .clean-search-button {
 
 .input-group  .input-container {
 	display: flex;
-	align-items: center;
 	flex: 1;
 }
 

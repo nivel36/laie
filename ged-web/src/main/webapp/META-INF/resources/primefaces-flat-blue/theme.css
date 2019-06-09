@@ -207,6 +207,12 @@ body .ui-chkbox .ui-chkbox-box.ui-state-disabled {
 	background: #e6e9f0;
 }
 
+body .ui-autocomplete-input-token input {
+	margin: 0 0 0 0.5em;
+	padding: 0;
+	height: 24px;
+}
+
 body .ui-chips-container {
 	outline: medium none;
 	background: white;
@@ -221,34 +227,34 @@ body .ui-chips-container.ui-state-disabled {
 	background: transparent;
 }
 
-body .ui-chips-container .ui-chips-token {
+body .ui-chips-container .ui-chips-token, body .ui-autocomplete-multiple .ui-autocomplete-token {
 	display: inline-flex;
 	padding: 5px;
 	border-radius: 3px;
 	background: #59a2df;
 	color: white;
-	text-shadow: 1px 1px #509ede;
 	cursor: pointer;
 }
 
-body .ui-chips-container.ui-state-disabled .ui-chips-token {
+body .ui-chips-container.ui-state-disabled .ui-chips-token, body .ui-autocomplete-multiple.ui-state-disabled .ui-autocomplete-token {
 	cursor: default;
 }
 
-body .ui-chips-token .ui-chips-token-label {
+body .ui-chips-token .ui-chips-token-label, body .ui-autocomplete-multiple .ui-autocomplete-token-label {
 	padding: 0 0.5em 0 0.5em;
 	display: flex;
 }
 
-body .ui-chips-container.ui-state-disabled .ui-chips-token:hover .ui-icon {
+body .ui-chips-container.ui-state-disabled .ui-chips-token:hover .ui-icon, body .ui-autocomplete-multiple.ui-state-disabled .ui-autocomplete-token:hover .ui-icon
+	{
 	display: none;
 }
 
-body .ui-chips-container .ui-chips-token:hover .ui-icon {
+body .ui-chips-container .ui-chips-token:hover .ui-icon, body .ui-autocomplete-multiple .ui-autocomplete-token:hover .ui-icon {
 	display: inline;
 }
 
-body .ui-chips-container .ui-chips-token .ui-icon {
+body .ui-chips-container .ui-chips-token .ui-icon, body .ui-autocomplete-multiple .ui-autocomplete-token .ui-icon {
 	cursor: pointer;
 	margin-top: 0;
 	position: relative;
@@ -459,6 +465,15 @@ body .ui-dialog .ui-dialog-titlebar .ui-dialog-titlebar-close {
 body .ui-autocomplete .ui-inputfield, body .ui-calendar .ui-inputfield, body .ui-inputnumber .ui-inputfield {
 	padding: 0.5em;
 	border: 1px solid #c2cad8;
+}
+
+body .ui-autocomplete.ui-autocomplete-multiple .ui-inputfield {
+	padding: 0;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-start;
+	height: auto;
+	min-height: 34px;
 }
 
 body .ui-spinner .ui-inputfield {

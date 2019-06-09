@@ -46,11 +46,10 @@
 							<cc:inputText id="state" label="#{i18n['job.state']}" value="#{addJobView.jobOffer.address.state}" required="true" />
 
 							<cc:inputUser id="owner" label="#{i18n['job.owner']}" value="#{addJobView.jobOffer.owner}" completeMethod="#{addJobView.queryOwner}"
-								search="#{addJobView.searchOwner}">
-								<p:ajax event="dialogReturn" listener="#{addJobView.onOwnerSelect}" update="owner" />
-							</cc:inputUser>
+								search="#{addJobView.searchOwner}" />
 
-							<cc:inputTag id="recruiters" label="#{i18n['job.recruiters']}" value="#{addJobView.recruiters}" tagLabel="#{addJobView.recruiters}" />
+							<cc:inputUsers id="recruiters" label="#{i18n['job.recruiters']}" completeMethod="#{addJobView.queryRecruiter}"
+								search="#{addJobView.searchRecruiter}" value="#{addJobView.recruiters}" />
 						</div>
 						<div class="col-12">
 							<h3>#{i18n['user.personal_information']}</h3>
