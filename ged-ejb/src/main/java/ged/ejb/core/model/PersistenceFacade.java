@@ -149,7 +149,7 @@ public class PersistenceFacade {
 	}
 
 	private boolean hasSortFields(final List<SortField> sortFields) {
-		return (sortFields != null) && !sortFields.isEmpty();
+		return sortFields != null && !sortFields.isEmpty();
 	}
 
 	public <T extends Identifiable> void insert(final T entity) {

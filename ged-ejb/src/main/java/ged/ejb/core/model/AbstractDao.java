@@ -40,13 +40,15 @@ public abstract class AbstractDao<T extends AbstractEntity> {
 		return this.persistenceFacade.findByQuery(entityClass, namedQuery, null);
 	}
 
-	protected <E> E findByQuery(final Class<E> entityClass, final String namedQuery, final Map<String, Object> parameters) {
+	protected <E> E findByQuery(final Class<E> entityClass, final String namedQuery,
+			final Map<String, Object> parameters) {
 		Objects.requireNonNull(entityClass);
 		Objects.requireNonNull(namedQuery);
 		return this.persistenceFacade.findByQuery(entityClass, namedQuery, parameters);
 	}
 
-	protected <E> List<E> findByQuery(final Class<E> entityClass, final String namedQuery, final Map<String, Object> parameters, final Page page) {
+	protected <E> List<E> findByQuery(final Class<E> entityClass, final String namedQuery,
+			final Map<String, Object> parameters, final Page page) {
 		Objects.requireNonNull(entityClass);
 		Objects.requireNonNull(namedQuery);
 		return this.persistenceFacade.findByQuery(entityClass, namedQuery, parameters, page);
@@ -68,9 +70,9 @@ public abstract class AbstractDao<T extends AbstractEntity> {
 	protected abstract Class<T> getType();
 
 	protected T insert(final T entity) {
-		preInsert(entity);
+		this.preInsert(entity);
 		this.persistenceFacade.insert(entity);
-		postInsert(entity);
+		this.postInsert(entity);
 		return entity;
 	}
 
@@ -89,20 +91,18 @@ public abstract class AbstractDao<T extends AbstractEntity> {
 	public T save(final T entity) {
 		Objects.requireNonNull(entity);
 		if (entity.getId() == 0) {
-			return insert(entity);
-		}
-		else {
-			return update(entity);
+			return this.insert(entity);
+		} else {
+			return this.update(entity);
 		}
 	}
 
 	public SearchResult<T> search(final String searchText, final Page page) {
 		return this.search(searchText, page, new ArrayList<SortField>());
-
 	}
 
 	public SearchResult<T> search(final String searchText, final Page page, final List<SortField> sortOrders) {
-		return this.persistenceFacade.search(getType(), page, sortOrders, searchText, searchFields());
+		return this.persistenceFacade.search(this.getType(), page, sortOrders, searchText, this.searchFields());
 	}
 
 	public SearchResult<T> search(final String searchText, final Page page, final SortField sortOrder) {
@@ -119,9 +119,9 @@ public abstract class AbstractDao<T extends AbstractEntity> {
 	}
 
 	protected T update(final T entity) {
-		preUpdate(entity);
+		this.preUpdate(entity);
 		final T updatedEntity = this.persistenceFacade.update(entity);
-		postUpdate(entity);
+		this.postUpdate(entity);
 		return updatedEntity;
 	}
 }
