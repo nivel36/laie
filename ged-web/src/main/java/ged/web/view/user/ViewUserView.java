@@ -42,7 +42,7 @@ public class ViewUserView extends AbstractView {
 	private List<User> team;
 
 	@Inject
-	@Param(name = "id", required = true, converter = "userConverter")
+	@Param(name = "id", required = true)
 	private User user;
 
 	@Inject

@@ -19,78 +19,83 @@
 	</ui:define>
 
 	<ui:define name="content">
-		<h:form id="candidateForm">
-			<div class="panel">
-				<div class="panel-aside">
-					<div class="column candidate-metadata">
-						<cc:inputAvatar id="candidate_image" value="#{editCandidateView.candidate.imageFileName}"
-							fileUploadListener="#{editCandidateView.uploadImage}" />
-						<div class="candidate-rating">
-							<p:rating value="#{editCandidateView.candidate.rating}" cancel="false">
-								<p:ajax event="rate" listener="#{editCandidateView.onrate}" update="" />
-							</p:rating>
+		<div class="grid">
+			<div class="col-12 xl-9">
+				<h:form id="candidateForm">
+					<div class="panel">
+						<div class="panel-aside">
+							<div class="column candidate-metadata">
+								<cc:inputAvatar id="candidate_image" value="#{editCandidateView.candidate.imageFileName}"
+									fileUploadListener="#{editCandidateView.uploadImage}" />
+								<div class="candidate-rating">
+									<p:rating value="#{editCandidateView.candidate.rating}" cancel="false">
+										<p:ajax event="rate" listener="#{editCandidateView.onrate}" update="" />
+									</p:rating>
+								</div>
+								<cc:inputTag value="#{editCandidateView.tags}" tagLabel="#{i18n['editCandidateView.tags']}"
+									completeMethod="#{editCandidateView.queryTags}" />
+							</div>
 						</div>
-						<cc:inputTag value="#{editCandidateView.tags}" tagLabel="#{i18n['editCandidateView.tags']}" />
+						<div class="panel-content">
+							<div class="panel-content-data grid nogutter">
+								<div class="col-12 sm-6">
+									<h4>#{i18n['candidate.personal_information']}</h4>
+
+									<cc:inputText id="name" label="#{i18n['candidate.name']}" value="#{editCandidateView.candidate.name}" required="true" />
+
+									<cc:inputText id="surname" label="#{i18n['candidate.surname']}" value="#{editCandidateView.candidate.surname}" required="true" />
+
+									<cc:calendar id="born_date" label="#{i18n['candidate.bornDate']}" value="#{editCandidateView.candidate.bornDate}"
+										yearRange="c-100:c0" />
+
+									<cc:inputText id="city" label="#{i18n['candidate.city']}" value="#{editCandidateView.candidate.address.city}" />
+
+									<cc:inputText id="state" label="#{i18n['candidate.state']}" value="#{editCandidateView.candidate.address.state}" />
+								</div>
+
+								<div class="col-12 sm-6">
+									<h4>#{i18n['candidate.contact_information']}</h4>
+
+									<cc:inputText id="phone_number" label="#{i18n['candidate.phone_number']}" value="#{editCandidateView.candidate.phoneNumber}"
+										styleClass="small" />
+
+									<cc:inputText id="email" label="#{i18n['candidate.email']}" value="#{editCandidateView.candidate.email}" />
+
+									<cc:inputText id="skype" label="#{i18n['candidate.skype']}" value="#{editCandidateView.candidate.skype}" />
+
+									<cc:inputText id="linkedin" label="#{i18n['candidate.linkedin']}" value="#{editCandidateView.candidate.linkedinProfileUrl}" />
+								</div>
+
+
+								<div class="col-12 sm-6">
+									<h4>#{i18n['candidate.job_information']}</h4>
+
+									<cc:inputText id="jobProfile" label="#{i18n['candidate.jobProfile']}" value="#{editCandidateView.candidate.jobProfile}"
+										required="true" />
+
+									<cc:inputSelect label="#{i18n['candidate.origin']}" value="#{editCandidateView.candidate.origin}" other="true">
+										<f:selectItems value="#{origins.list}" var="origin" itemValue="#{origin.code}" itemLabel="#{i18n:translate(origin.code)}" />
+									</cc:inputSelect>
+
+									<cc:inputMoney id="salary" label="#{i18n['candidate.salary']}" value="#{editCandidateView.candidate.salary}" />
+
+									<cc:inputMoney id="expected_salary" label="#{i18n['candidate.expected_salary']}"
+										value="#{editCandidateView.candidate.expectedSalary}" />
+								</div>
+							</div>
+						</div>
+
+						<div class="panel-footer">
+							<div class="panel-buttons">
+								<p:button styleClass="btn-gray" value="#{i18n['action.cancel']}" outcome="#{Page.CANDIDATE.getUrl()}">
+									<f:param name="id" value="#{editCandidateView.candidate.id}" />
+								</p:button>
+								<p:commandButton value="#{i18n['action.save']}" action="#{editCandidateView.save}" process="@form" update="@form growl" />
+							</div>
+						</div>
 					</div>
-				</div>
-				<div class="panel-content">
-					<div class="panel-content-data grid nogutter">
-						<div class="col-12 sm-6">
-							<h4>#{i18n['candidate.personal_information']}</h4>
-
-							<cc:inputText id="name" label="#{i18n['candidate.name']}" value="#{editCandidateView.candidate.name}" required="true" />
-
-							<cc:inputText id="surname" label="#{i18n['candidate.surname']}" value="#{editCandidateView.candidate.surname}" required="true" />
-
-							<cc:calendar id="born_date" label="#{i18n['candidate.bornDate']}" value="#{editCandidateView.candidate.bornDate}"
-								yearRange="c-100:c0" />
-
-							<cc:inputText id="city" label="#{i18n['candidate.city']}" value="#{editCandidateView.candidate.address.city}" />
-
-							<cc:inputText id="state" label="#{i18n['candidate.state']}" value="#{editCandidateView.candidate.address.state}" />
-						</div>
-
-						<div class="col-12 sm-6">
-							<h4>#{i18n['candidate.contact_information']}</h4>
-
-							<cc:inputText id="phone_number" label="#{i18n['candidate.phone_number']}" value="#{editCandidateView.candidate.phoneNumber}"
-								styleClass="small" />
-
-							<cc:inputText id="email" label="#{i18n['candidate.email']}" value="#{editCandidateView.candidate.email}" />
-
-							<cc:inputText id="skype" label="#{i18n['candidate.skype']}" value="#{editCandidateView.candidate.skype}" />
-
-							<cc:inputText id="linkedin" label="#{i18n['candidate.linkedin']}" value="#{editCandidateView.candidate.linkedinProfileUrl}" />
-						</div>
-
-
-						<div class="col-12 sm-6">
-							<h4>#{i18n['candidate.job_information']}</h4>
-
-							<cc:inputText id="jobProfile" label="#{i18n['candidate.jobProfile']}" value="#{editCandidateView.candidate.jobProfile}"
-								required="true" />
-
-							<cc:inputSelect label="#{i18n['candidate.origin']}" value="#{editCandidateView.candidate.origin}" other="true">
-								<f:selectItems value="#{origins.list}" var="origin" itemValue="#{origin.code}" itemLabel="#{i18n:translate(origin.code)}" />
-							</cc:inputSelect>
-
-							<cc:inputMoney id="salary" label="#{i18n['candidate.salary']}" value="#{editCandidateView.candidate.salary}" />
-
-							<cc:inputMoney id="expected_salary" label="#{i18n['candidate.expected_salary']}"
-								value="#{editCandidateView.candidate.expectedSalary}" />
-						</div>
-					</div>
-				</div>
-
-				<div class="panel-footer">
-					<div class="panel-buttons">
-						<p:button styleClass="btn-gray" value="#{i18n['action.cancel']}" outcome="#{Page.CANDIDATE.getUrl()}">
-							<f:param name="id" value="#{editCandidateView.candidate.id}" />
-						</p:button>
-						<p:commandButton value="#{i18n['action.save']}" action="#{editCandidateView.save}" process="@form" update="@form growl" />
-					</div>
-				</div>
+				</h:form>
 			</div>
-		</h:form>
+		</div>
 	</ui:define>
 </ui:composition>

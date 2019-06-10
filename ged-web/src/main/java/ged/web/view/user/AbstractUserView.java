@@ -100,7 +100,7 @@ public abstract class AbstractUserView extends AbstractView {
 	}
 
 	protected String userUrl() {
-		return PageEnum.USER.getUrl(this.user);
+		return PageEnum.USER.getRedirectedUrl(this.user);
 	}
 
 	public void validateEmail(final FacesContext context, final UIComponent component, final Object value) {

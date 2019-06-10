@@ -209,6 +209,13 @@ public class Candidate extends Person implements Ownerable {
 		this.skype = skype;
 	}
 
+	public void setTags(final List<Tag> tags) {
+		if (tags == null) {
+			return;
+		}
+		this.tags = new HashSet<>(tags);
+	}
+
 	public void setTags(final Set<Tag> tags) {
 		this.tags = tags;
 	}

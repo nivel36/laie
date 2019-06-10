@@ -20,14 +20,6 @@ public class AddCandidateView extends AbstractCandidateView {
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	private static final long serialVersionUID = 7552627372149481763L;
-	
-	private Candidate initCandidate() {
-		final Candidate newCandidate = new Candidate();
-		final Address address = new Address();
-		newCandidate.setAddress(address);
-		newCandidate.setOwner(this.sessionUser.get());
-		return newCandidate;
-	}
 
 	@PostConstruct
 	public void init() {
@@ -36,9 +28,17 @@ public class AddCandidateView extends AbstractCandidateView {
 		this.setTags(new ArrayList<>());
 	}
 
+	private Candidate initCandidate() {
+		final Candidate newCandidate = new Candidate();
+		final Address address = new Address();
+		newCandidate.setAddress(address);
+		newCandidate.setOwner(this.sessionUser.get());
+		return newCandidate;
+	}
+
 	public String save() {
 		logger.debug("Create new candidate action performed");
-		this.candidate.setTags(this.getTagsFromStringList(this.getTags()));
+		this.candidate.setTags(this.getTags());
 		this.candidate = this.candidateService.save(this.candidate);
 		return this.candidateUrl();
 	}
