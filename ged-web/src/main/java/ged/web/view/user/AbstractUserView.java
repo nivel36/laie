@@ -53,23 +53,11 @@ public abstract class AbstractUserView extends AbstractView {
 		return this.user;
 	}
 
-	public void onManagerSelect(final SelectEvent event) {
-		final Object selectedObject = event.getObject();
-		if (selectedObject != null) {
-			final User manager = (User) selectedObject;
-			this.user.setManager(manager);
-		}
-	}
-
 	public List<User> queryManager(final String query) {
 		logger.trace("Searching for manager with the string {}", query);
-		final List<User> managers = this.userService.search(query, Page.ALL).getResultData();
+		final List<User> managers = this.userService.search(query, Page.of(0, 10)).getResultData();
 		managers.remove(this.user);
 		return managers;
-	}
-
-	public void searchManager() {
-		this.openBigDialog(PageEnum.USER_SELECT.getUrl());
 	}
 
 	public void setFileUploadService(final FileUploadService fileUploadService) {

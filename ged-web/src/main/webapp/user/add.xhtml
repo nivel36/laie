@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://ged.com/i18n" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
-	xmlns:p="http://primefaces.org/ui" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:o="http://omnifaces.org/ui"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://ged.com/i18n"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:p="http://primefaces.org/ui"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:o="http://omnifaces.org/ui"
 	xmlns:of="http://omnifaces.org/functions" template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
@@ -9,10 +10,6 @@
 	</ui:define>
 
 	<ui:param name="selectedMenu" value="users" />
-
-	<ui:define name="actions">
-		<p:button value="#{i18n['user.new_user']}" outcome="#{Page.USER_ADD.getUrl()}" />
-	</ui:define>
 
 	<ui:define name="breadcrumb">
 		<p:breadCrumb styleClass="breadcrumb">
@@ -23,53 +20,57 @@
 	</ui:define>
 
 	<ui:define name="content">
-		<h:form id="userForm" enctype="multipart/form-data">
-			<div class="panel">
-				<div class="panel-aside">
-					<div class="candidate-metadata">
-						<cc:inputAvatar id="userImage" value="#{addUserView.user.imageFileName}" fileUploadListener="#{addUserView.uploadImage}" />
-					</div>
-				</div>
-				<div class="panel-content panel-content-data">
-					<div class="grid">
-						<div class="col-12 sm-6">
-							<h3>#{i18n['user.personal_information']}</h3>
-							<cc:inputText id="name" label="#{i18n['user.name']}" value="#{addUserView.user.name}" required="true" />
-
-							<cc:inputText id="surname" label="#{i18n['user.surname']}" value="#{addUserView.user.surname}" required="true" />
-
-							<cc:inputText id="email" label="#{i18n['user.email']}" value="#{addUserView.user.email}" required="true"
-								validator="#{addUserView.validateEmail}" />
-
-							<cc:inputText id="phone_number" label="#{i18n['user.phone_number']}" value="#{addUserView.user.phoneNumber}" />
+		<div class="grid">
+			<div class="col-12 xl-9">
+				<h:form id="userForm" enctype="multipart/form-data">
+					<div class="panel">
+						<div class="panel-aside">
+							<div class="candidate-metadata">
+								<cc:inputAvatar id="userImage" value="#{addUserView.user.imageFileName}"
+									fileUploadListener="#{addUserView.uploadImage}" />
+							</div>
 						</div>
+						<div class="panel-content panel-content-data">
+							<div class="grid">
+								<div class="col-12 sm-6">
+									<h4>#{i18n['user.personal_information']}</h4>
+									<cc:inputText id="name" label="#{i18n['user.name']}" value="#{addUserView.user.name}" required="true" />
 
-						<div class="col-12 sm-6">
+									<cc:inputText id="surname" label="#{i18n['user.surname']}" value="#{addUserView.user.surname}" required="true" />
 
-							<h3>#{i18n['user.professional_information']}</h3>
+									<cc:inputText id="email" label="#{i18n['user.email']}" value="#{addUserView.user.email}" required="true"
+										validator="#{addUserView.validateEmail}" />
 
-							<cc:inputSelect id="role" value="#{addUserView.user.role}" label="#{i18n['user.role']}" required="true">
-								<f:selectItems value="#{roles.list}" var="role" itemValue="#{role}" itemLabel="#{i18n:translate(role)}" />
-								<p:ajax event="change" update=":userForm:role :userForm:manager" process=":userForm:role"
-									listener="#{addUserView.changeRoleListener}" />
-							</cc:inputSelect>
+									<cc:inputText id="phone_number" label="#{i18n['user.phone_number']}" value="#{addUserView.user.phoneNumber}" />
+								</div>
 
-							<cc:inputUser id="manager" label="#{i18n['user.manager']}" value="#{addUserView.user.manager}"
-								completeMethod="#{addUserView.queryManager}" disabled="#{addUserView.user.isAdmin()}" search="#{addUserView.searchManager}">
-								<p:ajax event="dialogReturn" listener="#{addUserView.onManagerSelect}" update="manager" />
-							</cc:inputUser>
+								<div class="col-12 sm-6">
 
-							<cc:calendar id="date_of_join" label="#{i18n['user.date_of_join']}" value="#{addUserView.user.dateOfJoin}" />
+									<h4>#{i18n['user.professional_information']}</h4>
+
+									<cc:inputSelect id="role" value="#{addUserView.user.role}" label="#{i18n['user.role']}" required="true">
+										<f:selectItems value="#{roles.list}" var="role" itemValue="#{role}" itemLabel="#{i18n:translate(role)}" />
+										<p:ajax event="change" update=":userForm:role :userForm:manager" process=":userForm:role"
+											listener="#{addUserView.changeRoleListener}" />
+									</cc:inputSelect>
+
+									<cc:inputUser id="manager" label="#{i18n['user.manager']}" value="#{addUserView.user.manager}"
+										completeMethod="#{addUserView.queryManager}" disabled="#{addUserView.user.isAdmin()}" />
+
+									<cc:calendar id="date_of_join" label="#{i18n['user.date_of_join']}" value="#{addUserView.user.dateOfJoin}" />
+								</div>
+							</div>
+						</div>
+						<div class="panel-footer">
+							<div class="panel-buttons">
+								<p:button styleClass="btn-gray" value="#{i18n['action.cancel']}" outcome="#{Page.USER_SEARCH.getUrl()}" />
+								<p:commandButton value="#{i18n['action.save']}" action="#{addUserView.save}" process="@form"
+									update="@form growl" />
+							</div>
 						</div>
 					</div>
-				</div>
-				<div class="panel-footer">
-					<div class="panel-buttons">
-						<p:button styleClass="btn-gray" value="#{i18n['action.cancel']}" outcome="#{Page.USER_SEARCH.getUrl()}" />
-						<p:commandButton value="#{i18n['action.save']}" action="#{addUserView.save}" process="@form" update="@form growl" />
-					</div>
-				</div>
+				</h:form>
 			</div>
-		</h:form>
+		</div>
 	</ui:define>
 </ui:composition>

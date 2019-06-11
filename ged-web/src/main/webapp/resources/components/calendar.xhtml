@@ -8,24 +8,28 @@
 		<composite:attribute name="value" required="true" />
 		<composite:attribute name="yearRange" default="c-5:c+1" />
 		<composite:attribute name="required" default="false" />
-		<composite:attribute name="validator" targets="calendar" />
+		<composite:attribute name="validator" targets="input" />
+		<composite:attribute name="showIcon" type="java.lang.Boolean" default="true" />
 		<composite:attribute name="styleClass" required="false" default="" />
+				<composite:editableValueHolder name="input" targets="input" />
 	</composite:interface>
 
 	<composite:implementation>
 		<div id="#{cc.clientId}" class="input-group input-group-calendar #{cc.attrs.styleClass}">
 			<div class="label-container">
-				<p:outputLabel id="label" for="calendar" value="#{cc.attrs.label}" styleClass="label" />
+				<p:outputLabel id="label" for="input" value="#{cc.attrs.label}" styleClass="label" />
 			</div>
 			<div class="input-container">
-				<p:calendar id="calendar" value="#{cc.attrs.value}" pattern="dd/MM/yyyy" navigator="true"
-					yearRange="#{cc.attrs.yearRange}" required="#{cc.attrs.required}" styleClass="input calendar">
+				<p:calendar id="input" value="#{cc.attrs.value}" pattern="dd/MM/yyyy" navigator="true"
+					yearRange="#{cc.attrs.yearRange}" required="#{cc.attrs.required}" inputStyleClass="input calendar">
 					<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
 				</p:calendar>
-				<i class="icon fa fa-calendar" aria-hidden="true"></i>
+				<h:panelGroup layout="block" styleClass="icon-field" rendered="#{not empty cc.attrs.showIcon}">
+					<i class="icon right-icon fa fa-calendar" aria-hidden="true"></i>
+				</h:panelGroup>
 			</div>
 			<div class="message-container">
-				<p:message id="message" for="calendar" styleClass="message-error" />
+				<p:message id="message" for="input" styleClass="message-error" />
 			</div>
 		</div>
 	</composite:implementation>

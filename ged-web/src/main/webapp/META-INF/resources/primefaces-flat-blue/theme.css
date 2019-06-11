@@ -187,6 +187,10 @@ body .ui-breadcrumb .ui-breadcrumb-chevron {
 	margin: 0;
 }
 
+body .ui-calendar {
+	flex: 1;
+}
+
 body .ui-chkbox {
 	display: inline-block;
 	vertical-align: middle;
@@ -462,11 +466,6 @@ body .ui-dialog .ui-dialog-titlebar .ui-dialog-titlebar-close {
 	padding: 8px 12px;
 }
 
-body .ui-autocomplete .ui-inputfield, body .ui-calendar .ui-inputfield, body .ui-inputnumber .ui-inputfield {
-	padding: 0.5em;
-	border: 1px solid #c2cad8;
-}
-
 body .ui-autocomplete.ui-autocomplete-multiple .ui-inputfield {
 	padding: 0;
 	display: flex;
@@ -489,8 +488,6 @@ body .ui-inputfield {
 	color: inherit;
 	justify-content: inherit;
 	text-align: inherit;
-	border-bottom-left-radius: 4px;
-	border-top-left-radius: 4px;
 }
 
 body .ui-inputfield.hasDatepicker {

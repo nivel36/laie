@@ -7,26 +7,26 @@
 		<composite:attribute name="labelIcon" required="false" />
 		<composite:attribute name="label" required="false" />
 		<composite:attribute name="required" default="false" />
-		<composite:attribute name="validator" targets="input-text" />
+		<composite:attribute name="validator" targets="input" />
 		<composite:attribute name="value" required="true" />
 		<composite:attribute name="styleClass" required="false" default="" />
-		<composite:editableValueHolder name="input-text" targets="input-text"/>
+		<composite:editableValueHolder name="input" targets="input" />
 	</composite:interface>
 
 	<composite:implementation>
 		<div id="#{cc.clientId}" class="input-group input-group-text #{cc.attrs.styleClass}">
-			<h:panelGroup layout="block" styleClass="label-icon-container" rendered="#{not empty cc.attrs.labelIcon}">
-				<em class="label-icon icon fa #{cc.attrs.labelIcon}" />
-			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="label-container" rendered="#{not empty cc.attrs.label}">
-				<p:outputLabel id="label" for="input-text" value="#{cc.attrs.label}" styleClass="label" />
+				<p:outputLabel id="label" for="input" value="#{cc.attrs.label}" styleClass="label" />
 			</h:panelGroup>
 			<div class="input-container">
-				<p:inputText id="input-text" value="#{cc.attrs.value}" required="#{cc.attrs.required}"
+				<h:panelGroup layout="block" styleClass="label-icon" rendered="#{not empty cc.attrs.labelIcon}">
+					<em class="left-icon icon fa #{cc.attrs.labelIcon}" />
+				</h:panelGroup>
+				<p:inputText id="input" value="#{cc.attrs.value}" required="#{cc.attrs.required}"
 					styleClass="input input-text #{cc.attrs.inputStyleClass}" />
 			</div>
 			<div class="message-container">
-				<p:message id="message" for="input-text" styleClass="message-error" />
+				<p:message id="message" for="input" styleClass="message-error" />
 			</div>
 		</div>
 	</composite:implementation>
