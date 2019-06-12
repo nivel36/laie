@@ -1,6 +1,7 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:i18n="http://ged.com/i18n"
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" template="/WEB-INF/templates/default.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
+	xmlns:i18n="http://ged.com/i18n" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
 		<title>#{i18n['job.new_job_offer']}</title>
@@ -17,53 +18,57 @@
 	</ui:define>
 
 	<ui:define name="content">
-		<h:form id="jobOfferForm">
-			<div class="panel">
-				<div class="panel-content panel-content-data">
-					<div class="grid">
-						<div class="col-12 sm-6">
-							<h3>#{i18n['user.personal_information']}</h3>
+		<div class="grid">
+			<div class="col-12 xl-9">
+				<h:form id="jobOfferForm">
+					<div class="panel">
+						<div class="panel-content panel-content-data">
+							<div class="grid">
+								<div class="col-12 sm-6">
+									<h3>#{i18n['user.personal_information']}</h3>
 
-							<cc:inputText label="#{i18n['job.name']}" value="#{addJobView.jobOffer.name}" required="true" />
+									<cc:inputText label="#{i18n['job.name']}" value="#{addJobView.jobOffer.name}" required="true" />
 
-							<cc:inputClient id="client" label="#{i18n['job.client']}" value="#{addJobView.jobOffer.client}" search="#{addJobView.searchClient()}"
-								completeMethod="#{addJobView.completeClient}" required="true">
-								<p:ajax event="dialogReturn" listener="#{addJobView.onClientSelect}" update="client" />
-							</cc:inputClient>
+									<cc:inputClient id="client" label="#{i18n['job.client']}" value="#{addJobView.jobOffer.client}"
+										completeMethod="#{addJobView.completeClient}" required="true" />
 
-							<cc:inputNumber id="places" min="0" label="#{i18n['job.places']}" value="#{addJobView.jobOffer.places}" />
+									<cc:inputNumber id="places" min="0" label="#{i18n['job.places']}" value="#{addJobView.jobOffer.places}" />
 
-							<cc:calendar id="dateOpened" label="#{i18n['job.date_opened']}" value="#{addJobView.jobOffer.dateOpened}" />
+									<cc:calendar id="dateOpened" label="#{i18n['job.date_opened']}" value="#{addJobView.jobOffer.dateOpened}" />
 
-							<cc:calendar id="dateClosed" label="#{i18n['job.date_closed']}" value="#{addJobView.jobOffer.dateClosed}" />
+									<cc:calendar id="dateClosed" label="#{i18n['job.date_closed']}" value="#{addJobView.jobOffer.dateClosed}" />
 
+								</div>
+								<div class="col-12 sm-6">
+									<h3>#{i18n['user.personal_information']}</h3>
+
+									<cc:inputText id="city" label="#{i18n['job.city']}" value="#{addJobView.jobOffer.address.city}" required="true" />
+
+									<cc:inputText id="state" label="#{i18n['job.state']}" value="#{addJobView.jobOffer.address.state}"
+										required="true" />
+
+									<cc:inputUser id="owner" label="#{i18n['job.owner']}" value="#{addJobView.jobOffer.owner}"
+										completeMethod="#{addJobView.queryOwner}" />
+
+									<cc:inputUsers id="recruiters" label="#{i18n['job.recruiters']}" completeMethod="#{addJobView.queryRecruiter}"
+										value="#{addJobView.recruiters}" />
+								</div>
+								<div class="col-12">
+									<h3>#{i18n['user.personal_information']}</h3>
+									<cc:richText id="description" name="description" label="#{i18n['job.description']}"
+										value="#{addJobView.jobOffer.description}" />
+								</div>
+							</div>
 						</div>
-						<div class="col-12 sm-6">
-							<h3>#{i18n['user.personal_information']}</h3>
-
-							<cc:inputText id="city" label="#{i18n['job.city']}" value="#{addJobView.jobOffer.address.city}" required="true" />
-
-							<cc:inputText id="state" label="#{i18n['job.state']}" value="#{addJobView.jobOffer.address.state}" required="true" />
-
-							<cc:inputUser id="owner" label="#{i18n['job.owner']}" value="#{addJobView.jobOffer.owner}" completeMethod="#{addJobView.queryOwner}"
-								search="#{addJobView.searchOwner}" />
-
-							<cc:inputUsers id="recruiters" label="#{i18n['job.recruiters']}" completeMethod="#{addJobView.queryRecruiter}"
-								search="#{addJobView.searchRecruiter}" value="#{addJobView.recruiters}" />
-						</div>
-						<div class="col-12">
-							<h3>#{i18n['user.personal_information']}</h3>
-							<cc:richText id="description" name="description" label="#{i18n['job.description']}" value="#{addJobView.jobOffer.description}" />
+						<div class="panel-footer">
+							<div class="panel-buttons">
+								<p:button styleClass="btn-gray" value="#{i18n['action.cancel']}" outcome="#{Page.JOB_SEARCH.getUrl()}" />
+								<p:commandButton value="#{i18n['action.save']}" action="#{addJobView.save}" process="@form" update="@form growl" />
+							</div>
 						</div>
 					</div>
-				</div>
-				<div class="panel-footer">
-					<div class="panel-buttons">
-						<p:button styleClass="btn-gray" value="#{i18n['action.cancel']}" outcome="#{Page.JOB_SEARCH.getUrl()}" />
-						<p:commandButton value="#{i18n['action.save']}" action="#{addJobView.save}" process="@form" update="@form growl" />
-					</div>
-				</div>
+				</h:form>
 			</div>
-		</h:form>
+		</div>
 	</ui:define>
 </ui:composition>

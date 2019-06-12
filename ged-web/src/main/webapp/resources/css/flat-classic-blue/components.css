@@ -258,9 +258,13 @@ body .input {
 	padding: 0.5em;
 }
 
-body .input.ui-autocomplete, body .input.ui-spinner, body .input.ui-calendar, body .input.ui-inputnumber {
+body .input.ui-spinner, body .input.ui-calendar, body .input.ui-inputnumber {
 	padding: 0;	
 	border: 0px;
+}
+
+body .input.ui-autocomplete {
+	padding: 0;	
 }
 
 input[type="text"]:disabled {

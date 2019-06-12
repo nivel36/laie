@@ -8,7 +8,8 @@
 		<composite:attribute name="label" required="true" />
 		<composite:attribute name="value" required="true" />
 		<composite:attribute name="min" default="0" />
-		<composite:attribute name="max" default="100" />
+		<composite:attribute name="max" default="100" /> 
+		<composite:attribute name="showIcon" type="java.lang.Boolean" default="true" />
 		<composite:attribute name="required" />
 		<composite:attribute name="styleClass" required="false" default="" />
 	</composite:interface>
@@ -20,8 +21,10 @@
 			</div>
 			<div class="input-container">
 				<p:inputNumber id="inputNumber" name="#{cc.attrs.name}" value="#{cc.attrs.value}" required="#{cc.attrs.required}"
-					min="#{cc.attrs.min}" max="#{cc.attrs.max}" styleClass="input input-money" />
-				<i class="icon fa fa-euro" aria-hidden="true"></i>
+					min="#{cc.attrs.min}" max="#{cc.attrs.max}" inputStyleClass="input input-money" />
+				<h:panelGroup layout="block" styleClass="icon-field" rendered="#{not empty cc.attrs.showIcon}">
+					<i class="icon right-icon fa fa-euro" aria-hidden="true"></i>
+				</h:panelGroup>
 			</div>
 			<div class="message-container">
 				<p:message id="message" for="inputNumber" styleClass="message-error" />

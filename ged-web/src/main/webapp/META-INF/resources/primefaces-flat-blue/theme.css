@@ -81,6 +81,7 @@ body .ui-autocomplete {
 body .ui-autocomplete-panel {
 	display: flex;
 	background: white;
+	box-shadow: 0 2px 5px rgba(0,0,0,0.6);
 }
 
 body .ui-autocomplete-panel .ui-autocomplete-table {
@@ -97,6 +98,11 @@ body .ui-autocomplete-panel .ui-autocomplete-table td {
 	border: 0px;
 	display: flex;
 	align-items: center;
+}
+
+body .ui-autocomplete-panel .ui-autocomplete-table .ui-state-highlight{
+	background-color: #69abe2;
+	color: white;
 }
 
 body .ui-button.ui-button-icon-only {
@@ -238,6 +244,7 @@ body .ui-chips-container .ui-chips-token, body .ui-autocomplete-multiple .ui-aut
 	background: #59a2df;
 	color: white;
 	cursor: pointer;
+	font-size: 0.9em;
 }
 
 body .ui-chips-container.ui-state-disabled .ui-chips-token, body .ui-autocomplete-multiple.ui-state-disabled .ui-autocomplete-token {
@@ -472,7 +479,6 @@ body .ui-autocomplete.ui-autocomplete-multiple .ui-inputfield {
 	flex-wrap: wrap;
 	align-items: flex-start;
 	height: auto;
-	min-height: 34px;
 }
 
 body .ui-spinner .ui-inputfield {
