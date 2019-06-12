@@ -84,6 +84,13 @@ body .ui-autocomplete-panel {
 	box-shadow: 0 2px 5px rgba(0,0,0,0.6);
 }
 
+body .ui-autocomplete-panel .ui-autocomplete-list {
+	border: 1px solid #c2cad8;
+    padding: .4em;
+    border: 0 none;
+    width: 100%;
+}
+
 body .ui-autocomplete-panel .ui-autocomplete-table {
 	border: 1px solid #c2cad8;
 }
@@ -100,7 +107,7 @@ body .ui-autocomplete-panel .ui-autocomplete-table td {
 	align-items: center;
 }
 
-body .ui-autocomplete-panel .ui-autocomplete-table .ui-state-highlight{
+body .ui-autocomplete-panel .ui-state-highlight {
 	background-color: #69abe2;
 	color: white;
 }
