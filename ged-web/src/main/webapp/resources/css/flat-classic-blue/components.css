@@ -46,7 +46,7 @@ h3 {
 
 h4 {
 	font-size: 1em;
-	padding: 0.3em 0;
+	padding: 1em 0 0.3em 0;
 	border-bottom: 1px solid #cfcfcf;
 	margin-bottom: 1em;
 }
@@ -704,18 +704,14 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button 
 }
 
 .candidate-card .image {
-	image-orientation: from-image;
-	border-radius: 5px;
-	object-fit: cover;
 	width: 48px;
 	height: 48px;
-	box-shadow: none;
-	border: 0px;
+	border: 3px solid white;
 }
 
 .candidate-card .info {
 	display: flex;
-	padding-left: 5px;
+	padding-left: 1em;
 	flex-direction: column;
 }
 

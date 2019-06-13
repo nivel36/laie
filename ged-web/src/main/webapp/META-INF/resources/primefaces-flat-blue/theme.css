@@ -200,7 +200,7 @@ body .ui-breadcrumb .ui-breadcrumb-chevron {
 	margin: 0;
 }
 
-body .ui-calendar {
+body .ui-calendar, body .ui-inputnumber {
 	flex: 1;
 }
 
