@@ -28,7 +28,7 @@
 				<p:autoComplete id="input" value="#{cc.attrs.value}" required="#{cc.attrs.required}" styleClass="input input-tag"
 					completeMethod="#{cc.attrs.completeMethod}" minQueryLength="3" var="tag" itemValue="#{tag}"
 					itemLabel="#{tag.label}" disabled="#{cc.attrs.disabled}" multiple="true" converter="tagConverter" dynamic="true"
-					effectDuration="200" autoSelection="true" placeholder="#{i18n['candidate.tags']}"  />
+					effectDuration="200" autoSelection="true" unique="true"  />
 			</div>
 			<div class="message-container">
 				<p:message id="message" for="input" styleClass="message-error" />

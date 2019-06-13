@@ -257,6 +257,7 @@ body .input {
 	align-items: center;
 	border: 1px solid #c2cad8;
 	padding: 0.5em;
+	background: white;
 }
 
 body .input.ui-spinner, body .input.ui-calendar, body .input.ui-inputnumber {

@@ -10,11 +10,11 @@
 	</ui:define>
 
 	<ui:param name="selectedMenu" value="candidates" />
-	
+
 	<ui:define name="actions">
 		<p:button value="#{i18n['candidate.new_candidate']}" outcome="#{Page.CANDIDATE_ADD.getUrl()}" />
 	</ui:define>
-	
+
 
 	<ui:define name="breadcrumb">
 		<p:breadCrumb styleClass="breadcrumb">
@@ -25,94 +25,97 @@
 	</ui:define>
 
 	<ui:define name="content">
-		<div class="grid nogutter">
-			<div class="panel candidate col-12 xl-8">
-				<div class="panel-header">
-					<div class="panel-header-image">
-						<cc:avatar value="#{viewCandidateView.candidate.imageFileName}" />
-					</div>
-					<div class="panel-header-data">
-						<div class="name">#{viewCandidateView.candidate.fullName}</div>
-						<div class="job-profile">#{viewCandidateView.candidate.jobProfile}</div>
-
-						<div class="data email">
-							<div class="icon">
-								<em class="fa fa-envelope"></em>
-							</div>
-							<div class="text">#{viewCandidateView.candidate.email}</div>
+		<div class="grid">
+			<div class="col-12 xl-8">
+				<div class="panel candidate">
+					<div class="panel-header">
+						<div class="panel-header-image">
+							<cc:avatar value="#{viewCandidateView.candidate.imageFileName}" />
 						</div>
-						<div class="data phone">
-							<div class="icon">
-								<em class="fa fa-phone"></em>
-							</div>
-							<div class="text">#{viewCandidateView.candidate.phoneNumber}</div>
-						</div>
-						<h:panelGroup layout="block" styleClass="data skype" rendered="#{not empty viewCandidateView.candidate.skype}">
-							<div class="icon">
-								<em class="fa fa-skype"></em>
-							</div>
-							<div class="text">#{viewCandidateView.candidate.skype}</div>
-						</h:panelGroup>
-						<h:panelGroup layout="block" styleClass="data linkedin"
-							rendered="#{not empty viewCandidateView.candidate.linkedinProfileUrl}">
-							<div class="icon">
-								<em class="fa fa-linkedin"></em>
-							</div>
-							<div class="text">
-								<a href="#{viewCandidateView.candidate.linkedinProfileUrl}" target="new">#{viewCandidateView.candidate.linkedinProfileUrl}</a>
-							</div>
-						</h:panelGroup>
-					</div>
-					<h:form>
-						<div class="panel-buttons">
-							<p:button value="#{i18n['curriculum.curriculum']}" process="@this" outcome="#{Page.CURRICULUM.getUrl()}">
-								<f:param name="id" value="#{viewCandidateView.candidate.id}" />
-							</p:button>
-							<p:commandButton value="#{i18n['action.export']}" process="@this" action="#{viewCandidateView.export}"
-								icon="fa-file-excel-o" />
-							<p:commandButton value="#{i18n['action.edit']}" process="@this" action="#{viewCandidateView.editCandidate}" />
-						</div>
-					</h:form>
-				</div>
-				<div class="panel-content">
-					<div class="panel-content-data grid nogutter">
-						<div class="col-12 md-6">
-							<h4>#{i18n['candidate.personal_information']}</h4>
+						<div class="panel-header-data">
+							<div class="name">#{viewCandidateView.candidate.fullName}</div>
+							<div class="job-profile">#{viewCandidateView.candidate.jobProfile}</div>
 
-							<cc:outputText label="#{i18n['candidate.city']}"
-								value="#{viewCandidateView.candidate.address.city} (#{viewCandidateView.candidate.address.state})" />
-
-							<cc:outputText label="#{i18n['candidate.bornDate']}" value="#{viewCandidateView.candidate.bornDate}">
-								<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" for="element" />
-							</cc:outputText>
-						</div>
-						<div class="col-12 md-6">
-							<h4>#{i18n['candidate.contact_information']}</h4>
-
-							<cc:outputText label="#{i18n['candidate.origin']}" value="#{i18n:translate(viewCandidateView.candidate.origin)}" />
-
-							<cc:outputText label="#{i18n['candidate.salary']}" value="#{viewCandidateView.candidate.salary}">
-								<f:convertNumber for="text" currencyCode="EUR" maxFractionDigits="0" type="currency" />
-							</cc:outputText>
-
-							<cc:outputText label="#{i18n['candidate.expected_salary']}" value="#{viewCandidateView.candidate.expectedSalary}">
-								<f:convertNumber for="text" currencyCode="EUR" maxFractionDigits="0" type="currency" />
-							</cc:outputText>
-
-						</div>
-						<div class="col-12">
-							<h4>#{i18n['candidate.metadata']}</h4>
-							<div class="data rating">
-								<div class="label">#{i18n['candidate.rating']}</div>
-								<div class="text">
-									<p:rating value="#{viewCandidateView.candidate.rating}" cancel="false" readonly="true" />
+							<div class="data email">
+								<div class="icon">
+									<em class="fa fa-envelope"></em>
 								</div>
+								<div class="text">#{viewCandidateView.candidate.email}</div>
 							</div>
-							<div class="data tags">
-								<div class="label">#{i18n['candidate.tags']}</div>
+							<div class="data phone">
+								<div class="icon">
+									<em class="fa fa-phone"></em>
+								</div>
+								<div class="text">#{viewCandidateView.candidate.phoneNumber}</div>
+							</div>
+							<h:panelGroup layout="block" styleClass="data skype" rendered="#{not empty viewCandidateView.candidate.skype}">
+								<div class="icon">
+									<em class="fa fa-skype"></em>
+								</div>
+								<div class="text">#{viewCandidateView.candidate.skype}</div>
+							</h:panelGroup>
+							<h:panelGroup layout="block" styleClass="data linkedin"
+								rendered="#{not empty viewCandidateView.candidate.linkedinProfileUrl}">
+								<div class="icon">
+									<em class="fa fa-linkedin"></em>
+								</div>
 								<div class="text">
-									<p:chips id="tags" value="#{viewCandidateView.tags}" label="#{i18n['viewCandidateView.tags']}"
-										converter="stringConverter" style-class="tags" disabled="true" />
+									<a href="#{viewCandidateView.candidate.linkedinProfileUrl}" target="new">#{viewCandidateView.candidate.linkedinProfileUrl}</a>
+								</div>
+							</h:panelGroup>
+						</div>
+						<h:form>
+							<div class="panel-buttons">
+								<p:button value="#{i18n['curriculum.curriculum']}" process="@this" outcome="#{Page.CURRICULUM.getUrl()}">
+									<f:param name="id" value="#{viewCandidateView.candidate.id}" />
+								</p:button>
+								<p:commandButton value="#{i18n['action.export']}" process="@this" action="#{viewCandidateView.export}"
+									icon="fa-file-excel-o" />
+								<p:commandButton value="#{i18n['action.edit']}" process="@this" action="#{viewCandidateView.editCandidate}" />
+							</div>
+						</h:form>
+					</div>
+					<div class="panel-content">
+						<div class="panel-content-data grid nogutter">
+							<div class="col-12 md-6">
+								<h4>#{i18n['candidate.personal_information']}</h4>
+
+								<cc:outputText label="#{i18n['candidate.city']}"
+									value="#{viewCandidateView.candidate.address.city} (#{viewCandidateView.candidate.address.state})" />
+
+								<cc:outputText label="#{i18n['candidate.bornDate']}" value="#{viewCandidateView.candidate.bornDate}">
+									<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" for="element" />
+								</cc:outputText>
+							</div>
+							<div class="col-12 md-6">
+								<h4>#{i18n['candidate.contact_information']}</h4>
+
+								<cc:outputText label="#{i18n['candidate.origin']}" value="#{i18n:translate(viewCandidateView.candidate.origin)}" />
+
+								<cc:outputText label="#{i18n['candidate.salary']}" value="#{viewCandidateView.candidate.salary}">
+									<f:convertNumber for="text" currencyCode="EUR" maxFractionDigits="0" type="currency" />
+								</cc:outputText>
+
+								<cc:outputText label="#{i18n['candidate.expected_salary']}"
+									value="#{viewCandidateView.candidate.expectedSalary}">
+									<f:convertNumber for="text" currencyCode="EUR" maxFractionDigits="0" type="currency" />
+								</cc:outputText>
+
+							</div>
+							<div class="col-12">
+								<h4>#{i18n['candidate.metadata']}</h4>
+								<div class="data rating">
+									<div class="label">#{i18n['candidate.rating']}</div>
+									<div class="text">
+										<p:rating value="#{viewCandidateView.candidate.rating}" cancel="false" readonly="true" />
+									</div>
+								</div>
+								<div class="data tags">
+									<div class="label">#{i18n['candidate.tags']}</div>
+									<div class="text">
+										<p:chips id="tags" value="#{viewCandidateView.tags}" label="#{i18n['viewCandidateView.tags']}"
+											converter="stringConverter" style-class="tags" disabled="true" />
+									</div>
 								</div>
 							</div>
 						</div>

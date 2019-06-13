@@ -16,7 +16,6 @@ import javax.faces.validator.ValidatorException;
 import javax.inject.Inject;
 
 import org.primefaces.event.FileUploadEvent;
-import org.primefaces.event.SelectEvent;
 import org.primefaces.model.UploadedFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
