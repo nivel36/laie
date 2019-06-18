@@ -51,7 +51,9 @@ public class AddMeetingView extends AbstractView {
 	private transient UserService userService;
 
 	public void addAttendee() {
-		attendees.add(attendee);
+		if (attendee != null) {
+			attendees.add(attendee);
+		}
 		attendee = null;
 	}
 

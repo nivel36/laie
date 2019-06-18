@@ -40,7 +40,7 @@
 							<h4>#{i18n['meeting.header.attendees']}</h4>
 							<h:panelGroup id="attendeesWrapper" layout="block">
 								<cc:inputPerson id="person" value="#{addMeetingView.attendee}" completeMethod="#{addMeetingView.searchPerson}">
-									<p:ajax event="personSelect" listener="#{addMeetingView.addAttendee}" update="meetingForm:attendeesWrapper" />
+									<p:ajax event="selectPerson" listener="#{addMeetingView.addAttendee}" update="meetingForm:attendeesWrapper" />
 								</cc:inputPerson>
 								<h:panelGroup layout="block" id="attendees">
 									<ui:repeat var="person" value="#{addMeetingView.attendees}" varStatus="varStatus">
