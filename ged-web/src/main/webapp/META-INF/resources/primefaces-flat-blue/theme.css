@@ -254,6 +254,10 @@ body .ui-chips-container .ui-chips-token, body .ui-autocomplete-multiple .ui-aut
 	font-size: 0.9em;
 }
 
+body .ui-chips-container.ui-state-disabled .ui-chips-token .ui-icon, body .ui-autocomplete-multiple.ui-state-disabled .ui-autocomplete-token .ui-icon {
+	display: none;
+}
+
 body .ui-chips-container.ui-state-disabled .ui-chips-token, body .ui-autocomplete-multiple.ui-state-disabled .ui-autocomplete-token {
 	cursor: default;
 }
@@ -263,22 +267,17 @@ body .ui-chips-token .ui-chips-token-label, body .ui-autocomplete-multiple .ui-a
 	display: flex;
 }
 
-body .ui-chips-container.ui-state-disabled .ui-chips-token:hover .ui-icon, body .ui-autocomplete-multiple.ui-state-disabled .ui-autocomplete-token:hover .ui-icon
-	{
+body .ui-chips-container.ui-state-disabled .ui-chips-input-token {
 	display: none;
 }
 
-body .ui-chips-container .ui-chips-token:hover .ui-icon, body .ui-autocomplete-multiple .ui-autocomplete-token:hover .ui-icon {
-	display: inline;
-}
-
 body .ui-chips-container .ui-chips-token .ui-icon, body .ui-autocomplete-multiple .ui-autocomplete-token .ui-icon {
+	display: inline-flex;
 	cursor: pointer;
 	margin-top: 0;
 	position: relative;
 	right: 0;
 	top: 0;
-	display: none;
 }
 
 body .ui-datatable, body .ui-datatable .ui-datatable-tablewrapper {
