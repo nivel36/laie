@@ -18,14 +18,10 @@
 	<ui:define name="content">
 		<div class="grid">
 			<div class="col-12 lg-6">
-				<cc:jobOffers jobOffers="#{indexView.jobOffers}">
-					<p:button value="#{i18n['job.new_job_offer']}" outcome="#{Page.JOB_ADD.getUrl()}" />
-				</cc:jobOffers>
+				<cc:jobOffers jobOffers="#{indexView.jobOffers}" />
 			</div>
 			<div class="col-12 lg-6">
-				<cc:candidates candidates="#{indexView.candidates}" title="#{i18n['candidate.last_candidates']}">
-					<p:button value="#{i18n['candidate.new_candidate']}" outcome="#{Page.CANDIDATE_ADD.getUrl()}" />
-				</cc:candidates>
+				<cc:candidates candidates="#{indexView.candidates}" title="#{i18n['candidate.last_candidates']}" />
 			</div>
 
 			<div class="col-12 xl-4">
@@ -35,7 +31,6 @@
 					</div>
 					<div class="panel-content">
 						<div class="panel-content-data">
-						
 						</div>
 					</div>
 				</div>
@@ -49,11 +44,6 @@
 					<div class="panel-content">
 						<div class="panel-content-data">
 							<p:schedule id="scheduleLocale" value="#{indexView.schedule}" locale="es" />
-						</div>
-					</div>
-					<div class="panel-footer">
-						<div class="panel-buttons">
-							<p:button value="#{i18n['action.new']}" outcome="#{Page.CANDIDATE_ADD.getUrl()}" />
 						</div>
 					</div>
 				</div>

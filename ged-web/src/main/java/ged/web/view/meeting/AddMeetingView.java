@@ -4,6 +4,7 @@ import java.lang.invoke.MethodHandles;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -25,6 +26,7 @@ import ged.ejb.job.meeting.MeetingType;
 import ged.ejb.person.Person;
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
+import ged.web.core.util.PageEnum;
 import ged.web.core.view.AbstractView;
 
 @Named
@@ -149,10 +151,12 @@ public class AddMeetingView extends AbstractView {
 		this.attendees.remove(person);
 	}
 
-	public void save() {
-		LocalDateTime meetingDateTime = LocalDateTime.of(meetingDate, LocalTime.parse(meetingHour));
+	public String save() {
+		LocalTime time = LocalTime.parse(meetingHour,DateTimeFormatter.ofPattern("H:mm"));
+		LocalDateTime meetingDateTime = LocalDateTime.of(meetingDate, time);
 		this.meeting.setDatePlanned(meetingDateTime);
 		this.meetingService.save(this.meeting);
+		return PageEnum.MEETING_SEARCH.getUrl();
 	}
 
 	public List<Person> searchPerson(final String query) {
