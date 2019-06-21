@@ -263,14 +263,11 @@ body .ui-chips-token .ui-chips-token-label, body .ui-autocomplete-multiple .ui-a
 	display: flex;
 }
 
-body .ui-chips-container.ui-state-disabled .ui-chips-token:hover .ui-icon, body .ui-autocomplete-multiple.ui-state-disabled .ui-autocomplete-token:hover .ui-icon
+body .ui-chips-container.ui-state-disabled .ui-chips-token .ui-icon, body .ui-autocomplete-multiple.ui-state-disabled .ui-autocomplete-token .ui-icon
 	{
 	display: none;
 }
 
-body .ui-chips-container .ui-chips-token:hover .ui-icon, body .ui-autocomplete-multiple .ui-autocomplete-token:hover .ui-icon {
-	display: inline;
-}
 
 body .ui-chips-container .ui-chips-token .ui-icon, body .ui-autocomplete-multiple .ui-autocomplete-token .ui-icon {
 	cursor: pointer;
@@ -278,7 +275,7 @@ body .ui-chips-container .ui-chips-token .ui-icon, body .ui-autocomplete-multipl
 	position: relative;
 	right: 0;
 	top: 0;
-	display: none;
+	display: inline-flex;
 }
 
 body .ui-datatable, body .ui-datatable .ui-datatable-tablewrapper {
