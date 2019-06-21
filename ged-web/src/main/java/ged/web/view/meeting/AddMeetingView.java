@@ -64,14 +64,14 @@ public class AddMeetingView extends AbstractView {
 	private transient UserService userService;
 
 	public void addAttendee() {
-		if (attendee != null) {
-			attendees.add(attendee);
+		if (this.attendee != null) {
+			this.attendees.add(this.attendee);
 		}
-		attendee = null;
+		this.attendee = null;
 	}
 
 	public Person getAttendee() {
-		return attendee;
+		return this.attendee;
 	}
 
 	public List<Person> getAttendees() {
@@ -79,7 +79,7 @@ public class AddMeetingView extends AbstractView {
 	}
 
 	public List<String> getHours() {
-		return hours;
+		return this.hours;
 	}
 
 	public Meeting getMeeting() {
@@ -87,11 +87,11 @@ public class AddMeetingView extends AbstractView {
 	}
 
 	public LocalDate getMeetingDate() {
-		return meetingDate;
+		return this.meetingDate;
 	}
 
 	public String getMeetingHour() {
-		return meetingHour;
+		return this.meetingHour;
 	}
 
 	public List<MeetingType> getMeetingTypes() {
@@ -106,16 +106,21 @@ public class AddMeetingView extends AbstractView {
 		this.hours = this.initHours();
 		this.meetingHour = this.initActualMeetingHour();
 	}
-	
+
 	private String initActualMeetingHour() {
-		String hour = String.valueOf(LocalTime.now().getHour());
-		long minute =  LocalTime.now().getMinute();
-		if(minute < 30) {
-			return hour+":30";
+		final int hour = LocalTime.now().getHour();
+		final int minute = LocalTime.now().getMinute();
+		final StringBuilder sb = new StringBuilder();
+		if (minute < 30) {
+			sb.append(hour).append(":30");
+		} else {
+			if (hour < 23) {
+				sb.append(hour + 1).append(":00");
+			} else {
+				sb.append("0:00");
+			}
 		}
-		else {
-			return hour+":00";
-		}
+		return sb.toString();
 	}
 
 	private List<Person> initAttendees() {
@@ -127,7 +132,7 @@ public class AddMeetingView extends AbstractView {
 	}
 
 	private List<String> initHours() {
-		List<String> hourList = new ArrayList<>();
+		final List<String> hourList = new ArrayList<>();
 		for (int i = 0; i < 24; i++) {
 			hourList.add(i + ":00");
 			hourList.add(i + ":30");
@@ -152,8 +157,8 @@ public class AddMeetingView extends AbstractView {
 	}
 
 	public String save() {
-		LocalTime time = LocalTime.parse(meetingHour,DateTimeFormatter.ofPattern("H:mm"));
-		LocalDateTime meetingDateTime = LocalDateTime.of(meetingDate, time);
+		final LocalTime time = LocalTime.parse(this.meetingHour, DateTimeFormatter.ofPattern("H:mm"));
+		final LocalDateTime meetingDateTime = LocalDateTime.of(this.meetingDate, time);
 		this.meeting.setDatePlanned(meetingDateTime);
 		this.meetingService.save(this.meeting);
 		return PageEnum.MEETING_SEARCH.getUrl();
@@ -162,13 +167,13 @@ public class AddMeetingView extends AbstractView {
 	public List<Person> searchPerson(final String query) {
 		logger.trace("Searching for person with the string {}", query);
 		final List<Person> personsFound = new ArrayList<>();
-		personsFound.addAll(candidateService.search(query, Page.of(0, 10)).getResultData());
-		personsFound.addAll(userService.search(query, Page.of(0, 10)).getResultData());
-		personsFound.addAll(contactService.search(query, Page.of(0, 10)).getResultData());
+		personsFound.addAll(this.candidateService.search(query, Page.of(0, 10)).getResultData());
+		personsFound.addAll(this.userService.search(query, Page.of(0, 10)).getResultData());
+		personsFound.addAll(this.contactService.search(query, Page.of(0, 10)).getResultData());
 		return personsFound;
 	}
 
-	public void setAttendee(Person attendee) {
+	public void setAttendee(final Person attendee) {
 		this.attendee = attendee;
 	}
 
@@ -176,11 +181,11 @@ public class AddMeetingView extends AbstractView {
 		this.attendees = attendees;
 	}
 
-	public void setCandidateService(CandidateService candidateService) {
+	public void setCandidateService(final CandidateService candidateService) {
 		this.candidateService = candidateService;
 	}
 
-	public void setContactService(ContactService contactService) {
+	public void setContactService(final ContactService contactService) {
 		this.contactService = contactService;
 	}
 
@@ -188,11 +193,11 @@ public class AddMeetingView extends AbstractView {
 		this.meeting = meeting;
 	}
 
-	public void setMeetingDate(LocalDate meetingDate) {
+	public void setMeetingDate(final LocalDate meetingDate) {
 		this.meetingDate = meetingDate;
 	}
 
-	public void setMeetingHour(String meetingHour) {
+	public void setMeetingHour(final String meetingHour) {
 		this.meetingHour = meetingHour;
 	}
 
@@ -200,7 +205,7 @@ public class AddMeetingView extends AbstractView {
 		this.meetingService = meetingService;
 	}
 
-	public void setUserService(UserService userService) {
+	public void setUserService(final UserService userService) {
 		this.userService = userService;
 	}
 }
