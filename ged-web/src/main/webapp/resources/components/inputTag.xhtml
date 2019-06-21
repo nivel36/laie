@@ -5,13 +5,12 @@
 	<composite:interface>
 		<composite:attribute name="labelIcon" required="false" />
 		<composite:attribute name="label" required="false" />
-		<composite:attribute name="tagLabel" required="false" />
 		<composite:attribute name="required" default="false" />
 		<composite:attribute name="value" required="true" />
 		<composite:attribute name="styleClass" required="false" default="" />
 		<composite:attribute name="inputStyleClass" required="false" default="" />
-		<composite:editableValueHolder name="input" />
 		<composite:attribute name="completeMethod" method-signature="void function(java.lang.String)" required="true" />
+		<composite:editableValueHolder name="input" />
 	</composite:interface>
 
 	<composite:implementation>
@@ -26,9 +25,7 @@
 				<p:autoComplete id="input" value="#{cc.attrs.value}" required="#{cc.attrs.required}" styleClass="input input-tag"
 					completeMethod="#{cc.attrs.completeMethod}" minQueryLength="3" var="tag" itemValue="#{tag}" itemLabel="#{tag.label}"
 					disabled="#{cc.attrs.disabled}" multiple="true" converter="tagConverter" forceSelection="false" autoHighlight="false"
-					autoSelection="true" unique="true">
-					<p:ajax event="select" process="@this" update="@this" />
-				</p:autoComplete>
+					autoSelection="true" unique="true" />
 			</div>
 			<div class="message-container">
 				<p:message id="message" for="input" styleClass="message-error" />

@@ -26,21 +26,28 @@
 					<div class="grid">
 						<div class="col-12 lg-7">
 							<h4>#{i18n['meeting.header.details']}</h4>
-							<cc:calendar label="#{i18n['meeting.date_planned']}" value="#{addMeetingView.meeting.datePlanned}"
-								required="true" />
+							<cc:calendar label="#{i18n['meeting.date_planned']}" value="#{addMeetingView.meetingDate}" required="true" />
+
+							<cc:inputSelect label="#{i18n['meeting.hour_planned']}" value="#{addMeetingView.meetingHour}" required="true">
+								<f:selectItems value="#{addMeetingView.hours}" var="meetingHour" itemValue="#{meetingHour}"
+									itemLabel="#{meetingHour}" />
+							</cc:inputSelect>
+
 							<cc:inputSelect label="#{i18n['meeting.type']}" value="#{addMeetingView.meeting.meetingType}">
 								<f:selectItem />
 								<f:selectItems value="#{addMeetingView.meetingTypes}" var="meetingType" itemValue="#{meetingType}"
 									itemLabel="#{i18n[meetingType]}" />
 							</cc:inputSelect>
+
 							<cc:inputText label="#{i18n['meeting.location']}" value="#{addMeetingView.meeting.location}" />
+
 							<cc:richText label="#{i18n['meeting.description']}" value="#{addMeetingView.meeting.description}" />
 						</div>
 						<div class="col-12 lg-5">
 							<h4>#{i18n['meeting.header.attendees']}</h4>
 							<h:panelGroup id="attendeesWrapper" layout="block">
 								<cc:inputPerson id="person" value="#{addMeetingView.attendee}" completeMethod="#{addMeetingView.searchPerson}">
-									<p:ajax event="personSelect" listener="#{addMeetingView.addAttendee}" update="meetingForm:attendeesWrapper" />
+									<p:ajax event="selectPerson" listener="#{addMeetingView.addAttendee}" update="meetingForm:attendeesWrapper" />
 								</cc:inputPerson>
 								<h:panelGroup layout="block" id="attendees">
 									<ui:repeat var="person" value="#{addMeetingView.attendees}" varStatus="varStatus">

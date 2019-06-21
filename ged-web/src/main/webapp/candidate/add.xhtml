@@ -30,8 +30,7 @@
 										<p:ajax event="rate" listener="#{addCandidateView.onrate}" update="" />
 									</p:rating>
 								</div>
-								<cc:inputTag value="#{addCandidateView.tags}" tagLabel="#{i18n['addCandidateView.tags']}"
-									completeMethod="#{addCandidateView.queryTags}" />
+								<cc:inputTag value="#{addCandidateView.tags}" completeMethod="#{addCandidateView.queryTags}" />
 							</div>
 						</div>
 						<div class="panel-content panel-content-data">

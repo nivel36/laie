@@ -51,9 +51,8 @@ public class Meeting extends AbstractEntity implements Ownerable {
 
 	private String description;
 
-	@NotNull
 	@ManyToOne
-	@JoinColumn(name = "jobCandidatureId", nullable = false)
+	@JoinColumn(name = "jobCandidatureId")
 	private JobCandidature jobCandidature;
 
 	private String location;

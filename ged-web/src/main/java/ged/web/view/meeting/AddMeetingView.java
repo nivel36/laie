@@ -1,6 +1,10 @@
 package ged.web.view.meeting;
 
 import java.lang.invoke.MethodHandles;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -20,7 +24,9 @@ import ged.ejb.job.meeting.Meeting;
 import ged.ejb.job.meeting.MeetingService;
 import ged.ejb.job.meeting.MeetingType;
 import ged.ejb.person.Person;
+import ged.ejb.user.User;
 import ged.ejb.user.UserService;
+import ged.web.core.util.PageEnum;
 import ged.web.core.view.AbstractView;
 
 @Named
@@ -41,8 +47,15 @@ public class AddMeetingView extends AbstractView {
 	@Inject
 	private transient ContactService contactService;
 
+	private List<String> hours;
+
 	private Meeting meeting;
 
+	private LocalDate meetingDate;
+
+	private String meetingHour;
+
+	@Inject
 	private transient MeetingService meetingService;
 
 	private List<MeetingType> meetingTypes;
@@ -51,7 +64,9 @@ public class AddMeetingView extends AbstractView {
 	private transient UserService userService;
 
 	public void addAttendee() {
-		attendees.add(attendee);
+		if (attendee != null) {
+			attendees.add(attendee);
+		}
 		attendee = null;
 	}
 
@@ -63,8 +78,20 @@ public class AddMeetingView extends AbstractView {
 		return this.attendees;
 	}
 
+	public List<String> getHours() {
+		return hours;
+	}
+
 	public Meeting getMeeting() {
 		return this.meeting;
+	}
+
+	public LocalDate getMeetingDate() {
+		return meetingDate;
+	}
+
+	public String getMeetingHour() {
+		return meetingHour;
 	}
 
 	public List<MeetingType> getMeetingTypes() {
@@ -76,6 +103,19 @@ public class AddMeetingView extends AbstractView {
 		this.meeting = this.initMeeting();
 		this.meetingTypes = this.initMeetingTypes();
 		this.attendees = this.initAttendees();
+		this.hours = this.initHours();
+		this.meetingHour = this.initActualMeetingHour();
+	}
+	
+	private String initActualMeetingHour() {
+		String hour = String.valueOf(LocalTime.now().getHour());
+		long minute =  LocalTime.now().getMinute();
+		if(minute < 30) {
+			return hour+":30";
+		}
+		else {
+			return hour+":00";
+		}
 	}
 
 	private List<Person> initAttendees() {
@@ -86,9 +126,20 @@ public class AddMeetingView extends AbstractView {
 		return attendeeList;
 	}
 
+	private List<String> initHours() {
+		List<String> hourList = new ArrayList<>();
+		for (int i = 0; i < 24; i++) {
+			hourList.add(i + ":00");
+			hourList.add(i + ":30");
+		}
+		return hourList;
+	}
+
 	private Meeting initMeeting() {
 		final Meeting newMeeting = new Meeting();
-		newMeeting.addAttendee(this.sessionUser.get());
+		final User currentUser = this.sessionUser.get();
+		newMeeting.addAttendee(currentUser);
+		newMeeting.setOwner(currentUser);
 		return newMeeting;
 	}
 
@@ -100,8 +151,12 @@ public class AddMeetingView extends AbstractView {
 		this.attendees.remove(person);
 	}
 
-	public void save() {
+	public String save() {
+		LocalTime time = LocalTime.parse(meetingHour,DateTimeFormatter.ofPattern("H:mm"));
+		LocalDateTime meetingDateTime = LocalDateTime.of(meetingDate, time);
+		this.meeting.setDatePlanned(meetingDateTime);
 		this.meetingService.save(this.meeting);
+		return PageEnum.MEETING_SEARCH.getUrl();
 	}
 
 	public List<Person> searchPerson(final String query) {
@@ -131,6 +186,14 @@ public class AddMeetingView extends AbstractView {
 
 	public void setMeeting(final Meeting meeting) {
 		this.meeting = meeting;
+	}
+
+	public void setMeetingDate(LocalDate meetingDate) {
+		this.meetingDate = meetingDate;
+	}
+
+	public void setMeetingHour(String meetingHour) {
+		this.meetingHour = meetingHour;
 	}
 
 	public void setMeetingService(final MeetingService meetingService) {

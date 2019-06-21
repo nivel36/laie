@@ -4,6 +4,7 @@ import java.lang.invoke.MethodHandles;
 import java.util.List;
 import java.util.Objects;
 
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
@@ -17,6 +18,7 @@ import ged.ejb.core.model.Repository;
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.user.User;
 
+@Stateless
 public class MeetingService extends AbstractService<Meeting> {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
