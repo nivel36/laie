@@ -1,0 +1,30 @@
+<ui:component xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
+	xmlns:composite="http://xmlns.jcp.org/jsf/composite" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	xmlns:o="http://omnifaces.org/ui" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+	<composite:interface>
+		<composite:attribute name="value" type="ged.ejb.job.meeting.Meeting" required="true" />
+		<composite:attribute name="styleClass" required="false" default="" />
+	</composite:interface>
+
+	<composite:implementation>
+		<div id="#{cc.clientId}" class="meeting #{cc.attrs.styleClass}">
+			<div class="meeting-header">
+				<div class="meeting-title">#{cc.value.description}</div>
+				<div class="meeting-date-time">
+					<div class="meeting-date">#{cc.value.datePlanned}</div>
+				</div>
+			</div>
+			<div class="meeting-detail">
+				<div class="meeting-type">#{cc.value.meetingType}</div>
+				<div class="meeting-location">#{cc.value.location}</div>
+				<div class="meeting-attendees">
+					<ui:repeat var="attendee" value="#{cc.value.attendees}">
+						<div class="meeting-attendee">#{attendee.fullName}</div>
+					</ui:repeat>
+				</div>
+			</div>
+		</div>
+	</composite:implementation>
+</ui:component>
