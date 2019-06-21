@@ -269,10 +269,8 @@ body .ui-chips-token .ui-chips-token-label, body .ui-autocomplete-multiple .ui-a
 
 body .ui-chips-container.ui-state-disabled .ui-chips-token .ui-icon, body .ui-autocomplete-multiple.ui-state-disabled .ui-autocomplete-token .ui-icon
 	{
-body .ui-chips-container.ui-state-disabled .ui-chips-input-token {
 	display: none;
 }
-
 
 body .ui-chips-container .ui-chips-token .ui-icon, body .ui-autocomplete-multiple .ui-autocomplete-token .ui-icon {
 	display: inline-flex;
