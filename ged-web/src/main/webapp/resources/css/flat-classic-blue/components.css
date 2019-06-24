@@ -421,7 +421,7 @@ body .input-search .clean-search-button {
 	width: 150px;
 }
 
-.input-group .labelIcon {
+.input-group .labelIcon, .input-group .input-icon {
 	flex: 0 1 auto;
 }
 
