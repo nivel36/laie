@@ -12,7 +12,7 @@
 			<div class="grid">
 				<div class="col-12 md-6 lg-4">
 					<div class="inputgroup">
-						<p:inputText id="searchText" value="#{jobOfferSearchDialogView.searchText}" />
+						<p:input id="searchText" value="#{jobOfferSearchDialogView.searchText}" />
 						<p:commandButton id="cleanSearchTextAction" action="#{jobOfferSearchDialogView.clean}" update="@form" styleClass="btn-gray"
 							icon="fa fa-times" rendered="#{not empty jobOfferSearchDialogView.searchText}" />
 						<p:commandButton id="searchAction" action="#{jobOfferSearchDialogView.search}" update="@form" icon="fa fa-search" />

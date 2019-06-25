@@ -16,7 +16,7 @@
 					<div class="form-group">
 						<p:outputLabel value="#{i18n['skill.skill']}" />
 						<div class="inputgroup">
-							<p:inputText id="skill" value="#{skillsView.skillName}" />
+							<p:input id="skill" value="#{skillsView.skillName}" />
 							<p:commandButton id="addSkill" action="#{skillsView.addSkill}" process="@form" update="@form" styleClass="btn-green" icon="fa fa-plus" />
 						</div>
 						<p:message for="skill" />

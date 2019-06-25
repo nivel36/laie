@@ -27,7 +27,7 @@
 								<div class="col-12 sm-6">
 									<h3>#{i18n['user.personal_information']}</h3>
 
-									<cc:inputText label="#{i18n['job.name']}" value="#{addJobView.jobOffer.name}" required="true" />
+									<cc:input label="#{i18n['job.name']}" value="#{addJobView.jobOffer.name}" required="true" />
 
 									<cc:inputClient id="client" label="#{i18n['job.client']}" value="#{addJobView.jobOffer.client}"
 										completeMethod="#{addJobView.completeClient}" required="true" />
@@ -42,9 +42,9 @@
 								<div class="col-12 sm-6">
 									<h3>#{i18n['user.personal_information']}</h3>
 
-									<cc:inputText id="city" label="#{i18n['job.city']}" value="#{addJobView.jobOffer.address.city}" required="true" />
+									<cc:input id="city" label="#{i18n['job.city']}" value="#{addJobView.jobOffer.address.city}" required="true" />
 
-									<cc:inputText id="state" label="#{i18n['job.state']}" value="#{addJobView.jobOffer.address.state}"
+									<cc:input id="state" label="#{i18n['job.state']}" value="#{addJobView.jobOffer.address.state}"
 										required="true" />
 
 									<cc:inputUser id="owner" label="#{i18n['job.owner']}" value="#{addJobView.jobOffer.owner}"

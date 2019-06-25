@@ -34,14 +34,14 @@
 							<div class="grid">
 								<div class="col-12 sm-6">
 									<h4>#{i18n['user.personal_information']}</h4>
-									<cc:inputText id="name" label="#{i18n['user.name']}" value="#{addUserView.user.name}" required="true" />
+									<cc:input id="name" label="#{i18n['user.name']}" value="#{addUserView.user.name}" required="true" />
 
-									<cc:inputText id="surname" label="#{i18n['user.surname']}" value="#{addUserView.user.surname}" required="true" />
+									<cc:input id="surname" label="#{i18n['user.surname']}" value="#{addUserView.user.surname}" required="true" />
 
-									<cc:inputText id="email" label="#{i18n['user.email']}" value="#{addUserView.user.email}" required="true"
+									<cc:input id="email" label="#{i18n['user.email']}" value="#{addUserView.user.email}" required="true"
 										validator="#{addUserView.validateEmail}" />
 
-									<cc:inputText id="phone_number" label="#{i18n['user.phone_number']}" value="#{addUserView.user.phoneNumber}" />
+									<cc:input id="phone_number" label="#{i18n['user.phone_number']}" value="#{addUserView.user.phoneNumber}" />
 								</div>
 
 								<div class="col-12 sm-6">

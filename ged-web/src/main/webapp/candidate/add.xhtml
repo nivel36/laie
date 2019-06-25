@@ -38,31 +38,31 @@
 								<div class="col-12 sm-6">
 									<h4>#{i18n['candidate.personal_information']}</h4>
 
-									<cc:inputText id="name" label="#{i18n['candidate.name']}" value="#{addCandidateView.candidate.name}"
+									<cc:input id="name" label="#{i18n['candidate.name']}" value="#{addCandidateView.candidate.name}"
 										required="true" />
 
-									<cc:inputText id="surname" label="#{i18n['candidate.surname']}" value="#{addCandidateView.candidate.surname}"
+									<cc:input id="surname" label="#{i18n['candidate.surname']}" value="#{addCandidateView.candidate.surname}"
 										required="true" />
 
 									<cc:calendar id="born_date" label="#{i18n['candidate.bornDate']}"
 										value="#{addCandidateView.candidate.bornDate}" yearRange="c-100:c0" />
 
-									<cc:inputText id="city" label="#{i18n['candidate.city']}" value="#{addCandidateView.candidate.address.city}" />
+									<cc:input id="city" label="#{i18n['candidate.city']}" value="#{addCandidateView.candidate.address.city}" />
 
-									<cc:inputText id="state" label="#{i18n['candidate.state']}" value="#{addCandidateView.candidate.address.state}" />
+									<cc:input id="state" label="#{i18n['candidate.state']}" value="#{addCandidateView.candidate.address.state}" />
 								</div>
 
 								<div class="col-12 sm-6">
 									<h4>#{i18n['candidate.contact_information']}</h4>
 
-									<cc:inputText id="phone_number" label="#{i18n['candidate.phone_number']}"
+									<cc:input id="phone_number" label="#{i18n['candidate.phone_number']}"
 										value="#{addCandidateView.candidate.phoneNumber}" styleClass="small" />
 
-									<cc:inputText id="email" label="#{i18n['candidate.email']}" value="#{addCandidateView.candidate.email}" />
+									<cc:input id="email" label="#{i18n['candidate.email']}" value="#{addCandidateView.candidate.email}" />
 
-									<cc:inputText id="skype" label="#{i18n['candidate.skype']}" value="#{addCandidateView.candidate.skype}" />
+									<cc:input id="skype" label="#{i18n['candidate.skype']}" value="#{addCandidateView.candidate.skype}" />
 
-									<cc:inputText id="linkedin" label="#{i18n['candidate.linkedin']}"
+									<cc:input id="linkedin" label="#{i18n['candidate.linkedin']}"
 										value="#{addCandidateView.candidate.linkedinProfileUrl}" />
 								</div>
 
@@ -70,7 +70,7 @@
 								<div class="col-12 sm-6">
 									<h4>#{i18n['candidate.job_information']}</h4>
 
-									<cc:inputText id="jobProfile" label="#{i18n['candidate.jobProfile']}"
+									<cc:input id="jobProfile" label="#{i18n['candidate.jobProfile']}"
 										value="#{addCandidateView.candidate.jobProfile}" required="true" />
 
 									<cc:inputSelect label="#{i18n['candidate.origin']}" value="#{addCandidateView.candidate.origin}" other="true">
@@ -78,10 +78,11 @@
 											itemLabel="#{i18n:translate(origin.code)}" />
 									</cc:inputSelect>
 
-									<cc:inputMoney id="salary" label="#{i18n['candidate.salary']}" value="#{addCandidateView.candidate.salary}" />
+									<cc:input id="salary" label="#{i18n['candidate.salary']}" value="#{addCandidateView.candidate.salary}"
+										type="money" />
 
-									<cc:inputMoney id="expected_salary" label="#{i18n['candidate.expected_salary']}"
-										value="#{addCandidateView.candidate.expectedSalary}" />
+									<cc:input id="expected_salary" label="#{i18n['candidate.expected_salary']}"
+										value="#{addCandidateView.candidate.expectedSalary}" type="money" />
 								</div>
 							</div>
 						</div>

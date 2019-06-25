@@ -26,18 +26,18 @@
 					<div class="grid">
 						<div class="col-12 sm-6">
 							<h3>#{i18n['client.client_information']}</h3>
-							<cc:inputText id="name" label="#{i18n['client.name']}" value="#{addClientView.client.name}" required="true" />
+							<cc:input id="name" label="#{i18n['client.name']}" value="#{addClientView.client.name}" required="true" />
 
-							<cc:inputText id="cif" label="#{i18n['client.cif']}" value="#{addClientView.client.cif}" required="true" />
+							<cc:input id="cif" label="#{i18n['client.cif']}" value="#{addClientView.client.cif}" required="true" />
 						</div>
 						<div class="col-12 sm-6">
 							<h3>#{i18n['client.contact_information']}</h3>
 
-							<cc:inputText id="phoneNumber" label="#{i18n['client.phone_number']}" value="#{addClientView.client.phoneNumber}" />
+							<cc:input id="phoneNumber" label="#{i18n['client.phone_number']}" value="#{addClientView.client.phoneNumber}" />
 
-							<cc:inputText id="city" label="#{i18n['client.city']}" value="#{addClientView.client.address.city}" />
+							<cc:input id="city" label="#{i18n['client.city']}" value="#{addClientView.client.address.city}" />
 
-							<cc:inputText id="state" label="#{i18n['client.state']}" value="#{addClientView.client.address.state}" />
+							<cc:input id="state" label="#{i18n['client.state']}" value="#{addClientView.client.address.state}" />
 						</div>
 					</div>
 				</div>

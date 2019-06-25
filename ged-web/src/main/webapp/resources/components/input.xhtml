@@ -1,0 +1,58 @@
+<ui:component xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:o="http://omnifaces.org/ui"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" xmlns:composite="http://xmlns.jcp.org/jsf/composite">
+
+	<composite:interface>
+		<composite:attribute name="type" default="text" />
+		<composite:attribute name="label" />
+		<composite:attribute name="icon" />
+		<composite:attribute name="iconPosition" default="left" />
+		<composite:attribute name="required" type="java.lang.Boolean" default="false" />
+		<composite:attribute name="validator" targets="input" />
+		<composite:attribute name="value" required="true" />
+
+		<composite:attribute name="styleClass" default="" />
+		<composite:attribute name="inputStyleClass" default="" />
+		<composite:attribute name="labelStyleClass" default="" />
+		<composite:attribute name="messageStyleClass" default="" />
+
+		<composite:editableValueHolder name="input" targets="input" />
+	</composite:interface>
+
+	<composite:implementation>
+		<div id="#{cc.clientId}" class="input-group input-group-text #{cc.attrs.styleClass}">
+
+			<h:panelGroup layout="block" styleClass="label-container" rendered="#{not empty cc.attrs.label}">
+				<p:outputLabel id="label" for="input" value="#{cc.attrs.label}" styleClass="label #{cc.attrs.labelStyleClass}" />
+			</h:panelGroup>
+
+			<div class="input-container">
+				<h:panelGroup layout="block" rendered="#{not empty cc.attrs.icon}" styleClass="input-icon">
+					<em class="icon #{cc.attrs.iconPosition eq 'left' ? 'left-icon' : 'right-icon'} fa #{cc.attrs.icon}" />
+				</h:panelGroup>
+				<c:choose>
+					<c:when test="#{cc.attrs.type eq 'money'}">
+						<p:inputNumber id="input" value="#{cc.attrs.value}" required="#{cc.attrs.required}"
+							styleClass="input input-money #{cc.attrs.inputStyleClass}" />
+						<h:panelGroup layout="block" styleClass="input-icon">
+							<em class="icon right-icon fa fa-euro" aria-hidden="true" />
+						</h:panelGroup>
+					</c:when>
+					<c:when test="#{cc.attrs.type eq 'password'}">
+						<p:password id="input" value="#{cc.attrs.value}" required="#{cc.attrs.required}"
+							styleClass="input input-password #{cc.attrs.inputStyleClass}" />
+					</c:when>
+					<c:otherwise>
+						<p:inputText id="input" value="#{cc.attrs.value}" required="#{cc.attrs.required}"
+							styleClass="input input-text #{cc.attrs.inputStyleClass}" />
+					</c:otherwise>
+				</c:choose>
+			</div>
+
+			<h:panelGroup layout="block" class="message-container">
+				<p:message id="message" for="input" styleClass="message-error #{cc.attrs.errorStyleClass}" />
+			</h:panelGroup>
+		</div>
+	</composite:implementation>
+</ui:component>
