@@ -26,7 +26,7 @@
 						<f:selectItem itemLabel="#{i18n['select.other']}" itemValue="other" />
 						<p:ajax event="change" process="@this" update="selectOneMenuWrapper" listener="#{cc.onChangeSelectValue}" />
 					</p:selectOneMenu>
-					<p:input id="other" binding="#{cc.otherInputText}" styleClass="input input-text" />
+					<p:inputText id="other" binding="#{cc.otherInputText}" styleClass="input input-text" />
 				</h:panelGroup>
 				<h:inputHidden value="#{cc.attrs.value}" binding="#{cc.inputHidden}" />
 			</c:if>

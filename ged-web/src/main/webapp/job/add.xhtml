@@ -32,11 +32,11 @@
 									<cc:inputClient id="client" label="#{i18n['job.client']}" value="#{addJobView.jobOffer.client}"
 										completeMethod="#{addJobView.completeClient}" required="true" />
 
-									<cc:inputNumber id="places" min="0" label="#{i18n['job.places']}" value="#{addJobView.jobOffer.places}" />
+									<cc:input id="places" min="0" label="#{i18n['job.places']}" value="#{addJobView.jobOffer.places}" type="number"/>
 
-									<cc:calendar id="dateOpened" label="#{i18n['job.date_opened']}" value="#{addJobView.jobOffer.dateOpened}" />
+									<cc:input id="dateOpened" label="#{i18n['job.date_opened']}" value="#{addJobView.jobOffer.dateOpened}" type="calendar"/>
 
-									<cc:calendar id="dateClosed" label="#{i18n['job.date_closed']}" value="#{addJobView.jobOffer.dateClosed}" />
+									<cc:input id="dateClosed" label="#{i18n['job.date_closed']}" value="#{addJobView.jobOffer.dateClosed}" type="calendar"/>
 
 								</div>
 								<div class="col-12 sm-6">
