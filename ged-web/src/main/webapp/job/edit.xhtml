@@ -33,11 +33,13 @@
 							<cc:inputClient id="client" label="#{i18n['job.client']}" value="#{editJobView.jobOffer.client}"
 								completeMethod="#{editJobView.completeClient}" required="true" />
 
-							<cc:inputNumber id="places" min="0" label="#{i18n['job.places']}" value="#{editJobView.jobOffer.places}" />
+							<cc:input id="places" label="#{i18n['job.places']}" value="#{editJobView.jobOffer.places}" type="number" min="0" />
 
-							<cc:calendar id="dateOpened" label="#{i18n['job.date_opened']}" value="#{editJobView.jobOffer.dateOpened}" />
+							<cc:input id="dateOpened" label="#{i18n['job.date_opened']}" value="#{editJobView.jobOffer.dateOpened}"
+								type="calendar" />
 
-							<cc:calendar id="dateClosed" label="#{i18n['job.date_closed']}" value="#{editJobView.jobOffer.dateClosed}" />
+							<cc:input id="dateClosed" label="#{i18n['job.date_closed']}" value="#{editJobView.jobOffer.dateClosed}"
+								type="calendar" />
 						</div>
 
 						<div class="col-12 sm-6">
@@ -45,8 +47,7 @@
 
 							<cc:input id="city" label="#{i18n['job.city']}" value="#{editJobView.jobOffer.address.city}" required="true" />
 
-							<cc:input id="state" label="#{i18n['job.state']}" value="#{editJobView.jobOffer.address.state}"
-								required="true" />
+							<cc:input id="state" label="#{i18n['job.state']}" value="#{editJobView.jobOffer.address.state}" required="true" />
 
 							<cc:inputUser id="owner" label="#{i18n['job.owner']}" value="#{editJobView.jobOffer.owner}"
 								completeMethod="#{editJobView.queryOwner}" />
@@ -56,8 +57,8 @@
 						</div>
 						<div class="col-12">
 							<h3>#{i18n['user.personal_information']}</h3>
-							<cc:richText id="description" name="description" label="#{i18n['job.description']}"
-								value="#{editJobView.jobOffer.description}" />
+							<cc:input id="description" name="description" label="#{i18n['job.description']}"
+								value="#{editJobView.jobOffer.description}" type="textarea" />
 						</div>
 					</div>
 				</div>

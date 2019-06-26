@@ -42,11 +42,11 @@
 									rendered="#{not jobExperienceView.stillWorking}" />
 							</h:panelGroup>
 
-							<cc:inputCheckbox id="still" label="#{i18n['job.still_working']}" value="#{jobExperienceView.stillWorking}">
+							<cc:input id="still" label="#{i18n['job.still_working']}" value="#{jobExperienceView.stillWorking}" type="checkbox">
 								<f:ajax event="change" render="jobExperience:toDateWrapper" />
-							</cc:inputCheckbox>
+							</cc:input>
 
-							<cc:richText id="description" label="#{i18n['job_experience.description']}" value="#{jobExperienceView.jobExperience.description}" />
+							<cc:input id="description" label="#{i18n['job_experience.description']}" value="#{jobExperienceView.jobExperience.description}" type="textarea"/>
 						</div>
 					</div>
 

@@ -45,11 +45,11 @@
 								</cc:inputSelect>
 							</h:panelGroup>
 
-							<cc:inputCheckbox id="still" label="#{i18n['job.still_working']}" value="#{jobExperienceBean.stillWorking}">
+							<cc:input id="still" label="#{i18n['job.still_working']}" value="#{jobExperienceBean.stillWorking}" type="checkbox" >
 								<f:ajax event="change" render="jobExperience:toDateWrapper" />
-							</cc:inputCheckbox>
+							</cc:input>
 
-							<cc:richText id="description" label="#{i18n['education.description']}" value="#{educationView.education.description}" />
+							<cc:input id="description" label="#{i18n['education.description']}" value="#{educationView.education.description}" type="textarea" />
 						</div>
 					</div>
 

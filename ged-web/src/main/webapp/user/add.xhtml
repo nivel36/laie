@@ -57,7 +57,7 @@
 									<cc:inputUser id="manager" label="#{i18n['user.manager']}" value="#{addUserView.user.manager}"
 										completeMethod="#{addUserView.queryManager}" disabled="#{addUserView.user.isAdmin()}" />
 
-									<cc:calendar id="date_of_join" label="#{i18n['user.date_of_join']}" value="#{addUserView.user.dateOfJoin}" />
+									<cc:input id="date_of_join" label="#{i18n['user.date_of_join']}" value="#{addUserView.user.dateOfJoin}" type="calendar"/>
 								</div>
 							</div>
 						</div>

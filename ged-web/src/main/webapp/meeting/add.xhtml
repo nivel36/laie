@@ -26,7 +26,7 @@
 					<div class="grid">
 						<div class="col-12 lg-7">
 							<h4>#{i18n['meeting.header.details']}</h4>
-							<cc:calendar label="#{i18n['meeting.date_planned']}" value="#{addMeetingView.meetingDate}" required="true" />
+							<cc:input id="datePlanned" label="#{i18n['meeting.date_planned']}" value="#{addMeetingView.meetingDate}" required="true" type="calendar"/>
 
 							<cc:inputSelect label="#{i18n['meeting.hour_planned']}" value="#{addMeetingView.meetingHour}" required="true">
 								<f:selectItems value="#{addMeetingView.hours}" var="meetingHour" itemValue="#{meetingHour}"
@@ -41,7 +41,7 @@
 
 							<cc:input label="#{i18n['meeting.location']}" value="#{addMeetingView.meeting.location}" />
 
-							<cc:richText label="#{i18n['meeting.description']}" value="#{addMeetingView.meeting.description}" />
+							<cc:input label="#{i18n['meeting.description']}" value="#{addMeetingView.meeting.description}" type="textarea"/>
 						</div>
 						<div class="col-12 lg-5">
 							<h4>#{i18n['meeting.header.attendees']}</h4>
