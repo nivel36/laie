@@ -1,6 +1,7 @@
-<ui:component xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
-	xmlns:o="http://omnifaces.org/ui" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" xmlns:composite="http://xmlns.jcp.org/jsf/composite">
+<ui:component xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:o="http://omnifaces.org/ui"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" xmlns:composite="http://xmlns.jcp.org/jsf/composite">
 
 	<composite:interface>
 		<composite:attribute name="type" default="text" />
@@ -32,13 +33,19 @@
 				</h:panelGroup>
 				<c:choose>
 					<c:when test="#{cc.attrs.type eq 'number'}">
-						<p:spinner id="input" value="#{cc.attrs.value}" required="#{cc.attrs.required}" styleClass="input input-number" />
+
+						<p:spinner id="input" value="#{cc.attrs.value}" required="#{cc.attrs.required}"
+							styleClass="input input-number #{cc.attrs.inputStyleClass}" min="#{not empty cc.attrs.min ? cc.attrs.min : 0}"
+							max="#{not empty cc.attrs.max ? cc.attrs.max : 100}" />
 					</c:when>
 					<c:when test="#{cc.attrs.type eq 'calendar'}">
-						<p:calendar id="input" value="#{cc.attrs.value}" pattern="dd/MM/yyyy" navigator="true" yearRange="#{yearRange}"
+						<p:calendar id="input" value="#{cc.attrs.value}" pattern="dd/MM/yyyy" navigator="true"
 							required="#{cc.attrs.required}" inputStyleClass="input calendar #{cc.attrs.inputStyleClass}">
 							<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
 						</p:calendar>
+						<c:if test="#{not empty cc.attrs.yearRange}">
+							<f:attribute name="yearRange" value="#{cc.attrs.yearRange}" />
+						</c:if>
 						<h:panelGroup layout="block" styleClass="input-icon">
 							<em class="icon right-icon fa fa-calendar" aria-hidden="true" />
 						</h:panelGroup>

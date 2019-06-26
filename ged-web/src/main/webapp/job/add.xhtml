@@ -32,7 +32,7 @@
 									<cc:inputClient id="client" label="#{i18n['job.client']}" value="#{addJobView.jobOffer.client}"
 										completeMethod="#{addJobView.completeClient}" required="true" />
 
-									<cc:input id="places" min="0" label="#{i18n['job.places']}" value="#{addJobView.jobOffer.places}" type="number"/>
+									<cc:input id="places" min="0" max="10" label="#{i18n['job.places']}" value="#{addJobView.jobOffer.places}" type="number"/>
 
 									<cc:input id="dateOpened" label="#{i18n['job.date_opened']}" value="#{addJobView.jobOffer.dateOpened}" type="calendar"/>
 
