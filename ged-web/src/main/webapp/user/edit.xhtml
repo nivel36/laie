@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://ged.com/i18n" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:g="http://ged.org/ui" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:p="http://primefaces.org/ui" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:o="http://omnifaces.org/ui"
 	xmlns:of="http://omnifaces.org/functions" template="/WEB-INF/templates/default.xhtml">
 
@@ -32,37 +32,37 @@
 					<div class="panel">
 						<div class="panel-aside">
 							<div class="candidate-metadata">
-								<cc:inputAvatar id="userImage" value="#{editUserView.user.imageFileName}" fileUploadListener="#{editUserView.uploadImage}" />
+								<g:inputAvatar id="userImage" value="#{editUserView.user.imageFileName}" fileUploadListener="#{editUserView.uploadImage}" />
 							</div>
 						</div>
 						<div class="panel-content panel-content-data">
 							<div class="grid">
 								<div class="col-12 sm-6">
 									<h3>#{i18n['user.personal_information']}</h3>
-									<cc:input id="name" label="#{i18n['user.name']}" value="#{editUserView.user.name}" required="true" />
+									<g:input id="name" label="#{i18n['user.name']}" value="#{editUserView.user.name}" required="true" />
 
-									<cc:input id="surname" label="#{i18n['user.surname']}" value="#{editUserView.user.surname}" required="true" />
+									<g:input id="surname" label="#{i18n['user.surname']}" value="#{editUserView.user.surname}" required="true" />
 
-									<cc:input id="email" label="#{i18n['user.email']}" value="#{editUserView.user.email}" required="true"
+									<g:input id="email" label="#{i18n['user.email']}" value="#{editUserView.user.email}" required="true"
 										validator="#{editUserView.validateEmail}" />
 
-									<cc:input id="phone_number" label="#{i18n['user.phone_number']}" value="#{editUserView.user.phoneNumber}" />
+									<g:input id="phone_number" label="#{i18n['user.phone_number']}" value="#{editUserView.user.phoneNumber}" />
 								</div>
 
 								<div class="col-12 sm-6">
 
 									<h3>#{i18n['user.professional_information']}</h3>
 
-									<cc:inputSelect id="role" value="#{editUserView.user.role}" label="#{i18n['user.role']}" required="true">
-										<f:selectItems value="#{roles.list}" var="role" itemValue="#{role}" itemLabel="#{i18n:translate(role)}" />
+									<g:inputSelect id="role" value="#{editUserView.user.role}" label="#{i18n['user.role']}" required="true">
+										<f:selectItems value="#{roles.list}" var="role" itemValue="#{role}" itemLabel="#{g:translate(role)}" />
 										<p:ajax event="change" process=":userForm:role" update=":userForm:role :userForm:manager"
 											listener="#{editUserView.changeRoleListener}" />
-									</cc:inputSelect>
+									</g:inputSelect>
 
-									<cc:inputUser id="manager" label="#{i18n['user.manager']}" value="#{editUserView.user.manager}"
+									<g:inputUser id="manager" label="#{i18n['user.manager']}" value="#{editUserView.user.manager}"
 										completeMethod="#{editUserView.queryManager}" disabled="#{editUserView.user.admin}" />
 
-									<cc:input id="date_of_join" label="#{i18n['user.date_of_join']}" value="#{editUserView.user.dateOfJoin}" type="calendar"/>
+									<g:input id="date_of_join" label="#{i18n['user.date_of_join']}" value="#{editUserView.user.dateOfJoin}" type="calendar"/>
 								</div>
 							</div>
 						</div>

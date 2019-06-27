@@ -24,7 +24,7 @@
 					<div class="panel">
 						<div class="panel-aside">
 							<div class="candidate-metadata">
-								<cc:inputAvatar id="user-image" value="#{configView.user.imageFileName}" fileUploadListener="#{configView.uploadImage}"
+								<g:inputAvatar id="user-image" value="#{configView.user.imageFileName}" fileUploadListener="#{configView.uploadImage}"
 									allowCamera="true" captureListener="#{configView.captureImage}" />
 							</div>
 						</div>
@@ -32,22 +32,22 @@
 							<div class="grid">
 								<div class="col-12 sm-6">
 									<h3>#{i18n['config.personal_information']}</h3>
-									<cc:input label="#{i18n['config.name']}" id="name" value="#{configView.user.name}" required="true" />
-									<cc:input label="#{i18n['config.surname']}" id="surname" value="#{configView.user.surname}" required="true" />
-									<cc:input label="#{i18n['config.email']}" id="email" value="#{configView.user.email}" required="true" />
+									<g:input label="#{i18n['config.name']}" id="name" value="#{configView.user.name}" required="true" />
+									<g:input label="#{i18n['config.surname']}" id="surname" value="#{configView.user.surname}" required="true" />
+									<g:input label="#{i18n['config.email']}" id="email" value="#{configView.user.email}" required="true" />
 								</div>
 								<div class="col-12 md-6">
 									<h3>#{i18n['config.config_data']}</h3>
-									<cc:inputSelect label="#{i18n['config.rows_per_page']}" value="#{configView.user.rowsPerPage}">
+									<g:inputSelect label="#{i18n['config.rows_per_page']}" value="#{configView.user.rowsPerPage}">
 										<f:selectItem itemValue="5" itemLabel="5" />
 										<f:selectItem itemValue="10" itemLabel="10" />
 										<f:selectItem itemValue="25" itemLabel="25" />
-									</cc:inputSelect>
-									<cc:inputSelect label="#{i18n['config.language']}" value="#{configView.user.language}" styleClass="locales">
+									</g:inputSelect>
+									<g:inputSelect label="#{i18n['config.language']}" value="#{configView.user.language}" styleClass="locales">
 										<f:selectItems var="locale" value="#{applicationView.locales}" itemValue="#{locale.language}"
 											itemLabel="#{locale.displayLanguage}" />
 										<f:ajax event="change" render="@all" listener="#{configView.changeLocale}" />
-									</cc:inputSelect>
+									</g:inputSelect>
 								</div>
 							</div>
 						</div>

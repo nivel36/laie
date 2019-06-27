@@ -1,6 +1,6 @@
 <ui:component xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:composite="http://xmlns.jcp.org/jsf/composite"
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:o="http://omnifaces.org/ui" xmlns:i18n="http://ged.com/i18n"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:o="http://omnifaces.org/ui" xmlns:g="http://ged.org/ui"
 	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
 	<composite:interface>
@@ -39,7 +39,7 @@
 					</p:column>
 
 					<p:column headerText="#{i18n['job.job_offer_state']}">
-						<div class="tag #{jobOffer.jobOfferState.color}">#{i18n:translate(jobOffer.jobOfferState.name)}</div>
+						<div class="tag #{jobOffer.jobOfferState.color}">#{g:translate(jobOffer.jobOfferState.name)}</div>
 					</p:column>
 				</p:dataTable>
 			</div>

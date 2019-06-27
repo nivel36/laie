@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://ged.com/i18n" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:g="http://ged.org/ui" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:p="http://primefaces.org/ui" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:o="http://omnifaces.org/ui"
 	xmlns:of="http://omnifaces.org/functions" template="/WEB-INF/templates/default.xhtml">
 
@@ -32,7 +32,7 @@
 						</div>
 						<div class="panel-header-data">
 							<div class="name">#{viewUserView.user.fullName}</div>
-							<div class="job-profile">#{i18n:translate(viewUserView.user.role)}</div>
+							<div class="job-profile">#{g:translate(viewUserView.user.role)}</div>
 							<div class="data email">
 								<span class="icon"><em class="fa fa-envelope"></em></span><span class="text">#{viewUserView.user.email}</span>
 							</div>

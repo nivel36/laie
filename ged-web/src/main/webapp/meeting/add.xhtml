@@ -26,29 +26,29 @@
 					<div class="grid">
 						<div class="col-12 lg-7">
 							<h4>#{i18n['meeting.header.details']}</h4>
-							<cc:input id="datePlanned" label="#{i18n['meeting.date_planned']}" value="#{addMeetingView.meetingDate}" required="true" type="calendar"/>
+							<g:input id="datePlanned" label="#{i18n['meeting.date_planned']}" value="#{addMeetingView.meetingDate}" required="true" type="calendar"/>
 
-							<cc:inputSelect label="#{i18n['meeting.hour_planned']}" value="#{addMeetingView.meetingHour}" required="true">
+							<g:inputSelect label="#{i18n['meeting.hour_planned']}" value="#{addMeetingView.meetingHour}" required="true">
 								<f:selectItems value="#{addMeetingView.hours}" var="meetingHour" itemValue="#{meetingHour}"
 									itemLabel="#{meetingHour}" />
-							</cc:inputSelect>
+							</g:inputSelect>
 
-							<cc:inputSelect label="#{i18n['meeting.type']}" value="#{addMeetingView.meeting.meetingType}">
+							<g:inputSelect label="#{i18n['meeting.type']}" value="#{addMeetingView.meeting.meetingType}">
 								<f:selectItem />
 								<f:selectItems value="#{addMeetingView.meetingTypes}" var="meetingType" itemValue="#{meetingType}"
 									itemLabel="#{i18n[meetingType]}" />
-							</cc:inputSelect>
+							</g:inputSelect>
 
-							<cc:input label="#{i18n['meeting.location']}" value="#{addMeetingView.meeting.location}" />
+							<g:input label="#{i18n['meeting.location']}" value="#{addMeetingView.meeting.location}" />
 
-							<cc:input label="#{i18n['meeting.description']}" value="#{addMeetingView.meeting.description}" type="textarea"/>
+							<g:input label="#{i18n['meeting.description']}" value="#{addMeetingView.meeting.description}" type="textarea"/>
 						</div>
 						<div class="col-12 lg-5">
 							<h4>#{i18n['meeting.header.attendees']}</h4>
 							<h:panelGroup id="attendeesWrapper" layout="block">
-								<cc:inputPerson id="person" value="#{addMeetingView.attendee}" completeMethod="#{addMeetingView.searchPerson}">
+								<g:inputPerson id="person" value="#{addMeetingView.attendee}" completeMethod="#{addMeetingView.searchPerson}">
 									<p:ajax event="selectPerson" listener="#{addMeetingView.addAttendee}" update="meetingForm:attendeesWrapper" />
-								</cc:inputPerson>
+								</g:inputPerson>
 								<h:panelGroup layout="block" id="attendees">
 									<ui:repeat var="person" value="#{addMeetingView.attendees}" varStatus="varStatus">
 										<h:panelGroup layout="block" id="attendee" styleClass="attendee">
