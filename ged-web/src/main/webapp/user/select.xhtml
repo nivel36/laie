@@ -12,7 +12,7 @@
 			<div class="panel">
 				<div class="panel-content">
 					<div class="panel-content-data">
-						<g:inputSearch searchText="#{selectUserView.searchText}" searchAction="#{selectUserView.search}" update="@form" />
+						<cc:inputSearch searchText="#{selectUserView.searchText}" searchAction="#{selectUserView.search}" update="@form" />
 					</div>
 
 					<p:dataTable var="user" id="users" value="#{selectUserView.users}" emptyMessage="#{i18n['user.no_users_found']}" reflow="true"

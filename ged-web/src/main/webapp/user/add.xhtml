@@ -26,7 +26,7 @@
 					<div class="panel">
 						<div class="panel-aside">
 							<div class="candidate-metadata">
-								<g:inputAvatar id="userImage" value="#{addUserView.user.imageFileName}"
+								<cc:inputAvatar id="userImage" value="#{addUserView.user.imageFileName}"
 									fileUploadListener="#{addUserView.uploadImage}" />
 							</div>
 						</div>
@@ -48,13 +48,13 @@
 
 									<h4>#{i18n['user.professional_information']}</h4>
 
-									<g:inputSelect id="role" value="#{addUserView.user.role}" label="#{i18n['user.role']}" required="true">
+									<cc:inputSelect id="role" value="#{addUserView.user.role}" label="#{i18n['user.role']}" required="true">
 										<f:selectItems value="#{roles.list}" var="role" itemValue="#{role}" itemLabel="#{g:translate(role)}" />
 										<p:ajax event="change" update=":userForm:role :userForm:manager" process=":userForm:role"
 											listener="#{addUserView.changeRoleListener}" />
-									</g:inputSelect>
+									</cc:inputSelect>
 
-									<g:inputUser id="manager" label="#{i18n['user.manager']}" value="#{addUserView.user.manager}"
+									<cc:inputUser id="manager" label="#{i18n['user.manager']}" value="#{addUserView.user.manager}"
 										completeMethod="#{addUserView.queryManager}" disabled="#{addUserView.user.isAdmin()}" />
 
 									<g:input id="date_of_join" label="#{i18n['user.date_of_join']}" value="#{addUserView.user.dateOfJoin}" type="calendar"/>

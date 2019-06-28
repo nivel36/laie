@@ -28,16 +28,16 @@
 							<h4>#{i18n['meeting.header.details']}</h4>
 							<g:input id="datePlanned" label="#{i18n['meeting.date_planned']}" value="#{addMeetingView.meetingDate}" required="true" type="calendar"/>
 
-							<g:inputSelect label="#{i18n['meeting.hour_planned']}" value="#{addMeetingView.meetingHour}" required="true">
+							<cc:inputSelect label="#{i18n['meeting.hour_planned']}" value="#{addMeetingView.meetingHour}" required="true">
 								<f:selectItems value="#{addMeetingView.hours}" var="meetingHour" itemValue="#{meetingHour}"
 									itemLabel="#{meetingHour}" />
-							</g:inputSelect>
+							</cc:inputSelect>
 
-							<g:inputSelect label="#{i18n['meeting.type']}" value="#{addMeetingView.meeting.meetingType}">
+							<cc:inputSelect label="#{i18n['meeting.type']}" value="#{addMeetingView.meeting.meetingType}">
 								<f:selectItem />
 								<f:selectItems value="#{addMeetingView.meetingTypes}" var="meetingType" itemValue="#{meetingType}"
 									itemLabel="#{i18n[meetingType]}" />
-							</g:inputSelect>
+							</cc:inputSelect>
 
 							<g:input label="#{i18n['meeting.location']}" value="#{addMeetingView.meeting.location}" />
 

@@ -32,17 +32,17 @@
 
 							<g:input id="school" label="#{i18n['education.school']}" value="#{educationView.education.school}" required="true" />
 
-							<g:inputSelect id="fromDate" label="#{i18n['education.from_date']}" value="#{educationView.education.startYear}">
+							<cc:inputSelect id="fromDate" label="#{i18n['education.from_date']}" value="#{educationView.education.startYear}">
 								<f:selectItem itemLabel="#{i18n['date.year']}" itemValue="" />
 								<f:selectItems var="year" value="#{educationView.years}" itemValue="#{year}" itemLabel="#{year}" />
-							</g:inputSelect>
+							</cc:inputSelect>
 
 							<h:panelGroup layout="block" id="toDateWrapper">
-								<g:inputSelect id="toDate" label="#{i18n['education.to_date']}" value="#{educationView.education.endYear}"
+								<cc:inputSelect id="toDate" label="#{i18n['education.to_date']}" value="#{educationView.education.endYear}"
 									rendered="#{not educationView.education.stillStudying}">
 									<f:selectItem itemLabel="#{i18n['date.year']}" itemValue="" />
 									<f:selectItems var="year" value="#{educationView.years}" itemValue="#{year}" itemLabel="#{year}" />
-								</g:inputSelect>
+								</cc:inputSelect>
 							</h:panelGroup>
 
 							<g:input id="still" label="#{i18n['job.still_working']}" value="#{jobExperienceBean.stillWorking}" type="checkbox" >

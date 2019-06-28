@@ -30,7 +30,7 @@
 
 							<g:input label="#{i18n['job.name']}" value="#{editJobView.jobOffer.name}" required="true" />
 
-							<g:inputClient id="client" label="#{i18n['job.client']}" value="#{editJobView.jobOffer.client}"
+							<cc:inputClient id="client" label="#{i18n['job.client']}" value="#{editJobView.jobOffer.client}"
 								completeMethod="#{editJobView.completeClient}" required="true" />
 
 							<g:input id="places" label="#{i18n['job.places']}" value="#{editJobView.jobOffer.places}" type="number" min="0" />
@@ -49,10 +49,10 @@
 
 							<g:input id="state" label="#{i18n['job.state']}" value="#{editJobView.jobOffer.address.state}" required="true" />
 
-							<g:inputUser id="owner" label="#{i18n['job.owner']}" value="#{editJobView.jobOffer.owner}"
+							<cc:inputUser id="owner" label="#{i18n['job.owner']}" value="#{editJobView.jobOffer.owner}"
 								completeMethod="#{editJobView.queryOwner}" />
 
-							<g:inputUsers id="recruiters" label="#{i18n['job.recruiters']}" completeMethod="#{editJobView.queryRecruiter}"
+							<cc:inputUsers id="recruiters" label="#{i18n['job.recruiters']}" completeMethod="#{editJobView.queryRecruiter}"
 								value="#{editJobView.recruiters}" />
 						</div>
 						<div class="col-12">

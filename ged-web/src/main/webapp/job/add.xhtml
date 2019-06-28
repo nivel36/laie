@@ -29,14 +29,17 @@
 
 									<g:input label="#{i18n['job.name']}" value="#{addJobView.jobOffer.name}" required="true" />
 
-									<g:inputClient id="client" label="#{i18n['job.client']}" value="#{addJobView.jobOffer.client}"
+									<cc:inputClient id="client" label="#{i18n['job.client']}" value="#{addJobView.jobOffer.client}"
 										completeMethod="#{addJobView.completeClient}" required="true" />
 
-									<g:input id="places" min="0" max="10" label="#{i18n['job.places']}" value="#{addJobView.jobOffer.places}" type="number"/>
+									<g:input id="places" min="0" max="10" label="#{i18n['job.places']}" value="#{addJobView.jobOffer.places}"
+										type="number" />
 
-									<g:input id="dateOpened" label="#{i18n['job.date_opened']}" value="#{addJobView.jobOffer.dateOpened}" type="calendar"/>
+									<g:input id="dateOpened" label="#{i18n['job.date_opened']}" value="#{addJobView.jobOffer.dateOpened}"
+										type="calendar" />
 
-									<g:input id="dateClosed" label="#{i18n['job.date_closed']}" value="#{addJobView.jobOffer.dateClosed}" type="calendar"/>
+									<g:input id="dateClosed" label="#{i18n['job.date_closed']}" value="#{addJobView.jobOffer.dateClosed}"
+										type="calendar" />
 
 								</div>
 								<div class="col-12 sm-6">
@@ -44,19 +47,18 @@
 
 									<g:input id="city" label="#{i18n['job.city']}" value="#{addJobView.jobOffer.address.city}" required="true" />
 
-									<g:input id="state" label="#{i18n['job.state']}" value="#{addJobView.jobOffer.address.state}"
-										required="true" />
+									<g:input id="state" label="#{i18n['job.state']}" value="#{addJobView.jobOffer.address.state}" required="true" />
 
-									<g:inputUser id="owner" label="#{i18n['job.owner']}" value="#{addJobView.jobOffer.owner}"
+									<cc:inputUser id="owner" label="#{i18n['job.owner']}" value="#{addJobView.jobOffer.owner}"
 										completeMethod="#{addJobView.queryOwner}" />
 
-									<g:inputUsers id="recruiters" label="#{i18n['job.recruiters']}" completeMethod="#{addJobView.queryRecruiter}"
+									<cc:inputUsers id="recruiters" label="#{i18n['job.recruiters']}" completeMethod="#{addJobView.queryRecruiter}"
 										value="#{addJobView.recruiters}" />
 								</div>
 								<div class="col-12">
 									<h3>#{i18n['user.personal_information']}</h3>
-									<cc:richText id="description" name="description" label="#{i18n['job.description']}"
-										value="#{addJobView.jobOffer.description}" />
+									<g:input id="description" label="#{i18n['job.description']}" value="#{addJobView.jobOffer.description}"
+										type="textarea" />
 								</div>
 							</div>
 						</div>

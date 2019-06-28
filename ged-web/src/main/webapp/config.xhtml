@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:composite="http://xmlns.jcp.org/jsf/composite"
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:o="http://omnifaces.org/ui" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
+	xmlns:composite="http://xmlns.jcp.org/jsf/composite" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	xmlns:o="http://omnifaces.org/ui" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" xmlns:g="http://ged.org/ui"
 	template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
@@ -24,8 +25,8 @@
 					<div class="panel">
 						<div class="panel-aside">
 							<div class="candidate-metadata">
-								<g:inputAvatar id="user-image" value="#{configView.user.imageFileName}" fileUploadListener="#{configView.uploadImage}"
-									allowCamera="true" captureListener="#{configView.captureImage}" />
+								<cc:inputAvatar id="user-image" value="#{configView.user.imageFileName}"
+									fileUploadListener="#{configView.uploadImage}" allowCamera="true" captureListener="#{configView.captureImage}" />
 							</div>
 						</div>
 						<div class="panel-content panel-content-data">
@@ -38,22 +39,23 @@
 								</div>
 								<div class="col-12 md-6">
 									<h3>#{i18n['config.config_data']}</h3>
-									<g:inputSelect label="#{i18n['config.rows_per_page']}" value="#{configView.user.rowsPerPage}">
+									<g:input label="#{i18n['config.rows_per_page']}" value="#{configView.user.rowsPerPage}" type="selectOneMenu">
 										<f:selectItem itemValue="5" itemLabel="5" />
 										<f:selectItem itemValue="10" itemLabel="10" />
 										<f:selectItem itemValue="25" itemLabel="25" />
-									</g:inputSelect>
-									<g:inputSelect label="#{i18n['config.language']}" value="#{configView.user.language}" styleClass="locales">
+									</g:input>
+									<g:input label="#{i18n['config.language']}" value="#{configView.user.language}" styleClass="locales" type="selectOneMenu">
 										<f:selectItems var="locale" value="#{applicationView.locales}" itemValue="#{locale.language}"
 											itemLabel="#{locale.displayLanguage}" />
 										<f:ajax event="change" render="@all" listener="#{configView.changeLocale}" />
-									</g:inputSelect>
+									</g:input>
 								</div>
 							</div>
 						</div>
 						<div class="panel-footer">
 							<div class="panel-buttons">
-								<p:commandButton value="#{i18n['config.change_password']}" process="@this" action="#{Page.CHANGE_PASSWORD.getUrl()}" />
+								<p:commandButton value="#{i18n['config.change_password']}" process="@this"
+									action="#{Page.CHANGE_PASSWORD.getUrl()}" />
 								<p:commandButton value="#{i18n['action.save']}" action="#{configView.save}" process="@form" update="@form growl" />
 							</div>
 						</div>

@@ -26,7 +26,7 @@
 			<div class="panel">
 				<div class="panel-content">
 					<div class="panel-content-data">
-						<g:inputSearch searchText="#{searchJobView.searchText}" searchAction="#{searchJobView.search}" update="@form" />
+						<cc:inputSearch searchText="#{searchJobView.searchText}" searchAction="#{searchJobView.search}" update="@form" />
 						<div class="panel-buttons">
 							<p:commandButton value="#{i18n['action.export']}" action="#{searchJobView.export}" process="@this" icon="fa-file-excel-o" />
 						</div>
