@@ -10,20 +10,24 @@
 
 	<composite:implementation>
 		<div id="#{cc.clientId}" class="meeting #{cc.attrs.styleClass}">
-			<div class="meeting-header">
-				<div class="meeting-title">#{cc.value.description}</div>
-				<div class="meeting-date-time">
-					<div class="meeting-date">#{cc.value.datePlanned}</div>
-				</div>
+			<div class="meeting-date">
+				<h:outputText value="#{cc.attrs.value.datePlanned}">
+					<f:convertDateTime type="localDate" locale="es" dateStyle="full" />
+				</h:outputText>
 			</div>
-			<div class="meeting-detail">
-				<div class="meeting-type">#{cc.value.meetingType}</div>
-				<div class="meeting-location">#{cc.value.location}</div>
-				<div class="meeting-attendees">
-					<ui:repeat var="attendee" value="#{cc.value.attendees}">
-						<div class="meeting-attendee">#{attendee.fullName}</div>
-					</ui:repeat>
-				</div>
+			<div class="meeting-title">#{cc.attrs.value.description}</div>
+
+			<div class="meeting-time">
+				<h:outputText value="#{cc.attrs.value.datePlanned}">
+					<f:convertDateTime type="localDateTime" pattern="HH:mm" />
+				</h:outputText>
+			</div>
+			<div class="meeting-type">#{i18n[cc.attrs.value.meetingType]}</div>
+			<div class="meeting-location">#{cc.attrs.value.location}</div>
+			<div class="meeting-attendees">
+				<ui:repeat var="attendee" value="#{cc.attrs.value.attendees}">
+					<div class="meeting-attendee">#{attendee.fullName}</div>
+				</ui:repeat>
 			</div>
 		</div>
 	</composite:implementation>
