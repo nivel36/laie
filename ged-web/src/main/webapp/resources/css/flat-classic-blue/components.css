@@ -334,17 +334,22 @@ body .input-container>*:last-child, body .input-container>*:last-child>*
 	text-align: center;
 }
 
-.input-avatar .image, .avatar .image {
+.input-avatar, .avatar  {
 	width: 128px;
 	height: 128px;
 	border-radius: 3px;
-	border: 5px solid white;
 	box-shadow: 0px 0px 3px rgba(1, 1, 1, 0.5);
+	border: 3px solid white;
+}
+
+.input-avatar .image, .avatar .image {
+	width: 100%;
+	height: 100%;
 	object-fit: cover;
 	image-orientation: from-image;
 }
 
-.avatar.image-icon .image {
+.avatar.image-icon {
 	width: 32px;
 	height: 32px;
 	border: 2px solid white;
@@ -948,10 +953,9 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button
 	display: flex;
 }
 
-.person .avatar .image {
+.person .avatar {
 	width: 52px;
 	height: 52px;
-	border: 3px solid white;
 }
 
 .person .person-data {
@@ -963,8 +967,9 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button
 	font-size: 1.1em;
 }
 
-.person .person-data .email {
+.person .person-data .description {
 	font-size: 0.9em;
+	color: #898989;
 }
 
 .tag {
