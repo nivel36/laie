@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:g="http://ged.org/ui" xmlns:p="http://primefaces.org/ui"
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components">
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" 
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" 
+	xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:g="http://ged.org/ui" 
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <h:head>
 	<title>${i18n['login.login']}</title>
@@ -11,6 +19,7 @@
 	<h:outputStylesheet name="css/reset.css" />
 	<h:outputStylesheet name="css/flat-classic-blue/components.css" />
 </h:head>
+
 <h:body>
 	<p:growl id="growl" globalOnly="true" />
 	<div class="full-page login-page">

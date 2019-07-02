@@ -1025,7 +1025,7 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button
 
 .meeting {
 	display: flex;
-	flex-direction: column;
+	flex-flow: row wrap;
 }
 
 .meeting-title {
@@ -1033,6 +1033,7 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button
 	padding: 10px 15px;
 	color: white;
 	background: #a3cced;
+	flex: 1;
 }
 
 .meeting-date {
@@ -1040,20 +1041,36 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button
 	padding: 10px 15px;
 	color: white;
 	background: #69abe2;
+	flex: 1 100%;
+}
+
+.meeting-time {
+	display: inline-flex;
+	padding: 10px 15px;
+	color: white;
+	background: #69abe2;
+	font-size: 2em;
+	display: flex;
+	flex: 0 auto;
 }
 
 .meeting-detail {
 	display: flex;
+	flex: 1 100%;
 }
 
 .meeting-type {
-	display: inline-flex;
+	display: flex;
+	flex: 1 100%;
 }
 
 .meeting-location {
-	display: inline-flex;
+	display: flex;
+	flex: 1 100%;
 }
 
 .meeting-attendees {
-	display: inline-flex;
+	display: flex;
+	flex: 1 100%;
+	padding: 10px 15px;
 }
