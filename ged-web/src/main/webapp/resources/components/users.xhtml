@@ -24,9 +24,10 @@
 			<div class="panel-content">
 				<p:dataGrid layout="grid" var="user" value="#{cc.attrs.users}" emptyMessage="#{i18n['user.no_team']}"
 					paginator="true" paginatorPosition="bottom" columns="2" rows="6" paginatorTemplate="{PageLinks}">
-					<ui:include src="/user/userCard.xhtml">
-						<ui:param name="user" value="#{user}" />
-					</ui:include>
+					<p:link outcome="#{Page.USER.getUrl()}">
+						<f:param name="id" value="#{user.id}" />
+						<g:person value="#{user}" showDescription="false" />
+					</p:link>
 				</p:dataGrid>
 			</div>
 			<h:panelGroup layout="block" styleClass="panel-footer"

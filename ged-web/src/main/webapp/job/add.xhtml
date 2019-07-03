@@ -37,8 +37,12 @@
 
 									<g:input label="#{i18n['job.name']}" value="#{addJobView.jobOffer.name}" required="true" />
 
-									<cc:inputClient id="client" label="#{i18n['job.client']}" value="#{addJobView.jobOffer.client}"
-										completeMethod="#{addJobView.completeClient}" required="true" />
+									<cc:autocomplete id="client" label="#{i18n['job.client']}" value="#{addJobView.jobOffer.client}"
+										completeMethod="#{addJobView.completeClient}" required="true" converter="userConverter" >
+										<p:column>
+											<h:outputText value="#{var.name}" />
+										</p:column>
+									</cc:autocomplete>
 
 									<g:input id="places" min="0" max="10" label="#{i18n['job.places']}" value="#{addJobView.jobOffer.places}"
 										type="number" />
@@ -57,8 +61,15 @@
 
 									<g:input id="state" label="#{i18n['job.state']}" value="#{addJobView.jobOffer.address.state}" required="true" />
 
-									<cc:inputUser id="owner" label="#{i18n['job.owner']}" value="#{addJobView.jobOffer.owner}"
-										completeMethod="#{addJobView.queryOwner}" />
+									<cc:autocomplete id="owner" label="#{i18n['job.owner']}" value="#{addJobView.jobOffer.owner}"
+										completeMethod="#{addJobView.queryOwner}" converter="userConverter">
+										<p:column styleClass="user-select image">
+											<cc:avatar styleClass="image-icon" value="#{var.imageFileName}" />
+										</p:column>
+										<p:column styleClass="user-select name">
+											<h:outputText value="#{var.fullName}" />
+										</p:column>
+									</cc:autocomplete>
 
 									<cc:inputUsers id="recruiters" label="#{i18n['job.recruiters']}" completeMethod="#{addJobView.queryRecruiter}"
 										value="#{addJobView.recruiters}" />

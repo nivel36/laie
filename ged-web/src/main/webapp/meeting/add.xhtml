@@ -1,15 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
-	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" 
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" 
-	xmlns:f="http://java.sun.com/jsf/core" 
-	xmlns:g="http://ged.org/ui" 
-	xmlns:h="http://java.sun.com/jsf/html" 
-	xmlns:o="http://omnifaces.org/ui"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	template="/WEB-INF/templates/default.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:g="http://ged.org/ui" xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui"
+	xmlns:p="http://primefaces.org/ui" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets" template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
 		<title>#{i18n['calendar.calendar']}</title>
@@ -57,9 +51,17 @@
 								<div class="col-12 lg-5">
 									<h4>#{i18n['meeting.header.attendees']}</h4>
 									<h:panelGroup id="attendeesWrapper" layout="block">
-										<cc:inputPerson id="person" value="#{addMeetingView.attendee}" completeMethod="#{addMeetingView.searchPerson}">
+										<cc:autocomplete id="person" value="#{addMeetingView.attendee}" completeMethod="#{addMeetingView.searchPerson}"
+											converter="personConverter">
+											<p:column styleClass="select-person image">
+												<cc:avatar styleClass="image-icon" value="#{var.imageFileName}" />
+											</p:column>
+											<p:column styleClass="select-person name">
+												<h:outputText value="#{var.fullName}" />
+											</p:column>
 											<p:ajax event="selectPerson" listener="#{addMeetingView.addAttendee}" update="meetingForm:attendeesWrapper" />
-										</cc:inputPerson>
+										</cc:autocomplete>
+
 										<h:panelGroup layout="block" id="attendees">
 											<ui:repeat var="person" value="#{addMeetingView.attendees}" varStatus="varStatus">
 												<h:panelGroup layout="block" id="attendee" styleClass="attendee">
