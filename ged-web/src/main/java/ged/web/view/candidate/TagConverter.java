@@ -9,7 +9,7 @@ import javax.inject.Inject;
 import ged.ejb.core.tag.Tag;
 import ged.ejb.core.tag.TagService;
 
-@FacesConverter(value = "tagConverter", managed = true)
+@FacesConverter(managed = true, forClass = Tag.class)
 public class TagConverter implements Converter<Tag> {
 
 	@Inject
@@ -21,7 +21,7 @@ public class TagConverter implements Converter<Tag> {
 			return null;
 		}
 		Tag tag = this.tagService.findByLabel(value);
-		if (tag == null) {
+		if (tag != null) {
 			tag = new Tag(value);
 		}
 		return tag;

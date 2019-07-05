@@ -39,7 +39,7 @@
 							<g:input label="#{i18n['job.name']}" value="#{editJobView.jobOffer.name}" required="true" />
 
 							<cc:aucomplete id="client" label="#{i18n['job.client']}" value="#{editJobView.jobOffer.client}"
-								completeMethod="#{editJobView.completeClient}" required="true" converter="userConverter">
+								completeMethod="#{editJobView.completeClient}" required="true">
 								<p:column>
 									<h:outputText value="#{var.name}" />
 								</p:column>
@@ -62,7 +62,7 @@
 							<g:input id="state" label="#{i18n['job.state']}" value="#{editJobView.jobOffer.address.state}" required="true" />
 
 							<cc:autocomplete id="owner" label="#{i18n['job.owner']}" value="#{editJobView.jobOffer.owner}"
-								completeMethod="#{editJobView.queryOwner}" converter="userConverter">
+								completeMethod="#{editJobView.queryOwner}">
 								<p:column styleClass="user-select image">
 									<cc:avatar styleClass="image-icon" value="#{var.imageFileName}" />
 								</p:column>

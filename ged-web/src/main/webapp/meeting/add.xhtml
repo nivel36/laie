@@ -51,15 +51,16 @@
 								<div class="col-12 lg-5">
 									<h4>#{i18n['meeting.header.attendees']}</h4>
 									<h:panelGroup id="attendeesWrapper" layout="block">
-										<cc:autocomplete id="person" value="#{addMeetingView.attendee}" completeMethod="#{addMeetingView.searchPerson}"
-											converter="personConverter">
+										<cc:autocomplete id="person" value="#{addMeetingView.attendee}"
+											completeMethod="#{addMeetingView.searchPerson}">
 											<p:column styleClass="select-person image">
 												<cc:avatar styleClass="image-icon" value="#{var.imageFileName}" />
 											</p:column>
 											<p:column styleClass="select-person name">
 												<h:outputText value="#{var.fullName}" />
 											</p:column>
-											<p:ajax event="selectPerson" listener="#{addMeetingView.addAttendee}" update="meetingForm:attendeesWrapper" />
+											<f:converter converterId="personConverter" for="input" />
+											<p:ajax event="itemSelect" listener="#{addMeetingView.addAttendee}" update="meetingForm:attendeesWrapper" />
 										</cc:autocomplete>
 
 										<h:panelGroup layout="block" id="attendees">

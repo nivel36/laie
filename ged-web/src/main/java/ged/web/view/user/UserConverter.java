@@ -8,7 +8,7 @@ import ged.ejb.user.User;
 import ged.ejb.user.UserService;
 import ged.web.core.view.AbstractConverter;
 
-@FacesConverter(value = "userConverter", managed = true)
+@FacesConverter(forClass = User.class, managed = true)
 public class UserConverter extends AbstractConverter<User> {
 
 	@Inject

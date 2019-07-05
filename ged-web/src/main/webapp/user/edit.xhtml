@@ -67,7 +67,7 @@
 									</cc:inputSelect>
 
 									<cc:autocomplete id="manager" label="#{i18n['user.manager']}" value="#{editUserView.user.manager}"
-										completeMethod="#{editUserView.queryManager}" disabled="#{editUserView.user.admin}" converter="userConverter">
+										completeMethod="#{editUserView.queryManager}" disabled="#{editUserView.user.admin}">
 										<p:column styleClass="user-select image">
 											<cc:avatar styleClass="image-icon" value="#{var.imageFileName}" />
 										</p:column>

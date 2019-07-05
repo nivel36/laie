@@ -20,7 +20,7 @@ public class PersonConverter implements Converter<Person> {
 
 	@Inject
 	private CandidateService candidateService;
-	
+
 	@Inject
 	private ContactService contactService;
 
@@ -34,6 +34,9 @@ public class PersonConverter implements Converter<Person> {
 		}
 		try {
 			int separator = value.indexOf("::");
+			if (separator == -1) {
+				throw new ConverterException(value + " is not a valid id");
+			}
 			String type = value.substring(0, separator);
 			String idString = value.substring(separator + 2, value.length());
 			final long id = Long.parseLong(idString);
@@ -67,7 +70,7 @@ public class PersonConverter implements Converter<Person> {
 			}
 		}
 	}
-	
+
 	public void setCandidateService(CandidateService candidateService) {
 		this.candidateService = candidateService;
 	}
