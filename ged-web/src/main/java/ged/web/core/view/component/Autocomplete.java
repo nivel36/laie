@@ -9,8 +9,8 @@ import javax.faces.component.UIInput;
 import javax.faces.component.UINamingContainer;
 import javax.faces.context.FacesContext;
 
-@FacesComponent(value = "inputClient")
-public class InputClient extends UIInput implements NamingContainer {
+@FacesComponent(value = "autocomplete")
+public class Autocomplete extends UIInput implements NamingContainer {
 
 	private UICommand cleanButton;
 

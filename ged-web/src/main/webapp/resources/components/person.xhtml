@@ -1,10 +1,20 @@
-<ui:component xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:composite="http://xmlns.jcp.org/jsf/composite"
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:o="http://omnifaces.org/ui" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+<ui:component xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" 
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	xmlns:composite="http://xmlns.jcp.org/jsf/composite" 
+	xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:g="http://ged.org/ui" 
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 	<composite:interface>
-		<composite:attribute name="value" type="ged.ejb.person.Person" required="true" />
-		<composite:attribute name="styleClass" required="false" default="" />
+		<composite:attribute name="value"  required="true" type="ged.ejb.person.Person"/>
+		<composite:attribute name="description" required="false" default="#{cc.attrs.value.email}"/>
+		<composite:attribute name="showDescription" required="false" default="true" type="java.lang.Boolean"/>
+		<composite:attribute name="styleClass" required="false" />
 	</composite:interface>
 
 	<composite:implementation>
@@ -12,7 +22,7 @@
 			<cc:avatar value="#{cc.attrs.value.imageFileName}" />
 			<div class="person-data">
 				<div class="name">#{cc.attrs.value.fullName}</div>
-				<div class="email">#{cc.attrs.value.email}</div>
+				<h:panelGroup display="block" styleClass="description" rendered="#{cc.attrs.showDescription}">#{cc.attrs.description}</h:panelGroup>
 			</div>
 		</div>
 	</composite:implementation>

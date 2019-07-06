@@ -73,6 +73,14 @@ public class Meeting extends AbstractEntity implements Ownerable {
 	@OneToMany
 	private Set<User> userAttendees = new HashSet<>();
 
+	public Set<Person> getAttendees() {
+		final Set<Person> attendees = new HashSet<Person>();
+		attendees.addAll(userAttendees);
+		attendees.addAll(contactAttendees);
+		attendees.addAll(candidateAttendees);
+		return attendees;
+	}
+
 	public void addAttendee(final Person person) {
 		if (person instanceof User) {
 			userAttendees.add((User) person);
@@ -86,7 +94,7 @@ public class Meeting extends AbstractEntity implements Ownerable {
 	public void addOtherAttendee(final String name) {
 		otherAttendees.add(name);
 	}
-	
+
 	@Override
 	public boolean equals(final Object obj) {
 		if (obj == null) {
@@ -107,11 +115,11 @@ public class Meeting extends AbstractEntity implements Ownerable {
 				&& Objects.equals(this.jobCandidature, other.jobCandidature)
 				&& Objects.equals(this.result, other.result);
 	}
-	
+
 	public Set<Candidate> getCandidateAttendees() {
 		return candidateAttendees;
 	}
-	
+
 	public LocalDateTime getDatePlanned() {
 		return this.datePlanned;
 	}

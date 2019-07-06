@@ -1,29 +1,38 @@
-<ui:component xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
-	xmlns:composite="http://xmlns.jcp.org/jsf/composite" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
-	xmlns:o="http://omnifaces.org/ui" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+<ui:component xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" 
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	xmlns:composite="http://xmlns.jcp.org/jsf/composite" 
+	xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:g="http://ged.org/ui" 
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 	<composite:interface>
 		<composite:attribute name="value" type="ged.ejb.job.meeting.Meeting" required="true" />
 		<composite:attribute name="styleClass" required="false" default="" />
+		<composite:attribute name="locale" required="false" default="es" />
 	</composite:interface>
 
 	<composite:implementation>
 		<div id="#{cc.clientId}" class="meeting #{cc.attrs.styleClass}">
-			<div class="meeting-header">
-				<div class="meeting-title">#{cc.value.description}</div>
-				<div class="meeting-date-time">
-					<div class="meeting-date">#{cc.value.datePlanned}</div>
-				</div>
+			<div class="meeting-date">
+				<h:outputText value="#{cc.attrs.value.datePlanned}">
+					<f:convertDateTime type="localDate" locale="#{cc.attrs.locale}" dateStyle="full" />
+				</h:outputText>
 			</div>
-			<div class="meeting-detail">
-				<div class="meeting-type">#{cc.value.meetingType}</div>
-				<div class="meeting-location">#{cc.value.location}</div>
-				<div class="meeting-attendees">
-					<ui:repeat var="attendee" value="#{cc.value.attendees}">
-						<div class="meeting-attendee">#{attendee.fullName}</div>
-					</ui:repeat>
-				</div>
+			<div class="meeting-time">
+				<h:outputText value="#{cc.attrs.value.datePlanned}">
+					<f:convertDateTime type="localDateTime" pattern="HH:mm" />
+				</h:outputText>
+			</div>
+			<div class="meeting-title">#{cc.attrs.value.description}</div>			
+			<div class="meeting-attendees">
+				<ui:repeat var="attendee" value="#{cc.attrs.value.attendees}">
+					<div class="meeting-attendee">#{attendee.fullName}</div>
+				</ui:repeat>
 			</div>
 		</div>
 	</composite:implementation>

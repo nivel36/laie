@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:composite="http://xmlns.jcp.org/jsf/composite"
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:o="http://omnifaces.org/ui" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" 
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" 
+	xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:g="http://ged.org/ui" 
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
 	template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
 		<title>#{clientEditView.newClient ? i18n['client.new_client'] : clientEditView.client.name}</title>
 	</ui:define>
-
 
 	<ui:define name="breadcrumb">
 		<p:breadCrumb styleClass="breadcrumb">
@@ -31,7 +37,8 @@
 						<div class="col-12 sm-6">
 							<g:input id="name" label="#{i18n['contact.name']}" value="#{addContactView.contact.name}" required="true" />
 
-							<g:input id="surname" label="#{i18n['contact.surname']}" value="#{addContactView.contact.surname}" required="true" />
+							<g:input id="surname" label="#{i18n['contact.surname']}" value="#{addContactView.contact.surname}"
+								required="true" />
 
 							<g:input id="position" label="#{i18n['contact.position']}" value="#{addContactView.contact.position}" />
 
@@ -46,7 +53,8 @@
 						<p:button styleClass="btn-gray" value="#{i18n['action.cancel']}" outcome="#{Page.CLIENT.getUrl()}">
 							<f:param name="id" value="#{addContactView.client.id}" />
 						</p:button>
-						<p:commandButton value="#{i18n['action.save']}" action="#{addContactView.save}" process="@form growl" update="@form" />
+						<p:commandButton value="#{i18n['action.save']}" action="#{addContactView.save}" process="@form growl"
+							update="@form" />
 					</div>
 				</div>
 			</div>

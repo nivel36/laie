@@ -181,7 +181,8 @@ body footer .version span {
 }
 
 body .breadcrumb {
-	background: linear-gradient(to bottom, rgba(243, 245, 248, 1) 0%, rgba(246, 246, 246, 1) 48%, rgba(237, 237, 237, 1) 100%);
+	background: linear-gradient(to bottom, rgba(243, 245, 248, 1) 0%,
+		rgba(246, 246, 246, 1) 48%, rgba(237, 237, 237, 1) 100%);
 	border-top: 1px solid white;
 	border-bottom: 1px solid #bfceda;
 	border-left: 1px solid white;
@@ -260,13 +261,14 @@ body .input {
 	background: white;
 }
 
-body .input.ui-spinner, body .input.ui-calendar, body .input.ui-inputnumber {
-	padding: 0;	
+body .input.ui-spinner, body .input.ui-calendar, body .input.ui-inputnumber
+	{
+	padding: 0;
 	border: 0px;
 }
 
 body .input.ui-autocomplete {
-	padding: 0;	
+	padding: 0;
 }
 
 input[type="text"]:disabled {
@@ -311,7 +313,8 @@ input[type="text"]:disabled {
 	border-top-left-radius: 4px;
 }
 
-body .input-container>*:last-child, body .input-container>*:last-child>* {
+body .input-container>*:last-child, body .input-container>*:last-child>*
+	{
 	border-bottom-right-radius: 4px;
 	border-top-right-radius: 4px;
 }
@@ -331,17 +334,22 @@ body .input-container>*:last-child, body .input-container>*:last-child>* {
 	text-align: center;
 }
 
-.input-avatar .image, .avatar .image {
+.input-avatar, .avatar  {
 	width: 128px;
 	height: 128px;
 	border-radius: 3px;
-	border: 5px solid white;
 	box-shadow: 0px 0px 3px rgba(1, 1, 1, 0.5);
+	border: 3px solid white;
+}
+
+.input-avatar .image, .avatar .image {
+	width: 100%;
+	height: 100%;
 	object-fit: cover;
 	image-orientation: from-image;
 }
 
-.avatar.image-icon .image {
+.avatar.image-icon {
 	width: 32px;
 	height: 32px;
 	border: 2px solid white;
@@ -425,7 +433,8 @@ body .input-search .clean-search-button {
 	flex: 0 1 auto;
 }
 
-body .input-group button.icon, .input-group .icon, body .input-group .ui-button {
+body .input-group button.icon, .input-group .icon, body .input-group .ui-button
+	{
 	width: 34px;
 	height: 34px;
 	display: inline-flex;
@@ -487,7 +496,8 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button 
 }
 
 .dialog-header {
-	background: linear-gradient(to right, rgba(242, 243, 247, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(236, 238, 243, 1) 100%);
+	background: linear-gradient(to right, rgba(242, 243, 247, 1) 0%,
+		rgba(246, 246, 246, 1) 47%, rgba(236, 238, 243, 1) 100%);
 	border-bottom: 1px solid #bfceda;
 	padding: 0.3em 1.2em;
 	display: flex;
@@ -526,7 +536,8 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button 
 }
 
 .panel-header {
-	background: linear-gradient(to right, rgba(242, 243, 247, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(236, 238, 243, 1) 100%);
+	background: linear-gradient(to right, rgba(242, 243, 247, 1) 0%,
+		rgba(246, 246, 246, 1) 47%, rgba(236, 238, 243, 1) 100%);
 	border-bottom: 1px solid #bfceda;
 	padding: 0px;
 	margin: 0;
@@ -595,7 +606,8 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button 
 	flex: 1;
 }
 
-.curriculum .panel-header, .candidate .panel-header, .user .panel-header {
+.curriculum .panel-header, .candidate .panel-header, .user .panel-header
+	{
 	background: #e0e3ed;
 }
 
@@ -638,23 +650,27 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button 
 	flex-direction: column;
 }
 
-.curriculum .panel-header-data .name, .candidate .panel-header-data .name, .user .panel-header-data .name {
+.curriculum .panel-header-data .name, .candidate .panel-header-data .name,
+	.user .panel-header-data .name {
 	font-size: 1.5em;
 	text-shadow: 1px 1px white;
 	padding-bottom: 0.4em;
 }
 
-.curriculum .panel-header-data .job-profile, .candidate .panel-header-data .job-profile {
+.curriculum .panel-header-data .job-profile, .candidate .panel-header-data .job-profile
+	{
 	font-size: 1em;
 	padding-bottom: 0.6em;
 }
 
-.curricukum .panel-header-data .section, .candidate .panel-header-data .section, .user .panel-header-data .section {
+.curricukum .panel-header-data .section, .candidate .panel-header-data .section,
+	.user .panel-header-data .section {
 	font-size: 1.2em;
 	padding-bottom: 0.4em;
 }
 
-.curriculum .personal-data, .candidate .personal-data, .user .personal-data {
+.curriculum .personal-data, .candidate .personal-data, .user .personal-data
+	{
 	display: flex;
 	flex-direction: column;
 	flex: 1;
@@ -758,7 +774,8 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button 
 }
 
 .login-page {
-	background-image: url("#{request.contextPath}/resources/img/loginbg.jpg");
+	background-image:
+		url("#{request.contextPath}/resources/img/loginbg.jpg");
 }
 
 .login-page .content {
@@ -936,10 +953,9 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button 
 	display: flex;
 }
 
-.person .avatar .image {
+.person .avatar {
 	width: 52px;
 	height: 52px;
-	border: 3px solid white;
 }
 
 .person .person-data {
@@ -948,11 +964,12 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button 
 
 .person .person-data .name {
 	color: black;
-	font-size: 1.1em;	
+	font-size: 1.1em;
 }
 
-.person .person-data .email {
-	font-size: 0.9em;	
+.person .person-data .description {
+	font-size: 0.9em;
+	color: #898989;
 }
 
 .tag {
@@ -1009,4 +1026,56 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button 
 	display: flex;
 	flex: 1 100%;
 	flex-flow: column wrap;
+}
+
+.meeting {
+	display: flex;
+	flex-flow: row wrap;
+}
+
+.meeting-title {
+	display: inline-flex;
+	padding: 10px 15px;
+	color: white;
+	background: #a3cced;
+	flex: 1;
+}
+
+.meeting-date {
+	display: inline-flex;
+	padding: 10px 15px;
+	color: white;
+	background: #69abe2;
+	flex: 1 100%;
+}
+
+.meeting-time {
+	display: inline-flex;
+	padding: 10px 15px;
+	color: white;
+	background: #69abe2;
+	font-size: 2em;
+	display: flex;
+	flex: 0 auto;
+}
+
+.meeting-detail {
+	display: flex;
+	flex: 1 100%;
+}
+
+.meeting-type {
+	display: flex;
+	flex: 1 100%;
+}
+
+.meeting-location {
+	display: flex;
+	flex: 1 100%;
+}
+
+.meeting-attendees {
+	display: flex;
+	flex: 1 100%;
+	padding: 10px 15px;
 }

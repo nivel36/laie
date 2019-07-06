@@ -177,6 +177,9 @@
 		<query><![CDATA[
 			SELECT m 
 			FROM Meeting m 
+			LEFT JOIN FETCH m.userAttendees
+			LEFT JOIN FETCH m.candidateAttendees
+			LEFT JOIN FETCH m.contactAttendees
 			WHERE m.owner = :owner
 		]]></query>
 	</named-query>
