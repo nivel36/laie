@@ -50,6 +50,8 @@ public class EditCandidateView extends AbstractCandidateView {
 	private void initTags() {
 		if (this.candidate.getTags() != null) {
 			this.tags = new ArrayList<>(this.candidate.getTags());
+		} else {
+			this.candidate.setTags(new ArrayList<>());
 		}
 	}
 

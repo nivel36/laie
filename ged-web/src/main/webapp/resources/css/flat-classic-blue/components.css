@@ -219,16 +219,18 @@ body .breadcrumb ul li.ui-breadcrumb-chevron {
 }
 
 .candidate-metadata {
-	justify-content: center;
 	background: #f8f9fb;
 	border-right: 1px solid #bfceda;
 	height: 100%;
 	padding: 2em;
+	display: flex;
+	flex-direction: column;
 }
 
 .candidate-metadata .candidate-rating {
 	padding: 1em;
-	text-align: center;
+	display: inline-flex;
+	justify-content: center;
 }
 
 .form-action-primary {
@@ -329,9 +331,13 @@ body .input-container>*:last-child, body .input-container>*:last-child>*
 	color: #7a869b;
 }
 
+.panel-aside .input-avatar {
+	display: inline-flex;
+	justify-content: center;
+}
+
 .input-avatar {
 	position: relative;
-	text-align: center;
 }
 
 .avatar  {
@@ -572,6 +578,7 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button
 .panel-aside {
 	flex: 0;
 	border-bottom: 1px solid #bfceda;
+	display: flex;
 }
 
 .panel>div:nth-last-child(1) {
