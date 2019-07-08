@@ -230,6 +230,10 @@ body .ui-autocomplete-input-token input {
 	height: 24px;
 }
 
+body .ui-chips {
+	cursor: default;	
+}
+
 body .ui-chips-container {
 	outline: medium none;
 	background: white;
@@ -251,7 +255,6 @@ body .ui-chips-container .ui-chips-token, body .ui-autocomplete-multiple .ui-aut
 	background: #59a2df;
 	color: white;
 	cursor: pointer;
-	font-size: 0.9em;
 }
 
 body .ui-chips-container.ui-state-disabled .ui-chips-token .ui-icon, body .ui-autocomplete-multiple.ui-state-disabled .ui-autocomplete-token .ui-icon {
@@ -280,6 +283,11 @@ body .ui-chips-container .ui-chips-token .ui-icon, body .ui-autocomplete-multipl
 	right: 0;
 	top: 0;
 	display: inline-flex;
+}
+
+body .ui-chips-input-token {
+	margin: 0;
+	padding: 0;
 }
 
 body .ui-datatable, body .ui-datatable .ui-datatable-tablewrapper {

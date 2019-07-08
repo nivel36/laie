@@ -295,11 +295,6 @@ input[type="text"]:disabled {
 	text-align: right;
 }
 
-.input.input-tag {
-	height: auto;
-	min-height: 34px;
-}
-
 .input.input-select {
 	padding: 0;
 	overflow: hidden;
@@ -611,6 +606,10 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button
 .tags {
 	display: flex;
 	flex: 1;
+}
+
+.tags input[type="text"]:disabled {
+	background: transparent;
 }
 
 .curriculum .panel-header, .candidate .panel-header, .user .panel-header

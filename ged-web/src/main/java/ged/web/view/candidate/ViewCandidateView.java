@@ -52,7 +52,7 @@ public class ViewCandidateView extends AbstractView {
 	@Inject
 	private transient JobCandidatureService jobCandidatureService;
 
-	private final List<String> tags = new ArrayList<>();
+	private final List<Tag> tags = new ArrayList<>();
 	
 	public String editCandidate() {
 		logger.debug("Edit candidate action performed");
@@ -65,9 +65,7 @@ public class ViewCandidateView extends AbstractView {
 	}
 
 	private void fillTags() {
-		for (final Tag tag : this.candidate.getTags()) {
-			this.tags.add(tag.getLabel());
-		}
+		tags.addAll(candidate.getTags());
 	}
 
 	public Candidate getCandidate() {
@@ -82,7 +80,7 @@ public class ViewCandidateView extends AbstractView {
 		return this.jobCandidatures;
 	}
 
-	public List<String> getTags() {
+	public List<Tag> getTags() {
 		return this.tags;
 	}
 

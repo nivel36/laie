@@ -9,7 +9,7 @@ import javax.inject.Inject;
 import ged.ejb.core.tag.Tag;
 import ged.ejb.core.tag.TagService;
 
-@FacesConverter(managed = true, forClass = Tag.class, value = "tagConverter")
+@FacesConverter(value="tagConverter", managed = true)
 public class TagConverter implements Converter<Tag> {
 
 	@Inject
