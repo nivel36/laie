@@ -66,15 +66,9 @@
 											listener="#{editUserView.changeRoleListener}" />
 									</cc:inputSelect>
 
-									<cc:autocomplete id="manager" label="#{i18n['user.manager']}" value="#{editUserView.user.manager}"
-										completeMethod="#{editUserView.queryManager}" disabled="#{editUserView.user.admin}">
-										<p:column styleClass="user-select image">
-											<cc:avatar styleClass="image-icon" value="#{var.imageFileName}" />
-										</p:column>
-										<p:column styleClass="user-select name">
-											<h:outputText value="#{var.fullName}" />
-										</p:column>
-									</cc:autocomplete>
+									<cc:inputUser id="manager" label="#{i18n['user.manager']}" value="#{editUserView.user.manager}"
+										completeMethod="#{editUserView.queryManager}" disabled="#{editUserView.user.isAdmin()}" />
+
 
 									<g:input id="date_of_join" label="#{i18n['user.date_of_join']}" value="#{editUserView.user.dateOfJoin}" type="calendar"/>
 								</div>
