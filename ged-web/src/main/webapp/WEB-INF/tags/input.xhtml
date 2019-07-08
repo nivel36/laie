@@ -53,8 +53,9 @@
 				</c:when>
 
 				<c:when test="#{type eq 'number'}">
-					<p:spinner id="#{id}_input" value="#{value}" required="#{required}" styleClass="input input-number #{inputStyleClass}"
-						min="#{not empty min ? min : 0}" max="#{not empty max ? max : 100}">
+					<p:spinner id="#{id}_input" value="#{value}" required="#{required}"
+						styleClass="input input-number #{inputStyleClass}" min="#{not empty min ? min : 0}"
+						max="#{not empty max ? max : 100}">
 						<ui:insert />
 					</p:spinner>
 				</c:when>
@@ -64,10 +65,10 @@
 						inputStyleClass="input calendar #{inputStyleClass}">
 						<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
 						<ui:insert />
+						<c:if test="#{not empty yearRange}">
+							<f:attribute name="yearRange" value="#{yearRange}" />
+						</c:if>
 					</p:calendar>
-					<c:if test="#{not empty yearRange}">
-						<f:attribute name="yearRange" value="#{yearRange}" />
-					</c:if>
 					<h:panelGroup layout="block" styleClass="input-icon">
 						<em class="icon right-icon fa fa-calendar" aria-hidden="true" />
 					</h:panelGroup>
@@ -84,13 +85,15 @@
 				</c:when>
 
 				<c:when test="#{type eq 'password'}">
-					<p:password id="#{id}_input" value="#{value}" required="#{required}" styleClass="input input-password #{inputStyleClass}">
+					<p:password id="#{id}_input" value="#{value}" required="#{required}"
+						styleClass="input input-password #{inputStyleClass}">
 						<ui:insert />
 					</p:password>
 				</c:when>
 
 				<c:otherwise>
-					<p:inputText id="#{id}_input" value="#{value}" required="#{required}" styleClass="input input-text #{inputStyleClass}">
+					<p:inputText id="#{id}_input" value="#{value}" required="#{required}"
+						styleClass="input input-text #{inputStyleClass}">
 						<ui:insert />
 					</p:inputText>
 				</c:otherwise>
