@@ -167,7 +167,7 @@
 								<!-- Skills -->
 								<div class="section-title">#{i18n['curriculum.skills']}</div>
 								<div class="section-content">
-									<p:chips value="#{curriculumView.skills}" converter="stringConverter" disabled="true" />
+									<p:chips value="#{curriculumView.skills}" converter="skillConverter" disabled="true" />
 								</div>
 								<div class="panel-buttons">
 									<p:commandButton value="#{i18n['action.edit']}" action="#{curriculumView.editSkills}" process="@this" />

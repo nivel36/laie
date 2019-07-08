@@ -18,6 +18,12 @@ import ged.ejb.core.model.AbstractEntity;
 public class Skill extends AbstractEntity {
 
 	private static final long serialVersionUID = 6591356212002981267L;
+	
+	public Skill() {}
+	
+	public Skill(String name) {
+		this.name = name;
+	}
 
 	@ManyToOne
 	@JoinColumn(name = "curriculumId", nullable = false)
@@ -40,15 +46,7 @@ public class Skill extends AbstractEntity {
 			return false;
 		}
 		final Skill other = (Skill) obj;
-		if (name == null) {
-			if (other.name != null) {
-				return false;
-			}
-		}
-		else if (!name.equals(other.name)) {
-			return false;
-		}
-		return true;
+		return Objects.equals(other.name, this.name);
 	}
 
 	public Curriculum getCurriculum() {

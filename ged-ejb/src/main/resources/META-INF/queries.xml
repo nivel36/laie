@@ -260,19 +260,27 @@
 		]]></query>
 	</named-query>
 		
-	<named-query name="Tag.findByLabel">
-		<query><![CDATA[
-			SELECT t 
-			FROM Tag t 
-			WHERE t.label = :label
-		]]></query>
-	</named-query>
-
 	<named-query name="ServerFile.findByCandidate">
 		<query><![CDATA[
 			SELECT s 
 			FROM ServerFile s 
 			WHERE s.candidate = :candidate
+		]]></query>
+	</named-query>
+	
+	<named-query name="Skill.findByName">
+		<query><![CDATA[
+			SELECT s 
+			FROM Skill s 
+			WHERE s.name = :name
+		]]></query>
+	</named-query>
+	
+	<named-query name="Tag.findByLabel">
+		<query><![CDATA[
+			SELECT t 
+			FROM Tag t 
+			WHERE t.label = :label
 		]]></query>
 	</named-query>
 
