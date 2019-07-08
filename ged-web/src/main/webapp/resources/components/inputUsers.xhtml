@@ -29,15 +29,12 @@
 			<div class="input-container">
 				<p:autoComplete id="input" value="#{cc.attrs.value}" required="#{cc.attrs.required}" binding="#{cc.input}"
 					styleClass="input input-users" completeMethod="#{cc.attrs.completeMethod}" forceSelection="true" minQueryLength="3"
-					var="user" itemValue="#{user}" itemLabel="#{user.fullName}" disabled="#{cc.attrs.disabled}" multiple="true"
-					converter="userConverter">
-					<p:column styleClass="user-select image">
-						<cc:avatar styleClass="image-icon" value="#{user.imageFileName}" />
-					</p:column>
-					<p:column styleClass="user-select name">
-						<h:outputText value="#{user.fullName}" />
+					var="user" itemValue="#{user}" itemLabel="#{user.fullName}" disabled="#{cc.attrs.disabled}" multiple="true" converter="userConverter">
+					<p:column styleClass="user-select">
+						<cc:person value="#{user}" showDescription="false" />
 					</p:column>
 					<p:ajax event="itemSelect" update="#{cc.clientId}" process="input" />
+					<p:ajax event="itemUnselect" update="#{cc.clientId}" process="input" />
 				</p:autoComplete>
 				<h:panelGroup layout="block" styleClass="icon-field" rendered="#{not empty cc.attrs.showIcon}">
 					<i class="icon right-icon fa fa-search" aria-hidden="true"></i>

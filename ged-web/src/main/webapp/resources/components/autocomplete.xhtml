@@ -49,6 +49,7 @@
 					disabled="#{cc.attrs.disabled}">
 					<composite:insertChildren />
 					<p:ajax event="itemSelect" update="#{cc.clientId}" process="input" />
+					<p:ajax event="itemUnselect" update="#{cc.clientId}" process="input" />
 				</p:autoComplete>
 				<p:commandButton id="cleanButton" process="@this" update="#{cc.clientId}" action="#{cc.clean}" styleClass="btn-gray"
 					icon="fa fa-times" binding="#{cc.cleanButton}">

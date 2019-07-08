@@ -63,11 +63,8 @@
 
 									<cc:autocomplete id="owner" label="#{i18n['job.owner']}" value="#{addJobView.jobOffer.owner}"
 										completeMethod="#{addJobView.queryOwner}">
-										<p:column styleClass="user-select image">
-											<cc:avatar styleClass="image-icon" value="#{var.imageFileName}" />
-										</p:column>
-										<p:column styleClass="user-select name">
-											<h:outputText value="#{var.fullName}" />
+										<p:column styleClass="user-select">
+											<cc:person value="#{var}" showDescription="false" />
 										</p:column>
 									</cc:autocomplete>
 
