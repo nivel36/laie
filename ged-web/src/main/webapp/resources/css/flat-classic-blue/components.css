@@ -696,10 +696,6 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button
 	justify-content: flex-start;
 }
 
-.panel-header-data .icon {
-	
-}
-
 .panel-content-data .data {
 	display: flex;
 	flex-direction: column;
@@ -710,8 +706,11 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button
 	flex: 1 100%;
 }
 
+.panel-content-data .data .label-container {
+	padding: 0em 0 5px 0;
+}
+
 .panel-content-data .data .label {
-	padding: 0em 0 0.3em 0;
 	font-size: 0.8em;
 }
 

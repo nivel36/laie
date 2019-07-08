@@ -26,7 +26,7 @@
 					paginator="true" paginatorPosition="bottom" columns="2" rows="6" paginatorTemplate="{PageLinks}">
 					<p:link outcome="#{Page.USER.getUrl()}">
 						<f:param name="id" value="#{user.id}" />
-						<g:person value="#{user}" showDescription="false" />
+						<cc:person value="#{user}" showDescription="false" />
 					</p:link>
 				</p:dataGrid>
 			</div>
