@@ -111,16 +111,20 @@
 							<div class="col-12">
 								<h4>#{i18n['candidate.metadata']}</h4>
 								<div class="data rating">
-									<div class="label">#{i18n['candidate.rating']}</div>
-									<div class="text">
+									<div class="label-container">
+										<div class="label">#{i18n['candidate.rating']}</div>
+									</div>
+									<div class="text-container">
 										<p:rating value="#{viewCandidateView.candidate.rating}" cancel="false" readonly="true" />
 									</div>
 								</div>
 								<div class="data tags">
-									<div class="label">#{i18n['candidate.tags']}</div>
-									<div class="text">
-										<p:chips id="tags" styleClass="tags" value="#{viewCandidateView.tags}" label="#{i18n['viewCandidateView.tags']}"
-											converter="tagConverter" disabled="true" />
+									<div class="label-container">
+										<div class="label">#{i18n['candidate.tags']}</div>
+									</div>
+									<div class="text-container">
+										<p:chips id="tags" styleClass="tags" value="#{viewCandidateView.tags}"
+											label="#{i18n['viewCandidateView.tags']}" converter="tagConverter" disabled="true" />
 									</div>
 								</div>
 							</div>
