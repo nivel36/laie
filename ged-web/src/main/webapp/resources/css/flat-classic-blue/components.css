@@ -14,7 +14,7 @@ body {
 	font-size: 14px;
 	font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
 	color: #7a869b;
-	background: #dadee9;
+	background: #f4f4f4;
 }
 
 a {
@@ -1090,4 +1090,8 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button
 .meeting-attendee {
 	display: inline-flex;
 	padding: 5px 10px 5px 0px;
+}
+
+.search-bar {
+	width: 300px;
 }
