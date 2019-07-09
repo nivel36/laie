@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<entity-mappings xmlns="http://xmlns.jcp.org/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<entity-mappings xmlns="http://xmlns.jcp.org/xml/ns/persistence/orm"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence/orm
-        http://xmlns.jcp.org/xml/ns/persistence/orm_2_1.xsd" version="2.1">
+        http://xmlns.jcp.org/xml/ns/persistence/orm_2_1.xsd"
+	version="2.1">
 
 	<named-query name="Bookmark.find">
 		<query><![CDATA[
@@ -38,6 +40,14 @@
 			LEFT JOIN FETCH c.tags
 			LEFT JOIN FETCH c.jobCandidatures
 			WHERE c.id = :id
+		]]></query>
+	</named-query>
+
+	<named-query name="Candidate.findByEmail">
+		<query><![CDATA[
+			SELECT c 
+			FROM Candidate c 
+			WHERE c.email = :email
 		]]></query>
 	</named-query>
 
@@ -116,6 +126,14 @@
 		]]></query>
 	</named-query>
 
+	<named-query name="Contact.findByEmail">
+		<query><![CDATA[
+			SELECT c 
+			FROM Contact c 
+			WHERE c.email = :email
+		]]></query>
+	</named-query>
+
 	<named-query name="Curriculum.findByCandidate">
 		<query><![CDATA[
 			SELECT c 
@@ -164,7 +182,7 @@
 			AND j.jobOffer = :jobOffer
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="JobCandidatureState.findFirstJobCandidatureState">
 		<query><![CDATA[
 			SELECT j 
@@ -176,34 +194,40 @@
 	<named-query name="Meeting.findByOwner">
 		<query><![CDATA[
 			SELECT m 
-			FROM Meeting m 
+			FROM Meeting m
+			LEFT JOIN FETCH m.attendeesEmails
+			LEFT JOIN FETCH m.jobCandidature 
 			WHERE m.owner = :owner
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="Meeting.findByCandidate">
 		<query><![CDATA[
 			SELECT m 
 			FROM Meeting m
+			LEFT JOIN FETCH m.attendeesEmails
 			LEFT JOIN FETCH m.jobCandidature 
 			WHERE m.jobCandidature.candidate = :candidate
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="Meeting.findByJobOffer">
 		<query><![CDATA[
 			SELECT m 
 			FROM Meeting m
-			LEFT JOIN FETCH m.jobCandidature 
+			LEFT JOIN FETCH m.attendeesEmails
+			LEFT JOIN FETCH m.jobCandidature
 			WHERE m.jobCandidature.jobOffer = :jobOffer
 		]]></query>
 	</named-query>
 
 	<named-query name="Meeting.findPlannedMeetings">
 		<query><![CDATA[
-			SELECT j 
-			FROM Meeting j 
-			WHERE j.datePlanned IS NOT NULL 
+			SELECT m 
+			FROM Meeting m
+			LEFT JOIN FETCH m.attendeesEmails
+			LEFT JOIN FETCH m.jobCandidature
+			WHERE m.datePlanned IS NOT NULL 
 		]]></query>
 	</named-query>
 
@@ -256,7 +280,7 @@
 			WHERE j.first = true
 		]]></query>
 	</named-query>
-		
+
 	<named-query name="ServerFile.findByCandidate">
 		<query><![CDATA[
 			SELECT s 
@@ -264,7 +288,7 @@
 			WHERE s.candidate = :candidate
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="Skill.findByName">
 		<query><![CDATA[
 			SELECT s 
@@ -272,7 +296,7 @@
 			WHERE s.name = :name
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="Tag.findByLabel">
 		<query><![CDATA[
 			SELECT t 
@@ -324,7 +348,7 @@
 			OR (:surname IS NOT NULL AND u.surname = :surname)
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="User.findUserAndCredential">
 		<query><![CDATA[
 			SELECT u

@@ -3,7 +3,6 @@ package ged.web.view;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
-import javax.faces.convert.ConverterException;
 import javax.faces.convert.FacesConverter;
 import javax.inject.Inject;
 
@@ -32,43 +31,27 @@ public class PersonConverter implements Converter<Person> {
 		if (value == null) {
 			return null;
 		}
-		try {
-			int separator = value.indexOf("::");
-			if (separator == -1) {
-				throw new ConverterException(value + " is not a valid id");
-			}
-			String type = value.substring(0, separator);
-			String idString = value.substring(separator + 2, value.length());
-			final long id = Long.parseLong(idString);
-			if ("user".equals(type)) {
-				return this.userService.find(id);
-			} else if ("candidate".equals(type)) {
-				return this.candidateService.find(id);
-			} else if ("contact".equals(type)) {
-				return this.contactService.find(id);
-			}
-		} catch (final NumberFormatException e) {
-			throw new ConverterException(value + " is not a valid id");
+		User user = userService.findUserByEmail(value);
+		if (user != null) {
+			return user;
 		}
-		return null;
+		Candidate candidate = candidateService.findCandidateByEmail(value);
+		if (candidate != null) {
+			return candidate;
+		}
+		Contact contact = contactService.findContactByEmail(value);
+		if (contact != null) {
+			return contact;
+		}
+		return new SimplePerson(value);
 	}
 
 	@Override
 	public String getAsString(FacesContext context, UIComponent component, Person person) {
 		if (person == null) {
 			return null;
-		} else {
-			String id = String.valueOf(person.getId());
-			if (person instanceof User) {
-				return "user::" + id;
-			} else if (person instanceof Contact) {
-				return "contact::" + id;
-			} else if (person instanceof Candidate) {
-				return "candidate::" + id;
-			} else {
-				throw new ConverterException("Unknow entity");
-			}
 		}
+		return person.getEmail();
 	}
 
 	public void setCandidateService(CandidateService candidateService) {

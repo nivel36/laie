@@ -1039,7 +1039,7 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button
 }
 
 .meeting-title {
-	display: inline-flex;
+	display: flex;
 	padding: 10px 15px;
 	color: white;
 	background: #a3cced;
@@ -1066,7 +1066,9 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button
 
 .meeting-detail {
 	display: flex;
-	flex: 1 100%;
+	flex: 1 auto;
+	flex-direction: column;
+	
 }
 
 .meeting-type {
@@ -1083,4 +1085,9 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button
 	display: flex;
 	flex: 1 100%;
 	padding: 10px 15px;
+}
+
+.meeting-attendee {
+	display: inline-flex;
+	padding: 5px 10px 5px 0px;
 }

@@ -35,7 +35,7 @@
 								<div class="col-12">
 									<g:input label="#{i18n['meeting.title']}" value="#{addMeetingView.meeting.title}" />
 								</div>
-								<div class="col-12 lg-6">
+								<div class="col-12 md-6">
 									<h4>#{i18n['meeting.header.details']}</h4>
 									<g:input id="datePlanned" label="#{i18n['meeting.date_planned']}" value="#{addMeetingView.meetingDate}"
 										required="true" type="calendar" />
@@ -55,7 +55,7 @@
 									<g:input label="#{i18n['meeting.location']}" value="#{addMeetingView.meeting.location}" />
 
 								</div>
-								<div class="col-12 lg-6">
+								<div class="col-12 md-6">
 									<h4>#{i18n['meeting.header.attendees']}</h4>
 									<h:panelGroup id="attendeesWrapper" layout="block">
 										<p:autoComplete id="input" value="#{addMeetingView.attendee}" inputStyleClass="input autocomplete"
