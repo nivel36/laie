@@ -27,6 +27,11 @@ public class CandidateDao extends AbstractDao<Candidate> {
 		Objects.requireNonNull(email);
 		return this.findByQuery(Boolean.class, "Candidate.emailExists", map("email", email));
 	}
+	
+	public Candidate findCandidateByEmail(final String email) {
+		Objects.requireNonNull(email);
+		return this.findByQuery(Candidate.class, "Candidate.findByEmail", map("email", email));
+	}
 
 	public List<Origin> findAllOrigins() {
 		return getPersistenceFacade().findAll(Origin.class, Page.ALL);

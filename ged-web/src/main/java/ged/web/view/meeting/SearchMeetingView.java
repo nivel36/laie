@@ -33,8 +33,7 @@ public class SearchMeetingView extends AbstractView {
 	}
 
 	private List<Meeting> initMeetings() {
-		List<Meeting> meetingList = meetingService.findMeeting(sessionUser.get(), Page.ALL);
-		return meetingList;
+		return meetingService.findMeeting(sessionUser.get(), Page.ALL);
 	}
 
 	public void setMeetingService(MeetingService meetingService) {

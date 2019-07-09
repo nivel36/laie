@@ -51,12 +51,14 @@
 								<cc:outputText label="#{i18n['job.client']}" value="#{viewJobView.jobOffer.client.name}" />
 							</div>
 							<div class="col-12 lg-6 xl-4">
-								<div class="state">
-									<p:commandLink action="#{viewJobView.editJobOffer}" styleClass="state_button">
-										<span class="tag #{viewJobView.jobOffer.jobOfferState.color}">#{g:translate(viewJobView.jobOffer.jobOfferState.name)}</span>
-										<i class="icon fa fa-pencil"></i>
-									</p:commandLink>
-								</div>
+								<h:form>
+									<div class="state">
+										<p:commandLink action="#{viewJobView.editJobOffer}" styleClass="state_button">
+											<span class="tag #{viewJobView.jobOffer.jobOfferState.color}">#{g:translate(viewJobView.jobOffer.jobOfferState.name)}</span>
+											<i class="icon fa fa-pencil"></i>
+										</p:commandLink>
+									</div>
+								</h:form>
 							</div>
 							<div class="col-12 lg-6 xl-4">
 								<cc:outputText label="#{i18n['job.places']}" value="#{viewJobView.jobOffer.places}" />

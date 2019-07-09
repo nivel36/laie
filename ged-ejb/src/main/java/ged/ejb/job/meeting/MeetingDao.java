@@ -17,16 +17,19 @@ public class MeetingDao extends AbstractDao<Meeting> {
 
 	public List<Meeting> findMeeting(final User owner, final Page page) {
 		Objects.requireNonNull(owner);
+		Objects.requireNonNull(page);
 		return this.findByQuery(Meeting.class, "Meeting.findByOwner", map("owner", owner), page);
 	}
 
 	public List<Meeting> findMeeting(final Candidate candidate, final Page page) {
 		Objects.requireNonNull(candidate);
+		Objects.requireNonNull(page);
 		return this.findByQuery(Meeting.class, "Meeting.findByCandidate", map("candidate", candidate), page);
 	}
 
 	public List<Meeting> findMeeting(final JobOffer jobOffer, final Page page) {
 		Objects.requireNonNull(jobOffer);
+		Objects.requireNonNull(page);
 		return this.findByQuery(Meeting.class, "Meeting.findByJobOffer", map("jobOffer", jobOffer), page);
 	}
 

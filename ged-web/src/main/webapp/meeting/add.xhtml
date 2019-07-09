@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:g="http://ged.org/ui" xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui"
-	xmlns:p="http://primefaces.org/ui" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
-	xmlns:ui="http://java.sun.com/jsf/facelets" template="/WEB-INF/templates/default.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" 
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" 
+	xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:g="http://ged.org/ui" 
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
 		<title>#{i18n['calendar.calendar']}</title>
@@ -23,11 +29,13 @@
 		<div class="grid">
 			<div class="col-12 xl-9">
 				<h:form id="meetingForm">
-
 					<div class="panel">
 						<div class="panel-content panel-content-data">
 							<div class="grid">
-								<div class="col-12 lg-7">
+								<div class="col-12">
+									<g:input label="#{i18n['meeting.title']}" value="#{addMeetingView.meeting.title}" />
+								</div>
+								<div class="col-12 lg-6">
 									<h4>#{i18n['meeting.header.details']}</h4>
 									<g:input id="datePlanned" label="#{i18n['meeting.date_planned']}" value="#{addMeetingView.meetingDate}"
 										required="true" type="calendar" />
@@ -46,22 +54,18 @@
 
 									<g:input label="#{i18n['meeting.location']}" value="#{addMeetingView.meeting.location}" />
 
-									<g:input label="#{i18n['meeting.description']}" value="#{addMeetingView.meeting.description}" type="textarea" />
 								</div>
-								<div class="col-12 lg-5">
+								<div class="col-12 lg-6">
 									<h4>#{i18n['meeting.header.attendees']}</h4>
 									<h:panelGroup id="attendeesWrapper" layout="block">
-										<cc:autocomplete id="person" value="#{addMeetingView.attendee}"
-											completeMethod="#{addMeetingView.searchPerson}">
-											<p:column styleClass="select-person image">
-												<cc:avatar styleClass="image-icon" value="#{var.imageFileName}" />
+										<p:autoComplete id="input" value="#{addMeetingView.attendee}" inputStyleClass="input autocomplete"
+											completeMethod="#{addMeetingView.searchPerson}" forceSelection="true" minQueryLength="3" var="person"
+											itemValue="#{person}" itemLabel="#{person}" converter="personConverter">
+											<p:column styleClass="select-person">
+												<cc:person value="#{person}" />
 											</p:column>
-											<p:column styleClass="select-person name">
-												<h:outputText value="#{var.fullName}" />
-											</p:column>
-											<f:converter converterId="personConverter" for="input" />
 											<p:ajax event="itemSelect" listener="#{addMeetingView.addAttendee}" update="meetingForm:attendeesWrapper" />
-										</cc:autocomplete>
+										</p:autoComplete>
 
 										<h:panelGroup layout="block" id="attendees">
 											<ui:repeat var="person" value="#{addMeetingView.attendees}" varStatus="varStatus">

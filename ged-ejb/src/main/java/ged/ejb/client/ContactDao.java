@@ -18,6 +18,11 @@ public class ContactDao extends AbstractDao<Contact> {
 				Page.ALL);
 	}
 
+	public Contact findContactByEmail(final String email) {
+		Objects.requireNonNull(email);
+		return this.findByQuery(Contact.class, "Contact.findByEmail", map("email", email));
+	}
+
 	@Override
 	protected Class<Contact> getType() {
 		return Contact.class;

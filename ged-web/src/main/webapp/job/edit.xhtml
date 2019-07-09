@@ -38,12 +38,12 @@
 
 							<g:input label="#{i18n['job.name']}" value="#{editJobView.jobOffer.name}" required="true" />
 
-							<cc:aucomplete id="client" label="#{i18n['job.client']}" value="#{editJobView.jobOffer.client}"
+							<cc:autocomplete id="client" label="#{i18n['job.client']}" value="#{editJobView.jobOffer.client}"
 								completeMethod="#{editJobView.completeClient}" required="true">
 								<p:column>
 									<h:outputText value="#{var.name}" />
 								</p:column>
-							</cc:aucomplete>
+							</cc:autocomplete>
 
 							<g:input id="places" label="#{i18n['job.places']}" value="#{editJobView.jobOffer.places}" type="number" min="0" />
 
