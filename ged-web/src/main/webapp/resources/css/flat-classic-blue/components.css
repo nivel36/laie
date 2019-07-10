@@ -525,10 +525,8 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button
 	display: flex;
 	flex-flow: row wrap;
 	background: #ffffff;
-	border-top: 1px solid white;
-	border-bottom: 1px solid #bfceda;
-	border-left: 1px solid white;
-	border-right: 1px solid #bfceda;
+	border: 0px;
+	box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.08);
 	align-items: stretch;
 }
 
@@ -537,12 +535,8 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button
 }
 
 .panel-header {
-	background: linear-gradient(to right, rgba(242, 243, 247, 1) 0%,
-		rgba(246, 246, 246, 1) 47%, rgba(236, 238, 243, 1) 100%);
-	border-bottom: 1px solid #bfceda;
 	padding: 0px;
 	margin: 0;
-	min-height: 52px;
 	display: flex;
 }
 

@@ -17,7 +17,7 @@
 	</composite:interface>
 
 	<composite:implementation>
-		<p:panel title="#{cc.attrs.title}">
+		<p:panel header="#{cc.attrs.title}">
 			<p:dataGrid layout="grid" var="candidate" value="#{cc.attrs.candidates}"
 				emptyMessage="#{i18n['candidate.no_candidates_found']}" paginator="true" paginatorPosition="bottom" columns="2"
 				rows="6">

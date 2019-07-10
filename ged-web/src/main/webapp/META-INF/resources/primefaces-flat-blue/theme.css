@@ -696,21 +696,17 @@ body .ui-panel {
 	margin: 0;
 	width: 100%;
 	background: #ffffff;
-	border-top: 1px solid white;
-	border-bottom: 1px solid #bfceda;
-	border-left: 1px solid white;
-	border-right: 1px solid #bfceda;
+	box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.08);
+	border: 0px;
 }
 
 body .ui-panel .ui-panel-titlebar {
 	display: flex;
-	background: linear-gradient(to right, rgba(242, 243, 247, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(236, 238, 243, 1) 100%);
-	border-bottom: 1px solid #bfceda;
-	padding: 0.7em;
+	padding: 10px ;
 }
 
 body .ui-panel .ui-panel-titlebar .ui-panel-title {
-	font-size: 1.3em;
+	font-size: 1.1em;
 	padding: 0.3em 0;
 	font-weight: bold;
 	color: #737c93;
