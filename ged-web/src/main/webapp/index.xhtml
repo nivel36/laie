@@ -29,33 +29,22 @@
 				<cc:jobOffers jobOffers="#{indexView.jobOffers}" />
 			</div>
 			<div class="col-12 lg-6">
-				<cc:candidates candidates="#{indexView.candidates}" title="#{i18n['candidate.last_candidates']}" >
-				<p:button value="test"/>
+				<cc:candidates candidates="#{indexView.candidates}" title="#{i18n['candidate.last_candidates']}">
+					<p:button value="test" />
 				</cc:candidates>
 			</div>
 
 			<div class="col-12 xl-4">
-				<div class="panel">
-					<div class="panel-header">
-						<div class="panel-header-title">#{i18n['index.last_reports']}</div>
-					</div>
-					<div class="panel-content">
-						<div class="panel-content-data"></div>
-					</div>
-				</div>
+				<p:panel header="#{i18n['index.last_reports']}">
+				</p:panel>
 			</div>
 
 			<div class="col-12 xl-8">
-				<div class="panel">
-					<div class="panel-header">
-						<div class="panel-header-title">#{i18n['index.scheudele']}</div>
+				<p:panel header="#{i18n['index.scheudele']}">
+					<div class="panel-content-data">
+						<p:schedule id="scheduleLocale" value="#{indexView.schedule}" locale="es" />
 					</div>
-					<div class="panel-content">
-						<div class="panel-content-data">
-							<p:schedule id="scheduleLocale" value="#{indexView.schedule}" locale="es" />
-						</div>
-					</div>
-				</div>
+				</p:panel>
 			</div>
 		</div>
 	</ui:define>

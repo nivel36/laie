@@ -75,11 +75,10 @@ body footer .version span {
  ************************************/
 .navbar {
 	display: flex;
-	background: #3d4f69;
+	background: black;
 	color: white;
 	justify-content: space-between;
 	align-items: center;
-	border-bottom: 1px solid #28384f;
 }
 
 .navbar a {
@@ -99,7 +98,7 @@ body footer .version span {
 
 .navbar li:hover a {
 	transition: all 0.2s ease-in;
-	background-color: #28384f;
+	background-color: #333333;
 }
 
 .navbar li a .menu_text {
@@ -107,7 +106,8 @@ body footer .version span {
 }
 
 .navbar .navbar-menu .selected {
-	background: #1976d2;
+	background: #505050;
+	border-bottom: 3px solid #0078d6;
 }
 
 .navbar-search .navbar-search-icon {
@@ -181,9 +181,7 @@ body footer .version span {
 }
 
 body .breadcrumb {
-	background: linear-gradient(to bottom, rgba(243, 245, 248, 1) 0%,
-		rgba(246, 246, 246, 1) 48%, rgba(237, 237, 237, 1) 100%);
-	border-top: 1px solid white;
+	background: white;
 	border-bottom: 1px solid #bfceda;
 	border-left: 1px solid white;
 	border-right: 1px solid #bfceda;
@@ -198,11 +196,9 @@ body .breadcrumb ul {
 body .breadcrumb ul li {
 	display: flex;
 	padding: 0.2em;
-	font-size: 0.8em;
 	font-weight: 700;
-	text-transform: uppercase;
-	text-shadow: 1px 1px white;
 	color: #848b9d;
+	font-size: 1em;
 }
 
 body .breadcrumb ul li a {
@@ -472,53 +468,8 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button
 	margin-left: 150px;
 }
 
-.dialog.login {
-	border-top: 6px solid #8000ff;
-}
-
-.dialog.blue {
-	border-top: 6px solid #1976d2;
-}
-
 .dialog {
-	display: flex;
-	flex-direction: column;
-	padding: 0;
-	margin: 0;
-	width: 100%;
-	border-radius: 6px;
-	background: #ffffff;
-	border: 1px solid #c2c2d3;
-	overflow: auto;
-}
-
-.dialog>div:nth-last-child(1) {
-	border-bottom: 0px;
-}
-
-.dialog-header {
-	background: linear-gradient(to right, rgba(242, 243, 247, 1) 0%,
-		rgba(246, 246, 246, 1) 47%, rgba(236, 238, 243, 1) 100%);
-	border-bottom: 1px solid #bfceda;
-	padding: 0.3em 1.2em;
-	display: flex;
-	justify-content: space-between;
-	min-height: 2.5em;
-	align-items: center;
-}
-
-.dialog-content {
-	padding: 2em;
-	border-bottom: 1px solid #bfceda;
-}
-
-.dialog-footer {
-	display: flex;
-	background: #eef1f8;
-	border-top: 1px solid white;
-	padding: 0.7em;
-	margin: 0;
-	justify-content: flex-end;
+	border-radius: 4px;
 }
 
 .panel {
@@ -589,11 +540,6 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button
 }
 
 .panel-footer {
-	order: 3;
-	background: #eef1f8;
-	border-top: 1px solid white;
-	padding: 0;
-	margin: 0;
 	justify-content: flex-end;
 }
 
@@ -604,11 +550,6 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button
 
 .tags input[type="text"]:disabled {
 	background: transparent;
-}
-
-.curriculum .panel-header, .candidate .panel-header, .user .panel-header
-	{
-	background: #e0e3ed;
 }
 
 .curriculum .panel-content-data {
@@ -949,7 +890,12 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button
 }
 
 .person {
+	padding: 5px;
 	display: flex;
+}
+
+.person:hover {
+	background: #f0f0f0;
 }
 
 .person .avatar {

@@ -17,11 +17,8 @@
 	</composite:interface>
 
 	<composite:implementation>
-		<div id="#{cc.clientId}" class="panel contacts #{cc.attrs.styleClass}">
-			<div class="panel-header">
-				<div class="panel-header-title">#{cc.attrs.title}</div>
-			</div>
-			<div class="panel-content">
+		<div id="#{cc.clientId}">
+			<p:panel header="#{cc.attrs.title}">
 				<p:dataGrid layout="grid" var="contact" value="#{cc.attrs.contacts}"
 					emptyMessage="#{i18n['client.no_contacts_found']}" paginator="true" paginatorPosition="bottom">
 					<div class="card contact">
@@ -35,12 +32,12 @@
 						</div>
 					</div>
 				</p:dataGrid>
-			</div>
-			<h:panelGroup layout="block" class="panel-footer" rendered="#{component.findComponent('children').childCount > 0}">
-				<h:panelGroup id="children" styleClass="panel-buttons">
-					<composite:insertChildren />
+				<h:panelGroup layout="block" class="panel-footer" rendered="#{component.findComponent('children').childCount > 0}">
+					<h:panelGroup id="children" styleClass="panel-buttons">
+						<composite:insertChildren />
+					</h:panelGroup>
 				</h:panelGroup>
-			</h:panelGroup>
+			</p:panel>
 		</div>
 	</composite:implementation>
 </ui:component>

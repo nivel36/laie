@@ -1,15 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
-	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" 
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" 
-	xmlns:f="http://java.sun.com/jsf/core" 
-	xmlns:g="http://ged.org/ui" 
-	xmlns:h="http://java.sun.com/jsf/html" 
-	xmlns:o="http://omnifaces.org/ui"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	template="/WEB-INF/templates/default.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:g="http://ged.org/ui" xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui"
+	xmlns:p="http://primefaces.org/ui" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets" template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
 		<title>#{i18n['candidate.candidate']} - #{viewCandidateView.candidate.fullName}</title>
@@ -134,26 +128,21 @@
 			</div>
 			<div class="col-12 lg-6 xl-4">
 				<h:form id="file_form" enctype="multipart/form-data">
-					<div class="panel">
-						<div class="panel-header">
-							<div class="panel-header-title">#{i18n['file.files']}</div>
-						</div>
-						<div class="panel-content">
-							<p:dataTable var="file" id="files" value="#{filePanelView.files}" emptyMessage="#{i18n['file.no_files']}"
-								reflow="true" rows="#{sessionUser.rowsPerPage}" rowKey="#{file.id}">
+					<p:panel header="#{i18n['file.files']}">
+						<p:dataTable var="file" id="files" value="#{filePanelView.files}" emptyMessage="#{i18n['file.no_files']}"
+							reflow="true" rows="#{sessionUser.rowsPerPage}" rowKey="#{file.id}">
 
-								<p:column headerText="#{i18n['file.name']}">
-									<h:commandLink action="#{filePanelView.openFile(file)}">
-										<h:outputText value="#{file.name}" />
-									</h:commandLink>
-								</p:column>
+							<p:column headerText="#{i18n['file.name']}">
+								<h:commandLink action="#{filePanelView.openFile(file)}">
+									<h:outputText value="#{file.name}" />
+								</h:commandLink>
+							</p:column>
 
-								<p:column>
-									<p:commandButton icon="fa fa-trash" styleClass="btn-gray" action="#{filePanelView.removeFile(file)}"
-										process="@this" update="@form growl " />
-								</p:column>
-							</p:dataTable>
-						</div>
+							<p:column>
+								<p:commandButton icon="fa fa-trash" styleClass="btn-gray" action="#{filePanelView.removeFile(file)}"
+									process="@this" update="@form growl " />
+							</p:column>
+						</p:dataTable>
 
 						<div class="panel-footer">
 							<div class="panel-buttons">
@@ -162,7 +151,7 @@
 									disabled="#{filePanelView.files.size() gt 6}" />
 							</div>
 						</div>
-					</div>
+					</p:panel>
 				</h:form>
 			</div>
 			<div class="col-12 lg-6">

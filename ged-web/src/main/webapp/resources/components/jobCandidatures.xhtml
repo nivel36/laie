@@ -19,11 +19,8 @@
 	</composite:interface>
 
 	<composite:implementation>
-		<div id="#{cc.clientId}" class="panel job-offers #{cc.attrs.styleClass}">
-			<div class="panel-header">
-				<div class="panel-header-title">#{cc.attrs.title}</div>
-			</div>
-			<div class="panel-content">
+		<div id="#{cc.clientId}" >
+			<p:panel header="#{cc.attrs.title}">
 				<p:dataTable var="jobCandidature" value="#{cc.attrs.jobCandidatures}"
 					emptyMessage="#{i18n['job_candidature.no_job_candidatures_found']}" reflow="true" paginator="true" paginatorPosition="bottom"
 					rows="#{sessionUser.rowsPerPage}" sortBy="#{jobOffer.name}" sortOrder="ascending">
@@ -53,12 +50,13 @@
 						<div class="tag #{jobCandidature.jobCandidatureState.color}">#{g:translate(jobCandidature.jobCandidatureState.name)}</div>
 					</p:column>
 				</p:dataTable>
-			</div>
-			<h:panelGroup layout="block" class="panel-footer" rendered="#{component.findComponent('children').childCount > 0}">
-				<h:panelGroup id="children" styleClass="panel-buttons">
-					<composite:insertChildren />
+			
+				<h:panelGroup layout="block" class="panel-footer" rendered="#{component.findComponent('children').childCount > 0}">
+					<h:panelGroup id="children" styleClass="panel-buttons">
+						<composite:insertChildren />
+					</h:panelGroup>
 				</h:panelGroup>
-			</h:panelGroup>
+			</p:panel>
 		</div>
 	</composite:implementation>
 </ui:component>

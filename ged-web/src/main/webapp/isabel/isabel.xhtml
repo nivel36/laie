@@ -27,20 +27,18 @@
 
 
 	<ui:define name="content">
-		<div class="panel">
-			<h:form>
-				<div class="panel-content">
-					<div class="panel-content-data">
-						<p:pickList value="#{isabelView.model}" var="item" converter="exportViewConverter" itemLabel="#{item.label}" itemValue="#{item}"
-							showTargetControls="true" update="@form growl" />
-					</div>
+		<h:form>
+			<p:panel>
+				<div class="panel-content-data">
+					<p:pickList value="#{isabelView.model}" var="item" converter="exportViewConverter" itemLabel="#{item.label}" itemValue="#{item}"
+						showTargetControls="true" update="@form growl" />
 				</div>
 				<div class="panel-footer">
 					<div class="panel-buttons">
 						<p:commandButton value="Guardar" action="#{isabelView.save}" process="@form" update="@form growl" />
 					</div>
 				</div>
-			</h:form>
-		</div>
+			</p:panel>
+		</h:form>
 	</ui:define>
 </ui:composition>

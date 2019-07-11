@@ -25,20 +25,18 @@
 	</ui:define>
 
 	<ui:define name="content">
-		<div class="panel">
-			<div class="panel-content">
-				<div class="panel-content-data grid">
-					<div class="col-12 lg-12 xl-6">
-						<h2>#{i18n['job_candidature.job_candidatures']}</h2>
-						<ul>
-							<li><h:link outcome="#{Page.MAINTENANCE_JOB_CANDIDATURE_STATES.getUrl()}"
-									value="#{i18n['job_candidature.job_candidature_states']}" styleClass="link" /></li>
-							<li><h:link outcome="#{Page.MAINTENANCE_JOB_OFFER_STATES.getUrl()}" value="#{i18n['job.job_offer_states']}"
-									styleClass="link" /></li>
-						</ul>
-					</div>
+		<p:panel header="#{i18n['maintenance.maintenances']}">
+			<div class="panel-content-data grid">
+				<div class="col-12 lg-12 xl-6">
+					<h2>#{i18n['job_candidature.job_candidatures']}</h2>
+					<ul>
+						<li><h:link outcome="#{Page.MAINTENANCE_JOB_CANDIDATURE_STATES.getUrl()}"
+								value="#{i18n['job_candidature.job_candidature_states']}" styleClass="link" /></li>
+						<li><h:link outcome="#{Page.MAINTENANCE_JOB_OFFER_STATES.getUrl()}" value="#{i18n['job.job_offer_states']}"
+								styleClass="link" /></li>
+					</ul>
 				</div>
 			</div>
-		</div>
+		</p:panel>
 	</ui:define>
 </ui:composition>

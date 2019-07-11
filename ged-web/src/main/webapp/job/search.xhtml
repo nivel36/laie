@@ -30,60 +30,59 @@
 
 	<ui:define name="content">
 		<h:form id="jobOfferSearchform">
-			<div class="panel">
-				<div class="panel-content">
-					<div class="panel-content-data">
-						<cc:inputSearch searchText="#{searchJobView.searchText}" searchAction="#{searchJobView.search}" update="@form" />
-						<div class="panel-buttons">
-							<p:commandButton value="#{i18n['action.export']}" action="#{searchJobView.export}" process="@this" icon="fa-file-excel-o" />
-						</div>
+			<p:panel>
+				<div class="panel-content-data">
+					<cc:inputSearch searchText="#{searchJobView.searchText}" searchAction="#{searchJobView.search}" update="@form" />
+					<div class="panel-buttons">
+						<p:commandButton value="#{i18n['action.export']}" action="#{searchJobView.export}" process="@this"
+							icon="fa-file-excel-o" />
 					</div>
-
-					<p:dataTable var="jobOffer" value="#{searchJobView.jobOffers}" emptyMessage="#{i18n['job.no_jobs_found']}" reflow="true"
-						paginator="true" paginatorPosition="bottom" rows="#{sessionUser.rowsPerPage}" sortBy="#{jobOffer.name}" sortOrder="descending"
-						lazy="true">
-
-						<p:column headerText="#{i18n['job.name']}" sortBy="#{jobOffer.name}">
-							<h:link value="#{jobOffer.name}" outcome="#{Page.JOB.getUrl()}">
-								<f:param name="id" value="#{jobOffer.id}" />
-							</h:link>
-							<span class="job_address">#{jobOffer.address.city} (#{jobOffer.address.state})</span>
-						</p:column>
-
-						<p:column headerText="#{i18n['job.client']}" sortBy="#{jobOffer.client.name}">
-							<h:link value="#{jobOffer.client.name}" outcome="#{Page.CLIENT.getUrl()}">
-								<f:param name="id" value="#{jobOffer.client.id}" />
-							</h:link>
-						</p:column>
-
-						<p:column headerText="#{i18n['job.date_opened']}" sortBy="#{jobOffer.dateOpened}">
-							<h:outputText value="#{jobOffer.dateOpened}">
-								<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
-							</h:outputText>
-						</p:column>
-
-						<p:column headerText="#{i18n['job.date_closed']}" sortBy="#{jobOffer.dateClosed}">
-							<h:outputText value="#{jobOffer.dateClosed}">
-								<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
-							</h:outputText>
-						</p:column>
-
-						<p:column headerText="#{i18n['job.places']}">
-							<h:outputText value="#{jobOffer.places}" />
-						</p:column>
-
-						<p:column headerText="#{i18n['user.owner']}" sortBy="#{user.owner.name}">
-							<h:link value="#{jobOffer.owner.fullName}" outcome="#{Page.USER.getUrl()}">
-								<f:param name="id" value="#{jobOffer.owner.id}" />
-							</h:link>
-						</p:column>
-
-						<p:column headerText="#{i18n['job.job_offer_state']}">
-							<div class="tag #{jobOffer.jobOfferState.color}">#{g:translate(jobOffer.jobOfferState.name)}</div>
-						</p:column>
-					</p:dataTable>
 				</div>
-			</div>
+
+				<p:dataTable var="jobOffer" value="#{searchJobView.jobOffers}" emptyMessage="#{i18n['job.no_jobs_found']}"
+					reflow="true" paginator="true" paginatorPosition="bottom" rows="#{sessionUser.rowsPerPage}"
+					sortBy="#{jobOffer.name}" sortOrder="descending" lazy="true">
+
+					<p:column headerText="#{i18n['job.name']}" sortBy="#{jobOffer.name}">
+						<h:link value="#{jobOffer.name}" outcome="#{Page.JOB.getUrl()}">
+							<f:param name="id" value="#{jobOffer.id}" />
+						</h:link>
+						<span class="job_address">#{jobOffer.address.city} (#{jobOffer.address.state})</span>
+					</p:column>
+
+					<p:column headerText="#{i18n['job.client']}" sortBy="#{jobOffer.client.name}">
+						<h:link value="#{jobOffer.client.name}" outcome="#{Page.CLIENT.getUrl()}">
+							<f:param name="id" value="#{jobOffer.client.id}" />
+						</h:link>
+					</p:column>
+
+					<p:column headerText="#{i18n['job.date_opened']}" sortBy="#{jobOffer.dateOpened}">
+						<h:outputText value="#{jobOffer.dateOpened}">
+							<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="#{i18n['job.date_closed']}" sortBy="#{jobOffer.dateClosed}">
+						<h:outputText value="#{jobOffer.dateClosed}">
+							<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="#{i18n['job.places']}">
+						<h:outputText value="#{jobOffer.places}" />
+					</p:column>
+
+					<p:column headerText="#{i18n['user.owner']}" sortBy="#{user.owner.name}">
+						<h:link value="#{jobOffer.owner.fullName}" outcome="#{Page.USER.getUrl()}">
+							<f:param name="id" value="#{jobOffer.owner.id}" />
+						</h:link>
+					</p:column>
+
+					<p:column headerText="#{i18n['job.job_offer_state']}">
+						<div class="tag #{jobOffer.jobOfferState.color}">#{g:translate(jobOffer.jobOfferState.name)}</div>
+					</p:column>
+				</p:dataTable>
+			</p:panel>
 		</h:form>
 	</ui:define>
 </ui:composition>
