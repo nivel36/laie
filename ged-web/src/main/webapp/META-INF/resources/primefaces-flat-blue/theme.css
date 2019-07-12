@@ -108,7 +108,11 @@ body .ui-autocomplete-panel .ui-autocomplete-table td {
 }
 
 body .ui-autocomplete-panel .ui-state-highlight {
-	background-color: #69abe2;
+	background-color: #1976d2;
+	color: white;
+}
+
+body .ui-autocomplete-panel .ui-state-highlight .person .person-data .name, body .ui-autocomplete-panel .ui-state-highlight .person .person-data .description{
 	color: white;
 }
 
@@ -330,7 +334,7 @@ body .ui-datatable tbody td, body .ui-datatable tfoot td, body .ui-datatable tfo
 
 body .ui-datatable .ui-datatable-data tr:hover {
 	transition: all 0.2s ease-in;
-	background-color: #ffffd4;
+	background-color: #f2f3f3;
 }
 
 body .ui-datatable .ui-datatable-data tr:hover.ui-state-highlight {
@@ -706,12 +710,12 @@ body .ui-panel {
 
 body .ui-panel .ui-panel-titlebar {
 	display: flex;
-	padding: 8px 16px;
+	padding: 10px 20px;
 	background: #1976d2;
 }
 
 body .ui-panel .ui-panel-titlebar .ui-panel-title {
-	font-size: 16px;
+	font-size: 15px;
 	color: white;
 	margin: 0;
 	font-weight: 700;

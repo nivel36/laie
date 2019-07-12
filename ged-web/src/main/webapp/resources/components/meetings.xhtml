@@ -20,9 +20,11 @@
 	<composite:implementation>
 		<div id="#{cc.clientId}">
 			<p:panel header="#{cc.attrs.title}">
-				<ui:repeat var="meeting" value="#{cc.attrs.value}">
-					<cc:meeting value="#{meeting}" />
-				</ui:repeat>
+				<div class="panel-content-data">
+					<ui:repeat var="meeting" value="#{cc.attrs.value}">
+						<cc:meeting value="#{meeting}" />
+					</ui:repeat>
+				</div>
 			</p:panel>
 		</div>
 	</composite:implementation>

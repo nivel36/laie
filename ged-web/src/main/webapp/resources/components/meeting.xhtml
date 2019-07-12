@@ -17,17 +17,19 @@
 					<f:convertDateTime type="localDate" locale="#{cc.attrs.locale}" dateStyle="full" />
 				</h:outputText>
 			</div>
-			<div class="meeting-time">
-				<h:outputText value="#{cc.attrs.value.datePlanned}">
-					<f:convertDateTime type="localDateTime" pattern="HH:mm" />
-				</h:outputText>
-			</div>
-			<div class="meeting-detail">
-				<div class="meeting-title">#{cc.attrs.value.title}</div>
-				<div class="meeting-attendees">
-					<ui:repeat var="attendeeEmail" value="#{cc.attrs.value.attendeesEmails}">
-						<div class="meeting-attendee">#{attendeeEmail}</div>
-					</ui:repeat>
+			<div class="meeting-content">
+				<div class="meeting-time">
+					<h:outputText value="#{cc.attrs.value.datePlanned}">
+						<f:convertDateTime type="localDateTime" pattern="HH:mm" />
+					</h:outputText>
+				</div>
+				<div class="meeting-detail">
+					<div class="meeting-title">#{cc.attrs.value.title}</div>
+					<div class="meeting-attendees">
+						<ui:repeat var="attendeeEmail" value="#{cc.attrs.value.attendeesEmails}">
+							<div class="meeting-attendee">#{attendeeEmail}</div>
+						</ui:repeat>
+					</div>
 				</div>
 			</div>
 		</div>
