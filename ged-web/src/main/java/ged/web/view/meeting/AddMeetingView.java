@@ -125,6 +125,7 @@ public class AddMeetingView extends AbstractView {
 
 	private List<Person> initAttendees() {
 		final List<Person> attendeeList = new ArrayList<Person>();
+		attendeeList.add(this.sessionUser.get());
 		return attendeeList;
 	}
 
@@ -156,7 +157,7 @@ public class AddMeetingView extends AbstractView {
 		final LocalTime time = LocalTime.parse(this.meetingHour, DateTimeFormatter.ofPattern("H:mm"));
 		final LocalDateTime meetingDateTime = LocalDateTime.of(this.meetingDate, time);
 		this.meeting.setDatePlanned(meetingDateTime);
-		for(Person person: attendees) {
+		for (final Person person : this.attendees) {
 			this.meeting.addAttendee(person.getEmail());
 		}
 		this.meetingService.save(this.meeting);

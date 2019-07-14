@@ -25,11 +25,7 @@
 				</div>
 				<div class="meeting-detail">
 					<div class="meeting-title">#{cc.attrs.value.title}</div>
-					<div class="meeting-attendees">
-						<ui:repeat var="attendeeEmail" value="#{cc.attrs.value.attendeesEmails}">
-							<div class="meeting-attendee">#{attendeeEmail}</div>
-						</ui:repeat>
-					</div>
+					<div class="meeting-data"><em class="icon fa fa-map-marker"/>#{cc.attrs.value.location}</div>
 				</div>
 			</div>
 		</div>

@@ -195,8 +195,6 @@
 		<query><![CDATA[
 			SELECT m 
 			FROM Meeting m
-			LEFT JOIN FETCH m.attendeesEmails
-			LEFT JOIN FETCH m.jobCandidature 
 			WHERE m.owner = :owner
 		]]></query>
 	</named-query>
