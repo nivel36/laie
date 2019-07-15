@@ -8,12 +8,11 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.primefaces.model.LazyScheduleModel;
-import org.primefaces.model.ScheduleModel;
-
 import ged.ejb.candidate.Candidate;
 import ged.ejb.candidate.CandidateService;
 import ged.ejb.core.model.Page;
+import ged.ejb.job.meeting.Meeting;
+import ged.ejb.job.meeting.MeetingService;
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
 import ged.ejb.user.User;
@@ -27,15 +26,18 @@ public class IndexView extends AbstractView {
 
 	private List<Candidate> candidates;
 
+	@Inject
+	private transient CandidateService candidateService;
+	
 	private List<JobOffer> jobOffers;
 	
 	@Inject
 	private transient JobOfferService jobService;
 	
+	private List<Meeting> meetings;
+	
 	@Inject
-	private transient CandidateService candidateService;
-
-	private transient ScheduleModel schedule;
+	private transient MeetingService meetingService;
 
 	public List<Candidate> getCandidates() {
 		return this.candidates;
@@ -49,8 +51,8 @@ public class IndexView extends AbstractView {
 		return this.jobOffers;
 	}
 
-	public ScheduleModel getSchedule() {
-		return this.schedule;
+	public List<Meeting> getMeetings() {
+		return meetings;
 	}
 
 	@PostConstruct
@@ -58,10 +60,18 @@ public class IndexView extends AbstractView {
 		final User user = this.sessionUser.get();
 		this.jobOffers = this.jobService.findJobOffers(user, new Page(0,10));
 		this.candidates = this.candidateService.search(null, new Page(0,10)).getResultData();
-		this.schedule = new LazyScheduleModel();
+		this.meetings = initMeetings();
 	}
 
+	private List<Meeting> initMeetings() {
+		return meetingService.findPlannedMeetings(sessionUser.get(), Page.of(0,10));
+	}
+	
 	public void setJobService(final JobOfferService jobService) {
 		this.jobService = jobService;
+	}
+
+	public void setMeetingService(MeetingService meetingService) {
+		this.meetingService = meetingService;
 	}
 }

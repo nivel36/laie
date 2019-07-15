@@ -634,6 +634,10 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button
 	font-size: 0.8em;
 }
 
+.label-container .label {
+	color: #7a869b;
+}
+
 .panel-content-data .data .text {
 	font-size: 1.1em;
 }

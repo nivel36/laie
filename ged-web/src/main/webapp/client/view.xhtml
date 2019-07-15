@@ -32,7 +32,7 @@
 	<ui:define name="content">
 		<div class="grid">
 			<div class="col-12 sm-8">
-				<div class="panel client">
+				<p:panel>
 					<div class="panel-header">
 						<div class="panel-header-title">#{viewClientView.client}</div>
 						<h:form>
@@ -43,7 +43,7 @@
 							</div>
 						</h:form>
 					</div>
-					<div class="panel-content panel-content-data grid">
+					<div class="panel-content-data grid">
 						<div class="col-12 sm-6">
 							<cc:outputText label="#{i18n['client.cif']}" value="#{viewClientView.client.cif}" styleClass="cif" />
 						</div>
@@ -56,7 +56,7 @@
 							<cc:outputText label="#{i18n['client.state']}" value="#{viewClientView.client.address.state}" styleClass="state" />
 						</div>
 					</div>
-				</div>
+				</p:panel>
 			</div>
 			<div class="col-12 sm-4">
 				<h:form id="contactsForm">
@@ -66,7 +66,7 @@
 					</cc:contacts>
 				</h:form>
 			</div>
-			<div class="col-12 sm-6">
+			<div class="col-12 sm-8">
 				<h:form id="jobOffersForm">
 					<cc:jobOffers id="jobOffers" jobOffers="#{viewClientView.jobOffers}">
 						<p:commandButton value="#{i18n['job.new_job_offer']}" actionListener="#{viewClientView.newJobOffer}"

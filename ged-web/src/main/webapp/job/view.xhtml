@@ -46,7 +46,10 @@
 					</div>
 					<div class="panel-content-data grid">
 							<div class="col-12 md-4">
-								<cc:outputText label="#{i18n['job.client']}" value="#{viewJobView.jobOffer.client.name}" />
+								<p:link outcome="#{Page.CLIENT.getUrl()}">
+									<f:param name="id" value="#{viewJobView.jobOffer.client.id}" />
+									<cc:outputText label="#{i18n['job.client']}" value="#{viewJobView.jobOffer.client.name}" />
+								</p:link>
 							</div>
 							<div class="col-12 md-4">
 								<h:form>
@@ -93,13 +96,6 @@
 						</p:commandButton>
 					</cc:jobCandidatures>
 				</h:form>
-			</div>
-
-			<div class="col-12 xl-6">
-				<p:panel header="#{i18n['meeting.conducted_meetings']}" />
-			</div>
-			<div class="col-12 md-12 lg-6">
-				<p:panel header="#{i18n['meeting.planned_meetings']}" />
 			</div>
 		</div>
 	</ui:define>

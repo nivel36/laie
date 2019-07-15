@@ -34,17 +34,9 @@
 				</cc:candidates>
 			</div>
 
-			<div class="col-12 xl-4">
-				<p:panel header="#{i18n['index.last_reports']}">
-				</p:panel>
-			</div>
-
-			<div class="col-12 xl-8">
-				<p:panel header="#{i18n['index.scheudele']}">
-					<div class="panel-content-data">
-						<p:schedule id="scheduleLocale" value="#{indexView.schedule}" locale="es" />
-					</div>
-				</p:panel>
+			<div class="col-12 md-6">
+				<cc:meetings value="#{indexView.meetings}" title="#{i18n['meeting.planned_meetings']}"
+					emptyMessage="#{i18n['meeting.no_planned']}" />
 			</div>
 		</div>
 	</ui:define>
