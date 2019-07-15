@@ -10,7 +10,7 @@
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	template="/WEB-INF/templates/default.xhtml">
-
+	
 	<ui:define name="title">
 		<title>#{i18n['calendar.calendar']}</title>
 	</ui:define>
@@ -32,7 +32,12 @@
 		<h:form>
 			<div class="grid">
 				<div class="col-12 md-6">
-					<cc:meetings value="#{searchMeetingView.meetings}" />
+					<cc:meetings value="#{searchMeetingView.plannedMeetings}" title="#{i18n['meeting.planned_meetings']}"
+						emptyMessage="#{i18n['meeting.no_planned']}" />
+				</div>
+				<div class="col-12 md-6">
+					<cc:meetings value="#{searchMeetingView.conductedMeetings}" title="#{i18n['meeting.conducted_meetings']}"
+						emptyMessage="#{i18n['meeting.no_conducted']}" />
 				</div>
 			</div>
 		</h:form>

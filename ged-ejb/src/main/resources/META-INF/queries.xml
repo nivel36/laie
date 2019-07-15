@@ -191,41 +191,21 @@
 		]]></query>
 	</named-query>
 
-	<named-query name="Meeting.findByOwner">
+	<named-query name="Meeting.findPlannedByOwner">
 		<query><![CDATA[
 			SELECT m 
 			FROM Meeting m
 			WHERE m.owner = :owner
+			AND m.datePlanned >= CURRENT_TIMESTAMP
 		]]></query>
 	</named-query>
-
-	<named-query name="Meeting.findByCandidate">
+	
+	<named-query name="Meeting.findConductedByOwner">
 		<query><![CDATA[
 			SELECT m 
 			FROM Meeting m
-			LEFT JOIN FETCH m.attendeesEmails
-			LEFT JOIN FETCH m.jobCandidature 
-			WHERE m.jobCandidature.candidate = :candidate
-		]]></query>
-	</named-query>
-
-	<named-query name="Meeting.findByJobOffer">
-		<query><![CDATA[
-			SELECT m 
-			FROM Meeting m
-			LEFT JOIN FETCH m.attendeesEmails
-			LEFT JOIN FETCH m.jobCandidature
-			WHERE m.jobCandidature.jobOffer = :jobOffer
-		]]></query>
-	</named-query>
-
-	<named-query name="Meeting.findPlannedMeetings">
-		<query><![CDATA[
-			SELECT m 
-			FROM Meeting m
-			LEFT JOIN FETCH m.attendeesEmails
-			LEFT JOIN FETCH m.jobCandidature
-			WHERE m.datePlanned IS NOT NULL 
+			WHERE m.owner = :owner
+			AND m.datePlanned < CURRENT_TIMESTAMP
 		]]></query>
 	</named-query>
 

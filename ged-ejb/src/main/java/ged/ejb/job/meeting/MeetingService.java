@@ -27,19 +27,25 @@ public class MeetingService extends AbstractService<Meeting> {
 	@Repository
 	private MeetingDao meetingDao;
 
-	public List<Meeting> findMeeting(final User owner, final Page page) {
+	public List<Meeting> findPlannedMeetings(final User owner, final Page page) {
 		Objects.requireNonNull(owner);
-		logger.debug("Find meetings by owner {}", owner);
-		return this.meetingDao.findMeeting(owner, page);
+		logger.debug("Find planned meetings by owner {}", owner);
+		return this.meetingDao.findPlannedMeetings(owner, page);
+	}
+	
+	public List<Meeting> findConductedMeetings(final User owner, final Page page) {
+		Objects.requireNonNull(owner);
+		logger.debug("Find conducted meetings by owner {}", owner);
+		return this.meetingDao.findConductedMeetings(owner, page);
 	}
 
-	public List<Meeting> findMeeting(final Candidate candidate, final Page page) {
+	public List<Meeting> findMeetings(final Candidate candidate, final Page page) {
 		Objects.requireNonNull(candidate);
 		logger.debug("Find meetings by candidate {}", candidate);
 		return this.meetingDao.findMeeting(candidate, page);
 	}
 
-	public List<Meeting> findMeeting(final JobOffer jobOffer, final Page page) {
+	public List<Meeting> findMeetings(final JobOffer jobOffer, final Page page) {
 		Objects.requireNonNull(jobOffer);
 		logger.debug("Find meetings by jobOffer {}", jobOffer);
 		return this.meetingDao.findMeeting(jobOffer, page);

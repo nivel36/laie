@@ -15,10 +15,16 @@ import ged.ejb.user.User;
 @Repository
 public class MeetingDao extends AbstractDao<Meeting> {
 
-	public List<Meeting> findMeeting(final User owner, final Page page) {
+	public List<Meeting> findPlannedMeetings(final User owner, final Page page) {
 		Objects.requireNonNull(owner);
 		Objects.requireNonNull(page);
-		return this.findByQuery(Meeting.class, "Meeting.findByOwner", map("owner", owner), page);
+		return this.findByQuery(Meeting.class, "Meeting.findPlannedByOwner", map("owner", owner), page);
+	}
+	
+	public List<Meeting> findConductedMeetings(final User owner, final Page page) {
+		Objects.requireNonNull(owner);
+		Objects.requireNonNull(page);
+		return this.findByQuery(Meeting.class, "Meeting.findConductedByOwner", map("owner", owner), page);
 	}
 
 	public List<Meeting> findMeeting(final Candidate candidate, final Page page) {
