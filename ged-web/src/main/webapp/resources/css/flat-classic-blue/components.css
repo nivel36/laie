@@ -881,7 +881,7 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button
 .person {
 	padding: 5px;
 	display: flex;
-	flex: 1 1 100%;
+	min-width: 300px;
 }
 
 .candidates .person {

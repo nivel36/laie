@@ -9,7 +9,7 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
-	
+
 	<composite:interface>
 		<composite:attribute name="candidates" type="java.util.List" required="true" />
 		<composite:attribute name="styleClass" required="false" default="" />
@@ -19,14 +19,13 @@
 	<composite:implementation>
 		<div id="#{cc.clientId}">
 			<p:panel header="#{cc.attrs.title}" styleClass="panel candidates #{styleClass}">
-				<p:dataGrid layout="grid" var="candidate" value="#{cc.attrs.candidates}"
-					emptyMessage="#{i18n['candidate.no_candidates_found']}" paginator="true" paginatorPosition="bottom" columns="2"
-					rows="6">
+				<p:dataList var="candidate" value="#{cc.attrs.candidates}" emptyMessage="#{i18n['candidate.no_candidates_found']}"
+					paginator="true" paginatorPosition="bottom">
 					<p:link outcome="#{Page.CANDIDATE.getUrl()}">
 						<f:param name="id" value="#{candidate.id}" />
 						<cc:person value="#{candidate}" description="#{candidate.jobProfile}" />
 					</p:link>
-				</p:dataGrid>
+				</p:dataList>
 				<ui:define name="footer">
 					<h:panelGroup id="children" styleClass="panel-buttons">
 						<composite:insertChildren />

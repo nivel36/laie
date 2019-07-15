@@ -290,6 +290,16 @@ body .ui-chips-container .ui-chips-token .ui-icon, body .ui-autocomplete-multipl
 	display: inline-flex;
 }
 
+body .ui-datalist-data {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+body .ui-datalist-data .ui-datalist-item {
+	display: flex;
+	flex: 1 1 auto;
+}
+
 body .ui-chips-input-token {
 	margin: 0;
 	padding: 0;
