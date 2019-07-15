@@ -486,7 +486,7 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button
 	font-weight: bold;
 	color: #737c93;
 	text-shadow: 1px 1px white;
-	margin: 10px;
+	margin: 10px 20px;
 	font-size: 1.3em;
 	padding: 0px;
 	align-items: center;
