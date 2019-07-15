@@ -23,6 +23,8 @@ import ged.ejb.curriculum.Curriculum;
 import ged.ejb.curriculum.CurriculumService;
 import ged.ejb.job.candidature.JobCandidature;
 import ged.ejb.job.candidature.JobCandidatureService;
+import ged.ejb.job.meeting.Meeting;
+import ged.ejb.job.meeting.MeetingService;
 import ged.ejb.job.offer.JobOffer;
 import ged.web.core.IllegalPageStateException;
 import ged.web.core.util.PageEnum;
@@ -41,16 +43,21 @@ public class ViewCandidateView extends AbstractView {
 	private Candidate candidate;
 
 	private Curriculum curriculum;
-
+	
 	@Inject
 	private transient CurriculumService curriculumService;
 
 	private boolean editable;
 
 	private List<JobCandidature> jobCandidatures;
-	
+
 	@Inject
 	private transient JobCandidatureService jobCandidatureService;
+	
+	private List<Meeting> meetings;
+
+	@Inject
+	private transient MeetingService meetingService;
 
 	private final List<Tag> tags = new ArrayList<>();
 	
@@ -63,7 +70,7 @@ public class ViewCandidateView extends AbstractView {
 	public void export() throws IOException {
 		logger.debug("Export candidate action performed");
 	}
-
+	
 	private void fillTags() {
 		tags.addAll(candidate.getTags());
 	}
@@ -75,9 +82,13 @@ public class ViewCandidateView extends AbstractView {
 	public Curriculum getCurriculum() {
 		return this.curriculum;
 	}
-
+	
 	public List<JobCandidature> getJobCandidatures() {
 		return this.jobCandidatures;
+	}
+	
+	public List<Meeting> getMeetings() {
+		return meetings;
 	}
 
 	public List<Tag> getTags() {
@@ -97,10 +108,20 @@ public class ViewCandidateView extends AbstractView {
 		this.jobCandidatures = this.jobCandidatureService.findJobCandidatures(candidate, Page.ALL);
 		this.curriculum = this.curriculumService.findByCandidate(this.candidate);
 		this.editable = this.sessionUser.hasPermissionToEdit(this.candidate);
+		this.meetings = initMeetings();
+	}
+
+	private List<Meeting> initMeetings() {
+		return meetingService.findMeetings(candidate, Page.of(0, 10));
 	}
 
 	public boolean isEditable() {
 		return this.editable;
+	}
+
+	public String newMeeting() {
+		this.putValueToFlash("attendee", this.candidate);
+		return PageEnum.MEETING_ADD.getRedirectedUrl();
 	}
 
 	public void onCloseSelectJobOfferDialog(final SelectEvent event) {
@@ -130,6 +151,10 @@ public class ViewCandidateView extends AbstractView {
 
 	public void setJobCandidatureService(JobCandidatureService jobCandidatureService) {
 		this.jobCandidatureService = jobCandidatureService;
+	}
+
+	public void setMeetingService(MeetingService meetingService) {
+		this.meetingService = meetingService;
 	}
 
 }

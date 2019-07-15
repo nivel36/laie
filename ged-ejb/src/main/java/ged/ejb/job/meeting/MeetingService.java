@@ -42,7 +42,7 @@ public class MeetingService extends AbstractService<Meeting> {
 	public List<Meeting> findMeetings(final Candidate candidate, final Page page) {
 		Objects.requireNonNull(candidate);
 		logger.debug("Find meetings by candidate {}", candidate);
-		return this.meetingDao.findMeeting(candidate, page);
+		return this.meetingDao.findMeetingByAttendeesEmail(candidate.getEmail(), page);
 	}
 
 	public List<Meeting> findMeetings(final JobOffer jobOffer, final Page page) {

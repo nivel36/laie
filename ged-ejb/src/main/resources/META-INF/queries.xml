@@ -208,7 +208,15 @@
 			AND m.datePlanned < CURRENT_TIMESTAMP
 		]]></query>
 	</named-query>
-
+	
+	<named-query name="Meeting.findByAttendeesEmail">
+		<query><![CDATA[
+			SELECT m 
+			FROM Meeting m
+			WHERE :email MEMBER OF m.attendeesEmails
+		]]></query>
+	</named-query>
+	
 	<named-query name="JobOffer.findAllByOwner">
 		<query><![CDATA[
 			SELECT j 

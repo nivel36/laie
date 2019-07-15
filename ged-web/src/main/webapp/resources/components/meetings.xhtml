@@ -29,6 +29,11 @@
 						<h:outputText value="#{cc.attrs.emptyMessage}" rendered="#{empty cc.attrs.value}" />
 					</div>
 				</div>
+				<h:panelGroup layout="block" class="panel-footer" rendered="#{component.findComponent('children').childCount > 0}">
+					<h:panelGroup id="children" styleClass="panel-buttons">
+						<composite:insertChildren />
+					</h:panelGroup>
+				</h:panelGroup>
 			</p:panel>
 		</div>
 	</composite:implementation>
