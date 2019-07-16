@@ -15,6 +15,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ged.ejb.core.model.Page;
+import ged.ejb.job.meeting.Meeting;
+import ged.ejb.job.meeting.MeetingService;
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
 import ged.ejb.user.User;
@@ -36,13 +38,18 @@ public class ViewUserView extends AbstractView {
 
 	private List<JobOffer> jobOffers;
 
+	private List<Meeting> meetings;
+
+	@Inject
+	private transient MeetingService meetingService;
+
 	@Inject
 	private transient JobOfferService jobOfferService;
 
 	private List<User> team;
 
 	@Inject
-	@Param(name = "id", required = true, converter="userConverter")
+	@Param(name = "id", required = true, converter = "userConverter")
 	private User user;
 
 	@Inject
@@ -64,6 +71,10 @@ public class ViewUserView extends AbstractView {
 		return this.jobOffers;
 	}
 
+	public List<Meeting> getMeetings() {
+		return this.meetings;
+	}
+
 	public List<User> getTeam() {
 		return this.team;
 	}
@@ -81,6 +92,7 @@ public class ViewUserView extends AbstractView {
 		this.team = this.userService.findSubordinateUsers(this.user);
 		this.jobOffers = this.jobOfferService.findJobOffers(this.user, Page.ALL);
 		this.editable = this.sessionUser.isAdmin();
+		this.meetings = this.meetingService.findPlannedMeetings(this.user, Page.of(0, 10));
 	}
 
 	public boolean isEditable() {
@@ -89,6 +101,10 @@ public class ViewUserView extends AbstractView {
 
 	public void setJobOfferService(final JobOfferService jobOfferService) {
 		this.jobOfferService = jobOfferService;
+	}
+
+	public void setMeetingService(final MeetingService meetingService) {
+		this.meetingService = meetingService;
 	}
 
 	public void setUser(final User user) {
