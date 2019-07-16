@@ -522,6 +522,7 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button
 .panel-content-data {
 	padding: 20px;
 	display: flex;
+	flex-wrap: wrap;
 }
 
 .panel-footer {
@@ -971,6 +972,7 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button
 .meeting {
 	display: flex;
 	flex-flow: row wrap;
+	flex: 1 1 100%;
 }
 
 .meeting-title {

@@ -31,7 +31,7 @@
 
 	<ui:define name="content">
 		<div class="grid">
-			<div class="col-12 sm-8">
+			<div class="col-12 sm-7">
 				<p:panel>
 					<div class="panel-header">
 						<div class="panel-header-title">#{viewClientView.client}</div>
@@ -58,7 +58,7 @@
 					</div>
 				</p:panel>
 			</div>
-			<div class="col-12 sm-4">
+			<div class="col-12 sm-5">
 				<h:form id="contactsForm">
 					<cc:contacts contacts="#{viewClientView.contacts}">
 						<p:commandButton value="#{i18n['contact.new_contact']}" actionListener="#{viewClientView.newContact}"

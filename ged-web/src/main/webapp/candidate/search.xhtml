@@ -32,8 +32,9 @@
 		<h:form id="candidateSearchForm">
 			<p:panel>
 				<div class="panel-content-data">
-					<cc:inputSearch searchText="#{searchCandidateView.searchText}" searchAction="#{searchCandidateView.search}"
-						update="@form" />
+					<div class="search-bar">
+						<cc:inputSearch searchText="#{searchCandidateView.searchText}" searchAction="#{searchCandidateView.search}"	update="@form" />
+					</div>
 					<div class="panel-buttons">
 						<p:commandButton value="#{i18n['action.export']}" action="#{searchCandidateView.export}" process="@this"
 							icon="fa-file-excel-o" />

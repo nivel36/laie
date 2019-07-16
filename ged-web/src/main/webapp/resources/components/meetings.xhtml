@@ -20,7 +20,7 @@
 
 	<composite:implementation>
 		<div id="#{cc.clientId}">
-			<p:panel header="#{cc.attrs.title}">
+			<p:panel header="#{cc.attrs.title}" styleClass="panel meetings #{cc.attrs.styleClass}">
 				<div class="panel-content-data">
 					<ui:repeat var="meeting" value="#{cc.attrs.value}" rendered="#{not empty cc.attrs.value}">
 						<cc:meeting value="#{meeting}" />

@@ -32,8 +32,9 @@
 		<h:form id="clientSearchForm">
 			<p:panel>
 				<div class="panel-content-data">
-					<cc:inputSearch searchText="#{searchClientView.searchText}" searchAction="#{searchClientView.search}"
-						update="@form" />
+					<div class="search-bar">
+						<cc:inputSearch searchText="#{searchClientView.searchText}" searchAction="#{searchClientView.search}" update="@form" />
+					</div>
 					<div class="panel-buttons">
 						<p:commandButton value="#{i18n['action.export']}" action="#{searchClientView.export}" process="@this"
 							icon="fa-file-excel-o" />
@@ -59,11 +60,7 @@
 					</p:column>
 
 					<p:column headerText="#{i18n['client.city']}" sortBy="#{client.address.city}">
-						<h:outputText value="#{client.address.city}" />
-					</p:column>
-
-					<p:column headerText="#{i18n['client.state']}" sortBy="#{client.address.state}">
-						<h:outputText value="#{client.address.state}" />
+						<h:outputText value="#{client.address.city}" /> (<h:outputText value="#{client.address.state}" />)
 					</p:column>
 
 					<p:column headerText="#{i18n['client.owner']}" sortBy="#{client.owner.name}">
