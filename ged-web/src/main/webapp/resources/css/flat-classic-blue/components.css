@@ -391,6 +391,7 @@ body .input-search .clean-search-button {
 	padding: 0.5em;
 	align-items: center;
 	flex-flow: row wrap;
+	position: relative;
 }
 
 .input-group.input-search-group {
@@ -408,6 +409,7 @@ body .input-search .clean-search-button {
 .input-group  .input-container {
 	display: flex;
 	flex: 1;
+	position: relative;
 }
 
 .input-group .label-container {

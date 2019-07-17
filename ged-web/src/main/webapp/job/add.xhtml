@@ -61,8 +61,12 @@
 
 									<g:input id="state" label="#{i18n['job.state']}" value="#{addJobView.jobOffer.address.state}" required="true" />
 
-									<cc:inputUser id="owner" label="#{i18n['job.owner']}" value="#{addJobView.jobOffer.owner}"
-										completeMethod="#{addJobView.queryOwner}" />
+									<cc:autocomplete id="owner" label="#{i18n['job.owner']}" value="#{addJobView.jobOffer.owner}"
+										completeMethod="#{addJobView.queryOwner}" converter="userConverter">
+										<p:column styleClass="user-select image">
+											<cc:person value="#{var}" showDescription="false" />
+										</p:column>
+									</cc:autocomplete>
 
 									<cc:inputUsers id="recruiters" label="#{i18n['job.recruiters']}" completeMethod="#{addJobView.queryRecruiter}"
 										value="#{addJobView.recruiters}" />

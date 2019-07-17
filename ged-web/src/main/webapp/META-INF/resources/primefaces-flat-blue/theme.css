@@ -184,6 +184,19 @@ body .ui-button.btn-gray {
 	border: 1px solid #929292;
 }
 
+body .ui-button.btn-input-clean {
+	position: absolute;
+	right: 0px;
+	z-index: 1;
+	border: 0px;
+	right: 34px;
+	background: transparent;
+}
+
+body .ui-button.btn-input-clean .ui-icon {
+	color: #7a869b;
+}
+
 body .ui-button.btn-gray.ui-state-hover {
 	background: #888888;
 }

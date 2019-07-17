@@ -9,6 +9,7 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
+
 	<composite:interface>
 		<composite:attribute name="users" required="true" />
 		<composite:attribute name="styleClass" required="false" default="" />
@@ -17,20 +18,19 @@
 
 	<composite:implementation>
 		<div id="#{cc.clientId}">
-			<p:panel header="#{cc.attrs.title}">
-				<p:dataGrid layout="grid" var="user" value="#{cc.attrs.users}" emptyMessage="#{i18n['user.no_team']}"
-					paginator="true" paginatorPosition="bottom" columns="2" rows="6" paginatorTemplate="{PageLinks}">
+			<p:panel header="#{cc.attrs.title}" styleClass="panel users #{cc.attrs.styleClass}">
+				<p:dataList var="user" value="#{cc.attrs.users}" emptyMessage="#{i18n['user.no_team']}" paginator="true"
+					paginator="true" paginatorPosition="bottom">
 					<p:link outcome="#{Page.USER.getUrl()}">
 						<f:param name="id" value="#{user.id}" />
 						<cc:person value="#{user}" showDescription="false" />
 					</p:link>
-				</p:dataGrid>
+				</p:dataList>
 
-				<h:panelGroup layout="block" styleClass="panel-footer"
-					rendered="#{component.findComponent('children').childCount > 0}">
-					<div id="children" class="panel-buttons">
+				<h:panelGroup layout="block" styleClass="panel-footer" rendered="#{component.findComponent('children').childCount > 0}">
+					<h:panelGroup id="children" styleClass="panel-buttons">
 						<composite:insertChildren />
-					</div>
+					<</h:panelGroup>
 				</h:panelGroup>
 			</p:panel>
 		</div>

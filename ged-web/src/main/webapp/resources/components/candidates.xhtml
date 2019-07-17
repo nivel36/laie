@@ -18,7 +18,7 @@
 
 	<composite:implementation>
 		<div id="#{cc.clientId}">
-			<p:panel header="#{cc.attrs.title}" styleClass="panel candidates #{styleClass}">
+			<p:panel header="#{cc.attrs.title}" styleClass="panel candidates #{cc.attrs.styleClass}">
 				<p:dataList var="candidate" value="#{cc.attrs.candidates}" emptyMessage="#{i18n['candidate.no_candidates_found']}"
 					paginator="true" paginatorPosition="bottom">
 					<p:link outcome="#{Page.CANDIDATE.getUrl()}">
@@ -26,11 +26,12 @@
 						<cc:person value="#{candidate}" description="#{candidate.jobProfile}" />
 					</p:link>
 				</p:dataList>
-				<ui:define name="footer">
+				
+				<h:panelGroup layout="block" styleClass="panel-footer" rendered="#{component.findComponent('children').childCount > 0}">
 					<h:panelGroup id="children" styleClass="panel-buttons">
 						<composite:insertChildren />
 					</h:panelGroup>
-				</ui:define>
+				</h:panelGroup>
 			</p:panel>
 		</div>
 	</composite:implementation>

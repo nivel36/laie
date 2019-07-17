@@ -64,7 +64,6 @@ public class User extends Person {
 		this.bookmarks.add(bookmark);
 	}
 
-
 	public Set<Bookmark> getBookmarks() {
 		return this.bookmarks;
 	}
