@@ -54,12 +54,36 @@ insert into I18NSTRING( id, version, locale, key, text ) values( 311, 0, 'es', '
 
 insert into CREDENTIAL( id, version, hashPassword, salt, created ) values( 600, 0, '16AFB50A06A958ACEC2EDA9D70283139BC7B7372E21CC83F619CCF169E6E7956', 'FFFFFF', (TO_DATE('17/12/2015', 'DD/MM/YYYY')));
 insert into CREDENTIAL( id, version, hashPassword, salt, created ) values( 601, 0, '16AFB50A06A958ACEC2EDA9D70283139BC7B7372E21CC83F619CCF169E6E7956', 'FFFFFF', (TO_DATE('17/12/2015', 'DD/MM/YYYY')));
+insert into CREDENTIAL( id, version, hashPassword, salt, created ) values( 602, 0, '16AFB50A06A958ACEC2EDA9D70283139BC7B7372E21CC83F619CCF169E6E7956', 'FFFFFF', (TO_DATE('17/12/2015', 'DD/MM/YYYY')));
+insert into CREDENTIAL( id, version, hashPassword, salt, created ) values( 603, 0, '16AFB50A06A958ACEC2EDA9D70283139BC7B7372E21CC83F619CCF169E6E7956', 'FFFFFF', (TO_DATE('17/12/2015', 'DD/MM/YYYY')));
+insert into CREDENTIAL( id, version, hashPassword, salt, created ) values( 604, 0, '16AFB50A06A958ACEC2EDA9D70283139BC7B7372E21CC83F619CCF169E6E7956', 'FFFFFF', (TO_DATE('17/12/2015', 'DD/MM/YYYY')));
+insert into CREDENTIAL( id, version, hashPassword, salt, created ) values( 605, 0, '16AFB50A06A958ACEC2EDA9D70283139BC7B7372E21CC83F619CCF169E6E7956', 'FFFFFF', (TO_DATE('17/12/2015', 'DD/MM/YYYY')));
+insert into CREDENTIAL( id, version, hashPassword, salt, created ) values( 606, 0, '16AFB50A06A958ACEC2EDA9D70283139BC7B7372E21CC83F619CCF169E6E7956', 'FFFFFF', (TO_DATE('17/12/2015', 'DD/MM/YYYY')));
+insert into CREDENTIAL( id, version, hashPassword, salt, created ) values( 607, 0, '16AFB50A06A958ACEC2EDA9D70283139BC7B7372E21CC83F619CCF169E6E7956', 'FFFFFF', (TO_DATE('17/12/2015', 'DD/MM/YYYY')));
 
-insert into USER( id, version, name, surname, phoneNumber, email, language, rowsPerPage, role, credentialId ) values( 500, 0, 'Abel', 'Ferrer Jiménez','685555276', 'abel.ferrer.jimenez@gmail.com', 'es', 10, 'ADMIN', 600);
-insert into USER( id, version, name, surname, phoneNumber, email, language, rowsPerPage, role, credentialId ) values( 501, 0, 'Isabel', 'Vallejo Medina','685555276', 'isabel.vallejo.medina@gmail.com', 'es', 10, 'ADMIN', 601);
+insert into USER( id, version, name, surname, phoneNumber, email, language, rowsPerPage, role, credentialId, managerId ) values( 500, 0, 'Abel', 'Ferrer Jiménez','685555276', 'abel.ferrer.jimenez@gmail.com', 'es', 10, 'ADMIN', 600, null);
+insert into USER( id, version, name, surname, phoneNumber, email, language, rowsPerPage, role, credentialId, managerId ) values( 501, 0, 'Isabel', 'Vallejo Medina','685555276', 'isabel.vallejo.medina@gmail.com', 'es', 10, 'ADMIN', 601, null);
+insert into USER( id, version, name, surname, phoneNumber, email, language, rowsPerPage, role, credentialId, managerId ) values( 502, 0, 'Juan', 'Fernández','685555276', 'jfernandez@gmail.com', 'es', 10, 'USER', 602, 500);
+insert into USER( id, version, name, surname, phoneNumber, email, language, rowsPerPage, role, credentialId, managerId ) values( 503, 0, 'Pedro', 'Smith','685555276', 'psmith@gmail.com', 'es', 10, 'USER', 603, 500);
+insert into USER( id, version, name, surname, phoneNumber, email, language, rowsPerPage, role, credentialId, managerId ) values( 504, 0, 'Luis', 'Carrasco','685555276', 'lcarrasco@gmail.com', 'es', 10, 'USER', 604, 500);
+insert into USER( id, version, name, surname, phoneNumber, email, language, rowsPerPage, role, credentialId, managerId ) values( 505, 0, 'Ana', 'Casoras','685555276', 'acasoras@gmail.com', 'es', 10, 'USER', 605, 500);
+insert into USER( id, version, name, surname, phoneNumber, email, language, rowsPerPage, role, credentialId, managerId ) values( 506, 0, 'Luis Ángel', 'Nuestra Señora del manto','685555276', 'lantrasenora@gmail.com', 'es', 10, 'USER', 606, 500);
+insert into USER( id, version, name, surname, phoneNumber, email, language, rowsPerPage, role, credentialId, managerId ) values( 507, 0, 'Anabel', 'Villafafila','685555276', 'anabel@gmail.com', 'es', 10, 'USER', 607, 500);
 
 insert into USERCLOSURE( id, version, antecessor_id, descendant_id, pathLength ) values( 700, 0, 500, 500, 0 );
 insert into USERCLOSURE( id, version, antecessor_id, descendant_id, pathLength ) values( 701, 0, 501, 501, 0 );
+insert into USERCLOSURE( id, version, antecessor_id, descendant_id, pathLength ) values( 702, 0, 502, 502, 0 );
+insert into USERCLOSURE( id, version, antecessor_id, descendant_id, pathLength ) values( 703, 0, 503, 503, 0 );
+insert into USERCLOSURE( id, version, antecessor_id, descendant_id, pathLength ) values( 704, 0, 504, 504, 0 );
+insert into USERCLOSURE( id, version, antecessor_id, descendant_id, pathLength ) values( 705, 0, 505, 505, 0 );
+insert into USERCLOSURE( id, version, antecessor_id, descendant_id, pathLength ) values( 706, 0, 506, 506, 0 );
+insert into USERCLOSURE( id, version, antecessor_id, descendant_id, pathLength ) values( 707, 0, 507, 507, 0 );
+insert into USERCLOSURE( id, version, antecessor_id, descendant_id, pathLength ) values( 708, 0, 500, 502, 1 );
+insert into USERCLOSURE( id, version, antecessor_id, descendant_id, pathLength ) values( 709, 0, 500, 503, 1 );
+insert into USERCLOSURE( id, version, antecessor_id, descendant_id, pathLength ) values( 710, 0, 500, 504, 1 );
+insert into USERCLOSURE( id, version, antecessor_id, descendant_id, pathLength ) values( 711, 0, 500, 505, 1 );
+insert into USERCLOSURE( id, version, antecessor_id, descendant_id, pathLength ) values( 712, 0, 500, 506, 1 );
+insert into USERCLOSURE( id, version, antecessor_id, descendant_id, pathLength ) values( 713, 0, 500, 507, 1 );
 
 insert into CANDIDATE( id, version, name, surname, phoneNumber, email, city, country, door, number, state, storey, street, zipCode, jobProfile, ownerId) values ( 510, 0, 'Abel', 'Ferrer Jiménez','685555276', 'aferrer@gmail.com', 'Barcelona', 'España','1','85', 'Barcelona', 'Principal', 'Bailén', '08809', 'Arquitecto', 500);
 insert into CANDIDATE( id, version, name, surname, phoneNumber, email, city, country, door, number, state, storey, street, zipCode, jobProfile, ownerId) values ( 511, 0, 'Luís', 'González Sánchez','685555277', 'lgonzalez@gmail.com', 'Madrid', 'España','2','85', 'Madrid', '2', 'Miraflores', '80809', 'Programador JEE', 500);

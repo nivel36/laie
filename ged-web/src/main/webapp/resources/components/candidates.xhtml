@@ -23,7 +23,7 @@
 					paginator="true" paginatorPosition="bottom">
 					<p:link outcome="#{Page.CANDIDATE.getUrl()}">
 						<f:param name="id" value="#{candidate.id}" />
-						<cc:person value="#{candidate}" description="#{candidate.jobProfile}" />
+						<cc:person value="#{candidate}" description="#{candidate.jobProfile}" styleClass="selectable"/>
 					</p:link>
 				</p:dataList>
 				

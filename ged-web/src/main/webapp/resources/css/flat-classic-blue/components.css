@@ -884,14 +884,14 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button
 .person {
 	padding: 5px;
 	display: flex;
-	min-width: 300px;
+	flex: 1 1 100%;
 }
 
-.candidates .person {
+.person.selectable {
 	border-left: 3px solid white;
 }
 
-.candidates .person:hover {
+.person.selectable:hover {
 	background: #f2f3f3;
 	border-left: 3px solid #1976d2;
 }
@@ -908,6 +908,7 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button
 .person .person-data .name {
 	color: black;
 	font-size: 1.1em;
+	width: 180px;
 }
 
 .person .person-data .description {

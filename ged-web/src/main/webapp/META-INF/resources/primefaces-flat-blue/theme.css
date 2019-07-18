@@ -787,6 +787,11 @@ body .ui-selectonemenu .ui-selectonemenu-label {
 	align-items: center;
 }
 
+body .ui-link {
+	display: flex;
+	flex: 1 1 100%;
+}
+
 body .ui-spinner {
 	display: flex;
 }
