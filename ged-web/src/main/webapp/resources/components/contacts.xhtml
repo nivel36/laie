@@ -21,7 +21,10 @@
 			<p:panel header="#{cc.attrs.title}">
 				<p:dataList var="contact" value="#{cc.attrs.contacts}" emptyMessage="#{i18n['client.no_contacts_found']}"
 					paginator="true" paginatorPosition="bottom">
-					<cc:person value="#{contact}" />
+					<p:link outcome="#{Page.CONTACT.getUrl()}" >
+						<f:param name="id" value="#{contact.id}" />
+						<cc:person value="#{contact}" styleClass="selectable"/>
+					</p:link>
 				</p:dataList>
 				<h:panelGroup layout="block" class="panel-footer" rendered="#{component.findComponent('children').childCount > 0}">
 					<h:panelGroup id="children" styleClass="panel-buttons">

@@ -18,6 +18,7 @@ public enum PageEnum {
 	CLIENT_SEARCH("/client/search"), //
 	CLIENT_SELECT("/client/select"), //
 	CONFIG("/config"), //
+	CONTACT("/client/contact/view"), //
 	CONTACT_ADD("/client/contact/add"), //
 	CONTACT_EDIT("/client/contact/edit", true), //
 	CURRICULUM("/candidate/curriculum"), //

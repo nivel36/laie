@@ -906,14 +906,14 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button
 }
 
 .person .person-data .name {
-	color: black;
+	color: #7a869b;
 	font-size: 1.1em;
 	width: 180px;
 }
 
 .person .person-data .description {
 	font-size: 0.9em;
-	color: #898989;
+	color: #7a869b;
 }
 
 .tag {

@@ -68,7 +68,7 @@
 										<h:panelGroup class="user-minicard" rendered="#{viewUserView.user.managed}">
 											<p:link outcome="#{Page.USER.getUrl()}">
 												<f:param name="id" value="#{viewUserView.user.manager.id}" />
-												<cc:person value="#{viewUserView.user.manager}" showDescription="false" />
+												<cc:person value="#{viewUserView.user.manager}" showDescription="false" styleClass="selectable" />
 											</p:link>
 										</h:panelGroup>
 									</div>
