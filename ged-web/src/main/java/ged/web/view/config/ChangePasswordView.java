@@ -38,7 +38,7 @@ public class ChangePasswordView extends AbstractView {
 	private transient UserService userService;
 
 	public String change() {
-		logger.debug("Action: change password");
+		logger.debug("AbstractAction: change password");
 		if (!this.isValidPassword()) {
 			this.addMessage(FacesMessage.SEVERITY_ERROR, "login.error.bad_password", "login.error.bad_password");
 			this.facesContext.validationFailed();

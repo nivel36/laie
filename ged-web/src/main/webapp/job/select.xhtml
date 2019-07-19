@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:i18n="http://ged.com/i18n"
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" template="/WEB-INF/templates/dialog.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" 
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" 
+	xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:g="http://ged.org/ui" 
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/WEB-INF/templates/dialog.xhtml">
 
 	<ui:define name="title">
 		<title>#{i18n['job.job_offers']}</title>
@@ -12,7 +20,7 @@
 			<div class="grid">
 				<div class="col-12 md-6 lg-4">
 					<div class="inputgroup">
-						<p:inputText id="searchText" value="#{jobOfferSearchDialogView.searchText}" />
+						<p:input id="searchText" value="#{jobOfferSearchDialogView.searchText}" />
 						<p:commandButton id="cleanSearchTextAction" action="#{jobOfferSearchDialogView.clean}" update="@form" styleClass="btn-gray"
 							icon="fa fa-times" rendered="#{not empty jobOfferSearchDialogView.searchText}" />
 						<p:commandButton id="searchAction" action="#{jobOfferSearchDialogView.search}" update="@form" icon="fa fa-search" />

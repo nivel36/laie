@@ -42,9 +42,9 @@ public class AddUserViewTest {
 
 		@Test
 		public void getUserTest() {
-			final User user = mockUser();
-			addUserView.setUser(user);
-			final User returnedUser = addUserView.getUser();
+			final User user = AddUserViewTest.this.mockUser();
+			AddUserViewTest.this.addUserView.setUser(user);
+			final User returnedUser = AddUserViewTest.this.addUserView.getUser();
 			assertEquals(user, returnedUser);
 		}
 	}
@@ -54,9 +54,9 @@ public class AddUserViewTest {
 
 		@Test
 		public void newUserShouldHaveDefaultValuesNonNull() {
-			when(sessionUser.isAdmin()).thenReturn(true);
-			addUserView.init();
-			final User user = addUserView.getUser();
+			when(AddUserViewTest.this.sessionUser.isAdmin()).thenReturn(true);
+			AddUserViewTest.this.addUserView.init();
+			final User user = AddUserViewTest.this.addUserView.getUser();
 
 			assertNull(user.getEmail());
 			assertEquals(LocalDate.now(), user.getDateOfJoin());
@@ -71,15 +71,15 @@ public class AddUserViewTest {
 
 		@Test
 		public void newUserShouldBeOk() {
-			final User user = mockNewUser();
-			addUserView.setUser(user);
+			final User user = AddUserViewTest.this.mockNewUser();
+			AddUserViewTest.this.addUserView.setUser(user);
 
-			final User savedUser = mockUser();
-			when(userService.save(user)).thenReturn(savedUser);
+			final User savedUser = AddUserViewTest.this.mockUser();
+			when(AddUserViewTest.this.userService.save(user)).thenReturn(savedUser);
 
-			addUserView.save();
-			assertEquals("abel@test.com", addUserView.getUser().getEmail());
-			assertEquals(1L, addUserView.getUser().getId());
+			AddUserViewTest.this.addUserView.save();
+			assertEquals("abel@test.com", AddUserViewTest.this.addUserView.getUser().getEmail());
+			assertEquals(1L, AddUserViewTest.this.addUserView.getUser().getId());
 		}
 	}
 
@@ -87,24 +87,12 @@ public class AddUserViewTest {
 	class SearchManager {
 
 		@Test
-		public void nullSearchShouldReturnEmptyList() {
-			final List<User> managers = addUserView.searchManager(null);
-			assertEquals(0, managers.size());
-		}
-
-		@Test
-		public void shortTextSearchShouldReturnEmptyList() {
-			final List<User> managers = addUserView.searchManager("as");
-			assertEquals(0, managers.size());
-		}
-
-		@Test
 		public void validSearchShouldReturnUserList() {
-			final List<User> mockedManagers = mockListOfUsers();
-			SearchResult<User> searchResult = new SearchResult<>(mockedManagers, mockedManagers.size());
-			Mockito.when(userService.search("Abe", Page.ALL)).thenReturn(searchResult);
+			final List<User> mockedManagers = AddUserViewTest.this.mockListOfUsers();
+			final SearchResult<User> searchResult = new SearchResult<>(mockedManagers, mockedManagers.size());
+			Mockito.when(AddUserViewTest.this.userService.search("Abe", Page.of(0, 10))).thenReturn(searchResult);
 
-			final List<User> managers = addUserView.searchManager("Abe");
+			final List<User> managers = AddUserViewTest.this.addUserView.queryManager("Abe");
 
 			assertEquals("abel@test.com", managers.get(0).getEmail());
 		}
@@ -115,35 +103,35 @@ public class AddUserViewTest {
 
 		@Test
 		public void emptyFileShouldNotSetImageNameToUser() throws IOException {
-			final User user = mockUser();
+			final User user = AddUserViewTest.this.mockUser();
 			user.setEmail("abel@test.com");
-			addUserView.setUser(user);
+			AddUserViewTest.this.addUserView.setUser(user);
 
 			final FileUploadEvent event = mock(FileUploadEvent.class);
-			addUserView.uploadImage(event);
+			AddUserViewTest.this.addUserView.uploadImage(event);
 			assertNull(user.getImageFileName());
 		}
 
 		@Test
 		public void nullEventShouldThrowNullPointerException() throws IOException {
 			assertThrows(NullPointerException.class, () -> {
-				addUserView.uploadImage(null);
+				AddUserViewTest.this.addUserView.uploadImage(null);
 			});
 		}
 
 		@Test
 		public void uploadImageShouldSetImageNameToUserObject() throws IOException {
-			final User user = mockUser();
-			addUserView.setUser(user);
+			final User user = AddUserViewTest.this.mockUser();
+			AddUserViewTest.this.addUserView.setUser(user);
 
 			final FileUploadEvent event = mock(FileUploadEvent.class);
 			final UploadedFile file = mock(UploadedFile.class);
 			when(event.getFile()).thenReturn(file);
 			final InputStream is = mock(InputStream.class);
 			when(event.getFile().getInputstream()).thenReturn(is);
-			when(fileUploadService.uploadImage(is)).thenReturn("uuidImageName");
+			when(AddUserViewTest.this.fileUploadService.uploadImage(is)).thenReturn("uuidImageName");
 
-			addUserView.uploadImage(event);
+			AddUserViewTest.this.addUserView.uploadImage(event);
 			assertEquals("uuidImageName", user.getImageFileName());
 		}
 	}
@@ -154,31 +142,31 @@ public class AddUserViewTest {
 		@Test
 		public void changeEmailToDuplicatedEmailShouldThrowValidatorException() {
 			assertThrows(ValidatorException.class, () -> {
-				addUserView.setUser(mockUser());
+				AddUserViewTest.this.addUserView.setUser(AddUserViewTest.this.mockUser());
 
-				when(userService.isEmailInUse("bernard@test.com")).thenReturn(true);
-				when(translator.message("user.error.email_exists")).thenReturn("Error message");
+				when(AddUserViewTest.this.userService.isEmailInUse("bernard@test.com")).thenReturn(true);
+				when(AddUserViewTest.this.translator.message("user.error.email_exists")).thenReturn("Error message");
 
-				addUserView.validateEmail(null, null, "bernard@test.com");
+				AddUserViewTest.this.addUserView.validateEmail(null, null, "bernard@test.com");
 			});
 		}
 
 		@Test
 		public void changeEmailToNonDuplicatedEmailShoulbBeOk() {
-			addUserView.setUser(mockUser());
-			when(userService.isEmailInUse("another.email@test.com")).thenReturn(false);
-			addUserView.validateEmail(null, null, "another.email@test.com");
+			AddUserViewTest.this.addUserView.setUser(AddUserViewTest.this.mockUser());
+			when(AddUserViewTest.this.userService.isEmailInUse("another.email@test.com")).thenReturn(false);
+			AddUserViewTest.this.addUserView.validateEmail(null, null, "another.email@test.com");
 		}
 
 		@Test
 		public void nullEmailShouldBeOk() {
-			addUserView.validateEmail(null, null, null);
+			AddUserViewTest.this.addUserView.validateEmail(null, null, null);
 		}
 
 		@Test
 		public void unmodifiedEmailShouldBeOk() {
-			addUserView.setUser(mockUser());
-			addUserView.validateEmail(null, null, "abel@test.com");
+			AddUserViewTest.this.addUserView.setUser(AddUserViewTest.this.mockUser());
+			AddUserViewTest.this.addUserView.validateEmail(null, null, "abel@test.com");
 		}
 	}
 
@@ -201,7 +189,7 @@ public class AddUserViewTest {
 
 	private List<User> mockListOfUsers() {
 		final List<User> users = new ArrayList<>();
-		users.add(mockUser());
+		users.add(this.mockUser());
 		return users;
 	}
 
@@ -225,7 +213,7 @@ public class AddUserViewTest {
 		this.addUserView.setUserService(this.userService);
 		this.addUserView.setFlash(this.flash);
 		this.addUserView.setTranslator(this.translator);
-		addUserView.setSessionUser(sessionUser);
+		this.addUserView.setSessionUser(this.sessionUser);
 	}
 
 }

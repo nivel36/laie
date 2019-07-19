@@ -3,9 +3,7 @@ package ged.web.view.candidate;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UncheckedIOException;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.inject.Inject;
 
@@ -16,6 +14,7 @@ import org.primefaces.model.UploadedFile;
 import ged.ejb.candidate.Candidate;
 import ged.ejb.candidate.CandidateService;
 import ged.ejb.core.FileUploadService;
+import ged.ejb.core.model.Page;
 import ged.ejb.core.tag.Tag;
 import ged.ejb.core.tag.TagService;
 import ged.web.core.util.PageEnum;
@@ -33,43 +32,30 @@ public abstract class AbstractCandidateView extends AbstractView {
 	@Inject
 	protected transient FileUploadService fileUploadService;
 
-	protected List<String> tags;
+	protected List<Tag> tags;
 
 	@Inject
 	protected transient TagService tagService;
 
 	protected String candidateUrl() {
-		return PageEnum.CANDIDATE.getRedirectUrl(this.candidate);
+		return PageEnum.CANDIDATE.getRedirectedUrl(this.candidate);
 	}
 
 	public Candidate getCandidate() {
 		return this.candidate;
 	}
 
-	public List<String> getTags() {
+	public List<Tag> getTags() {
 		return this.tags;
-	}
-
-	// TODO: Redo
-	protected Set<Tag> getTagsFromStringList(final List<String> labels) {
-		if ((labels == null) || labels.isEmpty()) {
-			return new HashSet<>();
-		}
-		final Set<Tag> candidateTags = new HashSet<>();
-		for (final String label : labels) {
-			final Tag tagFoundInDataBase = this.tagService.findByName(label);
-			if (tagFoundInDataBase != null) {
-				candidateTags.add(tagFoundInDataBase);
-			} else {
-				candidateTags.add(new Tag(label));
-			}
-		}
-		return candidateTags;
 	}
 
 	public void onrate(final RateEvent rateEvent) {
 		final Integer rate = (Integer) rateEvent.getRating();
 		this.candidate.setRating(rate);
+	}
+
+	public List<Tag> queryTags(final String query) {
+		return this.tagService.search(query, Page.of(0, 10)).getResultData();
 	}
 
 	public void setCandidate(final Candidate candidate) {
@@ -80,7 +66,7 @@ public abstract class AbstractCandidateView extends AbstractView {
 		this.candidateService = candidateService;
 	}
 
-	public void setTags(final List<String> tags) {
+	public void setTags(final List<Tag> tags) {
 		this.tags = tags;
 	}
 

@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://ged.com/i18n" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
-	xmlns:p="http://primefaces.org/ui" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:o="http://omnifaces.org/ui"
-	xmlns:of="http://omnifaces.org/functions" template="/WEB-INF/templates/default.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" 
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" 
+	xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:g="http://ged.org/ui" 
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
 		<title>#{i18n['curriculum.curriculum']} - #{curriculumView.candidate.fullName}</title>
@@ -160,7 +167,7 @@
 								<!-- Skills -->
 								<div class="section-title">#{i18n['curriculum.skills']}</div>
 								<div class="section-content">
-									<p:chips value="#{curriculumView.skills}" converter="stringConverter" disabled="true" />
+									<p:chips value="#{curriculumView.skills}" converter="skillConverter" disabled="true" />
 								</div>
 								<div class="panel-buttons">
 									<p:commandButton value="#{i18n['action.edit']}" action="#{curriculumView.editSkills}" process="@this" />

@@ -21,7 +21,7 @@ public abstract class AbstractClientView extends AbstractView {
 	}
 
 	protected String clientUrl() {
-		return PageEnum.CLIENT.getRedirectUrl(this.client);
+		return PageEnum.CLIENT.getRedirectedUrl(this.client);
 	}
 
 	public void setClientService(final ClientService clientService) {

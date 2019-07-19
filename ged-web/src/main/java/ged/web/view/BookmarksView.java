@@ -32,10 +32,10 @@ public class BookmarksView extends AbstractView {
 	private transient BookmarkService bookmarkService;
 
 	public void add(final AbstractEntity entity) {
-		BookmarksView.logger.debug("Adding bookmark {} for user {}", entity, this.sessionUser.get().getEmail());
+		logger.debug("Adding bookmark {} for user {}", entity, this.sessionUser.get().getEmail());
 		Bookmark bookmark = this.createBookmark(entity);
 		if (this.bookmarks.size() > 9) {
-			BookmarksView.logger.warn("Bookmark full for user {}", this.sessionUser.get().getEmail());
+			logger.warn("Bookmark full for user {}", this.sessionUser.get().getEmail());
 			Message.addError("Bookmark full", "Bookmark full");
 			return;
 		}

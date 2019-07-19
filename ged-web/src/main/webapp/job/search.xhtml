@@ -1,15 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://ged.com/i18n" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
-	xmlns:p="http://primefaces.org/ui" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:o="http://omnifaces.org/ui"
-	xmlns:of="http://omnifaces.org/functions" template="/WEB-INF/templates/default.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" 
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" 
+	xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:g="http://ged.org/ui" 
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
 		<title>#{i18n['job.job_offer']}</title>
 	</ui:define>
 
 	<ui:param name="selectedMenu" value="offers" />
-	
+
 	<ui:define name="actions">
 		<p:button value="#{i18n['job.new_job_offer']}" outcome="#{Page.JOB_ADD.getUrl()}" />
 	</ui:define>
@@ -23,56 +30,61 @@
 
 	<ui:define name="content">
 		<h:form id="jobOfferSearchform">
-			<div class="panel">
-				<div class="panel-content">
-					<div class="panel-content-data">
+			<p:panel>
+				<div class="panel-content-data">
+					<div class="search-bar">
 						<cc:inputSearch searchText="#{searchJobView.searchText}" searchAction="#{searchJobView.search}" update="@form" />
-						<div class="panel-buttons">
-							<p:commandButton value="#{i18n['action.export']}" action="#{searchJobView.export}" process="@this" icon="fa-file-excel-o" />
-						</div>
 					</div>
-
-					<p:dataTable var="jobOffer" value="#{searchJobView.jobOffers}" emptyMessage="#{i18n['job.no_jobs_found']}" reflow="true"
-						paginator="true" paginatorPosition="bottom" rows="#{sessionUser.rowsPerPage}" sortBy="#{jobOffer.name}" sortOrder="descending"
-						lazy="true">
-
-						<p:column headerText="#{i18n['job.name']}" sortBy="#{jobOffer.name}">
-							<h:link value="#{jobOffer.name}" outcome="#{Page.JOB.getUrl()}">
-								<f:param name="id" value="#{jobOffer.id}" />
-							</h:link>
-							<span class="job_address">#{jobOffer.address.city} (#{jobOffer.address.state})</span>
-						</p:column>
-
-						<p:column headerText="#{i18n['job.client']}" sortBy="#{jobOffer.client.name}">
-							<h:link value="#{jobOffer.client.name}" outcome="#{Page.CLIENT.getUrl()}">
-								<f:param name="id" value="#{jobOffer.client.id}" />
-							</h:link>
-						</p:column>
-
-						<p:column headerText="#{i18n['job.date_opened']}" sortBy="#{jobOffer.dateOpened}">
-							<h:outputText value="#{jobOffer.dateOpened}">
-								<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
-							</h:outputText>
-						</p:column>
-
-						<p:column headerText="#{i18n['job.date_closed']}" sortBy="#{jobOffer.dateClosed}">
-							<h:outputText value="#{jobOffer.dateClosed}">
-								<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
-							</h:outputText>
-						</p:column>
-
-						<p:column headerText="#{i18n['job.places']}">
-							<h:outputText value="#{jobOffer.places}" />
-						</p:column>
-
-						<p:column headerText="#{i18n['user.owner']}" sortBy="#{user.owner.name}">
-							<h:link value="#{jobOffer.owner.fullName}" outcome="#{Page.USER.getUrl()}">
-								<f:param name="id" value="#{jobOffer.owner.id}" />
-							</h:link>
-						</p:column>
-					</p:dataTable>
+					<div class="panel-buttons">
+						<p:commandButton value="#{i18n['action.export']}" action="#{searchJobView.export}" process="@this"
+							icon="fa-file-excel-o" />
+					</div>
 				</div>
-			</div>
+
+				<p:dataTable var="jobOffer" value="#{searchJobView.jobOffers}" emptyMessage="#{i18n['job.no_jobs_found']}"
+					reflow="true" paginator="true" paginatorPosition="bottom" rows="#{sessionUser.rowsPerPage}"
+					sortBy="#{jobOffer.name}" sortOrder="descending" lazy="true">
+
+					<p:column headerText="#{i18n['job.name']}" sortBy="#{jobOffer.name}">
+						<h:link value="#{jobOffer.name}" outcome="#{Page.JOB.getUrl()}">
+							<f:param name="id" value="#{jobOffer.id}" />
+						</h:link>
+						<span class="job_address">#{jobOffer.address.city} (#{jobOffer.address.state})</span>
+					</p:column>
+
+					<p:column headerText="#{i18n['job.client']}" sortBy="#{jobOffer.client.name}">
+						<h:link value="#{jobOffer.client.name}" outcome="#{Page.CLIENT.getUrl()}">
+							<f:param name="id" value="#{jobOffer.client.id}" />
+						</h:link>
+					</p:column>
+
+					<p:column headerText="#{i18n['job.date_opened']}" sortBy="#{jobOffer.dateOpened}">
+						<h:outputText value="#{jobOffer.dateOpened}">
+							<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="#{i18n['job.date_closed']}" sortBy="#{jobOffer.dateClosed}">
+						<h:outputText value="#{jobOffer.dateClosed}">
+							<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="#{i18n['job.places']}">
+						<h:outputText value="#{jobOffer.places}" />
+					</p:column>
+
+					<p:column headerText="#{i18n['user.owner']}" sortBy="#{user.owner.name}">
+						<h:link value="#{jobOffer.owner.fullName}" outcome="#{Page.USER.getUrl()}">
+							<f:param name="id" value="#{jobOffer.owner.id}" />
+						</h:link>
+					</p:column>
+
+					<p:column headerText="#{i18n['job.job_offer_state']}">
+						<div class="tag #{jobOffer.jobOfferState.color}">#{g:translate(jobOffer.jobOfferState.name)}</div>
+					</p:column>
+				</p:dataTable>
+			</p:panel>
 		</h:form>
 	</ui:define>
 </ui:composition>

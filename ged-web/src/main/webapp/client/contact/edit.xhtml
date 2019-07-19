@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:composite="http://xmlns.jcp.org/jsf/composite"
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:o="http://omnifaces.org/ui" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" 
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" 
+	xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:g="http://ged.org/ui" 
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
 	template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
@@ -23,15 +30,15 @@
 				<div class="panel-content panel-content-data">
 					<div class="grid">
 						<div class="col-12 sm-6">
-							<cc:inputText id="name" label="#{i18n['contact.name']}" value="#{contactEditView.contact.name}" required="true" />
+							<g:input id="name" label="#{i18n['contact.name']}" value="#{contactEditView.contact.name}" required="true" />
 
-							<cc:inputText id="surname" label="#{i18n['contact.surname']}" value="#{contactEditView.contact.surname}" required="true" />
+							<g:input id="surname" label="#{i18n['contact.surname']}" value="#{contactEditView.contact.surname}" required="true" />
 
-							<cc:inputText id="position" label="#{i18n['contact.position']}" value="#{contactEditView.contact.position}" />
+							<g:input id="position" label="#{i18n['contact.position']}" value="#{contactEditView.contact.position}" />
 
-							<cc:inputText id="email" label="#{i18n['contact.email']}" value="#{contactEditView.contact.email}" />
+							<g:input id="email" label="#{i18n['contact.email']}" value="#{contactEditView.contact.email}" />
 
-							<cc:inputText id="phone_number" label="#{i18n['contact.phone_number']}" value="#{contactEditView.contact.phoneNumber}" />
+							<g:input id="phone_number" label="#{i18n['contact.phone_number']}" value="#{contactEditView.contact.phoneNumber}" />
 						</div>
 					</div>
 				</div>

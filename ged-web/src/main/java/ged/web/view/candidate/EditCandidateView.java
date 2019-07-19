@@ -2,7 +2,7 @@ package ged.web.view.candidate;
 
 import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -11,7 +11,6 @@ import javax.inject.Named;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ged.ejb.core.tag.Tag;
 import ged.web.core.IllegalPageStateException;
 
 @Named
@@ -38,14 +37,6 @@ public class EditCandidateView extends AbstractCandidateView {
 		}
 	}
 
-	private List<String> initTags() {
-		List<String> tagNames = new ArrayList<>();
-		for (final Tag tag : this.candidate.getTags()) {
-			tagNames.add(tag.getLabel());
-		}
-		return tags;
-	}
-
 	@PostConstruct
 	public void init() {
 		this.candidate = this.getValueFromFlash(CANDIDATE_KEY);
@@ -53,12 +44,24 @@ public class EditCandidateView extends AbstractCandidateView {
 		this.checkEditPermission();
 		logger.trace("Candidate {} edit init", this.candidate);
 		this.putValueToFlash(CANDIDATE_KEY, this.candidate); // prevent errors if f5/reload is pressed
-		this.tags = initTags();
+		this.initTags();
+	}
+
+	private void initTags() {
+		if (this.candidate.getTags() != null) {
+			this.tags = new ArrayList<>(this.candidate.getTags());
+		} else {
+			this.candidate.setTags(new ArrayList<>());
+		}
 	}
 
 	public String save() {
 		logger.debug("Save candidate action performed");
-		this.candidate.setTags(this.getTagsFromStringList(this.getTags()));
+		if (this.getTags() == null) {
+			this.candidate.setTags(new HashSet<>());
+		} else {
+			this.candidate.setTags(this.getTags());
+		}
 		this.candidate = this.candidateService.save(this.candidate);
 		return this.candidateUrl();
 	}

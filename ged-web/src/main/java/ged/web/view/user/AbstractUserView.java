@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UncheckedIOException;
 import java.lang.invoke.MethodHandles;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -29,7 +28,7 @@ import ged.web.core.util.PageEnum;
 import ged.web.core.view.AbstractView;
 
 public abstract class AbstractUserView extends AbstractView {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	private static final long serialVersionUID = 3354587838102295632L;
@@ -41,7 +40,7 @@ public abstract class AbstractUserView extends AbstractView {
 
 	@Inject
 	protected transient UserService userService;
-	
+
 	public void changeRoleListener() {
 		logger.trace("Change role listener triggered");
 		if (this.user.isAdmin()) {
@@ -49,12 +48,13 @@ public abstract class AbstractUserView extends AbstractView {
 		}
 	}
 
-	public List<User> searchManager(final String query) {
+	public User getUser() {
+		return this.user;
+	}
+
+	public List<User> queryManager(final String query) {
 		logger.trace("Searching for manager with the string {}", query);
-		if ((query == null) || (query.trim().length() < 3)) {
-			return new ArrayList<>();
-		}
-		final List<User> managers = this.userService.search(query, Page.ALL).getResultData();
+		final List<User> managers = this.userService.search(query, Page.of(0, 10)).getResultData();
 		managers.remove(this.user);
 		return managers;
 	}
@@ -86,6 +86,10 @@ public abstract class AbstractUserView extends AbstractView {
 		}
 	}
 
+	protected String userUrl() {
+		return PageEnum.USER.getRedirectedUrl(this.user);
+	}
+
 	public void validateEmail(final FacesContext context, final UIComponent component, final Object value) {
 		if (value == null) {
 			return;
@@ -101,13 +105,5 @@ public abstract class AbstractUserView extends AbstractView {
 			final String msg = this.translator.message("user.error.email_exists");
 			throw new ValidatorException(new FacesMessage(SEVERITY_ERROR, msg, msg));
 		}
-	}
-	
-	public User getUser() {
-		return this.user;
-	}
-	
-	protected String userUrl() {
-		return PageEnum.USER.getRedirectUrl(this.user);
 	}
 }

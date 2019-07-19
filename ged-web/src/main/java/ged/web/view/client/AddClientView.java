@@ -10,7 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ged.ejb.client.Client;
-import ged.ejb.core.Address;
+import ged.ejb.core.model.Address;
 
 @Named
 @ViewScoped

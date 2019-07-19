@@ -40,7 +40,7 @@ public class LanguageView extends AbstractView {
 	private List<Language> languages;
 
 	private String curriculumUrl() {
-		return PageEnum.CURRICULUM.getRedirectUrl(this.curriculum.getCandidate());
+		return PageEnum.CURRICULUM.getUrl(this.curriculum.getCandidate());
 	}
 
 	public void deleteLanguage(final Language language) {

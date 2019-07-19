@@ -51,23 +51,23 @@ public class CurriculumView extends AbstractView {
 	public String editEducation(final Education education) {
 		this.putValueToFlash("education", education);
 		this.putValueToFlash(CURRICULUM_KEY, curriculum);
-		return PageEnum.CURRICULUM_EDUCATION.getRedirectUrl();
+		return PageEnum.CURRICULUM_EDUCATION.getUrl();
 	}
 
 	public String editJobExperience(final JobExperience jobExperience) {
 		this.putValueToFlash("jobExperience", jobExperience);
 		this.putValueToFlash(CURRICULUM_KEY, curriculum);
-		return PageEnum.CURRICULUM_JOB_EXPERIENCE.getRedirectUrl();
+		return PageEnum.CURRICULUM_JOB_EXPERIENCE.getUrl();
 	}
 
 	public String editLanguages() {
 		this.putValueToFlash(CURRICULUM_KEY, curriculum);
-		return PageEnum.CURRICULUM_LANGUAGE.getRedirectUrl();
+		return PageEnum.CURRICULUM_LANGUAGE.getUrl();
 	}
 	
 	public String editSkills() {
 		this.putValueToFlash(CURRICULUM_KEY, curriculum);
-		return PageEnum.CURRICULUM_SKILLS.getRedirectUrl();
+		return PageEnum.CURRICULUM_SKILLS.getUrl();
 	}
 
 	public Candidate getCandidate() {
@@ -129,22 +129,22 @@ public class CurriculumView extends AbstractView {
 
 	public String newEducation() {
 		this.putValueToFlash(CURRICULUM_KEY, this.curriculum);
-		return PageEnum.CURRICULUM_EDUCATION.getRedirectUrl();
+		return PageEnum.CURRICULUM_EDUCATION.getUrl();
 	}
 
 	public String newJobExperience() {
 		this.putValueToFlash(CURRICULUM_KEY, this.curriculum);
-		return PageEnum.CURRICULUM_JOB_EXPERIENCE.getRedirectUrl();
+		return PageEnum.CURRICULUM_JOB_EXPERIENCE.getUrl();
 	}
 
 	public String newLanguage() {
 		this.putValueToFlash(CURRICULUM_KEY, this.curriculum);
-		return PageEnum.CURRICULUM_LANGUAGE.getRedirectUrl();
+		return PageEnum.CURRICULUM_LANGUAGE.getUrl();
 	}
 
 	public String newSkill() {
 		this.putValueToFlash(CURRICULUM_KEY, this.curriculum);
-		return PageEnum.CURRICULUM_SKILLS.getRedirectUrl();
+		return PageEnum.CURRICULUM_SKILLS.getUrl();
 	}
 
 	private void orderEducationByDate() {

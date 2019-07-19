@@ -16,7 +16,8 @@ import org.slf4j.LoggerFactory;
 
 import ged.ejb.client.Client;
 import ged.ejb.client.Contact;
-import ged.ejb.core.Address;
+import ged.ejb.core.model.Address;
+import ged.ejb.core.model.Page;
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
 import ged.web.core.IllegalPageStateException;
@@ -50,7 +51,7 @@ public class ViewClientView extends AbstractView {
 	public String editClient() {
 		logger.debug("Edit client action performed");
 		this.putValueToFlash(CLIENT_KEY, this.client);
-		return PageEnum.CLIENT_EDIT.getRedirectUrl();
+		return PageEnum.CLIENT_EDIT.getUrl();
 	}
 
 	public void export() throws IOException {
@@ -79,7 +80,7 @@ public class ViewClientView extends AbstractView {
 			this.client.setAddress(new Address());
 		}
 		this.contacts = new ArrayList<>(this.client.getContacts());
-		this.jobOffers = this.jobOfferService.findJobOffersByClient(this.client);
+		this.jobOffers = this.jobOfferService.findJobOffers(this.client, Page.ALL);
 		checkDeleted();
 		this.editable = this.sessionUser.hasPermissionToEdit(this.client);
 	}

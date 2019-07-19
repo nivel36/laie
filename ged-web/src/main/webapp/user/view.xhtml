@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://ged.com/i18n" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
-	xmlns:p="http://primefaces.org/ui" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:o="http://omnifaces.org/ui"
-	xmlns:of="http://omnifaces.org/functions" template="/WEB-INF/templates/default.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" 
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" 
+	xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:g="http://ged.org/ui" 
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
 		<title>#{i18n['user.user']} - #{viewUserView.user.fullName}</title>
@@ -24,15 +31,15 @@
 
 	<ui:define name="content">
 		<div class="grid">
-			<div class="col-12 xl-8">
+			<div class="col-12 xl-7">
 				<div class="panel">
 					<div class="panel-header">
 						<div class="panel-header-image">
-							<cc:avatar imageFileName="#{viewUserView.user.imageFileName}" />
+							<cc:avatar value="#{viewUserView.user.imageFileName}" />
 						</div>
 						<div class="panel-header-data">
 							<div class="name">#{viewUserView.user.fullName}</div>
-							<div class="job-profile">#{i18n:translate(viewUserView.user.role)}</div>
+							<div class="job-profile">#{g:translate(viewUserView.user.role)}</div>
 							<div class="data email">
 								<span class="icon"><em class="fa fa-envelope"></em></span><span class="text">#{viewUserView.user.email}</span>
 							</div>
@@ -43,39 +50,47 @@
 						</div>
 						<h:form>
 							<div class="panel-buttons">
-								<p:commandButton value="#{i18n['action.export']}" process="@this" action="#{viewUserView.export}" icon="fa-file-excel-o" />
+								<p:commandButton value="#{i18n['action.export']}" process="@this" action="#{viewUserView.export}"
+									icon="fa-file-excel-o" />
 								<p:commandButton value="#{i18n['action.edit']}" process="@this" action="#{viewUserView.editUser}" />
 							</div>
 						</h:form>
 					</div>
-					<div class="panel-content panel-content-data grid">
-						<div class="data manager col-12 sm-6">
-							<div class="label">#{i18n['user.manager']}</div>
-							<h:panelGroup layout="block" styleClass="name" rendered="#{not viewUserView.user.managed}"> --- </h:panelGroup>
-							<h:panelGroup class="user-minicard" rendered="#{viewUserView.user.managed}">
-								<p:link outcome="#{Page.USER.getUrl()}">
-									<f:param name="id" value="#{viewUserView.user.manager.id}" />
-									<div class="user-minicard-image">
-										<p:graphicImage class="image" value="/images/#{viewUserView.user.manager.imageFileName}"
-											rendered="#{not empty viewUserView.user.manager.imageFileName}" />
-										<p:graphicImage class="image" value="/resources/img/default-avatar.png"
-											rendered="#{empty viewUserView.user.manager.imageFileName}" />
+					<div class="panel-content panel-content-data">
+						<div class="grid">
+							<div class="col-12 sm-6">
+								<div class="data manager">
+									<div class="label-container">
+										<div class="label">#{i18n['user.manager']}</div>
 									</div>
-									<div class="user-minicard-info">
-										<h:panelGroup layout="block" styleClass="name" rendered="#{viewUserView.user.managed}">#{viewUserView.user.manager}</h:panelGroup>
+									<div class="text-container">
+										<h:panelGroup layout="block" styleClass="name" rendered="#{not viewUserView.user.managed}"> --- </h:panelGroup>
+										<h:panelGroup class="user-minicard" rendered="#{viewUserView.user.managed}">
+											<p:link outcome="#{Page.USER.getUrl()}">
+												<f:param name="id" value="#{viewUserView.user.manager.id}" />
+												<cc:person value="#{viewUserView.user.manager}" showDescription="false" styleClass="selectable" />
+											</p:link>
+										</h:panelGroup>
 									</div>
-								</p:link>
-							</h:panelGroup>
-						</div>
-						<div class="data date_of_join col-12 sm-6">
-							<cc:outputText label="#{i18n['user.date_of_join']}" value="#{viewUserView.user.dateOfJoin}">
-								<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" for="element" />
-							</cc:outputText>
+								</div>
+							</div>
+							<div class="col-12 sm-6">
+								<cc:outputText label="#{i18n['user.date_of_join']}" value="#{viewUserView.user.dateOfJoin}"
+									styleClass="data date_of_join">
+									<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" for="text" />
+								</cc:outputText>
+							</div>
+							<div class="col-12 sm-6">
+								<cc:outputText label="#{i18n['user.last_login']}" value="#{viewUserView.user.lastConnection}"
+									styleClass="data last_login">
+									<f:convertDateTime type="localDateTime" pattern="dd/MM/yyyy HH:mm" for="text" />
+								</cc:outputText>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="col-12 lg-12 xl-4">
+			<div class="col-12 lg-12 xl-5">
 				<h:form id="userTeamForm">
 					<cc:users users="#{viewUserView.team}" title="#{i18n['user.team']}" />
 				</h:form>
@@ -87,7 +102,7 @@
 			</div>
 			<div class="col-12 lg-12 xl-6">
 				<h:form id="jobMeetingsForm">
-					<cc:jobMeetings />
+					<cc:meetings value="#{viewUserView.meetings}" />
 				</h:form>
 			</div>
 		</div>

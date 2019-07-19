@@ -3,6 +3,9 @@ package ged.ejb.core;
 import java.util.List;
 import java.util.Objects;
 
+import javax.annotation.Resource;
+import javax.ejb.SessionContext;
+
 import ged.ejb.core.model.AbstractDao;
 import ged.ejb.core.model.AbstractEntity;
 import ged.ejb.core.model.Page;
@@ -10,7 +13,10 @@ import ged.ejb.core.model.SearchResult;
 import ged.ejb.core.model.SortField;
 
 public abstract class AbstractService<T extends AbstractEntity> {
-
+	
+	@Resource
+	private SessionContext sessionContext;
+	
 	public void delete(final T entity) {
 		Objects.requireNonNull(entity);
 		this.getDao().delete(entity);

@@ -1,0 +1,107 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
+	xmlns:o="http://omnifaces.org/ui" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:composite="http://xmlns.jcp.org/jsf/composite">
+
+	<o:tagAttribute name="id" />
+	<o:tagAttribute name="rendered" default="#{true}" />
+	<o:tagAttribute name="type" default="text" />
+
+	<o:tagAttribute name="label" />
+	<o:tagAttribute name="icon" />
+	<o:tagAttribute name="iconPosition" default="left" />
+
+	<o:tagAttribute name="value" />
+	<o:tagAttribute name="required" default="#{false}" />
+	<o:tagAttribute name="disabled" default="#{false}" />
+
+	<o:tagAttribute name="styleClass" />
+	<o:tagAttribute name="inputStyleClass" />
+	<o:tagAttribute name="labelStyleClass" />
+	<o:tagAttribute name="messageStyleClass" />
+
+	<h:panelGroup id="#{id}" class="input-group #{styleClass}" rendered="#{rendered}">
+
+		<h:panelGroup layout="block" styleClass="label-container" rendered="#{not empty label}">
+			<p:outputLabel id="#{id}_label" for="#{id}_input" value="#{label}" styleClass="label #{labelStyleClass}" />
+		</h:panelGroup>
+
+		<div class="input-container">
+			<h:panelGroup layout="block" rendered="#{not empty icon}" styleClass="input-icon">
+				<em class="icon #{iconPosition eq 'left' ? 'left-icon' : 'right-icon'} fa #{icon}" />
+			</h:panelGroup>
+			<c:choose>
+				<c:when test="#{type eq 'selectOneMenu'}">
+					<p:selectOneMenu id="#{id}_input" value="#{value}" required="#{required}"
+						styleClass="input input-select #{inputStyleClass}">
+						<f:selectItem />
+						<ui:insert />
+					</p:selectOneMenu>
+				</c:when>
+				<c:when test="#{type eq 'textarea'}">
+					<p:inputTextarea id="#{id}_input" value="#{value}" required="#{required}"
+						styleClass="input input-text-area #{inputStyleClass}" autoResize="false">
+						<ui:insert />
+					</p:inputTextarea>
+				</c:when>
+
+				<c:when test="#{type eq 'checkbox'}">
+					<p:selectBooleanCheckbox id="input" value="#{value}" required="#{required}"
+						styleClass="input input-checkbox #{inputStyleClass}">
+						<ui:insert />
+					</p:selectBooleanCheckbox>
+				</c:when>
+
+				<c:when test="#{type eq 'number'}">
+					<p:spinner id="#{id}_input" value="#{value}" required="#{required}"
+						styleClass="input input-number #{inputStyleClass}" min="#{not empty min ? min : 0}"
+						max="#{not empty max ? max : 100}">
+						<ui:insert />
+					</p:spinner>
+				</c:when>
+
+				<c:when test="#{type eq 'calendar'}">
+					<p:calendar id="#{id}_input" value="#{value}" pattern="dd/MM/yyyy" navigator="true" required="#{required}"
+						inputStyleClass="input calendar #{inputStyleClass}">
+						<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
+						<ui:insert />
+						<c:if test="#{not empty yearRange}">
+							<f:attribute name="yearRange" value="#{yearRange}" />
+						</c:if>
+					</p:calendar>
+					<h:panelGroup layout="block" styleClass="input-icon">
+						<em class="icon right-icon fa fa-calendar" aria-hidden="true" />
+					</h:panelGroup>
+				</c:when>
+
+				<c:when test="#{type eq 'money'}">
+					<p:inputNumber id="#{id}_input" value="#{value}" required="#{required}"
+						inputStyleClass="input input-money #{inputStyleClass}">
+						<ui:insert />
+					</p:inputNumber>
+					<h:panelGroup layout="block" styleClass="input-icon">
+						<em class="icon right-icon fa fa-euro" aria-hidden="true" />
+					</h:panelGroup>
+				</c:when>
+
+				<c:when test="#{type eq 'password'}">
+					<p:password id="#{id}_input" value="#{value}" required="#{required}"
+						styleClass="input input-password #{inputStyleClass}">
+						<ui:insert />
+					</p:password>
+				</c:when>
+
+				<c:otherwise>
+					<p:inputText id="#{id}_input" value="#{value}" required="#{required}"
+						styleClass="input input-text #{inputStyleClass}">
+						<ui:insert />
+					</p:inputText>
+				</c:otherwise>
+			</c:choose>
+		</div>
+
+		<h:panelGroup layout="block" class="message-container" rendered="#{!components.find('input').valid}">
+			<p:message id="#{id}_message" for="#{id}_input" styleClass="message-error #{errorStyleClass}" />
+		</h:panelGroup>
+	</h:panelGroup>
+</ui:composition>

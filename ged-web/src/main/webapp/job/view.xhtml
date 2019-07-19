@@ -1,15 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:i18n="http://ged.com/i18n" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
-	xmlns:p="http://primefaces.org/ui" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:o="http://omnifaces.org/ui"
-	xmlns:of="http://omnifaces.org/functions" template="/WEB-INF/templates/default.xhtml">
-
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" 
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" 
+	xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:g="http://ged.org/ui" 
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/WEB-INF/templates/default.xhtml">
+	
 	<ui:define name="title">
 		<title>#{i18n['job.job_offer']} - {viewJobView.jobOffer.name}</title>
 	</ui:define>
 
 	<ui:param name="selectedMenu" value="offers" />
-	
+
 	<ui:define name="actions">
 		<p:button value="#{i18n['job.new_job_offer']}" outcome="#{Page.JOB_ADD.getUrl()}" />
 	</ui:define>
@@ -23,52 +30,64 @@
 	</ui:define>
 
 	<ui:define name="content">
-		<div class="grid nogutter">
-			<div class="panel job col-12 xl-6">
-				<div class="panel-header">
-					<div class="panel-header-title">#{i18n['job.job_offer']}</div>
-					<h:form>
-						<div class="panel-buttons">
-							<p:commandButton value="#{i18n['action.export']}" action="#{viewJobView.export}" icon="fa-file-excel-o" />
-							<p:commandButton value="#{i18n['action.edit']}" action="#{viewJobView.editJobOffer}" />
+		<div class="grid">
+			<div class="col-12 xl-6">
+				<p:panel>
+					<div class="panel-header">
+						<div class="panel-header-title">
+							#{viewJobView.jobOffer.name}
 						</div>
-					</h:form>
-				</div>
-				<div class="panel-content panel-content-data">
-					<div class="grid">
-						<div class="col-12 lg-6 xl-4">
-							<cc:outputText label="#{i18n['job.name']}" value="#{viewJobView.jobOffer.name}" />
-						</div>
-						<div class="col-12 lg-6 xl-4">
-							<cc:outputText label="#{i18n['job.client']}" value="#{viewJobView.jobOffer.client.name}" />
-						</div>
-						<div class="col-12 lg-6 xl-4">
-							<cc:outputText label="#{i18n['job.places']}" value="#{viewJobView.jobOffer.places}" />
-						</div>
-						<div class="col-12 lg-6 xl-4">
-							<cc:outputText label="#{i18n['job.date_opened']}" value="#{viewJobView.jobOffer.dateOpened}">
-								<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" for="element" />
-							</cc:outputText>
-						</div>
-						<div class="col-12 lg-6 xl-4">
-							<cc:outputText label="#{i18n['job.date_closed']}" value="#{viewJobView.jobOffer.dateClosed}">
-								<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" for="element" />
-							</cc:outputText>
-						</div>
-						<div class="col-12 lg-6 xl-4">
-							<cc:outputText label="#{i18n['address.city']}" value="#{viewJobView.jobOffer.address.city}" />
-
-						</div>
-						<div class="col-12 lg-6 xl-4">
-							<cc:outputText label="#{i18n['address.state']}" value="#{viewJobView.jobOffer.address.state}" />
-
-						</div>
-						<div class="col-12">
-							<cc:outputText label="#{i18n['job.description']}" value="#{viewJobView.jobOffer.description}" />
-						</div>
+						<h:form>
+							<div class="panel-buttons">
+								<p:commandButton value="#{i18n['action.export']}" action="#{viewJobView.export}" icon="fa-file-excel-o" />
+								<p:commandButton value="#{i18n['action.edit']}" action="#{viewJobView.editJobOffer}" />
+							</div>
+						</h:form>
 					</div>
-				</div>
+					<div class="panel-content-data grid">
+							<div class="col-12 md-4">
+								<p:link outcome="#{Page.CLIENT.getUrl()}">
+									<f:param name="id" value="#{viewJobView.jobOffer.client.id}" />
+									<cc:outputText label="#{i18n['job.client']}" value="#{viewJobView.jobOffer.client.name}" />
+								</p:link>
+							</div>
+							<div class="col-12 md-4">
+								<h:form>
+									<div class="state">
+										<p:commandLink action="#{viewJobView.editJobOffer}" styleClass="state_button">
+											<span class="tag #{viewJobView.jobOffer.jobOfferState.color}">#{g:translate(viewJobView.jobOffer.jobOfferState.name)}</span>
+											<i class="icon fa fa-pencil"></i>
+										</p:commandLink>
+									</div>
+								</h:form>
+							</div>
+							<div class="col-12 md-4">
+								<cc:outputText label="#{i18n['job.places']}" value="#{viewJobView.jobOffer.places}" />
+							</div>
+							<div class="col-12 md-4">
+								<cc:outputText label="#{i18n['job.date_opened']}" value="#{viewJobView.jobOffer.dateOpened}">
+									<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" for="element" />
+								</cc:outputText>
+							</div>
+							<div class="col-12 md-4">
+								<cc:outputText label="#{i18n['job.date_closed']}" value="#{viewJobView.jobOffer.dateClosed}">
+									<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" for="element" />
+								</cc:outputText>
+							</div>
+							<div class="col-12 md-4">
+								<cc:outputText label="#{i18n['address.city']}" value="#{viewJobView.jobOffer.address.city}" />
+
+							</div>
+							<div class="col-12 md-4">
+								<cc:outputText label="#{i18n['address.state']}" value="#{viewJobView.jobOffer.address.state}" />
+							</div>
+							<div class="col-12">
+								<cc:outputText label="#{i18n['job.description']}" value="#{viewJobView.jobOffer.description}" />
+							</div>
+						</div>
+				</p:panel>
 			</div>
+
 			<div class="col-12 xl-6">
 				<h:form id="candidatesForm">
 					<cc:jobCandidatures jobCandidatures="#{viewJobView.jobCandidatures}" showJobOffer="false">
@@ -77,15 +96,6 @@
 						</p:commandButton>
 					</cc:jobCandidatures>
 				</h:form>
-			</div>
-
-			<div class="col-12 xl-6">
-				<p:panel header="#{i18n['job_meeting.conducted_job_meetings']}">
-				</p:panel>
-			</div>
-			<div class="col-12 md-12 lg-6">
-				<p:panel header="#{i18n['job_meeting.planned_job_meetings']}">
-				</p:panel>
 			</div>
 		</div>
 	</ui:define>

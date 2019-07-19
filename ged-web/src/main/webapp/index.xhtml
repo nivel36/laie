@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" template="/WEB-INF/templates/default.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" 
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" 
+	xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:g="http://ged.org/ui" 
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/WEB-INF/templates/default.xhtml">
 
 	<ui:define name="title">
 		<title>Ged</title>
@@ -18,45 +26,17 @@
 	<ui:define name="content">
 		<div class="grid">
 			<div class="col-12 lg-6">
-				<cc:jobOffers jobOffers="#{indexView.jobOffers}">
-					<p:button value="#{i18n['job.new_job_offer']}" outcome="#{Page.JOB_ADD.getUrl()}" />
-				</cc:jobOffers>
+				<cc:jobOffers jobOffers="#{indexView.jobOffers}" />
 			</div>
 			<div class="col-12 lg-6">
 				<cc:candidates candidates="#{indexView.candidates}" title="#{i18n['candidate.last_candidates']}">
-					<p:button value="#{i18n['candidate.new_candidate']}" outcome="#{Page.CANDIDATE_ADD.getUrl()}" />
+					<p:button value="test" />
 				</cc:candidates>
 			</div>
 
-			<div class="col-12 xl-4">
-				<div class="panel">
-					<div class="panel-header">
-						<div class="panel-header-title">#{i18n['index.last_reports']}</div>
-					</div>
-					<div class="panel-content">
-						<div class="panel-content-data">
-						
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<div class="col-12 xl-8">
-				<div class="panel">
-					<div class="panel-header">
-						<div class="panel-header-title">#{i18n['index.scheudele']}</div>
-					</div>
-					<div class="panel-content">
-						<div class="panel-content-data">
-							<p:schedule id="scheduleLocale" value="#{indexView.schedule}" locale="es" />
-						</div>
-					</div>
-					<div class="panel-footer">
-						<div class="panel-buttons">
-							<p:button value="#{i18n['action.new']}" outcome="#{Page.CANDIDATE_ADD.getUrl()}" />
-						</div>
-					</div>
-				</div>
+			<div class="col-12 md-6">
+				<cc:meetings value="#{indexView.meetings}" title="#{i18n['meeting.planned_meetings']}"
+					emptyMessage="#{i18n['meeting.no_planned']}" />
 			</div>
 		</div>
 	</ui:define>

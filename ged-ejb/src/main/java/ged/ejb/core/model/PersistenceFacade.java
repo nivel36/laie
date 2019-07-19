@@ -149,7 +149,7 @@ public class PersistenceFacade {
 	}
 
 	private boolean hasSortFields(final List<SortField> sortFields) {
-		return (sortFields != null) && !sortFields.isEmpty();
+		return sortFields != null && !sortFields.isEmpty();
 	}
 
 	public <T extends Identifiable> void insert(final T entity) {
@@ -195,10 +195,9 @@ public class PersistenceFacade {
 
 		final List<T> results = fullTextQuery.getResultList();
 		if (results instanceof ArrayList) {
-
-			return new SearchResult<T>(results, fullTextQuery.getResultSize());
+			return new SearchResult<>(results, fullTextQuery.getResultSize());
 		} else {
-			return new SearchResult<T>(new ArrayList<>(results), fullTextQuery.getResultSize());
+			return new SearchResult<>(new ArrayList<>(results), fullTextQuery.getResultSize());
 		}
 	}
 

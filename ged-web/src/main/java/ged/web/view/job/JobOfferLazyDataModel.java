@@ -11,7 +11,7 @@ public class JobOfferLazyDataModel extends AbstractLazyDataModel<JobOffer> {
 
 	private static final long serialVersionUID = 6799896178978982561L;
 	
-	private JobOfferService jobOfferService;
+	private transient JobOfferService jobOfferService;
 
 	public JobOfferLazyDataModel(final JobOfferService jobOfferService) {
 		Objects.requireNonNull(jobOfferService, "JobOfferService can't be null");

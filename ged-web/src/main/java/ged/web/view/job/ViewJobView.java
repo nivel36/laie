@@ -19,11 +19,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ged.ejb.candidate.Candidate;
-import ged.ejb.job.offer.JobCandidature;
+import ged.ejb.core.model.Page;
+import ged.ejb.job.candidature.JobCandidature;
+import ged.ejb.job.candidature.JobCandidatureService;
 import ged.ejb.job.offer.JobOffer;
-import ged.ejb.job.offer.JobOfferService;
 import ged.web.core.IllegalPageStateException;
-import ged.web.core.util.Message;
 import ged.web.core.util.PageEnum;
 import ged.web.core.view.AbstractView;
 
@@ -44,21 +44,14 @@ public class ViewJobView extends AbstractView {
 	@Inject
 	@Param(name = "id", required = true)
 	private JobOffer jobOffer;
-
+	
 	@Inject
-	private transient JobOfferService jobService;
-
-	private void checkDeleted() {
-		if (this.jobOffer.isDeleted()) {
-			logger.warn("Job offer is deleted");
-			Message.addWarning("message.erased_entity", "message.erased_entity");
-		}
-	}
+	private transient JobCandidatureService jobCandidatureService;
 
 	public String editJobOffer() {
 		logger.debug("Edit job offer action performed");
 		this.putValueToFlash(JOB_OFFER_KEY, this.jobOffer);
-		return PageEnum.JOB_EDIT.getRedirectUrl();
+		return PageEnum.JOB_EDIT.getUrl();
 	}
 
 	public void export() throws IOException {
@@ -83,8 +76,7 @@ public class ViewJobView extends AbstractView {
 			throw new IllegalPageStateException();
 		}
 		logger.trace("JobOffer {} init", this.jobOffer);
-		this.jobCandidatures = this.jobService.findJobCandituresByJobOffer(this.jobOffer);
-		this.checkDeleted();
+		this.jobCandidatures = this.jobCandidatureService.findJobCanditures(this.jobOffer, Page.ALL);
 		this.editable = this.sessionUser.hasPermissionToEdit(this.jobOffer);
 	}
 
@@ -96,7 +88,7 @@ public class ViewJobView extends AbstractView {
 		@SuppressWarnings("unchecked")
 		final List<Candidate> selectedCandidates = (List<Candidate>) event.getObject();
 		for (final Candidate candidate : selectedCandidates) {
-			final JobCandidature jobCandidature = this.jobService.addJobCandidature(this.jobOffer, candidate);
+			final JobCandidature jobCandidature = this.jobCandidatureService.addJobCandidature(this.jobOffer, candidate);
 			this.jobCandidatures.add(jobCandidature);
 		}
 	}
@@ -116,9 +108,5 @@ public class ViewJobView extends AbstractView {
 
 	public void setJobOffer(final JobOffer jobOffer) {
 		this.jobOffer = jobOffer;
-	}
-
-	public void setJobService(final JobOfferService jobService) {
-		this.jobService = jobService;
 	}
 }

@@ -43,7 +43,7 @@ public class ConfigView extends AbstractView {
 
 	public void captureImage(final CaptureEvent event) {
 		Objects.requireNonNull(event);
-		logger.debug("Action: Upload camera image for user {}", this.user);
+		logger.debug("AbstractAction: Upload camera image for user {}", this.user);
 		final byte[] data = event.getData();
 		if (data == null) {
 			return;
@@ -58,7 +58,7 @@ public class ConfigView extends AbstractView {
 
 	public void changeLocale() {
 		final Locale newLocale = new Locale(this.user.getLanguage());
-		logger.debug("Action: Changed locale to {} for user {}", newLocale, this.user);
+		logger.debug("AbstractAction: Changed locale to {} for user {}", newLocale, this.user);
 		this.facesContext.getViewRoot().setLocale(newLocale);
 	}
 
@@ -83,7 +83,7 @@ public class ConfigView extends AbstractView {
 	}
 
 	public void save() {
-		logger.debug("Action: Save user {} data", this.user);
+		logger.debug("AbstractAction: Save user {} data", this.user);
 		this.user = this.userService.save(this.user);
 		refreshSessionUser();
 		this.addMessage(FacesMessage.SEVERITY_INFO, "action.save_action_performed", "action.save_action_performed");
@@ -101,7 +101,7 @@ public class ConfigView extends AbstractView {
 
 	public void uploadImage(final FileUploadEvent event) {
 		Objects.requireNonNull(event);
-		logger.debug("Action: Upload user {} image", this.user);
+		logger.debug("AbstractAction: Upload user {} image", this.user);
 		final UploadedFile uploadedFile = event.getFile();
 		if (uploadedFile == null) {
 			return;

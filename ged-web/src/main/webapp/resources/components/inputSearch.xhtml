@@ -1,7 +1,14 @@
-<ui:component xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
-	xmlns:composite="http://xmlns.jcp.org/jsf/composite" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
-	xmlns:o="http://omnifaces.org/ui" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+<ui:component xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" 
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	xmlns:composite="http://xmlns.jcp.org/jsf/composite" 
+	xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:g="http://ged.org/ui" 
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 	<composite:interface componentType="inputSearch">
 		<composite:attribute name="searchText" required="true" />
@@ -16,7 +23,7 @@
 			<div class="input-container">
 				<p:inputText id="searchText" value="#{cc.attrs.searchText}" binding="#{cc.searchInputText}"
 					styleClass="input input-search" />
-				<p:button id="cleanSearchButton" action="#{cc.clean}" styleClass="clean-search-button btn-icon" icon="fa fa-times"
+				<p:button id="cleanSearchButton" action="#{cc.clean}" styleClass="btn-input-clean btn-icon" icon="fa fa-times"
 					rendered="#{not empty cc.attrs.searchText}" process="@this" />
 				<p:commandButton id="searchButton" action="#{cc.attrs.searchAction}" process="@this searchText"
 					styleClass="search-button btn-icon" icon="fa fa-search" binding="#{cc.searchCommandButton}"

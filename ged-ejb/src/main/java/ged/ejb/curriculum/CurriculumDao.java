@@ -3,6 +3,7 @@ package ged.ejb.curriculum;
 import static ged.ejb.core.util.Parameters.map;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.NoResultException;
 
@@ -24,6 +25,15 @@ public class CurriculumDao extends AbstractDao<Curriculum> {
 		} catch (final NoResultException e) {
 			return null;
 		}
+	}
+	
+	public Skill findSkill(final String name) {
+		Objects.requireNonNull(name, "Skill name can't be null");
+		try {
+			return this.findByQuery(Skill.class, "Skill.findByName", map("name", name));
+		} catch (final NoResultException e) {
+			return null;
+		}	
 	}
 
 	@Override

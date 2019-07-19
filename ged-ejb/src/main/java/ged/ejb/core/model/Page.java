@@ -1,5 +1,7 @@
 package ged.ejb.core.model;
 
+import java.util.Objects;
+
 public class Page {
 
 	public static final Page ALL = Page.of(0, 150);
@@ -26,6 +28,18 @@ public class Page {
 		this.limit = limit;
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Page other = (Page) obj;
+		return Objects.equals(other.limit, this.limit) && Objects.equals(other.offset, this.offset);
+	}
+
 	public int getLimit() {
 		return this.limit;
 	}
@@ -34,4 +48,8 @@ public class Page {
 		return this.offset;
 	}
 
+	@Override
+	public int hashCode() {
+		return Objects.hash(offset, limit);
+	}
 }

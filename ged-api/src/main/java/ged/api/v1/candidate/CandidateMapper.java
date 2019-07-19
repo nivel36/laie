@@ -7,7 +7,7 @@ import javax.inject.Inject;
 import ged.api.v1.mapper.AbstractMapper;
 import ged.api.v1.mapper.Mapper;
 import ged.ejb.candidate.Candidate;
-import ged.ejb.core.Address;
+import ged.ejb.core.model.Address;
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
 

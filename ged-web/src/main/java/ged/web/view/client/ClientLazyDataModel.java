@@ -11,7 +11,7 @@ public class ClientLazyDataModel extends AbstractLazyDataModel<Client> {
 	
 	private static final long serialVersionUID = -5620775502252787830L;
 	
-	private ClientService clientService;
+	private transient ClientService clientService;
 	
 	public ClientLazyDataModel(final ClientService clientService) {
 		Objects.requireNonNull(clientService, "ClientService can't be null");

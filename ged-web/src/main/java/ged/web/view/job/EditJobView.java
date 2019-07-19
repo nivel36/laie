@@ -9,7 +9,7 @@ import javax.inject.Named;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ged.ejb.core.Address;
+import ged.ejb.core.model.Address;
 import ged.ejb.user.User;
 import ged.web.core.IllegalPageStateException;
 
@@ -39,7 +39,7 @@ public class EditJobView extends AbstractJobView {
 
 	private void fillRecruiters() {
 		for (final User recruiter : this.jobOffer.getRecruiters()) {
-			this.getRecruiters().add(recruiter.getFullName());
+			this.getRecruiters().add(recruiter);
 		}
 	}
 
@@ -58,6 +58,7 @@ public class EditJobView extends AbstractJobView {
 
 	public String save() {
 		logger.debug("Save job offer action performed");
+		this.jobOffer.setRecruiters(this.getRecruiters());
 		this.jobOffer = this.jobOfferService.save(this.jobOffer);
 		return this.jobUrl();
 	}

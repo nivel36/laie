@@ -16,15 +16,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ged.ejb.candidate.Candidate;
-import ged.ejb.core.Address;
+import ged.ejb.core.model.Address;
+import ged.ejb.core.model.Page;
 import ged.ejb.core.tag.Tag;
 import ged.ejb.curriculum.Curriculum;
 import ged.ejb.curriculum.CurriculumService;
-import ged.ejb.job.offer.JobCandidature;
+import ged.ejb.job.candidature.JobCandidature;
+import ged.ejb.job.candidature.JobCandidatureService;
+import ged.ejb.job.meeting.Meeting;
+import ged.ejb.job.meeting.MeetingService;
 import ged.ejb.job.offer.JobOffer;
-import ged.ejb.job.offer.JobOfferService;
 import ged.web.core.IllegalPageStateException;
-import ged.web.core.util.Message;
 import ged.web.core.util.PageEnum;
 import ged.web.core.view.AbstractView;
 
@@ -41,7 +43,7 @@ public class ViewCandidateView extends AbstractView {
 	private Candidate candidate;
 
 	private Curriculum curriculum;
-
+	
 	@Inject
 	private transient CurriculumService curriculumService;
 
@@ -50,24 +52,27 @@ public class ViewCandidateView extends AbstractView {
 	private List<JobCandidature> jobCandidatures;
 
 	@Inject
-	private transient JobOfferService jobOfferService;
+	private transient JobCandidatureService jobCandidatureService;
+	
+	private List<Meeting> meetings;
 
-	private final List<String> tags = new ArrayList<>();
+	@Inject
+	private transient MeetingService meetingService;
 
+	private final List<Tag> tags = new ArrayList<>();
+	
 	public String editCandidate() {
 		logger.debug("Edit candidate action performed");
 		this.putValueToFlash("candidate", this.candidate);
-		return PageEnum.CANDIDATE_EDIT.getRedirectUrl();
+		return PageEnum.CANDIDATE_EDIT.getUrl();
 	}
 
 	public void export() throws IOException {
 		logger.debug("Export candidate action performed");
 	}
-
+	
 	private void fillTags() {
-		for (final Tag tag : this.candidate.getTags()) {
-			this.tags.add(tag.getLabel());
-		}
+		tags.addAll(candidate.getTags());
 	}
 
 	public Candidate getCandidate() {
@@ -77,12 +82,16 @@ public class ViewCandidateView extends AbstractView {
 	public Curriculum getCurriculum() {
 		return this.curriculum;
 	}
-
+	
 	public List<JobCandidature> getJobCandidatures() {
 		return this.jobCandidatures;
 	}
+	
+	public List<Meeting> getMeetings() {
+		return meetings;
+	}
 
-	public List<String> getTags() {
+	public List<Tag> getTags() {
 		return this.tags;
 	}
 
@@ -96,21 +105,23 @@ public class ViewCandidateView extends AbstractView {
 			this.candidate.setAddress(new Address());
 		}
 		this.fillTags();
-		this.jobCandidatures = this.jobOfferService.findJobCandidatures(candidate);
+		this.jobCandidatures = this.jobCandidatureService.findJobCandidatures(candidate, Page.ALL);
 		this.curriculum = this.curriculumService.findByCandidate(this.candidate);
-		checkDeleted();
 		this.editable = this.sessionUser.hasPermissionToEdit(this.candidate);
+		this.meetings = initMeetings();
 	}
 
-	private void checkDeleted() {
-		if (this.candidate.isDeleted()) {
-			logger.warn("Candidate is deleted");
-			Message.addWarning("message.erased_entity", "message.erased_entity");
-		}
+	private List<Meeting> initMeetings() {
+		return meetingService.findMeetings(candidate, Page.of(0, 10));
 	}
 
 	public boolean isEditable() {
 		return this.editable;
+	}
+
+	public String newMeeting() {
+		this.putValueToFlash("attendee", this.candidate);
+		return PageEnum.MEETING_ADD.getRedirectedUrl();
 	}
 
 	public void onCloseSelectJobOfferDialog(final SelectEvent event) {
@@ -120,7 +131,7 @@ public class ViewCandidateView extends AbstractView {
 			return;
 		}
 		for (final JobOffer jobOffer : selectedJobOffers) {
-			final JobCandidature jobCandidature = this.jobOfferService.addJobCandidature(jobOffer, this.candidate);
+			final JobCandidature jobCandidature = this.jobCandidatureService.addJobCandidature(jobOffer, this.candidate);
 			jobCandidatures.add(jobCandidature);
 		}
 	}
@@ -138,7 +149,12 @@ public class ViewCandidateView extends AbstractView {
 		this.curriculumService = curriculumService;
 	}
 
-	public void setJobOfferService(final JobOfferService jobOfferService) {
-		this.jobOfferService = jobOfferService;
+	public void setJobCandidatureService(JobCandidatureService jobCandidatureService) {
+		this.jobCandidatureService = jobCandidatureService;
 	}
+
+	public void setMeetingService(MeetingService meetingService) {
+		this.meetingService = meetingService;
+	}
+
 }
