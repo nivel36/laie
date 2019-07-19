@@ -6,9 +6,9 @@ import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 
 import ged.api.v1.Dto;
 
@@ -19,7 +19,7 @@ public class CandidateDto implements Dto {
 
 	private String city;
 
-	@Pattern(regexp = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$")
+	@Email
 	@NotNull
 	private String email;
 
@@ -43,7 +43,6 @@ public class CandidateDto implements Dto {
 	private String ownerEmail;
 
 	@NotNull
-	@Pattern(regexp = "(?:[+]?(?:[0-9]{1,5}|\\x28[0-9]{1,5}\\x29)[ ]?)?[0-9]{2}(?:[0-9][ ]?){6}[0-9]")
 	private String phoneNumber;
 
 	private Integer rating;

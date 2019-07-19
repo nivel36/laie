@@ -25,9 +25,6 @@ public class ImageServlet extends FileServlet {
 		if ((pathInfo == null) || pathInfo.isEmpty() || "/".equals(pathInfo)) {
 			throw new IllegalArgumentException();
 		}
-		if (!pathInfo.matches("[a-zA-Z0-9-#-/]++")) {
-			throw new IllegalArgumentException();
-		}
 		return new File(this.folderPath, pathInfo);
 	}
 }

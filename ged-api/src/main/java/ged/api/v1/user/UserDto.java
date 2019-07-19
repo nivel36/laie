@@ -3,8 +3,8 @@ package ged.api.v1.user;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 
 import ged.api.v1.Dto;
 
@@ -12,6 +12,7 @@ public class UserDto implements Dto {
 
 	private LocalDate dateOfJoin;
 
+	@Email
 	@NotNull
 	private String email;
 
@@ -27,7 +28,6 @@ public class UserDto implements Dto {
 	@NotNull
 	private String name;
 
-	@Pattern(regexp = "(?:[+]?(?:[0-9]{1,5}|\\x28[0-9]{1,5}\\x29)[ ]?)?[0-9]{2}(?:[0-9][ ]?){6}[0-9]")
 	private String phoneNumber;
 
 	@NotNull
