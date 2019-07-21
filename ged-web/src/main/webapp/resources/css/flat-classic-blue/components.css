@@ -586,7 +586,7 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button
 	padding-bottom: 0.4em;
 }
 
-.curriculum .panel-header-data .job-profile, .candidate .panel-header-data .job-profile
+.curriculum .panel-header-data .job-profile, .candidate .panel-header-data .job-profile, .user .panel-header-data .job-profile
 	{
 	font-size: 1em;
 	padding-bottom: 0.6em;
