@@ -268,10 +268,12 @@ body .ui-chips-container.ui-state-disabled {
 body .ui-chips-container .ui-chips-token, body .ui-autocomplete-multiple .ui-autocomplete-token {
 	display: inline-flex;
 	padding: 0px;
+	margin: 0 2px 2px 0;
 	border-radius: 0px;
 	background: #59a2df;
 	color: white;
 	cursor: pointer;
+	order: 1;
 }
 
 body .ui-chips-container.ui-state-disabled .ui-chips-token .ui-icon, body .ui-autocomplete-multiple.ui-state-disabled .ui-autocomplete-token .ui-icon {
@@ -296,10 +298,13 @@ body .ui-chips-container .ui-chips-token .ui-icon, body .ui-autocomplete-multipl
 	display: inline-flex;
 	padding: 7px;
 	cursor: pointer;
-	margin-top: 0;
+	order: 2;
+	margin: 0;
 	position: relative;
 	right: 0;
-	top: 0;
+}
+
+body .ui-chips-container .ui-chips-token:hover .ui-icon, body .ui-autocomplete-multiple .ui-autocomplete-token:hover .ui-icon {
 	background: #86bce8;
 }
 
