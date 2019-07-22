@@ -258,7 +258,6 @@ body .ui-chips-container {
 	border: 1px solid #c2cad8;
 	color: #777777;
 	width: 100%;
-	font-size: 0.8em;
 }
 
 body .ui-chips-container.ui-state-disabled {
@@ -268,8 +267,8 @@ body .ui-chips-container.ui-state-disabled {
 
 body .ui-chips-container .ui-chips-token, body .ui-autocomplete-multiple .ui-autocomplete-token {
 	display: inline-flex;
-	padding: 5px;
-	border-radius: 3px;
+	padding: 0px;
+	border-radius: 0px;
 	background: #59a2df;
 	color: white;
 	cursor: pointer;
@@ -284,7 +283,7 @@ body .ui-chips-container.ui-state-disabled .ui-chips-token, body .ui-autocomplet
 }
 
 body .ui-chips-token .ui-chips-token-label, body .ui-autocomplete-multiple .ui-autocomplete-token-label {
-	padding: 0 0.5em 0 0.5em;
+	padding: 7px 14px;
 	display: flex;
 }
 
@@ -295,12 +294,13 @@ body .ui-chips-container.ui-state-disabled .ui-chips-token .ui-icon, body .ui-au
 
 body .ui-chips-container .ui-chips-token .ui-icon, body .ui-autocomplete-multiple .ui-autocomplete-token .ui-icon {
 	display: inline-flex;
+	padding: 7px;
 	cursor: pointer;
 	margin-top: 0;
 	position: relative;
 	right: 0;
 	top: 0;
-	display: inline-flex;
+	background: #86bce8;
 }
 
 body .ui-datalist-data {
