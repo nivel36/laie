@@ -1,76 +1,92 @@
 @charset "UTF-8";
 
 body .ui-icon {
-	font-family: FontAwesome;
 	font-size: 1em;
 	text-indent: 0px;
 }
 
 .ui-icon-carat-2-n-s:before {
+	font-family: FontAwesome;
 	content: "\f0dc";
 }
 
 .ui-icon-triangle-1-n:before {
+	font-family: FontAwesome;
 	content: "\f0d8";
 }
 
 .ui-icon-triangle-1-e:before {
+	font-family: FontAwesome;
 	content: "\f105";
 }
 
 .ui-icon-triangle-1-s:before {
+	font-family: FontAwesome;
 	content: "\f0d7";
 }
 
 .ui-icon-arrow-1-n:before {
+	font-family: FontAwesome;
 	content: "\f106";
 }
 
 .ui-icon-arrowstop-1-n:before {
+	font-family: FontAwesome;
 	content: "\f102";
 }
 
 .ui-icon-arrow-1-s:before {
+	font-family: FontAwesome;
 	content: "\f107";
 }
 
 .ui-icon-arrowstop-1-s:before {
+	font-family: FontAwesome;
 	content: "\f103";
 }
 
 .ui-icon-arrow-1-w:before {
+	font-family: FontAwesome;
 	content: "\f104";
 }
 
 .ui-icon-arrowstop-1-w:before {
+	font-family: FontAwesome;
 	content: "\f100";
 }
 
 .ui-icon-arrow-1-e:before {
+	font-family: FontAwesome;
 	content: "\f105";
 }
 
 .ui-icon-arrowstop-1-e:before {
+	font-family: FontAwesome;
 	content: "\f101";
 }
 
 .ui-icon-circle-triangle-w:before {
+	font-family: FontAwesome;
 	content: "\f0d9";
 }
 
 .ui-icon-plusthick:before {
+	font-family: FontAwesome;
 	content: "\f067";
 }
 
 .ui-icon-closethick:before {
+	font-family: FontAwesome;
 	content: "\f00d";
 }
 
 .ui-icon-check:before {
+	font-family: FontAwesome;
 	content: "\f00c";
 }
 
 .ui-icon-close:before {
+	font-family: FontAwesome;
 	content: "\f00d";
 }
 
@@ -749,17 +765,16 @@ body .ui-panel .ui-panel-titlebar .ui-panel-title {
 }
 
 body .ui-panel .ui-panel-content {
-	border-bottom: 1px solid #bfceda;
+	margin: 0;
 	padding: 0;
+	display: flex;
+	flex-wrap: wrap;
 }
 
 body .ui-panel .ui-panel-footer {
 	display: flex;
-	background: #eef1f8;
-	border-top: 1px solid white;
-	padding: 1em;
 	margin: 0;
-	justify-content: flex-end;
+	padding: 0;
 }
 
 body .ui-picklist {

@@ -215,9 +215,6 @@ body .breadcrumb ul li.ui-breadcrumb-chevron {
 }
 
 .candidate-metadata {
-	background: #f8f9fb;
-	border-right: 1px solid #bfceda;
-	height: 100%;
 	padding: 2em;
 	display: flex;
 	flex-direction: column;
@@ -504,7 +501,6 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button
 
 .panel-aside {
 	flex: 0;
-	border-bottom: 1px solid #bfceda;
 	display: flex;
 }
 
@@ -525,6 +521,7 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button
 	padding: 20px;
 	display: flex;
 	flex-wrap: wrap;
+	flex: 1;
 }
 
 .panel-footer {

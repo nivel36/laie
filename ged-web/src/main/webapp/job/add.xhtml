@@ -29,53 +29,47 @@
 		<div class="grid">
 			<div class="col-12 xl-9">
 				<h:form id="jobOfferForm">
-					<div class="panel">
-						<div class="panel-content panel-content-data">
-							<div class="grid">
-								<div class="col-12 sm-6">
-									<h3>#{i18n['user.personal_information']}</h3>
+					<p:panel>
+						<div class="panel-content-data grid">
+							<div class="col-12 sm-6">
+								<h3>#{i18n['user.personal_information']}</h3>
 
-									<g:input label="#{i18n['job.name']}" value="#{addJobView.jobOffer.name}" required="true" />
+								<g:input label="#{i18n['job.name']}" value="#{addJobView.jobOffer.name}" required="true" />
 
-									<cc:autocomplete id="client" label="#{i18n['job.client']}" value="#{addJobView.jobOffer.client}"
-										completeMethod="#{addJobView.completeClient}" required="true">
-										<p:column>
-											<h:outputText value="#{var.name}" />
-										</p:column>
-									</cc:autocomplete>
+								<cc:autocomplete id="client" label="#{i18n['job.client']}" value="#{addJobView.jobOffer.client}"
+									completeMethod="#{addJobView.completeClient}" required="true">
+									<p:column>
+										<h:outputText value="#{var.name}" />
+									</p:column>
+								</cc:autocomplete>
 
-									<g:input id="places" min="0" max="10" label="#{i18n['job.places']}" value="#{addJobView.jobOffer.places}"
-										type="number" />
+								<g:input id="places" min="0" max="10" label="#{i18n['job.places']}" value="#{addJobView.jobOffer.places}" type="number" />
 
-									<g:input id="dateOpened" label="#{i18n['job.date_opened']}" value="#{addJobView.jobOffer.dateOpened}"
-										type="calendar" />
+								<g:input id="dateOpened" label="#{i18n['job.date_opened']}" value="#{addJobView.jobOffer.dateOpened}" type="calendar" />
 
-									<g:input id="dateClosed" label="#{i18n['job.date_closed']}" value="#{addJobView.jobOffer.dateClosed}"
-										type="calendar" />
+								<g:input id="dateClosed" label="#{i18n['job.date_closed']}" value="#{addJobView.jobOffer.dateClosed}" type="calendar" />
 
-								</div>
-								<div class="col-12 sm-6">
-									<h3>#{i18n['user.personal_information']}</h3>
+							</div>
+							<div class="col-12 sm-6">
+								<h3>#{i18n['user.personal_information']}</h3>
 
-									<g:input id="city" label="#{i18n['job.city']}" value="#{addJobView.jobOffer.address.city}" required="true" />
+								<g:input id="city" label="#{i18n['job.city']}" value="#{addJobView.jobOffer.address.city}" required="true" />
 
-									<g:input id="state" label="#{i18n['job.state']}" value="#{addJobView.jobOffer.address.state}" required="true" />
+								<g:input id="state" label="#{i18n['job.state']}" value="#{addJobView.jobOffer.address.state}" required="true" />
 
-									<cc:autocomplete id="owner" label="#{i18n['job.owner']}" value="#{addJobView.jobOffer.owner}"
-										completeMethod="#{addJobView.queryOwner}" converter="userConverter">
-										<p:column styleClass="user-select image">
-											<cc:person value="#{var}" showDescription="false" />
-										</p:column>
-									</cc:autocomplete>
+								<cc:autocomplete id="owner" label="#{i18n['job.owner']}" value="#{addJobView.jobOffer.owner}"
+									completeMethod="#{addJobView.queryOwner}" converter="userConverter">
+									<p:column styleClass="user-select image">
+										<cc:person value="#{var}" showDescription="false" />
+									</p:column>
+								</cc:autocomplete>
 
-									<cc:inputUsers id="recruiters" label="#{i18n['job.recruiters']}" completeMethod="#{addJobView.queryRecruiter}"
-										value="#{addJobView.recruiters}" />
-								</div>
-								<div class="col-12">
-									<h3>#{i18n['user.personal_information']}</h3>
-									<g:input id="description" label="#{i18n['job.description']}" value="#{addJobView.jobOffer.description}"
-										type="textarea" />
-								</div>
+								<cc:inputUsers id="recruiters" label="#{i18n['job.recruiters']}" completeMethod="#{addJobView.queryRecruiter}"
+									value="#{addJobView.recruiters}" />
+							</div>
+							<div class="col-12">
+								<h3>#{i18n['user.personal_information']}</h3>
+								<g:input id="description" label="#{i18n['job.description']}" value="#{addJobView.jobOffer.description}" type="textarea" />
 							</div>
 						</div>
 						<div class="panel-footer">
@@ -84,7 +78,7 @@
 								<p:commandButton value="#{i18n['action.save']}" action="#{addJobView.save}" process="@form" update="@form growl" />
 							</div>
 						</div>
-					</div>
+					</p:panel>
 				</h:form>
 			</div>
 		</div>
