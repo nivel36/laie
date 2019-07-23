@@ -452,10 +452,6 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button
 	margin-left: 150px;
 }
 
-.dialog {
-	border-radius: 4px;
-}
-
 .panel {
 	display: flex;
 	flex-flow: row wrap;
