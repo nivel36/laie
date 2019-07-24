@@ -17,6 +17,11 @@ body {
 	background: #f4f4f4;
 }
 
+body button {
+	font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+	font-size: 14px;
+}
+
 a {
 	text-decoration: none;
 }
@@ -163,13 +168,6 @@ body footer .version span {
 	flex: 1 auto;
 	overflow: hidden;
 	padding: 1em;
-}
-
-#breadcrumb {
-	display: flex;
-	flex-direction: column;
-	flex: 1;
-	padding: 0;
 }
 
 /************************************
@@ -467,7 +465,7 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button
 	display: flex;
 	flex: 1 1 auto;
 	justify-content: flex-end;
-	padding: 10px;
+	padding: 20px;
 }
 
 .panel-aside {

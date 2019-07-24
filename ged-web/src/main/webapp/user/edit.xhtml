@@ -36,54 +36,52 @@
 		<div class="grid">
 			<div class="col-12 xl-9">
 				<h:form id="userForm" enctype="multipart/form-data">
-					<div class="panel">
+					<p:panel>
 						<div class="panel-aside">
 							<div class="candidate-metadata">
 								<cc:inputAvatar id="userImage" value="#{editUserView.user.imageFileName}" fileUploadListener="#{editUserView.uploadImage}" />
 							</div>
 						</div>
-						<div class="panel-content panel-content-data">
-							<div class="grid">
-								<div class="col-12 sm-6">
-									<h3>#{i18n['user.personal_information']}</h3>
-									<g:input id="name" label="#{i18n['user.name']}" value="#{editUserView.user.name}" required="true" />
+						<div class="panel-content-data grid">
+							<div class="col-12 sm-6">
+								<h3>#{i18n['user.personal_information']}</h3>
+								<g:input id="name" label="#{i18n['user.name']}" value="#{editUserView.user.name}" required="true" />
 
-									<g:input id="surname" label="#{i18n['user.surname']}" value="#{editUserView.user.surname}" required="true" />
+								<g:input id="surname" label="#{i18n['user.surname']}" value="#{editUserView.user.surname}" required="true" />
 
-									<g:input id="email" label="#{i18n['user.email']}" value="#{editUserView.user.email}" required="true"
-										validator="#{editUserView.validateEmail}" />
+								<g:input id="email" label="#{i18n['user.email']}" value="#{editUserView.user.email}" required="true"
+									validator="#{editUserView.validateEmail}" />
 
-									<g:input id="phone_number" label="#{i18n['user.phone_number']}" value="#{editUserView.user.phoneNumber}" />
-								</div>
+								<g:input id="phone_number" label="#{i18n['user.phone_number']}" value="#{editUserView.user.phoneNumber}" />
+							</div>
 
-								<div class="col-12 sm-6">
+							<div class="col-12 sm-6">
 
-									<h3>#{i18n['user.professional_information']}</h3>
+								<h3>#{i18n['user.professional_information']}</h3>
 
-									<cc:inputSelect id="role" value="#{editUserView.user.role}" label="#{i18n['user.role']}" required="true">
-										<f:selectItems value="#{roles.list}" var="role" itemValue="#{role}" itemLabel="#{g:translate(role)}" />
-										<p:ajax event="change" process=":userForm:role" update=":userForm:role :userForm:manager"
-											listener="#{editUserView.changeRoleListener}" />
-									</cc:inputSelect>
+								<cc:inputSelect id="role" value="#{editUserView.user.role}" label="#{i18n['user.role']}" required="true">
+									<f:selectItems value="#{roles.list}" var="role" itemValue="#{role}" itemLabel="#{g:translate(role)}" />
+									<p:ajax event="change" process=":userForm:role" update=":userForm:role :userForm:manager"
+										listener="#{editUserView.changeRoleListener}" />
+								</cc:inputSelect>
 
-									<cc:autocomplete id="manager" label="#{i18n['user.manager']}" value="#{editUserView.user.manager}"
-										completeMethod="#{editUserView.queryManager}" disabled="#{editUserView.user.isAdmin()}" converter="userConverter">
-										<p:column styleClass="user-select image">
-											<cc:person value="#{var}" showDescription="false" />
-										</p:column>
-									</cc:autocomplete>
+								<cc:autocomplete id="manager" label="#{i18n['user.manager']}" value="#{editUserView.user.manager}"
+									completeMethod="#{editUserView.queryManager}" disabled="#{editUserView.user.isAdmin()}" converter="userConverter">
+									<p:column styleClass="user-select image">
+										<cc:person value="#{var}" showDescription="false" />
+									</p:column>
+								</cc:autocomplete>
 
-									<g:input id="date_of_join" label="#{i18n['user.date_of_join']}" value="#{editUserView.user.dateOfJoin}" type="calendar"/>
-								</div>
+								<g:input id="date_of_join" label="#{i18n['user.date_of_join']}" value="#{editUserView.user.dateOfJoin}" type="calendar" />
 							</div>
 						</div>
-						<div class="panel-footer">
+						<f:facet name="footer">
 							<div class="panel-buttons">
 								<p:button styleClass="btn-gray" value="#{i18n['action.cancel']}" outcome="#{Page.USER.getUrl(editUserView.user)}" />
 								<p:commandButton value="#{i18n['action.save']}" action="#{editUserView.save}" process="@form" update="@form growl" />
 							</div>
-						</div>
-					</div>
+						</f:facet>
+					</p:panel>
 				</h:form>
 			</div>
 		</div>
