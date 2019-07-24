@@ -188,32 +188,6 @@ body .breadcrumb {
 	padding: 0.5em;
 }
 
-body .breadcrumb ul {
-	display: flex;
-	align-items: center;
-}
-
-body .breadcrumb ul li {
-	display: flex;
-	padding: 0.2em;
-	font-weight: 700;
-	color: #848b9d;
-	font-size: 1em;
-}
-
-body .breadcrumb ul li a {
-	color: #5aa3de;
-	font-weight: 800;
-}
-
-body .breadcrumb ul li a.ui-icon {
-	margin-top: 0px;
-}
-
-body .breadcrumb ul li.ui-breadcrumb-chevron {
-	color: #b6bdcf;
-}
-
 .candidate-metadata {
 	padding: 2em;
 	display: flex;
@@ -469,6 +443,7 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button
 	padding: 0px;
 	margin: 0;
 	display: flex;
+	flex: 1 1 100%;
 }
 
 .panel-header a {

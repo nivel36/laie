@@ -5,6 +5,10 @@ body .ui-icon {
 	text-indent: 0px;
 }
 
+body .ui-button .ui-icon {
+	font-family: FontAwesome;
+}
+
 .ui-icon-carat-2-n-s:before {
 	font-family: FontAwesome;
 	content: "\f0dc";
@@ -130,6 +134,41 @@ body .ui-autocomplete-panel .ui-state-highlight {
 
 body .ui-autocomplete-panel .ui-state-highlight .person .person-data .name, body .ui-autocomplete-panel .ui-state-highlight .person .person-data .description{
 	color: white;
+}
+
+body .ui-breadcrumb {
+	background: white;
+	border-bottom: 1px solid #bfceda;
+	padding: 0.5em;
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+}
+
+body .ui-breadcrumb ul {
+	display: flex;
+	align-items: center;
+}
+
+body .ui-breadcrumb ul li {
+	display: flex;
+	padding: 0.2em;
+	font-weight: 700;
+	color: #848b9d;
+	font-size: 1em;
+}
+
+body .ui-breadcrumb ul li a {
+	color: #5aa3de;
+	font-weight: 800;
+}
+
+body .ui-breadcrumb ul li a.ui-icon {
+	margin-top: 0px;
+}
+
+body .ui-breadcrumb ul li.ui-breadcrumb-chevron {
+	color: #b6bdcf;
 }
 
 body .ui-button.ui-button-icon-only {

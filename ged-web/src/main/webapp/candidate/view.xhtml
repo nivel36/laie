@@ -16,7 +16,7 @@
 
 
 	<ui:define name="breadcrumb">
-		<p:breadCrumb styleClass="breadcrumb">
+		<p:breadCrumb>
 			<p:menuitem value="#{i18n['menu.index']}" outcome="#{Page.INDEX.getUrl()}" />
 			<p:menuitem value="#{i18n['candidate.candidates']}" outcome="#{Page.CANDIDATE_SEARCH.getUrl()}" />
 			<p:menuitem value="#{viewCandidateView.candidate.fullName}" disabled="true" />
@@ -26,7 +26,7 @@
 	<ui:define name="content">
 		<div class="grid">
 			<div class="col-12 xl-8">
-				<p:panel styleClass="panel user">
+				<p:panel styleClass="user">
 					<div class="panel-header">
 						<div class="panel-header-image">
 							<cc:avatar value="#{viewCandidateView.candidate.imageFileName}" />
@@ -72,50 +72,49 @@
 							</div>
 						</h:form>
 					</div>
-					<div>
-						<div class="panel-content-data grid nogutter">
-							<div class="col-12 md-6">
-								<h4>#{i18n['candidate.personal_information']}</h4>
 
-								<cc:outputText label="#{i18n['candidate.city']}"
-									value="#{viewCandidateView.candidate.address.city} (#{viewCandidateView.candidate.address.state})" />
+					<div class="panel-content-data grid">
+						<div class="col-12 md-6">
+							<h4>#{i18n['candidate.personal_information']}</h4>
 
-								<cc:outputText label="#{i18n['candidate.bornDate']}" value="#{viewCandidateView.candidate.bornDate}">
-									<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" for="text" />
-								</cc:outputText>
-							</div>
-							<div class="col-12 md-6">
-								<h4>#{i18n['candidate.contact_information']}</h4>
+							<cc:outputText label="#{i18n['candidate.city']}"
+								value="#{viewCandidateView.candidate.address.city} (#{viewCandidateView.candidate.address.state})" />
 
-								<cc:outputText label="#{i18n['candidate.origin']}" value="#{g:translate(viewCandidateView.candidate.origin)}" />
+							<cc:outputText label="#{i18n['candidate.bornDate']}" value="#{viewCandidateView.candidate.bornDate}">
+								<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" for="text" />
+							</cc:outputText>
+						</div>
+						<div class="col-12 md-6">
+							<h4>#{i18n['candidate.contact_information']}</h4>
 
-								<cc:outputText label="#{i18n['candidate.salary']}" value="#{viewCandidateView.candidate.salary}">
-									<f:convertNumber for="text" currencyCode="EUR" maxFractionDigits="0" type="currency" />
-								</cc:outputText>
+							<cc:outputText label="#{i18n['candidate.origin']}" value="#{g:translate(viewCandidateView.candidate.origin)}" />
 
-								<cc:outputText label="#{i18n['candidate.expected_salary']}" value="#{viewCandidateView.candidate.expectedSalary}">
-									<f:convertNumber for="text" currencyCode="EUR" maxFractionDigits="0" type="currency" />
-								</cc:outputText>
+							<cc:outputText label="#{i18n['candidate.salary']}" value="#{viewCandidateView.candidate.salary}">
+								<f:convertNumber for="text" currencyCode="EUR" maxFractionDigits="0" type="currency" />
+							</cc:outputText>
 
-							</div>
-							<div class="col-12">
-								<h4>#{i18n['candidate.metadata']}</h4>
-								<div class="data rating">
-									<div class="label-container">
-										<div class="label">#{i18n['candidate.rating']}</div>
-									</div>
-									<div class="text-container">
-										<p:rating value="#{viewCandidateView.candidate.rating}" cancel="false" readonly="true" />
-									</div>
+							<cc:outputText label="#{i18n['candidate.expected_salary']}" value="#{viewCandidateView.candidate.expectedSalary}">
+								<f:convertNumber for="text" currencyCode="EUR" maxFractionDigits="0" type="currency" />
+							</cc:outputText>
+
+						</div>
+						<div class="col-12">
+							<h4>#{i18n['candidate.metadata']}</h4>
+							<div class="data rating">
+								<div class="label-container">
+									<div class="label">#{i18n['candidate.rating']}</div>
 								</div>
-								<div class="data tags">
-									<div class="label-container">
-										<div class="label">#{i18n['candidate.tags']}</div>
-									</div>
-									<div class="text-container">
-										<p:chips id="tags" styleClass="tags" value="#{viewCandidateView.tags}" label="#{i18n['viewCandidateView.tags']}"
-											converter="tagConverter" disabled="true" />
-									</div>
+								<div class="text-container">
+									<p:rating value="#{viewCandidateView.candidate.rating}" cancel="false" readonly="true" />
+								</div>
+							</div>
+							<div class="data tags">
+								<div class="label-container">
+									<div class="label">#{i18n['candidate.tags']}</div>
+								</div>
+								<div class="text-container">
+									<p:chips id="tags" styleClass="tags" value="#{viewCandidateView.tags}" label="#{i18n['viewCandidateView.tags']}"
+										converter="tagConverter" disabled="true" />
 								</div>
 							</div>
 						</div>
