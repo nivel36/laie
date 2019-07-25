@@ -1,8 +1,12 @@
 @charset "UTF-8";
 
 @font-face {
-	font-family: "Roboto";
-	src: url("#{resource['fonts:roboto.woff2']}") format("woff2");
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Roboto'), local('Roboto-Regular'), url(https://fonts.gstatic.com/s/roboto/v20/KFOmCnqEu92Fr1Mu72xKOzY.woff2) format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
 }
 
 * {
@@ -178,14 +182,6 @@ body footer .version span {
 	width: 100%;
 }
 
-body .breadcrumb {
-	background: white;
-	border-bottom: 1px solid #bfceda;
-	border-left: 1px solid white;
-	border-right: 1px solid #bfceda;
-	padding: 0.5em;
-}
-
 .candidate-metadata {
 	padding: 2em;
 	display: flex;
@@ -217,68 +213,6 @@ body .breadcrumb {
 /************************************
  *  input
  ************************************/
-body .input {
-	flex: 1 1 auto;
-	color: #777777;
-	min-height: 34px;
-	display: flex;
-	align-items: center;
-	border: 1px solid #c2cad8;
-	padding: 0.5em;
-	background: white;
-}
-
-body .input.ui-spinner, body .input.ui-calendar, body .input.ui-inputnumber
-	{
-	padding: 0;
-	border: 0px;
-}
-
-body .input.ui-autocomplete {
-	padding: 0;
-}
-
-input[type="text"]:disabled {
-	background: #efefef;
-}
-
-.input.input-checkbox {
-	flex: 0 0 16px;
-	height: 16px;
-	padding: 0;
-}
-
-.input.input-text-area {
-	height: 100px;
-}
-
-.input.input-number {
-	padding-right: 25px;
-}
-
-.input.input-number, .input.input-money, .input.input-select {
-	text-align: right;
-}
-
-.input.input-select {
-	padding: 0;
-	overflow: hidden;
-}
-
-.input.input-user input[type="text"] {
-	padding: 0.5em;
-	overflow: hidden;
-}
-
-.input .btn-inner {
-	margin: -2.25em;
-	background-color: transparent;
-	border: 0px;
-}
-
-.input .btn-inner .ui-icon {
-	color: #7a869b;
-}
 
 .panel-aside .input-avatar {
 	display: inline-flex;
@@ -379,18 +313,19 @@ body .input-search .clean-search-button {
 	display: flex;
 	flex: 1;
 	position: relative;
+	align-items: center;
 }
 
 .input-group .label-container {
 	display: flex;
-	width: 150px;
+	width: 170px;
 }
 
 .input-group .labelIcon, .input-group .input-icon {
 	flex: 0 1 auto;
 }
 
-body .input-group button.icon, .input-group .icon, body .input-group .ui-button
+body .input-group button.icon, .input-group .icon
 	{
 	width: 34px;
 	height: 34px;

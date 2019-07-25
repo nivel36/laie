@@ -29,56 +29,52 @@
 		<div class="grid">
 			<div class="col-12 xl-9">
 				<h:form id="userForm" enctype="multipart/form-data">
-					<div class="panel">
+					<p:panel>
 						<div class="panel-aside">
 							<div class="candidate-metadata">
-								<cc:inputAvatar id="userImage" value="#{addUserView.user.imageFileName}"
-									fileUploadListener="#{addUserView.uploadImage}" />
+								<cc:inputAvatar id="userImage" value="#{addUserView.user.imageFileName}" fileUploadListener="#{addUserView.uploadImage}" />
 							</div>
 						</div>
-						<div class="panel-content panel-content-data">
-							<div class="grid">
-								<div class="col-12 sm-6">
-									<h4>#{i18n['user.personal_information']}</h4>
-									<g:input id="name" label="#{i18n['user.name']}" value="#{addUserView.user.name}" required="true" />
+						<div class="panel-content-data grid">
+							<div class="col-12 sm-6">
+								<h4>#{i18n['user.personal_information']}</h4>
+								<g:input id="name" label="#{i18n['user.name']}" value="#{addUserView.user.name}" required="true" />
 
-									<g:input id="surname" label="#{i18n['user.surname']}" value="#{addUserView.user.surname}" required="true" />
+								<g:input id="surname" label="#{i18n['user.surname']}" value="#{addUserView.user.surname}" required="true" />
 
-									<g:input id="email" label="#{i18n['user.email']}" value="#{addUserView.user.email}" required="true"
-										validator="#{addUserView.validateEmail}" />
+								<g:input id="email" label="#{i18n['user.email']}" value="#{addUserView.user.email}" required="true"
+									validator="#{addUserView.validateEmail}" />
 
-									<g:input id="phone_number" label="#{i18n['user.phone_number']}" value="#{addUserView.user.phoneNumber}" />
-								</div>
+								<g:input id="phone_number" label="#{i18n['user.phone_number']}" value="#{addUserView.user.phoneNumber}" />
+							</div>
 
-								<div class="col-12 sm-6">
+							<div class="col-12 sm-6">
 
-									<h4>#{i18n['user.professional_information']}</h4>
+								<h4>#{i18n['user.professional_information']}</h4>
 
-									<cc:inputSelect id="role" value="#{addUserView.user.role}" label="#{i18n['user.role']}" required="true">
-										<f:selectItems value="#{roles.list}" var="role" itemValue="#{role}" itemLabel="#{g:translate(role)}" />
-										<p:ajax event="change" update=":userForm:role :userForm:manager" process=":userForm:role"
-											listener="#{addUserView.changeRoleListener}" />
-									</cc:inputSelect>
+								<cc:inputSelect id="role" value="#{addUserView.user.role}" label="#{i18n['user.role']}" required="true">
+									<f:selectItems value="#{roles.list}" var="role" itemValue="#{role}" itemLabel="#{g:translate(role)}" />
+									<p:ajax event="change" update=":userForm:role :userForm:manager" process=":userForm:role"
+										listener="#{addUserView.changeRoleListener}" />
+								</cc:inputSelect>
 
-									<cc:autocomplete id="manager" label="#{i18n['user.manager']}" value="#{addUserView.user.manager}"
-										completeMethod="#{addUserView.queryManager}" disabled="#{addUserView.user.isAdmin()}" converter="userConverter" >
-										<p:column styleClass="user-select image">
-											<cc:person value="#{var}" showDescription="false" />
-										</p:column>
-									</cc:autocomplete>
+								<cc:autocomplete id="manager" label="#{i18n['user.manager']}" value="#{addUserView.user.manager}"
+									completeMethod="#{addUserView.queryManager}" disabled="#{addUserView.user.isAdmin()}" converter="userConverter">
+									<p:column styleClass="user-select image">
+										<cc:person value="#{var}" showDescription="false" />
+									</p:column>
+								</cc:autocomplete>
 
-									<g:input id="date_of_join" label="#{i18n['user.date_of_join']}" value="#{addUserView.user.dateOfJoin}" type="calendar"/>
-								</div>
+								<g:input id="date_of_join" label="#{i18n['user.date_of_join']}" value="#{addUserView.user.dateOfJoin}" type="calendar" />
 							</div>
 						</div>
-						<div class="panel-footer">
+						<f:facet name="footer">
 							<div class="panel-buttons">
 								<p:button styleClass="btn-gray" value="#{i18n['action.cancel']}" outcome="#{Page.USER_SEARCH.getUrl()}" />
-								<p:commandButton value="#{i18n['action.save']}" action="#{addUserView.save}" process="@form"
-									update="@form growl" />
+								<p:commandButton value="#{i18n['action.save']}" action="#{addUserView.save}" process="@form" update="@form growl" />
 							</div>
-						</div>
-					</div>
+						</f:facet>
+					</p:panel>
 				</h:form>
 			</div>
 		</div>

@@ -95,7 +95,8 @@ body .ui-button .ui-icon {
 }
 
 body .ui-autocomplete {
-	width: 100%;
+	display: flex;
+	flex: 1 1 100%;
 }
 
 body .ui-autocomplete-panel {
@@ -275,7 +276,8 @@ body .ui-breadcrumb .ui-breadcrumb-chevron {
 }
 
 body .ui-calendar, body .ui-inputnumber {
-	flex: 1;
+	display: flex;
+	flex: 1 1 100%;
 }
 
 body .ui-chkbox {
@@ -297,6 +299,11 @@ body .ui-chkbox .ui-chkbox-box {
 body .ui-chkbox .ui-chkbox-box.ui-state-disabled {
 	background: #e6e9f0;
 }
+
+body .ui-autocomplete-input-token {
+	flex: 1 1 100%;
+}
+
 
 body .ui-autocomplete-input-token input {
 	margin: 0 0 0 0.5em;
@@ -588,23 +595,20 @@ body .ui-autocomplete.ui-autocomplete-multiple .ui-inputfield {
 	height: auto;
 }
 
-body .ui-spinner .ui-inputfield {
-	padding: 0.5em 25px 0.5em 0.5em;
-	border: 1px solid #c2cad8;
-}
-
 body .ui-inputfield {
-	border: 0px;
-	padding: 0;
 	height: 100%;
-	width: 100%;
-	color: inherit;
-	justify-content: inherit;
-	text-align: inherit;
+	flex: 1 1 100%;
+	color: #777777;
+	min-height: 34px;
+	display: flex;
+	align-items: center;
+	border: 1px solid #c2cad8;
+	background: white;
 }
 
 body .ui-inputfield.hasDatepicker {
 	cursor: pointer;
+	text-align: right;
 }
 
 body .ui-inputtext.ui-state-disabled, body .ui-inputfield.hasDatepicker.ui-state-disabled, body .ui-autocomplete-input.ui-state-disabled {
@@ -714,14 +718,27 @@ body .ui-growl .ui-growl-item-container.ui-growl-error {
 }
 
 body .ui-selectonemenu {
-	display: inline-block;
 	position: relative;
 	width: auto;
-	zoom: 1;
 	cursor: pointer;
-	padding-right: 22px;
 	vertical-align: top;
-	width: 100%;
+	flex: 1 1 100%;
+	color: #777777;
+	min-height: 34px;
+	display: flex;
+	border: 1px solid #c2cad8;
+	background: white;
+}
+
+body .ui-selectonemenu .ui-selectonemenu-label {
+	display: flex;
+	flex: 1 1 100%;
+	white-space: nowrap;
+	overflow: hidden;
+	font-weight: normal;
+	height: 100%;
+	justify-content: flex-end;
+	align-items: center;
 }
 
 body .ui-selectonemenu .ui-selectonemenu-trigger {
@@ -833,32 +850,9 @@ body .ui-picklist .ui-picklist-buttons {
 	padding: 1em;
 }
 
-body .ui-selectonemenu .ui-selectonemenu-label {
-	display: flex;
-	border: 0;
-	white-space: nowrap;
-	overflow: hidden;
-	font-weight: normal;
-	width: 100%;
-	height: 100%;
-	justify-content: flex-end;
-	padding-right: 34px;
-	align-items: center;
-}
-
 body .ui-link {
 	display: flex;
 	flex: 1 1 100%;
-}
-
-body .ui-spinner {
-	display: flex;
-}
-
-body .input-group .ui-spinner .ui-spinner-button {
-	height: 50%;
-	width: 16px;
-	margin-left: 16px;
 }
 
 body .ui-selectonemenu-panel .ui-selectonemenu-list-item {
@@ -867,4 +861,14 @@ body .ui-selectonemenu-panel .ui-selectonemenu-list-item {
 	padding: 3px 5px;
 	text-align: right;
 	white-space: nowrap;
+}
+
+body .ui-spinner {
+	display: flex;
+	flex: 1 1 100%;
+}
+
+body .ui-spinner .ui-spinner-button {
+	height: 50%;
+	width: 16px;
 }
