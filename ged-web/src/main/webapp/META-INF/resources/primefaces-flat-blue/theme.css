@@ -321,6 +321,8 @@ body .ui-chips-container {
 	border: 1px solid #c2cad8;
 	color: #777777;
 	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
 }
 
 body .ui-chips-container.ui-state-disabled {
@@ -383,6 +385,10 @@ body .ui-datalist-data .ui-datalist-item {
 body .ui-chips-input-token {
 	margin: 0;
 	padding: 0;
+	height: 34px;
+	display: flex;
+	flex: 1 1 100%;
+	align-items: center;
 }
 
 body .ui-datatable, body .ui-datatable .ui-datatable-tablewrapper {
@@ -590,9 +596,11 @@ body .ui-dialog .ui-dialog-titlebar .ui-dialog-titlebar-close {
 body .ui-autocomplete.ui-autocomplete-multiple .ui-inputfield {
 	padding: 0;
 	display: flex;
+	flex: 1 1 100%;
 	flex-wrap: wrap;
 	align-items: flex-start;
 	height: auto;
+	width: 300px;
 }
 
 body .ui-inputfield {
