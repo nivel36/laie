@@ -40,7 +40,9 @@
 										<p:ajax event="rate" listener="#{editCandidateView.onrate}" update="" />
 									</p:rating>
 								</div>
-								<g:input value="#{editCandidateView.tags}" completeMethod="#{editCandidateView.queryTags}" type="tag"/>
+								<g:input id="tags" value="#{editCandidateView.tags}" completeMethod="#{editCandidateView.queryTags}" type="chips" >
+									<f:converter converterId="tagConverter" for="tags" />
+								</g:input>
 							</div>
 						</div>
 

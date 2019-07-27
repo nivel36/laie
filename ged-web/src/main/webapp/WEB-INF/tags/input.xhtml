@@ -24,10 +24,10 @@
 	<o:tagAttribute name="labelStyleClass" />
 	<o:tagAttribute name="messageStyleClass" />
 
-	<h:panelGroup id="#{id}" class="input-group #{styleClass}" rendered="#{rendered}">
+	<h:panelGroup id="#{id}_group" class="input-group #{styleClass}" rendered="#{rendered}">
 
 		<h:panelGroup layout="block" styleClass="label-container" rendered="#{not empty label}">
-			<p:outputLabel id="#{id}_label" for="#{id}_input" value="#{label}" styleClass="label #{labelStyleClass}" />
+			<p:outputLabel id="#{id}_label" for="#{id}" value="#{label}" styleClass="label #{labelStyleClass}" />
 		</h:panelGroup>
 
 		<div class="input-container">
@@ -36,13 +36,13 @@
 			</h:panelGroup>
 			<c:choose>
 				<c:when test="#{type eq 'selectOneMenu'}">
-					<p:selectOneMenu id="#{id}_input" value="#{value}" required="#{required}" styleClass="input input-select #{inputStyleClass}">
+					<p:selectOneMenu id="#{id}" value="#{value}" required="#{required}" styleClass="input input-select #{inputStyleClass}">
 						<f:selectItem />
 						<ui:insert />
 					</p:selectOneMenu>
 				</c:when>
 				<c:when test="#{type eq 'textarea'}">
-					<p:inputTextarea id="#{id}_input" value="#{value}" required="#{required}" styleClass="input input-text-area #{inputStyleClass}"
+					<p:inputTextarea id="#{id}" value="#{value}" required="#{required}" styleClass="input input-text-area #{inputStyleClass}"
 						autoResize="false">
 						<ui:insert />
 					</p:inputTextarea>
@@ -55,14 +55,14 @@
 				</c:when>
 
 				<c:when test="#{type eq 'number'}">
-					<p:spinner id="#{id}_input" value="#{value}" required="#{required}" styleClass="input input-number #{inputStyleClass}"
+					<p:spinner id="#{id}" value="#{value}" required="#{required}" styleClass="input input-number #{inputStyleClass}"
 						min="#{not empty min ? min : 0}" max="#{not empty max ? max : 100}">
 						<ui:insert />
 					</p:spinner>
 				</c:when>
 
 				<c:when test="#{type eq 'calendar'}">
-					<p:calendar id="#{id}_input" value="#{value}" pattern="dd/MM/yyyy" navigator="true" required="#{required}"
+					<p:calendar id="#{id}" value="#{value}" pattern="dd/MM/yyyy" navigator="true" required="#{required}"
 						inputStyleClass="input calendar #{inputStyleClass}">
 						<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
 						<ui:insert />
@@ -76,7 +76,7 @@
 				</c:when>
 
 				<c:when test="#{type eq 'money'}">
-					<p:inputNumber id="#{id}_input" value="#{value}" required="#{required}" inputStyleClass="input input-money #{inputStyleClass}">
+					<p:inputNumber id="#{id}" value="#{value}" required="#{required}" inputStyleClass="input input-money #{inputStyleClass}">
 						<ui:insert />
 					</p:inputNumber>
 					<h:panelGroup layout="block" styleClass="input-icon">
@@ -85,19 +85,19 @@
 				</c:when>
 
 				<c:when test="#{type eq 'password'}">
-					<p:password id="#{id}_input" value="#{value}" required="#{required}" styleClass="input input-password #{inputStyleClass}">
+					<p:password id="#{id}" value="#{value}" required="#{required}" styleClass="input input-password #{inputStyleClass}">
 						<ui:insert />
 					</p:password>
 				</c:when>
 
-				<c:when test="#{type eq 'tags'}">
-					<p:chips id="#{id}_input" value="#{value}" required="#{required}" styleClass="input input-tag #{inputStyleClass}" converter="tagConverter">
+				<c:when test="#{type eq 'chips'}">
+					<p:chips id="#{id}" value="#{value}" required="#{required}" styleClass="input input-chips #{inputStyleClass}">
 						<ui:insert />
 					</p:chips>
 				</c:when>
 
 				<c:otherwise>
-					<p:inputText id="#{id}_input" value="#{value}" required="#{required}" styleClass="input input-text #{inputStyleClass}">
+					<p:inputText id="#{id}" value="#{value}" required="#{required}" styleClass="input input-text #{inputStyleClass}">
 						<ui:insert />
 					</p:inputText>
 				</c:otherwise>
@@ -105,7 +105,7 @@
 		</div>
 
 		<div class="message-container">
-			<p:message id="#{id}_message" for="#{id}_input" styleClass="message-error #{errorStyleClass}" />
+			<p:message id="#{id}_message" for="#{id}" styleClass="message-error #{errorStyleClass}" />
 		</div>
 	</h:panelGroup>
 </ui:composition>

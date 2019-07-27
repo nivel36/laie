@@ -11,7 +11,6 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	template="/WEB-INF/templates/default.xhtml">
 
-
 	<ui:define name="title">
 		<title>#{i18n['candidate.new_candidate']}</title>
 	</ui:define>
@@ -40,7 +39,9 @@
 										<p:ajax event="rate" listener="#{addCandidateView.onrate}" update="" />
 									</p:rating>
 								</div>
-								<g:input value="#{addCandidateView.tags}" completeMethod="#{addCandidateView.queryTags}" type="tags"/>
+								<g:input id="tags" value="#{addCandidateView.tags}" completeMethod="#{addCandidateView.queryTags}" type="chips">
+									<f:converter converterId="tagConverter" for="tags" />
+								</g:input>
 							</div>
 						</div>
 						<div class="panel-content-data grid">

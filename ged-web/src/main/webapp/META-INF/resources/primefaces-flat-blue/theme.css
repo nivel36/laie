@@ -184,6 +184,7 @@ body .ui-button.ui-spinner-button {
 
 body .ui-button {
 	min-width: 80px;
+	min-height: 34px;
 }
 
 body .ui-button, body .ui-button.ui-button-icon-only {
@@ -280,6 +281,10 @@ body .ui-calendar, body .ui-inputnumber {
 	flex: 1 1 100%;
 }
 
+body .ui-calendar .ui-inputfield, body .ui-inputnumber .ui-inputfield {
+	text-align: right;
+}
+
 body .ui-chkbox {
 	display: inline-block;
 	vertical-align: middle;
@@ -328,6 +333,10 @@ body .ui-chips-container {
 body .ui-chips-container.ui-state-disabled {
 	border: 1px solid transparent;
 	background: transparent;
+}
+
+body .ui-chips-container.ui-state-disabled .ui-chips-input-token {
+	display: none;
 }
 
 body .ui-chips-container .ui-chips-token, body .ui-autocomplete-multiple .ui-autocomplete-token {
@@ -612,11 +621,6 @@ body .ui-inputfield {
 	align-items: center;
 	border: 1px solid #c2cad8;
 	background: white;
-}
-
-body .ui-inputfield.hasDatepicker {
-	cursor: pointer;
-	text-align: right;
 }
 
 body .ui-inputtext.ui-state-disabled, body .ui-inputfield.hasDatepicker.ui-state-disabled, body .ui-autocomplete-input.ui-state-disabled {

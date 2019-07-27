@@ -24,11 +24,9 @@
 		<div class="content">
 			<h:form>
 				<p:panel header="${i18n['login.login']}" styleClass="login dialog">
-					<div class="panel-content-data grid">
-						<div class="col-12">
-							<g:input id="username" icon="fa-user" value="#{loginView.username}" required="true" />
-							<g:input id="password" icon="fa-lock" value="#{loginView.password}" required="true" type="password" />
-						</div>
+					<div class="panel-content-data">
+						<g:input id="username" icon="fa-user" value="#{loginView.username}" required="true" />
+						<g:input id="password" icon="fa-lock" value="#{loginView.password}" required="true" type="password" />
 					</div>
 					<f:facet name="footer">
 						<div class="panel-buttons">

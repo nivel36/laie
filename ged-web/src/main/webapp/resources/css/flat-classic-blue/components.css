@@ -296,7 +296,7 @@ body .input-search .clean-search-button {
 .input-group {
 	display: flex;
 	flex: 1 1 100%;
-	padding: 0.5em;
+	padding: 5px 0;
 	align-items: center;
 	flex-flow: row wrap;
 	position: relative;
@@ -360,8 +360,8 @@ body .input-group button.icon, .input-group .icon
 }
 
 .input-group .message-container {
-	flex: 1 100%;
-	margin-left: 150px;
+	flex: 1 1 100%;
+	margin-left: 170px;
 }
 
 .panel {
