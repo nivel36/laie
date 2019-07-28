@@ -473,7 +473,7 @@ body .input-group button.icon, .input-group .icon
 .panel-header-image {
 	display: flex;
 	flex-direction: column;
-	padding: 10px;
+	padding: 20px;
 }
 
 .panel-header-content {

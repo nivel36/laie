@@ -64,11 +64,13 @@
 						</div>
 						<h:form>
 							<div class="panel-buttons">
-								<p:button value="#{i18n['curriculum.curriculum']}" process="@this" outcome="#{Page.CURRICULUM.getUrl()}">
+							 <p:menuButton value="Acciones">
+								<p:menuitem value="#{i18n['curriculum.curriculum']}" process="@this" outcome="#{Page.CURRICULUM.getUrl()}">
 									<f:param name="id" value="#{viewCandidateView.candidate.id}" />
-								</p:button>
-								<p:commandButton value="#{i18n['action.export']}" process="@this" action="#{viewCandidateView.export}" icon="fa-file-excel-o" />
-								<p:commandButton value="#{i18n['action.edit']}" process="@this" action="#{viewCandidateView.editCandidate}" />
+								</p:menuitem>
+								<p:menuitem value="#{i18n['action.export']}" process="@this" action="#{viewCandidateView.export}" />
+								<p:menuitem value="#{i18n['action.edit']}" process="@this" action="#{viewCandidateView.editCandidate}" /> 
+							 </p:menuButton>
 							</div>
 						</h:form>
 					</div>

@@ -5,7 +5,7 @@ body .ui-icon {
 	text-indent: 0px;
 }
 
-body .ui-button .ui-icon {
+body .ui-button .ui-icon, body .ui-menuitem .ui-icon  {
 	font-family: FontAwesome;
 }
 
@@ -867,6 +867,29 @@ body .ui-link {
 	flex: 1 1 100%;
 }
 
+
+body .ui-menu {
+	padding: 0;
+	margin: 0;
+}
+
+body .ui-menu .ui-menu-list {
+	background: white;
+	color: #7a869b;
+	display: flex;
+	position: relative;
+	flex-flow: column wrap; 
+}
+
+body .ui-menu .ui-menu-list .ui-menuitem {
+	color: #7a869b;
+}
+
+body .ui-menu .ui-menu-list .ui-menuitem.ui-state-hover{
+	background: #7a869b;
+	color: white;
+}
+
 body .ui-selectonemenu-panel .ui-selectonemenu-list-item {
 	border: 0 none;
 	margin: 1px 0;
@@ -883,4 +906,8 @@ body .ui-spinner {
 body .ui-spinner .ui-spinner-button {
 	height: 50%;
 	width: 16px;
+}
+
+body .ui-widget-content {
+	background: white;
 }
