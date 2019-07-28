@@ -31,7 +31,7 @@
 
 	<ui:define name="content">
 		<div class="grid">
-			<div class="col-12 xl-7">
+			<div class="col-12 xl-5">
 				<div class="panel user">
 					<div class="panel-header">
 						<div class="panel-header-image">
@@ -90,17 +90,18 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-12 lg-12 xl-5">
-				<h:form id="userTeamForm">
-					<cc:users users="#{viewUserView.team}" title="#{i18n['user.team']}" />
-				</h:form>
-			</div>
-			<div class="col-12 lg-12">
+			<div class="col-12 lg-7">
 				<h:form id="jobOffersForm">
 					<cc:jobOffers jobOffers="#{viewUserView.jobOffers}" />
 				</h:form>
 			</div>
-			<div class="col-12 lg-12 xl-6">
+			<div class="col-12 xl-6">
+				<h:form id="userTeamForm">
+					<cc:users users="#{viewUserView.team}" title="#{i18n['user.team']}" />
+				</h:form>
+			</div>
+			
+			<div class="col-12 xl-6">
 				<h:form id="jobMeetingsForm">
 					<cc:meetings value="#{viewUserView.meetings}" />
 				</h:form>

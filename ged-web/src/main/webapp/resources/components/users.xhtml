@@ -17,8 +17,8 @@
 	</composite:interface>
 
 	<composite:implementation>
-		<div id="#{cc.clientId}">
-			<p:panel header="#{cc.attrs.title}" styleClass="panel users #{cc.attrs.styleClass}">
+		<div id="#{cc.clientId}" style="height:100%">
+			<p:panel header="#{cc.attrs.title}" styleClass="users #{cc.attrs.styleClass}">
 				<p:dataList var="user" value="#{cc.attrs.users}" emptyMessage="#{i18n['user.no_team']}" paginator="true" paginatorPosition="bottom">
 					<p:link outcome="#{Page.USER.getUrl()}" >
 						<f:param name="id" value="#{user.id}" />
@@ -26,11 +26,11 @@
 					</p:link>
 				</p:dataList>
 
-				<h:panelGroup layout="block" styleClass="panel-footer" rendered="#{component.findComponent('children').childCount > 0}">
+				<f:facet name="footer">
 					<h:panelGroup id="children" styleClass="panel-buttons">
 						<composite:insertChildren />
 					</h:panelGroup>
-				</h:panelGroup>
+				</f:facet>
 			</p:panel>
 		</div>
 	</composite:implementation>
