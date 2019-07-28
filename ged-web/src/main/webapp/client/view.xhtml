@@ -59,20 +59,20 @@
 				</p:panel>
 			</div>
 			<div class="col-12 sm-5">
-				<h:form id="contactsForm">
-					<cc:contacts contacts="#{viewClientView.contacts}">
+				<cc:contacts contacts="#{viewClientView.contacts}">
+					<h:form id="contactsForm">
 						<p:commandButton value="#{i18n['contact.new_contact']}" actionListener="#{viewClientView.newContact}"
 							action="#{Page.CONTACT_ADD.getUrl()}" process="@this" />
-					</cc:contacts>
-				</h:form>
+					</h:form>
+				</cc:contacts>
 			</div>
 			<div class="col-12 sm-8">
-				<h:form id="jobOffersForm">
-					<cc:jobOffers id="jobOffers" jobOffers="#{viewClientView.jobOffers}">
+				<cc:jobOffers id="jobOffers" jobOffers="#{viewClientView.jobOffers}">
+					<h:form id="jobOffersForm">
 						<p:commandButton value="#{i18n['job.new_job_offer']}" actionListener="#{viewClientView.newJobOffer}"
 							action="#{Page.JOB_ADD.getUrl()}" process="@this" />
-					</cc:jobOffers>
-				</h:form>
+					</h:form>
+				</cc:jobOffers>
 			</div>
 		</div>
 	</ui:define>

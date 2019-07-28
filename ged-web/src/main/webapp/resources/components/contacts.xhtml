@@ -17,8 +17,8 @@
 	</composite:interface>
 
 	<composite:implementation>
-		<div id="#{cc.clientId}">
-			<p:panel header="#{cc.attrs.title}">
+		<div id="#{cc.clientId}" style="height:100%">
+			<p:panel header="#{cc.attrs.title}" styleClass="contacts #{cc.attrs.styleClass}">
 				<p:dataList var="contact" value="#{cc.attrs.contacts}" emptyMessage="#{i18n['client.no_contacts_found']}"
 					paginator="true" paginatorPosition="bottom">
 					<p:link outcome="#{Page.CONTACT.getUrl()}" >
@@ -26,11 +26,11 @@
 						<cc:person value="#{contact}" styleClass="selectable"/>
 					</p:link>
 				</p:dataList>
-				<h:panelGroup layout="block" class="panel-footer" rendered="#{component.findComponent('children').childCount > 0}">
+				<f:facet name="footer">
 					<h:panelGroup id="children" styleClass="panel-buttons">
 						<composite:insertChildren />
 					</h:panelGroup>
-				</h:panelGroup>
+				</f:facet>
 			</p:panel>
 		</div>
 	</composite:implementation>

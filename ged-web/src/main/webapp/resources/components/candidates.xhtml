@@ -17,7 +17,7 @@
 	</composite:interface>
 
 	<composite:implementation>
-		<div id="#{cc.clientId}">
+		<div id="#{cc.clientId}" style="height:100%">
 			<p:panel header="#{cc.attrs.title}" styleClass="panel candidates #{cc.attrs.styleClass}">
 				<p:dataList var="candidate" value="#{cc.attrs.candidates}" emptyMessage="#{i18n['candidate.no_candidates_found']}"
 					paginator="true" paginatorPosition="bottom">
@@ -27,11 +27,11 @@
 					</p:link>
 				</p:dataList>
 				
-				<h:panelGroup layout="block" styleClass="panel-footer" rendered="#{component.findComponent('children').childCount > 0}">
+				<f:facet name="footer">
 					<h:panelGroup id="children" styleClass="panel-buttons">
 						<composite:insertChildren />
 					</h:panelGroup>
-				</h:panelGroup>
+				</f:facet>
 			</p:panel>
 		</div>
 	</composite:implementation>

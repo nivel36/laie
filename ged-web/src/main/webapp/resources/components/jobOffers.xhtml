@@ -17,8 +17,8 @@
 	</composite:interface>
 
 	<composite:implementation>
-		<div id="#{cc.clientId}">
-			<p:panel header="#{cc.attrs.title}" styleClass="job-offers panel #{cc.attrs.styleClass}">
+		<div id="#{cc.clientId}" style="height:100%">
+			<p:panel header="#{cc.attrs.title}" styleClass="job-offers #{cc.attrs.styleClass}">
 				<p:dataTable var="jobOffer" value="#{cc.attrs.jobOffers}" emptyMessage="#{i18n['job.no_jobs_found']}" reflow="true" paginator="true"
 					paginatorPosition="bottom" paginatorTemplate="{PageLinks}" rows="#{sessionUser.rowsPerPage}" sortBy="#{jobOffer.name}"
 					sortOrder="descending">
@@ -47,11 +47,11 @@
 					</p:column>
 				</p:dataTable>
 				
-				<h:panelGroup layout="block" styleClass="panel-footer" rendered="#{component.findComponent('children').childCount gt 0}">
+				<f:facet name="footer">
 					<h:panelGroup id="children" styleClass="panel-buttons">
 						<composite:insertChildren />
 					</h:panelGroup>
-				</h:panelGroup>
+				</f:facet>
 			</p:panel>
 		</div>
 	</composite:implementation>

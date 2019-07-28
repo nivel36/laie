@@ -25,7 +25,7 @@
 
 	<ui:define name="content">
 		<div class="grid">
-			<div class="col-12 xl-8">
+			<div class="col-12 xl-5">
 				<p:panel styleClass="user">
 					<div class="panel-header">
 						<div class="panel-header-image">
@@ -102,6 +102,8 @@
 						</div>
 						<div class="col-12">
 							<h4>#{i18n['candidate.metadata']}</h4>
+						</div>
+						<div class="col-12 md-6">
 							<div class="data rating">
 								<div class="label-container">
 									<div class="label">#{i18n['candidate.rating']}</div>
@@ -110,6 +112,8 @@
 									<p:rating value="#{viewCandidateView.candidate.rating}" cancel="false" readonly="true" />
 								</div>
 							</div>
+						</div>
+						<div class="col-12 md-6">
 							<div class="data tags">
 								<div class="label-container">
 									<div class="label">#{i18n['candidate.tags']}</div>
@@ -123,8 +127,12 @@
 					</div>
 				</p:panel>
 			</div>
+			
+			<div class="col-12 lg-7">
+				<cc:jobCandidatures jobCandidatures="#{viewCandidateView.jobCandidatures}" showCandidate="false" />
+			</div>
 
-			<div class="col-12 lg-6 xl-4">
+			<div class="col-12 lg-6">
 				<h:form id="file_form" enctype="multipart/form-data">
 					<p:panel header="#{i18n['file.files']}">
 						<p:dataTable var="file" id="files" value="#{filePanelView.files}" emptyMessage="#{i18n['file.no_files']}" reflow="true"
@@ -153,14 +161,11 @@
 			</div>
 
 			<div class="col-12 lg-6">
-				<cc:jobCandidatures jobCandidatures="#{viewCandidateView.jobCandidatures}" showCandidate="false" />
-			</div>
-			<div class="col-12 lg-6">
-				<h:form>
-					<cc:meetings value="#{viewCandidateView.meetings}">
+				<cc:meetings value="#{viewCandidateView.meetings}">
+					<h:form>
 						<p:commandButton value="#{i18n['meeting.add_meeting']}" action="#{viewCandidateView.newMeeting}" />
-					</cc:meetings>
-				</h:form>
+					</h:form>
+				</cc:meetings>
 			</div>
 		</div>
 	</ui:define>

@@ -18,8 +18,8 @@
 	</composite:interface>
 
 	<composite:implementation>
-		<div id="#{cc.clientId}">
-			<p:panel header="#{cc.attrs.title}">
+		<div id="#{cc.clientId}" style="height:100%">
+			<p:panel header="#{cc.attrs.title}" styleClass="clients #{cc.attrs.styleClass}">
 				<p:dataTable var="client" id="clients" value="#{cc.attrs.clients}" emptyMessage="#{i18n['client.no_clients_found']}"
 					reflow="true" paginator="true" paginatorPosition="bottom" rows="#{sessionUser.rowsPerPage}" sortBy="#{client.name}"
 					sortOrder="ascending">
@@ -43,12 +43,11 @@
 						</h:link>
 					</p:column>
 				</p:dataTable>
-				<h:panelGroup layout="block" styleClass="panel-footer"
-					rendered="#{component.findComponent('children').childCount > 0}">
+				<f:facet name="footer">
 					<h:panelGroup id="children" styleClass="panel-buttons">
 						<composite:insertChildren />
 					</h:panelGroup>
-				</h:panelGroup>
+				</f:facet>
 			</p:panel>
 		</div>
 	</composite:implementation>

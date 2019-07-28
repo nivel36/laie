@@ -19,7 +19,7 @@
 	</composite:interface>
 
 	<composite:implementation>
-		<div id="#{cc.clientId}" >
+		<div id="#{cc.clientId}" style="height:100%">
 			<p:panel header="#{cc.attrs.title}">
 				<p:dataTable var="jobCandidature" value="#{cc.attrs.jobCandidatures}"
 					emptyMessage="#{i18n['job_candidature.no_job_candidatures_found']}" reflow="true" paginator="true" paginatorPosition="bottom"
@@ -51,11 +51,11 @@
 					</p:column>
 				</p:dataTable>
 			
-				<h:panelGroup layout="block" class="panel-footer" rendered="#{component.findComponent('children').childCount > 0}">
+				<f:facet name="footer">
 					<h:panelGroup id="children" styleClass="panel-buttons">
 						<composite:insertChildren />
 					</h:panelGroup>
-				</h:panelGroup>
+				</f:facet>
 			</p:panel>
 		</div>
 	</composite:implementation>

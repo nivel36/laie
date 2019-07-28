@@ -19,8 +19,8 @@
 	</composite:interface>
 
 	<composite:implementation>
-		<div id="#{cc.clientId}">
-			<p:panel header="#{cc.attrs.title}" styleClass="panel meetings #{cc.attrs.styleClass}">
+		<div id="#{cc.clientId}" style="height:100%">
+			<p:panel header="#{cc.attrs.title}" styleClass="meetings #{cc.attrs.styleClass}">
 				<div class="panel-content-data">
 					<ui:repeat var="meeting" value="#{cc.attrs.value}" rendered="#{not empty cc.attrs.value}">
 						<cc:meeting value="#{meeting}" />
@@ -29,11 +29,11 @@
 						<h:outputText value="#{cc.attrs.emptyMessage}" rendered="#{empty cc.attrs.value}" />
 					</div>
 				</div>
-				<h:panelGroup layout="block" class="panel-footer" rendered="#{component.findComponent('children').childCount > 0}">
+				<f:facet name="footer">
 					<h:panelGroup id="children" styleClass="panel-buttons">
 						<composite:insertChildren />
 					</h:panelGroup>
-				</h:panelGroup>
+				</f:facet>
 			</p:panel>
 		</div>
 	</composite:implementation>
