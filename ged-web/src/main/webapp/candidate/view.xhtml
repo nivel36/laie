@@ -62,17 +62,17 @@
 								</div>
 							</h:panelGroup>
 						</div>
-						<h:form>
-							<div class="panel-buttons">
-							 <p:menuButton value="Acciones">
-								<p:menuitem value="#{i18n['curriculum.curriculum']}" process="@this" outcome="#{Page.CURRICULUM.getUrl()}">
-									<f:param name="id" value="#{viewCandidateView.candidate.id}" />
-								</p:menuitem>
-								<p:menuitem value="#{i18n['action.export']}" process="@this" action="#{viewCandidateView.export}" />
-								<p:menuitem value="#{i18n['action.edit']}" process="@this" action="#{viewCandidateView.editCandidate}" /> 
-							 </p:menuButton>
-							</div>
-						</h:form>
+						<div class="panel-buttons buttons">
+							<h:form>
+								<p:menuButton value="Acciones">
+									<p:menuitem value="#{i18n['curriculum.curriculum']}" process="@this" outcome="#{Page.CURRICULUM.getUrl()}">
+										<f:param name="id" value="#{viewCandidateView.candidate.id}" />
+									</p:menuitem>
+									<p:menuitem value="#{i18n['action.export']}" process="@this" action="#{viewCandidateView.export}" />
+									<p:menuitem value="#{i18n['action.edit']}" process="@this" action="#{viewCandidateView.editCandidate}" />
+								</p:menuButton>
+							</h:form>
+						</div>
 					</div>
 
 					<div class="panel-content-data grid">
@@ -127,7 +127,7 @@
 					</div>
 				</p:panel>
 			</div>
-			
+
 			<div class="col-12 lg-7">
 				<cc:jobCandidatures jobCandidatures="#{viewCandidateView.jobCandidatures}" showCandidate="false" />
 			</div>
