@@ -18,7 +18,13 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.IndexedEmbedded;
+import org.hibernate.search.annotations.SortableField;
+import org.hibernate.search.annotations.Store;
 
 import ged.ejb.core.bookmark.Bookmark;
 import ged.ejb.person.Person;
@@ -38,21 +44,28 @@ public class User extends Person {
 	@NotNull
 	private Credential credential;
 
+	@Field(name = "dateOfJoin", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
+	@SortableField(forField = "dateOfJoin")
 	private LocalDate dateOfJoin;
 
 	@NotNull
 	@Column(nullable = false)
 	private String language;
 
+	@Field(name = "lastConnection", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
+	@SortableField(forField = "lastConnection")
 	private LocalDateTime lastConnection;
 
 	@ManyToOne
 	@JoinColumn(name = "managerId")
+	@IndexedEmbedded(depth = 1)
 	private User manager;
 
 	@NotNull
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
+	@Field(name = "role", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
+	@SortableField(forField = "role")
 	private Role role;
 
 	@NotNull

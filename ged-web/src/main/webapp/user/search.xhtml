@@ -60,17 +60,17 @@
 						<h:outputText value="#{user.email}" />
 					</p:column>
 
-					<p:column headerText="#{i18n['user.role']}">
+					<p:column headerText="#{i18n['user.role']}" sortBy="#{user.role}">
 						<h:outputText value="#{g:translate(user.role)}" />
 					</p:column>
 
-					<p:column headerText="#{i18n['user.manager']}">
+					<p:column headerText="#{i18n['user.manager']}" sortBy="#{user.manager.name}">
 						<h:link value="#{user.manager.fullName}" outcome="#{Page.USER.getUrl()}" rendered="#{not empty user.manager}">
 							<f:param name="id" value="#{user.manager.id}" />
 						</h:link>
 					</p:column>
 
-					<p:column headerText="#{i18n['user.last_login']}">
+					<p:column headerText="#{i18n['user.last_login']}" sortBy="#{user.lastConnection}">
 						<h:outputText value="#{user.lastConnection}">
 							<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
 						</h:outputText>
