@@ -64,7 +64,6 @@ public final class ExportAcquirerUtil {
 		Objects.requireNonNull(className);
 		Objects.requireNonNull(type);
 		try {
-			System.out.println(SurnameAcquirer.class);
 			final Class<?> clazz = Class.forName(className);
 			Objects.requireNonNull(clazz);
 			// TODO validar tipo

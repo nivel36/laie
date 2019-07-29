@@ -43,7 +43,7 @@
 					</h:panelGroup>
 				</div>
 				<div class="panel-header-buttons">
-					<p:commandButton value="#{i18n['action.export']}" process="@this" actionListener="#{userBean.editUser}"
+					<p:commandButton value="#{i18n['action.export']}" process="@this" actionListener="#{userBean.export}" ajax="false" 
 						icon="fa-file-excel-o" action="/faces/user/userEdit?faces-redirect=true" />
 					<p:commandButton value="#{i18n['action.edit']}" process="@this" actionListener="#{userBean.editUser}"
 						action="/faces/user/userEdit?faces-redirect=true" />

@@ -33,7 +33,7 @@
 				<div class="search-result-header">
 					<div class="search-result-header-title">#{i18n['user.users']}</div>
 					<div class="search-result-header-buttons">
-						<p:commandButton value="#{i18n['action.export']}" action="#{userSearchBean.export}" process="@this"
+						<p:commandButton value="#{i18n['action.export']}" action="#{userSearchBean.export}" process="@this" ajax="false" 
 							icon="fa-file-excel-o" styleClass="btn-primary" />
 						<p:button value="#{i18n['action.new']}" outcome="userEdit" styleClass="btn-primary" />
 					</div>
