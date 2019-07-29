@@ -24,21 +24,12 @@
 		<ged.version>${project.version}</ged.version>
 
 		<javaee-api.version>8.0</javaee-api.version>
-<<<<<<< HEAD
-		<primefaces.version>6.2</primefaces.version>
-		<hibernate-search.version>5.10.1.Final</hibernate-search.version>
-		<infinispan.version>9.2.4.Final</infinispan.version>
-		<font-awesome.version>4.5.0</font-awesome.version>
-		<pdfbox.version>1.8.6</pdfbox.version>
-		<slf4j.version>1.7.22</slf4j.version>
-=======
 		<primefaces.version>7.0</primefaces.version>
 		<hibernate-search.version>5.10.5.Final</hibernate-search.version>
 		<infinispan.version>9.4.14.Final</infinispan.version>
 		<font-awesome.version>5.9.0</font-awesome.version>
 		<slf4j.version>1.7.26</slf4j.version>
 		<poi.version>4.1.0</poi.version>
->>>>>>> branch 'develop' of https://isabelV@bitbucket.org/ged_team/ged.git
 		<xml.bind.version>2.2.11</xml.bind.version>
 		<javax.activation.version>1.1.1</javax.activation.version>
 		<omnifaces.version>3.3</omnifaces.version>
@@ -139,15 +130,9 @@
 			</dependency>
 
 			<dependency>
-<<<<<<< HEAD
 				<groupId>org.apache.pdfbox</groupId>
 				<artifactId>pdfbox</artifactId>
 				<version>${pdfbox.version}</version>
-=======
-				<groupId>org.apache.poi</groupId>
-				<artifactId>poi</artifactId>
-				<version>${poi.version}</version>
->>>>>>> branch 'develop' of https://isabelV@bitbucket.org/ged_team/ged.git
 			</dependency>
 
 			<dependency>
