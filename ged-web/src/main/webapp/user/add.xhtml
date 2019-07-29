@@ -38,34 +38,39 @@
 						<div class="panel-content-data grid">
 							<div class="col-12 sm-6">
 								<h4>#{i18n['user.personal_information']}</h4>
-								<g:input id="name" label="#{i18n['user.name']}" value="#{addUserView.user.name}" required="true" />
-
-								<g:input id="surname" label="#{i18n['user.surname']}" value="#{addUserView.user.surname}" required="true" />
-
-								<g:input id="email" label="#{i18n['user.email']}" value="#{addUserView.user.email}" required="true"
-									validator="#{addUserView.validateEmail}" />
-
-								<g:input id="phone_number" label="#{i18n['user.phone_number']}" value="#{addUserView.user.phoneNumber}" />
+								
+								<div class="form-field">
+									<g:input id="name" label="#{i18n['user.name']}" value="#{addUserView.user.name}" required="true" />
+	
+									<g:input id="surname" label="#{i18n['user.surname']}" value="#{addUserView.user.surname}" required="true" />
+	
+									<g:input id="email" label="#{i18n['user.email']}" value="#{addUserView.user.email}" required="true"
+										validator="#{addUserView.validateEmail}" />
+	
+									<g:input id="phone_number" label="#{i18n['user.phone_number']}" value="#{addUserView.user.phoneNumber}" />
+								</div>
 							</div>
 
 							<div class="col-12 sm-6">
 
 								<h4>#{i18n['user.professional_information']}</h4>
 
-								<cc:inputSelect id="role" value="#{addUserView.user.role}" label="#{i18n['user.role']}" required="true">
-									<f:selectItems value="#{roles.list}" var="role" itemValue="#{role}" itemLabel="#{g:translate(role)}" />
-									<p:ajax event="change" update=":userForm:role :userForm:manager" process=":userForm:role"
-										listener="#{addUserView.changeRoleListener}" />
-								</cc:inputSelect>
-
-								<cc:autocomplete id="manager" label="#{i18n['user.manager']}" value="#{addUserView.user.manager}"
-									completeMethod="#{addUserView.queryManager}" disabled="#{addUserView.user.isAdmin()}" converter="userConverter">
-									<p:column styleClass="user-select image">
-										<cc:person value="#{var}" showDescription="false" />
-									</p:column>
-								</cc:autocomplete>
-
-								<g:input id="date_of_join" label="#{i18n['user.date_of_join']}" value="#{addUserView.user.dateOfJoin}" type="calendar" />
+								<div class="form-field">
+									<cc:inputSelect id="role" value="#{addUserView.user.role}" label="#{i18n['user.role']}" required="true">
+										<f:selectItems value="#{roles.list}" var="role" itemValue="#{role}" itemLabel="#{g:translate(role)}" />
+										<p:ajax event="change" update=":userForm:role :userForm:manager" process=":userForm:role"
+											listener="#{addUserView.changeRoleListener}" />
+									</cc:inputSelect>
+	
+									<cc:autocomplete id="manager" label="#{i18n['user.manager']}" value="#{addUserView.user.manager}"
+										completeMethod="#{addUserView.queryManager}" disabled="#{addUserView.user.isAdmin()}" converter="userConverter">
+										<p:column styleClass="user-select image">
+											<cc:person value="#{var}" showDescription="false" />
+										</p:column>
+									</cc:autocomplete>
+	
+									<g:input id="date_of_join" label="#{i18n['user.date_of_join']}" value="#{addUserView.user.dateOfJoin}" type="calendar" />
+								</div>
 							</div>
 						</div>
 						<f:facet name="footer">

@@ -31,11 +31,11 @@
 	<ui:define name="content">
 		<h:form id="searchUsers">
 			<p:panel>
-				<div class="panel-content-data">
-					<div class="search-bar">
+				<div class="panel-content-data grid">
+					<div class="ui-g-6">
 						<cc:inputSearch searchText="#{searchUserView.searchText}" searchAction="#{searchUserView.search}" update="@form" />
 					</div>
-					<div class="panel-buttons">
+					<div class="ui-g-6">
 						<p:commandButton value="#{i18n['action.export']}" action="#{searchUserView.export}" process="@this" icon="fa-file-excel-o" />
 					</div>
 				</div>

@@ -27,44 +27,48 @@
 				<div class="panel-content-data grid">
 					<div class="col-12 sm-6">
 						<h3>#{i18n['user.personal_information']}</h3>
+						<div class="form-field">
+							<g:input label="#{i18n['job.name']}" value="#{editJobView.jobOffer.name}" required="true" />
 
-						<g:input label="#{i18n['job.name']}" value="#{editJobView.jobOffer.name}" required="true" />
-
-						<cc:autocomplete id="client" label="#{i18n['job.client']}" value="#{editJobView.jobOffer.client}"
-							completeMethod="#{editJobView.completeClient}" required="true">
-							<p:column>
-								<h:outputText value="#{var.name}" />
-							</p:column>
-						</cc:autocomplete>
-
-						<g:input id="places" label="#{i18n['job.places']}" value="#{editJobView.jobOffer.places}" type="number" min="0" />
-
-						<g:input id="dateOpened" label="#{i18n['job.date_opened']}" value="#{editJobView.jobOffer.dateOpened}" type="calendar" />
-
-						<g:input id="dateClosed" label="#{i18n['job.date_closed']}" value="#{editJobView.jobOffer.dateClosed}" type="calendar" />
+							<cc:autocomplete id="client" label="#{i18n['job.client']}" value="#{editJobView.jobOffer.client}"
+								completeMethod="#{editJobView.completeClient}" required="true">
+								<p:column>
+									<h:outputText value="#{var.name}" />
+								</p:column>
+							</cc:autocomplete>
+		
+							<g:input id="places" label="#{i18n['job.places']}" value="#{editJobView.jobOffer.places}" type="number" min="0" />
+		
+							<g:input id="dateOpened" label="#{i18n['job.date_opened']}" value="#{editJobView.jobOffer.dateOpened}" type="calendar" />
+		
+							<g:input id="dateClosed" label="#{i18n['job.date_closed']}" value="#{editJobView.jobOffer.dateClosed}" type="calendar" />
+						</div>
 					</div>
 
 					<div class="col-12 sm-6">
 						<h3>#{i18n['user.personal_information']}</h3>
-
-						<g:input id="city" label="#{i18n['job.city']}" value="#{editJobView.jobOffer.address.city}" required="true" />
-
-						<g:input id="state" label="#{i18n['job.state']}" value="#{editJobView.jobOffer.address.state}" required="true" />
-
-						<cc:autocomplete id="owner" label="#{i18n['job.owner']}" value="#{editJobView.jobOffer.owner}"
-							completeMethod="#{editJobView.queryOwner}" converter="userConverter">
-							<p:column styleClass="user-select image">
-								<cc:person value="#{var}" showDescription="false" />
-							</p:column>
-						</cc:autocomplete>
-
-						<cc:inputUsers id="recruiters" label="#{i18n['job.recruiters']}" completeMethod="#{editJobView.queryRecruiter}"
-							value="#{editJobView.recruiters}" />
+						<div class="form-field">
+							<g:input id="city" label="#{i18n['job.city']}" value="#{editJobView.jobOffer.address.city}" required="true" />
+	
+							<g:input id="state" label="#{i18n['job.state']}" value="#{editJobView.jobOffer.address.state}" required="true" />
+	
+							<cc:autocomplete id="owner" label="#{i18n['job.owner']}" value="#{editJobView.jobOffer.owner}"
+								completeMethod="#{editJobView.queryOwner}" converter="userConverter">
+								<p:column styleClass="user-select image">
+									<cc:person value="#{var}" showDescription="false" />
+								</p:column>
+							</cc:autocomplete>
+	
+							<cc:inputUsers id="recruiters" label="#{i18n['job.recruiters']}" completeMethod="#{editJobView.queryRecruiter}"
+								value="#{editJobView.recruiters}" />
+						</div>
 					</div>
 					<div class="col-12">
 						<h3>#{i18n['user.personal_information']}</h3>
-						<g:input id="description" name="description" label="#{i18n['job.description']}" value="#{editJobView.jobOffer.description}"
-							type="textarea" />
+						<div class="form-field">
+							<g:input id="description" name="description" label="#{i18n['job.description']}" value="#{editJobView.jobOffer.description}"
+								type="textarea" />
+						</div>
 					</div>
 				</div>
 				<div class="panel-footer">

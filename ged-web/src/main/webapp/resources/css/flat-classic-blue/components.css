@@ -209,6 +209,10 @@ body footer .version span {
 	justify-content: flex-end;
 }
 
+.form-field .input-group {
+	padding: 7px 14px;
+}
+
 .link {
 	padding: 5px 0px;
 	display: inline-flex;
@@ -301,7 +305,7 @@ body .input-search .clean-search-button {
 .input-group {
 	display: flex;
 	flex: 1 1 100%;
-	padding: 5px 0;
+	padding: 0;
 	align-items: center;
 	flex-flow: row wrap;
 	position: relative;
