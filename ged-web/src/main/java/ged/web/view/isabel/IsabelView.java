@@ -10,6 +10,7 @@ import javax.inject.Named;
 
 import org.primefaces.model.DualListModel;
 
+import ged.ejb.export.acquirer.ReportInfo;
 import ged.ejb.export.dto.ExportFieldsOutputBean;
 import ged.ejb.export.dto.ExportFieldsOutputBean.ExportFieldItem;
 import ged.ejb.export.dto.ExportSaveDefinitionInputBean;
@@ -34,6 +35,8 @@ public class IsabelView extends AbstractView {
 	private transient ExportDefinitionService exportDefinitionService;
 
 	private DualListModel<ExportViewItemI> model;
+	
+	private List<ReportInfo> reportsList;
 
 	private ExportDefinitionService getExportDefinitionService() {
 		return exportDefinitionService;
@@ -53,6 +56,7 @@ public class IsabelView extends AbstractView {
 	}
 
 	private void initialize(final String exportName) {
+		this.reportsList = getExportDefinitionService().getReportsList();
 		final List<ExportViewItemI> source = initializeList(getExportDefinitionService().findFieldsByExport(EXPORT_NAME));
 		final List<ExportViewItemI> target = initializeList(getExportDefinitionService().findDefinitionByExport(EXPORT_NAME));
 		this.model = new DualListModel<>(source, target);
@@ -79,5 +83,9 @@ public class IsabelView extends AbstractView {
 
 	public void setModel(DualListModel<ExportViewItemI> campos) {
 		this.model = campos;
+	}
+
+	public List<ReportInfo> getReportsList() {
+		return reportsList;
 	}
 }

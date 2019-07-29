@@ -13,7 +13,9 @@ import javax.inject.Inject;
 
 import ged.ejb.core.AbstractService;
 import ged.ejb.core.model.AbstractDao;
+import ged.ejb.core.model.Page;
 import ged.ejb.core.model.Repository;
+import ged.ejb.export.acquirer.ReportInfo;
 import ged.ejb.export.dao.ExportDao;
 import ged.ejb.export.dto.ExportFieldsOutputBean;
 import ged.ejb.export.dto.ExportFieldsOutputBean.ExportFieldItem;
@@ -57,7 +59,15 @@ public class ExportDefinitionService extends AbstractService<Export> {
 		}
 	}
 	
-	
+	public List<ReportInfo> getReportsList() {
+		final List<Export> exports = findAll(Page.ALL);
+		Objects.requireNonNull(exports);
+		final List<ReportInfo> result = new ArrayList<>(exports.size());
+		for (Export item: exports) {
+			result.add(new ReportInfo(item.getId(), item.getExportName()));
+		}
+		return result;
+	}
 	
 	private static Map<Long, ExportDefinition> toExportDefinitionMap(final Set<ExportDefinition> set) {
 		final Map<Long, ExportDefinition> map = new HashMap<>();
