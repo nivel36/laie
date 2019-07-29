@@ -7,7 +7,7 @@
 	<packaging>pom</packaging>
 	<name>ged</name>
 	<modules>
-<!-- 	<module>ged-commons-excel</module> -->
+	 	<module>ged-commons-excel</module>
 		<module>ged-ear</module>
 		<module>ged-ejb</module>
 		<module>ged-api</module>
