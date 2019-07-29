@@ -31,13 +31,14 @@
 	<ui:define name="content">
 		<h:form id="clientSearchForm">
 			<p:panel>
-				<div class="panel-content-data">
-					<div class="search-bar">
+				<div class="panel-content-data grid justify-between">
+					<div class="ui-g-12 ui-md-3">
 						<cc:inputSearch searchText="#{searchClientView.searchText}" searchAction="#{searchClientView.search}" update="@form" />
 					</div>
-					<div class="panel-buttons">
-						<p:commandButton value="#{i18n['action.export']}" action="#{searchClientView.export}" process="@this" ajax="false" 
-							icon="fa-file-excel-o" />
+					<div class="ui-g-12 ui-md-3">
+						<div class="buttons">
+							<p:commandButton value="#{i18n['action.export']}" action="#{searchClientView.export}" process="@this" icon="fa-file-excel-o" ajax="false" />
+						</div>
 					</div>
 				</div>
 

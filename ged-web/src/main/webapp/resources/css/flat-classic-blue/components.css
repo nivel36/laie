@@ -88,6 +88,11 @@ body footer .version span {
 	color: #848b9d;
 }
 
+.buttons {
+	display: flex;
+	justify-content: flex-end;
+}
+
 /************************************
  *  nav
  ************************************/

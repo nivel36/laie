@@ -32,11 +32,13 @@
 		<h:form id="searchUsers">
 			<p:panel>
 				<div class="panel-content-data grid justify-between">
-					<div class="ui-g-3">
+					<div class="ui-g-12 ui-md-3">
 						<cc:inputSearch searchText="#{searchUserView.searchText}" searchAction="#{searchUserView.search}" update="@form" />
 					</div>
-					<div class="ui-g-9 justify-end">
-						<p:commandButton value="#{i18n['action.export']}" action="#{searchUserView.export}" process="@this" ajax="false" icon="fa-file-excel-o" />
+					<div class="ui-g-12 ui-md-3">
+						<div class="buttons">
+							<p:commandButton value="#{i18n['action.export']}" action="#{searchUserView.export}" process="@this" icon="fa-file-excel-o" ajax="false"/>
+						</div>
 					</div>
 				</div>
 
