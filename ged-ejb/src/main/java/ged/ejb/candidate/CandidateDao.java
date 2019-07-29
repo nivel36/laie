@@ -27,6 +27,11 @@ public class CandidateDao extends AbstractDao<Candidate> {
 		Objects.requireNonNull(email);
 		return this.findByQuery(Boolean.class, "Candidate.emailExists", map("email", email));
 	}
+	
+	public Candidate findCandidateByEmail(final String email) {
+		Objects.requireNonNull(email);
+		return this.findByQuery(Candidate.class, "Candidate.findByEmail", map("email", email));
+	}
 
 	public List<Origin> findAllOrigins() {
 		return getPersistenceFacade().findAll(Origin.class, Page.ALL);
@@ -34,34 +39,22 @@ public class CandidateDao extends AbstractDao<Candidate> {
 
 	public Candidate findCandidateData(final long candidateId) {
 		if (candidateId < 1) {
-			logger.warn("Bad candidate id: {}", candidateId);
+			logger.error("Bad candidate id: {}", candidateId);
 			throw new IllegalArgumentException("Bad candidate id " + candidateId);
 		}
 		return this.findByQuery(Candidate.class, "Candidate.findAllDataById", map("id", candidateId));
 	}
 
-	public List<Candidate> findCandidates(final JobOffer jobOffer) {
+	public List<Candidate> findCandidates(final JobOffer jobOffer, final Page page) {
+		Objects.requireNonNull(jobOffer);
+		Objects.requireNonNull(page);
 		try {
-			Objects.requireNonNull(jobOffer);
-			return this.findByQuery(Candidate.class, "Candidate.findByJobOffer", map("jobOffer", jobOffer), Page.ALL);
+			return this.findByQuery(Candidate.class, "Candidate.findByJobOffer", map("jobOffer", jobOffer), page);
 		} catch (final NoResultException e) {
-			logger.debug("No candidates found", e);
 			return new ArrayList<>();
 		}
 	}
 
-	public List<Candidate> findLastAddedCandidates(final int numberOfCandidates) {
-		if (numberOfCandidates < 1) {
-			logger.warn("Bad number of candidates {}", numberOfCandidates);
-			throw new IllegalArgumentException("Bad number of candidates: " + numberOfCandidates);
-		}
-		return this.findByQuery(Candidate.class, "Candidate.findLastAddedCandidates", null,
-				Page.of(1, numberOfCandidates));
-	}
-
-	public long findNumberOfCandidates() {
-		return (long) this.findByQuery("Candidate.numberOfCandidates", null);
-	}
 
 	@Override
 	public Class<Candidate> getType() {
@@ -93,6 +86,6 @@ public class CandidateDao extends AbstractDao<Candidate> {
 
 	@Override
 	public String[] searchFields() {
-		return new String[] { "name", "surname", "jobProfile", "tags.label" };
+		return new String[] { "_name", "_surname", "_jobProfile", "tags.label" };
 	}
 }

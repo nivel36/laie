@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" 
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" 
+	xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:g="http://ged.org/ui" 
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/WEB-INF/templates/errorPage.xhtml">
+
+	<ui:define name="title">
+		<title>#{i18n['config.config']}</title>
+	</ui:define>
+
+	<ui:define name="content">
+			<o:importFunctions type="org.omnifaces.util.Faces" />
+			<c:set var="fromURL" value="#{Faces:getRequestURLWithQueryString()}" scope="request" />
+
+			<section>
+				<h2>Detail <small>(only shown during development mode)</small></h2>
+				<ul>
+					<li>Exception: <code>#{requestScope['javax.servlet.error.message']}</code></li>
+					<li>Request URI: <code><a href="#{fromURL}">#{fromURL}</a></code></li>
+					<li>Ajax request: <code>#{facesContext.partialViewContext.ajaxRequest ? 'Yes' : 'No'}</code></li>
+					<li>User agent: <code>#{header['user-agent']}</code></li>
+				</ul>
+				<pre><code>#{of:printStackTrace(requestScope['javax.servlet.error.exception'])}</code></pre>
+			</section>
+	</ui:define>
+</ui:composition>

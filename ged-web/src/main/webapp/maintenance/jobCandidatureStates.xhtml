@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" 
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" 
+	xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:g="http://ged.org/ui" 
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/WEB-INF/templates/default.xhtml">
+
+	<ui:define name="title">
+		<title>#{i18n['job_candidature.job_candidature_states']}</title>
+	</ui:define>
+
+	<ui:param name="selectedMenu" value="maintenances" />
+
+	<ui:define name="breadcrumb">
+		<p:breadCrumb>
+			<p:menuitem value="#{i18n['menu.index']}" outcome="#{Page.INDEX.getUrl()}" />
+			<p:menuitem value="#{i18n['maintenance.maintenances']}" outcome="#{Page.MAINTENANCE.getUrl()}" />
+			<p:menuitem value="#{i18n['job_candidature.job_candidature_states']}" disabled="true" />
+		</p:breadCrumb>
+	</ui:define>
+
+	<ui:define name="content">
+		<div class="panel">
+			<div class="panel-content">
+				<div class="panel-content-data">
+					<div class="tag-list">
+						<ui:repeat var="jobCandidatureState" value="#{jobCandidatureStatesMaintenanceView.states}">
+							<div class="tag #{jobCandidatureState.color}">#{g:translate(jobCandidatureState.name)}</div>
+						</ui:repeat>
+					</div>
+				</div>
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>

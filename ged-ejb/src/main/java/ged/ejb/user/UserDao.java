@@ -19,37 +19,51 @@ import ged.ejb.core.model.Repository;
 @Repository
 public class UserDao extends AbstractDao<User> {
 
+	private static final String EMAIL = "email";
+
+	private static final String ID = "id";
+
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	private void deleteUserClosures(final User user) {
 		logger.trace("Delete user closures for user {}", user.getEmail());
-		final List<UserClosure> userClosures = findAntecessorsUserClosures(user);
+		final List<UserClosure> userClosures = this.findAntecessorsUserClosures(user);
 		for (final UserClosure userClosure : userClosures) {
-			getPersistenceFacade().delete(UserClosure.class, userClosure);
+			this.getPersistenceFacade().delete(UserClosure.class, userClosure);
 		}
 	}
 
 	private List<UserClosure> findAntecessorsUserClosures(final User user) {
-		return this.findByQuery(UserClosure.class, "UserClosure.findAntecessorsUserClosuresById",
-				map("id", user.getId()), Page.ALL);
+		return this.findByQuery(UserClosure.class, "UserClosure.findAntecessorsUserClosuresById", map(ID, user.getId()),
+				Page.ALL);
 	}
 
 	public List<User> findSubordinateUsers(final User user) {
 		Objects.requireNonNull(user);
 		try {
-			return this.findByQuery(User.class, "User.findSubordinateUsers", map("id", user.getId()), Page.ALL);
+			return this.findByQuery(User.class, "User.findSubordinateUsers", map(ID, user.getId()), Page.ALL);
 		} catch (final NoResultException e) {
 			logger.trace("No subordinate users for user {} found", user.getEmail(), e);
 			return new ArrayList<>();
 		}
 	}
 
+	public User findUserAndCredential(final String email) {
+		Objects.requireNonNull(email);
+		try {
+			return this.findByQuery(User.class, "User.findUserAndCredential", map(EMAIL, email));
+		} catch (final NoResultException exception) {
+			logger.trace("No users for email {} found", email);
+			return null;
+		}
+	}
+
 	public User findUserByEmail(final String email) {
 		Objects.requireNonNull(email);
 		try {
-			return this.findByQuery(User.class, "User.findByEmail", map("email", email));
+			return this.findByQuery(User.class, "User.findByEmail", map(EMAIL, email));
 		} catch (final NoResultException e) {
-			logger.trace("No users with email {} found", email, e);
+			logger.trace("No user for email {} found", email);
 			return null;
 		}
 	}
@@ -63,86 +77,86 @@ public class UserDao extends AbstractDao<User> {
 		logger.trace("Insert in user closure table. Antecessor {}, descendant {}, pathLength {}", antecessor.getEmail(),
 				descendant.getEmail(), pathLength);
 		final UserClosure newUserClosure = new UserClosure(antecessor, descendant, pathLength);
-		getPersistenceFacade().insert(newUserClosure);
+		this.getPersistenceFacade().insert(newUserClosure);
 	}
 
 	private void insertUserClosures(final User user) {
 		logger.trace("Insert user closures for user {}", user.getEmail());
-		final List<UserClosure> userClosures = findAntecessorsUserClosures(user.getManager());
+		final List<UserClosure> userClosures = this.findAntecessorsUserClosures(user.getManager());
 		for (final UserClosure userClosure : userClosures) {
-			insertUserClosure(userClosure.getAntecessor(), user, userClosure.getPathLength() + 1);
+			this.insertUserClosure(userClosure.getAntecessor(), user, userClosure.getPathLength() + 1);
 		}
-		insertUserClosure(user, user, 0);
+		this.insertUserClosure(user, user, 0);
 	}
 
 	private boolean isAddingManager(final User user, final User userInDatabase) {
-		return userInDatabase.getManager() == null && user.getManager() != null;
+		return (userInDatabase.getManager() == null) && (user.getManager() != null);
 	}
 
 	private boolean isChangingManager(final User user, final User userInDatabase) {
-		return userInDatabase.getManager() != null && user.getManager() != null
+		return (userInDatabase.getManager() != null) && (user.getManager() != null)
 				&& !user.getManager().equals(userInDatabase.getManager());
 	}
 
 	private boolean isDuplicateEmail(final User user) {
 		Objects.requireNonNull(user);
-		final User repositoryUser = findUserByEmail(user.getEmail());
-		return repositoryUser != null && !(repositoryUser.getId() == user.getId());
+		final User repositoryUser = this.findUserByEmail(user.getEmail());
+		return (repositoryUser != null) && (repositoryUser.getId() != user.getId());
 	}
 
 	public boolean isEmailInUse(final String email) {
 		Objects.requireNonNull(email);
-		return this.findByQuery(Boolean.class, "User.emailExists", map("email", email));
+		return this.findByQuery(Boolean.class, "User.emailExists", map(EMAIL, email));
 	}
 
 	private boolean isRemovingManager(final User user, final User userInDatabase) {
-		return userInDatabase.getManager() != null && user.getManager() == null;
+		return (userInDatabase.getManager() != null) && (user.getManager() == null);
 	}
 
 	@Override
 	protected void postInsert(final User user) {
 		if (user.getManager() != null) {
-			insertUserClosures(user);
+			this.insertUserClosures(user);
 		}
 	}
 
 	@Override
 	protected void postUpdate(final User user) {
-		updateUserClosures(user);
+		this.updateUserClosures(user);
 	}
 
 	@Override
 	protected void preInsert(final User user) {
-		if (isEmailInUse(user.getEmail())) {
+		if (this.isEmailInUse(user.getEmail())) {
 			throw new DuplicateEmailException();
 		}
 	}
 
 	@Override
 	protected void preUpdate(final User user) {
-		if (isDuplicateEmail(user)) {
+		if (this.isDuplicateEmail(user)) {
 			throw new DuplicateEmailException();
 		}
 	}
 
 	@Override
 	public String[] searchFields() {
-		return new String[] { "name", "surname", "email" };
+		return new String[] { "_name", "_surname" };
 	}
 
 	private void updateUserClosures(final User user) {
-		final User userInDatabase = find(user.getId());
+		final User userInDatabase = this.find(user.getId());
 		if (userInDatabase == null) {
 			logger.warn("User doesn't exists");
 			throw new IllegalStateException();
 		}
-		if (isAddingManager(user, userInDatabase)) {
-			insertUserClosures(user);
-		} else if (isRemovingManager(user, userInDatabase)) {
-			deleteUserClosures(userInDatabase);
-		} else if (isChangingManager(user, userInDatabase)) {
-			deleteUserClosures(userInDatabase);
-			insertUserClosures(user);
+		if (this.isAddingManager(user, userInDatabase)) {
+			this.insertUserClosures(user);
+		} else if (this.isRemovingManager(user, userInDatabase)) {
+			this.deleteUserClosures(userInDatabase);
+		} else if (this.isChangingManager(user, userInDatabase)) {
+			this.deleteUserClosures(userInDatabase);
+			this.insertUserClosures(user);
 		}
 	}
 }

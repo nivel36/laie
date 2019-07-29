@@ -18,7 +18,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import ged.ejb.core.file.ServerFile;
 import ged.ejb.core.file.ServerFileDao;
-import ged.ejb.job.offer.JobCandidatureDao;
+import ged.ejb.core.model.Page;
+import ged.ejb.job.candidature.JobCandidatureDao;
 import ged.ejb.job.offer.JobOffer;
 
 @ExtendWith(MockitoExtension.class)
@@ -36,10 +37,12 @@ public class CandidateServiceTest {
 
 		@Test
 		public void shouldBeOk() {
-			final ServerFile mockedUploadedServerFile = mock(ServerFile.class);
-
+			final ServerFile file = new ServerFile();
 			final Candidate mockedCandidate = mock(Candidate.class);
-			candidateService.addFileToCandidate(mockedCandidate, mockedUploadedServerFile);
+			
+			candidateService.addFileToCandidate(mockedCandidate, file);
+
+			assertNotNull(file.getCandidate());
 		}
 	}
 
@@ -50,16 +53,16 @@ public class CandidateServiceTest {
 		public void findAllByJobOfferTest() {
 			final JobOffer jobOffer = new JobOffer();
 
-			when(candidateDao.findCandidates(jobOffer)).thenReturn(new ArrayList<>());
+			when(candidateDao.findCandidates(jobOffer, Page.ALL)).thenReturn(new ArrayList<>());
 
-			final List<Candidate> candidatesFromRepository = candidateService.findCandidates(jobOffer);
+			final List<Candidate> candidatesFromRepository = candidateService.findCandidates(jobOffer, Page.ALL);
 			assertEquals(0, candidatesFromRepository.size());
 		}
 
 		@Test
 		public void nullJobOfferShouldReturnNullPointerException() {
 			assertThrows(NullPointerException.class, () -> {
-				candidateService.findCandidates(null);
+				candidateService.findCandidates(null, Page.ALL);
 			});
 		}
 	}
@@ -107,37 +110,6 @@ public class CandidateServiceTest {
 	}
 
 	@Nested
-	class FindLastAddedCandidates {
-
-		@Test
-		public void badNumberShouldThrowIllegalArgumentExpcetion() {
-			assertThrows(IllegalArgumentException.class, () -> {
-				candidateService.findLastAddedCandidates(-1);
-			});
-		}
-
-		@Test
-		public void validNumberShouldReturnListOfCandidates() {
-			when(candidateDao.findLastAddedCandidates(1)).thenReturn(new ArrayList<>());
-
-			final List<Candidate> candidatesFromRepository = candidateService.findLastAddedCandidates(1);
-			assertEquals(0, candidatesFromRepository.size());
-		}
-	}
-
-	@Nested
-	class FindNumberOfCandidates {
-
-		@Test
-		public void shouldReturnNumberOfCandidates() {
-			when(candidateDao.findNumberOfCandidates()).thenReturn(1L);
-
-			final long numberOfCandidates = candidateService.findNumberOfCandidates();
-			assertEquals(1, numberOfCandidates);
-		}
-	}
-
-	@Nested
 	class UpdateFile {
 
 		@Test
@@ -173,7 +145,6 @@ public class CandidateServiceTest {
 	public void setUp() {
 		this.candidateService = new CandidateService();
 		this.candidateService.setCandidateDao(this.candidateDao);
-		this.candidateService.setJobCandidatureDao(this.jobCandidatureDao);
 		this.candidateService.setServerFileDao(this.serverFileDao);
 	}
 }

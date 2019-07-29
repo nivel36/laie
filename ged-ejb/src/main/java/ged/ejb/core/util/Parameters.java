@@ -1,15 +1,12 @@
 package ged.ejb.core.util;
 
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-public class Parameters implements Map<String, Object>, Serializable {
-
-	private static final long serialVersionUID = 5597385039960202946L;
+public class Parameters implements Map<String, Object> {
 
 	public static Parameters map(final String key, final Object value) {
 		return new Parameters().and(key, value);

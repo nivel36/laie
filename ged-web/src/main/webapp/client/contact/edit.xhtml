@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" 
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" 
+	xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:g="http://ged.org/ui" 
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/WEB-INF/templates/default.xhtml">
+
+	<ui:define name="title">
+		<title>#{clientEditView.client.name}</title>
+	</ui:define>
+
+	<ui:define name="breadcrumb">
+		<p:breadCrumb>
+			<p:menuitem value="#{i18n['menu.index']}" url="/index.xhtml" />
+			<p:menuitem value="#{i18n['client.clients']}" url="/client/clientSearch.xhtml" />
+			<p:menuitem value="#{contactEditView.client.name}" url="/client/client.xhtml?clientId=#{contactEditView.client.id}" />
+			<p:menuitem value="#{contactEditView.contact.fullName}" disabled="true" />
+		</p:breadCrumb>
+	</ui:define>
+
+	<ui:define name="content">
+		<h:form id="contactForm">
+			<div class="panel">
+				<div class="panel-content panel-content-data">
+					<div class="grid">
+						<div class="col-12 sm-6">
+							<g:input id="name" label="#{i18n['contact.name']}" value="#{contactEditView.contact.name}" required="true" />
+
+							<g:input id="surname" label="#{i18n['contact.surname']}" value="#{contactEditView.contact.surname}" required="true" />
+
+							<g:input id="position" label="#{i18n['contact.position']}" value="#{contactEditView.contact.position}" />
+
+							<g:input id="email" label="#{i18n['contact.email']}" value="#{contactEditView.contact.email}" />
+
+							<g:input id="phone_number" label="#{i18n['contact.phone_number']}" value="#{contactEditView.contact.phoneNumber}" />
+						</div>
+					</div>
+				</div>
+				<div class="panel-footer">
+					<div class="panel-buttons">
+						<p:button styleClass="btn-gray" value="#{i18n['action.cancel']}" outcome="#{PageEnum.CLIENT.getUrl()}">
+							<f:param name="id" value="#{contactEditView.client.id}" />
+						</p:button>
+						<p:commandButton value="#{i18n['action.save']}" action="#{contactEditView.save}" update="@form" />
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

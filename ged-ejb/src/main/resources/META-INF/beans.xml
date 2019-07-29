@@ -4,6 +4,5 @@
                       http://xmlns.jcp.org/xml/ns/javaee/beans_2_0.xsd" bean-discovery-mode="all">
 	<interceptors>
 		<class>ged.ejb.core.security.SecurityInterceptor</class>
-		<class>ged.ejb.core.events.LoginInterceptor</class>
 	</interceptors>
 </beans>

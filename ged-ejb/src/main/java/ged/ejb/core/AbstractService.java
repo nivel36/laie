@@ -3,13 +3,20 @@ package ged.ejb.core;
 import java.util.List;
 import java.util.Objects;
 
+import javax.annotation.Resource;
+import javax.ejb.SessionContext;
+
 import ged.ejb.core.model.AbstractDao;
 import ged.ejb.core.model.AbstractEntity;
 import ged.ejb.core.model.Page;
-import ged.ejb.core.model.SortOrder;
+import ged.ejb.core.model.SearchResult;
+import ged.ejb.core.model.SortField;
 
 public abstract class AbstractService<T extends AbstractEntity> {
-
+	
+	@Resource
+	private SessionContext sessionContext;
+	
 	public void delete(final T entity) {
 		Objects.requireNonNull(entity);
 		this.getDao().delete(entity);
@@ -32,15 +39,15 @@ public abstract class AbstractService<T extends AbstractEntity> {
 		return this.getDao().save(entity);
 	}
 
-	public List<T> search(final String searchText, final Page page) {
+	public SearchResult<T> search(final String searchText, final Page page) {
 		return this.getDao().search(searchText, page);
 	}
 
-	public List<T> search(final String searchText, final Page page, final List<SortOrder> sortOrders) {
-		return this.getDao().search(searchText, page, sortOrders);
+	public SearchResult<T> search(final String searchText, final Page page, final List<SortField> sortFields) {
+		return this.getDao().search(searchText, page, sortFields);
 	}
 
-	public List<T> search(final String searchText, final Page page, final SortOrder sortOrder) {
-		return this.getDao().search(searchText, page, sortOrder);
+	public SearchResult<T> search(final String searchText, final Page page, final SortField SortField) {
+		return this.getDao().search(searchText, page, SortField);
 	}
 }

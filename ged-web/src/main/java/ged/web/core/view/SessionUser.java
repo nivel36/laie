@@ -11,6 +11,7 @@ import javax.enterprise.context.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,6 +39,12 @@ public class SessionUser implements Serializable {
 
 	@Inject
 	private transient UserService userService;
+
+	public String exit() {
+		logger.debug("User {} logout", this.user);
+		invalidateSession();
+		return "/login.xhtml?faces-redirect=true";
+	}
 
 	public User get() {
 		return this.user;
@@ -67,20 +74,25 @@ public class SessionUser implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		final String email = externalContext.getRemoteUser();
+		final String email = this.externalContext.getRemoteUser();
 		logger.info("User {} has init his/her session", email);
 		loadUserData(email);
 	}
 
+	private void invalidateSession() {
+		final HttpSession session = (HttpSession) this.externalContext.getSession(true);
+		session.invalidate();
+	}
+
 	public boolean isActive() {
-		return user != null;
+		return this.user != null;
 	}
 
 	public boolean isAdmin() {
 		if (!isActive()) {
 			return false;
 		}
-		return user.isAdmin();
+		return this.user.isAdmin();
 	}
 
 	public boolean isManagerOf(final User subordinate) {
@@ -89,21 +101,21 @@ public class SessionUser implements Serializable {
 	}
 
 	private boolean isOwnerOrHisManager(final User owner) {
-		if (user.equals(owner)) {
+		if (this.user.equals(owner)) {
 			return true;
 		}
 		return isManagerOf(owner);
 	}
 
 	private void loadUserData(final String email) {
-		this.user = userService.findUserByEmail(email);
+		this.user = this.userService.findUserByEmail(email);
 		this.locale = new Locale(this.user.getLanguage());
-		this.team = userService.findSubordinateUsers(this.user);
+		this.team = this.userService.findSubordinateUsers(this.user);
 	}
 
 	public void refresh() {
-		logger.trace("Refreshing session for user {}", user.getEmail());
-		loadUserData(user.getEmail());
+		logger.trace("Refreshing session for user {}", this.user.getEmail());
+		loadUserData(this.user.getEmail());
 	}
 
 	public void setExternalContext(final ExternalContext externalContext) {
@@ -119,6 +131,6 @@ public class SessionUser implements Serializable {
 		if (!isActive()) {
 			return "";
 		}
-		return user.getFullName();
+		return this.user.getFullName();
 	}
 }

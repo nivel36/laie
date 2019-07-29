@@ -29,15 +29,11 @@ public class UserMapperTest {
 		public void mapDtoShouldReturnAnEntity() {
 			final User boss = new User();
 			boss.setEmail("boss@test.com");
-			when(userService.findUserByEmail("boss@test.com")).thenReturn(boss);
+			when(UserMapperTest.this.userService.findUserByEmail("boss@test.com")).thenReturn(boss);
 
-			final Role role = mockRole();
+			final UserDto userDto = UserMapperTest.this.mockUserDto();
 
-			when(userService.findRoleByName(Role.USER)).thenReturn(role);
-
-			final UserDto userDto = mockUserDto();
-
-			final User user = userMapper.mapDto(userDto);
+			final User user = UserMapperTest.this.userMapper.mapDto(userDto);
 
 			assertNotNull(user);
 			assertEquals(userDto.getDateOfJoin(), user.getDateOfJoin());
@@ -48,13 +44,13 @@ public class UserMapperTest {
 			assertEquals(userDto.getManagerEmail(), user.getManager().getEmail());
 			assertEquals(userDto.getName(), user.getName());
 			assertEquals(userDto.getPhoneNumber(), user.getPhoneNumber());
-			assertEquals(userDto.getRoleName(), user.getRole().getName());
+			assertEquals(userDto.getRoleName(), user.getRole().name());
 			assertEquals(userDto.getSurname(), user.getSurname());
 		}
 
 		@Test
 		public void nullDtoShouldReturnNullEntity() {
-			final User user = userMapper.mapDto(null);
+			final User user = UserMapperTest.this.userMapper.mapDto(null);
 			assertNull(user);
 		}
 	}
@@ -64,9 +60,9 @@ public class UserMapperTest {
 
 		@Test
 		public void mapEntityShouldReturnDto() {
-			final User user = mockUser();
+			final User user = UserMapperTest.this.mockUser();
 
-			final UserDto userDto = userMapper.mapEntity(user);
+			final UserDto userDto = UserMapperTest.this.userMapper.mapEntity(user);
 
 			assertNotNull(userDto);
 			assertEquals(user.getDateOfJoin(), userDto.getDateOfJoin());
@@ -77,13 +73,13 @@ public class UserMapperTest {
 			assertEquals(user.getManager().getEmail(), userDto.getManagerEmail());
 			assertEquals(user.getName(), userDto.getName());
 			assertEquals(user.getPhoneNumber(), userDto.getPhoneNumber());
-			assertEquals(user.getRole().getName(), userDto.getRoleName());
+			assertEquals(user.getRole().name(), userDto.getRoleName());
 			assertEquals(user.getSurname(), userDto.getSurname());
 		}
 
 		@Test
 		public void nullEntityShouldReturnNullDto() {
-			final UserDto userDto = userMapper.mapEntity(null);
+			final UserDto userDto = UserMapperTest.this.userMapper.mapEntity(null);
 			assertNull(userDto);
 		}
 	}
@@ -92,13 +88,6 @@ public class UserMapperTest {
 
 	@Mock
 	private UserService userService;
-
-	private Role mockRole() {
-		final Role role = new Role();
-		role.setName(Role.USER);
-		role.setId(1L);
-		return role;
-	}
 
 	private User mockUser() {
 		final User user = new User();
@@ -109,7 +98,7 @@ public class UserMapperTest {
 		user.setLastConnection(LocalDateTime.now());
 		user.setName("Aaron");
 		user.setPhoneNumber("123456789");
-		user.setRole(mockRole());
+		user.setRole(Role.USER);
 		user.setSurname("Smith");
 
 		final User manager = new User();
@@ -128,14 +117,14 @@ public class UserMapperTest {
 		userDto.setManagerEmail("boss@test.com");
 		userDto.setName("Aaron");
 		userDto.setPhoneNumber("123456789");
-		userDto.setRoleName(Role.USER);
+		userDto.setRoleName(Role.USER.name());
 		userDto.setSurname("Smith");
 		return userDto;
 	}
 
 	@BeforeEach
 	public void setUp() {
-		userMapper = new UserMapper();
-		userMapper.setUserService(userService);
+		this.userMapper = new UserMapper();
+		this.userMapper.setUserService(this.userService);
 	}
 }

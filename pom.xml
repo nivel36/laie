@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>igochan</groupId>
 	<artifactId>ged</artifactId>
-	<version>0.8.0-SNAPSHOT</version>
+	<version>0.8.4-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>ged</name>
 	<modules>
@@ -16,26 +16,35 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<maven.compiler.source>1.11</maven.compiler.source>
-		<maven.compiler.target>1.11</maven.compiler.target>
+		<maven.compiler.source>11</maven.compiler.source>
+		<maven.compiler.target>11</maven.compiler.target>
 
 		<timestamp>${maven.build.timestamp}</timestamp>
 		<maven.build.timestamp.format>dd-MM-yyyy HH:mm</maven.build.timestamp.format>
 		<ged.version>${project.version}</ged.version>
 
 		<javaee-api.version>8.0</javaee-api.version>
+<<<<<<< HEAD
 		<primefaces.version>6.2</primefaces.version>
 		<hibernate-search.version>5.10.1.Final</hibernate-search.version>
 		<infinispan.version>9.2.4.Final</infinispan.version>
 		<font-awesome.version>4.5.0</font-awesome.version>
 		<pdfbox.version>1.8.6</pdfbox.version>
 		<slf4j.version>1.7.22</slf4j.version>
+=======
+		<primefaces.version>7.0</primefaces.version>
+		<hibernate-search.version>5.10.5.Final</hibernate-search.version>
+		<infinispan.version>9.4.14.Final</infinispan.version>
+		<font-awesome.version>5.9.0</font-awesome.version>
+		<slf4j.version>1.7.26</slf4j.version>
+		<poi.version>4.1.0</poi.version>
+>>>>>>> branch 'develop' of https://isabelV@bitbucket.org/ged_team/ged.git
 		<xml.bind.version>2.2.11</xml.bind.version>
 		<javax.activation.version>1.1.1</javax.activation.version>
-		<omnifaces.version>3.0</omnifaces.version>
-		<commons-fileupload.version>1.3</commons-fileupload.version>
-		<swagger.version>1.5.17</swagger.version>
-		<jackson-datatype-hibernate5.version>2.9.2</jackson-datatype-hibernate5.version>
+		<omnifaces.version>3.3</omnifaces.version>
+		<commons-fileupload.version>1.4</commons-fileupload.version>
+		<swagger.version>1.5.22</swagger.version>
+		<jackson-datatype-hibernate5.version>2.9.9</jackson-datatype-hibernate5.version>
 
 		<mockito.version>2.21.0</mockito.version>
 		<junit.version>5.1.0</junit.version>
@@ -130,9 +139,15 @@
 			</dependency>
 
 			<dependency>
+<<<<<<< HEAD
 				<groupId>org.apache.pdfbox</groupId>
 				<artifactId>pdfbox</artifactId>
 				<version>${pdfbox.version}</version>
+=======
+				<groupId>org.apache.poi</groupId>
+				<artifactId>poi</artifactId>
+				<version>${poi.version}</version>
+>>>>>>> branch 'develop' of https://isabelV@bitbucket.org/ged_team/ged.git
 			</dependency>
 
 			<dependency>
@@ -193,14 +208,30 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.21.0</version>
-				<dependencies>
-					<dependency>
-						<groupId>org.junit.platform</groupId>
-						<artifactId>junit-platform-surefire-provider</artifactId>
-						<version>1.2.0</version>
-					</dependency>
-				</dependencies>
+				<version>2.22.0</version>
+				<configuration>
+					<argLine>
+						--illegal-access=permit
+					</argLine>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<version>2.22.0</version>
+				<configuration>
+					<argLine>
+						--illegal-access=permit
+					</argLine>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.0</version>
+				<configuration>
+					<release>11</release>
+				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

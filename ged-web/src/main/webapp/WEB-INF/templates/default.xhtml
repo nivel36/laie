@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui"  xmlns:g="http://ged.org/ui">
 
 <f:view contentType="text/html" locale="#{sessionUser.locale}">
 	<h:head>
@@ -12,9 +12,13 @@
 		<h:outputStylesheet name="css/reset.css" />
 		<h:outputStylesheet name="css/flat-classic-blue/components.css" />
 		<h:outputStylesheet name="css/flexgrid.css" />
+		<h:outputScript name="js/primefaces-locales.js" />
 	</h:head>
 
 	<h:body>
+		<f:metadata>
+			<p:importConstants type="ged.web.core.util.PageEnum" var="Page" />
+		</f:metadata>
 		<header>
 			<ui:insert name="header">
 				<ui:decorate template="header.xhtml" />
@@ -27,8 +31,13 @@
 					<ui:include src="aside.xhtml" />
 				</ui:insert>
 			</div>
-			<div id="content">
-				<ui:insert name="content" />
+			<div class="wrapper">
+				<div id="breadcrumb">
+					<ui:insert name="breadcrumb" />
+				</div>
+				<div id="content">
+					<ui:insert name="content" />
+				</div>
 			</div>
 		</div>
 		<footer>

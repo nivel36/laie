@@ -4,6 +4,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
+import javax.security.auth.login.LoginException;
+
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -12,59 +15,95 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import ged.ejb.user.role.Role;
-import ged.ejb.user.role.RoleDao;
 
 @ExtendWith(MockitoExtension.class)
 public class UserServiceTest {
+
+	@Nested
+	class Login {
+
+		@Test
+		public void invalidEmailShoudThrowLoginException() {
+			when(UserServiceTest.this.userDao.findUserAndCredential("abel@test.com")).thenReturn(null);
+			assertThrows(LoginException.class, () -> {
+				UserServiceTest.this.userService.login("abel@test.com", "password");
+			});
+		}
+
+		@Test
+		public void invalidPasswordShoudThrowLoginException() {
+			final User user = UserServiceTest.this.mockUser(1L, "abel@test.com", null);
+			when(UserServiceTest.this.userDao.findUserAndCredential("abel@test.com")).thenReturn(user);
+			assertThrows(LoginException.class, () -> {
+				UserServiceTest.this.userService.login("abel@test.com", "pasword");
+			});
+		}
+
+		@Test
+		public void nullEmailShoudThrowNullPointerException() {
+			assertThrows(NullPointerException.class, () -> {
+				UserServiceTest.this.userService.login(null, "password");
+			});
+		}
+
+		@Test
+		public void nullPasswordShoudThrowNullPointerException() {
+			assertThrows(NullPointerException.class, () -> {
+				UserServiceTest.this.userService.login("abel@test.com", null);
+			});
+		}
+
+		@Test
+		public void validCredentialShoudSaveUser() throws Exception {
+			final User user = UserServiceTest.this.mockUser(1L, "abel@test.com", null);
+			when(UserServiceTest.this.userDao.findUserAndCredential("abel@test.com")).thenReturn(user);
+			when(UserServiceTest.this.userDao.save(user)).thenReturn(user);
+			final User savedUser = UserServiceTest.this.userService.login("abel@test.com", "password");
+			Assertions.assertTrue(savedUser.getLastConnection() != null);
+		}
+	}
 
 	@Nested
 	class Save {
 
 		@Test
 		public void adminWithManagerShouldThrowIllegalStateException() {
-			assertThrows(BadManagerException.class, () -> {
-				final User manager = mockUser(2L, "abel@test.com", null);
-				final User user = mockUser(null, "bernat@test.com", manager);
-				final Role adminRole = new Role();
-				adminRole.setName(Role.ADMIN);
-				user.setRole(adminRole);
-				user.setManager(user);
+			final User manager = UserServiceTest.this.mockUser(2L, "abel@test.com", null);
+			final User user = UserServiceTest.this.mockUser(null, "bernat@test.com", manager);
+			user.setRole(Role.ADMIN);
+			user.setManager(user);
 
-				userService.save(user);
+			assertThrows(BadManagerException.class, () -> {
+				UserServiceTest.this.userService.save(user);
 			});
 		}
 
 		@Test
 		public void adminWithoutManagerShouldReturnUser() {
-			final User user = mockUser(1L, "abel@test.com", null);
-			final Role adminRole = new Role();
-			adminRole.setName(Role.ADMIN);
-			user.setRole(adminRole);
-			when(userDao.save(user)).thenReturn(user);
+			final User user = UserServiceTest.this.mockUser(1L, "abel@test.com", null);
+			user.setRole(Role.ADMIN);
+			when(UserServiceTest.this.userDao.save(user)).thenReturn(user);
 
-			final User returnedUser = userService.save(user);
+			final User returnedUser = UserServiceTest.this.userService.save(user);
 			assertEquals(returnedUser, user);
 		}
 
 		@Test
 		public void nullUserShouldThrowNullPointerException() {
 			assertThrows(NullPointerException.class, () -> {
-				userService.save(null);
+				UserServiceTest.this.userService.save(null);
 			});
 		}
 
 		@Test
 		public void usersOwnManagerShouldThrowIllegalStateException() {
+			final User user = UserServiceTest.this.mockUser(null, "abel@test.com", null);
+			user.setManager(user);
 			assertThrows(BadManagerException.class, () -> {
-				final User user = mockUser(null, "abel@test.com", null);
-				user.setManager(user);
-				userService.save(user);
+				UserServiceTest.this.userService.save(user);
 			});
 		}
 	}
-
-	@Mock
-	private RoleDao roleDao;
 
 	@Mock
 	private UserDao userDao;
@@ -78,13 +117,13 @@ public class UserServiceTest {
 		}
 		user.setEmail(email);
 		user.setManager(manager);
+		user.newCredential("password");
 		return user;
 	}
 
 	@BeforeEach
 	public void setUp() {
 		this.userService = new UserService();
-		this.userService.setUserDao(userDao);
-		this.userService.setRoleDao(roleDao);
+		this.userService.setUserDao(this.userDao);
 	}
 }

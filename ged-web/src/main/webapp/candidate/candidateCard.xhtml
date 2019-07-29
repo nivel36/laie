@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" 
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" 
+	xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:g="http://ged.org/ui" 
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	
+	<p:link outcome="#{Page.CANDIDATE.getUrl()}">
+		<f:param name="candidateId" value="#{candidate.id}" />
+		<div class="user-minicard">
+			<div class="user-image">
+				<cc:avatar value="#{candidate.imageFileName}" />
+			</div>
+			<div class="user-info">
+				<div class="name">#{candidate}</div>
+				<div class="position">#{candidate.jobProfile}</div>
+			</div>
+		</div>
+	</p:link>
+</ui:composition>

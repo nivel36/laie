@@ -10,17 +10,17 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ged.ejb.core.AbstractAuditedService;
+import ged.ejb.core.AbstractService;
 import ged.ejb.core.file.ServerFile;
 import ged.ejb.core.file.ServerFileDao;
 import ged.ejb.core.model.AbstractDao;
+import ged.ejb.core.model.Page;
 import ged.ejb.core.model.Repository;
-import ged.ejb.job.offer.JobCandidature;
-import ged.ejb.job.offer.JobCandidatureDao;
+import ged.ejb.job.candidature.JobCandidatureDao;
 import ged.ejb.job.offer.JobOffer;
 
 @Stateless
-public class CandidateService extends AbstractAuditedService<Candidate> {
+public class CandidateService extends AbstractService<Candidate> {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
@@ -47,6 +47,11 @@ public class CandidateService extends AbstractAuditedService<Candidate> {
 	public List<Origin> findAllOrigins() {
 		return this.candidateDao.findAllOrigins();
 	}
+	
+	public Candidate findCandidateByEmail(final String email) {
+		Objects.requireNonNull(email, "Email can't be null");
+		return this.candidateDao.findCandidateByEmail(email);
+	}
 
 	public Candidate findCandidateData(final long candidateId) {
 		if (candidateId < 1) {
@@ -57,10 +62,10 @@ public class CandidateService extends AbstractAuditedService<Candidate> {
 		return this.candidateDao.findCandidateData(candidateId);
 	}
 
-	public List<Candidate> findCandidates(final JobOffer jobOffer) {
+	public List<Candidate> findCandidates(final JobOffer jobOffer, final Page page) {
 		Objects.requireNonNull(jobOffer);
 		logger.debug("Find candidates by jobOffer {} ", jobOffer);
-		return this.candidateDao.findCandidates(jobOffer);
+		return this.candidateDao.findCandidates(jobOffer, page);
 	}
 
 	public ServerFile findFile(final long fileId) {
@@ -78,25 +83,6 @@ public class CandidateService extends AbstractAuditedService<Candidate> {
 		return this.serverFileDao.findByCandidate(candidate);
 	}
 
-	public List<JobCandidature> findJobCandidatures(final Candidate candidate) {
-		Objects.requireNonNull(candidate);
-		logger.debug("Find job candidatures by candidate {}", candidate);
-		return this.jobCandidatureDao.findByCandidate(candidate);
-	}
-
-	public List<Candidate> findLastAddedCandidates(final int numberOfCandidates) {
-		if (numberOfCandidates < 1) {
-			throw new IllegalArgumentException("numberOfCandidates: " + numberOfCandidates);
-		}
-		logger.debug("Find last added candidates");
-		return this.candidateDao.findLastAddedCandidates(numberOfCandidates);
-	}
-
-	public long findNumberOfCandidates() {
-		logger.debug("Find total number of candidates");
-		return this.candidateDao.findNumberOfCandidates();
-	}
-
 	@Override
 	public AbstractDao<Candidate> getDao() {
 		return this.candidateDao;
@@ -112,9 +98,6 @@ public class CandidateService extends AbstractAuditedService<Candidate> {
 		this.candidateDao = candidateDao;
 	}
 
-	public void setJobCandidatureDao(final JobCandidatureDao jobCandidatureDao) {
-		this.jobCandidatureDao = jobCandidatureDao;
-	}
 
 	public void setServerFileDao(final ServerFileDao serverFileDao) {
 		this.serverFileDao = serverFileDao;

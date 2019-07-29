@@ -40,6 +40,37 @@ public class PersistenceFacade {
 		this.em = em;
 	}
 
+	@SuppressWarnings("rawtypes")
+	private org.apache.lucene.search.Query createLuceneQuery(final QueryBuilder qb,
+			final BooleanJunction<BooleanJunction> bj) {
+		org.apache.lucene.search.Query luceneQuery;
+		if (bj.isEmpty()) {
+			luceneQuery = qb.all().createQuery();
+		} else {
+			luceneQuery = bj.createQuery();
+		}
+		return luceneQuery;
+	}
+
+	@SuppressWarnings("rawtypes")
+	private BooleanJunction<BooleanJunction> createPredicate(final String searchText, final QueryBuilder qb,
+			final String... fields) {
+		final BooleanJunction<BooleanJunction> bj = qb.bool();
+
+		if (searchText != null) {
+			final List<String> searchValues = Arrays.asList(searchText.split("\\s"));
+			for (final String searchValue : searchValues) {
+				if (searchValue == null) {
+					continue;
+				}
+				final BooleanJunction<BooleanJunction> fieldBj = qb.bool();
+				fieldBj.should(qb.keyword().onFields(fields).matching(searchValue).createQuery());
+				bj.must(fieldBj.createQuery());
+			}
+		}
+		return bj;
+	}
+
 	public <T extends Identifiable> void delete(final Class<T> type, final T entity) {
 		Objects.requireNonNull(entity);
 		Objects.requireNonNull(type);
@@ -49,8 +80,7 @@ public class PersistenceFacade {
 		logger.debug("Delete entity class {} with id {}", type, entity.getId());
 		if (this.em.contains(entity)) {
 			this.em.remove(entity);
-		}
-		else {
+		} else {
 			this.em.remove(this.em.merge(entity));
 		}
 	}
@@ -81,7 +111,8 @@ public class PersistenceFacade {
 		return query.getResultList();
 	}
 
-	public <E> E findByQuery(final Class<E> entityClass, final String namedQuery, final Map<String, Object> parameters) {
+	public <E> E findByQuery(final Class<E> entityClass, final String namedQuery,
+			final Map<String, Object> parameters) {
 		Objects.requireNonNull(entityClass);
 		Objects.requireNonNull(namedQuery);
 		logger.debug("Find entity {} by named query {}", entityClass, namedQuery);
@@ -91,7 +122,8 @@ public class PersistenceFacade {
 		return query.getSingleResult();
 	}
 
-	public <E> List<E> findByQuery(final Class<E> entityClass, final String namedQuery, final Map<String, Object> parameters, final Page page) {
+	public <E> List<E> findByQuery(final Class<E> entityClass, final String namedQuery,
+			final Map<String, Object> parameters, final Page page) {
 		Objects.requireNonNull(entityClass);
 		Objects.requireNonNull(namedQuery);
 		Objects.requireNonNull(page);
@@ -116,6 +148,10 @@ public class PersistenceFacade {
 		return this.em;
 	}
 
+	private boolean hasSortFields(final List<SortField> sortFields) {
+		return sortFields != null && !sortFields.isEmpty();
+	}
+
 	public <T extends Identifiable> void insert(final T entity) {
 		Objects.requireNonNull(entity);
 		if (entity.getId() != 0) {
@@ -127,7 +163,7 @@ public class PersistenceFacade {
 	}
 
 	private void paginate(final Page page, final Query query) {
-		query.setFirstResult(page.getOffSet());
+		query.setFirstResult(page.getOffset());
 		query.setMaxResults(page.getLimit());
 	}
 
@@ -142,59 +178,48 @@ public class PersistenceFacade {
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public <T extends Identifiable> List<T> search(final Class<T> type, final Page page, final List<SortOrder> sortOrders, final String searchText,
-			final String... fields) {
+	public <T extends Identifiable> SearchResult<T> search(final Class<T> type, final Page page,
+			final List<SortField> sortFields, final String searchText, final String... fields) {
+
 		final FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(this.getEm());
 		final QueryBuilder qb = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(type).get();
-		final BooleanJunction<BooleanJunction> bj = qb.bool();
 
-		if (searchText != null) {
-			final List<String> searchValues = Arrays.asList(searchText.split("\\s"));
-			for (final String searchValue : searchValues) {
-				if (searchValue == null) {
-					continue;
-				}
-				final BooleanJunction<BooleanJunction> fieldBj = qb.bool();
-				fieldBj.should(qb.keyword().onFields(fields).matching(searchValue).createQuery());
-				bj.must(fieldBj.createQuery());
-			}
-		}
+		final BooleanJunction<BooleanJunction> bj = this.createPredicate(searchText, qb, fields);
 
-		final FullTextQuery fullTextQuery;
-		org.apache.lucene.search.Query luceneQuery;
-		if (bj.isEmpty()) {
-			luceneQuery = qb.all().createQuery();
-		}
-		else {
-			luceneQuery = bj.createQuery();
-		}
-
-		fullTextQuery = fullTextEntityManager.createFullTextQuery(luceneQuery, type);
-		paginate(page, fullTextQuery);
+		final FullTextQuery fullTextQuery = fullTextEntityManager.createFullTextQuery(this.createLuceneQuery(qb, bj),
+				type);
+		this.paginate(page, fullTextQuery);
 		fullTextQuery.setHint(CACHE_STORE_MODE, CacheStoreMode.REFRESH);
 
-		if ((sortOrders != null) && !sortOrders.isEmpty()) {
-			final int orderSize = sortOrders.size();
-			final SortFieldContext sfc = qb.sort().byField(sortOrders.get(0).getField());
-			if (sortOrders.get(0).isDescending()) {
+		this.sortQuery(sortFields, qb, fullTextQuery);
+
+		final List<T> results = fullTextQuery.getResultList();
+		if (results instanceof ArrayList) {
+			return new SearchResult<>(results, fullTextQuery.getResultSize());
+		} else {
+			return new SearchResult<>(new ArrayList<>(results), fullTextQuery.getResultSize());
+		}
+	}
+
+	private void sortQuery(final List<SortField> sortFields, final QueryBuilder qb, final FullTextQuery fullTextQuery) {
+		if (this.hasSortFields(sortFields)) {
+			final int orderSize = sortFields.size();
+			final SortFieldContext sfc = qb.sort().byField(sortFields.get(0).getField());
+			if (sortFields.get(0).isDescending()) {
 				sfc.asc();
+			} else {
+				sfc.desc();
 			}
 			for (int i = 1; i < orderSize; i++) {
-				sfc.andByField(sortOrders.get(i).getField());
-				if (sortOrders.get(0).isDescending()) {
+				sfc.andByField(sortFields.get(i).getField());
+				if (sortFields.get(0).isDescending()) {
 					sfc.asc();
+				} else {
+					sfc.desc();
 				}
 			}
 			final Sort sort = sfc.createSort();
 			fullTextQuery.setSort(sort);
-		}
-
-		final List<T> results = fullTextQuery.getResultList();
-		if (results instanceof ArrayList) {
-			return results;
-		}
-		else {
-			return new ArrayList<>(results);
 		}
 	}
 
@@ -206,8 +231,7 @@ public class PersistenceFacade {
 		logger.debug("Update entity of class {} and id {}", entity.getClass(), entity.getId());
 		if (this.em.contains(entity)) {
 			return entity;
-		}
-		else {
+		} else {
 			return this.em.merge(entity);
 		}
 	}

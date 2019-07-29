@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" 
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" 
+	xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:g="http://ged.org/ui" 
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/WEB-INF/templates/default.xhtml">
+
+	<ui:define name="title">
+		<title>#{i18n['candidate.candidate_edit']} - #{editCandidateView.candidate.fullName}</title>
+	</ui:define>
+
+	<ui:define name="breadcrumb">
+		<p:breadCrumb>
+			<p:menuitem value="#{i18n['menu.index']}" outcome="#{Page.INDEX.getUrl()}" />
+			<p:menuitem value="#{i18n['candidate.candidates']}" outcome="#{Page.CANDIDATE_SEARCH.getUrl()}" />
+			<p:menuitem value="#{editCandidateView.candidate.fullName}" outcome="#{Page.CANDIDATE.getUrl()}">
+				<f:param name="id" value="#{editCandidateView.candidate.id}" />
+			</p:menuitem>
+			<p:menuitem value="#{i18n['action.edit']}" disabled="true" />
+		</p:breadCrumb>
+	</ui:define>
+
+	<ui:define name="content">
+		<div class="grid">
+			<div class="col-12 xl-9">
+				<h:form id="candidateForm">
+					<p:panel>
+						<div class="panel-aside">
+							<div class="column candidate-metadata">
+								<cc:inputAvatar id="candidate_image" value="#{editCandidateView.candidate.imageFileName}"
+									fileUploadListener="#{editCandidateView.uploadImage}" />
+								<div class="candidate-rating">
+									<p:rating value="#{editCandidateView.candidate.rating}" cancel="false">
+										<p:ajax event="rate" listener="#{editCandidateView.onrate}" update="" />
+									</p:rating>
+								</div>
+								<p:chips id="tags" value="#{addCandidateView.tags}" required="#{required}" styleClass="input input-chips" completeMethod="#{addCandidateView.queryTags}" >
+									<f:converter converterId="tagConverter" for="tags" />
+								</p:chips>
+							</div>
+						</div>
+
+						<div class="panel-content-data grid">
+							<div class="col-12 sm-6">
+								<h4>#{i18n['candidate.personal_information']}</h4>
+
+								<g:input id="name" label="#{i18n['candidate.name']}" value="#{editCandidateView.candidate.name}" required="true" />
+
+								<g:input id="surname" label="#{i18n['candidate.surname']}" value="#{editCandidateView.candidate.surname}" required="true" />
+
+								<g:input id="born_date" label="#{i18n['candidate.bornDate']}" value="#{editCandidateView.candidate.bornDate}" type="calendar"
+									yearRange="c-100:c" />
+
+								<g:input id="city" label="#{i18n['candidate.city']}" value="#{editCandidateView.candidate.address.city}" />
+
+								<g:input id="state" label="#{i18n['candidate.state']}" value="#{editCandidateView.candidate.address.state}" />
+							</div>
+
+							<div class="col-12 sm-6">
+								<h4>#{i18n['candidate.contact_information']}</h4>
+
+								<g:input id="phone_number" label="#{i18n['candidate.phone_number']}" value="#{editCandidateView.candidate.phoneNumber}"
+									styleClass="small" />
+
+								<g:input id="email" label="#{i18n['candidate.email']}" value="#{editCandidateView.candidate.email}" />
+
+								<g:input id="skype" label="#{i18n['candidate.skype']}" value="#{editCandidateView.candidate.skype}" />
+
+								<g:input id="linkedin" label="#{i18n['candidate.linkedin']}" value="#{editCandidateView.candidate.linkedinProfileUrl}" />
+							</div>
+
+
+							<div class="col-12 sm-6">
+								<h4>#{i18n['candidate.job_information']}</h4>
+
+								<g:input id="jobProfile" label="#{i18n['candidate.jobProfile']}" value="#{editCandidateView.candidate.jobProfile}" required="true" />
+
+								<cc:inputSelect label="#{i18n['candidate.origin']}" value="#{editCandidateView.candidate.origin}" other="true">
+									<f:selectItems value="#{origins.list}" var="origin" itemValue="#{origin.code}" itemLabel="#{g:translate(origin.code)}" />
+								</cc:inputSelect>
+
+								<g:input id="salary" label="#{i18n['candidate.salary']}" value="#{editCandidateView.candidate.salary}" type="money" />
+
+								<g:input id="expected_salary" label="#{i18n['candidate.expected_salary']}" value="#{editCandidateView.candidate.expectedSalary}"
+									type="money" />
+							</div>
+						</div>
+
+
+						<f:facet name="footer">
+							<div class="panel-buttons">
+								<p:button styleClass="btn-gray" value="#{i18n['action.cancel']}" outcome="#{Page.CANDIDATE.getUrl()}">
+									<f:param name="id" value="#{editCandidateView.candidate.id}" />
+								</p:button>
+								<p:commandButton value="#{i18n['action.save']}" action="#{editCandidateView.save}" process="@form" update="@form growl" />
+							</div>
+						</f:facet>
+					</p:panel>
+				</h:form>
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>

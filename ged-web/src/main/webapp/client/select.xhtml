@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" 
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" 
+	xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:g="http://ged.org/ui" 
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/WEB-INF/templates/dialog.xhtml">
+
+	<ui:define name="title">
+		<title>#{i18n['client.select']}</title>
+	</ui:define>
+
+	<ui:define name="content">
+		<h:form id="clientsSearchForm">
+			<div class="panel">
+				<div class="panel-content">
+					<div class="panel-content-data">
+						<cc:inputSearch searchText="#{selectClientView.searchText}" searchAction="#{selectClientView.search}"
+							update="@form" />
+					</div>
+					<p:dataTable var="client" id="clients" value="#{selectClientView.clients}"
+						emptyMessage="#{i18n['client.no_clients_found']}" reflow="true" paginator="true" paginatorPosition="bottom"
+						rows="#{sessionUser.rowsPerPage}" selectionMode="single" selection="#{selectClientView.selectedClient}"
+						rowKey="#{client.id}" sortBy="#{client.name}" sortOrder="descending" lazy="true">
+
+						<p:ajax event="rowSelect" listener="#{selectClientView.onClientSelect}" update="@form" resetValues="true" />
+
+						<p:column headerText="#{i18n['client.name']}" sortBy="#{client.name}">
+							<h:outputText value="#{client.name}" />
+						</p:column>
+
+						<p:column headerText="#{i18n['client.phone_number']}" sortBy="#{client.phoneNumber}">
+							<h:outputText value="#{client.phoneNumber}" />
+						</p:column>
+
+						<p:column headerText="#{i18n['client.cif']}" sortBy="#{client.cif}">
+							<h:outputText value="#{client.cif}" />
+						</p:column>
+
+						<p:column headerText="#{i18n['client.city']}" sortBy="#{client.address.city}">
+							<h:outputText value="#{client.address.city}" />
+						</p:column>
+
+						<p:column headerText="#{i18n['client.state']}" sortBy="#{client.address.state}">
+							<h:outputText value="#{client.address.state}" />
+						</p:column>
+
+						<p:column headerText="#{i18n['client.owner']}" sortBy="#{client.owner.fullName}">
+							<h:outputText value="#{client.owner.fullName}" />
+						</p:column>
+					</p:dataTable>
+
+					<div class="panel-footer">
+						<div class="panel-buttons">
+							<p:commandButton value="#{i18n['action.cancel']}" action="#{selectClientView.cancel}" process="@this"
+								styleClass="btn-gray" />
+						</div>
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

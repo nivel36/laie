@@ -36,25 +36,24 @@ public class StartupConfig {
 	}
 
 	private void createAppDirectories() throws IOException {
-		create("/temp/lucene");
-		create("/temp/files");
-		create("/temp/img");
+		this.create("/temp/lucene");
+		this.create("/temp/files");
+		this.create("/temp/img");
 	}
 
 	private void indexerInit() throws InterruptedException {
 		try {
 			this.indexer.index();
-		}
-		catch (final InterruptedException e) {
-			logger.error("Indexer fail", e);
-			throw e;
+		} catch (final InterruptedException e) {
+			logger.error("Indexer failed", e);
+			Thread.currentThread().interrupt();
 		}
 	}
 
-	public void init(@Observes @Initialized(ApplicationScoped.class) final ServletContext context) throws InterruptedException, IOException {
+	public void init(@Observes @Initialized(ApplicationScoped.class) final ServletContext context)
+			throws InterruptedException, IOException {
 		logger.info("Setting up application");
-		createAppDirectories();
-		indexerInit();
-
+		this.createAppDirectories();
+		this.indexerInit();
 	}
 }

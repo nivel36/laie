@@ -14,7 +14,7 @@ public class Navigate {
 	public static final String FACES_REDIRECT = "faces-redirect=true";
 
 	public static Navigate to(final PageEnum page) {
-		return new Navigate(page.url());
+		return new Navigate(page.getUrl());
 	}
 
 	public static Navigate to(final String url) {
@@ -45,7 +45,7 @@ public class Navigate {
 			return stringBuilder.toString();
 		}
 		else {
-			return null;
+			return "";
 		}
 	}
 
@@ -53,9 +53,7 @@ public class Navigate {
 		try {
 			final FacesContext facesContext = FacesContext.getCurrentInstance();
 			final ExternalContext externalContext = facesContext.getExternalContext();
-			final String contextName = externalContext.getContextName();
-			final StringBuilder fullUrl = new StringBuilder("/");
-			fullUrl.append(contextName).append(this.url).append(".xhtml").append(this.buildQueryParams());
+			final StringBuilder fullUrl = new StringBuilder(this.url).append(this.buildQueryParams());
 			externalContext.redirect(fullUrl.toString());
 		}
 		catch (final IOException e) {

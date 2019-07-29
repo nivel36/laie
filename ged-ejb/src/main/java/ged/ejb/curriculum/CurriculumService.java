@@ -14,8 +14,6 @@ import ged.ejb.candidate.Candidate;
 import ged.ejb.core.AbstractService;
 import ged.ejb.core.model.AbstractDao;
 import ged.ejb.core.model.Repository;
-import ged.ejb.curriculum.language.LanguageLevel;
-import ged.ejb.curriculum.skills.SkillLevel;
 
 @Stateless
 public class CurriculumService extends AbstractService<Curriculum> {
@@ -25,12 +23,12 @@ public class CurriculumService extends AbstractService<Curriculum> {
 	@Inject
 	@Repository
 	private CurriculumDao curriculumDao;
-
-	public List<LanguageLevel> findAllLanguageLevels() {
-		logger.debug("Find all the language levels");
-		return this.curriculumDao.findAllLanguageLevels();
+	
+	public Skill findSkill(final String name) {
+		Objects.requireNonNull(name, "Skill name can't be null");
+		return this.curriculumDao.findSkill(name);
 	}
-
+	
 	public List<SkillLevel> findAllSkillLevels() {
 		logger.debug("Find all the skill levels");
 		return this.curriculumDao.findAllSkillLevels();

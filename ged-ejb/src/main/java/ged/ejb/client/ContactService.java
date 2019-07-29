@@ -10,12 +10,12 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ged.ejb.core.AbstractAuditedService;
+import ged.ejb.core.AbstractService;
 import ged.ejb.core.model.AbstractDao;
 import ged.ejb.core.model.Repository;
 
 @Stateless
-public class ContactService extends AbstractAuditedService<Contact> {
+public class ContactService extends AbstractService<Contact> {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
@@ -23,6 +23,11 @@ public class ContactService extends AbstractAuditedService<Contact> {
 	@Repository
 	private ContactDao contactDao;
 
+	public Contact findContactByEmail(final String email) {
+		Objects.requireNonNull(email, "Email can't be null");
+		return contactDao.findContactByEmail(email);
+	}
+	
 	public List<Contact> findContactsByClient(final Client client) {
 		Objects.requireNonNull(client);
 		logger.debug("Finding contacts by client {}", client);

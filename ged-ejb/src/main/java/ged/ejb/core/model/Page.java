@@ -1,41 +1,55 @@
 package ged.ejb.core.model;
 
+import java.util.Objects;
+
 public class Page {
 
-	public final static Page ALL = Page.of(1, 150);
+	public static final Page ALL = Page.of(0, 150);
 
-	public static Page of(final int pageNumber, final int pageSize) {
-		return new Page(pageNumber, pageSize);
+	public static Page of(final int offset, final int limit) {
+		return new Page(offset, limit);
 	}
 
-	private final int pageNumber;
+	private final int limit;
 
-	private final int pageSize;
+	private final int offset;
 
-	public Page(final int pageNumber, final int pageSize) {
-		if (pageNumber < 1) {
-			throw new IllegalArgumentException("pageNum: " + pageNumber);
+	public Page(final int offset, final int limit) {
+		if (offset < 0) {
+			throw new IllegalArgumentException("offset: " + offset);
 		}
-		if (pageSize < 1) {
-			throw new IllegalArgumentException("pageSize: " + pageSize);
+		if (limit < 0) {
+			throw new IllegalArgumentException("limit: " + limit);
 		}
-		this.pageNumber = pageNumber;
-		this.pageSize = pageSize;
+		if (offset >= limit) {
+			throw new IllegalArgumentException("offset greater than limit");
+		}
+		this.offset = offset;
+		this.limit = limit;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Page other = (Page) obj;
+		return Objects.equals(other.limit, this.limit) && Objects.equals(other.offset, this.offset);
 	}
 
 	public int getLimit() {
-		return pageNumber * pageSize;
+		return this.limit;
 	}
 
-	public int getOffSet() {
-		return (pageNumber - 1) * pageSize;
+	public int getOffset() {
+		return this.offset;
 	}
 
-	public int getPageNumber() {
-		return pageNumber;
-	}
-
-	public int getPageSize() {
-		return pageSize;
+	@Override
+	public int hashCode() {
+		return Objects.hash(offset, limit);
 	}
 }

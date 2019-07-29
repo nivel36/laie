@@ -34,7 +34,8 @@ public class SearchFieldValidator implements Validator<String> {
 		if ((value != null) && (value.length() < 3)) {
 			logger.warn("Search value is too short");
 			final String translatedMessage = this.translate(context, "error.search.camp_too_short");
-			final FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, translatedMessage, translatedMessage);
+			final FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, translatedMessage,
+					translatedMessage);
 			throw new ValidatorException(message);
 		}
 	}

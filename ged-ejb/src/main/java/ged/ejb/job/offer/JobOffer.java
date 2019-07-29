@@ -1,41 +1,50 @@
 package ged.ejb.job.offer;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.IndexedEmbedded;
+import org.hibernate.search.annotations.SortableField;
+import org.hibernate.search.annotations.Store;
 
 import ged.ejb.client.Client;
-import ged.ejb.core.i18n.I18n;
-import ged.ejb.core.model.AbstractAuditedEntity;
+import ged.ejb.core.model.AbstractEntity;
+import ged.ejb.core.model.Address;
+import ged.ejb.core.model.Ownerable;
+import ged.ejb.job.candidature.JobCandidature;
 import ged.ejb.user.User;
 
 @Entity
 @Indexed
 @Table(name = "JOB_OFFER")
-public class JobOffer extends AbstractAuditedEntity {
+public class JobOffer extends AbstractEntity implements Ownerable {
 
 	private static final long serialVersionUID = 5579321864799956403L;
 
-	@Column(nullable = false, length = 64)
-	@NotNull
-	@Field
-	private String city;
+	@Embedded
+	@IndexedEmbedded
+	private Address address;
 
 	@ManyToOne
 	@JoinColumn(name = "clientId", nullable = false)
@@ -43,20 +52,15 @@ public class JobOffer extends AbstractAuditedEntity {
 	@IndexedEmbedded
 	private Client client;
 
-	@I18n
-	private String contractDuration;
-
-	@I18n
-	private String contractType;
-
-	@Column(length = 64)
-	private String country;
-
+	@Field(analyze = Analyze.NO)
+	@SortableField
 	private LocalDate dateClosed;
 
+	@Field(analyze = Analyze.NO)
+	@SortableField
 	private LocalDate dateOpened;
 
-	@Column(length = 1024)
+	@Lob
 	@Field
 	private String description;
 
@@ -68,18 +72,24 @@ public class JobOffer extends AbstractAuditedEntity {
 	private JobOfferState jobOfferState;
 
 	@NotNull
-	@Column(length = 128, nullable = false)
-	@Field
+	@Column(nullable = false)
+	@Field(name = "_name")
+	@Field(name = "name", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
+	@SortableField(forField = "name")
 	private String name;
+
+	@NotNull
+	@ManyToOne
+	@JoinColumn(name = "ownerId", nullable = false)
+	@IndexedEmbedded
+	private User owner;
 
 	@NotNull
 	private Integer places = 1;
 
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "job_user", joinColumns = @JoinColumn(name = "job_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
 	private Set<User> recruiters;
-
-	private String state;
 
 	@Override
 	public boolean equals(final Object obj) {
@@ -93,27 +103,16 @@ public class JobOffer extends AbstractAuditedEntity {
 			return false;
 		}
 		final JobOffer other = (JobOffer) obj;
-		return Objects.equals(this.dateOpened, other.dateOpened) && Objects.equals(this.name, other.name) && Objects.equals(this.places, other.places);
+		return Objects.equals(this.dateOpened, other.dateOpened) && Objects.equals(this.name, other.name)
+				&& Objects.equals(this.places, other.places);
 	}
 
-	public String getCity() {
-		return this.city;
+	public Address getAddress() {
+		return this.address;
 	}
 
 	public Client getClient() {
 		return this.client;
-	}
-
-	public String getContractDuration() {
-		return this.contractDuration;
-	}
-
-	public String getContractType() {
-		return this.contractType;
-	}
-
-	public String getCountry() {
-		return this.country;
 	}
 
 	public LocalDate getDateClosed() {
@@ -140,6 +139,11 @@ public class JobOffer extends AbstractAuditedEntity {
 		return this.name;
 	}
 
+	@Override
+	public User getOwner() {
+		return this.owner;
+	}
+
 	public Integer getPlaces() {
 		return this.places;
 	}
@@ -148,33 +152,17 @@ public class JobOffer extends AbstractAuditedEntity {
 		return this.recruiters;
 	}
 
-	public String getState() {
-		return this.state;
-	}
-
 	@Override
 	public int hashCode() {
 		return Objects.hash(this.dateOpened, this.name, this.places);
 	}
 
-	public void setCity(final String city) {
-		this.city = city;
+	public void setAddress(final Address address) {
+		this.address = address;
 	}
 
 	public void setClient(final Client client) {
 		this.client = client;
-	}
-
-	public void setContractDuration(final String contractDuration) {
-		this.contractDuration = contractDuration;
-	}
-
-	public void setContractType(final String contractType) {
-		this.contractType = contractType;
-	}
-
-	public void setCountry(final String country) {
-		this.country = country;
 	}
 
 	public void setDateClosed(final LocalDate dateClosed) {
@@ -201,16 +189,27 @@ public class JobOffer extends AbstractAuditedEntity {
 		this.name = name;
 	}
 
+	@Override
+	public void setOwner(final User owner) {
+		this.owner = owner;
+	}
+
 	public void setPlaces(final Integer places) {
 		this.places = places;
 	}
 
-	public void setRecruiters(final Set<User> recruiters) {
-		this.recruiters = recruiters;
+	public void setRecruiters(final List<User> users) {
+		this.recruiters = new HashSet<User>();
+		if (users == null || users.isEmpty()) {
+			return;
+		}
+		for (final User user : users) {
+			this.recruiters.add(user);
+		}
 	}
 
-	public void setState(final String state) {
-		this.state = state;
+	public void setRecruiters(final Set<User> recruiters) {
+		this.recruiters = recruiters;
 	}
 
 	@Override

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui"  xmlns:g="http://ged.org/ui">
+
+<f:view contentType="text/html">
+	<h:head>
+		<ui:insert name="title">
+			<title>Ged</title>
+		</ui:insert>
+		<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+		<meta name="viewport" content="width=device-width,maximum-scale=2" />
+		<h:outputStylesheet name="css/reset.css" />
+		<h:outputStylesheet name="css/flat-classic-blue/components.css" />
+		<h:outputStylesheet name="css/flexgrid.css" />
+		<h:outputScript name="js/primefaces-locales.js" />
+	</h:head>
+
+	<h:body>
+		<f:metadata>
+			<p:importConstants type="ged.web.core.util.PageEnum" var="Page" />
+		</f:metadata>
+		<div id="main">
+			<div class="wrapper">
+				<div id="content">
+					<ui:insert name="content" />
+				</div>
+			</div>
+		</div>
+		<footer>
+			<ui:insert name="footer">
+				<ui:include src="footer.xhtml" />
+			</ui:insert>
+		</footer>
+	</h:body>
+</f:view>
+</html>

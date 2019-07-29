@@ -1,7 +1,15 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" 
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" 
+	xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:g="http://ged.org/ui" 
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
 <h:head>
 	<title>${i18n['login.login']}</title>
 	<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
@@ -9,29 +17,23 @@
 	<h:outputStylesheet name="css/reset.css" />
 	<h:outputStylesheet name="css/flat-classic-blue/components.css" />
 </h:head>
+
 <h:body>
-	<p:growl id="msg" sticky="true" />
+	<p:growl id="growl" globalOnly="true" />
 	<div class="full-page login-page">
 		<div class="content">
 			<h:form>
-				<div class="login dialog purple">
-					<div class="dialog-header">
-						<h2>${i18n['login.login']}</h2>
+				<p:panel header="${i18n['login.login']}" styleClass="login dialog">
+					<div class="panel-content-data">
+						<g:input id="username" icon="fa-user" value="#{loginView.username}" required="true" />
+						<g:input id="password" icon="fa-lock" value="#{loginView.password}" required="true" type="password" />
 					</div>
-					<div class="dialog-content">
-						<div class="input-text input-group">
-							<span class="input-group-addon"><em class="fa fa-user" /></span>
-							<p:inputText id="username" value="#{loginBean.username}" />
+					<f:facet name="footer">
+						<div class="panel-buttons">
+							<p:commandButton action="#{loginView.login}" value="${i18n['login.enter']}" update="@form growl" />
 						</div>
-						<div class="input-text input-group">
-							<span class="input-group-addon"><em class="fa fa-lock" /></span>
-							<p:password id="password" value="#{loginBean.password}" />
-						</div>
-					</div>
-					<div class="dialog-footer">
-						<p:commandButton action="#{loginBean.login}" value="${i18n['login.enter']}" />
-					</div>
-				</div>
+					</f:facet>
+				</p:panel>
 			</h:form>
 		</div>
 	</div>

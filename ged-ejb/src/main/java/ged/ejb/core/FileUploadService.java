@@ -36,8 +36,7 @@ public class FileUploadService {
 			final Path source = Paths.get(this.fileDirectory, file.getUuid());
 			final Path newPath = Files.move(source, source.resolveSibling(file.getName()), REPLACE_EXISTING);
 			return newPath.toFile();
-		}
-		catch (final IOException e) {
+		} catch (final IOException e) {
 			throw new UncheckedIOException(e);
 		}
 	}
@@ -45,8 +44,7 @@ public class FileUploadService {
 	public void removeFileFromFileSystem(final String uuid) {
 		try {
 			Files.deleteIfExists(new File(this.fileDirectory, uuid).toPath());
-		}
-		catch (final IOException e) {
+		} catch (final IOException e) {
 			throw new UncheckedIOException(e);
 		}
 	}
@@ -56,8 +54,7 @@ public class FileUploadService {
 			final String uuid = UUID.randomUUID().toString();
 			Files.copy(inputStream, new File(directory, uuid).toPath(), REPLACE_EXISTING);
 			return uuid;
-		}
-		catch (final IOException e) {
+		} catch (final IOException e) {
 			throw new UncheckedIOException(e);
 		}
 	}
@@ -71,8 +68,7 @@ public class FileUploadService {
 		try (InputStream inputStream = new FileInputStream(image)) {
 			Objects.requireNonNull(inputStream);
 			return this.upload(this.imageDirectory, inputStream);
-		}
-		catch (final IOException e) {
+		} catch (final IOException e) {
 			throw new UncheckedIOException(e);
 		}
 	}

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" 
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" 
+	xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:g="http://ged.org/ui" 
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/WEB-INF/templates/default.xhtml">
+
+	<ui:define name="title">
+		<title>#{i18n['job_experience.job_experience']}</title>
+	</ui:define>
+
+	<ui:define name="breadcrumb">
+		<p:breadCrumb>
+			<p:menuitem value="#{i18n['menu.index']}" outcome="#{Page.INDEX.getUrl()}" />
+			<p:menuitem value="#{i18n['candidate.candidates']}" outcome="#{Page.CANDIDATE_SEARCH.getUrl()}" />
+			<p:menuitem value="#{jobExperienceView.curriculum.candidate.fullName}" outcome="#{Page.CANDIDATE.getUrl()}">
+				<f:param name="id" value="#{jobExperienceView.curriculum.candidate.id}" />
+			</p:menuitem>
+			<p:menuitem value="#{i18n['curriculum.curriculum']}" outcome="#{Page.CURRICULUM.getUrl()}">
+				<f:param name="id" value="#{jobExperienceView.curriculum.candidate.id}" />
+			</p:menuitem>
+			<p:menuitem value="#{i18n['job_experience.job_experience']}" disabled="true" />
+		</p:breadCrumb>
+	</ui:define>
+
+	<ui:define name="content">
+
+		<h:form id="jobExperience">
+			<div class="grid nogutter">
+				<div class="panel curriculum col-12 xl-8">
+					<div class="panel-content">
+						<div class="panel-content-data">
+							<g:input id="degree" label="#{i18n['job_experience.company_name']}" value="#{jobExperienceView.jobExperience.companyName}"
+								required="true" />
+
+							<g:input id="jobPosition" label="#{i18n['job_experience.job_position']}" value="#{jobExperienceView.jobExperience.jobPosition}"
+								required="true" />
+
+							<g:inputYearMonth id="fromDate" label="#{i18n['job.from_date']}" value="#{jobExperienceView.fromDate}" required="true" />
+
+							<h:panelGroup layout="block" id="toDateWrapper">
+								<g:inputYearMonth id="toDate" label="#{i18n['job.to_date']}" value="#{jobExperienceView.toDate}"
+									rendered="#{not jobExperienceView.stillWorking}" />
+							</h:panelGroup>
+
+							<g:input id="still" label="#{i18n['job.still_working']}" value="#{jobExperienceView.stillWorking}" type="checkbox">
+								<f:ajax event="change" render="jobExperience:toDateWrapper" />
+							</g:input>
+
+							<g:input id="description" label="#{i18n['job_experience.description']}" value="#{jobExperienceView.jobExperience.description}" type="textarea"/>
+						</div>
+					</div>
+
+					<div class="panel-footer">
+						<div class="panel-buttons">
+							<p:button value="#{i18n['action.cancel']}" outcome="#{Page.CURRICULUM.getUrl()}" styleClass="btn-gray">
+								<f:param name="id" value="#{jobExperienceView.curriculum.candidate.id}" />
+							</p:button>
+							<p:commandButton value="#{i18n['action.delete']}" action="#{jobExperienceView.delete}" process="@this"
+								rendered="#{not jobExperienceView.newJobExperience}" />
+							<p:commandButton value="#{i18n['action.save']}" action="#{jobExperienceView.save}" process="@form" update="@form" />
+						</div>
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

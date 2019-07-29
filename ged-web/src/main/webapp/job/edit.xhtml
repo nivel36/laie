@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://ged.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets" template="/WEB-INF/templates/default.xhtml">
+
+	<ui:define name="title">
+		<title>#{i18n['job.edit_job']} - #{editJobView.jobOffer.name}</title>
+	</ui:define>
+
+	<ui:param name="selectedMenu" value="offers" />
+
+	<ui:define name="breadcrumb">
+		<p:breadCrumb>
+			<p:menuitem value="#{i18n['menu.index']}" outcome="#{Page.INDEX.getUrl()}" />
+			<p:menuitem value="#{i18n['job.job_offers']}" outcome="#{Page.JOB_SEARCH.getUrl()}" />
+			<p:menuitem value="#{editJobView.jobOffer}" outcome="#{Page.JOB.getUrl()}">
+				<f:param name="id" value="#{editJobView.jobOffer.id}" />
+			</p:menuitem>
+			<p:menuitem value="#{i18n['job.edit_job']}" disabled="true" />
+		</p:breadCrumb>
+	</ui:define>
+
+	<ui:define name="content">
+		<h:form id="jobOfferForm">
+			<p:panel>
+				<div class="panel-content-data grid">
+					<div class="col-12 sm-6">
+						<h3>#{i18n['user.personal_information']}</h3>
+
+						<g:input label="#{i18n['job.name']}" value="#{editJobView.jobOffer.name}" required="true" />
+
+						<cc:autocomplete id="client" label="#{i18n['job.client']}" value="#{editJobView.jobOffer.client}"
+							completeMethod="#{editJobView.completeClient}" required="true">
+							<p:column>
+								<h:outputText value="#{var.name}" />
+							</p:column>
+						</cc:autocomplete>
+
+						<g:input id="places" label="#{i18n['job.places']}" value="#{editJobView.jobOffer.places}" type="number" min="0" />
+
+						<g:input id="dateOpened" label="#{i18n['job.date_opened']}" value="#{editJobView.jobOffer.dateOpened}" type="calendar" />
+
+						<g:input id="dateClosed" label="#{i18n['job.date_closed']}" value="#{editJobView.jobOffer.dateClosed}" type="calendar" />
+					</div>
+
+					<div class="col-12 sm-6">
+						<h3>#{i18n['user.personal_information']}</h3>
+
+						<g:input id="city" label="#{i18n['job.city']}" value="#{editJobView.jobOffer.address.city}" required="true" />
+
+						<g:input id="state" label="#{i18n['job.state']}" value="#{editJobView.jobOffer.address.state}" required="true" />
+
+						<cc:autocomplete id="owner" label="#{i18n['job.owner']}" value="#{editJobView.jobOffer.owner}"
+							completeMethod="#{editJobView.queryOwner}" converter="userConverter">
+							<p:column styleClass="user-select image">
+								<cc:person value="#{var}" showDescription="false" />
+							</p:column>
+						</cc:autocomplete>
+
+						<cc:inputUsers id="recruiters" label="#{i18n['job.recruiters']}" completeMethod="#{editJobView.queryRecruiter}"
+							value="#{editJobView.recruiters}" />
+					</div>
+					<div class="col-12">
+						<h3>#{i18n['user.personal_information']}</h3>
+						<g:input id="description" name="description" label="#{i18n['job.description']}" value="#{editJobView.jobOffer.description}"
+							type="textarea" />
+					</div>
+				</div>
+				<div class="panel-footer">
+					<div class="panel-buttons">
+						<p:button styleClass="btn-gray" value="#{i18n['action.cancel']}" outcome="#{Page.JOB.getUrl()}">
+							<f:param name="id" value="#{editJobView.jobOffer.id}" />
+						</p:button>
+						<p:commandButton value="#{i18n['action.save']}" action="#{editJobView.save}" process="@form" update="@form growl" />
+					</div>
+				</div>
+			</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>
