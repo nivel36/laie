@@ -37,7 +37,7 @@
 						<div class="panel-header-title">#{viewClientView.client}</div>
 						<h:form>
 							<div class="panel-buttons">
-								<p:commandButton value="#{i18n['action.export']}" process="@this" action="#{viewClientView.export}"
+								<p:commandButton value="#{i18n['action.export']}" process="@this" action="#{viewClientView.export}" ajax="false" 
 									icon="fa-file-excel-o" />
 								<p:commandButton value="#{i18n['action.edit']}" process="@this" action="#{viewClientView.editClient}" />
 							</div>

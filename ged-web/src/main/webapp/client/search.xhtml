@@ -36,7 +36,7 @@
 						<cc:inputSearch searchText="#{searchClientView.searchText}" searchAction="#{searchClientView.search}" update="@form" />
 					</div>
 					<div class="panel-buttons">
-						<p:commandButton value="#{i18n['action.export']}" action="#{searchClientView.export}" process="@this"
+						<p:commandButton value="#{i18n['action.export']}" action="#{searchClientView.export}" process="@this" ajax="false" 
 							icon="fa-file-excel-o" />
 					</div>
 				</div>
