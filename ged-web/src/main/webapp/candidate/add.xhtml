@@ -39,9 +39,9 @@
 										<p:ajax event="rate" listener="#{addCandidateView.onrate}" update="" />
 									</p:rating>
 								</div>
-								<g:input id="tags" value="#{addCandidateView.tags}" completeMethod="#{addCandidateView.queryTags}" type="chips">
+								<p:chips id="tags" value="#{addCandidateView.tags}" required="#{required}" styleClass="input input-chips" completeMethod="#{addCandidateView.queryTags}" >
 									<f:converter converterId="tagConverter" for="tags" />
-								</g:input>
+								</p:chips>
 							</div>
 						</div>
 						<div class="panel-content-data grid">

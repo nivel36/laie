@@ -628,6 +628,7 @@ body .input-group button.icon, .input-group .icon
 
 .login.dialog {
 	width: 400px;
+	height: auto;
 }
 
 .invisible {
@@ -949,8 +950,4 @@ body .input-group button.icon, .input-group .icon
 .meeting-attendee {
 	display: inline-flex;
 	padding: 5px 10px 5px 0px;
-}
-
-.search-bar {
-	width: 300px;
 }
