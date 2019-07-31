@@ -50,27 +50,26 @@
 						</div>
 						<h:form>
 							<div class="panel-buttons">
-								<p:commandButton value="#{i18n['action.export']}" process="@this" action="#{viewUserView.export}"
-									icon="fa-file-excel-o" />
+								<p:commandButton value="#{i18n['action.export']}" process="@this" action="#{viewUserView.export}" icon="fa-file-excel-o" />
 								<p:commandButton value="#{i18n['action.edit']}" process="@this" action="#{viewUserView.editUser}" />
 							</div>
 						</h:form>
 					</div>
 					<div class="panel-content panel-content-data">
 						<div class="grid">
-							<div class="col-12 sm-6">
-								<cc:outputText label="#{i18n['user.date_of_join']}" value="#{viewUserView.user.dateOfJoin}"
-									styleClass="data date_of_join">
+							<div class="col-12 md-6">
+								<h4>#{i18n['user.activity']}</h4>
+								<cc:outputText label="#{i18n['user.date_of_join']}" value="#{viewUserView.user.dateOfJoin}" styleClass="data date_of_join">
 									<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" for="text" />
 								</cc:outputText>
-							</div>
-							<div class="col-12 sm-6">
-								<cc:outputText label="#{i18n['user.last_login']}" value="#{viewUserView.user.lastConnection}"
-									styleClass="data last_login">
+
+								<cc:outputText label="#{i18n['user.last_login']}" value="#{viewUserView.user.lastConnection}" styleClass="data last_login">
 									<f:convertDateTime type="localDateTime" pattern="dd/MM/yyyy HH:mm" for="text" />
 								</cc:outputText>
 							</div>
-							<div class="col-12 sm-6">
+
+							<div class="col-12 md-6">
+								<h4>#{i18n['user.team']}</h4>
 								<div class="data manager">
 									<div class="label-container">
 										<div class="label">#{i18n['user.manager']}</div>
@@ -100,7 +99,7 @@
 					<cc:users users="#{viewUserView.team}" title="#{i18n['user.team']}" />
 				</h:form>
 			</div>
-			
+
 			<div class="col-12 xl-6">
 				<h:form id="jobMeetingsForm">
 					<cc:meetings value="#{viewUserView.meetings}" />
