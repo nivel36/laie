@@ -1,0 +1,149 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+                xmlns:h="http://java.sun.com/jsf/html" 
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:po="http://primefaces.org/roma">
+
+    <div class="layout-menu-container">
+        <div class="nano">
+            <div class="nano-content menu-scroll-content">
+                <h:form id="menuform">
+                    <ui:fragment rendered="#{guestPreferences.profileMode == 'inline' ? true : false}">
+                        <div class="layout-profile">
+                            <a class="layout-profile-button" href="#">
+                                <p:graphicImage name="images/avatar/avatar.png" library="roma-layout" />
+                                <div class="layout-profile-userinfo">
+                                    <span class="layout-profile-name">Arlene Welch</span>
+                                    <span class="layout-profile-role">Design Ops</span>
+                                </div>
+                            </a>
+                            <ul class="layout-profile-menu">
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-fw fa-user"></i><span>Profile</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-fw fa-cog"></i><span>Settings</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-fw fa-envelope-o"></i><span>Messages</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-fw fa-bell-o"></i><span>Notifications</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </ui:fragment>
+                    <po:menu>
+                        <p:menuitem id="om_dashboard" value="Dashboard" icon="fa fa-fw fa-dashboard" outcome="/dashboard" />
+                        <p:submenu id="om_customization" label="Layouts" icon="fa fa-fw fa-desktop">
+                            <p:menuitem id="om_customization_1" value="Static" icon="fa fa-fw fa-bars" actionListener="#{guestPreferences.setMenuMode('layout-static')}" ajax="false" />
+                            <p:menuitem id="om_customization_2" value="Overlay" icon="fa fa-fw fa-bars" actionListener="#{guestPreferences.setMenuMode('layout-overlay')}" ajax="false" />
+                            <p:menuitem id="om_customization_3" value="Slim" icon="fa fa-fw fa-bars" actionListener="#{guestPreferences.setMenuMode('layout-slim')}" ajax="false" />
+                            <p:menuitem id="om_customization_4" value="Horizontal" icon="fa fa-fw fa-bars" actionListener="#{guestPreferences.setMenuMode('layout-horizontal')}" ajax="false" />
+                            <p:submenu id="om_orientation" label="Orientation" icon="fa fa-align-left">
+                                <p:menuitem id="om_ltr" value="LTR" icon="fa fa-align-left" actionListener="#{guestPreferences.setOrientationRTL(false)}" ajax="false" />
+                                <p:menuitem id="om_rtl" value="RTL" icon="fa fa-align-right" actionListener="#{guestPreferences.setOrientationRTL(true)}" ajax="false" />
+                            </p:submenu>
+                        </p:submenu>
+                        <p:submenu id="om_topbar_mode" label="Topbar Colors" icon="fa fa-fw fa-magic">
+                            <p:menuitem id="om_customization_topbar_mode_1" value="Light" icon="fa fa-fw fa-paint-brush" actionListener="#{guestPreferences.setTopBarColor('layout-topbar-light', 'logo-roma')}" ajax="false" />
+                            <p:menuitem id="om_customization_topbar_mode_2" value="Dark" icon="fa fa-fw fa-paint-brush" actionListener="#{guestPreferences.setTopBarColor('layout-topbar-dark', 'logo-roma-white')}" ajax="false" />
+                            <p:menuitem id="om_customization_topbar_mode_3" value="Blue" icon="fa fa-fw fa-paint-brush" actionListener="#{guestPreferences.setTopBarColor('layout-topbar-blue', 'logo-roma-white')}" ajax="false" />
+                            <p:menuitem id="om_customization_topbar_mode_4" value="Green" icon="fa fa-fw fa-paint-brush" actionListener="#{guestPreferences.setTopBarColor('layout-topbar-green', 'logo-roma-white')}" ajax="false" />
+                            <p:menuitem id="om_customization_topbar_mode_5" value="Orange" icon="fa fa-fw fa-paint-brush" actionListener="#{guestPreferences.setTopBarColor('layout-topbar-orange', 'logo-roma-white')}" ajax="false" />
+                            <p:menuitem id="om_customization_topbar_mode_6" value="Magenta" icon="fa fa-fw fa-paint-brush" actionListener="#{guestPreferences.setTopBarColor('layout-topbar-magenta', 'logo-roma-white')}" ajax="false" />
+                            <p:menuitem id="om_customization_topbar_mode_7" value="Blue Grey" icon="fa fa-fw fa-paint-brush" actionListener="#{guestPreferences.setTopBarColor('layout-topbar-bluegrey', 'logo-roma-white')}" ajax="false" />
+                            <p:menuitem id="om_customization_topbar_mode_8" value="Deep Purple" icon="fa fa-fw fa-paint-brush" actionListener="#{guestPreferences.setTopBarColor('layout-topbar-deeppurple', 'logo-roma-white')}" ajax="false" />
+                            <p:menuitem id="om_customization_topbar_mode_9" value="Brown" icon="fa fa-fw fa-paint-brush" actionListener="#{guestPreferences.setTopBarColor('layout-topbar-brown', 'logo-roma-white')}" ajax="false" />
+                            <p:menuitem id="om_customization_topbar_mode_10" value="Lime" icon="fa fa-fw fa-paint-brush" actionListener="#{guestPreferences.setTopBarColor('layout-topbar-lime', 'logo-roma-white')}" ajax="false" />
+                            <p:menuitem id="om_customization_topbar_mode_11" value="Rose" icon="fa fa-fw fa-paint-brush" actionListener="#{guestPreferences.setTopBarColor('layout-topbar-rose', 'logo-roma-white')}" ajax="false" />
+                            <p:menuitem id="om_customization_topbar_mode_12" value="Cyan" icon="fa fa-fw fa-paint-brush" actionListener="#{guestPreferences.setTopBarColor('layout-topbar-cyan', 'logo-roma-white')}" ajax="false" />
+                            <p:menuitem id="om_customization_topbar_mode_13" value="Teal" icon="fa fa-fw fa-paint-brush" actionListener="#{guestPreferences.setTopBarColor('layout-topbar-teal', 'logo-roma-white')}" ajax="false" />
+                            <p:menuitem id="om_customization_topbar_mode_14" value="Deep Orange" icon="fa fa-fw fa-paint-brush" actionListener="#{guestPreferences.setTopBarColor('layout-topbar-deeporange', 'logo-roma-white')}" ajax="false" />
+                            <p:menuitem id="om_customization_topbar_mode_15" value="Indigo" icon="fa fa-fw fa-paint-brush" actionListener="#{guestPreferences.setTopBarColor('layout-topbar-indigo', 'logo-roma-white')}" ajax="false" />
+                            <p:menuitem id="om_customization_topbar_mode_16" value="Pink" icon="fa fa-fw fa-paint-brush" actionListener="#{guestPreferences.setTopBarColor('layout-topbar-pink', 'logo-roma-white')}" ajax="false" />
+                            <p:menuitem id="om_customization_topbar_mode_17" value="Purple" icon="fa fa-fw fa-paint-brush" actionListener="#{guestPreferences.setTopBarColor('layout-topbar-purple', 'logo-roma-white')}" ajax="false" />
+                        </p:submenu>
+                        <p:submenu id="om_customization_mode" label="Menu Colors" icon="fa fa-fw fa-list">
+                            <p:menuitem id="om_customization_mode_1" value="Light" icon="fa fa-fw fa-circle-o" actionListener="#{guestPreferences.setMenuColor('layout-menu-light')}" ajax="false" />
+                            <p:menuitem id="om_customization_mode_2" value="Dark" icon="fa fa-fw fa-circle" actionListener="#{guestPreferences.setMenuColor('layout-menu-dark')}" ajax="false" />
+                        </p:submenu>
+                        <p:submenu id="omx_userprofile_mode" label="User Profile" icon="fa fa-fw fa-user">
+                            <p:menuitem id="omx_userprofile_mode_1" value="Popup" icon="fa fa-fw fa-user" actionListener="#{guestPreferences.setProfileMode('popup')}" ajax="false" />
+                            <p:menuitem id="omx_userprofile_mode_2" value="Inline" icon="fa fa-fw fa-user" actionListener="#{guestPreferences.setProfileMode('inline')}" ajax="false" />
+                        </p:submenu>
+                        <p:submenu id="om_themes" label="Themes" icon="fa fa-fw fa-paint-brush">
+                            <p:menuitem id="om_theme_1" value="Blue" icon="fa fa-fw fa-paint-brush" actionListener="#{guestPreferences.setTheme('blue')}" ajax="false"/>
+                            <p:menuitem id="om_theme_2" value="Green" icon="fa fa-fw fa-paint-brush" actionListener="#{guestPreferences.setTheme('green')}" ajax="false"/>
+                            <p:menuitem id="om_theme_3" value="Orange" icon="fa fa-fw fa-paint-brush" actionListener="#{guestPreferences.setTheme('orange')}" ajax="false"/>
+                            <p:menuitem id="om_theme_4" value="Magenta" icon="fa fa-fw fa-paint-brush" actionListener="#{guestPreferences.setTheme('magenta')}" ajax="false"/>
+                            <p:menuitem id="om_theme_5" value="Blue Grey" icon="fa fa-fw fa-paint-brush" actionListener="#{guestPreferences.setTheme('bluegrey')}" ajax="false"/>
+                            <p:menuitem id="om_theme_6" value="Deep Purple" icon="fa fa-fw fa-paint-brush" actionListener="#{guestPreferences.setTheme('deeppurple')}" ajax="false"/>
+                            <p:menuitem id="om_theme_7" value="Brown" icon="fa fa-fw fa-paint-brush" actionListener="#{guestPreferences.setTheme('brown')}" ajax="false"/>
+                            <p:menuitem id="om_theme_8" value="Lime" icon="fa fa-fw fa-paint-brush" actionListener="#{guestPreferences.setTheme('lime')}" ajax="false"/>
+                            <p:menuitem id="om_theme_9" value="Rose" icon="fa fa-fw fa-paint-brush" actionListener="#{guestPreferences.setTheme('rose')}" ajax="false"/>
+                            <p:menuitem id="om_theme_10" value="Cyan" icon="fa fa-fw fa-paint-brush" actionListener="#{guestPreferences.setTheme('cyan')}" ajax="false"/>
+                            <p:menuitem id="om_theme_11" value="Teal" icon="fa fa-fw fa-paint-brush" actionListener="#{guestPreferences.setTheme('teal')}" ajax="false"/>
+                            <p:menuitem id="om_theme_12" value="Deep Orange" icon="fa fa-fw fa-paint-brush" actionListener="#{guestPreferences.setTheme('deeporange')}" ajax="false"/>
+                            <p:menuitem id="om_theme_13" value="Indigo" icon="fa fa-fw fa-paint-brush" actionListener="#{guestPreferences.setTheme('indigo')}" ajax="false"/>
+                            <p:menuitem id="om_theme_14" value="Pink" icon="fa fa-fw fa-paint-brush" actionListener="#{guestPreferences.setTheme('pink')}" ajax="false"/>
+                            <p:menuitem id="om_theme_15" value="Purple" icon="fa fa-fw fa-paint-brush" actionListener="#{guestPreferences.setTheme('purple')}" ajax="false"/>
+                        </p:submenu>
+                        <p:submenu id="om_components" label="Components" icon="fa fa-fw fa-bars">
+                            <p:menuitem id="om_sample" value="Sample Page" icon="fa fa-fw fa-columns" outcome="/sample" />
+                            <p:menuitem id="om_forms" value="Forms" icon="fa fa-fw fa-code" outcome="/forms" />
+                            <p:menuitem id="om_data" value="Data" icon="fa fa-fw fa-table" outcome="/data" />
+                            <p:menuitem id="om_panels" value="Panels" icon="fa fa-fw fa-list-alt" outcome="/panel" />
+                            <p:menuitem id="om_overlays" value="Overlays" icon="fa fa-fw fa-square" outcome="/overlay" />
+                            <p:menuitem id="om_menus" value="Menus" icon="fa fa-fw fa-minus-square-o" outcome="/menu" />
+                            <p:menuitem id="om_messages" value="Messages" icon="fa fa-fw fa-circle-o-notch" outcome="/messages" />
+                            <p:menuitem id="om_charts" value="Charts" icon="fa fa-fw fa-area-chart" outcome="/charts" />
+                            <p:menuitem id="om_file" value="File" icon="fa fa-fw fa-arrow-circle-o-up" outcome="/file" />
+                            <p:menuitem id="om_misc" value="Misc" icon="fa fa-fw fa-user-secret" outcome="/misc" />
+                        </p:submenu>
+                        <p:submenu id="om_default" label="Pages" icon="fa fa-fw fa-cube">
+                            <p:menuitem id="om_empty" value="Empty" icon="fa fa-fw fa-square-o" outcome="/empty" />
+                            <p:menuitem id="om_login" value="Login" icon="fa fa-fw fa-sign-in" outcome="/login" />
+                            <p:menuitem id="om_db_landing" value="Landing" icon="fa fa-fw fa-certificate" outcome="/landing" />
+                            <p:menuitem id="om_error" value="Error" icon="fa fa-fw fa-exclamation-circle" outcome="/error" />
+                            <p:menuitem id="om_404" value="404" icon="fa fa-fw fa-times" outcome="/404" />
+                            <p:menuitem id="om_access" value="Access Denied" icon="fa fa-fw fa-exclamation-triangle" outcome="/access" />
+                        </p:submenu>
+                        <p:submenu id="om_hierarchy" label="Hierarchy" icon="fa fa-fw fa-sitemap">
+                            <p:submenu id="om_sm1" label="Submenu 1" icon="fa fa-fw fa-sign-in">
+                                <p:submenu id="om_sm11" label="Submenu 1.1" icon="fa fa-fw fa-sign-in">
+                                    <p:menuitem id="om_lnk111" value="Link 1.1.1" icon="fa fa-fw fa-sign-in" url="#" />
+                                    <p:menuitem id="om_lnk112" value="Link 1.1.2" icon="fa fa-fw fa-sign-in" url="#" />
+                                    <p:menuitem id="om_lnk113" value="Link 1.1.3" icon="fa fa-fw fa-sign-in" url="#" />
+                                </p:submenu>
+                                <p:submenu id="om_sm12" label="Submenu 1.2" icon="fa fa-fw fa-sign-in">
+                                    <p:menuitem id="om_lnk121" value="Link 1.2.1" icon="fa fa-fw fa-sign-in" url="#" />
+                                </p:submenu>
+                            </p:submenu>
+                            <p:submenu id="om_sm2" label="Submenu 2" icon="fa fa-fw fa-sign-in">
+                                <p:submenu id="om_sm21" label="Submenu 2.1" icon="fa fa-fw fa-sign-in">
+                                    <p:menuitem id="om_lnk211" value="Link 2.1.1" icon="fa fa-fw fa-sign-in" url="#" />
+                                    <p:menuitem id="om_lnk212" value="Link 2.1.2" icon="fa fa-fw fa-sign-in" url="#" />
+                                </p:submenu>
+                                <p:submenu id="om_sm22" label="Submenu 2.2" icon="fa fa-fw fa-sign-in">
+                                    <p:menuitem id="om_lnk221" value="Link 2.2.1" icon="fa fa-fw fa-sign-in" url="#" />
+                                </p:submenu>
+                            </p:submenu>
+                        </p:submenu>
+                        <p:menuitem id="om_doc" value="Docs" icon="fa fa-fw fa-file-code-o" outcome="/docs" />
+                        <p:menuitem id="om_buy" value="Buy Now" icon="fa fa-fw fa-credit-card-alt" url="https://www.primefaces.org/store"/>
+                    </po:menu>
+                </h:form>
+            </div>
+        </div>
+    </div>
+</ui:composition>
