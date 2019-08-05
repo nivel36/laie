@@ -178,10 +178,6 @@ body .ui-button.ui-button-icon-only {
 	min-width: auto;
 }
 
-body .ui-button.ui-spinner-button {
-	min-width: auto;
-}
-
 body .ui-button {
 	min-width: 80px;
 	min-height: 34px;
@@ -907,6 +903,7 @@ body .ui-spinner {
 body .ui-spinner .ui-spinner-button {
 	height: 50%;
 	width: 16px;
+	min-width: auto;
 }
 
 body .ui-widget-content {

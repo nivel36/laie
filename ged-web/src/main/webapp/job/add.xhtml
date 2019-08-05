@@ -43,13 +43,14 @@
 										</p:column>
 									</cc:autocomplete>
 	
-									<g:input id="places" min="0" max="10" label="#{i18n['job.places']}" value="#{addJobView.jobOffer.places}" type="number" />
+									<g:input id="places" label="#{i18n['job.places']}" value="#{addJobView.jobOffer.places}" type="number" min="0" />
 	
 									<g:input id="dateOpened" label="#{i18n['job.date_opened']}" value="#{addJobView.jobOffer.dateOpened}" type="calendar" />
 	
 									<g:input id="dateClosed" label="#{i18n['job.date_closed']}" value="#{addJobView.jobOffer.dateClosed}" type="calendar" />
 								</div>
 							</div>
+							
 							<div class="col-12 sm-6">
 								<h3>#{i18n['user.personal_information']}</h3>
 								
