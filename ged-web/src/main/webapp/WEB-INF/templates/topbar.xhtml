@@ -28,8 +28,7 @@
             <ui:fragment rendered="#{guestPreferences.profileMode == 'popup' ? true : false}">
                 <li class="user-profile">
                     <a href="#">
-                    	<p:graphicImage value="/images/#{sessionUser.get().imageFileName}" rendered="#{not empty sessionUser.get().imageFileName}" />
-						<p:graphicImage value="/resources/img/default-avatar.png" rendered="#{empty sessionUser.get().imageFileName}" />
+                    	<cc:avatar value="#{sessionUser.get().imageFileName}" />
                     	
                         <div class="layout-profile-userinfo">
                             <span class="layout-profile-name">#{sessionUser.get().fullName}</span>
