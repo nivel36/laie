@@ -4,7 +4,7 @@
                       http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
 	version="4.0">
 	<display-name>web</display-name>
-	
+
 	<security-constraint>
 		<web-resource-collection>
 			<web-resource-name>Unprotected</web-resource-name>
@@ -32,27 +32,41 @@
 	<security-role>
 		<role-name>USER</role-name>
 	</security-role>
-
+	
+	<listener>
+		<listener-class>com.sun.faces.config.ConfigureListener</listener-class>
+	</listener>
+	
 	<context-param>
 		<param-name>javax.faces.FACELETS_REFRESH_PERIOD</param-name>
 		<param-value>2</param-value>
 	</context-param>
+	
 	<context-param>
 		<param-name>javax.faces.CLIENT_WINDOW_MODE</param-name>
 		<param-value>none</param-value>
 	</context-param>
+	
 	<context-param>
 		<param-name>javax.faces.DEFAULT_SUFFIX</param-name>
 		<param-value>.xhtml</param-value>
 	</context-param>
+	
 	<context-param>
 		<param-name>javax.faces.FACELETS_LIBRARIES</param-name>
-		<param-value>/WEB-INF/i18n.taglib.xml</param-value>
+		<param-value>/WEB-INF/primefaces-roma.taglib.xml; /WEB-INF/i18n.taglib.xml</param-value>
 	</context-param>
+	
+	<context-param>
+		<param-name>primefaces.THEME</param-name>
+		<param-value>roma</param-value>
+	</context-param>
+
 	<context-param>
 		<param-name>javax.faces.INTERPRET_EMPTY_STRING_SUBMITTED_VALUES_AS_NULL</param-name>
 		<param-value>true</param-value>
 	</context-param>
+	
 	<context-param>
 		<param-name>javax.faces.PROJECT_STAGE</param-name>
 		<param-value>Development</param-value>
@@ -72,10 +86,6 @@
 	<context-param>
 		<param-name>primefaces.FONT_AWESOME</param-name>
 		<param-value>true</param-value>
-	</context-param>
-	<context-param>
-		<param-name>primefaces.THEME</param-name>
-		<param-value>flat-blue</param-value>
 	</context-param>
 
 	<servlet>
@@ -98,7 +108,7 @@
 	<welcome-file-list>
 		<welcome-file>index.xhtml</welcome-file>
 	</welcome-file-list>
-	
+
 	<error-page>
 		<error-code>400</error-code>
 		<location>/WEB-INF/errorpages/400.xhtml</location>
@@ -115,7 +125,7 @@
 		<error-code>500</error-code>
 		<location>/WEB-INF/errorpages/500.xhtml</location>
 	</error-page>
-		<error-page>
+	<error-page>
 		<exception-type>ged.web.core.PageNotFoundException</exception-type>
 		<location>/WEB-INF/errorpages/404.xhtml</location>
 	</error-page>
@@ -155,9 +165,9 @@
 		<extension>woff2</extension>
 		<mime-type>application/x-font-woff2</mime-type>
 	</mime-mapping>
-	<mime-mapping> 
-    	<extension>xls</extension> 
-   		<mime-type>application/vnd.ms-excel</mime-type> 
+	<mime-mapping>
+		<extension>xls</extension>
+		<mime-type>application/vnd.ms-excel</mime-type>
 	</mime-mapping>
 	<mime-mapping>
 		<extension>xlsx</extension>

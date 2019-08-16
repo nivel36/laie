@@ -17,42 +17,42 @@
 	</composite:interface>
 
 	<composite:implementation>
-		<div id="#{cc.clientId}" style="height:100%">
-			<p:panel header="#{cc.attrs.title}" styleClass="job-offers #{cc.attrs.styleClass}">
-				<p:dataTable var="jobOffer" value="#{cc.attrs.jobOffers}" emptyMessage="#{i18n['job.no_jobs_found']}" reflow="true" paginator="true"
-					paginatorPosition="bottom" paginatorTemplate="{PageLinks}" rows="#{sessionUser.rowsPerPage}" sortBy="#{jobOffer.name}"
-					sortOrder="descending">
+		<div id="#{cc.clientId}" class="card card-w-title">
+			<h1>#{cc.attrs.title}</h1>
 
-					<p:column headerText="#{i18n['job.name']}">
-						<h:link value="#{jobOffer.name}" outcome="#{Page.JOB.getUrl()}">
-							<f:param name="id" value="#{jobOffer.id}" />
-						</h:link>
-						<span class="job_address">#{jobOffer.address.city} (#{jobOffer.address.state})</span>
-					</p:column>
+			<p:dataTable var="jobOffer" value="#{cc.attrs.jobOffers}" emptyMessage="#{i18n['job.no_jobs_found']}" reflow="true" paginator="true"
+				paginatorPosition="bottom" paginatorTemplate="{PageLinks}" rows="#{sessionUser.rowsPerPage}" sortBy="#{jobOffer.name}"
+				sortOrder="descending">
 
-					<p:column headerText="#{i18n['job.date_closed']}">
-						<h:outputText value="#{jobOffer.dateClosed}">
-							<f:convertDateTime pattern="dd / MM / yyyy" type="localDate" />
-						</h:outputText>
-					</p:column>
+				<p:column headerText="#{i18n['job.name']}">
+					<h:link value="#{jobOffer.name}" outcome="#{Page.JOB.getUrl()}">
+						<f:param name="id" value="#{jobOffer.id}" />
+					</h:link>
+					<span class="job_address">#{jobOffer.address.city} (#{jobOffer.address.state})</span>
+				</p:column>
 
-					<p:column headerText="#{i18n['job.owner']}">
-						<h:link value="#{jobOffer.owner.fullName}" outcome="#{Page.USER_SEARCH.getUrl()}">
-							<f:param name="id" value="#{jobOffer.owner.id}" />
-						</h:link>
-					</p:column>
+				<p:column headerText="#{i18n['job.date_closed']}">
+					<h:outputText value="#{jobOffer.dateClosed}">
+						<f:convertDateTime pattern="dd / MM / yyyy" type="localDate" />
+					</h:outputText>
+				</p:column>
 
-					<p:column headerText="#{i18n['job.job_offer_state']}">
-						<div class="tag #{jobOffer.jobOfferState.color}">#{g:translate(jobOffer.jobOfferState.name)}</div>
-					</p:column>
-				</p:dataTable>
-				
-				<f:facet name="footer">
-					<h:panelGroup id="children" styleClass="panel-buttons">
-						<composite:insertChildren />
-					</h:panelGroup>
-				</f:facet>
-			</p:panel>
+				<p:column headerText="#{i18n['job.owner']}">
+					<h:link value="#{jobOffer.owner.fullName}" outcome="#{Page.USER_SEARCH.getUrl()}">
+						<f:param name="id" value="#{jobOffer.owner.id}" />
+					</h:link>
+				</p:column>
+
+				<p:column headerText="#{i18n['job.job_offer_state']}">
+					<div class="tag #{jobOffer.jobOfferState.color}">#{g:translate(jobOffer.jobOfferState.name)}</div>
+				</p:column>
+			</p:dataTable>
+
+			<f:facet name="footer">
+				<h:panelGroup id="children" styleClass="panel-buttons">
+					<composite:insertChildren />
+				</h:panelGroup>
+			</f:facet>
 		</div>
 	</composite:implementation>
 </ui:component>

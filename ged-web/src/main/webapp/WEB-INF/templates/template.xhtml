@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html>	
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
@@ -14,19 +14,25 @@
             <meta name="apple-mobile-web-app-capable" content="yes" />
             <link rel="shortcut icon" type="image/x-icon" href="#{request.contextPath}/roma-layout/images/favicon.ico" />
         </f:facet>
-        <title><ui:insert name="title">PrimeFaces Roma</ui:insert></title>
+        <title><ui:insert name="title">Ged</ui:insert></title>
         <h:outputScript name="js/nanoscroller.js" library="roma-layout" />
         <h:outputScript name="js/layout.js" library="roma-layout" />
         <ui:insert name="head"/>
     </h:head>
 
     <h:body>
-        <div class="layout-wrapper #{guestPreferences.menuMode} #{guestPreferences.menuColor} #{guestPreferences.topBarColor} #{guestPreferences.orientationRTL ? 'layout-rtl' : null}">
+    	<p:growl id="growl" globalOnly="true" />
+    	<f:metadata>
+			<p:importConstants type="ged.web.core.util.PageEnum" var="Page" />
+		</f:metadata>
+        <div class="layout-wrapper #{guestPreferences.menuMode} #{guestPreferences.menuColor} #{guestPreferences.topBarColor}">
             <ui:include src="./topbar.xhtml"></ui:include>
             <ui:include src="./menu.xhtml"></ui:include>
             <ui:include src="./right-panel.xhtml" />
 
-            <div class="layout-main">        
+            <div class="layout-main">
+               <ui:insert name="breadcrumb" />
+                       
                 <div class="layout-content" style="min-height:300px">
                     <ui:insert name="content"></ui:insert>
                 </div>
