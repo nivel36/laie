@@ -19,44 +19,42 @@
 	</composite:interface>
 
 	<composite:implementation>
-		<div id="#{cc.clientId}" style="height:100%">
-			<p:panel header="#{cc.attrs.title}">
-				<p:dataTable var="jobCandidature" value="#{cc.attrs.jobCandidatures}"
-					emptyMessage="#{i18n['job_candidature.no_job_candidatures_found']}" reflow="true" paginator="true" paginatorPosition="bottom"
-					rows="#{sessionUser.rowsPerPage}" sortBy="#{jobOffer.name}" sortOrder="ascending">
-					<p:column headerText="#{i18n['job_candidature.job_offer']}" rendered="#{cc.attrs.showJobOffer}">
-						<h:link value="#{jobCandidature.jobOffer.name}" outcome="#{Page.JOB.getUrl()}">
-							<f:param name="id" value="#{jobCandidature.jobOffer.id}" />
-						</h:link>
-						<span class="job_address">#{jobCandidature.jobOffer.address.city} (#{jobCandidature.jobOffer.address.state})</span>
-					</p:column>
-					<p:column headerText="#{i18n['job_candidature.client']}" rendered="#{cc.attrs.showJobOffer}">
-						<h:link value="#{jobCandidature.jobOffer.client.name}" outcome="#{Page.CLIENT.getUrl()}">
-							<f:param name="id" value="#{jobCandidature.jobOffer.client.id}" />
-						</h:link>
-					</p:column>
-					<p:column rendered="#{cc.attrs.showCandidate}">
-						<cc:avatar value="#{jobCandidature.candidate.imageFileName}" styleClass="image-icon" />
-					</p:column>
-					<p:column headerText="#{i18n['job_candidature.candidate']}" rendered="#{cc.attrs.showCandidate}">
-						<h:link value="#{jobCandidature.candidate.fullName}" outcome="#{Page.CANDIDATE.getUrl()}">
-							<f:param name="id" value="#{jobCandidature.candidate.id}" />
-						</h:link>
-					</p:column>
-					<p:column headerText="#{i18n['candidate.rating']}" rendered="#{cc.attrs.showCandidate}">
-						<p:rating value="#{jobCandidature.candidate.rating}" cancel="false" readonly="true" />
-					</p:column>
-					<p:column headerText="#{i18n['job_candidature.job_candidature_state']}">
-						<div class="tag #{jobCandidature.jobCandidatureState.color}">#{g:translate(jobCandidature.jobCandidatureState.name)}</div>
-					</p:column>
-				</p:dataTable>
+		<div id="#{cc.clientId}" class="card card-w-title jobCandidatures #{cc.attrs.styleClass}">
+			<h3>#{cc.attrs.title}</h3>
 			
-				<f:facet name="footer">
-					<h:panelGroup id="children" styleClass="panel-buttons">
-						<composite:insertChildren />
-					</h:panelGroup>
-				</f:facet>
-			</p:panel>
+			<p:dataTable var="jobCandidature" value="#{cc.attrs.jobCandidatures}"
+				emptyMessage="#{i18n['job_candidature.no_job_candidatures_found']}" reflow="true" paginator="true" paginatorPosition="bottom"
+				rows="#{sessionUser.rowsPerPage}" sortBy="#{jobOffer.name}" sortOrder="ascending">
+				<p:column headerText="#{i18n['job_candidature.job_offer']}" rendered="#{cc.attrs.showJobOffer}">
+					<h:link value="#{jobCandidature.jobOffer.name}" outcome="#{Page.JOB.getUrl()}">
+						<f:param name="id" value="#{jobCandidature.jobOffer.id}" />
+					</h:link>
+					<span class="job_address">#{jobCandidature.jobOffer.address.city} (#{jobCandidature.jobOffer.address.state})</span>
+				</p:column>
+				<p:column headerText="#{i18n['job_candidature.client']}" rendered="#{cc.attrs.showJobOffer}">
+					<h:link value="#{jobCandidature.jobOffer.client.name}" outcome="#{Page.CLIENT.getUrl()}">
+						<f:param name="id" value="#{jobCandidature.jobOffer.client.id}" />
+					</h:link>
+				</p:column>
+				<p:column rendered="#{cc.attrs.showCandidate}">
+					<cc:avatar value="#{jobCandidature.candidate.imageFileName}" styleClass="image-icon" />
+				</p:column>
+				<p:column headerText="#{i18n['job_candidature.candidate']}" rendered="#{cc.attrs.showCandidate}">
+					<h:link value="#{jobCandidature.candidate.fullName}" outcome="#{Page.CANDIDATE.getUrl()}">
+						<f:param name="id" value="#{jobCandidature.candidate.id}" />
+					</h:link>
+				</p:column>
+				<p:column headerText="#{i18n['candidate.rating']}" rendered="#{cc.attrs.showCandidate}">
+					<p:rating value="#{jobCandidature.candidate.rating}" cancel="false" readonly="true" />
+				</p:column>
+				<p:column headerText="#{i18n['job_candidature.job_candidature_state']}">
+					<div class="tag #{jobCandidature.jobCandidatureState.color}">#{g:translate(jobCandidature.jobCandidatureState.name)}</div>
+				</p:column>
+			</p:dataTable>
+		
+			<h:panelGroup id="children" styleClass="panel-buttons">
+				<composite:insertChildren />
+			</h:panelGroup>
 		</div>
 	</composite:implementation>
 </ui:component>

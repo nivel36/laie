@@ -1,5 +1,102 @@
+h1 { 
+    display: block;
+    font-size: 2em;
+    margin-top: 0.67em;
+    margin-bottom: 0.67em;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: bold;
+}
+h2 {
+    display: block;
+    font-size: 1.5em;
+    margin-top: 0.83em;
+    margin-bottom: 0.83em;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: bold;
+}
+h3 { 
+    display: block;
+    font-size: 1.17em;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: bold;
+}
+h4 { 
+    display: block;
+    margin-top: 1.33em;
+    margin-bottom: 1.33em;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: bold;
+}
+h5 { 
+    display: block;
+    font-size: .83em;
+    margin-top: 1.67em;
+    margin-bottom: 1.67em;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: bold;
+}
+h6 { 
+    display: block;
+    font-size: .67em;
+    margin-top: 2.33em;
+    margin-bottom: 2.33em;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: bold;
+}
+
 .avatar {
 	border-radius: 50%;
 	object-fit: cover;
 	image-orientation: from-image;
+}
+
+.candidates .ui-datalist .ui-datalist-content {
+	padding: 0;
+	margin: 0;
+}
+
+.person {
+	padding: .5em;
+}
+
+.person.selectable {
+	border-left: 3px solid white;
+}
+
+.person.selectable:hover {
+	background: #f2f3f3;
+	border-left: 3px solid #1976d2;
+}
+
+.person .avatar {
+	width: 36px;
+	height: 36px;
+}
+
+.person .person-data {
+	margin-left: 1em;
+	display: inline-block;
+}
+
+.person .person-data .name {
+	display: block;
+	font-weight: 500;
+}
+
+.person .person-data .description {
+	color: #65656a;
+}
+
+.version {
+	display: flex;
+	flex: 1 1 100%;
+	justify-content: center;
 }

@@ -17,8 +17,8 @@
 	</composite:interface>
 
 	<composite:implementation>
-		<div id="#{cc.clientId}" class="card card-w-title">
-			<h1>#{cc.attrs.title}</h1>
+		<div id="#{cc.clientId}" class="card card-w-title jobOffers  #{cc.attrs.styleClass}">
+			<h3>#{cc.attrs.title}</h3>
 
 			<p:dataTable var="jobOffer" value="#{cc.attrs.jobOffers}" emptyMessage="#{i18n['job.no_jobs_found']}" reflow="true" paginator="true"
 				paginatorPosition="bottom" paginatorTemplate="{PageLinks}" rows="#{sessionUser.rowsPerPage}" sortBy="#{jobOffer.name}"
@@ -48,11 +48,9 @@
 				</p:column>
 			</p:dataTable>
 
-			<f:facet name="footer">
-				<h:panelGroup id="children" styleClass="panel-buttons">
-					<composite:insertChildren />
-				</h:panelGroup>
-			</f:facet>
+			<h:panelGroup id="children" styleClass="panel-buttons">
+				<composite:insertChildren />
+			</h:panelGroup>
 		</div>
 	</composite:implementation>
 </ui:component>

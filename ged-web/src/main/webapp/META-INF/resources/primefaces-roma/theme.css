@@ -2783,6 +2783,10 @@ body .ui-datalist .ui-datalist-footer {
   color: #252529;
   padding: 0.857em 1em;
   font-weight: 500; }
+body .ui-datalist.ui-datalist-borderless .ui-datalist-header,
+body .ui-datalist.ui-datalist-borderless .ui-datalist-footer {
+	border: none;
+}
 body .ui-datalist .ui-datalist-header {
   border-bottom: 0 none; }
 body .ui-datalist .ui-datalist-footer {
@@ -2793,12 +2797,24 @@ body .ui-datalist .ui-datalist-content {
   color: #252529;
   padding: 0.571em 1em;
   line-height: 1.5; }
+body .ui-datalist.ui-datalist-borderless .ui-datalist-content {
+	border: none;
+}
 body .ui-datalist .ui-paginator {
   padding: 0.25em 0; }
   body .ui-datalist .ui-paginator.ui-paginator-top {
     border-bottom: 0 none; }
   body .ui-datalist .ui-paginator.ui-paginator-bottom {
     border-top: 0 none; }
+body .ui-datalist.ui-datalist-borderless .ui-paginator-top {
+  border: 0 none;
+   }
+body .ui-datalist.ui-datalist-borderless .ui-paginator-bottom {
+  border: 0 none; }
+body .ui-datalist.ui-datalist-borderless .ui-datatable-header {
+  border: 0 none;}
+body .ui-datalist.ui-datalist-borderless .ui-datatable-footer {
+  border: 0 none;}
 body .ui-datascroller .ui-datascroller-header,
 body .ui-datascroller .ui-datascroller-footer {
   background-color: #ffffff;
