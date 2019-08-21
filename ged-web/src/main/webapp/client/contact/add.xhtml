@@ -12,7 +12,7 @@
 	template="/WEB-INF/templates/template.xhtml">
 
 	<ui:define name="title">
-		<title>#{clientEditView.newClient ? i18n['client.new_client'] : clientEditView.client.name}</title>
+		#{clientEditView.newClient}
 	</ui:define>
 
 	<ui:define name="breadcrumb">
