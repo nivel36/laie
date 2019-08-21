@@ -58,6 +58,11 @@ h6 {
 	image-orientation: from-image;
 }
 
+.avatar.small {
+	width: 36px;
+	height: 36px;
+}
+
 .candidates .ui-datalist .ui-datalist-content {
 	padding: 0;
 	margin: 0;

@@ -16,7 +16,7 @@
 	</composite:interface>
 
 	<composite:implementation>
-		<p:graphicImage class="avatar" value="/images/#{cc.attrs.value}" rendered="#{not empty cc.attrs.value}" />
-		<p:graphicImage class="avatar" value="/resources/img/default-avatar.png" rendered="#{empty cc.attrs.value}" />
+		<p:graphicImage class="avatar #{cc.attrs.styleClass}" value="/images/#{cc.attrs.value}" rendered="#{not empty cc.attrs.value}" />
+		<p:graphicImage class="avatar #{cc.attrs.styleClass}" value="/resources/img/default-avatar.png" rendered="#{empty cc.attrs.value}" />
 	</composite:implementation>
 </ui:component>

@@ -31,12 +31,15 @@
 	<ui:define name="content">
 		<h:form id="searchUsers">
 			<div class="card">
+				<div class="searchBar">
+					<cc:inputSearch searchText="#{searchUserView.searchText}" searchAction="#{searchUserView.search}" update="@form" />
+				</div>
 				<p:dataTable var="user" id="users" value="#{searchUserView.users}" emptyMessage="#{i18n['user.no_users_found']}" reflow="true"
 					paginator="true" paginatorPosition="bottom" paginatorTemplate="{PageLinks}" rows="#{sessionUser.rowsPerPage}" sortBy="#{user.name}"
 					sortOrder="descending" lazy="true">
 
 					<p:column>
-						<cc:avatar value="#{user.imageFileName}"  />
+						<cc:avatar value="#{user.imageFileName}" styleClass="small"/>
 					</p:column>
 
 					<p:column headerText="#{i18n['user.name']}" sortBy="#{user.name}">
