@@ -1,15 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
-	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" 
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" 
-	xmlns:f="http://java.sun.com/jsf/core" 
-	xmlns:g="http://ged.org/ui" 
-	xmlns:h="http://java.sun.com/jsf/html" 
-	xmlns:o="http://omnifaces.org/ui"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	template="/WEB-INF/templates/template.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://ged.org/ui" xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets" template="/WEB-INF/templates/template.xhtml">
 
 	<ui:define name="title">
 		#{i18n['user.new_user']}
@@ -26,60 +18,58 @@
 	</ui:define>
 
 	<ui:define name="content">
-		<div class="grid">
-			<div class="col-12 xl-9">
+		<div class="p-grid">
+			<div class="p-col-12 p-xl-8">
 				<h:form id="userForm" enctype="multipart/form-data">
-					<p:panel>
-						<div class="panel-aside">
-							<div class="candidate-metadata">
-								<cc:inputAvatar id="userImage" value="#{addUserView.user.imageFileName}" fileUploadListener="#{addUserView.uploadImage}" />
-							</div>
-						</div>
-						<div class="panel-content-data grid">
-							<div class="col-12 sm-6">
+					<div class="card-aside">
+						<cc:inputAvatar id="userImage" value="#{addUserView.user.imageFileName}" fileUploadListener="#{addUserView.uploadImage}" />
+					</div>
+					<div class="card">
+						<div class="p-grid">
+							<div class="p-col-12 p-xl-6">
+
 								<h4>#{i18n['user.personal_information']}</h4>
-								
-								<div class="form-field">
+
+								<div class="form-field  ui-fluid">
 									<g:input id="name" label="#{i18n['user.name']}" value="#{addUserView.user.name}" required="true" />
-	
+
 									<g:input id="surname" label="#{i18n['user.surname']}" value="#{addUserView.user.surname}" required="true" />
-	
-									<g:input id="email" label="#{i18n['user.email']}" value="#{addUserView.user.email}" required="true"
-										validator="#{addUserView.validateEmail}" />
-	
+
+									<g:input id="email" label="#{i18n['user.email']}" value="#{addUserView.user.email}" required="true" validator="#{addUserView.validateEmail}" />
+
 									<g:input id="phone_number" label="#{i18n['user.phone_number']}" value="#{addUserView.user.phoneNumber}" />
 								</div>
 							</div>
 
-							<div class="col-12 sm-6">
+							<div class="p-col-12 p-xl-6">
 
 								<h4>#{i18n['user.professional_information']}</h4>
 
-								<div class="form-field">
+								<div class="form-field  ui-fluid">
 									<cc:inputSelect id="role" value="#{addUserView.user.role}" label="#{i18n['user.role']}" required="true">
 										<f:selectItems value="#{roles.list}" var="role" itemValue="#{role}" itemLabel="#{g:translate(role)}" />
-										<p:ajax event="change" update=":userForm:role :userForm:manager" process=":userForm:role"
-											listener="#{addUserView.changeRoleListener}" />
+										<p:ajax event="change" update=":userForm:role :userForm:manager" process=":userForm:role" listener="#{addUserView.changeRoleListener}" />
 									</cc:inputSelect>
-	
-									<cc:autocomplete id="manager" label="#{i18n['user.manager']}" value="#{addUserView.user.manager}"
-										completeMethod="#{addUserView.queryManager}" disabled="#{addUserView.user.isAdmin()}" converter="userConverter">
+
+									<cc:autocomplete id="manager" label="#{i18n['user.manager']}" value="#{addUserView.user.manager}" completeMethod="#{addUserView.queryManager}"
+										disabled="#{addUserView.user.isAdmin()}" converter="userConverter">
 										<p:column styleClass="user-select image">
 											<cc:person value="#{var}" showDescription="false" />
 										</p:column>
 									</cc:autocomplete>
-	
+
 									<g:input id="date_of_join" label="#{i18n['user.date_of_join']}" value="#{addUserView.user.dateOfJoin}" type="calendar" />
 								</div>
 							</div>
 						</div>
-						<f:facet name="footer">
-							<div class="panel-buttons">
-								<p:button styleClass="btn-gray" value="#{i18n['action.cancel']}" outcome="#{Page.USER_SEARCH.getUrl()}" />
-								<p:commandButton value="#{i18n['action.save']}" action="#{addUserView.save}" process="@form" update="@form growl" />
+
+						<div class="p-col-12">
+							<div class="buttons">
+								<p:button value="#{i18n['action.cancel']}" outcome="#{Page.USER_SEARCH.getUrl()}" styleClass="secondary-button" />
+								<p:commandButton value="#{i18n['action.save']}" action="#{addUserView.save}" process="@form" update="@form growl" styleClass="success-btn" />
 							</div>
-						</f:facet>
-					</p:panel>
+						</div>
+					</div>
 				</h:form>
 			</div>
 		</div>

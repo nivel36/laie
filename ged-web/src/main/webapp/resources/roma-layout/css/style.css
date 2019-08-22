@@ -52,6 +52,10 @@ h6 {
     font-weight: bold;
 }
 
+body .ui-datatable table {
+	table-layout: auto;
+}
+
 .avatar {
 	border-radius: 50%;
 	object-fit: cover;
@@ -63,9 +67,44 @@ h6 {
 	height: 36px;
 }
 
+.buttons {
+	display: flex;
+	justify-content: flex-end;
+}
+
+.buttons .ui-widget {
+	margin-left: 1em;
+}
+
+.buttons .ui-widget:first-child {
+	margin-left: 0;
+}
+
+.card-aside {
+	float:left;
+	padding: 1em;
+}
+
 .candidates .ui-datalist .ui-datalist-content {
 	padding: 0;
 	margin: 0;
+}
+
+.input-avatar img{
+	width: 128px;
+	height: 128px;
+}
+
+.input-avatar label {
+	cursor: pointer;
+}
+
+.input-avatar .ui-fileupload {
+	display: none;
+}
+
+.input-group .label-container {
+	 margin: 1em 0;
 }
 
 .person {

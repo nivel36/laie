@@ -17,10 +17,6 @@
 
 	<ui:param name="selectedMenu" value="users" />
 
-	<ui:define name="actions">
-		<p:button value="#{i18n['user.new_user']}" outcome="#{Page.USER_ADD.getUrl()}" />
-	</ui:define>
-
 	<ui:define name="breadcrumb">
 		<p:breadCrumb>
 			<p:menuitem value="#{i18n['menu.index']}" outcome="#{Page.INDEX.getUrl()}" />
@@ -30,14 +26,14 @@
 	</ui:define>
 
 	<ui:define name="content">
-		<div class="grid">
-			<div class="col-12 xl-5">
-				<div class="panel user">
-					<div class="panel-header">
-						<div class="panel-header-image">
+		<div class="p-grid">
+			<div class="p-col-12 p-xl-5">
+				<div class="card user-card">
+					<div class="user-card-header">
+					</div>
+					<div class="user-card-content">
 							<cc:avatar value="#{viewUserView.user.imageFileName}" />
-						</div>
-						<div class="panel-header-data">
+
 							<div class="name">#{viewUserView.user.fullName}</div>
 							<div class="job-profile">#{g:translate(viewUserView.user.role)}</div>
 							<div class="data email">
@@ -55,6 +51,7 @@
 							</div>
 						</h:form>
 					</div>
+					
 					<div class="panel-content panel-content-data">
 						<div class="grid">
 							<div class="col-12 md-6">
@@ -89,18 +86,19 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-12 lg-7">
+			
+			<div class="p-col-12 p-lg-7">
 				<h:form id="jobOffersForm">
 					<cc:jobOffers jobOffers="#{viewUserView.jobOffers}" />
 				</h:form>
 			</div>
-			<div class="col-12 xl-6">
+			<div class="p-col-12 p-xl-4">
 				<h:form id="userTeamForm">
 					<cc:users users="#{viewUserView.team}" title="#{i18n['user.team']}" />
 				</h:form>
 			</div>
 
-			<div class="col-12 xl-6">
+			<div class="p-col-12 p-xl-8">
 				<h:form id="jobMeetingsForm">
 					<cc:meetings value="#{viewUserView.meetings}" />
 				</h:form>
