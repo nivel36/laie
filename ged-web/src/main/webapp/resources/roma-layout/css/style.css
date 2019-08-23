@@ -1,55 +1,60 @@
-h1 { 
-    display: block;
-    font-size: 2em;
-    margin-top: 0.67em;
-    margin-bottom: 0.67em;
-    margin-left: 0;
-    margin-right: 0;
-    font-weight: bold;
+h1 {
+	display: block;
+	font-size: 2em;
+	margin-top: 0.67em;
+	margin-bottom: 0.67em;
+	margin-left: 0;
+	margin-right: 0;
+	font-weight: bold;
 }
+
 h2 {
-    display: block;
-    font-size: 1.5em;
-    margin-top: 0.83em;
-    margin-bottom: 0.83em;
-    margin-left: 0;
-    margin-right: 0;
-    font-weight: bold;
+	display: block;
+	font-size: 1.5em;
+	margin-top: 0.83em;
+	margin-bottom: 0.83em;
+	margin-left: 0;
+	margin-right: 0;
+	font-weight: bold;
 }
-h3 { 
-    display: block;
-    font-size: 1.17em;
-    margin-top: 1em;
-    margin-bottom: 1em;
-    margin-left: 0;
-    margin-right: 0;
-    font-weight: bold;
+
+h3 {
+	display: block;
+	font-size: 1.17em;
+	margin-top: 1em;
+	margin-bottom: 1em;
+	margin-left: 0;
+	margin-right: 0;
+	font-weight: bold;
 }
-h4 { 
-    display: block;
-    margin-top: 1.33em;
-    margin-bottom: 1.33em;
-    margin-left: 0;
-    margin-right: 0;
-    font-weight: bold;
+
+h4 {
+	display: block;
+	margin-top: 1.33em;
+	margin-bottom: 1.33em;
+	margin-left: 0;
+	margin-right: 0;
+	font-weight: bold;
 }
-h5 { 
-    display: block;
-    font-size: .83em;
-    margin-top: 1.67em;
-    margin-bottom: 1.67em;
-    margin-left: 0;
-    margin-right: 0;
-    font-weight: bold;
+
+h5 {
+	display: block;
+	font-size: .83em;
+	margin-top: 1.67em;
+	margin-bottom: 1.67em;
+	margin-left: 0;
+	margin-right: 0;
+	font-weight: bold;
 }
-h6 { 
-    display: block;
-    font-size: .67em;
-    margin-top: 2.33em;
-    margin-bottom: 2.33em;
-    margin-left: 0;
-    margin-right: 0;
-    font-weight: bold;
+
+h6 {
+	display: block;
+	font-size: .67em;
+	margin-top: 2.33em;
+	margin-bottom: 2.33em;
+	margin-left: 0;
+	margin-right: 0;
+	font-weight: bold;
 }
 
 body .ui-datatable table {
@@ -60,6 +65,12 @@ body .ui-datatable table {
 	border-radius: 50%;
 	object-fit: cover;
 	image-orientation: from-image;
+	width: 64px;
+	height: 64px;
+}
+
+.avatar.with-border {
+	border: 2px solid white;
 }
 
 .avatar.small {
@@ -81,16 +92,16 @@ body .ui-datatable table {
 }
 
 .card-aside {
-	float:left;
+	float: left;
 	padding: 1em;
 }
 
-.candidates .ui-datalist .ui-datalist-content {
+.candidates .ui-datalist .ui-datalist-content, .users .ui-datalist .ui-datalist-content{
 	padding: 0;
 	margin: 0;
 }
 
-.input-avatar img{
+.input-avatar img {
 	width: 128px;
 	height: 128px;
 }
@@ -104,10 +115,11 @@ body .ui-datatable table {
 }
 
 .input-group .label-container {
-	 margin: 1em 0;
+	margin: 1em 0;
 }
 
 .person {
+	display: flex;
 	padding: .5em;
 }
 
@@ -143,4 +155,83 @@ body .ui-datatable table {
 	display: flex;
 	flex: 1 1 100%;
 	justify-content: center;
+}
+
+ .user-card {
+	padding: 0;
+}
+
+ .user-card .user-card-header {
+	height: 120px;
+	overflow: hidden;
+}
+
+ .user-card .user-card-header img {
+	width: 100%;
+	height: 100%;
+}
+
+ .user-card .user-card-content .user-image {
+	width: 80px;
+	height: 80px;
+	margin: -40px 0 0 24px;
+}
+
+ .user-card .user-card-content .ui-menubutton {
+ 	width: 36px;
+	height: 36px;
+	-moz-border-radius: 50%;
+	-webkit-border-radius: 50%;
+	border-radius: 50%;
+	float: right;
+	margin: -30px 12px 0 0;
+	z-index: 1;
+}
+
+ .user-card .user-card-content .ui-button {
+	width: 36px;
+	height: 36px;
+	-moz-border-radius: 50%;
+	-webkit-border-radius: 50%;
+	border-radius: 50%;
+	float: right;
+	margin: -30px 12px 0 0;
+	z-index: 1;
+}
+
+ .user-card .user-card-content .user-card-name {
+	font-size: 13px;
+	color: #ffffff;
+	position: relative;
+	top: -60px;
+	margin-left: 120px;
+	font-weight: 700;
+	white-space: nowrap;
+}
+
+ .user-card .user-card-content .user-card-role {
+	font-size: 13px;
+	position: relative;
+	top: -50px;
+	margin-left: 120px;
+	font-weight: 700;
+	white-space: nowrap;
+}
+
+
+ .user-card .user-card-content .user-detail {
+	padding: .5em 1em;
+}
+
+ .user-card .user-card-content .user-detail .data {
+	padding: .5em;
+	position: relative;
+}
+
+ .user-card .user-card-content .user-detail .data .label-container {
+	margin-bottom: .5em;
+}
+
+ .user-card .user-card-content .user-detail .data .text {
+	color: #65656a;
 }

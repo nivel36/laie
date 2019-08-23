@@ -1,69 +1,32 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
-	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" 
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" 
-	xmlns:f="http://java.sun.com/jsf/core" 
-	xmlns:g="http://ged.org/ui" 
-	xmlns:h="http://java.sun.com/jsf/html" 
-	xmlns:o="http://omnifaces.org/ui"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:po="http://primefaces.org/roma"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://ged.org/ui" xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+	xmlns:po="http://primefaces.org/roma" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets">
 
-    <div class="layout-topbar">
-        <a class="layout-right-panel-button layout-topbar-icon" href="#">
-            <i class="fa fa-ellipsis-v" />
-        </a>
+	<div class="layout-topbar">
+		<a class="layout-right-panel-button layout-topbar-icon" href="#"> <i class="fa fa-ellipsis-v" />
+		</a> <a class="layout-menu-button layout-topbar-icon" href="#"> <i class="fa fa-bars" />
+		</a> <span class="layout-topbar-search"> <i class="fa fa-search"></i> <input type="text" />
+		</span>
 
-        <a class="layout-menu-button layout-topbar-icon" href="#">
-            <i class="fa fa-bars" />
-        </a>
+		<ul class="topbar-menu fadeInDown">
 
-        <span class="layout-topbar-search">
-            <i class="fa fa-search"></i>
-            <input type="text"/>
-        </span>
+			<li class="user-profile"><a href="#"> <cc:avatar value="#{sessionUser.get().imageFileName}" styleClass="small" />
 
-        <ul class="topbar-menu fadeInDown">
-            <ui:fragment rendered="#{guestPreferences.profileMode == 'popup' ? true : false}">
-                <li class="user-profile">
-                    <a href="#">
-                    	<cc:avatar value="#{sessionUser.get().imageFileName}" />
-                    	
-                        <div class="layout-profile-userinfo">
-                            <span class="layout-profile-name">#{sessionUser.get().fullName}</span>
-                            <span class="layout-profile-role">#{g:translate(sessionUser.get().role)}</span>
-                        </div>
-                    </a>
-                    <ul>
-                        <li>
-                            <a href="#">
-                                <i class="fa fa-fw fa-user"></i>
-                                <span>Profile</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="fa fa-fw fa-cog"></i>
-                                <span>Settings</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="fa fa-fw fa-envelope-o"></i>
-                                <span>Messages</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="fa fa-fw fa-bell-o"></i>
-                                <span>Notifications</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-            </ui:fragment>
-        </ul>
-    </div>
+					<div class="layout-profile-userinfo">
+						<span class="layout-profile-name">#{sessionUser.get().fullName}</span> <span class="layout-profile-role">#{g:translate(sessionUser.get().role)}</span>
+					</div>
+			</a>
+				<ul>
+					<li><p:link outcome="#{Page.CONFIG.getUrl()}">
+							<i class="fa fa-fw fa-cog"></i>
+							<span>#{i18n['menu.config']}</span>
+						</p:link></li>
+					<li><p:commandLink action="#{sessionUser.exit}">
+							<i class="fa fa-fw fa-power-off"></i>
+							<span>#{i18n['user.logout']}</span>
+						</p:commandLink></li>
+				</ul></li>
+		</ul>
+	</div>
 
 </ui:composition>
