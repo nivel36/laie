@@ -1,15 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
-	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" 
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" 
-	xmlns:f="http://java.sun.com/jsf/core" 
-	xmlns:g="http://ged.org/ui" 
-	xmlns:h="http://java.sun.com/jsf/html" 
-	xmlns:o="http://omnifaces.org/ui"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	template="/WEB-INF/templates/template.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://ged.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets" template="/WEB-INF/templates/template.xhtml">
 
 	<ui:define name="title">
 		#{i18n['job_candidature.job_candidature_states']}
@@ -26,12 +19,14 @@
 	</ui:define>
 
 	<ui:define name="content">
-		<div class="panel">
-			<div class="panel-content">
-				<div class="panel-content-data">
-					<div class="tag-list">
+		<div class="p-grid">
+			<div class="p-col-12 p-xl-4">
+				<div class="card">
+					<div class="p-grid">
 						<ui:repeat var="jobCandidatureState" value="#{jobCandidatureStatesMaintenanceView.states}">
-							<div class="tag #{jobCandidatureState.color}">#{g:translate(jobCandidatureState.name)}</div>
+							<div class="p-col-12">
+								<div class="tag #{jobCandidatureState.color}">#{g:translate(jobCandidatureState.name)}</div>
+							</div>
 						</ui:repeat>
 					</div>
 				</div>

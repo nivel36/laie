@@ -61,6 +61,68 @@ body .ui-datatable table {
 	table-layout: auto;
 }
 
+.attendee {
+	display: flex;
+	flex: 1 1 100%;
+	justify-content: space-between;
+	align-items: center;
+	padding: 0.5em;
+}
+
+.attendee .remove-attendee {
+	display: none !important;
+}
+
+.attendee:hover {
+	background: #f2f3f3;
+}
+
+.attendee:hover .remove-attendee {
+	display: inline-flex !important;
+}
+
+.tag {
+	padding: 0.4em;
+	border-radius: 3px;
+	text-align: center;
+	max-width: 120px;
+}
+
+.tag.green {
+	background: green;
+	color: white;
+}
+
+.tag.blue {
+	background: blue;
+	color: white;
+}
+
+.tag.brown {
+	background: brown;
+	color: white;
+}
+
+.tag.red {
+	background: red;
+	color: white;
+}
+
+.tag.blueviolet {
+	background: blueviolet;
+	color: white;
+}
+
+.tag.cornflowerblue {
+	background: cornflowerblue;
+	color: white;
+}
+
+.tag.gray {
+	background: gray;
+	color: white;
+}
+
 .avatar {
 	border-radius: 50%;
 	object-fit: cover;
@@ -91,12 +153,17 @@ body .ui-datatable table {
 	margin-left: 0;
 }
 
-.card-aside {
-	float: left;
-	padding: 1em;
+.card.files .ui-fileupload .ui-fileupload-content{ 
+	display:none;
 }
 
-.candidates .ui-datalist .ui-datalist-content, .users .ui-datalist .ui-datalist-content{
+.card.files .ui-fileupload .ui-fileupload-buttonbar{ 
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+.candidates .ui-datalist .ui-datalist-content, .users .ui-datalist .ui-datalist-content {
 	padding: 0;
 	margin: 0;
 }
@@ -157,38 +224,27 @@ body .ui-datatable table {
 	justify-content: center;
 }
 
- .user-card {
+.user-card {
 	padding: 0;
 }
 
- .user-card .user-card-header {
+.user-card .user-card-header {
 	height: 120px;
 	overflow: hidden;
 }
 
- .user-card .user-card-header img {
+.user-card .user-card-header img {
 	width: 100%;
 	height: 100%;
 }
 
- .user-card .user-card-content .user-image {
+.user-card .user-card-content .user-image {
 	width: 80px;
 	height: 80px;
 	margin: -40px 0 0 24px;
 }
 
- .user-card .user-card-content .ui-menubutton {
- 	width: 36px;
-	height: 36px;
-	-moz-border-radius: 50%;
-	-webkit-border-radius: 50%;
-	border-radius: 50%;
-	float: right;
-	margin: -30px 12px 0 0;
-	z-index: 1;
-}
-
- .user-card .user-card-content .ui-button {
+.user-card .user-card-content .ui-menubutton {
 	width: 36px;
 	height: 36px;
 	-moz-border-radius: 50%;
@@ -199,7 +255,18 @@ body .ui-datatable table {
 	z-index: 1;
 }
 
- .user-card .user-card-content .user-card-name {
+.user-card .user-card-content .ui-button {
+	width: 36px;
+	height: 36px;
+	-moz-border-radius: 50%;
+	-webkit-border-radius: 50%;
+	border-radius: 50%;
+	float: right;
+	margin: -30px 12px 0 0;
+	z-index: 1;
+}
+
+.user-card .user-card-content .user-card-name {
 	font-size: 13px;
 	color: #ffffff;
 	position: relative;
@@ -209,7 +276,7 @@ body .ui-datatable table {
 	white-space: nowrap;
 }
 
- .user-card .user-card-content .user-card-role {
+.user-card .user-card-content .user-card-role {
 	font-size: 13px;
 	position: relative;
 	top: -50px;
@@ -218,20 +285,19 @@ body .ui-datatable table {
 	white-space: nowrap;
 }
 
-
- .user-card .user-card-content .user-detail {
+.user-card .user-card-content .user-detail {
 	padding: .5em 1em;
 }
 
- .user-card .user-card-content .user-detail .data {
+.user-card .user-card-content .user-detail .data {
 	padding: .5em;
 	position: relative;
 }
 
- .user-card .user-card-content .user-detail .data .label-container {
+.user-card .user-card-content .user-detail .data .label-container {
 	margin-bottom: .5em;
 }
 
- .user-card .user-card-content .user-detail .data .text {
+.user-card .user-card-content .user-detail .data .text {
 	color: #65656a;
 }

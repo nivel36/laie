@@ -1,15 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
-	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" 
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" 
-	xmlns:f="http://java.sun.com/jsf/core" 
-	xmlns:g="http://ged.org/ui" 
-	xmlns:h="http://java.sun.com/jsf/html" 
-	xmlns:o="http://omnifaces.org/ui"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	template="/WEB-INF/templates/template.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://ged.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets" template="/WEB-INF/templates/template.xhtml">
 
 	<ui:define name="title">
 		#{i18n['job.edit_job']} - #{editJobView.jobOffer.name}
@@ -29,14 +22,14 @@
 	</ui:define>
 
 	<ui:define name="content">
-		<div class="grid">
-			<div class="col-12 xl-9">
+		<div class="p-grid">
+			<div class="p-col-12 p-xl-9">
 				<h:form id="jobOfferForm">
-					<p:panel>
-						<div class="panel-content-data grid">
-							<div class="col-12 sm-6">
+					<div class="card">
+						<div class="p-grid">
+							<div class="p-col-12 p-xl-6">
 								<h3>#{i18n['user.personal_information']}</h3>
-								<div class="form-field">
+								<div class="form-field ui-fluid">
 									<g:input label="#{i18n['job.name']}" value="#{editJobView.jobOffer.name}" required="true" />
 
 									<cc:autocomplete id="client" label="#{i18n['job.client']}" value="#{editJobView.jobOffer.client}"
@@ -54,11 +47,11 @@
 								</div>
 							</div>
 
-							<div class="col-12 sm-6">
+							<div class="p-col-12 p-xl-6">
 								<h3>#{i18n['user.personal_information']}</h3>
-								
-								<div class="form-field">
-								
+
+								<div class="form-field ui-fluid">
+
 									<g:input id="city" label="#{i18n['job.city']}" value="#{editJobView.jobOffer.address.city}" required="true" />
 
 									<g:input id="state" label="#{i18n['job.state']}" value="#{editJobView.jobOffer.address.state}" required="true" />
@@ -74,23 +67,25 @@
 										value="#{editJobView.recruiters}" />
 								</div>
 							</div>
-							<div class="col-12">
+							<div class="p-col-12">
 								<h3>#{i18n['user.personal_information']}</h3>
-								<div class="form-field">
+								<div class="form-field ui-fluid">
 									<g:input id="description" name="description" label="#{i18n['job.description']}" value="#{editJobView.jobOffer.description}"
 										type="textarea" />
 								</div>
 							</div>
-						</div>
-						<f:facet name="footer">
-							<div class="panel-buttons">
-								<p:button styleClass="btn-gray" value="#{i18n['action.cancel']}" outcome="#{Page.JOB.getUrl()}">
-									<f:param name="id" value="#{editJobView.jobOffer.id}" />
-								</p:button>
-								<p:commandButton value="#{i18n['action.save']}" action="#{editJobView.save}" process="@form" update="@form growl" />
+							<div class="p-col-12 p-xl-6">
+
+								<div class="buttons">
+									<p:button value="#{i18n['action.cancel']}" outcome="#{Page.JOB.getUrl()}" styleClass="secondary-button">
+										<f:param name="id" value="#{editJobView.jobOffer.id}" />
+									</p:button>
+									<p:commandButton value="#{i18n['action.save']}" action="#{editJobView.save}" process="@form" update="@form growl"
+										styleClass="succes-btn" />
+								</div>
 							</div>
-						</f:facet>
-					</p:panel>
+						</div>
+					</div>
 				</h:form>
 			</div>
 		</div>

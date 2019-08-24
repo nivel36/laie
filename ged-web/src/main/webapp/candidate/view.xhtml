@@ -129,42 +129,47 @@
 			</div>
 
 			<div class="p-col-12 p-xl-7">
-				<cc:jobCandidatures jobCandidatures="#{viewCandidateView.jobCandidatures}" showCandidate="false" title="#{i18n['candidate.job_candidatures']}"/>
+				<cc:jobCandidatures jobCandidatures="#{viewCandidateView.jobCandidatures}" showCandidate="false"
+					title="#{i18n['candidate.job_candidatures']}" />
 			</div>
 
 			<div class="p-col-12 p-xl-6">
 				<h:form id="file_form" enctype="multipart/form-data">
-				
-					<p:panel header="#{i18n['file.files']}">
-						<p:dataTable var="file" id="files" value="#{filePanelView.files}" emptyMessage="#{i18n['file.no_files']}" reflow="true"
-							rows="#{sessionUser.rowsPerPage}" rowKey="#{file.id}">
+					<div class="card card-w-title files">
+						<h3>#{i18n['file.files']}</h3>
+						<div class="p-grid">
+							<div class="p-col-12">
+								<p:dataTable var="file" id="files" value="#{filePanelView.files}" emptyMessage="#{i18n['file.no_files']}" paginator="true"
+									paginatorPosition="bottom" reflow="true" rows="#{sessionUser.rowsPerPage}" rowKey="#{file.id}" styleClass="ui-datatable-borderless">
 
-							<p:column headerText="#{i18n['file.name']}">
-								<h:commandLink action="#{filePanelView.openFile(file)}">
-									<h:outputText value="#{file.name}" />
-								</h:commandLink>
-							</p:column>
+									<p:column headerText="#{i18n['file.name']}">
+										<h:commandLink action="#{filePanelView.openFile(file)}">
+											<h:outputText value="#{file.name}" />
+										</h:commandLink>
+									</p:column>
 
-							<p:column>
-								<p:commandButton icon="fa fa-trash" styleClass="btn-gray" action="#{filePanelView.removeFile(file)}" process="@this"
-									update="@form growl " />
-							</p:column>
-						</p:dataTable>
-
-						<div class="panel-footer">
-							<div class="panel-buttons">
-								<p:fileUpload id="uploadFile" fileUploadListener="#{filePanelView.uploadFile}" mode="advanced" dragDropSupport="false"
-									update="@form growl" auto="true" label="#{i18n['action.add']}" disabled="#{filePanelView.files.size() gt 6}" />
+									<p:column>
+										<p:commandButton icon="fa fa-trash" styleClass="danger-btn" action="#{filePanelView.removeFile(file)}" process="@this"
+											update="@form growl " />
+									</p:column>
+								</p:dataTable>
+							</div>
+							<div class="p-col-12">
+								<div class="buttons">
+									<p:fileUpload id="uploadFile" fileUploadListener="#{filePanelView.uploadFile}" mode="advanced" dragDropSupport="false"
+										update="@form growl" auto="true" label="#{i18n['action.add']}" />
+								</div>
 							</div>
 						</div>
-					</p:panel>
+					</div>
+
 				</h:form>
 			</div>
 
 			<div class="p-col-12 p-xl-6">
 				<cc:meetings value="#{viewCandidateView.meetings}">
 					<h:form>
-						<p:commandButton value="#{i18n['meeting.add_meeting']}" action="#{viewCandidateView.newMeeting}" />
+						<p:commandButton value="#{i18n['meeting.add_meeting']}" action="#{viewCandidateView.newMeeting}" styleClass="success-btn"/>
 					</h:form>
 				</cc:meetings>
 			</div>
