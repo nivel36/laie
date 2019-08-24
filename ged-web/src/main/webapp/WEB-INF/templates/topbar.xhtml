@@ -1,5 +1,6 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://ged.org/ui" xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://ged.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
 	xmlns:po="http://primefaces.org/roma" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets">
 
 	<div class="layout-topbar">
@@ -9,7 +10,6 @@
 		</span>
 
 		<ul class="topbar-menu fadeInDown">
-
 			<li class="user-profile"><a href="#"> <cc:avatar value="#{sessionUser.get().imageFileName}" styleClass="small" />
 
 					<div class="layout-profile-userinfo">
@@ -21,10 +21,13 @@
 							<i class="fa fa-fw fa-cog"></i>
 							<span>#{i18n['menu.config']}</span>
 						</p:link></li>
-					<li><p:commandLink action="#{sessionUser.exit}">
-							<i class="fa fa-fw fa-power-off"></i>
-							<span>#{i18n['user.logout']}</span>
-						</p:commandLink></li>
+
+					<li><h:form>
+							<p:commandLink action="#{sessionUser.exit}">
+								<i class="fa fa-fw fa-power-off"></i>
+								<span>#{i18n['user.logout']}</span>
+							</p:commandLink>
+						</h:form></li>
 				</ul></li>
 		</ul>
 	</div>

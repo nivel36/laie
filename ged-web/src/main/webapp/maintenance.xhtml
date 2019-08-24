@@ -1,15 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
-	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" 
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" 
-	xmlns:f="http://java.sun.com/jsf/core" 
-	xmlns:g="http://ged.org/ui" 
-	xmlns:h="http://java.sun.com/jsf/html" 
-	xmlns:o="http://omnifaces.org/ui"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	template="/WEB-INF/templates/template.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://ged.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets" template="/WEB-INF/templates/template.xhtml">
 
 	<ui:define name="title">
 		#{i18n['maintenance.maintenances']}
@@ -25,37 +18,34 @@
 	</ui:define>
 
 	<ui:define name="content">
-		<p:panel>
-			<div class="panel-content-data grid">
-				<div class="col-12 md-6">
-					<h2>#{i18n['maintenance.job_candidatures']}</h2>
+		<div class="p-grid">
+			<div class="p-col-12 p-xl-6">
+				<div class="card card-w-title">
+					<h3>#{i18n['maintenance.job_candidatures']}</h3>
 					<ul>
 						<li><h:link outcome="#{Page.MAINTENANCE_JOB_CANDIDATURE_STATES.getUrl()}"
 								value="#{i18n['job_candidature.job_candidature_states']}" styleClass="link" /></li>
-						<li><h:link outcome="#{Page.MAINTENANCE_JOB_OFFER_STATES.getUrl()}" value="#{i18n['job.job_offer_states']}"
-								styleClass="link" /></li>
+						<li><h:link outcome="#{Page.MAINTENANCE_JOB_OFFER_STATES.getUrl()}" value="#{i18n['job.job_offer_states']}" styleClass="link" /></li>
 					</ul>
 				</div>
-				<div class="col-12 md-6">
-					<h2>#{i18n['maintenance.reports']}</h2>
+			</div>
+			<div class="p-col-12 p-xl-6">
+				<div class="card card-w-title">
+					<h3>#{i18n['maintenance.reports']}</h3>
 					<ul>
 						<ui:repeat var="item" value="#{isabelView.reportsList}" varStatus="status">
 							<li>#{item.id} - #{item.name}</li>
 						</ui:repeat>
 					</ul>
 					<h:form>
-						<div class="panel-content-data">
-							<p:pickList value="#{isabelView.model}" var="item" converter="exportViewConverter" itemLabel="#{item.label}" itemValue="#{item}"
-								showTargetControls="true" update="@form growl" />
-						</div>
-						<div class="panel-footer">
-							<div class="panel-buttons">
-								<p:commandButton value="Guardar" action="#{isabelView.save}" process="@form" update="@form growl" />
-							</div>
+						<p:pickList value="#{isabelView.model}" var="item" converter="exportViewConverter" itemLabel="#{item.label}" itemValue="#{item}"
+							showTargetControls="true" update="@form growl" />
+						<div class="buttons">
+							<p:commandButton value="Guardar" action="#{isabelView.save}" process="@form" update="@form growl" />
 						</div>
 					</h:form>
 				</div>
 			</div>
-		</p:panel>
+		</div>
 	</ui:define>
 </ui:composition>

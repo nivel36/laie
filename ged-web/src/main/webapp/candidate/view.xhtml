@@ -5,7 +5,7 @@
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets" template="/WEB-INF/templates/template.xhtml">
 
 	<ui:define name="title">
-		<title>#{i18n['candidate.candidate']} - #{viewCandidateView.candidate.fullName}</title>
+		#{i18n['candidate.candidate']} - #{viewCandidateView.candidate.fullName}
 	</ui:define>
 
 	<ui:param name="selectedMenu" value="candidates" />
@@ -24,8 +24,8 @@
 	</ui:define>
 
 	<ui:define name="content">
-		<div class="grid">
-			<div class="col-12 xl-5">
+		<div class="p-grid">
+			<div class="p-col-12 p-xl-5">
 				<p:panel styleClass="user">
 					<div class="panel-header">
 						<div class="panel-header-image">
@@ -76,7 +76,7 @@
 					</div>
 
 					<div class="panel-content-data grid">
-						<div class="col-12 md-6">
+						<div class="p-col-12 p-xl-6">
 							<h4>#{i18n['candidate.personal_information']}</h4>
 
 							<cc:outputText label="#{i18n['candidate.city']}"
@@ -86,7 +86,7 @@
 								<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" for="text" />
 							</cc:outputText>
 						</div>
-						<div class="col-12 md-6">
+						<div class="p-col-12 p-xl-6">
 							<h4>#{i18n['candidate.job_details']}</h4>
 
 							<cc:outputText label="#{i18n['candidate.origin']}" value="#{g:translate(viewCandidateView.candidate.origin)}" />
@@ -100,10 +100,10 @@
 							</cc:outputText>
 
 						</div>
-						<div class="col-12">
+						<div class="p-col-12">
 							<h4>#{i18n['candidate.metadata']}</h4>
 						</div>
-						<div class="col-12 md-6">
+						<div class="p-col-12 p-xl-6">
 							<div class="data rating">
 								<div class="label-container">
 									<div class="label">#{i18n['candidate.rating']}</div>
@@ -113,7 +113,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-12 md-6">
+						<div class="p-col-12 p-xl-6">
 							<div class="data tags">
 								<div class="label-container">
 									<div class="label">#{i18n['candidate.tags']}</div>
@@ -128,12 +128,13 @@
 				</p:panel>
 			</div>
 
-			<div class="col-12 lg-7">
+			<div class="p-col-12 p-xl-7">
 				<cc:jobCandidatures jobCandidatures="#{viewCandidateView.jobCandidatures}" showCandidate="false" title="#{i18n['candidate.job_candidatures']}"/>
 			</div>
 
-			<div class="col-12 lg-6">
+			<div class="p-col-12 p-xl-6">
 				<h:form id="file_form" enctype="multipart/form-data">
+				
 					<p:panel header="#{i18n['file.files']}">
 						<p:dataTable var="file" id="files" value="#{filePanelView.files}" emptyMessage="#{i18n['file.no_files']}" reflow="true"
 							rows="#{sessionUser.rowsPerPage}" rowKey="#{file.id}">
@@ -160,7 +161,7 @@
 				</h:form>
 			</div>
 
-			<div class="col-12 lg-6">
+			<div class="p-col-12 p-xl-6">
 				<cc:meetings value="#{viewCandidateView.meetings}">
 					<h:form>
 						<p:commandButton value="#{i18n['meeting.add_meeting']}" action="#{viewCandidateView.newMeeting}" />

@@ -1,25 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
-	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" 
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" 
-	xmlns:f="http://java.sun.com/jsf/core" 
-	xmlns:g="http://ged.org/ui" 
-	xmlns:h="http://java.sun.com/jsf/html" 
-	xmlns:o="http://omnifaces.org/ui"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	template="/WEB-INF/templates/template.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://ged.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets" template="/WEB-INF/templates/template.xhtml">
 
 	<ui:define name="title">
 		#{i18n['client.clients']}
 	</ui:define>
 
 	<ui:param name="selectedMenu" value="clients" />
-
-	<ui:define name="actions">
-		<p:button value="#{i18n['client.new_client']}" outcome="#{Page.CLIENT_ADD.getUrl()}" />
-	</ui:define>
 
 	<ui:define name="breadcrumb">
 		<p:breadCrumb>
@@ -30,21 +19,25 @@
 
 	<ui:define name="content">
 		<h:form id="clientSearchForm">
-			<p:panel>
-				<div class="panel-content-data grid justify-between">
-					<div class="ui-g-12 ui-md-3">
-						<cc:inputSearch searchText="#{searchClientView.searchText}" searchAction="#{searchClientView.search}" update="@form" />
+			<div class="card">
+				<div class="p-grid">
+					<div class="p-col-12 p-xl-5">
+						<div class="searchBar ui-fluid">
+							<cc:inputSearch searchText="#{searchClientView.searchText}" searchAction="#{searchClientView.search}" update="@form" />
+						</div>
 					</div>
-					<div class="ui-g-12 ui-md-3">
+					<div class="p-col-12 p-xl-7">
 						<div class="buttons">
-							<p:commandButton value="#{i18n['action.export']}" action="#{searchClientView.export}" process="@this" icon="fa-file-excel-o" ajax="false" />
+							<p:commandButton value="#{i18n['action.export']}" action="#{searchClientView.export}" process="@this" icon="fa fa-file-excel-o" />
+							<p:button value="#{i18n['client.new_client']}" outcome="#{Page.CLIENT_ADD.getUrl()}" icon="fa fa-plus" styleClass="success-btn" />
 						</div>
 					</div>
 				</div>
-
-				<p:dataTable var="client" id="clients" value="#{searchClientView.clients}"
-					emptyMessage="#{i18n['client.no_clients_found']}" reflow="true" paginator="true" paginatorPosition="bottom"
-					rows="#{sessionUser.rowsPerPage}" sortBy="#{client.name}" sortOrder="descending" lazy="true">
+			</div>
+			<div class="card">
+				<p:dataTable var="client" id="clients" value="#{searchClientView.clients}" emptyMessage="#{i18n['client.no_clients_found']}"
+					reflow="true" paginator="true" paginatorPosition="bottom" rows="#{sessionUser.rowsPerPage}" sortBy="#{client.name}"
+					sortOrder="descending" lazy="true">
 
 					<p:column headerText="#{i18n['client.name']}" sortBy="#{client.name}">
 						<h:link value="#{client.name}" outcome="#{Page.CLIENT.getUrl()}">
@@ -61,7 +54,8 @@
 					</p:column>
 
 					<p:column headerText="#{i18n['client.city']}" sortBy="#{client.address.city}">
-						<h:outputText value="#{client.address.city} " /> <h:panelGroup rendered="#{not empty client.address.state}">(<h:outputText value="#{client.address.state}" />)</h:panelGroup>
+						<h:outputText value="#{client.address.city} " />
+						<h:panelGroup rendered="#{not empty client.address.state}">(<h:outputText value="#{client.address.state}" />)</h:panelGroup>
 					</p:column>
 
 					<p:column headerText="#{i18n['client.owner']}" sortBy="#{client.owner.name}">
@@ -70,7 +64,7 @@
 						</h:link>
 					</p:column>
 				</p:dataTable>
-			</p:panel>
+			</div>
 		</h:form>
 	</ui:define>
 </ui:composition>
