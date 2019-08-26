@@ -10,10 +10,6 @@
 
 	<ui:param name="selectedMenu" value="clients" />
 
-	<ui:define name="actions">
-		<p:button value="#{i18n['client.new_client']}" outcome="#{Page.CLIENT_ADD.getUrl()}" />
-	</ui:define>
-
 	<ui:define name="breadcrumb">
 		<p:breadCrumb>
 			<p:menuitem value="#{i18n['menu.index']}" outcome="#{Page.INDEX.getUrl()}" />
@@ -24,35 +20,41 @@
 
 	<ui:define name="content">
 		<div class="p-grid">
-			<div class="p-col-12 p-xl-7">
-				<div class="card card-w-title">
-					<h3>#{viewClientView.client}</h3>
-					<div class="p-grid">
-						<div class="p-col-12">
-							<div class="buttons">
-								<h:form>
-									<p:commandButton value="#{i18n['action.export']}" process="@this" action="#{viewClientView.export}" ajax="false"
-										icon="fa-file-excel-o" />
-									<p:commandButton value="#{i18n['action.edit']}" process="@this" action="#{viewClientView.editClient}" />
-								</h:form>
+			<div class="p-col-12 p-xl-5">
+				<div class="card user-card">
+					<div class="user-card-header">
+						<p:graphicImage value="/resources/img/bg-header.png" />
+					</div>
+					<div class="user-card-content">
+						<p class="user-image">#{viewClientView.capitalLetters}</p>
+
+						<h:form>
+							<p:menuButton icon="fa fa-cog">
+								<p:menuitem value="#{i18n['action.export']}" process="@this" action="#{viewClientView.export}" icon="fa fa-file-excel-o" />
+								<p:menuitem value="#{i18n['action.edit']}" process="@this" action="#{viewClientView.editClient}" icon="fa fa-pencil" />
+							</p:menuButton>
+						</h:form>
+
+						<div class="user-card-name">#{viewClientView.client.name}</div>
+						<div class="user-card-role">#{viewClientView.client.cif}</div>
+						<div class="user-detail">
+							<div class="p-grid">
+								<div class="p-col-6">
+									<cc:outputText label="#{i18n['client.phone_number']}" value="#{viewClientView.client.phoneNumber}" styleClass="phone_number" />
+								</div>
+								<div class="p-col-6">
+									<cc:outputText label="#{i18n['client.city']}" value="#{viewClientView.client.address.city}" styleClass="city" />
+								</div>
+								<div class="p-col-6">
+									<cc:outputText label="#{i18n['client.state']}" value="#{viewClientView.client.address.state}" styleClass="state" />
+								</div>
 							</div>
-						</div>
-
-						<div class="p-col-12 p-xl-6">
-							<cc:outputText label="#{i18n['client.cif']}" value="#{viewClientView.client.cif}" styleClass="cif" />
-						</div>
-						<div class="p-col-12 p-xl-6">
-							<cc:outputText label="#{i18n['client.phone_number']}" value="#{viewClientView.client.phoneNumber}" styleClass="phone_number" />
-
-							<cc:outputText label="#{i18n['client.city']}" value="#{viewClientView.client.address.city}" styleClass="city" />
-
-							<cc:outputText label="#{i18n['client.state']}" value="#{viewClientView.client.address.state}" styleClass="state" />
 						</div>
 					</div>
 				</div>
 			</div>
 
-			<div class="p-col-12 p-xl-5">
+			<div class="p-col-12 p-xl-7">
 				<cc:contacts contacts="#{viewClientView.contacts}">
 					<h:form id="contactsForm">
 						<p:commandButton value="#{i18n['contact.new_contact']}" actionListener="#{viewClientView.newContact}"
