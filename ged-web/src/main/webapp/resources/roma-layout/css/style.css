@@ -81,6 +81,11 @@ body .ui-datatable table {
 	display: inline-flex !important;
 }
 
+.card-aside {
+	padding: 1em;
+	float: left;
+}
+
 .tag {
 	padding: 0.4em;
 	border-radius: 3px;

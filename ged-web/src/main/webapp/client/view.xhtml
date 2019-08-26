@@ -56,7 +56,7 @@
 				<cc:contacts contacts="#{viewClientView.contacts}">
 					<h:form id="contactsForm">
 						<p:commandButton value="#{i18n['contact.new_contact']}" actionListener="#{viewClientView.newContact}"
-							action="#{Page.CONTACT_ADD.getUrl()}" process="@this" styleClass="success-btn" />
+							action="#{Page.CONTACT_ADD.getRedirectedUrl()}" process="@this" styleClass="success-btn" />
 					</h:form>
 				</cc:contacts>
 			</div>

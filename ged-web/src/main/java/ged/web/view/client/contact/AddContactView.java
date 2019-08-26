@@ -50,10 +50,8 @@ public class AddContactView extends AbstractView {
 	public void init() {
 		logger.debug("New contact");
 		this.client = this.getValueFromFlash("client");
-		this.contact = this.getValueFromFlash("contact");
-		if (this.contact == null) {
-			this.contact = this.buildNewContact(this.client);
-		}
+		this.putValueToFlash("client", client);
+		this.contact = this.buildNewContact(this.client);
 	}
 
 	public String save() {
