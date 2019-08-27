@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://ged.org/ui" xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://ged.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets" template="/WEB-INF/templates/template.xhtml">
 
 	<ui:define name="title">
@@ -34,18 +35,9 @@
 					<div class="job-card-content">
 						<div class="p-grid">
 							<div class="p-col-3">
-								<div class="data manager">
-									<div class="label-container">
-										<div class="label">#{i18n['job.owner']}</div>
-									</div>
-									<div class="text-container">
-										<h:panelGroup layout="block" class="text">
-											<p:link outcome="#{Page.USER.getUrl()}" value="#{viewJobView.jobOffer.owner.fullName}">
-												<f:param name="id" value="#{viewJobView.jobOffer.owner.id}" />
-											</p:link>
-										</h:panelGroup>
-									</div>
-								</div>
+								<cc:outputLink label="#{i18n['job.owner']}" value="#{viewJobView.jobOffer.owner.fullName}" outcome="#{Page.USER.getUrl()}">
+									<f:param name="id" value="#{viewJobView.jobOffer.owner.id}" />
+								</cc:outputLink>
 							</div>
 							<div class="p-col-3">
 								<cc:outputText label="#{i18n['job.places']}" value="#{viewJobView.jobOffer.places}" />
@@ -64,30 +56,20 @@
 					<h3>Detalles</h3>
 					<div class="p-grid">
 						<div class="p-col-6">
-							<p:link outcome="#{Page.CLIENT.getUrl()}">
+							<cc:outputLink label="#{i18n['job.client']}" value="#{viewJobView.jobOffer.client.name}" outcome="#{Page.CLIENT.getUrl()}">
 								<f:param name="id" value="#{viewJobView.jobOffer.client.id}" />
-								<cc:outputText label="#{i18n['job.client']}" value="#{viewJobView.jobOffer.client.name}" />
-							</p:link>
+							</cc:outputLink>
 						</div>
 						<div class="p-col-6">
-							<div class="data">
-								<div class="label-container">
-									<div class="label">#{i18n['job.owner']}</div>
-								</div>
-								<div class="text-container">
-									<h:panelGroup layout="block" class="text">
-										<p:link outcome="#{Page.USER.getUrl()}" value="#{viewJobView.jobOffer.owner.fullName}">
-											<f:param name="id" value="#{viewJobView.jobOffer.owner.id}" />
-										</p:link>
-									</h:panelGroup>
-								</div>
-							</div>
+							<cc:outputLink label="#{i18n['job.owner']}" value="#{viewJobView.jobOffer.owner.fullName}" outcome="#{Page.USER.getUrl()}">
+								<f:param name="id" value="#{viewJobView.jobOffer.owner.id}" />
+							</cc:outputLink>
 						</div>
 
 						<div class="p-col-6">
 							<div class="data">
 								<div class="label-container">
-									<div class="label">#{i18n['job.state']}</div>
+									<div class="label">#{i18n['job.job_offer_state']}</div>
 								</div>
 								<div class="text-container">
 									<h:form>
@@ -119,7 +101,19 @@
 
 						</div>
 						<div class="p-col-6">
-							<cc:outputText label="#{i18n['address.state']}" value="#{viewJobView.jobOffer.address.state}" />
+							<cc:outputText label="#{i18n['job.state']}" value="#{viewJobView.jobOffer.address.state}" />
+						</div>
+						<div class="p-col-6">
+							<div class="data">
+								<div class="label-container">
+									<div class="label">#{i18n['job.recruiters']}</div>
+								</div>
+								<div class="text-container">
+									<ui:repeat value="#{viewJobView.jobOffer.recruiters}" var="recruiter">
+										<h:outputText id="text" value="#{recruiter.fullName}, " styleClass="text" />
+									</ui:repeat>
+								</div>
+							</div>
 						</div>
 						<div class="p-col-12">
 							<cc:outputText label="#{i18n['job.description']}" value="#{viewJobView.jobOffer.description}" />
