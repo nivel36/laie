@@ -100,8 +100,10 @@
 											<div class="label">#{i18n['candidate.tags']}</div>
 										</div>
 										<div class="text-container">
-											<p:chips id="tags" value="#{viewCandidateView.tags}" label="#{i18n['viewCandidateView.tags']}" converter="tagConverter"
-												disabled="true" readonly="true" />
+											<ui:repeat value="#{viewCandidateView.candidate.tags}" var="tag" rendered="#{not empty viewCandidateView.candidate.tags}">
+												<div class="tag">#{tag.label}</div>
+											</ui:repeat>
+											<h:outputText id="emptyText" value="---" styleClass="text" rendered="#{empty viewCandidateView.candidate.tags}" />
 										</div>
 									</div>
 								</div>

@@ -89,8 +89,11 @@ body .ui-datatable table {
 .tag {
 	border-radius: 3px;
 	text-align: center;
-	width: 120px;
-	padding: 0.4em;
+	padding: 0 0.4em;
+	display: inline-block;
+	background: #0772B3;
+	color: white;
+	line-height: 1.8em;
 }
 
 .tag.green {
@@ -329,13 +332,13 @@ body .ui-datatable table {
 	height: 100%;
 }
 
-.user-card-content .user-image {
+.user-card .user-card-content .user-image {
 	width: 80px;
 	height: 80px;
 	margin: -40px 0 0 24px;
 }
 
-.user-card-content .ui-menubutton {
+.user-card .user-card-content .ui-menubutton {
 	width: 36px;
 	height: 36px;
 	-moz-border-radius: 50%;
@@ -346,7 +349,7 @@ body .ui-datatable table {
 	z-index: 1;
 }
 
-.user-card-content .ui-button {
+.user-card .user-card-content .ui-button {
 	width: 36px;
 	height: 36px;
 	-moz-border-radius: 50%;
@@ -357,7 +360,7 @@ body .ui-datatable table {
 	z-index: 1;
 }
 
-.user-card-content .user-card-name {
+.user-card .user-card-content .user-card-name {
 	font-size: 13px;
 	color: #ffffff;
 	position: relative;
@@ -367,7 +370,7 @@ body .ui-datatable table {
 	white-space: nowrap;
 }
 
-.user-card-content .user-card-role {
+.user-card .user-card-content .user-card-role {
 	font-size: 13px;
 	position: relative;
 	top: -50px;
@@ -376,6 +379,6 @@ body .ui-datatable table {
 	white-space: nowrap;
 }
 
-.user-card-content .user-detail {
+.user-card .user-card-content .user-detail {
 	padding: .5em 1em;
 }

@@ -49,7 +49,7 @@
 				</c:when>
 
 				<c:when test="#{type eq 'checkbox'}">
-					<p:selectBooleanCheckbox id="input" value="#{value}" required="#{required}" styleClass="input input-checkbox #{inputStyleClass}">
+					<p:selectBooleanCheckbox id="#{id}" value="#{value}" required="#{required}" styleClass="input input-checkbox #{inputStyleClass}">
 						<ui:insert />
 					</p:selectBooleanCheckbox>
 				</c:when>

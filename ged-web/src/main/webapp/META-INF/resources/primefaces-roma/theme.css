@@ -932,8 +932,8 @@ body .ui-rating .ui-rating-star {
     text-align: center;
     display: block;
     font-size: 1.5em;
-    height: 1.5em;
-    width: 1.5em;
+    height: 1em;
+    width: 1em;
     color: #252529; }
     body .ui-rating .ui-rating-star a:before {
       content: ""; }
@@ -951,8 +951,8 @@ body .ui-rating .ui-rating-star-on a {
   text-align: center;
   display: block;
   font-size: 1.5em;
-  height: 1.5em;
-  width: 1.5em;
+  height: 1em;
+  width: 1em;
   color: #0f97c7; }
   body .ui-rating .ui-rating-star-on a:before {
     content: ""; }
@@ -2533,12 +2533,14 @@ body .ui-datatable .ui-datatable-data > tr {
   transition: background-color 0.2s; }
   body .ui-datatable .ui-datatable-data > tr > td {
     padding: 0.75em 1.214em;
-    border: 0 none; }
+    border: 0 none;
+    vertical-align: middle; }
     body .ui-datatable .ui-datatable-data > tr > td.ui-datatable-subtable-header {
       background-color: #ffffff;
       border: 1px solid #d8d8dc;
       color: #252529;
-      font-weight: 500; }
+      font-weight: 500;
+       }
   body .ui-datatable .ui-datatable-data > tr.ui-datatable-even {
     background-color: #f8f8f8; }
   body .ui-datatable .ui-datatable-data > tr.ui-state-hover {

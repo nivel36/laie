@@ -1,15 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
-	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" 
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" 
-	xmlns:f="http://java.sun.com/jsf/core" 
-	xmlns:g="http://ged.org/ui" 
-	xmlns:h="http://java.sun.com/jsf/html" 
-	xmlns:o="http://omnifaces.org/ui"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	template="/WEB-INF/templates/template.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://ged.org/ui" xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets" template="/WEB-INF/templates/template.xhtml">
 
 	<ui:define name="title">
 		#{i18n['curriculum.curriculum']} - #{curriculumView.candidate.fullName}
@@ -30,153 +22,144 @@
 
 	<ui:define name="content">
 		<h:form id="form">
-			<div class="grid nogutter">
-				<div class="panel curriculum col-12 xl-8">
-					<div class="panel-header">
-						<div class="panel-header-image">
-							<cc:avatar imageFileName="#{curriculumView.candidate.imageFileName}" />
-						</div>
-						<div class="panel-header-data">
-							<div class="name">#{curriculumView.candidate.fullName}</div>
-							<div class="job-profile">#{curriculumView.candidate.jobProfile}</div>
+			<div class="p-grid">
+				<div class="p-col-12 p-xl-8">
+					<div class="card">
 
-							<div class="data email">
-								<div class="icon">
-									<em class="fa fa-envelope"></em>
-								</div>
-								<div class="text">#{curriculumView.candidate.email}</div>
+						<cc:avatar value="#{curriculumView.candidate.imageFileName}" />
+
+						<div class="name">#{curriculumView.candidate.fullName}</div>
+
+						<div class="job-profile">#{curriculumView.candidate.jobProfile}</div>
+
+						<div class="data email">
+							<div class="icon">
+								<em class="fa fa-envelope"></em>
 							</div>
-							<div class="data phone">
-								<div class="icon">
-									<em class="fa fa-phone"></em>
-								</div>
-								<div class="text">#{curriculumView.candidate.phoneNumber}</div>
-							</div>
-							<h:panelGroup layout="block" styleClass="data skype" rendered="#{not empty curriculumView.candidate.skype}">
-								<div class="icon">
-									<em class="fa fa-skype"></em>
-								</div>
-								<div class="text">#{curriculumView.candidate.skype}</div>
-							</h:panelGroup>
-							<h:panelGroup layout="block" styleClass="data linkedin" rendered="#{not empty curriculumView.candidate.linkedinProfileUrl}">
-								<div class="icon">
-									<em class="fa fa-linkedin"></em>
-								</div>
-								<div class="text">
-									<a href="#{curriculumView.candidate.linkedinProfileUrl}" target="new">#{curriculumView.candidate.linkedinProfileUrl}</a>
-								</div>
-							</h:panelGroup>
+							<div class="text">#{curriculumView.candidate.email}</div>
 						</div>
-						<div class="panel-buttons">
+
+						<div class="data phone">
+							<div class="icon">
+								<em class="fa fa-phone"></em>
+							</div>
+							<div class="text">#{curriculumView.candidate.phoneNumber}</div>
+						</div>
+
+						<h:panelGroup layout="block" styleClass="data skype" rendered="#{not empty curriculumView.candidate.skype}">
+							<div class="icon">
+								<em class="fa fa-skype"></em>
+							</div>
+							<div class="text">#{curriculumView.candidate.skype}</div>
+						</h:panelGroup>
+
+						<h:panelGroup layout="block" styleClass="data linkedin" rendered="#{not empty curriculumView.candidate.linkedinProfileUrl}">
+							<div class="icon">
+								<em class="fa fa-linkedin"></em>
+							</div>
+							<div class="text">
+								<a href="#{curriculumView.candidate.linkedinProfileUrl}" target="new">#{curriculumView.candidate.linkedinProfileUrl}</a>
+							</div>
+						</h:panelGroup>
+
+						<div class="buttons">
 							<p:button value="#{i18n['action.back']}" outcome="#{Page.CANDIDATE.getUrl()}">
 								<f:param name="id" value="#{curriculumView.candidate.id}" />
 							</p:button>
 						</div>
-					</div>
-					<div class="panel-content">
-						<div class="panel-content-data">
-							<h:panelGroup styleClass="jobExperience section" id="jobExperiences" layout="block">
-								<div class="section-header">
-									<div class="section-title">#{i18n['curriculum.job_experiences']}</div>
-									<div class="panel-buttons">
-										<p:commandButton value="#{i18n['action.new']}" action="#{curriculumView.newJobExperience}" process="@this" />
-									</div>
+
+						<h:panelGroup styleClass="jobExperience section" id="jobExperiences" layout="block">
+							<div class="section section-w-title">
+								<h3>#{i18n['curriculum.job_experiences']}</h3>
+								<div class="buttons">
+									<p:commandButton action="#{curriculumView.newJobExperience}" process="@this" icon="fa fa-plus"/>
 								</div>
-								<ui:repeat value="#{curriculumView.jobExperiences}" var="jobExperience" id="jobExperience" varStatus="varStatus">
-									<div class="section-content">
-										<p>
-											<span class="job_position">#{jobExperience.jobPosition}</span>
-										</p>
-										<p>
-											<span class="company">#{jobExperience.companyName}</span> · <span class="date-range"><h:outputText
-													value="#{jobExperience.startDate}">
+							</div>
+							<ui:repeat value="#{curriculumView.jobExperiences}" var="jobExperience" id="jobExperience" varStatus="varStatus">
+								<div class="section-content">
+									<p>
+										<span class="job_position">#{jobExperience.jobPosition}</span>
+									</p>
+									<p>
+										<span class="company">#{jobExperience.companyName}</span> · <span class="date-range"><h:outputText value="#{jobExperience.startDate}">
+												<f:convertDateTime type="localDate" pattern="MM / yyyy" />
+											</h:outputText> <h:outputText value=" - " /> <h:panelGroup rendered="#{not jobExperience.stillWorking}">
+												<h:outputText value="#{jobExperience.endDate}">
 													<f:convertDateTime type="localDate" pattern="MM / yyyy" />
-												</h:outputText> <h:outputText value=" - " /> <h:panelGroup rendered="#{not jobExperience.stillWorking}">
-													<h:outputText value="#{jobExperience.endDate}">
-														<f:convertDateTime type="localDate" pattern="MM / yyyy" />
-													</h:outputText>
-												</h:panelGroup> <h:outputText value="#{i18n['job_experience.still_working']}" rendered="#{jobExperience.stillWorking}" /> <h:outputText
-													value=" ( " /> <h:panelGroup rendered="#{(jobExperience.monthsWorked - jobExperience.monthsWorked%12)/12 gt 0}">
-													<h:outputText value="#{(jobExperience.monthsWorked - jobExperience.monthsWorked%12)/12}">
-														<f:convertNumber maxFractionDigits="0" />
-													</h:outputText>
-													<h:outputText
-														value=" #{(jobExperience.monthsWorked - jobExperience.monthsWorked%12)/12 gt 1 ? i18n['date.years'] : i18n['date.year']}" />
-												</h:panelGroup> <h:outputText value=" #{i18n['date.and']}  "
-													rendered="#{jobExperience.monthsWorked%12 gt 0 and (jobExperience.monthsWorked - jobExperience.monthsWorked%12)/12 gt 0}" /> <h:panelGroup
-													rendered="#{jobExperience.monthsWorked%12 gt 0}">
-													<h:outputText value="#{jobExperience.monthsWorked%12}" />
-													<h:outputText value=" #{jobExperience.monthsWorked%12 gt 1 ? i18n['date.months'] : i18n['date.month']}" />
-												</h:panelGroup> <h:outputText value=" #{i18n['date.days']} "
-													rendered="#{jobExperience.monthsWorked%12 eq 0 and (jobExperience.monthsWorked - jobExperience.monthsWorked%12)/12 eq 0}" /> <h:outputText
-													value=" ) " /> </span>
-										</p>
+												</h:outputText>
+											</h:panelGroup> <h:outputText value="#{i18n['job_experience.still_working']}" rendered="#{jobExperience.stillWorking}" /> <h:outputText value=" ( " /> <h:panelGroup
+												rendered="#{(jobExperience.monthsWorked - jobExperience.monthsWorked%12)/12 gt 0}">
+												<h:outputText value="#{(jobExperience.monthsWorked - jobExperience.monthsWorked%12)/12}">
+													<f:convertNumber maxFractionDigits="0" />
+												</h:outputText>
+												<h:outputText value=" #{(jobExperience.monthsWorked - jobExperience.monthsWorked%12)/12 gt 1 ? i18n['date.years'] : i18n['date.year']}" />
+											</h:panelGroup> <h:outputText value=" #{i18n['date.and']}  " rendered="#{jobExperience.monthsWorked%12 gt 0 and (jobExperience.monthsWorked - jobExperience.monthsWorked%12)/12 gt 0}" />
+											<h:panelGroup rendered="#{jobExperience.monthsWorked%12 gt 0}">
+												<h:outputText value="#{jobExperience.monthsWorked%12}" />
+												<h:outputText value=" #{jobExperience.monthsWorked%12 gt 1 ? i18n['date.months'] : i18n['date.month']}" />
+											</h:panelGroup> <h:outputText value=" #{i18n['date.days']} " rendered="#{jobExperience.monthsWorked%12 eq 0 and (jobExperience.monthsWorked - jobExperience.monthsWorked%12)/12 eq 0}" />
+											<h:outputText value=" ) " /> </span>
+									</p>
 
-										<h:outputText value="#{jobExperience.description}" escape="false" styleClass="jobDescription" />
-										<div class="panel-buttons">
-											<p:commandButton value="#{i18n['action.edit']}" action="#{curriculumView.editJobExperience(jobExperience)}" process="@this" />
-										</div>
-									</div>
-								</ui:repeat>
-							</h:panelGroup>
-							<h:panelGroup styleClass="education section" id="educations" layout="block">
-								<div class="section-header">
-									<div class="section-title">#{i18n['curriculum.education']}</div>
-									<div class="panel-buttons">
-										<p:commandButton value="#{i18n['action.new']}" action="#{curriculumView.newEducation}" process="@this" />
+									<h:outputText value="#{jobExperience.description}" escape="false" styleClass="jobDescription" />
+									<div class="buttons">
+										<p:commandButton action="#{curriculumView.editJobExperience(jobExperience)}" process="@this" icon="fa fa-pencil" />
 									</div>
 								</div>
-								<ui:repeat value="#{curriculumView.education}" var="education" id="education">
-									<div class="section-content">
-										<p>
-											<span class="degree">#{education.degree}</span>
-										</p>
-										<p>
-											<span class="school">#{education.school}</span> · <span class="date-range"> <h:outputText value="#{education.startYear}" />
-												- <h:outputText value="#{education.endYear}" rendered="#{not education.stillStudying}" /> <h:outputText
-													value="#{i18n['education.still_studying']}" rendered="#{education.stillStudying}" />
-											</span>
-										</p>
+							</ui:repeat>
+						</h:panelGroup>
+						<h:panelGroup styleClass="section section-w-title" id="educations" layout="block">
 
-										<h:outputText value="#{education.description}" escape="false" styleClass="educationDescription" />
+							<h3>#{i18n['curriculum.education']}</h3>
+							<div class="buttons">
+								<p:commandButton action="#{curriculumView.newEducation}" process="@this"  icon="fa fa-plus"/>
+							</div>
 
-										<div class="panel-buttons">
-											<p:commandButton value="#{i18n['action.edit']}" action="#{curriculumView.editEducation(education)}" process="@this" />
-										</div>
-									</div>
-								</ui:repeat>
-							</h:panelGroup>
-
-							<h:panelGroup styleClass="language section" id="languages" layout="block">
-								<div class="section-header">
-									<div class="section-title">#{i18n['curriculum.languages']}</div>
-								</div>
+							<ui:repeat value="#{curriculumView.education}" var="education" id="education">
 								<div class="section-content">
-									<ui:repeat value="#{curriculumView.languages}" var="language" id="language">
-										<p>
-											<span class="language_name">#{language.name}</span> <span class="language_level">#{i18n[language.level]}</span>
-										</p>
-									</ui:repeat>
-									<div class="panel-buttons">
-										<p:commandButton value="#{i18n['action.edit']}" action="#{curriculumView.editLanguages}" process="@this" />
+									<p>
+										<span class="degree">#{education.degree}</span>
+									</p>
+									<p>
+										<span class="school">#{education.school}</span> · <span class="date-range"> <h:outputText value="#{education.startYear}" /> - <h:outputText
+												value="#{education.endYear}" rendered="#{not education.stillStudying}" /> <h:outputText value="#{i18n['education.still_studying']}"
+												rendered="#{education.stillStudying}" />
+										</span>
+									</p>
+
+									<h:outputText value="#{education.description}" escape="false" styleClass="educationDescription" />
+
+									<div class="buttons">
+										<p:commandButton action="#{curriculumView.editEducation(education)}" process="@this" icon="fa fa-pencil" />
 									</div>
 								</div>
-							</h:panelGroup>
+							</ui:repeat>
+						</h:panelGroup>
 
-							<h:panelGroup styleClass="skill section" id="skills" layout="block">
-								<!-- Skills -->
-								<div class="section-title">#{i18n['curriculum.skills']}</div>
-								<div class="section-content">
-									<p:chips value="#{curriculumView.skills}" converter="skillConverter" disabled="true" />
+						<h:panelGroup styleClass="section section-w-title" id="languages" layout="block">
+							<h3>#{i18n['curriculum.languages']}</h3>
+							<div class="section-content">
+								<ui:repeat value="#{curriculumView.languages}" var="language" id="language">
+									<p>
+										<span class="language_name">#{language.name}</span> <span class="language_level">#{i18n[language.level]}</span>
+									</p>
+								</ui:repeat>
+								<div class="buttons">
+									<p:commandButton action="#{curriculumView.editLanguages}" process="@this" icon="fa fa-pencil" />
 								</div>
-								<div class="panel-buttons">
-									<p:commandButton value="#{i18n['action.edit']}" action="#{curriculumView.editSkills}" process="@this" />
-								</div>
-							</h:panelGroup>
-						</div>
-					</div>
-					<div class="panel-footer">
-						<div class="panel-buttons">
+							</div>
+						</h:panelGroup>
+
+						<h:panelGroup styleClass="section section-w-title" id="skills" layout="block">
+							<!-- Skills -->
+							<h3>#{i18n['curriculum.skills']}</h3>
+							<div class="section-content"></div>
+							<div class="buttons">
+								<p:commandButton action="#{curriculumView.editSkills}" process="@this" icon="fa fa-pencil" />
+							</div>
+						</h:panelGroup>
+
+						<div class="buttons">
 							<p:button value="#{i18n['action.back']}" outcome="#{Page.CANDIDATE.getUrl()}">
 								<f:param name="id" value="#{curriculumView.candidate.id}" />
 							</p:button>
