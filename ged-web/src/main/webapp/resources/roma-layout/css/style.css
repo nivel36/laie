@@ -238,6 +238,7 @@ body .ui-datatable table {
 }
 
 .card .data .label-container {
+	
 }
 
 .card .data .text-container {
@@ -255,7 +256,8 @@ body .ui-datatable table {
 }
 
 .job-card-header {
-	position: relative; background : #f9f9f9;
+	position: relative;
+	background: #f9f9f9;
 	overflow: hidden;
 	padding: 1.5em;
 	background: #f9f9f9;
@@ -278,7 +280,8 @@ body .ui-datatable table {
 .job-card-buttons {
 	position: absolute;
 	top: 1.5em;
-	right: 1.5em; float : right;
+	right: 1.5em;
+	float: right;
 	display: inline-block;
 	float: right;
 }
@@ -316,6 +319,102 @@ body .ui-datatable table {
 
 .client-card-content {
 	padding: .5em 1em;
+}
+
+.curriculum {
+	flex-direction: column;
+}
+
+.curriculum .name {
+	font-size: 1.5em;
+	text-shadow: 1px 1px white;
+	padding-bottom: 0.4em;
+}
+
+.curriculum .job-profile {
+	font-size: 1em;
+	padding-bottom: 0.6em;
+}
+
+.curriculum .section {
+	font-size: 1.1em;
+	font-weight: 400;
+	padding-bottom: 0.4em;
+}
+
+.curriculum .personal-data {
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+	padding: 0.9em 0;
+}
+
+.meeting {
+	display: flex;
+	flex-flow: row wrap;
+	flex: 1 1 100%;
+}
+
+.meeting-title {
+	display: flex;
+	padding: 10px 0;
+	color: black;
+	font-size: 16px;
+	flex: 1;
+}
+
+.meeting-content {
+	display: flex;
+	margin: 10px 0px;
+}
+
+.meeting-date {
+	display: inline-flex;
+	padding: 10px 15px;
+	color: white;
+	background: #0772B3;
+	flex: 1 100%;
+}
+
+.meeting-data .icon {
+	padding: 0 5px;
+}
+
+.meeting-time {
+	display: inline-flex;
+	padding: 10px 15px;
+	border-left: 3px solid #0fc763;
+	font-size: 2em;
+	display: flex;
+	flex: 0 auto;
+}
+
+.meeting-detail {
+	display: flex;
+	flex: 1 auto;
+	flex-direction: column;
+}
+
+.meeting-type {
+	display: flex;
+	flex: 1 100%;
+}
+
+.meeting-location {
+	display: flex;
+	flex: 1 100%;
+}
+
+.meeting-attendees {
+	display: flex;
+	flex: 1 100%;
+	padding: 10px 15px;
+	flex-wrap: wrap;
+}
+
+.meeting-attendee {
+	display: inline-flex;
+	padding: 5px 10px 5px 0px;
 }
 
 .user-card {

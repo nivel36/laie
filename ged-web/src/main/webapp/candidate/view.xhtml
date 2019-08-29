@@ -112,13 +112,13 @@
 					</div>
 				</div>
 			</div>
-
+			
 			<div class="p-col-12 p-xl-7">
 				<cc:jobCandidatures jobCandidatures="#{viewCandidateView.jobCandidatures}" showCandidate="false"
 					title="#{i18n['candidate.job_candidatures']}" />
 			</div>
 
-			<div class="p-col-12 p-xl-6">
+			<div class="p-col-12 p-xl-5">
 				<h:form id="file_form" enctype="multipart/form-data">
 					<div class="card card-w-title files">
 						<h3>#{i18n['file.files']}</h3>
@@ -150,13 +150,15 @@
 				</h:form>
 			</div>
 
-			<div class="p-col-12 p-xl-6">
+			<div class="p-col-12 p-xl-4">
 				<cc:meetings value="#{viewCandidateView.meetings}">
 					<h:form>
 						<p:commandButton value="#{i18n['meeting.add_meeting']}" action="#{viewCandidateView.newMeeting}" styleClass="success-btn" />
 					</h:form>
 				</cc:meetings>
 			</div>
+			
+			
 		</div>
 	</ui:define>
 </ui:composition>
