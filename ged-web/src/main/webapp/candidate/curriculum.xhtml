@@ -63,7 +63,7 @@
 						</h:panelGroup>
 
 						<div class="buttons">
-							<p:button value="#{i18n['action.back']}" outcome="#{Page.CANDIDATE.getUrl()}">
+							<p:button value="#{i18n['action.back']}" outcome="#{Page.CANDIDATE.getUrl()}" >
 								<f:param name="id" value="#{curriculumView.candidate.id}" />
 							</p:button>
 						</div>
@@ -72,7 +72,7 @@
 							<div class="section section-w-title">
 								<h3>#{i18n['curriculum.job_experiences']}</h3>
 								<div class="buttons">
-									<p:commandButton action="#{curriculumView.newJobExperience}" process="@this" icon="fa fa-plus"/>
+									<p:commandButton action="#{curriculumView.newJobExperience}" process="@this" icon="fa fa-plus" styleClass="secondary-button"/>
 								</div>
 							</div>
 							<ui:repeat value="#{curriculumView.jobExperiences}" var="jobExperience" id="jobExperience" varStatus="varStatus">
@@ -103,7 +103,7 @@
 
 									<h:outputText value="#{jobExperience.description}" escape="false" styleClass="jobDescription" />
 									<div class="buttons">
-										<p:commandButton action="#{curriculumView.editJobExperience(jobExperience)}" process="@this" icon="fa fa-pencil" />
+										<p:commandButton action="#{curriculumView.editJobExperience(jobExperience)}" process="@this" icon="fa fa-pencil" styleClass="secondary-button"/>
 									</div>
 								</div>
 							</ui:repeat>
@@ -112,7 +112,7 @@
 
 							<h3>#{i18n['curriculum.education']}</h3>
 							<div class="buttons">
-								<p:commandButton action="#{curriculumView.newEducation}" process="@this"  icon="fa fa-plus"/>
+								<p:commandButton action="#{curriculumView.newEducation}" process="@this"  icon="fa fa-plus" styleClass="secondary-button"/>
 							</div>
 
 							<ui:repeat value="#{curriculumView.education}" var="education" id="education">
@@ -130,7 +130,7 @@
 									<h:outputText value="#{education.description}" escape="false" styleClass="educationDescription" />
 
 									<div class="buttons">
-										<p:commandButton action="#{curriculumView.editEducation(education)}" process="@this" icon="fa fa-pencil" />
+										<p:commandButton action="#{curriculumView.editEducation(education)}" process="@this" icon="fa fa-pencil" styleClass="secondary-button"/>
 									</div>
 								</div>
 							</ui:repeat>
@@ -145,7 +145,7 @@
 									</p>
 								</ui:repeat>
 								<div class="buttons">
-									<p:commandButton action="#{curriculumView.editLanguages}" process="@this" icon="fa fa-pencil" />
+									<p:commandButton action="#{curriculumView.editLanguages}" process="@this" icon="fa fa-pencil" styleClass="secondary-button"/>
 								</div>
 							</div>
 						</h:panelGroup>
@@ -155,7 +155,7 @@
 							<h3>#{i18n['curriculum.skills']}</h3>
 							<div class="section-content"></div>
 							<div class="buttons">
-								<p:commandButton action="#{curriculumView.editSkills}" process="@this" icon="fa fa-pencil" />
+								<p:commandButton action="#{curriculumView.editSkills}" process="@this" icon="fa fa-pencil" styleClass="secondary-button"/>
 							</div>
 						</h:panelGroup>
 
