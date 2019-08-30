@@ -38,11 +38,11 @@
 								</div>
 								<div class="p-col-4">
 									<h:panelGroup layout="block" id="toDateWrapper">
-										<cc:inputYearMonth id="toDate" label="#{i18n['job.to_date']}" value="#{jobExperienceView.toDate}" rendered="#{not jobExperienceView.stillWorking}" />
+										<cc:inputYearMonth id="toDate" label="#{i18n['job.to_date']}" value="#{jobExperienceView.toDate}" rendered="#{not jobExperienceView.jobExperience.stillWorking}" />
 									</h:panelGroup>
 								</div>
 								<div class="p-col-4">
-									<g:input id="still" label="#{i18n['job.still_working']}" value="#{jobExperienceView.stillWorking}" type="checkbox">
+									<g:input id="still" label="#{i18n['job.still_working']}" value="#{jobExperienceView.jobExperience.stillWorking}" type="checkbox">
 										<f:ajax event="change" render="jobExperience:toDateWrapper" />
 									</g:input>
 								</div>
@@ -56,7 +56,7 @@
 								<f:param name="id" value="#{jobExperienceView.curriculum.candidate.id}" />
 							</p:button>
 							<p:commandButton value="#{i18n['action.delete']}" action="#{jobExperienceView.delete}" process="@this" rendered="#{not jobExperienceView.newJobExperience}"
-								secondaty="warning-btn" />
+								styleClass="danger-btn" />
 							<p:commandButton value="#{i18n['action.save']}" action="#{jobExperienceView.save}" process="@form" update="@form" />
 						</div>
 					</div>

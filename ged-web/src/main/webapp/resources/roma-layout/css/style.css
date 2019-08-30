@@ -86,6 +86,10 @@ body .ui-datatable table {
 	float: left;
 }
 
+.card>ul>li {
+	padding: 0.5em;
+}
+
 .tag {
 	border-radius: 3px;
 	text-align: center;
@@ -151,6 +155,12 @@ body .ui-datatable table {
 .buttons {
 	display: flex;
 	justify-content: flex-end;
+}
+
+.buttons.header-buttons{
+	position: absolute;
+	right: 1em;
+	top: 1em;
 }
 
 .buttons .ui-widget {
@@ -322,7 +332,36 @@ body .ui-datatable table {
 }
 
 .curriculum {
+	position: relative;
 	flex-direction: column;
+	overflow: auto;
+}
+
+.curriculum .avatar {
+	float: left;
+	margin: 0 2em 0 1em;
+	border-radius: 0;
+	border: 0;
+}
+
+.curriculum .section {
+	border-bottom: 1px solid #dfdfdf;
+	position: relative;
+	margin-top: 2em;
+	font-size: 1.1em;
+	font-weight: 400;
+	padding: 0 2em 1em 2em;
+}
+
+.curriculum .section:last-child {
+	border-bottom: none;
+	margin-bottom: 0;
+}
+
+.curriculum .section .buttons {
+	position: absolute;
+	right: 0px;
+	top: 0px;
 }
 
 .curriculum .name {
@@ -336,17 +375,22 @@ body .ui-datatable table {
 	padding-bottom: 0.6em;
 }
 
-.curriculum .section {
-	font-size: 1.1em;
-	font-weight: 400;
-	padding-bottom: 0.4em;
+.curriculum .date-range {
+	color: #8c8c93;	
 }
 
-.curriculum .personal-data {
-	display: flex;
-	flex-direction: column;
-	flex: 1;
-	padding: 0.9em 0;
+.curriculum .language_name {
+	font-weight: 500;
+	min-width: 100px;
+	display: inline-block;
+}
+
+.curriculum .company, .curriculum .school {
+	font-size: 1.1em;
+}
+
+.curriculum p {
+	margin: 0.4em 4em 0.4em 0;
 }
 
 .meeting {

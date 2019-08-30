@@ -35,13 +35,11 @@ public class JobExperienceView extends AbstractView {
 
 	private JobExperience jobExperience;
 
-	private boolean stillWorking;
-
 	@NotNull
 	private YearMonthDto toDate;
 
 	private String curriculumUrl() {
-		return PageEnum.CURRICULUM.getUrl(this.jobExperience.getCurriculum().getCandidate());
+		return PageEnum.CURRICULUM.getRedirectedUrl(this.curriculum.getCandidate());
 	}
 
 	public String delete() {
@@ -71,7 +69,6 @@ public class JobExperienceView extends AbstractView {
 		this.jobExperience = this.initJobExperience();
 		this.fromDate = this.initFromDate();
 		this.toDate = this.initToDate();
-		this.stillWorking = this.jobExperience.isStillWorking();
 		if (!this.isNewJobExperience()) {
 			this.curriculum.removeJobExperience(this.jobExperience);
 		}
@@ -109,10 +106,6 @@ public class JobExperienceView extends AbstractView {
 		return this.jobExperience.getId() == 0;
 	}
 
-	public boolean isStillWorking() {
-		return this.stillWorking;
-	}
-
 	public String save() {
 		this.updateJobExperienceData();
 		this.curriculum.addJobExperience(this.jobExperience);
@@ -132,16 +125,12 @@ public class JobExperienceView extends AbstractView {
 		this.jobExperience = jobExperience;
 	}
 
-	public void setStillWorking(final boolean stillWorking) {
-		this.stillWorking = stillWorking;
-	}
-
 	public void setToDate(final YearMonthDto toDate) {
 		this.toDate = toDate;
 	}
 
 	private void updateJobExperienceData() {
-		if (this.stillWorking) {
+		if (this.jobExperience.isStillWorking()) {
 			this.jobExperience.setEndDate(null);
 		} else {
 			final YearMonth endDate = YearMonth.of(this.toDate.getYear(), this.toDate.getMonth());
@@ -149,6 +138,5 @@ public class JobExperienceView extends AbstractView {
 		}
 		final YearMonth startDate = YearMonth.of(this.fromDate.getYear(), this.fromDate.getMonth());
 		this.jobExperience.setStartDate(startDate);
-		this.jobExperience.setStillWorking(this.stillWorking);
 	}
 }
