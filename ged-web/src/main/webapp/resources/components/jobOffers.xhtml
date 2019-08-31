@@ -15,11 +15,11 @@
 			<div class="p-grid">
 				<div class="p-col-12">
 					<p:dataTable var="jobOffer" value="#{cc.attrs.jobOffers}" emptyMessage="#{i18n['job.no_jobs_found']}" reflow="true" paginator="true"
-						paginatorPosition="bottom" paginatorTemplate="{PageLinks}" rows="#{sessionUser.rowsPerPage}" sortBy="#{jobOffer.name}"
+						paginatorPosition="bottom" paginatorTemplate="{PageLinks}" rows="#{sessionUser.rowsPerPage}" sortBy="#{jobOffer.title}"
 						sortOrder="descending" styleClass="ui-datatable-borderless">
 
-						<p:column headerText="#{i18n['job.name']}">
-							<h:link value="#{jobOffer.name}" outcome="#{Page.JOB.getUrl()}">
+						<p:column headerText="#{i18n['job.title']}">
+							<h:link value="#{jobOffer.title}" outcome="#{Page.JOB.getUrl()}">
 								<f:param name="id" value="#{jobOffer.id}" />
 							</h:link>
 							<span class="job_address">#{jobOffer.address.city} (#{jobOffer.address.state})</span>

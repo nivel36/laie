@@ -242,14 +242,6 @@
 		]]></query>
 	</named-query>
 
-	<named-query name="JobOffer.findByName">
-		<query><![CDATA[
-			SELECT j 
-			FROM JobOffer j 
-			WHERE j.name = :name
-		]]></query>
-	</named-query>
-
 	<named-query name="JobOffer.findLastJobOffers">
 		<query><![CDATA[
 			SELECT j 

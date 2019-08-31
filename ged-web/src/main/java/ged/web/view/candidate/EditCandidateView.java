@@ -43,7 +43,6 @@ public class EditCandidateView extends AbstractCandidateView {
 		this.checkNonNullCandidate();
 		this.checkEditPermission();
 		logger.trace("Candidate {} edit init", this.candidate);
-		this.putValueToFlash(CANDIDATE_KEY, this.candidate); // prevent errors if f5/reload is pressed
 		this.initTags();
 	}
 

@@ -19,11 +19,11 @@ import ged.web.core.view.AbstractView;
 public class SkillsView extends AbstractView {
 
 	private static final String CURRICULUM_KEY = "curriculum";
-	
+
 	private static final long serialVersionUID = -5470807754278944272L;
 
 	private Curriculum curriculum;
-	
+
 	@Inject
 	private transient CurriculumService curriculumService;
 
@@ -34,23 +34,22 @@ public class SkillsView extends AbstractView {
 	}
 
 	public Curriculum getCurriculum() {
-		return curriculum;
+		return this.curriculum;
 	}
 
 	public List<Skill> getSkills() {
-		return skills;
+		return this.skills;
 	}
 
 	@PostConstruct
 	public void init() {
 		this.curriculum = this.getValueFromFlash(CURRICULUM_KEY);
 		this.skills = new ArrayList<Skill>(this.curriculum.getSkills());
-		this.putValueToFlash(CURRICULUM_KEY, curriculum);
 	}
-	
+
 	public String save() {
-		for(Skill skill : this.skills) {
-			skill.setCurriculum(curriculum);
+		for (final Skill skill : this.skills) {
+			skill.setCurriculum(this.curriculum);
 		}
 		this.curriculum.setSkills(this.skills);
 		this.curriculumService.save(this.curriculum);
@@ -61,7 +60,7 @@ public class SkillsView extends AbstractView {
 		this.curriculumService = curriculumService;
 	}
 
-	public void setSkills(List<Skill> skills) {
+	public void setSkills(final List<Skill> skills) {
 		this.skills = skills;
 	}
 }

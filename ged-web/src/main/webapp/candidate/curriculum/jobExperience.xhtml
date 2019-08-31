@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://ged.org/ui" xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://ged.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets" template="/WEB-INF/templates/template.xhtml">
 
 	<ui:define name="title">
@@ -28,17 +29,22 @@
 				<div class="p-col-12 p-xl-8">
 					<div class="card">
 						<div class="ui-fluid">
-							<g:input id="degree" label="#{i18n['job_experience.company_name']}" value="#{jobExperienceView.jobExperience.companyName}" required="true" />
-
-							<g:input id="jobPosition" label="#{i18n['job_experience.job_position']}" value="#{jobExperienceView.jobExperience.jobPosition}" required="true" />
-
 							<div class="p-grid">
+								<div class="p-col-6">
+									<g:input id="degree" label="#{i18n['job_experience.company_name']}" value="#{jobExperienceView.jobExperience.companyName}"
+										required="true" />
+								</div>
+								<div class="p-col-6">
+									<g:input id="jobPosition" label="#{i18n['job_experience.job_position']}" value="#{jobExperienceView.jobExperience.jobPosition}"
+										required="true" />
+								</div>
 								<div class="p-col-4">
 									<cc:inputYearMonth id="fromDate" label="#{i18n['job.from_date']}" value="#{jobExperienceView.fromDate}" required="true" />
 								</div>
 								<div class="p-col-4">
 									<h:panelGroup layout="block" id="toDateWrapper">
-										<cc:inputYearMonth id="toDate" label="#{i18n['job.to_date']}" value="#{jobExperienceView.toDate}" rendered="#{not jobExperienceView.jobExperience.stillWorking}" />
+										<cc:inputYearMonth id="toDate" label="#{i18n['job.to_date']}" value="#{jobExperienceView.toDate}"
+											rendered="#{not jobExperienceView.jobExperience.stillWorking}" />
 									</h:panelGroup>
 								</div>
 								<div class="p-col-4">
@@ -46,17 +52,19 @@
 										<f:ajax event="change" render="jobExperience:toDateWrapper" />
 									</g:input>
 								</div>
+								<div class="p-col-12">
+									<g:input id="description" label="#{i18n['job_experience.description']}" value="#{jobExperienceView.jobExperience.description}"
+										type="textarea" />
+								</div>
 							</div>
-
-							<g:input id="description" label="#{i18n['job_experience.description']}" value="#{jobExperienceView.jobExperience.description}" type="textarea" />
 						</div>
 
 						<div class="buttons">
 							<p:button value="#{i18n['action.cancel']}" outcome="#{Page.CURRICULUM.getUrl()}" styleClass="secondary-button">
 								<f:param name="id" value="#{jobExperienceView.curriculum.candidate.id}" />
 							</p:button>
-							<p:commandButton value="#{i18n['action.delete']}" action="#{jobExperienceView.delete}" process="@this" rendered="#{not jobExperienceView.newJobExperience}"
-								styleClass="danger-btn" />
+							<p:commandButton value="#{i18n['action.delete']}" action="#{jobExperienceView.delete}" process="@this"
+								rendered="#{not jobExperienceView.newJobExperience}" styleClass="danger-btn" />
 							<p:commandButton value="#{i18n['action.save']}" action="#{jobExperienceView.save}" process="@form" update="@form" />
 						</div>
 					</div>

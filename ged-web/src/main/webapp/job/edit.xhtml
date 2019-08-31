@@ -5,7 +5,7 @@
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets" template="/WEB-INF/templates/template.xhtml">
 
 	<ui:define name="title">
-		#{i18n['job.edit_job']} - #{editJobView.jobOffer.name}
+		#{i18n['job.edit_job']} - #{editJobView.jobOffer.title}
 	</ui:define>
 
 	<ui:param name="selectedMenu" value="offers" />
@@ -30,7 +30,7 @@
 							<div class="p-col-12 p-xl-6">
 								<h3>#{i18n['user.personal_information']}</h3>
 								<div class="form-field ui-fluid">
-									<g:input label="#{i18n['job.name']}" value="#{editJobView.jobOffer.name}" required="true" />
+									<g:input label="#{i18n['job.title']}" value="#{editJobView.jobOffer.title}" required="true" />
 
 									<cc:autocomplete id="client" label="#{i18n['job.client']}" value="#{editJobView.jobOffer.client}"
 										completeMethod="#{editJobView.completeClient}" required="true">
@@ -40,6 +40,8 @@
 									</cc:autocomplete>
 
 									<g:input id="places" label="#{i18n['job.places']}" value="#{editJobView.jobOffer.places}" type="number" min="0" />
+									
+									<g:input id="salary" label="#{i18n['job.salary']}" value="#{editJobView.jobOffer.salary}" type="money" />
 
 									<g:input id="dateOpened" label="#{i18n['job.date_opened']}" value="#{editJobView.jobOffer.dateOpened}" type="calendar" />
 

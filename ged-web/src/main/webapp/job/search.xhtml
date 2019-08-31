@@ -36,11 +36,11 @@
 			</div>
 			<div class="card">
 				<p:dataTable var="jobOffer" value="#{searchJobView.jobOffers}" emptyMessage="#{i18n['job.no_jobs_found']}" reflow="true"
-					paginator="true" paginatorPosition="bottom" rows="#{sessionUser.rowsPerPage}" sortBy="#{jobOffer.name}" sortOrder="descending"
+					paginator="true" paginatorPosition="bottom" rows="#{sessionUser.rowsPerPage}" sortBy="#{jobOffer.title}" sortOrder="descending"
 					lazy="true">
 
-					<p:column headerText="#{i18n['job.name']}" sortBy="#{jobOffer.name}">
-						<h:link value="#{jobOffer.name}" outcome="#{Page.JOB.getUrl()}">
+					<p:column headerText="#{i18n['job.title']}" sortBy="#{jobOffer.title}">
+						<h:link value="#{jobOffer.title}" outcome="#{Page.JOB.getUrl()}">
 							<f:param name="id" value="#{jobOffer.id}" />
 						</h:link>
 						<span class="job_address">#{jobOffer.address.city} (#{jobOffer.address.state})</span>
@@ -58,10 +58,8 @@
 						</h:outputText>
 					</p:column>
 
-					<p:column headerText="#{i18n['job.date_closed']}" sortBy="#{jobOffer.dateClosed}">
-						<h:outputText value="#{jobOffer.dateClosed}">
-							<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
-						</h:outputText>
+					<p:column headerText="#{i18n['job.salary']}" sortBy="#{jobOffer.salary}">
+						<h:outputText value="#{jobOffer.salray}" />
 					</p:column>
 
 					<p:column headerText="#{i18n['job.places']}">

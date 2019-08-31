@@ -104,7 +104,7 @@ public class UserReport extends AbstractReport {
 			cell = row.createCell(1);
 			cell.setCellValue(jobOffer.getClient().getName());
 			cell = row.createCell(2);
-			cell.setCellValue(jobOffer.getName());
+			cell.setCellValue(jobOffer.getTitle());
 			cell = row.createCell(3);
 			final CellStyle style = this.wb.createCellStyle();
 			style.setDataFormat(df.getFormat("mm-YYYY"));

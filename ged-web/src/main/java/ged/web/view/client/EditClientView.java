@@ -41,7 +41,6 @@ public class EditClientView extends AbstractClientView {
 		this.checkNonNullClient();
 		logger.trace("Client {} edit init", this.client);
 		this.checkEditPermission();
-		this.putValueToFlash(CLIENT_KEY, this.client); // prevent errors if f5/reload is pressed
 	}
 
 	public String save() {

@@ -27,7 +27,7 @@
 							<div class="p-col-12 p-xl-6">
 								<h3>#{i18n['user.personal_information']}</h3>
 								<div class="form-field ui-fluid">
-									<g:input label="#{i18n['job.name']}" value="#{addJobView.jobOffer.name}" required="true" />
+									<g:input label="#{i18n['job.title']}" value="#{addJobView.jobOffer.title}" required="true" />
 
 									<cc:autocomplete id="client" label="#{i18n['job.client']}" value="#{addJobView.jobOffer.client}"
 										completeMethod="#{addJobView.completeClient}" required="true">
@@ -37,6 +37,8 @@
 									</cc:autocomplete>
 
 									<g:input id="places" label="#{i18n['job.places']}" value="#{addJobView.jobOffer.places}" type="number" min="0" />
+									
+									<g:input id="salary" label="#{i18n['job.salary']}" value="#{addJobView.jobOffer.salary}" type="money" />
 
 									<g:input id="dateOpened" label="#{i18n['job.date_opened']}" value="#{addJobView.jobOffer.dateOpened}" type="calendar" />
 
