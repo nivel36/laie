@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -48,6 +49,13 @@ public class ViewClientView extends AbstractView {
 	@Inject
 	private transient JobOfferService jobOfferService;
 
+	private void checkDeleted() {
+		if (this.client.isDeleted()) {
+			logger.warn("Client is deleted");
+			Message.addWarning("message.erased_entity", "message.erased_entity");
+		}
+	}
+
 	public String editClient() {
 		logger.debug("Edit client action performed");
 		this.putValueToFlash(CLIENT_KEY, this.client);
@@ -56,6 +64,15 @@ public class ViewClientView extends AbstractView {
 
 	public void export() throws IOException {
 		logger.debug("Export client action performed");
+	}
+
+	public String getCapitalLetters() {
+		final StringTokenizer st = new StringTokenizer(this.client.getName(), " ");
+		String result = st.nextToken().substring(0, 1);
+		if (st.hasMoreElements()) {
+			result = result + st.nextToken().substring(0, 1);
+		}
+		return result;
 	}
 
 	public Client getClient() {
@@ -81,15 +98,8 @@ public class ViewClientView extends AbstractView {
 		}
 		this.contacts = new ArrayList<>(this.client.getContacts());
 		this.jobOffers = this.jobOfferService.findJobOffers(this.client, Page.ALL);
-		checkDeleted();
+		this.checkDeleted();
 		this.editable = this.sessionUser.hasPermissionToEdit(this.client);
-	}
-
-	private void checkDeleted() {
-		if (this.client.isDeleted()) {
-			logger.warn("Client is deleted");
-			Message.addWarning("message.erased_entity", "message.erased_entity");
-		}
 	}
 
 	public boolean isEditable() {

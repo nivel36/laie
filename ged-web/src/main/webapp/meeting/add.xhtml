@@ -1,24 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
-	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" 
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" 
-	xmlns:f="http://java.sun.com/jsf/core" 
-	xmlns:g="http://ged.org/ui" 
-	xmlns:h="http://java.sun.com/jsf/html" 
-	xmlns:o="http://omnifaces.org/ui"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	template="/WEB-INF/templates/default.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://ged.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets" template="/WEB-INF/templates/template.xhtml">
 
 	<ui:define name="title">
-		<title>#{i18n['calendar.calendar']}</title>
+		#{i18n['calendar.calendar']}
 	</ui:define>
 
-	<ui:param name="selectedMenu" value="calendar" />
+	<ui:param name="selectedMenu" value="meeting" />
 
 	<ui:define name="breadcrumb">
-		<p:breadCrumb styleClass="breadcrumb">
+		<p:breadCrumb>
 			<p:menuitem value="#{i18n['menu.index']}" outcome="#{Page.INDEX.getUrl()}" />
 			<p:menuitem value="#{i18n['meeting.meetings']}" outcome="#{Page.MEETING_SEARCH.getUrl()}" />
 			<p:menuitem value="#{i18n['meeting.add_meeting']}" disabled="true" />
@@ -26,24 +19,25 @@
 	</ui:define>
 
 	<ui:define name="content">
-		<div class="grid">
-			<div class="col-12 xl-9">
+		<div class="p-grid">
+			<div class="p-col-12 p-xl-9">
 				<h:form id="meetingForm">
-					<div class="panel">
-						<div class="panel-content panel-content-data">
-							<div class="grid">
-								<div class="col-12">
+					<div class="card">
+						<div class="p-grid">
+							<div class="p-col-12">
+								<div class="form-field ui-fluid">
 									<g:input label="#{i18n['meeting.title']}" value="#{addMeetingView.meeting.title}" />
 								</div>
-								<div class="col-12 md-6">
-									<h4>#{i18n['meeting.header.details']}</h4>
-									<g:input id="datePlanned" label="#{i18n['meeting.date_planned']}" value="#{addMeetingView.meetingDate}"
-										required="true" type="calendar" />
+							</div>
+							<div class="p-col-12 p-xl-6">
+								<h4>#{i18n['meeting.header.details']}</h4>
 
-									<g:input label="#{i18n['meeting.hour_planned']}" value="#{addMeetingView.meetingHour}" required="true"
-										type="selectOneMenu">
-										<f:selectItems value="#{addMeetingView.hours}" var="meetingHour" itemValue="#{meetingHour}"
-											itemLabel="#{meetingHour}" />
+								<div class="form-field ui-fluid">
+									<g:input id="datePlanned" label="#{i18n['meeting.date_planned']}" value="#{addMeetingView.meetingDate}" required="true"
+										type="calendar" />
+
+									<g:input label="#{i18n['meeting.hour_planned']}" value="#{addMeetingView.meetingHour}" required="true" type="selectOneMenu">
+										<f:selectItems value="#{addMeetingView.hours}" var="meetingHour" itemValue="#{meetingHour}" itemLabel="#{meetingHour}" />
 									</g:input>
 
 									<g:input label="#{i18n['meeting.type']}" value="#{addMeetingView.meeting.meetingType}" type="selectOneMenu">
@@ -53,38 +47,43 @@
 									</g:input>
 
 									<g:input label="#{i18n['meeting.location']}" value="#{addMeetingView.meeting.location}" />
-
 								</div>
-								<div class="col-12 md-6">
-									<h4>#{i18n['meeting.header.attendees']}</h4>
-									<h:panelGroup id="attendeesWrapper" layout="block">
-										<p:autoComplete id="input" value="#{addMeetingView.attendee}" inputStyleClass="input autocomplete"
-											completeMethod="#{addMeetingView.searchPerson}" forceSelection="true" minQueryLength="3" var="person"
-											itemValue="#{person}" itemLabel="#{person}" converter="personConverter">
-											<p:column styleClass="select-person">
-												<cc:person value="#{person}" />
-											</p:column>
-											<p:ajax event="itemSelect" listener="#{addMeetingView.addAttendee}" update="meetingForm:attendeesWrapper" />
-										</p:autoComplete>
 
-										<h:panelGroup layout="block" id="attendees">
-											<ui:repeat var="person" value="#{addMeetingView.attendees}" varStatus="varStatus">
-												<h:panelGroup layout="block" id="attendee" styleClass="attendee">
-													<cc:person value="#{person}" styleClass="small" />
-													<p:commandButton icon="fa fa-times" styleClass="remove-attendee"
-														action="#{addMeetingView.removeAttendee(person)}" process="@this" update="meetingForm:attendees" />
-												</h:panelGroup>
-											</ui:repeat>
+							</div>
+							<div class="p-col-12 p-xl-6">
+								<h4>#{i18n['meeting.header.attendees']}</h4>
+
+								<div class="form-field ui-fluid">
+									<div class="input-group">
+										<h:panelGroup id="attendeesWrapper" layout="block">
+											<p:autoComplete id="input" value="#{addMeetingView.attendee}" inputStyleClass="input autocomplete"
+												completeMethod="#{addMeetingView.searchPerson}" forceSelection="true" minQueryLength="3" var="person" itemValue="#{person}"
+												itemLabel="#{person}" converter="personConverter">
+												<p:column styleClass="select-person">
+													<cc:person value="#{person}" />
+												</p:column>
+												<p:ajax event="itemSelect" listener="#{addMeetingView.addAttendee}" update="meetingForm:attendeesWrapper" />
+											</p:autoComplete>
+
+											<h:panelGroup layout="block" id="attendees">
+												<ui:repeat var="person" value="#{addMeetingView.attendees}" varStatus="varStatus">
+													<h:panelGroup layout="block" id="attendee" styleClass="attendee">
+														<cc:person value="#{person}" styleClass="small" />
+														<p:commandButton icon="fa fa-times" styleClass="remove-attendee" action="#{addMeetingView.removeAttendee(person)}"
+															process="@this" update="meetingForm:attendees" />
+													</h:panelGroup>
+												</ui:repeat>
+											</h:panelGroup>
 										</h:panelGroup>
-									</h:panelGroup>
+									</div>
 								</div>
 							</div>
-						</div>
-						<div class="panel-footer">
-							<div class="panel-buttons">
-								<p:button value="#{i18n['action.cancel']}" outcome="#{Page.MEETING_SEARCH.getUrl()}" styleClass="btn-gray" />
-								<p:commandButton value="#{i18n['action.save']}" action="#{addMeetingView.save}" process="@form"
-									update="@form growl" />
+							<div class="p-col-12">
+								<div class="buttons">
+									<p:button value="#{i18n['action.cancel']}" outcome="#{Page.MEETING_SEARCH.getUrl()}" styleClass="secondary-button" />
+									<p:commandButton value="#{i18n['action.save']}" action="#{addMeetingView.save}" process="@form" update="@form growl"
+										styleClass="success-btn" />
+								</div>
 							</div>
 						</div>
 					</div>

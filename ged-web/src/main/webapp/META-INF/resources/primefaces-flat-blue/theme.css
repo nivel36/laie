@@ -1,81 +1,102 @@
 @charset "UTF-8";
 
 body .ui-icon {
-	font-family: FontAwesome;
 	font-size: 1em;
 	text-indent: 0px;
 }
 
+body .ui-button .ui-icon, body .ui-menuitem .ui-icon  {
+	font-family: FontAwesome;
+}
+
 .ui-icon-carat-2-n-s:before {
+	font-family: FontAwesome;
 	content: "\f0dc";
 }
 
 .ui-icon-triangle-1-n:before {
+	font-family: FontAwesome;
 	content: "\f0d8";
 }
 
 .ui-icon-triangle-1-e:before {
+	font-family: FontAwesome;
 	content: "\f105";
 }
 
 .ui-icon-triangle-1-s:before {
+	font-family: FontAwesome;
 	content: "\f0d7";
 }
 
 .ui-icon-arrow-1-n:before {
+	font-family: FontAwesome;
 	content: "\f106";
 }
 
 .ui-icon-arrowstop-1-n:before {
+	font-family: FontAwesome;
 	content: "\f102";
 }
 
 .ui-icon-arrow-1-s:before {
+	font-family: FontAwesome;
 	content: "\f107";
 }
 
 .ui-icon-arrowstop-1-s:before {
+	font-family: FontAwesome;
 	content: "\f103";
 }
 
 .ui-icon-arrow-1-w:before {
+	font-family: FontAwesome;
 	content: "\f104";
 }
 
 .ui-icon-arrowstop-1-w:before {
+	font-family: FontAwesome;
 	content: "\f100";
 }
 
 .ui-icon-arrow-1-e:before {
+	font-family: FontAwesome;
 	content: "\f105";
 }
 
 .ui-icon-arrowstop-1-e:before {
+	font-family: FontAwesome;
 	content: "\f101";
 }
 
 .ui-icon-circle-triangle-w:before {
+	font-family: FontAwesome;
 	content: "\f0d9";
 }
 
 .ui-icon-plusthick:before {
+	font-family: FontAwesome;
 	content: "\f067";
 }
 
 .ui-icon-closethick:before {
+	font-family: FontAwesome;
 	content: "\f00d";
 }
 
 .ui-icon-check:before {
+	font-family: FontAwesome;
 	content: "\f00c";
 }
 
 .ui-icon-close:before {
+	font-family: FontAwesome;
 	content: "\f00d";
 }
 
 body .ui-autocomplete {
-	width: 100%;
+	display: flex;
+	flex: 1 1 100%;
 }
 
 body .ui-autocomplete-panel {
@@ -116,17 +137,50 @@ body .ui-autocomplete-panel .ui-state-highlight .person .person-data .name, body
 	color: white;
 }
 
+body .ui-breadcrumb {
+	background: white;
+	border-bottom: 1px solid #bfceda;
+	padding: 0.5em;
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+}
+
+body .ui-breadcrumb ul {
+	display: flex;
+	align-items: center;
+}
+
+body .ui-breadcrumb ul li {
+	display: flex;
+	padding: 0.2em;
+	font-weight: 700;
+	color: #848b9d;
+	font-size: 1em;
+	line-height: 1.2em;
+}
+
+body .ui-breadcrumb ul li a {
+	color: #5aa3de;
+	font-weight: 700;
+}
+
+body .ui-breadcrumb ul li a.ui-icon {
+	margin-top: 0px;
+}
+
+body .ui-breadcrumb ul li.ui-breadcrumb-chevron {
+	color: #b6bdcf;
+}
+
 body .ui-button.ui-button-icon-only {
 	font-size: 1em;
 	min-width: auto;
 }
 
-body .ui-button.ui-spinner-button {
-	min-width: auto;
-}
-
 body .ui-button {
 	min-width: 80px;
+	min-height: 34px;
 }
 
 body .ui-button, body .ui-button.ui-button-icon-only {
@@ -219,7 +273,12 @@ body .ui-breadcrumb .ui-breadcrumb-chevron {
 }
 
 body .ui-calendar, body .ui-inputnumber {
-	flex: 1;
+	display: flex;
+	flex: 1 1 100%;
+}
+
+body .ui-calendar .ui-inputfield, body .ui-inputnumber .ui-inputfield {
+	text-align: right;
 }
 
 body .ui-chkbox {
@@ -242,6 +301,11 @@ body .ui-chkbox .ui-chkbox-box.ui-state-disabled {
 	background: #e6e9f0;
 }
 
+body .ui-autocomplete-input-token {
+	flex: 1 1 100%;
+}
+
+
 body .ui-autocomplete-input-token input {
 	margin: 0 0 0 0.5em;
 	padding: 0;
@@ -258,7 +322,8 @@ body .ui-chips-container {
 	border: 1px solid #c2cad8;
 	color: #777777;
 	width: 100%;
-	font-size: 0.8em;
+	display: flex;
+	flex-wrap: wrap;
 }
 
 body .ui-chips-container.ui-state-disabled {
@@ -266,13 +331,18 @@ body .ui-chips-container.ui-state-disabled {
 	background: transparent;
 }
 
+body .ui-chips-container.ui-state-disabled .ui-chips-input-token {
+	display: none;
+}
+
 body .ui-chips-container .ui-chips-token, body .ui-autocomplete-multiple .ui-autocomplete-token {
 	display: inline-flex;
-	padding: 5px;
-	border-radius: 3px;
+	padding: 0px;
+	margin: 0 2px 2px 0;
+	border-radius: 0px;
 	background: #59a2df;
 	color: white;
-	cursor: pointer;
+	order: 1;
 }
 
 body .ui-chips-container.ui-state-disabled .ui-chips-token .ui-icon, body .ui-autocomplete-multiple.ui-state-disabled .ui-autocomplete-token .ui-icon {
@@ -284,7 +354,7 @@ body .ui-chips-container.ui-state-disabled .ui-chips-token, body .ui-autocomplet
 }
 
 body .ui-chips-token .ui-chips-token-label, body .ui-autocomplete-multiple .ui-autocomplete-token-label {
-	padding: 0 0.5em 0 0.5em;
+	padding: 7px 14px;
 	display: flex;
 }
 
@@ -295,12 +365,16 @@ body .ui-chips-container.ui-state-disabled .ui-chips-token .ui-icon, body .ui-au
 
 body .ui-chips-container .ui-chips-token .ui-icon, body .ui-autocomplete-multiple .ui-autocomplete-token .ui-icon {
 	display: inline-flex;
+	padding: 7px;
 	cursor: pointer;
-	margin-top: 0;
+	order: 2;
+	margin: 0;
 	position: relative;
 	right: 0;
-	top: 0;
-	display: inline-flex;
+}
+
+body .ui-chips-container .ui-chips-token:hover .ui-icon, body .ui-autocomplete-multiple .ui-autocomplete-token:hover .ui-icon {
+	background: #86bce8;
 }
 
 body .ui-datalist-data {
@@ -316,6 +390,10 @@ body .ui-datalist-data .ui-datalist-item {
 body .ui-chips-input-token {
 	margin: 0;
 	padding: 0;
+	height: 34px;
+	display: flex;
+	flex: 1 1 100%;
+	align-items: center;
 }
 
 body .ui-datatable, body .ui-datatable .ui-datatable-tablewrapper {
@@ -523,28 +601,22 @@ body .ui-dialog .ui-dialog-titlebar .ui-dialog-titlebar-close {
 body .ui-autocomplete.ui-autocomplete-multiple .ui-inputfield {
 	padding: 0;
 	display: flex;
+	flex: 1 1 100%;
 	flex-wrap: wrap;
 	align-items: flex-start;
 	height: auto;
-}
-
-body .ui-spinner .ui-inputfield {
-	padding: 0.5em 25px 0.5em 0.5em;
-	border: 1px solid #c2cad8;
+	width: 300px;
 }
 
 body .ui-inputfield {
-	border: 0px;
-	padding: 0;
 	height: 100%;
-	width: 100%;
-	color: inherit;
-	justify-content: inherit;
-	text-align: inherit;
-}
-
-body .ui-inputfield.hasDatepicker {
-	cursor: pointer;
+	flex: 1 1 100%;
+	color: #777777;
+	min-height: 34px;
+	display: flex;
+	align-items: center;
+	border: 1px solid #c2cad8;
+	background: white;
 }
 
 body .ui-inputtext.ui-state-disabled, body .ui-inputfield.hasDatepicker.ui-state-disabled, body .ui-autocomplete-input.ui-state-disabled {
@@ -654,14 +726,27 @@ body .ui-growl .ui-growl-item-container.ui-growl-error {
 }
 
 body .ui-selectonemenu {
-	display: inline-block;
 	position: relative;
 	width: auto;
-	zoom: 1;
 	cursor: pointer;
-	padding-right: 22px;
 	vertical-align: top;
-	width: 100%;
+	flex: 1 1 100%;
+	color: #777777;
+	min-height: 34px;
+	display: flex;
+	border: 1px solid #c2cad8;
+	background: white;
+}
+
+body .ui-selectonemenu .ui-selectonemenu-label {
+	display: flex;
+	flex: 1 1 100%;
+	white-space: nowrap;
+	overflow: hidden;
+	font-weight: normal;
+	height: 100%;
+	justify-content: flex-end;
+	align-items: center;
 }
 
 body .ui-selectonemenu .ui-selectonemenu-trigger {
@@ -726,6 +811,7 @@ body .ui-panel {
 	padding: 0;
 	margin: 0;
 	width: 100%;
+	height: 100%;
 	background: #ffffff;
 	box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.08);
 	border: 0px;
@@ -745,17 +831,16 @@ body .ui-panel .ui-panel-titlebar .ui-panel-title {
 }
 
 body .ui-panel .ui-panel-content {
-	border-bottom: 1px solid #bfceda;
+	margin: 0;
 	padding: 0;
+	display: flex;
+	flex-wrap: wrap;
 }
 
 body .ui-panel .ui-panel-footer {
 	display: flex;
-	background: #eef1f8;
-	border-top: 1px solid white;
-	padding: 1em;
 	margin: 0;
-	justify-content: flex-end;
+	padding: 0;
 }
 
 body .ui-picklist {
@@ -774,32 +859,32 @@ body .ui-picklist .ui-picklist-buttons {
 	padding: 1em;
 }
 
-body .ui-selectonemenu .ui-selectonemenu-label {
-	display: flex;
-	border: 0;
-	white-space: nowrap;
-	overflow: hidden;
-	font-weight: normal;
-	width: 100%;
-	height: 100%;
-	justify-content: flex-end;
-	padding-right: 34px;
-	align-items: center;
-}
-
 body .ui-link {
 	display: flex;
 	flex: 1 1 100%;
 }
 
-body .ui-spinner {
-	display: flex;
+
+body .ui-menu {
+	padding: 0;
+	margin: 0;
 }
 
-body .input-group .ui-spinner .ui-spinner-button {
-	height: 50%;
-	width: 16px;
-	margin-left: 16px;
+body .ui-menu .ui-menu-list {
+	background: white;
+	color: #7a869b;
+	display: flex;
+	position: relative;
+	flex-flow: column wrap; 
+}
+
+body .ui-menu .ui-menu-list .ui-menuitem {
+	color: #7a869b;
+}
+
+body .ui-menu .ui-menu-list .ui-menuitem.ui-state-hover{
+	background: #7a869b;
+	color: white;
 }
 
 body .ui-selectonemenu-panel .ui-selectonemenu-list-item {
@@ -808,4 +893,19 @@ body .ui-selectonemenu-panel .ui-selectonemenu-list-item {
 	padding: 3px 5px;
 	text-align: right;
 	white-space: nowrap;
+}
+
+body .ui-spinner {
+	display: flex;
+	flex: 1 1 100%;
+}
+
+body .ui-spinner .ui-spinner-button {
+	height: 50%;
+	width: 16px;
+	min-width: auto;
+}
+
+body .ui-widget-content {
+	background: white;
 }

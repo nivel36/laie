@@ -28,7 +28,7 @@ public class JobCandidatureService extends AbstractService<JobCandidature> {
 	private JobCandidatureDao jobCandidatureDao;
 	
 	public JobCandidature addJobCandidature(final JobOffer jobOffer, final Candidate candidate) {
-		Objects.requireNonNull(jobOffer, "JobOffer can't be null ");
+		Objects.requireNonNull(jobOffer, "JobOffer can't be null");
 		Objects.requireNonNull(candidate, "Candidate can't be null");
 		logger.debug("Add Job Candidature of candidate {} to jobOffer {}", candidate.getFullName(), jobOffer);
 		final JobCandidatureState firstJobCandidatureState = this.jobCandidatureDao.findFirstJobCandidatureState();
@@ -38,7 +38,7 @@ public class JobCandidatureService extends AbstractService<JobCandidature> {
 	}
 	
 	public List<JobCandidature> addJobCandidatures(final JobOffer jobOffer, final List<Candidate> candidates) {
-		Objects.requireNonNull(jobOffer, "JobOffer can't be null ");
+		Objects.requireNonNull(jobOffer, "JobOffer can't be null");
 		Objects.requireNonNull(candidates, "Candidates can't be null");
 		logger.debug("Add job candidatures to jobOffer {}", jobOffer);
 		final List<JobCandidature> jobCandidatures = new ArrayList<>();
@@ -50,7 +50,7 @@ public class JobCandidatureService extends AbstractService<JobCandidature> {
 	}
 	
 	public void removeJobCandidature(final JobOffer jobOffer, final Candidate candidate) {
-		Objects.requireNonNull(jobOffer, "JobOffer can't be null ");
+		Objects.requireNonNull(jobOffer, "JobOffer can't be null");
 		Objects.requireNonNull(candidate, "Candidate can't be null");
 		logger.debug("Remove job candidature of candidate {} to job offer {}", candidate.getFullName(), jobOffer);
 		final JobCandidature jobCandidature = this.jobCandidatureDao.findByJobOfferAndCandidate(jobOffer, candidate);
@@ -73,16 +73,16 @@ public class JobCandidatureService extends AbstractService<JobCandidature> {
 	}
 
 	public List<JobCandidature> findJobCanditures(final JobOffer jobOffer, final Page page) {
-		Objects.requireNonNull(jobOffer, "JobOffer can't be null ");
+		Objects.requireNonNull(jobOffer, "JobOffer can't be null");
 		Objects.requireNonNull(page, "Page can't be null");
-		logger.debug("Find all job candidatures of the job offer  {}", jobOffer);
+		logger.debug("Find all job candidatures of the job offer {}", jobOffer);
 		return this.jobCandidatureDao.findJobCanditures(jobOffer, page);
 	}
 	
 	public List<JobCandidature> findJobCandidatures(final Candidate candidate, final Page page) {
 		Objects.requireNonNull(candidate, "Candidate can't be null");
 		Objects.requireNonNull(page, "Page can't be null");
-		logger.debug("Find all job candidatures of the candidate  {}", candidate);
+		logger.debug("Find all job candidatures of the candidate {}", candidate);
 		return this.jobCandidatureDao.findJobCandidatures(candidate, page);
 	}
 }

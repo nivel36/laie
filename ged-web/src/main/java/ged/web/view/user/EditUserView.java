@@ -41,7 +41,6 @@ public class EditUserView extends AbstractUserView {
 		this.checkNonNullUser();
 		this.checkEditPermission();
 		logger.trace("User {} edit init", this.user.getEmail());
-		this.putValueToFlash(USER_KEY, this.user); // prevent errors if f5/reload is pressed
 	}
 
 	public String save() {

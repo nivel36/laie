@@ -1,14 +1,7 @@
-<ui:component xmlns=	"http://www.w3.org/1999/xhtml"
-	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" 
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
-	xmlns:composite="http://xmlns.jcp.org/jsf/composite" 
-	xmlns:f="http://java.sun.com/jsf/core" 
-	xmlns:g="http://ged.org/ui" 
-	xmlns:h="http://java.sun.com/jsf/html" 
-	xmlns:o="http://omnifaces.org/ui"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:component xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:composite="http://xmlns.jcp.org/jsf/composite"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://ged.org/ui" xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui"
+	xmlns:p="http://primefaces.org/ui" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets">
 
 	<composite:interface>
 		<composite:attribute name="value" required="true" />
@@ -19,22 +12,19 @@
 	</composite:interface>
 
 	<composite:implementation>
-		<div id="#{cc.clientId}">
-			<p:panel header="#{cc.attrs.title}" styleClass="panel meetings #{cc.attrs.styleClass}">
-				<div class="panel-content-data">
-					<ui:repeat var="meeting" value="#{cc.attrs.value}" rendered="#{not empty cc.attrs.value}">
-						<cc:meeting value="#{meeting}" />
-					</ui:repeat>
-					<div class="meetings-empty-message">
-						<h:outputText value="#{cc.attrs.emptyMessage}" rendered="#{empty cc.attrs.value}" />
-					</div>
+		<div id="#{cc.clientId}" class="card card-w-title meetings  #{cc.attrs.styleClass}">
+			<h3>#{cc.attrs.title}</h3>
+			<div class="panel-content-data">
+				<ui:repeat var="meeting" value="#{cc.attrs.value}" rendered="#{not empty cc.attrs.value}">
+					<cc:meeting value="#{meeting}" />
+				</ui:repeat>
+				<div class="meetings-empty-message">
+					<h:outputText value="#{cc.attrs.emptyMessage}" rendered="#{empty cc.attrs.value}" />
 				</div>
-				<h:panelGroup layout="block" class="panel-footer" rendered="#{component.findComponent('children').childCount > 0}">
-					<h:panelGroup id="children" styleClass="panel-buttons">
-						<composite:insertChildren />
-					</h:panelGroup>
-				</h:panelGroup>
-			</p:panel>
+			</div>
+			<h:panelGroup id="children" styleClass="buttons">
+				<composite:insertChildren />
+			</h:panelGroup>
 		</div>
 	</composite:implementation>
 </ui:component>

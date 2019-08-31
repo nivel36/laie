@@ -1,25 +1,44 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui" lang="en">
 
-<f:view contentType="text/html" locale="#{sessionUser.locale}">
-	<h:head>
-		<ui:insert name="title">
-			<title>Dialog</title>
-		</ui:insert>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-		<meta http-equiv="Pragma" content="no-cache" />
-		<meta http-equiv="Expires" content="-1" />
-		<script>{"describedby":"form"}</script>
-		<h:outputStylesheet name="css/reset.css" />
-		<h:outputStylesheet name="css/flat-classic-blue/components.css" />
-		<h:outputStylesheet name="css/flexgrid.css" />
-	</h:head>
+<h:head>
+	<f:facet name="first">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<link rel="shortcut icon" type="image/x-icon" href="#{request.contextPath}/roma-layout/images/favicon.ico" />
+	</f:facet>
+	<title><ui:insert name="title">Ged</ui:insert></title>
+	<h:outputScript name="js/nanoscroller.js" library="roma-layout" />
+	<h:outputScript name="js/layout.js" library="roma-layout" />
+	<ui:insert name="head" />
+</h:head>
 
-	<h:body>
-		<ui:insert name="content" />
-	</h:body>
-</f:view>
+<h:body>
+	<f:metadata>
+		<p:importConstants type="ged.web.core.util.PageEnum" var="Page" />
+	</f:metadata>
+	<div class="layout-wrapper #{guestPreferences.menuMode} #{guestPreferences.menuColor} #{guestPreferences.topBarColor}">
+
+		<ui:insert name="content"></ui:insert>
+		<p:ajaxStatus styleClass="layout-ajax-loader">
+			<f:facet name="start">
+				<i class="fa fa-circle-o-notch fa-spin layout-ajax-loader-icon" aria-hidden="true"></i>
+			</f:facet>
+
+			<f:facet name="complete">
+				<h:outputText value="" />
+			</f:facet>
+		</p:ajaxStatus>
+	</div>
+
+	<h:outputStylesheet name="css/reset.css" library="roma-layout" />
+	<h:outputStylesheet name="css/primeflex.css" library="roma-layout" />
+	<h:outputStylesheet name="css/nanoscroller.css" library="roma-layout" />
+	<h:outputStylesheet name="css/layout-blue.css" library="roma-layout" />
+	<h:outputStylesheet name="css/style.css" library="roma-layout" />
+</h:body>
+
 </html>

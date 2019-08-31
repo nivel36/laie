@@ -36,9 +36,9 @@ public class StartupConfig {
 	}
 
 	private void createAppDirectories() throws IOException {
-		create("/temp/lucene");
-		create("/temp/files");
-		create("/temp/img");
+		this.create("/temp/lucene");
+		this.create("/temp/files");
+		this.create("/temp/img");
 	}
 
 	private void indexerInit() throws InterruptedException {
@@ -53,8 +53,7 @@ public class StartupConfig {
 	public void init(@Observes @Initialized(ApplicationScoped.class) final ServletContext context)
 			throws InterruptedException, IOException {
 		logger.info("Setting up application");
-		createAppDirectories();
-		indexerInit();
-
+		this.createAppDirectories();
+		this.indexerInit();
 	}
 }

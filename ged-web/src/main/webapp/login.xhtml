@@ -1,43 +1,57 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" 
-	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" 
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" 
-	xmlns:f="http://java.sun.com/jsf/core" 
-	xmlns:g="http://ged.org/ui" 
-	xmlns:h="http://java.sun.com/jsf/html" 
-	xmlns:o="http://omnifaces.org/ui"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
 
 <h:head>
+	<f:facet name="first">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+	</f:facet>
 	<title>${i18n['login.login']}</title>
-	<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
-	<meta name="viewport" content="width=device-width,maximum-scale=2" />
-	<h:outputStylesheet name="css/reset.css" />
-	<h:outputStylesheet name="css/flat-classic-blue/components.css" />
 </h:head>
 
-<h:body>
-	<p:growl id="growl" globalOnly="true" />
-	<div class="full-page login-page">
-		<div class="content">
-			<h:form>
-				<p:panel header="${i18n['login.login']}" styleClass="login dialog">
-					<div class="panel-content-data grid">
-						<div class="col-12">
-							<g:input id="username" icon="fa-user" value="#{loginView.username}" required="true" />
-							<g:input id="password" icon="fa-lock" value="#{loginView.password}" required="true" type="password" />
-						</div>
+<h:body styleClass="login-body">
+	<h:form>
+		<div class="card login-panel ui-fluid">
+			<div class="login-panel-content">
+				<div class="p-grid">
+					<div class="p-col-12 username-container">
+						<h:panelGroup>
+							<label>#{i18n['login.username']}</label>
+							<div class="login-input">
+								<p:inputText id="username" value="#{loginView.username}" />
+							</div>
+						</h:panelGroup>
 					</div>
-					<div class="panel-footer">
-						<div class="panel-buttons">
-							<p:commandButton action="#{loginView.login}" value="${i18n['login.enter']}" update="@form growl" />
-						</div>
+					<div class="p-col-12 password-container">
+						<h:panelGroup>
+							<label>#{i18n['login.password']}</label>
+							<div class="login-input">
+								<p:password id="password" value="#{loginView.password}" />
+							</div>
+						</h:panelGroup>
 					</div>
-				</p:panel>
-			</h:form>
+					<div class="p-col-12 p-sm-6 p-md-6 rememberme-container">
+						<p:selectBooleanCheckbox />
+						<label>Acordarse</label>
+					</div>
+
+					<div class="p-col-12 p-sm-6 p-md-6 forgetpassword-container">
+						<a href="#" class="forget-password">He olvidado la contraseña</a>
+					</div>
+
+					<div class="p-col-12 p-sm-6 p-md-6">
+						<p:commandButton action="#{loginView.login}" value="${i18n['login.enter']}" icon="fa fa-user" update="@form" />
+					</div>
+				</div>
+			</div>
 		</div>
-	</div>
+	</h:form>
+
+	<h:outputStylesheet name="css/primeflex.css" library="roma-layout" />
+	<h:outputStylesheet name="css/layout-#{guestPreferences.theme}.css" library="roma-layout" />
 </h:body>
+
 </html>

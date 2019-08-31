@@ -1,28 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
-	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" 
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" 
-	xmlns:f="http://java.sun.com/jsf/core" 
-	xmlns:g="http://ged.org/ui" 
-	xmlns:h="http://java.sun.com/jsf/html" 
-	xmlns:o="http://omnifaces.org/ui"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	template="/WEB-INF/templates/default.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://ged.org/ui" xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets" template="/WEB-INF/templates/template.xhtml">
 
 	<ui:define name="title">
-		<title>#{i18n['client.client']} - #{viewClientView.client.name}</title>
+		#{i18n['client.client']} - #{viewClientView.client.name}
 	</ui:define>
 
 	<ui:param name="selectedMenu" value="clients" />
 
-	<ui:define name="actions">
-		<p:button value="#{i18n['client.new_client']}" outcome="#{Page.CLIENT_ADD.getUrl()}" />
-	</ui:define>
-
 	<ui:define name="breadcrumb">
-		<p:breadCrumb styleClass="breadcrumb">
+		<p:breadCrumb>
 			<p:menuitem value="#{i18n['menu.index']}" outcome="#{Page.INDEX.getUrl()}" />
 			<p:menuitem value="#{i18n['client.clients']}" outcome="#{Page.CLIENT_SEARCH.getUrl()}" />
 			<p:menuitem value="#{viewClientView.client.name}" disabled="true" />
@@ -30,50 +18,56 @@
 	</ui:define>
 
 	<ui:define name="content">
-		<div class="grid">
-			<div class="col-12 sm-7">
-				<p:panel>
-					<div class="panel-header">
-						<div class="panel-header-title">#{viewClientView.client}</div>
-						<h:form>
-							<div class="panel-buttons">
-								<p:commandButton value="#{i18n['action.export']}" process="@this" action="#{viewClientView.export}"
-									icon="fa-file-excel-o" />
-								<p:commandButton value="#{i18n['action.edit']}" process="@this" action="#{viewClientView.editClient}" />
+		<div class="p-grid">
+			<div class="p-col-12">
+				<div class="card client-card">
+					<div class="client-card-header">
+						<div class="client-card-name">#{viewClientView.client.name}</div>
+						<div class="client-card-buttons">
+							<h:form>
+								<p:commandButton value="#{i18n['action.export']}" process="@this" action="#{viewClientView.export}" icon="fa fa-file-excel-o" />
+								<p:commandButton value="#{i18n['action.edit']}" process="@this" action="#{viewClientView.editClient}" icon="fa fa-pencil" />
+							</h:form>
+						</div>
+					</div>
+
+					<div class="client-card-content">
+						<div class="p-grid">
+							<div class="p-col-3 p-xl-2">
+								<cc:outputText label="#{i18n['client.cif']}" value="#{viewClientView.client.cif}" />
 							</div>
-						</h:form>
-					</div>
-					<div class="panel-content-data grid">
-						<div class="col-12 sm-6">
-							<cc:outputText label="#{i18n['client.cif']}" value="#{viewClientView.client.cif}" styleClass="cif" />
-						</div>
-						<div class="col-12 sm-6">
-							<cc:outputText label="#{i18n['client.phone_number']}" value="#{viewClientView.client.phoneNumber}"
-								styleClass="phone_number" />
-
-							<cc:outputText label="#{i18n['client.city']}" value="#{viewClientView.client.address.city}" styleClass="city" />
-
-							<cc:outputText label="#{i18n['client.state']}" value="#{viewClientView.client.address.state}" styleClass="state" />
+							<div class="p-col-3 p-xl-2">
+								<cc:outputText label="#{i18n['client.phone_number']}" value="#{viewClientView.client.phoneNumber}" />
+							</div>
+							<div class="p-col-3 p-xl-2">
+								<cc:outputText label="#{i18n['client.city']}" value="#{viewClientView.client.address.city}" />
+							</div>
+							<div class="p-col-3 p-xl-2">
+								<cc:outputText label="#{i18n['client.state']}" value="#{viewClientView.client.address.state}" />
+							</div>
 						</div>
 					</div>
-				</p:panel>
+				</div>
 			</div>
-			<div class="col-12 sm-5">
-				<h:form id="contactsForm">
-					<cc:contacts contacts="#{viewClientView.contacts}">
-						<p:commandButton value="#{i18n['contact.new_contact']}" actionListener="#{viewClientView.newContact}"
-							action="#{Page.CONTACT_ADD.getUrl()}" process="@this" />
-					</cc:contacts>
-				</h:form>
+
+			<div class="p-col-12 p-xl-8">
+				<cc:jobOffers id="jobOffers" jobOffers="#{viewClientView.jobOffers}">
+					<h:form id="jobOffersForm">
+						<p:commandButton value="#{i18n['job.new_job_offer']}" actionListener="#{viewClientView.newJobOffer}" action="#{Page.JOB_ADD.getUrl()}" process="@this"
+							styleClass="success-btn" />
+					</h:form>
+				</cc:jobOffers>
 			</div>
-			<div class="col-12 sm-8">
-				<h:form id="jobOffersForm">
-					<cc:jobOffers id="jobOffers" jobOffers="#{viewClientView.jobOffers}">
-						<p:commandButton value="#{i18n['job.new_job_offer']}" actionListener="#{viewClientView.newJobOffer}"
-							action="#{Page.JOB_ADD.getUrl()}" process="@this" />
-					</cc:jobOffers>
-				</h:form>
+
+			<div class="p-col-12 p-xl-4">
+				<cc:contacts contacts="#{viewClientView.contacts}">
+					<h:form id="contactsForm">
+						<p:commandButton value="#{i18n['contact.new_contact']}" actionListener="#{viewClientView.newContact}" action="#{Page.CONTACT_ADD.getRedirectedUrl()}" process="@this"
+							styleClass="success-btn" />
+					</h:form>
+				</cc:contacts>
 			</div>
+
 		</div>
 	</ui:define>
 </ui:composition>

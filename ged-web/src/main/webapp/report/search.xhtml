@@ -9,18 +9,17 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	template="/WEB-INF/templates/default.xhtml">
+	template="/WEB-INF/templates/template.xhtml">
 
 	<ui:param name="selectedMenu" value="reports" />
 	
 	<ui:define name="breadcrumb">
-		<p:breadCrumb styleClass="breadcrumb">
+		<p:breadCrumb>
 			<p:menuitem value="#{i18n['menu.index']}" outcome="#{Page.INDEX.getUrl()}" />
 			<p:menuitem value="#{i18n['report.reports']}" disabled="true" />
 		</p:breadCrumb>
 	</ui:define>
 	
-
 	<ui:define name="content">
 	</ui:define>
 </ui:composition>

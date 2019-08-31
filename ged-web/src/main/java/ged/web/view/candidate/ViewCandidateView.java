@@ -2,7 +2,6 @@ package ged.web.view.candidate;
 
 import java.io.IOException;
 import java.lang.invoke.MethodHandles;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -18,7 +17,6 @@ import org.slf4j.LoggerFactory;
 import ged.ejb.candidate.Candidate;
 import ged.ejb.core.model.Address;
 import ged.ejb.core.model.Page;
-import ged.ejb.core.tag.Tag;
 import ged.ejb.curriculum.Curriculum;
 import ged.ejb.curriculum.CurriculumService;
 import ged.ejb.job.candidature.JobCandidature;
@@ -58,8 +56,6 @@ public class ViewCandidateView extends AbstractView {
 
 	@Inject
 	private transient MeetingService meetingService;
-
-	private final List<Tag> tags = new ArrayList<>();
 	
 	public String editCandidate() {
 		logger.debug("Edit candidate action performed");
@@ -71,10 +67,6 @@ public class ViewCandidateView extends AbstractView {
 		logger.debug("Export candidate action performed");
 	}
 	
-	private void fillTags() {
-		tags.addAll(candidate.getTags());
-	}
-
 	public Candidate getCandidate() {
 		return this.candidate;
 	}
@@ -91,10 +83,6 @@ public class ViewCandidateView extends AbstractView {
 		return meetings;
 	}
 
-	public List<Tag> getTags() {
-		return this.tags;
-	}
-
 	@PostConstruct
 	public void init() {
 		if (this.candidate == null) {
@@ -104,7 +92,6 @@ public class ViewCandidateView extends AbstractView {
 		if (this.candidate.getAddress() == null) {
 			this.candidate.setAddress(new Address());
 		}
-		this.fillTags();
 		this.jobCandidatures = this.jobCandidatureService.findJobCandidatures(candidate, Page.ALL);
 		this.curriculum = this.curriculumService.findByCandidate(this.candidate);
 		this.editable = this.sessionUser.hasPermissionToEdit(this.candidate);
@@ -156,5 +143,4 @@ public class ViewCandidateView extends AbstractView {
 	public void setMeetingService(MeetingService meetingService) {
 		this.meetingService = meetingService;
 	}
-
 }

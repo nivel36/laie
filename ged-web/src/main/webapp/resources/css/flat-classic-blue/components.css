@@ -1,8 +1,16 @@
 @charset "UTF-8";
 
+/* roboto-regular - latin */
 @font-face {
-	font-family: "Roboto";
-	src: url("#{resource['fonts:Roboto-Regular.ttf']}") format("truetype");
+font-family: 'Roboto';
+font-style: normal;
+src: url("#{resource['primefaces-mytheme:fonts/roboto-v15-latin-regular.eot']}"); /* IE9 Compat Modes */
+src: local('Roboto'), local('Roboto-Regular'),
+    url("#{resource['primefaces-mytheme:fonts/roboto-v15-latin-regular.eot']}#iefix") format('embedded-opentype'), /* IE6-IE8 */
+    url("#{resource['primefaces-mytheme:fonts/roboto-v15-latin-regular.woff2']}") format('woff2'), /* Super Modern Browsers */
+    url("#{resource['primefaces-mytheme:fonts/roboto-v15-latin-regular.woff']}") format('woff'), /* Modern Browsers */
+    url("#{resource['primefaces-mytheme:fonts/roboto-v15-latin-regular.ttf']}") format('truetype'), /* Safari, Android, iOS */
+    url("#{resource['primefaces-mytheme:fonts/roboto-v15-latin-regular.svg']}#Roboto") format('svg'); /* Legacy iOS */
 }
 
 * {
@@ -15,6 +23,11 @@ body {
 	font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
 	color: #7a869b;
 	background: #f4f4f4;
+}
+
+body button {
+	font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+	font-size: 14px;
 }
 
 a {
@@ -45,8 +58,8 @@ h3 {
 }
 
 h4 {
-	font-size: 1em;
-	padding: 1em 0 0.3em 0;
+	font-size: 14px;
+	padding: 5px 0;
 	border-bottom: 1px solid #cfcfcf;
 	margin-bottom: 1em;
 }
@@ -68,6 +81,11 @@ body>footer .version {
 body footer .version span {
 	font-size: 0.8em;
 	color: #848b9d;
+}
+
+.buttons {
+	display: flex;
+	justify-content: flex-end;
 }
 
 /************************************
@@ -165,13 +183,6 @@ body footer .version span {
 	padding: 1em;
 }
 
-#breadcrumb {
-	display: flex;
-	flex-direction: column;
-	flex: 1;
-	padding: 0;
-}
-
 /************************************
  *  main
  ************************************/
@@ -180,44 +191,7 @@ body footer .version span {
 	width: 100%;
 }
 
-body .breadcrumb {
-	background: white;
-	border-bottom: 1px solid #bfceda;
-	border-left: 1px solid white;
-	border-right: 1px solid #bfceda;
-	padding: 0.5em;
-}
-
-body .breadcrumb ul {
-	display: flex;
-	align-items: center;
-}
-
-body .breadcrumb ul li {
-	display: flex;
-	padding: 0.2em;
-	font-weight: 700;
-	color: #848b9d;
-	font-size: 1em;
-}
-
-body .breadcrumb ul li a {
-	color: #5aa3de;
-	font-weight: 800;
-}
-
-body .breadcrumb ul li a.ui-icon {
-	margin-top: 0px;
-}
-
-body .breadcrumb ul li.ui-breadcrumb-chevron {
-	color: #b6bdcf;
-}
-
 .candidate-metadata {
-	background: #f8f9fb;
-	border-right: 1px solid #bfceda;
-	height: 100%;
 	padding: 2em;
 	display: flex;
 	flex-direction: column;
@@ -235,6 +209,10 @@ body .breadcrumb ul li.ui-breadcrumb-chevron {
 	justify-content: flex-end;
 }
 
+.form-field .input-group {
+	padding: 7px 14px;
+}
+
 .link {
 	padding: 5px 0px;
 	display: inline-flex;
@@ -248,68 +226,6 @@ body .breadcrumb ul li.ui-breadcrumb-chevron {
 /************************************
  *  input
  ************************************/
-body .input {
-	flex: 1 1 auto;
-	color: #777777;
-	min-height: 34px;
-	display: flex;
-	align-items: center;
-	border: 1px solid #c2cad8;
-	padding: 0.5em;
-	background: white;
-}
-
-body .input.ui-spinner, body .input.ui-calendar, body .input.ui-inputnumber
-	{
-	padding: 0;
-	border: 0px;
-}
-
-body .input.ui-autocomplete {
-	padding: 0;
-}
-
-input[type="text"]:disabled {
-	background: #efefef;
-}
-
-.input.input-checkbox {
-	flex: 0 0 16px;
-	height: 16px;
-	padding: 0;
-}
-
-.input.input-text-area {
-	height: 100px;
-}
-
-.input.input-number {
-	padding-right: 25px;
-}
-
-.input.input-number, .input.input-money, .input.input-select {
-	text-align: right;
-}
-
-.input.input-select {
-	padding: 0;
-	overflow: hidden;
-}
-
-.input.input-user input[type="text"] {
-	padding: 0.5em;
-	overflow: hidden;
-}
-
-.input .btn-inner {
-	margin: -2.25em;
-	background-color: transparent;
-	border: 0px;
-}
-
-.input .btn-inner .ui-icon {
-	color: #7a869b;
-}
 
 .panel-aside .input-avatar {
 	display: inline-flex;
@@ -388,7 +304,8 @@ body .input-search .clean-search-button {
 
 .input-group {
 	display: flex;
-	padding: 0.5em;
+	flex: 1 1 100%;
+	padding: 0;
 	align-items: center;
 	flex-flow: row wrap;
 	position: relative;
@@ -408,20 +325,21 @@ body .input-search .clean-search-button {
 
 .input-group  .input-container {
 	display: flex;
-	flex: 1;
+	flex: 1 1 auto;
 	position: relative;
+	align-items: center;
 }
 
 .input-group .label-container {
 	display: flex;
-	width: 150px;
+	width: 170px;
 }
 
 .input-group .labelIcon, .input-group .input-icon {
 	flex: 0 1 auto;
 }
 
-body .input-group button.icon, .input-group .icon, body .input-group .ui-button
+body .input-group button.icon, .input-group .icon
 	{
 	width: 34px;
 	height: 34px;
@@ -451,12 +369,8 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button
 }
 
 .input-group .message-container {
-	flex: 1 100%;
-	margin-left: 150px;
-}
-
-.dialog {
-	border-radius: 4px;
+	flex: 1 1 100%;
+	margin-left: 170px;
 }
 
 .panel {
@@ -476,6 +390,7 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button
 	padding: 0px;
 	margin: 0;
 	display: flex;
+	flex: 1 1 100%;
 }
 
 .panel-header a {
@@ -499,12 +414,11 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button
 	display: flex;
 	flex: 1 1 auto;
 	justify-content: flex-end;
-	padding: 10px;
+	padding: 20px;
 }
 
 .panel-aside {
 	flex: 0;
-	border-bottom: 1px solid #bfceda;
 	display: flex;
 }
 
@@ -525,6 +439,7 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button
 	padding: 20px;
 	display: flex;
 	flex-wrap: wrap;
+	flex: 1;
 }
 
 .panel-footer {
@@ -567,7 +482,7 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button
 .panel-header-image {
 	display: flex;
 	flex-direction: column;
-	padding: 10px;
+	padding: 20px;
 }
 
 .panel-header-content {
@@ -586,7 +501,7 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button
 	padding-bottom: 0.4em;
 }
 
-.curriculum .panel-header-data .job-profile, .candidate .panel-header-data .job-profile
+.curriculum .panel-header-data .job-profile, .candidate .panel-header-data .job-profile, .user .panel-header-data .job-profile
 	{
 	font-size: 1em;
 	padding-bottom: 0.6em;
@@ -717,6 +632,7 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button
 
 .login.dialog {
 	width: 400px;
+	height: auto;
 }
 
 .invisible {
@@ -1038,8 +954,4 @@ body .input-group button.icon, .input-group .icon, body .input-group .ui-button
 .meeting-attendee {
 	display: inline-flex;
 	padding: 5px 10px 5px 0px;
-}
-
-.search-bar {
-	width: 300px;
 }

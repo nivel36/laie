@@ -52,6 +52,8 @@ public class JobOffer extends AbstractEntity implements Ownerable {
 	@IndexedEmbedded
 	private Client client;
 
+	private Integer salary;
+
 	@Field(analyze = Analyze.NO)
 	@SortableField
 	private LocalDate dateClosed;
@@ -73,10 +75,10 @@ public class JobOffer extends AbstractEntity implements Ownerable {
 
 	@NotNull
 	@Column(nullable = false)
-	@Field(name = "_name")
-	@Field(name = "name", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
-	@SortableField(forField = "name")
-	private String name;
+	@Field(name = "_title")
+	@Field(name = "title", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
+	@SortableField(forField = "title")
+	private String title;
 
 	@NotNull
 	@ManyToOne
@@ -103,7 +105,7 @@ public class JobOffer extends AbstractEntity implements Ownerable {
 			return false;
 		}
 		final JobOffer other = (JobOffer) obj;
-		return Objects.equals(this.dateOpened, other.dateOpened) && Objects.equals(this.name, other.name)
+		return Objects.equals(this.dateOpened, other.dateOpened) && Objects.equals(this.title, other.title)
 				&& Objects.equals(this.places, other.places);
 	}
 
@@ -135,10 +137,6 @@ public class JobOffer extends AbstractEntity implements Ownerable {
 		return this.jobOfferState;
 	}
 
-	public String getName() {
-		return this.name;
-	}
-
 	@Override
 	public User getOwner() {
 		return this.owner;
@@ -152,9 +150,17 @@ public class JobOffer extends AbstractEntity implements Ownerable {
 		return this.recruiters;
 	}
 
+	public Integer getSalary() {
+		return this.salary;
+	}
+
+	public String getTitle() {
+		return this.title;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(this.dateOpened, this.name, this.places);
+		return Objects.hash(this.dateOpened, this.title, this.places);
 	}
 
 	public void setAddress(final Address address) {
@@ -185,10 +191,6 @@ public class JobOffer extends AbstractEntity implements Ownerable {
 		this.jobOfferState = jobOfferState;
 	}
 
-	public void setName(final String name) {
-		this.name = name;
-	}
-
 	@Override
 	public void setOwner(final User owner) {
 		this.owner = owner;
@@ -212,8 +214,16 @@ public class JobOffer extends AbstractEntity implements Ownerable {
 		this.recruiters = recruiters;
 	}
 
+	public void setSalary(final Integer salary) {
+		this.salary = salary;
+	}
+
+	public void setTitle(final String title) {
+		this.title = title;
+	}
+
 	@Override
 	public String toString() {
-		return this.name + "-" + this.client.getName();
+		return this.title + "-" + this.client.getName();
 	}
 }

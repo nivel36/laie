@@ -1,22 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
-	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" 
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" 
-	xmlns:f="http://java.sun.com/jsf/core" 
-	xmlns:g="http://ged.org/ui" 
-	xmlns:h="http://java.sun.com/jsf/html" 
-	xmlns:o="http://omnifaces.org/ui"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	template="/WEB-INF/templates/default.xhtml">
-	
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://ged.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets" template="/WEB-INF/templates/template.xhtml">
+
 	<ui:define name="title">
-		<title>#{i18n['education.education']}</title>
+		#{i18n['education.education']}
 	</ui:define>
 
 	<ui:define name="breadcrumb">
-		<p:breadCrumb styleClass="breadcrumb">
+		<p:breadCrumb>
 			<p:menuitem value="#{i18n['menu.index']}" outcome="#{Page.INDEX.getUrl()}" />
 			<p:menuitem value="#{i18n['candidate.candidates']}" outcome="#{Page.CANDIDATE_SEARCH.getUrl()}" />
 			<p:menuitem value="#{educationView.curriculum.candidate.fullName}" outcome="#{Page.CANDIDATE.getUrl()}">
@@ -31,42 +24,49 @@
 
 	<ui:define name="content">
 		<h:form id="education">
-			<div class="grid nogutter">
-				<div class="panel curriculum col-12 xl-8">
-					<div class="panel-content">
-						<div class="panel-content-data">
-							<g:input id="degree" label="#{i18n['education.degree']}" value="#{educationView.education.degree}" required="true" />
-
-							<g:input id="school" label="#{i18n['education.school']}" value="#{educationView.education.school}" required="true" />
-
-							<cc:inputSelect id="fromDate" label="#{i18n['education.from_date']}" value="#{educationView.education.startYear}">
-								<f:selectItem itemLabel="#{i18n['date.year']}" itemValue="" />
-								<f:selectItems var="year" value="#{educationView.years}" itemValue="#{year}" itemLabel="#{year}" />
-							</cc:inputSelect>
-
-							<h:panelGroup layout="block" id="toDateWrapper">
-								<cc:inputSelect id="toDate" label="#{i18n['education.to_date']}" value="#{educationView.education.endYear}"
-									rendered="#{not educationView.education.stillStudying}">
-									<f:selectItem itemLabel="#{i18n['date.year']}" itemValue="" />
-									<f:selectItems var="year" value="#{educationView.years}" itemValue="#{year}" itemLabel="#{year}" />
-								</cc:inputSelect>
-							</h:panelGroup>
-
-							<g:input id="still" label="#{i18n['job.still_working']}" value="#{jobExperienceBean.stillWorking}" type="checkbox" >
-								<f:ajax event="change" render="jobExperience:toDateWrapper" />
-							</g:input>
-
-							<g:input id="description" label="#{i18n['education.description']}" value="#{educationView.education.description}" type="textarea" />
+			<div class="p-grid">
+				<div class="p-col-12 p-xl-8">
+					<div class="card">
+						<div class="ui-fluid">
+							<div class="p-grid">
+								<div class="p-col-6">
+									<g:input id="degree" label="#{i18n['education.degree']}" value="#{educationView.education.degree}" required="true" />
+								</div>
+								<div class="p-col-6">
+									<g:input id="school" label="#{i18n['education.school']}" value="#{educationView.education.school}" required="true" />
+								</div>
+								<div class="p-col-4">
+									<cc:inputSelect id="fromDate" label="#{i18n['education.from_date']}" value="#{educationView.education.startYear}">
+										<f:selectItem itemLabel="#{i18n['date.year']}" itemValue="" />
+										<f:selectItems var="year" value="#{educationView.years}" itemValue="#{year}" itemLabel="#{year}" />
+									</cc:inputSelect>
+								</div>
+								<div class="p-col-4">
+									<h:panelGroup layout="block" id="toDateWrapper">
+										<cc:inputSelect id="toDate" label="#{i18n['education.to_date']}" value="#{educationView.education.endYear}"
+											rendered="#{not educationView.education.stillStudying}">
+											<f:selectItem itemLabel="#{i18n['date.year']}" itemValue="" />
+											<f:selectItems var="year" value="#{educationView.years}" itemValue="#{year}" itemLabel="#{year}" />
+										</cc:inputSelect>
+									</h:panelGroup>
+								</div>
+								<div class="p-col-4">
+									<g:input id="still" label="#{i18n['job.still_working']}" value="#{educationView.education.stillStudying}" type="checkbox">
+										<f:ajax event="change" render="education:toDateWrapper" />
+									</g:input>
+								</div>
+								<div class="p-col-12">
+									<g:input id="description" label="#{i18n['education.description']}" value="#{educationView.education.description}" type="textarea" />
+								</div>
+							</div>
 						</div>
-					</div>
 
-					<div class="panel-footer">
-						<div class="panel-buttons">
-							<p:button value="#{i18n['action.cancel']}" outcome="#{Page.CURRICULUM.getUrl()}" styleClass="btn-gray">
+						<div class="buttons">
+							<p:button value="#{i18n['action.cancel']}" outcome="#{Page.CURRICULUM.getUrl()}" styleClass="secondary-button">
 								<f:param name="id" value="#{educationView.curriculum.candidate.id}" />
 							</p:button>
 							<p:commandButton value="#{i18n['action.delete']}" action="#{educationView.delete}" process="@this"
-								rendered="#{not educationView.newEducation}" />
+								rendered="#{not educationView.newEducation}" styleClass="danger-btn" />
 							<p:commandButton value="#{i18n['action.save']}" action="#{educationView.save}" process="@form" update="@form" />
 						</div>
 					</div>

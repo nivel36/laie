@@ -15,10 +15,8 @@ import ged.ejb.user.User;
 @Repository
 public class JobOfferDao extends AbstractDao<JobOffer> {
 
-	public List<JobOffer> findJobOffers(final User owner, final Page page) {
-		Objects.requireNonNull(owner, "Owner can't be null");
-		Objects.requireNonNull(page, "Page can't be null");
-		return this.findByQuery(JobOffer.class, "JobOffer.findAllByOwner", map("owner", owner), page);
+	public JobOfferState findFirstJobOfferState() {
+		return this.findByQuery(JobOfferState.class, "JobOfferState.findFirst");
 	}
 
 	public List<JobOffer> findJobOffers(final Candidate candidate, final Page page) {
@@ -32,13 +30,15 @@ public class JobOfferDao extends AbstractDao<JobOffer> {
 		Objects.requireNonNull(page, "Page can't be null");
 		return this.findByQuery(JobOffer.class, "JobOffer.findByClient", map("client", client), page);
 	}
-	
-	public List<JobOfferState> findJobOfferStates() {
-		return this.getPersistenceFacade().findAll(JobOfferState.class, Page.ALL);
+
+	public List<JobOffer> findJobOffers(final User owner, final Page page) {
+		Objects.requireNonNull(owner, "Owner can't be null");
+		Objects.requireNonNull(page, "Page can't be null");
+		return this.findByQuery(JobOffer.class, "JobOffer.findAllByOwner", map("owner", owner), page);
 	}
 
-	public JobOfferState findFirstJobOfferState() {
-		return this.findByQuery(JobOfferState.class, "JobOfferState.findFirst");
+	public List<JobOfferState> findJobOfferStates() {
+		return this.getPersistenceFacade().findAll(JobOfferState.class, Page.ALL);
 	}
 
 	@Override
@@ -48,6 +48,6 @@ public class JobOfferDao extends AbstractDao<JobOffer> {
 
 	@Override
 	public String[] searchFields() {
-		return new String[] { "name", "client.name" };
+		return new String[] { "title", "client.name" };
 	}
 }

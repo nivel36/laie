@@ -1,14 +1,7 @@
-<ui:component xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" 
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
-	xmlns:composite="http://xmlns.jcp.org/jsf/composite" 
-	xmlns:f="http://java.sun.com/jsf/core" 
-	xmlns:g="http://ged.org/ui" 
-	xmlns:h="http://java.sun.com/jsf/html" 
-	xmlns:o="http://omnifaces.org/ui"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:component xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:composite="http://xmlns.jcp.org/jsf/composite"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://ged.org/ui" xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui"
+	xmlns:p="http://primefaces.org/ui" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets">
 
 	<composite:interface>
 		<composite:attribute name="jobOffers" required="true" />
@@ -17,42 +10,44 @@
 	</composite:interface>
 
 	<composite:implementation>
-		<div id="#{cc.clientId}">
-			<p:panel header="#{cc.attrs.title}" styleClass="job-offers panel #{cc.attrs.styleClass}">
-				<p:dataTable var="jobOffer" value="#{cc.attrs.jobOffers}" emptyMessage="#{i18n['job.no_jobs_found']}" reflow="true" paginator="true"
-					paginatorPosition="bottom" paginatorTemplate="{PageLinks}" rows="#{sessionUser.rowsPerPage}" sortBy="#{jobOffer.name}"
-					sortOrder="descending">
+		<div id="#{cc.clientId}" class="card card-w-title jobOffers  #{cc.attrs.styleClass}">
+			<h3>#{cc.attrs.title}</h3>
+			<div class="p-grid">
+				<div class="p-col-12">
+					<p:dataTable var="jobOffer" value="#{cc.attrs.jobOffers}" emptyMessage="#{i18n['job.no_jobs_found']}" reflow="true" paginator="true"
+						paginatorPosition="bottom" paginatorTemplate="{PageLinks}" rows="#{sessionUser.rowsPerPage}" sortBy="#{jobOffer.title}"
+						sortOrder="descending" styleClass="ui-datatable-borderless">
 
-					<p:column headerText="#{i18n['job.name']}">
-						<h:link value="#{jobOffer.name}" outcome="#{Page.JOB.getUrl()}">
-							<f:param name="id" value="#{jobOffer.id}" />
-						</h:link>
-						<span class="job_address">#{jobOffer.address.city} (#{jobOffer.address.state})</span>
-					</p:column>
+						<p:column headerText="#{i18n['job.title']}">
+							<h:link value="#{jobOffer.title}" outcome="#{Page.JOB.getUrl()}">
+								<f:param name="id" value="#{jobOffer.id}" />
+							</h:link>
+							<span class="job_address">#{jobOffer.address.city} (#{jobOffer.address.state})</span>
+						</p:column>
 
-					<p:column headerText="#{i18n['job.date_closed']}">
-						<h:outputText value="#{jobOffer.dateClosed}">
-							<f:convertDateTime pattern="dd / MM / yyyy" type="localDate" />
-						</h:outputText>
-					</p:column>
+						<p:column headerText="#{i18n['job.date_closed']}">
+							<h:outputText value="#{jobOffer.dateClosed}">
+								<f:convertDateTime pattern="dd / MM / yyyy" type="localDate" />
+							</h:outputText>
+						</p:column>
 
-					<p:column headerText="#{i18n['job.owner']}">
-						<h:link value="#{jobOffer.owner.fullName}" outcome="#{Page.USER_SEARCH.getUrl()}">
-							<f:param name="id" value="#{jobOffer.owner.id}" />
-						</h:link>
-					</p:column>
+						<p:column headerText="#{i18n['job.owner']}">
+							<h:link value="#{jobOffer.owner.fullName}" outcome="#{Page.USER_SEARCH.getUrl()}">
+								<f:param name="id" value="#{jobOffer.owner.id}" />
+							</h:link>
+						</p:column>
 
-					<p:column headerText="#{i18n['job.job_offer_state']}">
-						<div class="tag #{jobOffer.jobOfferState.color}">#{g:translate(jobOffer.jobOfferState.name)}</div>
-					</p:column>
-				</p:dataTable>
-				
-				<h:panelGroup layout="block" styleClass="panel-footer" rendered="#{component.findComponent('children').childCount gt 0}">
-					<h:panelGroup id="children" styleClass="panel-buttons">
+						<p:column headerText="#{i18n['job.job_offer_state']}">
+							<div class="tag #{jobOffer.jobOfferState.color}">#{g:translate(jobOffer.jobOfferState.name)}</div>
+						</p:column>
+					</p:dataTable>
+				</div>
+				<div class="p-col-12">
+					<div class="buttons">
 						<composite:insertChildren />
-					</h:panelGroup>
-				</h:panelGroup>
-			</p:panel>
+					</div>
+				</div>
+			</div>
 		</div>
 	</composite:implementation>
 </ui:component>

@@ -9,32 +9,30 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	template="/WEB-INF/templates/default.xhtml">
+	template="/WEB-INF/templates/template.xhtml">
 
 	<ui:define name="title">
-		<title>Ged</title>
+		Ged
 	</ui:define>
 
 	<ui:param name="selectedMenu" value="index" />
 
 	<ui:define name="breadcrumb">
-		<p:breadCrumb styleClass="breadcrumb">
-			<p:menuitem value="#{i18n['menu.index']}" disabled="true" />
+		<p:breadCrumb>
+			<p:menuitem value="#{i18n['menu.index']}"  url="#"/>
 		</p:breadCrumb>
 	</ui:define>
 
 	<ui:define name="content">
-		<div class="grid">
-			<div class="col-12 lg-6">
+		<div class="p-grid">
+			<div class="p-col-12 p-xl-8">
 				<cc:jobOffers jobOffers="#{indexView.jobOffers}" />
 			</div>
-			<div class="col-12 lg-6">
-				<cc:candidates candidates="#{indexView.candidates}" title="#{i18n['candidate.last_candidates']}">
-					<p:button value="test" />
-				</cc:candidates>
+			<div class="p-col-12 p-xl-4">
+				<cc:candidates candidates="#{indexView.candidates}" title="#{i18n['candidate.last_candidates']}"/>
 			</div>
 
-			<div class="col-12 md-6">
+			<div class="p-col-12 p-md-4">
 				<cc:meetings value="#{indexView.meetings}" title="#{i18n['meeting.planned_meetings']}"
 					emptyMessage="#{i18n['meeting.no_planned']}" />
 			</div>

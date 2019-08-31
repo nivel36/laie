@@ -35,7 +35,7 @@ public class EducationView extends AbstractView {
 	private List<Integer> years;
 
 	private String curriculumUrl() {
-		return PageEnum.CURRICULUM.getUrl(this.education.getCurriculum().getCandidate());
+		return PageEnum.CURRICULUM.getRedirectedUrl(this.education.getCurriculum().getCandidate());
 	}
 
 	public String delete() {

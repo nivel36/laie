@@ -6,8 +6,8 @@ import javax.persistence.Column;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.MappedSuperclass;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
@@ -23,6 +23,7 @@ public abstract class Person extends AbstractEntity {
 
 	private static final long serialVersionUID = 1256626229385088883L;
 
+	@Email
 	@NotNull
 	@Column(length = 128, nullable = false, unique = true)
 	@Field
@@ -38,7 +39,6 @@ public abstract class Person extends AbstractEntity {
 	@SortableField(forField = "name")
 	protected String name;
 
-	@Pattern(regexp = "(?:[+]?(?:[0-9]{1,5}|\\x28[0-9]{1,5}\\x29)[ ]?)?[0-9]{2}(?:[0-9][ ]?){6}[0-9]")
 	@Column(length = 12)
 	protected String phoneNumber;
 

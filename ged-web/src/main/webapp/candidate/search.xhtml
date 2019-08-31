@@ -1,28 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
-	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" 
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" 
-	xmlns:f="http://java.sun.com/jsf/core" 
-	xmlns:g="http://ged.org/ui" 
-	xmlns:h="http://java.sun.com/jsf/html" 
-	xmlns:o="http://omnifaces.org/ui"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	template="/WEB-INF/templates/default.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://ged.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets" template="/WEB-INF/templates/template.xhtml">
 
 	<ui:define name="title">
-		<title>#{i18n['candidate.candidates']}</title>
+		#{i18n['candidate.candidates']}
 	</ui:define>
 
 	<ui:param name="selectedMenu" value="candidates" />
 
-	<ui:define name="actions">
-		<p:button value="#{i18n['candidate.new_candidate']}" outcome="#{Page.CANDIDATE_ADD.getUrl()}" />
-	</ui:define>
-
 	<ui:define name="breadcrumb">
-		<p:breadCrumb styleClass="breadcrumb">
+		<p:breadCrumb>
 			<p:menuitem value="#{i18n['menu.index']}" outcome="#{Page.INDEX.getUrl()}" />
 			<p:menuitem value="#{i18n['candidate.candidates']}" disabled="true" />
 		</p:breadCrumb>
@@ -30,23 +19,29 @@
 
 	<ui:define name="content">
 		<h:form id="candidateSearchForm">
-			<p:panel>
-				<div class="panel-content-data">
-					<div class="search-bar">
-						<cc:inputSearch searchText="#{searchCandidateView.searchText}" searchAction="#{searchCandidateView.search}"	update="@form" />
+			<div class="card">
+				<div class="p-grid">
+					<div class="p-col-12 p-xl-5">
+						<div class="searchBar ui-fluid">
+							<cc:inputSearch searchText="#{searchCandidateView.searchText}" searchAction="#{searchCandidateView.search}" update="@form" />
+						</div>
 					</div>
-					<div class="panel-buttons">
-						<p:commandButton value="#{i18n['action.export']}" action="#{searchCandidateView.export}" process="@this"
-							icon="fa-file-excel-o" />
+					<div class="p-col-12 p-xl-7">
+						<div class="buttons">
+							<p:commandButton value="#{i18n['action.export']}" action="#{searchCandidateView.export}" process="@this" icon="fa fa-file-excel-o" />
+							<p:button value="#{i18n['candidate.new_candidate']}" outcome="#{Page.CANDIDATE_ADD.getUrl()}" icon="fa fa-plus"
+								styleClass="success-btn" />
+						</div>
 					</div>
 				</div>
-
+			</div>
+			<div class="card">
 				<p:dataTable var="candidate" id="candidates" value="#{searchCandidateView.candidates}"
 					emptyMessage="#{i18n['candidate.no_candidates_found']}" reflow="true" paginator="true" paginatorPosition="bottom"
 					rows="#{sessionUser.rowsPerPage}" sortBy="#{candidate.name}" sortOrder="descending" lazy="true">
 
 					<p:column>
-						<cc:avatar value="#{candidate.imageFileName}" styleClass="image-icon" />
+						<cc:avatar value="#{candidate.imageFileName}" styleClass="small" />
 					</p:column>
 
 					<p:column headerText="#{i18n['candidate.name']}" sortBy="#{candidate.name}">
@@ -71,7 +66,7 @@
 						<p:rating value="#{candidate.rating}" cancel="false" readonly="true" />
 					</p:column>
 				</p:dataTable>
-			</p:panel>
+			</div>
 		</h:form>
 	</ui:define>
 </ui:composition>

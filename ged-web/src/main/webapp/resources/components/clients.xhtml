@@ -18,38 +18,34 @@
 	</composite:interface>
 
 	<composite:implementation>
-		<div id="#{cc.clientId}">
-			<p:panel header="#{cc.attrs.title}">
-				<p:dataTable var="client" id="clients" value="#{cc.attrs.clients}" emptyMessage="#{i18n['client.no_clients_found']}"
-					reflow="true" paginator="true" paginatorPosition="bottom" rows="#{sessionUser.rowsPerPage}" sortBy="#{client.name}"
-					sortOrder="ascending">
-					<p:column headerText="#{i18n['client.name']}" sortBy="#{client.name}">
-						<h:link value="#{client.name}" outcome="#{Page.CLIENT.getUrl()}">
-							<f:param name="id" value="#{client.id}" />
-						</h:link>
-					</p:column>
-					<p:column headerText="#{i18n['client.phone_number']}" sortBy="#{client.phoneNumber}">
-						<h:outputText value="#{client.phoneNumber}" />
-					</p:column>
-					<p:column headerText="#{i18n['client.cif']}" sortBy="#{client.cif}">
-						<h:outputText value="#{client.cif}" />
-					</p:column>
-					<p:column headerText="#{i18n['client.city']}" sortBy="#{client.address.city}">
-						<h:outputText value="#{client.address.city} " /> <h:panelGroup rendered="#{not empty client.address.state}">(<h:outputText value="#{client.address.state}" />)</h:panelGroup>
-					</p:column>
-					<p:column headerText="#{i18n['client.owner']}" sortBy="#{client.owner.fullName}">
-						<h:link value="#{client.owner.fullName}" outcome="#{Page.USER_SEARCH.getUrl()}">
-							<f:param name="id" value="#{client.owner.id}" />
-						</h:link>
-					</p:column>
-				</p:dataTable>
-				<h:panelGroup layout="block" styleClass="panel-footer"
-					rendered="#{component.findComponent('children').childCount > 0}">
-					<h:panelGroup id="children" styleClass="panel-buttons">
-						<composite:insertChildren />
-					</h:panelGroup>
-				</h:panelGroup>
-			</p:panel>
+		<div id="#{cc.clientId}" class="card card-w-title clients #{cc.attrs.styleClass}">
+			<h3>#{cc.attrs.title}</h3>
+			<p:dataTable var="client" id="clients" value="#{cc.attrs.clients}" emptyMessage="#{i18n['client.no_clients_found']}"
+				reflow="true" paginator="true" paginatorPosition="bottom" rows="#{sessionUser.rowsPerPage}" sortBy="#{client.name}"
+				sortOrder="ascending">
+				<p:column headerText="#{i18n['client.name']}" sortBy="#{client.name}">
+					<h:link value="#{client.name}" outcome="#{Page.CLIENT.getUrl()}">
+						<f:param name="id" value="#{client.id}" />
+					</h:link>
+				</p:column>
+				<p:column headerText="#{i18n['client.phone_number']}" sortBy="#{client.phoneNumber}">
+					<h:outputText value="#{client.phoneNumber}" />
+				</p:column>
+				<p:column headerText="#{i18n['client.cif']}" sortBy="#{client.cif}">
+					<h:outputText value="#{client.cif}" />
+				</p:column>
+				<p:column headerText="#{i18n['client.city']}" sortBy="#{client.address.city}">
+					<h:outputText value="#{client.address.city} " /> <h:panelGroup rendered="#{not empty client.address.state}">(<h:outputText value="#{client.address.state}" />)</h:panelGroup>
+				</p:column>
+				<p:column headerText="#{i18n['client.owner']}" sortBy="#{client.owner.fullName}">
+					<h:link value="#{client.owner.fullName}" outcome="#{Page.USER_SEARCH.getUrl()}">
+						<f:param name="id" value="#{client.owner.id}" />
+					</h:link>
+				</p:column>
+			</p:dataTable>
+			<h:panelGroup id="children" styleClass="panel-buttons">
+				<composite:insertChildren />
+			</h:panelGroup>
 		</div>
 	</composite:implementation>
 </ui:component>

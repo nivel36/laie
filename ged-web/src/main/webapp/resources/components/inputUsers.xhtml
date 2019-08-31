@@ -26,7 +26,7 @@
 			<div class="label-container">
 				<p:outputLabel id="label" value="#{cc.attrs.label}" for="input" styleClass="label" />
 			</div>
-			<div class="input-container">
+			<div class="ui-inputgroup">
 				<p:autoComplete id="input" value="#{cc.attrs.value}" required="#{cc.attrs.required}" binding="#{cc.input}"
 					styleClass="input input-users" completeMethod="#{cc.attrs.completeMethod}" forceSelection="true" minQueryLength="3"
 					var="user" itemValue="#{user}" itemLabel="#{user.fullName}" disabled="#{cc.attrs.disabled}" multiple="true" converter="userConverter">
@@ -36,8 +36,8 @@
 					<p:ajax event="itemSelect" update="#{cc.clientId}" process="input" />
 					<p:ajax event="itemUnselect" update="#{cc.clientId}" process="input" />
 				</p:autoComplete>
-				<h:panelGroup layout="block" styleClass="icon-field" rendered="#{not empty cc.attrs.showIcon}">
-					<i class="icon right-icon fa fa-search" aria-hidden="true"></i>
+				<h:panelGroup layout="block" styleClass="ui-inputgroup-addon" rendered="#{not empty cc.attrs.showIcon}">
+					<i class="fa fa-search" aria-hidden="true"></i>
 				</h:panelGroup>
 			</div>
 			<div class="message-container">

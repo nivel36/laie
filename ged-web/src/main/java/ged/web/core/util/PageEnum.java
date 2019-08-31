@@ -42,7 +42,8 @@ public enum PageEnum {
 	USER_ADD("/user/add"), //
 	USER_EDIT("/user/edit", true), //
 	USER_SEARCH("/user/search"), //
-	USER_SELECT("/user/select");
+	USER_SELECT("/user/select"), //
+	ERROR("/error");
 
 	private static final String XHTML = ".xhtml";
 

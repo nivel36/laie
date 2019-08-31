@@ -40,7 +40,7 @@ public class LanguageView extends AbstractView {
 	private List<Language> languages;
 
 	private String curriculumUrl() {
-		return PageEnum.CURRICULUM.getUrl(this.curriculum.getCandidate());
+		return PageEnum.CURRICULUM.getRedirectedUrl(this.curriculum.getCandidate());
 	}
 
 	public void deleteLanguage(final Language language) {
@@ -80,7 +80,7 @@ public class LanguageView extends AbstractView {
 	public void newLanguage() {
 		final Language newLanguage = new Language();
 		newLanguage.setName(this.languageName);
-		newLanguage.setLevel(LanguageLevel.valueOf(languageLevel));
+		newLanguage.setLevel(LanguageLevel.valueOf(this.languageLevel));
 		newLanguage.setCurriculum(this.curriculum);
 		this.languages.add(newLanguage);
 		this.languageName = null;

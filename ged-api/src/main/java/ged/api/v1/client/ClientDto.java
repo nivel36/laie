@@ -2,8 +2,6 @@ package ged.api.v1.client;
 
 import java.util.Set;
 
-import javax.validation.constraints.Pattern;
-
 import ged.api.v1.Dto;
 import ged.ejb.client.Contact;
 import ged.ejb.job.offer.JobOffer;
@@ -22,7 +20,6 @@ public class ClientDto implements Dto {
 
 	private String owner;
 
-	@Pattern(regexp = "(?:[+]?(?:[0-9]{1,5}|\\x28[0-9]{1,5}\\x29)[ ]?)?[0-9]{2}(?:[0-9][ ]?){6}[0-9]")
 	private String phoneNumber;
 
 	private String state;

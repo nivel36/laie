@@ -1,22 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
-	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" 
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" 
-	xmlns:f="http://java.sun.com/jsf/core" 
-	xmlns:g="http://ged.org/ui" 
-	xmlns:h="http://java.sun.com/jsf/html" 
-	xmlns:o="http://omnifaces.org/ui"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	template="/WEB-INF/templates/default.xhtml">
-	
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://ged.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets" template="/WEB-INF/templates/template.xhtml">
+
 	<ui:define name="title">
-		<title>#{i18n['client.edit_client']} - #{editClientView.client.name}</title>
+		#{i18n['client.edit_client']} - #{editClientView.client.name}
 	</ui:define>
 
 	<ui:define name="breadcrumb">
-		<p:breadCrumb styleClass="breadcrumb">
+		<p:breadCrumb>
 			<p:menuitem value="#{i18n['menu.index']}" outcome="#{Page.INDEX.getUrl()}" />
 			<p:menuitem value="#{i18n['client.clients']}" outcome="#{Page.CLIENT_SEARCH.getUrl()}" />
 			<p:menuitem value="#{editClientView.client.name}" outcome="#{Page.CLIENT.getUrl()}">
@@ -28,33 +21,43 @@
 
 	<ui:define name="content">
 		<h:form id="clientForm">
-			<div class="panel">
-				<div class="panel-content panel-content-data">
-					<div class="grid">
-						<div class="col-12 sm-6">
-							<h3>#{i18n['client.client_information']}</h3>
-							<g:input id="name" label="#{i18n['client.name']}" value="#{editClientView.client.name}" required="true" />
+			<div class="p-grid">
+				<div class="p-col-12 p-xl-6">
+					<div class="card card-w-title">
+						<h3>#{editClientView.client.name}</h3>
+						<div class="p-grid">
+							<div class="p-col-12 p-xl-6">
+								<h4>#{i18n['client.client_information']}</h4>
 
-							<g:input id="cif" label="#{i18n['client.cif']}" value="#{editClientView.client.cif}" required="true" />
-						</div>
-						<div class="col-12 sm-6">
-							<h3>#{i18n['client.contact_information']}</h3>
+								<div class="form-field ui-fluid">
+									<g:input id="name" label="#{i18n['client.name']}" value="#{editClientView.client.name}" required="true" />
 
-							<g:input id="phoneNumber" label="#{i18n['client.phone_number']}" value="#{editClientView.client.phoneNumber}" />
+									<g:input id="cif" label="#{i18n['client.cif']}" value="#{editClientView.client.cif}" required="true" />
+								</div>
+							</div>
+							<div class="p-col-12 p-xl-6">
+								<h4>#{i18n['client.contact_information']}</h4>
 
-							<g:input id="city" label="#{i18n['client.city']}" value="#{editClientView.client.address.city}" />
+								<div class="form-field ui-fluid">
 
-							<g:input id="state" label="#{i18n['client.state']}" value="#{editClientView.client.address.state}" />
+									<g:input id="phoneNumber" label="#{i18n['client.phone_number']}" value="#{editClientView.client.phoneNumber}" />
+
+									<g:input id="city" label="#{i18n['client.city']}" value="#{editClientView.client.address.city}" />
+
+									<g:input id="state" label="#{i18n['client.state']}" value="#{editClientView.client.address.state}" />
+								</div>
+							</div>
+							<div class="p-col-12">
+								<div class="buttons">
+									<p:button value="#{i18n['action.cancel']}" outcome="#{Page.CLIENT.getUrl()}" styleClass="secondary-button">
+										<f:param name="id" value="#{editClientView.client.id}" />
+									</p:button>
+									<p:commandButton value="#{i18n['action.save']}" action="#{editClientView.save}" process="@form" update="@form growl"
+										styleClass="success-btn" />
+								</div>
+							</div>
 						</div>
 					</div>
-				</div>
-			</div>
-			<div class="panel-footer">
-				<div class="panel-buttons">
-					<p:button styleClass="btn-gray" value="#{i18n['action.cancel']}" outcome="#{Page.CLIENT.getUrl()}">
-						<f:param name="id" value="#{editClientView.client.id}" />
-					</p:button>
-					<p:commandButton value="#{i18n['action.save']}" action="#{editClientView.save}" process="@form" update="@form growl" />
 				</div>
 			</div>
 		</h:form>

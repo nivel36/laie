@@ -1,5 +1,7 @@
 package ged.ejb.curriculum;
 
+import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -103,10 +105,6 @@ public class Curriculum extends AbstractEntity {
 		return this.skills;
 	}
 
-	public int getSkillsSize() {
-		return this.skills.size();
-	}
-
 	@Override
 	public int hashCode() {
 		return Objects.hash(this.candidate);
@@ -146,6 +144,10 @@ public class Curriculum extends AbstractEntity {
 
 	public void setSkills(final Set<Skill> skills) {
 		this.skills = skills;
+	}
+	
+	public void setSkills(final List<Skill> skills) {
+		this.skills = new HashSet<Skill>(skills);
 	}
 
 	@Override

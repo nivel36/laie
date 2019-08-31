@@ -1,39 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
-	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" 
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" 
-	xmlns:f="http://java.sun.com/jsf/core" 
-	xmlns:g="http://ged.org/ui" 
-	xmlns:h="http://java.sun.com/jsf/html" 
-	xmlns:o="http://omnifaces.org/ui"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	template="/WEB-INF/templates/default.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://ged.org/ui" xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets" template="/WEB-INF/templates/template.xhtml">
 
 	<ui:define name="title">
-		<title>#{i18n['skill.skills']}</title>
+		#{i18n['skill.skills']}
+	</ui:define>
+
+	<ui:define name="breadcrumb">
+		<p:breadCrumb>
+			<p:menuitem value="#{i18n['menu.index']}" outcome="#{Page.INDEX.getUrl()}" />
+			<p:menuitem value="#{i18n['candidate.candidates']}" outcome="#{Page.CANDIDATE_SEARCH.getUrl()}" />
+			<p:menuitem value="#{languageView.curriculum.candidate.fullName}" outcome="#{Page.CANDIDATE.getUrl()}">
+				<f:param name="id" value="#{languageView.curriculum.candidate.id}" />
+			</p:menuitem>
+			<p:menuitem value="#{i18n['curriculum.curriculum']}" outcome="#{Page.CURRICULUM.getUrl()}">
+				<f:param name="id" value="#{languageView.curriculum.candidate.id}" />
+			</p:menuitem>
+			<p:menuitem value="#{i18n['skill.skills']}" disabled="true" />
+		</p:breadCrumb>
 	</ui:define>
 
 	<ui:define name="content">
 		<h:form>
-			<div class="grid">
-				<div class="col-12">
-					<div class="form-group">
-						<p:outputLabel value="#{i18n['skill.skill']}" />
-						<div class="inputgroup">
-							<p:input id="skill" value="#{skillsView.skillName}" />
-							<p:commandButton id="addSkill" action="#{skillsView.addSkill}" process="@form" update="@form" styleClass="btn-green" icon="fa fa-plus" />
+			<div class="p-grid">
+				<div class="p-col-12 p-xl-5">
+					<div class="card card-w-title">
+						<h1>#{i18n['skill.skills']}</h1>
+						<div class="p-grid">
+							<div class="p-col-12">
+								<div class="ui-fluid">
+									<p:chips value="#{skillsView.skills}" converter="skillConverter" />
+								</div>
+							</div>
+							<div class="p-col-12">
+								<div class="buttons">
+									<p:button value="#{i18n['action.cancel']}" outcome="#{Page.CURRICULUM.getUrl()}" styleClass="secondary-button">
+										<f:param name="id" value="#{skillsView.curriculum.candidate.id}" />
+									</p:button>
+									<p:commandButton value="#{i18n['action.save']}" action="#{skillsView.save}" process="@form" update="growl @form" />
+								</div>
+							</div>
 						</div>
-						<p:message for="skill" />
-					</div>
-				</div>
-				<div class="col-12">
-					<p:chips value="#{skillsView.skills}" converter="skillConverter" disabled="true" />
-				</div>
-				<div class="col-12">
-					<div class="form-action-primary">
-						<p:commandButton styleClass="btn-gray" value="#{i18n['action.close']}" process="@this" update="@form" />
 					</div>
 				</div>
 			</div>

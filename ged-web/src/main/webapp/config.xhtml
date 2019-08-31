@@ -1,50 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
-	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" 
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" 
-	xmlns:f="http://java.sun.com/jsf/core" 
-	xmlns:g="http://ged.org/ui" 
-	xmlns:h="http://java.sun.com/jsf/html" 
-	xmlns:o="http://omnifaces.org/ui"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	template="/WEB-INF/templates/default.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://ged.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets" template="/WEB-INF/templates/template.xhtml">
 
 	<ui:define name="title">
-		<title>#{i18n['config.config']}</title>
+		#{i18n['config.config']}
 	</ui:define>
 
 	<ui:param name="selectedMenu" value="config" />
 
 	<ui:define name="breadcrumb">
-		<p:breadCrumb styleClass="breadcrumb">
+		<p:breadCrumb>
 			<p:menuitem value="#{i18n['menu.index']}" outcome="#{Page.INDEX.getUrl()}" />
 			<p:menuitem value="#{i18n['config.config']}" disabled="true" />
 		</p:breadCrumb>
 	</ui:define>
 
 	<ui:define name="content">
-		<div class="grid">
-			<div class="col-12 lg-9">
-				<h:form enctype="multipart/form-data">
-					<div class="panel">
-						<div class="panel-aside">
-							<div class="candidate-metadata">
-								<cc:inputAvatar id="user-image" value="#{configView.user.imageFileName}"
-									fileUploadListener="#{configView.uploadImage}" allowCamera="true" captureListener="#{configView.captureImage}" />
-							</div>
-						</div>
-						<div class="panel-content panel-content-data">
-							<div class="grid">
-								<div class="col-12 sm-6">
+
+		<h:form enctype="multipart/form-data">
+			<div class="p-grid">
+				<div class="p-col-12 p-xl-8">
+					<div class="card-aside">
+						<cc:inputAvatar id="user-image" value="#{configView.user.imageFileName}" fileUploadListener="#{configView.uploadImage}"
+							allowCamera="true" captureListener="#{configView.captureImage}" />
+					</div>
+					<div class="card">
+						<div class="p-grid">
+							<div class="p-col-12 p-xl-6">
+								<div class="form-field ui-fluid">
 									<h3>#{i18n['config.personal_information']}</h3>
 									<g:input label="#{i18n['config.name']}" id="name" value="#{configView.user.name}" required="true" />
 									<g:input label="#{i18n['config.surname']}" id="surname" value="#{configView.user.surname}" required="true" />
 									<g:input label="#{i18n['config.email']}" id="email" value="#{configView.user.email}" required="true" />
+									<g:input label="#{i18n['user.phone_number']}" id="phone" value="#{configView.user.phoneNumber}" />
 								</div>
-								<div class="col-12 md-6">
+							</div>
+							<div class="p-col-12 p-xl-6">
+								<div class="form-field ui-fluid">
 									<h3>#{i18n['config.config_data']}</h3>
+
 									<g:input label="#{i18n['config.rows_per_page']}" value="#{configView.user.rowsPerPage}" type="selectOneMenu">
 										<f:selectItem itemValue="5" itemLabel="5" />
 										<f:selectItem itemValue="10" itemLabel="10" />
@@ -58,16 +54,16 @@
 								</div>
 							</div>
 						</div>
-						<div class="panel-footer">
-							<div class="panel-buttons">
-								<p:commandButton value="#{i18n['config.change_password']}" process="@this"
-									action="#{Page.CHANGE_PASSWORD.getUrl()}" />
-								<p:commandButton value="#{i18n['action.save']}" action="#{configView.save}" process="@form" update="@form growl" />
+						<div class="p-col-12">
+							<div class="buttons">
+								<p:commandButton value="#{i18n['config.change_password']}" process="@this" action="#{Page.CHANGE_PASSWORD.getUrl()}" />
+								<p:commandButton value="#{i18n['action.save']}" action="#{configView.save}" process="@form" update="@form growl"
+									styleClass="success-btn" />
 							</div>
 						</div>
 					</div>
-				</h:form>
+				</div>
 			</div>
-		</div>
+		</h:form>
 	</ui:define>
 </ui:composition>

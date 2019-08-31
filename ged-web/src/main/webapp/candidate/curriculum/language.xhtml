@@ -1,22 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
-	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" 
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" 
-	xmlns:f="http://java.sun.com/jsf/core" 
-	xmlns:g="http://ged.org/ui" 
-	xmlns:h="http://java.sun.com/jsf/html" 
-	xmlns:o="http://omnifaces.org/ui"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	template="/WEB-INF/templates/default.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://ged.org/ui" xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets" template="/WEB-INF/templates/template.xhtml">
 
 	<ui:define name="title">
-		<title>#{i18n['language.language']}</title>
+		#{i18n['language.language']}
 	</ui:define>
 
 	<ui:define name="breadcrumb">
-		<p:breadCrumb styleClass="breadcrumb">
+		<p:breadCrumb>
 			<p:menuitem value="#{i18n['menu.index']}" outcome="#{Page.INDEX.getUrl()}" />
 			<p:menuitem value="#{i18n['candidate.candidates']}" outcome="#{Page.CANDIDATE_SEARCH.getUrl()}" />
 			<p:menuitem value="#{languageView.curriculum.candidate.fullName}" outcome="#{Page.CANDIDATE.getUrl()}">
@@ -31,44 +23,59 @@
 
 	<ui:define name="content">
 		<h:form id="language">
-			<div class="grid nogutter">
-				<div class="panel curriculum col-12 xl-8">
-					<div class="panel-content">
-						<div class="panel-content-data">
-							<h:panelGroup styleClass="language section" id="languages" layout="block">
-								<ui:repeat var="language" value="#{languageView.languages}">
-									<p>
-										<span class="language_name">#{language.name}</span> <span class="language_level">#{i18n[language.level]}</span>
-										<p:commandButton icon="fa fa-trash" action="#{languageView.deleteLanguage(language)}" process="@this" update="@form" />
-									</p>
-								</ui:repeat>
-							</h:panelGroup>
-
-							<div class="input-group">
-								<div class="input-container">
-									<p:input id="input-text" value="#{languageView.languageName}" required="true" styleClass="input input-text" />
-									<p:selectOneMenu id="selectOneMenu" required="true" styleClass="input input-select" value="#{languageView.languageLevel}">
-										<f:selectItem />
-										<f:selectItems value="#{languageView.languageLevels}" var="languageLevel" itemValue="#{languageLevel}"
-											itemLabel="#{i18n[languageLevel]}" />
-									</p:selectOneMenu>
-									<div class="panel-buttons">
-										<p:commandButton value="#{i18n['action.add']}" action="#{languageView.newLanguage}" process="@form" update="@form" />
+			<div class="p-grid">
+				<div class="p-col-12 p-xl-5">
+					<div class="card">
+						<h:panelGroup styleClass="language section" id="languages" layout="block">
+							<ui:repeat var="language" value="#{languageView.languages}">
+								<div class="ui-fluid">
+									<div class="p-grid">
+										<div class="p-col-5">
+											<g:input id="input-text" value="#{language.name}" required="true" styleClass="input input-text" />
+										</div>
+										<div class="p-col-5">
+											<p:selectOneMenu id="level" required="true" styleClass="input input-select" value="#{language.level}">
+												<f:selectItem />
+												<f:selectItems value="#{languageView.languageLevels}" var="languageLevel" itemValue="#{languageLevel}" itemLabel="#{i18n[languageLevel]}" />
+											</p:selectOneMenu>
+											<div class="message-container">
+												<p:message id="message" for="input-text" styleClass="message-error" />
+											</div>
+										</div>
+										<div class="p-col-2">
+											<p:commandButton icon="fa fa-trash" action="#{languageView.deleteLanguage(language)}" process="@this" update="language:languages" styleClass="danger-btn" />
+										</div>
 									</div>
 								</div>
-								<div class="message-container">
-									<p:message id="message" for="input-text" styleClass="message-error" />
+							</ui:repeat>
+						</h:panelGroup>
+						<h:panelGroup styleClass="language section" id="new_language" layout="block">
+							<div class="ui-fluid">
+								<div class="p-grid">
+									<div class="p-col-5">
+										<g:input id="input-text" value="#{languageView.languageName}" required="true" styleClass="input input-text" />
+									</div>
+									<div class="p-col-5">
+										<p:selectOneMenu id="selectOneMenu" required="true" styleClass="input input-select" value="#{languageView.languageLevel}">
+											<f:selectItem />
+											<f:selectItems value="#{languageView.languageLevels}" var="languageLevel" itemValue="#{languageLevel}" itemLabel="#{i18n[languageLevel]}" />
+										</p:selectOneMenu>
+										<div class="message-container">
+											<p:message id="message" for="input-text" styleClass="message-error" />
+										</div>
+									</div>
+									<div class="p-col-2">
+										<p:commandButton icon="fa fa-plus" action="#{languageView.newLanguage}" process="language:new_language" update="@form" styleClass="success-btn" />
+									</div>
 								</div>
 							</div>
-						</div>
+						</h:panelGroup>
 
-						<div class="panel-footer">
-							<div class="panel-buttons">
-								<p:button value="#{i18n['action.cancel']}" outcome="#{Page.CURRICULUM.getUrl()}" styleClass="btn-gray">
-									<f:param name="id" value="#{languageView.curriculum.candidate.id}" />
-								</p:button>
-								<p:commandButton value="#{i18n['action.save']}" action="#{languageView.save}" process="@this" update="@form" />
-							</div>
+						<div class="buttons">
+							<p:button value="#{i18n['action.cancel']}" outcome="#{Page.CURRICULUM.getUrl()}" styleClass="secondary-button">
+								<f:param name="id" value="#{languageView.curriculum.candidate.id}" />
+							</p:button>
+							<p:commandButton value="#{i18n['action.save']}" action="#{languageView.save}" process="@this language:languages" update="growl language:languages" />
 						</div>
 					</div>
 				</div>

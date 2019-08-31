@@ -1,0 +1,26 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+                xmlns:h="http://java.sun.com/jsf/html" 
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:po="http://primefaces.org/roma">
+
+	<div class="layout-menu-container">
+		<div class="nano">
+			<div class="nano-content menu-scroll-content">
+				<h:form id="menuform">
+					<po:menu>
+						<p:menuitem id="om_index" value="#{i18n['menu.index']}" icon="fa fa-fw fa-home" outcome="#{Page.INDEX.getUrl()}" />
+						<p:menuitem id="om_candidates" value="#{i18n['menu.candidates']}" icon="fa fa-fw fa-users" outcome="#{Page.CANDIDATE_SEARCH.getUrl()}" />
+						<p:menuitem id="om_offers" value="#{i18n['menu.offers']}" icon="fa fa-fw fa-suitcase" outcome="#{Page.JOB_SEARCH.getUrl()}" />
+						<p:menuitem id="om_clients" value="#{i18n['menu.clients']}" icon="fa fa-fw fa-industry" outcome="#{Page.CLIENT_SEARCH.getUrl()}" />
+						<p:menuitem id="om_reports" value="#{i18n['menu.reports']}" icon="fa fa-fw fa-area-chart" outcome="#{Page.REPORT.getUrl()}" />
+						<p:menuitem id="om_users" value="#{i18n['menu.users']}" icon="fa fa-fw fa-user" outcome="#{Page.USER_SEARCH.getUrl()}" />
+						<p:menuitem id="om_maintenances" value="#{i18n['menu.maintenances']}" icon="fa fa-fw fa-cogs" outcome="#{Page.MAINTENANCE.getUrl()}" />
+						<p:menuitem id="om_meetings" value="#{i18n['menu.meetings']}" icon="fa fa-fw fa-calendar" outcome="#{Page.MEETING_SEARCH.getUrl()}" />
+					</po:menu>
+				</h:form>
+			</div>
+		</div>
+	</div>
+</ui:composition>

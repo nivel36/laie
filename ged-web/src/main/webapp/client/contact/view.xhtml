@@ -9,10 +9,10 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	template="/WEB-INF/templates/default.xhtml">
+	template="/WEB-INF/templates/template.xhtml">
 
 	<ui:define name="title">
-		<title>#{i18n['client.client']} - #{viewClientView.client.name}</title>
+		#{i18n['client.client']} - #{viewClientView.client.name}
 	</ui:define>
 
 	<ui:param name="selectedMenu" value="clients" />
@@ -22,7 +22,7 @@
 	</ui:define>
 
 	<ui:define name="breadcrumb">
-		<p:breadCrumb styleClass="breadcrumb">
+		<p:breadCrumb>
 			<p:menuitem value="#{i18n['menu.index']}" outcome="#{Page.INDEX.getUrl()}" />
 			<p:menuitem value="#{i18n['client.clients']}" outcome="#{Page.CLIENT_SEARCH.getUrl()}" />
 			<p:menuitem value="#{viewClientView.client.name}" disabled="true" />

@@ -3,10 +3,11 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>igochan</groupId>
 	<artifactId>ged</artifactId>
-	<version>0.8.3</version>
+	<version>0.9.0</version>
 	<packaging>pom</packaging>
 	<name>ged</name>
 	<modules>
+		<module>ged-commons-excel</module>
 		<module>ged-ear</module>
 		<module>ged-ejb</module>
 		<module>ged-api</module>
@@ -25,6 +26,7 @@
 		<javaee-api.version>8.0</javaee-api.version>
 		<primefaces.version>7.0</primefaces.version>
 		<hibernate-search.version>5.10.5.Final</hibernate-search.version>
+		<hibernate-envers.version>5.4.4.Final</hibernate-envers.version>
 		<infinispan.version>9.4.14.Final</infinispan.version>
 		<font-awesome.version>5.9.0</font-awesome.version>
 		<slf4j.version>1.7.26</slf4j.version>
@@ -99,6 +101,13 @@
 			</dependency>
 
 			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-envers</artifactId>
+				<version>${hibernate-envers.version}</version>
+				<scope>provided</scope>
+			</dependency>
+
+			<dependency>
 				<groupId>igochan</groupId>
 				<artifactId>ged-ejb</artifactId>
 				<version>${ged.version}</version>
@@ -129,9 +138,9 @@
 			</dependency>
 
 			<dependency>
-				<groupId>org.apache.poi</groupId>
-				<artifactId>poi</artifactId>
-				<version>${poi.version}</version>
+				<groupId>org.apache.pdfbox</groupId>
+				<artifactId>pdfbox</artifactId>
+				<version>${pdfbox.version}</version>
 			</dependency>
 
 			<dependency>
@@ -207,6 +216,14 @@
 					<argLine>
 						--illegal-access=permit
 					</argLine>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.0</version>
+				<configuration>
+					<release>11</release>
 				</configuration>
 			</plugin>
 			<plugin>

@@ -10,11 +10,12 @@ import javax.inject.Named;
 
 import org.primefaces.model.DualListModel;
 
+import ged.ejb.export.acquirer.ReportInfo;
 import ged.ejb.export.dto.ExportFieldsOutputBean;
 import ged.ejb.export.dto.ExportFieldsOutputBean.ExportFieldItem;
 import ged.ejb.export.dto.ExportSaveDefinitionInputBean;
 import ged.ejb.export.dto.ExportSaveDefinitionInputBean.SaveDefinitionItem;
-import ged.ejb.export.service.ExportService;
+import ged.ejb.export.service.ExportDefinitionService;
 import ged.web.core.util.Translator;
 import ged.web.core.view.AbstractView;
 
@@ -31,12 +32,14 @@ public class IsabelView extends AbstractView {
 	private static final String EXPORT_NAME = "USERS";
 
 	@Inject
-	private transient ExportService exportService;
+	private transient ExportDefinitionService exportDefinitionService;
 
 	private DualListModel<ExportViewItemI> model;
+	
+	private List<ReportInfo> reportsList;
 
-	private ExportService getExportService() {
-		return exportService;
+	private ExportDefinitionService getExportDefinitionService() {
+		return exportDefinitionService;
 	}
 
 	public DualListModel<ExportViewItemI> getModel() {
@@ -53,8 +56,9 @@ public class IsabelView extends AbstractView {
 	}
 
 	private void initialize(final String exportName) {
-		final List<ExportViewItemI> source = initializeList(getExportService().findFieldsByExport(EXPORT_NAME));
-		final List<ExportViewItemI> target = initializeList(getExportService().findDefinitionByExport(EXPORT_NAME));
+		this.reportsList = getExportDefinitionService().getReportsList();
+		final List<ExportViewItemI> source = initializeList(getExportDefinitionService().findFieldsByExport(EXPORT_NAME));
+		final List<ExportViewItemI> target = initializeList(getExportDefinitionService().findDefinitionByExport(EXPORT_NAME));
 		this.model = new DualListModel<>(source, target);
 	}
 
@@ -73,11 +77,15 @@ public class IsabelView extends AbstractView {
 		for (ExportViewItemI item : currentTarget) {
 			list.add(new SaveDefinitionItem(((ExportFieldItem) item.getItem()).getIdField(), i++));
 		}
-		getExportService().saveDefinition(new ExportSaveDefinitionInputBean(EXPORT_NAME, list));
+		getExportDefinitionService().saveDefinition(new ExportSaveDefinitionInputBean(EXPORT_NAME, list));
 		initialize(EXPORT_NAME);
 	}
 
 	public void setModel(DualListModel<ExportViewItemI> campos) {
 		this.model = campos;
+	}
+
+	public List<ReportInfo> getReportsList() {
+		return reportsList;
 	}
 }

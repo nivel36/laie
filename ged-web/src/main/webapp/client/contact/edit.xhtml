@@ -9,14 +9,14 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	template="/WEB-INF/templates/default.xhtml">
+	template="/WEB-INF/templates/template.xhtml">
 
 	<ui:define name="title">
-		<title>#{clientEditView.client.name}</title>
+		#{clientEditView.client.name}
 	</ui:define>
 
 	<ui:define name="breadcrumb">
-		<p:breadCrumb styleClass="breadcrumb">
+		<p:breadCrumb>
 			<p:menuitem value="#{i18n['menu.index']}" url="/index.xhtml" />
 			<p:menuitem value="#{i18n['client.clients']}" url="/client/clientSearch.xhtml" />
 			<p:menuitem value="#{contactEditView.client.name}" url="/client/client.xhtml?clientId=#{contactEditView.client.id}" />
@@ -30,15 +30,17 @@
 				<div class="panel-content panel-content-data">
 					<div class="grid">
 						<div class="col-12 sm-6">
-							<g:input id="name" label="#{i18n['contact.name']}" value="#{contactEditView.contact.name}" required="true" />
-
-							<g:input id="surname" label="#{i18n['contact.surname']}" value="#{contactEditView.contact.surname}" required="true" />
-
-							<g:input id="position" label="#{i18n['contact.position']}" value="#{contactEditView.contact.position}" />
-
-							<g:input id="email" label="#{i18n['contact.email']}" value="#{contactEditView.contact.email}" />
-
-							<g:input id="phone_number" label="#{i18n['contact.phone_number']}" value="#{contactEditView.contact.phoneNumber}" />
+							<div class="form-field">
+								<g:input id="name" label="#{i18n['contact.name']}" value="#{contactEditView.contact.name}" required="true" />
+	
+								<g:input id="surname" label="#{i18n['contact.surname']}" value="#{contactEditView.contact.surname}" required="true" />
+	
+								<g:input id="position" label="#{i18n['contact.position']}" value="#{contactEditView.contact.position}" />
+	
+								<g:input id="email" label="#{i18n['contact.email']}" value="#{contactEditView.contact.email}" />
+	
+								<g:input id="phone_number" label="#{i18n['contact.phone_number']}" value="#{contactEditView.contact.phoneNumber}" />
+							</div>
 						</div>
 					</div>
 				</div>

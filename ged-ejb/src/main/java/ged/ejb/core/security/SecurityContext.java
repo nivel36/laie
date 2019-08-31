@@ -23,25 +23,34 @@ public class SecurityContext {
 
 	public boolean canEdit(final Ownerable entity) {
 		Objects.requireNonNull(entity);
-		final String username = extractUsernameFromPrincipal();
+		final String username = this.extractUsernameFromPrincipal();
 		final User entityOwner = entity.getOwner();
 		if (username.equals(entityOwner.getEmail())) {
 			return true;
 		}
-		final User sessionUser = getUserByUsername(username);
+		final User sessionUser = this.getUserByUsername(username);
 		if (sessionUser.isAdmin()) {
 			return true;
 		}
-		return userService.isSubordinateUser(sessionUser, entityOwner);
+		return this.userService.isSubordinateUser(sessionUser, entityOwner);
 	}
 
 	private String extractUsernameFromPrincipal() {
-		final Principal principal = sessionContext.getCallerPrincipal();
+		final Principal principal = this.sessionContext.getCallerPrincipal();
 		return principal.getName();
 	}
 
+	public User getLoggedUser() {
+		final String username = this.sessionContext.getCallerPrincipal().getName();
+		return this.getUserByUsername(username);
+	}
+
 	private User getUserByUsername(final String username) {
-		return userService.findUserByEmail(username);
+		return this.userService.findUserByEmail(username);
+	}
+
+	public String getUsername() {
+		return this.sessionContext.getCallerPrincipal().getName();
 	}
 
 	public void setSessionContext(final SessionContext sessionContext) {
