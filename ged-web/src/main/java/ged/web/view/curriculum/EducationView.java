@@ -39,6 +39,7 @@ public class EducationView extends AbstractView {
 	}
 
 	public String delete() {
+		this.curriculum.removeEducation(this.education);
 		this.curriculumService.save(this.curriculum);
 		return this.curriculumUrl();
 	}

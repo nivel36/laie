@@ -43,6 +43,7 @@ public class JobExperienceView extends AbstractView {
 	}
 
 	public String delete() {
+		this.curriculum.removeJobExperience(this.jobExperience);
 		this.curriculumService.save(this.curriculum);
 		return this.curriculumUrl();
 	}
