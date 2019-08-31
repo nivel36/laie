@@ -4,27 +4,25 @@
 	xmlns:po="http://primefaces.org/roma" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets">
 
 	<div class="layout-topbar">
-		<a class="layout-right-panel-button layout-topbar-icon" href="#"> <i class="fa fa-ellipsis-v" />
-		</a> <a class="layout-menu-button layout-topbar-icon" href="#"> <i class="fa fa-bars" />
-		</a> <span class="layout-topbar-search"> <i class="fa fa-search"></i> <input type="text" />
+		<a class="layout-right-panel-button layout-topbar-icon" href="#"> <em class="fa fa-ellipsis-v" />
+		</a> <a class="layout-menu-button layout-topbar-icon" href="#"> <em class="fa fa-bars" />
+		</a> <span class="layout-topbar-search"> <em class="fa fa-search" /> <input type="text" />
 		</span>
 
 		<ul class="topbar-menu fadeInDown">
 			<li class="user-profile"><a href="#"> <cc:avatar value="#{sessionUser.get().imageFileName}" styleClass="small" />
-
 					<div class="layout-profile-userinfo">
 						<span class="layout-profile-name">#{sessionUser.get().fullName}</span> <span class="layout-profile-role">#{g:translate(sessionUser.get().role)}</span>
 					</div>
 			</a>
 				<ul>
 					<li><p:link outcome="#{Page.CONFIG.getUrl()}">
-							<i class="fa fa-fw fa-cog"></i>
-							<span>#{i18n['menu.config']}</span>
+							<em class="fa fa-fw fa-cog" /> <span>#{i18n['menu.config']}</span>
 						</p:link></li>
 
 					<li><h:form>
 							<p:commandLink action="#{sessionUser.exit}">
-								<i class="fa fa-fw fa-power-off"></i>
+								<em class="fa fa-fw fa-power-off" />
 								<span>#{i18n['user.logout']}</span>
 							</p:commandLink>
 						</h:form></li>
