@@ -1333,7 +1333,9 @@ a {
       margin-top: 0px; }
   .card h4 {
     font-size: 13px;
-    font-weight: 500; }
+    font-weight: 500;
+    border-bottom: 1px solid #bbbb;
+    padding-bottom: 0.3em; }
     .card h4:first-child {
       margin-top: 0px; }
 
