@@ -14,13 +14,18 @@
 			<h3>#{cc.attrs.title}</h3>
 			<div class="p-grid">
 				<div class="p-col-12">
-					<p:dataList var="contact" value="#{cc.attrs.contacts}" emptyMessage="#{i18n['client.no_contacts_found']}" paginator="true"
-						paginatorPosition="bottom" styleClass="ui-datalist-borderless">
-						<p:link outcome="#{Page.CONTACT.getUrl()}">
-							<f:param name="id" value="#{contact.id}" />
-							<cc:person value="#{contact}" styleClass="selectable" />
-						</p:link>
-					</p:dataList>
+					<p:dataTable var="contact" value="#{cc.attrs.contacts}" emptyMessage="#{i18n['client.no_contacts_found']}" paginator="true"
+						paginatorPosition="bottom" styleClass="ui-datatable-borderless">
+						<p:column headerText="#{i18n['contact.name']}" sortBy="#{contact.name}">
+						 #{contact.name} #{contact.surname}
+						</p:column>
+						<p:column headerText="#{i18n['contact.email']}">
+						#{contact.email}
+						</p:column>
+						<p:column headerText="#{i18n['contact.position']}">
+						#{contact.position}
+						</p:column>
+					</p:dataTable>
 				</div>
 				<div class="p-col-12">
 					<h:panelGroup id="children" styleClass="buttons">

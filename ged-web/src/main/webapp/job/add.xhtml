@@ -25,14 +25,13 @@
 					<div class="card">
 						<div class="p-grid">
 							<div class="p-col-12 p-xl-6">
-								<h3>#{i18n['user.personal_information']}</h3>
 								<div class="form-field ui-fluid">
 									<g:input label="#{i18n['job.title']}" value="#{addJobView.jobOffer.title}" required="true" />
 
 									<cc:autocomplete id="client" label="#{i18n['job.client']}" value="#{addJobView.jobOffer.client}"
 										completeMethod="#{addJobView.completeClient}" required="true">
 										<p:column>
-											<h:outputText value="#{var.name}" />
+											#{var.name}
 										</p:column>
 									</cc:autocomplete>
 
@@ -47,7 +46,6 @@
 							</div>
 
 							<div class="p-col-12 p-xl-6">
-								<h3>#{i18n['user.personal_information']}</h3>
 
 								<div class="form-field ui-fluid">
 
@@ -67,7 +65,6 @@
 								</div>
 							</div>
 							<div class="p-col-12">
-								<h3>#{i18n['user.personal_information']}</h3>
 								<div class="form-field ui-fluid">
 									<g:input id="description" label="#{i18n['job.description']}" value="#{addJobView.jobOffer.description}" type="textarea" />
 								</div>

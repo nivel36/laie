@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://ged.org/ui" xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://ged.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets" template="/WEB-INF/templates/template.xhtml">
 
 	<ui:define name="title">
@@ -50,24 +51,49 @@
 				</div>
 			</div>
 
-			<div class="p-col-12 p-xl-8">
+			<div class="p-col-12 p-xl-7">
 				<cc:jobOffers id="jobOffers" jobOffers="#{viewClientView.jobOffers}">
 					<h:form id="jobOffersForm">
-						<p:commandButton value="#{i18n['job.new_job_offer']}" actionListener="#{viewClientView.newJobOffer}" action="#{Page.JOB_ADD.getUrl()}" process="@this"
-							styleClass="success-btn" />
+						<p:commandButton value="#{i18n['job.new_job_offer']}" actionListener="#{viewClientView.newJobOffer}" action="#{Page.JOB_ADD.getUrl()}"
+							process="@this" styleClass="success-btn" />
 					</h:form>
 				</cc:jobOffers>
 			</div>
 
-			<div class="p-col-12 p-xl-4">
-				<cc:contacts contacts="#{viewClientView.contacts}">
+			<div class="p-col-12 p-xl-5">
+				<div class="card card-w-title contacts">
+					<h3>#{i18n['client.contacts']}</h3>
 					<h:form id="contactsForm">
-						<p:commandButton value="#{i18n['contact.new_contact']}" actionListener="#{viewClientView.newContact}" action="#{Page.CONTACT_ADD.getRedirectedUrl()}" process="@this"
-							styleClass="success-btn" />
+						<div class="p-grid">
+							<div class="p-col-12">
+								<p:dataTable var="contact" value="#{viewClientView.contacts}" emptyMessage="#{i18n['client.no_contacts_found']}" paginator="true"
+									paginatorPosition="bottom" styleClass="ui-datatable-borderless">
+									<p:column headerText="#{i18n['contact.name']}" sortBy="#{contact.name}">
+										<h:outputText value="#{contact.name} #{contact.surname}" />
+									</p:column>
+									<p:column headerText="#{i18n['contact.email']}">
+										<h:outputText value="#{contact.email}" />
+									</p:column>
+									<p:column headerText="#{i18n['contact.position']}">
+										<h:outputText value="#{contact.position}" />
+									</p:column>
+									<p:column>
+										<p:commandButton icon="fa fa-search" styleClass="success-btn" />
+										<p:commandButton icon="fa fa-pencil" />
+										<p:commandButton icon="fa fa-trash" styleClass="danger-btn" />
+									</p:column>
+								</p:dataTable>
+							</div>
+							<div class="p-col-12">
+								<h:panelGroup id="children" styleClass="buttons">
+									<p:commandButton value="#{i18n['contact.new_contact']}" actionListener="#{viewClientView.newContact}"
+										action="#{Page.CONTACT_ADD.getRedirectedUrl()}" process="@this" styleClass="success-btn" />
+								</h:panelGroup>
+							</div>
+						</div>
 					</h:form>
-				</cc:contacts>
+				</div>
 			</div>
-
 		</div>
 	</ui:define>
 </ui:composition>
