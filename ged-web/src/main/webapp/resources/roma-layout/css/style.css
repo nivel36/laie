@@ -147,6 +147,11 @@ body .ui-datatable table {
 	border: 2px solid white;
 }
 
+.avatar.tiny {
+	width: 30x;
+	height: 30px;
+}
+
 .avatar.small {
 	width: 36px;
 	height: 36px;
@@ -329,6 +334,10 @@ body .ui-datatable table {
 
 .client-card-content {
 	padding: .5em 1em;
+}
+
+.contacts.card .ui-datatable .ui-button {
+	margin-left: 6px;
 }
 
 .curriculum {
