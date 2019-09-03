@@ -20,7 +20,7 @@
 
 	<ui:define name="content">
 		<div class="p-grid">
-			<div class="p-col-12 p-xl-5">
+			<div class="p-col-12 p-xl-6">
 				<div class="card user-card">
 					<div class="user-card-header">
 						<p:graphicImage value="/resources/img/bg-header.png" />
@@ -75,17 +75,19 @@
 					</div>
 				</div>
 			</div>
-
-			<div class="p-col-12 p-lg-7">
-				<h:form id="jobOffersForm">
-					<cc:jobOffers jobOffers="#{viewUserView.jobOffers}" />
-				</h:form>
-			</div>
+			
 			<div class="p-col-12 p-xl-4">
 				<h:form id="userTeamForm">
 					<cc:users users="#{viewUserView.team}" title="#{i18n['user.team']}" />
 				</h:form>
 			</div>
+
+			<div class="p-col-12 p-lg-8">
+				<h:form id="jobOffersForm">
+					<cc:jobOffers jobOffers="#{viewUserView.jobOffers}" />
+				</h:form>
+			</div>
+			
 
 			<div class="p-col-12 p-xl-4">
 				<h:form id="jobMeetingsForm">
