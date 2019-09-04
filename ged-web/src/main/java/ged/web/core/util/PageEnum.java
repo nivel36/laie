@@ -4,6 +4,7 @@ import ged.ejb.core.model.Identifiable;
 
 public enum PageEnum {
 
+	ACTIVITY_SEARCH("/activity/search"), //
 	CANDIDATE("/candidate/view"), //
 	CANDIDATE_ADD("/candidate/add"), //
 	CANDIDATE_EDIT("/candidate/edit", true), //

@@ -45,6 +45,17 @@ insert into I18NSTRING( id, version, locale, key, text ) values( 226, 0, 'ca', '
 insert into I18NSTRING( id, version, locale, key, text ) values( 230, 0, 'es', 'job_candidature_state.approved', 'Aprobado' );
 insert into I18NSTRING( id, version, locale, key, text ) values( 231, 0, 'ca', 'job_candidature_state.approved', 'Aprovat' );
 
+insert into I18NSTRING( id, version, locale, key, text ) values( 250, 0, 'es', 'activity_type.other', 'Otra' );
+insert into I18NSTRING( id, version, locale, key, text ) values( 251, 0, 'ca', 'activity_type.other', 'Altre' );
+insert into I18NSTRING( id, version, locale, key, text ) values( 250, 0, 'es', 'activity_type.email', 'Correo electrónico' );
+insert into I18NSTRING( id, version, locale, key, text ) values( 251, 0, 'ca', 'activity_type.email', 'Correu electrónic' );
+insert into I18NSTRING( id, version, locale, key, text ) values( 250, 0, 'es', 'activity_type.phone_call', 'Llamada telefónica' );
+insert into I18NSTRING( id, version, locale, key, text ) values( 251, 0, 'ca', 'activity_type.phone_call', 'Trucada telefónica' );
+insert into I18NSTRING( id, version, locale, key, text ) values( 250, 0, 'es', 'activity_type.video_call', 'Videoconferencia' );
+insert into I18NSTRING( id, version, locale, key, text ) values( 251, 0, 'ca', 'activity_type.video_call', 'Videoconferencia' );
+insert into I18NSTRING( id, version, locale, key, text ) values( 250, 0, 'es', 'activity_type.message', 'Mensaje' );
+insert into I18NSTRING( id, version, locale, key, text ) values( 251, 0, 'ca', 'activity_type.message', 'Missatge' );
+
 insert into I18NSTRING( id, version, locale, key, text ) values( 300, 0, 'ca', 'infojobs', 'Infojobs' );
 insert into I18NSTRING( id, version, locale, key, text ) values( 301, 0, 'es', 'infojobs', 'Infojobs' );
 insert into I18NSTRING( id, version, locale, key, text ) values( 305, 0, 'ca', 'linkedin', 'LinkedIn' );
