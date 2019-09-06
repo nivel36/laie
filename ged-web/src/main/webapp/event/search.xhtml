@@ -4,7 +4,7 @@
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets" template="/WEB-INF/templates/template.xhtml">
 
 	<ui:define name="title">
-		#{i18n['activity.activities']}
+		#{i18n['event.events']}
 	</ui:define>
 
 	<ui:param name="selectedMenu" value="users" />
@@ -12,12 +12,12 @@
 	<ui:define name="breadcrumb">
 		<p:breadCrumb>
 			<p:menuitem value="#{i18n['menu.index']}" outcome="#{Page.INDEX.getUrl()}" />
-			<p:menuitem value="#{i18n['activity.activities']}" disabled="true" />
+			<p:menuitem value="#{i18n['event.events']}" disabled="true" />
 		</p:breadCrumb>
 	</ui:define>
 
 	<ui:define name="content">
-		<h:form id="searchActivities">
+		<h:form id="searchevents">
 			<div class="card">
 				<div class="p-grid">
 					<div class="p-col-12 p-xl-5">
@@ -26,25 +26,32 @@
 					</div>
 					<div class="p-col-12 p-xl-7">
 						<div class="buttons">
-							<p:commandButton value="#{i18n['action.export']}" action="#{searchActivityView.export}" process="@this" icon="fa fa-file-excel-o" />
+							<p:commandButton value="#{i18n['action.export']}" action="#{searchEventView.export}" process="@this" icon="fa fa-file-excel-o" />
 						</div>
 					</div>
 				</div>
 			</div>
 			<div class="card">
-				<p:dataTable var="user" id="activities" value="#{searchActivityView.activities}" emptyMessage="#{i18n['activity.no_activities_found']}" reflow="true" paginator="true"
-					paginatorPosition="bottom" paginatorTemplate="{PageLinks}" rows="#{sessionUser.rowsPerPage}" sortBy="#{activity.date}" sortOrder="descending" lazy="true">
+				<p:dataTable var="user" id="events" value="#{searchEventView.events}" emptyMessage="#{i18n['event.no_events_found']}" reflow="true" paginator="true"
+					paginatorPosition="bottom" paginatorTemplate="{PageLinks}" rows="#{sessionUser.rowsPerPage}" sortBy="#{event.date}" sortOrder="descending" lazy="true">
 
-					<p:column headerText="#{i18n['activity.type']}" sortBy="#{activity.type}">
-						<h:outputText value="#{activity.type}" />
+					<p:column headerText="#{i18n['event.type']}" sortBy="#{event.type}">
+						<h:outputText value="#{event.type}" />
+					</p:column>
+					
+					<p:column headerText="#{i18n['event.job_candidature']}">
+						<h:outputText value="#{event.jobCandidature}" />
+					</p:column>
+					
+					<p:column headerText="#{i18n['event.user']}" sortBy="#{event.user}">
+						<h:outputText value="#{event.user}" />
 					</p:column>
 
-					<p:column headerText="#{i18n['activity.date']}" sortBy="#{activity.date}">
-						<h:outputText value="#{activity.date}">
+					<p:column headerText="#{i18n['event.date']}" sortBy="#{event.date}">
+						<h:outputText value="#{event.date}">
 							<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
 						</h:outputText>
 					</p:column>
-
 				</p:dataTable>
 			</div>
 		</h:form>

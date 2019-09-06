@@ -4,7 +4,6 @@ import ged.ejb.core.model.Identifiable;
 
 public enum PageEnum {
 
-	ACTIVITY_SEARCH("/activity/search"), //
 	CANDIDATE("/candidate/view"), //
 	CANDIDATE_ADD("/candidate/add"), //
 	CANDIDATE_EDIT("/candidate/edit", true), //
@@ -27,6 +26,8 @@ public enum PageEnum {
 	CURRICULUM_LANGUAGE("/candidate/curriculum/language", true), //
 	CURRICULUM_EDUCATION("/candidate/curriculum/education", true), //
 	CURRICULUM_SKILLS("/candidate/curriculum/skills", true), //
+	EVENT_SEARCH("/event/search"), //
+	EVENT_ADD("/event/add"), //
 	INDEX("/index"), //
 	ISABEL("/isabel/isabel"), //
 	JOB("/job/view"), //

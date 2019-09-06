@@ -1,14 +1,14 @@
-package ged.ejb.activity;
+package ged.ejb.event;
 
 import ged.ejb.core.model.AbstractDao;
 import ged.ejb.core.model.Repository;
 
 @Repository
-public class ActivityTypeDao extends AbstractDao<ActivityType> {
+public class EventTypeDao extends AbstractDao<EventType> {
 
 	@Override
-	protected Class<ActivityType> getType() {
-		return ActivityType.class;
+	protected Class<EventType> getType() {
+		return EventType.class;
 	}
 
 	@Override
