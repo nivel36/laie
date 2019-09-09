@@ -24,7 +24,11 @@
 					<div class="card">
 						<div class="p-grid">
 							<div class="p-col-12 p-xl-6">
-								<div class="form-field ui-fluid"></div>
+								<div class="form-field ui-fluid">
+									<cc:inputSelect label="#{i18n['event.type']}" value="#{addEventView.event.type}" other="true">
+										<f:selectItems value="#{eventTypes.list}" var="event" itemValue="#{event.id}" itemLabel="#{g:translate(event.name)}" />
+									</cc:inputSelect>
+								</div>
 							</div>
 
 							<div class="p-col-12">

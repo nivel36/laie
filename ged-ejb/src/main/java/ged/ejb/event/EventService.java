@@ -32,8 +32,8 @@ public class EventService extends AbstractService<Event> {
 		return eventDao;
 	}
 	
-	public List<EventType> findActivityTypes() {
-		logger.debug("Find all activity types");
+	public List<EventType> findAllEventTypes() {
+		logger.debug("Find all event types");
 		return eventTypeDao.findAll(Page.ALL);
 	}
 }

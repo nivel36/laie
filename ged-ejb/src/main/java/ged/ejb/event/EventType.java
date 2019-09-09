@@ -4,23 +4,24 @@ import java.util.Objects;
 
 import javax.persistence.Entity;
 
-import ged.ejb.core.i18n.I18nString;
+import ged.ejb.core.i18n.I18n;
 import ged.ejb.core.model.AbstractEntity;
 
-@Entity
+@Entity(name="EVENT_TYPE")
 public class EventType extends AbstractEntity {
 
 	private static final long serialVersionUID = 1723624254313067783L;
 
-	private I18nString name;
+	@I18n
+	private String name;
 
 	private String icon;
 
-	public I18nString getName() {
+	public String getName() {
 		return name;
 	}
 
-	public void setName(I18nString name) {
+	public void setName(String name) {
 		this.name = name;
 	}
 
