@@ -25,9 +25,16 @@
 						<div class="p-grid">
 							<div class="p-col-12 p-xl-6">
 								<div class="form-field ui-fluid">
-									<cc:inputSelect label="#{i18n['event.type']}" value="#{addEventView.event.type}" other="true">
-										<f:selectItems value="#{eventTypes.list}" var="event" itemValue="#{event.id}" itemLabel="#{g:translate(event.name)}" />
+									<cc:inputSelect label="#{i18n['event.type']}" value="#{addEventView.event.type}">
+										<f:selectItems value="#{eventTypes.list}" var="event" itemValue="#{event.name}" itemLabel="#{g:translate(event.name)}" />
 									</cc:inputSelect>
+
+									<cc:inputSelect label="#{i18n['event.job_candidature']}" value="#{addEventView.event.jobCandidature}">
+										<f:selectItems value="#{addEventView.jobCandidatures}" var="jobCandidature" itemValue="#{jobCandidature.id}" itemLabel="#{jobCandidature}" />
+									</cc:inputSelect>
+
+
+									<g:input id="description" label="#{i18n['event.description']}" value="#{addEventView.event.description}" type="textarea" />
 								</div>
 							</div>
 

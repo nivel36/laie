@@ -52,4 +52,8 @@ public class Page {
 	public int hashCode() {
 		return Objects.hash(offset, limit);
 	}
+
+	public String toString() {
+		return String.format("Offset %d - Limit %d", offset, limit);
+	}
 }

@@ -21,23 +21,23 @@ import ged.ejb.user.User;
 @Indexed
 public class Event extends AbstractEntity {
 	
-	private static final long serialVersionUID = -4676990785364088633L;
+	private static final long serialVersionUID = 1L;
 
 	@Field(name = "date", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField(forField = "date")
 	private LocalDateTime date;
 	
 	private String description;
-	
+
 	@ManyToOne
 	private JobCandidature jobCandidature;
-	
+
 	@ManyToOne
 	private EventType type;
-
+	
 	@ManyToOne
 	private User user;
-
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -56,6 +56,10 @@ public class Event extends AbstractEntity {
 
 	public String getDescription() {
 		return description;
+	}
+
+	public JobCandidature getJobCandidature() {
+		return jobCandidature;
 	}
 
 	public EventType getType() {
@@ -77,6 +81,10 @@ public class Event extends AbstractEntity {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public void setJobCandidature(JobCandidature jobCandidature) {
+		this.jobCandidature = jobCandidature;
 	}
 
 	public void setType(EventType type) {

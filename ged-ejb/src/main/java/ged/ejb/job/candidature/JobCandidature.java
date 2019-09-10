@@ -102,6 +102,6 @@ public class JobCandidature extends AbstractEntity {
 
 	@Override
 	public String toString() {
-		return this.candidate.getFullName() + "-" + this.jobOffer;
+		return this.jobOffer + " - " + this.candidate.getFullName();
 	}
 }
