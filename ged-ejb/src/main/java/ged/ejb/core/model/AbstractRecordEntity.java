@@ -11,7 +11,7 @@ import ged.ejb.user.User;
 @MappedSuperclass
 public class AbstractRecordEntity extends AbstractEntity {
 
-	private static final long serialVersionUID = 8347072557418850004L;
+	private static final long serialVersionUID = 1L;
 
 	@Column(length = 64)
 	private String entityClass;

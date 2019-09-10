@@ -18,7 +18,7 @@ public class Credential extends AbstractEntity {
 
 	private static final Random RANDOM = new SecureRandom();
 
-	private static final long serialVersionUID = 8026493839739887015L;
+	private static final long serialVersionUID = 1L;
 
 	@NotNull
 	private LocalDate created;

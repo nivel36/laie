@@ -17,7 +17,7 @@ public class EditUserView extends AbstractUserView {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
-	private static final long serialVersionUID = -2187385732087309689L;
+	private static final long serialVersionUID = 1L;
 
 	private static final String USER_KEY = "user";
 

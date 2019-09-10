@@ -17,7 +17,7 @@ import ged.web.core.view.AbstractView;
 @ViewScoped
 public class SearchMeetingView extends AbstractView {
 
-	private static final long serialVersionUID = 1105875525922748690L;
+	private static final long serialVersionUID = 1L;
 
 	private List<Meeting> conductedMeetings;
 	

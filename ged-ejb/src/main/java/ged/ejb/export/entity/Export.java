@@ -15,7 +15,7 @@ import ged.ejb.core.model.AbstractEntity;
 @Entity
 public class Export extends AbstractEntity {
 
-	private static final long serialVersionUID = 1529660983196543022L;
+	private static final long serialVersionUID = 1L;
 
 	@Column(length = 50, unique = true, nullable = false)
 	private String exportName;

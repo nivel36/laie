@@ -23,7 +23,7 @@ public class EducationView extends AbstractView {
 
 	private static final String EDUCATION_KEY = "education";
 
-	private static final long serialVersionUID = -7120837113945432637L;
+	private static final long serialVersionUID = 1L;
 
 	private Curriculum curriculum;
 

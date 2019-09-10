@@ -24,7 +24,7 @@ public class BookmarksView extends AbstractView {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
-	private static final long serialVersionUID = 8786492354769335930L;
+	private static final long serialVersionUID = 1L;
 
 	private List<Bookmark> bookmarks;
 

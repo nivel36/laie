@@ -22,7 +22,7 @@ import ged.web.core.view.AbstractView;
 @ViewScoped
 public class IndexView extends AbstractView {
 
-	private static final long serialVersionUID = 3050470966176013477L;
+	private static final long serialVersionUID = 1L;
 
 	private List<Candidate> candidates;
 

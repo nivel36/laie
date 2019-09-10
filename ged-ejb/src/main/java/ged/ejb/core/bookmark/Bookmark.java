@@ -10,6 +10,6 @@ import ged.ejb.core.model.AbstractRecordEntity;
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = { "userId", "entityClass", "entityId" }))
 public class Bookmark extends AbstractRecordEntity {
 
-	private static final long serialVersionUID = 7897704476327486542L;
+	private static final long serialVersionUID = 1L;
 
 }

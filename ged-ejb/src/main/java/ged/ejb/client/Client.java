@@ -34,7 +34,7 @@ import ged.ejb.user.User;
 @Indexed
 public class Client extends AbstractEntity implements Ownerable, Erasable {
 
-	private static final long serialVersionUID = -5319357138994738654L;
+	private static final long serialVersionUID = 1L;
 
 	@Embedded
 	@IndexedEmbedded

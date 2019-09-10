@@ -40,7 +40,7 @@ import ged.ejb.user.User;
 @Table(name = "JOB_OFFER")
 public class JobOffer extends AbstractEntity implements Ownerable {
 
-	private static final long serialVersionUID = 5579321864799956403L;
+	private static final long serialVersionUID = 1L;
 
 	@Embedded
 	@IndexedEmbedded

@@ -19,7 +19,7 @@ import ged.ejb.core.model.AbstractEntity;
 @Entity
 public class Curriculum extends AbstractEntity {
 
-	private static final long serialVersionUID = 5171402772798965261L;
+	private static final long serialVersionUID = 1L;
 
 	@NotNull
 	@OneToOne(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, orphanRemoval = true)

@@ -21,7 +21,7 @@ public class EditCandidateView extends AbstractCandidateView {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
-	private static final long serialVersionUID = -7336942836739051499L;
+	private static final long serialVersionUID = 1L;
 
 	private void checkEditPermission() {
 		if (!this.sessionUser.hasPermissionToEdit(this.candidate)) {

@@ -19,7 +19,7 @@ import ged.web.core.view.AbstractView;
 
 public abstract class AbstractJobView extends AbstractView {
 
-	private static final long serialVersionUID = 747123354355904789L;
+	private static final long serialVersionUID = 1L;
 
 	@Inject
 	protected transient ClientService clientService;

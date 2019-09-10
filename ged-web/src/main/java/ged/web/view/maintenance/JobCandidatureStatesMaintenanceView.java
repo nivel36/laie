@@ -21,7 +21,7 @@ public class JobCandidatureStatesMaintenanceView extends AbstractView {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
-	private static final long serialVersionUID = -2637725114049902496L;
+	private static final long serialVersionUID = 1L;
 
 	private List<JobCandidatureState> states;
 

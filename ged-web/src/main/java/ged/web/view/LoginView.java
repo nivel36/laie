@@ -32,7 +32,7 @@ public class LoginView extends AbstractView {
 
 	private static final Logger logger = LoggerFactory.getLogger(LoginView.class);
 
-	private static final long serialVersionUID = 8364578958730650005L;
+	private static final long serialVersionUID = 1L;
 
 	private Locale locale;
 

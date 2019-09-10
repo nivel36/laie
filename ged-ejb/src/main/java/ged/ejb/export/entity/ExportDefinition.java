@@ -15,7 +15,7 @@ import ged.ejb.core.model.AbstractEntity;
 @Entity
 public class ExportDefinition extends AbstractEntity {
 
-	private static final long serialVersionUID = 2536514027188561441L;
+	private static final long serialVersionUID = 1L;
 
 	// TODO ivmedina unique export-exportField
 	// TODO ivmedina unique export-sortOrder

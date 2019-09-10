@@ -20,7 +20,7 @@ public class SkillsView extends AbstractView {
 
 	private static final String CURRICULUM_KEY = "curriculum";
 
-	private static final long serialVersionUID = -5470807754278944272L;
+	private static final long serialVersionUID = 1L;
 
 	private Curriculum curriculum;
 

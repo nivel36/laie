@@ -10,7 +10,7 @@ import ged.ejb.core.model.AbstractEntity;
 @Entity
 public class Origin extends AbstractEntity {
 
-	private static final long serialVersionUID = -8905604950314447602L;
+	private static final long serialVersionUID = 1L;
 
 	@I18n
 	private String code;

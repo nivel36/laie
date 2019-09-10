@@ -21,7 +21,7 @@ import ged.ejb.job.offer.JobOffer;
 @Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "jobOfferId", "candidateId" }) })
 public class JobCandidature extends AbstractEntity {
 
-	private static final long serialVersionUID = 4596378123715515824L;
+	private static final long serialVersionUID = 1L;
 
 	@NotNull
 	@ManyToOne

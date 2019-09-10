@@ -13,7 +13,7 @@ import ged.ejb.person.Person;
 @Indexed
 public class Contact extends Person {
 
-	private static final long serialVersionUID = -5910261570364209778L;
+	private static final long serialVersionUID = 1L;
 
 	@ManyToOne
 	@JoinColumn(name = "clientId", nullable = false)

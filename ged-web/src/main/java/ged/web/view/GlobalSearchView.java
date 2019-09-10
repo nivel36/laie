@@ -25,7 +25,7 @@ import ged.web.core.view.AbstractView;
 @ViewScoped
 public class GlobalSearchView extends AbstractView {
 
-	private static final long serialVersionUID = 8268523301916849175L;
+	private static final long serialVersionUID = 1L;
 
 	private List<Candidate> candidates;
 

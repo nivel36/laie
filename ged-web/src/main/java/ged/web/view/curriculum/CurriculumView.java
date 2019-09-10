@@ -29,7 +29,7 @@ public class CurriculumView extends AbstractView {
 
 	private static final String CURRICULUM_KEY = "curriculum";
 
-	private static final long serialVersionUID = -5942086439519787220L;
+	private static final long serialVersionUID = 1L;
 
 	@Inject
 	@Param(name = "id", required = true)

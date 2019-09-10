@@ -23,7 +23,7 @@ import ged.web.core.util.Translator;
 
 public abstract class AbstractView implements Serializable {
 
-	private static final long serialVersionUID = -647915087403140904L;
+	private static final long serialVersionUID = 1L;
 
 	@Inject
 	protected transient ApplicationView applicationView;

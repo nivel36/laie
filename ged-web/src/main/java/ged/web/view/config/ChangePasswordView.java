@@ -22,7 +22,7 @@ public class ChangePasswordView extends AbstractView {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
-	private static final long serialVersionUID = -7760785874121856319L;
+	private static final long serialVersionUID = 1L;
 
 	private String newPassword;
 

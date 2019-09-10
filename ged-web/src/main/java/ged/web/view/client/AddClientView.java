@@ -19,7 +19,7 @@ public class AddClientView extends AbstractClientView {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
-	private static final long serialVersionUID = 1412905869664752048L;
+	private static final long serialVersionUID = 1L;
 
 	private Contact contact;
 

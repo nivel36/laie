@@ -28,7 +28,7 @@ import ged.web.core.view.AbstractView;
 @ViewScoped
 public class FilePanelView extends AbstractView {
 
-	private static final long serialVersionUID = 6244684784788818815L;
+	private static final long serialVersionUID = 1L;
 
 	@Inject
 	@Param(name = "id", required = true)

@@ -21,7 +21,7 @@ import ged.ejb.core.model.AbstractEntity;
 @Indexed
 public class JobExperience extends AbstractEntity {
 
-	private static final long serialVersionUID = -2578992834584255548L;
+	private static final long serialVersionUID = 1L;
 
 	@Field
 	@NotNull

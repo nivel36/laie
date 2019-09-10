@@ -2,7 +2,7 @@ package ged.web.core;
 
 public class IllegalPageStateException extends RuntimeException {
 
-	private static final long serialVersionUID = -6986707115344212432L;
+	private static final long serialVersionUID = 1L;
 
 	public IllegalPageStateException() {
 	}

@@ -24,7 +24,7 @@ public class LanguageView extends AbstractView {
 
 	private static final String CURRICULUM_KEY = "curriculum";
 
-	private static final long serialVersionUID = -3985331305200647310L;
+	private static final long serialVersionUID = 1L;
 
 	private Curriculum curriculum;
 

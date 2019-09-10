@@ -15,7 +15,7 @@ import ged.ejb.core.model.SortField;
 
 public abstract class AbstractLazyDataModel<T extends AbstractEntity> extends LazyDataModel<T> {
 
-	private static final long serialVersionUID = 209661618733021826L;
+	private static final long serialVersionUID = 1L;
 
 	protected String searchText;
 

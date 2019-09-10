@@ -2,7 +2,7 @@ package ged.ejb.user;
 
 public class BadManagerException extends RuntimeException {
 
-	private static final long serialVersionUID = 487013940365943306L;
+	private static final long serialVersionUID = 1L;
 
 	public BadManagerException() {
 	}

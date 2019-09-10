@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class YearMonthDto implements Serializable {
 
-	private static final long serialVersionUID = 8244823973608903911L;
+	private static final long serialVersionUID = 1L;
 
 	public static YearMonthDto of(final YearMonth yearMonth) {
 		Objects.requireNonNull(yearMonth);

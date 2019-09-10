@@ -9,7 +9,7 @@ import ged.web.core.view.AbstractLazyDataModel;
 
 public class ContactLazyDataModel extends AbstractLazyDataModel<Contact> {
 
-	private static final long serialVersionUID = -7990024695503848209L;
+	private static final long serialVersionUID = 1L;
 	
 	private transient ContactService contactService;
 

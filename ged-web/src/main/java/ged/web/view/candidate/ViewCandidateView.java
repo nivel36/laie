@@ -34,7 +34,7 @@ public class ViewCandidateView extends AbstractView {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
-	private static final long serialVersionUID = 1577879781927493283L;
+	private static final long serialVersionUID = 1L;
 
 	@Inject
 	@Param(name = "id", required = true)

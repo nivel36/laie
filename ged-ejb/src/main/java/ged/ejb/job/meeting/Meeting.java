@@ -26,7 +26,7 @@ import ged.ejb.user.User;
 @Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "jobCandidatureId", "datePlanned" }) })
 public class Meeting extends AbstractEntity implements Ownerable {
 
-	private static final long serialVersionUID = 3394583186288921090L;
+	private static final long serialVersionUID = 1L;
 
 	@ElementCollection
 	@CollectionTable(name="emails", joinColumns=@JoinColumn(name="meeting_id"))

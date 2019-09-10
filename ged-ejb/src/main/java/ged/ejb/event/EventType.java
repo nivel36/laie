@@ -10,7 +10,7 @@ import ged.ejb.core.model.AbstractEntity;
 @Entity(name="EVENT_TYPE")
 public class EventType extends AbstractEntity {
 
-	private static final long serialVersionUID = 1723624254313067783L;
+	private static final long serialVersionUID = 1L;
 
 	@I18n
 	private String name;

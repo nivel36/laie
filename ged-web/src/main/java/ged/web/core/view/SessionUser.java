@@ -26,7 +26,7 @@ public class SessionUser implements Serializable {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
-	private static final long serialVersionUID = -8079836415042166193L;
+	private static final long serialVersionUID = 1L;
 
 	@Inject
 	private transient ExternalContext externalContext;

@@ -7,6 +7,6 @@ import ged.ejb.core.maintenance.AbstractEnumEntity;
 @Entity
 public class SkillLevel extends AbstractEnumEntity {
 
-	private static final long serialVersionUID = -2173944466495102970L;
+	private static final long serialVersionUID = 1L;
 
 }

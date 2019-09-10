@@ -2,7 +2,7 @@ package ged.web.core.util;
 
 public class NavigationException extends RuntimeException {
 
-	private static final long serialVersionUID = 4147943989974147669L;
+	private static final long serialVersionUID = 1L;
 
 	public NavigationException() {
 	}

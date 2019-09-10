@@ -23,7 +23,7 @@ public class JobExperienceView extends AbstractView {
 
 	private static final String JOB_EXPERIENCE_KEY = "jobExperience";
 
-	private static final long serialVersionUID = -2896828087283592020L;
+	private static final long serialVersionUID = 1L;
 
 	private Curriculum curriculum;
 

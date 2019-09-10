@@ -17,7 +17,7 @@ import ged.ejb.core.model.AbstractEntity;
 @Indexed
 public class Skill extends AbstractEntity {
 
-	private static final long serialVersionUID = 6591356212002981267L;
+	private static final long serialVersionUID = 1L;
 	
 	public Skill() {}
 	

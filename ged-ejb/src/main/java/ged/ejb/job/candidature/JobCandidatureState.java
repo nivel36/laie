@@ -12,7 +12,7 @@ import ged.ejb.core.model.AbstractEntity;
 @Table(name = "JOB_CANDIDATURE_STATE")
 public class JobCandidatureState extends AbstractEntity {
 
-	private static final long serialVersionUID = -4388524806296516306L;
+	private static final long serialVersionUID = 1L;
 
 	@I18n
 	private String name;

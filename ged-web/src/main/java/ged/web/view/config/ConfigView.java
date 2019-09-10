@@ -31,7 +31,7 @@ public class ConfigView extends AbstractView {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
-	private static final long serialVersionUID = -2789492893353263506L;
+	private static final long serialVersionUID = 1L;
 
 	@Inject
 	private transient FileUploadService fileUploadService;

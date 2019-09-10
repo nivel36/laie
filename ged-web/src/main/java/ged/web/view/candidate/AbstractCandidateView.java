@@ -22,7 +22,7 @@ import ged.web.core.view.AbstractView;
 
 public abstract class AbstractCandidateView extends AbstractView {
 
-	private static final long serialVersionUID = 967686583070407655L;
+	private static final long serialVersionUID = 1L;
 
 	protected Candidate candidate;
 

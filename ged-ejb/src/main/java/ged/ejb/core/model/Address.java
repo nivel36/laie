@@ -14,7 +14,7 @@ import org.hibernate.search.annotations.Store;
 @Embeddable
 public class Address implements Serializable {
 
-	private static final long serialVersionUID = 2907479775923990369L;
+	private static final long serialVersionUID = 1L;
 
 	@Field(name = "_city")
 	@Field(name = "city", analyze = Analyze.NO, store = Store.NO, index = Index.NO)

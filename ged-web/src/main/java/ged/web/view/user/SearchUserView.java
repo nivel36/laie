@@ -33,7 +33,7 @@ public class SearchUserView extends AbstractView {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
-	private static final long serialVersionUID = 2434819723782902618L;
+	private static final long serialVersionUID = 1L;
 
 	private String searchText;
 

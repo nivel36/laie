@@ -21,7 +21,7 @@ public class EditJobView extends AbstractJobView {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
-	private static final long serialVersionUID = -4373329969104383876L;
+	private static final long serialVersionUID = 1L;
 
 	private void checkEditPermission() {
 		if (!this.sessionUser.hasPermissionToEdit(this.jobOffer)) {

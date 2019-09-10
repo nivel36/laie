@@ -15,7 +15,7 @@ import ged.ejb.core.model.AbstractEntity;
 @Indexed
 public class Tag extends AbstractEntity {
 
-	private static final long serialVersionUID = -2676859619371128798L;
+	private static final long serialVersionUID = 1L;
 
 	@NotNull
 	@Column(length = 128, nullable = false)

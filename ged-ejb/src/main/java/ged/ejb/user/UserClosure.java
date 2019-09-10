@@ -12,7 +12,7 @@ import ged.ejb.core.model.AbstractEntity;
 @Entity
 public class UserClosure extends AbstractEntity {
 
-	private static final long serialVersionUID = -4505908505220258870L;
+	private static final long serialVersionUID = 1L;
 
 	@ManyToOne
 	@JoinColumn(name = "antecessor_id", nullable = false)
