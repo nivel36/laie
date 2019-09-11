@@ -26,42 +26,42 @@ public class AddEventView extends AbstractView {
 
 	@Inject
 	private transient EventService eventService;
-	
+
 	private List<JobCandidature> jobCandidatures;
-	
+
 	@Inject
 	private transient JobCandidatureService jobCandidatureService;
 
 	public Event getEvent() {
-		return event;
+		return this.event;
 	}
 
 	public List<JobCandidature> getJobCandidatures() {
-		return jobCandidatures;
+		return this.jobCandidatures;
 	}
 
 	@PostConstruct
 	public void init() {
 		final User user = this.sessionUser.get();
-		event = new Event();
-		event.setUser(user);
-		jobCandidatures = this.jobCandidatureService.findJobCandidatures(user, Page.ALL);
+		this.event = new Event();
+		this.event.setUser(user);
+		this.jobCandidatures = this.jobCandidatureService.findJobCandidatures(user, Page.ALL);
 	}
 
 	public String save() {
-		this.eventService.save(event);
+		this.eventService.save(this.event);
 		return PageEnum.EVENT_SEARCH.getRedirectedUrl();
 	}
 
-	public void setEvent(Event event) {
+	public void setEvent(final Event event) {
 		this.event = event;
 	}
-	
-	public void setEventService(EventService eventService) {
+
+	public void setEventService(final EventService eventService) {
 		this.eventService = eventService;
 	}
 
-	public void setJobCandidatureService(JobCandidatureService jobCandidatureService) {
+	public void setJobCandidatureService(final JobCandidatureService jobCandidatureService) {
 		this.jobCandidatureService = jobCandidatureService;
 	}
 }

@@ -142,12 +142,12 @@ public class Curriculum extends AbstractEntity {
 		this.languages = languages;
 	}
 
-	public void setSkills(final Set<Skill> skills) {
-		this.skills = skills;
-	}
-	
 	public void setSkills(final List<Skill> skills) {
 		this.skills = new HashSet<Skill>(skills);
+	}
+	
+	public void setSkills(final Set<Skill> skills) {
+		this.skills = skills;
 	}
 
 	@Override

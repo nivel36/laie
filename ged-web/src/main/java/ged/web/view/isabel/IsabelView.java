@@ -46,6 +46,10 @@ public class IsabelView extends AbstractView {
 		return model;
 	}
 
+	public List<ReportInfo> getReportsList() {
+		return reportsList;
+	}
+
 	private Translator getTranslator() {
 		return translator;
 	}
@@ -83,9 +87,5 @@ public class IsabelView extends AbstractView {
 
 	public void setModel(DualListModel<ExportViewItemI> campos) {
 		this.model = campos;
-	}
-
-	public List<ReportInfo> getReportsList() {
-		return reportsList;
 	}
 }

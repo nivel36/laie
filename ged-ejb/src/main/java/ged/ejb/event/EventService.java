@@ -27,13 +27,13 @@ public class EventService extends AbstractService<Event> {
 	@Repository
 	private EventTypeDao eventTypeDao;
 
-	@Override
-	protected AbstractDao<Event> getDao() {
-		return eventDao;
-	}
-	
 	public List<EventType> findAllEventTypes() {
 		logger.debug("Find all event types");
 		return eventTypeDao.findAll(Page.ALL);
+	}
+	
+	@Override
+	protected AbstractDao<Event> getDao() {
+		return eventDao;
 	}
 }

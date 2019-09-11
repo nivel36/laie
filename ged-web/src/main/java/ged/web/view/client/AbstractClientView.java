@@ -16,12 +16,12 @@ public abstract class AbstractClientView extends AbstractView {
 	@Inject
 	protected transient ClientService clientService;
 
-	public Client getClient() {
-		return this.client;
-	}
-
 	protected String clientUrl() {
 		return PageEnum.CLIENT.getRedirectedUrl(this.client);
+	}
+
+	public Client getClient() {
+		return this.client;
 	}
 
 	public void setClientService(final ClientService clientService) {
