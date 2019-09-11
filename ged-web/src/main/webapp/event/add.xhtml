@@ -33,8 +33,11 @@
 										<f:selectItems value="#{addEventView.jobCandidatures}" var="jobCandidature" itemValue="#{jobCandidature.id}" itemLabel="#{jobCandidature}" />
 									</cc:inputSelect>
 
-
 									<g:input id="description" label="#{i18n['event.description']}" value="#{addEventView.event.description}" type="textarea" />
+									
+									<cc:inputSelect label="#{i18n['event.status']}" value="#{addEventView.event.status}">
+										<f:selectItems value="#{jobCandidatureStates.list}" var="jobCandidatureState" itemValue="#{jobCandidatureState.name}" itemLabel="#{g:translate(jobCandidatureState.name)}" />
+									</cc:inputSelect>
 								</div>
 							</div>
 

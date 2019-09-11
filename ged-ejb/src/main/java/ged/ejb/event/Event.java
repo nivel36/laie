@@ -15,18 +15,19 @@ import org.hibernate.search.annotations.Store;
 
 import ged.ejb.core.model.AbstractEntity;
 import ged.ejb.job.candidature.JobCandidature;
+import ged.ejb.job.candidature.JobCandidatureState;
 import ged.ejb.user.User;
 
 @Entity
 @Indexed
 public class Event extends AbstractEntity {
-	
+
 	private static final long serialVersionUID = 1L;
 
 	@Field(name = "date", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField(forField = "date")
 	private LocalDateTime date;
-	
+
 	private String description;
 
 	@ManyToOne
@@ -34,64 +35,79 @@ public class Event extends AbstractEntity {
 
 	@ManyToOne
 	private EventType type;
-	
+
 	@ManyToOne
 	private User user;
-	
+
+	@ManyToOne
+	private JobCandidatureState status;
+
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
+	public boolean equals(final Object obj) {
+		if (this == obj) {
 			return true;
-		if (!super.equals(obj))
+		}
+		if (!super.equals(obj)) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (this.getClass() != obj.getClass()) {
 			return false;
-		Event other = (Event) obj;
-		return Objects.equals(date, other.date) && Objects.equals(type, other.type) && Objects.equals(user, other.user);
+		}
+		final Event other = (Event) obj;
+		return Objects.equals(this.date, other.date) && Objects.equals(this.type, other.type)
+				&& Objects.equals(this.user, other.user);
 	}
 
 	public LocalDateTime getDate() {
-		return date;
+		return this.date;
 	}
 
 	public String getDescription() {
-		return description;
+		return this.description;
 	}
 
 	public JobCandidature getJobCandidature() {
-		return jobCandidature;
+		return this.jobCandidature;
+	}
+
+	public JobCandidatureState getStatus() {
+		return this.status;
 	}
 
 	public EventType getType() {
-		return type;
+		return this.type;
 	}
 
 	public User getUser() {
-		return user;
+		return this.user;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(date, type, user);
+		return Objects.hash(this.date, this.type, this.user);
 	}
 
-	public void setDate(LocalDateTime date) {
+	public void setDate(final LocalDateTime date) {
 		this.date = date;
 	}
 
-	public void setDescription(String description) {
+	public void setDescription(final String description) {
 		this.description = description;
 	}
 
-	public void setJobCandidature(JobCandidature jobCandidature) {
+	public void setJobCandidature(final JobCandidature jobCandidature) {
 		this.jobCandidature = jobCandidature;
 	}
 
-	public void setType(EventType type) {
+	public void setStatus(final JobCandidatureState status) {
+		this.status = status;
+	}
+
+	public void setType(final EventType type) {
 		this.type = type;
 	}
-	
-	public void setUser(User user) {
+
+	public void setUser(final User user) {
 		this.user = user;
 	}
 }
