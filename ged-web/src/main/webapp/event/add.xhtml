@@ -25,8 +25,8 @@
 						<div class="p-grid">
 							<div class="p-col-12 p-xl-6">
 								<div class="form-field ui-fluid">
-									<cc:inputSelect label="#{i18n['event.type']}" value="#{addEventView.event.type}">
-										<f:selectItems value="#{eventTypes.list}" var="event" itemValue="#{event.name}" itemLabel="#{g:translate(event.name)}" />
+									<cc:inputSelect label="#{i18n['event.type']}" value="#{addEventView.event.type}" >
+										<f:selectItems value="#{eventTypes.list}" var="event" itemValue="#{event.id}" itemLabel="#{g:translate(event.name)}" />
 									</cc:inputSelect>
 
 									<cc:inputSelect label="#{i18n['event.job_candidature']}" value="#{addEventView.event.jobCandidature}">
@@ -36,7 +36,7 @@
 									<g:input id="description" label="#{i18n['event.description']}" value="#{addEventView.event.description}" type="textarea" />
 									
 									<cc:inputSelect label="#{i18n['event.status']}" value="#{addEventView.event.status}">
-										<f:selectItems value="#{jobCandidatureStates.list}" var="jobCandidatureState" itemValue="#{jobCandidatureState.name}" itemLabel="#{g:translate(jobCandidatureState.name)}" />
+										<f:selectItems value="#{jobCandidatureStates.list}" var="jobCandidatureState" itemValue="#{jobCandidatureState.id}" itemLabel="#{g:translate(jobCandidatureState.name)}" />
 									</cc:inputSelect>
 								</div>
 							</div>
