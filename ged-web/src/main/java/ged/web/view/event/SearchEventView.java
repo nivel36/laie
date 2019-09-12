@@ -17,7 +17,7 @@ import ged.web.core.view.AbstractView;
 @Named
 @ViewScoped
 public class SearchEventView extends AbstractView {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	private static final long serialVersionUID = 1L;
@@ -39,6 +39,12 @@ public class SearchEventView extends AbstractView {
 	public void init() {
 		logger.trace("Search events init");
 		events = initEvents();
+		this.search();
+	}
+
+	public void search() {
+		logger.debug("Search events action performed");
+		events.setSearchText(null);
 	}
 
 	private EventLazyDataModel initEvents() {

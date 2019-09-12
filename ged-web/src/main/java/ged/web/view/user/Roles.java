@@ -1,4 +1,4 @@
-package ged.web.view;
+package ged.web.view.user;
 
 import java.io.Serializable;
 import java.util.Arrays;

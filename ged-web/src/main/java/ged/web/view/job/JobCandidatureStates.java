@@ -1,4 +1,4 @@
-package ged.web.view;
+package ged.web.view.job;
 
 import java.io.Serializable;
 import java.util.List;

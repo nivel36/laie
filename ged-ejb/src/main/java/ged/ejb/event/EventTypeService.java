@@ -8,14 +8,15 @@ import ged.ejb.core.model.AbstractDao;
 import ged.ejb.core.model.Repository;
 
 @Stateless
-public class EventService extends AbstractService<Event> {
-
+public class EventTypeService extends AbstractService<EventType>{
+	
 	@Inject
 	@Repository
-	private EventDao eventDao;
-	
+	private EventTypeDao eventTypeDao;
+
 	@Override
-	protected AbstractDao<Event> getDao() {
-		return eventDao;
+	protected AbstractDao<EventType> getDao() {
+		return eventTypeDao;
 	}
+
 }

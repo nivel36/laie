@@ -22,7 +22,7 @@ insert into EVENT_TYPE( id, version, name, icon ) values ( 31, 0, 'event_type.em
 insert into EVENT_TYPE( id, version, name, icon ) values ( 32, 0, 'event_type.phone_call', 'fa-phone');
 insert into EVENT_TYPE( id, version, name, icon ) values ( 33, 0, 'event_type.video_call', 'fa-computer');
 insert into EVENT_TYPE( id, version, name, icon ) values ( 34, 0, 'event_type.message', 'fa-pencil');
-insert into EVENT_TYPE( id, version, name, icon ) values ( 34, 0, 'event_type.meeting', 'fa-pencil');
+insert into EVENT_TYPE( id, version, name, icon ) values ( 35, 0, 'event_type.meeting', 'fa-pencil');
 
 
 insert into I18NSTRING( id, version, locale, key, text ) values( 100, 0, 'es', 'job_offer_state.opened', 'Abierta' );

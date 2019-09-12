@@ -1,4 +1,4 @@
-package ged.web.view;
+package ged.web.view.event;
 
 import java.io.Serializable;
 import java.util.List;
@@ -8,8 +8,9 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import ged.ejb.event.EventService;
+import ged.ejb.core.model.Page;
 import ged.ejb.event.EventType;
+import ged.ejb.event.EventTypeService;
 
 @Named
 @ApplicationScoped
@@ -18,7 +19,7 @@ public class EventTypes implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@Inject
-	private transient EventService eventService;
+	private transient EventTypeService eventTypeService;
 
 	private List<EventType> listOfEventTypes;
 
@@ -28,10 +29,10 @@ public class EventTypes implements Serializable{
 
 	@PostConstruct
 	public void init() {
-		this.listOfEventTypes = this.eventService.findAllEventTypes();
+		this.listOfEventTypes = this.eventTypeService.findAll(Page.ALL);
 	}
 
-	public void setEventService(final EventService eventService) {
-		this.eventService = eventService;
+	public void setEventTypeService(final EventTypeService eventTypeService) {
+		this.eventTypeService = eventTypeService;
 	}
 }
