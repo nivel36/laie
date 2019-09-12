@@ -75,11 +75,6 @@ public class JobCandidatureService extends AbstractService<JobCandidature> {
 		return jobCandidatureDao;
 	}
 
-	public List<JobCandidatureState> findJobCandidatureStates() {
-		logger.debug("Find all job candidature states");
-		return this.jobCandidatureDao.findJobCandidatureStates();
-	}
-
 	public List<JobCandidature> findJobCanditures(final JobOffer jobOffer, final Page page) {
 		Objects.requireNonNull(jobOffer, "JobOffer can't be null");
 		Objects.requireNonNull(page, "Page can't be null");
