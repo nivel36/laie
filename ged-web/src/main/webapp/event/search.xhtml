@@ -21,8 +21,7 @@
 			<div class="card">
 				<div class="p-grid">
 					<div class="p-col-12 p-xl-5">
-						<div class="searchBar ui-fluid">
-						</div>
+						<div class="searchBar ui-fluid"></div>
 					</div>
 					<div class="p-col-12 p-xl-7">
 						<div class="buttons">
@@ -32,25 +31,46 @@
 				</div>
 			</div>
 			<div class="card">
-				<p:dataTable var="user" id="events" value="#{searchEventView.events}" emptyMessage="#{i18n['event.no_events_found']}" reflow="true" paginator="true"
-					paginatorPosition="bottom" paginatorTemplate="{PageLinks}" rows="#{sessionUser.rowsPerPage}" sortBy="#{event.date}" sortOrder="descending" lazy="true">
+				<p:dataTable var="event" id="events" value="#{searchEventView.events}" emptyMessage="#{i18n['event.no_events_found']}" reflow="true" paginator="true" paginatorPosition="bottom"
+					paginatorTemplate="{PageLinks}" rows="#{sessionUser.rowsPerPage}" sortBy="#{event.date}" sortOrder="descending" lazy="true">
 
 					<p:column headerText="#{i18n['event.type']}" sortBy="#{event.type}">
-						<h:outputText value="#{event.type}" />
+						<h:outputText value="#{g:translate(event.type.name)}" />
 					</p:column>
-					
-					<p:column headerText="#{i18n['event.job_candidature']}">
-						<h:outputText value="#{event.jobCandidature}" />
+
+					<p:column headerText="#{i18n['event.candidate']}">
+						<h:link value="#{event.jobCandidature.candidate.fullName}" outcome="#{Page.CANDIDATE.getUrl()}">
+							<f:param name="id" value="#{event.jobCandidature.candidate.id}" />
+						</h:link>
 					</p:column>
-					
+
+					<p:column headerText="#{i18n['event.job_offer']}">
+						<h:link value="#{event.jobCandidature.jobOffer.title}" outcome="#{Page.JOB.getUrl()}">
+							<f:param name="id" value="#{event.jobCandidature.jobOffer.id}" />
+						</h:link>
+					</p:column>
+
+					<p:column headerText="#{i18n['event.client']}">
+						<h:link value="#{event.jobCandidature.jobOffer.client.name}" outcome="#{Page.CLIENT.getUrl()}">
+							<f:param name="id" value="#{event.jobCandidature.jobOffer.client.id}" />
+						</h:link>
+					</p:column>
+
 					<p:column headerText="#{i18n['event.user']}" sortBy="#{event.user}">
-						<h:outputText value="#{event.user}" />
+						<h:link value="#{event.user.fullName}" outcome="#{Page.USER.getUrl()}">
+							<f:param name="id" value="#{event.user.id}" />
+						</h:link>
 					</p:column>
 
 					<p:column headerText="#{i18n['event.date']}" sortBy="#{event.date}">
 						<h:outputText value="#{event.date}">
 							<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
 						</h:outputText>
+					</p:column>
+
+					<p:column headerText="#{i18n['event.status']}" sortBy="#{event.status}">
+						<div class="tag #{event.status.color}">#{g:translate(event.status.name)}</div>
+
 					</p:column>
 				</p:dataTable>
 			</div>
