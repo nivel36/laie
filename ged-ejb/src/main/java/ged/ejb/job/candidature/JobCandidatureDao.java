@@ -22,9 +22,6 @@ public class JobCandidatureDao extends AbstractDao<JobCandidature> {
 				map("jobOffer", jobOffer).and("candidate", candidate));
 	}
 
-	public JobCandidatureState findFirstJobCandidatureState() {
-		return this.findByQuery(JobCandidatureState.class, "JobCandidatureState.findFirstJobCandidatureState");
-	}
 
 	public List<JobCandidature> findJobCandidatures(final Candidate candidate, final Page page) {
 		Objects.requireNonNull(candidate, "Candidate can't be null");
@@ -37,10 +34,6 @@ public class JobCandidatureDao extends AbstractDao<JobCandidature> {
 		Objects.requireNonNull(user, "User can't be null");
 		Objects.requireNonNull(page, "Page can't be null");
 		return this.findByQuery(JobCandidature.class, "JobCandidature.findByUser", map("user", user), page);
-	}
-
-	public List<JobCandidatureState> findJobCandidatureStates() {
-		return this.getPersistenceFacade().findAll(JobCandidatureState.class, Page.ALL);
 	}
 
 	public List<JobCandidature> findJobCanditures(final JobOffer jobOffer, final Page page) {

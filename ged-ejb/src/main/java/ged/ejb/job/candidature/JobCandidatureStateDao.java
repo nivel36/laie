@@ -4,7 +4,7 @@ import ged.ejb.core.model.AbstractDao;
 import ged.ejb.core.model.Repository;
 
 @Repository
-public class JobCandidatureStateDao  extends AbstractDao<JobCandidatureState> {
+public class JobCandidatureStateDao extends AbstractDao<JobCandidatureState> {
 
 	@Override
 	protected Class<JobCandidatureState> getType() {
@@ -14,5 +14,9 @@ public class JobCandidatureStateDao  extends AbstractDao<JobCandidatureState> {
 	@Override
 	public String[] searchFields() {
 		return null;
+	}
+
+	public JobCandidatureState findFirstJobCandidatureState() {
+		return this.findByQuery(JobCandidatureState.class, "JobCandidatureState.findFirstJobCandidatureState");
 	}
 }

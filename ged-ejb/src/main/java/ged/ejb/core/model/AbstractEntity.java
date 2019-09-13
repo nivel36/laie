@@ -36,6 +36,10 @@ public abstract class AbstractEntity implements Identifiable, Serializable {
 	@Version
 	protected long version;
 
+	public boolean isNew() {
+		return id == 0;
+	}
+
 	@Override
 	public boolean equals(final Object obj) {
 		if (this == obj) {

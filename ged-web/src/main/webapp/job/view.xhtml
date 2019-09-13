@@ -5,7 +5,7 @@
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets" template="/WEB-INF/templates/template.xhtml">
 
 	<ui:define name="title">
-		#{i18n['job.job_offer']} - {viewJobView.jobOffer.title}
+		#{i18n['job.job_offer']} - #{viewJobView.jobOffer.title}
 	</ui:define>
 
 	<ui:param name="selectedMenu" value="offers" />
