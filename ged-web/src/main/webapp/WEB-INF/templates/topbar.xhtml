@@ -1,23 +1,31 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://ged.org/ui" xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://ged.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
 	xmlns:po="http://primefaces.org/roma" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets">
 	<h:form>
 		<div class="layout-topbar">
 			<a class="layout-menu-button layout-topbar-icon" href="#"> <em class="fa fa-bars" />
-			</a>
-
-			<span class="layout-topbar-search"> <em class="fa fa-search" /> <input type="text" />
+			</a> <span class="layout-topbar-search"> <em class="fa fa-search" /> <input type="text" />
 			</span>
+
+			<div class="spacer"></div>
+
+			<p:button value="#{i18n['client.new_client']}" outcome="#{Page.CLIENT_ADD.getUrl()}" styleClass="success-btn" rendered="#{selectedMenu eq 'clients'}"/>
+			<p:button value="#{i18n['job.new_job_offer']}" outcome="#{Page.JOB_ADD.getUrl()}" styleClass="success-btn" rendered="#{selectedMenu eq 'offers'}"/>
+			<p:button value="#{i18n['candidate.new_candidate']}" outcome="#{Page.CANDIDATE_ADD.getUrl()}" styleClass="success-btn" rendered="#{selectedMenu eq 'candidates'}"/>
+			<p:button value="#{i18n['user.new_user']}" outcome="#{Page.USER_ADD.getUrl()}" styleClass="success-btn" rendered="#{selectedMenu eq 'users'}"/>
+			<p:button value="#{i18n['meeting.add_meeting']}" outcome="#{Page.MEETING_ADD.getUrl()}" styleClass="success-btn" rendered="#{selectedMenu eq 'meetings'}"/>
+			<p:button value="#{i18n['event.new_event']}" outcome="#{Page.EVENT_ADD.getUrl()}" styleClass="success-btn" rendered="#{selectedMenu eq 'events'}"/>		
+			<p:menuButton icon="fa fa-plus" styleClass="success-btn" >
+				<p:menuitem value="#{i18n['client.new_client']}" outcome="#{Page.CLIENT_ADD.getUrl()}" rendered="#{selectedMenu ne 'clients'}"/>
+				<p:menuitem value="#{i18n['job.new_job_offer']}" outcome="#{Page.JOB_ADD.getUrl()}" rendered="#{!selectedMenu ne 'offers'}" />
+				<p:menuitem value="#{i18n['candidate.new_candidate']}" outcome="#{Page.CANDIDATE_ADD.getUrl()}" rendered="#{!selectedMenu ne 'candidates'}" />
+				<p:menuitem value="#{i18n['user.new_user']}" outcome="#{Page.USER_ADD.getUrl()}" rendered="#{!selectedMenu ne 'users'}" />
+				<p:menuitem value="#{i18n['meeting.add_meeting']}" outcome="#{Page.MEETING_ADD.getUrl()}" rendered="#{!selectedMenu ne 'meetings'}" />
+				<p:menuitem value="#{i18n['event.new_event']}" outcome="#{Page.EVENT_ADD.getUrl()}" rendered="#{!selectedMenu ne 'events'}" />
+			</p:menuButton>
 			
-			<p:splitButton  value="#{i18n['client.new_client']}" styleClass="success-btn"  >
-				<p:menuitem value="#{i18n['client.new_client']}" outcome="#{Page.CLIENT_ADD.getUrl()}" />
-				<p:menuitem value="#{i18n['job.new_job_offer']}" outcome="#{Page.JOB_ADD.getUrl()}" />
-				<p:menuitem value="#{i18n['candidate.new_candidate']}" outcome="#{Page.CANDIDATE_ADD.getUrl()}" />
-				<p:menuitem value="#{i18n['user.new_user']}" outcome="#{Page.USER_ADD.getUrl()}" />
-				<p:menuitem value="#{i18n['meeting.add_meeting']}" outcome="#{Page.MEETING_ADD.getUrl()}" />
-				<p:menuitem value="#{i18n['event.new_event']}" outcome="#{Page.EVENT_ADD.getUrl()}" />
-			</p:splitButton>
-			
+
 			<ul class="topbar-menu fadeInDown">
 				<li><a href="#"> <cc:avatar value="#{sessionUser.get().imageFileName}" styleClass="tiny" />
 				</a>
@@ -33,7 +41,6 @@
 							</p:commandLink></li>
 					</ul></li>
 			</ul>
-
 		</div>
 	</h:form>
 </ui:composition>

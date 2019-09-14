@@ -241,6 +241,11 @@ body .ui-datatable table {
 	color: #65656a;
 }
 
+.spacer {
+	display: flex;
+	flex: 1;
+}
+
 .version {
 	display: flex;
 	flex: 1 1 100%;
