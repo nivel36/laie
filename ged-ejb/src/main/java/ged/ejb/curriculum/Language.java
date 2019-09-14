@@ -19,7 +19,7 @@ import ged.ejb.core.model.AbstractEntity;
 @Entity
 public class Language extends AbstractEntity {
 
-	private static final long serialVersionUID = 8362523998951126576L;
+	private static final long serialVersionUID = 1L;
 
 	@NotNull
 	@ManyToOne

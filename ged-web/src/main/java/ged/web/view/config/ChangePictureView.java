@@ -31,7 +31,7 @@ public class ChangePictureView extends AbstractView {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
-	private static final long serialVersionUID = -4692285273689581632L;
+	private static final long serialVersionUID = 1L;
 
 	@Inject
 	private transient FileUploadService fileUploadService;

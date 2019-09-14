@@ -40,7 +40,7 @@ import ged.ejb.user.User;
 @Indexed
 public class Candidate extends Person implements Ownerable {
 
-	private static final long serialVersionUID = 1305321530927456159L;
+	private static final long serialVersionUID = 1L;
 
 	@Embedded
 	private Address address;

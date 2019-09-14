@@ -9,8 +9,6 @@ public enum PageEnum {
 	CANDIDATE_EDIT("/candidate/edit", true), //
 	CANDIDATE_SEARCH("/candidate/search"), //
 	CANDIDATE_SELECT("/candidate/select"), //
-	MEETING_SEARCH("/meeting/search"), //
-	MEETING_ADD("/meeting/add"), //
 	CHANGE_PASSWORD("/changePassword", true), //
 	CLIENT("/client/view"), //
 	CLIENT_ADD("/client/add"), //
@@ -22,10 +20,13 @@ public enum PageEnum {
 	CONTACT_ADD("/client/contact/add"), //
 	CONTACT_EDIT("/client/contact/edit", true), //
 	CURRICULUM("/candidate/curriculum"), //
+	CURRICULUM_EDUCATION("/candidate/curriculum/education", true), //
 	CURRICULUM_JOB_EXPERIENCE("/candidate/curriculum/jobExperience", true), //
 	CURRICULUM_LANGUAGE("/candidate/curriculum/language", true), //
-	CURRICULUM_EDUCATION("/candidate/curriculum/education", true), //
 	CURRICULUM_SKILLS("/candidate/curriculum/skills", true), //
+	ERROR("/error"), //
+	EVENT_ADD("/event/add"), //
+	EVENT_SEARCH("/event/search"), //
 	INDEX("/index"), //
 	ISABEL("/isabel/isabel"), //
 	JOB("/job/view"), //
@@ -37,21 +38,22 @@ public enum PageEnum {
 	MAINTENANCE("/maintenance"), //
 	MAINTENANCE_JOB_CANDIDATURE_STATES("/maintenance/jobCandidatureStates"), //
 	MAINTENANCE_JOB_OFFER_STATES("/maintenance/jobOfferStates"), //
+	MEETING_ADD("/meeting/add"), //
+	MEETING_SEARCH("/meeting/search"), //
 	REPORT("/report/search"), //
 	USER("/user/view"), //
 	USER_ADD("/user/add"), //
 	USER_EDIT("/user/edit", true), //
 	USER_SEARCH("/user/search"), //
-	USER_SELECT("/user/select"), //
-	ERROR("/error");
-
-	private static final String XHTML = ".xhtml";
+	USER_SELECT("/user/select");
 
 	private final static String REDIRECT = "faces-redirect=true";
 
-	private String url;
+	private static final String XHTML = ".xhtml";
 
 	private boolean isPost;
+
+	private String url;
 
 	PageEnum(final String url) {
 		this(url, false);

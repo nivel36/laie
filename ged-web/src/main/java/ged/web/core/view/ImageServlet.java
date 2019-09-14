@@ -13,7 +13,7 @@ import ged.ejb.core.util.ConfigurationProperty;
 @WebServlet("/images/*")
 public class ImageServlet extends FileServlet {
 
-	private static final long serialVersionUID = 7820731670232262777L;
+	private static final long serialVersionUID = 1L;
 
 	@Inject
 	@ConfigurationProperty("image.directory")

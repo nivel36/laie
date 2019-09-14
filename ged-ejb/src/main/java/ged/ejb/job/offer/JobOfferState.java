@@ -5,14 +5,16 @@ import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import ged.ejb.core.i18n.I18n;
 import ged.ejb.core.model.AbstractEntity;
 
 @Entity
 @Table(name = "JOB_OFFER_STATE")
 public class JobOfferState extends AbstractEntity {
 
-	private static final long serialVersionUID = -4884212859752082844L;
+	private static final long serialVersionUID = 1L;
 
+	@I18n
 	private String name;
 
 	private String color;

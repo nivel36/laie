@@ -1,4 +1,4 @@
-package ged.web.view;
+package ged.web.view.user;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -14,7 +14,7 @@ import ged.ejb.user.role.Role;
 @ApplicationScoped
 public class Roles implements Serializable {
 
-	private static final long serialVersionUID = 6616698634859334823L;
+	private static final long serialVersionUID = 1L;
 
 	private List<Role> listOfRoles;
 

@@ -33,7 +33,7 @@ public class SearchUserView extends AbstractView {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
-	private static final long serialVersionUID = 2434819723782902618L;
+	private static final long serialVersionUID = 1L;
 
 	private String searchText;
 
@@ -60,26 +60,16 @@ public class SearchUserView extends AbstractView {
 		}
 	}
 	
-	private ExcelData toExcelData(final ExportData exportData) {
-		final List<String> literals = new ArrayList<String>();
-		for (String item: exportData.getIdLabels()) {
-			final String literal = getTranslator().message(item);
-			Objects.requireNonNull(literal);
-			literals.add(literal);
-		}
-		final List<ItemData> values = new ArrayList<ItemData>();
-		for (Item item: exportData.getItems()) {
-			final ItemData itemData = new ItemData();
-			for (Object value: item.getValue()) {
-				itemData.add(value);
-			}
-			values.add(itemData);
-		}
-		return new ExcelData(literals, values);
+	public ExportService getExportService() {
+		return exportService;
 	}
 
 	public String getSearchText() {
 		return this.searchText;
+	}
+
+	private Translator getTranslator() {
+		return translator;
 	}
 
 	public UserLazyDataModel getUsers() {
@@ -98,27 +88,37 @@ public class SearchUserView extends AbstractView {
 		users.setSearchText(searchText);
 	}
 
+	public void setExportService(ExportService exportService) {
+		this.exportService = exportService;
+	}
+
 	public void setSearchText(final String searchText) {
 		this.searchText = searchText;
 	}
-
+	
 	public void setUsers(final UserLazyDataModel users) {
 		this.users = users;
 	}
-
+	
 	public void setUserService(final UserService userService) {
 		this.userService = userService;
 	}
-	
-	private Translator getTranslator() {
-		return translator;
-	}
-	
-	public ExportService getExportService() {
-		return exportService;
-	}
 
-	public void setExportService(ExportService exportService) {
-		this.exportService = exportService;
+	private ExcelData toExcelData(final ExportData exportData) {
+		final List<String> literals = new ArrayList<String>();
+		for (String item: exportData.getIdLabels()) {
+			final String literal = getTranslator().message(item);
+			Objects.requireNonNull(literal);
+			literals.add(literal);
+		}
+		final List<ItemData> values = new ArrayList<ItemData>();
+		for (Item item: exportData.getItems()) {
+			final ItemData itemData = new ItemData();
+			for (Object value: item.getValue()) {
+				itemData.add(value);
+			}
+			values.add(itemData);
+		}
+		return new ExcelData(literals, values);
 	}
 }

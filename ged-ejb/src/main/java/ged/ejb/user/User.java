@@ -34,7 +34,7 @@ import ged.ejb.user.role.Role;
 @Indexed
 public class User extends Person {
 
-	private static final long serialVersionUID = 5920907439877095636L;
+	private static final long serialVersionUID = 1L;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user", orphanRemoval = true)
 	private Set<Bookmark> bookmarks = new HashSet<>();

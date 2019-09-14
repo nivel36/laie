@@ -23,7 +23,7 @@ public class ApplicationView extends AbstractView {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
-	private static final long serialVersionUID = 6394915115616408285L;
+	private static final long serialVersionUID = 1L;
 
 	@Inject
 	@WebConfigurationProperty(value = "ged.buildtime")

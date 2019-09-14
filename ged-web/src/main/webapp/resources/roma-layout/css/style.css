@@ -147,6 +147,11 @@ body .ui-datatable table {
 	border: 2px solid white;
 }
 
+.avatar.tiny {
+	width: 30x;
+	height: 30px;
+}
+
 .avatar.small {
 	width: 36px;
 	height: 36px;
@@ -234,6 +239,11 @@ body .ui-datatable table {
 
 .person .person-data .description {
 	color: #65656a;
+}
+
+.spacer {
+	display: flex;
+	flex: 1;
 }
 
 .version {
@@ -331,6 +341,10 @@ body .ui-datatable table {
 	padding: .5em 1em;
 }
 
+.contacts.card .ui-datatable .ui-button {
+	margin-left: 6px;
+}
+
 .curriculum {
 	position: relative;
 	flex-direction: column;
@@ -391,6 +405,11 @@ body .ui-datatable table {
 
 .curriculum p {
 	margin: 0.4em 4em 0.4em 0;
+}
+
+.layout-topbar-newItem {
+	padding: 0.4em 1em 0 0;
+	float: right;	
 }
 
 .meeting {
@@ -525,3 +544,19 @@ body .ui-datatable table {
 .user-card .user-card-content .user-detail {
 	padding: .5em 1em;
 }
+
+body .ui-menubutton.success-btn .ui-button{
+    background-color: #0fc763;
+    color: #ffffff;
+    border: 1px solid #0fc763; }
+    body .ui-menubutton.success-btn .ui-button.ui-state-hover {
+      background-color: #1DDB76;
+      color: #ffffff;
+      border-color: #31e885; }
+    body .ui-menubutton.success-btn .ui-button.ui-state-focus {
+      -webkit-box-shadow: 0 0 0 0.2em #72ffb3;
+      -moz-box-shadow: 0 0 0 0.2em #72ffb3;
+      box-shadow: 0 0 0 0.2em #72ffb3; }
+    body .ui-menubutton.success-btn .ui-button.ui-state-active {
+      background-color: #0a9c4d;
+      color: #ffffff; }

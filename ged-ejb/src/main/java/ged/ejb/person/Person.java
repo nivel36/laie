@@ -21,7 +21,7 @@ import ged.ejb.core.model.AbstractEntity;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Person extends AbstractEntity {
 
-	private static final long serialVersionUID = 1256626229385088883L;
+	private static final long serialVersionUID = 1L;
 
 	@Email
 	@NotNull

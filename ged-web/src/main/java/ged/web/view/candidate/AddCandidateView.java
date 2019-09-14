@@ -19,7 +19,7 @@ public class AddCandidateView extends AbstractCandidateView {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
-	private static final long serialVersionUID = 7552627372149481763L;
+	private static final long serialVersionUID = 1L;
 
 	@PostConstruct
 	public void init() {

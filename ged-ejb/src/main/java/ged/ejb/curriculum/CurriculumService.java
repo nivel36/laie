@@ -24,20 +24,20 @@ public class CurriculumService extends AbstractService<Curriculum> {
 	@Repository
 	private CurriculumDao curriculumDao;
 	
-	public Skill findSkill(final String name) {
-		Objects.requireNonNull(name, "Skill name can't be null");
-		return this.curriculumDao.findSkill(name);
-	}
-	
 	public List<SkillLevel> findAllSkillLevels() {
 		logger.debug("Find all the skill levels");
 		return this.curriculumDao.findAllSkillLevels();
 	}
-
+	
 	public Curriculum findByCandidate(final Candidate candidate) {
 		Objects.requireNonNull(candidate);
 		logger.debug("Find curriculum by candidate  {}", candidate);
 		return this.curriculumDao.findByCandidate(candidate);
+	}
+
+	public Skill findSkill(final String name) {
+		Objects.requireNonNull(name, "Skill name can't be null");
+		return this.curriculumDao.findSkill(name);
 	}
 
 	@Override

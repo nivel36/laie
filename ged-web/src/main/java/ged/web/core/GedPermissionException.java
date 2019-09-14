@@ -2,7 +2,7 @@ package ged.web.core;
 
 public class GedPermissionException extends RuntimeException {
 
-	private static final long serialVersionUID = -865352372697083874L;
+	private static final long serialVersionUID = 1L;
 
 	public GedPermissionException() {
 	}

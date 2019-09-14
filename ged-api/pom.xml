@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>igochan</groupId>
 		<artifactId>ged</artifactId>
-		<version>0.9.0</version>
+		<version>0.9.1</version>
 		<relativePath>..</relativePath>
 	</parent>
 	<artifactId>ged-api</artifactId>

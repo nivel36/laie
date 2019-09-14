@@ -12,15 +12,15 @@ import ged.ejb.core.model.Repository;
 @Repository
 public class ContactDao extends AbstractDao<Contact> {
 
+	public Contact findContactByEmail(final String email) {
+		Objects.requireNonNull(email);
+		return this.findByQuery(Contact.class, "Contact.findByEmail", map("email", email));
+	}
+
 	public List<Contact> findContactsByClient(final Client client) {
 		Objects.requireNonNull(client);
 		return this.getPersistenceFacade().findByQuery(Contact.class, "Contact.findByClient", map("client", client),
 				Page.ALL);
-	}
-
-	public Contact findContactByEmail(final String email) {
-		Objects.requireNonNull(email);
-		return this.findByQuery(Contact.class, "Contact.findByEmail", map("email", email));
 	}
 
 	@Override

@@ -11,7 +11,7 @@ import ged.ejb.core.model.AbstractEntity;
 @MappedSuperclass
 public abstract class AbstractEnumEntity extends AbstractEntity implements EnumEntity {
 
-	private static final long serialVersionUID = 84699572149525433L;
+	private static final long serialVersionUID = 1L;
 
 	@I18n
 	@Column(length = 64)

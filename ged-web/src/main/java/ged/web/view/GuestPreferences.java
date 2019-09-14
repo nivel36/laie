@@ -9,7 +9,7 @@ import javax.inject.Named;
 @SessionScoped
 public class GuestPreferences implements Serializable {
 
-	private static final long serialVersionUID = 4947141483877255221L;
+	private static final long serialVersionUID = 1L;
 
 	private String menuMode = "layout-static";
 

@@ -21,7 +21,7 @@ public class SelectClientView extends AbstractView {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
-	private static final long serialVersionUID = -9105788652207124873L;
+	private static final long serialVersionUID = 1L;
 
 	private ClientLazyDataModel clients;
 

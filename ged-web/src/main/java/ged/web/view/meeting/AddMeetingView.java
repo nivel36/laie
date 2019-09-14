@@ -35,7 +35,7 @@ public class AddMeetingView extends AbstractView {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
-	private static final long serialVersionUID = 7690002057596615051L;
+	private static final long serialVersionUID = 1L;
 
 	private Person attendee;
 

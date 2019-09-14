@@ -15,12 +15,20 @@ import ged.ejb.core.model.SortField;
 
 public abstract class AbstractLazyDataModel<T extends AbstractEntity> extends LazyDataModel<T> {
 
-	private static final long serialVersionUID = 209661618733021826L;
+	private static final long serialVersionUID = 1L;
 
 	protected String searchText;
 
-	public void setSearchText(final String searchText) {
-		this.searchText = searchText;
+	@Override
+	public T getRowData(final String rowKey) {
+		Objects.requireNonNull(rowKey, "RowKey can't be null");
+		return getService().find(Integer.parseInt(rowKey));
+	}
+
+	@Override
+	public Object getRowKey(final T entity) {
+		Objects.requireNonNull(entity, "Entity can't be null");
+		return entity.getId();
 	}
 
 	protected abstract AbstractService<T> getService();
@@ -35,15 +43,7 @@ public abstract class AbstractLazyDataModel<T extends AbstractEntity> extends La
 		return searchResult.getResultData();
 	}
 
-	@Override
-	public T getRowData(final String rowKey) {
-		Objects.requireNonNull(rowKey, "RowKey can't be null");
-		return getService().find(Integer.parseInt(rowKey));
-	}
-
-	@Override
-	public Object getRowKey(final T entity) {
-		Objects.requireNonNull(entity, "Entity can't be null");
-		return entity.getId();
+	public void setSearchText(final String searchText) {
+		this.searchText = searchText;
 	}
 }

@@ -31,7 +31,7 @@ public abstract class AbstractUserView extends AbstractView {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
-	private static final long serialVersionUID = 3354587838102295632L;
+	private static final long serialVersionUID = 1L;
 
 	@Inject
 	protected transient FileUploadService fileUploadService;

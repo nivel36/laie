@@ -24,7 +24,7 @@
 
 	<ui:define name="content">
 		<div class="p-grid">
-			<div class="p-col-12 p-xl-5">
+			<div class="p-col-12 p-xl-6">
 				<div class="card user-card">
 					<div class="user-card-header">
 						<p:graphicImage value="/resources/img/bg-header.png" />
@@ -113,12 +113,7 @@
 				</div>
 			</div>
 			
-			<div class="p-col-12 p-xl-7">
-				<cc:jobCandidatures jobCandidatures="#{viewCandidateView.jobCandidatures}" showCandidate="false"
-					title="#{i18n['candidate.job_candidatures']}" />
-			</div>
-
-			<div class="p-col-12 p-xl-5">
+			<div class="p-col-12 p-xl-6">
 				<h:form id="file_form" enctype="multipart/form-data">
 					<div class="card card-w-title files">
 						<h3>#{i18n['file.files']}</h3>
@@ -148,6 +143,11 @@
 						</div>
 					</div>
 				</h:form>
+			</div>
+			
+			<div class="p-col-12 p-xl-8">
+				<cc:jobCandidatures jobCandidatures="#{viewCandidateView.jobCandidatures}" showCandidate="false"
+					title="#{i18n['candidate.job_candidatures']}" />
 			</div>
 
 			<div class="p-col-12 p-xl-4">

@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ged.ejb.client.Client;
+import ged.ejb.client.Contact;
 import ged.ejb.core.model.Address;
 
 @Named
@@ -18,13 +19,23 @@ public class AddClientView extends AbstractClientView {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
-	private static final long serialVersionUID = 1412905869664752048L;
+	private static final long serialVersionUID = 1L;
+
+	private Contact contact;
+
+	public void addContact() {
+		this.client.addContact(this.contact);
+	}
 
 	private Client buildNewClient() {
 		final Client newClient = new Client();
 		newClient.setOwner(this.sessionUser.get());
 		newClient.setAddress(new Address());
 		return newClient;
+	}
+
+	public Contact getContact() {
+		return this.contact;
 	}
 
 	@PostConstruct
@@ -37,5 +48,9 @@ public class AddClientView extends AbstractClientView {
 		logger.debug("Create new client action performed");
 		this.client = this.clientService.save(this.client);
 		return this.clientUrl();
+	}
+
+	public void setContact(final Contact contact) {
+		this.contact = contact;
 	}
 }

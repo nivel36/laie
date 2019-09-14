@@ -6,7 +6,7 @@ import ged.ejb.person.Person;
 
 public class SimplePerson extends Person {
 
-	private static final long serialVersionUID = -6155115179930375658L;
+	private static final long serialVersionUID = 1L;
 	
 	SimplePerson() {}
 	

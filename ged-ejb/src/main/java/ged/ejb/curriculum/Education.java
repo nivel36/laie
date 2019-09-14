@@ -17,7 +17,7 @@ import ged.ejb.core.model.AbstractEntity;
 @Indexed
 public class Education extends AbstractEntity {
 
-	private static final long serialVersionUID = 5584224215756841045L;
+	private static final long serialVersionUID = 1L;
 
 	@NotNull
 	@ManyToOne

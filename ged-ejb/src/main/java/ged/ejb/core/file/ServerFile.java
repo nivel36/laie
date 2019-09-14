@@ -15,7 +15,7 @@ import ged.ejb.core.model.AbstractEntity;
 @Entity
 public class ServerFile extends AbstractEntity {
 
-	private static final long serialVersionUID = 6267888369284581482L;
+	private static final long serialVersionUID = 1L;
 
 	@ManyToOne
 	@JoinColumn(name = "candidateId", nullable = false)

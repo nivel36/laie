@@ -11,8 +11,9 @@ import javax.inject.Named;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ged.ejb.job.candidature.JobCandidatureService;
+import ged.ejb.core.model.Page;
 import ged.ejb.job.candidature.JobCandidatureState;
+import ged.ejb.job.candidature.JobCandidatureStateService;
 import ged.web.core.view.AbstractView;
 
 @Named
@@ -21,12 +22,12 @@ public class JobCandidatureStatesMaintenanceView extends AbstractView {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
-	private static final long serialVersionUID = -2637725114049902496L;
+	private static final long serialVersionUID = 1L;
 
 	private List<JobCandidatureState> states;
 
 	@Inject
-	private transient JobCandidatureService jobCandidatureService;
+	private transient JobCandidatureStateService jobCandidatureStateService;
 
 	public List<JobCandidatureState> getStates() {
 		return this.states;
@@ -35,11 +36,11 @@ public class JobCandidatureStatesMaintenanceView extends AbstractView {
 	@PostConstruct
 	public void init() {
 		logger.trace("Job candidature states maintenances init");
-		this.states = this.jobCandidatureService.findJobCandidatureStates();
+		this.states = this.jobCandidatureStateService.findAll(Page.ALL);
 	}
 
-	public void setJobOfferService(final JobCandidatureService jobCandidatureService) {
-		this.jobCandidatureService = jobCandidatureService;
+	public void setJobCandidatureStateService(final JobCandidatureStateService jobCandidatureStateService) {
+		this.jobCandidatureStateService = jobCandidatureStateService;
 	}
 
 }

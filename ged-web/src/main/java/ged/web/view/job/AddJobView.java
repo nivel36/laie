@@ -20,7 +20,7 @@ public class AddJobView extends AbstractJobView {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
-	private static final long serialVersionUID = -4373329969104383876L;
+	private static final long serialVersionUID = 1L;
 
 	private JobOffer buildNewJobOffer() {
 		final JobOffer newJobOffer = new JobOffer();

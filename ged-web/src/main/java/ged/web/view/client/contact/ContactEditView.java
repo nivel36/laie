@@ -21,7 +21,7 @@ public class ContactEditView extends AbstractView {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
-	private static final long serialVersionUID = 8611792798437280352L;
+	private static final long serialVersionUID = 1L;
 
 	private Client client;
 

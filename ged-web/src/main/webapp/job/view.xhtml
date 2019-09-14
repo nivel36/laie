@@ -5,7 +5,7 @@
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets" template="/WEB-INF/templates/template.xhtml">
 
 	<ui:define name="title">
-		#{i18n['job.job_offer']} - {viewJobView.jobOffer.title}
+		#{i18n['job.job_offer']} - #{viewJobView.jobOffer.title}
 	</ui:define>
 
 	<ui:param name="selectedMenu" value="offers" />
@@ -51,7 +51,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="p-col-12 p-xl-7">
+			<div class="p-col-12 p-xl-5">
 				<div class="card card-w-title">
 					<h3>Detalles</h3>
 					<div class="p-grid">
@@ -76,7 +76,7 @@
 										<div class="job-state">
 											<p:commandLink action="#{viewJobView.editJobOffer}">
 												<span class="tag #{viewJobView.jobOffer.jobOfferState.color}">#{g:translate(viewJobView.jobOffer.jobOfferState.name)}</span>
-												<i class="icon fa fa-pencil"></i>
+												<em class="icon fa fa-pencil" />
 											</p:commandLink>
 										</div>
 									</h:form>
@@ -129,7 +129,7 @@
 				</div>
 			</div>
 
-			<div class="p-col-12 p-xl-5">
+			<div class="p-col-12 p-xl-7">
 				<h:form>
 					<cc:jobCandidatures jobCandidatures="#{viewJobView.jobCandidatures}" showJobOffer="false">
 						<p:commandButton value="#{i18n['action.add']}" action="#{viewJobView.selectCandidates}" process="@this">

@@ -14,7 +14,7 @@ import ged.ejb.core.model.AbstractEntity;
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = { "key", "locale" }))
 public class I18nString extends AbstractEntity {
 
-	private static final long serialVersionUID = -945638955619584072L;
+	private static final long serialVersionUID = 1L;
 
 	@NotNull
 	@Column(length = 64, nullable = false)

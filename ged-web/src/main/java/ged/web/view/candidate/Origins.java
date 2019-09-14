@@ -1,4 +1,4 @@
-package ged.web.view;
+package ged.web.view.candidate;
 
 import java.io.Serializable;
 import java.util.List;
@@ -15,7 +15,7 @@ import ged.ejb.candidate.Origin;
 @ApplicationScoped
 public class Origins implements Serializable {
 
-	private static final long serialVersionUID = -2279622649333101152L;
+	private static final long serialVersionUID = 1L;
 
 	@Inject
 	private transient CandidateService candidateService;

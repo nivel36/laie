@@ -35,7 +35,7 @@ public class ViewJobView extends AbstractView {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
-	private static final long serialVersionUID = -1200840678252895578L;
+	private static final long serialVersionUID = 1L;
 
 	private boolean editable;
 

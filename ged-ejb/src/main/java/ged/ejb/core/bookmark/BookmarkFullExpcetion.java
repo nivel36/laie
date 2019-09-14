@@ -2,7 +2,7 @@ package ged.ejb.core.bookmark;
 
 public class BookmarkFullExpcetion extends Exception {
 
-	private static final long serialVersionUID = -7189651788345900176L;
+	private static final long serialVersionUID = 1L;
 
 	public BookmarkFullExpcetion() {
 	}

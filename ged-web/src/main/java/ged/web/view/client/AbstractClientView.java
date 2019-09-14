@@ -9,19 +9,19 @@ import ged.web.core.view.AbstractView;
 
 public abstract class AbstractClientView extends AbstractView {
 
-	private static final long serialVersionUID = -6560496691505294872L;
+	private static final long serialVersionUID = 1L;
 	
 	protected Client client;
 
 	@Inject
 	protected transient ClientService clientService;
 
-	public Client getClient() {
-		return this.client;
-	}
-
 	protected String clientUrl() {
 		return PageEnum.CLIENT.getRedirectedUrl(this.client);
+	}
+
+	public Client getClient() {
+		return this.client;
 	}
 
 	public void setClientService(final ClientService clientService) {

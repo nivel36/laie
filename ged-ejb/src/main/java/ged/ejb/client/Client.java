@@ -1,5 +1,6 @@
 package ged.ejb.client;
 
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -33,7 +34,7 @@ import ged.ejb.user.User;
 @Indexed
 public class Client extends AbstractEntity implements Ownerable, Erasable {
 
-	private static final long serialVersionUID = -5319357138994738654L;
+	private static final long serialVersionUID = 1L;
 
 	@Embedded
 	@IndexedEmbedded
@@ -43,7 +44,7 @@ public class Client extends AbstractEntity implements Ownerable, Erasable {
 	private String cif;
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "client", orphanRemoval = true)
-	private Set<Contact> contacts;
+	private Set<Contact> contacts = new HashSet<>();
 
 	@Column(nullable = false)
 	@Field
@@ -51,7 +52,7 @@ public class Client extends AbstractEntity implements Ownerable, Erasable {
 
 	@ContainedIn
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "client", orphanRemoval = true)
-	private Set<JobOffer> jobOffers;
+	private Set<JobOffer> jobOffers = new HashSet<>();
 
 	@NotNull
 	@Column(unique = true, nullable = false)
@@ -67,6 +68,11 @@ public class Client extends AbstractEntity implements Ownerable, Erasable {
 	private User owner;
 
 	private String phoneNumber;
+
+	public void addContact(final Contact contact) {
+		Objects.requireNonNull(contact);
+		this.contacts.add(contact);
+	}
 
 	@Override
 	public boolean equals(final Object obj) {

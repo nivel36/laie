@@ -17,22 +17,22 @@ import ged.ejb.core.model.AbstractEntity;
 @Indexed
 public class Skill extends AbstractEntity {
 
-	private static final long serialVersionUID = 6591356212002981267L;
+	private static final long serialVersionUID = 1L;
 	
-	public Skill() {}
-	
-	public Skill(String name) {
-		this.name = name;
-	}
-
 	@ManyToOne
 	@JoinColumn(name = "curriculumId", nullable = false)
 	private Curriculum curriculum;
-
+	
 	@Field
 	@NotNull
 	@Column(nullable = false)
 	private String name;
+
+	public Skill() {}
+
+	public Skill(String name) {
+		this.name = name;
+	}
 
 	@Override
 	public boolean equals(final Object obj) {

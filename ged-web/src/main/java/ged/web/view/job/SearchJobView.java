@@ -20,7 +20,7 @@ public class SearchJobView extends AbstractView {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
-	private static final long serialVersionUID = 8777365288968792501L;
+	private static final long serialVersionUID = 1L;
 
 	private JobOfferLazyDataModel jobOffers;
 

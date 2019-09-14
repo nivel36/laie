@@ -25,7 +25,7 @@ public class I18nView extends AbstractView {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
-	private static final long serialVersionUID = 7203326692219293611L;
+	private static final long serialVersionUID = 1L;
 
 	private static final String SPANISH = "es";
 

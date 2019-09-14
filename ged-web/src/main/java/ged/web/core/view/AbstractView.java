@@ -23,7 +23,7 @@ import ged.web.core.util.Translator;
 
 public abstract class AbstractView implements Serializable {
 
-	private static final long serialVersionUID = -647915087403140904L;
+	private static final long serialVersionUID = 1L;
 
 	@Inject
 	protected transient ApplicationView applicationView;
@@ -110,6 +110,10 @@ public abstract class AbstractView implements Serializable {
 		return options;
 	}
 
+	protected boolean flashContainsKey(final String key) {
+		return this.flash.containsKey(key);
+	}
+
 	protected Long getIdFromParameters(final String idName) {
 		try {
 			final String idValue = this.getValueFromGetParameters(idName);
@@ -156,13 +160,9 @@ public abstract class AbstractView implements Serializable {
 		options.put("width", "746");
 		PrimeFaces.current().dialog().openDynamic(name, options, params);
 	}
-
+	
 	protected void putValueToFlash(final String key, final Object value) {
 		this.flash.put(key, value);
-	}
-	
-	protected boolean flashContainsKey(final String key) {
-		return this.flash.containsKey(key);
 	}
 
 	public void setApplicationView(final ApplicationView applicationView) {

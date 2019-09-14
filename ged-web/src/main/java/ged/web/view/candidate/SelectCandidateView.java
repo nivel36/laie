@@ -23,7 +23,7 @@ public class SelectCandidateView extends AbstractView {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
-	private static final long serialVersionUID = 8503929833968698420L;
+	private static final long serialVersionUID = 1L;
 
 	private List<Long> alredySelected;
 

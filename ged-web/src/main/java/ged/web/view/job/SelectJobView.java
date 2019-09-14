@@ -17,7 +17,7 @@ import ged.web.core.view.AbstractView;
 @ViewScoped
 public class SelectJobView extends AbstractView {
 
-	private static final long serialVersionUID = 2489802687772948858L;
+	private static final long serialVersionUID = 1L;
 
 	private JobOfferLazyDataModel jobOffers;
 

@@ -14,7 +14,7 @@ import javax.inject.Named;
 @Named
 public class Combo implements Serializable {
 
-	private static final long serialVersionUID = 5310266094038317040L;
+	private static final long serialVersionUID = 1L;
 
 	private List<String> months;
 

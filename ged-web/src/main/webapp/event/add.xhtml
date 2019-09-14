@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://ged.org/ui" xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets" template="/WEB-INF/templates/template.xhtml">
+
+	<ui:define name="title">
+		#{i18n['event.new_event']}
+	</ui:define>
+
+	<ui:param name="selectedMenu" value="events" />
+
+	<ui:define name="breadcrumb">
+		<p:breadCrumb>
+			<p:menuitem value="#{i18n['menu.index']}" outcome="#{Page.INDEX.getUrl()}" />
+			<p:menuitem value="#{i18n['event.events']}" outcome="#{Page.EVENT_SEARCH.getUrl()}" />
+			<p:menuitem value="#{i18n['event.new_event']}" disabled="true" />
+		</p:breadCrumb>
+	</ui:define>
+
+	<ui:define name="content">
+		<div class="p-ggrid">
+			<div class="p-col-12 p-xl-9">
+				<h:form id="eventForm">
+					<div class="card">
+						<div class="p-grid">
+							<div class="p-col-12 p-xl-6">
+								<div class="form-field ui-fluid">
+									<cc:inputSelect label="#{i18n['event.type']}" value="#{addEventView.event.type}" >
+										<f:selectItems value="#{eventTypes.list}" var="event" itemValue="#{event}" itemLabel="#{i18n[event.name]}" />
+									</cc:inputSelect>
+
+									<cc:inputSelect label="#{i18n['event.job_candidature']}" value="#{addEventView.event.jobCandidature}">
+										<f:selectItems value="#{addEventView.jobCandidatures}" var="jobCandidature" itemValue="#{jobCandidature}" itemLabel="#{jobCandidature}" />
+									</cc:inputSelect>
+
+									<g:input id="description" label="#{i18n['event.description']}" value="#{addEventView.event.description}" type="textarea" />
+									
+									<cc:inputSelect label="#{i18n['event.status']}" value="#{addEventView.event.status}">
+										<f:selectItems value="#{jobCandidatureStates.list}" var="jobCandidatureState" itemValue="#{jobCandidatureState}" itemLabel="#{g:translate(jobCandidatureState.name)}" />
+									</cc:inputSelect>
+								</div>
+							</div>
+
+							<div class="p-col-12">
+								<div class="buttons">
+									<p:button value="#{i18n['action.cancel']}" outcome="#{Page.EVENT_SEARCH.getUrl()}" styleClass="secondary-button" />
+									<p:commandButton value="#{i18n['action.save']}" action="#{addEventView.save}" process="@form" update="@form growl" styleClass="success-btn" />
+								</div>
+							</div>
+						</div>
+					</div>
+				</h:form>
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>
