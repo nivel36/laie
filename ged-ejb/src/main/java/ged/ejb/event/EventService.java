@@ -16,14 +16,14 @@ import ged.ejb.job.candidature.JobCandidatureState;
 
 @Stateless
 public class EventService extends AbstractService<Event> {
-	
+
 	@Inject
 	@Repository
 	private EventDao eventDao;
 
 	@Inject
 	private JobCandidatureService jobCandidatureService;
-	
+
 	@Inject
 	private SecurityContext securityContext;
 
@@ -31,20 +31,21 @@ public class EventService extends AbstractService<Event> {
 		final Event event = new Event();
 		event.setDate(LocalDateTime.now());
 		event.setStatus(jobCandidature.getJobCandidatureState());
-		event.setUser(securityContext.getLoggedUser());
-		event.setStatus(jobCandidature.getJobCandidatureState());
+		event.setUser(this.securityContext.getLoggedUser());
 		event.setJobCandidature(jobCandidature);
+		event.setType(EventType.OTHER);
 		this.eventDao.save(event);
 	}
-	
+
 	@Override
 	protected AbstractDao<Event> getDao() {
-		return eventDao;
+		return this.eventDao;
 	}
 
+	@Override
 	public Event save(final Event event) {
 		Objects.requireNonNull(event);
-		updateJobCandidatureState(event);
+		this.updateJobCandidatureState(event);
 		return super.save(event);
 	}
 
@@ -54,7 +55,7 @@ public class EventService extends AbstractService<Event> {
 		final JobCandidatureState eventState = event.getStatus();
 		if (jobCandidatureState.equals(eventState)) {
 			jobCandidature.setJobCandidatureState(event.getStatus());
-			jobCandidatureService.save(jobCandidature);
+			this.jobCandidatureService.save(jobCandidature);
 		}
 	}
 }

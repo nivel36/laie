@@ -35,7 +35,7 @@
 					paginatorTemplate="{PageLinks}" rows="#{sessionUser.rowsPerPage}" sortBy="#{event.date}" sortOrder="descending" lazy="true">
 
 					<p:column headerText="#{i18n['event.type']}" sortBy="#{event.type}">
-						<h:outputText value="#{g:translate(event.type.name)}" />
+						<h:outputText value="#{i18n[event.type.name]}" />
 					</p:column>
 
 					<p:column headerText="#{i18n['event.candidate']}">

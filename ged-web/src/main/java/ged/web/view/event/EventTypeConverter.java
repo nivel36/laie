@@ -1,25 +1,34 @@
 package ged.web.view.event;
 
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.convert.Converter;
+import javax.faces.convert.ConverterException;
 import javax.faces.convert.FacesConverter;
-import javax.inject.Inject;
 
-import ged.ejb.core.AbstractService;
 import ged.ejb.event.EventType;
-import ged.ejb.event.EventTypeService;
-import ged.web.core.view.AbstractConverter;
 
-@FacesConverter(managed = true, forClass = EventType.class)
-public class EventTypeConverter extends AbstractConverter<EventType>{
-	
-	@Inject
-	private EventTypeService eventTypeService;
+@FacesConverter(forClass = EventType.class)
+public class EventTypeConverter implements Converter<EventType> {
 
 	@Override
-	protected AbstractService<EventType> getService() {
-		return eventTypeService;
+	public EventType getAsObject(final FacesContext context, final UIComponent component, final String value) {
+		if (value == null) {
+			return null;
+		}
+		for (final EventType eventType : EventType.values()) {
+			if (eventType.getName().equals(value)) {
+				return eventType;
+			}
+		}
+		throw new ConverterException("No event type wiht name " + value);
 	}
 
-	public void setEventTypeService(EventTypeService eventTypeService) {
-		this.eventTypeService = eventTypeService;
+	@Override
+	public String getAsString(final FacesContext context, final UIComponent component, final EventType value) {
+		if (value == null) {
+			return null;
+		}
+		return value.getName();
 	}
 }

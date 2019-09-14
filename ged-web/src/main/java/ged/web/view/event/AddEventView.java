@@ -1,5 +1,6 @@
 package ged.web.view.event;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -45,6 +46,7 @@ public class AddEventView extends AbstractView {
 		final User user = this.sessionUser.get();
 		this.event = new Event();
 		this.event.setUser(user);
+		this.event.setDate(LocalDateTime.now());
 		this.jobCandidatures = this.jobCandidatureService.findJobCandidatures(user, Page.ALL);
 	}
 

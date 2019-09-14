@@ -26,7 +26,7 @@
 							<div class="p-col-12 p-xl-6">
 								<div class="form-field ui-fluid">
 									<cc:inputSelect label="#{i18n['event.type']}" value="#{addEventView.event.type}" >
-										<f:selectItems value="#{eventTypes.list}" var="event" itemValue="#{event}" itemLabel="#{g:translate(event.name)}" />
+										<f:selectItems value="#{eventTypes.list}" var="event" itemValue="#{event}" itemLabel="#{i18n[event.name]}" />
 									</cc:inputSelect>
 
 									<cc:inputSelect label="#{i18n['event.job_candidature']}" value="#{addEventView.event.jobCandidature}">

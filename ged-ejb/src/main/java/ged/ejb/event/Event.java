@@ -33,7 +33,6 @@ public class Event extends AbstractEntity {
 	@ManyToOne
 	private JobCandidature jobCandidature;
 
-	@ManyToOne
 	private EventType type;
 
 	@ManyToOne

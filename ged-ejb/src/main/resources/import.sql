@@ -17,14 +17,6 @@ insert into ORIGIN( id, version, code ) values ( 20, 0, 'infojobs');
 insert into ORIGIN( id, version, code ) values ( 21, 0, 'linkedin');
 insert into ORIGIN( id, version, code ) values ( 22, 0, 'reference');
 
-insert into EVENT_TYPE( id, version, name, icon ) values ( 30, 0, 'event_type.other', 'fa-pencil');
-insert into EVENT_TYPE( id, version, name, icon ) values ( 31, 0, 'event_type.email', 'fa-envelope');
-insert into EVENT_TYPE( id, version, name, icon ) values ( 32, 0, 'event_type.phone_call', 'fa-phone');
-insert into EVENT_TYPE( id, version, name, icon ) values ( 33, 0, 'event_type.video_call', 'fa-computer');
-insert into EVENT_TYPE( id, version, name, icon ) values ( 34, 0, 'event_type.message', 'fa-pencil');
-insert into EVENT_TYPE( id, version, name, icon ) values ( 35, 0, 'event_type.meeting', 'fa-pencil');
-
-
 insert into I18NSTRING( id, version, locale, key, text ) values( 100, 0, 'es', 'job_offer_state.opened', 'Abierta' );
 insert into I18NSTRING( id, version, locale, key, text ) values( 101, 0, 'ca', 'job_offer_state.opened', 'Oberta' );
 insert into I18NSTRING( id, version, locale, key, text ) values( 105, 0, 'es', 'job_offer_state.closed', 'Cerrada' );
@@ -52,19 +44,6 @@ insert into I18NSTRING( id, version, locale, key, text ) values( 225, 0, 'es', '
 insert into I18NSTRING( id, version, locale, key, text ) values( 226, 0, 'ca', 'job_candidature_state.offered', 'Oferigut' );
 insert into I18NSTRING( id, version, locale, key, text ) values( 230, 0, 'es', 'job_candidature_state.approved', 'Aprobado' );
 insert into I18NSTRING( id, version, locale, key, text ) values( 231, 0, 'ca', 'job_candidature_state.approved', 'Aprovat' );
-
-insert into I18NSTRING( id, version, locale, key, text ) values( 250, 0, 'es', 'event_type.other', 'Otra' );
-insert into I18NSTRING( id, version, locale, key, text ) values( 251, 0, 'ca', 'event_type.other', 'Altre' );
-insert into I18NSTRING( id, version, locale, key, text ) values( 255, 0, 'es', 'event_type.email', 'Correo electrónico' );
-insert into I18NSTRING( id, version, locale, key, text ) values( 256, 0, 'ca', 'event_type.email', 'Correu electrónic' );
-insert into I18NSTRING( id, version, locale, key, text ) values( 260, 0, 'es', 'event_type.phone_call', 'Llamada telefónica' );
-insert into I18NSTRING( id, version, locale, key, text ) values( 261, 0, 'ca', 'event_type.phone_call', 'Trucada telefónica' );
-insert into I18NSTRING( id, version, locale, key, text ) values( 265, 0, 'es', 'event_type.video_call', 'Videoconferencia' );
-insert into I18NSTRING( id, version, locale, key, text ) values( 266, 0, 'ca', 'event_type.video_call', 'Videoconferencia' );
-insert into I18NSTRING( id, version, locale, key, text ) values( 270, 0, 'es', 'event_type.message', 'Mensaje' );
-insert into I18NSTRING( id, version, locale, key, text ) values( 271, 0, 'ca', 'event_type.message', 'Missatge' );
-insert into I18NSTRING( id, version, locale, key, text ) values( 275, 0, 'es', 'event_type.meeting', 'Reunion' );
-insert into I18NSTRING( id, version, locale, key, text ) values( 276, 0, 'ca', 'event_type.metting', 'Reunió' );
 
 insert into I18NSTRING( id, version, locale, key, text ) values( 300, 0, 'ca', 'infojobs', 'Infojobs' );
 insert into I18NSTRING( id, version, locale, key, text ) values( 301, 0, 'es', 'infojobs', 'Infojobs' );
