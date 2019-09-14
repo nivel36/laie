@@ -13,7 +13,7 @@ public class JobCandidatureStateDao extends AbstractDao<JobCandidatureState> {
 
 	@Override
 	public String[] searchFields() {
-		return null;
+		return new String[] {};
 	}
 
 	public JobCandidatureState findFirstJobCandidatureState() {
