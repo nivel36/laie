@@ -1,49 +1,61 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
 	xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://ged.org/ui" xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:pc="http://primefaces.org/roma">
-
-	<div class="layout-right-panel">
-		<h:form>
+	<h:form>
+		<div class="layout-right-panel">
 			<p:tabView activeIndex="#{chatView.activePanel}">
 				<p:tab title="#{i18n['chat.contacts']}">
-					<ui:repeat var="user" value="#{chatView.users}">
-						<p:commandLink action="#{chatView.selectUser(user)}" process="@this" update="@form">
-							<cc:person value="#{user}" />
-						</p:commandLink>
-					</ui:repeat>
+					<h:panelGroup id="users" layout="block" styleClass="users">
+						<div class="users-search ui-g">
+							<div class="ui-fluid ui-g-12">
+								<div class="ui-inputgroup">
+									<p:inputText placeholder="#{i18n['chat.search_an_user']}" value="#{chatView.searchText}" id="searchText" />
+									<p:commandButton id="searchButton" action="#{chatView.search}" process="@this searchText" styleClass="search-button" icon="fa fa-search" update="users" />
+								</div>
+							</div>
+						</div>
+						<ui:repeat var="user" value="#{chatView.users}">
+							<p:commandLink action="#{chatView.selectUser(user)}" process="@this" update="@form">
+								<cc:person value="#{user}" />
+							</p:commandLink>
+						</ui:repeat>
+					</h:panelGroup>
 				</p:tab>
 				<p:tab title="#{chatView.selectedUser}">
-					<div class="messages-title">
-						<span>November 13, 2018</span>
-					</div>
-					<div class="messages-content ui-g">
-						<div class="time ui-g-2">00:00</div>
-						<div class="message ui-g-10">All systems reporting at 100%</div>
-					</div>
+					<div class="messages">
+						<div class="messages-input ui-g">
+							<div class="ui-fluid ui-g-12">
+								<p:inputText placeholder="#{i18n['chat.write_a_message']}" value="#{chatView.message}" />
+							</div>
+						</div>
 
-					<div class="messages-title">
-						<span>November 12, 2018</span>
-					</div>
-					<div class="messages-content ui-g">
-						<span class="time ui-g-2">00:00</span> <span class="message ui-g-10">All systems reporting at 100%</span>
-					</div>
+						<div class="messages-title">
+							<span>November 13, 2018</span>
+						</div>
+						<div class="messages-content ui-g">
+							<div class="time ui-g-2">00:00</div>
+							<div class="message ui-g-10">All systems reporting at 100%</div>
+						</div>
 
-					<div class="messages-title">
-						<span>November 7, 2018</span>
-					</div>
-					<div class="messages-content ui-g">
-						<span class="time ui-g-2">09:23</span> <span class="message ui-g-10">Everything operating normally.</span> <span class="time ui-g-2">08:58</span> <span
-							class="message ui-g-10">We're investigating delays inupdates to PrimeFaces.org.</span> <span class="time ui-g-2">08:50</span> <span class="message ui-g-10">We are
-							investigating reports of elevated error rates.</span>
-					</div>
-					<div class="messages-input ui-g">
-						<div class="ui-fluid ui-g-12">
-							<p:inputText placeholder="#{i18n['chat.write_a_message']}"/>
+						<div class="messages-title">
+							<span>November 12, 2018</span>
+						</div>
+						<div class="messages-content ui-g">
+							<span class="time ui-g-2">00:00</span> <span class="message ui-g-10">All systems reporting at 100%</span>
+						</div>
+
+						<div class="messages-title">
+							<span>November 7, 2018</span>
+						</div>
+						<div class="messages-content ui-g">
+							<span class="time ui-g-2">09:23</span> <span class="message ui-g-10">Everything operating normally.</span> <span class="time ui-g-2">08:58</span> <span
+								class="message ui-g-10">We're investigating delays inupdates to PrimeFaces.org.</span> <span class="time ui-g-2">08:50</span> <span class="message ui-g-10">We are
+								investigating reports of elevated error rates.</span>
 						</div>
 					</div>
 				</p:tab>
 			</p:tabView>
-		</h:form>
-	</div>
+		</div>
+	</h:form>
 
 </ui:composition>

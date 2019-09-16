@@ -20,6 +20,10 @@ public class ChatView extends AbstractView {
 
 	private int activePanel = 0;
 	
+	private String message;
+	
+	private String searchText;
+	
 	private User selectedUser;
 	
 	private List<User> users;
@@ -29,6 +33,14 @@ public class ChatView extends AbstractView {
 
 	public int getActivePanel() {
 		return activePanel;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public String getSearchText() {
+		return searchText;
 	}
 
 	public User getSelectedUser() {
@@ -41,9 +53,13 @@ public class ChatView extends AbstractView {
 
 	@PostConstruct
 	public void init() {
-		users = userService.findAll(Page.ALL);
+		users = userService.findAll(Page.of(0, 10));
 		users.remove(this.sessionUser.get());
 		selectedUser = users.get(0);
+	}
+
+	public void search() {
+		users = userService.search(searchText, Page.of(0, 10)).getResultData();
 	}
 
 	public void selectUser(User selectedUser) {
@@ -51,6 +67,14 @@ public class ChatView extends AbstractView {
 		this.activePanel = 1;
 	}
 
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+	public void setSearchText(String searchText) {
+		this.searchText = searchText;
+	}
+	
 	public void setUserService(UserService userService) {
 		this.userService = userService;
 	}

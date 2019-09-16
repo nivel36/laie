@@ -162,7 +162,7 @@ body .ui-datatable table {
 	justify-content: flex-end;
 }
 
-.buttons.header-buttons{
+.buttons.header-buttons {
 	position: absolute;
 	right: 1em;
 	top: 1em;
@@ -390,7 +390,7 @@ body .ui-datatable table {
 }
 
 .curriculum .date-range {
-	color: #8c8c93;	
+	color: #8c8c93;
 }
 
 .curriculum .language_name {
@@ -409,7 +409,7 @@ body .ui-datatable table {
 
 .layout-topbar-newItem {
 	padding: 0.4em 1em 0 0;
-	float: right;	
+	float: right;
 }
 
 .meeting {
@@ -480,6 +480,19 @@ body .ui-datatable table {
 	padding: 5px 10px 5px 0px;
 }
 
+
+.layout-right-panel .messages {
+	margin: 24px 0 0 0;
+}
+
+.layout-right-panel .users {
+	margin: 24px 0 0 0;
+}
+
+.layout-right-panel .users .users-search {
+	margin: 0 0 24px 0;
+}
+
 .user-card {
 	padding: 0;
 }
@@ -545,18 +558,25 @@ body .ui-datatable table {
 	padding: .5em 1em;
 }
 
-body .ui-menubutton.success-btn .ui-button{
-    background-color: #0fc763;
-    color: #ffffff;
-    border: 1px solid #0fc763; }
-    body .ui-menubutton.success-btn .ui-button.ui-state-hover {
-      background-color: #1DDB76;
-      color: #ffffff;
-      border-color: #31e885; }
-    body .ui-menubutton.success-btn .ui-button.ui-state-focus {
-      -webkit-box-shadow: 0 0 0 0.2em #72ffb3;
-      -moz-box-shadow: 0 0 0 0.2em #72ffb3;
-      box-shadow: 0 0 0 0.2em #72ffb3; }
-    body .ui-menubutton.success-btn .ui-button.ui-state-active {
-      background-color: #0a9c4d;
-      color: #ffffff; }
+body .ui-menubutton.success-btn .ui-button {
+	background-color: #0fc763;
+	color: #ffffff;
+	border: 1px solid #0fc763;
+}
+
+body .ui-menubutton.success-btn .ui-button.ui-state-hover {
+	background-color: #1DDB76;
+	color: #ffffff;
+	border-color: #31e885;
+}
+
+body .ui-menubutton.success-btn .ui-button.ui-state-focus {
+	-webkit-box-shadow: 0 0 0 0.2em #72ffb3;
+	-moz-box-shadow: 0 0 0 0.2em #72ffb3;
+	box-shadow: 0 0 0 0.2em #72ffb3;
+}
+
+body .ui-menubutton.success-btn .ui-button.ui-state-active {
+	background-color: #0a9c4d;
+	color: #ffffff;
+}
