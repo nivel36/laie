@@ -1960,8 +1960,8 @@ a {
 }
 
 .layout-right-panel {
-	width: 288px;
-	right: -288px;
+	width: 360px;
+	right: -360px;
 	background-color: #ffffff;
 	border-left: solid 1px #ebebef;
 	position: fixed;
@@ -2089,16 +2089,14 @@ a {
 	font-size: 11px;
 }
 
-.layout-right-panel .messages-content .message-1 {
-	color: #0fc752;
+.layout-right-panel .messages-content .message {
+	color: #65656a;
 	font-size: 13px;
 	font-weight: 500;
 }
 
-.layout-right-panel .messages-content .message-2 {
-	color: #f5b064;
-	font-size: 13px;
-	font-weight: 500;
+.layout-right-panel .messages-input {
+	bottom: 0;
 }
 
 .layout-footer {
@@ -3809,7 +3807,7 @@ a {
 .layout-rtl .layout-right-panel {
 	direction: rtl;
 	right: auto;
-	left: -288px;
+	left: -360px;
 	border-left: 0;
 	border-right: solid 1px #ebebef;
 	-moz-transition: left 0.2s;
