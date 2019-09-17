@@ -1967,7 +1967,7 @@ a {
 	position: fixed;
 	z-index: 999;
 	top: 46px;
-	height: 100%;
+	height: calc(100vh - 46px);
 	padding: 0;
 	margin: 0;
 	-moz-transition: right 0.2s;
@@ -1977,6 +1977,7 @@ a {
 	-webkit-box-shadow: 0 0px 10px 0 rgba(0, 0, 0, 0.16);
 	-moz-box-shadow: 0 0px 10px 0 rgba(0, 0, 0, 0.16);
 	box-shadow: 0 0px 10px 0 rgba(0, 0, 0, 0.16);
+	overflow: hidden;
 }
 
 .layout-right-panel.layout-right-panel-active {
@@ -1990,14 +1991,17 @@ a {
 
 .layout-right-panel .ui-tabs.ui-tabs-top {
 	padding: 16px;
+	height: 100%;
 }
 
 .layout-right-panel .ui-tabs.ui-tabs-top .ui-tabs-panels {
 	border: 0 none;
+	height: 100%;
 }
 
 .layout-right-panel .ui-tabs.ui-tabs-top .ui-tabs-panels .ui-tabs-panel {
 	padding: 0;
+	height: 100%;
 }
 
 .layout-right-panel .ui-tabs.ui-tabs-top .ui-tabs-nav .ui-tabs-header {

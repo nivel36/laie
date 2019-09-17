@@ -1,17 +1,14 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
 	xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://ged.org/ui" xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:pc="http://primefaces.org/roma">
-	<h:form>
-		<div class="layout-right-panel">
-			<p:tabView activeIndex="#{chatView.activePanel}">
+	<div class="layout-right-panel">
+		<h:form id="chat" style="height:100%">
+			<p:tabView activeIndex="#{chatView.activePanel}" id="tabs">
 				<p:tab title="#{i18n['chat.contacts']}">
 					<h:panelGroup id="users" layout="block" styleClass="users">
 						<div class="users-search ui-g">
 							<div class="ui-fluid ui-g-12">
-								<div class="ui-inputgroup">
-									<p:inputText placeholder="#{i18n['chat.search_an_user']}" value="#{chatView.searchText}" id="searchText" />
-									<p:commandButton id="searchButton" action="#{chatView.search}" process="@this searchText" styleClass="search-button" icon="fa fa-search" update="users" />
-								</div>
+								<cc:inputSearch id="searchText" searchText="#{chatView.searchText}" searchAction="#{chatView.search}" placeholder="#{i18n['chat.search_an_user']}" update="chat:tabs:users" />
 							</div>
 						</div>
 						<ui:repeat var="user" value="#{chatView.users}">
@@ -23,12 +20,6 @@
 				</p:tab>
 				<p:tab title="#{chatView.selectedUser}">
 					<div class="messages">
-						<div class="messages-input ui-g">
-							<div class="ui-fluid ui-g-12">
-								<p:inputText placeholder="#{i18n['chat.write_a_message']}" value="#{chatView.message}" />
-							</div>
-						</div>
-
 						<div class="messages-title">
 							<span>November 13, 2018</span>
 						</div>
@@ -53,9 +44,13 @@
 								investigating reports of elevated error rates.</span>
 						</div>
 					</div>
+					<div class="messages-input ui-g">
+						<div class="ui-fluid ui-g-12">
+							<p:inputText placeholder="#{i18n['chat.write_a_message']}" value="#{chatView.message}" />
+						</div>
+					</div>
 				</p:tab>
 			</p:tabView>
-		</div>
-	</h:form>
-
+		</h:form>
+	</div>
 </ui:composition>
