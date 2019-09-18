@@ -14,11 +14,10 @@
 		<div id="#{cc.clientId}" class="input-group input-search-group #{cc.attrs.styleClass}">
 			<p:defaultCommand target="searchButton" />
 			<div class="ui-inputgroup">
-				<p:inputText id="searchText" value="#{cc.attrs.searchText}" styleClass="input input-search" placeholder="#{cc.attrs.placeholder}" />
+				<p:inputText id="searchText" value="#{cc.attrs.searchText}" placeholder="#{cc.attrs.placeholder}" />
 				<p:commandButton id="cleanSearchButton" styleClass="secondary-button" icon="fa fa-times" rendered="#{not empty cc.attrs.searchText}"
-					onclick="$('##{cc.clientId}:searchText'.replace( /(:|\.|\[|\]|,|=|@)/g, '\\$1' )).val('')" action="#{cc.attrs.searchAction}" process="searchText @this"
-					update="#{cc.clientId} #{cc.attrs.update}" />
-				<p:commandButton id="searchButton" action="#{cc.attrs.searchAction}" process="@this searchText" styleClass="search-button" icon="fa fa-search" update="#{cc.attrs.update}" />
+					onclick="$(PrimeFaces.escapeClientId('#{cc.clientId}:searchText')).val('')" action="#{cc.attrs.searchAction}" process="searchText @this" update="#{cc.clientId} #{cc.attrs.update}" />
+				<p:commandButton id="searchButton" action="#{cc.attrs.searchAction}" process="searchText @this" icon="fa fa-search" update="#{cc.clientId} #{cc.attrs.update}" />
 			</div>
 		</div>
 	</composite:implementation>

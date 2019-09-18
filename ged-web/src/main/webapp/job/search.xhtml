@@ -23,7 +23,7 @@
 				<div class="p-grid">
 					<div class="p-col-12 p-xl-5">
 						<div class="searchBar ui-fluid">
-							<cc:inputSearch searchText="#{searchJobView.searchText}" searchAction="#{searchJobView.search}" update="@form" />
+							<cc:inputSearch searchText="#{searchJobView.searchText}" searchAction="#{searchJobView.search}" update="jobOfferSearchform:jobOffers" />
 						</div>
 					</div>
 					<div class="p-col-12 p-xl-7">
@@ -34,7 +34,7 @@
 				</div>
 			</div>
 			<div class="card">
-				<p:dataTable var="jobOffer" value="#{searchJobView.jobOffers}" emptyMessage="#{i18n['job.no_jobs_found']}" reflow="true"
+				<p:dataTable id="jobOffers" var="jobOffer" value="#{searchJobView.jobOffers}" emptyMessage="#{i18n['job.no_jobs_found']}" reflow="true"
 					paginator="true" paginatorPosition="bottom" rows="#{sessionUser.rowsPerPage}" sortBy="#{jobOffer.title}" sortOrder="descending"
 					lazy="true">
 
