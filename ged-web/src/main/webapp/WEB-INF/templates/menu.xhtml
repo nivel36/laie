@@ -6,23 +6,23 @@
 			<div class="nano-content menu-scroll-content">
 				<h:form id="menuform">
 					<po:menu>
-						<p:menuitem id="om_index" value="#{i18n['menu.index']}" icon="fa fa-fw fa-home" containerStyleClass="#{selectedMenu eq 'index' ? 'active-menuitem' : '' }"
+						<p:menuitem id="om_index" value="#{i18n['menu.index']}" icon="fa fa-fw fa-home" containerStyleClass="#{selectedMenu eq 'index' ? 'active-menuitem' : 'menuitem' }"
 							outcome="#{Page.INDEX.getUrl()}" />
-						<p:menuitem id="om_candidates" value="#{i18n['menu.candidates']}" icon="fa fa-fw fa-users" containerStyleClass="#{selectedMenu eq 'candidates' ? 'active-menuitem' : '' }"
+						<p:menuitem id="om_candidates" value="#{i18n['menu.candidates']}" icon="fa fa-fw fa-users" containerStyleClass="#{selectedMenu eq 'candidates' ? 'active-menuitem' : 'menuitem' }"
 							outcome="#{Page.CANDIDATE_SEARCH.getUrl()}" />
-						<p:menuitem id="om_offers" value="#{i18n['menu.offers']}" icon="fa fa-fw fa-suitcase" containerStyleClass="#{selectedMenu eq 'offers' ? 'active-menuitem' : '' }"
+						<p:menuitem id="om_offers" value="#{i18n['menu.offers']}" icon="fa fa-fw fa-suitcase" containerStyleClass="#{selectedMenu eq 'offers' ? 'active-menuitem' : 'menuitem' }"
 							outcome="#{Page.JOB_SEARCH.getUrl()}" />
-						<p:menuitem id="om_clients" value="#{i18n['menu.clients']}" icon="fa fa-fw fa-industry" containerStyleClass="#{selectedMenu eq 'clients' ? 'active-menuitem' : '' }"
+						<p:menuitem id="om_clients" value="#{i18n['menu.clients']}" icon="fa fa-fw fa-industry" containerStyleClass="#{selectedMenu eq 'clients' ? 'active-menuitem' : 'menuitem' }"
 							outcome="#{Page.CLIENT_SEARCH.getUrl()}" />
-						<p:menuitem id="om_events" value="#{i18n['menu.events']}" icon="fa fa-fw fa-laptop" containerStyleClass="#{selectedMenu eq 'events' ? 'active-menuitem' : '' }"
+						<p:menuitem id="om_events" value="#{i18n['menu.events']}" icon="fa fa-fw fa-laptop" containerStyleClass="#{selectedMenu eq 'events' ? 'active-menuitem' : 'menuitem' }"
 							outcome="#{Page.EVENT_SEARCH.getUrl()}" />
-						<p:menuitem id="om_reports" value="#{i18n['menu.reports']}" icon="fa fa-fw fa-area-chart" containerStyleClass="#{selectedMenu eq 'reports' ? 'active-menuitem' : '' }"
+						<p:menuitem id="om_reports" value="#{i18n['menu.reports']}" icon="fa fa-fw fa-area-chart" containerStyleClass="#{selectedMenu eq 'reports' ? 'active-menuitem' : 'menuitem' }"
 							outcome="#{Page.REPORT.getUrl()}" />
-						<p:menuitem id="om_meetings" value="#{i18n['menu.meetings']}" icon="fa fa-fw fa-calendar" containerStyleClass="#{selectedMenu eq 'meetings' ? 'active-menuitem' : '' }"
+						<p:menuitem id="om_meetings" value="#{i18n['menu.meetings']}" icon="fa fa-fw fa-calendar" containerStyleClass="#{selectedMenu eq 'meetings' ? 'active-menuitem' : 'menuitem' }"
 							outcome="#{Page.MEETING_SEARCH.getUrl()}" />
-						<p:menuitem id="om_users" value="#{i18n['menu.users']}" icon="fa fa-fw fa-user" containerStyleClass="#{selectedMenu eq 'users' ? 'active-menuitem' : '' }"
+						<p:menuitem id="om_users" value="#{i18n['menu.users']}" icon="fa fa-fw fa-user" containerStyleClass="#{selectedMenu eq 'users' ? 'active-menuitem' : 'menuitem' }"
 							outcome="#{Page.USER_SEARCH.getUrl()}" />
-						<p:menuitem id="om_maintenances" value="#{i18n['menu.maintenances']}" containerStyleClass="#{selectedMenu eq 'maintenances' ? 'active-menuitem' : '' }"
+						<p:menuitem id="om_maintenances" value="#{i18n['menu.maintenances']}" containerStyleClass="#{selectedMenu eq 'maintenances' ? 'active-menuitem' : 'menuitem' }"
 							icon="fa fa-fw fa-cogs" outcome="#{Page.MAINTENANCE.getUrl()}" />
 					</po:menu>
 				</h:form>
