@@ -46,45 +46,45 @@
 						<div class="user-card-role">#{viewCandidateView.candidate.jobProfile}</div>
 						<div class="user-detail ui-fluid">
 							<div class="p-grid">
-								<div class="p-col-6">
+								<div class="p-col-12 p-sm-6">
 									<cc:outputText label="#{i18n['candidate.email']}" value="#{viewCandidateView.candidate.email}" />
 								</div>
-								<div class="p-col-6">
+								<div class="p-col-12 p-sm-6">
 									<cc:outputText label="#{i18n['candidate.phone_number']}" value="#{viewCandidateView.candidate.phoneNumber}" />
 								</div>
-								<div class="p-col-6">
+								<div class="p-col-12 p-sm-6">
 									<cc:outputText label="#{i18n['candidate.skype']}" value="#{viewCandidateView.candidate.skype}" />
 								</div>
-								<div class="p-col-6">
+								<div class="p-col-12 p-sm-6">
 									<cc:outputText label="#{i18n['candidate.linkedin']}" value="#{viewCandidateView.candidate.linkedinProfileUrl}" />
 								</div>
-								<div class="p-col-6">
+								<div class="p-col-12 p-sm-6">
 									<cc:outputText label="#{i18n['candidate.city']}"
 										value="#{viewCandidateView.candidate.address.city} (#{viewCandidateView.candidate.address.state})" />
 								</div>
-								<div class="p-col-6">
+								<div class="p-col-12 p-sm-6">
 									<cc:outputText label="#{i18n['candidate.bornDate']}" value="#{viewCandidateView.candidate.bornDate}">
 										<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" for="text" />
 									</cc:outputText>
 								</div>
 
-								<div class="p-col-6">
+								<div class="p-col-12 p-sm-6">
 									<cc:outputText label="#{i18n['candidate.salary']}" value="#{viewCandidateView.candidate.salary}">
 										<f:convertNumber for="text" currencyCode="EUR" maxFractionDigits="0" type="currency" />
 									</cc:outputText>
 								</div>
 
-								<div class="p-col-6">
+								<div class="p-col-12 p-sm-6">
 									<cc:outputText label="#{i18n['candidate.expected_salary']}" value="#{viewCandidateView.candidate.expectedSalary}">
 										<f:convertNumber for="text" currencyCode="EUR" maxFractionDigits="0" type="currency" />
 									</cc:outputText>
 								</div>
 
-								<div class="p-col-6">
+								<div class="p-col-12 p-sm-6">
 									<cc:outputText label="#{i18n['candidate.origin']}" value="#{g:translate(viewCandidateView.candidate.origin)}" />
 								</div>
 
-								<div class="p-col-6">
+								<div class="p-col-12 p-sm-6">
 									<div class="data rating">
 										<div class="label-container">
 											<div class="label">#{i18n['candidate.rating']}</div>
