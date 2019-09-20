@@ -1,7 +1,6 @@
 package ged.ejb.event;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Objects;
 
 import javax.ejb.Stateless;
@@ -9,7 +8,6 @@ import javax.inject.Inject;
 
 import ged.ejb.core.AbstractService;
 import ged.ejb.core.model.AbstractDao;
-import ged.ejb.core.model.Page;
 import ged.ejb.core.model.Repository;
 import ged.ejb.core.security.SecurityContext;
 import ged.ejb.job.candidature.JobCandidature;
@@ -59,10 +57,5 @@ public class EventService extends AbstractService<Event> {
 			jobCandidature.setJobCandidatureState(event.getStatus());
 			this.jobCandidatureService.save(jobCandidature);
 		}
-	}
-
-	public List<Event> findLastEvents(Page page) {
-		Objects.requireNonNull(page, "Page can't be null");
-		return this.eventDao.findLastEvents(page);
 	}
 }

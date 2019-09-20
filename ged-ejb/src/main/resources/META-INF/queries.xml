@@ -147,14 +147,6 @@
 		]]></query>
 	</named-query>
 	
-	<named-query name="Event.findLast">
-		<query><![CDATA[
-			SELECT e
-			FROM Event e
-			ORDER BY e.id DESC
-		]]></query>
-	</named-query>
-
 	<named-query name="I18n.findByKeyAndLocale">
 		<query><![CDATA[
 			SELECT i 

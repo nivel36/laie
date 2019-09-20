@@ -11,7 +11,6 @@ import javax.inject.Named;
 import ged.ejb.candidate.Candidate;
 import ged.ejb.candidate.CandidateService;
 import ged.ejb.core.model.Page;
-import ged.ejb.event.Event;
 import ged.ejb.event.EventService;
 import ged.ejb.job.meeting.Meeting;
 import ged.ejb.job.meeting.MeetingService;
@@ -19,6 +18,7 @@ import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
 import ged.ejb.user.User;
 import ged.web.core.view.AbstractView;
+import ged.web.view.event.EventLazyDataModel;
 
 @Named
 @ViewScoped
@@ -30,19 +30,19 @@ public class IndexView extends AbstractView {
 
 	@Inject
 	private transient CandidateService candidateService;
-	
-	private List<Event> events;
-	
+
+	private EventLazyDataModel events;
+
 	@Inject
 	private transient EventService eventService;
-	
+
 	private List<JobOffer> jobOffers;
-	
+
 	@Inject
 	private transient JobOfferService jobService;
-	
+
 	private List<Meeting> meetings;
-	
+
 	@Inject
 	private transient MeetingService meetingService;
 
@@ -50,8 +50,8 @@ public class IndexView extends AbstractView {
 		return this.candidates;
 	}
 
-	public List<Event> getEvents() {
-		return events;
+	public EventLazyDataModel getEvents() {
+		return this.events;
 	}
 
 	public LocalDate getInitialDate() {
@@ -63,31 +63,32 @@ public class IndexView extends AbstractView {
 	}
 
 	public List<Meeting> getMeetings() {
-		return meetings;
+		return this.meetings;
 	}
 
 	@PostConstruct
 	public void init() {
 		final User user = this.sessionUser.get();
-		this.jobOffers = this.jobService.findJobOffers(user, new Page(0,10));
-		this.candidates = this.candidateService.search(null, new Page(0,10)).getResultData();
-		this.meetings = initMeetings();
-		this.events = this.eventService.findLastEvents(new Page(0,10));
+		this.jobOffers = this.jobService.findJobOffers(user, new Page(0, 10));
+		this.candidates = this.candidateService.search(null, new Page(0, 10)).getResultData();
+		this.meetings = this.initMeetings();
+		this.events = new EventLazyDataModel(this.eventService);
+		this.events.setSearchText(null);
 	}
 
 	private List<Meeting> initMeetings() {
-		return meetingService.findPlannedMeetings(sessionUser.get(), Page.of(0,10));
+		return this.meetingService.findPlannedMeetings(this.sessionUser.get(), Page.of(0, 10));
 	}
 
-	public void setEventService(EventService eventService) {
+	public void setEventService(final EventService eventService) {
 		this.eventService = eventService;
 	}
-	
+
 	public void setJobService(final JobOfferService jobService) {
 		this.jobService = jobService;
 	}
 
-	public void setMeetingService(MeetingService meetingService) {
+	public void setMeetingService(final MeetingService meetingService) {
 		this.meetingService = meetingService;
 	}
 }

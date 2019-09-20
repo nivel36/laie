@@ -10,6 +10,7 @@ import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.SortableField;
 import org.hibernate.search.annotations.Store;
 
@@ -36,6 +37,7 @@ public class Event extends AbstractEntity {
 	private EventType type;
 
 	@ManyToOne
+	@IndexedEmbedded
 	private User user;
 
 	@ManyToOne
