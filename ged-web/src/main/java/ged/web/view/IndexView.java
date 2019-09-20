@@ -8,7 +8,6 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import ged.ejb.candidate.Candidate;
 import ged.ejb.candidate.CandidateService;
 import ged.ejb.core.model.Page;
 import ged.ejb.event.EventService;
@@ -18,6 +17,7 @@ import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
 import ged.ejb.user.User;
 import ged.web.core.view.AbstractView;
+import ged.web.view.candidate.CandidateLazyDataModel;
 import ged.web.view.event.EventLazyDataModel;
 
 @Named
@@ -26,7 +26,7 @@ public class IndexView extends AbstractView {
 
 	private static final long serialVersionUID = 1L;
 
-	private List<Candidate> candidates;
+	private CandidateLazyDataModel candidates;
 
 	@Inject
 	private transient CandidateService candidateService;
@@ -46,7 +46,7 @@ public class IndexView extends AbstractView {
 	@Inject
 	private transient MeetingService meetingService;
 
-	public List<Candidate> getCandidates() {
+	public CandidateLazyDataModel getCandidates() {
 		return this.candidates;
 	}
 
@@ -70,7 +70,8 @@ public class IndexView extends AbstractView {
 	public void init() {
 		final User user = this.sessionUser.get();
 		this.jobOffers = this.jobService.findJobOffers(user, new Page(0, 10));
-		this.candidates = this.candidateService.search(null, new Page(0, 10)).getResultData();
+		this.candidates = new CandidateLazyDataModel(this.candidateService);
+		this.candidates.setSearchText(null);
 		this.meetings = this.initMeetings();
 		this.events = new EventLazyDataModel(this.eventService);
 		this.events.setSearchText(null);
