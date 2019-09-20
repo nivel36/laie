@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:component xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	xmlns:composite="http://xmlns.jcp.org/jsf/composite" xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://ged.org/ui" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<composite:interface>
+		<composite:attribute name="value" required="true" />
+		<composite:attribute name="styleClass" required="false" default="" />
+		<composite:attribute name="title" required="false" default="#{i18n['event.events']}" />
+	</composite:interface>
+
+	<composite:implementation>
+		<div id="#{cc.clientId}" class="card card-w-title events #{cc.attrs.styleClass}">
+			<h3>#{cc.attrs.title}</h3>
+			<p:dataTable var="event" id="events" value="#{cc.attrs.value}" emptyMessage="#{i18n['event.no_events_found']}" reflow="true" paginator="true" paginatorPosition="bottom"
+				paginatorTemplate="{PageLinks}" rows="#{sessionUser.rowsPerPage}" sortBy="#{event.date}" sortOrder="descending" lazy="true" >
+
+				<p:column headerText="#{i18n['event.type']}" sortBy="#{event.type}">
+					<h:outputText value="#{i18n[event.type.name]}" />
+				</p:column>
+
+				<p:column headerText="#{i18n['event.candidate']}">
+					<h:link value="#{event.jobCandidature.candidate.fullName}" outcome="#{Page.CANDIDATE.getUrl()}">
+						<f:param name="id" value="#{event.jobCandidature.candidate.id}" />
+					</h:link>
+				</p:column>
+
+				<p:column headerText="#{i18n['event.job_offer']}">
+					<h:link value="#{event.jobCandidature.jobOffer.title}" outcome="#{Page.JOB.getUrl()}">
+						<f:param name="id" value="#{event.jobCandidature.jobOffer.id}" />
+					</h:link>
+				</p:column>
+
+				<p:column headerText="#{i18n['event.client']}">
+					<h:link value="#{event.jobCandidature.jobOffer.client.name}" outcome="#{Page.CLIENT.getUrl()}">
+						<f:param name="id" value="#{event.jobCandidature.jobOffer.client.id}" />
+					</h:link>
+				</p:column>
+
+				<p:column headerText="#{i18n['event.user']}" sortBy="#{event.user}">
+					<h:link value="#{event.user.fullName}" outcome="#{Page.USER.getUrl()}">
+						<f:param name="id" value="#{event.user.id}" />
+					</h:link>
+				</p:column>
+
+				<p:column headerText="#{i18n['event.date']}" sortBy="#{event.date}">
+					<h:outputText value="#{event.date}">
+						<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
+
+				<p:column headerText="#{i18n['event.status']}" sortBy="#{event.status}">
+					<div class="tag #{event.status.color}">#{g:translate(event.status.name)}</div>
+
+				</p:column>
+			</p:dataTable>
+			<h:panelGroup id="children" styleClass="buttons">
+				<composite:insertChildren />
+			</h:panelGroup>
+		</div>
+	</composite:implementation>
+</ui:component>

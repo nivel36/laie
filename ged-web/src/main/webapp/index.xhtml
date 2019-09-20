@@ -31,6 +31,11 @@
 			<div class="p-col-12 p-xl-4">
 				<cc:candidates candidates="#{indexView.candidates}" title="#{i18n['candidate.last_candidates']}"/>
 			</div>
+			
+			<div class="p-col-12 p-md-8">
+				<cc:events value="#{indexView.events}" title="#{i18n['event.last_events']}" />
+					
+			</div>
 
 			<div class="p-col-12 p-md-4">
 				<cc:meetings value="#{indexView.meetings}" title="#{i18n['meeting.planned_meetings']}"

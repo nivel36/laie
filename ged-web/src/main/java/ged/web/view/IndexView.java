@@ -11,6 +11,8 @@ import javax.inject.Named;
 import ged.ejb.candidate.Candidate;
 import ged.ejb.candidate.CandidateService;
 import ged.ejb.core.model.Page;
+import ged.ejb.event.Event;
+import ged.ejb.event.EventService;
 import ged.ejb.job.meeting.Meeting;
 import ged.ejb.job.meeting.MeetingService;
 import ged.ejb.job.offer.JobOffer;
@@ -29,6 +31,11 @@ public class IndexView extends AbstractView {
 	@Inject
 	private transient CandidateService candidateService;
 	
+	private List<Event> events;
+	
+	@Inject
+	private transient EventService eventService;
+	
 	private List<JobOffer> jobOffers;
 	
 	@Inject
@@ -41,6 +48,10 @@ public class IndexView extends AbstractView {
 
 	public List<Candidate> getCandidates() {
 		return this.candidates;
+	}
+
+	public List<Event> getEvents() {
+		return events;
 	}
 
 	public LocalDate getInitialDate() {
@@ -61,10 +72,15 @@ public class IndexView extends AbstractView {
 		this.jobOffers = this.jobService.findJobOffers(user, new Page(0,10));
 		this.candidates = this.candidateService.search(null, new Page(0,10)).getResultData();
 		this.meetings = initMeetings();
+		this.events = this.eventService.findLastEvents(new Page(0,10));
 	}
 
 	private List<Meeting> initMeetings() {
 		return meetingService.findPlannedMeetings(sessionUser.get(), Page.of(0,10));
+	}
+
+	public void setEventService(EventService eventService) {
+		this.eventService = eventService;
 	}
 	
 	public void setJobService(final JobOfferService jobService) {
