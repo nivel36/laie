@@ -34,15 +34,15 @@
 					</div>
 					<div class="job-card-content">
 						<div class="p-grid">
-							<div class="p-col-3">
+							<div class="p-col-12 p-sm-3">
 								<cc:outputLink label="#{i18n['job.owner']}" value="#{viewJobView.jobOffer.owner.fullName}" outcome="#{Page.USER.getUrl()}">
 									<f:param name="id" value="#{viewJobView.jobOffer.owner.id}" />
 								</cc:outputLink>
 							</div>
-							<div class="p-col-3">
+							<div class="p-col-12 p-sm-3">
 								<cc:outputText label="#{i18n['job.places']}" value="#{viewJobView.jobOffer.places}" />
 							</div>
-							<div class="p-col-3">
+							<div class="p-col-12 p-sm-3">
 								<cc:outputText label="#{i18n['job.date_closed']}" value="#{viewJobView.jobOffer.dateClosed}">
 									<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" for="element" />
 								</cc:outputText>
@@ -53,20 +53,20 @@
 			</div>
 			<div class="p-col-12 p-xl-5">
 				<div class="card card-w-title">
-					<h3>Detalles</h3>
+					<h3>#{i18n['job.details']}</h3>
 					<div class="p-grid">
-						<div class="p-col-6">
+						<div class="p-col-12 p-sm-6">
 							<cc:outputLink label="#{i18n['job.client']}" value="#{viewJobView.jobOffer.client.name}" outcome="#{Page.CLIENT.getUrl()}">
 								<f:param name="id" value="#{viewJobView.jobOffer.client.id}" />
 							</cc:outputLink>
 						</div>
-						<div class="p-col-6">
+						<div class="p-col-12 p-sm-6">
 							<cc:outputLink label="#{i18n['job.owner']}" value="#{viewJobView.jobOffer.owner.fullName}" outcome="#{Page.USER.getUrl()}">
 								<f:param name="id" value="#{viewJobView.jobOffer.owner.id}" />
 							</cc:outputLink>
 						</div>
 
-						<div class="p-col-6">
+						<div class="p-col-12 p-sm-6">
 							<div class="data">
 								<div class="label-container">
 									<div class="label">#{i18n['job.job_offer_state']}</div>
@@ -83,30 +83,30 @@
 								</div>
 							</div>
 						</div>
-						<div class="p-col-6">
+						<div class="p-col-12 p-sm-6">
 							<cc:outputText label="#{i18n['job.salary']}" value="#{viewJobView.jobOffer.salary}" />
 						</div>
-						<div class="p-col-6">
+						<div class="p-col-12 p-sm-6">
 							<cc:outputText label="#{i18n['job.places']}" value="#{viewJobView.jobOffer.places}" />
 						</div>
-						<div class="p-col-6">
+						<div class="p-col-12 p-sm-6">
 							<cc:outputText label="#{i18n['job.date_opened']}" value="#{viewJobView.jobOffer.dateOpened}">
 								<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" for="element" />
 							</cc:outputText>
 						</div>
-						<div class="p-col-6">
+						<div class="p-col-12 p-sm-6">
 							<cc:outputText label="#{i18n['job.date_closed']}" value="#{viewJobView.jobOffer.dateClosed}">
 								<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" for="element" />
 							</cc:outputText>
 						</div>
-						<div class="p-col-6">
+						<div class="p-col-12 p-sm-6">
 							<cc:outputText label="#{i18n['address.city']}" value="#{viewJobView.jobOffer.address.city}" />
 
 						</div>
-						<div class="p-col-6">
+						<div class="p-col-12 p-sm-6">
 							<cc:outputText label="#{i18n['job.state']}" value="#{viewJobView.jobOffer.address.state}" />
 						</div>
-						<div class="p-col-6">
+						<div class="p-col-12 p-sm-6">
 							<div class="data">
 								<div class="label-container">
 									<div class="label">#{i18n['job.recruiters']}</div>
