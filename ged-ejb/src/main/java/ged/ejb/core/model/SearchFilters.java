@@ -1,23 +1,25 @@
 package ged.ejb.core.model;
 
 import java.util.ArrayDeque;
+import java.util.Iterator;
 import java.util.Objects;
 import java.util.Queue;
 
-public class SearchFilters {
+public class SearchFilters implements Iterable<SearchFilter> {
 
-	private Queue<SearchFilter> filters;
+	private final Queue<SearchFilter> filters;
 
 	public SearchFilters() {
-		filters = new ArrayDeque<SearchFilter>();
+		this.filters = new ArrayDeque<SearchFilter>();
 	}
 
-	public void addSearchFilter(SearchFilter searchFilter) {
+	public void addFilter(final SearchFilter searchFilter) {
 		Objects.requireNonNull(searchFilter);
 		this.filters.add(searchFilter);
 	}
 
-	public Queue<SearchFilter> getFilters() {
-		return filters;
+	@Override
+	public Iterator<SearchFilter> iterator() {
+		return this.filters.iterator();
 	}
 }
