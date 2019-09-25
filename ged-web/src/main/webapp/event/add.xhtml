@@ -25,19 +25,29 @@
 						<div class="p-grid">
 							<div class="p-col-12 p-xl-6">
 								<div class="form-field ui-fluid">
-									<cc:inputSelect label="#{i18n['event.type']}" value="#{addEventView.event.type}" >
+									<cc:inputSelect label="#{i18n['event.type']}" value="#{addEventView.event.type}">
 										<f:selectItems value="#{eventTypes.list}" var="event" itemValue="#{event}" itemLabel="#{i18n[event.name]}" />
 									</cc:inputSelect>
 
 									<cc:inputSelect label="#{i18n['event.job_candidature']}" value="#{addEventView.event.jobCandidature}">
 										<f:selectItems value="#{addEventView.jobCandidatures}" var="jobCandidature" itemValue="#{jobCandidature}" itemLabel="#{jobCandidature}" />
+										<p:ajax event="change" process="@this" update="eventForm:state" listener="#{addEventView.updateState}" />
 									</cc:inputSelect>
 
 									<g:input id="description" label="#{i18n['event.description']}" value="#{addEventView.event.description}" type="textarea" />
-									
-									<cc:inputSelect label="#{i18n['event.status']}" value="#{addEventView.event.status}">
-										<f:selectItems value="#{jobCandidatureStates.list}" var="jobCandidatureState" itemValue="#{jobCandidatureState}" itemLabel="#{g:translate(jobCandidatureState.name)}" />
-									</cc:inputSelect>
+
+									<div class="input-group input-group-select">
+										<div class="label-container">
+											<p:outputLabel id="label" value="#{i18n['event.status']}" for="state" styleClass="label" />
+										</div>
+
+										<p:selectOneMenu id="state" value="#{addEventView.event.status}" styleClass="input input-select" panelStyleClass="jobCandidatureStates" var="state">
+											<f:selectItems value="#{jobCandidatureStates.list}" var="jobCandidatureState" itemValue="#{jobCandidatureState}" itemLabel="#{g:translate(jobCandidatureState.name)}" />
+											<p:column>
+												<div class="tag #{state.color}">#{g:translate(state.name)}</div>
+											</p:column>
+										</p:selectOneMenu>
+									</div>
 								</div>
 							</div>
 

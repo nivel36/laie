@@ -1,14 +1,6 @@
-<ui:component xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" 
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
-	xmlns:composite="http://xmlns.jcp.org/jsf/composite" 
-	xmlns:f="http://java.sun.com/jsf/core" 
-	xmlns:g="http://ged.org/ui" 
-	xmlns:h="http://java.sun.com/jsf/html" 
-	xmlns:o="http://omnifaces.org/ui"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:component xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	xmlns:composite="http://xmlns.jcp.org/jsf/composite" xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://ged.org/ui" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets">
 
 	<composite:interface componentType="inputSelect">
 		<composite:attribute name="label" required="true" />
@@ -26,8 +18,7 @@
 			</div>
 			<c:if test="#{cc.attrs.other}">
 				<h:panelGroup layout="block" id="selectOneMenuWrapper" styleClass="input-container">
-					<p:selectOneMenu id="selectOneMenu" name="#{cc.attrs.name}" required="#{cc.attrs.required}"
-						binding="#{cc.selectInput}" styleClass="input input-select">
+					<p:selectOneMenu id="selectOneMenu" name="#{cc.attrs.name}" required="#{cc.attrs.required}" binding="#{cc.selectInput}" styleClass="input input-select">
 						<f:selectItem />
 						<composite:insertChildren />
 						<f:selectItem itemLabel="#{i18n['select.other']}" itemValue="other" />
@@ -39,8 +30,7 @@
 			</c:if>
 			<c:if test="#{not cc.attrs.other}">
 				<div class="input-container">
-					<p:selectOneMenu id="selectOneMenu" name="#{cc.attrs.name}" value="#{cc.attrs.value}"
-						required="#{cc.attrs.required}" styleClass="input input-select">
+					<p:selectOneMenu id="selectOneMenu" name="#{cc.attrs.name}" value="#{cc.attrs.value}" required="#{cc.attrs.required}" styleClass="input input-select" >
 						<f:selectItem />
 						<composite:insertChildren />
 					</p:selectOneMenu>

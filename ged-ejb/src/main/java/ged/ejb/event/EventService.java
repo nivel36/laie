@@ -55,7 +55,7 @@ public class EventService extends AbstractService<Event> {
 		final JobCandidature jobCandidature = event.getJobCandidature();
 		final JobCandidatureState jobCandidatureState = jobCandidature.getJobCandidatureState();
 		final JobCandidatureState eventState = event.getStatus();
-		if (jobCandidatureState.equals(eventState)) {
+		if (!jobCandidatureState.equals(eventState)) {
 			jobCandidature.setJobCandidatureState(event.getStatus());
 			this.jobCandidatureService.save(jobCandidature);
 		}

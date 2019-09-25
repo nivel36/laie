@@ -208,6 +208,15 @@ body .ui-datatable table {
 	margin: 1em 0;
 }
 
+body .jobCandidatureStates.ui-selectonemenu-panel .ui-selectonemenu-items .ui-selectonemenu-item.ui-selectonemenu-row, body .jobCandidatureStates.ui-selectonemenu-panel .ui-selectonemenu-table th,
+	.ui-selectonemenu-panel .ui-selectonemenu-table td {
+	border: 0px;
+}
+
+body .jobCandidatureStates.ui-selectonemenu-panel .ui-selectonemenu-items .ui-selectonemenu-item.ui-selectonemenu-row td {
+	padding: 0.3em 0.6em;
+}
+
 .person {
 	display: flex;
 	padding: .5em;
@@ -479,7 +488,6 @@ body .ui-datatable table {
 	display: inline-flex;
 	padding: 5px 10px 5px 0px;
 }
-
 
 .layout-right-panel .messages {
 	margin: 24px 0 0 0;
