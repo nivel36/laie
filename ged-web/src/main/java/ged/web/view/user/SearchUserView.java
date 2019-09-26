@@ -80,7 +80,6 @@ public class SearchUserView extends AbstractView {
 	public void init() {
 		logger.trace("User search init");
 		users = new UserLazyDataModel(userService);
-		this.search();
 	}
 
 	public void search() {

@@ -21,7 +21,13 @@
 			<div class="card">
 				<div class="p-grid">
 					<div class="p-col-12 p-xl-5">
-						<div class="searchBar ui-fluid"></div>
+						<div class="searchBar ui-fluid">
+							<p:selectOneMenu id="state" value="#{searchEventView.searchState}" styleClass="input input-select" panelStyleClass="jobCandidatureStates">
+								<f:selectItem />
+								<f:selectItems value="#{jobCandidatureStates.list}" var="jobCandidatureState" itemValue="#{jobCandidatureState}" itemLabel="#{g:translate(jobCandidatureState.name)}" />
+								<p:ajax event="change" listener="#{searchEventView.search}" process="@form" update="@form" />
+							</p:selectOneMenu>
+						</div>
 					</div>
 					<div class="p-col-12 p-xl-7">
 						<div class="buttons">

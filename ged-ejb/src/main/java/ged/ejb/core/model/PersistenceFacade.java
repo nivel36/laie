@@ -26,8 +26,6 @@ import org.hibernate.search.query.dsl.sort.SortFieldContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ged.ejb.core.model.SearchFilter.SearchCondition;
-
 @Repository
 public class PersistenceFacade {
 
@@ -55,7 +53,7 @@ public class PersistenceFacade {
 	}
 
 	@SuppressWarnings("rawtypes")
-	private BooleanJunction<BooleanJunction> createPredicate(final String searchText, final QueryBuilder qb,
+	private BooleanJunction<BooleanJunction> createPredicate(final QueryBuilder qb, final SearchFilters searchFilters, final String searchText,
 			final String... fields) {
 		final BooleanJunction<BooleanJunction> bj = qb.bool();
 
@@ -70,20 +68,9 @@ public class PersistenceFacade {
 				bj.must(fieldBj.createQuery());
 			}
 		}
-		return bj;
-	}
-
-	@SuppressWarnings("rawtypes")
-	private BooleanJunction<BooleanJunction> createPredicateFilters(final QueryBuilder qb,
-			final SearchFilters searchFilters) {
-		final BooleanJunction<BooleanJunction> bj = qb.bool();
-		for (final SearchFilter searchFilter : searchFilters) {
-			final org.apache.lucene.search.Query createQuery = qb.keyword().onField(searchFilter.getName())
-					.matching(searchFilter.getValue()).createQuery();
-			if (searchFilter.getSearchCondition().equals(SearchCondition.AND)) {
-				bj.should(createQuery);
-			} else {
-				bj.must(createQuery);
+		if (searchFilters != null) {
+			for (final SearchFilter searchFilter : searchFilters) {
+				bj.must(qb.keyword().onField(searchFilter.getName()).matching(searchFilter.getValue()).createQuery());
 			}
 		}
 		return bj;
@@ -197,38 +184,13 @@ public class PersistenceFacade {
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public <T extends Identifiable> SearchResult<T> search(final Class<T> type, final Page page,
-			final List<SortField> sortFields, final SearchFilters searchFilter, final String searchText,
+			final List<SortField> sortFields, final SearchFilters searchFilters, final String searchText,
 			final String... fields) {
 
 		final FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(this.getEm());
 		final QueryBuilder qb = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(type).get();
 
-		final BooleanJunction<BooleanJunction> bj = this.createPredicateFilters(qb, searchFilter);
-		bj.must(this.createPredicate(searchText, qb, fields).createQuery());
-
-		final FullTextQuery fullTextQuery = fullTextEntityManager.createFullTextQuery(this.createLuceneQuery(qb, bj),
-				type);
-		this.paginate(page, fullTextQuery);
-		fullTextQuery.setHint(CACHE_STORE_MODE, CacheStoreMode.REFRESH);
-
-		this.sortQuery(sortFields, qb, fullTextQuery);
-
-		final List<T> results = fullTextQuery.getResultList();
-		if (results instanceof ArrayList) {
-			return new SearchResult<>(results, fullTextQuery.getResultSize());
-		} else {
-			return new SearchResult<>(new ArrayList<>(results), fullTextQuery.getResultSize());
-		}
-	}
-
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public <T extends Identifiable> SearchResult<T> search(final Class<T> type, final Page page,
-			final List<SortField> sortFields, final String searchText, final String... fields) {
-
-		final FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(this.getEm());
-		final QueryBuilder qb = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(type).get();
-
-		final BooleanJunction<BooleanJunction> bj = this.createPredicate(searchText, qb, fields);
+		final BooleanJunction<BooleanJunction> bj = this.createPredicate(qb, searchFilters, searchText, fields);
 
 		final FullTextQuery fullTextQuery = fullTextEntityManager.createFullTextQuery(this.createLuceneQuery(qb, bj),
 				type);

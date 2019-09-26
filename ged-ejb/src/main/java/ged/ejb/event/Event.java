@@ -41,6 +41,7 @@ public class Event extends AbstractEntity {
 	private User user;
 
 	@ManyToOne
+	@IndexedEmbedded
 	private JobCandidatureState status;
 
 	@Override

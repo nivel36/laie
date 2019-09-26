@@ -98,7 +98,6 @@ public class CandidateService extends AbstractService<Candidate> {
 		this.candidateDao = candidateDao;
 	}
 
-
 	public void setServerFileDao(final ServerFileDao serverFileDao) {
 		this.serverFileDao = serverFileDao;
 	}

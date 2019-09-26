@@ -14,7 +14,7 @@
 			<h3>#{cc.attrs.title}</h3>
 			
 			<p:dataList var="candidate" value="#{cc.attrs.candidates}" emptyMessage="#{i18n['candidate.no_candidates_found']}" paginator="true"
-				paginatorPosition="bottom" itemStyleClass="ui-datalist-nobullets" styleClass="ui-datalist-borderless">
+				paginatorPosition="bottom" rows="#{sessionUser.rowsPerPage}" itemStyleClass="ui-datalist-nobullets" styleClass="ui-datalist-borderless" lazy="true" >
 				<p:link outcome="#{Page.CANDIDATE.getUrl()}">
 					<f:param name="id" value="#{candidate.id}" />
 					<cc:person value="#{candidate}" description="#{candidate.jobProfile}" styleClass="selectable" />

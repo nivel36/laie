@@ -10,6 +10,8 @@ import org.primefaces.model.SortOrder;
 import ged.ejb.core.AbstractService;
 import ged.ejb.core.model.AbstractEntity;
 import ged.ejb.core.model.Page;
+import ged.ejb.core.model.SearchFilter;
+import ged.ejb.core.model.SearchFilters;
 import ged.ejb.core.model.SearchResult;
 import ged.ejb.core.model.SortField;
 
@@ -18,6 +20,12 @@ public abstract class AbstractLazyDataModel<T extends AbstractEntity> extends La
 	private static final long serialVersionUID = 1L;
 
 	protected String searchText;
+	
+	protected SearchFilters searchFilter = new SearchFilters();
+	
+	public void addSearchFilter(String field, String value) {
+		searchFilter.addFilter(new SearchFilter(field, value));
+	}
 
 	@Override
 	public T getRowData(final String rowKey) {
@@ -37,8 +45,13 @@ public abstract class AbstractLazyDataModel<T extends AbstractEntity> extends La
 	public List<T> load(final int first, final int pageSize, final String sortFieldName, final SortOrder sortOrder,
 			Map<String, Object> filters) {
 		final Page page = new Page(first, pageSize);
-		final SortField sortField = new SortField(sortFieldName, sortOrder == SortOrder.DESCENDING);
-		final SearchResult<T> searchResult = getService().search(searchText, page, sortField);
+		final SortField sortField;
+		if (sortOrder != null) {
+			sortField = new SortField(sortFieldName, sortOrder == SortOrder.DESCENDING);
+		} else {
+			sortField = null;
+		}
+		final SearchResult<T> searchResult = getService().search(searchText, page, sortField, searchFilter);
 		this.setRowCount(searchResult.getCount());
 		return searchResult.getResultData();
 	}

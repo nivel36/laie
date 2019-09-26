@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ged.ejb.event.EventService;
+import ged.ejb.job.candidature.JobCandidatureState;
 import ged.web.core.view.AbstractView;
 
 @Named
@@ -23,6 +24,17 @@ public class SearchEventView extends AbstractView {
 	private static final long serialVersionUID = 1L;
 
 	private EventLazyDataModel events;
+	
+	
+	private JobCandidatureState searchState;
+
+	public JobCandidatureState getSearchState() {
+		return searchState;
+	}
+
+	public void setSearchState(JobCandidatureState searchState) {
+		this.searchState = searchState;
+	}
 
 	@Inject
 	protected transient EventService eventService;
@@ -39,12 +51,13 @@ public class SearchEventView extends AbstractView {
 	public void init() {
 		logger.trace("Search events init");
 		events = initEvents();
-		this.search();
 	}
 
 	public void search() {
 		logger.debug("Search events action performed");
-		events.setSearchText(null);
+		if(searchState != null) {
+			events.addSearchFilter("status.name", searchState.getName());
+		}
 	}
 
 	private EventLazyDataModel initEvents() {

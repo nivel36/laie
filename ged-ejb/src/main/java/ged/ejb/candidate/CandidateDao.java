@@ -55,7 +55,6 @@ public class CandidateDao extends AbstractDao<Candidate> {
 		}
 	}
 
-
 	@Override
 	public Class<Candidate> getType() {
 		return Candidate.class;
