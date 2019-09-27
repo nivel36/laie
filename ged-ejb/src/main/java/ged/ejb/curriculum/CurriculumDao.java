@@ -26,14 +26,14 @@ public class CurriculumDao extends AbstractDao<Curriculum> {
 			return null;
 		}
 	}
-	
+
 	public Skill findSkill(final String name) {
 		Objects.requireNonNull(name, "Skill name can't be null");
 		try {
 			return this.findByQuery(Skill.class, "Skill.findByName", map("name", name));
 		} catch (final NoResultException e) {
 			return null;
-		}	
+		}
 	}
 
 	@Override

@@ -13,6 +13,6 @@ public class EventDao extends AbstractDao<Event> {
 
 	@Override
 	public String[] searchFields() {
-		return new String[] {"status.name", "user.name"};
+		return new String[] { "status.name", "user.name" };
 	}
 }

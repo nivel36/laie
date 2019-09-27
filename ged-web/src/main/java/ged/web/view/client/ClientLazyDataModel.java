@@ -8,11 +8,11 @@ import ged.ejb.core.AbstractService;
 import ged.web.core.view.AbstractLazyDataModel;
 
 public class ClientLazyDataModel extends AbstractLazyDataModel<Client> {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	private transient ClientService clientService;
-	
+
 	public ClientLazyDataModel(final ClientService clientService) {
 		Objects.requireNonNull(clientService, "ClientService can't be null");
 		this.clientService = clientService;
@@ -20,6 +20,6 @@ public class ClientLazyDataModel extends AbstractLazyDataModel<Client> {
 
 	@Override
 	protected AbstractService<Client> getService() {
-		return clientService;
+		return this.clientService;
 	}
 }

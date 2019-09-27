@@ -10,7 +10,7 @@ import ged.web.core.view.AbstractLazyDataModel;
 public class UserLazyDataModel extends AbstractLazyDataModel<User> {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private transient UserService userService;
 
 	public UserLazyDataModel(final UserService userService) {
@@ -20,6 +20,6 @@ public class UserLazyDataModel extends AbstractLazyDataModel<User> {
 
 	@Override
 	protected AbstractService<User> getService() {
-		return userService;
+		return this.userService;
 	}
 }

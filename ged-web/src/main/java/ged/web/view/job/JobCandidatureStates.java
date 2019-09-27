@@ -18,10 +18,10 @@ public class JobCandidatureStates implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	private List<JobCandidatureState> jobCandidatureStates;
+
 	@Inject
 	private transient JobCandidatureStateService jobCandidatureStateService;
-
-	private List<JobCandidatureState> jobCandidatureStates;
 
 	public List<JobCandidatureState> getList() {
 		return this.jobCandidatureStates;

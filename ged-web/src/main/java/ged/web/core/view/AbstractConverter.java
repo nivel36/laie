@@ -18,8 +18,7 @@ public abstract class AbstractConverter<T extends AbstractEntity> implements Con
 		try {
 			final long id = Long.parseLong(value);
 			return this.getService().find(id);
-		}
-		catch (final NumberFormatException e) {
+		} catch (final NumberFormatException e) {
 			throw new ConverterException(value + " is not a valid id");
 		}
 	}

@@ -46,7 +46,7 @@ public class Address implements Serializable {
 		if (obj == null) {
 			return false;
 		}
-		if (getClass() != obj.getClass()) {
+		if (this.getClass() != obj.getClass()) {
 			return false;
 		}
 		final Address other = (Address) obj;
@@ -95,7 +95,7 @@ public class Address implements Serializable {
 	}
 
 	private boolean isNotEmpty(final String string) {
-		return string != null && !"".equals(string.trim());
+		return (string != null) && !"".equals(string.trim());
 	}
 
 	public void setCity(final String city) {
@@ -134,35 +134,35 @@ public class Address implements Serializable {
 	public String toString() {
 		final String eol = System.getProperty("line.separator");
 		final StringBuilder sb = new StringBuilder();
-		if (isNotEmpty(this.street)) {
+		if (this.isNotEmpty(this.street)) {
 			sb.append(this.street);
 			sb.append(" ");
 		}
-		if (isNotEmpty(this.number)) {
+		if (this.isNotEmpty(this.number)) {
 			sb.append(this.number);
 			sb.append(", ");
 		}
-		if (isNotEmpty(this.storey)) {
+		if (this.isNotEmpty(this.storey)) {
 			sb.append(this.storey);
 			sb.append(", ");
 		}
-		if (isNotEmpty(this.door)) {
+		if (this.isNotEmpty(this.door)) {
 			sb.append(this.door);
 			sb.append(eol);
 		}
-		if (isNotEmpty(this.zipCode)) {
+		if (this.isNotEmpty(this.zipCode)) {
 			sb.append(this.zipCode);
 			sb.append(eol);
 		}
-		if (isNotEmpty(this.city)) {
+		if (this.isNotEmpty(this.city)) {
 			sb.append(this.city);
 			sb.append(eol);
 		}
-		if (isNotEmpty(this.state)) {
+		if (this.isNotEmpty(this.state)) {
 			sb.append(this.state);
 			sb.append(eol);
 		}
-		if (isNotEmpty(this.country)) {
+		if (this.isNotEmpty(this.country)) {
 			sb.append(this.country);
 		}
 		return sb.toString();

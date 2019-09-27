@@ -37,13 +37,11 @@ public class I18nView extends AbstractView {
 	public String getI18nText(final String key, final String language) {
 		try {
 			return this.translator.message(key);
-		}
-		catch (final MissingResourceException e) {
+		} catch (final MissingResourceException e) {
 			final I18nString message = this.i18nService.find(key, language);
 			if (message != null) {
 				return message.getText();
-			}
-			else {
+			} else {
 				return key;
 			}
 		}
@@ -53,8 +51,7 @@ public class I18nView extends AbstractView {
 		final Locale defaultLocale = this.facesContext.getApplication().getDefaultLocale();
 		if (defaultLocale == null) {
 			return SPANISH;
-		}
-		else {
+		} else {
 			return defaultLocale.getLanguage();
 		}
 	}

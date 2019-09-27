@@ -72,9 +72,8 @@ public class ChangePictureView extends AbstractView {
 		final byte[] data = captureEvent.getData();
 		Objects.requireNonNull(data);
 		try (InputStream inputStream = new ByteArrayInputStream(data)) {
-			changeUserImage(inputStream);
-		}
-		catch (final IOException e) {
+			this.changeUserImage(inputStream);
+		} catch (final IOException e) {
 			throw new FacesException("Error in writing captured image.", e);
 		}
 	}
@@ -97,9 +96,8 @@ public class ChangePictureView extends AbstractView {
 		final UploadedFile uploadedFile = event.getFile();
 		Objects.requireNonNull(uploadedFile);
 		try (InputStream inputStream = uploadedFile.getInputstream()) {
-			changeUserImage(inputStream);
-		}
-		catch (final IOException e) {
+			this.changeUserImage(inputStream);
+		} catch (final IOException e) {
 			throw new UncheckedIOException(e);
 		}
 	}

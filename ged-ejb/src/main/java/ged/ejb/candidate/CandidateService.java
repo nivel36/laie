@@ -47,7 +47,7 @@ public class CandidateService extends AbstractService<Candidate> {
 	public List<Origin> findAllOrigins() {
 		return this.candidateDao.findAllOrigins();
 	}
-	
+
 	public Candidate findCandidateByEmail(final String email) {
 		Objects.requireNonNull(email, "Email can't be null");
 		return this.candidateDao.findCandidateByEmail(email);

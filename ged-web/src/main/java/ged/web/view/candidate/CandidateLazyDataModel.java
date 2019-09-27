@@ -20,6 +20,6 @@ public class CandidateLazyDataModel extends AbstractLazyDataModel<Candidate> {
 
 	@Override
 	protected AbstractService<Candidate> getService() {
-		return candidateService;
+		return this.candidateService;
 	}
 }

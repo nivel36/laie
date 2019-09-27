@@ -34,14 +34,14 @@ public class Event extends AbstractEntity {
 	@ManyToOne
 	private JobCandidature jobCandidature;
 
+	@ManyToOne
+	@IndexedEmbedded
+	private JobCandidatureState status;
+
 	private EventType type;
 
 	@ManyToOne
 	private User user;
-
-	@ManyToOne
-	@IndexedEmbedded
-	private JobCandidatureState status;
 
 	@Override
 	public boolean equals(final Object obj) {

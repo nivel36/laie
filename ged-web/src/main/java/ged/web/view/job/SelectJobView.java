@@ -47,11 +47,11 @@ public class SelectJobView extends AbstractView {
 
 	@PostConstruct
 	public void init() {
-		jobOffers = new JobOfferLazyDataModel(this.jobOfferService);
+		this.jobOffers = new JobOfferLazyDataModel(this.jobOfferService);
 	}
 
 	public void search() {
-		this.jobOffers.setSearchText(searchText);
+		this.jobOffers.setSearchText(this.searchText);
 	}
 
 	public void select() {

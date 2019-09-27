@@ -25,7 +25,7 @@ public class Tag extends AbstractEntity {
 	public Tag() {
 	}
 
-	public Tag(String label) {
+	public Tag(final String label) {
 		Objects.requireNonNull(label, "Label can't be null");
 		this.label = label;
 	}
@@ -41,7 +41,7 @@ public class Tag extends AbstractEntity {
 		if (!super.equals(obj)) {
 			return false;
 		}
-		if (getClass() != obj.getClass()) {
+		if (this.getClass() != obj.getClass()) {
 			return false;
 		}
 		final Tag other = (Tag) obj;

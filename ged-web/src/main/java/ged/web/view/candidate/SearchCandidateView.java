@@ -21,7 +21,7 @@ public class SearchCandidateView extends AbstractView {
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private CandidateLazyDataModel candidates;
 
 	@Inject
@@ -34,7 +34,7 @@ public class SearchCandidateView extends AbstractView {
 	}
 
 	public CandidateLazyDataModel getCandidates() {
-		return candidates;
+		return this.candidates;
 	}
 
 	public String getSearchText() {
@@ -44,16 +44,16 @@ public class SearchCandidateView extends AbstractView {
 	@PostConstruct
 	public void init() {
 		logger.trace("Search candidate init");
-		candidates = initCandidates();
+		this.candidates = this.initCandidates();
 	}
 
 	private CandidateLazyDataModel initCandidates() {
-		return new CandidateLazyDataModel(candidateService);
+		return new CandidateLazyDataModel(this.candidateService);
 	}
 
 	public void search() {
 		logger.debug("Search candidates action performed");
-		candidates.setSearchText(searchText);
+		this.candidates.setSearchText(this.searchText);
 	}
 
 	public void setCandidateService(final CandidateService candidateService) {

@@ -10,7 +10,7 @@ import ged.web.core.view.AbstractConverter;
 
 @FacesConverter(managed = true, forClass = JobOffer.class)
 public class JobOfferConverter extends AbstractConverter<JobOffer> {
-	
+
 	@Inject
 	private JobOfferService jobOfferService;
 

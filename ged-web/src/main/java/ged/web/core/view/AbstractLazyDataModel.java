@@ -10,33 +10,33 @@ import org.primefaces.model.SortOrder;
 import ged.ejb.core.AbstractService;
 import ged.ejb.core.model.AbstractEntity;
 import ged.ejb.core.model.Page;
-import ged.ejb.core.model.SearchFacet;
-import ged.ejb.core.model.SearchFacets;
-import ged.ejb.core.model.SearchResult;
-import ged.ejb.core.model.SortField;
+import ged.ejb.core.model.search.SearchFacet;
+import ged.ejb.core.model.search.SearchFacets;
+import ged.ejb.core.model.search.SearchResult;
+import ged.ejb.core.model.search.SortField;
 
 public abstract class AbstractLazyDataModel<T extends AbstractEntity> extends LazyDataModel<T> {
 
 	private static final long serialVersionUID = 1L;
 
 	protected SearchFacets searchFilter = new SearchFacets();
-	
+
 	protected String searchText;
-	
-	public void addSearchFilter(String field, String value, int... selectedFacets) {
-		SearchFacet searchFacet = new SearchFacet(field, value);
+
+	public void addSearchFilter(final String field, final String value, final int... selectedFacets) {
+		final SearchFacet searchFacet = new SearchFacet(field, value);
 		searchFacet.selectFacets(selectedFacets);
-		searchFilter.addFacet(searchFacet);
+		this.searchFilter.addFacet(searchFacet);
 	}
 
 	public void clearSearchFilters() {
-		searchFilter.clear();
+		this.searchFilter.clear();
 	}
-	
+
 	@Override
 	public T getRowData(final String rowKey) {
 		Objects.requireNonNull(rowKey, "RowKey can't be null");
-		return getService().find(Integer.parseInt(rowKey));
+		return this.getService().find(Integer.parseInt(rowKey));
 	}
 
 	@Override
@@ -49,7 +49,7 @@ public abstract class AbstractLazyDataModel<T extends AbstractEntity> extends La
 
 	@Override
 	public List<T> load(final int first, final int pageSize, final String sortFieldName, final SortOrder sortOrder,
-			Map<String, Object> filters) {
+			final Map<String, Object> filters) {
 		final Page page = new Page(first, pageSize);
 		final SortField sortField;
 		if (sortOrder != null) {
@@ -57,7 +57,8 @@ public abstract class AbstractLazyDataModel<T extends AbstractEntity> extends La
 		} else {
 			sortField = null;
 		}
-		final SearchResult<T> searchResult = getService().search(searchText, page, sortField, searchFilter);
+		final SearchResult<T> searchResult = this.getService().search(this.searchText, page, sortField,
+				this.searchFilter);
 		this.setRowCount(searchResult.getCount());
 		return searchResult.getResultData();
 	}

@@ -16,8 +16,7 @@ public class Translate {
 		final Locale locale;
 		if (uIViewRoot != null) {
 			locale = uIViewRoot.getLocale();
-		}
-		else {
+		} else {
 			locale = Locale.ENGLISH;
 		}
 		return locale;

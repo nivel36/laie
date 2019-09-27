@@ -44,7 +44,7 @@ public class ServerFile extends AbstractEntity {
 		if (!super.equals(obj)) {
 			return false;
 		}
-		if (getClass() != obj.getClass()) {
+		if (this.getClass() != obj.getClass()) {
 			return false;
 		}
 		final ServerFile other = (ServerFile) obj;

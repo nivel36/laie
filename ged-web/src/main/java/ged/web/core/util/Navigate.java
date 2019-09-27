@@ -36,15 +36,13 @@ public class Navigate {
 			for (final Entry<String, Object> entry : entriesSet) {
 				if (stringBuilder.length() == 0) {
 					stringBuilder.append("?");
-				}
-				else {
+				} else {
 					stringBuilder.append("&");
 				}
 				stringBuilder.append(entry.getKey()).append("=").append(entry.getValue().toString());
 			}
 			return stringBuilder.toString();
-		}
-		else {
+		} else {
 			return "";
 		}
 	}
@@ -55,8 +53,7 @@ public class Navigate {
 			final ExternalContext externalContext = facesContext.getExternalContext();
 			final StringBuilder fullUrl = new StringBuilder(this.url).append(this.buildQueryParams());
 			externalContext.redirect(fullUrl.toString());
-		}
-		catch (final IOException e) {
+		} catch (final IOException e) {
 			throw new NavigationException("Unable to go to " + this.url, e);
 		}
 	}

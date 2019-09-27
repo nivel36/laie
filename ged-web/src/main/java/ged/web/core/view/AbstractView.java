@@ -68,18 +68,19 @@ public abstract class AbstractView implements Serializable {
 		this.addMessage(null, severity, title, message, null);
 	}
 
-	protected void addMessage(final Severity severity, final String title, final String message, final Object... params) {
+	protected void addMessage(final Severity severity, final String title, final String message,
+			final Object... params) {
 		this.addMessage(null, severity, title, message, params);
 	}
 
-	private void addMessage(final UIComponent component, final Severity severity, final String title, final String message, final Object[] params) {
+	private void addMessage(final UIComponent component, final Severity severity, final String title,
+			final String message, final Object[] params) {
 		final String translatedTitle = this.translator.message(title, params);
 		final String translatedMessage = this.translator.message(message, params);
 		final FacesMessage facesMessage = new FacesMessage(severity, translatedTitle, translatedMessage);
 		if (component == null) {
 			this.facesContext.addMessage(null, facesMessage);
-		}
-		else {
+		} else {
 			this.facesContext.addMessage(component.getClientId(), facesMessage);
 		}
 	}
@@ -121,8 +122,7 @@ public abstract class AbstractView implements Serializable {
 				return null;
 			}
 			return Long.parseLong(idValue);
-		}
-		catch (final NumberFormatException e) {
+		} catch (final NumberFormatException e) {
 			throw new IllegalStateException();
 		}
 	}
@@ -131,8 +131,7 @@ public abstract class AbstractView implements Serializable {
 	protected <T> T getValueFromFlash(final String key) {
 		if (this.flash.containsKey(key)) {
 			return (T) this.flash.get(key);
-		}
-		else {
+		} else {
 			return null;
 		}
 	}
@@ -160,7 +159,7 @@ public abstract class AbstractView implements Serializable {
 		options.put("width", "746");
 		PrimeFaces.current().dialog().openDynamic(name, options, params);
 	}
-	
+
 	protected void putValueToFlash(final String key, final Object value) {
 		this.flash.put(key, value);
 	}

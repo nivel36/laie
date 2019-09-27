@@ -1,4 +1,4 @@
-package ged.ejb.core.model;
+package ged.ejb.core.model.search;
 
 public class SortField {
 

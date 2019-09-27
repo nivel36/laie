@@ -42,11 +42,11 @@ public class ViewJobView extends AbstractView {
 	private List<JobCandidature> jobCandidatures;
 
 	@Inject
+	private transient JobCandidatureService jobCandidatureService;
+
+	@Inject
 	@Param(name = "id", required = true)
 	private JobOffer jobOffer;
-	
-	@Inject
-	private transient JobCandidatureService jobCandidatureService;
 
 	public String editJobOffer() {
 		logger.debug("Edit job offer action performed");
@@ -88,7 +88,8 @@ public class ViewJobView extends AbstractView {
 		@SuppressWarnings("unchecked")
 		final List<Candidate> selectedCandidates = (List<Candidate>) event.getObject();
 		for (final Candidate candidate : selectedCandidates) {
-			final JobCandidature jobCandidature = this.jobCandidatureService.addJobCandidature(this.jobOffer, candidate);
+			final JobCandidature jobCandidature = this.jobCandidatureService.addJobCandidature(this.jobOffer,
+					candidate);
 			this.jobCandidatures.add(jobCandidature);
 		}
 	}

@@ -29,14 +29,17 @@ public class Page {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
+	public boolean equals(final Object obj) {
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (this.getClass() != obj.getClass()) {
 			return false;
-		Page other = (Page) obj;
+		}
+		final Page other = (Page) obj;
 		return Objects.equals(other.limit, this.limit) && Objects.equals(other.offset, this.offset);
 	}
 
@@ -50,10 +53,11 @@ public class Page {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(offset, limit);
+		return Objects.hash(this.offset, this.limit);
 	}
 
+	@Override
 	public String toString() {
-		return String.format("Offset %d - Limit %d", offset, limit);
+		return String.format("Offset %d - Limit %d", this.offset, this.limit);
 	}
 }

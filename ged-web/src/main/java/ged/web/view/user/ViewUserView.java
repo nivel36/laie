@@ -38,13 +38,13 @@ public class ViewUserView extends AbstractView {
 
 	private List<JobOffer> jobOffers;
 
+	@Inject
+	private transient JobOfferService jobOfferService;
+
 	private List<Meeting> meetings;
 
 	@Inject
 	private transient MeetingService meetingService;
-
-	@Inject
-	private transient JobOfferService jobOfferService;
 
 	private List<User> team;
 

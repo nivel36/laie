@@ -57,7 +57,8 @@ public class Education extends AbstractEntity {
 		}
 		final Education other = (Education) obj;
 		return Objects.equals(this.degree, other.degree) && Objects.equals(this.description, other.description)
-				&& Objects.equals(this.startYear, other.startYear) && Objects.equals(this.stillStudying, other.stillStudying)
+				&& Objects.equals(this.startYear, other.startYear)
+				&& Objects.equals(this.stillStudying, other.stillStudying)
 				&& Objects.equals(this.endYear, other.endYear);
 	}
 

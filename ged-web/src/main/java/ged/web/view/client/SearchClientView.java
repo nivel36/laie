@@ -44,12 +44,12 @@ public class SearchClientView extends AbstractView {
 	@PostConstruct
 	public void init() {
 		logger.debug("Client search init");
-		clients = new ClientLazyDataModel(clientService);
+		this.clients = new ClientLazyDataModel(this.clientService);
 	}
 
 	public void search() {
 		logger.debug("Search clients action performed");
-		clients.setSearchText(searchText);
+		this.clients.setSearchText(this.searchText);
 	}
 
 	public void setClientService(final ClientService clientService) {

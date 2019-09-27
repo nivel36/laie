@@ -68,14 +68,14 @@ public class ConfigView extends AbstractView {
 
 	@PostConstruct
 	public void init() {
-		refreshSessionUser();
+		this.refreshSessionUser();
 		this.user = this.sessionUser.get();
 		logger.debug("Config user {}", this.user.getEmail());
 	}
 
 	public void openChangePasswordDialog() {
 		this.openDialog("/config/changePasswordDialog",
-				buildDialogParameter("userId", String.valueOf(this.user.getId())));
+				this.buildDialogParameter("userId", String.valueOf(this.user.getId())));
 	}
 
 	private void refreshSessionUser() {
@@ -85,7 +85,7 @@ public class ConfigView extends AbstractView {
 	public void save() {
 		logger.debug("AbstractAction: Save user {} data", this.user);
 		this.user = this.userService.save(this.user);
-		refreshSessionUser();
+		this.refreshSessionUser();
 		this.addMessage(FacesMessage.SEVERITY_INFO, "action.save_action_performed", "action.save_action_performed");
 	}
 

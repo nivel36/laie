@@ -16,7 +16,7 @@ public class I18nDao extends AbstractDao<I18nString> {
 		try {
 			return this.findByQuery(I18nString.class, "I18n.findByKeyAndLocale",
 					Parameters.map("key", key).and("locale", locale));
-		} catch (NoResultException e) {
+		} catch (final NoResultException e) {
 			return null;
 		}
 	}

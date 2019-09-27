@@ -23,12 +23,12 @@ public class CurriculumService extends AbstractService<Curriculum> {
 	@Inject
 	@Repository
 	private CurriculumDao curriculumDao;
-	
+
 	public List<SkillLevel> findAllSkillLevels() {
 		logger.debug("Find all the skill levels");
 		return this.curriculumDao.findAllSkillLevels();
 	}
-	
+
 	public Curriculum findByCandidate(final Candidate candidate) {
 		Objects.requireNonNull(candidate);
 		logger.debug("Find curriculum by candidate  {}", candidate);

@@ -27,19 +27,19 @@ public class PersonConverter implements Converter<Person> {
 	private UserService userService;
 
 	@Override
-	public Person getAsObject(FacesContext context, UIComponent component, String value) {
+	public Person getAsObject(final FacesContext context, final UIComponent component, final String value) {
 		if (value == null) {
 			return null;
 		}
-		User user = userService.findUserByEmail(value);
+		final User user = this.userService.findUserByEmail(value);
 		if (user != null) {
 			return user;
 		}
-		Candidate candidate = candidateService.findCandidateByEmail(value);
+		final Candidate candidate = this.candidateService.findCandidateByEmail(value);
 		if (candidate != null) {
 			return candidate;
 		}
-		Contact contact = contactService.findContactByEmail(value);
+		final Contact contact = this.contactService.findContactByEmail(value);
 		if (contact != null) {
 			return contact;
 		}
@@ -47,22 +47,22 @@ public class PersonConverter implements Converter<Person> {
 	}
 
 	@Override
-	public String getAsString(FacesContext context, UIComponent component, Person person) {
+	public String getAsString(final FacesContext context, final UIComponent component, final Person person) {
 		if (person == null) {
 			return null;
 		}
 		return person.getEmail();
 	}
 
-	public void setCandidateService(CandidateService candidateService) {
+	public void setCandidateService(final CandidateService candidateService) {
 		this.candidateService = candidateService;
 	}
 
-	public void setContactService(ContactService contactService) {
+	public void setContactService(final ContactService contactService) {
 		this.contactService = contactService;
 	}
 
-	public void setUserService(UserService userService) {
+	public void setUserService(final UserService userService) {
 		this.userService = userService;
 	}
 }

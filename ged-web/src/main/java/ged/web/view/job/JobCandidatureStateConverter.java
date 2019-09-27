@@ -10,16 +10,16 @@ import ged.web.core.view.AbstractConverter;
 
 @FacesConverter(managed = true, forClass = JobCandidatureState.class)
 public class JobCandidatureStateConverter extends AbstractConverter<JobCandidatureState> {
-	
+
 	@Inject
 	private JobCandidatureStateService jobCandidatureStateService;
 
 	@Override
 	protected AbstractService<JobCandidatureState> getService() {
-		return jobCandidatureStateService;
+		return this.jobCandidatureStateService;
 	}
 
-	public void setJobCandidatureStateService(JobCandidatureStateService jobCandidatureStateService) {
+	public void setJobCandidatureStateService(final JobCandidatureStateService jobCandidatureStateService) {
 		this.jobCandidatureStateService = jobCandidatureStateService;
 	}
 }

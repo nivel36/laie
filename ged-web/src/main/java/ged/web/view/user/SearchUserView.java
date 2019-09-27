@@ -21,8 +21,8 @@ import ged.ejb.export.acquirer.ExportData.Item;
 import ged.ejb.export.service.ExportService;
 import ged.ejb.user.UserService;
 import ged.excel.write.ExcelData;
-import ged.excel.write.GenerateReport;
 import ged.excel.write.ExcelData.ItemData;
+import ged.excel.write.GenerateReport;
 import ged.excel.write.inner.GedWorkbookFactory.WorkbookType;
 import ged.web.core.util.Translator;
 import ged.web.core.view.AbstractView;
@@ -35,12 +35,12 @@ public class SearchUserView extends AbstractView {
 
 	private static final long serialVersionUID = 1L;
 
+	@Inject
+	private transient ExportService exportService;
+
 	private String searchText;
 
 	private UserLazyDataModel users;
-	
-	@Inject
-	private transient ExportService exportService;
 
 	@Inject
 	private transient UserService userService;
@@ -48,20 +48,20 @@ public class SearchUserView extends AbstractView {
 	public void export() {
 		logger.debug("Export users action performed");
 		// TODO ivmedina
-		Objects.requireNonNull(getUsers()); // TODO ivmedina revisar
-		final ExportData exportData = getExportService().getExportUsersData(getUsers().getWrappedData());
+		Objects.requireNonNull(this.getUsers()); // TODO ivmedina revisar
+		final ExportData exportData = this.getExportService().getExportUsersData(this.getUsers().getWrappedData());
 		Objects.requireNonNull(exportData);
-		final ExcelData excelData = toExcelData(exportData);
+		final ExcelData excelData = this.toExcelData(exportData);
 		try {
 			final byte[] bytes = GenerateReport.generate(excelData, WorkbookType.XLSX_STREAMING);
 			Faces.sendFile(bytes, "fichero.xlsx", true);
-		} catch (IOException e) {
-			addMessage(FacesMessage.SEVERITY_ERROR, "test", "abc");
+		} catch (final IOException e) {
+			this.addMessage(FacesMessage.SEVERITY_ERROR, "test", "abc");
 		}
 	}
-	
+
 	public ExportService getExportService() {
-		return exportService;
+		return this.exportService;
 	}
 
 	public String getSearchText() {
@@ -69,7 +69,7 @@ public class SearchUserView extends AbstractView {
 	}
 
 	private Translator getTranslator() {
-		return translator;
+		return this.translator;
 	}
 
 	public UserLazyDataModel getUsers() {
@@ -79,41 +79,41 @@ public class SearchUserView extends AbstractView {
 	@PostConstruct
 	public void init() {
 		logger.trace("User search init");
-		users = new UserLazyDataModel(userService);
+		this.users = new UserLazyDataModel(this.userService);
 	}
 
 	public void search() {
 		logger.debug("Search users action performed");
-		users.setSearchText(searchText);
+		this.users.setSearchText(this.searchText);
 	}
 
-	public void setExportService(ExportService exportService) {
+	public void setExportService(final ExportService exportService) {
 		this.exportService = exportService;
 	}
 
 	public void setSearchText(final String searchText) {
 		this.searchText = searchText;
 	}
-	
+
 	public void setUsers(final UserLazyDataModel users) {
 		this.users = users;
 	}
-	
+
 	public void setUserService(final UserService userService) {
 		this.userService = userService;
 	}
 
 	private ExcelData toExcelData(final ExportData exportData) {
 		final List<String> literals = new ArrayList<String>();
-		for (String item: exportData.getIdLabels()) {
-			final String literal = getTranslator().message(item);
+		for (final String item : exportData.getIdLabels()) {
+			final String literal = this.getTranslator().message(item);
 			Objects.requireNonNull(literal);
 			literals.add(literal);
 		}
 		final List<ItemData> values = new ArrayList<ItemData>();
-		for (Item item: exportData.getItems()) {
+		for (final Item item : exportData.getItems()) {
 			final ItemData itemData = new ItemData();
-			for (Object value: item.getValue()) {
+			for (final Object value : item.getValue()) {
 				itemData.add(value);
 			}
 			values.add(itemData);

@@ -36,10 +36,6 @@ public abstract class AbstractEntity implements Identifiable, Serializable {
 	@Version
 	protected long version;
 
-	public boolean isNew() {
-		return id == 0;
-	}
-
 	@Override
 	public boolean equals(final Object obj) {
 		if (this == obj) {
@@ -48,7 +44,7 @@ public abstract class AbstractEntity implements Identifiable, Serializable {
 		if (obj == null) {
 			return false;
 		}
-		if (getClass() != obj.getClass()) {
+		if (this.getClass() != obj.getClass()) {
 			return false;
 		}
 		final AbstractEntity other = (AbstractEntity) obj;
@@ -67,6 +63,10 @@ public abstract class AbstractEntity implements Identifiable, Serializable {
 	@Override
 	public int hashCode() {
 		return Objects.hash(this.id);
+	}
+
+	public boolean isNew() {
+		return this.id == 0;
 	}
 
 	@Override

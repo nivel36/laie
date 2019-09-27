@@ -8,8 +8,6 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.omnifaces.cdi.Param;
-
 import ged.ejb.core.model.Page;
 import ged.ejb.event.Event;
 import ged.ejb.event.EventService;
@@ -26,13 +24,9 @@ public class AddEventView extends AbstractView {
 	private static final long serialVersionUID = 1L;
 
 	private Event event;
-	
-	@Inject
-	private transient EventService eventService;
 
 	@Inject
-	@Param(name = "jobCandidatureId")
-	private JobCandidature jobCandidature;
+	private transient EventService eventService;
 
 	private List<JobCandidature> jobCandidatures;
 
@@ -46,21 +40,14 @@ public class AddEventView extends AbstractView {
 	public List<JobCandidature> getJobCandidatures() {
 		return this.jobCandidatures;
 	}
-	
+
 	@PostConstruct
 	public void init() {
 		final User user = this.sessionUser.get();
-		this.event = initEvent(user);
+		this.event = new Event();
+		this.event.setUser(user);
+		this.event.setDate(LocalDateTime.now());
 		this.jobCandidatures = this.jobCandidatureService.findJobCandidatures(user, Page.ALL);
-	}
-
-	public Event initEvent(final User user){
-		final Event newEvent = new Event();
-		newEvent.setUser(user);
-		newEvent.setDate(LocalDateTime.now());
-		newEvent.setJobCandidature(this.jobCandidature);
-		newEvent.setStatus(this.jobCandidature.getJobCandidatureState());
-		return newEvent;
 	}
 
 	public String save() {
@@ -71,13 +58,9 @@ public class AddEventView extends AbstractView {
 	public void setEvent(final Event event) {
 		this.event = event;
 	}
-	
+
 	public void setEventService(final EventService eventService) {
 		this.eventService = eventService;
-	}
-
-	public void setJobCandidature(JobCandidature jobCandidature) {
-		this.jobCandidature = jobCandidature;
 	}
 
 	public void setJobCandidatureService(final JobCandidatureService jobCandidatureService) {

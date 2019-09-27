@@ -20,35 +20,35 @@ public class SearchMeetingView extends AbstractView {
 	private static final long serialVersionUID = 1L;
 
 	private List<Meeting> conductedMeetings;
-	
+
 	@Inject
 	private transient MeetingService meetingService;
 
 	private List<Meeting> plannedMeetings;
 
 	public List<Meeting> getConductedMeetings() {
-		return conductedMeetings;
+		return this.conductedMeetings;
 	}
 
 	public List<Meeting> getPlannedMeetings() {
-		return plannedMeetings;
+		return this.plannedMeetings;
 	}
 
 	@PostConstruct
 	public void init() {
-		plannedMeetings = initPlannedMeetings();
-		conductedMeetings = initConductedMeetings();
+		this.plannedMeetings = this.initPlannedMeetings();
+		this.conductedMeetings = this.initConductedMeetings();
 	}
 
 	private List<Meeting> initConductedMeetings() {
-		return meetingService.findConductedMeetings(sessionUser.get(), Page.of(0,10));
-	}
-	
-	private List<Meeting> initPlannedMeetings() {
-		return meetingService.findPlannedMeetings(sessionUser.get(), Page.of(0,10));
+		return this.meetingService.findConductedMeetings(this.sessionUser.get(), Page.of(0, 10));
 	}
 
-	public void setMeetingService(MeetingService meetingService) {
+	private List<Meeting> initPlannedMeetings() {
+		return this.meetingService.findPlannedMeetings(this.sessionUser.get(), Page.of(0, 10));
+	}
+
+	public void setMeetingService(final MeetingService meetingService) {
 		Objects.requireNonNull(meetingService, "MeetingService can't be null");
 		this.meetingService = meetingService;
 	}

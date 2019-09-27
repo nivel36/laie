@@ -17,8 +17,8 @@ import ged.ejb.client.Contact;
 import ged.ejb.client.ContactDao;
 import ged.ejb.core.model.Page;
 import ged.ejb.core.model.PersistenceFacade;
-import ged.ejb.core.model.SearchResult;
-import ged.ejb.core.model.SortField;
+import ged.ejb.core.model.search.SearchResult;
+import ged.ejb.core.model.search.SortField;
 
 @ExtendWith(MockitoExtension.class)
 public class ContactDaoTest {

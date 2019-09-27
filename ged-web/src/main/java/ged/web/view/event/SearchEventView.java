@@ -25,46 +25,46 @@ public class SearchEventView extends AbstractView {
 
 	private EventLazyDataModel events;
 
-	private JobCandidatureState searchState;
-
-	public JobCandidatureState getSearchState() {
-		return searchState;
-	}
-
-	public void setSearchState(JobCandidatureState searchState) {
-		this.searchState = searchState;
-	}
-
 	@Inject
 	protected transient EventService eventService;
+
+	private JobCandidatureState searchState;
 
 	public void export() throws IOException {
 		logger.debug("Export events action performed");
 	}
 
 	public EventLazyDataModel getEvents() {
-		return events;
+		return this.events;
+	}
+
+	public JobCandidatureState getSearchState() {
+		return this.searchState;
 	}
 
 	@PostConstruct
 	public void init() {
 		logger.trace("Search events init");
-		events = initEvents();
-		search();
+		this.events = this.initEvents();
+		this.search();
+	}
+
+	private EventLazyDataModel initEvents() {
+		return new EventLazyDataModel(this.eventService);
 	}
 
 	public void search() {
 		logger.debug("Search events action performed");
-		events.clearSearchFilters();
-		events.addSearchFilter("status", "status.name");
-	}
-
-	private EventLazyDataModel initEvents() {
-		return new EventLazyDataModel(eventService);
+		this.events.clearSearchFilters();
+		this.events.addSearchFilter("status", "status.name");
 	}
 
 	public void setEventService(final EventService eventService) {
 		this.eventService = eventService;
+	}
+
+	public void setSearchState(final JobCandidatureState searchState) {
+		this.searchState = searchState;
 	}
 
 }

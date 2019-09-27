@@ -9,9 +9,9 @@ import javax.ejb.SessionContext;
 import ged.ejb.core.model.AbstractDao;
 import ged.ejb.core.model.AbstractEntity;
 import ged.ejb.core.model.Page;
-import ged.ejb.core.model.SearchFacets;
-import ged.ejb.core.model.SearchResult;
-import ged.ejb.core.model.SortField;
+import ged.ejb.core.model.search.SearchFacets;
+import ged.ejb.core.model.search.SearchResult;
+import ged.ejb.core.model.search.SortField;
 
 public abstract class AbstractService<T extends AbstractEntity> {
 

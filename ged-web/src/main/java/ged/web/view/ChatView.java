@@ -19,63 +19,63 @@ public class ChatView extends AbstractView {
 	private static final long serialVersionUID = 1L;
 
 	private int activePanel = 0;
-	
+
 	private String message;
-	
+
 	private String searchText;
-	
+
 	private User selectedUser;
-	
+
 	private List<User> users;
 
 	@Inject
 	private transient UserService userService;
 
 	public int getActivePanel() {
-		return activePanel;
+		return this.activePanel;
 	}
 
 	public String getMessage() {
-		return message;
+		return this.message;
 	}
 
 	public String getSearchText() {
-		return searchText;
+		return this.searchText;
 	}
 
 	public User getSelectedUser() {
-		return selectedUser;
+		return this.selectedUser;
 	}
 
 	public List<User> getUsers() {
-		return users;
+		return this.users;
 	}
 
 	@PostConstruct
 	public void init() {
-		users = userService.findAll(Page.of(0, 10));
-		users.remove(this.sessionUser.get());
-		selectedUser = users.get(0);
+		this.users = this.userService.findAll(Page.of(0, 10));
+		this.users.remove(this.sessionUser.get());
+		this.selectedUser = this.users.get(0);
 	}
 
 	public void search() {
-		users = userService.search(searchText, Page.of(0, 10)).getResultData();
+		this.users = this.userService.search(this.searchText, Page.of(0, 10)).getResultData();
 	}
 
-	public void selectUser(User selectedUser) {
+	public void selectUser(final User selectedUser) {
 		this.selectedUser = selectedUser;
 		this.activePanel = 1;
 	}
 
-	public void setMessage(String message) {
+	public void setMessage(final String message) {
 		this.message = message;
 	}
 
-	public void setSearchText(String searchText) {
+	public void setSearchText(final String searchText) {
 		this.searchText = searchText;
 	}
-	
-	public void setUserService(UserService userService) {
+
+	public void setUserService(final UserService userService) {
 		this.userService = userService;
 	}
 }

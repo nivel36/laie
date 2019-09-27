@@ -17,7 +17,7 @@ import org.primefaces.model.menu.MenuModel;
 @ListenerFor(sourceClass = RomaMenu.class, systemEventClass = PostAddToViewEvent.class)
 public class RomaMenu extends AbstractMenu implements Widget, ComponentSystemEventListener {
 	public enum PropertyKeys {
-		widgetVar, model, style, styleClass;
+		model, style, styleClass, widgetVar;
 
 		String toString;
 
@@ -34,8 +34,8 @@ public class RomaMenu extends AbstractMenu implements Widget, ComponentSystemEve
 		}
 	}
 
-	public static final String COMPONENT_TYPE = "org.primefaces.component.RomaMenu";
 	public static final String COMPONENT_FAMILY = "org.primefaces.component";
+	public static final String COMPONENT_TYPE = "org.primefaces.component.RomaMenu";
 	private static final String DEFAULT_RENDERER = "org.primefaces.component.RomaMenuRenderer";
 	private static final String[] LEGACY_RESOURCES = new String[] { "primefaces.css", "jquery/jquery.js",
 			"jquery/jquery-plugins.js", "primefaces.js" };

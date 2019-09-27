@@ -7,6 +7,10 @@ import java.util.Objects;
 
 import javax.inject.Inject;
 
+import ged.ejb.core.model.search.SearchFacets;
+import ged.ejb.core.model.search.SearchResult;
+import ged.ejb.core.model.search.SortField;
+
 public abstract class AbstractDao<T extends AbstractEntity> {
 
 	@Inject
@@ -101,13 +105,16 @@ public abstract class AbstractDao<T extends AbstractEntity> {
 		return this.search(searchText, page, new ArrayList<SortField>(), null);
 	}
 
-	public SearchResult<T> search(final String searchText, final Page page, final List<SortField> sortOrders, final SearchFacets searchFacets) {
-		return this.persistenceFacade.search(this.getType(), page, sortOrders, searchFacets, searchText, this.searchFields());
+	public SearchResult<T> search(final String searchText, final Page page, final List<SortField> sortOrders,
+			final SearchFacets searchFacets) {
+		return this.persistenceFacade.search(this.getType(), page, sortOrders, searchFacets, searchText,
+				this.searchFields());
 	}
 
-	public SearchResult<T> search(final String searchText, final Page page, final SortField sortOrder, final SearchFacets searchFacets) {
+	public SearchResult<T> search(final String searchText, final Page page, final SortField sortOrder,
+			final SearchFacets searchFacets) {
 		final List<SortField> sortOrders = new ArrayList<>();
-		if(sortOrder != null) {
+		if (sortOrder != null) {
 			sortOrders.add(sortOrder);
 		}
 		return this.search(searchText, page, sortOrders, searchFacets);

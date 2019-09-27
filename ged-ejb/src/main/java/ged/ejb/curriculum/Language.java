@@ -28,7 +28,7 @@ public class Language extends AbstractEntity {
 
 	@NotNull
 	@Enumerated(EnumType.STRING)
-	@Column(nullable=false)
+	@Column(nullable = false)
 	private LanguageLevel level;
 
 	@NotNull
@@ -56,13 +56,12 @@ public class Language extends AbstractEntity {
 	}
 
 	public LanguageLevel getLevel() {
-		return level;
+		return this.level;
 	}
 
 	public String getName() {
 		return this.name;
 	}
-
 
 	@Override
 	public int hashCode() {
@@ -73,7 +72,7 @@ public class Language extends AbstractEntity {
 		this.curriculum = curriculum;
 	}
 
-	public void setLevel(LanguageLevel level) {
+	public void setLevel(final LanguageLevel level) {
 		this.level = level;
 	}
 

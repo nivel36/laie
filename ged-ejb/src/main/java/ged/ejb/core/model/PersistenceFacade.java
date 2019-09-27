@@ -32,6 +32,11 @@ import org.hibernate.search.query.facet.FacetingRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import ged.ejb.core.model.search.SearchFacet;
+import ged.ejb.core.model.search.SearchFacets;
+import ged.ejb.core.model.search.SearchResult;
+import ged.ejb.core.model.search.SortField;
+
 @Repository
 public class PersistenceFacade {
 
@@ -155,7 +160,7 @@ public class PersistenceFacade {
 	}
 
 	private boolean hasSortFields(final List<SortField> sortFields) {
-		return sortFields != null && !sortFields.isEmpty();
+		return (sortFields != null) && !sortFields.isEmpty();
 	}
 
 	public <T extends Identifiable> void insert(final T entity) {
@@ -215,18 +220,17 @@ public class PersistenceFacade {
 			for (final SearchFacet searchFacet : searchFacets) {
 				allFacets.put(searchFacet.getName(), fullTextQuery.getFacetManager().getFacets(searchFacet.getName()));
 				if (searchFacet.hasSelectedFacets()) {
-					FacetSelection facetSelection = facetManager.getFacetGroup(searchFacet.getName());
-					List<Facet> facets = facetManager.getFacets(searchFacet.getName());
+					final FacetSelection facetSelection = facetManager.getFacetGroup(searchFacet.getName());
+					final List<Facet> facets = facetManager.getFacets(searchFacet.getName());
 					if (searchFacet.getSelectedFactes().length == 1) {
-						int selectedFacet = searchFacet.getSelectedFactes()[0];
+						final int selectedFacet = searchFacet.getSelectedFactes()[0];
 						facetSelection.selectFacets(facets.get(selectedFacet));
-					}
-					else {
-						Facet[] facetArray = new Facet[searchFacet.getSelectedFactes().length];
-						for (int i= 0; i < searchFacet.getSelectedFactes().length; i++) {
+					} else {
+						final Facet[] facetArray = new Facet[searchFacet.getSelectedFactes().length];
+						for (int i = 0; i < searchFacet.getSelectedFactes().length; i++) {
 							facetArray[i] = facets.get(searchFacet.getSelectedFactes()[0]);
 						}
-						facetSelection.selectFacets( FacetCombine.AND, facetArray );
+						facetSelection.selectFacets(FacetCombine.AND, facetArray);
 					}
 				}
 			}

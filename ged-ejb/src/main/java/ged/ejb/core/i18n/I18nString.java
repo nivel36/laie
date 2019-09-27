@@ -39,7 +39,7 @@ public class I18nString extends AbstractEntity {
 		if (!super.equals(obj)) {
 			return false;
 		}
-		if (getClass() != obj.getClass()) {
+		if (this.getClass() != obj.getClass()) {
 			return false;
 		}
 		final I18nString other = (I18nString) obj;
@@ -47,20 +47,20 @@ public class I18nString extends AbstractEntity {
 	}
 
 	public String getKey() {
-		return key;
+		return this.key;
 	}
 
 	public String getLocale() {
-		return locale;
+		return this.locale;
 	}
 
 	public String getText() {
-		return text;
+		return this.text;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(key, locale);
+		return Objects.hash(this.key, this.locale);
 	}
 
 	public void setKey(final String key) {
@@ -77,6 +77,6 @@ public class I18nString extends AbstractEntity {
 
 	@Override
 	public String toString() {
-		return text;
+		return this.text;
 	}
 }

@@ -47,14 +47,14 @@ public class LoginView extends AbstractView {
 		final AuthenticationStatus status = this.securityContext.authenticate(getRequest(), getResponse(), parameters);
 		if (status == SEND_FAILURE) {
 			logger.warn("Authentication failed for user {}", this.username);
-			addMessage(FacesMessage.SEVERITY_ERROR, "auth.message.error", "auth.message.error");
-			facesContext.validationFailed();
+			this.addMessage(FacesMessage.SEVERITY_ERROR, "auth.message.error", "auth.message.error");
+			this.facesContext.validationFailed();
 		} else if (status == SEND_CONTINUE) {
 			// Prevent JSF from rendering a response so authentication mechanism can
 			// continue.
-			facesContext.responseComplete();
+			this.facesContext.responseComplete();
 		} else if (status == SUCCESS) {
-			gotoIndex();
+			this.gotoIndex();
 		}
 	}
 
@@ -80,16 +80,16 @@ public class LoginView extends AbstractView {
 		final String remoteUser = this.externalContext.getRemoteUser();
 		if (remoteUser != null) {
 			logger.warn("User {} alredy logged", remoteUser);
-			gotoIndex();
+			this.gotoIndex();
 		}
-		setDefaultLocale();
+		this.setDefaultLocale();
 	}
 
 	public void login() {
 		logger.debug("User {} login", this.username);
 		final UsernamePasswordCredential credential = new UsernamePasswordCredential(this.username, this.password);
 		final AuthenticationParameters parameters = withParams().credential(credential).newAuthentication(true);
-		authenticate(parameters);
+		this.authenticate(parameters);
 	}
 
 	private void setDefaultLocale() {

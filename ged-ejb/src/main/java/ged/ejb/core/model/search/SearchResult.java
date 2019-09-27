@@ -1,10 +1,12 @@
-package ged.ejb.core.model;
+package ged.ejb.core.model.search;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.hibernate.search.query.facet.Facet;
+
+import ged.ejb.core.model.Identifiable;
 
 public class SearchResult<T extends Identifiable> {
 	

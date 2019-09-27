@@ -20,6 +20,6 @@ public class EventLazyDataModel extends AbstractLazyDataModel<Event> {
 
 	@Override
 	protected AbstractService<Event> getService() {
-		return eventService;
+		return this.eventService;
 	}
 }

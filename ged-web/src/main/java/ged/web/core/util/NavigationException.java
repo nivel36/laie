@@ -15,7 +15,8 @@ public class NavigationException extends RuntimeException {
 		super(message, cause);
 	}
 
-	public NavigationException(final String message, final Throwable cause, final boolean enableSuppression, final boolean writableStackTrace) {
+	public NavigationException(final String message, final Throwable cause, final boolean enableSuppression,
+			final boolean writableStackTrace) {
 		super(message, cause, enableSuppression, writableStackTrace);
 	}
 

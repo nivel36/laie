@@ -69,11 +69,11 @@ public class GlobalSearchView extends AbstractView {
 
 	@PostConstruct
 	public void init() {
-		search();
+		this.search();
 	}
 
 	public void search() {
-		if (this.searchText == null || this.searchText.length() < 3) {
+		if ((this.searchText == null) || (this.searchText.length() < 3)) {
 			Message.addWarning("error.search.camp_to_short", "error.search.camp_to_short");
 		} else {
 			this.users = this.userService.search(this.searchText, Page.ALL).getResultData();

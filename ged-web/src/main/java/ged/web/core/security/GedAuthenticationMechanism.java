@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 public class GedAuthenticationMechanism implements HttpAuthenticationMechanism {
 
 	static final String LOGIN_URL = "/login.xhtml";
-	
+
 	@Inject
 	private IdentityStore identityStore;
 
@@ -32,9 +32,8 @@ public class GedAuthenticationMechanism implements HttpAuthenticationMechanism {
 		final Credential credential = httpMessageContext.getAuthParameters().getCredential();
 
 		if (credential != null) {
-			return httpMessageContext.notifyContainerAboutLogin(identityStore.validate(credential));
-		}
-		else {
+			return httpMessageContext.notifyContainerAboutLogin(this.identityStore.validate(credential));
+		} else {
 			return httpMessageContext.doNothing();
 		}
 	}

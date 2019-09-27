@@ -16,10 +16,10 @@ public class SecurityInterceptor {
 
 	@AroundInvoke
 	public Object checkSecurity(final InvocationContext joinPoint) throws Exception {
-		final Object[] parameters = getParameters(joinPoint);
-		final Ownerable[] ownerableEntities = getOwnerableEntitiesFromParameters(parameters);
+		final Object[] parameters = this.getParameters(joinPoint);
+		final Ownerable[] ownerableEntities = this.getOwnerableEntitiesFromParameters(parameters);
 		for (final Ownerable entity : ownerableEntities) {
-			if (!securityContext.canEdit(entity)) {
+			if (!this.securityContext.canEdit(entity)) {
 				throw new SecurityException();
 			}
 		}
@@ -41,7 +41,7 @@ public class SecurityInterceptor {
 		if (numberOfOwnerableFound == 0) {
 			throw new IllegalArgumentException("No ownerable entities");
 		}
-		return trimArray(parametersLength, ownerableEntities);
+		return this.trimArray(parametersLength, ownerableEntities);
 	}
 
 	private Object[] getParameters(final InvocationContext joinPoint) {

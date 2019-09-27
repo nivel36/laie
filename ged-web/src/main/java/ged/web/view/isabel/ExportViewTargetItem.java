@@ -7,37 +7,37 @@ import ged.web.core.util.Translator;
 
 public final class ExportViewTargetItem implements ExportViewItemI {
 
-	private final Translator translator;
+	private final ExportDefinition item;
 
 	private final String label;
 
-	private final ExportDefinition item;
+	private final Translator translator;
 
 	public ExportViewTargetItem(final ExportDefinition item, final Translator translator) {
 		super();
 		Objects.requireNonNull(item);
 		Objects.requireNonNull(translator);
 		this.translator = translator;
-		this.label = getTranslator().message(item.getExportField().getLiteralId());
+		this.label = this.getTranslator().message(item.getExportField().getLiteralId());
 		this.item = item;
 	}
 
 	@Override
 	public ExportDefinition getItem() {
-		return item;
+		return this.item;
 	}
 
 	@Override
 	public String getLabel() {
-		return label;
+		return this.label;
 	}
 
 	private Translator getTranslator() {
-		return translator;
+		return this.translator;
 	}
 
 	@Override
 	public String toString() {
-		return "ExportViewTargetItem [label=" + label + "]";
+		return "ExportViewTargetItem [label=" + this.label + "]";
 	}
 }

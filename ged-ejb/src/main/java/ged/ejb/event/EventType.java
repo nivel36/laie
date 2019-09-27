@@ -2,12 +2,12 @@ package ged.ejb.event;
 
 public enum EventType {
 
-	OTHER("event_type.other", "fa-pencil"), //
 	EMAIL("event_type.email", "fa-envelope"), //
-	PHONE_CALLL("event_type.phone_call", "fa-phone"), //
-	VIDEO_CALLL("event_type.video_call", "fa-computer"), //
+	MEETING("event_type.meeting", "fa-pencil"), //
 	MESSAGE("event_type.message", "fa-envelope"), //
-	MEETING("event_type.meeting", "fa-pencil");
+	OTHER("event_type.other", "fa-pencil"), //
+	PHONE_CALLL("event_type.phone_call", "fa-phone"), //
+	VIDEO_CALLL("event_type.video_call", "fa-computer");
 
 	private String icon;
 

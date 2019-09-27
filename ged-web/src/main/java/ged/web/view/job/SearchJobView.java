@@ -44,12 +44,12 @@ public class SearchJobView extends AbstractView {
 	@PostConstruct
 	public void init() {
 		logger.trace("JobOffer search init");
-		jobOffers = new JobOfferLazyDataModel(jobOfferService);
+		this.jobOffers = new JobOfferLazyDataModel(this.jobOfferService);
 	}
 
 	public void search() {
 		logger.debug("Search job offer action performed");
-		this.jobOffers.setSearchText(searchText);
+		this.jobOffers.setSearchText(this.searchText);
 	}
 
 	public void setJobOfferService(final JobOfferService jobOfferService) {

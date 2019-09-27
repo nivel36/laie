@@ -17,16 +17,16 @@ import ged.web.core.view.AbstractView;
 
 @Named
 @ViewScoped
-public class JobOfferStatesMaintenanceView  extends AbstractView {
+public class JobOfferStatesMaintenanceView extends AbstractView {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	private static final long serialVersionUID = 1L;
 
-	private List<JobOfferState> states;
-
 	@Inject
 	private transient JobOfferService jobOfferService;
+
+	private List<JobOfferState> states;
 
 	public List<JobOfferState> getStates() {
 		return this.states;

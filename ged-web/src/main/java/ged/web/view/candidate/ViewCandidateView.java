@@ -41,7 +41,7 @@ public class ViewCandidateView extends AbstractView {
 	private Candidate candidate;
 
 	private Curriculum curriculum;
-	
+
 	@Inject
 	private transient CurriculumService curriculumService;
 
@@ -51,12 +51,12 @@ public class ViewCandidateView extends AbstractView {
 
 	@Inject
 	private transient JobCandidatureService jobCandidatureService;
-	
+
 	private List<Meeting> meetings;
 
 	@Inject
 	private transient MeetingService meetingService;
-	
+
 	public String editCandidate() {
 		logger.debug("Edit candidate action performed");
 		this.putValueToFlash("candidate", this.candidate);
@@ -66,7 +66,7 @@ public class ViewCandidateView extends AbstractView {
 	public void export() throws IOException {
 		logger.debug("Export candidate action performed");
 	}
-	
+
 	public Candidate getCandidate() {
 		return this.candidate;
 	}
@@ -74,13 +74,13 @@ public class ViewCandidateView extends AbstractView {
 	public Curriculum getCurriculum() {
 		return this.curriculum;
 	}
-	
+
 	public List<JobCandidature> getJobCandidatures() {
 		return this.jobCandidatures;
 	}
-	
+
 	public List<Meeting> getMeetings() {
-		return meetings;
+		return this.meetings;
 	}
 
 	@PostConstruct
@@ -92,14 +92,14 @@ public class ViewCandidateView extends AbstractView {
 		if (this.candidate.getAddress() == null) {
 			this.candidate.setAddress(new Address());
 		}
-		this.jobCandidatures = this.jobCandidatureService.findJobCandidatures(candidate, Page.ALL);
+		this.jobCandidatures = this.jobCandidatureService.findJobCandidatures(this.candidate, Page.ALL);
 		this.curriculum = this.curriculumService.findByCandidate(this.candidate);
 		this.editable = this.sessionUser.hasPermissionToEdit(this.candidate);
-		this.meetings = initMeetings();
+		this.meetings = this.initMeetings();
 	}
 
 	private List<Meeting> initMeetings() {
-		return meetingService.findMeetings(candidate, Page.of(0, 10));
+		return this.meetingService.findMeetings(this.candidate, Page.of(0, 10));
 	}
 
 	public boolean isEditable() {
@@ -118,8 +118,9 @@ public class ViewCandidateView extends AbstractView {
 			return;
 		}
 		for (final JobOffer jobOffer : selectedJobOffers) {
-			final JobCandidature jobCandidature = this.jobCandidatureService.addJobCandidature(jobOffer, this.candidate);
-			jobCandidatures.add(jobCandidature);
+			final JobCandidature jobCandidature = this.jobCandidatureService.addJobCandidature(jobOffer,
+					this.candidate);
+			this.jobCandidatures.add(jobCandidature);
 		}
 	}
 
@@ -136,11 +137,11 @@ public class ViewCandidateView extends AbstractView {
 		this.curriculumService = curriculumService;
 	}
 
-	public void setJobCandidatureService(JobCandidatureService jobCandidatureService) {
+	public void setJobCandidatureService(final JobCandidatureService jobCandidatureService) {
 		this.jobCandidatureService = jobCandidatureService;
 	}
 
-	public void setMeetingService(MeetingService meetingService) {
+	public void setMeetingService(final MeetingService meetingService) {
 		this.meetingService = meetingService;
 	}
 }

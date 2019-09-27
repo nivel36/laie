@@ -7,11 +7,12 @@ import ged.ejb.person.Person;
 public class SimplePerson extends Person {
 
 	private static final long serialVersionUID = 1L;
-	
-	SimplePerson() {}
-	
-	SimplePerson(String email) {
+
+	SimplePerson() {
+	}
+
+	SimplePerson(final String email) {
 		Objects.requireNonNull(email);
-		this.email= email;
+		this.email = email;
 	}
 }

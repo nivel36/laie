@@ -50,23 +50,23 @@ public class CurriculumView extends AbstractView {
 
 	public String editEducation(final Education education) {
 		this.putValueToFlash("education", education);
-		this.putValueToFlash(CURRICULUM_KEY, curriculum);
+		this.putValueToFlash(CURRICULUM_KEY, this.curriculum);
 		return PageEnum.CURRICULUM_EDUCATION.getUrl();
 	}
 
 	public String editJobExperience(final JobExperience jobExperience) {
 		this.putValueToFlash("jobExperience", jobExperience);
-		this.putValueToFlash(CURRICULUM_KEY, curriculum);
+		this.putValueToFlash(CURRICULUM_KEY, this.curriculum);
 		return PageEnum.CURRICULUM_JOB_EXPERIENCE.getUrl();
 	}
 
 	public String editLanguages() {
-		this.putValueToFlash(CURRICULUM_KEY, curriculum);
+		this.putValueToFlash(CURRICULUM_KEY, this.curriculum);
 		return PageEnum.CURRICULUM_LANGUAGE.getUrl();
 	}
-	
+
 	public String editSkills() {
-		this.putValueToFlash(CURRICULUM_KEY, curriculum);
+		this.putValueToFlash(CURRICULUM_KEY, this.curriculum);
 		return PageEnum.CURRICULUM_SKILLS.getUrl();
 	}
 
@@ -102,7 +102,7 @@ public class CurriculumView extends AbstractView {
 		this.curriculum = this.curriculumService.findByCandidate(this.candidate);
 		if (this.curriculum == null) {
 			this.curriculum = new Curriculum();
-			this.curriculum.setCandidate(candidate);
+			this.curriculum.setCandidate(this.candidate);
 		}
 		if (this.curriculum.getSkills() == null) {
 			this.curriculum.setSkills(new HashSet<Skill>());

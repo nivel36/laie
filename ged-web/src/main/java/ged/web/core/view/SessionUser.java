@@ -42,7 +42,7 @@ public class SessionUser implements Serializable {
 
 	public String exit() {
 		logger.debug("User {} logout", this.user);
-		invalidateSession();
+		this.invalidateSession();
 		return "/login.xhtml?faces-redirect=true";
 	}
 
@@ -64,19 +64,19 @@ public class SessionUser implements Serializable {
 
 	public boolean hasPermissionToEdit(final Ownerable entity) {
 		Objects.requireNonNull(entity);
-		if (isAdmin()) {
+		if (this.isAdmin()) {
 			return true;
 		}
 		final User owner = entity.getOwner();
 		Objects.requireNonNull(owner);
-		return isOwnerOrHisManager(owner);
+		return this.isOwnerOrHisManager(owner);
 	}
 
 	@PostConstruct
 	public void init() {
 		final String email = this.externalContext.getRemoteUser();
 		logger.info("User {} has init his/her session", email);
-		loadUserData(email);
+		this.loadUserData(email);
 	}
 
 	private void invalidateSession() {
@@ -89,7 +89,7 @@ public class SessionUser implements Serializable {
 	}
 
 	public boolean isAdmin() {
-		if (!isActive()) {
+		if (!this.isActive()) {
 			return false;
 		}
 		return this.user.isAdmin();
@@ -97,14 +97,14 @@ public class SessionUser implements Serializable {
 
 	public boolean isManagerOf(final User subordinate) {
 		Objects.requireNonNull(subordinate);
-		return getTeam().contains(subordinate);
+		return this.getTeam().contains(subordinate);
 	}
 
 	private boolean isOwnerOrHisManager(final User owner) {
 		if (this.user.equals(owner)) {
 			return true;
 		}
-		return isManagerOf(owner);
+		return this.isManagerOf(owner);
 	}
 
 	private void loadUserData(final String email) {
@@ -115,7 +115,7 @@ public class SessionUser implements Serializable {
 
 	public void refresh() {
 		logger.trace("Refreshing session for user {}", this.user.getEmail());
-		loadUserData(this.user.getEmail());
+		this.loadUserData(this.user.getEmail());
 	}
 
 	public void setExternalContext(final ExternalContext externalContext) {
@@ -128,7 +128,7 @@ public class SessionUser implements Serializable {
 
 	@Override
 	public String toString() {
-		if (!isActive()) {
+		if (!this.isActive()) {
 			return "";
 		}
 		return this.user.getFullName();

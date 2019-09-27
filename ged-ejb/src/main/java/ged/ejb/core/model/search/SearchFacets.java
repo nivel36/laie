@@ -1,4 +1,4 @@
-package ged.ejb.core.model;
+package ged.ejb.core.model.search;
 
 import java.util.ArrayDeque;
 import java.util.Iterator;

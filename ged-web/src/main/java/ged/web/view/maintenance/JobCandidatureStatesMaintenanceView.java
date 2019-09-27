@@ -24,10 +24,10 @@ public class JobCandidatureStatesMaintenanceView extends AbstractView {
 
 	private static final long serialVersionUID = 1L;
 
-	private List<JobCandidatureState> states;
-
 	@Inject
 	private transient JobCandidatureStateService jobCandidatureStateService;
+
+	private List<JobCandidatureState> states;
 
 	public List<JobCandidatureState> getStates() {
 		return this.states;
