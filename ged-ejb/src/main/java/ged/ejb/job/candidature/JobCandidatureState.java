@@ -5,9 +5,11 @@ import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.Facet;
+import org.hibernate.search.annotations.FacetEncodingType;
 import org.hibernate.search.annotations.Field;
 
-import ged.ejb.core.i18n.I18n;
 import ged.ejb.core.model.AbstractEntity;
 
 @Entity
@@ -16,7 +18,8 @@ public class JobCandidatureState extends AbstractEntity {
 
 	private static final long serialVersionUID = 1L;
 
-	@Field
+	@Field(analyze = Analyze.NO)
+	@Facet(encoding = FacetEncodingType.STRING)
 	private String name;
 
 	private String color;

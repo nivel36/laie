@@ -230,10 +230,10 @@ public class RomaMenuRenderer extends BaseMenuRenderer {
 					String menuClientId = menu.getClientId(context);
 					Map<String, List<String>> params = menuitem.getParams();
 					if (params == null) {
-						params = new LinkedHashMap();
+						params = new LinkedHashMap<>();
 					}
 
-					List<String> idParams = new ArrayList();
+					List<String> idParams = new ArrayList<>();
 					idParams.add(menuitem.getId());
 					((Map) params).put(menuClientId + "_menuid", idParams);
 					command = menuitem.isAjax()

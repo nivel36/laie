@@ -3,6 +3,7 @@ package ged.ejb.core.model;
 import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -23,6 +24,11 @@ import org.hibernate.search.jpa.Search;
 import org.hibernate.search.query.dsl.BooleanJunction;
 import org.hibernate.search.query.dsl.QueryBuilder;
 import org.hibernate.search.query.dsl.sort.SortFieldContext;
+import org.hibernate.search.query.engine.spi.FacetManager;
+import org.hibernate.search.query.facet.Facet;
+import org.hibernate.search.query.facet.FacetCombine;
+import org.hibernate.search.query.facet.FacetSelection;
+import org.hibernate.search.query.facet.FacetingRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,7 +59,7 @@ public class PersistenceFacade {
 	}
 
 	@SuppressWarnings("rawtypes")
-	private BooleanJunction<BooleanJunction> createPredicate(final QueryBuilder qb, final SearchFilters searchFilters, final String searchText,
+	private BooleanJunction<BooleanJunction> createPredicate(final QueryBuilder qb, final String searchText,
 			final String... fields) {
 		final BooleanJunction<BooleanJunction> bj = qb.bool();
 
@@ -66,11 +72,6 @@ public class PersistenceFacade {
 				final BooleanJunction<BooleanJunction> fieldBj = qb.bool();
 				fieldBj.should(qb.keyword().onFields(fields).matching(searchValue).createQuery());
 				bj.must(fieldBj.createQuery());
-			}
-		}
-		if (searchFilters != null) {
-			for (final SearchFilter searchFilter : searchFilters) {
-				bj.must(qb.keyword().onField(searchFilter.getName()).matching(searchFilter.getValue()).createQuery());
 			}
 		}
 		return bj;
@@ -184,13 +185,13 @@ public class PersistenceFacade {
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public <T extends Identifiable> SearchResult<T> search(final Class<T> type, final Page page,
-			final List<SortField> sortFields, final SearchFilters searchFilters, final String searchText,
+			final List<SortField> sortFields, final SearchFacets searchFacets, final String searchText,
 			final String... fields) {
 
 		final FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(this.getEm());
 		final QueryBuilder qb = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(type).get();
 
-		final BooleanJunction<BooleanJunction> bj = this.createPredicate(qb, searchFilters, searchText, fields);
+		final BooleanJunction<BooleanJunction> bj = this.createPredicate(qb, searchText, fields);
 
 		final FullTextQuery fullTextQuery = fullTextEntityManager.createFullTextQuery(this.createLuceneQuery(qb, bj),
 				type);
@@ -199,11 +200,41 @@ public class PersistenceFacade {
 
 		this.sortQuery(sortFields, qb, fullTextQuery);
 
+		final FacetManager facetManager = fullTextQuery.getFacetManager();
+		if (searchFacets != null) {
+			for (final SearchFacet searchFacet : searchFacets) {
+				final FacetingRequest facetingRequest = qb.facet().name(searchFacet.getName())
+						.onField(searchFacet.getField()).discrete().createFacetingRequest();
+				facetManager.enableFaceting(facetingRequest);
+			}
+		}
+
 		final List<T> results = fullTextQuery.getResultList();
+		final Map<String, List<Facet>> allFacets = new HashMap<>();
+		if (searchFacets != null) {
+			for (final SearchFacet searchFacet : searchFacets) {
+				allFacets.put(searchFacet.getName(), fullTextQuery.getFacetManager().getFacets(searchFacet.getName()));
+				if (searchFacet.hasSelectedFacets()) {
+					FacetSelection facetSelection = facetManager.getFacetGroup(searchFacet.getName());
+					List<Facet> facets = facetManager.getFacets(searchFacet.getName());
+					if (searchFacet.getSelectedFactes().length == 1) {
+						int selectedFacet = searchFacet.getSelectedFactes()[0];
+						facetSelection.selectFacets(facets.get(selectedFacet));
+					}
+					else {
+						Facet[] facetArray = new Facet[searchFacet.getSelectedFactes().length];
+						for (int i= 0; i < searchFacet.getSelectedFactes().length; i++) {
+							facetArray[i] = facets.get(searchFacet.getSelectedFactes()[0]);
+						}
+						facetSelection.selectFacets( FacetCombine.AND, facetArray );
+					}
+				}
+			}
+		}
 		if (results instanceof ArrayList) {
-			return new SearchResult<>(results, fullTextQuery.getResultSize());
+			return new SearchResult<>(results, fullTextQuery.getResultSize(), allFacets);
 		} else {
-			return new SearchResult<>(new ArrayList<>(results), fullTextQuery.getResultSize());
+			return new SearchResult<>(new ArrayList<>(results), fullTextQuery.getResultSize(), allFacets);
 		}
 	}
 

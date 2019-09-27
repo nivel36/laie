@@ -10,8 +10,8 @@ import org.primefaces.model.SortOrder;
 import ged.ejb.core.AbstractService;
 import ged.ejb.core.model.AbstractEntity;
 import ged.ejb.core.model.Page;
-import ged.ejb.core.model.SearchFilter;
-import ged.ejb.core.model.SearchFilters;
+import ged.ejb.core.model.SearchFacet;
+import ged.ejb.core.model.SearchFacets;
 import ged.ejb.core.model.SearchResult;
 import ged.ejb.core.model.SortField;
 
@@ -19,14 +19,20 @@ public abstract class AbstractLazyDataModel<T extends AbstractEntity> extends La
 
 	private static final long serialVersionUID = 1L;
 
+	protected SearchFacets searchFilter = new SearchFacets();
+	
 	protected String searchText;
 	
-	protected SearchFilters searchFilter = new SearchFilters();
-	
-	public void addSearchFilter(String field, String value) {
-		searchFilter.addFilter(new SearchFilter(field, value));
+	public void addSearchFilter(String field, String value, int... selectedFacets) {
+		SearchFacet searchFacet = new SearchFacet(field, value);
+		searchFacet.selectFacets(selectedFacets);
+		searchFilter.addFacet(searchFacet);
 	}
 
+	public void clearSearchFilters() {
+		searchFilter.clear();
+	}
+	
 	@Override
 	public T getRowData(final String rowKey) {
 		Objects.requireNonNull(rowKey, "RowKey can't be null");

@@ -24,8 +24,7 @@ public class SearchEventView extends AbstractView {
 	private static final long serialVersionUID = 1L;
 
 	private EventLazyDataModel events;
-	
-	
+
 	private JobCandidatureState searchState;
 
 	public JobCandidatureState getSearchState() {
@@ -51,13 +50,13 @@ public class SearchEventView extends AbstractView {
 	public void init() {
 		logger.trace("Search events init");
 		events = initEvents();
+		search();
 	}
 
 	public void search() {
 		logger.debug("Search events action performed");
-		if(searchState != null) {
-			events.addSearchFilter("status.name", searchState.getName());
-		}
+		events.clearSearchFilters();
+		events.addSearchFilter("status", "status.name");
 	}
 
 	private EventLazyDataModel initEvents() {
