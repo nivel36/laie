@@ -75,8 +75,10 @@
 					</p:column>
 
 					<p:column headerText="#{i18n['event.status']}" sortBy="#{event.status}">
-						<div class="tag #{event.status.color}">#{g:translate(event.status.name)}</div>
-
+						<p:link outcome="#{Page.EVENT_ADD.getUrl()}">
+							<f:param name="jobCandidatureId" value="#{event.jobCandidature.id}" />
+							<div class="tag #{event.status.color}">#{g:translate(event.status.name)}</div>
+						</p:link>
 					</p:column>
 				</p:dataTable>
 			</div>
