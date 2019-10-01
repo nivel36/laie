@@ -227,7 +227,7 @@ body .jobCandidatureStates.ui-selectonemenu-panel .ui-selectonemenu-items .ui-se
 }
 
 .person.selectable:hover {
-	background: #f2f3f3;
+	background: #eaeaea;
 	border-left: 3px solid #1976d2;
 }
 

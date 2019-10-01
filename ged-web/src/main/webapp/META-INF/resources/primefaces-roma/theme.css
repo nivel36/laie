@@ -314,8 +314,8 @@ body .ui-autocomplete-panel {
         color: #252529;
         border: 1px solid #d8d8dc; }
         body .ui-autocomplete-panel .ui-autocomplete-items .ui-autocomplete-item.ui-autocomplete-row.ui-state-highlight {
-        background-color: #0f97c7;
-        color: #ffffff;
+        background-color: #eaeaea;
+        color: #252529;
         border: 1px solid #d8d8dc; }
         body .ui-autocomplete-panel .ui-autocomplete-items .ui-autocomplete-item.ui-autocomplete-row > td {
           padding: 0.75em 1.214em; }
