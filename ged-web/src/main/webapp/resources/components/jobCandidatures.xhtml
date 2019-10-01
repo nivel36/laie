@@ -43,7 +43,10 @@
 							<p:rating value="#{jobCandidature.candidate.rating}" cancel="false" readonly="true" />
 						</p:column>
 						<p:column headerText="#{i18n['job_candidature.job_candidature_state']}">
-							<div class="tag #{jobCandidature.jobCandidatureState.color}">#{g:translate(jobCandidature.jobCandidatureState.name)}</div>
+							<p:link outcome="#{Page.EVENT_ADD.getUrl()}">
+								<f:param name="jobCandidatureId" value="#{jobCandidature.id}" />
+								<div class="tag #{jobCandidature.jobCandidatureState.color}">#{g:translate(jobCandidature.jobCandidatureState.name)}</div>
+							</p:link>					
 						</p:column>
 					</p:dataTable>
 				</div>

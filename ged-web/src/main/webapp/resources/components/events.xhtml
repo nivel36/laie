@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:component xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:composite="http://xmlns.jcp.org/jsf/composite"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://ged.org/ui" xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui"
-	xmlns:p="http://primefaces.org/ui" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:component xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	xmlns:composite="http://xmlns.jcp.org/jsf/composite" xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://ged.org/ui" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets">
 
 	<composite:interface>
 		<composite:attribute name="value" required="true" />
@@ -13,9 +12,8 @@
 	<composite:implementation>
 		<div id="#{cc.clientId}" class="card card-w-title events #{cc.attrs.styleClass}">
 			<h3>#{cc.attrs.title}</h3>
-			<p:dataTable var="event" id="events" value="#{cc.attrs.value}" emptyMessage="#{i18n['event.no_events_found']}" reflow="true"
-				paginator="true" paginatorPosition="bottom" paginatorTemplate="{PageLinks}" rows="#{sessionUser.rowsPerPage}" sortBy="#{event.date}"
-				sortOrder="ascending" lazy="true">
+			<p:dataTable var="event" id="events" value="#{cc.attrs.value}" emptyMessage="#{i18n['event.no_events_found']}" reflow="true" paginator="true" paginatorPosition="bottom"
+				paginatorTemplate="{PageLinks}" rows="#{sessionUser.rowsPerPage}" sortBy="#{event.date}" sortOrder="ascending" lazy="true">
 
 				<p:column headerText="#{i18n['event.date']}" sortBy="#{event.date}">
 					<h:outputText value="#{event.date}">
@@ -47,7 +45,10 @@
 				</p:column>
 
 				<p:column headerText="#{i18n['event.status']}">
-					<div class="tag #{event.status.color}">#{g:translate(event.status.name)}</div>
+					<p:link outcome="#{Page.EVENT_ADD.getUrl()}">
+						<f:param name="jobCandidatureId" value="#{event.jobCandidature.id}" />
+						<div class="tag #{event.status.color}">#{g:translate(event.status.name)}</div>
+					</p:link>
 				</p:column>
 
 				<p:column headerText="#{i18n['event.user']}" sortBy="#{event.user.name}">
