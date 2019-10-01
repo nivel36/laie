@@ -21,9 +21,6 @@ public class Page {
 		if (limit < 0) {
 			throw new IllegalArgumentException("limit: " + limit);
 		}
-		if (offset >= limit) {
-			throw new IllegalArgumentException(String.format("offset %d greater than limit %d", offset, limit));
-		}
 		this.offset = offset;
 		this.limit = limit;
 	}
