@@ -16,7 +16,7 @@
 			<p:button value="#{i18n['user.new_user']}" outcome="#{Page.USER_ADD.getUrl()}" styleClass="success-btn" rendered="#{selectedMenu eq 'users'}"/>
 			<p:button value="#{i18n['meeting.add_meeting']}" outcome="#{Page.MEETING_ADD.getUrl()}" styleClass="success-btn" rendered="#{selectedMenu eq 'meetings'}"/>
 			<p:button value="#{i18n['event.new_event']}" outcome="#{Page.EVENT_ADD.getUrl()}" styleClass="success-btn" rendered="#{selectedMenu eq 'events'}"/>		
-			<p:menuButton icon="fa fa-plus" styleClass="success-btn" >
+			<p:menuButton icon="fa fa-plus" styleClass="success-btn" menuStyleClass="new_menu" >
 				<p:menuitem value="#{i18n['client.new_client']}" outcome="#{Page.CLIENT_ADD.getUrl()}" rendered="#{selectedMenu ne 'clients'}"/>
 				<p:menuitem value="#{i18n['job.new_job_offer']}" outcome="#{Page.JOB_ADD.getUrl()}" rendered="#{selectedMenu ne 'offers'}" />
 				<p:menuitem value="#{i18n['candidate.new_candidate']}" outcome="#{Page.CANDIDATE_ADD.getUrl()}" endered="#{selectedMenu ne 'candidates'}" />

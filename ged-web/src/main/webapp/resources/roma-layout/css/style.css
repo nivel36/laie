@@ -568,6 +568,20 @@ body .jobCandidatureStates.ui-selectonemenu-panel .ui-selectonemenu-items .ui-se
 	padding: .5em 1em;
 }
 
+body .ui-menu.new_menu {
+	background: #0fc763;
+	min-width: 200px;
+}
+
+body .ui-menu.new_menu .ui-menu-list .ui-menuitem .ui-menuitem-link .ui-menuitem-text {
+	color: white;
+} 
+ 
+body .ui-menu.new_menu .ui-menu-list .ui-menuitem.ui-state-hover {
+      background-color: #1DDB76;
+      border-color: #31e885;
+}
+
 body .ui-menubutton.success-btn .ui-button {
 	background-color: #0fc763;
 	color: #ffffff;
