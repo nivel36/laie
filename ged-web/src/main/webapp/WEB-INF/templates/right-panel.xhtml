@@ -19,7 +19,7 @@
 					</h:panelGroup>
 				</p:tab>
 				<p:tab title="#{chatView.selectedUser}">
-					<div class="messages">
+					<h:panelGroup id="messages" styleClass="messages" layout="block"> 
 						<div class="messages-title">
 							<span>November 13, 2018</span>
 						</div>
@@ -43,10 +43,12 @@
 								class="message ui-g-10">We're investigating delays inupdates to PrimeFaces.org.</span> <span class="time ui-g-2">08:50</span> <span class="message ui-g-10">We are
 								investigating reports of elevated error rates.</span>
 						</div>
-					</div>
+					</h:panelGroup>
 					<div class="messages-input ui-g">
 						<div class="ui-fluid ui-g-12">
-							<p:inputText placeholder="#{i18n['chat.write_a_message']}" value="#{chatView.message}" />
+							<p:remoteCommand name="chatMessageRc" process="@this chatMessage" update="messages" />
+							<p:inputText id="chatMessage" placeholder="#{i18n['chat.write_a_message']}" value="#{chatView.message}" 
+								 onkeyup="if (event.keyCode == 13) { chatMessageRc();  return false; }" />
 						</div>
 					</div>
 				</p:tab>
