@@ -26,7 +26,7 @@
 						<p:graphicImage value="/resources/img/bg-header.png" />
 					</div>
 					<div class="user-card-content">
-						<cc:avatar value="#{viewUserView.user.imageFileName}" styleClass="user-image" />
+						<cc:avatar value="#{viewUserView.user.imageFileName}" styleClass="user-image with-border" />
 
 						<h:form>
 							<p:menuButton icon="fa fa-cog">
@@ -78,20 +78,20 @@
 			
 			<div class="p-col-12 p-xl-4">
 				<h:form id="userTeamForm">
-					<cc:users users="#{viewUserView.team}" title="#{i18n['user.team']}" />
+					<cc:users value="#{viewUserView.team}" title="#{i18n['user.team']}" rows="5"/>
 				</h:form>
 			</div>
 
 			<div class="p-col-12 p-lg-8">
 				<h:form id="jobOffersForm">
-					<cc:jobOffers jobOffers="#{viewUserView.jobOffers}" />
+					<cc:jobOffers value="#{viewUserView.jobOffers}" rows="5" />
 				</h:form>
 			</div>
 			
 
 			<div class="p-col-12 p-xl-4">
 				<h:form id="jobMeetingsForm">
-					<cc:meetings value="#{viewUserView.meetings}" />
+					<cc:meetings value="#{viewUserView.meetings}" rows="5" />
 				</h:form>
 			</div>
 		</div>

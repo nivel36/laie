@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <ui:component xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" 
 	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
@@ -11,16 +12,18 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 	<composite:interface>
-		<composite:attribute name="users" required="true" />
+		<composite:attribute name="value" required="true" />
 		<composite:attribute name="styleClass" required="false" default="" />
 		<composite:attribute name="title" required="false" default="#{i18n['user.users']}" />
+		<composite:attribute name="rows" required="false" default="#{sessionUser.rowsPerPage}" />
 	</composite:interface>
 
 	<composite:implementation>
 		<div id="#{cc.clientId}" class="card card-w-title users  #{cc.attrs.styleClass}">
 			<h3>#{cc.attrs.title}</h3>
-			<p:dataList var="user" value="#{cc.attrs.users}" emptyMessage="#{i18n['user.no_team']}" paginator="true" paginatorPosition="bottom" styleClass="ui-datalist-borderless"  itemStyleClass="ui-datalist-nobullets">
-				<p:link outcome="#{Page.USER.getUrl()}" >
+			<p:dataList var="user" value="#{cc.attrs.value}" emptyMessage="#{i18n['user.no_team']}" paginator="true" paginatorPosition="bottom" styleClass="ui-datalist-borderless"
+				itemStyleClass="ui-datalist-nobullets" rows="#{cc.attrs.rows}">
+				<p:link outcome="#{Page.USER.getUrl()}">
 					<f:param name="id" value="#{user.id}" />
 					<cc:person value="#{user}" showDescription="false" styleClass="selectable" />
 				</p:link>

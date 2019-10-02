@@ -86,7 +86,7 @@
 			</div>
 
 			<div class="p-col-12 p-xl-8">
-				<cc:jobOffers id="jobOffers" jobOffers="#{viewClientView.jobOffers}">
+				<cc:jobOffers id="jobOffers" value="#{viewClientView.jobOffers}" rows="5">
 					<h:form id="jobOffersForm">
 						<p:commandButton value="#{i18n['job.new_job_offer']}" actionListener="#{viewClientView.newJobOffer}" action="#{Page.JOB_ADD.getUrl()}" process="@this"
 							styleClass="success-btn" />

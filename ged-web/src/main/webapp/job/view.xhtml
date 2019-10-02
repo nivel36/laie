@@ -131,7 +131,7 @@
 
 			<div class="p-col-12 p-xl-7">
 				<h:form>
-					<cc:jobCandidatures jobCandidatures="#{viewJobView.jobCandidatures}" showJobOffer="false">
+					<cc:jobCandidatures value="#{viewJobView.jobCandidatures}" showJobOffer="false" rows="5">
 						<p:commandButton value="#{i18n['action.add']}" action="#{viewJobView.selectCandidates}" process="@this">
 							<p:ajax event="dialogReturn" listener="#{viewJobView.onCloseSelectCandidateDialog}" update="@form" />
 						</p:commandButton>

@@ -60,7 +60,7 @@
 			</div>
 			<div class="col-12 sm-5">
 				<h:form id="contactsForm">
-					<cc:contacts contacts="#{viewClientView.contacts}">
+					<cc:contacts value="#{viewClientView.contacts}" rows="5">
 						<p:commandButton value="#{i18n['contact.new_contact']}" actionListener="#{viewClientView.newContact}"
 							action="#{Page.CONTACT_ADD.getUrl()}" process="@this" />
 					</cc:contacts>
@@ -68,7 +68,7 @@
 			</div>
 			<div class="col-12 sm-8">
 				<h:form id="jobOffersForm">
-					<cc:jobOffers id="jobOffers" jobOffers="#{viewClientView.jobOffers}">
+					<cc:jobOffers id="jobOffers" value="#{viewClientView.jobOffers}" rows="5">
 						<p:commandButton value="#{i18n['job.new_job_offer']}" actionListener="#{viewClientView.newJobOffer}"
 							action="#{Page.JOB_ADD.getUrl()}" process="@this" />
 					</cc:jobOffers>

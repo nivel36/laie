@@ -26,20 +26,20 @@
 	<ui:define name="content">
 		<div class="p-grid">
 			<div class="p-col-12 p-xl-8">
-				<cc:jobOffers jobOffers="#{indexView.jobOffers}" />
+				<cc:jobOffers value="#{indexView.jobOffers}" rows="5" />
 			</div>
 			<div class="p-col-12 p-xl-4">
-				<cc:candidates candidates="#{indexView.candidates}" title="#{i18n['candidate.last_candidates']}"/>
+				<cc:candidates value="#{indexView.candidates}" title="#{i18n['candidate.last_candidates']}" rows="5" />
 			</div>
 			
 			<div class="p-col-12">
-				<cc:events value="#{indexView.events}" title="#{i18n['event.last_events']}" />
+				<cc:events value="#{indexView.events}" title="#{i18n['event.last_events']}" rows="5" />
 					
 			</div>
 
 			<div class="p-col-12 p-xl-4">
 				<cc:meetings value="#{indexView.meetings}" title="#{i18n['meeting.planned_meetings']}"
-					emptyMessage="#{i18n['meeting.no_planned']}" />
+					emptyMessage="#{i18n['meeting.no_planned']}" rows="5" />
 			</div>
 		</div>
 	</ui:define>

@@ -30,7 +30,7 @@
 						<p:graphicImage value="/resources/img/bg-header.png" />
 					</div>
 					<div class="user-card-content">
-						<cc:avatar value="#{viewCandidateView.candidate.imageFileName}" styleClass="user-image" />
+						<cc:avatar value="#{viewCandidateView.candidate.imageFileName}" styleClass="user-image with-border" />
 
 						<h:form>
 							<p:menuButton icon="fa fa-cog">
@@ -146,12 +146,12 @@
 			</div>
 			
 			<div class="p-col-12 p-xl-8">
-				<cc:jobCandidatures jobCandidatures="#{viewCandidateView.jobCandidatures}" showCandidate="false"
-					title="#{i18n['candidate.job_candidatures']}" />
+				<cc:jobCandidatures value="#{viewCandidateView.jobCandidatures}" showCandidate="false"
+					title="#{i18n['candidate.job_candidatures']}" rows="5" />
 			</div>
 
 			<div class="p-col-12 p-xl-4">
-				<cc:meetings value="#{viewCandidateView.meetings}">
+				<cc:meetings value="#{viewCandidateView.meetings}" rows="5">
 					<h:form>
 						<p:commandButton value="#{i18n['meeting.add_meeting']}" action="#{viewCandidateView.newMeeting}" styleClass="success-btn" />
 					</h:form>

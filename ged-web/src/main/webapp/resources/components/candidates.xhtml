@@ -1,20 +1,29 @@
-<ui:component xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:composite="http://xmlns.jcp.org/jsf/composite"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://ged.org/ui" xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui"
-	xmlns:p="http://primefaces.org/ui" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets">
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:component xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" 
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	xmlns:composite="http://xmlns.jcp.org/jsf/composite" 
+	xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:g="http://ged.org/ui" 
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 	<composite:interface>
-		<composite:attribute name="candidates" required="true" />
+		<composite:attribute name="value" required="true" />
 		<composite:attribute name="styleClass" required="false" default="" />
 		<composite:attribute name="title" required="false" default="#{i18n['candidate.candidates']}" />
+		<composite:attribute name="rows" required="false" default="#{sessionUser.rowsPerPage}" />
 	</composite:interface>
 
 	<composite:implementation>
 		<div id="#{cc.clientId}" class="card card-w-title candidates #{cc.attrs.styleClass}">
 			<h3>#{cc.attrs.title}</h3>
 			
-			<p:dataList var="candidate" value="#{cc.attrs.candidates}" emptyMessage="#{i18n['candidate.no_candidates_found']}" paginator="true"
-				paginatorPosition="bottom" rows="#{sessionUser.rowsPerPage}" itemStyleClass="ui-datalist-nobullets" styleClass="ui-datalist-borderless" lazy="true" >
+			<p:dataList var="candidate" value="#{cc.attrs.value}" emptyMessage="#{i18n['candidate.no_candidates_found']}" paginator="true"
+				paginatorPosition="bottom" rows="#{cc.attrs.rows}" itemStyleClass="ui-datalist-nobullets" styleClass="ui-datalist-borderless" lazy="true" >
 				<p:link outcome="#{Page.CANDIDATE.getUrl()}">
 					<f:param name="id" value="#{candidate.id}" />
 					<cc:person value="#{candidate}" description="#{candidate.jobProfile}" styleClass="selectable" />
