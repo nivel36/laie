@@ -92,14 +92,6 @@ public class FilePanelView extends AbstractView {
 		this.fileUploadService.removeFileFromFileSystem(file.getUuid());
 		this.candidateService.removeFile(file);
 		this.files.remove(file);
-		this.addInfoMessage("file.message.remove", "file.message.remove", file.getName());
-	}
-
-	public void updateFile(final ServerFile file) {
-		this.files.remove(file);
-		final ServerFile updatedFile = this.candidateService.updateFile(file);
-		this.files.add(updatedFile);
-		this.addInfoMessage("file.message.update", "file.message.update", updatedFile.getName());
 	}
 
 	public void uploadFile(final FileUploadEvent event) {
@@ -110,7 +102,6 @@ public class FilePanelView extends AbstractView {
 			final ServerFile file = this.buildServerFile(uuid, fileName);
 			this.candidateService.addFileToCandidate(this.candidate, file);
 			this.files.add(file);
-			this.addInfoMessage("file.message.upload", "file.message.upload", fileName);
 		} catch (final IOException e) {
 			throw new UncheckedIOException(e);
 		}

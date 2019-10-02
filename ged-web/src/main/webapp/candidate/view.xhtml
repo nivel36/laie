@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://ged.org/ui"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://ged.org/ui" xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets" template="/WEB-INF/templates/template.xhtml">
 
 	<ui:define name="title">
@@ -59,8 +58,7 @@
 									<cc:outputText label="#{i18n['candidate.linkedin']}" value="#{viewCandidateView.candidate.linkedinProfileUrl}" />
 								</div>
 								<div class="p-col-12 p-sm-6">
-									<cc:outputText label="#{i18n['candidate.city']}"
-										value="#{viewCandidateView.candidate.address.city} (#{viewCandidateView.candidate.address.state})" />
+									<cc:outputText label="#{i18n['candidate.city']}" value="#{viewCandidateView.candidate.address.city} (#{viewCandidateView.candidate.address.state})" />
 								</div>
 								<div class="p-col-12 p-sm-6">
 									<cc:outputText label="#{i18n['candidate.bornDate']}" value="#{viewCandidateView.candidate.bornDate}">
@@ -112,15 +110,15 @@
 					</div>
 				</div>
 			</div>
-			
+
 			<div class="p-col-12 p-xl-6">
 				<h:form id="file_form" enctype="multipart/form-data">
 					<div class="card card-w-title files">
 						<h3>#{i18n['file.files']}</h3>
 						<div class="p-grid">
 							<div class="p-col-12">
-								<p:dataTable var="file" id="files" value="#{filePanelView.files}" emptyMessage="#{i18n['file.no_files']}" paginator="true"
-									paginatorPosition="bottom" reflow="true" rows="#{sessionUser.rowsPerPage}" rowKey="#{file.id}" styleClass="ui-datatable-borderless">
+								<p:dataTable var="file" id="files" value="#{filePanelView.files}" emptyMessage="#{i18n['file.no_files']}" paginator="true" paginatorPosition="bottom" reflow="true" rows="5"
+									rowKey="#{file.id}" styleClass="ui-datatable-borderless">
 
 									<p:column headerText="#{i18n['file.name']}">
 										<h:commandLink action="#{filePanelView.openFile(file)}">
@@ -129,25 +127,25 @@
 									</p:column>
 
 									<p:column>
-										<p:commandButton icon="fa fa-trash" styleClass="danger-btn" action="#{filePanelView.removeFile(file)}" process="@this"
-											update="@form growl " />
+										<p:commandButton icon="fa fa-trash" styleClass="danger-btn" action="#{filePanelView.removeFile(file)}" process="@this" update="@form">
+											<p:confirm  message="#{i18n['file.message.remove']}" icon="fa fa-exclamation-triangle" />
+										</p:commandButton>
 									</p:column>
 								</p:dataTable>
 							</div>
 							<div class="p-col-12">
 								<div class="buttons">
-									<p:fileUpload id="uploadFile" fileUploadListener="#{filePanelView.uploadFile}" mode="advanced" dragDropSupport="false"
-										update="@form growl" auto="true" label="#{i18n['action.add']}" />
+									<p:fileUpload id="uploadFile" fileUploadListener="#{filePanelView.uploadFile}" mode="advanced" dragDropSupport="false" update="@form growl" auto="true"
+										label="#{i18n['action.add']}" />
 								</div>
 							</div>
 						</div>
 					</div>
 				</h:form>
 			</div>
-			
+
 			<div class="p-col-12 p-xl-8">
-				<cc:jobCandidatures value="#{viewCandidateView.jobCandidatures}" showCandidate="false"
-					title="#{i18n['candidate.job_candidatures']}" rows="5" />
+				<cc:jobCandidatures value="#{viewCandidateView.jobCandidatures}" showCandidate="false" title="#{i18n['candidate.job_candidatures']}" rows="5" />
 			</div>
 
 			<div class="p-col-12 p-xl-4">
@@ -157,8 +155,8 @@
 					</h:form>
 				</cc:meetings>
 			</div>
-			
-			
+
+
 		</div>
 	</ui:define>
 </ui:composition>
