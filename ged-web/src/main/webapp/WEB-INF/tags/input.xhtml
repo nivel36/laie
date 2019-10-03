@@ -1,11 +1,5 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
-	xmlns:ui="http://java.sun.com/jsf/facelets" 
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html" 
-	xmlns:p="http://primefaces.org/ui" 
-	xmlns:o="http://omnifaces.org/ui"
-	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" 
-	xmlns:composite="http://xmlns.jcp.org/jsf/composite">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" xmlns:composite="http://xmlns.jcp.org/jsf/composite">
 
 	<o:tagAttribute name="id" />
 	<o:tagAttribute name="rendered" default="#{true}" />
@@ -42,8 +36,7 @@
 					</p:selectOneMenu>
 				</c:when>
 				<c:when test="#{type eq 'textarea'}">
-					<p:inputTextarea id="#{id}" value="#{value}" required="#{required}" styleClass="input input-text-area #{inputStyleClass}"
-						autoResize="false">
+					<p:inputTextarea id="#{id}" value="#{value}" required="#{required}" styleClass="input input-text-area #{inputStyleClass}" autoResize="false">
 						<ui:insert />
 					</p:inputTextarea>
 				</c:when>
@@ -55,23 +48,21 @@
 				</c:when>
 
 				<c:when test="#{type eq 'number'}">
-					<p:spinner id="#{id}" value="#{value}" required="#{required}" styleClass="input input-number #{inputStyleClass}"
-						min="#{not empty min ? min : 0}" max="#{not empty max ? max : 100}">
+					<p:spinner id="#{id}" value="#{value}" required="#{required}" styleClass="input input-number #{inputStyleClass}" min="#{not empty min ? min : 0}"
+						max="#{not empty max ? max : 100}">
 						<ui:insert />
 					</p:spinner>
 				</c:when>
 
 				<c:when test="#{type eq 'calendar'}">
-					<p:calendar id="#{id}" value="#{value}" pattern="dd/MM/yyyy" navigator="true" required="#{required}"
-						inputStyleClass="input calendar #{inputStyleClass}">
+					<p:calendar id="#{id}" value="#{value}" pattern="dd/MM/yyyy" navigator="true" required="#{required}" inputStyleClass="input calendar #{inputStyleClass}">
 						<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
 						<ui:insert />
 						<c:if test="#{not empty yearRange}">
 							<f:attribute name="yearRange" value="#{yearRange}" />
 						</c:if>
 					</p:calendar>
-					<span class="ui-inputgroup-addon">
-						<em class="fa fa-calendar" aria-hidden="true" />
+					<span class="ui-inputgroup-addon"> <em class="fa fa-calendar" aria-hidden="true" />
 					</span>
 				</c:when>
 
@@ -79,8 +70,7 @@
 					<p:inputNumber id="#{id}" value="#{value}" required="#{required}" inputStyleClass="input input-money #{inputStyleClass}">
 						<ui:insert />
 					</p:inputNumber>
-					<span class="ui-inputgroup-addon">
-						<em class="fa fa-euro" aria-hidden="true" />
+					<span class="ui-inputgroup-addon"> <em class="fa fa-euro" aria-hidden="true" />
 					</span>
 				</c:when>
 
@@ -107,8 +97,6 @@
 			</h:panelGroup>
 		</div>
 
-		<div class="message-container">
-			<p:message id="#{id}_message" for="#{id}" styleClass="message-error #{errorStyleClass}" />
-		</div>
+		<p:message id="#{id}_message" for="#{id}" styleClass="message-error #{errorStyleClass}" />
 	</h:panelGroup>
 </ui:composition>

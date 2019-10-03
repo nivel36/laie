@@ -191,6 +191,10 @@ body .ui-datatable table {
 	margin: 0;
 }
 
+.form-field {
+	padding-right: 1em;
+}
+
 .input-avatar img {
 	width: 128px;
 	height: 128px;
