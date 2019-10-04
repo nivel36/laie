@@ -35,10 +35,17 @@
 						<ui:insert />
 					</p:selectOneMenu>
 				</c:when>
+				
 				<c:when test="#{type eq 'textarea'}">
 					<p:inputTextarea id="#{id}" value="#{value}" required="#{required}" styleClass="input input-text-area #{inputStyleClass}" autoResize="false">
 						<ui:insert />
 					</p:inputTextarea>
+				</c:when>
+				
+				<c:when test="#{type eq 'inputSwitch'}">
+				 	<p:inputSwitch  id="#{id}" value="#{value}" required="#{required}" styleClass="input input-switch #{inputStyleClass}" >
+				 		<ui:insert />
+				 	</p:inputSwitch>
 				</c:when>
 
 				<c:when test="#{type eq 'checkbox'}">
@@ -92,6 +99,7 @@
 					</p:inputText>
 				</c:otherwise>
 			</c:choose>
+			
 			<h:panelGroup layout="block" rendered="#{not empty icon and iconPosition eq 'right'}" styleClass="ui-inputgroup-addon">
 				<em class="fa #{icon}" />
 			</h:panelGroup>

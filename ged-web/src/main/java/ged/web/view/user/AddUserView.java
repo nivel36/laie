@@ -20,6 +20,12 @@ public class AddUserView extends AbstractUserView {
 
 	private static final long serialVersionUID = 1L;
 
+	private String password;
+	
+	private String repeatPassword;
+	
+	private boolean sendWelcomeEmail;
+
 	private User buildNewUser() {
 		final User newUser = new User();
 		newUser.setLanguage("ES");
@@ -36,16 +42,41 @@ public class AddUserView extends AbstractUserView {
 		}
 	}
 
+	public String getPassword() {
+		return password;
+	}
+
+	public String getRepeatPassword() {
+		return repeatPassword;
+	}
+
 	@PostConstruct
 	public void init() {
 		logger.trace("New user init");
 		this.checkAddPermission();
 		this.user = this.buildNewUser();
+		this.sendWelcomeEmail = true;
+	}
+
+	public boolean isSendWelcomeEmail() {
+		return sendWelcomeEmail;
 	}
 
 	public String save() {
 		logger.debug("Create new user action performed");
 		this.user = this.userService.save(this.user);
 		return this.userUrl();
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public void setRepeatPassword(String repeatPassword) {
+		this.repeatPassword = repeatPassword;
+	}
+
+	public void setSendWelcomeEmail(boolean sendWelcomeEmail) {
+		this.sendWelcomeEmail = sendWelcomeEmail;
 	}
 }
