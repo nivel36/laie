@@ -50,6 +50,10 @@ public class SessionUser implements Serializable {
 		return this.user;
 	}
 
+	public User getUser() {
+		return this.user;
+	}
+	
 	public Locale getLocale() {
 		return this.locale;
 	}
