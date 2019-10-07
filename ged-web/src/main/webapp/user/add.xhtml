@@ -17,19 +17,17 @@
 		</p:breadCrumb>
 	</ui:define>
 
+	<ui:define name="buttons">
+		<h:form>
+			<p:button value="#{i18n['action.cancel']}" outcome="#{Page.USER_SEARCH.getUrl()}" styleClass="secondary-button" />
+			<p:commandButton value="#{i18n['action.save']}" onclick="processFormUser()" styleClass="success-btn" />
+		</h:form>
+	</ui:define>
+
 	<ui:define name="content">
 		<h:form id="userForm">
-
+			<p:remoteCommand name="processFormUser" process="@form" update="@form growl" action="#{addUserView.save}"/>
 			<div class="p-grid">
-				<div class="p-col-12">
-					<div class="card">
-						<div class="buttons">
-							<p:button value="#{i18n['action.cancel']}" outcome="#{Page.USER_SEARCH.getUrl()}" styleClass="secondary-button" />
-							<p:commandButton value="#{i18n['action.save']}" action="#{addUserView.save}" process="@form" update="@form growl" styleClass="success-btn" />
-						</div>
-					</div>
-				</div>
-
 				<div class="p-col-12 p-xl-6">
 					<div class="card card-w-title ui-fluid">
 						<h1>#{i18n['user.personal_information']}</h1>
@@ -86,14 +84,6 @@
 							<h:panelGroup styleClass="p-col-12 p-sm-6" id="repeatPasswordWrapper" layout="block">
 								<g:input id="repeatPassword" label="#{i18n['user.repeat_password']}" value="#{addUserView.repeatPassword}" type="password" rendered="#{not addUserView.sendWelcomeEmail}" />
 							</h:panelGroup>
-						</div>
-					</div>
-				</div>
-				<div class="p-col-12">
-					<div class="card">
-						<div class="buttons">
-							<p:button value="#{i18n['action.cancel']}" outcome="#{Page.USER_SEARCH.getUrl()}" styleClass="secondary-button" />
-							<p:commandButton value="#{i18n['action.save']}" action="#{addUserView.save}" process="@form" update="@form growl" styleClass="success-btn" />
 						</div>
 					</div>
 				</div>

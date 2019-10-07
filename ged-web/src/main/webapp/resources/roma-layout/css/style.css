@@ -604,3 +604,9 @@ body .ui-menubutton.success-btn .ui-button.ui-state-active {
 	background-color: #0a9c4d;
 	color: #ffffff;
 }
+
+@media screen and (max-width: 896px) {
+	.layout-topbar .menu-detail-button {
+		display: none;
+	}
+}

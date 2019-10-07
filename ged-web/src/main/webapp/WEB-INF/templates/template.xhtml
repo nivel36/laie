@@ -25,9 +25,15 @@
 		<ui:include src="./topbar.xhtml"></ui:include>
 		<ui:include src="./menu.xhtml"></ui:include>
 		<ui:include src="./right-panel.xhtml" />
-
 		<div class="layout-main">
-			<ui:insert name="breadcrumb" />
+			<div class="layout-main-topbar">
+				<div class="breadcrumb">
+					<ui:insert name="breadcrumb" />
+				</div>
+				<div class="buttons">
+					<ui:insert name="buttons" />
+				</div>
+			</div>
 
 			<div class="layout-content" style="min-height: 300px">
 				<ui:insert name="content"></ui:insert>
