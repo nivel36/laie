@@ -61,6 +61,16 @@ body .ui-datatable table {
 	table-layout: auto;
 }
 
+body .field-btn {
+	margin-top: 2em;
+}
+
+@media screen and (max-width: 576px) {
+	body .field-btn {
+		margin-top: 0em;
+	}
+}
+
 .attendee {
 	display: flex;
 	flex: 1 1 100%;

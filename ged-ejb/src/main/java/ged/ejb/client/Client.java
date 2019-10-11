@@ -71,7 +71,17 @@ public class Client extends AbstractEntity implements Ownerable, Erasable {
 
 	public void addContact(final Contact contact) {
 		Objects.requireNonNull(contact);
+		contact.setClient(this);
 		this.contacts.add(contact);
+	}
+
+	public Contact deleteContact(final Contact contact) {
+		Objects.requireNonNull(contact);
+		boolean delete = this.contacts.remove(contact);
+		if (!delete) {
+			throw new IllegalStateException(String.format("Contact %s doesn't exist", contact));
+		}
+		return contact;
 	}
 
 	@Override

@@ -25,6 +25,18 @@ public class Event extends AbstractEntity {
 
 	private static final long serialVersionUID = 1L;
 
+	public Event() {
+	}
+
+	public Event(User user, JobCandidature jobCandidature) {
+		this.user = user;
+		this.date = LocalDateTime.now();
+		if (jobCandidature != null) {
+			this.jobCandidature = jobCandidature;
+			this.status = jobCandidature.getJobCandidatureState();
+		}
+	}
+
 	@Field(name = "date", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField(forField = "date")
 	private LocalDateTime date;

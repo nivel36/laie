@@ -25,6 +25,7 @@ public class AddClientView extends AbstractClientView {
 
 	public void addContact() {
 		this.client.addContact(this.contact);
+		this.contact = buildNewContact();
 	}
 
 	private Client buildNewClient() {
@@ -42,6 +43,19 @@ public class AddClientView extends AbstractClientView {
 	public void init() {
 		logger.trace("New client init");
 		this.client = this.buildNewClient();
+		this.contact = this.buildNewContact();
+	}
+	
+	public Contact buildNewContact() {
+		return new Contact();
+	}
+	
+	public void removeContact(Contact contact) {
+		this.client.deleteContact(contact);
+	}
+	
+	public void editContact(Contact contact) {
+		this.contact = contact;
 	}
 
 	public String save() {

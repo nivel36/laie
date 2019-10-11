@@ -24,21 +24,10 @@
 		</h:form>
 	</ui:define>
 
-
 	<ui:define name="content">
 		<h:form id="candidateForm">
 			<p:remoteCommand name="processForm" process="@form" update="@form growl" action="#{addCandidateView.save}" />
 			<div class="p-grid">
-				<div class="p-col-12">
-					<div class="card ui-fluid">
-						<div class="p-grid">
-							<div class="p-col-12">
-								<cc:inputAvatar id="candidate_image" value="#{addCandidateView.candidate.imageFileName}" fileUploadListener="#{addCandidateView.uploadImage}" />
-							</div>
-						</div>
-					</div>
-				</div>
-				
 				<div class="p-col-12 p-xl-6">
 					<div class="card card-w-title ui-fluid">
 						<h1>#{i18n['candidate.personal_information']}</h1>
@@ -127,6 +116,15 @@
 										<f:converter converterId="tagConverter" for="tags" />
 									</p:chips>
 								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="p-col-12">
+					<div class="card ui-fluid">
+						<div class="p-grid">
+							<div class="p-col-12">
+								<cc:inputAvatar id="candidate_image" value="#{addCandidateView.candidate.imageFileName}" fileUploadListener="#{addCandidateView.uploadImage}" />
 							</div>
 						</div>
 					</div>
