@@ -20,75 +20,83 @@
 			<p:menuitem value="#{i18n['job.edit_job']}" disabled="true" />
 		</p:breadCrumb>
 	</ui:define>
+	
+	<ui:define name="buttons">
+		<h:form>
+			<p:button value="#{i18n['action.cancel']}" outcome="#{Page.JOB_SEARCH.getUrl()}" styleClass="secondary-button" />
+			<p:commandButton value="#{i18n['action.save']}" onclick="processForm()" styleClass="success-btn" />
+		</h:form>
+	</ui:define>
 
 	<ui:define name="content">
-		<div class="p-grid">
-			<div class="p-col-12 p-xl-9">
-				<h:form id="jobOfferForm">
-					<div class="card">
+		<h:form id="jobOfferForm">
+			<p:remoteCommand name="processForm" process="@form" update="@form growl" action="#{editJobView.save}" />
+			<div class="p-grid">
+				<div class="p-col-12 p-xl-6">
+
+					<div class="card card-w-title ui-fluid">
+						<h1>Datos de la oferta</h1>
 						<div class="p-grid">
-							<div class="p-col-12 p-xl-6">
-								<h3>#{i18n['user.personal_information']}</h3>
-								<div class="form-field ui-fluid">
-									<g:input label="#{i18n['job.title']}" value="#{editJobView.jobOffer.title}" required="true" />
-
-									<cc:autocomplete id="client" label="#{i18n['job.client']}" value="#{editJobView.jobOffer.client}"
-										completeMethod="#{editJobView.completeClient}" required="true">
-										<p:column>
-											<h:outputText value="#{var.name}" />
-										</p:column>
-									</cc:autocomplete>
-
-									<g:input id="places" label="#{i18n['job.places']}" value="#{editJobView.jobOffer.places}" type="number" min="0" />
-									
-									<g:input id="salary" label="#{i18n['job.salary']}" value="#{editJobView.jobOffer.salary}" type="money" />
-
-									<g:input id="dateOpened" label="#{i18n['job.date_opened']}" value="#{editJobView.jobOffer.dateOpened}" type="calendar" />
-
-									<g:input id="dateClosed" label="#{i18n['job.date_closed']}" value="#{editJobView.jobOffer.dateClosed}" type="calendar" />
-								</div>
-							</div>
-
-							<div class="p-col-12 p-xl-6">
-								<h3>#{i18n['user.personal_information']}</h3>
-
-								<div class="form-field ui-fluid">
-
-									<g:input id="city" label="#{i18n['job.city']}" value="#{editJobView.jobOffer.address.city}" required="true" />
-
-									<g:input id="state" label="#{i18n['job.state']}" value="#{editJobView.jobOffer.address.state}" required="true" />
-
-									<cc:autocomplete id="owner" label="#{i18n['job.owner']}" value="#{editJobView.jobOffer.owner}"
-										completeMethod="#{editJobView.queryOwner}" converter="userConverter">
-										<p:column styleClass="user-select image">
-											<cc:person value="#{var}" showDescription="false" />
-										</p:column>
-									</cc:autocomplete>
-
-									<cc:inputUsers id="recruiters" label="#{i18n['job.recruiters']}" completeMethod="#{editJobView.queryRecruiter}"
-										value="#{editJobView.recruiters}" />
-								</div>
-							</div>
 							<div class="p-col-12">
-								<h3>#{i18n['user.personal_information']}</h3>
-								<div class="form-field ui-fluid">
-									<g:input id="description" name="description" label="#{i18n['job.description']}" value="#{editJobView.jobOffer.description}"
-										type="textarea" />
-								</div>
+								<g:input label="#{i18n['job.title']}" value="#{editJobView.jobOffer.title}" required="true" />
 							</div>
-							<div class="p-col-12">
-								<div class="buttons">
-									<p:button value="#{i18n['action.cancel']}" outcome="#{Page.JOB.getUrl()}" styleClass="secondary-button">
-										<f:param name="id" value="#{editJobView.jobOffer.id}" />
-									</p:button>
-									<p:commandButton value="#{i18n['action.save']}" action="#{editJobView.save}" process="@form" update="@form growl"
-										styleClass="succes-btn" />
-								</div>
+							<div class="p-col-12 p-sm-6">
+								<cc:autocomplete id="client" label="#{i18n['job.client']}" value="#{editJobView.jobOffer.client}" completeMethod="#{editJobView.completeClient}" required="true">
+									<p:column>
+											#{var.name}
+										</p:column>
+								</cc:autocomplete>
+							</div>
+							<div class="p-col-12 p-sm-6">
+								<cc:autocomplete id="owner" label="#{i18n['job.owner']}" value="#{editJobView.jobOffer.owner}" completeMethod="#{editJobView.queryOwner}" converter="userConverter">
+									<p:column styleClass="user-select image">
+										<cc:person value="#{var}" showDescription="false" />
+									</p:column>
+								</cc:autocomplete>
+							</div>
+							<div class="p-col-12 p-sm-6">
+								<g:input id="places" label="#{i18n['job.places']}" value="#{editJobView.jobOffer.places}" type="number" min="0" />
+							</div>
+							<div class="p-col-12 p-sm-6"></div>
+							<div class="p-col-12 p-sm-6">
+								<g:input id="city" label="#{i18n['job.city']}" value="#{editJobView.jobOffer.address.city}" required="true" />
+							</div>
+							<div class="p-col-12 p-sm-6">
+								<g:input id="state" label="#{i18n['job.state']}" value="#{editJobView.jobOffer.address.state}" required="true" />
 							</div>
 						</div>
 					</div>
-				</h:form>
+				</div>
+				<div class="p-col-12 p-xl-6">
+					<div class="card card-w-title ui-fluid">
+						<h1>Datos de la oferta</h1>
+						<div class="p-grid">
+							<div class="p-col-12 p-sm-6">
+								<g:input id="dateOpened" label="#{i18n['job.date_opened']}" value="#{editJobView.jobOffer.dateOpened}" type="calendar" />
+							</div>
+							<div class="p-col-12 p-sm-6">
+								<g:input id="dateClosed" label="#{i18n['job.date_closed']}" value="#{editJobView.jobOffer.dateClosed}" type="calendar" />
+							</div>
+							<div class="p-col-12 p-sm-6">
+								<g:input id="salary" label="#{i18n['job.salary']}" value="#{editJobView.jobOffer.salary}" type="money" />
+							</div>
+							<div class="p-col-12">
+								<cc:inputUsers id="recruiters" label="#{i18n['job.recruiters']}" completeMethod="#{editJobView.queryRecruiter}" value="#{editJobView.recruiters}" />
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="p-col-12">
+					<div class="card card-w-title ui-fluid">
+						<h1>Datos de la oferta</h1>
+						<div class="p-grid">
+							<div class="p-col-12">
+								<g:input id="description" label="#{i18n['job.description']}" value="#{editJobView.jobOffer.description}" type="textarea" />
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
-		</div>
+		</h:form>
 	</ui:define>
 </ui:composition>
