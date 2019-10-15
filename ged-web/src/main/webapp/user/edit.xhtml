@@ -22,7 +22,9 @@
 
 	<ui:define name="buttons">
 		<h:form>
-			<p:button value="#{i18n['action.cancel']}" outcome="#{Page.USER_SEARCH.getUrl()}" styleClass="secondary-button" />
+			<p:button value="#{i18n['action.cancel']}" outcome="#{Page.USER.getUrl()}" styleClass="secondary-button" >
+				<f:param name="id" value="#{editUserView.user.id}" />
+			</p:button>
 			<p:commandButton value="#{i18n['action.save']}" onclick="processForm()" styleClass="success-btn" />
 		</h:form>
 	</ui:define>

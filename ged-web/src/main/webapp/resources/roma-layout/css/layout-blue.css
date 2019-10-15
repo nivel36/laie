@@ -61,7 +61,7 @@ a {
 }
 
 .layout-main-topbar .buttons {
-	flex: 1 100%;
+	flex: 0 1 100%;
 	padding: 0.571em 1em;
 	justify-content: flex-end;
 }

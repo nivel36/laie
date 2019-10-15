@@ -51,16 +51,6 @@
 						</h:link>
 					</p:column>
 
-					<p:column headerText="#{i18n['job.date_opened']}" sortBy="#{jobOffer.dateOpened}">
-						<h:outputText value="#{jobOffer.dateOpened}">
-							<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
-						</h:outputText>
-					</p:column>
-
-					<p:column headerText="#{i18n['job.salary']}" sortBy="#{jobOffer.salary}">
-						<h:outputText value="#{jobOffer.salary}" />
-					</p:column>
-
 					<p:column headerText="#{i18n['job.places']}">
 						<h:outputText value="#{jobOffer.places}" />
 					</p:column>

@@ -17,6 +17,13 @@
 			<p:menuitem value="#{viewUserView.user}" disabled="true" />
 		</p:breadCrumb>
 	</ui:define>
+	
+	<ui:define name="buttons">
+		<h:form>
+			<p:commandButton value="#{i18n['action.edit']}" process="@this" action="#{viewUserView.editUser}" icon="fa fa-pencil" />
+			<p:commandButton value="#{i18n['action.export']}" process="@this" action="#{viewUserView.export}" icon="fa fa-file-excel-o" />
+		</h:form>
+	</ui:define>
 
 	<ui:define name="content">
 		<div class="p-grid">
@@ -27,13 +34,6 @@
 					</div>
 					<div class="user-card-content">
 						<cc:avatar value="#{viewUserView.user.imageFileName}" styleClass="user-image with-border" />
-
-						<h:form>
-							<p:menuButton icon="fa fa-cog">
-								<p:menuitem value="#{i18n['action.export']}" process="@this" action="#{viewUserView.export}" icon="fa fa-file-excel-o" />
-								<p:menuitem value="#{i18n['action.edit']}" process="@this" action="#{viewUserView.editUser}" icon="fa fa-pencil" />
-							</p:menuButton>
-						</h:form>
 
 						<div class="user-card-name">#{viewUserView.user.fullName}</div>
 						<div class="user-card-role">#{g:translate(viewUserView.user.role)}</div>
