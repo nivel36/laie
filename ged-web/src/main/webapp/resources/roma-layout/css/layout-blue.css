@@ -41,6 +41,10 @@ a {
 	.layout-static .layout-main-topbar {
 		left: 0px;
 	}
+	
+	.layout-static .layout-main-topbar .ui-breadcrumb ul li:not(:nth-child(1)):not(:nth-last-child(4)):not(:nth-last-child(3)):not(:nth-last-child(2)):not(:last-child) {
+		display: none;
+	}
 }
 
 @media screen and (max-width: 576px) {
@@ -53,7 +57,11 @@ a {
 }
 
 .layout-main-topbar .breadcrumb {
-	flex: 1 100%;
+	overflow: hidden;
+}
+
+.layout-main-topbar .breadcrumb ul{
+	white-space: nowrap;
 }
 
 .layout-main-topbar .breadcrumb .ui-breadcrumb {
@@ -61,9 +69,9 @@ a {
 }
 
 .layout-main-topbar .buttons {
-	flex: 0 1 100%;
 	padding: 0.571em 1em;
 	justify-content: flex-end;
+	white-space: nowrap;
 }
 
 .layout-wrapper.layout-topbar-light .layout-topbar {

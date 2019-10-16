@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://ged.org/ui"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://ged.org/ui" xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets" template="/WEB-INF/templates/template.xhtml">
 
 	<ui:define name="title">
 		#{i18n['client.edit_client']} - #{editClientView.client.name}
 	</ui:define>
-	
+
 	<ui:param name="selectedMenu" value="clients" />
 
 	<ui:define name="breadcrumb">
@@ -21,41 +20,42 @@
 		</p:breadCrumb>
 	</ui:define>
 
+	<ui:define name="buttons">
+		<h:form>
+			<p:button value="#{i18n['action.cancel']}" outcome="#{Page.CLIENT.getUrl()}" styleClass="secondary-button">
+				<f:param name="id" value="#{editClientView.client.id}" />
+			</p:button>
+			<p:commandButton value="#{i18n['action.save']}" onclick="processForm()" styleClass="success-btn" />
+		</h:form>
+	</ui:define>
+
 	<ui:define name="content">
-		<h:form id="clientForm">
-			<div class="p-grid">
-				<div class="p-col-12 p-xl-6">
-					<div class="card card-w-title">
+		<div class="p-grid">
+			<div class="p-col-12 p-xl-6">
+				<h:form id="clientForm">
+					<p:remoteCommand name="processForm" process="@form" update="@form growl" action="#{editClientView.save}" />
+					<h:panelGroup id="client" styleClass="card card-w-title ui-fluid" layout="block">
+						<h1>#{i18n['client.client']}</h1>
 						<div class="p-grid">
-							<div class="p-col-12 p-xl-6">
-								<div class="form-field ui-fluid">
-									<g:input id="name" label="#{i18n['client.name']}" value="#{editClientView.client.name}" required="true" />
-
-									<g:input id="cif" label="#{i18n['client.cif']}" value="#{editClientView.client.cif}" />
-									
-									<g:input id="phoneNumber" label="#{i18n['client.phone_number']}" value="#{editClientView.client.phoneNumber}" />
-								</div>
-							</div>
-							<div class="p-col-12 p-xl-6">
-								<div class="form-field ui-fluid">
-									<g:input id="city" label="#{i18n['client.city']}" value="#{editClientView.client.address.city}" />
-
-									<g:input id="state" label="#{i18n['client.state']}" value="#{editClientView.client.address.state}" />
-								</div>
-							</div>
 							<div class="p-col-12">
-								<div class="buttons">
-									<p:button value="#{i18n['action.cancel']}" outcome="#{Page.CLIENT.getUrl()}" styleClass="secondary-button">
-										<f:param name="id" value="#{editClientView.client.id}" />
-									</p:button>
-									<p:commandButton value="#{i18n['action.save']}" action="#{editClientView.save}" process="@form" update="@form growl"
-										styleClass="success-btn" />
-								</div>
+								<g:input id="name" label="#{i18n['client.name']}" value="#{editClientView.client.name}" required="true" />
+							</div>
+							<div class="p-col-12 p-sm-6">
+								<g:input id="cif" label="#{i18n['client.cif']}" value="#{editClientView.client.cif}" />
+							</div>
+							<div class="p-col-12 p-sm-6">
+								<g:input id="phoneNumber" label="#{i18n['client.phone_number']}" value="#{editClientView.client.phoneNumber}" />
+							</div>
+							<div class="p-col-12 p-sm-6">
+								<g:input id="city" label="#{i18n['client.city']}" value="#{editClientView.client.address.city}" />
+							</div>
+							<div class="p-col-12 p-sm-6">
+								<g:input id="state" label="#{i18n['client.state']}" value="#{editClientView.client.address.state}" />
 							</div>
 						</div>
-					</div>
-				</div>
+					</h:panelGroup>
+				</h:form>
 			</div>
-		</h:form>
+		</div>
 	</ui:define>
 </ui:composition>

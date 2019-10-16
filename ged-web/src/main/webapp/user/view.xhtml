@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://ged.org/ui"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://ged.org/ui" xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets" template="/WEB-INF/templates/template.xhtml">
 
 	<ui:define name="title">
@@ -17,7 +16,7 @@
 			<p:menuitem value="#{viewUserView.user}" disabled="true" />
 		</p:breadCrumb>
 	</ui:define>
-	
+
 	<ui:define name="buttons">
 		<h:form>
 			<p:commandButton value="#{i18n['action.edit']}" process="@this" action="#{viewUserView.editUser}" icon="fa fa-pencil" />
@@ -29,8 +28,8 @@
 		<div class="p-grid">
 			<div class="p-col-12 p-xl-6">
 				<div class="card user-card">
-					<div class="user-card-header">
-						<p:graphicImage value="/resources/img/bg-header.png" />
+					<div class="card-header">
+						
 					</div>
 					<div class="user-card-content">
 						<cc:avatar value="#{viewUserView.user.imageFileName}" styleClass="user-image with-border" />
@@ -75,19 +74,19 @@
 					</div>
 				</div>
 			</div>
-			
-			<div class="p-col-12 p-xl-4">
+
+			<div class="p-col-12 p-xl-6">
 				<h:form id="userTeamForm">
-					<cc:users value="#{viewUserView.team}" title="#{i18n['user.team']}" rows="5"/>
+					<cc:users value="#{viewUserView.team}" title="#{i18n['user.team']}" rows="5" />
 				</h:form>
 			</div>
 
-			<div class="p-col-12 p-lg-8">
+			<div class="p-col-12 p-xl-8">
 				<h:form id="jobOffersForm">
 					<cc:jobOffers value="#{viewUserView.jobOffers}" rows="5" />
 				</h:form>
 			</div>
-			
+
 
 			<div class="p-col-12 p-xl-4">
 				<h:form id="jobMeetingsForm">

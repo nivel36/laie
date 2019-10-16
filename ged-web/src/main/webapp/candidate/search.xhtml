@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://ged.org/ui"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://ged.org/ui" xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets" template="/WEB-INF/templates/template.xhtml">
 
 	<ui:define name="title">
@@ -17,53 +16,54 @@
 		</p:breadCrumb>
 	</ui:define>
 
+	<ui:define name="buttons">
+		<h:form>
+			<p:commandButton value="#{i18n['action.export']}" onclick="export()" icon="fa fa-file-excel-o" />
+		</h:form>
+	</ui:define>
+
 	<ui:define name="content">
 		<h:form id="candidateSearchForm">
+			<p:remoteCommand name="export" process="@form" update="@form growl" action="#{searchCandidateView.export}" />
 			<div class="card">
 				<div class="p-grid">
-					<div class="p-col-12 p-xl-5">
+					<div class="p-col-12 p-lg-5">
 						<div class="searchBar ui-fluid">
 							<cc:inputSearch searchText="#{searchCandidateView.searchText}" searchAction="#{searchCandidateView.search}" update="candidateSearchForm:candidates" />
 						</div>
 					</div>
-					<div class="p-col-12 p-xl-7">
-						<div class="buttons">
-							<p:commandButton value="#{i18n['action.export']}" action="#{searchCandidateView.export}" process="@this" icon="fa fa-file-excel-o" />
-						</div>
+					<div class="p-col-12">
+						<p:dataTable var="candidate" id="candidates" value="#{searchCandidateView.candidates}" emptyMessage="#{i18n['candidate.no_candidates_found']}" reflow="true" paginator="true"
+							paginatorPosition="bottom" rows="#{sessionUser.rowsPerPage}" sortBy="#{candidate.name}" sortOrder="descending" lazy="true">
+
+							<p:column>
+								<cc:avatar value="#{candidate.imageFileName}" styleClass="small" />
+							</p:column>
+
+							<p:column headerText="#{i18n['candidate.name']}" sortBy="#{candidate.name}">
+								<h:link value="#{candidate.fullName}" outcome="#{Page.CANDIDATE.getUrl()}">
+									<f:param name="id" value="#{candidate.id}" />
+								</h:link>
+							</p:column>
+
+							<p:column headerText="#{i18n['candidate.jobProfile']}" sortBy="#{candidate.jobProfile}" priority="5">
+								<h:outputText value="#{candidate.jobProfile}" />
+							</p:column>
+
+							<p:column headerText="#{i18n['candidate.email']}">
+								<h:outputText value="#{candidate.email}" />
+							</p:column>
+
+							<p:column headerText="#{i18n['candidate.phone_number']}" priority="6">
+								<h:outputText value="#{candidate.phoneNumber}" />
+							</p:column>
+
+							<p:column headerText="#{i18n['candidate.rating']}" sortBy="#{candidate.rating}" priority="4">
+								<p:rating value="#{candidate.rating}" cancel="false" readonly="true" />
+							</p:column>
+						</p:dataTable>
 					</div>
 				</div>
-			</div>
-			<div class="card">
-				<p:dataTable var="candidate" id="candidates" value="#{searchCandidateView.candidates}"
-					emptyMessage="#{i18n['candidate.no_candidates_found']}" reflow="true" paginator="true" paginatorPosition="bottom"
-					rows="#{sessionUser.rowsPerPage}" sortBy="#{candidate.name}" sortOrder="descending" lazy="true">
-
-					<p:column>
-						<cc:avatar value="#{candidate.imageFileName}" styleClass="small" />
-					</p:column>
-
-					<p:column headerText="#{i18n['candidate.name']}" sortBy="#{candidate.name}">
-						<h:link value="#{candidate.fullName}" outcome="#{Page.CANDIDATE.getUrl()}">
-							<f:param name="id" value="#{candidate.id}" />
-						</h:link>
-					</p:column>
-
-					<p:column headerText="#{i18n['candidate.jobProfile']}" sortBy="#{candidate.jobProfile}">
-						<h:outputText value="#{candidate.jobProfile}" />
-					</p:column>
-
-					<p:column headerText="#{i18n['candidate.email']}">
-						<h:outputText value="#{candidate.email}" />
-					</p:column>
-
-					<p:column headerText="#{i18n['candidate.phone_number']}">
-						<h:outputText value="#{candidate.phoneNumber}" />
-					</p:column>
-
-					<p:column headerText="#{i18n['candidate.rating']}" sortBy="#{candidate.rating}">
-						<p:rating value="#{candidate.rating}" cancel="false" readonly="true" />
-					</p:column>
-				</p:dataTable>
 			</div>
 		</h:form>
 	</ui:define>

@@ -294,24 +294,16 @@ body .jobCandidatureStates.ui-selectonemenu-panel .ui-selectonemenu-items .ui-se
 	padding: 0;
 }
 
-.job-card-header {
-	position: relative;
-	background: #f9f9f9;
-	overflow: hidden;
-	padding: 1.5em;
-	background: #f9f9f9;
-}
-
 .job-card-name {
 	font-size: 1.8em;
 	font-weight: 700;
 	display: block;
+	padding: 7px 0 0 20px;
 }
 
 .job-card-client {
-	color: #65656a;
 	font-size: 1em;
-	padding-bottom: 0.5em;
+	padding: 30px 0 0 20px;
 	font-weight: 700;
 	display: block;
 }
@@ -333,18 +325,9 @@ body .jobCandidatureStates.ui-selectonemenu-panel .ui-selectonemenu-items .ui-se
 	padding: 0;
 }
 
-.client-card-header {
-	background: #f9f9f9;
-	overflow: hidden;
-	padding: 1.5em;
-}
-
-.client-card-header .ui-button {
-	float: right;
-}
-
 .client-card-name {
-	color: #65656a;
+	padding: 40px 0 0 20px;
+	color: #ffffff;
 	font-size: 1.8em;
 	font-weight: 700;
 	white-space: nowrap;
@@ -513,21 +496,19 @@ body .jobCandidatureStates.ui-selectonemenu-panel .ui-selectonemenu-items .ui-se
 	margin: 0 0 24px 0;
 }
 
-.user-card {
+
+.user-card, .candidate-card {
 	padding: 0;
 }
 
-.user-card .user-card-header {
-	height: 120px;
+.user-card .card-header, .client-card .card-header, .job-card .card-header, .candidate-card .card-header {
+	height: 80px;
 	overflow: hidden;
+	background-color: #0772B3;
+	color: #ffffff;
 }
 
-.user-card .user-card-header img {
-	width: 100%;
-	height: 100%;
-}
-
-.user-card .user-card-content .user-image {
+.user-card .user-card-content .user-image, .candidate-card .candidate-card-content .candidate-image {
 	width: 80px;
 	height: 80px;
 	margin: -40px 0 0 24px;
@@ -555,7 +536,7 @@ body .jobCandidatureStates.ui-selectonemenu-panel .ui-selectonemenu-items .ui-se
 	z-index: 1;
 }
 
-.user-card .user-card-content .user-card-name {
+.user-card .user-card-content .user-card-name, .candidate-card .candidate-card-content .candidate-card-name {
 	font-size: 13px;
 	color: #ffffff;
 	position: relative;
@@ -565,7 +546,7 @@ body .jobCandidatureStates.ui-selectonemenu-panel .ui-selectonemenu-items .ui-se
 	white-space: nowrap;
 }
 
-.user-card .user-card-content .user-card-role {
+.user-card .user-card-content .user-card-role, .candidate-card .candidate-card-content .candidate-card-profile {
 	font-size: 13px;
 	position: relative;
 	top: -50px;
@@ -574,7 +555,7 @@ body .jobCandidatureStates.ui-selectonemenu-panel .ui-selectonemenu-items .ui-se
 	white-space: nowrap;
 }
 
-.user-card .user-card-content .user-detail {
+.user-card .user-card-content .user-detail, .candidate-card .candidate-card-content .candidate-detail {
 	padding: .5em 1em;
 }
 

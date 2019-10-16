@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://ged.org/ui"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://ged.org/ui" xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets" template="/WEB-INF/templates/template.xhtml">
 
 	<ui:define name="title">
@@ -17,52 +16,53 @@
 		</p:breadCrumb>
 	</ui:define>
 
+	<ui:define name="buttons">
+		<h:form>
+			<p:commandButton value="#{i18n['action.export']}" onclick="export()" icon="fa fa-file-excel-o" />
+		</h:form>
+	</ui:define>
+
 	<ui:define name="content">
 		<h:form id="clientSearchForm">
+			<p:remoteCommand name="export" process="@form" update="@form growl" action="#{searchUserView.export}" />
 			<div class="card">
 				<div class="p-grid">
-					<div class="p-col-12 p-xl-5">
+					<div class="p-col-12 p-lg-5">
 						<div class="searchBar ui-fluid">
 							<cc:inputSearch searchText="#{searchClientView.searchText}" searchAction="#{searchClientView.search}" update="clientSearchForm:clients" />
 						</div>
 					</div>
-					<div class="p-col-12 p-xl-7">
-						<div class="buttons">
-							<p:commandButton value="#{i18n['action.export']}" action="#{searchClientView.export}" process="@this" icon="fa fa-file-excel-o" />
-						</div>
+					<div class="p-col-12">
+						<p:dataTable var="client" id="clients" value="#{searchClientView.clients}" emptyMessage="#{i18n['client.no_clients_found']}" reflow="true" paginator="true"
+							paginatorPosition="bottom" rows="#{sessionUser.rowsPerPage}" sortBy="#{client.name}" sortOrder="descending" lazy="true">
+
+							<p:column headerText="#{i18n['client.name']}" sortBy="#{client.name}">
+								<h:link value="#{client.name}" outcome="#{Page.CLIENT.getUrl()}">
+									<f:param name="id" value="#{client.id}" />
+								</h:link>
+							</p:column>
+
+							<p:column headerText="#{i18n['client.phone_number']}">
+								<h:outputText value="#{client.phoneNumber}" />
+							</p:column>
+
+							<p:column headerText="#{i18n['client.cif']}">
+								<h:outputText value="#{client.cif}" />
+							</p:column>
+
+							<p:column headerText="#{i18n['client.city']}" sortBy="#{client.address.city}">
+								<h:outputText value="#{client.address.city} " />
+								<h:panelGroup rendered="#{not empty client.address.state}">(<h:outputText value="#{client.address.state}" />)</h:panelGroup>
+							</p:column>
+
+							<p:column headerText="#{i18n['client.owner']}" sortBy="#{client.owner.name}">
+								<h:link value="#{client.owner.fullName}" outcome="#{Page.USER_SEARCH.getUrl()}">
+									<f:param name="id" value="#{client.owner.id}" />
+								</h:link>
+							</p:column>
+						</p:dataTable>
 					</div>
 				</div>
-			</div>
-			<div class="card">
-				<p:dataTable var="client" id="clients" value="#{searchClientView.clients}" emptyMessage="#{i18n['client.no_clients_found']}"
-					reflow="true" paginator="true" paginatorPosition="bottom" rows="#{sessionUser.rowsPerPage}" sortBy="#{client.name}"
-					sortOrder="descending" lazy="true">
-
-					<p:column headerText="#{i18n['client.name']}" sortBy="#{client.name}">
-						<h:link value="#{client.name}" outcome="#{Page.CLIENT.getUrl()}">
-							<f:param name="id" value="#{client.id}" />
-						</h:link>
-					</p:column>
-
-					<p:column headerText="#{i18n['client.phone_number']}">
-						<h:outputText value="#{client.phoneNumber}" />
-					</p:column>
-
-					<p:column headerText="#{i18n['client.cif']}">
-						<h:outputText value="#{client.cif}" />
-					</p:column>
-
-					<p:column headerText="#{i18n['client.city']}" sortBy="#{client.address.city}">
-						<h:outputText value="#{client.address.city} " />
-						<h:panelGroup rendered="#{not empty client.address.state}">(<h:outputText value="#{client.address.state}" />)</h:panelGroup>
-					</p:column>
-
-					<p:column headerText="#{i18n['client.owner']}" sortBy="#{client.owner.name}">
-						<h:link value="#{client.owner.fullName}" outcome="#{Page.USER_SEARCH.getUrl()}">
-							<f:param name="id" value="#{client.owner.id}" />
-						</h:link>
-					</p:column>
-				</p:dataTable>
 			</div>
 		</h:form>
 	</ui:define>

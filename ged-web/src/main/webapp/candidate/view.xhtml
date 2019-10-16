@@ -21,29 +21,27 @@
 		</p:breadCrumb>
 	</ui:define>
 
+	<ui:define name="buttons">
+		<h:form>
+			<p:button value="#{i18n['curriculum.curriculum']}" process="@this" outcome="#{Page.CURRICULUM.getUrl()}" icon="fa fa-pencil">
+				<f:param name="id" value="#{viewCandidateView.candidate.id}" />
+			</p:button>
+			<p:commandButton value="#{i18n['action.edit']}" process="@this" action="#{viewCandidateView.editUser}" icon="fa fa-pencil" />
+			<p:commandButton value="#{i18n['action.export']}" process="@this" action="#{viewCandidateView.export}" icon="fa fa-file-excel-o" />
+		</h:form>
+	</ui:define>
+
 	<ui:define name="content">
 		<div class="p-grid">
 			<div class="p-col-12 p-xl-6">
-				<div class="card user-card">
-					<div class="user-card-header">
-						<p:graphicImage value="/resources/img/bg-header.png" />
-					</div>
-					<div class="user-card-content">
-						<cc:avatar value="#{viewCandidateView.candidate.imageFileName}" styleClass="user-image with-border" />
+				<div class="card candidate-card">
+					<div class="card-header"></div>
+					<div class="candidate-card-content">
+						<cc:avatar value="#{viewCandidateView.candidate.imageFileName}" styleClass="candidate-image with-border" />
 
-						<h:form>
-							<p:menuButton icon="fa fa-cog">
-								<p:menuitem value="#{i18n['curriculum.curriculum']}" process="@this" outcome="#{Page.CURRICULUM.getUrl()}">
-									<f:param name="id" value="#{viewCandidateView.candidate.id}" />
-								</p:menuitem>
-								<p:menuitem value="#{i18n['action.export']}" process="@this" action="#{viewCandidateView.export}" icon="fa fa-file-excel-o" />
-								<p:menuitem value="#{i18n['action.edit']}" process="@this" action="#{viewCandidateView.editCandidate}" icon="fa fa-pencil" />
-							</p:menuButton>
-						</h:form>
-
-						<div class="user-card-name">#{viewCandidateView.candidate.fullName}</div>
-						<div class="user-card-role">#{viewCandidateView.candidate.jobProfile}</div>
-						<div class="user-detail ui-fluid">
+						<div class="candidate-card-name">#{viewCandidateView.candidate.fullName}</div>
+						<div class="candidate-card-profile">#{viewCandidateView.candidate.jobProfile}</div>
+						<div class="candidate-detail ui-fluid">
 							<div class="p-grid">
 								<div class="p-col-12 p-sm-6">
 									<cc:outputText label="#{i18n['candidate.email']}" value="#{viewCandidateView.candidate.email}" />
@@ -128,7 +126,7 @@
 
 									<p:column>
 										<p:commandButton icon="fa fa-trash" styleClass="danger-btn" action="#{filePanelView.removeFile(file)}" process="@this" update="@form">
-											<p:confirm  message="#{i18n['file.message.remove']}" icon="fa fa-exclamation-triangle" />
+											<p:confirm message="#{i18n['file.message.remove']}" icon="fa fa-exclamation-triangle" />
 										</p:commandButton>
 									</p:column>
 								</p:dataTable>

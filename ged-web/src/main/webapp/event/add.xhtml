@@ -25,7 +25,7 @@
 	</ui:define>
 
 	<ui:define name="content">
-		<div class="p-ggrid">
+		<div class="p-grid">
 			<div class="p-col-12 p-xl-6">
 				<h:form id="eventForm">
 					<p:remoteCommand name="processForm" process="@form" update="@form growl" action="#{addEventView.save}" />
@@ -33,15 +33,13 @@
 						<h1>#{i18n['event.event']}</h1>
 						<div class="p-grid">
 
-							<div class="p-col-12 p-xl-6">
+							<div class="p-col-12">
 								<cc:inputSelect label="#{i18n['event.job_candidature']}" value="#{addEventView.event.jobCandidature}">
 									<f:selectItems value="#{addEventView.jobCandidatures}" var="jobCandidature" itemValue="#{jobCandidature}" itemLabel="#{jobCandidature}" />
 									<p:ajax event="change" process="@this" update="eventForm:state" listener="#{addEventView.updateState}" />
 								</cc:inputSelect>
 							</div>
 							
-							<div class="p-col-12 p-xl-6"></div>
-
 							<div class="p-col-12 p-xl-6">
 								<cc:inputSelect label="#{i18n['event.type']}" value="#{addEventView.event.type}">
 									<f:selectItems value="#{eventTypes.list}" var="event" itemValue="#{event}" itemLabel="#{i18n[event.name]}" />
