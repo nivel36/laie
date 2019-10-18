@@ -505,6 +505,7 @@ body .jobCandidatureStates.ui-selectonemenu-panel .ui-selectonemenu-items .ui-se
 	height: 80px;
 	overflow: hidden;
 	background-color: #0772B3;
+	background: linear-gradient(30deg, rgba(7,114,179,1) 0%, rgba(0,170,255,1) 100%);
 	color: #ffffff;
 }
 

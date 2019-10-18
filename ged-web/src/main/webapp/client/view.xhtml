@@ -16,8 +16,8 @@
 			<p:menuitem value="#{viewClientView.client.name}" disabled="true" />
 		</p:breadCrumb>
 	</ui:define>
-	
-		<ui:define name="buttons">
+
+	<ui:define name="buttons">
 		<h:form>
 			<p:commandButton value="#{i18n['action.edit']}" process="@this" action="#{viewClientView.editClient}" icon="fa fa-pencil" />
 			<p:commandButton value="#{i18n['action.export']}" process="@this" action="#{viewClientView.export}" icon="fa fa-file-excel-o" />
@@ -57,7 +57,7 @@
 						<div class="p-grid">
 							<div class="p-col-12">
 								<p:dataTable var="contact" value="#{viewClientView.contacts}" emptyMessage="#{i18n['client.no_contacts_found']}" paginator="true" paginatorPosition="bottom"
-									styleClass="ui-datatable-borderless">
+									styleClass="ui-datatable-borderless" rows="5">
 									<p:column headerText="#{i18n['contact.name']}" sortBy="#{contact.name}">
 										<h:outputText value="#{contact.name} #{contact.surname}" />
 									</p:column>

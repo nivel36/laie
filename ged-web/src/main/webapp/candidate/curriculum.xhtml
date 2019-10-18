@@ -20,18 +20,18 @@
 		</p:breadCrumb>
 	</ui:define>
 
+	<ui:define name="buttons">
+		<p:button value="#{i18n['action.back']}" outcome="#{Page.CANDIDATE.getUrl()}" styleClass="secondary-button">
+			<f:param name="id" value="#{curriculumView.candidate.id}" />
+		</p:button>
+	</ui:define>
+
 	<ui:define name="content">
 		<h:form id="form">
 			<div class="p-grid">
 				<div class="p-col-12 p-xl-8">
 					<div class="card curriculum">
 						<cc:avatar value="#{curriculumView.candidate.imageFileName}" />
-
-						<div class="buttons header-buttons">
-							<p:button value="#{i18n['action.back']}" outcome="#{Page.CANDIDATE.getUrl()}">
-								<f:param name="id" value="#{curriculumView.candidate.id}" />
-							</p:button>
-						</div>
 
 						<div class="name">#{curriculumView.candidate.fullName}</div>
 

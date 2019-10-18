@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://ged.org/ui"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://ged.org/ui" xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets" template="/WEB-INF/templates/template.xhtml">
 
 	<ui:define name="title">
@@ -22,8 +21,19 @@
 		</p:breadCrumb>
 	</ui:define>
 
+	<ui:define name="buttons">
+		<h:form>
+			<p:button value="#{i18n['action.cancel']}" outcome="#{Page.CURRICULUM.getUrl()}" styleClass="secondary-button">
+				<f:param name="id" value="#{educationView.curriculum.candidate.id}" />
+			</p:button>
+			<p:commandButton value="#{i18n['action.delete']}" action="#{educationView.delete}" process="@this" rendered="#{not educationView.newEducation}" styleClass="danger-btn" />
+			<p:commandButton value="#{i18n['action.save']}" onclick="processForm()" />
+		</h:form>
+	</ui:define>
+
 	<ui:define name="content">
 		<h:form id="education">
+		<p:remoteCommand name="processForm" process="@form" update="@form growl" action="#{educationView.save}" />
 			<div class="p-grid">
 				<div class="p-col-12 p-xl-8">
 					<div class="card">
@@ -43,8 +53,7 @@
 								</div>
 								<div class="p-col-4">
 									<h:panelGroup layout="block" id="toDateWrapper">
-										<cc:inputSelect id="toDate" label="#{i18n['education.to_date']}" value="#{educationView.education.endYear}"
-											rendered="#{not educationView.education.stillStudying}">
+										<cc:inputSelect id="toDate" label="#{i18n['education.to_date']}" value="#{educationView.education.endYear}" rendered="#{not educationView.education.stillStudying}">
 											<f:selectItem itemLabel="#{i18n['date.year']}" itemValue="" />
 											<f:selectItems var="year" value="#{educationView.years}" itemValue="#{year}" itemLabel="#{year}" />
 										</cc:inputSelect>
@@ -59,15 +68,6 @@
 									<g:input id="description" label="#{i18n['education.description']}" value="#{educationView.education.description}" type="textarea" />
 								</div>
 							</div>
-						</div>
-
-						<div class="buttons">
-							<p:button value="#{i18n['action.cancel']}" outcome="#{Page.CURRICULUM.getUrl()}" styleClass="secondary-button">
-								<f:param name="id" value="#{educationView.curriculum.candidate.id}" />
-							</p:button>
-							<p:commandButton value="#{i18n['action.delete']}" action="#{educationView.delete}" process="@this"
-								rendered="#{not educationView.newEducation}" styleClass="danger-btn" />
-							<p:commandButton value="#{i18n['action.save']}" action="#{educationView.save}" process="@form" update="@form" />
 						</div>
 					</div>
 				</div>

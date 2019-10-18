@@ -63,7 +63,7 @@ public class AddEventView extends AbstractView {
 	
 	public String save() {
 		this.eventService.save(this.event);
-		return PageEnum.EVENT_SEARCH.getRedirectedUrl();
+		return PageEnum.JOB.getRedirectedUrl(jobCandidature.getJobOffer());
 	}
 
 	public void setEvent(final Event event) {

@@ -14,7 +14,7 @@
 		<div id="#{cc.clientId}" class="card card-w-title events #{cc.attrs.styleClass}">
 			<h3>#{cc.attrs.title}</h3>
 			<p:dataTable var="event" id="events" value="#{cc.attrs.value}" emptyMessage="#{i18n['event.no_events_found']}" reflow="true" paginator="true" paginatorPosition="bottom"
-				paginatorTemplate="{PageLinks}" rows="#{cc.attrs.rows}" sortBy="#{event.date}" sortOrder="ascending" lazy="true">
+				rows="#{cc.attrs.rows}" sortBy="#{event.date}" sortOrder="ascending" lazy="true" styleClass="ui-datatable-borderless">
 
 				<p:column headerText="#{i18n['event.type']}" sortBy="#{event.type}">
 					<h:outputText value="#{i18n[event.type.name]}" />

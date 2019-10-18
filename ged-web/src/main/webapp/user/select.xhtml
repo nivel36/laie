@@ -1,15 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
-	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" 
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" 
-	xmlns:f="http://java.sun.com/jsf/core" 
-	xmlns:g="http://ged.org/ui" 
-	xmlns:h="http://java.sun.com/jsf/html" 
-	xmlns:o="http://omnifaces.org/ui"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	template="/WEB-INF/templates/dialog.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://ged.org/ui" xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets" template="/WEB-INF/templates/dialog.xhtml">
 
 	<ui:define name="title">
 		#{i18n['user.users']}
@@ -23,9 +15,8 @@
 						<cc:inputSearch searchText="#{selectUserView.searchText}" searchAction="#{selectUserView.search}" update="@form" />
 					</div>
 
-					<p:dataTable var="user" id="users" value="#{selectUserView.users}" emptyMessage="#{i18n['user.no_users_found']}" reflow="true"
-						paginator="true" paginatorPosition="bottom" paginatorTemplate="{PageLinks}" rows="#{sessionUser.rowsPerPage}" selectionMode="single"
-						selection="#{selectUserView.selectedUser}" sortBy="#{user.name}" sortOrder="descending" lazy="true">
+					<p:dataTable var="user" id="users" value="#{selectUserView.users}" emptyMessage="#{i18n['user.no_users_found']}" reflow="true" paginator="true" paginatorPosition="bottom"
+						rows="#{sessionUser.rowsPerPage}" selectionMode="single" selection="#{selectUserView.selectedUser}" sortBy="#{user.name}" sortOrder="descending" lazy="true">
 
 						<p:ajax event="rowSelect" listener="#{selectUserView.onUserSelect}" update="@form" resetValues="true" />
 

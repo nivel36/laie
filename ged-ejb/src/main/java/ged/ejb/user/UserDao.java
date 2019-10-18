@@ -121,11 +121,6 @@ public class UserDao extends AbstractDao<User> {
 	}
 
 	@Override
-	protected void postUpdate(final User user) {
-		this.updateUserClosures(user);
-	}
-
-	@Override
 	protected void preInsert(final User user) {
 		if (this.isEmailInUse(user.getEmail())) {
 			throw new DuplicateEmailException();
@@ -137,6 +132,7 @@ public class UserDao extends AbstractDao<User> {
 		if (this.isDuplicateEmail(user)) {
 			throw new DuplicateEmailException();
 		}
+		this.updateUserClosures(user);
 	}
 
 	@Override

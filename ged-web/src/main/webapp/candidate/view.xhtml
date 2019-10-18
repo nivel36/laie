@@ -26,7 +26,7 @@
 			<p:button value="#{i18n['curriculum.curriculum']}" process="@this" outcome="#{Page.CURRICULUM.getUrl()}" icon="fa fa-pencil">
 				<f:param name="id" value="#{viewCandidateView.candidate.id}" />
 			</p:button>
-			<p:commandButton value="#{i18n['action.edit']}" process="@this" action="#{viewCandidateView.editUser}" icon="fa fa-pencil" />
+			<p:commandButton value="#{i18n['action.edit']}" process="@this" action="#{viewCandidateView.editCandidate}" icon="fa fa-pencil" />
 			<p:commandButton value="#{i18n['action.export']}" process="@this" action="#{viewCandidateView.export}" icon="fa fa-file-excel-o" />
 		</h:form>
 	</ui:define>
@@ -109,7 +109,7 @@
 				</div>
 			</div>
 
-			<div class="p-col-12 p-xl-6">
+			<div class="p-col-12 p-xl-5">
 				<h:form id="file_form" enctype="multipart/form-data">
 					<div class="card card-w-title files">
 						<h3>#{i18n['file.files']}</h3>
@@ -118,7 +118,7 @@
 								<p:dataTable var="file" id="files" value="#{filePanelView.files}" emptyMessage="#{i18n['file.no_files']}" paginator="true" paginatorPosition="bottom" reflow="true" rows="5"
 									rowKey="#{file.id}" styleClass="ui-datatable-borderless">
 
-									<p:column headerText="#{i18n['file.name']}">
+									<p:column>
 										<h:commandLink action="#{filePanelView.openFile(file)}">
 											<h:outputText value="#{file.name}" />
 										</h:commandLink>

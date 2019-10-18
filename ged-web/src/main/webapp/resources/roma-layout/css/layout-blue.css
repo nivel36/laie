@@ -1590,6 +1590,10 @@ a {
 	padding-top: 90px;
 }
 
+.layout-wrapper .layout-main.index {
+	padding-top: 45px;
+}
+
 .layout-wrapper .layout-main .layout-content {
 	padding: 16px;
 }
@@ -1920,6 +1924,16 @@ a {
 		-webkit-transition: margin-left 0.2s;
 		transition: margin-left 0.2s;
 	}
+	
+	.layout-wrapper .layout-main.index {
+		margin-left: 0;
+		padding-top: 45px;
+		-moz-transition: margin-left 0.2s;
+		-o-transition: margin-left 0.2s;
+		-webkit-transition: margin-left 0.2s;
+		transition: margin-left 0.2s;
+	}
+	
 	.layout-wrapper .layout-content-mask {
 		display: none;
 		background-color: #252529;
@@ -1953,6 +1967,15 @@ a {
 		.layout-wrapper .layout-main {
 		margin-left: 0;
 		padding-top: 135px;
+		-moz-transition: margin-left 0.2s;
+		-o-transition: margin-left 0.2s;
+		-webkit-transition: margin-left 0.2s;
+		transition: margin-left 0.2s;
+	}
+	
+	.layout-wrapper .layout-main.index {
+		margin-left: 0;
+		padding-top: 45px;
 		-moz-transition: margin-left 0.2s;
 		-o-transition: margin-left 0.2s;
 		-webkit-transition: margin-left 0.2s;

@@ -25,7 +25,7 @@
 			<div class="p-grid">
 				<div class="p-col-12">
 					<p:dataTable var="jobOffer" value="#{cc.attrs.value}" emptyMessage="#{i18n['job.no_jobs_found']}" reflow="true" paginator="true"
-						paginatorPosition="bottom" paginatorTemplate="{PageLinks}" rows="#{cc.attrs.rows}" sortBy="#{jobOffer.title}"
+						paginatorPosition="bottom" rows="#{cc.attrs.rows}" sortBy="#{jobOffer.title}"
 						sortOrder="descending" styleClass="ui-datatable-borderless">
 
 						<p:column headerText="#{i18n['job.title']}">
