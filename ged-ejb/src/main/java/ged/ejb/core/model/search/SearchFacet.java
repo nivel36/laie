@@ -6,7 +6,7 @@ public class SearchFacet {
 	
 	private final String name;
 	
-	private int[] selectedFactes;
+	private String[] selectedFactes;
 
 	public SearchFacet(final String name, final String field) {
 		this.name = name;
@@ -25,11 +25,11 @@ public class SearchFacet {
 		return name;
 	}
 
-	public int[] getSelectedFactes() {
+	public String[] getSelectedFactes() {
 		return selectedFactes;
 	}
 
-	public void selectFacets(int[] facets) {
+	public void selectFacets(String[] facets) {
 		this.selectedFactes = facets;
 	}
 

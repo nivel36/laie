@@ -57,7 +57,6 @@ public class PersistenceFacade {
 			return new HashMap<>();
 		}
 		final Map<String, List<Facet>> allFacets = new HashMap<>();
-
 		final FacetManager facetManager = fullTextQuery.getFacetManager();
 
 		for (final SearchFacet searchFacet : searchFacets) {
@@ -77,7 +76,13 @@ public class PersistenceFacade {
 				final int facetsLength = searchFacet.getSelectedFactes().length;
 				final Facet[] facetArray = new Facet[facetsLength];
 				for (int i = 0; i < facetsLength; i++) {
-					facetArray[i] = facets.get(searchFacet.getSelectedFactes()[i]);
+					for(String selectedFacet : searchFacet.getSelectedFactes()) {
+						for(Facet facet: facets) {
+							if(facet.getValue().equals(selectedFacet)) {
+								facetArray[i] = facet;
+							}
+						}
+					}
 				}
 				facetSelection.selectFacets(FacetCombine.AND, facetArray);
 			}

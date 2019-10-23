@@ -23,7 +23,7 @@ public abstract class AbstractLazyDataModel<T extends AbstractEntity> extends La
 
 	protected String searchText;
 
-	public void addSearchFilter(final String field, final String value, final int... selectedFacets) {
+	public void addSearchFilter(final String field, final String value, final String... selectedFacets) {
 		final SearchFacet searchFacet = new SearchFacet(field, value);
 		searchFacet.selectFacets(selectedFacets);
 		this.searchFilter.addFacet(searchFacet);
@@ -53,7 +53,7 @@ public abstract class AbstractLazyDataModel<T extends AbstractEntity> extends La
 		final Page page = new Page(first, pageSize);
 		final SortField sortField;
 		if (sortOrder != null) {
-			sortField = new SortField(sortFieldName, sortOrder == SortOrder.DESCENDING);
+			sortField = new SortField(sortFieldName, sortOrder == SortOrder.ASCENDING);
 		} else {
 			sortField = null;
 		}
