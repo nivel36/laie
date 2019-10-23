@@ -21,7 +21,7 @@
 
 	<composite:implementation>
 		<div id="#{cc.clientId}" class="card card-w-title jobOffers  #{cc.attrs.styleClass}">
-			<h3>#{cc.attrs.title}</h3>
+			<h1>#{cc.attrs.title}</h1>
 			<div class="p-grid">
 				<div class="p-col-12">
 					<p:dataTable var="jobOffer" value="#{cc.attrs.value}" emptyMessage="#{i18n['job.no_jobs_found']}" reflow="true" paginator="true"

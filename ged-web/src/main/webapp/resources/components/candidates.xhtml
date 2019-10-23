@@ -12,7 +12,7 @@
 
 	<composite:implementation>
 		<div id="#{cc.clientId}" class="card card-w-title candidates #{cc.attrs.styleClass}">
-			<h3>#{cc.attrs.title}</h3>
+			<h1>#{cc.attrs.title}</h1>
 
 			<p:dataTable var="candidate" id="candidates" value="#{cc.attrs.value}" emptyMessage="#{i18n['candidate.no_candidates_found']}" reflow="true" paginator="true"
 				paginatorPosition="bottom" rows="#{cc.attrs.rows}" sortBy="#{candidate.name}" sortOrder="descending" lazy="true" styleClass="ui-datatable-borderless">

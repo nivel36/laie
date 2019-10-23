@@ -55,8 +55,8 @@ public class SearchEventView extends AbstractView {
 
 	public void search() {
 		logger.debug("Search events action performed");
-		this.events.clearSearchFilters();
 		this.events.addSearchFilter("status", "status.name");
+		this.events.clearSearchFilters();
 	}
 
 	public void setEventService(final EventService eventService) {
@@ -66,5 +66,4 @@ public class SearchEventView extends AbstractView {
 	public void setSearchState(final JobCandidatureState searchState) {
 		this.searchState = searchState;
 	}
-
 }

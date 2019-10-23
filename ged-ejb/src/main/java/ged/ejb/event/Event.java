@@ -53,6 +53,7 @@ public class Event extends AbstractEntity {
 	private EventType type;
 
 	@ManyToOne
+	@IndexedEmbedded
 	private User user;
 
 	@Override

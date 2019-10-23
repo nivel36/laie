@@ -54,17 +54,16 @@
 								</g:input>
 							</div>
 							<div class="p-col-12 p-xl-6">
-
 								<g:input label="#{i18n['meeting.location']}" value="#{addMeetingView.meeting.location}" />
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="p-col-12 p-xl-6">
+				<div class="p-col-12 p-sm-8 p-lg-6 p-xl-4">
 					<div class="card card-w-title ui-fluid">
 						<h1>#{i18n['meeting.header.attendees']}</h1>
 						<div class="ui-grid">
-							<div class="p-col-12 p-sm-6">
+							<div class="p-col-12">
 								<div class="input-group">
 									<p:autoComplete id="input" value="#{addMeetingView.attendee}" inputStyleClass="input autocomplete" completeMethod="#{addMeetingView.searchPerson}" forceSelection="true"
 										minQueryLength="3" var="person" itemValue="#{person}" itemLabel="#{person}" converter="personConverter">
@@ -75,7 +74,7 @@
 									</p:autoComplete>
 								</div>
 							</div>
-							<div class="p-col-12 p-sm-6">
+							<div class="p-col-12">
 								<h:panelGroup layout="block" id="attendees">
 									<ui:repeat var="person" value="#{addMeetingView.attendees}" varStatus="varStatus">
 										<h:panelGroup layout="block" id="attendee" styleClass="attendee">

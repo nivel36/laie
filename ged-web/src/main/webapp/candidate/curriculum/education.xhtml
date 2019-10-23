@@ -26,47 +26,47 @@
 			<p:button value="#{i18n['action.cancel']}" outcome="#{Page.CURRICULUM.getUrl()}" styleClass="secondary-button">
 				<f:param name="id" value="#{educationView.curriculum.candidate.id}" />
 			</p:button>
-			<p:commandButton value="#{i18n['action.delete']}" action="#{educationView.delete}" process="@this" rendered="#{not educationView.newEducation}" styleClass="danger-btn" />
-			<p:commandButton value="#{i18n['action.save']}" onclick="processForm()" />
+			<p:commandButton value="#{i18n['action.delete']}" action="#{educationView.delete}" process="@this" rendered="#{not educationView.newEducation}" styleClass="danger-btn">
+				<p:confirm message="#{i18n['education.message.remove']}" icon="fa fa-exclamation-triangle" />
+			</p:commandButton>
+			<p:commandButton value="#{i18n['action.save']}" onclick="processForm()" styleClass="success-btn" />
 		</h:form>
 	</ui:define>
 
 	<ui:define name="content">
 		<h:form id="education">
-		<p:remoteCommand name="processForm" process="@form" update="@form growl" action="#{educationView.save}" />
+			<p:remoteCommand name="processForm" process="@form" update="@form growl" action="#{educationView.save}" />
 			<div class="p-grid">
-				<div class="p-col-12 p-xl-8">
-					<div class="card">
-						<div class="ui-fluid">
-							<div class="p-grid">
-								<div class="p-col-6">
-									<g:input id="degree" label="#{i18n['education.degree']}" value="#{educationView.education.degree}" required="true" />
-								</div>
-								<div class="p-col-6">
-									<g:input id="school" label="#{i18n['education.school']}" value="#{educationView.education.school}" required="true" />
-								</div>
-								<div class="p-col-4">
-									<cc:inputSelect id="fromDate" label="#{i18n['education.from_date']}" value="#{educationView.education.startYear}">
+				<div class="p-col-12 p-xl-6">
+					<div class="card ui-fluid">
+						<div class="p-grid">
+							<div class="p-col-12 p-sm-6">
+								<g:input id="degree" label="#{i18n['education.degree']}" value="#{educationView.education.degree}" required="true" />
+							</div>
+							<div class="p-col-12 p-sm-6">
+								<g:input id="school" label="#{i18n['education.school']}" value="#{educationView.education.school}" required="true" />
+							</div>
+							<div class="p-col-12 p-sm-4">
+								<cc:inputSelect id="fromDate" label="#{i18n['education.from_date']}" value="#{educationView.education.startYear}">
+									<f:selectItem itemLabel="#{i18n['date.year']}" itemValue="" />
+									<f:selectItems var="year" value="#{educationView.years}" itemValue="#{year}" itemLabel="#{year}" />
+								</cc:inputSelect>
+							</div>
+							<div class="p-col-12 p-sm-4">
+								<h:panelGroup layout="block" id="toDateWrapper">
+									<cc:inputSelect id="toDate" label="#{i18n['education.to_date']}" value="#{educationView.education.endYear}" rendered="#{not educationView.education.stillStudying}">
 										<f:selectItem itemLabel="#{i18n['date.year']}" itemValue="" />
 										<f:selectItems var="year" value="#{educationView.years}" itemValue="#{year}" itemLabel="#{year}" />
 									</cc:inputSelect>
-								</div>
-								<div class="p-col-4">
-									<h:panelGroup layout="block" id="toDateWrapper">
-										<cc:inputSelect id="toDate" label="#{i18n['education.to_date']}" value="#{educationView.education.endYear}" rendered="#{not educationView.education.stillStudying}">
-											<f:selectItem itemLabel="#{i18n['date.year']}" itemValue="" />
-											<f:selectItems var="year" value="#{educationView.years}" itemValue="#{year}" itemLabel="#{year}" />
-										</cc:inputSelect>
-									</h:panelGroup>
-								</div>
-								<div class="p-col-4">
-									<g:input id="still" label="#{i18n['job.still_working']}" value="#{educationView.education.stillStudying}" type="checkbox">
-										<f:ajax event="change" render="education:toDateWrapper" />
-									</g:input>
-								</div>
-								<div class="p-col-12">
-									<g:input id="description" label="#{i18n['education.description']}" value="#{educationView.education.description}" type="textarea" />
-								</div>
+								</h:panelGroup>
+							</div>
+							<div class="p-col-12 p-sm-4">
+								<g:input id="still" label="#{i18n['job.still_working']}" value="#{educationView.education.stillStudying}" type="checkbox">
+									<f:ajax event="change" render="education:toDateWrapper" />
+								</g:input>
+							</div>
+							<div class="p-col-12">
+								<g:input id="description" label="#{i18n['education.description']}" value="#{educationView.education.description}" type="textarea" />
 							</div>
 						</div>
 					</div>

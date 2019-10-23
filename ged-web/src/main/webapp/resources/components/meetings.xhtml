@@ -22,7 +22,7 @@
 
 	<composite:implementation>
 		<div id="#{cc.clientId}" class="card card-w-title meetings  #{cc.attrs.styleClass}">
-			<h3>#{cc.attrs.title}</h3>
+			<h1>#{cc.attrs.title}</h1>
 			<div class="panel-content-data">
 				<ui:repeat var="meeting" value="#{cc.attrs.value}" rendered="#{not empty cc.attrs.value}">
 					<cc:meeting value="#{meeting}" />

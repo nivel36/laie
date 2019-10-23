@@ -246,14 +246,14 @@ public class PersistenceFacade {
 		if (this.hasSortFields(sortFields)) {
 			final int orderSize = sortFields.size();
 			final SortFieldContext sfc = qb.sort().byField(sortFields.get(0).getField());
-			if (sortFields.get(0).isDescending()) {
+			if (sortFields.get(0).isAscending()) {
 				sfc.asc();
 			} else {
 				sfc.desc();
 			}
 			for (int i = 1; i < orderSize; i++) {
 				sfc.andByField(sortFields.get(i).getField());
-				if (sortFields.get(0).isDescending()) {
+				if (sortFields.get(0).isAscending()) {
 					sfc.asc();
 				} else {
 					sfc.desc();

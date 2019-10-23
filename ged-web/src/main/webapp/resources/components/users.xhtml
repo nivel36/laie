@@ -12,7 +12,7 @@
 
 	<composite:implementation>
 		<div id="#{cc.clientId}" class="card card-w-title users  #{cc.attrs.styleClass}">
-			<h3>#{cc.attrs.title}</h3>
+			<h1>#{cc.attrs.title}</h1>
 			<p:dataTable id="users" value="#{cc.attrs.value}" var="user" emptyMessage="#{i18n['user.no_team']}" reflow="true" paginator="true" paginatorPosition="bottom"
 				rows="#{cc.attrs.rows}" sortBy="#{user.name}" sortOrder="descending" lazy="true" styleClass="ui-datatable-borderless">
 				<p:column>

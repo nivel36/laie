@@ -2,7 +2,7 @@ package ged.ejb.core.model.search;
 
 public class SortField {
 
-	private boolean descending;
+	private boolean ascending;
 
 	private final String field;
 
@@ -11,17 +11,17 @@ public class SortField {
 		this.field = field;
 	}
 
-	public SortField(final String field, final boolean descending) {
+	public SortField(final String field, final boolean ascending) {
 		super();
 		this.field = field;
-		this.descending = descending;
+		this.ascending = ascending;
 	}
 
 	public String getField() {
 		return field;
 	}
 
-	public boolean isDescending() {
-		return descending;
+	public boolean isAscending() {
+		return ascending;
 	}
 }

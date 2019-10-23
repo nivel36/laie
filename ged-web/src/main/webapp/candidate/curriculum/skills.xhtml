@@ -21,25 +21,25 @@
 		</p:breadCrumb>
 	</ui:define>
 
+	<ui:define name="buttons">
+		<h:form>
+			<p:button value="#{i18n['action.cancel']}" outcome="#{Page.CURRICULUM.getUrl()}" styleClass="secondary-button">
+				<f:param name="id" value="#{skillsView.curriculum.candidate.id}" />
+			</p:button>
+			<p:commandButton value="#{i18n['action.save']}" onclick="save()" styleClass="success-btn" />
+		</h:form>
+	</ui:define>
+
 	<ui:define name="content">
 		<h:form>
+			<p:remoteCommand name="save" process="@form" update="growl @form" action="#{skillsView.save}" />
 			<div class="p-grid">
-				<div class="p-col-12 p-xl-5">
-					<div class="card card-w-title">
+				<div class="p-col-12 p-xl-6">
+					<div class="card card-w-title ui-fluid">
 						<h1>#{i18n['skill.skills']}</h1>
 						<div class="p-grid">
 							<div class="p-col-12">
-								<div class="ui-fluid">
-									<p:chips value="#{skillsView.skills}" converter="skillConverter" />
-								</div>
-							</div>
-							<div class="p-col-12">
-								<div class="buttons">
-									<p:button value="#{i18n['action.cancel']}" outcome="#{Page.CURRICULUM.getUrl()}" styleClass="secondary-button">
-										<f:param name="id" value="#{skillsView.curriculum.candidate.id}" />
-									</p:button>
-									<p:commandButton value="#{i18n['action.save']}" action="#{skillsView.save}" process="@form" update="growl @form" />
-								</div>
+								<p:chips value="#{skillsView.skills}" converter="skillConverter" />
 							</div>
 						</div>
 					</div>

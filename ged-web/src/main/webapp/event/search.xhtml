@@ -23,24 +23,22 @@
 	</ui:define>
 
 	<ui:define name="content">
-		<h:form id="searchevents">
+		<h:form id="searchEvents">
 			<p:remoteCommand name="export" process="@form" update="@form growl" action="#{searchEventView.export}" />
-			<div class="card">
+			<div class="card ui-fluid">
 				<div class="p-grid">
 					<div class="p-col-12 p-xl-5">
-						<div class="searchBar ui-fluid">
-							<p:selectOneMenu id="state" value="#{searchEventView.searchState}" styleClass="input input-select" panelStyleClass="jobCandidatureStates">
-								<f:selectItem />
-								<f:selectItems value="#{jobCandidatureStates.list}" var="jobCandidatureState" itemValue="#{jobCandidatureState}" itemLabel="#{g:translate(jobCandidatureState.name)}" />
-								<p:ajax event="change" listener="#{searchEventView.search}" process="@form" update="@form" />
-							</p:selectOneMenu>
-						</div>
+						<p:selectOneMenu id="state" value="#{searchEventView.searchState}" styleClass="input input-select" panelStyleClass="jobCandidatureStates">
+							<f:selectItem />
+							<f:selectItems value="#{jobCandidatureStates.list}" var="jobCandidatureState" itemValue="#{jobCandidatureState}" itemLabel="#{g:translate(jobCandidatureState.name)}" />
+							<p:ajax event="change" listener="#{searchEventView.search}" process="@form" update="@form" />
+						</p:selectOneMenu>
 					</div>
 					<div class="p-col-12">
 						<p:dataTable var="event" id="events" value="#{searchEventView.events}" emptyMessage="#{i18n['event.no_events_found']}" reflow="true" paginator="true"
-							paginatorPosition="bottom" rows="#{sessionUser.rowsPerPage}" sortBy="#{event.date}" sortOrder="ascending" lazy="true">
-
-							<p:column headerText="#{i18n['event.type']}" sortBy="#{event.type}">
+							paginatorPosition="bottom" rows="#{sessionUser.rowsPerPage}" sortBy="#{event.date}" sortOrder="ascending" lazy="true" >
+							
+							<p:column headerText="#{i18n['event.type']}">
 								<h:outputText value="#{i18n[event.type.name]}" />
 							</p:column>
 
@@ -56,7 +54,7 @@
 								</h:link>
 							</p:column>
 
-							<p:column headerText="#{i18n['event.client']}" priority="6" >
+							<p:column headerText="#{i18n['event.client']}" priority="6">
 								<h:link value="#{event.jobCandidature.jobOffer.client.name}" outcome="#{Page.CLIENT.getUrl()}">
 									<f:param name="id" value="#{event.jobCandidature.jobOffer.client.id}" />
 								</h:link>
@@ -74,11 +72,8 @@
 								</h:outputText>
 							</p:column>
 
-							<p:column headerText="#{i18n['event.status']}" sortBy="#{event.status}">
-								<p:link outcome="#{Page.EVENT_ADD.getUrl()}">
-									<f:param name="jobCandidatureId" value="#{event.jobCandidature.id}" />
-									<div class="tag #{event.status.color}">#{g:translate(event.status.name)}</div>
-								</p:link>
+							<p:column headerText="#{i18n['event.status']}">
+								<div class="tag #{event.status.color}">#{g:translate(event.status.name)}</div>
 							</p:column>
 						</p:dataTable>
 					</div>
