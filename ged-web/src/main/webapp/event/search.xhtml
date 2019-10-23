@@ -34,6 +34,10 @@
 							<p:ajax event="change" listener="#{searchEventView.search}" process="@form" update="@form" />
 						</p:selectOneMenu>
 					</div>
+					<div class="p-col-12 p-xl-5">
+						<p:selectBooleanCheckbox itemLabel="#{i18n['show_last_events']}" value="#{searchEventView.showLastEvents}" />
+					</div>
+
 					<div class="p-col-12">
 						<p:dataTable var="event" id="events" value="#{searchEventView.events}" emptyMessage="#{i18n['event.no_events_found']}" reflow="true" paginator="true"
 							paginatorPosition="bottom" rows="#{sessionUser.rowsPerPage}" sortBy="#{event.date}" sortOrder="ascending" lazy="true">

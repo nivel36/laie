@@ -30,6 +30,8 @@ public class SearchEventView extends AbstractView {
 
 	private JobCandidatureState searchState;
 
+	private boolean showLastEvents;
+
 	public void export() throws IOException {
 		logger.debug("Export events action performed");
 	}
@@ -53,10 +55,14 @@ public class SearchEventView extends AbstractView {
 		return new EventLazyDataModel(this.eventService);
 	}
 
+	public boolean isShowLastEvents() {
+		return showLastEvents;
+	}
+
 	public void search() {
 		logger.debug("Search events action performed");
 		this.events.clearSearchFilters();
-		if(getSearchState() != null ) {
+		if (getSearchState() != null) {
 			this.events.addSearchFilter("status", "status.name", getSearchState().getName());
 		}
 	}
@@ -67,5 +73,9 @@ public class SearchEventView extends AbstractView {
 
 	public void setSearchState(final JobCandidatureState searchState) {
 		this.searchState = searchState;
+	}
+
+	public void setShowLastEvents(boolean showLastEvents) {
+		this.showLastEvents = showLastEvents;
 	}
 }
