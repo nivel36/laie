@@ -51,14 +51,13 @@ public class PersistenceFacade {
 		this.em = em;
 	}
 
-	private Map<String, List<Facet>> buildFacets(final SearchFacets searchFacets, final QueryBuilder qb,
+	private void enableFaceting(final SearchFacets searchFacets, final QueryBuilder qb,
 			final FullTextQuery fullTextQuery) {
-		if (searchFacets == null) {
-			return new HashMap<>();
+		if(searchFacets == null) {
+			return;
 		}
-		final Map<String, List<Facet>> allFacets = new HashMap<>();
-		final FacetManager facetManager = fullTextQuery.getFacetManager();
 
+		final FacetManager facetManager = fullTextQuery.getFacetManager();
 		for (final SearchFacet searchFacet : searchFacets) {
 			final String facetName = searchFacet.getName();
 			final String facetField = searchFacet.getField();
@@ -66,28 +65,6 @@ public class PersistenceFacade {
 					.createFacetingRequest();
 			facetManager.enableFaceting(facetingRequest);
 		}
-
-		for (final SearchFacet searchFacet : searchFacets) {
-			final String facetName = searchFacet.getName();
-			allFacets.put(facetName, fullTextQuery.getFacetManager().getFacets(facetName));
-			if (searchFacet.hasSelectedFacets()) {
-				final FacetSelection facetSelection = facetManager.getFacetGroup(facetName);
-				final List<Facet> facets = facetManager.getFacets(facetName);
-				final int facetsLength = searchFacet.getSelectedFactes().length;
-				final Facet[] facetArray = new Facet[facetsLength];
-				for (int i = 0; i < facetsLength; i++) {
-					for(String selectedFacet : searchFacet.getSelectedFactes()) {
-						for(Facet facet: facets) {
-							if(facet.getValue().equals(selectedFacet)) {
-								facetArray[i] = facet;
-							}
-						}
-					}
-				}
-				facetSelection.selectFacets(FacetCombine.AND, facetArray);
-			}
-		}
-		return allFacets;
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -227,7 +204,7 @@ public class PersistenceFacade {
 		}
 	}
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public <T extends Identifiable> SearchResult<T> search(final Class<T> type, final Page page,
 			final List<SortField> sortFields, final SearchFacets searchFacets, final String searchText,
 			final String... fields) {
@@ -238,13 +215,66 @@ public class PersistenceFacade {
 		fullTextQuery.setHint(CACHE_STORE_MODE, CacheStoreMode.REFRESH);
 		this.paginate(page, fullTextQuery);
 		this.sortQuery(sortFields, qb, fullTextQuery);
-		final Map<String, List<Facet>> allFacets = this.buildFacets(searchFacets, qb, fullTextQuery);
-		final List<T> results = fullTextQuery.getResultList();
-		if (results instanceof ArrayList) {
-			return new SearchResult<>(results, fullTextQuery.getResultSize(), allFacets);
-		} else {
-			return new SearchResult<>(new ArrayList<>(results), fullTextQuery.getResultSize(), allFacets);
+		this.enableFaceting(searchFacets, qb, fullTextQuery);
+		final Map<String, List<Facet>> allFacets = selectFacets(searchFacets, fullTextQuery);
+		if (searchFacets != null && !searchFacets.isEmpty()) {
+			boolean hasFacet = false;
+			for (String key : allFacets.keySet()) {
+				if (hasFacet) {
+					break;
+				}
+				for (Facet facet : allFacets.get(key)) {
+					if (searchFacets.containsFacet(facet.getFieldName(), key, facet.getValue())) {
+						hasFacet = true;
+						break;
+					}
+				}
+			}
+			if (!hasFacet) {
+				return buildSearchResult(new ArrayList<>(), 0, allFacets);
+			}
 		}
+		return buildSearchResult(fullTextQuery.getResultList(), fullTextQuery.getResultSize(), allFacets);
+	}
+
+	private <T extends Identifiable> SearchResult<T> buildSearchResult(final List<T> results, int resultsSize,
+			final Map<String, List<Facet>> allFacets) {
+		if (results instanceof ArrayList) {
+			return new SearchResult<>(results, resultsSize, allFacets);
+		} else {
+			return new SearchResult<>(new ArrayList<>(results), resultsSize, allFacets);
+		}
+	}
+
+	private Map<String, List<Facet>> selectFacets(final SearchFacets searchFacets, final FullTextQuery fullTextQuery) {
+		if (searchFacets == null) {
+			return new HashMap<>();
+		}
+		final Map<String, List<Facet>> allFacets = new HashMap<>();
+
+		final FacetManager facetManager = fullTextQuery.getFacetManager();
+		for (final SearchFacet searchFacet : searchFacets) {
+			final String facetName = searchFacet.getName();
+			allFacets.put(facetName, fullTextQuery.getFacetManager().getFacets(facetName));
+			if (searchFacet.hasSelectedFacets()) {
+				final FacetSelection facetSelection = facetManager.getFacetGroup(facetName);
+				final List<Facet> facets = facetManager.getFacets(facetName);
+				final int facetsLength = searchFacet.getSelectedFactes().length;
+				final List<Facet> facetList = new ArrayList<>();
+				for (int i = 0; i < facetsLength; i++) {
+					for (String selectedFacet : searchFacet.getSelectedFactes()) {
+						for (Facet facet : facets) {
+							if (facet.getValue().equals(selectedFacet)) {
+								facetList.add(facet);
+							}
+						}
+					}
+				}
+				final Facet[] selectedMatchedFacets = facetList.toArray(new Facet[0]);
+				facetSelection.selectFacets(FacetCombine.OR, selectedMatchedFacets);
+			}
+		}
+		return allFacets;
 	}
 
 	private void sortQuery(final List<SortField> sortFields, final QueryBuilder qb, final FullTextQuery fullTextQuery) {

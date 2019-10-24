@@ -22,8 +22,25 @@ public class SearchFacets implements Iterable<SearchFacet> {
 	public Iterator<SearchFacet> iterator() {
 		return this.facets.iterator();
 	}
-	
+
 	public void clear() {
 		facets.clear();
+	}
+
+	public int getSize() {
+		return facets.size();
+	}
+
+	public boolean isEmpty() {
+		return facets.size() == 0;
+	}
+
+	public boolean containsFacet(String field, String name, String selectedFacet) {
+		for (SearchFacet searchFacet : facets) {
+			if (searchFacet.getName().equals(name) && searchFacet.getField().equals(field) && searchFacet.hasFacet(selectedFacet)) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

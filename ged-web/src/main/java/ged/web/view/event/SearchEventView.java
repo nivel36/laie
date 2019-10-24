@@ -12,7 +12,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ged.ejb.event.EventService;
-import ged.ejb.job.candidature.JobCandidatureState;
 import ged.web.core.view.AbstractView;
 
 @Named
@@ -28,9 +27,7 @@ public class SearchEventView extends AbstractView {
 	@Inject
 	protected transient EventService eventService;
 
-	private JobCandidatureState searchState;
-
-	private boolean showLastEvents;
+	private String[] searchStates;
 
 	public void export() throws IOException {
 		logger.debug("Export events action performed");
@@ -40,8 +37,8 @@ public class SearchEventView extends AbstractView {
 		return this.events;
 	}
 
-	public JobCandidatureState getSearchState() {
-		return this.searchState;
+	public String[] getSearchStates() {
+		return this.searchStates;
 	}
 
 	@PostConstruct
@@ -55,15 +52,11 @@ public class SearchEventView extends AbstractView {
 		return new EventLazyDataModel(this.eventService);
 	}
 
-	public boolean isShowLastEvents() {
-		return showLastEvents;
-	}
-
 	public void search() {
 		logger.debug("Search events action performed");
 		this.events.clearSearchFilters();
-		if (getSearchState() != null) {
-			this.events.addSearchFilter("status", "status.name", getSearchState().getName());
+		if (getSearchStates() != null && getSearchStates().length > 0) {
+			this.events.addSearchFilter("status", "status.name", getSearchStates());
 		}
 	}
 
@@ -71,11 +64,7 @@ public class SearchEventView extends AbstractView {
 		this.eventService = eventService;
 	}
 
-	public void setSearchState(final JobCandidatureState searchState) {
-		this.searchState = searchState;
-	}
-
-	public void setShowLastEvents(boolean showLastEvents) {
-		this.showLastEvents = showLastEvents;
+	public void setSearchStates(final String[] searchStates) {
+		this.searchStates = searchStates;
 	}
 }
