@@ -377,7 +377,7 @@ body .jobCandidatureStates.ui-selectonemenu-panel .ui-selectonemenu-items .ui-se
 .curriculum .section .buttons {
 	position: absolute;
 	right: 0px;
-	top: 0px;
+	bottom: 0px;
 }
 
 .curriculum .name {

@@ -1,6 +1,6 @@
 package ged.ejb.event;
 
-public enum EventType {
+public enum JobCandidatureEventType {
 
 	EMAIL("event_type.email", "fa-envelope"), //
 	MEETING("event_type.meeting", "fa-pencil"), //
@@ -13,7 +13,7 @@ public enum EventType {
 
 	private String name;
 
-	EventType(final String name, final String icon) {
+	JobCandidatureEventType(final String name, final String icon) {
 		this.name = name;
 		this.icon = icon;
 	}

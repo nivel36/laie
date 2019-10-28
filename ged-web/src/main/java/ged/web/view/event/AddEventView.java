@@ -10,8 +10,8 @@ import javax.inject.Named;
 import org.omnifaces.cdi.Param;
 
 import ged.ejb.core.model.Page;
-import ged.ejb.event.Event;
-import ged.ejb.event.EventService;
+import ged.ejb.event.JobCandidatureEvent;
+import ged.ejb.event.JobCandidatureEventService;
 import ged.ejb.job.candidature.JobCandidature;
 import ged.ejb.job.candidature.JobCandidatureService;
 import ged.ejb.user.User;
@@ -24,22 +24,22 @@ public class AddEventView extends AbstractView {
 
 	private static final long serialVersionUID = 1L;
 
-	private Event event;
+	private JobCandidatureEvent jobCandidatureEvent;
 	
 	@Inject
 	@Param(name = "jobCandidatureId")
 	private JobCandidature jobCandidature;
 
 	@Inject
-	private transient EventService eventService;
+	private transient JobCandidatureEventService jobCandidatureEventService;
 
 	private List<JobCandidature> jobCandidatures;
 
 	@Inject
 	private transient JobCandidatureService jobCandidatureService;
 
-	public Event getEvent() {
-		return this.event;
+	public JobCandidatureEvent getEvent() {
+		return this.jobCandidatureEvent;
 	}
 
 	public List<JobCandidature> getJobCandidatures() {
@@ -47,31 +47,31 @@ public class AddEventView extends AbstractView {
 	}
 	
 	public void updateState() {
-		this.event.setStatus(this.event.getJobCandidature().getJobCandidatureState());
+		this.jobCandidatureEvent.setStatus(this.jobCandidatureEvent.getJobCandidature().getJobCandidatureState());
 	}
 
 	@PostConstruct
 	public void init() {
 		final User user = this.sessionUser.get();
-		this.event = initEvent(user);
+		this.jobCandidatureEvent = initEvent(user);
 		this.jobCandidatures = this.jobCandidatureService.findJobCandidatures(user, Page.ALL);
 	}
 
-	public Event initEvent(final User user){
-		return new Event(user, jobCandidature);
+	public JobCandidatureEvent initEvent(final User user){
+		return new JobCandidatureEvent(user, jobCandidature);
 	}
 	
 	public String save() {
-		this.eventService.save(this.event);
+		this.jobCandidatureEventService.save(this.jobCandidatureEvent);
 		return PageEnum.JOB.getRedirectedUrl(jobCandidature.getJobOffer());
 	}
 
-	public void setEvent(final Event event) {
-		this.event = event;
+	public void setEvent(final JobCandidatureEvent jobCandidatureEvent) {
+		this.jobCandidatureEvent = jobCandidatureEvent;
 	}
 
-	public void setEventService(final EventService eventService) {
-		this.eventService = eventService;
+	public void setEventService(final JobCandidatureEventService jobCandidatureEventService) {
+		this.jobCandidatureEventService = jobCandidatureEventService;
 	}
 
 	public void setJobCandidatureService(final JobCandidatureService jobCandidatureService) {

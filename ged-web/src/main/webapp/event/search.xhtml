@@ -28,9 +28,10 @@
 			<div class="card ui-fluid">
 				<div class="p-grid">
 					<div class="p-col-12 p-xl-5">
-						<p:selectCheckboxMenu id="state" value="#{searchEventView.searchStates}" panelStyleClass="jobCandidatureStates" multiple="true">
+						<p:selectCheckboxMenu id="state" value="#{searchEventView.searchStates}" panelStyleClass="jobCandidatureStates" multiple="true" >
 							<f:selectItems value="#{jobCandidatureStates.list}" var="jobCandidatureState" itemValue="#{jobCandidatureState.name}" itemLabel="#{g:translate(jobCandidatureState.name)}" />
-							<p:ajax event="change" listener="#{searchEventView.search}" process="@form" update="@form" />
+							<p:ajax event="change" listener="#{searchEventView.search}" process="@this" update="events" />
+							<p:ajax event="toggleSelect" listener="#{searchEventView.search}" process="@this" update="events" />
 						</p:selectCheckboxMenu>
 					</div>
 

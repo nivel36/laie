@@ -10,7 +10,7 @@ import javax.inject.Named;
 
 import ged.ejb.candidate.CandidateService;
 import ged.ejb.core.model.Page;
-import ged.ejb.event.EventService;
+import ged.ejb.event.JobCandidatureEventService;
 import ged.ejb.job.meeting.Meeting;
 import ged.ejb.job.meeting.MeetingService;
 import ged.ejb.job.offer.JobOffer;
@@ -34,7 +34,7 @@ public class IndexView extends AbstractView {
 	private EventLazyDataModel events;
 
 	@Inject
-	private transient EventService eventService;
+	private transient JobCandidatureEventService jobCandidatureEventService;
 
 	private List<JobOffer> jobOffers;
 
@@ -72,15 +72,15 @@ public class IndexView extends AbstractView {
 		this.jobOffers = this.jobService.findJobOffers(user, new Page(0, 10));
 		this.candidates = new CandidateLazyDataModel(this.candidateService);
 		this.meetings = this.initMeetings();
-		this.events = new EventLazyDataModel(this.eventService);
+		this.events = new EventLazyDataModel(this.jobCandidatureEventService);
 	}
 
 	private List<Meeting> initMeetings() {
 		return this.meetingService.findPlannedMeetings(this.sessionUser.get(), Page.of(0, 10));
 	}
 
-	public void setEventService(final EventService eventService) {
-		this.eventService = eventService;
+	public void setEventService(final JobCandidatureEventService jobCandidatureEventService) {
+		this.jobCandidatureEventService = jobCandidatureEventService;
 	}
 
 	public void setJobService(final JobOfferService jobService) {

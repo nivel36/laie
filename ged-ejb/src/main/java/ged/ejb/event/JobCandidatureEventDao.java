@@ -4,11 +4,11 @@ import ged.ejb.core.model.AbstractDao;
 import ged.ejb.core.model.Repository;
 
 @Repository
-public class EventDao extends AbstractDao<Event> {
+public class JobCandidatureEventDao extends AbstractDao<JobCandidatureEvent> {
 
 	@Override
-	protected Class<Event> getType() {
-		return Event.class;
+	protected Class<JobCandidatureEvent> getType() {
+		return JobCandidatureEvent.class;
 	}
 
 	@Override

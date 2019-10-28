@@ -16,7 +16,7 @@ import ged.ejb.core.AbstractService;
 import ged.ejb.core.model.AbstractDao;
 import ged.ejb.core.model.Page;
 import ged.ejb.core.model.Repository;
-import ged.ejb.event.EventService;
+import ged.ejb.event.JobCandidatureEventService;
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.user.User;
 
@@ -26,7 +26,7 @@ public class JobCandidatureService extends AbstractService<JobCandidature> {
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	@Inject
-	private EventService eventService;
+	private JobCandidatureEventService jobCandidatureEventService;
 	
 	@Inject
 	@Repository
@@ -42,7 +42,7 @@ public class JobCandidatureService extends AbstractService<JobCandidature> {
 		final JobCandidatureState firstJobCandidatureState = this.jobCandidatureStateService.findFirstJobCandidatureState();
 		final JobCandidature jobCandidature = new JobCandidature(candidate, jobOffer);
 		jobCandidature.setJobCandidatureState(firstJobCandidatureState);
-		eventService.createEvent(jobCandidature);
+		jobCandidatureEventService.createEvent(jobCandidature);
 		return this.save(jobCandidature);
 	}
 
@@ -92,8 +92,8 @@ public class JobCandidatureService extends AbstractService<JobCandidature> {
 		this.jobCandidatureDao.delete(jobCandidature);
 	}
 	
-	public void setEventService(EventService eventService) {
-		this.eventService = eventService;
+	public void setEventService(JobCandidatureEventService jobCandidatureEventService) {
+		this.jobCandidatureEventService = jobCandidatureEventService;
 	}
 
 	public void setJobCandidatureDao(final JobCandidatureDao jobCandidatureDao) {

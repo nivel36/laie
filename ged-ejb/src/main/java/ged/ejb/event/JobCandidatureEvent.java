@@ -21,14 +21,14 @@ import ged.ejb.user.User;
 
 @Entity
 @Indexed
-public class Event extends AbstractEntity {
+public class JobCandidatureEvent extends AbstractEntity {
 
 	private static final long serialVersionUID = 1L;
 
-	public Event() {
+	public JobCandidatureEvent() {
 	}
 
-	public Event(User user, JobCandidature jobCandidature) {
+	public JobCandidatureEvent(User user, JobCandidature jobCandidature) {
 		this.user = user;
 		this.date = LocalDateTime.now();
 		if (jobCandidature != null) {
@@ -50,7 +50,7 @@ public class Event extends AbstractEntity {
 	@IndexedEmbedded
 	private JobCandidatureState status;
 
-	private EventType type;
+	private JobCandidatureEventType type;
 
 	@ManyToOne
 	@IndexedEmbedded
@@ -67,7 +67,7 @@ public class Event extends AbstractEntity {
 		if (this.getClass() != obj.getClass()) {
 			return false;
 		}
-		final Event other = (Event) obj;
+		final JobCandidatureEvent other = (JobCandidatureEvent) obj;
 		return Objects.equals(this.date, other.date) && Objects.equals(this.type, other.type)
 				&& Objects.equals(this.user, other.user);
 	}
@@ -88,7 +88,7 @@ public class Event extends AbstractEntity {
 		return this.status;
 	}
 
-	public EventType getType() {
+	public JobCandidatureEventType getType() {
 		return this.type;
 	}
 
@@ -117,7 +117,7 @@ public class Event extends AbstractEntity {
 		this.status = status;
 	}
 
-	public void setType(final EventType type) {
+	public void setType(final JobCandidatureEventType type) {
 		this.type = type;
 	}
 

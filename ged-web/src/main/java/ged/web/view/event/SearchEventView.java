@@ -11,7 +11,7 @@ import javax.inject.Named;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ged.ejb.event.EventService;
+import ged.ejb.event.JobCandidatureEventService;
 import ged.web.core.view.AbstractView;
 
 @Named
@@ -25,7 +25,7 @@ public class SearchEventView extends AbstractView {
 	private EventLazyDataModel events;
 
 	@Inject
-	protected transient EventService eventService;
+	protected transient JobCandidatureEventService jobCandidatureEventService;
 
 	private String[] searchStates;
 
@@ -49,7 +49,7 @@ public class SearchEventView extends AbstractView {
 	}
 
 	private EventLazyDataModel initEvents() {
-		return new EventLazyDataModel(this.eventService);
+		return new EventLazyDataModel(this.jobCandidatureEventService);
 	}
 
 	public void search() {
@@ -60,8 +60,8 @@ public class SearchEventView extends AbstractView {
 		}
 	}
 
-	public void setEventService(final EventService eventService) {
-		this.eventService = eventService;
+	public void setEventService(final JobCandidatureEventService jobCandidatureEventService) {
+		this.jobCandidatureEventService = jobCandidatureEventService;
 	}
 
 	public void setSearchStates(final String[] searchStates) {
