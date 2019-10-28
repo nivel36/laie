@@ -25,18 +25,6 @@ public class JobCandidatureEvent extends AbstractEntity {
 
 	private static final long serialVersionUID = 1L;
 
-	public JobCandidatureEvent() {
-	}
-
-	public JobCandidatureEvent(User user, JobCandidature jobCandidature) {
-		this.user = user;
-		this.date = LocalDateTime.now();
-		if (jobCandidature != null) {
-			this.jobCandidature = jobCandidature;
-			this.status = jobCandidature.getJobCandidatureState();
-		}
-	}
-
 	@Field(name = "date", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField(forField = "date")
 	private LocalDateTime date;
@@ -56,6 +44,19 @@ public class JobCandidatureEvent extends AbstractEntity {
 	@IndexedEmbedded
 	private User user;
 
+	public JobCandidatureEvent() {
+	}
+
+	public JobCandidatureEvent(User user, JobCandidature jobCandidature) {
+		Objects.requireNonNull(user);
+		Objects.requireNonNull(jobCandidature);
+		this.user = user;
+		this.date = LocalDateTime.now();
+		this.jobCandidature = jobCandidature;
+		this.status = jobCandidature.getJobCandidatureState();
+		this.setType(JobCandidatureEventType.OTHER);
+	}
+
 	@Override
 	public boolean equals(final Object obj) {
 		if (this == obj) {
@@ -69,7 +70,7 @@ public class JobCandidatureEvent extends AbstractEntity {
 		}
 		final JobCandidatureEvent other = (JobCandidatureEvent) obj;
 		return Objects.equals(this.date, other.date) && Objects.equals(this.type, other.type)
-				&& Objects.equals(this.user, other.user);
+				&& Objects.equals(this.user, other.user) && Objects.equals(this.jobCandidature, jobCandidature);
 	}
 
 	public LocalDateTime getDate() {
@@ -98,7 +99,7 @@ public class JobCandidatureEvent extends AbstractEntity {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(this.date, this.type, this.user);
+		return Objects.hash(this.date, this.type, this.user, this.jobCandidature);
 	}
 
 	public void setDate(final LocalDateTime date) {

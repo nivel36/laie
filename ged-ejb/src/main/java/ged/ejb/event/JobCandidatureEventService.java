@@ -1,6 +1,5 @@
 package ged.ejb.event;
 
-import java.time.LocalDateTime;
 import java.util.Objects;
 
 import javax.ejb.Stateless;
@@ -28,12 +27,7 @@ public class JobCandidatureEventService extends AbstractService<JobCandidatureEv
 	private SecurityContext securityContext;
 
 	public void createEvent(final JobCandidature jobCandidature) {
-		final JobCandidatureEvent jobCandidatureEvent = new JobCandidatureEvent();
-		jobCandidatureEvent.setDate(LocalDateTime.now());
-		jobCandidatureEvent.setStatus(jobCandidature.getJobCandidatureState());
-		jobCandidatureEvent.setUser(this.securityContext.getLoggedUser());
-		jobCandidatureEvent.setJobCandidature(jobCandidature);
-		jobCandidatureEvent.setType(JobCandidatureEventType.OTHER);
+		final JobCandidatureEvent jobCandidatureEvent = new JobCandidatureEvent(this.securityContext.getLoggedUser(), jobCandidature);
 		this.jobCandidatureEventDao.save(jobCandidatureEvent);
 	}
 
