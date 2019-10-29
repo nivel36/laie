@@ -47,7 +47,7 @@ public class AddEventView extends AbstractView {
 	}
 	
 	public void updateState() {
-		this.jobCandidatureEvent.setStatus(this.jobCandidatureEvent.getJobCandidature().getJobCandidatureState());
+		this.jobCandidatureEvent.setState(this.jobCandidatureEvent.getJobCandidature().getJobCandidatureState());
 	}
 
 	@PostConstruct

@@ -13,7 +13,7 @@ import ged.ejb.user.User;
 import ged.ejb.user.UserService;
 
 @Stateless
-public class SecurityContext {
+public class GedSecurityContext {
 
 	@Resource
 	protected SessionContext sessionContext;

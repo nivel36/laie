@@ -1,10 +1,3 @@
-insert into JOB_OFFER_STATE( id, version, name, first, last, color) values (1, 0, 'job_offer_state.opened', false, false,'green');
-insert into JOB_OFFER_STATE( id, version, name, first, last, color) values (2, 0, 'job_offer_state.closed', false, false, 'red');
-insert into JOB_OFFER_STATE( id, version, name, first, last, color) values (3, 0, 'job_offer_state.cancelled', false, true, 'brown');
-insert into JOB_OFFER_STATE( id, version, name, first, last, color) values (4, 0, 'job_offer_state.finished', false, true, 'blue');
-insert into JOB_OFFER_STATE( id, version, name, first, last, color) values (5, 0, 'job_offer_state.paused', false, false, 'blueviolet');
-insert into JOB_OFFER_STATE( id, version, name, first, last, color) values (6, 0, 'job_offer_state.created', true, false, 'cornflowerblue');
-
 insert into JOB_CANDIDATURE_STATE( id, version, name, first, last, color ) values ( 10, 0, 'job_candidature_state.not_contacted', true, false, 'green');
 insert into JOB_CANDIDATURE_STATE( id, version, name, first, last, color ) values ( 11, 0, 'job_candidature_state.contacted', false, false,  'blue');
 insert into JOB_CANDIDATURE_STATE( id, version, name, first, last, color ) values ( 12, 0, 'job_candidature_state.submitted', false, false,  'brown');

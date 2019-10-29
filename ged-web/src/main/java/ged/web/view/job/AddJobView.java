@@ -47,7 +47,7 @@ public class AddJobView extends AbstractJobView {
 	public String save() {
 		logger.debug("Create new client action performed");
 		this.jobOffer.setRecruiters(this.getRecruiters());
-		this.jobOffer = this.jobOfferService.newJobOffer(this.jobOffer);
+		this.jobOffer = this.jobOfferService.save(this.jobOffer);
 		return this.jobUrl();
 	}
 }

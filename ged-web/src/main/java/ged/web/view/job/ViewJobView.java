@@ -53,6 +53,12 @@ public class ViewJobView extends AbstractView {
 		this.putValueToFlash(JOB_OFFER_KEY, this.jobOffer);
 		return PageEnum.JOB_EDIT.getUrl();
 	}
+	
+	public String editJobOfferState() {
+		logger.debug("Edit job offer state action performed");
+		this.putValueToFlash(JOB_OFFER_KEY, this.jobOffer);
+		return PageEnum.JOB_EDIT.getUrl();
+	}
 
 	public void export() throws IOException {
 		logger.debug("Export job action performed");
@@ -85,25 +91,26 @@ public class ViewJobView extends AbstractView {
 	}
 
 	public void onCloseSelectCandidateDialog(final SelectEvent event) {
-		@SuppressWarnings("unchecked")
-		final List<Candidate> selectedCandidates = (List<Candidate>) event.getObject();
-		for (final Candidate candidate : selectedCandidates) {
-			final JobCandidature jobCandidature = this.jobCandidatureService.addJobCandidature(this.jobOffer,
-					candidate);
-			this.jobCandidatures.add(jobCandidature);
+		final Object eventObject = event.getObject();
+		if (eventObject == null) {
+			return;
 		}
+		@SuppressWarnings("unchecked")
+		final List<Candidate> selectedCandidates = (List<Candidate>) eventObject;
+		this.jobCandidatureService.addJobCandidatures(this.jobOffer, selectedCandidates);
 	}
 
 	public void selectCandidates() {
 		logger.debug("Select candidates action performed");
-		if (!this.jobCandidatures.isEmpty()) {
+
+		if (this.jobCandidatures.isEmpty()) {
+			this.openBigDialog(PageEnum.CANDIDATE_SELECT.getUrl());
+		} else {
 			final String candidateIds = this.jobCandidatures.stream().map(this::getCandidateIdAsString)
 					.collect(Collectors.joining("|"));
 			final Map<String, List<String>> parameters = new HashMap<>();
 			parameters.put("jobCandiatesId", Arrays.asList(candidateIds));
 			this.openBigDialog(PageEnum.CANDIDATE_SELECT.getUrl(), parameters);
-		} else {
-			this.openBigDialog(PageEnum.CANDIDATE_SELECT.getUrl());
 		}
 	}
 

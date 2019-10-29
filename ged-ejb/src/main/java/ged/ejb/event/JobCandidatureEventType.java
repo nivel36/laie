@@ -25,5 +25,4 @@ public enum JobCandidatureEventType {
 	public String getName() {
 		return this.name;
 	}
-
 }

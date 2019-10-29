@@ -17,8 +17,6 @@ import ged.web.core.IllegalPageStateException;
 @ViewScoped
 public class EditJobView extends AbstractJobView {
 
-	private static final String JOB_OFFER_KEY = "jobOffer";
-
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	private static final long serialVersionUID = 1L;
@@ -45,7 +43,7 @@ public class EditJobView extends AbstractJobView {
 
 	@PostConstruct
 	public void init() {
-		this.jobOffer = this.getValueFromFlash(JOB_OFFER_KEY);
+		this.jobOffer = this.getValueFromFlash("jobOffer");
 		this.checkNonNullJobOffer();
 		this.checkEditPermission();
 		if (this.jobOffer.getAddress() == null) {

@@ -16,7 +16,7 @@ public class JobCandidatureStateDao extends AbstractDao<JobCandidatureState> {
 		return new String[] {};
 	}
 
-	public JobCandidatureState findFirstJobCandidatureState() {
+	public JobCandidatureState findInitialState() {
 		return this.findByQuery(JobCandidatureState.class, "JobCandidatureState.findFirstJobCandidatureState");
 	}
 }

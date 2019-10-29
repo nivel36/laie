@@ -36,7 +36,7 @@ public class JobCandidatureEvent extends AbstractEntity {
 
 	@ManyToOne
 	@IndexedEmbedded
-	private JobCandidatureState status;
+	private JobCandidatureState state;
 
 	private JobCandidatureEventType type;
 
@@ -53,7 +53,7 @@ public class JobCandidatureEvent extends AbstractEntity {
 		this.user = user;
 		this.date = LocalDateTime.now();
 		this.jobCandidature = jobCandidature;
-		this.status = jobCandidature.getJobCandidatureState();
+		this.state = jobCandidature.getJobCandidatureState();
 		this.setType(JobCandidatureEventType.OTHER);
 	}
 
@@ -85,8 +85,8 @@ public class JobCandidatureEvent extends AbstractEntity {
 		return this.jobCandidature;
 	}
 
-	public JobCandidatureState getStatus() {
-		return this.status;
+	public JobCandidatureState getState() {
+		return this.state;
 	}
 
 	public JobCandidatureEventType getType() {
@@ -114,8 +114,8 @@ public class JobCandidatureEvent extends AbstractEntity {
 		this.jobCandidature = jobCandidature;
 	}
 
-	public void setStatus(final JobCandidatureState status) {
-		this.status = status;
+	public void setState(final JobCandidatureState state) {
+		this.state = state;
 	}
 
 	public void setType(final JobCandidatureEventType type) {

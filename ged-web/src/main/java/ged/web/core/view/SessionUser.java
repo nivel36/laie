@@ -30,7 +30,7 @@ public class SessionUser implements Serializable {
 
 	@Inject
 	private transient ExternalContext externalContext;
-
+	
 	private Locale locale;
 
 	private List<User> team;

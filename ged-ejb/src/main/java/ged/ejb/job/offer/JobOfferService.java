@@ -1,6 +1,8 @@
 package ged.ejb.job.offer;
 
 import java.lang.invoke.MethodHandles;
+import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -27,25 +29,23 @@ public class JobOfferService extends AbstractService<JobOffer> {
 	@Repository
 	private JobOfferDao jobOfferDao;
 
-	public JobOffer newJobOffer(final JobOffer jobOffer) {
-		Objects.requireNonNull(jobOffer, "JobOffer can't be null");
-		logger.debug("Add new jobOffer {}", jobOffer);
-		final JobOfferState state = this.jobOfferDao.findFirstJobOfferState();
-		jobOffer.setJobOfferState(state);
-		return this.save(jobOffer);
-	}
+	@Inject
+	@Repository
+	private JobOfferStateChangeEventDao jobOfferStateChangeEventDao;
 
 	public List<JobOffer> findJobOffers(final Candidate candidate, final Page page) {
 		Objects.requireNonNull(candidate, "Candidate can't be null");
 		Objects.requireNonNull(page, "Page can't be null");
 		logger.debug("Find all job offers of the candidate  {}", candidate);
+
 		return this.jobOfferDao.findJobOffers(candidate, page);
 	}
 
-	public List<JobOffer> findJobOffers(final Client client, Page page) {
+	public List<JobOffer> findJobOffers(final Client client, final Page page) {
 		Objects.requireNonNull(client, "Client can't be null");
 		Objects.requireNonNull(page, "Page can't be null");
 		logger.debug("Find all job offers of the client  {}", client);
+
 		return this.jobOfferDao.findJobOffers(client, page);
 	}
 
@@ -53,12 +53,14 @@ public class JobOfferService extends AbstractService<JobOffer> {
 		Objects.requireNonNull(owner, "Owner can't be null ");
 		Objects.requireNonNull(page, "Page can't be null");
 		logger.debug("Find all job offers of the owner {}", owner.getFullName());
+
 		return this.jobOfferDao.findJobOffers(owner, page);
 	}
 
 	public List<JobOfferState> findJobOfferStates() {
 		logger.debug("Find all job offer states");
-		return this.jobOfferDao.findJobOfferStates();
+
+		return Arrays.asList(JobOfferState.values());
 	}
 
 	@Override
@@ -66,8 +68,54 @@ public class JobOfferService extends AbstractService<JobOffer> {
 		return this.jobOfferDao;
 	}
 
+	public boolean isOpen(final JobOffer jobOffer) {
+		Objects.requireNonNull(jobOffer, "Job offer can't be null");
+		logger.debug("Test if {} is open", jobOffer);
+
+		return jobOffer.hasState(JobOfferState.OPENED);
+	}
+
+	private boolean openDateHasCome(final JobOffer jobOffer) {
+		final LocalDate today = LocalDate.now();
+		return jobOffer.getDateOpened().isAfter(today) || jobOffer.getDateOpened().isEqual(today);
+	}
+
+	@Override
+	public JobOffer save(final JobOffer jobOffer) {
+		Objects.requireNonNull(jobOffer, "Job offer can't be null");
+		logger.debug("Save job offer {}", jobOffer);
+
+		final JobOffer savedJobOffer = super.save(jobOffer);
+		if (savedJobOffer.hasState(JobOfferState.CREATED) && this.openDateHasCome(savedJobOffer)) {
+			this.updateJobOfferState(savedJobOffer, JobOfferState.OPENED, null, null);
+		} else if (!jobOffer.getJobOfferState().equals(savedJobOffer.getJobOfferState())) {
+			this.updateJobOfferState(savedJobOffer, savedJobOffer.getJobOfferState(), null, null);
+		}
+		return savedJobOffer;
+	}
+
 	public void setJobOfferDao(final JobOfferDao jobOfferDao) {
 		Objects.requireNonNull(jobOfferDao, "JobOfferDao can't be null");
+
 		this.jobOfferDao = jobOfferDao;
+	}
+
+	public void updateJobOfferState(final JobOffer jobOffer, final JobOfferState state, final User user,
+			final String notes) {
+		Objects.requireNonNull(jobOffer, "Job offer cant't be null");
+		Objects.requireNonNull(state, "Job offer state cant't be null");
+		logger.debug("Update job offer {} to state {}", jobOffer, state);
+
+		if (jobOffer.hasState(state)) {
+			throw new IllegalStateException("Can't change state");
+		}
+
+		jobOffer.setJobOfferState(state);
+		this.save(jobOffer);
+
+		final JobOfferStateChangeEvent event = new JobOfferStateChangeEvent(jobOffer, state);
+		event.setUser(user);
+		event.setNotes(notes);
+		this.jobOfferStateChangeEventDao.save(event);
 	}
 }

@@ -1,77 +1,28 @@
 package ged.ejb.job.offer;
 
-import java.util.Objects;
+public enum JobOfferState {
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+	OPENED("job_offer_state.opened", "green"), //
+	CREATED("job_offer_state.created", "cornflowerblue"), //
+	CANCELLED("job_offer_state.cancelled", "brown"), //
+	FINISHED("job_offer_state.finished", "blue"), //
+	CLOSED("job_offer_state.closed", "red"), //
+	PAUSED("job_offer_state.paused", "blueviolet");
 
-import ged.ejb.core.i18n.I18n;
-import ged.ejb.core.model.AbstractEntity;
-
-@Entity
-@Table(name = "JOB_OFFER_STATE")
-public class JobOfferState extends AbstractEntity {
-
-	private static final long serialVersionUID = 1L;
-
-	@I18n
 	private String name;
 
 	private String color;
 
-	private boolean first;
-
-	private boolean last;
-
-	@Override
-	public boolean equals(final Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (!super.equals(obj)) {
-			return false;
-		}
-		if (this.getClass() != obj.getClass()) {
-			return false;
-		}
-		final JobOfferState other = (JobOfferState) obj;
-		return Objects.equals(this.name, other.name);
-	}
-
-	public String getColor() {
-		return this.color;
-	}
-
-	public String getName() {
-		return this.name;
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hashCode(this.name);
-	}
-
-	public boolean isFirst() {
-		return this.first;
-	}
-
-	public boolean isLast() {
-		return this.last;
-	}
-
-	public void setColor(final String color) {
+	JobOfferState(String name, String color) {
+		this.name = name;
 		this.color = color;
 	}
 
-	public void setFirst(final boolean first) {
-		this.first = first;
+	public String getName() {
+		return name;
 	}
 
-	public void setLast(final boolean last) {
-		this.last = last;
-	}
-
-	public void setName(final String name) {
-		this.name = name;
+	public String getColor() {
+		return color;
 	}
 }

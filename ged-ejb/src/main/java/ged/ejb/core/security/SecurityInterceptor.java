@@ -12,14 +12,14 @@ import ged.ejb.core.model.Ownerable;
 public class SecurityInterceptor {
 
 	@Inject
-	private SecurityContext securityContext;
+	private GedSecurityContext gedSecurityContext;
 
 	@AroundInvoke
 	public Object checkSecurity(final InvocationContext joinPoint) throws Exception {
 		final Object[] parameters = this.getParameters(joinPoint);
 		final Ownerable[] ownerableEntities = this.getOwnerableEntitiesFromParameters(parameters);
 		for (final Ownerable entity : ownerableEntities) {
-			if (!this.securityContext.canEdit(entity)) {
+			if (!this.gedSecurityContext.canEdit(entity)) {
 				throw new SecurityException();
 			}
 		}
@@ -48,8 +48,8 @@ public class SecurityInterceptor {
 		return joinPoint.getParameters();
 	}
 
-	public void setSecurityContext(final SecurityContext securityContext) {
-		this.securityContext = securityContext;
+	public void setSecurityContext(final GedSecurityContext gedSecurityContext) {
+		this.gedSecurityContext = gedSecurityContext;
 	}
 
 	private Ownerable[] trimArray(final int length, final Ownerable[] untrimmedOwnerableEntities) {

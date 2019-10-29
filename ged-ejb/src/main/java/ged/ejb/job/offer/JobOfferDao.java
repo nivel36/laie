@@ -37,10 +37,6 @@ public class JobOfferDao extends AbstractDao<JobOffer> {
 		return this.findByQuery(JobOffer.class, "JobOffer.findAllByOwner", map("owner", owner), page);
 	}
 
-	public List<JobOfferState> findJobOfferStates() {
-		return this.getPersistenceFacade().findAll(JobOfferState.class, Page.ALL);
-	}
-
 	@Override
 	public Class<JobOffer> getType() {
 		return JobOffer.class;

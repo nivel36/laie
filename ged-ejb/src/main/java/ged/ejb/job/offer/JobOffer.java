@@ -42,6 +42,11 @@ public class JobOffer extends AbstractEntity implements Ownerable {
 
 	private static final long serialVersionUID = 1L;
 
+	public JobOffer() {
+		this.jobOfferState = JobOfferState.CREATED;
+		this.dateOpened = LocalDate.now();
+	}
+
 	@Embedded
 	@IndexedEmbedded
 	private Address address;
@@ -51,8 +56,6 @@ public class JobOffer extends AbstractEntity implements Ownerable {
 	@NotNull
 	@IndexedEmbedded
 	private Client client;
-
-	private Integer salary;
 
 	@Field(analyze = Analyze.NO)
 	@SortableField
@@ -70,15 +73,7 @@ public class JobOffer extends AbstractEntity implements Ownerable {
 	private Set<JobCandidature> jobCandidatures;
 
 	@NotNull
-	@ManyToOne
 	private JobOfferState jobOfferState;
-
-	@NotNull
-	@Column(nullable = false)
-	@Field(name = "_title")
-	@Field(name = "title", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
-	@SortableField(forField = "title")
-	private String title;
 
 	@NotNull
 	@ManyToOne
@@ -92,6 +87,15 @@ public class JobOffer extends AbstractEntity implements Ownerable {
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "job_user", joinColumns = @JoinColumn(name = "job_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
 	private Set<User> recruiters;
+
+	private Integer salary;
+
+	@NotNull
+	@Column(nullable = false)
+	@Field(name = "_title")
+	@Field(name = "title", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
+	@SortableField(forField = "title")
+	private String title;
 
 	@Override
 	public boolean equals(final Object obj) {
@@ -161,6 +165,14 @@ public class JobOffer extends AbstractEntity implements Ownerable {
 	@Override
 	public int hashCode() {
 		return Objects.hash(this.dateOpened, this.title, this.places);
+	}
+
+	public boolean hasState(final JobOfferState state) {
+		if (jobOfferState == null) {
+			return state == null;
+		} else {
+			return this.jobOfferState.equals(state);
+		}
 	}
 
 	public void setAddress(final Address address) {

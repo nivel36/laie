@@ -23,7 +23,7 @@ public class JobCandidatureStateService  extends AbstractService<JobCandidatureS
 		this.jobCandidatureStateDao = jobCandidatureStateDao;
 	}
 	
-	public JobCandidatureState findFirstJobCandidatureState() {
-		return this.jobCandidatureStateDao.findFirstJobCandidatureState();
+	public JobCandidatureState findInitialState() {
+		return this.jobCandidatureStateDao.findInitialState();
 	}
 }

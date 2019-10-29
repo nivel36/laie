@@ -22,6 +22,7 @@ import javax.security.enterprise.credential.UsernamePasswordCredential;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import ged.ejb.core.SessionUsers;
 import ged.web.core.util.Navigate;
 import ged.web.core.util.PageEnum;
 import ged.web.core.view.AbstractView;
@@ -40,6 +41,9 @@ public class LoginView extends AbstractView {
 
 	@Inject
 	private SecurityContext securityContext;
+	
+	@Inject
+	private SessionUsers sessionUsers;
 
 	private String username;
 
@@ -90,6 +94,7 @@ public class LoginView extends AbstractView {
 		final UsernamePasswordCredential credential = new UsernamePasswordCredential(this.username, this.password);
 		final AuthenticationParameters parameters = withParams().credential(credential).newAuthentication(true);
 		this.authenticate(parameters);
+		sessionUsers.login(this.username);
 	}
 
 	private void setDefaultLocale() {

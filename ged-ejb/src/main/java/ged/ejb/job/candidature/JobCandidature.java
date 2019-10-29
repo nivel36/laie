@@ -32,13 +32,13 @@ public class JobCandidature extends AbstractEntity {
 	@JoinColumn(name = "jobCandidatureStateId")
 	private JobCandidatureState jobCandidatureState;
 
-	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "jobCandidature", orphanRemoval = true)
-	private List<Meeting> meetings;
-
 	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "jobOfferId", nullable = false)
 	private JobOffer jobOffer;
+
+	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "jobCandidature", orphanRemoval = true)
+	private List<Meeting> meetings;
 
 	public JobCandidature() {
 	}
@@ -82,6 +82,14 @@ public class JobCandidature extends AbstractEntity {
 	@Override
 	public int hashCode() {
 		return Objects.hash(this.candidate, this.jobOffer);
+	}
+
+	public boolean hasState(final JobCandidatureState state) {
+		if (jobCandidatureState == null) {
+			return state == null;
+		} else {
+			return jobCandidatureState.equals(state);
+		}
 	}
 
 	public void setCandidate(final Candidate candidate) {
