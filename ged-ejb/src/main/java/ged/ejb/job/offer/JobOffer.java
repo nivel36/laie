@@ -238,4 +238,8 @@ public class JobOffer extends AbstractEntity implements Ownerable {
 	public String toString() {
 		return this.title + "-" + this.client.getName();
 	}
+	
+	public boolean isOpen() {
+		return hasState(JobOfferState.OPENED);
+	}
 }

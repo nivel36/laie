@@ -85,10 +85,10 @@ public class JobCandidature extends AbstractEntity {
 	}
 
 	public boolean hasState(final JobCandidatureState state) {
-		if (jobCandidatureState == null) {
+		if (this.jobCandidatureState == null) {
 			return state == null;
 		} else {
-			return jobCandidatureState.equals(state);
+			return this.jobCandidatureState.equals(state);
 		}
 	}
 

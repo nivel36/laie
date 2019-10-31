@@ -27,7 +27,7 @@ public class JobOfferEvent extends AbstractEntity {
 	@Field(name = "date", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField(forField = "date")
 	private LocalDateTime date;
-	
+
 	@ManyToOne
 	private JobOffer jobOffer;
 
@@ -48,55 +48,58 @@ public class JobOfferEvent extends AbstractEntity {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
+	public boolean equals(final Object obj) {
+		if (this == obj) {
 			return true;
-		if (!super.equals(obj))
+		}
+		if (!super.equals(obj)) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (this.getClass() != obj.getClass()) {
 			return false;
-		JobOfferEvent other = (JobOfferEvent) obj;
-		return Objects.equals(date, other.date) && Objects.equals(jobOffer, other.jobOffer)
-				&& Objects.equals(state, other.state) && Objects.equals(user, other.user);
+		}
+		final JobOfferEvent other = (JobOfferEvent) obj;
+		return Objects.equals(this.date, other.date) && Objects.equals(this.jobOffer, other.jobOffer)
+				&& Objects.equals(this.state, other.state) && Objects.equals(this.user, other.user);
 	}
 
 	public LocalDateTime getDate() {
-		return date;
+		return this.date;
 	}
 
 	public JobOffer getJobOffer() {
-		return jobOffer;
+		return this.jobOffer;
 	}
 
 	public JobOfferState getState() {
-		return state;
+		return this.state;
 	}
 
 	public User getUser() {
-		return user;
+		return this.user;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + Objects.hash(date, jobOffer, state, user);
+		result = (prime * result) + Objects.hash(this.date, this.jobOffer, this.state, this.user);
 		return result;
 	}
 
-	public void setDate(LocalDateTime date) {
+	public void setDate(final LocalDateTime date) {
 		this.date = date;
 	}
 
-	public void setJobOffer(JobOffer jobOffer) {
+	public void setJobOffer(final JobOffer jobOffer) {
 		this.jobOffer = jobOffer;
 	}
 
-	public void setState(JobOfferState state) {
+	public void setState(final JobOfferState state) {
 		this.state = state;
 	}
 
-	public void setUser(User user) {
+	public void setUser(final User user) {
 		this.user = user;
 	}
 }

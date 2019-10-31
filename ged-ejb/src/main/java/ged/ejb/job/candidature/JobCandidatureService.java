@@ -18,7 +18,6 @@ import ged.ejb.core.model.Page;
 import ged.ejb.core.model.Repository;
 import ged.ejb.event.JobCandidatureEventService;
 import ged.ejb.job.offer.JobOffer;
-import ged.ejb.job.offer.JobOfferService;
 import ged.ejb.user.User;
 
 @Stateless
@@ -27,22 +26,11 @@ public class JobCandidatureService extends AbstractService<JobCandidature> {
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	@Inject
-	private JobCandidatureEventService jobCandidatureEventService;
-
-	@Inject
 	@Repository
 	private JobCandidatureDao jobCandidatureDao;
 
 	@Inject
-	private JobOfferService jobOfferService;
-
-	public void setJobCandidatureEventService(JobCandidatureEventService jobCandidatureEventService) {
-		this.jobCandidatureEventService = jobCandidatureEventService;
-	}
-
-	public void setJobOfferService(JobOfferService jobOfferService) {
-		this.jobOfferService = jobOfferService;
-	}
+	private JobCandidatureEventService jobCandidatureEventService;
 
 	@Inject
 	private JobCandidatureStateService jobCandidatureStateService;
@@ -50,7 +38,7 @@ public class JobCandidatureService extends AbstractService<JobCandidature> {
 	public JobCandidature addJobCandidature(final JobOffer jobOffer, final Candidate candidate) {
 		Objects.requireNonNull(jobOffer, "JobOffer can't be null");
 		Objects.requireNonNull(candidate, "Candidate can't be null");
-		if (!jobOfferService.isOpen(jobOffer)) {
+		if (!jobOffer.isOpen()) {
 			throw new IllegalStateException("Job offer isn't open");
 		}
 		logger.debug("Add Job Candidature of candidate {} to jobOffer {}", candidate.getFullName(), jobOffer);
@@ -58,14 +46,14 @@ public class JobCandidatureService extends AbstractService<JobCandidature> {
 		final JobCandidatureState firstState = this.jobCandidatureStateService.findInitialState();
 		final JobCandidature jobCandidature = new JobCandidature(candidate, jobOffer);
 		jobCandidature.setJobCandidatureState(firstState);
-		jobCandidatureEventService.createEvent(jobCandidature);
+		this.jobCandidatureEventService.createEvent(jobCandidature);
 		return this.save(jobCandidature);
 	}
 
 	public List<JobCandidature> addJobCandidatures(final JobOffer jobOffer, final List<Candidate> candidates) {
 		Objects.requireNonNull(jobOffer, "JobOffer can't be null");
 		Objects.requireNonNull(candidates, "Candidates can't be null");
-		if (!jobOfferService.isOpen(jobOffer)) {
+		if (!jobOffer.isOpen()) {
 			throw new IllegalStateException("Job offer isn't open");
 		}
 		logger.debug("Add job candidatures to jobOffer {}", jobOffer);
@@ -91,7 +79,7 @@ public class JobCandidatureService extends AbstractService<JobCandidature> {
 		Objects.requireNonNull(page, "Page can't be null");
 		logger.debug("Find job candidatures regarding user {} ({})", user, page);
 
-		return jobCandidatureDao.findJobCandidatures(user, page);
+		return this.jobCandidatureDao.findJobCandidatures(user, page);
 	}
 
 	public List<JobCandidature> findJobCanditures(final JobOffer jobOffer, final Page page) {
@@ -104,7 +92,7 @@ public class JobCandidatureService extends AbstractService<JobCandidature> {
 
 	@Override
 	protected AbstractDao<JobCandidature> getDao() {
-		return jobCandidatureDao;
+		return this.jobCandidatureDao;
 	}
 
 	public void removeJobCandidature(final JobOffer jobOffer, final Candidate candidate) {
@@ -116,7 +104,7 @@ public class JobCandidatureService extends AbstractService<JobCandidature> {
 		this.jobCandidatureDao.delete(jobCandidature);
 	}
 
-	public void setEventService(JobCandidatureEventService jobCandidatureEventService) {
+	public void setEventService(final JobCandidatureEventService jobCandidatureEventService) {
 		this.jobCandidatureEventService = jobCandidatureEventService;
 	}
 
@@ -126,7 +114,11 @@ public class JobCandidatureService extends AbstractService<JobCandidature> {
 		this.jobCandidatureDao = jobCandidatureDao;
 	}
 
-	public void setJobCandidatureStateService(JobCandidatureStateService jobCandidatureStateService) {
+	public void setJobCandidatureEventService(final JobCandidatureEventService jobCandidatureEventService) {
+		this.jobCandidatureEventService = jobCandidatureEventService;
+	}
+
+	public void setJobCandidatureStateService(final JobCandidatureStateService jobCandidatureStateService) {
 		this.jobCandidatureStateService = jobCandidatureStateService;
 	}
 

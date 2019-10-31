@@ -35,12 +35,6 @@
 							<span class="job_address">#{jobOffer.address.city} (#{jobOffer.address.state})</span>
 						</p:column>
 
-						<p:column headerText="#{i18n['job.date_closed']}">
-							<h:outputText value="#{jobOffer.dateClosed}">
-								<f:convertDateTime pattern="dd / MM / yyyy" type="localDate" />
-							</h:outputText>
-						</p:column>
-
 						<p:column headerText="#{i18n['job.owner']}">
 							<h:link value="#{jobOffer.owner.fullName}" outcome="#{Page.USER_SEARCH.getUrl()}">
 								<f:param name="id" value="#{jobOffer.owner.id}" />

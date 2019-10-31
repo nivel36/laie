@@ -24,14 +24,14 @@ public class JobCandidatureEventService extends AbstractService<JobCandidatureEv
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	@Inject
+	private GedSecurityContext gedSecurityContext;
+
+	@Inject
 	@Repository
 	private JobCandidatureEventDao jobCandidatureEventDao;
 
 	@Inject
 	private JobCandidatureService jobCandidatureService;
-	
-	@Inject
-	private GedSecurityContext gedSecurityContext;
 
 	public JobCandidatureEvent createEvent(final JobCandidature jobCandidature) {
 		Objects.requireNonNull(jobCandidature, "Job candidature can't be null");
@@ -59,6 +59,6 @@ public class JobCandidatureEventService extends AbstractService<JobCandidatureEv
 	private void updateJobCandidatureState(final JobCandidatureEvent jobCandidatureEvent) {
 		final JobCandidature jobCandidature = jobCandidatureEvent.getJobCandidature();
 		final JobCandidatureState eventState = jobCandidatureEvent.getState();
-		jobCandidatureService.updateState(jobCandidature, eventState);
+		this.jobCandidatureService.updateState(jobCandidature, eventState);
 	}
 }

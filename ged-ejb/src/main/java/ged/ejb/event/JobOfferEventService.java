@@ -24,14 +24,14 @@ public class JobOfferEventService extends AbstractService<JobOfferEvent> {
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	@Inject
-	@Repository
-	private JobOfferEventDao jobOfferEventDao;
-	
-	@Inject
-	private JobOfferService jobOfferService;
+	private GedSecurityContext gedSecurityContext;
 
 	@Inject
-	private GedSecurityContext gedSecurityContext;
+	@Repository
+	private JobOfferEventDao jobOfferEventDao;
+
+	@Inject
+	private JobOfferService jobOfferService;
 
 	public JobOfferEvent createEvent(final JobOffer jobOffer) {
 		Objects.requireNonNull(jobOffer, "Job offer can't be null");
@@ -44,30 +44,31 @@ public class JobOfferEventService extends AbstractService<JobOfferEvent> {
 
 	@Override
 	protected AbstractDao<JobOfferEvent> getDao() {
-		return jobOfferEventDao;
+		return this.jobOfferEventDao;
 	}
 
-	public JobOfferEvent save(JobOfferEvent jobOfferEvent) {
+	@Override
+	public JobOfferEvent save(final JobOfferEvent jobOfferEvent) {
 		Objects.requireNonNull(jobOfferEvent, "Job offer event can't be null");
 		logger.debug("Save jobOffer event {}", jobOfferEvent);
 
 		final JobOffer jobOffer = jobOfferEvent.getJobOffer();
 		final JobOfferState state = jobOfferEvent.getState();
-		jobOfferService.updateJobOfferState(jobOffer, state, null, null);
+		this.jobOfferService.updateJobOfferState(jobOffer, state, null, null);
 		return this.jobOfferEventDao.save(jobOfferEvent);
 	}
 
-	public void setJobOfferEventDao(JobOfferEventDao jobOfferEventDao) {
+	public void setJobOfferEventDao(final JobOfferEventDao jobOfferEventDao) {
 		Objects.requireNonNull(jobOfferEventDao);
 		this.jobOfferEventDao = jobOfferEventDao;
 	}
-	
-	public void setJobOfferService(JobOfferService jobOfferService) {
+
+	public void setJobOfferService(final JobOfferService jobOfferService) {
 		Objects.requireNonNull(jobOfferService);
 		this.jobOfferService = jobOfferService;
 	}
-	
-	public void setSecurityContext(GedSecurityContext gedSecurityContext) {
+
+	public void setSecurityContext(final GedSecurityContext gedSecurityContext) {
 		Objects.requireNonNull(gedSecurityContext);
 		this.gedSecurityContext = gedSecurityContext;
 	}

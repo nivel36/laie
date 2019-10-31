@@ -53,11 +53,11 @@ public class ViewJobView extends AbstractView {
 		this.putValueToFlash(JOB_OFFER_KEY, this.jobOffer);
 		return PageEnum.JOB_EDIT.getUrl();
 	}
-	
+
 	public String editJobOfferState() {
 		logger.debug("Edit job offer state action performed");
 		this.putValueToFlash(JOB_OFFER_KEY, this.jobOffer);
-		return PageEnum.JOB_EDIT.getUrl();
+		return PageEnum.JOB_EDIT_STATE.getUrl();
 	}
 
 	public void export() throws IOException {
@@ -97,7 +97,9 @@ public class ViewJobView extends AbstractView {
 		}
 		@SuppressWarnings("unchecked")
 		final List<Candidate> selectedCandidates = (List<Candidate>) eventObject;
-		this.jobCandidatureService.addJobCandidatures(this.jobOffer, selectedCandidates);
+		final List<JobCandidature> newJobCandidatures = this.jobCandidatureService.addJobCandidatures(this.jobOffer,
+				selectedCandidates);
+		this.jobCandidatures.addAll(newJobCandidatures);
 	}
 
 	public void selectCandidates() {

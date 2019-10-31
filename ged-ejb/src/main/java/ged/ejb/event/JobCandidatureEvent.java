@@ -47,7 +47,7 @@ public class JobCandidatureEvent extends AbstractEntity {
 	public JobCandidatureEvent() {
 	}
 
-	public JobCandidatureEvent(User user, JobCandidature jobCandidature) {
+	public JobCandidatureEvent(final User user, final JobCandidature jobCandidature) {
 		Objects.requireNonNull(user);
 		Objects.requireNonNull(jobCandidature);
 		this.user = user;
@@ -70,7 +70,7 @@ public class JobCandidatureEvent extends AbstractEntity {
 		}
 		final JobCandidatureEvent other = (JobCandidatureEvent) obj;
 		return Objects.equals(this.date, other.date) && Objects.equals(this.type, other.type)
-				&& Objects.equals(this.user, other.user) && Objects.equals(this.jobCandidature, jobCandidature);
+				&& Objects.equals(this.user, other.user) && Objects.equals(this.jobCandidature, this.jobCandidature);
 	}
 
 	public LocalDateTime getDate() {

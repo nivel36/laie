@@ -8,22 +8,22 @@ import ged.ejb.core.model.AbstractDao;
 import ged.ejb.core.model.Repository;
 
 @Stateless
-public class JobCandidatureStateService  extends AbstractService<JobCandidatureState> {
-	
+public class JobCandidatureStateService extends AbstractService<JobCandidatureState> {
+
 	@Repository
 	@Inject
-	private JobCandidatureStateDao jobCandidatureStateDao; 
+	private JobCandidatureStateDao jobCandidatureStateDao;
+
+	public JobCandidatureState findInitialState() {
+		return this.jobCandidatureStateDao.findInitialState();
+	}
 
 	@Override
 	protected AbstractDao<JobCandidatureState> getDao() {
-		return jobCandidatureStateDao;
+		return this.jobCandidatureStateDao;
 	}
 
-	public void setJobCandidatureStateDao(JobCandidatureStateDao jobCandidatureStateDao) {
+	public void setJobCandidatureStateDao(final JobCandidatureStateDao jobCandidatureStateDao) {
 		this.jobCandidatureStateDao = jobCandidatureStateDao;
-	}
-	
-	public JobCandidatureState findInitialState() {
-		return this.jobCandidatureStateDao.findInitialState();
 	}
 }

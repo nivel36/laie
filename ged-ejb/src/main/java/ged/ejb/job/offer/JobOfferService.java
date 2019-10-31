@@ -18,6 +18,9 @@ import ged.ejb.core.AbstractService;
 import ged.ejb.core.model.AbstractDao;
 import ged.ejb.core.model.Page;
 import ged.ejb.core.model.Repository;
+import ged.ejb.job.candidature.JobCandidature;
+import ged.ejb.job.candidature.JobCandidatureService;
+import ged.ejb.job.candidature.JobCandidatureState;
 import ged.ejb.user.User;
 
 @Stateless
@@ -28,6 +31,9 @@ public class JobOfferService extends AbstractService<JobOffer> {
 	@Inject
 	@Repository
 	private JobOfferDao jobOfferDao;
+	
+	@Inject
+	private JobCandidatureService jobCandidatureService;
 
 	@Inject
 	@Repository
@@ -68,13 +74,6 @@ public class JobOfferService extends AbstractService<JobOffer> {
 		return this.jobOfferDao;
 	}
 
-	public boolean isOpen(final JobOffer jobOffer) {
-		Objects.requireNonNull(jobOffer, "Job offer can't be null");
-		logger.debug("Test if {} is open", jobOffer);
-
-		return jobOffer.hasState(JobOfferState.OPENED);
-	}
-
 	private boolean openDateHasCome(final JobOffer jobOffer) {
 		final LocalDate today = LocalDate.now();
 		return jobOffer.getDateOpened().isAfter(today) || jobOffer.getDateOpened().isEqual(today);
@@ -109,6 +108,10 @@ public class JobOfferService extends AbstractService<JobOffer> {
 		if (jobOffer.hasState(state)) {
 			throw new IllegalStateException("Can't change state");
 		}
+		
+		if(state.equals(JobOfferState.CLOSED)) {
+			closeJobOffer(jobOffer);
+		}
 
 		jobOffer.setJobOfferState(state);
 		this.save(jobOffer);
@@ -117,5 +120,9 @@ public class JobOfferService extends AbstractService<JobOffer> {
 		event.setUser(user);
 		event.setNotes(notes);
 		this.jobOfferStateChangeEventDao.save(event);
+	}
+
+	private void closeJobOffer(final JobOffer jobOffer) {
+		jobOffer.setDateClosed(LocalDate.now());
 	}
 }

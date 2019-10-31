@@ -1,8 +1,6 @@
 package ged.web.view.job;
 
 import java.lang.invoke.MethodHandles;
-import java.util.Arrays;
-import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -33,9 +31,9 @@ public class EditJobStateView extends AbstractView {
 	@Inject
 	protected transient JobOfferService jobOfferService;
 
-	private JobOfferState newState;
+	private String notes;
 
-	private String note;
+	private JobOfferState state;
 
 	private void checkEditPermission() {
 		if (!this.sessionUser.hasPermissionToEdit(this.jobOffer)) {
@@ -51,12 +49,16 @@ public class EditJobStateView extends AbstractView {
 		}
 	}
 
-	public JobOfferState getNewState() {
-		return this.newState;
+	public JobOffer getJobOffer() {
+		return jobOffer;
 	}
 
-	public String getNote() {
-		return this.note;
+	public String getNotes() {
+		return this.notes;
+	}
+
+	public JobOfferState getState() {
+		return this.state;
 	}
 
 	@PostConstruct
@@ -76,7 +78,7 @@ public class EditJobStateView extends AbstractView {
 
 	public String save() {
 		logger.debug("Save job offer action performed");
-		this.jobOffer = this.jobOfferService.save(this.jobOffer);
+		this.jobOfferService.updateJobOfferState(jobOffer, state, this.sessionUser.get(), notes);
 		return this.jobUrl();
 	}
 
@@ -88,11 +90,11 @@ public class EditJobStateView extends AbstractView {
 		this.jobOfferService = jobOfferService;
 	}
 
-	public void setNewState(final JobOfferState newState) {
-		this.newState = newState;
+	public void setNotes(final String notes) {
+		this.notes = notes;
 	}
 
-	public void setNote(final String note) {
-		this.note = note;
+	public void setState(final JobOfferState state) {
+		this.state = state;
 	}
 }

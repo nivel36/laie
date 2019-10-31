@@ -22,7 +22,6 @@ public class JobCandidatureDao extends AbstractDao<JobCandidature> {
 				map("jobOffer", jobOffer).and("candidate", candidate));
 	}
 
-
 	public List<JobCandidature> findJobCandidatures(final Candidate candidate, final Page page) {
 		Objects.requireNonNull(candidate, "Candidate can't be null");
 		Objects.requireNonNull(page, "Page can't be null");

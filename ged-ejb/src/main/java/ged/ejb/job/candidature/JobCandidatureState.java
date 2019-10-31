@@ -18,15 +18,15 @@ public class JobCandidatureState extends AbstractEntity {
 
 	private static final long serialVersionUID = 1L;
 
-	@Field(analyze = Analyze.NO)
-	@Facet(encoding = FacetEncodingType.STRING)
-	private String name;
-
 	private String color;
 
 	private boolean first;
 
 	private boolean last;
+
+	@Field(analyze = Analyze.NO)
+	@Facet(encoding = FacetEncodingType.STRING)
+	private String name;
 
 	@Override
 	public boolean equals(final Object obj) {
