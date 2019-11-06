@@ -1,10 +1,10 @@
-insert into JOB_CANDIDATURE_STATE( id, version, name, first, last, color ) values ( 10, 0, 'job_candidature_state.not_contacted', true, false, 'green');
-insert into JOB_CANDIDATURE_STATE( id, version, name, first, last, color ) values ( 11, 0, 'job_candidature_state.contacted', false, false,  'blue');
-insert into JOB_CANDIDATURE_STATE( id, version, name, first, last, color ) values ( 12, 0, 'job_candidature_state.submitted', false, false,  'brown');
-insert into JOB_CANDIDATURE_STATE( id, version, name, first, last, color ) values ( 13, 0, 'job_candidature_state.declined', false, true,  'red');
-insert into JOB_CANDIDATURE_STATE( id, version, name, first, last, color ) values ( 14, 0, 'job_candidature_state.interviewed', false, false,  'blueviolet');
-insert into JOB_CANDIDATURE_STATE( id, version, name, first, last, color ) values ( 15, 0, 'job_candidature_state.offered', false, false,  'cornflowerblue');
-insert into JOB_CANDIDATURE_STATE( id, version, name, first, last, color ) values ( 16, 0, 'job_candidature_state.approved', false, true,  'gray');
+insert into JOB_CANDIDATURE_STATE( id, version, name, first, approved, declined, color ) values ( 10, 0, 'job_candidature_state.not_contacted', true, false, false, 'green');
+insert into JOB_CANDIDATURE_STATE( id, version, name, first, approved, declined, color ) values ( 11, 0, 'job_candidature_state.contacted', false, false, false, 'blue');
+insert into JOB_CANDIDATURE_STATE( id, version, name, first, approved, declined, color ) values ( 12, 0, 'job_candidature_state.submitted', false, false, false, 'brown');
+insert into JOB_CANDIDATURE_STATE( id, version, name, first, approved, declined, color ) values ( 13, 0, 'job_candidature_state.declined', false, false, true, 'red');
+insert into JOB_CANDIDATURE_STATE( id, version, name, first, approved, declined, color ) values ( 14, 0, 'job_candidature_state.interviewed', false, false, false, 'blueviolet');
+insert into JOB_CANDIDATURE_STATE( id, version, name, first, approved, declined, color ) values ( 15, 0, 'job_candidature_state.offered', false, false, false, 'cornflowerblue');
+insert into JOB_CANDIDATURE_STATE( id, version, name, first, approved, declined, color ) values ( 16, 0, 'job_candidature_state.approved', false, true, false, 'gray');
 
 insert into ORIGIN( id, version, code ) values ( 20, 0, 'infojobs');
 insert into ORIGIN( id, version, code ) values ( 21, 0, 'linkedin');

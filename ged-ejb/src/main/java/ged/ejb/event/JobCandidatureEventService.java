@@ -15,7 +15,6 @@ import ged.ejb.core.model.Repository;
 import ged.ejb.core.security.GedSecurityContext;
 import ged.ejb.job.candidature.JobCandidature;
 import ged.ejb.job.candidature.JobCandidatureService;
-import ged.ejb.job.candidature.JobCandidatureState;
 import ged.ejb.user.User;
 
 @Stateless
@@ -52,13 +51,7 @@ public class JobCandidatureEventService extends AbstractService<JobCandidatureEv
 		Objects.requireNonNull(jobCandidatureEvent, "Job candidature event can't be null");
 		logger.debug("Save job candidature event {}", jobCandidatureEvent);
 
-		this.updateJobCandidatureState(jobCandidatureEvent);
+		this.jobCandidatureService.save(jobCandidatureEvent.getJobCandidature());
 		return super.save(jobCandidatureEvent);
-	}
-
-	private void updateJobCandidatureState(final JobCandidatureEvent jobCandidatureEvent) {
-		final JobCandidature jobCandidature = jobCandidatureEvent.getJobCandidature();
-		final JobCandidatureState eventState = jobCandidatureEvent.getState();
-		this.jobCandidatureService.updateState(jobCandidature, eventState);
 	}
 }

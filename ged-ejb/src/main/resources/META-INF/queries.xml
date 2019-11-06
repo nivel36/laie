@@ -165,6 +165,17 @@
 			WHERE j.jobOffer = :jobOffer
 		]]></query>
 	</named-query>
+	
+	<named-query name="JobCandidature.findApprovedByJobOffer">
+		<query><![CDATA[
+			SELECT j 
+			FROM JobCandidature j 
+			LEFT JOIN FETCH j.candidate
+			LEFT JOIN FETCH j.jobOffer
+			WHERE j.jobOffer = :jobOffer
+			AND j.jobCandidatureState.approved = TRUE
+		]]></query>
+	</named-query>
 
 	<named-query name="JobCandidature.findByCandidate">
 		<query><![CDATA[

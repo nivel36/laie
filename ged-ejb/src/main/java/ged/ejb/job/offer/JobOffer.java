@@ -42,11 +42,6 @@ public class JobOffer extends AbstractEntity implements Ownerable {
 
 	private static final long serialVersionUID = 1L;
 
-	public JobOffer() {
-		this.jobOfferState = JobOfferState.CREATED;
-		this.dateOpened = LocalDate.now();
-	}
-
 	@Embedded
 	@IndexedEmbedded
 	private Address address;
@@ -96,6 +91,11 @@ public class JobOffer extends AbstractEntity implements Ownerable {
 	@Field(name = "title", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField(forField = "title")
 	private String title;
+
+	public JobOffer() {
+		this.jobOfferState = JobOfferState.CREATED;
+		this.dateOpened = LocalDate.now();
+	}
 
 	@Override
 	public boolean equals(final Object obj) {
@@ -168,11 +168,15 @@ public class JobOffer extends AbstractEntity implements Ownerable {
 	}
 
 	public boolean hasState(final JobOfferState state) {
-		if (jobOfferState == null) {
+		if (this.jobOfferState == null) {
 			return state == null;
 		} else {
 			return this.jobOfferState.equals(state);
 		}
+	}
+
+	public boolean isOpen() {
+		return this.hasState(JobOfferState.OPENED);
 	}
 
 	public void setAddress(final Address address) {
@@ -182,7 +186,7 @@ public class JobOffer extends AbstractEntity implements Ownerable {
 	public void setClient(final Client client) {
 		this.client = client;
 	}
-
+	
 	public void setDateClosed(final LocalDate dateClosed) {
 		this.dateClosed = dateClosed;
 	}
@@ -214,7 +218,7 @@ public class JobOffer extends AbstractEntity implements Ownerable {
 
 	public void setRecruiters(final List<User> users) {
 		this.recruiters = new HashSet<User>();
-		if (users == null || users.isEmpty()) {
+		if ((users == null) || users.isEmpty()) {
 			return;
 		}
 		for (final User user : users) {
@@ -237,9 +241,5 @@ public class JobOffer extends AbstractEntity implements Ownerable {
 	@Override
 	public String toString() {
 		return this.title + "-" + this.client.getName();
-	}
-	
-	public boolean isOpen() {
-		return hasState(JobOfferState.OPENED);
 	}
 }

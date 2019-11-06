@@ -40,7 +40,13 @@ public class JobCandidatureDao extends AbstractDao<JobCandidature> {
 		Objects.requireNonNull(page, "Page can't be null");
 		return this.findByQuery(JobCandidature.class, "JobCandidature.findByJobOffer", map("jobOffer", jobOffer), page);
 	}
-
+	
+	public List<JobCandidature> findApprovedJobCanditures(final JobOffer jobOffer, final Page page) {
+		Objects.requireNonNull(jobOffer, "JobOffer can't be null");
+		Objects.requireNonNull(page, "Page can't be null");
+		return this.findByQuery(JobCandidature.class, "JobCandidature.findApprovedByJobOffer", map("jobOffer", jobOffer), page);
+	}
+	
 	@Override
 	protected Class<JobCandidature> getType() {
 		return JobCandidature.class;

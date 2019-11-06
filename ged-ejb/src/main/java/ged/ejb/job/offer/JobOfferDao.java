@@ -24,7 +24,7 @@ public class JobOfferDao extends AbstractDao<JobOffer> {
 		Objects.requireNonNull(page, "Page can't be null");
 		return this.findByQuery(JobOffer.class, "JobOffer.findByCandidate", map("candidate", candidate), page);
 	}
-
+	
 	public List<JobOffer> findJobOffers(final Client client, final Page page) {
 		Objects.requireNonNull(client, "Client can't be null");
 		Objects.requireNonNull(page, "Page can't be null");

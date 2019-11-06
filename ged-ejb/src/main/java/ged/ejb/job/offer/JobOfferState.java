@@ -2,27 +2,42 @@ package ged.ejb.job.offer;
 
 public enum JobOfferState {
 
+	CLOSED("job_offer_state.closed", "red", false, true), //
+	CREATED("job_offer_state.created", "cornflowerblue", true, false), //
+	FINISHED("job_offer_state.finished", "blue", false, true), //
 	OPENED("job_offer_state.opened", "green"), //
-	CREATED("job_offer_state.created", "cornflowerblue"), //
-	CANCELLED("job_offer_state.cancelled", "brown"), //
-	FINISHED("job_offer_state.finished", "blue"), //
-	CLOSED("job_offer_state.closed", "red"), //
 	PAUSED("job_offer_state.paused", "blueviolet");
 
-	private String name;
+	private boolean closeState;
 
 	private String color;
 
-	JobOfferState(String name, String color) {
+	private String name;
+
+	private boolean openState;
+
+	JobOfferState(final String name, final String color) {
+		this(name, color, false, false);
+	}
+
+	JobOfferState(final String name, final String color, final boolean openState, final boolean closeState) {
 		this.name = name;
 		this.color = color;
 	}
 
-	public String getName() {
-		return name;
+	public String getColor() {
+		return this.color;
 	}
 
-	public String getColor() {
-		return color;
+	public String getName() {
+		return this.name;
+	}
+
+	public boolean isCloseState() {
+		return this.closeState;
+	}
+
+	public boolean isOpenState() {
+		return this.openState;
 	}
 }

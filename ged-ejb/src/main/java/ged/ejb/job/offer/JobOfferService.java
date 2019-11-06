@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Objects;
 
 import javax.ejb.Stateless;
+import javax.enterprise.event.Event;
+import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
@@ -20,7 +22,10 @@ import ged.ejb.core.model.Page;
 import ged.ejb.core.model.Repository;
 import ged.ejb.job.candidature.JobCandidature;
 import ged.ejb.job.candidature.JobCandidatureService;
-import ged.ejb.job.candidature.JobCandidatureState;
+import ged.ejb.job.candidature.event.JobCandidatureCompletedEvent;
+import ged.ejb.job.offer.event.JobOfferCompletedEvent;
+import ged.ejb.job.offer.event.JobOfferCreatedEvent;
+import ged.ejb.job.offer.event.JobOfferStateChangedEvent;
 import ged.ejb.user.User;
 
 @Stateless
@@ -29,15 +34,41 @@ public class JobOfferService extends AbstractService<JobOffer> {
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	@Inject
-	@Repository
-	private JobOfferDao jobOfferDao;
-	
+	@JobOfferCompletedEvent
+	private Event<JobOffer> completedEvent;
+
+	@Inject
+	@JobOfferCreatedEvent
+	private Event<JobOffer> createdEvent;
+
 	@Inject
 	private JobCandidatureService jobCandidatureService;
 
 	@Inject
 	@Repository
+	private JobOfferDao jobOfferDao;
+
+	@Inject
+	@Repository
 	private JobOfferStateChangeEventDao jobOfferStateChangeEventDao;
+
+	@Inject
+	@JobOfferStateChangedEvent
+	private Event<JobOffer> stateChangedEvent;
+
+	private void addJobOfferStateChangeEvent(final JobOffer jobOffer, final JobOfferState state, final User user,
+			final String notes) {
+		final JobOfferStateChangeEvent event = new JobOfferStateChangeEvent(jobOffer, state);
+		event.setUser(user);
+		event.setNotes(notes);
+		this.jobOfferStateChangeEventDao.save(event);
+	}
+
+	private void closeJobOffer(final JobOffer jobOffer) {
+		jobOffer.setDateClosed(LocalDate.now());
+		jobOffer.setJobOfferState(JobOfferState.CLOSED);
+		completedEvent.fire(jobOffer);
+	}
 
 	public List<JobOffer> findJobOffers(final Candidate candidate, final Page page) {
 		Objects.requireNonNull(candidate, "Candidate can't be null");
@@ -74,23 +105,70 @@ public class JobOfferService extends AbstractService<JobOffer> {
 		return this.jobOfferDao;
 	}
 
+	private JobOfferState getPreviousState(final JobOffer jobOffer) {
+		if (!jobOffer.isNew()) {
+			final JobOffer savedJobOffer = this.find(jobOffer.getId());
+			return savedJobOffer.getJobOfferState();
+		}
+		return null;
+	}
+
+	private boolean isCompleted(final JobOffer jobOffer) {
+		final List<JobCandidature> jobCandidatures = this.jobCandidatureService.findApprovedJobCanditures(jobOffer,
+				Page.ALL);
+		final int numberofAprrovedCandidatures = jobCandidatures.size();
+		if (jobOffer.getPlaces() == numberofAprrovedCandidatures) {
+			return true;
+		}
+		return false;
+	}
+
+	public void onJobCandidatureCompleted(@Observes @JobCandidatureCompletedEvent final JobCandidature jobCandidature) {
+		Objects.requireNonNull(jobCandidature, "Job candidature can't be null");
+		final JobOffer jobOffer = jobCandidature.getJobOffer();
+		if (this.isCompleted(jobCandidature.getJobOffer())) {
+			this.closeJobOffer(jobOffer);
+		}
+	}
+
 	private boolean openDateHasCome(final JobOffer jobOffer) {
-		final LocalDate today = LocalDate.now();
-		return jobOffer.getDateOpened().isAfter(today) || jobOffer.getDateOpened().isEqual(today);
+		return !LocalDate.now().isBefore(jobOffer.getDateOpened());
+	}
+
+	private void openJobOffer(final JobOffer jobOffer) {
+		jobOffer.setDateOpened(LocalDate.now());
 	}
 
 	@Override
 	public JobOffer save(final JobOffer jobOffer) {
 		Objects.requireNonNull(jobOffer, "Job offer can't be null");
 		logger.debug("Save job offer {}", jobOffer);
-
-		final JobOffer savedJobOffer = super.save(jobOffer);
-		if (savedJobOffer.hasState(JobOfferState.CREATED) && this.openDateHasCome(savedJobOffer)) {
-			this.updateJobOfferState(savedJobOffer, JobOfferState.OPENED, null, null);
-		} else if (!jobOffer.getJobOfferState().equals(savedJobOffer.getJobOfferState())) {
-			this.updateJobOfferState(savedJobOffer, savedJobOffer.getJobOfferState(), null, null);
+		if (jobOffer.isNew()) {
+			this.createdEvent.fire(jobOffer);
+		} else {
+			final JobOfferState previousJobOfferState = this.getPreviousState(jobOffer);
+			if (jobOffer.hasState(JobOfferState.CREATED) && this.openDateHasCome(jobOffer)) {
+				logger.debug("The open date has come. Opening the job offer");
+				this.openJobOffer(jobOffer);
+				this.addJobOfferStateChangeEvent(jobOffer, JobOfferState.OPENED, null, null);
+			} else if (!jobOffer.getJobOfferState().equals(previousJobOfferState)) {
+				logger.debug("The job offer state has changed");
+				this.stateChangedEvent.fire(jobOffer);
+			}
 		}
-		return savedJobOffer;
+		return super.save(jobOffer);
+	}
+
+	public void setCompletedEvent(final Event<JobOffer> completedEvent) {
+		this.completedEvent = completedEvent;
+	}
+
+	public void setCreatedEvent(final Event<JobOffer> createdEvent) {
+		this.createdEvent = createdEvent;
+	}
+
+	public void setJobCandidatureService(final JobCandidatureService jobCandidatureService) {
+		this.jobCandidatureService = jobCandidatureService;
 	}
 
 	public void setJobOfferDao(final JobOfferDao jobOfferDao) {
@@ -99,30 +177,24 @@ public class JobOfferService extends AbstractService<JobOffer> {
 		this.jobOfferDao = jobOfferDao;
 	}
 
+	public void setJobOfferStateChangeEventDao(final JobOfferStateChangeEventDao jobOfferStateChangeEventDao) {
+		this.jobOfferStateChangeEventDao = jobOfferStateChangeEventDao;
+	}
+
+	public void setStateChangedEvent(final Event<JobOffer> stateChangedEvent) {
+		this.stateChangedEvent = stateChangedEvent;
+	}
+
 	public void updateJobOfferState(final JobOffer jobOffer, final JobOfferState state, final User user,
 			final String notes) {
 		Objects.requireNonNull(jobOffer, "Job offer cant't be null");
 		Objects.requireNonNull(state, "Job offer state cant't be null");
+		if (jobOffer.hasState(JobOfferState.CLOSED)) {
+			throw new IllegalStateException("Job offer is closed. Can't change state");
+		}
+
 		logger.debug("Update job offer {} to state {}", jobOffer, state);
-
-		if (jobOffer.hasState(state)) {
-			throw new IllegalStateException("Can't change state");
-		}
-		
-		if(state.equals(JobOfferState.CLOSED)) {
-			closeJobOffer(jobOffer);
-		}
-
-		jobOffer.setJobOfferState(state);
+		this.addJobOfferStateChangeEvent(jobOffer, state, user, notes);
 		this.save(jobOffer);
-
-		final JobOfferStateChangeEvent event = new JobOfferStateChangeEvent(jobOffer, state);
-		event.setUser(user);
-		event.setNotes(notes);
-		this.jobOfferStateChangeEventDao.save(event);
-	}
-
-	private void closeJobOffer(final JobOffer jobOffer) {
-		jobOffer.setDateClosed(LocalDate.now());
 	}
 }

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Objects;
 
 import javax.ejb.Stateless;
+import javax.enterprise.event.Event;
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
@@ -16,7 +17,9 @@ import ged.ejb.core.AbstractService;
 import ged.ejb.core.model.AbstractDao;
 import ged.ejb.core.model.Page;
 import ged.ejb.core.model.Repository;
-import ged.ejb.event.JobCandidatureEventService;
+import ged.ejb.job.candidature.event.JobCandidatureCompletedEvent;
+import ged.ejb.job.candidature.event.JobCandidatureCreatedEvent;
+import ged.ejb.job.candidature.event.JobCandidatureStateChangedEvent;
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.user.User;
 
@@ -26,11 +29,21 @@ public class JobCandidatureService extends AbstractService<JobCandidature> {
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	@Inject
+	@JobCandidatureCompletedEvent
+	private Event<JobCandidature> completedEvent;
+
+	@Inject
+	@JobCandidatureCreatedEvent
+	private Event<JobCandidature> createdEvent;
+
+	@Inject
+	@JobCandidatureStateChangedEvent
+	private Event<JobCandidature> stateChangedEvent;
+	
+	@Inject
 	@Repository
 	private JobCandidatureDao jobCandidatureDao;
 
-	@Inject
-	private JobCandidatureEventService jobCandidatureEventService;
 
 	@Inject
 	private JobCandidatureStateService jobCandidatureStateService;
@@ -46,7 +59,6 @@ public class JobCandidatureService extends AbstractService<JobCandidature> {
 		final JobCandidatureState firstState = this.jobCandidatureStateService.findInitialState();
 		final JobCandidature jobCandidature = new JobCandidature(candidate, jobOffer);
 		jobCandidature.setJobCandidatureState(firstState);
-		this.jobCandidatureEventService.createEvent(jobCandidature);
 		return this.save(jobCandidature);
 	}
 
@@ -64,6 +76,13 @@ public class JobCandidatureService extends AbstractService<JobCandidature> {
 			jobCandidatures.add(jobCandidature);
 		}
 		return jobCandidatures;
+	}
+
+	public List<JobCandidature> findApprovedJobCanditures(final JobOffer jobOffer, final Page page) {
+		Objects.requireNonNull(jobOffer, "JobOffer can't be null");
+		Objects.requireNonNull(page, "Page can't be null");
+		logger.debug("Find all approved  job candidatures of the job offer {}", jobOffer);
+		return this.jobCandidatureDao.findJobCanditures(jobOffer, page);
 	}
 
 	public List<JobCandidature> findJobCandidatures(final Candidate candidate, final Page page) {
@@ -104,32 +123,41 @@ public class JobCandidatureService extends AbstractService<JobCandidature> {
 		this.jobCandidatureDao.delete(jobCandidature);
 	}
 
-	public void setEventService(final JobCandidatureEventService jobCandidatureEventService) {
-		this.jobCandidatureEventService = jobCandidatureEventService;
+	public void setJobCandidatureCompletedEvent(final Event<JobCandidature> jobCandidatureCompletedEvent) {
+		this.completedEvent = jobCandidatureCompletedEvent;
+	}
+
+	public void setJobCandidatureCreatedEvent(final Event<JobCandidature> jobCandidatureCreatedEvent) {
+		this.createdEvent = jobCandidatureCreatedEvent;
 	}
 
 	public void setJobCandidatureDao(final JobCandidatureDao jobCandidatureDao) {
-		Objects.requireNonNull(jobCandidatureDao, "JobCandidatureDao can't be null");
-
 		this.jobCandidatureDao = jobCandidatureDao;
 	}
 
-	public void setJobCandidatureEventService(final JobCandidatureEventService jobCandidatureEventService) {
-		this.jobCandidatureEventService = jobCandidatureEventService;
+	public void setJobCandidatureStateChangedEvent(final Event<JobCandidature> jobCandidatureStateChangedEvent) {
+		this.stateChangedEvent = jobCandidatureStateChangedEvent;
 	}
 
 	public void setJobCandidatureStateService(final JobCandidatureStateService jobCandidatureStateService) {
 		this.jobCandidatureStateService = jobCandidatureStateService;
 	}
 
-	public void updateState(final JobCandidature jobCandidature, final JobCandidatureState jobCandidatureState) {
+	public JobCandidature save(final JobCandidature jobCandidature) {
 		Objects.requireNonNull(jobCandidature, "Job candidature can't be null");
-		Objects.requireNonNull(jobCandidatureState, "Job candidature state can't be null");
-		logger.debug("Update job candidature {} to state {}", jobCandidature, jobCandidatureState);
+		logger.debug("Save job candidature {}", jobCandidature);
 
-		if (!jobCandidature.hasState(jobCandidatureState)) {
-			jobCandidature.setJobCandidatureState(jobCandidatureState);
-			this.save(jobCandidature);
+		if (jobCandidature.isNew()) {
+			this.createdEvent.fire(jobCandidature);
+		} else {
+			final JobCandidature previousVersion = this.find(jobCandidature.getId());
+			if (!previousVersion.hasState(jobCandidature.getJobCandidatureState())) {
+				this.stateChangedEvent.fire(jobCandidature);
+			}
+			if (jobCandidature.isApproved()) {
+				this.completedEvent.fire(jobCandidature);
+			}
 		}
+		return super.save(jobCandidature);
 	}
 }

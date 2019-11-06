@@ -21,18 +21,6 @@ public class JobOfferStateChangeEvent extends AbstractEntity {
 
 	private static final long serialVersionUID = -6400237230027216957L;
 
-	public JobOfferStateChangeEvent() {
-		this.date = LocalDateTime.now();
-	}
-
-	public JobOfferStateChangeEvent(JobOffer jobOffer, JobOfferState jobOfferState) {
-		Objects.requireNonNull(jobOffer);
-		Objects.requireNonNull(jobOfferState);
-		this.date = LocalDateTime.now();
-		this.jobOffer = jobOffer;
-		this.jobOfferState = jobOfferState;
-	}
-
 	@Field(name = "date", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField(forField = "date")
 	private LocalDateTime date;
@@ -47,6 +35,18 @@ public class JobOfferStateChangeEvent extends AbstractEntity {
 	@ManyToOne
 	@IndexedEmbedded
 	private User user;
+
+	public JobOfferStateChangeEvent() {
+		this.date = LocalDateTime.now();
+	}
+
+	public JobOfferStateChangeEvent(final JobOffer jobOffer, final JobOfferState jobOfferState) {
+		Objects.requireNonNull(jobOffer);
+		Objects.requireNonNull(jobOfferState);
+		this.date = LocalDateTime.now();
+		this.jobOffer = jobOffer;
+		this.jobOfferState = jobOfferState;
+	}
 
 	@Override
 	public boolean equals(final Object obj) {

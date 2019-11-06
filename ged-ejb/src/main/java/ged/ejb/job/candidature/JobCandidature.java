@@ -112,4 +112,11 @@ public class JobCandidature extends AbstractEntity {
 	public String toString() {
 		return this.jobOffer + " - " + this.candidate.getFullName();
 	}
+
+	public boolean isApproved() {
+		if (jobCandidatureState == null) {
+			return false;
+		}
+		return jobCandidatureState.isApproved();
+	}
 }
