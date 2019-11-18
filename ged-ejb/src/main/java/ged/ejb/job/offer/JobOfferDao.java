@@ -2,8 +2,11 @@ package ged.ejb.job.offer;
 
 import static ged.ejb.core.util.Parameters.map;
 
+import java.util.Base64;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 import ged.ejb.candidate.Candidate;
 import ged.ejb.client.Client;
@@ -24,7 +27,7 @@ public class JobOfferDao extends AbstractDao<JobOffer> {
 		Objects.requireNonNull(page, "Page can't be null");
 		return this.findByQuery(JobOffer.class, "JobOffer.findByCandidate", map("candidate", candidate), page);
 	}
-	
+
 	public List<JobOffer> findJobOffers(final Client client, final Page page) {
 		Objects.requireNonNull(client, "Client can't be null");
 		Objects.requireNonNull(page, "Page can't be null");
@@ -40,6 +43,19 @@ public class JobOfferDao extends AbstractDao<JobOffer> {
 	@Override
 	public Class<JobOffer> getType() {
 		return JobOffer.class;
+	}
+
+	@Override
+	protected void preInsert(final JobOffer jobOffer) {
+		final String base64Id = generateUId();
+		jobOffer.setUId(base64Id);
+	}
+
+	private String generateUId() {
+		Random random = ThreadLocalRandom.current();
+		final byte[] bytes = new byte[32];
+		random.nextBytes(bytes);
+		return Base64.getEncoder().encodeToString(bytes);
 	}
 
 	@Override

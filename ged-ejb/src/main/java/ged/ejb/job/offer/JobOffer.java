@@ -31,6 +31,7 @@ import org.hibernate.search.annotations.Store;
 import ged.ejb.client.Client;
 import ged.ejb.core.model.AbstractEntity;
 import ged.ejb.core.model.Address;
+import ged.ejb.core.model.Ofuscable;
 import ged.ejb.core.model.Ownerable;
 import ged.ejb.job.candidature.JobCandidature;
 import ged.ejb.user.User;
@@ -38,10 +39,10 @@ import ged.ejb.user.User;
 @Entity
 @Indexed
 @Table(name = "JOB_OFFER")
-public class JobOffer extends AbstractEntity implements Ownerable {
+public class JobOffer extends AbstractEntity implements Ownerable, Ofuscable {
 
 	private static final long serialVersionUID = 1L;
-
+	
 	@Embedded
 	@IndexedEmbedded
 	private Address address;
@@ -68,9 +69,6 @@ public class JobOffer extends AbstractEntity implements Ownerable {
 	private Set<JobCandidature> jobCandidatures;
 
 	@NotNull
-	private JobOfferState state;
-
-	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "ownerId", nullable = false)
 	@IndexedEmbedded
@@ -86,11 +84,16 @@ public class JobOffer extends AbstractEntity implements Ownerable {
 	private Integer salary;
 
 	@NotNull
+	private JobOfferState state;
+
+	@NotNull
 	@Column(nullable = false)
 	@Field(name = "_title")
 	@Field(name = "title", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField(forField = "title")
 	private String title;
+
+	private String uId;
 
 	public JobOffer() {
 		this.state = JobOfferState.CREATED;
@@ -137,10 +140,6 @@ public class JobOffer extends AbstractEntity implements Ownerable {
 		return this.jobCandidatures;
 	}
 
-	public JobOfferState getState() {
-		return this.state;
-	}
-
 	@Override
 	public User getOwner() {
 		return this.owner;
@@ -158,8 +157,16 @@ public class JobOffer extends AbstractEntity implements Ownerable {
 		return this.salary;
 	}
 
+	public JobOfferState getState() {
+		return this.state;
+	}
+
 	public String getTitle() {
 		return this.title;
+	}
+
+	public String getUId() {
+		return uId;
 	}
 
 	@Override
@@ -186,7 +193,7 @@ public class JobOffer extends AbstractEntity implements Ownerable {
 	public void setClient(final Client client) {
 		this.client = client;
 	}
-	
+
 	public void setDateClosed(final LocalDate dateClosed) {
 		this.dateClosed = dateClosed;
 	}
@@ -201,10 +208,6 @@ public class JobOffer extends AbstractEntity implements Ownerable {
 
 	public void setJobCandidatures(final Set<JobCandidature> jobCandidatures) {
 		this.jobCandidatures = jobCandidatures;
-	}
-
-	public void setState(final JobOfferState state) {
-		this.state = state;
 	}
 
 	@Override
@@ -234,8 +237,16 @@ public class JobOffer extends AbstractEntity implements Ownerable {
 		this.salary = salary;
 	}
 
+	public void setState(final JobOfferState state) {
+		this.state = state;
+	}
+
 	public void setTitle(final String title) {
 		this.title = title;
+	}
+
+	public void setUId(String uId) {
+		this.uId = uId;
 	}
 
 	@Override
