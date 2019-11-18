@@ -212,8 +212,9 @@ public class Candidate extends Person implements Ownerable {
 	public void setTags(final List<Tag> tags) {
 		if (tags == null) {
 			this.tags = new HashSet<>();
+		}else {
+			this.tags = new HashSet<>(tags);
 		}
-		this.tags = new HashSet<>(tags);
 	}
 
 	public void setTags(final Set<Tag> tags) {

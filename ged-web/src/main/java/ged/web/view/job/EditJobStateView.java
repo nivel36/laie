@@ -1,6 +1,7 @@
 package ged.web.view.job;
 
 import java.lang.invoke.MethodHandles;
+import java.time.LocalDateTime;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -11,8 +12,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ged.ejb.core.model.Address;
+import ged.ejb.event.JobOfferEvent;
+import ged.ejb.event.JobOfferEventService;
 import ged.ejb.job.offer.JobOffer;
-import ged.ejb.job.offer.JobOfferService;
 import ged.ejb.job.offer.JobOfferState;
 import ged.web.core.IllegalPageStateException;
 import ged.web.core.util.PageEnum;
@@ -29,11 +31,21 @@ public class EditJobStateView extends AbstractView {
 	private JobOffer jobOffer;
 
 	@Inject
-	protected transient JobOfferService jobOfferService;
+	protected transient JobOfferEventService jobOfferEventService;
 
 	private String notes;
 
 	private JobOfferState state;
+
+	private JobOfferEvent buildEvent() {
+		final JobOfferEvent event = new JobOfferEvent();
+		event.setJobOffer(jobOffer);
+		event.setDate(LocalDateTime.now());
+		event.setNotes(notes);
+		event.setState(state);
+		event.setUser(this.sessionUser.get());
+		return event;
+	}
 
 	private void checkEditPermission() {
 		if (!this.sessionUser.hasPermissionToEdit(this.jobOffer)) {
@@ -78,7 +90,8 @@ public class EditJobStateView extends AbstractView {
 
 	public String save() {
 		logger.debug("Save job offer action performed");
-		this.jobOfferService.updateJobOfferState(jobOffer, state, this.sessionUser.get(), notes);
+		final JobOfferEvent event = buildEvent();
+		this.jobOfferEventService.save(event);
 		return this.jobUrl();
 	}
 
@@ -86,8 +99,8 @@ public class EditJobStateView extends AbstractView {
 		this.jobOffer = jobOffer;
 	}
 
-	public void setJobOfferService(final JobOfferService jobOfferService) {
-		this.jobOfferService = jobOfferService;
+	public void setJobOfferEventService(final JobOfferEventService jobOfferEventService) {
+		this.jobOfferEventService = jobOfferEventService;
 	}
 
 	public void setNotes(final String notes) {

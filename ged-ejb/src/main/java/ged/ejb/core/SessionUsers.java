@@ -1,24 +1,50 @@
 package ged.ejb.core;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
 public class SessionUsers {
 
-	private Set<String> onlineUsers = new HashSet<>();
+	private class SessionValues {
 
-	public boolean isOnline(String username) {
-		return onlineUsers.contains(username);
+		private LocalDateTime lastAction;
+
+		private final String sessionId;
+
+		SessionValues(final String sessionId) {
+			this.sessionId = sessionId;
+			this.lastAction = LocalDateTime.now();
+		}
 	}
 
-	public void login(String username) {
-		onlineUsers.add(username);
+	private final Map<String, SessionValues> onlineUsers = new HashMap<>();
+
+	public void action(final String username) {
+		this.onlineUsers.get(username).lastAction = LocalDateTime.now();
 	}
 
-	public void logout(String username) {
-		onlineUsers.remove(username);
+	public String getSessionId(final String username) {
+		return this.onlineUsers.get(username).sessionId;
+	}
+
+	public boolean isOnline(final String username) {
+		return this.onlineUsers.containsKey(username);
+	}
+
+	public LocalDateTime getLastAction(final String username) {
+		return this.onlineUsers.get(username).lastAction;
+	}
+
+	public void login(final String username, final String sessionId) {
+		final SessionValues values = new SessionValues(sessionId);
+		this.onlineUsers.put(username, values);
+	}
+
+	public void logout(final String username) {
+		this.onlineUsers.remove(username);
 	}
 }

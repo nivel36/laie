@@ -91,7 +91,8 @@ public class Credential extends AbstractEntity {
 
 	public boolean isValid(final String password) {
 		Objects.requireNonNull(password);
-		return Arrays.equals(this.hashPassword, this.buildHashPassword(password));
+		final byte[] typedPassword = this.buildHashPassword(password);
+		return Arrays.equals(this.hashPassword, typedPassword);
 	}
 
 	private void newCredential(final String password) {

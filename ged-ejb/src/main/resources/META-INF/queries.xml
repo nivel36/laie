@@ -173,7 +173,7 @@
 			LEFT JOIN FETCH j.candidate
 			LEFT JOIN FETCH j.jobOffer
 			WHERE j.jobOffer = :jobOffer
-			AND j.jobCandidatureState.approved = TRUE
+			AND j.state.approved = TRUE
 		]]></query>
 	</named-query>
 

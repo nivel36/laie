@@ -36,7 +36,7 @@
 					<h:outputText value="#{client.cif}" />
 				</p:column>
 				<p:column headerText="#{i18n['client.city']}" sortBy="#{client.address.city}">
-					<h:outputText value="#{client.address.city} " /> <h:panelGroup rendered="#{not empty client.address.state}">(<h:outputText value="#{client.address.state}" />)</h:panelGroup>
+					<h:outputText value="#{client.address.city} " /> <h:panelGroup rendered="#{not empty client.address.region}">(<h:outputText value="#{client.address.region}" />)</h:panelGroup>
 				</p:column>
 				<p:column headerText="#{i18n['client.owner']}" sortBy="#{client.owner.fullName}">
 					<h:link value="#{client.owner.fullName}" outcome="#{Page.USER_SEARCH.getUrl()}">

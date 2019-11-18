@@ -56,17 +56,9 @@ public class JobOfferService extends AbstractService<JobOffer> {
 	@JobOfferStateChangedEvent
 	private Event<JobOffer> stateChangedEvent;
 
-	private void addJobOfferStateChangeEvent(final JobOffer jobOffer, final JobOfferState state, final User user,
-			final String notes) {
-		final JobOfferStateChangeEvent event = new JobOfferStateChangeEvent(jobOffer, state);
-		event.setUser(user);
-		event.setNotes(notes);
-		this.jobOfferStateChangeEventDao.save(event);
-	}
-
 	private void closeJobOffer(final JobOffer jobOffer) {
 		jobOffer.setDateClosed(LocalDate.now());
-		jobOffer.setJobOfferState(JobOfferState.CLOSED);
+		jobOffer.setState(JobOfferState.CLOSED);
 		completedEvent.fire(jobOffer);
 	}
 
@@ -108,7 +100,7 @@ public class JobOfferService extends AbstractService<JobOffer> {
 	private JobOfferState getPreviousState(final JobOffer jobOffer) {
 		if (!jobOffer.isNew()) {
 			final JobOffer savedJobOffer = this.find(jobOffer.getId());
-			return savedJobOffer.getJobOfferState();
+			return savedJobOffer.getState();
 		}
 		return null;
 	}
@@ -137,21 +129,20 @@ public class JobOfferService extends AbstractService<JobOffer> {
 
 	private void openJobOffer(final JobOffer jobOffer) {
 		jobOffer.setDateOpened(LocalDate.now());
+		jobOffer.setState(JobOfferState.OPENED);
 	}
 
 	@Override
 	public JobOffer save(final JobOffer jobOffer) {
 		Objects.requireNonNull(jobOffer, "Job offer can't be null");
 		logger.debug("Save job offer {}", jobOffer);
-		if (jobOffer.isNew()) {
+		if (jobOffer.isNew() && this.openDateHasCome(jobOffer)) {
+			logger.debug("The open date has come. Opening the job offer");
+			this.openJobOffer(jobOffer);
 			this.createdEvent.fire(jobOffer);
 		} else {
 			final JobOfferState previousJobOfferState = this.getPreviousState(jobOffer);
-			if (jobOffer.hasState(JobOfferState.CREATED) && this.openDateHasCome(jobOffer)) {
-				logger.debug("The open date has come. Opening the job offer");
-				this.openJobOffer(jobOffer);
-				this.addJobOfferStateChangeEvent(jobOffer, JobOfferState.OPENED, null, null);
-			} else if (!jobOffer.getJobOfferState().equals(previousJobOfferState)) {
+			if (!jobOffer.hasState(previousJobOfferState)) {
 				logger.debug("The job offer state has changed");
 				this.stateChangedEvent.fire(jobOffer);
 			}
@@ -183,18 +174,5 @@ public class JobOfferService extends AbstractService<JobOffer> {
 
 	public void setStateChangedEvent(final Event<JobOffer> stateChangedEvent) {
 		this.stateChangedEvent = stateChangedEvent;
-	}
-
-	public void updateJobOfferState(final JobOffer jobOffer, final JobOfferState state, final User user,
-			final String notes) {
-		Objects.requireNonNull(jobOffer, "Job offer cant't be null");
-		Objects.requireNonNull(state, "Job offer state cant't be null");
-		if (jobOffer.hasState(JobOfferState.CLOSED)) {
-			throw new IllegalStateException("Job offer is closed. Can't change state");
-		}
-
-		logger.debug("Update job offer {} to state {}", jobOffer, state);
-		this.addJobOfferStateChangeEvent(jobOffer, state, user, notes);
-		this.save(jobOffer);
 	}
 }

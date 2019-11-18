@@ -2,7 +2,6 @@ package ged.web.view;
 
 import static javax.security.enterprise.AuthenticationStatus.SEND_CONTINUE;
 import static javax.security.enterprise.AuthenticationStatus.SEND_FAILURE;
-import static javax.security.enterprise.AuthenticationStatus.SUCCESS;
 import static javax.security.enterprise.authentication.mechanism.http.AuthenticationParameters.withParams;
 import static org.omnifaces.util.Faces.getRequest;
 import static org.omnifaces.util.Faces.getResponse;
@@ -10,8 +9,8 @@ import static org.omnifaces.util.Faces.getResponse;
 import java.util.Locale;
 
 import javax.annotation.PostConstruct;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
-import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.security.enterprise.AuthenticationStatus;
@@ -28,7 +27,7 @@ import ged.web.core.util.PageEnum;
 import ged.web.core.view.AbstractView;
 
 @Named
-@ViewScoped
+@RequestScoped
 public class LoginView extends AbstractView {
 
 	private static final Logger logger = LoggerFactory.getLogger(LoginView.class);
@@ -40,10 +39,10 @@ public class LoginView extends AbstractView {
 	private transient String password;
 
 	@Inject
-	private SecurityContext securityContext;
-	
+	private transient SecurityContext securityContext;
+
 	@Inject
-	private SessionUsers sessionUsers;
+	private transient SessionUsers sessionUsers;
 
 	private String username;
 
@@ -57,8 +56,6 @@ public class LoginView extends AbstractView {
 			// Prevent JSF from rendering a response so authentication mechanism can
 			// continue.
 			this.facesContext.responseComplete();
-		} else if (status == SUCCESS) {
-			this.gotoIndex();
 		}
 	}
 
@@ -94,7 +91,14 @@ public class LoginView extends AbstractView {
 		final UsernamePasswordCredential credential = new UsernamePasswordCredential(this.username, this.password);
 		final AuthenticationParameters parameters = withParams().credential(credential).newAuthentication(true);
 		this.authenticate(parameters);
-		sessionUsers.login(this.username);
+		registerUserSession();
+		this.gotoIndex();
+	}
+
+	private void registerUserSession() {
+		this.facesContext.getExternalContext().getSessionMap().put("username", username);
+		final String sessionId = this.externalContext.getSessionId(true);
+		this.sessionUsers.login(username, sessionId);
 	}
 
 	private void setDefaultLocale() {

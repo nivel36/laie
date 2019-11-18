@@ -30,7 +30,7 @@ public class JobCandidature extends AbstractEntity {
 
 	@ManyToOne
 	@JoinColumn(name = "jobCandidatureStateId")
-	private JobCandidatureState jobCandidatureState;
+	private JobCandidatureState state;
 
 	@NotNull
 	@ManyToOne
@@ -67,8 +67,8 @@ public class JobCandidature extends AbstractEntity {
 		return this.candidate;
 	}
 
-	public JobCandidatureState getJobCandidatureState() {
-		return this.jobCandidatureState;
+	public JobCandidatureState getState() {
+		return this.state;
 	}
 
 	public List<Meeting> getJobMeetings() {
@@ -85,10 +85,10 @@ public class JobCandidature extends AbstractEntity {
 	}
 
 	public boolean hasState(final JobCandidatureState state) {
-		if (this.jobCandidatureState == null) {
-			return state == null;
+		if (state == null) {
+			return this.state == null;
 		} else {
-			return this.jobCandidatureState.equals(state);
+			return this.state.equals(state);
 		}
 	}
 
@@ -96,8 +96,8 @@ public class JobCandidature extends AbstractEntity {
 		this.candidate = candidate;
 	}
 
-	public void setJobCandidatureState(final JobCandidatureState jobCandidatureState) {
-		this.jobCandidatureState = jobCandidatureState;
+	public void setState(final JobCandidatureState state) {
+		this.state = state;
 	}
 
 	public void setJobMeetings(final List<Meeting> meetings) {
@@ -114,9 +114,9 @@ public class JobCandidature extends AbstractEntity {
 	}
 
 	public boolean isApproved() {
-		if (jobCandidatureState == null) {
+		if (state == null) {
 			return false;
 		}
-		return jobCandidatureState.isApproved();
+		return state.isApproved();
 	}
 }

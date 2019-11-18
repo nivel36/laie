@@ -15,7 +15,6 @@ import ged.ejb.core.model.Repository;
 import ged.ejb.core.security.GedSecurityContext;
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
-import ged.ejb.job.offer.JobOfferState;
 import ged.ejb.user.User;
 
 @Stateless
@@ -53,8 +52,7 @@ public class JobOfferEventService extends AbstractService<JobOfferEvent> {
 		logger.debug("Save jobOffer event {}", jobOfferEvent);
 
 		final JobOffer jobOffer = jobOfferEvent.getJobOffer();
-		final JobOfferState state = jobOfferEvent.getState();
-		this.jobOfferService.updateJobOfferState(jobOffer, state, null, null);
+		this.jobOfferService.save(jobOffer);
 		return this.jobOfferEventDao.save(jobOfferEvent);
 	}
 

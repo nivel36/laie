@@ -38,7 +38,7 @@
 							<h:link value="#{jobOffer.title}" outcome="#{Page.JOB.getUrl()}">
 								<f:param name="id" value="#{jobOffer.id}" />
 							</h:link>
-							<span class="job_address">#{jobOffer.address.city} (#{jobOffer.address.state})</span>
+							<span class="job_address">#{jobOffer.address.city} (#{jobOffer.address.region})</span>
 						</p:column>
 
 						<p:column headerText="#{i18n['job.client']}" sortBy="#{jobOffer.client.name}">

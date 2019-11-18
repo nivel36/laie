@@ -16,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.search.annotations.Analyze;
@@ -55,7 +56,7 @@ public class User extends Person {
 	@Field(name = "lastConnection", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField(forField = "lastConnection")
 	private LocalDateTime lastConnection;
-
+	
 	@ManyToOne
 	@JoinColumn(name = "managerId")
 	@IndexedEmbedded(depth = 1)
@@ -71,6 +72,9 @@ public class User extends Person {
 	@NotNull
 	@Column(nullable = false)
 	private Integer rowsPerPage = 10;
+
+	@Transient
+	private String sessionId;
 
 	public void addBookmark(final Bookmark bookmark) {
 		Objects.requireNonNull(bookmark);
@@ -107,6 +111,10 @@ public class User extends Person {
 
 	public Integer getRowsPerPage() {
 		return this.rowsPerPage;
+	}
+
+	public String getSessionId() {
+		return sessionId;
 	}
 
 	public boolean hasRole(final Role role) {
@@ -164,5 +172,9 @@ public class User extends Person {
 
 	public void setRowsPerPage(final Integer rowsPerPage) {
 		this.rowsPerPage = rowsPerPage;
+	}
+
+	public void setSessionId(String sessionId) {
+		this.sessionId = sessionId;
 	}
 }

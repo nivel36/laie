@@ -37,16 +37,15 @@ public class JobCandidatureService extends AbstractService<JobCandidature> {
 	private Event<JobCandidature> createdEvent;
 
 	@Inject
-	@JobCandidatureStateChangedEvent
-	private Event<JobCandidature> stateChangedEvent;
-	
-	@Inject
 	@Repository
 	private JobCandidatureDao jobCandidatureDao;
 
-
 	@Inject
 	private JobCandidatureStateService jobCandidatureStateService;
+
+	@Inject
+	@JobCandidatureStateChangedEvent
+	private Event<JobCandidature> stateChangedEvent;
 
 	public JobCandidature addJobCandidature(final JobOffer jobOffer, final Candidate candidate) {
 		Objects.requireNonNull(jobOffer, "JobOffer can't be null");
@@ -58,7 +57,7 @@ public class JobCandidatureService extends AbstractService<JobCandidature> {
 
 		final JobCandidatureState firstState = this.jobCandidatureStateService.findInitialState();
 		final JobCandidature jobCandidature = new JobCandidature(candidate, jobOffer);
-		jobCandidature.setJobCandidatureState(firstState);
+		jobCandidature.setState(firstState);
 		return this.save(jobCandidature);
 	}
 
@@ -114,6 +113,12 @@ public class JobCandidatureService extends AbstractService<JobCandidature> {
 		return this.jobCandidatureDao;
 	}
 
+	public boolean hasStateChanged(final JobCandidature jobCandidature) {
+		final JobCandidature previousVersion = this.find(jobCandidature.getId());
+		final JobCandidatureState state = jobCandidature.getState();
+		return !previousVersion.hasState(state);
+	}
+
 	public void removeJobCandidature(final JobOffer jobOffer, final Candidate candidate) {
 		Objects.requireNonNull(jobOffer, "JobOffer can't be null");
 		Objects.requireNonNull(candidate, "Candidate can't be null");
@@ -121,6 +126,26 @@ public class JobCandidatureService extends AbstractService<JobCandidature> {
 
 		final JobCandidature jobCandidature = this.jobCandidatureDao.findByJobOfferAndCandidate(jobOffer, candidate);
 		this.jobCandidatureDao.delete(jobCandidature);
+	}
+
+	public JobCandidature save(final JobCandidature jobCandidature) {
+		Objects.requireNonNull(jobCandidature, "Job candidature can't be null");
+		logger.debug("Save job candidature {}", jobCandidature);
+
+		if (jobCandidature.isNew()) {
+			logger.trace("Is a new job candidature");
+			this.createdEvent.fire(jobCandidature);
+		} else {
+			if (hasStateChanged(jobCandidature)) {
+				logger.trace("State has changed to {}", jobCandidature.getState());
+				this.stateChangedEvent.fire(jobCandidature);
+			}
+			if (jobCandidature.isApproved()) {
+				logger.trace("Job candidature is approved");
+				this.completedEvent.fire(jobCandidature);
+			}
+		}
+		return super.save(jobCandidature);
 	}
 
 	public void setJobCandidatureCompletedEvent(final Event<JobCandidature> jobCandidatureCompletedEvent) {
@@ -141,23 +166,5 @@ public class JobCandidatureService extends AbstractService<JobCandidature> {
 
 	public void setJobCandidatureStateService(final JobCandidatureStateService jobCandidatureStateService) {
 		this.jobCandidatureStateService = jobCandidatureStateService;
-	}
-
-	public JobCandidature save(final JobCandidature jobCandidature) {
-		Objects.requireNonNull(jobCandidature, "Job candidature can't be null");
-		logger.debug("Save job candidature {}", jobCandidature);
-
-		if (jobCandidature.isNew()) {
-			this.createdEvent.fire(jobCandidature);
-		} else {
-			final JobCandidature previousVersion = this.find(jobCandidature.getId());
-			if (!previousVersion.hasState(jobCandidature.getJobCandidatureState())) {
-				this.stateChangedEvent.fire(jobCandidature);
-			}
-			if (jobCandidature.isApproved()) {
-				this.completedEvent.fire(jobCandidature);
-			}
-		}
-		return super.save(jobCandidature);
 	}
 }

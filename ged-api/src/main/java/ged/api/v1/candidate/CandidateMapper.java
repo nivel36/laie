@@ -31,7 +31,7 @@ public class CandidateMapper implements AbstractMapper<Candidate, CandidateDto> 
 		candidate.setOwner(owner);
 		final Address address = new Address();
 		address.setCity(candidateDto.getCity());
-		address.setState(candidateDto.getState());
+		address.setRegion(candidateDto.getState());
 		candidate.setAddress(address);
 		candidate.setBornDate(candidateDto.getBornDate());
 		candidate.setEmail(candidateDto.getEmail());
@@ -72,7 +72,7 @@ public class CandidateMapper implements AbstractMapper<Candidate, CandidateDto> 
 		candidateDto.setRating(candidate.getRating());
 		candidateDto.setSalary(candidate.getSalary());
 		candidateDto.setSkype(candidate.getSkype());
-		candidateDto.setState(candidate.getAddress().getState());
+		candidateDto.setState(candidate.getAddress().getRegion());
 		candidateDto.setSurname(candidate.getSurname());
 		return candidateDto;
 	}

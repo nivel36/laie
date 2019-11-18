@@ -48,7 +48,7 @@ public class ClientMapper implements AbstractMapper<Client, ClientDto> {
 		}
 		else {
 			dto.setCity(address.getCity());
-			dto.setState(address.getState());
+			dto.setState(address.getRegion());
 		}
 		dto.setName(entity.getName());
 		final User owner = entity.getOwner();

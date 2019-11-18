@@ -29,7 +29,7 @@ public class JobCandidatureEvent extends AbstractEntity {
 	@SortableField(forField = "date")
 	private LocalDateTime date;
 
-	private String description;
+	private String notes;
 
 	@ManyToOne
 	private JobCandidature jobCandidature;
@@ -53,7 +53,7 @@ public class JobCandidatureEvent extends AbstractEntity {
 		this.user = user;
 		this.date = LocalDateTime.now();
 		this.jobCandidature = jobCandidature;
-		this.state = jobCandidature.getJobCandidatureState();
+		this.state = jobCandidature.getState();
 		this.setType(JobCandidatureEventType.OTHER);
 	}
 
@@ -70,15 +70,15 @@ public class JobCandidatureEvent extends AbstractEntity {
 		}
 		final JobCandidatureEvent other = (JobCandidatureEvent) obj;
 		return Objects.equals(this.date, other.date) && Objects.equals(this.type, other.type)
-				&& Objects.equals(this.user, other.user) && Objects.equals(this.jobCandidature, this.jobCandidature);
+				&& Objects.equals(this.user, other.user) && Objects.equals(this.jobCandidature, other.jobCandidature);
 	}
 
 	public LocalDateTime getDate() {
 		return this.date;
 	}
 
-	public String getDescription() {
-		return this.description;
+	public String getNotes() {
+		return this.notes;
 	}
 
 	public JobCandidature getJobCandidature() {
@@ -106,8 +106,8 @@ public class JobCandidatureEvent extends AbstractEntity {
 		this.date = date;
 	}
 
-	public void setDescription(final String description) {
-		this.description = description;
+	public void setNotes(final String notes) {
+		this.notes = notes;
 	}
 
 	public void setJobCandidature(final JobCandidature jobCandidature) {

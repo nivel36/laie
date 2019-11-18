@@ -2453,7 +2453,6 @@ body .ui-datatable .ui-datatable-header {
 body .ui-datatable .ui-datatable-footer {
   text-align: left;
   border-top: 0 none;
-  font-weight: 500;
   font-weight: 500; }
 body .ui-datatable .ui-paginator {
   padding: 0.25em 0; }

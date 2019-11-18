@@ -27,9 +27,11 @@ public class JobOfferEvent extends AbstractEntity {
 	@Field(name = "date", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField(forField = "date")
 	private LocalDateTime date;
-
+	
 	@ManyToOne
 	private JobOffer jobOffer;
+
+	private String notes;
 
 	private JobOfferState state;
 
@@ -44,7 +46,7 @@ public class JobOfferEvent extends AbstractEntity {
 		this.user = user;
 		this.jobOffer = jobOffer;
 		this.date = LocalDateTime.now();
-		this.state = jobOffer.getJobOfferState();
+		this.state = jobOffer.getState();
 	}
 
 	@Override
@@ -71,6 +73,10 @@ public class JobOfferEvent extends AbstractEntity {
 		return this.jobOffer;
 	}
 
+	public String getNotes() {
+		return notes;
+	}
+
 	public JobOfferState getState() {
 		return this.state;
 	}
@@ -81,10 +87,7 @@ public class JobOfferEvent extends AbstractEntity {
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = (prime * result) + Objects.hash(this.date, this.jobOffer, this.state, this.user);
-		return result;
+		return Objects.hash(this.date, this.jobOffer, this.state, this.user);
 	}
 
 	public void setDate(final LocalDateTime date) {
@@ -93,6 +96,10 @@ public class JobOfferEvent extends AbstractEntity {
 
 	public void setJobOffer(final JobOffer jobOffer) {
 		this.jobOffer = jobOffer;
+	}
+
+	public void setNotes(String notes) {
+		this.notes = notes;
 	}
 
 	public void setState(final JobOfferState state) {

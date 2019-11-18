@@ -52,7 +52,7 @@
 
 							<p:column headerText="#{i18n['client.city']}" sortBy="#{client.address.city}">
 								<h:outputText value="#{client.address.city} " />
-								<h:panelGroup rendered="#{not empty client.address.state}">(<h:outputText value="#{client.address.state}" />)</h:panelGroup>
+								<h:panelGroup rendered="#{not empty client.address.region}">(<h:outputText value="#{client.address.region}" />)</h:panelGroup>
 							</p:column>
 
 							<p:column headerText="#{i18n['client.owner']}" sortBy="#{client.owner.name}">

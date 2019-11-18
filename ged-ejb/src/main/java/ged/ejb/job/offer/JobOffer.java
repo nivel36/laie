@@ -68,7 +68,7 @@ public class JobOffer extends AbstractEntity implements Ownerable {
 	private Set<JobCandidature> jobCandidatures;
 
 	@NotNull
-	private JobOfferState jobOfferState;
+	private JobOfferState state;
 
 	@NotNull
 	@ManyToOne
@@ -93,7 +93,7 @@ public class JobOffer extends AbstractEntity implements Ownerable {
 	private String title;
 
 	public JobOffer() {
-		this.jobOfferState = JobOfferState.CREATED;
+		this.state = JobOfferState.CREATED;
 		this.dateOpened = LocalDate.now();
 	}
 
@@ -137,8 +137,8 @@ public class JobOffer extends AbstractEntity implements Ownerable {
 		return this.jobCandidatures;
 	}
 
-	public JobOfferState getJobOfferState() {
-		return this.jobOfferState;
+	public JobOfferState getState() {
+		return this.state;
 	}
 
 	@Override
@@ -168,10 +168,10 @@ public class JobOffer extends AbstractEntity implements Ownerable {
 	}
 
 	public boolean hasState(final JobOfferState state) {
-		if (this.jobOfferState == null) {
+		if (this.state == null) {
 			return state == null;
 		} else {
-			return this.jobOfferState.equals(state);
+			return this.state.equals(state);
 		}
 	}
 
@@ -203,8 +203,8 @@ public class JobOffer extends AbstractEntity implements Ownerable {
 		this.jobCandidatures = jobCandidatures;
 	}
 
-	public void setJobOfferState(final JobOfferState jobOfferState) {
-		this.jobOfferState = jobOfferState;
+	public void setState(final JobOfferState state) {
+		this.state = state;
 	}
 
 	@Override

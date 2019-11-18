@@ -33,7 +33,7 @@
 							<h:link value="#{jobCandidature.jobOffer.title}" outcome="#{Page.JOB.getUrl()}">
 								<f:param name="id" value="#{jobCandidature.jobOffer.id}" />
 							</h:link>
-							<span class="job_address">#{jobCandidature.jobOffer.address.city} (#{jobCandidature.jobOffer.address.state})</span>
+							<span class="job_address">#{jobCandidature.jobOffer.address.city} (#{jobCandidature.jobOffer.address.region})</span>
 						</p:column>
 						<p:column headerText="#{i18n['job_candidature.client']}" rendered="#{cc.attrs.showJobOffer}">
 							<h:link value="#{jobCandidature.jobOffer.client.name}" outcome="#{Page.CLIENT.getUrl()}">
@@ -54,7 +54,7 @@
 						<p:column headerText="#{i18n['job_candidature.job_candidature_state']}">
 							<p:link outcome="#{Page.EVENT_ADD.getUrl()}">
 								<f:param name="jobCandidatureId" value="#{jobCandidature.id}" />
-								<div class="tag #{jobCandidature.jobCandidatureState.color}">#{g:translate(jobCandidature.jobCandidatureState.name)}</div>
+								<div class="tag #{jobCandidature.state.color}">#{g:translate(jobCandidature.state.name)}</div>
 							</p:link>					
 						</p:column>
 					</p:dataTable>

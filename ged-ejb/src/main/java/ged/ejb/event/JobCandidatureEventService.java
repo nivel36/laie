@@ -4,6 +4,7 @@ import java.lang.invoke.MethodHandles;
 import java.util.Objects;
 
 import javax.ejb.Stateless;
+import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
@@ -15,6 +16,7 @@ import ged.ejb.core.model.Repository;
 import ged.ejb.core.security.GedSecurityContext;
 import ged.ejb.job.candidature.JobCandidature;
 import ged.ejb.job.candidature.JobCandidatureService;
+import ged.ejb.job.candidature.event.JobCandidatureCreatedEvent;
 import ged.ejb.user.User;
 
 @Stateless
@@ -32,18 +34,23 @@ public class JobCandidatureEventService extends AbstractService<JobCandidatureEv
 	@Inject
 	private JobCandidatureService jobCandidatureService;
 
-	public JobCandidatureEvent createEvent(final JobCandidature jobCandidature) {
-		Objects.requireNonNull(jobCandidature, "Job candidature can't be null");
-		logger.debug("Create event for job candidature {}", jobCandidature);
-
-		final User user = this.gedSecurityContext.getLoggedUser();
-		final JobCandidatureEvent jobCandidatureEvent = new JobCandidatureEvent(user, jobCandidature);
-		return this.jobCandidatureEventDao.save(jobCandidatureEvent);
-	}
-
 	@Override
 	protected AbstractDao<JobCandidatureEvent> getDao() {
 		return this.jobCandidatureEventDao;
+	}
+
+	private User loggedUser() {
+		final User user = this.gedSecurityContext.getLoggedUser();
+		return user;
+	}
+
+	public void onJobCandidatureCreated(@JobCandidatureCreatedEvent @Observes JobCandidature jobCandidature) {
+		Objects.requireNonNull(jobCandidature, "Job candidature can't be null");
+		logger.debug("Create event for job candidature {}", jobCandidature);
+
+		final User user = loggedUser();
+		final JobCandidatureEvent jobCandidatureEvent = new JobCandidatureEvent(user, jobCandidature);
+		this.jobCandidatureEventDao.save(jobCandidatureEvent);
 	}
 
 	@Override
@@ -51,7 +58,10 @@ public class JobCandidatureEventService extends AbstractService<JobCandidatureEv
 		Objects.requireNonNull(jobCandidatureEvent, "Job candidature event can't be null");
 		logger.debug("Save job candidature event {}", jobCandidatureEvent);
 
-		this.jobCandidatureService.save(jobCandidatureEvent.getJobCandidature());
+		final JobCandidature jobCandidature = jobCandidatureEvent.getJobCandidature();
+		if (this.jobCandidatureService.hasStateChanged(jobCandidature)) {
+			this.jobCandidatureService.save(jobCandidature);
+		}
 		return super.save(jobCandidatureEvent);
 	}
 }

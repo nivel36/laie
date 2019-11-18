@@ -47,7 +47,7 @@
 							</div>
 
 							<div class="p-col-12">
-								<g:input id="description" label="#{i18n['event.description']}" value="#{addEventView.event.description}" type="textarea" />
+								<g:input id="notes" label="#{i18n['event.notes']}" value="#{addEventView.event.notes}" type="textarea" />
 							</div>
 
 							<div class="p-col-12 p-xl-6">
@@ -56,7 +56,7 @@
 										<p:outputLabel id="label" value="#{i18n['event.state']}" for="state" styleClass="label" />
 									</div>
 									<p:selectOneMenu id="state" value="#{addEventView.event.state}" styleClass="input input-select" panelStyleClass="jobCandidatureStates" var="state">
-										<f:selectItems value="#{jobCandidatureStates.list}" var="jobCandidatureState" itemValue="#{jobCandidatureState}" itemLabel="#{g:translate(jobCandidatureState.name)}" />
+										<f:selectItems value="#{jobCandidatureStates.list}" var="state" itemValue="#{state}" itemLabel="#{g:translate(state.name)}" />
 										<p:column>
 											<div class="tag #{state.color}">#{g:translate(state.name)}</div>
 										</p:column>
