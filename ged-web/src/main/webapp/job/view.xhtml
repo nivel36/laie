@@ -54,7 +54,9 @@
 								<cc:outputText label="#{i18n['job.state']}" value="#{viewJobView.jobOffer.address.region}" />
 							</div>
 							<div class="p-col-12">
-								<cc:outputText label="#{i18n['job.description']}" value="#{viewJobView.jobOffer.description}" />
+								<cc:outputLink label="#{i18n['job.description']}" value="#{i18n['job.view_description']}" outcome="#{Page.PORTAL_JOB.getUrl()}" target="new">
+									<f:param name="id" value="#{viewJobView.jobOffer.id}" />
+								</cc:outputLink>
 							</div>
 						</div>
 					</div>
@@ -116,7 +118,6 @@
 					</div>
 				</div>
 			</div>
-
 
 			<div class="p-col-12 p-xl-7">
 				<h:form>

@@ -35,17 +35,32 @@
 						<ui:insert />
 					</p:selectOneMenu>
 				</c:when>
-				
+
 				<c:when test="#{type eq 'textarea'}">
 					<p:inputTextarea id="#{id}" value="#{value}" required="#{required}" styleClass="input input-text-area #{inputStyleClass}" autoResize="false">
 						<ui:insert />
 					</p:inputTextarea>
 				</c:when>
-				
+
+				<c:when test="#{type eq 'rich'}">
+					<p:textEditor id="#{id}" value="#{value}" required="#{required}" styleClass="input input-rich #{inputStyleClass}" autoResize="false">
+						<f:facet name="toolbar">
+							<span class="ql-formats">
+								<button class="ql-bold"></button>
+								<button class="ql-italic"></button>
+								<button class="ql-underline"></button>
+								<button class="ql-strike"></button>
+							</span>
+							<span class="ql-formats"> <select class="ql-font"></select> <select class="ql-size"></select>
+							</span>
+						</f:facet>
+					</p:textEditor>
+				</c:when>
+
 				<c:when test="#{type eq 'inputSwitch'}">
-				 	<p:inputSwitch  id="#{id}" value="#{value}" required="#{required}" styleClass="input input-switch #{inputStyleClass}" >
-				 		<ui:insert />
-				 	</p:inputSwitch>
+					<p:inputSwitch id="#{id}" value="#{value}" required="#{required}" styleClass="input input-switch #{inputStyleClass}">
+						<ui:insert />
+					</p:inputSwitch>
 				</c:when>
 
 				<c:when test="#{type eq 'checkbox'}">
@@ -99,7 +114,7 @@
 					</p:inputText>
 				</c:otherwise>
 			</c:choose>
-			
+
 			<h:panelGroup layout="block" rendered="#{not empty icon and iconPosition eq 'right'}" styleClass="ui-inputgroup-addon">
 				<em class="fa #{icon}" />
 			</h:panelGroup>

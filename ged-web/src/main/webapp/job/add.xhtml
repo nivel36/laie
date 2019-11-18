@@ -39,8 +39,8 @@
 							<div class="p-col-12 p-sm-6">
 								<cc:autocomplete id="client" label="#{i18n['job.client']}" value="#{addJobView.jobOffer.client}" completeMethod="#{addJobView.completeClient}" required="true">
 									<p:column>
-											#{var.name}
-										</p:column>
+										#{var.name}
+									</p:column>
 								</cc:autocomplete>
 							</div>
 							<div class="p-col-12 p-sm-6">
@@ -87,7 +87,7 @@
 						<h1>Datos de la oferta</h1>
 						<div class="p-grid">
 							<div class="p-col-12">
-								<g:input id="description" label="#{i18n['job.description']}" value="#{addJobView.jobOffer.description}" type="textarea" />
+								<g:input id="description" label="#{i18n['job.description']}" value="#{addJobView.jobOffer.description}" type="rich" />
 							</div>
 						</div>
 					</div>

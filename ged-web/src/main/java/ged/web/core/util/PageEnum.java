@@ -35,6 +35,7 @@ public enum PageEnum {
 	JOB_EDIT_STATE("/job/editState", true), //
 	JOB_SEARCH("/job/search"), //
 	JOB_SELECT("/job/select"), //
+	PORTAL_JOB("/portal/jobOffer"),
 	LOGIN("/login"), //
 	MAINTENANCE("/maintenance"), //
 	MAINTENANCE_JOB_CANDIDATURE_STATES("/maintenance/jobCandidatureStates"), //

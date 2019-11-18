@@ -11,6 +11,7 @@
 			<url-pattern>/login.xhtml</url-pattern>
 			<url-pattern>/javax.faces.resource/*</url-pattern>
 			<url-pattern>/resources/img/*</url-pattern>
+			<url-pattern>/portal/*</url-pattern>
 		</web-resource-collection>
 	</security-constraint>
 	<security-constraint>
