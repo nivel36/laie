@@ -12,11 +12,18 @@ import org.slf4j.LoggerFactory;
 
 import ged.ejb.core.model.AbstractDao;
 import ged.ejb.core.model.Repository;
+import ged.ejb.job.offer.JobOffer;
 
 @Repository
 public class ClientDao extends AbstractDao<Client> {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
+
+	@Override
+	protected boolean existUid(final String uid) {
+		Objects.requireNonNull(uid);
+		return this.findByQuery(Boolean.class, "Client.existUid", map("uid", uid));
+	}
 
 	public Client findAllClientDataByClientId(final long clientId) {
 		if (clientId < 0) {
@@ -24,6 +31,11 @@ public class ClientDao extends AbstractDao<Client> {
 			throw new IllegalArgumentException();
 		}
 		return this.findByQuery(Client.class, "Client.findByClientId", map("clientId", clientId));
+	}
+
+	public JobOffer findByUid(final String uid) {
+		Objects.requireNonNull(uid);
+		return this.findByQuery(JobOffer.class, "Client.findByUid", map("uid", uid));
 	}
 
 	public Client findClientByCif(final String cif) {
@@ -39,6 +51,12 @@ public class ClientDao extends AbstractDao<Client> {
 	@Override
 	public Class<Client> getType() {
 		return Client.class;
+	}
+
+	@Override
+	protected void preInsert(final Client client) {
+		final String base64Id = this.generateUid();
+		client.setUid(base64Id);
 	}
 
 	@Override

@@ -5094,3 +5094,11 @@ body .ui-terminal {
     font-size: 13px; }
 
 /* Add your customizations of theme here */
+
+body .ui-texteditor {
+	width: 100%;
+}
+
+body .ql-toolbar.ql-snow + .ql-container.ql-snow {
+	height: auto;
+}

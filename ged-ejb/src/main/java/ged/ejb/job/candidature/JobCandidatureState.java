@@ -62,6 +62,10 @@ public class JobCandidatureState extends AbstractEntity {
 		return this.approved;
 	}
 
+	public boolean isClosed() {
+		return isApproved() || isDeclined();
+	}
+
 	public boolean isDeclined() {
 		return this.declined;
 	}
@@ -85,12 +89,8 @@ public class JobCandidatureState extends AbstractEntity {
 	public void setFirst(final boolean first) {
 		this.first = first;
 	}
-
+	
 	public void setName(final String name) {
 		this.name = name;
-	}
-	
-	public boolean isClosed() {
-		return isApproved() || isDeclined();
 	}
 }

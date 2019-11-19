@@ -84,6 +84,11 @@ public class JobCandidatureService extends AbstractService<JobCandidature> {
 		return this.jobCandidatureDao.findJobCanditures(jobOffer, page);
 	}
 
+	public JobOffer findByUid(final String uid) {
+		Objects.requireNonNull(uid);
+		return this.jobCandidatureDao.findByUid(uid);
+	}
+
 	public List<JobCandidature> findJobCandidatures(final Candidate candidate, final Page page) {
 		Objects.requireNonNull(candidate, "Candidate can't be null");
 		Objects.requireNonNull(page, "Page can't be null");
@@ -127,7 +132,7 @@ public class JobCandidatureService extends AbstractService<JobCandidature> {
 		final JobCandidature jobCandidature = this.jobCandidatureDao.findByJobOfferAndCandidate(jobOffer, candidate);
 		this.jobCandidatureDao.delete(jobCandidature);
 	}
-
+	
 	public JobCandidature save(final JobCandidature jobCandidature) {
 		Objects.requireNonNull(jobCandidature, "Job candidature can't be null");
 		logger.debug("Save job candidature {}", jobCandidature);

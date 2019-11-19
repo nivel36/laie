@@ -39,7 +39,7 @@
 
 							<p:column headerText="#{i18n['job.title']}" sortBy="#{jobOffer.title}">
 								<h:link value="#{jobOffer.title}" outcome="#{Page.JOB.getUrl()}">
-									<f:param name="id" value="#{jobOffer.id}" />
+									<f:param name="id" value="#{jobOffer.uid}" />
 								</h:link>
 								<span class="job_address">#{jobOffer.address.city} (#{jobOffer.address.region})</span>
 							</p:column>

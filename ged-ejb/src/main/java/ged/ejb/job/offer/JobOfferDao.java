@@ -2,11 +2,8 @@ package ged.ejb.job.offer;
 
 import static ged.ejb.core.util.Parameters.map;
 
-import java.util.Base64;
 import java.util.List;
 import java.util.Objects;
-import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
 
 import ged.ejb.candidate.Candidate;
 import ged.ejb.client.Client;
@@ -17,6 +14,16 @@ import ged.ejb.user.User;
 
 @Repository
 public class JobOfferDao extends AbstractDao<JobOffer> {
+
+	protected boolean existUid(final String uid) {
+		Objects.requireNonNull(uid);
+		return this.findByQuery(Boolean.class, "JobOffer.existUid", map("uid", uid));
+	}
+
+	public JobOffer findByUid(final String uid) {
+		Objects.requireNonNull(uid);
+		return this.findByQuery(JobOffer.class, "JobOffer.findByUid", map("uid", uid));
+	}
 
 	public JobOfferState findFirstJobOfferState() {
 		return this.findByQuery(JobOfferState.class, "JobOfferState.findFirst");
@@ -47,24 +54,12 @@ public class JobOfferDao extends AbstractDao<JobOffer> {
 
 	@Override
 	protected void preInsert(final JobOffer jobOffer) {
-		final String base64Id = generateUId();
-		jobOffer.setUId(base64Id);
-	}
-
-	private String generateUId() {
-		Random random = ThreadLocalRandom.current();
-		final byte[] bytes = new byte[32];
-		random.nextBytes(bytes);
-		return Base64.getEncoder().encodeToString(bytes);
+		final String base64Id = generateUid();
+		jobOffer.setUid(base64Id);
 	}
 
 	@Override
 	public String[] searchFields() {
 		return new String[] { "title", "client.name" };
-	}
-
-	public JobOffer findByUid(String uid) {
-		Objects.requireNonNull(uid);
-		return this.findByQuery(JobOffer.class, "JobOffer.findByUid", map("uid", uid));
 	}
 }

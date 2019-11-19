@@ -15,11 +15,27 @@ import ged.ejb.user.User;
 @Repository
 public class JobCandidatureDao extends AbstractDao<JobCandidature> {
 
+	protected boolean existUid(final String uid) {
+		Objects.requireNonNull(uid);
+		return this.findByQuery(Boolean.class, "JobCandidature.existUid", map("uid", uid));
+	}
+	
+	public List<JobCandidature> findApprovedJobCanditures(final JobOffer jobOffer, final Page page) {
+		Objects.requireNonNull(jobOffer, "JobOffer can't be null");
+		Objects.requireNonNull(page, "Page can't be null");
+		return this.findByQuery(JobCandidature.class, "JobCandidature.findApprovedByJobOffer", map("jobOffer", jobOffer), page);
+	}
+	
 	public JobCandidature findByJobOfferAndCandidate(final JobOffer jobOffer, final Candidate candidate) {
 		Objects.requireNonNull(jobOffer, "JobOffer can't be null");
 		Objects.requireNonNull(candidate, "Candidate can't be null");
 		return this.findByQuery(JobCandidature.class, "JobCandidature.findByJobOfferAndCandidate",
 				map("jobOffer", jobOffer).and("candidate", candidate));
+	}
+
+	public JobOffer findByUid(final String uid) {
+		Objects.requireNonNull(uid);
+		return this.findByQuery(JobOffer.class, "JobCandidature.findByUid", map("uid", uid));
 	}
 
 	public List<JobCandidature> findJobCandidatures(final Candidate candidate, final Page page) {
@@ -41,15 +57,15 @@ public class JobCandidatureDao extends AbstractDao<JobCandidature> {
 		return this.findByQuery(JobCandidature.class, "JobCandidature.findByJobOffer", map("jobOffer", jobOffer), page);
 	}
 	
-	public List<JobCandidature> findApprovedJobCanditures(final JobOffer jobOffer, final Page page) {
-		Objects.requireNonNull(jobOffer, "JobOffer can't be null");
-		Objects.requireNonNull(page, "Page can't be null");
-		return this.findByQuery(JobCandidature.class, "JobCandidature.findApprovedByJobOffer", map("jobOffer", jobOffer), page);
-	}
-	
 	@Override
 	protected Class<JobCandidature> getType() {
 		return JobCandidature.class;
+	}
+	
+	@Override
+	protected void preInsert(final JobCandidature jobCandidature) {
+		final String base64Id = generateUid();
+		jobCandidature.setUid(base64Id);
 	}
 
 	@Override

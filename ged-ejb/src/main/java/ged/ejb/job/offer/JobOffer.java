@@ -42,7 +42,7 @@ import ged.ejb.user.User;
 public class JobOffer extends AbstractEntity implements Ownerable, Obfuscable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Embedded
 	@IndexedEmbedded
 	private Address address;
@@ -93,6 +93,8 @@ public class JobOffer extends AbstractEntity implements Ownerable, Obfuscable {
 	@SortableField(forField = "title")
 	private String title;
 
+	@NotNull
+	@Column(unique = true, nullable = false)
 	private String uid;
 
 	public JobOffer() {
@@ -245,7 +247,7 @@ public class JobOffer extends AbstractEntity implements Ownerable, Obfuscable {
 		this.title = title;
 	}
 
-	public void setUId(String uid) {
+	public void setUid(String uid) {
 		this.uid = uid;
 	}
 

@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import ged.ejb.core.model.AbstractDao;
 import ged.ejb.core.model.Page;
 import ged.ejb.core.model.Repository;
+import ged.ejb.job.offer.JobOffer;
 
 @Repository
 public class UserDao extends AbstractDao<User> {
@@ -33,9 +34,19 @@ public class UserDao extends AbstractDao<User> {
 		}
 	}
 
+	protected boolean existUid(final String uid) {
+		Objects.requireNonNull(uid);
+		return this.findByQuery(Boolean.class, "User.existUid", map("uid", uid));
+	}
+
 	private List<UserClosure> findAntecessorsUserClosures(final User user) {
 		return this.findByQuery(UserClosure.class, "UserClosure.findAntecessorsUserClosuresById", map(ID, user.getId()),
 				Page.ALL);
+	}
+
+	public JobOffer findByUid(final String uid) {
+		Objects.requireNonNull(uid);
+		return this.findByQuery(JobOffer.class, "User.findByUid", map("uid", uid));
 	}
 
 	public List<User> findSubordinateUsers(final User user) {
@@ -115,6 +126,8 @@ public class UserDao extends AbstractDao<User> {
 
 	@Override
 	protected void postInsert(final User user) {
+		final String base64Id = generateUid();
+		user.setUid(base64Id);
 		if (user.getManager() != null) {
 			this.insertUserClosures(user);
 		}

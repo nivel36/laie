@@ -28,15 +28,16 @@ import org.hibernate.search.annotations.SortableField;
 import org.hibernate.search.annotations.Store;
 
 import ged.ejb.core.bookmark.Bookmark;
+import ged.ejb.core.model.Obfuscable;
 import ged.ejb.person.Person;
 import ged.ejb.user.role.Role;
 
 @Entity
 @Indexed
-public class User extends Person {
-
+public class User extends Person implements Obfuscable {
+	
 	private static final long serialVersionUID = 1L;
-
+	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user", orphanRemoval = true)
 	private Set<Bookmark> bookmarks = new HashSet<>();
 
@@ -56,7 +57,7 @@ public class User extends Person {
 	@Field(name = "lastConnection", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField(forField = "lastConnection")
 	private LocalDateTime lastConnection;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "managerId")
 	@IndexedEmbedded(depth = 1)
@@ -72,9 +73,13 @@ public class User extends Person {
 	@NotNull
 	@Column(nullable = false)
 	private Integer rowsPerPage = 10;
-
+	
 	@Transient
 	private String sessionId;
+
+	@NotNull
+	@Column(unique = true, nullable = false)
+	private String uid;
 
 	public void addBookmark(final Bookmark bookmark) {
 		Objects.requireNonNull(bookmark);
@@ -115,6 +120,11 @@ public class User extends Person {
 
 	public String getSessionId() {
 		return sessionId;
+	}
+
+	@Override
+	public String getUid() {
+		return this.uid;
 	}
 
 	public boolean hasRole(final Role role) {
@@ -176,5 +186,9 @@ public class User extends Person {
 
 	public void setSessionId(String sessionId) {
 		this.sessionId = sessionId;
+	}
+
+	public void setUid(String uid) {
+		this.uid = uid;
 	}
 }

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -14,23 +15,20 @@ import javax.validation.constraints.NotNull;
 
 import ged.ejb.candidate.Candidate;
 import ged.ejb.core.model.AbstractEntity;
+import ged.ejb.core.model.Obfuscable;
 import ged.ejb.job.meeting.Meeting;
 import ged.ejb.job.offer.JobOffer;
 
 @Entity
 @Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "jobOfferId", "candidateId" }) })
-public class JobCandidature extends AbstractEntity {
-
+public class JobCandidature extends AbstractEntity implements Obfuscable {
+	
 	private static final long serialVersionUID = 1L;
-
+	
 	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "candidateId", nullable = false)
 	private Candidate candidate;
-
-	@ManyToOne
-	@JoinColumn(name = "jobCandidatureStateId")
-	private JobCandidatureState state;
 
 	@NotNull
 	@ManyToOne
@@ -39,6 +37,14 @@ public class JobCandidature extends AbstractEntity {
 
 	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "jobCandidature", orphanRemoval = true)
 	private List<Meeting> meetings;
+
+	@ManyToOne
+	@JoinColumn(name = "jobCandidatureStateId")
+	private JobCandidatureState state;
+
+	@NotNull
+	@Column(unique = true, nullable = false)
+	private String uid;
 
 	public JobCandidature() {
 	}
@@ -67,16 +73,21 @@ public class JobCandidature extends AbstractEntity {
 		return this.candidate;
 	}
 
-	public JobCandidatureState getState() {
-		return this.state;
-	}
-
 	public List<Meeting> getJobMeetings() {
 		return this.meetings;
 	}
 
 	public JobOffer getJobOffer() {
 		return this.jobOffer;
+	}
+
+	public JobCandidatureState getState() {
+		return this.state;
+	}
+
+	@Override
+	public String getUid() {
+		return this.uid;
 	}
 
 	@Override
@@ -92,12 +103,15 @@ public class JobCandidature extends AbstractEntity {
 		}
 	}
 
-	public void setCandidate(final Candidate candidate) {
-		this.candidate = candidate;
+	public boolean isApproved() {
+		if (state == null) {
+			return false;
+		}
+		return state.isApproved();
 	}
 
-	public void setState(final JobCandidatureState state) {
-		this.state = state;
+	public void setCandidate(final Candidate candidate) {
+		this.candidate = candidate;
 	}
 
 	public void setJobMeetings(final List<Meeting> meetings) {
@@ -108,15 +122,16 @@ public class JobCandidature extends AbstractEntity {
 		this.jobOffer = jobOffer;
 	}
 
+	public void setState(final JobCandidatureState state) {
+		this.state = state;
+	}
+
+	public void setUid(String uid) {
+		this.uid = uid;
+	}
+
 	@Override
 	public String toString() {
 		return this.jobOffer + " - " + this.candidate.getFullName();
-	}
-
-	public boolean isApproved() {
-		if (state == null) {
-			return false;
-		}
-		return state.isApproved();
 	}
 }

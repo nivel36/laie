@@ -43,9 +43,14 @@ public class CandidateService extends AbstractService<Candidate> {
 		file.setCandidate(candidate);
 		this.serverFileDao.save(file);
 	}
-
+	
 	public List<Origin> findAllOrigins() {
 		return this.candidateDao.findAllOrigins();
+	}
+
+	public JobOffer findByUid(final String uid) {
+		Objects.requireNonNull(uid);
+		return this.candidateDao.findByUid(uid);
 	}
 
 	public Candidate findCandidateByEmail(final String email) {

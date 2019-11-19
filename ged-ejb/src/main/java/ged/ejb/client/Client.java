@@ -26,23 +26,23 @@ import org.hibernate.search.annotations.Store;
 import ged.ejb.core.model.AbstractEntity;
 import ged.ejb.core.model.Address;
 import ged.ejb.core.model.Erasable;
+import ged.ejb.core.model.Obfuscable;
 import ged.ejb.core.model.Ownerable;
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.user.User;
 
 @Entity
 @Indexed
-public class Client extends AbstractEntity implements Ownerable, Erasable {
-
+public class Client extends AbstractEntity implements Ownerable, Erasable, Obfuscable {
+	
 	private static final long serialVersionUID = 1L;
-
+	
 	@Embedded
 	@IndexedEmbedded
 	private Address address;
 
 	@Column(unique = true)
 	private String cif;
-
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "client", orphanRemoval = true)
 	private Set<Contact> contacts = new HashSet<>();
 
@@ -68,6 +68,10 @@ public class Client extends AbstractEntity implements Ownerable, Erasable {
 	private User owner;
 
 	private String phoneNumber;
+
+	@NotNull
+	@Column(unique = true, nullable = false)
+	private String uid;
 
 	public void addContact(final Contact contact) {
 		Objects.requireNonNull(contact);
@@ -132,6 +136,11 @@ public class Client extends AbstractEntity implements Ownerable, Erasable {
 	}
 
 	@Override
+	public String getUid() {
+		return this.uid;
+	}
+
+	@Override
 	public int hashCode() {
 		return Objects.hash(this.name);
 	}
@@ -173,6 +182,10 @@ public class Client extends AbstractEntity implements Ownerable, Erasable {
 
 	public void setPhoneNumber(final String phoneNumber) {
 		this.phoneNumber = phoneNumber;
+	}
+
+	public void setUid(String uid) {
+		this.uid = uid;
 	}
 
 	@Override

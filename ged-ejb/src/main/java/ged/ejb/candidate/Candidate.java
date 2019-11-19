@@ -29,6 +29,7 @@ import org.hibernate.search.annotations.Store;
 
 import ged.ejb.core.file.ServerFile;
 import ged.ejb.core.model.Address;
+import ged.ejb.core.model.Obfuscable;
 import ged.ejb.core.model.Ownerable;
 import ged.ejb.core.tag.Tag;
 import ged.ejb.curriculum.Curriculum;
@@ -38,10 +39,10 @@ import ged.ejb.user.User;
 
 @Entity
 @Indexed
-public class Candidate extends Person implements Ownerable {
-
+public class Candidate extends Person implements Ownerable, Obfuscable {
+	
 	private static final long serialVersionUID = 1L;
-
+	
 	@Embedded
 	private Address address;
 
@@ -49,6 +50,8 @@ public class Candidate extends Person implements Ownerable {
 
 	@OneToOne(fetch = FetchType.EAGER, mappedBy = "candidate")
 	private Curriculum curriculum;
+	
+	
 
 	@Min(0)
 	private Integer expectedSalary;
@@ -90,6 +93,10 @@ public class Candidate extends Person implements Ownerable {
 	@JoinTable(name = "candidate_tag", joinColumns = @JoinColumn(name = "candidate_id"), inverseJoinColumns = @JoinColumn(name = "tag_id"))
 	@IndexedEmbedded
 	private Set<Tag> tags = new HashSet<>();
+
+	@NotNull
+	@Column(unique = true, nullable = false)
+	private String uid;
 
 	public Address getAddress() {
 		return this.address;
@@ -150,6 +157,11 @@ public class Candidate extends Person implements Ownerable {
 
 	public Set<Tag> getTags() {
 		return this.tags;
+	}
+
+	@Override
+	public String getUid() {
+		return this.uid;
 	}
 
 	public void setAddress(final Address address) {
@@ -220,4 +232,10 @@ public class Candidate extends Person implements Ownerable {
 	public void setTags(final Set<Tag> tags) {
 		this.tags = tags;
 	}
+
+	public void setUid(String uid) {
+		this.uid = uid;
+	}
+
+
 }

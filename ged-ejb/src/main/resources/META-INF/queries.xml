@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<entity-mappings xmlns="http://xmlns.jcp.org/xml/ns/persistence/orm"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<entity-mappings xmlns="http://xmlns.jcp.org/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence/orm
-        http://xmlns.jcp.org/xml/ns/persistence/orm_2_1.xsd"
-	version="2.1">
+        http://xmlns.jcp.org/xml/ns/persistence/orm_2_1.xsd" version="2.1">
 
 	<named-query name="Bookmark.find">
 		<query><![CDATA[
@@ -106,7 +104,7 @@
 			WHERE c.candidate = :candidate
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="I18n.findByKeyAndLocale">
 		<query><![CDATA[
 			SELECT i 
@@ -125,7 +123,7 @@
 			WHERE j.jobOffer = :jobOffer
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="JobCandidature.findApprovedByJobOffer">
 		<query><![CDATA[
 			SELECT j 
@@ -153,7 +151,7 @@
 			AND j.jobOffer = :jobOffer
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="JobCandidature.findByUser">
 		<query><![CDATA[
 			SELECT j 
@@ -179,7 +177,7 @@
 			AND m.datePlanned >= CURRENT_TIMESTAMP
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="Meeting.findConductedByOwner">
 		<query><![CDATA[
 			SELECT m 
@@ -188,7 +186,7 @@
 			AND m.datePlanned < CURRENT_TIMESTAMP
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="Meeting.findByAttendeesEmail">
 		<query><![CDATA[
 			SELECT m 
@@ -196,7 +194,7 @@
 			WHERE :email MEMBER OF m.attendeesEmails
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="JobOffer.findAllByOwner">
 		<query><![CDATA[
 			SELECT j 
@@ -221,7 +219,15 @@
 			WHERE j.client = :client
 		]]></query>
 	</named-query>
-	
+
+	<named-query name="JobOffer.existUid">
+		<query><![CDATA[
+			SELECT CASE WHEN (COUNT(j) > 0) THEN TRUE ELSE FALSE END
+			FROM JobOffer j
+			WHERE j.uid = :uid
+		]]></query>
+	</named-query>
+
 	<named-query name="JobOffer.findByUid">
 		<query><![CDATA[
 			SELECT j 

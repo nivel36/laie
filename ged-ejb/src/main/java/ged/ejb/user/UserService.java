@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import ged.ejb.core.AbstractService;
 import ged.ejb.core.model.AbstractDao;
 import ged.ejb.core.model.Repository;
+import ged.ejb.job.offer.JobOffer;
 
 @Stateless
 public class UserService extends AbstractService<User> {
@@ -30,12 +31,17 @@ public class UserService extends AbstractService<User> {
 		this.userDao.save(user);
 	}
 
+	public JobOffer findByUid(final String uid) {
+		Objects.requireNonNull(uid);
+		return this.userDao.findByUid(uid);
+	}
+
 	public List<User> findSubordinateUsers(final User user) {
 		Objects.requireNonNull(user);
 		logger.debug("Finding subordinate users of user {}", user.getEmail());
 		return this.userDao.findSubordinateUsers(user);
 	}
-
+	
 	public User findUserAndCredential(final String email) {
 		Objects.requireNonNull(email);
 		logger.debug("Finding user credential for user {}", email);

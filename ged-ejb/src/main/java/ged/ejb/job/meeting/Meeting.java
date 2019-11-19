@@ -18,16 +18,17 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.search.annotations.IndexedEmbedded;
 
 import ged.ejb.core.model.AbstractEntity;
+import ged.ejb.core.model.Obfuscable;
 import ged.ejb.core.model.Ownerable;
 import ged.ejb.job.candidature.JobCandidature;
 import ged.ejb.user.User;
 
 @Entity
 @Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "jobCandidatureId", "datePlanned" }) })
-public class Meeting extends AbstractEntity implements Ownerable {
-
+public class Meeting extends AbstractEntity implements Ownerable, Obfuscable {
+	
 	private static final long serialVersionUID = 1L;
-
+	
 	@ElementCollection
 	@CollectionTable(name="emails", joinColumns=@JoinColumn(name="meeting_id"))
 	@Column(name="email")
@@ -42,9 +43,9 @@ public class Meeting extends AbstractEntity implements Ownerable {
 	private JobCandidature jobCandidature;
 
 	private String location;
-	
+
 	private MeetingType meetingType;
-	
+
 	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "ownerId", nullable = false)
@@ -52,10 +53,14 @@ public class Meeting extends AbstractEntity implements Ownerable {
 	private User owner;
 
 	private String result;
-
+	
 	@NotNull
 	@Column(nullable = false)
 	private String title;
+	
+	@NotNull
+	@Column(unique = true, nullable = false)
+	private String uid;
 
 	public void addAttendee(String email) {
 		Objects.requireNonNull(email, "Email can't be null");
@@ -121,6 +126,11 @@ public class Meeting extends AbstractEntity implements Ownerable {
 	}
 
 	@Override
+	public String getUid() {
+		return this.uid;
+	}
+
+	@Override
 	public int hashCode() {
 		return Objects.hash(this.datePlanned, this.title, this.jobCandidature, this.result);
 	}
@@ -165,5 +175,9 @@ public class Meeting extends AbstractEntity implements Ownerable {
 
 	public void setTitle(final String title) {
 		this.title = title;
+	}
+
+	public void setUid(String uid) {
+		this.uid = uid;
 	}
 }

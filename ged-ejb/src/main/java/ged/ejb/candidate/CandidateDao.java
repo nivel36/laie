@@ -22,6 +22,16 @@ import ged.ejb.job.offer.JobOffer;
 public class CandidateDao extends AbstractDao<Candidate> {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
+	
+	protected boolean existUid(final String uid) {
+		Objects.requireNonNull(uid);
+		return this.findByQuery(Boolean.class, "Candidate.existUid", map("uid", uid));
+	}
+
+	public JobOffer findByUid(final String uid) {
+		Objects.requireNonNull(uid);
+		return this.findByQuery(JobOffer.class, "Candidate.findByUid", map("uid", uid));
+	}
 
 	public boolean emailExists(final String email) {
 		Objects.requireNonNull(email);
@@ -72,6 +82,8 @@ public class CandidateDao extends AbstractDao<Candidate> {
 			logger.warn("The email {} is in use", candidate.getEmail());
 			throw new ValidationException("Email duplicated");
 		}
+		final String base64Id = generateUid();
+		candidate.setUid(base64Id);
 	}
 
 	@Override

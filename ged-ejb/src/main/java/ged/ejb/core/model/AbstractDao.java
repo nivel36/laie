@@ -1,9 +1,12 @@
 package ged.ejb.core.model;
 
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 import javax.inject.Inject;
 
@@ -20,6 +23,10 @@ public abstract class AbstractDao<T extends AbstractEntity> {
 	public void delete(final T entity) {
 		Objects.requireNonNull(entity);
 		this.persistenceFacade.delete(this.getType(), entity);
+	}
+
+	protected boolean existUid(final String uidCandidate) {
+		return false;
 	}
 
 	public T find(final long id) {
@@ -65,6 +72,19 @@ public abstract class AbstractDao<T extends AbstractEntity> {
 	protected Object findByQuery(final String namedQuery, final Map<String, Object> parameters) {
 		Objects.requireNonNull(namedQuery);
 		return this.persistenceFacade.findByQuery(namedQuery, parameters);
+	}
+
+	protected String generateUid() {
+		boolean uidExist = false;
+		String uidCandidate;
+		final Random random = ThreadLocalRandom.current();
+		final byte[] bytes = new byte[8];
+		do {
+			random.nextBytes(bytes);
+			uidCandidate = Base64.getUrlEncoder().withoutPadding().encodeToString(bytes);
+			uidExist = this.existUid(uidCandidate);
+		} while (uidExist);
+		return uidCandidate;
 	}
 
 	protected PersistenceFacade getPersistenceFacade() {
