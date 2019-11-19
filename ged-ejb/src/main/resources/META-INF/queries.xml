@@ -51,29 +51,12 @@
 		]]></query>
 	</named-query>
 
-	<named-query name="Candidate.findByNameAndSurname">
-		<query><![CDATA[
-			SELECT c 
-			FROM Candidate c 
-			WHERE (:name IS NOT NULL AND c.name = :name)
-			OR (:surname IS NOT NULL AND c.surname = :surname)
-		]]></query>
-	</named-query>
-
 	<named-query name="Candidate.findByJobOffer">
 		<query><![CDATA[
 			SELECT c 
 			FROM Candidate c
 			LEFT JOIN c.jobCandidatures jc
 			WHERE jc.jobOffer = :jobOffer
-		]]></query>
-	</named-query>
-
-	<named-query name="Candidate.findLastAddedCandidates">
-		<query><![CDATA[
-			SELECT c
-			FROM Candidate c
-			ORDER BY c.id DESC
 		]]></query>
 	</named-query>
 
@@ -85,13 +68,6 @@
 		]]></query>
 	</named-query>
 
-	<named-query name="Candidate.numberOfCandidates">
-		<query><![CDATA[
-			SELECT COUNT(c)
-			FROM Candidate c
-		]]></query>
-	</named-query>
-
 	<named-query name="Client.findByClientId">
 		<query><![CDATA[
 			SELECT c 
@@ -99,22 +75,6 @@
 			LEFT JOIN FETCH c.contacts
 			LEFT JOIN FETCH c.jobOffers
 			WHERE c.id = :clientId
-		]]></query>
-	</named-query>
-
-	<named-query name="Client.findByName">
-		<query><![CDATA[
-			SELECT c 
-			FROM Client c 
-			WHERE c.name = :name
-		]]></query>
-	</named-query>
-
-	<named-query name="Client.clientExist">
-		<query><![CDATA[
-			SELECT CASE WHEN (COUNT(c) > 0) THEN TRUE ELSE FALSE END 
-			FROM Client c 
-			WHERE c.name = :name
 		]]></query>
 	</named-query>
 
@@ -261,13 +221,12 @@
 			WHERE j.client = :client
 		]]></query>
 	</named-query>
-
-	<named-query name="JobOffer.findLastJobOffers">
+	
+	<named-query name="JobOffer.findByUid">
 		<query><![CDATA[
 			SELECT j 
 			FROM JobOffer j 
-			WHERE j.owner = :owner 
-			ORDER BY j.id
+			WHERE j.uid = :uid
 		]]></query>
 	</named-query>
 
@@ -295,14 +254,6 @@
 		]]></query>
 	</named-query>
 
-	<named-query name="User.findById">
-		<query><![CDATA[
-			SELECT u 
-			FROM User u 
-			WHERE u.id = :id
-		]]></query>
-	</named-query>
-
 	<named-query name="User.findByEmail">
 		<query><![CDATA[
 			SELECT u 
@@ -321,15 +272,6 @@
 		]]></query>
 	</named-query>
 
-	<named-query name="User.findByNameAndSurname">
-		<query><![CDATA[
-			SELECT u
-			FROM User u
-			WHERE (:name IS NOT NULL AND u.name = :name)
-			OR (:surname IS NOT NULL AND u.surname = :surname)
-		]]></query>
-	</named-query>
-
 	<named-query name="User.findUser">
 		<query><![CDATA[
 			SELECT u 
@@ -345,58 +287,6 @@
 			FROM User u
 			LEFT JOIN FETCH u.credential
 			WHERE u.email = :email
-		]]></query>
-	</named-query>
-
-	<named-query name="User.findUsersOffline">
-		<query><![CDATA[
-			SELECT u 
-			FROM User u 
-			WHERE u.lastConnection NOT BETWEEN :start and :end
-			OR u.lastConnection IS NULL
-		]]></query>
-	</named-query>
-
-	<named-query name="User.numberOfUsersOffline">
-		<query><![CDATA[
-			SELECT COUNT(u) 
-			FROM User u 
-			WHERE u.lastConnection NOT BETWEEN :start and :end
-			OR u.lastConnection IS NULL
-		]]></query>
-	</named-query>
-
-	<named-query name="User.findUsersOnline">
-		<query><![CDATA[
-			SELECT u 
-			FROM User u 
-			WHERE u.lastConnection BETWEEN :start and :end
-		]]></query>
-	</named-query>
-
-	<named-query name="User.numberOfUsersOnline">
-		<query><![CDATA[
-			SELECT COUNT(u) 
-			FROM User u 
-			WHERE u.lastConnection BETWEEN :start and :end
-		]]></query>
-	</named-query>
-
-	<named-query name="User.numberOfUsersInTeam">
-		<query><![CDATA[
-			SELECT COUNT (u) 
-			FROM UserClosure uc 
-			JOIN uc.descendant u 
-			WHERE uc.antecessor.id = :id 
-			AND uc.pathLength > 0
-		]]></query>
-	</named-query>
-
-	<named-query name="User.existsMoreThanOneAdmin">
-		<query><![CDATA[
-			SELECT CASE WHEN (COUNT(u) > 1) THEN TRUE ELSE FALSE END 
-			FROM User u 
-			WHERE u.role = ged.ejb.user.role.Role.ADMIN
 		]]></query>
 	</named-query>
 

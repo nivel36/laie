@@ -62,4 +62,9 @@ public class JobOfferDao extends AbstractDao<JobOffer> {
 	public String[] searchFields() {
 		return new String[] { "title", "client.name" };
 	}
+
+	public JobOffer findByUid(String uid) {
+		Objects.requireNonNull(uid);
+		return this.findByQuery(JobOffer.class, "JobOffer.findByUid", map("uid", uid));
+	}
 }

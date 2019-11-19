@@ -22,12 +22,6 @@ public class ClientService extends AbstractService<Client> {
 	@Repository
 	private ClientDao clientDao;
 
-	public boolean clientExists(final String clientName) {
-		Objects.requireNonNull(clientName);
-		logger.debug("Testing if client {} exists in database", clientName);
-		return this.clientDao.clientExists(clientName);
-	}
-
 	public Client findAllClientDataByClientId(final long clientId) {
 		if (clientId < 0) {
 			logger.warn("Bad client id {}", clientId);
@@ -41,12 +35,6 @@ public class ClientService extends AbstractService<Client> {
 		Objects.requireNonNull(cif);
 		logger.debug("Finding client by cif {}", cif);
 		return this.clientDao.findClientByCif(cif);
-	}
-
-	public Client findClientByName(final String clientName) {
-		Objects.requireNonNull(clientName);
-		logger.debug("Finding client by name {}", clientName);
-		return this.clientDao.findClientByName(clientName);
 	}
 
 	@Override

@@ -114,6 +114,11 @@ public class JobOfferService extends AbstractService<JobOffer> {
 		}
 		return false;
 	}
+	
+	public JobOffer findByUid(String uid) {
+		Objects.requireNonNull(uid);
+		return this.jobOfferDao.findByUid(uid);
+	}
 
 	public void onJobCandidatureCompleted(@Observes @JobCandidatureCompletedEvent final JobCandidature jobCandidature) {
 		Objects.requireNonNull(jobCandidature, "Job candidature can't be null");

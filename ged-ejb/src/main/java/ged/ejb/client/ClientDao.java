@@ -18,11 +18,6 @@ public class ClientDao extends AbstractDao<Client> {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
-	public boolean clientExists(final String clientName) {
-		Objects.requireNonNull(clientName);
-		return (boolean) this.findByQuery("Client.clientExist", map("name", clientName));
-	}
-
 	public Client findAllClientDataByClientId(final long clientId) {
 		if (clientId < 0) {
 			logger.warn("Bad client id {}", clientId);
@@ -35,16 +30,6 @@ public class ClientDao extends AbstractDao<Client> {
 		Objects.requireNonNull(cif);
 		try {
 			return this.findByQuery(Client.class, "Client.findByCif", map("cif", cif));
-		} catch (final NoResultException e) {
-			logger.debug("No client found", e);
-			return null;
-		}
-	}
-
-	public Client findClientByName(final String clientName) {
-		Objects.requireNonNull(clientName);
-		try {
-			return this.findByQuery(Client.class, "Client.findByName", map("name", clientName));
 		} catch (final NoResultException e) {
 			logger.debug("No client found", e);
 			return null;

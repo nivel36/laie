@@ -31,7 +31,7 @@ import org.hibernate.search.annotations.Store;
 import ged.ejb.client.Client;
 import ged.ejb.core.model.AbstractEntity;
 import ged.ejb.core.model.Address;
-import ged.ejb.core.model.Ofuscable;
+import ged.ejb.core.model.Obfuscable;
 import ged.ejb.core.model.Ownerable;
 import ged.ejb.job.candidature.JobCandidature;
 import ged.ejb.user.User;
@@ -39,7 +39,7 @@ import ged.ejb.user.User;
 @Entity
 @Indexed
 @Table(name = "JOB_OFFER")
-public class JobOffer extends AbstractEntity implements Ownerable, Ofuscable {
+public class JobOffer extends AbstractEntity implements Ownerable, Obfuscable {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -93,7 +93,7 @@ public class JobOffer extends AbstractEntity implements Ownerable, Ofuscable {
 	@SortableField(forField = "title")
 	private String title;
 
-	private String uId;
+	private String uid;
 
 	public JobOffer() {
 		this.state = JobOfferState.CREATED;
@@ -165,8 +165,8 @@ public class JobOffer extends AbstractEntity implements Ownerable, Ofuscable {
 		return this.title;
 	}
 
-	public String getUId() {
-		return uId;
+	public String getUid() {
+		return uid;
 	}
 
 	@Override
@@ -245,8 +245,8 @@ public class JobOffer extends AbstractEntity implements Ownerable, Ofuscable {
 		this.title = title;
 	}
 
-	public void setUId(String uId) {
-		this.uId = uId;
+	public void setUId(String uid) {
+		this.uid = uid;
 	}
 
 	@Override
