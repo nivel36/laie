@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
 
 import ged.ejb.core.model.AbstractDao;
 import ged.ejb.core.model.Repository;
-import ged.ejb.job.offer.JobOffer;
 
 @Repository
 public class ClientDao extends AbstractDao<Client> {
@@ -33,9 +32,9 @@ public class ClientDao extends AbstractDao<Client> {
 		return this.findByQuery(Client.class, "Client.findByClientId", map("clientId", clientId));
 	}
 
-	public JobOffer findByUid(final String uid) {
+	public Client findByUid(final String uid) {
 		Objects.requireNonNull(uid);
-		return this.findByQuery(JobOffer.class, "Client.findByUid", map("uid", uid));
+		return this.findByQuery(Client.class, "Client.findByUid", map("uid", uid));
 	}
 
 	public Client findClientByCif(final String cif) {

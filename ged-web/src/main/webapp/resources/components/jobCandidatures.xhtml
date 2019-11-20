@@ -31,13 +31,13 @@
 						
 						<p:column headerText="#{i18n['job_candidature.job_offer']}" rendered="#{cc.attrs.showJobOffer}">
 							<h:link value="#{jobCandidature.jobOffer.title}" outcome="#{Page.JOB.getUrl()}">
-								<f:param name="id" value="#{jobCandidature.jobOffer.id}" />
+								<f:param name="id" value="#{jobCandidature.jobOffer.uid}" />
 							</h:link>
 							<span class="job_address">#{jobCandidature.jobOffer.address.city} (#{jobCandidature.jobOffer.address.region})</span>
 						</p:column>
 						<p:column headerText="#{i18n['job_candidature.client']}" rendered="#{cc.attrs.showJobOffer}">
 							<h:link value="#{jobCandidature.jobOffer.client.name}" outcome="#{Page.CLIENT.getUrl()}">
-								<f:param name="id" value="#{jobCandidature.jobOffer.client.id}" />
+								<f:param name="id" value="#{jobCandidature.jobOffer.client.uid}" />
 							</h:link>
 						</p:column>
 						<p:column rendered="#{cc.attrs.showCandidate}">
@@ -45,7 +45,7 @@
 						</p:column>
 						<p:column headerText="#{i18n['job_candidature.candidate']}" rendered="#{cc.attrs.showCandidate}">
 							<h:link value="#{jobCandidature.candidate.fullName}" outcome="#{Page.CANDIDATE.getUrl()}">
-								<f:param name="id" value="#{jobCandidature.candidate.id}" />
+								<f:param name="id" value="#{jobCandidature.candidate.uid}" />
 							</h:link>
 						</p:column>
 						<p:column headerText="#{i18n['candidate.rating']}" rendered="#{cc.attrs.showCandidate}">
@@ -53,7 +53,7 @@
 						</p:column>
 						<p:column headerText="#{i18n['job_candidature.job_candidature_state']}">
 							<p:link outcome="#{Page.EVENT_ADD.getUrl()}">
-								<f:param name="jobCandidatureId" value="#{jobCandidature.id}" />
+								<f:param name="jobCandidatureId" value="#{jobCandidature.uid}" />
 								<div class="tag #{jobCandidature.state.color}">#{g:translate(jobCandidature.state.name)}</div>
 							</p:link>					
 						</p:column>

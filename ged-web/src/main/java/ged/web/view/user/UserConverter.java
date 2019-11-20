@@ -1,22 +1,34 @@
 package ged.web.view.user;
 
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.inject.Inject;
 
-import ged.ejb.core.AbstractService;
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
-import ged.web.core.view.AbstractConverter;
 
 @FacesConverter(managed = true, value = "userConverter")
-public class UserConverter extends AbstractConverter<User> {
+public class UserConverter implements Converter<User> {
 
 	@Inject
 	private UserService userService;
 
 	@Override
-	protected AbstractService<User> getService() {
-		return this.userService;
+	public User getAsObject(final FacesContext context, final UIComponent component, final String value) {
+		if (value == null) {
+			return null;
+		}
+		return this.userService.findByUid(value);
+	}
+
+	@Override
+	public String getAsString(final FacesContext context, final UIComponent component, final User value) {
+		if (value == null) {
+			return null;
+		}
+		return value.getUid();
 	}
 
 	public void setUserService(final UserService userService) {

@@ -28,7 +28,7 @@ public class JobOfferConverter implements Converter<JobOffer> {
 		if (value == null) {
 			return null;
 		}
-		return String.valueOf(value.getId());
+		return value.getUid();
 	}
 
 	public void setJobOfferService(final JobOfferService jobOfferService) {

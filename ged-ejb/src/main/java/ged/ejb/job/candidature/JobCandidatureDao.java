@@ -33,9 +33,9 @@ public class JobCandidatureDao extends AbstractDao<JobCandidature> {
 				map("jobOffer", jobOffer).and("candidate", candidate));
 	}
 
-	public JobOffer findByUid(final String uid) {
+	public JobCandidature findByUid(final String uid) {
 		Objects.requireNonNull(uid);
-		return this.findByQuery(JobOffer.class, "JobCandidature.findByUid", map("uid", uid));
+		return this.findByQuery(JobCandidature.class, "JobCandidature.findByUid", map("uid", uid));
 	}
 
 	public List<JobCandidature> findJobCandidatures(final Candidate candidate, final Page page) {

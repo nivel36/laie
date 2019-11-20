@@ -1,6 +1,6 @@
 package ged.web.core.util;
 
-import ged.ejb.core.model.Identifiable;
+import ged.ejb.core.model.Obfuscable;
 
 public enum PageEnum {
 
@@ -70,8 +70,8 @@ public enum PageEnum {
 		return new StringBuilder(this.url).append("?").append(REDIRECT).toString();
 	}
 
-	public String getRedirectedUrl(final Identifiable id) {
-		return new StringBuilder(this.url).append("?id=").append(id.getId()).append("&").append(REDIRECT).toString();
+	public String getRedirectedUrl(final Obfuscable id) {
+		return new StringBuilder(this.url).append("?id=").append(id.getUid()).append("&").append(REDIRECT).toString();
 	}
 
 	public String getUrl() {
@@ -82,11 +82,11 @@ public enum PageEnum {
 		}
 	}
 
-	public String getUrl(final Identifiable id) {
+	public String getUrl(final Obfuscable id) {
 		if (this.isPost) {
 			return this.getRedirectedUrl(id);
 		} else {
-			return new StringBuilder(this.url).append("?id=").append(id.getId()).toString();
+			return new StringBuilder(this.url).append("?id=").append(id.getUid()).toString();
 		}
 	}
 }

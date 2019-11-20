@@ -46,7 +46,7 @@
 
 							<p:column headerText="#{i18n['job.client']}" sortBy="#{jobOffer.client.name}">
 								<h:link value="#{jobOffer.client.name}" outcome="#{Page.CLIENT.getUrl()}">
-									<f:param name="id" value="#{jobOffer.client.id}" />
+									<f:param name="id" value="#{jobOffer.client.uid}" />
 								</h:link>
 							</p:column>
 
@@ -56,7 +56,7 @@
 
 							<p:column headerText="#{i18n['user.owner']}" sortBy="#{user.owner.name}">
 								<h:link value="#{jobOffer.owner.fullName}" outcome="#{Page.USER.getUrl()}">
-									<f:param name="id" value="#{jobOffer.owner.id}" />
+									<f:param name="id" value="#{jobOffer.owner.uid}" />
 								</h:link>
 							</p:column>
 

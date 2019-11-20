@@ -41,6 +41,23 @@
 		]]></query>
 	</named-query>
 
+	<named-query name="Candidate.findByUid">
+		<query><![CDATA[
+			SELECT c 
+			FROM Candidate c 
+			WHERE c.uid = :uid
+		]]></query>
+	</named-query>
+
+	<named-query name="Candidate.existUid">
+		<query><![CDATA[
+			SELECT CASE WHEN (COUNT(c) > 0) THEN TRUE ELSE FALSE END
+			FROM Candidate c 
+			WHERE c.uid = :uid
+		]]></query>
+	</named-query>
+
+
 	<named-query name="Candidate.findByEmail">
 		<query><![CDATA[
 			SELECT c 
@@ -63,6 +80,22 @@
 			SELECT CASE WHEN (COUNT(c) > 0) THEN TRUE ELSE FALSE END
 			FROM Candidate c
 			WHERE c.email = :email
+		]]></query>
+	</named-query>
+
+	<named-query name="Client.findByUid">
+		<query><![CDATA[
+			SELECT c 
+			FROM Client c 
+			WHERE c.uid = :uid
+		]]></query>
+	</named-query>
+
+	<named-query name="Client.existUid">
+		<query><![CDATA[
+			SELECT CASE WHEN (COUNT(c) > 0) THEN TRUE ELSE FALSE END
+			FROM Client c 
+			WHERE c.uid = :uid
 		]]></query>
 	</named-query>
 
@@ -89,6 +122,22 @@
 			SELECT c 
 			FROM Contact c 
 			WHERE c.email = :email
+		]]></query>
+	</named-query>
+
+	<named-query name="Contact.findByUid">
+		<query><![CDATA[
+			SELECT c 
+			FROM Contact c 
+			WHERE c.uid = :uid
+		]]></query>
+	</named-query>
+
+	<named-query name="Contact.existUid">
+		<query><![CDATA[
+			SELECT CASE WHEN (COUNT(c) > 0) THEN TRUE ELSE FALSE END
+			FROM Contact c 
+			WHERE c.uid = :uid
 		]]></query>
 	</named-query>
 
@@ -161,6 +210,22 @@
 		]]></query>
 	</named-query>
 
+	<named-query name="JobCandidature.findByUid">
+		<query><![CDATA[
+			SELECT j
+			FROM JobCandidature j 
+			WHERE j.uid = :uid
+		]]></query>
+	</named-query>
+	
+	<named-query name="JobCandidature.existUid">
+		<query><![CDATA[
+			SELECT CASE WHEN (COUNT(j) > 0) THEN TRUE ELSE FALSE END
+			FROM JobCandidature j 
+			WHERE j.uid = :uid
+		]]></query>
+	</named-query>
+
 	<named-query name="JobCandidatureState.findFirstJobCandidatureState">
 		<query><![CDATA[
 			SELECT j 
@@ -192,6 +257,14 @@
 			SELECT m 
 			FROM Meeting m
 			WHERE :email MEMBER OF m.attendeesEmails
+		]]></query>
+	</named-query>
+
+	<named-query name="Meeting.findByUid">
+		<query><![CDATA[
+			SELECT m 
+			FROM Meeting m 
+			WHERE m.uid = :uid
 		]]></query>
 	</named-query>
 
@@ -301,6 +374,22 @@
 			SELECT CASE WHEN (COUNT(u) > 0) THEN TRUE ELSE FALSE END 
 			FROM User u 
 			WHERE u.email = :email
+		]]></query>
+	</named-query>
+
+	<named-query name="User.findByUid">
+		<query><![CDATA[
+			SELECT u 
+			FROM User u 
+			WHERE u.uid = :uid
+		]]></query>
+	</named-query>
+	
+	<named-query name="User.existUid">
+		<query><![CDATA[
+			SELECT CASE WHEN (COUNT(u) > 0) THEN TRUE ELSE FALSE END
+			FROM User u 
+			WHERE u.uid = :uid
 		]]></query>
 	</named-query>
 

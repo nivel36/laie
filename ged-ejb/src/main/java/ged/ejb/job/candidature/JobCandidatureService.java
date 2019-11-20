@@ -84,7 +84,7 @@ public class JobCandidatureService extends AbstractService<JobCandidature> {
 		return this.jobCandidatureDao.findJobCanditures(jobOffer, page);
 	}
 
-	public JobOffer findByUid(final String uid) {
+	public JobCandidature findByUid(final String uid) {
 		Objects.requireNonNull(uid);
 		return this.jobCandidatureDao.findByUid(uid);
 	}

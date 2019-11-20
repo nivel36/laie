@@ -28,9 +28,9 @@ public class CandidateDao extends AbstractDao<Candidate> {
 		return this.findByQuery(Boolean.class, "Candidate.existUid", map("uid", uid));
 	}
 
-	public JobOffer findByUid(final String uid) {
+	public Candidate findByUid(final String uid) {
 		Objects.requireNonNull(uid);
-		return this.findByQuery(JobOffer.class, "Candidate.findByUid", map("uid", uid));
+		return this.findByQuery(Candidate.class, "Candidate.findByUid", map("uid", uid));
 	}
 
 	public boolean emailExists(final String email) {

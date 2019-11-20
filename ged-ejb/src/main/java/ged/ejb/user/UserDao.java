@@ -15,7 +15,6 @@ import org.slf4j.LoggerFactory;
 import ged.ejb.core.model.AbstractDao;
 import ged.ejb.core.model.Page;
 import ged.ejb.core.model.Repository;
-import ged.ejb.job.offer.JobOffer;
 
 @Repository
 public class UserDao extends AbstractDao<User> {
@@ -44,9 +43,9 @@ public class UserDao extends AbstractDao<User> {
 				Page.ALL);
 	}
 
-	public JobOffer findByUid(final String uid) {
+	public User findByUid(final String uid) {
 		Objects.requireNonNull(uid);
-		return this.findByQuery(JobOffer.class, "User.findByUid", map("uid", uid));
+		return this.findByQuery(User.class, "User.findByUid", map("uid", uid));
 	}
 
 	public List<User> findSubordinateUsers(final User user) {

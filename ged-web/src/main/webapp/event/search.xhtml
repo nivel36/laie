@@ -45,25 +45,25 @@
 
 							<p:column headerText="#{i18n['event.candidate']}">
 								<h:link value="#{event.jobCandidature.candidate.fullName}" outcome="#{Page.CANDIDATE.getUrl()}">
-									<f:param name="id" value="#{event.jobCandidature.candidate.id}" />
+									<f:param name="id" value="#{event.jobCandidature.candidate.uid}" />
 								</h:link>
 							</p:column>
 
 							<p:column headerText="#{i18n['event.job_offer']}">
 								<h:link value="#{event.jobCandidature.jobOffer.title}" outcome="#{Page.JOB.getUrl()}">
-									<f:param name="id" value="#{event.jobCandidature.jobOffer.id}" />
+									<f:param name="id" value="#{event.jobCandidature.jobOffer.uid}" />
 								</h:link>
 							</p:column>
 
 							<p:column headerText="#{i18n['event.client']}" priority="6">
 								<h:link value="#{event.jobCandidature.jobOffer.client.name}" outcome="#{Page.CLIENT.getUrl()}">
-									<f:param name="id" value="#{event.jobCandidature.jobOffer.client.id}" />
+									<f:param name="id" value="#{event.jobCandidature.jobOffer.client.uid}" />
 								</h:link>
 							</p:column>
 
 							<p:column headerText="#{i18n['event.user']}" sortBy="#{event.user}" priority="5">
 								<h:link value="#{event.user.fullName}" outcome="#{Page.USER.getUrl()}">
-									<f:param name="id" value="#{event.user.id}" />
+									<f:param name="id" value="#{event.user.uid}" />
 								</h:link>
 							</p:column>
 

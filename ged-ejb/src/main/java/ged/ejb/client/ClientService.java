@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
 import ged.ejb.core.AbstractService;
 import ged.ejb.core.model.AbstractDao;
 import ged.ejb.core.model.Repository;
-import ged.ejb.job.offer.JobOffer;
 
 @Stateless
 public class ClientService extends AbstractService<Client> {
@@ -32,7 +31,7 @@ public class ClientService extends AbstractService<Client> {
 		return this.clientDao.findAllClientDataByClientId(clientId);
 	}
 	
-	public JobOffer findByUid(final String uid) {
+	public Client findByUid(final String uid) {
 		Objects.requireNonNull(uid);
 		return this.clientDao.findByUid(uid);
 	}

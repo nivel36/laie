@@ -42,7 +42,7 @@
 
 							<p:column headerText="#{i18n['user.name']}" sortBy="#{user.name}">
 								<h:link value="#{user.fullName}" outcome="#{Page.USER.getUrl()}">
-									<f:param name="id" value="#{user.id}" />
+									<f:param name="id" value="#{user.uid}" />
 								</h:link>
 							</p:column>
 
@@ -56,7 +56,7 @@
 
 							<p:column headerText="#{i18n['user.manager']}" sortBy="#{user.manager.name}" priority="4">
 								<h:link value="#{user.manager.fullName}" outcome="#{Page.USER.getUrl()}" rendered="#{not empty user.manager}">
-									<f:param name="id" value="#{user.manager.id}" />
+									<f:param name="id" value="#{user.manager.uid}" />
 								</h:link>
 							</p:column>
 
