@@ -78,7 +78,7 @@ public abstract class AbstractDao<T extends AbstractEntity> {
 		boolean uidExist = false;
 		String uidCandidate;
 		final Random random = ThreadLocalRandom.current();
-		final byte[] bytes = new byte[8];
+		final byte[] bytes = new byte[4];
 		do {
 			random.nextBytes(bytes);
 			uidCandidate = Base64.getUrlEncoder().withoutPadding().encodeToString(bytes);
