@@ -9,6 +9,7 @@ import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 import javax.inject.Inject;
+import javax.persistence.FlushModeType;
 
 import ged.ejb.core.model.search.SearchFacets;
 import ged.ejb.core.model.search.SearchResult;
@@ -56,6 +57,13 @@ public abstract class AbstractDao<T extends AbstractEntity> {
 		Objects.requireNonNull(entityClass);
 		Objects.requireNonNull(namedQuery);
 		return this.persistenceFacade.findByQuery(entityClass, namedQuery, parameters);
+	}
+
+	protected <E> E findByQuery(final Class<E> entityClass, final String namedQuery,
+			final Map<String, Object> parameters, FlushModeType flushModeType) {
+		Objects.requireNonNull(entityClass);
+		Objects.requireNonNull(namedQuery);
+		return this.persistenceFacade.findByQuery(entityClass, namedQuery, parameters, flushModeType);
 	}
 
 	protected <E> List<E> findByQuery(final Class<E> entityClass, final String namedQuery,

@@ -63,7 +63,7 @@
 											<h:panelGroup layout="block" styleClass="text" rendered="#{not viewUserView.user.managed}"> --- </h:panelGroup>
 											<h:panelGroup layout="block" class="text" rendered="#{viewUserView.user.managed}">
 												<p:link outcome="#{Page.USER.getUrl()}" value="#{viewUserView.user.manager.fullName}">
-													<f:param name="id" value="#{viewUserView.user.manager.id}" />
+													<f:param name="id" value="#{viewUserView.user.manager.uid}" />
 												</p:link>
 											</h:panelGroup>
 										</div>

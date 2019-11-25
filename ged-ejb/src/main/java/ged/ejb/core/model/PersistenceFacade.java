@@ -11,6 +11,7 @@ import java.util.Objects;
 import javax.inject.Inject;
 import javax.persistence.CacheStoreMode;
 import javax.persistence.EntityManager;
+import javax.persistence.FlushModeType;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -53,7 +54,7 @@ public class PersistenceFacade {
 
 	private void enableFaceting(final SearchFacets searchFacets, final QueryBuilder qb,
 			final FullTextQuery fullTextQuery) {
-		if(searchFacets == null) {
+		if (searchFacets == null) {
 			return;
 		}
 
@@ -138,15 +139,21 @@ public class PersistenceFacade {
 		return query.getResultList();
 	}
 
-	public <E> E findByQuery(final Class<E> entityClass, final String namedQuery,
-			final Map<String, Object> parameters) {
+	public <E> E findByQuery(final Class<E> entityClass, final String namedQuery, final Map<String, Object> parameters,
+			FlushModeType flusModeType) {
 		Objects.requireNonNull(entityClass);
 		Objects.requireNonNull(namedQuery);
 		logger.debug("Find entity {} by named query {}", entityClass, namedQuery);
 		final TypedQuery<E> query = this.em.createNamedQuery(namedQuery, entityClass);
 		query.setHint(CACHE_STORE_MODE, CacheStoreMode.REFRESH);
+		query.setFlushMode(flusModeType);
 		this.parametrize(parameters, query);
 		return query.getSingleResult();
+	}
+
+	public <E> E findByQuery(final Class<E> entityClass, final String namedQuery,
+			final Map<String, Object> parameters) {
+		return findByQuery(entityClass, namedQuery, parameters, FlushModeType.AUTO);
 	}
 
 	public <E> List<E> findByQuery(final Class<E> entityClass, final String namedQuery,

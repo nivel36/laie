@@ -5,6 +5,8 @@ import static ged.ejb.core.util.Parameters.map;
 import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.FlushModeType;
+
 import ged.ejb.candidate.Candidate;
 import ged.ejb.core.model.AbstractDao;
 import ged.ejb.core.model.Page;
@@ -17,7 +19,7 @@ public class JobCandidatureDao extends AbstractDao<JobCandidature> {
 
 	protected boolean existUid(final String uid) {
 		Objects.requireNonNull(uid);
-		return this.findByQuery(Boolean.class, "JobCandidature.existUid", map("uid", uid));
+		return this.findByQuery(Boolean.class, "JobCandidature.existUid", map("uid", uid), FlushModeType.COMMIT);
 	}
 	
 	public List<JobCandidature> findApprovedJobCanditures(final JobOffer jobOffer, final Page page) {
