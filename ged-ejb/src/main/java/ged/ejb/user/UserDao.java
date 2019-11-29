@@ -125,7 +125,7 @@ public class UserDao extends AbstractDao<User> {
 
 	@Override
 	protected void postInsert(final User user) {
-		final String base64Id = generateUid();
+		final String base64Id = this.generateUid();
 		user.setUid(base64Id);
 		if (user.getManager() != null) {
 			this.insertUserClosures(user);

@@ -26,30 +26,34 @@ public class UserService extends AbstractService<User> {
 	private UserDao userDao;
 
 	public void changePassword(final User user, final String newPassword) {
+		Objects.requireNonNull(user);
+		Objects.requireNonNull(newPassword);
+		logger.debug("Change password for user {}", user);
 		user.getCredential().setPassword(newPassword);
 		this.userDao.save(user);
 	}
 
 	public User findByUid(final String uid) {
 		Objects.requireNonNull(uid);
+		logger.debug("Find user by uid {}", uid);
 		return this.userDao.findByUid(uid);
 	}
 
 	public List<User> findSubordinateUsers(final User user) {
 		Objects.requireNonNull(user);
-		logger.debug("Finding subordinate users of user {}", user.getEmail());
+		logger.debug("Finding subordinate users of user {}", user);
 		return this.userDao.findSubordinateUsers(user);
 	}
-	
+
 	public User findUserAndCredential(final String email) {
 		Objects.requireNonNull(email);
-		logger.debug("Finding user credential for user {}", email);
+		logger.debug("Find user and credential for user with email {}", email);
 		return this.userDao.findUserAndCredential(email);
 	}
 
 	public User findUserByEmail(final String email) {
 		Objects.requireNonNull(email);
-		logger.debug("Finding user by email {}", email);
+		logger.debug("Find user by email {}", email);
 		return this.userDao.findUserByEmail(email);
 	}
 
@@ -100,6 +104,7 @@ public class UserService extends AbstractService<User> {
 	}
 
 	public void setUserDao(final UserDao userDao) {
+		Objects.requireNonNull(userDao);
 		this.userDao = userDao;
 	}
 
