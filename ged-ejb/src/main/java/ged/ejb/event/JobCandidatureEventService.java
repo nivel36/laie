@@ -62,6 +62,7 @@ public class JobCandidatureEventService extends AbstractService<JobCandidatureEv
 		final JobCandidatureState newJobCandidatureState = jobCandidatureEvent.getState();
 		final JobCandidature jobCandidature = jobCandidatureEvent.getJobCandidature();
 		if (!jobCandidature.hasState(newJobCandidatureState)) {
+			jobCandidature.setState(newJobCandidatureState);
 			this.jobCandidatureService.save(jobCandidature);
 		}
 		return super.save(jobCandidatureEvent);

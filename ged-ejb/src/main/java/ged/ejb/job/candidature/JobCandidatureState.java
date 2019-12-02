@@ -89,8 +89,13 @@ public class JobCandidatureState extends AbstractEntity {
 	public void setFirst(final boolean first) {
 		this.first = first;
 	}
-	
+
 	public void setName(final String name) {
 		this.name = name;
+	}
+	
+	@Override
+	public String toString() {
+		return name;
 	}
 }
