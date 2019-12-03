@@ -4000,7 +4000,7 @@ body .ui-message {
     width: auto;
     height: auto; }
 body .ui-growl {
-  top: 85px; }
+  top: 15px; }
   body .ui-growl .ui-growl-item-container {
     margin: 0 0 1em 0;
     -webkit-box-shadow: 0 3px 0.5em 0 rgba(0, 0, 0, 0.16);
