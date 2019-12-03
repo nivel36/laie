@@ -1,4 +1,4 @@
-package ged.web.view.portal;
+package ged.web.view.open;
 
 import java.io.Serializable;
 import java.lang.invoke.MethodHandles;
