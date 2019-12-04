@@ -23,7 +23,7 @@
 	<ui:define name="buttons">
 		<h:form>
 			<p:button value="#{i18n['action.cancel']}" outcome="#{Page.JOB.getUrl()}" styleClass="secondary-button">
-				<f:param name="id" value="#{editJobView.jobOffer.id}" />
+				<f:param name="id" value="#{editJobView.jobOffer.uid}" />
 			</p:button>
 			<p:commandButton value="#{i18n['action.save']}" onclick="processForm()" styleClass="success-btn" />
 		</h:form>
@@ -92,7 +92,7 @@
 						<h1>Datos de la oferta</h1>
 						<div class="p-grid">
 							<div class="p-col-12">
-								<g:input id="description" label="#{i18n['job.description']}" value="#{editJobView.jobOffer.description}" type="textarea" />
+								<g:input id="description" label="#{i18n['job.description']}" value="#{editJobView.jobOffer.description}" type="rich" />
 							</div>
 						</div>
 					</div>

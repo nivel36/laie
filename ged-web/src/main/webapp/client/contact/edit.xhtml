@@ -19,7 +19,7 @@
 		<p:breadCrumb>
 			<p:menuitem value="#{i18n['menu.index']}" url="/index.xhtml" />
 			<p:menuitem value="#{i18n['client.clients']}" url="/client/clientSearch.xhtml" />
-			<p:menuitem value="#{contactEditView.client.name}" url="/client/client.xhtml?clientId=#{contactEditView.client.id}" />
+			<p:menuitem value="#{contactEditView.client.name}" url="/client/client.xhtml?clientId=#{contactEditView.client.uid}" />
 			<p:menuitem value="#{contactEditView.contact.fullName}" disabled="true" />
 		</p:breadCrumb>
 	</ui:define>
@@ -47,7 +47,7 @@
 				<div class="panel-footer">
 					<div class="buttons">
 						<p:button styleClass="btn-gray" value="#{i18n['action.cancel']}" outcome="#{PageEnum.CLIENT.getUrl()}">
-							<f:param name="id" value="#{contactEditView.client.id}" />
+							<f:param name="id" value="#{contactEditView.client.uid}" />
 						</p:button>
 						<p:commandButton value="#{i18n['action.save']}" action="#{contactEditView.save}" update="@form" />
 					</div>
