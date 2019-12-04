@@ -3175,7 +3175,6 @@ a {
 .landing-body .landing-wrapper .landing-news {
 	background: url("#{resource['roma-layout:images/landing/landing-news@2x.png']}");
 	background-size: cover;
-	height: 236px;
 	padding: 36px 450px 48px 145px;
 	text-align: left;
 }

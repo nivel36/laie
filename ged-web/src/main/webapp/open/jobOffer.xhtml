@@ -16,10 +16,22 @@
 	<ui:insert name="head" />
 </h:head>
 
-<h:body>
-	<div>
-		<h:outputText value="#{jobOfferView.jobOffer.description}" escape="false" />
+<h:body styleClass="landing-body">
+	<div class="landing-wrapper">
+		<div id="news" class="landing-news">
+			<h3>#{jobOfferView.jobOffer.title}</h3>
+		</div>
+		<div id="pricing" class="landing-pricing">
+			<div class="pricing-topic-shadow">
+				<div class="pricing-topic">#{i18n['job.details']}</div>
+			</div>
+			<div class="jobDescripition">
+				<h:outputText value="#{jobOfferView.jobOffer.description}"
+					escape="false" />
+			</div>
+		</div>
 	</div>
+
 	<h:outputStylesheet name="css/primeflex.css" library="roma-layout" />
 	<h:outputStylesheet name="css/nanoscroller.css" library="roma-layout" />
 	<h:outputStylesheet name="css/layout-blue.css" library="roma-layout" />
