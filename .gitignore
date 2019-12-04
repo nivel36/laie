@@ -11,5 +11,5 @@ buildNumber.properties
 .classpath
 .settings
 .tern-project
-.pageflow
+*.pageflow
 /build/
