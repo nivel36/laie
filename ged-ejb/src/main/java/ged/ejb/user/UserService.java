@@ -57,6 +57,12 @@ public class UserService extends AbstractService<User> {
 		return this.userDao.findUserByEmail(email);
 	}
 
+	public User findUserByTokenHash(final String tokenHash) {
+		Objects.requireNonNull(tokenHash);
+		logger.debug("Find user by token hash {}", tokenHash);
+		return this.userDao.findUserByTokenHash(tokenHash);
+	}
+
 	@Override
 	protected AbstractDao<User> getDao() {
 		return this.userDao;

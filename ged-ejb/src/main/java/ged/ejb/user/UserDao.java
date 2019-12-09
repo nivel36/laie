@@ -33,6 +33,7 @@ public class UserDao extends AbstractDao<User> {
 		}
 	}
 
+	@Override
 	protected boolean existUid(final String uid) {
 		Objects.requireNonNull(uid);
 		return this.findByQuery(Boolean.class, "User.existUid", map("uid", uid));
@@ -76,6 +77,12 @@ public class UserDao extends AbstractDao<User> {
 			logger.trace("No user for email {} found", email);
 			return null;
 		}
+	}
+
+	public User findUserByTokenHash(String tokenHash) {
+		Objects.requireNonNull(tokenHash);
+		return this.getPersistenceFacade().findByQuery(User.class, "User.findUserByTokenHash",
+				map("tokenHash", tokenHash));
 	}
 
 	@Override

@@ -10,6 +10,7 @@ import javax.security.enterprise.authentication.mechanism.http.HttpMessageContex
 import javax.security.enterprise.authentication.mechanism.http.LoginToContinue;
 import javax.security.enterprise.authentication.mechanism.http.RememberMe;
 import javax.security.enterprise.credential.Credential;
+import javax.security.enterprise.identitystore.CredentialValidationResult;
 import javax.security.enterprise.identitystore.IdentityStore;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -32,7 +33,8 @@ public class GedAuthenticationMechanism implements HttpAuthenticationMechanism {
 		final Credential credential = httpMessageContext.getAuthParameters().getCredential();
 
 		if (credential != null) {
-			return httpMessageContext.notifyContainerAboutLogin(this.identityStore.validate(credential));
+			final CredentialValidationResult validationResult = this.identityStore.validate(credential);
+			return httpMessageContext.notifyContainerAboutLogin(validationResult);
 		} else {
 			return httpMessageContext.doNothing();
 		}

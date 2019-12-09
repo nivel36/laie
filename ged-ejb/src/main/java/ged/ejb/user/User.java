@@ -3,6 +3,7 @@ package ged.ejb.user;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -29,6 +30,7 @@ import org.hibernate.search.annotations.Store;
 
 import ged.ejb.core.bookmark.Bookmark;
 import ged.ejb.core.model.Obfuscable;
+import ged.ejb.core.security.LoginToken;
 import ged.ejb.person.Person;
 import ged.ejb.user.role.Role;
 
@@ -58,6 +60,9 @@ public class User extends Person implements Obfuscable {
 	@SortableField(forField = "lastConnection")
 	private LocalDateTime lastConnection;
 
+	@OneToMany
+	private List<LoginToken> loginTokens;
+	
 	@ManyToOne
 	@JoinColumn(name = "managerId")
 	@IndexedEmbedded(depth = 1)
@@ -73,14 +78,14 @@ public class User extends Person implements Obfuscable {
 	@NotNull
 	@Column(nullable = false)
 	private Integer rowsPerPage = 10;
-	
+
 	@Transient
 	private String sessionId;
 
 	@NotNull
 	@Column(unique = true, nullable = false)
 	private String uid;
-
+	
 	public void addBookmark(final Bookmark bookmark) {
 		Objects.requireNonNull(bookmark);
 		this.bookmarks.add(bookmark);
@@ -104,6 +109,10 @@ public class User extends Person implements Obfuscable {
 
 	public LocalDateTime getLastConnection() {
 		return this.lastConnection;
+	}
+
+	public List<LoginToken> getLoginTokens() {
+		return loginTokens;
 	}
 
 	public User getManager() {
@@ -170,6 +179,10 @@ public class User extends Person implements Obfuscable {
 
 	public void setLastConnection(final LocalDateTime lastConnection) {
 		this.lastConnection = lastConnection;
+	}
+
+	public void setLoginTokens(List<LoginToken> loginTokens) {
+		this.loginTokens = loginTokens;
 	}
 
 	public void setManager(final User manager) {

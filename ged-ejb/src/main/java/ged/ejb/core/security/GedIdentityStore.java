@@ -3,6 +3,7 @@ package ged.ejb.core.security;
 import static javax.security.enterprise.identitystore.CredentialValidationResult.NOT_VALIDATED_RESULT;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.inject.Inject;
@@ -22,11 +23,13 @@ public class GedIdentityStore implements IdentityStore {
 	private UserService userService;
 
 	public void setUserService(final UserService userService) {
+		Objects.requireNonNull(userService);
 		this.userService = userService;
 	}
 
 	@Override
 	public CredentialValidationResult validate(final Credential credential) {
+		Objects.requireNonNull(credential);
 		final User user;
 		if (credential instanceof UsernamePasswordCredential) {
 			try {
@@ -43,8 +46,20 @@ public class GedIdentityStore implements IdentityStore {
 			return NOT_VALIDATED_RESULT;
 		}
 
+		return validate(user);
+	}
+
+	public CredentialValidationResult validate(final User user) {
+		if (user == null) {
+			return NOT_VALIDATED_RESULT;
+		}
+		final Set<String> roles = getRoles(user);
+		return new CredentialValidationResult(new GedCallerPrincipal(user), roles);
+	}
+
+	private Set<String> getRoles(final User user) {
 		final Set<String> roles = new HashSet<>();
 		roles.add(user.getRole().toString());
-		return new CredentialValidationResult(new GedCallerPrincipal(user), roles);
+		return roles;
 	}
 }
