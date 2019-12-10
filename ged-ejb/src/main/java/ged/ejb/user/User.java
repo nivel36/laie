@@ -3,7 +3,6 @@ package ged.ejb.user;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -17,7 +16,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.search.annotations.Analyze;
@@ -61,7 +59,7 @@ public class User extends Person implements Obfuscable {
 	private LocalDateTime lastConnection;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true)
-	private List<LoginToken> loginTokens;
+	private Set<LoginToken> loginTokens;
 	
 	@ManyToOne
 	@JoinColumn(name = "managerId")
@@ -78,9 +76,6 @@ public class User extends Person implements Obfuscable {
 	@NotNull
 	@Column(nullable = false)
 	private Integer rowsPerPage = 10;
-
-	@Transient
-	private String sessionId;
 
 	@NotNull
 	@Column(unique = true, nullable = false)
@@ -111,7 +106,7 @@ public class User extends Person implements Obfuscable {
 		return this.lastConnection;
 	}
 
-	public List<LoginToken> getLoginTokens() {
+	public Set<LoginToken> getLoginTokens() {
 		return loginTokens;
 	}
 
@@ -125,10 +120,6 @@ public class User extends Person implements Obfuscable {
 
 	public Integer getRowsPerPage() {
 		return this.rowsPerPage;
-	}
-
-	public String getSessionId() {
-		return sessionId;
 	}
 
 	@Override
@@ -181,7 +172,7 @@ public class User extends Person implements Obfuscable {
 		this.lastConnection = lastConnection;
 	}
 
-	public void setLoginTokens(List<LoginToken> loginTokens) {
+	public void setLoginTokens(Set<LoginToken> loginTokens) {
 		this.loginTokens = loginTokens;
 	}
 
@@ -197,11 +188,7 @@ public class User extends Person implements Obfuscable {
 		this.rowsPerPage = rowsPerPage;
 	}
 
-	public void setSessionId(String sessionId) {
-		this.sessionId = sessionId;
-	}
-
-	public void setUid(String uid) {
+	public void setUid(final String uid) {
 		this.uid = uid;
 	}
 }
