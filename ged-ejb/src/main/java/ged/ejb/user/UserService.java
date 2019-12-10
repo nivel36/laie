@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import ged.ejb.core.AbstractService;
 import ged.ejb.core.model.AbstractDao;
 import ged.ejb.core.model.Repository;
+import ged.ejb.core.security.LoginToken.TokenType;
 
 @Stateless
 public class UserService extends AbstractService<User> {
@@ -57,10 +58,11 @@ public class UserService extends AbstractService<User> {
 		return this.userDao.findUserByEmail(email);
 	}
 
-	public User findUserByTokenHash(final String tokenHash) {
+	public User findUserByTokenHash(final byte[] tokenHash, final TokenType type) {
 		Objects.requireNonNull(tokenHash);
-		logger.debug("Find user by token hash {}", tokenHash);
-		return this.userDao.findUserByTokenHash(tokenHash);
+		Objects.requireNonNull(type);
+		logger.debug("Find user by token hash {} and type {}", tokenHash, type);
+		return this.userDao.findUserByTokenHashAndType(tokenHash, type);
 	}
 
 	@Override
@@ -98,7 +100,7 @@ public class UserService extends AbstractService<User> {
 			throw new LoginException("Passwords doesn't match");
 		}
 		user.setLastConnection(LocalDateTime.now());
-		return this.userDao.save(user);
+		return user;
 	}
 
 	@Override

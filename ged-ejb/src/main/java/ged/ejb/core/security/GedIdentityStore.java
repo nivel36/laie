@@ -22,6 +22,12 @@ public class GedIdentityStore implements IdentityStore {
 	@Inject
 	private UserService userService;
 
+	private Set<String> getRoles(final User user) {
+		final Set<String> roles = new HashSet<>();
+		roles.add(user.getRole().toString());
+		return roles;
+	}
+
 	public void setUserService(final UserService userService) {
 		Objects.requireNonNull(userService);
 		this.userService = userService;
@@ -55,11 +61,5 @@ public class GedIdentityStore implements IdentityStore {
 		}
 		final Set<String> roles = getRoles(user);
 		return new CredentialValidationResult(new GedCallerPrincipal(user), roles);
-	}
-
-	private Set<String> getRoles(final User user) {
-		final Set<String> roles = new HashSet<>();
-		roles.add(user.getRole().toString());
-		return roles;
 	}
 }

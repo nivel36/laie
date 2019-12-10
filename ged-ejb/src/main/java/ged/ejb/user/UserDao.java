@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import ged.ejb.core.model.AbstractDao;
 import ged.ejb.core.model.Page;
 import ged.ejb.core.model.Repository;
+import ged.ejb.core.security.LoginToken.TokenType;
 
 @Repository
 public class UserDao extends AbstractDao<User> {
@@ -79,10 +80,15 @@ public class UserDao extends AbstractDao<User> {
 		}
 	}
 
-	public User findUserByTokenHash(String tokenHash) {
+	public User findUserByTokenHashAndType(final byte[] tokenHash, final TokenType type) {
 		Objects.requireNonNull(tokenHash);
-		return this.getPersistenceFacade().findByQuery(User.class, "User.findUserByTokenHash",
-				map("tokenHash", tokenHash));
+		Objects.requireNonNull(type);
+		try {
+			return this.getPersistenceFacade().findByQuery(User.class, "User.findByTokenHashAndType",
+					map("tokenHash", tokenHash).and("type", type));
+		} catch (NoResultException e) {
+			return null;
+		}
 	}
 
 	@Override

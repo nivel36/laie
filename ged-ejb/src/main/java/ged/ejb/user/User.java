@@ -60,7 +60,7 @@ public class User extends Person implements Obfuscable {
 	@SortableField(forField = "lastConnection")
 	private LocalDateTime lastConnection;
 
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true)
 	private List<LoginToken> loginTokens;
 	
 	@ManyToOne

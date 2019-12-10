@@ -39,7 +39,7 @@ public class LoginTokenService {
 
 	public String generate(final String email, final String ipAddress, final String description,
 			final TokenType tokenType, final Instant expiration) {
-		final User user = userService.findUserByEmail(email);
+		final User user = userService.findUserAndCredential(email);
 		if (user == null) {
 			throw new IllegalStateException();
 		}
@@ -79,5 +79,4 @@ public class LoginTokenService {
 		Objects.requireNonNull(userService);
 		this.userService = userService;
 	}
-
 }

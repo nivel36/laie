@@ -233,41 +233,7 @@
 			WHERE j.first = true
 		]]></query>
 	</named-query>
-
-	<named-query name="Meeting.findPlannedByOwner">
-		<query><![CDATA[
-			SELECT m 
-			FROM Meeting m
-			WHERE m.owner = :owner
-			AND m.datePlanned >= CURRENT_TIMESTAMP
-		]]></query>
-	</named-query>
-
-	<named-query name="Meeting.findConductedByOwner">
-		<query><![CDATA[
-			SELECT m 
-			FROM Meeting m
-			WHERE m.owner = :owner
-			AND m.datePlanned < CURRENT_TIMESTAMP
-		]]></query>
-	</named-query>
-
-	<named-query name="Meeting.findByAttendeesEmail">
-		<query><![CDATA[
-			SELECT m 
-			FROM Meeting m
-			WHERE :email MEMBER OF m.attendeesEmails
-		]]></query>
-	</named-query>
-
-	<named-query name="Meeting.findByUid">
-		<query><![CDATA[
-			SELECT m 
-			FROM Meeting m 
-			WHERE m.uid = :uid
-		]]></query>
-	</named-query>
-
+	
 	<named-query name="JobOffer.findAllByOwner">
 		<query><![CDATA[
 			SELECT j 
@@ -306,6 +272,56 @@
 			SELECT j 
 			FROM JobOffer j 
 			WHERE j.uid = :uid
+		]]></query>
+	</named-query>
+
+	<named-query name="Meeting.findPlannedByOwner">
+		<query><![CDATA[
+			SELECT m 
+			FROM Meeting m
+			WHERE m.owner = :owner
+			AND m.datePlanned >= CURRENT_TIMESTAMP
+		]]></query>
+	</named-query>
+
+	<named-query name="Meeting.findConductedByOwner">
+		<query><![CDATA[
+			SELECT m 
+			FROM Meeting m
+			WHERE m.owner = :owner
+			AND m.datePlanned < CURRENT_TIMESTAMP
+		]]></query>
+	</named-query>
+	
+	<named-query name="LoginToken.findExpired">
+		<query><![CDATA[
+			SELECT l 
+			FROM LoginToken l 
+			WHERE l.expiration >= CURRENT_TIMESTAMP
+		]]></query>
+	</named-query>
+	
+	<named-query name="LoginToken.findByTokenHash">
+		<query><![CDATA[
+			SELECT l 
+			FROM LoginToken l 
+			WHERE l.tokenHash = :tokenHash
+		]]></query>
+	</named-query>
+
+	<named-query name="Meeting.findByAttendeesEmail">
+		<query><![CDATA[
+			SELECT m 
+			FROM Meeting m
+			WHERE :email MEMBER OF m.attendeesEmails
+		]]></query>
+	</named-query>
+
+	<named-query name="Meeting.findByUid">
+		<query><![CDATA[
+			SELECT m 
+			FROM Meeting m 
+			WHERE m.uid = :uid
 		]]></query>
 	</named-query>
 
@@ -365,6 +381,7 @@
 			SELECT u
 			FROM User u
 			LEFT JOIN FETCH u.credential
+			LEFT JOIN FETCH u.loginTokens
 			WHERE u.email = :email
 		]]></query>
 	</named-query>
@@ -382,6 +399,16 @@
 			SELECT u 
 			FROM User u 
 			WHERE u.uid = :uid
+		]]></query>
+	</named-query>
+	
+	<named-query name="User.findByTokenHashAndType">
+		<query><![CDATA[
+			SELECT u
+			FROM User u, LoginToken l
+			WHERE l MEMBER OF u.loginTokens
+			AND l.tokenHash = :tokenHash
+			AND l.type = :type
 		]]></query>
 	</named-query>
 	
