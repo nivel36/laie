@@ -30,16 +30,20 @@ public class SessionUsers {
 		this.onlineUsers.get(username).lastAction = LocalDateTime.now();
 	}
 
+	public LocalDateTime getLastAction(final String username) {
+		return this.onlineUsers.get(username).lastAction;
+	}
+
+	public Set<String> getOnlineUsers() {
+		return onlineUsers.keySet();
+	}
+
 	public Set<String> getSessionId(final String username) {
 		return this.onlineUsers.get(username).sessionIds;
 	}
 
 	public boolean isOnline(final String username) {
 		return this.onlineUsers.containsKey(username);
-	}
-
-	public LocalDateTime getLastAction(final String username) {
-		return this.onlineUsers.get(username).lastAction;
 	}
 
 	public void login(final String username, final String sessionId) {
