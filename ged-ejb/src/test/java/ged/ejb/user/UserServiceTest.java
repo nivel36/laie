@@ -57,7 +57,6 @@ public class UserServiceTest {
 		public void validCredentialShoudSaveUser() throws Exception {
 			final User user = UserServiceTest.this.mockUser(1L, "abel@test.com", null);
 			when(UserServiceTest.this.userDao.findUserAndCredential("abel@test.com")).thenReturn(user);
-			when(UserServiceTest.this.userDao.save(user)).thenReturn(user);
 			final User savedUser = UserServiceTest.this.userService.login("abel@test.com", "password");
 			Assertions.assertTrue(savedUser.getLastConnection() != null);
 		}
