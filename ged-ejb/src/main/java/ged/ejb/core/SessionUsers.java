@@ -2,7 +2,9 @@ package ged.ejb.core;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import javax.enterprise.context.ApplicationScoped;
 
@@ -13,10 +15,11 @@ public class SessionUsers {
 
 		private LocalDateTime lastAction;
 
-		private final String sessionId;
+		private final Set<String> sessionIds;
 
 		SessionValues(final String sessionId) {
-			this.sessionId = sessionId;
+			this.sessionIds = new HashSet<>();
+			this.sessionIds.add(sessionId);
 			this.lastAction = LocalDateTime.now();
 		}
 	}
@@ -27,8 +30,8 @@ public class SessionUsers {
 		this.onlineUsers.get(username).lastAction = LocalDateTime.now();
 	}
 
-	public String getSessionId(final String username) {
-		return this.onlineUsers.get(username).sessionId;
+	public Set<String> getSessionId(final String username) {
+		return this.onlineUsers.get(username).sessionIds;
 	}
 
 	public boolean isOnline(final String username) {
