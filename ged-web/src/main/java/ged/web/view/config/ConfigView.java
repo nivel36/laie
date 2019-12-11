@@ -5,7 +5,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UncheckedIOException;
 import java.lang.invoke.MethodHandles;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.PostConstruct;
@@ -74,8 +76,9 @@ public class ConfigView extends AbstractView {
 	}
 
 	public void openChangePasswordDialog() {
-		this.openDialog("/config/changePasswordDialog",
-				this.buildDialogParameter("userId", String.valueOf(this.user.getId())));
+		final String userId = String.valueOf(this.user.getId());
+		final Map<String, List<String>> dialogParameters = this.buildDialogParameter("userId", userId);
+		this.openDialog("/config/changePasswordDialog", dialogParameters);
 	}
 
 	private void refreshSessionUser() {
