@@ -12,7 +12,7 @@
 	template="/WEB-INF/templates/template.xhtml">
 	
 	<p:link outcome="#{Page.USER.getUrl()}">
-		<f:param name="id" value="#{user.id}" />
+		<f:param name="id" value="#{user.uid}" />
 		<div class="user-minicard">
 			<div class="user-minicard-image">
 				<cc:avatar value="#{user.imageFileName}" />

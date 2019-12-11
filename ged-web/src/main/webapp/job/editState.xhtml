@@ -14,7 +14,7 @@
 			<p:menuitem value="#{i18n['menu.index']}" outcome="#{Page.INDEX.getUrl()}" />
 			<p:menuitem value="#{i18n['job.job_offers']}" outcome="#{Page.JOB_SEARCH.getUrl()}" />
 			<p:menuitem value="#{editJobStateView.jobOffer}" outcome="#{Page.JOB.getUrl()}">
-				<f:param name="id" value="#{editJobStateView.jobOffer.id}" />
+				<f:param name="id" value="#{editJobStateView.jobOffer.uid}" />
 			</p:menuitem>
 			<p:menuitem value="#{i18n['job.edit_job_state']}" disabled="true" />
 		</p:breadCrumb>
@@ -22,7 +22,7 @@
 	<ui:define name="buttons">
 		<h:form>
 			<p:button value="#{i18n['action.cancel']}" outcome="#{Page.JOB.getUrl()}" styleClass="secondary-button">
-				<f:param name="id" value="#{editJobStateView.jobOffer.id}" />
+				<f:param name="id" value="#{editJobStateView.jobOffer.uid}" />
 			</p:button>
 			<p:commandButton value="#{i18n['action.save']}" onclick="processForm()" styleClass="success-btn" />
 		</h:form>

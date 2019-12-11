@@ -12,10 +12,10 @@
 			<p:menuitem value="#{i18n['menu.index']}" outcome="#{Page.INDEX.getUrl()}" />
 			<p:menuitem value="#{i18n['candidate.candidates']}" outcome="#{Page.CANDIDATE_SEARCH.getUrl()}" />
 			<p:menuitem value="#{languageView.curriculum.candidate.fullName}" outcome="#{Page.CANDIDATE.getUrl()}">
-				<f:param name="id" value="#{languageView.curriculum.candidate.id}" />
+				<f:param name="id" value="#{languageView.curriculum.candidate.uid}" />
 			</p:menuitem>
 			<p:menuitem value="#{i18n['curriculum.curriculum']}" outcome="#{Page.CURRICULUM.getUrl()}">
-				<f:param name="id" value="#{languageView.curriculum.candidate.id}" />
+				<f:param name="id" value="#{languageView.curriculum.candidate.uid}" />
 			</p:menuitem>
 			<p:menuitem value="#{i18n['skill.skills']}" disabled="true" />
 		</p:breadCrumb>
@@ -24,7 +24,7 @@
 	<ui:define name="buttons">
 		<h:form>
 			<p:button value="#{i18n['action.cancel']}" outcome="#{Page.CURRICULUM.getUrl()}" styleClass="secondary-button">
-				<f:param name="id" value="#{skillsView.curriculum.candidate.id}" />
+				<f:param name="id" value="#{skillsView.curriculum.candidate.uid}" />
 			</p:button>
 			<p:commandButton value="#{i18n['action.save']}" onclick="save()" styleClass="success-btn" />
 		</h:form>

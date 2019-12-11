@@ -24,7 +24,7 @@
 	<ui:define name="buttons">
 		<h:form>
 			<p:button value="#{i18n['curriculum.curriculum']}" process="@this" outcome="#{Page.CURRICULUM.getUrl()}" icon="fa fa-pencil">
-				<f:param name="id" value="#{viewCandidateView.candidate.id}" />
+				<f:param name="id" value="#{viewCandidateView.candidate.uid}" />
 			</p:button>
 			<p:commandButton value="#{i18n['action.edit']}" process="@this" action="#{viewCandidateView.editCandidate}" icon="fa fa-pencil" />
 			<p:commandButton value="#{i18n['action.export']}" process="@this" action="#{viewCandidateView.export}" icon="fa fa-file-excel-o" />

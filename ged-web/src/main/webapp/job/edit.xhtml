@@ -14,7 +14,7 @@
 			<p:menuitem value="#{i18n['menu.index']}" outcome="#{Page.INDEX.getUrl()}" />
 			<p:menuitem value="#{i18n['job.job_offers']}" outcome="#{Page.JOB_SEARCH.getUrl()}" />
 			<p:menuitem value="#{editJobView.jobOffer}" outcome="#{Page.JOB.getUrl()}">
-				<f:param name="id" value="#{editJobView.jobOffer.id}" />
+				<f:param name="id" value="#{editJobView.jobOffer.uid}" />
 			</p:menuitem>
 			<p:menuitem value="#{i18n['job.edit_job']}" disabled="true" />
 		</p:breadCrumb>

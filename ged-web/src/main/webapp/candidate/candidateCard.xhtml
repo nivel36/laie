@@ -11,7 +11,7 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 	
 	<p:link outcome="#{Page.CANDIDATE.getUrl()}">
-		<f:param name="candidateId" value="#{candidate.id}" />
+		<f:param name="candidateId" value="#{candidate.uid}" />
 		<div class="user-minicard">
 			<div class="user-image">
 				<cc:avatar value="#{candidate.imageFileName}" />

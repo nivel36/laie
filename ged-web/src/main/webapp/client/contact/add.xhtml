@@ -12,7 +12,7 @@
 			<p:menuitem value="#{i18n['menu.index']}" outcome="#{Page.INDEX.getUrl()}" />
 			<p:menuitem value="#{i18n['client.clients']}" outcome="#{Page.CLIENT_SEARCH.getUrl()}" />
 			<p:menuitem value="#{addContactView.client.name}" outcome="#{Page.CLIENT.getUrl()}">
-				<f:param name="id" value="#{addContactView.client.id}" />
+				<f:param name="id" value="#{addContactView.client.uid}" />
 			</p:menuitem>
 			<p:menuitem value="#{i18n['contact.new_contact']}" disabled="true" />
 		</p:breadCrumb>
@@ -21,7 +21,7 @@
 	<ui:define name="buttons">
 		<h:form>
 			<p:button value="#{i18n['action.cancel']}" outcome="#{Page.CLIENT.getUrl()}" styleClass="secondary-button">
-				<f:param name="id" value="#{addContactView.client.id}" />
+				<f:param name="id" value="#{addContactView.client.uid}" />
 			</p:button>
 			<p:commandButton value="#{i18n['action.save']}" onclick="processForm()" styleClass="success-btn" />
 		</h:form>

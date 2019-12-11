@@ -36,7 +36,7 @@
 						<div class="p-grid">
 							<div class="p-col-12 p-sm-6">
 								<cc:outputLink label="#{i18n['job.client']}" value="#{viewJobView.jobOffer.client.name}" outcome="#{Page.CLIENT.getUrl()}">
-									<f:param name="id" value="#{viewJobView.jobOffer.client.id}" />
+									<f:param name="id" value="#{viewJobView.jobOffer.client.uid}" />
 								</cc:outputLink>
 							</div>
 
@@ -69,7 +69,7 @@
 					<div class="p-grid">
 						<div class="p-col-12 p-sm-6">
 							<cc:outputLink label="#{i18n['job.owner']}" value="#{viewJobView.jobOffer.owner.fullName}" outcome="#{Page.USER.getUrl()}">
-								<f:param name="id" value="#{viewJobView.jobOffer.owner.id}" />
+								<f:param name="id" value="#{viewJobView.jobOffer.owner.uid}" />
 							</cc:outputLink>
 						</div>
 
@@ -107,7 +107,7 @@
 								<div class="text-container">
 									<ui:repeat value="#{viewJobView.jobOffer.recruiters}" var="recruiter" varStatus="varStatus">
 										<p:link outcome="#{Page.USER.getUrl()}">
-											<f:param name="id" value="#{recruiter.id}" />
+											<f:param name="id" value="#{recruiter.uid}" />
 											<h:outputText value="#{recruiter.fullName}" />
 										</p:link>
 										<h:outputText value=", " styleClass="text" rendered="#{not varStatus.last}" />
