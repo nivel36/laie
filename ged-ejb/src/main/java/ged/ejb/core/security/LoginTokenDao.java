@@ -19,7 +19,7 @@ public class LoginTokenDao extends AbstractDao<LoginToken> {
 	}
 
 	public List<LoginToken> findExpiredTokens() {
-		return this.getPersistenceFacade().findByQuery(LoginToken.class, "LoginToken.findExpired", null, Page.ALL);
+		return this.getPersistenceFacade().findByQuery(LoginToken.class, "LoginToken.findExpired", null, Page.ALL_RESULTS);
 	}
 
 	@Override

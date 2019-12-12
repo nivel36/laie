@@ -90,7 +90,7 @@ public class AddUserViewTest {
 		public void validSearchShouldReturnUserList() {
 			final List<User> mockedManagers = AddUserViewTest.this.mockListOfUsers();
 			final SearchResult<User> searchResult = new SearchResult<>(mockedManagers, mockedManagers.size());
-			Mockito.when(AddUserViewTest.this.userService.search("Abe", Page.of(0, 10))).thenReturn(searchResult);
+			Mockito.when(AddUserViewTest.this.userService.search("Abe", Page.TEN_RESULTS_PER_PAGE)).thenReturn(searchResult);
 
 			final List<User> managers = AddUserViewTest.this.addUserView.queryManager("Abe");
 

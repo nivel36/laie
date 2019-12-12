@@ -36,7 +36,7 @@ public class JobCandidatureStatesMaintenanceView extends AbstractView {
 	@PostConstruct
 	public void init() {
 		logger.trace("Job candidature states maintenances init");
-		this.states = this.jobCandidatureStateService.findAll(Page.ALL);
+		this.states = this.jobCandidatureStateService.findAll(Page.ALL_RESULTS);
 	}
 
 	public void setJobCandidatureStateService(final JobCandidatureStateService jobCandidatureStateService) {

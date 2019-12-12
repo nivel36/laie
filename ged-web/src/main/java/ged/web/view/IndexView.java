@@ -76,7 +76,7 @@ public class IndexView extends AbstractView {
 	}
 
 	private List<Meeting> initMeetings() {
-		return this.meetingService.findPlannedMeetings(this.sessionUser.get(), Page.of(0, 10));
+		return this.meetingService.findPlannedMeetings(this.sessionUser.get(), Page.TEN_RESULTS_PER_PAGE);
 	}
 
 	public void setEventService(final JobCandidatureEventService jobCandidatureEventService) {

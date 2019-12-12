@@ -55,7 +55,7 @@ public abstract class AbstractCandidateView extends AbstractView {
 	}
 
 	public List<Tag> queryTags(final String query) {
-		return this.tagService.search(query, Page.of(0, 10)).getResultData();
+		return this.tagService.search(query, Page.TEN_RESULTS_PER_PAGE).getResultData();
 	}
 
 	public void setCandidate(final Candidate candidate) {

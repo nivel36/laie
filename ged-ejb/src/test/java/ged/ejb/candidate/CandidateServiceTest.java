@@ -53,16 +53,16 @@ public class CandidateServiceTest {
 		public void findAllByJobOfferTest() {
 			final JobOffer jobOffer = new JobOffer();
 
-			when(candidateDao.findCandidates(jobOffer, Page.ALL)).thenReturn(new ArrayList<>());
+			when(candidateDao.findCandidates(jobOffer, Page.ALL_RESULTS)).thenReturn(new ArrayList<>());
 
-			final List<Candidate> candidatesFromRepository = candidateService.findCandidates(jobOffer, Page.ALL);
+			final List<Candidate> candidatesFromRepository = candidateService.findCandidates(jobOffer, Page.ALL_RESULTS);
 			assertEquals(0, candidatesFromRepository.size());
 		}
 
 		@Test
 		public void nullJobOfferShouldReturnNullPointerException() {
 			assertThrows(NullPointerException.class, () -> {
-				candidateService.findCandidates(null, Page.ALL);
+				candidateService.findCandidates(null, Page.ALL_RESULTS);
 			});
 		}
 	}

@@ -23,7 +23,7 @@ public class BookmarkDao extends AbstractDao<Bookmark> {
 		final Map<String, Object> parameters = new HashMap<>();
 		parameters.put("entityClass", entityClass);
 		parameters.put("entityId", entityId);
-		return this.findByQuery(this.getType(), "Bookmark.findAllByClassAndId", parameters, Page.ALL);
+		return this.findByQuery(this.getType(), "Bookmark.findAllByClassAndId", parameters, Page.ALL_RESULTS);
 	}
 
 	public Bookmark find(final User user, final String entityClass, final long entityId) {
@@ -39,7 +39,7 @@ public class BookmarkDao extends AbstractDao<Bookmark> {
 		logger.debug("Buscando todos los Bookmarks del usuario {}", user.getFullName());
 		final Map<String, Object> parameters = new HashMap<>();
 		parameters.put("user", user);
-		return this.findByQuery(this.getType(), "Bookmark.findAllByUser", parameters, Page.ALL);
+		return this.findByQuery(this.getType(), "Bookmark.findAllByUser", parameters, Page.ALL_RESULTS);
 	}
 
 	@Override

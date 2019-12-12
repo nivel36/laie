@@ -92,14 +92,14 @@ public class ViewCandidateView extends AbstractView {
 		if (this.candidate.getAddress() == null) {
 			this.candidate.setAddress(new Address());
 		}
-		this.jobCandidatures = this.jobCandidatureService.findJobCandidatures(this.candidate, Page.ALL);
+		this.jobCandidatures = this.jobCandidatureService.findJobCandidatures(this.candidate, Page.ALL_RESULTS);
 		this.curriculum = this.curriculumService.findByCandidate(this.candidate);
 		this.editable = this.sessionUser.hasPermissionToEdit(this.candidate);
 		this.meetings = this.initMeetings();
 	}
 
 	private List<Meeting> initMeetings() {
-		return this.meetingService.findMeetings(this.candidate, Page.of(0, 10));
+		return this.meetingService.findMeetings(this.candidate, Page.TEN_RESULTS_PER_PAGE);
 	}
 
 	public boolean isEditable() {

@@ -16,7 +16,7 @@ import ged.ejb.core.model.Repository;
 public class CurriculumDao extends AbstractDao<Curriculum> {
 
 	public List<SkillLevel> findAllSkillLevels() {
-		return this.findAll(SkillLevel.class, Page.ALL);
+		return this.findAll(SkillLevel.class, Page.ALL_RESULTS);
 	}
 
 	public Curriculum findByCandidate(final Candidate candidate) {

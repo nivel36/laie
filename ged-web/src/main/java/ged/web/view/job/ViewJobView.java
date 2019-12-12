@@ -82,7 +82,7 @@ public class ViewJobView extends AbstractView {
 			throw new IllegalPageStateException();
 		}
 		logger.trace("JobOffer {} init", this.jobOffer);
-		this.jobCandidatures = this.jobCandidatureService.findJobCanditures(this.jobOffer, Page.ALL);
+		this.jobCandidatures = this.jobCandidatureService.findJobCanditures(this.jobOffer, Page.ALL_RESULTS);
 		this.editable = this.sessionUser.hasPermissionToEdit(this.jobOffer);
 	}
 

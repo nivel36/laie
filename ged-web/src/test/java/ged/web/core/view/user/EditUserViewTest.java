@@ -89,7 +89,7 @@ public class EditUserViewTest {
 		public void validSearchShouldReturnUserList() {
 			final List<User> mockedManagers = EditUserViewTest.this.mockListOfUsers();
 			final SearchResult<User> searchResult = new SearchResult<>(mockedManagers, mockedManagers.size());
-			when(EditUserViewTest.this.userService.search("Abe", Page.of(0, 10))).thenReturn(searchResult);
+			when(EditUserViewTest.this.userService.search("Abe", Page.TEN_RESULTS_PER_PAGE)).thenReturn(searchResult);
 
 			final List<User> managers = EditUserViewTest.this.userEditView.queryManager("Abe");
 

@@ -15,7 +15,7 @@ public class ServerFileDao extends AbstractDao<ServerFile> {
 
 	public List<ServerFile> findByCandidate(final Candidate candidate) {
 		Objects.requireNonNull(candidate);
-		return this.findByQuery(ServerFile.class, "ServerFile.findByCandidate", map("candidate", candidate), Page.ALL);
+		return this.findByQuery(ServerFile.class, "ServerFile.findByCandidate", map("candidate", candidate), Page.ALL_RESULTS);
 	}
 
 	@Override

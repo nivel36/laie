@@ -4,7 +4,8 @@ import java.util.Objects;
 
 public class Page {
 
-	public static final Page ALL = Page.of(0, 150);
+	public static final Page ALL_RESULTS = Page.of(0, 150);
+	public static final Page TEN_RESULTS_PER_PAGE = Page.of(0, 10);
 
 	public static Page of(final int offset, final int limit) {
 		return new Page(offset, limit);

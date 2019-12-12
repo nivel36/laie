@@ -41,11 +41,11 @@ public class SearchMeetingView extends AbstractView {
 	}
 
 	private List<Meeting> initConductedMeetings() {
-		return this.meetingService.findConductedMeetings(this.sessionUser.get(), Page.of(0, 10));
+		return this.meetingService.findConductedMeetings(this.sessionUser.get(), Page.TEN_RESULTS_PER_PAGE);
 	}
 
 	private List<Meeting> initPlannedMeetings() {
-		return this.meetingService.findPlannedMeetings(this.sessionUser.get(), Page.of(0, 10));
+		return this.meetingService.findPlannedMeetings(this.sessionUser.get(), Page.TEN_RESULTS_PER_PAGE);
 	}
 
 	public void setMeetingService(final MeetingService meetingService) {

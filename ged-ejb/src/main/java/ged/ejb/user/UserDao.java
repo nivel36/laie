@@ -42,7 +42,7 @@ public class UserDao extends AbstractDao<User> {
 
 	private List<UserClosure> findAntecessorsUserClosures(final User user) {
 		return this.findByQuery(UserClosure.class, "UserClosure.findAntecessorsUserClosuresById", map(ID, user.getId()),
-				Page.ALL);
+				Page.ALL_RESULTS);
 	}
 
 	public User findByUid(final String uid) {
@@ -53,7 +53,7 @@ public class UserDao extends AbstractDao<User> {
 	public List<User> findSubordinateUsers(final User user) {
 		Objects.requireNonNull(user);
 		try {
-			return this.findByQuery(User.class, "User.findSubordinateUsers", map(ID, user.getId()), Page.ALL);
+			return this.findByQuery(User.class, "User.findSubordinateUsers", map(ID, user.getId()), Page.ALL_RESULTS);
 		} catch (final NoResultException e) {
 			logger.trace("No subordinate users for user {} found", user.getEmail(), e);
 			return new ArrayList<>();

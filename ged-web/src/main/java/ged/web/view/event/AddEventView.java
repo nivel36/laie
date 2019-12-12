@@ -54,7 +54,7 @@ public class AddEventView extends AbstractView {
 	public void init() {
 		final User user = this.sessionUser.get();
 		this.jobCandidatureEvent = initEvent(user);
-		this.jobCandidatures = this.jobCandidatureService.findJobCandidatures(user, Page.ALL);
+		this.jobCandidatures = this.jobCandidatureService.findJobCandidatures(user, Page.ALL_RESULTS);
 	}
 
 	public JobCandidatureEvent initEvent(final User user){

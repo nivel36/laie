@@ -39,7 +39,7 @@ public class CandidateDao extends AbstractDao<Candidate> {
 	}
 
 	public List<Origin> findAllOrigins() {
-		return this.getPersistenceFacade().findAll(Origin.class, Page.ALL);
+		return this.getPersistenceFacade().findAll(Origin.class, Page.ALL_RESULTS);
 	}
 
 	public Candidate findCandidateByEmail(final String email) {

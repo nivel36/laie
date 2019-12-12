@@ -64,14 +64,14 @@ public class ChatView extends AbstractView {
 
 	@PostConstruct
 	public void init() {
-		this.users = this.userService.findAll(Page.of(0, 10));
+		this.users = this.userService.findAll(Page.TEN_RESULTS_PER_PAGE);
 		this.users.remove(this.sessionUser.get());
 		this.selectedUser = this.users.get(0);
 		this.messages = new HashMap<User, String>();
 	}
 
 	public void search() {
-		this.users = this.userService.search(this.searchText, Page.of(0, 10)).getResultData();
+		this.users = this.userService.search(this.searchText, Page.TEN_RESULTS_PER_PAGE).getResultData();
 	}
 
 	public void sendMessage() {

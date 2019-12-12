@@ -171,9 +171,9 @@ public class AddMeetingView extends AbstractView {
 	public List<Person> searchPerson(final String query) {
 		logger.trace("Searching for person with the string {}", query);
 		final List<Person> personsFound = new ArrayList<>();
-		personsFound.addAll(this.candidateService.search(query, Page.of(0, 10)).getResultData());
-		personsFound.addAll(this.userService.search(query, Page.of(0, 10)).getResultData());
-		personsFound.addAll(this.contactService.search(query, Page.of(0, 10)).getResultData());
+		personsFound.addAll(this.candidateService.search(query, Page.TEN_RESULTS_PER_PAGE).getResultData());
+		personsFound.addAll(this.userService.search(query, Page.TEN_RESULTS_PER_PAGE).getResultData());
+		personsFound.addAll(this.contactService.search(query, Page.TEN_RESULTS_PER_PAGE).getResultData());
 		return personsFound;
 	}
 

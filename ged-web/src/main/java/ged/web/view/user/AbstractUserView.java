@@ -54,7 +54,7 @@ public abstract class AbstractUserView extends AbstractView {
 
 	public List<User> queryManager(final String query) {
 		logger.trace("Searching for manager with the string {}", query);
-		final List<User> managers = this.userService.search(query, Page.of(0, 10)).getResultData();
+		final List<User> managers = this.userService.search(query, Page.TEN_RESULTS_PER_PAGE).getResultData();
 		managers.remove(this.user);
 		return managers;
 	}

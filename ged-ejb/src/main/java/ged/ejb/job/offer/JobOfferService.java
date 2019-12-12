@@ -112,7 +112,7 @@ public class JobOfferService extends AbstractService<JobOffer> {
 	
 	private boolean isCompleted(final JobOffer jobOffer) {
 		final List<JobCandidature> jobCandidatures = this.jobCandidatureService.findApprovedJobCanditures(jobOffer,
-				Page.ALL);
+				Page.ALL_RESULTS);
 		final int numberofAprrovedCandidatures = jobCandidatures.size();
 		if (jobOffer.getPlaces() == numberofAprrovedCandidatures) {
 			return true;
