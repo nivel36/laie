@@ -17,9 +17,11 @@
 
 	<ui:define name="breadcrumb">
 		<p:breadCrumb>
-			<p:menuitem value="#{i18n['menu.index']}" url="/index.xhtml" />
-			<p:menuitem value="#{i18n['client.clients']}" url="/client/clientSearch.xhtml" />
-			<p:menuitem value="#{contactEditView.client.name}" url="/client/client.xhtml?clientId=#{contactEditView.client.uid}" />
+			<p:menuitem value="#{i18n['menu.index']}" url="#{Page.INDEX.getUrl()}" />
+			<p:menuitem value="#{i18n['client.clients']}" url="#{Page.CLIENT_SEARCH.getUrl()}" />
+			<p:menuitem value="#{contactEditView.client.name}" url="#{Page.CLIENT.getUrl()}" >
+				<f:param name="id" value="#{contactEditView.client.uid}" />
+			</p:menuitem>
 			<p:menuitem value="#{contactEditView.contact.fullName}" disabled="true" />
 		</p:breadCrumb>
 	</ui:define>

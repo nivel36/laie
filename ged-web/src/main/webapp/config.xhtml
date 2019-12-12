@@ -31,17 +31,17 @@
 					<div class="card card-w-title ui-fluid">
 						<h1>#{i18n['config.personal_information']}</h1>
 						<div class="p-grid">
-							<div class="p-col-12 p-xl-6">
-								<g:input label="#{i18n['config.name']}" id="name" value="#{configView.user.name}" required="true" />
+							<div class="p-col-12 p-sm-6">
+								<g:input id="name" label="#{i18n['config.name']}" value="#{configView.user.name}" required="true" />
 							</div>
-							<div class="p-col-12 p-xl-6">
-								<g:input label="#{i18n['config.surname']}" id="surname" value="#{configView.user.surname}" required="true" />
+							<div class="p-col-12 p-sm-6">
+								<g:input id="surname" label="#{i18n['config.surname']}" value="#{configView.user.surname}" required="true" />
 							</div>
-							<div class="p-col-12 p-xl-6">
-								<g:input label="#{i18n['config.email']}" id="email" value="#{configView.user.email}" required="true" />
+							<div class="p-col-12 p-sm-6">
+								<g:input id="email" label="#{i18n['config.email']}" value="#{configView.user.email}" required="true" />
 							</div>
-							<div class="p-col-12 p-xl-6">
-								<g:input label="#{i18n['user.phone_number']}" id="phone" value="#{configView.user.phoneNumber}" />
+							<div class="p-col-12 p-sm-6">
+								<g:input id="phone" label="#{i18n['user.phone_number']}" value="#{configView.user.phoneNumber}" />
 							</div>
 						</div>
 					</div>
@@ -50,15 +50,15 @@
 					<div class="card card-w-title ui-fluid">
 						<h1>#{i18n['config.config_data']}</h1>
 						<div class="p-grid">
-							<div class="p-col-12 p-xl-6">
-								<g:input label="#{i18n['config.rows_per_page']}" value="#{configView.user.rowsPerPage}" type="selectOneMenu">
+							<div class="p-col-12 p-sm-6">
+								<g:input id="rowsPerPage" label="#{i18n['config.rows_per_page']}" value="#{configView.user.rowsPerPage}" type="selectOneMenu">
 									<f:selectItem itemValue="5" itemLabel="5" />
 									<f:selectItem itemValue="10" itemLabel="10" />
 									<f:selectItem itemValue="25" itemLabel="25" />
 								</g:input>
 							</div>
-							<div class="p-col-12 p-xl-6">
-								<g:input label="#{i18n['config.language']}" value="#{configView.user.language}" styleClass="locales" type="selectOneMenu">
+							<div class="p-col-12 p-sm-6">
+								<g:input id="locale" label="#{i18n['config.language']}" value="#{configView.user.language}" styleClass="locales" type="selectOneMenu">
 									<f:selectItems var="locale" value="#{applicationView.locales}" itemValue="#{locale.language}" itemLabel="#{locale.displayLanguage}" />
 									<f:ajax event="change" render="@all" listener="#{configView.changeLocale}" />
 								</g:input>
@@ -66,8 +66,9 @@
 						</div>
 					</div>
 				</div>
-				<div class="p-col-12 p-xl-6">
-					<div class="card">
+				<div class="p-col-12 p-sm-6">
+					<div class="card card-w-title">
+					<h1>#{i18n['config.picture']}</h1>
 						<cc:inputAvatar id="user-image" value="#{configView.user.imageFileName}" fileUploadListener="#{configView.uploadImage}" allowCamera="true"
 							captureListener="#{configView.captureImage}" />
 					</div>
