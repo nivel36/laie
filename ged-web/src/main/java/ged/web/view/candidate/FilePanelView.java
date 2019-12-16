@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -21,7 +22,6 @@ import ged.ejb.candidate.Candidate;
 import ged.ejb.candidate.CandidateService;
 import ged.ejb.core.FileUploadService;
 import ged.ejb.core.file.ServerFile;
-import ged.web.core.util.Message;
 import ged.web.core.view.AbstractView;
 
 @Named
@@ -53,7 +53,7 @@ public class FilePanelView extends AbstractView {
 
 	private void checkLopdFile() {
 		if (!this.hasLopdFile()) {
-			Message.addWarning("candidate.warn.no_lopd_file", "candidate.warn.no_lopd_file");
+			this.addMessage(FacesMessage.SEVERITY_WARN, "candidate.warn.no_lopd_file", "candidate.warn.no_lopd_file");
 		}
 	}
 

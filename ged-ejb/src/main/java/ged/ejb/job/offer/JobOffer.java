@@ -76,6 +76,8 @@ public class JobOffer extends AbstractEntity implements Ownerable, Obfuscable {
 
 	@NotNull
 	private Integer places = 1;
+	
+	private boolean publish;
 
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "job_user", joinColumns = @JoinColumn(name = "job_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
@@ -188,6 +190,10 @@ public class JobOffer extends AbstractEntity implements Ownerable, Obfuscable {
 		return this.hasState(JobOfferState.OPENED);
 	}
 
+	public boolean isPublish() {
+		return publish;
+	}
+
 	public void setAddress(final Address address) {
 		this.address = address;
 	}
@@ -219,6 +225,10 @@ public class JobOffer extends AbstractEntity implements Ownerable, Obfuscable {
 
 	public void setPlaces(final Integer places) {
 		this.places = places;
+	}
+
+	public void setPublish(boolean publish) {
+		this.publish = publish;
 	}
 
 	public void setRecruiters(final List<User> users) {

@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -22,7 +23,6 @@ import ged.ejb.core.model.Page;
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
 import ged.web.core.IllegalPageStateException;
-import ged.web.core.util.Message;
 import ged.web.core.util.PageEnum;
 import ged.web.core.view.AbstractView;
 
@@ -52,7 +52,7 @@ public class ViewClientView extends AbstractView {
 	private void checkDeleted() {
 		if (this.client.isDeleted()) {
 			logger.warn("Client is deleted");
-			Message.addWarning("message.erased_entity", "message.erased_entity");
+			this.addMessage(FacesMessage.SEVERITY_WARN, "message.erased_entity", "message.erased_entity");
 		}
 	}
 

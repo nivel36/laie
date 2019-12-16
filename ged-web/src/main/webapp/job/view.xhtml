@@ -54,7 +54,10 @@
 								<cc:outputText label="#{i18n['job.state']}" value="#{viewJobView.jobOffer.address.region}" />
 							</div>
 							<div class="p-col-12">
-								<cc:outputLink label="#{i18n['job.description']}" value="#{i18n['job.view_description']}" outcome="#{Page.OPEN_JOB.getUrl()}" target="new">
+								<cc:outputLink label="#{i18n['job.preview']}" value="#{i18n['job.preview']}" outcome="#{Page.JOB_PREVIEW.getUrl()}" target="new">
+									<f:param name="id" value="#{viewJobView.jobOffer.uid}" />
+								</cc:outputLink>
+								<cc:outputLink label="#{i18n['job.description']}" value="#{applicationView.hostname}#{Page.OPEN_JOB.getUrl(viewJobView.jobOffer)}" outcome="#{Page.OPEN_JOB.getUrl()}" target="new">
 									<f:param name="id" value="#{viewJobView.jobOffer.uid}" />
 								</cc:outputLink>
 							</div>
@@ -65,7 +68,7 @@
 
 			<div class="p-col-12 p-xl-6">
 				<div class="card card-w-title">
-					<h1>Datos</h1>
+					<h1>#{i18n['job.data']}</h1>
 					<div class="p-grid">
 						<div class="p-col-12 p-sm-6">
 							<cc:outputLink label="#{i18n['job.owner']}" value="#{viewJobView.jobOffer.owner.fullName}" outcome="#{Page.USER.getUrl()}">

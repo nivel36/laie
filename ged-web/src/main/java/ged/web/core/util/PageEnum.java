@@ -33,6 +33,7 @@ public enum PageEnum {
 	JOB_ADD("/job/add"), //
 	JOB_EDIT("/job/edit", true), //
 	JOB_EDIT_STATE("/job/editState", true), //
+	JOB_PREVIEW("/job/preview"), //
 	JOB_SEARCH("/job/search"), //
 	JOB_SELECT("/job/select"), //
 	OPEN_JOB("/open/jobOffer"),

@@ -3,33 +3,6 @@
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence/orm
         http://xmlns.jcp.org/xml/ns/persistence/orm_2_1.xsd" version="2.1">
 
-	<named-query name="Bookmark.find">
-		<query><![CDATA[
-			SELECT b 
-			FROM Bookmark b 
-			WHERE b.user = :user 
-			AND b.entityClass = :entityClass 
-			AND b.entityId = :entityId
-		]]></query>
-	</named-query>
-
-	<named-query name="Bookmark.findAllByClassAndId">
-		<query><![CDATA[
-			SELECT b 
-			FROM Bookmark b 
-			WHERE b.entityClass = :entityClass 
-			AND b.entityId = :entityId
-		]]></query>
-	</named-query>
-
-	<named-query name="Bookmark.findAllByUser">
-		<query><![CDATA[
-			SELECT b 
-			FROM Bookmark b 
-			WHERE b.user = :user
-		]]></query>
-	</named-query>
-
 	<named-query name="Candidate.findAllDataById">
 		<query><![CDATA[
 			SELECT c 

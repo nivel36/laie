@@ -31,7 +31,7 @@
 				<div class="p-col-12 p-xl-6">
 
 					<div class="card card-w-title ui-fluid">
-						<h1>Datos de la oferta</h1>
+						<h1>#{i18n['job.data']}</h1>
 						<div class="p-grid">
 							<div class="p-col-12">
 								<g:input label="#{i18n['job.title']}" value="#{addJobView.jobOffer.title}" required="true" />
@@ -43,17 +43,13 @@
 									</p:column>
 								</cc:autocomplete>
 							</div>
+							<div class="p-col-12 p-sm-6"></div>
 							<div class="p-col-12 p-sm-6">
-								<cc:autocomplete id="owner" label="#{i18n['job.owner']}" value="#{addJobView.jobOffer.owner}" completeMethod="#{addJobView.queryOwner}" converter="userConverter">
-									<p:column styleClass="user-select image">
-										<cc:person value="#{var}" showDescription="false" />
-									</p:column>
-								</cc:autocomplete>
+								<g:input id="salary" label="#{i18n['job.salary']}" value="#{addJobView.jobOffer.salary}" type="money" />
 							</div>
 							<div class="p-col-12 p-sm-6">
 								<g:input id="places" label="#{i18n['job.places']}" value="#{addJobView.jobOffer.places}" type="number" min="0" />
 							</div>
-							<div class="p-col-12 p-sm-6"></div>
 							<div class="p-col-12 p-sm-6">
 								<g:input id="city" label="#{i18n['job.city']}" value="#{addJobView.jobOffer.address.city}" required="true" />
 							</div>
@@ -65,7 +61,7 @@
 				</div>
 				<div class="p-col-12 p-xl-6">
 					<div class="card card-w-title ui-fluid">
-						<h1>Datos de la oferta</h1>
+						<h1>#{i18n['job.other_data']}</h1>
 						<div class="p-grid">
 							<div class="p-col-12 p-sm-6">
 								<g:input id="dateOpened" label="#{i18n['job.date_opened']}" value="#{addJobView.jobOffer.dateOpened}" type="calendar" />
@@ -74,7 +70,11 @@
 								<g:input id="dateClosed" label="#{i18n['job.date_closed']}" value="#{addJobView.jobOffer.dateClosed}" type="calendar" />
 							</div>
 							<div class="p-col-12 p-sm-6">
-								<g:input id="salary" label="#{i18n['job.salary']}" value="#{addJobView.jobOffer.salary}" type="money" />
+								<cc:autocomplete id="owner" label="#{i18n['job.owner']}" value="#{addJobView.jobOffer.owner}" completeMethod="#{addJobView.queryOwner}" converter="userConverter">
+									<p:column styleClass="user-select image">
+										<cc:person value="#{var}" showDescription="false" />
+									</p:column>
+								</cc:autocomplete>
 							</div>
 							<div class="p-col-12">
 								<cc:inputUsers id="recruiters" label="#{i18n['job.recruiters']}" completeMethod="#{addJobView.queryRecruiter}" value="#{addJobView.recruiters}" />
@@ -84,8 +84,11 @@
 				</div>
 				<div class="p-col-12">
 					<div class="card card-w-title ui-fluid">
-						<h1>Datos de la oferta</h1>
+						<h1>#{i18n['job.description']}</h1>
 						<div class="p-grid">
+							<div class="p-col-12 p-sm-6">
+								<g:input id="publish" label="#{i18n['job.publish']}" value="#{addJobView.jobOffer.publish}" type="inputSwitch" />
+							</div>
 							<div class="p-col-12">
 								<g:input id="description" label="#{i18n['job.description']}" value="#{addJobView.jobOffer.description}" type="rich" />
 							</div>

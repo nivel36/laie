@@ -11,6 +11,7 @@ import java.util.Locale;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
+import javax.faces.application.NavigationHandler;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.security.enterprise.AuthenticationStatus;
@@ -22,7 +23,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ged.ejb.core.SessionUsers;
-import ged.web.core.util.Navigate;
 import ged.web.core.util.PageEnum;
 import ged.web.core.view.AbstractView;
 
@@ -74,7 +74,9 @@ public class LoginView extends AbstractView {
 	}
 
 	private void gotoIndex() {
-		Navigate.to(PageEnum.INDEX).doPost();
+		final NavigationHandler nav = this.facesContext.getApplication().getNavigationHandler();
+		nav.handleNavigation(this.facesContext, null, PageEnum.INDEX.getRedirectedUrl());
+		this.facesContext.renderResponse();
 	}
 
 	@PostConstruct

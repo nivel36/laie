@@ -11,6 +11,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.faces.application.Application;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +30,8 @@ public class ApplicationView extends AbstractView {
 	@WebConfigurationProperty(value = "ged.buildtime")
 	private String buildtime;
 
+	private String hostname;
+
 	private List<Locale> locales = new ArrayList<>();
 
 	@Inject
@@ -37,6 +40,10 @@ public class ApplicationView extends AbstractView {
 
 	public String getBuildtime() {
 		return this.buildtime;
+	}
+
+	public String getHostname() {
+		return hostname;
 	}
 
 	public List<Locale> getLocales() {
@@ -50,6 +57,15 @@ public class ApplicationView extends AbstractView {
 	@PostConstruct
 	public void init() {
 		this.loadLocales();
+		this.hostname = getHostnameUrl();
+	}
+
+	private String getHostnameUrl() {
+		final HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
+		final String url = request.getRequestURL().toString();
+		final String uri = request.getRequestURI();
+		final int hostnameLength = url.length() - uri.length();
+		return url.substring(0, hostnameLength);
 	}
 
 	private void loadLocales() {
