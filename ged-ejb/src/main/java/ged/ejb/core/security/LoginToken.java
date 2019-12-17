@@ -30,7 +30,8 @@ public class LoginToken extends AbstractEntity{
 	public enum TokenType {
 		REMEMBER_ME,
 		API,
-		RESET_PASSWORD
+		RESET_PASSWORD,
+		SIGNUP_GDPR
 	}
 
 	@Column(length = HASH_LENGTH, nullable = false, unique = true)
