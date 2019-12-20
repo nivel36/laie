@@ -1,6 +1,8 @@
 package ged.ejb.core.util;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.invoke.MethodHandles;
 import java.util.Properties;
 
@@ -10,6 +12,7 @@ import javax.enterprise.inject.spi.InjectionPoint;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.apache.fop.apps.FopFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,15 +26,25 @@ public class Resources {
 
 	private Properties properties;
 
+	private InputStream getConfigFile(String path) {
+		this.properties = new Properties();
+		final ClassLoader cl = Thread.currentThread().getContextClassLoader();
+		return cl.getResourceAsStream(path);
+	}
+
 	@PostConstruct
-	public void init() {
+	public void init() throws IOException {
 		try {
-			this.properties = new Properties();
-			final ClassLoader cl = Thread.currentThread().getContextClassLoader();
-			this.properties.load(cl.getResourceAsStream("/config.properties"));
-		} catch (final IOException e) {
-			logger.error("Property file not found", e);
+			this.properties.load(getConfigFile("/config.properties"));
+		} catch (IOException e) {
+			logger.error("Config properties file not found");
+			throw e;
 		}
+	}
+
+	@Produces
+	public FopFactory fopFactory() throws Exception {
+		return FopFactory.newInstance(new File("C:/Temp/fop.xconf"));
 	}
 
 	@Produces

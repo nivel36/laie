@@ -115,4 +115,6 @@ insert into EXPORTFIELD( id, version, exportId, fieldName, sortOrder, literalId,
 insert into EXPORTDEFINITION (id, version, exportId, exportFieldId, sortOrder) values (1300, 0, 1100, 1201, 1);
 insert into EXPORTDEFINITION (id, version, exportId, exportFieldId, sortOrder) values (1301, 0, 1100, 1202, 2);
 
+insert into DOCUMENT (id, version, language, name, title, text) values (1500, 0, 'es', 'gdpr', 'Regulación general de protección de datos', '<p>Inserta aquí el documento de GDPR de la empresa</p><p> </p><p> </p><p> </p><p align="center"><b>Firma y fecha</b></p>');
+
 ALTER SEQUENCE HIBERNATE_SEQUENCE RESTART with 2000;

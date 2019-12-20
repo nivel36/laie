@@ -39,8 +39,10 @@ public enum PageEnum {
 	OPEN_JOB("/open/jobOffer"),
 	LOGIN("/login"), //
 	MAINTENANCE("/maintenance"), //
+	MAINTENANCE_GDPR("/maintenance/gdpr"), //
 	MAINTENANCE_JOB_CANDIDATURE_STATES("/maintenance/jobCandidatureStates"), //
 	MAINTENANCE_JOB_OFFER_STATES("/maintenance/jobOfferStates"), //
+	MAINTENANCE_REPORTS("/maintenance/reports"), //
 	MEETING_ADD("/meeting/add"), //
 	MEETING_SEARCH("/meeting/search"), //
 	REPORT("/report/search"), //

@@ -126,6 +126,14 @@
 			WHERE c.candidate = :candidate
 		]]></query>
 	</named-query>
+	
+	<named-query name="Document.findByName">
+		<query><![CDATA[
+			SELECT d 
+			FROM Document d 
+			WHERE d.name = :name
+		]]></query>
+	</named-query>
 
 	<named-query name="I18n.findByKeyAndLocale">
 		<query><![CDATA[
