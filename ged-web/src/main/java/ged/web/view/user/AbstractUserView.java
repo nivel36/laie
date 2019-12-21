@@ -15,6 +15,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
 import javax.inject.Inject;
 
+import org.omnifaces.cdi.Param;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 import org.slf4j.Logger;
@@ -36,6 +37,9 @@ public abstract class AbstractUserView extends AbstractView {
 	@Inject
 	protected transient FileUploadService fileUploadService;
 
+	@SuppressWarnings("cdi-ambiguous-dependency")
+	@Inject
+	@Param(name = "id", required = true, converter = "userConverter")
 	protected User user;
 
 	@Inject
@@ -53,13 +57,14 @@ public abstract class AbstractUserView extends AbstractView {
 	}
 
 	public List<User> queryManager(final String query) {
-		logger.trace("Searching for manager with the string {}", query);
+		logger.trace("Search manager with the string {}", query);
 		final List<User> managers = this.userService.search(query, Page.TEN_RESULTS_PER_PAGE).getResultData();
 		managers.remove(this.user);
 		return managers;
 	}
 
 	public void setFileUploadService(final FileUploadService fileUploadService) {
+		Objects.requireNonNull(fileUploadService);
 		this.fileUploadService = fileUploadService;
 	}
 
@@ -68,6 +73,7 @@ public abstract class AbstractUserView extends AbstractView {
 	}
 
 	public void setUserService(final UserService userService) {
+		Objects.requireNonNull(userService);
 		this.userService = userService;
 	}
 
@@ -95,7 +101,7 @@ public abstract class AbstractUserView extends AbstractView {
 			return;
 		}
 		final String userEmail = (String) value;
-		logger.trace("Validating email {}", userEmail);
+		logger.trace("Validate user email {}", userEmail);
 		if (userEmail.equals(this.user.getEmail())) {
 			// If the old and the new email are equals, the user is not updating the email.
 			return;

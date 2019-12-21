@@ -48,6 +48,7 @@ public class ViewUserView extends AbstractView {
 
 	private List<User> team;
 
+	@SuppressWarnings("cdi-ambiguous-dependency")
 	@Inject
 	@Param(name = "id", required = true, converter = "userConverter")
 	private User user;
@@ -58,7 +59,7 @@ public class ViewUserView extends AbstractView {
 	public String editUser() {
 		logger.debug("Edit user action performed");
 		this.putValueToFlash("user", this.user);
-		return PageEnum.USER_EDIT.getUrl();
+		return PageEnum.USER_EDIT.getUrl(this.user);
 	}
 
 	public void export() throws IOException {

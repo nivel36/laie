@@ -1,5 +1,7 @@
 package ged.web.view.user;
 
+import java.util.Objects;
+
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -32,6 +34,7 @@ public class UserConverter implements Converter<User> {
 	}
 
 	public void setUserService(final UserService userService) {
+		Objects.requireNonNull(userService);
 		this.userService = userService;
 	}
 }

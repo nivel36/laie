@@ -19,8 +19,6 @@ public class EditUserView extends AbstractUserView {
 
 	private static final long serialVersionUID = 1L;
 
-	private static final String USER_KEY = "user";
-
 	private void checkEditPermission() {
 		if (!this.sessionUser.isAdmin()) {
 			logger.error("User {} hasn't got priviliges to edit user {}", this.sessionUser.get(), this.user);
@@ -37,7 +35,6 @@ public class EditUserView extends AbstractUserView {
 
 	@PostConstruct
 	public void init() {
-		this.user = this.getValueFromFlash(USER_KEY);
 		this.checkNonNullUser();
 		this.checkEditPermission();
 		logger.trace("User {} edit init", this.user.getEmail());
@@ -45,7 +42,6 @@ public class EditUserView extends AbstractUserView {
 
 	public String save() {
 		logger.debug("Save user action performed");
-		this.checkEditPermission();
 		this.user = this.userService.save(this.user);
 		return this.userUrl();
 	}
