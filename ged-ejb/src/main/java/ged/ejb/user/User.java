@@ -2,7 +2,6 @@ package ged.ejb.user;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -26,7 +25,6 @@ import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.SortableField;
 import org.hibernate.search.annotations.Store;
 
-import ged.ejb.core.bookmark.Bookmark;
 import ged.ejb.core.model.Obfuscable;
 import ged.ejb.core.security.LoginToken;
 import ged.ejb.person.Person;
@@ -37,9 +35,6 @@ import ged.ejb.user.role.Role;
 public class User extends Person implements Obfuscable {
 
 	private static final long serialVersionUID = 1L;
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user", orphanRemoval = true)
-	private Set<Bookmark> bookmarks = new HashSet<>();
 
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false, orphanRemoval = true)
 	@JoinColumn(name = "credentialId", unique = true, nullable = false, updatable = false)
@@ -80,15 +75,6 @@ public class User extends Person implements Obfuscable {
 	@NotNull
 	@Column(unique = true, nullable = false)
 	private String uid;
-
-	public void addBookmark(final Bookmark bookmark) {
-		Objects.requireNonNull(bookmark);
-		this.bookmarks.add(bookmark);
-	}
-
-	public Set<Bookmark> getBookmarks() {
-		return this.bookmarks;
-	}
 
 	public Credential getCredential() {
 		return this.credential;
@@ -145,15 +131,6 @@ public class User extends Person implements Obfuscable {
 
 	public void newCredential(final String password) {
 		this.credential = new Credential(password);
-	}
-
-	public void removeBookmark(final Bookmark bookmark) {
-		Objects.requireNonNull(bookmark);
-		this.bookmarks.remove(bookmark);
-	}
-
-	public void setBookmarks(final Set<Bookmark> bookmarks) {
-		this.bookmarks = bookmarks;
 	}
 
 	public void setCredential(final Credential credential) {

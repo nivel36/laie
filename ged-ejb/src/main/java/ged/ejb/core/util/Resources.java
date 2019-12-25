@@ -31,33 +31,6 @@ public class Resources {
 
 	private Properties properties;
 
-	private InputStream getFileAsStream(String path) {
-		final ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-		return classLoader.getResourceAsStream(path);
-	}
-
-	private URL getFileAsUrl(String path) {
-		final ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-		return classLoader.getResource(path);
-	}
-
-	@PostConstruct
-	public void init() {
-		this.properties = loadProperties();
-	}
-
-	private Properties loadProperties() {
-		final Properties p = new Properties();
-		final String fileName = "/config.properties";
-		try (final InputStream inputStream = getFileAsStream(fileName)) {
-			p.load(inputStream);
-		} catch (IOException e) {
-			logger.error("File {} not found", fileName);
-			throw new UncheckedIOException(e);
-		}
-		return p;
-	}
-
 	@Produces
 	public FopFactory fopFactory() {
 		try {
@@ -69,6 +42,33 @@ public class Resources {
 		} catch (URISyntaxException | SAXException | IOException e) {
 			throw new IllegalStateException(e);
 		}
+	}
+
+	private InputStream getFileAsStream(final String path) {
+		final ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+		return classLoader.getResourceAsStream(path);
+	}
+
+	private URL getFileAsUrl(final String path) {
+		final ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+		return classLoader.getResource(path);
+	}
+
+	@PostConstruct
+	public void init() {
+		this.properties = this.loadProperties();
+	}
+
+	private Properties loadProperties() {
+		final Properties p = new Properties();
+		final String fileName = "/config.properties";
+		try (final InputStream inputStream = this.getFileAsStream(fileName)) {
+			p.load(inputStream);
+		} catch (final IOException e) {
+			logger.error("File {} not found", fileName);
+			throw new UncheckedIOException(e);
+		}
+		return p;
 	}
 
 	@Produces
