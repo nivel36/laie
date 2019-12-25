@@ -1,7 +1,6 @@
 package ged.web.view.maintenance;
 
 import java.io.File;
-import java.io.IOException;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -26,30 +25,30 @@ public class GdprMaintenanceView extends AbstractView {
 	@Inject
 	private DocumentService documentService;
 
+	public void export() throws Exception {
+		final File file = this.documentService.export(this.document, "/xsltemplates/xhtml2fo.xsl");
+		Faces.sendFile(file, true);
+	}
+
 	public Document getDocument() {
-		return document;
+		return this.document;
 	}
 
 	@PostConstruct
 	public void init() {
-		this.document = documentService.findDocumentByName("gdpr");
-	}
-
-	public void setDocument(Document document) {
-		this.document = document;
-	}
-
-	public void setDocumentService(DocumentService documentService) {
-		this.documentService = documentService;
+		this.document = this.documentService.findDocumentByName("gdpr");
 	}
 
 	public void save() {
-		this.documentService.save(document);
+		this.documentService.save(this.document);
 		this.addMessage(FacesMessage.SEVERITY_INFO, "action.save_action_performed", "action.save_action_performed");
 	}
-	
-	public void export() throws Exception {
-		File file = this.documentService.export();
-		Faces.sendFile(file, true);
+
+	public void setDocument(final Document document) {
+		this.document = document;
+	}
+
+	public void setDocumentService(final DocumentService documentService) {
+		this.documentService = documentService;
 	}
 }
