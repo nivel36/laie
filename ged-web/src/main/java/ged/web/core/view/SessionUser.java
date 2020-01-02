@@ -11,7 +11,6 @@ import javax.enterprise.context.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +18,7 @@ import org.slf4j.LoggerFactory;
 import ged.ejb.core.model.Ownerable;
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
+import ged.web.core.LoginService;
 
 @Named
 @SessionScoped
@@ -31,6 +31,9 @@ public class SessionUser implements Serializable {
 	@Inject
 	private transient ExternalContext externalContext;
 	
+	@Inject
+	private transient LoginService loginService;
+
 	private Locale locale;
 
 	private List<User> team;
@@ -42,7 +45,7 @@ public class SessionUser implements Serializable {
 
 	public String exit() {
 		logger.debug("User {} logout", this.user);
-		this.invalidateSession();
+		loginService.logout(this.user.getEmail());
 		return "/login.xhtml?faces-redirect=true";
 	}
 
@@ -53,7 +56,7 @@ public class SessionUser implements Serializable {
 	public User getUser() {
 		return this.user;
 	}
-	
+
 	public Locale getLocale() {
 		return this.locale;
 	}
@@ -81,11 +84,6 @@ public class SessionUser implements Serializable {
 		final String email = this.externalContext.getRemoteUser();
 		logger.info("User {} has init his/her session", email);
 		this.loadUserData(email);
-	}
-
-	private void invalidateSession() {
-		final HttpSession session = (HttpSession) this.externalContext.getSession(true);
-		session.invalidate();
 	}
 
 	public boolean isActive() {

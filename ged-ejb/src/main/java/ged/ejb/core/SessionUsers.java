@@ -51,7 +51,11 @@ public class SessionUsers {
 		this.onlineUsers.put(username, values);
 	}
 
-	public void logout(final String username) {
-		this.onlineUsers.remove(username);
+	public void logout(final String username, final String sessionId) {
+		SessionValues sessionValues = this.onlineUsers.get(username);
+		sessionValues.sessionIds.remove(sessionId);
+		if (sessionValues.sessionIds.isEmpty()) {
+			onlineUsers.remove(username);
+		}
 	}
 }
