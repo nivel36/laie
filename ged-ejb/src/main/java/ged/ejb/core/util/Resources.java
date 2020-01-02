@@ -1,13 +1,9 @@
 package ged.ejb.core.util;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UncheckedIOException;
 import java.lang.invoke.MethodHandles;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.Properties;
 
 import javax.annotation.PostConstruct;
@@ -16,10 +12,8 @@ import javax.enterprise.inject.spi.InjectionPoint;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import org.apache.fop.apps.FopFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.xml.sax.SAXException;
 
 public class Resources {
 
@@ -31,27 +25,13 @@ public class Resources {
 
 	private Properties properties;
 
-	@Produces
-	public FopFactory fopFactory() {
-		try {
-			final String fileName = "/META-INF/fop.xml";
-			final URL urlFile = this.getFileAsUrl(fileName);
-			final URI uriFile = urlFile.toURI();
-			final File file = new File(uriFile);
-			return FopFactory.newInstance(file);
-		} catch (URISyntaxException | SAXException | IOException e) {
-			throw new IllegalStateException(e);
-		}
-	}
-
 	private InputStream getFileAsStream(final String path) {
-		final ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+		final ClassLoader classLoader = getClassLoader();
 		return classLoader.getResourceAsStream(path);
 	}
 
-	private URL getFileAsUrl(final String path) {
-		final ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-		return classLoader.getResource(path);
+	private ClassLoader getClassLoader() {
+		return Thread.currentThread().getContextClassLoader();
 	}
 
 	@PostConstruct

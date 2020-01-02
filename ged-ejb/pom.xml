@@ -41,8 +41,8 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.apache.xmlgraphics</groupId>
-			<artifactId>fop</artifactId>
+			<groupId>com.itextpdf</groupId>
+			<artifactId>html2pdf</artifactId>
 		</dependency>
 
 		<dependency>

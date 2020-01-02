@@ -26,7 +26,7 @@ public class GdprMaintenanceView extends AbstractView {
 	private DocumentService documentService;
 
 	public void export() throws Exception {
-		final File file = this.documentService.export(this.document, "/xsltemplates/xhtml2fo.xsl");
+		final File file = this.documentService.export(this.document);
 		Faces.sendFile(file, true);
 	}
 
