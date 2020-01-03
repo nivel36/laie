@@ -6,7 +6,7 @@ public enum PageEnum {
 
 	CANDIDATE("/candidate/view"), //
 	CANDIDATE_ADD("/candidate/add"), //
-	CANDIDATE_EDIT("/candidate/edit", true), //
+	CANDIDATE_EDIT("/candidate/edit"), //
 	CANDIDATE_SEARCH("/candidate/search"), //
 	CANDIDATE_SELECT("/candidate/select"), //
 	CHANGE_PASSWORD("/changePassword", true), //
@@ -48,7 +48,7 @@ public enum PageEnum {
 	REPORT("/report/search"), //
 	USER("/user/view"), //
 	USER_ADD("/user/add"), //
-	USER_EDIT("/user/edit", true), //
+	USER_EDIT("/user/edit"), //
 	USER_SEARCH("/user/search"), //
 	USER_SELECT("/user/select");
 

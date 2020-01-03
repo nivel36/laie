@@ -57,8 +57,7 @@ public class ViewUserView extends AbstractView {
 
 	public String editUser() {
 		logger.debug("Edit user action performed");
-		this.putValueToFlash("user", this.user);
-		return PageEnum.USER_EDIT.getUrl(this.user);
+		return PageEnum.USER_EDIT.getRedirectedUrl(this.user);
 	}
 
 	public void export() throws IOException {

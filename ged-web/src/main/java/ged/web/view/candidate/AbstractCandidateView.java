@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.omnifaces.cdi.Param;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.RateEvent;
 import org.primefaces.model.UploadedFile;
@@ -24,13 +25,15 @@ public abstract class AbstractCandidateView extends AbstractView {
 
 	private static final long serialVersionUID = 1L;
 
-	protected Candidate candidate;
-
 	@Inject
 	protected transient CandidateService candidateService;
 
 	@Inject
 	protected transient FileUploadService fileUploadService;
+	
+	@Inject
+	@Param(name = "id", required = true)
+	protected Candidate candidate;
 
 	protected List<Tag> tags;
 

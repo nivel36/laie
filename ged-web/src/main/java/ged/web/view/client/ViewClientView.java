@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.StringTokenizer;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -12,7 +11,6 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.omnifaces.cdi.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,21 +22,16 @@ import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
 import ged.web.core.IllegalPageStateException;
 import ged.web.core.util.PageEnum;
-import ged.web.core.view.AbstractView;
 
 @Named
 @ViewScoped
-public class ViewClientView extends AbstractView {
+public class ViewClientView extends AbstractClientView {
 
 	private static final String CLIENT_KEY = "client";
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	private static final long serialVersionUID = 1L;
-
-	@Inject
-	@Param(name = "id", required = true)
-	private Client client;
 
 	private List<Contact> contacts;
 
@@ -58,25 +51,11 @@ public class ViewClientView extends AbstractView {
 
 	public String editClient() {
 		logger.debug("Edit client action performed");
-		this.putValueToFlash(CLIENT_KEY, this.client);
-		return PageEnum.CLIENT_EDIT.getUrl();
+		return PageEnum.CLIENT_EDIT.getRedirectedUrl(client);
 	}
 
 	public void export() throws IOException {
 		logger.debug("Export client action performed");
-	}
-
-	public String getCapitalLetters() {
-		final StringTokenizer st = new StringTokenizer(this.client.getName(), " ");
-		String result = st.nextToken().substring(0, 1);
-		if (st.hasMoreElements()) {
-			result = result + st.nextToken().substring(0, 1);
-		}
-		return result;
-	}
-
-	public Client getClient() {
-		return this.client;
 	}
 
 	public List<Contact> getContacts() {

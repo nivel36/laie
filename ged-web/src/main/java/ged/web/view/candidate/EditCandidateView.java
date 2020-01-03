@@ -11,13 +11,9 @@ import javax.inject.Named;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ged.web.core.IllegalPageStateException;
-
 @Named
 @ViewScoped
 public class EditCandidateView extends AbstractCandidateView {
-
-	private static final String CANDIDATE_KEY = "candidate";
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
@@ -30,17 +26,8 @@ public class EditCandidateView extends AbstractCandidateView {
 		}
 	}
 
-	private void checkNonNullCandidate() {
-		if (this.candidate == null) {
-			logger.error("Trying to edit a candidate but candidate is null");
-			throw new IllegalPageStateException();
-		}
-	}
-
 	@PostConstruct
 	public void init() {
-		this.candidate = this.getValueFromFlash(CANDIDATE_KEY);
-		this.checkNonNullCandidate();
 		this.checkEditPermission();
 		logger.trace("Candidate {} edit init", this.candidate);
 		this.initTags();
@@ -64,5 +51,4 @@ public class EditCandidateView extends AbstractCandidateView {
 		this.candidate = this.candidateService.save(this.candidate);
 		return this.candidateUrl();
 	}
-
 }
