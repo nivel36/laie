@@ -1,11 +1,11 @@
 package ged.web.core;
 
-import static javax.security.enterprise.AuthenticationStatus.SEND_CONTINUE;
 import static javax.security.enterprise.authentication.mechanism.http.AuthenticationParameters.withParams;
 import static org.omnifaces.util.Faces.getRequest;
 import static org.omnifaces.util.Faces.getResponse;
 
 import java.lang.invoke.MethodHandles;
+import java.util.Objects;
 
 import javax.ejb.Stateless;
 import javax.faces.context.ExternalContext;
@@ -15,6 +15,8 @@ import javax.security.enterprise.AuthenticationStatus;
 import javax.security.enterprise.SecurityContext;
 import javax.security.enterprise.authentication.mechanism.http.AuthenticationParameters;
 import javax.security.enterprise.credential.UsernamePasswordCredential;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -30,7 +32,7 @@ public class LoginService {
 
 	@Inject
 	private transient SecurityContext securityContext;
-	
+
 	@Inject
 	private transient GedRememberMeIdentityStore gedRememberMeIdentityStore;
 
@@ -47,10 +49,10 @@ public class LoginService {
 		final UsernamePasswordCredential credential = new UsernamePasswordCredential(username, password);
 		final AuthenticationParameters parameters = withParams().credential(credential).newAuthentication(true);
 		final AuthenticationStatus authenticationStatus = this.authenticate(parameters);
-		if (!authenticationStatus.equals(AuthenticationStatus.SEND_FAILURE)) {
-			this.registerUserSession(username);
-		} else {
+		if (authenticationStatus == AuthenticationStatus.SEND_FAILURE) {
 			logger.error("Login error for username {}", username);
+		} else {
+			this.registerUserSession(username);
 		}
 		return authenticationStatus;
 	}
@@ -63,7 +65,7 @@ public class LoginService {
 
 	private AuthenticationStatus authenticate(final AuthenticationParameters parameters) {
 		final AuthenticationStatus status = this.securityContext.authenticate(getRequest(), getResponse(), parameters);
-		if (status == SEND_CONTINUE) {
+		if (status == AuthenticationStatus.SEND_CONTINUE) {
 			// Prevent JSF from rendering a response so authentication mechanism can
 			// continue.
 			this.facesContext.responseComplete();
@@ -72,10 +74,21 @@ public class LoginService {
 	}
 
 	public void logout(String username) {
-		final HttpSession session = (HttpSession) this.externalContext.getSession(true);
+		Objects.requireNonNull(username);
 		final String sessionId = this.externalContext.getSessionId(false);
 		sessionUsers.logout(username, sessionId);
-		gedRememberMeIdentityStore.removeLoginToken(sessionId);
+		final HttpServletRequest httpResuqest = (HttpServletRequest) this.externalContext.getRequest();
+		final Cookie[] cookies = httpResuqest.getCookies();
+		for (Cookie cookie : cookies) {
+			if (!cookie.getName().equals("JREMEMBERMEID")) {
+				continue;
+			}
+			final String tokenHash = cookie.getValue();
+			this.gedRememberMeIdentityStore.removeLoginToken(tokenHash);
+			cookie.setMaxAge(0);
+			break;
+		}
+		final HttpSession session = (HttpSession) this.externalContext.getSession(false);
 		session.invalidate();
 	}
 }

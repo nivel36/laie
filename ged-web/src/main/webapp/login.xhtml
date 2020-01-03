@@ -14,7 +14,7 @@
 
 <h:body styleClass="login-body">
 	<p:growl id="growl" globalOnly="true" />
-	<h:form>
+	<h:form id="loginForm">
 		<div class="card login-panel ui-fluid">
 			<div class="login-panel-content">
 				<div class="p-grid">
@@ -35,7 +35,7 @@
 						</h:panelGroup>
 					</div>
 					<div class="p-col-12 p-sm-6 p-md-6 rememberme-container">
-						<p:selectBooleanCheckbox />
+						<p:selectBooleanCheckbox id="rememberme" />
 						<label>#{i18n['login.rememberme']}</label>
 					</div>
 

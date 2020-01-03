@@ -32,7 +32,7 @@ public class GedRememberMeIdentityStore implements RememberMeIdentityStore {
 
 	@Inject
 	private UserService userService;
-
+	
 	@Override
 	public String generateLoginToken(final CallerPrincipal callerPrincipal, final Set<String> groups) {
 		Objects.requireNonNull(callerPrincipal);

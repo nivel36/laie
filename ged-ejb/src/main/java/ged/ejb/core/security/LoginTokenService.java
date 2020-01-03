@@ -26,7 +26,7 @@ public class LoginTokenService {
 	@Inject
 	private UserService userService;
 
-	public LoginToken findByTokenHash(final String tokenHash) {
+	public LoginToken findByTokenHash(final byte[] tokenHash) {
 		Objects.requireNonNull(tokenHash);
 		return this.loginTokenDao.findByTokenHash(tokenHash);
 	}
@@ -58,9 +58,11 @@ public class LoginTokenService {
 
 	public void remove(final String token) {
 		Objects.requireNonNull(token);
-		final String tokenHash = CriptoUtil.digestPassword(token).toString();
+		final byte[] tokenHash = CriptoUtil.digestPassword(token);
 		final LoginToken loginToken = this.findByTokenHash(tokenHash);
-		this.loginTokenDao.delete(loginToken);
+		if (loginToken != null) {
+			this.loginTokenDao.delete(loginToken);
+		}
 	}
 
 	public void removeExpiredTokens() {

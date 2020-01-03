@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -27,11 +28,15 @@ public class SessionUsers {
 	private final Map<String, SessionValues> onlineUsers = new HashMap<>();
 
 	public void action(final String username) {
-		this.onlineUsers.get(username).lastAction = LocalDateTime.now();
+		Objects.requireNonNull(username);
+		final SessionValues sessionValues = this.onlineUsers.get(username);
+		sessionValues.lastAction = LocalDateTime.now();
 	}
 
 	public LocalDateTime getLastAction(final String username) {
-		return this.onlineUsers.get(username).lastAction;
+		Objects.requireNonNull(username);
+		final SessionValues sessionValues = this.onlineUsers.get(username);
+		return sessionValues.lastAction;
 	}
 
 	public Set<String> getOnlineUsers() {

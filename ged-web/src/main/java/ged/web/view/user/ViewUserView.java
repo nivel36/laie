@@ -48,7 +48,6 @@ public class ViewUserView extends AbstractView {
 
 	private List<User> team;
 
-	@SuppressWarnings("cdi-ambiguous-dependency")
 	@Inject
 	@Param(name = "id", required = true, converter = "userConverter")
 	private User user;

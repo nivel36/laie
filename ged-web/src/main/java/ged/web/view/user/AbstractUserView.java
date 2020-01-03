@@ -37,7 +37,6 @@ public abstract class AbstractUserView extends AbstractView {
 	@Inject
 	protected transient FileUploadService fileUploadService;
 
-	@SuppressWarnings("cdi-ambiguous-dependency")
 	@Inject
 	@Param(name = "id", required = true, converter = "userConverter")
 	protected User user;

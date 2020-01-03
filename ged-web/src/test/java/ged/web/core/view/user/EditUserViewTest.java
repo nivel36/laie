@@ -48,41 +48,6 @@ public class EditUserViewTest {
 	}
 
 	@Nested
-	class Init {
-
-		@Test
-		public void updateUserShouldHavelEmail() {
-			final User mockUser = EditUserViewTest.this.mockUser();
-			when(EditUserViewTest.this.flash.containsKey("user")).thenReturn(true);
-			when(EditUserViewTest.this.flash.get("user")).thenReturn(mockUser);
-			when(EditUserViewTest.this.sessionUser.isAdmin()).thenReturn(true);
-			EditUserViewTest.this.userEditView.init();
-
-			assertEquals("abel@test.com", EditUserViewTest.this.userEditView.getUser().getEmail());
-		}
-	}
-
-	@Nested
-	class Save {
-
-		@Test
-		public void userShouldBeOk() {
-			final User user = EditUserViewTest.this.mockUser();
-			EditUserViewTest.this.userEditView.setUser(user);
-
-			final User updatedUser = EditUserViewTest.this.mockUser();
-
-			when(EditUserViewTest.this.sessionUser.isAdmin()).thenReturn(true);
-			when(EditUserViewTest.this.userService.save(user)).thenReturn(updatedUser);
-
-			EditUserViewTest.this.userEditView.save();
-
-			assertEquals("abel@test.com", updatedUser.getEmail());
-			assertEquals(1L, updatedUser.getId());
-		}
-	}
-
-	@Nested
 	class SearchManager {
 
 		@Test
