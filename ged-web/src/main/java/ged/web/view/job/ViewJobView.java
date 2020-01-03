@@ -13,7 +13,6 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.omnifaces.cdi.Param;
 import org.primefaces.event.SelectEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,16 +21,12 @@ import ged.ejb.candidate.Candidate;
 import ged.ejb.core.model.Page;
 import ged.ejb.job.candidature.JobCandidature;
 import ged.ejb.job.candidature.JobCandidatureService;
-import ged.ejb.job.offer.JobOffer;
 import ged.web.core.IllegalPageStateException;
 import ged.web.core.util.PageEnum;
-import ged.web.core.view.AbstractView;
 
 @Named
 @ViewScoped
-public class ViewJobView extends AbstractView {
-
-	private static final String JOB_OFFER_KEY = "jobOffer";
+public class ViewJobView extends AbstractJobView {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
@@ -44,20 +39,14 @@ public class ViewJobView extends AbstractView {
 	@Inject
 	private transient JobCandidatureService jobCandidatureService;
 
-	@Inject
-	@Param(name = "id", required = true)
-	private JobOffer jobOffer;
-
 	public String editJobOffer() {
 		logger.debug("Edit job offer action performed");
-		this.putValueToFlash(JOB_OFFER_KEY, this.jobOffer);
-		return PageEnum.JOB_EDIT.getUrl();
+		return PageEnum.JOB_EDIT.getRedirectedUrl(this.jobOffer);
 	}
 
 	public String editJobOfferState() {
 		logger.debug("Edit job offer state action performed");
-		this.putValueToFlash(JOB_OFFER_KEY, this.jobOffer);
-		return PageEnum.JOB_EDIT_STATE.getUrl();
+		return PageEnum.JOB_EDIT_STATE.getRedirectedUrl(this.jobOffer);
 	}
 
 	public void export() throws IOException {
@@ -70,10 +59,6 @@ public class ViewJobView extends AbstractView {
 
 	public List<JobCandidature> getJobCandidatures() {
 		return this.jobCandidatures;
-	}
-
-	public JobOffer getJobOffer() {
-		return this.jobOffer;
 	}
 
 	@PostConstruct
@@ -114,9 +99,5 @@ public class ViewJobView extends AbstractView {
 			parameters.put("jobCandiatesId", Arrays.asList(candidateIds));
 			this.openBigDialog(PageEnum.CANDIDATE_SELECT.getUrl(), parameters);
 		}
-	}
-
-	public void setJobOffer(final JobOffer jobOffer) {
-		this.jobOffer = jobOffer;
 	}
 }

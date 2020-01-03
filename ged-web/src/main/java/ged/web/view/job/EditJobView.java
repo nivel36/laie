@@ -43,7 +43,6 @@ public class EditJobView extends AbstractJobView {
 
 	@PostConstruct
 	public void init() {
-		this.jobOffer = this.getValueFromFlash("jobOffer");
 		this.checkNonNullJobOffer();
 		this.checkEditPermission();
 		if (this.jobOffer.getAddress() == null) {

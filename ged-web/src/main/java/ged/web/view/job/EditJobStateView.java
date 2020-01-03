@@ -8,6 +8,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.omnifaces.cdi.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,6 +29,8 @@ public class EditJobStateView extends AbstractView {
 
 	private static final long serialVersionUID = 1L;
 
+	@Inject
+	@Param(name = "id", required = true)
 	private JobOffer jobOffer;
 
 	@Inject
@@ -39,10 +42,10 @@ public class EditJobStateView extends AbstractView {
 
 	private JobOfferEvent buildEvent() {
 		final JobOfferEvent event = new JobOfferEvent();
-		event.setJobOffer(jobOffer);
+		event.setJobOffer(this.jobOffer);
 		event.setDate(LocalDateTime.now());
-		event.setNotes(notes);
-		event.setState(state);
+		event.setNotes(this.notes);
+		event.setState(this.state);
 		event.setUser(this.sessionUser.get());
 		return event;
 	}
@@ -62,7 +65,7 @@ public class EditJobStateView extends AbstractView {
 	}
 
 	public JobOffer getJobOffer() {
-		return jobOffer;
+		return this.jobOffer;
 	}
 
 	public String getNotes() {
@@ -75,7 +78,6 @@ public class EditJobStateView extends AbstractView {
 
 	@PostConstruct
 	public void init() {
-		this.jobOffer = this.getValueFromFlash("jobOffer");
 		this.checkNonNullJobOffer();
 		this.checkEditPermission();
 		if (this.jobOffer.getAddress() == null) {
@@ -90,7 +92,7 @@ public class EditJobStateView extends AbstractView {
 
 	public String save() {
 		logger.debug("Save job offer action performed");
-		final JobOfferEvent event = buildEvent();
+		final JobOfferEvent event = this.buildEvent();
 		this.jobOfferEventService.save(event);
 		return this.jobUrl();
 	}

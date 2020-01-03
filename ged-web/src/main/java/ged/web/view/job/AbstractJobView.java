@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.omnifaces.cdi.Param;
 import org.primefaces.event.SelectEvent;
 
 import ged.ejb.client.Client;
@@ -24,6 +25,8 @@ public abstract class AbstractJobView extends AbstractView {
 	@Inject
 	protected transient ClientService clientService;
 
+	@Inject
+	@Param(name = "id", required = true)
 	protected JobOffer jobOffer;
 
 	@Inject
