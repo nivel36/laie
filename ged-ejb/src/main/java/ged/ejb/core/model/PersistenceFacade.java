@@ -12,6 +12,7 @@ import javax.inject.Inject;
 import javax.persistence.CacheStoreMode;
 import javax.persistence.EntityManager;
 import javax.persistence.FlushModeType;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -148,12 +149,16 @@ public class PersistenceFacade {
 		query.setHint(CACHE_STORE_MODE, CacheStoreMode.REFRESH);
 		query.setFlushMode(flusModeType);
 		this.parametrize(parameters, query);
-		return query.getSingleResult();
+		try {
+			return query.getSingleResult();
+		} catch (NoResultException e) {
+			return null;
+		}
 	}
 
 	public <E> E findByQuery(final Class<E> entityClass, final String namedQuery,
 			final Map<String, Object> parameters) {
-		return findByQuery(entityClass, namedQuery, parameters, FlushModeType.AUTO);
+			return findByQuery(entityClass, namedQuery, parameters, FlushModeType.AUTO);
 	}
 
 	public <E> List<E> findByQuery(final Class<E> entityClass, final String namedQuery,
@@ -166,7 +171,11 @@ public class PersistenceFacade {
 		query.setHint(CACHE_STORE_MODE, CacheStoreMode.REFRESH);
 		this.parametrize(parameters, query);
 		this.paginate(page, query);
-		return query.getResultList();
+		try {
+			return query.getResultList();
+		} catch (NoResultException e) {
+			return new ArrayList<E>();
+		}
 	}
 
 	public Object findByQuery(final String namedQuery, final Map<String, Object> parameters) {

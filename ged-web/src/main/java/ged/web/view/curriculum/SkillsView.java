@@ -8,6 +8,8 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.omnifaces.cdi.Param;
+
 import ged.ejb.curriculum.Curriculum;
 import ged.ejb.curriculum.CurriculumService;
 import ged.ejb.curriculum.Skill;
@@ -18,10 +20,10 @@ import ged.web.core.view.AbstractView;
 @ViewScoped
 public class SkillsView extends AbstractView {
 
-	private static final String CURRICULUM_KEY = "curriculum";
-
 	private static final long serialVersionUID = 1L;
 
+	@Inject
+	@Param(name = "curriculumId", required = true)
 	private Curriculum curriculum;
 
 	@Inject
@@ -30,7 +32,7 @@ public class SkillsView extends AbstractView {
 	private List<Skill> skills;
 
 	private String curriculumUrl() {
-		return PageEnum.CURRICULUM.getRedirectedUrl(this.curriculum.getCandidate());
+		return navigator.getRedirectUrl(PageEnum.CURRICULUM, this.curriculum.getCandidate());
 	}
 
 	public Curriculum getCurriculum() {
@@ -43,7 +45,6 @@ public class SkillsView extends AbstractView {
 
 	@PostConstruct
 	public void init() {
-		this.curriculum = this.getValueFromFlash(CURRICULUM_KEY);
 		this.skills = new ArrayList<Skill>(this.curriculum.getSkills());
 	}
 

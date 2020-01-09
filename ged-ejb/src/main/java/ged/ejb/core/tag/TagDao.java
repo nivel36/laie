@@ -4,8 +4,6 @@ import static ged.ejb.core.util.Parameters.map;
 
 import java.util.Objects;
 
-import javax.persistence.NoResultException;
-
 import ged.ejb.core.model.AbstractDao;
 import ged.ejb.core.model.Repository;
 
@@ -14,11 +12,7 @@ public class TagDao extends AbstractDao<Tag> {
 
 	public Tag findByLabel(final String label) {
 		Objects.requireNonNull(label, "Label can't be null");
-		try {
-			return this.getPersistenceFacade().findByQuery(Tag.class, "Tag.findByLabel", map("label", label));
-		} catch (final NoResultException e) {
-			return null;
-		}
+		return this.getPersistenceFacade().findByQuery(Tag.class, "Tag.findByLabel", map("label", label));
 	}
 
 	@Override

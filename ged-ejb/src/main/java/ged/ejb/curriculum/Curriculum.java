@@ -15,9 +15,10 @@ import javax.validation.constraints.NotNull;
 
 import ged.ejb.candidate.Candidate;
 import ged.ejb.core.model.AbstractEntity;
+import ged.ejb.core.model.Obfuscable;
 
 @Entity
-public class Curriculum extends AbstractEntity {
+public class Curriculum extends AbstractEntity implements Obfuscable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -37,6 +38,8 @@ public class Curriculum extends AbstractEntity {
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "curriculum", orphanRemoval = true)
 	private Set<Skill> skills;
+	
+	private String uid;
 
 	public void addEducation(final Education education) {
 		education.setCurriculum(this);
@@ -105,6 +108,10 @@ public class Curriculum extends AbstractEntity {
 		return this.skills;
 	}
 
+	public String getUid() {
+		return uid;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(this.candidate);
@@ -148,6 +155,10 @@ public class Curriculum extends AbstractEntity {
 
 	public void setSkills(final Set<Skill> skills) {
 		this.skills = skills;
+	}
+
+	public void setUid(String uid) {
+		this.uid = uid;
 	}
 
 	@Override

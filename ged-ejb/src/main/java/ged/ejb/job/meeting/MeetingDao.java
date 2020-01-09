@@ -13,7 +13,7 @@ import ged.ejb.user.User;
 
 @Repository
 public class MeetingDao extends AbstractDao<Meeting> {
-	
+
 	public JobOffer findByUid(final String uid) {
 		Objects.requireNonNull(uid);
 		return this.findByQuery(JobOffer.class, "Meeting.findByUid", map("uid", uid));
@@ -24,7 +24,7 @@ public class MeetingDao extends AbstractDao<Meeting> {
 		Objects.requireNonNull(page);
 		return this.findByQuery(Meeting.class, "Meeting.findConductedByOwner", map("owner", owner), page);
 	}
-	
+
 	public List<Meeting> findMeeting(final JobOffer jobOffer, final Page page) {
 		Objects.requireNonNull(jobOffer);
 		Objects.requireNonNull(page);

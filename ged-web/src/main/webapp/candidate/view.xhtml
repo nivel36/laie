@@ -27,7 +27,8 @@
 			<p:menuButton icon="fa fa-plus">
 				<p:menuitem value="#{i18n['action.export']}" process="@this" action="#{viewCandidateView.export}" icon="fa fa-file-excel-o" />
 				<p:menuitem value="#{i18n['curriculum.curriculum']}" process="@this" outcome="#{Page.CURRICULUM.getUrl()}" icon="fa fa-pencil">
-					<f:param name="id" value="#{viewCandidateView.candidate.uid}" />
+					<f:param name="candidateId" value="#{viewCandidateView.candidate.uid}" />
+					<f:param name="id" value="#{viewCandidateView.candidate.curriculum.uid}" />
 				</p:menuitem>
 			</p:menuButton>
 		</h:form>

@@ -9,6 +9,8 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.omnifaces.cdi.Param;
+
 import ged.ejb.curriculum.Curriculum;
 import ged.ejb.curriculum.CurriculumService;
 import ged.ejb.curriculum.Education;
@@ -19,23 +21,23 @@ import ged.web.core.view.AbstractView;
 @ViewScoped
 public class EducationView extends AbstractView {
 
-	private static final String CURRICULUM_KEY = "curriculum";
-
-	private static final String EDUCATION_KEY = "education";
-
 	private static final long serialVersionUID = 1L;
 
+	@Inject
+	@Param(name = "curriculumId", required = true)
 	private Curriculum curriculum;
 
 	@Inject
 	private transient CurriculumService curriculumService;
 
+	@Inject
+	@Param(name = "id", required = false)
 	private Education education;
 
 	private List<Integer> years;
 
 	private String curriculumUrl() {
-		return PageEnum.CURRICULUM.getRedirectedUrl(this.education.getCurriculum().getCandidate());
+		return navigator.getRedirectUrl(PageEnum.CURRICULUM, this.education.getCurriculum().getCandidate());
 	}
 
 	public String delete() {
@@ -64,7 +66,6 @@ public class EducationView extends AbstractView {
 	}
 
 	private Curriculum initCurriculum() {
-		final Curriculum curriculum = this.getValueFromFlash(CURRICULUM_KEY);
 		if (this.isNewEducation()) {
 			curriculum.removeEducation(this.education);
 		}
@@ -72,7 +73,6 @@ public class EducationView extends AbstractView {
 	}
 
 	public Education initEducation() {
-		Education education = this.getValueFromFlash(EDUCATION_KEY);
 		if (education == null) {
 			education = new Education();
 			education.setStillStudying(false);

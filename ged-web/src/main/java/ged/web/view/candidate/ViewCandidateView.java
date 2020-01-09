@@ -59,7 +59,7 @@ public class ViewCandidateView extends AbstractView {
 
 	public String editCandidate() {
 		logger.debug("Edit candidate action performed");
-		return PageEnum.CANDIDATE_EDIT.getRedirectedUrl(candidate);
+		return navigator.getRedirectUrl(PageEnum.CANDIDATE_EDIT, candidate);
 	}
 
 	public void export() throws IOException {
@@ -107,7 +107,7 @@ public class ViewCandidateView extends AbstractView {
 
 	public String newMeeting() {
 		this.putValueToFlash("attendee", this.candidate);
-		return PageEnum.MEETING_ADD.getRedirectedUrl();
+		return navigator.getRedirectUrl(PageEnum.MEETING_ADD);
 	}
 
 	public void onCloseSelectJobOfferDialog(final SelectEvent event) {

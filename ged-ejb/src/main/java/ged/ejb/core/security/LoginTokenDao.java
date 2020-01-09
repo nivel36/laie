@@ -5,8 +5,6 @@ import static ged.ejb.core.util.Parameters.map;
 import java.util.List;
 import java.util.Objects;
 
-import javax.persistence.NoResultException;
-
 import ged.ejb.core.model.AbstractDao;
 import ged.ejb.core.model.Page;
 import ged.ejb.core.model.Repository;
@@ -16,12 +14,8 @@ public class LoginTokenDao extends AbstractDao<LoginToken> {
 
 	public LoginToken findByTokenHash(final byte[] tokenHash) {
 		Objects.requireNonNull(tokenHash);
-		try {
-			return this.getPersistenceFacade().findByQuery(LoginToken.class, "LoginToken.findByTokenHash",
-					map("tokenHash", tokenHash));
-		} catch (NoResultException e) {
-			return null;
-		}
+		return this.getPersistenceFacade().findByQuery(LoginToken.class, "LoginToken.findByTokenHash",
+				map("tokenHash", tokenHash));
 	}
 
 	public List<LoginToken> findExpiredTokens() {

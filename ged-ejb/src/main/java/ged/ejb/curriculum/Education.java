@@ -12,10 +12,11 @@ import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 
 import ged.ejb.core.model.AbstractEntity;
+import ged.ejb.core.model.Obfuscable;
 
 @Entity
 @Indexed
-public class Education extends AbstractEntity {
+public class Education extends AbstractEntity implements Obfuscable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -27,6 +28,10 @@ public class Education extends AbstractEntity {
 	@NotNull
 	@Column(length = 128, nullable = false)
 	private String degree;
+	
+	@NotNull
+	@Column(length = 128, nullable = false)
+	private String uid;
 
 	@Field
 	@Column(length = 512)
@@ -121,5 +126,14 @@ public class Education extends AbstractEntity {
 
 	public void setStillStudying(final boolean stillStudying) {
 		this.stillStudying = stillStudying;
+	}
+
+	@Override
+	public String getUid() {
+		return uid;
+	}
+	
+	public void setUid(final String uid) {
+		this.uid = uid;
 	}
 }

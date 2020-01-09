@@ -22,15 +22,6 @@
 		]]></query>
 	</named-query>
 
-	<named-query name="Candidate.existUid">
-		<query><![CDATA[
-			SELECT CASE WHEN (COUNT(c) > 0) THEN TRUE ELSE FALSE END
-			FROM Candidate c 
-			WHERE c.uid = :uid
-		]]></query>
-	</named-query>
-
-
 	<named-query name="Candidate.findByEmail">
 		<query><![CDATA[
 			SELECT c 
@@ -59,14 +50,6 @@
 	<named-query name="Client.findByUid">
 		<query><![CDATA[
 			SELECT c 
-			FROM Client c 
-			WHERE c.uid = :uid
-		]]></query>
-	</named-query>
-
-	<named-query name="Client.existUid">
-		<query><![CDATA[
-			SELECT CASE WHEN (COUNT(c) > 0) THEN TRUE ELSE FALSE END
 			FROM Client c 
 			WHERE c.uid = :uid
 		]]></query>
@@ -106,14 +89,6 @@
 		]]></query>
 	</named-query>
 
-	<named-query name="Contact.existUid">
-		<query><![CDATA[
-			SELECT CASE WHEN (COUNT(c) > 0) THEN TRUE ELSE FALSE END
-			FROM Contact c 
-			WHERE c.uid = :uid
-		]]></query>
-	</named-query>
-
 	<named-query name="Curriculum.findByCandidate">
 		<query><![CDATA[
 			SELECT c 
@@ -127,11 +102,32 @@
 		]]></query>
 	</named-query>
 	
+	<named-query name="Curriculum.findByUid">
+		<query><![CDATA[
+			SELECT c 
+			FROM Curriculum c 
+			LEFT JOIN FETCH c.candidate 
+			LEFT JOIN FETCH c.education
+			LEFT JOIN FETCH c.jobExperiences 
+			LEFT JOIN FETCH c.languages 
+			LEFT JOIN FETCH c.skills 
+			WHERE c.uid = :uid
+		]]></query>
+	</named-query>
+	
 	<named-query name="Document.findByName">
 		<query><![CDATA[
 			SELECT d 
 			FROM Document d 
 			WHERE d.name = :name
+		]]></query>
+	</named-query>
+	
+	<named-query name="Education.findByUid">
+		<query><![CDATA[
+			SELECT e 
+			FROM Education e 
+			WHERE e.uid = :uid
 		]]></query>
 	</named-query>
 
@@ -199,19 +195,19 @@
 		]]></query>
 	</named-query>
 	
-	<named-query name="JobCandidature.existUid">
-		<query><![CDATA[
-			SELECT CASE WHEN (COUNT(j) > 0) THEN TRUE ELSE FALSE END
-			FROM JobCandidature j 
-			WHERE j.uid = :uid
-		]]></query>
-	</named-query>
-
 	<named-query name="JobCandidatureState.findFirstJobCandidatureState">
 		<query><![CDATA[
 			SELECT j 
 			FROM JobCandidatureState j 
 			WHERE j.first = true
+		]]></query>
+	</named-query>
+	
+	<named-query name="JobExperience.findByUid">
+		<query><![CDATA[
+			SELECT j 
+			FROM JobExperience j 
+			WHERE j.uid = :uid
 		]]></query>
 	</named-query>
 	
@@ -237,14 +233,6 @@
 			SELECT j 
 			FROM JobOffer j 
 			WHERE j.client = :client
-		]]></query>
-	</named-query>
-
-	<named-query name="JobOffer.existUid">
-		<query><![CDATA[
-			SELECT CASE WHEN (COUNT(j) > 0) THEN TRUE ELSE FALSE END
-			FROM JobOffer j
-			WHERE j.uid = :uid
 		]]></query>
 	</named-query>
 
@@ -393,14 +381,6 @@
 		]]></query>
 	</named-query>
 	
-	<named-query name="User.existUid">
-		<query><![CDATA[
-			SELECT CASE WHEN (COUNT(u) > 0) THEN TRUE ELSE FALSE END
-			FROM User u 
-			WHERE u.uid = :uid
-		]]></query>
-	</named-query>
-
 	<named-query name="UserClosure.findAntecessorsUserClosuresById">
 		<query><![CDATA[
 			SELECT uc 

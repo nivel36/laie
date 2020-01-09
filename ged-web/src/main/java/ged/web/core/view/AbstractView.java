@@ -19,11 +19,15 @@ import javax.inject.Inject;
 
 import org.primefaces.PrimeFaces;
 
+import ged.web.core.util.Navigator;
 import ged.web.core.util.Translator;
 
 public abstract class AbstractView implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	
+	@Inject
+	protected transient Navigator navigator;
 
 	@Inject
 	protected transient ApplicationView applicationView;

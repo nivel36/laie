@@ -3,11 +3,9 @@ package ged.ejb.candidate;
 import static ged.ejb.core.util.Parameters.map;
 
 import java.lang.invoke.MethodHandles;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import javax.persistence.NoResultException;
 import javax.validation.ValidationException;
 
 import org.slf4j.Logger;
@@ -22,11 +20,6 @@ import ged.ejb.job.offer.JobOffer;
 public class CandidateDao extends AbstractDao<Candidate> {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
-	
-	protected boolean existUid(final String uid) {
-		Objects.requireNonNull(uid);
-		return this.findByQuery(Boolean.class, "Candidate.existUid", map("uid", uid));
-	}
 
 	public Candidate findByUid(final String uid) {
 		Objects.requireNonNull(uid);
@@ -58,11 +51,7 @@ public class CandidateDao extends AbstractDao<Candidate> {
 	public List<Candidate> findCandidates(final JobOffer jobOffer, final Page page) {
 		Objects.requireNonNull(jobOffer);
 		Objects.requireNonNull(page);
-		try {
-			return this.findByQuery(Candidate.class, "Candidate.findByJobOffer", map("jobOffer", jobOffer), page);
-		} catch (final NoResultException e) {
-			return new ArrayList<>();
-		}
+		return this.findByQuery(Candidate.class, "Candidate.findByJobOffer", map("jobOffer", jobOffer), page);
 	}
 
 	@Override
@@ -82,8 +71,6 @@ public class CandidateDao extends AbstractDao<Candidate> {
 			logger.warn("The email {} is in use", candidate.getEmail());
 			throw new ValidationException("Email duplicated");
 		}
-		final String base64Id = generateUid();
-		candidate.setUid(base64Id);
 	}
 
 	@Override

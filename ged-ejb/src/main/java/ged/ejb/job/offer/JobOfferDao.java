@@ -15,11 +15,6 @@ import ged.ejb.user.User;
 @Repository
 public class JobOfferDao extends AbstractDao<JobOffer> {
 
-	protected boolean existUid(final String uid) {
-		Objects.requireNonNull(uid);
-		return this.findByQuery(Boolean.class, "JobOffer.existUid", map("uid", uid));
-	}
-
 	public JobOffer findByUid(final String uid) {
 		Objects.requireNonNull(uid);
 		return this.findByQuery(JobOffer.class, "JobOffer.findByUid", map("uid", uid));
@@ -50,12 +45,6 @@ public class JobOfferDao extends AbstractDao<JobOffer> {
 	@Override
 	public Class<JobOffer> getType() {
 		return JobOffer.class;
-	}
-
-	@Override
-	protected void preInsert(final JobOffer jobOffer) {
-		final String base64Id = generateUid();
-		jobOffer.setUid(base64Id);
 	}
 
 	@Override

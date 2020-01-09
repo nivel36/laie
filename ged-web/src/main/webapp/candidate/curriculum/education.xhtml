@@ -15,7 +15,8 @@
 				<f:param name="id" value="#{educationView.curriculum.candidate.uid}" />
 			</p:menuitem>
 			<p:menuitem value="#{i18n['curriculum.curriculum']}" outcome="#{Page.CURRICULUM.getUrl()}">
-				<f:param name="id" value="#{educationView.curriculum.candidate.uid}" />
+				<f:param name="candidateId" value="#{educationView.curriculum.candidate.uid}" />
+				<f:param name="id" value="#{educationView.curriculum.uid}" />
 			</p:menuitem>
 			<p:menuitem value="#{i18n['education.education']}" disabled="true" />
 		</p:breadCrumb>
@@ -24,7 +25,8 @@
 	<ui:define name="buttons">
 		<h:form>
 			<p:button value="#{i18n['action.cancel']}" outcome="#{Page.CURRICULUM.getUrl()}" styleClass="secondary-button">
-				<f:param name="id" value="#{educationView.curriculum.candidate.uid}" />
+				<f:param name="candidateId" value="#{educationView.curriculum.candidate.uid}" />
+				<f:param name="id" value="#{educationView.curriculum.uid}" />
 			</p:button>
 			<p:commandButton value="#{i18n['action.delete']}" action="#{educationView.delete}" process="@this" rendered="#{not educationView.newEducation}" styleClass="danger-btn">
 				<p:confirm message="#{i18n['education.message.remove']}" icon="fa fa-exclamation-triangle" />

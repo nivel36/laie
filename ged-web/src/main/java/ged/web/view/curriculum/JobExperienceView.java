@@ -8,6 +8,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.validation.constraints.NotNull;
 
+import org.omnifaces.cdi.Param;
+
 import ged.ejb.curriculum.Curriculum;
 import ged.ejb.curriculum.CurriculumService;
 import ged.ejb.curriculum.JobExperience;
@@ -19,12 +21,10 @@ import ged.web.core.view.AbstractView;
 @ViewScoped
 public class JobExperienceView extends AbstractView {
 
-	private static final String CURRICULUM_KEY = "curriculum";
-
-	private static final String JOB_EXPERIENCE_KEY = "jobExperience";
-
 	private static final long serialVersionUID = 1L;
 
+	@Inject
+	@Param(name = "curriculumId", required = true)
 	private Curriculum curriculum;
 
 	@Inject
@@ -33,13 +33,15 @@ public class JobExperienceView extends AbstractView {
 	@NotNull
 	private YearMonthDto fromDate;
 
+	@Inject
+	@Param(name = "id", required = false)
 	private JobExperience jobExperience;
 
 	@NotNull
 	private YearMonthDto toDate;
 
 	private String curriculumUrl() {
-		return PageEnum.CURRICULUM.getRedirectedUrl(this.curriculum.getCandidate());
+		return navigator.getRedirectUrl(PageEnum.CURRICULUM, this.curriculum);
 	}
 
 	public String delete() {
@@ -66,11 +68,10 @@ public class JobExperienceView extends AbstractView {
 
 	@PostConstruct
 	public void init() {
-		this.curriculum = this.getValueFromFlash(CURRICULUM_KEY);
 		this.jobExperience = this.initJobExperience();
 		this.fromDate = this.initFromDate();
 		this.toDate = this.initToDate();
-		if (!this.isNewJobExperience()) {
+		if (!this.jobExperience.isNew()) {
 			this.curriculum.removeJobExperience(this.jobExperience);
 		}
 	}
@@ -85,7 +86,6 @@ public class JobExperienceView extends AbstractView {
 	}
 
 	public JobExperience initJobExperience() {
-		JobExperience jobExperience = this.getValueFromFlash(JOB_EXPERIENCE_KEY);
 		if (jobExperience == null) {
 			jobExperience = new JobExperience();
 			jobExperience.setStillWorking(false);
@@ -104,7 +104,7 @@ public class JobExperienceView extends AbstractView {
 	}
 
 	public boolean isNewJobExperience() {
-		return this.jobExperience.getId() == 0;
+		return jobExperience.isNew();
 	}
 
 	public String save() {

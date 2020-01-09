@@ -85,10 +85,10 @@ insert into CANDIDATE( id, uid, version, name, surname, phoneNumber, email, city
 insert into CANDIDATE( id, uid, version, name, surname, phoneNumber, email, city, country, door, number, region, storey, street, zipCode, jobProfile, ownerId) values ( 514, 'uid514', 0, 'Gonzalo', 'León Cuellar','685555280', 'gonzo73@gmail.com', 'Lugo', 'España','1','85', 'Lugo', '3', 'España', '02809', 'Programador', 500);
 insert into CANDIDATE( id, uid, version, name, surname, phoneNumber, email, city, country, door, number, region, storey, street, zipCode, jobProfile, ownerId) values ( 515, 'uid515', 0, 'Antonio', 'García Collado','685555281', 'agc2@gmail.com', 'Pontevedra', 'España','2','85', 'Pontevedra', 'Principal', 'Luguense', '01809', 'Programador Junior', 501);
 
-insert into CURRICULUM( id, version, candidateId) values (801, 0, 510);
+insert into CURRICULUM( id, uid, version, candidateId) values (801, 'uid801', 0, 510);
 
-insert into EDUCATION( id, version, curriculumId, degree, description,  startYear, school, stillStudying, endYear) values( 802, 0, 801, 'Licenciado en Matemáticas', 'Licenciado en Matemáticas por la universidad de Barcelona', 2000, 'Universitat de Barcelona', false, 2010);
-insert into EDUCATION( id, version, curriculumId, degree, description,  startYear, school, stillStudying, endYear) values( 803, 0, 801, 'Bachillerato', null,  1988, 'IES Thalassa', false, 1992);
+insert into EDUCATION( id, uid, version, curriculumId, degree, description,  startYear, school, stillStudying, endYear) values( 802, 'uid802', 0, 801, 'Licenciado en Matemáticas', 'Licenciado en Matemáticas por la universidad de Barcelona', 2000, 'Universitat de Barcelona', false, 2010);
+insert into EDUCATION( id, uid, version, curriculumId, degree, description,  startYear, school, stillStudying, endYear) values( 803, 'uid803', 0, 801, 'Bachillerato', null,  1988, 'IES Thalassa', false, 1992);
 
 insert into LANGUAGE( id, version, curriculumId, name, level ) values( 804, 0, 801, 'Castellano', 'NATIVE' );
 insert into LANGUAGE( id, version, curriculumId, name, level ) values( 805, 0, 801, 'Català', 'NATIVE' );
@@ -100,7 +100,7 @@ insert into SKILL( id, version, curriculumId, name ) values( 809, 0, 801, 'Hiber
 insert into SKILL( id, version, curriculumId, name ) values( 810, 0, 801, 'JSF');
 insert into SKILL( id, version, curriculumId, name ) values( 811, 0, 801, 'JEE');
 
-insert into JOBEXPERIENCE( id, version, curriculumId, companyName, description, startDate, jobPosition, stillWorking, endDate) values (812, 0, 801, 'Alten', 'Desarrollo de la herramienta para Gas Natural Fenosa con el que se dará cobertura a todas las actividades asociadas al proceso de expansión de la red y provisión de servicio en todos los ámbitos geográficos donde el grupo Gas Natural Fenosa (GNF) desarrolla sus negocios de distribución de gas natural y electricidad. Puesto de Arquitecto JEE desarrollando las siguientes tareas:', CAST('aced00057372000d6a6176612e74696d652e536572955d84ba1b2248b20c0000787077060c000007da0378' AS VARBINARY(255)), 'Arquitecto JAVA', true, null );
+insert into JOBEXPERIENCE( id, uid, version, curriculumId, companyName, description, startDate, jobPosition, stillWorking, endDate) values (812, 'uid812', 0, 801, 'Alten', 'Desarrollo de la herramienta para Gas Natural Fenosa con el que se dará cobertura a todas las actividades asociadas al proceso de expansión de la red y provisión de servicio en todos los ámbitos geográficos donde el grupo Gas Natural Fenosa (GNF) desarrolla sus negocios de distribución de gas natural y electricidad. Puesto de Arquitecto JEE desarrollando las siguientes tareas:', CAST('aced00057372000d6a6176612e74696d652e536572955d84ba1b2248b20c0000787077060c000007da0378' AS VARBINARY(255)), 'Arquitecto JAVA', true, null );
 
 insert into CLIENT( id, uid, version, name, cif, ownerId, phoneNumber, deleted) values (1000, 'uid1000', 0, 'F.C. Barcelona', 'A0000000', 500, '935551414', false);
 

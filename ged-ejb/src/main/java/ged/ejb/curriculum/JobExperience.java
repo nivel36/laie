@@ -16,10 +16,11 @@ import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 
 import ged.ejb.core.model.AbstractEntity;
+import ged.ejb.core.model.Obfuscable;
 
 @Entity
 @Indexed
-public class JobExperience extends AbstractEntity {
+public class JobExperience extends AbstractEntity implements Obfuscable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -36,7 +37,7 @@ public class JobExperience extends AbstractEntity {
 	@Field
 	@Lob
 	private String description;
-
+	
 	private YearMonth endDate;
 
 	@NotNull
@@ -47,6 +48,10 @@ public class JobExperience extends AbstractEntity {
 	private YearMonth startDate;
 
 	private boolean stillWorking;
+
+	@NotNull
+	@Column(length = 32, nullable = false)
+	private String uid;
 
 	@Override
 	public boolean equals(final Object obj) {
@@ -103,6 +108,10 @@ public class JobExperience extends AbstractEntity {
 		return this.startDate;
 	}
 
+	public String getUid() {
+		return uid;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(this.companyName, this.curriculum, this.description, this.startDate, this.jobPosition,
@@ -139,5 +148,9 @@ public class JobExperience extends AbstractEntity {
 
 	public void setStillWorking(final boolean stillWorking) {
 		this.stillWorking = stillWorking;
+	}
+
+	public void setUid(String uid) {
+		this.uid = uid;
 	}
 }

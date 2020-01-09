@@ -24,9 +24,21 @@ public class CurriculumService extends AbstractService<Curriculum> {
 	@Repository
 	private CurriculumDao curriculumDao;
 
+	@Inject
+	@Repository
+	private EducationDao educationDao;
+
+	@Inject
+	@Repository
+	private JobExperienceDao jobExperienceDao;
+
+	@Inject
+	@Repository
+	private SkillDao skillDao;
+
 	public List<SkillLevel> findAllSkillLevels() {
 		logger.debug("Find all the skill levels");
-		return this.curriculumDao.findAllSkillLevels();
+		return this.skillDao.findAllSkillLevels();
 	}
 
 	public Curriculum findByCandidate(final Candidate candidate) {
@@ -35,9 +47,28 @@ public class CurriculumService extends AbstractService<Curriculum> {
 		return this.curriculumDao.findByCandidate(candidate);
 	}
 
+	public Curriculum findByUid(final String uid) {
+		Objects.requireNonNull(uid);
+		logger.debug("Find curriculum by uid {}", uid);
+		return this.curriculumDao.findByUid(uid);
+	}
+
+	public Education findEducation(final String uid) {
+		Objects.requireNonNull(uid);
+		logger.debug("Find education by uid {}", uid);
+		return this.educationDao.findByUid(uid);
+	}
+
+	public JobExperience findJobExperience(final String uid) {
+		Objects.requireNonNull(uid);
+		logger.debug("Find jobExperience by uid {}", uid);
+		return this.jobExperienceDao.findByUid(uid);
+	}
+
 	public Skill findSkill(final String name) {
 		Objects.requireNonNull(name, "Skill name can't be null");
-		return this.curriculumDao.findSkill(name);
+		logger.debug("Find skill by name {}", name);
+		return this.skillDao.findSkill(name);
 	}
 
 	@Override
@@ -47,5 +78,13 @@ public class CurriculumService extends AbstractService<Curriculum> {
 
 	public void setCurriculumDao(final CurriculumDao curriculumDao) {
 		this.curriculumDao = curriculumDao;
+	}
+
+	public void setEducationDao(EducationDao educationDao) {
+		this.educationDao = educationDao;
+	}
+
+	public void setJobExperienceDao(JobExperienceDao jobExperienceDao) {
+		this.jobExperienceDao = jobExperienceDao;
 	}
 }

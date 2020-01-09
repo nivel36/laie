@@ -51,7 +51,7 @@ public class ViewClientView extends AbstractClientView {
 
 	public String editClient() {
 		logger.debug("Edit client action performed");
-		return PageEnum.CLIENT_EDIT.getRedirectedUrl(client);
+		return navigator.getRedirectUrl(PageEnum.CLIENT_EDIT, client);
 	}
 
 	public void export() throws IOException {

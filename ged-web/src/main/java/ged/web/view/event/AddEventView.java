@@ -25,7 +25,7 @@ public class AddEventView extends AbstractView {
 	private static final long serialVersionUID = 1L;
 
 	private JobCandidatureEvent jobCandidatureEvent;
-	
+
 	@Inject
 	@Param(name = "jobCandidatureId")
 	private JobCandidature jobCandidature;
@@ -45,7 +45,7 @@ public class AddEventView extends AbstractView {
 	public List<JobCandidature> getJobCandidatures() {
 		return this.jobCandidatures;
 	}
-	
+
 	public void updateState() {
 		this.jobCandidatureEvent.setState(this.jobCandidatureEvent.getJobCandidature().getState());
 	}
@@ -57,13 +57,13 @@ public class AddEventView extends AbstractView {
 		this.jobCandidatures = this.jobCandidatureService.findJobCandidatures(user, Page.ALL_RESULTS);
 	}
 
-	public JobCandidatureEvent initEvent(final User user){
+	public JobCandidatureEvent initEvent(final User user) {
 		return new JobCandidatureEvent(user, jobCandidature);
 	}
-	
+
 	public String save() {
 		this.jobCandidatureEventService.save(this.jobCandidatureEvent);
-		return PageEnum.JOB.getRedirectedUrl(jobCandidature.getJobOffer());
+		return navigator.getRedirectUrl(PageEnum.JOB, jobCandidature.getJobOffer());
 	}
 
 	public void setEvent(final JobCandidatureEvent jobCandidatureEvent) {

@@ -13,11 +13,6 @@ import ged.ejb.job.offer.JobOffer;
 @Repository
 public class ContactDao extends AbstractDao<Contact> {
 
-	protected boolean existUid(final String uid) {
-		Objects.requireNonNull(uid);
-		return this.findByQuery(Boolean.class, "Contact.existUid", map("uid", uid));
-	}
-
 	public JobOffer findByUid(final String uid) {
 		Objects.requireNonNull(uid);
 		return this.findByQuery(JobOffer.class, "Contact.findByUid", map("uid", uid));
@@ -37,12 +32,6 @@ public class ContactDao extends AbstractDao<Contact> {
 	@Override
 	protected Class<Contact> getType() {
 		return Contact.class;
-	}
-
-	@Override
-	protected void preInsert(final Contact contact) {
-		final String base64Id = generateUid();
-		contact.setUid(base64Id);
 	}
 
 	@Override

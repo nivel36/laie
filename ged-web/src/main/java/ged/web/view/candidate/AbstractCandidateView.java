@@ -30,7 +30,7 @@ public abstract class AbstractCandidateView extends AbstractView {
 
 	@Inject
 	protected transient FileUploadService fileUploadService;
-	
+
 	@Inject
 	@Param(name = "id", required = true)
 	protected Candidate candidate;
@@ -41,7 +41,7 @@ public abstract class AbstractCandidateView extends AbstractView {
 	protected transient TagService tagService;
 
 	protected String candidateUrl() {
-		return PageEnum.CANDIDATE.getRedirectedUrl(this.candidate);
+		return navigator.getRedirectUrl(PageEnum.CANDIDATE, this.candidate);
 	}
 
 	public Candidate getCandidate() {

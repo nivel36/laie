@@ -41,12 +41,12 @@ public class ViewJobView extends AbstractJobView {
 
 	public String editJobOffer() {
 		logger.debug("Edit job offer action performed");
-		return PageEnum.JOB_EDIT.getRedirectedUrl(this.jobOffer);
+		return navigator.getRedirectUrl(PageEnum.JOB_EDIT, this.jobOffer);
 	}
 
 	public String editJobOfferState() {
 		logger.debug("Edit job offer state action performed");
-		return PageEnum.JOB_EDIT_STATE.getRedirectedUrl(this.jobOffer);
+		return navigator.getRedirectUrl(PageEnum.JOB_EDIT_STATE, this.jobOffer);
 	}
 
 	public void export() throws IOException {

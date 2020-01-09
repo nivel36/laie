@@ -10,6 +10,8 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.omnifaces.cdi.Param;
+
 import ged.ejb.curriculum.Curriculum;
 import ged.ejb.curriculum.CurriculumService;
 import ged.ejb.curriculum.Language;
@@ -22,10 +24,10 @@ import ged.web.core.view.AbstractView;
 @ViewScoped
 public class LanguageView extends AbstractView {
 
-	private static final String CURRICULUM_KEY = "curriculum";
-
 	private static final long serialVersionUID = 1L;
 
+	@Inject
+	@Param(name = "curriculumId", required = true)
 	private Curriculum curriculum;
 
 	@Inject
@@ -40,7 +42,7 @@ public class LanguageView extends AbstractView {
 	private List<Language> languages;
 
 	private String curriculumUrl() {
-		return PageEnum.CURRICULUM.getRedirectedUrl(this.curriculum.getCandidate());
+		return navigator.getRedirectUrl(PageEnum.CURRICULUM, this.curriculum.getCandidate());
 	}
 
 	public void deleteLanguage(final Language language) {
@@ -69,7 +71,6 @@ public class LanguageView extends AbstractView {
 
 	@PostConstruct
 	public void init() {
-		this.curriculum = this.getValueFromFlash(CURRICULUM_KEY);
 		if (this.curriculum == null) {
 			throw new IllegalPageStateException("Null curriculum");
 		}

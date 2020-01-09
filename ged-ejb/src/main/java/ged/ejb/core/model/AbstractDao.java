@@ -10,6 +10,10 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import javax.inject.Inject;
 import javax.persistence.FlushModeType;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 import ged.ejb.core.model.search.SearchFacets;
 import ged.ejb.core.model.search.SearchResult;
@@ -27,7 +31,12 @@ public abstract class AbstractDao<T extends AbstractEntity> {
 	}
 
 	protected boolean existUid(final String uidCandidate) {
-		return false;
+		final CriteriaBuilder cb = this.getPersistenceFacade().getEm().getCriteriaBuilder();
+		final CriteriaQuery<Long> q = cb.createQuery(Long.class);
+		final Root<T> c = q.from(this.getType());
+		final Predicate predicate = cb.equal(c.get("uid"), uidCandidate);
+		q.select(cb.count(c)).where(predicate);
+		return this.getPersistenceFacade().getEm().createQuery(q).getSingleResult() > 0;
 	}
 
 	public T find(final long id) {
@@ -103,9 +112,18 @@ public abstract class AbstractDao<T extends AbstractEntity> {
 
 	protected T insert(final T entity) {
 		this.preInsert(entity);
+		setUid(entity);
 		this.persistenceFacade.insert(entity);
 		this.postInsert(entity);
 		return entity;
+	}
+
+	private void setUid(final T entity) {
+		if (Obfuscable.class.isAssignableFrom(entity.getClass())) {
+			Obfuscable o = (Obfuscable) entity;
+			final String base64Id = generateUid();
+			o.setUid(base64Id);
+		}
 	}
 
 	protected void postInsert(final T entity) {

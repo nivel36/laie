@@ -51,8 +51,6 @@ public class Candidate extends Person implements Ownerable, Obfuscable {
 	@OneToOne(fetch = FetchType.EAGER, mappedBy = "candidate")
 	private Curriculum curriculum;
 	
-	
-
 	@Min(0)
 	private Integer expectedSalary;
 

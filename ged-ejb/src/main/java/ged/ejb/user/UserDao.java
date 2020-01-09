@@ -3,11 +3,8 @@ package ged.ejb.user;
 import static ged.ejb.core.util.Parameters.map;
 
 import java.lang.invoke.MethodHandles;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
-import javax.persistence.NoResultException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,12 +31,6 @@ public class UserDao extends AbstractDao<User> {
 		}
 	}
 
-	@Override
-	protected boolean existUid(final String uid) {
-		Objects.requireNonNull(uid);
-		return this.findByQuery(Boolean.class, "User.existUid", map("uid", uid));
-	}
-
 	private List<UserClosure> findAntecessorsUserClosures(final User user) {
 		return this.findByQuery(UserClosure.class, "UserClosure.findAntecessorsUserClosuresById", map(ID, user.getId()),
 				Page.ALL_RESULTS);
@@ -52,43 +43,24 @@ public class UserDao extends AbstractDao<User> {
 
 	public List<User> findSubordinateUsers(final User user) {
 		Objects.requireNonNull(user);
-		try {
-			return this.findByQuery(User.class, "User.findSubordinateUsers", map(ID, user.getId()), Page.ALL_RESULTS);
-		} catch (final NoResultException e) {
-			logger.trace("No subordinate users for user {} found", user.getEmail(), e);
-			return new ArrayList<>();
-		}
+		return this.findByQuery(User.class, "User.findSubordinateUsers", map(ID, user.getId()), Page.ALL_RESULTS);
 	}
 
 	public User findUserAndCredential(final String email) {
 		Objects.requireNonNull(email);
-		try {
-			return this.findByQuery(User.class, "User.findUserAndCredential", map(EMAIL, email));
-		} catch (final NoResultException exception) {
-			logger.trace("No users for email {} found", email);
-			return null;
-		}
+		return this.findByQuery(User.class, "User.findUserAndCredential", map(EMAIL, email));
 	}
 
 	public User findUserByEmail(final String email) {
 		Objects.requireNonNull(email);
-		try {
-			return this.findByQuery(User.class, "User.findByEmail", map(EMAIL, email));
-		} catch (final NoResultException e) {
-			logger.trace("No user for email {} found", email);
-			return null;
-		}
+		return this.findByQuery(User.class, "User.findByEmail", map(EMAIL, email));
 	}
 
 	public User findUserByTokenHashAndType(final byte[] tokenHash, final TokenType type) {
 		Objects.requireNonNull(tokenHash);
 		Objects.requireNonNull(type);
-		try {
-			return this.getPersistenceFacade().findByQuery(User.class, "User.findByTokenHashAndType",
-					map("tokenHash", tokenHash).and("type", type));
-		} catch (NoResultException e) {
-			return null;
-		}
+		return this.getPersistenceFacade().findByQuery(User.class, "User.findByTokenHashAndType",
+				map("tokenHash", tokenHash).and("type", type));
 	}
 
 	@Override
@@ -138,8 +110,6 @@ public class UserDao extends AbstractDao<User> {
 
 	@Override
 	protected void postInsert(final User user) {
-		final String base64Id = this.generateUid();
-		user.setUid(base64Id);
 		if (user.getManager() != null) {
 			this.insertUserClosures(user);
 		}
