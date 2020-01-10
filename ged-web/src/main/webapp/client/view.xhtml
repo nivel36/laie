@@ -68,16 +68,18 @@
 										<h:outputText value="#{contact.position}" />
 									</p:column>
 									<p:column>
-										<p:commandButton icon="fa fa-search" styleClass="success-btn" />
-										<p:commandButton icon="fa fa-pencil" />
+										<p:button icon="fa fa-pencil" outcome="#{Page.CONTACT_EDIT.getUrl()}">
+											<f:param name="id" value="#{contact.uid}" />
+										</p:button>
 										<p:commandButton icon="fa fa-trash" styleClass="danger-btn" />
 									</p:column>
 								</p:dataTable>
 							</div>
 							<div class="p-col-12">
 								<h:panelGroup id="children" styleClass="buttons">
-									<p:commandButton value="#{i18n['contact.new_contact']}" actionListener="#{viewClientView.newContact}" action="#{Page.CONTACT_ADD.getRedirectedUrl()}" process="@this"
-										styleClass="success-btn" />
+									<p:button value="#{i18n['contact.new_contact']}" outcome="#{Page.CONTACT_ADD.getUrl()}" process="@this"	styleClass="success-btn" >
+										<f:param name="clientId" value="#{viewClientView.client.uid}" />
+									</p:button>
 								</h:panelGroup>
 							</div>
 						</div>
@@ -88,8 +90,9 @@
 			<div class="p-col-12 p-xl-8">
 				<cc:jobOffers id="jobOffers" value="#{viewClientView.jobOffers}" rows="5">
 					<h:form id="jobOffersForm">
-						<p:commandButton value="#{i18n['job.new_job_offer']}" actionListener="#{viewClientView.newJobOffer}" action="#{Page.JOB_ADD.getUrl()}" process="@this"
-							styleClass="success-btn" />
+						<p:button value="#{i18n['job.new_job_offer']}" outcome="#{Page.JOB_ADD.getUrl()}" process="@this" styleClass="success-btn" >
+							<f:param name="clientId" value="#{viewClientView.client.uid}" />
+						</p:button>
 					</h:form>
 				</cc:jobOffers>
 			</div>

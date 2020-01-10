@@ -5,11 +5,14 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.omnifaces.cdi.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import ged.ejb.client.Client;
 import ged.ejb.core.model.Address;
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.user.User;
@@ -21,11 +24,19 @@ public class AddJobView extends AbstractJobView {
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	private static final long serialVersionUID = 1L;
+	
+	@Inject
+	@Param(name="clientId", required=false)
+	private Client client;
+
+	public void setClient(Client client) {
+		this.client = client;
+	}
 
 	private JobOffer buildNewJobOffer() {
 		final JobOffer newJobOffer = new JobOffer();
 		newJobOffer.setOwner(this.sessionUser.get());
-		newJobOffer.setClient(this.getValueFromFlash("client"));
+		newJobOffer.setClient(this.client);
 		newJobOffer.setAddress(new Address());
 		return newJobOffer;
 	}

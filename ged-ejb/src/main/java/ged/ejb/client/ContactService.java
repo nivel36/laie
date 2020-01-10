@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
 import ged.ejb.core.AbstractService;
 import ged.ejb.core.model.AbstractDao;
 import ged.ejb.core.model.Repository;
-import ged.ejb.job.offer.JobOffer;
 
 @Stateless
 public class ContactService extends AbstractService<Contact> {
@@ -44,7 +43,7 @@ public class ContactService extends AbstractService<Contact> {
 		this.contactDao = contactDao;
 	}
 	
-	public JobOffer findByUid(final String uid) {
+	public Contact findByUid(final String uid) {
 		Objects.requireNonNull(uid);
 		return this.contactDao.findByUid(uid);
 	}

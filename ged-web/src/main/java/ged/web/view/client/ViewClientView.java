@@ -27,8 +27,6 @@ import ged.web.core.util.PageEnum;
 @ViewScoped
 public class ViewClientView extends AbstractClientView {
 
-	private static final String CLIENT_KEY = "client";
-
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	private static final long serialVersionUID = 1L;
@@ -83,16 +81,6 @@ public class ViewClientView extends AbstractClientView {
 
 	public boolean isEditable() {
 		return this.editable;
-	}
-
-	public void newContact() {
-		logger.debug("New contact action performed");
-		this.putValueToFlash(CLIENT_KEY, this.client);
-	}
-
-	public void newJobOffer() {
-		logger.debug("New job offer action performed");
-		this.putValueToFlash(CLIENT_KEY, this.client);
 	}
 
 	public void setClient(final Client client) {

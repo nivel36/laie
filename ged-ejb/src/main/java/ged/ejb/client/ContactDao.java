@@ -8,14 +8,13 @@ import java.util.Objects;
 import ged.ejb.core.model.AbstractDao;
 import ged.ejb.core.model.Page;
 import ged.ejb.core.model.Repository;
-import ged.ejb.job.offer.JobOffer;
 
 @Repository
 public class ContactDao extends AbstractDao<Contact> {
 
-	public JobOffer findByUid(final String uid) {
+	public Contact findByUid(final String uid) {
 		Objects.requireNonNull(uid);
-		return this.findByQuery(JobOffer.class, "Contact.findByUid", map("uid", uid));
+		return this.findByQuery(Contact.class, "Contact.findByUid", map("uid", uid));
 	}
 	
 	public Contact findContactByEmail(final String email) {
