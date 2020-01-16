@@ -20,11 +20,11 @@ a {
 
 .layout-main-topbar {
 	position: fixed;
-	top: 45px;
+	top: 46px;
 	height: 45px;
 	right: 0px;
 	left: 208px;
-	z-index: 10;
+	z-index: 999;
 	display: flex;
 	border: 1px solid #d8d8dc;
 	background-color: #ffffff;

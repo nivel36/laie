@@ -2,22 +2,16 @@ package ged.web.view.job;
 
 import java.io.IOException;
 import java.lang.invoke.MethodHandles;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.primefaces.event.SelectEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ged.ejb.candidate.Candidate;
 import ged.ejb.core.model.Page;
 import ged.ejb.job.candidature.JobCandidature;
 import ged.ejb.job.candidature.JobCandidatureService;
@@ -53,10 +47,6 @@ public class ViewJobView extends AbstractJobView {
 		logger.debug("Export job action performed");
 	}
 
-	private String getCandidateIdAsString(final JobCandidature jobCandidature) {
-		return String.valueOf(jobCandidature.getCandidate().getId());
-	}
-
 	public List<JobCandidature> getJobCandidatures() {
 		return this.jobCandidatures;
 	}
@@ -73,31 +63,5 @@ public class ViewJobView extends AbstractJobView {
 
 	public boolean isEditable() {
 		return this.editable;
-	}
-
-	public void onCloseSelectCandidateDialog(final SelectEvent event) {
-		final Object eventObject = event.getObject();
-		if (eventObject == null) {
-			return;
-		}
-		@SuppressWarnings("unchecked")
-		final List<Candidate> selectedCandidates = (List<Candidate>) eventObject;
-		final List<JobCandidature> newJobCandidatures = this.jobCandidatureService.addJobCandidatures(this.jobOffer,
-				selectedCandidates);
-		this.jobCandidatures.addAll(newJobCandidatures);
-	}
-
-	public void selectCandidates() {
-		logger.debug("Select candidates action performed");
-
-		if (this.jobCandidatures.isEmpty()) {
-			this.openBigDialog(PageEnum.CANDIDATE_SELECT.getUrl());
-		} else {
-			final String candidateIds = this.jobCandidatures.stream().map(this::getCandidateIdAsString)
-					.collect(Collectors.joining("|"));
-			final Map<String, List<String>> parameters = new HashMap<>();
-			parameters.put("jobCandiatesId", Arrays.asList(candidateIds));
-			this.openBigDialog(PageEnum.CANDIDATE_SELECT.getUrl(), parameters);
-		}
 	}
 }

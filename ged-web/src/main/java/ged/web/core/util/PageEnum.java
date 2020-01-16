@@ -34,6 +34,7 @@ public enum PageEnum {
 	JOB_PREVIEW("/job/preview"), //
 	JOB_SEARCH("/job/search"), //
 	JOB_SELECT("/job/select"), //
+	JOB_SELECT_CANDIDATES("/job/selectCandidates"), //
 	OPEN_JOB("/open/jobOffer"), //
 	LOGIN("/login"), //
 	MAINTENANCE("/maintenance"), //

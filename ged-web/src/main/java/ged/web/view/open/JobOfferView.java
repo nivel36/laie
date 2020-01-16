@@ -34,7 +34,10 @@ public class JobOfferView implements Serializable {
 	@PostConstruct
 	public void init() {
 		if (this.jobOffer == null) {
-			throw new IllegalPageStateException();
+			throw new IllegalPageStateException("Job offer not found");
+		}
+		if (!this.jobOffer.isPublished()) {
+			throw new IllegalPageStateException("Trying to access to a non published job offer");
 		}
 		logger.trace("JobOffer {} init", this.jobOffer);
 	}

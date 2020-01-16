@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://ged.org/ui" xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui"
+	xmlns:p="http://primefaces.org/ui" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/WEB-INF/templates/template.xhtml">
+
+	<ui:define name="title">
+		#{i18n['job.new_job_offer']}
+	</ui:define>
+
+	<ui:param name="selectedMenu" value="offers" />
+
+	<ui:define name="breadcrumb">
+		<p:breadCrumb>
+			<p:menuitem value="#{i18n['menu.index']}" outcome="#{Page.INDEX.getUrl()}" />
+			<p:menuitem value="#{i18n['job.job_offers']}" outcome="#{Page.JOB_SEARCH.getUrl()}" />
+			<p:menuitem value="#{selectCandidatesView.jobOffer}" outcome="#{Page.JOB.getUrl()}">
+				<f:param name="id" value="#{selectCandidatesView.jobOffer.uid}" />
+			</p:menuitem>
+			<p:menuitem value="#{i18n['candidate.select_candidates']}" disabled="true" />
+		</p:breadCrumb>
+	</ui:define>
+
+	<ui:define name="buttons">
+		<h:form>
+			<p:button value="#{i18n['action.cancel']}" outcome="#{Page.JOB.getUrl()}" styleClass="secondary-button">
+				<f:param name="id" value="#{selectCandidatesView.jobOffer.uid}" />
+			</p:button>
+			<p:commandButton value="#{i18n['action.select']}" onclick="select()" styleClass="success-btn" />
+		</h:form>
+	</ui:define>
+
+	<ui:define name="content">
+		<h:form id="jobOfferForm">
+			<p:remoteCommand name="select" process="@form" update="@form growl" action="#{selectCandidatesView.select}" />
+			<div class="p-grid">
+				<div class="p-col-12">
+					<div class="card card-w-title ui-fluid">
+						<h1>#{i18n['job.data']}</h1>
+						<p:dataTable var="candidate" id="candidates" value="#{selectCandidatesView.candidates}" emptyMessage="#{i18n['candidate.no_candidates_found']}"
+							reflow="true" paginator="true" paginatorPosition="bottom" selection="#{selectCandidatesView.selectedCandidates}"
+							disabledSelection="#{selectCandidatesView.isAlredySelected(candidate.id)}" rows="#{sessionUser.rowsPerPage}" sortBy="#{candidate.name}"
+							sortOrder="descending" lazy="true">
+
+							<p:column selectionMode="multiple" style="width:16px;text-align:center" />
+
+							<p:column>
+								<cc:avatar value="#{candidate.imageFileName}" styleClass="small" />
+							</p:column>
+
+							<p:column headerText="#{i18n['candidate.name']}" sortBy="#{candidate.name}">
+								<h:outputText value="#{candidate.fullName}" />
+							</p:column>
+
+							<p:column headerText="#{i18n['candidate.jobProfile']}" sortBy="#{candidate.jobProfile}">
+								<h:outputText value="#{candidate.jobProfile}" />
+							</p:column>
+
+							<p:column headerText="#{i18n['candidate.email']}">
+								<h:outputText value="#{candidate.email}" />
+							</p:column>
+
+							<p:column headerText="#{i18n['candidate.phone_number']}">
+								<h:outputText value="#{candidate.phoneNumber}" />
+							</p:column>
+
+							<p:column headerText="#{i18n['candidate.rating']}" sortBy="#{candidate.rating}">
+								<p:rating value="#{candidate.rating}" cancel="false" readonly="true" />
+							</p:column>
+						</p:dataTable>
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

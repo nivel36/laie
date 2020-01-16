@@ -28,6 +28,7 @@ import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.SortableField;
 import org.hibernate.search.annotations.Store;
 
+import ged.ejb.candidate.Candidate;
 import ged.ejb.client.Client;
 import ged.ejb.core.model.AbstractEntity;
 import ged.ejb.core.model.Address;
@@ -76,8 +77,8 @@ public class JobOffer extends AbstractEntity implements Ownerable, Obfuscable {
 
 	@NotNull
 	private Integer places = 1;
-	
-	private boolean publish;
+
+	private boolean published;
 
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "job_user", joinColumns = @JoinColumn(name = "job_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
@@ -169,8 +170,22 @@ public class JobOffer extends AbstractEntity implements Ownerable, Obfuscable {
 		return this.title;
 	}
 
+	@Override
 	public String getUid() {
 		return uid;
+	}
+
+	public boolean hasCandidatureOf(Candidate candidate) {
+		Objects.requireNonNull(candidate);
+		if (this.jobCandidatures.isEmpty()) {
+			return false;
+		}
+		for (final JobCandidature jobCandidature : this.jobCandidatures) {
+			if (jobCandidature.getCandidate().equals(candidate)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	@Override
@@ -190,8 +205,8 @@ public class JobOffer extends AbstractEntity implements Ownerable, Obfuscable {
 		return this.hasState(JobOfferState.OPENED);
 	}
 
-	public boolean isPublish() {
-		return publish;
+	public boolean isPublished() {
+		return published;
 	}
 
 	public void setAddress(final Address address) {
@@ -227,8 +242,8 @@ public class JobOffer extends AbstractEntity implements Ownerable, Obfuscable {
 		this.places = places;
 	}
 
-	public void setPublish(boolean publish) {
-		this.publish = publish;
+	public void setPublished(boolean published) {
+		this.published = published;
 	}
 
 	public void setRecruiters(final List<User> users) {
@@ -257,6 +272,7 @@ public class JobOffer extends AbstractEntity implements Ownerable, Obfuscable {
 		this.title = title;
 	}
 
+	@Override
 	public void setUid(String uid) {
 		this.uid = uid;
 	}

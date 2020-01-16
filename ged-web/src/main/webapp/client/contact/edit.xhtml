@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
-	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" 
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" 
-	xmlns:f="http://java.sun.com/jsf/core" 
-	xmlns:g="http://ged.org/ui" 
-	xmlns:h="http://java.sun.com/jsf/html" 
-	xmlns:o="http://omnifaces.org/ui"
-	xmlns:p="http://primefaces.org/ui"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://ged.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	template="/WEB-INF/templates/template.xhtml">
@@ -19,39 +17,46 @@
 		<p:breadCrumb>
 			<p:menuitem value="#{i18n['menu.index']}" outcome="#{Page.INDEX.getUrl()}" />
 			<p:menuitem value="#{i18n['client.clients']}" outcome="#{Page.CLIENT_SEARCH.getUrl()}" />
-			<p:menuitem value="#{contactEditView.contact.client.name}" outcome="#{Page.CLIENT.getUrl()}" >
+			<p:menuitem value="#{contactEditView.contact.client.name}" outcome="#{Page.CLIENT.getUrl()}">
 				<f:param name="id" value="#{contactEditView.contact.client.uid}" />
 			</p:menuitem>
 			<p:menuitem value="#{contactEditView.contact.fullName}" disabled="true" />
 		</p:breadCrumb>
 	</ui:define>
 
+	<ui:define name="buttons">
+		<h:form>
+			<p:button value="#{i18n['action.cancel']}" outcome="#{Page.CLIENT.getUrl()}" styleClass="secondary-button">
+				<f:param name="id" value="#{contactEditView.contact.client.uid}" />
+			</p:button>
+			<p:commandButton value="#{i18n['action.save']}" onclick="saveForm()" styleClass="success-btn" />
+		</h:form>
+	</ui:define>
+
 	<ui:define name="content">
 		<h:form id="contactForm">
-			<div class="panel">
-				<div class="panel-content panel-content-data">
-					<div class="grid">
-						<div class="col-12 sm-6">
-							<div class="form-field">
+			<p:remoteCommand name="saveForm" process="@form" update="@form growl" action="#{contactEditView.save}" />
+			<div class="p-grid">
+				<div class="p-col-12 p-xl-6">
+					<div class="card card-w-title ui-fluid">
+						<h1>#{i18n['contact.data']}</h1>
+						<div class="p-grid">
+							<div class="p-col-12 p-sm-6">
 								<g:input id="name" label="#{i18n['contact.name']}" value="#{contactEditView.contact.name}" required="true" />
-	
+							</div>
+							<div class="p-col-12 p-sm-6">
 								<g:input id="surname" label="#{i18n['contact.surname']}" value="#{contactEditView.contact.surname}" required="true" />
-	
+							</div>
+							<div class="p-col-12 p-sm-6">
 								<g:input id="position" label="#{i18n['contact.position']}" value="#{contactEditView.contact.position}" />
-	
+							</div>
+							<div class="p-col-12 p-sm-6">
 								<g:input id="email" label="#{i18n['contact.email']}" value="#{contactEditView.contact.email}" />
-	
+							</div>
+							<div class="p-col-12 p-sm-6">
 								<g:input id="phone_number" label="#{i18n['contact.phone_number']}" value="#{contactEditView.contact.phoneNumber}" />
 							</div>
 						</div>
-					</div>
-				</div>
-				<div class="panel-footer">
-					<div class="buttons">
-						<p:button styleClass="btn-gray" value="#{i18n['action.cancel']}" outcome="#{PageEnum.CLIENT.getUrl()}">
-							<f:param name="id" value="#{contactEditView.contact.client.uid}" />
-						</p:button>
-						<p:commandButton value="#{i18n['action.save']}" action="#{contactEditView.save}" update="@form" />
 					</div>
 				</div>
 			</div>
