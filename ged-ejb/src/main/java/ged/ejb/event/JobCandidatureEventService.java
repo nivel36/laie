@@ -51,7 +51,8 @@ public class JobCandidatureEventService extends AbstractService<JobCandidatureEv
 
 		final User user = loggedUser();
 		final JobCandidatureEvent jobCandidatureEvent = new JobCandidatureEvent(user, jobCandidature);
-		this.jobCandidatureEventDao.save(jobCandidatureEvent);
+		jobCandidature.addJobCandidatureEvent(jobCandidatureEvent);
+		this.save(jobCandidatureEvent);
 	}
 
 	@Override

@@ -37,7 +37,7 @@
 
 					<div class="p-col-12">
 						<p:dataTable var="event" id="events" value="#{searchEventView.events}" emptyMessage="#{i18n['event.no_events_found']}" reflow="true" paginator="true"
-							paginatorPosition="bottom" rows="#{sessionUser.rowsPerPage}" sortBy="#{event.date}" sortOrder="ascending" lazy="true">
+							paginatorPosition="bottom" rows="#{sessionUser.rowsPerPage}" sortBy="#{event.date}" sortOrder="descending" lazy="true">
 
 							<p:column headerText="#{i18n['event.type']}">
 								<h:outputText value="#{i18n[event.type.name]}" />

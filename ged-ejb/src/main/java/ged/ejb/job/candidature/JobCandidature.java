@@ -1,7 +1,8 @@
 package ged.ejb.job.candidature;
 
-import java.util.List;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -16,6 +17,7 @@ import javax.validation.constraints.NotNull;
 import ged.ejb.candidate.Candidate;
 import ged.ejb.core.model.AbstractEntity;
 import ged.ejb.core.model.Obfuscable;
+import ged.ejb.event.JobCandidatureEvent;
 import ged.ejb.job.meeting.Meeting;
 import ged.ejb.job.offer.JobOffer;
 
@@ -30,28 +32,36 @@ public class JobCandidature extends AbstractEntity implements Obfuscable {
 	@JoinColumn(name = "candidateId", nullable = false)
 	private Candidate candidate;
 
+	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "jobCandidature", orphanRemoval = true)
+	private Set<JobCandidatureEvent> jobCandidatureEvents = new HashSet<>();
+
 	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "jobOfferId", nullable = false)
 	private JobOffer jobOffer;
 
 	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "jobCandidature", orphanRemoval = true)
-	private List<Meeting> meetings;
+	private Set<Meeting> meetings;
 
 	@ManyToOne
 	@JoinColumn(name = "jobCandidatureStateId")
 	private JobCandidatureState state;
-
+	
 	@NotNull
 	@Column(unique = true, nullable = false)
 	private String uid;
 
 	public JobCandidature() {
 	}
-
+	
 	public JobCandidature(final Candidate candidate, final JobOffer jobOffer) {
 		this.candidate = candidate;
 		this.jobOffer = jobOffer;
+	}
+
+	public void addJobCandidatureEvent(JobCandidatureEvent jobCandidatureEvent) {
+		Objects.requireNonNull(jobCandidatureEvent);
+		this.jobCandidatureEvents.add(jobCandidatureEvent);
 	}
 
 	@Override
@@ -73,7 +83,7 @@ public class JobCandidature extends AbstractEntity implements Obfuscable {
 		return this.candidate;
 	}
 
-	public List<Meeting> getJobMeetings() {
+	public Set<Meeting> getJobMeetings() {
 		return this.meetings;
 	}
 
@@ -114,7 +124,7 @@ public class JobCandidature extends AbstractEntity implements Obfuscable {
 		this.candidate = candidate;
 	}
 
-	public void setJobMeetings(final List<Meeting> meetings) {
+	public void setJobMeetings(final Set<Meeting> meetings) {
 		this.meetings = meetings;
 	}
 

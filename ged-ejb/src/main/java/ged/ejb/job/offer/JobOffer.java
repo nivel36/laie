@@ -66,7 +66,7 @@ public class JobOffer extends AbstractEntity implements Ownerable, Obfuscable {
 	@Field
 	private String description;
 
-	@OneToMany(mappedBy = "jobOffer", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "jobOffer", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<JobCandidature> jobCandidatures;
 
 	@NotNull

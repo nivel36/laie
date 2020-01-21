@@ -12,6 +12,7 @@ import org.apache.commons.collections4.map.HashedMap;
 import org.omnifaces.cdi.Param;
 
 import ged.ejb.candidate.Candidate;
+import ged.ejb.candidate.CandidateService;
 import ged.ejb.job.candidature.JobCandidature;
 import ged.ejb.job.candidature.JobCandidatureService;
 import ged.ejb.job.offer.JobOffer;
@@ -25,33 +26,38 @@ public class SelectCandidatesView extends AbstractView {
 
 	private static final long serialVersionUID = 1L;
 
-	private CandidateLazyDataModel candidates;
+	private Map<String, Candidate> alredySelectedCandidates = new HashedMap<>();
 
-	private List<Candidate> selectedCandidates;
+	private CandidateLazyDataModel candidates;
+	
+	@Inject
+	protected transient CandidateService candidateService;
 
 	@Inject
 	private JobCandidatureService jobCandidatureService;
-
-	public void setJobCandidatureService(JobCandidatureService jobCandidatureService) {
-		this.jobCandidatureService = jobCandidatureService;
-	}
-
-	public List<Candidate> getSelectedCandidates() {
-		return selectedCandidates;
-	}
-
-	public void setSelectedCandidates(List<Candidate> selectedCandidates) {
-		this.selectedCandidates = selectedCandidates;
-	}
-
-	private Map<String, Candidate> alredySelectedCandidates = new HashedMap<>();
 
 	@Inject
 	@Param(name = "jobOfferId", required = true)
 	private JobOffer jobOffer;
 
+	private String searchText;
+
+	private List<Candidate> selectedCandidates;
+
+	public CandidateLazyDataModel getCandidates() {
+		return candidates;
+	}
+
 	public JobOffer getJobOffer() {
 		return jobOffer;
+	}
+
+	public String getSearchText() {
+		return searchText;
+	}
+
+	public List<Candidate> getSelectedCandidates() {
+		return selectedCandidates;
 	}
 
 	@PostConstruct
@@ -60,24 +66,16 @@ public class SelectCandidatesView extends AbstractView {
 			final Candidate candidate = jobCandidature.getCandidate();
 			alredySelectedCandidates.put(candidate.getUid(), candidate);
 		}
-	}
-
-	public void setJobOffer(JobOffer jobOffer) {
-		this.jobOffer = jobOffer;
-	}
-
-	private String searchText;
-
-	public CandidateLazyDataModel getCandidates() {
-		return candidates;
-	}
-
-	public void search() {
-		this.candidates.setSearchText(this.searchText);
+		this.candidates = new CandidateLazyDataModel(this.candidateService);
+		search();
 	}
 
 	public boolean isAlredySelected(final Candidate candidate) {
 		return this.alredySelectedCandidates.containsKey(candidate.getUid());
+	}
+
+	public void search() {
+		this.candidates.setSearchText(this.searchText);
 	}
 
 	public String select() {
@@ -87,5 +85,25 @@ public class SelectCandidatesView extends AbstractView {
 
 	public void setCandidates(CandidateLazyDataModel candidates) {
 		this.candidates = candidates;
+	}
+
+	public void setCandidateService(CandidateService candidateService) {
+		this.candidateService = candidateService;
+	}
+
+	public void setJobCandidatureService(JobCandidatureService jobCandidatureService) {
+		this.jobCandidatureService = jobCandidatureService;
+	}
+
+	public void setJobOffer(JobOffer jobOffer) {
+		this.jobOffer = jobOffer;
+	}
+
+	public void setSearchText(String searchText) {
+		this.searchText = searchText;
+	}
+
+	public void setSelectedCandidates(List<Candidate> selectedCandidates) {
+		this.selectedCandidates = selectedCandidates;
 	}
 }

@@ -127,7 +127,7 @@
 			<div class="p-col-12 p-xl-7">
 				<h:form>
 					<cc:jobCandidatures value="#{viewJobView.jobCandidatures}" showJobOffer="false" rows="5">
-						<p:button value="#{i18n['action.add']}" outcome="#{page.JOB_SELECT_CANDIDATES}" process="@this" rendered="#{viewJobView.jobOffer.open}">
+						<p:button value="#{i18n['action.add']}" outcome="#{Page.JOB_SELECT_CANDIDATES.getUrl()}" process="@this" rendered="#{viewJobView.jobOffer.open}">
 							<f:param name="jobOfferId" value="#{viewJobView.jobOffer.uid}" />
 						</p:button>
 					</cc:jobCandidatures>

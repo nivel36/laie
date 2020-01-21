@@ -132,25 +132,31 @@ public class JobCandidatureService extends AbstractService<JobCandidature> {
 		final JobCandidature jobCandidature = this.jobCandidatureDao.findByJobOfferAndCandidate(jobOffer, candidate);
 		this.jobCandidatureDao.delete(jobCandidature);
 	}
-	
+
 	public JobCandidature save(final JobCandidature jobCandidature) {
 		Objects.requireNonNull(jobCandidature, "Job candidature can't be null");
 		logger.debug("Save job candidature {}", jobCandidature);
 
-		if (jobCandidature.isNew()) {
+		boolean newCandidature = jobCandidature.isNew();
+		boolean stateChanged = !newCandidature && hasStateChanged(jobCandidature);
+		boolean approved = !stateChanged && jobCandidature.isApproved();
+
+		final JobCandidature savedJobCandidature = super.save(jobCandidature);
+
+		if (newCandidature) {
 			logger.trace("Is a new job candidature");
 			this.createdEvent.fire(jobCandidature);
 		} else {
-			if (hasStateChanged(jobCandidature)) {
+			if (stateChanged) {
 				logger.trace("State has changed to {}", jobCandidature.getState());
 				this.stateChangedEvent.fire(jobCandidature);
 			}
-			if (jobCandidature.isApproved()) {
+			if (approved) {
 				logger.trace("Job candidature is approved");
 				this.completedEvent.fire(jobCandidature);
 			}
 		}
-		return super.save(jobCandidature);
+		return savedJobCandidature;
 	}
 
 	public void setJobCandidatureCompletedEvent(final Event<JobCandidature> jobCandidatureCompletedEvent) {
