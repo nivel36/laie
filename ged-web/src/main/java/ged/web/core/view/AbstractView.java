@@ -27,9 +27,6 @@ public abstract class AbstractView implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Inject
-	protected transient Navigator navigator;
-
-	@Inject
 	protected transient ApplicationView applicationView;
 
 	@Inject
@@ -40,6 +37,9 @@ public abstract class AbstractView implements Serializable {
 
 	@Inject
 	protected transient Flash flash;
+	
+	@Inject
+	protected transient Navigator navigator;
 
 	@Inject
 	protected transient SessionUser sessionUser;
@@ -174,6 +174,10 @@ public abstract class AbstractView implements Serializable {
 
 	public void setFlash(final Flash flash) {
 		this.flash = flash;
+	}
+
+	public void setNavigator(Navigator navigator) {
+		this.navigator = navigator;
 	}
 
 	public void setSessionUser(final SessionUser sessionUser) {

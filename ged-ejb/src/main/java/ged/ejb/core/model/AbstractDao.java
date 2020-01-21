@@ -10,6 +10,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import javax.inject.Inject;
 import javax.persistence.FlushModeType;
+import javax.persistence.NoResultException;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -79,7 +80,11 @@ public abstract class AbstractDao<T extends AbstractEntity> {
 			final Map<String, Object> parameters, final Page page) {
 		Objects.requireNonNull(entityClass);
 		Objects.requireNonNull(namedQuery);
-		return this.persistenceFacade.findByQuery(entityClass, namedQuery, parameters, page);
+		try {
+			return this.persistenceFacade.findByQuery(entityClass, namedQuery, parameters, page);
+		} catch (NoResultException e) {
+			return new ArrayList<>();
+		}
 	}
 
 	protected Object findByQuery(final String namedQuery) {

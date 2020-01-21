@@ -30,6 +30,7 @@ import ged.ejb.core.model.Page;
 import ged.ejb.core.model.search.SearchResult;
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
+import ged.web.core.util.Navigator;
 import ged.web.core.util.Translator;
 import ged.web.core.view.SessionUser;
 import ged.web.view.user.AddUserView;
@@ -71,6 +72,8 @@ public class AddUserViewTest {
 
 		@Test
 		public void newUserShouldBeOk() {
+			
+			
 			final User user = AddUserViewTest.this.mockNewUser();
 			AddUserViewTest.this.addUserView.setUser(user);
 
@@ -169,6 +172,9 @@ public class AddUserViewTest {
 			AddUserViewTest.this.addUserView.validateEmail(null, null, "abel@test.com");
 		}
 	}
+	
+	@Mock
+	private Navigator navigator;
 
 	@Mock
 	private FileUploadService fileUploadService;
@@ -209,6 +215,7 @@ public class AddUserViewTest {
 	@BeforeEach
 	public void setUp() {
 		this.addUserView = new AddUserView();
+		this.addUserView.setNavigator(this.navigator);
 		this.addUserView.setFileUploadService(this.fileUploadService);
 		this.addUserView.setUserService(this.userService);
 		this.addUserView.setFlash(this.flash);

@@ -6,6 +6,8 @@ import java.lang.invoke.MethodHandles;
 import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.NoResultException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,7 +55,11 @@ public class UserDao extends AbstractDao<User> {
 
 	public User findUserByEmail(final String email) {
 		Objects.requireNonNull(email);
-		return this.findByQuery(User.class, "User.findByEmail", map(EMAIL, email));
+		try {
+			return this.findByQuery(User.class, "User.findByEmail", map(EMAIL, email));
+		} catch (NoResultException e) {
+			return null;
+		}
 	}
 
 	public User findUserByTokenHashAndType(final byte[] tokenHash, final TokenType type) {
