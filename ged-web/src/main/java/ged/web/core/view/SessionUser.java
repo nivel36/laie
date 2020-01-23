@@ -30,7 +30,7 @@ public class SessionUser implements Serializable {
 
 	@Inject
 	private transient ExternalContext externalContext;
-	
+
 	@Inject
 	private transient LoginService loginService;
 
@@ -81,9 +81,12 @@ public class SessionUser implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		final String email = this.externalContext.getRemoteUser();
-		logger.info("User {} has init his/her session", email);
-		this.loadUserData(email);
+		final String remoteUser = this.externalContext.getRemoteUser();
+		if (remoteUser == null) {
+			return;
+		}
+		logger.info("User {} has init his/her session", remoteUser);
+		this.loadUserData(remoteUser);
 	}
 
 	public boolean isActive() {

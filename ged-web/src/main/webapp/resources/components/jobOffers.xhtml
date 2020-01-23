@@ -36,7 +36,7 @@
 						</p:column>
 
 						<p:column headerText="#{i18n['job.owner']}">
-							<h:link value="#{jobOffer.owner.fullName}" outcome="#{Page.USER_SEARCH.getUrl()}">
+							<h:link value="#{jobOffer.owner.fullName}" outcome="#{Page.USER.getUrl()}">
 								<f:param name="id" value="#{jobOffer.owner.uid}" />
 							</h:link>
 						</p:column>

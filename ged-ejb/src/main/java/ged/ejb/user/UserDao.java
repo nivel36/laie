@@ -65,8 +65,12 @@ public class UserDao extends AbstractDao<User> {
 	public User findUserByTokenHashAndType(final byte[] tokenHash, final TokenType type) {
 		Objects.requireNonNull(tokenHash);
 		Objects.requireNonNull(type);
-		return this.getPersistenceFacade().findByQuery(User.class, "User.findByTokenHashAndType",
-				map("tokenHash", tokenHash).and("type", type));
+		try {
+			return this.getPersistenceFacade().findByQuery(User.class, "User.findByTokenHashAndType",
+					map("tokenHash", tokenHash).and("type", type));
+		} catch (NoResultException e) {
+			return null;
+		}
 	}
 
 	@Override
