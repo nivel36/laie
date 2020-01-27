@@ -19,6 +19,7 @@ a {
 }
 
 .layout-main-topbar {
+	z-index:998;
 	position: fixed;
 	top: 46px;
 	height: 45px;

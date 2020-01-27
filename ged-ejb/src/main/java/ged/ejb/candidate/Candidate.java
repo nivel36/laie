@@ -71,7 +71,9 @@ public class Candidate extends Person implements Ownerable, Obfuscable {
 
 	private String linkedinProfileUrl;
 
-	private String origin;
+	@ManyToOne
+	@JoinColumn(name = "candidateId")
+	private Origin origin;
 
 	@NotNull
 	@ManyToOne
@@ -132,7 +134,7 @@ public class Candidate extends Person implements Ownerable, Obfuscable {
 		return this.linkedinProfileUrl;
 	}
 
-	public String getOrigin() {
+	public Origin getOrigin() {
 		return this.origin;
 	}
 
@@ -198,7 +200,7 @@ public class Candidate extends Person implements Ownerable, Obfuscable {
 		this.linkedinProfileUrl = linkedinProfileUrl;
 	}
 
-	public void setOrigin(final String origin) {
+	public void setOrigin(final Origin origin) {
 		this.origin = origin;
 	}
 
@@ -234,6 +236,4 @@ public class Candidate extends Person implements Ownerable, Obfuscable {
 	public void setUid(String uid) {
 		this.uid = uid;
 	}
-
-
 }
