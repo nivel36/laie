@@ -49,17 +49,17 @@
 								<g:input id="school" label="#{i18n['education.school']}" value="#{educationView.education.school}" required="true" />
 							</div>
 							<div class="p-col-12 p-sm-4">
-								<cc:inputSelect id="fromDate" label="#{i18n['education.from_date']}" value="#{educationView.education.startYear}">
+								<g:input type="inputSelect" id="fromDate" label="#{i18n['education.from_date']}" value="#{educationView.education.startYear}">
 									<f:selectItem itemLabel="#{i18n['date.year']}" itemValue="" />
 									<f:selectItems var="year" value="#{educationView.years}" itemValue="#{year}" itemLabel="#{year}" />
-								</cc:inputSelect>
+								</g:input>
 							</div>
 							<div class="p-col-12 p-sm-4">
 								<h:panelGroup layout="block" id="toDateWrapper">
-									<cc:inputSelect id="toDate" label="#{i18n['education.to_date']}" value="#{educationView.education.endYear}" rendered="#{not educationView.education.stillStudying}">
+									<g:input type="inputSelect" id="toDate" label="#{i18n['education.to_date']}" value="#{educationView.education.endYear}" rendered="#{not educationView.education.stillStudying}">
 										<f:selectItem itemLabel="#{i18n['date.year']}" itemValue="" />
 										<f:selectItems var="year" value="#{educationView.years}" itemValue="#{year}" itemLabel="#{year}" />
-									</cc:inputSelect>
+									</g:input>
 								</h:panelGroup>
 							</div>
 							<div class="p-col-12 p-sm-4">

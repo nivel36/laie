@@ -2,7 +2,6 @@ package ged.web.view.candidate;
 
 import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
-import java.util.HashSet;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -34,20 +33,16 @@ public class EditCandidateView extends AbstractCandidateView {
 	}
 
 	private void initTags() {
-		if (this.candidate.getTags() != null) {
-			this.tags = new ArrayList<>(this.candidate.getTags());
+		if (this.candidate.getTags() == null) {
+			this.tags = new ArrayList<>();
 		} else {
-			this.candidate.setTags(new ArrayList<>());
+			this.tags = new ArrayList<>(this.candidate.getTags());			
 		}
 	}
 
 	public String save() {
 		logger.debug("Save candidate action performed");
-		if (this.getTags() == null) {
-			this.candidate.setTags(new HashSet<>());
-		} else {
-			this.candidate.setTags(this.getTags());
-		}
+		this.candidate.setTags(this.getTags());
 		this.candidate = this.candidateService.save(this.candidate);
 		return this.candidateUrl();
 	}
