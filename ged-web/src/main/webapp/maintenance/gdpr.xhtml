@@ -26,7 +26,7 @@
 	<ui:define name="buttons">
 		<h:form enctype="multipart/form-data">
 			<p:button value="#{i18n['action.cancel']}" outcome="#{Page.MAINTENANCE.getUrl()}" styleClass="secondary-button" />
-			<p:commandButton value="#{i18n['action.export']}" action="#{gdprMaintenanceView.export}" icon="fa fa-file-excel-o" ajax="false" />
+			<p:commandButton value="#{i18n['action.export']}" onclick="export()" icon="fa fa-file-excel-o" ajax="false" />
 			<p:commandButton value="#{i18n['action.save']}" onclick="save()" styleClass="success-btn" />
 		</h:form>
 	</ui:define>
@@ -34,6 +34,7 @@
 	<ui:define name="content">
 		<h:form id="gdprForm">
 			<p:remoteCommand name="save" process="@form" update="@form growl" action="#{gdprMaintenanceView.save}" />
+			<p:remoteCommand name="export" process="@form" update="@form growl" action="#{gdprMaintenanceView.export}" />
 			<div class="p-grid">
 				<div class="p-col-12">
 					<div class="card card-w-title ui-fluid">

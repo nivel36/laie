@@ -67,7 +67,7 @@
 						<h1>#{i18n['user.professional_information']}</h1>
 						<div class="p-grid">
 							<div class="p-col-12 p-sm-6">
-								<g:input type="inputSelect" id="role" value="#{editUserView.user.role}" label="#{i18n['user.role']}" required="true">
+								<g:input type="selectOneMenu" id="role" value="#{editUserView.user.role}" label="#{i18n['user.role']}" required="true">
 									<f:selectItems value="#{roles.list}" var="role" itemValue="#{role}" itemLabel="#{g:translate(role)}" />
 									<p:ajax event="change" update=":userForm:role :userForm:managerWrapper" process=":userForm:role" listener="#{editUserView.changeRoleListener}" />
 								</g:input>

@@ -9,6 +9,7 @@ insert into JOB_CANDIDATURE_STATE( id, version, name, first, approved, declined,
 insert into ORIGIN( id, version, code ) values ( 20, 0, 'infojobs');
 insert into ORIGIN( id, version, code ) values ( 21, 0, 'linkedin');
 insert into ORIGIN( id, version, code ) values ( 22, 0, 'reference');
+insert into ORIGIN( id, version, code ) values ( 23, 0, 'other');
 
 insert into I18NSTRING( id, version, locale, key, text ) values( 100, 0, 'es', 'job_offer_state.opened', 'Abierta' );
 insert into I18NSTRING( id, version, locale, key, text ) values( 101, 0, 'ca', 'job_offer_state.opened', 'Oberta' );
@@ -44,6 +45,8 @@ insert into I18NSTRING( id, version, locale, key, text ) values( 305, 0, 'ca', '
 insert into I18NSTRING( id, version, locale, key, text ) values( 306, 0, 'es', 'linkedin', 'LinkedIn' );
 insert into I18NSTRING( id, version, locale, key, text ) values( 310, 0, 'ca', 'reference', 'Referència' );
 insert into I18NSTRING( id, version, locale, key, text ) values( 311, 0, 'es', 'reference', 'Referencia' );
+insert into I18NSTRING( id, version, locale, key, text ) values( 315, 0, 'ca', 'other', 'Altre' );
+insert into I18NSTRING( id, version, locale, key, text ) values( 316, 0, 'es', 'other', 'Otro' );
 
 insert into CREDENTIAL( id, version, hashPassword, salt, created ) values( 600, 0, '16AFB50A06A958ACEC2EDA9D70283139BC7B7372E21CC83F619CCF169E6E7956', 'FFFFFF', (TO_DATE('17/12/2015', 'DD/MM/YYYY')));
 insert into CREDENTIAL( id, version, hashPassword, salt, created ) values( 601, 0, '16AFB50A06A958ACEC2EDA9D70283139BC7B7372E21CC83F619CCF169E6E7956', 'FFFFFF', (TO_DATE('17/12/2015', 'DD/MM/YYYY')));
@@ -115,6 +118,6 @@ insert into EXPORTFIELD( id, version, exportId, fieldName, sortOrder, literalId,
 insert into EXPORTDEFINITION (id, version, exportId, exportFieldId, sortOrder) values (1300, 0, 1100, 1201, 1);
 insert into EXPORTDEFINITION (id, version, exportId, exportFieldId, sortOrder) values (1301, 0, 1100, 1202, 2);
 
-insert into DOCUMENT (id, version, language, name, title, text) values (1500, 0, 'es', 'gdpr', 'Regulación general de protección de datos', '<p>Inserta aquí el documento de GDPR de la empresa</p><p> </p><p> </p><p> </p><p align="center"><b>Firma y fecha</b></p>');
+insert into DOCUMENT_TEMPLATE (id, version, language, name, title, text) values (1500, 0, 'es', 'gdpr', 'Regulación general de protección de datos', '<p>Barcelona a %date%</p><br/><p>Inserta aquí el documento de GDPR de la empresa</p><p> </p><p> </p><p> </p><p align="center"><b>Firma</b></p>');
 
 ALTER SEQUENCE HIBERNATE_SEQUENCE RESTART with 2000;

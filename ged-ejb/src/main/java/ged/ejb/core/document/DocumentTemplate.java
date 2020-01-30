@@ -10,8 +10,8 @@ import javax.persistence.UniqueConstraint;
 import ged.ejb.core.model.AbstractEntity;
 
 @Entity
-@Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "name", "title" }) })
-public class Document extends AbstractEntity {
+@Table(name = "DOCUMENT_TEMPLATE", uniqueConstraints = { @UniqueConstraint(columnNames = { "name", "title" }) })
+public class DocumentTemplate extends AbstractEntity {
 
 	private static final long serialVersionUID = 1L;
 
@@ -32,7 +32,7 @@ public class Document extends AbstractEntity {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		final Document other = (Document) obj;
+		final DocumentTemplate other = (DocumentTemplate) obj;
 		return Objects.equals(name, other.name);
 	}
 

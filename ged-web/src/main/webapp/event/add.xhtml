@@ -34,14 +34,14 @@
 						<div class="p-grid">
 
 							<div class="p-col-12">
-								<g:input type="inputSelect" label="#{i18n['event.job_candidature']}" value="#{addEventView.event.jobCandidature}">
+								<g:input type="selectOneMenu" label="#{i18n['event.job_candidature']}" value="#{addEventView.event.jobCandidature}">
 									<f:selectItems value="#{addEventView.jobCandidatures}" var="jobCandidature" itemValue="#{jobCandidature}" itemLabel="#{jobCandidature}" />
 									<p:ajax event="change" process="@this" update="eventForm:state" listener="#{addEventView.updateState}" />
 								</g:input>
 							</div>
 							
 							<div class="p-col-12 p-xl-6">
-								<g:input type="inputSelect" label="#{i18n['event.type']}" value="#{addEventView.event.type}">
+								<g:input type="selectOneMenu" label="#{i18n['event.type']}" value="#{addEventView.event.type}">
 									<f:selectItems value="#{eventTypes.list}" var="event" itemValue="#{event}" itemLabel="#{i18n[event.name]}" />
 								</g:input>
 							</div>

@@ -8,16 +8,16 @@ import ged.ejb.core.model.AbstractDao;
 import ged.ejb.core.model.Repository;
 
 @Repository
-public class DocumentDao extends AbstractDao<Document> {
+public class DocumentTemplateDao extends AbstractDao<DocumentTemplate> {
 
 	@Override
-	protected Class<Document> getType() {
-		return Document.class;
+	protected Class<DocumentTemplate> getType() {
+		return DocumentTemplate.class;
 	}
 
-	public Document findDocumentByName(final String name) {
+	public DocumentTemplate findDocumentTemplateByName(final String name) {
 		Objects.requireNonNull(name);
-		return this.findByQuery(Document.class, "Document.findByName", map("name", name));
+		return this.findByQuery(DocumentTemplate.class, "DocumentTemplate.findByName", map("name", name));
 	}
 
 	@Override
