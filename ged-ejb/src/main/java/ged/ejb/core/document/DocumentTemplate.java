@@ -4,6 +4,7 @@ import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -20,6 +21,7 @@ public class DocumentTemplate extends AbstractEntity {
 	@Column(unique = true)
 	private String name;
 
+	@Lob
 	private String text;
 
 	private String title;

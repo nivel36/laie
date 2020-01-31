@@ -30,8 +30,6 @@ public class GdprMaintenanceView extends AbstractView {
 	private DocumentTemplateService documentService;
 
 	public void export() throws Exception {
-		this.documentService.save(this.document);
-		
 		final Set<TemplateTag> tags = new HashSet<>();
 		tags.add(new DateTag(sessionUser.getLocale()));
 		

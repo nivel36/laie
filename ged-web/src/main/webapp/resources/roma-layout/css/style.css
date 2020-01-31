@@ -91,6 +91,16 @@ body .field-btn {
 	display: inline-flex !important;
 }
 
+.document .ql-editor {
+	padding: 4em 5em 3em 3em;
+}
+
+@media (min-width: 1200px) {
+	.document {
+		width: 21cm;
+	}
+}
+
 .card-aside {
 	padding: 1em;
 	float: left;
