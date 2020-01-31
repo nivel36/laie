@@ -43,8 +43,9 @@
 								<g:input id="title" label="#{i18n['document.title']}" value="#{gdprMaintenanceView.document.title}" />
 							</div>
 							<div class="p-col-12 p-lg-2">
-								<g:input id="locale" label="#{i18n['document.language']}" value="#{gdprMaintenanceView.document.language}" styleClass="locales" type="selectOneMenu">
-									<f:selectItems var="locale" value="#{applicationView.locales}" itemValue="#{locale.language}" itemLabel="#{locale.displayLanguage}" />
+								<g:input id="language" label="#{i18n['document.language']}" value="#{gdprMaintenanceView.language}" type="selectOneMenu">
+									<f:selectItems var="language" value="#{applicationView.languages}" itemValue="#{language}" itemLabel="#{language.getCode}" />
+									<p:ajax event="change" process="@this" update="@form" listener="#{gdprMaintenanceView.searchDocument}"/>
 								</g:input>
 							</div>
 							<div class="p-col-12">

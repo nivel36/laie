@@ -16,6 +16,7 @@ import com.itextpdf.html2pdf.ConverterProperties;
 import com.itextpdf.html2pdf.HtmlConverter;
 
 import ged.ejb.core.AbstractService;
+import ged.ejb.core.Language;
 import ged.ejb.core.model.AbstractDao;
 import ged.ejb.core.model.Repository;
 
@@ -35,9 +36,9 @@ public class DocumentTemplateService extends AbstractService<DocumentTemplate> {
 		this.documentTemplateDao = documentTemplateDao;
 	}
 
-	public DocumentTemplate findDocumentByName(final String name) {
+	public DocumentTemplate findDocumentByName(final String name, final Language language) {
 		Objects.requireNonNull(name);
-		return this.documentTemplateDao.findDocumentTemplateByName(name);
+		return this.documentTemplateDao.findDocumentTemplateByName(name, language);
 	}
 
 	public File export(DocumentTemplate document, Set<TemplateTag> parameters) {

@@ -42,7 +42,9 @@
 				<c:when test="#{type eq 'selectOneMenu'}">
 					<p:selectOneMenu id="#{id}" value="#{value}" required="#{required}"
 						styleClass="input input-select #{inputStyleClass}">
-						<f:selectItem />
+						<c:if test="#{emptyValue}">
+							<f:selectItem />
+						</c:if>
 						<ui:insert />
 					</p:selectOneMenu>
 				</c:when>

@@ -120,6 +120,7 @@
 			SELECT d 
 			FROM DocumentTemplate d 
 			WHERE d.name = :name
+			AND d.language = :language
 		]]></query>
 	</named-query>
 	

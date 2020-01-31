@@ -2,7 +2,6 @@ package ged.ejb.core.document;
 
 import java.util.Objects;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Lob;
 import javax.persistence.Table;
@@ -11,14 +10,13 @@ import javax.persistence.UniqueConstraint;
 import ged.ejb.core.model.AbstractEntity;
 
 @Entity
-@Table(name = "DOCUMENT_TEMPLATE", uniqueConstraints = { @UniqueConstraint(columnNames = { "name", "title" }) })
+@Table(name = "DOCUMENT_TEMPLATE", uniqueConstraints = { @UniqueConstraint(columnNames = { "name", "language"}) })
 public class DocumentTemplate extends AbstractEntity {
 
 	private static final long serialVersionUID = 1L;
 
 	private String language;
 
-	@Column(unique = true)
 	private String name;
 
 	@Lob
@@ -35,7 +33,7 @@ public class DocumentTemplate extends AbstractEntity {
 		if (getClass() != obj.getClass())
 			return false;
 		final DocumentTemplate other = (DocumentTemplate) obj;
-		return Objects.equals(name, other.name);
+		return Objects.equals(name, other.name) && Objects.equals(language, other.language);
 	}
 
 	public String getLanguage() {
@@ -56,7 +54,7 @@ public class DocumentTemplate extends AbstractEntity {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(name);
+		return Objects.hash(name, language);
 	}
 
 	public void setLanguage(String language) {

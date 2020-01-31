@@ -2,6 +2,7 @@ package ged.web.view.maintenance;
 
 import java.io.File;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 
 import javax.annotation.PostConstruct;
@@ -12,6 +13,7 @@ import javax.inject.Named;
 
 import org.omnifaces.util.Faces;
 
+import ged.ejb.core.Language;
 import ged.ejb.core.document.DateTag;
 import ged.ejb.core.document.DocumentTemplate;
 import ged.ejb.core.document.DocumentTemplateService;
@@ -29,10 +31,12 @@ public class GdprMaintenanceView extends AbstractView {
 	@Inject
 	private DocumentTemplateService documentService;
 
+	private Language language;
+
 	public void export() throws Exception {
 		final Set<TemplateTag> tags = new HashSet<>();
 		tags.add(new DateTag(sessionUser.getLocale()));
-		
+
 		final File file = this.documentService.export(this.document, tags);
 		Faces.sendFile(file, true);
 	}
@@ -41,14 +45,23 @@ public class GdprMaintenanceView extends AbstractView {
 		return this.document;
 	}
 
+	public Language getLanguage() {
+		return language;
+	}
+
 	@PostConstruct
 	public void init() {
-		this.document = this.documentService.findDocumentByName("gdpr");
+		this.language = Language.ofCode(this.sessionUser.getLocale().getLanguage());
+		searchDocument();
 	}
 
 	public void save() {
 		this.documentService.save(this.document);
 		this.addMessage(FacesMessage.SEVERITY_INFO, "action.save_action_performed", "action.save_action_performed");
+	}
+
+	public void searchDocument() {
+		this.document = this.documentService.findDocumentByName("gdpr", language);
 	}
 
 	public void setDocument(final DocumentTemplate document) {
@@ -57,5 +70,9 @@ public class GdprMaintenanceView extends AbstractView {
 
 	public void setDocumentService(final DocumentTemplateService documentService) {
 		this.documentService = documentService;
+	}
+
+	public void setLanguage(Language language) {
+		this.language = language;
 	}
 }
