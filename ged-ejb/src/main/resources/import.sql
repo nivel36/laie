@@ -119,6 +119,6 @@ insert into EXPORTDEFINITION (id, version, exportId, exportFieldId, sortOrder) v
 insert into EXPORTDEFINITION (id, version, exportId, exportFieldId, sortOrder) values (1301, 0, 1100, 1202, 2);
 
 insert into DOCUMENT_TEMPLATE (id, version, language, name, title, text) values (1500, 0, 'es', 'gdpr', 'Regulación general de protección de datos', '<p>Barcelona a %date%</p><br/><p>Inserta aquí el documento de GDPR de la empresa en castellano</p><p> </p><p> </p><p> </p><p align="center"><b>Firma</b></p>');
-insert into DOCUMENT_TEMPLATE (id, version, language, name, title, text) values (1500, 0, 'es', 'gdpr', 'Regulació general de protecció de dades', '<p>Barcelona a %date%</p><br/><p>Insereix aquí el documento de GDPR de la empresa en català</p><p> </p><p> </p><p> </p><p align="center"><b>Signatura</b></p>');
+insert into DOCUMENT_TEMPLATE (id, version, language, name, title, text) values (1501, 0, 'ca', 'gdpr', 'Regulació general de protecció de dades', '<p>Barcelona a %date%</p><br/><p>Insereix aquí el documento de GDPR de la empresa en català</p><p> </p><p> </p><p> </p><p align="center"><b>Signatura</b></p>');
 
 ALTER SEQUENCE HIBERNATE_SEQUENCE RESTART with 2000;

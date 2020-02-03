@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://ged.org/ui"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://ged.org/ui" xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui"
+	xmlns:p="http://primefaces.org/ui" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets"
 	template="/WEB-INF/templates/template.xhtml">
 
 	<ui:define name="title">
@@ -24,7 +19,7 @@
 	</ui:define>
 
 	<ui:define name="buttons">
-		<h:form enctype="multipart/form-data">
+		<h:form enctype="multipart/form-data" id="buttonsForm">
 			<p:button value="#{i18n['action.cancel']}" outcome="#{Page.MAINTENANCE.getUrl()}" styleClass="secondary-button" />
 			<p:commandButton value="#{i18n['action.export']}" action="#{gdprMaintenanceView.export}" icon="fa fa-file-excel-o" ajax="false" />
 			<p:commandButton value="#{i18n['action.save']}" onclick="save()" styleClass="success-btn" />
@@ -33,7 +28,7 @@
 
 	<ui:define name="content">
 		<h:form id="gdprForm">
-			<p:remoteCommand name="save" process="@form" update="@form growl" action="#{gdprMaintenanceView.save}" />
+			<p:remoteCommand name="save" process="@form" update="@form growl :buttonsForm" action="#{gdprMaintenanceView.save}" />
 			<div class="p-grid">
 				<div class="p-col-12">
 					<div class="card card-w-title ui-fluid">
@@ -44,12 +39,12 @@
 							</div>
 							<div class="p-col-12 p-lg-2">
 								<g:input id="language" label="#{i18n['document.language']}" value="#{gdprMaintenanceView.language}" type="selectOneMenu">
-									<f:selectItems var="language" value="#{applicationView.languages}" itemValue="#{language}" itemLabel="#{language.getCode}" />
-									<p:ajax event="change" process="@this" update="@form" listener="#{gdprMaintenanceView.searchDocument}"/>
+									<f:selectItems var="language" value="#{applicationView.languages}" itemValue="#{language}" itemLabel="#{i18n[language.code]}" />
+									<p:ajax event="change" process="@this" update="@form" listener="#{gdprMaintenanceView.searchDocument}" />
 								</g:input>
 							</div>
 							<div class="p-col-12">
-								<g:input id="text" label="#{i18n['document.text']}" value="#{gdprMaintenanceView.document.text}" type="rich" styleClass="document"/>
+								<g:input id="text" label="#{i18n['document.text']}" value="#{gdprMaintenanceView.document.text}" type="rich" styleClass="document" />
 							</div>
 						</div>
 					</div>

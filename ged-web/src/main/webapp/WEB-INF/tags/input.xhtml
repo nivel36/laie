@@ -1,9 +1,5 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui"
-	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
 	xmlns:composite="http://xmlns.jcp.org/jsf/composite">
 
 	<o:tagAttribute name="id" />
@@ -23,25 +19,18 @@
 	<o:tagAttribute name="labelStyleClass" />
 	<o:tagAttribute name="messageStyleClass" />
 
-	<h:panelGroup layout="block" id="#{id}_group"
-		class="input-group #{styleClass}" rendered="#{rendered}">
-
-		<h:panelGroup layout="block" styleClass="label-container"
-			rendered="#{not empty label}">
-			<p:outputLabel id="#{id}_label" for="#{id}" value="#{label}"
-				styleClass="#{labelStyleClass}" />
+	<h:panelGroup layout="block" id="#{id}_group" class="input-group #{styleClass}" rendered="#{rendered}">
+		<h:panelGroup layout="block" styleClass="label-container" rendered="#{not empty label}">
+			<p:outputLabel id="#{id}_label" for="#{id}" value="#{label}" styleClass="#{labelStyleClass}" />
 		</h:panelGroup>
 
 		<div class="ui-inputgroup">
-			<h:panelGroup layout="block"
-				rendered="#{not empty icon and iconPosition eq 'left'}"
-				styleClass="ui-inputgroup-addon">
+			<h:panelGroup layout="block" rendered="#{not empty icon and iconPosition eq 'left'}" styleClass="ui-inputgroup-addon">
 				<em class="fa #{icon}" />
 			</h:panelGroup>
 			<c:choose>
 				<c:when test="#{type eq 'selectOneMenu'}">
-					<p:selectOneMenu id="#{id}" value="#{value}" required="#{required}"
-						styleClass="input input-select #{inputStyleClass}">
+					<p:selectOneMenu id="#{id}" value="#{value}" required="#{required}" styleClass="input input-select #{inputStyleClass}">
 						<c:if test="#{emptyValue}">
 							<f:selectItem />
 						</c:if>
@@ -50,17 +39,13 @@
 				</c:when>
 
 				<c:when test="#{type eq 'textarea'}">
-					<p:inputTextarea id="#{id}" value="#{value}" required="#{required}"
-						styleClass="input input-text-area #{inputStyleClass}"
-						autoResize="false">
+					<p:inputTextarea id="#{id}" value="#{value}" required="#{required}" styleClass="input input-text-area #{inputStyleClass}" autoResize="false">
 						<ui:insert />
 					</p:inputTextarea>
 				</c:when>
 
 				<c:when test="#{type eq 'rich'}">
-					<p:textEditor id="#{id}" value="#{value}" required="#{required}"
-						styleClass="input input-rich #{inputStyleClass}"
-						autoResize="false">
+					<p:textEditor id="#{id}" value="#{value}" required="#{required}" styleClass="input input-rich #{inputStyleClass}" autoResize="false">
 						<f:facet name="toolbar">
 							<span class="ql-formats">
 								<button class="ql-bold" />
@@ -90,84 +75,68 @@
 				</c:when>
 
 				<c:when test="#{type eq 'inputSwitch'}">
-					<p:inputSwitch id="#{id}" value="#{value}" required="#{required}"
-						styleClass="input input-switch #{inputStyleClass}">
+					<p:inputSwitch id="#{id}" value="#{value}" required="#{required}" styleClass="input input-switch #{inputStyleClass}">
 						<ui:insert />
 					</p:inputSwitch>
 				</c:when>
 
 				<c:when test="#{type eq 'checkbox'}">
-					<p:selectBooleanCheckbox id="#{id}" value="#{value}"
-						required="#{required}"
-						styleClass="input input-checkbox #{inputStyleClass}">
+					<p:selectBooleanCheckbox id="#{id}" value="#{value}" required="#{required}" styleClass="input input-checkbox #{inputStyleClass}">
 						<ui:insert />
 					</p:selectBooleanCheckbox>
 				</c:when>
 
 				<c:when test="#{type eq 'number'}">
-					<p:spinner id="#{id}" value="#{value}" required="#{required}"
-						styleClass="input input-number #{inputStyleClass}"
-						min="#{not empty min ? min : 0}"
+					<p:spinner id="#{id}" value="#{value}" required="#{required}" styleClass="input input-number #{inputStyleClass}" min="#{not empty min ? min : 0}"
 						max="#{not empty max ? max : 100}">
 						<ui:insert />
 					</p:spinner>
 				</c:when>
 
 				<c:when test="#{type eq 'calendar'}">
-					<p:calendar id="#{id}" value="#{value}" pattern="dd/MM/yyyy"
-						navigator="true" required="#{required}"
-						inputStyleClass="input calendar #{inputStyleClass}">
+					<p:calendar id="#{id}" value="#{value}" pattern="dd/MM/yyyy" navigator="true" required="#{required}" inputStyleClass="input calendar #{inputStyleClass}">
 						<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
 						<ui:insert />
 						<c:if test="#{not empty yearRange}">
 							<f:attribute name="yearRange" value="#{yearRange}" />
 						</c:if>
 					</p:calendar>
-					<span class="ui-inputgroup-addon"> <em
-						class="fa fa-calendar" aria-hidden="true" />
+					<span class="ui-inputgroup-addon"> <em class="fa fa-calendar" aria-hidden="true" />
 					</span>
 				</c:when>
 
 				<c:when test="#{type eq 'money'}">
-					<p:inputNumber id="#{id}" value="#{value}" required="#{required}"
-						inputStyleClass="input input-money #{inputStyleClass}">
+					<p:inputNumber id="#{id}" value="#{value}" required="#{required}" inputStyleClass="input input-money #{inputStyleClass}">
 						<ui:insert />
 					</p:inputNumber>
-					<span class="ui-inputgroup-addon"> <em class="fa fa-euro"
-						aria-hidden="true" />
+					<span class="ui-inputgroup-addon"> <em class="fa fa-euro" aria-hidden="true" />
 					</span>
 				</c:when>
 
 				<c:when test="#{type eq 'password'}">
-					<p:password id="#{id}" value="#{value}" required="#{required}"
-						styleClass="input input-password #{inputStyleClass}">
+					<p:password id="#{id}" value="#{value}" required="#{required}" styleClass="input input-password #{inputStyleClass}">
 						<ui:insert />
 					</p:password>
 				</c:when>
 
 				<c:when test="#{type eq 'chips'}">
-					<p:chips id="#{id}" value="#{value}" required="#{required}"
-						styleClass="input input-chips #{inputStyleClass}">
+					<p:chips id="#{id}" value="#{value}" required="#{required}" styleClass="input input-chips #{inputStyleClass}">
 						<ui:insert />
 					</p:chips>
 				</c:when>
 
 				<c:otherwise>
-					<p:inputText id="#{id}" value="#{value}" required="#{required}"
-						styleClass="input input-text #{inputStyleClass}">
+					<p:inputText id="#{id}" value="#{value}" required="#{required}" styleClass="input input-text #{inputStyleClass}" >
 						<ui:insert />
 					</p:inputText>
 				</c:otherwise>
 			</c:choose>
 
-			<h:panelGroup layout="block"
-				rendered="#{not empty icon and iconPosition eq 'right'}"
-				styleClass="ui-inputgroup-addon">
+			<h:panelGroup layout="block" rendered="#{not empty icon and iconPosition eq 'right'}" styleClass="ui-inputgroup-addon">
 				<em class="fa #{icon}" />
 			</h:panelGroup>
 		</div>
 
-		<p:message id="#{id}_message" for="#{id}"
-			styleClass="message-error #{errorStyleClass}" />
+		<p:message id="#{id}_message" for="#{id}" styleClass="message-error #{errorStyleClass}" />
 	</h:panelGroup>
 </ui:composition>

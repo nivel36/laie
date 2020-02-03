@@ -2,7 +2,6 @@ package ged.web.view.maintenance;
 
 import java.io.File;
 import java.util.HashSet;
-import java.util.Locale;
 import java.util.Set;
 
 import javax.annotation.PostConstruct;
@@ -61,7 +60,14 @@ public class GdprMaintenanceView extends AbstractView {
 	}
 
 	public void searchDocument() {
-		this.document = this.documentService.findDocumentByName("gdpr", language);
+		final DocumentTemplate documentFromDatabase = this.documentService.findDocumentByName("gdpr", language);
+		if (documentFromDatabase == null) {
+			this.document = new DocumentTemplate();
+			this.document.setName("gdpr");
+			this.document.setLanguage(language.getCode());
+		} else {
+			this.document = documentFromDatabase;
+		}
 	}
 
 	public void setDocument(final DocumentTemplate document) {

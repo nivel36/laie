@@ -28,22 +28,22 @@ public abstract class AbstractView implements Serializable {
 	
 	@Inject
 	protected transient ApplicationView applicationView;
-
+	
 	@Inject
 	protected transient ExternalContext externalContext;
-
+	
 	@Inject
 	protected transient FacesContext facesContext;
-
+	
 	@Inject
 	protected transient Flash flash;
-	
+
 	@Inject
 	protected transient Navigator navigator;
 
 	@Inject
 	protected transient SessionUser sessionUser;
-
+	
 	@Inject
 	protected transient Translator translator;
 
