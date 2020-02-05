@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import ged.ejb.user.Credential;
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
+import ged.web.core.util.PageEnum;
 import ged.web.core.view.AbstractView;
 
 @Named
@@ -38,7 +39,7 @@ public class ChangePasswordView extends AbstractView {
 	private transient UserService userService;
 
 	public String change() {
-		logger.debug("AbstractAction: change password");
+		logger.debug("Change password for user {} action performed", user);
 		if (!this.isValidPassword()) {
 			this.addMessage(FacesMessage.SEVERITY_ERROR, "login.error.bad_password", "login.error.bad_password");
 			this.facesContext.validationFailed();
@@ -52,7 +53,7 @@ public class ChangePasswordView extends AbstractView {
 		}
 		this.userService.changePassword(this.user, this.newPassword);
 		this.sessionUser.refresh();
-		return "/config.xhtml?faces-redirect=true";
+		return PageEnum.CONFIG.getUrl();
 	}
 
 	public String getNewPassword() {
@@ -71,6 +72,7 @@ public class ChangePasswordView extends AbstractView {
 	public void init() {
 		this.user = this.userService.findUserAndCredential(this.sessionUser.get().getEmail());
 		this.userCredential = this.user.getCredential();
+		logger.debug("Change password for user {} init", this.user);
 	}
 
 	private boolean inputPasswordsAreEquals() {

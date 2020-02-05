@@ -1,5 +1,6 @@
 package ged.ejb.user;
 
+import java.io.InputStream;
 import java.lang.invoke.MethodHandles;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -13,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ged.ejb.core.AbstractService;
+import ged.ejb.core.FileService;
 import ged.ejb.core.model.AbstractDao;
 import ged.ejb.core.model.Repository;
 import ged.ejb.core.security.LoginToken.TokenType;
@@ -23,8 +25,26 @@ public class UserService extends AbstractService<User> {
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	@Inject
+	private transient FileService fileService;
+
+	@Inject
 	@Repository
 	private UserDao userDao;
+
+	public User addUserImage(final User user, final InputStream inputStream) {
+		Objects.requireNonNull(user);
+		Objects.requireNonNull(inputStream);
+		
+		final String oldImage = user.getImageFileName();
+		final String uuid = this.fileService.uploadImage(inputStream);
+		user.setImageFileName(uuid);
+		final User savedUser = this.save(user);
+		
+		if (oldImage != null) {
+			this.fileService.removeFileFromFileSystem(oldImage);
+		}
+		return savedUser;
+	}
 
 	public void changePassword(final User user, final String newPassword) {
 		Objects.requireNonNull(user);

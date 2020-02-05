@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://ged.org/ui" xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets" template="/WEB-INF/templates/template.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" 
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:g="http://ged.org/ui" 
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:p="http://primefaces.org/ui" 
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" 
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/WEB-INF/templates/template.xhtml">
 
 	<ui:define name="title">
 		#{i18n['config.config']}
@@ -58,9 +66,9 @@
 								</g:input>
 							</div>
 							<div class="p-col-12 p-sm-6">
-								<g:input id="locale" label="#{i18n['config.language']}" value="#{configView.user.language}" styleClass="locales" type="selectOneMenu">
-									<f:selectItems var="locale" value="#{applicationView.locales}" itemValue="#{locale.language}" itemLabel="#{locale.displayLanguage}" />
-									<f:ajax event="change" render="@all" listener="#{configView.changeLocale}" />
+								<g:input id="locale" label="#{i18n['config.language']}" value="#{configView.user.language}" type="selectOneMenu">
+									<f:selectItems var="language" value="#{applicationView.languages}" itemValue="#{language.code}" itemLabel="#{g:translate(language.code)}" />
+									<f:ajax event="change" render="@all" listener="#{configView.changeLanguage}" />
 								</g:input>
 							</div>
 						</div>
@@ -68,7 +76,7 @@
 				</div>
 				<div class="p-col-12 p-sm-6">
 					<div class="card card-w-title">
-					<h1>#{i18n['config.picture']}</h1>
+						<h1>#{i18n['config.picture']}</h1>
 						<cc:inputAvatar id="user-image" value="#{configView.user.imageFileName}" fileUploadListener="#{configView.uploadImage}" allowCamera="true"
 							captureListener="#{configView.captureImage}" />
 					</div>

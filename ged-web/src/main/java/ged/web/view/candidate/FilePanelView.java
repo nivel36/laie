@@ -20,7 +20,7 @@ import org.primefaces.model.UploadedFile;
 
 import ged.ejb.candidate.Candidate;
 import ged.ejb.candidate.CandidateService;
-import ged.ejb.core.FileUploadService;
+import ged.ejb.core.FileService;
 import ged.ejb.core.file.ServerFile;
 import ged.web.core.view.AbstractView;
 
@@ -40,7 +40,7 @@ public class FilePanelView extends AbstractView {
 	private List<ServerFile> files;
 
 	@Inject
-	private transient FileUploadService fileUploadService;
+	private transient FileService fileUploadService;
 
 	private ServerFile buildServerFile(final String uuid, final String fileName) {
 		final ServerFile file = new ServerFile();

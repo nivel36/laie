@@ -23,7 +23,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 
-import ged.ejb.core.FileUploadService;
+import ged.ejb.core.FileService;
 import ged.ejb.core.model.Page;
 import ged.ejb.core.model.search.SearchResult;
 import ged.ejb.user.User;
@@ -135,7 +135,7 @@ public class EditUserViewTest {
 	}
 
 	@Mock
-	private FileUploadService fileUploadService;
+	private FileService fileUploadService;
 
 	@Mock
 	private Flash flash;

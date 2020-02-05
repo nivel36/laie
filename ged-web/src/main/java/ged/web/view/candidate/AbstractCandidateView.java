@@ -14,7 +14,7 @@ import org.primefaces.model.UploadedFile;
 
 import ged.ejb.candidate.Candidate;
 import ged.ejb.candidate.CandidateService;
-import ged.ejb.core.FileUploadService;
+import ged.ejb.core.FileService;
 import ged.ejb.core.model.Page;
 import ged.ejb.core.tag.Tag;
 import ged.ejb.core.tag.TagService;
@@ -29,7 +29,7 @@ public abstract class AbstractCandidateView extends AbstractView {
 	protected transient CandidateService candidateService;
 
 	@Inject
-	protected transient FileUploadService fileUploadService;
+	protected transient FileService fileUploadService;
 
 	@Inject
 	@Param(name = "id", required = true)

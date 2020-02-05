@@ -21,7 +21,7 @@ import org.primefaces.model.UploadedFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ged.ejb.core.FileUploadService;
+import ged.ejb.core.FileService;
 import ged.ejb.core.model.Page;
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
@@ -35,7 +35,7 @@ public abstract class AbstractUserView extends AbstractView {
 	private static final long serialVersionUID = 1L;
 
 	@Inject
-	protected transient FileUploadService fileUploadService;
+	protected transient FileService fileUploadService;
 
 	@Inject
 	@Param(name = "id", required = true, converter = "userConverter")
@@ -62,7 +62,7 @@ public abstract class AbstractUserView extends AbstractView {
 		return managers;
 	}
 
-	public void setFileUploadService(final FileUploadService fileUploadService) {
+	public void setFileUploadService(final FileService fileUploadService) {
 		Objects.requireNonNull(fileUploadService);
 		this.fileUploadService = fileUploadService;
 	}

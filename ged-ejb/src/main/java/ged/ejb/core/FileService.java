@@ -20,7 +20,7 @@ import ged.ejb.core.file.ServerFile;
 import ged.ejb.core.util.ConfigurationProperty;
 
 @Stateless
-public class FileUploadService {
+public class FileService {
 
 	@Inject
 	@ConfigurationProperty(value = "file.directory")
@@ -42,8 +42,11 @@ public class FileUploadService {
 	}
 
 	public void removeFileFromFileSystem(final String uuid) {
+		Objects.requireNonNull(uuid);
 		try {
-			Files.deleteIfExists(new File(this.fileDirectory, uuid).toPath());
+			final File file = new File(this.fileDirectory, uuid);
+			final Path path = file.toPath();
+			Files.deleteIfExists(path);
 		} catch (final IOException e) {
 			throw new UncheckedIOException(e);
 		}
