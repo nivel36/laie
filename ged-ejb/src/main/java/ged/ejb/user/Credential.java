@@ -8,6 +8,9 @@ import java.util.Random;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
 import ged.ejb.core.model.AbstractEntity;
@@ -19,7 +22,7 @@ public class Credential extends AbstractEntity {
 	private static final Random RANDOM = new SecureRandom();
 
 	private static final long serialVersionUID = 1L;
-
+	
 	@NotNull
 	private LocalDate created;
 
@@ -33,18 +36,24 @@ public class Credential extends AbstractEntity {
 	@NotNull
 	private byte[] salt;
 
+	@OneToOne(fetch = FetchType.EAGER, optional = false, orphanRemoval = true)
+	@JoinColumn(name = "userId", unique = true, nullable = false, updatable = false)
+	@NotNull
+	private User user;
+
 	public Credential() {
 		this.hashPassword = new byte[32];
 		this.salt = new byte[16];
 		this.created = LocalDate.now();
 	}
 
-	public Credential(final String password) {
+	public Credential(User user, final String password) {
 		Objects.requireNonNull(password);
+		Objects.requireNonNull(user);
 		this.hashPassword = new byte[32];
 		this.salt = new byte[16];
 		this.created = LocalDate.now();
-		this.newCredential(password);
+		this.newCredential(user, password);
 	}
 
 	private byte[] buildHashPassword(final String password) {
@@ -80,6 +89,10 @@ public class Credential extends AbstractEntity {
 		return randmoSalt;
 	}
 
+	public User getUser() {
+		return user;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(this.hashPassword, this.salt);
@@ -95,7 +108,13 @@ public class Credential extends AbstractEntity {
 		return Arrays.equals(this.hashPassword, typedPassword);
 	}
 
-	private void newCredential(final String password) {
+	private void newCredential(final User user, final String password) {
+		this.user = user;
+		this.salt = this.getRandomSalt();
+		this.hashPassword = this.buildHashPassword(password);
+	}
+	
+	public void setPassword(final String password) {
 		this.salt = this.getRandomSalt();
 		this.hashPassword = this.buildHashPassword(password);
 	}
@@ -104,8 +123,7 @@ public class Credential extends AbstractEntity {
 		this.created = created;
 	}
 
-	public void setPassword(final String password) {
-		Objects.requireNonNull(password);
-		this.newCredential(password);
+	public void setUser(User user) {
+		this.user = user;
 	}
 }

@@ -10,11 +10,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.search.annotations.Analyze;
@@ -36,11 +34,6 @@ public class User extends Person implements Obfuscable {
 
 	private static final long serialVersionUID = 1L;
 
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false, orphanRemoval = true)
-	@JoinColumn(name = "credentialId", unique = true, nullable = false, updatable = false)
-	@NotNull
-	private Credential credential;
-
 	@Field(name = "dateOfJoin", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField(forField = "dateOfJoin")
 	private LocalDate dateOfJoin;
@@ -52,9 +45,6 @@ public class User extends Person implements Obfuscable {
 	@Field(name = "lastConnection", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField(forField = "lastConnection")
 	private LocalDateTime lastConnection;
-
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true)
-	private Set<LoginToken> loginTokens;
 
 	@ManyToOne
 	@JoinColumn(name = "managerId")
@@ -76,10 +66,6 @@ public class User extends Person implements Obfuscable {
 	@Column(unique = true, nullable = false)
 	private String uid;
 
-	public Credential getCredential() {
-		return this.credential;
-	}
-
 	public LocalDate getDateOfJoin() {
 		return this.dateOfJoin;
 	}
@@ -90,10 +76,6 @@ public class User extends Person implements Obfuscable {
 
 	public LocalDateTime getLastConnection() {
 		return this.lastConnection;
-	}
-
-	public Set<LoginToken> getLoginTokens() {
-		return this.loginTokens;
 	}
 
 	public User getManager() {
@@ -129,14 +111,6 @@ public class User extends Person implements Obfuscable {
 		return this.manager != null;
 	}
 
-	public void newCredential(final String password) {
-		this.credential = new Credential(password);
-	}
-
-	public void setCredential(final Credential credential) {
-		this.credential = credential;
-	}
-
 	public void setDateOfJoin(final LocalDate dateOfJoin) {
 		this.dateOfJoin = dateOfJoin;
 	}
@@ -147,10 +121,6 @@ public class User extends Person implements Obfuscable {
 
 	public void setLastConnection(final LocalDateTime lastConnection) {
 		this.lastConnection = lastConnection;
-	}
-
-	public void setLoginTokens(final Set<LoginToken> loginTokens) {
-		this.loginTokens = loginTokens;
 	}
 
 	public void setManager(final User manager) {

@@ -48,9 +48,9 @@ public class UserDao extends AbstractDao<User> {
 		return this.findByQuery(User.class, "User.findSubordinateUsers", map(ID, user.getId()), Page.ALL_RESULTS);
 	}
 
-	public User findUserAndCredential(final String email) {
+	public Credential findCredential(final String email) {
 		Objects.requireNonNull(email);
-		return this.findByQuery(User.class, "User.findUserAndCredential", map(EMAIL, email));
+		return this.findByQuery(Credential.class, "User.findCredential", map(EMAIL, email));
 	}
 
 	public User findUserByEmail(final String email) {

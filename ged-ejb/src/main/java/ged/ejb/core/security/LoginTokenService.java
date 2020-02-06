@@ -13,7 +13,7 @@ import javax.inject.Inject;
 
 import ged.ejb.core.model.Repository;
 import ged.ejb.core.security.LoginToken.TokenType;
-import ged.ejb.user.User;
+import ged.ejb.user.Credential;
 import ged.ejb.user.UserService;
 
 @Stateless
@@ -39,8 +39,8 @@ public class LoginTokenService {
 
 	public String generate(final String email, final String ipAddress, final String description,
 			final TokenType tokenType, final Instant expiration) {
-		final User user = userService.findUserAndCredential(email);
-		if (user == null) {
+		final Credential credential = userService.findCredential(email);
+		if (credential == null) {
 			throw new IllegalStateException();
 		}
 		final String rawToken = randomUUID().toString();
@@ -51,8 +51,8 @@ public class LoginTokenService {
 		loginToken.setDescription(description);
 		loginToken.setType(tokenType);
 		loginToken.setIpAddress(ipAddress);
-		loginToken.setUser(user);
-		user.getLoginTokens().add(loginToken);
+		loginToken.setUser(credential.getUser());
+		
 		return rawToken;
 	}
 

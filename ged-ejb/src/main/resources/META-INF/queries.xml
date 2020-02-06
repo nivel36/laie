@@ -346,13 +346,12 @@
 		]]></query>
 	</named-query>
 
-	<named-query name="User.findUserAndCredential">
+	<named-query name="User.findCredential">
 		<query><![CDATA[
-			SELECT u
-			FROM User u
-			LEFT JOIN FETCH u.credential
-			LEFT JOIN FETCH u.loginTokens
-			WHERE u.email = :email
+			SELECT c
+			FROM Credential c
+			LEFT JOIN FETCH c.user
+			WHERE c.user.email = :email
 		]]></query>
 	</named-query>
 

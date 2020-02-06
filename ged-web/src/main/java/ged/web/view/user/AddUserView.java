@@ -31,7 +31,6 @@ public class AddUserView extends AbstractUserView {
 		newUser.setLanguage("ES");
 		newUser.setRowsPerPage(25);
 		newUser.setDateOfJoin(LocalDate.now());
-		newUser.newCredential("pasword");
 		return newUser;
 	}
 

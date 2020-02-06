@@ -70,8 +70,8 @@ public class ChangePasswordView extends AbstractView {
 
 	@PostConstruct
 	public void init() {
-		this.user = this.userService.findUserAndCredential(this.sessionUser.get().getEmail());
-		this.userCredential = this.user.getCredential();
+		this.user = this.sessionUser.get();
+		this.userCredential = this.userService.findCredential(this.user.getEmail());
 		logger.debug("Change password for user {} init", this.user);
 	}
 

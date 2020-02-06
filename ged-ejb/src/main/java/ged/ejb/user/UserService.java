@@ -50,8 +50,8 @@ public class UserService extends AbstractService<User> {
 		Objects.requireNonNull(user);
 		Objects.requireNonNull(newPassword);
 		logger.debug("Change password for user {}", user);
-		user.getCredential().setPassword(newPassword);
-		this.userDao.save(user);
+		final Credential credential = this.userDao.findCredential(user.getEmail());
+		credential.setPassword(newPassword);
 	}
 
 	public User findByUid(final String uid) {
@@ -66,10 +66,10 @@ public class UserService extends AbstractService<User> {
 		return this.userDao.findSubordinateUsers(user);
 	}
 
-	public User findUserAndCredential(final String email) {
+	public Credential findCredential(final String email) {
 		Objects.requireNonNull(email);
-		logger.debug("Find user and credential for user with email {}", email);
-		return this.userDao.findUserAndCredential(email);
+		logger.debug("Find credential for user with email {}", email);
+		return this.userDao.findCredential(email);
 	}
 
 	public User findUserByEmail(final String email) {
@@ -111,16 +111,16 @@ public class UserService extends AbstractService<User> {
 	public User login(final String email, final String password) throws LoginException {
 		Objects.requireNonNull(email);
 		Objects.requireNonNull(password);
-		final User user = this.userDao.findUserAndCredential(email);
-		if (user == null) {
+		final Credential credential = this.userDao.findCredential(email);
+		if (credential == null) {
 			throw new LoginException("Invalid email");
 		}
-		final Credential credential = user.getCredential();
 		if (!credential.isValid(password)) {
 			throw new LoginException("Passwords doesn't match");
 		}
+		final User user = credential.getUser();
 		user.setLastConnection(LocalDateTime.now());
-		return user;
+		return super.save(user);
 	}
 
 	@Override
