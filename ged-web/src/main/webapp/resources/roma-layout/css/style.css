@@ -184,8 +184,8 @@ body .field-btn {
 
 .buttons.header-buttons {
 	position: absolute;
-	right: 1em;
-	top: 1em;
+	right: 2em;
+	top: 2em;
 }
 
 .buttons .ui-widget {
@@ -387,7 +387,7 @@ body .jobCandidatureStates.ui-selectonemenu-panel .ui-selectonemenu-items .ui-se
 .curriculum .section .buttons {
 	position: absolute;
 	right: 0px;
-	bottom: 0px;
+	bottom: 1em;
 }
 
 .curriculum .name {
