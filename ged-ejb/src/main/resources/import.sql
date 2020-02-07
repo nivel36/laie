@@ -48,23 +48,23 @@ insert into I18NSTRING( id, version, locale, key, text ) values( 311, 0, 'es', '
 insert into I18NSTRING( id, version, locale, key, text ) values( 315, 0, 'ca', 'other', 'Altre' );
 insert into I18NSTRING( id, version, locale, key, text ) values( 316, 0, 'es', 'other', 'Otro' );
 
-insert into CREDENTIAL( id, version, hashPassword, salt, created ) values( 600, 0, '16AFB50A06A958ACEC2EDA9D70283139BC7B7372E21CC83F619CCF169E6E7956', 'FFFFFF', (TO_DATE('17/12/2015', 'DD/MM/YYYY')));
-insert into CREDENTIAL( id, version, hashPassword, salt, created ) values( 601, 0, '16AFB50A06A958ACEC2EDA9D70283139BC7B7372E21CC83F619CCF169E6E7956', 'FFFFFF', (TO_DATE('17/12/2015', 'DD/MM/YYYY')));
-insert into CREDENTIAL( id, version, hashPassword, salt, created ) values( 602, 0, '16AFB50A06A958ACEC2EDA9D70283139BC7B7372E21CC83F619CCF169E6E7956', 'FFFFFF', (TO_DATE('17/12/2015', 'DD/MM/YYYY')));
-insert into CREDENTIAL( id, version, hashPassword, salt, created ) values( 603, 0, '16AFB50A06A958ACEC2EDA9D70283139BC7B7372E21CC83F619CCF169E6E7956', 'FFFFFF', (TO_DATE('17/12/2015', 'DD/MM/YYYY')));
-insert into CREDENTIAL( id, version, hashPassword, salt, created ) values( 604, 0, '16AFB50A06A958ACEC2EDA9D70283139BC7B7372E21CC83F619CCF169E6E7956', 'FFFFFF', (TO_DATE('17/12/2015', 'DD/MM/YYYY')));
-insert into CREDENTIAL( id, version, hashPassword, salt, created ) values( 605, 0, '16AFB50A06A958ACEC2EDA9D70283139BC7B7372E21CC83F619CCF169E6E7956', 'FFFFFF', (TO_DATE('17/12/2015', 'DD/MM/YYYY')));
-insert into CREDENTIAL( id, version, hashPassword, salt, created ) values( 606, 0, '16AFB50A06A958ACEC2EDA9D70283139BC7B7372E21CC83F619CCF169E6E7956', 'FFFFFF', (TO_DATE('17/12/2015', 'DD/MM/YYYY')));
-insert into CREDENTIAL( id, version, hashPassword, salt, created ) values( 607, 0, '16AFB50A06A958ACEC2EDA9D70283139BC7B7372E21CC83F619CCF169E6E7956', 'FFFFFF', (TO_DATE('17/12/2015', 'DD/MM/YYYY')));
+insert into USER( id, version, uid, name, surname, phoneNumber, email, language, rowsPerPage, role, managerId ) values( 500, 0, 'uid500', 'Abel', 'Ferrer Jiménez','685555276', 'abel.ferrer.jimenez@gmail.com', 'es', 10, 'ADMIN', null);
+insert into USER( id, version, uid, name, surname, phoneNumber, email, language, rowsPerPage, role, managerId ) values( 501, 0, 'uid501', 'Isabel', 'Vallejo Medina','685555276', 'isabel.vallejo.medina@gmail.com', 'es', 10, 'ADMIN', null);
+insert into USER( id, version, uid, name, surname, phoneNumber, email, language, rowsPerPage, role, managerId ) values( 502, 0, 'uid502', 'Juan', 'Fernández','685555276', 'jfernandez@gmail.com', 'es', 10, 'USER', 500);
+insert into USER( id, version, uid, name, surname, phoneNumber, email, language, rowsPerPage, role, managerId ) values( 503, 0, 'uid503', 'Pedro', 'Smith','685555276', 'psmith@gmail.com', 'es', 10, 'USER', 500);
+insert into USER( id, version, uid, name, surname, phoneNumber, email, language, rowsPerPage, role, managerId ) values( 504, 0, 'uid504', 'Luis', 'Carrasco','685555276', 'lcarrasco@gmail.com', 'es', 10, 'USER', 500);
+insert into USER( id, version, uid, name, surname, phoneNumber, email, language, rowsPerPage, role, managerId ) values( 505, 0, 'uid505', 'Ana', 'Casoras','685555276', 'acasoras@gmail.com', 'es', 10, 'USER', 500);
+insert into USER( id, version, uid, name, surname, phoneNumber, email, language, rowsPerPage, role, managerId ) values( 506, 0, 'uid506', 'Luis Ángel', 'Nuestra Señora del manto','685555276', 'lantrasenora@gmail.com', 'es', 10, 'USER', 500);
+insert into USER( id, version, uid, name, surname, phoneNumber, email, language, rowsPerPage, role, managerId ) values( 507, 0, 'uid507', 'Anabel', 'Villafafila','685555276', 'anabel@gmail.com', 'es', 10, 'USER', 500);
 
-insert into USER( id, version, uid, name, surname, phoneNumber, email, language, rowsPerPage, role, credentialId, managerId ) values( 500, 0, 'uid500', 'Abel', 'Ferrer Jiménez','685555276', 'abel.ferrer.jimenez@gmail.com', 'es', 10, 'ADMIN', 600, null);
-insert into USER( id, version, uid, name, surname, phoneNumber, email, language, rowsPerPage, role, credentialId, managerId ) values( 501, 0, 'uid501', 'Isabel', 'Vallejo Medina','685555276', 'isabel.vallejo.medina@gmail.com', 'es', 10, 'ADMIN', 601, null);
-insert into USER( id, version, uid, name, surname, phoneNumber, email, language, rowsPerPage, role, credentialId, managerId ) values( 502, 0, 'uid502', 'Juan', 'Fernández','685555276', 'jfernandez@gmail.com', 'es', 10, 'USER', 602, 500);
-insert into USER( id, version, uid, name, surname, phoneNumber, email, language, rowsPerPage, role, credentialId, managerId ) values( 503, 0, 'uid503', 'Pedro', 'Smith','685555276', 'psmith@gmail.com', 'es', 10, 'USER', 603, 500);
-insert into USER( id, version, uid, name, surname, phoneNumber, email, language, rowsPerPage, role, credentialId, managerId ) values( 504, 0, 'uid504', 'Luis', 'Carrasco','685555276', 'lcarrasco@gmail.com', 'es', 10, 'USER', 604, 500);
-insert into USER( id, version, uid, name, surname, phoneNumber, email, language, rowsPerPage, role, credentialId, managerId ) values( 505, 0, 'uid505', 'Ana', 'Casoras','685555276', 'acasoras@gmail.com', 'es', 10, 'USER', 605, 500);
-insert into USER( id, version, uid, name, surname, phoneNumber, email, language, rowsPerPage, role, credentialId, managerId ) values( 506, 0, 'uid506', 'Luis Ángel', 'Nuestra Señora del manto','685555276', 'lantrasenora@gmail.com', 'es', 10, 'USER', 606, 500);
-insert into USER( id, version, uid, name, surname, phoneNumber, email, language, rowsPerPage, role, credentialId, managerId ) values( 507, 0, 'uid507', 'Anabel', 'Villafafila','685555276', 'anabel@gmail.com', 'es', 10, 'USER', 607, 500);
+insert into CREDENTIAL( id, version, hashPassword, salt, created, userid ) values( 600, 0, '16AFB50A06A958ACEC2EDA9D70283139BC7B7372E21CC83F619CCF169E6E7956', 'FFFFFF', (TO_DATE('17/12/2015', 'DD/MM/YYYY')), 500);
+insert into CREDENTIAL( id, version, hashPassword, salt, created, userid ) values( 601, 0, '16AFB50A06A958ACEC2EDA9D70283139BC7B7372E21CC83F619CCF169E6E7956', 'FFFFFF', (TO_DATE('17/12/2015', 'DD/MM/YYYY')), 501);
+insert into CREDENTIAL( id, version, hashPassword, salt, created, userid ) values( 602, 0, '16AFB50A06A958ACEC2EDA9D70283139BC7B7372E21CC83F619CCF169E6E7956', 'FFFFFF', (TO_DATE('17/12/2015', 'DD/MM/YYYY')), 502);
+insert into CREDENTIAL( id, version, hashPassword, salt, created, userid ) values( 603, 0, '16AFB50A06A958ACEC2EDA9D70283139BC7B7372E21CC83F619CCF169E6E7956', 'FFFFFF', (TO_DATE('17/12/2015', 'DD/MM/YYYY')), 503);
+insert into CREDENTIAL( id, version, hashPassword, salt, created, userid ) values( 604, 0, '16AFB50A06A958ACEC2EDA9D70283139BC7B7372E21CC83F619CCF169E6E7956', 'FFFFFF', (TO_DATE('17/12/2015', 'DD/MM/YYYY')), 504);
+insert into CREDENTIAL( id, version, hashPassword, salt, created, userid ) values( 605, 0, '16AFB50A06A958ACEC2EDA9D70283139BC7B7372E21CC83F619CCF169E6E7956', 'FFFFFF', (TO_DATE('17/12/2015', 'DD/MM/YYYY')), 505);
+insert into CREDENTIAL( id, version, hashPassword, salt, created, userid ) values( 606, 0, '16AFB50A06A958ACEC2EDA9D70283139BC7B7372E21CC83F619CCF169E6E7956', 'FFFFFF', (TO_DATE('17/12/2015', 'DD/MM/YYYY')), 506);
+insert into CREDENTIAL( id, version, hashPassword, salt, created, userid ) values( 607, 0, '16AFB50A06A958ACEC2EDA9D70283139BC7B7372E21CC83F619CCF169E6E7956', 'FFFFFF', (TO_DATE('17/12/2015', 'DD/MM/YYYY')), 507);
 
 insert into USERCLOSURE( id, version, antecessor_id, descendant_id, pathLength ) values( 700, 0, 500, 500, 0 );
 insert into USERCLOSURE( id, version, antecessor_id, descendant_id, pathLength ) values( 701, 0, 501, 501, 0 );

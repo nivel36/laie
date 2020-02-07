@@ -375,9 +375,9 @@
 		<query><![CDATA[
 			SELECT u
 			FROM User u, LoginToken l
-			WHERE l MEMBER OF u.loginTokens
-			AND l.tokenHash = :tokenHash
+			WHERE l.tokenHash = :tokenHash
 			AND l.type = :type
+			AND l.user = u
 		]]></query>
 	</named-query>
 	

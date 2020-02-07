@@ -52,7 +52,7 @@ public class LoginTokenService {
 		loginToken.setType(tokenType);
 		loginToken.setIpAddress(ipAddress);
 		loginToken.setUser(credential.getUser());
-		
+		loginTokenDao.save(loginToken);
 		return rawToken;
 	}
 
