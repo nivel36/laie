@@ -35,10 +35,15 @@ public class CurriculumService extends AbstractService<Curriculum> {
 	@Inject
 	@Repository
 	private SkillDao skillDao;
+	
+	public List<CurriculumTemplate> findCurriculumTemplates() {
+		logger.debug("Find curriculum templates");
+		return this.curriculumDao.findCurriculumTemplates();
+	}
 
-	public List<SkillLevel> findAllSkillLevels() {
-		logger.debug("Find all the skill levels");
-		return this.skillDao.findAllSkillLevels();
+	public List<SkillLevel> findSkillLevels() {
+		logger.debug("Find skill levels");
+		return this.skillDao.findSkillLevels();
 	}
 
 	public Curriculum findByCandidate(final Candidate candidate) {

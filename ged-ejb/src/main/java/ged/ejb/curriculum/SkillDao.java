@@ -12,7 +12,7 @@ import ged.ejb.core.model.Repository;
 @Repository
 public class SkillDao extends AbstractDao<Skill> {
 
-	public List<SkillLevel> findAllSkillLevels() {
+	public List<SkillLevel> findSkillLevels() {
 		return this.findAll(SkillLevel.class, Page.ALL_RESULTS);
 	}
 

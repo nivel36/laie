@@ -1,26 +1,92 @@
 package ged.ejb.curriculum;
 
+import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
 import com.sun.istack.NotNull;
 
-import ged.ejb.core.i18n.I18nString;
 import ged.ejb.core.model.AbstractEntity;
 
 @Entity
 public class CurriculumTemplate extends AbstractEntity {
 
 	private static final long serialVersionUID = 1L;
-	
-	@NotNull
-	@Column(nullable = false)
-	private String screenshootPath;
 
 	@NotNull
 	@Column(nullable = false)
 	private String css;
+
+	@NotNull
+	@Column(nullable = false)
+	private String description;
+
+	@NotNull
+	@Column(nullable = false)
+	private String screenshootPath;
 	
 	@NotNull
-	private I18nString title;
+	@Column(nullable = false)
+	private String title;
+
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (!super.equals(obj)) {
+			return false;
+		}
+		if (this.getClass() != obj.getClass()) {
+			return false;
+		}
+		final CurriculumTemplate other = (CurriculumTemplate) obj;
+		return Objects.equals(this.title, other.title);
+	}
+
+	public String getCss() {
+		return this.css;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public String getScreenshootPath() {
+		return this.screenshootPath;
+	}
+
+	public String getTitle() {
+		return this.title;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = (prime * result) + Objects.hash(this.title);
+		return result;
+	}
+
+	public void setCss(final String css) {
+		this.css = css;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public void setScreenshootPath(final String screenshootPath) {
+		this.screenshootPath = screenshootPath;
+	}
+
+	public void setTitle(final String title) {
+		this.title = title;
+	}
+
+	@Override
+	public String toString() {
+		return this.title;
+	}
 }

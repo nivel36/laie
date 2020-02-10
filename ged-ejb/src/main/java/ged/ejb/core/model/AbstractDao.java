@@ -76,6 +76,16 @@ public abstract class AbstractDao<T extends AbstractEntity> {
 		return this.persistenceFacade.findByQuery(entityClass, namedQuery, parameters, flushModeType);
 	}
 
+	protected <E> List<E> findByQuery(final Class<E> entityClass, final String namedQuery, final Page page) {
+		Objects.requireNonNull(entityClass);
+		Objects.requireNonNull(namedQuery);
+		try {
+			return this.persistenceFacade.findByQuery(entityClass, namedQuery, null, page);
+		} catch (final NoResultException e) {
+			return new ArrayList<>();
+		}
+	}
+
 	protected <E> List<E> findByQuery(final Class<E> entityClass, final String namedQuery,
 			final Map<String, Object> parameters, final Page page) {
 		Objects.requireNonNull(entityClass);
