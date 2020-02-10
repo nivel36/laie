@@ -8,6 +8,10 @@ import ged.ejb.core.model.Repository;
 @Repository
 public class JobExperienceDao extends AbstractDao<JobExperience> {
 
+	public JobExperience findByUid(final String uid) {
+		return this.findByQuery(JobExperience.class, "JobExperience.findByUid", map("uid", uid));
+	}
+
 	@Override
 	protected Class<JobExperience> getType() {
 		return JobExperience.class;
@@ -16,9 +20,5 @@ public class JobExperienceDao extends AbstractDao<JobExperience> {
 	@Override
 	public String[] searchFields() {
 		return new String[] { "jobPosition", "description", "companyName" };
-	}
-
-	public JobExperience findByUid(final String uid) {
-		return this.findByQuery(JobExperience.class, "JobExperience.findByUid", map("uid", uid));
 	}
 }

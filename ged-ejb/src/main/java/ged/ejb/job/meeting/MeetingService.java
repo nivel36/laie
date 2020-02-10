@@ -31,13 +31,13 @@ public class MeetingService extends AbstractService<Meeting> {
 		Objects.requireNonNull(uid);
 		return this.meetingDao.findByUid(uid);
 	}
-	
+
 	public List<Meeting> findConductedMeetings(final User owner, final Page page) {
 		Objects.requireNonNull(owner);
 		logger.debug("Find conducted meetings by owner {}", owner);
 		return this.meetingDao.findConductedMeetings(owner, page);
 	}
-	
+
 	public List<Meeting> findMeetings(final Candidate candidate, final Page page) {
 		Objects.requireNonNull(candidate);
 		logger.debug("Find meetings by candidate {}", candidate);

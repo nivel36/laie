@@ -22,7 +22,7 @@ public class Credential extends AbstractEntity {
 	private static final Random RANDOM = new SecureRandom();
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@NotNull
 	private LocalDate created;
 
@@ -47,7 +47,7 @@ public class Credential extends AbstractEntity {
 		this.created = LocalDate.now();
 	}
 
-	public Credential(User user, final String password) {
+	public Credential(final User user, final String password) {
 		Objects.requireNonNull(password);
 		Objects.requireNonNull(user);
 		this.hashPassword = new byte[32];
@@ -90,7 +90,7 @@ public class Credential extends AbstractEntity {
 	}
 
 	public User getUser() {
-		return user;
+		return this.user;
 	}
 
 	@Override
@@ -113,17 +113,17 @@ public class Credential extends AbstractEntity {
 		this.salt = this.getRandomSalt();
 		this.hashPassword = this.buildHashPassword(password);
 	}
-	
-	public void setPassword(final String password) {
-		this.salt = this.getRandomSalt();
-		this.hashPassword = this.buildHashPassword(password);
-	}
 
 	public void setCreated(final LocalDate created) {
 		this.created = created;
 	}
 
-	public void setUser(User user) {
+	public void setPassword(final String password) {
+		this.salt = this.getRandomSalt();
+		this.hashPassword = this.buildHashPassword(password);
+	}
+
+	public void setUser(final User user) {
 		this.user = user;
 	}
 }

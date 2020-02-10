@@ -18,22 +18,22 @@ public class CurriculumConverter implements Converter<Curriculum> {
 	private CurriculumService curriculumService;
 
 	@Override
-	public Curriculum getAsObject(FacesContext context, UIComponent component, String value) {
+	public Curriculum getAsObject(final FacesContext context, final UIComponent component, final String value) {
 		if (value == null) {
 			return null;
 		}
-		return curriculumService.findByUid(value);
+		return this.curriculumService.findByUid(value);
 	}
 
 	@Override
-	public String getAsString(FacesContext context, UIComponent component, Curriculum value) {
+	public String getAsString(final FacesContext context, final UIComponent component, final Curriculum value) {
 		if (value == null) {
 			return null;
 		}
 		return value.getUid();
 	}
 
-	public void setCurriculumService(CurriculumService curriculumService) {
+	public void setCurriculumService(final CurriculumService curriculumService) {
 		Objects.requireNonNull(curriculumService);
 		this.curriculumService = curriculumService;
 	}

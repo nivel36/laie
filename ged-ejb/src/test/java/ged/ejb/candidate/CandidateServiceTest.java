@@ -68,27 +68,6 @@ public class CandidateServiceTest {
 	}
 
 	@Nested
-	class FindAllCandidateDataByCandidateId {
-
-		@Test
-		public void badIdShouldThrowIllegalArgumentException() {
-			assertThrows(IllegalArgumentException.class, () -> {
-				candidateService.findCandidateData(0);
-			});
-		}
-
-		@Test
-		public void validIdShouldReturnCandidate() {
-			final Candidate mockedCandidate = mock(Candidate.class);
-
-			when(candidateDao.findCandidateData(1L)).thenReturn(mockedCandidate);
-
-			final Candidate candidateFromRepository = candidateService.findCandidateData(1L);
-			assertNotNull(candidateFromRepository);
-		}
-	}
-
-	@Nested
 	class FindFileByFileId {
 
 		@Test

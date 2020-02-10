@@ -24,11 +24,11 @@ public class AddEventView extends AbstractView {
 
 	private static final long serialVersionUID = 1L;
 
-	private JobCandidatureEvent jobCandidatureEvent;
-
 	@Inject
 	@Param(name = "jobCandidatureId")
 	private JobCandidature jobCandidature;
+
+	private JobCandidatureEvent jobCandidatureEvent;
 
 	@Inject
 	private transient JobCandidatureEventService jobCandidatureEventService;
@@ -46,24 +46,20 @@ public class AddEventView extends AbstractView {
 		return this.jobCandidatures;
 	}
 
-	public void updateState() {
-		this.jobCandidatureEvent.setState(this.jobCandidatureEvent.getJobCandidature().getState());
-	}
-
 	@PostConstruct
 	public void init() {
 		final User user = this.sessionUser.get();
-		this.jobCandidatureEvent = initEvent(user);
+		this.jobCandidatureEvent = this.initEvent(user);
 		this.jobCandidatures = this.jobCandidatureService.findJobCandidatures(user, Page.ALL_RESULTS);
 	}
 
 	public JobCandidatureEvent initEvent(final User user) {
-		return new JobCandidatureEvent(user, jobCandidature);
+		return new JobCandidatureEvent(user, this.jobCandidature);
 	}
 
 	public String save() {
 		this.jobCandidatureEventService.save(this.jobCandidatureEvent);
-		return navigator.getRedirectUrl(PageEnum.JOB, jobCandidature.getJobOffer());
+		return this.navigator.getRedirectUrl(PageEnum.JOB, this.jobCandidature.getJobOffer());
 	}
 
 	public void setEvent(final JobCandidatureEvent jobCandidatureEvent) {
@@ -76,5 +72,9 @@ public class AddEventView extends AbstractView {
 
 	public void setJobCandidatureService(final JobCandidatureService jobCandidatureService) {
 		this.jobCandidatureService = jobCandidatureService;
+	}
+
+	public void updateState() {
+		this.jobCandidatureEvent.setState(this.jobCandidatureEvent.getJobCandidature().getState());
 	}
 }

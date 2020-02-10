@@ -22,23 +22,15 @@ public class ClientService extends AbstractService<Client> {
 	@Repository
 	private ClientDao clientDao;
 
-	public Client findAllClientDataByClientId(final long clientId) {
-		if (clientId < 0) {
-			logger.warn("Bad client id {}", clientId);
-			throw new IllegalArgumentException();
-		}
-		logger.debug("Finding all client data by id {}", clientId);
-		return this.clientDao.findAllClientDataByClientId(clientId);
-	}
-	
 	public Client findByUid(final String uid) {
 		Objects.requireNonNull(uid);
+		logger.debug("Find client by uid {}", uid);
 		return this.clientDao.findByUid(uid);
 	}
 
 	public Client findClientByCif(final String cif) {
 		Objects.requireNonNull(cif);
-		logger.debug("Finding client by cif {}", cif);
+		logger.debug("Find client by cif {}", cif);
 		return this.clientDao.findClientByCif(cif);
 	}
 
@@ -48,6 +40,7 @@ public class ClientService extends AbstractService<Client> {
 	}
 
 	public void setClientDao(final ClientDao clientDao) {
+		Objects.requireNonNull(clientDao);
 		this.clientDao = clientDao;
 	}
 }

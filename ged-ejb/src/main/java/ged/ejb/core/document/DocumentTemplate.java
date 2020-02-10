@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 import ged.ejb.core.model.AbstractEntity;
 
 @Entity
-@Table(name = "DOCUMENT_TEMPLATE", uniqueConstraints = { @UniqueConstraint(columnNames = { "name", "language"}) })
+@Table(name = "DOCUMENT_TEMPLATE", uniqueConstraints = { @UniqueConstraint(columnNames = { "name", "language" }) })
 public class DocumentTemplate extends AbstractEntity {
 
 	private static final long serialVersionUID = 1L;
@@ -35,57 +35,60 @@ public class DocumentTemplate extends AbstractEntity {
 	private String title;
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
+	public boolean equals(final Object obj) {
+		if (this == obj) {
 			return true;
-		if (!super.equals(obj))
+		}
+		if (!super.equals(obj)) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (this.getClass() != obj.getClass()) {
 			return false;
+		}
 		final DocumentTemplate other = (DocumentTemplate) obj;
-		return Objects.equals(name, other.name) && Objects.equals(language, other.language);
+		return Objects.equals(this.name, other.name) && Objects.equals(this.language, other.language);
 	}
 
 	public String getLanguage() {
-		return language;
+		return this.language;
 	}
 
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	public String getText() {
-		return text;
+		return this.text;
 	}
 
 	public String getTitle() {
-		return title;
+		return this.title;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(name, language);
+		return Objects.hash(this.name, this.language);
 	}
 
-	public void setLanguage(String language) {
+	public void setLanguage(final String language) {
 		this.language = language;
 	}
 
-	public void setName(String name) {
+	public void setName(final String name) {
 		this.name = name;
 	}
 
-	public void setText(String text) {
+	public void setText(final String text) {
 		this.text = text;
 	}
 
-	public void setTitle(String title) {
+	public void setTitle(final String title) {
 		this.title = title;
 	}
 
 	@Override
 	public String toString() {
-		return name;
+		return this.name + " (" + this.language + ")";
 	}
 
 }

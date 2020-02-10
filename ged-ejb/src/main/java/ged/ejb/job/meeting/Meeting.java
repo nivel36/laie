@@ -26,12 +26,12 @@ import ged.ejb.user.User;
 @Entity
 @Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "jobCandidatureId", "datePlanned" }) })
 public class Meeting extends AbstractEntity implements Ownerable, Obfuscable {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	@ElementCollection
-	@CollectionTable(name="emails", joinColumns=@JoinColumn(name="meeting_id"))
-	@Column(name="email")
+	@CollectionTable(name = "emails", joinColumns = @JoinColumn(name = "meeting_id"))
+	@Column(name = "email")
 	private Set<String> attendeesEmails = new HashSet<>();
 
 	@NotNull
@@ -53,18 +53,18 @@ public class Meeting extends AbstractEntity implements Ownerable, Obfuscable {
 	private User owner;
 
 	private String result;
-	
+
 	@NotNull
 	@Column(nullable = false)
 	private String title;
-	
+
 	@NotNull
 	@Column(unique = true, nullable = false)
 	private String uid;
 
-	public void addAttendee(String email) {
+	public void addAttendee(final String email) {
 		Objects.requireNonNull(email, "Email can't be null");
-		attendeesEmails.add(email);
+		this.attendeesEmails.add(email);
 	}
 
 	@Override
@@ -82,14 +82,13 @@ public class Meeting extends AbstractEntity implements Ownerable, Obfuscable {
 			return false;
 		}
 		final Meeting other = (Meeting) obj;
-		return Objects.equals(this.datePlanned, other.datePlanned)
-				&& Objects.equals(this.title, other.title)
+		return Objects.equals(this.datePlanned, other.datePlanned) && Objects.equals(this.title, other.title)
 				&& Objects.equals(this.jobCandidature, other.jobCandidature)
 				&& Objects.equals(this.result, other.result);
 	}
 
 	public Set<String> getAttendeesEmails() {
-		return attendeesEmails;
+		return this.attendeesEmails;
 	}
 
 	public LocalDateTime getDatePlanned() {
@@ -135,12 +134,12 @@ public class Meeting extends AbstractEntity implements Ownerable, Obfuscable {
 		return Objects.hash(this.datePlanned, this.title, this.jobCandidature, this.result);
 	}
 
-	public void removeAttendee(String email) {
+	public void removeAttendee(final String email) {
 		Objects.requireNonNull(email, "Email can't be null");
-		attendeesEmails.remove(email);
+		this.attendeesEmails.remove(email);
 	}
 
-	public void setAttendeesEmails(Set<String> attendeesEmails) {
+	public void setAttendeesEmails(final Set<String> attendeesEmails) {
 		this.attendeesEmails = attendeesEmails;
 	}
 
@@ -177,7 +176,8 @@ public class Meeting extends AbstractEntity implements Ownerable, Obfuscable {
 		this.title = title;
 	}
 
-	public void setUid(String uid) {
+	@Override
+	public void setUid(final String uid) {
 		this.uid = uid;
 	}
 }

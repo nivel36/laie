@@ -18,12 +18,12 @@ public class OriginConverter implements Converter<Origin> {
 	private transient CandidateService candidateService;
 
 	@Override
-	public Origin getAsObject(FacesContext context, UIComponent component, String value) {
+	public Origin getAsObject(final FacesContext context, final UIComponent component, final String value) {
 		if (value == null) {
 			return null;
 		}
-		List<Origin> listOfOrigins = this.candidateService.findAllOrigins();
-		for (Origin origin : listOfOrigins) {
+		final List<Origin> listOfOrigins = this.candidateService.findAllOrigins();
+		for (final Origin origin : listOfOrigins) {
 			if (origin.getCode().equals(value)) {
 				return origin;
 			}
@@ -32,7 +32,7 @@ public class OriginConverter implements Converter<Origin> {
 	}
 
 	@Override
-	public String getAsString(FacesContext context, UIComponent component, Origin value) {
+	public String getAsString(final FacesContext context, final UIComponent component, final Origin value) {
 		if (value == null) {
 			return null;
 		}

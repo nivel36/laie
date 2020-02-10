@@ -25,13 +25,13 @@ public class Resources {
 
 	private Properties properties;
 
-	private InputStream getFileAsStream(final String path) {
-		final ClassLoader classLoader = getClassLoader();
-		return classLoader.getResourceAsStream(path);
-	}
-
 	private ClassLoader getClassLoader() {
 		return Thread.currentThread().getContextClassLoader();
+	}
+
+	private InputStream getFileAsStream(final String path) {
+		final ClassLoader classLoader = this.getClassLoader();
+		return classLoader.getResourceAsStream(path);
 	}
 
 	@PostConstruct

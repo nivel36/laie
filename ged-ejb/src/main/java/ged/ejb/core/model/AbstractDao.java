@@ -70,7 +70,7 @@ public abstract class AbstractDao<T extends AbstractEntity> {
 	}
 
 	protected <E> E findByQuery(final Class<E> entityClass, final String namedQuery,
-			final Map<String, Object> parameters, FlushModeType flushModeType) {
+			final Map<String, Object> parameters, final FlushModeType flushModeType) {
 		Objects.requireNonNull(entityClass);
 		Objects.requireNonNull(namedQuery);
 		return this.persistenceFacade.findByQuery(entityClass, namedQuery, parameters, flushModeType);
@@ -82,7 +82,7 @@ public abstract class AbstractDao<T extends AbstractEntity> {
 		Objects.requireNonNull(namedQuery);
 		try {
 			return this.persistenceFacade.findByQuery(entityClass, namedQuery, parameters, page);
-		} catch (NoResultException e) {
+		} catch (final NoResultException e) {
 			return new ArrayList<>();
 		}
 	}
@@ -117,18 +117,10 @@ public abstract class AbstractDao<T extends AbstractEntity> {
 
 	protected T insert(final T entity) {
 		this.preInsert(entity);
-		setUid(entity);
+		this.setUid(entity);
 		this.persistenceFacade.insert(entity);
 		this.postInsert(entity);
 		return entity;
-	}
-
-	private void setUid(final T entity) {
-		if (Obfuscable.class.isAssignableFrom(entity.getClass())) {
-			Obfuscable o = (Obfuscable) entity;
-			final String base64Id = generateUid();
-			o.setUid(base64Id);
-		}
 	}
 
 	protected void postInsert(final T entity) {
@@ -176,6 +168,14 @@ public abstract class AbstractDao<T extends AbstractEntity> {
 	public void setPersistenceFacade(final PersistenceFacade persistenceFacade) {
 		Objects.requireNonNull(persistenceFacade);
 		this.persistenceFacade = persistenceFacade;
+	}
+
+	private void setUid(final T entity) {
+		if (Obfuscable.class.isAssignableFrom(entity.getClass())) {
+			final Obfuscable o = (Obfuscable) entity;
+			final String base64Id = this.generateUid();
+			o.setUid(base64Id);
+		}
 	}
 
 	protected T update(final T entity) {

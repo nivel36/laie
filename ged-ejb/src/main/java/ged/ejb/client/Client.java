@@ -34,9 +34,9 @@ import ged.ejb.user.User;
 @Entity
 @Indexed
 public class Client extends AbstractEntity implements Ownerable, Erasable, Obfuscable {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	@Embedded
 	@IndexedEmbedded
 	private Address address;
@@ -81,7 +81,7 @@ public class Client extends AbstractEntity implements Ownerable, Erasable, Obfus
 
 	public Contact deleteContact(final Contact contact) {
 		Objects.requireNonNull(contact);
-		boolean delete = this.contacts.remove(contact);
+		final boolean delete = this.contacts.remove(contact);
 		if (!delete) {
 			throw new IllegalStateException(String.format("Contact %s doesn't exist", contact));
 		}
@@ -184,7 +184,8 @@ public class Client extends AbstractEntity implements Ownerable, Erasable, Obfus
 		this.phoneNumber = phoneNumber;
 	}
 
-	public void setUid(String uid) {
+	@Override
+	public void setUid(final String uid) {
 		this.uid = uid;
 	}
 

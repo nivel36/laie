@@ -15,10 +15,6 @@ public class ContactConverter implements Converter<Contact> {
 	@Inject
 	private ContactService contactService;
 
-	public void setContactService(final ContactService contactService) {
-		this.contactService = contactService;
-	}
-
 	@Override
 	public Contact getAsObject(final FacesContext context, final UIComponent component, final String value) {
 		if (value == null) {
@@ -33,5 +29,9 @@ public class ContactConverter implements Converter<Contact> {
 			return null;
 		}
 		return value.getUid();
+	}
+
+	public void setContactService(final ContactService contactService) {
+		this.contactService = contactService;
 	}
 }

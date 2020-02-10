@@ -45,11 +45,11 @@ public class JobCandidatureEventService extends AbstractService<JobCandidatureEv
 		return user;
 	}
 
-	public void onJobCandidatureCreated(@JobCandidatureCreatedEvent @Observes JobCandidature jobCandidature) {
+	public void onJobCandidatureCreated(@JobCandidatureCreatedEvent @Observes final JobCandidature jobCandidature) {
 		Objects.requireNonNull(jobCandidature, "Job candidature can't be null");
 		logger.debug("Create event for job candidature {}", jobCandidature);
 
-		final User user = loggedUser();
+		final User user = this.loggedUser();
 		final JobCandidatureEvent jobCandidatureEvent = new JobCandidatureEvent(user, jobCandidature);
 		jobCandidature.addJobCandidatureEvent(jobCandidatureEvent);
 		this.save(jobCandidatureEvent);

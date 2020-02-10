@@ -41,7 +41,7 @@ public class JobExperienceView extends AbstractView {
 	private YearMonthDto toDate;
 
 	private String curriculumUrl() {
-		return navigator.getRedirectUrl(PageEnum.CURRICULUM, this.curriculum);
+		return this.navigator.getRedirectUrl(PageEnum.CURRICULUM, this.curriculum);
 	}
 
 	public String delete() {
@@ -86,12 +86,12 @@ public class JobExperienceView extends AbstractView {
 	}
 
 	public JobExperience initJobExperience() {
-		if (jobExperience == null) {
-			jobExperience = new JobExperience();
-			jobExperience.setStillWorking(false);
-			jobExperience.setCurriculum(this.curriculum);
+		if (this.jobExperience == null) {
+			this.jobExperience = new JobExperience();
+			this.jobExperience.setStillWorking(false);
+			this.jobExperience.setCurriculum(this.curriculum);
 		}
-		return jobExperience;
+		return this.jobExperience;
 	}
 
 	public YearMonthDto initToDate() {
@@ -104,7 +104,7 @@ public class JobExperienceView extends AbstractView {
 	}
 
 	public boolean isNewJobExperience() {
-		return jobExperience.isNew();
+		return this.jobExperience.isNew();
 	}
 
 	public String save() {

@@ -131,6 +131,7 @@ public class User extends Person implements Obfuscable {
 		this.rowsPerPage = rowsPerPage;
 	}
 
+	@Override
 	public void setUid(final String uid) {
 		this.uid = uid;
 	}

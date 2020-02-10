@@ -10,6 +10,5 @@ import ged.web.core.view.AbstractView;
 public class ReportsMaintenanceView extends AbstractView {
 
 	private static final long serialVersionUID = 1L;
-	
 
 }

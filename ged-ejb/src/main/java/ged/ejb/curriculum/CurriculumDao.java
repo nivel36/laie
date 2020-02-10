@@ -17,11 +17,11 @@ public class CurriculumDao extends AbstractDao<Curriculum> {
 		Objects.requireNonNull(candidate);
 		try {
 			return this.findByQuery(Curriculum.class, "Curriculum.findByCandidate", map("candidate", candidate));
-		} catch (NoResultException e) {
+		} catch (final NoResultException e) {
 			return null;
 		}
 	}
-	
+
 	public Curriculum findByUid(final String uid) {
 		Objects.requireNonNull(uid);
 		return this.findByQuery(Curriculum.class, "Curriculum.findByUid", map("uid", uid));

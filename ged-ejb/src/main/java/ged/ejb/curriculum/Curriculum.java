@@ -38,7 +38,7 @@ public class Curriculum extends AbstractEntity implements Obfuscable {
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "curriculum", orphanRemoval = true)
 	private Set<Skill> skills;
-	
+
 	private String uid;
 
 	public void addEducation(final Education education) {
@@ -108,8 +108,9 @@ public class Curriculum extends AbstractEntity implements Obfuscable {
 		return this.skills;
 	}
 
+	@Override
 	public String getUid() {
-		return uid;
+		return this.uid;
 	}
 
 	@Override
@@ -157,7 +158,8 @@ public class Curriculum extends AbstractEntity implements Obfuscable {
 		this.skills = skills;
 	}
 
-	public void setUid(String uid) {
+	@Override
+	public void setUid(final String uid) {
 		this.uid = uid;
 	}
 

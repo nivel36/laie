@@ -15,10 +15,6 @@ public class CandidateConverter implements Converter<Candidate> {
 	@Inject
 	private CandidateService candidateService;
 
-	public void setCandidateService(final CandidateService candidateService) {
-		this.candidateService = candidateService;
-	}
-
 	@Override
 	public Candidate getAsObject(final FacesContext context, final UIComponent component, final String value) {
 		if (value == null) {
@@ -33,5 +29,9 @@ public class CandidateConverter implements Converter<Candidate> {
 			return null;
 		}
 		return value.getUid();
+	}
+
+	public void setCandidateService(final CandidateService candidateService) {
+		this.candidateService = candidateService;
 	}
 }

@@ -18,51 +18,26 @@ import ged.ejb.user.User;
 @ApplicationScoped
 public class ChatPush implements Serializable {
 
-	private static final long serialVersionUID = 1L;
-
-	@Inject
-	@Push(channel = "chat")
-	private PushContext push;
-
-	private int i = 0;
-	
-	public void sendMessage(final User fromUser, final User toUser, final String message) {
-		Objects.requireNonNull(fromUser);
-		Objects.requireNonNull(toUser);
-		Objects.requireNonNull(message);
-		final DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd 'de' MMMM 'de' uuuu"); // TODO
-		final DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("hh:mm:ss");
-		final MessageInfo info = new MessageInfo(fromUser.getName(), message, dateFormat.format(LocalDate.now()), i++ % 3 == 0, timeFormat.format(LocalTime.now()));
-		getPush().send(info, fromUser);
-		getPush().send(info, toUser);
-	}
-	
-	public PushContext getPush() {
-		return push;
-	}
-
-	public void setPush(PushContext push) {
-		this.push = push;
-	}
-	
 	/*
-	 * Si se cambia el nombre de las variables se debe modificar también en right-panel.xhtml
+	 * Si se cambia el nombre de las variables se debe modificar también en
+	 * right-panel.xhtml
 	 */
 	public static class MessageInfo implements Serializable {
-		
+
 		private static final long serialVersionUID = 1L;
 
-		private final String username;
-		
-		private final String message;
-		
 		private final String date;
-		
+
 		private final boolean firstMsgOfDay;
-		
+
+		private final String message;
+
 		private final String time;
-		
-		public MessageInfo(final String username, final String message, final String date, final boolean firstMsgOfDay, final String time) {
+
+		private final String username;
+
+		public MessageInfo(final String username, final String message, final String date, final boolean firstMsgOfDay,
+				final String time) {
 			super();
 			Objects.requireNonNull(username);
 			Objects.requireNonNull(message);
@@ -74,24 +49,52 @@ public class ChatPush implements Serializable {
 			this.time = time;
 		}
 
-		public String getUsername() {
-			return username;
+		public String getDate() {
+			return this.date;
 		}
 
 		public String getMessage() {
-			return message;
-		}
-
-		public String getDate() {
-			return date;
-		}
-
-		public boolean isFirstMsgOfDay() {
-			return firstMsgOfDay;
+			return this.message;
 		}
 
 		public String getTime() {
-			return time;
+			return this.time;
 		}
+
+		public String getUsername() {
+			return this.username;
+		}
+
+		public boolean isFirstMsgOfDay() {
+			return this.firstMsgOfDay;
+		}
+	}
+
+	private static final long serialVersionUID = 1L;
+
+	private int i = 0;
+
+	@Inject
+	@Push(channel = "chat")
+	private PushContext push;
+
+	public PushContext getPush() {
+		return this.push;
+	}
+
+	public void sendMessage(final User fromUser, final User toUser, final String message) {
+		Objects.requireNonNull(fromUser);
+		Objects.requireNonNull(toUser);
+		Objects.requireNonNull(message);
+		final DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd 'de' MMMM 'de' uuuu"); // TODO
+		final DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("hh:mm:ss");
+		final MessageInfo info = new MessageInfo(fromUser.getName(), message, dateFormat.format(LocalDate.now()),
+				(this.i++ % 3) == 0, timeFormat.format(LocalTime.now()));
+		this.getPush().send(info, fromUser);
+		this.getPush().send(info, toUser);
+	}
+
+	public void setPush(final PushContext push) {
+		this.push = push;
 	}
 }

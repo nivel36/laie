@@ -15,34 +15,12 @@ import ged.ejb.user.User;
 @Stateless
 public class ChatService implements Serializable {
 
-	private static final long serialVersionUID = 1L;
-	
-	private final Map<User, List<Value>> messages = new HashMap<User, List<Value>>();
-
-	public void sendMessage(final User user, final String message) {
-		Objects.requireNonNull(user);
-		Objects.requireNonNull(message);
-		if (!getMessages().containsKey(user)) {
-			getMessages().put(user, new ArrayList<>());
-		}
-		getMessages().get(user).add(new Value(LocalDate.now(), message));
-		System.out.println(getMessages().get(user).toString());
-	}
-	
-	public List<Value> getMessages(final User user) {
-		Objects.requireNonNull(user);
-		if (getMessages().containsKey(user)) {
-			return new ArrayList<>();
-		}
-		return getMessages().get(user);
-	}
-	
 	private static class Value {
-		
+
 		private final LocalDate date;
-		
+
 		private final String message;
-		
+
 		public Value(final LocalDate date, final String message) {
 			super();
 			Objects.requireNonNull(date);
@@ -52,20 +30,42 @@ public class ChatService implements Serializable {
 		}
 
 		public LocalDate getDate() {
-			return date;
+			return this.date;
 		}
 
 		public String getMessage() {
-			return message;
+			return this.message;
 		}
 
 		@Override
 		public String toString() {
-			return "Value [date=" + date + ", message=" + message + "]";
+			return "Value [date=" + this.date + ", message=" + this.message + "]";
 		}
 	}
 
+	private static final long serialVersionUID = 1L;
+
+	private final Map<User, List<Value>> messages = new HashMap<User, List<Value>>();
+
 	public Map<User, List<Value>> getMessages() {
-		return messages;
+		return this.messages;
+	}
+
+	public List<Value> getMessages(final User user) {
+		Objects.requireNonNull(user);
+		if (this.getMessages().containsKey(user)) {
+			return new ArrayList<>();
+		}
+		return this.getMessages().get(user);
+	}
+
+	public void sendMessage(final User user, final String message) {
+		Objects.requireNonNull(user);
+		Objects.requireNonNull(message);
+		if (!this.getMessages().containsKey(user)) {
+			this.getMessages().put(user, new ArrayList<>());
+		}
+		this.getMessages().get(user).add(new Value(LocalDate.now(), message));
+		System.out.println(this.getMessages().get(user).toString());
 	}
 }

@@ -26,14 +26,14 @@ public abstract class AbstractCandidateView extends AbstractView {
 	private static final long serialVersionUID = 1L;
 
 	@Inject
+	@Param(name = "id", required = true)
+	protected Candidate candidate;
+
+	@Inject
 	protected transient CandidateService candidateService;
 
 	@Inject
 	protected transient FileService fileUploadService;
-
-	@Inject
-	@Param(name = "id", required = true)
-	protected Candidate candidate;
 
 	protected List<Tag> tags;
 
@@ -41,7 +41,7 @@ public abstract class AbstractCandidateView extends AbstractView {
 	protected transient TagService tagService;
 
 	protected String candidateUrl() {
-		return navigator.getRedirectUrl(PageEnum.CANDIDATE, this.candidate);
+		return this.navigator.getRedirectUrl(PageEnum.CANDIDATE, this.candidate);
 	}
 
 	public Candidate getCandidate() {

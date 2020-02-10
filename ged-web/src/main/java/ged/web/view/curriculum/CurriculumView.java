@@ -56,26 +56,26 @@ public class CurriculumView extends AbstractView {
 		final Map<String, String> queryParams = new HashMap<>();
 		queryParams.put(ID, education.getUid());
 		queryParams.put(CURRICULUM_ID, this.curriculum.getUid());
-		return navigator.getRedirectUrl(PageEnum.CURRICULUM_EDUCATION, queryParams);
+		return this.navigator.getRedirectUrl(PageEnum.CURRICULUM_EDUCATION, queryParams);
 	}
 
 	public String editJobExperience(final JobExperience jobExperience) {
 		final Map<String, String> queryParams = new HashMap<>();
 		queryParams.put(ID, jobExperience.getUid());
 		queryParams.put(CURRICULUM_ID, this.curriculum.getUid());
-		return navigator.getRedirectUrl(PageEnum.CURRICULUM_JOB_EXPERIENCE, queryParams);
+		return this.navigator.getRedirectUrl(PageEnum.CURRICULUM_JOB_EXPERIENCE, queryParams);
 	}
 
 	public String editLanguages() {
 		final Map<String, String> queryParams = new HashMap<>();
 		queryParams.put(CURRICULUM_ID, this.curriculum.getUid());
-		return navigator.getRedirectUrl(PageEnum.CURRICULUM_LANGUAGE, queryParams);
+		return this.navigator.getRedirectUrl(PageEnum.CURRICULUM_LANGUAGE, queryParams);
 	}
 
 	public String editSkills() {
 		final Map<String, String> queryParams = new HashMap<>();
 		queryParams.put(CURRICULUM_ID, this.curriculum.getUid());
-		return navigator.getRedirectUrl(PageEnum.CURRICULUM_SKILLS, queryParams);
+		return this.navigator.getRedirectUrl(PageEnum.CURRICULUM_SKILLS, queryParams);
 	}
 
 	public Candidate getCandidate() {
@@ -104,7 +104,7 @@ public class CurriculumView extends AbstractView {
 
 	@PostConstruct
 	public void init() {
-		if (this.curriculum == null && this.candidate == null) {
+		if ((this.curriculum == null) && (this.candidate == null)) {
 			throw new IllegalPageStateException();
 		}
 		if (this.curriculum == null) {
@@ -137,25 +137,25 @@ public class CurriculumView extends AbstractView {
 	public String newEducation() {
 		final Map<String, String> queryParams = new HashMap<>();
 		queryParams.put(CURRICULUM_ID, this.curriculum.getUid());
-		return navigator.getRedirectUrl(PageEnum.CURRICULUM_EDUCATION, queryParams);
+		return this.navigator.getRedirectUrl(PageEnum.CURRICULUM_EDUCATION, queryParams);
 	}
 
 	public String newJobExperience() {
 		final Map<String, String> queryParams = new HashMap<>();
 		queryParams.put(CURRICULUM_ID, this.curriculum.getUid());
-		return navigator.getRedirectUrl(PageEnum.CURRICULUM_JOB_EXPERIENCE, queryParams);
+		return this.navigator.getRedirectUrl(PageEnum.CURRICULUM_JOB_EXPERIENCE, queryParams);
 	}
 
 	public String newLanguage() {
 		final Map<String, String> queryParams = new HashMap<>();
 		queryParams.put(CURRICULUM_ID, this.curriculum.getUid());
-		return navigator.getRedirectUrl(PageEnum.CURRICULUM_LANGUAGE, queryParams);
+		return this.navigator.getRedirectUrl(PageEnum.CURRICULUM_LANGUAGE, queryParams);
 	}
 
 	public String newSkill() {
 		final Map<String, String> queryParams = new HashMap<>();
 		queryParams.put(CURRICULUM_ID, this.curriculum.getUid());
-		return navigator.getRedirectUrl(PageEnum.CURRICULUM_SKILLS, queryParams);
+		return this.navigator.getRedirectUrl(PageEnum.CURRICULUM_SKILLS, queryParams);
 	}
 
 	private void orderEducationByDate() {

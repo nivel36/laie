@@ -28,10 +28,6 @@ public class Education extends AbstractEntity implements Obfuscable {
 	@NotNull
 	@Column(length = 128, nullable = false)
 	private String degree;
-	
-	@NotNull
-	@Column(length = 128, nullable = false)
-	private String uid;
 
 	@Field
 	@Column(length = 512)
@@ -48,6 +44,10 @@ public class Education extends AbstractEntity implements Obfuscable {
 	@NotNull
 	@Column(nullable = false)
 	private boolean stillStudying;
+
+	@NotNull
+	@Column(length = 128, nullable = false)
+	private String uid;
 
 	@Override
 	public boolean equals(final Object obj) {
@@ -92,6 +92,11 @@ public class Education extends AbstractEntity implements Obfuscable {
 	}
 
 	@Override
+	public String getUid() {
+		return this.uid;
+	}
+
+	@Override
 	public int hashCode() {
 		return Objects.hash(this.degree, this.description, this.startYear, this.stillStudying, this.endYear);
 	}
@@ -129,10 +134,6 @@ public class Education extends AbstractEntity implements Obfuscable {
 	}
 
 	@Override
-	public String getUid() {
-		return uid;
-	}
-	
 	public void setUid(final String uid) {
 		this.uid = uid;
 	}

@@ -21,11 +21,6 @@ public class CandidateDao extends AbstractDao<Candidate> {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
-	public Candidate findByUid(final String uid) {
-		Objects.requireNonNull(uid);
-		return this.findByQuery(Candidate.class, "Candidate.findByUid", map("uid", uid));
-	}
-
 	public boolean emailExists(final String email) {
 		Objects.requireNonNull(email);
 		return this.findByQuery(Boolean.class, "Candidate.emailExists", map("email", email));
@@ -35,17 +30,9 @@ public class CandidateDao extends AbstractDao<Candidate> {
 		return this.getPersistenceFacade().findAll(Origin.class, Page.ALL_RESULTS);
 	}
 
-	public Candidate findCandidateByEmail(final String email) {
-		Objects.requireNonNull(email);
-		return this.findByQuery(Candidate.class, "Candidate.findByEmail", map("email", email));
-	}
-
-	public Candidate findCandidateData(final long candidateId) {
-		if (candidateId < 1) {
-			logger.error("Bad candidate id: {}", candidateId);
-			throw new IllegalArgumentException("Bad candidate id " + candidateId);
-		}
-		return this.findByQuery(Candidate.class, "Candidate.findAllDataById", map("id", candidateId));
+	public Candidate findByUid(final String uid) {
+		Objects.requireNonNull(uid);
+		return this.findByQuery(Candidate.class, "Candidate.findByUid", map("uid", uid));
 	}
 
 	public List<Candidate> findCandidates(final JobOffer jobOffer, final Page page) {
@@ -84,6 +71,6 @@ public class CandidateDao extends AbstractDao<Candidate> {
 
 	@Override
 	public String[] searchFields() {
-		return new String[] { "_name", "_surname", "_jobProfile", "tags.label" };
+		return new String[] { "_name", "_surname", "_jobProfile", "tags._label" };
 	}
 }

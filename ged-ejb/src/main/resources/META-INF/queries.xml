@@ -3,30 +3,11 @@
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence/orm
         http://xmlns.jcp.org/xml/ns/persistence/orm_2_1.xsd" version="2.1">
 
-	<named-query name="Candidate.findAllDataById">
-		<query><![CDATA[
-			SELECT c 
-			FROM Candidate c 
-			LEFT JOIN FETCH c.files
-			LEFT JOIN FETCH c.tags
-			LEFT JOIN FETCH c.jobCandidatures
-			WHERE c.id = :id
-		]]></query>
-	</named-query>
-
 	<named-query name="Candidate.findByUid">
 		<query><![CDATA[
 			SELECT c 
 			FROM Candidate c 
 			WHERE c.uid = :uid
-		]]></query>
-	</named-query>
-
-	<named-query name="Candidate.findByEmail">
-		<query><![CDATA[
-			SELECT c 
-			FROM Candidate c 
-			WHERE c.email = :email
 		]]></query>
 	</named-query>
 
@@ -54,30 +35,12 @@
 			WHERE c.uid = :uid
 		]]></query>
 	</named-query>
-
-	<named-query name="Client.findByClientId">
-		<query><![CDATA[
-			SELECT c 
-			FROM Client c 
-			LEFT JOIN FETCH c.contacts
-			LEFT JOIN FETCH c.jobOffers
-			WHERE c.id = :clientId
-		]]></query>
-	</named-query>
-
+	
 	<named-query name="Contact.findByClient">
 		<query><![CDATA[
 			SELECT c 
 			FROM Contact c 
 			WHERE c.client = :client
-		]]></query>
-	</named-query>
-
-	<named-query name="Contact.findByEmail">
-		<query><![CDATA[
-			SELECT c 
-			FROM Contact c 
-			WHERE c.email = :email
 		]]></query>
 	</named-query>
 

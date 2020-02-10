@@ -15,11 +15,6 @@ public class ClientConverter implements Converter<Client> {
 	@Inject
 	private ClientService clientService;
 
-
-	public void setClientService(final ClientService clientService) {
-		this.clientService = clientService;
-	}
-	
 	@Override
 	public Client getAsObject(final FacesContext context, final UIComponent component, final String value) {
 		if (value == null) {
@@ -34,5 +29,9 @@ public class ClientConverter implements Converter<Client> {
 			return null;
 		}
 		return value.getUid();
+	}
+
+	public void setClientService(final ClientService clientService) {
+		this.clientService = clientService;
 	}
 }

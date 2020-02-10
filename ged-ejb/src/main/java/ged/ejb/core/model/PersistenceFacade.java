@@ -52,19 +52,12 @@ public class PersistenceFacade {
 		this.em = em;
 	}
 
-	private void enableFaceting(final SearchFacets searchFacets, final QueryBuilder qb,
-			final FullTextQuery fullTextQuery) {
-		if (searchFacets == null) {
-			return;
-		}
-
-		final FacetManager facetManager = fullTextQuery.getFacetManager();
-		for (final SearchFacet searchFacet : searchFacets) {
-			final String facetName = searchFacet.getName();
-			final String facetField = searchFacet.getField();
-			final FacetingRequest facetingRequest = qb.facet().name(facetName).onField(facetField).discrete()
-					.createFacetingRequest();
-			facetManager.enableFaceting(facetingRequest);
+	private <T extends Identifiable> SearchResult<T> buildSearchResult(final List<T> results, final int resultsSize,
+			final Map<String, List<Facet>> allFacets) {
+		if (results instanceof ArrayList) {
+			return new SearchResult<>(results, resultsSize, allFacets);
+		} else {
+			return new SearchResult<>(new ArrayList<>(results), resultsSize, allFacets);
 		}
 	}
 
@@ -113,6 +106,22 @@ public class PersistenceFacade {
 		}
 	}
 
+	private void enableFaceting(final SearchFacets searchFacets, final QueryBuilder qb,
+			final FullTextQuery fullTextQuery) {
+		if (searchFacets == null) {
+			return;
+		}
+
+		final FacetManager facetManager = fullTextQuery.getFacetManager();
+		for (final SearchFacet searchFacet : searchFacets) {
+			final String facetName = searchFacet.getName();
+			final String facetField = searchFacet.getField();
+			final FacetingRequest facetingRequest = qb.facet().name(facetName).onField(facetField).discrete()
+					.createFacetingRequest();
+			facetManager.enableFaceting(facetingRequest);
+		}
+	}
+
 	public <T extends Identifiable> T find(final Class<T> type, final long id) {
 		Objects.requireNonNull(id);
 		logger.debug("Find class {} by id {}", type, id);
@@ -139,8 +148,13 @@ public class PersistenceFacade {
 		return query.getResultList();
 	}
 
+	public <E> E findByQuery(final Class<E> entityClass, final String namedQuery,
+			final Map<String, Object> parameters) {
+		return this.findByQuery(entityClass, namedQuery, parameters, FlushModeType.AUTO);
+	}
+
 	public <E> E findByQuery(final Class<E> entityClass, final String namedQuery, final Map<String, Object> parameters,
-			FlushModeType flusModeType) {
+			final FlushModeType flusModeType) {
 		Objects.requireNonNull(entityClass);
 		Objects.requireNonNull(namedQuery);
 		logger.debug("Find entity {} by named query {}", entityClass, namedQuery);
@@ -149,11 +163,6 @@ public class PersistenceFacade {
 		query.setFlushMode(flusModeType);
 		this.parametrize(parameters, query);
 		return query.getSingleResult();
-	}
-
-	public <E> E findByQuery(final Class<E> entityClass, final String namedQuery,
-			final Map<String, Object> parameters) {
-		return findByQuery(entityClass, namedQuery, parameters, FlushModeType.AUTO);
 	}
 
 	public <E> List<E> findByQuery(final Class<E> entityClass, final String namedQuery,
@@ -183,7 +192,7 @@ public class PersistenceFacade {
 	}
 
 	private boolean hasSortFields(final List<SortField> sortFields) {
-		return sortFields != null && !sortFields.isEmpty();
+		return (sortFields != null) && !sortFields.isEmpty();
 	}
 
 	public <T extends Identifiable> void insert(final T entity) {
@@ -223,14 +232,14 @@ public class PersistenceFacade {
 		this.paginate(page, fullTextQuery);
 		this.sortQuery(sortFields, qb, fullTextQuery);
 		this.enableFaceting(searchFacets, qb, fullTextQuery);
-		final Map<String, List<Facet>> allFacets = selectFacets(searchFacets, fullTextQuery);
-		if (searchFacets != null && !searchFacets.isEmpty()) {
+		final Map<String, List<Facet>> allFacets = this.selectFacets(searchFacets, fullTextQuery);
+		if ((searchFacets != null) && !searchFacets.isEmpty()) {
 			boolean hasFacet = false;
-			for (String key : allFacets.keySet()) {
+			for (final String key : allFacets.keySet()) {
 				if (hasFacet) {
 					break;
 				}
-				for (Facet facet : allFacets.get(key)) {
+				for (final Facet facet : allFacets.get(key)) {
 					if (searchFacets.containsFacet(facet.getFieldName(), key, facet.getValue())) {
 						hasFacet = true;
 						break;
@@ -238,19 +247,10 @@ public class PersistenceFacade {
 				}
 			}
 			if (!hasFacet) {
-				return buildSearchResult(new ArrayList<>(), 0, allFacets);
+				return this.buildSearchResult(new ArrayList<>(), 0, allFacets);
 			}
 		}
-		return buildSearchResult(fullTextQuery.getResultList(), fullTextQuery.getResultSize(), allFacets);
-	}
-
-	private <T extends Identifiable> SearchResult<T> buildSearchResult(final List<T> results, int resultsSize,
-			final Map<String, List<Facet>> allFacets) {
-		if (results instanceof ArrayList) {
-			return new SearchResult<>(results, resultsSize, allFacets);
-		} else {
-			return new SearchResult<>(new ArrayList<>(results), resultsSize, allFacets);
-		}
+		return this.buildSearchResult(fullTextQuery.getResultList(), fullTextQuery.getResultSize(), allFacets);
 	}
 
 	private Map<String, List<Facet>> selectFacets(final SearchFacets searchFacets, final FullTextQuery fullTextQuery) {
@@ -269,8 +269,8 @@ public class PersistenceFacade {
 				final int facetsLength = searchFacet.getSelectedFactes().length;
 				final List<Facet> facetList = new ArrayList<>();
 				for (int i = 0; i < facetsLength; i++) {
-					for (String selectedFacet : searchFacet.getSelectedFactes()) {
-						for (Facet facet : facets) {
+					for (final String selectedFacet : searchFacet.getSelectedFactes()) {
+						for (final Facet facet : facets) {
 							if (facet.getValue().equals(selectedFacet)) {
 								facetList.add(facet);
 							}

@@ -21,9 +21,9 @@ public class AddUserView extends AbstractUserView {
 	private static final long serialVersionUID = 1L;
 
 	private String password;
-	
+
 	private String repeatPassword;
-	
+
 	private boolean sendWelcomeEmail;
 
 	private User buildNewUser() {
@@ -42,11 +42,11 @@ public class AddUserView extends AbstractUserView {
 	}
 
 	public String getPassword() {
-		return password;
+		return this.password;
 	}
 
 	public String getRepeatPassword() {
-		return repeatPassword;
+		return this.repeatPassword;
 	}
 
 	@PostConstruct
@@ -58,7 +58,7 @@ public class AddUserView extends AbstractUserView {
 	}
 
 	public boolean isSendWelcomeEmail() {
-		return sendWelcomeEmail;
+		return this.sendWelcomeEmail;
 	}
 
 	public String save() {
@@ -67,15 +67,15 @@ public class AddUserView extends AbstractUserView {
 		return this.userUrl();
 	}
 
-	public void setPassword(String password) {
+	public void setPassword(final String password) {
 		this.password = password;
 	}
 
-	public void setRepeatPassword(String repeatPassword) {
+	public void setRepeatPassword(final String repeatPassword) {
 		this.repeatPassword = repeatPassword;
 	}
 
-	public void setSendWelcomeEmail(boolean sendWelcomeEmail) {
+	public void setSendWelcomeEmail(final boolean sendWelcomeEmail) {
 		this.sendWelcomeEmail = sendWelcomeEmail;
 	}
 }

@@ -23,14 +23,15 @@ public class ContactService extends AbstractService<Contact> {
 	@Repository
 	private ContactDao contactDao;
 
-	public Contact findContactByEmail(final String email) {
-		Objects.requireNonNull(email, "Email can't be null");
-		return this.contactDao.findContactByEmail(email);
+	public Contact findByUid(final String uid) {
+		Objects.requireNonNull(uid);
+		logger.debug("Find contact by uid {}", uid);
+		return this.contactDao.findByUid(uid);
 	}
 
 	public List<Contact> findContactsByClient(final Client client) {
 		Objects.requireNonNull(client);
-		logger.debug("Finding contacts by client {}", client);
+		logger.debug("Find contacts by client {}", client);
 		return this.contactDao.findContactsByClient(client);
 	}
 
@@ -40,11 +41,7 @@ public class ContactService extends AbstractService<Contact> {
 	}
 
 	public void setContactDao(final ContactDao contactDao) {
+		Objects.requireNonNull(contactDao);
 		this.contactDao = contactDao;
-	}
-	
-	public Contact findByUid(final String uid) {
-		Objects.requireNonNull(uid);
-		return this.contactDao.findByUid(uid);
 	}
 }

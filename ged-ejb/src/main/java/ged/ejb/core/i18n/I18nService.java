@@ -18,7 +18,7 @@ public class I18nService extends AbstractService<I18nString> {
 	public I18nString find(final String key, final String locale) {
 		try {
 			return this.i18nDao.find(key, locale);
-		} catch (NoResultException e) {
+		} catch (final NoResultException e) {
 			final I18nString i18nString = new I18nString();
 			i18nString.setKey(key);
 			i18nString.setKey(locale);

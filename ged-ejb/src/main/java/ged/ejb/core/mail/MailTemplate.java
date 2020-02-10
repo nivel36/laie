@@ -10,30 +10,30 @@ public class MailTemplate {
 
 	private final String subject;
 
-	public MailTemplate(String name, String messageTemplate, String subject) {
+	public MailTemplate(final String name, final String messageTemplate, final String subject) {
 		this.name = name;
 		this.messageTemplate = messageTemplate;
 		this.subject = subject;
 	}
 
-	public String getMessageTemplate() {
-		return messageTemplate;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public String getSubject() {
-		return subject;
-	}
-
 	public String buildMessage(final Map<String, String> parameters) {
-		String message = messageTemplate;
-		for (String key : parameters.keySet()) {
-			String value = parameters.get(key);
+		final String message = this.messageTemplate;
+		for (final String key : parameters.keySet()) {
+			final String value = parameters.get(key);
 			message.replace("%" + key + "%", value);
 		}
 		return message;
+	}
+
+	public String getMessageTemplate() {
+		return this.messageTemplate;
+	}
+
+	public String getName() {
+		return this.name;
+	}
+
+	public String getSubject() {
+		return this.subject;
 	}
 }

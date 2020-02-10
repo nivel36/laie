@@ -80,11 +80,11 @@ public class CurriculumService extends AbstractService<Curriculum> {
 		this.curriculumDao = curriculumDao;
 	}
 
-	public void setEducationDao(EducationDao educationDao) {
+	public void setEducationDao(final EducationDao educationDao) {
 		this.educationDao = educationDao;
 	}
 
-	public void setJobExperienceDao(JobExperienceDao jobExperienceDao) {
+	public void setJobExperienceDao(final JobExperienceDao jobExperienceDao) {
 		this.jobExperienceDao = jobExperienceDao;
 	}
 }

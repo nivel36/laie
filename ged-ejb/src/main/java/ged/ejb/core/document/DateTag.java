@@ -11,19 +11,19 @@ public class DateTag extends AbstractTemplateTag implements TemplateTag {
 
 	private final Locale locale;
 
-	public DateTag(Locale locale) {
+	public DateTag(final Locale locale) {
 		this.locale = locale;
-	}
-
-	@Override
-	public String getText() {
-		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL)
-		        .withLocale(locale);
-		return LocalDate.now().format(dateTimeFormatter);
 	}
 
 	@Override
 	public String getTagName() {
 		return DATE;
+	}
+
+	@Override
+	public String getText() {
+		final DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL).withLocale(this.locale);
+		final LocalDate now = LocalDate.now();
+		return now.format(formatter);
 	}
 }

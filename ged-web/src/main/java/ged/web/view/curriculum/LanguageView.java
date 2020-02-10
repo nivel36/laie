@@ -42,7 +42,7 @@ public class LanguageView extends AbstractView {
 	private List<Language> languages;
 
 	private String curriculumUrl() {
-		return navigator.getRedirectUrl(PageEnum.CURRICULUM, this.curriculum.getCandidate());
+		return this.navigator.getRedirectUrl(PageEnum.CURRICULUM, this.curriculum.getCandidate());
 	}
 
 	public void deleteLanguage(final Language language) {

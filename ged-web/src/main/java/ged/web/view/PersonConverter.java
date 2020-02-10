@@ -31,19 +31,19 @@ public class PersonConverter implements Converter<Person> {
 		if (value == null) {
 			return null;
 		}
-		final User user = this.userService.findUserByEmail(value);
+		final User user = this.userService.findByUid(value);
 		if (user != null) {
 			return user;
 		}
-		final Candidate candidate = this.candidateService.findCandidateByEmail(value);
+		final Candidate candidate = this.candidateService.findByUid(value);
 		if (candidate != null) {
 			return candidate;
 		}
-		final Contact contact = this.contactService.findContactByEmail(value);
+		final Contact contact = this.contactService.findByUid(value);
 		if (contact != null) {
 			return contact;
 		}
-		return new SimplePerson(value);
+		return null;
 	}
 
 	@Override
@@ -51,7 +51,7 @@ public class PersonConverter implements Converter<Person> {
 		if (person == null) {
 			return null;
 		}
-		return person.getEmail();
+		return person.getUid();
 	}
 
 	public void setCandidateService(final CandidateService candidateService) {

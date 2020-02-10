@@ -43,21 +43,21 @@ public class UserDao extends AbstractDao<User> {
 		return this.findByQuery(User.class, "User.findByUid", map("uid", uid));
 	}
 
-	public List<User> findSubordinateUsers(final User user) {
-		Objects.requireNonNull(user);
-		return this.findByQuery(User.class, "User.findSubordinateUsers", map(ID, user.getId()), Page.ALL_RESULTS);
-	}
-
 	public Credential findCredential(final String email) {
 		Objects.requireNonNull(email);
 		return this.findByQuery(Credential.class, "User.findCredential", map(EMAIL, email));
+	}
+
+	public List<User> findSubordinateUsers(final User user) {
+		Objects.requireNonNull(user);
+		return this.findByQuery(User.class, "User.findSubordinateUsers", map(ID, user.getId()), Page.ALL_RESULTS);
 	}
 
 	public User findUserByEmail(final String email) {
 		Objects.requireNonNull(email);
 		try {
 			return this.findByQuery(User.class, "User.findByEmail", map(EMAIL, email));
-		} catch (NoResultException e) {
+		} catch (final NoResultException e) {
 			return null;
 		}
 	}
@@ -68,7 +68,7 @@ public class UserDao extends AbstractDao<User> {
 		try {
 			return this.getPersistenceFacade().findByQuery(User.class, "User.findByTokenHashAndType",
 					map("tokenHash", tokenHash).and("type", type));
-		} catch (NoResultException e) {
+		} catch (final NoResultException e) {
 			return null;
 		}
 	}

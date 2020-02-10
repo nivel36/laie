@@ -92,7 +92,7 @@ public abstract class AbstractUserView extends AbstractView {
 	}
 
 	protected String userUrl() {
-		return navigator.getRedirectUrl(PageEnum.USER, this.user);
+		return this.navigator.getRedirectUrl(PageEnum.USER, this.user);
 	}
 
 	public void validateEmail(final FacesContext context, final UIComponent component, final Object value) {

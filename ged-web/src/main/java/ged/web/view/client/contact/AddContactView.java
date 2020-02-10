@@ -57,7 +57,7 @@ public class AddContactView extends AbstractView {
 
 	public String save() {
 		this.contactService.save(this.contact);
-		return navigator.getRedirectUrl(PageEnum.CLIENT, this.client);
+		return this.navigator.getRedirectUrl(PageEnum.CLIENT, this.client);
 
 	}
 

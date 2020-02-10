@@ -29,10 +29,10 @@ public class JobCandidatureEvent extends AbstractEntity {
 	@SortableField(forField = "date")
 	private LocalDateTime date;
 
-	private String notes;
-
 	@ManyToOne
 	private JobCandidature jobCandidature;
+
+	private String notes;
 
 	@ManyToOne
 	@IndexedEmbedded
@@ -77,12 +77,12 @@ public class JobCandidatureEvent extends AbstractEntity {
 		return this.date;
 	}
 
-	public String getNotes() {
-		return this.notes;
-	}
-
 	public JobCandidature getJobCandidature() {
 		return this.jobCandidature;
+	}
+
+	public String getNotes() {
+		return this.notes;
 	}
 
 	public JobCandidatureState getState() {
@@ -106,12 +106,12 @@ public class JobCandidatureEvent extends AbstractEntity {
 		this.date = date;
 	}
 
-	public void setNotes(final String notes) {
-		this.notes = notes;
-	}
-
 	public void setJobCandidature(final JobCandidature jobCandidature) {
 		this.jobCandidature = jobCandidature;
+	}
+
+	public void setNotes(final String notes) {
+		this.notes = notes;
 	}
 
 	public void setState(final JobCandidatureState state) {

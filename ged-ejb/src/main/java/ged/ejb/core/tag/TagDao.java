@@ -16,7 +16,7 @@ public class TagDao extends AbstractDao<Tag> {
 		Objects.requireNonNull(label, "Label can't be null");
 		try {
 			return this.getPersistenceFacade().findByQuery(Tag.class, "Tag.findByLabel", map("label", label));
-		} catch (NoResultException e) {
+		} catch (final NoResultException e) {
 			return null;
 		}
 	}

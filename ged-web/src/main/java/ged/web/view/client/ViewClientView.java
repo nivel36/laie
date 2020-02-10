@@ -49,7 +49,7 @@ public class ViewClientView extends AbstractClientView {
 
 	public String editClient() {
 		logger.debug("Edit client action performed");
-		return navigator.getRedirectUrl(PageEnum.CLIENT_EDIT, client);
+		return this.navigator.getRedirectUrl(PageEnum.CLIENT_EDIT, this.client);
 	}
 
 	public void export() throws IOException {

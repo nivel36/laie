@@ -40,9 +40,9 @@ import ged.ejb.user.User;
 @Entity
 @Indexed
 public class Candidate extends Person implements Ownerable, Obfuscable {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	@Embedded
 	private Address address;
 
@@ -50,7 +50,7 @@ public class Candidate extends Person implements Ownerable, Obfuscable {
 
 	@OneToOne(fetch = FetchType.EAGER, mappedBy = "candidate")
 	private Curriculum curriculum;
-	
+
 	@Min(0)
 	private Integer expectedSalary;
 
@@ -224,7 +224,7 @@ public class Candidate extends Person implements Ownerable, Obfuscable {
 	public void setTags(final List<Tag> tags) {
 		if (tags == null) {
 			this.tags = new HashSet<>();
-		}else {
+		} else {
 			this.tags = new HashSet<>(tags);
 		}
 	}
@@ -233,7 +233,8 @@ public class Candidate extends Person implements Ownerable, Obfuscable {
 		this.tags = tags;
 	}
 
-	public void setUid(String uid) {
+	@Override
+	public void setUid(final String uid) {
 		this.uid = uid;
 	}
 }

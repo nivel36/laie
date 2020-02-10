@@ -37,7 +37,7 @@ public class JobExperience extends AbstractEntity implements Obfuscable {
 	@Field
 	@Lob
 	private String description;
-	
+
 	private YearMonth endDate;
 
 	@NotNull
@@ -108,8 +108,9 @@ public class JobExperience extends AbstractEntity implements Obfuscable {
 		return this.startDate;
 	}
 
+	@Override
 	public String getUid() {
-		return uid;
+		return this.uid;
 	}
 
 	@Override
@@ -150,7 +151,8 @@ public class JobExperience extends AbstractEntity implements Obfuscable {
 		this.stillWorking = stillWorking;
 	}
 
-	public void setUid(String uid) {
+	@Override
+	public void setUid(final String uid) {
 		this.uid = uid;
 	}
 }

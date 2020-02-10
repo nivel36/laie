@@ -2,24 +2,24 @@ package ged.ejb.core;
 
 public enum Language {
 
-	Spanish("es"), Catalan("ca"), English("en");
+	Catalan("ca"), English("en"), Spanish("es");
 
-	private String code;
-
-	Language(String code) {
-		this.code = code;
-	}
-
-	public String getCode() {
-		return code;
-	}
-
-	public static Language ofCode(String code) {
-		for (Language language : values()) {
+	public static Language ofCode(final String code) {
+		for (final Language language : values()) {
 			if (language.code.equals(code)) {
 				return language;
 			}
 		}
 		return null;
+	}
+
+	private String code;
+
+	Language(final String code) {
+		this.code = code;
+	}
+
+	public String getCode() {
+		return this.code;
 	}
 }

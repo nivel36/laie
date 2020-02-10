@@ -18,7 +18,7 @@ import ged.web.core.view.AbstractView;
 @Named
 @ViewScoped
 public class PreviewJobView extends AbstractView {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	private static final long serialVersionUID = 1L;
@@ -28,9 +28,9 @@ public class PreviewJobView extends AbstractView {
 	private JobOffer jobOffer;
 
 	public JobOffer getJobOffer() {
-		return jobOffer;
+		return this.jobOffer;
 	}
-	
+
 	@PostConstruct
 	public void init() {
 		if (this.jobOffer == null) {
@@ -39,7 +39,7 @@ public class PreviewJobView extends AbstractView {
 		logger.trace("JobOffer {} init", this.jobOffer);
 	}
 
-	public void setJobOffer(JobOffer jobOffer) {
+	public void setJobOffer(final JobOffer jobOffer) {
 		this.jobOffer = jobOffer;
 	}
 }

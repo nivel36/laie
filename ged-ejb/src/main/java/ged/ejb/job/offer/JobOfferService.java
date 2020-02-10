@@ -55,14 +55,14 @@ public class JobOfferService extends AbstractService<JobOffer> {
 	@Inject
 	@JobOfferStateChangedEvent
 	private Event<JobOffer> stateChangedEvent;
-	
+
 	private void closeJobOffer(final JobOffer jobOffer) {
 		jobOffer.setDateClosed(LocalDate.now());
 		jobOffer.setState(JobOfferState.CLOSED);
-		completedEvent.fire(jobOffer);
+		this.completedEvent.fire(jobOffer);
 	}
 
-	public JobOffer findByUid(String uid) {
+	public JobOffer findByUid(final String uid) {
 		Objects.requireNonNull(uid);
 		return this.jobOfferDao.findByUid(uid);
 	}
@@ -109,7 +109,7 @@ public class JobOfferService extends AbstractService<JobOffer> {
 		}
 		return null;
 	}
-	
+
 	private boolean isCompleted(final JobOffer jobOffer) {
 		final List<JobCandidature> jobCandidatures = this.jobCandidatureService.findApprovedJobCanditures(jobOffer,
 				Page.ALL_RESULTS);

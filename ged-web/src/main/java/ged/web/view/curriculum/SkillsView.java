@@ -32,7 +32,7 @@ public class SkillsView extends AbstractView {
 	private List<Skill> skills;
 
 	private String curriculumUrl() {
-		return navigator.getRedirectUrl(PageEnum.CURRICULUM, this.curriculum.getCandidate());
+		return this.navigator.getRedirectUrl(PageEnum.CURRICULUM, this.curriculum.getCandidate());
 	}
 
 	public Curriculum getCurriculum() {

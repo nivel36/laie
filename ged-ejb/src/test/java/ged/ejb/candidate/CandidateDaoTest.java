@@ -78,28 +78,6 @@ public class CandidateDaoTest {
 		}
 	}
 
-	@Nested
-	class FindAllCandidateDataById {
-
-		@Test
-		public void badIdShouldReturnIlllegalArgumentException() {
-			assertThrows(IllegalArgumentException.class, () -> {
-				candidateDao.findCandidateData(0);
-			});
-		}
-
-		@Test
-		public void validIdShouldReturnCandidateAndHisData() {
-			final Candidate mockedCandidate = mockCandidate();
-
-			when(persistenceFacade.findByQuery(Candidate.class, "Candidate.findAllDataById", map("id", 1L)))
-					.thenReturn(mockedCandidate);
-
-			final Candidate candidateFromRepository = candidateDao.findCandidateData(1L);
-			assertEquals(mockedCandidate, candidateFromRepository);
-		}
-	}
-
 	private CandidateDao candidateDao;
 
 	@Mock

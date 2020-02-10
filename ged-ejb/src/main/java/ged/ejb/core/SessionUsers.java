@@ -40,7 +40,7 @@ public class SessionUsers {
 	}
 
 	public Set<String> getOnlineUsers() {
-		return onlineUsers.keySet();
+		return this.onlineUsers.keySet();
 	}
 
 	public Set<String> getSessionId(final String username) {
@@ -57,10 +57,10 @@ public class SessionUsers {
 	}
 
 	public void logout(final String username, final String sessionId) {
-		SessionValues sessionValues = this.onlineUsers.get(username);
+		final SessionValues sessionValues = this.onlineUsers.get(username);
 		sessionValues.sessionIds.remove(sessionId);
 		if (sessionValues.sessionIds.isEmpty()) {
-			onlineUsers.remove(username);
+			this.onlineUsers.remove(username);
 		}
 	}
 }

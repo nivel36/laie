@@ -39,36 +39,25 @@ public class CandidateService extends AbstractService<Candidate> {
 	public void addFileToCandidate(final Candidate candidate, final ServerFile file) {
 		Objects.requireNonNull(file);
 		Objects.requireNonNull(candidate);
-		logger.debug("Adding file {} to candidate  {}", file, candidate);
+		logger.debug("Add file {} to candidate  {}", file, candidate);
 		file.setCandidate(candidate);
 		this.serverFileDao.save(file);
 	}
-	
+
 	public List<Origin> findAllOrigins() {
+		logger.debug("Find all candidate origins");
 		return this.candidateDao.findAllOrigins();
 	}
 
 	public Candidate findByUid(final String uid) {
 		Objects.requireNonNull(uid);
+		logger.debug("Find candidate by uid {}", uid);
 		return this.candidateDao.findByUid(uid);
-	}
-
-	public Candidate findCandidateByEmail(final String email) {
-		Objects.requireNonNull(email, "Email can't be null");
-		return this.candidateDao.findCandidateByEmail(email);
-	}
-
-	public Candidate findCandidateData(final long candidateId) {
-		if (candidateId < 1) {
-			logger.warn("Bad candidate id {}", candidateId);
-			throw new IllegalArgumentException("Bad candidate id: " + candidateId);
-		}
-		logger.debug("Find all candidate data with id {}", candidateId);
-		return this.candidateDao.findCandidateData(candidateId);
 	}
 
 	public List<Candidate> findCandidates(final JobOffer jobOffer, final Page page) {
 		Objects.requireNonNull(jobOffer);
+		Objects.requireNonNull(page);
 		logger.debug("Find candidates by jobOffer {} ", jobOffer);
 		return this.candidateDao.findCandidates(jobOffer, page);
 	}
@@ -95,15 +84,17 @@ public class CandidateService extends AbstractService<Candidate> {
 
 	public void removeFile(final ServerFile file) {
 		Objects.requireNonNull(file);
-		logger.debug("Removing file {}", file);
+		logger.debug("Remove file {}", file);
 		this.serverFileDao.delete(file);
 	}
 
 	public void setCandidateDao(final CandidateDao candidateDao) {
+		Objects.requireNonNull(candidateDao);
 		this.candidateDao = candidateDao;
 	}
 
 	public void setServerFileDao(final ServerFileDao serverFileDao) {
+		Objects.requireNonNull(serverFileDao);
 		this.serverFileDao = serverFileDao;
 	}
 

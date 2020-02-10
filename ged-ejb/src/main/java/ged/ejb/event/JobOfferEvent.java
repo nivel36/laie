@@ -27,7 +27,7 @@ public class JobOfferEvent extends AbstractEntity {
 	@Field(name = "date", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField(forField = "date")
 	private LocalDateTime date;
-	
+
 	@ManyToOne
 	private JobOffer jobOffer;
 
@@ -74,7 +74,7 @@ public class JobOfferEvent extends AbstractEntity {
 	}
 
 	public String getNotes() {
-		return notes;
+		return this.notes;
 	}
 
 	public JobOfferState getState() {
@@ -98,7 +98,7 @@ public class JobOfferEvent extends AbstractEntity {
 		this.jobOffer = jobOffer;
 	}
 
-	public void setNotes(String notes) {
+	public void setNotes(final String notes) {
 		this.notes = notes;
 	}
 

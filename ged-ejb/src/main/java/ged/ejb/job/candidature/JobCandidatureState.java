@@ -63,7 +63,7 @@ public class JobCandidatureState extends AbstractEntity {
 	}
 
 	public boolean isClosed() {
-		return isApproved() || isDeclined();
+		return this.isApproved() || this.isDeclined();
 	}
 
 	public boolean isDeclined() {
@@ -93,9 +93,9 @@ public class JobCandidatureState extends AbstractEntity {
 	public void setName(final String name) {
 		this.name = name;
 	}
-	
+
 	@Override
 	public String toString() {
-		return name;
+		return this.name;
 	}
 }

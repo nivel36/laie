@@ -17,28 +17,25 @@ import ged.ejb.core.model.AbstractEntity;
 import ged.ejb.user.User;
 
 @Entity
-public class LoginToken extends AbstractEntity{
-
-	private static final long serialVersionUID = -8763367136110624639L;
-	
-	private static final int HASH_LENGTH = 32;
-	
-	public static final int IP_ADDRESS_MAXLENGTH = 45;
-	
-	public static final int DESCRIPTION_MAXLENGTH = 255;
+public class LoginToken extends AbstractEntity {
 
 	public enum TokenType {
-		REMEMBER_ME,
-		API,
-		RESET_PASSWORD,
-		SIGNUP_GDPR
+		API, REMEMBER_ME, RESET_PASSWORD, SIGNUP_GDPR
 	}
 
-	@Column(length = HASH_LENGTH, nullable = false, unique = true)
-	private @NotNull byte[] tokenHash;
+	public static final int DESCRIPTION_MAXLENGTH = 255;
+
+	private static final int HASH_LENGTH = 32;
+
+	public static final int IP_ADDRESS_MAXLENGTH = 45;
+
+	private static final long serialVersionUID = -8763367136110624639L;
 
 	@Column(nullable = false)
 	private @NotNull Instant created;
+
+	@Column(length = DESCRIPTION_MAXLENGTH)
+	private @Size(max = DESCRIPTION_MAXLENGTH) String description;
 
 	@Column(nullable = false)
 	private @NotNull Instant expiration;
@@ -46,76 +43,76 @@ public class LoginToken extends AbstractEntity{
 	@Column(length = IP_ADDRESS_MAXLENGTH, nullable = false)
 	private @NotNull @Size(max = IP_ADDRESS_MAXLENGTH) String ipAddress;
 
-	@Column(length = DESCRIPTION_MAXLENGTH)
-	private @Size(max = DESCRIPTION_MAXLENGTH) String description;
-
-	@ManyToOne(optional = false)
-	private User user;
+	@Column(length = HASH_LENGTH, nullable = false, unique = true)
+	private @NotNull byte[] tokenHash;
 
 	@Enumerated(STRING)
 	private TokenType type;
 
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-	public byte[] getTokenHash() {
-		return tokenHash;
-	}
-
-	public void setTokenHash(byte[] tokenHash) {
-		this.tokenHash = tokenHash;
-	}
+	@ManyToOne(optional = false)
+	private User user;
 
 	public Instant getCreated() {
-		return created;
-	}
-
-	public void setCreated(Instant created) {
-		this.created = created;
-	}
-
-	public Instant getExpiration() {
-		return expiration;
-	}
-
-	public void setExpiration(Instant expiration) {
-		this.expiration = expiration;
-	}
-
-	public String getIpAddress() {
-		return ipAddress;
-	}
-
-	public void setIpAddress(String ipAddress) {
-		this.ipAddress = ipAddress;
+		return this.created;
 	}
 
 	public String getDescription() {
-		return description;
+		return this.description;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public Instant getExpiration() {
+		return this.expiration;
+	}
+
+	public String getIpAddress() {
+		return this.ipAddress;
+	}
+
+	public byte[] getTokenHash() {
+		return this.tokenHash;
 	}
 
 	public TokenType getType() {
-		return type;
+		return this.type;
 	}
 
-	public void setType(TokenType type) {
-		this.type = type;
+	public User getUser() {
+		return this.user;
+	}
+
+	public void setCreated(final Instant created) {
+		this.created = created;
+	}
+
+	public void setDescription(final String description) {
+		this.description = description;
+	}
+
+	public void setExpiration(final Instant expiration) {
+		this.expiration = expiration;
+	}
+
+	public void setIpAddress(final String ipAddress) {
+		this.ipAddress = ipAddress;
 	}
 
 	@PrePersist
 	public void setTimestamps() {
-		created = Instant.now();
-		if (expiration == null) {
-			expiration = created.plus(1, MONTHS);
+		this.created = Instant.now();
+		if (this.expiration == null) {
+			this.expiration = this.created.plus(1, MONTHS);
 		}
+	}
+
+	public void setTokenHash(final byte[] tokenHash) {
+		this.tokenHash = tokenHash;
+	}
+
+	public void setType(final TokenType type) {
+		this.type = type;
+	}
+
+	public void setUser(final User user) {
+		this.user = user;
 	}
 }

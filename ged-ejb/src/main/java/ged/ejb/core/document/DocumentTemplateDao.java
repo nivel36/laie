@@ -13,19 +13,19 @@ import ged.ejb.core.model.Repository;
 @Repository
 public class DocumentTemplateDao extends AbstractDao<DocumentTemplate> {
 
-	@Override
-	protected Class<DocumentTemplate> getType() {
-		return DocumentTemplate.class;
-	}
-
 	public DocumentTemplate findDocumentTemplateByName(final String name, final Language language) {
 		Objects.requireNonNull(name);
 		try {
 			return this.findByQuery(DocumentTemplate.class, "DocumentTemplate.findByName",
 					map("name", name).and("language", language.getCode()));
-		} catch (NoResultException e) {
+		} catch (final NoResultException e) {
 			return null;
 		}
+	}
+
+	@Override
+	protected Class<DocumentTemplate> getType() {
+		return DocumentTemplate.class;
 	}
 
 	@Override

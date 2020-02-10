@@ -34,7 +34,7 @@ public class GdprMaintenanceView extends AbstractView {
 
 	public void export() throws Exception {
 		final Set<TemplateTag> tags = new HashSet<>();
-		tags.add(new DateTag(sessionUser.getLocale()));
+		tags.add(new DateTag(this.sessionUser.getLocale()));
 
 		final File file = this.documentService.export(this.document, tags);
 		Faces.sendFile(file, true);
@@ -45,13 +45,13 @@ public class GdprMaintenanceView extends AbstractView {
 	}
 
 	public Language getLanguage() {
-		return language;
+		return this.language;
 	}
 
 	@PostConstruct
 	public void init() {
 		this.language = Language.ofCode(this.sessionUser.getLocale().getLanguage());
-		searchDocument();
+		this.searchDocument();
 	}
 
 	public void save() {
@@ -60,11 +60,12 @@ public class GdprMaintenanceView extends AbstractView {
 	}
 
 	public void searchDocument() {
-		final DocumentTemplate documentFromDatabase = this.documentService.findDocumentByName("gdpr", language);
+		final DocumentTemplate documentFromDatabase = this.documentService.findDocumentByNameAndLanguage("gdpr",
+				this.language);
 		if (documentFromDatabase == null) {
 			this.document = new DocumentTemplate();
 			this.document.setName("gdpr");
-			this.document.setLanguage(language.getCode());
+			this.document.setLanguage(this.language.getCode());
 		} else {
 			this.document = documentFromDatabase;
 		}
@@ -78,7 +79,7 @@ public class GdprMaintenanceView extends AbstractView {
 		this.documentService = documentService;
 	}
 
-	public void setLanguage(Language language) {
+	public void setLanguage(final Language language) {
 		this.language = language;
 	}
 }

@@ -20,15 +20,21 @@ import ged.web.core.view.AbstractView;
 @SessionScoped
 public class ChatView extends AbstractView {
 
+	private static final String DEFAULT_EMPTY_MESSAGE = null;
+
 	private static final long serialVersionUID = 1L;
 
-	private static final String DEFAULT_EMPTY_MESSAGE = null;
-	
 	private int activePanel = 0;
-	
+
+	@Inject
+	private transient ChatPush chatPush;
+
+	@Inject
+	private transient ChatService chatService;
+
 	private String currentMessage;
 
-	private Map<User,String> messages;
+	private Map<User, String> messages;
 
 	private String searchText;
 
@@ -39,15 +45,29 @@ public class ChatView extends AbstractView {
 	@Inject
 	private transient UserService userService;
 
-	@Inject
-	private transient ChatService chatService;
-	
-	@Inject
-	private transient ChatPush chatPush;
-	
-	
+	private void clearSelectedUserMessage() {
+		this.setCurrentMessage(DEFAULT_EMPTY_MESSAGE);
+		this.getMessages().put(this.getSelectedUser(), DEFAULT_EMPTY_MESSAGE);
+	}
+
 	public int getActivePanel() {
 		return this.activePanel;
+	}
+
+	public ChatPush getChatPush() {
+		return this.chatPush;
+	}
+
+	public ChatService getChatService() {
+		return this.chatService;
+	}
+
+	public String getCurrentMessage() {
+		return this.currentMessage;
+	}
+
+	private Map<User, String> getMessages() {
+		return this.messages;
 	}
 
 	public String getSearchText() {
@@ -74,37 +94,39 @@ public class ChatView extends AbstractView {
 		this.users = this.userService.search(this.searchText, Page.TEN_RESULTS_PER_PAGE).getResultData();
 	}
 
-	public void sendMessage() {
-		Objects.requireNonNull(getSelectedUser());
-		Objects.requireNonNull(getMessages());
-		if (getMessages().containsKey(getSelectedUser())) {
-			final String message = getCurrentMessage();
-			if (message != null && !message.isBlank()) {
-				getChatService().sendMessage(getSelectedUser(), message);
-				getChatPush().sendMessage(sessionUser.getUser(), getSelectedUser(), message);
-			}
-			clearSelectedUserMessage();
-		}
-	}
-	
-	private void clearSelectedUserMessage() {
-		setCurrentMessage(DEFAULT_EMPTY_MESSAGE);
-		getMessages().put(getSelectedUser(), DEFAULT_EMPTY_MESSAGE);
-	}
-	
-	public void updateMessage() {
-		Objects.requireNonNull(getSelectedUser());
-		getMessages().put(getSelectedUser(), getCurrentMessage());
-	}
-	
 	public void selectUser(final User selectedUser) {
 		this.selectedUser = selectedUser;
 		this.activePanel = 1;
-		if (getMessages().containsKey(selectedUser)) {
-			setCurrentMessage(getMessages().get(getSelectedUser()));
+		if (this.getMessages().containsKey(selectedUser)) {
+			this.setCurrentMessage(this.getMessages().get(this.getSelectedUser()));
 		} else {
-			setCurrentMessage(DEFAULT_EMPTY_MESSAGE);
+			this.setCurrentMessage(DEFAULT_EMPTY_MESSAGE);
 		}
+	}
+
+	public void sendMessage() {
+		Objects.requireNonNull(this.getSelectedUser());
+		Objects.requireNonNull(this.getMessages());
+		if (this.getMessages().containsKey(this.getSelectedUser())) {
+			final String message = this.getCurrentMessage();
+			if ((message != null) && !message.isBlank()) {
+				this.getChatService().sendMessage(this.getSelectedUser(), message);
+				this.getChatPush().sendMessage(this.sessionUser.getUser(), this.getSelectedUser(), message);
+			}
+			this.clearSelectedUserMessage();
+		}
+	}
+
+	public void setChatPush(final ChatPush chatPush) {
+		this.chatPush = chatPush;
+	}
+
+	public void setChatService(final ChatService chatService) {
+		this.chatService = chatService;
+	}
+
+	public void setCurrentMessage(final String currentMessage) {
+		this.currentMessage = currentMessage;
 	}
 
 	public void setSearchText(final String searchText) {
@@ -115,31 +137,8 @@ public class ChatView extends AbstractView {
 		this.userService = userService;
 	}
 
-	public ChatService getChatService() {
-		return chatService;
-	}
-
-	public void setChatService(ChatService chatService) {
-		this.chatService = chatService;
-	}
-
-	private Map<User, String> getMessages() {
-		return messages;
-	}
-
-	public void setCurrentMessage(String currentMessage) {
-		this.currentMessage = currentMessage;
-	}
-
-	public String getCurrentMessage() {
-		return currentMessage;
-	}
-
-	public ChatPush getChatPush() {
-		return chatPush;
-	}
-
-	public void setChatPush(ChatPush chatPush) {
-		this.chatPush = chatPush;
+	public void updateMessage() {
+		Objects.requireNonNull(this.getSelectedUser());
+		this.getMessages().put(this.getSelectedUser(), this.getCurrentMessage());
 	}
 }

@@ -6,8 +6,12 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.SortableField;
+import org.hibernate.search.annotations.Store;
 
 import ged.ejb.core.model.AbstractEntity;
 
@@ -19,14 +23,16 @@ public class Tag extends AbstractEntity {
 
 	@NotNull
 	@Column(length = 128, nullable = false)
-	@Field
+	@Field(name = "_label")
+	@Field(name = "label", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
+	@SortableField(forField = "label")
 	private String label;
 
 	public Tag() {
 	}
 
 	public Tag(final String label) {
-		Objects.requireNonNull(label, "Label can't be null");
+		Objects.requireNonNull(label);
 		this.label = label;
 	}
 

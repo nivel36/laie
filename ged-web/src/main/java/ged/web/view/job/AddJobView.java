@@ -24,14 +24,10 @@ public class AddJobView extends AbstractJobView {
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	private static final long serialVersionUID = 1L;
-	
-	@Inject
-	@Param(name="clientId", required=false)
-	private Client client;
 
-	public void setClient(Client client) {
-		this.client = client;
-	}
+	@Inject
+	@Param(name = "clientId", required = false)
+	private Client client;
 
 	private JobOffer buildNewJobOffer() {
 		final JobOffer newJobOffer = new JobOffer();
@@ -60,5 +56,9 @@ public class AddJobView extends AbstractJobView {
 		this.jobOffer.setRecruiters(this.getRecruiters());
 		this.jobOffer = this.jobOfferService.save(this.jobOffer);
 		return this.jobUrl();
+	}
+
+	public void setClient(final Client client) {
+		this.client = client;
 	}
 }

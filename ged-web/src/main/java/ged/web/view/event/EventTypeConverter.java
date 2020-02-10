@@ -12,7 +12,8 @@ import ged.ejb.event.JobCandidatureEventType;
 public class EventTypeConverter implements Converter<JobCandidatureEventType> {
 
 	@Override
-	public JobCandidatureEventType getAsObject(final FacesContext context, final UIComponent component, final String value) {
+	public JobCandidatureEventType getAsObject(final FacesContext context, final UIComponent component,
+			final String value) {
 		if (value == null) {
 			return null;
 		}
@@ -25,7 +26,8 @@ public class EventTypeConverter implements Converter<JobCandidatureEventType> {
 	}
 
 	@Override
-	public String getAsString(final FacesContext context, final UIComponent component, final JobCandidatureEventType value) {
+	public String getAsString(final FacesContext context, final UIComponent component,
+			final JobCandidatureEventType value) {
 		if (value == null) {
 			return null;
 		}

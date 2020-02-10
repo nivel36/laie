@@ -133,13 +133,14 @@ public class JobCandidatureService extends AbstractService<JobCandidature> {
 		this.jobCandidatureDao.delete(jobCandidature);
 	}
 
+	@Override
 	public JobCandidature save(final JobCandidature jobCandidature) {
 		Objects.requireNonNull(jobCandidature, "Job candidature can't be null");
 		logger.debug("Save job candidature {}", jobCandidature);
 
-		boolean newCandidature = jobCandidature.isNew();
-		boolean stateChanged = !newCandidature && hasStateChanged(jobCandidature);
-		boolean approved = !stateChanged && jobCandidature.isApproved();
+		final boolean newCandidature = jobCandidature.isNew();
+		final boolean stateChanged = !newCandidature && this.hasStateChanged(jobCandidature);
+		final boolean approved = !stateChanged && jobCandidature.isApproved();
 
 		final JobCandidature savedJobCandidature = super.save(jobCandidature);
 

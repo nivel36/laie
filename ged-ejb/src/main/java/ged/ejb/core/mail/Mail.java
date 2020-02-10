@@ -2,35 +2,35 @@ package ged.ejb.core.mail;
 
 public class Mail {
 
-	private final String to;
-
 	private final String from;
-
-	private final String subject;
 
 	private final String message;
 
-	public Mail(String to, String from, String subject, String message) {
+	private final String subject;
+
+	private final String to;
+
+	public Mail(final String to, final String from, final String subject, final String message) {
 		this.to = to;
 		this.from = from;
 		this.subject = subject;
 		this.message = message;
 	}
 
-	public String getTo() {
-		return to;
-	}
-
 	public String getFrom() {
-		return from;
-	}
-
-	public String getSubject() {
-		return subject;
+		return this.from;
 	}
 
 	public String getMessage() {
-		return message;
+		return this.message;
+	}
+
+	public String getSubject() {
+		return this.subject;
+	}
+
+	public String getTo() {
+		return this.to;
 	}
 
 }

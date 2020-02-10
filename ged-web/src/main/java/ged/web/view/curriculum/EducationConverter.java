@@ -16,7 +16,7 @@ public class EducationConverter implements Converter<Education> {
 	private CurriculumService curriculumService;
 
 	@Override
-	public Education getAsObject(FacesContext context, UIComponent component, String value) {
+	public Education getAsObject(final FacesContext context, final UIComponent component, final String value) {
 		if (value == null) {
 			return null;
 		}
@@ -24,7 +24,7 @@ public class EducationConverter implements Converter<Education> {
 	}
 
 	@Override
-	public String getAsString(FacesContext context, UIComponent component, Education value) {
+	public String getAsString(final FacesContext context, final UIComponent component, final Education value) {
 		if (value == null) {
 			return null;
 		}

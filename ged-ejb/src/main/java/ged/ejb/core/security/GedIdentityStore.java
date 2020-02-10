@@ -52,14 +52,14 @@ public class GedIdentityStore implements IdentityStore {
 			return NOT_VALIDATED_RESULT;
 		}
 
-		return validate(user);
+		return this.validate(user);
 	}
 
 	public CredentialValidationResult validate(final User user) {
 		if (user == null) {
 			return NOT_VALIDATED_RESULT;
 		}
-		final Set<String> roles = getRoles(user);
+		final Set<String> roles = this.getRoles(user);
 		return new CredentialValidationResult(new GedCallerPrincipal(user), roles);
 	}
 }

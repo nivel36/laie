@@ -87,7 +87,7 @@ public class EditJobStateView extends AbstractView {
 	}
 
 	private String jobUrl() {
-		return navigator.getRedirectUrl(PageEnum.JOB, this.jobOffer);
+		return this.navigator.getRedirectUrl(PageEnum.JOB, this.jobOffer);
 	}
 
 	public String save() {

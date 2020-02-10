@@ -14,9 +14,9 @@ import ged.ejb.person.Person;
 @Entity
 @Indexed
 public class Contact extends Person implements Obfuscable {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "clientId", nullable = false)
 	private Client client;
@@ -60,7 +60,8 @@ public class Contact extends Person implements Obfuscable {
 		this.position = position;
 	}
 
-	public void setUid(String uid) {
+	@Override
+	public void setUid(final String uid) {
 		this.uid = uid;
 	}
 }

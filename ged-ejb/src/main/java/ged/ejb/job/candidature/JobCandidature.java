@@ -24,9 +24,9 @@ import ged.ejb.job.offer.JobOffer;
 @Entity
 @Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "jobOfferId", "candidateId" }) })
 public class JobCandidature extends AbstractEntity implements Obfuscable {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "candidateId", nullable = false)
@@ -46,20 +46,20 @@ public class JobCandidature extends AbstractEntity implements Obfuscable {
 	@ManyToOne
 	@JoinColumn(name = "jobCandidatureStateId")
 	private JobCandidatureState state;
-	
+
 	@NotNull
 	@Column(unique = true, nullable = false)
 	private String uid;
 
 	public JobCandidature() {
 	}
-	
+
 	public JobCandidature(final Candidate candidate, final JobOffer jobOffer) {
 		this.candidate = candidate;
 		this.jobOffer = jobOffer;
 	}
 
-	public void addJobCandidatureEvent(JobCandidatureEvent jobCandidatureEvent) {
+	public void addJobCandidatureEvent(final JobCandidatureEvent jobCandidatureEvent) {
 		Objects.requireNonNull(jobCandidatureEvent);
 		this.jobCandidatureEvents.add(jobCandidatureEvent);
 	}
@@ -114,10 +114,10 @@ public class JobCandidature extends AbstractEntity implements Obfuscable {
 	}
 
 	public boolean isApproved() {
-		if (state == null) {
+		if (this.state == null) {
 			return false;
 		}
-		return state.isApproved();
+		return this.state.isApproved();
 	}
 
 	public void setCandidate(final Candidate candidate) {
@@ -136,7 +136,8 @@ public class JobCandidature extends AbstractEntity implements Obfuscable {
 		this.state = state;
 	}
 
-	public void setUid(String uid) {
+	@Override
+	public void setUid(final String uid) {
 		this.uid = uid;
 	}
 

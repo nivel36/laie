@@ -34,12 +34,12 @@ public class UserService extends AbstractService<User> {
 	public User addUserImage(final User user, final InputStream inputStream) {
 		Objects.requireNonNull(user);
 		Objects.requireNonNull(inputStream);
-		
+
 		final String oldImage = user.getImageFileName();
 		final String uuid = this.fileService.uploadImage(inputStream);
 		user.setImageFileName(uuid);
 		final User savedUser = this.save(user);
-		
+
 		if (oldImage != null) {
 			this.fileService.removeFileFromFileSystem(oldImage);
 		}
@@ -60,16 +60,16 @@ public class UserService extends AbstractService<User> {
 		return this.userDao.findByUid(uid);
 	}
 
-	public List<User> findSubordinateUsers(final User user) {
-		Objects.requireNonNull(user);
-		logger.debug("Finding subordinate users of user {}", user);
-		return this.userDao.findSubordinateUsers(user);
-	}
-
 	public Credential findCredential(final String email) {
 		Objects.requireNonNull(email);
 		logger.debug("Find credential for user with email {}", email);
 		return this.userDao.findCredential(email);
+	}
+
+	public List<User> findSubordinateUsers(final User user) {
+		Objects.requireNonNull(user);
+		logger.debug("Finding subordinate users of user {}", user);
+		return this.userDao.findSubordinateUsers(user);
 	}
 
 	public User findUserByEmail(final String email) {

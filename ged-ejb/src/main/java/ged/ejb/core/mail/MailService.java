@@ -32,18 +32,8 @@ public class MailService {
 	@Inject
 	private MailTemplateService mailTemplateService;
 
-	public void sendMail(final String to, final String from, final String templateName, Map<String, String> parameters)
-			throws MessagingException {
-		Objects.requireNonNull(to);
-		Objects.requireNonNull(from);
-		Objects.requireNonNull(templateName);
-		final MailTemplate mailTemplate = mailTemplateService.findMailTemplate(templateName);
-		final Mail mail = new Mail(to, from, mailTemplate.getSubject(), mailTemplate.buildMessage(parameters));
-		sendMail(mail);
-	}
-
 	private MimeMessage buildMessage(final Mail mail) throws MessagingException {
-		final MimeMessage message = new MimeMessage(mailSession);
+		final MimeMessage message = new MimeMessage(this.mailSession);
 		message.setRecipients(Message.RecipientType.TO, mail.getTo());
 		message.setSubject(mail.getSubject());
 		message.setFrom(mail.getFrom());
@@ -56,14 +46,24 @@ public class MailService {
 	@Lock(LockType.READ)
 	public void sendMail(final Mail mail) throws MessagingException {
 		Objects.requireNonNull(mail);
-		final MimeMessage message = buildMessage(mail);
+		final MimeMessage message = this.buildMessage(mail);
 		Transport.send(message);
 		logger.info("Email {} sended to {} ", mail.getSubject(), mail.getTo());
 		logger.trace("From: {}", mail.getFrom());
 		logger.trace("Message: {}", mail.getMessage());
 	}
 
-	public void setMailSession(Session mailSession) {
+	public void sendMail(final String to, final String from, final String templateName,
+			final Map<String, String> parameters) throws MessagingException {
+		Objects.requireNonNull(to);
+		Objects.requireNonNull(from);
+		Objects.requireNonNull(templateName);
+		final MailTemplate mailTemplate = this.mailTemplateService.findMailTemplate(templateName);
+		final Mail mail = new Mail(to, from, mailTemplate.getSubject(), mailTemplate.buildMessage(parameters));
+		this.sendMail(mail);
+	}
+
+	public void setMailSession(final Session mailSession) {
 		this.mailSession = mailSession;
 	}
 }

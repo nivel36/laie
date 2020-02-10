@@ -26,10 +26,10 @@ public class SelectCandidatesView extends AbstractView {
 
 	private static final long serialVersionUID = 1L;
 
-	private Map<String, Candidate> alredySelectedCandidates = new HashedMap<>();
+	private final Map<String, Candidate> alredySelectedCandidates = new HashedMap<>();
 
 	private CandidateLazyDataModel candidates;
-	
+
 	@Inject
 	protected transient CandidateService candidateService;
 
@@ -45,29 +45,29 @@ public class SelectCandidatesView extends AbstractView {
 	private List<Candidate> selectedCandidates;
 
 	public CandidateLazyDataModel getCandidates() {
-		return candidates;
+		return this.candidates;
 	}
 
 	public JobOffer getJobOffer() {
-		return jobOffer;
+		return this.jobOffer;
 	}
 
 	public String getSearchText() {
-		return searchText;
+		return this.searchText;
 	}
 
 	public List<Candidate> getSelectedCandidates() {
-		return selectedCandidates;
+		return this.selectedCandidates;
 	}
 
 	@PostConstruct
 	public void init() {
-		for (final JobCandidature jobCandidature : jobOffer.getJobCandidatures()) {
+		for (final JobCandidature jobCandidature : this.jobOffer.getJobCandidatures()) {
 			final Candidate candidate = jobCandidature.getCandidate();
-			alredySelectedCandidates.put(candidate.getUid(), candidate);
+			this.alredySelectedCandidates.put(candidate.getUid(), candidate);
 		}
 		this.candidates = new CandidateLazyDataModel(this.candidateService);
-		search();
+		this.search();
 	}
 
 	public boolean isAlredySelected(final Candidate candidate) {
@@ -79,31 +79,31 @@ public class SelectCandidatesView extends AbstractView {
 	}
 
 	public String select() {
-		this.jobCandidatureService.addJobCandidatures(jobOffer, selectedCandidates);
-		return navigator.getRedirectUrl(PageEnum.JOB, jobOffer);
+		this.jobCandidatureService.addJobCandidatures(this.jobOffer, this.selectedCandidates);
+		return this.navigator.getRedirectUrl(PageEnum.JOB, this.jobOffer);
 	}
 
-	public void setCandidates(CandidateLazyDataModel candidates) {
+	public void setCandidates(final CandidateLazyDataModel candidates) {
 		this.candidates = candidates;
 	}
 
-	public void setCandidateService(CandidateService candidateService) {
+	public void setCandidateService(final CandidateService candidateService) {
 		this.candidateService = candidateService;
 	}
 
-	public void setJobCandidatureService(JobCandidatureService jobCandidatureService) {
+	public void setJobCandidatureService(final JobCandidatureService jobCandidatureService) {
 		this.jobCandidatureService = jobCandidatureService;
 	}
 
-	public void setJobOffer(JobOffer jobOffer) {
+	public void setJobOffer(final JobOffer jobOffer) {
 		this.jobOffer = jobOffer;
 	}
 
-	public void setSearchText(String searchText) {
+	public void setSearchText(final String searchText) {
 		this.searchText = searchText;
 	}
 
-	public void setSelectedCandidates(List<Candidate> selectedCandidates) {
+	public void setSelectedCandidates(final List<Candidate> selectedCandidates) {
 		this.selectedCandidates = selectedCandidates;
 	}
 }

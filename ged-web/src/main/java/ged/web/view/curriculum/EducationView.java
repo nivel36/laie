@@ -37,7 +37,7 @@ public class EducationView extends AbstractView {
 	private List<Integer> years;
 
 	private String curriculumUrl() {
-		return navigator.getRedirectUrl(PageEnum.CURRICULUM, this.education.getCurriculum().getCandidate());
+		return this.navigator.getRedirectUrl(PageEnum.CURRICULUM, this.education.getCurriculum().getCandidate());
 	}
 
 	public String delete() {
@@ -67,18 +67,18 @@ public class EducationView extends AbstractView {
 
 	private Curriculum initCurriculum() {
 		if (this.isNewEducation()) {
-			curriculum.removeEducation(this.education);
+			this.curriculum.removeEducation(this.education);
 		}
-		return curriculum;
+		return this.curriculum;
 	}
 
 	public Education initEducation() {
-		if (education == null) {
-			education = new Education();
-			education.setStillStudying(false);
-			education.setCurriculum(this.curriculum);
+		if (this.education == null) {
+			this.education = new Education();
+			this.education.setStillStudying(false);
+			this.education.setCurriculum(this.curriculum);
 		}
-		return education;
+		return this.education;
 	}
 
 	public List<Integer> initYears() {

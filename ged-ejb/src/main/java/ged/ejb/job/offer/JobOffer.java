@@ -172,10 +172,10 @@ public class JobOffer extends AbstractEntity implements Ownerable, Obfuscable {
 
 	@Override
 	public String getUid() {
-		return uid;
+		return this.uid;
 	}
 
-	public boolean hasCandidatureOf(Candidate candidate) {
+	public boolean hasCandidatureOf(final Candidate candidate) {
 		Objects.requireNonNull(candidate);
 		if (this.jobCandidatures.isEmpty()) {
 			return false;
@@ -206,7 +206,7 @@ public class JobOffer extends AbstractEntity implements Ownerable, Obfuscable {
 	}
 
 	public boolean isPublished() {
-		return published;
+		return this.published;
 	}
 
 	public void setAddress(final Address address) {
@@ -242,7 +242,7 @@ public class JobOffer extends AbstractEntity implements Ownerable, Obfuscable {
 		this.places = places;
 	}
 
-	public void setPublished(boolean published) {
+	public void setPublished(final boolean published) {
 		this.published = published;
 	}
 
@@ -273,7 +273,7 @@ public class JobOffer extends AbstractEntity implements Ownerable, Obfuscable {
 	}
 
 	@Override
-	public void setUid(String uid) {
+	public void setUid(final String uid) {
 		this.uid = uid;
 	}
 

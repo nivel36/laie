@@ -16,7 +16,7 @@ public class JobExperienceConverter implements Converter<JobExperience> {
 	private CurriculumService curriculumService;
 
 	@Override
-	public JobExperience getAsObject(FacesContext context, UIComponent component, String value) {
+	public JobExperience getAsObject(final FacesContext context, final UIComponent component, final String value) {
 		if (value == null) {
 			return null;
 		}
@@ -24,7 +24,7 @@ public class JobExperienceConverter implements Converter<JobExperience> {
 	}
 
 	@Override
-	public String getAsString(FacesContext context, UIComponent component, JobExperience value) {
+	public String getAsString(final FacesContext context, final UIComponent component, final JobExperience value) {
 		if (value == null) {
 			return null;
 		}

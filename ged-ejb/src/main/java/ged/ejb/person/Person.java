@@ -16,10 +16,11 @@ import org.hibernate.search.annotations.SortableField;
 import org.hibernate.search.annotations.Store;
 
 import ged.ejb.core.model.AbstractEntity;
+import ged.ejb.core.model.Obfuscable;
 
 @MappedSuperclass
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public abstract class Person extends AbstractEntity {
+public abstract class Person extends AbstractEntity implements Obfuscable {
 
 	private static final long serialVersionUID = 1L;
 

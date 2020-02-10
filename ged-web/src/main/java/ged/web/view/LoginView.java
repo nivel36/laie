@@ -48,7 +48,7 @@ public class LoginView extends AbstractView {
 
 	private void gotoIndex() {
 		final NavigationHandler nav = this.facesContext.getApplication().getNavigationHandler();
-		final String indexUrl = navigator.getRedirectUrl(PageEnum.INDEX);
+		final String indexUrl = this.navigator.getRedirectUrl(PageEnum.INDEX);
 		nav.handleNavigation(this.facesContext, null, indexUrl);
 		this.facesContext.renderResponse();
 	}
@@ -66,7 +66,7 @@ public class LoginView extends AbstractView {
 
 	public void login() {
 		logger.debug("User {} login", this.username);
-		final AuthenticationStatus status = this.loginService.login(username, password);
+		final AuthenticationStatus status = this.loginService.login(this.username, this.password);
 		if (status.equals(AuthenticationStatus.SEND_FAILURE)) {
 			this.addMessage(FacesMessage.SEVERITY_ERROR, "auth.message.error", "auth.message.error");
 			this.facesContext.validationFailed();
