@@ -18,6 +18,7 @@ public enum PageEnum {
 	CONTACT_ADD("/client/contact/add"), //
 	CONTACT_EDIT("/client/contact/edit"), //
 	CURRICULUM("/candidate/curriculum"), //
+	CURRICULUM_EXPORT("/candidate/curriculum/export"), //
 	CURRICULUM_EDUCATION("/candidate/curriculum/education"), //
 	CURRICULUM_JOB_EXPERIENCE("/candidate/curriculum/jobExperience"), //
 	CURRICULUM_LANGUAGE("/candidate/curriculum/language"), //

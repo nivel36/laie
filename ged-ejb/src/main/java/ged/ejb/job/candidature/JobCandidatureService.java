@@ -48,8 +48,8 @@ public class JobCandidatureService extends AbstractService<JobCandidature> {
 	private Event<JobCandidature> stateChangedEvent;
 
 	public JobCandidature addJobCandidature(final JobOffer jobOffer, final Candidate candidate) {
-		Objects.requireNonNull(jobOffer, "JobOffer can't be null");
-		Objects.requireNonNull(candidate, "Candidate can't be null");
+		Objects.requireNonNull(jobOffer);
+		Objects.requireNonNull(candidate);
 		if (!jobOffer.isOpen()) {
 			throw new IllegalStateException("Job offer isn't open");
 		}
@@ -62,8 +62,8 @@ public class JobCandidatureService extends AbstractService<JobCandidature> {
 	}
 
 	public List<JobCandidature> addJobCandidatures(final JobOffer jobOffer, final List<Candidate> candidates) {
-		Objects.requireNonNull(jobOffer, "JobOffer can't be null");
-		Objects.requireNonNull(candidates, "Candidates can't be null");
+		Objects.requireNonNull(jobOffer);
+		Objects.requireNonNull(candidates);
 		if (!jobOffer.isOpen()) {
 			throw new IllegalStateException("Job offer isn't open");
 		}
@@ -78,8 +78,8 @@ public class JobCandidatureService extends AbstractService<JobCandidature> {
 	}
 
 	public List<JobCandidature> findApprovedJobCanditures(final JobOffer jobOffer, final Page page) {
-		Objects.requireNonNull(jobOffer, "JobOffer can't be null");
-		Objects.requireNonNull(page, "Page can't be null");
+		Objects.requireNonNull(jobOffer);
+		Objects.requireNonNull(page);
 		logger.debug("Find all approved  job candidatures of the job offer {}", jobOffer);
 		return this.jobCandidatureDao.findJobCanditures(jobOffer, page);
 	}
@@ -90,23 +90,23 @@ public class JobCandidatureService extends AbstractService<JobCandidature> {
 	}
 
 	public List<JobCandidature> findJobCandidatures(final Candidate candidate, final Page page) {
-		Objects.requireNonNull(candidate, "Candidate can't be null");
-		Objects.requireNonNull(page, "Page can't be null");
+		Objects.requireNonNull(candidate);
+		Objects.requireNonNull(page);
 		logger.debug("Find all job candidatures of the candidate {}", candidate);
 
 		return this.jobCandidatureDao.findJobCandidatures(candidate, page);
 	}
 
 	public List<JobCandidature> findJobCandidatures(final User user, final Page page) {
-		Objects.requireNonNull(user, "User can't be null");
-		Objects.requireNonNull(page, "Page can't be null");
+		Objects.requireNonNull(user);
+		Objects.requireNonNull(page);
 		logger.debug("Find job candidatures regarding user {} ({})", user, page);
 
 		return this.jobCandidatureDao.findJobCandidatures(user, page);
 	}
 
 	public List<JobCandidature> findJobCanditures(final JobOffer jobOffer, final Page page) {
-		Objects.requireNonNull(jobOffer, "JobOffer can't be null");
+		Objects.requireNonNull(jobOffer);
 		Objects.requireNonNull(page, "Page can't be null");
 		logger.debug("Find all job candidatures of the job offer {}", jobOffer);
 
@@ -125,8 +125,8 @@ public class JobCandidatureService extends AbstractService<JobCandidature> {
 	}
 
 	public void removeJobCandidature(final JobOffer jobOffer, final Candidate candidate) {
-		Objects.requireNonNull(jobOffer, "JobOffer can't be null");
-		Objects.requireNonNull(candidate, "Candidate can't be null");
+		Objects.requireNonNull(jobOffer);
+		Objects.requireNonNull(candidate);
 		logger.debug("Remove job candidature of candidate {} to job offer {}", candidate.getFullName(), jobOffer);
 
 		final JobCandidature jobCandidature = this.jobCandidatureDao.findByJobOfferAndCandidate(jobOffer, candidate);
@@ -135,7 +135,7 @@ public class JobCandidatureService extends AbstractService<JobCandidature> {
 
 	@Override
 	public JobCandidature save(final JobCandidature jobCandidature) {
-		Objects.requireNonNull(jobCandidature, "Job candidature can't be null");
+		Objects.requireNonNull(jobCandidature);
 		logger.debug("Save job candidature {}", jobCandidature);
 
 		final boolean newCandidature = jobCandidature.isNew();
@@ -161,22 +161,27 @@ public class JobCandidatureService extends AbstractService<JobCandidature> {
 	}
 
 	public void setJobCandidatureCompletedEvent(final Event<JobCandidature> jobCandidatureCompletedEvent) {
+		Objects.requireNonNull(jobCandidatureCompletedEvent);
 		this.completedEvent = jobCandidatureCompletedEvent;
 	}
 
 	public void setJobCandidatureCreatedEvent(final Event<JobCandidature> jobCandidatureCreatedEvent) {
+		Objects.requireNonNull(jobCandidatureCreatedEvent);
 		this.createdEvent = jobCandidatureCreatedEvent;
 	}
 
 	public void setJobCandidatureDao(final JobCandidatureDao jobCandidatureDao) {
+		Objects.requireNonNull(jobCandidatureDao);
 		this.jobCandidatureDao = jobCandidatureDao;
 	}
 
 	public void setJobCandidatureStateChangedEvent(final Event<JobCandidature> jobCandidatureStateChangedEvent) {
+		Objects.requireNonNull(jobCandidatureStateChangedEvent);
 		this.stateChangedEvent = jobCandidatureStateChangedEvent;
 	}
 
 	public void setJobCandidatureStateService(final JobCandidatureStateService jobCandidatureStateService) {
+		Objects.requireNonNull(jobCandidatureStateService);
 		this.jobCandidatureStateService = jobCandidatureStateService;
 	}
 }

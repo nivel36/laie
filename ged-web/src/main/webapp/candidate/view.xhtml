@@ -30,6 +30,11 @@
 					<f:param name="candidateId" value="#{viewCandidateView.candidate.uid}" />
 					<f:param name="id" value="#{viewCandidateView.candidate.curriculum.uid}" />
 				</p:menuitem>
+				<p:menuitem value="#{i18n['curriculum.export_to_pdf']}" process="@this" outcome="#{Page.CURRICULUM_EXPORT.getUrl()}" icon="fa fa-file-pdf-o">
+					<f:param name="candidateId" value="#{viewCandidateView.candidate.uid}" />
+					<f:param name="id" value="#{viewCandidateView.candidate.curriculum.uid}" />
+				</p:menuitem>
+				
 			</p:menuButton>
 		</h:form>
 	</ui:define>
