@@ -6,47 +6,10 @@ insert into JOB_CANDIDATURE_STATE( id, version, name, first, approved, declined,
 insert into JOB_CANDIDATURE_STATE( id, version, name, first, approved, declined, color ) values ( 15, 0, 'job_candidature_state.offered', false, false, false, 'cornflowerblue');
 insert into JOB_CANDIDATURE_STATE( id, version, name, first, approved, declined, color ) values ( 16, 0, 'job_candidature_state.approved', false, true, false, 'gray');
 
-insert into ORIGIN( id, version, code ) values ( 20, 0, 'infojobs');
-insert into ORIGIN( id, version, code ) values ( 21, 0, 'linkedin');
-insert into ORIGIN( id, version, code ) values ( 22, 0, 'reference');
-insert into ORIGIN( id, version, code ) values ( 23, 0, 'other');
-
-insert into I18NSTRING( id, version, locale, key, text ) values( 100, 0, 'es', 'job_offer_state.opened', 'Abierta' );
-insert into I18NSTRING( id, version, locale, key, text ) values( 101, 0, 'ca', 'job_offer_state.opened', 'Oberta' );
-insert into I18NSTRING( id, version, locale, key, text ) values( 105, 0, 'es', 'job_offer_state.closed', 'Cerrada' );
-insert into I18NSTRING( id, version, locale, key, text ) values( 106, 0, 'ca', 'job_offer_state.closed', 'Tancada' );
-insert into I18NSTRING( id, version, locale, key, text ) values( 110, 0, 'es', 'job_offer_state.cancelled', 'Cancelada' );
-insert into I18NSTRING( id, version, locale, key, text ) values( 111, 0, 'ca', 'job_offer_state.cancelled', 'Cancel·lada' );
-insert into I18NSTRING( id, version, locale, key, text ) values( 115, 0, 'es', 'job_offer_state.finished', 'Finalizada' );
-insert into I18NSTRING( id, version, locale, key, text ) values( 116, 0, 'ca', 'job_offer_state.finished', 'Finalitzada' );
-insert into I18NSTRING( id, version, locale, key, text ) values( 120, 0, 'es', 'job_offer_state.paused', 'Pausada' );
-insert into I18NSTRING( id, version, locale, key, text ) values( 121, 0, 'ca', 'job_offer_state.paused', 'Pausada' );
-insert into I18NSTRING( id, version, locale, key, text ) values( 125, 0, 'es', 'job_offer_state.created', 'Creada' );
-insert into I18NSTRING( id, version, locale, key, text ) values( 126, 0, 'ca', 'job_offer_state.created', 'Creada' );
-
-insert into I18NSTRING( id, version, locale, key, text ) values( 200, 0, 'es', 'job_candidature_state.not_contacted', 'Sin contactar' );
-insert into I18NSTRING( id, version, locale, key, text ) values( 201, 0, 'ca', 'job_candidature_state.not_contacted', 'Sense contactar' );
-insert into I18NSTRING( id, version, locale, key, text ) values( 205, 0, 'es', 'job_candidature_state.contacted', 'Contactado' );
-insert into I18NSTRING( id, version, locale, key, text ) values( 206, 0, 'ca', 'job_candidature_state.contacted', 'Contactat' );
-insert into I18NSTRING( id, version, locale, key, text ) values( 210, 0, 'es', 'job_candidature_state.submitted', 'Enviada' );
-insert into I18NSTRING( id, version, locale, key, text ) values( 211, 0, 'ca', 'job_candidature_state.submitted', 'Enviada' );
-insert into I18NSTRING( id, version, locale, key, text ) values( 215, 0, 'es', 'job_candidature_state.declined', 'Rechazada' );
-insert into I18NSTRING( id, version, locale, key, text ) values( 216, 0, 'ca', 'job_candidature_state.declined', 'Refusada' );
-insert into I18NSTRING( id, version, locale, key, text ) values( 220, 0, 'es', 'job_candidature_state.interviewed', 'Entrevistado' );
-insert into I18NSTRING( id, version, locale, key, text ) values( 221, 0, 'ca', 'job_candidature_state.interviewed', 'Entrevistado' );
-insert into I18NSTRING( id, version, locale, key, text ) values( 225, 0, 'es', 'job_candidature_state.offered', 'Ofrecido' );
-insert into I18NSTRING( id, version, locale, key, text ) values( 226, 0, 'ca', 'job_candidature_state.offered', 'Oferigut' );
-insert into I18NSTRING( id, version, locale, key, text ) values( 230, 0, 'es', 'job_candidature_state.approved', 'Aprobado' );
-insert into I18NSTRING( id, version, locale, key, text ) values( 231, 0, 'ca', 'job_candidature_state.approved', 'Aprovat' );
-
-insert into I18NSTRING( id, version, locale, key, text ) values( 300, 0, 'ca', 'infojobs', 'Infojobs' );
-insert into I18NSTRING( id, version, locale, key, text ) values( 301, 0, 'es', 'infojobs', 'Infojobs' );
-insert into I18NSTRING( id, version, locale, key, text ) values( 305, 0, 'ca', 'linkedin', 'LinkedIn' );
-insert into I18NSTRING( id, version, locale, key, text ) values( 306, 0, 'es', 'linkedin', 'LinkedIn' );
-insert into I18NSTRING( id, version, locale, key, text ) values( 310, 0, 'ca', 'reference', 'Referència' );
-insert into I18NSTRING( id, version, locale, key, text ) values( 311, 0, 'es', 'reference', 'Referencia' );
-insert into I18NSTRING( id, version, locale, key, text ) values( 315, 0, 'ca', 'other', 'Altre' );
-insert into I18NSTRING( id, version, locale, key, text ) values( 316, 0, 'es', 'other', 'Otro' );
+insert into ORIGIN( id, version, code ) values ( 20, 0, 'origin.infojobs');
+insert into ORIGIN( id, version, code ) values ( 21, 0, 'origin.linkedin');
+insert into ORIGIN( id, version, code ) values ( 22, 0, 'origin.reference');
+insert into ORIGIN( id, version, code ) values ( 23, 0, 'origin.other');
 
 insert into USER( id, version, uid, name, surname, phoneNumber, email, language, rowsPerPage, role, managerId ) values( 500, 0, 'uid500', 'Abel', 'Ferrer Jiménez','685555276', 'abel.ferrer.jimenez@gmail.com', 'es', 10, 'ADMIN', null);
 insert into USER( id, version, uid, name, surname, phoneNumber, email, language, rowsPerPage, role, managerId ) values( 501, 0, 'uid501', 'Isabel', 'Vallejo Medina','685555276', 'isabel.vallejo.medina@gmail.com', 'es', 10, 'ADMIN', null);

@@ -89,10 +89,4 @@
 			<type>boolean</type>
 		</attribute>
 	</tag>
-
-	<function>
-		<function-name>translate</function-name>
-		<function-class>ged.web.core.i18n.I18nFaceletsFunction</function-class>
-		<function-signature>String translate(java.lang.String)</function-signature>
-	</function>
 </facelet-taglib>

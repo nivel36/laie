@@ -54,7 +54,7 @@
 						<p:column headerText="#{i18n['job_candidature.job_candidature_state']}">
 							<p:link outcome="#{Page.EVENT_ADD.getUrl()}">
 								<f:param name="jobCandidatureId" value="#{jobCandidature.uid}" />
-								<div class="tag #{jobCandidature.state.color}">#{g:translate(jobCandidature.state.name)}</div>
+								<div class="tag #{jobCandidature.state.color}">#{jobCandidature.state.name}</div>
 							</p:link>					
 						</p:column>
 					</p:dataTable>

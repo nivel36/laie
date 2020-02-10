@@ -47,9 +47,9 @@
 										<p:outputLabel id="label" value="#{i18n['event.state']}" for="state" styleClass="label" />
 									</div>
 									<p:selectOneMenu id="state" value="#{editJobStateView.state}" styleClass="input input-select" panelStyleClass="jobCandidatureStates" var="state">
-										<f:selectItems value="#{jobOfferStates.list}" var="jobOfferState" itemValue="#{jobOfferState}" itemLabel="#{g:translate(jobOfferState.name)}" />
+										<f:selectItems value="#{jobOfferStates.list}" var="jobOfferState" itemValue="#{jobOfferState}" itemLabel="#{jobOfferState.name}" />
 										<p:column>
-											<div class="tag #{state.color}">#{g:translate(state.name)}</div>
+											<div class="tag #{state.color}">#{state.name}</div>
 										</p:column>
 									</p:selectOneMenu>
 								</div>
