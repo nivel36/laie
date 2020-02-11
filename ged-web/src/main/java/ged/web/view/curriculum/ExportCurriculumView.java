@@ -17,8 +17,6 @@ public class ExportCurriculumView extends AbstractView {
 
 	private static final String CANDIDATE_ID = "candidateId";
 
-	private static final String CURRICULUM_ID = "curriculumId";
-
 	private static final String ID = "id";
 
 	private static final long serialVersionUID = 1L;
@@ -33,5 +31,9 @@ public class ExportCurriculumView extends AbstractView {
 
 	public void export(CurriculumTemplate curriculumTemplate) {
 
+	}
+
+	public Curriculum getCurriculum() {
+		return this.curriculum;
 	}
 }

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://ged.org/ui" xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets" template="/WEB-INF/templates/template.xhtml">
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://ged.org/ui" xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui"
+	xmlns:p="http://primefaces.org/ui" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/WEB-INF/templates/template.xhtml">
 
 	<ui:define name="title">
 		#{i18n['skill.skills']}
@@ -33,10 +34,10 @@
 
 	<ui:define name="content">
 		<h:form>
-			<p:remoteCommand name="save" process="@form" update="growl @form" action="#{exportCurriculumView.save}" />
 			<div class="p-grid">
 				<div class="p-col-12 p-xl-6">
 					<div class="card card-w-title ui-fluid">
+						<p:commandButton value="export" action="#{exportCurriculumView.export}" />
 					</div>
 				</div>
 			</div>
