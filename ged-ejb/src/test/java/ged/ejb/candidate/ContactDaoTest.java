@@ -29,8 +29,8 @@ public class ContactDaoTest {
 		@Test
 		public void emptyTextShouldReturnList() {
 			final SearchResult<Contact> searchResult = new SearchResult<>(new ArrayList<>(), 0);
-			when(persistenceFacade.search(Contact.class, Page.ALL_RESULTS, new ArrayList<SortField>(), null, "", "name",
-					"surname", "email")).thenReturn(searchResult);
+			when(persistenceFacade.search(Contact.class, Page.ALL_RESULTS, new ArrayList<SortField>(), null, "", "_name",
+					"_surname", "_email")).thenReturn(searchResult);
 			final List<Contact> users = contactDao.search("", Page.ALL_RESULTS).getResultData();
 			assertEquals(0, users.size());
 		}
@@ -38,8 +38,8 @@ public class ContactDaoTest {
 		@Test
 		public void nullTextShouldReturnList() {
 			final SearchResult<Contact> searchResult = new SearchResult<>(new ArrayList<>(), 0);
-			when(persistenceFacade.search(Contact.class, Page.ALL_RESULTS, new ArrayList<SortField>(), null, null, "name",
-					"surname", "email")).thenReturn(searchResult);
+			when(persistenceFacade.search(Contact.class, Page.ALL_RESULTS, new ArrayList<SortField>(), null, null, "_name",
+					"_surname", "_email")).thenReturn(searchResult);
 
 			final List<Contact> users = contactDao.search(null, Page.ALL_RESULTS).getResultData();
 			assertEquals(0, users.size());
@@ -56,8 +56,8 @@ public class ContactDaoTest {
 
 			final SearchResult<Contact> searchResult = new SearchResult<>(contacts, 1);
 
-			when(persistenceFacade.search(Contact.class, Page.ALL_RESULTS, new ArrayList<SortField>(), null, "Aaron", "name",
-					"surname", "email")).thenReturn(searchResult);
+			when(persistenceFacade.search(Contact.class, Page.ALL_RESULTS, new ArrayList<SortField>(), null, "Aaron", "_name",
+					"_surname", "_email")).thenReturn(searchResult);
 
 			final List<Contact> returnedContacts = contactDao.search("Aaron", Page.ALL_RESULTS).getResultData();
 			assertEquals("Smith", returnedContacts.get(0).getSurname());

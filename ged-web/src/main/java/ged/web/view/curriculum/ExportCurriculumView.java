@@ -1,5 +1,9 @@
 package ged.web.view.curriculum;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -29,11 +33,25 @@ public class ExportCurriculumView extends AbstractView {
 	@Param(name = ID, required = false)
 	private Curriculum curriculum;
 
+	private List<CurriculumTemplate> templates;
+
 	public void export(CurriculumTemplate curriculumTemplate) {
 
 	}
 
 	public Curriculum getCurriculum() {
 		return this.curriculum;
+	}
+
+	public List<CurriculumTemplate> getTemplates() {
+		return templates;
+	}
+
+	@PostConstruct
+	public void init() {
+		templates = new ArrayList<>();
+		CurriculumTemplate basicTemplate = new CurriculumTemplate();
+		basicTemplate.setTitle("curriculum_template.basic_template");
+		templates.add(basicTemplate);
 	}
 }
