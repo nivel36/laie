@@ -4,12 +4,14 @@ import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
 import com.sun.istack.NotNull;
 
 import ged.ejb.core.model.AbstractEntity;
 
 @Entity
+@Table(name = "CURRICULUM_TEMPLATE")
 public class CurriculumTemplate extends AbstractEntity {
 
 	private static final long serialVersionUID = 1L;
@@ -22,9 +24,7 @@ public class CurriculumTemplate extends AbstractEntity {
 	@Column(nullable = false)
 	private String description;
 
-	@NotNull
-	@Column(nullable = false)
-	private String screenshootPath;
+	private String screenshoot;
 	
 	@NotNull
 	@Column(nullable = false)
@@ -53,8 +53,8 @@ public class CurriculumTemplate extends AbstractEntity {
 		return description;
 	}
 
-	public String getScreenshootPath() {
-		return this.screenshootPath;
+	public String getScreenshoot() {
+		return this.screenshoot;
 	}
 
 	public String getTitle() {
@@ -77,8 +77,8 @@ public class CurriculumTemplate extends AbstractEntity {
 		this.description = description;
 	}
 
-	public void setScreenshootPath(final String screenshootPath) {
-		this.screenshootPath = screenshootPath;
+	public void setScreenshoot(final String screenshoot) {
+		this.screenshoot = screenshoot;
 	}
 
 	public void setTitle(final String title) {

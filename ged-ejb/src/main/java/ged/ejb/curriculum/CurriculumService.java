@@ -1,5 +1,6 @@
 package ged.ejb.curriculum;
 
+import java.io.File;
 import java.lang.invoke.MethodHandles;
 import java.util.List;
 import java.util.Objects;
@@ -14,6 +15,7 @@ import ged.ejb.candidate.Candidate;
 import ged.ejb.core.AbstractService;
 import ged.ejb.core.model.AbstractDao;
 import ged.ejb.core.model.Repository;
+import ged.ejb.curriculum.export.CurriculumExporter;
 
 @Stateless
 public class CurriculumService extends AbstractService<Curriculum> {
@@ -27,6 +29,9 @@ public class CurriculumService extends AbstractService<Curriculum> {
 	@Inject
 	@Repository
 	private EducationDao educationDao;
+	
+	@Inject
+	private CurriculumExporter exporter;
 
 	@Inject
 	@Repository
@@ -74,6 +79,10 @@ public class CurriculumService extends AbstractService<Curriculum> {
 		Objects.requireNonNull(name, "Skill name can't be null");
 		logger.debug("Find skill by name {}", name);
 		return this.skillDao.findSkill(name);
+	}
+	
+	public File export(Curriculum curriculum, CurriculumTemplate template) {
+		return exporter.export(curriculum, template);
 	}
 
 	@Override

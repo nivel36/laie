@@ -38,7 +38,7 @@
 				<ui:repeat var="template" value="#{exportCurriculumView.templates}">
 					<div class="p-col-12 p-xl-6">
 						<div class="card card-w-title ui-fluid">
-							<p:commandButton value="export" action="#{exportCurriculumView.export(documentTemplate)}" />
+							<p:commandButton value="export" action="#{exportCurriculumView.export(template)}" ajax="false"/>
 						</div>
 					</div>
 				</ui:repeat>
