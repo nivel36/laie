@@ -10,6 +10,7 @@ public class JobExperiencesToHtml extends AbstractHtmlPrinter {
 	String print(final Set<JobExperience> jobExperiences) {
 		final StringBuilder sb = new StringBuilder();
 		sb.append(this.openDiv("jobExperiences"));
+		sb.append("<h1>Experiencia laboral</h1>");
 		for (final JobExperience jobExperience : jobExperiences) {
 			sb.append(this.printJobExperience(jobExperience));
 		}

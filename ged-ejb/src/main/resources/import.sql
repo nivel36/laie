@@ -85,6 +85,6 @@ insert into DOCUMENT_TEMPLATE (id, version, language, name, title, text) values 
 insert into DOCUMENT_TEMPLATE (id, version, language, name, title, text) values (1501, 0, 'ca', 'gdpr', 'Regulació general de protecció de dades', '<p>Barcelona a %date%</p><br/><p>Insereix aquí el documento de GDPR de la empresa en català</p><p> </p><p> </p><p> </p><p align="center"><b>Signatura</b></p>');
 
 insert into CURRICULUM_TEMPLATE (id, version, title, css, description, screenshoot) values (1510, 0, 'Básica', 'h1 {font-size: 2em;}' , 'Una plantilla básica', null);
-insert into CURRICULUM_TEMPLATE (id, version, title, css, description, screenshoot) values (1511, 0, 'Anónima', 'contact_data {display: none;}' , 'Una plantilla básica anónima', null);
+insert into CURRICULUM_TEMPLATE (id, version, title, css, description, screenshoot) values (1511, 0, 'Anónima', '.contactData {display: none;}' , 'Una plantilla básica anónima', null);
 
 ALTER SEQUENCE HIBERNATE_SEQUENCE RESTART with 2000;

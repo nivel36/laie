@@ -1,7 +1,8 @@
 package ged.web.view.curriculum;
 
 import java.io.File;
-import java.util.ArrayList;
+import java.io.InputStream;
+import java.nio.file.Files;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -43,7 +44,13 @@ public class ExportCurriculumView extends AbstractView {
 
 	public void export(final CurriculumTemplate template) throws Exception {
 		final File file = this.curriculumService.export(this.curriculum, template);
-		Faces.sendFile(file, true);
+		try (InputStream is = Files.newInputStream(file.toPath())) {
+			Faces.sendFile(is, buildFileName(template), true);
+		}
+	}
+
+	private String buildFileName(final CurriculumTemplate template) {
+		return curriculum.getCandidate().getFullName() + "_" + template.getTitle() + ".pdf";
 	}
 
 	public Curriculum getCurriculum() {

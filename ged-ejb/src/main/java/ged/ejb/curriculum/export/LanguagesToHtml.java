@@ -9,6 +9,7 @@ public class LanguagesToHtml extends AbstractHtmlPrinter {
 	String print(final Set<Language> languages) {
 		final StringBuilder sb = new StringBuilder();
 		sb.append(this.openDiv("languages"));
+		sb.append("<h1>Idiomas</h1>");
 		for (final Language language : languages) {
 			sb.append(this.printLanguage(language));
 		}

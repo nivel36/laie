@@ -9,6 +9,7 @@ class EducationToHtml extends AbstractHtmlPrinter {
 	String print(final Set<Education> educations) {
 		final StringBuilder sb = new StringBuilder();
 		sb.append(this.openDiv("educations"));
+		sb.append("<h1>Educación</h1>");
 		for (final Education education : educations) {
 			sb.append(this.printEducation(education));
 		}

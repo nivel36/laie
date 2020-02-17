@@ -9,6 +9,7 @@ class SkillsToHtml extends AbstractHtmlPrinter {
 	String print(final Set<Skill> skills) {
 		final StringBuilder sb = new StringBuilder();
 		sb.append(this.openDiv("skills"));
+		sb.append("<h1>habilidades</h1>");
 		for (final Skill skill : skills) {
 			sb.append(this.printSkill(skill));
 		}

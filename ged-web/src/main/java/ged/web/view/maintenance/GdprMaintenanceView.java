@@ -1,7 +1,10 @@
 package ged.web.view.maintenance;
 
 import java.io.File;
+import java.io.InputStream;
+import java.nio.file.Files;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 
 import javax.annotation.PostConstruct;
@@ -34,10 +37,13 @@ public class GdprMaintenanceView extends AbstractView {
 
 	public void export() throws Exception {
 		final Set<TemplateTag> tags = new HashSet<>();
-		tags.add(new DateTag(this.sessionUser.getLocale()));
+		final Locale locale = this.sessionUser.getLocale();
+		tags.add(new DateTag(locale));
 
 		final File file = this.documentService.export(this.document, tags);
-		Faces.sendFile(file, true);
+		try (InputStream is = Files.newInputStream(file.toPath())) {
+			Faces.sendFile(is, "Gdpr_" + this.document.getLanguage() + ".pdf", true);
+		}
 	}
 
 	public DocumentTemplate getDocument() {
