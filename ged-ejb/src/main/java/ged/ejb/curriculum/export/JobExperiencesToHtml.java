@@ -1,6 +1,7 @@
 package ged.ejb.curriculum.export;
 
 import java.time.YearMonth;
+import java.time.format.DateTimeFormatter;
 import java.util.Set;
 
 import ged.ejb.curriculum.JobExperience;
@@ -11,9 +12,11 @@ public class JobExperiencesToHtml extends AbstractHtmlPrinter {
 		final StringBuilder sb = new StringBuilder();
 		sb.append(this.openDiv("jobExperiences"));
 		sb.append("<h1>Experiencia laboral</h1>");
+		sb.append(this.openDiv("data"));
 		for (final JobExperience jobExperience : jobExperiences) {
 			sb.append(this.printJobExperience(jobExperience));
 		}
+		sb.append(this.closeDiv());
 		sb.append(this.closeDiv());
 		return sb.toString();
 	}
@@ -23,13 +26,14 @@ public class JobExperiencesToHtml extends AbstractHtmlPrinter {
 	}
 
 	String printDate(final YearMonth start, final YearMonth end, final boolean stillWorking) {
+		final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM / yy");
 		final StringBuilder sb = new StringBuilder();
-		sb.append(this.openDiv("from-to-date")).append("(").append(this.openSpan("from-date")).append(start)
+		sb.append(this.openDiv("from-to-date")).append(this.openSpan("from-date")).append(start.format(formatter))
 				.append(this.closeSpan()).append(" - ");
 		if (end != null) {
-			sb.append(this.openSpan("to-date")).append(end).append(this.closeSpan());
+			sb.append(this.openSpan("to-date")).append(end.format(formatter)).append(this.closeSpan());
 		}
-		sb.append(")").append(this.closeDiv());
+		sb.append(this.closeDiv());
 		return sb.toString();
 	}
 

@@ -5,9 +5,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UncheckedIOException;
+import java.lang.invoke.MethodHandles;
 import java.nio.file.Files;
 
 import javax.ejb.Stateless;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.itextpdf.html2pdf.ConverterProperties;
 import com.itextpdf.html2pdf.HtmlConverter;
@@ -17,6 +21,8 @@ import ged.ejb.curriculum.CurriculumTemplate;
 
 @Stateless
 public class CurriculumHtmlExporter implements CurriculumExporter {
+	
+	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	private File createPdf(final String html) {
 		try {
@@ -29,13 +35,15 @@ public class CurriculumHtmlExporter implements CurriculumExporter {
 	}
 
 	public File export(final Curriculum curriculum, final CurriculumTemplate template) {
-		final String html = new CurriculumToHtml().print(curriculum);
+		final String curriculumHtml = new CurriculumToHtml().print(curriculum);
 		final String css = template.getCss();
 
 		final StringBuilder sb = new StringBuilder();
-		sb.append("<html><head><style>").append(css).append("</style></head><body>").append(html)
+		sb.append("<html><head><style>").append(css).append("</style></head><body>").append(curriculumHtml)
 				.append("</body></html>");
-		return this.createPdf(sb.toString());
+		String html = sb.toString();
+		logger.info(html);
+		return this.createPdf(html);
 	}
 
 	private File htmlConverter(final String text, final File pdfDest, final ConverterProperties converterProperties) {

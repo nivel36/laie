@@ -10,21 +10,23 @@ class EducationToHtml extends AbstractHtmlPrinter {
 		final StringBuilder sb = new StringBuilder();
 		sb.append(this.openDiv("educations"));
 		sb.append("<h1>Educación</h1>");
+		sb.append(this.openDiv("data"));
 		for (final Education education : educations) {
 			sb.append(this.printEducation(education));
 		}
+		sb.append(this.closeDiv());
 		sb.append(this.closeDiv());
 		return sb.toString();
 	}
 
 	String printDate(final Integer start, final Integer end, final boolean stillStudying) {
 		final StringBuilder sb = new StringBuilder();
-		sb.append(this.openDiv("from-to-date")).append("(").append(this.openSpan("from-date")).append(start)
+		sb.append(this.openDiv("from-to-date")).append(this.openSpan("from-date")).append(start)
 				.append(this.closeSpan()).append(" - ");
 		if (end != null) {
 			sb.append(this.openSpan("to-date")).append(end).append(this.closeSpan());
 		}
-		sb.append(")").append(this.closeDiv());
+		sb.append(this.closeDiv());
 		return sb.toString();
 	}
 

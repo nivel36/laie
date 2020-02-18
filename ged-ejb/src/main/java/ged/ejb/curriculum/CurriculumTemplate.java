@@ -4,6 +4,7 @@ import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 
 import com.sun.istack.NotNull;
@@ -18,6 +19,7 @@ public class CurriculumTemplate extends AbstractEntity {
 
 	@NotNull
 	@Column(nullable = false)
+	@Lob
 	private String css;
 
 	@NotNull
