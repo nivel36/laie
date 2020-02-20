@@ -4,10 +4,10 @@ import ged.ejb.curriculum.Curriculum;
 
 public class CurriculumToHtml extends AbstractHtmlPrinter {
 
-	String print(final Curriculum curriculum) {
+	String print(final Curriculum curriculum, String imagePath) {
 		final StringBuilder sb = new StringBuilder();
 		sb.append(this.openDiv("curriculum"));
-		sb.append(new ContactDataToHtml().print(curriculum.getCandidate()));
+		sb.append(new ContactDataToHtml().print(curriculum.getCandidate(), imagePath));
 		sb.append(new JobExperiencesToHtml().print(curriculum.getJobExperiences()));
 		sb.append(new EducationToHtml().print(curriculum.getEducation()));
 		sb.append(new LanguagesToHtml().print(curriculum.getLanguages()));

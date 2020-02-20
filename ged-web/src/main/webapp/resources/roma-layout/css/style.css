@@ -401,6 +401,15 @@ body .jobCandidatureStates.ui-selectonemenu-panel .ui-selectonemenu-items .ui-se
 	padding-bottom: 0.6em;
 }
 
+.curriculum .job-profile {
+	font-size: 1em;
+	padding-bottom: 0.6em;
+}
+
+.curriculum .job-description {
+	white-space: pre-line	
+}
+
 .curriculum .date-range {
 	color: #8c8c93;
 }

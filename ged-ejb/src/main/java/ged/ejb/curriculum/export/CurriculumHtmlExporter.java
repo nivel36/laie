@@ -9,6 +9,7 @@ import java.lang.invoke.MethodHandles;
 import java.nio.file.Files;
 
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,12 +17,17 @@ import org.slf4j.LoggerFactory;
 import com.itextpdf.html2pdf.ConverterProperties;
 import com.itextpdf.html2pdf.HtmlConverter;
 
+import ged.ejb.core.util.ConfigurationProperty;
 import ged.ejb.curriculum.Curriculum;
 import ged.ejb.curriculum.CurriculumTemplate;
 
 @Stateless
 public class CurriculumHtmlExporter implements CurriculumExporter {
-	
+
+	@Inject
+	@ConfigurationProperty("image.directory")
+	private String imagePath;
+
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	private File createPdf(final String html) {
@@ -35,7 +41,7 @@ public class CurriculumHtmlExporter implements CurriculumExporter {
 	}
 
 	public File export(final Curriculum curriculum, final CurriculumTemplate template) {
-		final String curriculumHtml = new CurriculumToHtml().print(curriculum);
+		final String curriculumHtml = new CurriculumToHtml().print(curriculum, imagePath);
 		final String css = template.getCss();
 
 		final StringBuilder sb = new StringBuilder();
@@ -53,5 +59,9 @@ public class CurriculumHtmlExporter implements CurriculumExporter {
 		} catch (final IOException e) {
 			throw new UncheckedIOException(e);
 		}
+	}
+
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
 	}
 }

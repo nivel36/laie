@@ -1,6 +1,8 @@
 package ged.web.view.curriculum;
 
 import java.time.YearMonth;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -41,7 +43,10 @@ public class JobExperienceView extends AbstractView {
 	private YearMonthDto toDate;
 
 	private String curriculumUrl() {
-		return this.navigator.getRedirectUrl(PageEnum.CURRICULUM, this.curriculum);
+		final Map<String, String> queryParams = new HashMap<>();
+		queryParams.put("id", curriculum.getUid());
+		queryParams.put("candidateId", this.curriculum.getCandidate().getUid());
+		return this.navigator.getRedirectUrl(PageEnum.CURRICULUM, queryParams);
 	}
 
 	public String delete() {

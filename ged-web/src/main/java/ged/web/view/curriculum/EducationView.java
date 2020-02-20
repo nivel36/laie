@@ -2,7 +2,9 @@ package ged.web.view.curriculum;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -37,7 +39,10 @@ public class EducationView extends AbstractView {
 	private List<Integer> years;
 
 	private String curriculumUrl() {
-		return this.navigator.getRedirectUrl(PageEnum.CURRICULUM, this.education.getCurriculum().getCandidate());
+		final Map<String, String> queryParams = new HashMap<>();
+		queryParams.put("id", curriculum.getUid());
+		queryParams.put("candidateId", this.curriculum.getCandidate().getUid());
+		return this.navigator.getRedirectUrl(PageEnum.CURRICULUM, queryParams);
 	}
 
 	public String delete() {

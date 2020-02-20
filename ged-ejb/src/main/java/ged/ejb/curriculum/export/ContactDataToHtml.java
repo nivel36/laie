@@ -4,10 +4,11 @@ import ged.ejb.candidate.Candidate;
 
 public class ContactDataToHtml extends AbstractHtmlPrinter {
 
-	String print(final Candidate candidate) {
+	String print(final Candidate candidate, String imagePath) {
 		final StringBuilder sb = new StringBuilder();
 		sb.append(this.openDiv("contact"));
 		sb.append("<h1>Datos de contacto</h1>");
+		sb.append(printPicture(imagePath + "/" + candidate.getImageFileName()));
 		sb.append(this.openDiv("data"));
 		sb.append(this.printName(candidate.getFullName()));
 		sb.append(this.printEmail(candidate.getEmail()));
@@ -17,10 +18,17 @@ public class ContactDataToHtml extends AbstractHtmlPrinter {
 		return sb.toString();
 	}
 
+	String printPicture(String path) {
+		if (path == null) {
+			return "";
+		}
+		return "<div class=\"user-image\"><img class=\"picture\" src=\"" + path + "\"/></div>";
+	}
+
 	String printEmail(final String email) {
 		return this.openDiv("email") + printLabel("Correo electrónico") + email + this.closeDiv();
 	}
-	
+
 	String printLabel(final String label) {
 		return this.openDiv("label") + label + this.closeDiv();
 	}
@@ -32,5 +40,4 @@ public class ContactDataToHtml extends AbstractHtmlPrinter {
 	String printPhone(final String phone) {
 		return this.openDiv("phone") + printLabel("Teléfono") + phone + this.closeDiv();
 	}
-
 }
