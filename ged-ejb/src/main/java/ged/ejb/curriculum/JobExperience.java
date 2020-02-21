@@ -10,19 +10,16 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
-import javax.persistence.PrePersist;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 
-import ged.ejb.core.model.AbstractEntity;
-import ged.ejb.core.model.Obfuscable;
-import ged.ejb.core.model.UidGenerator;
+import ged.ejb.core.model.AbstractIndexedEntity;
 
 @Entity
 @Indexed
-public class JobExperience extends AbstractEntity implements Obfuscable {
+public class JobExperience extends AbstractIndexedEntity {
 
 	private static final long serialVersionUID = 1L;
 
@@ -50,10 +47,6 @@ public class JobExperience extends AbstractEntity implements Obfuscable {
 	private YearMonth startDate;
 
 	private boolean stillWorking;
-
-	@NotNull
-	@Column(length = 32, nullable = false)
-	private String uid;
 
 	@Override
 	public boolean equals(final Object obj) {
@@ -111,11 +104,6 @@ public class JobExperience extends AbstractEntity implements Obfuscable {
 	}
 
 	@Override
-	public String getUid() {
-		return this.uid;
-	}
-
-	@Override
 	public int hashCode() {
 		return Objects.hash(this.companyName, this.curriculum, this.description, this.startDate, this.jobPosition,
 				this.stillWorking, this.endDate);
@@ -151,15 +139,5 @@ public class JobExperience extends AbstractEntity implements Obfuscable {
 
 	public void setStillWorking(final boolean stillWorking) {
 		this.stillWorking = stillWorking;
-	}
-
-	@Override
-	public void setUid(final String uid) {
-		this.uid = uid;
-	}
-	
-	@PrePersist
-	public void generateUid() {
-		this.uid = UidGenerator.generate();
 	}
 }

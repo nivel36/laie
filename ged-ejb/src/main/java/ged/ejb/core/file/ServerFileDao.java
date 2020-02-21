@@ -24,8 +24,4 @@ public class ServerFileDao extends AbstractDao<ServerFile> {
 		return ServerFile.class;
 	}
 
-	@Override
-	public String[] searchFields() {
-		return new String[] {};
-	}
 }

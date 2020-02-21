@@ -9,9 +9,6 @@ import javax.ejb.SessionContext;
 import ged.ejb.core.model.AbstractDao;
 import ged.ejb.core.model.AbstractEntity;
 import ged.ejb.core.model.Page;
-import ged.ejb.core.model.search.SearchFacets;
-import ged.ejb.core.model.search.SearchResult;
-import ged.ejb.core.model.search.SortField;
 
 public abstract class AbstractService<T extends AbstractEntity> {
 
@@ -38,19 +35,5 @@ public abstract class AbstractService<T extends AbstractEntity> {
 	public T save(final T entity) {
 		Objects.requireNonNull(entity);
 		return this.getDao().save(entity);
-	}
-
-	public SearchResult<T> search(final String searchText, final Page page) {
-		return this.getDao().search(searchText, page);
-	}
-
-	public SearchResult<T> search(final String searchText, final Page page, final List<SortField> sortFields,
-			final SearchFacets searchFacets) {
-		return this.getDao().search(searchText, page, sortFields, searchFacets);
-	}
-
-	public SearchResult<T> search(final String searchText, final Page page, final SortField SortField,
-			final SearchFacets searchFacets) {
-		return this.getDao().search(searchText, page, SortField, searchFacets);
 	}
 }

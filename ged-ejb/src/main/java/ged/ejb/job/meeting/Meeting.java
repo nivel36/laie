@@ -11,23 +11,20 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.search.annotations.IndexedEmbedded;
 
-import ged.ejb.core.model.AbstractEntity;
-import ged.ejb.core.model.Obfuscable;
+import ged.ejb.core.model.AbstractIndexedEntity;
 import ged.ejb.core.model.Ownerable;
-import ged.ejb.core.model.UidGenerator;
 import ged.ejb.job.candidature.JobCandidature;
 import ged.ejb.user.User;
 
 @Entity
 @Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "jobCandidatureId", "datePlanned" }) })
-public class Meeting extends AbstractEntity implements Ownerable, Obfuscable {
+public class Meeting extends AbstractIndexedEntity implements Ownerable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -59,10 +56,6 @@ public class Meeting extends AbstractEntity implements Ownerable, Obfuscable {
 	@NotNull
 	@Column(nullable = false)
 	private String title;
-
-	@NotNull
-	@Column(unique = true, nullable = false)
-	private String uid;
 
 	public void addAttendee(final String email) {
 		Objects.requireNonNull(email, "Email can't be null");
@@ -127,11 +120,6 @@ public class Meeting extends AbstractEntity implements Ownerable, Obfuscable {
 	}
 
 	@Override
-	public String getUid() {
-		return this.uid;
-	}
-
-	@Override
 	public int hashCode() {
 		return Objects.hash(this.datePlanned, this.title, this.jobCandidature, this.result);
 	}
@@ -176,15 +164,5 @@ public class Meeting extends AbstractEntity implements Ownerable, Obfuscable {
 
 	public void setTitle(final String title) {
 		this.title = title;
-	}
-
-	@Override
-	public void setUid(final String uid) {
-		this.uid = uid;
-	}
-	
-	@PrePersist
-	public void generateUid() {
-		this.uid = UidGenerator.generate();
 	}
 }

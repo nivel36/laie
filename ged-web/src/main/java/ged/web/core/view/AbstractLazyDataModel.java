@@ -7,15 +7,15 @@ import java.util.Objects;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
-import ged.ejb.core.AbstractService;
-import ged.ejb.core.model.AbstractEntity;
+import ged.ejb.core.AbstractIndexedService;
+import ged.ejb.core.model.AbstractIndexedEntity;
 import ged.ejb.core.model.Page;
 import ged.ejb.core.model.search.SearchFacet;
 import ged.ejb.core.model.search.SearchFacets;
 import ged.ejb.core.model.search.SearchResult;
 import ged.ejb.core.model.search.SortField;
 
-public abstract class AbstractLazyDataModel<T extends AbstractEntity> extends LazyDataModel<T> {
+public abstract class AbstractLazyDataModel<T extends AbstractIndexedEntity> extends LazyDataModel<T> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -45,7 +45,7 @@ public abstract class AbstractLazyDataModel<T extends AbstractEntity> extends La
 		return entity.getId();
 	}
 
-	protected abstract AbstractService<T> getService();
+	protected abstract AbstractIndexedService<T> getService();
 
 	@Override
 	public List<T> load(final int first, final int pageSize, final String sortFieldName, final SortOrder sortOrder,

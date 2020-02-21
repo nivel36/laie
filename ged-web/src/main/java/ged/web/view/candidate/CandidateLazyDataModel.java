@@ -4,7 +4,7 @@ import java.util.Objects;
 
 import ged.ejb.candidate.Candidate;
 import ged.ejb.candidate.CandidateService;
-import ged.ejb.core.AbstractService;
+import ged.ejb.core.AbstractIndexedService;
 import ged.web.core.view.AbstractLazyDataModel;
 
 public class CandidateLazyDataModel extends AbstractLazyDataModel<Candidate> {
@@ -19,7 +19,7 @@ public class CandidateLazyDataModel extends AbstractLazyDataModel<Candidate> {
 	}
 
 	@Override
-	protected AbstractService<Candidate> getService() {
+	protected AbstractIndexedService<Candidate> getService() {
 		return this.candidateService;
 	}
 }

@@ -5,27 +5,23 @@ import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
 import ged.ejb.candidate.Candidate;
-import ged.ejb.core.model.AbstractEntity;
-import ged.ejb.core.model.Obfuscable;
-import ged.ejb.core.model.UidGenerator;
+import ged.ejb.core.model.AbstractIndexedEntity;
 import ged.ejb.event.JobCandidatureEvent;
 import ged.ejb.job.meeting.Meeting;
 import ged.ejb.job.offer.JobOffer;
 
 @Entity
 @Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "jobOfferId", "candidateId" }) })
-public class JobCandidature extends AbstractEntity implements Obfuscable {
+public class JobCandidature extends AbstractIndexedEntity {
 
 	private static final long serialVersionUID = 1L;
 
@@ -48,10 +44,6 @@ public class JobCandidature extends AbstractEntity implements Obfuscable {
 	@ManyToOne
 	@JoinColumn(name = "jobCandidatureStateId")
 	private JobCandidatureState state;
-
-	@NotNull
-	@Column(unique = true, nullable = false)
-	private String uid;
 
 	public JobCandidature() {
 	}
@@ -98,11 +90,6 @@ public class JobCandidature extends AbstractEntity implements Obfuscable {
 	}
 
 	@Override
-	public String getUid() {
-		return this.uid;
-	}
-
-	@Override
 	public int hashCode() {
 		return Objects.hash(this.candidate, this.jobOffer);
 	}
@@ -139,17 +126,7 @@ public class JobCandidature extends AbstractEntity implements Obfuscable {
 	}
 
 	@Override
-	public void setUid(final String uid) {
-		this.uid = uid;
-	}
-
-	@Override
 	public String toString() {
 		return this.jobOffer + " - " + this.candidate.getFullName();
-	}
-	
-	@PrePersist
-	public void generateUid() {
-		this.uid = UidGenerator.generate();
 	}
 }

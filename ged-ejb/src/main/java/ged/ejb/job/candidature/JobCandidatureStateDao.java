@@ -14,9 +14,4 @@ public class JobCandidatureStateDao extends AbstractDao<JobCandidatureState> {
 	protected Class<JobCandidatureState> getType() {
 		return JobCandidatureState.class;
 	}
-
-	@Override
-	public String[] searchFields() {
-		return new String[] {};
-	}
 }

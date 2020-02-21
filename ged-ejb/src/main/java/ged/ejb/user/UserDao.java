@@ -11,13 +11,13 @@ import javax.persistence.NoResultException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ged.ejb.core.model.AbstractDao;
+import ged.ejb.core.model.AbstractIndexedDao;
 import ged.ejb.core.model.Page;
 import ged.ejb.core.model.Repository;
 import ged.ejb.core.security.LoginToken.TokenType;
 
 @Repository
-public class UserDao extends AbstractDao<User> {
+public class UserDao extends AbstractIndexedDao<User> {
 
 	private static final String EMAIL = "email";
 

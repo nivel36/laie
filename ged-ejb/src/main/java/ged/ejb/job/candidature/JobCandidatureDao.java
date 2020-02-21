@@ -6,14 +6,14 @@ import java.util.List;
 import java.util.Objects;
 
 import ged.ejb.candidate.Candidate;
-import ged.ejb.core.model.AbstractDao;
+import ged.ejb.core.model.AbstractIndexedDao;
 import ged.ejb.core.model.Page;
 import ged.ejb.core.model.Repository;
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.user.User;
 
 @Repository
-public class JobCandidatureDao extends AbstractDao<JobCandidature> {
+public class JobCandidatureDao extends AbstractIndexedDao<JobCandidature> {
 
 	public List<JobCandidature> findApprovedJobCanditures(final JobOffer jobOffer, final Page page) {
 		Objects.requireNonNull(jobOffer);

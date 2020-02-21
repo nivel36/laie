@@ -16,8 +16,8 @@ import org.slf4j.LoggerFactory;
 
 import ged.ejb.candidate.Candidate;
 import ged.ejb.client.Client;
-import ged.ejb.core.AbstractService;
-import ged.ejb.core.model.AbstractDao;
+import ged.ejb.core.AbstractIndexedService;
+import ged.ejb.core.model.AbstractIndexedDao;
 import ged.ejb.core.model.Page;
 import ged.ejb.core.model.Repository;
 import ged.ejb.job.candidature.JobCandidature;
@@ -29,7 +29,7 @@ import ged.ejb.job.offer.event.JobOfferStateChangedEvent;
 import ged.ejb.user.User;
 
 @Stateless
-public class JobOfferService extends AbstractService<JobOffer> {
+public class JobOfferService extends AbstractIndexedService<JobOffer> {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
@@ -98,7 +98,7 @@ public class JobOfferService extends AbstractService<JobOffer> {
 	}
 
 	@Override
-	public AbstractDao<JobOffer> getDao() {
+	public AbstractIndexedDao<JobOffer> getDao() {
 		return this.jobOfferDao;
 	}
 

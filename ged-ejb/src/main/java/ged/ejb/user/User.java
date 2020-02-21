@@ -20,13 +20,12 @@ import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.SortableField;
 import org.hibernate.search.annotations.Store;
 
-import ged.ejb.core.model.Obfuscable;
 import ged.ejb.person.Person;
 import ged.ejb.user.role.Role;
 
 @Entity
 @Indexed
-public class User extends Person implements Obfuscable {
+public class User extends Person  {
 
 	private static final long serialVersionUID = 1L;
 
@@ -57,10 +56,6 @@ public class User extends Person implements Obfuscable {
 	@NotNull
 	@Column(nullable = false)
 	private Integer rowsPerPage = 10;
-
-	@NotNull
-	@Column(unique = true, nullable = false)
-	private String uid;
 
 	public LocalDate getDateOfJoin() {
 		return this.dateOfJoin;

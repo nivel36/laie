@@ -6,11 +6,11 @@ import java.util.Objects;
 
 import javax.persistence.NoResultException;
 
-import ged.ejb.core.model.AbstractDao;
+import ged.ejb.core.model.AbstractIndexedDao;
 import ged.ejb.core.model.Repository;
 
 @Repository
-public class TagDao extends AbstractDao<Tag> {
+public class TagDao extends AbstractIndexedDao<Tag> {
 
 	public Tag findByLabel(final String label) {
 		Objects.requireNonNull(label, "Label can't be null");

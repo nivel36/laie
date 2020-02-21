@@ -8,12 +8,12 @@ import java.util.Objects;
 import javax.persistence.NoResultException;
 
 import ged.ejb.candidate.Candidate;
-import ged.ejb.core.model.AbstractDao;
+import ged.ejb.core.model.AbstractIndexedDao;
 import ged.ejb.core.model.Page;
 import ged.ejb.core.model.Repository;
 
 @Repository
-public class CurriculumDao extends AbstractDao<Curriculum> {
+public class CurriculumDao extends AbstractIndexedDao<Curriculum> {
 
 	public List<CurriculumTemplate> findCurriculumTemplates() {
 		return this.findAll(CurriculumTemplate.class, Page.ALL_RESULTS);

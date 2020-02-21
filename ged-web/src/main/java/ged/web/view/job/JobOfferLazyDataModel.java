@@ -2,7 +2,7 @@ package ged.web.view.job;
 
 import java.util.Objects;
 
-import ged.ejb.core.AbstractService;
+import ged.ejb.core.AbstractIndexedService;
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferService;
 import ged.web.core.view.AbstractLazyDataModel;
@@ -19,7 +19,7 @@ public class JobOfferLazyDataModel extends AbstractLazyDataModel<JobOffer> {
 	}
 
 	@Override
-	protected AbstractService<JobOffer> getService() {
+	protected AbstractIndexedService<JobOffer> getService() {
 		return this.jobOfferService;
 	}
 }

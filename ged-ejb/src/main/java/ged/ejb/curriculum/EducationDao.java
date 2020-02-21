@@ -4,11 +4,11 @@ import static ged.ejb.core.util.Parameters.map;
 
 import java.util.Objects;
 
-import ged.ejb.core.model.AbstractDao;
+import ged.ejb.core.model.AbstractIndexedDao;
 import ged.ejb.core.model.Repository;
 
 @Repository
-public class EducationDao extends AbstractDao<Education> {
+public class EducationDao extends AbstractIndexedDao<Education> {
 
 	public Education findByUid(final String uid) {
 		Objects.requireNonNull(uid);

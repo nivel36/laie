@@ -11,13 +11,13 @@ import javax.validation.ValidationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ged.ejb.core.model.AbstractDao;
+import ged.ejb.core.model.AbstractIndexedDao;
 import ged.ejb.core.model.Page;
 import ged.ejb.core.model.Repository;
 import ged.ejb.job.offer.JobOffer;
 
 @Repository
-public class CandidateDao extends AbstractDao<Candidate> {
+public class CandidateDao extends AbstractIndexedDao<Candidate> {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 

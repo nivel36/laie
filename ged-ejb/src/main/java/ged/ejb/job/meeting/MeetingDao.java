@@ -5,14 +5,14 @@ import static ged.ejb.core.util.Parameters.map;
 import java.util.List;
 import java.util.Objects;
 
-import ged.ejb.core.model.AbstractDao;
+import ged.ejb.core.model.AbstractIndexedDao;
 import ged.ejb.core.model.Page;
 import ged.ejb.core.model.Repository;
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.user.User;
 
 @Repository
-public class MeetingDao extends AbstractDao<Meeting> {
+public class MeetingDao extends AbstractIndexedDao<Meeting> {
 
 	public JobOffer findByUid(final String uid) {
 		Objects.requireNonNull(uid);

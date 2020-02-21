@@ -11,16 +11,13 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.PrePersist;
 import javax.validation.constraints.NotNull;
 
 import ged.ejb.candidate.Candidate;
-import ged.ejb.core.model.AbstractEntity;
-import ged.ejb.core.model.Obfuscable;
-import ged.ejb.core.model.UidGenerator;
+import ged.ejb.core.model.AbstractIndexedEntity;
 
 @Entity
-public class Curriculum extends AbstractEntity implements Obfuscable {
+public class Curriculum extends AbstractIndexedEntity {
 
 	private static final long serialVersionUID = 1L;
 
@@ -40,8 +37,6 @@ public class Curriculum extends AbstractEntity implements Obfuscable {
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "curriculum", orphanRemoval = true)
 	private Set<Skill> skills;
-
-	private String uid;
 
 	public void addEducation(final Education education) {
 		education.setCurriculum(this);
@@ -111,11 +106,6 @@ public class Curriculum extends AbstractEntity implements Obfuscable {
 	}
 
 	@Override
-	public String getUid() {
-		return this.uid;
-	}
-
-	@Override
 	public int hashCode() {
 		return Objects.hash(this.candidate);
 	}
@@ -161,18 +151,8 @@ public class Curriculum extends AbstractEntity implements Obfuscable {
 	}
 
 	@Override
-	public void setUid(final String uid) {
-		this.uid = uid;
-	}
-
-	@Override
 	public String toString() {
 		return "Curriculum [education=" + this.education + ", jobExperiences=" + this.jobExperiences + ", languages="
 				+ this.languages + ", skills=" + this.skills + "]";
-	}
-	
-	@PrePersist
-	public void generateUid() {
-		this.uid = UidGenerator.generate();
 	}
 }

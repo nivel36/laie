@@ -10,8 +10,8 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ged.ejb.core.AbstractService;
-import ged.ejb.core.model.AbstractDao;
+import ged.ejb.core.AbstractIndexedService;
+import ged.ejb.core.model.AbstractIndexedDao;
 import ged.ejb.core.model.Repository;
 import ged.ejb.core.security.GedSecurityContext;
 import ged.ejb.job.candidature.JobCandidature;
@@ -21,7 +21,7 @@ import ged.ejb.job.candidature.event.JobCandidatureCreatedEvent;
 import ged.ejb.user.User;
 
 @Stateless
-public class JobCandidatureEventService extends AbstractService<JobCandidatureEvent> {
+public class JobCandidatureEventService extends AbstractIndexedService<JobCandidatureEvent> {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
@@ -36,7 +36,7 @@ public class JobCandidatureEventService extends AbstractService<JobCandidatureEv
 	private JobCandidatureService jobCandidatureService;
 
 	@Override
-	protected AbstractDao<JobCandidatureEvent> getDao() {
+	protected AbstractIndexedDao<JobCandidatureEvent> getDao() {
 		return this.jobCandidatureEventDao;
 	}
 

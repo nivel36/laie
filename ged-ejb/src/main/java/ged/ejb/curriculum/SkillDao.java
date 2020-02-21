@@ -5,12 +5,12 @@ import static ged.ejb.core.util.Parameters.map;
 import java.util.List;
 import java.util.Objects;
 
-import ged.ejb.core.model.AbstractDao;
+import ged.ejb.core.model.AbstractIndexedDao;
 import ged.ejb.core.model.Page;
 import ged.ejb.core.model.Repository;
 
 @Repository
-public class SkillDao extends AbstractDao<Skill> {
+public class SkillDao extends AbstractIndexedDao<Skill> {
 
 	public List<SkillLevel> findSkillLevels() {
 		return this.findAll(SkillLevel.class, Page.ALL_RESULTS);

@@ -27,9 +27,4 @@ public class LoginTokenDao extends AbstractDao<LoginToken> {
 	protected Class<LoginToken> getType() {
 		return LoginToken.class;
 	}
-
-	@Override
-	public String[] searchFields() {
-		return new String[] {};
-	}
 }

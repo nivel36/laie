@@ -1,10 +1,10 @@
 package ged.ejb.event;
 
-import ged.ejb.core.model.AbstractDao;
+import ged.ejb.core.model.AbstractIndexedDao;
 import ged.ejb.core.model.Repository;
 
 @Repository
-public class JobOfferEventDao extends AbstractDao<JobOfferEvent> {
+public class JobOfferEventDao extends AbstractIndexedDao<JobOfferEvent> {
 
 	@Override
 	protected Class<JobOfferEvent> getType() {

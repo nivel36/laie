@@ -2,7 +2,7 @@ package ged.web.view.event;
 
 import java.util.Objects;
 
-import ged.ejb.core.AbstractService;
+import ged.ejb.core.AbstractIndexedService;
 import ged.ejb.event.JobCandidatureEvent;
 import ged.ejb.event.JobCandidatureEventService;
 import ged.web.core.view.AbstractLazyDataModel;
@@ -19,7 +19,7 @@ public class EventLazyDataModel extends AbstractLazyDataModel<JobCandidatureEven
 	}
 
 	@Override
-	protected AbstractService<JobCandidatureEvent> getService() {
+	protected AbstractIndexedService<JobCandidatureEvent> getService() {
 		return this.jobCandidatureEventService;
 	}
 }

@@ -13,14 +13,14 @@ import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.SortableField;
 import org.hibernate.search.annotations.Store;
 
-import ged.ejb.core.model.AbstractEntity;
+import ged.ejb.core.model.AbstractIndexedEntity;
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.job.offer.JobOfferState;
 import ged.ejb.user.User;
 
 @Entity
 @Indexed
-public class JobOfferEvent extends AbstractEntity {
+public class JobOfferEvent extends AbstractIndexedEntity {
 
 	private static final long serialVersionUID = 1L;
 

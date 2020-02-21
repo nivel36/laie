@@ -9,12 +9,12 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ged.ejb.core.AbstractService;
-import ged.ejb.core.model.AbstractDao;
+import ged.ejb.core.AbstractIndexedService;
+import ged.ejb.core.model.AbstractIndexedDao;
 import ged.ejb.core.model.Repository;
 
 @Stateless
-public class ClientService extends AbstractService<Client> {
+public class ClientService extends AbstractIndexedService<Client> {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
@@ -35,7 +35,7 @@ public class ClientService extends AbstractService<Client> {
 	}
 
 	@Override
-	public AbstractDao<Client> getDao() {
+	public AbstractIndexedDao<Client> getDao() {
 		return this.clientDao;
 	}
 

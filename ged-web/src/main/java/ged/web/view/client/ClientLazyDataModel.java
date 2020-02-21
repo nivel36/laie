@@ -4,7 +4,7 @@ import java.util.Objects;
 
 import ged.ejb.client.Client;
 import ged.ejb.client.ClientService;
-import ged.ejb.core.AbstractService;
+import ged.ejb.core.AbstractIndexedService;
 import ged.web.core.view.AbstractLazyDataModel;
 
 public class ClientLazyDataModel extends AbstractLazyDataModel<Client> {
@@ -19,7 +19,7 @@ public class ClientLazyDataModel extends AbstractLazyDataModel<Client> {
 	}
 
 	@Override
-	protected AbstractService<Client> getService() {
+	protected AbstractIndexedService<Client> getService() {
 		return this.clientService;
 	}
 }

@@ -10,17 +10,17 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ged.ejb.core.AbstractService;
+import ged.ejb.core.AbstractIndexedService;
 import ged.ejb.core.file.ServerFile;
 import ged.ejb.core.file.ServerFileDao;
-import ged.ejb.core.model.AbstractDao;
+import ged.ejb.core.model.AbstractIndexedDao;
 import ged.ejb.core.model.Page;
 import ged.ejb.core.model.Repository;
 import ged.ejb.job.candidature.JobCandidatureDao;
 import ged.ejb.job.offer.JobOffer;
 
 @Stateless
-public class CandidateService extends AbstractService<Candidate> {
+public class CandidateService extends AbstractIndexedService<Candidate> {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
@@ -78,7 +78,7 @@ public class CandidateService extends AbstractService<Candidate> {
 	}
 
 	@Override
-	public AbstractDao<Candidate> getDao() {
+	public AbstractIndexedDao<Candidate> getDao() {
 		return this.candidateDao;
 	}
 

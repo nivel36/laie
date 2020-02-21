@@ -28,8 +28,4 @@ public class DocumentTemplateDao extends AbstractDao<DocumentTemplate> {
 		return DocumentTemplate.class;
 	}
 
-	@Override
-	public String[] searchFields() {
-		return new String[] {};
-	}
 }

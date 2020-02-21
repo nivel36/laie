@@ -13,14 +13,14 @@ import javax.security.auth.login.LoginException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ged.ejb.core.AbstractService;
+import ged.ejb.core.AbstractIndexedService;
 import ged.ejb.core.FileService;
-import ged.ejb.core.model.AbstractDao;
+import ged.ejb.core.model.AbstractIndexedDao;
 import ged.ejb.core.model.Repository;
 import ged.ejb.core.security.LoginToken.TokenType;
 
 @Stateless
-public class UserService extends AbstractService<User> {
+public class UserService extends AbstractIndexedService<User> {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
@@ -86,7 +86,7 @@ public class UserService extends AbstractService<User> {
 	}
 
 	@Override
-	protected AbstractDao<User> getDao() {
+	protected AbstractIndexedDao<User> getDao() {
 		return this.userDao;
 	}
 

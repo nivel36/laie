@@ -17,7 +17,6 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -31,18 +30,16 @@ import org.hibernate.search.annotations.Store;
 
 import ged.ejb.candidate.Candidate;
 import ged.ejb.client.Client;
-import ged.ejb.core.model.AbstractEntity;
+import ged.ejb.core.model.AbstractIndexedEntity;
 import ged.ejb.core.model.Address;
-import ged.ejb.core.model.Obfuscable;
 import ged.ejb.core.model.Ownerable;
-import ged.ejb.core.model.UidGenerator;
 import ged.ejb.job.candidature.JobCandidature;
 import ged.ejb.user.User;
 
 @Entity
 @Indexed
 @Table(name = "JOB_OFFER")
-public class JobOffer extends AbstractEntity implements Ownerable, Obfuscable {
+public class JobOffer extends AbstractIndexedEntity implements Ownerable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -97,10 +94,6 @@ public class JobOffer extends AbstractEntity implements Ownerable, Obfuscable {
 	@Field(name = "title", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField(forField = "title")
 	private String title;
-
-	@NotNull
-	@Column(unique = true, nullable = false)
-	private String uid;
 
 	public JobOffer() {
 		this.state = JobOfferState.CREATED;
@@ -170,11 +163,6 @@ public class JobOffer extends AbstractEntity implements Ownerable, Obfuscable {
 
 	public String getTitle() {
 		return this.title;
-	}
-
-	@Override
-	public String getUid() {
-		return this.uid;
 	}
 
 	public boolean hasCandidatureOf(final Candidate candidate) {
@@ -275,17 +263,7 @@ public class JobOffer extends AbstractEntity implements Ownerable, Obfuscable {
 	}
 
 	@Override
-	public void setUid(final String uid) {
-		this.uid = uid;
-	}
-
-	@Override
 	public String toString() {
 		return this.title + "-" + this.client.getName();
-	}
-	
-	@PrePersist
-	public void generateUid() {
-		this.uid = UidGenerator.generate();
 	}
 }

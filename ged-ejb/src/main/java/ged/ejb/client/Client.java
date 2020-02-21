@@ -12,7 +12,6 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.PrePersist;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.search.annotations.Analyze;
@@ -24,18 +23,17 @@ import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.SortableField;
 import org.hibernate.search.annotations.Store;
 
-import ged.ejb.core.model.AbstractEntity;
+import ged.ejb.core.model.AbstractIndexedEntity;
 import ged.ejb.core.model.Address;
 import ged.ejb.core.model.Erasable;
 import ged.ejb.core.model.Obfuscable;
 import ged.ejb.core.model.Ownerable;
-import ged.ejb.core.model.UidGenerator;
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.user.User;
 
 @Entity
 @Indexed
-public class Client extends AbstractEntity implements Ownerable, Erasable, Obfuscable {
+public class Client extends AbstractIndexedEntity implements Ownerable, Erasable, Obfuscable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -70,10 +68,6 @@ public class Client extends AbstractEntity implements Ownerable, Erasable, Obfus
 	private User owner;
 
 	private String phoneNumber;
-
-	@NotNull
-	@Column(unique = true, nullable = false)
-	private String uid;
 
 	public void addContact(final Contact contact) {
 		Objects.requireNonNull(contact);
@@ -138,11 +132,6 @@ public class Client extends AbstractEntity implements Ownerable, Erasable, Obfus
 	}
 
 	@Override
-	public String getUid() {
-		return this.uid;
-	}
-
-	@Override
 	public int hashCode() {
 		return Objects.hash(this.name);
 	}
@@ -187,17 +176,7 @@ public class Client extends AbstractEntity implements Ownerable, Erasable, Obfus
 	}
 
 	@Override
-	public void setUid(final String uid) {
-		this.uid = uid;
-	}
-
-	@Override
 	public String toString() {
 		return this.name;
-	}
-	
-	@PrePersist
-	public void generateUid() {
-		this.uid = UidGenerator.generate();
 	}
 }
