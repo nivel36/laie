@@ -11,6 +11,7 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
@@ -20,6 +21,7 @@ import org.hibernate.search.annotations.IndexedEmbedded;
 import ged.ejb.core.model.AbstractEntity;
 import ged.ejb.core.model.Obfuscable;
 import ged.ejb.core.model.Ownerable;
+import ged.ejb.core.model.UidGenerator;
 import ged.ejb.job.candidature.JobCandidature;
 import ged.ejb.user.User;
 
@@ -179,5 +181,10 @@ public class Meeting extends AbstractEntity implements Ownerable, Obfuscable {
 	@Override
 	public void setUid(final String uid) {
 		this.uid = uid;
+	}
+	
+	@PrePersist
+	public void generateUid() {
+		this.uid = UidGenerator.generate();
 	}
 }

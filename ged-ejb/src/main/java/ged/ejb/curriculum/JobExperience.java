@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.search.annotations.Field;
@@ -17,6 +18,7 @@ import org.hibernate.search.annotations.Indexed;
 
 import ged.ejb.core.model.AbstractEntity;
 import ged.ejb.core.model.Obfuscable;
+import ged.ejb.core.model.UidGenerator;
 
 @Entity
 @Indexed
@@ -154,5 +156,10 @@ public class JobExperience extends AbstractEntity implements Obfuscable {
 	@Override
 	public void setUid(final String uid) {
 		this.uid = uid;
+	}
+	
+	@PrePersist
+	public void generateUid() {
+		this.uid = UidGenerator.generate();
 	}
 }

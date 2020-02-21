@@ -86,11 +86,6 @@ public class User extends Person implements Obfuscable {
 		return this.rowsPerPage;
 	}
 
-	@Override
-	public String getUid() {
-		return this.uid;
-	}
-
 	public boolean hasRole(final Role role) {
 		Objects.requireNonNull(role);
 		return role.equals(this.role);
@@ -129,11 +124,6 @@ public class User extends Person implements Obfuscable {
 
 	public void setRowsPerPage(final Integer rowsPerPage) {
 		this.rowsPerPage = rowsPerPage;
-	}
-
-	@Override
-	public void setUid(final String uid) {
-		this.uid = uid;
 	}
 
 	@Override

@@ -17,6 +17,7 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -34,6 +35,7 @@ import ged.ejb.core.model.AbstractEntity;
 import ged.ejb.core.model.Address;
 import ged.ejb.core.model.Obfuscable;
 import ged.ejb.core.model.Ownerable;
+import ged.ejb.core.model.UidGenerator;
 import ged.ejb.job.candidature.JobCandidature;
 import ged.ejb.user.User;
 
@@ -280,5 +282,10 @@ public class JobOffer extends AbstractEntity implements Ownerable, Obfuscable {
 	@Override
 	public String toString() {
 		return this.title + "-" + this.client.getName();
+	}
+	
+	@PrePersist
+	public void generateUid() {
+		this.uid = UidGenerator.generate();
 	}
 }

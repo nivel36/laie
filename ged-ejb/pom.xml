@@ -38,8 +38,7 @@
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-search-orm</artifactId>
 			<scope>provided</scope>
-		</dependency>
-
+		</dependency>     
 		<dependency>
 			<groupId>com.itextpdf</groupId>
 			<artifactId>html2pdf</artifactId>

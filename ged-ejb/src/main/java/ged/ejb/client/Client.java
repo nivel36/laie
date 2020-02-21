@@ -12,6 +12,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.search.annotations.Analyze;
@@ -28,6 +29,7 @@ import ged.ejb.core.model.Address;
 import ged.ejb.core.model.Erasable;
 import ged.ejb.core.model.Obfuscable;
 import ged.ejb.core.model.Ownerable;
+import ged.ejb.core.model.UidGenerator;
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.user.User;
 
@@ -192,5 +194,10 @@ public class Client extends AbstractEntity implements Ownerable, Erasable, Obfus
 	@Override
 	public String toString() {
 		return this.name;
+	}
+	
+	@PrePersist
+	public void generateUid() {
+		this.uid = UidGenerator.generate();
 	}
 }

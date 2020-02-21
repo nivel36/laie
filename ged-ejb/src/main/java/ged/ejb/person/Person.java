@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.PrePersist;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 
@@ -17,6 +18,7 @@ import org.hibernate.search.annotations.Store;
 
 import ged.ejb.core.model.AbstractEntity;
 import ged.ejb.core.model.Obfuscable;
+import ged.ejb.core.model.UidGenerator;
 
 @MappedSuperclass
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
@@ -49,6 +51,10 @@ public abstract class Person extends AbstractEntity implements Obfuscable {
 	@Field(name = "surname", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField(forField = "surname")
 	protected String surname;
+
+	@NotNull
+	@Column(unique = true, nullable = false)
+	private String uid;
 
 	@Override
 	public boolean equals(final Object obj) {
@@ -93,6 +99,11 @@ public abstract class Person extends AbstractEntity implements Obfuscable {
 	}
 
 	@Override
+	public String getUid() {
+		return this.uid;
+	}
+
+	@Override
 	public int hashCode() {
 		return Objects.hash(this.email);
 	}
@@ -118,8 +129,17 @@ public abstract class Person extends AbstractEntity implements Obfuscable {
 	}
 
 	@Override
+	public void setUid(final String uid) {
+		this.uid = uid;
+	}
+
+	@Override
 	public String toString() {
 		return this.getFullName();
 	}
-
+	
+	@PrePersist
+	public void generateUid() {
+		this.uid = UidGenerator.generate();
+	}
 }

@@ -16,6 +16,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.PrePersist;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
@@ -31,6 +32,7 @@ import ged.ejb.core.file.ServerFile;
 import ged.ejb.core.model.Address;
 import ged.ejb.core.model.Obfuscable;
 import ged.ejb.core.model.Ownerable;
+import ged.ejb.core.model.UidGenerator;
 import ged.ejb.core.tag.Tag;
 import ged.ejb.curriculum.Curriculum;
 import ged.ejb.job.candidature.JobCandidature;
@@ -236,5 +238,10 @@ public class Candidate extends Person implements Ownerable, Obfuscable {
 	@Override
 	public void setUid(final String uid) {
 		this.uid = uid;
+	}
+
+	@PrePersist
+	public void generateUid() {
+		this.uid = UidGenerator.generate();
 	}
 }

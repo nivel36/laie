@@ -1,20 +1,13 @@
 package ged.ejb.core.model;
 
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
 
 import javax.inject.Inject;
 import javax.persistence.FlushModeType;
 import javax.persistence.NoResultException;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
 
 import ged.ejb.core.model.search.SearchFacets;
 import ged.ejb.core.model.search.SearchResult;
@@ -29,15 +22,6 @@ public abstract class AbstractDao<T extends AbstractEntity> {
 	public void delete(final T entity) {
 		Objects.requireNonNull(entity);
 		this.persistenceFacade.delete(this.getType(), entity);
-	}
-
-	protected boolean existUid(final String uidCandidate) {
-		final CriteriaBuilder cb = this.getPersistenceFacade().getEm().getCriteriaBuilder();
-		final CriteriaQuery<Long> q = cb.createQuery(Long.class);
-		final Root<T> c = q.from(this.getType());
-		final Predicate predicate = cb.equal(c.get("uid"), uidCandidate);
-		q.select(cb.count(c)).where(predicate);
-		return this.getPersistenceFacade().getEm().createQuery(q).getSingleResult() > 0;
 	}
 
 	public T find(final long id) {
@@ -106,19 +90,6 @@ public abstract class AbstractDao<T extends AbstractEntity> {
 		return this.persistenceFacade.findByQuery(namedQuery, parameters);
 	}
 
-	protected String generateUid() {
-		boolean uidExist = false;
-		String uidCandidate;
-		final Random random = ThreadLocalRandom.current();
-		final byte[] bytes = new byte[4];
-		do {
-			random.nextBytes(bytes);
-			uidCandidate = Base64.getUrlEncoder().withoutPadding().encodeToString(bytes);
-			uidExist = this.existUid(uidCandidate);
-		} while (uidExist);
-		return uidCandidate;
-	}
-
 	protected PersistenceFacade getPersistenceFacade() {
 		return this.persistenceFacade;
 	}
@@ -127,7 +98,6 @@ public abstract class AbstractDao<T extends AbstractEntity> {
 
 	protected T insert(final T entity) {
 		this.preInsert(entity);
-		this.setUid(entity);
 		this.persistenceFacade.insert(entity);
 		this.postInsert(entity);
 		return entity;
@@ -178,14 +148,6 @@ public abstract class AbstractDao<T extends AbstractEntity> {
 	public void setPersistenceFacade(final PersistenceFacade persistenceFacade) {
 		Objects.requireNonNull(persistenceFacade);
 		this.persistenceFacade = persistenceFacade;
-	}
-
-	private void setUid(final T entity) {
-		if (Obfuscable.class.isAssignableFrom(entity.getClass())) {
-			final Obfuscable o = (Obfuscable) entity;
-			final String base64Id = this.generateUid();
-			o.setUid(base64Id);
-		}
 	}
 
 	protected T update(final T entity) {

@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
@@ -17,6 +18,7 @@ import javax.validation.constraints.NotNull;
 import ged.ejb.candidate.Candidate;
 import ged.ejb.core.model.AbstractEntity;
 import ged.ejb.core.model.Obfuscable;
+import ged.ejb.core.model.UidGenerator;
 import ged.ejb.event.JobCandidatureEvent;
 import ged.ejb.job.meeting.Meeting;
 import ged.ejb.job.offer.JobOffer;
@@ -144,5 +146,10 @@ public class JobCandidature extends AbstractEntity implements Obfuscable {
 	@Override
 	public String toString() {
 		return this.jobOffer + " - " + this.candidate.getFullName();
+	}
+	
+	@PrePersist
+	public void generateUid() {
+		this.uid = UidGenerator.generate();
 	}
 }
