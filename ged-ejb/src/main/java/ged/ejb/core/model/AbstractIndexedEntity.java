@@ -22,7 +22,7 @@ import org.hibernate.search.annotations.TokenizerDef;
 				@Parameter(name = "minGramSize", value = "3"), @Parameter(name = "maxGramSize", value = "10") }) })
 @Analyzer(definition = "stdAnalyzer")
 @MappedSuperclass
-public abstract class AbstractIndexedEntity extends AbstractEntity implements Obfuscable {
+public abstract class AbstractIndexedEntity extends AbstractEntity implements Obfuscable, Indexable {
 
 	private static final long serialVersionUID = 1L;
 	

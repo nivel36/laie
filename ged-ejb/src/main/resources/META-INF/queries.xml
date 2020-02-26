@@ -86,14 +86,6 @@
 			AND d.language = :language
 		]]></query>
 	</named-query>
-	
-	<named-query name="Education.findByUid">
-		<query><![CDATA[
-			SELECT e 
-			FROM Education e 
-			WHERE e.uid = :uid
-		]]></query>
-	</named-query>
 
 	<named-query name="JobCandidature.findByJobOffer">
 		<query><![CDATA[
@@ -157,15 +149,7 @@
 			WHERE j.first = true
 		]]></query>
 	</named-query>
-	
-	<named-query name="JobExperience.findByUid">
-		<query><![CDATA[
-			SELECT j 
-			FROM JobExperience j 
-			WHERE j.uid = :uid
-		]]></query>
-	</named-query>
-	
+		
 	<named-query name="JobOffer.findAllByOwner">
 		<query><![CDATA[
 			SELECT j 

@@ -34,7 +34,7 @@
 					</div>
 					<div class="p-col-12">
 						<p:dataTable var="candidate" id="candidates" value="#{searchCandidateView.candidates}" emptyMessage="#{i18n['candidate.no_candidates_found']}" reflow="true" paginator="true"
-							paginatorPosition="bottom" rows="#{sessionUser.rowsPerPage}" sortBy="#{candidate.name}" sortOrder="descending" lazy="true">
+							paginatorPosition="bottom" rows="#{sessionUser.rowsPerPage}" sortBy="#{candidate.name}" sortOrder="ascending" lazy="true">
 
 							<p:column>
 								<cc:avatar value="#{candidate.imageFileName}" styleClass="small" />

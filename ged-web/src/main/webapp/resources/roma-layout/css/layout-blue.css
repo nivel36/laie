@@ -19,7 +19,7 @@ a {
 }
 
 .layout-main-topbar {
-	z-index:998;
+	z-index:999;
 	position: fixed;
 	top: 46px;
 	height: 45px;
@@ -1015,7 +1015,6 @@ a {
 }
 
 .layout-wrapper .layout-topbar .topbar-menu {
-	float: right;
 	padding: 0;
 	margin: 0;
 	list-style-type: none;
@@ -1052,7 +1051,6 @@ a {
 }
 
 .layout-wrapper .layout-topbar .topbar-menu>li {
-	float: right;
 	position: relative;
 }
 
@@ -1989,7 +1987,7 @@ a {
 	background-color: #ffffff;
 	border-left: solid 1px #ebebef;
 	position: fixed;
-	z-index: 999;
+	z-index: 1000;
 	top: 46px;
 	height: calc(100vh - 46px);
 	padding: 0;
@@ -2174,10 +2172,6 @@ a {
 	-moz-border-radius: 2px;
 	-webkit-border-radius: 2px;
 	border-radius: 2px;
-}
-
-.card.card-w-title {
-	padding-bottom: 1em;
 }
 
 .card.no-gutter {

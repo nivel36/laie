@@ -63,16 +63,16 @@ public class CurriculumService extends AbstractService<Curriculum> {
 		return this.curriculumDao.findByUid(uid);
 	}
 
-	public Education findEducation(final String uid) {
-		Objects.requireNonNull(uid);
-		logger.debug("Find education by uid {}", uid);
-		return this.educationDao.findByUid(uid);
+	public Education findEducation(final long id) {
+		Objects.requireNonNull(id);
+		logger.debug("Find education by id {}", id);
+		return this.educationDao.find(id);
 	}
 
-	public JobExperience findJobExperience(final String uid) {
-		Objects.requireNonNull(uid);
-		logger.debug("Find jobExperience by uid {}", uid);
-		return this.jobExperienceDao.findByUid(uid);
+	public JobExperience findJobExperience(final long id) {
+		Objects.requireNonNull(id);
+		logger.debug("Find jobExperience by uid {}", id);
+		return this.jobExperienceDao.find(id);
 	}
 
 	public Skill findSkill(final String name) {

@@ -8,7 +8,9 @@ public class ContactDataToHtml extends AbstractHtmlPrinter {
 		final StringBuilder sb = new StringBuilder();
 		sb.append(this.openDiv("contact"));
 		sb.append("<h1>Datos de contacto</h1>");
-		sb.append(printPicture(imagePath + "/" + candidate.getImageFileName()));
+		if (candidate.getImageFileName() != null) {
+			sb.append(printPicture(imagePath + "/" + candidate.getImageFileName()));
+		}
 		sb.append(this.openDiv("data"));
 		sb.append(this.printName(candidate.getFullName()));
 		sb.append(this.printEmail(candidate.getEmail()));
@@ -19,9 +21,6 @@ public class ContactDataToHtml extends AbstractHtmlPrinter {
 	}
 
 	String printPicture(String path) {
-		if (path == null) {
-			return "";
-		}
 		return "<div class=\"user-image\"><img class=\"picture\" src=\"" + path + "\"/></div>";
 	}
 

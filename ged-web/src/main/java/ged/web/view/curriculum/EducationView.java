@@ -2,6 +2,7 @@ package ged.web.view.curriculum;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +17,7 @@ import org.omnifaces.cdi.Param;
 import ged.ejb.curriculum.Curriculum;
 import ged.ejb.curriculum.CurriculumService;
 import ged.ejb.curriculum.Education;
+import ged.web.core.IllegalPageStateException;
 import ged.web.core.util.PageEnum;
 import ged.web.core.view.AbstractView;
 
@@ -32,23 +34,41 @@ public class EducationView extends AbstractView {
 	@Inject
 	private transient CurriculumService curriculumService;
 
-	@Inject
-	@Param(name = "id", required = false)
 	private Education education;
 
 	private List<Integer> years;
 
-	private String curriculumUrl() {
+	private String buildCurriculumUrl() {
 		final Map<String, String> queryParams = new HashMap<>();
-		queryParams.put("id", curriculum.getUid());
+		queryParams.put("id", this.curriculum.getUid());
 		queryParams.put("candidateId", this.curriculum.getCandidate().getUid());
 		return this.navigator.getRedirectUrl(PageEnum.CURRICULUM, queryParams);
+	}
+
+	private Education buildEducationFromQueryParameter(final String itemParameter) {
+		try {
+			final int item = Integer.parseInt(itemParameter);
+			final List<Education> educations = new ArrayList<>(this.curriculum.getEducation());
+			if (item >= educations.size()) {
+				throw new IllegalPageStateException();
+			}
+			Collections.sort(educations);
+			return educations.get(item);
+		} catch (final NumberFormatException e) {
+			throw new IllegalPageStateException();
+		}
+	}
+
+	private Education buildNewEducation() {
+		final Education education = new Education();
+		education.setCurriculum(this.curriculum);
+		return education;
 	}
 
 	public String delete() {
 		this.curriculum.removeEducation(this.education);
 		this.curriculumService.save(this.curriculum);
-		return this.curriculumUrl();
+		return this.buildCurriculumUrl();
 	}
 
 	public Curriculum getCurriculum() {
@@ -67,23 +87,15 @@ public class EducationView extends AbstractView {
 	public void init() {
 		this.education = this.initEducation();
 		this.years = this.initYears();
-		this.curriculum = this.initCurriculum();
-	}
-
-	private Curriculum initCurriculum() {
-		if (this.isNewEducation()) {
-			this.curriculum.removeEducation(this.education);
-		}
-		return this.curriculum;
 	}
 
 	public Education initEducation() {
-		if (this.education == null) {
-			this.education = new Education();
-			this.education.setStillStudying(false);
-			this.education.setCurriculum(this.curriculum);
+		final String itemParameter = this.getValueFromGetParameters("item");
+		if (itemParameter == null) {
+			return this.buildNewEducation();
+		} else {
+			return this.buildEducationFromQueryParameter(itemParameter);
 		}
-		return this.education;
 	}
 
 	public List<Integer> initYears() {
@@ -99,9 +111,11 @@ public class EducationView extends AbstractView {
 	}
 
 	public String save() {
-		this.curriculum.addEducation(this.education);
+		if (education.isNew()) {
+			this.curriculum.addEducation(this.education);
+		}
 		this.curriculumService.save(this.curriculum);
-		return this.curriculumUrl();
+		return this.buildCurriculumUrl();
 	}
 
 	public void setCurriculumService(final CurriculumService curriculumService) {

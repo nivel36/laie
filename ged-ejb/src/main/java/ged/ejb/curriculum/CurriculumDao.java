@@ -40,6 +40,7 @@ public class CurriculumDao extends AbstractIndexedDao<Curriculum> {
 
 	@Override
 	public String[] searchFields() {
-		return new String[] {};
+		return new String[] { "skills.name", "jobExperiences.jobPosition", "jobExperiences.description",
+				"jobExperiences.companyName", "educations.description" };
 	}
 }

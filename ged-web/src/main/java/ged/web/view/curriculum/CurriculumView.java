@@ -1,7 +1,7 @@
 package ged.web.view.curriculum;
 
 import java.util.ArrayList;
-import java.util.Comparator;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -31,8 +31,10 @@ public class CurriculumView extends AbstractView {
 	private static final String CANDIDATE_ID = "candidateId";
 
 	private static final String CURRICULUM_ID = "curriculumId";
-
+	
 	private static final String ID = "id";
+
+	private static final String ITEM = "item";
 
 	private static final long serialVersionUID = 1L;
 
@@ -52,16 +54,16 @@ public class CurriculumView extends AbstractView {
 
 	private List<String> skills;
 
-	public String editEducation(final Education education) {
+	public String editEducation(final Education e) {
 		final Map<String, String> queryParams = new HashMap<>();
-		queryParams.put(ID, education.getUid());
+		queryParams.put(ITEM, String.valueOf(education.indexOf(e)));
 		queryParams.put(CURRICULUM_ID, this.curriculum.getUid());
 		return this.navigator.getRedirectUrl(PageEnum.CURRICULUM_EDUCATION, queryParams);
 	}
 
-	public String editJobExperience(final JobExperience jobExperience) {
+	public String editJobExperience(final JobExperience j) {
 		final Map<String, String> queryParams = new HashMap<>();
-		queryParams.put(ID, jobExperience.getUid());
+		queryParams.put(ITEM, String.valueOf(jobExperiences.indexOf(j)));
 		queryParams.put(CURRICULUM_ID, this.curriculum.getUid());
 		return this.navigator.getRedirectUrl(PageEnum.CURRICULUM_JOB_EXPERIENCE, queryParams);
 	}
@@ -131,7 +133,9 @@ public class CurriculumView extends AbstractView {
 		this.jobExperiences = new ArrayList<>(this.curriculum.getJobExperiences());
 		this.languages = new ArrayList<>(this.curriculum.getLanguages());
 		this.orderJobExperiencesByDate();
-		this.orderEducationByDate();
+		this.orderEducation();
+		this.orderLanguages();
+		this.orderSkills();
 	}
 
 	public String newEducation() {
@@ -158,11 +162,19 @@ public class CurriculumView extends AbstractView {
 		return this.navigator.getRedirectUrl(PageEnum.CURRICULUM_SKILLS, queryParams);
 	}
 
-	private void orderEducationByDate() {
-		this.education.sort(Comparator.comparing(Education::getStartYear).reversed());
+	private void orderEducation() {
+		Collections.sort(education);
+	}
+	
+	private void orderLanguages() {
+		Collections.sort(languages);
 	}
 
 	private void orderJobExperiencesByDate() {
-		this.jobExperiences.sort(Comparator.comparing(JobExperience::getStartDate).reversed());
+		Collections.sort(jobExperiences);
+	}
+	
+	private void orderSkills() {
+		Collections.sort(skills);
 	}
 }

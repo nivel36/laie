@@ -15,11 +15,11 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 
-import ged.ejb.core.model.AbstractIndexedEntity;
+import ged.ejb.core.model.AbstractEntity;
 
 @Entity
 @Indexed
-public class JobExperience extends AbstractIndexedEntity {
+public class JobExperience extends AbstractEntity implements Comparable<JobExperience> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -139,5 +139,30 @@ public class JobExperience extends AbstractIndexedEntity {
 
 	public void setStillWorking(final boolean stillWorking) {
 		this.stillWorking = stillWorking;
+	}
+
+	@Override
+	public int compareTo(JobExperience jobExperience) {
+		final int startDateCompareTo = this.startDate.compareTo(jobExperience.startDate);
+		if (startDateCompareTo != 0) {
+			return -startDateCompareTo;
+		}
+		final int endDateCompareTo = this.endDate.compareTo(jobExperience.endDate);
+		if (endDateCompareTo != 0) {
+			return -endDateCompareTo;
+		}
+		final int comapanyNameCompareTo = this.companyName.compareTo(jobExperience.companyName);
+		if (comapanyNameCompareTo != 0) {
+			return comapanyNameCompareTo;
+		}
+		final int jobPositionCompareTo = this.jobPosition.compareTo(jobExperience.jobPosition);
+		if (jobPositionCompareTo != 0) {
+			return jobPositionCompareTo;
+		}
+		final int descriptionCompareTo = this.description.compareTo(jobExperience.description);
+		if (descriptionCompareTo != 0) {
+			return descriptionCompareTo;
+		}
+		return 0;
 	}
 }
