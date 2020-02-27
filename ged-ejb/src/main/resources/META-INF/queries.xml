@@ -133,14 +133,6 @@
 			OR j.jobOffer.owner = :user 
 		]]></query>
 	</named-query>
-
-	<named-query name="JobCandidature.findByUid">
-		<query><![CDATA[
-			SELECT j
-			FROM JobCandidature j 
-			WHERE j.uid = :uid
-		]]></query>
-	</named-query>
 	
 	<named-query name="JobCandidatureState.findFirstJobCandidatureState">
 		<query><![CDATA[
@@ -172,14 +164,6 @@
 			SELECT j 
 			FROM JobOffer j 
 			WHERE j.client = :client
-		]]></query>
-	</named-query>
-
-	<named-query name="JobOffer.findByUid">
-		<query><![CDATA[
-			SELECT j 
-			FROM JobOffer j 
-			WHERE j.uid = :uid
 		]]></query>
 	</named-query>
 
