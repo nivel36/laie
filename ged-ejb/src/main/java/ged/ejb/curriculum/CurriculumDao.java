@@ -27,6 +27,11 @@ public class CurriculumDao extends AbstractIndexedDao<Curriculum> {
 			return null;
 		}
 	}
+	
+	public Skill findSkill(final String name) {
+		Objects.requireNonNull(name);
+		return this.findByQuery(Skill.class, "Skill.findByName", map("name", name));
+	}
 
 	public Curriculum findByUid(final String uid) {
 		Objects.requireNonNull(uid);

@@ -26,29 +26,13 @@ public class CurriculumService extends AbstractService<Curriculum> {
 	@Repository
 	private CurriculumDao curriculumDao;
 
-	@Inject
-	@Repository
-	private EducationDao educationDao;
 	
 	@Inject
 	private CurriculumExporter exporter;
-
-	@Inject
-	@Repository
-	private JobExperienceDao jobExperienceDao;
-
-	@Inject
-	@Repository
-	private SkillDao skillDao;
 	
 	public List<CurriculumTemplate> findCurriculumTemplates() {
 		logger.debug("Find curriculum templates");
 		return this.curriculumDao.findCurriculumTemplates();
-	}
-
-	public List<SkillLevel> findSkillLevels() {
-		logger.debug("Find skill levels");
-		return this.skillDao.findSkillLevels();
 	}
 
 	public Curriculum findByCandidate(final Candidate candidate) {
@@ -63,22 +47,10 @@ public class CurriculumService extends AbstractService<Curriculum> {
 		return this.curriculumDao.findByUid(uid);
 	}
 
-	public Education findEducation(final long id) {
-		Objects.requireNonNull(id);
-		logger.debug("Find education by id {}", id);
-		return this.educationDao.find(id);
-	}
-
-	public JobExperience findJobExperience(final long id) {
-		Objects.requireNonNull(id);
-		logger.debug("Find jobExperience by uid {}", id);
-		return this.jobExperienceDao.find(id);
-	}
-
 	public Skill findSkill(final String name) {
 		Objects.requireNonNull(name, "Skill name can't be null");
 		logger.debug("Find skill by name {}", name);
-		return this.skillDao.findSkill(name);
+		return this.curriculumDao.findSkill(name);
 	}
 	
 	public File export(Curriculum curriculum, CurriculumTemplate template) {
@@ -92,13 +64,5 @@ public class CurriculumService extends AbstractService<Curriculum> {
 
 	public void setCurriculumDao(final CurriculumDao curriculumDao) {
 		this.curriculumDao = curriculumDao;
-	}
-
-	public void setEducationDao(final EducationDao educationDao) {
-		this.educationDao = educationDao;
-	}
-
-	public void setJobExperienceDao(final JobExperienceDao jobExperienceDao) {
-		this.jobExperienceDao = jobExperienceDao;
 	}
 }

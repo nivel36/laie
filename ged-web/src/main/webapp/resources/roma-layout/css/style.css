@@ -391,18 +391,14 @@ body .jobCandidatureStates.ui-selectonemenu-panel .ui-selectonemenu-items .ui-se
 }
 
 .curriculum .name {
-	font-size: 1.5em;
+	font-size: 2em;
+	font-weight: bold;
 	text-shadow: 1px 1px white;
 	padding-bottom: 0.4em;
 }
 
 .curriculum .job-profile {
-	font-size: 1em;
-	padding-bottom: 0.6em;
-}
-
-.curriculum .job-profile {
-	font-size: 1em;
+	font-size: 1.5em;
 	padding-bottom: 0.6em;
 }
 

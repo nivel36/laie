@@ -15,7 +15,7 @@ import ged.ejb.core.model.AbstractEntity;
 
 @Entity
 @Indexed
-public class Skill extends AbstractEntity {
+public class Skill extends AbstractEntity implements Comparable<Skill> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -74,5 +74,10 @@ public class Skill extends AbstractEntity {
 	@Override
 	public String toString() {
 		return this.name;
+	}
+
+	@Override
+	public int compareTo(Skill skill) {
+		return this.compareTo(skill);
 	}
 }
