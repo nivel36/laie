@@ -27,7 +27,7 @@ import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.SortableField;
 import org.hibernate.search.annotations.Store;
 
-import ged.ejb.core.file.ServerFile;
+import ged.ejb.core.file.File;
 import ged.ejb.core.model.Address;
 import ged.ejb.core.model.Obfuscable;
 import ged.ejb.core.model.Ownerable;
@@ -55,7 +55,7 @@ public class Candidate extends Person implements Ownerable, Obfuscable {
 	private Integer expectedSalary;
 
 	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "candidate", orphanRemoval = true)
-	private Set<ServerFile> files;
+	private Set<File> files;
 
 	private String infojobsProfileUrl;
 
@@ -110,7 +110,7 @@ public class Candidate extends Person implements Ownerable, Obfuscable {
 		return this.expectedSalary;
 	}
 
-	public Set<ServerFile> getFiles() {
+	public Set<File> getFiles() {
 		return this.files;
 	}
 
@@ -171,7 +171,7 @@ public class Candidate extends Person implements Ownerable, Obfuscable {
 		this.expectedSalary = expectedSalary;
 	}
 
-	public void setFiles(final Set<ServerFile> files) {
+	public void setFiles(final Set<File> files) {
 		this.files = files;
 	}
 

@@ -1,7 +1,8 @@
 package ged.ejb.core.file;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
+import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,7 +14,7 @@ import ged.ejb.candidate.Candidate;
 import ged.ejb.core.model.AbstractEntity;
 
 @Entity
-public class ServerFile extends AbstractEntity {
+public class File extends AbstractEntity {
 
 	private static final long serialVersionUID = 1L;
 
@@ -21,17 +22,29 @@ public class ServerFile extends AbstractEntity {
 	@JoinColumn(name = "candidateId", nullable = false)
 	private Candidate candidate;
 
-	private LocalDate date;
+	@NotNull
+	@Column(nullable = false)
+	private LocalDateTime created;
 
 	private String description;
-
-	private boolean lopd;
 
 	@NotNull
 	@Column(nullable = false)
 	private String name;
 
+	@NotNull
+	@Column(nullable = false)
 	private String uuid;
+
+	public File() {
+	}
+
+	public File(final String name) {
+		Objects.requireNonNull(name);
+		this.name = name;
+		this.created = LocalDateTime.now();
+		this.uuid = UUID.randomUUID().toString();
+	}
 
 	@Override
 	public boolean equals(final Object obj) {
@@ -47,7 +60,7 @@ public class ServerFile extends AbstractEntity {
 		if (this.getClass() != obj.getClass()) {
 			return false;
 		}
-		final ServerFile other = (ServerFile) obj;
+		final File other = (File) obj;
 		return Objects.equals(this.uuid, other.uuid);
 	}
 
@@ -55,8 +68,8 @@ public class ServerFile extends AbstractEntity {
 		return this.candidate;
 	}
 
-	public LocalDate getDate() {
-		return this.date;
+	public LocalDateTime getCreated() {
+		return this.created;
 	}
 
 	public String getDescription() {
@@ -76,24 +89,16 @@ public class ServerFile extends AbstractEntity {
 		return Objects.hash(this.uuid);
 	}
 
-	public boolean isLopd() {
-		return this.lopd;
-	}
-
 	public void setCandidate(final Candidate candidate) {
 		this.candidate = candidate;
 	}
 
-	public void setDate(final LocalDate date) {
-		this.date = date;
+	public void setCreated(final LocalDateTime created) {
+		this.created = created;
 	}
 
 	public void setDescription(final String description) {
 		this.description = description;
-	}
-
-	public void setLopd(final boolean lopd) {
-		this.lopd = lopd;
 	}
 
 	public void setName(final String name) {

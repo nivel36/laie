@@ -25,7 +25,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 
-import ged.ejb.core.FileService;
+import ged.ejb.core.file.FileService;
 import ged.ejb.core.model.Page;
 import ged.ejb.core.model.search.SearchResult;
 import ged.ejb.user.User;

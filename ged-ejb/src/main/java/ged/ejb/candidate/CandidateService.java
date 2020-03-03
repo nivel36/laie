@@ -11,8 +11,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ged.ejb.core.AbstractIndexedService;
-import ged.ejb.core.file.ServerFile;
-import ged.ejb.core.file.ServerFileDao;
+import ged.ejb.core.file.File;
+import ged.ejb.core.file.FileJpaDao;
 import ged.ejb.core.model.AbstractIndexedDao;
 import ged.ejb.core.model.Page;
 import ged.ejb.core.model.Repository;
@@ -34,9 +34,9 @@ public class CandidateService extends AbstractIndexedService<Candidate> {
 
 	@Inject
 	@Repository
-	private ServerFileDao serverFileDao;
+	private FileJpaDao serverFileDao;
 
-	public void addFileToCandidate(final Candidate candidate, final ServerFile file) {
+	public void addFileToCandidate(final Candidate candidate, final File file) {
 		Objects.requireNonNull(file);
 		Objects.requireNonNull(candidate);
 		logger.debug("Add file {} to candidate  {}", file, candidate);
@@ -62,7 +62,7 @@ public class CandidateService extends AbstractIndexedService<Candidate> {
 		return this.candidateDao.findCandidates(jobOffer, page);
 	}
 
-	public ServerFile findFile(final long fileId) {
+	public File findFile(final long fileId) {
 		if (fileId < 1) {
 			logger.warn("Bad file id {}", fileId);
 			throw new IllegalArgumentException("Bad file id: " + fileId);
@@ -71,7 +71,7 @@ public class CandidateService extends AbstractIndexedService<Candidate> {
 		return this.serverFileDao.find(fileId);
 	}
 
-	public List<ServerFile> findFiles(final Candidate candidate) {
+	public List<File> findFiles(final Candidate candidate) {
 		Objects.requireNonNull(candidate);
 		logger.debug("Find files by candidate {}", candidate);
 		return this.serverFileDao.findByCandidate(candidate);
@@ -82,7 +82,7 @@ public class CandidateService extends AbstractIndexedService<Candidate> {
 		return this.candidateDao;
 	}
 
-	public void removeFile(final ServerFile file) {
+	public void removeFile(final File file) {
 		Objects.requireNonNull(file);
 		logger.debug("Remove file {}", file);
 		this.serverFileDao.delete(file);
@@ -93,12 +93,12 @@ public class CandidateService extends AbstractIndexedService<Candidate> {
 		this.candidateDao = candidateDao;
 	}
 
-	public void setServerFileDao(final ServerFileDao serverFileDao) {
+	public void setServerFileDao(final FileJpaDao serverFileDao) {
 		Objects.requireNonNull(serverFileDao);
 		this.serverFileDao = serverFileDao;
 	}
 
-	public ServerFile updateFile(final ServerFile file) {
+	public File updateFile(final File file) {
 		Objects.requireNonNull(file);
 		logger.debug("Update file {}", file);
 		return this.serverFileDao.save(file);

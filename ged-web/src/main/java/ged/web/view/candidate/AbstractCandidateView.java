@@ -14,7 +14,7 @@ import org.primefaces.model.UploadedFile;
 
 import ged.ejb.candidate.Candidate;
 import ged.ejb.candidate.CandidateService;
-import ged.ejb.core.FileService;
+import ged.ejb.core.file.FileService;
 import ged.ejb.core.model.Page;
 import ged.ejb.core.tag.Tag;
 import ged.ejb.core.tag.TagService;

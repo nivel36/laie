@@ -14,7 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ged.ejb.core.AbstractIndexedService;
-import ged.ejb.core.FileService;
+import ged.ejb.core.file.FileService;
 import ged.ejb.core.model.AbstractIndexedDao;
 import ged.ejb.core.model.Repository;
 import ged.ejb.core.security.LoginToken.TokenType;
@@ -41,7 +41,7 @@ public class UserService extends AbstractIndexedService<User> {
 		final User savedUser = this.save(user);
 
 		if (oldImage != null) {
-			this.fileService.removeFileFromFileSystem(oldImage);
+			this.fileService.removeFile(oldImage);
 		}
 		return savedUser;
 	}

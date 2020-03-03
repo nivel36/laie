@@ -16,8 +16,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import ged.ejb.core.file.ServerFile;
-import ged.ejb.core.file.ServerFileDao;
+import ged.ejb.core.file.File;
+import ged.ejb.core.file.FileJpaDao;
 import ged.ejb.core.model.Page;
 import ged.ejb.job.candidature.JobCandidatureDao;
 import ged.ejb.job.offer.JobOffer;
@@ -37,7 +37,7 @@ public class CandidateServiceTest {
 
 		@Test
 		public void shouldBeOk() {
-			final ServerFile file = new ServerFile();
+			final File file = new File();
 			final Candidate mockedCandidate = mock(Candidate.class);
 			
 			candidateService.addFileToCandidate(mockedCandidate, file);
@@ -79,11 +79,11 @@ public class CandidateServiceTest {
 
 		@Test
 		public void findFileTest() {
-			final ServerFile mockedUploadedServerFile = mock(ServerFile.class);
+			final File mockedUploadedServerFile = mock(File.class);
 
 			when(serverFileDao.find(1L)).thenReturn(mockedUploadedServerFile);
 
-			final ServerFile serverFileFromRepository = candidateService.findFile(1L);
+			final File serverFileFromRepository = candidateService.findFile(1L);
 			assertEquals(mockedUploadedServerFile, serverFileFromRepository);
 		}
 	}
@@ -100,11 +100,11 @@ public class CandidateServiceTest {
 
 		@Test
 		public void updateFileTest() {
-			final ServerFile mockedServerFile = mock(ServerFile.class);
+			final File mockedServerFile = mock(File.class);
 
 			when(serverFileDao.save(mockedServerFile)).thenReturn(mockedServerFile);
 
-			final ServerFile updatedServerFile = candidateService.updateFile(mockedServerFile);
+			final File updatedServerFile = candidateService.updateFile(mockedServerFile);
 			assertEquals(mockedServerFile, updatedServerFile);
 		}
 	}
@@ -118,7 +118,7 @@ public class CandidateServiceTest {
 	private JobCandidatureDao jobCandidatureDao;
 
 	@Mock
-	private ServerFileDao serverFileDao;
+	private FileJpaDao serverFileDao;
 
 	@BeforeEach
 	public void setUp() {
