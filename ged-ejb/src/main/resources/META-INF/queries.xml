@@ -20,6 +20,16 @@
 		]]></query>
 	</named-query>
 
+	<named-query name="Candidate.findFiles">
+		<query><![CDATA[
+			SELECT f
+			FROM Candidate c
+			LEFT JOIN c.files f
+			WHERE c = :candidate
+			AND f is not null
+		]]></query>
+	</named-query>
+
 	<named-query name="Candidate.emailExists">
 		<query><![CDATA[
 			SELECT CASE WHEN (COUNT(c) > 0) THEN TRUE ELSE FALSE END
@@ -35,7 +45,7 @@
 			WHERE c.uid = :uid
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="Contact.findByClient">
 		<query><![CDATA[
 			SELECT c 
@@ -64,7 +74,7 @@
 			WHERE c.candidate = :candidate
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="Curriculum.findByUid">
 		<query><![CDATA[
 			SELECT c 
@@ -77,13 +87,29 @@
 			WHERE c.uid = :uid
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="DocumentTemplate.findByName">
 		<query><![CDATA[
 			SELECT d 
 			FROM DocumentTemplate d 
 			WHERE d.name = :name
 			AND d.language = :language
+		]]></query>
+	</named-query>
+
+	<named-query name="File.findByHash">
+		<query><![CDATA[
+			SELECT f 
+			FROM PhysicalFile f 
+			WHERE f.contentHash = :hash
+		]]></query>
+	</named-query>
+	
+	<named-query name="File.isOrphanPhysicalFile">
+		<query><![CDATA[
+			SELECT CASE WHEN (COUNT(f) > 0) THEN TRUE ELSE FALSE END 
+			FROM File f 
+			WHERE f.physicalFile.contentHash = :hash
 		]]></query>
 	</named-query>
 
@@ -133,7 +159,7 @@
 			OR j.jobOffer.owner = :user 
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="JobCandidatureState.findFirstJobCandidatureState">
 		<query><![CDATA[
 			SELECT j 
@@ -141,7 +167,7 @@
 			WHERE j.first = true
 		]]></query>
 	</named-query>
-		
+
 	<named-query name="JobOffer.findAllByOwner">
 		<query><![CDATA[
 			SELECT j 
@@ -184,7 +210,7 @@
 			AND m.datePlanned < CURRENT_TIMESTAMP
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="LoginToken.findExpired">
 		<query><![CDATA[
 			SELECT l 
@@ -192,7 +218,7 @@
 			WHERE l.expiration >= CURRENT_TIMESTAMP
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="LoginToken.findByTokenHash">
 		<query><![CDATA[
 			SELECT l 
@@ -214,14 +240,6 @@
 			SELECT m 
 			FROM Meeting m 
 			WHERE m.uid = :uid
-		]]></query>
-	</named-query>
-
-	<named-query name="ServerFile.findByCandidate">
-		<query><![CDATA[
-			SELECT s 
-			FROM ServerFile s 
-			WHERE s.candidate = :candidate
 		]]></query>
 	</named-query>
 
@@ -292,7 +310,7 @@
 			WHERE u.uid = :uid
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="User.findByTokenHashAndType">
 		<query><![CDATA[
 			SELECT u
@@ -302,7 +320,7 @@
 			AND l.user = u
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="UserClosure.findAntecessorsUserClosuresById">
 		<query><![CDATA[
 			SELECT uc 

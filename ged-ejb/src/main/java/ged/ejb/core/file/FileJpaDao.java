@@ -2,21 +2,24 @@ package ged.ejb.core.file;
 
 import static ged.ejb.core.util.Parameters.map;
 
-import java.util.List;
-import java.util.Objects;
+import javax.persistence.NoResultException;
 
-import ged.ejb.candidate.Candidate;
 import ged.ejb.core.model.AbstractDao;
-import ged.ejb.core.model.Page;
 import ged.ejb.core.model.Repository;
 
 @Repository
 public class FileJpaDao extends AbstractDao<File> {
 
-	public List<File> findByCandidate(final Candidate candidate) {
-		Objects.requireNonNull(candidate);
-		return this.findByQuery(File.class, "ServerFile.findByCandidate", map("candidate", candidate),
-				Page.ALL_RESULTS);
+	public boolean isOrphanPhysicalFile(PhysicalFile physicalFile) {
+		return this.findByQuery(Boolean.class, "File.isOrphanPhysicalFile", map("physicalFile", physicalFile));
+	}
+
+	public PhysicalFile findPhysicalFileByHash(String hash) {
+		try {
+			return this.findByQuery(PhysicalFile.class, "File.findByHash", map("hash", hash));
+		} catch (NoResultException e) {
+			return null;
+		}
 	}
 
 	@Override

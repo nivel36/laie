@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ged.ejb.core.AbstractIndexedService;
+import ged.ejb.core.file.File;
 import ged.ejb.core.file.FileService;
 import ged.ejb.core.model.AbstractIndexedDao;
 import ged.ejb.core.model.Repository;
@@ -35,9 +36,9 @@ public class UserService extends AbstractIndexedService<User> {
 		Objects.requireNonNull(user);
 		Objects.requireNonNull(inputStream);
 
-		final String oldImage = user.getImageFileName();
-		final String uuid = this.fileService.uploadImage(inputStream);
-		user.setImageFileName(uuid);
+		final File oldImage = user.getPicture();
+		File newImage = this.fileService.uploadFile(inputStream, user.getUid()+"_picture", true);
+		user.setPicture(newImage);
 		final User savedUser = this.save(user);
 
 		if (oldImage != null) {

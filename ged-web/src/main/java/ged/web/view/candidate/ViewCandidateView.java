@@ -1,6 +1,8 @@
 package ged.web.view.candidate;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.UncheckedIOException;
 import java.lang.invoke.MethodHandles;
 import java.util.List;
 
@@ -10,11 +12,17 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.omnifaces.cdi.Param;
+import org.omnifaces.util.Faces;
+import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.SelectEvent;
+import org.primefaces.model.UploadedFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ged.ejb.candidate.Candidate;
+import ged.ejb.candidate.CandidateService;
+import ged.ejb.core.file.File;
+import ged.ejb.core.file.FileService;
 import ged.ejb.core.model.Address;
 import ged.ejb.core.model.Page;
 import ged.ejb.curriculum.Curriculum;
@@ -40,12 +48,20 @@ public class ViewCandidateView extends AbstractView {
 	@Param(name = "id", required = true)
 	private Candidate candidate;
 
+	@Inject
+	private transient CandidateService candidateService;
+
 	private Curriculum curriculum;
 
 	@Inject
 	private transient CurriculumService curriculumService;
 
 	private boolean editable;
+
+	private List<File> files;
+
+	@Inject
+	private transient FileService fileUploadService;
 
 	private List<JobCandidature> jobCandidatures;
 
@@ -74,6 +90,10 @@ public class ViewCandidateView extends AbstractView {
 		return this.curriculum;
 	}
 
+	public List<File> getFiles() {
+		return this.files;
+	}
+
 	public List<JobCandidature> getJobCandidatures() {
 		return this.jobCandidatures;
 	}
@@ -95,6 +115,7 @@ public class ViewCandidateView extends AbstractView {
 		this.curriculum = this.curriculumService.findByCandidate(this.candidate);
 		this.editable = this.sessionUser.hasPermissionToEdit(this.candidate);
 		this.meetings = this.initMeetings();
+		this.files = this.candidateService.findFiles(this.candidate, Page.TEN_RESULTS_PER_PAGE);
 	}
 
 	private List<Meeting> initMeetings() {
@@ -123,6 +144,17 @@ public class ViewCandidateView extends AbstractView {
 		}
 	}
 
+	public void openFile(final File file) throws IOException {
+		try (final InputStream is = this.fileUploadService.getFile(file);) {
+			Faces.sendFile(is, file.getName(), true);
+		}
+	}
+
+	public void removeFile(final File file) {
+		this.candidateService.removeFile(candidate, file);
+		this.files.remove(file);
+	}
+
 	public void selectJobOffer() {
 		logger.debug("Select job action performed");
 		this.openBigDialog(PageEnum.JOB_SELECT.getUrl());
@@ -132,8 +164,16 @@ public class ViewCandidateView extends AbstractView {
 		this.candidate = candidate;
 	}
 
+	public void setCandidateService(final CandidateService candidateService) {
+		this.candidateService = candidateService;
+	}
+
 	public void setCurriculumService(final CurriculumService curriculumService) {
 		this.curriculumService = curriculumService;
+	}
+
+	public void setFileUploadService(final FileService fileUploadService) {
+		this.fileUploadService = fileUploadService;
 	}
 
 	public void setJobCandidatureService(final JobCandidatureService jobCandidatureService) {
@@ -142,5 +182,17 @@ public class ViewCandidateView extends AbstractView {
 
 	public void setMeetingService(final MeetingService meetingService) {
 		this.meetingService = meetingService;
+	}
+
+	public void uploadFile(final FileUploadEvent event) {
+		final UploadedFile uploadedFile = event.getFile();
+		try (final InputStream inputStream = uploadedFile.getInputstream()) {
+			final String fileName = uploadedFile.getFileName();
+			final File file = this.fileUploadService.uploadFile(inputStream, fileName, false);
+			this.candidate = this.candidateService.addFileToCandidate(this.candidate, file);
+			this.files.add(file);
+		} catch (final IOException e) {
+			throw new UncheckedIOException(e);
+		}
 	}
 }

@@ -41,7 +41,7 @@
 							</h:link>
 						</p:column>
 						<p:column rendered="#{cc.attrs.showCandidate}">
-							<cc:avatar value="#{jobCandidature.candidate.imageFileName}" styleClass="small" />
+							<cc:avatar value="#{jobCandidature.candidate.picture}" styleClass="small" />
 						</p:column>
 						<p:column headerText="#{i18n['job_candidature.candidate']}" rendered="#{cc.attrs.showCandidate}">
 							<h:link value="#{jobCandidature.candidate.fullName}" outcome="#{Page.CANDIDATE.getUrl()}">

@@ -21,7 +21,7 @@
 						<p:ajax event="rowSelect" listener="#{selectUserView.onUserSelect}" update="@form" resetValues="true" />
 
 						<p:column>
-							<cc:avatar value="#{user.imageFileName}" styleClass="image-icon" />
+							<cc:avatar value="#{user.picture}" styleClass="image-icon" />
 						</p:column>
 
 						<p:column headerText="#{i18n['user.name']}" sortBy="#{user.name}">

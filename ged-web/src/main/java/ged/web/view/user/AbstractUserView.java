@@ -21,6 +21,7 @@ import org.primefaces.model.UploadedFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import ged.ejb.core.file.File;
 import ged.ejb.core.file.FileService;
 import ged.ejb.core.model.Page;
 import ged.ejb.user.User;
@@ -84,8 +85,9 @@ public abstract class AbstractUserView extends AbstractView {
 			return;
 		}
 		try (InputStream inputStream = uploadedFile.getInputstream()) {
-			final String uuid = this.fileUploadService.uploadImage(inputStream);
-			this.user.setImageFileName(uuid);
+			final String filename = this.getUser().getUid() + "_picture";
+			final File file = this.fileUploadService.uploadFile(inputStream, filename, true);
+			this.user.setPicture(file);
 		} catch (final IOException e) {
 			throw new UncheckedIOException(e);
 		}

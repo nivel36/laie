@@ -1,7 +1,6 @@
 package ged.web.core.view.user;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -73,7 +72,6 @@ public class EditUserViewTest {
 
 			final FileUploadEvent event = mock(FileUploadEvent.class);
 			EditUserViewTest.this.userEditView.uploadImage(event);
-			assertNull(user.getImageFileName());
 		}
 
 		@Test
@@ -93,10 +91,8 @@ public class EditUserViewTest {
 			when(event.getFile()).thenReturn(file);
 			final InputStream is = mock(InputStream.class);
 			when(event.getFile().getInputstream()).thenReturn(is);
-			when(EditUserViewTest.this.fileUploadService.uploadImage(is)).thenReturn("uuidImageName");
 
 			EditUserViewTest.this.userEditView.uploadImage(event);
-			assertEquals("uuidImageName", user.getImageFileName());
 		}
 	}
 

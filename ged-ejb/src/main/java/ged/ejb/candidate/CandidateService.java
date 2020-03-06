@@ -1,8 +1,10 @@
 package ged.ejb.candidate;
 
 import java.lang.invoke.MethodHandles;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -12,7 +14,7 @@ import org.slf4j.LoggerFactory;
 
 import ged.ejb.core.AbstractIndexedService;
 import ged.ejb.core.file.File;
-import ged.ejb.core.file.FileJpaDao;
+import ged.ejb.core.file.FileService;
 import ged.ejb.core.model.AbstractIndexedDao;
 import ged.ejb.core.model.Page;
 import ged.ejb.core.model.Repository;
@@ -30,18 +32,20 @@ public class CandidateService extends AbstractIndexedService<Candidate> {
 
 	@Inject
 	@Repository
-	private JobCandidatureDao jobCandidatureDao;
+	private FileService fileService;
 
 	@Inject
 	@Repository
-	private FileJpaDao serverFileDao;
+	private JobCandidatureDao jobCandidatureDao;
 
-	public void addFileToCandidate(final Candidate candidate, final File file) {
+	public Candidate addFileToCandidate(final Candidate candidate, final File file) {
 		Objects.requireNonNull(file);
 		Objects.requireNonNull(candidate);
 		logger.debug("Add file {} to candidate  {}", file, candidate);
-		file.setCandidate(candidate);
-		this.serverFileDao.save(file);
+		final List<File> files = this.candidateDao.findFiles(candidate, Page.ALL_RESULTS);
+		candidate.setFiles(files.stream().collect(Collectors.toSet()));
+		candidate.addFile(file);
+		return this.candidateDao.save(candidate);
 	}
 
 	public List<Origin> findAllOrigins() {
@@ -68,13 +72,13 @@ public class CandidateService extends AbstractIndexedService<Candidate> {
 			throw new IllegalArgumentException("Bad file id: " + fileId);
 		}
 		logger.debug("Find file by id {}", fileId);
-		return this.serverFileDao.find(fileId);
+		return this.fileService.findById(fileId);
 	}
 
-	public List<File> findFiles(final Candidate candidate) {
+	public List<File> findFiles(final Candidate candidate, final Page page) {
 		Objects.requireNonNull(candidate);
 		logger.debug("Find files by candidate {}", candidate);
-		return this.serverFileDao.findByCandidate(candidate);
+		return this.candidateDao.findFiles(candidate, page);
 	}
 
 	@Override
@@ -82,25 +86,19 @@ public class CandidateService extends AbstractIndexedService<Candidate> {
 		return this.candidateDao;
 	}
 
-	public void removeFile(final File file) {
+	public void removeFile(Candidate candidate, final File file) {
+		Objects.requireNonNull(candidate);
 		Objects.requireNonNull(file);
-		logger.debug("Remove file {}", file);
-		this.serverFileDao.delete(file);
+		logger.debug("Remove file {} from candidate {}", file, candidate);
+		List<File> files = this.findFiles(candidate, Page.ALL_RESULTS);
+		candidate.setFiles(new HashSet<>(files));
+		candidate.removeFile(file);
+		this.candidateDao.save(candidate);
+		this.fileService.removeFile(file);
 	}
 
 	public void setCandidateDao(final CandidateDao candidateDao) {
 		Objects.requireNonNull(candidateDao);
 		this.candidateDao = candidateDao;
-	}
-
-	public void setServerFileDao(final FileJpaDao serverFileDao) {
-		Objects.requireNonNull(serverFileDao);
-		this.serverFileDao = serverFileDao;
-	}
-
-	public File updateFile(final File file) {
-		Objects.requireNonNull(file);
-		logger.debug("Update file {}", file);
-		return this.serverFileDao.save(file);
 	}
 }

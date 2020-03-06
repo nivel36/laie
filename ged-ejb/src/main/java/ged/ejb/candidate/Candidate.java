@@ -3,6 +3,7 @@ package ged.ejb.candidate;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -54,8 +55,8 @@ public class Candidate extends Person implements Ownerable, Obfuscable {
 	@Min(0)
 	private Integer expectedSalary;
 
-	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "candidate", orphanRemoval = true)
-	private Set<File> files;
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private Set<File> files = new HashSet<>();
 
 	private String infojobsProfileUrl;
 
@@ -93,6 +94,10 @@ public class Candidate extends Person implements Ownerable, Obfuscable {
 	@JoinTable(name = "candidate_tag", joinColumns = @JoinColumn(name = "candidate_id"), inverseJoinColumns = @JoinColumn(name = "tag_id"))
 	@IndexedEmbedded
 	private Set<Tag> tags = new HashSet<>();
+
+	public void addFile(final File file) {
+		this.files.add(file);
+	}
 
 	public Address getAddress() {
 		return this.address;
@@ -147,6 +152,14 @@ public class Candidate extends Person implements Ownerable, Obfuscable {
 		return this.salary;
 	}
 
+	public void removeFile(File file) {
+		Objects.requireNonNull(file);
+		if (files == null) {
+			throw new IllegalStateException();
+		}
+		this.files.remove(file);
+	}
+
 	public String getSkype() {
 		return this.skype;
 	}
@@ -154,7 +167,7 @@ public class Candidate extends Person implements Ownerable, Obfuscable {
 	public Set<Tag> getTags() {
 		return this.tags;
 	}
-	
+
 	public void setAddress(final Address address) {
 		this.address = address;
 	}

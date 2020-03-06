@@ -112,7 +112,6 @@ public class AddUserViewTest {
 
 			final FileUploadEvent event = mock(FileUploadEvent.class);
 			AddUserViewTest.this.addUserView.uploadImage(event);
-			assertNull(user.getImageFileName());
 		}
 
 		@Test
@@ -132,10 +131,8 @@ public class AddUserViewTest {
 			when(event.getFile()).thenReturn(file);
 			final InputStream is = mock(InputStream.class);
 			when(event.getFile().getInputstream()).thenReturn(is);
-			when(AddUserViewTest.this.fileUploadService.uploadImage(is)).thenReturn("uuidImageName");
 
 			AddUserViewTest.this.addUserView.uploadImage(event);
-			assertEquals("uuidImageName", user.getImageFileName());
 		}
 	}
 

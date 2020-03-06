@@ -36,7 +36,6 @@ public class CandidateMapper implements AbstractMapper<Candidate, CandidateDto> 
 		candidate.setBornDate(candidateDto.getBornDate());
 		candidate.setEmail(candidateDto.getEmail());
 		candidate.setExpectedSalary(candidateDto.getExpectedSalary());
-		candidate.setImageFileName(candidateDto.getImageFileName());
 		candidate.setInfojobsProfileUrl(candidateDto.getInfojobsProfileUrl());
 		candidate.setJobProfile(candidateDto.getJobProfile());
 		candidate.setLinkedinProfileUrl(candidateDto.getLinkedinProfileUrl());
@@ -62,7 +61,7 @@ public class CandidateMapper implements AbstractMapper<Candidate, CandidateDto> 
 		candidateDto.setEmail(candidate.getEmail());
 		candidateDto.setExpectedSalary(candidate.getExpectedSalary());
 		candidateDto.setId(candidate.getId());
-		candidateDto.setImageFileName(candidate.getImageFileName());
+		candidateDto.setImageFileName(candidate.getPicture().getName());
 		candidateDto.setInfojobsProfileUrl(candidate.getInfojobsProfileUrl());
 		candidateDto.setJobProfile(candidate.getJobProfile());
 		candidateDto.setLinkedinProfileUrl(candidate.getLinkedinProfileUrl());

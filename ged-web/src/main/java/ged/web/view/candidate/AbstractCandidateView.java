@@ -14,6 +14,7 @@ import org.primefaces.model.UploadedFile;
 
 import ged.ejb.candidate.Candidate;
 import ged.ejb.candidate.CandidateService;
+import ged.ejb.core.file.File;
 import ged.ejb.core.file.FileService;
 import ged.ejb.core.model.Page;
 import ged.ejb.core.tag.Tag;
@@ -76,8 +77,8 @@ public abstract class AbstractCandidateView extends AbstractView {
 	public void uploadImage(final FileUploadEvent event) {
 		final UploadedFile uploadedFile = event.getFile();
 		try (InputStream inputStream = uploadedFile.getInputstream()) {
-			final String uuid = this.fileUploadService.uploadImage(inputStream);
-			this.candidate.setImageFileName(uuid);
+			File file = this.fileUploadService.uploadFile(inputStream, this.candidate.getUid() + "_picture", true);
+			this.candidate.setPicture(file);
 		} catch (final IOException e) {
 			throw new UncheckedIOException(e);
 		}

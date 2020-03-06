@@ -1,7 +1,6 @@
 package ged.ejb.candidate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -39,10 +38,9 @@ public class CandidateServiceTest {
 		public void shouldBeOk() {
 			final File file = new File();
 			final Candidate mockedCandidate = mock(Candidate.class);
-			
+
 			candidateService.addFileToCandidate(mockedCandidate, file);
 
-			assertNotNull(file.getCandidate());
 		}
 	}
 
@@ -55,7 +53,8 @@ public class CandidateServiceTest {
 
 			when(candidateDao.findCandidates(jobOffer, Page.ALL_RESULTS)).thenReturn(new ArrayList<>());
 
-			final List<Candidate> candidatesFromRepository = candidateService.findCandidates(jobOffer, Page.ALL_RESULTS);
+			final List<Candidate> candidatesFromRepository = candidateService.findCandidates(jobOffer,
+					Page.ALL_RESULTS);
 			assertEquals(0, candidatesFromRepository.size());
 		}
 
@@ -88,27 +87,6 @@ public class CandidateServiceTest {
 		}
 	}
 
-	@Nested
-	class UpdateFile {
-
-		@Test
-		public void nullServerFileShouldThrowNullPointerException() {
-			assertThrows(NullPointerException.class, () -> {
-				candidateService.updateFile(null);
-			});
-		}
-
-		@Test
-		public void updateFileTest() {
-			final File mockedServerFile = mock(File.class);
-
-			when(serverFileDao.save(mockedServerFile)).thenReturn(mockedServerFile);
-
-			final File updatedServerFile = candidateService.updateFile(mockedServerFile);
-			assertEquals(mockedServerFile, updatedServerFile);
-		}
-	}
-
 	@Mock
 	private CandidateDao candidateDao;
 
@@ -124,6 +102,6 @@ public class CandidateServiceTest {
 	public void setUp() {
 		this.candidateService = new CandidateService();
 		this.candidateService.setCandidateDao(this.candidateDao);
-		this.candidateService.setServerFileDao(this.serverFileDao);
+
 	}
 }

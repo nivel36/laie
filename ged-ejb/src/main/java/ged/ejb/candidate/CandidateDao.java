@@ -11,6 +11,7 @@ import javax.validation.ValidationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import ged.ejb.core.file.File;
 import ged.ejb.core.model.AbstractIndexedDao;
 import ged.ejb.core.model.Page;
 import ged.ejb.core.model.Repository;
@@ -39,6 +40,10 @@ public class CandidateDao extends AbstractIndexedDao<Candidate> {
 		Objects.requireNonNull(jobOffer);
 		Objects.requireNonNull(page);
 		return this.findByQuery(Candidate.class, "Candidate.findByJobOffer", map("jobOffer", jobOffer), page);
+	}
+
+	public List<File> findFiles(final Candidate candidate, final Page page) {
+		return this.findByQuery(File.class, "Candidate.findFiles", map("candidate", candidate), page);
 	}
 
 	@Override

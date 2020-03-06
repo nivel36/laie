@@ -2,25 +2,21 @@ package ged.ejb.core.file;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
-import java.util.UUID;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
-import ged.ejb.candidate.Candidate;
 import ged.ejb.core.model.AbstractEntity;
 
 @Entity
 public class File extends AbstractEntity {
 
 	private static final long serialVersionUID = 1L;
-
-	@ManyToOne
-	@JoinColumn(name = "candidateId", nullable = false)
-	private Candidate candidate;
 
 	@NotNull
 	@Column(nullable = false)
@@ -32,9 +28,11 @@ public class File extends AbstractEntity {
 	@Column(nullable = false)
 	private String name;
 
-	@NotNull
-	@Column(nullable = false)
-	private String uuid;
+	@ManyToOne(cascade = { CascadeType.PERSIST}, fetch = FetchType.EAGER, optional = false)
+	@JoinColumn(name = "physicalFileId")
+	private PhysicalFile physicalFile;
+
+	private boolean publicAccess;
 
 	public File() {
 	}
@@ -43,29 +41,6 @@ public class File extends AbstractEntity {
 		Objects.requireNonNull(name);
 		this.name = name;
 		this.created = LocalDateTime.now();
-		this.uuid = UUID.randomUUID().toString();
-	}
-
-	@Override
-	public boolean equals(final Object obj) {
-		if (obj == null) {
-			return false;
-		}
-		if (this == obj) {
-			return true;
-		}
-		if (!super.equals(obj)) {
-			return false;
-		}
-		if (this.getClass() != obj.getClass()) {
-			return false;
-		}
-		final File other = (File) obj;
-		return Objects.equals(this.uuid, other.uuid);
-	}
-
-	public Candidate getCandidate() {
-		return this.candidate;
 	}
 
 	public LocalDateTime getCreated() {
@@ -80,17 +55,12 @@ public class File extends AbstractEntity {
 		return this.name;
 	}
 
-	public String getUuid() {
-		return this.uuid;
+	public PhysicalFile getPhysicalFile() {
+		return this.physicalFile;
 	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(this.uuid);
-	}
-
-	public void setCandidate(final Candidate candidate) {
-		this.candidate = candidate;
+	public boolean isPublicAccess() {
+		return this.publicAccess;
 	}
 
 	public void setCreated(final LocalDateTime created) {
@@ -105,7 +75,11 @@ public class File extends AbstractEntity {
 		this.name = name;
 	}
 
-	public void setUuid(final String uuid) {
-		this.uuid = uuid;
+	public void setPhysicalFile(final PhysicalFile physicalFile) {
+		this.physicalFile = physicalFile;
+	}
+
+	public void setPublicAccess(final boolean publicAccess) {
+		this.publicAccess = publicAccess;
 	}
 }

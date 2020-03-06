@@ -38,7 +38,6 @@ public class UserMapperTest {
 			assertNotNull(user);
 			assertEquals(userDto.getDateOfJoin(), user.getDateOfJoin());
 			assertEquals(userDto.getEmail(), user.getEmail());
-			assertEquals(userDto.getImageFileName(), user.getImageFileName());
 			assertEquals(userDto.getLanguage(), user.getLanguage());
 			assertEquals(userDto.getLastConnection(), user.getLastConnection());
 			assertEquals(userDto.getManagerEmail(), user.getManager().getEmail());
@@ -67,7 +66,6 @@ public class UserMapperTest {
 			assertNotNull(userDto);
 			assertEquals(user.getDateOfJoin(), userDto.getDateOfJoin());
 			assertEquals(user.getEmail(), userDto.getEmail());
-			assertEquals(user.getImageFileName(), userDto.getImageFileName());
 			assertEquals(user.getLanguage(), userDto.getLanguage());
 			assertEquals(user.getLastConnection(), userDto.getLastConnection());
 			assertEquals(user.getManager().getEmail(), userDto.getManagerEmail());
@@ -93,7 +91,6 @@ public class UserMapperTest {
 		final User user = new User();
 		user.setDateOfJoin(LocalDate.now());
 		user.setEmail("aaron@test.com");
-		user.setImageFileName("1");
 		user.setLanguage("ES");
 		user.setLastConnection(LocalDateTime.now());
 		user.setName("Aaron");

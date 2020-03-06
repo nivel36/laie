@@ -22,7 +22,6 @@ public class UserMapper implements AbstractMapper<User, UserDto> {
 		final User user = new User();
 		user.setDateOfJoin(userDto.getDateOfJoin());
 		user.setEmail(userDto.getEmail());
-		user.setImageFileName(userDto.getImageFileName());
 		user.setLanguage(userDto.getLanguage());
 		user.setLastConnection(userDto.getLastConnection());
 		if (userDto.getManagerEmail() != null) {
@@ -47,7 +46,6 @@ public class UserMapper implements AbstractMapper<User, UserDto> {
 		final UserDto userDto = new UserDto();
 		userDto.setDateOfJoin(user.getDateOfJoin());
 		userDto.setEmail(user.getEmail());
-		userDto.setImageFileName(user.getImageFileName());
 		userDto.setLanguage(user.getLanguage());
 		userDto.setLastConnection(user.getLastConnection());
 		if (user.getManager() != null) {

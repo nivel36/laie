@@ -5,6 +5,8 @@ import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
@@ -15,6 +17,7 @@ import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.SortableField;
 import org.hibernate.search.annotations.Store;
 
+import ged.ejb.core.file.File;
 import ged.ejb.core.model.AbstractIndexedEntity;
 
 @MappedSuperclass
@@ -29,9 +32,6 @@ public abstract class Person extends AbstractIndexedEntity {
 	@Field
 	protected String email;
 
-	@Column(unique = true)
-	protected String imageFileName;
-
 	@NotNull
 	@Column(nullable = false)
 	@Field(name = "_name")
@@ -41,6 +41,10 @@ public abstract class Person extends AbstractIndexedEntity {
 
 	@Column(length = 12)
 	protected String phoneNumber;
+
+	@ManyToOne
+	@JoinColumn(name = "picture")
+	protected File picture;
 
 	@NotNull
 	@Column(nullable = false)
@@ -75,16 +79,16 @@ public abstract class Person extends AbstractIndexedEntity {
 		return new StringBuilder(this.name).append(" ").append(this.surname).toString();
 	}
 
-	public String getImageFileName() {
-		return this.imageFileName;
-	}
-
 	public String getName() {
 		return this.name;
 	}
 
 	public String getPhoneNumber() {
 		return this.phoneNumber;
+	}
+
+	public File getPicture() {
+		return this.picture;
 	}
 
 	public String getSurname() {
@@ -100,16 +104,16 @@ public abstract class Person extends AbstractIndexedEntity {
 		this.email = email;
 	}
 
-	public void setImageFileName(final String imageFileName) {
-		this.imageFileName = imageFileName;
-	}
-
 	public void setName(final String name) {
 		this.name = name;
 	}
 
 	public void setPhoneNumber(final String phoneNumber) {
 		this.phoneNumber = phoneNumber;
+	}
+
+	public void setPicture(final File picture) {
+		this.picture = picture;
 	}
 
 	public void setSurname(final String surname) {
