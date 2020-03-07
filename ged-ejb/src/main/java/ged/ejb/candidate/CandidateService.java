@@ -31,7 +31,6 @@ public class CandidateService extends AbstractIndexedService<Candidate> {
 	private CandidateDao candidateDao;
 
 	@Inject
-	@Repository
 	private FileService fileService;
 
 	@Inject

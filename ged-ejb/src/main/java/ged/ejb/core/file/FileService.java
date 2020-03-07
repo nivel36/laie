@@ -134,7 +134,7 @@ public class FileService {
 				if (!Files.exists(parent)) {
 					Files.createDirectories(parent);
 				}
-				Files.copy(inputStream, path, REPLACE_EXISTING);
+				Files.copy(digestInputStream, path, REPLACE_EXISTING);
 				final byte[] hash = digest.digest();
 				return Base64.getEncoder().encodeToString(hash);
 			} catch (final IOException e) {

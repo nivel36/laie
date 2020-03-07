@@ -35,16 +35,13 @@ public class UserService extends AbstractIndexedService<User> {
 	public User addUserImage(final User user, final InputStream inputStream) {
 		Objects.requireNonNull(user);
 		Objects.requireNonNull(inputStream);
-
 		final File oldImage = user.getPicture();
 		File newImage = this.fileService.uploadFile(inputStream, user.getUid()+"_picture", true);
 		user.setPicture(newImage);
-		final User savedUser = this.save(user);
-
 		if (oldImage != null) {
 			this.fileService.removeFile(oldImage);
 		}
-		return savedUser;
+		return this.save(user);
 	}
 
 	public void changePassword(final User user, final String newPassword) {

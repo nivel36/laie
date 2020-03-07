@@ -66,27 +66,6 @@ public class CandidateServiceTest {
 		}
 	}
 
-	@Nested
-	class FindFileByFileId {
-
-		@Test
-		public void badIdShouldThrowIllegalArgumentExpcetion() {
-			assertThrows(IllegalArgumentException.class, () -> {
-				candidateService.findFile(0);
-			});
-		}
-
-		@Test
-		public void findFileTest() {
-			final File mockedUploadedServerFile = mock(File.class);
-
-			when(serverFileDao.find(1L)).thenReturn(mockedUploadedServerFile);
-
-			final File serverFileFromRepository = candidateService.findFile(1L);
-			assertEquals(mockedUploadedServerFile, serverFileFromRepository);
-		}
-	}
-
 	@Mock
 	private CandidateDao candidateDao;
 
