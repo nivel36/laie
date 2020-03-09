@@ -6,13 +6,11 @@ import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
 import javax.validation.constraints.NotNull;
 
 import ged.ejb.core.model.AbstractEntity;
 
 @Entity
-@EntityListeners({PhysicalFileListener.class})
 public class PhysicalFile extends AbstractEntity {
 
 	private static final long serialVersionUID = 1L;
