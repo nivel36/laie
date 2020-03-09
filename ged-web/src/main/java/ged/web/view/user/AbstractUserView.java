@@ -86,7 +86,7 @@ public abstract class AbstractUserView extends AbstractView {
 		}
 		try (InputStream inputStream = uploadedFile.getInputstream()) {
 			final String filename = this.getUser().getUid() + "_picture";
-			final File file = this.fileUploadService.uploadFile(inputStream, filename, true);
+			final File file = this.fileUploadService.uploadFile(inputStream, true, filename);
 			this.user.setPicture(file);
 		} catch (final IOException e) {
 			throw new UncheckedIOException(e);

@@ -188,7 +188,7 @@ public class ViewCandidateView extends AbstractView {
 		final UploadedFile uploadedFile = event.getFile();
 		try (final InputStream inputStream = uploadedFile.getInputstream()) {
 			final String fileName = uploadedFile.getFileName();
-			final File file = this.fileUploadService.uploadFile(inputStream, fileName, false);
+			final File file = this.fileUploadService.uploadFile(inputStream, false, fileName);
 			this.candidate = this.candidateService.addFileToCandidate(this.candidate, file);
 			this.files.add(file);
 		} catch (final IOException e) {
