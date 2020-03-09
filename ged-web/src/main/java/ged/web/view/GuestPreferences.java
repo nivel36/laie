@@ -9,6 +9,8 @@ import javax.inject.Named;
 @SessionScoped
 public class GuestPreferences implements Serializable {
 
+	private static final String POPUP = "popup";
+
 	private static final long serialVersionUID = 1L;
 
 	private String logo = "logo-roma-white";
@@ -17,7 +19,7 @@ public class GuestPreferences implements Serializable {
 
 	private String menuMode = "layout-static";
 
-	private String profileMode = "popup";
+	private String profileMode = POPUP;
 
 	private String theme = "blue";
 
@@ -55,13 +57,13 @@ public class GuestPreferences implements Serializable {
 		this.menuMode = menuMode;
 
 		if (this.menuMode.equals("layout-horizontal")) {
-			this.profileMode = "popup";
+			this.profileMode = POPUP;
 		}
 	}
 
 	public void setProfileMode(final String profileMode) {
 		if (this.menuMode.equals("layout-horizontal")) {
-			this.profileMode = "popup";
+			this.profileMode = POPUP;
 		} else {
 			this.profileMode = profileMode;
 		}

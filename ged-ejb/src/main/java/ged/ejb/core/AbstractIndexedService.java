@@ -20,9 +20,9 @@ public abstract class AbstractIndexedService<T extends AbstractIndexedEntity> ex
 		return this.getDao().search(searchText, page, sortFields, searchFacets);
 	}
 
-	public SearchResult<T> search(final String searchText, final Page page, final SortField SortField,
+	public SearchResult<T> search(final String searchText, final Page page, final SortField sortField,
 			final SearchFacets searchFacets) {
-		return this.getDao().search(searchText, page, SortField, searchFacets);
+		return this.getDao().search(searchText, page, sortField, searchFacets);
 	}
 	
 	protected abstract AbstractIndexedDao<T> getDao();

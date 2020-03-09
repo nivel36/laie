@@ -14,6 +14,23 @@ import ged.ejb.person.Person;
 @Indexed
 public class Contact extends Person implements Obfuscable {
 
+	@Override
+	public int hashCode() {
+		return super.hashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Contact other = (Contact) obj;
+		return super.equals(other);
+	}
+
 	private static final long serialVersionUID = 1L;
 
 	@ManyToOne

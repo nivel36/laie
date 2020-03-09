@@ -124,7 +124,7 @@ public class AddMeetingView extends AbstractView {
 	}
 
 	private List<Person> initAttendees() {
-		final List<Person> attendeeList = new ArrayList<Person>();
+		final List<Person> attendeeList = new ArrayList<>();
 		attendeeList.add(this.sessionUser.get());
 		final Person person = this.getValueFromFlash("attendee");
 		if (person != null) {

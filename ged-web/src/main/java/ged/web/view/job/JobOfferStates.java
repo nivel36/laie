@@ -20,15 +20,15 @@ public class JobOfferStates implements Serializable {
 	@Inject
 	private transient JobOfferService jobOfferService;
 
-	private List<JobOfferState> jobOfferStates;
+	private List<JobOfferState> states;
 
 	public List<JobOfferState> getList() {
-		return this.jobOfferStates;
+		return this.states;
 	}
 
 	@PostConstruct
 	public void init() {
-		this.jobOfferStates = this.jobOfferService.findJobOfferStates();
+		this.states = this.jobOfferService.findJobOfferStates();
 	}
 
 	public void setJobOfferService(final JobOfferService jobOfferService) {

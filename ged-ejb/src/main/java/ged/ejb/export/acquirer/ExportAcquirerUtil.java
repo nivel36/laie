@@ -72,7 +72,7 @@ public final class ExportAcquirerUtil {
 		Objects.requireNonNull(definition);
 		Objects.requireNonNull(type);
 		final List<AcquirerItem<T>> valuesAcquiresList = toDefinitionList(definition, type);
-		final List<Item> items = new ArrayList<Item>();
+		final List<Item> items = new ArrayList<>();
 		for (final T item : list) {
 			items.add(exportItemValues(item, valuesAcquiresList));
 		}
@@ -81,7 +81,7 @@ public final class ExportAcquirerUtil {
 
 	private static <T> List<AcquirerItem<T>> toDefinitionList(final ExportFieldsOutputBean definition,
 			final Class<T> type) {
-		final List<AcquirerItem<T>> list = new ArrayList<AcquirerItem<T>>();
+		final List<AcquirerItem<T>> list = new ArrayList<>();
 		for (final ExportFieldItem item : definition.getList()) {
 			final ExportAcquirerI<T, ?> acquirer = createInstance(item.getAcquiredClass(), type);
 			Objects.requireNonNull(acquirer);
@@ -91,7 +91,7 @@ public final class ExportAcquirerUtil {
 	}
 
 	private static List<String> toLabelsList(final ExportFieldsOutputBean definition) {
-		final List<String> list = new ArrayList<String>();
+		final List<String> list = new ArrayList<>();
 		for (final ExportFieldItem item : definition.getList()) {
 			list.add(item.getLiteralId());
 		}

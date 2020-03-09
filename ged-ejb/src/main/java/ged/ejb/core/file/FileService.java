@@ -26,9 +26,9 @@ public class FileService {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
-	private final static FileBucket PRIVATE_BUCKET = new PrivateFileBucket();
+	private static final FileBucket PRIVATE_BUCKET = new PrivateFileBucket();
 
-	private final static FileBucket PUBLIC_BUCKET = new PublicFileBucket();
+	private static final FileBucket PUBLIC_BUCKET = new PublicFileBucket();
 
 	@Inject
 	@Repository
@@ -79,8 +79,7 @@ public class FileService {
 		Objects.requireNonNull(file);
 		try {
 			final Path path = Paths.get(file.getPhysicalFile().getAbsolutePath());
-			final InputStream is = Files.newInputStream(path);
-			return new BufferedInputStream(is);
+			return new BufferedInputStream(Files.newInputStream(path));
 		} catch (final IOException e) {
 			throw new UncheckedIOException(e);
 		}

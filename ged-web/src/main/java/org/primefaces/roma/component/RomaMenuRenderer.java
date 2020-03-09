@@ -219,9 +219,9 @@ public class RomaMenuRenderer extends BaseMenuRenderer {
 
 					final List<String> idParams = new ArrayList<>();
 					idParams.add(menuitem.getId());
-					((Map) params).put(menuClientId + "_menuid", idParams);
+					params.put(menuClientId + "_menuid", idParams);
 					command = menuitem.isAjax()
-							? this.createAjaxRequest(context, menu, (AjaxSource) menuitem, form, (Map) params)
+							? this.createAjaxRequest(context, menu, (AjaxSource) menuitem, form, params)
 							: this.buildNonAjaxRequest(context, menu, form, menuClientId, params, true);
 				} else {
 					command = menuitem.isAjax() ? this.createAjaxRequest(context, (AjaxSource) menuitem, form)
@@ -361,7 +361,7 @@ public class RomaMenuRenderer extends BaseMenuRenderer {
 			try {
 				rootContext = Class.forName("org.primefaces.context.RequestContext");
 			} catch (final ClassNotFoundException var7) {
-				throw new RuntimeException(var7);
+				throw new IllegalStateException(var7);
 			}
 		}
 
@@ -369,10 +369,9 @@ public class RomaMenuRenderer extends BaseMenuRenderer {
 			Method method = rootContext.getMethod("getCurrentInstance");
 			final Object requestContextInstance = method.invoke((Object) null);
 			method = requestContextInstance.getClass().getMethod("getAjaxRequestBuilder");
-			final AjaxRequestBuilder builder = (AjaxRequestBuilder) method.invoke(requestContextInstance);
-			return builder;
+			return (AjaxRequestBuilder) method.invoke(requestContextInstance);
 		} catch (final Exception var6) {
-			throw new RuntimeException(var6);
+			throw new IllegalStateException(var6);
 		}
 	}
 }

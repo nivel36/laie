@@ -68,32 +68,28 @@ public class JobOfferService extends AbstractIndexedService<JobOffer> {
 	}
 
 	public List<JobOffer> findJobOffers(final Candidate candidate, final Page page) {
-		Objects.requireNonNull(candidate, "Candidate can't be null");
-		Objects.requireNonNull(page, "Page can't be null");
+		Objects.requireNonNull(candidate);
+		Objects.requireNonNull(page);
 		logger.debug("Find all job offers of the candidate  {}", candidate);
-
 		return this.jobOfferDao.findJobOffers(candidate, page);
 	}
 
 	public List<JobOffer> findJobOffers(final Client client, final Page page) {
-		Objects.requireNonNull(client, "Client can't be null");
-		Objects.requireNonNull(page, "Page can't be null");
+		Objects.requireNonNull(client);
+		Objects.requireNonNull(page);
 		logger.debug("Find all job offers of the client  {}", client);
-
 		return this.jobOfferDao.findJobOffers(client, page);
 	}
 
 	public List<JobOffer> findJobOffers(final User owner, final Page page) {
-		Objects.requireNonNull(owner, "Owner can't be null ");
-		Objects.requireNonNull(page, "Page can't be null");
+		Objects.requireNonNull(owner);
+		Objects.requireNonNull(page);
 		logger.debug("Find all job offers of the owner {}", owner.getFullName());
-
 		return this.jobOfferDao.findJobOffers(owner, page);
 	}
 
 	public List<JobOfferState> findJobOfferStates() {
 		logger.debug("Find all job offer states");
-
 		return Arrays.asList(JobOfferState.values());
 	}
 
@@ -114,10 +110,7 @@ public class JobOfferService extends AbstractIndexedService<JobOffer> {
 		final List<JobCandidature> jobCandidatures = this.jobCandidatureService.findApprovedJobCanditures(jobOffer,
 				Page.ALL_RESULTS);
 		final int numberofAprrovedCandidatures = jobCandidatures.size();
-		if (jobOffer.getPlaces() == numberofAprrovedCandidatures) {
-			return true;
-		}
-		return false;
+		return jobOffer.getPlaces() == numberofAprrovedCandidatures;
 	}
 
 	public void onJobCandidatureCompleted(@Observes @JobCandidatureCompletedEvent final JobCandidature jobCandidature) {
@@ -139,7 +132,7 @@ public class JobOfferService extends AbstractIndexedService<JobOffer> {
 
 	@Override
 	public JobOffer save(final JobOffer jobOffer) {
-		Objects.requireNonNull(jobOffer, "Job offer can't be null");
+		Objects.requireNonNull(jobOffer);
 		logger.debug("Save job offer {}", jobOffer);
 		if (jobOffer.isNew() && this.openDateHasCome(jobOffer)) {
 			logger.debug("The open date has come. Opening the job offer");
@@ -168,7 +161,7 @@ public class JobOfferService extends AbstractIndexedService<JobOffer> {
 	}
 
 	public void setJobOfferDao(final JobOfferDao jobOfferDao) {
-		Objects.requireNonNull(jobOfferDao, "JobOfferDao can't be null");
+		Objects.requireNonNull(jobOfferDao);
 
 		this.jobOfferDao = jobOfferDao;
 	}

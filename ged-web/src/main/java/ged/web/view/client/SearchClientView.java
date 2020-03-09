@@ -29,7 +29,7 @@ public class SearchClientView extends AbstractView {
 
 	private String searchText;
 
-	public void export() throws IOException {
+	public void export() {
 		logger.debug("Export clients action performed");
 	}
 

@@ -99,6 +99,18 @@ public class Candidate extends Person implements Ownerable, Obfuscable {
 		this.files.add(file);
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Candidate other = (Candidate) obj;
+		return super.equals(other);
+	}
+
 	public Address getAddress() {
 		return this.address;
 	}
@@ -152,20 +164,25 @@ public class Candidate extends Person implements Ownerable, Obfuscable {
 		return this.salary;
 	}
 
-	public void removeFile(File file) {
-		Objects.requireNonNull(file);
-		if (files == null) {
-			throw new IllegalStateException();
-		}
-		this.files.remove(file);
-	}
-
 	public String getSkype() {
 		return this.skype;
 	}
 
 	public Set<Tag> getTags() {
 		return this.tags;
+	}
+
+	@Override
+	public int hashCode() {
+		return super.hashCode();
+	}
+
+	public void removeFile(File file) {
+		Objects.requireNonNull(file);
+		if (files == null) {
+			throw new IllegalStateException();
+		}
+		this.files.remove(file);
 	}
 
 	public void setAddress(final Address address) {

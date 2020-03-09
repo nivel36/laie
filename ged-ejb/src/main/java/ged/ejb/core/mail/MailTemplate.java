@@ -17,10 +17,10 @@ public class MailTemplate {
 	}
 
 	public String buildMessage(final Map<String, String> parameters) {
-		final String message = this.messageTemplate;
-		for (final String key : parameters.keySet()) {
-			final String value = parameters.get(key);
-			message.replace("%" + key + "%", value);
+		String message = this.messageTemplate;
+		for (final  Map.Entry<String, String> entry : parameters.entrySet()) {
+			final String value = entry.getValue();
+			message = message.replace("%" + entry.getKey() + "%", value);
 		}
 		return message;
 	}

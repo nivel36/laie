@@ -5,6 +5,8 @@ import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class UidGenerator {
+	
+	private UidGenerator() {}
 
 	public static String generate() {
 		final Random random = ThreadLocalRandom.current();

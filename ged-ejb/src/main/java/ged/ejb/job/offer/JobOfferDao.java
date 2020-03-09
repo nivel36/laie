@@ -25,20 +25,20 @@ public class JobOfferDao extends AbstractIndexedDao<JobOffer> {
 	}
 
 	public List<JobOffer> findJobOffers(final Candidate candidate, final Page page) {
-		Objects.requireNonNull(candidate, "Candidate can't be null");
-		Objects.requireNonNull(page, "Page can't be null");
+		Objects.requireNonNull(candidate);
+		Objects.requireNonNull(page);
 		return this.findByQuery(JobOffer.class, "JobOffer.findByCandidate", map("candidate", candidate), page);
 	}
 
 	public List<JobOffer> findJobOffers(final Client client, final Page page) {
-		Objects.requireNonNull(client, "Client can't be null");
-		Objects.requireNonNull(page, "Page can't be null");
+		Objects.requireNonNull(client);
+		Objects.requireNonNull(page);
 		return this.findByQuery(JobOffer.class, "JobOffer.findByClient", map("client", client), page);
 	}
 
 	public List<JobOffer> findJobOffers(final User owner, final Page page) {
-		Objects.requireNonNull(owner, "Owner can't be null");
-		Objects.requireNonNull(page, "Page can't be null");
+		Objects.requireNonNull(owner);
+		Objects.requireNonNull(page);
 		return this.findByQuery(JobOffer.class, "JobOffer.findAllByOwner", map("owner", owner), page);
 	}
 

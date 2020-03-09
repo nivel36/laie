@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Objects;
 
 import javax.inject.Inject;
@@ -235,12 +236,12 @@ public class PersistenceFacade {
 		final Map<String, List<Facet>> allFacets = this.selectFacets(searchFacets, fullTextQuery);
 		if ((searchFacets != null) && !searchFacets.isEmpty()) {
 			boolean hasFacet = false;
-			for (final String key : allFacets.keySet()) {
+			for (final Entry<String,List<Facet>> entry : allFacets.entrySet()) {
 				if (hasFacet) {
 					break;
 				}
-				for (final Facet facet : allFacets.get(key)) {
-					if (searchFacets.containsFacet(facet.getFieldName(), key, facet.getValue())) {
+				for (final Facet facet : entry.getValue()) {
+					if (searchFacets.containsFacet(facet.getFieldName(), entry.getKey(), facet.getValue())) {
 						hasFacet = true;
 						break;
 					}
@@ -264,24 +265,28 @@ public class PersistenceFacade {
 			final String facetName = searchFacet.getName();
 			allFacets.put(facetName, fullTextQuery.getFacetManager().getFacets(facetName));
 			if (searchFacet.hasSelectedFacets()) {
-				final FacetSelection facetSelection = facetManager.getFacetGroup(facetName);
-				final List<Facet> facets = facetManager.getFacets(facetName);
-				final int facetsLength = searchFacet.getSelectedFactes().length;
-				final List<Facet> facetList = new ArrayList<>();
-				for (int i = 0; i < facetsLength; i++) {
-					for (final String selectedFacet : searchFacet.getSelectedFactes()) {
-						for (final Facet facet : facets) {
-							if (facet.getValue().equals(selectedFacet)) {
-								facetList.add(facet);
-							}
-						}
-					}
-				}
-				final Facet[] selectedMatchedFacets = facetList.toArray(new Facet[0]);
-				facetSelection.selectFacets(FacetCombine.OR, selectedMatchedFacets);
+				selectFacet(facetManager, searchFacet, facetName);
 			}
 		}
 		return allFacets;
+	}
+
+	private void selectFacet(final FacetManager facetManager, final SearchFacet searchFacet, final String facetName) {
+		final FacetSelection facetSelection = facetManager.getFacetGroup(facetName);
+		final List<Facet> facets = facetManager.getFacets(facetName);
+		final int facetsLength = searchFacet.getSelectedFactes().length;
+		final List<Facet> facetList = new ArrayList<>();
+		for (int i = 0; i < facetsLength; i++) {
+			for (final String selectedFacet : searchFacet.getSelectedFactes()) {
+				for (final Facet facet : facets) {
+					if (facet.getValue().equals(selectedFacet)) {
+						facetList.add(facet);
+					}
+				}
+			}
+		}
+		final Facet[] selectedMatchedFacets = facetList.toArray(new Facet[0]);
+		facetSelection.selectFacets(FacetCombine.OR, selectedMatchedFacets);
 	}
 
 	private void sortQuery(final List<SortField> sortFields, final QueryBuilder qb, final FullTextQuery fullTextQuery) {

@@ -52,7 +52,7 @@ public class ViewClientView extends AbstractClientView {
 		return this.navigator.getRedirectUrl(PageEnum.CLIENT_EDIT, this.client);
 	}
 
-	public void export() throws IOException {
+	public void export() {
 		logger.debug("Export client action performed");
 	}
 

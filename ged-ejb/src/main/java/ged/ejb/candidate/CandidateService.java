@@ -85,15 +85,16 @@ public class CandidateService extends AbstractIndexedService<Candidate> {
 		return this.candidateDao;
 	}
 
-	public void removeFile(Candidate candidate, final File file) {
+	public Candidate removeFile(final Candidate candidate, final File file) {
 		Objects.requireNonNull(candidate);
 		Objects.requireNonNull(file);
 		logger.debug("Remove file {} from candidate {}", file, candidate);
-		List<File> files = this.findFiles(candidate, Page.ALL_RESULTS);
+		final List<File> files = this.findFiles(candidate, Page.ALL_RESULTS);
 		candidate.setFiles(new HashSet<>(files));
 		candidate.removeFile(file);
-		this.candidateDao.save(candidate);
+		final Candidate updatedCandidate = this.candidateDao.save(candidate);
 		this.fileService.removeFile(file);
+		return updatedCandidate;
 	}
 
 	public void setCandidateDao(final CandidateDao candidateDao) {

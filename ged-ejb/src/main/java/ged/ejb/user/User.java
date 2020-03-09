@@ -41,6 +41,23 @@ public class User extends Person  {
 	@SortableField(forField = "lastConnection")
 	private LocalDateTime lastConnection;
 
+	@Override
+	public int hashCode() {
+		return super.hashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		User other = (User) obj;
+		return super.equals(other);
+	}
+
 	@ManyToOne
 	@JoinColumn(name = "managerId")
 	@IndexedEmbedded(depth = 1)

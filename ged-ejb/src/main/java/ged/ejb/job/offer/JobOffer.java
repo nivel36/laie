@@ -96,6 +96,15 @@ public class JobOffer extends AbstractIndexedEntity implements Ownerable {
 	private String title;
 
 	public JobOffer() {
+	}
+
+	public JobOffer(Client client, User owner, String title) {
+		Objects.requireNonNull(client);
+		Objects.requireNonNull(owner);
+		Objects.requireNonNull(title);
+		this.title = title;
+		this.owner = owner;
+		this.client = client;
 		this.state = JobOfferState.CREATED;
 		this.dateOpened = LocalDate.now();
 	}
@@ -237,13 +246,10 @@ public class JobOffer extends AbstractIndexedEntity implements Ownerable {
 	}
 
 	public void setRecruiters(final List<User> users) {
-		this.recruiters = new HashSet<User>();
 		if ((users == null) || users.isEmpty()) {
 			return;
 		}
-		for (final User user : users) {
-			this.recruiters.add(user);
-		}
+		this.recruiters = new HashSet<>(users);
 	}
 
 	public void setRecruiters(final Set<User> recruiters) {

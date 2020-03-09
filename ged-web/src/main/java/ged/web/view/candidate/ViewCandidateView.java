@@ -14,7 +14,6 @@ import javax.inject.Named;
 import org.omnifaces.cdi.Param;
 import org.omnifaces.util.Faces;
 import org.primefaces.event.FileUploadEvent;
-import org.primefaces.event.SelectEvent;
 import org.primefaces.model.UploadedFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,7 +30,6 @@ import ged.ejb.job.candidature.JobCandidature;
 import ged.ejb.job.candidature.JobCandidatureService;
 import ged.ejb.job.meeting.Meeting;
 import ged.ejb.job.meeting.MeetingService;
-import ged.ejb.job.offer.JobOffer;
 import ged.web.core.IllegalPageStateException;
 import ged.web.core.util.PageEnum;
 import ged.web.core.view.AbstractView;
@@ -78,7 +76,7 @@ public class ViewCandidateView extends AbstractView {
 		return this.navigator.getRedirectUrl(PageEnum.CANDIDATE_EDIT, this.candidate);
 	}
 
-	public void export() throws IOException {
+	public void export() {
 		logger.debug("Export candidate action performed");
 	}
 
@@ -131,19 +129,6 @@ public class ViewCandidateView extends AbstractView {
 		return this.navigator.getRedirectUrl(PageEnum.MEETING_ADD);
 	}
 
-	public void onCloseSelectJobOfferDialog(final SelectEvent event) {
-		@SuppressWarnings("unchecked")
-		final List<JobOffer> selectedJobOffers = (List<JobOffer>) event.getObject();
-		if (selectedJobOffers == null) {
-			return;
-		}
-		for (final JobOffer jobOffer : selectedJobOffers) {
-			final JobCandidature jobCandidature = this.jobCandidatureService.addJobCandidature(jobOffer,
-					this.candidate);
-			this.jobCandidatures.add(jobCandidature);
-		}
-	}
-
 	public void openFile(final File file) throws IOException {
 		try (final InputStream is = this.fileUploadService.getFile(file);) {
 			Faces.sendFile(is, file.getName(), true);
@@ -151,7 +136,7 @@ public class ViewCandidateView extends AbstractView {
 	}
 
 	public void removeFile(final File file) {
-		this.candidateService.removeFile(candidate, file);
+		this.candidate = this.candidateService.removeFile(candidate, file);
 		this.files.remove(file);
 	}
 

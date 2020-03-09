@@ -2,7 +2,7 @@ package ged.ejb.core;
 
 public enum Language {
 
-	Catalan("ca"), English("en"), Spanish("es");
+	CATALAN("ca"), ENGLISH("en"), SPANISH("es");
 
 	public static Language ofCode(final String code) {
 		for (final Language language : values()) {

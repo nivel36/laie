@@ -45,7 +45,7 @@ public class ChatService implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private final Map<User, List<Value>> messages = new HashMap<User, List<Value>>();
+	private final transient Map<User, List<Value>> messages = new HashMap<>();
 
 	public Map<User, List<Value>> getMessages() {
 		return this.messages;

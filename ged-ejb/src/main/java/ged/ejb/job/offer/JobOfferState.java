@@ -23,6 +23,8 @@ public enum JobOfferState {
 	JobOfferState(final String name, final String color, final boolean openState, final boolean closeState) {
 		this.name = name;
 		this.color = color;
+		this.openState = openState;
+		this.closeState = closeState;
 	}
 
 	public String getColor() {

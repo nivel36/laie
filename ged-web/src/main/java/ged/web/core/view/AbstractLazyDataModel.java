@@ -19,7 +19,7 @@ public abstract class AbstractLazyDataModel<T extends AbstractIndexedEntity> ext
 
 	private static final long serialVersionUID = 1L;
 
-	protected SearchFacets searchFilter = new SearchFacets();
+	protected transient SearchFacets searchFilter = new SearchFacets();
 
 	protected String searchText;
 

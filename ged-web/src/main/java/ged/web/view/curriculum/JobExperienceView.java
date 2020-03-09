@@ -59,11 +59,10 @@ public class JobExperienceView extends AbstractView {
 	}
 
 	private JobExperience buildNewJobExperience() {
-		JobExperience jobExperience;
-		jobExperience = new JobExperience();
-		jobExperience.setStillWorking(false);
-		jobExperience.setCurriculum(this.curriculum);
-		return jobExperience;
+		JobExperience newJobExperience = new JobExperience();
+		newJobExperience.setStillWorking(false);
+		newJobExperience.setCurriculum(this.curriculum);
+		return newJobExperience;
 	}
 
 	private String buildCurriculumUrl() {
@@ -103,9 +102,9 @@ public class JobExperienceView extends AbstractView {
 	}
 
 	public YearMonthDto initFromDate() {
-		final YearMonth fromDate = this.jobExperience.getStartDate();
-		if (fromDate != null) {
-			return YearMonthDto.of(fromDate);
+		final YearMonth jobExperienceFromDate = this.jobExperience.getStartDate();
+		if (jobExperienceFromDate != null) {
+			return YearMonthDto.of(jobExperienceFromDate);
 		} else {
 			return new YearMonthDto();
 		}
@@ -121,9 +120,9 @@ public class JobExperienceView extends AbstractView {
 	}
 
 	public YearMonthDto initToDate() {
-		final YearMonth toDate = this.jobExperience.getEndDate();
-		if (toDate != null) {
-			return YearMonthDto.of(toDate);
+		final YearMonth jobExperienceEndDate = this.jobExperience.getEndDate();
+		if (jobExperienceEndDate != null) {
+			return YearMonthDto.of(jobExperienceEndDate);
 		} else {
 			return new YearMonthDto();
 		}

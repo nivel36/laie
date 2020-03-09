@@ -65,10 +65,10 @@ public class InputYearMonth extends UIInput implements NamingContainer {
 	private Month[] buildMonthsCombo() {
 		final Month[] months = new Month[12];
 		for (int i = 1; i < 13; i++) {
-			final Month month = new Month();
-			month.setMonthName(this.message("date.month." + i));
-			month.setMonthNumber(i);
-			months[i - 1] = month;
+			final Month newMonth = new Month();
+			newMonth.setMonthName(this.message("date.month." + i));
+			newMonth.setMonthNumber(i);
+			months[i - 1] = newMonth;
 		}
 		return months;
 	}

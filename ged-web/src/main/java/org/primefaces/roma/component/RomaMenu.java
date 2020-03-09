@@ -4,7 +4,6 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.UINamingContainer;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
-import javax.faces.event.AbortProcessingException;
 import javax.faces.event.ComponentSystemEvent;
 import javax.faces.event.ComponentSystemEventListener;
 import javax.faces.event.ListenerFor;
@@ -17,7 +16,7 @@ import org.primefaces.model.menu.MenuModel;
 @ListenerFor(sourceClass = RomaMenu.class, systemEventClass = PostAddToViewEvent.class)
 public class RomaMenu extends AbstractMenu implements Widget, ComponentSystemEventListener {
 	public enum PropertyKeys {
-		model, style, styleClass, widgetVar;
+		MODEL, STYLE, STYLE_CLASS, WIDGET_VAR;
 
 		String toString;
 
@@ -48,28 +47,28 @@ public class RomaMenu extends AbstractMenu implements Widget, ComponentSystemEve
 
 	@Override
 	public String getFamily() {
-		return "org.primefaces.component";
+		return COMPONENT_FAMILY;
 	}
 
 	@Override
 	public MenuModel getModel() {
-		return (MenuModel) this.getStateHelper().eval(PropertyKeys.model, (Object) null);
+		return (MenuModel) this.getStateHelper().eval(PropertyKeys.MODEL, null);
 	}
 
 	public String getStyle() {
-		return (String) this.getStateHelper().eval(PropertyKeys.style, (Object) null);
+		return (String) this.getStateHelper().eval(PropertyKeys.STYLE, null);
 	}
 
 	public String getStyleClass() {
-		return (String) this.getStateHelper().eval(PropertyKeys.styleClass, (Object) null);
+		return (String) this.getStateHelper().eval(PropertyKeys.STYLE_CLASS, null);
 	}
 
 	public String getWidgetVar() {
-		return (String) this.getStateHelper().eval(PropertyKeys.widgetVar, (Object) null);
+		return (String) this.getStateHelper().eval(PropertyKeys.WIDGET_VAR, null);
 	}
 
 	@Override
-	public void processEvent(final ComponentSystemEvent event) throws AbortProcessingException {
+	public void processEvent(final ComponentSystemEvent event) {
 		if (event instanceof PostAddToViewEvent) {
 			final FacesContext context = this.getFacesContext();
 			final UIViewRoot root = context.getViewRoot();
@@ -110,19 +109,19 @@ public class RomaMenu extends AbstractMenu implements Widget, ComponentSystemEve
 						+ this.getClientId(context).replaceAll("-|" + UINamingContainer.getSeparatorChar(context), "_");
 	}
 
-	public void setModel(final MenuModel _model) {
-		this.getStateHelper().put(PropertyKeys.model, _model);
+	public void setModel(final MenuModel model) {
+		this.getStateHelper().put(PropertyKeys.MODEL, model);
 	}
 
-	public void setStyle(final String _style) {
-		this.getStateHelper().put(PropertyKeys.style, _style);
+	public void setStyle(final String style) {
+		this.getStateHelper().put(PropertyKeys.STYLE, style);
 	}
 
-	public void setStyleClass(final String _styleClass) {
-		this.getStateHelper().put(PropertyKeys.styleClass, _styleClass);
+	public void setStyleClass(final String styleClass) {
+		this.getStateHelper().put(PropertyKeys.STYLE_CLASS, styleClass);
 	}
 
-	public void setWidgetVar(final String _widgetVar) {
-		this.getStateHelper().put(PropertyKeys.widgetVar, _widgetVar);
+	public void setWidgetVar(final String widgetVar) {
+		this.getStateHelper().put(PropertyKeys.WIDGET_VAR, widgetVar);
 	}
 }

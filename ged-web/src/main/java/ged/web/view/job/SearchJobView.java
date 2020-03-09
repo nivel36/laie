@@ -29,7 +29,7 @@ public class SearchJobView extends AbstractView {
 
 	private String searchText;
 
-	public void export() throws IOException {
+	public void export() {
 		logger.debug("Export jobs action performed");
 	}
 

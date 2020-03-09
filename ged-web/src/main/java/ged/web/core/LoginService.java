@@ -31,19 +31,19 @@ public class LoginService {
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	@Inject
-	private transient SecurityContext securityContext;
+	private SecurityContext securityContext;
 
 	@Inject
-	private transient GedRememberMeIdentityStore gedRememberMeIdentityStore;
+	private GedRememberMeIdentityStore gedRememberMeIdentityStore;
 
 	@Inject
-	private transient FacesContext facesContext;
+	private FacesContext facesContext;
 
 	@Inject
-	private transient ExternalContext externalContext;
+	private ExternalContext externalContext;
 
 	@Inject
-	private transient SessionUsers sessionUsers;
+	private SessionUsers sessionUsers;
 
 	public AuthenticationStatus login(String username, String password) {
 		final UsernamePasswordCredential credential = new UsernamePasswordCredential(username, password);
@@ -80,15 +80,18 @@ public class LoginService {
 		final HttpServletRequest httpResuqest = (HttpServletRequest) this.externalContext.getRequest();
 		final Cookie[] cookies = httpResuqest.getCookies();
 		for (Cookie cookie : cookies) {
-			if (!cookie.getName().equals("JREMEMBERMEID")) {
-				continue;
+			if (cookie.getName().equals("JREMEMBERMEID")) {
+				removeLoginToken(cookie);
+				break;
 			}
-			final String tokenHash = cookie.getValue();
-			this.gedRememberMeIdentityStore.removeLoginToken(tokenHash);
-			cookie.setMaxAge(0);
-			break;
 		}
 		final HttpSession session = (HttpSession) this.externalContext.getSession(false);
 		session.invalidate();
+	}
+
+	private void removeLoginToken(Cookie cookie) {
+		final String tokenHash = cookie.getValue();
+		this.gedRememberMeIdentityStore.removeLoginToken(tokenHash);
+		cookie.setMaxAge(0);
 	}
 }

@@ -28,6 +28,24 @@ public class File extends AbstractEntity {
 	@Column(nullable = false)
 	private String name;
 
+	@Override
+	public int hashCode() {
+		return Objects.hash(created, name, publicAccess);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		File other = (File) obj;
+		return Objects.equals(created, other.created) && Objects.equals(name, other.name)
+				&& publicAccess == other.publicAccess;
+	}
+
 	@ManyToOne(cascade = { CascadeType.PERSIST}, fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "physicalFileId")
 	private PhysicalFile physicalFile;

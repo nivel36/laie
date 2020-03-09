@@ -26,7 +26,7 @@ public class UserService extends AbstractIndexedService<User> {
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	@Inject
-	private transient FileService fileService;
+	private FileService fileService;
 
 	@Inject
 	@Repository

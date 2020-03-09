@@ -87,7 +87,7 @@ public class ChatView extends AbstractView {
 		this.users = this.userService.findAll(Page.TEN_RESULTS_PER_PAGE);
 		this.users.remove(this.sessionUser.get());
 		this.selectedUser = this.users.get(0);
-		this.messages = new HashMap<User, String>();
+		this.messages = new HashMap<>();
 	}
 
 	public void search() {

@@ -4,6 +4,8 @@ import ged.ejb.export.acquirer.ExportAcquirerI;
 import ged.ejb.user.User;
 
 public final class UserExcelAcquirer {
+	
+	private UserExcelAcquirer() {}
 
 	public static class NameAcquirer implements ExportAcquirerI<User, String> {
 

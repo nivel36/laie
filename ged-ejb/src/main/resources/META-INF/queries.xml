@@ -104,12 +104,22 @@
 			WHERE f.contentHash = :hash
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="File.isOrphanPhysicalFile">
 		<query><![CDATA[
 			SELECT CASE WHEN (COUNT(f) > 0) THEN TRUE ELSE FALSE END 
 			FROM File f 
 			WHERE f.physicalFile = :physicalFile
+		]]></query>
+	</named-query>
+
+	<named-query name="JobCandidature.findByUid">
+		<query><![CDATA[
+			SELECT j 
+			FROM JobCandidature j 
+			LEFT JOIN FETCH j.candidate
+			LEFT JOIN FETCH j.jobOffer
+			WHERE j.uid = :uid
 		]]></query>
 	</named-query>
 
@@ -165,6 +175,14 @@
 			SELECT j 
 			FROM JobCandidatureState j 
 			WHERE j.first = true
+		]]></query>
+	</named-query>
+
+	<named-query name="JobOffer.findByUid">
+		<query><![CDATA[
+			SELECT j 
+			FROM JobOffer j 
+			WHERE j.uid = :uid
 		]]></query>
 	</named-query>
 

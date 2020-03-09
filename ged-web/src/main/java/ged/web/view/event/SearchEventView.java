@@ -29,7 +29,7 @@ public class SearchEventView extends AbstractView {
 
 	private String[] searchStates;
 
-	public void export() throws IOException {
+	public void export() {
 		logger.debug("Export events action performed");
 	}
 

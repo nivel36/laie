@@ -41,8 +41,7 @@ public class JobCandidatureEventService extends AbstractIndexedService<JobCandid
 	}
 
 	private User loggedUser() {
-		final User user = this.gedSecurityContext.getLoggedUser();
-		return user;
+		return this.gedSecurityContext.getLoggedUser();
 	}
 
 	public void onJobCandidatureCreated(@JobCandidatureCreatedEvent @Observes final JobCandidature jobCandidature) {
