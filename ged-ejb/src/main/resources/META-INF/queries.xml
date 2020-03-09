@@ -1,62 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<entity-mappings xmlns="http://xmlns.jcp.org/xml/ns/persistence/orm"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<entity-mappings xmlns="http://xmlns.jcp.org/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence/orm
-        http://xmlns.jcp.org/xml/ns/persistence/orm_2_1.xsd"
-	version="2.1">
+        http://xmlns.jcp.org/xml/ns/persistence/orm_2_1.xsd" version="2.1">
 
-	<named-query name="Bookmark.find">
-		<query><![CDATA[
-			SELECT b 
-			FROM Bookmark b 
-			WHERE b.user = :user 
-			AND b.entityClass = :entityClass 
-			AND b.entityId = :entityId
-		]]></query>
-	</named-query>
-
-	<named-query name="Bookmark.findAllByClassAndId">
-		<query><![CDATA[
-			SELECT b 
-			FROM Bookmark b 
-			WHERE b.entityClass = :entityClass 
-			AND b.entityId = :entityId
-		]]></query>
-	</named-query>
-
-	<named-query name="Bookmark.findAllByUser">
-		<query><![CDATA[
-			SELECT b 
-			FROM Bookmark b 
-			WHERE b.user = :user
-		]]></query>
-	</named-query>
-
-	<named-query name="Candidate.findAllDataById">
+	<named-query name="Candidate.findByUid">
 		<query><![CDATA[
 			SELECT c 
 			FROM Candidate c 
-			LEFT JOIN FETCH c.files
-			LEFT JOIN FETCH c.tags
-			LEFT JOIN FETCH c.jobCandidatures
-			WHERE c.id = :id
-		]]></query>
-	</named-query>
-
-	<named-query name="Candidate.findByEmail">
-		<query><![CDATA[
-			SELECT c 
-			FROM Candidate c 
-			WHERE c.email = :email
-		]]></query>
-	</named-query>
-
-	<named-query name="Candidate.findByNameAndSurname">
-		<query><![CDATA[
-			SELECT c 
-			FROM Candidate c 
-			WHERE (:name IS NOT NULL AND c.name = :name)
-			OR (:surname IS NOT NULL AND c.surname = :surname)
+			WHERE c.uid = :uid
 		]]></query>
 	</named-query>
 
@@ -69,11 +20,13 @@
 		]]></query>
 	</named-query>
 
-	<named-query name="Candidate.findLastAddedCandidates">
+	<named-query name="Candidate.findFiles">
 		<query><![CDATA[
-			SELECT c
+			SELECT f
 			FROM Candidate c
-			ORDER BY c.id DESC
+			LEFT JOIN c.files f
+			WHERE c = :candidate
+			AND f is not null
 		]]></query>
 	</named-query>
 
@@ -85,36 +38,11 @@
 		]]></query>
 	</named-query>
 
-	<named-query name="Candidate.numberOfCandidates">
-		<query><![CDATA[
-			SELECT COUNT(c)
-			FROM Candidate c
-		]]></query>
-	</named-query>
-
-	<named-query name="Client.findByClientId">
+	<named-query name="Client.findByUid">
 		<query><![CDATA[
 			SELECT c 
 			FROM Client c 
-			LEFT JOIN FETCH c.contacts
-			LEFT JOIN FETCH c.jobOffers
-			WHERE c.id = :clientId
-		]]></query>
-	</named-query>
-
-	<named-query name="Client.findByName">
-		<query><![CDATA[
-			SELECT c 
-			FROM Client c 
-			WHERE c.name = :name
-		]]></query>
-	</named-query>
-
-	<named-query name="Client.clientExist">
-		<query><![CDATA[
-			SELECT CASE WHEN (COUNT(c) > 0) THEN TRUE ELSE FALSE END 
-			FROM Client c 
-			WHERE c.name = :name
+			WHERE c.uid = :uid
 		]]></query>
 	</named-query>
 
@@ -126,11 +54,11 @@
 		]]></query>
 	</named-query>
 
-	<named-query name="Contact.findByEmail">
+	<named-query name="Contact.findByUid">
 		<query><![CDATA[
 			SELECT c 
 			FROM Contact c 
-			WHERE c.email = :email
+			WHERE c.uid = :uid
 		]]></query>
 	</named-query>
 
@@ -147,12 +75,41 @@
 		]]></query>
 	</named-query>
 
-	<named-query name="I18n.findByKeyAndLocale">
+	<named-query name="Curriculum.findByUid">
 		<query><![CDATA[
-			SELECT i 
-			FROM I18nString i  
-			WHERE i.key = :key
-			AND i.locale= :locale
+			SELECT c 
+			FROM Curriculum c 
+			LEFT JOIN FETCH c.candidate 
+			LEFT JOIN FETCH c.education
+			LEFT JOIN FETCH c.jobExperiences 
+			LEFT JOIN FETCH c.languages 
+			LEFT JOIN FETCH c.skills 
+			WHERE c.uid = :uid
+		]]></query>
+	</named-query>
+
+	<named-query name="DocumentTemplate.findByName">
+		<query><![CDATA[
+			SELECT d 
+			FROM DocumentTemplate d 
+			WHERE d.name = :name
+			AND d.language = :language
+		]]></query>
+	</named-query>
+
+	<named-query name="File.findByHash">
+		<query><![CDATA[
+			SELECT f 
+			FROM PhysicalFile f 
+			WHERE f.contentHash = :hash
+		]]></query>
+	</named-query>
+	
+	<named-query name="File.isOrphanPhysicalFile">
+		<query><![CDATA[
+			SELECT CASE WHEN (COUNT(f) > 0) THEN TRUE ELSE FALSE END 
+			FROM File f 
+			WHERE f.physicalFile = :physicalFile
 		]]></query>
 	</named-query>
 
@@ -163,6 +120,17 @@
 			LEFT JOIN FETCH j.candidate
 			LEFT JOIN FETCH j.jobOffer
 			WHERE j.jobOffer = :jobOffer
+		]]></query>
+	</named-query>
+
+	<named-query name="JobCandidature.findApprovedByJobOffer">
+		<query><![CDATA[
+			SELECT j 
+			FROM JobCandidature j 
+			LEFT JOIN FETCH j.candidate
+			LEFT JOIN FETCH j.jobOffer
+			WHERE j.jobOffer = :jobOffer
+			AND j.state.approved = TRUE
 		]]></query>
 	</named-query>
 
@@ -182,7 +150,7 @@
 			AND j.jobOffer = :jobOffer
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="JobCandidature.findByUser">
 		<query><![CDATA[
 			SELECT j 
@@ -200,32 +168,6 @@
 		]]></query>
 	</named-query>
 
-	<named-query name="Meeting.findPlannedByOwner">
-		<query><![CDATA[
-			SELECT m 
-			FROM Meeting m
-			WHERE m.owner = :owner
-			AND m.datePlanned >= CURRENT_TIMESTAMP
-		]]></query>
-	</named-query>
-	
-	<named-query name="Meeting.findConductedByOwner">
-		<query><![CDATA[
-			SELECT m 
-			FROM Meeting m
-			WHERE m.owner = :owner
-			AND m.datePlanned < CURRENT_TIMESTAMP
-		]]></query>
-	</named-query>
-	
-	<named-query name="Meeting.findByAttendeesEmail">
-		<query><![CDATA[
-			SELECT m 
-			FROM Meeting m
-			WHERE :email MEMBER OF m.attendeesEmails
-		]]></query>
-	</named-query>
-	
 	<named-query name="JobOffer.findAllByOwner">
 		<query><![CDATA[
 			SELECT j 
@@ -251,28 +193,53 @@
 		]]></query>
 	</named-query>
 
-	<named-query name="JobOffer.findLastJobOffers">
+	<named-query name="Meeting.findPlannedByOwner">
 		<query><![CDATA[
-			SELECT j 
-			FROM JobOffer j 
-			WHERE j.owner = :owner 
-			ORDER BY j.id
+			SELECT m 
+			FROM Meeting m
+			WHERE m.owner = :owner
+			AND m.datePlanned >= CURRENT_TIMESTAMP
 		]]></query>
 	</named-query>
 
-	<named-query name="JobOfferState.findFirst">
+	<named-query name="Meeting.findConductedByOwner">
 		<query><![CDATA[
-			SELECT j 
-			FROM JobOfferState j 
-			WHERE j.first = true
+			SELECT m 
+			FROM Meeting m
+			WHERE m.owner = :owner
+			AND m.datePlanned < CURRENT_TIMESTAMP
 		]]></query>
 	</named-query>
 
-	<named-query name="ServerFile.findByCandidate">
+	<named-query name="LoginToken.findExpired">
 		<query><![CDATA[
-			SELECT s 
-			FROM ServerFile s 
-			WHERE s.candidate = :candidate
+			SELECT l 
+			FROM LoginToken l 
+			WHERE l.expiration >= CURRENT_TIMESTAMP
+		]]></query>
+	</named-query>
+
+	<named-query name="LoginToken.findByTokenHash">
+		<query><![CDATA[
+			SELECT l 
+			FROM LoginToken l 
+			WHERE l.tokenHash = :tokenHash
+		]]></query>
+	</named-query>
+
+	<named-query name="Meeting.findByAttendeesEmail">
+		<query><![CDATA[
+			SELECT m 
+			FROM Meeting m
+			WHERE :email MEMBER OF m.attendeesEmails
+		]]></query>
+	</named-query>
+
+	<named-query name="Meeting.findByUid">
+		<query><![CDATA[
+			SELECT m 
+			FROM Meeting m 
+			WHERE m.uid = :uid
 		]]></query>
 	</named-query>
 
@@ -289,14 +256,6 @@
 			SELECT t 
 			FROM Tag t 
 			WHERE t.label = :label
-		]]></query>
-	</named-query>
-
-	<named-query name="User.findById">
-		<query><![CDATA[
-			SELECT u 
-			FROM User u 
-			WHERE u.id = :id
 		]]></query>
 	</named-query>
 
@@ -318,15 +277,6 @@
 		]]></query>
 	</named-query>
 
-	<named-query name="User.findByNameAndSurname">
-		<query><![CDATA[
-			SELECT u
-			FROM User u
-			WHERE (:name IS NOT NULL AND u.name = :name)
-			OR (:surname IS NOT NULL AND u.surname = :surname)
-		]]></query>
-	</named-query>
-
 	<named-query name="User.findUser">
 		<query><![CDATA[
 			SELECT u 
@@ -336,64 +286,12 @@
 		]]></query>
 	</named-query>
 
-	<named-query name="User.findUserAndCredential">
+	<named-query name="User.findCredential">
 		<query><![CDATA[
-			SELECT u
-			FROM User u
-			LEFT JOIN FETCH u.credential
-			WHERE u.email = :email
-		]]></query>
-	</named-query>
-
-	<named-query name="User.findUsersOffline">
-		<query><![CDATA[
-			SELECT u 
-			FROM User u 
-			WHERE u.lastConnection NOT BETWEEN :start and :end
-			OR u.lastConnection IS NULL
-		]]></query>
-	</named-query>
-
-	<named-query name="User.numberOfUsersOffline">
-		<query><![CDATA[
-			SELECT COUNT(u) 
-			FROM User u 
-			WHERE u.lastConnection NOT BETWEEN :start and :end
-			OR u.lastConnection IS NULL
-		]]></query>
-	</named-query>
-
-	<named-query name="User.findUsersOnline">
-		<query><![CDATA[
-			SELECT u 
-			FROM User u 
-			WHERE u.lastConnection BETWEEN :start and :end
-		]]></query>
-	</named-query>
-
-	<named-query name="User.numberOfUsersOnline">
-		<query><![CDATA[
-			SELECT COUNT(u) 
-			FROM User u 
-			WHERE u.lastConnection BETWEEN :start and :end
-		]]></query>
-	</named-query>
-
-	<named-query name="User.numberOfUsersInTeam">
-		<query><![CDATA[
-			SELECT COUNT (u) 
-			FROM UserClosure uc 
-			JOIN uc.descendant u 
-			WHERE uc.antecessor.id = :id 
-			AND uc.pathLength > 0
-		]]></query>
-	</named-query>
-
-	<named-query name="User.existsMoreThanOneAdmin">
-		<query><![CDATA[
-			SELECT CASE WHEN (COUNT(u) > 1) THEN TRUE ELSE FALSE END 
-			FROM User u 
-			WHERE u.role = ged.ejb.user.role.Role.ADMIN
+			SELECT c
+			FROM Credential c
+			LEFT JOIN FETCH c.user
+			WHERE c.user.email = :email
 		]]></query>
 	</named-query>
 
@@ -402,6 +300,24 @@
 			SELECT CASE WHEN (COUNT(u) > 0) THEN TRUE ELSE FALSE END 
 			FROM User u 
 			WHERE u.email = :email
+		]]></query>
+	</named-query>
+
+	<named-query name="User.findByUid">
+		<query><![CDATA[
+			SELECT u 
+			FROM User u 
+			WHERE u.uid = :uid
+		]]></query>
+	</named-query>
+
+	<named-query name="User.findByTokenHashAndType">
+		<query><![CDATA[
+			SELECT u
+			FROM User u, LoginToken l
+			WHERE l.tokenHash = :tokenHash
+			AND l.type = :type
+			AND l.user = u
 		]]></query>
 	</named-query>
 

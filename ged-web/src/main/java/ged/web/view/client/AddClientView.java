@@ -25,6 +25,7 @@ public class AddClientView extends AbstractClientView {
 
 	public void addContact() {
 		this.client.addContact(this.contact);
+		this.contact = this.buildNewContact();
 	}
 
 	private Client buildNewClient() {
@@ -32,6 +33,14 @@ public class AddClientView extends AbstractClientView {
 		newClient.setOwner(this.sessionUser.get());
 		newClient.setAddress(new Address());
 		return newClient;
+	}
+
+	public Contact buildNewContact() {
+		return new Contact();
+	}
+
+	public void editContact(final Contact contact) {
+		this.contact = contact;
 	}
 
 	public Contact getContact() {
@@ -42,6 +51,11 @@ public class AddClientView extends AbstractClientView {
 	public void init() {
 		logger.trace("New client init");
 		this.client = this.buildNewClient();
+		this.contact = this.buildNewContact();
+	}
+
+	public void removeContact(final Contact contact) {
+		this.client.deleteContact(contact);
 	}
 
 	public String save() {

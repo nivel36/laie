@@ -68,7 +68,7 @@ public class UserRestController extends AbstractRestController {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<UserDto> findAll() {
-		final List<User> users = this.userService.findAll(Page.ALL);
+		final List<User> users = this.userService.findAll(Page.ALL_RESULTS);
 		return createUserDtoListFromUserList(users);
 	}
 

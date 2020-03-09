@@ -10,9 +10,4 @@ public class MaintenanceDao extends AbstractDao<AbstractEnumEntity> {
 	public Class<AbstractEnumEntity> getType() {
 		return AbstractEnumEntity.class;
 	}
-
-	@Override
-	public String[] searchFields() {
-		return new String[] {};
-	}
 }

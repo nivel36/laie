@@ -1,5 +1,7 @@
 package ged.web.view;
 
+import java.util.Objects;
+
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -27,42 +29,45 @@ public class PersonConverter implements Converter<Person> {
 	private UserService userService;
 
 	@Override
-	public Person getAsObject(FacesContext context, UIComponent component, String value) {
+	public Person getAsObject(final FacesContext context, final UIComponent component, final String value) {
 		if (value == null) {
 			return null;
 		}
-		User user = userService.findUserByEmail(value);
+		final User user = this.userService.findByUid(value);
 		if (user != null) {
 			return user;
 		}
-		Candidate candidate = candidateService.findCandidateByEmail(value);
+		final Candidate candidate = this.candidateService.findByUid(value);
 		if (candidate != null) {
 			return candidate;
 		}
-		Contact contact = contactService.findContactByEmail(value);
+		final Contact contact = this.contactService.findByUid(value);
 		if (contact != null) {
 			return contact;
 		}
-		return new SimplePerson(value);
+		throw new IllegalArgumentException("converter value not found: " + value);
 	}
 
 	@Override
-	public String getAsString(FacesContext context, UIComponent component, Person person) {
+	public String getAsString(final FacesContext context, final UIComponent component, final Person person) {
 		if (person == null) {
 			return null;
 		}
-		return person.getEmail();
+		return person.getUid();
 	}
 
-	public void setCandidateService(CandidateService candidateService) {
+	public void setCandidateService(final CandidateService candidateService) {
+		Objects.requireNonNull(candidateService);
 		this.candidateService = candidateService;
 	}
 
-	public void setContactService(ContactService contactService) {
+	public void setContactService(final ContactService contactService) {
+		Objects.requireNonNull(contactService);
 		this.contactService = contactService;
 	}
 
-	public void setUserService(UserService userService) {
+	public void setUserService(final UserService userService) {
+		Objects.requireNonNull(userService);
 		this.userService = userService;
 	}
 }

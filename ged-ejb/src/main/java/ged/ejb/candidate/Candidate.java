@@ -3,6 +3,7 @@ package ged.ejb.candidate;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -27,8 +28,9 @@ import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.SortableField;
 import org.hibernate.search.annotations.Store;
 
-import ged.ejb.core.file.ServerFile;
+import ged.ejb.core.file.File;
 import ged.ejb.core.model.Address;
+import ged.ejb.core.model.Obfuscable;
 import ged.ejb.core.model.Ownerable;
 import ged.ejb.core.tag.Tag;
 import ged.ejb.curriculum.Curriculum;
@@ -38,7 +40,7 @@ import ged.ejb.user.User;
 
 @Entity
 @Indexed
-public class Candidate extends Person implements Ownerable {
+public class Candidate extends Person implements Ownerable, Obfuscable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -53,8 +55,8 @@ public class Candidate extends Person implements Ownerable {
 	@Min(0)
 	private Integer expectedSalary;
 
-	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "candidate", orphanRemoval = true)
-	private Set<ServerFile> files;
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private Set<File> files = new HashSet<>();
 
 	private String infojobsProfileUrl;
 
@@ -70,7 +72,9 @@ public class Candidate extends Person implements Ownerable {
 
 	private String linkedinProfileUrl;
 
-	private String origin;
+	@ManyToOne
+	@JoinColumn(name = "candidateId")
+	private Origin origin;
 
 	@NotNull
 	@ManyToOne
@@ -91,6 +95,10 @@ public class Candidate extends Person implements Ownerable {
 	@IndexedEmbedded
 	private Set<Tag> tags = new HashSet<>();
 
+	public void addFile(final File file) {
+		this.files.add(file);
+	}
+
 	public Address getAddress() {
 		return this.address;
 	}
@@ -107,7 +115,7 @@ public class Candidate extends Person implements Ownerable {
 		return this.expectedSalary;
 	}
 
-	public Set<ServerFile> getFiles() {
+	public Set<File> getFiles() {
 		return this.files;
 	}
 
@@ -127,7 +135,7 @@ public class Candidate extends Person implements Ownerable {
 		return this.linkedinProfileUrl;
 	}
 
-	public String getOrigin() {
+	public Origin getOrigin() {
 		return this.origin;
 	}
 
@@ -142,6 +150,14 @@ public class Candidate extends Person implements Ownerable {
 
 	public Integer getSalary() {
 		return this.salary;
+	}
+
+	public void removeFile(File file) {
+		Objects.requireNonNull(file);
+		if (files == null) {
+			throw new IllegalStateException();
+		}
+		this.files.remove(file);
 	}
 
 	public String getSkype() {
@@ -168,7 +184,7 @@ public class Candidate extends Person implements Ownerable {
 		this.expectedSalary = expectedSalary;
 	}
 
-	public void setFiles(final Set<ServerFile> files) {
+	public void setFiles(final Set<File> files) {
 		this.files = files;
 	}
 
@@ -188,7 +204,7 @@ public class Candidate extends Person implements Ownerable {
 		this.linkedinProfileUrl = linkedinProfileUrl;
 	}
 
-	public void setOrigin(final String origin) {
+	public void setOrigin(final Origin origin) {
 		this.origin = origin;
 	}
 
@@ -212,8 +228,9 @@ public class Candidate extends Person implements Ownerable {
 	public void setTags(final List<Tag> tags) {
 		if (tags == null) {
 			this.tags = new HashSet<>();
+		} else {
+			this.tags = new HashSet<>(tags);
 		}
-		this.tags = new HashSet<>(tags);
 	}
 
 	public void setTags(final Set<Tag> tags) {

@@ -25,13 +25,13 @@ public class SelectUserView extends AbstractView {
 
 	private static final long serialVersionUID = 1L;
 
-	private String searchText;
-
-	private UserLazyDataModel users;
-
 	private List<Long> alredySelected;
 
+	private String searchText;
+
 	private User selectedUser;
+
+	private UserLazyDataModel users;
 
 	@Inject
 	private transient UserService userService;

@@ -14,10 +14,10 @@ import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
 import ged.ejb.candidate.Candidate;
-import ged.ejb.core.model.AbstractEntity;
+import ged.ejb.core.model.AbstractIndexedEntity;
 
 @Entity
-public class Curriculum extends AbstractEntity {
+public class Curriculum extends AbstractIndexedEntity {
 
 	private static final long serialVersionUID = 1L;
 
@@ -145,7 +145,7 @@ public class Curriculum extends AbstractEntity {
 	public void setSkills(final List<Skill> skills) {
 		this.skills = new HashSet<Skill>(skills);
 	}
-	
+
 	public void setSkills(final Set<Skill> skills) {
 		this.skills = skills;
 	}

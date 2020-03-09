@@ -7,13 +7,18 @@ import java.util.Objects;
 
 import ged.ejb.candidate.Candidate;
 import ged.ejb.client.Client;
-import ged.ejb.core.model.AbstractDao;
+import ged.ejb.core.model.AbstractIndexedDao;
 import ged.ejb.core.model.Page;
 import ged.ejb.core.model.Repository;
 import ged.ejb.user.User;
 
 @Repository
-public class JobOfferDao extends AbstractDao<JobOffer> {
+public class JobOfferDao extends AbstractIndexedDao<JobOffer> {
+
+	public JobOffer findByUid(final String uid) {
+		Objects.requireNonNull(uid);
+		return this.findByQuery(JobOffer.class, "JobOffer.findByUid", map("uid", uid));
+	}
 
 	public JobOfferState findFirstJobOfferState() {
 		return this.findByQuery(JobOfferState.class, "JobOfferState.findFirst");
@@ -35,10 +40,6 @@ public class JobOfferDao extends AbstractDao<JobOffer> {
 		Objects.requireNonNull(owner, "Owner can't be null");
 		Objects.requireNonNull(page, "Page can't be null");
 		return this.findByQuery(JobOffer.class, "JobOffer.findAllByOwner", map("owner", owner), page);
-	}
-
-	public List<JobOfferState> findJobOfferStates() {
-		return this.getPersistenceFacade().findAll(JobOfferState.class, Page.ALL);
 	}
 
 	@Override

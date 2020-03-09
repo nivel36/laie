@@ -27,65 +27,67 @@ import ged.web.core.view.AbstractView;
 @ViewScoped
 public class IsabelView extends AbstractView {
 
-	private static final long serialVersionUID = 1L;
-
 	private static final String EXPORT_NAME = "USERS";
+
+	private static final long serialVersionUID = 1L;
 
 	@Inject
 	private transient ExportDefinitionService exportDefinitionService;
 
 	private DualListModel<ExportViewItemI> model;
-	
+
 	private List<ReportInfo> reportsList;
 
 	private ExportDefinitionService getExportDefinitionService() {
-		return exportDefinitionService;
+		return this.exportDefinitionService;
 	}
 
 	public DualListModel<ExportViewItemI> getModel() {
-		return model;
+		return this.model;
 	}
 
 	public List<ReportInfo> getReportsList() {
-		return reportsList;
+		return this.reportsList;
 	}
 
 	private Translator getTranslator() {
-		return translator;
+		return this.translator;
 	}
 
 	@PostConstruct
 	public void init() {
-		initialize(EXPORT_NAME);
+		this.initialize(EXPORT_NAME);
 	}
 
 	private void initialize(final String exportName) {
-		this.reportsList = getExportDefinitionService().getReportsList();
-		final List<ExportViewItemI> source = initializeList(getExportDefinitionService().findFieldsByExport(EXPORT_NAME));
-		final List<ExportViewItemI> target = initializeList(getExportDefinitionService().findDefinitionByExport(EXPORT_NAME));
+		this.reportsList = this.getExportDefinitionService().getReportsList();
+		final List<ExportViewItemI> source = this
+				.initializeList(this.getExportDefinitionService().findFieldsByExport(EXPORT_NAME));
+		final List<ExportViewItemI> target = this
+				.initializeList(this.getExportDefinitionService().findDefinitionByExport(EXPORT_NAME));
 		this.model = new DualListModel<>(source, target);
 	}
 
 	private List<ExportViewItemI> initializeList(final ExportFieldsOutputBean outputBean) {
 		final List<ExportViewItemI> source = new ArrayList<>();
-		for (ExportFieldItem item : outputBean.getList()) {
-			source.add(new ExportViewItem(item, getTranslator()));
+		for (final ExportFieldItem item : outputBean.getList()) {
+			source.add(new ExportViewItem(item, this.getTranslator()));
 		}
 		return source;
 	}
 
 	public void save() {
-		final List<ExportViewItemI> currentTarget = getModel().getTarget();
+		final List<ExportViewItemI> currentTarget = this.getModel().getTarget();
 		final List<SaveDefinitionItem> list = new ArrayList<>();
 		int i = 0;
-		for (ExportViewItemI item : currentTarget) {
+		for (final ExportViewItemI item : currentTarget) {
 			list.add(new SaveDefinitionItem(((ExportFieldItem) item.getItem()).getIdField(), i++));
 		}
-		getExportDefinitionService().saveDefinition(new ExportSaveDefinitionInputBean(EXPORT_NAME, list));
-		initialize(EXPORT_NAME);
+		this.getExportDefinitionService().saveDefinition(new ExportSaveDefinitionInputBean(EXPORT_NAME, list));
+		this.initialize(EXPORT_NAME);
 	}
 
-	public void setModel(DualListModel<ExportViewItemI> campos) {
+	public void setModel(final DualListModel<ExportViewItemI> campos) {
 		this.model = campos;
 	}
 }

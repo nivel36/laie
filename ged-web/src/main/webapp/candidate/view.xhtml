@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://ged.org/ui"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets" template="/WEB-INF/templates/template.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://ged.org/ui" xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui"
+	xmlns:p="http://primefaces.org/ui" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/WEB-INF/templates/template.xhtml">
 
 	<ui:define name="title">
 		#{i18n['candidate.candidate']} - #{viewCandidateView.candidate.fullName}
@@ -22,69 +22,75 @@
 		</p:breadCrumb>
 	</ui:define>
 
+	<ui:define name="buttons">
+		<h:form>
+			<p:commandButton value="#{i18n['action.edit']}" process="@this" action="#{viewCandidateView.editCandidate}" icon="fa fa-pencil" />
+			<p:menuButton icon="fa fa-plus">
+				<p:menuitem value="#{i18n['action.export']}" process="@this" action="#{viewCandidateView.export}" icon="fa fa-file-excel-o" />
+				<p:menuitem value="#{i18n['curriculum.curriculum']}" process="@this" outcome="#{Page.CURRICULUM.getUrl()}" icon="fa fa-pencil">
+					<f:param name="candidateId" value="#{viewCandidateView.candidate.uid}" />
+					<f:param name="id" value="#{viewCandidateView.candidate.curriculum.uid}" disable="#{viewCandidateView.candidate.curriculum.uid == null}" />
+				</p:menuitem>
+				<p:menuitem value="#{i18n['curriculum.export_to_pdf']}" process="@this" outcome="#{Page.CURRICULUM_EXPORT.getUrl()}" icon="fa fa-file-pdf-o"
+					rendered="#{viewCandidateView.candidate.curriculum.uid != null}">
+					<f:param name="candidateId" value="#{viewCandidateView.candidate.uid}" />
+					<f:param name="id" value="#{viewCandidateView.candidate.curriculum.uid}" />
+				</p:menuitem>
+
+			</p:menuButton>
+		</h:form>
+	</ui:define>
+
 	<ui:define name="content">
 		<div class="p-grid">
 			<div class="p-col-12 p-xl-6">
-				<div class="card user-card">
-					<div class="user-card-header">
-						<p:graphicImage value="/resources/img/bg-header.png" />
-					</div>
-					<div class="user-card-content">
-						<cc:avatar value="#{viewCandidateView.candidate.imageFileName}" styleClass="user-image" />
+				<div class="card candidate-card">
+					<div class="card-header"></div>
+					<div class="candidate-card-content">
+						<cc:avatar value="#{viewCandidateView.candidate.picture}" styleClass="candidate-image with-border" />
 
-						<h:form>
-							<p:menuButton icon="fa fa-cog">
-								<p:menuitem value="#{i18n['curriculum.curriculum']}" process="@this" outcome="#{Page.CURRICULUM.getUrl()}">
-									<f:param name="id" value="#{viewCandidateView.candidate.id}" />
-								</p:menuitem>
-								<p:menuitem value="#{i18n['action.export']}" process="@this" action="#{viewCandidateView.export}" icon="fa fa-file-excel-o" />
-								<p:menuitem value="#{i18n['action.edit']}" process="@this" action="#{viewCandidateView.editCandidate}" icon="fa fa-pencil" />
-							</p:menuButton>
-						</h:form>
-
-						<div class="user-card-name">#{viewCandidateView.candidate.fullName}</div>
-						<div class="user-card-role">#{viewCandidateView.candidate.jobProfile}</div>
-						<div class="user-detail ui-fluid">
+						<div class="candidate-card-name">#{viewCandidateView.candidate.fullName}</div>
+						<div class="candidate-card-profile">#{viewCandidateView.candidate.jobProfile}</div>
+						<div class="candidate-detail ui-fluid">
 							<div class="p-grid">
-								<div class="p-col-6">
+								<div class="p-col-12 p-sm-6">
 									<cc:outputText label="#{i18n['candidate.email']}" value="#{viewCandidateView.candidate.email}" />
 								</div>
-								<div class="p-col-6">
+								<div class="p-col-12 p-sm-6">
 									<cc:outputText label="#{i18n['candidate.phone_number']}" value="#{viewCandidateView.candidate.phoneNumber}" />
 								</div>
-								<div class="p-col-6">
+								<div class="p-col-12 p-sm-6">
 									<cc:outputText label="#{i18n['candidate.skype']}" value="#{viewCandidateView.candidate.skype}" />
 								</div>
-								<div class="p-col-6">
+								<div class="p-col-12 p-sm-6">
 									<cc:outputText label="#{i18n['candidate.linkedin']}" value="#{viewCandidateView.candidate.linkedinProfileUrl}" />
 								</div>
-								<div class="p-col-6">
-									<cc:outputText label="#{i18n['candidate.city']}"
-										value="#{viewCandidateView.candidate.address.city} (#{viewCandidateView.candidate.address.state})" />
+								<div class="p-col-12 p-sm-6">
+									<cc:outputText label="#{i18n['candidate.city']}" value="#{viewCandidateView.candidate.address.city} (#{viewCandidateView.candidate.address.region})" />
 								</div>
-								<div class="p-col-6">
+								<div class="p-col-12 p-sm-6">
 									<cc:outputText label="#{i18n['candidate.bornDate']}" value="#{viewCandidateView.candidate.bornDate}">
 										<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" for="text" />
 									</cc:outputText>
 								</div>
 
-								<div class="p-col-6">
+								<div class="p-col-12 p-sm-6">
 									<cc:outputText label="#{i18n['candidate.salary']}" value="#{viewCandidateView.candidate.salary}">
 										<f:convertNumber for="text" currencyCode="EUR" maxFractionDigits="0" type="currency" />
 									</cc:outputText>
 								</div>
 
-								<div class="p-col-6">
+								<div class="p-col-12 p-sm-6">
 									<cc:outputText label="#{i18n['candidate.expected_salary']}" value="#{viewCandidateView.candidate.expectedSalary}">
 										<f:convertNumber for="text" currencyCode="EUR" maxFractionDigits="0" type="currency" />
 									</cc:outputText>
 								</div>
 
-								<div class="p-col-6">
-									<cc:outputText label="#{i18n['candidate.origin']}" value="#{g:translate(viewCandidateView.candidate.origin)}" />
+								<div class="p-col-12 p-sm-6">
+									<cc:outputText label="#{i18n['candidate.origin']}" value="#{i18n[viewCandidateView.candidate.origin]}" />
 								</div>
 
-								<div class="p-col-6">
+								<div class="p-col-12 p-sm-6">
 									<div class="data rating">
 										<div class="label-container">
 											<div class="label">#{i18n['candidate.rating']}</div>
@@ -112,53 +118,53 @@
 					</div>
 				</div>
 			</div>
-			
+
 			<div class="p-col-12 p-xl-6">
 				<h:form id="file_form" enctype="multipart/form-data">
 					<div class="card card-w-title files">
-						<h3>#{i18n['file.files']}</h3>
+						<h1>#{i18n['file.files']}</h1>
 						<div class="p-grid">
 							<div class="p-col-12">
-								<p:dataTable var="file" id="files" value="#{filePanelView.files}" emptyMessage="#{i18n['file.no_files']}" paginator="true"
-									paginatorPosition="bottom" reflow="true" rows="#{sessionUser.rowsPerPage}" rowKey="#{file.id}" styleClass="ui-datatable-borderless">
+								<p:dataTable var="file" id="files" value="#{viewCandidateView.files}" emptyMessage="#{i18n['file.no_files']}" paginator="true" paginatorPosition="bottom"
+									reflow="true" rows="5" rowKey="#{file.id}" styleClass="ui-datatable-borderless">
 
-									<p:column headerText="#{i18n['file.name']}">
-										<h:commandLink action="#{filePanelView.openFile(file)}">
+									<p:column>
+										<h:commandLink action="#{viewCandidateView.openFile(file)}">
 											<h:outputText value="#{file.name}" />
 										</h:commandLink>
 									</p:column>
 
 									<p:column>
-										<p:commandButton icon="fa fa-trash" styleClass="danger-btn" action="#{filePanelView.removeFile(file)}" process="@this"
-											update="@form growl " />
+										<p:commandButton icon="fa fa-trash" styleClass="danger-btn" action="#{viewCandidateView.removeFile(file)}" process="@this" update="@form">
+											<p:confirm message="#{i18n['file.message.remove']}" icon="fa fa-exclamation-triangle" />
+										</p:commandButton>
 									</p:column>
 								</p:dataTable>
 							</div>
 							<div class="p-col-12">
 								<div class="buttons">
-									<p:fileUpload id="uploadFile" fileUploadListener="#{filePanelView.uploadFile}" mode="advanced" dragDropSupport="false"
-										update="@form growl" auto="true" label="#{i18n['action.add']}" />
+									<p:fileUpload id="uploadFile" fileUploadListener="#{viewCandidateView.uploadFile}" mode="advanced" dragDropSupport="false" update="@form growl" auto="true"
+										label="#{i18n['action.add']}" />
 								</div>
 							</div>
 						</div>
 					</div>
 				</h:form>
 			</div>
-			
+
 			<div class="p-col-12 p-xl-8">
-				<cc:jobCandidatures jobCandidatures="#{viewCandidateView.jobCandidatures}" showCandidate="false"
-					title="#{i18n['candidate.job_candidatures']}" />
+				<cc:jobCandidatures value="#{viewCandidateView.jobCandidatures}" showCandidate="false" title="#{i18n['candidate.job_candidatures']}" rows="5" />
 			</div>
 
 			<div class="p-col-12 p-xl-4">
-				<cc:meetings value="#{viewCandidateView.meetings}">
+				<cc:meetings value="#{viewCandidateView.meetings}" rows="5">
 					<h:form>
 						<p:commandButton value="#{i18n['meeting.add_meeting']}" action="#{viewCandidateView.newMeeting}" styleClass="success-btn" />
 					</h:form>
 				</cc:meetings>
 			</div>
-			
-			
+
+
 		</div>
 	</ui:define>
 </ui:composition>

@@ -21,9 +21,4 @@ public class ExportDao extends AbstractDao<Export> {
 	protected Class<Export> getType() {
 		return Export.class;
 	}
-
-	@Override
-	public String[] searchFields() {
-		return new String[] {};
-	}
 }

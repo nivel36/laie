@@ -23,8 +23,7 @@ public class WebResources {
 			this.properties = new Properties();
 			final ClassLoader cl = Thread.currentThread().getContextClassLoader();
 			this.properties.load(cl.getResourceAsStream("/ged/config.properties"));
-		}
-		catch (final IOException e) {
+		} catch (final IOException e) {
 			logger.error("Property file not found", e);
 		}
 	}

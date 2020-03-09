@@ -7,7 +7,7 @@
 		#{i18n['event.events']}
 	</ui:define>
 
-	<ui:param name="selectedMenu" value="users" />
+	<ui:param name="selectedMenu" value="events" />
 
 	<ui:define name="breadcrumb">
 		<p:breadCrumb>
@@ -16,63 +16,69 @@
 		</p:breadCrumb>
 	</ui:define>
 
+	<ui:define name="buttons">
+		<h:form>
+			<p:commandButton value="#{i18n['action.export']}" onclick="export()" icon="fa fa-file-excel-o" />
+		</h:form>
+	</ui:define>
+
 	<ui:define name="content">
-		<h:form id="searchevents">
-			<div class="card">
+		<h:form id="searchEvents">
+			<p:remoteCommand name="export" process="@form" update="@form growl" action="#{searchEventView.export}" />
+			<div class="card ui-fluid">
 				<div class="p-grid">
 					<div class="p-col-12 p-xl-5">
-						<div class="searchBar ui-fluid"></div>
+						<p:selectCheckboxMenu id="state" value="#{searchEventView.searchStates}" panelStyleClass="jobCandidatureStates" multiple="true" >
+							<f:selectItems value="#{jobCandidatureStates.list}" var="jobCandidatureState" itemValue="#{jobCandidatureState.name}" itemLabel="#{jobCandidatureState.name}" />
+							<p:ajax event="change" listener="#{searchEventView.search}" process="@this" update="events" />
+							<p:ajax event="toggleSelect" listener="#{searchEventView.search}" process="@this" update="events" />
+						</p:selectCheckboxMenu>
 					</div>
-					<div class="p-col-12 p-xl-7">
-						<div class="buttons">
-							<p:commandButton value="#{i18n['action.export']}" action="#{searchEventView.export}" process="@this" icon="fa fa-file-excel-o" />
-						</div>
+
+					<div class="p-col-12">
+						<p:dataTable var="event" id="events" value="#{searchEventView.events}" emptyMessage="#{i18n['event.no_events_found']}" reflow="true" paginator="true"
+							paginatorPosition="bottom" rows="#{sessionUser.rowsPerPage}" sortBy="#{event.date}" sortOrder="descending" lazy="true">
+
+							<p:column headerText="#{i18n['event.type']}">
+								<h:outputText value="#{i18n[event.type.name]}" />
+							</p:column>
+
+							<p:column headerText="#{i18n['event.candidate']}">
+								<h:link value="#{event.jobCandidature.candidate.fullName}" outcome="#{Page.CANDIDATE.getUrl()}">
+									<f:param name="id" value="#{event.jobCandidature.candidate.uid}" />
+								</h:link>
+							</p:column>
+
+							<p:column headerText="#{i18n['event.job_offer']}">
+								<h:link value="#{event.jobCandidature.jobOffer.title}" outcome="#{Page.JOB.getUrl()}">
+									<f:param name="id" value="#{event.jobCandidature.jobOffer.uid}" />
+								</h:link>
+							</p:column>
+
+							<p:column headerText="#{i18n['event.client']}" priority="6">
+								<h:link value="#{event.jobCandidature.jobOffer.client.name}" outcome="#{Page.CLIENT.getUrl()}">
+									<f:param name="id" value="#{event.jobCandidature.jobOffer.client.uid}" />
+								</h:link>
+							</p:column>
+
+							<p:column headerText="#{i18n['event.user']}" sortBy="#{event.user}" priority="5">
+								<h:link value="#{event.user.fullName}" outcome="#{Page.USER.getUrl()}">
+									<f:param name="id" value="#{event.user.uid}" />
+								</h:link>
+							</p:column>
+
+							<p:column headerText="#{i18n['event.date']}" sortBy="#{event.date}" priority="4">
+								<h:outputText value="#{event.date}">
+									<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
+								</h:outputText>
+							</p:column>
+
+							<p:column headerText="#{i18n['event.state']}">
+								<div class="tag #{event.state.color}">#{event.state.name}</div>
+							</p:column>
+						</p:dataTable>
 					</div>
 				</div>
-			</div>
-			<div class="card">
-				<p:dataTable var="event" id="events" value="#{searchEventView.events}" emptyMessage="#{i18n['event.no_events_found']}" reflow="true" paginator="true" paginatorPosition="bottom"
-					paginatorTemplate="{PageLinks}" rows="#{sessionUser.rowsPerPage}" sortBy="#{event.date}" sortOrder="descending" lazy="true">
-
-					<p:column headerText="#{i18n['event.type']}" sortBy="#{event.type}">
-						<h:outputText value="#{i18n[event.type.name]}" />
-					</p:column>
-
-					<p:column headerText="#{i18n['event.candidate']}">
-						<h:link value="#{event.jobCandidature.candidate.fullName}" outcome="#{Page.CANDIDATE.getUrl()}">
-							<f:param name="id" value="#{event.jobCandidature.candidate.id}" />
-						</h:link>
-					</p:column>
-
-					<p:column headerText="#{i18n['event.job_offer']}">
-						<h:link value="#{event.jobCandidature.jobOffer.title}" outcome="#{Page.JOB.getUrl()}">
-							<f:param name="id" value="#{event.jobCandidature.jobOffer.id}" />
-						</h:link>
-					</p:column>
-
-					<p:column headerText="#{i18n['event.client']}">
-						<h:link value="#{event.jobCandidature.jobOffer.client.name}" outcome="#{Page.CLIENT.getUrl()}">
-							<f:param name="id" value="#{event.jobCandidature.jobOffer.client.id}" />
-						</h:link>
-					</p:column>
-
-					<p:column headerText="#{i18n['event.user']}" sortBy="#{event.user}">
-						<h:link value="#{event.user.fullName}" outcome="#{Page.USER.getUrl()}">
-							<f:param name="id" value="#{event.user.id}" />
-						</h:link>
-					</p:column>
-
-					<p:column headerText="#{i18n['event.date']}" sortBy="#{event.date}">
-						<h:outputText value="#{event.date}">
-							<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
-						</h:outputText>
-					</p:column>
-
-					<p:column headerText="#{i18n['event.status']}" sortBy="#{event.status}">
-						<div class="tag #{event.status.color}">#{g:translate(event.status.name)}</div>
-
-					</p:column>
-				</p:dataTable>
 			</div>
 		</h:form>
 	</ui:define>

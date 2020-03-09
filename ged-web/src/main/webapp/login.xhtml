@@ -13,7 +13,8 @@
 </h:head>
 
 <h:body styleClass="login-body">
-	<h:form>
+	<p:growl id="growl" globalOnly="true" />
+	<h:form id="loginForm">
 		<div class="card login-panel ui-fluid">
 			<div class="login-panel-content">
 				<div class="p-grid">
@@ -34,16 +35,16 @@
 						</h:panelGroup>
 					</div>
 					<div class="p-col-12 p-sm-6 p-md-6 rememberme-container">
-						<p:selectBooleanCheckbox />
-						<label>Acordarse</label>
+						<p:selectBooleanCheckbox id="rememberme" />
+						<label>#{i18n['login.rememberme']}</label>
 					</div>
 
 					<div class="p-col-12 p-sm-6 p-md-6 forgetpassword-container">
-						<a href="#" class="forget-password">He olvidado la contraseña</a>
+						<a href="#" class="forget-password">#{i18n['login.forget_password']}</a>
 					</div>
 
 					<div class="p-col-12 p-sm-6 p-md-6">
-						<p:commandButton action="#{loginView.login}" value="${i18n['login.enter']}" icon="fa fa-user" update="@form" />
+						<p:commandButton action="#{loginView.login}" value="${i18n['login.enter']}" icon="fa fa-user" update="@form growl" />
 					</div>
 				</div>
 			</div>
@@ -51,7 +52,7 @@
 	</h:form>
 
 	<h:outputStylesheet name="css/primeflex.css" library="roma-layout" />
-	<h:outputStylesheet name="css/layout-#{guestPreferences.theme}.css" library="roma-layout" />
+	<h:outputStylesheet name="css/layout-blue.css" library="roma-layout" />
 </h:body>
 
 </html>

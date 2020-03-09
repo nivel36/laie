@@ -15,22 +15,23 @@ import ged.ejb.core.model.AbstractEntity;
 
 @Entity
 @Indexed
-public class Skill extends AbstractEntity {
+public class Skill extends AbstractEntity implements Comparable<Skill> {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "curriculumId", nullable = false)
 	private Curriculum curriculum;
-	
+
 	@Field
 	@NotNull
 	@Column(nullable = false)
 	private String name;
 
-	public Skill() {}
+	public Skill() {
+	}
 
-	public Skill(String name) {
+	public Skill(final String name) {
 		this.name = name;
 	}
 
@@ -42,7 +43,7 @@ public class Skill extends AbstractEntity {
 		if (!super.equals(obj)) {
 			return false;
 		}
-		if (getClass() != obj.getClass()) {
+		if (this.getClass() != obj.getClass()) {
 			return false;
 		}
 		final Skill other = (Skill) obj;
@@ -59,7 +60,7 @@ public class Skill extends AbstractEntity {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(name);
+		return Objects.hash(this.name);
 	}
 
 	public void setCurriculum(final Curriculum curriculum) {
@@ -73,5 +74,10 @@ public class Skill extends AbstractEntity {
 	@Override
 	public String toString() {
 		return this.name;
+	}
+
+	@Override
+	public int compareTo(Skill skill) {
+		return this.compareTo(skill);
 	}
 }

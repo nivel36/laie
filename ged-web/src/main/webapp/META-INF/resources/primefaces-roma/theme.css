@@ -313,6 +313,10 @@ body .ui-autocomplete-panel {
         background-color: #ffffff;
         color: #252529;
         border: 1px solid #d8d8dc; }
+        body .ui-autocomplete-panel .ui-autocomplete-items .ui-autocomplete-item.ui-autocomplete-row.ui-state-highlight {
+        background-color: #eaeaea;
+        color: #252529;
+        border: 1px solid #d8d8dc; }
         body .ui-autocomplete-panel .ui-autocomplete-items .ui-autocomplete-item.ui-autocomplete-row > td {
           padding: 0.75em 1.214em; }
 body .ui-fluid .ui-autocomplete .ui-autocomplete-input.ui-autocomplete-dd-input {
@@ -2449,7 +2453,6 @@ body .ui-datatable .ui-datatable-header {
 body .ui-datatable .ui-datatable-footer {
   text-align: left;
   border-top: 0 none;
-  font-weight: 500;
   font-weight: 500; }
 body .ui-datatable .ui-paginator {
   padding: 0.25em 0; }
@@ -3997,7 +4000,7 @@ body .ui-message {
     width: auto;
     height: auto; }
 body .ui-growl {
-  top: 85px; }
+  top: 15px; }
   body .ui-growl .ui-growl-item-container {
     margin: 0 0 1em 0;
     -webkit-box-shadow: 0 3px 0.5em 0 rgba(0, 0, 0, 0.16);
@@ -5091,3 +5094,11 @@ body .ui-terminal {
     font-size: 13px; }
 
 /* Add your customizations of theme here */
+
+body .ui-texteditor {
+	width: 100%;
+}
+
+body .ql-toolbar.ql-snow + .ql-container.ql-snow {
+	height: auto;
+}

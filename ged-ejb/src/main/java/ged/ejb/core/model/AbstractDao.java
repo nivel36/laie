@@ -6,6 +6,8 @@ import java.util.Map;
 import java.util.Objects;
 
 import javax.inject.Inject;
+import javax.persistence.FlushModeType;
+import javax.persistence.NoResultException;
 
 public abstract class AbstractDao<T extends AbstractEntity> {
 
@@ -47,11 +49,32 @@ public abstract class AbstractDao<T extends AbstractEntity> {
 		return this.persistenceFacade.findByQuery(entityClass, namedQuery, parameters);
 	}
 
+	protected <E> E findByQuery(final Class<E> entityClass, final String namedQuery,
+			final Map<String, Object> parameters, final FlushModeType flushModeType) {
+		Objects.requireNonNull(entityClass);
+		Objects.requireNonNull(namedQuery);
+		return this.persistenceFacade.findByQuery(entityClass, namedQuery, parameters, flushModeType);
+	}
+
+	protected <E> List<E> findByQuery(final Class<E> entityClass, final String namedQuery, final Page page) {
+		Objects.requireNonNull(entityClass);
+		Objects.requireNonNull(namedQuery);
+		try {
+			return this.persistenceFacade.findByQuery(entityClass, namedQuery, null, page);
+		} catch (final NoResultException e) {
+			return new ArrayList<>();
+		}
+	}
+
 	protected <E> List<E> findByQuery(final Class<E> entityClass, final String namedQuery,
 			final Map<String, Object> parameters, final Page page) {
 		Objects.requireNonNull(entityClass);
 		Objects.requireNonNull(namedQuery);
-		return this.persistenceFacade.findByQuery(entityClass, namedQuery, parameters, page);
+		try {
+			return this.persistenceFacade.findByQuery(entityClass, namedQuery, parameters, page);
+		} catch (final NoResultException e) {
+			return new ArrayList<>();
+		}
 	}
 
 	protected Object findByQuery(final String namedQuery) {
@@ -96,22 +119,6 @@ public abstract class AbstractDao<T extends AbstractEntity> {
 			return this.update(entity);
 		}
 	}
-
-	public SearchResult<T> search(final String searchText, final Page page) {
-		return this.search(searchText, page, new ArrayList<SortField>());
-	}
-
-	public SearchResult<T> search(final String searchText, final Page page, final List<SortField> sortOrders) {
-		return this.persistenceFacade.search(this.getType(), page, sortOrders, searchText, this.searchFields());
-	}
-
-	public SearchResult<T> search(final String searchText, final Page page, final SortField sortOrder) {
-		final List<SortField> sortOrders = new ArrayList<>();
-		sortOrders.add(sortOrder);
-		return this.search(searchText, page, sortOrders);
-	}
-
-	public abstract String[] searchFields();
 
 	public void setPersistenceFacade(final PersistenceFacade persistenceFacade) {
 		Objects.requireNonNull(persistenceFacade);

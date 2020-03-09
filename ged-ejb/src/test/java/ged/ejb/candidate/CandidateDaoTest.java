@@ -53,9 +53,9 @@ public class CandidateDaoTest {
 			final JobOffer jobOffer = new JobOffer();
 
 			when(persistenceFacade.findByQuery(Candidate.class, "Candidate.findByJobOffer", map("jobOffer", jobOffer),
-					Page.ALL)).thenReturn(mockCandidates());
+					Page.ALL_RESULTS)).thenReturn(mockCandidates());
 
-			final List<Candidate> candidatesFromRepository = candidateDao.findCandidates(jobOffer, Page.ALL);
+			final List<Candidate> candidatesFromRepository = candidateDao.findCandidates(jobOffer, Page.ALL_RESULTS);
 			assertEquals("aaron.douglas@test.com", candidatesFromRepository.get(0).getEmail());
 		}
 
@@ -64,39 +64,17 @@ public class CandidateDaoTest {
 			final JobOffer jobOffer = new JobOffer();
 
 			when(persistenceFacade.findByQuery(Candidate.class, "Candidate.findByJobOffer", map("jobOffer", jobOffer),
-					Page.ALL)).thenThrow(new NoResultException());
+					Page.ALL_RESULTS)).thenThrow(new NoResultException());
 
-			final List<Candidate> candidates = candidateDao.findCandidates(jobOffer, Page.ALL);
+			final List<Candidate> candidates = candidateDao.findCandidates(jobOffer, Page.ALL_RESULTS);
 			assertEquals(0, candidates.size());
 		}
 
 		@Test
 		public void nullJobOfferShouldReturnNullPointerException() {
 			assertThrows(NullPointerException.class, () -> {
-				candidateDao.findCandidates(null, Page.ALL);
+				candidateDao.findCandidates(null, Page.ALL_RESULTS);
 			});
-		}
-	}
-
-	@Nested
-	class FindAllCandidateDataById {
-
-		@Test
-		public void badIdShouldReturnIlllegalArgumentException() {
-			assertThrows(IllegalArgumentException.class, () -> {
-				candidateDao.findCandidateData(0);
-			});
-		}
-
-		@Test
-		public void validIdShouldReturnCandidateAndHisData() {
-			final Candidate mockedCandidate = mockCandidate();
-
-			when(persistenceFacade.findByQuery(Candidate.class, "Candidate.findAllDataById", map("id", 1L)))
-					.thenReturn(mockedCandidate);
-
-			final Candidate candidateFromRepository = candidateDao.findCandidateData(1L);
-			assertEquals(mockedCandidate, candidateFromRepository);
 		}
 	}
 

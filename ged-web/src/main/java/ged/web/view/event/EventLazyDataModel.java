@@ -2,24 +2,24 @@ package ged.web.view.event;
 
 import java.util.Objects;
 
-import ged.ejb.core.AbstractService;
-import ged.ejb.event.Event;
-import ged.ejb.event.EventService;
+import ged.ejb.core.AbstractIndexedService;
+import ged.ejb.event.JobCandidatureEvent;
+import ged.ejb.event.JobCandidatureEventService;
 import ged.web.core.view.AbstractLazyDataModel;
 
-public class EventLazyDataModel extends AbstractLazyDataModel<Event> {
+public class EventLazyDataModel extends AbstractLazyDataModel<JobCandidatureEvent> {
 
 	private static final long serialVersionUID = 1L;
 
-	private transient EventService eventService;
+	private transient JobCandidatureEventService jobCandidatureEventService;
 
-	public EventLazyDataModel(final EventService eventService) {
-		Objects.requireNonNull(eventService, "EventService can't be null");
-		this.eventService = eventService;
+	public EventLazyDataModel(final JobCandidatureEventService jobCandidatureEventService) {
+		Objects.requireNonNull(jobCandidatureEventService, "JobCandidatureEventService can't be null");
+		this.jobCandidatureEventService = jobCandidatureEventService;
 	}
 
 	@Override
-	protected AbstractService<Event> getService() {
-		return eventService;
+	protected AbstractIndexedService<JobCandidatureEvent> getService() {
+		return this.jobCandidatureEventService;
 	}
 }

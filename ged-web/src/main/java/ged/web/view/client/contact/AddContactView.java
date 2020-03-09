@@ -7,6 +7,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.omnifaces.cdi.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,6 +25,8 @@ public class AddContactView extends AbstractView {
 
 	private static final long serialVersionUID = 1L;
 
+	@Inject
+	@Param(name = "clientId", required = true)
 	private Client client;
 
 	private Contact contact;
@@ -49,13 +52,12 @@ public class AddContactView extends AbstractView {
 	@PostConstruct
 	public void init() {
 		logger.debug("New contact");
-		this.client = this.getValueFromFlash("client");
 		this.contact = this.buildNewContact(this.client);
 	}
 
 	public String save() {
 		this.contactService.save(this.contact);
-		return PageEnum.CLIENT.getRedirectedUrl(this.client);
+		return this.navigator.getRedirectUrl(PageEnum.CLIENT, this.client);
 
 	}
 

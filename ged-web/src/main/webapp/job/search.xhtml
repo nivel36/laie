@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://ged.org/ui"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://ged.org/ui" xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets" template="/WEB-INF/templates/template.xhtml">
 
 	<ui:define name="title">
@@ -17,64 +16,56 @@
 		</p:breadCrumb>
 	</ui:define>
 
+	<ui:define name="buttons">
+		<h:form>
+			<p:commandButton value="#{i18n['action.export']}" onclick="export()" icon="fa fa-file-excel-o" />
+		</h:form>
+	</ui:define>
+
+
 	<ui:define name="content">
 		<h:form id="jobOfferSearchform">
+			<p:remoteCommand name="export" process="@form" update="@form growl" action="#{searchJobView.export}" />
 			<div class="card">
 				<div class="p-grid">
-					<div class="p-col-12 p-xl-5">
+					<div class="p-col-12 p-lg-5">
 						<div class="searchBar ui-fluid">
-							<cc:inputSearch searchText="#{searchJobView.searchText}" searchAction="#{searchJobView.search}" update="@form" />
+							<cc:inputSearch searchText="#{searchJobView.searchText}" searchAction="#{searchJobView.search}" update="jobOfferSearchform:jobOffers" />
 						</div>
 					</div>
-					<div class="p-col-12 p-xl-7">
-						<div class="buttons">
-							<p:commandButton value="#{i18n['action.export']}" action="#{searchJobView.export}" process="@this" icon="fa fa-file-excel-o" />
-						</div>
+					<div class="p-col-12">
+						<p:dataTable id="jobOffers" var="jobOffer" value="#{searchJobView.jobOffers}" emptyMessage="#{i18n['job.no_jobs_found']}" reflow="true" paginator="true"
+							paginatorPosition="bottom" rows="#{sessionUser.rowsPerPage}" sortBy="#{jobOffer.title}" sortOrder="descending" lazy="true">
+
+							<p:column headerText="#{i18n['job.title']}" sortBy="#{jobOffer.title}">
+								<h:link value="#{jobOffer.title}" outcome="#{Page.JOB.getUrl()}">
+									<f:param name="id" value="#{jobOffer.uid}" />
+								</h:link>
+								<span class="job_address">#{jobOffer.address.city} (#{jobOffer.address.region})</span>
+							</p:column>
+
+							<p:column headerText="#{i18n['job.client']}" sortBy="#{jobOffer.client.name}">
+								<h:link value="#{jobOffer.client.name}" outcome="#{Page.CLIENT.getUrl()}">
+									<f:param name="id" value="#{jobOffer.client.uid}" />
+								</h:link>
+							</p:column>
+
+							<p:column headerText="#{i18n['job.places']}">
+								<h:outputText value="#{jobOffer.places}" />
+							</p:column>
+
+							<p:column headerText="#{i18n['user.owner']}" sortBy="#{user.owner.name}">
+								<h:link value="#{jobOffer.owner.fullName}" outcome="#{Page.USER.getUrl()}">
+									<f:param name="id" value="#{jobOffer.owner.uid}" />
+								</h:link>
+							</p:column>
+
+							<p:column headerText="#{i18n['job.job_offer_state']}">
+								<div class="tag #{jobOffer.state.color}">#{jobOffer.state.name}</div>
+							</p:column>
+						</p:dataTable>
 					</div>
 				</div>
-			</div>
-			<div class="card">
-				<p:dataTable var="jobOffer" value="#{searchJobView.jobOffers}" emptyMessage="#{i18n['job.no_jobs_found']}" reflow="true"
-					paginator="true" paginatorPosition="bottom" rows="#{sessionUser.rowsPerPage}" sortBy="#{jobOffer.title}" sortOrder="descending"
-					lazy="true">
-
-					<p:column headerText="#{i18n['job.title']}" sortBy="#{jobOffer.title}">
-						<h:link value="#{jobOffer.title}" outcome="#{Page.JOB.getUrl()}">
-							<f:param name="id" value="#{jobOffer.id}" />
-						</h:link>
-						<span class="job_address">#{jobOffer.address.city} (#{jobOffer.address.state})</span>
-					</p:column>
-
-					<p:column headerText="#{i18n['job.client']}" sortBy="#{jobOffer.client.name}">
-						<h:link value="#{jobOffer.client.name}" outcome="#{Page.CLIENT.getUrl()}">
-							<f:param name="id" value="#{jobOffer.client.id}" />
-						</h:link>
-					</p:column>
-
-					<p:column headerText="#{i18n['job.date_opened']}" sortBy="#{jobOffer.dateOpened}">
-						<h:outputText value="#{jobOffer.dateOpened}">
-							<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
-						</h:outputText>
-					</p:column>
-
-					<p:column headerText="#{i18n['job.salary']}" sortBy="#{jobOffer.salary}">
-						<h:outputText value="#{jobOffer.salary}" />
-					</p:column>
-
-					<p:column headerText="#{i18n['job.places']}">
-						<h:outputText value="#{jobOffer.places}" />
-					</p:column>
-
-					<p:column headerText="#{i18n['user.owner']}" sortBy="#{user.owner.name}">
-						<h:link value="#{jobOffer.owner.fullName}" outcome="#{Page.USER.getUrl()}">
-							<f:param name="id" value="#{jobOffer.owner.id}" />
-						</h:link>
-					</p:column>
-
-					<p:column headerText="#{i18n['job.job_offer_state']}">
-						<div class="tag #{jobOffer.jobOfferState.color}">#{g:translate(jobOffer.jobOfferState.name)}</div>
-					</p:column>
-				</p:dataTable>
 			</div>
 		</h:form>
 	</ui:define>

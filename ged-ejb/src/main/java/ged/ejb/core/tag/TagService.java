@@ -5,12 +5,12 @@ import java.util.Objects;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
-import ged.ejb.core.AbstractService;
-import ged.ejb.core.model.AbstractDao;
+import ged.ejb.core.AbstractIndexedService;
+import ged.ejb.core.model.AbstractIndexedDao;
 import ged.ejb.core.model.Repository;
 
 @Stateless
-public class TagService extends AbstractService<Tag> {
+public class TagService extends AbstractIndexedService<Tag> {
 
 	@Inject
 	@Repository
@@ -22,7 +22,7 @@ public class TagService extends AbstractService<Tag> {
 	}
 
 	@Override
-	protected AbstractDao<Tag> getDao() {
+	protected AbstractIndexedDao<Tag> getDao() {
 		return this.tagDao;
 	}
 

@@ -3,7 +3,6 @@ package ged.ejb.user;
 import static ged.ejb.core.util.Parameters.map;
 
 import java.lang.invoke.MethodHandles;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -12,12 +11,13 @@ import javax.persistence.NoResultException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ged.ejb.core.model.AbstractDao;
+import ged.ejb.core.model.AbstractIndexedDao;
 import ged.ejb.core.model.Page;
 import ged.ejb.core.model.Repository;
+import ged.ejb.core.security.LoginToken.TokenType;
 
 @Repository
-public class UserDao extends AbstractDao<User> {
+public class UserDao extends AbstractIndexedDao<User> {
 
 	private static final String EMAIL = "email";
 
@@ -35,27 +35,22 @@ public class UserDao extends AbstractDao<User> {
 
 	private List<UserClosure> findAntecessorsUserClosures(final User user) {
 		return this.findByQuery(UserClosure.class, "UserClosure.findAntecessorsUserClosuresById", map(ID, user.getId()),
-				Page.ALL);
+				Page.ALL_RESULTS);
+	}
+
+	public User findByUid(final String uid) {
+		Objects.requireNonNull(uid);
+		return this.findByQuery(User.class, "User.findByUid", map("uid", uid));
+	}
+
+	public Credential findCredential(final String email) {
+		Objects.requireNonNull(email);
+		return this.findByQuery(Credential.class, "User.findCredential", map(EMAIL, email));
 	}
 
 	public List<User> findSubordinateUsers(final User user) {
 		Objects.requireNonNull(user);
-		try {
-			return this.findByQuery(User.class, "User.findSubordinateUsers", map(ID, user.getId()), Page.ALL);
-		} catch (final NoResultException e) {
-			logger.trace("No subordinate users for user {} found", user.getEmail(), e);
-			return new ArrayList<>();
-		}
-	}
-
-	public User findUserAndCredential(final String email) {
-		Objects.requireNonNull(email);
-		try {
-			return this.findByQuery(User.class, "User.findUserAndCredential", map(EMAIL, email));
-		} catch (final NoResultException exception) {
-			logger.trace("No users for email {} found", email);
-			return null;
-		}
+		return this.findByQuery(User.class, "User.findSubordinateUsers", map(ID, user.getId()), Page.ALL_RESULTS);
 	}
 
 	public User findUserByEmail(final String email) {
@@ -63,7 +58,17 @@ public class UserDao extends AbstractDao<User> {
 		try {
 			return this.findByQuery(User.class, "User.findByEmail", map(EMAIL, email));
 		} catch (final NoResultException e) {
-			logger.trace("No user for email {} found", email);
+			return null;
+		}
+	}
+
+	public User findUserByTokenHashAndType(final byte[] tokenHash, final TokenType type) {
+		Objects.requireNonNull(tokenHash);
+		Objects.requireNonNull(type);
+		try {
+			return this.getPersistenceFacade().findByQuery(User.class, "User.findByTokenHashAndType",
+					map("tokenHash", tokenHash).and("type", type));
+		} catch (final NoResultException e) {
 			return null;
 		}
 	}
@@ -121,11 +126,6 @@ public class UserDao extends AbstractDao<User> {
 	}
 
 	@Override
-	protected void postUpdate(final User user) {
-		this.updateUserClosures(user);
-	}
-
-	@Override
 	protected void preInsert(final User user) {
 		if (this.isEmailInUse(user.getEmail())) {
 			throw new DuplicateEmailException();
@@ -137,6 +137,7 @@ public class UserDao extends AbstractDao<User> {
 		if (this.isDuplicateEmail(user)) {
 			throw new DuplicateEmailException();
 		}
+		this.updateUserClosures(user);
 	}
 
 	@Override

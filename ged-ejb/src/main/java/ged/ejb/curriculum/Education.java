@@ -15,7 +15,7 @@ import ged.ejb.core.model.AbstractEntity;
 
 @Entity
 @Indexed
-public class Education extends AbstractEntity {
+public class Education extends AbstractEntity implements Comparable<Education>{
 
 	private static final long serialVersionUID = 1L;
 
@@ -57,7 +57,8 @@ public class Education extends AbstractEntity {
 		}
 		final Education other = (Education) obj;
 		return Objects.equals(this.degree, other.degree) && Objects.equals(this.description, other.description)
-				&& Objects.equals(this.startYear, other.startYear) && Objects.equals(this.stillStudying, other.stillStudying)
+				&& Objects.equals(this.startYear, other.startYear)
+				&& Objects.equals(this.stillStudying, other.stillStudying)
 				&& Objects.equals(this.endYear, other.endYear);
 	}
 
@@ -120,5 +121,30 @@ public class Education extends AbstractEntity {
 
 	public void setStillStudying(final boolean stillStudying) {
 		this.stillStudying = stillStudying;
+	}
+	
+	@Override
+	public int compareTo(Education education) {
+		final int startYearCompareTo = this.startYear.compareTo(education.startYear);
+		if (startYearCompareTo != 0) {
+			return -startYearCompareTo;
+		}
+		final int endYearCompareTo = this.endYear.compareTo(education.endYear);
+		if (endYearCompareTo != 0) {
+			return -endYearCompareTo;
+		}
+		final int schoolCompareTo = this.school.compareTo(education.school);
+		if (schoolCompareTo != 0) {
+			return schoolCompareTo;
+		}
+		final int degreeCompareTo = this.degree.compareTo(education.degree);
+		if (degreeCompareTo != 0) {
+			return degreeCompareTo;
+		}
+		final int descriptionCompareTo = this.description.compareTo(education.description);
+		if (descriptionCompareTo != 0) {
+			return descriptionCompareTo;
+		}
+		return 0;
 	}
 }

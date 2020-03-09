@@ -17,20 +17,20 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.search.annotations.IndexedEmbedded;
 
-import ged.ejb.core.model.AbstractEntity;
+import ged.ejb.core.model.AbstractIndexedEntity;
 import ged.ejb.core.model.Ownerable;
 import ged.ejb.job.candidature.JobCandidature;
 import ged.ejb.user.User;
 
 @Entity
 @Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "jobCandidatureId", "datePlanned" }) })
-public class Meeting extends AbstractEntity implements Ownerable {
+public class Meeting extends AbstractIndexedEntity implements Ownerable {
 
 	private static final long serialVersionUID = 1L;
 
 	@ElementCollection
-	@CollectionTable(name="emails", joinColumns=@JoinColumn(name="meeting_id"))
-	@Column(name="email")
+	@CollectionTable(name = "emails", joinColumns = @JoinColumn(name = "meeting_id"))
+	@Column(name = "email")
 	private Set<String> attendeesEmails = new HashSet<>();
 
 	@NotNull
@@ -42,9 +42,9 @@ public class Meeting extends AbstractEntity implements Ownerable {
 	private JobCandidature jobCandidature;
 
 	private String location;
-	
+
 	private MeetingType meetingType;
-	
+
 	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "ownerId", nullable = false)
@@ -57,9 +57,9 @@ public class Meeting extends AbstractEntity implements Ownerable {
 	@Column(nullable = false)
 	private String title;
 
-	public void addAttendee(String email) {
+	public void addAttendee(final String email) {
 		Objects.requireNonNull(email, "Email can't be null");
-		attendeesEmails.add(email);
+		this.attendeesEmails.add(email);
 	}
 
 	@Override
@@ -77,14 +77,13 @@ public class Meeting extends AbstractEntity implements Ownerable {
 			return false;
 		}
 		final Meeting other = (Meeting) obj;
-		return Objects.equals(this.datePlanned, other.datePlanned)
-				&& Objects.equals(this.title, other.title)
+		return Objects.equals(this.datePlanned, other.datePlanned) && Objects.equals(this.title, other.title)
 				&& Objects.equals(this.jobCandidature, other.jobCandidature)
 				&& Objects.equals(this.result, other.result);
 	}
 
 	public Set<String> getAttendeesEmails() {
-		return attendeesEmails;
+		return this.attendeesEmails;
 	}
 
 	public LocalDateTime getDatePlanned() {
@@ -125,12 +124,12 @@ public class Meeting extends AbstractEntity implements Ownerable {
 		return Objects.hash(this.datePlanned, this.title, this.jobCandidature, this.result);
 	}
 
-	public void removeAttendee(String email) {
+	public void removeAttendee(final String email) {
 		Objects.requireNonNull(email, "Email can't be null");
-		attendeesEmails.remove(email);
+		this.attendeesEmails.remove(email);
 	}
 
-	public void setAttendeesEmails(Set<String> attendeesEmails) {
+	public void setAttendeesEmails(final Set<String> attendeesEmails) {
 		this.attendeesEmails = attendeesEmails;
 	}
 

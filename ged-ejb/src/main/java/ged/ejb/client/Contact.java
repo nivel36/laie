@@ -7,11 +7,12 @@ import javax.persistence.ManyToOne;
 
 import org.hibernate.search.annotations.Indexed;
 
+import ged.ejb.core.model.Obfuscable;
 import ged.ejb.person.Person;
 
 @Entity
 @Indexed
-public class Contact extends Person {
+public class Contact extends Person implements Obfuscable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -26,26 +27,26 @@ public class Contact extends Person {
 	private String position;
 
 	public Client getClient() {
-		return client;
+		return this.client;
 	}
 
 	public String getLanguage() {
-		return language;
+		return this.language;
 	}
 
 	public String getPosition() {
-		return position;
+		return this.position;
 	}
 
-	public void setClient(Client client) {
+	public void setClient(final Client client) {
 		this.client = client;
 	}
 
-	public void setLanguage(String language) {
+	public void setLanguage(final String language) {
 		this.language = language;
 	}
 
-	public void setPosition(String position) {
+	public void setPosition(final String position) {
 		this.position = position;
 	}
 }

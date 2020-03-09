@@ -1,6 +1,8 @@
 package ged.ejb.core.util;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.UncheckedIOException;
 import java.lang.invoke.MethodHandles;
 import java.util.Properties;
 
@@ -23,16 +25,30 @@ public class Resources {
 
 	private Properties properties;
 
+	private ClassLoader getClassLoader() {
+		return Thread.currentThread().getContextClassLoader();
+	}
+
+	private InputStream getFileAsStream(final String path) {
+		final ClassLoader classLoader = this.getClassLoader();
+		return classLoader.getResourceAsStream(path);
+	}
+
 	@PostConstruct
 	public void init() {
-		try {
-			this.properties = new Properties();
-			final ClassLoader cl = Thread.currentThread().getContextClassLoader();
-			this.properties.load(cl.getResourceAsStream("/config.properties"));
+		this.properties = this.loadProperties();
+	}
+
+	private Properties loadProperties() {
+		final Properties p = new Properties();
+		final String fileName = "/config.properties";
+		try (final InputStream inputStream = this.getFileAsStream(fileName)) {
+			p.load(inputStream);
+		} catch (final IOException e) {
+			logger.error("File {} not found", fileName);
+			throw new UncheckedIOException(e);
 		}
-		catch (final IOException e) {
-			logger.error("Property file not found", e);
-		}
+		return p;
 	}
 
 	@Produces

@@ -1,32 +1,37 @@
-<ui:component xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" 
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
-	xmlns:composite="http://xmlns.jcp.org/jsf/composite" 
-	xmlns:f="http://java.sun.com/jsf/core" 
-	xmlns:g="http://ged.org/ui" 
-	xmlns:h="http://java.sun.com/jsf/html" 
-	xmlns:o="http://omnifaces.org/ui"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:component xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	xmlns:composite="http://xmlns.jcp.org/jsf/composite" xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://ged.org/ui" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets">
 
 	<composite:interface>
-		<composite:attribute name="users" required="true" />
+		<composite:attribute name="value" required="true" />
 		<composite:attribute name="styleClass" required="false" default="" />
 		<composite:attribute name="title" required="false" default="#{i18n['user.users']}" />
+		<composite:attribute name="rows" required="false" default="#{sessionUser.rowsPerPage}" />
 	</composite:interface>
 
 	<composite:implementation>
 		<div id="#{cc.clientId}" class="card card-w-title users  #{cc.attrs.styleClass}">
-			<h3>#{cc.attrs.title}</h3>
-			<p:dataList var="user" value="#{cc.attrs.users}" emptyMessage="#{i18n['user.no_team']}" paginator="true" paginatorPosition="bottom" styleClass="ui-datalist-borderless"  itemStyleClass="ui-datalist-nobullets">
-				<p:link outcome="#{Page.USER.getUrl()}" >
-					<f:param name="id" value="#{user.id}" />
-					<cc:person value="#{user}" showDescription="false" styleClass="selectable" />
-				</p:link>
-			</p:dataList>
+			<h1>#{cc.attrs.title}</h1>
+			<p:dataTable id="users" value="#{cc.attrs.value}" var="user" emptyMessage="#{i18n['user.no_team']}" reflow="true" paginator="true" paginatorPosition="bottom"
+				rows="#{cc.attrs.rows}" sortBy="#{user.name}" sortOrder="descending" lazy="true" styleClass="ui-datatable-borderless">
+				<p:column>
+					<cc:avatar value="#{user.picture}" styleClass="small" />
+				</p:column>
 
-			<h:panelGroup id="children" styleClass="panel-buttons">
+				<p:column headerText="#{i18n['user.name']}">
+					<h:link value="#{user.fullName}" outcome="#{Page.USER.getUrl()}">
+						<f:param name="id" value="#{user.uid}" />
+					</h:link>
+				</p:column>
+
+				<p:column headerText="#{i18n['user.email']}" >
+					<h:outputText value="#{user.email}" />
+				</p:column>
+
+			</p:dataTable>
+
+			<h:panelGroup id="children" styleClass="buttons">
 				<composite:insertChildren />
 			</h:panelGroup>
 		</div>

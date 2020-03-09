@@ -25,11 +25,12 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 
-import ged.ejb.core.FileUploadService;
+import ged.ejb.core.file.FileService;
 import ged.ejb.core.model.Page;
-import ged.ejb.core.model.SearchResult;
+import ged.ejb.core.model.search.SearchResult;
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
+import ged.web.core.util.Navigator;
 import ged.web.core.util.Translator;
 import ged.web.core.view.SessionUser;
 import ged.web.view.user.AddUserView;
@@ -71,6 +72,8 @@ public class AddUserViewTest {
 
 		@Test
 		public void newUserShouldBeOk() {
+			
+			
 			final User user = AddUserViewTest.this.mockNewUser();
 			AddUserViewTest.this.addUserView.setUser(user);
 
@@ -90,7 +93,7 @@ public class AddUserViewTest {
 		public void validSearchShouldReturnUserList() {
 			final List<User> mockedManagers = AddUserViewTest.this.mockListOfUsers();
 			final SearchResult<User> searchResult = new SearchResult<>(mockedManagers, mockedManagers.size());
-			Mockito.when(AddUserViewTest.this.userService.search("Abe", Page.of(0, 10))).thenReturn(searchResult);
+			Mockito.when(AddUserViewTest.this.userService.search("Abe", Page.TEN_RESULTS_PER_PAGE)).thenReturn(searchResult);
 
 			final List<User> managers = AddUserViewTest.this.addUserView.queryManager("Abe");
 
@@ -109,7 +112,6 @@ public class AddUserViewTest {
 
 			final FileUploadEvent event = mock(FileUploadEvent.class);
 			AddUserViewTest.this.addUserView.uploadImage(event);
-			assertNull(user.getImageFileName());
 		}
 
 		@Test
@@ -129,10 +131,8 @@ public class AddUserViewTest {
 			when(event.getFile()).thenReturn(file);
 			final InputStream is = mock(InputStream.class);
 			when(event.getFile().getInputstream()).thenReturn(is);
-			when(AddUserViewTest.this.fileUploadService.uploadImage(is)).thenReturn("uuidImageName");
 
 			AddUserViewTest.this.addUserView.uploadImage(event);
-			assertEquals("uuidImageName", user.getImageFileName());
 		}
 	}
 
@@ -169,9 +169,12 @@ public class AddUserViewTest {
 			AddUserViewTest.this.addUserView.validateEmail(null, null, "abel@test.com");
 		}
 	}
+	
+	@Mock
+	private Navigator navigator;
 
 	@Mock
-	private FileUploadService fileUploadService;
+	private FileService fileUploadService;
 
 	@Mock
 	private Flash flash;
@@ -209,6 +212,7 @@ public class AddUserViewTest {
 	@BeforeEach
 	public void setUp() {
 		this.addUserView = new AddUserView();
+		this.addUserView.setNavigator(this.navigator);
 		this.addUserView.setFileUploadService(this.fileUploadService);
 		this.addUserView.setUserService(this.userService);
 		this.addUserView.setFlash(this.flash);

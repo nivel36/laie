@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://ged.org/ui"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://ged.org/ui" xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets" template="/WEB-INF/templates/template.xhtml">
 
 	<ui:define name="title">
@@ -17,56 +16,57 @@
 		</p:breadCrumb>
 	</ui:define>
 
+	<ui:define name="buttons">
+		<h:form>
+			<p:commandButton value="#{i18n['action.export']}" onclick="export()" icon="fa fa-file-excel-o" />
+		</h:form>
+	</ui:define>
+
 	<ui:define name="content">
 		<h:form id="searchUsers">
+			<p:remoteCommand name="export" process="@form" update="@form growl" action="#{searchUserView.export}" />
 			<div class="card">
 				<div class="p-grid">
-					<div class="p-col-12 p-xl-5">
+					<div class="p-col-12 p-lg-5">
 						<div class="searchBar ui-fluid">
-							<cc:inputSearch searchText="#{searchUserView.searchText}" searchAction="#{searchUserView.search}" update="@form" />
+							<cc:inputSearch searchText="#{searchUserView.searchText}" searchAction="#{searchUserView.search}" update="searchUsers:users" />
 						</div>
 					</div>
-					<div class="p-col-12 p-xl-7">
-						<div class="buttons">
-							<p:commandButton value="#{i18n['action.export']}" action="#{searchUserView.export}" process="@this" icon="fa fa-file-excel-o" />
-						</div>
+					<div class="p-col-12">
+						<p:dataTable id="users" value="#{searchUserView.users}" var="user" emptyMessage="#{i18n['user.no_users_found']}" reflow="true" paginator="true" paginatorPosition="bottom"
+							rows="#{sessionUser.rowsPerPage}" sortBy="#{user.lastConnection}" sortOrder="descending" lazy="true">
+							<p:column>
+								<cc:avatar value="#{user.picture}" styleClass="small" />
+							</p:column>
+
+							<p:column headerText="#{i18n['user.name']}" sortBy="#{user.name}">
+								<h:link value="#{user.fullName}" outcome="#{Page.USER.getUrl()}">
+									<f:param name="id" value="#{user.uid}" />
+								</h:link>
+							</p:column>
+
+							<p:column headerText="#{i18n['user.email']}" priority="3">
+								<h:outputText value="#{user.email}" />
+							</p:column>
+
+							<p:column headerText="#{i18n['user.role']}" sortBy="#{user.role}" priority="5">
+								<h:outputText value="#{i18n[user.role]}" />
+							</p:column>
+
+							<p:column headerText="#{i18n['user.manager']}" sortBy="#{user.manager.name}" priority="4">
+								<h:link value="#{user.manager.fullName}" outcome="#{Page.USER.getUrl()}" rendered="#{not empty user.manager}">
+									<f:param name="id" value="#{user.manager.uid}" />
+								</h:link>
+							</p:column>
+
+							<p:column headerText="#{i18n['user.last_login']}" sortBy="#{user.lastConnection}" priority="6">
+								<h:outputText value="#{user.lastConnection}">
+									<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
+								</h:outputText>
+							</p:column>
+						</p:dataTable>
 					</div>
 				</div>
-			</div>
-			<div class="card">
-				<p:dataTable var="user" id="users" value="#{searchUserView.users}" emptyMessage="#{i18n['user.no_users_found']}" reflow="true"
-					paginator="true" paginatorPosition="bottom" paginatorTemplate="{PageLinks}" rows="#{sessionUser.rowsPerPage}" sortBy="#{user.name}"
-					sortOrder="descending" lazy="true">
-					<p:column>
-						<cc:avatar value="#{user.imageFileName}" styleClass="small" />
-					</p:column>
-
-					<p:column headerText="#{i18n['user.name']}" sortBy="#{user.name}">
-						<h:link value="#{user.fullName}" outcome="#{Page.USER.getUrl()}">
-							<f:param name="id" value="#{user.id}" />
-						</h:link>
-					</p:column>
-
-					<p:column headerText="#{i18n['user.email']}">
-						<h:outputText value="#{user.email}" />
-					</p:column>
-
-					<p:column headerText="#{i18n['user.role']}" sortBy="#{user.role}">
-						<h:outputText value="#{g:translate(user.role)}" />
-					</p:column>
-
-					<p:column headerText="#{i18n['user.manager']}" sortBy="#{user.manager.name}">
-						<h:link value="#{user.manager.fullName}" outcome="#{Page.USER.getUrl()}" rendered="#{not empty user.manager}">
-							<f:param name="id" value="#{user.manager.id}" />
-						</h:link>
-					</p:column>
-
-					<p:column headerText="#{i18n['user.last_login']}" sortBy="#{user.lastConnection}">
-						<h:outputText value="#{user.lastConnection}">
-							<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
-						</h:outputText>
-					</p:column>
-				</p:dataTable>
 			</div>
 		</h:form>
 	</ui:define>

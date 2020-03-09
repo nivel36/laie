@@ -1,41 +1,28 @@
 package ged.ejb.job.offer;
 
-import java.util.Objects;
+public enum JobOfferState {
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+	CLOSED("job_offer_state.closed", "red", false, true), //
+	CREATED("job_offer_state.created", "cornflowerblue", true, false), //
+	FINISHED("job_offer_state.finished", "blue", false, true), //
+	OPENED("job_offer_state.opened", "green"), //
+	PAUSED("job_offer_state.paused", "blueviolet");
 
-import ged.ejb.core.i18n.I18n;
-import ged.ejb.core.model.AbstractEntity;
-
-@Entity
-@Table(name = "JOB_OFFER_STATE")
-public class JobOfferState extends AbstractEntity {
-
-	private static final long serialVersionUID = 1L;
-
-	@I18n
-	private String name;
+	private boolean closeState;
 
 	private String color;
 
-	private boolean first;
+	private String name;
 
-	private boolean last;
+	private boolean openState;
 
-	@Override
-	public boolean equals(final Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (!super.equals(obj)) {
-			return false;
-		}
-		if (this.getClass() != obj.getClass()) {
-			return false;
-		}
-		final JobOfferState other = (JobOfferState) obj;
-		return Objects.equals(this.name, other.name);
+	JobOfferState(final String name, final String color) {
+		this(name, color, false, false);
+	}
+
+	JobOfferState(final String name, final String color, final boolean openState, final boolean closeState) {
+		this.name = name;
+		this.color = color;
 	}
 
 	public String getColor() {
@@ -46,32 +33,11 @@ public class JobOfferState extends AbstractEntity {
 		return this.name;
 	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hashCode(this.name);
+	public boolean isCloseState() {
+		return this.closeState;
 	}
 
-	public boolean isFirst() {
-		return this.first;
-	}
-
-	public boolean isLast() {
-		return this.last;
-	}
-
-	public void setColor(final String color) {
-		this.color = color;
-	}
-
-	public void setFirst(final boolean first) {
-		this.first = first;
-	}
-
-	public void setLast(final boolean last) {
-		this.last = last;
-	}
-
-	public void setName(final String name) {
-		this.name = name;
+	public boolean isOpenState() {
+		return this.openState;
 	}
 }

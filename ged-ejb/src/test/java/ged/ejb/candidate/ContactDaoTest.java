@@ -17,8 +17,8 @@ import ged.ejb.client.Contact;
 import ged.ejb.client.ContactDao;
 import ged.ejb.core.model.Page;
 import ged.ejb.core.model.PersistenceFacade;
-import ged.ejb.core.model.SearchResult;
-import ged.ejb.core.model.SortField;
+import ged.ejb.core.model.search.SearchResult;
+import ged.ejb.core.model.search.SortField;
 
 @ExtendWith(MockitoExtension.class)
 public class ContactDaoTest {
@@ -29,19 +29,19 @@ public class ContactDaoTest {
 		@Test
 		public void emptyTextShouldReturnList() {
 			final SearchResult<Contact> searchResult = new SearchResult<>(new ArrayList<>(), 0);
-			when(persistenceFacade.search(Contact.class, Page.ALL, new ArrayList<SortField>(), "", "name", "surname",
-					"email")).thenReturn(searchResult);
-			final List<Contact> users = contactDao.search("", Page.ALL).getResultData();
+			when(persistenceFacade.search(Contact.class, Page.ALL_RESULTS, new ArrayList<SortField>(), null, "", "_name",
+					"_surname", "_email")).thenReturn(searchResult);
+			final List<Contact> users = contactDao.search("", Page.ALL_RESULTS).getResultData();
 			assertEquals(0, users.size());
 		}
 
 		@Test
 		public void nullTextShouldReturnList() {
 			final SearchResult<Contact> searchResult = new SearchResult<>(new ArrayList<>(), 0);
-			when(persistenceFacade.search(Contact.class, Page.ALL, new ArrayList<SortField>(), null, "name", "surname",
-					"email")).thenReturn(searchResult);
+			when(persistenceFacade.search(Contact.class, Page.ALL_RESULTS, new ArrayList<SortField>(), null, null, "_name",
+					"_surname", "_email")).thenReturn(searchResult);
 
-			final List<Contact> users = contactDao.search(null, Page.ALL).getResultData();
+			final List<Contact> users = contactDao.search(null, Page.ALL_RESULTS).getResultData();
 			assertEquals(0, users.size());
 		}
 
@@ -56,10 +56,10 @@ public class ContactDaoTest {
 
 			final SearchResult<Contact> searchResult = new SearchResult<>(contacts, 1);
 
-			when(persistenceFacade.search(Contact.class, Page.ALL, new ArrayList<SortField>(), "Aaron", "name",
-					"surname", "email")).thenReturn(searchResult);
+			when(persistenceFacade.search(Contact.class, Page.ALL_RESULTS, new ArrayList<SortField>(), null, "Aaron", "_name",
+					"_surname", "_email")).thenReturn(searchResult);
 
-			final List<Contact> returnedContacts = contactDao.search("Aaron", Page.ALL).getResultData();
+			final List<Contact> returnedContacts = contactDao.search("Aaron", Page.ALL_RESULTS).getResultData();
 			assertEquals("Smith", returnedContacts.get(0).getSurname());
 		}
 	}

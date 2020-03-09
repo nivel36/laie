@@ -11,6 +11,7 @@
 			<url-pattern>/login.xhtml</url-pattern>
 			<url-pattern>/javax.faces.resource/*</url-pattern>
 			<url-pattern>/resources/img/*</url-pattern>
+			<url-pattern>/public/*</url-pattern>
 		</web-resource-collection>
 	</security-constraint>
 	<security-constraint>
@@ -54,7 +55,7 @@
 	
 	<context-param>
 		<param-name>javax.faces.FACELETS_LIBRARIES</param-name>
-		<param-value>/WEB-INF/primefaces-roma.taglib.xml; /WEB-INF/i18n.taglib.xml</param-value>
+		<param-value>/WEB-INF/primefaces-roma.taglib.xml</param-value>
 	</context-param>
 	
 	<context-param>
@@ -86,6 +87,11 @@
 	<context-param>
 		<param-name>primefaces.FONT_AWESOME</param-name>
 		<param-value>true</param-value>
+	</context-param>
+
+	<context-param>
+ 		<param-name>javax.faces.ENABLE_WEBSOCKET_ENDPOINT</param-name>
+ 		<param-value>true</param-value>
 	</context-param>
 
 	<servlet>

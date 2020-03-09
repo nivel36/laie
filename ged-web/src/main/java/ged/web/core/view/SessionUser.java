@@ -11,7 +11,6 @@ import javax.enterprise.context.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +18,7 @@ import org.slf4j.LoggerFactory;
 import ged.ejb.core.model.Ownerable;
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
+import ged.web.core.LoginService;
 
 @Named
 @SessionScoped
@@ -31,6 +31,9 @@ public class SessionUser implements Serializable {
 	@Inject
 	private transient ExternalContext externalContext;
 
+	@Inject
+	private transient LoginService loginService;
+
 	private Locale locale;
 
 	private List<User> team;
@@ -42,11 +45,15 @@ public class SessionUser implements Serializable {
 
 	public String exit() {
 		logger.debug("User {} logout", this.user);
-		invalidateSession();
+		loginService.logout(this.user.getEmail());
 		return "/login.xhtml?faces-redirect=true";
 	}
 
 	public User get() {
+		return this.user;
+	}
+
+	public User getUser() {
 		return this.user;
 	}
 
@@ -64,24 +71,22 @@ public class SessionUser implements Serializable {
 
 	public boolean hasPermissionToEdit(final Ownerable entity) {
 		Objects.requireNonNull(entity);
-		if (isAdmin()) {
+		if (this.isAdmin()) {
 			return true;
 		}
 		final User owner = entity.getOwner();
 		Objects.requireNonNull(owner);
-		return isOwnerOrHisManager(owner);
+		return this.isOwnerOrHisManager(owner);
 	}
 
 	@PostConstruct
 	public void init() {
-		final String email = this.externalContext.getRemoteUser();
-		logger.info("User {} has init his/her session", email);
-		loadUserData(email);
-	}
-
-	private void invalidateSession() {
-		final HttpSession session = (HttpSession) this.externalContext.getSession(true);
-		session.invalidate();
+		final String remoteUser = this.externalContext.getRemoteUser();
+		if (remoteUser == null) {
+			return;
+		}
+		logger.info("User {} has init his/her session", remoteUser);
+		this.loadUserData(remoteUser);
 	}
 
 	public boolean isActive() {
@@ -89,7 +94,7 @@ public class SessionUser implements Serializable {
 	}
 
 	public boolean isAdmin() {
-		if (!isActive()) {
+		if (!this.isActive()) {
 			return false;
 		}
 		return this.user.isAdmin();
@@ -97,14 +102,14 @@ public class SessionUser implements Serializable {
 
 	public boolean isManagerOf(final User subordinate) {
 		Objects.requireNonNull(subordinate);
-		return getTeam().contains(subordinate);
+		return this.getTeam().contains(subordinate);
 	}
 
 	private boolean isOwnerOrHisManager(final User owner) {
 		if (this.user.equals(owner)) {
 			return true;
 		}
-		return isManagerOf(owner);
+		return this.isManagerOf(owner);
 	}
 
 	private void loadUserData(final String email) {
@@ -115,7 +120,7 @@ public class SessionUser implements Serializable {
 
 	public void refresh() {
 		logger.trace("Refreshing session for user {}", this.user.getEmail());
-		loadUserData(this.user.getEmail());
+		this.loadUserData(this.user.getEmail());
 	}
 
 	public void setExternalContext(final ExternalContext externalContext) {
@@ -128,7 +133,7 @@ public class SessionUser implements Serializable {
 
 	@Override
 	public String toString() {
-		if (!isActive()) {
+		if (!this.isActive()) {
 			return "";
 		}
 		return this.user.getFullName();

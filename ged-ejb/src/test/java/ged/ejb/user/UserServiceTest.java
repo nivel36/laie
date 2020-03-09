@@ -6,7 +6,6 @@ import static org.mockito.Mockito.when;
 
 import javax.security.auth.login.LoginException;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -24,18 +23,9 @@ public class UserServiceTest {
 
 		@Test
 		public void invalidEmailShoudThrowLoginException() {
-			when(UserServiceTest.this.userDao.findUserAndCredential("abel@test.com")).thenReturn(null);
+			when(UserServiceTest.this.userDao.findCredential("abel@test.com")).thenReturn(null);
 			assertThrows(LoginException.class, () -> {
 				UserServiceTest.this.userService.login("abel@test.com", "password");
-			});
-		}
-
-		@Test
-		public void invalidPasswordShoudThrowLoginException() {
-			final User user = UserServiceTest.this.mockUser(1L, "abel@test.com", null);
-			when(UserServiceTest.this.userDao.findUserAndCredential("abel@test.com")).thenReturn(user);
-			assertThrows(LoginException.class, () -> {
-				UserServiceTest.this.userService.login("abel@test.com", "pasword");
 			});
 		}
 
@@ -51,15 +41,6 @@ public class UserServiceTest {
 			assertThrows(NullPointerException.class, () -> {
 				UserServiceTest.this.userService.login("abel@test.com", null);
 			});
-		}
-
-		@Test
-		public void validCredentialShoudSaveUser() throws Exception {
-			final User user = UserServiceTest.this.mockUser(1L, "abel@test.com", null);
-			when(UserServiceTest.this.userDao.findUserAndCredential("abel@test.com")).thenReturn(user);
-			when(UserServiceTest.this.userDao.save(user)).thenReturn(user);
-			final User savedUser = UserServiceTest.this.userService.login("abel@test.com", "password");
-			Assertions.assertTrue(savedUser.getLastConnection() != null);
 		}
 	}
 
@@ -117,7 +98,6 @@ public class UserServiceTest {
 		}
 		user.setEmail(email);
 		user.setManager(manager);
-		user.newCredential("password");
 		return user;
 	}
 

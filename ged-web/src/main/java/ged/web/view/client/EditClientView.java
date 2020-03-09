@@ -15,8 +15,6 @@ import ged.web.core.IllegalPageStateException;
 @ViewScoped
 public class EditClientView extends AbstractClientView {
 
-	private static final String CLIENT_KEY = "client";
-
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	private static final long serialVersionUID = 1L;
@@ -37,7 +35,6 @@ public class EditClientView extends AbstractClientView {
 
 	@PostConstruct
 	public void init() {
-		this.client = this.getValueFromFlash(CLIENT_KEY);
 		this.checkNonNullClient();
 		logger.trace("Client {} edit init", this.client);
 		this.checkEditPermission();

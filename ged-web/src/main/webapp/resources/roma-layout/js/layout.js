@@ -400,23 +400,6 @@ PrimeFaces.widget.Roma = PrimeFaces.widget.BaseWidget.extend({
     },
 
     restoreMenuState: function() {
-        var menucookie = $.cookie('roma_expandeditems');
-        if (menucookie) {
-            this.expandedMenuitems = menucookie.split(',');
-            for (var i = 0; i < this.expandedMenuitems.length; i++) {
-                var id = this.expandedMenuitems[i];
-                if (id) {
-                    var menuitem = $("#" + this.expandedMenuitems[i].replace(/:/g, "\\:"));
-                    menuitem.addClass('active-menuitem');
-
-                    var submenu = menuitem.children('ul');
-                    if(submenu.length) {
-                        submenu.show();
-                    }
-                }
-            }
-        }
-
         var staticMenuCookie = $.cookie('roma_static_menu_inactive');
         if(staticMenuCookie) {
             this.wrapper.addClass('layout-static-inactive layout-static-inactive-restore');

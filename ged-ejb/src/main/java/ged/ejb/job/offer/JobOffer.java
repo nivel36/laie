@@ -28,8 +28,9 @@ import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.SortableField;
 import org.hibernate.search.annotations.Store;
 
+import ged.ejb.candidate.Candidate;
 import ged.ejb.client.Client;
-import ged.ejb.core.model.AbstractEntity;
+import ged.ejb.core.model.AbstractIndexedEntity;
 import ged.ejb.core.model.Address;
 import ged.ejb.core.model.Ownerable;
 import ged.ejb.job.candidature.JobCandidature;
@@ -38,7 +39,7 @@ import ged.ejb.user.User;
 @Entity
 @Indexed
 @Table(name = "JOB_OFFER")
-public class JobOffer extends AbstractEntity implements Ownerable {
+public class JobOffer extends AbstractIndexedEntity implements Ownerable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -52,8 +53,6 @@ public class JobOffer extends AbstractEntity implements Ownerable {
 	@IndexedEmbedded
 	private Client client;
 
-	private Integer salary;
-
 	@Field(analyze = Analyze.NO)
 	@SortableField
 	private LocalDate dateClosed;
@@ -66,19 +65,8 @@ public class JobOffer extends AbstractEntity implements Ownerable {
 	@Field
 	private String description;
 
-	@OneToMany(mappedBy = "jobOffer", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "jobOffer", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<JobCandidature> jobCandidatures;
-
-	@NotNull
-	@ManyToOne
-	private JobOfferState jobOfferState;
-
-	@NotNull
-	@Column(nullable = false)
-	@Field(name = "_title")
-	@Field(name = "title", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
-	@SortableField(forField = "title")
-	private String title;
 
 	@NotNull
 	@ManyToOne
@@ -89,9 +77,28 @@ public class JobOffer extends AbstractEntity implements Ownerable {
 	@NotNull
 	private Integer places = 1;
 
+	private boolean published;
+
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "job_user", joinColumns = @JoinColumn(name = "job_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
 	private Set<User> recruiters;
+
+	private Integer salary;
+
+	@NotNull
+	private JobOfferState state;
+
+	@NotNull
+	@Column(nullable = false)
+	@Field(name = "_title")
+	@Field(name = "title", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
+	@SortableField(forField = "title")
+	private String title;
+
+	public JobOffer() {
+		this.state = JobOfferState.CREATED;
+		this.dateOpened = LocalDate.now();
+	}
 
 	@Override
 	public boolean equals(final Object obj) {
@@ -133,10 +140,6 @@ public class JobOffer extends AbstractEntity implements Ownerable {
 		return this.jobCandidatures;
 	}
 
-	public JobOfferState getJobOfferState() {
-		return this.jobOfferState;
-	}
-
 	@Override
 	public User getOwner() {
 		return this.owner;
@@ -154,13 +157,46 @@ public class JobOffer extends AbstractEntity implements Ownerable {
 		return this.salary;
 	}
 
+	public JobOfferState getState() {
+		return this.state;
+	}
+
 	public String getTitle() {
 		return this.title;
+	}
+
+	public boolean hasCandidatureOf(final Candidate candidate) {
+		Objects.requireNonNull(candidate);
+		if (this.jobCandidatures.isEmpty()) {
+			return false;
+		}
+		for (final JobCandidature jobCandidature : this.jobCandidatures) {
+			if (jobCandidature.getCandidate().equals(candidate)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	@Override
 	public int hashCode() {
 		return Objects.hash(this.dateOpened, this.title, this.places);
+	}
+
+	public boolean hasState(final JobOfferState state) {
+		if (this.state == null) {
+			return state == null;
+		} else {
+			return this.state.equals(state);
+		}
+	}
+
+	public boolean isOpen() {
+		return this.hasState(JobOfferState.OPENED);
+	}
+
+	public boolean isPublished() {
+		return this.published;
 	}
 
 	public void setAddress(final Address address) {
@@ -187,10 +223,6 @@ public class JobOffer extends AbstractEntity implements Ownerable {
 		this.jobCandidatures = jobCandidatures;
 	}
 
-	public void setJobOfferState(final JobOfferState jobOfferState) {
-		this.jobOfferState = jobOfferState;
-	}
-
 	@Override
 	public void setOwner(final User owner) {
 		this.owner = owner;
@@ -200,9 +232,13 @@ public class JobOffer extends AbstractEntity implements Ownerable {
 		this.places = places;
 	}
 
+	public void setPublished(final boolean published) {
+		this.published = published;
+	}
+
 	public void setRecruiters(final List<User> users) {
 		this.recruiters = new HashSet<User>();
-		if (users == null || users.isEmpty()) {
+		if ((users == null) || users.isEmpty()) {
 			return;
 		}
 		for (final User user : users) {
@@ -216,6 +252,10 @@ public class JobOffer extends AbstractEntity implements Ownerable {
 
 	public void setSalary(final Integer salary) {
 		this.salary = salary;
+	}
+
+	public void setState(final JobOfferState state) {
+		this.state = state;
 	}
 
 	public void setTitle(final String title) {

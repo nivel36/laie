@@ -30,9 +30,9 @@ public class UserDaoTest {
 
 		@Test
 		public void shouldReturnAList() {
-			when(UserDaoTest.this.persistenceFacade.findAll(User.class, Page.ALL)).thenReturn(new ArrayList<User>());
+			when(UserDaoTest.this.persistenceFacade.findAll(User.class, Page.ALL_RESULTS)).thenReturn(new ArrayList<User>());
 
-			final List<User> users = UserDaoTest.this.userDao.findAll(Page.ALL);
+			final List<User> users = UserDaoTest.this.userDao.findAll(Page.ALL_RESULTS);
 			assertEquals(0, users.size());
 		}
 	}
@@ -52,7 +52,7 @@ public class UserDaoTest {
 			final User user = UserDaoTest.this.mockUser(1L, "abel@test.com", null);
 
 			when(UserDaoTest.this.persistenceFacade.findByQuery(User.class, "User.findSubordinateUsers", map("id", 1L),
-					Page.ALL)).thenThrow(new NoResultException());
+					Page.ALL_RESULTS)).thenThrow(new NoResultException());
 
 			final List<User> subordinateUsersFromDataBases = UserDaoTest.this.userDao.findSubordinateUsers(user);
 			assertEquals(0, subordinateUsersFromDataBases.size());
@@ -68,7 +68,7 @@ public class UserDaoTest {
 			subordinateUsers.add(subordinate);
 
 			when(UserDaoTest.this.persistenceFacade.findByQuery(User.class, "User.findSubordinateUsers", map("id", 1L),
-					Page.ALL)).thenReturn(subordinateUsers);
+					Page.ALL_RESULTS)).thenReturn(subordinateUsers);
 
 			final List<User> subordinateUsersFromDataBase = UserDaoTest.this.userDao.findSubordinateUsers(manager);
 			assertEquals(1, subordinateUsersFromDataBase.size());

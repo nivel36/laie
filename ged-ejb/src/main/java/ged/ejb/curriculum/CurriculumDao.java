@@ -8,18 +8,19 @@ import java.util.Objects;
 import javax.persistence.NoResultException;
 
 import ged.ejb.candidate.Candidate;
-import ged.ejb.core.model.AbstractDao;
+import ged.ejb.core.model.AbstractIndexedDao;
 import ged.ejb.core.model.Page;
 import ged.ejb.core.model.Repository;
 
 @Repository
-public class CurriculumDao extends AbstractDao<Curriculum> {
+public class CurriculumDao extends AbstractIndexedDao<Curriculum> {
 
-	public List<SkillLevel> findAllSkillLevels() {
-		return this.findAll(SkillLevel.class, Page.ALL);
+	public List<CurriculumTemplate> findCurriculumTemplates() {
+		return this.findAll(CurriculumTemplate.class, Page.ALL_RESULTS);
 	}
 
 	public Curriculum findByCandidate(final Candidate candidate) {
+		Objects.requireNonNull(candidate);
 		try {
 			return this.findByQuery(Curriculum.class, "Curriculum.findByCandidate", map("candidate", candidate));
 		} catch (final NoResultException e) {
@@ -28,12 +29,13 @@ public class CurriculumDao extends AbstractDao<Curriculum> {
 	}
 	
 	public Skill findSkill(final String name) {
-		Objects.requireNonNull(name, "Skill name can't be null");
-		try {
-			return this.findByQuery(Skill.class, "Skill.findByName", map("name", name));
-		} catch (final NoResultException e) {
-			return null;
-		}	
+		Objects.requireNonNull(name);
+		return this.findByQuery(Skill.class, "Skill.findByName", map("name", name));
+	}
+
+	public Curriculum findByUid(final String uid) {
+		Objects.requireNonNull(uid);
+		return this.findByQuery(Curriculum.class, "Curriculum.findByUid", map("uid", uid));
 	}
 
 	@Override
@@ -43,6 +45,7 @@ public class CurriculumDao extends AbstractDao<Curriculum> {
 
 	@Override
 	public String[] searchFields() {
-		return new String[] {};
+		return new String[] { "skills.name", "jobExperiences.jobPosition", "jobExperiences.description",
+				"jobExperiences.companyName", "educations.description" };
 	}
 }

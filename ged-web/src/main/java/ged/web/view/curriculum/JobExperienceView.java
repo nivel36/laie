@@ -1,6 +1,11 @@
 package ged.web.view.curriculum;
 
 import java.time.YearMonth;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -8,9 +13,12 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.validation.constraints.NotNull;
 
+import org.omnifaces.cdi.Param;
+
 import ged.ejb.curriculum.Curriculum;
 import ged.ejb.curriculum.CurriculumService;
 import ged.ejb.curriculum.JobExperience;
+import ged.web.core.IllegalPageStateException;
 import ged.web.core.YearMonthDto;
 import ged.web.core.util.PageEnum;
 import ged.web.core.view.AbstractView;
@@ -19,12 +27,10 @@ import ged.web.core.view.AbstractView;
 @ViewScoped
 public class JobExperienceView extends AbstractView {
 
-	private static final String CURRICULUM_KEY = "curriculum";
-
-	private static final String JOB_EXPERIENCE_KEY = "jobExperience";
-
 	private static final long serialVersionUID = 1L;
 
+	@Inject
+	@Param(name = "curriculumId", required = true)
 	private Curriculum curriculum;
 
 	@Inject
@@ -38,14 +44,39 @@ public class JobExperienceView extends AbstractView {
 	@NotNull
 	private YearMonthDto toDate;
 
-	private String curriculumUrl() {
-		return PageEnum.CURRICULUM.getRedirectedUrl(this.curriculum.getCandidate());
+	private JobExperience buildJobExperienceFromQueryParameter(final String itemParameter) {
+		try {
+			final int item = Integer.parseInt(itemParameter);
+			final List<JobExperience> jobExperiences = new ArrayList<>(this.curriculum.getJobExperiences());
+			if (item >= jobExperiences.size()) {
+				throw new IllegalPageStateException();
+			}
+			Collections.sort(jobExperiences);
+			return jobExperiences.get(item);
+		} catch (final NumberFormatException e) {
+			throw new IllegalPageStateException();
+		}
+	}
+
+	private JobExperience buildNewJobExperience() {
+		JobExperience jobExperience;
+		jobExperience = new JobExperience();
+		jobExperience.setStillWorking(false);
+		jobExperience.setCurriculum(this.curriculum);
+		return jobExperience;
+	}
+
+	private String buildCurriculumUrl() {
+		final Map<String, String> queryParams = new HashMap<>();
+		queryParams.put("id", this.curriculum.getUid());
+		queryParams.put("candidateId", this.curriculum.getCandidate().getUid());
+		return this.navigator.getRedirectUrl(PageEnum.CURRICULUM, queryParams);
 	}
 
 	public String delete() {
 		this.curriculum.removeJobExperience(this.jobExperience);
 		this.curriculumService.save(this.curriculum);
-		return this.curriculumUrl();
+		return this.buildCurriculumUrl();
 	}
 
 	public Curriculum getCurriculum() {
@@ -66,13 +97,9 @@ public class JobExperienceView extends AbstractView {
 
 	@PostConstruct
 	public void init() {
-		this.curriculum = this.getValueFromFlash(CURRICULUM_KEY);
 		this.jobExperience = this.initJobExperience();
-		this.fromDate = this.initFromDate();
 		this.toDate = this.initToDate();
-		if (!this.isNewJobExperience()) {
-			this.curriculum.removeJobExperience(this.jobExperience);
-		}
+		this.fromDate = this.initFromDate();
 	}
 
 	public YearMonthDto initFromDate() {
@@ -85,13 +112,12 @@ public class JobExperienceView extends AbstractView {
 	}
 
 	public JobExperience initJobExperience() {
-		JobExperience jobExperience = this.getValueFromFlash(JOB_EXPERIENCE_KEY);
-		if (jobExperience == null) {
-			jobExperience = new JobExperience();
-			jobExperience.setStillWorking(false);
-			jobExperience.setCurriculum(this.curriculum);
+		final String itemParameter = this.getValueFromGetParameters("item");
+		if (itemParameter == null) {
+			return this.buildNewJobExperience();
+		} else {
+			return this.buildJobExperienceFromQueryParameter(itemParameter);
 		}
-		return jobExperience;
 	}
 
 	public YearMonthDto initToDate() {
@@ -104,14 +130,16 @@ public class JobExperienceView extends AbstractView {
 	}
 
 	public boolean isNewJobExperience() {
-		return this.jobExperience.getId() == 0;
+		return this.jobExperience.isNew();
 	}
 
 	public String save() {
 		this.updateJobExperienceData();
-		this.curriculum.addJobExperience(this.jobExperience);
+		if (jobExperience.isNew()) {
+			this.curriculum.addJobExperience(this.jobExperience);
+		}
 		this.curriculumService.save(this.curriculum);
-		return this.curriculumUrl();
+		return this.buildCurriculumUrl();
 	}
 
 	public void setCurriculumService(final CurriculumService curriculumService) {

@@ -5,11 +5,14 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.omnifaces.cdi.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import ged.ejb.client.Client;
 import ged.ejb.core.model.Address;
 import ged.ejb.job.offer.JobOffer;
 import ged.ejb.user.User;
@@ -22,10 +25,14 @@ public class AddJobView extends AbstractJobView {
 
 	private static final long serialVersionUID = 1L;
 
+	@Inject
+	@Param(name = "clientId", required = false)
+	private Client client;
+
 	private JobOffer buildNewJobOffer() {
 		final JobOffer newJobOffer = new JobOffer();
 		newJobOffer.setOwner(this.sessionUser.get());
-		newJobOffer.setClient(this.getValueFromFlash("client"));
+		newJobOffer.setClient(this.client);
 		newJobOffer.setAddress(new Address());
 		return newJobOffer;
 	}
@@ -47,7 +54,11 @@ public class AddJobView extends AbstractJobView {
 	public String save() {
 		logger.debug("Create new client action performed");
 		this.jobOffer.setRecruiters(this.getRecruiters());
-		this.jobOffer = this.jobOfferService.newJobOffer(this.jobOffer);
+		this.jobOffer = this.jobOfferService.save(this.jobOffer);
 		return this.jobUrl();
+	}
+
+	public void setClient(final Client client) {
+		this.client = client;
 	}
 }

@@ -1,27 +1,20 @@
 package ged.web.core.view;
 
-import java.lang.invoke.MethodHandles;
-import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
-import javax.faces.application.Application;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import ged.ejb.core.Language;
 import ged.web.core.util.WebConfigurationProperty;
 
 @ApplicationScoped
 @Named
 public class ApplicationView extends AbstractView {
-
-	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	private static final long serialVersionUID = 1L;
 
@@ -29,7 +22,9 @@ public class ApplicationView extends AbstractView {
 	@WebConfigurationProperty(value = "ged.buildtime")
 	private String buildtime;
 
-	private List<Locale> locales = new ArrayList<>();
+	private String hostname;
+
+	private List<Language> languages;
 
 	@Inject
 	@WebConfigurationProperty(value = "ged.version")
@@ -39,8 +34,12 @@ public class ApplicationView extends AbstractView {
 		return this.buildtime;
 	}
 
-	public List<Locale> getLocales() {
-		return this.locales;
+	public String getHostname() {
+		return hostname;
+	}
+
+	public List<Language> getLanguages() {
+		return languages;
 	}
 
 	public String getVersion() {
@@ -49,26 +48,20 @@ public class ApplicationView extends AbstractView {
 
 	@PostConstruct
 	public void init() {
-		this.loadLocales();
+		this.hostname = getHostnameUrl();
+		this.languages = Arrays.asList(Language.values());
 	}
 
-	private void loadLocales() {
-		logger.info("Loading locales");
-		final Application app = this.facesContext.getApplication();
-		final Iterator<Locale> supportedLocales = app.getSupportedLocales();
-		while (supportedLocales.hasNext()) {
-			this.locales.add(supportedLocales.next());
-		}
-		final Locale defaultLocale = app.getDefaultLocale();
-		this.locales.add(defaultLocale);
+	private String getHostnameUrl() {
+		final HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
+		final String url = request.getRequestURL().toString();
+		final String uri = request.getRequestURI();
+		final int hostnameLength = url.length() - uri.length();
+		return url.substring(0, hostnameLength);
 	}
 
 	public void setBuildtime(final String buildtime) {
 		this.buildtime = buildtime;
-	}
-
-	public void setLocales(final List<Locale> locales) {
-		this.locales = locales;
 	}
 
 	public void setVersion(final String version) {

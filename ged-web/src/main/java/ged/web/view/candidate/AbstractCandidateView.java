@@ -7,13 +7,15 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.omnifaces.cdi.Param;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.RateEvent;
 import org.primefaces.model.UploadedFile;
 
 import ged.ejb.candidate.Candidate;
 import ged.ejb.candidate.CandidateService;
-import ged.ejb.core.FileUploadService;
+import ged.ejb.core.file.File;
+import ged.ejb.core.file.FileService;
 import ged.ejb.core.model.Page;
 import ged.ejb.core.tag.Tag;
 import ged.ejb.core.tag.TagService;
@@ -24,13 +26,15 @@ public abstract class AbstractCandidateView extends AbstractView {
 
 	private static final long serialVersionUID = 1L;
 
+	@Inject
+	@Param(name = "id", required = true)
 	protected Candidate candidate;
 
 	@Inject
 	protected transient CandidateService candidateService;
 
 	@Inject
-	protected transient FileUploadService fileUploadService;
+	protected transient FileService fileUploadService;
 
 	protected List<Tag> tags;
 
@@ -38,7 +42,7 @@ public abstract class AbstractCandidateView extends AbstractView {
 	protected transient TagService tagService;
 
 	protected String candidateUrl() {
-		return PageEnum.CANDIDATE.getRedirectedUrl(this.candidate);
+		return this.navigator.getRedirectUrl(PageEnum.CANDIDATE, this.candidate);
 	}
 
 	public Candidate getCandidate() {
@@ -55,7 +59,7 @@ public abstract class AbstractCandidateView extends AbstractView {
 	}
 
 	public List<Tag> queryTags(final String query) {
-		return this.tagService.search(query, Page.of(0, 10)).getResultData();
+		return this.tagService.search(query, Page.TEN_RESULTS_PER_PAGE).getResultData();
 	}
 
 	public void setCandidate(final Candidate candidate) {
@@ -73,8 +77,8 @@ public abstract class AbstractCandidateView extends AbstractView {
 	public void uploadImage(final FileUploadEvent event) {
 		final UploadedFile uploadedFile = event.getFile();
 		try (InputStream inputStream = uploadedFile.getInputstream()) {
-			final String uuid = this.fileUploadService.uploadImage(inputStream);
-			this.candidate.setImageFileName(uuid);
+			File file = this.fileUploadService.uploadFile(inputStream, true, this.candidate.getUid() + "_picture");
+			this.candidate.setPicture(file);
 		} catch (final IOException e) {
 			throw new UncheckedIOException(e);
 		}

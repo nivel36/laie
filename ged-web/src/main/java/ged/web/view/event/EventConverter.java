@@ -3,21 +3,21 @@ package ged.web.view.event;
 import javax.faces.convert.FacesConverter;
 
 import ged.ejb.core.AbstractService;
-import ged.ejb.event.Event;
-import ged.ejb.event.EventService;
+import ged.ejb.event.JobCandidatureEvent;
+import ged.ejb.event.JobCandidatureEventService;
 import ged.web.core.view.AbstractConverter;
 
-@FacesConverter(managed = true, forClass = Event.class)
-public class EventConverter extends AbstractConverter<Event> {
+@FacesConverter(managed = true, forClass = JobCandidatureEvent.class)
+public class EventConverter extends AbstractConverter<JobCandidatureEvent> {
 
-	private EventService eventService;
+	private JobCandidatureEventService jobCandidatureEventService;
 
 	@Override
-	protected AbstractService<Event> getService() {
-		return this.eventService;
+	protected AbstractService<JobCandidatureEvent> getService() {
+		return this.jobCandidatureEventService;
 	}
 
-	public void setEventService(final EventService eventService) {
-		this.eventService = eventService;
+	public void setEventService(final JobCandidatureEventService jobCandidatureEventService) {
+		this.jobCandidatureEventService = jobCandidatureEventService;
 	}
 }

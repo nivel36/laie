@@ -42,7 +42,7 @@ public class AbstractRecordEntity extends AbstractEntity {
 		if (this == obj) {
 			return true;
 		}
-		if (getClass() != obj.getClass()) {
+		if (this.getClass() != obj.getClass()) {
 			return false;
 		}
 		final AbstractRecordEntity other = (AbstractRecordEntity) obj;
@@ -50,8 +50,7 @@ public class AbstractRecordEntity extends AbstractEntity {
 			if (other.entityClass != null) {
 				return false;
 			}
-		}
-		else if (!this.entityClass.equals(other.entityClass)) {
+		} else if (!this.entityClass.equals(other.entityClass)) {
 			return false;
 		}
 		if (this.entityId != other.entityId) {
@@ -61,8 +60,7 @@ public class AbstractRecordEntity extends AbstractEntity {
 			if (other.user != null) {
 				return false;
 			}
-		}
-		else if (!this.user.equals(other.user)) {
+		} else if (!this.user.equals(other.user)) {
 			return false;
 		}
 		return true;
@@ -88,9 +86,9 @@ public class AbstractRecordEntity extends AbstractEntity {
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + (this.entityClass == null ? 0 : this.entityClass.hashCode());
-		result = prime * result + (int) this.entityId;
-		result = prime * result + (this.user == null ? 0 : this.user.hashCode());
+		result = (prime * result) + (this.entityClass == null ? 0 : this.entityClass.hashCode());
+		result = (prime * result) + (int) this.entityId;
+		result = (prime * result) + (this.user == null ? 0 : this.user.hashCode());
 		return result;
 	}
 

@@ -61,6 +61,16 @@ body .ui-datatable table {
 	table-layout: auto;
 }
 
+body .field-btn {
+	margin-top: 2em;
+}
+
+@media screen and (max-width: 576px) {
+	body .field-btn {
+		margin-top: 0em;
+	}
+}
+
 .attendee {
 	display: flex;
 	flex: 1 1 100%;
@@ -79,6 +89,16 @@ body .ui-datatable table {
 
 .attendee:hover .remove-attendee {
 	display: inline-flex !important;
+}
+
+.document .ql-editor {
+	padding: 4em 5em 3em 3em;
+}
+
+@media (min-width: 1200px) {
+	.document {
+		width: 21cm;
+	}
 }
 
 .card-aside {
@@ -148,7 +168,7 @@ body .ui-datatable table {
 }
 
 .avatar.tiny {
-	width: 30x;
+	width: 30px;
 	height: 30px;
 }
 
@@ -162,10 +182,10 @@ body .ui-datatable table {
 	justify-content: flex-end;
 }
 
-.buttons.header-buttons{
+.buttons.header-buttons {
 	position: absolute;
-	right: 1em;
-	top: 1em;
+	right: 2em;
+	top: 2em;
 }
 
 .buttons .ui-widget {
@@ -205,7 +225,16 @@ body .ui-datatable table {
 }
 
 .input-group .label-container {
-	margin: 1em 0;
+	margin: 0 0 1em 0;
+}
+
+body .jobCandidatureStates.ui-selectonemenu-panel .ui-selectonemenu-items .ui-selectonemenu-item.ui-selectonemenu-row, body .jobCandidatureStates.ui-selectonemenu-panel .ui-selectonemenu-table th,
+	.ui-selectonemenu-panel .ui-selectonemenu-table td {
+	border: 0px;
+}
+
+body .jobCandidatureStates.ui-selectonemenu-panel .ui-selectonemenu-items .ui-selectonemenu-item.ui-selectonemenu-row td {
+	padding: 0.3em 0.6em;
 }
 
 .person {
@@ -218,7 +247,7 @@ body .ui-datatable table {
 }
 
 .person.selectable:hover {
-	background: #f2f3f3;
+	background: #eaeaea;
 	border-left: 3px solid #1976d2;
 }
 
@@ -275,24 +304,16 @@ body .ui-datatable table {
 	padding: 0;
 }
 
-.job-card-header {
-	position: relative;
-	background: #f9f9f9;
-	overflow: hidden;
-	padding: 1.5em;
-	background: #f9f9f9;
-}
-
 .job-card-name {
 	font-size: 1.8em;
 	font-weight: 700;
 	display: block;
+	padding: 7px 0 0 20px;
 }
 
 .job-card-client {
-	color: #65656a;
 	font-size: 1em;
-	padding-bottom: 0.5em;
+	padding: 20px 0 0 20px;
 	font-weight: 700;
 	display: block;
 }
@@ -314,18 +335,9 @@ body .ui-datatable table {
 	padding: 0;
 }
 
-.client-card-header {
-	background: #f9f9f9;
-	overflow: hidden;
-	padding: 1.5em;
-}
-
-.client-card-header .ui-button {
-	float: right;
-}
-
 .client-card-name {
-	color: #65656a;
+	padding: 40px 0 0 20px;
+	color: #ffffff;
 	font-size: 1.8em;
 	font-weight: 700;
 	white-space: nowrap;
@@ -375,22 +387,27 @@ body .ui-datatable table {
 .curriculum .section .buttons {
 	position: absolute;
 	right: 0px;
-	top: 0px;
+	bottom: 1em;
 }
 
 .curriculum .name {
-	font-size: 1.5em;
+	font-size: 2em;
+	font-weight: bold;
 	text-shadow: 1px 1px white;
 	padding-bottom: 0.4em;
 }
 
 .curriculum .job-profile {
-	font-size: 1em;
+	font-size: 1.5em;
 	padding-bottom: 0.6em;
 }
 
+.curriculum .job-description {
+	white-space: pre-line	
+}
+
 .curriculum .date-range {
-	color: #8c8c93;	
+	color: #8c8c93;
 }
 
 .curriculum .language_name {
@@ -409,7 +426,7 @@ body .ui-datatable table {
 
 .layout-topbar-newItem {
 	padding: 0.4em 1em 0 0;
-	float: right;	
+	float: right;
 }
 
 .meeting {
@@ -480,21 +497,34 @@ body .ui-datatable table {
 	padding: 5px 10px 5px 0px;
 }
 
-.user-card {
+.layout-right-panel .messages {
+	margin: 24px 0 0 0;
+	overflow: auto;
+	height: calc(100% - 100px);
+}
+
+.layout-right-panel .users {
+	margin: 24px 0 0 0;
+}
+
+.layout-right-panel .users .users-search {
+	margin: 0 0 24px 0;
+}
+
+
+.user-card, .candidate-card {
 	padding: 0;
 }
 
-.user-card .user-card-header {
-	height: 120px;
+.user-card .card-header, .client-card .card-header, .job-card .card-header, .candidate-card .card-header {
+	height: 80px;
 	overflow: hidden;
+	background: linear-gradient(30deg, rgba(7,114,179,1) 0%, rgba(0,170,255,1) 100%);
+	background-color: #0772B3;
+	color: #ffffff;
 }
 
-.user-card .user-card-header img {
-	width: 100%;
-	height: 100%;
-}
-
-.user-card .user-card-content .user-image {
+.user-card .user-card-content .user-image, .candidate-card .candidate-card-content .candidate-image {
 	width: 80px;
 	height: 80px;
 	margin: -40px 0 0 24px;
@@ -522,7 +552,7 @@ body .ui-datatable table {
 	z-index: 1;
 }
 
-.user-card .user-card-content .user-card-name {
+.user-card .user-card-content .user-card-name, .candidate-card .candidate-card-content .candidate-card-name {
 	font-size: 13px;
 	color: #ffffff;
 	position: relative;
@@ -532,7 +562,7 @@ body .ui-datatable table {
 	white-space: nowrap;
 }
 
-.user-card .user-card-content .user-card-role {
+.user-card .user-card-content .user-card-role, .candidate-card .candidate-card-content .candidate-card-profile {
 	font-size: 13px;
 	position: relative;
 	top: -50px;
@@ -541,22 +571,49 @@ body .ui-datatable table {
 	white-space: nowrap;
 }
 
-.user-card .user-card-content .user-detail {
+.user-card .user-card-content .user-detail, .candidate-card .candidate-card-content .candidate-detail {
 	padding: .5em 1em;
 }
 
-body .ui-menubutton.success-btn .ui-button{
-    background-color: #0fc763;
-    color: #ffffff;
-    border: 1px solid #0fc763; }
-    body .ui-menubutton.success-btn .ui-button.ui-state-hover {
+body .ui-menu.new_menu {
+	background: #0fc763;
+	min-width: 200px;
+}
+
+body .ui-menu.new_menu .ui-menu-list .ui-menuitem .ui-menuitem-link .ui-menuitem-text {
+	color: white;
+} 
+ 
+body .ui-menu.new_menu .ui-menu-list .ui-menuitem.ui-state-hover {
       background-color: #1DDB76;
-      color: #ffffff;
-      border-color: #31e885; }
-    body .ui-menubutton.success-btn .ui-button.ui-state-focus {
-      -webkit-box-shadow: 0 0 0 0.2em #72ffb3;
-      -moz-box-shadow: 0 0 0 0.2em #72ffb3;
-      box-shadow: 0 0 0 0.2em #72ffb3; }
-    body .ui-menubutton.success-btn .ui-button.ui-state-active {
-      background-color: #0a9c4d;
-      color: #ffffff; }
+      border-color: #31e885;
+}
+
+body .ui-menubutton.success-btn .ui-button {
+	background-color: #0fc763;
+	color: #ffffff;
+	border: 1px solid #0fc763;
+}
+
+body .ui-menubutton.success-btn .ui-button.ui-state-hover {
+	background-color: #1DDB76;
+	color: #ffffff;
+	border-color: #31e885;
+}
+
+body .ui-menubutton.success-btn .ui-button.ui-state-focus {
+	-webkit-box-shadow: 0 0 0 0.2em #72ffb3;
+	-moz-box-shadow: 0 0 0 0.2em #72ffb3;
+	box-shadow: 0 0 0 0.2em #72ffb3;
+}
+
+body .ui-menubutton.success-btn .ui-button.ui-state-active {
+	background-color: #0a9c4d;
+	color: #ffffff;
+}
+
+@media screen and (max-width: 896px) {
+	.layout-topbar .menu-detail-button {
+		display: none;
+	}
+}

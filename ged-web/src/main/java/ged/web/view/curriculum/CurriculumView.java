@@ -1,9 +1,11 @@
 package ged.web.view.curriculum;
 
 import java.util.ArrayList;
-import java.util.Comparator;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -14,7 +16,6 @@ import org.omnifaces.cdi.Param;
 
 import ged.ejb.candidate.Candidate;
 import ged.ejb.curriculum.Curriculum;
-import ged.ejb.curriculum.CurriculumService;
 import ged.ejb.curriculum.Education;
 import ged.ejb.curriculum.JobExperience;
 import ged.ejb.curriculum.Language;
@@ -27,18 +28,23 @@ import ged.web.core.view.AbstractView;
 @ViewScoped
 public class CurriculumView extends AbstractView {
 
-	private static final String CURRICULUM_KEY = "curriculum";
+	private static final String CANDIDATE_ID = "candidateId";
+
+	private static final String CURRICULUM_ID = "curriculumId";
+	
+	private static final String ID = "id";
+
+	private static final String ITEM = "item";
 
 	private static final long serialVersionUID = 1L;
 
 	@Inject
-	@Param(name = "id", required = true)
+	@Param(name = CANDIDATE_ID, required = false)
 	private Candidate candidate;
 
-	private Curriculum curriculum;
-
 	@Inject
-	private transient CurriculumService curriculumService;
+	@Param(name = ID, required = false)
+	private Curriculum curriculum;
 
 	private List<Education> education;
 
@@ -48,26 +54,30 @@ public class CurriculumView extends AbstractView {
 
 	private List<String> skills;
 
-	public String editEducation(final Education education) {
-		this.putValueToFlash("education", education);
-		this.putValueToFlash(CURRICULUM_KEY, curriculum);
-		return PageEnum.CURRICULUM_EDUCATION.getUrl();
+	public String editEducation(final Education e) {
+		final Map<String, String> queryParams = new HashMap<>();
+		queryParams.put(ITEM, String.valueOf(education.indexOf(e)));
+		queryParams.put(CURRICULUM_ID, this.curriculum.getUid());
+		return this.navigator.getRedirectUrl(PageEnum.CURRICULUM_EDUCATION, queryParams);
 	}
 
-	public String editJobExperience(final JobExperience jobExperience) {
-		this.putValueToFlash("jobExperience", jobExperience);
-		this.putValueToFlash(CURRICULUM_KEY, curriculum);
-		return PageEnum.CURRICULUM_JOB_EXPERIENCE.getUrl();
+	public String editJobExperience(final JobExperience j) {
+		final Map<String, String> queryParams = new HashMap<>();
+		queryParams.put(ITEM, String.valueOf(jobExperiences.indexOf(j)));
+		queryParams.put(CURRICULUM_ID, this.curriculum.getUid());
+		return this.navigator.getRedirectUrl(PageEnum.CURRICULUM_JOB_EXPERIENCE, queryParams);
 	}
 
 	public String editLanguages() {
-		this.putValueToFlash(CURRICULUM_KEY, curriculum);
-		return PageEnum.CURRICULUM_LANGUAGE.getUrl();
+		final Map<String, String> queryParams = new HashMap<>();
+		queryParams.put(CURRICULUM_ID, this.curriculum.getUid());
+		return this.navigator.getRedirectUrl(PageEnum.CURRICULUM_LANGUAGE, queryParams);
 	}
-	
+
 	public String editSkills() {
-		this.putValueToFlash(CURRICULUM_KEY, curriculum);
-		return PageEnum.CURRICULUM_SKILLS.getUrl();
+		final Map<String, String> queryParams = new HashMap<>();
+		queryParams.put(CURRICULUM_ID, this.curriculum.getUid());
+		return this.navigator.getRedirectUrl(PageEnum.CURRICULUM_SKILLS, queryParams);
 	}
 
 	public Candidate getCandidate() {
@@ -96,13 +106,12 @@ public class CurriculumView extends AbstractView {
 
 	@PostConstruct
 	public void init() {
-		if (this.candidate == null) {
+		if ((this.curriculum == null) && (this.candidate == null)) {
 			throw new IllegalPageStateException();
 		}
-		this.curriculum = this.curriculumService.findByCandidate(this.candidate);
 		if (this.curriculum == null) {
 			this.curriculum = new Curriculum();
-			this.curriculum.setCandidate(candidate);
+			this.curriculum.setCandidate(this.candidate);
 		}
 		if (this.curriculum.getSkills() == null) {
 			this.curriculum.setSkills(new HashSet<Skill>());
@@ -124,38 +133,48 @@ public class CurriculumView extends AbstractView {
 		this.jobExperiences = new ArrayList<>(this.curriculum.getJobExperiences());
 		this.languages = new ArrayList<>(this.curriculum.getLanguages());
 		this.orderJobExperiencesByDate();
-		this.orderEducationByDate();
+		this.orderEducation();
+		this.orderLanguages();
+		this.orderSkills();
 	}
 
 	public String newEducation() {
-		this.putValueToFlash(CURRICULUM_KEY, this.curriculum);
-		return PageEnum.CURRICULUM_EDUCATION.getUrl();
+		final Map<String, String> queryParams = new HashMap<>();
+		queryParams.put(CURRICULUM_ID, this.curriculum.getUid());
+		return this.navigator.getRedirectUrl(PageEnum.CURRICULUM_EDUCATION, queryParams);
 	}
 
 	public String newJobExperience() {
-		this.putValueToFlash(CURRICULUM_KEY, this.curriculum);
-		return PageEnum.CURRICULUM_JOB_EXPERIENCE.getUrl();
+		final Map<String, String> queryParams = new HashMap<>();
+		queryParams.put(CURRICULUM_ID, this.curriculum.getUid());
+		return this.navigator.getRedirectUrl(PageEnum.CURRICULUM_JOB_EXPERIENCE, queryParams);
 	}
 
 	public String newLanguage() {
-		this.putValueToFlash(CURRICULUM_KEY, this.curriculum);
-		return PageEnum.CURRICULUM_LANGUAGE.getUrl();
+		final Map<String, String> queryParams = new HashMap<>();
+		queryParams.put(CURRICULUM_ID, this.curriculum.getUid());
+		return this.navigator.getRedirectUrl(PageEnum.CURRICULUM_LANGUAGE, queryParams);
 	}
 
 	public String newSkill() {
-		this.putValueToFlash(CURRICULUM_KEY, this.curriculum);
-		return PageEnum.CURRICULUM_SKILLS.getUrl();
+		final Map<String, String> queryParams = new HashMap<>();
+		queryParams.put(CURRICULUM_ID, this.curriculum.getUid());
+		return this.navigator.getRedirectUrl(PageEnum.CURRICULUM_SKILLS, queryParams);
 	}
 
-	private void orderEducationByDate() {
-		this.education.sort(Comparator.comparing(Education::getStartYear).reversed());
+	private void orderEducation() {
+		Collections.sort(education);
+	}
+	
+	private void orderLanguages() {
+		Collections.sort(languages);
 	}
 
 	private void orderJobExperiencesByDate() {
-		this.jobExperiences.sort(Comparator.comparing(JobExperience::getStartDate).reversed());
+		Collections.sort(jobExperiences);
 	}
-
-	public void setCurriculumService(final CurriculumService curriculumService) {
-		this.curriculumService = curriculumService;
+	
+	private void orderSkills() {
+		Collections.sort(skills);
 	}
 }

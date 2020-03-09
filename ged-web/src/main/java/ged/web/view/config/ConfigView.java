@@ -20,7 +20,6 @@ import org.primefaces.model.UploadedFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ged.ejb.core.FileUploadService;
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
 import ged.web.core.view.AbstractView;
@@ -33,9 +32,6 @@ public class ConfigView extends AbstractView {
 
 	private static final long serialVersionUID = 1L;
 
-	@Inject
-	private transient FileUploadService fileUploadService;
-
 	private User user;
 
 	@Inject
@@ -43,22 +39,21 @@ public class ConfigView extends AbstractView {
 
 	public void captureImage(final CaptureEvent event) {
 		Objects.requireNonNull(event);
-		logger.debug("AbstractAction: Upload camera image for user {}", this.user);
 		final byte[] data = event.getData();
 		if (data == null) {
 			return;
 		}
-		try (InputStream inputStream = new ByteArrayInputStream(data);) {
-			final String uuid = this.fileUploadService.uploadImage(inputStream);
-			this.user.setImageFileName(uuid);
+		logger.debug("Upload camera image for user {} action performed", this.user);
+		try (final InputStream inputStream = new ByteArrayInputStream(data);) {
+			this.user = this.userService.addUserImage(this.user, inputStream);
 		} catch (final IOException e) {
 			throw new UncheckedIOException(e);
 		}
 	}
 
-	public void changeLocale() {
+	public void changeLanguage() {
 		final Locale newLocale = new Locale(this.user.getLanguage());
-		logger.debug("AbstractAction: Changed locale to {} for user {}", newLocale, this.user);
+		logger.debug("Changed locale to {} for user {} action performed", newLocale, this.user);
 		this.facesContext.getViewRoot().setLocale(newLocale);
 	}
 
@@ -68,14 +63,9 @@ public class ConfigView extends AbstractView {
 
 	@PostConstruct
 	public void init() {
-		refreshSessionUser();
+		this.refreshSessionUser();
 		this.user = this.sessionUser.get();
-		logger.debug("Config user {}", this.user.getEmail());
-	}
-
-	public void openChangePasswordDialog() {
-		this.openDialog("/config/changePasswordDialog",
-				buildDialogParameter("userId", String.valueOf(this.user.getId())));
+		logger.debug("Config user {} init", this.user);
 	}
 
 	private void refreshSessionUser() {
@@ -83,9 +73,9 @@ public class ConfigView extends AbstractView {
 	}
 
 	public void save() {
-		logger.debug("AbstractAction: Save user {} data", this.user);
+		logger.debug("Save user {} action performed", this.user);
 		this.user = this.userService.save(this.user);
-		refreshSessionUser();
+		this.refreshSessionUser();
 		this.addMessage(FacesMessage.SEVERITY_INFO, "action.save_action_performed", "action.save_action_performed");
 	}
 
@@ -101,14 +91,13 @@ public class ConfigView extends AbstractView {
 
 	public void uploadImage(final FileUploadEvent event) {
 		Objects.requireNonNull(event);
-		logger.debug("AbstractAction: Upload user {} image", this.user);
 		final UploadedFile uploadedFile = event.getFile();
 		if (uploadedFile == null) {
 			return;
 		}
-		try (InputStream inputStream = uploadedFile.getInputstream()) {
-			final String uuid = this.fileUploadService.uploadImage(inputStream);
-			this.user.setImageFileName(uuid);
+		logger.debug("Upload user {} image action performed", this.user);
+		try (final InputStream inputStream = uploadedFile.getInputstream()) {
+			this.user = this.userService.addUserImage(this.user, inputStream);
 		} catch (final IOException e) {
 			throw new UncheckedIOException(e);
 		}

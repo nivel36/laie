@@ -1,33 +1,23 @@
-<ui:component xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" 
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
-	xmlns:composite="http://xmlns.jcp.org/jsf/composite" 
-	xmlns:f="http://java.sun.com/jsf/core" 
-	xmlns:g="http://ged.org/ui" 
-	xmlns:h="http://java.sun.com/jsf/html" 
-	xmlns:o="http://omnifaces.org/ui"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:component xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	xmlns:composite="http://xmlns.jcp.org/jsf/composite" xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://ged.org/ui" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets">
 
-	<composite:interface componentType="inputSearch">
+	<composite:interface>
 		<composite:attribute name="searchText" required="true" />
 		<composite:attribute name="searchAction" method-signature="void action()" required="true" />
 		<composite:attribute name="update" required="true" />
 		<composite:attribute name="styleClass" required="false" default="" />
+		<composite:attribute name="placeholder" required="false" default="" />
 	</composite:interface>
 
 	<composite:implementation>
 		<div id="#{cc.clientId}" class="input-group input-search-group #{cc.attrs.styleClass}">
 			<p:defaultCommand target="searchButton" />
 			<div class="ui-inputgroup">
-				<p:inputText id="searchText" value="#{cc.attrs.searchText}" binding="#{cc.searchInputText}"
-					styleClass="input input-search" />
-				<p:button id="cleanSearchButton" action="#{cc.clean}" styleClass="secondary-button" icon="fa fa-times"
-					rendered="#{not empty cc.attrs.searchText}" process="@this" />
-				<p:commandButton id="searchButton" action="#{cc.attrs.searchAction}" process="@this searchText"
-					styleClass="search-button" icon="fa fa-search" binding="#{cc.searchCommandButton}"
-					update="#{cc.attrs.update}" />
+				<p:inputText id="searchText" value="#{cc.attrs.searchText}" placeholder="#{cc.attrs.placeholder}" />
+				<p:commandButton id="cleanSearchButton" styleClass="secondary-button" icon="fa fa-times" rendered="#{not empty cc.attrs.searchText}"
+					onclick="$(PrimeFaces.escapeClientId('#{cc.clientId}:searchText')).val('')" action="#{cc.attrs.searchAction}" process="searchText @this" update="#{cc.clientId} #{cc.attrs.update}" />
+				<p:commandButton id="searchButton" action="#{cc.attrs.searchAction}" process="searchText @this" icon="fa fa-search" update="#{cc.clientId} #{cc.attrs.update}" />
 			</div>
 		</div>
 	</composite:implementation>

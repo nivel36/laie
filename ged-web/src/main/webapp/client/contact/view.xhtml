@@ -36,7 +36,7 @@
 					<div class="panel-header">
 						<div class="panel-header-title">#{viewClientView.client}</div>
 						<h:form>
-							<div class="panel-buttons">
+							<div class="buttons">
 								<p:commandButton value="#{i18n['action.export']}" process="@this" action="#{viewClientView.export}"
 									icon="fa-file-excel-o" />
 								<p:commandButton value="#{i18n['action.edit']}" process="@this" action="#{viewClientView.editClient}" />
@@ -53,14 +53,14 @@
 
 							<cc:outputText label="#{i18n['client.city']}" value="#{viewClientView.client.address.city}" styleClass="city" />
 
-							<cc:outputText label="#{i18n['client.state']}" value="#{viewClientView.client.address.state}" styleClass="state" />
+							<cc:outputText label="#{i18n['client.state']}" value="#{viewClientView.client.address.region}" styleClass="state" />
 						</div>
 					</div>
 				</p:panel>
 			</div>
 			<div class="col-12 sm-5">
 				<h:form id="contactsForm">
-					<cc:contacts contacts="#{viewClientView.contacts}">
+					<cc:contacts value="#{viewClientView.contacts}" rows="5">
 						<p:commandButton value="#{i18n['contact.new_contact']}" actionListener="#{viewClientView.newContact}"
 							action="#{Page.CONTACT_ADD.getUrl()}" process="@this" />
 					</cc:contacts>
@@ -68,7 +68,7 @@
 			</div>
 			<div class="col-12 sm-8">
 				<h:form id="jobOffersForm">
-					<cc:jobOffers id="jobOffers" jobOffers="#{viewClientView.jobOffers}">
+					<cc:jobOffers id="jobOffers" value="#{viewClientView.jobOffers}" rows="5">
 						<p:commandButton value="#{i18n['job.new_job_offer']}" actionListener="#{viewClientView.newJobOffer}"
 							action="#{Page.JOB_ADD.getUrl()}" process="@this" />
 					</cc:jobOffers>

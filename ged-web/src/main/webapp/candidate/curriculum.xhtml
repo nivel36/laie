@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://ged.org/ui" xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets" template="/WEB-INF/templates/template.xhtml">
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://ged.org/ui" xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui"
+	xmlns:p="http://primefaces.org/ui" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/WEB-INF/templates/template.xhtml">
 
 	<ui:define name="title">
 		#{i18n['curriculum.curriculum']} - #{curriculumView.candidate.fullName}
@@ -14,10 +15,16 @@
 			<p:menuitem value="#{i18n['menu.index']}" outcome="#{Page.INDEX.getUrl()}" />
 			<p:menuitem value="#{i18n['candidate.candidates']}" outcome="#{Page.CANDIDATE_SEARCH.getUrl()}" />
 			<p:menuitem value="#{curriculumView.candidate.fullName}" outcome="#{Page.CANDIDATE.getUrl()}">
-				<f:param name="id" value="#{curriculumView.candidate.id}" />
+				<f:param name="id" value="#{curriculumView.candidate.uid}" />
 			</p:menuitem>
 			<p:menuitem value="#{i18n['curriculum.curriculum']}" disabled="true" />
 		</p:breadCrumb>
+	</ui:define>
+
+	<ui:define name="buttons">
+		<p:button value="#{i18n['action.back']}" outcome="#{Page.CANDIDATE.getUrl()}" styleClass="secondary-button">
+			<f:param name="id" value="#{curriculumView.candidate.uid}" />
+		</p:button>
 	</ui:define>
 
 	<ui:define name="content">
@@ -25,13 +32,7 @@
 			<div class="p-grid">
 				<div class="p-col-12 p-xl-8">
 					<div class="card curriculum">
-						<cc:avatar value="#{curriculumView.candidate.imageFileName}" />
-
-						<div class="buttons header-buttons">
-							<p:button value="#{i18n['action.back']}" outcome="#{Page.CANDIDATE.getUrl()}">
-								<f:param name="id" value="#{curriculumView.candidate.id}" />
-							</p:button>
-						</div>
+						<cc:avatar value="#{curriculumView.candidate.picture}" />
 
 						<div class="name">#{curriculumView.candidate.fullName}</div>
 
@@ -77,16 +78,18 @@
 												<f:convertNumber maxFractionDigits="0" />
 											</h:outputText>
 											<h:outputText value=" #{(jobExperience.monthsWorked - jobExperience.monthsWorked%12)/12 gt 1 ? i18n['date.years'] : i18n['date.year']}" />
-										</h:panelGroup> <h:outputText value=" #{i18n['date.and']}  " rendered="#{jobExperience.monthsWorked%12 gt 0 and (jobExperience.monthsWorked - jobExperience.monthsWorked%12)/12 gt 0}" />
-										<h:panelGroup rendered="#{jobExperience.monthsWorked%12 gt 0}">
+										</h:panelGroup> <h:outputText value=" #{i18n['date.and']}  "
+											rendered="#{jobExperience.monthsWorked%12 gt 0 and (jobExperience.monthsWorked - jobExperience.monthsWorked%12)/12 gt 0}" /> <h:panelGroup
+											rendered="#{jobExperience.monthsWorked%12 gt 0}">
 											<h:outputText value="#{jobExperience.monthsWorked%12}" />
 											<h:outputText value=" #{jobExperience.monthsWorked%12 gt 1 ? i18n['date.months'] : i18n['date.month']}" />
-										</h:panelGroup> <h:outputText value=" #{i18n['date.days']} " rendered="#{jobExperience.monthsWorked%12 eq 0 and (jobExperience.monthsWorked - jobExperience.monthsWorked%12)/12 eq 0}" />
-										<h:outputText value=" ) " /> </span>
+										</h:panelGroup> <h:outputText value=" #{i18n['date.days']} "
+											rendered="#{jobExperience.monthsWorked%12 eq 0 and (jobExperience.monthsWorked - jobExperience.monthsWorked%12)/12 eq 0}" /> <h:outputText
+											value=" ) " /> </span>
 								</p>
-								<p>
-									<h:outputText value="#{jobExperience.description}" escape="false" styleClass="jobDescription" />
-								</p>
+
+								<h:outputText value="#{jobExperience.description}" escape="false" styleClass="job-description" />
+
 								<div class="buttons">
 									<p:commandButton action="#{curriculumView.editJobExperience(jobExperience)}" process="@this" icon="fa fa-pencil" styleClass="secondary-button" />
 								</div>

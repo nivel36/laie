@@ -6,27 +6,33 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.SortableField;
+import org.hibernate.search.annotations.Store;
 
-import ged.ejb.core.model.AbstractEntity;
+import ged.ejb.core.model.AbstractIndexedEntity;
 
 @Entity
 @Indexed
-public class Tag extends AbstractEntity {
+public class Tag extends AbstractIndexedEntity {
 
 	private static final long serialVersionUID = 1L;
 
 	@NotNull
 	@Column(length = 128, nullable = false)
-	@Field
+	@Field(name = "_label")
+	@Field(name = "label", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
+	@SortableField(forField = "label")
 	private String label;
 
 	public Tag() {
 	}
 
-	public Tag(String label) {
-		Objects.requireNonNull(label, "Label can't be null");
+	public Tag(final String label) {
+		Objects.requireNonNull(label);
 		this.label = label;
 	}
 
@@ -41,7 +47,7 @@ public class Tag extends AbstractEntity {
 		if (!super.equals(obj)) {
 			return false;
 		}
-		if (getClass() != obj.getClass()) {
+		if (this.getClass() != obj.getClass()) {
 			return false;
 		}
 		final Tag other = (Tag) obj;

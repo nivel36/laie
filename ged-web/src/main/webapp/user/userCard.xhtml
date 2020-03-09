@@ -12,14 +12,14 @@
 	template="/WEB-INF/templates/template.xhtml">
 	
 	<p:link outcome="#{Page.USER.getUrl()}">
-		<f:param name="id" value="#{user.id}" />
+		<f:param name="id" value="#{user.uid}" />
 		<div class="user-minicard">
 			<div class="user-minicard-image">
-				<cc:avatar value="#{user.imageFileName}" />
+				<cc:avatar value="#{user.picture}" />
 			</div>
 			<div class="user-minicard-info">
 				<div class="name">#{user}</div>
-				<div class="position">#{g:translate(user.role)}</div>
+				<div class="position">#{i18n[user.role]}</div>
 			</div>
 		</div>
 	</p:link>

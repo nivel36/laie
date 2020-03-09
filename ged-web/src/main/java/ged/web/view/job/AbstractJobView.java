@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.omnifaces.cdi.Param;
 import org.primefaces.event.SelectEvent;
 
 import ged.ejb.client.Client;
@@ -24,6 +25,8 @@ public abstract class AbstractJobView extends AbstractView {
 	@Inject
 	protected transient ClientService clientService;
 
+	@Inject
+	@Param(name = "id", required = true)
 	protected JobOffer jobOffer;
 
 	@Inject
@@ -35,7 +38,7 @@ public abstract class AbstractJobView extends AbstractView {
 	protected transient UserService userService;
 
 	public List<Client> completeClient(final String query) {
-		return this.clientService.search(query, Page.of(0, 10)).getResultData();
+		return this.clientService.search(query, Page.TEN_RESULTS_PER_PAGE).getResultData();
 	}
 
 	public JobOffer getJobOffer() {
@@ -47,7 +50,7 @@ public abstract class AbstractJobView extends AbstractView {
 	}
 
 	protected String jobUrl() {
-		return PageEnum.JOB.getRedirectedUrl(this.jobOffer);
+		return this.navigator.getRedirectUrl(PageEnum.JOB, this.jobOffer);
 	}
 
 	public void onClientSelect(final SelectEvent event) {
@@ -67,11 +70,11 @@ public abstract class AbstractJobView extends AbstractView {
 	}
 
 	public List<User> queryOwner(final String query) {
-		return this.userService.search(query, Page.ALL).getResultData();
+		return this.userService.search(query, Page.ALL_RESULTS).getResultData();
 	}
 
 	public List<User> queryRecruiter(final String query) {
-		final List<User> searchRecruiter = this.userService.search(query, Page.ALL).getResultData();
+		final List<User> searchRecruiter = this.userService.search(query, Page.ALL_RESULTS).getResultData();
 		searchRecruiter.removeAll(this.recruiters);
 		searchRecruiter.remove(this.jobOffer.getOwner());
 		return searchRecruiter;

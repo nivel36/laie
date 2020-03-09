@@ -10,12 +10,12 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ged.ejb.core.AbstractService;
-import ged.ejb.core.model.AbstractDao;
+import ged.ejb.core.AbstractIndexedService;
+import ged.ejb.core.model.AbstractIndexedDao;
 import ged.ejb.core.model.Repository;
 
 @Stateless
-public class ContactService extends AbstractService<Contact> {
+public class ContactService extends AbstractIndexedService<Contact> {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
@@ -23,23 +23,25 @@ public class ContactService extends AbstractService<Contact> {
 	@Repository
 	private ContactDao contactDao;
 
-	public Contact findContactByEmail(final String email) {
-		Objects.requireNonNull(email, "Email can't be null");
-		return contactDao.findContactByEmail(email);
+	public Contact findByUid(final String uid) {
+		Objects.requireNonNull(uid);
+		logger.debug("Find contact by uid {}", uid);
+		return this.contactDao.findByUid(uid);
 	}
-	
+
 	public List<Contact> findContactsByClient(final Client client) {
 		Objects.requireNonNull(client);
-		logger.debug("Finding contacts by client {}", client);
+		logger.debug("Find contacts by client {}", client);
 		return this.contactDao.findContactsByClient(client);
 	}
 
 	@Override
-	protected AbstractDao<Contact> getDao() {
+	protected AbstractIndexedDao<Contact> getDao() {
 		return this.contactDao;
 	}
 
 	public void setContactDao(final ContactDao contactDao) {
+		Objects.requireNonNull(contactDao);
 		this.contactDao = contactDao;
 	}
 }

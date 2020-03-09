@@ -1,33 +1,24 @@
 package ged.web.view;
 
-import static javax.security.enterprise.AuthenticationStatus.SEND_CONTINUE;
-import static javax.security.enterprise.AuthenticationStatus.SEND_FAILURE;
-import static javax.security.enterprise.AuthenticationStatus.SUCCESS;
-import static javax.security.enterprise.authentication.mechanism.http.AuthenticationParameters.withParams;
-import static org.omnifaces.util.Faces.getRequest;
-import static org.omnifaces.util.Faces.getResponse;
-
 import java.util.Locale;
 
 import javax.annotation.PostConstruct;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
-import javax.faces.view.ViewScoped;
+import javax.faces.application.NavigationHandler;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.security.enterprise.AuthenticationStatus;
-import javax.security.enterprise.SecurityContext;
-import javax.security.enterprise.authentication.mechanism.http.AuthenticationParameters;
-import javax.security.enterprise.credential.UsernamePasswordCredential;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ged.web.core.util.Navigate;
+import ged.web.core.LoginService;
 import ged.web.core.util.PageEnum;
 import ged.web.core.view.AbstractView;
 
 @Named
-@ViewScoped
+@RequestScoped
 public class LoginView extends AbstractView {
 
 	private static final Logger logger = LoggerFactory.getLogger(LoginView.class);
@@ -36,27 +27,12 @@ public class LoginView extends AbstractView {
 
 	private Locale locale;
 
+	@Inject
+	private transient LoginService loginService;
+
 	private transient String password;
 
-	@Inject
-	private SecurityContext securityContext;
-
 	private String username;
-
-	private void authenticate(final AuthenticationParameters parameters) {
-		final AuthenticationStatus status = this.securityContext.authenticate(getRequest(), getResponse(), parameters);
-		if (status == SEND_FAILURE) {
-			logger.warn("Authentication failed for user {}", this.username);
-			addMessage(FacesMessage.SEVERITY_ERROR, "auth.message.error", "auth.message.error");
-			facesContext.validationFailed();
-		} else if (status == SEND_CONTINUE) {
-			// Prevent JSF from rendering a response so authentication mechanism can
-			// continue.
-			facesContext.responseComplete();
-		} else if (status == SUCCESS) {
-			gotoIndex();
-		}
-	}
 
 	public Locale getLocale() {
 		return this.locale;
@@ -71,7 +47,10 @@ public class LoginView extends AbstractView {
 	}
 
 	private void gotoIndex() {
-		Navigate.to(PageEnum.INDEX).doPost();
+		final NavigationHandler nav = this.facesContext.getApplication().getNavigationHandler();
+		final String indexUrl = this.navigator.getRedirectUrl(PageEnum.INDEX);
+		nav.handleNavigation(this.facesContext, null, indexUrl);
+		this.facesContext.renderResponse();
 	}
 
 	@PostConstruct
@@ -80,16 +59,20 @@ public class LoginView extends AbstractView {
 		final String remoteUser = this.externalContext.getRemoteUser();
 		if (remoteUser != null) {
 			logger.warn("User {} alredy logged", remoteUser);
-			gotoIndex();
+			this.gotoIndex();
 		}
-		setDefaultLocale();
+		this.setDefaultLocale();
 	}
 
 	public void login() {
 		logger.debug("User {} login", this.username);
-		final UsernamePasswordCredential credential = new UsernamePasswordCredential(this.username, this.password);
-		final AuthenticationParameters parameters = withParams().credential(credential).newAuthentication(true);
-		authenticate(parameters);
+		final AuthenticationStatus status = this.loginService.login(this.username, this.password);
+		if (status.equals(AuthenticationStatus.SEND_FAILURE)) {
+			this.addMessage(FacesMessage.SEVERITY_ERROR, "auth.message.error", "auth.message.error");
+			this.facesContext.validationFailed();
+		} else {
+			this.gotoIndex();
+		}
 	}
 
 	private void setDefaultLocale() {

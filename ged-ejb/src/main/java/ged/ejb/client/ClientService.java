@@ -9,12 +9,12 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ged.ejb.core.AbstractService;
-import ged.ejb.core.model.AbstractDao;
+import ged.ejb.core.AbstractIndexedService;
+import ged.ejb.core.model.AbstractIndexedDao;
 import ged.ejb.core.model.Repository;
 
 @Stateless
-public class ClientService extends AbstractService<Client> {
+public class ClientService extends AbstractIndexedService<Client> {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
@@ -22,39 +22,25 @@ public class ClientService extends AbstractService<Client> {
 	@Repository
 	private ClientDao clientDao;
 
-	public boolean clientExists(final String clientName) {
-		Objects.requireNonNull(clientName);
-		logger.debug("Testing if client {} exists in database", clientName);
-		return this.clientDao.clientExists(clientName);
-	}
-
-	public Client findAllClientDataByClientId(final long clientId) {
-		if (clientId < 0) {
-			logger.warn("Bad client id {}", clientId);
-			throw new IllegalArgumentException();
-		}
-		logger.debug("Finding all client data by id {}", clientId);
-		return this.clientDao.findAllClientDataByClientId(clientId);
+	public Client findByUid(final String uid) {
+		Objects.requireNonNull(uid);
+		logger.debug("Find client by uid {}", uid);
+		return this.clientDao.findByUid(uid);
 	}
 
 	public Client findClientByCif(final String cif) {
 		Objects.requireNonNull(cif);
-		logger.debug("Finding client by cif {}", cif);
+		logger.debug("Find client by cif {}", cif);
 		return this.clientDao.findClientByCif(cif);
 	}
 
-	public Client findClientByName(final String clientName) {
-		Objects.requireNonNull(clientName);
-		logger.debug("Finding client by name {}", clientName);
-		return this.clientDao.findClientByName(clientName);
-	}
-
 	@Override
-	public AbstractDao<Client> getDao() {
+	public AbstractIndexedDao<Client> getDao() {
 		return this.clientDao;
 	}
 
 	public void setClientDao(final ClientDao clientDao) {
+		Objects.requireNonNull(clientDao);
 		this.clientDao = clientDao;
 	}
 }

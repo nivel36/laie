@@ -3,6 +3,7 @@ package ged.ejb.core.model;
 import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -10,6 +11,7 @@ import java.util.Objects;
 import javax.inject.Inject;
 import javax.persistence.CacheStoreMode;
 import javax.persistence.EntityManager;
+import javax.persistence.FlushModeType;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -23,8 +25,18 @@ import org.hibernate.search.jpa.Search;
 import org.hibernate.search.query.dsl.BooleanJunction;
 import org.hibernate.search.query.dsl.QueryBuilder;
 import org.hibernate.search.query.dsl.sort.SortFieldContext;
+import org.hibernate.search.query.engine.spi.FacetManager;
+import org.hibernate.search.query.facet.Facet;
+import org.hibernate.search.query.facet.FacetCombine;
+import org.hibernate.search.query.facet.FacetSelection;
+import org.hibernate.search.query.facet.FacetingRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import ged.ejb.core.model.search.SearchFacet;
+import ged.ejb.core.model.search.SearchFacets;
+import ged.ejb.core.model.search.SearchResult;
+import ged.ejb.core.model.search.SortField;
 
 @Repository
 public class PersistenceFacade {
@@ -40,6 +52,15 @@ public class PersistenceFacade {
 		this.em = em;
 	}
 
+	private <T extends Identifiable> SearchResult<T> buildSearchResult(final List<T> results, final int resultsSize,
+			final Map<String, List<Facet>> allFacets) {
+		if (results instanceof ArrayList) {
+			return new SearchResult<>(results, resultsSize, allFacets);
+		} else {
+			return new SearchResult<>(new ArrayList<>(results), resultsSize, allFacets);
+		}
+	}
+
 	@SuppressWarnings("rawtypes")
 	private org.apache.lucene.search.Query createLuceneQuery(final QueryBuilder qb,
 			final BooleanJunction<BooleanJunction> bj) {
@@ -53,7 +74,7 @@ public class PersistenceFacade {
 	}
 
 	@SuppressWarnings("rawtypes")
-	private BooleanJunction<BooleanJunction> createPredicate(final String searchText, final QueryBuilder qb,
+	private BooleanJunction<BooleanJunction> createPredicate(final QueryBuilder qb, final String searchText,
 			final String... fields) {
 		final BooleanJunction<BooleanJunction> bj = qb.bool();
 
@@ -85,6 +106,22 @@ public class PersistenceFacade {
 		}
 	}
 
+	private void enableFaceting(final SearchFacets searchFacets, final QueryBuilder qb,
+			final FullTextQuery fullTextQuery) {
+		if (searchFacets == null) {
+			return;
+		}
+
+		final FacetManager facetManager = fullTextQuery.getFacetManager();
+		for (final SearchFacet searchFacet : searchFacets) {
+			final String facetName = searchFacet.getName();
+			final String facetField = searchFacet.getField();
+			final FacetingRequest facetingRequest = qb.facet().name(facetName).onField(facetField).discrete()
+					.createFacetingRequest();
+			facetManager.enableFaceting(facetingRequest);
+		}
+	}
+
 	public <T extends Identifiable> T find(final Class<T> type, final long id) {
 		Objects.requireNonNull(id);
 		logger.debug("Find class {} by id {}", type, id);
@@ -113,11 +150,17 @@ public class PersistenceFacade {
 
 	public <E> E findByQuery(final Class<E> entityClass, final String namedQuery,
 			final Map<String, Object> parameters) {
+		return this.findByQuery(entityClass, namedQuery, parameters, FlushModeType.AUTO);
+	}
+
+	public <E> E findByQuery(final Class<E> entityClass, final String namedQuery, final Map<String, Object> parameters,
+			final FlushModeType flusModeType) {
 		Objects.requireNonNull(entityClass);
 		Objects.requireNonNull(namedQuery);
 		logger.debug("Find entity {} by named query {}", entityClass, namedQuery);
 		final TypedQuery<E> query = this.em.createNamedQuery(namedQuery, entityClass);
 		query.setHint(CACHE_STORE_MODE, CacheStoreMode.REFRESH);
+		query.setFlushMode(flusModeType);
 		this.parametrize(parameters, query);
 		return query.getSingleResult();
 	}
@@ -149,7 +192,7 @@ public class PersistenceFacade {
 	}
 
 	private boolean hasSortFields(final List<SortField> sortFields) {
-		return sortFields != null && !sortFields.isEmpty();
+		return (sortFields != null) && !sortFields.isEmpty();
 	}
 
 	public <T extends Identifiable> void insert(final T entity) {
@@ -177,42 +220,82 @@ public class PersistenceFacade {
 		}
 	}
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public <T extends Identifiable> SearchResult<T> search(final Class<T> type, final Page page,
-			final List<SortField> sortFields, final String searchText, final String... fields) {
-
-		final FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(this.getEm());
-		final QueryBuilder qb = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(type).get();
-
-		final BooleanJunction<BooleanJunction> bj = this.createPredicate(searchText, qb, fields);
-
-		final FullTextQuery fullTextQuery = fullTextEntityManager.createFullTextQuery(this.createLuceneQuery(qb, bj),
-				type);
-		this.paginate(page, fullTextQuery);
+			final List<SortField> sortFields, final SearchFacets searchFacets, final String searchText,
+			final String... fields) {
+		final FullTextEntityManager fullTextEM = Search.getFullTextEntityManager(this.getEm());
+		final QueryBuilder qb = fullTextEM.getSearchFactory().buildQueryBuilder().forEntity(type).get();
+		final BooleanJunction<BooleanJunction> bj = this.createPredicate(qb, searchText, fields);
+		final FullTextQuery fullTextQuery = fullTextEM.createFullTextQuery(this.createLuceneQuery(qb, bj), type);
 		fullTextQuery.setHint(CACHE_STORE_MODE, CacheStoreMode.REFRESH);
-
+		this.paginate(page, fullTextQuery);
 		this.sortQuery(sortFields, qb, fullTextQuery);
-
-		final List<T> results = fullTextQuery.getResultList();
-		if (results instanceof ArrayList) {
-			return new SearchResult<>(results, fullTextQuery.getResultSize());
-		} else {
-			return new SearchResult<>(new ArrayList<>(results), fullTextQuery.getResultSize());
+		this.enableFaceting(searchFacets, qb, fullTextQuery);
+		final Map<String, List<Facet>> allFacets = this.selectFacets(searchFacets, fullTextQuery);
+		if ((searchFacets != null) && !searchFacets.isEmpty()) {
+			boolean hasFacet = false;
+			for (final String key : allFacets.keySet()) {
+				if (hasFacet) {
+					break;
+				}
+				for (final Facet facet : allFacets.get(key)) {
+					if (searchFacets.containsFacet(facet.getFieldName(), key, facet.getValue())) {
+						hasFacet = true;
+						break;
+					}
+				}
+			}
+			if (!hasFacet) {
+				return this.buildSearchResult(new ArrayList<>(), 0, allFacets);
+			}
 		}
+		return this.buildSearchResult(fullTextQuery.getResultList(), fullTextQuery.getResultSize(), allFacets);
+	}
+
+	private Map<String, List<Facet>> selectFacets(final SearchFacets searchFacets, final FullTextQuery fullTextQuery) {
+		if (searchFacets == null) {
+			return new HashMap<>();
+		}
+		final Map<String, List<Facet>> allFacets = new HashMap<>();
+
+		final FacetManager facetManager = fullTextQuery.getFacetManager();
+		for (final SearchFacet searchFacet : searchFacets) {
+			final String facetName = searchFacet.getName();
+			allFacets.put(facetName, fullTextQuery.getFacetManager().getFacets(facetName));
+			if (searchFacet.hasSelectedFacets()) {
+				final FacetSelection facetSelection = facetManager.getFacetGroup(facetName);
+				final List<Facet> facets = facetManager.getFacets(facetName);
+				final int facetsLength = searchFacet.getSelectedFactes().length;
+				final List<Facet> facetList = new ArrayList<>();
+				for (int i = 0; i < facetsLength; i++) {
+					for (final String selectedFacet : searchFacet.getSelectedFactes()) {
+						for (final Facet facet : facets) {
+							if (facet.getValue().equals(selectedFacet)) {
+								facetList.add(facet);
+							}
+						}
+					}
+				}
+				final Facet[] selectedMatchedFacets = facetList.toArray(new Facet[0]);
+				facetSelection.selectFacets(FacetCombine.OR, selectedMatchedFacets);
+			}
+		}
+		return allFacets;
 	}
 
 	private void sortQuery(final List<SortField> sortFields, final QueryBuilder qb, final FullTextQuery fullTextQuery) {
 		if (this.hasSortFields(sortFields)) {
 			final int orderSize = sortFields.size();
 			final SortFieldContext sfc = qb.sort().byField(sortFields.get(0).getField());
-			if (sortFields.get(0).isDescending()) {
+			if (sortFields.get(0).isAscending()) {
 				sfc.asc();
 			} else {
 				sfc.desc();
 			}
 			for (int i = 1; i < orderSize; i++) {
 				sfc.andByField(sortFields.get(i).getField());
-				if (sortFields.get(0).isDescending()) {
+				if (sortFields.get(0).isAscending()) {
 					sfc.asc();
 				} else {
 					sfc.desc();

@@ -1,6 +1,6 @@
 package ged.ejb.job.meeting;
 
 public enum MeetingType {
-	
-	VIDEO, PHONE, IN_PERSON;
+
+	IN_PERSON, PHONE, VIDEO;
 }

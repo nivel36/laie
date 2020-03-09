@@ -14,6 +14,6 @@ public class GedCallerPrincipal extends CallerPrincipal {
 	}
 
 	public User getUser() {
-		return user;
+		return this.user;
 	}
 }

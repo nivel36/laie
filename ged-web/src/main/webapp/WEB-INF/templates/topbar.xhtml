@@ -1,46 +1,61 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://ged.org/ui"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
-	xmlns:po="http://primefaces.org/roma" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets">
-	<h:form>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://ged.org/ui" xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui"
+	xmlns:p="http://primefaces.org/ui" xmlns:po="http://primefaces.org/roma" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<h:form id="topbar-form">
 		<div class="layout-topbar">
 			<a class="layout-menu-button layout-topbar-icon" href="#"> <em class="fa fa-bars" />
-			</a> <span class="layout-topbar-search"> <em class="fa fa-search" /> <input type="text" />
-			</span>
+			</a>
 
 			<div class="spacer"></div>
 
-			<p:button value="#{i18n['client.new_client']}" outcome="#{Page.CLIENT_ADD.getUrl()}" styleClass="success-btn" rendered="#{selectedMenu eq 'clients'}"/>
-			<p:button value="#{i18n['job.new_job_offer']}" outcome="#{Page.JOB_ADD.getUrl()}" styleClass="success-btn" rendered="#{selectedMenu eq 'offers'}"/>
-			<p:button value="#{i18n['candidate.new_candidate']}" outcome="#{Page.CANDIDATE_ADD.getUrl()}" styleClass="success-btn" rendered="#{selectedMenu eq 'candidates'}"/>
-			<p:button value="#{i18n['user.new_user']}" outcome="#{Page.USER_ADD.getUrl()}" styleClass="success-btn" rendered="#{selectedMenu eq 'users'}"/>
-			<p:button value="#{i18n['meeting.add_meeting']}" outcome="#{Page.MEETING_ADD.getUrl()}" styleClass="success-btn" rendered="#{selectedMenu eq 'meetings'}"/>
-			<p:button value="#{i18n['event.new_event']}" outcome="#{Page.EVENT_ADD.getUrl()}" styleClass="success-btn" rendered="#{selectedMenu eq 'events'}"/>		
-			<p:menuButton icon="fa fa-plus" styleClass="success-btn" >
-				<p:menuitem value="#{i18n['client.new_client']}" outcome="#{Page.CLIENT_ADD.getUrl()}" rendered="#{selectedMenu ne 'clients'}"/>
-				<p:menuitem value="#{i18n['job.new_job_offer']}" outcome="#{Page.JOB_ADD.getUrl()}" rendered="#{!selectedMenu ne 'offers'}" />
-				<p:menuitem value="#{i18n['candidate.new_candidate']}" outcome="#{Page.CANDIDATE_ADD.getUrl()}" rendered="#{!selectedMenu ne 'candidates'}" />
-				<p:menuitem value="#{i18n['user.new_user']}" outcome="#{Page.USER_ADD.getUrl()}" rendered="#{!selectedMenu ne 'users'}" />
-				<p:menuitem value="#{i18n['meeting.add_meeting']}" outcome="#{Page.MEETING_ADD.getUrl()}" rendered="#{!selectedMenu ne 'meetings'}" />
-				<p:menuitem value="#{i18n['event.new_event']}" outcome="#{Page.EVENT_ADD.getUrl()}" rendered="#{!selectedMenu ne 'events'}" />
+			<p:button value="#{i18n['client.new_client']}" outcome="#{Page.CLIENT_ADD.getUrl()}" styleClass="menu-detail-button success-btn"
+				rendered="#{selectedMenu eq 'clients'}" />
+			<p:button value="#{i18n['job.new_job_offer']}" outcome="#{Page.JOB_ADD.getUrl()}" styleClass="menu-detail-button success-btn"
+				rendered="#{selectedMenu eq 'offers'}" />
+			<p:button value="#{i18n['candidate.new_candidate']}" outcome="#{Page.CANDIDATE_ADD.getUrl()}" styleClass="menu-detail-button success-btn"
+				rendered="#{selectedMenu eq 'candidates'}" />
+			<p:button value="#{i18n['user.new_user']}" outcome="#{Page.USER_ADD.getUrl()}" styleClass="menu-detail-button success-btn"
+				rendered="#{selectedMenu eq 'users'}" />
+			<p:button value="#{i18n['meeting.add_meeting']}" outcome="#{Page.MEETING_ADD.getUrl()}" styleClass="menu-detail-button success-btn"
+				rendered="#{selectedMenu eq 'meetings'}" />
+			<p:button value="#{i18n['event.new_event']}" outcome="#{Page.EVENT_ADD.getUrl()}" styleClass="menu-detail-button success-btn"
+				rendered="#{selectedMenu eq 'events'}" />
+			<p:menuButton icon="fa fa-plus" styleClass="success-btn" menuStyleClass="new_menu">
+				<p:menuitem value="#{i18n['client.new_client']}" outcome="#{Page.CLIENT_ADD.getUrl()}" />
+				<p:menuitem value="#{i18n['job.new_job_offer']}" outcome="#{Page.JOB_ADD.getUrl()}" />
+				<p:menuitem value="#{i18n['candidate.new_candidate']}" outcome="#{Page.CANDIDATE_ADD.getUrl()}" />
+				<p:menuitem value="#{i18n['user.new_user']}" outcome="#{Page.USER_ADD.getUrl()}" />
+				<p:menuitem value="#{i18n['meeting.add_meeting']}" outcome="#{Page.MEETING_ADD.getUrl()}" />
+				<p:menuitem value="#{i18n['event.new_event']}" outcome="#{Page.EVENT_ADD.getUrl()}" />
 			</p:menuButton>
-			
 
 			<ul class="topbar-menu fadeInDown">
-				<li><a href="#"> <cc:avatar value="#{sessionUser.get().imageFileName}" styleClass="tiny" />
+				<li><a href="#"> <cc:avatar value="#{sessionUser.get().picture}" styleClass="tiny with-border" />
 				</a>
 					<ul>
-						<li class="with-separator"><span class="menu-name">#{sessionUser.get().fullName}</span> <span class="menu-role">#{g:translate(sessionUser.get().role)}</span></li>
+						<li class="with-separator"><span class="menu-name">#{sessionUser.get().fullName}</span> <span class="menu-role">#{i18n[sessionUser.get().role]}</span></li>
 						<li><p:link outcome="#{Page.CONFIG.getUrl()}">
 								<em class="fa fa-fw fa-cog" />
 								<span>#{i18n['menu.config']}</span>
 							</p:link></li>
+						<li><p:commandLink onclick="PF('aboutDlg').show();">
+								<em class="fa fa-fw fa-question" />
+								<span>#{i18n['menu.about']}</span>
+							</p:commandLink></li>
 						<li><p:commandLink action="#{sessionUser.exit}">
 								<em class="fa fa-fw fa-power-off" />
 								<span>#{i18n['user.logout']}</span>
 							</p:commandLink></li>
 					</ul></li>
 			</ul>
+			<a class="layout-right-panel-button layout-topbar-icon" href="#"> <em class="fa fa-comments" />
+			</a>
 		</div>
+		<p:dialog header="#{i18n['menu.about.version']}" widgetVar="aboutDlg" minHeight="40">
+			<div class="version">
+				<span>#{applicationView.version}</span>
+			</div>
+		</p:dialog>
 	</h:form>
 </ui:composition>

@@ -18,14 +18,14 @@ public class ExportViewConverter implements Converter<ExportViewItemI> {
 	public ExportViewItemI getAsObject(final FacesContext context, final UIComponent component, final String id) {
 		try {
 			@SuppressWarnings("unchecked")
-			final DualListModel<ExportViewItemI> dualList = (DualListModel<ExportViewItemI>) ((PickList) component).getValue();
-			ExportViewItemI item = getObjectFromList(dualList.getSource(), id);
+			final DualListModel<ExportViewItemI> dualList = (DualListModel<ExportViewItemI>) ((PickList) component)
+					.getValue();
+			ExportViewItemI item = this.getObjectFromList(dualList.getSource(), id);
 			if (item == null) {
-				item = getObjectFromList(dualList.getTarget(), id);
+				item = this.getObjectFromList(dualList.getTarget(), id);
 			}
 			return item;
-		}
-		catch (ClassCastException cce) {
+		} catch (final ClassCastException cce) {
 			throw new ConverterException();
 		}
 	}
@@ -34,8 +34,7 @@ public class ExportViewConverter implements Converter<ExportViewItemI> {
 	public String getAsString(final FacesContext context, final UIComponent component, final ExportViewItemI value) {
 		if (value == null) {
 			return "";
-		}
-		else {
+		} else {
 			return value.getLabel();
 		}
 	}

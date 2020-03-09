@@ -6,26 +6,28 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 import javax.faces.convert.FacesConverter;
 
-import ged.ejb.event.EventType;
+import ged.ejb.event.JobCandidatureEventType;
 
-@FacesConverter(forClass = EventType.class)
-public class EventTypeConverter implements Converter<EventType> {
+@FacesConverter(forClass = JobCandidatureEventType.class)
+public class EventTypeConverter implements Converter<JobCandidatureEventType> {
 
 	@Override
-	public EventType getAsObject(final FacesContext context, final UIComponent component, final String value) {
+	public JobCandidatureEventType getAsObject(final FacesContext context, final UIComponent component,
+			final String value) {
 		if (value == null) {
 			return null;
 		}
-		for (final EventType eventType : EventType.values()) {
-			if (eventType.getName().equals(value)) {
-				return eventType;
+		for (final JobCandidatureEventType jobCandidatureEventType : JobCandidatureEventType.values()) {
+			if (jobCandidatureEventType.getName().equals(value)) {
+				return jobCandidatureEventType;
 			}
 		}
 		throw new ConverterException("No event type wiht name " + value);
 	}
 
 	@Override
-	public String getAsString(final FacesContext context, final UIComponent component, final EventType value) {
+	public String getAsString(final FacesContext context, final UIComponent component,
+			final JobCandidatureEventType value) {
 		if (value == null) {
 			return null;
 		}

@@ -5,7 +5,6 @@ import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 
-import ged.ejb.core.i18n.I18n;
 import ged.ejb.core.model.AbstractEntity;
 
 @MappedSuperclass
@@ -13,11 +12,9 @@ public abstract class AbstractEnumEntity extends AbstractEntity implements EnumE
 
 	private static final long serialVersionUID = 1L;
 
-	@I18n
 	@Column(length = 64)
 	protected String description;
 
-	@I18n
 	@Column(length = 64)
 	protected String name;
 

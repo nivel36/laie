@@ -17,7 +17,7 @@ import ged.ejb.core.model.AbstractEntity;
 
 @Indexed
 @Entity
-public class Language extends AbstractEntity {
+public class Language extends AbstractEntity implements Comparable<Language> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -28,7 +28,7 @@ public class Language extends AbstractEntity {
 
 	@NotNull
 	@Enumerated(EnumType.STRING)
-	@Column(nullable=false)
+	@Column(nullable = false)
 	private LanguageLevel level;
 
 	@NotNull
@@ -56,13 +56,12 @@ public class Language extends AbstractEntity {
 	}
 
 	public LanguageLevel getLevel() {
-		return level;
+		return this.level;
 	}
 
 	public String getName() {
 		return this.name;
 	}
-
 
 	@Override
 	public int hashCode() {
@@ -73,7 +72,7 @@ public class Language extends AbstractEntity {
 		this.curriculum = curriculum;
 	}
 
-	public void setLevel(LanguageLevel level) {
+	public void setLevel(final LanguageLevel level) {
 		this.level = level;
 	}
 
@@ -84,5 +83,31 @@ public class Language extends AbstractEntity {
 	@Override
 	public String toString() {
 		return "Language [languageName=" + this.name + ", level=" + this.level + "]";
+	}
+
+	@Override
+	public int compareTo(Language language) {
+		if (this.level.equals(language.level)) {
+			return this.name.compareTo(language.name);
+		}
+		if (this.level.equals(LanguageLevel.NATIVE)) {
+			return 1;
+		}
+		if (language.level.equals(LanguageLevel.NATIVE)) {
+			return -1;
+		}
+		if (this.level.equals(LanguageLevel.HIGH)) {
+			return 1;
+		}
+		if (language.level.equals(LanguageLevel.HIGH)) {
+			return -1;
+		}
+		if (this.level.equals(LanguageLevel.MEDIUM)) {
+			return 1;
+		}
+		if (language.level.equals(LanguageLevel.MEDIUM)) {
+			return -1;
+		}
+		return 0;
 	}
 }

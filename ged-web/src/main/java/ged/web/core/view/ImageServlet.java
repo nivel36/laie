@@ -16,7 +16,7 @@ public class ImageServlet extends FileServlet {
 	private static final long serialVersionUID = 1L;
 
 	@Inject
-	@ConfigurationProperty("image.directory")
+	@ConfigurationProperty("file.directory")
 	private String folderPath;
 
 	@Override

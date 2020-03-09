@@ -27,12 +27,11 @@ public class MeetingService extends AbstractService<Meeting> {
 	@Repository
 	private MeetingDao meetingDao;
 
-	public List<Meeting> findPlannedMeetings(final User owner, final Page page) {
-		Objects.requireNonNull(owner);
-		logger.debug("Find planned meetings by owner {}", owner);
-		return this.meetingDao.findPlannedMeetings(owner, page);
+	public JobOffer findByUid(final String uid) {
+		Objects.requireNonNull(uid);
+		return this.meetingDao.findByUid(uid);
 	}
-	
+
 	public List<Meeting> findConductedMeetings(final User owner, final Page page) {
 		Objects.requireNonNull(owner);
 		logger.debug("Find conducted meetings by owner {}", owner);
@@ -49,6 +48,12 @@ public class MeetingService extends AbstractService<Meeting> {
 		Objects.requireNonNull(jobOffer);
 		logger.debug("Find meetings by jobOffer {}", jobOffer);
 		return this.meetingDao.findMeeting(jobOffer, page);
+	}
+
+	public List<Meeting> findPlannedMeetings(final User owner, final Page page) {
+		Objects.requireNonNull(owner);
+		logger.debug("Find planned meetings by owner {}", owner);
+		return this.meetingDao.findPlannedMeetings(owner, page);
 	}
 
 	@Override

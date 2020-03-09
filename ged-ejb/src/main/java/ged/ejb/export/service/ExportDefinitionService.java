@@ -60,7 +60,7 @@ public class ExportDefinitionService extends AbstractService<Export> {
 	}
 	
 	public List<ReportInfo> getReportsList() {
-		final List<Export> exports = findAll(Page.ALL);
+		final List<Export> exports = findAll(Page.ALL_RESULTS);
 		Objects.requireNonNull(exports);
 		final List<ReportInfo> result = new ArrayList<>(exports.size());
 		for (Export item: exports) {

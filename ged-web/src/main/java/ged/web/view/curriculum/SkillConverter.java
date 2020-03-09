@@ -9,7 +9,7 @@ import javax.inject.Inject;
 import ged.ejb.curriculum.CurriculumService;
 import ged.ejb.curriculum.Skill;
 
-@FacesConverter(value="skillConverter", managed = true)
+@FacesConverter(value = "skillConverter", managed = true)
 public class SkillConverter implements Converter<Skill> {
 
 	@Inject

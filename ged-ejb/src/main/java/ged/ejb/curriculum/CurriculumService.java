@@ -1,5 +1,6 @@
 package ged.ejb.curriculum;
 
+import java.io.File;
 import java.lang.invoke.MethodHandles;
 import java.util.List;
 import java.util.Objects;
@@ -14,6 +15,7 @@ import ged.ejb.candidate.Candidate;
 import ged.ejb.core.AbstractService;
 import ged.ejb.core.model.AbstractDao;
 import ged.ejb.core.model.Repository;
+import ged.ejb.curriculum.export.CurriculumExporter;
 
 @Stateless
 public class CurriculumService extends AbstractService<Curriculum> {
@@ -23,21 +25,36 @@ public class CurriculumService extends AbstractService<Curriculum> {
 	@Inject
 	@Repository
 	private CurriculumDao curriculumDao;
+
 	
-	public List<SkillLevel> findAllSkillLevels() {
-		logger.debug("Find all the skill levels");
-		return this.curriculumDao.findAllSkillLevels();
+	@Inject
+	private CurriculumExporter exporter;
+	
+	public List<CurriculumTemplate> findCurriculumTemplates() {
+		logger.debug("Find curriculum templates");
+		return this.curriculumDao.findCurriculumTemplates();
 	}
-	
+
 	public Curriculum findByCandidate(final Candidate candidate) {
 		Objects.requireNonNull(candidate);
 		logger.debug("Find curriculum by candidate  {}", candidate);
 		return this.curriculumDao.findByCandidate(candidate);
 	}
 
+	public Curriculum findByUid(final String uid) {
+		Objects.requireNonNull(uid);
+		logger.debug("Find curriculum by uid {}", uid);
+		return this.curriculumDao.findByUid(uid);
+	}
+
 	public Skill findSkill(final String name) {
 		Objects.requireNonNull(name, "Skill name can't be null");
+		logger.debug("Find skill by name {}", name);
 		return this.curriculumDao.findSkill(name);
+	}
+	
+	public File export(Curriculum curriculum, CurriculumTemplate template) {
+		return exporter.export(curriculum, template);
 	}
 
 	@Override

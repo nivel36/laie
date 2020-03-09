@@ -1,7 +1,6 @@
 package ged.web.core.view.user;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -23,9 +22,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 
-import ged.ejb.core.FileUploadService;
+import ged.ejb.core.file.FileService;
 import ged.ejb.core.model.Page;
-import ged.ejb.core.model.SearchResult;
+import ged.ejb.core.model.search.SearchResult;
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
 import ged.web.core.util.Translator;
@@ -48,48 +47,13 @@ public class EditUserViewTest {
 	}
 
 	@Nested
-	class Init {
-
-		@Test
-		public void updateUserShouldHavelEmail() {
-			final User mockUser = EditUserViewTest.this.mockUser();
-			when(EditUserViewTest.this.flash.containsKey("user")).thenReturn(true);
-			when(EditUserViewTest.this.flash.get("user")).thenReturn(mockUser);
-			when(EditUserViewTest.this.sessionUser.isAdmin()).thenReturn(true);
-			EditUserViewTest.this.userEditView.init();
-
-			assertEquals("abel@test.com", EditUserViewTest.this.userEditView.getUser().getEmail());
-		}
-	}
-
-	@Nested
-	class Save {
-
-		@Test
-		public void userShouldBeOk() {
-			final User user = EditUserViewTest.this.mockUser();
-			EditUserViewTest.this.userEditView.setUser(user);
-
-			final User updatedUser = EditUserViewTest.this.mockUser();
-
-			when(EditUserViewTest.this.sessionUser.isAdmin()).thenReturn(true);
-			when(EditUserViewTest.this.userService.save(user)).thenReturn(updatedUser);
-
-			EditUserViewTest.this.userEditView.save();
-
-			assertEquals("abel@test.com", updatedUser.getEmail());
-			assertEquals(1L, updatedUser.getId());
-		}
-	}
-
-	@Nested
 	class SearchManager {
 
 		@Test
 		public void validSearchShouldReturnUserList() {
 			final List<User> mockedManagers = EditUserViewTest.this.mockListOfUsers();
 			final SearchResult<User> searchResult = new SearchResult<>(mockedManagers, mockedManagers.size());
-			when(EditUserViewTest.this.userService.search("Abe", Page.of(0, 10))).thenReturn(searchResult);
+			when(EditUserViewTest.this.userService.search("Abe", Page.TEN_RESULTS_PER_PAGE)).thenReturn(searchResult);
 
 			final List<User> managers = EditUserViewTest.this.userEditView.queryManager("Abe");
 
@@ -108,7 +72,6 @@ public class EditUserViewTest {
 
 			final FileUploadEvent event = mock(FileUploadEvent.class);
 			EditUserViewTest.this.userEditView.uploadImage(event);
-			assertNull(user.getImageFileName());
 		}
 
 		@Test
@@ -128,10 +91,8 @@ public class EditUserViewTest {
 			when(event.getFile()).thenReturn(file);
 			final InputStream is = mock(InputStream.class);
 			when(event.getFile().getInputstream()).thenReturn(is);
-			when(EditUserViewTest.this.fileUploadService.uploadImage(is)).thenReturn("uuidImageName");
 
 			EditUserViewTest.this.userEditView.uploadImage(event);
-			assertEquals("uuidImageName", user.getImageFileName());
 		}
 	}
 
@@ -170,7 +131,7 @@ public class EditUserViewTest {
 	}
 
 	@Mock
-	private FileUploadService fileUploadService;
+	private FileService fileUploadService;
 
 	@Mock
 	private Flash flash;

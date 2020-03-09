@@ -4,7 +4,8 @@ import java.util.Objects;
 
 public class Page {
 
-	public static final Page ALL = Page.of(0, 150);
+	public static final Page ALL_RESULTS = Page.of(0, 150);
+	public static final Page TEN_RESULTS_PER_PAGE = Page.of(0, 10);
 
 	public static Page of(final int offset, final int limit) {
 		return new Page(offset, limit);
@@ -21,22 +22,22 @@ public class Page {
 		if (limit < 0) {
 			throw new IllegalArgumentException("limit: " + limit);
 		}
-		if (offset >= limit) {
-			throw new IllegalArgumentException("offset greater than limit");
-		}
 		this.offset = offset;
 		this.limit = limit;
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
+	public boolean equals(final Object obj) {
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (this.getClass() != obj.getClass()) {
 			return false;
-		Page other = (Page) obj;
+		}
+		final Page other = (Page) obj;
 		return Objects.equals(other.limit, this.limit) && Objects.equals(other.offset, this.offset);
 	}
 
@@ -50,10 +51,11 @@ public class Page {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(offset, limit);
+		return Objects.hash(this.offset, this.limit);
 	}
 
+	@Override
 	public String toString() {
-		return String.format("Offset %d - Limit %d", offset, limit);
+		return String.format("Offset %d - Limit %d", this.offset, this.limit);
 	}
 }

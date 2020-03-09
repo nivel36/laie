@@ -118,7 +118,7 @@ public class UserReport extends AbstractReport {
 			cell = row.createCell(6);
 			cell.setCellValue(jobOffer.getAddress().getCity());
 			cell = row.createCell(7);
-			cell.setCellValue(jobOffer.getJobOfferState().getName());
+			cell.setCellValue(jobOffer.getState().getName());
 			cell = row.createCell(8);
 			cell.setCellValue(jobOffer.getDescription());
 		}

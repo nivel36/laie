@@ -15,14 +15,15 @@ public class YearMonthDto implements Serializable {
 		dto.year = Integer.valueOf(yearMonth.getYear());
 		return dto;
 	}
-	
+
 	private Integer month;
-	
+
 	private Integer year;
 
-	public YearMonthDto() {}
+	public YearMonthDto() {
+	}
 
-	public YearMonthDto(Integer month, Integer year) {
+	public YearMonthDto(final Integer month, final Integer year) {
 		this.month = month;
 		this.year = year;
 	}

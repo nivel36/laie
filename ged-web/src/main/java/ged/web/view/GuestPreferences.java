@@ -11,17 +11,17 @@ public class GuestPreferences implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private String menuMode = "layout-static";
-
-	private String theme = "blue";
+	private String logo = "logo-roma-white";
 
 	private String menuColor = "layout-menu-light";
 
-	private String topBarColor = "layout-topbar-blue";
-
-	private String logo = "logo-roma-white";
+	private String menuMode = "layout-static";
 
 	private String profileMode = "popup";
+
+	private String theme = "blue";
+
+	private String topBarColor = "layout-topbar-blue";
 
 	public String getLogo() {
 		return this.logo;

@@ -17,36 +17,53 @@
 		</p:breadCrumb>
 	</ui:define>
 
+	<ui:define name="buttons">
+		<h:form>
+			<p:button value="#{i18n['action.cancel']}" outcome="#{Page.EVENT_SEARCH.getUrl()}" styleClass="secondary-button" />
+			<p:commandButton value="#{i18n['action.save']}" onclick="processForm()" styleClass="success-btn" />
+		</h:form>
+	</ui:define>
+
 	<ui:define name="content">
-		<div class="p-ggrid">
-			<div class="p-col-12 p-xl-9">
+		<div class="p-grid">
+			<div class="p-col-12 p-xl-6">
 				<h:form id="eventForm">
-					<div class="card">
+					<p:remoteCommand name="processForm" process="@form" update="@form growl" action="#{addEventView.save}" />
+					<div class="card card-w-title ui-fluid">
+						<h1>#{i18n['event.event']}</h1>
 						<div class="p-grid">
+
+							<div class="p-col-12">
+								<g:input type="selectOneMenu" label="#{i18n['event.job_candidature']}" value="#{addEventView.event.jobCandidature}">
+									<f:selectItems value="#{addEventView.jobCandidatures}" var="jobCandidature" itemValue="#{jobCandidature}" itemLabel="#{jobCandidature}" />
+									<p:ajax event="change" process="@this" update="eventForm:state" listener="#{addEventView.updateState}" />
+								</g:input>
+							</div>
+							
 							<div class="p-col-12 p-xl-6">
-								<div class="form-field ui-fluid">
-									<cc:inputSelect label="#{i18n['event.type']}" value="#{addEventView.event.type}" >
-										<f:selectItems value="#{eventTypes.list}" var="event" itemValue="#{event}" itemLabel="#{i18n[event.name]}" />
-									</cc:inputSelect>
-
-									<cc:inputSelect label="#{i18n['event.job_candidature']}" value="#{addEventView.event.jobCandidature}">
-										<f:selectItems value="#{addEventView.jobCandidatures}" var="jobCandidature" itemValue="#{jobCandidature}" itemLabel="#{jobCandidature}" />
-									</cc:inputSelect>
-
-									<g:input id="description" label="#{i18n['event.description']}" value="#{addEventView.event.description}" type="textarea" />
-									
-									<cc:inputSelect label="#{i18n['event.status']}" value="#{addEventView.event.status}">
-										<f:selectItems value="#{jobCandidatureStates.list}" var="jobCandidatureState" itemValue="#{jobCandidatureState}" itemLabel="#{g:translate(jobCandidatureState.name)}" />
-									</cc:inputSelect>
-								</div>
+								<g:input type="selectOneMenu" label="#{i18n['event.type']}" value="#{addEventView.event.type}">
+									<f:selectItems value="#{eventTypes.list}" var="event" itemValue="#{event}" itemLabel="#{i18n[event.name]}" />
+								</g:input>
 							</div>
 
 							<div class="p-col-12">
-								<div class="buttons">
-									<p:button value="#{i18n['action.cancel']}" outcome="#{Page.EVENT_SEARCH.getUrl()}" styleClass="secondary-button" />
-									<p:commandButton value="#{i18n['action.save']}" action="#{addEventView.save}" process="@form" update="@form growl" styleClass="success-btn" />
+								<g:input id="notes" label="#{i18n['event.notes']}" value="#{addEventView.event.notes}" type="textarea" />
+							</div>
+
+							<div class="p-col-12 p-xl-6">
+								<div class="input-group input-group-select">
+									<div class="label-container">
+										<p:outputLabel id="label" value="#{i18n['event.state']}" for="state" styleClass="label" />
+									</div>
+									<p:selectOneMenu id="state" value="#{addEventView.event.state}" styleClass="input input-select" panelStyleClass="jobCandidatureStates" var="state">
+										<f:selectItems value="#{jobCandidatureStates.list}" var="state" itemValue="#{state}" itemLabel="#{state.name}" />
+										<p:column>
+											<div class="tag #{state.color}">#{state.name}</div>
+										</p:column>
+									</p:selectOneMenu>
 								</div>
 							</div>
+
 						</div>
 					</div>
 				</h:form>

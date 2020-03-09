@@ -8,6 +8,9 @@ import java.util.Random;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
 import ged.ejb.core.model.AbstractEntity;
@@ -33,18 +36,24 @@ public class Credential extends AbstractEntity {
 	@NotNull
 	private byte[] salt;
 
+	@OneToOne(fetch = FetchType.EAGER, optional = false, orphanRemoval = true)
+	@JoinColumn(name = "userId", unique = true, nullable = false, updatable = false)
+	@NotNull
+	private User user;
+
 	public Credential() {
 		this.hashPassword = new byte[32];
 		this.salt = new byte[16];
 		this.created = LocalDate.now();
 	}
 
-	public Credential(final String password) {
+	public Credential(final User user, final String password) {
 		Objects.requireNonNull(password);
+		Objects.requireNonNull(user);
 		this.hashPassword = new byte[32];
 		this.salt = new byte[16];
 		this.created = LocalDate.now();
-		this.newCredential(password);
+		this.newCredential(user, password);
 	}
 
 	private byte[] buildHashPassword(final String password) {
@@ -52,19 +61,26 @@ public class Credential extends AbstractEntity {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
+	public boolean equals(final Object obj) {
+		if (this == obj) {
 			return true;
-		if (!super.equals(obj))
+		}
+		if (!super.equals(obj)) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (this.getClass() != obj.getClass()) {
 			return false;
-		Credential other = (Credential) obj;
-		return Objects.equals(hashPassword, other.hashPassword) && Objects.equals(salt, other.salt);
+		}
+		final Credential other = (Credential) obj;
+		return Objects.equals(this.hashPassword, other.hashPassword) && Objects.equals(this.salt, other.salt);
 	}
 
 	public void expire() {
 		this.expired = LocalDate.now();
+	}
+
+	public LocalDate getCreated() {
+		return this.created;
 	}
 
 	private byte[] getRandomSalt() {
@@ -73,9 +89,13 @@ public class Credential extends AbstractEntity {
 		return randmoSalt;
 	}
 
+	public User getUser() {
+		return this.user;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(hashPassword, salt);
+		return Objects.hash(this.hashPassword, this.salt);
 	}
 
 	public boolean isExpired() {
@@ -84,16 +104,26 @@ public class Credential extends AbstractEntity {
 
 	public boolean isValid(final String password) {
 		Objects.requireNonNull(password);
-		return Arrays.equals(this.hashPassword, this.buildHashPassword(password));
+		final byte[] typedPassword = this.buildHashPassword(password);
+		return Arrays.equals(this.hashPassword, typedPassword);
 	}
 
-	private void newCredential(final String password) {
+	private void newCredential(final User user, final String password) {
+		this.user = user;
 		this.salt = this.getRandomSalt();
 		this.hashPassword = this.buildHashPassword(password);
 	}
 
+	public void setCreated(final LocalDate created) {
+		this.created = created;
+	}
+
 	public void setPassword(final String password) {
-		Objects.requireNonNull(password);
-		this.newCredential(password);
+		this.salt = this.getRandomSalt();
+		this.hashPassword = this.buildHashPassword(password);
+	}
+
+	public void setUser(final User user) {
+		this.user = user;
 	}
 }

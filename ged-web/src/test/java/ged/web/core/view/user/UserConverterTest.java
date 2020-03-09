@@ -25,7 +25,7 @@ public class UserConverterTest {
 		public void foundRoleShouldReturnRole() {
 			final User userFromDatabase = mockUser();
 
-			when(userService.find(1L)).thenReturn(userFromDatabase);
+			when(userService.findByUid("1")).thenReturn(userFromDatabase);
 
 			final User user = userConverter.getAsObject(null, null, "1");
 			assertEquals(userFromDatabase, user);
@@ -39,7 +39,7 @@ public class UserConverterTest {
 
 		@Test
 		public void roleNotFoundShouldReturnNull() {
-			when(userService.find(1L)).thenReturn(null);
+			when(userService.findByUid("1")).thenReturn(null);
 
 			final User user = userConverter.getAsObject(null, null, "1");
 			assertNull(user);
@@ -72,6 +72,7 @@ public class UserConverterTest {
 	private User mockUser() {
 		final User user = new User();
 		user.setId(1L);
+		user.setUid("1");
 		user.setEmail("abel@test.com");
 		return user;
 	}
