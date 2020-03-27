@@ -99,11 +99,11 @@ public class JobOfferService extends AbstractIndexedService<JobOffer> {
 	}
 
 	private JobOfferState getPreviousState(final JobOffer jobOffer) {
-		if (!jobOffer.isNew()) {
-			final JobOffer savedJobOffer = this.find(jobOffer.getId());
-			return savedJobOffer.getState();
+		if (jobOffer.isNew()) {
+			return null;
 		}
-		return null;
+		final JobOffer savedJobOffer = this.find(jobOffer.getId());
+		return savedJobOffer.getState();
 	}
 
 	private boolean isCompleted(final JobOffer jobOffer) {
@@ -116,7 +116,7 @@ public class JobOfferService extends AbstractIndexedService<JobOffer> {
 	public void onJobCandidatureCompleted(@Observes @JobCandidatureCompletedEvent final JobCandidature jobCandidature) {
 		Objects.requireNonNull(jobCandidature, "Job candidature can't be null");
 		final JobOffer jobOffer = jobCandidature.getJobOffer();
-		if (this.isCompleted(jobCandidature.getJobOffer())) {
+		if (this.isCompleted(jobOffer)) {
 			this.closeJobOffer(jobOffer);
 		}
 	}
@@ -126,8 +126,10 @@ public class JobOfferService extends AbstractIndexedService<JobOffer> {
 	}
 
 	private void openJobOffer(final JobOffer jobOffer) {
+		logger.debug("The open date has come. Opening the job offer");
 		jobOffer.setDateOpened(LocalDate.now());
 		jobOffer.setState(JobOfferState.OPENED);
+		this.createdEvent.fire(jobOffer);
 	}
 
 	@Override
@@ -135,9 +137,7 @@ public class JobOfferService extends AbstractIndexedService<JobOffer> {
 		Objects.requireNonNull(jobOffer);
 		logger.debug("Save job offer {}", jobOffer);
 		if (jobOffer.isNew() && this.openDateHasCome(jobOffer)) {
-			logger.debug("The open date has come. Opening the job offer");
 			this.openJobOffer(jobOffer);
-			this.createdEvent.fire(jobOffer);
 		} else {
 			final JobOfferState previousJobOfferState = this.getPreviousState(jobOffer);
 			if (!jobOffer.hasState(previousJobOfferState)) {
@@ -162,7 +162,6 @@ public class JobOfferService extends AbstractIndexedService<JobOffer> {
 
 	public void setJobOfferDao(final JobOfferDao jobOfferDao) {
 		Objects.requireNonNull(jobOfferDao);
-
 		this.jobOfferDao = jobOfferDao;
 	}
 
