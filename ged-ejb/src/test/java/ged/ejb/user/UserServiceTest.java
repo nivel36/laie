@@ -4,8 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
-import javax.security.auth.login.LoginException;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -17,32 +15,6 @@ import ged.ejb.user.role.Role;
 
 @ExtendWith(MockitoExtension.class)
 public class UserServiceTest {
-
-	@Nested
-	class Login {
-
-		@Test
-		public void invalidEmailShoudThrowLoginException() {
-			when(UserServiceTest.this.userDao.findCredential("abel@test.com")).thenReturn(null);
-			assertThrows(LoginException.class, () -> {
-				UserServiceTest.this.userService.login("abel@test.com", "password");
-			});
-		}
-
-		@Test
-		public void nullEmailShoudThrowNullPointerException() {
-			assertThrows(NullPointerException.class, () -> {
-				UserServiceTest.this.userService.login(null, "password");
-			});
-		}
-
-		@Test
-		public void nullPasswordShoudThrowNullPointerException() {
-			assertThrows(NullPointerException.class, () -> {
-				UserServiceTest.this.userService.login("abel@test.com", null);
-			});
-		}
-	}
 
 	@Nested
 	class Save {

@@ -5,6 +5,7 @@ import static org.omnifaces.util.Faces.getRequest;
 import static org.omnifaces.util.Faces.getResponse;
 
 import java.lang.invoke.MethodHandles;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 import javax.ejb.Stateless;
@@ -23,7 +24,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ged.ejb.core.SessionUsers;
-import ged.web.core.security.GedRememberMeIdentityStore;
+import ged.ejb.core.model.Repository;
+import ged.ejb.core.security.GedRememberMeIdentityStore;
+import ged.ejb.user.User;
+import ged.ejb.user.UserDao;
 
 @Stateless
 public class LoginService {
@@ -31,37 +35,22 @@ public class LoginService {
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
 	@Inject
-	private SecurityContext securityContext;
-
-	@Inject
-	private GedRememberMeIdentityStore gedRememberMeIdentityStore;
+	private ExternalContext externalContext;
 
 	@Inject
 	private FacesContext facesContext;
 
 	@Inject
-	private ExternalContext externalContext;
+	private GedRememberMeIdentityStore gedRememberMeIdentityStore;
+
+	@Inject
+	private SecurityContext securityContext;
 
 	@Inject
 	private SessionUsers sessionUsers;
-
-	public AuthenticationStatus login(String username, String password) {
-		final UsernamePasswordCredential credential = new UsernamePasswordCredential(username, password);
-		final AuthenticationParameters parameters = withParams().credential(credential).newAuthentication(true);
-		final AuthenticationStatus authenticationStatus = this.authenticate(parameters);
-		if (authenticationStatus == AuthenticationStatus.SEND_FAILURE) {
-			logger.error("Login error for username {}", username);
-		} else {
-			this.registerUserSession(username);
-		}
-		return authenticationStatus;
-	}
-
-	private void registerUserSession(String username) {
-		this.facesContext.getExternalContext().getSessionMap().put("username", username);
-		final String sessionId = this.externalContext.getSessionId(true);
-		this.sessionUsers.login(username, sessionId);
-	}
+	@Inject
+	@Repository
+	private UserDao userDao;
 
 	private AuthenticationStatus authenticate(final AuthenticationParameters parameters) {
 		final AuthenticationStatus status = this.securityContext.authenticate(getRequest(), getResponse(), parameters);
@@ -73,15 +62,29 @@ public class LoginService {
 		return status;
 	}
 
-	public void logout(String username) {
+	public AuthenticationStatus login(final String username, final String password) {
+		final UsernamePasswordCredential credential = new UsernamePasswordCredential(username, password);
+		final AuthenticationParameters parameters = withParams().credential(credential).newAuthentication(true);
+		final AuthenticationStatus authenticationStatus = this.authenticate(parameters);
+		if (authenticationStatus == AuthenticationStatus.SEND_FAILURE) {
+			logger.error("Login error for username {}", username);
+		} else {
+			this.registerUserSession(username);
+			final User user = this.userDao.findUserByEmail(username);
+			user.setLastConnection(LocalDateTime.now());
+		}
+		return authenticationStatus;
+	}
+
+	public void logout(final String username) {
 		Objects.requireNonNull(username);
 		final String sessionId = this.externalContext.getSessionId(false);
-		sessionUsers.logout(username, sessionId);
+		this.sessionUsers.remove(username, sessionId);
 		final HttpServletRequest httpResuqest = (HttpServletRequest) this.externalContext.getRequest();
 		final Cookie[] cookies = httpResuqest.getCookies();
-		for (Cookie cookie : cookies) {
+		for (final Cookie cookie : cookies) {
 			if (cookie.getName().equals("JREMEMBERMEID")) {
-				removeLoginToken(cookie);
+				this.removeLoginToken(cookie);
 				break;
 			}
 		}
@@ -89,7 +92,13 @@ public class LoginService {
 		session.invalidate();
 	}
 
-	private void removeLoginToken(Cookie cookie) {
+	private void registerUserSession(final String username) {
+		this.facesContext.getExternalContext().getSessionMap().put("username", username);
+		final String sessionId = this.externalContext.getSessionId(true);
+		this.sessionUsers.add(username, sessionId);
+	}
+
+	private void removeLoginToken(final Cookie cookie) {
 		final String tokenHash = cookie.getValue();
 		this.gedRememberMeIdentityStore.removeLoginToken(tokenHash);
 		cookie.setMaxAge(0);

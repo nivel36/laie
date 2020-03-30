@@ -2,13 +2,11 @@ package ged.ejb.user;
 
 import java.io.InputStream;
 import java.lang.invoke.MethodHandles;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.security.auth.login.LoginException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +16,6 @@ import ged.ejb.core.file.File;
 import ged.ejb.core.file.FileService;
 import ged.ejb.core.model.AbstractIndexedDao;
 import ged.ejb.core.model.Repository;
-import ged.ejb.core.security.LoginToken.TokenType;
 
 @Stateless
 public class UserService extends AbstractIndexedService<User> {
@@ -36,7 +33,7 @@ public class UserService extends AbstractIndexedService<User> {
 		Objects.requireNonNull(user);
 		Objects.requireNonNull(inputStream);
 		final File oldImage = user.getPicture();
-		File newImage = this.fileService.uploadFile(inputStream, true, user.getUid()+"_picture");
+		final File newImage = this.fileService.uploadFile(inputStream, true, user.getUid() + "_picture");
 		user.setPicture(newImage);
 		if (oldImage != null) {
 			this.fileService.removeFile(oldImage);
@@ -76,13 +73,6 @@ public class UserService extends AbstractIndexedService<User> {
 		return this.userDao.findUserByEmail(email);
 	}
 
-	public User findUserByTokenHash(final byte[] tokenHash, final TokenType type) {
-		Objects.requireNonNull(tokenHash);
-		Objects.requireNonNull(type);
-		logger.debug("Find user by token hash {} and type {}", tokenHash, type);
-		return this.userDao.findUserByTokenHashAndType(tokenHash, type);
-	}
-
 	@Override
 	protected AbstractIndexedDao<User> getDao() {
 		return this.userDao;
@@ -104,21 +94,6 @@ public class UserService extends AbstractIndexedService<User> {
 		Objects.requireNonNull(subordinate);
 		logger.debug("Testing if user {} is manager of the user {}", manager.getEmail(), subordinate.getEmail());
 		return this.findSubordinateUsers(manager).contains(subordinate);
-	}
-
-	public User login(final String email, final String password) throws LoginException {
-		Objects.requireNonNull(email);
-		Objects.requireNonNull(password);
-		final Credential credential = this.userDao.findCredential(email);
-		if (credential == null) {
-			throw new LoginException("Invalid email");
-		}
-		if (!credential.isValid(password)) {
-			throw new LoginException("Passwords doesn't match");
-		}
-		final User user = credential.getUser();
-		user.setLastConnection(LocalDateTime.now());
-		return super.save(user);
 	}
 
 	@Override

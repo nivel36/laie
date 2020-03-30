@@ -1,4 +1,4 @@
-package ged.web.core.security;
+package ged.ejb.core.security;
 
 import java.util.Objects;
 import java.util.Set;
@@ -11,15 +11,11 @@ import javax.security.enterprise.identitystore.CredentialValidationResult;
 import javax.security.enterprise.identitystore.RememberMeIdentityStore;
 import javax.servlet.http.HttpServletRequest;
 
-import ged.ejb.core.security.CriptoUtil;
-import ged.ejb.core.security.GedIdentityStore;
 import ged.ejb.core.security.LoginToken.TokenType;
-import ged.ejb.core.security.LoginTokenService;
 import ged.ejb.user.User;
-import ged.ejb.user.UserService;
 
 @ApplicationScoped
-public class GedRememberMeIdentityStore implements RememberMeIdentityStore {
+public class GedRememberMeIdentityStore extends AbstractIdentityStore implements RememberMeIdentityStore {
 
 	@Inject
 	private GedIdentityStore gedIdentityStore;
@@ -30,9 +26,6 @@ public class GedRememberMeIdentityStore implements RememberMeIdentityStore {
 	@Inject
 	private HttpServletRequest request;
 
-	@Inject
-	private UserService userService;
-	
 	@Override
 	public String generateLoginToken(final CallerPrincipal callerPrincipal, final Set<String> groups) {
 		Objects.requireNonNull(callerPrincipal);
@@ -64,17 +57,12 @@ public class GedRememberMeIdentityStore implements RememberMeIdentityStore {
 		this.request = request;
 	}
 
-	public void setUserService(final UserService userService) {
-		Objects.requireNonNull(userService);
-		this.userService = userService;
-	}
-
 	@Override
 	public CredentialValidationResult validate(final RememberMeCredential credential) {
 		Objects.requireNonNull(credential);
 		final String token = credential.getToken();
 		final byte[] tokenHash = CriptoUtil.digestPassword(token);
-		final User user = userService.findUserByTokenHash(tokenHash, TokenType.REMEMBER_ME);
+		final User user = userDao.findUserByTokenHashAndType(tokenHash, TokenType.REMEMBER_ME);
 		return gedIdentityStore.validate(user);
 	}
 }
