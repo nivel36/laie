@@ -19,11 +19,11 @@ import org.slf4j.LoggerFactory;
 
 import ged.ejb.candidate.CandidateService;
 import ged.ejb.client.ContactService;
+import ged.ejb.core.Subject;
 import ged.ejb.core.model.Page;
 import ged.ejb.job.meeting.Meeting;
 import ged.ejb.job.meeting.MeetingService;
 import ged.ejb.job.meeting.MeetingType;
-import ged.ejb.person.Person;
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
 import ged.web.core.util.PageEnum;
@@ -37,9 +37,9 @@ public class AddMeetingView extends AbstractView {
 
 	private static final long serialVersionUID = 1L;
 
-	private Person attendee;
+	private Subject attendee;
 
-	private List<Person> attendees;
+	private List<Subject> attendees;
 
 	@Inject
 	private transient CandidateService candidateService;
@@ -70,11 +70,11 @@ public class AddMeetingView extends AbstractView {
 		this.attendee = null;
 	}
 
-	public Person getAttendee() {
+	public Subject getAttendee() {
 		return this.attendee;
 	}
 
-	public List<Person> getAttendees() {
+	public List<Subject> getAttendees() {
 		return this.attendees;
 	}
 
@@ -123,10 +123,10 @@ public class AddMeetingView extends AbstractView {
 		return sb.toString();
 	}
 
-	private List<Person> initAttendees() {
-		final List<Person> attendeeList = new ArrayList<>();
+	private List<Subject> initAttendees() {
+		final List<Subject> attendeeList = new ArrayList<>();
 		attendeeList.add(this.sessionUser.get());
-		final Person person = this.getValueFromFlash("attendee");
+		final Subject person = this.getValueFromFlash("attendee");
 		if (person != null) {
 			attendeeList.add(person);
 		}
@@ -153,7 +153,7 @@ public class AddMeetingView extends AbstractView {
 		return Arrays.asList(MeetingType.values());
 	}
 
-	public void removeAttendee(final Person person) {
+	public void removeAttendee(final Subject person) {
 		this.attendees.remove(person);
 	}
 
@@ -161,27 +161,27 @@ public class AddMeetingView extends AbstractView {
 		final LocalTime time = LocalTime.parse(this.meetingHour, DateTimeFormatter.ofPattern("H:mm"));
 		final LocalDateTime meetingDateTime = LocalDateTime.of(this.meetingDate, time);
 		this.meeting.setDatePlanned(meetingDateTime);
-		for (final Person person : this.attendees) {
+		for (final Subject person : this.attendees) {
 			this.meeting.addAttendee(person.getEmail());
 		}
 		this.meetingService.save(this.meeting);
 		return PageEnum.MEETING_SEARCH.getUrl();
 	}
 
-	public List<Person> searchPerson(final String query) {
+	public List<Subject> searchPerson(final String query) {
 		logger.trace("Searching for person with the string {}", query);
-		final List<Person> personsFound = new ArrayList<>();
+		final List<Subject> personsFound = new ArrayList<>();
 		personsFound.addAll(this.candidateService.search(query, Page.TEN_RESULTS_PER_PAGE).getResultData());
 		personsFound.addAll(this.userService.search(query, Page.TEN_RESULTS_PER_PAGE).getResultData());
 		personsFound.addAll(this.contactService.search(query, Page.TEN_RESULTS_PER_PAGE).getResultData());
 		return personsFound;
 	}
 
-	public void setAttendee(final Person attendee) {
+	public void setAttendee(final Subject attendee) {
 		this.attendee = attendee;
 	}
 
-	public void setAttendees(final List<Person> attendees) {
+	public void setAttendees(final List<Subject> attendees) {
 		this.attendees = attendees;
 	}
 

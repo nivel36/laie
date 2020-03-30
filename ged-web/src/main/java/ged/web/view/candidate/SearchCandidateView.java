@@ -1,6 +1,5 @@
 package ged.web.view.candidate;
 
-import java.io.IOException;
 import java.lang.invoke.MethodHandles;
 
 import javax.annotation.PostConstruct;

@@ -17,6 +17,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
@@ -28,22 +29,22 @@ import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.SortableField;
 import org.hibernate.search.annotations.Store;
 
+import ged.ejb.core.Subject;
 import ged.ejb.core.file.File;
+import ged.ejb.core.model.AbstractIndexedEntity;
 import ged.ejb.core.model.Address;
-import ged.ejb.core.model.Obfuscable;
 import ged.ejb.core.model.Ownerable;
 import ged.ejb.core.tag.Tag;
 import ged.ejb.curriculum.Curriculum;
 import ged.ejb.job.candidature.JobCandidature;
-import ged.ejb.person.Person;
 import ged.ejb.user.User;
 
 @Entity
 @Indexed
-public class Candidate extends Person implements Ownerable, Obfuscable {
+public class Candidate extends AbstractIndexedEntity implements Ownerable, Subject {
 
 	private static final long serialVersionUID = 1L;
-
+	
 	@Embedded
 	private Address address;
 
@@ -51,6 +52,12 @@ public class Candidate extends Person implements Ownerable, Obfuscable {
 
 	@OneToOne(fetch = FetchType.EAGER, mappedBy = "candidate")
 	private Curriculum curriculum;
+
+	@Email
+	@NotNull
+	@Column(length = 128, nullable = false, unique = true)
+	@Field
+	protected String email;
 
 	@Min(0)
 	private Integer expectedSalary;
@@ -72,6 +79,13 @@ public class Candidate extends Person implements Ownerable, Obfuscable {
 
 	private String linkedinProfileUrl;
 
+	@NotNull
+	@Column(nullable = false)
+	@Field(name = "_name")
+	@Field(name = "name", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
+	@SortableField(forField = "name")
+	protected String name;
+
 	@ManyToOne
 	@JoinColumn(name = "candidateId")
 	private Origin origin;
@@ -82,6 +96,13 @@ public class Candidate extends Person implements Ownerable, Obfuscable {
 	@IndexedEmbedded
 	private User owner;
 
+	@Column(length = 12)
+	protected String phoneNumber;
+
+	@ManyToOne
+	@JoinColumn(name = "picture")
+	protected File picture;
+
 	@Field(analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField
 	private Integer rating;
@@ -89,6 +110,13 @@ public class Candidate extends Person implements Ownerable, Obfuscable {
 	private Integer salary;
 
 	private String skype;
+
+	@NotNull
+	@Column(nullable = false)
+	@Field(name = "_surname")
+	@Field(name = "surname", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
+	@SortableField(forField = "surname")
+	protected String surname;
 
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name = "candidate_tag", joinColumns = @JoinColumn(name = "candidate_id"), inverseJoinColumns = @JoinColumn(name = "tag_id"))
@@ -100,15 +128,18 @@ public class Candidate extends Person implements Ownerable, Obfuscable {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
+	public boolean equals(final Object obj) {
+		if (this == obj) {
 			return true;
-		if (!super.equals(obj))
+		}
+		if (!super.equals(obj)) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (this.getClass() != obj.getClass()) {
 			return false;
-		Candidate other = (Candidate) obj;
-		return super.equals(other);
+		}
+		final Candidate other = (Candidate) obj;
+		return Objects.equals(other.email, this.email);
 	}
 
 	public Address getAddress() {
@@ -123,12 +154,23 @@ public class Candidate extends Person implements Ownerable, Obfuscable {
 		return this.curriculum;
 	}
 
+	public String getEmail() {
+		return this.email;
+	}
+
 	public Integer getExpectedSalary() {
 		return this.expectedSalary;
 	}
 
 	public Set<File> getFiles() {
 		return this.files;
+	}
+
+	public String getFullName() {
+		if (this.name == null) {
+			return null;
+		}
+		return new StringBuilder(this.name).append(" ").append(this.surname).toString();
 	}
 
 	public String getInfojobsProfileUrl() {
@@ -147,6 +189,10 @@ public class Candidate extends Person implements Ownerable, Obfuscable {
 		return this.linkedinProfileUrl;
 	}
 
+	public String getName() {
+		return this.name;
+	}
+
 	public Origin getOrigin() {
 		return this.origin;
 	}
@@ -154,6 +200,14 @@ public class Candidate extends Person implements Ownerable, Obfuscable {
 	@Override
 	public User getOwner() {
 		return this.owner;
+	}
+
+	public String getPhoneNumber() {
+		return this.phoneNumber;
+	}
+
+	public File getPicture() {
+		return this.picture;
 	}
 
 	public Integer getRating() {
@@ -168,13 +222,17 @@ public class Candidate extends Person implements Ownerable, Obfuscable {
 		return this.skype;
 	}
 
+	public String getSurname() {
+		return this.surname;
+	}
+
 	public Set<Tag> getTags() {
 		return this.tags;
 	}
 
 	@Override
 	public int hashCode() {
-		return super.hashCode();
+		return Objects.hash(this.email);
 	}
 
 	public void removeFile(File file) {
@@ -195,6 +253,10 @@ public class Candidate extends Person implements Ownerable, Obfuscable {
 
 	public void setCurriculum(final Curriculum curriculum) {
 		this.curriculum = curriculum;
+	}
+
+	public void setEmail(final String email) {
+		this.email = email;
 	}
 
 	public void setExpectedSalary(final Integer expectedSalary) {
@@ -221,6 +283,10 @@ public class Candidate extends Person implements Ownerable, Obfuscable {
 		this.linkedinProfileUrl = linkedinProfileUrl;
 	}
 
+	public void setName(final String name) {
+		this.name = name;
+	}
+
 	public void setOrigin(final Origin origin) {
 		this.origin = origin;
 	}
@@ -228,6 +294,14 @@ public class Candidate extends Person implements Ownerable, Obfuscable {
 	@Override
 	public void setOwner(final User owner) {
 		this.owner = owner;
+	}
+
+	public void setPhoneNumber(final String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	public void setPicture(final File picture) {
+		this.picture = picture;
 	}
 
 	public void setRating(final Integer rating) {
@@ -242,6 +316,10 @@ public class Candidate extends Person implements Ownerable, Obfuscable {
 		this.skype = skype;
 	}
 
+	public void setSurname(final String surname) {
+		this.surname = surname;
+	}
+
 	public void setTags(final List<Tag> tags) {
 		if (tags == null) {
 			this.tags = new HashSet<>();
@@ -252,5 +330,10 @@ public class Candidate extends Person implements Ownerable, Obfuscable {
 
 	public void setTags(final Set<Tag> tags) {
 		this.tags = tags;
+	}
+
+	@Override
+	public String toString() {
+		return this.getFullName();
 	}
 }

@@ -10,6 +10,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.search.annotations.Analyze;
@@ -20,18 +21,26 @@ import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.SortableField;
 import org.hibernate.search.annotations.Store;
 
-import ged.ejb.person.Person;
+import ged.ejb.core.Subject;
+import ged.ejb.core.file.File;
+import ged.ejb.core.model.AbstractIndexedEntity;
 import ged.ejb.user.role.Role;
 
 @Entity
 @Indexed
-public class User extends Person  {
+public class User extends AbstractIndexedEntity implements Subject  {
 
 	private static final long serialVersionUID = 1L;
 
 	@Field(name = "dateOfJoin", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField(forField = "dateOfJoin")
 	private LocalDate dateOfJoin;
+	
+	@Email
+	@NotNull
+	@Column(length = 128, nullable = false, unique = true)
+	@Field
+	protected String email;
 
 	@NotNull
 	@Column(nullable = false)
@@ -41,27 +50,24 @@ public class User extends Person  {
 	@SortableField(forField = "lastConnection")
 	private LocalDateTime lastConnection;
 
-	@Override
-	public int hashCode() {
-		return super.hashCode();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (!super.equals(obj))
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		User other = (User) obj;
-		return super.equals(other);
-	}
-
 	@ManyToOne
 	@JoinColumn(name = "managerId")
 	@IndexedEmbedded(depth = 1)
 	private User manager;
+
+	@NotNull
+	@Column(nullable = false)
+	@Field(name = "_name")
+	@Field(name = "name", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
+	@SortableField(forField = "name")
+	protected String name;
+
+	@Column(length = 12)
+	protected String phoneNumber;
+
+	@ManyToOne
+	@JoinColumn(name = "picture")
+	protected File picture;
 
 	@NotNull
 	@Enumerated(EnumType.STRING)
@@ -74,8 +80,41 @@ public class User extends Person  {
 	@Column(nullable = false)
 	private Integer rowsPerPage = 10;
 
+	@NotNull
+	@Column(nullable = false)
+	@Field(name = "_surname")
+	@Field(name = "surname", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
+	@SortableField(forField = "surname")
+	protected String surname;
+
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (!super.equals(obj)) {
+			return false;
+		}
+		if (this.getClass() != obj.getClass()) {
+			return false;
+		}
+		final User other = (User) obj;
+		return Objects.equals(other.email, this.email);
+	}
+
 	public LocalDate getDateOfJoin() {
 		return this.dateOfJoin;
+	}
+
+	public String getEmail() {
+		return this.email;
+	}
+
+	public String getFullName() {
+		if (this.name == null) {
+			return null;
+		}
+		return new StringBuilder(this.name).append(" ").append(this.surname).toString();
 	}
 
 	public String getLanguage() {
@@ -90,12 +129,33 @@ public class User extends Person  {
 		return this.manager;
 	}
 
+	public String getName() {
+		return this.name;
+	}
+
+	public String getPhoneNumber() {
+		return this.phoneNumber;
+	}
+
+	public File getPicture() {
+		return this.picture;
+	}
+
 	public Role getRole() {
 		return this.role;
 	}
 
 	public Integer getRowsPerPage() {
 		return this.rowsPerPage;
+	}
+
+	public String getSurname() {
+		return this.surname;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(this.email);
 	}
 
 	public boolean hasRole(final Role role) {
@@ -118,6 +178,10 @@ public class User extends Person  {
 		this.dateOfJoin = dateOfJoin;
 	}
 
+	public void setEmail(final String email) {
+		this.email = email;
+	}
+
 	public void setLanguage(final String language) {
 		this.language = language;
 	}
@@ -130,12 +194,28 @@ public class User extends Person  {
 		this.manager = manager;
 	}
 
+	public void setName(final String name) {
+		this.name = name;
+	}
+
+	public void setPhoneNumber(final String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	public void setPicture(final File picture) {
+		this.picture = picture;
+	}
+
 	public void setRole(final Role role) {
 		this.role = role;
 	}
 
 	public void setRowsPerPage(final Integer rowsPerPage) {
 		this.rowsPerPage = rowsPerPage;
+	}
+
+	public void setSurname(final String surname) {
+		this.surname = surname;
 	}
 
 	@Override

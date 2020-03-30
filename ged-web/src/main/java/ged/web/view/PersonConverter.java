@@ -12,12 +12,12 @@ import ged.ejb.candidate.Candidate;
 import ged.ejb.candidate.CandidateService;
 import ged.ejb.client.Contact;
 import ged.ejb.client.ContactService;
-import ged.ejb.person.Person;
+import ged.ejb.core.Subject;
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
 
 @FacesConverter(value = "personConverter", managed = true)
-public class PersonConverter implements Converter<Person> {
+public class PersonConverter implements Converter<Subject> {
 
 	@Inject
 	private CandidateService candidateService;
@@ -29,7 +29,7 @@ public class PersonConverter implements Converter<Person> {
 	private UserService userService;
 
 	@Override
-	public Person getAsObject(final FacesContext context, final UIComponent component, final String value) {
+	public Subject getAsObject(final FacesContext context, final UIComponent component, final String value) {
 		if (value == null) {
 			return null;
 		}
@@ -49,11 +49,11 @@ public class PersonConverter implements Converter<Person> {
 	}
 
 	@Override
-	public String getAsString(final FacesContext context, final UIComponent component, final Person person) {
-		if (person == null) {
+	public String getAsString(final FacesContext context, final UIComponent component, final Subject subject) {
+		if (subject == null) {
 			return null;
 		}
-		return person.getUid();
+		return subject.getUid();
 	}
 
 	public void setCandidateService(final CandidateService candidateService) {

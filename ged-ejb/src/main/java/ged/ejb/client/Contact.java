@@ -1,35 +1,28 @@
 package ged.ejb.client;
 
+import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
 
+import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.SortableField;
+import org.hibernate.search.annotations.Store;
 
-import ged.ejb.core.model.Obfuscable;
-import ged.ejb.person.Person;
+import ged.ejb.core.Subject;
+import ged.ejb.core.file.File;
+import ged.ejb.core.model.AbstractIndexedEntity;
 
 @Entity
 @Indexed
-public class Contact extends Person implements Obfuscable {
-
-	@Override
-	public int hashCode() {
-		return super.hashCode();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (!super.equals(obj))
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Contact other = (Contact) obj;
-		return super.equals(other);
-	}
+public class Contact extends AbstractIndexedEntity implements Subject {
 
 	private static final long serialVersionUID = 1L;
 
@@ -37,33 +30,132 @@ public class Contact extends Person implements Obfuscable {
 	@JoinColumn(name = "clientId", nullable = false)
 	private Client client;
 
+	@Email
+	@NotNull
+	@Column(length = 128, nullable = false, unique = true)
+	@Field
+	protected String email;
+
 	@Column(length = 2)
 	private String language;
+
+	@NotNull
+	@Column(nullable = false)
+	@Field(name = "_name")
+	@Field(name = "name", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
+	@SortableField(forField = "name")
+	protected String name;
+
+	@Column(length = 12)
+	protected String phoneNumber;
+
+	@ManyToOne
+	@JoinColumn(name = "picture")
+	protected File picture;
 
 	@Column(length = 128)
 	private String position;
 
+	@NotNull
+	@Column(nullable = false)
+	@Field(name = "_surname")
+	@Field(name = "surname", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
+	@SortableField(forField = "surname")
+	protected String surname;
+
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (!super.equals(obj)) {
+			return false;
+		}
+		if (this.getClass() != obj.getClass()) {
+			return false;
+		}
+		final Contact other = (Contact) obj;
+		return Objects.equals(other.email, this.email);
+	}
+
 	public Client getClient() {
 		return this.client;
+	}
+
+	public String getEmail() {
+		return this.email;
+	}
+
+	public String getFullName() {
+		if (this.name == null) {
+			return null;
+		}
+		return new StringBuilder(this.name).append(" ").append(this.surname).toString();
 	}
 
 	public String getLanguage() {
 		return this.language;
 	}
 
+	public String getName() {
+		return this.name;
+	}
+
+	public String getPhoneNumber() {
+		return this.phoneNumber;
+	}
+
+	public File getPicture() {
+		return this.picture;
+	}
+
 	public String getPosition() {
 		return this.position;
+	}
+
+	public String getSurname() {
+		return this.surname;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(this.email);
 	}
 
 	public void setClient(final Client client) {
 		this.client = client;
 	}
 
+	public void setEmail(final String email) {
+		this.email = email;
+	}
+
 	public void setLanguage(final String language) {
 		this.language = language;
 	}
 
+	public void setName(final String name) {
+		this.name = name;
+	}
+
+	public void setPhoneNumber(final String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	public void setPicture(final File picture) {
+		this.picture = picture;
+	}
+
 	public void setPosition(final String position) {
 		this.position = position;
+	}
+
+	public void setSurname(final String surname) {
+		this.surname = surname;
+	}
+
+	@Override
+	public String toString() {
+		return this.getFullName();
 	}
 }
