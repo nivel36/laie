@@ -1,6 +1,8 @@
 package ged.ejb.job.offer;
 
-public enum JobOfferState {
+import ged.ejb.core.EventState;
+
+public enum JobOfferState implements EventState {
 
 	CLOSED("job_offer_state.closed", "red", false, true), //
 	CREATED("job_offer_state.created", "cornflowerblue", true, false), //

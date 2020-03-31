@@ -1,6 +1,8 @@
 package ged.ejb.event;
 
-public enum JobCandidatureEventType {
+import ged.ejb.core.EventType;
+
+public enum JobCandidatureEventType implements EventType {
 
 	EMAIL("event_type.email", "fa-envelope"), //
 	MEETING("event_type.meeting", "fa-pencil"), //

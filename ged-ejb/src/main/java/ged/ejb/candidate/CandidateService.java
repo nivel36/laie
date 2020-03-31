@@ -4,7 +4,6 @@ import java.lang.invoke.MethodHandles;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -42,7 +41,7 @@ public class CandidateService extends AbstractIndexedService<Candidate> {
 		Objects.requireNonNull(candidate);
 		logger.debug("Add file {} to candidate  {}", file, candidate);
 		final List<File> files = this.candidateDao.findFiles(candidate, Page.ALL_RESULTS);
-		candidate.setFiles(files.stream().collect(Collectors.toSet()));
+		candidate.setFiles(new HashSet<File>(files));
 		candidate.addFile(file);
 		return this.candidateDao.save(candidate);
 	}

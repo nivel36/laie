@@ -6,9 +6,11 @@ import ged.ejb.user.User;
 
 public interface Event {
 
-	String getEventType();
+	EventType getType();
+	
+	EventState getState();
 
 	User getUser();
 
-	LocalDateTime getEventDate();
+	LocalDateTime getDate();
 }
