@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import ged.ejb.core.AbstractIndexedService;
 import ged.ejb.core.model.AbstractIndexedDao;
+import ged.ejb.core.model.Page;
 import ged.ejb.core.model.Repository;
 
 @Stateless
@@ -29,10 +30,10 @@ public class ContactService extends AbstractIndexedService<Contact> {
 		return this.contactDao.findByUid(uid);
 	}
 
-	public List<Contact> findContactsByClient(final Client client) {
+	public List<Contact> findContactsByClient(final Client client, final Page page) {
 		Objects.requireNonNull(client);
 		logger.debug("Find contacts by client {}", client);
-		return this.contactDao.findContactsByClient(client);
+		return this.contactDao.findContactsByClient(client, page);
 	}
 
 	@Override

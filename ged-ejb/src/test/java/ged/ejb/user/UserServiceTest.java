@@ -11,8 +11,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import ged.ejb.user.role.Role;
-
 @ExtendWith(MockitoExtension.class)
 public class UserServiceTest {
 

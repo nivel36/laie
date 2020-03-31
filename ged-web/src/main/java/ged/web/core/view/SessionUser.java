@@ -113,7 +113,7 @@ public class SessionUser implements Serializable {
 	}
 
 	private void loadUserData(final String email) {
-		this.user = this.userService.findUserByEmail(email);
+		this.user = this.userService.findByEmail(email);
 		this.locale = new Locale(this.user.getLanguage());
 		this.team = this.userService.findSubordinateUsers(this.user);
 	}

@@ -24,7 +24,6 @@ import org.hibernate.search.annotations.Store;
 import ged.ejb.core.Subject;
 import ged.ejb.core.file.File;
 import ged.ejb.core.model.AbstractIndexedEntity;
-import ged.ejb.user.role.Role;
 
 @Entity
 @Indexed

@@ -1,4 +1,4 @@
-package ged.ejb.user.role;
+package ged.ejb.user;
 
 public enum Role {
 

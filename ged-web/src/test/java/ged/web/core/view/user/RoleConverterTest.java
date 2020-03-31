@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import ged.ejb.user.role.Role;
+import ged.ejb.user.Role;
 import ged.web.view.user.RoleConverter;
 
 @ExtendWith(MockitoExtension.class)

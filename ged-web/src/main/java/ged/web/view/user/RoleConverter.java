@@ -5,7 +5,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-import ged.ejb.user.role.Role;
+import ged.ejb.user.Role;
 
 @FacesConverter(managed = true, forClass = Role.class)
 public class RoleConverter implements Converter<Role> {

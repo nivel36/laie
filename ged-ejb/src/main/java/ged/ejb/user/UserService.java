@@ -67,7 +67,7 @@ public class UserService extends AbstractIndexedService<User> {
 		return this.userDao.findSubordinateUsers(user);
 	}
 
-	public User findUserByEmail(final String email) {
+	public User findByEmail(final String email) {
 		Objects.requireNonNull(email);
 		logger.debug("Find user by email {}", email);
 		return this.userDao.findUserByEmail(email);

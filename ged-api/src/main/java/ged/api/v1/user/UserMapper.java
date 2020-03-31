@@ -4,9 +4,9 @@ import javax.inject.Inject;
 
 import ged.api.v1.mapper.AbstractMapper;
 import ged.api.v1.mapper.Mapper;
+import ged.ejb.user.Role;
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
-import ged.ejb.user.role.Role;
 
 @Mapper
 public class UserMapper implements AbstractMapper<User, UserDto> {
@@ -25,7 +25,7 @@ public class UserMapper implements AbstractMapper<User, UserDto> {
 		user.setLanguage(userDto.getLanguage());
 		user.setLastConnection(userDto.getLastConnection());
 		if (userDto.getManagerEmail() != null) {
-			final User manager = this.userService.findUserByEmail(userDto.getManagerEmail());
+			final User manager = this.userService.findByEmail(userDto.getManagerEmail());
 			user.setManager(manager);
 		}
 		user.setName(userDto.getName());

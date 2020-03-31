@@ -77,7 +77,7 @@ public class UserRestController extends AbstractRestController {
 	@Produces(MediaType.APPLICATION_JSON)
 	public UserDto findByEmail(@QueryParam("email") final String email) {
 		Objects.requireNonNull(email);
-		final User user = this.userService.findUserByEmail(email);
+		final User user = this.userService.findByEmail(email);
 		return this.userMapper.mapEntity(user);
 	}
 

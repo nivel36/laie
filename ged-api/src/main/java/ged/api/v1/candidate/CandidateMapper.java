@@ -27,7 +27,7 @@ public class CandidateMapper implements AbstractMapper<Candidate, CandidateDto> 
 			return null;
 		}
 		final Candidate candidate = new Candidate();
-		final User owner = this.userService.findUserByEmail(candidateDto.getOwnerEmail());
+		final User owner = this.userService.findByEmail(candidateDto.getOwnerEmail());
 		candidate.setOwner(owner);
 		final Address address = new Address();
 		address.setCity(candidateDto.getCity());
