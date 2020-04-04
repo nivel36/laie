@@ -46,7 +46,7 @@ public class ClientRestController extends AbstractRestController {
 	@Path("/client/{cif}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public ClientDto findByCif(@PathParam("cif") final String cif) {
-		final Client client = this.clientService.findClientByCif(cif);
+		final Client client = this.clientService.findByCif(cif);
 		return this.clientMapper.mapEntity(client);
 	}
 

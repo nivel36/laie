@@ -113,7 +113,7 @@ public class ViewCandidateView extends AbstractView {
 		this.curriculum = this.curriculumService.findByCandidate(this.candidate);
 		this.editable = this.sessionUser.hasPermissionToEdit(this.candidate);
 		this.meetings = this.initMeetings();
-		this.files = this.candidateService.findFiles(this.candidate, Page.TEN_RESULTS_PER_PAGE);
+		this.files = this.candidateService.findCandidatesFiles(this.candidate, Page.TEN_RESULTS_PER_PAGE);
 	}
 
 	private List<Meeting> initMeetings() {
@@ -136,7 +136,7 @@ public class ViewCandidateView extends AbstractView {
 	}
 
 	public void removeFile(final File file) {
-		this.candidate = this.candidateService.removeFile(candidate, file);
+		this.candidate = this.candidateService.removeFileFromCandidate(candidate, file);
 		this.files.remove(file);
 	}
 

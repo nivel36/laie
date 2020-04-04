@@ -42,7 +42,9 @@ public class CandidateDao extends AbstractIndexedDao<Candidate> {
 		return this.findByQuery(Candidate.class, "Candidate.findByJobOffer", map("jobOffer", jobOffer), page);
 	}
 
-	public List<File> findFiles(final Candidate candidate, final Page page) {
+	public List<File> findCandidatesFiles(final Candidate candidate, final Page page) {
+		Objects.requireNonNull(candidate);
+		Objects.requireNonNull(page);
 		return this.findByQuery(File.class, "Candidate.findFiles", map("candidate", candidate), page);
 	}
 

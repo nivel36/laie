@@ -53,7 +53,7 @@ public class CandidateServiceTest {
 
 			when(candidateDao.findCandidates(jobOffer, Page.ALL_RESULTS)).thenReturn(new ArrayList<>());
 
-			final List<Candidate> candidatesFromRepository = candidateService.findCandidates(jobOffer,
+			final List<Candidate> candidatesFromRepository = candidateService.findByJobOffer(jobOffer,
 					Page.ALL_RESULTS);
 			assertEquals(0, candidatesFromRepository.size());
 		}
@@ -61,7 +61,7 @@ public class CandidateServiceTest {
 		@Test
 		public void nullJobOfferShouldReturnNullPointerException() {
 			assertThrows(NullPointerException.class, () -> {
-				candidateService.findCandidates(null, Page.ALL_RESULTS);
+				candidateService.findByJobOffer(null, Page.ALL_RESULTS);
 			});
 		}
 	}

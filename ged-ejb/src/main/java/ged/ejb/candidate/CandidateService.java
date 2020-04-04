@@ -40,7 +40,7 @@ public class CandidateService extends AbstractIndexedService<Candidate> {
 		Objects.requireNonNull(file);
 		Objects.requireNonNull(candidate);
 		logger.debug("Add file {} to candidate  {}", file, candidate);
-		final List<File> files = this.candidateDao.findFiles(candidate, Page.ALL_RESULTS);
+		final List<File> files = this.candidateDao.findCandidatesFiles(candidate, Page.ALL_RESULTS);
 		candidate.setFiles(new HashSet<File>(files));
 		candidate.addFile(file);
 		return this.candidateDao.save(candidate);
@@ -57,26 +57,17 @@ public class CandidateService extends AbstractIndexedService<Candidate> {
 		return this.candidateDao.findByUid(uid);
 	}
 
-	public List<Candidate> findCandidates(final JobOffer jobOffer, final Page page) {
+	public List<Candidate> findByJobOffer(final JobOffer jobOffer, final Page page) {
 		Objects.requireNonNull(jobOffer);
 		Objects.requireNonNull(page);
 		logger.debug("Find candidates by jobOffer {} ", jobOffer);
 		return this.candidateDao.findCandidates(jobOffer, page);
 	}
 
-	public File findFile(final long fileId) {
-		if (fileId < 1) {
-			logger.warn("Bad file id {}", fileId);
-			throw new IllegalArgumentException("Bad file id: " + fileId);
-		}
-		logger.debug("Find file by id {}", fileId);
-		return this.fileService.findById(fileId);
-	}
-
-	public List<File> findFiles(final Candidate candidate, final Page page) {
+	public List<File> findCandidatesFiles(final Candidate candidate, final Page page) {
 		Objects.requireNonNull(candidate);
 		logger.debug("Find files by candidate {}", candidate);
-		return this.candidateDao.findFiles(candidate, page);
+		return this.candidateDao.findCandidatesFiles(candidate, page);
 	}
 
 	@Override
@@ -84,11 +75,11 @@ public class CandidateService extends AbstractIndexedService<Candidate> {
 		return this.candidateDao;
 	}
 
-	public Candidate removeFile(final Candidate candidate, final File file) {
+	public Candidate removeFileFromCandidate(final Candidate candidate, final File file) {
 		Objects.requireNonNull(candidate);
 		Objects.requireNonNull(file);
 		logger.debug("Remove file {} from candidate {}", file, candidate);
-		final List<File> files = this.findFiles(candidate, Page.ALL_RESULTS);
+		final List<File> files = this.candidateDao.findCandidatesFiles(candidate, Page.ALL_RESULTS);
 		candidate.setFiles(new HashSet<>(files));
 		candidate.removeFile(file);
 		final Candidate updatedCandidate = this.candidateDao.save(candidate);
