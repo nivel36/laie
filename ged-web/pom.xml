@@ -109,7 +109,6 @@
 				<configuration>
 					<inputPath>${basedir}/src/main/sass/</inputPath>
 					<outputPath>${basedir}/target/</outputPath>
-					<includePath>${basedir}/src/main/sass/plugins/</includePath>
 				</configuration>
 			</plugin>
 			<plugin>

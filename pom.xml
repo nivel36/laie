@@ -33,7 +33,7 @@
 		<slf4j.version>1.7.26</slf4j.version>
 		<poi.version>3.17</poi.version>
 		<html2pdf.version>2.1.6</html2pdf.version>
-		<xml.bind.version>2.2.11</xml.bind.version>
+		<xml.bind.version>2.4.0-b180830.0359</xml.bind.version>
 		<javax.activation.version>1.1.1</javax.activation.version>
 		<omnifaces.version>3.3</omnifaces.version>
 		<commons-fileupload.version>1.4</commons-fileupload.version>
