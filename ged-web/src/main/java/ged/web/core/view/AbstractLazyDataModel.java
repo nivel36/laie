@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import org.primefaces.model.FilterMeta;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
@@ -49,7 +50,7 @@ public abstract class AbstractLazyDataModel<T extends AbstractIndexedEntity> ext
 
 	@Override
 	public List<T> load(final int first, final int pageSize, final String sortFieldName, final SortOrder sortOrder,
-			final Map<String, Object> filters) {
+			final Map<String, FilterMeta> filters) {
 		final Page page = new Page(first, pageSize);
 		final SortField sortField;
 		if (sortOrder != null) {

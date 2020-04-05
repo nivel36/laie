@@ -24,11 +24,11 @@
 		<ged.version>${project.version}</ged.version>
 
 		<javaee-api.version>8.0</javaee-api.version>
-		<primefaces.version>7.0</primefaces.version>
-		<hibernate-search.version>5.10.5.Final</hibernate-search.version>
+		<primefaces.version>8.0</primefaces.version>
+		<hibernate-search.version>5.10.7.Final</hibernate-search.version>
 		<hibernate-envers.version>5.4.4.Final</hibernate-envers.version>
-		<hibernate.version>5.0.5.Final</hibernate.version>
-		<infinispan.version>9.4.14.Final</infinispan.version>
+		<hibernate.version>5.3.15.Final</hibernate.version>
+		<infinispan.version>9.4.18.Final</infinispan.version>
 		<font-awesome.version>5.10.1</font-awesome.version>
 		<slf4j.version>1.7.26</slf4j.version>
 		<poi.version>3.17</poi.version>

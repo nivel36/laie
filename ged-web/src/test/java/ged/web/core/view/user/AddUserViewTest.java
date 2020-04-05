@@ -23,7 +23,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.primefaces.event.FileUploadEvent;
-import org.primefaces.model.UploadedFile;
+import org.primefaces.model.file.UploadedFile;
 
 import ged.ejb.core.file.FileService;
 import ged.ejb.core.model.Page;
@@ -130,7 +130,7 @@ public class AddUserViewTest {
 			final UploadedFile file = mock(UploadedFile.class);
 			when(event.getFile()).thenReturn(file);
 			final InputStream is = mock(InputStream.class);
-			when(event.getFile().getInputstream()).thenReturn(is);
+			when(event.getFile().getInputStream()).thenReturn(is);
 
 			AddUserViewTest.this.addUserView.uploadImage(event);
 		}

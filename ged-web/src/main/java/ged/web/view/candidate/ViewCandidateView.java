@@ -14,7 +14,7 @@ import javax.inject.Named;
 import org.omnifaces.cdi.Param;
 import org.omnifaces.util.Faces;
 import org.primefaces.event.FileUploadEvent;
-import org.primefaces.model.UploadedFile;
+import org.primefaces.model.file.UploadedFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -171,7 +171,7 @@ public class ViewCandidateView extends AbstractView {
 
 	public void uploadFile(final FileUploadEvent event) {
 		final UploadedFile uploadedFile = event.getFile();
-		try (final InputStream inputStream = uploadedFile.getInputstream()) {
+		try (final InputStream inputStream = uploadedFile.getInputStream()) {
 			final String fileName = uploadedFile.getFileName();
 			final File file = this.fileUploadService.uploadFile(inputStream, false, fileName);
 			this.candidate = this.candidateService.addFileToCandidate(this.candidate, file);

@@ -17,7 +17,7 @@ import javax.inject.Inject;
 
 import org.omnifaces.cdi.Param;
 import org.primefaces.event.FileUploadEvent;
-import org.primefaces.model.UploadedFile;
+import org.primefaces.model.file.UploadedFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -84,7 +84,7 @@ public abstract class AbstractUserView extends AbstractView {
 		if (uploadedFile == null) {
 			return;
 		}
-		try (InputStream inputStream = uploadedFile.getInputstream()) {
+		try (InputStream inputStream = uploadedFile.getInputStream()) {
 			final String filename = this.getUser().getUid() + "_picture";
 			final File file = this.fileUploadService.uploadFile(inputStream, true, filename);
 			this.user.setPicture(file);

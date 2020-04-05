@@ -16,7 +16,7 @@ import javax.inject.Named;
 
 import org.primefaces.event.CaptureEvent;
 import org.primefaces.event.FileUploadEvent;
-import org.primefaces.model.UploadedFile;
+import org.primefaces.model.file.UploadedFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -96,7 +96,7 @@ public class ConfigView extends AbstractView {
 			return;
 		}
 		logger.debug("Upload user {} image action performed", this.user);
-		try (final InputStream inputStream = uploadedFile.getInputstream()) {
+		try (final InputStream inputStream = uploadedFile.getInputStream()) {
 			this.user = this.userService.addUserImage(this.user, inputStream);
 		} catch (final IOException e) {
 			throw new UncheckedIOException(e);

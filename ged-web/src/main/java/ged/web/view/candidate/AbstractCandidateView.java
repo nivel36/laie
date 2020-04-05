@@ -10,7 +10,7 @@ import javax.inject.Inject;
 import org.omnifaces.cdi.Param;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.RateEvent;
-import org.primefaces.model.UploadedFile;
+import org.primefaces.model.file.UploadedFile;
 
 import ged.ejb.candidate.Candidate;
 import ged.ejb.candidate.CandidateService;
@@ -76,7 +76,7 @@ public abstract class AbstractCandidateView extends AbstractView {
 
 	public void uploadImage(final FileUploadEvent event) {
 		final UploadedFile uploadedFile = event.getFile();
-		try (InputStream inputStream = uploadedFile.getInputstream()) {
+		try (InputStream inputStream = uploadedFile.getInputStream()) {
 			File file = this.fileUploadService.uploadFile(inputStream, true, this.candidate.getUid() + "_picture");
 			this.candidate.setPicture(file);
 		} catch (final IOException e) {
