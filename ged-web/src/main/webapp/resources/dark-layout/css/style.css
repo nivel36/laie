@@ -1,0 +1,619 @@
+h1 {
+	display: block;
+	font-size: 2em;
+	margin-top: 0.67em;
+	margin-bottom: 0.67em;
+	margin-left: 0;
+	margin-right: 0;
+	font-weight: bold;
+}
+
+h2 {
+	display: block;
+	font-size: 1.5em;
+	margin-top: 0.83em;
+	margin-bottom: 0.83em;
+	margin-left: 0;
+	margin-right: 0;
+	font-weight: bold;
+}
+
+h3 {
+	display: block;
+	font-size: 1.17em;
+	margin-top: 1em;
+	margin-bottom: 1em;
+	margin-left: 0;
+	margin-right: 0;
+	font-weight: bold;
+}
+
+h4 {
+	display: block;
+	margin-top: 1.33em;
+	margin-bottom: 1.33em;
+	margin-left: 0;
+	margin-right: 0;
+	font-weight: bold;
+}
+
+h5 {
+	display: block;
+	font-size: .83em;
+	margin-top: 1.67em;
+	margin-bottom: 1.67em;
+	margin-left: 0;
+	margin-right: 0;
+	font-weight: bold;
+}
+
+h6 {
+	display: block;
+	font-size: .67em;
+	margin-top: 2.33em;
+	margin-bottom: 2.33em;
+	margin-left: 0;
+	margin-right: 0;
+	font-weight: bold;
+}
+
+body .ui-datatable table {
+	table-layout: auto;
+}
+
+body .field-btn {
+	margin-top: 2em;
+}
+
+@media screen and (max-width: 576px) {
+	body .field-btn {
+		margin-top: 0em;
+	}
+}
+
+.attendee {
+	display: flex;
+	flex: 1 1 100%;
+	justify-content: space-between;
+	align-items: center;
+	padding: 0.5em;
+}
+
+.attendee .remove-attendee {
+	display: none !important;
+}
+
+.attendee:hover {
+	background: #f2f3f3;
+}
+
+.attendee:hover .remove-attendee {
+	display: inline-flex !important;
+}
+
+.document .ql-editor {
+	padding: 4em 5em 3em 3em;
+}
+
+@media (min-width: 1200px) {
+	.document {
+		width: 21cm;
+	}
+}
+
+.card-aside {
+	padding: 1em;
+	float: left;
+}
+
+.card>ul>li {
+	padding: 0.5em;
+}
+
+.tag {
+	border-radius: 3px;
+	text-align: center;
+	padding: 0 0.4em;
+	display: inline-block;
+	background: #0772B3;
+	color: white;
+	line-height: 1.8em;
+}
+
+.tag.green {
+	background: green;
+	color: white;
+}
+
+.tag.blue {
+	background: blue;
+	color: white;
+}
+
+.tag.brown {
+	background: brown;
+	color: white;
+}
+
+.tag.red {
+	background: red;
+	color: white;
+}
+
+.tag.blueviolet {
+	background: blueviolet;
+	color: white;
+}
+
+.tag.cornflowerblue {
+	background: cornflowerblue;
+	color: white;
+}
+
+.tag.gray {
+	background: gray;
+	color: white;
+}
+
+.avatar {
+	border-radius: 50%;
+	object-fit: cover;
+	image-orientation: from-image;
+	width: 64px;
+	height: 64px;
+}
+
+.avatar.with-border {
+	border: 2px solid white;
+}
+
+.avatar.tiny {
+	width: 30px;
+	height: 30px;
+}
+
+.avatar.small {
+	width: 36px;
+	height: 36px;
+}
+
+.buttons {
+	display: flex;
+	justify-content: flex-end;
+}
+
+.buttons.header-buttons {
+	position: absolute;
+	right: 2em;
+	top: 2em;
+}
+
+.buttons .ui-widget {
+	margin-left: 1em;
+}
+
+.buttons .ui-widget:first-child {
+	margin-left: 0;
+}
+
+.card.files .ui-fileupload .ui-fileupload-content {
+	display: none;
+}
+
+.card.files .ui-fileupload .ui-fileupload-buttonbar {
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+.candidates .ui-datalist .ui-datalist-content, .users .ui-datalist .ui-datalist-content {
+	padding: 0;
+	margin: 0;
+}
+
+.input-avatar img {
+	width: 128px;
+	height: 128px;
+}
+
+.input-avatar label {
+	cursor: pointer;
+}
+
+.input-avatar .ui-fileupload {
+	display: none;
+}
+
+.input-group .label-container {
+	margin: 0 0 1em 0;
+}
+
+body .jobCandidatureStates.ui-selectonemenu-panel .ui-selectonemenu-items .ui-selectonemenu-item.ui-selectonemenu-row, body .jobCandidatureStates.ui-selectonemenu-panel .ui-selectonemenu-table th,
+	.ui-selectonemenu-panel .ui-selectonemenu-table td {
+	border: 0px;
+}
+
+body .jobCandidatureStates.ui-selectonemenu-panel .ui-selectonemenu-items .ui-selectonemenu-item.ui-selectonemenu-row td {
+	padding: 0.3em 0.6em;
+}
+
+.person {
+	display: flex;
+	padding: .5em;
+}
+
+.person.selectable {
+	border-left: 3px solid white;
+}
+
+.person.selectable:hover {
+	background: #eaeaea;
+	border-left: 3px solid #1976d2;
+}
+
+.person .avatar {
+	width: 36px;
+	height: 36px;
+}
+
+.person .person-data {
+	margin-left: 1em;
+	display: inline-block;
+}
+
+.person .person-data .name {
+	display: block;
+	font-weight: 500;
+}
+
+.person .person-data .description {
+	color: #65656a;
+}
+
+.spacer {
+	display: flex;
+	flex: 1;
+}
+
+.version {
+	display: flex;
+	flex: 1 1 100%;
+	justify-content: center;
+}
+
+.card .data {
+	padding: .5em;
+	position: relative;
+}
+
+.card .data .label-container {
+	
+}
+
+.card .data .text-container {
+	overflow: auto;
+	position: relative;
+	line-height: 2em;
+}
+
+.card .data .text {
+	color: #65656a;
+}
+
+.job-card {
+	padding: 0;
+}
+
+.job-card-name {
+	font-size: 1.8em;
+	font-weight: 700;
+	display: block;
+	padding: 7px 0 0 20px;
+}
+
+.job-card-client {
+	font-size: 1em;
+	padding: 20px 0 0 20px;
+	font-weight: 700;
+	display: block;
+}
+
+.job-card-buttons {
+	position: absolute;
+	top: 1.5em;
+	right: 1.5em;
+	float: right;
+	display: inline-block;
+	float: right;
+}
+
+.job-card-content {
+	padding: .5em 1em;
+}
+
+.client-card {
+	padding: 0;
+}
+
+.client-card-name {
+	padding: 40px 0 0 20px;
+	color: #ffffff;
+	font-size: 1.8em;
+	font-weight: 700;
+	white-space: nowrap;
+	display: inline-block;
+}
+
+.client-card-buttons {
+	float: right;
+	display: inline-block;
+}
+
+.client-card-content {
+	padding: .5em 1em;
+}
+
+.contacts.card .ui-datatable .ui-button {
+	margin-left: 6px;
+}
+
+.curriculum {
+	position: relative;
+	flex-direction: column;
+	overflow: auto;
+}
+
+.curriculum .avatar {
+	float: left;
+	margin: 0 2em 0 1em;
+	border-radius: 0;
+	border: 0;
+}
+
+.curriculum .section {
+	border-bottom: 1px solid #dfdfdf;
+	position: relative;
+	margin-top: 2em;
+	font-size: 1.1em;
+	font-weight: 400;
+	padding: 0 2em 1em 2em;
+}
+
+.curriculum .section:last-child {
+	border-bottom: none;
+	margin-bottom: 0;
+}
+
+.curriculum .section .buttons {
+	position: absolute;
+	right: 0px;
+	bottom: 1em;
+}
+
+.curriculum .name {
+	font-size: 2em;
+	font-weight: bold;
+	text-shadow: 1px 1px white;
+	padding-bottom: 0.4em;
+}
+
+.curriculum .job-profile {
+	font-size: 1.5em;
+	padding-bottom: 0.6em;
+}
+
+.curriculum .job-description {
+	white-space: pre-line	
+}
+
+.curriculum .date-range {
+	color: #8c8c93;
+}
+
+.curriculum .language_name {
+	font-weight: 500;
+	min-width: 100px;
+	display: inline-block;
+}
+
+.curriculum .company, .curriculum .school {
+	font-size: 1.1em;
+}
+
+.curriculum p {
+	margin: 0.4em 4em 0.4em 0;
+}
+
+.layout-topbar-newItem {
+	padding: 0.4em 1em 0 0;
+	float: right;
+}
+
+.meeting {
+	display: flex;
+	flex-flow: row wrap;
+	flex: 1 1 100%;
+}
+
+.meeting-title {
+	display: flex;
+	padding: 10px 0;
+	color: black;
+	font-size: 16px;
+	flex: 1;
+}
+
+.meeting-content {
+	display: flex;
+	margin: 10px 0px;
+}
+
+.meeting-date {
+	display: inline-flex;
+	padding: 10px 15px;
+	color: white;
+	background: #0772B3;
+	flex: 1 100%;
+}
+
+.meeting-data .icon {
+	padding: 0 5px;
+}
+
+.meeting-time {
+	display: inline-flex;
+	padding: 10px 15px;
+	border-left: 3px solid #0fc763;
+	font-size: 2em;
+	display: flex;
+	flex: 0 auto;
+}
+
+.meeting-detail {
+	display: flex;
+	flex: 1 auto;
+	flex-direction: column;
+}
+
+.meeting-type {
+	display: flex;
+	flex: 1 100%;
+}
+
+.meeting-location {
+	display: flex;
+	flex: 1 100%;
+}
+
+.meeting-attendees {
+	display: flex;
+	flex: 1 100%;
+	padding: 10px 15px;
+	flex-wrap: wrap;
+}
+
+.meeting-attendee {
+	display: inline-flex;
+	padding: 5px 10px 5px 0px;
+}
+
+.layout-right-panel .messages {
+	margin: 24px 0 0 0;
+	overflow: auto;
+	height: calc(100% - 100px);
+}
+
+.layout-right-panel .users {
+	margin: 24px 0 0 0;
+}
+
+.layout-right-panel .users .users-search {
+	margin: 0 0 24px 0;
+}
+
+
+.user-card, .candidate-card {
+	padding: 0;
+}
+
+.user-card .card-header, .client-card .card-header, .job-card .card-header, .candidate-card .card-header {
+	height: 80px;
+	overflow: hidden;
+	background: linear-gradient(30deg, rgba(7,114,179,1) 0%, rgba(0,170,255,1) 100%);
+	background-color: #0772B3;
+	color: #ffffff;
+}
+
+.user-card .user-card-content .user-image, .candidate-card .candidate-card-content .candidate-image {
+	width: 80px;
+	height: 80px;
+	margin: -40px 0 0 24px;
+}
+
+.user-card .user-card-content .ui-menubutton {
+	width: 36px;
+	height: 36px;
+	-moz-border-radius: 50%;
+	-webkit-border-radius: 50%;
+	border-radius: 50%;
+	float: right;
+	margin: -30px 12px 0 0;
+	z-index: 1;
+}
+
+.user-card .user-card-content .ui-button {
+	width: 36px;
+	height: 36px;
+	-moz-border-radius: 50%;
+	-webkit-border-radius: 50%;
+	border-radius: 50%;
+	float: right;
+	margin: -30px 12px 0 0;
+	z-index: 1;
+}
+
+.user-card .user-card-content .user-card-name, .candidate-card .candidate-card-content .candidate-card-name {
+	font-size: 13px;
+	color: #ffffff;
+	position: relative;
+	top: -60px;
+	margin-left: 120px;
+	font-weight: 700;
+	white-space: nowrap;
+}
+
+.user-card .user-card-content .user-card-role, .candidate-card .candidate-card-content .candidate-card-profile {
+	font-size: 13px;
+	position: relative;
+	top: -50px;
+	margin-left: 120px;
+	font-weight: 700;
+	white-space: nowrap;
+}
+
+.user-card .user-card-content .user-detail, .candidate-card .candidate-card-content .candidate-detail {
+	padding: .5em 1em;
+}
+
+body .ui-menu.new_menu {
+	background: #0fc763;
+	min-width: 200px;
+}
+
+body .ui-menu.new_menu .ui-menu-list .ui-menuitem .ui-menuitem-link .ui-menuitem-text {
+	color: white;
+} 
+ 
+body .ui-menu.new_menu .ui-menu-list .ui-menuitem.ui-state-hover {
+      background-color: #1DDB76;
+      border-color: #31e885;
+}
+
+body .ui-menubutton.success-btn .ui-button {
+	background-color: #0fc763;
+	color: #ffffff;
+	border: 1px solid #0fc763;
+}
+
+body .ui-menubutton.success-btn .ui-button.ui-state-hover {
+	background-color: #1DDB76;
+	color: #ffffff;
+	border-color: #31e885;
+}
+
+body .ui-menubutton.success-btn .ui-button.ui-state-focus {
+	-webkit-box-shadow: 0 0 0 0.2em #72ffb3;
+	-moz-box-shadow: 0 0 0 0.2em #72ffb3;
+	box-shadow: 0 0 0 0.2em #72ffb3;
+}
+
+body .ui-menubutton.success-btn .ui-button.ui-state-active {
+	background-color: #0a9c4d;
+	color: #ffffff;
+}
+
+@media screen and (max-width: 896px) {
+	.layout-topbar .menu-detail-button {
+		display: none;
+	}
+}

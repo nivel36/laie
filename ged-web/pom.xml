@@ -95,23 +95,6 @@
 		<finalName>${project.artifactId}</finalName>
 		<plugins>
 			<plugin>
-				<groupId>com.github.warmuuh</groupId>
-				<artifactId>libsass-maven-plugin</artifactId>
-				<version>0.2.10-libsass_3.5.3</version>
-				<executions>
-					<execution>
-						<phase>generate-resources</phase>
-						<goals>
-							<goal>compile</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<inputPath>${basedir}/src/main/sass</inputPath>
-					<outputPath>${basedir}/target</outputPath>
-				</configuration>
-			</plugin>
-			<plugin>
 				<artifactId>maven-war-plugin</artifactId>
 				<configuration>
 					<webResources>
