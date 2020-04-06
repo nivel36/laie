@@ -107,8 +107,8 @@
 					</execution>
 				</executions>
 				<configuration>
-					<inputPath>${basedir}/src/main/sass/</inputPath>
-					<outputPath>${basedir}/target/</outputPath>
+					<inputPath>${basedir}/src/main/sass</inputPath>
+					<outputPath>${basedir}/target</outputPath>
 				</configuration>
 			</plugin>
 			<plugin>
