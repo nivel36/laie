@@ -2290,9 +2290,6 @@ a {
   position: absolute;
   right: 0;
   background-color: rgba(255, 255, 255, 0.9);
-  -moz-border-radius: 2px;
-  -webkit-border-radius: 2px;
-  border-radius: 2px;
 }
 .login-body .login-panel .login-panel-content {
   margin-top: 33.3%;
@@ -2310,13 +2307,9 @@ a {
 .login-body .login-panel h1 {
   display: inline-block;
   font-size: 16px;
-  background-color: #feedbc;
   margin: 0 0 16px 0;
-  color: #666666;
-  padding: 4px 8px;
-  -moz-border-radius: 2px;
-  -webkit-border-radius: 2px;
-  border-radius: 2px;
+  color: #252529;
+  font-weight: 600;
 }
 .login-body .login-panel .guest-sign-in {
   color: #303030;
