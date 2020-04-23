@@ -1,4 +1,4 @@
-package ged.web.view;
+package ged.web.core.view;
 
 import java.io.Serializable;
 
@@ -15,7 +15,7 @@ public class GuestPreferences implements Serializable {
 
 	private String logo = "logo-roma-white";
 
-	private String menuColor = "layout-menu-light";
+	private String menuColor = "layout-menu-dark";
 
 	private String menuMode = "layout-static";
 
@@ -23,7 +23,7 @@ public class GuestPreferences implements Serializable {
 
 	private String theme = "blue";
 
-	private String topBarColor = "layout-topbar-blue";
+	private String topBarColor = "layout-topbar-dark";
 
 	public String getLogo() {
 		return this.logo;

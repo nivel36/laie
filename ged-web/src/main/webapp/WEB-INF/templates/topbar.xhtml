@@ -2,60 +2,115 @@
 	xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://ged.org/ui" xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui"
 	xmlns:p="http://primefaces.org/ui" xmlns:po="http://primefaces.org/roma" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
-	<h:form id="topbar-form">
-		<div class="layout-topbar">
-			<a class="layout-menu-button layout-topbar-icon" href="#"> <em class="fa fa-bars" />
-			</a>
+	<div class="layout-topbar">
+        <a class="layout-right-panel-button layout-topbar-icon" href="#">
+            <i class="fa fa-ellipsis-v" />
+        </a>
 
-			<div class="spacer"></div>
+        <a class="layout-menu-button layout-topbar-icon" href="#">
+            <i class="fa fa-bars" />
+        </a>
 
-			<p:button value="#{i18n['client.new_client']}" outcome="#{Page.CLIENT_ADD.getUrl()}" styleClass="menu-detail-button success-btn"
-				rendered="#{selectedMenu eq 'clients'}" />
-			<p:button value="#{i18n['job.new_job_offer']}" outcome="#{Page.JOB_ADD.getUrl()}" styleClass="menu-detail-button success-btn"
-				rendered="#{selectedMenu eq 'offers'}" />
-			<p:button value="#{i18n['candidate.new_candidate']}" outcome="#{Page.CANDIDATE_ADD.getUrl()}" styleClass="menu-detail-button success-btn"
-				rendered="#{selectedMenu eq 'candidates'}" />
-			<p:button value="#{i18n['user.new_user']}" outcome="#{Page.USER_ADD.getUrl()}" styleClass="menu-detail-button success-btn"
-				rendered="#{selectedMenu eq 'users'}" />
-			<p:button value="#{i18n['meeting.add_meeting']}" outcome="#{Page.MEETING_ADD.getUrl()}" styleClass="menu-detail-button success-btn"
-				rendered="#{selectedMenu eq 'meetings'}" />
-			<p:button value="#{i18n['event.new_event']}" outcome="#{Page.EVENT_ADD.getUrl()}" styleClass="menu-detail-button success-btn"
-				rendered="#{selectedMenu eq 'events'}" />
-			<p:menuButton icon="fa fa-plus" styleClass="success-btn" menuStyleClass="new_menu">
-				<p:menuitem value="#{i18n['client.new_client']}" outcome="#{Page.CLIENT_ADD.getUrl()}" />
-				<p:menuitem value="#{i18n['job.new_job_offer']}" outcome="#{Page.JOB_ADD.getUrl()}" />
-				<p:menuitem value="#{i18n['candidate.new_candidate']}" outcome="#{Page.CANDIDATE_ADD.getUrl()}" />
-				<p:menuitem value="#{i18n['user.new_user']}" outcome="#{Page.USER_ADD.getUrl()}" />
-				<p:menuitem value="#{i18n['meeting.add_meeting']}" outcome="#{Page.MEETING_ADD.getUrl()}" />
-				<p:menuitem value="#{i18n['event.new_event']}" outcome="#{Page.EVENT_ADD.getUrl()}" />
-			</p:menuButton>
+        <h:link id="logo-link" outcome="/index" styleClass="layout-topbar-logo">
+            <p:graphicImage name="images/#{guestPreferences.logo}.svg" library="roma-layout" />
+        </h:link>
 
-			<ul class="topbar-menu fadeInDown">
-				<li><a href="#"> <cc:avatar value="#{sessionUser.get().picture}" styleClass="tiny with-border" />
-				</a>
-					<ul>
-						<li class="with-separator"><span class="menu-name">#{sessionUser.get().fullName}</span> <span class="menu-role">#{i18n[sessionUser.get().role]}</span></li>
-						<li><p:link outcome="#{Page.CONFIG.getUrl()}">
-								<em class="fa fa-fw fa-cog" />
-								<span>#{i18n['menu.config']}</span>
-							</p:link></li>
-						<li><p:commandLink onclick="PF('aboutDlg').show();">
-								<em class="fa fa-fw fa-question" />
-								<span>#{i18n['menu.about']}</span>
-							</p:commandLink></li>
-						<li><p:commandLink action="#{sessionUser.exit}">
-								<em class="fa fa-fw fa-power-off" />
-								<span>#{i18n['user.logout']}</span>
-							</p:commandLink></li>
-					</ul></li>
-			</ul>
-			<a class="layout-right-panel-button layout-topbar-icon" href="#"> <em class="fa fa-comments" />
-			</a>
-		</div>
-		<p:dialog header="#{i18n['menu.about.version']}" widgetVar="aboutDlg" minHeight="40">
-			<div class="version">
-				<span>#{applicationView.version}</span>
-			</div>
-		</p:dialog>
-	</h:form>
+        <span class="layout-topbar-search">
+            <i class="fa fa-search"></i>
+            <input type="text" placeholder="Enter your search term"/>
+        </span>
+
+        <ul class="topbar-menu fadeInDown">
+            <ui:fragment rendered="#{guestPreferences.profileMode == 'popup' ? true : false}">
+                <li class="user-profile">
+                    <a href="#">
+                        <cc:avatar value="#{sessionUser.get().picture}" />	
+                        <div class="layout-profile-userinfo">
+                            <span class="layout-profile-name">#{sessionUser.get().fullName}</span>
+                            <span class="layout-profile-role">#{i18n[sessionUser.get().role]}</span>
+                        </div>
+                    </a>
+                    <ul>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-fw fa-user"></i>
+                                <span>Profile</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-fw fa-cog"></i>
+                                <span>Settings</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-fw fa-envelope-o"></i>
+                                <span>Messages</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-fw fa-bell-o"></i>
+                                <span>Notifications</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ui:fragment>
+            <li>
+                <a href="#" class="layout-topbar-icon">
+                    <i class="topbar-icon fa fa-fw fa-bell"></i>
+                </a>
+                <ul>
+                    <li role="menuitem">
+                        <a href="#">
+                            <p:graphicImage name="images/avatar/avatar-1.png" library="roma-layout" />
+                            <div class="topbar-menu-info">
+                                <span class="topbar-menu-name">Bithika Abhedananda</span>
+                                <span class="topbar-menu-role">User interface review is done.</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li role="menuitem">
+                        <a href="#">
+                            <p:graphicImage name="images/avatar/avatar-2.png" library="roma-layout" />
+                            <div class="topbar-menu-info">
+                                <span class="topbar-menu-name">Dai Jiang</span>
+                                <span class="topbar-menu-role">Uh, we have sort of a problem here.</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li role="menuitem">
+                        <a href="#">
+                            <p:graphicImage name="images/avatar/avatar-3.png" library="roma-layout" />
+                            <div class="topbar-menu-info">
+                                <span class="topbar-menu-name">Karlien Nijhuis</span>
+                                <span class="topbar-menu-role">You apparently didn’t put the thing</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li role="menuitem">
+                        <a href="#">
+                            <p:graphicImage name="images/avatar/avatar-4.png" library="roma-layout" />
+                            <div class="topbar-menu-info">
+                                <span class="topbar-menu-name">Tom Chun</span>
+                                <span class="topbar-menu-role">Please check the files</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li role="menuitem">
+                        <a href="#">
+                            <p:graphicImage name="images/avatar/avatar-5.png" library="roma-layout" />
+                            <div class="topbar-menu-info">
+                                <span class="topbar-menu-name">Maria Trofimova</span>
+                                <span class="topbar-menu-role">Meeting reports attached.</span>
+                            </div>
+                            
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
 </ui:composition>
