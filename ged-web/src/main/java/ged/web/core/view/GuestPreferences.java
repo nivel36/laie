@@ -17,7 +17,7 @@ public class GuestPreferences implements Serializable {
 
 	private String menuColor = "layout-menu-dark";
 
-	private String menuMode = "layout-static";
+	private String menuMode = "layout-slim";
 
 	private String profileMode = POPUP;
 
