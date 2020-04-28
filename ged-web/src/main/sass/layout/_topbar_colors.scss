@@ -53,8 +53,9 @@
                 background-color: #252529;
 
                 input {
-                    background-color: #252529;
+                    background-color: #414146;
                     color: #ffffff;
+					border: 1px solid #717176;
                     @include input-placeholder(#8b8b90);
                 }
 

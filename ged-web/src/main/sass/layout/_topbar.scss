@@ -1,12 +1,12 @@
 .layout-wrapper {
 
     .layout-topbar {
-        height: 70px;
+        height: $topbarHeight;
         position: fixed;
         left: 0;
         width: 100%;
         z-index: 999;
-        padding: 12px 20px;
+        padding: (($topbarHeight - 46px) / 2) 20px;
         @include clearfix();
         @include shadow(0 2px 10px 0 rgba(0, 0, 0, 0.16));
 
@@ -131,8 +131,9 @@
                     }
 
                     > img {
-                        width: 36px;
-                        margin-top: 4px;
+                        width: 30px;
+                        margin-top: 8px;
+						border-radius: 50%;
                     }
                 }
 
@@ -226,14 +227,14 @@
 @media screen and (max-width: 896px) {
     .layout-wrapper {
         .layout-topbar {
-            height: 70px;
+            height: $topbarHeight;
 
             .layout-topbar-search {
                 background-color: #f4f4f4;
                 position: absolute;
                 left: 0;
                 width: 100%;
-                top: 70px;
+                top: $topbarHeight;
                 margin-left: 0;
                 text-align: center;
                 height: 40px;

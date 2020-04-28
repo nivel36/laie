@@ -1,7 +1,7 @@
 # GED
 
 ## Sass
-com.github.warmuuh:libsass-maven-plugin:0.2.10-libsass_3.5.3:compile
+
 
 ## Api
 Swagger -> /api/

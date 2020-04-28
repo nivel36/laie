@@ -2,7 +2,7 @@
     .layout-menu-container {
         position: fixed;
         height: 100%;
-        top: 70px;
+        top: $topbarHeight;
         z-index: 999;
 
         .layout-profile {
@@ -384,7 +384,7 @@
     }
 
     .layout-main {
-        padding-top: 70px;
+        padding-top: $topbarHeight;
 
         .layout-content {
             padding: 16px;
@@ -441,7 +441,7 @@
         &.layout-slim {
             .layout-topbar {
                 .layout-topbar-logo {
-                    margin: 10px 0 0 0;
+                    margin: 0 0 0 0;
                 }
             }
             .layout-menu-container {
@@ -663,7 +663,6 @@
                 }
 
                 .layout-topbar-search {
-                    top: 5px;
                     margin-left: 40px;
                 }
             }

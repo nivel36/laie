@@ -3,116 +3,46 @@
 	xmlns:p="http://primefaces.org/ui" xmlns:po="http://primefaces.org/roma" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 	<div class="layout-topbar">
-        <a class="layout-right-panel-button layout-topbar-icon" href="#">
-            <i class="fa fa-ellipsis-v" />
-        </a>
+		<a class="layout-right-panel-button layout-topbar-icon" href="#"> <i class="fa fa-ellipsis-v" />
+		</a> <a class="layout-menu-button layout-topbar-icon" href="#"> <i class="fa fa-bars" />
+		</a>
 
-        <a class="layout-menu-button layout-topbar-icon" href="#">
-            <i class="fa fa-bars" />
-        </a>
-
-        <h:link id="logo-link" outcome="/index" styleClass="layout-topbar-logo">
-        	<svg width="30" height="30" viewBox="0 0 400 400">
-            	<polyline id="hexagon" fill="red" stroke-width="2" points="87,0 174,50 174,150 87,200 0,150 0,50 87,0"/>
-        	</svg>
-        </h:link>
-
-        <span class="layout-topbar-search">
+		<h:link id="logo-link" outcome="/index" styleClass="layout-topbar-logo">
+			<svg width="40" height="40" viewBox="0 0 170 170">
+				<g class="currentLayer">
+					<path fill="#f7941e" stroke="#222222" stroke-width="2" stroke-linejoin="round" d="M001,071 L013,048 L044,048 L056,071 L044,095 L013,095 L001,071 z" id="svg_1" />
+					<path fill="#ed1c24" stroke="#222222" stroke-width="2" stroke-linejoin="round" d="M001,118 L013,094 L044,094 L056,118 L044,142 L013,142 L001,118 z" id="svg_5" />
+					<path fill="#92278f" stroke="#222222" stroke-width="2" stroke-linejoin="round" d="M044,142 L055,118 L087,118 L099,142 L087,165 L055,165 L044,142 z" id="svg_6" />
+					<path fill="#39b54a" stroke="#222222" stroke-width="2" stroke-linejoin="round" d="M087,071 L099,047 L131,047 L143,071 L131,095 L099,095 L087,071 z" id="svg_3" />
+					<path fill="#25aae1" stroke="#222222" stroke-width="2" stroke-linejoin="round" d="M087,118 L099,095 L131,095 L143,118 L131,142 L099,142 L087,118 z" id="svg_4" />
+					<path fill="#fff143" stroke="#222222" stroke-width="2" stroke-linejoin="round" d="M044,047 L056,024 L087,024 L099,047 L087,071 L056,071 L044,047 z" id="svg_2" />
+				</g>
+			</svg>
+		</h:link>
+		
+		<span class="layout-topbar-search">
             <i class="fa fa-search"></i>
             <input type="text" placeholder="Enter your search term"/>
         </span>
 
-        <ul class="topbar-menu fadeInDown">
-            <ui:fragment rendered="#{guestPreferences.profileMode == 'popup' ? true : false}">
-                <li class="user-profile">
-                    <a href="#">
-                        <cc:avatar value="#{sessionUser.get().picture}" />	
-                        <div class="layout-profile-userinfo">
-                            <span class="layout-profile-name">#{sessionUser.get().fullName}</span>
-                            <span class="layout-profile-role">#{i18n[sessionUser.get().role]}</span>
-                        </div>
-                    </a>
-                    <ul>
-                        <li>
-                            <a href="#">
-                                <i class="fa fa-fw fa-user"></i>
-                                <span>Profile</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="fa fa-fw fa-cog"></i>
-                                <span>Settings</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="fa fa-fw fa-envelope-o"></i>
-                                <span>Messages</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="fa fa-fw fa-bell-o"></i>
-                                <span>Notifications</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-            </ui:fragment>
-            <li>
-                <a href="#" class="layout-topbar-icon">
-                    <i class="topbar-icon fa fa-fw fa-bell"></i>
-                </a>
-                <ul>
-                    <li role="menuitem">
-                        <a href="#">
-                            <p:graphicImage name="images/avatar/avatar-1.png" library="roma-layout" />
-                            <div class="topbar-menu-info">
-                                <span class="topbar-menu-name">Bithika Abhedananda</span>
-                                <span class="topbar-menu-role">User interface review is done.</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li role="menuitem">
-                        <a href="#">
-                            <p:graphicImage name="images/avatar/avatar-2.png" library="roma-layout" />
-                            <div class="topbar-menu-info">
-                                <span class="topbar-menu-name">Dai Jiang</span>
-                                <span class="topbar-menu-role">Uh, we have sort of a problem here.</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li role="menuitem">
-                        <a href="#">
-                            <p:graphicImage name="images/avatar/avatar-3.png" library="roma-layout" />
-                            <div class="topbar-menu-info">
-                                <span class="topbar-menu-name">Karlien Nijhuis</span>
-                                <span class="topbar-menu-role">You apparently didn’t put the thing</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li role="menuitem">
-                        <a href="#">
-                            <p:graphicImage name="images/avatar/avatar-4.png" library="roma-layout" />
-                            <div class="topbar-menu-info">
-                                <span class="topbar-menu-name">Tom Chun</span>
-                                <span class="topbar-menu-role">Please check the files</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li role="menuitem">
-                        <a href="#">
-                            <p:graphicImage name="images/avatar/avatar-5.png" library="roma-layout" />
-                            <div class="topbar-menu-info">
-                                <span class="topbar-menu-name">Maria Trofimova</span>
-                                <span class="topbar-menu-role">Meeting reports attached.</span>
-                            </div>
-                            
-                        </a>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-    </div>
+		<ul class="topbar-menu fadeInDown">
+			<ui:fragment rendered="#{guestPreferences.profileMode == 'popup' ? true : false}">
+				<li class="user-profile"><a href="#"> <cc:avatar value="#{sessionUser.get().picture}" />
+						<div class="layout-profile-userinfo">
+							<span class="layout-profile-name">#{sessionUser.get().fullName}</span> <span class="layout-profile-role">#{i18n[sessionUser.get().role]}</span>
+						</div>
+				</a>
+					<ul>
+						<li><a href="#"> <i class="fa fa-fw fa-user"></i> <span>Profile</span>
+						</a></li>
+						<li><a href="#"> <i class="fa fa-fw fa-cog"></i> <span>Settings</span>
+						</a></li>
+						<li><a href="#"> <i class="fa fa-fw fa-envelope-o"></i> <span>Messages</span>
+						</a></li>
+						<li><a href="#"> <i class="fa fa-fw fa-bell-o"></i> <span>Notifications</span>
+						</a></li>
+					</ul></li>
+			</ui:fragment>
+		</ul>
+	</div>
 </ui:composition>
