@@ -90,6 +90,7 @@ public class LoginService {
 
 	public void logout(final String username) {
 		Objects.requireNonNull(username);
+		logger.info("User {} logout", username);
 		this.removeSessionUser(username);
 		this.removeRememberMeCookie();
 		this.invalidateSession();

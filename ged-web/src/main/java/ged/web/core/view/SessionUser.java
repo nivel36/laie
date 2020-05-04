@@ -6,9 +6,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
-import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
-import javax.faces.context.ExternalContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -18,7 +16,6 @@ import org.slf4j.LoggerFactory;
 import ged.ejb.core.model.Ownerable;
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
-import ged.web.core.LoginService;
 
 @Named
 @SessionScoped
@@ -28,12 +25,6 @@ public class SessionUser implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@Inject
-	private transient ExternalContext externalContext;
-
-	@Inject
-	private transient LoginService loginService;
-
 	private Locale locale;
 
 	private List<User> team;
@@ -42,12 +33,6 @@ public class SessionUser implements Serializable {
 
 	@Inject
 	private transient UserService userService;
-
-	public String exit() {
-		logger.debug("User {} logout", this.user);
-		loginService.logout(this.user.getEmail());
-		return "/login.xhtml?faces-redirect=true";
-	}
 
 	public User get() {
 		return this.user;
@@ -78,15 +63,11 @@ public class SessionUser implements Serializable {
 		Objects.requireNonNull(owner);
 		return this.isOwnerOrHisManager(owner);
 	}
-
-	@PostConstruct
-	public void init() {
-		final String remoteUser = this.externalContext.getRemoteUser();
-		if (remoteUser == null) {
-			return;
-		}
-		logger.info("User {} has init his/her session", remoteUser);
-		this.loadUserData(remoteUser);
+	
+	public void load(String username) {
+		Objects.requireNonNull(username);
+		logger.info("User {} has init his/her session", username);
+		this.loadUserData(username);
 	}
 
 	public boolean isActive() {
@@ -121,10 +102,6 @@ public class SessionUser implements Serializable {
 	public void refresh() {
 		logger.trace("Refreshing session for user {}", this.user.getEmail());
 		this.loadUserData(this.user.getEmail());
-	}
-
-	public void setExternalContext(final ExternalContext externalContext) {
-		this.externalContext = externalContext;
 	}
 
 	public void setUserService(final UserService userService) {
