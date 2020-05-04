@@ -1571,16 +1571,17 @@ a {
   }
 }
 .layout-right-panel {
-  width: 288px;
-  right: -288px;
+  width: 400px;
+  right: -400px;
   background-color: #ffffff;
   border-left: solid 1px #ebebef;
   position: fixed;
   z-index: 999;
   top: 50px;
-  height: 100%;
+  height: calc( 100vh - 50px );
   padding: 0;
   margin: 0;
+  overflow: auto;
   -moz-transition: right 0.2s;
   -o-transition: right 0.2s;
   -webkit-transition: right 0.2s;
@@ -1592,9 +1593,6 @@ a {
 .layout-right-panel.layout-right-panel-active {
   right: 0;
   display: block;
-}
-.layout-right-panel .ui-progressbar {
-  height: 8px;
 }
 .layout-right-panel .ui-tabs.ui-tabs-top {
   padding: 16px;
@@ -1638,6 +1636,30 @@ a {
   color: #252529;
   background-color: #ffffff;
   border-bottom: 2px solid #0f97c7;
+}
+.layout-right-panel .person {
+  text-align: left;
+  display: flex;
+  margin: 6px 0 0 8px;
+  vertical-align: top;
+}
+.layout-right-panel .person .name {
+  font-size: 12px;
+  display: block;
+  font-weight: 500;
+  color: #666666;
+}
+.layout-right-panel .person .description {
+  font-size: 12px;
+  margin-top: 2px;
+  display: block;
+  color: #666666;
+}
+.layout-right-panel .person .avatar {
+  width: 30px;
+  margin-top: 8px;
+  margin-right: 8px;
+  border-radius: 50%;
 }
 .layout-right-panel .status-title {
   margin: 24px 0 12px 0;
