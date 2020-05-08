@@ -77,22 +77,6 @@ public abstract class AbstractUserView extends AbstractView {
 		this.userService = userService;
 	}
 
-	public void uploadImage(final FileUploadEvent event) {
-		Objects.requireNonNull(event);
-		logger.debug("Upload user image action performed");
-		final UploadedFile uploadedFile = event.getFile();
-		if (uploadedFile == null) {
-			return;
-		}
-		try (InputStream inputStream = uploadedFile.getInputStream()) {
-			final String filename = this.getUser().getUid() + "_picture";
-			final File file = this.fileUploadService.uploadFile(inputStream, true, filename);
-			this.user.setPicture(file);
-		} catch (final IOException e) {
-			throw new UncheckedIOException(e);
-		}
-	}
-
 	protected String userUrl() {
 		return this.navigator.getRedirectUrl(PageEnum.USER, this.user);
 	}

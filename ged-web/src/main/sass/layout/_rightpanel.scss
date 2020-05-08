@@ -34,6 +34,7 @@
                 border: 0 none;
                 margin-right: 0;
                 width: 50%;
+				overflow: hidden;
 
                 a {
                     text-align: center;
@@ -74,6 +75,11 @@
 	    display: flex;
 	    margin: 6px 0 0 8px;
 	    vertical-align: top;
+		padding: 3px 6px;
+
+ 		&:hover {
+			background-color: #f6f6f6;
+		}
 	
 	    .name {
 			font-size: 12px;
@@ -84,15 +90,13 @@
 	
 	    .description {
 	        font-size: 12px;
-	        margin-top: 2px;
 	        display: block;
 			color: $menuitemTextColor;
 	    }
 
  		.avatar {
             width: 30px;
-            margin-top: 8px;
-			margin-right: 8px;
+            margin: 4px 8px 4px 0;
 			border-radius: 50%;
         }
 	}

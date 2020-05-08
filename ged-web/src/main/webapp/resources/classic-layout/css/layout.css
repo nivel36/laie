@@ -18,6 +18,18 @@ a {
   text-decoration: none;
 }
 
+.layout-main-topbar {
+  position: relative;
+}
+.layout-main-topbar .buttons {
+  position: absolute;
+  right: 8px;
+  top: 8px;
+}
+.layout-main-topbar .buttons .ui-button {
+  margin-left: 10px;
+}
+
 .layout-wrapper.layout-topbar-light .layout-topbar {
   background-color: #ffffff;
   border-bottom: 1px solid #d8d8dc;
@@ -1607,6 +1619,7 @@ a {
   border: 0 none;
   margin-right: 0;
   width: 50%;
+  overflow: hidden;
 }
 .layout-right-panel .ui-tabs.ui-tabs-top .ui-tabs-nav .ui-tabs-header a {
   text-align: center;
@@ -1642,6 +1655,10 @@ a {
   display: flex;
   margin: 6px 0 0 8px;
   vertical-align: top;
+  padding: 3px 6px;
+}
+.layout-right-panel .person:hover {
+  background-color: #f6f6f6;
 }
 .layout-right-panel .person .name {
   font-size: 12px;
@@ -1651,14 +1668,12 @@ a {
 }
 .layout-right-panel .person .description {
   font-size: 12px;
-  margin-top: 2px;
   display: block;
   color: #666666;
 }
 .layout-right-panel .person .avatar {
   width: 30px;
-  margin-top: 8px;
-  margin-right: 8px;
+  margin: 4px 8px 4px 0;
   border-radius: 50%;
 }
 .layout-right-panel .status-title {
@@ -3576,6 +3591,26 @@ a {
     right: 10px;
   }
 }
+.input-avatar {
+  position: relative;
+  height: 200px;
+  width: 200px;
+}
+.input-avatar img {
+  cursor: pointer;
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+}
+.input-avatar .camera-button {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+.input-avatar .ui-fileupload {
+  display: none;
+}
+
 @font-face {
   font-family: "Inter UI";
   font-style: normal;

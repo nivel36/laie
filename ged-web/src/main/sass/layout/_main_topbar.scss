@@ -1,0 +1,13 @@
+.layout-main-topbar {
+	position: relative;
+	
+	.buttons {
+		position: absolute;
+		right: 8px;
+		top: 8px;
+		
+		.ui-button {
+			margin-left: 10px;
+		}	
+	}	
+}

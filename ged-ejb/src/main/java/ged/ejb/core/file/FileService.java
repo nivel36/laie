@@ -14,6 +14,7 @@ import java.util.UUID;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.persistence.EntityNotFoundException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -121,8 +122,7 @@ public class FileService {
 			final PhysicalFile newPhysicalFile = buildNewPhysicalFile(fileBucket, uuid, absolutePath, hash);
 			file.setPhysicalFile(newPhysicalFile);
 		}
-		this.fileDao.save(file);
-		return file;
+		return this.fileDao.save(file);
 	}
 
 	private String uploadFileToFilesystem(final Path path, final InputStream inputStream) {

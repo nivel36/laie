@@ -1,13 +1,6 @@
-<ui:component xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" 
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
-	xmlns:composite="http://xmlns.jcp.org/jsf/composite" 
-	xmlns:f="http://java.sun.com/jsf/core" 
-	xmlns:g="http://ged.org/ui" 
-	xmlns:h="http://java.sun.com/jsf/html" 
-	xmlns:o="http://omnifaces.org/ui"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+<ui:component xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	xmlns:composite="http://xmlns.jcp.org/jsf/composite" xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://ged.org/ui" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 	<composite:interface>
@@ -20,8 +13,8 @@
 
 	<composite:implementation>
 		<div id="#{cc.clientId}" class="input-avatar #{cc.attrs.styleClass}">
-			<p:fileUpload id="fileUpload" styleClass="invisible" fileUploadListener="#{cc.attrs.fileUploadListener}" mode="advanced"
-				dragDropSupport="false" process="@this" update="#{cc.clientId}" auto="true" />
+			<p:fileUpload id="fileUpload" listener="#{cc.attrs.fileUploadListener}" mode="advanced" dragDropSupport="false" process="@this"
+				update="#{cc.clientId}" auto="true" />
 			<h:outputLabel for="fileUpload_input">
 				<cc:avatar value="#{cc.attrs.value}" />
 			</h:outputLabel>
