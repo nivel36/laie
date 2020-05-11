@@ -62,41 +62,6 @@ public class EditUserViewTest {
 	}
 
 	@Nested
-	class UploadImage {
-
-		@Test
-		public void emptyFileShouldNotSetImageNameToUser() throws IOException {
-			final User user = EditUserViewTest.this.mockUser();
-			user.setEmail("abel@test.com");
-			EditUserViewTest.this.userEditView.setUser(user);
-
-			final FileUploadEvent event = mock(FileUploadEvent.class);
-			EditUserViewTest.this.userEditView.uploadImage(event);
-		}
-
-		@Test
-		public void nullEventShouldThrowNullPointerException() throws IOException {
-			assertThrows(NullPointerException.class, () -> {
-				EditUserViewTest.this.userEditView.uploadImage(null);
-			});
-		}
-
-		@Test
-		public void uploadImageShouldSetImageNameToUserObject() throws IOException {
-			final User user = EditUserViewTest.this.mockUser();
-			EditUserViewTest.this.userEditView.setUser(user);
-
-			final FileUploadEvent event = mock(FileUploadEvent.class);
-			final UploadedFile file = mock(UploadedFile.class);
-			when(event.getFile()).thenReturn(file);
-			final InputStream is = mock(InputStream.class);
-			when(event.getFile().getInputStream()).thenReturn(is);
-
-			EditUserViewTest.this.userEditView.uploadImage(event);
-		}
-	}
-
-	@Nested
 	class ValidateEmail {
 
 		@Test
