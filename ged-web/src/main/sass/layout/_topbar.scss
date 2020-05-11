@@ -30,10 +30,6 @@
             display: inline-block;
             vertical-align: middle;
             margin-left: 1.5em;
-
-            img {
-                height: 24px;
-            }
         }
 
         .layout-topbar-search {
@@ -132,6 +128,8 @@
 
                     > img {
                         width: 30px;
+						height: 30px;
+						object-fit: cover;
                         margin-top: 8px;
 						border-radius: 50%;
                     }

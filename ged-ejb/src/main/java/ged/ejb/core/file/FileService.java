@@ -90,10 +90,10 @@ public class FileService {
 		Objects.requireNonNull(file);
 		final PhysicalFile physicalFile = file.getPhysicalFile();
 		final boolean isOrphan = this.fileDao.isOrphanPhysicalFile(physicalFile);
+		this.fileDao.delete(file);
 		if (isOrphan) {
 			this.removePhysicalFile(physicalFile);
 		}
-		this.fileDao.delete(file);
 	}
 
 	private void removePhysicalFile(final PhysicalFile physicalFile) {

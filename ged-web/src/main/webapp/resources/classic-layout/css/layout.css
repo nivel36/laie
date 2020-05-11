@@ -698,9 +698,6 @@ a {
   vertical-align: middle;
   margin-left: 1.5em;
 }
-.layout-wrapper .layout-topbar .layout-topbar-logo img {
-  height: 24px;
-}
 .layout-wrapper .layout-topbar .layout-topbar-search {
   position: relative;
   vertical-align: middle;
@@ -800,6 +797,8 @@ a {
 }
 .layout-wrapper .layout-topbar .topbar-menu > li > a > img {
   width: 30px;
+  height: 30px;
+  object-fit: cover;
   margin-top: 8px;
   border-radius: 50%;
 }
