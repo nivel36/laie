@@ -3631,6 +3631,10 @@ a {
   src: url("#{resource['roma-layout:fonts/Inter-UI-Bold.otf']}") format("opentype"), url("#{resource['roma-layout:fonts/Inter-UI-Bold.woff2']}") format("woff2"), url("#{resource['roma-layout:fonts/Inter-UI-Bold.woff']}") format("woff"), url("#{resource['roma-layout:fonts/Inter-UI-Bold.ttf']}") format("truetype");
   /* Safari, Android, iOS */
 }
-/* Add your customizations of layout here */
+.ui-datatable .avatar {
+  width: 30px;
+  height: 30px;
+  object-fit: cover;
+}
 
 /*# sourceMappingURL=layout.css.map */

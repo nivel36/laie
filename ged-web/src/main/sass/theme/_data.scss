@@ -114,8 +114,11 @@ body {
     }
 
     .ui-datatable {
+		table {
+			table-layout: auto;
+		}
         .ui-datatable-header,
-        .ui-datatable-footer, {
+        .ui-datatable-footer {
             background-color: $panelHeaderBgColor;
             border: $panelHeaderBorder;
             color: $panelHeaderTextColor;
@@ -433,7 +436,7 @@ body {
 
     .ui-datagrid {
         .ui-datagrid-header,
-        .ui-datagrid-footer, {
+        .ui-datagrid-footer {
             background-color: $panelHeaderBgColor;
             border: $panelHeaderBorder;
             color: $panelHeaderTextColor;
@@ -472,7 +475,7 @@ body {
 
     .ui-datalist {
         .ui-datalist-header,
-        .ui-datalist-footer, {
+        .ui-datalist-footer {
             background-color: $panelHeaderBgColor;
             border: $panelHeaderBorder;
             color: $panelHeaderTextColor;
@@ -511,7 +514,7 @@ body {
 
     .ui-datascroller {
         .ui-datascroller-header,
-        .ui-datascroller-footer, {
+        .ui-datascroller-footer {
             background-color: $panelHeaderBgColor;
             border: $panelHeaderBorder;
             color: $panelHeaderTextColor;
@@ -538,7 +541,7 @@ body {
     
     .ui-dataview {
         .ui-dataview-header,
-        .ui-dataview-footer, {
+        .ui-dataview-footer {
             background-color: $panelHeaderBgColor;
             border: $panelHeaderBorder;
             color: $panelHeaderTextColor;
@@ -807,7 +810,7 @@ body {
 
     .ui-treetable {
         .ui-treetable-header,
-        .ui-treetable-footer, {
+        .ui-treetable-footer {
             background-color: $panelHeaderBgColor;
             border: $panelHeaderBorder;
             color: $panelHeaderTextColor;

@@ -2887,6 +2887,9 @@ body .ui-paginator .ui-paginator-current, body .ui-paginator .ui-paginator-rpp-o
   display: inline-block;
   vertical-align: middle;
 }
+body .ui-datatable table {
+  table-layout: auto;
+}
 body .ui-datatable .ui-datatable-header,
 body .ui-datatable .ui-datatable-footer {
   background-color: #ffffff;
