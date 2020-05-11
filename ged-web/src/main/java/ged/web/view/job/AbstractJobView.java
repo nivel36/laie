@@ -53,19 +53,17 @@ public abstract class AbstractJobView extends AbstractView {
 		return this.navigator.getRedirectUrl(PageEnum.JOB, this.jobOffer);
 	}
 
-	public void onClientSelect(final SelectEvent event) {
-		final Object selectedObject = event.getObject();
-		if (selectedObject != null) {
-			final Client client = (Client) selectedObject;
+	public void onClientSelect(final SelectEvent<Client> event) {
+		final Client client = event.getObject();
+		if (client != null) {
 			this.jobOffer.setClient(client);
 		}
 	}
 
-	public void onOwnerSelect(final SelectEvent event) {
-		final Object selectedObject = event.getObject();
-		if (selectedObject != null) {
-			final User owner = (User) selectedObject;
-			this.jobOffer.setOwner(owner);
+	public void onOwnerSelect(final SelectEvent<User> event) {
+		final User user = event.getObject();
+		if (user != null) {
+			this.jobOffer.setOwner(user);
 		}
 	}
 

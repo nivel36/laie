@@ -53,8 +53,8 @@ public abstract class AbstractCandidateView extends AbstractView {
 		return this.tags;
 	}
 
-	public void onrate(final RateEvent rateEvent) {
-		final Integer rate = (Integer) rateEvent.getRating();
+	public void onrate(final RateEvent<Integer> rateEvent) {
+		final Integer rate = rateEvent.getRating();
 		this.candidate.setRating(rate);
 	}
 
