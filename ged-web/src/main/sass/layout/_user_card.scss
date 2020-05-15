@@ -1,0 +1,72 @@
+.user-card {
+	
+	padding: 0;
+
+	.card-header{
+		height: 80px;
+		overflow: hidden;
+		background: linear-gradient(30deg, rgba(7,114,179,1) 0%, rgba(0,170,255,1) 100%);
+		background-color: #0772B3;
+		color: #ffffff;
+	}
+
+	.user-card-content {
+		
+		.label-container {
+			font-size: 0.8em;
+			padding-bottom: 0.3em;
+		
+			.label {
+				color: $darkMenuBgColor;
+			}	
+		}
+		
+		
+		
+		.text {
+			color: $menuitemTextColor;
+		}
+		
+		.user-image {
+			width: 80px;
+			height: 80px;
+			margin: -40px 0 0 24px;
+			border-radius: 50%;
+			object-fit: cover;
+		}
+	
+		.ui-menubutton {
+			width: 36px;
+			height: 36px;
+			-moz-border-radius: 50%;
+			-webkit-border-radius: 50%;
+			border-radius: 50%;
+			float: right;
+			margin: -30px 12px 0 0;
+			z-index: 1;
+		}
+		
+		.user-card-name {
+			font-size: 13px;
+			color: #ffffff;
+			position: relative;
+			top: -65px;
+			margin-left: 120px;
+			font-weight: 700;
+			white-space: nowrap;
+		}
+		
+		.user-card-role {
+			font-size: 13px;
+			position: relative;
+			top: -55px;
+			margin-left: 120px;
+			font-weight: 700;
+			white-space: nowrap;
+		}
+		
+		.user-detail {
+			padding: .5em 1em;
+		}
+	}
+}
