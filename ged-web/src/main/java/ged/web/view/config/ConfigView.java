@@ -89,7 +89,7 @@ public class ConfigView extends AbstractView {
 		this.userService = userService;
 	}
 
-	public void uploadImage(final FileUploadEvent event) {
+	public void uploadImage(final FileUploadEvent event) throws IOException {
 		Objects.requireNonNull(event);
 		final UploadedFile uploadedFile = event.getFile();
 		if (uploadedFile == null) {
@@ -98,8 +98,6 @@ public class ConfigView extends AbstractView {
 		logger.debug("Upload user {} image action performed", this.user);
 		try (final InputStream inputStream = uploadedFile.getInputStream()) {
 			this.user = this.userService.addUserImage(this.user, inputStream);
-		} catch (final IOException e) {
-			throw new UncheckedIOException(e);
 		}
 	}
 }

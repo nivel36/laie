@@ -1,3 +1,11 @@
+.files .ui-fileupload .ui-fileupload-content {
+  display: none;
+}
+.files .ui-fileupload .ui-fileupload-buttonbar {
+  border: 0px;
+  padding: 0;
+}
+
 html {
   height: 100%;
 }
@@ -3637,26 +3645,6 @@ a {
   border-radius: 50%;
   object-fit: cover;
 }
-.user-card .user-card-content .ui-menubutton {
-  width: 36px;
-  height: 36px;
-  -moz-border-radius: 50%;
-  -webkit-border-radius: 50%;
-  border-radius: 50%;
-  float: right;
-  margin: -30px 12px 0 0;
-  z-index: 1;
-}
-.user-card .user-card-content .ui-button {
-  width: 36px;
-  height: 36px;
-  -moz-border-radius: 50%;
-  -webkit-border-radius: 50%;
-  border-radius: 50%;
-  float: right;
-  margin: -30px 12px 0 0;
-  z-index: 1;
-}
 .user-card .user-card-content .user-card-name {
   font-size: 13px;
   color: #ffffff;
@@ -3675,7 +3663,55 @@ a {
   white-space: nowrap;
 }
 .user-card .user-card-content .user-detail {
-  padding: 0.5em 1em;
+  padding: 0 2.5em 2em 2.5em;
+}
+
+.candidate-card {
+  padding: 0;
+}
+.candidate-card .card-header {
+  height: 80px;
+  overflow: hidden;
+  background: linear-gradient(30deg, #0772b3 0%, #00aaff 100%);
+  background-color: #0772B3;
+  color: #ffffff;
+}
+.candidate-card .candidate-card-content .label-container {
+  font-size: 0.8em;
+  padding-bottom: 0.3em;
+}
+.candidate-card .candidate-card-content .label-container .label {
+  color: #252529;
+}
+.candidate-card .candidate-card-content .text {
+  color: #666666;
+}
+.candidate-card .candidate-card-content .candidate-image {
+  width: 80px;
+  height: 80px;
+  margin: -40px 0 0 24px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.candidate-card .candidate-card-content .candidate-card-name {
+  font-size: 13px;
+  color: #ffffff;
+  position: relative;
+  top: -65px;
+  margin-left: 120px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.candidate-card .candidate-card-content .candidate-card-profile {
+  font-size: 13px;
+  position: relative;
+  top: -55px;
+  margin-left: 120px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.candidate-card .candidate-card-content .candidate-detail {
+  padding: 0 2.5em 2em 2.5em;
 }
 
 @font-face {

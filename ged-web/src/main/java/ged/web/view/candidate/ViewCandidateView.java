@@ -2,9 +2,9 @@ package ged.web.view.candidate;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UncheckedIOException;
 import java.lang.invoke.MethodHandles;
 import java.util.List;
+import java.util.Objects;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -169,15 +169,15 @@ public class ViewCandidateView extends AbstractView {
 		this.meetingService = meetingService;
 	}
 
-	public void uploadFile(final FileUploadEvent event) {
+	public void uploadFile(final FileUploadEvent event) throws IOException {
+		Objects.requireNonNull(event);
 		final UploadedFile uploadedFile = event.getFile();
+		if (uploadedFile == null) {
+			return;
+		}
+		logger.debug("Upload candidate {} image action performed", this.candidate);
 		try (final InputStream inputStream = uploadedFile.getInputStream()) {
-			final String fileName = uploadedFile.getFileName();
-			final File file = this.fileUploadService.uploadFile(inputStream, false, fileName);
-			this.candidate = this.candidateService.addFileToCandidate(this.candidate, file);
-			this.files.add(file);
-		} catch (final IOException e) {
-			throw new UncheckedIOException(e);
+			this.candidateService.addFileToCandidate(candidate, inputStream, uploadedFile.getFileName());
 		}
 	}
 }

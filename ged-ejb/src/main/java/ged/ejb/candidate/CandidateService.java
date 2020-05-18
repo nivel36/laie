@@ -1,5 +1,6 @@
 package ged.ejb.candidate;
 
+import java.io.InputStream;
 import java.lang.invoke.MethodHandles;
 import java.util.HashSet;
 import java.util.List;
@@ -36,10 +37,11 @@ public class CandidateService extends AbstractIndexedService<Candidate> {
 	@Repository
 	private JobCandidatureDao jobCandidatureDao;
 
-	public Candidate addFileToCandidate(final Candidate candidate, final File file) {
-		Objects.requireNonNull(file);
+	public Candidate addFileToCandidate(final Candidate candidate, final InputStream inputStream, String filename) {
+		Objects.requireNonNull(inputStream);
 		Objects.requireNonNull(candidate);
-		logger.debug("Add file {} to candidate  {}", file, candidate);
+		logger.debug("Add file {} to candidate  {}", inputStream, candidate);
+		final File file = fileService.uploadFile(inputStream, false, filename);
 		final List<File> files = this.candidateDao.findCandidatesFiles(candidate, Page.ALL_RESULTS);
 		candidate.setFiles(new HashSet<File>(files));
 		candidate.addFile(file);
