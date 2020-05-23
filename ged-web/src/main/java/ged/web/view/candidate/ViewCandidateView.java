@@ -113,7 +113,11 @@ public class ViewCandidateView extends AbstractView {
 		this.curriculum = this.curriculumService.findByCandidate(this.candidate);
 		this.editable = this.sessionUser.hasPermissionToEdit(this.candidate);
 		this.meetings = this.initMeetings();
-		this.files = this.candidateService.findCandidatesFiles(this.candidate, Page.TEN_RESULTS_PER_PAGE);
+		this.files = this.findFiles();
+	}
+
+	private List<File> findFiles() {
+		return this.candidateService.findCandidatesFiles(this.candidate, Page.TEN_RESULTS_PER_PAGE);
 	}
 
 	private List<Meeting> initMeetings() {
@@ -175,9 +179,15 @@ public class ViewCandidateView extends AbstractView {
 		if (uploadedFile == null) {
 			return;
 		}
-		logger.debug("Upload candidate {} image action performed", this.candidate);
+		logger.debug("Upload candidate {} file action performed", this.candidate);
+		this.addFileToCandidate(candidate, uploadedFile);
+		this.files = this.findFiles();
+	}
+
+	private void addFileToCandidate(final Candidate candidate, final UploadedFile uploadedFile) throws IOException {
+		final String fileName = uploadedFile.getFileName();
 		try (final InputStream inputStream = uploadedFile.getInputStream()) {
-			this.candidateService.addFileToCandidate(candidate, inputStream, uploadedFile.getFileName());
+			this.candidate = this.candidateService.addFileToCandidate(candidate, inputStream, fileName);
 		}
 	}
 }
