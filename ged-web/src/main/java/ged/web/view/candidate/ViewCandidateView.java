@@ -113,7 +113,11 @@ public class ViewCandidateView extends AbstractView {
 		this.curriculum = this.curriculumService.findByCandidate(this.candidate);
 		this.editable = this.sessionUser.hasPermissionToEdit(this.candidate);
 		this.meetings = this.initMeetings();
-		this.files = this.candidateService.findCandidatesFiles(this.candidate, Page.TEN_RESULTS_PER_PAGE);
+		this.files = this.findFiles();
+	}
+
+	private List<File> findFiles() {
+		return this.candidateService.findCandidatesFiles(this.candidate, Page.TEN_RESULTS_PER_PAGE);
 	}
 
 	private List<Meeting> initMeetings() {
