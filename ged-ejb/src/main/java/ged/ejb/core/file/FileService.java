@@ -105,7 +105,7 @@ public class FileService {
 		}
 	}
 
-	public File uploadFile(final InputStream inputStream, final boolean publicAccess, final String filename) {
+	public File uploadFile(final InputStream inputStream, final String filename, final boolean publicAccess) {
 		Objects.requireNonNull(inputStream);
 		final FileBucket fileBucket = publicAccess ? PUBLIC_BUCKET : PRIVATE_BUCKET;
 		final File file = new File(filename);

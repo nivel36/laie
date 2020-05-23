@@ -177,7 +177,8 @@ public class ViewCandidateView extends AbstractView {
 		}
 		logger.debug("Upload candidate {} image action performed", this.candidate);
 		try (final InputStream inputStream = uploadedFile.getInputStream()) {
-			this.candidateService.addFileToCandidate(candidate, inputStream, uploadedFile.getFileName());
+			final File file = this.candidateService.addFileToCandidate(candidate.getUid(), inputStream, uploadedFile.getFileName());
+			this.files.add(file);
 		}
 	}
 }

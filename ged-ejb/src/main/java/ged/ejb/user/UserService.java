@@ -33,7 +33,7 @@ public class UserService extends AbstractIndexedService<User> {
 		Objects.requireNonNull(user);
 		Objects.requireNonNull(inputStream);
 		final File oldImage = user.getPicture();
-		final File newImage = this.fileService.uploadFile(inputStream, true, user.getUid() + "_picture");
+		final File newImage = this.fileService.uploadFile(inputStream, user.getUid() + "_picture", true);
 		user.setPicture(newImage);
 		if (oldImage != null) {
 			this.fileService.removeFile(oldImage);

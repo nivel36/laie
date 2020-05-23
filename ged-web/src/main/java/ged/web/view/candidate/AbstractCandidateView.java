@@ -77,7 +77,7 @@ public abstract class AbstractCandidateView extends AbstractView {
 	public void uploadImage(final FileUploadEvent event) {
 		final UploadedFile uploadedFile = event.getFile();
 		try (InputStream inputStream = uploadedFile.getInputStream()) {
-			File file = this.fileUploadService.uploadFile(inputStream, true, this.candidate.getUid() + "_picture");
+			File file = this.fileUploadService.uploadFile(inputStream, this.candidate.getUid() + "_picture", true);
 			this.candidate.setPicture(file);
 		} catch (final IOException e) {
 			throw new UncheckedIOException(e);

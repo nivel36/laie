@@ -37,15 +37,14 @@ public class CandidateService extends AbstractIndexedService<Candidate> {
 	@Repository
 	private JobCandidatureDao jobCandidatureDao;
 
-	public Candidate addFileToCandidate(final Candidate candidate, final InputStream inputStream, String filename) {
+	public File addFileToCandidate(final String candidateUid, final InputStream inputStream, String filename) {
 		Objects.requireNonNull(inputStream);
-		Objects.requireNonNull(candidate);
+		Objects.requireNonNull(candidateUid);
+		final Candidate candidate = candidateDao.findCandidateWithFiles(candidateUid);
 		logger.debug("Add file {} to candidate  {}", inputStream, candidate);
-		final File file = fileService.uploadFile(inputStream, false, filename);
-		final List<File> files = this.candidateDao.findCandidatesFiles(candidate, Page.ALL_RESULTS);
-		candidate.setFiles(new HashSet<File>(files));
+		final File file = fileService.uploadFile(inputStream, filename, false);
 		candidate.addFile(file);
-		return this.candidateDao.save(candidate);
+		return file;
 	}
 
 	public List<Origin> findAllOrigins() {

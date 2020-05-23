@@ -75,6 +75,11 @@ public class CandidateDao extends AbstractIndexedDao<Candidate> {
 			throw new ValidationException("Email duplicated");
 		}
 	}
+	
+	public Candidate findCandidateWithFiles(final String candidateUid) {
+		Objects.requireNonNull(candidateUid);
+		return this.findByQuery(Candidate.class, "Candidate.findCandidateWithFiles", map("candidateUid", candidateUid));
+	}
 
 	@Override
 	public String[] searchFields() {
