@@ -24,25 +24,6 @@ import ged.ejb.job.offer.JobOffer;
 @ExtendWith(MockitoExtension.class)
 public class CandidateServiceTest {
 
-	@Nested
-	class AddFileToCandidate {
-
-		@Test
-		public void nullParametersShouldThrowNullPointerException() {
-			assertThrows(NullPointerException.class, () -> {
-				candidateService.addFileToCandidate(null, null);
-			});
-		}
-
-		@Test
-		public void shouldBeOk() {
-			final File file = new File();
-			final Candidate mockedCandidate = mock(Candidate.class);
-
-			candidateService.addFileToCandidate(mockedCandidate, file);
-
-		}
-	}
 
 	@Nested
 	class FindAllByJobOffer {
