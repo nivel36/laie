@@ -18,6 +18,7 @@
 
 	<ui:define name="buttons">
 		<h:form>
+			<p:button value="#{i18n['candidate.new_candidate']}" outcome="#{Page.CANDIDATE_ADD.getUrl()}" styleClass="success-btn" />
 			<p:commandButton value="#{i18n['action.export']}" onclick="export()" icon="fa fa-file-excel-o" />
 		</h:form>
 	</ui:define>
