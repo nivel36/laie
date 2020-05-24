@@ -117,7 +117,7 @@ public class ViewCandidateView extends AbstractView {
 	}
 
 	private List<File> findFiles() {
-		return this.candidateService.findCandidatesFiles(this.candidate, Page.TEN_RESULTS_PER_PAGE);
+		return this.candidateService.findCandidatesFiles(this.candidate.getUid(), Page.TEN_RESULTS_PER_PAGE);
 	}
 
 	private List<Meeting> initMeetings() {
@@ -140,7 +140,7 @@ public class ViewCandidateView extends AbstractView {
 	}
 
 	public void removeFile(final File file) {
-		this.candidate = this.candidateService.removeFileFromCandidate(candidate, file);
+		this.candidateService.removeFileFromCandidate(candidate.getUid(), file);
 		this.files.remove(file);
 	}
 
@@ -181,7 +181,8 @@ public class ViewCandidateView extends AbstractView {
 		}
 		logger.debug("Upload candidate {} image action performed", this.candidate);
 		try (final InputStream inputStream = uploadedFile.getInputStream()) {
-			final File file = this.candidateService.addFileToCandidate(candidate.getUid(), inputStream, uploadedFile.getFileName());
+			final File file = this.candidateService.addFileToCandidate(candidate.getUid(), inputStream,
+					uploadedFile.getFileName());
 			this.files.add(file);
 		}
 	}

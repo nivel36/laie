@@ -25,7 +25,7 @@
 			SELECT c 
 			FROM Candidate c
 			LEFT JOIN c.jobCandidatures jc
-			WHERE jc.jobOffer = :jobOffer
+			WHERE jc.jobOffer.uid = :jobOfferUid
 		]]></query>
 	</named-query>
 
@@ -34,7 +34,7 @@
 			SELECT f
 			FROM Candidate c
 			LEFT JOIN c.files f
-			WHERE c = :candidate
+			WHERE c.uid = :candidateUid
 			AND f is not null
 		]]></query>
 	</named-query>
