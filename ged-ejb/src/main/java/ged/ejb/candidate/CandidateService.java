@@ -17,7 +17,6 @@ import ged.ejb.core.file.FileService;
 import ged.ejb.core.model.AbstractIndexedDao;
 import ged.ejb.core.model.Page;
 import ged.ejb.core.model.Repository;
-import ged.ejb.job.candidature.JobCandidatureDao;
 
 @Stateless
 public class CandidateService extends AbstractIndexedService<Candidate> {
@@ -31,16 +30,12 @@ public class CandidateService extends AbstractIndexedService<Candidate> {
 	@Inject
 	private FileService fileService;
 
-	@Inject
-	@Repository
-	private JobCandidatureDao jobCandidatureDao;
-
 	public File addFileToCandidate(final String candidateUid, final InputStream inputStream, String filename) {
 		Objects.requireNonNull(inputStream);
 		Objects.requireNonNull(candidateUid);
 		Objects.requireNonNull(filename);
+		logger.debug("Add file {} to candidate  {}", filename, candidateUid);
 		final Candidate candidate = candidateDao.findCandidateWithFiles(candidateUid);
-		logger.debug("Add file {} to candidate  {}", filename, candidate);
 		final File file = fileService.uploadFile(inputStream, filename, false);
 		candidate.addFile(file);
 		return file;
@@ -78,8 +73,8 @@ public class CandidateService extends AbstractIndexedService<Candidate> {
 	public void removeFileFromCandidate(final String candidateUid, final File file) {
 		Objects.requireNonNull(candidateUid);
 		Objects.requireNonNull(file);
+		logger.debug("Remove file {} from candidate {}", file, candidateUid);
 		final Candidate candidate = this.candidateDao.findCandidateWithFiles(candidateUid);
-		logger.debug("Remove file {} from candidate {}", file, candidate);
 		candidate.removeFile(file);
 		this.fileService.removeFile(file);
 	}

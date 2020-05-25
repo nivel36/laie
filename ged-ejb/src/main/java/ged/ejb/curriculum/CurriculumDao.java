@@ -7,7 +7,6 @@ import java.util.Objects;
 
 import javax.persistence.NoResultException;
 
-import ged.ejb.candidate.Candidate;
 import ged.ejb.core.model.AbstractIndexedDao;
 import ged.ejb.core.model.Page;
 import ged.ejb.core.model.Repository;
@@ -19,10 +18,10 @@ public class CurriculumDao extends AbstractIndexedDao<Curriculum> {
 		return this.findAll(CurriculumTemplate.class, Page.ALL_RESULTS);
 	}
 
-	public Curriculum findByCandidate(final Candidate candidate) {
-		Objects.requireNonNull(candidate);
+	public Curriculum findByCandidate(final String candidateUid) {
+		Objects.requireNonNull(candidateUid);
 		try {
-			return this.findByQuery(Curriculum.class, "Curriculum.findByCandidate", map("candidate", candidate));
+			return this.findByQuery(Curriculum.class, "Curriculum.findByCandidate", map("candidate", candidateUid));
 		} catch (final NoResultException e) {
 			return null;
 		}

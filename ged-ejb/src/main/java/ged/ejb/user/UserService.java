@@ -29,23 +29,25 @@ public class UserService extends AbstractIndexedService<User> {
 	@Repository
 	private UserDao userDao;
 
-	public User addUserImage(final User user, final InputStream inputStream) {
-		Objects.requireNonNull(user);
+	public File addUserImage(final String email, final InputStream inputStream) {
+		Objects.requireNonNull(email);
 		Objects.requireNonNull(inputStream);
+		logger.debug("Add image to user {}", email);
+		final User user = this.findByEmail(email);
 		final File oldImage = user.getPicture();
 		final File newImage = this.fileService.uploadFile(inputStream, user.getUid() + "_picture", true);
 		user.setPicture(newImage);
 		if (oldImage != null) {
 			this.fileService.removeFile(oldImage);
 		}
-		return this.save(user);
+		return newImage;
 	}
 
-	public void changePassword(final User user, final String newPassword) {
-		Objects.requireNonNull(user);
+	public void changePassword(final String email, final String newPassword) {
+		Objects.requireNonNull(email);
 		Objects.requireNonNull(newPassword);
-		logger.debug("Change password for user {}", user);
-		final Credential credential = this.userDao.findCredential(user.getEmail());
+		logger.debug("Change password for user {}", email);
+		final Credential credential = this.userDao.findCredential(email);
 		credential.setPassword(newPassword);
 	}
 
@@ -61,10 +63,10 @@ public class UserService extends AbstractIndexedService<User> {
 		return this.userDao.findCredential(email);
 	}
 
-	public List<User> findSubordinateUsers(final User user) {
-		Objects.requireNonNull(user);
-		logger.debug("Finding subordinate users of user {}", user);
-		return this.userDao.findSubordinateUsers(user);
+	public List<User> findSubordinateUsers(final String email) {
+		Objects.requireNonNull(email);
+		logger.debug("Finding subordinate users of user {}", email);
+		return this.userDao.findSubordinateUsers(email);
 	}
 
 	public User findByEmail(final String email) {
@@ -89,11 +91,11 @@ public class UserService extends AbstractIndexedService<User> {
 		return this.userDao.isEmailInUse(email);
 	}
 
-	public boolean isSubordinateUser(final User manager, final User subordinate) {
-		Objects.requireNonNull(manager);
-		Objects.requireNonNull(subordinate);
-		logger.debug("Testing if user {} is manager of the user {}", manager.getEmail(), subordinate.getEmail());
-		return this.findSubordinateUsers(manager).contains(subordinate);
+	public boolean isSubordinateUser(final String managerEmail, final String subordinateEmail) {
+		Objects.requireNonNull(managerEmail);
+		Objects.requireNonNull(subordinateEmail);
+		logger.debug("Testing if user {} is manager of the user {}", managerEmail, subordinateEmail);
+		return this.isSubordinateUser(managerEmail, subordinateEmail);
 	}
 
 	@Override

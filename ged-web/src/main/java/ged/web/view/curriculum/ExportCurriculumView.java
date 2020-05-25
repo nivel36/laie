@@ -44,7 +44,7 @@ public class ExportCurriculumView extends AbstractView {
 	private List<CurriculumTemplate> templates;
 
 	public void export(final CurriculumTemplate template) throws IOException  {
-		final File file = this.curriculumService.export(this.curriculum, template);
+		final File file = this.curriculumService.export(this.curriculum.getUid(), template);
 		try (InputStream is = Files.newInputStream(file.toPath())) {
 			Faces.sendFile(is, buildFileName(template), true);
 		}

@@ -38,7 +38,7 @@ public class AddJobView extends AbstractJobView {
 	}
 
 	private void fillRecruiters(final User user) {
-		final List<User> subordinateUsers = this.userService.findSubordinateUsers(user);
+		final List<User> subordinateUsers = this.userService.findSubordinateUsers(user.getEmail());
 		for (final User subordinate : subordinateUsers) {
 			this.getRecruiters().add(subordinate);
 		}

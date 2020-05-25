@@ -48,8 +48,12 @@ public class UserDao extends AbstractIndexedDao<User> {
 		return this.findByQuery(Credential.class, "User.findCredential", map(EMAIL, email));
 	}
 
-	public List<User> findSubordinateUsers(final User user) {
-		Objects.requireNonNull(user);
+	public List<User> findSubordinateUsers(final String email) {
+		Objects.requireNonNull(email);
+		final User user = this.findUserByEmail(email);
+		if (user == null) {
+			throw new NullPointerException(String.format("User with email %s doesn't exists", email));
+		}
 		return this.findByQuery(User.class, "User.findSubordinateUsers", map(ID, user.getId()), Page.ALL_RESULTS);
 	}
 
@@ -116,6 +120,14 @@ public class UserDao extends AbstractIndexedDao<User> {
 
 	private boolean isRemovingManager(final User user, final User userInDatabase) {
 		return (userInDatabase.getManager() != null) && (user.getManager() == null);
+	}
+
+	public boolean isSubordinateUser(final String managerEmail, final String subordinateEmail) {
+		Objects.requireNonNull(managerEmail);
+		final User manager = this.findUserByEmail(managerEmail);
+		final User subordinate = this.findUserByEmail(subordinateEmail);
+		return this.findByQuery(Boolean.class, "User.IsSubordinateUser",
+				map("managerId", manager.getId()).and("subordinateId", subordinate.getId()));
 	}
 
 	@Override

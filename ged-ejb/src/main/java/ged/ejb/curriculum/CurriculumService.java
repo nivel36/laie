@@ -11,7 +11,6 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ged.ejb.candidate.Candidate;
 import ged.ejb.core.AbstractService;
 import ged.ejb.core.model.AbstractDao;
 import ged.ejb.core.model.Repository;
@@ -26,19 +25,18 @@ public class CurriculumService extends AbstractService<Curriculum> {
 	@Repository
 	private CurriculumDao curriculumDao;
 
-	
 	@Inject
 	private CurriculumExporter exporter;
-	
+
 	public List<CurriculumTemplate> findCurriculumTemplates() {
 		logger.debug("Find curriculum templates");
 		return this.curriculumDao.findCurriculumTemplates();
 	}
 
-	public Curriculum findByCandidate(final Candidate candidate) {
-		Objects.requireNonNull(candidate);
-		logger.debug("Find curriculum by candidate  {}", candidate);
-		return this.curriculumDao.findByCandidate(candidate);
+	public Curriculum findByCandidate(final String candidateUid) {
+		Objects.requireNonNull(candidateUid);
+		logger.debug("Find curriculum by candidate  {}", candidateUid);
+		return this.curriculumDao.findByCandidate(candidateUid);
 	}
 
 	public Curriculum findByUid(final String uid) {
@@ -52,8 +50,12 @@ public class CurriculumService extends AbstractService<Curriculum> {
 		logger.debug("Find skill by name {}", name);
 		return this.curriculumDao.findSkill(name);
 	}
-	
-	public File export(Curriculum curriculum, CurriculumTemplate template) {
+
+	public File export(String curriculumUid, CurriculumTemplate template) {
+		Objects.requireNonNull(curriculumUid);
+		Objects.requireNonNull(template);
+		logger.debug("Export curriculum {} with template", curriculumUid, template);
+		final Curriculum curriculum = this.curriculumDao.findByUid(curriculumUid);
 		return exporter.export(curriculum, template);
 	}
 
@@ -63,6 +65,7 @@ public class CurriculumService extends AbstractService<Curriculum> {
 	}
 
 	public void setCurriculumDao(final CurriculumDao curriculumDao) {
+		Objects.requireNonNull(curriculumDao);
 		this.curriculumDao = curriculumDao;
 	}
 }

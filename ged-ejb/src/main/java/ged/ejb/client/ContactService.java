@@ -30,10 +30,10 @@ public class ContactService extends AbstractIndexedService<Contact> {
 		return this.contactDao.findByUid(uid);
 	}
 
-	public List<Contact> findContactsByClient(final Client client, final Page page) {
-		Objects.requireNonNull(client);
-		logger.debug("Find contacts by client {}", client);
-		return this.contactDao.findContactsByClient(client, page);
+	public List<Contact> findContactsByClient(final String clientUid, final Page page) {
+		Objects.requireNonNull(clientUid);
+		logger.debug("Find contacts by client {}", clientUid);
+		return this.contactDao.findContactsByClient(clientUid, page);
 	}
 
 	@Override

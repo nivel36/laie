@@ -63,7 +63,7 @@ public class SessionUser implements Serializable {
 		Objects.requireNonNull(owner);
 		return this.isOwnerOrHisManager(owner);
 	}
-	
+
 	public void load(String username) {
 		Objects.requireNonNull(username);
 		logger.info("User {} has init his/her session", username);
@@ -96,7 +96,7 @@ public class SessionUser implements Serializable {
 	private void loadUserData(final String email) {
 		this.user = this.userService.findByEmail(email);
 		this.locale = new Locale(this.user.getLanguage());
-		this.team = this.userService.findSubordinateUsers(this.user);
+		this.team = this.userService.findSubordinateUsers(email);
 	}
 
 	public void refresh() {
@@ -105,6 +105,7 @@ public class SessionUser implements Serializable {
 	}
 
 	public void setUserService(final UserService userService) {
+		Objects.requireNonNull(userService);
 		this.userService = userService;
 	}
 

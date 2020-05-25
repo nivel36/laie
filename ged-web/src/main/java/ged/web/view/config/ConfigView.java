@@ -20,6 +20,7 @@ import org.primefaces.model.file.UploadedFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import ged.ejb.core.file.File;
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
 import ged.web.core.view.AbstractView;
@@ -45,7 +46,8 @@ public class ConfigView extends AbstractView {
 		}
 		logger.debug("Upload camera image for user {} action performed", this.user);
 		try (final InputStream inputStream = new ByteArrayInputStream(data);) {
-			this.user = this.userService.addUserImage(this.user, inputStream);
+			final File image = this.userService.addUserImage(this.user.getEmail(), inputStream);
+			this.user.setPicture(image);
 		} catch (final IOException e) {
 			throw new UncheckedIOException(e);
 		}
@@ -97,7 +99,8 @@ public class ConfigView extends AbstractView {
 		}
 		logger.debug("Upload user {} image action performed", this.user);
 		try (final InputStream inputStream = uploadedFile.getInputStream()) {
-			this.user = this.userService.addUserImage(this.user, inputStream);
+			final File image = this.userService.addUserImage(this.user.getEmail(), inputStream);
+			this.user.setPicture(image);
 		}
 	}
 }

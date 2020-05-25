@@ -110,7 +110,7 @@ public class ViewCandidateView extends AbstractView {
 			this.candidate.setAddress(new Address());
 		}
 		this.jobCandidatures = this.jobCandidatureService.findJobCandidatures(this.candidate, Page.ALL_RESULTS);
-		this.curriculum = this.curriculumService.findByCandidate(this.candidate);
+		this.curriculum = this.curriculumService.findByCandidate(this.candidate.getEmail());
 		this.editable = this.sessionUser.hasPermissionToEdit(this.candidate);
 		this.meetings = this.initMeetings();
 		this.files = this.findFiles();

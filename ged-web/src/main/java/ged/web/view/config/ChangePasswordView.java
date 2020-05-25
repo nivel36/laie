@@ -51,7 +51,7 @@ public class ChangePasswordView extends AbstractView {
 			this.facesContext.validationFailed();
 			return null;
 		}
-		this.userService.changePassword(this.user, this.newPassword);
+		this.userService.changePassword(this.user.getEmail(), this.newPassword);
 		this.sessionUser.refresh();
 		return PageEnum.CONFIG.getUrl();
 	}

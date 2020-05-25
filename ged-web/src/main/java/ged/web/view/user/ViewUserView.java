@@ -88,7 +88,7 @@ public class ViewUserView extends AbstractView {
 			throw new IllegalPageStateException();
 		}
 		logger.trace("User {} init", this.user);
-		this.team = this.userService.findSubordinateUsers(this.user);
+		this.team = this.userService.findSubordinateUsers(this.user.getEmail());
 		this.jobOffers = this.jobOfferService.findJobOffers(this.user, Page.ALL_RESULTS);
 		this.editable = this.sessionUser.isAdmin();
 		this.meetings = this.meetingService.findPlannedMeetings(this.user, Page.TEN_RESULTS_PER_PAGE);

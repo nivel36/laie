@@ -10,7 +10,7 @@
 			WHERE c.uid = :uid
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="Candidate.findCandidateWithFiles">
 		<query><![CDATA[
 			SELECT c
@@ -286,11 +286,20 @@
 		]]></query>
 	</named-query>
 
-	<named-query name="User.findByEmail">
+	<named-query name="User.findCredential">
+		<query><![CDATA[
+			SELECT c
+			FROM Credential c
+			LEFT JOIN FETCH c.user
+			WHERE c.user.email = :email
+		]]></query>
+	</named-query>
+
+	<named-query name="User.findByUid">
 		<query><![CDATA[
 			SELECT u 
 			FROM User u 
-			WHERE u.email = :email
+			WHERE u.uid = :uid
 		]]></query>
 	</named-query>
 
@@ -303,22 +312,22 @@
 			AND uc.pathLength > 0
 		]]></query>
 	</named-query>
-
-	<named-query name="User.findUser">
+	
+	<named-query name="User.isSubordinateUser">
 		<query><![CDATA[
-			SELECT u 
-			FROM User u 
-			WHERE (:name IS NOT NULL AND u.name = :name)
-			OR (:surname IS NOT NULL AND u.surname = :surname)
+			SELECT CASE WHEN (COUNT(u) > 0) THEN TRUE ELSE FALSE END 
+			FROM UserClosure uc 
+			JOIN uc.descendant u 
+			WHERE uc.antecessor.id = :managerId 
+			AND u.id= :subordinateId
 		]]></query>
 	</named-query>
 
-	<named-query name="User.findCredential">
+	<named-query name="User.findByEmail">
 		<query><![CDATA[
-			SELECT c
-			FROM Credential c
-			LEFT JOIN FETCH c.user
-			WHERE c.user.email = :email
+			SELECT u 
+			FROM User u 
+			WHERE u.email = :email
 		]]></query>
 	</named-query>
 
@@ -327,14 +336,6 @@
 			SELECT CASE WHEN (COUNT(u) > 0) THEN TRUE ELSE FALSE END 
 			FROM User u 
 			WHERE u.email = :email
-		]]></query>
-	</named-query>
-
-	<named-query name="User.findByUid">
-		<query><![CDATA[
-			SELECT u 
-			FROM User u 
-			WHERE u.uid = :uid
 		]]></query>
 	</named-query>
 
