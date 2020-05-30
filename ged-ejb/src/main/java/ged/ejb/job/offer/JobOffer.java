@@ -95,20 +95,6 @@ public class JobOffer extends AbstractIndexedEntity implements Ownerable {
 	@SortableField(forField = "title")
 	private String title;
 
-	public JobOffer() {
-	}
-
-	public JobOffer(Client client, User owner, String title) {
-		Objects.requireNonNull(client);
-		Objects.requireNonNull(owner);
-		Objects.requireNonNull(title);
-		this.title = title;
-		this.owner = owner;
-		this.client = client;
-		this.state = JobOfferState.CREATED;
-		this.dateOpened = LocalDate.now();
-	}
-
 	@Override
 	public boolean equals(final Object obj) {
 		if (this == obj) {

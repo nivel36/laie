@@ -5,12 +5,9 @@ import static ged.ejb.core.util.Parameters.map;
 import java.util.List;
 import java.util.Objects;
 
-import ged.ejb.candidate.Candidate;
-import ged.ejb.client.Client;
 import ged.ejb.core.model.AbstractIndexedDao;
 import ged.ejb.core.model.Page;
 import ged.ejb.core.model.Repository;
-import ged.ejb.user.User;
 
 @Repository
 public class JobOfferDao extends AbstractIndexedDao<JobOffer> {
@@ -24,22 +21,22 @@ public class JobOfferDao extends AbstractIndexedDao<JobOffer> {
 		return this.findByQuery(JobOfferState.class, "JobOfferState.findFirst");
 	}
 
-	public List<JobOffer> findJobOffers(final Candidate candidate, final Page page) {
-		Objects.requireNonNull(candidate);
+	public List<JobOffer> findJobOffersByCandidate(final String candidateUid, final Page page) {
+		Objects.requireNonNull(candidateUid);
 		Objects.requireNonNull(page);
-		return this.findByQuery(JobOffer.class, "JobOffer.findByCandidate", map("candidate", candidate), page);
+		return this.findByQuery(JobOffer.class, "JobOffer.findByCandidate", map("candidateUid", candidateUid), page);
 	}
 
-	public List<JobOffer> findJobOffers(final Client client, final Page page) {
-		Objects.requireNonNull(client);
+	public List<JobOffer> findJobOffersByClient(final String clientUid, final Page page) {
+		Objects.requireNonNull(clientUid);
 		Objects.requireNonNull(page);
-		return this.findByQuery(JobOffer.class, "JobOffer.findByClient", map("client", client), page);
+		return this.findByQuery(JobOffer.class, "JobOffer.findByClient", map("clientUid", clientUid), page);
 	}
 
-	public List<JobOffer> findJobOffers(final User owner, final Page page) {
-		Objects.requireNonNull(owner);
+	public List<JobOffer> findJobOffersByUser(final String email, final Page page) {
+		Objects.requireNonNull(email);
 		Objects.requireNonNull(page);
-		return this.findByQuery(JobOffer.class, "JobOffer.findAllByOwner", map("owner", owner), page);
+		return this.findByQuery(JobOffer.class, "JobOffer.findAllByOwner", map("email", email), page);
 	}
 
 	@Override
