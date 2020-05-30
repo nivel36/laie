@@ -69,7 +69,7 @@ public class IndexView extends AbstractView {
 	@PostConstruct
 	public void init() {
 		final User user = this.sessionUser.get();
-		this.jobOffers = this.jobService.findJobOffers(user, new Page(0, 10));
+		this.jobOffers = this.jobService.findJobOffersByUser(user.getEmail(), new Page(0, 10));
 		this.candidates = new CandidateLazyDataModel(this.candidateService);
 		this.meetings = this.initMeetings();
 		this.events = new EventLazyDataModel(this.jobCandidatureEventService);
