@@ -33,10 +33,10 @@ public class CurriculumService extends AbstractService<Curriculum> {
 		return this.curriculumDao.findCurriculumTemplates();
 	}
 
-	public Curriculum findByCandidate(final String candidateUid) {
+	public Curriculum findByCandidateUid(final String candidateUid) {
 		Objects.requireNonNull(candidateUid);
-		logger.debug("Find curriculum by candidate  {}", candidateUid);
-		return this.curriculumDao.findByCandidate(candidateUid);
+		logger.debug("Find curriculum by candidate uid  {}", candidateUid);
+		return this.curriculumDao.findByCandidateUid(candidateUid);
 	}
 
 	public Curriculum findByUid(final String uid) {

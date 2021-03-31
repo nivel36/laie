@@ -36,7 +36,7 @@ public class JobOfferDao extends AbstractIndexedDao<JobOffer> {
 	public List<JobOffer> findJobOffersByUser(final String email, final Page page) {
 		Objects.requireNonNull(email);
 		Objects.requireNonNull(page);
-		return this.findByQuery(JobOffer.class, "JobOffer.findAllByOwner", map("email", email), page);
+		return this.findByQuery(JobOffer.class, "JobOffer.findJobOffersByUser", map("email", email), page);
 	}
 
 	@Override

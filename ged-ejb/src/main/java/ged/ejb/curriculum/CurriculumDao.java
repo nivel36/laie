@@ -18,10 +18,10 @@ public class CurriculumDao extends AbstractIndexedDao<Curriculum> {
 		return this.findAll(CurriculumTemplate.class, Page.ALL_RESULTS);
 	}
 
-	public Curriculum findByCandidate(final String candidateUid) {
+	public Curriculum findByCandidateUid(final String candidateUid) {
 		Objects.requireNonNull(candidateUid);
 		try {
-			return this.findByQuery(Curriculum.class, "Curriculum.findByCandidate", map("candidate", candidateUid));
+			return this.findByQuery(Curriculum.class, "Curriculum.findByCandidateUid", map("candidateUid", candidateUid));
 		} catch (final NoResultException e) {
 			return null;
 		}

@@ -71,7 +71,7 @@
 		]]></query>
 	</named-query>
 
-	<named-query name="Curriculum.findByCandidate">
+	<named-query name="Curriculum.findByCandidateUid">
 		<query><![CDATA[
 			SELECT c 
 			FROM Curriculum c 
@@ -80,7 +80,7 @@
 			LEFT JOIN FETCH c.jobExperiences 
 			LEFT JOIN FETCH c.languages 
 			LEFT JOIN FETCH c.skills 
-			WHERE c.candidate = :candidate
+			WHERE c.candidate.uid = :candidateUid
 		]]></query>
 	</named-query>
 
@@ -195,11 +195,11 @@
 		]]></query>
 	</named-query>
 
-	<named-query name="JobOffer.findAllByOwner">
+	<named-query name="JobOffer.findJobOffersByUser">
 		<query><![CDATA[
 			SELECT j 
 			FROM JobOffer j 
-			WHERE j.owner = :owner 
+			WHERE j.owner.email = :email 
 		]]></query>
 	</named-query>
 

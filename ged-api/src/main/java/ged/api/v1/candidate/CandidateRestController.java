@@ -21,10 +21,8 @@ import ged.ejb.candidate.Candidate;
 import ged.ejb.candidate.CandidateService;
 import ged.ejb.core.model.Page;
 import ged.ejb.user.UserService;
-import io.swagger.annotations.Api;
 
 @Path("candidate")
-@Api("candidate")
 @ApplicationScoped
 public class CandidateRestController extends AbstractRestController {
 

@@ -22,10 +22,8 @@ import ged.api.v1.mapper.Mapper;
 import ged.ejb.core.model.Page;
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
-import io.swagger.annotations.Api;
 
 @Path("user")
-@Api("user")
 @ApplicationScoped
 public class UserRestController extends AbstractRestController {
 

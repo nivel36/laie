@@ -20,10 +20,8 @@ import ged.api.v1.AbstractRestController;
 import ged.ejb.client.Client;
 import ged.ejb.client.ClientService;
 import ged.ejb.core.model.Page;
-import io.swagger.annotations.Api;
 
 @Path("client")
-@Api("client")
 @ApplicationScoped
 public class ClientRestController extends AbstractRestController {
 
