@@ -27,10 +27,9 @@
 		<javaee-api.version>8.0</javaee-api.version>
 		<primefaces.version>8.0</primefaces.version>
 		<hibernate-search.version>5.10.7.Final</hibernate-search.version>
-		<hibernate-envers.version>5.4.4.Final</hibernate-envers.version>
-		<hibernate.version>5.3.15.Final</hibernate.version>
-		<infinispan.version>9.4.18.Final</infinispan.version>
-		<font-awesome.version>5.10.1</font-awesome.version>
+		<hibernate.version>5.3.20.Final</hibernate.version>
+		<infinispan.version>11.0.9.Final</infinispan.version>
+		<font-awesome.version>5.15.2</font-awesome.version>
 		<slf4j.version>1.7.26</slf4j.version>
 		<poi.version>3.17</poi.version>
 		<html2pdf.version>2.1.6</html2pdf.version>
@@ -38,7 +37,7 @@
 		<xml.bind.core.version>2.3.0.1</xml.bind.core.version>
 		<xml.bind.impl.version>2.0.2</xml.bind.impl.version>
 		<javax.activation.version>1.1.1</javax.activation.version>
-		<omnifaces.version>3.3</omnifaces.version>
+		<omnifaces.version>3.10</omnifaces.version>
 		<commons-fileupload.version>1.4</commons-fileupload.version>
 		
 		<mockito.version>2.21.0</mockito.version>
