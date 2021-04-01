@@ -1,12 +1,13 @@
 package ged.web.core.view;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
 import org.primefaces.model.FilterMeta;
 import org.primefaces.model.LazyDataModel;
-import org.primefaces.model.SortOrder;
+import org.primefaces.model.SortMeta;
 
 import ged.ejb.core.AbstractIndexedService;
 import ged.ejb.core.model.AbstractIndexedEntity;
@@ -41,24 +42,18 @@ public abstract class AbstractLazyDataModel<T extends AbstractIndexedEntity> ext
 	}
 
 	@Override
-	public Object getRowKey(final T entity) {
+	public String getRowKey(final T entity) {
 		Objects.requireNonNull(entity, "Entity can't be null");
-		return entity.getId();
+		return String.valueOf(entity.getId());
 	}
 
 	protected abstract AbstractIndexedService<T> getService();
 
 	@Override
-	public List<T> load(final int first, final int pageSize, final String sortFieldName, final SortOrder sortOrder,
+	public List<T> load(final int first, final int pageSize, final Map<String, SortMeta> sorts,
 			final Map<String, FilterMeta> filters) {
 		final Page page = new Page(first, pageSize);
-		final SortField sortField;
-		if (sortOrder != null) {
-			sortField = new SortField(sortFieldName, sortOrder == SortOrder.ASCENDING);
-		} else {
-			sortField = null;
-		}
-		final SearchResult<T> searchResult = this.getService().search(this.searchText, page, sortField,
+		final SearchResult<T> searchResult = this.getService().search(this.searchText, page, new ArrayList<SortField>(),
 				this.searchFilter);
 		this.setRowCount(searchResult.getCount());
 		return searchResult.getResultData();

@@ -25,7 +25,7 @@
 		<ged.version>${project.version}</ged.version>
 
 		<javaee-api.version>8.0</javaee-api.version>
-		<primefaces.version>8.0</primefaces.version>
+		<primefaces.version>10.0.0</primefaces.version>
 		<hibernate-search.version>5.10.7.Final</hibernate-search.version>
 		<hibernate.version>5.3.20.Final</hibernate.version>
 		<infinispan.version>11.0.9.Final</infinispan.version>
@@ -36,12 +36,15 @@
 		<xml.bind.api.version>2.4.0-b180830.0359</xml.bind.api.version>
 		<xml.bind.core.version>2.3.0.1</xml.bind.core.version>
 		<xml.bind.impl.version>2.0.2</xml.bind.impl.version>
-		<javax.activation.version>1.1.1</javax.activation.version>
+		<javax.activation.version>1.2.2</javax.activation.version>
 		<omnifaces.version>3.10</omnifaces.version>
 		<commons-fileupload.version>1.4</commons-fileupload.version>
-		
+
 		<mockito.version>2.21.0</mockito.version>
 		<junit.version>5.5.2</junit.version>
+		
+		<version.server.bom>23.0.0.Final</version.server.bom>
+        <version.microprofile.bom>23.0.0.Final</version.microprofile.bom>
 
 		<maven.ear.plugin.version>3.0.1</maven.ear.plugin.version>
 		<maven.war.plugin.version>3.2.2</maven.war.plugin.version>
@@ -50,6 +53,22 @@
 
 	<dependencyManagement>
 		<dependencies>
+            <dependency>
+                <groupId>org.wildfly.bom</groupId>
+                <artifactId>wildfly-jakartaee8-with-tools</artifactId>
+                <version>${version.server.bom}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            
+            <dependency>
+                <groupId>org.wildfly.bom</groupId>
+                <artifactId>wildfly-microprofile</artifactId>
+                <version>${version.microprofile.bom}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+		
 			<dependency>
 				<groupId>javax.xml.bind</groupId>
 				<artifactId>jaxb-api</artifactId>
@@ -66,8 +85,8 @@
 				<version>${xml.bind.impl.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>javax.activation</groupId>
-				<artifactId>activation</artifactId>
+				<groupId>jakarta.activation</groupId>
+				<artifactId>jakarta.activation-api</artifactId>
 				<version>${javax.activation.version}</version>
 			</dependency>
 			<dependency>
@@ -80,7 +99,6 @@
 				<groupId>org.infinispan</groupId>
 				<artifactId>infinispan-core</artifactId>
 				<version>${infinispan.version}</version>
-				<scope>provided</scope>
 			</dependency>
 
 			<dependency>
@@ -106,7 +124,6 @@
 				<groupId>org.hibernate</groupId>
 				<artifactId>hibernate-envers</artifactId>
 				<version>${hibernate-envers.version}</version>
-				<scope>provided</scope>
 			</dependency>
 
 			<!-- Apache POI -->
@@ -166,7 +183,6 @@
 				<groupId>javax</groupId>
 				<artifactId>javaee-api</artifactId>
 				<version>${javaee-api.version}</version>
-				<scope>provided</scope>
 			</dependency>
 
 			<dependency>
