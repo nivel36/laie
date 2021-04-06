@@ -29,11 +29,11 @@ public class UserService extends AbstractIndexedService<User> {
 	@Repository
 	private UserDao userDao;
 
-	public File addUserImage(final String email, final InputStream inputStream) {
-		Objects.requireNonNull(email);
+	public File addUserImage(final String uid, final InputStream inputStream) {
+		Objects.requireNonNull(uid);
 		Objects.requireNonNull(inputStream);
-		logger.debug("Add image to user {}", email);
-		final User user = this.findByEmail(email);
+		final User user = this.findByUid(uid);
+		logger.debug("Add image to user {}", user);
 		final File oldImage = user.getPicture();
 		final File newImage = this.fileService.uploadFile(inputStream, user.getUid() + "_picture", true);
 		user.setPicture(newImage);
