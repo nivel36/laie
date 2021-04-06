@@ -4,11 +4,11 @@ import java.util.Base64;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class UidGenerator {
+public final class UidGenerator {
 	
 	private UidGenerator() {}
 
-	public static String generate() {
+	public static final String generate() {
 		final Random random = ThreadLocalRandom.current();
 		final byte[] bytes = new byte[6];
 		random.nextBytes(bytes);
