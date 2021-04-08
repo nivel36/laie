@@ -20,7 +20,7 @@
 	<o:tagAttribute name="messageStyleClass" />
 
 	<h:panelGroup layout="block" id="#{id}_group" class="input-group p-field #{styleClass}" rendered="#{rendered}">
-			<p:outputLabel id="#{id}_label" for="#{id}" value="#{label}" styleClass="#{labelStyleClass}" rendered="#{not empty label}" />
+		<p:outputLabel id="#{id}_label" for="#{id}" value="#{label}" styleClass="#{labelStyleClass}" rendered="#{not empty label}" />
 
 		<div class="ui-inputgroup">
 			<h:panelGroup layout="block" rendered="#{not empty icon and iconPosition eq 'left'}" styleClass="ui-inputgroup-addon">
@@ -135,6 +135,6 @@
 			</h:panelGroup>
 		</div>
 
-		<p:message id="#{id}_message" for="#{id}" styleClass="message-error #{errorStyleClass}" />
+		<p:message id="#{id}_message" for="#{id}" styleClass="#{errorStyleClass}" />
 	</h:panelGroup>
 </ui:composition>
