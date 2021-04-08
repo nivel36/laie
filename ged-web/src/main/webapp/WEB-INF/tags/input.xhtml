@@ -19,10 +19,8 @@
 	<o:tagAttribute name="labelStyleClass" />
 	<o:tagAttribute name="messageStyleClass" />
 
-	<h:panelGroup layout="block" id="#{id}_group" class="input-group #{styleClass}" rendered="#{rendered}">
-		<h:panelGroup layout="block" styleClass="label-container" rendered="#{not empty label}">
-			<p:outputLabel id="#{id}_label" for="#{id}" value="#{label}" styleClass="#{labelStyleClass}" />
-		</h:panelGroup>
+	<h:panelGroup layout="block" id="#{id}_group" class="input-group p-field #{styleClass}" rendered="#{rendered}">
+			<p:outputLabel id="#{id}_label" for="#{id}" value="#{label}" styleClass="#{labelStyleClass}" rendered="#{not empty label}" />
 
 		<div class="ui-inputgroup">
 			<h:panelGroup layout="block" rendered="#{not empty icon and iconPosition eq 'left'}" styleClass="ui-inputgroup-addon">

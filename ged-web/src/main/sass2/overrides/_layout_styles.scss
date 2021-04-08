@@ -1,0 +1,47 @@
+.ui-datatable {
+	.avatar {
+		width: 30px;
+		height: 30px;
+		object-fit: cover;
+		vertical-align: middle;
+	}
+}
+
+.layout-main-topbar {
+	position: relative;
+	
+	.buttons {
+		position: absolute;
+		top: 6px;
+		right: 6px;
+		
+		.ui-button {
+			margin-left:6px;
+		}
+	}
+}
+
+
+.layout-wrapper {
+    .layout-topbar {
+        .layout-topbar-logo {
+            img {
+                height: 24px;
+            }
+        }
+
+		.topbar-menu {
+            > li {
+                > a {
+                    > img {
+                        width: 30px;
+						height: 30px;
+						object-fit: cover;
+                        margin-top: 8px;
+						border-radius: 50%;
+                    }
+                }
+			}
+		}
+	}
+}

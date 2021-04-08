@@ -22,15 +22,16 @@
 		<p:importConstants type="ged.web.core.util.PageEnum" var="Page" />
 	</f:metadata>
 	<div class="layout-wrapper #{guestPreferences.menuMode} #{guestPreferences.menuColor} #{guestPreferences.topBarColor}">
-		<ui:include src="./topbar.xhtml"></ui:include>
-		<ui:include src="./menu.xhtml"></ui:include>
+		<ui:include src="./topbar.xhtml" />
+		<ui:include src="./menu.xhtml" />
 		<ui:include src="./right-panel.xhtml" />
-		<div class="index layout-main">
+		<div class="layout-main">
+		
 			<div class="layout-content" style="min-height: 300px">
-				<ui:insert name="content"></ui:insert>
+				<ui:insert name="content" />
 			</div>
 
-			<div class="layout-content-mask"></div>
+			<div class="layout-content-mask" />
 		</div>
 
 		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
@@ -40,7 +41,7 @@
 
 		<p:ajaxStatus styleClass="layout-ajax-loader">
 			<f:facet name="start">
-				<i class="fa fa-circle-o-notch fa-spin layout-ajax-loader-icon" aria-hidden="true"></i>
+				<i class="fa fa-circle-o-notch fa-spin layout-ajax-loader-icon" aria-hidden="true" />
 			</f:facet>
 
 			<f:facet name="complete">
@@ -49,9 +50,10 @@
 		</p:ajaxStatus>
 	</div>
 
-	<h:outputStylesheet name="css/primeflex.css" library="roma-layout" />
+    <h:outputStylesheet name="css/primeicons.css" library="roma-layout" />
+    <h:outputStylesheet name="css/primeflex.min.css" library="roma-layout" />
 	<h:outputStylesheet name="css/nanoscroller.css" library="roma-layout" />
-	<h:outputStylesheet name="css/layout-blue.css" library="roma-layout" />
+	<h:outputStylesheet name="css/layout.css" library="roma-layout" />
 </h:body>
 
 </html>

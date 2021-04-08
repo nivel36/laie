@@ -12,7 +12,7 @@
 
 	<composite:implementation>
 		<div id="#{cc.clientId}" class="card card-w-title events #{cc.attrs.styleClass}">
-			<h1>#{cc.attrs.title}</h1>
+			<h5>#{cc.attrs.title}</h5>
 			<p:dataTable var="event" id="events" value="#{cc.attrs.value}" emptyMessage="#{i18n['event.no_events_found']}" reflow="true" paginator="true" paginatorPosition="bottom"
 				rows="#{cc.attrs.rows}" sortBy="#{event.date}" sortOrder="ascending" lazy="true" styleClass="ui-datatable-borderless">
 

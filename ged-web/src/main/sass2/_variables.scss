@@ -1,0 +1,12 @@
+$fontFamily:'Inter UI',sans-serif;
+$fontSize:13px;
+$textColor:#252529;
+$textSecondaryColor:#65656a;
+$borderRadius:2px;
+$transitionDuration:.2s;
+
+$primaryColor: #6952EC !default;
+$primaryLightColor: scale-color($primaryColor, $lightness: 60%) !default;
+$primaryDarkColor: scale-color($primaryColor, $lightness: -10%) !default;
+$primaryDarkerColor: scale-color($primaryColor, $lightness: -20%) !default;
+$primaryTextColor:#ffffff;

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
 	xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://ged.org/ui" xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets" template="/WEB-INF/templates/template.xhtml">
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets" template="/WEB-INF/templates/indexTemplate.xhtml">
 
 	<ui:define name="title">
 		Ged
@@ -16,6 +16,7 @@
 	</ui:define>
 
 	<ui:define name="content">
+	
 		<div class="p-grid">
 			<div class="p-col-12 p-xl-8">
 				<cc:jobOffers value="#{indexView.jobOffers}" rows="5" />
@@ -31,9 +32,7 @@
 
 			<div class="p-col-12">
 				<cc:events value="#{indexView.events}" title="#{i18n['event.last_events']}" rows="5" />
-
 			</div>
-
 		</div>
 	</ui:define>
 </ui:composition>
