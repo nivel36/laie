@@ -26,8 +26,8 @@
 
 	<ui:define name="buttons">
 		<h:form>
-			<p:commandButton value="#{i18n['config.change_password']}" process="@this" action="#{Page.CHANGE_PASSWORD.getUrl()}" />
-			<p:commandButton value="#{i18n['action.save']}" onclick="save()" styleClass="success-btn" />
+			<p:commandButton value="#{i18n['config.change_password']}" process="@this" action="#{Page.CHANGE_PASSWORD.getUrl()}" styleClass="help-button" />
+			<p:commandButton value="#{i18n['action.save']}" onclick="save()" styleClass="success-button" />
 		</h:form>
 	</ui:define>
 

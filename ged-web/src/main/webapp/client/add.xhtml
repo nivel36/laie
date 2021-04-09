@@ -20,17 +20,17 @@
 	<ui:define name="buttons">
 		<h:form>
 			<p:button value="#{i18n['action.cancel']}" outcome="#{Page.CLIENT_SEARCH.getUrl()}" styleClass="secondary-button" />
-			<p:commandButton value="#{i18n['action.save']}" onclick="processForm()" styleClass="success-btn" />
+			<p:commandButton value="#{i18n['action.save']}" onclick="processForm()" styleClass="success-button" />
 		</h:form>
 	</ui:define>
 
 	<ui:define name="content">
 		<div class="p-grid">
-			<div class="p-col-12 p-xl-6">
+			<div class="p-col-12 p-md-6">
 				<h:form id="clientForm">
 					<p:remoteCommand name="processForm" process="@form" update="@form growl" action="#{addClientView.save}" />
 					<h:panelGroup id="client" styleClass="card card-w-title ui-fluid" layout="block">
-						<h1>#{i18n['client.client']}</h1>
+						<h5>#{i18n['client.client']}</h5>
 						<div class="p-grid">
 							<div class="p-col-12">
 								<g:input id="name" label="#{i18n['client.name']}" value="#{addClientView.client.name}" required="true" />
@@ -54,7 +54,7 @@
 			<div class="p-col-12">
 				<h:form id="contactForm">
 					<div class="card card-w-title ui-fluid">
-						<h1>#{i18n['contact.contacts']}</h1>
+						<h5>#{i18n['contact.contacts']}</h5>
 						<h:panelGroup id="contact" styleClass="p-grid" layout="block">
 							<div class="p-col-12 p-sm-2">
 								<g:input id="contact_name" label="#{i18n['contact.name']}" value="#{addClientView.contact.name}" />
@@ -72,7 +72,7 @@
 								<g:input id="contact_position" label="#{i18n['contact.position']}" value="#{addClientView.contact.position}" />
 							</div>
 							<div class="p-col-12 p-sm-1">
-								<div class="field-btn">
+								<div class="field-button">
 									<p:commandButton icon="fa fa-plus" action="#{addClientView.addContact}" process="@form" update="@form" styleClass="success-btn" />
 								</div>
 							</div>
