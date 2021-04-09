@@ -63,7 +63,7 @@
 									<cc:autocomplete id="manager" label="#{i18n['user.manager']}" value="#{addUserView.user.manager}" completeMethod="#{addUserView.queryManager}" converter="userConverter"
 										rendered="#{not addUserView.user.admin}">
 										<p:column styleClass="user-select image">
-											<cc:person value="#{var}" showDescription="false" />
+											<cc:person value="#{var}" />
 										</p:column>
 									</cc:autocomplete>
 								</h:panelGroup>

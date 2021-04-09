@@ -26,11 +26,9 @@
 
 	<ui:define name="content">
 		<div class="p-grid">
-			<div class="p-col-12 p-xl-6">
+			<div class="p-col-12 p-lg-6">
 				<div class="card user-card">
-					<div class="card-header">
-						
-					</div>
+					<div class="card-header"></div>
 					<div class="user-card-content">
 						<cc:avatar value="#{viewUserView.user.picture}" styleClass="user-image with-border" />
 
@@ -75,20 +73,20 @@
 				</div>
 			</div>
 
-			<div class="p-col-12 p-xl-6">
+			<div class="p-col-12 p-lg-6">
 				<h:form id="userTeamForm">
 					<cc:users value="#{viewUserView.team}" title="#{i18n['user.team']}" rows="5" />
 				</h:form>
 			</div>
 
-			<div class="p-col-12 p-xl-8">
+			<div class="p-col-12 p-lg-8">
 				<h:form id="jobOffersForm">
 					<cc:jobOffers value="#{viewUserView.jobOffers}" rows="5" />
 				</h:form>
 			</div>
 
 
-			<div class="p-col-12 p-xl-4">
+			<div class="p-col-12 p-lg-4">
 				<h:form id="jobMeetingsForm">
 					<cc:meetings value="#{viewUserView.meetings}" rows="5" />
 				</h:form>

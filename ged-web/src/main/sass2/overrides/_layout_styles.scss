@@ -45,3 +45,34 @@
 		}
 	}
 }
+
+.person {
+    text-align: left;
+    display: flex;
+    margin: 6px 0 0 8px;
+    vertical-align: top;
+	padding: 3px 6px;
+
+	&:hover {
+		background-color: #f6f6f6;
+	}
+
+    .person-name {
+		font-size: 12px;
+		display: block;
+		font-weight: 500;
+		color: $menuitemTextColor;
+    }
+
+    .person-description {
+        font-size: 12px;
+        display: block;
+		color: $menuitemTextColor;
+    }
+
+	.avatar {
+        width: 30px;
+        margin: 4px 8px 4px 0;
+		border-radius: 50%;
+    }
+}

@@ -64,9 +64,7 @@
 				</h:panelGroup>
 			</div>
 
-			<h:panelGroup layout="block" class="message-container" rendered="#{!components.find('input').valid}">
-				<p:message id="message" for="input" styleClass="message-error #{errorStyleClass}" />
-			</h:panelGroup>
+			<p:message id="message" for="input" styleClass="message-error #{errorStyleClass}" />
 		</div>
 	</composite:implementation>
 </ui:component>

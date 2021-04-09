@@ -66,34 +66,34 @@
   padding: 0 2.5em 2em 2.5em;
 }
 
-.user-card {
+.card.user-card {
   padding: 0;
 }
-.user-card .card-header {
+.card.user-card .card-header {
   height: 80px;
   overflow: hidden;
-  background: linear-gradient(30deg, #0772b3 0%, #00aaff 100%);
-  background-color: #0772B3;
+  background: linear-gradient(30deg, #6952EC 0%, #c3baf7 150%);
+  background-color: #6952EC;
   color: #ffffff;
 }
-.user-card .user-card-content .label-container {
+.card.user-card .user-card-content .label-container {
   font-size: 0.8em;
   padding-bottom: 0.3em;
 }
-.user-card .user-card-content .label-container .label {
+.card.user-card .user-card-content .label-container .label {
   color: #252529;
 }
-.user-card .user-card-content .text {
+.card.user-card .user-card-content .text {
   color: #666666;
 }
-.user-card .user-card-content .user-image {
+.card.user-card .user-card-content .user-image {
   width: 80px;
   height: 80px;
   margin: -40px 0 0 24px;
   border-radius: 50%;
   object-fit: cover;
 }
-.user-card .user-card-content .user-card-name {
+.card.user-card .user-card-content .user-card-name {
   font-size: 13px;
   color: #ffffff;
   position: relative;
@@ -102,7 +102,7 @@
   font-weight: 700;
   white-space: nowrap;
 }
-.user-card .user-card-content .user-card-role {
+.card.user-card .user-card-content .user-card-role {
   font-size: 13px;
   position: relative;
   top: -55px;
@@ -110,7 +110,7 @@
   font-weight: 700;
   white-space: nowrap;
 }
-.user-card .user-card-content .user-detail {
+.card.user-card .user-card-content .user-detail {
   padding: 0 2.5em 2em 2.5em;
 }
 
@@ -4005,6 +4005,33 @@ a {
   height: 30px;
   object-fit: cover;
   margin-top: 8px;
+  border-radius: 50%;
+}
+
+.person {
+  text-align: left;
+  display: flex;
+  margin: 6px 0 0 8px;
+  vertical-align: top;
+  padding: 3px 6px;
+}
+.person:hover {
+  background-color: #f6f6f6;
+}
+.person .person-name {
+  font-size: 12px;
+  display: block;
+  font-weight: 500;
+  color: #666666;
+}
+.person .person-description {
+  font-size: 12px;
+  display: block;
+  color: #666666;
+}
+.person .avatar {
+  width: 30px;
+  margin: 4px 8px 4px 0;
   border-radius: 50%;
 }
 

@@ -20,9 +20,9 @@
 	<composite:implementation>
 		<div id="#{cc.clientId}" class="person #{cc.attrs.styleClass}">
 			<cc:avatar value="#{cc.attrs.value.picture}" />
-			<div class="person-data">
-				<div class="name">#{cc.attrs.value.fullName}</div>
-				<h:panelGroup display="block" styleClass="description" rendered="#{cc.attrs.showDescription}">#{cc.attrs.description}</h:panelGroup>
+			<div class="person-box">
+				<div class="person-name">#{cc.attrs.value.fullName}</div>
+				<h:panelGroup display="block" styleClass="person-description" rendered="#{cc.attrs.showDescription}">#{cc.attrs.description}</h:panelGroup>
 			</div>
 		</div>
 	</composite:implementation>
