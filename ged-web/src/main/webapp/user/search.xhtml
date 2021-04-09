@@ -18,6 +18,7 @@
 
 	<ui:define name="buttons">
 		<h:form>
+			<p:button value="#{i18n['user.new_user']}" outcome="#{Page.USER_ADD.getUrl()}" styleClass="success-button" />
 			<p:commandButton value="#{i18n['action.export']}" onclick="export()" icon="fa fa-file-excel-o" />
 		</h:form>
 	</ui:define>
@@ -35,31 +36,24 @@
 					<div class="p-col-12">
 						<p:dataTable id="users" value="#{searchUserView.users}" var="user" emptyMessage="#{i18n['user.no_users_found']}" reflow="true" paginator="true" paginatorPosition="bottom"
 							rows="#{sessionUser.rowsPerPage}" sortBy="#{user.lastConnection}" sortOrder="descending" lazy="true">
-							<p:column>
-								<cc:avatar value="#{user.picture}" styleClass="small" />
-							</p:column>
-
 							<p:column headerText="#{i18n['user.name']}" sortBy="#{user.name}">
+								<cc:avatar value="#{user.picture}" styleClass="small" />
 								<h:link value="#{user.fullName}" outcome="#{Page.USER.getUrl()}">
 									<f:param name="id" value="#{user.uid}" />
 								</h:link>
 							</p:column>
 
-							<p:column headerText="#{i18n['user.email']}" priority="3">
-								<h:outputText value="#{user.email}" />
-							</p:column>
-
-							<p:column headerText="#{i18n['user.role']}" sortBy="#{user.role}" priority="5">
+							<p:column headerText="#{i18n['user.role']}" sortBy="#{user.role}" >
 								<h:outputText value="#{i18n[user.role]}" />
 							</p:column>
 
-							<p:column headerText="#{i18n['user.manager']}" sortBy="#{user.manager.name}" priority="4">
+							<p:column headerText="#{i18n['user.manager']}" sortBy="#{user.manager.name}" >
 								<h:link value="#{user.manager.fullName}" outcome="#{Page.USER.getUrl()}" rendered="#{not empty user.manager}">
 									<f:param name="id" value="#{user.manager.uid}" />
 								</h:link>
 							</p:column>
 
-							<p:column headerText="#{i18n['user.last_login']}" sortBy="#{user.lastConnection}" priority="6">
+							<p:column headerText="#{i18n['user.last_login']}" sortBy="#{user.lastConnection}">
 								<h:outputText value="#{user.lastConnection}">
 									<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
 								</h:outputText>

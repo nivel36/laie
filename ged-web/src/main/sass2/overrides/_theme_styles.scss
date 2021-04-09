@@ -1,5 +1,7 @@
 /* Add your customizations of theme here */
-table {
+body .ui-datatable table {
+	table-layout: auto;
+	
 	tbody{
 		tr{
 			a{

@@ -28,10 +28,10 @@
 		<h:form id="userForm">
 			<p:remoteCommand name="processForm" process="@form" update="@form growl" action="#{addUserView.save}"/>
 			<div class="p-grid">
-				<div class="p-col-12 p-xl-6">
+				<div class="p-col-12 p-md-6">
 					<div class="card card-w-title ui-fluid">
-						<h1>#{i18n['user.personal_information']}</h1>
-						<div class="p-grid">
+						<h5>#{i18n['user.personal_information']}</h5>
+						<div class="p-grid p-formgrid">
 							<div class="p-col-12 p-sm-6">
 								<g:input id="name" label="#{i18n['user.name']}" value="#{addUserView.user.name}" required="true" />
 							</div>
@@ -48,10 +48,10 @@
 						</div>
 					</div>
 				</div>
-				<div class="p-col-12 p-xl-6">
+				<div class="p-col-12 p-md-6">
 					<div class="card card-w-title ui-fluid">
-						<h1>#{i18n['user.professional_information']}</h1>
-						<div class="p-grid">
+						<h5>#{i18n['user.professional_information']}</h5>
+						<div class="p-grid p-formgrid">
 							<div class="p-col-12 p-sm-6">
 								<g:input type="selectOneMenu" id="role" value="#{addUserView.user.role}" label="#{i18n['user.role']}" required="true">
 									<f:selectItems value="#{roles.list}" var="role" itemValue="#{role}" itemLabel="#{i18n[role]}" />

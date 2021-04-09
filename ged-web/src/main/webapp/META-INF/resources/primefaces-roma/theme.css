@@ -6994,7 +6994,10 @@ body .ui-sidebar.ui-sidebar-active {
 }
 
 /* Add your customizations of theme here */
-table tbody tr a {
+body .ui-datatable table {
+  table-layout: auto;
+}
+body .ui-datatable table tbody tr a {
   display: inline;
   vertical-align: middle;
   margin-left: 0.5rem;
