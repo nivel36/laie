@@ -7003,4 +7003,8 @@ body .ui-datatable table tbody tr a {
   margin-left: 0.5rem;
 }
 
+body .ui-autocomplete .ui-autocomplete-multiple-container .ui-autocomplete-token {
+  margin: 0 0.5rem 0.5rem 0;
+}
+
 /*# sourceMappingURL=theme.css.map */

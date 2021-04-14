@@ -73,7 +73,7 @@ public class ViewClientView extends AbstractClientView {
 			this.client.setAddress(new Address());
 		}
 		this.contacts = new ArrayList<>(this.client.getContacts());
-		this.jobOffers = this.jobOfferService.findJobOffersByClient(this.client.getUid(), Page.ALL_RESULTS);
+		this.jobOffers = this.jobOfferService.findJobOffersByClientUid(this.client.getUid(), Page.ALL_RESULTS);
 		this.checkDeleted();
 		this.editable = this.sessionUser.hasPermissionToEdit(this.client);
 	}

@@ -31,8 +31,8 @@
 				<div class="p-col-12 p-xl-6">
 
 					<div class="card card-w-title ui-fluid">
-						<h1>#{i18n['job.data']}</h1>
-						<div class="p-grid">
+						<h5>#{i18n['job.data']}</h5>
+						<div class="p-grid p-formgrid">
 							<div class="p-col-12">
 								<g:input label="#{i18n['job.title']}" value="#{addJobView.jobOffer.title}" required="true" />
 							</div>
@@ -61,8 +61,8 @@
 				</div>
 				<div class="p-col-12 p-xl-6">
 					<div class="card card-w-title ui-fluid">
-						<h1>#{i18n['job.other_data']}</h1>
-						<div class="p-grid">
+						<h5>#{i18n['job.other_data']}</h5>
+						<div class="p-grid  p-formgrid">
 							<div class="p-col-12 p-sm-6">
 								<g:input id="dateOpened" label="#{i18n['job.date_opened']}" value="#{addJobView.jobOffer.dateOpened}" type="calendar" />
 							</div>
@@ -84,12 +84,12 @@
 				</div>
 				<div class="p-col-12">
 					<div class="card card-w-title ui-fluid">
-						<h1>#{i18n['job.description']}</h1>
-						<div class="p-grid">
+						<h5>#{i18n['job.description']}</h5>
+						<div class="p-grid p-formgrid">
 							<div class="p-col-12 p-sm-6">
 								<g:input id="published" label="#{i18n['job.publish']}" value="#{addJobView.jobOffer.published}" type="inputSwitch" />
 							</div>
-							<div class="p-col-12">
+							<div class="p-col-12 p-sm-12">
 								<g:input id="description" label="#{i18n['job.description']}" value="#{addJobView.jobOffer.description}" type="rich" />
 							</div>
 						</div>

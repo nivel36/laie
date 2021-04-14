@@ -100,11 +100,11 @@ public class JobOfferService extends AbstractIndexedService<JobOffer> {
 		return this.jobOfferDao.findJobOffersByCandidate(candidateUid, page);
 	}
 
-	public List<JobOffer> findJobOffersByClient(final String clientUid, final Page page) {
+	public List<JobOffer> findJobOffersByClientUid(final String clientUid, final Page page) {
 		Objects.requireNonNull(clientUid);
 		Objects.requireNonNull(page);
 		logger.debug("Find all job offers of the client  {}", clientUid);
-		return this.jobOfferDao.findJobOffersByClient(clientUid, page);
+		return this.jobOfferDao.findJobOffersByClientUid(clientUid, page);
 	}
 
 	public List<JobOffer> findJobOffersByUser(final String email, final Page page) {

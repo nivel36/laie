@@ -51,7 +51,7 @@
 		<query><![CDATA[
 			SELECT c 
 			FROM Client c 
-			WHERE c.uid = :uid
+			WHERE c.uid = :clientUid
 		]]></query>
 	</named-query>
 
@@ -212,11 +212,11 @@
 		]]></query>
 	</named-query>
 
-	<named-query name="JobOffer.findByClient">
+	<named-query name="JobOffer.findByClientUid">
 		<query><![CDATA[
 			SELECT j 
 			FROM JobOffer j 
-			WHERE j.client = :client
+			WHERE j.client.uid = :clientUid
 		]]></query>
 	</named-query>
 

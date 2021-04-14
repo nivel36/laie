@@ -3997,6 +3997,81 @@ a {
   margin-left: 6px;
 }
 
+.card.client-card {
+  padding: 0;
+}
+.card.client-card .card-header {
+  height: 80px;
+  overflow: hidden;
+  background: linear-gradient(30deg, #CC40EA 0%, #c3baf7 150%);
+  background-color: #CC40EA;
+  color: #ffffff;
+}
+.card.client-card .client-card-content .label-container {
+  font-size: 0.8em;
+  padding-bottom: 0.3em;
+}
+.card.client-card .client-card-content .label-container .label {
+  color: #252529;
+}
+.card.client-card .client-card-content .text {
+  color: #666666;
+}
+.card.client-card .client-card-content .client-card-name {
+  font-size: 2em;
+  color: #ffffff;
+  position: relative;
+  top: -65px;
+  margin-left: 1.5em;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.card.client-card .client-card-content .client-detail {
+  padding: 0 2.5em 2em 2.5em;
+}
+
+.card.job-card {
+  padding: 0;
+}
+.card.job-card .card-header {
+  height: 80px;
+  overflow: hidden;
+  background: linear-gradient(30deg, #CC40EA 0%, #c3baf7 150%);
+  background-color: #CC40EA;
+  color: #ffffff;
+}
+.card.job-card .job-card-content .job-detail {
+  padding: 0 2.5em 2em 2.5em;
+}
+.card.job-card .job-card-content .label-container {
+  font-size: 0.8em;
+  padding-bottom: 0.3em;
+}
+.card.job-card .job-card-content .label-container .label {
+  color: #252529;
+}
+.card.job-card .job-card-content .text {
+  color: #666666;
+}
+.card.job-card .job-card-content .job-card-name {
+  font-size: 2em;
+  color: #ffffff;
+  position: relative;
+  top: -60px;
+  margin-left: 1.5rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.card.job-card .job-card-content .job-card-client {
+  font-size: 1em;
+  color: #ffffff;
+  position: relative;
+  top: -60px;
+  margin-left: 1.5rem;
+  font-weight: 400;
+  white-space: nowrap;
+}
+
 .layout-wrapper .layout-topbar .layout-topbar-logo img {
   height: 24px;
 }

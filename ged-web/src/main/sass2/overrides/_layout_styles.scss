@@ -21,6 +21,85 @@
 	}
 }
 
+.card.client-card {
+	padding: 0;
+	.card-header{
+		height: 80px;
+		overflow: hidden;
+		background: linear-gradient(30deg, $secondaryColor 0%, $secondaryLightColor 150%);
+		background-color: $secondaryColor;
+		color: $secondaryTextColor;
+	}
+	.client-card-content {
+		.label-container {
+			font-size: 0.8em;
+			padding-bottom: 0.3em;
+			.label {
+				color: $darkMenuBgColor;
+			}	
+		}
+		.text {
+			color: $menuitemTextColor;
+		}
+		.client-card-name {
+			font-size: 2em;
+			color: #ffffff;
+			position: relative;
+			top: -65px;
+			margin-left: 1.5em;
+			font-weight: 700;
+			white-space: nowrap;
+		}
+		.client-detail {
+			padding: 0 2.5em 2em 2.5em;
+		}
+	}
+}
+
+.card.job-card {
+	padding: 0;
+	.card-header{
+		height: 80px;
+		overflow: hidden;
+		background: linear-gradient(30deg, $secondaryColor 0%, $secondaryLightColor 150%);
+		background-color: $secondaryColor;
+		color: $secondaryTextColor;
+	}
+	.job-card-content {
+		.job-detail{
+		    padding: 0 2.5em 2em 2.5em;
+		}
+		.label-container {
+			font-size: 0.8em;
+			padding-bottom: 0.3em;
+			.label {
+				color: $darkMenuBgColor;
+			}	
+		}
+		.text {
+			color: $menuitemTextColor;
+		}
+		.job-card-name {
+			font-size: 2em;
+			color: #ffffff;
+			position: relative;
+			top: -60px;
+			margin-left: 1.5rem;
+			font-weight: 700;
+			white-space: nowrap;
+		}
+		.job-card-client {
+			font-size: 1em;
+			color: #ffffff;
+			position: relative;
+			top: -60px;
+			margin-left: 1.5rem;
+			font-weight: 400;
+			white-space: nowrap;
+		}
+	}
+}
+
 
 .layout-wrapper {
     .layout-topbar {

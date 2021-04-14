@@ -25,7 +25,7 @@
 			<p:button value="#{i18n['action.cancel']}" outcome="#{Page.CLIENT.getUrl()}" styleClass="secondary-button">
 				<f:param name="id" value="#{editClientView.client.uid}" />
 			</p:button>
-			<p:commandButton value="#{i18n['action.save']}" onclick="processForm()" styleClass="success-btn" />
+			<p:commandButton value="#{i18n['action.save']}" onclick="processForm()" styleClass="success-button" />
 		</h:form>
 	</ui:define>
 
@@ -35,8 +35,8 @@
 				<h:form id="clientForm">
 					<p:remoteCommand name="processForm" process="@form" update="@form growl" action="#{editClientView.save}" />
 					<h:panelGroup id="client" styleClass="card card-w-title ui-fluid" layout="block">
-						<h1>#{i18n['client.client']}</h1>
-						<div class="p-grid">
+						<h5>#{i18n['client.client']}</h5>
+						<div class="p-grid p-formgrid">
 							<div class="p-col-12">
 								<g:input id="name" label="#{i18n['client.name']}" value="#{editClientView.client.name}" required="true" />
 							</div>

@@ -27,10 +27,10 @@ public class JobOfferDao extends AbstractIndexedDao<JobOffer> {
 		return this.findByQuery(JobOffer.class, "JobOffer.findByCandidate", map("candidateUid", candidateUid), page);
 	}
 
-	public List<JobOffer> findJobOffersByClient(final String clientUid, final Page page) {
+	public List<JobOffer> findJobOffersByClientUid(final String clientUid, final Page page) {
 		Objects.requireNonNull(clientUid);
 		Objects.requireNonNull(page);
-		return this.findByQuery(JobOffer.class, "JobOffer.findByClient", map("clientUid", clientUid), page);
+		return this.findByQuery(JobOffer.class, "JobOffer.findByClientUid", map("clientUid", clientUid), page);
 	}
 
 	public List<JobOffer> findJobOffersByUser(final String email, final Page page) {

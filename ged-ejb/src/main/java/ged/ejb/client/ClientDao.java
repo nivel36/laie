@@ -12,7 +12,7 @@ public class ClientDao extends AbstractIndexedDao<Client> {
 
 	public Client findByUid(final String uid) {
 		Objects.requireNonNull(uid);
-		return this.findByQuery(Client.class, "Client.findByUid", map("uid", uid));
+		return this.findByQuery(Client.class, "Client.findByUid", map("clientUid", uid));
 	}
 
 	public Client findByCif(final String cif) {

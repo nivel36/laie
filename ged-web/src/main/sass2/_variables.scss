@@ -10,3 +10,10 @@ $primaryLightColor: scale-color($primaryColor, $lightness: 60%) !default;
 $primaryDarkColor: scale-color($primaryColor, $lightness: -10%) !default;
 $primaryDarkerColor: scale-color($primaryColor, $lightness: -20%) !default;
 $primaryTextColor:#ffffff;
+
+$secondaryColor: #CC40EA !default;
+$secondaryLightColor: scale-color($primaryColor, $lightness: 60%) !default;
+$secondaryDarkColor: scale-color($primaryColor, $lightness: -10%) !default;
+$secondaryDarkerColor: scale-color($primaryColor, $lightness: -20%) !default;
+$secondaryTextColor:#ffffff;
+
