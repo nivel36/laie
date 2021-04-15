@@ -37,14 +37,15 @@
 						<p:dataTable id="users" value="#{searchUserView.users}" var="user" emptyMessage="#{i18n['user.no_users_found']}" reflow="true" paginator="true" paginatorPosition="bottom"
 							rows="#{sessionUser.rowsPerPage}" sortBy="#{user.lastConnection}" sortOrder="descending" lazy="true">
 							<p:column headerText="#{i18n['user.name']}" sortBy="#{user.name}">
-								<cc:avatar value="#{user.picture}" styleClass="small" />
-								<h:link value="#{user.fullName}" outcome="#{Page.USER.getUrl()}">
+								<h:link outcome="#{Page.USER.getUrl()}">
+									<cc:avatar value="#{user.picture}" styleClass="small" />
+									#{user.fullName}
 									<f:param name="id" value="#{user.uid}" />
 								</h:link>
 							</p:column>
 
 							<p:column headerText="#{i18n['user.role']}" sortBy="#{user.role}" >
-								<h:outputText value="#{i18n[user.role]}" />
+								<span class="user-role role-#{user.role}">#{i18n[user.role]}</span>
 							</p:column>
 
 							<p:column headerText="#{i18n['user.manager']}" sortBy="#{user.manager.name}" >

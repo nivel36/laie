@@ -26,7 +26,7 @@
 
 	<ui:define name="content">
 		<div class="p-grid">
-			<div class="p-col-12 p-lg-6">
+			<div class="p-col-12 p-md-7">
 				<div class="card user-card">
 					<div class="card-header"></div>
 					<div class="user-card-content">
@@ -73,7 +73,7 @@
 				</div>
 			</div>
 
-			<div class="p-col-12 p-lg-6">
+			<div class="p-col-12 p-md-5">
 				<h:form id="userTeamForm">
 					<cc:users value="#{viewUserView.team}" title="#{i18n['user.team']}" rows="3" />
 				</h:form>
@@ -84,7 +84,6 @@
 					<cc:jobOffers value="#{viewUserView.jobOffers}" rows="5" />
 				</h:form>
 			</div>
-
 
 			<div class="p-col-12 p-lg-4">
 				<h:form id="jobMeetingsForm">

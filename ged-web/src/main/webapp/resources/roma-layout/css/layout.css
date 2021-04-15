@@ -3985,6 +3985,30 @@ a {
   vertical-align: middle;
 }
 
+.user-role {
+  border-radius: 2px;
+  padding: 0.25em 0.5rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.3px;
+}
+.user-role.role-ADMIN {
+  background: #FEEDAF;
+  color: #8A5340;
+}
+.user-role.role-USER {
+  background: #C8E6C9;
+  color: #256029;
+}
+
+.users .ui-dataview-header {
+  display: none;
+}
+.users .ui-dataview-column {
+  padding: 0;
+}
+
 .layout-main-topbar {
   position: relative;
 }
@@ -4086,27 +4110,28 @@ a {
 .person {
   text-align: left;
   display: flex;
-  margin: 6px 0 0 8px;
   vertical-align: top;
-  padding: 3px 6px;
+  padding: 0.5em;
 }
 .person:hover {
   background-color: #f6f6f6;
 }
+.person .person-box {
+  margin-left: 1em;
+}
 .person .person-name {
-  font-size: 12px;
+  font-size: 13px;
   display: block;
   font-weight: 500;
   color: #666666;
 }
 .person .person-description {
-  font-size: 12px;
+  font-size: 13px;
   display: block;
   color: #666666;
 }
 .person .avatar {
-  width: 30px;
-  margin: 4px 8px 4px 0;
+  width: 36px;
   border-radius: 50%;
 }
 
