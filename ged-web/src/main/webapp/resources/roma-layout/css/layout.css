@@ -4110,4 +4110,73 @@ a {
   border-radius: 50%;
 }
 
+.curriculum {
+  position: relative;
+  flex-direction: column;
+  overflow: auto;
+}
+.curriculum .avatar {
+  float: left;
+  margin: 0 2em 0 1em;
+  border-radius: 0;
+  border: 0;
+  width: 128px;
+  object-fit: cover;
+}
+.curriculum .header-buttons {
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+}
+.curriculum .section {
+  border-bottom: 1px solid #dfdfdf;
+  position: relative;
+  margin-top: 2em;
+  font-size: 1.1em;
+  font-weight: 400;
+  padding: 0 2em 1em 2em;
+}
+.curriculum .section:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+.curriculum .section .buttons {
+  position: absolute;
+  right: 0px;
+  bottom: 1em;
+}
+.curriculum .name {
+  font-size: 2em;
+  font-weight: bold;
+  text-shadow: 1px 1px white;
+  padding-bottom: 0.4em;
+}
+.curriculum .job-profile {
+  font-size: 1.5em;
+  padding-bottom: 0.6em;
+}
+.curriculum .job-description {
+  white-space: pre-line;
+}
+.curriculum .date-range {
+  color: #8c8c93;
+}
+.curriculum .language_name {
+  font-weight: 500;
+  min-width: 100px;
+  display: inline-block;
+}
+.curriculum .company {
+  font-size: 1.1em;
+}
+.curriculum .curriculum .school {
+  font-size: 1.1em;
+}
+.curriculum p {
+  margin: 0.4em 4em 0.4em 0;
+}
+.curriculum .ui-tag {
+  margin-right: 0.2rem;
+}
+
 /*# sourceMappingURL=layout.css.map */

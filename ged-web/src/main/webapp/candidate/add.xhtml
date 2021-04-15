@@ -20,7 +20,7 @@
 	<ui:define name="buttons">
 		<h:form>
 			<p:button value="#{i18n['action.cancel']}" outcome="#{Page.CANDIDATE_SEARCH.getUrl()}" styleClass="secondary-button" />
-			<p:commandButton value="#{i18n['action.save']}" onclick="save()" styleClass="success-btn" />
+			<p:commandButton value="#{i18n['action.save']}" onclick="save()" styleClass="success-button" />
 		</h:form>
 	</ui:define>
 
@@ -28,10 +28,10 @@
 		<h:form id="candidateForm">
 			<p:remoteCommand name="save" process="@form" update="@form growl" action="#{addCandidateView.save}" />
 			<div class="p-grid">
-				<div class="p-col-12 p-xl-6">
+				<div class="p-col-12 p-md-6">
 					<div class="card card-w-title ui-fluid">
-						<h1>#{i18n['candidate.personal_information']}</h1>
-						<div class="p-grid">
+						<h5>#{i18n['candidate.personal_information']}</h5>
+						<div class="p-grid p-formgrid">
 							<div class="p-col-12 p-sm-6">
 								<g:input id="name" label="#{i18n['candidate.name']}" value="#{addCandidateView.candidate.name}" required="true" />
 							</div>
@@ -50,10 +50,10 @@
 						</div>
 					</div>
 				</div>
-				<div class="p-col-12 p-xl-6">
+				<div class="p-col-12 p-md-6">
 					<div class="card card-w-title ui-fluid">
-						<h1>#{i18n['candidate.contact_information']}</h1>
-						<div class="p-grid">
+						<h5>#{i18n['candidate.contact_information']}</h5>
+						<div class="p-grid p-formgrid">
 							<div class="p-col-12 p-sm-6">
 								<g:input id="email" label="#{i18n['candidate.email']}" value="#{addCandidateView.candidate.email}" />
 							</div>
@@ -71,10 +71,10 @@
 						</div>
 					</div>
 				</div>
-				<div class="p-col-12 p-xl-6">
+				<div class="p-col-12 p-md-6">
 					<div class="card card-w-title ui-fluid">
-						<h1>#{i18n['candidate.job_information']}</h1>
-						<div class="p-grid">
+						<h5>#{i18n['candidate.job_information']}</h5>
+						<div class="p-grid p-formgrid">
 							<div class="p-col-12 p-sm-6">
 								<g:input id="jobProfile" label="#{i18n['candidate.jobProfile']}" value="#{addCandidateView.candidate.jobProfile}" required="true" />
 							</div>
@@ -88,15 +88,13 @@
 						</div>
 					</div>
 				</div>
-				<div class="p-col-12 p-xl-6">
+				<div class="p-col-12 p-md-6">
 					<div class="card card-w-title ui-fluid">
-						<h1>#{i18n['candidate.other_data']}</h1>
-						<div class="p-grid">
+						<h5>#{i18n['candidate.other_data']}</h5>
+						<div class="p-grid p-formgrid">
 							<div class="p-col-12 p-sm-6">
-								<div class="input-group">
-									<div class="label-container">
-										<p:outputLabel id="rating_label" for="rating" value="#{i18n['candidate.rating']}" />
-									</div>
+								<div class="input-group p-field">
+									<p:outputLabel id="rating_label" for="rating" value="#{i18n['candidate.rating']}" />
 									<p:rating id="rating" value="#{addCandidateView.candidate.rating}" cancel="false">
 										<p:ajax event="rate" listener="#{addCandidateView.onrate}" update="" />
 									</p:rating>
@@ -108,10 +106,8 @@
 								</g:input>
 							</div>
 							<div class="p-col-12">
-								<div class="input-group">
-									<div class="label-container">
-										<p:outputLabel id="tags_label" for="tags" value="#{i18n['candidate.tags']}" />
-									</div>
+								<div class="input-group p-field">
+									<p:outputLabel id="tags_label" for="tags" value="#{i18n['candidate.tags']}" />
 									<p:chips id="tags" value="#{addCandidateView.tags}" required="#{required}" styleClass="input input-chips" completeMethod="#{addCandidateView.queryTags}">
 										<f:converter converterId="tagConverter" for="tags" />
 									</p:chips>
@@ -120,9 +116,10 @@
 						</div>
 					</div>
 				</div>
-				<div class="p-col-12 p-xl-6">
+				
+				<div class="p-col-12 p-sm-6 p-md-4 p-lg-4 p-xl-3">
 					<div class="card ui-fluid">
-						<div class="p-grid">
+						<div class="p-grid p-formgrid">
 							<div class="p-col-12">
 								<cc:inputAvatar id="candidate_image" value="#{addCandidateView.candidate.picture}" fileUploadListener="#{addCandidateView.uploadImage}" />
 							</div>

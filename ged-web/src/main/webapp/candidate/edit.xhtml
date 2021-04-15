@@ -107,10 +107,8 @@
 						<h5>#{i18n['candidate.other_data']}</h5>
 						<div class="p-formgrid p-grid">
 							<div class="p-col-12 p-sm-6">
-								<div class="input-group">
-									<div class="label-container">
-										<p:outputLabel id="rating_label" for="rating" value="#{i18n['candidate.rating']}" />
-									</div>
+								<div class="input-group p-field">
+									<p:outputLabel id="rating_label" for="rating" value="#{i18n['candidate.rating']}" />
 									<p:rating id="rating" value="#{editCandidateView.candidate.rating}" cancel="false">
 										<p:ajax event="rate" listener="#{editCandidateView.onrate}" update="" />
 									</p:rating>
@@ -122,10 +120,8 @@
 								</g:input>
 							</div>
 							<div class="p-col-12">
-								<div class="input-group">
-									<div class="label-container">
-										<p:outputLabel id="tags_label" for="tags" value="#{i18n['candidate.tags']}" />
-									</div>
+								<div class="input-group p-field">
+									<p:outputLabel id="tags_label" for="tags" value="#{i18n['candidate.tags']}" />
 									<p:chips id="tags" value="#{editCandidateView.tags}" required="#{required}" styleClass="input input-chips" completeMethod="#{editCandidateView.queryTags}">
 										<f:converter converterId="tagConverter" for="tags" />
 									</p:chips>
@@ -134,7 +130,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="p-col-12 p-xl-6">
+				<div class="p-col-12 p-sm-6 p-md-4 p-lg-4 p-xl-3">
 					<div class="card ui-fluid">
 						<div class="p-grid">
 							<div class="p-col-12 p-xl-6">

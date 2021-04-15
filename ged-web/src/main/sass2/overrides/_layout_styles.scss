@@ -155,3 +155,83 @@
 		border-radius: 50%;
     }
 }
+
+.curriculum {
+	position: relative;
+	flex-direction: column;
+	overflow: auto;
+	
+	.avatar {
+		float: left;
+		margin: 0 2em 0 1em;
+		border-radius: 0;
+		border: 0;
+		width: 128px;
+		object-fit: cover;	
+	}
+	
+	.header-buttons {
+		position: absolute;
+		right: 1rem;
+		top: 1rem;
+	}
+	
+	.section {
+		border-bottom: 1px solid #dfdfdf;
+		position: relative;
+		margin-top: 2em;
+		font-size: 1.1em;
+		font-weight: 400;
+		padding: 0 2em 1em 2em;
+		&:last-child {
+			border-bottom: none;
+			margin-bottom: 0;
+		}
+		.buttons {
+			position: absolute;
+			right: 0px;
+			bottom: 1em;
+		}
+	}	
+	.name {
+		font-size: 2em;
+		font-weight: bold;
+		text-shadow: 1px 1px white;
+		padding-bottom: 0.4em;
+	}
+	
+	.job-profile {
+		font-size: 1.5em;
+		padding-bottom: 0.6em;
+	}
+	
+	.job-description {
+		white-space: pre-line	
+	}
+	
+	.date-range {
+		color: #8c8c93;
+	}
+	
+	.language_name {
+		font-weight: 500;
+		min-width: 100px;
+		display: inline-block;
+	}
+	
+	.company {
+		font-size: 1.1em;
+	}
+	
+	.curriculum .school {
+		font-size: 1.1em;
+	}
+	
+	p {
+		margin: 0.4em 4em 0.4em 0;
+	}
+	
+	.ui-tag {
+		margin-right: 0.2rem;
+	}
+}

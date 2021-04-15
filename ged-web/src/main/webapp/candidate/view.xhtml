@@ -24,8 +24,8 @@
 
 	<ui:define name="buttons">
 		<h:form>
-			<p:commandButton value="#{i18n['action.edit']}" process="@this" action="#{viewCandidateView.editCandidate}" icon="fa fa-pencil" />
-			<p:menuButton icon="fa fa-plus">
+			<p:commandButton value="#{i18n['action.edit']}" process="@this" action="#{viewCandidateView.editCandidate}" icon="fa fa-pencil" styleClass="secondary-button" />
+			<p:menuButton icon="fa fa-plus" >
 				<p:menuitem value="#{i18n['action.export']}" process="@this" action="#{viewCandidateView.export}" icon="fa fa-file-excel-o" />
 				<p:menuitem value="#{i18n['curriculum.curriculum']}" process="@this" outcome="#{Page.CURRICULUM.getUrl()}" icon="fa fa-pencil">
 					<f:param name="candidateId" value="#{viewCandidateView.candidate.uid}" />
@@ -121,8 +121,8 @@
 			<div class="p-col-12 p-xl-6">
 				<h:form id="file_form" enctype="multipart/form-data">
 					<div class="card card-w-title files">
-						<h1>#{i18n['file.files']}</h1>
-						<div class="p-grid">
+						<h5>#{i18n['file.files']}</h5>
+						<div class="p-grid p-formgrid">
 							<div class="p-col-12">
 								<p:dataTable var="file" id="files" value="#{viewCandidateView.files}" emptyMessage="#{i18n['file.no_files']}" paginator="true" paginatorPosition="bottom"
 									reflow="true" rows="5" rowKey="#{file.id}" styleClass="ui-datatable-borderless">
@@ -134,7 +134,7 @@
 									</p:column>
 
 									<p:column>
-										<p:commandButton icon="fa fa-trash" styleClass="danger-btn" action="#{viewCandidateView.removeFile(file)}" process="@this" update="@form">
+										<p:commandButton icon="fa fa-trash" styleClass="danger-button" action="#{viewCandidateView.removeFile(file)}" process="@this" update="@form">
 											<p:confirm message="#{i18n['file.message.remove']}" icon="fa fa-exclamation-triangle" />
 										</p:commandButton>
 									</p:column>
@@ -142,8 +142,8 @@
 							</div>
 							<div class="p-col-12">
 								<div class="buttons">
-									<p:fileUpload id="uploadFile" listener="#{viewCandidateView.uploadFile}" mode="advanced" dragDropSupport="false" update="@form growl" auto="true"
-										label="#{i18n['action.add']}" />
+									<p:fileUpload id="uploadFile" listener="#{viewCandidateView.uploadFile}" mode="simple" skinSimple="true" update="@form growl" auto="true"
+										label="#{i18n['action.add']}"   />
 								</div>
 							</div>
 						</div>
