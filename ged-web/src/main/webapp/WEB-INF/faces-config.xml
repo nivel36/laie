@@ -22,8 +22,8 @@
 		</resource-bundle>
 		<message-bundle>ged.messages</message-bundle>
 		<locale-config id="es">
-			<default-locale>es</default-locale>
-			<supported-locale>ca</supported-locale>
+			<default-locale>es_ES</default-locale>
+			<supported-locale>es_ES</supported-locale>
 		</locale-config>
 	</application>
 	<lifecycle>

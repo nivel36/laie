@@ -9,7 +9,6 @@
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
-
 	<composite:interface>
 		<composite:attribute name="value" required="true" />
 		<composite:attribute name="styleClass" required="false" default="" />
@@ -49,6 +48,9 @@
 					<div class="tag #{jobOffer.state.color}">#{i18n[jobOffer.state.name]}</div>
 				</p:column>
 			</p:dataTable>
+			<div class="buttons">
+				<composite:insertChildren />
+			</div>
 		</div>
 	</composite:implementation>
 </ui:component>

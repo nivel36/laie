@@ -105,6 +105,19 @@ public class FileService {
 		}
 	}
 
+	public File uploadTemporalFile(final InputStream inputStream) {
+		Objects.requireNonNull(inputStream);
+		final FileBucket fileBucket = PRIVATE_BUCKET;
+		final String uuid = UUID.randomUUID().toString();
+		final File file = new File("temporal." + uuid);
+		file.setPublicAccess(false);
+		final Path absolutePath = getAbsolutePath(fileBucket, uuid);
+		final String hash = this.uploadFileToFilesystem(absolutePath, inputStream);
+		final PhysicalFile newPhysicalFile = buildNewPhysicalFile(fileBucket, uuid, absolutePath, hash);
+		file.setPhysicalFile(newPhysicalFile);
+		return file;
+	}
+
 	public File uploadFile(final InputStream inputStream, final String filename, final boolean publicAccess) {
 		Objects.requireNonNull(inputStream);
 		final FileBucket fileBucket = publicAccess ? PUBLIC_BUCKET : PRIVATE_BUCKET;

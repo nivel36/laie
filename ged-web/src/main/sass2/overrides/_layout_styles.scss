@@ -1,9 +1,24 @@
 .ui-datatable {
 	.avatar {
-		width: 30px;
-		height: 30px;
-		object-fit: cover;
+		max-width:30px;
+		max-height:30px;
+		width: auto;
+ 		height: auto;
+ 		border-radius: 50%;
 		vertical-align: middle;
+	}
+	a {
+		color: #666;
+		font-weight: 500;
+		&:hover {
+			text-decoration-line: underline;
+		}
+	}
+}
+
+.card {
+	.buttons {
+		text-align: right;
 	}
 }
 
@@ -126,7 +141,6 @@
 	}
 }
 
-
 .layout-wrapper {
     .layout-topbar {
         .layout-topbar-logo {
@@ -179,8 +193,12 @@
     }
 
 	.avatar {
-        width: 36px;
-		border-radius: 50%;
+		display: block;
+		max-width:36px;
+		max-height:36px;
+		width: auto;
+ 		height: auto;
+ 		border-radius: 50%;
     }
 }
 

@@ -19,7 +19,9 @@
 	
 		<div class="p-grid">
 			<div class="p-col-12 p-xl-8">
-				<cc:jobOffers value="#{indexView.jobOffers}" rows="5" />
+				<cc:jobOffers value="#{indexView.jobOffers}" rows="5" >
+					<p:button value="#{i18n['job.new_job_offer']}" outcome="#{Page.JOB_ADD.getUrl()}" styleClass="success-button" />
+				</cc:jobOffers>
 			</div>
 
 			<div class="p-col-12 p-xl-4">

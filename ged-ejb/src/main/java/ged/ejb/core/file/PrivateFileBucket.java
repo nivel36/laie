@@ -5,6 +5,6 @@ import java.nio.file.Path;
 class PrivateFileBucket extends AbstractFileBucket {
 
 	PrivateFileBucket() {
-		super("public", Path.of("public"));
+		super("private", Path.of("private"));
 	}
 }
