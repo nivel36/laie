@@ -104,7 +104,7 @@
 				</c:when>
 
 				<c:when test="#{type eq 'money'}">
-					<p:inputNumber id="#{id}" value="#{value}" required="#{required}" thousandSeparator="&#160;" inputStyleClass="input input-money #{inputStyleClass}" >
+					<p:inputNumber id="#{id}" value="#{value}" required="#{required}" inputStyleClass="input input-money #{inputStyleClass}" decimalSeparator="" thousandSeparator="" padControl="false">
 						<ui:insert />
 					</p:inputNumber>
 					<span class="ui-inputgroup-addon"> <em class="fa fa-euro" aria-hidden="true" />
@@ -112,7 +112,7 @@
 				</c:when>
 
 				<c:when test="#{type eq 'password'}">
-					<p:password id="#{id}" value="#{value}" required="#{required}" styleClass="input input-password #{inputStyleClass}">
+					<p:password id="#{id}" value="#{value}" required="#{required}"  styleClass="input input-password #{inputStyleClass}">
 						<ui:insert />
 					</p:password>
 				</c:when>
