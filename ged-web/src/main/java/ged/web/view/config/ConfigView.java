@@ -61,6 +61,7 @@ public class ConfigView extends AbstractView {
 			throw new UncheckedIOException(e);
 		}
 	}
+
 	
 	public void changeLanguage() {
 		final Locale newLocale = new Locale(this.user.getLanguage());
@@ -85,20 +86,25 @@ public class ConfigView extends AbstractView {
 
 	@PostConstruct
 	public void init() {
-		this.refreshSessionUser();
-		this.user = this.sessionUser.get();
-		this.userImage = this.user.getPicture();
+		this.refreshUser();
 		logger.debug("Config user {} init", this.user);
 	}
 
-	private void refreshSessionUser() {
+	private void refreshUser() {
 		this.sessionUser.refresh();
+		this.user = this.sessionUser.get();
+		this.userImage = this.user.getPicture();
 	}
 
 	public void save() {
 		logger.debug("Save user {} action performed", this.user);
-		this.user = this.userService.save(this.user);
-		this.refreshSessionUser();
+		this.userService.save(this.user);
+		saveImage();
+		this.refreshUser();
+		this.addMessage(FacesMessage.SEVERITY_INFO, "action.save_action_performed", "action.save_action_performed");
+	}
+
+	private void saveImage() {
 		if (imageChanged && userImage != null) {
 			try (final InputStream inputStream = fileService.getFile(userImage)) {
 				this.userService.addUserImage(user.getUid(), inputStream);
@@ -106,7 +112,6 @@ public class ConfigView extends AbstractView {
 				throw new UncheckedIOException(e);
 			}
 		}
-		this.addMessage(FacesMessage.SEVERITY_INFO, "action.save_action_performed", "action.save_action_performed");
 	}
 
 	public void setFileService(FileService fileService) {
@@ -118,11 +123,15 @@ public class ConfigView extends AbstractView {
 		this.user = user;
 	}
 
+	public void setUserImage(File userImage) {
+		this.userImage = userImage;
+	}
+
 	public void setUserService(final UserService userService) {
 		Objects.requireNonNull(userService);
 		this.userService = userService;
 	}
-
+	
 	public void uploadImage(final FileUploadEvent event) throws IOException {
 		Objects.requireNonNull(event);
 		imageChanged = true;
