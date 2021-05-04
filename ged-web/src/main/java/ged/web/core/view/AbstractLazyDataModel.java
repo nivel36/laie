@@ -53,7 +53,16 @@ public abstract class AbstractLazyDataModel<T extends AbstractIndexedEntity> ext
 	public List<T> load(final int first, final int pageSize, final Map<String, SortMeta> sorts,
 			final Map<String, FilterMeta> filters) {
 		final Page page = new Page(first, pageSize);
-		final SearchResult<T> searchResult = this.getService().search(this.searchText, page, new ArrayList<SortField>(),
+		SortField sortField = null;
+		if (sorts != null && !sorts.isEmpty()) {
+			for (SortMeta sort : sorts.values()) {
+				if(sort.getPriority() == 0) { // only one sort allowed
+					sortField = new SortField(sort.getField(), sort.getOrder().isAscending());
+					break;
+				}
+			}
+		}
+		final SearchResult<T> searchResult = this.getService().search(this.searchText, page, sortField,
 				this.searchFilter);
 		this.setRowCount(searchResult.getCount());
 		return searchResult.getResultData();
