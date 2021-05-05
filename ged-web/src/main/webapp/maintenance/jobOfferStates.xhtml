@@ -25,7 +25,7 @@
 					<div class="p-grid">
 						<ui:repeat var="jobOfferState" value="#{jobOfferStatesMaintenanceView.states}">
 							<div class="p-col-12">
-								<div class="tag #{jobOfferState.color}">#{i18n[jobOfferState.name]}</div>
+								<div class="job-offer-state job-offer-state-#{jobOfferState.name}">#{i18n['job_offer_state.'.concat(jobOfferState.name)]}</div>
 							</div>
 						</ui:repeat>
 					</div>

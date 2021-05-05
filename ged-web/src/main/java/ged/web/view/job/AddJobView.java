@@ -1,6 +1,7 @@
 package ged.web.view.job;
 
 import java.lang.invoke.MethodHandles;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -54,6 +55,9 @@ public class AddJobView extends AbstractJobView {
 	public String save() {
 		logger.debug("Create new client action performed");
 		this.jobOffer.setRecruiters(this.getRecruiters());
+		if (jobOffer.getDateOpened() == null) {
+			jobOffer.setDateOpened(LocalDate.now());
+		}
 		this.jobOffer = this.jobOfferService.save(this.jobOffer);
 		return this.jobUrl();
 	}

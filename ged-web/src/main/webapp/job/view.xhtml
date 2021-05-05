@@ -42,7 +42,9 @@
 							</div>
 
 							<div class="p-col-12 p-sm-6">
-								<cc:outputText label="#{i18n['job.salary']}" value="#{viewJobView.jobOffer.salary}" />
+								<cc:outputText label="#{i18n['job.salary']}" value="#{viewJobView.jobOffer.salary}" >
+									<f:convertNumber for="text" currencyCode="EUR" maxFractionDigits="0" type="currency" />
+								</cc:outputText>
 							</div>
 							<div class="p-col-12 p-sm-6">
 								<cc:outputText label="#{i18n['job.places']}" value="#{viewJobView.jobOffer.places}" />

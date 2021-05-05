@@ -39,6 +39,35 @@
 	}
 }
 
+.job-offer-state {
+	border-radius: 2px;
+	padding: 0.25em 0.5rem;
+	text-transform: uppercase;
+	font-weight: 700;
+	font-size: 12px;
+	letter-spacing: 0.3px;
+	&.job-offer-state-closed{
+		background:#FFCDD2;
+		color: #C63737;
+	}
+	&.job-offer-state-created{
+		background: #C8E6C9;
+		color: #256029;
+	}
+	&.job-offer-state-finished{
+		background: #FEEDAF;
+		color: #8A5340;
+	}
+	&.job-offer-state-opened{
+		background: rgb(174, 174, 255);
+		color: rgb(66, 62, 140);
+	}
+	&.job-offer-state-paused{
+		background: rgb(253, 174, 255);
+		color: rgb(140, 60, 142);
+	}
+}
+
 .users {
 	.ui-dataview-header {
 		display: none;

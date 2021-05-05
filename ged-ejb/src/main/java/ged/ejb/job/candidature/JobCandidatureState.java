@@ -21,8 +21,6 @@ public class JobCandidatureState extends AbstractEntity implements EventState {
 
 	private boolean approved;
 
-	private String color;
-
 	private boolean declined;
 
 	private boolean first;
@@ -44,11 +42,6 @@ public class JobCandidatureState extends AbstractEntity implements EventState {
 		}
 		final JobCandidatureState other = (JobCandidatureState) obj;
 		return Objects.equals(this.name, other.name);
-	}
-
-	@Override
-	public String getColor() {
-		return this.color;
 	}
 
 	@Override
@@ -79,10 +72,6 @@ public class JobCandidatureState extends AbstractEntity implements EventState {
 
 	public void setApproved(final boolean approved) {
 		this.approved = approved;
-	}
-
-	public void setColor(final String color) {
-		this.color = color;
 	}
 
 	public void setDeclined(final boolean declined) {

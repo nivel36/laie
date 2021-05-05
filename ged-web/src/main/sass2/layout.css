@@ -4020,6 +4020,35 @@ a {
   color: #256029;
 }
 
+.job-offer-state {
+  border-radius: 2px;
+  padding: 0.25em 0.5rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.3px;
+}
+.job-offer-state.job-offer-state-closed {
+  background: #FFCDD2;
+  color: #C63737;
+}
+.job-offer-state.job-offer-state-created {
+  background: #C8E6C9;
+  color: #256029;
+}
+.job-offer-state.job-offer-state-finished {
+  background: #FEEDAF;
+  color: #8A5340;
+}
+.job-offer-state.job-offer-state-opened {
+  background: #aeaeff;
+  color: #423e8c;
+}
+.job-offer-state.job-offer-state-paused {
+  background: #fdaeff;
+  color: #8c3c8e;
+}
+
 .users .ui-dataview-header {
   display: none;
 }

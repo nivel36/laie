@@ -4,6 +4,4 @@ public interface EventState {
 	
 	String getName();
 	
-	String getColor();
-
 }
