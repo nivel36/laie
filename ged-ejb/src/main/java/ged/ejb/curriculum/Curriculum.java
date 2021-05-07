@@ -143,7 +143,7 @@ public class Curriculum extends AbstractIndexedEntity {
 	}
 
 	public void setSkills(final List<Skill> skills) {
-		this.skills = new HashSet<Skill>(skills);
+		this.skills = new HashSet<>(skills);
 	}
 
 	public void setSkills(final Set<Skill> skills) {

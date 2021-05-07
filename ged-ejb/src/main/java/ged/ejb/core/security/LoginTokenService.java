@@ -5,7 +5,6 @@ import static java.time.temporal.ChronoUnit.DAYS;
 import static java.util.UUID.randomUUID;
 
 import java.time.Instant;
-import java.util.List;
 import java.util.Objects;
 
 import javax.ejb.Stateless;
@@ -61,13 +60,6 @@ public class LoginTokenService {
 		final byte[] tokenHash = CriptoUtil.digestPassword(token);
 		final LoginToken loginToken = this.findByTokenHash(tokenHash);
 		if (loginToken != null) {
-			this.loginTokenDao.delete(loginToken);
-		}
-	}
-
-	public void removeExpiredTokens() {
-		final List<LoginToken> loginTokens = this.loginTokenDao.findExpiredTokens();
-		for (final LoginToken loginToken : loginTokens) {
 			this.loginTokenDao.delete(loginToken);
 		}
 	}

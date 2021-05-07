@@ -11,7 +11,7 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 	<composite:interface>
-		<composite:attribute name="value"  required="true" type="ged.ejb.person.Person"/>
+		<composite:attribute name="value"  required="true" type="ged.ejb.core.Subject"/>
 		<composite:attribute name="description" required="false" default="#{cc.attrs.value.email}"/>
 		<composite:attribute name="showDescription" required="false" default="true" type="java.lang.Boolean"/>
 		<composite:attribute name="styleClass" required="false" default="" />
@@ -19,10 +19,10 @@
 
 	<composite:implementation>
 		<div id="#{cc.clientId}" class="person #{cc.attrs.styleClass}">
-			<cc:avatar value="#{cc.attrs.value.picture}" styleClass="small"/>
-			<div class="person-data">
-				<div class="name">#{cc.attrs.value.fullName}</div>
-				<h:panelGroup display="block" styleClass="description" rendered="#{cc.attrs.showDescription}">#{cc.attrs.description}</h:panelGroup>
+			<cc:avatar value="#{cc.attrs.value.picture}" />
+			<div class="person-box">
+				<div class="person-name">#{cc.attrs.value.fullName}</div>
+				<h:panelGroup display="block" styleClass="person-description" rendered="#{cc.attrs.showDescription}">#{cc.attrs.description}</h:panelGroup>
 			</div>
 		</div>
 	</composite:implementation>

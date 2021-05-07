@@ -51,12 +51,12 @@ public class SessionUsers {
 		return this.onlineUsers.containsKey(username);
 	}
 
-	public void login(final String username, final String sessionId) {
+	public void add(final String username, final String sessionId) {
 		final SessionValues values = new SessionValues(sessionId);
 		this.onlineUsers.put(username, values);
 	}
 
-	public void logout(final String username, final String sessionId) {
+	public void remove(final String username, final String sessionId) {
 		final SessionValues sessionValues = this.onlineUsers.get(username);
 		sessionValues.sessionIds.remove(sessionId);
 		if (sessionValues.sessionIds.isEmpty()) {

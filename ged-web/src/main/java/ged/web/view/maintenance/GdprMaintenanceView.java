@@ -1,6 +1,7 @@
 package ged.web.view.maintenance;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.HashSet;
@@ -35,7 +36,7 @@ public class GdprMaintenanceView extends AbstractView {
 
 	private Language language;
 
-	public void export() throws Exception {
+	public void export() throws IOException {
 		final Set<TemplateTag> tags = new HashSet<>();
 		final Locale locale = this.sessionUser.getLocale();
 		tags.add(new DateTag(locale));

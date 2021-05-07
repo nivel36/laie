@@ -104,13 +104,13 @@ public class SearchUserView extends AbstractView {
 	}
 
 	private ExcelData toExcelData(final ExportData exportData) {
-		final List<String> literals = new ArrayList<String>();
+		final List<String> literals = new ArrayList<>();
 		for (final String item : exportData.getIdLabels()) {
 			final String literal = this.getTranslator().message(item);
 			Objects.requireNonNull(literal);
 			literals.add(literal);
 		}
-		final List<ItemData> values = new ArrayList<ItemData>();
+		final List<ItemData> values = new ArrayList<>();
 		for (final Item item : exportData.getItems()) {
 			final ItemData itemData = new ItemData();
 			for (final Object value : item.getValue()) {

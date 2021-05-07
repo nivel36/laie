@@ -1,6 +1,5 @@
 package ged.web.view.job;
 
-import java.io.IOException;
 import java.lang.invoke.MethodHandles;
 import java.util.List;
 
@@ -43,7 +42,7 @@ public class ViewJobView extends AbstractJobView {
 		return this.navigator.getRedirectUrl(PageEnum.JOB_EDIT_STATE, this.jobOffer);
 	}
 
-	public void export() throws IOException {
+	public void export() {
 		logger.debug("Export job action performed");
 	}
 

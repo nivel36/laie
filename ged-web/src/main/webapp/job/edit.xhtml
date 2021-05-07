@@ -25,7 +25,7 @@
 			<p:button value="#{i18n['action.cancel']}" outcome="#{Page.JOB.getUrl()}" styleClass="secondary-button">
 				<f:param name="id" value="#{editJobView.jobOffer.uid}" />
 			</p:button>
-			<p:commandButton value="#{i18n['action.save']}" onclick="processForm()" styleClass="success-btn" />
+			<p:commandButton value="#{i18n['action.save']}" onclick="processForm()" styleClass="success-button" />
 		</h:form>
 	</ui:define>
 
@@ -33,11 +33,10 @@
 		<h:form id="jobOfferForm">
 			<p:remoteCommand name="processForm" process="@form" update="@form growl" action="#{editJobView.save}" />
 			<div class="p-grid">
-				<div class="p-col-12 p-xl-6">
-
+				<div class="p-col-12 p-md-6">
 					<div class="card card-w-title ui-fluid">
-						<h1>#{i18n['job.data']}</h1>
-						<div class="p-grid">
+						<h5>#{i18n['job.data']}</h5>
+						<div class="p-grid p-formgrid">
 							<div class="p-col-12">
 								<g:input label="#{i18n['job.title']}" value="#{editJobView.jobOffer.title}" required="true" />
 							</div>
@@ -64,10 +63,10 @@
 						</div>
 					</div>
 				</div>
-				<div class="p-col-12 p-xl-6">
+				<div class="p-col-12 p-md-6">
 					<div class="card card-w-title ui-fluid">
-						<h1>#{i18n['job.other_data']}</h1>
-						<div class="p-grid">
+						<h5>#{i18n['job.other_data']}</h5>
+						<div class="p-grid p-formgrid">
 							<div class="p-col-12 p-sm-6">
 								<g:input id="dateOpened" label="#{i18n['job.date_opened']}" value="#{editJobView.jobOffer.dateOpened}" type="calendar" />
 							</div>
@@ -89,8 +88,8 @@
 				</div>
 				<div class="p-col-12">
 					<div class="card card-w-title ui-fluid">
-						<h1>#{i18n['job.description']}</h1>
-						<div class="p-grid">
+						<h5>#{i18n['job.description']}</h5>
+						<div class="p-grid p-formgrid">
 							<div class="p-col-12 p-sm-6">
 								<g:input id="published" label="#{i18n['job.publish']}" value="#{editJobView.jobOffer.published}" type="inputSwitch" />
 							</div>

@@ -2,9 +2,9 @@ package ged.web.view.candidate;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UncheckedIOException;
 import java.lang.invoke.MethodHandles;
 import java.util.List;
+import java.util.Objects;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -14,8 +14,7 @@ import javax.inject.Named;
 import org.omnifaces.cdi.Param;
 import org.omnifaces.util.Faces;
 import org.primefaces.event.FileUploadEvent;
-import org.primefaces.event.SelectEvent;
-import org.primefaces.model.UploadedFile;
+import org.primefaces.model.file.UploadedFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,7 +30,6 @@ import ged.ejb.job.candidature.JobCandidature;
 import ged.ejb.job.candidature.JobCandidatureService;
 import ged.ejb.job.meeting.Meeting;
 import ged.ejb.job.meeting.MeetingService;
-import ged.ejb.job.offer.JobOffer;
 import ged.web.core.IllegalPageStateException;
 import ged.web.core.util.PageEnum;
 import ged.web.core.view.AbstractView;
@@ -78,7 +76,7 @@ public class ViewCandidateView extends AbstractView {
 		return this.navigator.getRedirectUrl(PageEnum.CANDIDATE_EDIT, this.candidate);
 	}
 
-	public void export() throws IOException {
+	public void export() {
 		logger.debug("Export candidate action performed");
 	}
 
@@ -112,10 +110,14 @@ public class ViewCandidateView extends AbstractView {
 			this.candidate.setAddress(new Address());
 		}
 		this.jobCandidatures = this.jobCandidatureService.findJobCandidatures(this.candidate, Page.ALL_RESULTS);
-		this.curriculum = this.curriculumService.findByCandidate(this.candidate);
+		this.curriculum = this.curriculumService.findByCandidateUid(this.candidate.getEmail());
 		this.editable = this.sessionUser.hasPermissionToEdit(this.candidate);
 		this.meetings = this.initMeetings();
-		this.files = this.candidateService.findFiles(this.candidate, Page.TEN_RESULTS_PER_PAGE);
+		this.files = this.findFiles();
+	}
+
+	private List<File> findFiles() {
+		return this.candidateService.findCandidatesFiles(this.candidate.getUid(), Page.TEN_RESULTS_PER_PAGE);
 	}
 
 	private List<Meeting> initMeetings() {
@@ -131,19 +133,6 @@ public class ViewCandidateView extends AbstractView {
 		return this.navigator.getRedirectUrl(PageEnum.MEETING_ADD);
 	}
 
-	public void onCloseSelectJobOfferDialog(final SelectEvent event) {
-		@SuppressWarnings("unchecked")
-		final List<JobOffer> selectedJobOffers = (List<JobOffer>) event.getObject();
-		if (selectedJobOffers == null) {
-			return;
-		}
-		for (final JobOffer jobOffer : selectedJobOffers) {
-			final JobCandidature jobCandidature = this.jobCandidatureService.addJobCandidature(jobOffer,
-					this.candidate);
-			this.jobCandidatures.add(jobCandidature);
-		}
-	}
-
 	public void openFile(final File file) throws IOException {
 		try (final InputStream is = this.fileUploadService.getFile(file);) {
 			Faces.sendFile(is, file.getName(), true);
@@ -151,7 +140,7 @@ public class ViewCandidateView extends AbstractView {
 	}
 
 	public void removeFile(final File file) {
-		this.candidateService.removeFile(candidate, file);
+		this.candidateService.removeFileFromCandidate(candidate.getUid(), file);
 		this.files.remove(file);
 	}
 
@@ -184,15 +173,17 @@ public class ViewCandidateView extends AbstractView {
 		this.meetingService = meetingService;
 	}
 
-	public void uploadFile(final FileUploadEvent event) {
+	public void uploadFile(final FileUploadEvent event) throws IOException {
+		Objects.requireNonNull(event);
 		final UploadedFile uploadedFile = event.getFile();
-		try (final InputStream inputStream = uploadedFile.getInputstream()) {
-			final String fileName = uploadedFile.getFileName();
-			final File file = this.fileUploadService.uploadFile(inputStream, false, fileName);
-			this.candidate = this.candidateService.addFileToCandidate(this.candidate, file);
+		if (uploadedFile == null) {
+			return;
+		}
+		logger.debug("Upload candidate {} image action performed", this.candidate);
+		try (final InputStream inputStream = uploadedFile.getInputStream()) {
+			final File file = this.candidateService.addFileToCandidate(candidate.getUid(), inputStream,
+					uploadedFile.getFileName());
 			this.files.add(file);
-		} catch (final IOException e) {
-			throw new UncheckedIOException(e);
 		}
 	}
 }

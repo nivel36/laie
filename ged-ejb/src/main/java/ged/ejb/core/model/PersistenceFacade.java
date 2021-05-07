@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Objects;
 
 import javax.inject.Inject;
@@ -191,10 +192,6 @@ public class PersistenceFacade {
 		return this.em;
 	}
 
-	private boolean hasSortFields(final List<SortField> sortFields) {
-		return (sortFields != null) && !sortFields.isEmpty();
-	}
-
 	public <T extends Identifiable> void insert(final T entity) {
 		Objects.requireNonNull(entity);
 		if (entity.getId() != 0) {
@@ -222,7 +219,7 @@ public class PersistenceFacade {
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public <T extends Identifiable> SearchResult<T> search(final Class<T> type, final Page page,
-			final List<SortField> sortFields, final SearchFacets searchFacets, final String searchText,
+			final SortField sortField, final SearchFacets searchFacets, final String searchText,
 			final String... fields) {
 		final FullTextEntityManager fullTextEM = Search.getFullTextEntityManager(this.getEm());
 		final QueryBuilder qb = fullTextEM.getSearchFactory().buildQueryBuilder().forEntity(type).get();
@@ -230,17 +227,17 @@ public class PersistenceFacade {
 		final FullTextQuery fullTextQuery = fullTextEM.createFullTextQuery(this.createLuceneQuery(qb, bj), type);
 		fullTextQuery.setHint(CACHE_STORE_MODE, CacheStoreMode.REFRESH);
 		this.paginate(page, fullTextQuery);
-		this.sortQuery(sortFields, qb, fullTextQuery);
+		this.sortQuery(sortField, qb, fullTextQuery);
 		this.enableFaceting(searchFacets, qb, fullTextQuery);
 		final Map<String, List<Facet>> allFacets = this.selectFacets(searchFacets, fullTextQuery);
 		if ((searchFacets != null) && !searchFacets.isEmpty()) {
 			boolean hasFacet = false;
-			for (final String key : allFacets.keySet()) {
+			for (final Entry<String, List<Facet>> entry : allFacets.entrySet()) {
 				if (hasFacet) {
 					break;
 				}
-				for (final Facet facet : allFacets.get(key)) {
-					if (searchFacets.containsFacet(facet.getFieldName(), key, facet.getValue())) {
+				for (final Facet facet : entry.getValue()) {
+					if (searchFacets.containsFacet(facet.getFieldName(), entry.getKey(), facet.getValue())) {
 						hasFacet = true;
 						break;
 					}
@@ -264,46 +261,42 @@ public class PersistenceFacade {
 			final String facetName = searchFacet.getName();
 			allFacets.put(facetName, fullTextQuery.getFacetManager().getFacets(facetName));
 			if (searchFacet.hasSelectedFacets()) {
-				final FacetSelection facetSelection = facetManager.getFacetGroup(facetName);
-				final List<Facet> facets = facetManager.getFacets(facetName);
-				final int facetsLength = searchFacet.getSelectedFactes().length;
-				final List<Facet> facetList = new ArrayList<>();
-				for (int i = 0; i < facetsLength; i++) {
-					for (final String selectedFacet : searchFacet.getSelectedFactes()) {
-						for (final Facet facet : facets) {
-							if (facet.getValue().equals(selectedFacet)) {
-								facetList.add(facet);
-							}
-						}
-					}
-				}
-				final Facet[] selectedMatchedFacets = facetList.toArray(new Facet[0]);
-				facetSelection.selectFacets(FacetCombine.OR, selectedMatchedFacets);
+				selectFacet(facetManager, searchFacet, facetName);
 			}
 		}
 		return allFacets;
 	}
 
-	private void sortQuery(final List<SortField> sortFields, final QueryBuilder qb, final FullTextQuery fullTextQuery) {
-		if (this.hasSortFields(sortFields)) {
-			final int orderSize = sortFields.size();
-			final SortFieldContext sfc = qb.sort().byField(sortFields.get(0).getField());
-			if (sortFields.get(0).isAscending()) {
-				sfc.asc();
-			} else {
-				sfc.desc();
-			}
-			for (int i = 1; i < orderSize; i++) {
-				sfc.andByField(sortFields.get(i).getField());
-				if (sortFields.get(0).isAscending()) {
-					sfc.asc();
-				} else {
-					sfc.desc();
+	private void selectFacet(final FacetManager facetManager, final SearchFacet searchFacet, final String facetName) {
+		final FacetSelection facetSelection = facetManager.getFacetGroup(facetName);
+		final List<Facet> facets = facetManager.getFacets(facetName);
+		final int facetsLength = searchFacet.getSelectedFactes().length;
+		final List<Facet> facetList = new ArrayList<>();
+		for (int i = 0; i < facetsLength; i++) {
+			for (final String selectedFacet : searchFacet.getSelectedFactes()) {
+				for (final Facet facet : facets) {
+					if (facet.getValue().equals(selectedFacet)) {
+						facetList.add(facet);
+					}
 				}
 			}
-			final Sort sort = sfc.createSort();
-			fullTextQuery.setSort(sort);
 		}
+		final Facet[] selectedMatchedFacets = facetList.toArray(new Facet[0]);
+		facetSelection.selectFacets(FacetCombine.OR, selectedMatchedFacets);
+	}
+
+	private void sortQuery(final SortField sortField, final QueryBuilder qb, final FullTextQuery fullTextQuery) {
+		if (sortField == null) {
+			return;
+		}
+		final SortFieldContext sfc = qb.sort().byField(sortField.getField());
+		if (sortField.isAscending()) {
+			sfc.asc();
+		} else {
+			sfc.desc();
+		}
+		final Sort sort = sfc.createSort();
+		fullTextQuery.setSort(sort);
 	}
 
 	public <T extends Identifiable> T update(final T entity) {

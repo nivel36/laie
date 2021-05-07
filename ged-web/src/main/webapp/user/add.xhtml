@@ -20,7 +20,7 @@
 	<ui:define name="buttons">
 		<h:form>
 			<p:button value="#{i18n['action.cancel']}" outcome="#{Page.USER_SEARCH.getUrl()}" styleClass="secondary-button" />
-			<p:commandButton value="#{i18n['action.save']}" onclick="processForm()" styleClass="success-btn" />
+			<p:commandButton value="#{i18n['action.save']}" onclick="processForm()" styleClass="success-button"/>
 		</h:form>
 	</ui:define>
 
@@ -28,10 +28,10 @@
 		<h:form id="userForm">
 			<p:remoteCommand name="processForm" process="@form" update="@form growl" action="#{addUserView.save}"/>
 			<div class="p-grid">
-				<div class="p-col-12 p-xl-6">
+				<div class="p-col-12 p-md-6">
 					<div class="card card-w-title ui-fluid">
-						<h1>#{i18n['user.personal_information']}</h1>
-						<div class="p-grid">
+						<h5>#{i18n['user.personal_information']}</h5>
+						<div class="p-grid p-formgrid">
 							<div class="p-col-12 p-sm-6">
 								<g:input id="name" label="#{i18n['user.name']}" value="#{addUserView.user.name}" required="true" />
 							</div>
@@ -48,10 +48,10 @@
 						</div>
 					</div>
 				</div>
-				<div class="p-col-12 p-xl-6">
+				<div class="p-col-12 p-md-6">
 					<div class="card card-w-title ui-fluid">
-						<h1>#{i18n['user.professional_information']}</h1>
-						<div class="p-grid">
+						<h5>#{i18n['user.professional_information']}</h5>
+						<div class="p-grid p-formgrid">
 							<div class="p-col-12 p-sm-6">
 								<g:input type="selectOneMenu" id="role" value="#{addUserView.user.role}" label="#{i18n['user.role']}" required="true">
 									<f:selectItems value="#{roles.list}" var="role" itemValue="#{role}" itemLabel="#{i18n[role]}" />
@@ -63,7 +63,7 @@
 									<cc:autocomplete id="manager" label="#{i18n['user.manager']}" value="#{addUserView.user.manager}" completeMethod="#{addUserView.queryManager}" converter="userConverter"
 										rendered="#{not addUserView.user.admin}">
 										<p:column styleClass="user-select image">
-											<cc:person value="#{var}" showDescription="false" />
+											<cc:person value="#{var}" />
 										</p:column>
 									</cc:autocomplete>
 								</h:panelGroup>

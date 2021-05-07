@@ -4,6 +4,7 @@ import static java.time.temporal.ChronoUnit.MONTHS;
 import static javax.persistence.EnumType.STRING;
 
 import java.time.Instant;
+import java.util.Arrays;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -52,6 +53,18 @@ public class LoginToken extends AbstractEntity {
 	@ManyToOne(optional = false)
 	private User user;
 
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		LoginToken other = (LoginToken) obj;
+		return Arrays.equals(tokenHash, other.tokenHash);
+	}
+
 	public Instant getCreated() {
 		return this.created;
 	}
@@ -78,6 +91,11 @@ public class LoginToken extends AbstractEntity {
 
 	public User getUser() {
 		return this.user;
+	}
+
+	@Override
+	public int hashCode() {
+		return Arrays.hashCode(tokenHash);
 	}
 
 	public void setCreated(final Instant created) {

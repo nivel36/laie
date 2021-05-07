@@ -32,7 +32,7 @@ public class GedSecurityContext {
 		if (sessionUser.isAdmin()) {
 			return true;
 		}
-		return this.userService.isSubordinateUser(sessionUser, entityOwner);
+		return this.userService.isSubordinateUser(sessionUser.getEmail(), entityOwner.getEmail());
 	}
 
 	private String extractUsernameFromPrincipal() {
@@ -46,7 +46,7 @@ public class GedSecurityContext {
 	}
 
 	private User getUserByUsername(final String username) {
-		return this.userService.findUserByEmail(username);
+		return this.userService.findByEmail(username);
 	}
 
 	public String getUsername() {

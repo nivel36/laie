@@ -4,58 +4,61 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 	<h:form id="topbar-form">
 		<div class="layout-topbar">
-			<a class="layout-menu-button layout-topbar-icon" href="#"> <em class="fa fa-bars" />
+			<a class="layout-right-panel-button layout-topbar-icon" href="#"> <i class="fa fa-comment" />
+			</a> <a class="layout-menu-button layout-topbar-icon" href="#"> <i class="fa fa-bars" />
 			</a>
 
-			<div class="spacer"></div>
+			<h:link id="logo-link" outcome="/index" styleClass="layout-topbar-logo">
+				<svg width="40" height="40" viewBox="0 0 170 170">
+				<g class="currentLayer">
+					<path fill="#f7941e" stroke="#222222" stroke-width="2" stroke-linejoin="round" d="M001,071 L013,048 L044,048 L056,071 L044,095 L013,095 L001,071 z"
+						id="svg_1" />
+					<path fill="#ed1c24" stroke="#222222" stroke-width="2" stroke-linejoin="round" d="M001,118 L013,094 L044,094 L056,118 L044,142 L013,142 L001,118 z"
+						id="svg_5" />
+					<path fill="#92278f" stroke="#222222" stroke-width="2" stroke-linejoin="round" d="M044,142 L055,118 L087,118 L099,142 L087,165 L055,165 L044,142 z"
+						id="svg_6" />
+					<path fill="#39b54a" stroke="#222222" stroke-width="2" stroke-linejoin="round" d="M087,071 L099,047 L131,047 L143,071 L131,095 L099,095 L087,071 z"
+						id="svg_3" />
+					<path fill="#25aae1" stroke="#222222" stroke-width="2" stroke-linejoin="round" d="M087,118 L099,095 L131,095 L143,118 L131,142 L099,142 L087,118 z"
+						id="svg_4" />
+					<path fill="#fff143" stroke="#222222" stroke-width="2" stroke-linejoin="round" d="M044,047 L056,024 L087,024 L099,047 L087,071 L056,071 L044,047 z"
+						id="svg_2" />
+				</g>
+			</svg>
+			</h:link>
 
-			<p:button value="#{i18n['client.new_client']}" outcome="#{Page.CLIENT_ADD.getUrl()}" styleClass="menu-detail-button success-btn"
-				rendered="#{selectedMenu eq 'clients'}" />
-			<p:button value="#{i18n['job.new_job_offer']}" outcome="#{Page.JOB_ADD.getUrl()}" styleClass="menu-detail-button success-btn"
-				rendered="#{selectedMenu eq 'offers'}" />
-			<p:button value="#{i18n['candidate.new_candidate']}" outcome="#{Page.CANDIDATE_ADD.getUrl()}" styleClass="menu-detail-button success-btn"
-				rendered="#{selectedMenu eq 'candidates'}" />
-			<p:button value="#{i18n['user.new_user']}" outcome="#{Page.USER_ADD.getUrl()}" styleClass="menu-detail-button success-btn"
-				rendered="#{selectedMenu eq 'users'}" />
-			<p:button value="#{i18n['meeting.add_meeting']}" outcome="#{Page.MEETING_ADD.getUrl()}" styleClass="menu-detail-button success-btn"
-				rendered="#{selectedMenu eq 'meetings'}" />
-			<p:button value="#{i18n['event.new_event']}" outcome="#{Page.EVENT_ADD.getUrl()}" styleClass="menu-detail-button success-btn"
-				rendered="#{selectedMenu eq 'events'}" />
-			<p:menuButton icon="fa fa-plus" styleClass="success-btn" menuStyleClass="new_menu">
-				<p:menuitem value="#{i18n['client.new_client']}" outcome="#{Page.CLIENT_ADD.getUrl()}" />
-				<p:menuitem value="#{i18n['job.new_job_offer']}" outcome="#{Page.JOB_ADD.getUrl()}" />
-				<p:menuitem value="#{i18n['candidate.new_candidate']}" outcome="#{Page.CANDIDATE_ADD.getUrl()}" />
-				<p:menuitem value="#{i18n['user.new_user']}" outcome="#{Page.USER_ADD.getUrl()}" />
-				<p:menuitem value="#{i18n['meeting.add_meeting']}" outcome="#{Page.MEETING_ADD.getUrl()}" />
-				<p:menuitem value="#{i18n['event.new_event']}" outcome="#{Page.EVENT_ADD.getUrl()}" />
-			</p:menuButton>
+
+			<span class="layout-topbar-search"> <i class="fa fa-search"></i> <p:inputText placeholder="#{i18n['menu.search']}" /></span>
+
 
 			<ul class="topbar-menu fadeInDown">
-				<li><a href="#"> <cc:avatar value="#{sessionUser.get().picture}" styleClass="tiny with-border" />
-				</a>
-					<ul>
-						<li class="with-separator"><span class="menu-name">#{sessionUser.get().fullName}</span> <span class="menu-role">#{i18n[sessionUser.get().role]}</span></li>
-						<li><p:link outcome="#{Page.CONFIG.getUrl()}">
-								<em class="fa fa-fw fa-cog" />
-								<span>#{i18n['menu.config']}</span>
-							</p:link></li>
-						<li><p:commandLink onclick="PF('aboutDlg').show();">
-								<em class="fa fa-fw fa-question" />
-								<span>#{i18n['menu.about']}</span>
-							</p:commandLink></li>
-						<li><p:commandLink action="#{sessionUser.exit}">
-								<em class="fa fa-fw fa-power-off" />
-								<span>#{i18n['user.logout']}</span>
-							</p:commandLink></li>
-					</ul></li>
+				<ui:fragment rendered="#{guestPreferences.profileMode == 'popup' ? true : false}">
+					<li class="user-profile"><a href="#"> <cc:avatar value="#{sessionUser.get().picture}" />
+							<div class="layout-profile-userinfo">
+								<span class="layout-profile-name">#{sessionUser.get().fullName}</span> <span class="layout-profile-role">#{i18n[sessionUser.get().role]}</span>
+							</div>
+					</a>
+						<ul>
+							<li><p:link outcome="#{Page.CONFIG.getUrl()}">
+									<em class="fa fa-fw fa-cog" />
+									<span>#{i18n['menu.config']}</span>
+								</p:link></li>
+							<li><p:commandLink onclick="PF('aboutDlg').show();">
+									<em class="fa fa-fw fa-question" />
+									<span>#{i18n['menu.about']}</span>
+								</p:commandLink></li>
+							<li><p:commandLink action="#{logoutView.logout}">
+									<em class="fa fa-fw fa-power-off" />
+									<span>#{i18n['user.logout']}</span>
+								</p:commandLink></li>
+						</ul></li>
+				</ui:fragment>
 			</ul>
-			<a class="layout-right-panel-button layout-topbar-icon" href="#"> <em class="fa fa-comments" />
-			</a>
 		</div>
-		<p:dialog header="#{i18n['menu.about.version']}" widgetVar="aboutDlg" minHeight="40">
-			<div class="version">
-				<span>#{applicationView.version}</span>
-			</div>
-		</p:dialog>
 	</h:form>
+	<p:dialog header="#{i18n['menu.about.version']}" widgetVar="aboutDlg" minHeight="40">
+		<div class="version">
+			<span>#{applicationView.version}</span>
+		</div>
+	</p:dialog>
 </ui:composition>

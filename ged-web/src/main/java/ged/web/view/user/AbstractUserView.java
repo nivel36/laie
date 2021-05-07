@@ -2,9 +2,6 @@ package ged.web.view.user;
 
 import static javax.faces.application.FacesMessage.SEVERITY_ERROR;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.UncheckedIOException;
 import java.lang.invoke.MethodHandles;
 import java.util.List;
 import java.util.Objects;
@@ -16,12 +13,9 @@ import javax.faces.validator.ValidatorException;
 import javax.inject.Inject;
 
 import org.omnifaces.cdi.Param;
-import org.primefaces.event.FileUploadEvent;
-import org.primefaces.model.UploadedFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ged.ejb.core.file.File;
 import ged.ejb.core.file.FileService;
 import ged.ejb.core.model.Page;
 import ged.ejb.user.User;
@@ -75,22 +69,6 @@ public abstract class AbstractUserView extends AbstractView {
 	public void setUserService(final UserService userService) {
 		Objects.requireNonNull(userService);
 		this.userService = userService;
-	}
-
-	public void uploadImage(final FileUploadEvent event) {
-		Objects.requireNonNull(event);
-		logger.debug("Upload user image action performed");
-		final UploadedFile uploadedFile = event.getFile();
-		if (uploadedFile == null) {
-			return;
-		}
-		try (InputStream inputStream = uploadedFile.getInputstream()) {
-			final String filename = this.getUser().getUid() + "_picture";
-			final File file = this.fileUploadService.uploadFile(inputStream, true, filename);
-			this.user.setPicture(file);
-		} catch (final IOException e) {
-			throw new UncheckedIOException(e);
-		}
 	}
 
 	protected String userUrl() {

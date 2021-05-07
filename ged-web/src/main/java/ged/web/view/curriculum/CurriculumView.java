@@ -149,19 +149,7 @@ public class CurriculumView extends AbstractView {
 		queryParams.put(CURRICULUM_ID, this.curriculum.getUid());
 		return this.navigator.getRedirectUrl(PageEnum.CURRICULUM_JOB_EXPERIENCE, queryParams);
 	}
-
-	public String newLanguage() {
-		final Map<String, String> queryParams = new HashMap<>();
-		queryParams.put(CURRICULUM_ID, this.curriculum.getUid());
-		return this.navigator.getRedirectUrl(PageEnum.CURRICULUM_LANGUAGE, queryParams);
-	}
-
-	public String newSkill() {
-		final Map<String, String> queryParams = new HashMap<>();
-		queryParams.put(CURRICULUM_ID, this.curriculum.getUid());
-		return this.navigator.getRedirectUrl(PageEnum.CURRICULUM_SKILLS, queryParams);
-	}
-
+	
 	private void orderEducation() {
 		Collections.sort(education);
 	}

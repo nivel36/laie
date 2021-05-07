@@ -22,16 +22,14 @@
 	</composite:interface>
 
 	<composite:implementation>
-		<div id="#{cc.clientId}" class="input-user input-group #{cc.attrs.styleClass}">
-			<div class="label-container">
-				<p:outputLabel id="label" value="#{cc.attrs.label}" for="input" styleClass="label" />
-			</div>
+		<div id="#{cc.clientId}" class="input-user input-group p-field #{cc.attrs.styleClass}">
+			<p:outputLabel id="label" value="#{cc.attrs.label}" for="input" styleClass="label" />
 			<div class="ui-inputgroup">
 				<p:autoComplete id="input" value="#{cc.attrs.value}" required="#{cc.attrs.required}" binding="#{cc.input}"
 					styleClass="input input-users" completeMethod="#{cc.attrs.completeMethod}" forceSelection="true" minQueryLength="3"
 					var="user" itemValue="#{user}" itemLabel="#{user.fullName}" disabled="#{cc.attrs.disabled}" multiple="true" converter="userConverter">
 					<p:column styleClass="user-select">
-						<cc:person value="#{user}" showDescription="false" />
+						<cc:person value="#{user}" description="#{user.email}" />
 					</p:column>
 					<p:ajax event="itemSelect" update="#{cc.clientId}" process="input" />
 					<p:ajax event="itemUnselect" update="#{cc.clientId}" process="input" />
@@ -40,9 +38,7 @@
 					<i class="fa fa-search" aria-hidden="true"></i>
 				</h:panelGroup>
 			</div>
-			<div class="message-container">
-				<p:message id="message" for="input" styleClass="message-error" />
-			</div>
+			<p:message id="message" for="input" styleClass="message-error" />
 		</div>
 	</composite:implementation>
 </ui:component>

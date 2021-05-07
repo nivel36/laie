@@ -8,7 +8,7 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
 
-import ged.ejb.user.role.Role;
+import ged.ejb.user.Role;
 
 @Named
 @ApplicationScoped

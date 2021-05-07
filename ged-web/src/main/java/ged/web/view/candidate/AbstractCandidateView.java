@@ -10,7 +10,7 @@ import javax.inject.Inject;
 import org.omnifaces.cdi.Param;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.RateEvent;
-import org.primefaces.model.UploadedFile;
+import org.primefaces.model.file.UploadedFile;
 
 import ged.ejb.candidate.Candidate;
 import ged.ejb.candidate.CandidateService;
@@ -36,7 +36,7 @@ public abstract class AbstractCandidateView extends AbstractView {
 	@Inject
 	protected transient FileService fileUploadService;
 
-	protected List<Tag> tags;
+	protected transient List<Tag> tags;
 
 	@Inject
 	protected transient TagService tagService;
@@ -53,8 +53,8 @@ public abstract class AbstractCandidateView extends AbstractView {
 		return this.tags;
 	}
 
-	public void onrate(final RateEvent rateEvent) {
-		final Integer rate = (Integer) rateEvent.getRating();
+	public void onrate(final RateEvent<Integer> rateEvent) {
+		final Integer rate = rateEvent.getRating();
 		this.candidate.setRating(rate);
 	}
 
@@ -76,8 +76,8 @@ public abstract class AbstractCandidateView extends AbstractView {
 
 	public void uploadImage(final FileUploadEvent event) {
 		final UploadedFile uploadedFile = event.getFile();
-		try (InputStream inputStream = uploadedFile.getInputstream()) {
-			File file = this.fileUploadService.uploadFile(inputStream, true, this.candidate.getUid() + "_picture");
+		try (InputStream inputStream = uploadedFile.getInputStream()) {
+			File file = this.fileUploadService.uploadFile(inputStream, this.candidate.getUid() + "_picture", true);
 			this.candidate.setPicture(file);
 		} catch (final IOException e) {
 			throw new UncheckedIOException(e);

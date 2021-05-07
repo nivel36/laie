@@ -15,7 +15,6 @@ import ged.ejb.core.file.File;
 import ged.ejb.core.model.AbstractIndexedDao;
 import ged.ejb.core.model.Page;
 import ged.ejb.core.model.Repository;
-import ged.ejb.job.offer.JobOffer;
 
 @Repository
 public class CandidateDao extends AbstractIndexedDao<Candidate> {
@@ -36,14 +35,16 @@ public class CandidateDao extends AbstractIndexedDao<Candidate> {
 		return this.findByQuery(Candidate.class, "Candidate.findByUid", map("uid", uid));
 	}
 
-	public List<Candidate> findCandidates(final JobOffer jobOffer, final Page page) {
-		Objects.requireNonNull(jobOffer);
+	public List<Candidate> findCandidates(final String jobOfferUid, final Page page) {
+		Objects.requireNonNull(jobOfferUid);
 		Objects.requireNonNull(page);
-		return this.findByQuery(Candidate.class, "Candidate.findByJobOffer", map("jobOffer", jobOffer), page);
+		return this.findByQuery(Candidate.class, "Candidate.findByJobOffer", map("jobOfferUid", jobOfferUid), page);
 	}
 
-	public List<File> findFiles(final Candidate candidate, final Page page) {
-		return this.findByQuery(File.class, "Candidate.findFiles", map("candidate", candidate), page);
+	public List<File> findCandidatesFiles(final String candidateUid, final Page page) {
+		Objects.requireNonNull(candidateUid);
+		Objects.requireNonNull(page);
+		return this.findByQuery(File.class, "Candidate.findFiles", map("candidateUid", candidateUid), page);
 	}
 
 	@Override
@@ -72,6 +73,11 @@ public class CandidateDao extends AbstractIndexedDao<Candidate> {
 			logger.warn("The email {} is in use", candidate.getEmail());
 			throw new ValidationException("Email duplicated");
 		}
+	}
+
+	public Candidate findCandidateWithFiles(final String candidateUid) {
+		Objects.requireNonNull(candidateUid);
+		return this.findByQuery(Candidate.class, "Candidate.findCandidateWithFiles", map("candidateUid", candidateUid));
 	}
 
 	@Override

@@ -15,9 +15,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import ged.ejb.user.Role;
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
-import ged.ejb.user.role.Role;
 
 @ExtendWith(MockitoExtension.class)
 public class UserMapperTest {
@@ -29,7 +29,7 @@ public class UserMapperTest {
 		public void mapDtoShouldReturnAnEntity() {
 			final User boss = new User();
 			boss.setEmail("boss@test.com");
-			when(UserMapperTest.this.userService.findUserByEmail("boss@test.com")).thenReturn(boss);
+			when(UserMapperTest.this.userService.findByEmail("boss@test.com")).thenReturn(boss);
 
 			final UserDto userDto = UserMapperTest.this.mockUserDto();
 

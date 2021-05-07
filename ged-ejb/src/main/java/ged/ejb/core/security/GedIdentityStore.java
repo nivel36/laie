@@ -2,11 +2,8 @@ package ged.ejb.core.security;
 
 import static javax.security.enterprise.identitystore.CredentialValidationResult.NOT_VALIDATED_RESULT;
 
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
-import javax.inject.Inject;
 import javax.security.auth.login.LoginException;
 import javax.security.enterprise.credential.CallerOnlyCredential;
 import javax.security.enterprise.credential.Credential;
@@ -15,51 +12,43 @@ import javax.security.enterprise.identitystore.CredentialValidationResult;
 import javax.security.enterprise.identitystore.IdentityStore;
 
 import ged.ejb.user.User;
-import ged.ejb.user.UserService;
 
-public class GedIdentityStore implements IdentityStore {
+public class GedIdentityStore extends AbstractIdentityStore implements IdentityStore {
 
-	@Inject
-	private UserService userService;
-
-	private Set<String> getRoles(final User user) {
-		final Set<String> roles = new HashSet<>();
-		roles.add(user.getRole().toString());
-		return roles;
+	private User findUserFromCallerOnlyCredential(final Credential credential) {
+		final CallerOnlyCredential callerOnlyCredential = (CallerOnlyCredential) credential;
+		final String email = callerOnlyCredential.getCaller();
+		return this.userDao.findUserByEmail(email);
 	}
 
-	public void setUserService(final UserService userService) {
-		Objects.requireNonNull(userService);
-		this.userService = userService;
+	private User findUserFromUsernamePasswordCredential(final Credential credential) throws LoginException {
+		final UsernamePasswordCredential usernamePasswordCredential = (UsernamePasswordCredential) credential;
+		final String email = usernamePasswordCredential.getCaller();
+		final String password = usernamePasswordCredential.getPasswordAsString();
+		final ged.ejb.user.Credential gedCredential = this.userDao.findCredential(email);
+		if (gedCredential == null) {
+			throw new LoginException("Invalid email");
+		}
+		if (!gedCredential.isValid(password)) {
+			throw new LoginException("Passwords doesn't match");
+		}
+		return gedCredential.getUser();
 	}
 
 	@Override
 	public CredentialValidationResult validate(final Credential credential) {
 		Objects.requireNonNull(credential);
-		final User user;
-		if (credential instanceof UsernamePasswordCredential) {
-			try {
-				final String email = ((UsernamePasswordCredential) credential).getCaller();
-				final String password = ((UsernamePasswordCredential) credential).getPasswordAsString();
-				user = this.userService.login(email, password);
-			} catch (final LoginException e) {
-				return NOT_VALIDATED_RESULT;
+		try {
+			if (credential instanceof UsernamePasswordCredential) {
+				final User user = this.findUserFromUsernamePasswordCredential(credential);
+				return this.validate(user);
+			} else if (credential instanceof CallerOnlyCredential) {
+				final User user = this.findUserFromCallerOnlyCredential(credential);
+				return this.validate(user);
 			}
-		} else if (credential instanceof CallerOnlyCredential) {
-			final String email = ((CallerOnlyCredential) credential).getCaller();
-			user = this.userService.findUserByEmail(email);
-		} else {
+		} catch (final LoginException e) {
 			return NOT_VALIDATED_RESULT;
 		}
-
-		return this.validate(user);
-	}
-
-	public CredentialValidationResult validate(final User user) {
-		if (user == null) {
-			return NOT_VALIDATED_RESULT;
-		}
-		final Set<String> roles = this.getRoles(user);
-		return new CredentialValidationResult(new GedCallerPrincipal(user), roles);
+		return NOT_VALIDATED_RESULT;
 	}
 }

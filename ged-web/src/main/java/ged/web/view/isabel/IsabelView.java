@@ -36,7 +36,7 @@ public class IsabelView extends AbstractView {
 
 	private DualListModel<ExportViewItemI> model;
 
-	private List<ReportInfo> reportsList;
+	private transient List<ReportInfo> reportsList;
 
 	private ExportDefinitionService getExportDefinitionService() {
 		return this.exportDefinitionService;

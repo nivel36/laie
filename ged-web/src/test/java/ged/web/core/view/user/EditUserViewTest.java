@@ -2,11 +2,8 @@ package ged.web.core.view.user;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,8 +16,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.primefaces.event.FileUploadEvent;
-import org.primefaces.model.UploadedFile;
 
 import ged.ejb.core.file.FileService;
 import ged.ejb.core.model.Page;
@@ -58,41 +53,6 @@ public class EditUserViewTest {
 			final List<User> managers = EditUserViewTest.this.userEditView.queryManager("Abe");
 
 			assertEquals("abel@test.com", managers.get(0).getEmail());
-		}
-	}
-
-	@Nested
-	class UploadImage {
-
-		@Test
-		public void emptyFileShouldNotSetImageNameToUser() throws IOException {
-			final User user = EditUserViewTest.this.mockUser();
-			user.setEmail("abel@test.com");
-			EditUserViewTest.this.userEditView.setUser(user);
-
-			final FileUploadEvent event = mock(FileUploadEvent.class);
-			EditUserViewTest.this.userEditView.uploadImage(event);
-		}
-
-		@Test
-		public void nullEventShouldThrowNullPointerException() throws IOException {
-			assertThrows(NullPointerException.class, () -> {
-				EditUserViewTest.this.userEditView.uploadImage(null);
-			});
-		}
-
-		@Test
-		public void uploadImageShouldSetImageNameToUserObject() throws IOException {
-			final User user = EditUserViewTest.this.mockUser();
-			EditUserViewTest.this.userEditView.setUser(user);
-
-			final FileUploadEvent event = mock(FileUploadEvent.class);
-			final UploadedFile file = mock(UploadedFile.class);
-			when(event.getFile()).thenReturn(file);
-			final InputStream is = mock(InputStream.class);
-			when(event.getFile().getInputstream()).thenReturn(is);
-
-			EditUserViewTest.this.userEditView.uploadImage(event);
 		}
 	}
 

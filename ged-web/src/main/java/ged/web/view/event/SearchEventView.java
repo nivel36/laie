@@ -1,6 +1,5 @@
 package ged.web.view.event;
 
-import java.io.IOException;
 import java.lang.invoke.MethodHandles;
 
 import javax.annotation.PostConstruct;
@@ -29,7 +28,7 @@ public class SearchEventView extends AbstractView {
 
 	private String[] searchStates;
 
-	public void export() throws IOException {
+	public void export() {
 		logger.debug("Export events action performed");
 	}
 

@@ -3,11 +3,8 @@ package ged.web.core.view.user;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,8 +19,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.primefaces.event.FileUploadEvent;
-import org.primefaces.model.UploadedFile;
 
 import ged.ejb.core.file.FileService;
 import ged.ejb.core.model.Page;
@@ -98,41 +93,6 @@ public class AddUserViewTest {
 			final List<User> managers = AddUserViewTest.this.addUserView.queryManager("Abe");
 
 			assertEquals("abel@test.com", managers.get(0).getEmail());
-		}
-	}
-
-	@Nested
-	class UploadImage {
-
-		@Test
-		public void emptyFileShouldNotSetImageNameToUser() throws IOException {
-			final User user = AddUserViewTest.this.mockUser();
-			user.setEmail("abel@test.com");
-			AddUserViewTest.this.addUserView.setUser(user);
-
-			final FileUploadEvent event = mock(FileUploadEvent.class);
-			AddUserViewTest.this.addUserView.uploadImage(event);
-		}
-
-		@Test
-		public void nullEventShouldThrowNullPointerException() throws IOException {
-			assertThrows(NullPointerException.class, () -> {
-				AddUserViewTest.this.addUserView.uploadImage(null);
-			});
-		}
-
-		@Test
-		public void uploadImageShouldSetImageNameToUserObject() throws IOException {
-			final User user = AddUserViewTest.this.mockUser();
-			AddUserViewTest.this.addUserView.setUser(user);
-
-			final FileUploadEvent event = mock(FileUploadEvent.class);
-			final UploadedFile file = mock(UploadedFile.class);
-			when(event.getFile()).thenReturn(file);
-			final InputStream is = mock(InputStream.class);
-			when(event.getFile().getInputstream()).thenReturn(is);
-
-			AddUserViewTest.this.addUserView.uploadImage(event);
 		}
 	}
 

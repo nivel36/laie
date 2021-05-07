@@ -22,7 +22,7 @@
 	</ui:define>
 
 	<ui:define name="buttons">
-		<p:button value="#{i18n['action.back']}" outcome="#{Page.CANDIDATE.getUrl()}" styleClass="secondary-button">
+		<p:button value="#{i18n['action.back']}" outcome="#{Page.CANDIDATE.getUrl()}" styleClass="info-button">
 			<f:param name="id" value="#{curriculumView.candidate.uid}" />
 		</p:button>
 	</ui:define>
@@ -57,14 +57,14 @@
 				</div>
 				<div class="p-col-12 p-xl-8">
 					<h:panelGroup styleClass="card card-w-title curriculum" id="jobExperiences" layout="block">
-						<h1>#{i18n['curriculum.job_experiences']}</h1>
+						<h4>#{i18n['curriculum.job_experiences']}</h4>
 						<div class="buttons header-buttons">
-							<p:commandButton action="#{curriculumView.newJobExperience}" process="@this" icon="fa fa-plus" styleClass="secondary-button" />
+							<p:commandButton action="#{curriculumView.newJobExperience}" process="@this" icon="fa fa-plus" styleClass="success-button" />
 						</div>
 
 						<ui:repeat value="#{curriculumView.jobExperiences}" var="jobExperience" id="jobExperience" varStatus="varStatus">
 							<div class="section">
-								<h2>#{jobExperience.jobPosition}</h2>
+								<h5>#{jobExperience.jobPosition}</h5>
 								<p>
 									<span class="company">#{jobExperience.companyName}</span> · <span class="date-range"><h:outputText value="#{jobExperience.startDate}">
 											<f:convertDateTime type="localDate" pattern="MM / yyyy" />
@@ -87,8 +87,9 @@
 											rendered="#{jobExperience.monthsWorked%12 eq 0 and (jobExperience.monthsWorked - jobExperience.monthsWorked%12)/12 eq 0}" /> <h:outputText
 											value=" ) " /> </span>
 								</p>
-
-								<h:outputText value="#{jobExperience.description}" escape="false" styleClass="job-description" />
+								<p>
+									<h:outputText value="#{jobExperience.description}" escape="false" styleClass="job-description" />
+								</p>
 
 								<div class="buttons">
 									<p:commandButton action="#{curriculumView.editJobExperience(jobExperience)}" process="@this" icon="fa fa-pencil" styleClass="secondary-button" />
@@ -99,14 +100,14 @@
 				</div>
 				<div class="p-col-12 p-xl-8">
 					<h:panelGroup class="card card-w-title curriculum" id="educations" layout="block">
-						<h1>#{i18n['curriculum.education']}</h1>
+						<h4>#{i18n['curriculum.education']}</h4>
 						<div class="buttons header-buttons">
-							<p:commandButton action="#{curriculumView.newEducation}" process="@this" icon="fa fa-plus" styleClass="secondary-button" />
+							<p:commandButton action="#{curriculumView.newEducation}" process="@this" icon="fa fa-plus" styleClass="success-button" />
 						</div>
 
 						<ui:repeat value="#{curriculumView.education}" var="education" id="education">
 							<div class="section">
-								<h2>#{education.degree}</h2>
+								<h5>#{education.degree}</h5>
 								<p>
 									<span class="school">#{education.school}</span> · <span class="date-range"> <h:outputText value="#{education.startYear}" /> - <h:outputText
 											value="#{education.endYear}" rendered="#{not education.stillStudying}" /> <h:outputText value="#{i18n['education.still_studying']}"
@@ -125,7 +126,7 @@
 				</div>
 				<div class="p-col-12 p-xl-8">
 					<h:panelGroup styleClass="card card-w-title curriculum" id="languages" layout="block">
-						<h1>#{i18n['curriculum.languages']}</h1>
+						<h4>#{i18n['curriculum.languages']}</h4>
 						<div class="section">
 							<ui:repeat value="#{curriculumView.languages}" var="language" id="language">
 								<p>
@@ -141,10 +142,10 @@
 				</div>
 				<div class="p-col-12 p-xl-8">
 					<h:panelGroup styleClass="card card-w-title curriculum" id="skills" layout="block">
-						<h1>#{i18n['curriculum.skills']}</h1>
+						<h4>#{i18n['curriculum.skills']}</h4>
 						<div class="section">
 							<ui:repeat var="skill" value="#{curriculumView.curriculum.skills}">
-								<div class="tag">#{skill.name}</div>
+								<p:tag value="#{skill.name}" />
 							</ui:repeat>
 							<div class="buttons">
 								<p:commandButton action="#{curriculumView.editSkills}" process="@this" icon="fa fa-pencil" styleClass="secondary-button" />

@@ -10,17 +10,16 @@ import org.hibernate.search.annotations.Facet;
 import org.hibernate.search.annotations.FacetEncodingType;
 import org.hibernate.search.annotations.Field;
 
+import ged.ejb.core.EventState;
 import ged.ejb.core.model.AbstractEntity;
 
 @Entity
 @Table(name = "JOB_CANDIDATURE_STATE")
-public class JobCandidatureState extends AbstractEntity {
+public class JobCandidatureState extends AbstractEntity implements EventState {
 
 	private static final long serialVersionUID = 1L;
 
 	private boolean approved;
-
-	private String color;
 
 	private boolean declined;
 
@@ -45,10 +44,7 @@ public class JobCandidatureState extends AbstractEntity {
 		return Objects.equals(this.name, other.name);
 	}
 
-	public String getColor() {
-		return this.color;
-	}
-
+	@Override
 	public String getName() {
 		return this.name;
 	}
@@ -76,10 +72,6 @@ public class JobCandidatureState extends AbstractEntity {
 
 	public void setApproved(final boolean approved) {
 		this.approved = approved;
-	}
-
-	public void setColor(final String color) {
-		this.color = color;
 	}
 
 	public void setDeclined(final boolean declined) {

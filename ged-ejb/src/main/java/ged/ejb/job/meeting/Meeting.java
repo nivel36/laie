@@ -94,10 +94,6 @@ public class Meeting extends AbstractIndexedEntity implements Ownerable {
 		return this.jobCandidature;
 	}
 
-	public MeetingType getJobMeetingType() {
-		return this.meetingType;
-	}
-
 	public String getLocation() {
 		return this.location;
 	}
@@ -139,10 +135,6 @@ public class Meeting extends AbstractIndexedEntity implements Ownerable {
 
 	public void setJobCandidature(final JobCandidature jobCandidature) {
 		this.jobCandidature = jobCandidature;
-	}
-
-	public void setJobMeetingType(final MeetingType meetingType) {
-		this.meetingType = meetingType;
 	}
 
 	public void setLocation(final String location) {

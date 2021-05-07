@@ -1,10 +1,9 @@
 package ged.ejb.candidate;
 
+import java.io.InputStream;
 import java.lang.invoke.MethodHandles;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -18,8 +17,6 @@ import ged.ejb.core.file.FileService;
 import ged.ejb.core.model.AbstractIndexedDao;
 import ged.ejb.core.model.Page;
 import ged.ejb.core.model.Repository;
-import ged.ejb.job.candidature.JobCandidatureDao;
-import ged.ejb.job.offer.JobOffer;
 
 @Stateless
 public class CandidateService extends AbstractIndexedService<Candidate> {
@@ -33,18 +30,15 @@ public class CandidateService extends AbstractIndexedService<Candidate> {
 	@Inject
 	private FileService fileService;
 
-	@Inject
-	@Repository
-	private JobCandidatureDao jobCandidatureDao;
-
-	public Candidate addFileToCandidate(final Candidate candidate, final File file) {
-		Objects.requireNonNull(file);
-		Objects.requireNonNull(candidate);
-		logger.debug("Add file {} to candidate  {}", file, candidate);
-		final List<File> files = this.candidateDao.findFiles(candidate, Page.ALL_RESULTS);
-		candidate.setFiles(files.stream().collect(Collectors.toSet()));
+	public File addFileToCandidate(final String candidateUid, final InputStream inputStream, String filename) {
+		Objects.requireNonNull(inputStream);
+		Objects.requireNonNull(candidateUid);
+		Objects.requireNonNull(filename);
+		logger.debug("Add file {} to candidate  {}", filename, candidateUid);
+		final Candidate candidate = candidateDao.findCandidateWithFiles(candidateUid);
+		final File file = fileService.uploadFile(inputStream, filename, false);
 		candidate.addFile(file);
-		return this.candidateDao.save(candidate);
+		return file;
 	}
 
 	public List<Origin> findAllOrigins() {
@@ -58,26 +52,17 @@ public class CandidateService extends AbstractIndexedService<Candidate> {
 		return this.candidateDao.findByUid(uid);
 	}
 
-	public List<Candidate> findCandidates(final JobOffer jobOffer, final Page page) {
-		Objects.requireNonNull(jobOffer);
+	public List<Candidate> findByJobOffer(final String jobOfferUid, final Page page) {
+		Objects.requireNonNull(jobOfferUid);
 		Objects.requireNonNull(page);
-		logger.debug("Find candidates by jobOffer {} ", jobOffer);
-		return this.candidateDao.findCandidates(jobOffer, page);
+		logger.debug("Find candidates by jobOffer {} ", jobOfferUid);
+		return this.candidateDao.findCandidates(jobOfferUid, page);
 	}
 
-	public File findFile(final long fileId) {
-		if (fileId < 1) {
-			logger.warn("Bad file id {}", fileId);
-			throw new IllegalArgumentException("Bad file id: " + fileId);
-		}
-		logger.debug("Find file by id {}", fileId);
-		return this.fileService.findById(fileId);
-	}
-
-	public List<File> findFiles(final Candidate candidate, final Page page) {
-		Objects.requireNonNull(candidate);
-		logger.debug("Find files by candidate {}", candidate);
-		return this.candidateDao.findFiles(candidate, page);
+	public List<File> findCandidatesFiles(final String candidateUid, final Page page) {
+		Objects.requireNonNull(candidateUid);
+		logger.debug("Find files by candidate {}", candidateUid);
+		return this.candidateDao.findCandidatesFiles(candidateUid, page);
 	}
 
 	@Override
@@ -85,14 +70,12 @@ public class CandidateService extends AbstractIndexedService<Candidate> {
 		return this.candidateDao;
 	}
 
-	public void removeFile(Candidate candidate, final File file) {
-		Objects.requireNonNull(candidate);
+	public void removeFileFromCandidate(final String candidateUid, final File file) {
+		Objects.requireNonNull(candidateUid);
 		Objects.requireNonNull(file);
-		logger.debug("Remove file {} from candidate {}", file, candidate);
-		List<File> files = this.findFiles(candidate, Page.ALL_RESULTS);
-		candidate.setFiles(new HashSet<>(files));
+		logger.debug("Remove file {} from candidate {}", file, candidateUid);
+		final Candidate candidate = this.candidateDao.findCandidateWithFiles(candidateUid);
 		candidate.removeFile(file);
-		this.candidateDao.save(candidate);
 		this.fileService.removeFile(file);
 	}
 

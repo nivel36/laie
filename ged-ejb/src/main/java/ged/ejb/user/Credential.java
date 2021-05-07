@@ -42,9 +42,6 @@ public class Credential extends AbstractEntity {
 	private User user;
 
 	public Credential() {
-		this.hashPassword = new byte[32];
-		this.salt = new byte[16];
-		this.created = LocalDate.now();
 	}
 
 	public Credential(final User user, final String password) {
@@ -53,7 +50,9 @@ public class Credential extends AbstractEntity {
 		this.hashPassword = new byte[32];
 		this.salt = new byte[16];
 		this.created = LocalDate.now();
-		this.newCredential(user, password);
+		this.user = user;
+		this.salt = this.getRandomSalt();
+		this.hashPassword = this.buildHashPassword(password);
 	}
 
 	private byte[] buildHashPassword(final String password) {
@@ -106,12 +105,6 @@ public class Credential extends AbstractEntity {
 		Objects.requireNonNull(password);
 		final byte[] typedPassword = this.buildHashPassword(password);
 		return Arrays.equals(this.hashPassword, typedPassword);
-	}
-
-	private void newCredential(final User user, final String password) {
-		this.user = user;
-		this.salt = this.getRandomSalt();
-		this.hashPassword = this.buildHashPassword(password);
 	}
 
 	public void setCreated(final LocalDate created) {

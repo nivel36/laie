@@ -22,10 +22,8 @@ import ged.api.v1.mapper.Mapper;
 import ged.ejb.core.model.Page;
 import ged.ejb.user.User;
 import ged.ejb.user.UserService;
-import io.swagger.annotations.Api;
 
 @Path("user")
-@Api("user")
 @ApplicationScoped
 public class UserRestController extends AbstractRestController {
 
@@ -77,7 +75,7 @@ public class UserRestController extends AbstractRestController {
 	@Produces(MediaType.APPLICATION_JSON)
 	public UserDto findByEmail(@QueryParam("email") final String email) {
 		Objects.requireNonNull(email);
-		final User user = this.userService.findUserByEmail(email);
+		final User user = this.userService.findByEmail(email);
 		return this.userMapper.mapEntity(user);
 	}
 

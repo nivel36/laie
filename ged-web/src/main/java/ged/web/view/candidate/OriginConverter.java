@@ -15,7 +15,7 @@ import ged.ejb.candidate.Origin;
 public class OriginConverter implements Converter<Origin> {
 
 	@Inject
-	private transient CandidateService candidateService;
+	private CandidateService candidateService;
 
 	@Override
 	public Origin getAsObject(final FacesContext context, final UIComponent component, final String value) {

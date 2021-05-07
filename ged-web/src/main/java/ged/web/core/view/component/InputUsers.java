@@ -35,12 +35,9 @@ public class InputUsers extends UIInput implements NamingContainer {
 		return this.input;
 	}
 
-	public void onDialogReturn(final SelectEvent event) {
-		final Object selectedObject = event.getObject();
-		if (selectedObject != null) {
-			final User user = (User) selectedObject;
-			this.addValueToList(user);
-		}
+	public void onDialogReturn(final SelectEvent<User> event) {
+		final User user = event.getObject();
+		this.addValueToList(user);
 	}
 
 	public void setInput(final UIInput input) {

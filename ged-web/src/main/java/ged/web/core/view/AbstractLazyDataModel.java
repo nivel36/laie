@@ -4,8 +4,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import org.primefaces.model.FilterMeta;
 import org.primefaces.model.LazyDataModel;
-import org.primefaces.model.SortOrder;
+import org.primefaces.model.SortMeta;
 
 import ged.ejb.core.AbstractIndexedService;
 import ged.ejb.core.model.AbstractIndexedEntity;
@@ -19,7 +20,7 @@ public abstract class AbstractLazyDataModel<T extends AbstractIndexedEntity> ext
 
 	private static final long serialVersionUID = 1L;
 
-	protected SearchFacets searchFilter = new SearchFacets();
+	protected transient SearchFacets searchFilter = new SearchFacets();
 
 	protected String searchText;
 
@@ -40,22 +41,25 @@ public abstract class AbstractLazyDataModel<T extends AbstractIndexedEntity> ext
 	}
 
 	@Override
-	public Object getRowKey(final T entity) {
+	public String getRowKey(final T entity) {
 		Objects.requireNonNull(entity, "Entity can't be null");
-		return entity.getId();
+		return String.valueOf(entity.getId());
 	}
 
 	protected abstract AbstractIndexedService<T> getService();
 
 	@Override
-	public List<T> load(final int first, final int pageSize, final String sortFieldName, final SortOrder sortOrder,
-			final Map<String, Object> filters) {
+	public List<T> load(final int first, final int pageSize, final Map<String, SortMeta> sorts,
+			final Map<String, FilterMeta> filters) {
 		final Page page = new Page(first, pageSize);
-		final SortField sortField;
-		if (sortOrder != null) {
-			sortField = new SortField(sortFieldName, sortOrder == SortOrder.ASCENDING);
-		} else {
-			sortField = null;
+		SortField sortField = null;
+		if (sorts != null && !sorts.isEmpty()) {
+			for (SortMeta sort : sorts.values()) {
+				if(sort.getPriority() == 0) { // only one sort allowed
+					sortField = new SortField(sort.getField(), sort.getOrder().isAscending());
+					break;
+				}
+			}
 		}
 		final SearchResult<T> searchResult = this.getService().search(this.searchText, page, sortField,
 				this.searchFilter);

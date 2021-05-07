@@ -17,7 +17,7 @@ public class ExportService {
 	private static final String EXPORT_USERS_NAME = "USERS";
 	
 	@Inject
-	private transient ExportDefinitionService exportDefinitionService;
+	private ExportDefinitionService exportDefinitionService;
 	
 	public ExportData getExportUsersData(final List<User> users) {
 		Objects.requireNonNull(users);

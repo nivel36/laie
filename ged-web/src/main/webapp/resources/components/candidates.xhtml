@@ -12,16 +12,13 @@
 
 	<composite:implementation>
 		<div id="#{cc.clientId}" class="card card-w-title candidates #{cc.attrs.styleClass}">
-			<h1>#{cc.attrs.title}</h1>
+			<h5>#{cc.attrs.title}</h5>
 
 			<p:dataTable var="candidate" id="candidates" value="#{cc.attrs.value}" emptyMessage="#{i18n['candidate.no_candidates_found']}" reflow="true" paginator="true"
 				paginatorPosition="bottom" rows="#{cc.attrs.rows}" sortBy="#{candidate.name}" sortOrder="ascending" lazy="true" styleClass="ui-datatable-borderless">
 
-				<p:column>
-					<cc:avatar value="#{candidate.picture}" styleClass="small" />
-				</p:column>
-
 				<p:column headerText="#{i18n['candidate.name']}" sortBy="#{candidate.name}">
+					<cc:avatar value="#{candidate.picture}" styleClass="small" />
 					<h:link value="#{candidate.fullName}" outcome="#{Page.CANDIDATE.getUrl()}">
 						<f:param name="id" value="#{candidate.uid}" />
 					</h:link>

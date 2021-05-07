@@ -1,6 +1,5 @@
 package ged.web.view.candidate;
 
-import java.io.IOException;
 import java.lang.invoke.MethodHandles;
 
 import javax.annotation.PostConstruct;
@@ -29,7 +28,7 @@ public class SearchCandidateView extends AbstractView {
 
 	private String searchText;
 
-	public void export() throws IOException {
+	public void export() {
 		logger.debug("Export candidates action performed");
 	}
 

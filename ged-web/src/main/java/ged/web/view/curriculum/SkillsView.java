@@ -50,7 +50,7 @@ public class SkillsView extends AbstractView {
 
 	@PostConstruct
 	public void init() {
-		this.skills = new ArrayList<Skill>(this.curriculum.getSkills());
+		this.skills = new ArrayList<>(this.curriculum.getSkills());
 	}
 
 	public String save() {

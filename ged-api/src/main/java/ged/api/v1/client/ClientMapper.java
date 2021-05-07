@@ -18,7 +18,7 @@ public class ClientMapper implements AbstractMapper<Client, ClientDto> {
 	}
 
 	private User getUserByUsername(final String username) {
-		return this.userService.findUserByEmail(username);
+		return this.userService.findByEmail(username);
 	}
 
 	@Override

@@ -11,12 +11,21 @@
 		]]></query>
 	</named-query>
 
+	<named-query name="Candidate.findCandidateWithFiles">
+		<query><![CDATA[
+			SELECT c
+			FROM Candidate c
+			LEFT JOIN FETCH c.files
+			WHERE c.uid = :candidateUid
+		]]></query>
+	</named-query>
+
 	<named-query name="Candidate.findByJobOffer">
 		<query><![CDATA[
 			SELECT c 
 			FROM Candidate c
 			LEFT JOIN c.jobCandidatures jc
-			WHERE jc.jobOffer = :jobOffer
+			WHERE jc.jobOffer.uid = :jobOfferUid
 		]]></query>
 	</named-query>
 
@@ -25,7 +34,7 @@
 			SELECT f
 			FROM Candidate c
 			LEFT JOIN c.files f
-			WHERE c = :candidate
+			WHERE c.uid = :candidateUid
 			AND f is not null
 		]]></query>
 	</named-query>
@@ -42,7 +51,7 @@
 		<query><![CDATA[
 			SELECT c 
 			FROM Client c 
-			WHERE c.uid = :uid
+			WHERE c.uid = :clientUid
 		]]></query>
 	</named-query>
 
@@ -62,7 +71,7 @@
 		]]></query>
 	</named-query>
 
-	<named-query name="Curriculum.findByCandidate">
+	<named-query name="Curriculum.findByCandidateUid">
 		<query><![CDATA[
 			SELECT c 
 			FROM Curriculum c 
@@ -71,7 +80,7 @@
 			LEFT JOIN FETCH c.jobExperiences 
 			LEFT JOIN FETCH c.languages 
 			LEFT JOIN FETCH c.skills 
-			WHERE c.candidate = :candidate
+			WHERE c.candidate.uid = :candidateUid
 		]]></query>
 	</named-query>
 
@@ -104,12 +113,22 @@
 			WHERE f.contentHash = :hash
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="File.isOrphanPhysicalFile">
 		<query><![CDATA[
 			SELECT CASE WHEN (COUNT(f) > 0) THEN TRUE ELSE FALSE END 
 			FROM File f 
 			WHERE f.physicalFile = :physicalFile
+		]]></query>
+	</named-query>
+
+	<named-query name="JobCandidature.findByUid">
+		<query><![CDATA[
+			SELECT j 
+			FROM JobCandidature j 
+			LEFT JOIN FETCH j.candidate
+			LEFT JOIN FETCH j.jobOffer
+			WHERE j.uid = :uid
 		]]></query>
 	</named-query>
 
@@ -168,11 +187,19 @@
 		]]></query>
 	</named-query>
 
-	<named-query name="JobOffer.findAllByOwner">
+	<named-query name="JobOffer.findByUid">
 		<query><![CDATA[
 			SELECT j 
 			FROM JobOffer j 
-			WHERE j.owner = :owner 
+			WHERE j.uid = :uid
+		]]></query>
+	</named-query>
+
+	<named-query name="JobOffer.findJobOffersByUser">
+		<query><![CDATA[
+			SELECT j 
+			FROM JobOffer j 
+			WHERE j.owner.email = :email 
 		]]></query>
 	</named-query>
 
@@ -185,11 +212,11 @@
 		]]></query>
 	</named-query>
 
-	<named-query name="JobOffer.findByClient">
+	<named-query name="JobOffer.findByClientUid">
 		<query><![CDATA[
 			SELECT j 
 			FROM JobOffer j 
-			WHERE j.client = :client
+			WHERE j.client.uid = :clientUid
 		]]></query>
 	</named-query>
 
@@ -259,11 +286,20 @@
 		]]></query>
 	</named-query>
 
-	<named-query name="User.findByEmail">
+	<named-query name="User.findCredential">
+		<query><![CDATA[
+			SELECT c
+			FROM Credential c
+			LEFT JOIN FETCH c.user
+			WHERE c.user.email = :email
+		]]></query>
+	</named-query>
+
+	<named-query name="User.findByUid">
 		<query><![CDATA[
 			SELECT u 
 			FROM User u 
-			WHERE u.email = :email
+			WHERE u.uid = :uid
 		]]></query>
 	</named-query>
 
@@ -276,22 +312,22 @@
 			AND uc.pathLength > 0
 		]]></query>
 	</named-query>
-
-	<named-query name="User.findUser">
+	
+	<named-query name="User.isSubordinateUser">
 		<query><![CDATA[
-			SELECT u 
-			FROM User u 
-			WHERE (:name IS NOT NULL AND u.name = :name)
-			OR (:surname IS NOT NULL AND u.surname = :surname)
+			SELECT CASE WHEN (COUNT(u) > 0) THEN TRUE ELSE FALSE END 
+			FROM UserClosure uc 
+			JOIN uc.descendant u 
+			WHERE uc.antecessor.id = :managerId 
+			AND u.id= :subordinateId
 		]]></query>
 	</named-query>
 
-	<named-query name="User.findCredential">
+	<named-query name="User.findByEmail">
 		<query><![CDATA[
-			SELECT c
-			FROM Credential c
-			LEFT JOIN FETCH c.user
-			WHERE c.user.email = :email
+			SELECT u 
+			FROM User u 
+			WHERE u.email = :email
 		]]></query>
 	</named-query>
 
@@ -300,14 +336,6 @@
 			SELECT CASE WHEN (COUNT(u) > 0) THEN TRUE ELSE FALSE END 
 			FROM User u 
 			WHERE u.email = :email
-		]]></query>
-	</named-query>
-
-	<named-query name="User.findByUid">
-		<query><![CDATA[
-			SELECT u 
-			FROM User u 
-			WHERE u.uid = :uid
 		]]></query>
 	</named-query>
 

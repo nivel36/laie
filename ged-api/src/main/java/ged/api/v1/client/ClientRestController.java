@@ -20,10 +20,8 @@ import ged.api.v1.AbstractRestController;
 import ged.ejb.client.Client;
 import ged.ejb.client.ClientService;
 import ged.ejb.core.model.Page;
-import io.swagger.annotations.Api;
 
 @Path("client")
-@Api("client")
 @ApplicationScoped
 public class ClientRestController extends AbstractRestController {
 
@@ -46,7 +44,7 @@ public class ClientRestController extends AbstractRestController {
 	@Path("/client/{cif}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public ClientDto findByCif(@PathParam("cif") final String cif) {
-		final Client client = this.clientService.findClientByCif(cif);
+		final Client client = this.clientService.findByCif(cif);
 		return this.clientMapper.mapEntity(client);
 	}
 

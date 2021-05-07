@@ -17,10 +17,10 @@ public class ContactDao extends AbstractIndexedDao<Contact> {
 		return this.findByQuery(Contact.class, "Contact.findByUid", map("uid", uid));
 	}
 
-	public List<Contact> findContactsByClient(final Client client) {
-		Objects.requireNonNull(client);
-		return this.getPersistenceFacade().findByQuery(Contact.class, "Contact.findByClient", map("client", client),
-				Page.ALL_RESULTS);
+	public List<Contact> findContactsByClient(final String clientUid, final Page page) {
+		Objects.requireNonNull(clientUid);
+		return this.getPersistenceFacade().findByQuery(Contact.class, "Contact.findByClient", map("clientUid", clientUid),
+				page);
 	}
 
 	@Override

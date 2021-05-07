@@ -18,18 +18,18 @@ public class JobCandidatureStates implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private List<JobCandidatureState> jobCandidatureStates;
+	private List<JobCandidatureState> states;
 
 	@Inject
 	private transient JobCandidatureStateService jobCandidatureStateService;
 
 	public List<JobCandidatureState> getList() {
-		return this.jobCandidatureStates;
+		return this.states;
 	}
 
 	@PostConstruct
 	public void init() {
-		this.jobCandidatureStates = this.jobCandidatureStateService.findAll(Page.ALL_RESULTS);
+		this.states = this.jobCandidatureStateService.findAll(Page.ALL_RESULTS);
 	}
 
 	public void setJobCandidatureStateService(final JobCandidatureStateService jobCandidatureStateService) {

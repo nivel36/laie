@@ -1,0 +1,22 @@
+/* Add your customizations of theme here */
+body .ui-datatable table {
+	table-layout: auto;
+	
+	tbody{
+		tr{
+			a{
+				display:inline;
+				vertical-align: middle; 
+				margin-left: .5rem;
+			}
+		}
+	}
+}
+
+body .ui-autocomplete .ui-autocomplete-multiple-container .ui-autocomplete-token {
+	margin: 0 0.5rem 0.5rem 0;
+}
+
+body .ui-inputnumber .ui-inputtext {
+	text-align: right;
+}

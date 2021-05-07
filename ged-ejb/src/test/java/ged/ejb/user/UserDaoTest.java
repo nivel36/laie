@@ -18,11 +18,14 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
 import ged.ejb.core.model.Page;
 import ged.ejb.core.model.PersistenceFacade;
 
 @ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class UserDaoTest {
 
 	@Nested
@@ -30,7 +33,8 @@ public class UserDaoTest {
 
 		@Test
 		public void shouldReturnAList() {
-			when(UserDaoTest.this.persistenceFacade.findAll(User.class, Page.ALL_RESULTS)).thenReturn(new ArrayList<User>());
+			when(UserDaoTest.this.persistenceFacade.findAll(User.class, Page.ALL_RESULTS))
+					.thenReturn(new ArrayList<User>());
 
 			final List<User> users = UserDaoTest.this.userDao.findAll(Page.ALL_RESULTS);
 			assertEquals(0, users.size());
@@ -51,10 +55,14 @@ public class UserDaoTest {
 		public void userWithoutSubordinatesShouldReturnAnEmptyList() {
 			final User user = UserDaoTest.this.mockUser(1L, "abel@test.com", null);
 
-			when(UserDaoTest.this.persistenceFacade.findByQuery(User.class, "User.findSubordinateUsers", map("id", 1L),
-					Page.ALL_RESULTS)).thenThrow(new NoResultException());
+			when(UserDaoTest.this.persistenceFacade.findByQuery(User.class, "User.findByEmail",
+					map("email", "abel@test.com"))).thenReturn(user);
+			when(UserDaoTest.this.persistenceFacade.findByQuery(User.class, "User.findSubordinateUsers",
+					map("id", user.getId()), Page.ALL_RESULTS)).thenThrow(new NoResultException());
 
-			final List<User> subordinateUsersFromDataBases = UserDaoTest.this.userDao.findSubordinateUsers(user);
+			final List<User> subordinateUsersFromDataBases = UserDaoTest.this.userDao
+					.findSubordinateUsers("abel@test.com");
+
 			assertEquals(0, subordinateUsersFromDataBases.size());
 		}
 
@@ -67,10 +75,15 @@ public class UserDaoTest {
 			final List<User> subordinateUsers = new ArrayList<>();
 			subordinateUsers.add(subordinate);
 
+			when(UserDaoTest.this.persistenceFacade.findByQuery(User.class, "User.findByEmail",
+					map("email", "abel@test.com"))).thenReturn(manager);
+			when(UserDaoTest.this.persistenceFacade.findByQuery(User.class, "User.findByEmail",
+					map("email", "bernard@test.com"))).thenReturn(subordinate);
 			when(UserDaoTest.this.persistenceFacade.findByQuery(User.class, "User.findSubordinateUsers", map("id", 1L),
 					Page.ALL_RESULTS)).thenReturn(subordinateUsers);
 
-			final List<User> subordinateUsersFromDataBase = UserDaoTest.this.userDao.findSubordinateUsers(manager);
+			final List<User> subordinateUsersFromDataBase = UserDaoTest.this.userDao
+					.findSubordinateUsers(manager.getEmail());
 			assertEquals(1, subordinateUsersFromDataBase.size());
 		}
 	}

@@ -11,7 +11,6 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 	<composite:interface componentType="inputYearMonth">
-		<composite:attribute name="labelIcon" required="false" />
 		<composite:attribute name="label" required="false" />
 		<composite:attribute name="required" type="java.lang.Boolean" default="false" />
 		<composite:attribute name="disabled" type="java.lang.Boolean" default="false" />
@@ -22,13 +21,8 @@
 	</composite:interface>
 
 	<composite:implementation>
-		<div id="#{cc.clientId}" class="input-group input-year-month #{cc.attrs.styleClass}">
-			<h:panelGroup layout="block" styleClass="label-icon-container" rendered="#{not empty cc.attrs.labelIcon}">
-				<em class="label-icon icon fa #{cc.attrs.labelIcon}" />
-			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="label-container" rendered="#{not empty cc.attrs.label}">
-				<p:outputLabel id="label" for="month" value="#{cc.attrs.label}" styleClass="label" />
-			</h:panelGroup>
+		<div id="#{cc.clientId}" class="p-field input-group input-year-month #{cc.attrs.styleClass}">
+			<p:outputLabel id="label" for="month" value="#{cc.attrs.label}" styleClass="label" />
 			<div class="input-container">
 				<p:selectOneMenu id="month" value="#{cc.attrs.value.month}" required="#{cc.attrs.required}" styleClass="input input-select"
 					disabled="#{cc.attrs.disabled}">
@@ -41,9 +35,7 @@
 					<f:selectItems var="year" value="#{cc.years}" itemValue="#{year}" itemLabel="#{year}" />
 				</p:selectOneMenu>
 			</div>
-			<div class="message-container">
-				<p:message id="message" for="month" styleClass="message-error" />
-			</div>
+			<p:message id="message" for="month" styleClass="message-error" />
 		</div>
 	</composite:implementation>
 </ui:component>

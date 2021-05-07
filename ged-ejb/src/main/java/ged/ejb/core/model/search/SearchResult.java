@@ -25,7 +25,7 @@ public class SearchResult<T extends Identifiable> {
 	public SearchResult(List<T> resultData, int count) {
 		this.resultData = resultData;
 		this.count = count;
-		this.facets = new HashMap<String, List<Facet>>();
+		this.facets = new HashMap<>();
 	}
 	
 	public int getCount() {

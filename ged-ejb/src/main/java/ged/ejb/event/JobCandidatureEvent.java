@@ -14,6 +14,7 @@ import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.SortableField;
 import org.hibernate.search.annotations.Store;
 
+import ged.ejb.core.Event;
 import ged.ejb.core.model.AbstractIndexedEntity;
 import ged.ejb.job.candidature.JobCandidature;
 import ged.ejb.job.candidature.JobCandidatureState;
@@ -21,7 +22,7 @@ import ged.ejb.user.User;
 
 @Entity
 @Indexed
-public class JobCandidatureEvent extends AbstractIndexedEntity {
+public class JobCandidatureEvent extends AbstractIndexedEntity implements Event {
 
 	private static final long serialVersionUID = 1L;
 

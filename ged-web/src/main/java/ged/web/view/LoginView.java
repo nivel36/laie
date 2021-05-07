@@ -3,9 +3,9 @@ package ged.web.view;
 import java.util.Locale;
 
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.application.NavigationHandler;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.security.enterprise.AuthenticationStatus;
@@ -18,7 +18,7 @@ import ged.web.core.util.PageEnum;
 import ged.web.core.view.AbstractView;
 
 @Named
-@RequestScoped
+@ViewScoped
 public class LoginView extends AbstractView {
 
 	private static final Logger logger = LoggerFactory.getLogger(LoginView.class);
@@ -71,6 +71,7 @@ public class LoginView extends AbstractView {
 			this.addMessage(FacesMessage.SEVERITY_ERROR, "auth.message.error", "auth.message.error");
 			this.facesContext.validationFailed();
 		} else {
+			this.sessionUser.load(this.username);
 			this.gotoIndex();
 		}
 	}

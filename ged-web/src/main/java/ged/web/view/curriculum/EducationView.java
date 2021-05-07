@@ -60,9 +60,9 @@ public class EducationView extends AbstractView {
 	}
 
 	private Education buildNewEducation() {
-		final Education education = new Education();
-		education.setCurriculum(this.curriculum);
-		return education;
+		final Education newEducation = new Education();
+		newEducation.setCurriculum(this.curriculum);
+		return newEducation;
 	}
 
 	public String delete() {
@@ -99,11 +99,11 @@ public class EducationView extends AbstractView {
 	}
 
 	public List<Integer> initYears() {
-		final List<Integer> years = new ArrayList<Integer>();
+		final List<Integer> newYears = new ArrayList<>();
 		for (int i = 1950; i < LocalDate.now().getYear(); i++) {
-			years.add(Integer.valueOf(i));
+			newYears.add(Integer.valueOf(i));
 		}
-		return years;
+		return newYears;
 	}
 
 	public boolean isNewEducation() {

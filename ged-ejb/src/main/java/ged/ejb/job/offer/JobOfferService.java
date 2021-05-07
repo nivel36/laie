@@ -14,8 +14,8 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ged.ejb.candidate.Candidate;
 import ged.ejb.client.Client;
+import ged.ejb.client.ClientService;
 import ged.ejb.core.AbstractIndexedService;
 import ged.ejb.core.model.AbstractIndexedDao;
 import ged.ejb.core.model.Page;
@@ -27,11 +27,15 @@ import ged.ejb.job.offer.event.JobOfferCompletedEvent;
 import ged.ejb.job.offer.event.JobOfferCreatedEvent;
 import ged.ejb.job.offer.event.JobOfferStateChangedEvent;
 import ged.ejb.user.User;
+import ged.ejb.user.UserService;
 
 @Stateless
 public class JobOfferService extends AbstractIndexedService<JobOffer> {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
+
+	@Inject
+	private ClientService clientService;
 
 	@Inject
 	@JobOfferCompletedEvent
@@ -56,44 +60,62 @@ public class JobOfferService extends AbstractIndexedService<JobOffer> {
 	@JobOfferStateChangedEvent
 	private Event<JobOffer> stateChangedEvent;
 
-	private void closeJobOffer(final JobOffer jobOffer) {
+	@Inject
+	private UserService userService;
+
+	public JobOffer closeJobOffer(final String jobOfferUid) {
+		final JobOffer jobOffer = this.findByUid(jobOfferUid);
 		jobOffer.setDateClosed(LocalDate.now());
 		jobOffer.setState(JobOfferState.CLOSED);
+		jobOffer.setPublished(false);
 		this.completedEvent.fire(jobOffer);
+		return jobOffer;
+	}
+
+	public JobOffer createJobOffer(final String clientUid, final String ownerEmail, final String title) {
+		Objects.requireNonNull(clientUid);
+		Objects.requireNonNull(ownerEmail);
+		Objects.requireNonNull(title);
+		final User user = this.userService.findByEmail(ownerEmail);
+		final Client client = this.clientService.findByUid(clientUid);
+		final JobOffer jobOffer = new JobOffer();
+		jobOffer.setClient(client);
+		jobOffer.setOwner(user);
+		jobOffer.setTitle(title);
+		jobOffer.setState(JobOfferState.CREATED);
+		jobOffer.setDateOpened(LocalDate.now());
+		return jobOffer;
 	}
 
 	public JobOffer findByUid(final String uid) {
 		Objects.requireNonNull(uid);
+		logger.debug("Find job offer by uid {}", uid);
 		return this.jobOfferDao.findByUid(uid);
 	}
 
-	public List<JobOffer> findJobOffers(final Candidate candidate, final Page page) {
-		Objects.requireNonNull(candidate, "Candidate can't be null");
-		Objects.requireNonNull(page, "Page can't be null");
-		logger.debug("Find all job offers of the candidate  {}", candidate);
-
-		return this.jobOfferDao.findJobOffers(candidate, page);
+	public List<JobOffer> findJobOffersByCandidate(final String candidateUid, final Page page) {
+		Objects.requireNonNull(candidateUid);
+		Objects.requireNonNull(page);
+		logger.debug("Find all job offers of the candidate  {}", candidateUid);
+		return this.jobOfferDao.findJobOffersByCandidate(candidateUid, page);
 	}
 
-	public List<JobOffer> findJobOffers(final Client client, final Page page) {
-		Objects.requireNonNull(client, "Client can't be null");
-		Objects.requireNonNull(page, "Page can't be null");
-		logger.debug("Find all job offers of the client  {}", client);
-
-		return this.jobOfferDao.findJobOffers(client, page);
+	public List<JobOffer> findJobOffersByClientUid(final String clientUid, final Page page) {
+		Objects.requireNonNull(clientUid);
+		Objects.requireNonNull(page);
+		logger.debug("Find all job offers of the client  {}", clientUid);
+		return this.jobOfferDao.findJobOffersByClientUid(clientUid, page);
 	}
 
-	public List<JobOffer> findJobOffers(final User owner, final Page page) {
-		Objects.requireNonNull(owner, "Owner can't be null ");
-		Objects.requireNonNull(page, "Page can't be null");
-		logger.debug("Find all job offers of the owner {}", owner.getFullName());
-
-		return this.jobOfferDao.findJobOffers(owner, page);
+	public List<JobOffer> findJobOffersByUser(final String email, final Page page) {
+		Objects.requireNonNull(email);
+		Objects.requireNonNull(page);
+		logger.debug("Find all job offers of the owner {}", email);
+		return this.jobOfferDao.findJobOffersByUser(email, page);
 	}
 
 	public List<JobOfferState> findJobOfferStates() {
 		logger.debug("Find all job offer states");
-
 		return Arrays.asList(JobOfferState.values());
 	}
 
@@ -103,28 +125,25 @@ public class JobOfferService extends AbstractIndexedService<JobOffer> {
 	}
 
 	private JobOfferState getPreviousState(final JobOffer jobOffer) {
-		if (!jobOffer.isNew()) {
-			final JobOffer savedJobOffer = this.find(jobOffer.getId());
-			return savedJobOffer.getState();
+		if (jobOffer.isNew()) {
+			return null;
 		}
-		return null;
+		final JobOffer savedJobOffer = this.find(jobOffer.getId());
+		return savedJobOffer.getState();
 	}
 
 	private boolean isCompleted(final JobOffer jobOffer) {
 		final List<JobCandidature> jobCandidatures = this.jobCandidatureService.findApprovedJobCanditures(jobOffer,
 				Page.ALL_RESULTS);
 		final int numberofAprrovedCandidatures = jobCandidatures.size();
-		if (jobOffer.getPlaces() == numberofAprrovedCandidatures) {
-			return true;
-		}
-		return false;
+		return jobOffer.getPlaces() == numberofAprrovedCandidatures;
 	}
 
 	public void onJobCandidatureCompleted(@Observes @JobCandidatureCompletedEvent final JobCandidature jobCandidature) {
 		Objects.requireNonNull(jobCandidature, "Job candidature can't be null");
 		final JobOffer jobOffer = jobCandidature.getJobOffer();
-		if (this.isCompleted(jobCandidature.getJobOffer())) {
-			this.closeJobOffer(jobOffer);
+		if (this.isCompleted(jobOffer)) {
+			this.closeJobOffer(jobOffer.getUid());
 		}
 	}
 
@@ -133,18 +152,30 @@ public class JobOfferService extends AbstractIndexedService<JobOffer> {
 	}
 
 	private void openJobOffer(final JobOffer jobOffer) {
+		logger.debug("The open date has come. Opening the job offer");
 		jobOffer.setDateOpened(LocalDate.now());
 		jobOffer.setState(JobOfferState.OPENED);
+		this.createdEvent.fire(jobOffer);
+	}
+
+	public JobOffer publish(final String jobOfferUid) {
+		Objects.requireNonNull(jobOfferUid);
+		logger.debug(String.format("Publish job oofer %s", jobOfferUid));
+		final JobOffer jobOffer = this.findByUid(jobOfferUid);
+		if (jobOffer.isOpen()) {
+			jobOffer.setPublished(true);
+		} else {
+			throw new IllegalStateException(String.format("Job offer %s is not oppen", jobOfferUid));
+		}
+		return jobOffer;
 	}
 
 	@Override
 	public JobOffer save(final JobOffer jobOffer) {
-		Objects.requireNonNull(jobOffer, "Job offer can't be null");
+		Objects.requireNonNull(jobOffer);
 		logger.debug("Save job offer {}", jobOffer);
 		if (jobOffer.isNew() && this.openDateHasCome(jobOffer)) {
-			logger.debug("The open date has come. Opening the job offer");
 			this.openJobOffer(jobOffer);
-			this.createdEvent.fire(jobOffer);
 		} else {
 			final JobOfferState previousJobOfferState = this.getPreviousState(jobOffer);
 			if (!jobOffer.hasState(previousJobOfferState)) {
@@ -153,6 +184,11 @@ public class JobOfferService extends AbstractIndexedService<JobOffer> {
 			}
 		}
 		return super.save(jobOffer);
+	}
+
+	public void setClientService(ClientService clientService) {
+		Objects.requireNonNull(clientService);
+		this.clientService = clientService;
 	}
 
 	public void setCompletedEvent(final Event<JobOffer> completedEvent) {
@@ -164,20 +200,34 @@ public class JobOfferService extends AbstractIndexedService<JobOffer> {
 	}
 
 	public void setJobCandidatureService(final JobCandidatureService jobCandidatureService) {
+		Objects.requireNonNull(jobCandidatureService);
 		this.jobCandidatureService = jobCandidatureService;
 	}
 
 	public void setJobOfferDao(final JobOfferDao jobOfferDao) {
-		Objects.requireNonNull(jobOfferDao, "JobOfferDao can't be null");
-
+		Objects.requireNonNull(jobOfferDao);
 		this.jobOfferDao = jobOfferDao;
 	}
 
 	public void setJobOfferStateChangeEventDao(final JobOfferStateChangeEventDao jobOfferStateChangeEventDao) {
+		Objects.requireNonNull(jobOfferStateChangeEventDao);
 		this.jobOfferStateChangeEventDao = jobOfferStateChangeEventDao;
 	}
 
 	public void setStateChangedEvent(final Event<JobOffer> stateChangedEvent) {
 		this.stateChangedEvent = stateChangedEvent;
+	}
+
+	public void setUserService(UserService userService) {
+		Objects.requireNonNull(userService);
+		this.userService = userService;
+	}
+
+	public JobOffer unpublish(final String jobOfferUid) {
+		final JobOffer jobOffer = this.findByUid(jobOfferUid);
+		if (jobOffer.isPublished()) {
+			jobOffer.setPublished(false);
+		}
+		return jobOffer;
 	}
 }

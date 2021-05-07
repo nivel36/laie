@@ -19,13 +19,13 @@ public class Navigator {
 
 		boolean isRedirect;
 
-		PageEnum page;
+		PageEnum pageEnum;
 
 		Map<String, String> queryParams;
 
-		Page(PageEnum page) {
-			this.page = page;
-			queryParams = new HashedMap<String, String>();
+		Page(PageEnum pageEnum) {
+			this.pageEnum = pageEnum;
+			queryParams = new HashedMap<>();
 		}
 
 		Page addQueryIdParam(String value) {
@@ -70,7 +70,7 @@ public class Navigator {
 			if (getClass() != obj.getClass())
 				return false;
 			Page other = (Page) obj;
-			return isRedirect == other.isRedirect && page == other.page
+			return isRedirect == other.isRedirect && pageEnum == other.pageEnum
 					&& Objects.equals(queryParams, other.queryParams);
 		}
 
@@ -78,23 +78,23 @@ public class Navigator {
 			final String query = buildQuery();
 			if (query.isEmpty()) {
 				if (isRedirect) {
-					return new StringBuilder(this.page.getUrl()).append("?faces-redirect=true").toString();
+					return new StringBuilder(this.pageEnum.getUrl()).append("?faces-redirect=true").toString();
 				} else {
-					return this.page.getUrl();
+					return this.pageEnum.getUrl();
 				}
 			} else {
 				if (isRedirect) {
-					return new StringBuilder(this.page.getUrl()).append(query).append("&faces-redirect=true")
+					return new StringBuilder(this.pageEnum.getUrl()).append(query).append("&faces-redirect=true")
 							.toString();
 				} else {
-					return new StringBuilder(this.page.getUrl()).append(query).toString();
+					return new StringBuilder(this.pageEnum.getUrl()).append(query).toString();
 				}
 			}
 		}
 
 		@Override
 		public int hashCode() {
-			return Objects.hash(isRedirect, page, queryParams);
+			return Objects.hash(isRedirect, pageEnum, queryParams);
 		}
 	}
 

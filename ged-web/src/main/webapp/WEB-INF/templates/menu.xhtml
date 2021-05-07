@@ -6,8 +6,6 @@
 			<div class="nano-content menu-scroll-content">
 				<h:form id="menuform">
 					<po:menu>
-						<p:menuitem id="om_index" value="#{i18n['menu.index']}" icon="fa fa-fw fa-home" containerStyleClass="#{selectedMenu eq 'index' ? 'active-menuitem' : 'menuitem' }"
-							outcome="#{Page.INDEX.getUrl()}" />
 						<p:menuitem id="om_candidates" value="#{i18n['menu.candidates']}" icon="fa fa-fw fa-users" containerStyleClass="#{selectedMenu eq 'candidates' ? 'active-menuitem' : 'menuitem' }"
 							outcome="#{Page.CANDIDATE_SEARCH.getUrl()}" />
 						<p:menuitem id="om_offers" value="#{i18n['menu.offers']}" icon="fa fa-fw fa-suitcase" containerStyleClass="#{selectedMenu eq 'offers' ? 'active-menuitem' : 'menuitem' }"

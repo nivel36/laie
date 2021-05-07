@@ -20,7 +20,7 @@
 
 	<composite:implementation>
 		<div id="#{cc.clientId}" class="card card-w-title clients #{cc.attrs.styleClass}">
-			<h1>#{cc.attrs.title}</h1>
+			<h5>#{cc.attrs.title}</h5>
 			<p:dataTable var="client" id="clients" value="#{cc.attrs.value}" emptyMessage="#{i18n['client.no_clients_found']}"
 				reflow="true" paginator="true" paginatorPosition="bottom" rows="#{cc.attrs.rows}" sortBy="#{client.name}"
 				sortOrder="ascending">

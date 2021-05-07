@@ -10,7 +10,7 @@ public class SearchFacets implements Iterable<SearchFacet> {
 	private final Queue<SearchFacet> facets;
 
 	public SearchFacets() {
-		this.facets = new ArrayDeque<SearchFacet>();
+		this.facets = new ArrayDeque<>();
 	}
 
 	public void addFacet(final SearchFacet searchFacet) {
@@ -32,7 +32,7 @@ public class SearchFacets implements Iterable<SearchFacet> {
 	}
 
 	public boolean isEmpty() {
-		return facets.size() == 0;
+		return facets.isEmpty();
 	}
 
 	public boolean containsFacet(String field, String name, String selectedFacet) {

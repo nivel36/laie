@@ -1,8 +1,5 @@
 package ged.api.v1;
 
-import javax.xml.bind.annotation.XmlRootElement;
-
-@XmlRootElement
 public class ErrorResponseDto {
 
 	private String message;

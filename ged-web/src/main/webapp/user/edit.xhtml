@@ -12,7 +12,7 @@
 	template="/WEB-INF/templates/template.xhtml">
 
 	<ui:define name="title">
-		#{i18n['user.user_edit']} - #{editUserView.user.fullName}
+		#{i18n['user.edit_user']} - #{editUserView.user.fullName}
 	</ui:define>
 
 	<ui:param name="selectedMenu" value="users" />
@@ -33,7 +33,7 @@
 			<p:button value="#{i18n['action.cancel']}" outcome="#{Page.USER.getUrl()}" styleClass="secondary-button">
 				<f:param name="id" value="#{editUserView.user.uid}" />
 			</p:button>
-			<p:commandButton value="#{i18n['action.save']}" onclick="save()" styleClass="success-btn" />
+			<p:commandButton value="#{i18n['action.save']}" onclick="save()" styleClass="success-button" />
 		</h:form>
 	</ui:define>
 
@@ -42,10 +42,10 @@
 		<h:form id="userForm">
 			<p:remoteCommand name="save" process="@form" update="@form growl" action="#{editUserView.save}" />
 			<div class="p-grid">
-				<div class="p-col-12 p-xl-6">
+				<div class="p-col-12 p-md-6">
 					<div class="card card-w-title ui-fluid">
-						<h1>#{i18n['user.personal_information']}</h1>
-						<div class="p-grid">
+						<h5>#{i18n['user.personal_information']}</h5>
+						<div class="p-grid p-formgrid">
 							<div class="p-col-12 p-sm-6">
 								<g:input id="name" label="#{i18n['user.name']}" value="#{editUserView.user.name}" required="true" />
 							</div>
@@ -62,10 +62,10 @@
 						</div>
 					</div>
 				</div>
-				<div class="p-col-12 p-xl-6">
+				<div class="p-col-12 p-md-6">
 					<div class="card card-w-title ui-fluid">
-						<h1>#{i18n['user.professional_information']}</h1>
-						<div class="p-grid">
+						<h5>#{i18n['user.professional_information']}</h5>
+						<div class="p-grid p-formgrid">
 							<div class="p-col-12 p-sm-6">
 								<g:input type="selectOneMenu" id="role" value="#{editUserView.user.role}" label="#{i18n['user.role']}" required="true">
 									<f:selectItems value="#{roles.list}" var="role" itemValue="#{role}" itemLabel="#{i18n[role]}" />
@@ -77,7 +77,7 @@
 									<cc:autocomplete id="manager" label="#{i18n['user.manager']}" value="#{editUserView.user.manager}" completeMethod="#{editUserView.queryManager}"
 										converter="userConverter" rendered="#{not editUserView.user.admin}">
 										<p:column styleClass="user-select image">
-											<cc:person value="#{var}" showDescription="false" />
+											<cc:person value="#{var}" />
 										</p:column>
 									</cc:autocomplete>
 								</h:panelGroup>

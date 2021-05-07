@@ -1,6 +1,5 @@
 package ged.web.view.client;
 
-import java.io.IOException;
 import java.lang.invoke.MethodHandles;
 
 import javax.annotation.PostConstruct;
@@ -29,7 +28,7 @@ public class SearchClientView extends AbstractView {
 
 	private String searchText;
 
-	public void export() throws IOException {
+	public void export() {
 		logger.debug("Export clients action performed");
 	}
 

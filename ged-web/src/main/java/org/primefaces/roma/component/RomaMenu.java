@@ -1,128 +1,138 @@
+/**
+ *  Copyright 2009-2020 PrimeTek.
+ *
+ *  Licensed under PrimeFaces Commercial License, Version 1.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *  Licensed under PrimeFaces Commercial License, Version 1.0 (the "License");
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
 package org.primefaces.roma.component;
 
 import javax.faces.component.UIComponent;
-import javax.faces.component.UINamingContainer;
-import javax.faces.component.UIViewRoot;
+import org.primefaces.component.menu.AbstractMenu;
 import javax.faces.context.FacesContext;
+import javax.faces.component.UINamingContainer;
+import javax.faces.component.UIOutput;
+import javax.faces.component.UIViewRoot;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.ComponentSystemEvent;
 import javax.faces.event.ComponentSystemEventListener;
 import javax.faces.event.ListenerFor;
 import javax.faces.event.PostAddToViewEvent;
-
 import org.primefaces.component.api.Widget;
-import org.primefaces.component.menu.AbstractMenu;
-import org.primefaces.model.menu.MenuModel;
 
 @ListenerFor(sourceClass = RomaMenu.class, systemEventClass = PostAddToViewEvent.class)
-public class RomaMenu extends AbstractMenu implements Widget, ComponentSystemEventListener {
-	public enum PropertyKeys {
-		model, style, styleClass, widgetVar;
+public class RomaMenu extends AbstractMenu implements Widget,ComponentSystemEventListener {
 
-		String toString;
+    public static final String COMPONENT_TYPE = "org.primefaces.component.RomaMenu";
+    public static final String COMPONENT_FAMILY = "org.primefaces.component";
+    private static final String DEFAULT_RENDERER = "org.primefaces.component.RomaMenuRenderer";
+    private static final String[] LEGACY_RESOURCES = new String[]{"primefaces.css","jquery/jquery.js","jquery/jquery-plugins.js","primefaces.js"};
+    private static final String[] MODERN_RESOURCES = new String[]{"components.css","jquery/jquery.js","jquery/jquery-plugins.js","core.js"};
+    
+    protected enum PropertyKeys {
 
-		private PropertyKeys() {
-		}
+        widgetVar, model, style, styleClass;
 
-		private PropertyKeys(final String toString) {
-			this.toString = toString;
-		}
+        String toString;
 
-		@Override
-		public String toString() {
-			return this.toString != null ? this.toString : super.toString();
-		}
-	}
+        PropertyKeys(String toString) {
+            this.toString = toString;
+        }
 
-	public static final String COMPONENT_FAMILY = "org.primefaces.component";
-	public static final String COMPONENT_TYPE = "org.primefaces.component.RomaMenu";
-	private static final String[] LEGACY_RESOURCES = new String[] { "primefaces.css", "jquery/jquery.js",
-			"jquery/jquery-plugins.js", "primefaces.js" };
+        PropertyKeys() {
+        }
 
-	private static final String[] MODERN_RESOURCES = new String[] { "components.css", "jquery/jquery.js",
-			"jquery/jquery-plugins.js", "core.js" };
+        public String toString() {
+            return ((this.toString != null) ? this.toString : super.toString());
+        }
+    }
 
-	public RomaMenu() {
-		this.setRendererType("org.primefaces.component.RomaMenuRenderer");
-	}
+    public RomaMenu() {
+        setRendererType(DEFAULT_RENDERER);
+    }
 
-	@Override
-	public String getFamily() {
-		return "org.primefaces.component";
-	}
+    public String getFamily() {
+        return COMPONENT_FAMILY;
+    }
 
-	@Override
-	public MenuModel getModel() {
-		return (MenuModel) this.getStateHelper().eval(PropertyKeys.model, (Object) null);
-	}
+    public java.lang.String getWidgetVar() {
+        return (java.lang.String) getStateHelper().eval(PropertyKeys.widgetVar, null);
+    }
 
-	public String getStyle() {
-		return (String) this.getStateHelper().eval(PropertyKeys.style, (Object) null);
-	}
+    public void setWidgetVar(java.lang.String _widgetVar) {
+        getStateHelper().put(PropertyKeys.widgetVar, _widgetVar);
+    }
 
-	public String getStyleClass() {
-		return (String) this.getStateHelper().eval(PropertyKeys.styleClass, (Object) null);
-	}
+    public org.primefaces.model.menu.MenuModel getModel() {
+        return (org.primefaces.model.menu.MenuModel) getStateHelper().eval(PropertyKeys.model, null);
+    }
 
-	public String getWidgetVar() {
-		return (String) this.getStateHelper().eval(PropertyKeys.widgetVar, (Object) null);
-	}
+    public void setModel(org.primefaces.model.menu.MenuModel _model) {
+        getStateHelper().put(PropertyKeys.model, _model);
+    }
 
-	@Override
-	public void processEvent(final ComponentSystemEvent event) throws AbortProcessingException {
-		if (event instanceof PostAddToViewEvent) {
-			final FacesContext context = this.getFacesContext();
-			final UIViewRoot root = context.getViewRoot();
+    public java.lang.String getStyle() {
+        return (java.lang.String) getStateHelper().eval(PropertyKeys.style, null);
+    }
 
-			boolean isPrimeConfig;
-			try {
-				isPrimeConfig = Class.forName("org.primefaces.config.PrimeConfiguration") != null;
-			} catch (final ClassNotFoundException var11) {
-				isPrimeConfig = false;
-			}
+    public void setStyle(java.lang.String _style) {
+        getStateHelper().put(PropertyKeys.style, _style);
+    }
 
-			final String[] resources = isPrimeConfig ? MODERN_RESOURCES : LEGACY_RESOURCES;
-			final String[] var6 = resources;
-			final int var7 = resources.length;
+    public java.lang.String getStyleClass() {
+        return (java.lang.String) getStateHelper().eval(PropertyKeys.styleClass, null);
+    }
 
-			for (int var8 = 0; var8 < var7; ++var8) {
-				final String res = var6[var8];
-				final UIComponent component = context.getApplication().createComponent("javax.faces.Output");
-				if (res.endsWith("css")) {
-					component.setRendererType("javax.faces.resource.Stylesheet");
-				} else if (res.endsWith("js")) {
-					component.setRendererType("javax.faces.resource.Script");
-				}
+    public void setStyleClass(java.lang.String _styleClass) {
+        getStateHelper().put(PropertyKeys.styleClass, _styleClass);
+    }
 
-				component.getAttributes().put("library", "primefaces");
-				component.getAttributes().put("name", res);
-				root.addComponentResource(context, component);
-			}
-		}
-	}
+    public String resolveWidgetVar() {
+        FacesContext context = getFacesContext();
+        String userWidgetVar = (String) getAttributes().get("widgetVar");
 
-	@Override
-	public String resolveWidgetVar() {
-		final FacesContext context = this.getFacesContext();
-		final String userWidgetVar = (String) this.getAttributes().get("widgetVar");
-		return userWidgetVar != null ? userWidgetVar
-				: "widget_"
-						+ this.getClientId(context).replaceAll("-|" + UINamingContainer.getSeparatorChar(context), "_");
-	}
+        if (userWidgetVar != null) {
+            return userWidgetVar;
+        } else {
+            return "widget_" + getClientId(context).replaceAll("-|" + UINamingContainer.getSeparatorChar(context), "_");
+        }
+    }
+    
+    @Override
+    public void processEvent(ComponentSystemEvent event) throws AbortProcessingException {
+        if(event instanceof PostAddToViewEvent) {
+            FacesContext context = getFacesContext();
+            UIViewRoot root = context.getViewRoot();
+            
+            boolean isPrimeConfig;
+            try {
+                isPrimeConfig = Class.forName("org.primefaces.config.PrimeConfiguration") != null;
+            } catch (ClassNotFoundException e) {
+                isPrimeConfig = false;
+            }
 
-	public void setModel(final MenuModel _model) {
-		this.getStateHelper().put(PropertyKeys.model, _model);
-	}
+            String[] resources = (isPrimeConfig) ? MODERN_RESOURCES : LEGACY_RESOURCES;
 
-	public void setStyle(final String _style) {
-		this.getStateHelper().put(PropertyKeys.style, _style);
-	}
+            for(String res : resources) {
+                UIComponent component = context.getApplication().createComponent(UIOutput.COMPONENT_TYPE);
+                if(res.endsWith("css"))
+                    component.setRendererType("javax.faces.resource.Stylesheet");
+                else if(res.endsWith("js"))
+                    component.setRendererType("javax.faces.resource.Script");
 
-	public void setStyleClass(final String _styleClass) {
-		this.getStateHelper().put(PropertyKeys.styleClass, _styleClass);
-	}
+                component.getAttributes().put("library", "primefaces");
+                component.getAttributes().put("name", res);
 
-	public void setWidgetVar(final String _widgetVar) {
-		this.getStateHelper().put(PropertyKeys.widgetVar, _widgetVar);
-	}
+                root.addComponentResource(context, component);
+            }
+        }
+    }
 }

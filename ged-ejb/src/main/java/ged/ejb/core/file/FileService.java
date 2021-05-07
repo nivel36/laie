@@ -26,9 +26,9 @@ public class FileService {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
-	private final static FileBucket PRIVATE_BUCKET = new PrivateFileBucket();
+	private static final FileBucket PRIVATE_BUCKET = new PrivateFileBucket();
 
-	private final static FileBucket PUBLIC_BUCKET = new PublicFileBucket();
+	private static final FileBucket PUBLIC_BUCKET = new PublicFileBucket();
 
 	@Inject
 	@Repository
@@ -79,8 +79,7 @@ public class FileService {
 		Objects.requireNonNull(file);
 		try {
 			final Path path = Paths.get(file.getPhysicalFile().getAbsolutePath());
-			final InputStream is = Files.newInputStream(path);
-			return new BufferedInputStream(is);
+			return new BufferedInputStream(Files.newInputStream(path));
 		} catch (final IOException e) {
 			throw new UncheckedIOException(e);
 		}
@@ -90,10 +89,10 @@ public class FileService {
 		Objects.requireNonNull(file);
 		final PhysicalFile physicalFile = file.getPhysicalFile();
 		final boolean isOrphan = this.fileDao.isOrphanPhysicalFile(physicalFile);
+		this.fileDao.delete(file);
 		if (isOrphan) {
 			this.removePhysicalFile(physicalFile);
 		}
-		this.fileDao.delete(file);
 	}
 
 	private void removePhysicalFile(final PhysicalFile physicalFile) {
@@ -106,7 +105,20 @@ public class FileService {
 		}
 	}
 
-	public File uploadFile(final InputStream inputStream, final boolean publicAccess, final String filename) {
+	public File uploadTemporalFile(final InputStream inputStream) {
+		Objects.requireNonNull(inputStream);
+		final FileBucket fileBucket = PRIVATE_BUCKET;
+		final String uuid = UUID.randomUUID().toString();
+		final File file = new File("temporal." + uuid);
+		file.setPublicAccess(false);
+		final Path absolutePath = getAbsolutePath(fileBucket, uuid);
+		final String hash = this.uploadFileToFilesystem(absolutePath, inputStream);
+		final PhysicalFile newPhysicalFile = buildNewPhysicalFile(fileBucket, uuid, absolutePath, hash);
+		file.setPhysicalFile(newPhysicalFile);
+		return file;
+	}
+
+	public File uploadFile(final InputStream inputStream, final String filename, final boolean publicAccess) {
 		Objects.requireNonNull(inputStream);
 		final FileBucket fileBucket = publicAccess ? PUBLIC_BUCKET : PRIVATE_BUCKET;
 		final File file = new File(filename);
@@ -122,8 +134,7 @@ public class FileService {
 			final PhysicalFile newPhysicalFile = buildNewPhysicalFile(fileBucket, uuid, absolutePath, hash);
 			file.setPhysicalFile(newPhysicalFile);
 		}
-		this.fileDao.save(file);
-		return file;
+		return this.fileDao.save(file);
 	}
 
 	private String uploadFileToFilesystem(final Path path, final InputStream inputStream) {

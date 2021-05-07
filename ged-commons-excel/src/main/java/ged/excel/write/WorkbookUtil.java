@@ -19,39 +19,29 @@ public final class WorkbookUtil {
 	private WorkbookUtil() {
 		throw new UnsupportedOperationException();
 	}
-	
+
 	public static Sheet createSheet(final Workbook workbook, final String sheetName) {
 		Objects.requireNonNull(workbook);
 		Objects.requireNonNull(sheetName);
 		return workbook.createSheet(sheetName);
 	}
-	
+
 	public static byte[] workbookToByteArray(final Workbook workbook) throws IOException {
 		Objects.requireNonNull(workbook);
-		final ByteArrayOutputStream bos = new ByteArrayOutputStream();
-		try {
+		try (final ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
 			workbook.write(bos);
 			return bos.toByteArray();
-		} finally {
-			if (bos != null) {
-				bos.close();
-			}
 		}
 	}
-	
+
 	public static void workbookToFile(final Workbook workbook, final File file) throws IOException {
 		Objects.requireNonNull(workbook);
 		Objects.requireNonNull(file);
-		final FileOutputStream fileOut = new FileOutputStream(file);
-		try {
+		try (final FileOutputStream fileOut = new FileOutputStream(file)) {
 			workbook.write(fileOut);
-		} finally {
-			if (fileOut != null) {
-				fileOut.close();
-			}
 		}
 	}
-	
+
 	public static void closeWorkbook(final Workbook workbook) throws IOException {
 		Objects.requireNonNull(workbook);
 		if (workbook instanceof SXSSFWorkbook) { // TODO ivmedina. Poner bonito

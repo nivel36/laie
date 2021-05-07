@@ -11,12 +11,12 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 	<composite:interface>
-		<composite:attribute name="value" required="true" type="ged.ejb.core.file.File"/>
+		<composite:attribute name="value" required="true" type="ged.ejb.core.file.File" />
 		<composite:attribute name="styleClass" required="false" default="" />
 	</composite:interface>
 
 	<composite:implementation>
-		<p:graphicImage styleClass="avatar #{cc.attrs.styleClass}" value="/images/#{cc.attrs.value.physicalFile.relativePath}" rendered="#{not empty cc.attrs.value}" />
+ 		<p:graphicImage styleClass="avatar #{cc.attrs.styleClass}" value="/images/#{cc.attrs.value.physicalFile.relativePath}" rendered="#{not empty cc.attrs.value}"/>
 		<p:graphicImage styleClass="avatar #{cc.attrs.styleClass}" value="/resources/img/default-avatar.png" rendered="#{empty cc.attrs.value}" />
 	</composite:implementation>
 </ui:component>

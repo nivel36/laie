@@ -9,6 +9,7 @@ import javax.inject.Named;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import ged.ejb.core.model.Address;
 import ged.web.core.IllegalPageStateException;
 
 @Named
@@ -38,6 +39,9 @@ public class EditClientView extends AbstractClientView {
 		this.checkNonNullClient();
 		logger.trace("Client {} edit init", this.client);
 		this.checkEditPermission();
+		if(client.getAddress() == null) {
+			client.setAddress(new Address());
+		}
 	}
 
 	public String save() {

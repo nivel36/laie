@@ -1,6 +1,5 @@
 package ged.web.view.client;
 
-import java.io.IOException;
 import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +51,7 @@ public class ViewClientView extends AbstractClientView {
 		return this.navigator.getRedirectUrl(PageEnum.CLIENT_EDIT, this.client);
 	}
 
-	public void export() throws IOException {
+	public void export() {
 		logger.debug("Export client action performed");
 	}
 
@@ -74,7 +73,7 @@ public class ViewClientView extends AbstractClientView {
 			this.client.setAddress(new Address());
 		}
 		this.contacts = new ArrayList<>(this.client.getContacts());
-		this.jobOffers = this.jobOfferService.findJobOffers(this.client, Page.ALL_RESULTS);
+		this.jobOffers = this.jobOfferService.findJobOffersByClientUid(this.client.getUid(), Page.ALL_RESULTS);
 		this.checkDeleted();
 		this.editable = this.sessionUser.hasPermissionToEdit(this.client);
 	}
