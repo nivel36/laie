@@ -28,6 +28,17 @@ public class UserService extends AbstractIndexedService<User> {
 	@Inject
 	@Repository
 	private UserDao userDao;
+	
+	public void deleteUserImage(final String uid) {
+		Objects.requireNonNull(uid);
+		final User user = this.findByUid(uid);
+		logger.debug("Delete image to user {}", user);
+		final File oldImage = user.getPicture();
+		user.setPicture(null);
+		if (oldImage != null) {
+			this.fileService.removeFile(oldImage);
+		}
+	}
 
 	public File addUserImage(final String uid, final InputStream inputStream) {
 		Objects.requireNonNull(uid);

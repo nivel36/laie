@@ -48,32 +48,43 @@ public class ConfigView extends AbstractView {
 
 	public void captureImage(final CaptureEvent event) {
 		Objects.requireNonNull(event);
-		imageChanged = true;
+		this.imageChanged = true;
 		final byte[] data = event.getData();
 		if (data == null) {
 			return;
 		}
-		logger.debug("Upload camera image for user {} action performed", this.user);
+		ConfigView.logger.debug("Upload camera image for user {} action performed", this.user);
 		try (final InputStream inputStream = new ByteArrayInputStream(data);) {
-			userImage = this.fileService.uploadTemporalFile(inputStream);
+			this.userImage = this.fileService.uploadTemporalFile(inputStream);
 		} catch (final IOException e) {
-			imageChanged = false;
+			this.imageChanged = false;
 			throw new UncheckedIOException(e);
 		}
 	}
 
-	
 	public void changeLanguage() {
 		final Locale newLocale = new Locale(this.user.getLanguage());
-		logger.debug("Changed locale to {} for user {} action performed", newLocale, this.user);
+		ConfigView.logger.debug("Changed locale to {} for user {} action performed", newLocale, this.user);
 		this.facesContext.getViewRoot().setLocale(newLocale);
 	}
 
-	public void deleteImage() {
-		if(userService != null) {
-			imageChanged = true;
-			userService = null;
+	private void changeUserImage() {
+		try (final InputStream inputStream = this.fileService.getFile(this.userImage)) {
+			this.userService.addUserImage(this.user.getUid(), inputStream);
+		} catch (final IOException e) {
+			throw new UncheckedIOException(e);
 		}
+	}
+
+	public void deleteImage() {
+		if (this.userImage != null) {
+			this.imageChanged = true;
+			this.userImage = null;
+		}
+	}
+
+	private void deleteUserImage() {
+		this.userService.deleteUserImage(this.user.getUid());
 	}
 
 	public User getUser() {
@@ -81,13 +92,13 @@ public class ConfigView extends AbstractView {
 	}
 
 	public File getUserImage() {
-		return userImage;
+		return this.userImage;
 	}
 
 	@PostConstruct
 	public void init() {
 		this.refreshUser();
-		logger.debug("Config user {} init", this.user);
+		ConfigView.logger.debug("Config user {} init", this.user);
 	}
 
 	private void refreshUser() {
@@ -97,24 +108,26 @@ public class ConfigView extends AbstractView {
 	}
 
 	public void save() {
-		logger.debug("Save user {} action performed", this.user);
+		ConfigView.logger.debug("Save user {} action performed", this.user);
 		this.userService.save(this.user);
-		saveImage();
+		this.saveImage();
 		this.refreshUser();
 		this.addMessage(FacesMessage.SEVERITY_INFO, "action.save_action_performed", "action.save_action_performed");
 	}
 
 	private void saveImage() {
-		if (imageChanged && userImage != null) {
-			try (final InputStream inputStream = fileService.getFile(userImage)) {
-				this.userService.addUserImage(user.getUid(), inputStream);
-			} catch (final IOException e) {
-				throw new UncheckedIOException(e);
+		if (this.imageChanged) {
+			if (this.userImage == null) {
+				logger.trace("Deleting user image");
+				this.deleteUserImage();
+			} else {
+				logger.trace("Changing user image");
+				this.changeUserImage();
 			}
 		}
 	}
 
-	public void setFileService(FileService fileService) {
+	public void setFileService(final FileService fileService) {
 		this.fileService = fileService;
 	}
 
@@ -123,25 +136,21 @@ public class ConfigView extends AbstractView {
 		this.user = user;
 	}
 
-	public void setUserImage(File userImage) {
-		this.userImage = userImage;
-	}
-
 	public void setUserService(final UserService userService) {
 		Objects.requireNonNull(userService);
 		this.userService = userService;
 	}
-	
+
 	public void uploadImage(final FileUploadEvent event) throws IOException {
 		Objects.requireNonNull(event);
-		imageChanged = true;
+		this.imageChanged = true;
 		final UploadedFile uploadedFile = event.getFile();
 		if (uploadedFile == null) {
 			return;
 		}
-		logger.debug("Upload user {} image action performed", this.user);
+		ConfigView.logger.debug("Upload user {} image action performed", this.user);
 		try (final InputStream inputStream = uploadedFile.getInputStream()) {
-			userImage = this.fileService.uploadTemporalFile(inputStream);
+			this.userImage = this.fileService.uploadTemporalFile(inputStream);
 		}
 	}
 }
