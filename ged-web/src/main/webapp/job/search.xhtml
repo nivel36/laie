@@ -60,7 +60,7 @@
 							</p:column>
 
 							<p:column headerText="#{i18n['job.job_offer_state']}">
-								<div class="tag #{jobOffer.state.color}">#{i18n[jobOffer.state.name]}</div>
+								<cc:jobOfferState value="#{jobOffer.state}" />
 							</p:column>
 						</p:dataTable>
 					</div>

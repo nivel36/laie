@@ -55,10 +55,8 @@ public abstract class AbstractLazyDataModel<T extends AbstractIndexedEntity> ext
 		SortField sortField = null;
 		if (sorts != null && !sorts.isEmpty()) {
 			for (SortMeta sort : sorts.values()) {
-				if(sort.getPriority() == 0) { // only one sort allowed
-					sortField = new SortField(sort.getField(), sort.getOrder().isAscending());
-					break;
-				}
+				sortField = new SortField(sort.getField(), sort.getOrder().isAscending());
+				break;
 			}
 		}
 		final SearchResult<T> searchResult = this.getService().search(this.searchText, page, sortField,

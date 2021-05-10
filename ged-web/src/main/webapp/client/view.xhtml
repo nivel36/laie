@@ -26,11 +26,9 @@
 
 	<ui:define name="content">
 		<div class="p-grid">
-			<div class="p-col-12">
+			<div class="p-col-12 p-xl-6">
 				<div class="card client-card">
-					<div class="card-header">
-						
-					</div>
+					<div class="card-header"></div>
 					<div class="client-card-content">
 					<div class="client-card-name">#{viewClientView.client.name}</div>
 						<div class="client-detail">
@@ -53,17 +51,7 @@
 				</div>
 			</div>
 			
-			<div class="p-col-12 p-lg-8">
-				<cc:jobOffers id="jobOffers" value="#{viewClientView.jobOffers}" rows="5">
-					<h:form id="jobOffersForm">
-						<p:button value="#{i18n['job.new_job_offer']}" outcome="#{Page.JOB_ADD.getUrl()}" process="@this" styleClass="success-btn" >
-							<f:param name="clientId" value="#{viewClientView.client.uid}" />
-						</p:button>
-					</h:form>
-				</cc:jobOffers>
-			</div>
-
-			<div class="p-col-12 p-lg-4">
+			<div class="p-col-12 p-lg-6">
 				<div class="card card-w-title contacts">
 					<h5>#{i18n['client.contacts']}</h5>
 					<h:form id="contactsForm">
@@ -89,18 +77,26 @@
 								</p:dataTable>
 							</div>
 							<div class="p-col-12">
-								<h:panelGroup id="children" styleClass="buttons">
+								<div class="buttons">
 									<p:button value="#{i18n['contact.new_contact']}" outcome="#{Page.CONTACT_ADD.getUrl()}" process="@this"	styleClass="success-btn" >
 										<f:param name="clientId" value="#{viewClientView.client.uid}" />
 									</p:button>
-								</h:panelGroup>
+								</div>
 							</div>
 						</div>
 					</h:form>
 				</div>
 			</div>
-
 			
+			<div class="p-col-12 p-lg-8">
+				<cc:jobOffers id="jobOffers" value="#{viewClientView.jobOffers}" rows="5">
+					<h:form id="jobOffersForm">
+						<p:button value="#{i18n['job.new_job_offer']}" outcome="#{Page.JOB_ADD.getUrl()}" process="@this" styleClass="success-btn" >
+							<f:param name="clientId" value="#{viewClientView.client.uid}" />
+						</p:button>
+					</h:form>
+				</cc:jobOffers>
+			</div>
 		</div>
 	</ui:define>
 </ui:composition>
