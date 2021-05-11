@@ -1,32 +1,41 @@
-$bodyBgColor:#f4f4f4;
-$textColor:#252529;
-$textSecondaryColor:#65686a;
-$dividerColor: #ebedef;
+$fontFamily:'Inter UI',sans-serif !default;
+$fontSize:13px !default;
+$borderRadius:2px !default;
+$transitionDuration:.2s !default;
+$mobileBreakpoint:991px !default;
+$phoneBreakpoint:576px !default;
+$animationDuration:.2s !default;
+$animationTimingFunction:cubic-bezier(.05,.74,.2,.99) !default;
+$letterSpacing:normal !default;
 
-$footerBgColor:#ffffff;
-$footerBorderColor:#ebebef;
+//main
+$bodyBgColor:#f4f4f4 !default;
+$textColor:#252529 !default;
+$textSecondaryColor:#65686a !default;
+$dividerColor: #ebedef !default;
+
+$footerBgColor:#ffffff !default;
+$footerBorderColor:#ebebef !default;
 
 //light menu
-$menuBgColor:#ffffff;
-$menuBorderColor:#ebebef;
-$menuitemTextColor:#666666;
-$menuitemIconColor:#65656a;
-$menuitemTextHoverColor:#252529;
-$menuitemIconHoverColor:#252529;
-$menuitemHoverBgColor:#eaeaea;
-$menuitemSeparator:#ebebef;
+$menuBgColor:#ffffff !default;
+$menuBorderColor:#ebebef !default;
+$menuitemTextColor:#666666 !default;
+$menuitemIconColor:#65656a !default;
+$menuitemTextHoverColor:#252529 !default;
+$menuitemIconHoverColor:#252529 !default;
+$menuitemHoverBgColor:#eaeaea !default;
+$menuitemSeparator:#ebebef !default;
 
 //dark menu
-$darkMenuBgColor:#252529;
-$darkMenuBorderColor:#252529;
-$darkMenuitemTextColor:rgba(#ebedef,7);
-$darkMenuitemIconColor:rgba(#ebedef,6);
-$darkMenuitemTextHoverColor:#ebebef;
-$darkMenuitemIconHoverColor:#ebebef;
-$darkMenuitemHoverBgColor:#2e2e33;
-$darkMenuitemSeparator:#424247;
+$darkMenuBgColor:#252529 !default;
+$darkMenuBorderColor:#252529 !default;
+$darkMenuitemTextColor:#8b8b90 !default;
+$darkMenuitemIconColor:#a6a6a6 !default;
+$darkMenuitemTextHoverColor:#ebebef !default;
+$darkMenuitemIconHoverColor:#ebebef !default;
+$darkMenuitemHoverBgColor:#2e2e33 !default;
+$darkMenuitemSeparator:#424247 !default;
 
-$slimMenuTooltipBgColor:#333333;
-$slimMenuTooltipTextColor:#c8c8c8;
-
-@import './_layout_common.scss';
+$slimMenuTooltipBgColor:#333333 !default;
+$slimMenuTooltipTextColor:#c8c8c8 !default;

@@ -6,39 +6,36 @@
 }
 
 .card {
-    border-radius: $borderRadius;
     background: #ffffff;
     padding: 1rem;
     box-sizing: border-box;
+    margin-bottom: 1rem;
     @include shadow(0 2px 8px 0 rgba(0, 0, 0, 0.08));
     @include border-radius($borderRadius);
-    margin-bottom: 1rem;
+
+    .card-header {
+        @include flex();
+        @include flex-align-center();
+        @include flex-justify-between();
+    }
 
     &:last-child {
-      margin-bottom: 0;
-    }
-    
-    .card-header {
-      @include flex();
-      @include flex-align-center();
-      @include flex-justify-between();
+        margin-bottom: 0;
     }
 
-    .card-subtitle {
-      color: $textSecondaryColor;
-      font-weight: 600;
-      margin: -1rem 0 1rem 0;
-    } 
+    &.card-w-title {
+        padding-bottom: 1rem;
+    }
+
+    &.no-gutter {
+        margin-bottom: 0;
+    }
 }
 
 .nopad {
     padding: 0;
-    
+
     .ui-panel-content {
         padding: 0;
     }
-}
-
-.ui-g {
-    -ms-flex-wrap: wrap;
 }

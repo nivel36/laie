@@ -13,14 +13,16 @@ $shade900:#212529 !default;    //unused
 //global 
 $fontSize:1rem !default;
 $fontFamily:'Inter UI',sans-serif;
+$textColor:$shade700 !default;
 $transitionDuration:.2s !default;
 $transition:background-color $transitionDuration, color $transitionDuration, border-color $transitionDuration, box-shadow $transitionDuration !default;
 $animationDuration:.4s !default;
 $animationTimingFunction:cubic-bezier(.05,.74,.2,.99) !default;
 $letterSpacing:normal !default;
-$borderRadius:3px !default;
+$borderRadius:4px !default;
 $tabletBreakpoint:991px !default;
 $phoneBreakpoint:576px !default;
+$divider:1px solid $shade300 !default;
 $disabledOpacity:.6 !default;
 $maskBg:rgba(0, 0, 0, 0.4) !default;
 $inlineSpacing:.5rem !default;
@@ -41,9 +43,6 @@ $actionIconHoverBg:$shade200 !default;
 $actionIconHoverBorderColor:transparent !default;
 $actionIconHoverColor:$shade700 !default;
 $actionIconBorderRadius:50% !default;
-
-//transition
-$transition: background-color $transitionDuration, color $transitionDuration, border-color $transitionDuration, box-shadow $transitionDuration !default;
 
 //focus
 $focusOutlineColor:$primaryLightColor !default;
@@ -136,9 +135,12 @@ $roundedButtonBorderRadius:2rem !default;
 $textButtonHoverBgOpacity:.04 !default;
 $textButtonActiveBgOpacity:.16 !default;
 $outlinedButtonBorder:1px solid !default;
+$plainButtonTextColor:$shade600 !default;
+$plainButtonHoverBgColor:$shade200 !default;
+$plainButtonActiveBgColor:$shade300 !default;
 
 //button severities
-$secondaryButtonBg:#7B90B0 !default;
+$secondaryButtonBg:#607D8B !default;
 $secondaryButtonTextColor:#ffffff !default;
 $secondaryButtonBorder:1px solid $secondaryButtonBg !default;
 $secondaryButtonHoverBg:scale-color($secondaryButtonBg, $lightness: -10%) !default;
@@ -149,7 +151,7 @@ $secondaryButtonTextActiveColor:$secondaryButtonTextColor !default;
 $secondaryButtonActiveBorderColor:scale-color($secondaryButtonBg, $lightness: -20%) !default;
 $secondaryButtonFocusShadow:0 0 0 0.2rem scale-color($secondaryButtonBg, $lightness: 60%) !default;
 
-$infoButtonBg:#25A4D4 !default;
+$infoButtonBg:#0288D1 !default;
 $infoButtonTextColor:#ffffff !default;
 $infoButtonBorder:1px solid $infoButtonBg !default;
 $infoButtonHoverBg:scale-color($infoButtonBg, $lightness: -10%) !default;
@@ -160,7 +162,7 @@ $infoButtonTextActiveColor:$infoButtonTextColor !default;
 $infoButtonActiveBorderColor:scale-color($infoButtonBg, $lightness: -20%) !default;
 $infoButtonFocusShadow:0 0 0 0.2rem scale-color($infoButtonBg, $lightness: 60%) !default;
 
-$successButtonBg:#3C9462 !default;
+$successButtonBg:#689F38 !default;
 $successButtonTextColor:#ffffff !default;
 $successButtonBorder:1px solid $successButtonBg !default;
 $successButtonHoverBg:scale-color($successButtonBg, $lightness: -10%) !default;
@@ -171,8 +173,8 @@ $successButtonTextActiveColor:$successButtonTextColor !default;
 $successButtonActiveBorderColor:scale-color($successButtonBg, $lightness: -20%) !default;
 $successButtonFocusShadow:0 0 0 0.2rem scale-color($successButtonBg, $lightness: 60%) !default;
 
-$warningButtonBg:#DB8519 !default;
-$warningButtonTextColor:#ffffff !default;
+$warningButtonBg:#FBC02D !default;
+$warningButtonTextColor:#212529 !default;
 $warningButtonBorder:1px solid $warningButtonBg !default;
 $warningButtonHoverBg:scale-color($warningButtonBg, $lightness: -10%) !default;
 $warningButtonTextHoverColor:$warningButtonTextColor !default;
@@ -182,7 +184,7 @@ $warningButtonTextActiveColor:$warningButtonTextColor !default;
 $warningButtonActiveBorderColor:scale-color($warningButtonBg, $lightness: -20%) !default;
 $warningButtonFocusShadow:0 0 0 0.2rem scale-color($warningButtonBg, $lightness: 60%) !default;
 
-$helpButtonBg:#A053A7 !default;
+$helpButtonBg:#9C27B0 !default;
 $helpButtonTextColor:#ffffff !default;
 $helpButtonBorder:1px solid $helpButtonBg !default;
 $helpButtonHoverBg:scale-color($helpButtonBg, $lightness: -10%) !default;
@@ -193,7 +195,7 @@ $helpButtonTextActiveColor:$helpButtonTextColor !default;
 $helpButtonActiveBorderColor:scale-color($helpButtonBg, $lightness: -20%) !default;
 $helpButtonFocusShadow:0 0 0 0.2rem scale-color($helpButtonBg, $lightness: 60%) !default;
 
-$dangerButtonBg:#E83E22 !default;
+$dangerButtonBg:#D32F2F !default;
 $dangerButtonTextColor:#ffffff !default;
 $dangerButtonBorder:1px solid $dangerButtonBg !default;
 $dangerButtonHoverBg:scale-color($dangerButtonBg, $lightness: -10%) !default;
@@ -218,7 +220,7 @@ $checkboxFocusShadow:0 0 0 0.2em $primaryLightColor !default;
 $radiobuttonBorderWidth:2px !default;
 $radiobuttonWidth:20px !default;
 $radiobuttonHeight:20px !default;
-$radiobuttonIconSize:12px !default !default;
+$radiobuttonIconSize:12px !default;
 $radiobuttonActiveBorderColor:$primaryColor !default;
 $radiobuttonActiveBg:$primaryColor !default;
 $radiobuttonActiveHoverBg:$primaryDarkColor !default;
@@ -272,6 +274,7 @@ $sliderHandleHoverBg:$primaryColor !default;
 $sliderRangeBg:$primaryColor !default;
 
 //calendar
+$calendarPadding:.5rem !default;
 $calendarTitlePadding:1rem !default;
 $calendarTitleBg:$shade000 !default;
 $calendarTitleTextColor:$shade700 !default;
@@ -292,6 +295,8 @@ $calendarCellDateSelectedBorder:0 none !default;
 $calendarCellDateTodayBg:transparent !default;
 $calendarCellDateTodayTextColor:$primaryDarkerColor !default;
 $calendarCellDateTodayBorder:0 none !default;
+
+$calendarButtonBarPadding:1rem 0 !default;
 $calendarTimePickerMargin:.857em 0 !default;
 $calendarTimePickerLabelPadding:0 !default;
 $calendarTimePickerInputPadding:.5em 0 !default;
@@ -310,19 +315,16 @@ $keyboardButtonActiveBorderColor:$buttonActiveBorderColor !default;
 $keyboardButtonActiveBg:$buttonActiveBg !default;
 $keyboardButtonTextActiveColor:$shade000 !default;
 
-//chips
-$chipBg:$primaryColor !default;
-$chipTextColor:$primaryTextColor !default;
-$chipBorder:1px solid $primaryColor !default;
-
 //switch
 $inputSwitchOffBg:$shade300 !default;
 $inputSwitchHandleOffBg:$shade000 !default;
 $inputSwitchHandleOffBorder:2px solid $shade300 !default;
 $inputSwitchOnBg:$primaryColor !default;
-$inputSwitchHandleOnBg:$primaryDarkerColor !default;
+$inputSwitchHandleOnBg:$shade000 !default;
 $inputSwitchHandleOnBorderColor:$primaryDarkerColor !default;
+$inputSwitchHandleBorderRadius:50% !default;
 $inputSwitchHandleShadow:0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0,0,0,.12) !default;
+$inputSwitchBorderRadius:30px !default;
 
 //panel common
 $panelHeaderBorder:1px solid $shade300 !default;
@@ -406,7 +408,8 @@ $scrollPanelTrackBg:#f8f8f8 !default;
 
 //paginator
 $paginatorBg:$shade000 !default;
-$paginatorBorder:0 none !default;
+$paginatorBorder:solid $shade200 !default;
+$paginatorBorderWidth:0 !default;
 $paginatorIconColor:$shade600 !default;
 $paginatorPadding:1rem !default;
 $paginatorElementWidth:2.286em !default;
@@ -419,8 +422,14 @@ $paginatorElementHoverBorderColor:transparent !default;
 $paginatorElementBorderRadius:$borderRadius !default;
 
 //datatable
-$datatableHeaderBorderWidth:0 0 1px 0 !default;
-$datatableHeaderCellPadding:1rem !default;
+$datatableHeaderBorder:1px solid $shade200 !default;
+$datatableHeaderBorderWidth:1px 0 1px 0 !default;
+$datatableHeaderBg:$shade100 !default;
+$datatableHeaderTextColor:$shade700 !default;
+$datatableHeaderFontWeight:600 !default;
+$datatableHeaderPadding:1rem 1rem !default;
+
+$datatableHeaderCellPadding:1rem 1rem !default;
 $datatableHeaderCellBg:$shade100 !default;
 $datatableHeaderCellTextColor:$shade700 !default;
 $datatableHeaderCellFontWeight:700 !default;
@@ -428,28 +437,53 @@ $datatableHeaderCellBorder:1px solid $shade200 !default;
 $datatableHeaderCellBorderWidth:0 0 1px 0 !default;
 $datatableHeaderCellHoverBg:$shade200 !default;
 $datatableHeaderCellTextHoverColor:$shade700 !default;
+$datatableHeaderCellHighlightBg:$shade100 !default;
+$datatableHeaderCellHighlightTextColor:$primaryColor !default;
+$datatableHeaderCellHighlightHoverBg:$shade200 !default;
+$datatableHeaderCellHighlightTextHoverColor:$primaryColor !default;
+$datatableSortableColumnBadgeSize:1.143rem !default;
 $datatableBodyRowBg:$shade000 !default;
 $datatableBodyRowTextColor:$shade700 !default;
 $datatableBodyRowBorder:1px solid rgba(0, 0, 0, 0.08) !default;
 $datatableBodyRowOddBg:#fbfcfc !default;
 $datatableBodyRowHoverBg:$shade200 !default;
 $datatableBodyRowTextHoverColor:$shade700 !default;
-$datatableBodyCellPadding:1rem !default;
+$datatableBodyCellPadding:1rem 1rem !default;
 $datatableBodyCellBorderWidth:0 0 1px 0 !default;
 $datatableFooterBorderWidth:0 0 1px 0 !default;
-$datatableFooterCellPadding:1rem !default;
+$datatableFooterCellPadding:1rem 1rem !default;
 $datatableFooterCellBg:$shade100 !default;
 $datatableFooterCellTextColor:$shade700 !default;
 $datatableFooterCellFontWeight:700 !default;
 $datatableFooterCellBorder:1px solid $shade200 !default;
 $datatableFooterCellBorderWidth:0 0 1px 0 !default;
 $datatableResizerHelperBg:$primaryColor !default;
+
+$datatableFooterBorder:1px solid $shade200 !default;
+$datatableFooterBorderWidth:0 0 1px 0 !default;
+$datatableFooterBg:$shade100 !default;
+$datatableFooterTextColor:$shade700 !default;
+$datatableFooterFontWeight:600 !default;
+$datatableFooterPadding:1rem 1rem !default;
+
+$datatableTopPaginatorBorderWidth:0 0 1px 0 !default;
+$datatableBottomPaginatorBorderWidth:0 0 1px 0 !default;
+
 $datatableScaleSm:0.5 !default;
+$datatableScaleLg:1.25 !default;
+
+//dataview
+$dataViewContentPadding:0 !default;
+$dataViewContentBorder:0 none !default;
+$dataViewListItemBorder:solid $shade200 !default;
+$dataViewListItemBorderWidth:0 0 1px 0 !default;
 
 //schedule
-$scheduleEventBg:$highlightBg !default;
-$scheduleEventBorder:1px solid $highlightBg !default;
-$scheduleEventTextColor:$highlightTextColor !default;
+$scheduleCellBorderColor: $shade300 !default;
+$scheduleTodayBg:$highlightBg !default;
+$scheduleEventBg:$primaryDarkColor !default;
+$scheduleEventBorder:0px solid $primaryDarkColor !default;
+$scheduleEventTextColor:$primaryTextColor !default;
 
 //tree
 $treeNodePadding:.143em 0 !default;
@@ -488,17 +522,17 @@ $dialogHeaderBg:$shade000 !default;
 $dialogHeaderTextColor:$shade700 !default;
 $dialogHeaderFontWeight:700 !default;
 $dialogHeaderFontSize:1.25rem !default;
-$dialogHeaderPadding:1rem !default;
+$dialogHeaderPadding:1.5rem !default;
 $dialogContentBorder:0 none !default;
 $dialogContentBg:$shade000 !default;
 $dialogContentTextColor:$shade700 !default;
-$dialogContentPadding:2rem !default;
+$dialogContentPadding:0 1.5rem 2rem 1.5rem !default;
 $dialogFooterBorder:0 none !default;
 $dialogFooterBg:$shade000 !default;
 $dialogFooterTextColor:$shade700 !default;
-$dialogFooterPadding:1rem !default;
+$dialogFooterPadding:0 1.5rem 1.5rem 1.5rem !default;
 
-$confirmDialogContentPadding:1rem 2rem !default;
+$confirmDialogContentPadding:0 1.5rem 2rem 1.5rem !default;
 $confirmDialogIconFontSize:2.5rem !default;
 
 //overlay panel
@@ -528,7 +562,6 @@ $progressBarBg:#efefef !default;
 $progressBarValueBg:$primaryColor !default;
 
 //menu
-$breadcrumbPadding:1rem !default;
 $verticalMenuPadding:.25rem 0 !default;
 $menuBg:$shade000 !default;
 $menuBorder:1px solid $shade300 !default;
@@ -541,6 +574,15 @@ $menuitemPadding:.75rem 1rem !default;
 $menuitemMargin:0 !default;
 $menuitemBorderRadius:0 !default;
 $menuSeparatorMargin:.25rem 0 !default;
+
+$breadcrumbPadding:1rem !default;
+$breadcrumbBg:$menuBg !default;
+$breadcrumbBorder:$menuBorder !default;
+$breadcrumbItemTextColor:$menuitemTextColor !default;
+$breadcrumbItemIconColor:$menuitemIconColor !default;
+$breadcrumbLastItemTextColor:$menuitemTextColor !default;
+$breadcrumbLastItemIconColor:$menuitemIconColor !default;
+$breadcrumbSeparatorColor:$menuitemTextColor !default;
 
 $submenuHeaderMargin:0 !default;
 $submenuHeaderPadding:.75rem 1rem !default;
@@ -564,6 +606,79 @@ $badgeTextColor:$primaryTextColor !default;
 $badgeMinWidth:1.5rem !default;
 $badgeHeight:1.5rem !default;
 $badgeFontWeight:700 !default;
-$badgeFontSize:.875rem !default;
+$badgeFontSize:.75rem !default;
 
 $tagPadding:.25rem .4rem !default;
+
+//card
+$cardBodyPadding:1rem !default;
+$cardTitleFontSize:1.5rem !default;
+$cardTitleFontWeight:700 !default;
+$cardSubTitleFontWeight:400 !default;
+$cardSubTitleColor:$shade600 !default;
+$cardContentPadding:1rem 0 !default;
+$cardFooterPadding:1rem 0 0 0 !default;
+$cardShadow:0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12) !default;
+
+//divider
+$dividerHorizontalMargin:1rem 0 !default;
+$dividerHorizontalPadding:0 1rem !default;
+$dividerVerticalMargin:0 1rem !default;
+$dividerVerticalPadding:1rem 0 !default;
+$dividerSize:1px !default;
+$dividerColor:$shade300 !default;
+
+//avatar
+$avatarBg:$shade300 !default;
+$avatarTextColor:$textColor !default;
+
+//chip
+$chipBg:$shade300 !default;
+$chipTextColor:$textColor !default;
+$chipBorderRadius: 16px !default;
+
+//scrollTop
+$scrollTopBg:rgba(0,0,0,0.7) !default;
+$scrollTopHoverBg:rgba(0,0,0,0.8) !default;
+$scrollTopWidth:3rem !default;
+$scrollTopHeight:3rem !default;
+$scrollTopBorderRadius:50% !default;
+$scrollTopFontSize:1.5rem !default;
+$scrollTopTextColor:$shade100 !default;
+
+//skeleton
+$skeletonBg:$shade200 !default;
+$skeletonAnimationBg:rgba(255,255,255,0.4) !default;
+
+//splitter
+$splitterGutterBg:$shade100 !default;
+$splitterGutterHandleBg:$shade300 !default;
+
+//chronoline
+$chronolineVerticalEventContentPadding:0 1rem !default;
+$chronolineHorizontalEventContentPadding:1rem 0 !default;
+$chronolineEventMarkerWidth:1rem !default;
+$chronolineEventMarkerHeight:1rem !default;
+$chronolineEventMarkerBorderRadius:50% !default;
+$chronolineEventMarkerBorder:2px solid $primaryColor !default;
+$chronolineEventMarkerBackground:$shade000 !default;
+$chronolineEventConnectorSize:2px !default;
+$chronolineEventColor:$shade300 !default;
+
+//confirmpopup
+$confirmPopupContentPadding:$panelContentPadding !default;
+$confirmPopupFooterPadding:0 1rem 1rem 1rem !default;
+
+:root {
+  --surface-a:#{$shade000};
+  --surface-b:#{$shade100};
+  --surface-c:#{$shade200};
+  --surface-d:#{$shade300};
+  --surface-e:#{$shade000};
+  --surface-f:#{$shade000};
+  --text-color:#{$shade700};
+  --text-color-secondary:#{$shade600};
+  --primary-color:#{$primaryColor};
+  --primary-color-text:#{$primaryTextColor};
+  --font-family:#{$fontFamily};
+}

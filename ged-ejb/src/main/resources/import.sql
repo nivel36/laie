@@ -1,10 +1,10 @@
-insert into JOB_CANDIDATURE_STATE( id, version, name, first, approved, declined, color ) values ( 10, 0, 'job_candidature_state.not_contacted', true, false, false, 'green');
-insert into JOB_CANDIDATURE_STATE( id, version, name, first, approved, declined, color ) values ( 11, 0, 'job_candidature_state.contacted', false, false, false, 'blue');
-insert into JOB_CANDIDATURE_STATE( id, version, name, first, approved, declined, color ) values ( 12, 0, 'job_candidature_state.submitted', false, false, false, 'brown');
-insert into JOB_CANDIDATURE_STATE( id, version, name, first, approved, declined, color ) values ( 13, 0, 'job_candidature_state.declined', false, false, true, 'red');
-insert into JOB_CANDIDATURE_STATE( id, version, name, first, approved, declined, color ) values ( 14, 0, 'job_candidature_state.interviewed', false, false, false, 'blueviolet');
-insert into JOB_CANDIDATURE_STATE( id, version, name, first, approved, declined, color ) values ( 15, 0, 'job_candidature_state.offered', false, false, false, 'cornflowerblue');
-insert into JOB_CANDIDATURE_STATE( id, version, name, first, approved, declined, color ) values ( 16, 0, 'job_candidature_state.approved', false, true, false, 'gray');
+insert into JOB_CANDIDATURE_STATE( id, version, name, first, approved, declined ) values ( 10, 0, 'job_candidature_state.not_contacted', true, false, false);
+insert into JOB_CANDIDATURE_STATE( id, version, name, first, approved, declined ) values ( 11, 0, 'job_candidature_state.contacted', false, false, false);
+insert into JOB_CANDIDATURE_STATE( id, version, name, first, approved, declined ) values ( 12, 0, 'job_candidature_state.submitted', false, false, false);
+insert into JOB_CANDIDATURE_STATE( id, version, name, first, approved, declined ) values ( 13, 0, 'job_candidature_state.declined', false, false, true);
+insert into JOB_CANDIDATURE_STATE( id, version, name, first, approved, declined ) values ( 14, 0, 'job_candidature_state.interviewed', false, false, false);
+insert into JOB_CANDIDATURE_STATE( id, version, name, first, approved, declined ) values ( 15, 0, 'job_candidature_state.offered', false, false, false);
+insert into JOB_CANDIDATURE_STATE( id, version, name, first, approved, declined ) values ( 16, 0, 'job_candidature_state.approved', false, true, false);
 
 insert into ORIGIN( id, version, code ) values ( 20, 0, 'origin.infojobs');
 insert into ORIGIN( id, version, code ) values ( 21, 0, 'origin.linkedin');

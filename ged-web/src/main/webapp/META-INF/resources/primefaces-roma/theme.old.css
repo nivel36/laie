@@ -1657,19 +1657,19 @@ body .ui-button {
       left: 50%;
       margin-top: -0.5em;
       margin-left: -0.5em; }
-  body .ui-button.secondary-button {
+  body .ui-button.ui-button-secondary ui-button-outlined {
     background-color: #ffffff;
     color: #0f97c7;
     border: 1px solid #0f97c7; }
-    body .ui-button.secondary-button.ui-state-hover {
+    body .ui-button.ui-button-secondary ui-button-outlined.ui-state-hover {
       background-color: #1cb9d7;
       border-color: #1cb9d7;
       color: #ffffff; }
-    body .ui-button.secondary-button.ui-state-focus {
+    body .ui-button.ui-button-secondary ui-button-outlined.ui-state-focus {
       -webkit-box-shadow: 0 0 0 0.2em #2ed7e4;
       -moz-box-shadow: 0 0 0 0.2em #2ed7e4;
       box-shadow: 0 0 0 0.2em #2ed7e4; }
-    body .ui-button.secondary-button.ui-state-active {
+    body .ui-button.ui-button-secondary ui-button-outlined.ui-state-active {
       background-color: #0772b3;
       border-color: #0772b3;
       color: #ffffff; }

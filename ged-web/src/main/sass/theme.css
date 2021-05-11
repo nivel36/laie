@@ -1944,22 +1944,22 @@ body .ui-button.ui-button-icon-only .ui-icon {
   margin-top: -0.5em;
   margin-left: -0.5em;
 }
-body .ui-button.secondary-button {
+body .ui-button.ui-button-secondary ui-button-outlined {
   background-color: #ffffff;
   color: #578697;
   border: 1px solid #578697;
 }
-body .ui-button.secondary-button.ui-state-hover {
+body .ui-button.ui-button-secondary ui-button-outlined.ui-state-hover {
   background-color: #719BAA;
   border-color: #719BAA;
   color: #ffffff;
 }
-body .ui-button.secondary-button.ui-state-focus {
+body .ui-button.ui-button-secondary ui-button-outlined.ui-state-focus {
   -webkit-box-shadow: 0 0 0 0.2em #89B1BF;
   -moz-box-shadow: 0 0 0 0.2em #89B1BF;
   box-shadow: 0 0 0 0.2em #89B1BF;
 }
-body .ui-button.secondary-button.ui-state-active {
+body .ui-button.ui-button-secondary ui-button-outlined.ui-state-active {
   background-color: #2C5462;
   border-color: #2C5462;
   color: #ffffff;

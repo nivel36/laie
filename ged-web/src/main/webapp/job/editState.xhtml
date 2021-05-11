@@ -21,7 +21,7 @@
 	</ui:define>
 	<ui:define name="buttons">
 		<h:form>
-			<p:button value="#{i18n['action.cancel']}" outcome="#{Page.JOB.getUrl()}" styleClass="secondary-button">
+			<p:button value="#{i18n['action.cancel']}" outcome="#{Page.JOB.getUrl()}" styleClass="ui-button-secondary ui-button-outlined">
 				<f:param name="id" value="#{editJobStateView.jobOffer.uid}" />
 			</p:button>
 			<p:commandButton value="#{i18n['action.save']}" onclick="processForm()" styleClass="success-btn" />
@@ -47,14 +47,13 @@
 										<p:outputLabel id="label" value="#{i18n['event.state']}" for="state" styleClass="label" />
 									</div>
 									<p:selectOneMenu id="state" value="#{editJobStateView.state}" styleClass="input input-select" panelStyleClass="jobCandidatureStates" var="state">
-										<f:selectItems value="#{jobOfferStates.list}" var="jobOfferState" itemValue="#{jobOfferState}" itemLabel="#{i18n[jobOfferState.name]}" />
+										<f:selectItems value="#{jobOfferStates.list}" var="jobOfferState" itemValue="#{jobOfferState}" itemLabel="#{i18n['job_offer_state.'.concat(jobOfferState.name)]}" />
 										<p:column>
-											<div class="tag #{state.color}">#{i18n[state.name]}</div>
+											<cc:jobOfferState value="#{state}" />
 										</p:column>
 									</p:selectOneMenu>
 								</div>
 							</div>
-
 						</div>
 					</div>
 				</h:form>

@@ -1,5 +1,7 @@
 package ged.ejb.core;
 
+import ged.ejb.core.file.File;
+
 public interface Subject {
 	
 	String getUid();
@@ -7,5 +9,6 @@ public interface Subject {
 	String getEmail();
 	
 	String getFullName();
-
+	
+	File getPicture();
 }

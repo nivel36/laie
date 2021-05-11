@@ -119,7 +119,7 @@
     }
 }
 
-@media screen and (min-width: $tabletBreakpoint + 1) {
+@media screen and (min-width: $mobileBreakpoint + 1) {
     .layout-rtl {
         &.layout-wrapper {
             &.layout-static {
@@ -337,7 +337,7 @@
     }
 }
 
-@media screen and (max-width: $tabletBreakpoint) {
+@media screen and (max-width: $mobileBreakpoint) {
     .layout-rtl {    
         &.layout-wrapper {
             .layout-topbar {

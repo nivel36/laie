@@ -54,7 +54,7 @@
 					<p:ajax event="itemUnselect" update="#{cc.clientId}" process="input" />
 				</p:autoComplete>
 				<p:commandButton id="cleanButton" process="@this" update="#{cc.clientId}" action="#{cc.clean}"
-					styleClass="secondary-button" icon="fa fa-times" binding="#{cc.cleanButton}">
+					styleClass="ui-button-secondary ui-button-outlined" icon="fa fa-times" binding="#{cc.cleanButton}">
 				</p:commandButton>
 				<h:panelGroup layout="block" rendered="#{not empty cc.attrs.showIcon}" styleClass="ui-inputgroup-addon">
 					<em class="fa fa-search" aria-hidden="true" />

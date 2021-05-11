@@ -26,12 +26,13 @@
             }
     
             i {
-                color: $textColor;
+                color: $textSecondaryColor;
                 width: 2rem;
+                font-size: 1.5rem;
                 position: absolute;
-                margin-left: 1rem;
                 top: 50%;
                 margin-top: -.75rem;
+                margin-left: 1rem;
             }
         }
     }
@@ -131,7 +132,7 @@
     }   
 }
 
-@media screen and (max-width: $tabletBreakpoint) {
+@media screen and (max-width: $mobileBreakpoint) {
     .help-page {
         .help-search {    
             .help-search-content {

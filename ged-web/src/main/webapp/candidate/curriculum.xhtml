@@ -22,7 +22,7 @@
 	</ui:define>
 
 	<ui:define name="buttons">
-		<p:button value="#{i18n['action.back']}" outcome="#{Page.CANDIDATE.getUrl()}" styleClass="info-button">
+		<p:button value="#{i18n['action.back']}" outcome="#{Page.CANDIDATE.getUrl()}" styleClass="ui-button-info ui-button-outlined">
 			<f:param name="id" value="#{curriculumView.candidate.uid}" />
 		</p:button>
 	</ui:define>
@@ -59,7 +59,7 @@
 					<h:panelGroup styleClass="card card-w-title curriculum" id="jobExperiences" layout="block">
 						<h4>#{i18n['curriculum.job_experiences']}</h4>
 						<div class="buttons header-buttons">
-							<p:commandButton action="#{curriculumView.newJobExperience}" process="@this" icon="fa fa-plus" styleClass="success-button" />
+							<p:commandButton action="#{curriculumView.newJobExperience}" process="@this" icon="fa fa-plus" styleClass="ui-button-success ui-button-outlined" />
 						</div>
 
 						<ui:repeat value="#{curriculumView.jobExperiences}" var="jobExperience" id="jobExperience" varStatus="varStatus">
@@ -92,7 +92,7 @@
 								</p>
 
 								<div class="buttons">
-									<p:commandButton action="#{curriculumView.editJobExperience(jobExperience)}" process="@this" icon="fa fa-pencil" styleClass="secondary-button" />
+									<p:commandButton action="#{curriculumView.editJobExperience(jobExperience)}" process="@this" icon="fa fa-pencil" styleClass="ui-button-secondary ui-button-outlined" />
 								</div>
 							</div>
 						</ui:repeat>
@@ -102,7 +102,7 @@
 					<h:panelGroup class="card card-w-title curriculum" id="educations" layout="block">
 						<h4>#{i18n['curriculum.education']}</h4>
 						<div class="buttons header-buttons">
-							<p:commandButton action="#{curriculumView.newEducation}" process="@this" icon="fa fa-plus" styleClass="success-button" />
+							<p:commandButton action="#{curriculumView.newEducation}" process="@this" icon="fa fa-plus" styleClass="ui-button-success ui-button-outlined" />
 						</div>
 
 						<ui:repeat value="#{curriculumView.education}" var="education" id="education">
@@ -118,7 +118,7 @@
 								<h:outputText value="#{education.description}" escape="false" styleClass="educationDescription" />
 
 								<div class="buttons">
-									<p:commandButton action="#{curriculumView.editEducation(education)}" process="@this" icon="fa fa-pencil" styleClass="secondary-button" />
+									<p:commandButton action="#{curriculumView.editEducation(education)}" process="@this" icon="fa fa-pencil" styleClass="ui-button-secondary ui-button-outlined" />
 								</div>
 							</div>
 						</ui:repeat>
@@ -134,7 +134,7 @@
 								</p>
 							</ui:repeat>
 							<div class="buttons">
-								<p:commandButton action="#{curriculumView.editLanguages}" process="@this" icon="fa fa-pencil" styleClass="secondary-button" />
+								<p:commandButton action="#{curriculumView.editLanguages}" process="@this" icon="fa fa-pencil" styleClass="ui-button-secondary ui-button-outlined" />
 							</div>
 						</div>
 					</h:panelGroup>
@@ -148,7 +148,7 @@
 								<p:tag value="#{skill.name}" />
 							</ui:repeat>
 							<div class="buttons">
-								<p:commandButton action="#{curriculumView.editSkills}" process="@this" icon="fa fa-pencil" styleClass="secondary-button" />
+								<p:commandButton action="#{curriculumView.editSkills}" process="@this" icon="fa fa-pencil" styleClass="ui-button-secondary ui-button-outlined" />
 							</div>
 						</div>
 					</h:panelGroup>

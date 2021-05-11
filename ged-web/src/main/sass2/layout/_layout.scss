@@ -1,9 +1,6 @@
-
 @import '../mixins/_mixins';
+@import '../variables/_layout';
 @import '../overrides/_layout_variables';
-@import './_inputavatar';
-@import './_candidate_card';
-@import './_user_card';
 @import './_typography';
 @import './_animation';
 @import './_main';
@@ -22,6 +19,6 @@
 @import './_help';
 @import './_invoice';
 @import './_config';
-@import '../_fonts';
+@import './_fonts';
 @import '../overrides/layout_styles';
 

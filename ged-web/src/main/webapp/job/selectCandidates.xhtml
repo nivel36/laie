@@ -23,7 +23,7 @@
 
 	<ui:define name="buttons">
 		<h:form>
-			<p:button value="#{i18n['action.cancel']}" outcome="#{Page.JOB.getUrl()}" styleClass="secondary-button">
+			<p:button value="#{i18n['action.cancel']}" outcome="#{Page.JOB.getUrl()}" styleClass="ui-button-secondary ui-button-outlined">
 				<f:param name="id" value="#{selectCandidatesView.jobOffer.uid}" />
 			</p:button>
 			<p:commandButton value="#{i18n['action.select']}" onclick="select()" styleClass="success-btn" />

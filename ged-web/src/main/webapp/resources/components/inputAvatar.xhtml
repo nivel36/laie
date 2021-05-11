@@ -27,7 +27,7 @@
 					<p:commandButton type="button" value="Capture" onclick="PF('camera').capture()" />
 				</p:dialog>
 			</c:if>
-			<p:commandButton id="deleteButton" icon="fa fa-times" styleClass="delete-button icon danger-button" process="@this avatar" rendered="#{not empty cc.attrs.value}" action="#{cc.attrs.deleteImage}" update="#{cc.clientId}" />
+			<p:commandButton id="deleteButton" icon="fa fa-times" styleClass="delete-button icon ui-button-danger" process="@this avatar" rendered="#{not empty cc.attrs.value}" action="#{cc.attrs.deleteImage}" update="#{cc.clientId}" />
 		</div>
 	</composite:implementation>
 </ui:component>

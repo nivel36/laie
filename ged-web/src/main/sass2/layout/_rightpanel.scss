@@ -5,7 +5,7 @@
     border-left: solid 1px #ebebef;
     position: fixed;
     z-index: 999;
-    top: 0px;
+    top: 0;
     height: 100%;
     padding: 0;
     margin: 0;
@@ -85,7 +85,7 @@
         
         i {
             float: right;
-            font-size: 20px;
+            font-size: 18px;
             color: #8b8b90;
         }
     }
@@ -99,6 +99,7 @@
             font-weight: 500;
         }
         .percentage-2 {
+            margin-right: .25em;
             color: #65656a;
             font-size: 13px;
             font-weight: 500;
@@ -136,7 +137,7 @@
     }
 }
 
-@media screen and (max-width: $tabletBreakpoint) {
+@media screen and (max-width: $mobileBreakpoint) {
     .layout-right-panel {
         top: 110px;
     } 

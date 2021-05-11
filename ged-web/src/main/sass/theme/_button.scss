@@ -76,7 +76,7 @@ body {
             }
         }
 
-        &.secondary-button {
+        &.ui-button-secondary ui-button-outlined {
             background-color: $secondaryButtonBgColor;
             color: $secondaryButtonTextColor;
             border: $secondaryButtonBorder;

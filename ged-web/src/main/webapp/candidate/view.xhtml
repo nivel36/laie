@@ -24,7 +24,7 @@
 
 	<ui:define name="buttons">
 		<h:form>
-			<p:commandButton value="#{i18n['action.edit']}" process="@this" action="#{viewCandidateView.editCandidate}" icon="fa fa-pencil" styleClass="secondary-button" />
+			<p:commandButton value="#{i18n['action.edit']}" process="@this" action="#{viewCandidateView.editCandidate}" icon="fa fa-pencil" styleClass="ui-button-secondary ui-button-outlined" />
 			<p:menuButton icon="fa fa-plus" >
 				<p:menuitem value="#{i18n['action.export']}" process="@this" action="#{viewCandidateView.export}" icon="fa fa-file-excel-o" />
 				<p:menuitem value="#{i18n['curriculum.curriculum']}" process="@this" outcome="#{Page.CURRICULUM.getUrl()}" icon="fa fa-pencil">
