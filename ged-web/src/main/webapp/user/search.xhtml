@@ -50,7 +50,7 @@
 							</p:column>
 
 							<p:column headerText="#{i18n['user.role']}" sortBy="#{user.role}">
-								<span class="user-role role-#{user.role}">#{i18n[user.role]}</span>
+								<p:tag styleClass="user-role role-#{user.role}" value="#{i18n[user.role]}" />
 							</p:column>
 
 							<p:column headerText="#{i18n['user.manager']}" sortBy="#{user.manager.name}">

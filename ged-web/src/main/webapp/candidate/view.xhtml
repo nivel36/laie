@@ -25,7 +25,7 @@
 	<ui:define name="buttons">
 		<h:form>
 			<p:commandButton value="#{i18n['action.edit']}" process="@this" action="#{viewCandidateView.editCandidate}" icon="fa fa-pencil" styleClass="ui-button-secondary ui-button-outlined" />
-			<p:menuButton icon="fa fa-plus" >
+			<p:menuButton icon="fa fa-plus">
 				<p:menuitem value="#{i18n['action.export']}" process="@this" action="#{viewCandidateView.export}" icon="fa fa-file-excel-o" />
 				<p:menuitem value="#{i18n['curriculum.curriculum']}" process="@this" outcome="#{Page.CURRICULUM.getUrl()}" icon="fa fa-pencil">
 					<f:param name="candidateId" value="#{viewCandidateView.candidate.uid}" />
@@ -46,7 +46,7 @@
 				<div class="card candidate-card">
 					<div class="card-header"></div>
 					<div class="candidate-card-content">
-						<cc:avatar value="#{viewCandidateView.candidate.picture}" styleClass="candidate-image with-border" />
+						<cc:avatar styleClass="candidate-image" value="#{viewCandidateView.candidate}" size="xlarge" />
 
 						<div class="candidate-card-name">#{viewCandidateView.candidate.fullName}</div>
 						<div class="candidate-card-profile">#{viewCandidateView.candidate.jobProfile}</div>
@@ -143,7 +143,7 @@
 							<div class="p-col-12">
 								<div class="buttons">
 									<p:fileUpload id="uploadFile" listener="#{viewCandidateView.uploadFile}" mode="simple" skinSimple="true" update="@form growl" auto="true"
-										label="#{i18n['action.add']}"   />
+										label="#{i18n['action.add']}" styleClass="ui-button-outlined" />
 								</div>
 							</div>
 						</div>
@@ -158,7 +158,7 @@
 			<div class="p-col-12 p-xl-4">
 				<cc:meetings value="#{viewCandidateView.meetings}" rows="5">
 					<h:form>
-						<p:commandButton value="#{i18n['meeting.add_meeting']}" action="#{viewCandidateView.newMeeting}" styleClass="success-btn" />
+						<p:commandButton value="#{i18n['meeting.add_meeting']}" action="#{viewCandidateView.newMeeting}" styleClass="ui-button-success ui-button-outlined" />
 					</h:form>
 				</cc:meetings>
 			</div>

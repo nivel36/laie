@@ -33,7 +33,7 @@
 
 			<ul class="topbar-menu fadeInDown">
 				<ui:fragment rendered="#{guestPreferences.profileMode == 'popup' ? true : false}">
-					<li class="user-profile"><a href="#"> <cc:avatar value="#{sessionUser.get()}" size="xlarge"/>
+					<li class="user-profile"><a href="#"> <cc:avatar value="#{sessionUser.get()}" size="large"/>
 							<div class="layout-profile-userinfo">
 								<span class="layout-profile-name">#{sessionUser.get().fullName}</span> <span class="layout-profile-role">#{i18n[sessionUser.get().role]}</span>
 							</div>

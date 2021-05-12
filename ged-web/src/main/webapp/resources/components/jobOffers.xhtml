@@ -1,33 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:component xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
-	xmlns:composite="http://xmlns.jcp.org/jsf/composite"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://ged.org/ui"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+<ui:component xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:composite="http://xmlns.jcp.org/jsf/composite"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://ged.org/ui" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 	<composite:interface>
 		<composite:attribute name="value" required="true" />
 		<composite:attribute name="styleClass" required="false" default="" />
-		<composite:attribute name="title" required="false"
-			default="#{i18n['job.job_offers']}" />
-		<composite:attribute name="rows" required="false"
-			default="#{sessionUser.rowsPerPage}" />
+		<composite:attribute name="title" required="false" default="#{i18n['job.job_offers']}" />
+		<composite:attribute name="rows" required="false" default="#{sessionUser.rowsPerPage}" />
 	</composite:interface>
 
 	<composite:implementation>
-		<div id="#{cc.clientId}"
-			class="card card-w-title jobOffers  #{cc.attrs.styleClass}">
+		<div id="#{cc.clientId}" class="card card-w-title jobOffers  #{cc.attrs.styleClass}">
 			<h5>#{cc.attrs.title}</h5>
 
-			<p:dataTable var="jobOffer" value="#{cc.attrs.value}"
-				emptyMessage="#{i18n['job.no_jobs_found']}" reflow="true"
-				paginator="true" paginatorPosition="bottom" rows="#{cc.attrs.rows}"
-				sortBy="#{jobOffer.title}" sortOrder="descending"
-				styleClass="ui-datatable-borderless">
+			<p:dataTable var="jobOffer" value="#{cc.attrs.value}" emptyMessage="#{i18n['job.no_jobs_found']}" reflow="true"
+				paginator="true" paginatorPosition="bottom" rows="#{cc.attrs.rows}" sortBy="#{jobOffer.title}"
+				sortOrder="descending" styleClass="ui-datatable-borderless">
 
 				<p:column headerText="#{i18n['job.title']}">
 					<h:link value="#{jobOffer.title}" outcome="#{Page.JOB.getUrl()}">
@@ -35,13 +26,11 @@
 					</h:link>
 				</p:column>
 				<p:column headerText="#{i18n['job.city']}">
-					<span class="job_address">#{jobOffer.address.city}
-						(#{jobOffer.address.region})</span>
+					<span class="job_address">#{jobOffer.address.city} (#{jobOffer.address.region})</span>
 				</p:column>
 
 				<p:column headerText="#{i18n['job.owner']}">
-					<h:link value="#{jobOffer.owner.fullName}"
-						outcome="#{Page.USER.getUrl()}">
+					<h:link value="#{jobOffer.owner.fullName}" outcome="#{Page.USER.getUrl()}">
 						<f:param name="id" value="#{jobOffer.owner.uid}" />
 					</h:link>
 				</p:column>

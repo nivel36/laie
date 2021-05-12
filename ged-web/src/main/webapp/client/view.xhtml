@@ -78,7 +78,7 @@
 							</div>
 							<div class="p-col-12">
 								<div class="buttons">
-									<p:button value="#{i18n['contact.new_contact']}" outcome="#{Page.CONTACT_ADD.getUrl()}" process="@this"	styleClass="success-btn" >
+									<p:button value="#{i18n['contact.new_contact']}" outcome="#{Page.CONTACT_ADD.getUrl()}" process="@this"	styleClass="ui-button-success ui-button-outlined" >
 										<f:param name="clientId" value="#{viewClientView.client.uid}" />
 									</p:button>
 								</div>
@@ -91,7 +91,7 @@
 			<div class="p-col-12 p-lg-8">
 				<cc:jobOffers id="jobOffers" value="#{viewClientView.jobOffers}" rows="5">
 					<h:form id="jobOffersForm">
-						<p:button value="#{i18n['job.new_job_offer']}" outcome="#{Page.JOB_ADD.getUrl()}" process="@this" styleClass="success-btn" >
+						<p:button value="#{i18n['job.new_job_offer']}" outcome="#{Page.JOB_ADD.getUrl()}" process="@this" styleClass="ui-button-success ui-button-outlined" >
 							<f:param name="clientId" value="#{viewClientView.client.uid}" />
 						</p:button>
 					</h:form>

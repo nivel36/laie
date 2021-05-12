@@ -44,9 +44,9 @@
 							rows="#{sessionUser.rowsPerPage}" sortBy="#{candidate.name}" sortOrder="ascending" lazy="true">
 
 							<p:column headerText="#{i18n['candidate.name']}" sortBy="#{candidate.name}">
-								<cc:avatar value="#{candidate}" styleClass="p-mr-2" />
-								<h:link value="#{candidate.fullName}" outcome="#{Page.CANDIDATE.getUrl()}"
-									style="vertical-align: middle;margin-left: .5rem;">
+								<h:link outcome="#{Page.CANDIDATE.getUrl()}">
+									<cc:avatar value="#{candidate}" styleClass="p-mr-2" />
+									<h:outputText styleClass="link" value="#{candidate.fullName}" />
 									<f:param name="id" value="#{candidate.uid}" />
 								</h:link>
 							</p:column>
