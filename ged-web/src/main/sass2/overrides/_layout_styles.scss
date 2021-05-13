@@ -268,8 +268,8 @@
 			font-size: 2em;
 			color: #ffffff;
 			position: relative;
-			top: -65px;
-			margin-left: 1.5em;
+			top: -3.5rem;
+			margin-left: 1em;
 			font-weight: 700;
 			white-space: nowrap;
 		}
@@ -284,7 +284,7 @@
 	.card-header{
 		height: 80px;
 		overflow: hidden;
-		background: linear-gradient(30deg, $secondaryColor 0%, $secondaryLightColor 150%);
+		background: linear-gradient(30deg, $thirdColor 0%, $thirdLightColor 150%);
 		background-color: $secondaryColor;
 		color: $secondaryTextColor;
 	}
@@ -453,5 +453,61 @@
 	
 	.ui-tag {
 		margin-right: 0.2rem;
+	}
+}
+
+.contacts {
+	.ui-dataview-header {
+		display: none;
+	}
+	.ui-dataview-column {
+		padding: 0;
+	}
+}
+
+.contact {
+	position: relative;
+	padding: 1rem;
+	&:hover {
+		background-color: #f5f5f5;
+		transition: 0.3s ease;
+	}
+	.contact-box {
+		display:flex;
+		flex-direction: column;
+		line-height: 1.2em;
+		
+		.contact-name {
+			font-size: 1.1rem;
+			font-weight: 800;
+		}
+		.contact-position {
+			font-weight: 400;
+		}
+		.contact-data {
+			display: flex;
+			flex-direction: column;
+			i {
+				display: inline-block;
+				margin-right: 9px;
+			}
+			.contact-phone {
+				font-size: 0.8rem;
+				font-weight: 400;
+			}
+			.contact-email {
+				font-size: 0.8rem;
+				font-weight: 400;
+			}
+		}
+	}
+	
+	.buttons{
+		position: absolute;
+		top: 1em;
+		right: 1rem;
+			button {
+				background-color: white;
+			}
 	}
 }

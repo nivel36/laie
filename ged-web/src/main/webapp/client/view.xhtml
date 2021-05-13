@@ -26,7 +26,8 @@
 
 	<ui:define name="content">
 		<div class="p-grid">
-			<div class="p-col-12 p-xl-6">
+			<div class="p-col-12 p-xl-8 p-col-nogutter">
+			<div class="p-col-12">
 				<div class="card client-card">
 					<div class="card-header"></div>
 					<div class="client-card-content">
@@ -51,44 +52,7 @@
 				</div>
 			</div>
 			
-			<div class="p-col-12 p-lg-6">
-				<div class="card card-w-title contacts">
-					<h5>#{i18n['client.contacts']}</h5>
-					<h:form id="contactsForm">
-						<div class="p-grid">
-							<div class="p-col-12">
-								<p:dataTable var="contact" value="#{viewClientView.contacts}" emptyMessage="#{i18n['client.no_contacts_found']}" paginator="true" paginatorPosition="bottom"
-									styleClass="ui-datatable-borderless" rows="5">
-									<p:column headerText="#{i18n['contact.name']}" sortBy="#{contact.name}">
-										<h:outputText value="#{contact.name} #{contact.surname}" />
-									</p:column>
-									<p:column headerText="#{i18n['contact.email']}">
-										<h:outputText value="#{contact.email}" />
-									</p:column>
-									<p:column headerText="#{i18n['contact.position']}">
-										<h:outputText value="#{contact.position}" />
-									</p:column>
-									<p:column>
-										<p:button icon="fa fa-pencil" outcome="#{Page.CONTACT_EDIT.getUrl()}">
-											<f:param name="id" value="#{contact.uid}" />
-										</p:button>
-										<p:commandButton icon="fa fa-trash" styleClass="danger-btn" />
-									</p:column>
-								</p:dataTable>
-							</div>
-							<div class="p-col-12">
-								<div class="buttons">
-									<p:button value="#{i18n['contact.new_contact']}" outcome="#{Page.CONTACT_ADD.getUrl()}" process="@this"	styleClass="ui-button-success ui-button-outlined" >
-										<f:param name="clientId" value="#{viewClientView.client.uid}" />
-									</p:button>
-								</div>
-							</div>
-						</div>
-					</h:form>
-				</div>
-			</div>
-			
-			<div class="p-col-12 p-lg-8">
+			<div class="p-col-12">
 				<cc:jobOffers id="jobOffers" value="#{viewClientView.jobOffers}" rows="5">
 					<h:form id="jobOffersForm">
 						<p:button value="#{i18n['job.new_job_offer']}" outcome="#{Page.JOB_ADD.getUrl()}" process="@this" styleClass="ui-button-success ui-button-outlined" >
@@ -96,6 +60,15 @@
 						</p:button>
 					</h:form>
 				</cc:jobOffers>
+			</div>
+			</div>
+			
+			<div class="p-col-12 p-sm-8 p-md-6 p-lg-5 p-xl-4">
+				<cc:contacts value="#{viewClientView.client.contacts}" >
+					<p:button value="#{i18n['contact.new_contact']}" outcome="#{Page.CONTACT_ADD.getUrl()}" process="@this" styleClass="ui-button-success ui-button-outlined" >
+						<f:param name="clientId" value="#{viewClientView.client.uid}" />
+					</p:button>
+				</cc:contacts>
 			</div>
 		</div>
 	</ui:define>

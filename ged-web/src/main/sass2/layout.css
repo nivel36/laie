@@ -140,7 +140,7 @@ body {
 
 a {
   text-decoration: none;
-  color: #6952EC;
+  color: #214B9C;
 }
 
 .layout-main {
@@ -1187,7 +1187,7 @@ a {
   border-right: 4px solid transparent;
 }
 .layout-wrapper .layout-menu-container .layout-menu > li.active-menuitem {
-  border-left-color: #6952EC;
+  border-left-color: #214B9C;
 }
 .layout-wrapper .layout-menu-container .layout-menu li.layout-root-menuitem > .layout-menuitem-root-text {
   font-size: 1rem;
@@ -1331,10 +1331,10 @@ a {
   color: #252529;
 }
 .layout-wrapper.layout-menu-light .layout-menu-container .layout-menu li.active-menuitem > a .layout-menuitem-text {
-  color: #6952EC;
+  color: #214B9C;
 }
 .layout-wrapper.layout-menu-light .layout-menu-container .layout-menu li.active-menuitem > a .layout-menuitem-icon, .layout-wrapper.layout-menu-light .layout-menu-container .layout-menu li.active-menuitem > a .layout-submenu-toggler {
-  color: #6952EC;
+  color: #214B9C;
 }
 .layout-wrapper.layout-menu-dark .layout-menu-container {
   background-color: #252529;
@@ -1394,10 +1394,10 @@ a {
   color: #ebebef;
 }
 .layout-wrapper.layout-menu-dark .layout-menu-container .layout-menu li.active-menuitem > a .layout-menuitem-text {
-  color: #6952EC;
+  color: #214B9C;
 }
 .layout-wrapper.layout-menu-dark .layout-menu-container .layout-menu li.active-menuitem > a .layout-menuitem-icon, .layout-wrapper.layout-menu-dark .layout-menu-container .layout-menu li.active-menuitem > a .layout-submenu-toggler {
-  color: #6952EC;
+  color: #214B9C;
 }
 .layout-wrapper .layout-main {
   padding-top: 70px;
@@ -1667,7 +1667,7 @@ a {
   }
   .layout-wrapper.layout-horizontal .layout-menu-container .layout-menu > li.active-menuitem > ul {
     display: block;
-    border-top: 4px solid #6952EC;
+    border-top: 4px solid #214B9C;
   }
   .layout-wrapper.layout-horizontal .layout-topbar .layout-menu-button, .layout-wrapper.layout-slim .layout-topbar .layout-menu-button {
     display: none;
@@ -3192,7 +3192,7 @@ a {
 }
 .layout-rtl.layout-wrapper .layout-menu-container .layout-menu > li.active-menuitem {
   border-left-color: transparent;
-  border-right-color: #6952EC;
+  border-right-color: #214B9C;
 }
 .layout-rtl.layout-wrapper .layout-menu-container .layout-menu li a .layout-menuitem-icon {
   margin-right: 0;
@@ -3708,7 +3708,7 @@ a {
   width: 52px;
   height: 52px;
   line-height: 52px;
-  background-color: #6952EC;
+  background-color: #214B9C;
   text-align: center;
   color: #ffffff;
   top: 230px;
@@ -3735,12 +3735,12 @@ a {
   transition: transform 1s;
 }
 .layout-config .layout-config-content .layout-config-button:hover {
-  background-color: #7d69ef;
+  background-color: #2555b1;
 }
 .layout-config .layout-config-content .layout-config-header {
   padding: 18px 12px;
   margin-bottom: 12px;
-  background-image: linear-gradient(90deg, #6952EC 10%, #8977f0 100%);
+  background-image: linear-gradient(90deg, #214B9C 10%, #285bbe 100%);
 }
 .layout-config .layout-config-content .layout-config-header > h3 {
   font-size: 16px;
@@ -3930,8 +3930,8 @@ a {
 .candidate-card .card-header {
   height: 5rem;
   overflow: hidden;
-  background: linear-gradient(30deg, #6952EC 0%, #c3baf7 150%);
-  background-color: #6952EC;
+  background: linear-gradient(30deg, #214B9C 0%, #95b2e9 150%);
+  background-color: #214B9C;
   color: #ffffff;
 }
 .candidate-card .candidate-card-content .label-container {
@@ -3980,8 +3980,8 @@ a {
 .card.user-card .card-header {
   height: 5rem;
   overflow: hidden;
-  background: linear-gradient(30deg, #6952EC 0%, #c3baf7 150%);
-  background-color: #6952EC;
+  background: linear-gradient(30deg, #214B9C 0%, #95b2e9 150%);
+  background-color: #214B9C;
   color: #ffffff;
 }
 .card.user-card .user-card-content .label-container {
@@ -4136,8 +4136,8 @@ a {
 .card.client-card .card-header {
   height: 5rem;
   overflow: hidden;
-  background: linear-gradient(30deg, #CC40EA 0%, #c3baf7 150%);
-  background-color: #CC40EA;
+  background: linear-gradient(30deg, #14A143 0%, #8af0ac 150%);
+  background-color: #14A143;
   color: #ffffff;
 }
 .card.client-card .client-card-content .label-container {
@@ -4154,8 +4154,8 @@ a {
   font-size: 2em;
   color: #ffffff;
   position: relative;
-  top: -65px;
-  margin-left: 1.5em;
+  top: -3.5rem;
+  margin-left: 1em;
   font-weight: 700;
   white-space: nowrap;
 }
@@ -4169,8 +4169,8 @@ a {
 .card.job-card .card-header {
   height: 80px;
   overflow: hidden;
-  background: linear-gradient(30deg, #CC40EA 0%, #c3baf7 150%);
-  background-color: #CC40EA;
+  background: linear-gradient(30deg, #EE4F10 0%, #f9b89f 150%);
+  background-color: #14A143;
   color: #ffffff;
 }
 .card.job-card .job-card-content .job-detail {
@@ -4311,6 +4311,58 @@ a {
 }
 .curriculum .ui-tag {
   margin-right: 0.2rem;
+}
+
+.contacts .ui-dataview-header {
+  display: none;
+}
+.contacts .ui-dataview-column {
+  padding: 0;
+}
+
+.contact {
+  position: relative;
+  padding: 1rem;
+}
+.contact:hover {
+  background-color: #f5f5f5;
+  transition: 0.3s ease;
+}
+.contact .contact-box {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2em;
+}
+.contact .contact-box .contact-name {
+  font-size: 1.1rem;
+  font-weight: 800;
+}
+.contact .contact-box .contact-position {
+  font-weight: 400;
+}
+.contact .contact-box .contact-data {
+  display: flex;
+  flex-direction: column;
+}
+.contact .contact-box .contact-data i {
+  display: inline-block;
+  margin-right: 9px;
+}
+.contact .contact-box .contact-data .contact-phone {
+  font-size: 0.8rem;
+  font-weight: 400;
+}
+.contact .contact-box .contact-data .contact-email {
+  font-size: 0.8rem;
+  font-weight: 400;
+}
+.contact .buttons {
+  position: absolute;
+  top: 1em;
+  right: 1rem;
+}
+.contact .buttons button {
+  background-color: white;
 }
 
 /*# sourceMappingURL=layout.css.map */

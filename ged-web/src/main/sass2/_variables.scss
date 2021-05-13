@@ -5,15 +5,21 @@ $textSecondaryColor:#65656a;
 $borderRadius:2px;
 $transitionDuration:.2s;
 
-$primaryColor: #6952EC !default;
+$primaryColor: #214B9C !default;
 $primaryLightColor: scale-color($primaryColor, $lightness: 60%) !default;
 $primaryDarkColor: scale-color($primaryColor, $lightness: -10%) !default;
 $primaryDarkerColor: scale-color($primaryColor, $lightness: -20%) !default;
 $primaryTextColor:#ffffff;
 
-$secondaryColor: #CC40EA !default;
-$secondaryLightColor: scale-color($primaryColor, $lightness: 60%) !default;
-$secondaryDarkColor: scale-color($primaryColor, $lightness: -10%) !default;
-$secondaryDarkerColor: scale-color($primaryColor, $lightness: -20%) !default;
+$secondaryColor: #14A143 !default;
+$secondaryLightColor: scale-color($secondaryColor, $lightness: 60%) !default;
+$secondaryDarkColor: scale-color($secondaryColor, $lightness: -10%) !default;
+$secondaryDarkerColor: scale-color($secondaryColor, $lightness: -20%) !default;
 $secondaryTextColor:#ffffff;
+
+$thirdColor: #EE4F10 !default;
+$thirdLightColor: scale-color($thirdColor, $lightness: 60%) !default;
+$thirdDarkColor: scale-color($thirdColor, $lightness: -10%) !default;
+$thirdyDarkerColor: scale-color($thirdColor, $lightness: -20%) !default;
+$thirdTextColor:#ffffff;
 

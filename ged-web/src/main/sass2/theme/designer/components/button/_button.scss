@@ -288,7 +288,7 @@ body {
   }
 
   .ui-button.ui-button-secondary, .ui-splitbutton.ui-button-secondary > .ui-button {
-    @include ui-button-secondary ui-button-outlined();
+    @include secondary-button();
   }
 
   .ui-button.ui-button-success, .ui-splitbutton.ui-button-success > .ui-button {

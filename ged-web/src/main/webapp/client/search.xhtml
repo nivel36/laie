@@ -38,7 +38,7 @@
 							paginatorPosition="bottom" rows="#{sessionUser.rowsPerPage}" sortBy="#{client.name}" sortOrder="descending" lazy="true">
 
 							<p:column headerText="#{i18n['client.name']}" sortBy="#{client.name}">
-								<h:link value="#{client.name}" outcome="#{Page.CLIENT.getUrl()}">
+								<h:link value="#{client.name}" outcome="#{Page.CLIENT.getUrl()}" styleClass="link">
 									<f:param name="id" value="#{client.uid}" />
 								</h:link>
 							</p:column>
@@ -57,7 +57,7 @@
 							</p:column>
 
 							<p:column headerText="#{i18n['client.owner']}" sortBy="#{client.owner.name}">
-								<h:link value="#{client.owner.fullName}" outcome="#{Page.USER_SEARCH.getUrl()}">
+								<h:link value="#{client.owner.fullName}" outcome="#{Page.USER_SEARCH.getUrl()}" styleClass="link">
 									<f:param name="id" value="#{client.owner.uid}" />
 								</h:link>
 							</p:column>

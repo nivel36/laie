@@ -52,3 +52,7 @@ body .ui-datatable.ui-datatable-borderless {
 		border: 0 none;
 	}
 }
+
+body .ui-avatar img {
+	object-fit: cover;
+}

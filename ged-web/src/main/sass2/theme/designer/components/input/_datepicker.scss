@@ -147,7 +147,7 @@ body {
       button {
         transition: $transition;
         border-radius: $borderRadius;
-        @include ui-button-secondary ui-button-outlined();
+        @include secondary-button();
       }
 
       .ui-g-6:first-child {

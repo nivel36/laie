@@ -21,7 +21,7 @@
 				sortOrder="descending" styleClass="ui-datatable-borderless">
 
 				<p:column headerText="#{i18n['job.title']}">
-					<h:link value="#{jobOffer.title}" outcome="#{Page.JOB.getUrl()}">
+					<h:link value="#{jobOffer.title}" outcome="#{Page.JOB.getUrl()}" styleClass="link">
 						<f:param name="id" value="#{jobOffer.uid}" />
 					</h:link>
 				</p:column>
@@ -29,9 +29,9 @@
 					<span class="job_address">#{jobOffer.address.city} (#{jobOffer.address.region})</span>
 				</p:column>
 
-				<p:column headerText="#{i18n['job.owner']}">
-					<h:link value="#{jobOffer.owner.fullName}" outcome="#{Page.USER.getUrl()}">
-						<f:param name="id" value="#{jobOffer.owner.uid}" />
+				<p:column headerText="#{i18n['job.client']}">
+					<h:link value="#{jobOffer.client}" outcome="#{Page.CLIENT.getUrl()}" styleClass="link">
+						<f:param name="id" value="#{jobOffer.client.uid}" />
 					</h:link>
 				</p:column>
 

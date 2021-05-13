@@ -48,7 +48,7 @@
     }
 }
 
-@mixin ui-button-secondary ui-button-outlined() {
+@mixin secondary-button() {
     background: $secondaryButtonBg;
     color: $secondaryButtonTextColor;
     border: $secondaryButtonBorder;

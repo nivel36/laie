@@ -1,0 +1,33 @@
+<ui:component xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:composite="http://xmlns.jcp.org/jsf/composite"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://ged.org/ui" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<composite:interface>
+		<composite:attribute name="value" required="true" type="ged.ejb.client.Contact" />
+		<composite:attribute name="styleClass" required="false" default="" />
+	</composite:interface>
+
+	<composite:implementation>
+		<div id="#{cc.clientId}" class="contact #{cc.attrs.styleClass}">
+			<div class="contact-box">
+				<div class="contact-name">#{cc.attrs.value.fullName}</div>
+				<div class="contact-position">#{cc.attrs.value.position}</div>
+				<div class="contact-data">
+					<div class="contact-phone">
+						<i class="pi pi-phone" />#{cc.attrs.value.phoneNumber}
+					</div>
+					<div class="contact-email">
+						<i class="pi pi-envelope" />#{cc.attrs.value.email}
+					</div>
+				</div>
+			</div>
+			<div class="buttons">
+				<p:button icon="fa fa-pencil" outcome="#{Page.CONTACT_EDIT.getUrl()}" styleClass="ui-button-outlined">
+					<f:param name="id" value="#{cc.attrs.value.uid}" />
+				</p:button>
+			</div>
+		</div>
+	</composite:implementation>
+</ui:component>
