@@ -22,7 +22,7 @@
 		<h:form enctype="multipart/form-data" id="buttonsForm">
 			<p:button value="#{i18n['action.cancel']}" outcome="#{Page.MAINTENANCE.getUrl()}" styleClass="ui-button-secondary ui-button-outlined" />
 			<p:commandButton value="#{i18n['action.export']}" action="#{gdprMaintenanceView.export}" icon="fa fa-file-excel-o" ajax="false" />
-			<p:commandButton value="#{i18n['action.save']}" onclick="save()" styleClass="success-btn" />
+			<p:commandButton value="#{i18n['action.save']}" onclick="save()" styleClass="ui-button-success ui-button-outlined" />
 		</h:form>
 	</ui:define>
 

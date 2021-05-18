@@ -13,19 +13,19 @@
 		<div id="#{cc.clientId}" class="contact #{cc.attrs.styleClass}">
 			<div class="contact-box">
 				<div class="contact-name">#{cc.attrs.value.fullName}</div>
-				<div class="contact-position">#{cc.attrs.value.position}</div>
+				<h:panelGroup layout="block" styleClass="contact-position" rendered="#{not empty cc.attrs.value.position}">#{cc.attrs.value.position}</h:panelGroup>
 				<div class="contact-data">
-					<div class="contact-phone">
+					<h:panelGroup layout="block" styleClass="contact-phone" rendered="#{not empty cc.attrs.value.phoneNumber}">
 						<i class="pi pi-phone" />#{cc.attrs.value.phoneNumber}
-					</div>
-					<div class="contact-email">
+					</h:panelGroup>
+					<h:panelGroup layout="block" styleClass="contact-email" rendered="#{not empty cc.attrs.value.email}">
 						<i class="pi pi-envelope" />#{cc.attrs.value.email}
-					</div>
+					</h:panelGroup>
 				</div>
 			</div>
 			<div class="buttons">
 				<p:button icon="fa fa-pencil" outcome="#{Page.CONTACT_EDIT.getUrl()}" styleClass="ui-button-outlined">
-					<f:param name="id" value="#{cc.attrs.value.uid}" />
+					<f:param name="uid" value="#{cc.attrs.value.uid}" />
 				</p:button>
 			</div>
 		</div>

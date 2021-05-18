@@ -26,6 +26,7 @@ public class Contact extends AbstractIndexedEntity implements Subject {
 
 	private static final long serialVersionUID = 1L;
 
+	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "clientId", nullable = false)
 	private Client client;

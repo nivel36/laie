@@ -16,7 +16,7 @@
 		<div id="#{cc.clientId}" class="card card-w-title contacts #{cc.attrs.styleClass}">
 			<h5>#{cc.attrs.title}</h5>
 			<p:dataView var="contact" value="#{cc.attrs.value}" gridIcon="pi pi-th-large" listIcon="pi pi-bars" paginator="true"
-				layout="grid" paginatorPosition="bottom" rows="4" emptyMessage="#{i18n['contact.no_team']}" lazy="true">
+				layout="grid" paginatorPosition="bottom" rows="4" emptyMessage="#{i18n['client.no_contacts_found']}" lazy="true">
 				<p:dataViewGridItem columns="1">
 					<cc:contact value="#{contact}" />
 				</p:dataViewGridItem>

@@ -43,6 +43,7 @@ public class Client extends AbstractIndexedEntity implements Ownerable, Erasable
 
 	@Column(unique = true)
 	private String cif;
+	
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "client", orphanRemoval = true)
 	private Set<Contact> contacts = new HashSet<>();
 
@@ -75,13 +76,12 @@ public class Client extends AbstractIndexedEntity implements Ownerable, Erasable
 		this.contacts.add(contact);
 	}
 
-	public Contact deleteContact(final Contact contact) {
+	public void deleteContact(final Contact contact) {
 		Objects.requireNonNull(contact);
 		final boolean delete = this.contacts.remove(contact);
 		if (!delete) {
 			throw new IllegalStateException(String.format("Contact %s doesn't exist", contact));
 		}
-		return contact;
 	}
 
 	@Override

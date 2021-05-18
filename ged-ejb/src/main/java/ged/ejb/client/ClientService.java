@@ -33,6 +33,13 @@ public class ClientService extends AbstractIndexedService<Client> {
 		logger.debug("Find client by cif {}", cif);
 		return this.clientDao.findByCif(cif);
 	}
+	
+	public void deleteContact(final String uid, Contact contact) {
+		Objects.requireNonNull(contact);
+		logger.debug("Delete contact {} of client {}", contact, uid);
+		Client client = this.clientDao.findByUid(uid);
+		client.deleteContact(contact);
+	}
 
 	@Override
 	public AbstractIndexedDao<Client> getDao() {
