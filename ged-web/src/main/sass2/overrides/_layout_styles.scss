@@ -1,3 +1,35 @@
+.meeting {
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 1rem;
+	border-bottom: 1px solid $dividerColor;
+	padding-bottom: 1rem;
+	
+	.meeting-date {
+		font-size: 1.2rem;
+		color: $textColor;
+		text-transform:capitalize;
+	}
+	.meeting-content {
+		display: flex;
+		margin-top: 0.3rem;
+		.meeting-time {
+			color: $primaryColor;
+			font-size: 2.5rem;
+		}
+		.meeting-detail {
+			margin-top: 0.2rem;
+			margin-left: 1rem;
+		}
+		.meeting-data {
+			.icon {
+				padding-right: 0.5em;
+				
+			}
+		}
+	}
+}
+
 .attendees {
 	margin-top: 1rem;
 	.attendee {

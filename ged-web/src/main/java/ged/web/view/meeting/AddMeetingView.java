@@ -165,7 +165,7 @@ public class AddMeetingView extends AbstractView {
 			this.meeting.addAttendee(person.getEmail());
 		}
 		this.meetingService.save(this.meeting);
-		return PageEnum.MEETING_SEARCH.getUrl();
+		return this.navigator.getRedirectUrl(PageEnum.MEETING_SEARCH);
 	}
 
 	public List<Subject> searchPerson(final String query) {

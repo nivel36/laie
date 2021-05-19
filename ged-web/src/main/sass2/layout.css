@@ -3924,6 +3924,34 @@ a {
   src: url("#{resource['roma-layout:fonts/Inter-UI-Bold.otf']}") format("opentype"), url("#{resource['roma-layout:fonts/Inter-UI-Bold.woff2']}") format("woff2"), url("#{resource['roma-layout:fonts/Inter-UI-Bold.woff']}") format("woff"), url("#{resource['roma-layout:fonts/Inter-UI-Bold.ttf']}") format("truetype");
   /* Safari, Android, iOS */
 }
+.meeting {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #ebedef;
+  padding-bottom: 1rem;
+}
+.meeting .meeting-date {
+  font-size: 1.2rem;
+  color: #252529;
+  text-transform: capitalize;
+}
+.meeting .meeting-content {
+  display: flex;
+  margin-top: 0.3rem;
+}
+.meeting .meeting-content .meeting-time {
+  color: #214B9C;
+  font-size: 2.5rem;
+}
+.meeting .meeting-content .meeting-detail {
+  margin-top: 0.2rem;
+  margin-left: 1rem;
+}
+.meeting .meeting-content .meeting-data .icon {
+  padding-right: 0.5em;
+}
+
 .attendees {
   margin-top: 1rem;
 }
