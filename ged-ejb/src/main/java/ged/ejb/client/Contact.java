@@ -34,7 +34,8 @@ public class Contact extends AbstractIndexedEntity implements Subject {
 	@Email
 	@NotNull
 	@Column(length = 128, nullable = false, unique = true)
-	@Field
+	@Field(name = "_email")
+	@Field(name = "email", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	protected String email;
 
 	@Column(length = 2)

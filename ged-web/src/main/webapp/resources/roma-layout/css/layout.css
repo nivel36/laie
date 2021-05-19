@@ -3924,6 +3924,21 @@ a {
   src: url("#{resource['roma-layout:fonts/Inter-UI-Bold.otf']}") format("opentype"), url("#{resource['roma-layout:fonts/Inter-UI-Bold.woff2']}") format("woff2"), url("#{resource['roma-layout:fonts/Inter-UI-Bold.woff']}") format("woff"), url("#{resource['roma-layout:fonts/Inter-UI-Bold.ttf']}") format("truetype");
   /* Safari, Android, iOS */
 }
+.attendees {
+  margin-top: 1rem;
+}
+.attendees .attendee {
+  display: block;
+  overflow: auto;
+}
+.attendees .attendee .person {
+  float: left;
+}
+.attendees .attendee button {
+  margin-top: 0.5rem;
+  float: right;
+}
+
 .candidate-card {
   padding: 0;
 }
@@ -4117,6 +4132,12 @@ a {
 .users .ui-dataview-column {
   padding: 0;
 }
+.users a {
+  color: #65656a;
+}
+.users a:hover {
+  background-color: #ebebef;
+}
 
 .layout-main-topbar {
   position: relative;
@@ -4218,9 +4239,6 @@ a {
   vertical-align: top;
   padding: 0.5em;
 }
-.person:hover {
-  background-color: #f6f6f6;
-}
 .person .person-box {
   margin-left: 1em;
 }
@@ -4228,12 +4246,10 @@ a {
   font-size: 13px;
   display: block;
   font-weight: 500;
-  color: #666666;
 }
 .person .person-description {
   font-size: 13px;
   display: block;
-  color: #666666;
 }
 .person .avatar {
   display: block;

@@ -6,6 +6,7 @@ import java.lang.invoke.MethodHandles;
 import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.NoResultException;
 import javax.validation.ValidationException;
 
 import org.slf4j.Logger;
@@ -32,7 +33,12 @@ public class CandidateDao extends AbstractIndexedDao<Candidate> {
 
 	public Candidate findByUid(final String uid) {
 		Objects.requireNonNull(uid);
-		return this.findByQuery(Candidate.class, "Candidate.findByUid", map("uid", uid));
+		try {
+			return this.findByQuery(Candidate.class, "Candidate.findByUid", map("uid", uid));
+		}
+		catch(NoResultException e) {
+			return null;
+		}
 	}
 
 	public List<Candidate> findCandidates(final String jobOfferUid, final Page page) {

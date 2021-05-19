@@ -5,6 +5,8 @@ import static ged.ejb.core.util.Parameters.map;
 import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.NoResultException;
+
 import ged.ejb.core.model.AbstractIndexedDao;
 import ged.ejb.core.model.Page;
 import ged.ejb.core.model.Repository;
@@ -14,13 +16,17 @@ public class ContactDao extends AbstractIndexedDao<Contact> {
 
 	public Contact findByUid(final String uid) {
 		Objects.requireNonNull(uid);
-		return this.findByQuery(Contact.class, "Contact.findByUid", map("uid", uid));
+		try {
+			return this.findByQuery(Contact.class, "Contact.findByUid", map("uid", uid));
+		} catch (NoResultException e) {
+			return null;
+		}
 	}
 
 	public List<Contact> findContactsByClient(final String clientUid, final Page page) {
 		Objects.requireNonNull(clientUid);
-		return this.getPersistenceFacade().findByQuery(Contact.class, "Contact.findByClient", map("clientUid", clientUid),
-				page);
+		return this.getPersistenceFacade().findByQuery(Contact.class, "Contact.findByClient",
+				map("clientUid", clientUid), page);
 	}
 
 	@Override

@@ -1,3 +1,18 @@
+.attendees {
+	margin-top: 1rem;
+	.attendee {
+		display: block;
+		overflow: auto;
+		.person {
+			float:left;	
+		}
+		button{
+			margin-top: 0.5rem;
+			float:right;
+		}
+	}
+}
+
 .candidate-card {
 	
 	padding: 0;
@@ -228,6 +243,12 @@
 	.ui-dataview-column {
 		padding: 0;
 	}
+	a {
+		color: $textSecondaryColor;
+		&:hover{
+			background-color: $darkMenuitemTextHoverColor;
+		}
+	}
 }
 
 .layout-main-topbar {
@@ -344,10 +365,6 @@
     display: flex;
     vertical-align: top;
 	padding: 0.5em;
-
-	&:hover {
-		background-color: #f6f6f6;
-	}
 	
 	.person-box {
 		margin-left: 1em;
@@ -357,13 +374,11 @@
 		font-size: 13px;
 		display: block;
 		font-weight: 500;
-		color: $menuitemTextColor;
     }
 
     .person-description {
         font-size: 13px;
         display: block;
-		color: $menuitemTextColor;
     }
 
 	.avatar {

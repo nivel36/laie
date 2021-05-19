@@ -40,7 +40,12 @@ public class UserDao extends AbstractIndexedDao<User> {
 
 	public User findByUid(final String uid) {
 		Objects.requireNonNull(uid);
-		return this.findByQuery(User.class, "User.findByUid", map("uid", uid));
+		try {
+			return this.findByQuery(User.class, "User.findByUid", map("uid", uid));
+		}
+		catch(NoResultException e) {
+			return null;
+		}
 	}
 
 	public Credential findCredential(final String email) {
