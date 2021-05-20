@@ -1,6 +1,8 @@
 package ged.ejb.job.meeting;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.OffsetTime;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -36,6 +38,10 @@ public class Meeting extends AbstractIndexedEntity implements Ownerable {
 	@NotNull
 	@Column(nullable = false)
 	private LocalDateTime datePlanned;
+	
+	@NotNull
+	@Column(nullable = false)
+	private Duration duration = Duration.ofMinutes(30);
 
 	@ManyToOne
 	@JoinColumn(name = "jobCandidatureId")
@@ -90,6 +96,10 @@ public class Meeting extends AbstractIndexedEntity implements Ownerable {
 		return this.datePlanned;
 	}
 
+	public Duration getDuration() {
+		return duration;
+	}
+
 	public JobCandidature getJobCandidature() {
 		return this.jobCandidature;
 	}
@@ -131,6 +141,10 @@ public class Meeting extends AbstractIndexedEntity implements Ownerable {
 
 	public void setDatePlanned(final LocalDateTime datePlanned) {
 		this.datePlanned = datePlanned;
+	}
+
+	public void setDuration(Duration duration) {
+		this.duration = duration;
 	}
 
 	public void setJobCandidature(final JobCandidature jobCandidature) {

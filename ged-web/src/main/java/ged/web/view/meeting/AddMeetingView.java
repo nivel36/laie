@@ -1,6 +1,7 @@
 package ged.web.view.meeting;
 
 import java.lang.invoke.MethodHandles;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -47,11 +48,15 @@ public class AddMeetingView extends AbstractView {
 	@Inject
 	private transient ContactService contactService;
 
+	private List<String> durations;
+
 	private List<String> hours;
 
 	private Meeting meeting;
 
 	private LocalDate meetingDate;
+
+	private String meetingDuration;
 
 	private String meetingHour;
 
@@ -78,6 +83,10 @@ public class AddMeetingView extends AbstractView {
 		return this.attendees;
 	}
 
+	public List<String> getDurations() {
+		return this.durations;
+	}
+
 	public List<String> getHours() {
 		return this.hours;
 	}
@@ -88,6 +97,10 @@ public class AddMeetingView extends AbstractView {
 
 	public LocalDate getMeetingDate() {
 		return this.meetingDate;
+	}
+
+	public String getMeetingDuration() {
+		return this.meetingDuration;
 	}
 
 	public String getMeetingHour() {
@@ -104,6 +117,7 @@ public class AddMeetingView extends AbstractView {
 		this.meetingTypes = this.initMeetingTypes();
 		this.attendees = this.initAttendees();
 		this.hours = this.initHours();
+		this.durations = this.initDurations();
 		this.meetingHour = this.initActualMeetingHour();
 	}
 
@@ -133,6 +147,20 @@ public class AddMeetingView extends AbstractView {
 		return attendeeList;
 	}
 
+	private List<String> initDurations() {
+		final List<String> durations = new ArrayList<>();
+		durations.add("0:15");
+		durations.add("0:30");
+		durations.add("0:45");
+		for (int i = 1; i < 3; i++) {
+			durations.add(i + ":00");
+			durations.add(i + ":15");
+			durations.add(i + ":30");
+			durations.add(i + ":45");
+		}
+		return durations;
+	}
+
 	private List<String> initHours() {
 		final List<String> hourList = new ArrayList<>();
 		for (int i = 0; i < 24; i++) {
@@ -159,8 +187,11 @@ public class AddMeetingView extends AbstractView {
 
 	public String save() {
 		final LocalTime time = LocalTime.parse(this.meetingHour, DateTimeFormatter.ofPattern("H:mm"));
+		final LocalTime endTime = LocalTime.parse(this.meetingDuration, DateTimeFormatter.ofPattern("H:mm"));
+		final Duration duration = Duration.between(time, endTime);
 		final LocalDateTime meetingDateTime = LocalDateTime.of(this.meetingDate, time);
 		this.meeting.setDatePlanned(meetingDateTime);
+		this.meeting.setDuration(duration);
 		for (final Subject person : this.attendees) {
 			this.meeting.addAttendee(person.getEmail());
 		}
@@ -169,11 +200,14 @@ public class AddMeetingView extends AbstractView {
 	}
 
 	public List<Subject> searchPerson(final String query) {
-		logger.trace("Searching for person with the string {}", query);
+		AddMeetingView.logger.trace("Searching for person with the string {}", query);
 		final List<Subject> personsFound = new ArrayList<>();
 		personsFound.addAll(this.candidateService.search(query, Page.TEN_RESULTS_PER_PAGE).getResultData());
 		personsFound.addAll(this.userService.search(query, Page.TEN_RESULTS_PER_PAGE).getResultData());
 		personsFound.addAll(this.contactService.search(query, Page.TEN_RESULTS_PER_PAGE).getResultData());
+		for (Subject attendee : attendees) {
+			personsFound.remove(attendee);
+		}
 		return personsFound;
 	}
 
@@ -199,6 +233,10 @@ public class AddMeetingView extends AbstractView {
 
 	public void setMeetingDate(final LocalDate meetingDate) {
 		this.meetingDate = meetingDate;
+	}
+
+	public void setMeetingDuration(final String meetingDuration) {
+		this.meetingDuration = meetingDuration;
 	}
 
 	public void setMeetingHour(final String meetingHour) {
