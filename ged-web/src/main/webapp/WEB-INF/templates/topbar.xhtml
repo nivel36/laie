@@ -4,8 +4,8 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 	<h:form id="topbar-form">
 		<div class="layout-topbar">
-			<a class="layout-right-panel-button layout-topbar-icon" href="#"> <i class="fa fa-comment" />
-			</a> <a class="layout-menu-button layout-topbar-icon" href="#"> <i class="fa fa-bars" />
+			<a class="layout-right-panel-button layout-topbar-icon" href="#"> <em class="fa fa-comment" />
+			</a> <a class="layout-menu-button layout-topbar-icon" href="#"> <em class="fa fa-bars" />
 			</a>
 
 			<h:link id="logo-link" outcome="/index" styleClass="layout-topbar-logo">
@@ -27,9 +27,7 @@
 			</svg>
 			</h:link>
 
-
-			<span class="layout-topbar-search"> <i class="fa fa-search"></i> <p:inputText placeholder="#{i18n['menu.search']}" /></span>
-
+			<span class="layout-topbar-search"> <em class="fa fa-search"></i> <p:inputText placeholder="#{i18n['menu.search']}" /></span>
 
 			<ul class="topbar-menu fadeInDown">
 				<ui:fragment rendered="#{guestPreferences.profileMode == 'popup' ? true : false}">
