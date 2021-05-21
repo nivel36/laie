@@ -1,2 +1,2 @@
-# laie
-Gestor de horarios
+# Laie
+Aplicación para gestión de horarios y vacaciones
