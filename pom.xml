@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>es.nvl36</groupId>
 	<artifactId>laie</artifactId>
-	<version>0.0.1</version>
+	<version>0.0.2-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>laie</name>
 
@@ -14,30 +14,38 @@
 
 		<version.server.bom>23.0.0.Final</version.server.bom>
 		<version.microprofile.bom>23.0.0.Final</version.microprofile.bom>
+
+		<version.primefaces>10.0.0</version.primefaces>
 	</properties>
 
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>org.wildfly.bom</groupId>
-				<artifactId>wildfly-jakartaee8-with-tools</artifactId>
-				<version>${version.server.bom}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
 
-			<dependency>
-				<groupId>org.wildfly.bom</groupId>
-				<artifactId>wildfly-microprofile</artifactId>
-				<version>${version.microprofile.bom}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
+	<dependencies>
+		<dependency>
+			<groupId>org.wildfly.bom</groupId>
+			<artifactId>wildfly-jakartaee8-with-tools</artifactId>
+			<version>${version.server.bom}</version>
+			<type>pom</type>
+			<scope>import</scope>
+		</dependency>
 
-		</dependencies>
-	</dependencyManagement>
+		<dependency>
+			<groupId>org.wildfly.bom</groupId>
+			<artifactId>wildfly-microprofile</artifactId>
+			<version>${version.microprofile.bom}</version>
+			<type>pom</type>
+			<scope>import</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.primefaces</groupId>
+			<artifactId>primefaces</artifactId>
+			<version>${version.primefaces}</version>
+		</dependency>
+
+	</dependencies>
 
 	<build>
+		<finalName>${project.artifactId}</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
