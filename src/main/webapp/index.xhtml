@@ -1,15 +1,22 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/templates/template.xhtml">
+             
+    <ui:define name="title">Empty Page</ui:define>
 
-<h:head>
-	<title>¡Hola Mundo!</title>
-</h:head>
+    <ui:define name="content">
+        <div class="p-grid">
+            <div class="p-col">
+                <div class="card">
+                    <h4>Empty Page</h4>
+                    <p>This is your empty page template to start building beautiful applications.</p>
+                    <p:commandButton type="button" icon="pi pi-home" value="Home" />
+                </div>
+            </div>
+        </div>
+    </ui:define>
 
-<h:body>
-	<h1>¡Hola Mundo!</h1>
-	<p>Esta es la primera versión de Laie - Aplicación para la gestión de horarios.</p>
-	
-	<p:spinner />
-</h:body>
-
-</html>
+</ui:composition>

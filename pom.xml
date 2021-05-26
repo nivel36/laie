@@ -4,6 +4,7 @@
 	<groupId>es.nvl36</groupId>
 	<artifactId>laie</artifactId>
 	<version>0.0.2-SNAPSHOT</version>
+
 	<packaging>war</packaging>
 	<name>laie</name>
 
@@ -16,24 +17,62 @@
 		<version.microprofile.bom>23.0.0.Final</version.microprofile.bom>
 
 		<version.primefaces>10.0.0</version.primefaces>
+
+		<version.maven-surefire-plugin>3.0.0-M5</version.maven-surefire-plugin>
+		<version.maven-failsafe-plugin>3.0.0-M5</version.maven-failsafe-plugin>
+		<version.maven-compiler-plugin>3.8.0</version.maven-compiler-plugin>
+		<version.maven-war-plugin>3.3.1</version.maven-war-plugin>
 	</properties>
 
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.wildfly.bom</groupId>
+				<artifactId>wildfly-jakartaee8-with-tools</artifactId>
+				<version>${version.server.bom}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.wildfly.bom</groupId>
+				<artifactId>wildfly-microprofile</artifactId>
+				<version>${version.microprofile.bom}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
 	<dependencies>
 		<dependency>
-			<groupId>org.wildfly.bom</groupId>
-			<artifactId>wildfly-jakartaee8-with-tools</artifactId>
-			<version>${version.server.bom}</version>
-			<type>pom</type>
-			<scope>import</scope>
+            <groupId>jakarta.enterprise</groupId>
+            <artifactId>jakarta.enterprise.cdi-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+	
+		<dependency>
+			<groupId>org.jboss.spec.javax.annotation</groupId>
+			<artifactId>jboss-annotations-api_1.3_spec</artifactId>
+			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
-			<groupId>org.wildfly.bom</groupId>
-			<artifactId>wildfly-microprofile</artifactId>
-			<version>${version.microprofile.bom}</version>
-			<type>pom</type>
-			<scope>import</scope>
+			<groupId>org.jboss.spec.javax.ejb</groupId>
+			<artifactId>jboss-ejb-api_3.2_spec</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jboss.spec.javax.faces</groupId>
+			<artifactId>jboss-jsf-api_2.3_spec</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jboss.spec.javax.servlet</groupId>
+			<artifactId>jboss-servlet-api_4.0_spec</artifactId>
+			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
@@ -41,8 +80,8 @@
 			<artifactId>primefaces</artifactId>
 			<version>${version.primefaces}</version>
 		</dependency>
-
 	</dependencies>
+
 
 	<build>
 		<finalName>${project.artifactId}</finalName>
@@ -50,7 +89,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.22.0</version>
+				<version>${version.maven-surefire-plugin}</version>
 				<configuration>
 					<argLine>
 						--illegal-access=permit
@@ -60,7 +99,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-failsafe-plugin</artifactId>
-				<version>2.22.0</version>
+				<version>${version.maven-failsafe-plugin}</version>
 				<configuration>
 					<argLine>
 						--illegal-access=permit
@@ -70,7 +109,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.8.0</version>
+				<version>${version.maven-compiler-plugin}</version>
 				<configuration>
 					<release>11</release>
 				</configuration>
@@ -78,7 +117,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
-				<version>3.3.1</version>
+				<version>${version.maven-war-plugin}</version>
 				<configuration>
 					<failOnMissingWebXml>false</failOnMissingWebXml>
 				</configuration>
