@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:component xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:composite="http://xmlns.jcp.org/jsf/composite"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://ged.org/ui" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<composite:interface>
+		<composite:attribute name="value" required="true" />
+		<composite:attribute name="styleClass" required="false" default="" />
+		<composite:attribute name="title" required="false" default="#{i18n['user.users']}" />
+		<composite:attribute name="rows" required="false" default="#{sessionUser.rowsPerPage}" />
+	</composite:interface>
+
+	<composite:implementation>
+		<div id="#{cc.clientId}" class="card card-w-title users #{cc.attrs.styleClass}">
+			<h5>#{cc.attrs.title}</h5>
+			<p:dataView var="user" value="#{cc.attrs.value}" gridIcon="pi pi-th-large" listIcon="pi pi-bars" paginator="true"
+				layout="grid" paginatorPosition="bottom" rows="4" emptyMessage="#{i18n['user.no_team']}" lazy="true">
+				<p:dataViewGridItem columns="1">
+					<h:link outcome="#{Page.USER.getUrl()}">
+						<f:param name="id" value="#{user.uid}" />
+						<cc:person value="#{user}" description="#{user.email}" />
+					</h:link>
+				</p:dataViewGridItem>
+			</p:dataView>
+
+			<h:panelGroup id="children" styleClass="buttons">
+				<composite:insertChildren />
+			</h:panelGroup>
+		</div>
+	</composite:implementation>
+</ui:component>

@@ -13,7 +13,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  */
-package es.nvl36.laie.view.component;
+package es.nivel36.laie.view.component;
 
 import javax.faces.component.UIComponent;
 import javax.faces.component.UINamingContainer;
@@ -32,9 +32,9 @@ import org.primefaces.component.menu.AbstractMenu;
 @ListenerFor(sourceClass = RomaMenu.class, systemEventClass = PostAddToViewEvent.class)
 public class RomaMenu extends AbstractMenu implements Widget,ComponentSystemEventListener {
 
-    public static final String COMPONENT_TYPE = "es.nvl36.laie.view.component.RomaMenu";
-    public static final String COMPONENT_FAMILY = "es.nvl36.laie.view.component";
-    private static final String DEFAULT_RENDERER = "es.nvl36.laie.view.component.RomaMenuRenderer";
+    public static final String COMPONENT_TYPE = "es.nivel36.laie.view.component.RomaMenu";
+    public static final String COMPONENT_FAMILY = "es.nivel36.laie.view.component";
+    private static final String DEFAULT_RENDERER = "es.nivel36.laie.view.component.RomaMenuRenderer";
     private static final String[] LEGACY_RESOURCES = new String[]{"primefaces.css","jquery/jquery.js","jquery/jquery-plugins.js","primefaces.js"};
     private static final String[] MODERN_RESOURCES = new String[]{"components.css","jquery/jquery.js","jquery/jquery-plugins.js","core.js"};
     

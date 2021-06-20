@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="http://xmlns.jcp.org/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence/orm
+        http://xmlns.jcp.org/xml/ns/persistence/orm_2_1.xsd" version="2.1">
+
+	<named-query name="File.findByHash">
+		<query><![CDATA[
+			SELECT f 
+			FROM PhysicalFile f 
+			WHERE f.contentHash = :hash
+		]]></query>
+	</named-query>
+
+	<named-query name="File.isOrphan">
+		<query><![CDATA[
+			SELECT CASE WHEN (COUNT(f) > 0) THEN TRUE ELSE FALSE END 
+			FROM File f 
+			WHERE f.physicalFile = :physicalFile
+		]]></query>
+	</named-query>
+
+	<named-query name="User.findByUid">
+		<query><![CDATA[
+			SELECT u 
+			FROM User u 
+			WHERE u.uid = :uid
+		]]></query>
+	</named-query>
+
+	<named-query name="User.findSubordinateUsers">
+		<query><![CDATA[
+			SELECT u 
+			FROM UserClosure uc 
+			JOIN uc.descendant u 
+			WHERE uc.antecessor.id = :id 
+			AND uc.pathLength > 0
+		]]></query>
+	</named-query>
+	
+	<named-query name="User.isSubordinateUser">
+		<query><![CDATA[
+			SELECT CASE WHEN (COUNT(u) > 0) THEN TRUE ELSE FALSE END 
+			FROM UserClosure uc 
+			JOIN uc.descendant u 
+			WHERE uc.antecessor.id = :managerId 
+			AND u.id= :subordinateId
+		]]></query>
+	</named-query>
+
+	<named-query name="UserClosure.findAntecessorsUserClosuresById">
+		<query><![CDATA[
+			SELECT uc 
+			FROM UserClosure uc 
+			WHERE uc.descendant.id = :id
+		]]></query>
+	</named-query>
+
+	<named-query name="UserClosure.findDescendantsUserClosuresById">
+		<query><![CDATA[
+			SELECT uc 
+			FROM UserClosure uc 
+			WHERE uc.antecessor.id = :id
+		]]></query>
+	</named-query>
+</entity-mappings>

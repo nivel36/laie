@@ -13,7 +13,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  */
-package es.nvl36.laie.view.component;
+package es.nivel36.laie.view.component;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
