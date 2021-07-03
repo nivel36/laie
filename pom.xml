@@ -18,7 +18,7 @@
 		<version.junit.bom>5.7.2</version.junit.bom>
 
 		<version.primefaces>10.0.0</version.primefaces>
-		<version.omnifaces>4.0-M8</version.omnifaces>
+		<version.omnifaces>3.11</version.omnifaces>
 		<version.mockito>3.11.0</version.mockito>
 
 		<version.maven-surefire-plugin>3.0.0-M5</version.maven-surefire-plugin>
@@ -113,6 +113,12 @@
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jboss.spec.javax.ws.rs</groupId>
+			<artifactId>jboss-jaxrs-api_2.1_spec</artifactId>
 			<scope>provided</scope>
 		</dependency>
 

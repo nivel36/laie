@@ -4,15 +4,15 @@
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_3.xsd" version="2.3">
 
 	<component>
-		<component-type>es.nivel36.laie.view.component.RomaMenu</component-type>
-		<component-class>es.nivel36.laie.view.component.RomaMenu</component-class>
+		<component-type>es.nivel36.laie.core.view.component.RomaMenu</component-type>
+		<component-class>es.nivel36.laie.core.view.component.RomaMenu</component-class>
 	</component>
 
 	<render-kit>
 		<renderer>
-			<component-family>es.nivel36.laie.view.component</component-family>
-			<renderer-type>es.nivel36.laie.view.component.RomaMenuRenderer</renderer-type>
-			<renderer-class>es.nivel36.laie.view.component.RomaMenuRenderer</renderer-class>
+			<component-family>es.nivel36.laie.core.view.component</component-family>
+			<renderer-type>es.nivel36.laie.core.view.component.RomaMenuRenderer</renderer-type>
+			<renderer-class>es.nivel36.laie.core.view.component.RomaMenuRenderer</renderer-class>
 		</renderer>
 	</render-kit>
 
@@ -21,7 +21,7 @@
 			<base-name>es.nivel36.laie.i18n</base-name>
 			<var>i18n</var>
 		</resource-bundle>
-		<message-bundle>laie.messages</message-bundle>
+		<message-bundle>es.nivel36.laie.messages</message-bundle>
 		<locale-config id="es">
 			<default-locale>es_ES</default-locale>
 		</locale-config>

@@ -18,21 +18,52 @@
 			WHERE f.physicalFile = :physicalFile
 		]]></query>
 	</named-query>
-
-	<named-query name="User.findByUid">
+	
+	<named-query name="User.findAll">
 		<query><![CDATA[
 			SELECT u 
+			FROM User u
+		]]></query>
+	</named-query>
+	
+	<named-query name="User.findDuplicateEmail">
+		<query><![CDATA[
+			SELECT CASE WHEN (COUNT(u) > 0) THEN TRUE ELSE FALSE END 
+			FROM User u 
+			WHERE u.email = :email
+		]]></query>
+	</named-query>
+	
+	<named-query name="User.findDuplicateIdNumber">
+		<query><![CDATA[
+			SELECT CASE WHEN (COUNT(u) > 0) THEN TRUE ELSE FALSE END 
+			FROM User u 
+			WHERE u.idNumber = :idNumber
+		]]></query>
+	</named-query>
+	
+	<named-query name="User.findDuplicateUid">
+		<query><![CDATA[
+			SELECT CASE WHEN (COUNT(u) > 0) THEN TRUE ELSE FALSE END 
 			FROM User u 
 			WHERE u.uid = :uid
 		]]></query>
 	</named-query>
 
-	<named-query name="User.findSubordinateUsers">
+	<named-query name="User.findUserByUid">
+		<query><![CDATA[
+			SELECT u 
+			FROM User u
+			WHERE u.uid = :uid
+		]]></query>
+	</named-query>
+
+	<named-query name="User.findUsersByManagerUid">
 		<query><![CDATA[
 			SELECT u 
 			FROM UserClosure uc 
 			JOIN uc.descendant u 
-			WHERE uc.antecessor.id = :id 
+			WHERE uc.antecessor.id = :managerUid 
 			AND uc.pathLength > 0
 		]]></query>
 	</named-query>
@@ -47,15 +78,7 @@
 		]]></query>
 	</named-query>
 
-	<named-query name="UserClosure.findAntecessorsUserClosuresById">
-		<query><![CDATA[
-			SELECT uc 
-			FROM UserClosure uc 
-			WHERE uc.descendant.id = :id
-		]]></query>
-	</named-query>
-
-	<named-query name="UserClosure.findDescendantsUserClosuresById">
+	<named-query name="UserClosure.findAntecessorsById">
 		<query><![CDATA[
 			SELECT uc 
 			FROM UserClosure uc 
