@@ -1,6 +1,10 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui"
-	template="/WEB-INF/templates/template.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:ui="http://java.sun.com/jsf/facelets" 
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	template="/WEB-INF/templates/template.xhtml" >
 
 	<ui:define name="title">Empty Page</ui:define>
 
@@ -12,7 +16,7 @@
 					<div class="user-card-content">
 						<cc:avatar value="#{viewUserView.user}" size="xlarge" styleClass="user-image with-border" />
 
-						<div class="user-card-name">#{viewUserView.user.fullName}</div>
+						<div class="user-card-name">#{viewUserView.user}</div>
 						<div class="user-card-role">#{i18n[viewUserView.user.role]}</div>
 						<div class="user-detail">
 							<div class="p-grid">
@@ -22,18 +26,7 @@
 								<div class="p-col-12 p-sm-6">
 									<cc:outputText label="#{i18n['user.phone_number']}" value="#{viewUserView.user.phoneNumber}" />
 								</div>
-								<div class="p-col-12 p-sm-6">
-									<cc:outputText label="#{i18n['user.date_of_join']}" value="#{viewUserView.user.dateOfJoin}"
-										styleClass="data date_of_join">
-										<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" for="text" />
-									</cc:outputText>
-								</div>
-								<div class="p-col-12 p-sm-6">
-									<cc:outputText label="#{i18n['user.last_login']}" value="#{viewUserView.user.lastConnection}"
-										styleClass="data last_login">
-										<f:convertDateTime type="localDateTime" pattern="dd/MM/yyyy HH:mm" for="text" />
-									</cc:outputText>
-								</div>
+								
 								<div class="p-col-12">
 									<div class="data manager">
 										<div class="label-container">

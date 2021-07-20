@@ -26,6 +26,7 @@ import javax.persistence.TypedQuery;
 import es.nivel36.laie.core.service.AbstractDao;
 import es.nivel36.laie.core.service.IdentifiableNotFoundException;
 import es.nivel36.laie.core.service.Repository;
+import es.nivel36.laie.login.LaieCredential;
 
 /**
  * Data access object for the User entity.
@@ -46,7 +47,7 @@ public class UserJpaDao extends AbstractDao {
 	 * @param page     <tt>int</tt> with the page to start searching from. Must be
 	 *                 greater or equal than 0.
 	 * @param pageSize <tt>int</tt> with the maximum number of results to return.
-	 *                 Must be greater than 0 and lesser or equal than 100.
+	 *                 Must be greater than 0 and lesser or equal than 1000.
 	 *
 	 * @return <tt> List<User></tt> with all the users. The size of the list is the
 	 *         same as the size of the page.
@@ -56,6 +57,21 @@ public class UserJpaDao extends AbstractDao {
 		final TypedQuery<User> query = this.entityManager.createNamedQuery("User.findAll", User.class);
 		this.paginate(page, pageSize, query);
 		return query.getResultList();
+	}
+	
+	public LaieCredential findCredential(final String email) {
+		final TypedQuery<LaieCredential> query = this.entityManager.createNamedQuery("User.findCredential", LaieCredential.class);
+		query.setParameter("email", email);
+		return query.getSingleResult();
+	}
+	
+	public User findUserByTokenHashAndType(final byte[] tokenHash, final es.nivel36.laie.login.token.LoginToken.TokenType type) {
+		Objects.requireNonNull(tokenHash);
+		Objects.requireNonNull(type);
+		final TypedQuery<User> query = this.entityManager.createNamedQuery("User.findByTokenHashAndType", User.class);
+		query.setParameter("tokenHash", tokenHash);
+		query.setParameter("type", type);
+		return query.getSingleResult();
 	}
 
 	/**
@@ -90,6 +106,26 @@ public class UserJpaDao extends AbstractDao {
 	}
 
 	/**
+	 * Search for a user by their email.
+	 *
+	 * @param uid <tt>String</tt> with the email. This parameter cannot be null.
+	 *
+	 * @return <tt>User</tt> that has the same email as the one passed as parameter,
+	 *         <tt>null</tt> if no user is found
+	 * 
+	 */
+	public User findUserByEmail(final String email) {
+		Objects.requireNonNull(email);
+		try {
+			final TypedQuery<User> q = this.entityManager.createNamedQuery("User.findUserByEmail", User.class);
+			q.setParameter("email", email);
+			return q.getSingleResult();
+		} catch (NoResultException e) {
+			throw new IdentifiableNotFoundException();
+		}
+	}
+
+	/**
 	 * Search for a user by their unique identifier.
 	 *
 	 * @param uid <tt>String</tt> with the unique identifier. This parameter cannot
@@ -120,7 +156,7 @@ public class UserJpaDao extends AbstractDao {
 	 * @param page       <tt>int</tt> with the page to start searching from. Must be
 	 *                   greater or equal than 0.
 	 * @param pageSize   <tt>int</tt> with the maximum number of results to return.
-	 *                   Must be greater than 0 and lesser or equal than 100.
+	 *                   Must be greater than 0 and lesser or equal than 1000.
 	 *
 	 * @return <tt> List<User></tt> whose manager is the user passed as a parameter.
 	 *         The size of the list is the same as the size of the page.

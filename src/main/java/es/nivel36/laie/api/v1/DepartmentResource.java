@@ -46,7 +46,7 @@ public class DepartmentResource extends AbstractResource {
 	 * @param page     <tt>int</tt> with the page to start searching from. Must be
 	 *                 greater or equal than 0.
 	 * @param pageSize <tt>int</tt> with the maximum number of results to return.
-	 *                 Must be greater than 0 and lesser or equal than 100.
+	 *                 Must be greater than 0 and lesser or equal than 1000.
 	 */
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -69,7 +69,7 @@ public class DepartmentResource extends AbstractResource {
 	 *                      be greater or equal than 0.
 	 * @param pageSize      <tt>int</tt> with the maximum number of results to
 	 *                      return. Must be greater than 0 and lesser or equal than
-	 *                      100.
+	 *                      1000.
 	 */
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)

@@ -36,7 +36,7 @@ public abstract class AbstractDao {
 	////////////////////////////////////////////////////////////////////////////
 
 	// The limit of the maximum number of results that can be searched.
-	protected static final int MAX_RESULT_SIZE = 100;
+	protected static final int MAX_RESULT_SIZE = 1000;
 
 	@PersistenceContext
 	protected EntityManager entityManager;
@@ -48,13 +48,13 @@ public abstract class AbstractDao {
 	protected abstract boolean findDuplicateUid(final String uid);
 
 	protected void generateUid(final Identifiable identifiable) {
-		final UidGenerator uidGenerator = new UidGenerator(6);
+		final RandomGenerator uidGenerator = new RandomGenerator(6);
 		// The identifier is a randomly generated number. Although it generates a number
 		// out of 16,777,216 and it is difficult for any number to be repeated, we must
 		// always verify that the value is not duplicated.
 		String uid;
 		do {
-			uid = uidGenerator.generate();
+			uid = uidGenerator.generateHex();
 		} while (this.findDuplicateUid(uid));
 		identifiable.setUid(uid);
 	}

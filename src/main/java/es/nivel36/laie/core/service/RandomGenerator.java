@@ -17,8 +17,8 @@
  */
 package es.nivel36.laie.core.service;
 
+import java.security.SecureRandom;
 import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Generator of a random hexadecimal string. This generator is capable of
@@ -27,7 +27,7 @@ import java.util.concurrent.ThreadLocalRandom;
  * @author Abel Ferrer
  *
  */
-public final class UidGenerator {
+public final class RandomGenerator {
 
 	private static final String _02X = "%02X";
 
@@ -43,12 +43,12 @@ public final class UidGenerator {
 	 * 
 	 * @param size <tt>int</tt> with the size of the random string.
 	 */
-	public UidGenerator(final int size) {
+	public RandomGenerator(final int size) {
 		if ((size < 1) || (size > 128)) {
 			throw new IllegalArgumentException(String.format("Size %d is out of limits", size));
 		}
 		this.size = size;
-		this.random = ThreadLocalRandom.current();
+		this.random = new SecureRandom();
 		final int byteSize = (size % 2) == 0 ? size / 2 : (size + 1) / 2;
 		this.bytes = new byte[byteSize];
 	}
@@ -59,7 +59,7 @@ public final class UidGenerator {
 	 * 
 	 * @return <tt>String</tt> with a random hexadecimal value.
 	 */
-	public String generate() {
+	public String generateHex() {
 		this.random.nextBytes(this.bytes);
 
 		final StringBuilder sb = new StringBuilder();
@@ -74,5 +74,16 @@ public final class UidGenerator {
 			randomString = sb.substring(0, this.size);
 		}
 		return randomString;
+	}
+	
+	/**
+	 * Generates an array of bytes of random characters with the length
+	 * determined by the constructor.
+	 * 
+	 * @return <tt>byte[]</tt> with a random value.
+	 */
+	public byte[] generate() {
+		this.random.nextBytes(this.bytes);
+		return this.bytes;
 	}
 }

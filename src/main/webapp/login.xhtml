@@ -1,61 +1,59 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui" lang="es">
 
 <h:head>
-    <f:facet name="first">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-    </f:facet>
-    <title>PrimeFaces Roma - Login</title>
+	<f:facet name="first">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+	</f:facet>
+	<title>${i18n['login.login']}</title>
 </h:head>
 
 <h:body styleClass="login-body">
+	<p:growl id="growl" globalOnly="true" />
+	<h:form id="loginForm">
+		<div class="card login-panel ui-fluid">
+			<div class="login-panel-content">
+				<div class="p-grid">
+					<div class="p-col-12 username-container">
+						<h:panelGroup>
+							<label>#{i18n['login.username']}</label>
+							<div class="login-input">
+								<p:inputText id="username" value="#{loginView.username}" />
+							</div>
+						</h:panelGroup>
+					</div>
+					<div class="p-col-12 password-container">
+						<h:panelGroup>
+							<label>#{i18n['login.password']}</label>
+							<div class="login-input">
+								<p:password id="password" value="#{loginView.password}" />
+							</div>
+						</h:panelGroup>
+					</div>
+					<div class="p-col-12 p-sm-6 p-md-6 rememberme-container">
+						<p:selectBooleanCheckbox id="rememberme" />
+						<label>#{i18n['login.rememberme']}</label>
+					</div>
 
-    <div class="card login-panel ui-fluid">
-        <div class="login-panel-content">
-            <div class="p-grid">
-                <div class="p-col-12 p-sm-6 p-md-6 logo-container">
-                    <img src="./resources/roma-layout/images/logo-roma.svg" />
-                    <span class="guest-sign-in">Welcome, please use the form to sign-in Roma network</span>
-                </div>
-                <div class="p-col-12 username-container">
-                    <h:panelGroup>
-                        <label>User Name</label>
-                        <div class="login-input">
-                            <p:inputText />
-                        </div>
-                    </h:panelGroup>
-                </div>
-                <div class="p-col-12 password-container">
-                    <h:panelGroup>
-                        <label>Password</label>
-                        <div class="login-input">
-                            <p:password />
-                        </div>
-                    </h:panelGroup>
-                </div>
-                <div class="p-col-12 p-sm-6 p-md-6 rememberme-container">
-                    <p:selectBooleanCheckbox />
-                    <label>Remember me</label>
-                </div>
+					<div class="p-col-12 p-sm-6 p-md-6 forgetpassword-container">
+						<a href="#" class="forget-password">#{i18n['login.forget_password']}</a>
+					</div>
 
-                <div class="p-col-12 p-sm-6 p-md-6 forgetpassword-container">
-                    <a href="#" class="forget-password">Forget Password</a>
-                </div>
+					<div class="p-col-12 p-sm-6 p-md-6">
+						<p:commandButton action="#{loginView.login}" value="${i18n['login.enter']}" icon="fa fa-user" update="@form growl" />
+					</div>
+				</div>
+			</div>
+		</div>
+	</h:form>
 
-                <div class="p-col-12 p-sm-6 p-md-6">
-                    <p:button outcome="/index" value="Sign In" icon="pi pi-user" />
-                </div>
-            </div>
-        </div>
-    </div>
-
+	<h:outputStylesheet name="css/layout.css" library="roma-layout" />
     <h:outputStylesheet name="css/primeicons.css" library="roma-layout" />
     <h:outputStylesheet name="css/primeflex.min.css" library="roma-layout" />
-    <h:outputStylesheet name="css/layout-blue.css" library="roma-layout" />
 </h:body>
 
 </html>

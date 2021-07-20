@@ -30,7 +30,7 @@ public abstract class AbstractService {
 	////////////////////////////////////////////////////////////////////////////
 
 	// The limit of the maximum number of results that can be searched.
-	private static final int MAX_RESULT_SIZE = 100;
+	private static final int MAX_RESULT_SIZE = 1000;
 
 	////////////////////////////////////////////////////////////////////////////
 	// PROTECTED

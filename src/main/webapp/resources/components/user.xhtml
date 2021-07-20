@@ -3,7 +3,6 @@
 	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
 	xmlns:composite="http://xmlns.jcp.org/jsf/composite" 
 	xmlns:f="http://java.sun.com/jsf/core" 
-	xmlns:g="http://ged.org/ui" 
 	xmlns:h="http://java.sun.com/jsf/html" 
 	xmlns:o="http://omnifaces.org/ui"
 	xmlns:p="http://primefaces.org/ui"
@@ -21,7 +20,7 @@
 		<div id="#{cc.clientId}" class="person #{cc.attrs.styleClass}">
 			<cc:avatar value="#{cc.attrs.value}" />
 			<div class="person-box">
-				<div class="person-name">#{cc.attrs.value.fullName}</div>
+				<div class="person-name">#{cc.attrs.value}</div>
 				<h:panelGroup display="block" styleClass="person-description" rendered="#{cc.attrs.showDescription}">#{cc.attrs.description}</h:panelGroup>
 			</div>
 			<h:panelGroup id="children" styleClass="person-data">

@@ -47,7 +47,7 @@ public class DepartmentJpaDao extends AbstractDao {
 	 * @param page     <tt>int</tt> with the page to start searching from. Must be
 	 *                 greater or equal than 0.
 	 * @param pageSize <tt>int</tt> with the maximum number of results to return.
-	 *                 Must be greater than 0 and lesser or equal than 100.
+	 *                 Must be greater than 0 and lesser or equal than 1000.
 	 */
 	public List<Department> findAll(int page, int pageSize) {
 		this.validatePagination(page, pageSize);
@@ -66,7 +66,7 @@ public class DepartmentJpaDao extends AbstractDao {
 	 *                      be greater or equal than 0.
 	 * @param pageSize      <tt>int</tt> with the maximum number of results to
 	 *                      return. Must be greater than 0 and lesser or equal than
-	 *                      100.
+	 *                      1000.
 	 * 
 	 * @throws IdentifiableNotFoundException if the user isn't found.
 	 */

@@ -17,8 +17,6 @@
  */
 package es.nivel36.laie.user;
 
-import java.nio.file.Path;
-import java.util.Locale;
 import java.util.Objects;
 
 import javax.validation.constraints.NotNull;
@@ -35,7 +33,11 @@ import es.nivel36.laie.department.SimpleDepartmentDto;
  */
 public final class UserDto implements Dto {
 
-	private static final long serialVersionUID = -332451995048050979L;
+	private static final long serialVersionUID = -6357240024287869443L;
+	
+	////////////////////////////////////////////////////////////////////////////
+	// VARIABLES
+	////////////////////////////////////////////////////////////////////////////
 
 	private SimpleDepartmentDto department;
 
@@ -44,11 +46,11 @@ public final class UserDto implements Dto {
 
 	private String idNumber;
 
-	private Path image;
+	private String image;
 
 	private SimpleUserDto manager;
 
-	private Locale locale;
+	private String locale;
 
 	@NotNull
 	private String name;
@@ -64,9 +66,9 @@ public final class UserDto implements Dto {
 	@NotNull
 	private String uid;
 
-	///////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////
 	// PUBLIC
-	///////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////
 
 	@Override
 	public boolean equals(final Object obj) {
@@ -132,20 +134,20 @@ public final class UserDto implements Dto {
 	/**
 	 * Returns the path of the user's image.<br/>
 	 * 
-	 * @return <tt>Path</tt> with the path of the user's image or <tt>null</tt> if
+	 * @return <tt>String</tt> with the path of the user's image or <tt>null</tt> if
 	 *         the user has no image.
 	 */
-	public Path getImage() {
+	public String getImage() {
 		return this.image;
 	}
 
 	/**
 	 * Returns the user's locale.
 	 * 
-	 * @return <tt>Locale</tt> with the user's locale.
+	 * @return <tt>String</tt> with the user's locale.
 	 * @see java.util.Locale
 	 */
-	public Locale getLocale() {
+	public String getLocale() {
 		return locale;
 	}
 
@@ -258,7 +260,7 @@ public final class UserDto implements Dto {
 		this.idNumber = idNumber;
 	}
 	
-	void setImage(final Path image) {
+	void setImage(final String image) {
 		this.image = image;
 	}
 
@@ -269,7 +271,7 @@ public final class UserDto implements Dto {
 	 *               null.
 	 * @see java.util.Locale
 	 */
-	public void setLocale(final Locale locale) {
+	public void setLocale(final String locale) {
 		this.locale = locale;
 	}
 

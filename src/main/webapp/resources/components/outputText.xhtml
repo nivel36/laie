@@ -1,0 +1,30 @@
+<ui:component xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" 
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	xmlns:composite="http://xmlns.jcp.org/jsf/composite" 
+	xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<composite:interface>
+		<composite:attribute name="label" required="true" />
+		<composite:attribute name="value" required="true" />
+		<composite:attribute name="styleClass" required="false" default="" />
+		<composite:editableValueHolder name="text" targets="text" />
+	</composite:interface>
+
+	<composite:implementation>
+		<div id="#{cc.clientId}" class="data #{cc.attrs.styleClass}">
+			<div class="label-container">
+				<span class="label">#{cc.attrs.label}</span>
+			</div>
+			<div class="text-container">
+				<h:outputText id="text" value="#{cc.attrs.value}" styleClass="text" rendered="#{not empty cc.attrs.value}" />
+				<h:outputText id="emptyText" value="---" styleClass="text" rendered="#{empty cc.attrs.value}"  />
+			</div>
+		</div>
+	</composite:implementation>
+</ui:component>

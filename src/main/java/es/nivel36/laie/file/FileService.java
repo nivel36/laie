@@ -32,10 +32,10 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.NoResultException;
 
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import es.nivel36.laie.core.ConfigurationProperty;
 import es.nivel36.laie.core.service.Repository;
 
 @Stateless
@@ -44,7 +44,7 @@ public class FileService {
 	private static final Logger logger = LoggerFactory.getLogger(FileService.class);
 
 	@Inject
-	@ConfigurationProperty(required = true, value = "file.directory")
+	@ConfigProperty(name = "file.directory")
 	private String fileDirectory;
 
 	@Inject

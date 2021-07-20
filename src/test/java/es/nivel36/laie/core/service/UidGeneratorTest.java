@@ -31,14 +31,14 @@ public class UidGeneratorTest {
 		@Test
 		public void badLowSizeShouldThrowIllegalArgumentException() {
 			assertThrows(IllegalArgumentException.class, () -> {
-				new UidGenerator(-1);
+				new RandomGenerator(-1);
 			});
 		}
 		
 		@Test
 		public void badHighSizeShouldThrowIllegalArgumentException() {
 			assertThrows(IllegalArgumentException.class, () -> {
-				new UidGenerator(129);
+				new RandomGenerator(129);
 			});
 		}
 	}
@@ -49,8 +49,8 @@ public class UidGeneratorTest {
 		@Test
 		public void pairLengthShouldReturnHexRandomValue() {
 			final int length = 6;
-			final UidGenerator uidGenerator = new UidGenerator(length);
-			String random = uidGenerator.generate();
+			final RandomGenerator uidGenerator = new RandomGenerator(length);
+			String random = uidGenerator.generateHex();
 			Assertions.assertEquals(length, random.length());
 			Long.parseLong(random, 16); // validate hexValue
 		}
@@ -58,8 +58,8 @@ public class UidGeneratorTest {
 		@Test
 		public void oddLengthSforShouldReturnHexRandomValue() {
 			final int length = 5;
-			final UidGenerator uidGenerator = new UidGenerator(length);
-			String random = uidGenerator.generate();
+			final RandomGenerator uidGenerator = new RandomGenerator(length);
+			String random = uidGenerator.generateHex();
 			Assertions.assertEquals(length, random.length());
 			Long.parseLong(random, 16); // validate hexValue
 		}

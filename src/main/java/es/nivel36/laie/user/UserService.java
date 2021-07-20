@@ -18,6 +18,7 @@
 package es.nivel36.laie.user;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 import javax.ejb.Stateless;
@@ -39,7 +40,7 @@ public class UserService extends AbstractService {
 	////////////////////////////////////////////////////////////////////////////
 	// VARIABLES
 	////////////////////////////////////////////////////////////////////////////
-	
+
 	private final UserMapper userMapper;
 
 	@Inject
@@ -49,7 +50,7 @@ public class UserService extends AbstractService {
 	@Inject
 	@Repository
 	private DepartmentJpaDao departmentDao;
-	
+
 	////////////////////////////////////////////////////////////////////////////
 	// CONSTRUCTOR
 	////////////////////////////////////////////////////////////////////////////
@@ -68,7 +69,7 @@ public class UserService extends AbstractService {
 	 * @param page     <tt>int</tt> with the page to start searching from. Must be
 	 *                 greater or equal than 0.
 	 * @param pageSize <tt>int</tt> with the maximum number of results to return.
-	 *                 Must be greater than 0 and lesser or equal than 100.
+	 *                 Must be greater than 0 and lesser or equal than 1000.
 	 *
 	 * @return <tt> List<UserDto></tt> with all the users. The size of the list is
 	 *         the same as the size of the page.
@@ -78,6 +79,22 @@ public class UserService extends AbstractService {
 		logger.debug("Find all users, page {}, page size", page, pageSize);
 		final List<User> users = this.userDao.findAll(page, pageSize);
 		return userMapper.mapList(users);
+	}
+
+	/**
+	 * Search for a user by their email.
+	 *
+	 * @param email <tt>String</tt> with the user's email. This parameter cannot be
+	 *              null.
+	 *
+	 * @return <tt>User</tt> that has the same email as the one passed as parameter.
+	 *         <tt>null</tt> if no user with such an email is found.
+	 */
+	public UserDto findUserByEmail(final String email) {
+		Objects.requireNonNull(email);
+		logger.debug("Find user by email {}", email);
+		final User user = this.userDao.findUserByEmail(email);
+		return userMapper.map(user);
 	}
 
 	/**
@@ -105,7 +122,7 @@ public class UserService extends AbstractService {
 	 * @param page       <tt>int</tt> with the page to start searching from. Must be
 	 *                   greater or equal than 0.
 	 * @param pageSize   <tt>int</tt> with the maximum number of results to return.
-	 *                   Must be greater than 0 and lesser or equal than 100
+	 *                   Must be greater than 0 and lesser or equal than 1000
 	 *
 	 * @return <tt> List<UserDto></tt> whose manager is the user passed as a
 	 *         parameter. The size of the list is the same as the size of the page.
@@ -234,7 +251,13 @@ public class UserService extends AbstractService {
 		userInDatabase.setDepartment(department);
 		userInDatabase.setEmail(user.getEmail());
 		userInDatabase.setIdNumber(user.getIdNumber());
-		userInDatabase.setLocale(user.getLocale());
+		final String userLocale = user.getLocale();
+		if (userLocale != null) {
+			final Locale locale = new Locale(userLocale.substring(0, 2), userLocale.substring(3, 2));
+			userInDatabase.setLocale(locale);
+		} else {
+			userInDatabase.setLocale(null);
+		}
 		userInDatabase.setName(user.getName());
 		userInDatabase.setPhoneNumber(user.getPhoneNumber());
 		userInDatabase.setRole(user.getRole());
@@ -281,7 +304,7 @@ public class UserService extends AbstractService {
 		Objects.requireNonNull(userDao);
 		this.userDao = userDao;
 	}
-	
+
 	public void setDepartmentDao(final DepartmentJpaDao departmentDao) {
 		Objects.requireNonNull(departmentDao);
 		this.departmentDao = departmentDao;

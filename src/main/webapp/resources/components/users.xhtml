@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:component xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
 	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:composite="http://xmlns.jcp.org/jsf/composite"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://ged.org/ui" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
@@ -20,7 +20,7 @@
 				<p:dataViewGridItem columns="1">
 					<h:link outcome="#{Page.USER.getUrl()}">
 						<f:param name="id" value="#{user.uid}" />
-						<cc:person value="#{user}" description="#{user.email}" />
+						<cc:user value="#{user}" description="#{user.email}" />
 					</h:link>
 				</p:dataViewGridItem>
 			</p:dataView>

@@ -66,7 +66,7 @@ public class UserResource extends AbstractResource {
 	 * @param page     <tt>int</tt> with the page to start searching from. Must be
 	 *                 greater or equal than 0.
 	 * @param pageSize <tt>int</tt> with the maximum number of results to return.
-	 *                 Must be greater than 0 and lesser or equal than 100.
+	 *                 Must be greater than 0 and lesser or equal than 1000.
 	 *
 	 * @return <tt> List<UserDto></tt> with all the users. The size of the list is
 	 *         the same as the size of the page.
@@ -115,7 +115,7 @@ public class UserResource extends AbstractResource {
 	 * @param page       <tt>int</tt> with the page to start searching from. Must be
 	 *                   greater or equal than 0.
 	 * @param pageSize   <tt>int</tt> with the maximum number of results to return.
-	 *                   Must be greater than 0 and lesser or equal than 100
+	 *                   Must be greater than 0 and lesser or equal than 1000
 	 *
 	 * @return <tt> List<UserDto></tt> whose manager is the user passed as a
 	 *         parameter. The size of the list is the same as the size of the page.

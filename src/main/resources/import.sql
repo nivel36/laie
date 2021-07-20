@@ -7,6 +7,15 @@ insert into USER( id, version, uid, name, surname, phoneNumber, email, locale, r
 insert into USER( id, version, uid, name, surname, phoneNumber, email, locale, role, managerId ) values( 506, 0, 'AF506', 'Luis Ángel', 'Nuestra Señora del manto','685555276', 'lantrasenora@gmail.com', 'es_ES', 'USER', 500);
 insert into USER( id, version, uid, name, surname, phoneNumber, email, locale, role, managerId ) values( 507, 0, 'AF507', 'Anabel', 'Villafafila','685555276', 'anabel@gmail.com', 'es_ES', 'USER', 500);
 
+insert into CREDENTIAL( id, version, hashPassword, salt, created, userid ) values( 600, 0, '16AFB50A06A958ACEC2EDA9D70283139BC7B7372E21CC83F619CCF169E6E7956', 'FFFFFF', (TO_DATE('17/12/2015', 'DD/MM/YYYY')), 500);
+insert into CREDENTIAL( id, version, hashPassword, salt, created, userid ) values( 601, 0, '16AFB50A06A958ACEC2EDA9D70283139BC7B7372E21CC83F619CCF169E6E7956', 'FFFFFF', (TO_DATE('17/12/2015', 'DD/MM/YYYY')), 501);
+insert into CREDENTIAL( id, version, hashPassword, salt, created, userid ) values( 602, 0, '16AFB50A06A958ACEC2EDA9D70283139BC7B7372E21CC83F619CCF169E6E7956', 'FFFFFF', (TO_DATE('17/12/2015', 'DD/MM/YYYY')), 502);
+insert into CREDENTIAL( id, version, hashPassword, salt, created, userid ) values( 603, 0, '16AFB50A06A958ACEC2EDA9D70283139BC7B7372E21CC83F619CCF169E6E7956', 'FFFFFF', (TO_DATE('17/12/2015', 'DD/MM/YYYY')), 503);
+insert into CREDENTIAL( id, version, hashPassword, salt, created, userid ) values( 604, 0, '16AFB50A06A958ACEC2EDA9D70283139BC7B7372E21CC83F619CCF169E6E7956', 'FFFFFF', (TO_DATE('17/12/2015', 'DD/MM/YYYY')), 504);
+insert into CREDENTIAL( id, version, hashPassword, salt, created, userid ) values( 605, 0, '16AFB50A06A958ACEC2EDA9D70283139BC7B7372E21CC83F619CCF169E6E7956', 'FFFFFF', (TO_DATE('17/12/2015', 'DD/MM/YYYY')), 505);
+insert into CREDENTIAL( id, version, hashPassword, salt, created, userid ) values( 606, 0, '16AFB50A06A958ACEC2EDA9D70283139BC7B7372E21CC83F619CCF169E6E7956', 'FFFFFF', (TO_DATE('17/12/2015', 'DD/MM/YYYY')), 506);
+insert into CREDENTIAL( id, version, hashPassword, salt, created, userid ) values( 607, 0, '16AFB50A06A958ACEC2EDA9D70283139BC7B7372E21CC83F619CCF169E6E7956', 'FFFFFF', (TO_DATE('17/12/2015', 'DD/MM/YYYY')), 507);
+
 insert into USERCLOSURE( id, version, antecessor_id, descendant_id, pathLength ) values( 700, 0, 500, 500, 0 );
 insert into USERCLOSURE( id, version, antecessor_id, descendant_id, pathLength ) values( 701, 0, 501, 501, 0 );
 insert into USERCLOSURE( id, version, antecessor_id, descendant_id, pathLength ) values( 702, 0, 502, 502, 0 );

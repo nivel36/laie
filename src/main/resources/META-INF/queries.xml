@@ -26,6 +26,15 @@
 		]]></query>
 	</named-query>
 	
+	<named-query name="User.findCredential">
+		<query><![CDATA[
+			SELECT c
+			FROM LaieCredential c
+			LEFT JOIN FETCH c.user
+			WHERE c.user.email = :email
+		]]></query>
+	</named-query>
+	
 	<named-query name="User.findDuplicateEmail">
 		<query><![CDATA[
 			SELECT CASE WHEN (COUNT(u) > 0) THEN TRUE ELSE FALSE END 
@@ -55,6 +64,14 @@
 			SELECT u 
 			FROM User u
 			WHERE u.uid = :uid
+		]]></query>
+	</named-query>
+	
+	<named-query name="User.findUserByEmail">
+		<query><![CDATA[
+			SELECT u 
+			FROM User u
+			WHERE u.email = :email
 		]]></query>
 	</named-query>
 
