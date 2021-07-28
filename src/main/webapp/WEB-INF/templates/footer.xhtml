@@ -6,17 +6,18 @@
 
     <div class="layout-footer">
         <div>
-            <p:graphicImage name="images/logo-roma.svg" library="roma-layout" />
-            <p>Premium PrimeFaces Application Template</p>
+            <p:graphicImage name="images/laie-logo.svg" library="roma-layout" />
+            <p>#{i18n['laie.time_management']}</p>
         </div>
         <div class="footer-icons">
-            <a href="#">
+            <h:link outcome="/index" styleClass="layout-topbar-logo">
                 <i class="pi pi-home"/>
-            </a>
-            <a href="#">
+            </h:link>
+            
+            <a href="https://www.nivel36.es" target="_blank">
                 <i class="pi pi-globe"/>
             </a>
-            <a href="#">
+            <a href="mailto:laie@nivel36.es">
                 <i class="pi pi-envelope"/>
             </a>
         </div>

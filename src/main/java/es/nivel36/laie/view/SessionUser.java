@@ -54,7 +54,7 @@ public class SessionUser implements Serializable {
 
 	private void loadUserData(final String email) {
 		this.user = this.userService.findUserByEmail(email);
-		this.locale = new Locale(this.user.getLocale().substring(0,2),this.user.getLocale().substring(3,2) );
+		this.locale = this.user.getLocale();
 	}
 
 	public void refresh() {

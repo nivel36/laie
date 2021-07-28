@@ -17,8 +17,6 @@
  */
 package es.nivel36.laie.user;
 
-import java.util.Locale;
-
 import es.nivel36.laie.core.AbstractMapper;
 import es.nivel36.laie.department.Department;
 import es.nivel36.laie.department.SimpleDepartmentDto;
@@ -66,13 +64,7 @@ public class UserMapper extends AbstractMapper<User, UserDto> {
 		if (image != null) {
 			userDto.setImage(image.getPath().toString());
 		}
-		final Locale locale = user.getLocale();
-		if(locale != null) {
-			userDto.setLocale(locale.toString());
-		}
-		else {
-			userDto.setLocale(null);
-		}
+		userDto.setLocale(user.getLocale());
 		final User manager = user.getManager();
 		final SimpleUserDto simpleManagerDto = simpleUserMapper.map(manager);
 		userDto.setManager(simpleManagerDto);

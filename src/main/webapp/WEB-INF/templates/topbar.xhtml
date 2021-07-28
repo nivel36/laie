@@ -2,22 +2,14 @@
     xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui" xmlns:po="http://primefaces.org/roma">
 
     <div class="layout-topbar">
-        <a class="layout-right-panel-button layout-topbar-icon" href="#">
-            <i class="pi pi-ellipsis-v" />
-        </a>
 
         <a class="layout-menu-button layout-topbar-icon" href="#">
             <i class="pi pi-bars" />
         </a>
 
         <h:link id="logo-link" outcome="/index" styleClass="layout-topbar-logo">
-            <p:graphicImage name="images/logo-roma.svg" library="roma-layout" />
+            <p:graphicImage name="images/laie-logo.svg" library="roma-layout" />
         </h:link>
-
-        <span class="layout-topbar-search">
-            <i class="pi pi-search"></i>
-            <input type="text" placeholder="Enter your search term"/>
-        </span>
 
         <ul class="topbar-menu fadeInDown">
             <ui:fragment rendered="#{true}">

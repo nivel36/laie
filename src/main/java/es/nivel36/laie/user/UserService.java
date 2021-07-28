@@ -18,7 +18,6 @@
 package es.nivel36.laie.user;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
 
 import javax.ejb.Stateless;
@@ -251,13 +250,7 @@ public class UserService extends AbstractService {
 		userInDatabase.setDepartment(department);
 		userInDatabase.setEmail(user.getEmail());
 		userInDatabase.setIdNumber(user.getIdNumber());
-		final String userLocale = user.getLocale();
-		if (userLocale != null) {
-			final Locale locale = new Locale(userLocale.substring(0, 2), userLocale.substring(3, 2));
-			userInDatabase.setLocale(locale);
-		} else {
-			userInDatabase.setLocale(null);
-		}
+		userInDatabase.setLocale(user.getLocale());
 		userInDatabase.setName(user.getName());
 		userInDatabase.setPhoneNumber(user.getPhoneNumber());
 		userInDatabase.setRole(user.getRole());

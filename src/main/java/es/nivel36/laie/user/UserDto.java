@@ -17,6 +17,7 @@
  */
 package es.nivel36.laie.user;
 
+import java.util.Locale;
 import java.util.Objects;
 
 import javax.validation.constraints.NotNull;
@@ -50,7 +51,7 @@ public final class UserDto implements Dto {
 
 	private SimpleUserDto manager;
 
-	private String locale;
+	private Locale locale;
 
 	@NotNull
 	private String name;
@@ -144,10 +145,10 @@ public final class UserDto implements Dto {
 	/**
 	 * Returns the user's locale.
 	 * 
-	 * @return <tt>String</tt> with the user's locale.
+	 * @return <tt>Locale</tt> with the user's locale.
 	 * @see java.util.Locale
 	 */
-	public String getLocale() {
+	public Locale getLocale() {
 		return locale;
 	}
 
@@ -271,7 +272,7 @@ public final class UserDto implements Dto {
 	 *               null.
 	 * @see java.util.Locale
 	 */
-	public void setLocale(final String locale) {
+	public void setLocale(final Locale locale) {
 		this.locale = locale;
 	}
 
