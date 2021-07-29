@@ -28,6 +28,7 @@ abstract class AbstractUserTest {
 		user.setPhoneNumber("1234567890");
 		user.setRole(Role.USER);
 		user.setSurname("surname" + uid);
+		user.setJobPosition("Developer");
 		user.setUid(uid);
 		user.setVersion(1l);
 		user.setManager(manager);
@@ -40,6 +41,7 @@ abstract class AbstractUserTest {
 		userDto.setIdNumber(uid);
 		userDto.setManager(manager);
 		userDto.setName("Name" + uid);
+		userDto.setJobPosition("Developer");
 		userDto.setPhoneNumber("1234567890");
 		userDto.setRole(Role.USER);
 		userDto.setSurname("surname" + uid);

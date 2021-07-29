@@ -250,6 +250,7 @@ public class UserService extends AbstractService {
 		userInDatabase.setDepartment(department);
 		userInDatabase.setEmail(user.getEmail());
 		userInDatabase.setIdNumber(user.getIdNumber());
+		userInDatabase.setJobPosition(user.getJobPosition());
 		userInDatabase.setLocale(user.getLocale());
 		userInDatabase.setName(user.getName());
 		userInDatabase.setPhoneNumber(user.getPhoneNumber());

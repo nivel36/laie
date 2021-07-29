@@ -48,6 +48,8 @@ public final class UserDto implements Dto {
 	private String idNumber;
 
 	private String image;
+	
+	private String jobPosition;
 
 	private SimpleUserDto manager;
 
@@ -140,6 +142,16 @@ public final class UserDto implements Dto {
 	 */
 	public String getImage() {
 		return this.image;
+	}
+	
+	/**
+	 * Returns the job position of the user.<br/>
+	 * 
+	 * @return <tt>String</tt> with the job position of the user or <tt>null</tt> if
+	 *         the user has no job position.
+	 */
+	public String getJobPosition() {
+		return this.jobPosition;
 	}
 
 	/**
@@ -263,6 +275,15 @@ public final class UserDto implements Dto {
 	
 	void setImage(final String image) {
 		this.image = image;
+	}
+	
+	/**
+	 * Sets the user's job position.
+	 * 
+	 * @param jobPosition <tt>String</tt> with the user's job position.
+	 */
+	public void setJobPosition(final String jobPosition) {
+		this.jobPosition = jobPosition;
 	}
 
 	/**

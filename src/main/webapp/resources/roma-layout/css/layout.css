@@ -3925,5 +3925,74 @@ a {
   src: url("#{resource['roma-layout:fonts/Inter-UI-Bold.otf']}") format("opentype"), url("#{resource['roma-layout:fonts/Inter-UI-Bold.woff2']}") format("woff2"), url("#{resource['roma-layout:fonts/Inter-UI-Bold.woff']}") format("woff"), url("#{resource['roma-layout:fonts/Inter-UI-Bold.ttf']}") format("truetype");
   /* Safari, Android, iOS */
 }
+.card.user-card {
+  padding: 0;
+}
+.card.user-card .card-header {
+  height: 80px;
+  overflow: hidden;
+  background: linear-gradient(30deg, #0f97c7 0%, #91dcf7 150%);
+  background-color: #0f97c7;
+  color: #ffffff;
+}
+.card.user-card .user-card-content .label-container {
+  font-size: 0.8em;
+  padding-bottom: 0.3em;
+}
+.card.user-card .user-card-content .label-container .label {
+  color: #252529;
+}
+.card.user-card .user-card-content .text {
+  color: #666666;
+}
+.card.user-card .user-card-content .user-image {
+  width: 80px;
+  height: 80px;
+  margin: -40px 0 0 24px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.card.user-card .user-card-content .user-card-name {
+  font-size: 13px;
+  color: #ffffff;
+  position: relative;
+  top: -65px;
+  margin-left: 120px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.card.user-card .user-card-content .user-card-role {
+  font-size: 13px;
+  position: relative;
+  top: -55px;
+  margin-left: 120px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.card.user-card .user-card-content .user-detail {
+  padding: 0 2.5em 2em 2.5em;
+}
+
+.layout-wrapper .layout-topbar .topbar-menu a {
+  color: #252529;
+}
+.layout-wrapper .layout-topbar .topbar-menu a:hover {
+  text-decoration: none;
+}
+.layout-wrapper .layout-topbar .topbar-menu .layout-profile-userinfo {
+  text-align: left;
+  display: inline-block;
+  margin: 6px 0 0 8px;
+  vertical-align: top;
+}
+.layout-wrapper .layout-topbar .topbar-menu .layout-profile-userinfo .layout-profile-name {
+  font-size: 14px;
+  display: block;
+}
+.layout-wrapper .layout-topbar .topbar-menu .layout-profile-userinfo .layout-profile-role {
+  font-size: 12px;
+  margin-top: 2px;
+  display: block;
+}
 
 /*# sourceMappingURL=layout.css.map */

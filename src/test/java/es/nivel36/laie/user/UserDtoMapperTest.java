@@ -36,6 +36,7 @@ public class UserDtoMapperTest extends AbstractUserTest {
 			Assertions.assertAll( // Assert all even if one fails.
 					() -> Assertions.assertEquals(user.getEmail(), userDto.getEmail()),
 					() -> Assertions.assertEquals(user.getIdNumber(), userDto.getIdNumber()),
+					() -> Assertions.assertEquals(user.getJobPosition(), userDto.getJobPosition()),
 					() -> Assertions.assertEquals(user.getLocale(), userDto.getLocale()),
 					() -> Assertions.assertEquals(user.getManager().toString(), userDto.getManager().getFullName()),
 					() -> Assertions.assertEquals(user.getManager().getUid(), userDto.getManager().getUid()),

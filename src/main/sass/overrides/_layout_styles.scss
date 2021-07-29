@@ -1,0 +1,90 @@
+.card.user-card {
+	
+	padding: 0;
+
+	.card-header{
+		height: 80px;
+		overflow: hidden;
+		background: linear-gradient(30deg, $primaryColor 0%, $primaryLightColor 150%);
+		background-color: $primaryColor;
+		color: $primaryTextColor;
+	}
+
+	.user-card-content {
+		
+		.label-container {
+			font-size: 0.8em;
+			padding-bottom: 0.3em;
+		
+			.label {
+				color: $darkMenuBgColor;
+			}	
+		}
+		
+		.text {
+			color: $menuitemTextColor;
+		}
+		
+		.user-image {
+			width: 80px;
+			height: 80px;
+			margin: -40px 0 0 24px;
+			border-radius: 50%;
+			object-fit: cover;
+		}
+		
+		.user-card-name {
+			font-size: 13px;
+			color: $primaryTextColor;
+			position: relative;
+			top: -65px;
+			margin-left: 120px;
+			font-weight: 700;
+			white-space: nowrap;
+		}
+		
+		.user-card-role {
+			font-size: 13px;
+			position: relative;
+			top: -55px;
+			margin-left: 120px;
+			font-weight: 700;
+			white-space: nowrap;
+		}
+		
+		.user-detail {
+			padding: 0 2.5em 2em 2.5em;
+		}
+	}
+}
+
+.layout-wrapper {
+	.layout-topbar {
+		 .topbar-menu {
+			a {
+				color: $textColor;
+				&:hover{
+					text-decoration: none;				
+				}
+			}
+			
+			.layout-profile-userinfo {
+	            text-align: left;
+	            display: inline-block;
+	            margin: 6px 0 0 8px;
+	            vertical-align: top;
+	
+	            .layout-profile-name {
+	              font-size: 14px;
+	              display: block;
+	            }
+	
+	            .layout-profile-role {
+	              font-size: 12px;
+	              margin-top: 2px;
+	              display: block;
+	            }
+			}
+		}
+	}
+}

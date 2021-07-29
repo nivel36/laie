@@ -1,4 +1,4 @@
-insert into USER( id, version, uid, name, surname, phoneNumber, email, locale, role, managerId ) values( 500, 0, 'AF500', 'Abel', 'Ferrer Jiménez','685555276', 'abel.ferrer.jimenez@gmail.com', 'es_ES', 'ADMIN', null);
+insert into USER( id, version, uid, name, surname, phoneNumber, email, locale, role, managerId, jobPosition ) values( 500, 0, 'AF500', 'Abel', 'Ferrer Jiménez','685555276', 'abel.ferrer.jimenez@gmail.com', 'es_ES', 'ADMIN', null, 'Software architect');
 insert into USER( id, version, uid, name, surname, phoneNumber, email, locale, role, managerId ) values( 501, 0, 'AF501', 'Isabel', 'Vallejo Medina','685555276', 'isabel.vallejo.medina@gmail.com', 'es_ES', 'ADMIN', null);
 insert into USER( id, version, uid, name, surname, phoneNumber, email, locale, role, managerId ) values( 502, 0, 'AF502', 'Juan', 'Fernández','685555276', 'jfernandez@gmail.com', 'es_ES', 'RRHH', 500);
 insert into USER( id, version, uid, name, surname, phoneNumber, email, locale, role, managerId ) values( 503, 0, 'AF503', 'Pedro', 'Smith','685555276', 'psmith@gmail.com', 'es_ES', 'RRHH', 500);

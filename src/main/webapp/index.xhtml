@@ -6,25 +6,30 @@
 	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
 	template="/WEB-INF/templates/template.xhtml" >
 
-	<ui:define name="title">Empty Page</ui:define>
+	<ui:define name="title">#{i18n[index.title]}</ui:define>
 
 	<ui:define name="content">
 		<div class="p-grid">
-			<div class="p-col-12 p-md-7">
+			<div class="p-col-12 p-md-6 p-xl-4">
 				<div class="card user-card">
 					<div class="card-header"></div>
 					<div class="user-card-content">
-						<cc:avatar value="#{viewUserView.user}" size="xlarge" styleClass="user-image with-border" />
+						<cc:avatar value="#{sessionUser.user}" size="xlarge" class="user-image"/>
 
-						<div class="user-card-name">#{viewUserView.user}</div>
-						<div class="user-card-role">#{i18n[viewUserView.user.role]}</div>
+						<div class="user-card-name">#{sessionUser.user}</div>
+						<div class="user-card-role">#{sessionUser.user.jobPosition}</div>
 						<div class="user-detail">
 							<div class="p-grid">
 								<div class="p-col-12 p-sm-6">
-									<cc:outputText label="#{i18n['user.email']}" value="#{viewUserView.user.email}" />
+									<cc:outputText label="#{i18n['user.email']}" value="#{sessionUser.user.email}" />
 								</div>
+								
 								<div class="p-col-12 p-sm-6">
-									<cc:outputText label="#{i18n['user.phone_number']}" value="#{viewUserView.user.phoneNumber}" />
+									<cc:outputText label="#{i18n['user.phone_number']}" value="#{sessionUser.user.phoneNumber}" />
+								</div>
+								
+								<div class="p-col-12 p-sm-6">
+									<cc:outputText label="#{i18n['user.role']}" value="#{i18n['role.'.concat(sessionUser.user.role)]}" />
 								</div>
 								
 								<div class="p-col-12">
@@ -33,10 +38,10 @@
 											<div class="label">#{i18n['user.manager']}</div>
 										</div>
 										<div class="text-container">
-											<h:panelGroup layout="block" styleClass="text" rendered="#{not viewUserView.user.managed}"> --- </h:panelGroup>
-											<h:panelGroup layout="block" class="text" rendered="#{viewUserView.user.managed}">
-												<p:link outcome="#{Page.USER.getUrl()}" value="#{viewUserView.user.manager.fullName}">
-													<f:param name="id" value="#{viewUserView.user.manager.uid}" />
+											<h:panelGroup layout="block" styleClass="text" rendered="#{not sessionUser.user.manager}"> --- </h:panelGroup>
+											<h:panelGroup layout="block" class="text" rendered="#{sessionUser.user.manager}">
+												<p:link outcome="#{Page.USER.getUrl()}" value="#{sessionUser.user.manager.fullName}">
+													<f:param name="id" value="#{sessionUser.user.manager.uid}" />
 												</p:link>
 											</h:panelGroup>
 										</div>

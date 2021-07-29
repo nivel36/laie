@@ -64,6 +64,7 @@ public class UserMapper extends AbstractMapper<User, UserDto> {
 		if (image != null) {
 			userDto.setImage(image.getPath().toString());
 		}
+		userDto.setJobPosition(user.getJobPosition());
 		userDto.setLocale(user.getLocale());
 		final User manager = user.getManager();
 		final SimpleUserDto simpleManagerDto = simpleUserMapper.map(manager);

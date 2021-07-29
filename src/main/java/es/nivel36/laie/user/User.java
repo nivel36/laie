@@ -57,6 +57,8 @@ public class User extends AbstractEntity implements Identifiable {
 	@ManyToOne
 	@JoinColumn(name = "image")
 	private File image;
+	
+	private String jobPosition;
 
 	@NotNull
 	@Column(nullable = false)
@@ -154,6 +156,16 @@ public class User extends AbstractEntity implements Identifiable {
 	 */
 	public File getImage() {
 		return image;
+	}
+	
+	/**
+	 * Returns the job position of the user.<br/>
+	 * 
+	 * @return <tt>String</tt> with the job position of the user or <tt>null</tt> if
+	 *         the user has no job position.
+	 */
+	public String getJobPosition() {
+		return this.jobPosition;
 	}
 
 	/**
@@ -287,6 +299,15 @@ public class User extends AbstractEntity implements Identifiable {
 	 */
 	public void setImage(final File image) {
 		this.image = image;
+	}
+	
+	/**
+	 * Sets the user's job position.
+	 * 
+	 * @param jobPosition <tt>String</tt> with the user's job position.
+	 */
+	public void setJobPosition(final String jobPosition) {
+		this.jobPosition = jobPosition;
 	}
 
 	/**
