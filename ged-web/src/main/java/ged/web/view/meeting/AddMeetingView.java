@@ -146,6 +146,10 @@ public class AddMeetingView extends AbstractView {
 		}
 		return attendeeList;
 	}
+	
+	public boolean isAvaliable(final Subject subject) {
+		return true;
+	}
 
 	private List<String> initDurations() {
 		final List<String> durations = new ArrayList<>();

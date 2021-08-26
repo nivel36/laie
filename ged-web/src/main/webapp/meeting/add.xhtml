@@ -32,34 +32,34 @@
 		<h:form id="meetingForm">
 			<p:remoteCommand name="processForm" process="@form" update="@form growl" action="#{addMeetingView.save}" />
 			<div class="p-grid">
-				<div class="p-col-12 p-md-7">
+				<div class="p-col-12 p-xl-7">
 					<div class="card card-w-title ui-fluid">
 						<h5>#{i18n['meeting.header.details']}</h5>
 						<div class="p-grid p-formgrid">
 							<div class="p-col-12">
 								<g:input label="#{i18n['meeting.title']}" value="#{addMeetingView.meeting.title}" />
 							</div>
-							<div class="p-col-12 p-xl-4">
+							<div class="p-col-12 p-sm-4">
 								<g:input id="datePlanned" label="#{i18n['meeting.date_planned']}" value="#{addMeetingView.meetingDate}"
 									required="true" type="calendar" />
 							</div>
-							<div class="p-col-12 p-xl-4">
+							<div class="p-col-12 p-sm-4">
 								<g:input label="#{i18n['meeting.hour_planned']}" value="#{addMeetingView.meetingHour}" required="true"
 									type="selectOneMenu">
 									<f:selectItems value="#{addMeetingView.hours}" var="meetingHour" itemValue="#{meetingHour}"
 										itemLabel="#{meetingHour}" />
 								</g:input>
 							</div>
-							<div class="p-col-12 p-xl-4">
+							<div class="p-col-12 p-sm-4">
 								<g:input label="#{i18n['meeting.duration']}" value="#{addMeetingView.meetingDuration}" required="true"
 									type="selectOneMenu">
 									<f:selectItems value="#{addMeetingView.durations}" var="meetingDuration" itemLabel="#{meetingDuration}"/>
 								</g:input>
 							</div>
-							<div class="p-col-12 p-xl-6">
+							<div class="p-col-12 p-sm-6">
 								<g:input label="#{i18n['meeting.location']}" value="#{addMeetingView.meeting.location}" />
 							</div>
-							<div class="p-col-12 p-xl-6">
+							<div class="p-col-12 p-sm-6">
 								<g:input label="#{i18n['meeting.type']}" value="#{addMeetingView.meeting.meetingType}" type="selectOneMenu">
 									<f:selectItem />
 									<f:selectItems value="#{addMeetingView.meetingTypes}" var="meetingType" itemValue="#{meetingType}"
@@ -70,7 +70,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="p-col-12 p-md-5">
+				<div class="p-col-12 p-sm-10 p-md-8 p-lg-6 p-xl-5">
 					<div class="card card-w-title ui-fluid">
 						<h5>#{i18n['meeting.header.attendees']}</h5>
 						<div class="p-grid p-formgrid">
@@ -93,7 +93,10 @@
 								<h:panelGroup layout="block" id="attendees" styleClass="attendees">
 									<ui:repeat var="person" value="#{addMeetingView.attendees}" varStatus="varStatus">
 										<h:panelGroup layout="block" id="attendee" styleClass="attendee">
-											<cc:person value="#{person}" styleClass="small" />
+											<cc:person value="#{person}" >
+												<p:tag styleClass="p-mr-2" icon="pi pi-check" severity="success" rounded="true" value="#{i18n['meeting.available']}" rendered="#{addMeetingView.isAvaliable(person)}" />
+												<p:tag styleClass="p-mr-2" icon="pi pi-times" severity="danger" rounded="true" value="#{i18n['meeting.non_available']}" rendered="#{not addMeetingView.isAvaliable(person)}" />
+											</cc:person>
 											<p:commandButton icon="fa fa-times" styleClass="ui-button-outlined"
 												action="#{addMeetingView.removeAttendee(person)}" process="@this" update="meetingForm:attendees" />
 										</h:panelGroup>

@@ -24,6 +24,9 @@
 				<div class="person-name">#{cc.attrs.value.fullName}</div>
 				<h:panelGroup display="block" styleClass="person-description" rendered="#{cc.attrs.showDescription}">#{cc.attrs.description}</h:panelGroup>
 			</div>
+			<h:panelGroup id="children" styleClass="person-data">
+				<composite:insertChildren />
+			</h:panelGroup>
 		</div>
 	</composite:implementation>
 </ui:component>
