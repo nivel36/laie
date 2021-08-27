@@ -35,8 +35,9 @@ public class UserDtoTest {
 
 		@Test
 		public void differentClassShouldReturnFalse() {
-			final UserDto user = new UserDto();
-			final boolean equals = user.equals(new User());
+			final UserDto userDto = new UserDto();
+			final User user = new User();
+			final boolean equals = userDto.equals(user);
 			Assertions.assertFalse(equals);
 		}
 		

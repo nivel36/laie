@@ -1,46 +1,45 @@
-/*
-   Copyright 2009-2021 PrimeTek.
-
-   Licensed under PrimeFaces Commercial License, Version 1.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-   Licensed under PrimeFaces Commercial License, Version 1.0 (the "License");
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
+/**
+ *  Copyright 2009-2020 PrimeTek.
+ *
+ *  Licensed under PrimeFaces Commercial License, Version 1.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *  Licensed under PrimeFaces Commercial License, Version 1.0 (the "License");
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
  */
-package es.nivel36.laie.core.view.component;
+package org.primefaces.roma.component;
 
 import javax.faces.component.UIComponent;
+import org.primefaces.component.menu.AbstractMenu;
+import javax.faces.context.FacesContext;
 import javax.faces.component.UINamingContainer;
 import javax.faces.component.UIOutput;
 import javax.faces.component.UIViewRoot;
-import javax.faces.context.FacesContext;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.ComponentSystemEvent;
 import javax.faces.event.ComponentSystemEventListener;
 import javax.faces.event.ListenerFor;
 import javax.faces.event.PostAddToViewEvent;
-
 import org.primefaces.component.api.Widget;
-import org.primefaces.component.menu.AbstractMenu;
 
 @ListenerFor(sourceClass = RomaMenu.class, systemEventClass = PostAddToViewEvent.class)
 public class RomaMenu extends AbstractMenu implements Widget,ComponentSystemEventListener {
 
-    public static final String COMPONENT_TYPE = "es.nivel36.laie.view.component.RomaMenu";
-    public static final String COMPONENT_FAMILY = "es.nivel36.laie.view.component";
-    private static final String DEFAULT_RENDERER = "es.nivel36.laie.view.component.RomaMenuRenderer";
+    public static final String COMPONENT_TYPE = "org.primefaces.component.RomaMenu";
+    public static final String COMPONENT_FAMILY = "org.primefaces.component";
+    private static final String DEFAULT_RENDERER = "org.primefaces.component.RomaMenuRenderer";
     private static final String[] LEGACY_RESOURCES = new String[]{"primefaces.css","jquery/jquery.js","jquery/jquery-plugins.js","primefaces.js"};
     private static final String[] MODERN_RESOURCES = new String[]{"components.css","jquery/jquery.js","jquery/jquery-plugins.js","core.js"};
     
     protected enum PropertyKeys {
 
-        widgetVar, model, style, styleClass, statefulScroll;
+        widgetVar, model, style, styleClass;
 
         String toString;
 
@@ -94,14 +93,6 @@ public class RomaMenu extends AbstractMenu implements Widget,ComponentSystemEven
 
     public void setStyleClass(java.lang.String _styleClass) {
         getStateHelper().put(PropertyKeys.styleClass, _styleClass);
-    }
-
-    public java.lang.Boolean isStatefulScroll() {
-        return (java.lang.Boolean) getStateHelper().eval(PropertyKeys.statefulScroll, true);
-    }
-
-    public void setStatefulScroll(boolean _statefulScroll) {
-        getStateHelper().put(PropertyKeys.statefulScroll, _statefulScroll);
     }
 
     public String resolveWidgetVar() {

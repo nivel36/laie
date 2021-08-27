@@ -27,6 +27,7 @@ import es.nivel36.laie.core.service.AbstractDao;
 import es.nivel36.laie.core.service.IdentifiableNotFoundException;
 import es.nivel36.laie.core.service.Repository;
 import es.nivel36.laie.login.LaieCredential;
+import es.nivel36.laie.login.token.LoginToken.TokenType;
 
 /**
  * Data access object for the User entity.
@@ -58,14 +59,15 @@ public class UserJpaDao extends AbstractDao {
 		this.paginate(page, pageSize, query);
 		return query.getResultList();
 	}
-	
+
 	public LaieCredential findCredential(final String email) {
-		final TypedQuery<LaieCredential> query = this.entityManager.createNamedQuery("User.findCredential", LaieCredential.class);
+		final TypedQuery<LaieCredential> query = this.entityManager.createNamedQuery("User.findCredential",
+				LaieCredential.class);
 		query.setParameter("email", email);
 		return query.getSingleResult();
 	}
-	
-	public User findUserByTokenHashAndType(final byte[] tokenHash, final es.nivel36.laie.login.token.LoginToken.TokenType type) {
+
+	public User findUserByTokenHashAndType(final byte[] tokenHash, final TokenType type) {
 		Objects.requireNonNull(tokenHash);
 		Objects.requireNonNull(type);
 		final TypedQuery<User> query = this.entityManager.createNamedQuery("User.findByTokenHashAndType", User.class);
@@ -200,6 +202,17 @@ public class UserJpaDao extends AbstractDao {
 		query.setParameter("manager", manager);
 		query.setParameter("subordinate", user);
 		return query.getSingleResult();
+	}
+
+	public List<User> search(String searchText, final int page, final int pageSize) {
+		this.validatePagination(page, pageSize);
+		if (searchText == null || searchText.isBlank()) {
+			return this.findAll(page, pageSize);
+		}
+		final TypedQuery<User> query = this.entityManager.createNamedQuery("User.search", User.class);
+		query.setParameter("searchText", searchText);
+		this.paginate(page, pageSize, query);
+		return query.getResultList();
 	}
 
 	/**

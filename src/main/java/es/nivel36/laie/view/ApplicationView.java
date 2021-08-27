@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import es.nivel36.laie.core.Language;
+import es.nivel36.laie.core.view.AbstractView;
 
 @ApplicationScoped
 @Named

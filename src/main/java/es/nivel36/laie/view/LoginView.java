@@ -13,6 +13,7 @@ import javax.security.enterprise.AuthenticationStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import es.nivel36.laie.core.view.AbstractView;
 import es.nivel36.laie.login.LoginService;
 
 

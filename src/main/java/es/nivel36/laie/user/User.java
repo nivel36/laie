@@ -28,8 +28,17 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.Analyzer;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.SortableField;
+import org.hibernate.search.annotations.Store;
+
 import es.nivel36.laie.core.service.AbstractEntity;
 import es.nivel36.laie.core.service.Identifiable;
+import es.nivel36.laie.core.service.search.Indexable;
 import es.nivel36.laie.department.Department;
 import es.nivel36.laie.file.File;
 
@@ -39,8 +48,10 @@ import es.nivel36.laie.file.File;
  * @author Abel Ferrer
  *
  */
+@Analyzer(definition = "stdAnalyzer")
+@Indexed
 @Entity
-public class User extends AbstractEntity implements Identifiable {
+public class User extends AbstractEntity implements Identifiable, Indexable {
 
 	private static final long serialVersionUID = 8025930876190406588L;
 
@@ -49,6 +60,9 @@ public class User extends AbstractEntity implements Identifiable {
 
 	@NotNull
 	@Column(nullable = false, unique = true)
+	@Field(name = "_email")
+	@Field(name = "email", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
+	@SortableField(forField = "email")
 	private String email;
 
 	@Column(unique = true)
@@ -57,7 +71,7 @@ public class User extends AbstractEntity implements Identifiable {
 	@ManyToOne
 	@JoinColumn(name = "image")
 	private File image;
-	
+
 	private String jobPosition;
 
 	@NotNull
@@ -70,6 +84,9 @@ public class User extends AbstractEntity implements Identifiable {
 
 	@NotNull
 	@Column(nullable = false)
+	@Field(name = "_name")
+	@Field(name = "name", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
+	@SortableField(forField = "name")
 	private String name;
 
 	private String phoneNumber;
@@ -81,6 +98,9 @@ public class User extends AbstractEntity implements Identifiable {
 
 	@NotNull
 	@Column(nullable = false)
+	@Field(name = "_surname")
+	@Field(name = "surname", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
+	@SortableField(forField = "surname")
 	private String surname;
 
 	@NotNull
@@ -157,7 +177,7 @@ public class User extends AbstractEntity implements Identifiable {
 	public File getImage() {
 		return image;
 	}
-	
+
 	/**
 	 * Returns the job position of the user.<br/>
 	 * 
@@ -300,7 +320,7 @@ public class User extends AbstractEntity implements Identifiable {
 	public void setImage(final File image) {
 		this.image = image;
 	}
-	
+
 	/**
 	 * Sets the user's job position.
 	 * 

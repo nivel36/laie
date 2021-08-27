@@ -4,15 +4,15 @@
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_3.xsd" version="2.3">
 
 	<component>
-		<component-type>es.nivel36.laie.core.view.component.RomaMenu</component-type>
-		<component-class>es.nivel36.laie.core.view.component.RomaMenu</component-class>
+		<component-type>org.primefaces.component.RomaMenu</component-type>
+		<component-class>org.primefaces.roma.component.RomaMenu</component-class>
 	</component>
 
 	<render-kit>
 		<renderer>
-			<component-family>es.nivel36.laie.core.view.component</component-family>
-			<renderer-type>es.nivel36.laie.core.view.component.RomaMenuRenderer</renderer-type>
-			<renderer-class>es.nivel36.laie.core.view.component.RomaMenuRenderer</renderer-class>
+			<component-family>org.primefaces.component</component-family>
+			<renderer-type>org.primefaces.component.RomaMenuRenderer</renderer-type>
+			<renderer-class>org.primefaces.roma.component.RomaMenuRenderer</renderer-class>
 		</renderer>
 	</render-kit>
 

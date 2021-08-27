@@ -28,6 +28,8 @@ import org.slf4j.LoggerFactory;
 
 import es.nivel36.laie.core.service.AbstractService;
 import es.nivel36.laie.core.service.Repository;
+import es.nivel36.laie.core.service.search.SearchFacade;
+import es.nivel36.laie.core.service.search.SortField;
 import es.nivel36.laie.department.Department;
 import es.nivel36.laie.department.DepartmentJpaDao;
 
@@ -41,6 +43,10 @@ public class UserService extends AbstractService {
 	////////////////////////////////////////////////////////////////////////////
 
 	private final UserMapper userMapper;
+
+	@Inject
+	@Repository
+	private SearchFacade searchFacade;
 
 	@Inject
 	@Repository
@@ -172,6 +178,13 @@ public class UserService extends AbstractService {
 		this.mergeUser(user, userToPersist);
 		this.userDao.insert(userToPersist);
 		return userMapper.map(userToPersist);
+	}
+
+	public List<UserDto> searchByName(final int firstResult, final int maxResults, final SortField sortField,
+			final String searchText) {
+		List<User> search = searchFacade.search(User.class, firstResult, maxResults, sortField, searchText,
+						new String[] { "_name", "_surname", "_email" });
+		return userMapper.mapList(search);
 	}
 
 	/**

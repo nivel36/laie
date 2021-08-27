@@ -43,7 +43,8 @@ public class UserTest extends AbstractUserTest {
 		@Test
 		public void differentClassShouldReturnFalse() {
 			final User user = new User();
-			final boolean equals = user.equals(new UserDto());
+			final UserDto userDto = new UserDto();
+			final boolean equals = user.equals(userDto);
 			Assertions.assertFalse(equals);
 		}
 		

@@ -1,19 +1,17 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" 
-                xmlns:h="http://java.sun.com/jsf/html" 
-                xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:ui="http://java.sun.com/jsf/facelets" 
-                xmlns:p="http://primefaces.org/ui"
-                xmlns:po="http://primefaces.org/roma">
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:ui="http://java.sun.com/jsf/facelets" 
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:po="http://primefaces.org/roma">
 
-    <div class="layout-menu-container">
-        <div class="menu-scroll-content">
-            <h:form id="menuform">
-                <po:menu widgetVar="RomaMenuWidget">
-                    <p:submenu id="om_favorites" label="Favorites" icon="pi pi-fw pi-home">
-                        <p:menuitem id="om_dashboard" value="Dashboard" icon="pi pi-fw pi-home" outcome="/index" />
-                    </p:submenu>
-                </po:menu>
-            </h:form>
-        </div>
-    </div>
+	<div class="layout-menu-container">
+		<div class="menu-scroll-content">
+			<h:form id="menuform">
+				<po:menu widgetVar="RomaMenuWidget">
+					<p:menuitem id="om_users" value="#{i18n['menu.users']}" icon="fa fa-fw fa-users" outcome="/users" />
+				</po:menu>
+			</h:form>
+		</div>
+	</div>
 </ui:composition>

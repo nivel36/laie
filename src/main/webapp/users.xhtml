@@ -1,0 +1,55 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" template="/WEB-INF/templates/template.xhtml">
+
+	<ui:define name="title">#{i18n[users.users]}</ui:define>
+
+	<ui:param name="selectedMenu" value="users" />
+
+	<ui:define name="buttons">
+		<h:form>
+			<p:button value="#{i18n['users.new_user']}" outcome="#{Page.USER_ADD.getUrl()}"
+				styleClass="ui-button-success ui-button-outlined" />
+			<p:commandButton value="#{i18n['action.export']}" onclick="export()" icon="fa fa-file-excel-o"
+				styleClass="ui-button-info ui-button-outlined" />
+		</h:form>
+	</ui:define>
+
+	<ui:define name="content">
+		<h:form id="searchUsers">
+			<div class="card">
+				<div class="p-grid">
+					<div class="p-col-12 p-lg-5">
+						<div class="searchBar ui-fluid">
+							<cc:inputSearch searchText="#{usersView.searchText}" searchAction="#{usersView.search}"
+								update="@form" />
+						</div>
+					</div>
+					<div class="p-col-12">
+						<p:dataTable id="users" value="#{usersView.users}" var="user" emptyMessage="#{i18n['user.no_users_found']}"
+							paginator="true" paginatorPosition="bottom" rows="15" sortMode="single" lazy="true">
+							<p:column headerText="#{i18n['user.name']}" sortBy="#{user.name}">
+								<h:link outcome="#{Page.USER.getUrl()}">
+									<cc:avatar value="#{user}" styleClass="p-mr-2" />
+									<h:outputText class="link" value="#{user}" />
+									<f:param name="id" value="#{user.uid}" />
+								</h:link>
+							</p:column>
+
+							<p:column headerText="#{i18n['user.role']}">
+								<p:tag styleClass="user-role role-#{user.role}" value="#{i18n[user.role]}" />
+							</p:column>
+
+							<p:column headerText="#{i18n['user.manager']}">
+								<h:link value="#{user.manager.fullName}" styleClass="link" outcome="#{Page.USER.getUrl()}"
+									rendered="#{not empty user.manager}">
+									<f:param name="id" value="#{user.manager.uid}" />
+								</h:link>
+							</p:column>
+						</p:dataTable>
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

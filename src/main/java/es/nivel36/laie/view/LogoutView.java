@@ -10,11 +10,12 @@ import javax.servlet.ServletException;
 
 import org.omnifaces.util.Faces;
 
+import es.nivel36.laie.core.view.AbstractView;
 import es.nivel36.laie.login.LoginService;
 
 @Named
 @RequestScoped
-public class LogoutView extends AbstractView {
+public class LogoutView extends AbstractView  {
 
 	private static final long serialVersionUID = 4381747115656366818L;
 
