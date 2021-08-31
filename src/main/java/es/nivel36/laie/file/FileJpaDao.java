@@ -24,16 +24,27 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
+import es.nivel36.laie.core.service.AbstractDao;
 import es.nivel36.laie.core.service.Repository;
 
 @Repository
-public class FileJpaDao {
+public class FileJpaDao extends AbstractDao {
 
 	@PersistenceContext
 	private EntityManager entityManager;
 
 	public File find(final long fileId) {
 		return this.entityManager.find(File.class, fileId);
+	}
+	
+	public File findByUid(final String uid) {
+		try {
+			final TypedQuery<File> q = this.entityManager.createQuery("File.findByUid", File.class);
+			q.setParameter("uid", uid);
+			return q.getSingleResult();
+		} catch (final NoResultException e) {
+			return null;
+		}
 	}
 
 	public PhysicalFile findPhysicalFileByHash(final String hash) {
@@ -56,7 +67,8 @@ public class FileJpaDao {
 		this.entityManager.remove(file);
 	}
 
-	public File save(final File file) {
+	public File insert(final File file) {
+		this.generateUid(file);
 		return this.entityManager.merge(file);
 	}
 
@@ -65,4 +77,10 @@ public class FileJpaDao {
 		this.entityManager = entityManager;
 	}
 
+	@Override
+	protected boolean findDuplicateUid(String uid) {
+		final TypedQuery<Boolean> query = this.entityManager.createQuery("File.findDuplicateUid", Boolean.class);
+		query.setParameter("uid", uid);
+		return query.getSingleResult();
+	}
 }

@@ -3,7 +3,8 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui" xmlns:n36="http://nivel36.es/ui"
+	xmlns:p="http://primefaces.org/ui" 
+	xmlns:n36="http://nivel36.es/ui"
 	xmlns:po="http://primefaces.org/roma">
 
 	<div class="layout-topbar">
@@ -28,6 +29,7 @@
 					</div>
 				</p:commandLink>
 				<p:menu overlay="true" trigger="dynaButton" my="left top" at="left bottom" styleClass="topbar-menu">
+					<p:menuitem value="#{i18n['config.config']}" outcome="config" />
 					<p:menuitem value="#{i18n['login.logout']}" action="#{logoutView.logout}" />
 				</p:menu>
 			</h:form>

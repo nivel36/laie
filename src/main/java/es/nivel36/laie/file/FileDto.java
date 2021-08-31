@@ -20,6 +20,8 @@ package es.nivel36.laie.file;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+import es.nivel36.laie.core.Dto;
+
 /**
  * *
  * <p>
@@ -35,15 +37,19 @@ import java.util.Objects;
  * @author Abel Ferrer
  * 
  */
-public class FileDto {
+public class FileDto implements Dto {
+
+	private static final long serialVersionUID = -310795968243464178L;
 
 	private LocalDateTime created;
 
 	private String description;
 
-	private long id;
-
 	private String name;
+
+	private String path;
+	
+	private String uid;
 
 	@Override
 	public boolean equals(Object obj) {
@@ -54,7 +60,7 @@ public class FileDto {
 		if (getClass() != obj.getClass())
 			return false;
 		FileDto other = (FileDto) obj;
-		return id == other.id;
+		return uid == other.uid;
 	}
 
 	public LocalDateTime getCreated() {
@@ -65,17 +71,21 @@ public class FileDto {
 		return description;
 	}
 
-	public long getId() {
-		return id;
-	}
-
 	public String getName() {
 		return name;
 	}
 
+	public String getPath() {
+		return path;
+	}
+
+	public String getUid() {
+		return uid;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(id);
+		return Objects.hash(uid);
 	}
 
 	public void setCreated(LocalDateTime created) {
@@ -86,12 +96,16 @@ public class FileDto {
 		this.description = description;
 	}
 
-	public void setId(long id) {
-		this.id = id;
-	}
-
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
+	}
+
+	void setUid(String uid) {
+		this.uid = uid;
 	}
 
 	@Override

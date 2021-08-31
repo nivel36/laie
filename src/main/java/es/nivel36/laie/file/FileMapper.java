@@ -17,22 +17,19 @@
  */
 package es.nivel36.laie.file;
 
-public class FileDtoMapper {
+import es.nivel36.laie.core.AbstractMapper;
 
-	private File file;
+public class FileMapper extends AbstractMapper<File, FileDto> {
 
-	public FileDtoMapper(File file) {
-		this.file = file;
-	}
-
-	public FileDto map() {
-		if (this.file == null) {
+	@Override
+	public FileDto map(final File file) {
+		if (file == null) {
 			return null;
 		}
 		final FileDto fileDto = new FileDto();
 		fileDto.setCreated(file.getCreated());
 		fileDto.setDescription(file.getDescription());
-		fileDto.setId(file.getId());
+		fileDto.setUid(file.getUid());
 		fileDto.setName(file.getName());
 		return fileDto;
 	}

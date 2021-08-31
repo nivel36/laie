@@ -30,20 +30,20 @@ public class FileDtoMapperTest extends FileTest {
 		public void FileShouldReturnFileDto() {
 			final File file = mockFile();
 
-			final FileDtoMapper fm = new FileDtoMapper(file);
-			final FileDto fileDto = fm.map();
+			final FileMapper fm = new FileMapper();
+			final FileDto fileDto = fm.map(file);
 
 			Assertions.assertAll( // Assert all even if one fails.
 					() -> Assertions.assertEquals(file.getName(), fileDto.getName()),
 					() -> Assertions.assertEquals(file.getDescription(), fileDto.getDescription()),
-					() -> Assertions.assertEquals(file.getId(), fileDto.getId()),
+					() -> Assertions.assertEquals(file.getUid(), fileDto.getUid()),
 					() -> Assertions.assertEquals(file.getCreated(), fileDto.getCreated()));
 		}
 
 		@Test
 		public void NullFileShouldReturnNullFileDto() {
-			final FileDtoMapper fm = new FileDtoMapper(null);
-			final FileDto file = fm.map();
+			final FileMapper fm = new FileMapper();
+			final FileDto file = fm.map(null);
 
 			Assertions.assertNull(file);
 		}

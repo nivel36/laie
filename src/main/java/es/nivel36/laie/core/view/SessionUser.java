@@ -1,4 +1,4 @@
-package es.nivel36.laie.view;
+package es.nivel36.laie.core.view;
 
 import java.io.Serializable;
 import java.lang.invoke.MethodHandles;
@@ -44,7 +44,7 @@ public class SessionUser implements Serializable {
 
 	public void load(String username) {
 		Objects.requireNonNull(username);
-		logger.info("User {} has init his/her maxAge", username);
+		logger.info("User {} has init his/her session", username);
 		this.loadUserData(username);
 	}
 

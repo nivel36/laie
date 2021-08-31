@@ -19,7 +19,6 @@ package es.nivel36.laie.file;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -60,16 +59,16 @@ public class FileService {
 	 * Gets a file from the file system from its identifier
 	 * </p>
 	 *
-	 * @param fileId <tt>long</tt> with the identifier of the file to download
+	 * @param fileUid <tt>String</tt> with the identifier of the file to download
 	 * @return <tt>InputStream</tt> pointing the file
 	 */
-	public InputStream downloadFile(final long fileId) {
-		if (fileId < 1) {
-			logger.error("Bad file id {}", fileId);
-			throw new IllegalArgumentException("Bad file id: " + fileId);
+	public InputStream downloadFile(final String fileUid) {
+		Objects.requireNonNull(fileUid);
+		logger.debug("Downloading file {}", fileUid);
+		final File file = this.findFile(fileUid);
+		if (file == null) {
+			return null;
 		}
-		logger.debug("Downloading file {}", fileId);
-		final File file = this.fileJpaDao.find(fileId);
 		final Path path = file.getPath();
 		return readFileFromFileSystem(path);
 	}
@@ -79,22 +78,15 @@ public class FileService {
 	 * Searches the database for a file by its id.
 	 * </p>
 	 *
-	 * @param fileId <tt>long</tt> with the identifier of the file.
+	 * @param fileUid <tt>String</tt> with the identifier of the file.
 	 * @return <tt>FileDto</tt> if a file with such an id is found in the database,
 	 *         <tt>null</tt> if it does not exist.
 	 */
-	public FileDto findFileById(final long fileId) {
-		if (fileId < 1) {
-			logger.error("Bad file id {}", fileId);
-			throw new IllegalArgumentException("Bad file id: " + fileId);
-		}
-		logger.debug("Find file by its id {}", fileId);
-		try {
-			final File file = this.fileJpaDao.find(fileId);
-			return new FileDtoMapper(file).map();
-		} catch (final NoResultException e) {
-			return null;
-		}
+	public FileDto findFileByUid(final String fileUid) {
+		Objects.requireNonNull(fileUid);
+		logger.debug("Find file by its id {}", fileUid);
+		final File file = this.findFile(fileUid);
+		return new FileMapper().map(file);
 	}
 
 	/**
@@ -106,26 +98,28 @@ public class FileService {
 	 * the record in the database and the record in the file system will be deleted.
 	 * </p>
 	 *
-	 * @param fileId <tt>long</tt> with the file identifier of the file to be
-	 *               deleted.
+	 * @param fileUid <tt>String</tt> with the file identifier of the file to be
+	 *                deleted.
 	 */
-	public void removeFile(final long fileId) {
-		if (fileId < 1) {
-			logger.error("Bad file id {}", fileId);
-			throw new IllegalArgumentException("Bad file id: " + fileId);
-		}
-		logger.debug("Removing file {}", fileId);
-		final File file = this.fileJpaDao.find(fileId);
-		final PhysicalFile physicalFile = file.getPhysicalFile();
-		final boolean isOrphan = this.fileJpaDao.isOrphan(physicalFile.getId());
-		this.fileJpaDao.remove(file);
-		if (isOrphan) {
-			logger.trace("File is orphan");
-			final Path path = file.getPath();
-			final boolean deleted = this.removeFileFromFilesystem(path);
-			if (!deleted) {
-				logger.error("File {} not found in the file system", fileId);
+	public void removeFile(final String fileUid) {
+		Objects.requireNonNull(fileUid);
+		logger.debug("Removing file {}", fileUid);
+		try {
+			final File file = this.fileJpaDao.findByUid(fileUid);
+			final PhysicalFile physicalFile = file.getPhysicalFile();
+			final boolean isOrphan = this.fileJpaDao.isOrphan(physicalFile.getId());
+			this.fileJpaDao.remove(file);
+			if (isOrphan) {
+				logger.trace("File is orphan");
+				final Path path = file.getPath();
+				final boolean deleted = this.removeFileFromFilesystem(path);
+				if (!deleted) {
+					logger.error("File {} not found in the file system", fileUid);
+				}
 			}
+		} catch (final NoResultException e) {
+			logger.warn("File {} not found", fileUid);
+			return;
 		}
 	}
 
@@ -138,19 +132,19 @@ public class FileService {
 	 * Thus it is possible for a single file to have multiple records.
 	 * </p>
 	 *
-	 * @param outputStream <tt>OutputStream</tt> of the file to be uploaded. The
+	 * @param inputStream <tt>InputStream</tt> of the file to be uploaded. The
 	 *                     stream must be closed after use.
 	 * @param filename     <tt>String</tt> with the name of the file.
 	 * @return <tt>FileDto</tt> with the file data.
 	 */
-	public FileDto uploadFile(final OutputStream outputStream, final String filename) {
-		Objects.requireNonNull(outputStream);
+	public FileDto uploadFile(final InputStream inputStream, final String filename) {
+		Objects.requireNonNull(inputStream);
 		Objects.requireNonNull(filename);
 		logger.debug("Uploading file {}", filename);
 		final File file = new File(filename);
 		final String uuid = UUID.randomUUID().toString();
 		final Path absolutePath = this.buildPath(uuid);
-		final String hash = this.uploadFileToFilesystem(absolutePath, outputStream);
+		final String hash = this.uploadFileToFilesystem(absolutePath, inputStream);
 		final PhysicalFile physicalFile = this.fileJpaDao.findPhysicalFileByHash(hash);
 		if (physicalFile != null) {
 			logger.debug("Duplicated file found");
@@ -159,13 +153,22 @@ public class FileService {
 			final PhysicalFile newPhysicalFile = new PhysicalFile(uuid, absolutePath, hash);
 			file.setPhysicalFile(newPhysicalFile);
 		}
-		final File savedFile = this.fileJpaDao.save(file);
-		return new FileDtoMapper(savedFile).map();
+		final File savedFile = this.fileJpaDao.insert(file);
+		return new FileMapper().map(savedFile);
 	}
 
 	///////////////////////////////////////////////////////////////////////////
 	// PRIVATE
 	///////////////////////////////////////////////////////////////////////////
+
+	private File findFile(final String fileUid) {
+		try {
+			return this.fileJpaDao.findByUid(fileUid);
+		} catch (final NoResultException e) {
+			logger.warn("File {} not found", fileUid);
+			return null;
+		}
+	}
 
 	private Path buildPath(final String uuid) {
 		return Paths.get(this.fileDirectory, uuid.substring(0, 1), uuid.substring(1, 2), uuid);
@@ -188,10 +191,10 @@ public class FileService {
 		}
 	}
 
-	private String uploadFileToFilesystem(final Path path, final OutputStream outputStream) {
+	private String uploadFileToFilesystem(final Path path, final InputStream inputStream) {
 		try {
 			final DigestedFileWriter fileWriter = new Sha256DigestedFileWriter(path);
-			return fileWriter.write(outputStream);
+			return fileWriter.write(inputStream);
 		} catch (IOException | NoSuchAlgorithmException e) {
 			throw new FileUploadException(e);
 		}

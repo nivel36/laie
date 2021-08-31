@@ -32,6 +32,7 @@ abstract class FileTest {
 		final File file = new File("filename");
 		file.setDescription("description");
 		file.setId(1L);
+		file.setUid("1");
 		file.setPhysicalFile(mockPhysicalFile());
 		return file;
 	}

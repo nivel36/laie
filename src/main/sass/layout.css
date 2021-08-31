@@ -3973,6 +3973,31 @@ a {
   padding: 0 2.5em 2em 2.5em;
 }
 
+.input-avatar {
+  position: relative;
+  height: 200px;
+  width: 200px;
+}
+.input-avatar img {
+  cursor: pointer;
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+}
+.input-avatar .camera-button {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+.input-avatar .delete-button {
+  position: absolute;
+  right: 31px;
+  bottom: 0;
+}
+.input-avatar .ui-fileupload {
+  display: none;
+}
+
 .layout-wrapper .layout-topbar .topbar-menu a {
   color: #252529;
 }

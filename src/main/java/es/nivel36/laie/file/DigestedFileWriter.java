@@ -18,9 +18,9 @@
 package es.nivel36.laie.file;
 
 import java.io.IOException;
-import java.io.OutputStream;
+import java.io.InputStream;
 
 interface DigestedFileWriter {
 	
-	String write(final OutputStream outputStream) throws IOException;
+	String write(final InputStream inputStream) throws IOException;
 }

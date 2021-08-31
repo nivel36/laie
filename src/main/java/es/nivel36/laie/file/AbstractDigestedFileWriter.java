@@ -18,10 +18,10 @@
 package es.nivel36.laie.file;
 
 import java.io.IOException;
-import java.io.OutputStream;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.security.DigestOutputStream;
+import java.security.DigestInputStream;
 import java.security.MessageDigest;
 import java.util.Base64;
 import java.util.Objects;
@@ -59,11 +59,11 @@ abstract class AbstractDigestedFileWriter implements DigestedFileWriter {
 	}
 
 	@Override
-	public String write(final OutputStream outputStream) throws IOException {
-		Objects.requireNonNull(outputStream);
+	public String write(final InputStream inputStream) throws IOException {
+		Objects.requireNonNull(inputStream);
 		final MessageDigest messageDigest = this.getMessageDigest();
-		final DigestOutputStream digestOutputStream = new DigestOutputStream(outputStream, messageDigest);
-		Files.copy(this.path, digestOutputStream);
+		final DigestInputStream digestInputStream = new DigestInputStream(inputStream, messageDigest);
+		Files.copy(digestInputStream, path);
 		final byte[] hash = messageDigest.digest();
 		return Base64.getEncoder().encodeToString(hash);
 	}

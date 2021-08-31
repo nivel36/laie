@@ -21,6 +21,7 @@ import es.nivel36.laie.core.AbstractMapper;
 import es.nivel36.laie.department.Department;
 import es.nivel36.laie.department.SimpleDepartmentDto;
 import es.nivel36.laie.file.File;
+import es.nivel36.laie.file.FileMapper;
 
 /**
  * A mapper for the class UserDto
@@ -33,9 +34,12 @@ import es.nivel36.laie.file.File;
 public class UserMapper extends AbstractMapper<User, UserDto> {
 
 	private final SimpleUserMapper simpleUserMapper;
+	
+	private final FileMapper fileMapper;
 
 	public UserMapper() {
 		this.simpleUserMapper = new SimpleUserMapper();
+		this.fileMapper = new FileMapper();
 	}
 
 	/**
@@ -60,10 +64,8 @@ public class UserMapper extends AbstractMapper<User, UserDto> {
 		}
 		userDto.setEmail(user.getEmail());
 		userDto.setIdNumber(user.getIdNumber());
-		final File image = user.getImage();
-		if (image != null) {
-			userDto.setImage(image.getPath().toString());
-		}
+		final File image = user.getImage();	
+		userDto.setImage(fileMapper.map(image));
 		userDto.setJobPosition(user.getJobPosition());
 		userDto.setLocale(user.getLocale());
 		final User manager = user.getManager();

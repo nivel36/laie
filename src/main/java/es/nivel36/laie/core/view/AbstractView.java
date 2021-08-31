@@ -1,5 +1,6 @@
 package es.nivel36.laie.core.view;
 
+
 import static org.omnifaces.util.Faces.validationFailed;
 
 import java.io.Serializable;
@@ -19,24 +20,20 @@ import javax.inject.Inject;
 
 import org.primefaces.PrimeFaces;
 
-import es.nivel36.laie.view.ApplicationView;
-import es.nivel36.laie.view.Navigator;
-import es.nivel36.laie.view.SessionUser;
-import es.nivel36.laie.view.Translator;
 
 public abstract class AbstractView implements Serializable {
 
-	private static final long serialVersionUID = -968210191970450174L;
-
+	private static final long serialVersionUID = 1L;
+	
 	@Inject
 	protected transient ApplicationView applicationView;
-
+	
 	@Inject
 	protected transient ExternalContext externalContext;
-
+	
 	@Inject
 	protected transient FacesContext facesContext;
-
+	
 	@Inject
 	protected transient Flash flash;
 
@@ -45,7 +42,7 @@ public abstract class AbstractView implements Serializable {
 
 	@Inject
 	protected transient SessionUser sessionUser;
-
+	
 	@Inject
 	protected transient Translator translator;
 

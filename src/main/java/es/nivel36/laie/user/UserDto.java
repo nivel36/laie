@@ -24,6 +24,7 @@ import javax.validation.constraints.NotNull;
 
 import es.nivel36.laie.core.Dto;
 import es.nivel36.laie.department.SimpleDepartmentDto;
+import es.nivel36.laie.file.FileDto;
 
 /**
  * <p>
@@ -47,7 +48,7 @@ public final class UserDto implements Dto {
 
 	private String idNumber;
 
-	private String image;
+	private FileDto image;
 	
 	private String jobPosition;
 
@@ -140,7 +141,7 @@ public final class UserDto implements Dto {
 	 * @return <tt>String</tt> with the path of the user's image or <tt>null</tt> if
 	 *         the user has no image.
 	 */
-	public String getImage() {
+	public FileDto getImage() {
 		return this.image;
 	}
 	
@@ -273,7 +274,7 @@ public final class UserDto implements Dto {
 		this.idNumber = idNumber;
 	}
 	
-	void setImage(final String image) {
+	void setImage(final FileDto image) {
 		this.image = image;
 	}
 	

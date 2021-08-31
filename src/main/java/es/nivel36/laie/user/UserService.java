@@ -32,6 +32,8 @@ import es.nivel36.laie.core.service.search.SearchFacade;
 import es.nivel36.laie.core.service.search.SortField;
 import es.nivel36.laie.department.Department;
 import es.nivel36.laie.department.DepartmentJpaDao;
+import es.nivel36.laie.file.File;
+import es.nivel36.laie.file.FileJpaDao;
 
 @Stateless
 public class UserService extends AbstractService {
@@ -47,6 +49,10 @@ public class UserService extends AbstractService {
 	@Inject
 	@Repository
 	private SearchFacade searchFacade;
+	
+	@Inject
+	@Repository
+	private DepartmentJpaDao departmentDao;
 
 	@Inject
 	@Repository
@@ -54,7 +60,7 @@ public class UserService extends AbstractService {
 
 	@Inject
 	@Repository
-	private DepartmentJpaDao departmentDao;
+	private FileJpaDao fileDao;
 
 	////////////////////////////////////////////////////////////////////////////
 	// CONSTRUCTOR
@@ -67,6 +73,27 @@ public class UserService extends AbstractService {
 	////////////////////////////////////////////////////////////////////////////
 	// PUBLIC
 	////////////////////////////////////////////////////////////////////////////
+
+	/**
+	 * Associates an image with the user. If you want to delete an image associated
+	 * with a user, the imageUid parameter must be null.
+	 *
+	 * @param userUid  <tt>String</tt> with the unique identifier of the user to
+	 *                 whom an image is assigned.
+	 * @param imageUid <tt>String</tt> the unique identifier of the image.
+	 *                 <tt>null</tt> if you want to delete an image,
+	 *
+	 */
+	public void addImage(final String userUid, final String imageUid) {
+		Objects.requireNonNull(userUid);
+		final User user = this.userDao.findUserByUid(userUid);
+		if (imageUid == null) {
+			user.setImage(null);
+		} else {
+			final File file = fileDao.findByUid(imageUid);
+			user.setImage(file);
+		}
+	}
 
 	/**
 	 * Returns all users.
@@ -315,5 +342,10 @@ public class UserService extends AbstractService {
 	public void setDepartmentDao(final DepartmentJpaDao departmentDao) {
 		Objects.requireNonNull(departmentDao);
 		this.departmentDao = departmentDao;
+	}
+
+	public void setFileDao(final FileJpaDao fileDao) {
+		Objects.requireNonNull(fileDao);
+		this.fileDao = fileDao;
 	}
 }

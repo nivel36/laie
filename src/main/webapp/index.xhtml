@@ -3,10 +3,13 @@
 	xmlns:f="http://java.sun.com/jsf/core" 
 	xmlns:ui="http://java.sun.com/jsf/facelets" 
 	xmlns:p="http://primefaces.org/ui"
+	xmlns:n36="http://nivel36.es/ui"
 	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
 	template="/WEB-INF/templates/template.xhtml" >
 
-	<ui:define name="title">#{i18n[index.title]}</ui:define>
+	<ui:define name="title">
+		#{i18n['index.title']}
+	</ui:define>
 
 	<ui:define name="content">
 		<div class="p-grid">

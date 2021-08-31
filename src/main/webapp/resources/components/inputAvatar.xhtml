@@ -1,0 +1,40 @@
+<ui:component xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" 
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	xmlns:composite="http://xmlns.jcp.org/jsf/composite" 
+	xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:n36="http://nivel36.es/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:o="http://omnifaces.org/ui" 
+	xmlns:p="http://primefaces.org/ui" 
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<composite:interface>
+		<composite:attribute name="value" required="true" type="es.nivel36.laie.file.FileDto"/>
+		<composite:attribute name="styleClass" required="false" default="" />
+		<composite:attribute name="fileUploadListener" method-signature="void listener(org.primefaces.event.FileUploadEvent)" required="true" />
+		<composite:attribute name="captureListener" method-signature="void listener(org.primefaces.event.CaptureEvent)" />
+		<composite:attribute name="allowCamera" default="false" type="java.lang.Boolean" />
+		<composite:attribute name="deleteImage" method-signature="void method()" required="true"/>
+	</composite:interface>
+
+	<composite:implementation>
+		<div id="#{cc.clientId}" class="input-avatar #{cc.attrs.styleClass}">
+			<p:fileUpload id="fileUpload" listener="#{cc.attrs.fileUploadListener}" mode="advanced" dragDropSupport="false" process="@this"
+				update="#{cc.clientId}" auto="true" />	
+			<h:outputLabel for="fileUpload_input">
+				<p:graphicImage styleClass="avatar" id="avatar" value="/images/#{cc.attrs.value.physicalFile.relativePath}" rendered="#{not empty cc.attrs.value}" />
+				<p:graphicImage styleClass="avatar" value="/resources/img/default-avatar.png" rendered="#{empty cc.attrs.value}" />
+			</h:outputLabel>
+			<c:if test="#{cc.attrs.allowCamera}">
+				<p:commandButton id="cameraButton" icon="fa fa-camera" onclick="PF('cameraDialog').show();" styleClass="camera-button icon" process="@this" />
+				<p:dialog widgetVar="cameraDialog" closable="true" dynamic="true" modal="true">
+					<p:photoCam widgetVar="camera" listener="#{cc.attrs.captureListener}" update="#{cc.clientId}" />
+					<p:commandButton type="button" value="Capture" onclick="PF('camera').capture()" />
+				</p:dialog>
+			</c:if>
+			<p:commandButton id="deleteButton" icon="fa fa-times" styleClass="delete-button icon danger-button" process="@this avatar" rendered="#{not empty cc.attrs.value}" action="#{cc.attrs.deleteImage}" update="#{cc.clientId}" />
+		</div>
+	</composite:implementation>
+</ui:component>

@@ -60,7 +60,7 @@ public class StartupConfig {
 		logger.info("|  '--. |  | |  | |  | |  `---.");
 		logger.info("`-----' `--' `--' `--' `------'");
 		logger.info("");
-		logger.info("LAIE - Versión 0.0.2 - (c) Nivel36");
+		logger.info("LAIE - Versión 0.0.3 - (c) Nivel36");
 		logger.info("=====================================================================================");
 		this.createAppDirectories();
 		this.indexerInit();

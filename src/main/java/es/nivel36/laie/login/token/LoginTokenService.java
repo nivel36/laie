@@ -1,6 +1,5 @@
 package es.nivel36.laie.login.token;
 
-import static java.time.temporal.ChronoUnit.MONTHS;
 import static java.util.UUID.randomUUID;
 
 import java.time.Instant;
@@ -34,7 +33,7 @@ public class LoginTokenService {
 		final Instant now = Instant.now();
 		loginToken.setCreated(now);
 		if (tokenType.equals(TokenType.REMEMBER_ME)) {
-			loginToken.setExpiration(now.plus(1, MONTHS));
+			loginToken.setExpiration(now.plus(30, ChronoUnit.DAYS));
 		} else {
 			loginToken.setExpiration(now.plus(30, ChronoUnit.MINUTES));
 		}

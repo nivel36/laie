@@ -24,7 +24,6 @@ import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -50,21 +49,21 @@ public class FileServiceTest extends FileTest{
 	class DownloadFile {
 
 		@Test
-		public void BadIdFileShouldThrowNullPointerException() {
-			assertThrows(IllegalArgumentException.class, () -> {
-				fileService.downloadFile(-1);
+		public void NullUidFileShouldThrowNullPointerException() {
+			assertThrows(NullPointerException.class, () -> {
+				fileService.downloadFile(null);
 			});
 		}
 
 		@Test
 		public void correctValueShouldReturnInputStream() throws Exception {
 			final File file = mockFile();
-			Mockito.when(fileJpaDao.find(1L)).thenReturn(file);
+			Mockito.when(fileJpaDao.findByUid("1")).thenReturn(file);
 			final InputStream reader = new ByteArrayInputStream("test".getBytes());
 			try (MockedConstruction<FileReader> mocked = Mockito.mockConstruction(FileReader.class, (mock, context) -> {
 				when(mock.read()).thenReturn(reader);
 			})) {
-				final InputStream is = fileService.downloadFile(1);
+				final InputStream is = fileService.downloadFile("1");
 				final InputStreamReader inputStreamReader = new InputStreamReader(is, StandardCharsets.UTF_8);
 				final String text = new BufferedReader(inputStreamReader).lines().collect(Collectors.joining("\n"));
 				Assertions.assertEquals(text, "test");
@@ -73,30 +72,30 @@ public class FileServiceTest extends FileTest{
 	}
 
 	@Nested
-	class FindFileById {
+	class FindFileByUid {
 
 		@Test
-		public void BadIdShouldThrowIllegalStateException() {
-			assertThrows(IllegalArgumentException.class, () -> {
-				fileService.findFileById(-1L);
+		public void NullIdShouldThrowNullPointerException() {
+			assertThrows(NullPointerException.class, () -> {
+				fileService.findFileByUid(null);
 			});
 		}
 
 		@Test
 		public void ExistingIdShouldReturnAValue() {
 			final File file = mockFile();
-			Mockito.when(fileJpaDao.find(1L)).thenReturn(file);
+			Mockito.when(fileJpaDao.findByUid("1")).thenReturn(file);
 			
-			final FileDto fileDto = fileService.findFileById(1L);
+			final FileDto fileDto = fileService.findFileByUid("1");
 			
 			Assertions.assertNotNull(fileDto);
 		}
 
 		@Test
 		public void NonExistingIdShouldReturnNull() {
-			Mockito.when(fileJpaDao.find(1L)).thenThrow(NoResultException.class);
+			Mockito.when(fileJpaDao.findByUid("1")).thenThrow(NoResultException.class);
 			
-			final FileDto file = fileService.findFileById(1L);
+			final FileDto file = fileService.findFileByUid("1");
 			
 			Assertions.assertNull(file);
 		}
@@ -106,20 +105,20 @@ public class FileServiceTest extends FileTest{
 	class RemoveFile {
 
 		@Test
-		public void BadIdShouldThrowIllegalStateException() {
-			assertThrows(IllegalArgumentException.class, () -> {
-				fileService.removeFile(-1L);
+		public void BadIdShouldThrowNullPointerException() {
+			assertThrows(NullPointerException.class, () -> {
+				fileService.removeFile(null);
 			});
 		}
 
 		@Test
 		public void removeNonOrphanFileShouldntRemoveFile() {
 			final File file = mockFile();
-			Mockito.when(fileJpaDao.find(1L)).thenReturn(file);
+			Mockito.when(fileJpaDao.findByUid("1")).thenReturn(file);
 			Mockito.when(fileJpaDao.isOrphan(1L)).thenReturn(false);
 			try (MockedStatic<Files> utilities = Mockito.mockStatic(Files.class)) {
 				
-				fileService.removeFile(1L);
+				fileService.removeFile("1");
 				
 				utilities.verify(() -> Files.deleteIfExists(Mockito.any(Path.class)), Mockito.never());
 			}
@@ -128,12 +127,12 @@ public class FileServiceTest extends FileTest{
 		@Test
 		public void removeOrphanFileShouldRemoveFile() {
 			final File file = mockFile();
-			Mockito.when(fileJpaDao.find(1L)).thenReturn(file);
+			Mockito.when(fileJpaDao.findByUid("1")).thenReturn(file);
 			Mockito.when(fileJpaDao.isOrphan(1L)).thenReturn(true);
 			try (MockedStatic<Files> utilities = Mockito.mockStatic(Files.class)) {
 				utilities.when(() -> Files.deleteIfExists(Mockito.any(Path.class))).thenReturn(true);
 				
-				fileService.removeFile(1L);
+				fileService.removeFile("1");
 				
 				utilities.verify(() -> Files.deleteIfExists(Mockito.any(Path.class)), Mockito.atLeastOnce());
 			}
@@ -153,52 +152,52 @@ public class FileServiceTest extends FileTest{
 		@Test
 		public void nullFilenameShouldThrowNullPointerException() {
 			assertThrows(NullPointerException.class, () -> {
-				OutputStream outputStream = Mockito.mock(OutputStream.class);
+				InputStream outputStream = Mockito.mock(InputStream.class);
 				fileService.uploadFile(outputStream, null);
 			});
 		}
 
 		@Test
 		public void uploadDuplicateFileShouldntUploadTheFile() {
-			OutputStream outputStream = Mockito.mock(OutputStream.class);
+			InputStream inputStream = Mockito.mock(InputStream.class);
 			File file = mockFile();
 			PhysicalFile physicalFile =  mockPhysicalFile();
 			Mockito.when(fileJpaDao.findPhysicalFileByHash("HASH")).thenReturn(physicalFile);
-			Mockito.when(fileJpaDao.save(Mockito.any(File.class))).thenReturn(file);
+			Mockito.when(fileJpaDao.insert(Mockito.any(File.class))).thenReturn(file);
 			try (MockedConstruction<Sha256DigestedFileWriter> mocked = Mockito
 					.mockConstruction(Sha256DigestedFileWriter.class, (mock, context) -> {
-						when(mock.write(outputStream)).thenReturn("HASH");
+						when(mock.write(inputStream)).thenReturn("HASH");
 					})) {
 
 				try (MockedStatic<Files> utilities = Mockito.mockStatic(Files.class)) {
 					utilities.when(() -> Files.deleteIfExists(Mockito.any(Path.class))).thenReturn(true);
 					
-					FileDto fileDto = fileService.uploadFile(outputStream, "FileName");
+					FileDto fileDto = fileService.uploadFile(inputStream, "FileName");
 					
 					utilities.verify(() -> Files.deleteIfExists(Mockito.any(Path.class)), Mockito.atLeastOnce());
-					Assertions.assertEquals(1L, fileDto.getId());
+					Assertions.assertEquals("1", fileDto.getUid());
 				}
 			}
 		}
 		
 		@Test
 		public void uploadFileShouldUploadAndCreateRegistry() {
-			OutputStream outputStream = Mockito.mock(OutputStream.class);
+			InputStream inputStream = Mockito.mock(InputStream.class);
 			File file = mockFile();
 			Mockito.when(fileJpaDao.findPhysicalFileByHash("HASH")).thenReturn(null);
-			Mockito.when(fileJpaDao.save(Mockito.any(File.class))).thenReturn(file);
+			Mockito.when(fileJpaDao.insert(Mockito.any(File.class))).thenReturn(file);
 			try (MockedConstruction<Sha256DigestedFileWriter> mocked = Mockito
 					.mockConstruction(Sha256DigestedFileWriter.class, (mock, context) -> {
-						when(mock.write(outputStream)).thenReturn("HASH");
+						when(mock.write(inputStream)).thenReturn("HASH");
 					})) {
 
 				try (MockedStatic<Files> utilities = Mockito.mockStatic(Files.class)) {
 					utilities.when(() -> Files.deleteIfExists(Mockito.any(Path.class))).thenReturn(true);
 					
-					FileDto fileDto = fileService.uploadFile(outputStream, "FileName");
+					FileDto fileDto = fileService.uploadFile(inputStream, "FileName");
 					
 					utilities.verify(() -> Files.deleteIfExists(Mockito.any(Path.class)), Mockito.never());
-					Assertions.assertEquals(1L, fileDto.getId());
+					Assertions.assertEquals("1", fileDto.getUid());
 				}
 			}
 		}

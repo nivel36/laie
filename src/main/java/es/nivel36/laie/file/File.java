@@ -30,6 +30,7 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 import es.nivel36.laie.core.service.AbstractEntity;
+import es.nivel36.laie.core.service.Identifiable;
 import es.nivel36.laie.user.User;
 
 /**
@@ -38,8 +39,8 @@ import es.nivel36.laie.user.User;
  * system.<br/>
  * A file can be uploaded multiple times, but only one copy will be stored on
  * the file system. This is associated with the
- * {@link es.nivel36.laie.file.PhysicalFile PhysicalFile}, which is the
- * file system representation of the file.
+ * {@link es.nivel36.laie.file.PhysicalFile PhysicalFile}, which is the file
+ * system representation of the file.
  * </p>
  * 
  * @see PhysicalFile
@@ -47,7 +48,7 @@ import es.nivel36.laie.user.User;
  * 
  */
 @Entity
-public class File extends AbstractEntity {
+public class File extends AbstractEntity implements Identifiable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -68,6 +69,10 @@ public class File extends AbstractEntity {
 	@ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "physicalFileId")
 	private PhysicalFile physicalFile;
+
+	@NotNull
+	@Column(nullable = false, unique = true)
+	private String uid;
 
 	public File() {
 	}
@@ -111,6 +116,11 @@ public class File extends AbstractEntity {
 	}
 
 	@Override
+	public String getUid() {
+		return uid;
+	}
+
+	@Override
 	public int hashCode() {
 		return Objects.hash(created, name);
 	}
@@ -129,6 +139,11 @@ public class File extends AbstractEntity {
 
 	public void setPhysicalFile(final PhysicalFile physicalFile) {
 		this.physicalFile = physicalFile;
+	}
+
+	@Override
+	public void setUid(String uid) {
+		this.uid = uid;
 	}
 
 	@Override

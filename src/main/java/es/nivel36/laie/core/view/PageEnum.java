@@ -1,4 +1,4 @@
-package es.nivel36.laie.view;
+package es.nivel36.laie.core.view;
 
 public enum PageEnum {
 
