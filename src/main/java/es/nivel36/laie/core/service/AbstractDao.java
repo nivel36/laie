@@ -45,20 +45,6 @@ public abstract class AbstractDao {
 	// PROTECTED
 	////////////////////////////////////////////////////////////////////////////
 
-	protected abstract boolean findDuplicateUid(final String uid);
-
-	protected void generateUid(final Identifiable identifiable) {
-		final RandomGenerator uidGenerator = new RandomGenerator(6);
-		// The identifier is a randomly generated number. Although it generates a number
-		// out of 16,777,216 and it is difficult for any number to be repeated, we must
-		// always verify that the value is not duplicated.
-		String uid;
-		do {
-			uid = uidGenerator.generateHex();
-		} while (this.findDuplicateUid(uid));
-		identifiable.setUid(uid);
-	}
-
 	protected <T> void paginate(final int page, final int pageSize, final TypedQuery<T> query) {
 		query.setFirstResult(page * pageSize);
 		query.setMaxResults(pageSize);

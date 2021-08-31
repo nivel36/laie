@@ -21,4 +21,12 @@ public class UserLazyDataModel extends AbstractLazyDataModel<UserDto> {
 			final String searchText) {
 		return userService.searchByName(firstResult, maxResults, sortField, searchText);
 	}
+	
+	public String getRowKey(UserDto user) {
+		return user.getUid();
+	}
+	
+	public UserDto getRowData(String rowKey) {
+		return userService.findUserByUid(rowKey);
+	}
 }

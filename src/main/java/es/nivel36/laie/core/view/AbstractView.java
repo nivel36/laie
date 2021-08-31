@@ -45,9 +45,15 @@ public abstract class AbstractView implements Serializable {
 	
 	@Inject
 	protected transient Translator translator;
-
-	protected void addErrorToField(final UIComponent component, final String message) {
-		this.addMessage(component, FacesMessage.SEVERITY_ERROR, message, message, null);
+	
+	private UIComponent getUIComponent(String id) {  
+	      return FacesContext.getCurrentInstance().getViewRoot().findComponent(id) ;  
+	}
+	
+	protected void addErrorToField(final String componentId, final String message, final Object... params) {
+		UIComponent component = getUIComponent(componentId);
+		final String translatedMessage = this.translator.message(message, params);
+		this.addMessage(component, FacesMessage.SEVERITY_ERROR, translatedMessage, message, null);
 		validationFailed();
 	}
 

@@ -36,8 +36,7 @@ import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.SortableField;
 import org.hibernate.search.annotations.Store;
 
-import es.nivel36.laie.core.service.AbstractEntity;
-import es.nivel36.laie.core.service.Identifiable;
+import es.nivel36.laie.core.service.AbstractIdentifiableEntity;
 import es.nivel36.laie.core.service.search.Indexable;
 import es.nivel36.laie.department.Department;
 import es.nivel36.laie.file.File;
@@ -51,7 +50,7 @@ import es.nivel36.laie.file.File;
 @Analyzer(definition = "stdAnalyzer")
 @Indexed
 @Entity
-public class User extends AbstractEntity implements Identifiable, Indexable {
+public class User extends AbstractIdentifiableEntity implements Indexable {
 
 	private static final long serialVersionUID = 8025930876190406588L;
 
@@ -103,10 +102,6 @@ public class User extends AbstractEntity implements Identifiable, Indexable {
 	@SortableField(forField = "surname")
 	private String surname;
 
-	@NotNull
-	@Column(nullable = false, unique = true)
-	private String uid;
-
 	///////////////////////////////////////////////////////////////////////////
 	// PUBLIC
 	///////////////////////////////////////////////////////////////////////////
@@ -120,12 +115,12 @@ public class User extends AbstractEntity implements Identifiable, Indexable {
 		if (getClass() != obj.getClass())
 			return false;
 		User other = (User) obj;
-		return Objects.equals(uid, other.uid);
+		return Objects.equals(this.getUid(), other.getUid());
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(uid);
+		return Objects.hash(this.getUid());
 	}
 
 	@Override
@@ -261,19 +256,6 @@ public class User extends AbstractEntity implements Identifiable, Indexable {
 		return surname;
 	}
 
-	/**
-	 * Returns the unique identifier of the user.<br/>
-	 * This 6 digits value in hexadecimal is created by the application and is not
-	 * related to the user's identifier in the company.<br/>
-	 * This value cannot be null or duplicated.
-	 * 
-	 * @return <tt>String</tt> with the unique identifier of the user in the
-	 *         application. This value is a six-character string in hexadecimal.
-	 */
-	public String getUid() {
-		return uid;
-	}
-
 	///////////////////////////////////////////////////////////////////////////
 	// SETTERS
 	///////////////////////////////////////////////////////////////////////////
@@ -403,18 +385,5 @@ public class User extends AbstractEntity implements Identifiable, Indexable {
 	 */
 	public void setSurname(final String surname) {
 		this.surname = surname;
-	}
-
-	/**
-	 * Sets the unique identifier of the user.<br/>
-	 * This 6 digits value in hexadecimal is created by the application and is not
-	 * related to the user's identifier in the company.<br/>
-	 * This value cannot be null or duplicated.
-	 * 
-	 * @param uid <tt>String</tt> with the unique identifier of the user in the
-	 *            application. This value is a six-character string in hexadecimal.
-	 */
-	public void setUid(final String uid) {
-		this.uid = uid;
 	}
 }
