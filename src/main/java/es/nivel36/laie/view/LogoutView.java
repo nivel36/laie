@@ -35,7 +35,7 @@ public class LogoutView extends AbstractView  {
 
 	private void gotoLogin() {
 		final NavigationHandler nav = this.facesContext.getApplication().getNavigationHandler();
-		final String indexUrl = this.navigator.getRedirectUrl(PageEnum.LOGIN);
+		final String indexUrl = "login";
 		nav.handleNavigation(this.facesContext, null, indexUrl);
 		this.facesContext.renderResponse();
 	}
