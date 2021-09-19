@@ -65,7 +65,8 @@ public class ConfigView extends AbstractView {
 		}
 		logger.debug("Upload camera image for user {} action performed", this.user);
 		try (final InputStream inputStream = new ByteArrayInputStream(data)) {
-			this.userImage = this.fileService.uploadFile(inputStream, "userImage_" + this.user.getUid());
+			final String userUid = this.user.getUid();
+			this.userImage = this.fileService.uploadFile(inputStream, "userImage_" + userUid, userUid);
 		} catch (final IOException e) {
 			this.imageChanged = false;
 			throw new UncheckedIOException(e);
@@ -122,7 +123,8 @@ public class ConfigView extends AbstractView {
 		}
 		logger.debug("Upload user {} image action performed", this.user);
 		try (final InputStream inputStream = uploadedFile.getInputStream()) {
-			this.userImage = this.fileService.uploadFile(inputStream, "userImage_" + this.user.getUid());
+			final String userUid = this.user.getUid();
+			this.userImage = this.fileService.uploadFile(inputStream, "userImage_" + userUid, userUid);
 		} catch (final IOException e) {
 			this.imageChanged = false;
 			throw new UncheckedIOException(e);

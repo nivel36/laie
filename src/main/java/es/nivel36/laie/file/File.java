@@ -29,8 +29,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
-import es.nivel36.laie.core.service.AbstractEntity;
-import es.nivel36.laie.core.service.Identifiable;
+import es.nivel36.laie.core.service.AbstractIdentifiableEntity;
 import es.nivel36.laie.user.User;
 
 /**
@@ -42,13 +41,13 @@ import es.nivel36.laie.user.User;
  * {@link es.nivel36.laie.file.PhysicalFile PhysicalFile}, which is the file
  * system representation of the file.
  * </p>
- * 
+ *
  * @see PhysicalFile
  * @author Abel Ferrer
- * 
+ *
  */
 @Entity
-public class File extends AbstractEntity implements Identifiable {
+public class File extends AbstractIdentifiableEntity {
 
 	private static final long serialVersionUID = 1L;
 
@@ -66,13 +65,9 @@ public class File extends AbstractEntity implements Identifiable {
 	@JoinColumn(name = "ownerId")
 	private User owner;
 
-	@ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, optional = false)
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "physicalFileId")
 	private PhysicalFile physicalFile;
-
-	@NotNull
-	@Column(nullable = false, unique = true)
-	private String uid;
 
 	public File() {
 	}
@@ -84,15 +79,15 @@ public class File extends AbstractEntity implements Identifiable {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
+	public boolean equals(final Object obj) {
+		if (this == obj) {
 			return true;
-		if (!super.equals(obj))
+		}
+		if (!super.equals(obj) || (this.getClass() != obj.getClass())) {
 			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		File other = (File) obj;
-		return Objects.equals(created, other.created) && Objects.equals(name, other.name);
+		}
+		final File other = (File) obj;
+		return Objects.equals(this.created, other.created) && Objects.equals(this.name, other.name);
 	}
 
 	public LocalDateTime getCreated() {
@@ -107,8 +102,12 @@ public class File extends AbstractEntity implements Identifiable {
 		return this.name;
 	}
 
+	public User getOwner() {
+		return this.owner;
+	}
+
 	public Path getPath() {
-		return Path.of(physicalFile.getAbsolutePath());
+		return Path.of(this.physicalFile.getAbsolutePath());
 	}
 
 	public PhysicalFile getPhysicalFile() {
@@ -116,13 +115,8 @@ public class File extends AbstractEntity implements Identifiable {
 	}
 
 	@Override
-	public String getUid() {
-		return uid;
-	}
-
-	@Override
 	public int hashCode() {
-		return Objects.hash(created, name);
+		return Objects.hash(this.created, this.name);
 	}
 
 	public void setCreated(final LocalDateTime created) {
@@ -137,17 +131,16 @@ public class File extends AbstractEntity implements Identifiable {
 		this.name = name;
 	}
 
+	public void setOwner(final User owner) {
+		this.owner = owner;
+	}
+
 	public void setPhysicalFile(final PhysicalFile physicalFile) {
 		this.physicalFile = physicalFile;
 	}
 
 	@Override
-	public void setUid(String uid) {
-		this.uid = uid;
-	}
-
-	@Override
 	public String toString() {
-		return name;
+		return this.name;
 	}
 }

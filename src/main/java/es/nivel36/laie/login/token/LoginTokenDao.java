@@ -19,11 +19,6 @@ public class LoginTokenDao extends AbstractDao {
 		return query.getSingleResult();
 	}
 
-	@Override
-	protected boolean findDuplicateUid(final String uid) {
-		return false;
-	}
-
 	public List<LoginToken> findExpiredTokens(final int page, final int pageSize) {
 		this.validatePagination(page, pageSize);
 		final TypedQuery<LoginToken> query = this.entityManager.createNamedQuery("LoginToken.findExpired",

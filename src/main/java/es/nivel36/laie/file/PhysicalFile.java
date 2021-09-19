@@ -20,9 +20,11 @@ package es.nivel36.laie.file;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
 import es.nivel36.laie.core.service.AbstractEntity;
@@ -32,8 +34,8 @@ import es.nivel36.laie.core.service.AbstractEntity;
  * A physical file is a database representation of a file in the file
  * system.<br/>
  * A physical file cannot be duplicated.<br/>
- * Its relationship to a {@link es.nivel36.laie.file.File File}. is
- * many-to-one; a physical file may be associated with multiple files.<br/>
+ * Its relationship to a {@link es.nivel36.laie.file.File File}. is many-to-one;
+ * a physical file may be associated with multiple files.<br/>
  * When the file on the file system is deleted, its record in the database must
  * also be deleted.
  * </p>
@@ -54,6 +56,17 @@ public class PhysicalFile extends AbstractEntity {
 		this.contentHash = hash;
 		this.path = path.toString();
 		this.created = LocalDateTime.now();
+	}
+
+	@OneToMany(mappedBy = "physicalFile")
+	private Set<File> file;
+
+	public Set<File> getFile() {
+		return file;
+	}
+
+	public void setFile(Set<File> file) {
+		this.file = file;
 	}
 
 	@NotNull

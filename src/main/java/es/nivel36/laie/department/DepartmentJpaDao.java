@@ -23,7 +23,7 @@ import java.util.Objects;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 
-import es.nivel36.laie.core.service.AbstractDao;
+import es.nivel36.laie.core.service.AbstractIdentifiableDao;
 import es.nivel36.laie.core.service.IdentifiableNotFoundException;
 import es.nivel36.laie.core.service.Repository;
 import es.nivel36.laie.user.User;
@@ -35,7 +35,7 @@ import es.nivel36.laie.user.User;
  *
  */
 @Repository
-public class DepartmentJpaDao extends AbstractDao {
+public class DepartmentJpaDao extends AbstractIdentifiableDao {
 
 	////////////////////////////////////////////////////////////////////////////
 	// PUBLIC

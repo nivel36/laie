@@ -31,6 +31,7 @@ public class FileMapper extends AbstractMapper<File, FileDto> {
 		fileDto.setDescription(file.getDescription());
 		fileDto.setUid(file.getUid());
 		fileDto.setName(file.getName());
+		fileDto.setPath(file.getPhysicalFile().getAbsolutePath());
 		return fileDto;
 	}
 }

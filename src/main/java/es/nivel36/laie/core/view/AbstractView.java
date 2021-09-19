@@ -1,9 +1,10 @@
 package es.nivel36.laie.core.view;
 
-
 import static org.omnifaces.util.Faces.validationFailed;
 
+import java.io.IOException;
 import java.io.Serializable;
+import java.io.UncheckedIOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -20,36 +21,32 @@ import javax.inject.Inject;
 
 import org.primefaces.PrimeFaces;
 
-
 public abstract class AbstractView implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Inject
 	protected transient ApplicationView applicationView;
-	
+
 	@Inject
 	protected transient ExternalContext externalContext;
-	
+
 	@Inject
 	protected transient FacesContext facesContext;
-	
+
 	@Inject
 	protected transient Flash flash;
 
 	@Inject
-	protected transient Navigator navigator;
+	protected transient SessionUser sessionUser;
 
 	@Inject
-	protected transient SessionUser sessionUser;
-	
-	@Inject
 	protected transient Translator translator;
-	
-	private UIComponent getUIComponent(String id) {  
-	      return FacesContext.getCurrentInstance().getViewRoot().findComponent(id) ;  
+
+	private UIComponent getUIComponent(String id) {
+		return FacesContext.getCurrentInstance().getViewRoot().findComponent(id);
 	}
-	
+
 	protected void addErrorToField(final String componentId, final String message, final Object... params) {
 		UIComponent component = getUIComponent(componentId);
 		final String translatedMessage = this.translator.message(message, params);
@@ -124,18 +121,6 @@ public abstract class AbstractView implements Serializable {
 		return this.flash.containsKey(key);
 	}
 
-	protected Long getIdFromParameters(final String idName) {
-		try {
-			final String idValue = this.getValueFromGetParameters(idName);
-			if (idValue == null) {
-				return null;
-			}
-			return Long.parseLong(idValue);
-		} catch (final NumberFormatException e) {
-			throw new IllegalStateException();
-		}
-	}
-
 	@SuppressWarnings("unchecked")
 	protected <T> T getValueFromFlash(final String key) {
 		if (this.flash.containsKey(key)) {
@@ -145,7 +130,7 @@ public abstract class AbstractView implements Serializable {
 		}
 	}
 
-	protected String getValueFromGetParameters(final String key) {
+	protected String getParamater(final String key) {
 		return this.externalContext.getRequestParameterMap().get(key);
 	}
 
@@ -181,15 +166,19 @@ public abstract class AbstractView implements Serializable {
 		this.flash = flash;
 	}
 
-	public void setNavigator(Navigator navigator) {
-		this.navigator = navigator;
-	}
-
 	public void setSessionUser(final SessionUser sessionUser) {
 		this.sessionUser = sessionUser;
 	}
 
 	public void setTranslator(final Translator translator) {
 		this.translator = translator;
+	}
+
+	protected void redirect(String url) {
+		try {
+			externalContext.redirect(url);
+		} catch (IOException e) {
+			throw new UncheckedIOException(e);
+		}
 	}
 }

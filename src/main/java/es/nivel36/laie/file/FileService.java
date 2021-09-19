@@ -36,6 +36,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import es.nivel36.laie.core.service.Repository;
+import es.nivel36.laie.user.User;
+import es.nivel36.laie.user.UserJpaDao;
 
 @Stateless
 public class FileService {
@@ -49,6 +51,10 @@ public class FileService {
 	@Inject
 	@Repository
 	private FileJpaDao fileJpaDao;
+
+	@Inject
+	@Repository
+	private UserJpaDao userJpaDao;
 
 	///////////////////////////////////////////////////////////////////////////
 	// PUBLIC
@@ -133,24 +139,27 @@ public class FileService {
 	 * </p>
 	 *
 	 * @param inputStream <tt>InputStream</tt> of the file to be uploaded. The
-	 *                     stream must be closed after use.
-	 * @param filename     <tt>String</tt> with the name of the file.
+	 *                    stream must be closed after use.
+	 * @param filename    <tt>String</tt> with the name of the file.
 	 * @return <tt>FileDto</tt> with the file data.
 	 */
-	public FileDto uploadFile(final InputStream inputStream, final String filename) {
+	public FileDto uploadFile(final InputStream inputStream, final String filename, String userUid) {
 		Objects.requireNonNull(inputStream);
 		Objects.requireNonNull(filename);
 		logger.debug("Uploading file {}", filename);
 		final File file = new File(filename);
+		final User user = userJpaDao.findUserByUid(userUid);
+		file.setOwner(user);
 		final String uuid = UUID.randomUUID().toString();
-		final Path absolutePath = this.buildPath(uuid);
-		final String hash = this.uploadFileToFilesystem(absolutePath, inputStream);
+		final Path path = this.buildPath(uuid);
+		final String hash = this.uploadFileToFilesystem(path, inputStream);
 		final PhysicalFile physicalFile = this.fileJpaDao.findPhysicalFileByHash(hash);
 		if (physicalFile != null) {
 			logger.debug("Duplicated file found");
-			this.removeFileFromFilesystem(absolutePath);
+			file.setPhysicalFile(physicalFile);
+			this.removeFileFromFilesystem(path);
 		} else {
-			final PhysicalFile newPhysicalFile = new PhysicalFile(uuid, absolutePath, hash);
+			final PhysicalFile newPhysicalFile = new PhysicalFile(uuid, path, hash);
 			file.setPhysicalFile(newPhysicalFile);
 		}
 		final File savedFile = this.fileJpaDao.insert(file);
@@ -171,21 +180,27 @@ public class FileService {
 	}
 
 	private Path buildPath(final String uuid) {
-		return Paths.get(this.fileDirectory, uuid.substring(0, 1), uuid.substring(1, 2), uuid);
+		return Paths.get(uuid.substring(0, 1), uuid.substring(1, 2), uuid);
 	}
 
 	private InputStream readFileFromFileSystem(final Path path) {
 		try {
-			final FileReader fileReader = new FileReader(path);
+			final Path absolutePath = getAbsolutePath(path);
+			final FileReader fileReader = new FileReader(absolutePath);
 			return fileReader.read();
 		} catch (final IOException e) {
 			throw new UncheckedIOException(e);
 		}
 	}
 
+	private Path getAbsolutePath(final Path path) {
+		return Paths.get(fileDirectory, path.toString());
+	}
+
 	private boolean removeFileFromFilesystem(final Path path) {
 		try {
-			return Files.deleteIfExists(path);
+			final Path absolutePath = getAbsolutePath(path);
+			return Files.deleteIfExists(absolutePath);
 		} catch (final IOException e) {
 			return false;
 		}
@@ -193,7 +208,8 @@ public class FileService {
 
 	private String uploadFileToFilesystem(final Path path, final InputStream inputStream) {
 		try {
-			final DigestedFileWriter fileWriter = new Sha256DigestedFileWriter(path);
+			final Path absolutePath = getAbsolutePath(path);
+			final DigestedFileWriter fileWriter = new Sha256DigestedFileWriter(absolutePath);
 			return fileWriter.write(inputStream);
 		} catch (IOException | NoSuchAlgorithmException e) {
 			throw new FileUploadException(e);

@@ -1,4 +1,4 @@
-package es.nivel36.laie.view.users;
+package es.nivel36.laie.view.user;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -14,11 +14,11 @@ import es.nivel36.laie.user.UserService;
 
 @Named
 @ViewScoped
-public class UsersView extends AbstractView {
+public class UserSearchView extends AbstractView {
 
 	private static final long serialVersionUID = 8546647283433420219L;
 
-	private static final Logger logger = LoggerFactory.getLogger(UsersView.class);
+	private static final Logger logger = LoggerFactory.getLogger(UserSearchView.class);
 
 	private String searchText;
 

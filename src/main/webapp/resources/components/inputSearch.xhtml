@@ -11,38 +11,57 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 	<composite:interface>
-		<composite:attribute name="searchText" 		required="true" 										/>
-		<composite:attribute name="searchAction" 	required="true" 	method-signature="void action()" 	/>
-		<composite:attribute name="update" 			required="true" 										/>
-		<composite:attribute name="styleClass" 		required="false" 	default="" 							/>
-		<composite:attribute name="placeholder" 	required="false" 	default="" 							/>
+		<composite:attribute
+			name="searchText"
+			required="true"	/>
+		<composite:attribute 
+			name="searchAction"
+			required="true"
+			method-signature="void action()" />
+		<composite:attribute
+			name="update"
+			required="true" />
+		<composite:attribute 
+			name="styleClass"
+			required="false"	
+			default="" />
+		<composite:attribute 
+			name="placeholder" 
+			required="false" 	
+			default="" />
 	</composite:interface>
 
 	<composite:implementation>
-		<div id="#{cc.clientId}" class="input-group input-search-group #{cc.attrs.styleClass}">
-			<p:defaultCommand target="searchButton" />
+		<div 
+			id="#{cc.clientId}" 
+			class="input-group input-search-group #{cc.attrs.styleClass}">
 			
-			<div class="ui-inputgroup">
-			
-				<p:inputText 		id="searchText" 
-									value="#{cc.attrs.searchText}" 
-									placeholder="#{cc.attrs.placeholder}" />
-									
-				<p:commandButton 	id="cleanSearchButton" 
-									styleClass="ui-button-danger ui-button-outlined" 
-									icon="fa fa-times"
-									rendered="#{not empty cc.attrs.searchText}"
-									onclick="$(PrimeFaces.escapeClientId('#{cc.clientId}:searchText')).val('')" 
-									action="#{cc.attrs.searchAction}"
-									process="searchText @this" 
-									update="#{cc.clientId} #{cc.attrs.update}" />
-									
-				<p:commandButton 	id="searchButton" 
-									action="#{cc.attrs.searchAction}" 
-									process="searchText @this" 
-									icon="fa fa-search"
-									update="#{cc.clientId} #{cc.attrs.update}" 
-									styleClass="ui-button-outlined" />
+			<p:defaultCommand 
+				target="searchButton" />
+				
+			<div 
+				class="ui-inputgroup">
+				
+				<p:inputText
+					id="searchText" 
+					value="#{cc.attrs.searchText}" 
+					placeholder="#{cc.attrs.placeholder}" />				
+				<p:commandButton
+				 	id="cleanSearchButton" 
+					styleClass="ui-button-danger ui-button-outlined" 
+					icon="fa fa-times"
+					rendered="#{not empty cc.attrs.searchText}"
+					onclick="$(PrimeFaces.escapeClientId('#{cc.clientId}:searchText')).val('')" 
+					action="#{cc.attrs.searchAction}"
+					process="searchText @this" 
+					update="#{cc.clientId} #{cc.attrs.update}" />				
+				<p:commandButton
+				 	id="searchButton" 
+					action="#{cc.attrs.searchAction}" 
+					process="searchText @this" 
+					icon="fa fa-search"
+					update="#{cc.clientId} #{cc.attrs.update}" 
+					styleClass="ui-button-outlined" />
 			</div>
 		</div>
 	</composite:implementation>

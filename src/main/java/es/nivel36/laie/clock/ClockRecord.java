@@ -3,18 +3,30 @@ package es.nivel36.laie.clock;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
+
+import es.nivel36.laie.core.service.AbstractEntity;
 import es.nivel36.laie.user.User;
 
-public class ClockRecord {
+@Entity
+public class ClockRecord extends AbstractEntity {
 
-	enum ClockType {
-		IN, OUT
-	}
+	private static final long serialVersionUID = 6200578389175178283L;
 
+	@NotNull
+	@Enumerated(EnumType.STRING)
 	private ClockType clockType;
 
+	@NotNull
 	private LocalDateTime timeEvent;
 
+	@NotNull
+	@ManyToOne(optional = false, fetch = FetchType.EAGER)
 	private User user;
 
 	public ClockRecord() {
@@ -77,5 +89,4 @@ public class ClockRecord {
 		return "ClockRecord [user=" + this.user + ", clockType=" + this.clockType + ", timeEvent=" + this.timeEvent
 				+ "]";
 	}
-
 }

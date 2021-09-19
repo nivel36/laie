@@ -145,7 +145,7 @@ public class FileServiceTest extends FileTest{
 		@Test
 		public void nullOutputStreamShouldThrowNullPointerException() {
 			assertThrows(NullPointerException.class, () -> {
-				fileService.uploadFile(null, "filename");
+				fileService.uploadFile(null, "filename", null);
 			});
 		}
 
@@ -153,7 +153,7 @@ public class FileServiceTest extends FileTest{
 		public void nullFilenameShouldThrowNullPointerException() {
 			assertThrows(NullPointerException.class, () -> {
 				InputStream outputStream = Mockito.mock(InputStream.class);
-				fileService.uploadFile(outputStream, null);
+				fileService.uploadFile(outputStream, null, null);
 			});
 		}
 
@@ -172,7 +172,7 @@ public class FileServiceTest extends FileTest{
 				try (MockedStatic<Files> utilities = Mockito.mockStatic(Files.class)) {
 					utilities.when(() -> Files.deleteIfExists(Mockito.any(Path.class))).thenReturn(true);
 					
-					FileDto fileDto = fileService.uploadFile(inputStream, "FileName");
+					FileDto fileDto = fileService.uploadFile(inputStream, "FileName", null);
 					
 					utilities.verify(() -> Files.deleteIfExists(Mockito.any(Path.class)), Mockito.atLeastOnce());
 					Assertions.assertEquals("1", fileDto.getUid());
@@ -194,7 +194,7 @@ public class FileServiceTest extends FileTest{
 				try (MockedStatic<Files> utilities = Mockito.mockStatic(Files.class)) {
 					utilities.when(() -> Files.deleteIfExists(Mockito.any(Path.class))).thenReturn(true);
 					
-					FileDto fileDto = fileService.uploadFile(inputStream, "FileName");
+					FileDto fileDto = fileService.uploadFile(inputStream, "FileName", null);
 					
 					utilities.verify(() -> Files.deleteIfExists(Mockito.any(Path.class)), Mockito.never());
 					Assertions.assertEquals("1", fileDto.getUid());

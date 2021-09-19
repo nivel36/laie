@@ -3929,48 +3929,38 @@ a {
   padding: 0;
 }
 .card.user-card .card-header {
-  height: 80px;
+  height: 8rem;
   overflow: hidden;
   background: linear-gradient(30deg, #0f97c7 0%, #91dcf7 150%);
   background-color: #0f97c7;
   color: #ffffff;
 }
 .card.user-card .user-card-content .label-container {
-  font-size: 0.8em;
-  padding-bottom: 0.3em;
+  font-size: 1rem;
+  padding-bottom: 0.3rem;
 }
 .card.user-card .user-card-content .label-container .label {
   color: #252529;
 }
 .card.user-card .user-card-content .text {
+  font-size: 1.2rem;
   color: #666666;
 }
 .card.user-card .user-card-content .user-image {
-  width: 80px;
-  height: 80px;
-  margin: -40px 0 0 24px;
-  border-radius: 50%;
+  margin: -2rem 0 0 1.5rem;
   object-fit: cover;
 }
 .card.user-card .user-card-content .user-card-name {
-  font-size: 13px;
+  font-size: 1.25rem;
   color: #ffffff;
   position: relative;
-  top: -65px;
-  margin-left: 120px;
-  font-weight: 700;
-  white-space: nowrap;
-}
-.card.user-card .user-card-content .user-card-role {
-  font-size: 13px;
-  position: relative;
-  top: -55px;
-  margin-left: 120px;
+  top: -4rem;
+  margin-left: 7rem;
   font-weight: 700;
   white-space: nowrap;
 }
 .card.user-card .user-card-content .user-detail {
-  padding: 0 2.5em 2em 2.5em;
+  padding: 0 2.5rem 2rem 2.5rem;
 }
 
 .input-avatar {
@@ -4007,16 +3997,16 @@ a {
 .layout-wrapper .layout-topbar .topbar-menu .layout-profile-userinfo {
   text-align: left;
   display: inline-block;
-  margin: 6px 0 0 8px;
+  margin: 0.5rem 0 0 0.6rem;
   vertical-align: top;
 }
 .layout-wrapper .layout-topbar .topbar-menu .layout-profile-userinfo .layout-profile-name {
-  font-size: 14px;
+  font-size: 1.1rem;
   display: block;
 }
 .layout-wrapper .layout-topbar .topbar-menu .layout-profile-userinfo .layout-profile-role {
-  font-size: 12px;
-  margin-top: 2px;
+  font-size: 0.9rem;
+  margin-top: 0.15rem;
   display: block;
 }
 

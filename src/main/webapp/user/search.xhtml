@@ -21,19 +21,17 @@
 				<div class="p-grid">
 					<div class="p-col-12 p-lg-5">
 						<div class="searchBar ui-fluid">
-							<cc:inputSearch searchText="#{usersView.searchText}" searchAction="#{usersView.search}" update="@form" />
+							<cc:inputSearch searchText="#{userSearchView.searchText}" searchAction="#{userSearchView.search}" update="@form" />
 						</div>
 					</div>
 					<div class="p-col-12">
-						<p:dataTable id="users" value="#{usersView.users}" var="user" emptyMessage="#{i18n['user.no_users_found']}"
-							paginator="true" paginatorPosition="bottom" rows="15" sortMode="single" lazy="true" selectionMode="single"
-							selection="#{usersView.selectedUser}" rowKey="#{user.uid}">
-							<p:ajax event="rowSelect" listener="#{usersView.viewUser}" />
+						<p:dataTable id="users" value="#{userSearchView.users}" var="user" emptyMessage="#{i18n['user.no_users_found']}"
+							paginator="true" paginatorPosition="bottom" rows="15" sortMode="single" lazy="true">
 							<p:column headerText="#{i18n['user.name']}" sortBy="#{user.name}">
-								<h:link outcome="#{Page.USER.getUrl()}">
-									<cc:avatar value="#{user}" styleClass="p-mr-2" />
+								<h:link outcome="/user">
+									<cc:avatar value="#{user}" styleClass="p-mr-3" size="medium" />
 									<h:outputText class="link" value="#{user}" />
-									<f:param name="id" value="#{user.uid}" />
+									<f:param name="uid" value="#{user.uid}" />
 								</h:link>
 							</p:column>
 
@@ -42,9 +40,9 @@
 							</p:column>
 
 							<p:column headerText="#{i18n['user.manager']}">
-								<h:link value="#{user.manager.fullName}" styleClass="link" outcome="#{Page.USER.getUrl()}"
+								<h:link value="#{user.manager.fullName}" styleClass="link" outcome="/user"
 									rendered="#{not empty user.manager}">
-									<f:param name="id" value="#{user.manager.uid}" />
+									<f:param name="uid" value="#{user.manager.uid}" />
 								</h:link>
 							</p:column>
 						</p:dataTable>

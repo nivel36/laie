@@ -1,10 +1,13 @@
-package es.nivel36.laie.view.users;
+package es.nivel36.laie.view.user;
 
 import java.util.List;
 import java.util.Objects;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -62,7 +65,7 @@ public class EditUserView extends AbstractView {
 		return this.user;
 	}
 
-	public String save() {
+	public void save() {
 		logger.debug("Save data for user {}", user);
 		try {
 			if (this.user.getUid() == null) {
@@ -75,7 +78,7 @@ public class EditUserView extends AbstractView {
 		} catch (final DuplicateIdNumberException e) {
 			this.addErrorToField("idNumber", "user.error.duplicate_id");
 		}
-		return "user/view";
+		redirect("/user.xhtml?uid=" + user.getUid());
 	}
 
 	public List<UserDto> queryManager(final String query) {
@@ -93,5 +96,23 @@ public class EditUserView extends AbstractView {
 	public void setUserService(final UserService userService) {
 		Objects.requireNonNull(userService);
 		this.userService = userService;
+	}
+
+	public void validateEmail(final FacesContext context, final UIComponent component, final Object value) {
+		if (value == null) {
+			return;
+		}
+		final String userEmail = (String) value;
+		logger.trace("Validate user email {}", userEmail);
+		if (userEmail.equals(this.user.getEmail())) {
+			// If the old and the new email are equals, the user is not updating the email.
+			return;
+		}
+		final UserDto user = userService.findUserByEmail(userEmail);
+		if (user != null && user != this.user) {
+			logger.warn("Email {} exists", userEmail);
+			final String msg = this.translator.message("user.error.email_exists");
+			throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg));
+		}
 	}
 }

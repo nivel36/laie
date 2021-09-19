@@ -2,7 +2,8 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui" xmlns:n36="http://nivel36.es/ui"
+	xmlns:p="http://primefaces.org/ui" 
+	xmlns:n36="http://nivel36.es/ui"
 	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
 	template="/WEB-INF/templates/template.xhtml">
 
@@ -12,30 +13,28 @@
 
 	<ui:define name="content">
 		<div class="p-grid">
-			<div class="p-col-12 p-md-6 p-xl-4">
+			<div class="p-col-12 p-md-6">
 				<div class="card user-card">
 					<div class="card-header"></div>
 					<div class="user-card-content">
-						<cc:avatar value="#{sessionUser.user}" size="xlarge"
-							class="user-image" />
+						<cc:avatar value="#{sessionUser.user}" size="xlarge" styleClass="user-image" />
 
 						<div class="user-card-name">#{sessionUser.user}</div>
-						<div class="user-card-role">#{sessionUser.user.jobPosition}</div>
 						<div class="user-detail">
 							<div class="p-grid">
 								<div class="p-col-12 p-sm-6">
-									<cc:outputText label="#{i18n['user.email']}"
-										value="#{sessionUser.user.email}" />
+									<cc:outputText label="#{i18n['user.job_position']}" value="#{sessionUser.user.jobPosition}" />
+								</div>
+								<div class="p-col-12">
+									<cc:outputText label="#{i18n['user.email']}" value="#{sessionUser.user.email}" />
 								</div>
 
 								<div class="p-col-12 p-sm-6">
-									<cc:outputText label="#{i18n['user.phone_number']}"
-										value="#{sessionUser.user.phoneNumber}" />
+									<cc:outputText label="#{i18n['user.phone_number']}" value="#{sessionUser.user.phoneNumber}" />
 								</div>
 
 								<div class="p-col-12 p-sm-6">
-									<cc:outputText label="#{i18n['user.role']}"
-										value="#{i18n['role.'.concat(sessionUser.user.role)]}" />
+									<cc:outputText label="#{i18n['user.role']}" value="#{i18n['role.'.concat(sessionUser.user.role)]}" />
 								</div>
 
 								<div class="p-col-12">
@@ -44,12 +43,9 @@
 											<div class="label">#{i18n['user.manager']}</div>
 										</div>
 										<div class="text-container">
-											<h:panelGroup layout="block" styleClass="text"
-												rendered="#{not sessionUser.user.manager}"> --- </h:panelGroup>
-											<h:panelGroup layout="block" class="text"
-												rendered="#{sessionUser.user.manager}">
-												<p:link outcome="#{Page.USER.getUrl()}"
-													value="#{sessionUser.user.manager.fullName}">
+											<h:panelGroup layout="block" styleClass="text" rendered="#{not sessionUser.user.manager}"> --- </h:panelGroup>
+											<h:panelGroup layout="block" class="text" rendered="#{sessionUser.user.manager}">
+												<p:link outcome="#{Page.USER.getUrl()}" value="#{sessionUser.user.manager.fullName}">
 													<f:param name="id" value="#{sessionUser.user.manager.uid}" />
 												</p:link>
 											</h:panelGroup>
@@ -61,29 +57,19 @@
 					</div>
 				</div>
 			</div>
+			
+	
 			<div class="p-col-12 p-md-6">
 				<div class="card card-w-title ui-fluid">
-					<h5>#{i18n['config.language']}</h5>
-					<div class="p-grid p-formgrid">
-						<div class="p-col-12 p-sm-6">
-							<n36:input id="locale" label="#{i18n['config.language']}"
-								value="#{configView.user.locale}" type="selectOneMenu">
-								<f:selectItems var="language"
-									value="#{applicationView.languages}"
-									itemValue="#{language.code}" itemLabel="#{i18n[language.code]}" />
-							</n36:input>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="p-col-12 p-sm-6 p-md-4 p-lg-4 p-xl-3">
-				<div class="card card-w-title">
-					<h:form>
-						<h5>#{i18n['config.change_avatar']}</h5>
-						<cc:inputAvatar id="user-image" value="#{configView.userImage}"
-							fileUploadListener="#{configView.uploadImage}" allowCamera="true"
+					<h5>#{i18n['config.change_avatar']}</h5>
+						<h:form>
+						<cc:inputAvatar id="user-image" 
+							value="#{configView.userImage}"
+							fileUploadListener="#{configView.uploadImage}" 
+							allowCamera="true"
 							captureListener="#{configView.captureImage}"
 							deleteImage="#{configView.deleteImage}" />
+					
 					</h:form>
 				</div>
 			</div>

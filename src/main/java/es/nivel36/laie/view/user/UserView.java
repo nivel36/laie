@@ -11,13 +11,13 @@ import es.nivel36.laie.user.UserDto;
 
 @Named
 @ViewScoped
-public class ViewUserView extends AbstractView {
+public class UserView extends AbstractView {
 
 	private static final long serialVersionUID = -7976662872898546674L;
 
 	@Inject
 	@Param(name = "uid", required = true, converter = "userConverter")
-	protected UserDto user;
+	private UserDto user;
 
 	public UserDto getUser() {
 		return user;
@@ -25,5 +25,9 @@ public class ViewUserView extends AbstractView {
 
 	public void setUser(UserDto user) {
 		this.user = user;
+	}
+
+	public String editUser() {
+		return "/user/edit?uid=" + user.getUid();
 	}
 }

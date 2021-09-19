@@ -1,4 +1,4 @@
-package es.nivel36.laie.view.users;
+package es.nivel36.laie.view.user;
 
 import java.util.List;
 

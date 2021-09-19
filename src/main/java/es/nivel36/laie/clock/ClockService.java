@@ -6,17 +6,18 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.Objects;
 
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import es.nivel36.laie.clock.ClockRecord.ClockType;
 import es.nivel36.laie.core.service.Repository;
 import es.nivel36.laie.user.User;
 import es.nivel36.laie.user.UserJpaDao;
 import es.nivel36.laie.user.UserService;
 
+@Stateless
 public class ClockService {
 
 	private static final Logger logger = LoggerFactory.getLogger(UserService.class);

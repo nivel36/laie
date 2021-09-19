@@ -1,7 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<entity-mappings xmlns="http://xmlns.jcp.org/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<entity-mappings xmlns="http://xmlns.jcp.org/xml/ns/persistence/orm"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence/orm
-        http://xmlns.jcp.org/xml/ns/persistence/orm_2_1.xsd" version="2.1">
+        http://xmlns.jcp.org/xml/ns/persistence/orm_2_1.xsd"
+	version="2.1">
+
+
+	<named-query name="File.isOrphan">
+		<query><![CDATA[
+			SELECT CASE WHEN (COUNT(f) > 0) THEN TRUE ELSE FALSE END 
+			FROM File f 
+			WHERE f.physicalFile.id = :physicalFileId
+		]]></query>
+	</named-query>
 
 	<named-query name="File.findByHash">
 		<query><![CDATA[
@@ -11,21 +22,22 @@
 		]]></query>
 	</named-query>
 
-	<named-query name="File.isOrphan">
+
+	<named-query name="File.findDuplicateUid">
 		<query><![CDATA[
 			SELECT CASE WHEN (COUNT(f) > 0) THEN TRUE ELSE FALSE END 
 			FROM File f 
-			WHERE f.physicalFile = :physicalFile
+			WHERE f.uid = :uid
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="User.findAll">
 		<query><![CDATA[
 			SELECT u 
 			FROM User u
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="User.findCredential">
 		<query><![CDATA[
 			SELECT c
@@ -34,7 +46,7 @@
 			WHERE c.user.email = :email
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="User.findDuplicateEmail">
 		<query><![CDATA[
 			SELECT CASE WHEN (COUNT(u) > 0) THEN TRUE ELSE FALSE END 
@@ -42,7 +54,7 @@
 			WHERE u.email = :email
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="User.findDuplicateIdNumber">
 		<query><![CDATA[
 			SELECT CASE WHEN (COUNT(u) > 0) THEN TRUE ELSE FALSE END 
@@ -50,7 +62,7 @@
 			WHERE u.idNumber = :idNumber
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="User.findDuplicateUid">
 		<query><![CDATA[
 			SELECT CASE WHEN (COUNT(u) > 0) THEN TRUE ELSE FALSE END 
@@ -66,7 +78,7 @@
 			WHERE u.uid = :uid
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="User.findUserByEmail">
 		<query><![CDATA[
 			SELECT u 
@@ -84,7 +96,7 @@
 			AND uc.pathLength > 0
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="User.isSubordinateUser">
 		<query><![CDATA[
 			SELECT CASE WHEN (COUNT(u) > 0) THEN TRUE ELSE FALSE END 

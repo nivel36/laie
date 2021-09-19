@@ -48,9 +48,8 @@ public class LoginView extends AbstractView {
 
 	private void gotoIndex() {
 		final NavigationHandler nav = this.facesContext.getApplication().getNavigationHandler();
-		final String indexUrl = "index";
-		nav.handleNavigation(this.facesContext, null, indexUrl);
-		this.facesContext.renderResponse();
+		nav.handleNavigation(this.facesContext, null, "/index?faces-redirect=true");
+		this.facesContext.renderResponse(); 
 	}
 
 	@PostConstruct

@@ -1,0 +1,77 @@
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:ui="http://java.sun.com/jsf/facelets" 
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:n36="http://nivel36.es/ui" 
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	template="/WEB-INF/templates/template.xhtml">
+
+	<ui:define name="title">#{i18n['user.user']} #{userView.user}</ui:define>
+
+	<ui:define name="content">
+		<div class="p-grid">
+			<div class="p-col-12">
+				<p:toolbar>
+					<p:toolbarGroup>
+						<p:button 
+							type="button" 
+							value="#{i18n['action.edit']}" 
+							outcome="/user/edit" 
+							icon="pi pi-pencil"
+							styleClass="p-mr-2" >
+							<f:param name="uid" value="#{userView.user.uid}" />
+						</p:button>
+					</p:toolbarGroup>
+				</p:toolbar>
+			</div>
+
+			<div class="p-col-12 p-md-6">
+				<div class="card user-card">
+					<div class="card-header"></div>
+					<div class="user-card-content">
+						<cc:avatar value="#{userView.user}" size="xlarge" styleClass="user-image" />
+
+						<div class="user-card-name">#{userView.user}</div>
+						<div class="user-detail">
+							<div class="p-grid">
+								<div class="p-col-12 p-sm-6">
+									<cc:outputText label="#{i18n['user.job_position']}" value="#{userView.user.jobPosition}" />
+								</div>
+								<div class="p-col-12">
+									<cc:outputText label="#{i18n['user.email']}" value="#{userView.user.email}" />
+								</div>
+
+								<div class="p-col-12 p-sm-6">
+									<cc:outputText label="#{i18n['user.phone_number']}" value="#{userView.user.phoneNumber}" />
+								</div>
+
+								<div class="p-col-12 p-sm-6">
+									<cc:outputText label="#{i18n['user.role']}" value="#{i18n['role.'.concat(userView.user.role)]}" />
+								</div>
+
+								<div class="p-col-12">
+									<div class="data manager">
+										<div class="label-container">
+											<div class="label">#{i18n['user.manager']}</div>
+										</div>
+										<div class="text-container">
+											<h:panelGroup layout="block" styleClass="text" rendered="#{not userView.user.manager}"> --- </h:panelGroup>
+											<h:panelGroup layout="block" class="text" rendered="#{userView.user.manager}">
+												<p:link outcome="/user/view" value="#{userView.user.manager.fullName}">
+													<f:param name="id" value="#{userView.user.manager.uid}" />
+												</p:link>
+											</h:panelGroup>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</ui:define>
+
+</ui:composition>

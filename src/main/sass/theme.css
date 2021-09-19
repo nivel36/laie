@@ -6845,6 +6845,15 @@ body .ui-wizard .ui-icon-arrowthick-1-e:before {
   content: "";
 }
 
-/* Add your customizations of theme here */
+body .ui-datatable .ui-datatable-data tr td {
+  padding: 1rem 1rem;
+}
+body .ui-datatable table {
+  table-layout: auto;
+}
+body .ui-datatable table tbody tr a {
+  display: flex;
+  align-items: center;
+}
 
 /*# sourceMappingURL=theme.css.map */

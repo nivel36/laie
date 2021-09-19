@@ -19,5 +19,4 @@ public abstract class AbstractIdentifiableDao extends AbstractDao {
 		} while (this.findDuplicateUid(uid));
 		identifiable.setUid(uid);
 	}
-
 }

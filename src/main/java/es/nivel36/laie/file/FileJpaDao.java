@@ -24,11 +24,11 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
-import es.nivel36.laie.core.service.AbstractDao;
+import es.nivel36.laie.core.service.AbstractIdentifiableDao;
 import es.nivel36.laie.core.service.Repository;
 
 @Repository
-public class FileJpaDao extends AbstractDao {
+public class FileJpaDao extends AbstractIdentifiableDao {
 
 	@PersistenceContext
 	private EntityManager entityManager;
@@ -49,7 +49,7 @@ public class FileJpaDao extends AbstractDao {
 
 	public PhysicalFile findPhysicalFileByHash(final String hash) {
 		try {
-			final TypedQuery<PhysicalFile> q = this.entityManager.createQuery("File.findByHash", PhysicalFile.class);
+			final TypedQuery<PhysicalFile> q = this.entityManager.createNamedQuery("File.findByHash", PhysicalFile.class);
 			q.setParameter("hash", hash);
 			return q.getSingleResult();
 		} catch (final NoResultException e) {
@@ -58,7 +58,7 @@ public class FileJpaDao extends AbstractDao {
 	}
 
 	public boolean isOrphan(final long physicalFileId) {
-		final TypedQuery<Boolean> q = this.entityManager.createQuery("PhysicalFile.isOrphan", Boolean.class);
+		final TypedQuery<Boolean> q = this.entityManager.createNamedQuery("File.isOrphan", Boolean.class);
 		q.setParameter("physicalFileId", physicalFileId);
 		return q.getSingleResult();
 	}
@@ -69,7 +69,8 @@ public class FileJpaDao extends AbstractDao {
 
 	public File insert(final File file) {
 		this.generateUid(file);
-		return this.entityManager.merge(file);
+		this.entityManager.persist(file);
+		return file;
 	}
 
 	public void setEntityManager(final EntityManager entityManager) {
@@ -79,7 +80,7 @@ public class FileJpaDao extends AbstractDao {
 
 	@Override
 	protected boolean findDuplicateUid(String uid) {
-		final TypedQuery<Boolean> query = this.entityManager.createQuery("File.findDuplicateUid", Boolean.class);
+		final TypedQuery<Boolean> query = this.entityManager.createNamedQuery("File.findDuplicateUid", Boolean.class);
 		query.setParameter("uid", uid);
 		return query.getSingleResult();
 	}

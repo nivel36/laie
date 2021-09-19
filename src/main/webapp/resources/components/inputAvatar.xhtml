@@ -24,7 +24,7 @@
 			<p:fileUpload id="fileUpload" listener="#{cc.attrs.fileUploadListener}" mode="advanced" dragDropSupport="false" process="@this"
 				update="#{cc.clientId}" auto="true" />	
 			<h:outputLabel for="fileUpload_input">
-				<p:graphicImage styleClass="avatar" id="avatar" value="/images/#{cc.attrs.value.physicalFile.relativePath}" rendered="#{not empty cc.attrs.value}" />
+				<p:graphicImage styleClass="avatar" id="avatar" value="/images/#{cc.attrs.value.path}" rendered="#{not empty cc.attrs.value}" />
 				<p:graphicImage styleClass="avatar" value="/resources/img/default-avatar.png" rendered="#{empty cc.attrs.value}" />
 			</h:outputLabel>
 			<c:if test="#{cc.attrs.allowCamera}">

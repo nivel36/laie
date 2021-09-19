@@ -3,30 +3,59 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
-                xmlns:g="http://nivel36.es/ui"
+                xmlns:n36="http://nivel36.es/ui"
                 template="/WEB-INF/templates/template.xhtml">
              
     <ui:define name="title">#{i18n['user.edit_user']}</ui:define>
 
     <ui:define name="content">
-    <h:form id="userForm">
+    	<h:form id="userForm">
 			<div class="p-grid">
+				<div class="p-col-12">
+					<p:toolbar>
+						<p:toolbarGroup>
+							<p:button value="#{i18n['action.cancel']}" 
+								outcome="/user"
+								icon="pi pi-times"
+								styleClass="p-mr-2" >
+								<f:param name="uid" 
+									value="#{editUserView.user.uid}" />
+							</p:button>
+							<p:commandButton value="#{i18n['action.save']}" 
+								action="#{editUserView.save}"
+								icon="pi pi-save"
+								styleClass="p-mr-2 ui-button-success" />
+						</p:toolbarGroup>
+					</p:toolbar>
+				</div>
+			
 				<div class="p-col-12 p-md-6">
 					<div class="card card-w-title ui-fluid">
 						<h5>#{i18n['user.details']}</h5>
 						<div class="p-grid p-formgrid">
 							<div class="p-col-12 p-sm-6">
-								<g:input id="name" label="#{i18n['user.name']}" value="#{addUserView.user.name}" required="true" />
+								<n36:input id="name" 
+									label="#{i18n['user.name']}" 
+									value="#{editUserView.user.name}" 
+									required="true" />
 							</div>
 							<div class="p-col-12 p-sm-6">
-								<g:input id="surname" label="#{i18n['user.surname']}" value="#{addUserView.user.surname}" required="true" />
+								<n36:input id="surname" 
+									label="#{i18n['user.surname']}"
+									value="#{editUserView.user.surname}" 
+									required="true" />
 							</div>
 							<div class="p-col-12 p-sm-6">
-								<g:input id="email" label="#{i18n['user.email']}" value="#{addUserView.user.email}" required="true"
-									validator="#{addUserView.validateEmail}" />
+								<n36:input id="email" 
+									label="#{i18n['user.email']}" 
+									value="#{editUserView.user.email}" 
+									required="true"
+									validator="#{editUserView.validateEmail}" />
 							</div>
 							<div class="p-col-12 p-sm-6">
-								<g:input id="phone_number" label="#{i18n['user.phone_number']}" value="#{addUserView.user.phoneNumber}" />
+								<n36:input id="phone_number" 
+									label="#{i18n['user.phone_number']}" 
+									value="#{editUserView.user.phoneNumber}" />
 							</div>
 						</div>
 					</div>

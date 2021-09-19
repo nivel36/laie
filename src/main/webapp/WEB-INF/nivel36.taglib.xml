@@ -2,7 +2,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facelettaglibrary_2_2.xsd">
 
-	<namespace>http://level36.es/ui</namespace>
+	<namespace>http://nivel36.es/ui</namespace>
 
 	<tag>
 		<tag-name>input</tag-name>
