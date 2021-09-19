@@ -229,4 +229,9 @@ public class FileService {
 		Objects.requireNonNull(fileJpaDao);
 		this.fileJpaDao = fileJpaDao;
 	}
+	
+	public void setUserJpaDao(final UserJpaDao userJpaDao) {
+		Objects.requireNonNull(userJpaDao);
+		this.userJpaDao = userJpaDao;
+	}
 }

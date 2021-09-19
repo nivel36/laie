@@ -42,6 +42,9 @@ import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import es.nivel36.laie.user.User;
+import es.nivel36.laie.user.UserJpaDao;
+
 @ExtendWith(MockitoExtension.class)
 public class FileServiceTest extends FileTest{
 
@@ -161,9 +164,11 @@ public class FileServiceTest extends FileTest{
 		public void uploadDuplicateFileShouldntUploadTheFile() {
 			InputStream inputStream = Mockito.mock(InputStream.class);
 			File file = mockFile();
+			User user = new User();
 			PhysicalFile physicalFile =  mockPhysicalFile();
 			Mockito.when(fileJpaDao.findPhysicalFileByHash("HASH")).thenReturn(physicalFile);
 			Mockito.when(fileJpaDao.insert(Mockito.any(File.class))).thenReturn(file);
+			Mockito.when(userJpaDao.findUserByUid("uid")).thenReturn(user);
 			try (MockedConstruction<Sha256DigestedFileWriter> mocked = Mockito
 					.mockConstruction(Sha256DigestedFileWriter.class, (mock, context) -> {
 						when(mock.write(inputStream)).thenReturn("HASH");
@@ -172,7 +177,7 @@ public class FileServiceTest extends FileTest{
 				try (MockedStatic<Files> utilities = Mockito.mockStatic(Files.class)) {
 					utilities.when(() -> Files.deleteIfExists(Mockito.any(Path.class))).thenReturn(true);
 					
-					FileDto fileDto = fileService.uploadFile(inputStream, "FileName", null);
+					FileDto fileDto = fileService.uploadFile(inputStream, "FileName", "uid");
 					
 					utilities.verify(() -> Files.deleteIfExists(Mockito.any(Path.class)), Mockito.atLeastOnce());
 					Assertions.assertEquals("1", fileDto.getUid());
@@ -184,8 +189,10 @@ public class FileServiceTest extends FileTest{
 		public void uploadFileShouldUploadAndCreateRegistry() {
 			InputStream inputStream = Mockito.mock(InputStream.class);
 			File file = mockFile();
+			User user = new User();
 			Mockito.when(fileJpaDao.findPhysicalFileByHash("HASH")).thenReturn(null);
 			Mockito.when(fileJpaDao.insert(Mockito.any(File.class))).thenReturn(file);
+			Mockito.when(userJpaDao.findUserByUid("uid")).thenReturn(user);
 			try (MockedConstruction<Sha256DigestedFileWriter> mocked = Mockito
 					.mockConstruction(Sha256DigestedFileWriter.class, (mock, context) -> {
 						when(mock.write(inputStream)).thenReturn("HASH");
@@ -194,7 +201,7 @@ public class FileServiceTest extends FileTest{
 				try (MockedStatic<Files> utilities = Mockito.mockStatic(Files.class)) {
 					utilities.when(() -> Files.deleteIfExists(Mockito.any(Path.class))).thenReturn(true);
 					
-					FileDto fileDto = fileService.uploadFile(inputStream, "FileName", null);
+					FileDto fileDto = fileService.uploadFile(inputStream, "FileName", "uid");
 					
 					utilities.verify(() -> Files.deleteIfExists(Mockito.any(Path.class)), Mockito.never());
 					Assertions.assertEquals("1", fileDto.getUid());
@@ -202,6 +209,9 @@ public class FileServiceTest extends FileTest{
 			}
 		}
 	}
+	
+	@Mock
+	private UserJpaDao userJpaDao;
 
 	@Mock
 	private FileJpaDao fileJpaDao;
@@ -212,6 +222,7 @@ public class FileServiceTest extends FileTest{
 	public void setUp() {
 		this.fileService = new FileService();
 		this.fileService.setFileJpaDao(fileJpaDao);
+		this.fileService.setUserJpaDao(userJpaDao);
 		this.fileService.setFileDirectory("/tmp");
 	}
 }
