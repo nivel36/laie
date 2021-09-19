@@ -32,6 +32,7 @@ import es.nivel36.laie.core.service.search.SearchFacade;
 import es.nivel36.laie.core.service.search.SortField;
 import es.nivel36.laie.department.Department;
 import es.nivel36.laie.department.DepartmentJpaDao;
+import es.nivel36.laie.department.SimpleDepartmentDto;
 import es.nivel36.laie.file.File;
 import es.nivel36.laie.file.FileJpaDao;
 
@@ -49,7 +50,7 @@ public class UserService extends AbstractService {
 	@Inject
 	@Repository
 	private SearchFacade searchFacade;
-	
+
 	@Inject
 	@Repository
 	private DepartmentJpaDao departmentDao;
@@ -210,7 +211,7 @@ public class UserService extends AbstractService {
 	public List<UserDto> searchByName(final int firstResult, final int maxResults, final SortField sortField,
 			final String searchText) {
 		List<User> search = searchFacade.search(User.class, firstResult, maxResults, sortField, searchText,
-						new String[] { "_name", "_surname", "_email" });
+				new String[] { "_name", "_surname", "_email" });
 		return userMapper.mapList(search);
 	}
 
@@ -223,9 +224,13 @@ public class UserService extends AbstractService {
 	public void update(final UserDto user) throws DuplicateEmailException, DuplicateIdNumberException {
 		Objects.requireNonNull(user);
 		logger.debug("Update user {}", user);
-		validateDuplicateEmail(user.getEmail());
-		validateDuplicateIdNumber(user.getIdNumber());
 		final User userInDatabase = this.userDao.findUserByUid(user.getUid());
+		if (!userInDatabase.getEmail().equals(user.getEmail())) {
+			validateDuplicateEmail(user.getEmail());
+		}
+		if (userInDatabase.getIdNumber() != null && !userInDatabase.getIdNumber().equals(user.getIdNumber())) {
+			validateDuplicateIdNumber(user.getIdNumber());
+		}
 		this.mergeUser(user, userInDatabase);
 	}
 
@@ -286,8 +291,11 @@ public class UserService extends AbstractService {
 	private void mergeUser(final UserDto user, final User userInDatabase) {
 		final User manager = findManager(user, userInDatabase);
 		userInDatabase.setManager(manager);
-		final Department department = departmentDao.findDepartmentByUid(user.getUid());
-		userInDatabase.setDepartment(department);
+		final SimpleDepartmentDto simpleDepartment = user.getDepartment();
+		if(simpleDepartment != null) {
+			final Department department = departmentDao.findDepartmentByUid(simpleDepartment.getUid());
+			userInDatabase.setDepartment(department);
+		}
 		userInDatabase.setEmail(user.getEmail());
 		userInDatabase.setIdNumber(user.getIdNumber());
 		userInDatabase.setJobPosition(user.getJobPosition());

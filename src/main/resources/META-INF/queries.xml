@@ -4,7 +4,37 @@
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence/orm
         http://xmlns.jcp.org/xml/ns/persistence/orm_2_1.xsd"
 	version="2.1">
-
+		
+	<named-query name="Department.findAll">
+		<query><![CDATA[
+			SELECT d 
+			FROM Department d
+		]]></query>
+	</named-query>
+	
+	<named-query name="Department.findAllWorkersOfDepartment">
+		<query><![CDATA[
+			SELECT u 
+			FROM User u
+			WHERE u.department.uid = :uid
+		]]></query>
+	</named-query>
+	
+	<named-query name="Department.findDepartmentByUid">
+		<query><![CDATA[
+			SELECT d 
+			FROM Department d
+			WHERE d.uid = :uid
+		]]></query>
+	</named-query>
+	
+	<named-query name="findDuplicateUidfindDuplicateUid">
+		<query><![CDATA[
+			SELECT CASE WHEN (COUNT(d) > 0) THEN TRUE ELSE FALSE END 
+			FROM Department d 
+			WHERE d.uid = :uid
+		]]></query>
+	</named-query>
 
 	<named-query name="File.isOrphan">
 		<query><![CDATA[
@@ -21,7 +51,6 @@
 			WHERE f.contentHash = :hash
 		]]></query>
 	</named-query>
-
 
 	<named-query name="File.findDuplicateUid">
 		<query><![CDATA[

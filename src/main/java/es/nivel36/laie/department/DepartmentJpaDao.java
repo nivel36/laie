@@ -100,7 +100,7 @@ public class DepartmentJpaDao extends AbstractIdentifiableDao {
 		try {
 			final TypedQuery<Department> query = this.entityManager.createNamedQuery("Department.findDepartmentByUid",
 					Department.class);
-			query.setParameter("departmentUid", departmentUid);
+			query.setParameter("uid", departmentUid);
 			return query.getSingleResult();
 		} catch (NoResultException e) {
 			throw new IdentifiableNotFoundException();
