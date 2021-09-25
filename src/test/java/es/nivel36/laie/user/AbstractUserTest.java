@@ -19,9 +19,17 @@ package es.nivel36.laie.user;
 
 abstract class AbstractUserTest {
 
+	protected User mockUser(final String uid) {
+		return mockUser(uid, null);
+	}
+
 	protected User mockUser(final String uid, final User manager) {
+		return mockUser(uid, manager, uid + "@email.com");
+	}
+
+	protected User mockUser(final String uid, final User manager, final String email) {
 		final User user = new User();
-		user.setEmail(uid + "@email.com");
+		user.setEmail(email);
 		user.setId(1l);
 		user.setIdNumber(uid);
 		user.setName("Name" + uid);
@@ -34,10 +42,18 @@ abstract class AbstractUserTest {
 		user.setManager(manager);
 		return user;
 	}
+	
+	protected UserDto mockUserDto(final String uid) {
+		return mockUserDto(uid, null);
+	}
 
-	protected UserDto mockUserDto(final String uid, SimpleUserDto manager) {
+	protected UserDto mockUserDto(final String uid, final SimpleUserDto manager) {
+		return mockUserDto(uid, manager, uid + "@email.com");
+	}
+
+	protected UserDto mockUserDto(final String uid, SimpleUserDto manager, String email) {
 		final UserDto userDto = new UserDto();
-		userDto.setEmail(uid + "@email.com");
+		userDto.setEmail(email);
 		userDto.setIdNumber(uid);
 		userDto.setManager(manager);
 		userDto.setName("Name" + uid);

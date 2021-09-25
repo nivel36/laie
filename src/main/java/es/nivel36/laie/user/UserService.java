@@ -172,7 +172,7 @@ public class UserService extends AbstractService {
 	 * Checks whether a manager is a manager of a user. This implies not only if
 	 * he/she is the direct manager of the user but also if he/she is above him/her
 	 * in the hierarchy pyramid.
-	 * 
+	 *
 	 * @param userUid    <tt>String</tt> with the identifier of the user we want to
 	 *                   verify if he/she is a subordinate.
 	 * @param managerUid <tt>String</tt> with the identifier of the user we want to
@@ -224,19 +224,23 @@ public class UserService extends AbstractService {
 	public void update(final UserDto user) throws DuplicateEmailException, DuplicateIdNumberException {
 		Objects.requireNonNull(user);
 		logger.debug("Update user {}", user);
-		final User userInDatabase = this.userDao.findUserByUid(user.getUid());
-		if (!userInDatabase.getEmail().equals(user.getEmail())) {
-			validateDuplicateEmail(user.getEmail());
+		final String uid = user.getUid();
+		final User userInDatabase = this.userDao.findUserByUid(uid);
+		final String newEmail = user.getEmail();
+		if (!userInDatabase.getEmail().equals(newEmail)) {
+			validateDuplicateEmail(newEmail);
 		}
-		if (userInDatabase.getIdNumber() != null && !userInDatabase.getIdNumber().equals(user.getIdNumber())) {
-			validateDuplicateIdNumber(user.getIdNumber());
+		final String idNumber = userInDatabase.getIdNumber();
+		final String newIdNumber = user.getIdNumber();
+		if (idNumber != null && !idNumber.equals(newIdNumber)) {
+			validateDuplicateIdNumber(newIdNumber);
 		}
 		this.mergeUser(user, userInDatabase);
 	}
 
 	/**
 	 * Updates the user's manager.
-	 * 
+	 *
 	 * <p>
 	 * The manager rules are:
 	 * <ul>
@@ -245,7 +249,7 @@ public class UserService extends AbstractService {
 	 * someone who has the user's own manager.</li>
 	 * </ul>
 	 * </p>
-	 * 
+	 *
 	 * @param userUid       <tt>String</tt> with the unique identifier of the user
 	 *                      to which we are going to update the manager. This
 	 *                      parameter cannot be null.
@@ -292,7 +296,7 @@ public class UserService extends AbstractService {
 		final User manager = findManager(user, userInDatabase);
 		userInDatabase.setManager(manager);
 		final SimpleDepartmentDto simpleDepartment = user.getDepartment();
-		if(simpleDepartment != null) {
+		if (simpleDepartment != null) {
 			final Department department = departmentDao.findDepartmentByUid(simpleDepartment.getUid());
 			userInDatabase.setDepartment(department);
 		}

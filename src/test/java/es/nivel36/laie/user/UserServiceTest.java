@@ -217,8 +217,9 @@ public class UserServiceTest extends AbstractUserTest {
 		public void userWithDuplicateEmailShouldThrowDuplicateEmailException() {
 			assertThrows(DuplicateEmailException.class, () -> {
 				final User mockedUser = mockUser("AFE1", null);
-				final UserDto mockedUserDto = mockUserDto("AFE1", null);
-				Mockito.when(userJpaDao.findDuplicateEmail(mockedUser.getEmail())).thenReturn(true);
+				final UserDto mockedUserDto = mockUserDto("AFE1", null, "AFE@email.com");
+				Mockito.when(userJpaDao.findUserByUid(mockedUserDto.getUid())).thenReturn(mockedUser);
+				Mockito.when(userJpaDao.findDuplicateEmail(mockedUserDto.getEmail())).thenReturn(true);
 
 				userService.update(mockedUserDto);
 			});
@@ -228,10 +229,10 @@ public class UserServiceTest extends AbstractUserTest {
 		public void userWithDuplicateIdNumberShouldThrowDuplicateIdNumberException() {
 			assertThrows(DuplicateIdNumberException.class, () -> {
 				final User mockedUser = mockUser("AFE1", null);
+				mockedUser.setIdNumber("idNumber");
 				final UserDto mockedUserDto = mockUserDto("AFE1", null);
-				Mockito.when(userJpaDao.findDuplicateEmail(mockedUser.getEmail())).thenReturn(false);
-				Mockito.when(userJpaDao.findDuplicateIdNumber(mockedUser.getIdNumber())).thenReturn(true);
-
+				Mockito.when(userJpaDao.findUserByUid(mockedUserDto.getUid())).thenReturn(mockedUser);
+				Mockito.when(userJpaDao.findDuplicateIdNumber(mockedUserDto.getIdNumber())).thenReturn(true);
 				userService.update(mockedUserDto);
 			});
 		}
@@ -240,8 +241,6 @@ public class UserServiceTest extends AbstractUserTest {
 		public void userWithoutManagerShouldReturnUser() throws Exception {
 			final User mockedUser = mockUser("AFE1", null);
 			final UserDto mockedUserDto = mockUserDto("AFE1", null);
-			Mockito.when(userJpaDao.findDuplicateEmail(mockedUser.getEmail())).thenReturn(false);
-			Mockito.when(userJpaDao.findDuplicateIdNumber(mockedUser.getIdNumber())).thenReturn(false);
 			Mockito.when(userJpaDao.findUserByUid(mockedUserDto.getIdNumber())).thenReturn(mockedUser);
 
 			userService.update(mockedUserDto);
@@ -251,8 +250,6 @@ public class UserServiceTest extends AbstractUserTest {
 		public void userWithManagerRemovedManagerShouldReturnUserWithoutManager() throws Exception {
 			final User mockedUser = mockUser("AFE1", mockUser("ABE1", null));
 			final UserDto mockedUserDto = mockUserDto("AFE1", null);
-			Mockito.when(userJpaDao.findDuplicateEmail(mockedUser.getEmail())).thenReturn(false);
-			Mockito.when(userJpaDao.findDuplicateIdNumber(mockedUser.getIdNumber())).thenReturn(false);
 			Mockito.when(userJpaDao.findUserByUid(mockedUserDto.getIdNumber())).thenReturn(mockedUser);
 
 			userService.update(mockedUserDto);
@@ -261,7 +258,7 @@ public class UserServiceTest extends AbstractUserTest {
 
 	@Mock
 	private UserJpaDao userJpaDao;
-	
+
 	@Mock
 	private DepartmentJpaDao departmentJpaDao;
 
