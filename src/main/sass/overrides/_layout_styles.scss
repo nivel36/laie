@@ -47,6 +47,13 @@
 	}
 }
 
+.card.clock-record {
+	.ui-analog-clock {
+		text-align: center;
+        width: 10rem;
+    }
+}
+
 .input-avatar {
 	position: relative;
 	height: 200px;

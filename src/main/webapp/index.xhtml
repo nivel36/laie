@@ -1,6 +1,10 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui"
-	xmlns:n36="http://nivel36.es/ui" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:ui="http://java.sun.com/jsf/facelets" 
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:n36="http://nivel36.es/ui" 
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
 	template="/WEB-INF/templates/template.xhtml">
 
 	<ui:define name="title">
@@ -51,6 +55,34 @@
 							</div>
 						</div>
 					</div>
+				</div>
+			</div>
+			<div class="p-col-12 p-lg-6">
+				<div class="card card-w-title clock-record">
+					<h5>Registro</h5>
+						<p:clock displayMode="analog"/>
+					<h6>Horario</h6>
+						<h:outputText value="De 8h a 14h y de 15h a 17:30h" />
+						<h:form>
+					<h6>Jornada laboral</h6>
+						<div>
+							<h:outputText value="8:01" /> -- <h:outputText value="14:02" /> <br/>
+							<h:outputText value="15:03" /> --
+						</div>  
+						<p:commandButton id="enter" 
+							styleClass="ui-button-success" 
+							value="Entrar"
+							icon="pi pi-sign-in" />
+						<p:commandButton id="exit" 
+							styleClass="ui-button-danger" 
+							value="Salir" 
+							icon="pi pi-sign-out" /> 
+					<h6>Tiempo trabajado</h6>
+						 7:23
+						<p:progressBar id="progressBarClient" 
+							widgetVar="pbClient" 
+							styleClass="p-mt-3"/>
+					</h:form>					
 				</div>
 			</div>
 		</div>

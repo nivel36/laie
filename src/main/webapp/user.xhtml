@@ -21,7 +21,7 @@
 							outcome="/user/edit" 
 							icon="pi pi-pencil"
 							styleClass="p-mr-2" >
-							<f:param name="uid" value="#{userView.user.uid}" />
+							<f:param name="userUid" value="#{userView.user.uid}" />
 						</p:button>
 					</p:toolbarGroup>
 				</p:toolbar>
@@ -60,7 +60,7 @@
 											<h:panelGroup layout="block" styleClass="text" rendered="#{not userView.user.manager}"> --- </h:panelGroup>
 											<h:panelGroup layout="block" class="text" rendered="#{userView.user.manager}">
 												<p:link outcome="/user/view" value="#{userView.user.manager.fullName}">
-													<f:param name="id" value="#{userView.user.manager.uid}" />
+													<f:param name="userUid" value="#{userView.user.manager.uid}" />
 												</p:link>
 											</h:panelGroup>
 										</div>

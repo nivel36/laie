@@ -3963,6 +3963,15 @@ a {
   padding: 0 2.5rem 2rem 2.5rem;
 }
 
+.card.clock-record .ui-analog-clock {
+  text-align: center;
+  width: 10rem;
+}
+.card.clock-record .ui-clock {
+  text-align: center;
+  border: 0px;
+}
+
 .input-avatar {
   position: relative;
   height: 200px;

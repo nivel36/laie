@@ -32,7 +32,7 @@ public class EditUserView extends AbstractView {
 	private static final Logger logger = LoggerFactory.getLogger(EditUserView.class);
 
 	@Inject
-	@Param(name = "uid", required = false, converter = "userConverter")
+	@Param(name = "userUid", required = false, converter = "userConverter")
 	private UserDto user;
 
 	@Inject
@@ -78,7 +78,7 @@ public class EditUserView extends AbstractView {
 		} catch (final DuplicateIdNumberException e) {
 			this.addErrorToField("idNumber", "user.error.duplicate_id");
 		}
-		redirect("/user.xhtml?uid=" + user.getUid());
+		redirect("/user.xhtml?userUid=" + user.getUid());
 	}
 
 	public List<UserDto> queryManager(final String query) {

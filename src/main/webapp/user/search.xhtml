@@ -31,7 +31,7 @@
 								<h:link outcome="/user">
 									<cc:avatar value="#{user}" styleClass="p-mr-3" size="medium" />
 									<h:outputText class="link" value="#{user}" />
-									<f:param name="uid" value="#{user.uid}" />
+									<f:param name="userUid" value="#{user.uid}" />
 								</h:link>
 							</p:column>
 
@@ -42,7 +42,7 @@
 							<p:column headerText="#{i18n['user.manager']}">
 								<h:link value="#{user.manager.fullName}" styleClass="link" outcome="/user"
 									rendered="#{not empty user.manager}">
-									<f:param name="uid" value="#{user.manager.uid}" />
+									<f:param name="userUid" value="#{user.manager.uid}" />
 								</h:link>
 							</p:column>
 						</p:dataTable>
