@@ -72,11 +72,15 @@
 						<p:commandButton id="enter" 
 							styleClass="ui-button-success" 
 							value="Entrar"
-							icon="pi pi-sign-in" />
+							icon="pi pi-sign-in"
+							action="#{clockView.singin}"
+							rendered="#{clockView.renderSingin}" />
 						<p:commandButton id="exit" 
 							styleClass="ui-button-danger" 
 							value="Salir" 
-							icon="pi pi-sign-out" /> 
+							icon="pi pi-sign-out" 
+							action="#{clockView.singout}"
+							rendered="#{clockView.renderSingin}" /> 
 					<h6>Tiempo trabajado</h6>
 						 7:23
 						<p:progressBar id="progressBarClient" 

@@ -233,6 +233,7 @@ public class UserServiceTest extends AbstractUserTest {
 				final UserDto mockedUserDto = mockUserDto("AFE1", null);
 				Mockito.when(userJpaDao.findUserByUid(mockedUserDto.getUid())).thenReturn(mockedUser);
 				Mockito.when(userJpaDao.findDuplicateIdNumber(mockedUserDto.getIdNumber())).thenReturn(true);
+				
 				userService.update(mockedUserDto);
 			});
 		}
