@@ -73,10 +73,10 @@ insert into CLIENT( id, uid, version, name, cif, ownerId, phoneNumber, deleted) 
 insert into EXPORT( id, version, exportName) values (1100, 0, 'USERS');
 insert into EXPORT( id, version, exportName) values (1101, 0, 'CANDIDATES');
 
-insert into EXPORTFIELD( id, version, exportId, fieldName, sortOrder, literalId, disabled, acquirerClass) values (1200, 0, 1100, 'NAME',      1, 'user.name',     false, 'ged.ejb.export.acquirer.impl.UserExcelAcquirer$SurnameAcquirer');
-insert into EXPORTFIELD( id, version, exportId, fieldName, sortOrder, literalId, disabled, acquirerClass) values (1201, 0, 1100, 'SURNAME',   2, 'user.surname',  false, 'ged.ejb.export.acquirer.impl.UserExcelAcquirer$SurnameAcquirer');
-insert into EXPORTFIELD( id, version, exportId, fieldName, sortOrder, literalId, disabled, acquirerClass) values (1202, 0, 1100, 'MAIL',      3, 'user.email',    false, 'ged.ejb.export.acquirer.impl.UserExcelAcquirer$EmailAcquirer');
-insert into EXPORTFIELD( id, version, exportId, fieldName, sortOrder, literalId, disabled, acquirerClass) values (1203, 0, 1100, 'DISABLED', -1, 'user.disabled', true , 'ged.ejb.export.acquirer.impl.UserExcelAcquirer$DummyAcquirer');
+insert into EXPORTFIELD( id, version, exportId, fieldName, sortOrder, literalId, disabled, acquirerClass) values (1200, 0, 1100, 'NAME',      1, 'user.name',     false, 'es.nivel36.laie.ejb.export.acquirer.impl.UserExcelAcquirer$SurnameAcquirer');
+insert into EXPORTFIELD( id, version, exportId, fieldName, sortOrder, literalId, disabled, acquirerClass) values (1201, 0, 1100, 'SURNAME',   2, 'user.surname',  false, 'es.nivel36.laie.ejb.export.acquirer.impl.UserExcelAcquirer$SurnameAcquirer');
+insert into EXPORTFIELD( id, version, exportId, fieldName, sortOrder, literalId, disabled, acquirerClass) values (1202, 0, 1100, 'MAIL',      3, 'user.email',    false, 'es.nivel36.laie.ejb.export.acquirer.impl.UserExcelAcquirer$EmailAcquirer');
+insert into EXPORTFIELD( id, version, exportId, fieldName, sortOrder, literalId, disabled, acquirerClass) values (1203, 0, 1100, 'DISABLED', -1, 'user.disabled', true , 'es.nivel36.laie.ejb.export.acquirer.impl.UserExcelAcquirer$DummyAcquirer');
 
 insert into EXPORTDEFINITION (id, version, exportId, exportFieldId, sortOrder) values (1300, 0, 1100, 1201, 1);
 insert into EXPORTDEFINITION (id, version, exportId, exportFieldId, sortOrder) values (1301, 0, 1100, 1202, 2);

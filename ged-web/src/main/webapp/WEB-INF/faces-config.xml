@@ -27,6 +27,6 @@
 		</locale-config>
 	</application>
 	<lifecycle>
-		<phase-listener>ged.web.core.security.UpdateSessionPhaseListener</phase-listener>
+		<phase-listener>es.nivel36.laie.web.core.security.UpdateSessionPhaseListener</phase-listener>
 	</lifecycle>
 </faces-config>

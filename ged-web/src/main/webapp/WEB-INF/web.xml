@@ -132,7 +132,7 @@
 		<location>/WEB-INF/errorpages/500.xhtml</location>
 	</error-page>
 	<error-page>
-		<exception-type>ged.web.core.IllegalPageStateException</exception-type>
+		<exception-type>es.nivel36.laie.web.core.IllegalPageStateException</exception-type>
 		<location>/WEB-INF/errorpages/404.xhtml</location>
 	</error-page>
 	<error-page>

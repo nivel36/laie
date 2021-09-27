@@ -1,0 +1,92 @@
+package es.nivel36.laie.web.view.client;
+
+import java.lang.invoke.MethodHandles;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import es.nivel36.laie.ejb.client.Client;
+import es.nivel36.laie.ejb.client.Contact;
+import es.nivel36.laie.ejb.core.model.Address;
+import es.nivel36.laie.ejb.core.model.Page;
+import es.nivel36.laie.ejb.job.offer.JobOffer;
+import es.nivel36.laie.ejb.job.offer.JobOfferService;
+import es.nivel36.laie.web.core.IllegalPageStateException;
+import es.nivel36.laie.web.core.util.PageEnum;
+
+@Named
+@ViewScoped
+public class ViewClientView extends AbstractClientView {
+
+	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
+
+	private static final long serialVersionUID = 1L;
+
+	private List<Contact> contacts;
+
+	private boolean editable;
+
+	private List<JobOffer> jobOffers;
+
+	@Inject
+	private transient JobOfferService jobOfferService;
+
+	private void checkDeleted() {
+		if (this.client.isDeleted()) {
+			logger.warn("Client is deleted");
+			this.addMessage(FacesMessage.SEVERITY_WARN, "message.erased_entity", "message.erased_entity");
+		}
+	}
+
+	public String editClient() {
+		logger.debug("Edit client action performed");
+		return this.navigator.getRedirectUrl(PageEnum.CLIENT_EDIT, this.client);
+	}
+
+	public void export() {
+		logger.debug("Export client action performed");
+	}
+
+	public List<Contact> getContacts() {
+		return this.contacts;
+	}
+
+	public List<JobOffer> getJobOffers() {
+		return this.jobOffers;
+	}
+
+	@PostConstruct
+	public void init() {
+		if (this.client == null) {
+			throw new IllegalPageStateException();
+		}
+		logger.trace("Client {} init", this.client);
+		if (this.client.getAddress() == null) {
+			this.client.setAddress(new Address());
+		}
+		this.contacts = new ArrayList<>(this.client.getContacts());
+		this.jobOffers = this.jobOfferService.findJobOffersByClientUid(this.client.getUid(), Page.ALL_RESULTS);
+		this.checkDeleted();
+		this.editable = this.sessionUser.hasPermissionToEdit(this.client);
+	}
+
+	public boolean isEditable() {
+		return this.editable;
+	}
+
+	public void setClient(final Client client) {
+		this.client = client;
+	}
+
+	public void setJobOfferService(final JobOfferService jobOfferService) {
+		this.jobOfferService = jobOfferService;
+	}
+}
