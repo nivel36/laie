@@ -3,20 +3,20 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>igochan</groupId>
-		<artifactId>ged</artifactId>
+		<groupId>es.nivel36</groupId>
+		<artifactId>laie</artifactId>
 		<version>0.9.4-SNAPSHOT</version>
 		<relativePath>..</relativePath>
 	</parent>
 
-	<artifactId>ged-web</artifactId>
+	<artifactId>laie-web</artifactId>
 	<packaging>war</packaging>
 
 	<dependencies>
 
 		<dependency>
-			<groupId>igochan</groupId>
-			<artifactId>ged-ejb</artifactId>
+			<groupId>es.nivel36</groupId>
+			<artifactId>laie-ejb</artifactId>
 			<type>ejb</type>
 			<scope>provided</scope>
 		</dependency>

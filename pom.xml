@@ -2,17 +2,17 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>igochan</groupId>
-	<artifactId>ged</artifactId>
+	<groupId>es.nivel36</groupId>
+	<artifactId>laie</artifactId>
 	<version>0.9.4-SNAPSHOT</version>
 	<packaging>pom</packaging>
-	<name>ged</name>
+	<name>laie</name>
 	<modules>
-		<module>ged-commons-excel</module>
-		<module>ged-ear</module>
-		<module>ged-ejb</module>
-		<module>ged-api</module>
-		<module>ged-web</module>
+		<module>laie-commons-excel</module>
+		<module>laie-ear</module>
+		<module>laie-ejb</module>
+		<module>laie-api</module>
+		<module>laie-web</module>
 	</modules>
 
 	<properties>
@@ -158,29 +158,29 @@
 			</dependency>
 
 			<dependency>
-				<groupId>igochan</groupId>
-				<artifactId>ged-commons-excel</artifactId>
+				<groupId>es.nivel36</groupId>
+				<artifactId>laie-commons-excel</artifactId>
 				<version>${ged.version}</version>
 			</dependency>
 
 			<dependency>
-				<groupId>igochan</groupId>
-				<artifactId>ged-ejb</artifactId>
+				<groupId>es.nivel36</groupId>
+				<artifactId>laie-ejb</artifactId>
 				<version>${ged.version}</version>
 				<type>ejb</type>
 			</dependency>
 
 			<dependency>
-				<groupId>igochan</groupId>
-				<artifactId>ged-web</artifactId>
+				<groupId>es.nivel36</groupId>
+				<artifactId>laie-web</artifactId>
 				<version>${ged.version}</version>
 				<type>war</type>
 				<scope>compile</scope>
 			</dependency>
 
 			<dependency>
-				<groupId>igochan</groupId>
-				<artifactId>ged-api</artifactId>
+				<groupId>es.nivel36</groupId>
+				<artifactId>laie-api</artifactId>
 				<version>${ged.version}</version>
 				<type>war</type>
 				<scope>compile</scope>

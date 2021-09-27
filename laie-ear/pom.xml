@@ -3,35 +3,35 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>igochan</groupId>
-		<artifactId>ged</artifactId>
+		<groupId>es.nivel36</groupId>
+		<artifactId>laie</artifactId>
 		<version>0.9.4-SNAPSHOT</version>
 		<relativePath>..</relativePath>
 	</parent>
 
-	<artifactId>ged-ear</artifactId>
+	<artifactId>laie-ear</artifactId>
 	<packaging>ear</packaging>
 
 	<dependencies>
 		<dependency>
-			<groupId>igochan</groupId>
-			<artifactId>ged-web</artifactId>
+			<groupId>es.nivel36</groupId>
+			<artifactId>laie-web</artifactId>
 			<type>war</type>
 		</dependency>
 		<dependency>
-			<groupId>igochan</groupId>
-			<artifactId>ged-api</artifactId>
+			<groupId>es.nivel36</groupId>
+			<artifactId>laie-api</artifactId>
 			<type>war</type>
 		</dependency>
 		<dependency>
-			<groupId>igochan</groupId>
-			<artifactId>ged-ejb</artifactId>
+			<groupId>es.nivel36</groupId>
+			<artifactId>laie-ejb</artifactId>
 			<type>ejb</type>
 		</dependency>
 	</dependencies>
 
 	<build>
-		<finalName>ged</finalName>
+		<finalName>laie</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -41,18 +41,18 @@
 					<defaultLibBundleDir>lib</defaultLibBundleDir>
 					<modules>
 						<webModule>
-							<groupId>igochan</groupId>
-							<artifactId>ged-api</artifactId>
+							<groupId>es.nivel36</groupId>
+							<artifactId>laie-api</artifactId>
 							<contextRoot>/api</contextRoot>
 						</webModule>
 						<webModule>
-							<groupId>igochan</groupId>
-							<artifactId>ged-web</artifactId>
+							<groupId>es.nivel36</groupId>
+							<artifactId>laie-web</artifactId>
 							<contextRoot>/</contextRoot>
 						</webModule>
 						<ejbModule>
-							<groupId>igochan</groupId>
-							<artifactId>ged-ejb</artifactId>
+							<groupId>es.nivel36</groupId>
+							<artifactId>laie-ejb</artifactId>
 						</ejbModule>
 					</modules>
 					<outputFileNameMapping>@{artifactId}@-@{version}@@{dashClassifier?}@.@{extension}@</outputFileNameMapping>
