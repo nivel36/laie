@@ -17,10 +17,10 @@
 
 	<application>
 		<resource-bundle>
-			<base-name>ged.i18n</base-name>
+			<base-name>es.nivel36.laie.i18n</base-name>
 			<var>i18n</var>
 		</resource-bundle>
-		<message-bundle>ged.messages</message-bundle>
+		<message-bundle>es.nivel36.laie.messages</message-bundle>
 		<locale-config id="es">
 			<default-locale>es_ES</default-locale>
 			<supported-locale>es_ES</supported-locale>
