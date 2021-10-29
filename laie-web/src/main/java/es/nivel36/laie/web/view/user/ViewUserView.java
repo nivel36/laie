@@ -15,11 +15,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import es.nivel36.laie.ejb.core.model.Page;
-import es.nivel36.laie.ejb.job.meeting.Meeting;
+import es.nivel36.laie.ejb.job.meeting.MeetingDto;
 import es.nivel36.laie.ejb.job.meeting.MeetingService;
-import es.nivel36.laie.ejb.job.offer.JobOffer;
+import es.nivel36.laie.ejb.job.offer.JobOfferDto;
 import es.nivel36.laie.ejb.job.offer.JobOfferService;
-import es.nivel36.laie.ejb.user.User;
+import es.nivel36.laie.ejb.user.UserDto;
 import es.nivel36.laie.ejb.user.UserService;
 import es.nivel36.laie.web.core.IllegalPageStateException;
 import es.nivel36.laie.web.core.util.PageEnum;
@@ -36,28 +36,28 @@ public class ViewUserView extends AbstractView {
 
 	private boolean editable;
 
-	private List<JobOffer> jobOffers;
+	private List<JobOfferDto> jobOffers;
 
 	@Inject
 	private transient JobOfferService jobOfferService;
 
-	private List<Meeting> meetings;
+	private List<MeetingDto> meetings;
 
 	@Inject
 	private transient MeetingService meetingService;
 
-	private List<User> team;
+	private List<UserDto> team;
 
 	@Inject
-	@Param(name = "id", required = true, converter = "userConverter")
-	private User user;
+	@Param(name = "uid", required = true, converter = "userConverter")
+	private UserDto user;
 
 	@Inject
 	private transient UserService userService;
 
 	public String editUser() {
 		logger.debug("Edit user action performed");
-		return this.navigator.getRedirectUrl(PageEnum.USER_EDIT, this.user);
+		return this.navigator.getRedirectUrl(PageEnum.USER_EDIT, this.user.getUid());
 	}
 
 	public void export() throws IOException {
@@ -66,19 +66,19 @@ public class ViewUserView extends AbstractView {
 		Faces.sendFile(userReport.create(), true);
 	}
 
-	public List<JobOffer> getJobOffers() {
+	public List<JobOfferDto> getJobOffers() {
 		return this.jobOffers;
 	}
 
-	public List<Meeting> getMeetings() {
+	public List<MeetingDto> getMeetings() {
 		return this.meetings;
 	}
 
-	public List<User> getTeam() {
+	public List<UserDto> getTeam() {
 		return this.team;
 	}
 
-	public User getUser() {
+	public UserDto getUser() {
 		return this.user;
 	}
 
@@ -88,10 +88,10 @@ public class ViewUserView extends AbstractView {
 			throw new IllegalPageStateException();
 		}
 		logger.trace("User {} init", this.user);
-		this.team = this.userService.findSubordinateUsers(this.user.getEmail());
-		this.jobOffers = this.jobOfferService.findJobOffersByUser(this.user.getEmail(), Page.ALL_RESULTS);
+		this.team = this.userService.findSubordinateUsers(this.user.getUid());
+		this.jobOffers = this.jobOfferService.findJobOffersByOwner(this.user.getUid(), Page.ALL_RESULTS);
 		this.editable = this.sessionUser.isAdmin();
-		this.meetings = this.meetingService.findPlannedMeetings(this.user, Page.TEN_RESULTS_PER_PAGE);
+		this.meetings = this.meetingService.findPlannedMeetings(this.user.getUid(), Page.TEN_RESULTS_PER_PAGE);
 	}
 
 	public boolean isEditable() {
@@ -106,7 +106,7 @@ public class ViewUserView extends AbstractView {
 		this.meetingService = meetingService;
 	}
 
-	public void setUser(final User user) {
+	public void setUser(final UserDto user) {
 		this.user = user;
 	}
 

@@ -14,7 +14,7 @@ import org.omnifaces.cdi.Param;
 
 import es.nivel36.laie.ejb.curriculum.Curriculum;
 import es.nivel36.laie.ejb.curriculum.CurriculumService;
-import es.nivel36.laie.ejb.curriculum.Skill;
+import es.nivel36.laie.ejb.curriculum.skill.Skill;
 import es.nivel36.laie.web.core.util.PageEnum;
 import es.nivel36.laie.web.core.view.AbstractView;
 

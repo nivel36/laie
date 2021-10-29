@@ -24,7 +24,7 @@ import es.nivel36.laie.ejb.user.User;
 @Indexed
 public class JobCandidatureEvent extends AbstractIndexedEntity implements Event {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -5724212902774335888L;
 
 	@Field(name = "date", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField(forField = "date")

@@ -4,14 +4,10 @@ import es.nivel36.laie.ejb.core.model.AbstractDao;
 import es.nivel36.laie.ejb.core.model.Repository;
 
 @Repository
-public class JobCandidatureStateDao extends AbstractDao<JobCandidatureState> {
+public class JobCandidatureStateDao extends AbstractDao {
 
 	public JobCandidatureState findInitialState() {
-		return this.findByQuery(JobCandidatureState.class, "JobCandidatureState.findFirstJobCandidatureState");
-	}
-
-	@Override
-	protected Class<JobCandidatureState> getType() {
-		return JobCandidatureState.class;
+		final String namedQuery = "JobCandidatureState.findFirstJobCandidatureState";
+		return this.findByQuery(JobCandidatureState.class, namedQuery, null);
 	}
 }

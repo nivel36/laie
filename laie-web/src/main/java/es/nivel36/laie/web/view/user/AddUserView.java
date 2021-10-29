@@ -1,6 +1,5 @@
 package es.nivel36.laie.web.view.user;
 
-import java.lang.invoke.MethodHandles;
 import java.time.LocalDate;
 
 import javax.annotation.PostConstruct;
@@ -10,15 +9,16 @@ import javax.inject.Named;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import es.nivel36.laie.ejb.user.User;
+import es.nivel36.laie.ejb.user.DuplicateEmailException;
+import es.nivel36.laie.ejb.user.UserDto;
 
 @Named
 @ViewScoped
 public class AddUserView extends AbstractUserView {
 
-	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
+	private static final long serialVersionUID = 5488456059551016365L;
 
-	private static final long serialVersionUID = 1L;
+	private static final Logger logger = LoggerFactory.getLogger(AbstractUserView.class);
 
 	private String password;
 
@@ -26,10 +26,9 @@ public class AddUserView extends AbstractUserView {
 
 	private boolean sendWelcomeEmail;
 
-	private User buildNewUser() {
-		final User newUser = new User();
+	private UserDto buildNewUser() {
+		final UserDto newUser = new UserDto();
 		newUser.setLanguage("ES");
-		newUser.setRowsPerPage(25);
 		newUser.setDateOfJoin(LocalDate.now());
 		return newUser;
 	}
@@ -61,9 +60,14 @@ public class AddUserView extends AbstractUserView {
 		return this.sendWelcomeEmail;
 	}
 
-	public String save() {
+	public String save() throws DuplicateEmailException {
 		logger.debug("Create new user action performed");
-		this.user = this.userService.save(this.user);
+		try {
+			this.userService.addUser(this.user);
+		} catch (DuplicateEmailException e) {
+			//TODO: gestionar excepcion
+			throw e;
+		}
 		return this.userUrl();
 	}
 

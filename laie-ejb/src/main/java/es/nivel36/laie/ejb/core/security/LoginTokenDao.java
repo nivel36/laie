@@ -8,23 +8,32 @@ import java.util.Objects;
 import es.nivel36.laie.ejb.core.model.AbstractDao;
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.core.model.Repository;
+import es.nivel36.laie.ejb.core.util.Parameters;
 
 @Repository
-public class LoginTokenDao extends AbstractDao<LoginToken> {
+public class LoginTokenDao extends AbstractDao {
+
+	public void insert(final LoginToken loginToken) {
+		Objects.requireNonNull(loginToken);
+		this.em.persist(loginToken);
+	}
+
+	public void delete(final LoginToken loginToken) {
+		Objects.requireNonNull(loginToken);
+		final long id = loginToken.getId();
+		final LoginToken reference = em.getReference(LoginToken.class, id);
+		em.remove(reference);
+	}
 
 	public LoginToken findByTokenHash(final byte[] tokenHash) {
 		Objects.requireNonNull(tokenHash);
-		return this.getPersistenceFacade().findByQuery(LoginToken.class, "LoginToken.findByTokenHash",
-				map("tokenHash", tokenHash));
+		final String namedQuery = "LoginToken.findByTokenHash";
+		final Parameters parameters = map("tokenHash", tokenHash);
+		return this.findByQuery(LoginToken.class, namedQuery, parameters);
 	}
 
 	public List<LoginToken> findExpiredTokens() {
-		return this.getPersistenceFacade().findByQuery(LoginToken.class, "LoginToken.findExpired", null,
-				Page.ALL_RESULTS);
-	}
-
-	@Override
-	protected Class<LoginToken> getType() {
-		return LoginToken.class;
+		final String namedQuery = "LoginToken.findExpired";
+		return this.findByQuery(LoginToken.class, namedQuery, null, Page.ALL_RESULTS);
 	}
 }

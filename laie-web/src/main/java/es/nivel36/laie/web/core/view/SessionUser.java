@@ -1,7 +1,6 @@
 package es.nivel36.laie.web.core.view;
 
 import java.io.Serializable;
-import java.lang.invoke.MethodHandles;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -13,32 +12,32 @@ import javax.inject.Named;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import es.nivel36.laie.ejb.core.model.Ownerable;
-import es.nivel36.laie.ejb.user.User;
+import es.nivel36.laie.ejb.user.Role;
+import es.nivel36.laie.ejb.user.UserDto;
 import es.nivel36.laie.ejb.user.UserService;
 
 @Named
 @SessionScoped
 public class SessionUser implements Serializable {
 
-	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
+	private static final long serialVersionUID = 6994840904536694158L;
 
-	private static final long serialVersionUID = 1L;
+	private static final Logger logger = LoggerFactory.getLogger(SessionUser.class);
 
 	private Locale locale;
 
-	private List<User> team;
+	private List<UserDto> team;
 
-	private User user;
+	private UserDto user;
 
 	@Inject
 	private transient UserService userService;
 
-	public User get() {
+	public UserDto get() {
 		return this.user;
 	}
 
-	public User getUser() {
+	public UserDto getUser() {
 		return this.user;
 	}
 
@@ -46,22 +45,8 @@ public class SessionUser implements Serializable {
 		return this.locale;
 	}
 
-	public int getRowsPerPage() {
-		return this.user.getRowsPerPage();
-	}
-
-	public List<User> getTeam() {
+	public List<UserDto> getTeam() {
 		return this.team;
-	}
-
-	public boolean hasPermissionToEdit(final Ownerable entity) {
-		Objects.requireNonNull(entity);
-		if (this.isAdmin()) {
-			return true;
-		}
-		final User owner = entity.getOwner();
-		Objects.requireNonNull(owner);
-		return this.isOwnerOrHisManager(owner);
 	}
 
 	public void load(String username) {
@@ -78,23 +63,16 @@ public class SessionUser implements Serializable {
 		if (!this.isActive()) {
 			return false;
 		}
-		return this.user.isAdmin();
+		return this.user.getRoleName().equals(Role.ADMIN.name());
 	}
 
-	public boolean isManagerOf(final User subordinate) {
+	public boolean isManagerOf(final UserDto subordinate) {
 		Objects.requireNonNull(subordinate);
 		return this.getTeam().contains(subordinate);
 	}
 
-	private boolean isOwnerOrHisManager(final User owner) {
-		if (this.user.equals(owner)) {
-			return true;
-		}
-		return this.isManagerOf(owner);
-	}
-
 	private void loadUserData(final String email) {
-		this.user = this.userService.findByEmail(email);
+		this.user = this.userService.findUserByEmail(email);
 		this.locale = new Locale(this.user.getLanguage());
 		this.team = this.userService.findSubordinateUsers(email);
 	}
@@ -114,6 +92,6 @@ public class SessionUser implements Serializable {
 		if (!this.isActive()) {
 			return "";
 		}
-		return this.user.getFullName();
+		return this.user.toString();
 	}
 }

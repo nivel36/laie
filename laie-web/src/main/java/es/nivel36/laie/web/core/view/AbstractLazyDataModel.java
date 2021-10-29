@@ -1,5 +1,6 @@
 package es.nivel36.laie.web.core.view;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -8,17 +9,15 @@ import org.primefaces.model.FilterMeta;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortMeta;
 
-import es.nivel36.laie.ejb.core.AbstractIndexedService;
-import es.nivel36.laie.ejb.core.model.AbstractIndexedEntity;
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.core.model.search.SearchFacet;
 import es.nivel36.laie.ejb.core.model.search.SearchFacets;
 import es.nivel36.laie.ejb.core.model.search.SearchResult;
 import es.nivel36.laie.ejb.core.model.search.SortField;
 
-public abstract class AbstractLazyDataModel<T extends AbstractIndexedEntity> extends LazyDataModel<T> {
+public abstract class AbstractLazyDataModel<T extends Serializable> extends LazyDataModel<T> {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -7266573501998556478L;
 
 	protected transient SearchFacets searchFilter = new SearchFacets();
 
@@ -37,16 +36,20 @@ public abstract class AbstractLazyDataModel<T extends AbstractIndexedEntity> ext
 	@Override
 	public T getRowData(final String rowKey) {
 		Objects.requireNonNull(rowKey, "RowKey can't be null");
-		return this.getService().find(Integer.parseInt(rowKey));
+		return find(rowKey);
 	}
 
 	@Override
 	public String getRowKey(final T entity) {
-		Objects.requireNonNull(entity, "Entity can't be null");
-		return String.valueOf(entity.getId());
+		return getKey(entity);
 	}
 
-	protected abstract AbstractIndexedService<T> getService();
+	protected abstract SearchResult<T> search(String searchText, Page page, SortField sortField,
+			SearchFacets searchFilter);
+
+	protected abstract T find(String rowkey);
+	
+	protected abstract String getKey(T entity);
 
 	@Override
 	public List<T> load(final int first, final int pageSize, final Map<String, SortMeta> sorts,
@@ -59,8 +62,7 @@ public abstract class AbstractLazyDataModel<T extends AbstractIndexedEntity> ext
 				break;
 			}
 		}
-		final SearchResult<T> searchResult = this.getService().search(this.searchText, page, sortField,
-				this.searchFilter);
+		final SearchResult<T> searchResult = search(this.searchText, page, sortField, this.searchFilter);
 		this.setRowCount(searchResult.getCount());
 		return searchResult.getResultData();
 	}

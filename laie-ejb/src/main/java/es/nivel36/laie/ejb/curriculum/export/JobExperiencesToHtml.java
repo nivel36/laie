@@ -4,7 +4,7 @@ import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.Set;
 
-import es.nivel36.laie.ejb.curriculum.JobExperience;
+import es.nivel36.laie.ejb.curriculum.jobexperience.JobExperience;
 
 public class JobExperiencesToHtml extends AbstractHtmlPrinter {
 

@@ -1,7 +1,6 @@
 package es.nivel36.laie.web.view.user;
 
 import java.io.IOException;
-import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -21,8 +20,8 @@ import es.nivel36.laie.ejb.export.acquirer.ExportData.Item;
 import es.nivel36.laie.ejb.export.service.ExportService;
 import es.nivel36.laie.ejb.user.UserService;
 import es.nivel36.laie.excel.write.ExcelData;
-import es.nivel36.laie.excel.write.GenerateReport;
 import es.nivel36.laie.excel.write.ExcelData.ItemData;
+import es.nivel36.laie.excel.write.GenerateReport;
 import es.nivel36.laie.excel.write.inner.GedWorkbookFactory.WorkbookType;
 import es.nivel36.laie.web.core.util.Translator;
 import es.nivel36.laie.web.core.view.AbstractView;
@@ -31,9 +30,9 @@ import es.nivel36.laie.web.core.view.AbstractView;
 @ViewScoped
 public class SearchUserView extends AbstractView {
 
-	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
+	private static final long serialVersionUID = -8054971408222722286L;
 
-	private static final long serialVersionUID = 1L;
+	private static final Logger logger = LoggerFactory.getLogger(SearchUserView.class);
 
 	@Inject
 	private transient ExportService exportService;

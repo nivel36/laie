@@ -1,7 +1,6 @@
 package es.nivel36.laie.ejb.job.candidature;
 
 import java.lang.invoke.MethodHandles;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -13,18 +12,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import es.nivel36.laie.ejb.candidate.Candidate;
-import es.nivel36.laie.ejb.core.AbstractService;
-import es.nivel36.laie.ejb.core.model.AbstractDao;
+import es.nivel36.laie.ejb.candidate.CandidateDao;
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.core.model.Repository;
 import es.nivel36.laie.ejb.job.candidature.event.JobCandidatureCompletedEvent;
 import es.nivel36.laie.ejb.job.candidature.event.JobCandidatureCreatedEvent;
 import es.nivel36.laie.ejb.job.candidature.event.JobCandidatureStateChangedEvent;
 import es.nivel36.laie.ejb.job.offer.JobOffer;
-import es.nivel36.laie.ejb.user.User;
+import es.nivel36.laie.ejb.job.offer.JobOfferDao;
 
 @Stateless
-public class JobCandidatureService extends AbstractService<JobCandidature> {
+public class JobCandidatureService {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
@@ -35,129 +33,94 @@ public class JobCandidatureService extends AbstractService<JobCandidature> {
 	@Inject
 	@JobCandidatureCreatedEvent
 	private Event<JobCandidature> createdEvent;
+	
+	@Inject
+	@JobCandidatureStateChangedEvent
+	private Event<JobCandidature> stateChangedEvent;
 
 	@Inject
 	@Repository
 	private JobCandidatureDao jobCandidatureDao;
 
 	@Inject
-	private JobCandidatureStateService jobCandidatureStateService;
+	@Repository
+	private JobOfferDao jobOfferDao;
 
 	@Inject
-	@JobCandidatureStateChangedEvent
-	private Event<JobCandidature> stateChangedEvent;
+	@Repository
+	private CandidateDao candidateDao;
 
-	public JobCandidature addJobCandidature(final JobOffer jobOffer, final Candidate candidate) {
-		Objects.requireNonNull(jobOffer);
-		Objects.requireNonNull(candidate);
+	@Inject
+	private JobCandidatureStateService jobCandidatureStateService;
+
+	public void addJobCandidature(final String jobOfferUid, final String candidateUid) {
+		Objects.requireNonNull(jobOfferUid);
+		Objects.requireNonNull(candidateUid);
+		final JobOffer jobOffer = jobOfferDao.findByUid(jobOfferUid);
 		if (!jobOffer.isOpen()) {
 			throw new IllegalStateException("Job offer isn't open");
 		}
+		final Candidate candidate = candidateDao.findByUid(candidateUid);
 		logger.debug("Add Job Candidature of candidate {} to jobOffer {}", candidate.getFullName(), jobOffer);
 
 		final JobCandidatureState firstState = this.jobCandidatureStateService.findInitialState();
 		final JobCandidature jobCandidature = new JobCandidature(candidate, jobOffer);
 		jobCandidature.setState(firstState);
-		return this.save(jobCandidature);
+		this.jobCandidatureDao.insert(jobCandidature);
 	}
 
-	public List<JobCandidature> addJobCandidatures(final JobOffer jobOffer, final List<Candidate> candidates) {
-		Objects.requireNonNull(jobOffer);
-		Objects.requireNonNull(candidates);
-		if (!jobOffer.isOpen()) {
-			throw new IllegalStateException("Job offer isn't open");
+	public void addJobCandidatures(final String jobOfferUid, final List<String> candidateUids) {
+		Objects.requireNonNull(jobOfferUid);
+		Objects.requireNonNull(candidateUids);
+		for (final String candidateUid : candidateUids) {
+			this.addJobCandidature(jobOfferUid, candidateUid);
 		}
-		logger.debug("Add job candidatures to jobOffer {}", jobOffer);
-
-		final List<JobCandidature> jobCandidatures = new ArrayList<>();
-		for (final Candidate candidate : candidates) {
-			final JobCandidature jobCandidature = this.addJobCandidature(jobOffer, candidate);
-			jobCandidatures.add(jobCandidature);
-		}
-		return jobCandidatures;
 	}
 
-	public List<JobCandidature> findApprovedJobCanditures(final JobOffer jobOffer, final Page page) {
-		Objects.requireNonNull(jobOffer);
+	public List<JobCandidature> findCandidatesJobCandidatures(final String candidateUid, final Page page) {
+		Objects.requireNonNull(candidateUid);
 		Objects.requireNonNull(page);
-		logger.debug("Find all approved  job candidatures of the job offer {}", jobOffer);
-		return this.jobCandidatureDao.findJobCanditures(jobOffer, page);
+		logger.debug("Find all job candidatures of the candidate {}", candidateUid);
+
+		return this.jobCandidatureDao.findCandidatesJobCandidatures(candidateUid, page);
 	}
 
-	public JobCandidature findByUid(final String uid) {
-		Objects.requireNonNull(uid);
-		return this.jobCandidatureDao.findByUid(uid);
-	}
-
-	public List<JobCandidature> findJobCandidatures(final Candidate candidate, final Page page) {
-		Objects.requireNonNull(candidate);
+	public List<JobCandidature> findUsersJobCandidatures(final String userUid, final Page page) {
+		Objects.requireNonNull(userUid);
 		Objects.requireNonNull(page);
-		logger.debug("Find all job candidatures of the candidate {}", candidate);
+		logger.debug("Find job candidatures regarding user {} ({})", userUid, page);
 
-		return this.jobCandidatureDao.findJobCandidatures(candidate, page);
+		return this.jobCandidatureDao.findUsersJobCandidatures(userUid, page);
 	}
 
-	public List<JobCandidature> findJobCandidatures(final User user, final Page page) {
-		Objects.requireNonNull(user);
-		Objects.requireNonNull(page);
-		logger.debug("Find job candidatures regarding user {} ({})", user, page);
-
-		return this.jobCandidatureDao.findJobCandidatures(user, page);
-	}
-
-	public List<JobCandidature> findJobCanditures(final JobOffer jobOffer, final Page page) {
-		Objects.requireNonNull(jobOffer);
+	public List<JobCandidature> findJobOffersJobCanditures(final String jobOfferUid, final Page page) {
+		Objects.requireNonNull(jobOfferUid);
 		Objects.requireNonNull(page, "Page can't be null");
-		logger.debug("Find all job candidatures of the job offer {}", jobOffer);
+		logger.debug("Find all job candidatures of the job offer {}", jobOfferUid);
 
-		return this.jobCandidatureDao.findJobCanditures(jobOffer, page);
+		return this.jobCandidatureDao.findJobOffersJobCanditures(jobOfferUid, page);
 	}
 
-	@Override
-	protected AbstractDao<JobCandidature> getDao() {
-		return this.jobCandidatureDao;
+	public void removeJobCandidature(final String jobOfferUid, final String candidateUid) {
+		Objects.requireNonNull(jobOfferUid);
+		Objects.requireNonNull(candidateUid);
+		logger.debug("Remove job candidature of candidate {} to job offer {}", candidateUid, jobOfferUid);
+		this.jobCandidatureDao.delete(jobOfferUid, candidateUid);
 	}
 
-	public boolean hasStateChanged(final JobCandidature jobCandidature) {
-		final JobCandidature previousVersion = this.find(jobCandidature.getId());
-		final JobCandidatureState state = jobCandidature.getState();
-		return !previousVersion.hasState(state);
-	}
-
-	public void removeJobCandidature(final JobOffer jobOffer, final Candidate candidate) {
-		Objects.requireNonNull(jobOffer);
-		Objects.requireNonNull(candidate);
-		logger.debug("Remove job candidature of candidate {} to job offer {}", candidate.getFullName(), jobOffer);
-
-		final JobCandidature jobCandidature = this.jobCandidatureDao.findByJobOfferAndCandidate(jobOffer, candidate);
-		this.jobCandidatureDao.delete(jobCandidature);
-	}
-
-	@Override
-	public JobCandidature save(final JobCandidature jobCandidature) {
-		Objects.requireNonNull(jobCandidature);
-		logger.debug("Save job candidature {}", jobCandidature);
-
-		final boolean newCandidature = jobCandidature.isNew();
-		final boolean stateChanged = !newCandidature && this.hasStateChanged(jobCandidature);
-		final boolean approved = !stateChanged && jobCandidature.isApproved();
-
-		final JobCandidature savedJobCandidature = super.save(jobCandidature);
-
-		if (newCandidature) {
-			logger.trace("Is a new job candidature");
-			this.createdEvent.fire(jobCandidature);
-		} else {
-			if (stateChanged) {
-				logger.trace("State has changed to {}", jobCandidature.getState());
-				this.stateChangedEvent.fire(jobCandidature);
-			}
-			if (approved) {
-				logger.trace("Job candidature is approved");
-				this.completedEvent.fire(jobCandidature);
-			}
+	public void changeState(final String jobOfferUid, final String candidateUid, final JobCandidatureState newState) {
+		Objects.requireNonNull(jobOfferUid);
+		Objects.requireNonNull(candidateUid);
+		final JobCandidature jobCandidature = jobCandidatureDao.findByJobOfferAndCandidate(jobOfferUid, candidateUid);
+		if (jobCandidature.getState().equals(newState)) {
+			return;
 		}
-		return savedJobCandidature;
+		logger.trace("State has changed to {}", jobCandidature.getState());
+		this.stateChangedEvent.fire(jobCandidature);
+		if (newState.isApproved()) {
+			logger.trace("Job candidature is approved");
+			this.completedEvent.fire(jobCandidature);
+		}
 	}
 
 	public void setJobCandidatureCompletedEvent(final Event<JobCandidature> jobCandidatureCompletedEvent) {

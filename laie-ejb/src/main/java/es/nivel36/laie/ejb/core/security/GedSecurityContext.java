@@ -9,17 +9,19 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import es.nivel36.laie.ejb.core.model.Ownerable;
+import es.nivel36.laie.ejb.core.model.Repository;
 import es.nivel36.laie.ejb.user.User;
-import es.nivel36.laie.ejb.user.UserService;
+import es.nivel36.laie.ejb.user.UserDao;
 
 @Stateless
 public class GedSecurityContext {
 
 	@Resource
 	protected SessionContext sessionContext;
-
+	
 	@Inject
-	private UserService userService;
+	@Repository
+	private UserDao userDao;
 
 	public boolean canEdit(final Ownerable entity) {
 		Objects.requireNonNull(entity);
@@ -28,11 +30,11 @@ public class GedSecurityContext {
 		if (username.equals(entityOwner.getEmail())) {
 			return true;
 		}
-		final User sessionUser = this.getUserByUsername(username);
+		final User sessionUser = this.userDao.findUserByEmail(username);
 		if (sessionUser.isAdmin()) {
 			return true;
 		}
-		return this.userService.isSubordinateUser(sessionUser.getEmail(), entityOwner.getEmail());
+		return this.userDao.isSubordinateUser(sessionUser, entityOwner);
 	}
 
 	private String extractUsernameFromPrincipal() {
@@ -42,11 +44,7 @@ public class GedSecurityContext {
 
 	public User getLoggedUser() {
 		final String username = this.sessionContext.getCallerPrincipal().getName();
-		return this.getUserByUsername(username);
-	}
-
-	private User getUserByUsername(final String username) {
-		return this.userService.findByEmail(username);
+		return this.userDao.findUserByEmail(username);
 	}
 
 	public String getUsername() {

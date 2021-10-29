@@ -1,11 +1,11 @@
 package es.nivel36.laie.ejb.job.offer;
 
-import java.lang.invoke.MethodHandles;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 import javax.enterprise.event.Event;
 import javax.enterprise.event.Observes;
@@ -15,27 +15,26 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import es.nivel36.laie.ejb.client.Client;
-import es.nivel36.laie.ejb.client.ClientService;
-import es.nivel36.laie.ejb.core.AbstractIndexedService;
-import es.nivel36.laie.ejb.core.model.AbstractIndexedDao;
+import es.nivel36.laie.ejb.client.ClientDao;
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.core.model.Repository;
 import es.nivel36.laie.ejb.job.candidature.JobCandidature;
-import es.nivel36.laie.ejb.job.candidature.JobCandidatureService;
+import es.nivel36.laie.ejb.job.candidature.JobCandidatureDao;
 import es.nivel36.laie.ejb.job.candidature.event.JobCandidatureCompletedEvent;
 import es.nivel36.laie.ejb.job.offer.event.JobOfferCompletedEvent;
 import es.nivel36.laie.ejb.job.offer.event.JobOfferCreatedEvent;
 import es.nivel36.laie.ejb.job.offer.event.JobOfferStateChangedEvent;
 import es.nivel36.laie.ejb.user.User;
-import es.nivel36.laie.ejb.user.UserService;
+import es.nivel36.laie.ejb.user.UserDao;
 
 @Stateless
-public class JobOfferService extends AbstractIndexedService<JobOffer> {
+public class JobOfferService {
 
-	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
+	private static final Logger logger = LoggerFactory.getLogger(JobOffer.class);
 
 	@Inject
-	private ClientService clientService;
+	@Repository
+	private ClientDao clientDao;
 
 	@Inject
 	@JobOfferCompletedEvent
@@ -46,11 +45,16 @@ public class JobOfferService extends AbstractIndexedService<JobOffer> {
 	private Event<JobOffer> createdEvent;
 
 	@Inject
-	private JobCandidatureService jobCandidatureService;
+	@Repository
+	private JobCandidatureDao jobCandidatureDao;
 
 	@Inject
 	@Repository
 	private JobOfferDao jobOfferDao;
+
+	@Inject
+	@Repository
+	private UserDao userDao;
 
 	@Inject
 	@Repository
@@ -60,91 +64,60 @@ public class JobOfferService extends AbstractIndexedService<JobOffer> {
 	@JobOfferStateChangedEvent
 	private Event<JobOffer> stateChangedEvent;
 
-	@Inject
-	private UserService userService;
+	private JobOfferMapper jobOfferMapper;
 
-	public JobOffer closeJobOffer(final String jobOfferUid) {
-		final JobOffer jobOffer = this.findByUid(jobOfferUid);
+	@PostConstruct
+	public void init() {
+		jobOfferMapper = new JobOfferMapper();
+	}
+
+	public JobOfferDto closeJobOffer(final String jobOfferUid) {
+		final JobOffer jobOffer = this.jobOfferDao.findByUid(jobOfferUid);
 		jobOffer.setDateClosed(LocalDate.now());
 		jobOffer.setState(JobOfferState.CLOSED);
 		jobOffer.setPublished(false);
 		this.completedEvent.fire(jobOffer);
-		return jobOffer;
+		return jobOfferMapper.map(jobOffer);
 	}
 
-	public JobOffer createJobOffer(final String clientUid, final String ownerEmail, final String title) {
-		Objects.requireNonNull(clientUid);
-		Objects.requireNonNull(ownerEmail);
-		Objects.requireNonNull(title);
-		final User user = this.userService.findByEmail(ownerEmail);
-		final Client client = this.clientService.findByUid(clientUid);
-		final JobOffer jobOffer = new JobOffer();
-		jobOffer.setClient(client);
-		jobOffer.setOwner(user);
-		jobOffer.setTitle(title);
-		jobOffer.setState(JobOfferState.CREATED);
-		jobOffer.setDateOpened(LocalDate.now());
-		return jobOffer;
-	}
-
-	public JobOffer findByUid(final String uid) {
-		Objects.requireNonNull(uid);
-		logger.debug("Find job offer by uid {}", uid);
-		return this.jobOfferDao.findByUid(uid);
-	}
-
-	public List<JobOffer> findJobOffersByCandidate(final String candidateUid, final Page page) {
-		Objects.requireNonNull(candidateUid);
-		Objects.requireNonNull(page);
-		logger.debug("Find all job offers of the candidate  {}", candidateUid);
-		return this.jobOfferDao.findJobOffersByCandidate(candidateUid, page);
-	}
-
-	public List<JobOffer> findJobOffersByClientUid(final String clientUid, final Page page) {
-		Objects.requireNonNull(clientUid);
-		Objects.requireNonNull(page);
-		logger.debug("Find all job offers of the client  {}", clientUid);
-		return this.jobOfferDao.findJobOffersByClientUid(clientUid, page);
-	}
-
-	public List<JobOffer> findJobOffersByUser(final String email, final Page page) {
-		Objects.requireNonNull(email);
-		Objects.requireNonNull(page);
-		logger.debug("Find all job offers of the owner {}", email);
-		return this.jobOfferDao.findJobOffersByUser(email, page);
-	}
-
-	public List<JobOfferState> findJobOfferStates() {
-		logger.debug("Find all job offer states");
-		return Arrays.asList(JobOfferState.values());
-	}
-
-	@Override
-	public AbstractIndexedDao<JobOffer> getDao() {
-		return this.jobOfferDao;
-	}
-
-	private JobOfferState getPreviousState(final JobOffer jobOffer) {
-		if (jobOffer.isNew()) {
-			return null;
+	public void addRecruiters(final String jobOfferUid, final String[] recruiterUids) {
+		final JobOffer jobOffer = jobOfferDao.findByUid(jobOfferUid);
+		for (String recruiterUid : recruiterUids) {
+			final User recruiter = userDao.findUserByUid(recruiterUid);
+			jobOffer.getRecruiters().add(recruiter);
 		}
-		final JobOffer savedJobOffer = this.find(jobOffer.getId());
-		return savedJobOffer.getState();
 	}
 
-	private boolean isCompleted(final JobOffer jobOffer) {
-		final List<JobCandidature> jobCandidatures = this.jobCandidatureService.findApprovedJobCanditures(jobOffer,
-				Page.ALL_RESULTS);
-		final int numberofAprrovedCandidatures = jobCandidatures.size();
-		return jobOffer.getPlaces() == numberofAprrovedCandidatures;
+	public void addRecruiter(final String jobOfferUid, final String recruiterUid) {
+		final JobOffer jobOffer = jobOfferDao.findByUid(jobOfferUid);
+		final User recruiter = userDao.findUserByUid(recruiterUid);
+		jobOffer.getRecruiters().add(recruiter);
 	}
 
-	public void onJobCandidatureCompleted(@Observes @JobCandidatureCompletedEvent final JobCandidature jobCandidature) {
-		Objects.requireNonNull(jobCandidature, "Job candidature can't be null");
-		final JobOffer jobOffer = jobCandidature.getJobOffer();
-		if (this.isCompleted(jobOffer)) {
-			this.closeJobOffer(jobOffer.getUid());
+	public void removeRecruiter(final String jobOfferUid, final String recruiterUid) {
+		final JobOffer jobOffer = jobOfferDao.findByUid(jobOfferUid);
+		final User recruiter = userDao.findUserByUid(recruiterUid);
+		jobOffer.getRecruiters().remove(recruiter);
+	}
+
+	public void createJobOffer(final String clientUid, final JobOfferDto jobOffer) {
+		Objects.requireNonNull(jobOffer);
+		final User user = this.userDao.findUserByUid(jobOffer.getOwner().getUid());
+		final Client client = this.clientDao.findClientByUid(clientUid);
+		final JobOffer entity = new JobOffer();
+		entity.setClient(client);
+		entity.setOwner(user);
+		entity.setTitle(jobOffer.getTitle());
+		entity.setState(JobOfferState.CREATED);
+		entity.setDateOpened(LocalDate.now());
+		entity.setDescription(jobOffer.getDescription());
+		entity.setPlaces(jobOffer.getPlaces());
+		entity.setPublished(jobOffer.isPublished());
+		entity.setSalary(jobOffer.getSalary());
+		if (this.openDateHasCome(entity)) {
+			this.openJobOffer(entity);
 		}
+		this.jobOfferDao.insert(entity);
 	}
 
 	private boolean openDateHasCome(final JobOffer jobOffer) {
@@ -158,10 +131,61 @@ public class JobOfferService extends AbstractIndexedService<JobOffer> {
 		this.createdEvent.fire(jobOffer);
 	}
 
-	public JobOffer publish(final String jobOfferUid) {
+	public JobOfferDto findByUid(final String uid) {
+		Objects.requireNonNull(uid);
+		logger.debug("Find job offer by uid {}", uid);
+		final JobOffer jobOffer = this.jobOfferDao.findByUid(uid);
+		return jobOfferMapper.map(jobOffer);
+	}
+
+	public List<JobOfferDto> findJobOffersByCandidate(final String candidateUid, final Page page) {
+		Objects.requireNonNull(candidateUid);
+		Objects.requireNonNull(page);
+		logger.debug("Find all job offers of the candidate  {}", candidateUid);
+		final List<JobOffer> jobOffers = this.jobOfferDao.findJobOffersByCandidate(candidateUid, page);
+		return jobOfferMapper.mapList(jobOffers);
+	}
+
+	public List<JobOfferDto> findJobOffersByClient(final String clientUid, final Page page) {
+		Objects.requireNonNull(clientUid);
+		Objects.requireNonNull(page);
+		logger.debug("Find all job offers of the client  {}", clientUid);
+		final List<JobOffer> jobOffers = this.jobOfferDao.findJobOffersByClient(clientUid, page);
+		return jobOfferMapper.mapList(jobOffers);
+	}
+
+	public List<JobOfferDto> findJobOffersByOwner(final String ownerUid, final Page page) {
+		Objects.requireNonNull(ownerUid);
+		Objects.requireNonNull(page);
+		logger.debug("Find all job offers of the owner {}", ownerUid);
+		final List<JobOffer> jobOffers = this.jobOfferDao.findJobOffersByOwner(ownerUid, page);
+		return jobOfferMapper.mapList(jobOffers);
+	}
+
+	public List<JobOfferState> findJobOfferStates() {
+		logger.debug("Find all job offer states");
+		return Arrays.asList(JobOfferState.values());
+	}
+
+	private boolean isCompleted(final JobOffer jobOffer) {
+		final List<JobCandidature> jobCandidatures = this.jobCandidatureDao.findApprovedJobCanditures(jobOffer.getUid(),
+				Page.ALL_RESULTS);
+		final int numberofAprrovedCandidatures = jobCandidatures.size();
+		return jobOffer.getPlaces() == numberofAprrovedCandidatures;
+	}
+
+	public void onJobCandidatureCompleted(@Observes @JobCandidatureCompletedEvent final JobCandidature jobCandidature) {
+		Objects.requireNonNull(jobCandidature, "Job candidature can't be null");
+		final JobOffer jobOffer = jobCandidature.getJobOffer();
+		if (this.isCompleted(jobOffer)) {
+			this.closeJobOffer(jobOffer.getUid());
+		}
+	}
+
+	public JobOfferDto publish(final String jobOfferUid) {
 		Objects.requireNonNull(jobOfferUid);
 		logger.debug(String.format("Publish job oofer %s", jobOfferUid));
-		final JobOffer jobOffer = this.findByUid(jobOfferUid);
+		final JobOfferDto jobOffer = this.findByUid(jobOfferUid);
 		if (jobOffer.isOpen()) {
 			jobOffer.setPublished(true);
 		} else {
@@ -170,25 +194,20 @@ public class JobOfferService extends AbstractIndexedService<JobOffer> {
 		return jobOffer;
 	}
 
-	@Override
-	public JobOffer save(final JobOffer jobOffer) {
-		Objects.requireNonNull(jobOffer);
-		logger.debug("Save job offer {}", jobOffer);
-		if (jobOffer.isNew() && this.openDateHasCome(jobOffer)) {
-			this.openJobOffer(jobOffer);
-		} else {
-			final JobOfferState previousJobOfferState = this.getPreviousState(jobOffer);
-			if (!jobOffer.hasState(previousJobOfferState)) {
-				logger.debug("The job offer state has changed");
-				this.stateChangedEvent.fire(jobOffer);
-			}
-		}
-		return super.save(jobOffer);
+	public void changeState(String jobOfferUid, JobOfferState newState) {
+		final JobOffer entity = this.jobOfferDao.findByUid(jobOfferUid);
+		entity.setState(newState);
+		this.stateChangedEvent.fire(entity);
 	}
 
-	public void setClientService(ClientService clientService) {
-		Objects.requireNonNull(clientService);
-		this.clientService = clientService;
+	public void update(final JobOfferDto jobOffer) {
+		Objects.requireNonNull(jobOffer);
+		logger.debug("Update job offer {}", jobOffer);
+		final JobOffer entity = this.jobOfferDao.findByUid(jobOffer.getUid());
+		entity.setTitle(jobOffer.getTitle());
+		entity.setDescription(jobOffer.getDescription());
+		entity.setPlaces(jobOffer.getPlaces());
+		entity.setSalary(jobOffer.getSalary());
 	}
 
 	public void setCompletedEvent(final Event<JobOffer> completedEvent) {
@@ -199,9 +218,9 @@ public class JobOfferService extends AbstractIndexedService<JobOffer> {
 		this.createdEvent = createdEvent;
 	}
 
-	public void setJobCandidatureService(final JobCandidatureService jobCandidatureService) {
-		Objects.requireNonNull(jobCandidatureService);
-		this.jobCandidatureService = jobCandidatureService;
+	public void setJobCandidatureDao(final JobCandidatureDao jobCandidatureDao) {
+		Objects.requireNonNull(jobCandidatureDao);
+		this.jobCandidatureDao = jobCandidatureDao;
 	}
 
 	public void setJobOfferDao(final JobOfferDao jobOfferDao) {
@@ -218,13 +237,8 @@ public class JobOfferService extends AbstractIndexedService<JobOffer> {
 		this.stateChangedEvent = stateChangedEvent;
 	}
 
-	public void setUserService(UserService userService) {
-		Objects.requireNonNull(userService);
-		this.userService = userService;
-	}
-
-	public JobOffer unpublish(final String jobOfferUid) {
-		final JobOffer jobOffer = this.findByUid(jobOfferUid);
+	public JobOfferDto unpublish(final String jobOfferUid) {
+		final JobOfferDto jobOffer = this.findByUid(jobOfferUid);
 		if (jobOffer.isPublished()) {
 			jobOffer.setPublished(false);
 		}

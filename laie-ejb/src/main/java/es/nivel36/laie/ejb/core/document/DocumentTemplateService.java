@@ -5,7 +5,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UncheckedIOException;
-import java.lang.invoke.MethodHandles;
 import java.nio.file.Files;
 import java.util.Objects;
 import java.util.Set;
@@ -19,15 +18,13 @@ import org.slf4j.LoggerFactory;
 import com.itextpdf.html2pdf.ConverterProperties;
 import com.itextpdf.html2pdf.HtmlConverter;
 
-import es.nivel36.laie.ejb.core.AbstractService;
 import es.nivel36.laie.ejb.core.Language;
-import es.nivel36.laie.ejb.core.model.AbstractDao;
 import es.nivel36.laie.ejb.core.model.Repository;
 
 @Stateless
-public class DocumentTemplateService extends AbstractService<DocumentTemplate> {
+public class DocumentTemplateService  {
 
-	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
+	private static final Logger logger = LoggerFactory.getLogger(DocumentTemplateService.class);
 
 	@Inject
 	@Repository
@@ -56,11 +53,6 @@ public class DocumentTemplateService extends AbstractService<DocumentTemplate> {
 		Objects.requireNonNull(language);
 		logger.debug("Find document by name {} and langauge {}", name, language);
 		return this.documentTemplateDao.findDocumentTemplateByName(name, language);
-	}
-
-	@Override
-	protected AbstractDao<DocumentTemplate> getDao() {
-		return this.documentTemplateDao;
 	}
 
 	private File htmlConverter(final String text, final File pdfDest, final ConverterProperties converterProperties) {

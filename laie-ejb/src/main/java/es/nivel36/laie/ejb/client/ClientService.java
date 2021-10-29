@@ -1,49 +1,61 @@
 package es.nivel36.laie.ejb.client;
 
-import java.lang.invoke.MethodHandles;
 import java.util.Objects;
+import java.util.Set;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import es.nivel36.laie.ejb.core.AbstractIndexedService;
-import es.nivel36.laie.ejb.core.model.AbstractIndexedDao;
 import es.nivel36.laie.ejb.core.model.Repository;
 
 @Stateless
-public class ClientService extends AbstractIndexedService<Client> {
+public class ClientService {
 
-	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
+	private static final Logger logger = LoggerFactory.getLogger(ClientService.class);
 
 	@Inject
 	@Repository
 	private ClientDao clientDao;
 
-	public Client findByUid(final String uid) {
+	private ClientMapper clientMapper;
+
+	private ClientMerger clientMerger;
+
+	@PostConstruct
+	public void init() {
+		this.clientMapper = new ClientMapper();
+		this.clientMerger = new ClientMerger();
+	}
+
+	public void insert(final ClientDto client) {
+		Objects.requireNonNull(client);
+		Client entity = new Client();
+		clientMerger.merge(entity, client);
+		this.clientDao.insert(entity);
+	}
+
+	public void update(final ClientDto client) {
+		Objects.requireNonNull(client);
+		final Client entity = this.clientDao.findContactByUid(client.getUid());
+		clientMerger.merge(entity, client);
+	}
+
+	public ClientDto findByUid(final String uid) {
 		Objects.requireNonNull(uid);
 		logger.debug("Find client by uid {}", uid);
-		return this.clientDao.findByUid(uid);
+		final Client client = this.clientDao.findContactByUid(uid);
+		return this.clientMapper.map(client);
 	}
 
-	public Client findByCif(final String cif) {
+	public ClientDto findByCif(final String cif) {
 		Objects.requireNonNull(cif);
 		logger.debug("Find client by cif {}", cif);
-		return this.clientDao.findByCif(cif);
-	}
-	
-	public void deleteContact(final String uid, Contact contact) {
-		Objects.requireNonNull(contact);
-		logger.debug("Delete contact {} of client {}", contact, uid);
-		Client client = this.clientDao.findByUid(uid);
-		client.deleteContact(contact);
-	}
-
-	@Override
-	public AbstractIndexedDao<Client> getDao() {
-		return this.clientDao;
+		final Client client = this.clientDao.findClientByCif(cif);
+		return this.clientMapper.map(client);
 	}
 
 	public void setClientDao(final ClientDao clientDao) {

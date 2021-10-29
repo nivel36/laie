@@ -16,10 +16,10 @@ import org.omnifaces.cdi.Param;
 
 import es.nivel36.laie.ejb.candidate.Candidate;
 import es.nivel36.laie.ejb.curriculum.Curriculum;
-import es.nivel36.laie.ejb.curriculum.Education;
-import es.nivel36.laie.ejb.curriculum.JobExperience;
-import es.nivel36.laie.ejb.curriculum.Language;
-import es.nivel36.laie.ejb.curriculum.Skill;
+import es.nivel36.laie.ejb.curriculum.education.Education;
+import es.nivel36.laie.ejb.curriculum.jobexperience.JobExperience;
+import es.nivel36.laie.ejb.curriculum.language.Language;
+import es.nivel36.laie.ejb.curriculum.skill.Skill;
 import es.nivel36.laie.web.core.IllegalPageStateException;
 import es.nivel36.laie.web.core.util.PageEnum;
 import es.nivel36.laie.web.core.view.AbstractView;

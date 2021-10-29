@@ -1,6 +1,5 @@
 package es.nivel36.laie.ejb.event;
 
-import java.lang.invoke.MethodHandles;
 import java.util.Objects;
 
 import javax.ejb.Stateless;
@@ -9,18 +8,15 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import es.nivel36.laie.ejb.core.AbstractService;
-import es.nivel36.laie.ejb.core.model.AbstractDao;
 import es.nivel36.laie.ejb.core.model.Repository;
 import es.nivel36.laie.ejb.core.security.GedSecurityContext;
 import es.nivel36.laie.ejb.job.offer.JobOffer;
-import es.nivel36.laie.ejb.job.offer.JobOfferService;
 import es.nivel36.laie.ejb.user.User;
 
 @Stateless
-public class JobOfferEventService extends AbstractService<JobOfferEvent> {
+public class JobOfferEventService  {
 
-	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
+	private static final Logger logger = LoggerFactory.getLogger(JobOfferEventService.class);
 
 	@Inject
 	private GedSecurityContext gedSecurityContext;
@@ -29,41 +25,18 @@ public class JobOfferEventService extends AbstractService<JobOfferEvent> {
 	@Repository
 	private JobOfferEventDao jobOfferEventDao;
 
-	@Inject
-	private JobOfferService jobOfferService;
-
-	public JobOfferEvent createEvent(final JobOffer jobOffer) {
-		Objects.requireNonNull(jobOffer, "Job offer can't be null");
+	public void createEvent(final JobOffer jobOffer) {
+		Objects.requireNonNull(jobOffer);
 		logger.debug("Create event for job offer {}", jobOffer);
 
 		final User user = this.gedSecurityContext.getLoggedUser();
 		final JobOfferEvent jobOfferEvent = new JobOfferEvent(user, jobOffer);
-		return this.jobOfferEventDao.save(jobOfferEvent);
-	}
-
-	@Override
-	protected AbstractDao<JobOfferEvent> getDao() {
-		return this.jobOfferEventDao;
-	}
-
-	@Override
-	public JobOfferEvent save(final JobOfferEvent jobOfferEvent) {
-		Objects.requireNonNull(jobOfferEvent, "Job offer event can't be null");
-		logger.debug("Save jobOffer event {}", jobOfferEvent);
-
-		final JobOffer jobOffer = jobOfferEvent.getJobOffer();
-		this.jobOfferService.save(jobOffer);
-		return this.jobOfferEventDao.save(jobOfferEvent);
+		this.jobOfferEventDao.insert(jobOfferEvent);
 	}
 
 	public void setJobOfferEventDao(final JobOfferEventDao jobOfferEventDao) {
 		Objects.requireNonNull(jobOfferEventDao);
 		this.jobOfferEventDao = jobOfferEventDao;
-	}
-
-	public void setJobOfferService(final JobOfferService jobOfferService) {
-		Objects.requireNonNull(jobOfferService);
-		this.jobOfferService = jobOfferService;
 	}
 
 	public void setSecurityContext(final GedSecurityContext gedSecurityContext) {

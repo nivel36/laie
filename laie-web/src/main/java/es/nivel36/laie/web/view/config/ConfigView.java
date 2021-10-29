@@ -70,7 +70,7 @@ public class ConfigView extends AbstractView {
 
 	private void changeUserImage() {
 		try (final InputStream inputStream = this.fileService.getFile(this.userImage)) {
-			this.userService.addUserImage(this.user.getUid(), inputStream);
+			this.userService.changeUsersImage(this.user.getUid(), inputStream);
 		} catch (final IOException e) {
 			throw new UncheckedIOException(e);
 		}
@@ -84,7 +84,7 @@ public class ConfigView extends AbstractView {
 	}
 
 	private void deleteUserImage() {
-		this.userService.deleteUserImage(this.user.getUid());
+		this.userService.deleteUsersImage(this.user.getUid());
 	}
 
 	public User getUser() {

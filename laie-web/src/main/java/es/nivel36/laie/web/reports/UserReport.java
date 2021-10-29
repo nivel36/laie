@@ -16,8 +16,8 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 
-import es.nivel36.laie.ejb.job.offer.JobOffer;
-import es.nivel36.laie.ejb.user.User;
+import es.nivel36.laie.ejb.job.offer.JobOfferDto;
+import es.nivel36.laie.ejb.user.UserDto;
 
 public class UserReport extends AbstractReport {
 
@@ -34,11 +34,11 @@ public class UserReport extends AbstractReport {
 		return style;
 	}
 
-	private final List<JobOffer> jobOffers;
+	private final List<JobOfferDto> jobOffers;
 
-	private final User user;
+	private final UserDto user;
 
-	public UserReport(final User user, final List<JobOffer> jobOffers) {
+	public UserReport(final UserDto user, final List<JobOfferDto> jobOffers) {
 		super("", user.getFullName() + "_report.xls".replace(" ", "_"));
 		this.user = user;
 		this.jobOffers = jobOffers;
@@ -99,10 +99,11 @@ public class UserReport extends AbstractReport {
 		cell.setCellStyle(this.getHeaderStyle(this.wb));
 		int i = 7;
 		final DataFormat df = this.wb.createDataFormat();
-		for (final JobOffer jobOffer : this.jobOffers) {
+		for (final JobOfferDto jobOffer : this.jobOffers) {
 			row = sheet.createRow(i++);
 			cell = row.createCell(1);
-			cell.setCellValue(jobOffer.getClient().getName());
+			//TODO: poner client name en la celda de abajo
+			cell.setCellValue("");
 			cell = row.createCell(2);
 			cell.setCellValue(jobOffer.getTitle());
 			cell = row.createCell(3);

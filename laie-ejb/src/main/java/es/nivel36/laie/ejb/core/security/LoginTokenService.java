@@ -51,7 +51,7 @@ public class LoginTokenService {
 		loginToken.setType(tokenType);
 		loginToken.setIpAddress(ipAddress);
 		loginToken.setUser(credential.getUser());
-		this.loginTokenDao.save(loginToken);
+		this.loginTokenDao.insert(loginToken);
 		return rawToken;
 	}
 

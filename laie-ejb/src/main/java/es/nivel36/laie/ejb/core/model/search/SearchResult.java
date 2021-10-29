@@ -6,9 +6,7 @@ import java.util.Map;
 
 import org.hibernate.search.query.facet.Facet;
 
-import es.nivel36.laie.ejb.core.model.Identifiable;
-
-public class SearchResult<T extends Identifiable> {
+public class SearchResult<T> {
 	
 	private final int count;
 	

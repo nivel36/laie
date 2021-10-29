@@ -9,6 +9,7 @@ import javax.inject.Named;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import es.nivel36.laie.ejb.user.DuplicateEmailException;
 import es.nivel36.laie.web.core.IllegalPageStateException;
 
 @Named
@@ -40,9 +41,14 @@ public class EditUserView extends AbstractUserView {
 		logger.trace("User {} edit init", this.user.getEmail());
 	}
 
-	public String save() {
+	public String save() throws DuplicateEmailException {
 		logger.debug("Save user action performed");
-		this.user = this.userService.save(this.user);
+		try {
+			this.userService.updateUser(this.user);
+		} catch (DuplicateEmailException e) {
+			// TODO: Gestionar excepcion
+			throw e;
+		}
 		return this.userUrl();
 	}
 }

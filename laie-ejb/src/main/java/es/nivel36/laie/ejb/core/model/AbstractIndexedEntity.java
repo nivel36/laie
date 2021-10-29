@@ -4,7 +4,6 @@ import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
-import javax.persistence.PrePersist;
 import javax.validation.constraints.NotNull;
 
 import org.apache.lucene.analysis.core.LowerCaseFilterFactory;
@@ -42,11 +41,6 @@ public abstract class AbstractIndexedEntity extends AbstractEntity implements Ob
 			return false;
 		AbstractIndexedEntity other = (AbstractIndexedEntity) obj;
 		return Objects.equals(uid, other.uid);
-	}
-
-	@PrePersist
-	public void generateUid() {
-		this.uid = UidGenerator.generate();
 	}
 
 	public String getUid() {

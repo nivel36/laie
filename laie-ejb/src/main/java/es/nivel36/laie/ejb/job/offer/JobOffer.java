@@ -41,7 +41,7 @@ import es.nivel36.laie.ejb.user.User;
 @Table(name = "JOB_OFFER")
 public class JobOffer extends AbstractIndexedEntity implements Ownerable {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1529439068651089035L;
 
 	@Embedded
 	@IndexedEmbedded
@@ -94,6 +94,8 @@ public class JobOffer extends AbstractIndexedEntity implements Ownerable {
 	@Field(name = "title", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField(forField = "title")
 	private String title;
+	
+	private String uid;
 
 	@Override
 	public boolean equals(final Object obj) {
@@ -158,6 +160,10 @@ public class JobOffer extends AbstractIndexedEntity implements Ownerable {
 
 	public String getTitle() {
 		return this.title;
+	}
+
+	public String getUid() {
+		return uid;
 	}
 
 	public boolean hasCandidatureOf(final Candidate candidate) {
@@ -252,6 +258,10 @@ public class JobOffer extends AbstractIndexedEntity implements Ownerable {
 
 	public void setTitle(final String title) {
 		this.title = title;
+	}
+
+	public void setUid(String uid) {
+		this.uid = uid;
 	}
 
 	@Override

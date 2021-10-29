@@ -17,7 +17,7 @@ import org.omnifaces.cdi.Param;
 
 import es.nivel36.laie.ejb.curriculum.Curriculum;
 import es.nivel36.laie.ejb.curriculum.CurriculumService;
-import es.nivel36.laie.ejb.curriculum.JobExperience;
+import es.nivel36.laie.ejb.curriculum.jobexperience.JobExperience;
 import es.nivel36.laie.web.core.IllegalPageStateException;
 import es.nivel36.laie.web.core.YearMonthDto;
 import es.nivel36.laie.web.core.util.PageEnum;

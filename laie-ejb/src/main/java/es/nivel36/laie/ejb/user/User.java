@@ -21,20 +21,19 @@ import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.SortableField;
 import org.hibernate.search.annotations.Store;
 
-import es.nivel36.laie.ejb.core.Subject;
 import es.nivel36.laie.ejb.core.file.File;
 import es.nivel36.laie.ejb.core.model.AbstractIndexedEntity;
 
 @Entity
 @Indexed
-public class User extends AbstractIndexedEntity implements Subject  {
+public class User extends AbstractIndexedEntity {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -3719561601581901723L;
 
 	@Field(name = "dateOfJoin", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField(forField = "dateOfJoin")
 	private LocalDate dateOfJoin;
-	
+
 	@Email
 	@NotNull
 	@Column(length = 128, nullable = false, unique = true)

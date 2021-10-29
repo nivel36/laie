@@ -1,6 +1,6 @@
 package es.nivel36.laie.api.v1.user;
 
-import java.util.ArrayList;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Objects;
 
@@ -10,6 +10,7 @@ import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -18,9 +19,11 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import es.nivel36.laie.api.v1.AbstractRestController;
-import es.nivel36.laie.api.v1.mapper.Mapper;
 import es.nivel36.laie.ejb.core.model.Page;
-import es.nivel36.laie.ejb.user.User;
+import es.nivel36.laie.ejb.core.model.search.SearchResult;
+import es.nivel36.laie.ejb.user.BadManagerException;
+import es.nivel36.laie.ejb.user.DuplicateEmailException;
+import es.nivel36.laie.ejb.user.UserDto;
 import es.nivel36.laie.ejb.user.UserService;
 
 @Path("user")
@@ -28,63 +31,37 @@ import es.nivel36.laie.ejb.user.UserService;
 public class UserRestController extends AbstractRestController {
 
 	@Inject
-	@Mapper
-	private UserMapper userMapper;
-
-	@Inject
 	private UserService userService;
 
-	@POST
+	@PUT
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response addUser(@Valid final UserDto userDto) {
-		final User user = this.userMapper.mapDto(userDto);
-		final User savedUser = this.userService.save(user);
-		final UserDto returnedUserDto = this.userMapper.mapEntity(savedUser);
-		final Response.ResponseBuilder builder = Response.status(Response.Status.OK).entity(returnedUserDto);
+		Objects.requireNonNull(userDto);
+		Response.ResponseBuilder builder;
+		try {
+			this.userService.addUser(userDto);
+			builder = Response.status(Response.Status.OK);
+		} catch (final DuplicateEmailException exception) {
+			builder = Response.status(Response.Status.BAD_REQUEST);
+		}
 		return builder.build();
 	}
 
-	private List<UserDto> createUserDtoListFromUserList(final List<User> users) {
-		final List<UserDto> userDtos = new ArrayList<>(users.size());
-		for (final User user : users) {
-			final UserDto userDto = this.userMapper.mapEntity(user);
-			userDtos.add(userDto);
-		}
-		return userDtos;
-	}
-
 	@GET
-	@Path("/{id:[0-9][0-9]*}")
+	@Path("/{email}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public UserDto find(@PathParam("id") final long id) {
-		Objects.requireNonNull(id);
-		final User user = this.userService.find(id);
-		return this.userMapper.mapEntity(user);
-	}
-
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	public List<UserDto> findAll() {
-		final List<User> users = this.userService.findAll(Page.ALL_RESULTS);
-		return createUserDtoListFromUserList(users);
-	}
-
-	@GET
-	@Path("/find")
-	@Produces(MediaType.APPLICATION_JSON)
-	public UserDto findByEmail(@QueryParam("email") final String email) {
+	public UserDto findUserByEmail(@PathParam("email") final String email) {
 		Objects.requireNonNull(email);
-		final User user = this.userService.findByEmail(email);
-		return this.userMapper.mapEntity(user);
+		return this.userService.findUserByUid(email);
 	}
 
-	public void setUserMapper(final UserMapper userMapper) {
-		this.userMapper = userMapper;
-	}
-
-	public void setUserService(final UserService userService) {
-		this.userService = userService;
+	@GET
+	@Path("/{uid:[0-9a-fA-F]+}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public UserDto findUserByUid(@PathParam("uid") final String uid) {
+		Objects.requireNonNull(uid);
+		return this.userService.findUserByUid(uid);
 	}
 
 	@POST
@@ -92,10 +69,66 @@ public class UserRestController extends AbstractRestController {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response updateUser(@Valid final UserDto userDto) {
 		Objects.requireNonNull(userDto);
-		final User user = this.userMapper.mapDto(userDto);
-		final User savedUser = this.userService.save(user);
-		final UserDto returnedUserDto = this.userMapper.mapEntity(savedUser);
-		final Response.ResponseBuilder builder = Response.status(Response.Status.OK).entity(returnedUserDto);
+		Response.ResponseBuilder builder;
+		try {
+			this.userService.updateUser(userDto);
+			builder = Response.status(Response.Status.OK);
+		} catch (final DuplicateEmailException e) {
+			builder = Response.status(Response.Status.BAD_REQUEST);
+		}
 		return builder.build();
+	}
+
+	@POST
+	@Path("{uid:[0-9a-fA-F]+}/changeImage")
+	public String changeUsersImage(@PathParam("uid") final String userUid, final InputStream image) {
+		return this.userService.changeUsersImage(userUid, image);
+
+	}
+
+	@POST
+	@Path("{uid:[0-9a-fA-F]+}/deleteImage")
+	public void deleteUsersImage(@PathParam("uid") final String userUid) {
+		this.userService.deleteUsersImage(userUid);
+	}
+
+	@POST
+	@Path("{uid:[0-9a-fA-F]+}/changeManager/")
+	public Response changeUsersManager(@PathParam("uid") final String userUid,
+			@QueryParam("managerUid") final String managerUid) {
+		Response.ResponseBuilder builder;
+		try {
+			userService.changeUsersManager(userUid, managerUid);
+			builder = Response.status(Response.Status.OK);
+		} catch (BadManagerException e) {
+			builder = Response.status(Response.Status.BAD_REQUEST);
+		}
+		return builder.build();
+	}
+
+	@POST
+	@Path("changePassword")
+	public void changePassword(@QueryParam("email") final String email,
+			@QueryParam("oldPassword") final String oldPassword, @QueryParam("newPassword") final String newPassword) {
+		this.userService.changePassword(email, oldPassword, newPassword);
+	}
+
+	@GET
+	@Path("{uid:[0-9a-fA-F]+}/subordinate/")
+	public List<UserDto> findSubordinateUsers(@PathParam("uid") String userUid) {
+		return this.userService.findSubordinateUsers(userUid);
+	}
+
+	@GET
+	@Path("search/")
+	public SearchResult<UserDto> search(@QueryParam("searchText") final String searchText,
+			@QueryParam("offset") int offset, @QueryParam("limit") int limit) {
+		final Page page = new Page(offset, limit);
+		return this.userService.search(searchText, page);
+	}
+
+	public void setUserService(final UserService userService) {
+		Objects.requireNonNull(userService);
+		this.userService = userService;
 	}
 }

@@ -29,7 +29,6 @@ import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.SortableField;
 import org.hibernate.search.annotations.Store;
 
-import es.nivel36.laie.ejb.core.Subject;
 import es.nivel36.laie.ejb.core.file.File;
 import es.nivel36.laie.ejb.core.model.AbstractIndexedEntity;
 import es.nivel36.laie.ejb.core.model.Address;
@@ -41,10 +40,10 @@ import es.nivel36.laie.ejb.user.User;
 
 @Entity
 @Indexed
-public class Candidate extends AbstractIndexedEntity implements Ownerable, Subject {
+public class Candidate extends AbstractIndexedEntity implements Ownerable {
 
-	private static final long serialVersionUID = 1L;
-	
+	private static final long serialVersionUID = -7470903145789563432L;
+
 	@Embedded
 	private Address address;
 

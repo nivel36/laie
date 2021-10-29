@@ -7,26 +7,38 @@ import java.util.Objects;
 
 import javax.persistence.NoResultException;
 
-import es.nivel36.laie.ejb.core.model.AbstractIndexedDao;
+import es.nivel36.laie.ejb.core.model.AbstractDao;
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.core.model.Repository;
+import es.nivel36.laie.ejb.core.model.UidGenerator;
+import es.nivel36.laie.ejb.core.model.search.SearchFacets;
+import es.nivel36.laie.ejb.core.model.search.SearchResult;
+import es.nivel36.laie.ejb.core.model.search.SortField;
+import es.nivel36.laie.ejb.curriculum.skill.Skill;
 
 @Repository
-public class CurriculumDao extends AbstractIndexedDao<Curriculum> {
+public class CurriculumDao extends AbstractDao {
 
-	public List<CurriculumTemplate> findCurriculumTemplates() {
-		return this.findAll(CurriculumTemplate.class, Page.ALL_RESULTS);
+	public void insert(final Curriculum curriculum) {
+		final String uid = UidGenerator.generate(Curriculum.class);
+		curriculum.setUid(uid);
+		this.insert(curriculum);
+	}
+
+	public void delete(final Curriculum curriculum) {
+		this.delete(Curriculum.class, curriculum);
 	}
 
 	public Curriculum findByCandidateUid(final String candidateUid) {
 		Objects.requireNonNull(candidateUid);
 		try {
-			return this.findByQuery(Curriculum.class, "Curriculum.findByCandidateUid", map("candidateUid", candidateUid));
+			return this.findByQuery(Curriculum.class, "Curriculum.findByCandidateUid",
+					map("candidateUid", candidateUid));
 		} catch (final NoResultException e) {
 			return null;
 		}
 	}
-	
+
 	public Skill findSkill(final String name) {
 		Objects.requireNonNull(name);
 		return this.findByQuery(Skill.class, "Skill.findByName", map("name", name));
@@ -37,14 +49,18 @@ public class CurriculumDao extends AbstractIndexedDao<Curriculum> {
 		return this.findByQuery(Curriculum.class, "Curriculum.findByUid", map("uid", uid));
 	}
 
-	@Override
-	public Class<Curriculum> getType() {
-		return Curriculum.class;
+	public List<CurriculumTemplate> findCurriculumTemplates() {
+		return this.findAll(CurriculumTemplate.class, Page.ALL_RESULTS);
 	}
 
-	@Override
-	public String[] searchFields() {
-		return new String[] { "skills.name", "jobExperiences.jobPosition", "jobExperiences.description",
-				"jobExperiences.companyName", "educations.description" };
+	public SearchResult<Curriculum> search(final String searchText, final Page page) {
+		return this.search(searchText, page, null, null);
+	}
+
+	public SearchResult<Curriculum> search(final String searchText, final Page page, SortField sortOrder,
+			final SearchFacets searchFacets) {
+		final String[] searchFields = new String[] { "skills.name", "jobExperiences.jobPosition",
+				"jobExperiences.description", "jobExperiences.companyName", "educations.description" };
+		return this.search(Curriculum.class, page, sortOrder, searchFacets, searchText, searchFields);
 	}
 }

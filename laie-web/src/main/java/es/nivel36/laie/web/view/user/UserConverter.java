@@ -8,25 +8,25 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.inject.Inject;
 
-import es.nivel36.laie.ejb.user.User;
+import es.nivel36.laie.ejb.user.UserDto;
 import es.nivel36.laie.ejb.user.UserService;
 
 @FacesConverter(managed = true, value = "userConverter")
-public class UserConverter implements Converter<User> {
+public class UserConverter implements Converter<UserDto> {
 
 	@Inject
 	private UserService userService;
 
 	@Override
-	public User getAsObject(final FacesContext context, final UIComponent component, final String value) {
+	public UserDto getAsObject(final FacesContext context, final UIComponent component, final String value) {
 		if (value == null) {
 			return null;
 		}
-		return this.userService.findByUid(value);
+		return this.userService.findUserByUid(value);
 	}
 
 	@Override
-	public String getAsString(final FacesContext context, final UIComponent component, final User value) {
+	public String getAsString(final FacesContext context, final UIComponent component, final UserDto value) {
 		if (value == null) {
 			return null;
 		}

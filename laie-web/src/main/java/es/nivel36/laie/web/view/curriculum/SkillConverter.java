@@ -7,7 +7,7 @@ import javax.faces.convert.FacesConverter;
 import javax.inject.Inject;
 
 import es.nivel36.laie.ejb.curriculum.CurriculumService;
-import es.nivel36.laie.ejb.curriculum.Skill;
+import es.nivel36.laie.ejb.curriculum.skill.Skill;
 
 @FacesConverter(value = "skillConverter", managed = true)
 public class SkillConverter implements Converter<Skill> {

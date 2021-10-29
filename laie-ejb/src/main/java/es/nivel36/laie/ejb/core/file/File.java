@@ -21,16 +21,28 @@ public class File extends AbstractEntity {
 	@NotNull
 	@Column(nullable = false)
 	private LocalDateTime created;
-
+	
 	private String description;
 
 	@NotNull
 	@Column(nullable = false)
 	private String name;
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(created, name, publicAccess);
+	@ManyToOne(cascade = { CascadeType.PERSIST}, fetch = FetchType.EAGER, optional = false)
+	@JoinColumn(name = "physicalFileId")
+	private PhysicalFile physicalFile;
+
+	private boolean publicAccess;
+
+	private String uid;
+
+	public File() {
+	}
+
+	public File(final String name) {
+		Objects.requireNonNull(name);
+		this.name = name;
+		this.created = LocalDateTime.now();
 	}
 
 	@Override
@@ -44,21 +56,6 @@ public class File extends AbstractEntity {
 		File other = (File) obj;
 		return Objects.equals(created, other.created) && Objects.equals(name, other.name)
 				&& publicAccess == other.publicAccess;
-	}
-
-	@ManyToOne(cascade = { CascadeType.PERSIST}, fetch = FetchType.EAGER, optional = false)
-	@JoinColumn(name = "physicalFileId")
-	private PhysicalFile physicalFile;
-
-	private boolean publicAccess;
-
-	public File() {
-	}
-
-	public File(final String name) {
-		Objects.requireNonNull(name);
-		this.name = name;
-		this.created = LocalDateTime.now();
 	}
 
 	public LocalDateTime getCreated() {
@@ -75,6 +72,15 @@ public class File extends AbstractEntity {
 
 	public PhysicalFile getPhysicalFile() {
 		return this.physicalFile;
+	}
+
+	public String getUid() {
+		return uid;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(created, name, publicAccess);
 	}
 
 	public boolean isPublicAccess() {
@@ -99,5 +105,9 @@ public class File extends AbstractEntity {
 
 	public void setPublicAccess(final boolean publicAccess) {
 		this.publicAccess = publicAccess;
+	}
+
+	public void setUid(String uid) {
+		this.uid = uid;
 	}
 }

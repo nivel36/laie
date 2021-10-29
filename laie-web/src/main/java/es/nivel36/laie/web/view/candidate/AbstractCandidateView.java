@@ -12,12 +12,9 @@ import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.RateEvent;
 import org.primefaces.model.file.UploadedFile;
 
-import es.nivel36.laie.ejb.candidate.Candidate;
+import es.nivel36.laie.ejb.candidate.CandidateDto;
 import es.nivel36.laie.ejb.candidate.CandidateService;
-import es.nivel36.laie.ejb.core.file.File;
 import es.nivel36.laie.ejb.core.file.FileService;
-import es.nivel36.laie.ejb.core.model.Page;
-import es.nivel36.laie.ejb.core.tag.Tag;
 import es.nivel36.laie.ejb.core.tag.TagService;
 import es.nivel36.laie.web.core.util.PageEnum;
 import es.nivel36.laie.web.core.view.AbstractView;
@@ -27,8 +24,8 @@ public abstract class AbstractCandidateView extends AbstractView {
 	private static final long serialVersionUID = 1L;
 
 	@Inject
-	@Param(name = "id", required = true)
-	protected Candidate candidate;
+	@Param(name = "uid", required = true)
+	protected CandidateDto candidate;
 
 	@Inject
 	protected transient CandidateService candidateService;
@@ -36,20 +33,20 @@ public abstract class AbstractCandidateView extends AbstractView {
 	@Inject
 	protected transient FileService fileUploadService;
 
-	protected transient List<Tag> tags;
+	protected transient List<String> tags;
 
 	@Inject
 	protected transient TagService tagService;
 
 	protected String candidateUrl() {
-		return this.navigator.getRedirectUrl(PageEnum.CANDIDATE, this.candidate);
+		return this.navigator.getRedirectUrl(PageEnum.CANDIDATE, this.candidate.getUid());
 	}
 
-	public Candidate getCandidate() {
+	public CandidateDto getCandidate() {
 		return this.candidate;
 	}
 
-	public List<Tag> getTags() {
+	public List<String> getTags() {
 		return this.tags;
 	}
 
@@ -58,11 +55,7 @@ public abstract class AbstractCandidateView extends AbstractView {
 		this.candidate.setRating(rate);
 	}
 
-	public List<Tag> queryTags(final String query) {
-		return this.tagService.search(query, Page.TEN_RESULTS_PER_PAGE).getResultData();
-	}
-
-	public void setCandidate(final Candidate candidate) {
+	public void setCandidate(final CandidateDto candidate) {
 		this.candidate = candidate;
 	}
 
@@ -70,15 +63,15 @@ public abstract class AbstractCandidateView extends AbstractView {
 		this.candidateService = candidateService;
 	}
 
-	public void setTags(final List<Tag> tags) {
+	public void setTags(final List<String> tags) {
 		this.tags = tags;
 	}
 
 	public void uploadImage(final FileUploadEvent event) {
 		final UploadedFile uploadedFile = event.getFile();
-		try (InputStream inputStream = uploadedFile.getInputStream()) {
-			File file = this.fileUploadService.uploadFile(inputStream, this.candidate.getUid() + "_picture", true);
-			this.candidate.setPicture(file);
+		try (final InputStream inputStream = uploadedFile.getInputStream()) {
+			final String path = this.candidateService.changeUsersImage(this.candidate.getUid(), inputStream);
+			this.candidate.setPicturesPath(path);
 		} catch (final IOException e) {
 			throw new UncheckedIOException(e);
 		}

@@ -338,6 +338,14 @@
 			WHERE u.email = :email
 		]]></query>
 	</named-query>
+	
+		<named-query name="User.checkDuplicateUid">
+		<query><![CDATA[
+			SELECT CASE WHEN (COUNT(u) > 0) THEN TRUE ELSE FALSE END 
+			FROM User u 
+			WHERE u.uid = :uid
+		]]></query>
+	</named-query>
 
 	<named-query name="User.findByTokenHashAndType">
 		<query><![CDATA[

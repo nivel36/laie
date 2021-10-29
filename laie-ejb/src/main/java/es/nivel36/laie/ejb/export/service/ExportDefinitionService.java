@@ -11,15 +11,13 @@ import java.util.Set;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
-import es.nivel36.laie.ejb.core.AbstractService;
-import es.nivel36.laie.ejb.core.model.AbstractDao;
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.core.model.Repository;
 import es.nivel36.laie.ejb.export.acquirer.ReportInfo;
 import es.nivel36.laie.ejb.export.dao.ExportDao;
 import es.nivel36.laie.ejb.export.dto.ExportFieldsOutputBean;
-import es.nivel36.laie.ejb.export.dto.ExportSaveDefinitionInputBean;
 import es.nivel36.laie.ejb.export.dto.ExportFieldsOutputBean.ExportFieldItem;
+import es.nivel36.laie.ejb.export.dto.ExportSaveDefinitionInputBean;
 import es.nivel36.laie.ejb.export.dto.ExportSaveDefinitionInputBean.SaveDefinitionItem;
 import es.nivel36.laie.ejb.export.entity.Export;
 import es.nivel36.laie.ejb.export.entity.ExportDefinition;
@@ -27,7 +25,7 @@ import es.nivel36.laie.ejb.export.entity.ExportField;
 import es.nivel36.laie.ejb.export.util.ExportNotFieldFoundException;
 
 @Stateless
-public class ExportDefinitionService extends AbstractService<Export> {
+public class ExportDefinitionService {
 
 	@Inject
 	@Repository
@@ -60,7 +58,7 @@ public class ExportDefinitionService extends AbstractService<Export> {
 	}
 	
 	public List<ReportInfo> getReportsList() {
-		final List<Export> exports = findAll(Page.ALL_RESULTS);
+		final List<Export> exports = this.exportDao.findAll(Page.ALL_RESULTS);
 		Objects.requireNonNull(exports);
 		final List<ReportInfo> result = new ArrayList<>(exports.size());
 		for (Export item: exports) {
@@ -130,11 +128,6 @@ public class ExportDefinitionService extends AbstractService<Export> {
 			}
 		}
 		return new ExportFieldsOutputBean(export.getId(), list);
-	}
-
-	@Override
-	protected AbstractDao<Export> getDao() {
-		return this.exportDao;
 	}
 
 	private ExportDao getExportDao() {

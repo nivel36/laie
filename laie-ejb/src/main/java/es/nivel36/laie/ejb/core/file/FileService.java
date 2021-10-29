@@ -62,22 +62,22 @@ public class FileService {
 		}
 	}
 
-	public File findById(final long fileId) {
-		if (fileId < 1) {
-			logger.warn("Bad file id {}", fileId);
-			throw new IllegalArgumentException("Bad file id: " + fileId);
-		}
-		logger.debug("Find file by id {}", fileId);
-		return this.fileDao.find(fileId);
+	public FileDto findByUid(final String uid) {
+		Objects.requireNonNull(uid);
+		logger.debug("Find file by uid {}", uid);
+		final File file = this.fileDao.findFileByUid(uid);
+		final FileMapper fileMapper = new FileMapper();
+		return fileMapper.map(file);
 	}
 
 	private Path getAbsolutePath(final FileBucket fileBucket, final String uuid) {
 		return new PathBuilder().buildAbsolutePath(this.fileDirectory, fileBucket, uuid);
 	}
 
-	public InputStream getFile(final File file) {
-		Objects.requireNonNull(file);
+	public InputStream getFile(final String uid) {
+		Objects.requireNonNull(uid);
 		try {
+			final File file = this.fileDao.findFileByUid(uid);
 			final Path path = Paths.get(file.getPhysicalFile().getAbsolutePath());
 			return new BufferedInputStream(Files.newInputStream(path));
 		} catch (final IOException e) {
@@ -85,8 +85,9 @@ public class FileService {
 		}
 	}
 
-	public void removeFile(final File file) {
-		Objects.requireNonNull(file);
+	public void removeFile(final String uid) {
+		Objects.requireNonNull(uid);
+		final File file = this.fileDao.findFileByUid(uid);
 		final PhysicalFile physicalFile = file.getPhysicalFile();
 		final boolean isOrphan = this.fileDao.isOrphanPhysicalFile(physicalFile);
 		this.fileDao.delete(file);
@@ -105,7 +106,7 @@ public class FileService {
 		}
 	}
 
-	public File uploadTemporalFile(final InputStream inputStream) {
+	public FileDto uploadTemporalFile(final InputStream inputStream) {
 		Objects.requireNonNull(inputStream);
 		final FileBucket fileBucket = PRIVATE_BUCKET;
 		final String uuid = UUID.randomUUID().toString();
@@ -115,10 +116,11 @@ public class FileService {
 		final String hash = this.uploadFileToFilesystem(absolutePath, inputStream);
 		final PhysicalFile newPhysicalFile = buildNewPhysicalFile(fileBucket, uuid, absolutePath, hash);
 		file.setPhysicalFile(newPhysicalFile);
-		return file;
+		final FileMapper fileMapper = new FileMapper();
+		return fileMapper.map(file);
 	}
 
-	public File uploadFile(final InputStream inputStream, final String filename, final boolean publicAccess) {
+	public FileDto uploadFile(final InputStream inputStream, final String filename, final boolean publicAccess) {
 		Objects.requireNonNull(inputStream);
 		final FileBucket fileBucket = publicAccess ? PUBLIC_BUCKET : PRIVATE_BUCKET;
 		final File file = new File(filename);
@@ -134,7 +136,8 @@ public class FileService {
 			final PhysicalFile newPhysicalFile = buildNewPhysicalFile(fileBucket, uuid, absolutePath, hash);
 			file.setPhysicalFile(newPhysicalFile);
 		}
-		return this.fileDao.save(file);
+		this.fileDao.insert(file);
+		return new FileMapper().map(file);
 	}
 
 	private String uploadFileToFilesystem(final Path path, final InputStream inputStream) {

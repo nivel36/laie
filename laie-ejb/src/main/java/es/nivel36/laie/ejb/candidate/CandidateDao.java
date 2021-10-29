@@ -2,92 +2,86 @@ package es.nivel36.laie.ejb.candidate;
 
 import static es.nivel36.laie.ejb.core.util.Parameters.map;
 
-import java.lang.invoke.MethodHandles;
 import java.util.List;
 import java.util.Objects;
 
-import javax.persistence.NoResultException;
-import javax.validation.ValidationException;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import es.nivel36.laie.ejb.core.file.File;
-import es.nivel36.laie.ejb.core.model.AbstractIndexedDao;
+import es.nivel36.laie.ejb.core.model.AbstractDao;
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.core.model.Repository;
+import es.nivel36.laie.ejb.core.model.UidGenerator;
+import es.nivel36.laie.ejb.core.model.search.SearchFacets;
+import es.nivel36.laie.ejb.core.model.search.SearchResult;
+import es.nivel36.laie.ejb.core.model.search.SortField;
+import es.nivel36.laie.ejb.core.util.Parameters;
 
 @Repository
-public class CandidateDao extends AbstractIndexedDao<Candidate> {
+public class CandidateDao extends AbstractDao {
 
-	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
-
-	public boolean emailExists(final String email) {
-		Objects.requireNonNull(email);
-		return this.findByQuery(Boolean.class, "Candidate.emailExists", map("email", email));
+	public void insert(final Candidate candidate) {
+		Objects.requireNonNull(candidate);
+		this.setUid(candidate);
+		this.em.persist(candidate);
 	}
 
-	public List<Origin> findAllOrigins() {
-		return this.getPersistenceFacade().findAll(Origin.class, Page.ALL_RESULTS);
+	private void setUid(final Candidate candidate) {
+		String uid;
+		do {
+			uid = UidGenerator.generate(Candidate.class);
+			candidate.setUid(uid);
+		} while (!this.checkDuplicateUid(uid));
+	}
+
+	private boolean checkDuplicateUid(final String uid) {
+		final String namedQuery = "Candidate.checkDuplicateUid";
+		final Parameters parameters = map("uid", uid);
+		return this.findByQuery(Boolean.class, namedQuery, parameters);
+	}
+
+	public boolean checkDuplicateEmail(final String email) {
+		Objects.requireNonNull(email);
+		final String namedQuery = "Candidate.checkDuplicateEmail";
+		final Parameters parameters = map("email", email);
+		return this.findByQuery(Boolean.class, namedQuery, parameters);
 	}
 
 	public Candidate findByUid(final String uid) {
 		Objects.requireNonNull(uid);
-		try {
-			return this.findByQuery(Candidate.class, "Candidate.findByUid", map("uid", uid));
-		}
-		catch(NoResultException e) {
-			return null;
-		}
+		final String namedQuery = "Candidate.findByUid";
+		final Parameters parameters = map("uid", uid);
+		return this.findByQuery(Candidate.class, namedQuery, parameters);
 	}
 
 	public List<Candidate> findCandidates(final String jobOfferUid, final Page page) {
 		Objects.requireNonNull(jobOfferUid);
 		Objects.requireNonNull(page);
-		return this.findByQuery(Candidate.class, "Candidate.findByJobOffer", map("jobOfferUid", jobOfferUid), page);
+		final String namedQuery = "Candidate.findByJobOffer";
+		final Parameters parameters = map("jobOfferUid", jobOfferUid);
+		return this.findByQuery(Candidate.class, namedQuery, parameters, page);
 	}
 
 	public List<File> findCandidatesFiles(final String candidateUid, final Page page) {
 		Objects.requireNonNull(candidateUid);
 		Objects.requireNonNull(page);
-		return this.findByQuery(File.class, "Candidate.findFiles", map("candidateUid", candidateUid), page);
-	}
-
-	@Override
-	public Class<Candidate> getType() {
-		return Candidate.class;
-	}
-
-	private boolean isDuplicatedEmail(final String emailToInsert, final String emailInRepository) {
-		final boolean candidateHasChangedHisEmail = !emailToInsert.equals(emailInRepository);
-		final boolean newEmailAlredyExists = this.emailExists(emailToInsert);
-		return candidateHasChangedHisEmail && newEmailAlredyExists;
-	}
-
-	@Override
-	protected void preInsert(final Candidate candidate) {
-		if (this.emailExists(candidate.getEmail())) {
-			logger.warn("The email {} is in use", candidate.getEmail());
-			throw new ValidationException("Email duplicated");
-		}
-	}
-
-	@Override
-	protected void preUpdate(final Candidate candidate) {
-		final Candidate candidateInRepository = this.find(candidate.getId());
-		if (this.isDuplicatedEmail(candidate.getEmail(), candidateInRepository.getEmail())) {
-			logger.warn("The email {} is in use", candidate.getEmail());
-			throw new ValidationException("Email duplicated");
-		}
+		final String namedQuery = "Candidate.findFiles";
+		final Parameters parameters = map("uid", candidateUid);
+		return this.findByQuery(File.class, namedQuery, parameters, page);
 	}
 
 	public Candidate findCandidateWithFiles(final String candidateUid) {
 		Objects.requireNonNull(candidateUid);
-		return this.findByQuery(Candidate.class, "Candidate.findCandidateWithFiles", map("candidateUid", candidateUid));
+		final String namedQuery = "Candidate.findCandidateWithFiles";
+		final Parameters parameters = map("uid", candidateUid);
+		return this.findByQuery(Candidate.class, namedQuery, parameters);
 	}
 
-	@Override
-	public String[] searchFields() {
-		return new String[] { "_name", "_surname", "_jobProfile", "tags._label" };
+	public List<Origin> findAllOrigins() {
+		return this.findAll(Origin.class, Page.ALL_RESULTS);
+	}
+
+	public SearchResult<Candidate> search(final String searchText, final Page page, SortField sortOrder,
+			final SearchFacets searchFacets) {
+		final String[] searchFields = new String[] { "_name", "_surname", "_jobProfile", "tags._label" };
+		return search(Candidate.class, page, sortOrder, searchFacets, searchText, searchFields);
 	}
 }

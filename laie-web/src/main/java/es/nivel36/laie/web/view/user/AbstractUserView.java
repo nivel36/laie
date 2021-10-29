@@ -1,15 +1,8 @@
 package es.nivel36.laie.web.view.user;
 
-import static javax.faces.application.FacesMessage.SEVERITY_ERROR;
-
-import java.lang.invoke.MethodHandles;
 import java.util.List;
 import java.util.Objects;
 
-import javax.faces.application.FacesMessage;
-import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
-import javax.faces.validator.ValidatorException;
 import javax.inject.Inject;
 
 import org.omnifaces.cdi.Param;
@@ -18,41 +11,42 @@ import org.slf4j.LoggerFactory;
 
 import es.nivel36.laie.ejb.core.file.FileService;
 import es.nivel36.laie.ejb.core.model.Page;
-import es.nivel36.laie.ejb.user.User;
+import es.nivel36.laie.ejb.user.Role;
+import es.nivel36.laie.ejb.user.UserDto;
 import es.nivel36.laie.ejb.user.UserService;
 import es.nivel36.laie.web.core.util.PageEnum;
 import es.nivel36.laie.web.core.view.AbstractView;
 
 public abstract class AbstractUserView extends AbstractView {
 
-	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
+	private static final long serialVersionUID = 7151813864584776910L;
 
-	private static final long serialVersionUID = 1L;
+	private static final Logger logger = LoggerFactory.getLogger(AbstractUserView.class);
 
 	@Inject
 	protected transient FileService fileUploadService;
 
 	@Inject
-	@Param(name = "id", required = true, converter = "userConverter")
-	protected User user;
+	@Param(name = "uid", required = true, converter = "userConverter")
+	protected UserDto user;
 
 	@Inject
 	protected transient UserService userService;
 
 	public void changeRoleListener() {
 		logger.trace("Change role listener triggered");
-		if (this.user.isAdmin()) {
+		if (this.user.getRoleName().equals(Role.ADMIN.name())) {
 			this.user.setManager(null);
 		}
 	}
 
-	public User getUser() {
+	public UserDto getUser() {
 		return this.user;
 	}
 
-	public List<User> queryManager(final String query) {
+	public List<UserDto> queryManager(final String query) {
 		logger.trace("Search manager with the string {}", query);
-		final List<User> managers = this.userService.search(query, Page.TEN_RESULTS_PER_PAGE).getResultData();
+		final List<UserDto> managers = this.userService.search(query, Page.TEN_RESULTS_PER_PAGE).getResultData();
 		managers.remove(this.user);
 		return managers;
 	}
@@ -62,7 +56,7 @@ public abstract class AbstractUserView extends AbstractView {
 		this.fileUploadService = fileUploadService;
 	}
 
-	public void setUser(final User user) {
+	public void setUser(final UserDto user) {
 		this.user = user;
 	}
 
@@ -72,23 +66,6 @@ public abstract class AbstractUserView extends AbstractView {
 	}
 
 	protected String userUrl() {
-		return this.navigator.getRedirectUrl(PageEnum.USER, this.user);
-	}
-
-	public void validateEmail(final FacesContext context, final UIComponent component, final Object value) {
-		if (value == null) {
-			return;
-		}
-		final String userEmail = (String) value;
-		logger.trace("Validate user email {}", userEmail);
-		if (userEmail.equals(this.user.getEmail())) {
-			// If the old and the new email are equals, the user is not updating the email.
-			return;
-		}
-		if (this.userService.isEmailInUse(userEmail)) {
-			logger.warn("Email {} exists", userEmail);
-			final String msg = this.translator.message("user.error.email_exists");
-			throw new ValidatorException(new FacesMessage(SEVERITY_ERROR, msg, msg));
-		}
+		return this.navigator.getRedirectUrl(PageEnum.USER, this.user.getUid());
 	}
 }

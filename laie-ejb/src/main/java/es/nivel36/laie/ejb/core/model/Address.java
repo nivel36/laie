@@ -16,6 +16,21 @@ public class Address implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	public Address() {
+
+	}
+
+	public Address(AddressDto dto) {
+		this.city = dto.getCity();
+		this.country = dto.getCountry();
+		this.door = dto.getDoor();
+		this.number = dto.getNumber();
+		this.region = dto.getRegion();
+		this.storey = dto.getStorey();
+		this.street = dto.getStreet();
+		this.zipCode = dto.getZipCode();
+	}
+
 	@Field(name = "_city")
 	@Field(name = "city", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField(forField = "city")

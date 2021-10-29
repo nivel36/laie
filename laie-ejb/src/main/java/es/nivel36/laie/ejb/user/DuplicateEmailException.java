@@ -1,8 +1,8 @@
 package es.nivel36.laie.ejb.user;
 
-public class DuplicateEmailException extends RuntimeException {
+public class DuplicateEmailException extends Exception {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 4901899794757264099L;
 
 	public DuplicateEmailException() {
 	}
@@ -23,5 +23,4 @@ public class DuplicateEmailException extends RuntimeException {
 	public DuplicateEmailException(final Throwable cause) {
 		super(cause);
 	}
-
 }

@@ -2,7 +2,6 @@ package es.nivel36.laie.ejb.job.meeting;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.OffsetTime;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -21,14 +20,14 @@ import org.hibernate.search.annotations.IndexedEmbedded;
 
 import es.nivel36.laie.ejb.core.model.AbstractIndexedEntity;
 import es.nivel36.laie.ejb.core.model.Ownerable;
-import es.nivel36.laie.ejb.job.candidature.JobCandidature;
+import es.nivel36.laie.ejb.job.offer.JobOffer;
 import es.nivel36.laie.ejb.user.User;
 
 @Entity
 @Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "jobCandidatureId", "datePlanned" }) })
 public class Meeting extends AbstractIndexedEntity implements Ownerable {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -8068167269155086050L;
 
 	@ElementCollection
 	@CollectionTable(name = "emails", joinColumns = @JoinColumn(name = "meeting_id"))
@@ -44,8 +43,8 @@ public class Meeting extends AbstractIndexedEntity implements Ownerable {
 	private Duration duration = Duration.ofMinutes(30);
 
 	@ManyToOne
-	@JoinColumn(name = "jobCandidatureId")
-	private JobCandidature jobCandidature;
+	@JoinColumn(name = "jobOfferId")
+	private JobOffer jobOffer;
 
 	private String location;
 
@@ -84,7 +83,7 @@ public class Meeting extends AbstractIndexedEntity implements Ownerable {
 		}
 		final Meeting other = (Meeting) obj;
 		return Objects.equals(this.datePlanned, other.datePlanned) && Objects.equals(this.title, other.title)
-				&& Objects.equals(this.jobCandidature, other.jobCandidature)
+				&& Objects.equals(this.jobOffer, other.jobOffer)
 				&& Objects.equals(this.result, other.result);
 	}
 
@@ -100,8 +99,8 @@ public class Meeting extends AbstractIndexedEntity implements Ownerable {
 		return duration;
 	}
 
-	public JobCandidature getJobCandidature() {
-		return this.jobCandidature;
+	public JobOffer getJobOffer() {
+		return this.jobOffer;
 	}
 
 	public String getLocation() {
@@ -127,7 +126,8 @@ public class Meeting extends AbstractIndexedEntity implements Ownerable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(this.datePlanned, this.title, this.jobCandidature, this.result);
+		return Objects.hash(this.datePlanned, this.title, this.jobOffer
+				, this.result);
 	}
 
 	public void removeAttendee(final String email) {
@@ -147,8 +147,8 @@ public class Meeting extends AbstractIndexedEntity implements Ownerable {
 		this.duration = duration;
 	}
 
-	public void setJobCandidature(final JobCandidature jobCandidature) {
-		this.jobCandidature = jobCandidature;
+	public void setJobOffer(final JobOffer jobOffer) {
+		this.jobOffer = jobOffer;
 	}
 
 	public void setLocation(final String location) {

@@ -20,7 +20,7 @@ public class JobCandidatureConverter implements Converter<JobCandidature> {
 		if (value == null) {
 			return null;
 		}
-		return this.jobCandidatureService.findByUid(value);
+		return this.jobCandidatureService.findContactByUid(value);
 	}
 
 	@Override

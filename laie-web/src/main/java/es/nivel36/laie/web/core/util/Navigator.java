@@ -109,6 +109,10 @@ public class Navigator {
 	public String getRedirectUrl(PageEnum page, Obfuscable id) {
 		return new Page(page).addQueryIdParam(id.getUid()).addQueryRedirectParam().getUrl();
 	}
+	
+	public String getRedirectUrl(PageEnum page, String uid) {
+		return new Page(page).addQueryIdParam(uid).addQueryRedirectParam().getUrl();
+	}
 
 	public String getUrl(PageEnum page) {
 		return new Page(page).getUrl();

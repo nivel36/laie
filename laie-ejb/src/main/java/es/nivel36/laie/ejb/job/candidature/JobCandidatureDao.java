@@ -5,63 +5,63 @@ import static es.nivel36.laie.ejb.core.util.Parameters.map;
 import java.util.List;
 import java.util.Objects;
 
-import es.nivel36.laie.ejb.candidate.Candidate;
-import es.nivel36.laie.ejb.core.model.AbstractIndexedDao;
+import es.nivel36.laie.ejb.core.model.AbstractDao;
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.core.model.Repository;
-import es.nivel36.laie.ejb.job.offer.JobOffer;
-import es.nivel36.laie.ejb.user.User;
+import es.nivel36.laie.ejb.core.util.Parameters;
 
 @Repository
-public class JobCandidatureDao extends AbstractIndexedDao<JobCandidature> {
+public class JobCandidatureDao extends AbstractDao {
 
-	private static final String JOB_OFFER = "jobOffer";
+	public void insert(final JobCandidature jobCandidature) {
+		Objects.requireNonNull(jobCandidature);
+		this.em.persist(jobCandidature);
+	}
 
-	public List<JobCandidature> findApprovedJobCanditures(final JobOffer jobOffer, final Page page) {
-		Objects.requireNonNull(jobOffer);
+	public void delete(final String jobOffereUid, final String candidateUid) {
+		Objects.requireNonNull(jobOffereUid);
+		Objects.requireNonNull(candidateUid);
+		final JobCandidature jobCandidature = this.findByJobOfferAndCandidate(jobOffereUid, candidateUid);
+		this.em.remove(jobCandidature);
+	}
+
+	public List<JobCandidature> findApprovedJobCanditures(final String jobOfferUid, final Page page) {
+		Objects.requireNonNull(jobOfferUid);
 		Objects.requireNonNull(page);
-		return this.findByQuery(JobCandidature.class, "JobCandidature.findApprovedByJobOffer",
-				map(JOB_OFFER, jobOffer), page);
+		final String namedQuery = "JobCandidature.findApprovedByJobOfferUid";
+		final Parameters parameters = map("jobOfferUid", jobOfferUid);
+		return this.findByQuery(JobCandidature.class, namedQuery, parameters, page);
 	}
 
-	public JobCandidature findByJobOfferAndCandidate(final JobOffer jobOffer, final Candidate candidate) {
-		Objects.requireNonNull(jobOffer);
-		Objects.requireNonNull(candidate);
-		return this.findByQuery(JobCandidature.class, "JobCandidature.findByJobOfferAndCandidate",
-				map(JOB_OFFER, jobOffer).and("candidate", candidate));
+	public JobCandidature findByJobOfferAndCandidate(final String jobOfferUid, final String candidateUid) {
+		Objects.requireNonNull(jobOfferUid);
+		Objects.requireNonNull(candidateUid);
+		final String namedQuery = "JobCandidature.findByJobOfferAndCandidate";
+		final Parameters parameters = map("jobOfferUid", jobOfferUid).and("candidateUid", candidateUid);
+		return this.findByQuery(JobCandidature.class, namedQuery, parameters);
 	}
 
-	public JobCandidature findByUid(final String uid) {
-		Objects.requireNonNull(uid);
-		return this.findByQuery(JobCandidature.class, "JobCandidature.findByUid", map("uid", uid));
-	}
-
-	public List<JobCandidature> findJobCandidatures(final Candidate candidate, final Page page) {
-		Objects.requireNonNull(candidate);
+	public List<JobCandidature> findCandidatesJobCandidatures(final String candidateUid, final Page page) {
+		Objects.requireNonNull(candidateUid);
 		Objects.requireNonNull(page);
-		return this.findByQuery(JobCandidature.class, "JobCandidature.findByCandidate", map("candidate", candidate),
-				page);
+		final String namedQuery = "JobCandidature.findByCandidateUid";
+		final Parameters parameters = map("candidateUid", candidateUid);
+		return this.findByQuery(JobCandidature.class, namedQuery, parameters, page);
 	}
 
-	public List<JobCandidature> findJobCandidatures(final User user, final Page page) {
-		Objects.requireNonNull(user);
+	public List<JobCandidature> findUsersJobCandidatures(final String userUid, final Page page) {
+		Objects.requireNonNull(userUid);
 		Objects.requireNonNull(page);
-		return this.findByQuery(JobCandidature.class, "JobCandidature.findByUser", map("user", user), page);
+		final String namedQuery = "JobCandidature.findByUserUid";
+		final Parameters parameters = map("userUid", userUid);
+		return this.findByQuery(JobCandidature.class, namedQuery, parameters, page);
 	}
 
-	public List<JobCandidature> findJobCanditures(final JobOffer jobOffer, final Page page) {
-		Objects.requireNonNull(jobOffer, "JobOffer can't be null");
-		Objects.requireNonNull(page, "Page can't be null");
-		return this.findByQuery(JobCandidature.class, "JobCandidature.findByJobOffer", map(JOB_OFFER, jobOffer), page);
-	}
-
-	@Override
-	protected Class<JobCandidature> getType() {
-		return JobCandidature.class;
-	}
-
-	@Override
-	public String[] searchFields() {
-		return new String[] {};
+	public List<JobCandidature> findJobOffersJobCanditures(final String jobOfferUid, final Page page) {
+		Objects.requireNonNull(jobOfferUid);
+		Objects.requireNonNull(page);
+		final String namedQuery = "JobCandidature.findByJobOfferUid";
+		final Parameters parameters = map("jobOfferUid", jobOfferUid);
+		return this.findByQuery(JobCandidature.class, namedQuery, parameters, page);
 	}
 }

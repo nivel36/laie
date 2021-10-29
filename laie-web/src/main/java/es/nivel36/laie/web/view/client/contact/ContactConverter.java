@@ -20,7 +20,7 @@ public class ContactConverter implements Converter<Contact> {
 		if (value == null) {
 			return null;
 		}
-		return this.contactService.findByUid(value);
+		return this.contactService.findContactByUid(value);
 	}
 
 	@Override

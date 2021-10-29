@@ -4,29 +4,58 @@ import static es.nivel36.laie.ejb.core.util.Parameters.map;
 
 import java.util.Objects;
 
-import es.nivel36.laie.ejb.core.model.AbstractIndexedDao;
+import es.nivel36.laie.ejb.core.model.AbstractDao;
+import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.core.model.Repository;
+import es.nivel36.laie.ejb.core.model.UidGenerator;
+import es.nivel36.laie.ejb.core.model.search.SearchFacets;
+import es.nivel36.laie.ejb.core.model.search.SearchResult;
+import es.nivel36.laie.ejb.core.model.search.SortField;
+import es.nivel36.laie.ejb.core.util.Parameters;
+import es.nivel36.laie.ejb.user.User;
 
 @Repository
-public class ClientDao extends AbstractIndexedDao<Client> {
+public class ClientDao extends AbstractDao {
 
-	public Client findByUid(final String uid) {
+	public void insert(final Client client) {
+		Objects.requireNonNull(client);
+		this.setUid(client);
+		em.persist(client);
+	}
+
+	private void setUid(final Client client) {
+		String uid;
+		do {
+			uid = UidGenerator.generate(Client.class);
+			client.setUid(uid);
+		} while (!this.checkDuplicateUid(uid));
+	}
+
+	private boolean checkDuplicateUid(final String uid) {
+		final String namedQuery = "Client.checkDuplicateUid";
+		final Parameters parameters = map("uid", uid);
+		return this.findByQuery(Boolean.class, namedQuery, parameters);
+	}
+
+	public Client findClientByUid(final String uid) {
 		Objects.requireNonNull(uid);
-		return this.findByQuery(Client.class, "Client.findByUid", map("clientUid", uid));
+		final String namedQuery = "Client.findByUid";
+		final Parameters parameters = map("uid", uid);
+		return this.findByQuery(Client.class, namedQuery, parameters);
 	}
 
-	public Client findByCif(final String cif) {
+	public Client findClientByCif(final String cif) {
 		Objects.requireNonNull(cif);
-		return this.findByQuery(Client.class, "Client.findByCif", map("cif", cif));
+		final String namedQuery = "Client.findByCif";
+		final Parameters parameters = map("cif", cif);
+		return this.findByQuery(Client.class, namedQuery, parameters);
 	}
 
-	@Override
-	public Class<Client> getType() {
-		return Client.class;
-	}
-
-	@Override
-	public String[] searchFields() {
-		return new String[] { "_name" };
+	public SearchResult<User> search(final String searchText, final Page page, SortField sortOrder,
+			final SearchFacets searchFacets) {
+		Objects.requireNonNull(searchText);
+		Objects.requireNonNull(page);
+		final String[] fields = new String[] { "_name" };
+		return this.search(User.class, page, sortOrder, searchFacets, searchText, fields);
 	}
 }

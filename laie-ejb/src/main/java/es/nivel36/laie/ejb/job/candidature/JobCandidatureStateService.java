@@ -1,14 +1,14 @@
 package es.nivel36.laie.ejb.job.candidature;
 
+import java.util.Objects;
+
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
-import es.nivel36.laie.ejb.core.AbstractService;
-import es.nivel36.laie.ejb.core.model.AbstractDao;
 import es.nivel36.laie.ejb.core.model.Repository;
 
 @Stateless
-public class JobCandidatureStateService extends AbstractService<JobCandidatureState> {
+public class JobCandidatureStateService {
 
 	@Repository
 	@Inject
@@ -18,12 +18,8 @@ public class JobCandidatureStateService extends AbstractService<JobCandidatureSt
 		return this.jobCandidatureStateDao.findInitialState();
 	}
 
-	@Override
-	protected AbstractDao<JobCandidatureState> getDao() {
-		return this.jobCandidatureStateDao;
-	}
-
 	public void setJobCandidatureStateDao(final JobCandidatureStateDao jobCandidatureStateDao) {
+		Objects.requireNonNull(jobCandidatureStateDao);
 		this.jobCandidatureStateDao = jobCandidatureStateDao;
 	}
 }

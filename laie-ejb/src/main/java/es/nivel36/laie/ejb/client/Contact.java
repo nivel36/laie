@@ -16,15 +16,13 @@ import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.SortableField;
 import org.hibernate.search.annotations.Store;
 
-import es.nivel36.laie.ejb.core.Subject;
-import es.nivel36.laie.ejb.core.file.File;
 import es.nivel36.laie.ejb.core.model.AbstractIndexedEntity;
 
 @Entity
 @Indexed
-public class Contact extends AbstractIndexedEntity implements Subject {
+public class Contact extends AbstractIndexedEntity {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -2403549918176092142L;
 
 	@NotNull
 	@ManyToOne
@@ -50,10 +48,6 @@ public class Contact extends AbstractIndexedEntity implements Subject {
 
 	@Column(length = 12)
 	protected String phoneNumber;
-
-	@ManyToOne
-	@JoinColumn(name = "picture")
-	protected File picture;
 
 	@Column(length = 128)
 	private String position;
@@ -107,10 +101,6 @@ public class Contact extends AbstractIndexedEntity implements Subject {
 		return this.phoneNumber;
 	}
 
-	public File getPicture() {
-		return this.picture;
-	}
-
 	public String getPosition() {
 		return this.position;
 	}
@@ -142,10 +132,6 @@ public class Contact extends AbstractIndexedEntity implements Subject {
 
 	public void setPhoneNumber(final String phoneNumber) {
 		this.phoneNumber = phoneNumber;
-	}
-
-	public void setPicture(final File picture) {
-		this.picture = picture;
 	}
 
 	public void setPosition(final String position) {

@@ -5,37 +5,63 @@ import static es.nivel36.laie.ejb.core.util.Parameters.map;
 import java.util.List;
 import java.util.Objects;
 
-import javax.persistence.NoResultException;
-
-import es.nivel36.laie.ejb.core.model.AbstractIndexedDao;
+import es.nivel36.laie.ejb.core.model.AbstractDao;
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.core.model.Repository;
+import es.nivel36.laie.ejb.core.model.UidGenerator;
+import es.nivel36.laie.ejb.core.model.search.SearchFacets;
+import es.nivel36.laie.ejb.core.model.search.SearchResult;
+import es.nivel36.laie.ejb.core.model.search.SortField;
+import es.nivel36.laie.ejb.core.util.Parameters;
 
 @Repository
-public class ContactDao extends AbstractIndexedDao<Contact> {
+public class ContactDao extends AbstractDao {
 
-	public Contact findByUid(final String uid) {
+	public void insert(final Contact contact) {
+		Objects.requireNonNull(contact);
+		this.setUid(contact);
+		this.em.persist(contact);
+	}
+
+	private void setUid(Contact contact) {
+		String uid;
+		do {
+			uid = UidGenerator.generate(Contact.class);
+			contact.setUid(uid);
+		} while (!this.checkDuplicateUid(uid));
+	}
+
+	private boolean checkDuplicateUid(final String uid) {
+		final String namedQuery = "Contact.checkDuplicateUid";
+		final Parameters parameters = map("uid", uid);
+		return this.findByQuery(Boolean.class, namedQuery, parameters);
+	}
+	
+	public void delete(final Contact contact) {
+		Objects.requireNonNull(contact);
+		this.delete(Contact.class, contact);
+	}
+	
+	public Contact findContactByUid(final String uid) {
 		Objects.requireNonNull(uid);
-		try {
-			return this.findByQuery(Contact.class, "Contact.findByUid", map("uid", uid));
-		} catch (NoResultException e) {
-			return null;
-		}
+		final String namedQuery = "Contact.findByUid";
+		final Parameters parameters = map("uid", uid);
+		return this.findByQuery(Contact.class, namedQuery, parameters);
 	}
 
 	public List<Contact> findContactsByClient(final String clientUid, final Page page) {
 		Objects.requireNonNull(clientUid);
-		return this.getPersistenceFacade().findByQuery(Contact.class, "Contact.findByClient",
-				map("clientUid", clientUid), page);
+		Objects.requireNonNull(page);
+		final String namedQuery = "Contact.findByClient";
+		final Parameters parameters = map("clientUid", clientUid);
+		return this.findByQuery(Contact.class, namedQuery, parameters, page);
 	}
 
-	@Override
-	protected Class<Contact> getType() {
-		return Contact.class;
-	}
-
-	@Override
-	public String[] searchFields() {
-		return new String[] { "_name", "_surname", "_email" };
+	public SearchResult<Contact> search(final String searchText, final Page page, SortField sortOrder,
+			final SearchFacets searchFacets) {
+		Objects.requireNonNull(searchText);
+		Objects.requireNonNull(page);
+		final String[] fields = new String[] { "_name", "_surname, _email" };
+		return this.search(Contact.class, page, sortOrder, searchFacets, searchText, fields);
 	}
 }
