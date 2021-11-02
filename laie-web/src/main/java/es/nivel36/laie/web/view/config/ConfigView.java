@@ -4,7 +4,6 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UncheckedIOException;
-import java.lang.invoke.MethodHandles;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -20,9 +19,9 @@ import org.primefaces.model.file.UploadedFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import es.nivel36.laie.ejb.core.file.File;
 import es.nivel36.laie.ejb.core.file.FileService;
-import es.nivel36.laie.ejb.user.User;
+import es.nivel36.laie.ejb.user.DuplicateEmailException;
+import es.nivel36.laie.ejb.user.UserDto;
 import es.nivel36.laie.ejb.user.UserService;
 import es.nivel36.laie.web.core.view.AbstractView;
 
@@ -30,21 +29,34 @@ import es.nivel36.laie.web.core.view.AbstractView;
 @ViewScoped
 public class ConfigView extends AbstractView {
 
-	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
+	private static final long serialVersionUID = -1963260899429126179L;
 
-	private static final long serialVersionUID = 1L;
-
-	@Inject
-	private FileService fileService;
+	private static final Logger logger = LoggerFactory.getLogger(ConfigView.class);
 
 	private boolean imageChanged;
 
-	private User user;
+	private UserDto user;
 
-	private File userImage;
+	private String userImage;
+	
+	@Inject
+	private FileService fileService;
 
 	@Inject
 	private transient UserService userService;
+	
+	@PostConstruct
+	public void init() {
+		this.user = this.sessionUser.get();
+		this.userImage = this.user.getImageFileName();
+		logger.debug("Config user {} init", this.user);
+	}
+	
+	private void refreshUser() {
+		this.user = this.sessionUser.get();
+		this.userImage = this.user.getImageFileName();
+		this.sessionUser.refresh();
+	}
 
 	public void captureImage(final CaptureEvent event) {
 		Objects.requireNonNull(event);
@@ -53,68 +65,61 @@ public class ConfigView extends AbstractView {
 		if (data == null) {
 			return;
 		}
-		ConfigView.logger.debug("Upload camera image for user {} action performed", this.user);
+		logger.debug("Upload camera image for user {} action performed", this.user);
 		try (final InputStream inputStream = new ByteArrayInputStream(data);) {
-			this.userImage = this.fileService.uploadTemporalFile(inputStream);
+			this.userImage = this.fileService.uploadTemporalFile(inputStream).getPath();
 		} catch (final IOException e) {
 			this.imageChanged = false;
 			throw new UncheckedIOException(e);
 		}
 	}
-
-	public void changeLanguage() {
-		final Locale newLocale = new Locale(this.user.getLanguage());
-		ConfigView.logger.debug("Changed locale to {} for user {} action performed", newLocale, this.user);
-		this.facesContext.getViewRoot().setLocale(newLocale);
-	}
-
-	private void changeUserImage() {
-		try (final InputStream inputStream = this.fileService.getFile(this.userImage)) {
-			this.userService.changeUsersImage(this.user.getUid(), inputStream);
-		} catch (final IOException e) {
-			throw new UncheckedIOException(e);
+	
+	public void uploadImage(final FileUploadEvent event) throws IOException {
+		Objects.requireNonNull(event);
+		this.imageChanged = true;
+		final UploadedFile uploadedFile = event.getFile();
+		if (uploadedFile == null) {
+			return;
+		}
+		logger.debug("Upload user {} image action performed", this.user);
+		try (final InputStream inputStream = uploadedFile.getInputStream()) {
+			this.userImage = this.fileService.uploadTemporalFile(inputStream).getPath();
 		}
 	}
-
+	
 	public void deleteImage() {
 		if (this.userImage != null) {
 			this.imageChanged = true;
 			this.userImage = null;
 		}
 	}
-
-	private void deleteUserImage() {
-		this.userService.deleteUsersImage(this.user.getUid());
+	
+	public void changeLanguage() {
+		String language = this.user.getLanguage();
+		final Locale newLocale = new Locale(language);
+		logger.debug("Changed locale to {} for user {} action performed", newLocale, this.user);
+		this.user.setLanguage(language);
+		try {
+			this.userService.updateUser(user);
+		} catch (DuplicateEmailException e) {
+			// No puede ocurrir puesto que solo estamos cambiando el idioma.
+		}
+		this.facesContext.getViewRoot().setLocale(newLocale);
 	}
-
-	public User getUser() {
-		return this.user;
-	}
-
-	public File getUserImage() {
-		return this.userImage;
-	}
-
-	@PostConstruct
-	public void init() {
-		this.refreshUser();
-		ConfigView.logger.debug("Config user {} init", this.user);
-	}
-
-	private void refreshUser() {
-		this.sessionUser.refresh();
-		this.user = this.sessionUser.get();
-		this.userImage = this.user.getPicture();
-	}
-
+	
 	public void save() {
-		ConfigView.logger.debug("Save user {} action performed", this.user);
-		this.userService.save(this.user);
+		logger.debug("Save user {} action performed", this.user);
+		try {
+			this.userService.updateUser(user);
+		}
+		catch(final DuplicateEmailException e) {
+			//TODO: gestionar error 
+		}
 		this.saveImage();
 		this.refreshUser();
 		this.addMessage(FacesMessage.SEVERITY_INFO, "action.save_action_performed", "action.save_action_performed");
 	}
-
+	
 	private void saveImage() {
 		if (this.imageChanged) {
 			if (this.userImage == null) {
@@ -126,31 +131,38 @@ public class ConfigView extends AbstractView {
 			}
 		}
 	}
-
-	public void setFileService(final FileService fileService) {
-		this.fileService = fileService;
+	
+	private void deleteUserImage() {
+		this.userService.deleteUsersImage(this.user.getUid());
+	}
+	
+	private void changeUserImage() {
+		try (final InputStream inputStream = this.fileService.getFile(this.userImage)) {
+			this.userService.changeUsersImage(this.user.getUid(), inputStream);
+		} catch (final IOException e) {
+			throw new UncheckedIOException(e);
+		}
+	}
+	
+	public UserDto getUser() {
+		return this.user;
 	}
 
-	public void setUser(final User user) {
-		Objects.requireNonNull(user);
+	public String getUserImage() {
+		return this.userImage;
+	}
+
+	public void setUser(final UserDto user) {
 		this.user = user;
+	}
+	
+	public void setFileService(final FileService fileService) {
+		Objects.requireNonNull(fileService);
+		this.fileService = fileService;
 	}
 
 	public void setUserService(final UserService userService) {
 		Objects.requireNonNull(userService);
 		this.userService = userService;
-	}
-
-	public void uploadImage(final FileUploadEvent event) throws IOException {
-		Objects.requireNonNull(event);
-		this.imageChanged = true;
-		final UploadedFile uploadedFile = event.getFile();
-		if (uploadedFile == null) {
-			return;
-		}
-		ConfigView.logger.debug("Upload user {} image action performed", this.user);
-		try (final InputStream inputStream = uploadedFile.getInputStream()) {
-			this.userImage = this.fileService.uploadTemporalFile(inputStream);
-		}
 	}
 }

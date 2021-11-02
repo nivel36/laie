@@ -13,6 +13,8 @@ import org.slf4j.LoggerFactory;
 @ViewScoped
 public class EditCandidateView extends AbstractCandidateView {
 
+	private static final long serialVersionUID = -5736997599473134307L;
+	
 	private static final Logger logger = LoggerFactory.getLogger(EditCandidateView.class);
 
 	@PostConstruct

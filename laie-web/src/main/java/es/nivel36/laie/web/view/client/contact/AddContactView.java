@@ -1,18 +1,14 @@
 package es.nivel36.laie.web.view.client.contact;
 
-import java.lang.invoke.MethodHandles;
-
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.omnifaces.cdi.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import es.nivel36.laie.ejb.client.Client;
-import es.nivel36.laie.ejb.client.Contact;
+import es.nivel36.laie.ejb.client.ContactDto;
 import es.nivel36.laie.ejb.client.ContactService;
 import es.nivel36.laie.web.core.util.PageEnum;
 import es.nivel36.laie.web.core.view.AbstractView;
@@ -21,47 +17,35 @@ import es.nivel36.laie.web.core.view.AbstractView;
 @ViewScoped
 public class AddContactView extends AbstractView {
 
-	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
+	private static final long serialVersionUID = 5239278570997577504L;
 
-	private static final long serialVersionUID = 1L;
+	private static final Logger logger = LoggerFactory.getLogger(AddContactView.class);
 
-	@Inject
-	@Param(name = "clientId", required = true)
-	private Client client;
+	private String clientUid;
 
-	private Contact contact;
+	private ContactDto contact;
 
 	@Inject
 	private transient ContactService contactService;
-
-	private Contact buildNewContact(final Client client) {
-		final Contact newContact = new Contact();
-		newContact.setClient(client);
-		newContact.setPhoneNumber(client.getPhoneNumber());
-		return newContact;
-	}
-
-	public Client getClient() {
-		return this.client;
-	}
-
-	public Contact getContact() {
-		return this.contact;
-	}
-
+	
 	@PostConstruct
 	public void init() {
 		logger.debug("New contact");
-		this.contact = this.buildNewContact(this.client);
+		this.clientUid = this.getValueFromGetParameters("clientUid");
+		this.contact = new ContactDto();
 	}
 
 	public String save() {
 		logger.debug("Contact add action performed");
-		this.contactService.save(this.contact);
-		return this.navigator.getRedirectUrl(PageEnum.CLIENT, this.client);
+		this.contactService.addContact(clientUid,contact);
+		return this.navigator.getRedirectUrl(PageEnum.CLIENT, this.clientUid);
+	}
+	
+	public ContactDto getContact() {
+		return this.contact;
 	}
 
-	public void setContact(final Contact contact) {
+	public void setContact(final ContactDto contact) {
 		this.contact = contact;
 	}
 

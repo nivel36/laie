@@ -12,7 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import es.nivel36.laie.ejb.user.Credential;
-import es.nivel36.laie.ejb.user.User;
+import es.nivel36.laie.ejb.user.UserDto;
 import es.nivel36.laie.ejb.user.UserService;
 import es.nivel36.laie.web.core.util.PageEnum;
 import es.nivel36.laie.web.core.view.AbstractView;
@@ -31,7 +31,7 @@ public class ChangePasswordView extends AbstractView {
 
 	private String repeatPassword;
 
-	private User user;
+	private UserDto user;
 
 	private Credential userCredential;
 
@@ -51,7 +51,7 @@ public class ChangePasswordView extends AbstractView {
 			this.facesContext.validationFailed();
 			return null;
 		}
-		this.userService.changePassword(this.user.getEmail(), this.newPassword);
+		this.userService.changePassword(this.user.getEmail(), this.newPassword, null);
 		this.sessionUser.refresh();
 		return PageEnum.CONFIG.getUrl();
 	}

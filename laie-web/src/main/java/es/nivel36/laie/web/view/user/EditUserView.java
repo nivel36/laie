@@ -1,7 +1,5 @@
 package es.nivel36.laie.web.view.user;
 
-import java.lang.invoke.MethodHandles;
-
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
@@ -16,29 +14,31 @@ import es.nivel36.laie.web.core.IllegalPageStateException;
 @ViewScoped
 public class EditUserView extends AbstractUserView {
 
-	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
+	private static final long serialVersionUID = -7714492306802728830L;
 
-	private static final long serialVersionUID = 1L;
+	private static final Logger logger = LoggerFactory.getLogger(EditUserView.class);
+	
+	protected String uid;
+	
+	@PostConstruct
+	public void init() {
+		uid = this.getValueFromGetParameters("uid");
+		if(uid == null) {
+			throw new IllegalPageStateException();
+		}
+		user = this.userService.findUserByUid(uid);
+		if(user== null) {
+			throw new IllegalPageStateException();
+		}
+		this.checkEditPermission();
+		logger.trace("User {} edit init", this.user.getEmail());
+	}
 
 	private void checkEditPermission() {
 		if (!this.sessionUser.isAdmin()) {
 			logger.error("User {} hasn't got priviliges to edit user {}", this.sessionUser.get(), this.user);
 			throw new SecurityException();
 		}
-	}
-
-	private void checkNonNullUser() {
-		if (this.user == null) {
-			logger.error("User is null");
-			throw new IllegalPageStateException();
-		}
-	}
-
-	@PostConstruct
-	public void init() {
-		this.checkNonNullUser();
-		this.checkEditPermission();
-		logger.trace("User {} edit init", this.user.getEmail());
 	}
 
 	public String save() throws DuplicateEmailException {

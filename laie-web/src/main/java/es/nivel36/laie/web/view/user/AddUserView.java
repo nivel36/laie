@@ -16,15 +16,16 @@ import es.nivel36.laie.ejb.user.UserDto;
 @ViewScoped
 public class AddUserView extends AbstractUserView {
 
-	private static final long serialVersionUID = 5488456059551016365L;
-
-	private static final Logger logger = LoggerFactory.getLogger(AbstractUserView.class);
-
-	private String password;
-
-	private String repeatPassword;
-
-	private boolean sendWelcomeEmail;
+	private static final long serialVersionUID = 2822959833449476143L;
+	
+	private static final Logger logger = LoggerFactory.getLogger(AddUserView.class);
+	
+	@PostConstruct
+	public void init() {
+		logger.trace("New user init");
+		this.checkAddPermission();
+		this.user = this.buildNewUser();
+	}
 
 	private UserDto buildNewUser() {
 		final UserDto newUser = new UserDto();
@@ -40,46 +41,14 @@ public class AddUserView extends AbstractUserView {
 		}
 	}
 
-	public String getPassword() {
-		return this.password;
-	}
-
-	public String getRepeatPassword() {
-		return this.repeatPassword;
-	}
-
-	@PostConstruct
-	public void init() {
-		logger.trace("New user init");
-		this.checkAddPermission();
-		this.user = this.buildNewUser();
-		this.sendWelcomeEmail = true;
-	}
-
-	public boolean isSendWelcomeEmail() {
-		return this.sendWelcomeEmail;
-	}
-
 	public String save() throws DuplicateEmailException {
 		logger.debug("Create new user action performed");
 		try {
-			this.userService.addUser(this.user);
+			this.userService.addUser(this.user, manager.getUid());
 		} catch (DuplicateEmailException e) {
 			//TODO: gestionar excepcion
 			throw e;
 		}
 		return this.userUrl();
-	}
-
-	public void setPassword(final String password) {
-		this.password = password;
-	}
-
-	public void setRepeatPassword(final String repeatPassword) {
-		this.repeatPassword = repeatPassword;
-	}
-
-	public void setSendWelcomeEmail(final boolean sendWelcomeEmail) {
-		this.sendWelcomeEmail = sendWelcomeEmail;
 	}
 }
