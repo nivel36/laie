@@ -31,7 +31,7 @@ public class CandidateRestController extends AbstractRestController {
 	@Path("/{uid:[0-9][0-9]*}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public CandidateDto find(@PathParam("uid") final String uid) {
-		return this.candidateService.findByUid(uid);
+		return this.candidateService.findCandidateByUid(uid);
 	}
 
 	@POST
@@ -39,7 +39,7 @@ public class CandidateRestController extends AbstractRestController {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response insert(@Valid final CandidateDto candidateDto) {
 		Response.ResponseBuilder builder = null;
-		this.candidateService.addClient(candidateDto);
+		this.candidateService.addCandidate(candidateDto);
 		builder = Response.ok();
 		return builder.build();
 	}

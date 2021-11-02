@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
@@ -16,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import es.nivel36.laie.ejb.core.file.File;
 import es.nivel36.laie.ejb.core.file.FileDto;
 import es.nivel36.laie.ejb.core.file.FileJpaDao;
+import es.nivel36.laie.ejb.core.file.FileMapper;
 import es.nivel36.laie.ejb.core.file.FileService;
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.core.model.Repository;
@@ -39,17 +39,28 @@ public class CandidateService {
 	@Repository
 	private FileJpaDao fileDao;
 
-	private CandidateMerger candidateMerger;
+	private CandidateMerger candidateMerger = new CandidateMerger();
 
-	private CandidateMapper candidateMapper;
-
-	@PostConstruct
-	public void init() {
-		candidateMerger = new CandidateMerger();
-		candidateMapper = new CandidateMapper();
+	private CandidateMapper candidateMapper = new CandidateMapper();
+	
+	public CandidateDto addCandidate(final CandidateDto candidate) {
+		Objects.requireNonNull(candidate);
+		logger.debug("Add candidate {}", candidate);
+		final Candidate entity = new Candidate();
+		candidateMerger.merge(entity, candidate);
+		this.candidateDao.insert(entity);
+		return candidateMapper.map(entity);
+	}
+	
+	public void updateCandidate(final CandidateDto candidate) {
+		Objects.requireNonNull(candidate);
+		logger.debug("Update candidate", candidate);
+		final String uid = candidate.getUid();
+		final Candidate entity = this.candidateDao.findByUid(uid);
+		candidateMerger.merge(entity, candidate);
 	}
 
-	public String changeUsersImage(final String candidateUid, final InputStream image) {
+	public String changeCandidatesImage(final String candidateUid, final InputStream image) {
 		Objects.requireNonNull(candidateUid);
 		Objects.requireNonNull(image);
 		final Candidate candidate = this.candidateDao.findByUid(candidateUid);
@@ -68,7 +79,34 @@ public class CandidateService {
 		return newImage.getPath();
 	}
 
-	public String addFileToCandidate(final String candidateUid, final InputStream inputStream, String filename) {
+	public List<Origin> findCandidateOrigins() {
+		logger.debug("Find all candidate origins");
+		return this.candidateDao.findAllOrigins();
+	}
+
+	public List<CandidateDto> findCandidateByJobOffer(final String jobOfferUid, final Page page) {
+		Objects.requireNonNull(jobOfferUid);
+		Objects.requireNonNull(page);
+		logger.debug("Find candidates by jobOffer {} ", jobOfferUid);
+		final List<Candidate> candidates = this.candidateDao.findCandidates(jobOfferUid, page);
+		return candidateMapper.mapList(candidates);
+	}
+
+	public CandidateDto findCandidateByUid(final String uid) {
+		Objects.requireNonNull(uid);
+		logger.debug("Find candidate by uid {}", uid);
+		final Candidate candidates = this.candidateDao.findByUid(uid);
+		return candidateMapper.map(candidates);
+	}
+
+	public List<FileDto> findCandidatesFiles(final String candidateUid, final Page page) {
+		Objects.requireNonNull(candidateUid);
+		logger.debug("Find files by candidate {}", candidateUid);
+		final List<File> files = this.candidateDao.findCandidatesFiles(candidateUid, page);
+		return new FileMapper().mapList(files);
+	}
+	
+	public FileDto addFileToCandidate(final String candidateUid, final InputStream inputStream, String filename) {
 		Objects.requireNonNull(inputStream);
 		Objects.requireNonNull(candidateUid);
 		Objects.requireNonNull(filename);
@@ -78,41 +116,7 @@ public class CandidateService {
 		final String uid = fileDto.getUid();
 		final File file = fileDao.findFileByUid(uid);
 		candidate.addFile(file);
-		return fileDto.getPath();
-	}
-
-	public List<Origin> findAllOrigins() {
-		logger.debug("Find all candidate origins");
-		return this.candidateDao.findAllOrigins();
-	}
-
-	public List<CandidateDto> findByJobOffer(final String jobOfferUid, final Page page) {
-		Objects.requireNonNull(jobOfferUid);
-		Objects.requireNonNull(page);
-		logger.debug("Find candidates by jobOffer {} ", jobOfferUid);
-		final List<Candidate> candidates = this.candidateDao.findCandidates(jobOfferUid, page);
-		return candidateMapper.mapList(candidates);
-	}
-
-	public CandidateDto findByUid(final String uid) {
-		Objects.requireNonNull(uid);
-		logger.debug("Find candidate by uid {}", uid);
-		final Candidate candidates = this.candidateDao.findByUid(uid);
-		return candidateMapper.map(candidates);
-	}
-
-	public List<File> findCandidatesFiles(final String candidateUid, final Page page) {
-		Objects.requireNonNull(candidateUid);
-		logger.debug("Find files by candidate {}", candidateUid);
-		return this.candidateDao.findCandidatesFiles(candidateUid, page);
-	}
-
-	public void addCandidate(final CandidateDto candidate) {
-		Objects.requireNonNull(candidate);
-		logger.debug("Add candidate {}", candidate);
-		final Candidate entity = new Candidate();
-		candidateMerger.merge(entity, candidate);
-		this.candidateDao.insert(entity);
+		return fileDto;
 	}
 
 	public void removeFileFromCandidate(final String candidateUid, final String fileUid) {
@@ -124,19 +128,6 @@ public class CandidateService {
 		candidate.removeFile(file);
 		final String uid = file.getUid();
 		this.fileService.removeFile(uid);
-	}
-
-	public void setCandidateDao(final CandidateDao candidateDao) {
-		Objects.requireNonNull(candidateDao);
-		this.candidateDao = candidateDao;
-	}
-
-	public void updateCandidate(final CandidateDto candidate) {
-		Objects.requireNonNull(candidate);
-		logger.debug("Update candidate", candidate);
-		final String uid = candidate.getUid();
-		final Candidate entity = this.candidateDao.findByUid(uid);
-		candidateMerger.merge(entity, candidate);
 	}
 
 	public SearchResult<CandidateDto> search(final String searchText, final Page page) {
@@ -154,5 +145,10 @@ public class CandidateService {
 		final int count = entities.getCount();
 		final Map<String, List<Facet>> allFacets = entities.getAllFacets();
 		return new SearchResult<CandidateDto>(dtoList, count, allFacets);
+	}
+	
+	public void setCandidateDao(final CandidateDao candidateDao) {
+		Objects.requireNonNull(candidateDao);
+		this.candidateDao = candidateDao;
 	}
 }

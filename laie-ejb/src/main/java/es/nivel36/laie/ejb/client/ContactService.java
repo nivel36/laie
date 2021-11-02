@@ -3,7 +3,6 @@ package es.nivel36.laie.ejb.client;
 import java.util.List;
 import java.util.Objects;
 
-import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
@@ -26,15 +25,9 @@ public class ContactService {
 	@Repository
 	private ClientDao clientDao;
 
-	private ContactMapper contactMapper;
+	private ContactMapper contactMapper = new ContactMapper();
 
-	private ContactMerger contactMerger;
-
-	@PostConstruct
-	public void init() {
-		contactMapper = new ContactMapper();
-		contactMerger = new ContactMerger();
-	}
+	private ContactMerger contactMerger = new ContactMerger();
 
 	public void addContact(final String clientUid, final ContactDto contact) {
 		Objects.requireNonNull(clientUid);

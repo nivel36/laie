@@ -2,7 +2,6 @@ package es.nivel36.laie.ejb.client;
 
 import java.util.Objects;
 
-import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
@@ -20,15 +19,9 @@ public class ClientService {
 	@Repository
 	private ClientDao clientDao;
 
-	private ClientMapper clientMapper;
+	private ClientMapper clientMapper = new ClientMapper();
 
-	private ClientMerger clientMerger;
-
-	@PostConstruct
-	public void init() {
-		this.clientMapper = new ClientMapper();
-		this.clientMerger = new ClientMerger();
-	}
+	private ClientMerger clientMerger = new ClientMerger();
 
 	public void addClient(final ClientDto client) {
 		Objects.requireNonNull(client);
@@ -41,7 +34,8 @@ public class ClientService {
 	public void updateClient(final ClientDto client) {
 		Objects.requireNonNull(client);
 		logger.debug("Update client {}", client);
-		final Client entity = this.clientDao.findClientByUid(client.getUid());
+		final String uid = client.getUid();
+		final Client entity = this.clientDao.findClientByUid(uid);
 		clientMerger.merge(entity, client);
 	}
 

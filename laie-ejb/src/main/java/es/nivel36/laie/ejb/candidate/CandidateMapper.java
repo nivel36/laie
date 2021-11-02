@@ -1,17 +1,17 @@
 package es.nivel36.laie.ejb.candidate;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import es.nivel36.laie.ejb.core.Mapper;
 import es.nivel36.laie.ejb.core.model.Address;
 import es.nivel36.laie.ejb.core.model.AddressDto;
 import es.nivel36.laie.ejb.core.model.AddressMapper;
+import es.nivel36.laie.ejb.job.candidature.JobCandidature;
+import es.nivel36.laie.ejb.job.candidature.JobCandidatureDto;
+import es.nivel36.laie.ejb.job.candidature.JobCandidatureMapper;
 
 public class CandidateMapper implements Mapper<Candidate, CandidateDto> {
-
-	private AddressMapper addressMapper;
-
-	public CandidateMapper() {
-		addressMapper = new AddressMapper();
-	}
 
 	@Override
 	public CandidateDto map(final Candidate entity) {
@@ -20,7 +20,7 @@ public class CandidateMapper implements Mapper<Candidate, CandidateDto> {
 		}
 		final CandidateDto dto = new CandidateDto();
 		final Address address = entity.getAddress();
-		final AddressDto addressDto = addressMapper.map(address);
+		final AddressDto addressDto = new AddressMapper().map(address);
 		dto.setAddress(addressDto);
 		dto.setBornDate(entity.getBornDate());
 		dto.setEmail(entity.getEmail());
@@ -36,6 +36,22 @@ public class CandidateMapper implements Mapper<Candidate, CandidateDto> {
 		dto.setSalary(entity.getSalary());
 		dto.setSkype(entity.getSkype());
 		dto.setSurname(entity.getSurname());
+		final List<JobCandidatureDto> jobCandidaturesDto = mapJobCandidatures(entity, dto);
+		dto.setJobCandidature(jobCandidaturesDto);
 		return dto;
+	}
+
+	private List<JobCandidatureDto> mapJobCandidatures(final Candidate entity, final CandidateDto dto) {
+		final List<JobCandidature> jobCandidatures = entity.getJobCandidatures();
+		if (jobCandidatures == null) {
+			return null;
+		}
+		final List<JobCandidatureDto> jobCandidaturesDto = new ArrayList<JobCandidatureDto>(jobCandidatures.size());
+		final JobCandidatureMapper jobCandidatureMapper = new JobCandidatureMapper();
+		for (final JobCandidature jobCandidature : jobCandidatures) {
+			final JobCandidatureDto jobCandidatureDto = jobCandidatureMapper.map(jobCandidature);
+			jobCandidaturesDto.add(jobCandidatureDto);
+		}
+		return jobCandidaturesDto;
 	}
 }

@@ -33,7 +33,7 @@ public class JobCandidatureService {
 	@Inject
 	@JobCandidatureCreatedEvent
 	private Event<JobCandidature> createdEvent;
-	
+
 	@Inject
 	@JobCandidatureStateChangedEvent
 	private Event<JobCandidature> stateChangedEvent;
@@ -77,28 +77,30 @@ public class JobCandidatureService {
 		}
 	}
 
-	public List<JobCandidature> findCandidatesJobCandidatures(final String candidateUid, final Page page) {
+	public List<JobCandidatureDto> findCandidatesJobCandidatures(final String candidateUid, final Page page) {
 		Objects.requireNonNull(candidateUid);
 		Objects.requireNonNull(page);
 		logger.debug("Find all job candidatures of the candidate {}", candidateUid);
-
-		return this.jobCandidatureDao.findCandidatesJobCandidatures(candidateUid, page);
+		final List<JobCandidature> jobCandidatures = this.jobCandidatureDao.findCandidatesJobCandidatures(candidateUid,
+				page);
+		return new JobCandidatureMapper().mapList(jobCandidatures);
 	}
 
-	public List<JobCandidature> findUsersJobCandidatures(final String userUid, final Page page) {
+	public List<JobCandidatureDto> findUsersJobCandidatures(final String userUid, final Page page) {
 		Objects.requireNonNull(userUid);
 		Objects.requireNonNull(page);
 		logger.debug("Find job candidatures regarding user {} ({})", userUid, page);
-
-		return this.jobCandidatureDao.findUsersJobCandidatures(userUid, page);
+		final List<JobCandidature> jobCandidatures = this.jobCandidatureDao.findUsersJobCandidatures(userUid, page);
+		return new JobCandidatureMapper().mapList(jobCandidatures);
 	}
 
-	public List<JobCandidature> findJobOffersJobCanditures(final String jobOfferUid, final Page page) {
+	public List<JobCandidatureDto> findJobOffersJobCanditures(final String jobOfferUid, final Page page) {
 		Objects.requireNonNull(jobOfferUid);
 		Objects.requireNonNull(page, "Page can't be null");
 		logger.debug("Find all job candidatures of the job offer {}", jobOfferUid);
-
-		return this.jobCandidatureDao.findJobOffersJobCanditures(jobOfferUid, page);
+		final List<JobCandidature> jobCandidatures = this.jobCandidatureDao.findJobOffersJobCanditures(jobOfferUid,
+				page);
+		return new JobCandidatureMapper().mapList(jobCandidatures);
 	}
 
 	public void removeJobCandidature(final String jobOfferUid, final String candidateUid) {

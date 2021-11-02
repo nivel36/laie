@@ -22,7 +22,7 @@ public class OriginConverter implements Converter<Origin> {
 		if (value == null) {
 			return null;
 		}
-		final List<Origin> listOfOrigins = this.candidateService.findAllOrigins();
+		final List<Origin> listOfOrigins = this.candidateService.findCandidateOrigins();
 		for (final Origin origin : listOfOrigins) {
 			if (origin.getCode().equals(value)) {
 				return origin;

@@ -28,7 +28,7 @@ public class Origins implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		this.listOfOrigins = this.candidateService.findAllOrigins();
+		this.listOfOrigins = this.candidateService.findCandidateOrigins();
 	}
 
 	public void setCandidateService(final CandidateService candidateService) {

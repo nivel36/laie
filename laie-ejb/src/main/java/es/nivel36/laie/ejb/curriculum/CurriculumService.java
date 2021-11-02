@@ -17,11 +17,14 @@ import es.nivel36.laie.ejb.candidate.CandidateDao;
 import es.nivel36.laie.ejb.core.model.Repository;
 import es.nivel36.laie.ejb.curriculum.education.Education;
 import es.nivel36.laie.ejb.curriculum.education.EducationDto;
+import es.nivel36.laie.ejb.curriculum.education.EducationMerger;
 import es.nivel36.laie.ejb.curriculum.export.CurriculumExporter;
 import es.nivel36.laie.ejb.curriculum.jobexperience.JobExperience;
 import es.nivel36.laie.ejb.curriculum.jobexperience.JobExperienceDto;
+import es.nivel36.laie.ejb.curriculum.jobexperience.JobExperienceMerger;
 import es.nivel36.laie.ejb.curriculum.language.Language;
 import es.nivel36.laie.ejb.curriculum.language.LanguageDto;
+import es.nivel36.laie.ejb.curriculum.language.LenguageMerger;
 import es.nivel36.laie.ejb.curriculum.skill.Skill;
 
 @Stateless
@@ -40,7 +43,7 @@ public class CurriculumService {
 	@Inject
 	private CurriculumExporter exporter;
 
-	public void insert(String candidateUid, CurriculumDto curriculum) {
+	public void addCurriculum(String candidateUid, CurriculumDto curriculum) {
 		final Candidate candidate = this.candidateDao.findByUid(candidateUid);
 		final Curriculum entity = new Curriculum();
 		entity.setCandidate(candidate);
@@ -50,8 +53,8 @@ public class CurriculumService {
 			Skill skill = this.curriculumDao.findSkill(dto);
 			if (skill == null) {
 				skill = new Skill();
-				skill.setName(dto);
 				skill.setCurriculum(entity);
+				skill.setName(dto);
 			}
 			skills.add(skill);
 		}
@@ -59,13 +62,8 @@ public class CurriculumService {
 		final Set<JobExperience> jobExperiences = new HashSet<JobExperience>();
 		for (final JobExperienceDto jobExperienceDto : curriculum.getJobExperiences()) {
 			final JobExperience jobExperience = new JobExperience();
-			jobExperience.setCompanyName(jobExperienceDto.getCompanyName());
 			jobExperience.setCurriculum(entity);
-			jobExperience.setDescription(jobExperienceDto.getDescription());
-			jobExperience.setEndDate(jobExperienceDto.getEndDate());
-			jobExperience.setJobPosition(jobExperienceDto.getJobPosition());
-			jobExperience.setStartDate(jobExperienceDto.getStartDate());
-			jobExperience.setStillWorking(jobExperienceDto.isStillWorking());
+			new JobExperienceMerger().merge(jobExperience, jobExperienceDto);
 			jobExperiences.add(jobExperience);
 		}
 
@@ -73,12 +71,7 @@ public class CurriculumService {
 		for (final EducationDto educationDto : curriculum.getEducation()) {
 			final Education education = new Education();
 			education.setCurriculum(entity);
-			education.setDegree(educationDto.getDegree());
-			education.setDescription(educationDto.getDegree());
-			education.setEndYear(educationDto.getEndYear());
-			education.setSchool(educationDto.getSchool());
-			education.setStartYear(educationDto.getStartYear());
-			education.setStillStudying(education.isStillStudying());
+			new EducationMerger().merge(education, educationDto);
 			educations.add(education);
 		}
 
@@ -86,19 +79,18 @@ public class CurriculumService {
 		for (final LanguageDto languageDto : curriculum.getLanguages()) {
 			Language language = new Language();
 			language.setCurriculum(entity);
-			language.setName(languageDto.getName());
-			language.setLevel(languageDto.getLevel());
+			new LenguageMerger().merge(language, languageDto);
 			languages.add(language);
 		}
 
 		this.curriculumDao.insert(entity);
 	}
 	
-	public void update(final String candidateUid, final CurriculumDto curriculum) {
+	public void updateCurriculum(final String candidateUid, final CurriculumDto curriculum) {
 		final Candidate candidate = this.candidateDao.findByUid(candidateUid);
 		final Curriculum oldCurriculum = candidate.getCurriculum();
 		this.curriculumDao.delete(oldCurriculum);
-		this.insert(candidateUid, curriculum);
+		this.addCurriculum(candidateUid, curriculum);
 	}
 
 	public List<CurriculumTemplate> findCurriculumTemplates() {
@@ -106,22 +98,18 @@ public class CurriculumService {
 		return this.curriculumDao.findCurriculumTemplates();
 	}
 
-	public Curriculum findCandidatesCurriculum(final String candidateUid) {
+	public CurriculumDto findCandidatesCurriculum(final String candidateUid) {
 		Objects.requireNonNull(candidateUid);
 		logger.debug("Find curriculum of candidate {}", candidateUid);
-		return this.curriculumDao.findByCandidateUid(candidateUid);
+		final Curriculum curriculum = this.curriculumDao.findByCandidateUid(candidateUid);
+		return new CurriculumMapper().map(curriculum);
 	}
 
-	public Curriculum findByUid(final String uid) {
+	public CurriculumDto findByUid(final String uid) {
 		Objects.requireNonNull(uid);
 		logger.debug("Find curriculum by uid {}", uid);
-		return this.curriculumDao.findByUid(uid);
-	}
-
-	public Skill findSkill(final String name) {
-		Objects.requireNonNull(name, "Skill name can't be null");
-		logger.debug("Find skill by name {}", name);
-		return this.curriculumDao.findSkill(name);
+		final Curriculum curriculum = this.curriculumDao.findByUid(uid);
+		return new CurriculumMapper().map(curriculum);
 	}
 
 	public File export(String curriculumUid, CurriculumTemplate template) {
@@ -130,10 +118,6 @@ public class CurriculumService {
 		logger.debug("Export curriculum {} with template", curriculumUid, template);
 		final Curriculum curriculum = this.curriculumDao.findByUid(curriculumUid);
 		return exporter.export(curriculum, template);
-	}
-
-	protected CurriculumDao getDao() {
-		return this.curriculumDao;
 	}
 
 	public void setCurriculumDao(final CurriculumDao curriculumDao) {

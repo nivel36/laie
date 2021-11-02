@@ -10,5 +10,4 @@ public abstract class AbstractTemplateTag implements TemplateTag {
 	public String getValue() {
 		return TAG_DELIMITER + this.getTagName() + TAG_DELIMITER;
 	}
-
 }

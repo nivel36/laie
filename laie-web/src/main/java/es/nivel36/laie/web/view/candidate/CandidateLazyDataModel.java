@@ -29,7 +29,7 @@ public class CandidateLazyDataModel extends AbstractLazyDataModel<CandidateDto> 
 
 	@Override
 	protected CandidateDto find(String rowkey) {
-		return candidateService.findByUid(rowkey);
+		return candidateService.findCandidateByUid(rowkey);
 	}
 
 	@Override

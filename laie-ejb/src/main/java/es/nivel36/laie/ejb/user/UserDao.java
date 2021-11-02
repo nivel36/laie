@@ -44,7 +44,7 @@ public class UserDao extends AbstractDao {
 		return this.findByQuery(Boolean.class, "User.checkDuplicateUid", parameters);
 	}
 
-	public void update(User user) {
+	public void update(final User user) {
 		this.updateUserClosures(user);
 	}
 

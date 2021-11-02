@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UncheckedIOException;
 import java.util.List;
+import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -15,7 +16,6 @@ import org.primefaces.model.file.UploadedFile;
 import es.nivel36.laie.ejb.candidate.CandidateDto;
 import es.nivel36.laie.ejb.candidate.CandidateService;
 import es.nivel36.laie.ejb.core.file.FileService;
-import es.nivel36.laie.ejb.core.tag.TagService;
 import es.nivel36.laie.web.core.util.PageEnum;
 import es.nivel36.laie.web.core.view.AbstractView;
 
@@ -34,9 +34,6 @@ public abstract class AbstractCandidateView extends AbstractView {
 	protected transient FileService fileUploadService;
 
 	protected transient List<String> tags;
-
-	@Inject
-	protected transient TagService tagService;
 
 	protected String candidateUrl() {
 		return this.navigator.getRedirectUrl(PageEnum.CANDIDATE, this.candidate.getUid());
@@ -60,6 +57,7 @@ public abstract class AbstractCandidateView extends AbstractView {
 	}
 
 	public void setCandidateService(final CandidateService candidateService) {
+		Objects.requireNonNull(candidateService);
 		this.candidateService = candidateService;
 	}
 
@@ -70,7 +68,7 @@ public abstract class AbstractCandidateView extends AbstractView {
 	public void uploadImage(final FileUploadEvent event) {
 		final UploadedFile uploadedFile = event.getFile();
 		try (final InputStream inputStream = uploadedFile.getInputStream()) {
-			final String path = this.candidateService.changeUsersImage(this.candidate.getUid(), inputStream);
+			final String path = this.candidateService.changeCandidatesImage(this.candidate.getUid(), inputStream);
 			this.candidate.setPicturesPath(path);
 		} catch (final IOException e) {
 			throw new UncheckedIOException(e);

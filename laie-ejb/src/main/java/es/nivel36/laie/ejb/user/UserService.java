@@ -71,7 +71,6 @@ public class UserService {
 			checkDuplicateEmail(email);
 		}
 		this.userMerger.merge(entity, user);
-		this.userDao.update(entity);
 	}
 
 	private void checkDuplicateEmail(final String email) throws DuplicateEmailException {
@@ -139,6 +138,7 @@ public class UserService {
 			throw new BadManagerException("User is the manager of his new manager");
 		}
 		user.setManager(newManager);
+		this.userDao.update(user);
 	}
 	
 	public void deleteUsersImage(final String userUid) {

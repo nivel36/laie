@@ -36,11 +36,11 @@ public class UserRestController extends AbstractRestController {
 	@PUT
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response addUser(@Valid final UserDto userDto) {
+	public Response addUser(@Valid final UserDto userDto, String manangerUid) {
 		Objects.requireNonNull(userDto);
 		Response.ResponseBuilder builder;
 		try {
-			this.userService.addUser(userDto);
+			this.userService.addUser(userDto, manangerUid);
 			builder = Response.status(Response.Status.OK);
 		} catch (final DuplicateEmailException exception) {
 			builder = Response.status(Response.Status.BAD_REQUEST);

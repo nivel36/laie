@@ -10,6 +10,17 @@
 			WHERE c.uid = :uid
 		]]></query>
 	</named-query>
+	
+	<named-query name="Candidate.findAllDataByUid">
+		<query><![CDATA[
+			SELECT c 
+			FROM Candidate c 
+			LEFT JOIN FETCH c.files
+			LEFT JOIN FETCH c.jobCandidatures
+			LEFT JOIN FETCH c.meetings
+			WHERE c.uid = :uid
+		]]></query>
+	</named-query>
 
 	<named-query name="Candidate.findCandidateWithFiles">
 		<query><![CDATA[
