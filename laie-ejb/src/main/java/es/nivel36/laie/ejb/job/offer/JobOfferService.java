@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 import javax.enterprise.event.Event;
 import javax.enterprise.event.Observes;
@@ -37,14 +36,6 @@ public class JobOfferService {
 	private ClientDao clientDao;
 
 	@Inject
-	@JobOfferCompletedEvent
-	private Event<JobOffer> completedEvent;
-
-	@Inject
-	@JobOfferCreatedEvent
-	private Event<JobOffer> createdEvent;
-
-	@Inject
 	@Repository
 	private JobCandidatureDao jobCandidatureDao;
 
@@ -61,23 +52,64 @@ public class JobOfferService {
 	private JobOfferStateChangeEventDao jobOfferStateChangeEventDao;
 
 	@Inject
+	@JobOfferCompletedEvent
+	private Event<JobOffer> completedEvent;
+
+	@Inject
+	@JobOfferCreatedEvent
+	private Event<JobOffer> createdEvent;
+
+	@Inject
 	@JobOfferStateChangedEvent
 	private Event<JobOffer> stateChangedEvent;
 
-	private JobOfferMapper jobOfferMapper;
+	private JobOfferMapper jobOfferMapper = new JobOfferMapper();
 
-	@PostConstruct
-	public void init() {
-		jobOfferMapper = new JobOfferMapper();
+	private JobOfferMerger jobOfferMerger = new JobOfferMerger();
+
+	public void addJobOffer(final String clientUid, String ownerUid, final JobOfferDto jobOffer) {
+		Objects.requireNonNull(clientUid);
+		Objects.requireNonNull(jobOffer);
+		final Client client = this.clientDao.findClientByUid(clientUid);
+		final JobOffer entity = new JobOffer();
+		jobOfferMerger.merge(entity, jobOffer);
+		entity.setClient(client);
+		entity.setState(JobOfferState.CREATED);
+		if (this.openDateHasCome(entity)) {
+			this.openJobOffer(entity);
+		}
+		this.jobOfferDao.insert(entity);
+		if (ownerUid != null) {
+			final User owner = this.userDao.findUserByUid(ownerUid);
+			chageJobOffersOwner(entity, owner);
+		}
+		this.createdEvent.fire(entity);
 	}
 
-	public JobOfferDto closeJobOffer(final String jobOfferUid) {
+	private boolean openDateHasCome(final JobOffer jobOffer) {
+		final LocalDate dateOpened = jobOffer.getOpenDate();
+		final LocalDate now = LocalDate.now();
+		return !now.isBefore(dateOpened);
+	}
+
+	private void openJobOffer(final JobOffer jobOffer) {
+		logger.debug("The open date has come. Opening the job offer");
+		jobOffer.setState(JobOfferState.OPENED);
+		this.stateChangedEvent.fire(jobOffer);
+	}
+
+	public void closeJobOffer(final String jobOfferUid) {
 		final JobOffer jobOffer = this.jobOfferDao.findByUid(jobOfferUid);
-		jobOffer.setDateClosed(LocalDate.now());
+		jobOffer.setCloseDate(LocalDate.now());
 		jobOffer.setState(JobOfferState.CLOSED);
 		jobOffer.setPublished(false);
 		this.completedEvent.fire(jobOffer);
-		return jobOfferMapper.map(jobOffer);
+	}
+
+	public void addRecruiter(final String jobOfferUid, final String recruiterUid) {
+		final JobOffer jobOffer = jobOfferDao.findByUid(jobOfferUid);
+		final User recruiter = userDao.findUserByUid(recruiterUid);
+		jobOffer.getRecruiters().add(recruiter);
 	}
 
 	public void addRecruiters(final String jobOfferUid, final String[] recruiterUids) {
@@ -88,47 +120,26 @@ public class JobOfferService {
 		}
 	}
 
-	public void addRecruiter(final String jobOfferUid, final String recruiterUid) {
-		final JobOffer jobOffer = jobOfferDao.findByUid(jobOfferUid);
-		final User recruiter = userDao.findUserByUid(recruiterUid);
-		jobOffer.getRecruiters().add(recruiter);
-	}
-
 	public void removeRecruiter(final String jobOfferUid, final String recruiterUid) {
 		final JobOffer jobOffer = jobOfferDao.findByUid(jobOfferUid);
 		final User recruiter = userDao.findUserByUid(recruiterUid);
 		jobOffer.getRecruiters().remove(recruiter);
 	}
 
-	public void createJobOffer(final String clientUid, final JobOfferDto jobOffer) {
+	public void updateJobOffer(final JobOfferDto jobOffer) {
 		Objects.requireNonNull(jobOffer);
-		final User user = this.userDao.findUserByUid(jobOffer.getOwner().getUid());
-		final Client client = this.clientDao.findClientByUid(clientUid);
-		final JobOffer entity = new JobOffer();
-		entity.setClient(client);
-		entity.setOwner(user);
-		entity.setTitle(jobOffer.getTitle());
-		entity.setState(JobOfferState.CREATED);
-		entity.setDateOpened(LocalDate.now());
-		entity.setDescription(jobOffer.getDescription());
-		entity.setPlaces(jobOffer.getPlaces());
-		entity.setPublished(jobOffer.isPublished());
-		entity.setSalary(jobOffer.getSalary());
-		if (this.openDateHasCome(entity)) {
-			this.openJobOffer(entity);
-		}
-		this.jobOfferDao.insert(entity);
+		final JobOffer entity = jobOfferDao.findByUid(jobOffer.getUid());
+		jobOfferMerger.merge(entity, jobOffer);
 	}
 
-	private boolean openDateHasCome(final JobOffer jobOffer) {
-		return !LocalDate.now().isBefore(jobOffer.getDateOpened());
+	public void chageJobOffersOwner(String jobOfferUid, String newOwnerUid) {
+		JobOffer jobOffer = this.jobOfferDao.findByUid(jobOfferUid);
+		User owner = this.userDao.findUserByUid(newOwnerUid);
+		chageJobOffersOwner(jobOffer, owner);
 	}
 
-	private void openJobOffer(final JobOffer jobOffer) {
-		logger.debug("The open date has come. Opening the job offer");
-		jobOffer.setDateOpened(LocalDate.now());
-		jobOffer.setState(JobOfferState.OPENED);
-		this.createdEvent.fire(jobOffer);
+	private void chageJobOffersOwner(JobOffer jobOffer, User owner) {
+		jobOffer.setOwner(owner);
 	}
 
 	public JobOfferDto findByUid(final String uid) {
@@ -184,7 +195,7 @@ public class JobOfferService {
 
 	public JobOfferDto publish(final String jobOfferUid) {
 		Objects.requireNonNull(jobOfferUid);
-		logger.debug(String.format("Publish job oofer %s", jobOfferUid));
+		logger.debug("Publish job offer {}", jobOfferUid);
 		final JobOfferDto jobOffer = this.findByUid(jobOfferUid);
 		if (jobOffer.isOpen()) {
 			jobOffer.setPublished(true);
@@ -198,16 +209,6 @@ public class JobOfferService {
 		final JobOffer entity = this.jobOfferDao.findByUid(jobOfferUid);
 		entity.setState(newState);
 		this.stateChangedEvent.fire(entity);
-	}
-
-	public void update(final JobOfferDto jobOffer) {
-		Objects.requireNonNull(jobOffer);
-		logger.debug("Update job offer {}", jobOffer);
-		final JobOffer entity = this.jobOfferDao.findByUid(jobOffer.getUid());
-		entity.setTitle(jobOffer.getTitle());
-		entity.setDescription(jobOffer.getDescription());
-		entity.setPlaces(jobOffer.getPlaces());
-		entity.setSalary(jobOffer.getSalary());
 	}
 
 	public void setCompletedEvent(final Event<JobOffer> completedEvent) {

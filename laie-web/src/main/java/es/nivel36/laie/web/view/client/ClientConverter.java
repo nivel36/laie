@@ -20,7 +20,7 @@ public class ClientConverter implements Converter<Client> {
 		if (value == null) {
 			return null;
 		}
-		return this.clientService.findByUid(value);
+		return this.clientService.findClientByUid(value);
 	}
 
 	@Override

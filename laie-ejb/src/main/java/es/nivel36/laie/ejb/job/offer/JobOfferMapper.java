@@ -24,8 +24,8 @@ public class JobOfferMapper implements Mapper<JobOffer, JobOfferDto> {
 		final JobOfferDto dto = new JobOfferDto();
 		AddressDto addressDto = addressMapper.map(entity.getAddress());
 		dto.setAddress(addressDto);
-		dto.setDateClosed(entity.getDateClosed());
-		dto.setDateOpened(entity.getDateOpened());
+		dto.setCloseDate(entity.getCloseDate());
+		dto.setOpenDate(entity.getOpenDate());
 		dto.setDescription(entity.getDescription());
 		dto.setJobCandidatures(null);
 		final SimpleUserDto owner = simpleUserMapper.map(entity.getOwner());

@@ -39,7 +39,7 @@ public class CandidateRestController extends AbstractRestController {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response insert(@Valid final CandidateDto candidateDto) {
 		Response.ResponseBuilder builder = null;
-		this.candidateService.insert(candidateDto);
+		this.candidateService.addClient(candidateDto);
 		builder = Response.ok();
 		return builder.build();
 	}

@@ -16,9 +16,9 @@ public class JobOfferDto implements Serializable {
 
 	private AddressDto address;
 
-	private LocalDate dateClosed;
+	private LocalDate closeDate;
 
-	private LocalDate dateOpened;
+	private LocalDate openDate;
 
 	private String description;
 
@@ -44,12 +44,12 @@ public class JobOfferDto implements Serializable {
 		return this.address;
 	}
 
-	public LocalDate getDateClosed() {
-		return this.dateClosed;
+	public LocalDate getCloseDate() {
+		return this.closeDate;
 	}
 
-	public LocalDate getDateOpened() {
-		return this.dateOpened;
+	public LocalDate getOpenDate() {
+		return this.openDate;
 	}
 
 	public String getDescription() {
@@ -121,12 +121,12 @@ public class JobOfferDto implements Serializable {
 		this.address = address;
 	}
 
-	public void setDateClosed(final LocalDate dateClosed) {
-		this.dateClosed = dateClosed;
+	public void setCloseDate(final LocalDate closeDate) {
+		this.closeDate = closeDate;
 	}
 
-	public void setDateOpened(final LocalDate dateOpened) {
-		this.dateOpened = dateOpened;
+	public void setOpenDate(final LocalDate openDate) {
+		this.openDate = openDate;
 	}
 
 	public void setDescription(final String description) {
@@ -181,13 +181,13 @@ public class JobOfferDto implements Serializable {
 			return false;
 		}
 		final JobOfferDto other = (JobOfferDto) obj;
-		return Objects.equals(this.dateOpened, other.dateOpened) && Objects.equals(this.title, other.title)
+		return Objects.equals(this.openDate, other.openDate) && Objects.equals(this.title, other.title)
 				&& Objects.equals(this.places, other.places);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(this.dateOpened, this.title, this.places);
+		return Objects.hash(this.openDate, this.title, this.places);
 	}
 
 	@Override

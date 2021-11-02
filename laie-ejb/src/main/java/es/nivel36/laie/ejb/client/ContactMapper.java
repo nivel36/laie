@@ -1,7 +1,6 @@
 package es.nivel36.laie.ejb.client;
 
 import es.nivel36.laie.ejb.core.Mapper;
-import es.nivel36.laie.ejb.core.file.File;
 
 public class ContactMapper implements Mapper<Contact, ContactDto> {
 
@@ -12,12 +11,8 @@ public class ContactMapper implements Mapper<Contact, ContactDto> {
 		dto.setLanguage(entity.getLanguage());
 		dto.setName(entity.getName());
 		dto.setPhoneNumber(entity.getPhoneNumber());
-		final File picture = entity.getPicture();
-		if (picture != null) {
-			dto.setPicturesUrl(picture.getPhysicalFile().getRelativePath());
-		}
 		dto.setPosition(entity.getPosition());
 		dto.setSurname(entity.getSurname());
-		return null;
+		return dto;
 	}
 }

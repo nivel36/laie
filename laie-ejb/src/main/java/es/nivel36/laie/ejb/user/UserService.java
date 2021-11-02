@@ -57,8 +57,7 @@ public class UserService {
 		final User entity = new User();
 		this.userMerger.merge(entity, user);
 		this.userDao.insert(entity);
-		final String uid = entity.getUid();
-		this.changeUsersManager(uid, managerUid);
+		this.changeUsersManager(entity, managerUid);
 	}
 
 	public void updateUser(final UserDto user) throws DuplicateEmailException {
@@ -114,17 +113,23 @@ public class UserService {
 	public void changeUsersManager(final String userUid, final String managerUid) throws BadManagerException {
 		Objects.requireNonNull(userUid);
 		final User user = this.userDao.findUserByUid(userUid);
+		this.changeUsersManager(user, managerUid);
+	}
+	
+	private void changeUsersManager(final User user, final String managerUid) throws BadManagerException {
 		if (managerUid == null) {
 			logger.debug("Delete manager to user {}", user);
 			user.setManager(null);
 			return;
 		}
+		// Not all users have a manager, so it may be null.
 		final User oldManager = user.getManager();
+		
 		final User newManager = this.userDao.findUserByUid(managerUid);
-		if (oldManager.equals(newManager)) {
+		if (newManager.equals(oldManager)) {
 			return;
 		}
-		logger.debug("Change manager from {} to {} of user {}", oldManager, newManager, userUid);
+		logger.debug("Change manager from {} to {} of user {}", oldManager, newManager, user);
 		if (user.equals(newManager)) {
 			logger.warn("The user {} can't be his/her manager", user);
 			throw new BadManagerException("User can't be his/her manager");
@@ -135,6 +140,7 @@ public class UserService {
 		}
 		user.setManager(newManager);
 	}
+	
 	public void deleteUsersImage(final String userUid) {
 		Objects.requireNonNull(userUid);
 		final User user = this.userDao.findUserByUid(userUid);

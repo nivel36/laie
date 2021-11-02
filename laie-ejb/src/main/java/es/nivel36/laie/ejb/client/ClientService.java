@@ -1,7 +1,6 @@
 package es.nivel36.laie.ejb.client;
 
 import java.util.Objects;
-import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
@@ -31,27 +30,29 @@ public class ClientService {
 		this.clientMerger = new ClientMerger();
 	}
 
-	public void insert(final ClientDto client) {
+	public void addClient(final ClientDto client) {
 		Objects.requireNonNull(client);
+		logger.debug("Add new client {}", client);
 		Client entity = new Client();
 		clientMerger.merge(entity, client);
 		this.clientDao.insert(entity);
 	}
 
-	public void update(final ClientDto client) {
+	public void updateClient(final ClientDto client) {
 		Objects.requireNonNull(client);
-		final Client entity = this.clientDao.findContactByUid(client.getUid());
+		logger.debug("Update client {}", client);
+		final Client entity = this.clientDao.findClientByUid(client.getUid());
 		clientMerger.merge(entity, client);
 	}
 
-	public ClientDto findByUid(final String uid) {
+	public ClientDto findClientByUid(final String uid) {
 		Objects.requireNonNull(uid);
 		logger.debug("Find client by uid {}", uid);
-		final Client client = this.clientDao.findContactByUid(uid);
+		final Client client = this.clientDao.findClientByUid(uid);
 		return this.clientMapper.map(client);
 	}
 
-	public ClientDto findByCif(final String cif) {
+	public ClientDto findClientByCif(final String cif) {
 		Objects.requireNonNull(cif);
 		logger.debug("Find client by cif {}", cif);
 		final Client client = this.clientDao.findClientByCif(cif);

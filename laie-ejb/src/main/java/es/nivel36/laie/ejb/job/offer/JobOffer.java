@@ -55,11 +55,11 @@ public class JobOffer extends AbstractIndexedEntity implements Ownerable {
 
 	@Field(analyze = Analyze.NO)
 	@SortableField
-	private LocalDate dateClosed;
+	private LocalDate closeDate;
 
 	@Field(analyze = Analyze.NO)
 	@SortableField
-	private LocalDate dateOpened;
+	private LocalDate openDate;
 
 	@Lob
 	@Field
@@ -109,7 +109,7 @@ public class JobOffer extends AbstractIndexedEntity implements Ownerable {
 			return false;
 		}
 		final JobOffer other = (JobOffer) obj;
-		return Objects.equals(this.dateOpened, other.dateOpened) && Objects.equals(this.title, other.title)
+		return Objects.equals(this.openDate, other.openDate) && Objects.equals(this.title, other.title)
 				&& Objects.equals(this.places, other.places);
 	}
 
@@ -121,12 +121,12 @@ public class JobOffer extends AbstractIndexedEntity implements Ownerable {
 		return this.client;
 	}
 
-	public LocalDate getDateClosed() {
-		return this.dateClosed;
+	public LocalDate getCloseDate() {
+		return this.closeDate;
 	}
 
-	public LocalDate getDateOpened() {
-		return this.dateOpened;
+	public LocalDate getOpenDate() {
+		return this.openDate;
 	}
 
 	public String getDescription() {
@@ -181,7 +181,7 @@ public class JobOffer extends AbstractIndexedEntity implements Ownerable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(this.dateOpened, this.title, this.places);
+		return Objects.hash(this.openDate, this.title, this.places);
 	}
 
 	public boolean hasState(final JobOfferState state) {
@@ -208,12 +208,12 @@ public class JobOffer extends AbstractIndexedEntity implements Ownerable {
 		this.client = client;
 	}
 
-	public void setDateClosed(final LocalDate dateClosed) {
-		this.dateClosed = dateClosed;
+	public void setCloseDate(final LocalDate closeDate) {
+		this.closeDate = closeDate;
 	}
 
-	public void setDateOpened(final LocalDate dateOpened) {
-		this.dateOpened = dateOpened;
+	public void setOpenDate(final LocalDate openDate) {
+		this.openDate = openDate;
 	}
 
 	public void setDescription(final String description) {

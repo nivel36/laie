@@ -27,14 +27,14 @@ public class ClientRestController extends AbstractRestController {
 	@Path("/client/{cif}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public ClientDto findByCif(@PathParam("cif") final String cif) {
-		return this.clientService.findByCif(cif);
+		return this.clientService.findClientByCif(cif);
 	}
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response newClient(@Valid final ClientDto client) {
-		this.clientService.insert(client);
+		this.clientService.addClient(client);
 		final Response.ResponseBuilder builder = Response.ok();
 		return builder.build();
 	}
