@@ -7,14 +7,13 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.omnifaces.cdi.Param;
-
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.event.JobCandidatureEvent;
 import es.nivel36.laie.ejb.event.JobCandidatureEventService;
-import es.nivel36.laie.ejb.job.candidature.JobCandidature;
+import es.nivel36.laie.ejb.job.candidature.JobCandidatureDto;
 import es.nivel36.laie.ejb.job.candidature.JobCandidatureService;
 import es.nivel36.laie.ejb.user.User;
+import es.nivel36.laie.ejb.user.UserDto;
 import es.nivel36.laie.web.core.util.PageEnum;
 import es.nivel36.laie.web.core.view.AbstractView;
 
@@ -22,18 +21,16 @@ import es.nivel36.laie.web.core.view.AbstractView;
 @ViewScoped
 public class AddEventView extends AbstractView {
 
-	private static final long serialVersionUID = 1L;
-
-	@Inject
-	@Param(name = "jobCandidatureId")
-	private JobCandidature jobCandidature;
+	
+	
+	private JobCandidatureDto jobCandidature;
 
 	private JobCandidatureEvent jobCandidatureEvent;
 
 	@Inject
 	private transient JobCandidatureEventService jobCandidatureEventService;
 
-	private List<JobCandidature> jobCandidatures;
+	private List<JobCandidatureDto> jobCandidatures;
 
 	@Inject
 	private transient JobCandidatureService jobCandidatureService;
@@ -42,13 +39,16 @@ public class AddEventView extends AbstractView {
 		return this.jobCandidatureEvent;
 	}
 
-	public List<JobCandidature> getJobCandidatures() {
+	public List<JobCandidatureDto> getJobCandidatures() {
 		return this.jobCandidatures;
 	}
 
 	@PostConstruct
 	public void init() {
-		final User user = this.sessionUser.get();
+		final String jobOfferUid = this.getValueFromGetParameters("jobOfferUid");
+		final String clientUid = this.getValueFromGetParameters("clientUid");
+		this.jobCandidature = this.jobCandidatureService.findJobCandidature(jobOfferUid, clientUid);
+		final UserDto user = this.sessionUser.get();
 		this.jobCandidatureEvent = this.initEvent(user);
 		this.jobCandidatures = this.jobCandidatureService.findJobCandidatures(user, Page.ALL_RESULTS);
 	}

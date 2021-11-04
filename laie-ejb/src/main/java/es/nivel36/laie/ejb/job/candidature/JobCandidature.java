@@ -23,7 +23,7 @@ import es.nivel36.laie.ejb.job.offer.JobOffer;
 @Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "jobOfferId", "candidateId" }) })
 public class JobCandidature extends AbstractIndexedEntity {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 7312289648009726566L;
 
 	@NotNull
 	@ManyToOne

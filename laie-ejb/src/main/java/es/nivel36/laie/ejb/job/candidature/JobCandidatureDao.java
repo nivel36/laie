@@ -18,11 +18,19 @@ public class JobCandidatureDao extends AbstractDao {
 		this.em.persist(jobCandidature);
 	}
 
-	public void delete(final String jobOffereUid, final String candidateUid) {
-		Objects.requireNonNull(jobOffereUid);
+	public void delete(final String jobOfferUid, final String candidateUid) {
+		Objects.requireNonNull(jobOfferUid);
 		Objects.requireNonNull(candidateUid);
-		final JobCandidature jobCandidature = this.findByJobOfferAndCandidate(jobOffereUid, candidateUid);
+		final JobCandidature jobCandidature = this.findByJobOfferAndCandidate(jobOfferUid, candidateUid);
 		this.em.remove(jobCandidature);
+	}
+
+	public JobCandidature findJobCandidature(final String jobOfferUid, final String candidateUid) {
+		Objects.requireNonNull(jobOfferUid);
+		Objects.requireNonNull(candidateUid);
+		final String namedQuery = "JobCandidature.findJobCandidature";
+		final Parameters parameters = map("jobOfferUid", jobOfferUid).and("candidateUid", candidateUid);
+		return this.findByQuery(JobCandidature.class, namedQuery, parameters);
 	}
 
 	public List<JobCandidature> findApprovedJobCanditures(final String jobOfferUid, final Page page) {

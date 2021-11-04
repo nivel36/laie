@@ -77,6 +77,14 @@ public class JobCandidatureService {
 		}
 	}
 
+	public JobCandidatureDto findJobCandidature(final String jobOfferUid, final String candidateUid) {
+		Objects.requireNonNull(candidateUid);
+		Objects.requireNonNull(jobOfferUid);
+		logger.debug("Find job candidature of the candidate {} in the job offer {}", candidateUid, jobOfferUid);
+		final JobCandidature jobCandidature = this.jobCandidatureDao.findJobCandidature(jobOfferUid, candidateUid);
+		return new JobCandidatureMapper().map(jobCandidature);
+	}
+
 	public List<JobCandidatureDto> findCandidatesJobCandidatures(final String candidateUid, final Page page) {
 		Objects.requireNonNull(candidateUid);
 		Objects.requireNonNull(page);
