@@ -10,10 +10,12 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.omnifaces.cdi.Param;
+import org.primefaces.event.SelectEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import es.nivel36.laie.ejb.client.Client;
+import es.nivel36.laie.ejb.client.ClientDto;
 import es.nivel36.laie.ejb.core.model.Address;
 import es.nivel36.laie.ejb.job.offer.JobOffer;
 import es.nivel36.laie.ejb.user.User;
@@ -26,9 +28,7 @@ public class AddJobView extends AbstractJobView {
 
 	private static final long serialVersionUID = 1L;
 
-	@Inject
-	@Param(name = "clientId", required = false)
-	private Client client;
+	private ClientDto client;
 
 	private JobOffer buildNewJobOffer() {
 		final JobOffer newJobOffer = new JobOffer();
@@ -36,6 +36,13 @@ public class AddJobView extends AbstractJobView {
 		newJobOffer.setClient(this.client);
 		newJobOffer.setAddress(new Address());
 		return newJobOffer;
+	}
+
+	public void onClientSelect(final SelectEvent<ClientDto> event) {
+		final ClientDto dto = event.getObject();
+		if (dto != null) {
+			this.client = dto;
+		}
 	}
 
 	private void fillRecruiters(final User user) {

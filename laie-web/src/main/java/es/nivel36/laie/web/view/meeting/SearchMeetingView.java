@@ -8,44 +8,53 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import es.nivel36.laie.ejb.core.model.Page;
-import es.nivel36.laie.ejb.job.meeting.Meeting;
+import es.nivel36.laie.ejb.job.meeting.MeetingDto;
 import es.nivel36.laie.ejb.job.meeting.MeetingService;
+import es.nivel36.laie.ejb.user.UserDto;
 import es.nivel36.laie.web.core.view.AbstractView;
 
 @Named
 @ViewScoped
 public class SearchMeetingView extends AbstractView {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -8568862344770860565L;
+	
+	private static final Logger logger = LoggerFactory.getLogger(SearchMeetingView.class);
 
-	private List<Meeting> conductedMeetings;
+	private List<MeetingDto> conductedMeetings;
+
+	private List<MeetingDto> plannedMeetings;
 
 	@Inject
 	private transient MeetingService meetingService;
 
-	private List<Meeting> plannedMeetings;
+	@PostConstruct
+	public void init() {
+		logger.trace("Init search meeting");
+		final UserDto user = this.sessionUser.get();
+		final String userUid = user.getUid();
+		this.plannedMeetings = this.initPlannedMeetings(userUid);
+		this.conductedMeetings = this.initConductedMeetings(userUid);
+	}
 
-	public List<Meeting> getConductedMeetings() {
+	private List<MeetingDto> initConductedMeetings(final String userUid) {
+		return this.meetingService.findConductedMeetings(userUid, Page.TEN_RESULTS_PER_PAGE);
+	}
+
+	private List<MeetingDto> initPlannedMeetings(final String userUid) {
+		return this.meetingService.findPlannedMeetings(userUid, Page.TEN_RESULTS_PER_PAGE);
+	}
+
+	public List<MeetingDto> getConductedMeetings() {
 		return this.conductedMeetings;
 	}
 
-	public List<Meeting> getPlannedMeetings() {
+	public List<MeetingDto> getPlannedMeetings() {
 		return this.plannedMeetings;
-	}
-
-	@PostConstruct
-	public void init() {
-		this.plannedMeetings = this.initPlannedMeetings();
-		this.conductedMeetings = this.initConductedMeetings();
-	}
-
-	private List<Meeting> initConductedMeetings() {
-		return this.meetingService.findConductedMeetings(this.sessionUser.get(), Page.TEN_RESULTS_PER_PAGE);
-	}
-
-	private List<Meeting> initPlannedMeetings() {
-		return this.meetingService.findPlannedMeetings(this.sessionUser.get(), Page.TEN_RESULTS_PER_PAGE);
 	}
 
 	public void setMeetingService(final MeetingService meetingService) {

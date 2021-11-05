@@ -9,16 +9,28 @@ import javax.inject.Named;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import es.nivel36.laie.web.core.IllegalPageStateException;
+
 @Named
 @ViewScoped
 public class EditCandidateView extends AbstractCandidateView {
 
 	private static final long serialVersionUID = -5736997599473134307L;
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(EditCandidateView.class);
+
+	private String uid;
 
 	@PostConstruct
 	public void init() {
+		this.uid = this.getValueFromGetParameters("uid");
+		if (uid == null) {
+			throw new IllegalPageStateException();
+		}
+		this.candidate = candidateService.findCandidateByUid(uid);
+		if (candidate == null) {
+			throw new IllegalPageStateException();
+		}
 		logger.trace("Candidate {} edit init", this.candidate);
 		this.initTags();
 	}

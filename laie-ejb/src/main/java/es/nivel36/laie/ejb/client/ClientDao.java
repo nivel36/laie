@@ -12,7 +12,6 @@ import es.nivel36.laie.ejb.core.model.search.SearchFacets;
 import es.nivel36.laie.ejb.core.model.search.SearchResult;
 import es.nivel36.laie.ejb.core.model.search.SortField;
 import es.nivel36.laie.ejb.core.util.Parameters;
-import es.nivel36.laie.ejb.user.User;
 
 @Repository
 public class ClientDao extends AbstractDao {
@@ -51,11 +50,11 @@ public class ClientDao extends AbstractDao {
 		return this.findByQuery(Client.class, namedQuery, parameters);
 	}
 
-	public SearchResult<User> search(final String searchText, final Page page, SortField sortOrder,
+	public SearchResult<Client> search(final String searchText, final Page page, SortField sortOrder,
 			final SearchFacets searchFacets) {
 		Objects.requireNonNull(searchText);
 		Objects.requireNonNull(page);
 		final String[] fields = new String[] { "_name" };
-		return this.search(User.class, page, sortOrder, searchFacets, searchText, fields);
+		return this.search(Client.class, page, sortOrder, searchFacets, searchText, fields);
 	}
 }

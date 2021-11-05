@@ -1,15 +1,14 @@
 package es.nivel36.laie.web.view.user;
 
 import java.io.IOException;
-import java.lang.invoke.MethodHandles;
 import java.util.List;
+import java.util.Objects;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.omnifaces.cdi.Param;
 import org.omnifaces.util.Faces;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,34 +29,51 @@ import es.nivel36.laie.web.reports.UserReport;
 @ViewScoped
 public class ViewUserView extends AbstractView {
 
-	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
+	private static final long serialVersionUID = 1878119297191882440L;
 
-	private static final long serialVersionUID = 1L;
+	private static final Logger logger = LoggerFactory.getLogger(ViewUserView.class);
 
 	private boolean editable;
 
 	private List<JobOfferDto> jobOffers;
 
-	@Inject
-	private transient JobOfferService jobOfferService;
-
 	private List<MeetingDto> meetings;
-
-	@Inject
-	private transient MeetingService meetingService;
 
 	private List<UserDto> team;
 
-	@Inject
-	@Param(name = "uid", required = true, converter = "userConverter")
+	private String uid;
+	
 	private UserDto user;
+	
+	@Inject
+	private transient JobOfferService jobOfferService;
+	
+	@Inject
+	private transient MeetingService meetingService;
 
 	@Inject
 	private transient UserService userService;
+	
+	@PostConstruct
+	public void init() {
+		this.uid = this.getValueFromGetParameters("uid");
+		if (this.uid == null) {
+			throw new IllegalPageStateException();
+		}
+		this.user = this.userService.findUserByUid(uid);
+		if (this.user == null) {
+			throw new IllegalPageStateException();
+		}
+		logger.trace("User {} init", this.user);
+		this.team = this.userService.findSubordinateUsers(this.uid);
+		this.jobOffers = this.jobOfferService.findJobOffersByOwner(this.uid, Page.ALL_RESULTS);
+		this.meetings = this.meetingService.findPlannedMeetings(this.uid, Page.TEN_RESULTS_PER_PAGE);
+		this.editable = this.sessionUser.isAdmin();
+	}
 
 	public String editUser() {
 		logger.debug("Edit user action performed");
-		return this.navigator.getRedirectUrl(PageEnum.USER_EDIT, this.user.getUid());
+		return this.navigator.getRedirectUrl(PageEnum.USER_EDIT, this.uid);
 	}
 
 	public void export() throws IOException {
@@ -82,35 +98,26 @@ public class ViewUserView extends AbstractView {
 		return this.user;
 	}
 
-	@PostConstruct
-	public void init() {
-		if (this.user == null) {
-			throw new IllegalPageStateException();
-		}
-		logger.trace("User {} init", this.user);
-		this.team = this.userService.findSubordinateUsers(this.user.getUid());
-		this.jobOffers = this.jobOfferService.findJobOffersByOwner(this.user.getUid(), Page.ALL_RESULTS);
-		this.editable = this.sessionUser.isAdmin();
-		this.meetings = this.meetingService.findPlannedMeetings(this.user.getUid(), Page.TEN_RESULTS_PER_PAGE);
-	}
-
 	public boolean isEditable() {
 		return this.editable;
 	}
-
-	public void setJobOfferService(final JobOfferService jobOfferService) {
-		this.jobOfferService = jobOfferService;
-	}
-
-	public void setMeetingService(final MeetingService meetingService) {
-		this.meetingService = meetingService;
-	}
-
+	
 	public void setUser(final UserDto user) {
 		this.user = user;
 	}
 
+	public void setJobOfferService(final JobOfferService jobOfferService) {
+		Objects.requireNonNull(jobOfferService);
+		this.jobOfferService = jobOfferService;
+	}
+
+	public void setMeetingService(final MeetingService meetingService) {
+		Objects.requireNonNull(meetingService);
+		this.meetingService = meetingService;
+	}
+
 	public void setUserService(final UserService userService) {
+		Objects.requireNonNull(userService);
 		this.userService = userService;
 	}
 }

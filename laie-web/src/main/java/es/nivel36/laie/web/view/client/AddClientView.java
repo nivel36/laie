@@ -1,7 +1,5 @@
 package es.nivel36.laie.web.view.client;
 
-import java.lang.invoke.MethodHandles;
-
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
@@ -9,33 +7,25 @@ import javax.inject.Named;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import es.nivel36.laie.ejb.client.Client;
-import es.nivel36.laie.ejb.core.model.Address;
+import es.nivel36.laie.ejb.client.ClientDto;
 
 @Named
 @ViewScoped
 public class AddClientView extends AbstractClientView {
 
-	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
-
-	private static final long serialVersionUID = 1L;
-
-	private Client buildNewClient() {
-		final Client newClient = new Client();
-		newClient.setOwner(this.sessionUser.get());
-		newClient.setAddress(new Address());
-		return newClient;
-	}
+	private static final long serialVersionUID = -5675968370983284897L;
+	
+	private static final Logger logger = LoggerFactory.getLogger(AddClientView.class);
 
 	@PostConstruct
 	public void init() {
 		logger.trace("New client init");
-		this.client = this.buildNewClient();
+		this.client = new ClientDto();
 	}
 
 	public String save() {
-		logger.debug("Create new client action performed");
-		this.client = this.clientService.save(this.client);
+		logger.debug("Add new client action performed");
+		this.client = this.clientService.addClient(this.client);
 		return this.clientUrl();
 	}
 }

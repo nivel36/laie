@@ -6,17 +6,17 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.inject.Inject;
 
-import es.nivel36.laie.ejb.client.Client;
+import es.nivel36.laie.ejb.client.ClientDto;
 import es.nivel36.laie.ejb.client.ClientService;
 
-@FacesConverter(managed = true, forClass = Client.class)
-public class ClientConverter implements Converter<Client> {
+@FacesConverter(managed = true, forClass = ClientDto.class)
+public class ClientConverter implements Converter<ClientDto> {
 
 	@Inject
 	private ClientService clientService;
 
 	@Override
-	public Client getAsObject(final FacesContext context, final UIComponent component, final String value) {
+	public ClientDto getAsObject(final FacesContext context, final UIComponent component, final String value) {
 		if (value == null) {
 			return null;
 		}
@@ -24,7 +24,7 @@ public class ClientConverter implements Converter<Client> {
 	}
 
 	@Override
-	public String getAsString(final FacesContext context, final UIComponent component, final Client value) {
+	public String getAsString(final FacesContext context, final UIComponent component, final ClientDto value) {
 		if (value == null) {
 			return null;
 		}

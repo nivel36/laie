@@ -1,14 +1,21 @@
 package es.nivel36.laie.ejb.client;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
+import org.hibernate.search.query.facet.Facet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.core.model.Repository;
+import es.nivel36.laie.ejb.core.model.search.SearchFacets;
+import es.nivel36.laie.ejb.core.model.search.SearchResult;
+import es.nivel36.laie.ejb.core.model.search.SortField;
 
 @Stateless
 public class ClientService {
@@ -23,12 +30,13 @@ public class ClientService {
 
 	private ClientMerger clientMerger = new ClientMerger();
 
-	public void addClient(final ClientDto client) {
+	public ClientDto addClient(final ClientDto client) {
 		Objects.requireNonNull(client);
 		logger.debug("Add new client {}", client);
 		Client entity = new Client();
 		clientMerger.merge(entity, client);
 		this.clientDao.insert(entity);
+		return clientMapper.map(entity);
 	}
 
 	public void updateClient(final ClientDto client) {
@@ -51,6 +59,22 @@ public class ClientService {
 		logger.debug("Find client by cif {}", cif);
 		final Client client = this.clientDao.findClientByCif(cif);
 		return this.clientMapper.map(client);
+	}
+	
+	public SearchResult<ClientDto> search(final String searchText, final Page page) {
+		return this.search(searchText, page, null, null);
+	}
+
+	public SearchResult<ClientDto> search(final String searchText, final Page page, final SortField sortField,
+			final SearchFacets searchFacets) {
+		Objects.requireNonNull(searchText);
+		Objects.requireNonNull(page);
+		final SearchResult<Client> restul = this.clientDao.search(searchText, page, sortField, searchFacets);
+		final List<Client> resultData = restul.getResultData();
+		final List<ClientDto> mapList = new ClientMapper().mapList(resultData);
+		final Map<String, List<Facet>> allFacets = restul.getAllFacets();
+		final int count = restul.getCount();
+		return new SearchResult<ClientDto>(mapList, count, allFacets);
 	}
 
 	public void setClientDao(final ClientDao clientDao) {

@@ -20,7 +20,7 @@ public class JobOfferConverter implements Converter<JobOffer> {
 		if (value == null) {
 			return null;
 		}
-		return this.jobOfferService.findByUid(value);
+		return this.jobOfferService.findJobOfferByUid(value);
 	}
 
 	@Override

@@ -19,22 +19,23 @@ import javax.inject.Inject;
 
 import org.primefaces.PrimeFaces;
 
+import es.nivel36.laie.web.core.IllegalPageStateException;
 import es.nivel36.laie.web.core.util.Navigator;
 import es.nivel36.laie.web.core.util.Translator;
 
 public abstract class AbstractView implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Inject
 	protected transient ApplicationView applicationView;
-	
+
 	@Inject
 	protected transient ExternalContext externalContext;
-	
+
 	@Inject
 	protected transient FacesContext facesContext;
-	
+
 	@Inject
 	protected transient Flash flash;
 
@@ -43,7 +44,7 @@ public abstract class AbstractView implements Serializable {
 
 	@Inject
 	protected transient SessionUser sessionUser;
-	
+
 	@Inject
 	protected transient Translator translator;
 
@@ -141,7 +142,15 @@ public abstract class AbstractView implements Serializable {
 	}
 
 	protected String getValueFromGetParameters(final String key) {
-		return this.externalContext.getRequestParameterMap().get(key);
+		return this.getValueFromGetParameters(key, false);
+	}
+
+	protected String getValueFromGetParameters(final String key, final boolean required) {
+		final String value = this.externalContext.getRequestParameterMap().get(key);
+		if (required && (value == null || value.isBlank())) {
+			throw new IllegalPageStateException();
+		}
+		return value;
 	}
 
 	protected void openBigDialog(final String name) {

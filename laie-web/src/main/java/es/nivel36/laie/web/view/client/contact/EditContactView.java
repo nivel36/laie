@@ -1,18 +1,16 @@
 package es.nivel36.laie.web.view.client.contact;
 
-import java.lang.invoke.MethodHandles;
-
+import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.omnifaces.cdi.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import es.nivel36.laie.ejb.client.ClientService;
-import es.nivel36.laie.ejb.client.Contact;
+import es.nivel36.laie.ejb.client.ContactDto;
 import es.nivel36.laie.ejb.client.ContactService;
+import es.nivel36.laie.web.core.IllegalPageStateException;
 import es.nivel36.laie.web.core.util.PageEnum;
 import es.nivel36.laie.web.core.view.AbstractView;
 
@@ -20,42 +18,46 @@ import es.nivel36.laie.web.core.view.AbstractView;
 @ViewScoped
 public class EditContactView extends AbstractView {
 
-	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
+	private static final long serialVersionUID = 158765276093072012L;
 
-	private static final long serialVersionUID = 1L;
+	private static final Logger logger = LoggerFactory.getLogger(EditContactView.class);
 
-	@Inject
-	private transient ClientService clientService;
+	private ContactDto contact;
 
-	@Inject
-	@Param(name = "uid", required = true)
-	private Contact contact;
+	private String uid;
+
+	private String clientUid;
 
 	@Inject
 	private transient ContactService contactService;
 
-	public String delete() {
-		logger.debug("Contact delete action performed");
-		this.clientService.deleteContact(this.contact.getClient().getUid(), this.contact);
-		return this.navigator.getRedirectUrl(PageEnum.CLIENT, this.contact.getClient());
-	}
-
-	public Contact getContact() {
-		return this.contact;
+	@PostConstruct
+	public void init() {
+		this.uid = this.getValueFromGetParameters("uid", true);
+		this.clientUid = this.getValueFromGetParameters("clientUid", true);
+		this.contact = this.contactService.findContactByUid(uid);
+		if (this.contact == null) {
+			throw new IllegalPageStateException();
+		}
 	}
 
 	public String save() {
 		logger.debug("Contact save action performed");
-		this.contactService.save(this.contact);
-		return this.navigator.getRedirectUrl(PageEnum.CLIENT, this.contact.getClient());
+		this.contactService.updateContact(this.contact);
+		return this.navigator.getRedirectUrl(PageEnum.CLIENT, this.clientUid);
+	}
+	
+	public String delete() {
+		logger.debug("Contact delete action performed");
+		this.contactService.deleteContact(this.uid);
+		return this.navigator.getRedirectUrl(PageEnum.CLIENT, this.clientUid);
 	}
 
-	public void setClientService(ClientService clientService) {
-		this.clientService = clientService;
+	public ContactDto getContact() {
+		return this.contact;
 	}
 
-	public void setContact(final Contact contact) {
-
+	public void setContact(final ContactDto contact) {
 		this.contact = contact;
 	}
 

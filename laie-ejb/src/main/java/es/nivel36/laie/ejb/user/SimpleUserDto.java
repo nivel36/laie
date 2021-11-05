@@ -14,6 +14,15 @@ public class SimpleUserDto implements Serializable {
 	private String image;
 	
 	private String uid;
+	
+	public SimpleUserDto() {}
+	
+	public SimpleUserDto(final UserDto userDto) {
+		this.email = userDto.getEmail();
+		this.fullName = userDto.getFullName();
+		this.image = userDto.getImageFileName();
+		this.uid = userDto.getUid();
+	}
 
 	@Override
 	public boolean equals(final Object obj) {

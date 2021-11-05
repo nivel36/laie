@@ -8,7 +8,6 @@ import java.util.Objects;
 
 import javax.inject.Inject;
 
-import org.omnifaces.cdi.Param;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.RateEvent;
 import org.primefaces.model.file.UploadedFile;
@@ -21,10 +20,8 @@ import es.nivel36.laie.web.core.view.AbstractView;
 
 public abstract class AbstractCandidateView extends AbstractView {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -5594140111507887031L;
 
-	@Inject
-	@Param(name = "uid", required = true)
 	protected CandidateDto candidate;
 
 	@Inject

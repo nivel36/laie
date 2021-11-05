@@ -56,7 +56,11 @@ public class ClientDto implements Serializable {
 	}
 
 	public AddressDto getAddress() {
-		return this.address;
+		if (this.address != null) {
+			return this.address;
+		} else {
+			return new AddressDto();
+		}
 	}
 
 	public String getCif() {

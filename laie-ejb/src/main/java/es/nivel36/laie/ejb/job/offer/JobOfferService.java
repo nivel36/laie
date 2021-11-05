@@ -142,7 +142,7 @@ public class JobOfferService {
 		jobOffer.setOwner(owner);
 	}
 
-	public JobOfferDto findByUid(final String uid) {
+	public JobOfferDto findJobOfferByUid(final String uid) {
 		Objects.requireNonNull(uid);
 		logger.debug("Find job offer by uid {}", uid);
 		final JobOffer jobOffer = this.jobOfferDao.findByUid(uid);
@@ -196,7 +196,7 @@ public class JobOfferService {
 	public JobOfferDto publish(final String jobOfferUid) {
 		Objects.requireNonNull(jobOfferUid);
 		logger.debug("Publish job offer {}", jobOfferUid);
-		final JobOfferDto jobOffer = this.findByUid(jobOfferUid);
+		final JobOfferDto jobOffer = this.findJobOfferByUid(jobOfferUid);
 		if (jobOffer.isOpen()) {
 			jobOffer.setPublished(true);
 		} else {
@@ -239,7 +239,7 @@ public class JobOfferService {
 	}
 
 	public JobOfferDto unpublish(final String jobOfferUid) {
-		final JobOfferDto jobOffer = this.findByUid(jobOfferUid);
+		final JobOfferDto jobOffer = this.findJobOfferByUid(jobOfferUid);
 		if (jobOffer.isPublished()) {
 			jobOffer.setPublished(false);
 		}

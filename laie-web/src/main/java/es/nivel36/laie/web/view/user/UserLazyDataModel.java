@@ -12,8 +12,8 @@ import es.nivel36.laie.web.core.view.AbstractLazyDataModel;
 
 public class UserLazyDataModel extends AbstractLazyDataModel<UserDto> {
 
-	private static final long serialVersionUID = 1L;
-
+	private static final long serialVersionUID = 6698863542667375365L;
+	
 	private transient UserService userService;
 
 	public UserLazyDataModel(final UserService userService) {

@@ -2,24 +2,38 @@ package es.nivel36.laie.web.view.client;
 
 import java.util.Objects;
 
-import es.nivel36.laie.ejb.client.Client;
+import es.nivel36.laie.ejb.client.ClientDto;
 import es.nivel36.laie.ejb.client.ClientService;
-import es.nivel36.laie.ejb.core.AbstractIndexedService;
+import es.nivel36.laie.ejb.core.model.Page;
+import es.nivel36.laie.ejb.core.model.search.SearchFacets;
+import es.nivel36.laie.ejb.core.model.search.SearchResult;
+import es.nivel36.laie.ejb.core.model.search.SortField;
 import es.nivel36.laie.web.core.view.AbstractLazyDataModel;
 
-public class ClientLazyDataModel extends AbstractLazyDataModel<Client> {
+public class ClientLazyDataModel extends AbstractLazyDataModel<ClientDto> {
 
-	private static final long serialVersionUID = 1L;
-
+	private static final long serialVersionUID = 4434716428350786274L;
+	
 	private transient ClientService clientService;
 
 	public ClientLazyDataModel(final ClientService clientService) {
-		Objects.requireNonNull(clientService, "ClientService can't be null");
+		Objects.requireNonNull(clientService);
 		this.clientService = clientService;
 	}
 
 	@Override
-	protected AbstractIndexedService<Client> getService() {
-		return this.clientService;
+	protected SearchResult<ClientDto> search(String searchText, Page page, SortField sortField,
+			SearchFacets searchFilter) {
+		return clientService.search(searchText, page, sortField, searchFilter);
+	}
+
+	@Override
+	protected ClientDto find(String rowkey) {
+		return clientService.findClientByUid(rowkey);
+	}
+
+	@Override
+	protected String getKey(ClientDto entity) {
+		return entity.getUid();
 	}
 }
