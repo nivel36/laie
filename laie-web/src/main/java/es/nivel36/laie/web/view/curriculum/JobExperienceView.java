@@ -27,14 +27,9 @@ import es.nivel36.laie.web.core.view.AbstractView;
 @ViewScoped
 public class JobExperienceView extends AbstractView {
 
-	private static final long serialVersionUID = 1L;
-
-	@Inject
-	@Param(name = "curriculumId", required = true)
 	private Curriculum curriculum;
-
-	@Inject
-	private transient CurriculumService curriculumService;
+	
+	private String candidateUid;
 
 	@NotNull
 	private YearMonthDto fromDate;
@@ -43,6 +38,16 @@ public class JobExperienceView extends AbstractView {
 
 	@NotNull
 	private YearMonthDto toDate;
+	
+	@Inject
+	private transient CurriculumService curriculumService;
+	
+	@PostConstruct
+	public void init() {
+		this.jobExperience = this.initJobExperience();
+		this.toDate = this.initToDate();
+		this.fromDate = this.initFromDate();
+	}
 
 	private JobExperience buildJobExperienceFromQueryParameter(final String itemParameter) {
 		try {
@@ -61,7 +66,6 @@ public class JobExperienceView extends AbstractView {
 	private JobExperience buildNewJobExperience() {
 		JobExperience newJobExperience = new JobExperience();
 		newJobExperience.setStillWorking(false);
-		newJobExperience.setCurriculum(this.curriculum);
 		return newJobExperience;
 	}
 
@@ -74,7 +78,7 @@ public class JobExperienceView extends AbstractView {
 
 	public String delete() {
 		this.curriculum.removeJobExperience(this.jobExperience);
-		this.curriculumService.save(this.curriculum);
+		this.curriculumService.addCurriculum(null, null);
 		return this.buildCurriculumUrl();
 	}
 
@@ -92,13 +96,6 @@ public class JobExperienceView extends AbstractView {
 
 	public YearMonthDto getToDate() {
 		return this.toDate;
-	}
-
-	@PostConstruct
-	public void init() {
-		this.jobExperience = this.initJobExperience();
-		this.toDate = this.initToDate();
-		this.fromDate = this.initFromDate();
 	}
 
 	public YearMonthDto initFromDate() {

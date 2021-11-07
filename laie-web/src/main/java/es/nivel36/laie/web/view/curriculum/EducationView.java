@@ -3,20 +3,17 @@ package es.nivel36.laie.web.view.curriculum;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.Objects;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.omnifaces.cdi.Param;
-
-import es.nivel36.laie.ejb.curriculum.Curriculum;
+import es.nivel36.laie.ejb.curriculum.CurriculumDto;
 import es.nivel36.laie.ejb.curriculum.CurriculumService;
-import es.nivel36.laie.ejb.curriculum.education.Education;
+import es.nivel36.laie.ejb.curriculum.education.EducationDto;
 import es.nivel36.laie.web.core.IllegalPageStateException;
 import es.nivel36.laie.web.core.util.PageEnum;
 import es.nivel36.laie.web.core.view.AbstractView;
@@ -25,30 +22,36 @@ import es.nivel36.laie.web.core.view.AbstractView;
 @ViewScoped
 public class EducationView extends AbstractView {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 7140292965204508410L;
 
-	@Inject
-	@Param(name = "curriculumId", required = true)
-	private Curriculum curriculum;
+	private CurriculumDto curriculum;
+
+	private EducationDto education;
+
+	private List<Integer> years;
+	
+	private String candidateUid;
 
 	@Inject
 	private transient CurriculumService curriculumService;
 
-	private Education education;
-
-	private List<Integer> years;
-
-	private String buildCurriculumUrl() {
-		final Map<String, String> queryParams = new HashMap<>();
-		queryParams.put("id", this.curriculum.getUid());
-		queryParams.put("candidateId", this.curriculum.getCandidate().getUid());
-		return this.navigator.getRedirectUrl(PageEnum.CURRICULUM, queryParams);
+	@PostConstruct
+	public void init() {
+		final String educationUid = this.getValueFromGetParameters("education");
+		this.candidateUid = this.getValueFromGetParameters("candidate");
+		final String curriculumUid = this.getValueFromGetParameters("curriculum");
+		this.curriculum = this.curriculumService.findCurriculumByUid(curriculumUid);
+		this.education = this.initEducation(educationUid);
+		this.years = this.initYears();
 	}
 
-	private Education buildEducationFromQueryParameter(final String itemParameter) {
+	private EducationDto initEducation(final String educationUid) {
+		if (educationUid == null) {
+			return new EducationDto();
+		}
 		try {
-			final int item = Integer.parseInt(itemParameter);
-			final List<Education> educations = new ArrayList<>(this.curriculum.getEducation());
+			final int item = Integer.parseInt(educationUid);
+			final List<EducationDto> educations = new ArrayList<>(this.curriculum.getEducation());
 			if (item >= educations.size()) {
 				throw new IllegalPageStateException();
 			}
@@ -58,45 +61,7 @@ public class EducationView extends AbstractView {
 			throw new IllegalPageStateException();
 		}
 	}
-
-	private Education buildNewEducation() {
-		final Education newEducation = new Education();
-		newEducation.setCurriculum(this.curriculum);
-		return newEducation;
-	}
-
-	public String delete() {
-		this.curriculum.removeEducation(this.education);
-		this.curriculumService.save(this.curriculum);
-		return this.buildCurriculumUrl();
-	}
-
-	public Curriculum getCurriculum() {
-		return this.curriculum;
-	}
-
-	public Education getEducation() {
-		return this.education;
-	}
-
-	public List<Integer> getYears() {
-		return this.years;
-	}
-
-	@PostConstruct
-	public void init() {
-		this.education = this.initEducation();
-		this.years = this.initYears();
-	}
-
-	public Education initEducation() {
-		final String itemParameter = this.getValueFromGetParameters("item");
-		if (itemParameter == null) {
-			return this.buildNewEducation();
-		} else {
-			return this.buildEducationFromQueryParameter(itemParameter);
-		}
-	}
+	
 
 	public List<Integer> initYears() {
 		final List<Integer> newYears = new ArrayList<>();
@@ -106,23 +71,34 @@ public class EducationView extends AbstractView {
 		return newYears;
 	}
 
-	public boolean isNewEducation() {
-		return this.education.getId() == 0;
+	private String buildCurriculumUrl() {
+		return this.navigator.getRedirectUrl(PageEnum.CURRICULUM, this.curriculum.getUid());
+	}
+
+	public String delete() {
+		this.curriculum.getEducation().remove(education);
+		return this.save();
 	}
 
 	public String save() {
-		if (education.isNew()) {
-			this.curriculum.addEducation(this.education);
-		}
-		this.curriculumService.save(this.curriculum);
+		this.curriculumService.addCurriculum(this.candidateUid, this.curriculum);
 		return this.buildCurriculumUrl();
 	}
 
-	public void setCurriculumService(final CurriculumService curriculumService) {
-		this.curriculumService = curriculumService;
+	public EducationDto getEducation() {
+		return this.education;
 	}
 
-	public void setEducation(final Education education) {
+	public List<Integer> getYears() {
+		return this.years;
+	}
+
+	public void setEducation(final EducationDto education) {
 		this.education = education;
+	}
+
+	public void setCurriculumService(final CurriculumService curriculumService) {
+		Objects.requireNonNull(curriculumService);
+		this.curriculumService = curriculumService;
 	}
 }

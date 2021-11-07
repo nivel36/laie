@@ -8,8 +8,8 @@ import es.nivel36.laie.ejb.core.model.Repository;
 @Repository
 public class JobCandidatureEventDao extends AbstractDao {
 
-	public void insert(JobCandidatureEvent event) {
+	public void insert(final JobCandidatureEvent event) {
 		Objects.requireNonNull(event);
-		this.insert(event);
+		this.em.persist(event);
 	}
 }

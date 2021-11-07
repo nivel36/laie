@@ -38,7 +38,8 @@ public class JobCandidature extends AbstractIndexedEntity {
 	@JoinColumn(name = "jobOfferId", nullable = false)
 	private JobOffer jobOffer;
 
-	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "jobCandidature", orphanRemoval = true)
+	@OneToMany(cascade = CascadeType.REMOVE, orphanRemoval = true)
+	@JoinColumn(name = "jobCandidatureId")
 	private Set<Meeting> meetings;
 
 	@ManyToOne

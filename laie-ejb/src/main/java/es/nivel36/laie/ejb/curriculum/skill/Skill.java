@@ -4,26 +4,19 @@ import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 
 import es.nivel36.laie.ejb.core.model.AbstractEntity;
-import es.nivel36.laie.ejb.curriculum.Curriculum;
 
 @Entity
 @Indexed
 public class Skill extends AbstractEntity implements Comparable<Skill> {
 
-	private static final long serialVersionUID = 1L;
-
-	@ManyToOne
-	@JoinColumn(name = "curriculumId", nullable = false)
-	private Curriculum curriculum;
-
+	private static final long serialVersionUID = 4288106580541111562L;
+	
 	@Field
 	@NotNull
 	@Column(nullable = false)
@@ -51,10 +44,6 @@ public class Skill extends AbstractEntity implements Comparable<Skill> {
 		return Objects.equals(other.name, this.name);
 	}
 
-	public Curriculum getCurriculum() {
-		return this.curriculum;
-	}
-
 	public String getName() {
 		return this.name;
 	}
@@ -62,10 +51,6 @@ public class Skill extends AbstractEntity implements Comparable<Skill> {
 	@Override
 	public int hashCode() {
 		return Objects.hash(this.name);
-	}
-
-	public void setCurriculum(final Curriculum curriculum) {
-		this.curriculum = curriculum;
 	}
 
 	public void setName(final String name) {

@@ -6,26 +6,18 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 
 import es.nivel36.laie.ejb.core.model.AbstractEntity;
-import es.nivel36.laie.ejb.curriculum.Curriculum;
 
 @Indexed
 @Entity
 public class Language extends AbstractEntity implements Comparable<Language> {
 
-	private static final long serialVersionUID = 1L;
-
-	@NotNull
-	@ManyToOne
-	@JoinColumn(name = "curriculumId", nullable = false)
-	private Curriculum curriculum;
+	private static final long serialVersionUID = -3425255875950769281L;
 
 	@NotNull
 	@Enumerated(EnumType.STRING)
@@ -52,10 +44,6 @@ public class Language extends AbstractEntity implements Comparable<Language> {
 		return Objects.equals(this.name, other.name) && Objects.equals(this.level, other.level);
 	}
 
-	public Curriculum getCurriculum() {
-		return this.curriculum;
-	}
-
 	public LanguageLevel getLevel() {
 		return this.level;
 	}
@@ -67,10 +55,6 @@ public class Language extends AbstractEntity implements Comparable<Language> {
 	@Override
 	public int hashCode() {
 		return Objects.hash(this.name, this.level);
-	}
-
-	public void setCurriculum(final Curriculum curriculum) {
-		this.curriculum = curriculum;
 	}
 
 	public void setLevel(final LanguageLevel level) {

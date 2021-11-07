@@ -23,42 +23,42 @@ import es.nivel36.laie.ejb.curriculum.skill.Skill;
 @Entity
 public class Curriculum extends AbstractIndexedEntity {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 2258938088135732207L;
 
 	@NotNull
 	@OneToOne(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, orphanRemoval = true)
 	@JoinColumn(name = "candidateId", nullable = false)
 	private Candidate candidate;
 
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "curriculum", orphanRemoval = true)
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinColumn(name = "curriculum_id")
 	private Set<Education> education;
 
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "curriculum", orphanRemoval = true)
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinColumn(name = "curriculum_id")
 	private Set<JobExperience> jobExperiences;
 
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "curriculum", orphanRemoval = true)
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinColumn(name = "curriculum_id")
 	private Set<Language> languages;
 
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "curriculum", orphanRemoval = true)
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinColumn(name = "curriculum_id")
 	private Set<Skill> skills;
 
 	public void addEducation(final Education education) {
-		education.setCurriculum(this);
 		this.education.add(education);
 	}
 
 	public void addJobExperience(final JobExperience jobExperience) {
-		jobExperience.setCurriculum(this);
 		this.jobExperiences.add(jobExperience);
 	}
 
 	public void addLanguage(final Language language) {
-		language.setCurriculum(this);
 		this.languages.add(language);
 	}
 
 	public void addSkill(final Skill skill) {
-		skill.setCurriculum(this);
 		this.skills.add(skill);
 	}
 

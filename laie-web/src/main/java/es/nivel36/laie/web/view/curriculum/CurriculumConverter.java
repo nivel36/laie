@@ -8,25 +8,25 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.inject.Inject;
 
-import es.nivel36.laie.ejb.curriculum.Curriculum;
+import es.nivel36.laie.ejb.curriculum.CurriculumDto;
 import es.nivel36.laie.ejb.curriculum.CurriculumService;
 
-@FacesConverter(forClass = Curriculum.class, managed = true)
-public class CurriculumConverter implements Converter<Curriculum> {
+@FacesConverter(forClass = CurriculumDto.class, managed = true)
+public class CurriculumConverter implements Converter<CurriculumDto> {
 
 	@Inject
 	private CurriculumService curriculumService;
 
 	@Override
-	public Curriculum getAsObject(final FacesContext context, final UIComponent component, final String value) {
+	public CurriculumDto getAsObject(final FacesContext context, final UIComponent component, final String value) {
 		if (value == null) {
 			return null;
 		}
-		return this.curriculumService.findByUid(value);
+		return this.curriculumService.findCurriculumByUid(value);
 	}
 
 	@Override
-	public String getAsString(final FacesContext context, final UIComponent component, final Curriculum value) {
+	public String getAsString(final FacesContext context, final UIComponent component, final CurriculumDto value) {
 		if (value == null) {
 			return null;
 		}

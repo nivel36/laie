@@ -53,7 +53,6 @@ public class CurriculumService {
 			Skill skill = this.curriculumDao.findSkill(dto);
 			if (skill == null) {
 				skill = new Skill();
-				skill.setCurriculum(entity);
 				skill.setName(dto);
 			}
 			skills.add(skill);
@@ -62,7 +61,6 @@ public class CurriculumService {
 		final Set<JobExperience> jobExperiences = new HashSet<JobExperience>();
 		for (final JobExperienceDto jobExperienceDto : curriculum.getJobExperiences()) {
 			final JobExperience jobExperience = new JobExperience();
-			jobExperience.setCurriculum(entity);
 			new JobExperienceMerger().merge(jobExperience, jobExperienceDto);
 			jobExperiences.add(jobExperience);
 		}
@@ -70,7 +68,6 @@ public class CurriculumService {
 		final Set<Education> educations = new HashSet<Education>();
 		for (final EducationDto educationDto : curriculum.getEducation()) {
 			final Education education = new Education();
-			education.setCurriculum(entity);
 			new EducationMerger().merge(education, educationDto);
 			educations.add(education);
 		}
@@ -78,11 +75,9 @@ public class CurriculumService {
 		final Set<Language> languages = new HashSet<Language>();
 		for (final LanguageDto languageDto : curriculum.getLanguages()) {
 			Language language = new Language();
-			language.setCurriculum(entity);
 			new LenguageMerger().merge(language, languageDto);
 			languages.add(language);
 		}
-
 		this.curriculumDao.insert(entity);
 	}
 	
@@ -105,7 +100,7 @@ public class CurriculumService {
 		return new CurriculumMapper().map(curriculum);
 	}
 
-	public CurriculumDto findByUid(final String uid) {
+	public CurriculumDto findCurriculumByUid(final String uid) {
 		Objects.requireNonNull(uid);
 		logger.debug("Find curriculum by uid {}", uid);
 		final Curriculum curriculum = this.curriculumDao.findByUid(uid);

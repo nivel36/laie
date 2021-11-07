@@ -4,26 +4,18 @@ import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 
 import es.nivel36.laie.ejb.core.model.AbstractEntity;
-import es.nivel36.laie.ejb.curriculum.Curriculum;
 
 @Entity
 @Indexed
 public class Education extends AbstractEntity implements Comparable<Education>{
 
-	private static final long serialVersionUID = 1L;
-
-	@NotNull
-	@ManyToOne
-	@JoinColumn(name = "curriculumId", nullable = false)
-	private Curriculum curriculum;
+	private static final long serialVersionUID = 7831977505416700653L;
 
 	@NotNull
 	@Column(length = 128, nullable = false)
@@ -63,10 +55,6 @@ public class Education extends AbstractEntity implements Comparable<Education>{
 				&& Objects.equals(this.endYear, other.endYear);
 	}
 
-	public Curriculum getCurriculum() {
-		return this.curriculum;
-	}
-
 	public String getDegree() {
 		return this.degree;
 	}
@@ -94,10 +82,6 @@ public class Education extends AbstractEntity implements Comparable<Education>{
 
 	public boolean isStillStudying() {
 		return this.stillStudying;
-	}
-
-	public void setCurriculum(final Curriculum curriculum) {
-		this.curriculum = curriculum;
 	}
 
 	public void setDegree(final String degree) {

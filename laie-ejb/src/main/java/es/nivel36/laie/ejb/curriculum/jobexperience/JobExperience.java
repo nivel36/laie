@@ -7,32 +7,24 @@ import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 
 import es.nivel36.laie.ejb.core.model.AbstractEntity;
-import es.nivel36.laie.ejb.curriculum.Curriculum;
 
 @Entity
 @Indexed
 public class JobExperience extends AbstractEntity implements Comparable<JobExperience> {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 5196582360914455397L;
 
 	@Field
 	@NotNull
 	@Column(length = 128, nullable = false)
 	private String companyName;
-
-	@NotNull
-	@ManyToOne
-	@JoinColumn(name = "curriculumId", nullable = false)
-	private Curriculum curriculum;
 
 	@Field
 	@Lob
@@ -61,7 +53,7 @@ public class JobExperience extends AbstractEntity implements Comparable<JobExper
 			return false;
 		}
 		final JobExperience other = (JobExperience) obj;
-		return Objects.equals(this.companyName, other.companyName) && Objects.equals(this.curriculum, other.curriculum)
+		return Objects.equals(this.companyName, other.companyName)
 				&& Objects.equals(this.description, other.description)
 				&& Objects.equals(this.startDate, other.startDate)
 				&& Objects.equals(this.jobPosition, other.jobPosition)
@@ -70,10 +62,6 @@ public class JobExperience extends AbstractEntity implements Comparable<JobExper
 
 	public String getCompanyName() {
 		return this.companyName;
-	}
-
-	public Curriculum getCurriculum() {
-		return this.curriculum;
 	}
 
 	public String getDescription() {
@@ -106,8 +94,8 @@ public class JobExperience extends AbstractEntity implements Comparable<JobExper
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(this.companyName, this.curriculum, this.description, this.startDate, this.jobPosition,
-				this.stillWorking, this.endDate);
+		return Objects.hash(this.companyName, this.description, this.startDate, this.jobPosition, this.stillWorking,
+				this.endDate);
 	}
 
 	public boolean isStillWorking() {
@@ -116,10 +104,6 @@ public class JobExperience extends AbstractEntity implements Comparable<JobExper
 
 	public void setCompanyName(final String companyName) {
 		this.companyName = companyName;
-	}
-
-	public void setCurriculum(final Curriculum curriculum) {
-		this.curriculum = curriculum;
 	}
 
 	public void setDescription(final String description) {
