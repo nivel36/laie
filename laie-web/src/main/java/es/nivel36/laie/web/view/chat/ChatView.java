@@ -1,5 +1,6 @@
 package es.nivel36.laie.web.view.chat;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,7 +12,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import es.nivel36.laie.ejb.core.chat.ChatService;
-import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.ejb.user.UserService;
 import es.nivel36.laie.web.core.view.AbstractView;
@@ -84,14 +84,15 @@ public class ChatView extends AbstractView {
 
 	@PostConstruct
 	public void init() {
-		this.users = this.userService.findAll(Page.TEN_RESULTS_PER_PAGE);
+		//TODO:
+		this.users = new ArrayList<>();
 		this.users.remove(this.sessionUser.get());
 		this.selectedUser = this.users.get(0);
 		this.messages = new HashMap<>();
 	}
 
 	public void search() {
-		this.users = this.userService.search(this.searchText, Page.TEN_RESULTS_PER_PAGE).getResultData();
+		this.users = new ArrayList<User>();
 	}
 
 	public void selectUser(final User selectedUser) {
@@ -111,7 +112,7 @@ public class ChatView extends AbstractView {
 			final String message = this.getCurrentMessage();
 			if ((message != null) && !message.isBlank()) {
 				this.getChatService().sendMessage(this.getSelectedUser(), message);
-				this.getChatPush().sendMessage(this.sessionUser.getUser(), this.getSelectedUser(), message);
+				this.getChatPush().sendMessage(null, null, message);
 			}
 			this.clearSelectedUserMessage();
 		}

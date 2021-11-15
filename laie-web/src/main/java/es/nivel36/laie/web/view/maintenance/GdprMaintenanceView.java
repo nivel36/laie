@@ -18,7 +18,7 @@ import org.omnifaces.util.Faces;
 
 import es.nivel36.laie.ejb.core.Language;
 import es.nivel36.laie.ejb.core.document.DateTag;
-import es.nivel36.laie.ejb.core.document.DocumentTemplate;
+import es.nivel36.laie.ejb.core.document.DocumentTemplateDto;
 import es.nivel36.laie.ejb.core.document.DocumentTemplateService;
 import es.nivel36.laie.ejb.core.document.TemplateTag;
 import es.nivel36.laie.web.core.view.AbstractView;
@@ -27,9 +27,9 @@ import es.nivel36.laie.web.core.view.AbstractView;
 @ViewScoped
 public class GdprMaintenanceView extends AbstractView {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -5171546281152282168L;
 
-	private DocumentTemplate document;
+	private DocumentTemplateDto document;
 
 	@Inject
 	private DocumentTemplateService documentService;
@@ -47,7 +47,7 @@ public class GdprMaintenanceView extends AbstractView {
 		}
 	}
 
-	public DocumentTemplate getDocument() {
+	public DocumentTemplateDto getDocument() {
 		return this.document;
 	}
 
@@ -62,15 +62,15 @@ public class GdprMaintenanceView extends AbstractView {
 	}
 
 	public void save() {
-		this.documentService.save(this.document);
+		this.documentService.addDocumentTemplate(document);
 		this.addMessage(FacesMessage.SEVERITY_INFO, "action.save_action_performed", "action.save_action_performed");
 	}
 
 	public void searchDocument() {
-		final DocumentTemplate documentFromDatabase = this.documentService.findDocumentByNameAndLanguage("gdpr",
+		final DocumentTemplateDto documentFromDatabase = this.documentService.findDocumentByNameAndLanguage("gdpr",
 				this.language);
 		if (documentFromDatabase == null) {
-			this.document = new DocumentTemplate();
+			this.document = new DocumentTemplateDto();
 			this.document.setName("gdpr");
 			this.document.setLanguage(this.language.getCode());
 		} else {
@@ -78,7 +78,7 @@ public class GdprMaintenanceView extends AbstractView {
 		}
 	}
 
-	public void setDocument(final DocumentTemplate document) {
+	public void setDocument(final DocumentTemplateDto document) {
 		this.document = document;
 	}
 

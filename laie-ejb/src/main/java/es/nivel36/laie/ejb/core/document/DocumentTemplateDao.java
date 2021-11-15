@@ -9,7 +9,6 @@ import es.nivel36.laie.ejb.core.model.AbstractDao;
 import es.nivel36.laie.ejb.core.model.Repository;
 import es.nivel36.laie.ejb.core.model.UidGenerator;
 import es.nivel36.laie.ejb.core.util.Parameters;
-import es.nivel36.laie.ejb.user.User;
 
 @Repository
 public class DocumentTemplateDao extends AbstractDao {
@@ -24,7 +23,7 @@ public class DocumentTemplateDao extends AbstractDao {
 		String uid;
 		do {
 			uid = UidGenerator.generate(DocumentTemplate.class);
-			user.setUid(uid);
+			documentTemplate.setUid(uid);
 		} while (!this.checkDuplicateUid(uid));
 	}
 

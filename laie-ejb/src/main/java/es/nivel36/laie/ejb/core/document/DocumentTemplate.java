@@ -37,21 +37,6 @@ public class DocumentTemplate extends AbstractEntity {
 	@Column(nullable = false)
 	private String title;
 
-	@Override
-	public boolean equals(final Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (!super.equals(obj)) {
-			return false;
-		}
-		if (this.getClass() != obj.getClass()) {
-			return false;
-		}
-		final DocumentTemplate other = (DocumentTemplate) obj;
-		return Objects.equals(this.name, other.name) && Objects.equals(this.language, other.language);
-	}
-
 	public String getLanguage() {
 		return this.language;
 	}
@@ -72,11 +57,6 @@ public class DocumentTemplate extends AbstractEntity {
 		return this.uid;
 	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(this.name, this.language);
-	}
-
 	public void setLanguage(final String language) {
 		this.language = language;
 	}
@@ -95,6 +75,26 @@ public class DocumentTemplate extends AbstractEntity {
 	
 	public void setUid(final String uid) {
 		this.uid = uid;
+	}
+	
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (!super.equals(obj)) {
+			return false;
+		}
+		if (this.getClass() != obj.getClass()) {
+			return false;
+		}
+		final DocumentTemplate other = (DocumentTemplate) obj;
+		return Objects.equals(this.name, other.name) && Objects.equals(this.language, other.language);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(this.name, this.language);
 	}
 
 	@Override

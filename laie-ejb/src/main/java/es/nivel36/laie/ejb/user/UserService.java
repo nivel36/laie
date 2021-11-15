@@ -159,7 +159,7 @@ public class UserService {
 		final Credential credential = this.userDao.findCredential(email);
 		credential.setPassword(newPassword);
 	}
-
+	
 	public Credential findCredential(final String email) {
 		Objects.requireNonNull(email);
 		logger.debug("Find credential for user with email {}", email);
