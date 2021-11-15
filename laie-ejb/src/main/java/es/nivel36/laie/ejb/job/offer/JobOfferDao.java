@@ -73,10 +73,6 @@ public class JobOfferDao extends AbstractDao {
 		return this.findByQuery(JobOffer.class, namedQuery, parameters, page);
 	}
 
-	public SearchResult<JobOffer> search(final String searchText, final Page page) {
-		return this.search(searchText, page, null, null);
-	}
-
 	public SearchResult<JobOffer> search(final String searchText, final Page page, SortField sortOrder,
 			final SearchFacets searchFacets) {
 		final String[] searchFields = new String[] { "_title", "_client.name" };

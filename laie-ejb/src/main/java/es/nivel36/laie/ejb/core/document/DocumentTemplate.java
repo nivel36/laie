@@ -15,7 +15,10 @@ import es.nivel36.laie.ejb.core.model.AbstractEntity;
 @Table(name = "DOCUMENT_TEMPLATE", uniqueConstraints = { @UniqueConstraint(columnNames = { "name", "language" }) })
 public class DocumentTemplate extends AbstractEntity {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 5175582851805624309L;
+
+	@NotNull
+	private String uid;
 
 	@NotNull
 	@Column(nullable = false)
@@ -64,6 +67,10 @@ public class DocumentTemplate extends AbstractEntity {
 	public String getTitle() {
 		return this.title;
 	}
+	
+	public String getUid() {
+		return this.uid;
+	}
 
 	@Override
 	public int hashCode() {
@@ -85,10 +92,13 @@ public class DocumentTemplate extends AbstractEntity {
 	public void setTitle(final String title) {
 		this.title = title;
 	}
+	
+	public void setUid(final String uid) {
+		this.uid = uid;
+	}
 
 	@Override
 	public String toString() {
 		return this.name + " (" + this.language + ")";
 	}
-
 }

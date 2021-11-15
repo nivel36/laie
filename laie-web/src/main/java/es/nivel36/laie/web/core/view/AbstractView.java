@@ -25,7 +25,7 @@ import es.nivel36.laie.web.core.util.Translator;
 
 public abstract class AbstractView implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -75092582490831905L;
 
 	@Inject
 	protected transient ApplicationView applicationView;

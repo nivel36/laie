@@ -1,6 +1,6 @@
 package es.nivel36.laie.web.view.job;
 
-import java.lang.invoke.MethodHandles;
+import java.util.ArrayList;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -9,23 +9,23 @@ import javax.inject.Named;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import es.nivel36.laie.ejb.core.model.Address;
-import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.web.core.IllegalPageStateException;
 
 @Named
 @ViewScoped
 public class EditJobView extends AbstractJobView {
 
-	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
+	private static final long serialVersionUID = 7356542779288827753L;
+	
+	private static final Logger logger = LoggerFactory.getLogger(EditJobView.class);
 
-	private static final long serialVersionUID = 1L;
-
-	private void checkEditPermission() {
-		if (!this.sessionUser.hasPermissionToEdit(this.jobOffer)) {
-			logger.error("User {} hasn't got priviliges to edit jobOffer {}", this.sessionUser.get(), this.jobOffer);
-			throw new SecurityException();
-		}
+	@PostConstruct
+	public void init() {
+		final String uid = this.getValueFromGetParameters("jobOfferUid", true);
+		this.jobOffer = this.jobOfferService.findJobOfferByUid(uid);
+		this.checkNonNullJobOffer();
+		logger.trace("Edit job offer {} init", this.jobOffer);
+		this.fillRecruiters();
 	}
 
 	private void checkNonNullJobOffer() {
@@ -34,28 +34,14 @@ public class EditJobView extends AbstractJobView {
 			throw new IllegalPageStateException();
 		}
 	}
-
+	
 	private void fillRecruiters() {
-		for (final User recruiter : this.jobOffer.getRecruiters()) {
-			this.getRecruiters().add(recruiter);
-		}
-	}
-
-	@PostConstruct
-	public void init() {
-		this.checkNonNullJobOffer();
-		this.checkEditPermission();
-		if (this.jobOffer.getAddress() == null) {
-			this.jobOffer.setAddress(new Address());
-		}
-		logger.trace("Edit job offer {} init", this.jobOffer);
-		this.fillRecruiters();
+		this.recruiters = new ArrayList<>(this.jobOffer.getRecruiters());
 	}
 
 	public String save() {
 		logger.debug("Save job offer action performed");
-		this.jobOffer.setRecruiters(this.getRecruiters());
-		this.jobOffer = this.jobOfferService.save(this.jobOffer);
+		this.jobOfferService.updateJobOffer(jobOffer);
 		return this.jobUrl();
 	}
 }

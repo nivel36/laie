@@ -29,6 +29,11 @@ public class DocumentTemplateService  {
 	@Inject
 	@Repository
 	private DocumentTemplateDao documentTemplateDao;
+	
+	private void addDocumentTemplate(final DocumentTemplateDto documentTemplate) {
+		this.documentTemplateDao.i
+	}
+
 
 	private File createPdf(final String text) {
 		try {

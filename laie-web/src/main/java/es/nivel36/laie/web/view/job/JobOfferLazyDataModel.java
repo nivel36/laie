@@ -2,14 +2,17 @@ package es.nivel36.laie.web.view.job;
 
 import java.util.Objects;
 
-import es.nivel36.laie.ejb.core.AbstractIndexedService;
-import es.nivel36.laie.ejb.job.offer.JobOffer;
+import es.nivel36.laie.ejb.core.model.Page;
+import es.nivel36.laie.ejb.core.model.search.SearchFacets;
+import es.nivel36.laie.ejb.core.model.search.SearchResult;
+import es.nivel36.laie.ejb.core.model.search.SortField;
+import es.nivel36.laie.ejb.job.offer.JobOfferDto;
 import es.nivel36.laie.ejb.job.offer.JobOfferService;
 import es.nivel36.laie.web.core.view.AbstractLazyDataModel;
 
-public class JobOfferLazyDataModel extends AbstractLazyDataModel<JobOffer> {
+public class JobOfferLazyDataModel extends AbstractLazyDataModel<JobOfferDto> {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 6084482828895151751L;
 
 	private transient JobOfferService jobOfferService;
 
@@ -19,7 +22,18 @@ public class JobOfferLazyDataModel extends AbstractLazyDataModel<JobOffer> {
 	}
 
 	@Override
-	protected AbstractIndexedService<JobOffer> getService() {
-		return this.jobOfferService;
+	protected SearchResult<JobOfferDto> search(String searchText, Page page, SortField sortField,
+			SearchFacets searchFilter) {
+		return jobOfferService.search(searchText, page, sortField, searchFilter);
+	}
+
+	@Override
+	protected JobOfferDto find(String rowkey) {
+		return jobOfferService.findJobOfferByUid(rowkey);
+	}
+
+	@Override
+	protected String getKey(JobOfferDto entity) {
+		return entity.getUid();
 	}
 }

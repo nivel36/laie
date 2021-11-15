@@ -25,7 +25,7 @@ public abstract class AbstractJobView extends AbstractView {
 
 	protected JobOfferDto jobOffer;
 
-	private List<SimpleUserDto> recruiters = new ArrayList<>();
+	protected List<SimpleUserDto> recruiters = new ArrayList<>();
 
 	@Inject
 	protected transient ClientService clientService;

@@ -37,18 +37,6 @@ public class JobOfferEvent extends AbstractIndexedEntity {
 
 	private User user;
 
-	public JobOfferEvent() {
-	}
-
-	public JobOfferEvent(final User user, final JobOffer jobOffer) {
-		Objects.requireNonNull(user);
-		Objects.requireNonNull(jobOffer);
-		this.user = user;
-		this.jobOffer = jobOffer;
-		this.date = LocalDateTime.now();
-		this.state = jobOffer.getState();
-	}
-
 	@Override
 	public boolean equals(final Object obj) {
 		if (this == obj) {

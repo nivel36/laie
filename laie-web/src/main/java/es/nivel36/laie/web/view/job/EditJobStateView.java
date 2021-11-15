@@ -1,60 +1,46 @@
 package es.nivel36.laie.web.view.job;
 
-import java.lang.invoke.MethodHandles;
-import java.time.LocalDateTime;
+import java.util.Objects;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.omnifaces.cdi.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import es.nivel36.laie.ejb.core.model.Address;
-import es.nivel36.laie.ejb.event.JobOfferEvent;
 import es.nivel36.laie.ejb.event.JobOfferEventService;
-import es.nivel36.laie.ejb.job.offer.JobOffer;
+import es.nivel36.laie.ejb.job.offer.JobOfferDto;
+import es.nivel36.laie.ejb.job.offer.JobOfferService;
 import es.nivel36.laie.ejb.job.offer.JobOfferState;
 import es.nivel36.laie.web.core.IllegalPageStateException;
-import es.nivel36.laie.web.core.util.PageEnum;
 import es.nivel36.laie.web.core.view.AbstractView;
 
 @Named
 @ViewScoped
 public class EditJobStateView extends AbstractView {
 
-	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
+	private static final Logger logger = LoggerFactory.getLogger(EditJobStateView.class);
 
-	private static final long serialVersionUID = 1L;
-
-	@Inject
-	@Param(name = "id", required = true)
-	private JobOffer jobOffer;
-
-	@Inject
-	protected transient JobOfferEventService jobOfferEventService;
+	private JobOfferDto jobOffer;
 
 	private String notes;
 
 	private JobOfferState state;
 
-	private JobOfferEvent buildEvent() {
-		final JobOfferEvent event = new JobOfferEvent();
-		event.setJobOffer(this.jobOffer);
-		event.setDate(LocalDateTime.now());
-		event.setNotes(this.notes);
-		event.setState(this.state);
-		event.setUser(this.sessionUser.get());
-		return event;
-	}
-
-	private void checkEditPermission() {
-		if (!this.sessionUser.hasPermissionToEdit(this.jobOffer)) {
-			logger.error("User {} hasn't got priviliges to edit jobOffer {}", this.sessionUser.get(), this.jobOffer);
-			throw new SecurityException();
-		}
+	@Inject
+	protected transient JobOfferEventService jobOfferEventService;
+	
+	@Inject
+	protected transient JobOfferService jobOfferService;
+	
+	@PostConstruct
+	public void init() {
+		final String uid = this.getValueFromGetParameters("jobOffer", true);
+		this.jobOffer = this.jobOfferService.findJobOfferByUid(uid);
+		this.checkNonNullJobOffer();
+		logger.trace("Edit job state {} init", this.jobOffer);
 	}
 
 	private void checkNonNullJobOffer() {
@@ -64,7 +50,16 @@ public class EditJobStateView extends AbstractView {
 		}
 	}
 
-	public JobOffer getJobOffer() {
+	private String jobUrl() {
+		return null;
+	}
+
+	public String save() {
+		logger.debug("Save job offer action performed");
+		return this.jobUrl();
+	}
+
+	public JobOfferDto getJobOffer() {
 		return this.jobOffer;
 	}
 
@@ -76,33 +71,8 @@ public class EditJobStateView extends AbstractView {
 		return this.state;
 	}
 
-	@PostConstruct
-	public void init() {
-		this.checkNonNullJobOffer();
-		this.checkEditPermission();
-		if (this.jobOffer.getAddress() == null) {
-			this.jobOffer.setAddress(new Address());
-		}
-		logger.trace("Edit job offer {} init", this.jobOffer);
-	}
-
-	private String jobUrl() {
-		return this.navigator.getRedirectUrl(PageEnum.JOB, this.jobOffer);
-	}
-
-	public String save() {
-		logger.debug("Save job offer action performed");
-		final JobOfferEvent event = this.buildEvent();
-		this.jobOfferEventService.save(event);
-		return this.jobUrl();
-	}
-
-	public void setJobOffer(final JobOffer jobOffer) {
+	public void setJobOffer(final JobOfferDto jobOffer) {
 		this.jobOffer = jobOffer;
-	}
-
-	public void setJobOfferEventService(final JobOfferEventService jobOfferEventService) {
-		this.jobOfferEventService = jobOfferEventService;
 	}
 
 	public void setNotes(final String notes) {
@@ -111,5 +81,15 @@ public class EditJobStateView extends AbstractView {
 
 	public void setState(final JobOfferState state) {
 		this.state = state;
+	}
+	
+	public void setJobOfferService(final JobOfferService jobOfferService) {
+		Objects.requireNonNull(jobOfferService);
+		this.jobOfferService = jobOfferService;
+	}
+	
+	public void setJobOfferEventService(final JobOfferEventService jobOfferEventService) {
+		Objects.requireNonNull(jobOfferEventService);
+		this.jobOfferEventService = jobOfferEventService;
 	}
 }

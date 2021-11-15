@@ -40,7 +40,7 @@ public class JobOfferEventDto implements Serializable {
 		return date;
 	}
 
-	public void setDate(LocalDateTime date) {
+	void setDate(LocalDateTime date) {
 		this.date = date;
 	}
 
@@ -60,7 +60,7 @@ public class JobOfferEventDto implements Serializable {
 		this.state = state;
 	}
 
-	public SimpleUserDto getUser() {
+	SimpleUserDto getUser() {
 		return user;
 	}
 

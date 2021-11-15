@@ -2,6 +2,7 @@ package es.nivel36.laie.ejb.job.candidature;
 
 import java.util.Objects;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
@@ -17,7 +18,7 @@ import es.nivel36.laie.ejb.core.model.AbstractEntity;
 @Table(name = "JOB_CANDIDATURE_STATE")
 public class JobCandidatureState extends AbstractEntity implements EventState {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -1530029544557152044L;
 
 	private boolean approved;
 
@@ -27,31 +28,12 @@ public class JobCandidatureState extends AbstractEntity implements EventState {
 
 	@Field(analyze = Analyze.NO)
 	@Facet(encoding = FacetEncodingType.STRING)
+	@Column(unique = true)
 	private String name;
-
-	@Override
-	public boolean equals(final Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (!super.equals(obj)) {
-			return false;
-		}
-		if (this.getClass() != obj.getClass()) {
-			return false;
-		}
-		final JobCandidatureState other = (JobCandidatureState) obj;
-		return Objects.equals(this.name, other.name);
-	}
 
 	@Override
 	public String getName() {
 		return this.name;
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hashCode(this.name);
 	}
 
 	public boolean isApproved() {
@@ -84,6 +66,26 @@ public class JobCandidatureState extends AbstractEntity implements EventState {
 
 	public void setName(final String name) {
 		this.name = name;
+	}
+	
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (!super.equals(obj)) {
+			return false;
+		}
+		if (this.getClass() != obj.getClass()) {
+			return false;
+		}
+		final JobCandidatureState other = (JobCandidatureState) obj;
+		return Objects.equals(this.name, other.name);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hashCode(this.name);
 	}
 
 	@Override

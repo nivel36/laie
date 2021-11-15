@@ -69,7 +69,7 @@ public class JobCandidatureService {
 		this.jobCandidatureDao.insert(jobCandidature);
 	}
 
-	public void addJobCandidatures(final String jobOfferUid, final List<String> candidateUids) {
+	public void addJobCandidatures(final String jobOfferUid, final String[] candidateUids) {
 		Objects.requireNonNull(jobOfferUid);
 		Objects.requireNonNull(candidateUids);
 		for (final String candidateUid : candidateUids) {
