@@ -38,9 +38,9 @@ public class AddMeetingView extends AbstractView {
 	
 	private static final Logger logger = LoggerFactory.getLogger(AddMeetingView.class);
 
-	private Subject attendee;
+	private String attendee;
 
-	private List<Subject> attendees;
+	private List<String> attendees;
 
 	private List<String> durations;
 
@@ -89,12 +89,12 @@ public class AddMeetingView extends AbstractView {
 		return Arrays.asList(MeetingType.values());
 	}
 
-	private List<Subject> initAttendees() {
-		final List<Subject> attendeeList = new ArrayList<>();
-		attendeeList.add(this.sessionUser.get());
-		final Subject person = this.getValueFromFlash("attendee");
-		if (person != null) {
-			attendeeList.add(person);
+	private List<String> initAttendees() {
+		final List<String> attendeeList = new ArrayList<>();
+		attendeeList.add(this.sessionUser.get().getEmail());
+		final String attendee = this.getValueFromFlash("attendee");
+		if (attendee != null) {
+			attendeeList.add(attendee);
 		}
 		return attendeeList;
 	}
@@ -149,7 +149,7 @@ public class AddMeetingView extends AbstractView {
 		return true;
 	}
 
-	public void removeAttendee(final Subject person) {
+	public void removeAttendee(final String person) {
 		this.attendees.remove(person);
 	}
 
@@ -160,30 +160,23 @@ public class AddMeetingView extends AbstractView {
 		final LocalDateTime meetingDateTime = LocalDateTime.of(this.meetingDate, time);
 		this.meeting.setDatePlanned(meetingDateTime);
 		this.meeting.setDuration(duration);
-		for (final Subject person : this.attendees) {
-			this.meeting.addAttendee(person.getEmail());
+		for (final String person : this.attendees) {
+			this.meeting.addAttendee(person);
 		}
-		this.meetingService.save(this.meeting);
+		this.meetingService.createMeeting(this.meeting);
 		return this.navigator.getRedirectUrl(PageEnum.MEETING_SEARCH);
 	}
 
-	public List<Subject> searchPerson(final String query) {
-		AddMeetingView.logger.trace("Searching for person with the string {}", query);
-		final List<Subject> personsFound = new ArrayList<>();
-		personsFound.addAll(this.candidateService.search(query, Page.TEN_RESULTS_PER_PAGE).getResultData());
-		personsFound.addAll(this.userService.search(query, Page.TEN_RESULTS_PER_PAGE).getResultData());
-		personsFound.addAll(this.contactService.search(query, Page.TEN_RESULTS_PER_PAGE).getResultData());
-		for (Subject attendee : attendees) {
-			personsFound.remove(attendee);
-		}
-		return personsFound;
+	public List<String> searchPerson(final String query) {
+		logger.trace("Searching for person with the string {}", query);
+		return null;
 	}
 	
-	public Subject getAttendee() {
+	public String getAttendee() {
 		return this.attendee;
 	}
 
-	public List<Subject> getAttendees() {
+	public List<String> getAttendees() {
 		return this.attendees;
 	}
 
@@ -216,11 +209,11 @@ public class AddMeetingView extends AbstractView {
 	}
 
 
-	public void setAttendee(final Subject attendee) {
+	public void setAttendee(final String attendee) {
 		this.attendee = attendee;
 	}
 
-	public void setAttendees(final List<Subject> attendees) {
+	public void setAttendees(final List<String> attendees) {
 		this.attendees = attendees;
 	}
 

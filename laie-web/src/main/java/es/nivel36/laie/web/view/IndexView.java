@@ -72,7 +72,7 @@ public class IndexView extends AbstractView {
 		this.jobOffers = this.jobService.findJobOffersByOwner(user.getUid(), new Page(0, 10));
 		this.candidates = new CandidateLazyDataModel(this.candidateService);
 		this.meetings = this.initMeetings();
-		this.events = new EventLazyDataModel(this.jobCandidatureEventService);
+		this.events = null;
 	}
 
 	private List<MeetingDto> initMeetings() {

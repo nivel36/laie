@@ -48,7 +48,7 @@ public class SearchEventView extends AbstractView {
 	}
 
 	private EventLazyDataModel initEvents() {
-		return new EventLazyDataModel(this.jobCandidatureEventService);
+		return new EventLazyDataModel();
 	}
 
 	public void search() {

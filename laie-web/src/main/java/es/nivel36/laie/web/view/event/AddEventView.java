@@ -59,7 +59,7 @@ public class AddEventView extends AbstractView {
 	}
 	
 	public void updateState() {
-		this.jobCandidatureEvent.setState(this.jobCandidatureEvent.getJobCandidature().getState());
+		//this.jobCandidatureEvent.setState(this.jobCandidatureEvent.getJobCandidature().getState());
 	}
 	
 	public JobCandidatureEventDto getEvent() {
