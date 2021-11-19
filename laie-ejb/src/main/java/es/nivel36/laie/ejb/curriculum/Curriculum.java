@@ -27,7 +27,7 @@ public class Curriculum extends AbstractIndexedEntity {
 
 	@NotNull
 	@OneToOne(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, orphanRemoval = true)
-	@JoinColumn(name = "candidateId", nullable = false)
+	@JoinColumn(name = "candidate_id", nullable = false)
 	private Candidate candidate;
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
