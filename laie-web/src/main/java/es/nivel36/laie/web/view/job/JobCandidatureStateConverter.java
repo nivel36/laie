@@ -8,13 +8,9 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.inject.Inject;
 
-import com.google.common.util.concurrent.AbstractService;
-
 import es.nivel36.laie.ejb.job.candidature.JobCandidatureState;
 import es.nivel36.laie.ejb.job.candidature.JobCandidatureStateDto;
 import es.nivel36.laie.ejb.job.candidature.JobCandidatureStateService;
-import es.nivel36.laie.ejb.job.offer.JobOfferDto;
-import es.nivel36.laie.ejb.job.offer.JobOfferService;
 
 @FacesConverter(managed = true, forClass = JobCandidatureState.class)
 public class JobCandidatureStateConverter implements Converter<JobCandidatureStateDto> {

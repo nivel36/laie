@@ -20,8 +20,6 @@ import org.slf4j.LoggerFactory;
 
 import es.nivel36.laie.ejb.candidate.CandidateService;
 import es.nivel36.laie.ejb.client.ContactService;
-import es.nivel36.laie.ejb.core.model.Page;
-import es.nivel36.laie.ejb.job.meeting.Meeting;
 import es.nivel36.laie.ejb.job.meeting.MeetingDto;
 import es.nivel36.laie.ejb.job.meeting.MeetingService;
 import es.nivel36.laie.ejb.job.meeting.MeetingType;

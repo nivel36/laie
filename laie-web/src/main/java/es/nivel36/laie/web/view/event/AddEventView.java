@@ -9,13 +9,11 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import es.nivel36.laie.ejb.core.model.Page;
-import es.nivel36.laie.ejb.event.JobCandidatureEvent;
 import es.nivel36.laie.ejb.event.JobCandidatureEventDto;
 import es.nivel36.laie.ejb.event.JobCandidatureEventService;
 import es.nivel36.laie.ejb.job.candidature.JobCandidatureDto;
 import es.nivel36.laie.ejb.job.candidature.JobCandidatureService;
 import es.nivel36.laie.ejb.user.SimpleUserDto;
-import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.ejb.user.UserDto;
 import es.nivel36.laie.web.core.util.PageEnum;
 import es.nivel36.laie.web.core.view.AbstractView;
@@ -23,6 +21,8 @@ import es.nivel36.laie.web.core.view.AbstractView;
 @Named
 @ViewScoped
 public class AddEventView extends AbstractView {
+
+	private static final long serialVersionUID = 8985623161372187380L;
 
 	private JobCandidatureDto jobCandidature;
 
