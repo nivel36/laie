@@ -1,6 +1,9 @@
 package es.nivel36.laie.web.view.user;
 
+import java.util.Map;
 import java.util.Objects;
+
+import org.primefaces.model.FilterMeta;
 
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.core.model.search.SearchFacets;
@@ -35,5 +38,10 @@ public class UserLazyDataModel extends AbstractLazyDataModel<UserDto> {
 	@Override
 	protected String getKey(UserDto entity) {
 		return entity.getUid();
+	}
+
+	@Override
+	public int count(Map<String, FilterMeta> filterBy) {
+		return 0;
 	}
 }

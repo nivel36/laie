@@ -1,6 +1,9 @@
 package es.nivel36.laie.web.view.client.contact;
 
+import java.util.Map;
 import java.util.Objects;
+
+import org.primefaces.model.FilterMeta;
 
 import es.nivel36.laie.ejb.client.ContactDto;
 import es.nivel36.laie.ejb.client.ContactService;
@@ -35,5 +38,10 @@ public class ContactLazyDataModel extends AbstractLazyDataModel<ContactDto> {
 	@Override
 	protected String getKey(ContactDto entity) {
 		return entity.getUid();
+	}
+
+	@Override
+	public int count(Map<String, FilterMeta> filterBy) {
+		return 0;
 	}
 }

@@ -21,6 +21,8 @@ import es.nivel36.laie.web.core.view.AbstractView;
 @ViewScoped
 public class EditJobStateView extends AbstractView {
 
+	private static final long serialVersionUID = -3933919096807704912L;
+
 	private static final Logger logger = LoggerFactory.getLogger(EditJobStateView.class);
 
 	private JobOfferDto jobOffer;

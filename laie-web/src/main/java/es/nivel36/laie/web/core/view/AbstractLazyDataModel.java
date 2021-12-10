@@ -63,6 +63,7 @@ public abstract class AbstractLazyDataModel<T extends Serializable> extends Lazy
 			}
 		}
 		final SearchResult<T> searchResult = search(this.searchText, page, sortField, this.searchFilter);
+		this.recalculateFirst(first, pageSize, searchResult.getCount());
 		this.setRowCount(searchResult.getCount());
 		return searchResult.getResultData();
 	}

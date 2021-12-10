@@ -1,6 +1,9 @@
 package es.nivel36.laie.web.view.candidate;
 
+import java.util.Map;
 import java.util.Objects;
+
+import org.primefaces.model.FilterMeta;
 
 import es.nivel36.laie.ejb.candidate.CandidateDto;
 import es.nivel36.laie.ejb.candidate.CandidateService;
@@ -35,5 +38,10 @@ public class CandidateLazyDataModel extends AbstractLazyDataModel<CandidateDto> 
 	@Override
 	protected String getKey(CandidateDto entity) {
 		return entity.getUid();
+	}
+
+	@Override
+	public int count(Map<String, FilterMeta> filterBy) {
+		return 0;
 	}
 }

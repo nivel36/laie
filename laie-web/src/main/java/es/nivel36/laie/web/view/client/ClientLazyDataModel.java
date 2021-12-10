@@ -1,6 +1,9 @@
 package es.nivel36.laie.web.view.client;
 
+import java.util.Map;
 import java.util.Objects;
+
+import org.primefaces.model.FilterMeta;
 
 import es.nivel36.laie.ejb.client.ClientDto;
 import es.nivel36.laie.ejb.client.ClientService;
@@ -35,5 +38,10 @@ public class ClientLazyDataModel extends AbstractLazyDataModel<ClientDto> {
 	@Override
 	protected String getKey(ClientDto entity) {
 		return entity.getUid();
+	}
+
+	@Override
+	public int count(Map<String, FilterMeta> filterBy) {
+		return 0;
 	}
 }

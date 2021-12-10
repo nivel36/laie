@@ -1,6 +1,9 @@
 package es.nivel36.laie.web.view.job;
 
+import java.util.Map;
 import java.util.Objects;
+
+import org.primefaces.model.FilterMeta;
 
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.core.model.search.SearchFacets;
@@ -35,5 +38,10 @@ public class JobOfferLazyDataModel extends AbstractLazyDataModel<JobOfferDto> {
 	@Override
 	protected String getKey(JobOfferDto entity) {
 		return entity.getUid();
+	}
+
+	@Override
+	public int count(Map<String, FilterMeta> filterBy) {
+		return 0;
 	}
 }
