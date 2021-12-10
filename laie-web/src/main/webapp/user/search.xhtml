@@ -39,18 +39,18 @@
 					</div>
 					<div class="p-col-12">
 						<p:dataTable id="users" value="#{searchUserView.users}" var="user" emptyMessage="#{i18n['user.no_users_found']}"
-							reflow="true" paginator="true" paginatorPosition="bottom" rows="#{sessionUser.rowsPerPage}" sortMode="single"
+							reflow="true" paginator="true" paginatorPosition="bottom" rows="10" sortMode="single"
 							lazy="true">
 							<p:column headerText="#{i18n['user.name']}" sortBy="#{user.name}">
 								<h:link outcome="#{Page.USER.getUrl()}">
-									<cc:avatar value="#{user}" styleClass="p-mr-2" />
-									<h:outputText class="link" value="#{user.fullName}" />
-									<f:param name="id" value="#{user.uid}" />
+									<cc:avatar name="#{user.fullName}" path="#{user.avatarUrl}" styleClass="p-mr-2" />
+									<h:outputText value="#{user.fullName}" />
+									<f:param name="user" value="#{user.uid}" />
 								</h:link>
 							</p:column>
 
-							<p:column headerText="#{i18n['user.role']}" sortBy="#{user.role}">
-								<p:tag styleClass="user-role role-#{user.role}" value="#{i18n[user.role]}" />
+							<p:column headerText="#{i18n['user.role']}" sortBy="#{user.roleName}">
+								<p:tag styleClass="user-role role-#{user.roleName}" value="#{i18n[user.roleName]}" />
 							</p:column>
 
 							<p:column headerText="#{i18n['user.manager']}" sortBy="#{user.manager.name}">

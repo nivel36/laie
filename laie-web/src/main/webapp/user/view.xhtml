@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://nivel.36/laie/ui" xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets" template="/WEB-INF/templates/template.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:g="http://nivel.36/laie/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/WEB-INF/templates/template.xhtml">
 
 	<ui:define name="title">
 		#{i18n['user.user']} - #{viewUserView.user.fullName}
@@ -9,47 +17,41 @@
 
 	<ui:param name="selectedMenu" value="users" />
 
-	<ui:define name="breadcrumb">
-		<p:breadCrumb>
-			<p:menuitem value="#{i18n['menu.index']}" outcome="#{Page.INDEX.getUrl()}" />
-			<p:menuitem value="#{i18n['user.users']}" outcome="#{Page.USER_SEARCH.getUrl()}" />
-			<p:menuitem value="#{viewUserView.user.fullName}" disabled="true" />
-		</p:breadCrumb>
-	</ui:define>
-
-	<ui:define name="buttons">
-		<h:form>
-			<p:commandButton value="#{i18n['action.edit']}" process="@this" action="#{viewUserView.editUser}" icon="fa fa-pencil" styleClass="ui-button-secondary ui-button-outlined"/>
-			<p:commandButton value="#{i18n['action.export']}" process="@this" action="#{viewUserView.export}" icon="fa fa-file-excel-o" styleClass="ui-button-info ui-button-outlined"/>
-		</h:form>
-	</ui:define>
-
 	<ui:define name="content">
 		<div class="p-grid">
 			<div class="p-col-12 p-md-7">
 				<div class="card user-card">
-					<div class="card-header"></div>
+					<div class="user-card-header"></div>
 					<div class="user-card-content">
-						<cc:avatar value="#{viewUserView.user}" size="xlarge" styleClass="user-image with-border" />
+						<cc:avatar path="#{viewUserView.user.avatarUrl}"
+							name="#{viewUserView.user.fullName}" styleClass="user-image" />
 
 						<div class="user-card-name">#{viewUserView.user.fullName}</div>
-						<div class="user-card-role">#{i18n[viewUserView.user.role]}</div>
+
 						<div class="user-detail">
 							<div class="p-grid">
 								<div class="p-col-12 p-sm-6">
-									<cc:outputText label="#{i18n['user.email']}" value="#{viewUserView.user.email}" />
+									<cc:outputText label="#{i18n['user.email']}"
+										value="#{viewUserView.user.email}" />
 								</div>
 								<div class="p-col-12 p-sm-6">
-									<cc:outputText label="#{i18n['user.phone_number']}" value="#{viewUserView.user.phoneNumber}" />
+									<cc:outputText label="#{i18n['user.phone_number']}"
+										value="#{viewUserView.user.phoneNumber}" />
 								</div>
 								<div class="p-col-12 p-sm-6">
-									<cc:outputText label="#{i18n['user.date_of_join']}" value="#{viewUserView.user.dateOfJoin}" styleClass="data date_of_join">
-										<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" for="text" />
+									<cc:outputText label="#{i18n['user.date_of_join']}"
+										value="#{viewUserView.user.dateOfJoin}"
+										styleClass="data date_of_join">
+										<f:convertDateTime type="localDate" pattern="dd/MM/yyyy"
+											for="text" />
 									</cc:outputText>
 								</div>
 								<div class="p-col-12 p-sm-6">
-									<cc:outputText label="#{i18n['user.last_login']}" value="#{viewUserView.user.lastConnection}" styleClass="data last_login">
-										<f:convertDateTime type="localDateTime" pattern="dd/MM/yyyy HH:mm" for="text" />
+									<cc:outputText label="#{i18n['user.last_login']}"
+										value="#{viewUserView.user.lastConnection}"
+										styleClass="data last_login">
+										<f:convertDateTime type="localDateTime"
+											pattern="dd/MM/yyyy HH:mm" for="text" />
 									</cc:outputText>
 								</div>
 								<div class="p-col-12">
@@ -58,9 +60,12 @@
 											<div class="label">#{i18n['user.manager']}</div>
 										</div>
 										<div class="text-container">
-											<h:panelGroup layout="block" styleClass="text" rendered="#{not viewUserView.user.managed}"> --- </h:panelGroup>
-											<h:panelGroup layout="block" class="text" rendered="#{viewUserView.user.managed}">
-												<p:link outcome="#{Page.USER.getUrl()}" value="#{viewUserView.user.manager.fullName}">
+											<h:panelGroup layout="block" styleClass="text"
+												rendered="#{not viewUserView.user.manager}"> --- </h:panelGroup>
+											<h:panelGroup layout="block" class="text"
+												rendered="#{viewUserView.user.manager}">
+												<p:link outcome="#{Page.USER.getUrl()}"
+													value="#{viewUserView.user.manager.fullName}">
 													<f:param name="id" value="#{viewUserView.user.manager.uid}" />
 												</p:link>
 											</h:panelGroup>
@@ -70,12 +75,23 @@
 							</div>
 						</div>
 					</div>
+					<div class="buttons user-card-buttons">
+						<h:form>
+							<p:commandButton value="#{i18n['action.edit']}" process="@this"
+								action="#{viewUserView.editUser}" icon="fa fa-pencil"
+								styleClass="ui-button-secondary ui-button-outlined" />
+							<p:commandButton value="#{i18n['action.export']}" process="@this"
+								action="#{viewUserView.export}" icon="fa fa-file-excel-o"
+								styleClass="ui-button-info ui-button-outlined" />
+						</h:form>
+					</div>
 				</div>
 			</div>
 
 			<div class="p-col-12 p-md-5">
 				<h:form id="userTeamForm">
-					<cc:users value="#{viewUserView.team}" title="#{i18n['user.team']}" rows="3" />
+					<cc:users value="#{viewUserView.team}" title="#{i18n['user.team']}"
+						rows="3" />
 				</h:form>
 			</div>
 

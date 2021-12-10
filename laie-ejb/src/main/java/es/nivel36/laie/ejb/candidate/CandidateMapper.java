@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import es.nivel36.laie.ejb.core.Mapper;
+import es.nivel36.laie.ejb.core.file.File;
 import es.nivel36.laie.ejb.core.model.Address;
 import es.nivel36.laie.ejb.core.model.AddressDto;
 import es.nivel36.laie.ejb.core.model.AddressMapper;
@@ -25,7 +26,10 @@ public class CandidateMapper implements Mapper<Candidate, CandidateDto> {
 		dto.setBornDate(entity.getBornDate());
 		dto.setEmail(entity.getEmail());
 		dto.setExpectedSalary(entity.getExpectedSalary());
-		dto.setPicturesPath(entity.getPicture().getPhysicalFile().getRelativePath());
+		final File picture = entity.getPicture();
+		if(picture != null) {
+			dto.setAvatarUrl(picture.getPhysicalFile().getRelativePath());
+		}
 		dto.setInfojobsProfileUrl(entity.getInfojobsProfileUrl());
 		dto.setJobProfile(entity.getJobProfile());
 		dto.setLinkedinProfileUrl(entity.getLinkedinProfileUrl());
@@ -38,6 +42,7 @@ public class CandidateMapper implements Mapper<Candidate, CandidateDto> {
 		dto.setSurname(entity.getSurname());
 		final List<JobCandidatureDto> jobCandidaturesDto = mapJobCandidatures(entity, dto);
 		dto.setJobCandidature(jobCandidaturesDto);
+		dto.setUid(entity.getUid());
 		return dto;
 	}
 

@@ -25,17 +25,17 @@ public abstract class AbstractIdentityStore {
 		return roles;
 	}
 
-	public void setUserDao(final UserDao userDao) {
-		Objects.requireNonNull(userDao);
-		this.userDao = userDao;
-	}
-
 	protected CredentialValidationResult validate(final User user) {
 		if (user == null) {
 			return NOT_VALIDATED_RESULT;
 		}
 		final Set<String> roles = this.getRoles(user);
 		final GedCallerPrincipal callerPrincipal = new GedCallerPrincipal(user);
-		return new CredentialValidationResult(callerPrincipal, roles);
+		return new CredentialValidationResult(callerPrincipal.getName(), roles);
+	}
+	
+	public void setUserDao(final UserDao userDao) {
+		Objects.requireNonNull(userDao);
+		this.userDao = userDao;
 	}
 }

@@ -87,7 +87,7 @@ public class ChatView extends AbstractView {
 		//TODO:
 		this.users = new ArrayList<>();
 		//this.users.remove(this.sessionUser.get());
-		this.selectedUser = this.users.get(0);
+		//this.selectedUser = this.users.get(0);
 		this.messages = new HashMap<>();
 	}
 

@@ -20,7 +20,7 @@ public class SimpleUserDto implements Serializable {
 	public SimpleUserDto(final UserDto userDto) {
 		this.email = userDto.getEmail();
 		this.fullName = userDto.getFullName();
-		this.image = userDto.getImageFileName();
+		this.image = userDto.getAvatarUrl();
 		this.uid = userDto.getUid();
 	}
 

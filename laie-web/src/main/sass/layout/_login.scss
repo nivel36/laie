@@ -3,7 +3,7 @@
     overflow: hidden;
     margin: 0 auto;
     position: relative;
-    height: 100%;
+    height: 100vh;
     background: url("\#{resource['roma-layout:images/pages/login-bg.jpg']}") no-repeat;
     background-size: cover;
 
@@ -14,7 +14,7 @@
         position: absolute;
         right: 0;
         background-color: rgba(255, 255, 255, 0.9);
-        @include border-radius(0);
+        @include border-radius($borderRadius);
         
         .login-panel-content {
             margin-top: 33.3%;
@@ -36,9 +36,11 @@
         h1 {
             display: inline-block;
             font-size: 16px;
+            background-color: #feedbc;
             margin: 0 0 16px 0;
-            color: #252529;
-            font-weight: 600;
+            color: #666666;
+            padding: 4px 8px;
+            @include border-radius($borderRadius);
         }
 
         .guest-sign-in {

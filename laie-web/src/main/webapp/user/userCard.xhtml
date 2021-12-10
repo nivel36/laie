@@ -9,7 +9,7 @@
 		<f:param name="userId" value="#{user.uid}" />
 		<div class="user-minicard">
 			<div class="user-minicard-image">
-				<cc:avatar value="#{user.picture}" />
+				<cc:avatar name="#{user.fullName}" path="#{user.avatarUrl}" />
 			</div>
 			<div class="user-minicard-info">
 				<div class="name">#{user}</div>

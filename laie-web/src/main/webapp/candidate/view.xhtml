@@ -51,7 +51,7 @@
 				<div class="card candidate-card">
 					<div class="card-header"></div>
 					<div class="candidate-card-content">
-						<cc:avatar styleClass="candidate-image" value="#{viewCandidateView.candidate}" size="xlarge" />
+						<cc:avatar styleClass="candidate-image" name="#{viewCandidateView.candidate.fullName}" path="#{viewCandidateView.candidate.avatarUrl}" size="xlarge" />
 
 						<div class="candidate-card-name">#{viewCandidateView.candidate.fullName}</div>
 						<div class="candidate-card-profile">#{viewCandidateView.candidate.jobProfile}</div>

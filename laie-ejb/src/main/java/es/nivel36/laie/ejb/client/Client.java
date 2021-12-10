@@ -42,6 +42,7 @@ public class Client extends AbstractIndexedEntity implements Ownerable, Erasable
 	private Address address;
 
 	@Column(unique = true)
+	@Field(name = "_cif")
 	private String cif;
 	
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "client", orphanRemoval = true)

@@ -81,7 +81,7 @@ public class JobCandidatureService {
 		Objects.requireNonNull(candidateUid);
 		Objects.requireNonNull(jobOfferUid);
 		logger.debug("Find job candidature of the candidate {} in the job offer {}", candidateUid, jobOfferUid);
-		final JobCandidature jobCandidature = this.jobCandidatureDao.findJobCandidature(jobOfferUid, candidateUid);
+		final JobCandidature jobCandidature = this.jobCandidatureDao.findByJobOfferAndCandidate(jobOfferUid, candidateUid);
 		return new JobCandidatureMapper().map(jobCandidature);
 	}
 

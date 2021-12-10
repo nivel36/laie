@@ -25,12 +25,12 @@
 						<p:dataTable var="candidate" id="candidates" value="#{selectCandidateView.candidates}"
 							emptyMessage="#{i18n['candidate.no_candidates_found']}" reflow="true" paginator="true" paginatorPosition="bottom"
 							selection="#{selectCandidateView.selectedCandidates}" disabledSelection="#{selectCandidateView.isAlredySelected(candidate.id)}"
-							rows="#{sessionUser.rowsPerPage}" sortBy="#{candidate.name}" sortOrder="descending" lazy="true">
+							rows="10" sortBy="#{candidate.name}" sortOrder="descending" lazy="true">
 
 							<p:column selectionMode="multiple" style="width:16px;text-align:center" />
 
 							<p:column>
-								<cc:avatar value="#{candidate.picture}" styleClass="small" />
+								<cc:avatar name="#{candidate.fullName}" path="#{candidate.avatarUrl}" styleClass="small" />
 							</p:column>
 
 							<p:column headerText="#{i18n['candidate.name']}" sortBy="#{candidate.name}">

@@ -32,7 +32,7 @@
 			<div class="p-grid">
 				<div class="p-col-12 p-xl-8">
 					<div class="card curriculum">
-						<cc:avatar value="#{curriculumView.candidate.picture}" />
+						<cc:avatar name="#{curriculumView.candidate.fullName}" path="#{curriculumView.candidate.avatarUrl}" />
 
 						<div class="name">#{curriculumView.candidate.fullName}</div>
 

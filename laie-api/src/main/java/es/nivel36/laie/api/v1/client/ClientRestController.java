@@ -24,10 +24,10 @@ public class ClientRestController extends AbstractRestController {
 	private ClientService clientService;
 
 	@GET
-	@Path("/client/{cif}")
+	@Path("/client/{uid}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public ClientDto findByCif(@PathParam("cif") final String cif) {
-		return this.clientService.findClientByCif(cif);
+	public ClientDto findByCif(@PathParam("uid") final String uid) {
+		return this.clientService.findClientByUid(uid);
 	}
 
 	@POST
@@ -38,5 +38,4 @@ public class ClientRestController extends AbstractRestController {
 		final Response.ResponseBuilder builder = Response.ok();
 		return builder.build();
 	}
-
 }

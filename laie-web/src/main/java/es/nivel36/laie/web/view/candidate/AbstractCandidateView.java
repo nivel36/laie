@@ -66,7 +66,7 @@ public abstract class AbstractCandidateView extends AbstractView {
 		final UploadedFile uploadedFile = event.getFile();
 		try (final InputStream inputStream = uploadedFile.getInputStream()) {
 			final String path = this.candidateService.changeCandidatesImage(this.candidate.getUid(), inputStream);
-			this.candidate.setPicturesPath(path);
+			this.candidate.setAvatarUrl(path);
 		} catch (final IOException e) {
 			throw new UncheckedIOException(e);
 		}

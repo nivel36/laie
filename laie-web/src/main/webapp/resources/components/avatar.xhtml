@@ -11,15 +11,16 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 	<composite:interface>
-		<composite:attribute name="value" type="es.nivel36.laie.ejb.core.Subject" />
+		<composite:attribute name="name" />
+		<composite:attribute name="path" />
 		<composite:attribute name="styleClass" required="false" default="" />
 		<composite:attribute name="size" required="false" default="large" />
 	</composite:interface>
 
 	<composite:implementation>
-		<p:avatar label="#{cc.attrs.value.fullName}" styleClass="#{cc.attrs.styleClass}" size="#{cc.attrs.size}" shape="circle" rendered="#{empty cc.attrs.value.picture}" />
-        <p:avatar styleClass="#{cc.attrs.styleClass}" size="#{cc.attrs.size}" shape="circle" rendered="#{not empty cc.attrs.value.picture}">
-			<p:graphicImage value="/images/#{cc.attrs.value.picture.physicalFile.relativePath}" />
+		<p:avatar label="#{cc.attrs.name}" styleClass="#{cc.attrs.styleClass}" size="#{cc.attrs.size}" shape="circle" rendered="#{empty cc.attrs.path}" />
+        <p:avatar styleClass="#{cc.attrs.styleClass}" size="#{cc.attrs.size}" shape="circle" rendered="#{not empty cc.attrs.path}">
+			<p:graphicImage value="/images/#{cc.attrs.path}" />
         </p:avatar>
 	</composite:implementation>
 </ui:component>

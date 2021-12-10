@@ -29,7 +29,7 @@
 					styleClass="input input-users" completeMethod="#{cc.attrs.completeMethod}" forceSelection="true" minQueryLength="3"
 					var="user" itemValue="#{user}" itemLabel="#{user.fullName}" disabled="#{cc.attrs.disabled}" multiple="true" converter="userConverter">
 					<p:column styleClass="user-select">
-						<cc:person value="#{user}" description="#{user.email}" />
+						<cc:person name="#{user.fullName}" path="#{user.avatarUrl}" description="#{user.email}"/>
 					</p:column>
 					<p:ajax event="itemSelect" update="#{cc.clientId}" process="input" />
 					<p:ajax event="itemUnselect" update="#{cc.clientId}" process="input" />

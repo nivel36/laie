@@ -11,8 +11,6 @@ PrimeFaces.widget.Roma = PrimeFaces.widget.BaseWidget.extend({
         this.menuContainer = this.wrapper.find('.layout-menu-container');
         this.menu = this.jq;
         this.menulinks = this.menu.find('a');
-        this.nanoContainer = this.menuContainer.find('.nano');
-        this.nanoScrollContent = this.nanoContainer.children('.nano-content');
         this.expandedMenuitems = this.expandedMenuitems||[];
 
         this.topbarMenu = this.topbar.children('.topbar-menu');
@@ -30,57 +28,30 @@ PrimeFaces.widget.Roma = PrimeFaces.widget.BaseWidget.extend({
         this.profileButton = this.profileContainer.children('.layout-profile-button');
         this.profileMenu = this.profileContainer.children('.layout-profile-menu');
 
+        this.configButton = $('#layout-config-button');
+        this.configMenu = $('#layout-config');
+        this.configMenuClose = this.configMenu.find('> .layout-config-content > .layout-config-close');
+
         if(!(isSlimMenu && this.isDesktop()) && !(isHorizontalMenu && this.isDesktop())) {
             this.restoreMenuState();
         }
-        
-        if(!isHorizontalMenu) {
-            this.initNanoScroll();
-        }
 
         this._bindEvents();
-    },
-    
-    initNanoScroll: function() {       
-        this.nanoContainer.nanoScroller({ flash: true, isRTL: this.wrapper.hasClass('layout-rtl') });
-        this.nanoScrollContent.removeAttr('tabindex');
-
-        if(this.cfg.statefulScroll) {
-            var $this = this,
-            scrollTopVal = $.cookie('roma_scroll');
-            if (scrollTopVal) {
-                setTimeout(function() {
-                    $this.nanoScrollContent.scrollTop(scrollTopVal);
-                }, 10);
-            }
-
-            this.nanoContainer.on("update", function(event, values){
-                clearTimeout($this.scrollTimeout);
-                $this.scrollTimeout = setTimeout(function() {
-                    $this.saveScrollState($this.nanoScrollContent.scrollTop());
-                }, 250);
-            });
-        }
     },
 
     _bindEvents: function() {
         var $this = this;
 
-        $this.menuContainer.on('click', function() {
+        $this.menuContainer.off('click.menu').on('click.menu', function() {
             $this.menuClick = true;
         });
 
-        this.menuButton.off('click').on('click', function(e) {
+        this.menuButton.off('click.menu').on('click.menu', function(e) {
             $this.menuClick = true;
 
             if($this.isMobile()) {
                 $this.wrapper.toggleClass('layout-mobile-active');
                 $(document.body).toggleClass('blocked-scroll');
-                
-                setTimeout(function () {
-                    $this.nanoContainer.nanoScroller({isRTL: $this.wrapper.hasClass('layout-rtl')});
-                    $this.nanoScrollContent.removeAttr('tabindex');
-                }, 450);
             }
             else {
                 if($this.isStaticMenu()) {
@@ -95,15 +66,10 @@ PrimeFaces.widget.Roma = PrimeFaces.widget.BaseWidget.extend({
             e.preventDefault();
         });
 
-        $this.profileButton.off('click').on('click', function (e) {
+        $this.profileButton.off('click.profile').on('click.profile', function (e) {
             if (!$this.isHorizontalMenu() && !$this.isSlimMenu()) {
                 $this.profileContainer.toggleClass('layout-profile-active');
                 $this.profileMenu.slideToggle();
-
-                setTimeout(function () {
-                    $this.nanoContainer.nanoScroller();
-                    $this.nanoScrollContent.removeAttr('tabindex');
-                }, 500);
             }
             else {
                 $this.profileMenuClick = true;
@@ -125,7 +91,7 @@ PrimeFaces.widget.Roma = PrimeFaces.widget.BaseWidget.extend({
             e.preventDefault();
         });
 
-        this.menulinks.on('click', function (e) {
+        this.menulinks.off('click.menu').on('click.menu', function (e) {
             var link = $(this),
             item = link.parent('li'),
             submenu = item.children('ul');
@@ -136,7 +102,7 @@ PrimeFaces.widget.Roma = PrimeFaces.widget.BaseWidget.extend({
                     
                     if($this.isSlimMenu() || $this.isHorizontalMenu()) {
                         item.removeClass('active-menuitem');
-                        submenu.hide();
+                        submenu.slideUp();
                     }
                     else {
                         submenu.slideUp(400, function() {
@@ -150,8 +116,6 @@ PrimeFaces.widget.Roma = PrimeFaces.widget.BaseWidget.extend({
                 }
             }
             else {
-                $this.addMenuitem(item.attr('id'));
-
                 if($this.isSlimMenu() || $this.isHorizontalMenu()) {
                     $this.deactivateItems(item.siblings(), false);
 
@@ -161,6 +125,7 @@ PrimeFaces.widget.Roma = PrimeFaces.widget.BaseWidget.extend({
                 }
                 else {
                     $this.deactivateItems(item.siblings(), true);
+                    $.cookie('roma_menu_scroll_state', link.attr('href') + ',' + $this.menuContainer.scrollTop(), { path: '/' });
                 }
                 
                 $this.activate(item);
@@ -169,34 +134,29 @@ PrimeFaces.widget.Roma = PrimeFaces.widget.BaseWidget.extend({
                     $this.menuActive = true;
                 }
             }
-            
-            setTimeout(function() {
-                $this.nanoContainer.nanoScroller();
-                $this.nanoScrollContent.removeAttr('tabindex');
-            }, 450);
 
             if (submenu.length) {
                 e.preventDefault();
             }
         });
 
-        this.menu.children('li').on('mouseenter', function(e) {    
+        this.menu.children('li').off('mouseenter.menu').on('mouseenter.menu', function(e) {    
             if($this.isHorizontalMenu() || $this.isSlimMenu()) {
                 var item = $(this);
                 
                 if(!item.hasClass('active-menuitem')) {
                     $this.menu.find('.active-menuitem').removeClass('active-menuitem');
-                    $this.menu.find('ul:visible').hide();
+                    $this.menu.find('ul:visible').slideUp();
                     
                     if($this.menuActive) {
                         item.addClass('active-menuitem');
-                        item.children('ul').show();
+                        item.children('ul').slideDown();
                     }
                 }
             }
         });
 
-        this.topbarLinks.on('click', function (e) {
+        this.topbarLinks.off('click.topbar').on('click.topbar', function (e) {
             var link = $(this),
                 item = link.parent(),
                 submenu = link.next();
@@ -226,7 +186,9 @@ PrimeFaces.widget.Roma = PrimeFaces.widget.BaseWidget.extend({
             }
         });
 
-        $(document.body).on('click', function() {
+        this.bindConfigEvents();
+
+        $(document.body).off('click.layoutBody').on('click.layoutBody', function() {
             if(($this.isHorizontalMenu() || $this.isSlimMenu()) && !$this.menuClick && $this.isDesktop()) {
                 $this.menu.find('.active-menuitem').removeClass('active-menuitem');
                 $this.menu.find('ul:visible').hide();
@@ -250,10 +212,15 @@ PrimeFaces.widget.Roma = PrimeFaces.widget.BaseWidget.extend({
                 $this.profileContainer.removeClass('layout-profile-active');
             }
 
+            if (!$this.configMenuClicked) {
+                $this.configMenu.removeClass('layout-config-active');
+            }
+
             $this.menuClick = false;
             $this.topbarMenuClick = false;
             $this.rightPanelClick = false;
             $this.profileMenuClick = false;
+            $this.configMenuClicked = false;
         });
 
         $(function() {
@@ -271,6 +238,23 @@ PrimeFaces.widget.Roma = PrimeFaces.widget.BaseWidget.extend({
         }, 150);
     },
 
+    bindConfigEvents: function() {
+        var $this = this;
+        var changeConfigMenuState = function(e) {
+            this.toggleClass(this.configMenu, 'layout-config-active');
+            
+            this.configMenuClicked = true;
+            e.preventDefault();
+        };
+        
+        this.configButton.off('click.config').on('click.config', changeConfigMenuState.bind(this));
+        this.configMenuClose.off('click.config').on('click.config', changeConfigMenuState.bind(this));
+        
+        this.configMenu.off('click.configMenu').on('click.configMenu', function() {
+            $this.configMenuClicked = true;
+        });
+    },
+
     resetMenu: function() {
         this.menu.find('.active-menuitem').removeClass('active-menuitem');
         this.menu.find('ul:visible').hide();
@@ -283,7 +267,7 @@ PrimeFaces.widget.Roma = PrimeFaces.widget.BaseWidget.extend({
 
         if(submenu.length) {
             if(this.isSlimMenu() || this.isHorizontalMenu())
-                submenu.show();
+                submenu.slideDown();
             else
                 submenu.slideDown();
         }
@@ -294,7 +278,7 @@ PrimeFaces.widget.Roma = PrimeFaces.widget.BaseWidget.extend({
         item.removeClass('active-menuitem');
 
         if(submenu.length) {
-            submenu.hide();
+            submenu.slideUp();
         }
     },
 
@@ -344,34 +328,6 @@ PrimeFaces.widget.Roma = PrimeFaces.widget.BaseWidget.extend({
         }
     },
 
-    removeMenuitem: function (id) {
-        this.expandedMenuitems = $.grep(this.expandedMenuitems, function (value) {
-            return value !== id;
-        });
-
-        this.saveMenuState();
-    },
-
-    addMenuitem: function (id) {
-        if ($.inArray(id, this.expandedMenuitems) === -1) {
-            this.expandedMenuitems.push(id);
-        }
-        this.saveMenuState();
-    },
-
-    saveMenuState: function() {
-        $.cookie('roma_expandeditems', this.expandedMenuitems.join(','), {path: '/'});
-    },
-    
-    saveScrollState: function (value) {
-        $.cookie('roma_scroll', value, { path: '/' });
-    },
-
-    clearMenuState: function() {
-        $.removeCookie('roma_expandeditems', {path: '/'});
-        $.removeCookie('roma_scroll', { path:'/' });
-    },
-
     saveStaticMenuState: function() {
         if(this.wrapper.hasClass('layout-static-inactive'))
             $.cookie('roma_static_menu_inactive', 'roma_static_menu_inactive', {path: '/'});
@@ -380,7 +336,7 @@ PrimeFaces.widget.Roma = PrimeFaces.widget.BaseWidget.extend({
     },
 
     isMobile: function( ){
-        return $(window).width() <= 896;
+        return $(window).width() <= 991;
     },
     
     isStaticMenu: function() {
@@ -396,14 +352,82 @@ PrimeFaces.widget.Roma = PrimeFaces.widget.BaseWidget.extend({
     },
 
     isDesktop: function() {
-        return window.innerWidth > 896;
+        return window.innerWidth > 991;
     },
 
     restoreMenuState: function() {
+        var isSlimMenu = this.wrapper.hasClass('layout-slim');
+        var $this = this;
+
+        if (!isSlimMenu && this.isDesktop()) {
+            var link = $('a[href^="' + this.cfg.pathname + '"]');
+            if (link.length) {
+                link.addClass('active-route');
+
+                var menuitem = link.closest('li');
+                menuitem.addClass('active-menuitem');
+
+                setTimeout(function() {
+                    $this.restoreScrollState(menuitem);
+                }, 100)
+            }
+        }
+
         var staticMenuCookie = $.cookie('roma_static_menu_inactive');
         if(staticMenuCookie) {
             this.wrapper.addClass('layout-static-inactive layout-static-inactive-restore');
         }
+    },
+
+    restoreScrollState: function(menuitem) {
+        var scrollState = $.cookie('roma_menu_scroll_state');
+        if (scrollState) {
+            var state = scrollState.split(',');
+            if (state[0].startsWith(this.cfg.pathname) || this.isScrolledIntoView(menuitem, state[1])) {
+                this.menuContainer.scrollTop(parseInt(state[1], 10));
+            }
+            else {
+                this.scrollIntoView(menuitem.get(0));
+                $.removeCookie('roma_menu_scroll_state', { path: '/' });
+            }
+        }
+        else if (!this.isScrolledIntoView(menuitem, menuitem.scrollTop())){
+            this.scrollIntoView(menuitem.get(0));
+        }
+    },
+
+    scrollIntoView: function(elem) {
+        if (document.documentElement.scrollIntoView) {
+            elem.scrollIntoView();
+        }
+    },
+
+    isScrolledIntoView: function(elem, scrollTop) {
+        var viewBottom = parseInt(scrollTop, 10) + this.menuContainer.height();
+
+        var elemTop = elem.position().top;
+        var elemBottom = elemTop + elem.height();
+
+        return ((elemBottom <= viewBottom) && (elemTop >= scrollTop));
+    },
+
+    clearActiveItems: function() {
+        var activeItems = this.jq.find('li.active-menuitem'),
+        subContainers = activeItems.children('ul');
+
+        activeItems.removeClass('active-menuitem');
+        if(subContainers && subContainers.length) {
+            subContainers.hide();
+        }
+    },
+
+    clearMenuState: function() {
+        $.removeCookie('roma_static_menu_inactive', { path: '/' });
+    },
+
+    clearLayoutState: function() {
+        this.clearMenuState();
+        this.clearActiveItems();
     },
 
     _initrightPanel: function() {
@@ -420,16 +444,152 @@ PrimeFaces.widget.Roma = PrimeFaces.widget.BaseWidget.extend({
 
         this.rightPanel.off('click').on('click', function (e) {
             $this.rightPanelClick = true;
-            e.preventDefault();
+
+            var target = e.target;
+            if (!(target.nodeName === "A" && target.getAttribute('href') !== '#')) {
+                e.preventDefault();
+            }
         });
     },
 
-    closerightPanelMenu: function() {
-        if(this.rightPanel) {
-            this.rightPanel.removeClass('layout-right-panel-active');
+    toggleClass: function(el, className) {
+        if (el.hasClass(className)) {
+            el.removeClass(className);
         }
-    }
+        else {
+            el.addClass(className);
+        }
+    },
 });
+
+PrimeFaces.RomaConfigurator = {
+    changeLayout: function(layoutTheme) {
+        var linkElement = $('link[href*="layout-"]');
+        var href = linkElement.attr('href');
+        var startIndexOf = href.indexOf('layout-') + 7;
+        var endIndexOf = href.indexOf('.css');
+        var currentColor = href.substring(startIndexOf, endIndexOf);
+
+        this.replaceLink(linkElement, href.replace(currentColor, layoutTheme));
+    },
+
+    changeComponentsTheme: function(theme) {
+        var library = 'primefaces-roma';
+        var linkElement = $('link[href*="theme.css"]');
+        var href = linkElement.attr('href');
+        var index = href.indexOf(library) + 1;
+        var currentTheme = href.substring(index + library.length);
+
+        this.replaceLink(linkElement, href.replace(currentTheme, theme));
+        this.changeLayout(theme);
+    },
+
+    changeTopbarColor: function(topbarColorClass) {
+        var wrapper = $('.layout-wrapper'),
+        classes = wrapper.attr('class'),
+        startIndexOf = classes.indexOf('layout-topbar-'),
+        endIndexOf = classes.indexOf(' ', startIndexOf);
+        endIndexOf = endIndexOf === -1 ? classes.length : endIndexOf;
+
+        var currentTopbarColor = classes.substring(startIndexOf, endIndexOf);
+
+        wrapper.removeClass(currentTopbarColor).addClass(topbarColorClass);
+    },
+
+    changeSectionTheme: function(theme, section) {
+        var wrapperElement = $('.layout-wrapper');
+     
+        var styleClass = wrapperElement.attr('class');
+        var tokens = styleClass.split(' ');
+        var sectionClass;
+        for (var i = 0; i < tokens.length; i++) {
+            if (tokens[i].indexOf(section + '-') > -1) {
+                sectionClass = tokens[i];
+                break;
+            }
+        }
+
+        wrapperElement.attr('class', styleClass.replace(sectionClass, section + '-' + theme));
+    },
+
+    beforeResourceChange: function() {
+        PrimeFaces.ajax.RESOURCE = null;    //prevent resource append
+    },
+    
+    replaceLink: function(linkElement, href) {
+        PrimeFaces.ajax.RESOURCE = 'javax.faces.Resource';
+
+        var isIE = this.isIE();
+
+        if (isIE) {
+            linkElement.attr('href', href);
+        }
+        else {
+            var cloneLinkElement = linkElement.clone(false);
+
+            cloneLinkElement.attr('href', href);
+            linkElement.after(cloneLinkElement);
+            
+            cloneLinkElement.off('load').on('load', function() {
+                linkElement.remove();
+            });
+        }
+    },
+
+
+    changeMenuMode: function(menuMode) {
+        var wrapper = $(document.body).children('.layout-wrapper');
+        switch (menuMode) {
+            case 'layout-static layout-static-active':
+                wrapper.addClass('layout-static layout-static-active').removeClass('layout-overlay layout-slim layout-horizontal ');
+                this.clearLayoutState();
+            break;
+
+            case 'layout-overlay':
+                wrapper.addClass('layout-overlay').removeClass('layout-static layout-slim layout-horizontal layout-static-active');
+                this.clearLayoutState();
+            break;
+
+            case 'layout-horizontal':
+                wrapper.addClass('layout-horizontal').removeClass('layout-static layout-overlay  layout-slim  layout-static-active');
+                this.clearLayoutState();
+            break;
+
+            case 'layout-slim':
+                wrapper.addClass('layout-slim').removeClass('layout-static layout-overlay layout-horizontal layout-static-active');
+                this.clearLayoutState();
+            break;
+
+            default:
+                wrapper.addClass('layout-static').removeClass('layout-overlay layout-slim layout-horizontal ');
+                this.clearLayoutState();
+            break;
+        }
+    },
+
+    changeMenuToRTL: function() {
+        $('.layout-wrapper').toggleClass('layout-rtl');
+    },
+
+    clearLayoutState: function() {
+        var menu = PF('RomaMenuWidget');
+
+        if (menu) {
+            menu.clearLayoutState();
+        }
+    },
+    
+    isIE: function() {
+        return /(MSIE|Trident\/|Edge\/)/i.test(navigator.userAgent);
+    },
+
+    updateInputStyle: function(value) {
+        if (value === 'filled')
+            $(document.body).addClass('ui-input-filled');
+        else
+            $(document.body).removeClass('ui-input-filled');
+    }
+};
 
 /*!
  * jQuery Cookie Plugin v1.4.1

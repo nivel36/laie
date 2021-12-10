@@ -187,7 +187,6 @@ public class UserService {
 
 	public SearchResult<UserDto> search(final String searchText, final Page page, final SortField sortField,
 			final SearchFacets searchFacets) {
-		Objects.requireNonNull(searchText);
 		Objects.requireNonNull(page);
 		final SearchResult<User> restul = this.userDao.search(searchText, page, sortField, searchFacets);
 		final List<User> resultData = restul.getResultData();

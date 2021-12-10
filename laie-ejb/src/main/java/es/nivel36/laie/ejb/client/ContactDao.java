@@ -8,7 +8,6 @@ import java.util.Objects;
 import es.nivel36.laie.ejb.core.model.AbstractDao;
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.core.model.Repository;
-import es.nivel36.laie.ejb.core.model.UidGenerator;
 import es.nivel36.laie.ejb.core.model.search.SearchFacets;
 import es.nivel36.laie.ejb.core.model.search.SearchResult;
 import es.nivel36.laie.ejb.core.model.search.SortField;
@@ -19,29 +18,15 @@ public class ContactDao extends AbstractDao {
 
 	public void insert(final Contact contact) {
 		Objects.requireNonNull(contact);
-		this.setUid(contact);
+		this.setUid(Contact.class, contact);
 		this.em.persist(contact);
 	}
 
-	private void setUid(Contact contact) {
-		String uid;
-		do {
-			uid = UidGenerator.generate(Contact.class);
-			contact.setUid(uid);
-		} while (!this.checkDuplicateUid(uid));
-	}
-
-	private boolean checkDuplicateUid(final String uid) {
-		final String namedQuery = "Contact.checkDuplicateUid";
-		final Parameters parameters = map("uid", uid);
-		return this.findByQuery(Boolean.class, namedQuery, parameters);
-	}
-	
 	public void delete(final Contact contact) {
 		Objects.requireNonNull(contact);
 		this.delete(Contact.class, contact);
 	}
-	
+
 	public Contact findContactByUid(final String uid) {
 		Objects.requireNonNull(uid);
 		final String namedQuery = "Contact.findByUid";

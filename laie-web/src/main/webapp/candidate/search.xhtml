@@ -41,11 +41,11 @@
 					<div class="p-col-12">
 						<p:dataTable var="candidate" id="candidates" value="#{searchCandidateView.candidates}"
 							emptyMessage="#{i18n['candidate.no_candidates_found']}" reflow="true" paginator="true" paginatorPosition="bottom"
-							rows="#{sessionUser.rowsPerPage}" sortBy="#{candidate.name}" sortOrder="ascending" lazy="true">
+							rows="10" sortBy="#{candidate.name}" sortOrder="ascending" lazy="true">
 
 							<p:column headerText="#{i18n['candidate.name']}" sortBy="#{candidate.name}">
 								<h:link outcome="#{Page.CANDIDATE.getUrl()}">
-									<cc:avatar value="#{candidate}" styleClass="p-mr-2" />
+									<cc:avatar name="#{candidate.fullName}" path="#{candidate.avatarUrl}" styleClass="p-mr-2" />
 									<h:outputText styleClass="link" value="#{candidate.fullName}" />
 									<f:param name="id" value="#{candidate.uid}" />
 								</h:link>

@@ -15,7 +15,7 @@
 		<composite:attribute name="value" required="true" />
 		<composite:attribute name="styleClass" required="false" default="" />
 		<composite:attribute name="title" required="false" default="#{i18n['client.clients']}" />
-		<composite:attribute name="rows" required="false" default="#{sessionUser.rowsPerPage}" />
+		<composite:attribute name="rows" required="false" default="10" />
 	</composite:interface>
 
 	<composite:implementation>

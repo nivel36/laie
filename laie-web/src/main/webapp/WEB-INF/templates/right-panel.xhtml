@@ -13,7 +13,7 @@
 						</div>
 						<ui:repeat var="user" value="#{chatView.users}">
 							<p:commandLink action="#{chatView.selectUser(user)}" process="@this" update="@form">
-								<cc:person value="#{user}" />
+								<cc:person name="#{user.fullName}" path="#{user.avatarUrl}" description="#{user.email}"/>
 							</p:commandLink>
 						</ui:repeat>
 					</h:panelGroup>

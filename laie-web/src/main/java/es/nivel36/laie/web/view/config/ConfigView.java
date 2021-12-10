@@ -48,13 +48,13 @@ public class ConfigView extends AbstractView {
 	@PostConstruct
 	public void init() {
 		this.user = this.sessionUser.get();
-		this.userImage = this.user.getImageFileName();
+		this.userImage = this.user.getAvatarUrl();
 		logger.debug("Config user {} init", this.user);
 	}
 	
 	private void refreshUser() {
 		this.user = this.sessionUser.get();
-		this.userImage = this.user.getImageFileName();
+		this.userImage = this.user.getAvatarUrl();
 		this.sessionUser.refresh();
 	}
 

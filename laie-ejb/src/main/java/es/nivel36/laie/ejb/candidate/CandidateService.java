@@ -136,7 +136,6 @@ public class CandidateService {
 
 	public SearchResult<CandidateDto> search(final String searchText, final Page page, SortField sortOrder,
 			final SearchFacets searchFacets) {
-		Objects.requireNonNull(searchText);
 		Objects.requireNonNull(page);
 		logger.debug("Search {}, offset {} with limit of {}", searchText, page.getOffset(), page.getLimit());
 		final SearchResult<Candidate> entities = this.candidateDao.search(searchText, page, sortOrder, searchFacets);

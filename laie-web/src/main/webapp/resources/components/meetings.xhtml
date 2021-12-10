@@ -17,7 +17,7 @@
 		<composite:attribute name="styleClass" required="false" default="" />
 		<composite:attribute name="title" required="false" default="#{i18n['meeting.meetings']}" />
 		<composite:attribute name="emptyMessage" required="false" default="#{i18n['meeting.no_meetings']}" />
-		<composite:attribute name="rows" required="false" default="#{sessionUser.rowsPerPage}" />
+		<composite:attribute name="rows" required="false" default="10" />
 	</composite:interface>
 
 	<composite:implementation>

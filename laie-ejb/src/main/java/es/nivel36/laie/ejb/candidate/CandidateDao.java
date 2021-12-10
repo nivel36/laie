@@ -9,7 +9,6 @@ import es.nivel36.laie.ejb.core.file.File;
 import es.nivel36.laie.ejb.core.model.AbstractDao;
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.core.model.Repository;
-import es.nivel36.laie.ejb.core.model.UidGenerator;
 import es.nivel36.laie.ejb.core.model.search.SearchFacets;
 import es.nivel36.laie.ejb.core.model.search.SearchResult;
 import es.nivel36.laie.ejb.core.model.search.SortField;
@@ -20,22 +19,8 @@ public class CandidateDao extends AbstractDao {
 
 	public void insert(final Candidate candidate) {
 		Objects.requireNonNull(candidate);
-		this.setUid(candidate);
+		this.setUid(Candidate.class, candidate);
 		this.em.persist(candidate);
-	}
-
-	private void setUid(final Candidate candidate) {
-		String uid;
-		do {
-			uid = UidGenerator.generate(Candidate.class);
-			candidate.setUid(uid);
-		} while (!this.checkDuplicateUid(uid));
-	}
-
-	private boolean checkDuplicateUid(final String uid) {
-		final String namedQuery = "Candidate.checkDuplicateUid";
-		final Parameters parameters = map("uid", uid);
-		return this.findByQuery(Boolean.class, namedQuery, parameters);
 	}
 
 	public boolean checkDuplicateEmail(final String email) {

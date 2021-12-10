@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
 import es.nivel36.laie.ejb.core.model.AbstractDao;
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.core.model.Repository;
-import es.nivel36.laie.ejb.core.model.UidGenerator;
 import es.nivel36.laie.ejb.core.model.search.SearchFacets;
 import es.nivel36.laie.ejb.core.model.search.SearchResult;
 import es.nivel36.laie.ejb.core.model.search.SortField;
@@ -22,26 +21,13 @@ import es.nivel36.laie.ejb.core.util.Parameters;
 public class UserDao extends AbstractDao {
 
 	private static final Logger logger = LoggerFactory.getLogger(UserDao.class);
-	
+
 	public void insert(final User user) {
-		setUid(user);
+		setUid(User.class, user);
 		this.em.persist(user);
 		if (user.getManager() != null) {
 			this.insertUserClosures(user);
 		}
-	}
-
-	private void setUid(final User user) {
-		String uid;
-		do {
-			uid = UidGenerator.generate(User.class);
-			user.setUid(uid);
-		} while (!this.checkDuplicateUid(uid));
-	}
-
-	private boolean checkDuplicateUid(final String uid) {
-		final Parameters parameters = map("uid", uid);
-		return this.findByQuery(Boolean.class, "User.checkDuplicateUid", parameters);
 	}
 
 	public void update(final User user) {
@@ -50,7 +36,7 @@ public class UserDao extends AbstractDao {
 
 	public boolean checkDuplicateEmail(final String email) {
 		Objects.requireNonNull(email);
-		return this.findByQuery(Boolean.class, "User.emailExists", map("checkDuplicateEmail", email));
+		return this.checkDuplicateField(User.class, "email", email);
 	}
 
 	public User findUserByUid(final String uid) {
@@ -97,7 +83,7 @@ public class UserDao extends AbstractDao {
 		final Parameters parameters = map("managerId", userId).and("subordinateId", subordinateId);
 		return this.findByQuery(Boolean.class, namedQuery, parameters);
 	}
-	
+
 	public SearchResult<User> search(final String searchText, final Page page, SortField sortOrder,
 			final SearchFacets searchFacets) {
 		final String[] searchFields = new String[] { "_name", "_surname, _email" };

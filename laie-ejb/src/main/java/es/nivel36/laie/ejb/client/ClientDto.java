@@ -34,24 +34,6 @@ public class ClientDto implements Serializable {
 
 	private String uid;
 
-	@Override
-	public boolean equals(final Object obj) {
-		if (obj == null) {
-			return false;
-		}
-		if (this == obj) {
-			return true;
-		}
-		if (!super.equals(obj)) {
-			return false;
-		}
-		if (this.getClass() != obj.getClass()) {
-			return false;
-		}
-		final ClientDto other = (ClientDto) obj;
-		return Objects.equals(this.name, other.name);
-	}
-
 	public AddressDto getAddress() {
 		if (this.address != null) {
 			return this.address;
@@ -86,11 +68,6 @@ public class ClientDto implements Serializable {
 
 	public String getUid() {
 		return uid;
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(this.name);
 	}
 
 	public boolean isDeleted() {
@@ -132,6 +109,30 @@ public class ClientDto implements Serializable {
 	void setUid(String uid) {
 		this.uid = uid;
 	}
+	
+	@Override
+	public boolean equals(final Object obj) {
+		if (obj == null) {
+			return false;
+		}
+		if (this == obj) {
+			return true;
+		}
+		if (!super.equals(obj)) {
+			return false;
+		}
+		if (this.getClass() != obj.getClass()) {
+			return false;
+		}
+		final ClientDto other = (ClientDto) obj;
+		return Objects.equals(this.name, other.name);
+	}
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(this.name);
+	}
+
 
 	@Override
 	public String toString() {

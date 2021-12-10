@@ -6,7 +6,6 @@ import java.util.Objects;
 
 import es.nivel36.laie.ejb.core.model.AbstractDao;
 import es.nivel36.laie.ejb.core.model.Repository;
-import es.nivel36.laie.ejb.core.model.UidGenerator;
 import es.nivel36.laie.ejb.core.util.Parameters;
 
 @Repository
@@ -37,23 +36,10 @@ public class FileJpaDao extends AbstractDao {
 
 	public void insert(final File file) {
 		Objects.requireNonNull(file);
-		this.setUid(file);
+		this.setUid(File.class, file);
 		this.em.persist(file);
 	}
 	
-	private void setUid(File file) {
-		String uid;
-		do {
-			uid = UidGenerator.generate(File.class);
-			file.setUid(uid);
-		} while (!this.checkDuplicateUid(uid));
-	}
-
-	private boolean checkDuplicateUid(final String uid) {
-		final Parameters parameters = map("uid", uid);
-		return this.findByQuery(Boolean.class, "User.checkDuplicateUid", parameters);
-	}
-
 	public void delete(final File file) {
 		Objects.requireNonNull(file);
 		this.delete(File.class, file);

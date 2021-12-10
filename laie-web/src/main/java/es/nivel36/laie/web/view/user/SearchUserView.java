@@ -34,15 +34,26 @@ public class SearchUserView extends AbstractView {
 
 	private static final Logger logger = LoggerFactory.getLogger(SearchUserView.class);
 
-	@Inject
-	private transient ExportService exportService;
-
 	private String searchText;
 
 	private UserLazyDataModel users;
+	
+	@Inject
+	private transient ExportService exportService;
 
 	@Inject
 	private transient UserService userService;
+	
+	@PostConstruct
+	public void init() {
+		logger.trace("User search init");
+		this.users = new UserLazyDataModel(this.userService);
+	}
+	
+	public void search() {
+		logger.debug("Search users action performed");
+		this.users.setSearchText(this.searchText);
+	}
 
 	public void export() {
 		logger.debug("Export users action performed");
@@ -57,6 +68,24 @@ public class SearchUserView extends AbstractView {
 		} catch (final IOException e) {
 			this.addMessage(FacesMessage.SEVERITY_ERROR, "test", "abc");
 		}
+	}
+	
+	private ExcelData toExcelData(final ExportData exportData) {
+		final List<String> literals = new ArrayList<>();
+		for (final String item : exportData.getIdLabels()) {
+			final String literal = this.getTranslator().message(item);
+			Objects.requireNonNull(literal);
+			literals.add(literal);
+		}
+		final List<ItemData> values = new ArrayList<>();
+		for (final Item item : exportData.getItems()) {
+			final ItemData itemData = new ItemData();
+			for (final Object value : item.getValue()) {
+				itemData.add(value);
+			}
+			values.add(itemData);
+		}
+		return new ExcelData(literals, values);
 	}
 
 	public ExportService getExportService() {
@@ -75,21 +104,6 @@ public class SearchUserView extends AbstractView {
 		return this.users;
 	}
 
-	@PostConstruct
-	public void init() {
-		logger.trace("User search init");
-		this.users = new UserLazyDataModel(this.userService);
-	}
-
-	public void search() {
-		logger.debug("Search users action performed");
-		this.users.setSearchText(this.searchText);
-	}
-
-	public void setExportService(final ExportService exportService) {
-		this.exportService = exportService;
-	}
-
 	public void setSearchText(final String searchText) {
 		this.searchText = searchText;
 	}
@@ -97,26 +111,14 @@ public class SearchUserView extends AbstractView {
 	public void setUsers(final UserLazyDataModel users) {
 		this.users = users;
 	}
-
-	public void setUserService(final UserService userService) {
-		this.userService = userService;
+	
+	public void setExportService(final ExportService exportService) {
+		Objects.requireNonNull(exportService);
+		this.exportService = exportService;
 	}
 
-	private ExcelData toExcelData(final ExportData exportData) {
-		final List<String> literals = new ArrayList<>();
-		for (final String item : exportData.getIdLabels()) {
-			final String literal = this.getTranslator().message(item);
-			Objects.requireNonNull(literal);
-			literals.add(literal);
-		}
-		final List<ItemData> values = new ArrayList<>();
-		for (final Item item : exportData.getItems()) {
-			final ItemData itemData = new ItemData();
-			for (final Object value : item.getValue()) {
-				itemData.add(value);
-			}
-			values.add(itemData);
-		}
-		return new ExcelData(literals, values);
+	public void setUserService(final UserService userService) {
+		Objects.requireNonNull(userService);
+		this.userService = userService;
 	}
 }

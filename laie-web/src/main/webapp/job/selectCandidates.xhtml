@@ -46,13 +46,13 @@
 							<h1>#{i18n['job.data']}</h1>
 							<p:dataTable var="candidate" id="candidates" value="#{selectCandidatesView.candidates}" emptyMessage="#{i18n['candidate.no_candidates_found']}"
 								reflow="true" paginator="true" paginatorPosition="bottom" selection="#{selectCandidatesView.selectedCandidates}"
-								disabledSelection="#{selectCandidatesView.isAlredySelected(candidate)}" rows="#{sessionUser.rowsPerPage}" sortBy="#{candidate.name}"
+								disabledSelection="#{selectCandidatesView.isAlredySelected(candidate)}" rows="10" sortBy="#{candidate.name}"
 								sortOrder="ascending" lazy="true">
 
 								<p:column selectionMode="multiple" style="width:16px;text-align:center" />
 
 								<p:column>
-									<cc:avatar value="#{candidate.picture}" styleClass="small" />
+									<cc:avatar name="#{candidate.fullName}" path="#{candidate.avatarUrl}" styleClass="small" />
 								</p:column>
 
 								<p:column headerText="#{i18n['candidate.name']}" sortBy="#{candidate.name}">

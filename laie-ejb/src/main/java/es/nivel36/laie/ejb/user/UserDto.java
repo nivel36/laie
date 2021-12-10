@@ -17,7 +17,7 @@ public class UserDto implements Serializable {
 	@NotNull
 	private String email;
 
-	private String imageFileName;
+	private String avatarUrl;
 
 	@NotNull
 	private String language;
@@ -43,28 +43,6 @@ public class UserDto implements Serializable {
 		return toString();
 	}
 
-	@Override
-	public boolean equals(final Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (this.getClass() != obj.getClass()) {
-			return false;
-		}
-		final UserDto other = (UserDto) obj;
-		if (this.email == null) {
-			if (other.email != null) {
-				return false;
-			}
-		} else if (!this.email.equals(other.email)) {
-			return false;
-		}
-		return true;
-	}
-
 	public LocalDate getDateOfJoin() {
 		return this.dateOfJoin;
 	}
@@ -73,8 +51,8 @@ public class UserDto implements Serializable {
 		return this.email;
 	}
 
-	public String getImageFileName() {
-		return this.imageFileName;
+	public String getAvatarUrl() {
+		return this.avatarUrl;
 	}
 
 	public String getLanguage() {
@@ -109,14 +87,6 @@ public class UserDto implements Serializable {
 		return uid;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = (prime * result) + (this.email == null ? 0 : this.email.hashCode());
-		return result;
-	}
-
 	public void setDateOfJoin(final LocalDate dateOfJoin) {
 		this.dateOfJoin = dateOfJoin;
 	}
@@ -125,8 +95,8 @@ public class UserDto implements Serializable {
 		this.email = email;
 	}
 
-	public void setImageFileName(final String imageFileName) {
-		this.imageFileName = imageFileName;
+	public void setAvatarUrl(final String avatarUrl) {
+		this.avatarUrl = avatarUrl;
 	}
 
 	public void setLanguage(final String language) {
@@ -160,6 +130,37 @@ public class UserDto implements Serializable {
 	void setUid(final String uid) {
 		this.uid = uid;
 	}
+	
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (this.getClass() != obj.getClass()) {
+			return false;
+		}
+		final UserDto other = (UserDto) obj;
+		if (this.email == null) {
+			if (other.email != null) {
+				return false;
+			}
+		} else if (!this.email.equals(other.email)) {
+			return false;
+		}
+		return true;
+	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = (prime * result) + (this.email == null ? 0 : this.email.hashCode());
+		return result;
+	}
+
 	
 	@Override
 	public String toString() {

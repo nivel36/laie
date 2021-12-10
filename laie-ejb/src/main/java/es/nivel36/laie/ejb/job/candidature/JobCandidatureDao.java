@@ -25,18 +25,10 @@ public class JobCandidatureDao extends AbstractDao {
 		this.em.remove(jobCandidature);
 	}
 
-	public JobCandidature findJobCandidature(final String jobOfferUid, final String candidateUid) {
-		Objects.requireNonNull(jobOfferUid);
-		Objects.requireNonNull(candidateUid);
-		final String namedQuery = "JobCandidature.findJobCandidature";
-		final Parameters parameters = map("jobOfferUid", jobOfferUid).and("candidateUid", candidateUid);
-		return this.findByQuery(JobCandidature.class, namedQuery, parameters);
-	}
-
 	public List<JobCandidature> findApprovedJobCanditures(final String jobOfferUid, final Page page) {
 		Objects.requireNonNull(jobOfferUid);
 		Objects.requireNonNull(page);
-		final String namedQuery = "JobCandidature.findApprovedByJobOfferUid";
+		final String namedQuery = "JobCandidature.findApprovedByJobOffer";
 		final Parameters parameters = map("jobOfferUid", jobOfferUid);
 		return this.findByQuery(JobCandidature.class, namedQuery, parameters, page);
 	}
@@ -52,7 +44,7 @@ public class JobCandidatureDao extends AbstractDao {
 	public List<JobCandidature> findCandidatesJobCandidatures(final String candidateUid, final Page page) {
 		Objects.requireNonNull(candidateUid);
 		Objects.requireNonNull(page);
-		final String namedQuery = "JobCandidature.findByCandidateUid";
+		final String namedQuery = "JobCandidature.findByCandidate";
 		final Parameters parameters = map("candidateUid", candidateUid);
 		return this.findByQuery(JobCandidature.class, namedQuery, parameters, page);
 	}
@@ -60,7 +52,7 @@ public class JobCandidatureDao extends AbstractDao {
 	public List<JobCandidature> findUsersJobCandidatures(final String userUid, final Page page) {
 		Objects.requireNonNull(userUid);
 		Objects.requireNonNull(page);
-		final String namedQuery = "JobCandidature.findByUserUid";
+		final String namedQuery = "JobCandidature.findByUser";
 		final Parameters parameters = map("userUid", userUid);
 		return this.findByQuery(JobCandidature.class, namedQuery, parameters, page);
 	}
@@ -68,7 +60,7 @@ public class JobCandidatureDao extends AbstractDao {
 	public List<JobCandidature> findJobOffersJobCanditures(final String jobOfferUid, final Page page) {
 		Objects.requireNonNull(jobOfferUid);
 		Objects.requireNonNull(page);
-		final String namedQuery = "JobCandidature.findByJobOfferUid";
+		final String namedQuery = "JobCandidature.findByJobOffer";
 		final Parameters parameters = map("jobOfferUid", jobOfferUid);
 		return this.findByQuery(JobCandidature.class, namedQuery, parameters, page);
 	}

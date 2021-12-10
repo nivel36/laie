@@ -140,7 +140,7 @@ body {
 
 a {
   text-decoration: none;
-  color: #214B9C;
+  color: #0f97c7;
 }
 
 .layout-main {
@@ -161,7 +161,7 @@ a {
   right: 2rem;
   bottom: 2rem;
   font-size: 2rem;
-  color: #65656a;
+  color: #65686a;
   z-index: 999;
 }
 
@@ -843,6 +843,7 @@ a {
 .layout-wrapper .layout-topbar .layout-topbar-logo {
   display: inline-block;
   vertical-align: middle;
+  margin-left: 1.5em;
 }
 .layout-wrapper .layout-topbar .layout-topbar-logo img {
   height: 24px;
@@ -1187,7 +1188,7 @@ a {
   border-right: 4px solid transparent;
 }
 .layout-wrapper .layout-menu-container .layout-menu > li.active-menuitem {
-  border-left-color: #214B9C;
+  border-left-color: #0f97c7;
 }
 .layout-wrapper .layout-menu-container .layout-menu li.layout-root-menuitem > .layout-menuitem-root-text {
   font-size: 1rem;
@@ -1331,10 +1332,10 @@ a {
   color: #252529;
 }
 .layout-wrapper.layout-menu-light .layout-menu-container .layout-menu li.active-menuitem > a .layout-menuitem-text {
-  color: #214B9C;
+  color: #0f97c7;
 }
 .layout-wrapper.layout-menu-light .layout-menu-container .layout-menu li.active-menuitem > a .layout-menuitem-icon, .layout-wrapper.layout-menu-light .layout-menu-container .layout-menu li.active-menuitem > a .layout-submenu-toggler {
-  color: #214B9C;
+  color: #0f97c7;
 }
 .layout-wrapper.layout-menu-dark .layout-menu-container {
   background-color: #252529;
@@ -1394,10 +1395,10 @@ a {
   color: #ebebef;
 }
 .layout-wrapper.layout-menu-dark .layout-menu-container .layout-menu li.active-menuitem > a .layout-menuitem-text {
-  color: #214B9C;
+  color: #0f97c7;
 }
 .layout-wrapper.layout-menu-dark .layout-menu-container .layout-menu li.active-menuitem > a .layout-menuitem-icon, .layout-wrapper.layout-menu-dark .layout-menu-container .layout-menu li.active-menuitem > a .layout-submenu-toggler {
-  color: #214B9C;
+  color: #0f97c7;
 }
 .layout-wrapper .layout-main {
   padding-top: 70px;
@@ -1466,7 +1467,7 @@ a {
     left: 0;
   }
   .layout-wrapper.layout-slim .layout-topbar .layout-topbar-logo {
-    margin: 0;
+    margin: 10px 0 0 0;
   }
   .layout-wrapper.layout-slim .layout-menu-container {
     width: 57px;
@@ -1667,7 +1668,7 @@ a {
   }
   .layout-wrapper.layout-horizontal .layout-menu-container .layout-menu > li.active-menuitem > ul {
     display: block;
-    border-top: 4px solid #214B9C;
+    border-top: 4px solid #0f97c7;
   }
   .layout-wrapper.layout-horizontal .layout-topbar .layout-menu-button, .layout-wrapper.layout-slim .layout-topbar .layout-menu-button {
     display: none;
@@ -1904,7 +1905,7 @@ a {
   text-align: right;
 }
 .layout-footer .footer-icons a {
-  color: #65656a;
+  color: #65686a;
   font-size: 20px;
   margin-right: 16px;
   -moz-transition: color 0.2s;
@@ -1990,7 +1991,7 @@ a {
   font-size: 16px;
 }
 .layout-dashboard .expenses .expenses-legend > div span {
-  color: #65656a;
+  color: #65686a;
 }
 .layout-dashboard .expenses .expenses-legend > div .expenses-title {
   font-weight: 500;
@@ -2068,14 +2069,14 @@ a {
   border-bottom: 0 none;
 }
 .layout-dashboard .timeline ul p {
-  color: #65656a;
+  color: #65686a;
   margin: 0.5em 0;
 }
 .layout-dashboard .tasks {
   min-height: 325px;
 }
 .layout-dashboard .tasks p {
-  color: #65656a;
+  color: #65686a;
   margin: 1em 0;
 }
 .layout-dashboard .tasks p .task-highlight {
@@ -2134,7 +2135,7 @@ a {
 }
 .layout-dashboard .weather {
   padding: 0;
-  color: #65656a;
+  color: #65686a;
 }
 .layout-dashboard .weather img {
   width: 100%;
@@ -2892,7 +2893,7 @@ a {
   border-bottom: 0 none;
 }
 .timeline ul p {
-  color: #65656a;
+  color: #65686a;
   margin: 0.5em 0;
 }
 
@@ -2973,7 +2974,7 @@ a {
   border: 0 none;
   width: 100%;
   outline: 0 none;
-  color: #65656a;
+  color: #65686a;
   font-family: "Inter UI", sans-serif;
 }
 .live-support .new-message .p-col-fixed {
@@ -3031,11 +3032,11 @@ a {
   font-weight: 500;
 }
 .team ul .team-box .team-member-account {
-  color: #65656a;
+  color: #65686a;
 }
 .team ul a {
   float: right;
-  color: #65656a;
+  color: #65686a;
   font-size: 18px;
   margin-left: 1em;
 }
@@ -3089,7 +3090,7 @@ a {
   border-radius: 2px;
 }
 .user-card .user-card-content .user-detail .user-detail-box .user-detail-box-detail {
-  color: #65656a;
+  color: #65686a;
 }
 .user-card .user-card-content .user-detail .user-detail-box i {
   position: absolute;
@@ -3192,7 +3193,7 @@ a {
 }
 .layout-rtl.layout-wrapper .layout-menu-container .layout-menu > li.active-menuitem {
   border-left-color: transparent;
-  border-right-color: #214B9C;
+  border-right-color: #0f97c7;
 }
 .layout-rtl.layout-wrapper .layout-menu-container .layout-menu li a .layout-menuitem-icon {
   margin-right: 0;
@@ -3473,7 +3474,7 @@ a {
   width: 100%;
 }
 .help-page .help-search .search-container i {
-  color: #65656a;
+  color: #65686a;
   width: 2rem;
   font-size: 1.5rem;
   position: absolute;
@@ -3708,7 +3709,7 @@ a {
   width: 52px;
   height: 52px;
   line-height: 52px;
-  background-color: #214B9C;
+  background-color: #0f97c7;
   text-align: center;
   color: #ffffff;
   top: 230px;
@@ -3735,12 +3736,12 @@ a {
   transition: transform 1s;
 }
 .layout-config .layout-config-content .layout-config-button:hover {
-  background-color: #2555b1;
+  background-color: #11a9df;
 }
 .layout-config .layout-config-content .layout-config-header {
   padding: 18px 12px;
   margin-bottom: 12px;
-  background-image: linear-gradient(90deg, #214B9C 10%, #285bbe 100%);
+  background-image: linear-gradient(90deg, #0f97c7 10%, #12b4ed 100%);
 }
 .layout-config .layout-config-content .layout-config-header > h3 {
   font-size: 16px;
@@ -3924,495 +3925,98 @@ a {
   src: url("#{resource['roma-layout:fonts/Inter-UI-Bold.otf']}") format("opentype"), url("#{resource['roma-layout:fonts/Inter-UI-Bold.woff2']}") format("woff2"), url("#{resource['roma-layout:fonts/Inter-UI-Bold.woff']}") format("woff"), url("#{resource['roma-layout:fonts/Inter-UI-Bold.ttf']}") format("truetype");
   /* Safari, Android, iOS */
 }
-.meeting {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 1rem;
-  border-bottom: 1px solid #ebedef;
-  padding-bottom: 1rem;
-}
-.meeting .meeting-date {
-  font-size: 1.2rem;
-  color: #252529;
-  text-transform: capitalize;
-}
-.meeting .meeting-content {
-  display: flex;
-  margin-top: 0.3rem;
-}
-.meeting .meeting-content .meeting-time {
-  color: #214B9C;
-  font-size: 2.5rem;
-}
-.meeting .meeting-content .meeting-detail {
-  margin-top: 0.2rem;
-  margin-left: 1rem;
-}
-.meeting .meeting-content .meeting-data .icon {
-  padding-right: 0.5em;
-}
-
-.attendees {
-  margin-top: 1rem;
-}
-.attendees .attendee {
-  display: block;
-  overflow: auto;
-}
-.attendees .attendee .person {
+.layout-aside {
   float: left;
+  width: 20%;
 }
-.attendees .attendee button {
-  margin-top: 0.5rem;
-  float: right;
-}
-
-.candidate-card {
-  padding: 0;
-}
-.candidate-card .card-header {
-  height: 5rem;
-  overflow: hidden;
-  background: linear-gradient(30deg, #214B9C 0%, #95b2e9 150%);
-  background-color: #214B9C;
-  color: #ffffff;
-}
-.candidate-card .candidate-card-content .label-container {
-  font-size: 0.8em;
-  padding-bottom: 0.3em;
-}
-.candidate-card .candidate-card-content .label-container .label {
-  color: #252529;
-}
-.candidate-card .candidate-card-content .text {
-  color: #666666;
-}
-.candidate-card .candidate-card-content .candidate-image {
-  margin: -2.5rem 0 0 3rem;
-  width: 5rem;
-  height: 5rem;
-}
-.candidate-card .candidate-card-content .candidate-image img {
-  margin: 0;
-  width: 5rem;
-  height: 5rem;
-}
-.candidate-card .candidate-card-content .candidate-card-name {
-  font-size: 13px;
-  color: #ffffff;
-  position: relative;
-  top: -4.2rem;
-  margin-left: 9rem;
-  font-weight: 700;
-  white-space: nowrap;
-}
-.candidate-card .candidate-card-content .candidate-card-profile {
-  position: relative;
-  top: -3.8rem;
-  margin-left: 9rem;
-  font-weight: 700;
-  white-space: nowrap;
-}
-.candidate-card .candidate-card-content .candidate-detail {
-  padding: 0 2.5em 2em 2.5em;
+.layout-aside .layout-aside-content {
+  padding: 16px 0 16px 16px;
 }
 
-.card.user-card {
-  padding: 0;
+@media all and (max-width: 1200px) {
+  .layout-aside {
+    display: none;
+  }
 }
-.card.user-card .card-header {
-  height: 5rem;
-  overflow: hidden;
-  background: linear-gradient(30deg, #214B9C 0%, #95b2e9 150%);
-  background-color: #214B9C;
-  color: #ffffff;
+.layout-wrapper .layout-topbar {
+  height: 4rem;
 }
-.card.user-card .user-card-content .label-container {
-  font-size: 0.8em;
-  padding-bottom: 0.3em;
+.layout-wrapper .layout-topbar .topbar-menu > li > ul {
+  top: auto;
 }
-.card.user-card .user-card-content .label-container .label {
-  color: #252529;
+.layout-wrapper .layout-topbar .layout-right-panel-button {
+  width: 2rem;
+  height: 2rem;
+  line-height: 2rem;
 }
-.card.user-card .user-card-content .text {
-  color: #666666;
-}
-.card.user-card .user-card-content .user-image {
-  margin: -2.5rem 0 0 3rem;
-  width: 5rem;
-  height: 5rem;
-}
-.card.user-card .user-card-content .user-image img {
-  margin: 0;
-  width: 5rem;
-  height: 5rem;
-}
-.card.user-card .user-card-content .user-card-name {
-  color: #ffffff;
-  position: relative;
-  top: -4.2rem;
-  margin-left: 9rem;
-  font-weight: 700;
-  white-space: nowrap;
-}
-.card.user-card .user-card-content .user-card-role {
-  position: relative;
-  top: -3.8rem;
-  margin-left: 9rem;
-  font-weight: 700;
-  white-space: nowrap;
-}
-.card.user-card .user-card-content .user-detail {
-  padding: 0 2.5em 2em 2.5em;
+.layout-wrapper .layout-topbar .user-profile .user-image {
+  width: 2.5rem;
+  height: 2.5rem;
+  font-size: 1.25rem;
 }
 
-.input-avatar {
-  position: relative;
-  height: 200px;
-  width: 200px;
+@media screen and (min-width: 992px) {
+  .layout-wrapper.layout-horizontal .layout-menu-container {
+    width: auto;
+    float: left;
+    padding: 0;
+    min-height: 2rem;
+  }
 }
-.input-avatar img {
-  cursor: pointer;
-  width: 200px;
-  height: 200px;
-  object-fit: cover;
+@media screen and (max-width: 991px) {
+  .layout-wrapper .layout-main {
+    height: 4rem;
+    padding-top: 5rem;
+  }
 }
-.input-avatar .camera-button {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-}
-.input-avatar .delete-button {
-  position: absolute;
-  right: 31px;
-  bottom: 0;
-}
-.input-avatar .ui-fileupload {
-  display: none;
-}
-
-.ui-datatable a .ui-avatar-text {
-  color: #666;
-  font-weight: 500;
-  text-decoration-line: none;
-}
-.ui-datatable .link {
-  color: #666;
-  font-weight: 500;
-}
-.ui-datatable .link:hover {
-  text-decoration-line: underline;
-}
-
-.card .buttons {
-  padding-top: 1rem;
+.buttons {
+  padding: 1rem;
   text-align: right;
 }
-
-.user-role {
-  border-radius: 2px;
-  padding: 0.25em 0.5rem;
-  text-transform: uppercase;
-  font-weight: 700;
-  letter-spacing: 0.3px;
-}
-.user-role.role-ADMIN {
-  background: #FEEDAF;
-  color: #8A5340;
-}
-.user-role.role-USER {
-  background: #C8E6C9;
-  color: #256029;
+.buttons .ui-button {
+  margin-left: 1rem;
 }
 
-.job-offer-state {
-  border-radius: 2px;
-  padding: 0.25em 0.5rem;
-  text-transform: uppercase;
-  font-weight: 700;
-  font-size: 12px;
-  letter-spacing: 0.3px;
+.person .ui-avatar {
+  float: left;
 }
-.job-offer-state.job-offer-state-closed {
-  background: #FFCDD2;
-  color: #C63737;
+.person .person-box {
+  float: left;
+  margin: 0.35rem 0 0 1rem;
+  color: #252529;
 }
-.job-offer-state.job-offer-state-created {
-  background: #C8E6C9;
-  color: #256029;
+.person .person-box .person-description-text {
+  font-size: 0.9rem;
+  color: #65686a;
 }
-.job-offer-state.job-offer-state-finished {
-  background: #FEEDAF;
-  color: #8A5340;
+
+.user-card {
+  padding: 0;
 }
-.job-offer-state.job-offer-state-opened {
-  background: #aeaeff;
-  color: #423e8c;
+.user-card .user-card-header {
+  background: linear-gradient(30deg, #0f97c7 0%, #91dcf7 150%);
+  background-color: #0f97c7;
+  color: #ffffff;
 }
-.job-offer-state.job-offer-state-paused {
-  background: #fdaeff;
-  color: #8c3c8e;
+.user-card .user-card-content .user-detail {
+  padding: 1rem 2rem;
+}
+.user-card .user-card-content img {
+  width: 60px;
+  height: 60px;
+  margin: -30px 0 0 24px;
+}
+.user-card .user-card-content .user-image {
+  width: 60px;
+  height: 60px;
+  margin: -30px 0 0 24px;
+}
+.user-card .user-card-content .user-image .ui-avatar-text {
+  font-size: 2rem;
 }
 
 .users .ui-dataview-header {
   display: none;
-}
-.users .ui-dataview-column {
-  padding: 0;
-}
-.users a {
-  color: #65656a;
-}
-.users a:hover {
-  background-color: #ebebef;
-}
-
-.layout-main-topbar {
-  position: relative;
-}
-.layout-main-topbar .buttons {
-  position: absolute;
-  top: 6px;
-  right: 6px;
-}
-.layout-main-topbar .buttons .ui-button {
-  margin-left: 6px;
-}
-
-.card.client-card {
-  padding: 0;
-}
-.card.client-card .card-header {
-  height: 5rem;
-  overflow: hidden;
-  background: linear-gradient(30deg, #14A143 0%, #8af0ac 150%);
-  background-color: #14A143;
-  color: #ffffff;
-}
-.card.client-card .client-card-content .label-container {
-  font-size: 0.8em;
-  padding-bottom: 0.3em;
-}
-.card.client-card .client-card-content .label-container .label {
-  color: #252529;
-}
-.card.client-card .client-card-content .text {
-  color: #666666;
-}
-.card.client-card .client-card-content .client-card-name {
-  font-size: 2em;
-  color: #ffffff;
-  position: relative;
-  top: -3.5rem;
-  margin-left: 1em;
-  font-weight: 700;
-  white-space: nowrap;
-}
-.card.client-card .client-card-content .client-detail {
-  padding: 0 2.5em 2em 2.5em;
-}
-
-.card.job-card {
-  padding: 0;
-}
-.card.job-card .card-header {
-  height: 80px;
-  overflow: hidden;
-  background: linear-gradient(30deg, #EE4F10 0%, #f9b89f 150%);
-  background-color: #14A143;
-  color: #ffffff;
-}
-.card.job-card .job-card-content .job-detail {
-  padding: 0 2.5em 2em 2.5em;
-}
-.card.job-card .job-card-content .label-container {
-  font-size: 0.8em;
-  padding-bottom: 0.3em;
-}
-.card.job-card .job-card-content .label-container .label {
-  color: #252529;
-}
-.card.job-card .job-card-content .text {
-  color: #666666;
-}
-.card.job-card .job-card-content .job-card-name {
-  font-size: 2em;
-  color: #ffffff;
-  position: relative;
-  top: -60px;
-  margin-left: 1.5rem;
-  font-weight: 700;
-  white-space: nowrap;
-}
-.card.job-card .job-card-content .job-card-client {
-  font-size: 1em;
-  color: #ffffff;
-  position: relative;
-  top: -60px;
-  margin-left: 1.5rem;
-  font-weight: 400;
-  white-space: nowrap;
-}
-
-.layout-wrapper .layout-topbar .layout-topbar-logo img {
-  height: 2rem;
-}
-.layout-wrapper .layout-topbar .topbar-menu .ui-avatar {
-  margin-top: 0.4rem;
-}
-
-.person {
-  text-align: left;
-  display: flex;
-  vertical-align: top;
-  padding: 0.5em;
-}
-.person .person-box {
-  margin-left: 1em;
-}
-.person .person-name {
-  font-size: 13px;
-  display: block;
-  font-weight: 500;
-}
-.person .person-description {
-  font-size: 13px;
-  display: block;
-}
-.person .avatar {
-  display: block;
-  max-width: 36px;
-  max-height: 36px;
-  width: auto;
-  height: auto;
-  border-radius: 50%;
-}
-.person .person-data {
-  margin-top: 0.4rem;
-  margin-left: 1.5rem;
-  display: block;
-  float: left;
-}
-
-.curriculum {
-  position: relative;
-  flex-direction: column;
-  overflow: auto;
-}
-.curriculum .avatar {
-  float: left;
-  margin: 0 2em 0 1em;
-  border-radius: 0;
-  border: 0;
-  width: 128px;
-  object-fit: cover;
-}
-.curriculum .header-buttons {
-  position: absolute;
-  right: 1rem;
-  top: 1rem;
-}
-.curriculum .section {
-  border-bottom: 1px solid #dfdfdf;
-  position: relative;
-  margin-top: 2em;
-  font-size: 1.1em;
-  font-weight: 400;
-  padding: 0 2em 1em 2em;
-}
-.curriculum .section:last-child {
-  border-bottom: none;
-  margin-bottom: 0;
-}
-.curriculum .section .buttons {
-  position: absolute;
-  right: 0px;
-  bottom: 1em;
-}
-.curriculum .name {
-  font-size: 2em;
-  font-weight: bold;
-  text-shadow: 1px 1px white;
-  padding-bottom: 0.4em;
-}
-.curriculum .job-profile {
-  font-size: 1.5em;
-  padding-bottom: 0.6em;
-}
-.curriculum .job-description {
-  white-space: pre-line;
-}
-.curriculum .date-range {
-  color: #8c8c93;
-}
-.curriculum .language_name {
-  font-weight: 500;
-  min-width: 100px;
-  display: inline-block;
-}
-.curriculum .company {
-  font-size: 1.1em;
-}
-.curriculum .curriculum .school {
-  font-size: 1.1em;
-}
-.curriculum p {
-  margin: 0.4em 4em 0.4em 0;
-}
-.curriculum .ui-tag {
-  margin-right: 0.2rem;
-}
-
-.contacts .ui-dataview-header {
-  display: none;
-}
-.contacts .ui-dataview-column {
-  padding: 0;
-}
-
-.contact {
-  position: relative;
-  padding: 1rem;
-}
-.contact:hover {
-  background-color: #f5f5f5;
-  transition: 0.3s ease;
-}
-.contact .contact-box {
-  display: flex;
-  flex-direction: column;
-  line-height: 1.2em;
-}
-.contact .contact-box .contact-name {
-  font-size: 1.1rem;
-  font-weight: 800;
-}
-.contact .contact-box .contact-position {
-  font-weight: 400;
-}
-.contact .contact-box .contact-data {
-  display: flex;
-  flex-direction: column;
-}
-.contact .contact-box .contact-data i {
-  display: inline-block;
-  margin-right: 9px;
-}
-.contact .contact-box .contact-data .contact-phone {
-  font-size: 0.8rem;
-  font-weight: 400;
-}
-.contact .contact-box .contact-data .contact-email {
-  font-size: 0.8rem;
-  font-weight: 400;
-}
-.contact .buttons {
-  position: absolute;
-  top: 1em;
-  right: 1rem;
-}
-.contact .buttons button {
-  background-color: white;
 }
 
 /*# sourceMappingURL=layout.css.map */

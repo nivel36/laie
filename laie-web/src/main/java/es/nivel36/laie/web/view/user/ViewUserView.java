@@ -56,7 +56,7 @@ public class ViewUserView extends AbstractView {
 	
 	@PostConstruct
 	public void init() {
-		this.uid = this.getValueFromGetParameters("uid");
+		this.uid = this.getValueFromGetParameters("user");
 		if (this.uid == null) {
 			throw new IllegalPageStateException();
 		}

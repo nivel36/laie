@@ -1,0 +1,57 @@
+body .ui-datatable table {
+	table-layout: auto;
+	
+	tbody{
+		tr{
+			a{
+				display:flex;
+				align-items: center;
+			}
+		}
+	}
+}
+
+body .ui-dataview .ui-paginator.ui-paginator-bottom {
+	border: 0px; 
+}
+
+body .ui-autocomplete .ui-autocomplete-multiple-container .ui-autocomplete-token {
+	margin: 0 0.5rem 0.5rem 0;
+}
+
+body .ui-inputnumber .ui-inputtext {
+	text-align: right;
+}
+
+body .ui-datatable.ui-datatable-borderless {
+	.ui-paginator-top {
+		border-left: 0 none;
+		border-right: 0 none;
+		border-bottom: 1px solid #d8d8dc;
+	}
+	.ui-paginator-bottom {
+		border-left: 0 none;
+		border-right: 0 none;
+		border-top: 1px solid #d8d8dc;
+	}
+	.ui-datatable-header {
+		border-top: 0 none;
+		border-left: 0 none;
+		border-right: 0 none;
+	}
+	.ui-datatable-footer {
+		border-bottom: 0 none;
+		border-left: 0 none;
+		border-right: 0 none;
+	}
+	thead > tr {
+		border: 0 none;
+	}
+	.ui-datatable-data > tr {
+		border: 0 none;
+	}
+}
+
+body .ui-avatar img {
+	object-fit: cover;
+}

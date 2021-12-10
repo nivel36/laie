@@ -53,13 +53,6 @@ public class ClientService {
 		final Client client = this.clientDao.findClientByUid(uid);
 		return this.clientMapper.map(client);
 	}
-
-	public ClientDto findClientByCif(final String cif) {
-		Objects.requireNonNull(cif);
-		logger.debug("Find client by cif {}", cif);
-		final Client client = this.clientDao.findClientByCif(cif);
-		return this.clientMapper.map(client);
-	}
 	
 	public SearchResult<ClientDto> search(final String searchText, final Page page) {
 		return this.search(searchText, page, null, null);

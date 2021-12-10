@@ -72,7 +72,7 @@
 										completeMethod="#{addUserView.queryManager}" converter="userConverter"
 										rendered="#{not addUserView.user.admin}">
 										<p:column styleClass="user-select image">
-											<cc:person value="#{var}" />
+											<cc:person name="#{var.fullName}" path="#{var.avatarUrl}" description="#{var.email}" />
 										</p:column>
 									</cc:autocomplete>
 								</h:panelGroup>

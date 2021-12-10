@@ -26,13 +26,13 @@
 		<primefaces.version>10.0.0</primefaces.version>
 		<font-awesome.version>5.15.2</font-awesome.version>
 		<poi.version>3.17</poi.version>
-		<omnifaces.version>3.10</omnifaces.version>
+		<omnifaces.version>3.12</omnifaces.version>
 		<commons-fileupload.version>1.4</commons-fileupload.version>
 		<owasp-java-html-sanitizer.version>20200713.1</owasp-java-html-sanitizer.version>
 		<html2pdf.version>3.0.5</html2pdf.version>
 
 		<version.mockito>3.11.0</version.mockito>
-		<version.server.bom>24.0.1.Final</version.server.bom>
+		<version.server.bom>25.0.1.Final</version.server.bom>
 		<version.junit.bom>5.7.2</version.junit.bom>
 
 		<maven.ear.plugin.version>3.0.1</maven.ear.plugin.version>

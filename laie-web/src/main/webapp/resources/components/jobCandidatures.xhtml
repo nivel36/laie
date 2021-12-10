@@ -11,7 +11,7 @@
 		<composite:attribute name="showJobOffer" default="true" />
 		<composite:attribute name="styleClass" required="false" default="" />
 		<composite:attribute name="title" required="false" default="#{i18n['job_candidature.job_candidatures']}" />
-		<composite:attribute name="rows" required="false" default="#{sessionUser.rowsPerPage}" />
+		<composite:attribute name="rows" required="false" default="10" />
 	</composite:interface>
 
 	<composite:implementation>
@@ -36,7 +36,7 @@
 					</h:link>
 				</p:column>
 				<p:column rendered="#{cc.attrs.showCandidate}">
-					<cc:avatar value="#{jobCandidature.candidate.picture}" styleClass="small" />
+					<cc:avatar name="#{jobCandidature.candidate.fullName}" path="#{jobCandidature.candidate.avatarUrl}" styleClass="small" />
 				</p:column>
 				<p:column headerText="#{i18n['job_candidature.candidate']}" rendered="#{cc.attrs.showCandidate}">
 					<h:link value="#{jobCandidature.candidate.fullName}" outcome="#{Page.CANDIDATE.getUrl()}">

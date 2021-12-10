@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-import es.nivel36.laie.ejb.core.file.File;
+import es.nivel36.laie.ejb.core.file.FileDto;
 import es.nivel36.laie.ejb.core.model.AddressDto;
 import es.nivel36.laie.ejb.job.candidature.JobCandidatureDto;
 
@@ -23,7 +23,7 @@ public class CandidateDto implements Serializable {
 
 	private Integer expectedSalary;
 
-	private Set<File> files = new HashSet<>();
+	private Set<FileDto> files = new HashSet<>();
 
 	private String infojobsProfileUrl;
 
@@ -39,7 +39,7 @@ public class CandidateDto implements Serializable {
 
 	protected String phoneNumber;
 
-	protected String picturesPath;
+	protected String avatarUrl;
 
 	private Integer rating;
 
@@ -53,23 +53,10 @@ public class CandidateDto implements Serializable {
 
 	private String uid;
 
-	public void addFile(final File file) {
-		this.files.add(file);
-	}
-
-	@Override
-	public boolean equals(final Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (!super.equals(obj) || (this.getClass() != obj.getClass())) {
-			return false;
-		}
-		final Candidate other = (Candidate) obj;
-		return Objects.equals(other.email, this.email);
-	}
-
 	public AddressDto getAddress() {
+		if(this.address == null) {
+			return new AddressDto();
+		}
 		return this.address;
 	}
 
@@ -85,7 +72,7 @@ public class CandidateDto implements Serializable {
 		return this.expectedSalary;
 	}
 
-	public Set<File> getFiles() {
+	public Set<FileDto> getFiles() {
 		return this.files;
 	}
 
@@ -124,8 +111,8 @@ public class CandidateDto implements Serializable {
 		return this.phoneNumber;
 	}
 
-	public String getPicturesPath() {
-		return this.picturesPath;
+	public String getAvatarUrl() {
+		return this.avatarUrl;
 	}
 
 	public Integer getRating() {
@@ -152,19 +139,6 @@ public class CandidateDto implements Serializable {
 		return this.uid;
 	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(this.email);
-	}
-
-	public void removeFile(final File file) {
-		Objects.requireNonNull(file);
-		if (this.files == null) {
-			throw new IllegalStateException();
-		}
-		this.files.remove(file);
-	}
-
 	public void setAddress(final AddressDto address) {
 		this.address = address;
 	}
@@ -181,7 +155,7 @@ public class CandidateDto implements Serializable {
 		this.expectedSalary = expectedSalary;
 	}
 
-	public void setFiles(final Set<File> files) {
+	public void setFiles(final Set<FileDto> files) {
 		this.files = files;
 	}
 
@@ -213,8 +187,8 @@ public class CandidateDto implements Serializable {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public void setPicturesPath(final String picturesPath) {
-		this.picturesPath = picturesPath;
+	public void setAvatarUrl(final String avatarUrl) {
+		this.avatarUrl = avatarUrl;
 	}
 
 	public void setRating(final Integer rating) {
@@ -245,8 +219,25 @@ public class CandidateDto implements Serializable {
 		this.tags = tags;
 	}
 
-	public void setUid(final String uid) {
+	void setUid(final String uid) {
 		this.uid = uid;
+	}
+	
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (!super.equals(obj) || (this.getClass() != obj.getClass())) {
+			return false;
+		}
+		final Candidate other = (Candidate) obj;
+		return Objects.equals(other.email, this.email);
+	}
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(this.email);
 	}
 
 	@Override

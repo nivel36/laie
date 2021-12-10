@@ -35,7 +35,7 @@
 					</div>
 					<div class="p-col-12">
 						<p:dataTable id="jobOffers" var="jobOffer" value="#{searchJobView.jobOffers}" emptyMessage="#{i18n['job.no_jobs_found']}" reflow="true" paginator="true"
-							paginatorPosition="bottom" rows="#{sessionUser.rowsPerPage}" sortBy="#{jobOffer.title}" sortOrder="descending" lazy="true">
+							paginatorPosition="bottom" rows="10" sortBy="#{jobOffer.title}" sortOrder="descending" lazy="true">
 
 							<p:column headerText="#{i18n['job.title']}" sortBy="#{jobOffer.title}">
 								<h:link outcome="#{Page.JOB.getUrl()}">#{jobOffer.title} - ${jobOffer.address.city}

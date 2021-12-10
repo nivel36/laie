@@ -10,10 +10,11 @@ import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
 import es.nivel36.laie.ejb.core.model.AbstractEntity;
+import es.nivel36.laie.ejb.core.model.Obfuscable;
 
 @Entity
 @Table(name = "DOCUMENT_TEMPLATE", uniqueConstraints = { @UniqueConstraint(columnNames = { "name", "language" }) })
-public class DocumentTemplate extends AbstractEntity {
+public class DocumentTemplate extends AbstractEntity implements Obfuscable {
 
 	private static final long serialVersionUID = 5175582851805624309L;
 

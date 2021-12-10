@@ -16,12 +16,12 @@
 					</div>
 
 					<p:dataTable var="user" id="users" value="#{selectUserView.users}" emptyMessage="#{i18n['user.no_users_found']}" reflow="true" paginator="true" paginatorPosition="bottom"
-						rows="#{sessionUser.rowsPerPage}" selectionMode="single" selection="#{selectUserView.selectedUser}" sortBy="#{user.name}" sortOrder="descending" lazy="true">
+						rows="10" selectionMode="single" selection="#{selectUserView.selectedUser}" sortBy="#{user.name}" sortOrder="descending" lazy="true">
 
 						<p:ajax event="rowSelect" listener="#{selectUserView.onUserSelect}" update="@form" resetValues="true" />
 
 						<p:column>
-							<cc:avatar value="#{user.picture}" styleClass="image-icon" />
+							<cc:avatar name="#{user.fullName}" path="#{user.avatarUrl}" styleClass="image-icon" />
 						</p:column>
 
 						<p:column headerText="#{i18n['user.name']}" sortBy="#{user.name}">

@@ -10,7 +10,6 @@ import javax.persistence.NoResultException;
 import es.nivel36.laie.ejb.core.model.AbstractDao;
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.core.model.Repository;
-import es.nivel36.laie.ejb.core.model.UidGenerator;
 import es.nivel36.laie.ejb.core.model.search.SearchFacets;
 import es.nivel36.laie.ejb.core.model.search.SearchResult;
 import es.nivel36.laie.ejb.core.model.search.SortField;
@@ -20,8 +19,7 @@ import es.nivel36.laie.ejb.curriculum.skill.Skill;
 public class CurriculumDao extends AbstractDao {
 
 	public void insert(final Curriculum curriculum) {
-		final String uid = UidGenerator.generate(Curriculum.class);
-		curriculum.setUid(uid);
+		this.setUid(Curriculum.class, curriculum);
 		this.insert(curriculum);
 	}
 
@@ -39,14 +37,14 @@ public class CurriculumDao extends AbstractDao {
 		}
 	}
 
-	public Skill findSkill(final String name) {
-		Objects.requireNonNull(name);
-		return this.findByQuery(Skill.class, "Skill.findByName", map("name", name));
-	}
-
 	public Curriculum findByUid(final String uid) {
 		Objects.requireNonNull(uid);
 		return this.findByQuery(Curriculum.class, "Curriculum.findByUid", map("uid", uid));
+	}
+
+	public Skill findSkill(final String name) {
+		Objects.requireNonNull(name);
+		return this.findByQuery(Skill.class, "Curriculum.Skill.findByName", map("name", name));
 	}
 
 	public List<CurriculumTemplate> findCurriculumTemplates() {

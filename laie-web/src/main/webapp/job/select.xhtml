@@ -29,7 +29,7 @@
 
 				<div class="col-12">
 					<p:dataTable var="jobOffer" value="#{jobOfferSearchDialogView.jobOffers}" emptyMessage="#{i18n['job.no_jobs_found']}" reflow="true"
-						paginator="true" rowKey="#{jobOffer.id}" paginatorPosition="bottom" rows="#{sessionUser.rowsPerPage}"
+						paginator="true" rowKey="#{jobOffer.id}" paginatorPosition="bottom" rows="10"
 						selection="#{jobOfferSearchDialogView.selectedJobOffers}" lazy="true">
 
 						<p:column selectionMode="multiple" style="width:16px;text-align:center" />

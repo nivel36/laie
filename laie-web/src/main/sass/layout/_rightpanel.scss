@@ -1,21 +1,24 @@
 .layout-right-panel {
-    width: $rightPanelWidth;
-    right: -$rightPanelWidth;
+    width: 288px;
+    right: -288px;
     background-color: #ffffff;
     border-left: solid 1px #ebebef;
     position: fixed;
     z-index: 999;
-    top: $topbarHeight;
-    height: calc( 100vh - #{$topbarHeight} );
+    top: 0;
+    height: 100%;
     padding: 0;
     margin: 0;
-	overflow: auto;
     @include transition(right $transitionDuration);
     @include shadow(0 0px 10px 0 rgba(0, 0, 0, 0.16));
 
     &.layout-right-panel-active {
         right: 0;
         display: block;
+    }
+
+    .ui-progressbar {
+        height: 8px;
     }
 
     .ui-tabs.ui-tabs-top {
@@ -34,14 +37,15 @@
                 border: 0 none;
                 margin-right: 0;
                 width: 50%;
-				overflow: hidden;
+                padding:0;
 
                 a {
+                    padding: 0.857em 1em;
                     text-align: center;
                     width: 100%;
                     display: block;
                     font-size: 13px;
-                    color: $menuitemIconColor;
+                    color: #65656a;
                     background-color: #ffffff;
                     border-bottom: 2px solid #d8d8dc;
                     @include transition(color $transitionDuration);
@@ -70,37 +74,6 @@
         }
     }
 
-	.person {
-	    text-align: left;
-	    display: flex;
-	    margin: 6px 0 0 8px;
-	    vertical-align: top;
-		padding: 3px 6px;
-
- 		&:hover {
-			background-color: #f6f6f6;
-		}
-	
-	    .name {
-			font-size: 12px;
-			display: block;
-			font-weight: 500;
-			color: $menuitemTextColor;
-	    }
-	
-	    .description {
-	        font-size: 12px;
-	        display: block;
-			color: $menuitemTextColor;
-	    }
-
- 		.avatar {
-            width: 30px;
-            margin: 4px 8px 4px 0;
-			border-radius: 50%;
-        }
-	}
-
     .status-title {
         margin: 24px 0 12px 0;
 
@@ -112,7 +85,7 @@
         
         i {
             float: right;
-            font-size: 20px;
+            font-size: 18px;
             color: #8b8b90;
         }
     }
@@ -126,6 +99,7 @@
             font-weight: 500;
         }
         .percentage-2 {
+            margin-right: .25em;
             color: #65656a;
             font-size: 13px;
             font-weight: 500;
@@ -161,4 +135,10 @@
             font-weight: 500;
         }
     }
+}
+
+@media screen and (max-width: $mobileBreakpoint) {
+    .layout-right-panel {
+        top: 110px;
+    } 
 }

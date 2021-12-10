@@ -12,9 +12,10 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 import es.nivel36.laie.ejb.core.model.AbstractEntity;
+import es.nivel36.laie.ejb.core.model.Obfuscable;
 
 @Entity
-public class File extends AbstractEntity {
+public class File extends AbstractEntity implements Obfuscable {
 
 	private static final long serialVersionUID = 1L;
 

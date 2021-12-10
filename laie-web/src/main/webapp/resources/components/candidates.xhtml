@@ -7,7 +7,7 @@
 		<composite:attribute name="value" required="true" />
 		<composite:attribute name="styleClass" required="false" default="" />
 		<composite:attribute name="title" required="false" default="#{i18n['candidate.candidates']}" />
-		<composite:attribute name="rows" required="false" default="#{sessionUser.rowsPerPage}" />
+		<composite:attribute name="rows" required="false" default="10" />
 	</composite:interface>
 
 	<composite:implementation>
@@ -19,9 +19,9 @@
 
 				<p:column headerText="#{i18n['candidate.name']}" sortBy="#{candidate.name}">
 					<h:link outcome="#{Page.CANDIDATE.getUrl()}">
-						<cc:avatar value="#{candidate}" styleClass="p-mr-2" />
+						<cc:avatar name="#{candidate.fullName}" path="#{candidate.avatarUrl}" styleClass="p-mr-2" />
 						<h:outputText styleClass="link" value="#{candidate.fullName}" />
-						<f:param name="id" value="#{candidate.uid}" />
+						<f:param name="candidate" value="#{candidate.uid}" />
 					</h:link>
 				</p:column>
 

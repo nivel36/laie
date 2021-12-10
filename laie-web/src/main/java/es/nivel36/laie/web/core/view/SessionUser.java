@@ -1,6 +1,7 @@
 package es.nivel36.laie.web.core.view;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -13,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import es.nivel36.laie.ejb.user.Role;
+import es.nivel36.laie.ejb.user.SimpleUserDto;
 import es.nivel36.laie.ejb.user.UserDto;
 import es.nivel36.laie.ejb.user.UserService;
 
@@ -26,12 +28,48 @@ public class SessionUser implements Serializable {
 
 	private Locale locale;
 
-	private List<UserDto> team;
+	private List<SimpleUserDto> team;
 
 	private UserDto user;
 
 	@Inject
 	private transient UserService userService;
+
+	public void load(String username) {
+		Objects.requireNonNull(username);
+		logger.info("User {} has init his/her session", username);
+		this.loadUserData(username);
+	}
+
+	public boolean isActive() {
+		return this.user != null;
+	}
+
+	public boolean isManagerOf(final String subordinateUid) {
+		Objects.requireNonNull(subordinateUid);
+		for (final SimpleUserDto user : this.team) {
+			if (user.getUid().equals(subordinateUid)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private void loadUserData(final String email) {
+		this.user = this.userService.findUserByEmail(email);
+		this.locale = new Locale(this.user.getLanguage());
+		final String userUid = user.getUid();
+		final List<UserDto> usersTeam = this.userService.findSubordinateUsers(userUid);
+		this.team = new ArrayList<>(usersTeam.size());
+		for (final UserDto user : usersTeam) {
+			this.team.add(new SimpleUserDto(user));
+		}
+	}
+
+	public void refresh() {
+		logger.trace("Refreshing session for user {}", this.user.getEmail());
+		this.loadUserData(this.user.getEmail());
+	}
 
 	public UserDto get() {
 		return this.user;
@@ -45,18 +83,8 @@ public class SessionUser implements Serializable {
 		return this.locale;
 	}
 
-	public List<UserDto> getTeam() {
+	public List<SimpleUserDto> getTeam() {
 		return this.team;
-	}
-
-	public void load(String username) {
-		Objects.requireNonNull(username);
-		logger.info("User {} has init his/her session", username);
-		this.loadUserData(username);
-	}
-
-	public boolean isActive() {
-		return this.user != null;
 	}
 
 	public boolean isAdmin() {
@@ -64,22 +92,6 @@ public class SessionUser implements Serializable {
 			return false;
 		}
 		return this.user.getRoleName().equals(Role.ADMIN.name());
-	}
-
-	public boolean isManagerOf(final UserDto subordinate) {
-		Objects.requireNonNull(subordinate);
-		return this.getTeam().contains(subordinate);
-	}
-
-	private void loadUserData(final String email) {
-		this.user = this.userService.findUserByEmail(email);
-		this.locale = new Locale(this.user.getLanguage());
-		this.team = this.userService.findSubordinateUsers(email);
-	}
-
-	public void refresh() {
-		logger.trace("Refreshing session for user {}", this.user.getEmail());
-		this.loadUserData(this.user.getEmail());
 	}
 
 	public void setUserService(final UserService userService) {

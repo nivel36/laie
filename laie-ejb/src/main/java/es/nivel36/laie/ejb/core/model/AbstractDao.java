@@ -39,14 +39,33 @@ import es.nivel36.laie.ejb.core.model.search.SearchResult;
 import es.nivel36.laie.ejb.core.model.search.SortField;
 
 public abstract class AbstractDao {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(AbstractDao.class);
-	
+
 	private static final String CACHE_STORE_MODE = "javax.persistence.cache.storeMode";
 
 	@Inject
 	protected EntityManager em;
 	
+	protected <E extends Obfuscable> void setUid(Class<E> type, E entity) {
+		String uid;
+		do {
+			uid = UidGenerator.generate(type);
+			entity.setUid(uid);
+		} while (!this.checkDuplicateField(type, "uid", uid));
+	}
+
+	protected <E extends Identifiable> boolean checkDuplicateField(final Class<E> type, final String fieldName,
+			final Object fieldValue) {
+		final CriteriaBuilder cb = this.em.getCriteriaBuilder();
+		final CriteriaQuery<E> cq = cb.createQuery(type);
+		final Root<E> root = cq.from(type);
+		cq.select(root).where(cb.equal(root.get(fieldName), fieldValue));
+		cq.select(root.get(type.getName() + ".id"));
+		final List<E> elements = this.findByCriteria(cq, new Page(0, 1));
+		return elements.size() > 0;
+	}
+
 	public <E> List<E> findAll(final Class<E> type, final Page page) {
 		Objects.requireNonNull(type);
 		logger.debug("Find all entities of class {}", type);
@@ -72,8 +91,8 @@ public abstract class AbstractDao {
 		return this.findByQuery(entityClass, namedQuery, parameters, FlushModeType.AUTO);
 	}
 
-	protected <E> E findByQuery(final Class<E> entityClass, final String namedQuery, final Map<String, Object> parameters,
-			final FlushModeType flusModeType) {
+	protected <E> E findByQuery(final Class<E> entityClass, final String namedQuery,
+			final Map<String, Object> parameters, final FlushModeType flusModeType) {
 		Objects.requireNonNull(entityClass);
 		Objects.requireNonNull(namedQuery);
 		logger.debug("Find entity {} by named query {}", entityClass, namedQuery);
@@ -105,7 +124,7 @@ public abstract class AbstractDao {
 		this.parametrize(parameters, query);
 		return query.getSingleResult();
 	}
-	
+
 	private void paginate(final Page page, final Query query) {
 		query.setFirstResult(page.getOffset());
 		query.setMaxResults(page.getLimit());
@@ -120,7 +139,7 @@ public abstract class AbstractDao {
 			query.setParameter(entry.getKey(), entry.getValue());
 		}
 	}
-	
+
 	protected <T extends Identifiable> void delete(final Class<T> type, final T entity) {
 		Objects.requireNonNull(entity);
 		Objects.requireNonNull(type);
@@ -134,11 +153,11 @@ public abstract class AbstractDao {
 			this.em.remove(this.em.merge(entity));
 		}
 	}
-	
+
 	///////////////////////////////////////////////////////////////////////////
 	// SEARCH
 	///////////////////////////////////////////////////////////////////////////
-	
+
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public <T extends Identifiable> SearchResult<T> search(final Class<T> type, final Page page,
 			final SortField sortField, final SearchFacets searchFacets, final String searchText,
@@ -171,7 +190,7 @@ public abstract class AbstractDao {
 		}
 		return this.buildSearchResult(fullTextQuery.getResultList(), fullTextQuery.getResultSize(), allFacets);
 	}
-	
+
 	@SuppressWarnings("rawtypes")
 	private org.apache.lucene.search.Query createLuceneQuery(final QueryBuilder qb,
 			final BooleanJunction<BooleanJunction> bj) {
@@ -183,7 +202,7 @@ public abstract class AbstractDao {
 		}
 		return luceneQuery;
 	}
-	
+
 	private void enableFaceting(final SearchFacets searchFacets, final QueryBuilder qb,
 			final FullTextQuery fullTextQuery) {
 		if (searchFacets == null) {
@@ -218,7 +237,7 @@ public abstract class AbstractDao {
 		}
 		return bj;
 	}
-	
+
 	private <T extends Identifiable> SearchResult<T> buildSearchResult(final List<T> results, final int resultsSize,
 			final Map<String, List<Facet>> allFacets) {
 		if (results instanceof ArrayList) {
