@@ -95,7 +95,7 @@
 										<h:panelGroup layout="block" id="attendee" styleClass="attendee">
 											<cc:person name="#{person.fullName}" path="#{person.avatarUrl}" description="#{person.email}"/>
 												<p:tag styleClass="p-mr-2" icon="pi pi-check" severity="success" rounded="true" value="#{i18n['meeting.available']}" rendered="#{addMeetingView.isAvaliable(person)}" />
-												<p:tag styleClass="p-mr-2" icon="pi pi-times" severity="danger" rounded="true" value="#{i18n['meeting.non_available']}" rendered="#{not addMeetingView.isAvaliable(person)}" />
+												<p:tag styleClass="p-mr-2" icon="pi pi-times" severity="danger" rounded="true" value="#{i18n['meeting.non_available']}" rendered="#{addMeetingView.isAvaliable(person)}" />
 											</cc:person>
 											<p:commandButton icon="fa fa-times" styleClass="ui-button-outlined"
 												action="#{addMeetingView.removeAttendee(person)}" process="@this" update="meetingForm:attendees" />

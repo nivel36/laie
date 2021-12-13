@@ -59,7 +59,7 @@
 		<query><![CDATA[
 			SELECT c 
 			FROM Contact c 
-			WHERE c.client.uid = clientUid
+			WHERE c.client.uid = :clientUid
 		]]></query>
 	</named-query>
 	
