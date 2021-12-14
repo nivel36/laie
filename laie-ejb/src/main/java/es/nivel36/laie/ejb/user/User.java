@@ -17,7 +17,6 @@ import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Indexed;
-import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.SortableField;
 import org.hibernate.search.annotations.Store;
 
@@ -36,9 +35,9 @@ public class User extends AbstractIndexedEntity {
 
 	@Email
 	@NotNull
+	@Field(name = "_email")
 	@Column(length = 128, nullable = false, unique = true)
-	@Field
-	protected String email;
+	private String email;
 
 	@NotNull
 	@Column(nullable = false)
@@ -50,7 +49,6 @@ public class User extends AbstractIndexedEntity {
 
 	@ManyToOne
 	@JoinColumn(name = "managerId")
-	@IndexedEmbedded(depth = 1)
 	private User manager;
 
 	@NotNull
@@ -58,14 +56,14 @@ public class User extends AbstractIndexedEntity {
 	@Field(name = "_name")
 	@Field(name = "name", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField(forField = "name")
-	protected String name;
+	private String name;
 
 	@Column(length = 12)
-	protected String phoneNumber;
+	private String phoneNumber;
 
 	@ManyToOne
 	@JoinColumn(name = "picture")
-	protected File picture;
+	private File picture;
 
 	@NotNull
 	@Enumerated(EnumType.STRING)
@@ -83,22 +81,7 @@ public class User extends AbstractIndexedEntity {
 	@Field(name = "_surname")
 	@Field(name = "surname", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField(forField = "surname")
-	protected String surname;
-
-	@Override
-	public boolean equals(final Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (!super.equals(obj)) {
-			return false;
-		}
-		if (this.getClass() != obj.getClass()) {
-			return false;
-		}
-		final User other = (User) obj;
-		return Objects.equals(other.email, this.email);
-	}
+	private String surname;
 
 	public LocalDate getDateOfJoin() {
 		return this.dateOfJoin;
@@ -149,11 +132,6 @@ public class User extends AbstractIndexedEntity {
 
 	public String getSurname() {
 		return this.surname;
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(this.email);
 	}
 
 	public boolean hasRole(final Role role) {
@@ -214,6 +192,26 @@ public class User extends AbstractIndexedEntity {
 
 	public void setSurname(final String surname) {
 		this.surname = surname;
+	}
+	
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (!super.equals(obj)) {
+			return false;
+		}
+		if (this.getClass() != obj.getClass()) {
+			return false;
+		}
+		final User other = (User) obj;
+		return Objects.equals(other.email, this.email);
+	}
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(this.email);
 	}
 
 	@Override

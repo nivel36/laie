@@ -11,7 +11,7 @@ public class SimpleUserDto implements Serializable {
 
 	private String fullName;
 
-	private String image;
+	private String avatarUrl;
 	
 	private String uid;
 	
@@ -20,7 +20,7 @@ public class SimpleUserDto implements Serializable {
 	public SimpleUserDto(final UserDto userDto) {
 		this.email = userDto.getEmail();
 		this.fullName = userDto.getFullName();
-		this.image = userDto.getAvatarUrl();
+		this.avatarUrl = userDto.getAvatarUrl();
 		this.uid = userDto.getUid();
 	}
 
@@ -44,8 +44,8 @@ public class SimpleUserDto implements Serializable {
 		return this.fullName;
 	}
 
-	public String getImage() {
-		return this.image;
+	public String getAvatarUrl() {
+		return this.avatarUrl;
 	}
 
 	public String getUid() {
@@ -65,8 +65,8 @@ public class SimpleUserDto implements Serializable {
 		this.fullName = fullName;
 	}
 
-	void setImage(final String image) {
-		this.image = image;
+	void setAvatarUrl(final String avatarUrl) {
+		this.avatarUrl = avatarUrl;
 	}
 
 	void setUid(String uid) {

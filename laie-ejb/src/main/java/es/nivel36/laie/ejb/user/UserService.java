@@ -34,7 +34,7 @@ public class UserService {
 
 	@Inject
 	private FileService fileService;
-	
+
 	@Inject
 	@Repository
 	private FileJpaDao fileDao;
@@ -48,8 +48,9 @@ public class UserService {
 		userMapper = new UserMapper();
 		userMerger = new UserMerger();
 	}
-	
-	public void addUser(final UserDto user, final String managerUid) throws DuplicateEmailException {
+
+	public void addUser(final UserDto user, final String managerUid)
+			throws DuplicateEmailException, BadManagerException {
 		Objects.requireNonNull(user);
 		logger.debug("Insert user {}", user);
 		final String email = user.getEmail();
@@ -114,7 +115,7 @@ public class UserService {
 		final User user = this.userDao.findUserByUid(userUid);
 		this.changeUsersManager(user, managerUid);
 	}
-	
+
 	private void changeUsersManager(final User user, final String managerUid) throws BadManagerException {
 		if (managerUid == null) {
 			logger.debug("Delete manager to user {}", user);
@@ -123,7 +124,7 @@ public class UserService {
 		}
 		// Not all users have a manager, so it may be null.
 		final User oldManager = user.getManager();
-		
+
 		final User newManager = this.userDao.findUserByUid(managerUid);
 		if (newManager.equals(oldManager)) {
 			return;
@@ -140,7 +141,7 @@ public class UserService {
 		user.setManager(newManager);
 		this.userDao.update(user);
 	}
-	
+
 	public void deleteUsersImage(final String userUid) {
 		Objects.requireNonNull(userUid);
 		final User user = this.userDao.findUserByUid(userUid);
@@ -150,16 +151,16 @@ public class UserService {
 			this.fileService.removeFile(oldImage.getUid());
 		}
 	}
-	
+
 	public void changePassword(final String email, final String oldPassword, final String newPassword) {
 		Objects.requireNonNull(email);
 		Objects.requireNonNull(newPassword);
 		logger.debug("Change password for user {}", email);
-		//TODO: añadir lógica con el password antiguo
+		// TODO: añadir lógica con el password antiguo
 		final Credential credential = this.userDao.findCredential(email);
 		credential.setPassword(newPassword);
 	}
-	
+
 	public Credential findCredential(final String email) {
 		Objects.requireNonNull(email);
 		logger.debug("Find credential for user with email {}", email);
@@ -172,7 +173,7 @@ public class UserService {
 		final List<User> user = this.userDao.findSubordinateUsers(userUid);
 		return new UserMapper().mapList(user);
 	}
-	
+
 	public boolean isSubordinateUser(final String userUid, final String managerUid) {
 		Objects.requireNonNull(userUid);
 		logger.debug("Find is user {} is subordinate of {}", userUid, managerUid);

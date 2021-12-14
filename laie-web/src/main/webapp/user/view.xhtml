@@ -61,12 +61,12 @@
 										</div>
 										<div class="text-container">
 											<h:panelGroup layout="block" styleClass="text"
-												rendered="#{not viewUserView.user.manager}"> --- </h:panelGroup>
+												rendered="#{empty viewUserView.user.manager}"> --- </h:panelGroup>
 											<h:panelGroup layout="block" class="text"
-												rendered="#{viewUserView.user.manager}">
+												rendered="#{not empty viewUserView.user.manager}">
 												<p:link outcome="#{Page.USER.getUrl()}"
 													value="#{viewUserView.user.manager.fullName}">
-													<f:param name="id" value="#{viewUserView.user.manager.uid}" />
+													<f:param name="user" value="#{viewUserView.user.manager.uid}" />
 												</p:link>
 											</h:panelGroup>
 										</div>
@@ -77,9 +77,11 @@
 					</div>
 					<div class="buttons user-card-buttons">
 						<h:form>
-							<p:commandButton value="#{i18n['action.edit']}" process="@this"
-								action="#{viewUserView.editUser}" icon="pi pi-pencil"
-								styleClass="ui-button-secondary ui-button-outlined" />
+							<p:button value="#{i18n['action.edit']}" process="@this"
+								outcome="/user/edit" icon="pi pi-pencil"
+								styleClass="ui-button-secondary ui-button-outlined" >
+								<f:param name="user" value="#{viewUserView.user.uid}" />
+							</p:button>
 							<p:commandButton value="#{i18n['action.export']}" process="@this"
 								action="#{viewUserView.export}" icon="pi pi-file-excel"
 								styleClass="ui-button-info ui-button-outlined" />

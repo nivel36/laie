@@ -79,14 +79,14 @@ public class UserDao extends AbstractDao {
 	public boolean isSubordinateUser(final User user, final User subordinate) {
 		long userId = user.getId();
 		long subordinateId = subordinate.getId();
-		final String namedQuery = "User.IsSubordinateUser";
+		final String namedQuery = "User.isSubordinateUser";
 		final Parameters parameters = map("managerId", userId).and("subordinateId", subordinateId);
 		return this.findByQuery(Boolean.class, namedQuery, parameters);
 	}
 
 	public SearchResult<User> search(final String searchText, final Page page, SortField sortOrder,
 			final SearchFacets searchFacets) {
-		final String[] searchFields = new String[] { "_name", "_surname, _email" };
+		final String[] searchFields = new String[] { "_name", "_surname", "_email" };
 		return this.search(User.class, page, sortOrder, searchFacets, searchText, searchFields);
 	}
 

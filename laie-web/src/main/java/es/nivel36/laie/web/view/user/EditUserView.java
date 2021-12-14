@@ -7,6 +7,7 @@ import javax.inject.Named;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import es.nivel36.laie.ejb.user.BadManagerException;
 import es.nivel36.laie.ejb.user.DuplicateEmailException;
 import es.nivel36.laie.web.core.IllegalPageStateException;
 
@@ -17,20 +18,21 @@ public class EditUserView extends AbstractUserView {
 	private static final long serialVersionUID = -7714492306802728830L;
 
 	private static final Logger logger = LoggerFactory.getLogger(EditUserView.class);
-	
+
 	protected String uid;
-	
+
 	@PostConstruct
 	public void init() {
-		uid = this.getValueFromGetParameters("uid");
-		if(uid == null) {
+		uid = this.getValueFromGetParameters("user");
+		if (uid == null) {
 			throw new IllegalPageStateException();
 		}
 		user = this.userService.findUserByUid(uid);
-		if(user== null) {
+		if (user == null) {
 			throw new IllegalPageStateException();
 		}
 		this.checkEditPermission();
+		this.manager = user.getManager();
 		logger.trace("User {} edit init", this.user.getEmail());
 	}
 
@@ -41,14 +43,21 @@ public class EditUserView extends AbstractUserView {
 		}
 	}
 
-	public String save() throws DuplicateEmailException {
+	public String save() {
 		logger.debug("Save user action performed");
 		try {
 			this.userService.updateUser(this.user);
+			if (!this.user.getManager().equals(this.manager)) {
+				final String uid = this.manager == null ? null : this.manager.getUid();
+				this.userService.changeUsersManager(this.user.getUid(), uid);
+			}
+			return this.userUrl();
 		} catch (DuplicateEmailException e) {
-			// TODO: Gestionar excepcion
-			throw e;
+			this.addErrorToField("userForm:email", "user.error.email_exists");
+			return null;
+		} catch (BadManagerException e) {
+			this.addErrorToField("userForm:manager", "user.error.manager");
+			return null;
 		}
-		return this.userUrl();
 	}
 }

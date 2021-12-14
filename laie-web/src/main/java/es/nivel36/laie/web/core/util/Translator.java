@@ -10,7 +10,7 @@ import javax.faces.context.FacesContext;
 
 public class Translator {
 
-	private static final String FILE_NAME = "ged.i18n";
+	private static final String FILE_NAME = "es.nivel36.laie.i18n";
 
 	private Locale getLocale() {
 		final UIViewRoot uIViewRoot = FacesContext.getCurrentInstance().getViewRoot();

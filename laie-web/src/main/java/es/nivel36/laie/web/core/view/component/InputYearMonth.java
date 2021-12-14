@@ -60,7 +60,7 @@ public class InputYearMonth extends UIInput implements NamingContainer {
 		}
 	}
 
-	private static final String FILE_NAME = "ged.i18n";
+	private static final String FILE_NAME = "es.nivel36.laie.i18n";
 
 	private Month[] buildMonthsCombo() {
 		final Month[] months = new Month[12];

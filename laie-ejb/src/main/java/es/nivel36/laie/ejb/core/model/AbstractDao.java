@@ -61,7 +61,7 @@ public abstract class AbstractDao {
 		final CriteriaQuery<E> cq = cb.createQuery(type);
 		final Root<E> root = cq.from(type);
 		cq.select(root).where(cb.equal(root.get(fieldName), fieldValue));
-		cq.select(root.get(type.getName() + ".id"));
+		cq.select(root.get(fieldName));
 		final List<E> elements = this.findByCriteria(cq, new Page(0, 1));
 		return elements.size() > 0;
 	}

@@ -20,10 +20,12 @@ public class UserMapper implements Mapper<User, UserDto> {
 			final SimpleUserDto managerDto = new SimpleUserDto();
 			managerDto.setEmail(manager.getEmail());
 			managerDto.setFullName(manager.getFullName());
+			managerDto.setUid(manager.getUid());
 			final File picture = manager.getPicture();
 			if (picture != null) {
-				managerDto.setImage(picture.getPhysicalFile().getRelativePath());
+				managerDto.setAvatarUrl(picture.getPhysicalFile().getRelativePath());
 			}
+			userDto.setManager(managerDto);
 		}
 		userDto.setName(user.getName());
 		userDto.setPhoneNumber(user.getPhoneNumber());

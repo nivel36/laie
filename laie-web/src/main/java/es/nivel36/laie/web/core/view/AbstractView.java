@@ -3,11 +3,7 @@ package es.nivel36.laie.web.core.view;
 import static org.omnifaces.util.Faces.validationFailed;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.application.FacesMessage.Severity;
@@ -16,8 +12,6 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
 import javax.inject.Inject;
-
-import org.primefaces.PrimeFaces;
 
 import es.nivel36.laie.web.core.IllegalPageStateException;
 import es.nivel36.laie.web.core.util.Navigator;
@@ -48,9 +42,14 @@ public abstract class AbstractView implements Serializable {
 	@Inject
 	protected transient Translator translator;
 
-	protected void addErrorToField(final UIComponent component, final String message) {
+	protected void addErrorToField(final String componentId, final String message) {
+		final UIComponent component = getUIComponent(componentId);
 		this.addMessage(component, FacesMessage.SEVERITY_ERROR, message, message, null);
 		validationFailed();
+	}
+
+	private UIComponent getUIComponent(final String id) {
+		return facesContext.getViewRoot().findComponent(id);
 	}
 
 	protected void addInfoMessage(final String message) {
@@ -97,39 +96,8 @@ public abstract class AbstractView implements Serializable {
 		}
 	}
 
-	protected Map<String, List<String>> buildDialogParameter(final String name, final String value) {
-		final Map<String, List<String>> params = new HashMap<>();
-		final ArrayList<String> param = new ArrayList<>();
-		param.add(value);
-		params.put(name, param);
-		return params;
-	}
-
-	private Map<String, Object> buildDialogParameters() {
-		final Map<String, Object> options = new HashMap<>();
-		options.put("modal", true);
-		options.put("resizable", false);
-		options.put("responsive", true);
-		options.put("dynamic", true);
-		options.put("contentWidth", "100%");
-		options.put("height", "auto");
-		return options;
-	}
-
 	protected boolean flashContainsKey(final String key) {
 		return this.flash.containsKey(key);
-	}
-
-	protected Long getIdFromParameters(final String idName) {
-		try {
-			final String idValue = this.getValueFromGetParameters(idName);
-			if (idValue == null) {
-				return null;
-			}
-			return Long.parseLong(idValue);
-		} catch (final NumberFormatException e) {
-			throw new IllegalStateException();
-		}
 	}
 
 	@SuppressWarnings("unchecked")
@@ -151,26 +119,6 @@ public abstract class AbstractView implements Serializable {
 			throw new IllegalPageStateException();
 		}
 		return value;
-	}
-
-	protected void openBigDialog(final String name) {
-		this.openBigDialog(name, null);
-	}
-
-	protected void openBigDialog(final String name, final Map<String, List<String>> params) {
-		final Map<String, Object> options = this.buildDialogParameters();
-		options.put("width", "1024");
-		PrimeFaces.current().dialog().openDynamic(name, options, params);
-	}
-
-	protected void openDialog(final String name) {
-		this.openDialog(name, null);
-	}
-
-	protected void openDialog(final String name, final Map<String, List<String>> params) {
-		final Map<String, Object> options = this.buildDialogParameters();
-		options.put("width", "746");
-		PrimeFaces.current().dialog().openDynamic(name, options, params);
 	}
 
 	protected void putValueToFlash(final String key, final Object value) {

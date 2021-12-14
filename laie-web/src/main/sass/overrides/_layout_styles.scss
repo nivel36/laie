@@ -68,10 +68,8 @@
 	.person-box {
 		float: left;
 		margin: 0.35rem 0 0 1rem;
-		color: $textColor;
 		.person-description-text {
 			font-size: 0.9rem;
-			color: $textSecondaryColor;
 		}
 	}
 }
@@ -107,5 +105,10 @@
 .users {
 	.ui-dataview-header {
 		display:none;		
+	}
+	.ui-dataview-row {
+		a {
+			color: $textColor;
+		}
 	}
 }

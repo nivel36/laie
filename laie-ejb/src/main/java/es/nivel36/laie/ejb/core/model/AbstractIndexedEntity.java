@@ -25,12 +25,20 @@ import org.hibernate.search.annotations.TokenizerDef;
 @MappedSuperclass
 public abstract class AbstractIndexedEntity extends AbstractEntity implements Obfuscable, Indexable {
 
-	private static final long serialVersionUID = 1L;
-
+	private static final long serialVersionUID = -1229380560109370656L;
+	
 	@NotNull
 	@Column(unique = true, nullable = false)
 	private String uid;
 
+	public String getUid() {
+		return uid;
+	}
+
+	public void setUid(String uid) {
+		this.uid = uid;
+	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -42,18 +50,10 @@ public abstract class AbstractIndexedEntity extends AbstractEntity implements Ob
 		AbstractIndexedEntity other = (AbstractIndexedEntity) obj;
 		return Objects.equals(uid, other.uid);
 	}
-
-	public String getUid() {
-		return uid;
-	}
-
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(uid);
-	}
-
-	public void setUid(String uid) {
-		this.uid = uid;
 	}
 
 	@Override

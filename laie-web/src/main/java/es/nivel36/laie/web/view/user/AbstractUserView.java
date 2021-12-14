@@ -2,6 +2,7 @@ package es.nivel36.laie.web.view.user;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
@@ -11,20 +12,20 @@ import org.slf4j.LoggerFactory;
 import es.nivel36.laie.ejb.core.file.FileService;
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.user.Role;
+import es.nivel36.laie.ejb.user.SimpleUserDto;
 import es.nivel36.laie.ejb.user.UserDto;
 import es.nivel36.laie.ejb.user.UserService;
-import es.nivel36.laie.web.core.util.PageEnum;
 import es.nivel36.laie.web.core.view.AbstractView;
 
 public abstract class AbstractUserView extends AbstractView {
 
-	private static final long serialVersionUID = 2756361235302450874L;
+	private static final long serialVersionUID = 5892896620148492686L;
 
 	private static final Logger logger = LoggerFactory.getLogger(AbstractUserView.class);
 	
 	protected UserDto user;
 	
-	protected UserDto manager;
+	protected SimpleUserDto manager;
 	
 	@Inject
 	protected transient FileService fileUploadService;
@@ -39,18 +40,18 @@ public abstract class AbstractUserView extends AbstractView {
 		}
 	}
 
-	public List<UserDto> queryManager(final String query) {
+	public List<SimpleUserDto> queryManager(final String query) {
 		logger.trace("Search manager with the string {}", query);
-		final List<UserDto> managers = this.userService.search(query, Page.TEN_RESULTS_PER_PAGE).getResultData();
-		managers.remove(this.user);
+		final List<UserDto> resultData = this.userService.search(query, Page.TEN_RESULTS_PER_PAGE).getResultData();
+		final List<SimpleUserDto> managers = resultData.stream().filter(u->!u.equals(user)).map(SimpleUserDto::new).collect(Collectors.toList());
 		return managers;
 	}
 	
 	protected String userUrl() {
-		return this.navigator.getRedirectUrl(PageEnum.USER, this.user.getUid());
+		return "/user/view?faces-redirect=true&user="+user.getUid();
 	}
 	
-	public UserDto getmanager() {
+	public SimpleUserDto getmanager() {
 		return this.manager;
 	}
 	
@@ -58,7 +59,7 @@ public abstract class AbstractUserView extends AbstractView {
 		return this.user;
 	}
 	
-	public void setManager(final UserDto manager) {
+	public void setManager(final SimpleUserDto manager) {
 		this.manager = manager;
 	}
 	

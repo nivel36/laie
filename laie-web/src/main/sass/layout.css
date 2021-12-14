@@ -3983,11 +3983,9 @@ a {
 .person .person-box {
   float: left;
   margin: 0.35rem 0 0 1rem;
-  color: #252529;
 }
 .person .person-box .person-description-text {
   font-size: 0.9rem;
-  color: #65686a;
 }
 
 .user-card {
@@ -4017,6 +4015,9 @@ a {
 
 .users .ui-dataview-header {
   display: none;
+}
+.users .ui-dataview-row a {
+  color: #252529;
 }
 
 /*# sourceMappingURL=layout.css.map */

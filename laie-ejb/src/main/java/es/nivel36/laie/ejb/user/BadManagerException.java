@@ -1,8 +1,8 @@
 package es.nivel36.laie.ejb.user;
 
-public class BadManagerException extends RuntimeException {
+public class BadManagerException extends Exception {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 7899553794707186512L;
 
 	public BadManagerException() {
 	}

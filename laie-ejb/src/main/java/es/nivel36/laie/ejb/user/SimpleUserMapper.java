@@ -12,10 +12,9 @@ public class SimpleUserMapper implements Mapper<User, SimpleUserDto> {
 		dto.setFullName(entity.getFullName());
 		final File picture = entity.getPicture();
 		if (picture != null) {
-			dto.setImage(picture.getPhysicalFile().getRelativePath());
+			dto.setAvatarUrl(picture.getPhysicalFile().getRelativePath());
 		}
 		dto.setUid(entity.getUid());
-		return null;
+		return dto;
 	}
-
 }

@@ -25,7 +25,7 @@ public class SearchFieldValidator implements Validator<String> {
 	}
 
 	protected String translate(final FacesContext context, final String message) {
-		final ResourceBundle bundle = this.getResourceBundle(context, "ged.i18n");
+		final ResourceBundle bundle = this.getResourceBundle(context, "es.nivel36.laie.i18n");
 		return bundle.getString(message);
 	}
 

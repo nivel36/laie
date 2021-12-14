@@ -9,6 +9,7 @@ import javax.inject.Named;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import es.nivel36.laie.ejb.user.BadManagerException;
 import es.nivel36.laie.ejb.user.DuplicateEmailException;
 import es.nivel36.laie.ejb.user.UserDto;
 
@@ -17,9 +18,9 @@ import es.nivel36.laie.ejb.user.UserDto;
 public class AddUserView extends AbstractUserView {
 
 	private static final long serialVersionUID = 2822959833449476143L;
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(AddUserView.class);
-	
+
 	@PostConstruct
 	public void init() {
 		logger.trace("New user init");
@@ -41,12 +42,14 @@ public class AddUserView extends AbstractUserView {
 		}
 	}
 
-	public String save() throws DuplicateEmailException {
+	public String save() throws Exception {
 		logger.debug("Create new user action performed");
 		try {
 			this.userService.addUser(this.user, manager.getUid());
 		} catch (DuplicateEmailException e) {
-			//TODO: gestionar excepcion
+			// TODO: gestionar excepcion
+			throw e;
+		} catch (BadManagerException e) {
 			throw e;
 		}
 		return this.userUrl();
