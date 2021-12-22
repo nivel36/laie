@@ -65,18 +65,6 @@ public abstract class AbstractJobView extends AbstractView {
 		return recruiters;
 	}
 
-	public void searchClient() {
-		this.openBigDialog(PageEnum.CLIENT_SELECT.getUrl());
-	}
-
-	public void searchOwner() {
-		this.openBigDialog(PageEnum.USER_SELECT.getUrl());
-	}
-
-	public void searchRecruiter() {
-		this.openBigDialog(PageEnum.USER_SELECT.getUrl());
-	}
-
 	public JobOfferDto getJobOffer() {
 		return this.jobOffer;
 	}

@@ -10,7 +10,6 @@ import javax.inject.Named;
 
 import es.nivel36.laie.ejb.candidate.CandidateService;
 import es.nivel36.laie.ejb.core.model.Page;
-import es.nivel36.laie.ejb.event.JobCandidatureEventService;
 import es.nivel36.laie.ejb.job.meeting.MeetingDto;
 import es.nivel36.laie.ejb.job.meeting.MeetingService;
 import es.nivel36.laie.ejb.job.offer.JobOfferDto;
@@ -32,9 +31,6 @@ public class IndexView extends AbstractView {
 	private transient CandidateService candidateService;
 
 	private EventLazyDataModel events;
-
-	@Inject
-	private transient JobCandidatureEventService jobCandidatureEventService;
 
 	private List<JobOfferDto> jobOffers;
 
@@ -77,10 +73,6 @@ public class IndexView extends AbstractView {
 
 	private List<MeetingDto> initMeetings() {
 		return this.meetingService.findPlannedMeetings(this.sessionUser.get().getUid(), Page.TEN_RESULTS_PER_PAGE);
-	}
-
-	public void setEventService(final JobCandidatureEventService jobCandidatureEventService) {
-		this.jobCandidatureEventService = jobCandidatureEventService;
 	}
 
 	public void setJobService(final JobOfferService jobService) {

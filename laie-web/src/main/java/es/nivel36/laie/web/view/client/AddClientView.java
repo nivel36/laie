@@ -25,7 +25,8 @@ public class AddClientView extends AbstractClientView {
 
 	public String save() {
 		logger.debug("Add new client action performed");
-		this.client = this.clientService.addClient(this.client);
+		final String ownerUid = this.sessionUser.get().getUid();
+		this.client = this.clientService.addClient(this.client, ownerUid);
 		return this.clientUrl();
 	}
 }

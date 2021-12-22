@@ -6,12 +6,11 @@ import javax.inject.Inject;
 
 import es.nivel36.laie.ejb.client.ClientDto;
 import es.nivel36.laie.ejb.client.ClientService;
-import es.nivel36.laie.web.core.util.PageEnum;
 import es.nivel36.laie.web.core.view.AbstractView;
 
 public abstract class AbstractClientView extends AbstractView {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 3770146257248125858L;
 
 	protected ClientDto client;
 
@@ -19,7 +18,7 @@ public abstract class AbstractClientView extends AbstractView {
 	protected transient ClientService clientService;
 
 	protected String clientUrl() {
-		return this.navigator.getRedirectUrl(PageEnum.CLIENT, this.client.getUid());
+		return "/client/view?faces-redirect=true&client=" + client.getUid();
 	}
 
 	public ClientDto getClient() {

@@ -13,6 +13,8 @@ import javax.inject.Named;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import es.nivel36.laie.ejb.core.bookmark.BookmarkDto;
+import es.nivel36.laie.ejb.core.bookmark.BookmarkService;
 import es.nivel36.laie.ejb.user.Role;
 import es.nivel36.laie.ejb.user.SimpleUserDto;
 import es.nivel36.laie.ejb.user.UserDto;
@@ -31,9 +33,14 @@ public class SessionUser implements Serializable {
 	private List<SimpleUserDto> team;
 
 	private UserDto user;
+	
+	private List<BookmarkDto> bookmarks;
 
 	@Inject
 	private transient UserService userService;
+	
+	@Inject
+	private transient BookmarkService bookmarkService;
 
 	public void load(String username) {
 		Objects.requireNonNull(username);
@@ -64,10 +71,11 @@ public class SessionUser implements Serializable {
 		for (final UserDto user : usersTeam) {
 			this.team.add(new SimpleUserDto(user));
 		}
+		this.bookmarks = this.bookmarkService.findBookmarksByUserUid(userUid);
 	}
 
 	public void refresh() {
-		logger.trace("Refreshing session for user {}", this.user.getEmail());
+		logger.trace("Refreshing session for user {}", this.user);
 		this.loadUserData(this.user.getEmail());
 	}
 
@@ -87,6 +95,10 @@ public class SessionUser implements Serializable {
 		return this.team;
 	}
 
+	public List<BookmarkDto> getBookmarks() {
+		return bookmarks;
+	}
+
 	public boolean isAdmin() {
 		if (!this.isActive()) {
 			return false;
@@ -97,6 +109,11 @@ public class SessionUser implements Serializable {
 	public void setUserService(final UserService userService) {
 		Objects.requireNonNull(userService);
 		this.userService = userService;
+	}
+	
+	public void setBookmarkService(final BookmarkService bookmarkService) {
+		Objects.requireNonNull(bookmarkService);
+		this.bookmarkService = bookmarkService;
 	}
 
 	@Override

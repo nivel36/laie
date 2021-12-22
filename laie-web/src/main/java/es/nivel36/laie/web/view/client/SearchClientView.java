@@ -1,6 +1,6 @@
 package es.nivel36.laie.web.view.client;
 
-import java.lang.invoke.MethodHandles;
+import java.util.Objects;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -16,17 +16,28 @@ import es.nivel36.laie.web.core.view.AbstractView;
 @Named
 @ViewScoped
 public class SearchClientView extends AbstractView {
+	
+	private static final long serialVersionUID = -8547192185427619599L;
 
-	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
-
-	private static final long serialVersionUID = 1L;
+	private static final Logger logger = LoggerFactory.getLogger(SearchClientView.class);
 
 	private ClientLazyDataModel clients;
+	
+	private String searchText;
 
 	@Inject
 	private transient ClientService clientService;
-
-	private String searchText;
+	
+	@PostConstruct
+	public void init() {
+		logger.debug("Client search init");
+		this.clients = new ClientLazyDataModel(this.clientService);
+	}
+	
+	public void search() {
+		logger.debug("Search clients action performed");
+		this.clients.setSearchText(this.searchText);
+	}
 
 	public void export() {
 		logger.debug("Export clients action performed");
@@ -40,22 +51,12 @@ public class SearchClientView extends AbstractView {
 		return this.searchText;
 	}
 
-	@PostConstruct
-	public void init() {
-		logger.debug("Client search init");
-		this.clients = new ClientLazyDataModel(this.clientService);
-	}
-
-	public void search() {
-		logger.debug("Search clients action performed");
-		this.clients.setSearchText(this.searchText);
-	}
-
-	public void setClientService(final ClientService clientService) {
-		this.clientService = clientService;
-	}
-
 	public void setSearchText(final String searchText) {
 		this.searchText = searchText;
+	}
+	
+	public void setClientService(final ClientService clientService) {
+		Objects.requireNonNull(clientService);
+		this.clientService = clientService;
 	}
 }

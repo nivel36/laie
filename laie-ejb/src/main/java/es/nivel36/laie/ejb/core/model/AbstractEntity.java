@@ -11,7 +11,7 @@ import javax.persistence.Version;
 @MappedSuperclass
 public abstract class AbstractEntity implements Identifiable, Serializable {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 5132586442369497913L;
 
 	@Id
 	@GeneratedValue
@@ -19,6 +19,28 @@ public abstract class AbstractEntity implements Identifiable, Serializable {
 
 	@Version
 	protected long version;
+
+	public boolean isNew() {
+		return this.id == 0;
+	}
+
+	@Override
+	public long getId() {
+		return this.id;
+	}
+
+	public long getVersion() {
+		return this.version;
+	}
+
+	@Override
+	public void setId(final long id) {
+		this.id = id;
+	}
+
+	public void setVersion(final long version) {
+		this.version = version;
+	}
 
 	@Override
 	public boolean equals(final Object obj) {
@@ -32,33 +54,16 @@ public abstract class AbstractEntity implements Identifiable, Serializable {
 			return false;
 		}
 		final AbstractEntity other = (AbstractEntity) obj;
-		return other.id == this.id;
-	}
-
-	@Override
-	public long getId() {
-		return this.id;
-	}
-
-	public long getVersion() {
-		return this.version;
+		return other.id == this.id && other.version == this.version;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(this.id);
-	}
-
-	public boolean isNew() {
-		return this.id == 0;
+		return Objects.hash(this.id, this.version);
 	}
 
 	@Override
-	public void setId(final long id) {
-		this.id = id;
-	}
-
-	public void setVersion(final long version) {
-		this.version = version;
+	public String toString() {
+		return "AbstractEntity [id=" + id + ", version=" + version + "]";
 	}
 }

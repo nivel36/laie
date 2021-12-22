@@ -16,6 +16,8 @@ import es.nivel36.laie.ejb.core.model.Repository;
 import es.nivel36.laie.ejb.core.model.search.SearchFacets;
 import es.nivel36.laie.ejb.core.model.search.SearchResult;
 import es.nivel36.laie.ejb.core.model.search.SortField;
+import es.nivel36.laie.ejb.user.User;
+import es.nivel36.laie.ejb.user.UserDao;
 
 @Stateless
 public class ClientService {
@@ -25,18 +27,37 @@ public class ClientService {
 	@Inject
 	@Repository
 	private ClientDao clientDao;
+	
+	@Inject
+	@Repository
+	private UserDao userDao;
 
 	private ClientMapper clientMapper = new ClientMapper();
 
 	private ClientMerger clientMerger = new ClientMerger();
 
-	public ClientDto addClient(final ClientDto client) {
+	public ClientDto addClient(final ClientDto client, final String ownerUid) {
 		Objects.requireNonNull(client);
-		logger.debug("Add new client {}", client);
-		Client entity = new Client();
+		Objects.requireNonNull(ownerUid);
+		logger.debug("Add new client {} with owner {}", client, ownerUid);
+		final Client entity = new Client();
 		clientMerger.merge(entity, client);
+		this.changeOwner(entity, ownerUid);
 		this.clientDao.insert(entity);
 		return clientMapper.map(entity);
+	}
+	
+	public void changeOwner(final String clientUid, final String ownerUid) {
+		Objects.requireNonNull(clientUid);
+		Objects.requireNonNull(ownerUid);
+		logger.debug("Change clients {} owner {}", clientUid, ownerUid);
+		final Client entity = this.clientDao.findClientByUid(clientUid);
+		changeOwner(entity, ownerUid);
+	}
+
+	private void changeOwner(final Client entity, final String ownerUid) {
+		final User owner = this.userDao.findUserByUid(ownerUid);
+		entity.setOwner(owner);
 	}
 
 	public void updateClient(final ClientDto client) {
@@ -60,7 +81,6 @@ public class ClientService {
 
 	public SearchResult<ClientDto> search(final String searchText, final Page page, final SortField sortField,
 			final SearchFacets searchFacets) {
-		Objects.requireNonNull(searchText);
 		Objects.requireNonNull(page);
 		final SearchResult<Client> restul = this.clientDao.search(searchText, page, sortField, searchFacets);
 		final List<Client> resultData = restul.getResultData();
@@ -73,5 +93,10 @@ public class ClientService {
 	public void setClientDao(final ClientDao clientDao) {
 		Objects.requireNonNull(clientDao);
 		this.clientDao = clientDao;
+	}
+	
+	public void setUserDao(final UserDao userDao) {
+		Objects.requireNonNull(userDao);
+		this.userDao = userDao;
 	}
 }

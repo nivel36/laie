@@ -47,17 +47,23 @@ public class EditUserView extends AbstractUserView {
 		logger.debug("Save user action performed");
 		try {
 			this.userService.updateUser(this.user);
-			if (!this.user.getManager().equals(this.manager)) {
+			if (managerHasChanged()) {
 				final String uid = this.manager == null ? null : this.manager.getUid();
 				this.userService.changeUsersManager(this.user.getUid(), uid);
 			}
 			return this.userUrl();
 		} catch (DuplicateEmailException e) {
 			this.addErrorToField("userForm:email", "user.error.email_exists");
-			return null;
 		} catch (BadManagerException e) {
 			this.addErrorToField("userForm:manager", "user.error.manager");
-			return null;
 		}
+		return null;
+	}
+
+	private boolean managerHasChanged() {
+		if (this.user.getManager() == null) {
+			return this.manager != null;
+		}
+		return this.user.getManager().equals(this.manager);
 	}
 }

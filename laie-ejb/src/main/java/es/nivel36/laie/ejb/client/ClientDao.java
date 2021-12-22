@@ -30,7 +30,6 @@ public class ClientDao extends AbstractDao {
 
 	public SearchResult<Client> search(final String searchText, final Page page, SortField sortOrder,
 			final SearchFacets searchFacets) {
-		Objects.requireNonNull(searchText);
 		Objects.requireNonNull(page);
 		final String[] fields = new String[] { "_name, _cif" };
 		return this.search(Client.class, page, sortOrder, searchFacets, searchText, fields);

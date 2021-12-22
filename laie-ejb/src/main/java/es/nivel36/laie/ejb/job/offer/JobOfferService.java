@@ -283,7 +283,6 @@ public class JobOfferService {
 
 	public SearchResult<JobOfferDto> search(final String searchText, final Page page, final SortField sortField,
 			final SearchFacets searchFacets) {
-		Objects.requireNonNull(searchText);
 		Objects.requireNonNull(page);
 		final SearchResult<JobOffer> restul = this.jobOfferDao.search(searchText, page, sortField, searchFacets);
 		final List<JobOffer> resultData = restul.getResultData();
@@ -292,5 +291,4 @@ public class JobOfferService {
 		final int count = restul.getCount();
 		return new SearchResult<JobOfferDto>(mapList, count, allFacets);
 	}
-
 }

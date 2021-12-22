@@ -15,6 +15,8 @@ import org.slf4j.LoggerFactory;
 
 import es.nivel36.laie.ejb.client.ClientDto;
 import es.nivel36.laie.ejb.client.ContactDto;
+import es.nivel36.laie.ejb.core.bookmark.BookmarkDto;
+import es.nivel36.laie.ejb.core.bookmark.BookmarkService;
 import es.nivel36.laie.ejb.core.model.AddressDto;
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.job.offer.JobOfferDto;
@@ -26,7 +28,7 @@ import es.nivel36.laie.web.core.util.PageEnum;
 @ViewScoped
 public class ViewClientView extends AbstractClientView {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 7741542000560705248L;
 
 	private static final Logger logger = LoggerFactory.getLogger(ViewClientView.class);
 
@@ -38,9 +40,14 @@ public class ViewClientView extends AbstractClientView {
 
 	@Inject
 	private transient JobOfferService jobOfferService;
-	
+
+	@Inject
+	private transient BookmarkService bookmarkService;
+
 	@PostConstruct
 	public void init() {
+		String uid = this.getValueFromGetParameters("client", true);
+		this.client = this.clientService.findClientByUid(uid);
 		if (this.client == null) {
 			throw new IllegalPageStateException();
 		}
@@ -66,6 +73,13 @@ public class ViewClientView extends AbstractClientView {
 		return this.navigator.getRedirectUrl(PageEnum.CLIENT_EDIT, this.client.getUid());
 	}
 
+	public void addToBoorkmarks() {
+		final BookmarkDto bookmark = new BookmarkDto();
+		bookmark.setTitle(client.getName());
+		bookmark.setUrl("/client/view?client=" + this.client.getUid());
+		this.bookmarkService.addBookmark(bookmark, this.sessionUser.get().getUid());
+	}
+
 	public void export() {
 		logger.debug("Export client action performed");
 	}
@@ -89,5 +103,10 @@ public class ViewClientView extends AbstractClientView {
 	public void setJobOfferService(final JobOfferService jobOfferService) {
 		Objects.requireNonNull(jobOfferService);
 		this.jobOfferService = jobOfferService;
+	}
+	
+	public void setBookmarkService(final BookmarkService bookmarkService) {
+		Objects.requireNonNull(bookmarkService);
+		this.bookmarkService = bookmarkService;
 	}
 }

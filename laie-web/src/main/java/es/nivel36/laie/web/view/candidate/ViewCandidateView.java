@@ -122,11 +122,6 @@ public class ViewCandidateView extends AbstractView {
 		this.files.remove(file);
 	}
 
-	public void selectJobOffer() {
-		logger.debug("Select job action performed");
-		this.openBigDialog(PageEnum.JOB_SELECT.getUrl());
-	}
-
 	public void uploadFile(final FileUploadEvent event) throws IOException {
 		Objects.requireNonNull(event);
 		final UploadedFile uploadedFile = event.getFile();

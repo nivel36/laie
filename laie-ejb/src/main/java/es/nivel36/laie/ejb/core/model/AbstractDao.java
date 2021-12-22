@@ -52,7 +52,7 @@ public abstract class AbstractDao {
 		do {
 			uid = UidGenerator.generate(type);
 			entity.setUid(uid);
-		} while (!this.checkDuplicateField(type, "uid", uid));
+		} while (this.checkDuplicateField(type, "uid", uid));
 	}
 
 	protected <E extends Identifiable> boolean checkDuplicateField(final Class<E> type, final String fieldName,

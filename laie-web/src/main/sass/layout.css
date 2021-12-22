@@ -3969,6 +3969,39 @@ a {
     padding-top: 5rem;
   }
 }
+.card.client-card {
+  padding: 0;
+}
+.card.client-card .card-header {
+  height: 5rem;
+  overflow: hidden;
+  background: linear-gradient(30deg, #0f97c7 0%, #91dcf7 150%);
+  background-color: #0f97c7;
+  color: #ffffff;
+}
+.card.client-card .client-card-content .label-container {
+  font-size: 0.9em;
+  padding-bottom: 0.3em;
+}
+.card.client-card .client-card-content .label-container .label {
+  color: #252529;
+}
+.card.client-card .client-card-content .text {
+  color: #666666;
+}
+.card.client-card .client-card-content .client-card-name {
+  font-size: 2em;
+  color: #ffffff;
+  position: relative;
+  top: -3.5rem;
+  margin-left: 1em;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.card.client-card .client-card-content .client-detail {
+  padding: 0 2.5em 2em 2.5em;
+}
+
 .buttons {
   padding: 1rem;
   text-align: right;
@@ -4011,6 +4044,13 @@ a {
 }
 .user-card .user-card-content .user-image .ui-avatar-text {
   font-size: 2rem;
+}
+
+.contacts .ui-dataview-header {
+  display: none;
+}
+.contacts .ui-dataview-row a {
+  color: #252529;
 }
 
 .users .ui-dataview-header {

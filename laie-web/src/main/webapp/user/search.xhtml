@@ -16,11 +16,6 @@
 
 	<ui:param name="selectedMenu" value="users" />
 
-	<ui:define name="buttons">
-		<h:form>
-		</h:form>
-	</ui:define>
-
 	<ui:define name="content">
 		<h:form id="searchUsers">
 			<div class="p-grid">
@@ -30,58 +25,56 @@
 							outcome="#{Page.USER_ADD.getUrl()}"
 							styleClass="ui-button-success ui-button-outlined" />
 						<p:commandButton value="#{i18n['action.export']}"
-							onclick="export()" icon="pi pi-file-excel"
+							action="#{searchUserView.export}" icon="pi pi-file-excel"
 							styleClass="ui-button-info ui-button-outlined" />
 					</div>
 				</div>
 				<div class="p-col-12">
 					<div class="card">
-						<div class="p-grid">
-							<div class="p-col-12 p-lg-5">
-								<div class="searchBar ui-fluid">
-									<cc:inputSearch searchText="#{searchUserView.searchText}"
-										searchAction="#{searchUserView.search}"
-										update="searchUsers:users" />
-								</div>
+						<div class="p-col-12 p-lg-5">
+							<div class="searchBar ui-fluid">
+								<cc:inputSearch searchText="#{searchUserView.searchText}"
+									searchAction="#{searchUserView.search}"
+									update="searchUsers:users" />
 							</div>
-							<div class="p-col-12">
-								<p:dataTable id="users" value="#{searchUserView.users}"
-									var="user" emptyMessage="#{i18n['user.no_users_found']}"
-									reflow="true" paginator="true" paginatorPosition="bottom"
-									rows="10" sortMode="single" lazy="true">
-									<p:column headerText="#{i18n['user.name']}"
-										sortBy="#{user.name}">
-										<h:link outcome="#{Page.USER.getUrl()}">
-											<cc:avatar name="#{user.fullName}" path="#{user.avatarUrl}"
-												styleClass="p-mr-2" />
-											<h:outputText value="#{user.fullName}" />
-											<f:param name="user" value="#{user.uid}" />
-										</h:link>
-									</p:column>
+						</div>
+						<div class="p-col-12">
+							<p:dataTable id="users" value="#{searchUserView.users}"
+								var="user" emptyMessage="#{i18n['user.no_users_found']}"
+								reflow="true" paginator="true" paginatorPosition="bottom"
+								rows="10" sortMode="single" lazy="true">
+								<p:column headerText="#{i18n['user.name']}"
+									sortBy="#{user.name}">
+									<h:link outcome="#{Page.USER.getUrl()}">
+										<cc:avatar name="#{user.fullName}" path="#{user.avatarUrl}"
+											styleClass="p-mr-2" />
+										<h:outputText value="#{user.fullName}" />
+										<f:param name="user" value="#{user.uid}" />
+									</h:link>
+								</p:column>
 
-									<p:column headerText="#{i18n['user.role']}"
-										sortBy="#{user.roleName}">
-										<p:tag styleClass="user-role role-#{user.roleName}"
-											value="#{i18n[user.roleName]}" />
-									</p:column>
+								<p:column headerText="#{i18n['user.role']}"
+									sortBy="#{user.role}">
+									<p:tag styleClass="user-role role-#{user.roleName}"
+										value="#{i18n[user.roleName]}" />
+								</p:column>
 
-									<p:column headerText="#{i18n['user.manager']}"
-										sortBy="#{user.manager.name}">
-										<h:link value="#{user.manager.fullName}" styleClass="link"
-											outcome="#{Page.USER.getUrl()}"
-											rendered="#{not empty user.manager}">
-											<f:param name="id" value="#{user.manager.uid}" />
-										</h:link>
-									</p:column>
+								<p:column headerText="#{i18n['user.manager']}"
+									sortBy="#{user.manager.name}">
+									<h:link value="#{user.manager.fullName}" styleClass="link"
+										outcome="#{Page.USER.getUrl()}"
+										rendered="#{not empty user.manager}">
+										<f:param name="id" value="#{user.manager.uid}" />
+									</h:link>
+								</p:column>
 
-									<p:column headerText="#{i18n['user.last_login']}"
-										sortBy="#{user.lastConnection}" sortOrder="desc">
-										<h:outputText value="#{user.lastConnection}">
-											<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
-										</h:outputText>
-									</p:column>
-								</p:dataTable>
-							</div>
+								<p:column headerText="#{i18n['user.last_login']}"
+									sortBy="#{user.lastConnection}" sortOrder="desc">
+									<h:outputText value="#{user.lastConnection}">
+										<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
+									</h:outputText>
+								</p:column>
+							</p:dataTable>
 						</div>
 					</div>
 				</div>

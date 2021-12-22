@@ -3,23 +3,27 @@ package es.nivel36.laie.ejb.user;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
+import javax.persistence.OneToMany;
 
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.SortableField;
 import org.hibernate.search.annotations.Store;
 
+import es.nivel36.laie.ejb.core.bookmark.Bookmark;
 import es.nivel36.laie.ejb.core.file.File;
 import es.nivel36.laie.ejb.core.model.AbstractIndexedEntity;
 
@@ -32,14 +36,11 @@ public class User extends AbstractIndexedEntity {
 	@Field(name = "dateOfJoin", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField(forField = "dateOfJoin")
 	private LocalDate dateOfJoin;
-
-	@Email
-	@NotNull
+	
 	@Field(name = "_email")
 	@Column(length = 128, nullable = false, unique = true)
 	private String email;
 
-	@NotNull
 	@Column(nullable = false)
 	private String language;
 
@@ -49,9 +50,9 @@ public class User extends AbstractIndexedEntity {
 
 	@ManyToOne
 	@JoinColumn(name = "managerId")
+	@IndexedEmbedded(depth = 1)
 	private User manager;
 
-	@NotNull
 	@Column(nullable = false)
 	@Field(name = "_name")
 	@Field(name = "name", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
@@ -65,23 +66,23 @@ public class User extends AbstractIndexedEntity {
 	@JoinColumn(name = "picture")
 	private File picture;
 
-	@NotNull
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
 	@Field(name = "role", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField(forField = "role")
 	private Role role;
 
-	@NotNull
 	@Column(nullable = false)
 	private Integer rowsPerPage = 10;
 
-	@NotNull
 	@Column(nullable = false)
 	@Field(name = "_surname")
 	@Field(name = "surname", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField(forField = "surname")
 	private String surname;
+	
+	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
+	private Set<Bookmark> bookmarks;
 
 	public LocalDate getDateOfJoin() {
 		return this.dateOfJoin;
@@ -194,6 +195,14 @@ public class User extends AbstractIndexedEntity {
 		this.surname = surname;
 	}
 	
+	public Set<Bookmark> getBookmarks() {
+		return bookmarks;
+	}
+
+	public void setBookmarks(Set<Bookmark> bookmarks) {
+		this.bookmarks = bookmarks;
+	}
+
 	@Override
 	public boolean equals(final Object obj) {
 		if (this == obj) {

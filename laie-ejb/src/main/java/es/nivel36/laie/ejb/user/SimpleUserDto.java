@@ -12,11 +12,12 @@ public class SimpleUserDto implements Serializable {
 	private String fullName;
 
 	private String avatarUrl;
-	
+
 	private String uid;
-	
-	public SimpleUserDto() {}
-	
+
+	public SimpleUserDto() {
+	}
+
 	public SimpleUserDto(final UserDto userDto) {
 		this.email = userDto.getEmail();
 		this.fullName = userDto.getFullName();
@@ -26,6 +27,9 @@ public class SimpleUserDto implements Serializable {
 
 	@Override
 	public boolean equals(final Object obj) {
+		if (obj == null) {
+			return false;
+		}
 		if (this == obj) {
 			return true;
 		}

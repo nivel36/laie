@@ -9,53 +9,50 @@
 
 	<ui:param name="selectedMenu" value="clients" />
 
-	<ui:define name="breadcrumb">
-		<p:breadCrumb>
-			<p:menuitem value="#{i18n['menu.index']}" outcome="#{Page.INDEX.getUrl()}" />
-			<p:menuitem value="#{i18n['client.clients']}" outcome="#{Page.CLIENT_SEARCH.getUrl()}" />
-			<p:menuitem value="#{editClientView.client.name}" outcome="#{Page.CLIENT.getUrl()}">
-				<f:param name="id" value="#{editClientView.client.uid}" />
-			</p:menuitem>
-			<p:menuitem value="#{i18n['client.edit']}" disabled="true" />
-		</p:breadCrumb>
-	</ui:define>
-
-	<ui:define name="buttons">
-		<h:form>
-			<p:button value="#{i18n['action.cancel']}" outcome="#{Page.CLIENT.getUrl()}" styleClass="ui-button-secondary ui-button-outlined">
-				<f:param name="id" value="#{editClientView.client.uid}" />
-			</p:button>
-			<p:commandButton value="#{i18n['action.save']}" onclick="processForm()" styleClass="ui-button-success ui-button-outlined" />
-		</h:form>
-	</ui:define>
-
 	<ui:define name="content">
-		<div class="p-grid">
-			<div class="p-col-12 p-xl-6">
-				<h:form id="clientForm">
-					<p:remoteCommand name="processForm" process="@form" update="@form growl" action="#{editClientView.save}" />
-					<h:panelGroup id="client" styleClass="card card-w-title ui-fluid" layout="block">
+		<h:form id="clientForm">
+			<div class="p-grid">
+				<div class="p-col-12">
+					<div class="card buttons">
+						<p:button value="#{i18n['action.cancel']}"
+							outcome="#{Page.CLIENT.getUrl()}"
+							styleClass="ui-button-secondary ui-button-outlined">
+							<f:param name="id" value="#{editClientView.client.uid}" />
+						</p:button>
+						<p:commandButton value="#{i18n['action.save']}"
+							onclick="processForm()"
+							styleClass="ui-button-success ui-button-outlined" />
+
+					</div>
+				</div>
+				<div class="p-col-12 p-xl-6">
+					<div id="client" class="card card-w-title ui-fluid">
 						<h5>#{i18n['client.client']}</h5>
 						<div class="p-grid p-formgrid">
 							<div class="p-col-12">
-								<g:input id="name" label="#{i18n['client.name']}" value="#{editClientView.client.name}" required="true" />
+								<g:input id="name" label="#{i18n['client.name']}"
+									value="#{editClientView.client.name}" required="true" />
 							</div>
 							<div class="p-col-12 p-sm-6">
-								<g:input id="cif" label="#{i18n['client.cif']}" value="#{editClientView.client.cif}" />
+								<g:input id="cif" label="#{i18n['client.cif']}"
+									value="#{editClientView.client.cif}" />
 							</div>
 							<div class="p-col-12 p-sm-6">
-								<g:input id="phoneNumber" label="#{i18n['client.phone_number']}" value="#{editClientView.client.phoneNumber}" />
+								<g:input id="phoneNumber" label="#{i18n['client.phone_number']}"
+									value="#{editClientView.client.phoneNumber}" />
 							</div>
 							<div class="p-col-12 p-sm-6">
-								<g:input id="city" label="#{i18n['client.city']}" value="#{editClientView.client.address.city}" />
+								<g:input id="city" label="#{i18n['client.city']}"
+									value="#{editClientView.client.address.city}" />
 							</div>
 							<div class="p-col-12 p-sm-6">
-								<g:input id="state" label="#{i18n['client.state']}" value="#{editClientView.client.address.region}" />
+								<g:input id="state" label="#{i18n['client.state']}"
+									value="#{editClientView.client.address.region}" />
 							</div>
 						</div>
-					</h:panelGroup>
-				</h:form>
+					</div>
+				</div>
 			</div>
-		</div>
+		</h:form>
 	</ui:define>
 </ui:composition>

@@ -98,7 +98,7 @@ public class ClientDto implements Serializable {
 		this.name = name;
 	}
 
-	public void setOwner(final SimpleUserDto owner) {
+	void setOwner(final SimpleUserDto owner) {
 		this.owner = owner;
 	}
 

@@ -21,7 +21,7 @@ public class EditClientView extends AbstractClientView {
 
 	@PostConstruct
 	public void init() {
-		this.uid = this.getValueFromGetParameters("uid");
+		this.uid = this.getValueFromGetParameters("client");
 		if (this.uid == null) {
 			throw new IllegalPageStateException();
 		}
@@ -31,10 +31,14 @@ public class EditClientView extends AbstractClientView {
 		}
 		logger.trace("Client {} edit init", this.client);
 	}
+	
+	public void addBookmark() {
+		logger.debug("Add bokmark action performed");
+	}
 
 	public String save() {
 		logger.debug("Save client action performed");
-		this.client = this.clientService.addClient(client);
+		this.clientService.updateClient(client);
 		return this.clientUrl();
 	}
 }

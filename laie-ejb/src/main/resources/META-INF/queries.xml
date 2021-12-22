@@ -2,6 +2,15 @@
 <entity-mappings xmlns="http://xmlns.jcp.org/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence/orm
         http://xmlns.jcp.org/xml/ns/persistence/orm_2_1.xsd" version="2.1">
+
+	<named-query name="Bookmark.findByUserUid">
+		<query><![CDATA[
+			SELECT b 
+			FROM Bookmark b
+			LEFT JOIN b.user u
+			WHERE u.uid = :userUid
+		]]></query>
+	</named-query>
         
 	<named-query name="Candidate.findByUid">
 		<query><![CDATA[

@@ -35,5 +35,4 @@ public class EventLazyDataModel extends AbstractLazyDataModel<JobCandidatureEven
 	public int count(Map<String, FilterMeta> filterBy) {
 		return 0;
 	}
-
 }

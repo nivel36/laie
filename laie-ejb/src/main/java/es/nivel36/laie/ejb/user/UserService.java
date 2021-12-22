@@ -49,16 +49,17 @@ public class UserService {
 		userMerger = new UserMerger();
 	}
 
-	public void addUser(final UserDto user, final String managerUid)
+	public UserDto addUser(final UserDto user, final String managerUid)
 			throws DuplicateEmailException, BadManagerException {
 		Objects.requireNonNull(user);
 		logger.debug("Insert user {}", user);
 		final String email = user.getEmail();
-		checkDuplicateEmail(email);
+		this.checkDuplicateEmail(email, null);
 		final User entity = new User();
 		this.userMerger.merge(entity, user);
 		this.userDao.insert(entity);
 		this.changeUsersManager(entity, managerUid);
+		return user;
 	}
 
 	public void updateUser(final UserDto user) throws DuplicateEmailException {
@@ -68,15 +69,15 @@ public class UserService {
 		final User entity = this.userDao.findUserByUid(userUid);
 		final String email = user.getEmail();
 		final String entityEmail = entity.getEmail();
-		if (!entityEmail.equals(email)) {
-			checkDuplicateEmail(email);
-		}
+		this.checkDuplicateEmail(email, entityEmail);
 		this.userMerger.merge(entity, user);
 	}
 
-	private void checkDuplicateEmail(final String email) throws DuplicateEmailException {
-		if (this.userDao.checkDuplicateEmail(email)) {
-			throw new DuplicateEmailException();
+	private void checkDuplicateEmail(final String newEmail, final String oldEmail) throws DuplicateEmailException {
+		if (oldEmail == null || !newEmail.equals(oldEmail)) {
+			if (this.userDao.checkDuplicateEmail(newEmail)) {
+				throw new DuplicateEmailException();
+			}
 		}
 	}
 
