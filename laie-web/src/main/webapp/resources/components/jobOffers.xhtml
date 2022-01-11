@@ -21,7 +21,7 @@
 				sortOrder="descending" styleClass="ui-datatable-borderless">
 
 				<p:column headerText="#{i18n['job.title']}">
-					<h:link value="#{jobOffer.title}" outcome="#{Page.JOB.getUrl()}" styleClass="link">
+					<h:link value="#{jobOffer.title}" outcome="/job/view.xhtml" styleClass="link">
 						<f:param name="id" value="#{jobOffer.uid}" />
 					</h:link>
 				</p:column>
@@ -30,7 +30,7 @@
 				</p:column>
 
 				<p:column headerText="#{i18n['job.client']}">
-					<h:link value="#{jobOffer.client}" outcome="#{Page.CLIENT.getUrl()}" styleClass="link">
+					<h:link value="#{jobOffer.client}" outcome="/client/view.xhtml" styleClass="link">
 						<f:param name="id" value="#{jobOffer.client.uid}" />
 					</h:link>
 				</p:column>

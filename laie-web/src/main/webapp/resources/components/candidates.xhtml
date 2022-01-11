@@ -18,7 +18,7 @@
 				paginatorPosition="bottom" rows="#{cc.attrs.rows}" sortBy="#{candidate.name}" sortOrder="ascending" lazy="true" styleClass="ui-datatable-borderless">
 
 				<p:column headerText="#{i18n['candidate.name']}" sortBy="#{candidate.name}">
-					<h:link outcome="#{Page.CANDIDATE.getUrl()}">
+					<h:link outcome="/candidate/view">
 						<cc:avatar name="#{candidate.fullName}" path="#{candidate.avatarUrl}" styleClass="p-mr-2" />
 						<h:outputText styleClass="link" value="#{candidate.fullName}" />
 						<f:param name="candidate" value="#{candidate.uid}" />

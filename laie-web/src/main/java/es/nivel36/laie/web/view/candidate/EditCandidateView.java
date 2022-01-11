@@ -19,14 +19,9 @@ public class EditCandidateView extends AbstractCandidateView {
 
 	private static final Logger logger = LoggerFactory.getLogger(EditCandidateView.class);
 
-	private String uid;
-
 	@PostConstruct
 	public void init() {
-		this.uid = this.getValueFromGetParameters("uid");
-		if (uid == null) {
-			throw new IllegalPageStateException();
-		}
+		final String uid = this.getValueFromGetParameters("candidate",true );
 		this.candidate = candidateService.findCandidateByUid(uid);
 		if (candidate == null) {
 			throw new IllegalPageStateException();
@@ -46,7 +41,7 @@ public class EditCandidateView extends AbstractCandidateView {
 	public String save() {
 		logger.debug("Save candidate action performed");
 		this.candidate.setTags(this.getTags());
-		this.candidateService.addCandidate(this.candidate);
+		this.candidateService.updateCandidate(candidate);
 		return this.candidateUrl();
 	}
 }

@@ -12,9 +12,9 @@
 
 	<ui:define name="breadcrumb">
 		<p:breadCrumb>
-			<p:menuitem value="#{i18n['menu.index']}" outcome="#{Page.INDEX.getUrl()}" />
-			<p:menuitem value="#{i18n['job.job_offers']}" outcome="#{Page.JOB_SEARCH.getUrl()}" />
-			<p:menuitem value="#{selectCandidatesView.jobOffer}" outcome="#{Page.JOB.getUrl()}">
+			<p:menuitem value="#{i18n['menu.index']}" outcome="/index.xhtml" />
+			<p:menuitem value="#{i18n['job.job_offers']}" outcome="/job/search.xhtml" />
+			<p:menuitem value="#{selectCandidatesView.jobOffer}" outcome="/job/view.xhtml">
 				<f:param name="id" value="#{selectCandidatesView.jobOffer.uid}" />
 			</p:menuitem>
 			<p:menuitem value="#{i18n['candidate.select_candidates']}" disabled="true" />
@@ -23,7 +23,7 @@
 
 	<ui:define name="buttons">
 		<h:form>
-			<p:button value="#{i18n['action.cancel']}" outcome="#{Page.JOB.getUrl()}" styleClass="ui-button-secondary ui-button-outlined">
+			<p:button value="#{i18n['action.cancel']}" outcome="/job/view.xhtml" styleClass="ui-button-secondary ui-button-outlined">
 				<f:param name="id" value="#{selectCandidatesView.jobOffer.uid}" />
 			</p:button>
 			<p:commandButton value="#{i18n['action.select']}" onclick="select()" styleClass="ui-button-success ui-button-outlined" />

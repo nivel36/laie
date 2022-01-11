@@ -13,8 +13,9 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
 import javax.inject.Inject;
 
+import org.omnifaces.util.Faces;
+
 import es.nivel36.laie.web.core.IllegalPageStateException;
-import es.nivel36.laie.web.core.util.Navigator;
 import es.nivel36.laie.web.core.util.Translator;
 
 public abstract class AbstractView implements Serializable {
@@ -32,9 +33,6 @@ public abstract class AbstractView implements Serializable {
 
 	@Inject
 	protected transient Flash flash;
-
-	@Inject
-	protected transient Navigator navigator;
 
 	@Inject
 	protected transient SessionUser sessionUser;
@@ -133,8 +131,8 @@ public abstract class AbstractView implements Serializable {
 		this.flash = flash;
 	}
 
-	public void setNavigator(Navigator navigator) {
-		this.navigator = navigator;
+	protected void navigateTo(final String url) {
+		Faces.redirect(url);
 	}
 
 	public void setSessionUser(final SessionUser sessionUser) {

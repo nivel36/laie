@@ -9,12 +9,12 @@
 
 	<ui:define name="breadcrumb">
 		<p:breadCrumb>
-			<p:menuitem value="#{i18n['menu.index']}" outcome="#{Page.INDEX.getUrl()}" />
-			<p:menuitem value="#{i18n['candidate.candidates']}" outcome="#{Page.CANDIDATE_SEARCH.getUrl()}" />
-			<p:menuitem value="#{jobExperienceView.curriculum.candidate.fullName}" outcome="#{Page.CANDIDATE.getUrl()}">
+			<p:menuitem value="#{i18n['menu.index']}" outcome="/index.xhtml" />
+			<p:menuitem value="#{i18n['candidate.candidates']}" outcome="/candidate/search.xhtml" />
+			<p:menuitem value="#{jobExperienceView.curriculum.candidate.fullName}" outcome="/candidate/view.xhtml">
 				<f:param name="id" value="#{jobExperienceView.curriculum.candidate.uid}" />
 			</p:menuitem>
-			<p:menuitem value="#{i18n['curriculum.curriculum']}" outcome="#{Page.CURRICULUM.getUrl()}">
+			<p:menuitem value="#{i18n['curriculum.curriculum']}" outcome="/curriculum/view.xhtml">
 				<f:param name="id" value="#{jobExperienceView.curriculum.uid}" />	
 				<f:param name="candidateId" value="#{jobExperienceView.curriculum.candidate.uid}" />
 			</p:menuitem>
@@ -24,7 +24,7 @@
 
 	<ui:define name="buttons">
 		<h:form>
-			<p:button value="#{i18n['action.cancel']}" outcome="#{Page.CURRICULUM.getUrl()}" styleClass="ui-button-secondary ui-button-outlined">
+			<p:button value="#{i18n['action.cancel']}" outcome="/curriculum/view.xhtml" styleClass="ui-button-secondary ui-button-outlined">
 				<f:param name="id" value="#{jobExperienceView.curriculum.uid}" />	
 				<f:param name="candidateId" value="#{jobExperienceView.curriculum.candidate.uid}" />
 			</p:button>

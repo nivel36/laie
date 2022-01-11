@@ -15,9 +15,9 @@
 
 	<ui:define name="breadcrumb">
 		<p:breadCrumb>
-			<p:menuitem value="#{i18n['menu.index']}" outcome="#{Page.INDEX.getUrl()}" />
-			<p:menuitem value="#{i18n['client.clients']}" outcome="#{Page.CLIENT_SEARCH.getUrl()}" />
-			<p:menuitem value="#{editContactView.contact.client.name}" outcome="#{Page.CLIENT.getUrl()}">
+			<p:menuitem value="#{i18n['menu.index']}" outcome="/index.xhtml" />
+			<p:menuitem value="#{i18n['client.clients']}" outcome="/client/search.xhtml" />
+			<p:menuitem value="#{editContactView.contact.client.name}" outcome="/client/view.xhtml">
 				<f:param name="id" value="#{editContactView.contact.client.uid}" />
 			</p:menuitem>
 			<p:menuitem value="#{editContactView.contact.fullName}" disabled="true" />
@@ -26,7 +26,7 @@
 
 	<ui:define name="buttons">
 		<h:form>
-			<p:button value="#{i18n['action.cancel']}" outcome="#{Page.CLIENT.getUrl()}" styleClass="ui-button-secondary ui-button-outlined">
+			<p:button value="#{i18n['action.cancel']}" outcome="/client/view.xhtml" styleClass="ui-button-secondary ui-button-outlined">
 				<f:param name="id" value="#{editContactView.contact.client.uid}" />
 			</p:button>
 			<p:commandButton value="#{i18n['action.delete']}" action="#{editContactView.delete}" styleClass="ui-button-danger ui-button-outlined" >

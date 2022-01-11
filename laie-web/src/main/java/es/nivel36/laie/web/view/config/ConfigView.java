@@ -32,6 +32,8 @@ public class ConfigView extends AbstractView {
 	private static final long serialVersionUID = -1963260899429126179L;
 
 	private static final Logger logger = LoggerFactory.getLogger(ConfigView.class);
+	
+	public static final String URL = "/config.xhtml";
 
 	private boolean imageChanged;
 

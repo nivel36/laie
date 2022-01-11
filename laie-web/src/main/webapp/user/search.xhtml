@@ -22,7 +22,7 @@
 				<div class="p-col-12">
 					<div class="card buttons">
 						<p:button value="#{i18n['user.new_user']}"
-							outcome="#{Page.USER_ADD.getUrl()}"
+							outcome="/user/add.xhtml"
 							styleClass="ui-button-success ui-button-outlined" />
 						<p:commandButton value="#{i18n['action.export']}"
 							action="#{searchUserView.export}" icon="pi pi-file-excel"
@@ -45,7 +45,7 @@
 								rows="10" sortMode="single" lazy="true">
 								<p:column headerText="#{i18n['user.name']}"
 									sortBy="#{user.name}">
-									<h:link outcome="#{Page.USER.getUrl()}">
+									<h:link outcome="/user/view.xhtml">
 										<cc:avatar name="#{user.fullName}" path="#{user.avatarUrl}"
 											styleClass="p-mr-2" />
 										<h:outputText value="#{user.fullName}" />
@@ -62,7 +62,7 @@
 								<p:column headerText="#{i18n['user.manager']}"
 									sortBy="#{user.manager.name}">
 									<h:link value="#{user.manager.fullName}" styleClass="link"
-										outcome="#{Page.USER.getUrl()}"
+										outcome="/user/view.xhtml"
 										rendered="#{not empty user.manager}">
 										<f:param name="id" value="#{user.manager.uid}" />
 									</h:link>

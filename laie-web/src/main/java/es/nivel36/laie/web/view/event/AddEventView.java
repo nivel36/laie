@@ -15,7 +15,6 @@ import es.nivel36.laie.ejb.job.candidature.JobCandidatureDto;
 import es.nivel36.laie.ejb.job.candidature.JobCandidatureService;
 import es.nivel36.laie.ejb.user.SimpleUserDto;
 import es.nivel36.laie.ejb.user.UserDto;
-import es.nivel36.laie.web.core.util.PageEnum;
 import es.nivel36.laie.web.core.view.AbstractView;
 
 @Named
@@ -55,7 +54,7 @@ public class AddEventView extends AbstractView {
 
 	public String save() {
 		this.jobCandidatureEventService.addJobCandidatureEvent(jobCandidatureEvent);
-		return this.navigator.getRedirectUrl(PageEnum.JOB, this.jobCandidature.getJobOffer().getUid());
+		return null;
 	}
 	
 	public void updateState() {

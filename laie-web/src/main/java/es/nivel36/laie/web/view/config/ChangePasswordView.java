@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
 import es.nivel36.laie.ejb.user.Credential;
 import es.nivel36.laie.ejb.user.UserDto;
 import es.nivel36.laie.ejb.user.UserService;
-import es.nivel36.laie.web.core.util.PageEnum;
 import es.nivel36.laie.web.core.view.AbstractView;
 
 @Named
@@ -38,22 +37,22 @@ public class ChangePasswordView extends AbstractView {
 	@Inject
 	private transient UserService userService;
 
-	public String change() {
+	public void change() {
 		logger.debug("Change password for user {} action performed", this.user);
 		if (!this.isValidPassword()) {
 			this.addMessage(FacesMessage.SEVERITY_ERROR, "login.error.bad_password", "login.error.bad_password");
 			this.facesContext.validationFailed();
-			return null;
+			return;
 		}
 		if (!this.inputPasswordsAreEquals()) {
 			this.addMessage(FacesMessage.SEVERITY_ERROR, "login.error.password_not_equals",
 					"login.error.password_not_equals");
 			this.facesContext.validationFailed();
-			return null;
+			return;
 		}
 		this.userService.changePassword(this.user.getEmail(), this.newPassword, null);
 		this.sessionUser.refresh();
-		return PageEnum.CONFIG.getUrl();
+		this.navigateTo(ConfigView.URL);
 	}
 
 	public String getNewPassword() {

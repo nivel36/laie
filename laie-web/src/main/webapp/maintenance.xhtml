@@ -12,7 +12,7 @@
 
 	<ui:define name="breadcrumb">
 		<p:breadCrumb>
-			<p:menuitem value="#{i18n['menu.index']}" outcome="#{Page.INDEX.getUrl()}" />
+			<p:menuitem value="#{i18n['menu.index']}" outcome="/index.xhtml" />
 			<p:menuitem value="#{i18n['maintenance.maintenances']}" disabled="true" />
 		</p:breadCrumb>
 	</ui:define>
@@ -23,9 +23,9 @@
 				<div class="card card-w-title">
 					<h5>#{i18n['maintenance.job_candidatures']}</h5>
 					<ul>
-						<li><h:link outcome="#{Page.MAINTENANCE_JOB_CANDIDATURE_STATES.getUrl()}"
+						<li><h:link outcome="/maintenance/jobCandidatureStates.xhtml"
 								value="#{i18n['job_candidature.job_candidature_states']}" styleClass="link" /></li>
-						<li><h:link outcome="#{Page.MAINTENANCE_JOB_OFFER_STATES.getUrl()}" value="#{i18n['job.job_offer_states']}" styleClass="link" /></li>
+						<li><h:link outcome="/maintenance/jobOfferStates.xhtml" value="#{i18n['job.job_offer_states']}" styleClass="link" /></li>
 					</ul>
 				</div>
 			</div>
@@ -33,7 +33,7 @@
 				<div class="card card-w-title">
 					<h5>#{i18n['maintenance.reports']}</h5>
 					<ul>
-						<li><h:link outcome="#{Page.MAINTENANCE_REPORTS.getUrl()}" value="#{i18n['maintenance.reports']}" /></li>
+						<li><h:link outcome="/maintenance/reports.xhtml" value="#{i18n['maintenance.reports']}" /></li>
 					</ul>
 				</div>
 			</div>
@@ -41,7 +41,7 @@
 				<div class="card card-w-title">
 					<h5>#{i18n['maintenance.documents']}</h5>
 					<ul>
-						<li><h:link outcome="#{Page.MAINTENANCE_GDPR.getUrl()}" value="#{i18n['maintenance.gdpr']}" /></li>
+						<li><h:link outcome="/maintenance/gdpr.xhtml" value="#{i18n['maintenance.gdpr']}" /></li>
 					</ul>
 				</div>
 			</div>

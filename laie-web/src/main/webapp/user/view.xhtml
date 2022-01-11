@@ -64,7 +64,7 @@
 												rendered="#{empty viewUserView.user.manager}"> --- </h:panelGroup>
 											<h:panelGroup layout="block" class="text"
 												rendered="#{not empty viewUserView.user.manager}">
-												<p:link outcome="#{Page.USER.getUrl()}"
+												<p:link outcome="/user/view.xhtml"
 													value="#{viewUserView.user.manager.fullName}">
 													<f:param name="user" value="#{viewUserView.user.manager.uid}" />
 												</p:link>

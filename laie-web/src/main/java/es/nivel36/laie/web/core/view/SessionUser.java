@@ -1,5 +1,6 @@
 package es.nivel36.laie.web.core.view;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +10,9 @@ import java.util.Objects;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.ServletException;
 
+import org.omnifaces.util.Faces;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,6 +22,7 @@ import es.nivel36.laie.ejb.user.Role;
 import es.nivel36.laie.ejb.user.SimpleUserDto;
 import es.nivel36.laie.ejb.user.UserDto;
 import es.nivel36.laie.ejb.user.UserService;
+import es.nivel36.laie.web.core.LoginService;
 
 @Named
 @SessionScoped
@@ -33,14 +37,17 @@ public class SessionUser implements Serializable {
 	private List<SimpleUserDto> team;
 
 	private UserDto user;
-	
+
 	private List<BookmarkDto> bookmarks;
 
 	@Inject
 	private transient UserService userService;
-	
+
 	@Inject
 	private transient BookmarkService bookmarkService;
+
+	@Inject
+	private LoginService loginService;
 
 	public void load(String username) {
 		Objects.requireNonNull(username);
@@ -79,6 +86,12 @@ public class SessionUser implements Serializable {
 		this.loadUserData(this.user.getEmail());
 	}
 
+	public void logout() throws ServletException, IOException {
+		loginService.logout(this.user.getEmail());
+		Faces.logout();
+		Faces.redirect("/");
+	}
+
 	public UserDto get() {
 		return this.user;
 	}
@@ -110,10 +123,15 @@ public class SessionUser implements Serializable {
 		Objects.requireNonNull(userService);
 		this.userService = userService;
 	}
-	
+
 	public void setBookmarkService(final BookmarkService bookmarkService) {
 		Objects.requireNonNull(bookmarkService);
 		this.bookmarkService = bookmarkService;
+	}
+
+	public void setLoginService(final LoginService loginService) {
+		Objects.requireNonNull(loginService);
+		this.loginService = loginService;
 	}
 
 	@Override

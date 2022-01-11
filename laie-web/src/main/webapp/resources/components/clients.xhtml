@@ -25,7 +25,7 @@
 				reflow="true" paginator="true" paginatorPosition="bottom" rows="#{cc.attrs.rows}" sortBy="#{client.name}"
 				sortOrder="ascending">
 				<p:column headerText="#{i18n['client.name']}" sortBy="#{client.name}">
-					<h:link value="#{client.name}" outcome="#{Page.CLIENT.getUrl()}">
+					<h:link value="#{client.name}" outcome="/client/view.xhtml">
 						<f:param name="id" value="#{client.uid}" />
 					</h:link>
 				</p:column>
@@ -39,7 +39,7 @@
 					<h:outputText value="#{client.address.city} " /> <h:panelGroup rendered="#{not empty client.address.region}">(<h:outputText value="#{client.address.region}" />)</h:panelGroup>
 				</p:column>
 				<p:column headerText="#{i18n['client.owner']}" sortBy="#{client.owner.fullName}">
-					<h:link value="#{client.owner.fullName}" outcome="#{Page.USER_SEARCH.getUrl()}">
+					<h:link value="#{client.owner.fullName}" outcome="/user/search.xhtml">
 						<f:param name="id" value="#{client.owner.uid}" />
 					</h:link>
 				</p:column>

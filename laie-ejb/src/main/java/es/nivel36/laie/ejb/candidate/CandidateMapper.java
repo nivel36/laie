@@ -11,6 +11,9 @@ import es.nivel36.laie.ejb.core.model.AddressMapper;
 import es.nivel36.laie.ejb.job.candidature.JobCandidature;
 import es.nivel36.laie.ejb.job.candidature.JobCandidatureDto;
 import es.nivel36.laie.ejb.job.candidature.JobCandidatureMapper;
+import es.nivel36.laie.ejb.user.SimpleUserDto;
+import es.nivel36.laie.ejb.user.SimpleUserMapper;
+import es.nivel36.laie.ejb.user.User;
 
 public class CandidateMapper implements Mapper<Candidate, CandidateDto> {
 
@@ -35,6 +38,8 @@ public class CandidateMapper implements Mapper<Candidate, CandidateDto> {
 		dto.setLinkedinProfileUrl(entity.getLinkedinProfileUrl());
 		dto.setName(entity.getName());
 		dto.setOrigin(entity.getOrigin());
+		final SimpleUserDto owner = mapOwner(entity.getOwner());
+		dto.setOwner(owner);
 		dto.setPhoneNumber(entity.getPhoneNumber());
 		dto.setRating(entity.getRating());
 		dto.setSalary(entity.getSalary());
@@ -44,6 +49,11 @@ public class CandidateMapper implements Mapper<Candidate, CandidateDto> {
 		dto.setJobCandidature(jobCandidaturesDto);
 		dto.setUid(entity.getUid());
 		return dto;
+	}
+	
+	private SimpleUserDto mapOwner(final User owner) {
+		final SimpleUserMapper mapper = new SimpleUserMapper();
+		return mapper.map(owner);
 	}
 
 	private List<JobCandidatureDto> mapJobCandidatures(final Candidate entity, final CandidateDto dto) {

@@ -18,7 +18,6 @@ public class AddressMapper implements Mapper<Address, AddressDto> {
 		dto.setStorey(entity.getStorey());
 		dto.setStreet(entity.getStreet());
 		dto.setZipCode(entity.getZipCode());
-		return null;
+		return dto;
 	}
-
 }

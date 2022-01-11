@@ -33,8 +33,8 @@ public class ClientRestController extends AbstractRestController {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response newClient(@Valid final ClientDto client) {
-		this.clientService.addClient(client);
+	public Response newClient(@Valid final ClientDto client, final String ownerUid) {
+		this.clientService.addClient(client, ownerUid);
 		final Response.ResponseBuilder builder = Response.ok();
 		return builder.build();
 	}

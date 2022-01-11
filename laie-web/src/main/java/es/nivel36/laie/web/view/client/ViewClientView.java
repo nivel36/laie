@@ -22,7 +22,6 @@ import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.job.offer.JobOfferDto;
 import es.nivel36.laie.ejb.job.offer.JobOfferService;
 import es.nivel36.laie.web.core.IllegalPageStateException;
-import es.nivel36.laie.web.core.util.PageEnum;
 
 @Named
 @ViewScoped
@@ -31,10 +30,16 @@ public class ViewClientView extends AbstractClientView {
 	private static final long serialVersionUID = 7741542000560705248L;
 
 	private static final Logger logger = LoggerFactory.getLogger(ViewClientView.class);
+	
+	public static final String URL = "/client/view.xhtml";
 
 	private List<ContactDto> contacts;
 
 	private boolean editable;
+
+	private boolean bookmarkable;
+	
+	private BookmarkDto bookmark;
 
 	private List<JobOfferDto> jobOffers;
 
@@ -59,6 +64,15 @@ public class ViewClientView extends AbstractClientView {
 		this.jobOffers = this.jobOfferService.findJobOffersByOwner(this.client.getUid(), Page.ALL_RESULTS);
 		this.checkDeleted();
 		this.editable = true;
+		this.bookmark = this.buildBookmark();
+		this.bookmarkable = !this.sessionUser.getBookmarks().contains(this.bookmark);
+	}
+	
+	private BookmarkDto buildBookmark() {
+		final BookmarkDto bookmark = new BookmarkDto();
+		bookmark.setTitle(client.getName());
+		bookmark.setUrl(this.clientUrl());
+		return bookmark;
 	}
 
 	private void checkDeleted() {
@@ -68,16 +82,18 @@ public class ViewClientView extends AbstractClientView {
 		}
 	}
 
-	public String editClient() {
-		logger.debug("Edit client action performed");
-		return this.navigator.getRedirectUrl(PageEnum.CLIENT_EDIT, this.client.getUid());
+	public void addToBoorkmarks() {
+		this.bookmarkService.addBookmark(this.bookmark, getUserUid());
+		this.sessionUser.refresh();
 	}
 
-	public void addToBoorkmarks() {
-		final BookmarkDto bookmark = new BookmarkDto();
-		bookmark.setTitle(client.getName());
-		bookmark.setUrl("/client/view?client=" + this.client.getUid());
-		this.bookmarkService.addBookmark(bookmark, this.sessionUser.get().getUid());
+	public void removeFromBoorkmarks() {
+		this.bookmarkService.deleteBookmark(this.bookmark, getUserUid());
+		this.sessionUser.refresh();
+	}
+
+	private String getUserUid() {
+		return this.sessionUser.get().getUid();
 	}
 
 	public void export() {
@@ -92,6 +108,10 @@ public class ViewClientView extends AbstractClientView {
 		return this.jobOffers;
 	}
 
+	public boolean isBookmarkable() {
+		return this.bookmarkable;
+	}
+	
 	public boolean isEditable() {
 		return this.editable;
 	}
@@ -104,7 +124,7 @@ public class ViewClientView extends AbstractClientView {
 		Objects.requireNonNull(jobOfferService);
 		this.jobOfferService = jobOfferService;
 	}
-	
+
 	public void setBookmarkService(final BookmarkService bookmarkService) {
 		Objects.requireNonNull(bookmarkService);
 		this.bookmarkService = bookmarkService;

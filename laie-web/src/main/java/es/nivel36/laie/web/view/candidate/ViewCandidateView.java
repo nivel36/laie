@@ -30,19 +30,19 @@ import es.nivel36.laie.ejb.job.candidature.JobCandidatureService;
 import es.nivel36.laie.ejb.job.meeting.MeetingDto;
 import es.nivel36.laie.ejb.job.meeting.MeetingService;
 import es.nivel36.laie.web.core.IllegalPageStateException;
-import es.nivel36.laie.web.core.util.PageEnum;
 import es.nivel36.laie.web.core.view.AbstractView;
+import es.nivel36.laie.web.view.meeting.AddMeetingView;
 
 @Named
 @ViewScoped
 public class ViewCandidateView extends AbstractView {
 
-	private static final long serialVersionUID = -4175964958939330009L;
+	private static final long serialVersionUID = 8467299017233591349L;
 
 	private static final Logger logger = LoggerFactory.getLogger(ViewCandidateView.class);
 
 	private CandidateDto candidate;
-	
+
 	private String uid;
 
 	private CurriculumDto curriculum;
@@ -72,7 +72,7 @@ public class ViewCandidateView extends AbstractView {
 
 	@PostConstruct
 	public void init() {
-		this.uid = this.getValueFromGetParameters("uid");
+		this.uid = this.getValueFromGetParameters("candidate");
 		if (this.uid == null) {
 			throw new IllegalPageStateException();
 		}
@@ -97,18 +97,13 @@ public class ViewCandidateView extends AbstractView {
 		return this.candidateService.findCandidatesFiles(this.uid, Page.TEN_RESULTS_PER_PAGE);
 	}
 
-	public String editCandidate() {
-		logger.debug("Edit candidate action performed");
-		return this.navigator.getRedirectUrl(PageEnum.CANDIDATE_EDIT, this.uid);
-	}
-
 	public void export() {
 		logger.debug("Export candidate action performed");
 	}
 
-	public String newMeeting() {
+	public void newMeeting() {
 		this.putValueToFlash("attendee", this.candidate);
-		return this.navigator.getRedirectUrl(PageEnum.MEETING_ADD);
+		this.navigateTo(AddMeetingView.URL);
 	}
 
 	public void openFile(final File file) throws IOException {

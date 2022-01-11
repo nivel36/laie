@@ -24,6 +24,8 @@ public class SearchMeetingView extends AbstractView {
 	private static final long serialVersionUID = -8568862344770860565L;
 	
 	private static final Logger logger = LoggerFactory.getLogger(SearchMeetingView.class);
+	
+	public static final String URL = "/meeting/search.xhtml";
 
 	private List<MeetingDto> conductedMeetings;
 

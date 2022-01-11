@@ -18,13 +18,13 @@
 	<ui:param name="selectedMenu" value="clients" />
 
 	<ui:define name="actions">
-		<p:button value="#{i18n['client.new_client']}" outcome="#{Page.CLIENT_ADD.getUrl()}" />
+		<p:button value="#{i18n['client.new_client']}" outcome="/client/add.xhtml" />
 	</ui:define>
 
 	<ui:define name="breadcrumb">
 		<p:breadCrumb>
-			<p:menuitem value="#{i18n['menu.index']}" outcome="#{Page.INDEX.getUrl()}" />
-			<p:menuitem value="#{i18n['client.clients']}" outcome="#{Page.CLIENT_SEARCH.getUrl()}" />
+			<p:menuitem value="#{i18n['menu.index']}" outcome="/index.xhtml" />
+			<p:menuitem value="#{i18n['client.clients']}" outcome="/client/search.xhtml" />
 			<p:menuitem value="#{viewClientView.client.name}" disabled="true" />
 		</p:breadCrumb>
 	</ui:define>
@@ -62,7 +62,7 @@
 				<h:form id="contactsForm">
 					<cc:contacts value="#{viewClientView.contacts}" rows="5">
 						<p:commandButton value="#{i18n['contact.new_contact']}" actionListener="#{viewClientView.newContact}"
-							action="#{Page.CONTACT_ADD.getUrl()}" process="@this" />
+							action="/contact/add.xhtml" process="@this" />
 					</cc:contacts>
 				</h:form>
 			</div>
@@ -70,7 +70,7 @@
 				<h:form id="jobOffersForm">
 					<cc:jobOffers id="jobOffers" value="#{viewClientView.jobOffers}" rows="5">
 						<p:commandButton value="#{i18n['job.new_job_offer']}" actionListener="#{viewClientView.newJobOffer}"
-							action="#{Page.JOB_ADD.getUrl()}" process="@this" />
+							action="/job/add.xhtml" process="@this" />
 					</cc:jobOffers>
 				</h:form>
 			</div>

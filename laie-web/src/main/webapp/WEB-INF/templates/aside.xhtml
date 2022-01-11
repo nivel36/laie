@@ -7,12 +7,13 @@
 	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components">
 	<div class="layout-aside">
 		<div class="layout-aside-content">
-			<div class="card card-w-title ui-fluid bookmarks">
+			<h:panelGroup layout="block" id="bookmarks"
+				styleClass="card card-w-title ui-fluid bookmarks">
 				<h5>#{i18n['aside.bookmarks']}</h5>
 				<div class="bookmark-content">
 					<ui:repeat value="#{sessionUser.bookmarks}" var="bookmark">
 						<div class="bookmark">
-							<div class="bookmarkUrl">
+							<div class="bookmark-icon">
 								<p:avatar label="#{bookmark.title}"
 									rendered="#{empty bookmark.imageUrl}" />
 								<p:avatar shape="circle"
@@ -20,13 +21,13 @@
 									<p:graphicImage value="/images/#{bookmark.imageUrl}" />
 								</p:avatar>
 							</div>
-							<div class="bookmarkTitle">
+							<div class="bookmark-url">
 								<a href="#{bookmark.url}">#{bookmark.title}</a>
 							</div>
 						</div>
 					</ui:repeat>
 				</div>
-			</div>
+			</h:panelGroup>
 			<div class="card card-w-title ui-fluid">
 				<h5>#{i18n['aside.last_actions']}</h5>
 			</div>

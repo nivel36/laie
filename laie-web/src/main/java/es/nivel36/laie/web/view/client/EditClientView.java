@@ -4,6 +4,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
+import org.omnifaces.util.Faces;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,6 +17,8 @@ public class EditClientView extends AbstractClientView {
 	private static final long serialVersionUID = 1356969048613753901L;
 
 	private static final Logger logger = LoggerFactory.getLogger(EditClientView.class);
+
+	public static final String URL = "/client/edit.xhtml";
 
 	private String uid;
 
@@ -31,14 +34,15 @@ public class EditClientView extends AbstractClientView {
 		}
 		logger.trace("Client {} edit init", this.client);
 	}
-	
+
 	public void addBookmark() {
 		logger.debug("Add bokmark action performed");
 	}
 
-	public String save() {
+	public void save() {
 		logger.debug("Save client action performed");
 		this.clientService.updateClient(client);
-		return this.clientUrl();
+		final String clientUrl = this.clientUrl();
+		Faces.redirect(clientUrl);
 	}
 }

@@ -53,10 +53,81 @@
 	}
 }
 
+.bookmark {
+	display: flex;
+	align-items: center;
+	.bookmark-url{
+		margin-left: 1em;
+	}
+}
+
+.candidate-card {
+	
+	padding: 0;
+
+	.candidate-card-header{
+		height: 9rem;
+		overflow: hidden;
+		background: linear-gradient(30deg, $primaryColor 0%, $primaryLightColor 150%);
+		background-color:$primaryColor;
+		color: $primaryTextColor;
+	}
+
+	.candidate-card-content {
+		
+		.label-container {
+			font-size: 0.9em;
+			padding-bottom: 0.3em;
+		
+			.label {
+				color: $darkMenuBgColor;
+			}	
+		}
+		
+		.text {
+			color: $menuitemTextColor;
+		}
+		
+		.candidate-image {
+			margin: -2.5rem 0 0 3rem;
+			width: 5rem;
+			height: 5rem;
+			
+			img {
+				margin: 0;
+				width: 5rem;
+				height: 5rem;
+			}
+		}
+		
+		.candidate-card-name {
+			font-size: 13px;
+			color: $primaryTextColor;
+			position: relative;
+			top: -4.2rem;
+			margin-left: 9rem;
+			font-weight: 700;
+			white-space: nowrap;
+		}
+		
+		.candidate-card-profile {
+			position: relative;
+			top: -3.8rem;
+			margin-left: 9rem;
+			font-weight: 700;
+			white-space: nowrap;
+		}
+		
+		.candidate-detail {
+			padding: 0 2.5em 2em 2.5em;
+		}
+	}
+}
+
 .card.client-card {
 	padding: 0;
-	.card-header{
-		height: 5rem;
+	.client-card-header{
+		height: 9rem;
 		overflow: hidden;
 		background: linear-gradient(30deg, $primaryColor 0%, $primaryLightColor 150%);
 		background-color: $primaryColor;
@@ -113,13 +184,22 @@
 	padding: 0;
 
 	.user-card-header {
+		height: 9rem;
+		overflow: hidden;
 		background: linear-gradient(30deg, $primaryColor 0%, $primaryLightColor 150%);
 		background-color: $primaryColor;
 		color: $primaryTextColor;
 	}
 	.user-card-content {
-		.user-detail {
-			padding: 1rem 2rem;
+		.label-container {
+			font-size: 0.9em;
+			padding-bottom: 0.3em;
+			.label {
+				color: $darkMenuBgColor;
+			}	
+		}
+		.text {
+			color: $menuitemTextColor;
 		}
 		img {
 			width: 60px;
@@ -133,6 +213,9 @@
 			.ui-avatar-text {
 				font-size: 2rem;
 			}
+		}
+		.user-detail {
+			padding: 0 2.5em 2em 2.5em;
 		}
 	}
 }

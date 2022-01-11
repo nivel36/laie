@@ -22,11 +22,8 @@
 </h:head>
 
 <h:body styleClass="outlined" onload="document.body.style.opacity='1'">
-	<p:growl id="growl" />
-	<f:metadata>
-		<p:importConstants type="es.nivel36.laie.web.core.util.PageEnum"
-			var="Page" />
-	</f:metadata>
+	<p:growl id="growl" globalOnly="true"/>
+	
 	<div
 		class="layout-wrapper layout-horizontal layout-menu-dark layout-topbar-dark">
 		<ui:include src="./topbar.xhtml" />

@@ -22,6 +22,8 @@ import es.nivel36.laie.ejb.core.model.Repository;
 import es.nivel36.laie.ejb.core.model.search.SearchFacets;
 import es.nivel36.laie.ejb.core.model.search.SearchResult;
 import es.nivel36.laie.ejb.core.model.search.SortField;
+import es.nivel36.laie.ejb.user.User;
+import es.nivel36.laie.ejb.user.UserDao;
 
 @Stateless
 public class CandidateService {
@@ -38,20 +40,38 @@ public class CandidateService {
 	@Inject
 	@Repository
 	private FileJpaDao fileDao;
+	
+	@Inject
+	@Repository
+	private UserDao userDao;
 
 	private CandidateMerger candidateMerger = new CandidateMerger();
 
 	private CandidateMapper candidateMapper = new CandidateMapper();
-	
-	public CandidateDto addCandidate(final CandidateDto candidate) {
+
+	public CandidateDto addCandidate(final CandidateDto candidate, final String ownerUid) {
 		Objects.requireNonNull(candidate);
 		logger.debug("Add candidate {}", candidate);
 		final Candidate entity = new Candidate();
 		candidateMerger.merge(entity, candidate);
+		this.changeOwner(entity, ownerUid);
 		this.candidateDao.insert(entity);
 		return candidateMapper.map(entity);
 	}
+
+	public void changeOwner(final String candidateUid, final String ownerUid) {
+		Objects.requireNonNull(candidateUid);
+		Objects.requireNonNull(ownerUid);
+		logger.debug("Cange owner {} to candidate {}", ownerUid, candidateUid);
+		final Candidate candidate = this.candidateDao.findByUid(candidateUid);
+		this.changeOwner(candidate, ownerUid);
+	}
 	
+	private void changeOwner(final Candidate candidate, final String ownerUid) {
+		final User user = this.userDao.findUserByUid(ownerUid);
+		candidate.setOwner(user);
+	}
+
 	public void updateCandidate(final CandidateDto candidate) {
 		Objects.requireNonNull(candidate);
 		logger.debug("Update candidate", candidate);
@@ -105,7 +125,7 @@ public class CandidateService {
 		final List<File> files = this.candidateDao.findCandidatesFiles(candidateUid, page);
 		return new FileMapper().mapList(files);
 	}
-	
+
 	public FileDto addFileToCandidate(final String candidateUid, final InputStream inputStream, String filename) {
 		Objects.requireNonNull(inputStream);
 		Objects.requireNonNull(candidateUid);
@@ -145,9 +165,24 @@ public class CandidateService {
 		final Map<String, List<Facet>> allFacets = entities.getAllFacets();
 		return new SearchResult<CandidateDto>(dtoList, count, allFacets);
 	}
-	
+
 	public void setCandidateDao(final CandidateDao candidateDao) {
 		Objects.requireNonNull(candidateDao);
 		this.candidateDao = candidateDao;
+	}
+
+	public void setFileService(final FileService fileService) {
+		Objects.requireNonNull(fileService);
+		this.fileService = fileService;
+	}
+
+	public void setFileDao(final FileJpaDao fileDao) {
+		Objects.requireNonNull(fileDao);
+		this.fileDao = fileDao;
+	}
+
+	public void setUserDao(final UserDao userDao) {
+		Objects.requireNonNull(userDao);
+		this.userDao = userDao;
 	}
 }

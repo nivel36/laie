@@ -22,7 +22,7 @@
 				<div class="p-col-12">
 					<div class="card buttons">
 						<p:button value="#{i18n['client.new_client']}"
-							outcome="#{Page.CLIENT_ADD.getUrl()}"
+							outcome="/client/add.xhtml"
 							styleClass="ui-button-success ui-button-outlined" />
 						<p:commandButton value="#{i18n['action.export']}"
 							outcome="#{searchClientView.export}" icon="pi pi-file-excel"
@@ -48,7 +48,7 @@
 								<p:column headerText="#{i18n['client.name']}"
 									sortBy="#{client.name}">
 									<h:link value="#{client.name}"
-										outcome="#{Page.CLIENT.getUrl()}" styleClass="link">
+										outcome="/client/view.xhtml" styleClass="link">
 										<f:param name="client" value="#{client.uid}" />
 									</h:link>
 								</p:column>
@@ -71,7 +71,7 @@
 								<p:column headerText="#{i18n['client.owner']}"
 									sortBy="#{client.owner.name}">
 									<h:link value="#{client.owner.fullName}"
-										outcome="#{Page.USER.getUrl()}">
+										outcome="/user/view.xhtml">
 										<f:param name="user" value="#{client.owner.uid}" />
 									</h:link>
 								</p:column>

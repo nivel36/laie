@@ -19,7 +19,6 @@ import es.nivel36.laie.ejb.job.candidature.JobCandidatureService;
 import es.nivel36.laie.ejb.job.offer.JobOfferDto;
 import es.nivel36.laie.ejb.job.offer.JobOfferService;
 import es.nivel36.laie.web.core.IllegalPageStateException;
-import es.nivel36.laie.web.core.util.PageEnum;
 import es.nivel36.laie.web.core.view.AbstractView;
 import es.nivel36.laie.web.view.candidate.CandidateLazyDataModel;
 
@@ -71,11 +70,11 @@ public class SelectCandidatesView extends AbstractView {
 		return this.alredySelectedCandidates.containsKey(candidate.getUid());
 	}
 
-	public String select() {
+	public void select() {
 		final String[] candidatesUids = this.selectedCandidates.stream().map(CandidateDto::getTags).toArray(String[]::new);
 		final String jobOfferUid = this.jobOffer.getUid();
 		this.jobCandidatureService.addJobCandidatures(jobOfferUid, candidatesUids);
-		return this.navigator.getRedirectUrl(PageEnum.JOB, jobOfferUid);
+		this.navigateTo(ViewJobView.URL + "?job=" + this.jobOffer.getUid());
 	}
 	
 	public CandidateLazyDataModel getCandidates() {

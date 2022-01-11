@@ -22,7 +22,7 @@
 				<div class="p-col-12">
 					<div class="card buttons">
 						<p:button value="#{i18n['action.cancel']}"
-							outcome="#{Page.CLIENT_SEARCH.getUrl()}"
+							outcome="/client/search.xhtml"
 							styleClass="ui-button-secondary ui-button-outlined" />
 						<p:commandButton value="#{i18n['action.save']}"
 							action="#{addClientView.save}"
@@ -31,7 +31,6 @@
 				</div>
 				<div class="p-col-12 p-xl-8">
 					<div class="card card-w-title ui-fluid">
-
 						<h5>#{i18n['client.client']}</h5>
 						<div class="p-grid p-formgrid">
 							<div class="p-col-12">

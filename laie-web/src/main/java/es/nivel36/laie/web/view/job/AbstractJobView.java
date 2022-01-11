@@ -16,7 +16,6 @@ import es.nivel36.laie.ejb.job.offer.JobOfferService;
 import es.nivel36.laie.ejb.user.SimpleUserDto;
 import es.nivel36.laie.ejb.user.UserDto;
 import es.nivel36.laie.ejb.user.UserService;
-import es.nivel36.laie.web.core.util.PageEnum;
 import es.nivel36.laie.web.core.view.AbstractView;
 
 public abstract class AbstractJobView extends AbstractView {
@@ -38,10 +37,6 @@ public abstract class AbstractJobView extends AbstractView {
 
 	public List<ClientDto> completeClient(final String query) {
 		return this.clientService.search(query, Page.TEN_RESULTS_PER_PAGE).getResultData();
-	}
-
-	protected String jobUrl() {
-		return this.navigator.getRedirectUrl(PageEnum.JOB, this.jobOffer.getUid());
 	}
 
 	public void onOwnerSelect(final SelectEvent<SimpleUserDto> event) {

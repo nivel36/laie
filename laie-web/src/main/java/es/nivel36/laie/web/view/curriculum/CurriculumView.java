@@ -21,7 +21,6 @@ import es.nivel36.laie.ejb.curriculum.jobexperience.JobExperience;
 import es.nivel36.laie.ejb.curriculum.language.Language;
 import es.nivel36.laie.ejb.curriculum.skill.Skill;
 import es.nivel36.laie.web.core.IllegalPageStateException;
-import es.nivel36.laie.web.core.util.PageEnum;
 import es.nivel36.laie.web.core.view.AbstractView;
 
 @Named
@@ -58,26 +57,26 @@ public class CurriculumView extends AbstractView {
 		final Map<String, String> queryParams = new HashMap<>();
 		queryParams.put(ITEM, String.valueOf(education.indexOf(e)));
 		queryParams.put(CURRICULUM_ID, this.curriculum.getUid());
-		return this.navigator.getRedirectUrl(PageEnum.CURRICULUM_EDUCATION, queryParams);
+		return null;
 	}
 
 	public String editJobExperience(final JobExperience j) {
 		final Map<String, String> queryParams = new HashMap<>();
 		queryParams.put(ITEM, String.valueOf(jobExperiences.indexOf(j)));
 		queryParams.put(CURRICULUM_ID, this.curriculum.getUid());
-		return this.navigator.getRedirectUrl(PageEnum.CURRICULUM_JOB_EXPERIENCE, queryParams);
+		return null;
 	}
 
 	public String editLanguages() {
 		final Map<String, String> queryParams = new HashMap<>();
 		queryParams.put(CURRICULUM_ID, this.curriculum.getUid());
-		return this.navigator.getRedirectUrl(PageEnum.CURRICULUM_LANGUAGE, queryParams);
+		return null;
 	}
 
 	public String editSkills() {
 		final Map<String, String> queryParams = new HashMap<>();
 		queryParams.put(CURRICULUM_ID, this.curriculum.getUid());
-		return this.navigator.getRedirectUrl(PageEnum.CURRICULUM_SKILLS, queryParams);
+		return null;
 	}
 
 	public Candidate getCandidate() {
@@ -141,13 +140,13 @@ public class CurriculumView extends AbstractView {
 	public String newEducation() {
 		final Map<String, String> queryParams = new HashMap<>();
 		queryParams.put(CURRICULUM_ID, this.curriculum.getUid());
-		return this.navigator.getRedirectUrl(PageEnum.CURRICULUM_EDUCATION, queryParams);
+		return null;
 	}
 
 	public String newJobExperience() {
 		final Map<String, String> queryParams = new HashMap<>();
 		queryParams.put(CURRICULUM_ID, this.curriculum.getUid());
-		return this.navigator.getRedirectUrl(PageEnum.CURRICULUM_JOB_EXPERIENCE, queryParams);
+		return null;
 	}
 	
 	private void orderEducation() {

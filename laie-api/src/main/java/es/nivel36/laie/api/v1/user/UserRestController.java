@@ -44,6 +44,8 @@ public class UserRestController extends AbstractRestController {
 			builder = Response.status(Response.Status.OK);
 		} catch (final DuplicateEmailException exception) {
 			builder = Response.status(Response.Status.BAD_REQUEST);
+		} catch (final BadManagerException exception) {
+			builder = Response.status(Response.Status.BAD_REQUEST);
 		}
 		return builder.build();
 	}

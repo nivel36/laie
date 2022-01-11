@@ -15,7 +15,6 @@ import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.job.candidature.JobCandidatureDto;
 import es.nivel36.laie.ejb.job.candidature.JobCandidatureService;
 import es.nivel36.laie.web.core.IllegalPageStateException;
-import es.nivel36.laie.web.core.util.PageEnum;
 
 @Named
 @ViewScoped
@@ -24,6 +23,8 @@ public class ViewJobView extends AbstractJobView {
 	private static final long serialVersionUID = 8333996053828223314L;
 
 	private static final Logger logger = LoggerFactory.getLogger(ViewJobView.class);
+	
+	public static String URL = "/job/view.xhtml";
 
 	private List<JobCandidatureDto> jobCandidatures;
 
@@ -40,16 +41,6 @@ public class ViewJobView extends AbstractJobView {
 		logger.trace("JobOffer {} init", this.jobOffer);
 		this.jobCandidatures = this.jobCandidatureService.findJobOffersJobCanditures(this.jobOffer.getUid(),
 				Page.ALL_RESULTS);
-	}
-
-	public String editJobOffer() {
-		logger.debug("Edit job offer action performed");
-		return this.navigator.getRedirectUrl(PageEnum.JOB_EDIT, this.jobOffer.getUid());
-	}
-
-	public String editJobOfferState() {
-		logger.debug("Edit job offer state action performed");
-		return this.navigator.getRedirectUrl(PageEnum.JOB_EDIT_STATE, this.jobOffer.getUid());
 	}
 
 	public void export() {

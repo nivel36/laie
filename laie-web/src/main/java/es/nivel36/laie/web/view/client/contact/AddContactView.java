@@ -11,8 +11,8 @@ import org.slf4j.LoggerFactory;
 import es.nivel36.laie.ejb.client.ContactDto;
 import es.nivel36.laie.ejb.client.ContactService;
 import es.nivel36.laie.web.core.IllegalPageStateException;
-import es.nivel36.laie.web.core.util.PageEnum;
 import es.nivel36.laie.web.core.view.AbstractView;
+import es.nivel36.laie.web.view.client.ViewClientView;
 
 @Named
 @ViewScoped
@@ -39,10 +39,10 @@ public class AddContactView extends AbstractView {
 		this.contact = new ContactDto();
 	}
 
-	public String save() {
+	public void save() {
 		logger.debug("Contact add action performed");
 		this.contactService.addContact(clientUid, contact);
-		return this.navigator.getRedirectUrl(PageEnum.CLIENT, this.clientUid);
+		this.navigateTo(ViewClientView.URL + "?clientUid=" + this.clientUid);
 	}
 
 	public ContactDto getContact() {

@@ -16,8 +16,10 @@ import es.nivel36.laie.web.core.IllegalPageStateException;
 public class EditJobView extends AbstractJobView {
 
 	private static final long serialVersionUID = 7356542779288827753L;
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(EditJobView.class);
+
+	public static String URL = "/job/edit.xhtml";
 
 	@PostConstruct
 	public void init() {
@@ -34,14 +36,14 @@ public class EditJobView extends AbstractJobView {
 			throw new IllegalPageStateException();
 		}
 	}
-	
+
 	private void fillRecruiters() {
 		this.recruiters = new ArrayList<>(this.jobOffer.getRecruiters());
 	}
 
-	public String save() {
+	public void save() {
 		logger.debug("Save job offer action performed");
 		this.jobOfferService.updateJobOffer(jobOffer);
-		return this.jobUrl();
+		this.navigateTo(ViewJobView.URL + "?job=" + this.jobOffer.getUid());
 	}
 }

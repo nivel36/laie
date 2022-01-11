@@ -47,12 +47,12 @@ public class AddJobView extends AbstractJobView {
 		}
 	}
 
-	public String save() {
+	public void save() {
 		logger.debug("Create new client action performed");
 		String[] recruitersUid = this.recruiters.stream().map(SimpleUserDto::getUid).toArray(String[]::new);
 		this.jobOffer = this.jobOfferService.addJobOffer(client.getUid(), this.sessionUser.get().getUid(),
 				recruitersUid, jobOffer);
-		return this.jobUrl();
+		this.navigateTo(ViewJobView.URL + "?job=" + this.jobOffer.getUid());
 	}
 
 	public void setClient(final ClientDto client) {

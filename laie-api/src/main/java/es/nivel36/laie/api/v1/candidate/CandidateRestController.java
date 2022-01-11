@@ -37,9 +37,9 @@ public class CandidateRestController extends AbstractRestController {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response insert(@Valid final CandidateDto candidateDto) {
+	public Response insert(@Valid final CandidateDto candidateDto, final String ownerUid) {
 		Response.ResponseBuilder builder = null;
-		this.candidateService.addCandidate(candidateDto);
+		this.candidateService.addCandidate(candidateDto, ownerUid);
 		builder = Response.ok();
 		return builder.build();
 	}

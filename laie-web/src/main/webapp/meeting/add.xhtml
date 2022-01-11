@@ -11,17 +11,9 @@
 
 	<ui:param name="selectedMenu" value="meeting" />
 
-	<ui:define name="breadcrumb">
-		<p:breadCrumb>
-			<p:menuitem value="#{i18n['menu.index']}" outcome="#{Page.INDEX.getUrl()}" />
-			<p:menuitem value="#{i18n['meeting.meetings']}" outcome="#{Page.MEETING_SEARCH.getUrl()}" />
-			<p:menuitem value="#{i18n['meeting.add_meeting']}" disabled="true" />
-		</p:breadCrumb>
-	</ui:define>
-
 	<ui:define name="buttons">
 		<h:form>
-			<p:button value="#{i18n['action.cancel']}" outcome="#{Page.MEETING_SEARCH.getUrl()}"
+			<p:button value="#{i18n['action.cancel']}" outcome="/meeting/search.xhtml"
 				styleClass="ui-button-secondary ui-button-outlined" />
 			<p:commandButton value="#{i18n['action.save']}" onclick="processForm()"
 				styleClass="ui-button-success ui-button-outlined" />

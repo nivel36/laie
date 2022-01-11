@@ -11,8 +11,8 @@ import org.slf4j.LoggerFactory;
 import es.nivel36.laie.ejb.client.ContactDto;
 import es.nivel36.laie.ejb.client.ContactService;
 import es.nivel36.laie.web.core.IllegalPageStateException;
-import es.nivel36.laie.web.core.util.PageEnum;
 import es.nivel36.laie.web.core.view.AbstractView;
+import es.nivel36.laie.web.view.client.ViewClientView;
 
 @Named
 @ViewScoped
@@ -41,16 +41,16 @@ public class EditContactView extends AbstractView {
 		}
 	}
 
-	public String save() {
+	public void save() {
 		logger.debug("Contact save action performed");
 		this.contactService.updateContact(this.contact);
-		return this.navigator.getRedirectUrl(PageEnum.CLIENT, this.clientUid);
+		this.navigateTo(ViewClientView.URL + "?clientUid=" + this.clientUid);
 	}
-	
-	public String delete() {
+
+	public void delete() {
 		logger.debug("Contact delete action performed");
 		this.contactService.deleteContact(this.uid);
-		return this.navigator.getRedirectUrl(PageEnum.CLIENT, this.clientUid);
+		this.navigateTo(ViewClientView.URL + "?clientUid=" + this.clientUid);
 	}
 
 	public ContactDto getContact() {

@@ -12,8 +12,8 @@
 
 	<ui:define name="breadcrumb">
 		<p:breadCrumb>
-			<p:menuitem value="#{i18n['menu.index']}" outcome="#{Page.INDEX.getUrl()}" />
-			<p:menuitem value="#{i18n['job.job_offers']}" outcome="#{Page.JOB_SEARCH.getUrl()}" />
+			<p:menuitem value="#{i18n['menu.index']}" outcome="/index.xhtml" />
+			<p:menuitem value="#{i18n['job.job_offers']}" outcome="/job/search.xhtml" />
 			<p:menuitem value="#{viewJobView.jobOffer}" disabled="true" />
 		</p:breadCrumb>
 	</ui:define>
@@ -36,7 +36,7 @@
 						<div class="job-detail ui-fluid">
 							<div class="p-grid">
 							<div class="p-col-12 p-sm-6">
-								<cc:outputLink label="#{i18n['job.client']}" value="#{viewJobView.jobOffer.client.name}" outcome="#{Page.CLIENT.getUrl()}">
+								<cc:outputLink label="#{i18n['job.client']}" value="#{viewJobView.jobOffer.client.name}" outcome="/client/view.xhtml">
 									<f:param name="id" value="#{viewJobView.jobOffer.client.uid}" />
 								</cc:outputLink>
 							</div>
@@ -57,10 +57,10 @@
 								<cc:outputText label="#{i18n['job.state']}" value="#{viewJobView.jobOffer.address.region}" />
 							</div>
 							<div class="p-col-12">
-								<cc:outputLink label="#{i18n['job.preview']}" value="#{i18n['job.preview']}" outcome="#{Page.JOB_PREVIEW.getUrl()}" target="new">
+								<cc:outputLink label="#{i18n['job.preview']}" value="#{i18n['job.preview']}" outcome="/job/preview.xhtml" target="new">
 									<f:param name="id" value="#{viewJobView.jobOffer.uid}" />
 								</cc:outputLink>
-								<cc:outputLink label="#{i18n['job.description']}" value="#{applicationView.hostname}#{Page.OPEN_JOB.getUrl()}" outcome="#{Page.OPEN_JOB.getUrl()}"
+								<cc:outputLink label="#{i18n['job.description']}" value="#{applicationView.hostname}/open/jobOffer.xhtml" outcome="/open/jobOffer.xhtml"
 									target="new" rendered="#{viewJobView.jobOffer.published}">
 									<f:param name="id" value="#{viewJobView.jobOffer.uid}" />
 								</cc:outputLink>
@@ -76,7 +76,7 @@
 					<h5>#{i18n['job.data']}</h5>
 					<div class="p-grid">
 						<div class="p-col-12 p-sm-6">
-							<cc:outputLink label="#{i18n['job.owner']}" value="#{viewJobView.jobOffer.owner.fullName}" outcome="#{Page.USER.getUrl()}">
+							<cc:outputLink label="#{i18n['job.owner']}" value="#{viewJobView.jobOffer.owner.fullName}" outcome="/user/view.xhtml">
 								<f:param name="id" value="#{viewJobView.jobOffer.owner.uid}" />
 							</cc:outputLink>
 						</div>
@@ -114,7 +114,7 @@
 								</div>
 								<div class="text-container">
 									<ui:repeat value="#{viewJobView.jobOffer.recruiters}" var="recruiter" varStatus="varStatus">
-										<p:link outcome="#{Page.USER.getUrl()}">
+										<p:link outcome="/user/view.xhtml">
 											<f:param name="id" value="#{recruiter.uid}" />
 											<h:outputText value="#{recruiter.fullName}" />
 										</p:link>
@@ -130,7 +130,7 @@
 			<div class="p-col-12 p-xl-7">
 				<h:form>
 					<cc:jobCandidatures value="#{viewJobView.jobCandidatures}" showJobOffer="false" rows="5">
-						<p:button value="#{i18n['action.add']}" outcome="#{Page.JOB_SELECT_CANDIDATES.getUrl()}" process="@this" rendered="#{viewJobView.jobOffer.open}">
+						<p:button value="#{i18n['action.add']}" outcome="/job/selectCandidates.xhtml" process="@this" rendered="#{viewJobView.jobOffer.open}">
 							<f:param name="jobOfferId" value="#{viewJobView.jobOffer.uid}" />
 						</p:button>
 					</cc:jobCandidatures>

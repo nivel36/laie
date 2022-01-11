@@ -3969,11 +3969,69 @@ a {
     padding-top: 5rem;
   }
 }
+.bookmark {
+  display: flex;
+  align-items: center;
+}
+.bookmark .bookmark-url {
+  margin-left: 1em;
+}
+
+.candidate-card {
+  padding: 0;
+}
+.candidate-card .candidate-card-header {
+  height: 9rem;
+  overflow: hidden;
+  background: linear-gradient(30deg, #0f97c7 0%, #91dcf7 150%);
+  background-color: #0f97c7;
+  color: #ffffff;
+}
+.candidate-card .candidate-card-content .label-container {
+  font-size: 0.9em;
+  padding-bottom: 0.3em;
+}
+.candidate-card .candidate-card-content .label-container .label {
+  color: #252529;
+}
+.candidate-card .candidate-card-content .text {
+  color: #666666;
+}
+.candidate-card .candidate-card-content .candidate-image {
+  margin: -2.5rem 0 0 3rem;
+  width: 5rem;
+  height: 5rem;
+}
+.candidate-card .candidate-card-content .candidate-image img {
+  margin: 0;
+  width: 5rem;
+  height: 5rem;
+}
+.candidate-card .candidate-card-content .candidate-card-name {
+  font-size: 13px;
+  color: #ffffff;
+  position: relative;
+  top: -4.2rem;
+  margin-left: 9rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.candidate-card .candidate-card-content .candidate-card-profile {
+  position: relative;
+  top: -3.8rem;
+  margin-left: 9rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.candidate-card .candidate-card-content .candidate-detail {
+  padding: 0 2.5em 2em 2.5em;
+}
+
 .card.client-card {
   padding: 0;
 }
-.card.client-card .card-header {
-  height: 5rem;
+.card.client-card .client-card-header {
+  height: 9rem;
   overflow: hidden;
   background: linear-gradient(30deg, #0f97c7 0%, #91dcf7 150%);
   background-color: #0f97c7;
@@ -4025,12 +4083,21 @@ a {
   padding: 0;
 }
 .user-card .user-card-header {
+  height: 9rem;
+  overflow: hidden;
   background: linear-gradient(30deg, #0f97c7 0%, #91dcf7 150%);
   background-color: #0f97c7;
   color: #ffffff;
 }
-.user-card .user-card-content .user-detail {
-  padding: 1rem 2rem;
+.user-card .user-card-content .label-container {
+  font-size: 0.9em;
+  padding-bottom: 0.3em;
+}
+.user-card .user-card-content .label-container .label {
+  color: #252529;
+}
+.user-card .user-card-content .text {
+  color: #666666;
 }
 .user-card .user-card-content img {
   width: 60px;
@@ -4044,6 +4111,9 @@ a {
 }
 .user-card .user-card-content .user-image .ui-avatar-text {
   font-size: 2rem;
+}
+.user-card .user-card-content .user-detail {
+  padding: 0 2.5em 2em 2.5em;
 }
 
 .contacts .ui-dataview-header {

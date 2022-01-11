@@ -15,7 +15,6 @@ import es.nivel36.laie.ejb.curriculum.CurriculumDto;
 import es.nivel36.laie.ejb.curriculum.CurriculumService;
 import es.nivel36.laie.ejb.curriculum.education.EducationDto;
 import es.nivel36.laie.web.core.IllegalPageStateException;
-import es.nivel36.laie.web.core.util.PageEnum;
 import es.nivel36.laie.web.core.view.AbstractView;
 
 @Named
@@ -72,7 +71,7 @@ public class EducationView extends AbstractView {
 	}
 
 	private String buildCurriculumUrl() {
-		return this.navigator.getRedirectUrl(PageEnum.CURRICULUM, this.curriculum.getUid());
+		return null;
 	}
 
 	public String delete() {

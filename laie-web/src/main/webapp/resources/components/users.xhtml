@@ -18,7 +18,7 @@
 			<p:dataView var="user" value="#{cc.attrs.value}" gridIcon="pi pi-th-large" listIcon="pi pi-bars" paginator="true"
 				layout="grid" paginatorPosition="bottom" rows="4" emptyMessage="#{i18n['user.no_team']}" lazy="true">
 				<p:dataViewGridItem columns="1">
-					<h:link outcome="#{Page.USER.getUrl()}">
+					<h:link outcome="/user/view.xhtml">
 						<f:param name="user" value="#{user.uid}" />
 						<cc:person name="#{user.fullName}" path="#{user.avatarUrl}" description="#{user.email}"/>
 					</h:link>

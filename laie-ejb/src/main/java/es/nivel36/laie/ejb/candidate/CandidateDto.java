@@ -10,16 +10,17 @@ import java.util.Set;
 import es.nivel36.laie.ejb.core.file.FileDto;
 import es.nivel36.laie.ejb.core.model.AddressDto;
 import es.nivel36.laie.ejb.job.candidature.JobCandidatureDto;
+import es.nivel36.laie.ejb.user.SimpleUserDto;
 
 public class CandidateDto implements Serializable {
-
-	private static final long serialVersionUID = 3735581019757384532L;
+	
+	private static final long serialVersionUID = 6741561987058204897L;
 
 	private AddressDto address;
 
 	private LocalDate bornDate;
 
-	protected String email;
+	private String email;
 
 	private Integer expectedSalary;
 
@@ -33,13 +34,15 @@ public class CandidateDto implements Serializable {
 
 	private String linkedinProfileUrl;
 
-	protected String name;
+	private String name;
 
 	private Origin origin;
+	
+	private SimpleUserDto owner;
 
-	protected String phoneNumber;
+	private String phoneNumber;
 
-	protected String avatarUrl;
+	private String avatarUrl;
 
 	private Integer rating;
 
@@ -47,7 +50,7 @@ public class CandidateDto implements Serializable {
 
 	private String skype;
 
-	protected String surname;
+	private String surname;
 
 	private Set<String> tags = new HashSet<>();
 
@@ -105,6 +108,10 @@ public class CandidateDto implements Serializable {
 
 	public Origin getOrigin() {
 		return this.origin;
+	}
+	
+	public SimpleUserDto getOwner() {
+		return this.owner;
 	}
 
 	public String getPhoneNumber() {
@@ -181,6 +188,10 @@ public class CandidateDto implements Serializable {
 
 	public void setOrigin(final Origin origin) {
 		this.origin = origin;
+	}
+	
+	void setOwner(final SimpleUserDto owner) {
+		this.owner = owner;
 	}
 
 	public void setPhoneNumber(final String phoneNumber) {

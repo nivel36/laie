@@ -24,14 +24,14 @@
 				styleClass="ui-datatable-borderless">
 
 				<p:column headerText="#{i18n['job_candidature.job_offer']}" rendered="#{cc.attrs.showJobOffer}">
-					<h:link value="#{jobCandidature.jobOffer.title}" outcome="#{Page.JOB.getUrl()}">
+					<h:link value="#{jobCandidature.jobOffer.title}" outcome="/job/view.xhtml">
 						<f:param name="id" value="#{jobCandidature.jobOffer.uid}" />
 					</h:link>
 					<span class="job_address">#{jobCandidature.jobOffer.address.city}
 						(#{jobCandidature.jobOffer.address.region})</span>
 				</p:column>
 				<p:column headerText="#{i18n['job_candidature.client']}" rendered="#{cc.attrs.showJobOffer}">
-					<h:link value="#{jobCandidature.jobOffer.client.name}" outcome="#{Page.CLIENT.getUrl()}">
+					<h:link value="#{jobCandidature.jobOffer.client.name}" outcome="/client/view.xhtml">
 						<f:param name="id" value="#{jobCandidature.jobOffer.client.uid}" />
 					</h:link>
 				</p:column>
@@ -39,7 +39,7 @@
 					<cc:avatar name="#{jobCandidature.candidate.fullName}" path="#{jobCandidature.candidate.avatarUrl}" styleClass="small" />
 				</p:column>
 				<p:column headerText="#{i18n['job_candidature.candidate']}" rendered="#{cc.attrs.showCandidate}">
-					<h:link value="#{jobCandidature.candidate.fullName}" outcome="#{Page.CANDIDATE.getUrl()}">
+					<h:link value="#{jobCandidature.candidate.fullName}" outcome="/candidate/view.xhtml">
 						<f:param name="id" value="#{jobCandidature.candidate.uid}" />
 					</h:link>
 				</p:column>
@@ -47,7 +47,7 @@
 					<p:rating value="#{jobCandidature.candidate.rating}" cancel="false" readonly="true" />
 				</p:column>
 				<p:column headerText="#{i18n['job_candidature.job_candidature_state']}">
-					<p:link outcome="#{Page.EVENT_ADD.getUrl()}">
+					<p:link outcome="/event/add.xhtml">
 						<f:param name="jobCandidatureId" value="#{jobCandidature.uid}" />
 						<div class="tag #{jobCandidature.state.color}">#{i18n[jobCandidature.state.name]}</div>
 					</p:link>

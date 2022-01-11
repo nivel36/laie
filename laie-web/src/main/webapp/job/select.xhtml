@@ -35,14 +35,14 @@
 						<p:column selectionMode="multiple" style="width:16px;text-align:center" />
 
 						<p:column headerText="#{i18n['job.title']}" sortBy="#{jobOffer.title}">
-							<h:link value="#{jobOffer.title}" outcome="#{Page.JOB.getUrl()}">
+							<h:link value="#{jobOffer.title}" outcome="/job/view.xhtml">
 								<f:param name="id" value="#{jobOffer.uid}" />
 							</h:link>
 							<span class="job_address">#{jobOffer.address.city} (#{jobOffer.address.region})</span>
 						</p:column>
 
 						<p:column headerText="#{i18n['job.client']}" sortBy="#{jobOffer.client.name}">
-							<h:link value="#{jobOffer.client.name}" outcome="#{Page.CLIENT.getUrl()}">
+							<h:link value="#{jobOffer.client.name}" outcome="/client/view.xhtml">
 								<f:param name="id" value="#{jobOffer.client.uid}" />
 							</h:link>
 						</p:column>
@@ -64,7 +64,7 @@
 						</p:column>
 
 						<p:column headerText="#{i18n['user.owner']}" sortBy="#{user.owner.name}">
-							<h:link value="#{jobOffer.owner.fullName}" outcome="#{Page.USER.getUrl()}">
+							<h:link value="#{jobOffer.owner.fullName}" outcome="/user/view.xhtml">
 								<f:param name="id" value="#{jobOffer.owner.uid}" />
 							</h:link>
 						</p:column>

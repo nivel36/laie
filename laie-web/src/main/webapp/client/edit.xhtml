@@ -15,12 +15,12 @@
 				<div class="p-col-12">
 					<div class="card buttons">
 						<p:button value="#{i18n['action.cancel']}"
-							outcome="#{Page.CLIENT.getUrl()}"
+							outcome="/client/view"
 							styleClass="ui-button-secondary ui-button-outlined">
-							<f:param name="id" value="#{editClientView.client.uid}" />
+							<f:param name="client" value="#{editClientView.client.uid}" />
 						</p:button>
 						<p:commandButton value="#{i18n['action.save']}"
-							onclick="processForm()"
+							action="#{editClientView.save}"
 							styleClass="ui-button-success ui-button-outlined" />
 
 					</div>

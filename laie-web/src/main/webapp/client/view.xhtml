@@ -22,23 +22,26 @@
 				<div class="card buttons">
 					<h:form>
 						<p:button value="#{i18n['action.edit']}"
-							outcome="#{Page.CLIENT_EDIT.getUrl()}"
+							outcome="/client/edit.xhtml"
 							styleClass="ui-button-secondary ui-button-outlined" >
 							<f:param name="client" value="#{viewClientView.client.uid}" />
 						</p:button>
 						<p:commandButton value="#{i18n['action.export']}" process="@this"
 							action="#{viewClientView.export}" icon="pi pi-file-excel"
 							styleClass="ui-button-info ui-button-outlined" />
-						<p:commandButton value="#{i18n['bookmark.add_to_bookmarks']}" process="@this"
+						<p:commandButton value="#{i18n['bookmark.add_to_bookmarks']}" process="@this" update="@form :bookmarks"
 							action="#{viewClientView.addToBoorkmarks}" icon="pi pi-bookmark"
-							styleClass="ui-button-info ui-button-outlined" />
+							styleClass="ui-button-info ui-button-outlined" rendered="#{viewClientView.bookmarkable}"/> 
+						<p:commandButton value="#{i18n['bookmark.remove_from_bookmarks']}" process="@this" update="@form :bookmarks"
+							action="#{viewClientView.removeFromBoorkmarks}" icon="pi pi-bookmark"
+							styleClass="ui-button-info ui-button-outlined" rendered="#{not viewClientView.bookmarkable}"/>
 					</h:form>
 				</div>
 			</div>
 			<div class="p-col-12 p-xl-8 p-col-nogutter">
 				<div class="p-col-12">
 					<div class="card client-card">
-						<div class="card-header"></div>
+						<div class="client-card-header"></div>
 						<div class="client-card-content">
 							<div class="client-card-name">#{viewClientView.client.name}</div>
 							<div class="client-detail">
@@ -70,7 +73,7 @@
 						rows="5">
 						<h:form id="jobOffersForm">
 							<p:button value="#{i18n['job.new_job_offer']}"
-								outcome="#{Page.JOB_ADD.getUrl()}" process="@this"
+								outcome="/job/add.xhtml" process="@this"
 								styleClass="ui-button-success ui-button-outlined">
 								<f:param name="clientId" value="#{viewClientView.client.uid}" />
 							</p:button>
@@ -82,7 +85,7 @@
 			<div class="p-col-12 p-sm-8 p-md-6 p-lg-5 p-xl-4">
 				<cc:contacts value="#{viewClientView.client.contacts}">
 					<p:button value="#{i18n['contact.new_contact']}"
-						outcome="#{Page.CONTACT_ADD.getUrl()}" process="@this"
+						outcome="/client/contact/add.xhtml" process="@this"
 						styleClass="ui-button-success ui-button-outlined">
 						<f:param name="clientId" value="#{viewClientView.client.uid}" />
 					</p:button>

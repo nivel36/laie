@@ -18,7 +18,7 @@ public abstract class AbstractClientView extends AbstractView {
 	protected transient ClientService clientService;
 
 	protected String clientUrl() {
-		return "/client/view?faces-redirect=true&client=" + client.getUid();
+		return "/client/view.xhtml?client=" + client.getUid();
 	}
 
 	public ClientDto getClient() {

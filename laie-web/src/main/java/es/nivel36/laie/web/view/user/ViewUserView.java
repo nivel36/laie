@@ -21,7 +21,6 @@ import es.nivel36.laie.ejb.job.offer.JobOfferService;
 import es.nivel36.laie.ejb.user.UserDto;
 import es.nivel36.laie.ejb.user.UserService;
 import es.nivel36.laie.web.core.IllegalPageStateException;
-import es.nivel36.laie.web.core.util.PageEnum;
 import es.nivel36.laie.web.core.view.AbstractView;
 import es.nivel36.laie.web.reports.UserReport;
 
@@ -33,6 +32,8 @@ public class ViewUserView extends AbstractView {
 
 	private static final Logger logger = LoggerFactory.getLogger(ViewUserView.class);
 
+	public static final String URL = "/user/view.xhtml";
+
 	private boolean editable;
 
 	private List<JobOfferDto> jobOffers;
@@ -42,18 +43,18 @@ public class ViewUserView extends AbstractView {
 	private List<UserDto> team;
 
 	private String uid;
-	
+
 	private UserDto user;
-	
+
 	@Inject
 	private transient JobOfferService jobOfferService;
-	
+
 	@Inject
 	private transient MeetingService meetingService;
 
 	@Inject
 	private transient UserService userService;
-	
+
 	@PostConstruct
 	public void init() {
 		this.uid = this.getValueFromGetParameters("user");
@@ -71,9 +72,9 @@ public class ViewUserView extends AbstractView {
 		this.editable = this.sessionUser.isAdmin();
 	}
 
-	public String editUser() {
+	public void editUser() {
 		logger.debug("Edit user action performed");
-		return this.navigator.getRedirectUrl(PageEnum.USER_EDIT, this.uid);
+		this.navigateTo(EditUserView.URL + "?userId=" + this.uid);
 	}
 
 	public void export() throws IOException {
@@ -101,7 +102,7 @@ public class ViewUserView extends AbstractView {
 	public boolean isEditable() {
 		return this.editable;
 	}
-	
+
 	public void setUser(final UserDto user) {
 		this.user = user;
 	}

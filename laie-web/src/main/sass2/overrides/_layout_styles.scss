@@ -85,7 +85,6 @@
 		}
 		
 		.candidate-card-name {
-			font-size: 13px;
 			color: $primaryTextColor;
 			position: relative;
 			top: -4.2rem;
@@ -112,7 +111,7 @@
 	
 	padding: 0;
 
-	.card-header{
+	.user-card-header{
 		height: 5rem;
 		overflow: hidden;
 		background: linear-gradient(30deg, $primaryColor 0%, $primaryLightColor 150%);

@@ -8,6 +8,9 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import es.nivel36.laie.ejb.candidate.CandidateService;
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.job.meeting.MeetingDto;
@@ -23,8 +26,12 @@ import es.nivel36.laie.web.view.event.EventLazyDataModel;
 @ViewScoped
 public class IndexView extends AbstractView {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 469723251635970418L;
 
+	private static final Logger logger = LoggerFactory.getLogger(IndexView.class);
+
+	public static final String URL = "/index.xhtml";
+	
 	private CandidateLazyDataModel candidates;
 
 	@Inject
@@ -64,6 +71,7 @@ public class IndexView extends AbstractView {
 
 	@PostConstruct
 	public void init() {
+		logger.trace("Index init");
 		final UserDto user = this.sessionUser.get();
 		this.jobOffers = this.jobService.findJobOffersByOwner(user.getUid(), new Page(0, 10));
 		this.candidates = new CandidateLazyDataModel(this.candidateService);
