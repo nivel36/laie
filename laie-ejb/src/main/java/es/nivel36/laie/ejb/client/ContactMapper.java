@@ -13,6 +13,8 @@ public class ContactMapper implements Mapper<Contact, ContactDto> {
 		dto.setPhoneNumber(entity.getPhoneNumber());
 		dto.setPosition(entity.getPosition());
 		dto.setSurname(entity.getSurname());
+		dto.setUid(entity.getUid());
+		dto.setClientUid(entity.getClient().getUid());
 		return dto;
 	}
 }

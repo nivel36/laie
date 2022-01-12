@@ -2,7 +2,8 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
 	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://nivel.36/laie/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:g="http://nivel.36/laie/ui"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
@@ -13,51 +14,57 @@
 		#{clientEditView.client.name}
 	</ui:define>
 
-	<ui:define name="breadcrumb">
-		<p:breadCrumb>
-			<p:menuitem value="#{i18n['menu.index']}" outcome="/index.xhtml" />
-			<p:menuitem value="#{i18n['client.clients']}" outcome="/client/search.xhtml" />
-			<p:menuitem value="#{editContactView.contact.client.name}" outcome="/client/view.xhtml">
-				<f:param name="id" value="#{editContactView.contact.client.uid}" />
-			</p:menuitem>
-			<p:menuitem value="#{editContactView.contact.fullName}" disabled="true" />
-		</p:breadCrumb>
-	</ui:define>
-
 	<ui:define name="buttons">
 		<h:form>
-			<p:button value="#{i18n['action.cancel']}" outcome="/client/view.xhtml" styleClass="ui-button-secondary ui-button-outlined">
-				<f:param name="id" value="#{editContactView.contact.client.uid}" />
-			</p:button>
-			<p:commandButton value="#{i18n['action.delete']}" action="#{editContactView.delete}" styleClass="ui-button-danger ui-button-outlined" >
-				<p:confirm message="#{i18n['contact.message.remove']}" icon="fa fa-exclamation-triangle" />
-			</p:commandButton>
-			<p:commandButton value="#{i18n['action.save']}" onclick="saveForm()" styleClass="ui-button-success ui-button-outlined" />
+
 		</h:form>
 	</ui:define>
 
 	<ui:define name="content">
 		<h:form id="contactForm">
-			<p:remoteCommand name="saveForm" process="@form" update="@form growl" action="#{editContactView.save}" />
 			<div class="p-grid">
+				<div class="p-col-12">
+					<div class="card buttons">
+						<p:button value="#{i18n['action.cancel']}"
+							outcome="/client/view.xhtml"
+							styleClass="ui-button-secondary ui-button-outlined">
+							<f:param name="client" value="#{editContactView.contact.clientUid}" />
+						</p:button>
+						<p:commandButton value="#{i18n['action.delete']}"
+							action="#{editContactView.delete}"
+							styleClass="ui-button-danger ui-button-outlined">
+							<p:confirm message="#{i18n['contact.message.remove']}"
+								icon="fa fa-exclamation-triangle" />
+						</p:commandButton>
+						<p:commandButton value="#{i18n['action.save']}"
+							action="#{editContactView.save}"
+							styleClass="ui-button-success ui-button-outlined" />
+					</div>
+				</div>
 				<div class="p-col-12 p-xl-6">
 					<div class="card card-w-title ui-fluid">
 						<h1>#{i18n['contact.data']}</h1>
 						<div class="p-grid">
 							<div class="p-col-12 p-sm-6">
-								<g:input id="name" label="#{i18n['contact.name']}" value="#{editContactView.contact.name}" required="true" />
+								<g:input id="name" label="#{i18n['contact.name']}"
+									value="#{editContactView.contact.name}" required="true" />
 							</div>
 							<div class="p-col-12 p-sm-6">
-								<g:input id="surname" label="#{i18n['contact.surname']}" value="#{editContactView.contact.surname}" required="true" />
+								<g:input id="surname" label="#{i18n['contact.surname']}"
+									value="#{editContactView.contact.surname}" required="true" />
 							</div>
 							<div class="p-col-12 p-sm-6">
-								<g:input id="position" label="#{i18n['contact.position']}" value="#{editContactView.contact.position}" />
+								<g:input id="position" label="#{i18n['contact.position']}"
+									value="#{editContactView.contact.position}" />
 							</div>
 							<div class="p-col-12 p-sm-6">
-								<g:input id="email" label="#{i18n['contact.email']}" value="#{editContactView.contact.email}" />
+								<g:input id="email" label="#{i18n['contact.email']}"
+									value="#{editContactView.contact.email}" />
 							</div>
 							<div class="p-col-12 p-sm-6">
-								<g:input id="phone_number" label="#{i18n['contact.phone_number']}" value="#{editContactView.contact.phoneNumber}" />
+								<g:input id="phone_number"
+									label="#{i18n['contact.phone_number']}"
+									value="#{editContactView.contact.phoneNumber}" />
 							</div>
 						</div>
 					</div>

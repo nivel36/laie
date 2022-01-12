@@ -1,5 +1,7 @@
 package es.nivel36.laie.web.view.client.contact;
 
+import java.util.Objects;
+
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -10,7 +12,6 @@ import org.slf4j.LoggerFactory;
 
 import es.nivel36.laie.ejb.client.ContactDto;
 import es.nivel36.laie.ejb.client.ContactService;
-import es.nivel36.laie.web.core.IllegalPageStateException;
 import es.nivel36.laie.web.core.view.AbstractView;
 import es.nivel36.laie.web.view.client.ViewClientView;
 
@@ -32,17 +33,14 @@ public class AddContactView extends AbstractView {
 	@PostConstruct
 	public void init() {
 		logger.debug("New contact");
-		this.clientUid = this.getValueFromGetParameters("clientUid");
-		if (clientUid == null) {
-			throw new IllegalPageStateException();
-		}
+		this.clientUid = this.getValueFromGetParameters("client", true);
 		this.contact = new ContactDto();
 	}
 
 	public void save() {
 		logger.debug("Contact add action performed");
 		this.contactService.addContact(clientUid, contact);
-		this.navigateTo(ViewClientView.URL + "?clientUid=" + this.clientUid);
+		this.navigateTo(ViewClientView.URL + "?client=" + this.clientUid);
 	}
 
 	public ContactDto getContact() {
@@ -53,7 +51,12 @@ public class AddContactView extends AbstractView {
 		this.contact = contact;
 	}
 
+	public String getClientUid() {
+		return clientUid;
+	}
+
 	public void setContactService(final ContactService contactService) {
+		Objects.requireNonNull(contactService);
 		this.contactService = contactService;
 	}
 }

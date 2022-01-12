@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
 	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:g="http://nivel.36/laie/ui"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+	xmlns:o="http://omnifaces.org/ui"
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	template="/WEB-INF/templates/template.xhtml">
@@ -19,24 +20,29 @@
 	<ui:define name="content">
 		<div class="p-grid">
 			<div class="p-col-12">
-				<div class="card buttons">
+				<h:panelGroup layout="block" id="buttons" styleClass="card buttons">
 					<h:form>
 						<p:button value="#{i18n['action.edit']}"
 							outcome="/client/edit.xhtml"
-							styleClass="ui-button-secondary ui-button-outlined" >
+							styleClass="ui-button-secondary ui-button-outlined">
 							<f:param name="client" value="#{viewClientView.client.uid}" />
 						</p:button>
 						<p:commandButton value="#{i18n['action.export']}" process="@this"
 							action="#{viewClientView.export}" icon="pi pi-file-excel"
 							styleClass="ui-button-info ui-button-outlined" />
-						<p:commandButton value="#{i18n['bookmark.add_to_bookmarks']}" process="@this" update="@form :bookmarks"
+						<p:commandButton value="#{i18n['bookmark.add_to_bookmarks']}"
+							process="@this" update="buttons :bookmarks"
 							action="#{viewClientView.addToBoorkmarks}" icon="pi pi-bookmark"
-							styleClass="ui-button-info ui-button-outlined" rendered="#{viewClientView.bookmarkable}"/> 
-						<p:commandButton value="#{i18n['bookmark.remove_from_bookmarks']}" process="@this" update="@form :bookmarks"
-							action="#{viewClientView.removeFromBoorkmarks}" icon="pi pi-bookmark"
-							styleClass="ui-button-info ui-button-outlined" rendered="#{not viewClientView.bookmarkable}"/>
+							styleClass="ui-button-info ui-button-outlined"
+							rendered="#{viewClientView.bookmarkable}" />
+						<p:commandButton value="#{i18n['bookmark.remove_from_bookmarks']}"
+							process="@this" update="buttons :bookmarks"
+							action="#{viewClientView.removeFromBoorkmarks}"
+							icon="pi pi-bookmark"
+							styleClass="ui-button-info ui-button-outlined"
+							rendered="#{not viewClientView.bookmarkable}" />
 					</h:form>
-				</div>
+				</h:panelGroup>
 			</div>
 			<div class="p-col-12 p-xl-8 p-col-nogutter">
 				<div class="p-col-12">
@@ -87,7 +93,7 @@
 					<p:button value="#{i18n['contact.new_contact']}"
 						outcome="/client/contact/add.xhtml" process="@this"
 						styleClass="ui-button-success ui-button-outlined">
-						<f:param name="clientId" value="#{viewClientView.client.uid}" />
+						<f:param name="client" value="#{viewClientView.client.uid}" />
 					</p:button>
 				</cc:contacts>
 			</div>

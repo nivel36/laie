@@ -21,16 +21,10 @@ public class ContactDto implements Serializable {
 
 	private String uid;
 
-	@Override
-	public boolean equals(final Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (!super.equals(obj) || (this.getClass() != obj.getClass())) {
-			return false;
-		}
-		final Contact other = (Contact) obj;
-		return Objects.equals(other.email, this.email);
+	private String clientUid;
+
+	public String getClientUid() {
+		return clientUid;
 	}
 
 	public String getEmail() {
@@ -68,9 +62,8 @@ public class ContactDto implements Serializable {
 		return this.uid;
 	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(this.email);
+	void setClientUid(String clientUid) {
+		this.clientUid = clientUid;
 	}
 
 	public void setEmail(final String email) {
@@ -99,6 +92,23 @@ public class ContactDto implements Serializable {
 
 	void setUid(final String uid) {
 		this.uid = uid;
+	}
+	
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (!super.equals(obj) || (this.getClass() != obj.getClass())) {
+			return false;
+		}
+		final Contact other = (Contact) obj;
+		return Objects.equals(other.email, this.email);
+	}
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(this.email);
 	}
 
 	@Override

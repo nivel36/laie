@@ -84,11 +84,13 @@ public class ViewClientView extends AbstractClientView {
 
 	public void addToBoorkmarks() {
 		this.bookmarkService.addBookmark(this.bookmark, getUserUid());
+		this.bookmarkable = false;
 		this.sessionUser.refresh();
 	}
 
 	public void removeFromBoorkmarks() {
 		this.bookmarkService.deleteBookmark(this.bookmark, getUserUid());
+		this.bookmarkable = true;
 		this.sessionUser.refresh();
 	}
 

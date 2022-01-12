@@ -6,6 +6,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
+import org.omnifaces.util.Faces;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,16 +43,16 @@ public class AddUserView extends AbstractUserView {
 		}
 	}
 
-	public String save() throws Exception {
+	public void save() throws Exception {
 		logger.debug("Create new user action performed");
 		try {
-			this.userService.addUser(this.user, manager.getUid());
+			this.userService.addUser(this.user, this.manager.getUid());
+			final String userUrl = this.userUrl();
+			Faces.redirect(userUrl);
 		} catch (DuplicateEmailException e) {
-			// TODO: gestionar excepcion
-			throw e;
+			this.addErrorToField("userForm:email", "user.error.email_exists");
 		} catch (BadManagerException e) {
-			throw e;
+			this.addErrorToField("userForm:manager", "user.error.manager");
 		}
-		return this.userUrl();
 	}
 }

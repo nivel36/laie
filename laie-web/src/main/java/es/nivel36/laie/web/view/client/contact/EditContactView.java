@@ -33,8 +33,8 @@ public class EditContactView extends AbstractView {
 
 	@PostConstruct
 	public void init() {
-		this.uid = this.getValueFromGetParameters("uid", true);
-		this.clientUid = this.getValueFromGetParameters("clientUid", true);
+		this.uid = this.getValueFromGetParameters("contact", true);
+		this.clientUid = this.getValueFromGetParameters("client", false);
 		this.contact = this.contactService.findContactByUid(uid);
 		if (this.contact == null) {
 			throw new IllegalPageStateException();
@@ -44,13 +44,13 @@ public class EditContactView extends AbstractView {
 	public void save() {
 		logger.debug("Contact save action performed");
 		this.contactService.updateContact(this.contact);
-		this.navigateTo(ViewClientView.URL + "?clientUid=" + this.clientUid);
+		this.navigateTo(ViewClientView.URL + "?client=" + this.clientUid);
 	}
 
 	public void delete() {
 		logger.debug("Contact delete action performed");
 		this.contactService.deleteContact(this.uid);
-		this.navigateTo(ViewClientView.URL + "?clientUid=" + this.clientUid);
+		this.navigateTo(ViewClientView.URL + "?client=" + this.clientUid);
 	}
 
 	public ContactDto getContact() {

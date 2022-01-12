@@ -4,6 +4,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
+import org.omnifaces.util.Faces;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,11 +22,9 @@ public class EditUserView extends AbstractUserView {
 	
 	public static final String URL = "/user/edit.xhtml";
 
-	protected String uid;
-
 	@PostConstruct
 	public void init() {
-		uid = this.getValueFromGetParameters("user");
+		final String uid = this.getValueFromGetParameters("user");
 		if (uid == null) {
 			throw new IllegalPageStateException();
 		}
@@ -45,27 +44,27 @@ public class EditUserView extends AbstractUserView {
 		}
 	}
 
-	public String save() {
+	public void save() {
 		logger.debug("Save user action performed");
 		try {
 			this.userService.updateUser(this.user);
 			if (managerHasChanged()) {
-				final String uid = this.manager == null ? null : this.manager.getUid();
-				this.userService.changeUsersManager(this.user.getUid(), uid);
+				final String managerUid = this.manager == null ? null : this.manager.getUid();
+				this.userService.changeUsersManager(this.user.getUid(), managerUid);
 			}
-			return this.userUrl();
+			final String userUrl = this.userUrl();
+			Faces.redirect(userUrl);
 		} catch (DuplicateEmailException e) {
 			this.addErrorToField("userForm:email", "user.error.email_exists");
 		} catch (BadManagerException e) {
 			this.addErrorToField("userForm:manager", "user.error.manager");
 		}
-		return null;
 	}
 
 	private boolean managerHasChanged() {
 		if (this.user.getManager() == null) {
 			return this.manager != null;
 		}
-		return this.user.getManager().equals(this.manager);
+		return !this.user.getManager().equals(this.manager);
 	}
 }

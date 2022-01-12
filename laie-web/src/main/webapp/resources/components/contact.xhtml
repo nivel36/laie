@@ -5,7 +5,7 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 	<composite:interface>
-		<composite:attribute name="value" required="true" type="es.nivel36.laie.ejb.client.Contact" />
+		<composite:attribute name="value" required="true" type="es.nivel36.laie.ejb.client.ContactDto" />
 		<composite:attribute name="styleClass" required="false" default="" />
 	</composite:interface>
 
@@ -24,8 +24,9 @@
 				</div>
 			</div>
 			<div class="buttons">
-				<p:button icon="pi pi-pencil" outcome="/contact/edit.xhtml" styleClass="ui-button-outlined">
-					<f:param name="uid" value="#{cc.attrs.value.uid}" />
+				<p:button icon="pi pi-pencil" outcome="/client/contact/edit.xhtml" styleClass="ui-button-outlined">
+					<f:param name="contact" value="#{cc.attrs.value.uid}" />
+					<f:param name="client" value="#{cc.attrs.value.clientUid}" />
 				</p:button>
 			</div>
 		</div>

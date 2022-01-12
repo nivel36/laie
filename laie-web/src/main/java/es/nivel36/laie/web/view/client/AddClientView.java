@@ -4,6 +4,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
+import org.omnifaces.util.Faces;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,10 +24,11 @@ public class AddClientView extends AbstractClientView {
 		this.client = new ClientDto();
 	}
 
-	public String save() {
+	public void save() {
 		logger.debug("Add new client action performed");
 		final String ownerUid = this.sessionUser.get().getUid();
 		this.client = this.clientService.addClient(this.client, ownerUid);
-		return this.clientUrl();
+		final String clientUrl = this.clientUrl();
+		Faces.redirect(clientUrl);
 	}
 }
