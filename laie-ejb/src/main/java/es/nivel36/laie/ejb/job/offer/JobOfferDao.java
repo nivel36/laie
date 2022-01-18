@@ -25,7 +25,7 @@ public class JobOfferDao extends AbstractDao {
 	public JobOffer findByUid(final String uid) {
 		Objects.requireNonNull(uid);
 		final String namedQuery = "JobOffer.findByUid";
-		final Parameters parameters = map("uid", uid);
+		final Parameters parameters = map("jobOfferUid", uid);
 		return this.findByQuery(JobOffer.class, namedQuery, parameters);
 	}
 

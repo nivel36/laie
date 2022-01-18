@@ -59,21 +59,6 @@ public class Contact extends AbstractIndexedEntity {
 	@SortableField(forField = "surname")
 	protected String surname;
 
-	@Override
-	public boolean equals(final Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (!super.equals(obj)) {
-			return false;
-		}
-		if (this.getClass() != obj.getClass()) {
-			return false;
-		}
-		final Contact other = (Contact) obj;
-		return Objects.equals(other.email, this.email);
-	}
-
 	public Client getClient() {
 		return this.client;
 	}
@@ -109,11 +94,6 @@ public class Contact extends AbstractIndexedEntity {
 		return this.surname;
 	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(this.email);
-	}
-
 	public void setClient(final Client client) {
 		this.client = client;
 	}
@@ -140,6 +120,25 @@ public class Contact extends AbstractIndexedEntity {
 
 	public void setSurname(final String surname) {
 		this.surname = surname;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = prime * Objects.hash(email);
+		return result;
+	}
+
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		final Contact other = (Contact) obj;
+		return Objects.equals(email, other.email);
 	}
 
 	@Override

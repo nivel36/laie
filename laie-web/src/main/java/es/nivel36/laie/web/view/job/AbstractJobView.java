@@ -3,6 +3,7 @@ package es.nivel36.laie.web.view.job;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
@@ -42,12 +43,14 @@ public abstract class AbstractJobView extends AbstractView {
 	public void onOwnerSelect(final SelectEvent<SimpleUserDto> event) {
 		final SimpleUserDto user = event.getObject();
 		if (user != null) {
-			this.jobOfferService.chageJobOffersOwner(this.jobOffer.getUid(), user.getUid());
+			this.jobOfferService.changeJobOffersOwner(this.jobOffer.getUid(), user.getUid());
 		}
 	}
 
-	public List<UserDto> queryOwner(final String query) {
-		return this.userService.search(query, Page.ALL_RESULTS).getResultData();
+	public List<SimpleUserDto> queryOwner(final String query) {
+		final List<UserDto> resultData = this.userService.search(query, Page.TEN_RESULTS_PER_PAGE).getResultData();
+		final List<SimpleUserDto> users = resultData.stream().map(SimpleUserDto::new).collect(Collectors.toList());
+		return users;
 	}
 
 	public List<SimpleUserDto> queryRecruiter(final String query) {

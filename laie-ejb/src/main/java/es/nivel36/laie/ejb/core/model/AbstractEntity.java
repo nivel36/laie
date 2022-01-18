@@ -54,7 +54,7 @@ public abstract class AbstractEntity implements Identifiable, Serializable {
 			return false;
 		}
 		final AbstractEntity other = (AbstractEntity) obj;
-		return other.id == this.id && other.version == this.version;
+		return other.id == this.id;
 	}
 
 	@Override

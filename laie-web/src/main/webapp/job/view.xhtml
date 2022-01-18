@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://nivel.36/laie/ui" xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui"
-	xmlns:p="http://primefaces.org/ui" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:g="http://nivel.36/laie/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
 	template="/WEB-INF/templates/template.xhtml">
 
 	<ui:define name="title">
@@ -10,23 +16,36 @@
 
 	<ui:param name="selectedMenu" value="offers" />
 
-	<ui:define name="breadcrumb">
-		<p:breadCrumb>
-			<p:menuitem value="#{i18n['menu.index']}" outcome="/index.xhtml" />
-			<p:menuitem value="#{i18n['job.job_offers']}" outcome="/job/search.xhtml" />
-			<p:menuitem value="#{viewJobView.jobOffer}" disabled="true" />
-		</p:breadCrumb>
-	</ui:define>
-
 	<ui:define name="buttons">
 		<h:form>
-			<p:commandButton value="#{i18n['action.edit']}" action="#{viewJobView.editJobOffer}" icon="fa fa-pencil" styleClass="ui-button-secondary ui-button-outlined"/>
-			<p:commandButton value="#{i18n['action.export']}" action="#{viewJobView.export}" icon="fa fa-file-excel-o" styleClass="ui-button-info ui-button-outlined" />
+			<p:button value="#{i18n['action.edit']}" outcome="/job/edit"
+				icon="fa fa-pencil"
+				styleClass="ui-button-secondary ui-button-outlined">
+				<f:param name="job" value="#{viewJobView.jobOffer.uid}" />
+			</p:button>
+			<p:commandButton value="#{i18n['action.export']}"
+				action="#{viewJobView.export}" icon="fa fa-file-excel-o"
+				styleClass="ui-button-info ui-button-outlined" />
 		</h:form>
 	</ui:define>
 
 	<ui:define name="content">
 		<div class="p-grid">
+			<div class="p-col-12">
+				<div class="card buttons">
+					<h:form>
+						<p:button value="#{i18n['action.edit']}" outcome="/job/edit"
+							icon="pi pi-pencil"
+							styleClass="ui-button-secondary ui-button-outlined">
+							<f:param name="job" value="#{viewJobView.jobOffer.uid}" />
+						</p:button>
+						<p:commandButton value="#{i18n['action.export']}"
+							action="#{viewJobView.export}" icon="pi pi-file-excel"
+							styleClass="ui-button-info ui-button-outlined" />
+					</h:form>
+				</div>
+			</div>
+
 			<div class="p-col-12 p-xl-6">
 				<div class="card job-card">
 					<div class="card-header"></div>
@@ -35,38 +54,49 @@
 						<div class="job-card-name">#{viewJobView.jobOffer.title}</div>
 						<div class="job-detail ui-fluid">
 							<div class="p-grid">
-							<div class="p-col-12 p-sm-6">
-								<cc:outputLink label="#{i18n['job.client']}" value="#{viewJobView.jobOffer.client.name}" outcome="/client/view.xhtml">
-									<f:param name="id" value="#{viewJobView.jobOffer.client.uid}" />
-								</cc:outputLink>
-							</div>
+								<div class="p-col-12 p-sm-6">
+									<cc:outputLink label="#{i18n['job.client']}"
+										value="#{viewJobView.jobOffer.client.name}"
+										outcome="/client/view.xhtml">
+										<f:param name="client" value="#{viewJobView.jobOffer.client.uid}" />
+									</cc:outputLink>
+								</div>
 
-							<div class="p-col-12 p-sm-6">
-								<cc:outputText label="#{i18n['job.salary']}" value="#{viewJobView.jobOffer.salary}" >
-									<f:convertNumber for="text" currencyCode="EUR" maxFractionDigits="0" type="currency" />
-								</cc:outputText>
-							</div>
-							<div class="p-col-12 p-sm-6">
-								<cc:outputText label="#{i18n['job.places']}" value="#{viewJobView.jobOffer.places}" />
-							</div>
-							<div class="p-col-12 p-sm-6">
-								<cc:outputText label="#{i18n['address.city']}" value="#{viewJobView.jobOffer.address.city}" />
+								<div class="p-col-12 p-sm-6">
+									<cc:outputText label="#{i18n['job.salary']}"
+										value="#{viewJobView.jobOffer.salary}">
+										<f:convertNumber for="text" currencyCode="EUR"
+											maxFractionDigits="0" type="currency" />
+									</cc:outputText>
+								</div>
+								<div class="p-col-12 p-sm-6">
+									<cc:outputText label="#{i18n['job.places']}"
+										value="#{viewJobView.jobOffer.places}" />
+								</div>
+								<div class="p-col-12 p-sm-6">
+									<cc:outputText label="#{i18n['address.city']}"
+										value="#{viewJobView.jobOffer.address.city}" />
 
-							</div>
-							<div class="p-col-12 p-sm-6">
-								<cc:outputText label="#{i18n['job.state']}" value="#{viewJobView.jobOffer.address.region}" />
-							</div>
-							<div class="p-col-12">
-								<cc:outputLink label="#{i18n['job.preview']}" value="#{i18n['job.preview']}" outcome="/job/preview.xhtml" target="new">
-									<f:param name="id" value="#{viewJobView.jobOffer.uid}" />
-								</cc:outputLink>
-								<cc:outputLink label="#{i18n['job.description']}" value="#{applicationView.hostname}/open/jobOffer.xhtml" outcome="/open/jobOffer.xhtml"
-									target="new" rendered="#{viewJobView.jobOffer.published}">
-									<f:param name="id" value="#{viewJobView.jobOffer.uid}" />
-								</cc:outputLink>
+								</div>
+								<div class="p-col-12 p-sm-6">
+									<cc:outputText label="#{i18n['job.state']}"
+										value="#{viewJobView.jobOffer.address.region}" />
+								</div>
+								<div class="p-col-12">
+									<cc:outputLink label="#{i18n['job.preview']}"
+										value="#{i18n['job.preview']}" outcome="/job/preview.xhtml"
+										target="new">
+										<f:param name="job" value="#{viewJobView.jobOffer.uid}" />
+									</cc:outputLink>
+									<cc:outputLink label="#{i18n['job.description']}"
+										value="#{applicationView.hostname}/open/jobOffer.xhtml"
+										outcome="/open/jobOffer.xhtml" target="new"
+										rendered="#{viewJobView.jobOffer.published}">
+										<f:param name="job" value="#{viewJobView.jobOffer.uid}" />
+									</cc:outputLink>
+								</div>
 							</div>
 						</div>
-					</div>
 					</div>
 				</div>
 			</div>
@@ -76,8 +106,10 @@
 					<h5>#{i18n['job.data']}</h5>
 					<div class="p-grid">
 						<div class="p-col-12 p-sm-6">
-							<cc:outputLink label="#{i18n['job.owner']}" value="#{viewJobView.jobOffer.owner.fullName}" outcome="/user/view.xhtml">
-								<f:param name="id" value="#{viewJobView.jobOffer.owner.uid}" />
+							<cc:outputLink label="#{i18n['job.owner']}"
+								value="#{viewJobView.jobOffer.owner.fullName}"
+								outcome="/user/view.xhtml">
+								<f:param name="user" value="#{viewJobView.jobOffer.owner.uid}" />
 							</cc:outputLink>
 						</div>
 
@@ -98,13 +130,17 @@
 							</div>
 						</div>
 						<div class="p-col-12 p-sm-6">
-							<cc:outputText label="#{i18n['job.date_opened']}" value="#{viewJobView.jobOffer.dateOpened}">
-								<f:convertDateTime type="localDate" pattern="dd / MM / yyyy" for="text" />
+							<cc:outputText label="#{i18n['job.date_opened']}"
+								value="#{viewJobView.jobOffer.openDate}">
+								<f:convertDateTime type="localDate" pattern="dd / MM / yyyy"
+									for="text" />
 							</cc:outputText>
 						</div>
 						<div class="p-col-12 p-sm-6">
-							<cc:outputText label="#{i18n['job.date_closed']}" value="#{viewJobView.jobOffer.dateClosed}">
-								<f:convertDateTime type="localDate" pattern="dd / MM / yyyy" for="text" />
+							<cc:outputText label="#{i18n['job.date_closed']}"
+								value="#{viewJobView.jobOffer.closeDate}">
+								<f:convertDateTime type="localDate" pattern="dd / MM / yyyy"
+									for="text" />
 							</cc:outputText>
 						</div>
 						<div class="p-col-12">
@@ -113,12 +149,14 @@
 									<div class="label">#{i18n['job.recruiters']}</div>
 								</div>
 								<div class="text-container">
-									<ui:repeat value="#{viewJobView.jobOffer.recruiters}" var="recruiter" varStatus="varStatus">
+									<ui:repeat value="#{viewJobView.jobOffer.recruiters}"
+										var="recruiter" varStatus="varStatus">
 										<p:link outcome="/user/view.xhtml">
-											<f:param name="id" value="#{recruiter.uid}" />
+											<f:param name="user" value="#{recruiter.uid}" />
 											<h:outputText value="#{recruiter.fullName}" />
 										</p:link>
-										<h:outputText value=", " styleClass="text" rendered="#{not varStatus.last}" />
+										<h:outputText value=", " styleClass="text"
+											rendered="#{not varStatus.last}" />
 									</ui:repeat>
 								</div>
 							</div>
@@ -129,9 +167,12 @@
 
 			<div class="p-col-12 p-xl-7">
 				<h:form>
-					<cc:jobCandidatures value="#{viewJobView.jobCandidatures}" showJobOffer="false" rows="5">
-						<p:button value="#{i18n['action.add']}" outcome="/job/selectCandidates.xhtml" process="@this" rendered="#{viewJobView.jobOffer.open}">
-							<f:param name="jobOfferId" value="#{viewJobView.jobOffer.uid}" />
+					<cc:jobCandidatures value="#{viewJobView.jobCandidatures}"
+						showJobOffer="false" rows="5">
+						<p:button value="#{i18n['action.add']}"
+							outcome="/job/selectCandidates.xhtml" process="@this"
+							rendered="#{viewJobView.jobOffer.open}">
+							<f:param name="job" value="#{viewJobView.jobOffer.uid}" />
 						</p:button>
 					</cc:jobCandidatures>
 				</h:form>

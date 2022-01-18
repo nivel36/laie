@@ -14,12 +14,6 @@
 		#{clientEditView.client.name}
 	</ui:define>
 
-	<ui:define name="buttons">
-		<h:form>
-
-		</h:form>
-	</ui:define>
-
 	<ui:define name="content">
 		<h:form id="contactForm">
 			<div class="p-grid">
@@ -28,13 +22,14 @@
 						<p:button value="#{i18n['action.cancel']}"
 							outcome="/client/view.xhtml"
 							styleClass="ui-button-secondary ui-button-outlined">
-							<f:param name="client" value="#{editContactView.contact.clientUid}" />
+							<f:param name="client"
+								value="#{editContactView.contact.clientUid}" />
 						</p:button>
 						<p:commandButton value="#{i18n['action.delete']}"
 							action="#{editContactView.delete}"
 							styleClass="ui-button-danger ui-button-outlined">
 							<p:confirm message="#{i18n['contact.message.remove']}"
-								icon="fa fa-exclamation-triangle" />
+								icon="pi pi-exclamation-triangle" />
 						</p:commandButton>
 						<p:commandButton value="#{i18n['action.save']}"
 							action="#{editContactView.save}"
@@ -70,6 +65,13 @@
 					</div>
 				</div>
 			</div>
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade"
+				responsive="true" width="350">
+				<p:commandButton value="#{i18n['action.confirm.no']}" type="button"
+					styleClass="ui-confirmdialog-no ui-button-flat" />
+				<p:commandButton value="#{i18n['action.confirm.yes']}" type="button"
+					styleClass="ui-confirmdialog-yes" />
+			</p:confirmDialog>
 		</h:form>
 	</ui:define>
 </ui:composition>

@@ -30,7 +30,7 @@ public class ViewClientView extends AbstractClientView {
 	private static final long serialVersionUID = 7741542000560705248L;
 
 	private static final Logger logger = LoggerFactory.getLogger(ViewClientView.class);
-	
+
 	public static final String URL = "/client/view.xhtml";
 
 	private List<ContactDto> contacts;
@@ -38,7 +38,7 @@ public class ViewClientView extends AbstractClientView {
 	private boolean editable;
 
 	private boolean bookmarkable;
-	
+
 	private BookmarkDto bookmark;
 
 	private List<JobOfferDto> jobOffers;
@@ -61,13 +61,13 @@ public class ViewClientView extends AbstractClientView {
 			this.client.setAddress(new AddressDto());
 		}
 		this.contacts = new ArrayList<>(this.client.getContacts());
-		this.jobOffers = this.jobOfferService.findJobOffersByOwner(this.client.getUid(), Page.ALL_RESULTS);
+		this.jobOffers = this.jobOfferService.findJobOffersByClient(client.getUid(), Page.ALL_RESULTS);
 		this.checkDeleted();
 		this.editable = true;
 		this.bookmark = this.buildBookmark();
 		this.bookmarkable = !this.sessionUser.getBookmarks().contains(this.bookmark);
 	}
-	
+
 	private BookmarkDto buildBookmark() {
 		final BookmarkDto bookmark = new BookmarkDto();
 		bookmark.setTitle(client.getName());
@@ -113,7 +113,7 @@ public class ViewClientView extends AbstractClientView {
 	public boolean isBookmarkable() {
 		return this.bookmarkable;
 	}
-	
+
 	public boolean isEditable() {
 		return this.editable;
 	}

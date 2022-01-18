@@ -2,10 +2,12 @@ package es.nivel36.laie.ejb.job.offer;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
 import es.nivel36.laie.ejb.candidate.Candidate;
+import es.nivel36.laie.ejb.client.SimpleClientDto;
 import es.nivel36.laie.ejb.core.model.AddressDto;
 import es.nivel36.laie.ejb.job.candidature.JobCandidature;
 import es.nivel36.laie.ejb.user.SimpleUserDto;
@@ -16,13 +18,15 @@ public class JobOfferDto implements Serializable {
 
 	private AddressDto address;
 
-	private LocalDate closeDate;
+	private SimpleClientDto client;
 
-	private LocalDate openDate;
+	private LocalDate closeDate;
 
 	private String description;
 
-	private Set<JobCandidature> jobCandidatures;
+	private Set<JobCandidature> jobCandidatures = new HashSet<>();
+
+	private LocalDate openDate;
 
 	private SimpleUserDto owner;
 
@@ -30,7 +34,7 @@ public class JobOfferDto implements Serializable {
 
 	private boolean published;
 
-	private Set<SimpleUserDto> recruiters;
+	private Set<SimpleUserDto> recruiters = new HashSet<>();
 
 	private Integer salary;
 
@@ -47,12 +51,12 @@ public class JobOfferDto implements Serializable {
 		return this.address;
 	}
 
-	public LocalDate getCloseDate() {
-		return this.closeDate;
+	public final SimpleClientDto getClient() {
+		return client;
 	}
 
-	public LocalDate getOpenDate() {
-		return this.openDate;
+	public LocalDate getCloseDate() {
+		return this.closeDate;
 	}
 
 	public String getDescription() {
@@ -61,6 +65,10 @@ public class JobOfferDto implements Serializable {
 
 	public Set<JobCandidature> getJobCandidatures() {
 		return this.jobCandidatures;
+	}
+
+	public LocalDate getOpenDate() {
+		return this.openDate;
 	}
 
 	public SimpleUserDto getOwner() {
@@ -124,12 +132,12 @@ public class JobOfferDto implements Serializable {
 		this.address = address;
 	}
 
-	public void setCloseDate(final LocalDate closeDate) {
-		this.closeDate = closeDate;
+	public final void setClient(SimpleClientDto client) {
+		this.client = client;
 	}
 
-	public void setOpenDate(final LocalDate openDate) {
-		this.openDate = openDate;
+	public void setCloseDate(final LocalDate closeDate) {
+		this.closeDate = closeDate;
 	}
 
 	public void setDescription(final String description) {
@@ -138,6 +146,10 @@ public class JobOfferDto implements Serializable {
 
 	void setJobCandidatures(final Set<JobCandidature> jobCandidatures) {
 		this.jobCandidatures = jobCandidatures;
+	}
+
+	public void setOpenDate(final LocalDate openDate) {
+		this.openDate = openDate;
 	}
 
 	void setOwner(final SimpleUserDto owner) {

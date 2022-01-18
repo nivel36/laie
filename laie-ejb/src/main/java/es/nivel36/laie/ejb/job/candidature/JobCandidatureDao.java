@@ -15,6 +15,7 @@ public class JobCandidatureDao extends AbstractDao {
 
 	public void insert(final JobCandidature jobCandidature) {
 		Objects.requireNonNull(jobCandidature);
+		super.setUid(JobCandidature.class, jobCandidature);
 		this.em.persist(jobCandidature);
 	}
 

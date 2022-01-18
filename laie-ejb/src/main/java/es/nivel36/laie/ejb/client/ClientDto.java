@@ -8,7 +8,7 @@ import java.util.Set;
 import org.hibernate.search.annotations.Indexed;
 
 import es.nivel36.laie.ejb.core.model.AddressDto;
-import es.nivel36.laie.ejb.job.offer.JobOffer;
+import es.nivel36.laie.ejb.job.offer.JobOfferDto;
 import es.nivel36.laie.ejb.user.SimpleUserDto;
 
 @Indexed
@@ -24,7 +24,7 @@ public class ClientDto implements Serializable {
 
 	private boolean deleted;
 
-	private Set<JobOffer> jobOffers = new HashSet<>();
+	private Set<JobOfferDto> jobOffers = new HashSet<>();
 
 	private String name;
 
@@ -50,7 +50,7 @@ public class ClientDto implements Serializable {
 		return this.contacts;
 	}
 
-	public Set<JobOffer> getJobOffers() {
+	public Set<JobOfferDto> getJobOffers() {
 		return this.jobOffers;
 	}
 
@@ -90,7 +90,7 @@ public class ClientDto implements Serializable {
 		this.deleted = deleted;
 	}
 
-	public void setJobOffers(final Set<JobOffer> jobOffers) {
+	public void setJobOffers(final Set<JobOfferDto> jobOffers) {
 		this.jobOffers = jobOffers;
 	}
 

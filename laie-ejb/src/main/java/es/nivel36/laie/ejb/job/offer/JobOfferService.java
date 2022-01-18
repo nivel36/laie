@@ -72,9 +72,11 @@ public class JobOfferService {
 
 	private JobOfferMerger jobOfferMerger = new JobOfferMerger();
 
-	public JobOfferDto addJobOffer(final String clientUid, final String ownerUid, String[] recruiterUids, final JobOfferDto jobOffer) {
+	public JobOfferDto addJobOffer(final String clientUid, final String ownerUid, String[] recruiterUids,
+			final JobOfferDto jobOffer) {
 		Objects.requireNonNull(clientUid);
 		Objects.requireNonNull(jobOffer);
+		Objects.requireNonNull(ownerUid);
 		final Client client = this.clientDao.findClientByUid(clientUid);
 		final JobOffer entity = new JobOffer();
 		jobOfferMerger.merge(entity, jobOffer);
@@ -83,44 +85,26 @@ public class JobOfferService {
 		if (this.openDateHasCome(entity)) {
 			this.openJobOffer(entity);
 		}
+		final User owner = this.userDao.findUserByUid(ownerUid);
+		chageJobOffersOwner(entity, owner);
+		addRecruiters(entity, recruiterUids);
 		this.jobOfferDao.insert(entity);
-		if (ownerUid != null) {
-			final User owner = this.userDao.findUserByUid(ownerUid);
-			chageJobOffersOwner(entity, owner);
-		}
 		this.createdEvent.fire(entity);
 		return jobOfferMapper.map(entity);
 	}
-	
-	public void addRecruiter(final String jobOfferUid, final String recruiterUid) {
+
+	public void addRecruiter(final String jobOfferUid, final String[] recruiterUids) {
 		final JobOffer jobOffer = jobOfferDao.findByUid(jobOfferUid);
-		final User recruiter = userDao.findUserByUid(recruiterUid);
-		jobOffer.getRecruiters().add(recruiter);
+		addRecruiters(jobOffer, recruiterUids);
 	}
 
-	public void addRecruiters(final String jobOfferUid, final String[] recruiterUids) {
-		final JobOffer jobOffer = jobOfferDao.findByUid(jobOfferUid);
-		for (String recruiterUid : recruiterUids) {
-			final User recruiter = userDao.findUserByUid(recruiterUid);
-			jobOffer.getRecruiters().add(recruiter);
-		}
-	}
-	
-	public void addRecruiters(final JobOffer jobOffer, final String[] recruiterUids) {
+	private void addRecruiters(final JobOffer jobOffer, final String[] recruiterUids) {
 		for (String recruiterUid : recruiterUids) {
 			final User recruiter = userDao.findUserByUid(recruiterUid);
 			jobOffer.getRecruiters().add(recruiter);
 		}
 	}
 
-	public void removeRecruiter(final String jobOfferUid, final String recruiterUid) {
-		Objects.requireNonNull(jobOfferUid);
-		Objects.requireNonNull(recruiterUid);
-		final JobOffer jobOffer = jobOfferDao.findByUid(jobOfferUid);
-		final User recruiter = userDao.findUserByUid(recruiterUid);
-		jobOffer.getRecruiters().remove(recruiter);
-	}
-	
 	public void removeRecruiter(final String jobOfferUid, final String[] recruiterUids) {
 		Objects.requireNonNull(jobOfferUid);
 		Objects.requireNonNull(recruiterUids);
@@ -157,13 +141,13 @@ public class JobOfferService {
 		jobOfferMerger.merge(entity, jobOffer);
 	}
 
-	public void chageJobOffersOwner(String jobOfferUid, String newOwnerUid) {
-		JobOffer jobOffer = this.jobOfferDao.findByUid(jobOfferUid);
-		User owner = this.userDao.findUserByUid(newOwnerUid);
+	public void changeJobOffersOwner(final String jobOfferUid, final String newOwnerUid) {
+		final JobOffer jobOffer = this.jobOfferDao.findByUid(jobOfferUid);
+		final User owner = this.userDao.findUserByUid(newOwnerUid);
 		chageJobOffersOwner(jobOffer, owner);
 	}
 
-	private void chageJobOffersOwner(JobOffer jobOffer, User owner) {
+	private void chageJobOffersOwner(final JobOffer jobOffer, final User owner) {
 		jobOffer.setOwner(owner);
 	}
 
@@ -237,7 +221,7 @@ public class JobOfferService {
 		entity.setState(newState);
 		this.stateChangedEvent.fire(entity);
 	}
-	
+
 	public JobOfferDto unpublish(final String jobOfferUid) {
 		Objects.requireNonNull(jobOfferUid);
 		final JobOfferDto jobOffer = this.findJobOfferByUid(jobOfferUid);
@@ -258,10 +242,10 @@ public class JobOfferService {
 	}
 
 	public void setStateChangedEvent(final Event<JobOffer> stateChangedEvent) {
-		Objects.requireNonNull(jobOfferStateChangeEventDao);		
+		Objects.requireNonNull(jobOfferStateChangeEventDao);
 		this.stateChangedEvent = stateChangedEvent;
 	}
-	
+
 	public void setJobCandidatureDao(final JobCandidatureDao jobCandidatureDao) {
 		Objects.requireNonNull(jobCandidatureDao);
 		this.jobCandidatureDao = jobCandidatureDao;
@@ -276,7 +260,7 @@ public class JobOfferService {
 		Objects.requireNonNull(jobOfferStateChangeEventDao);
 		this.jobOfferStateChangeEventDao = jobOfferStateChangeEventDao;
 	}
-	
+
 	public SearchResult<JobOfferDto> search(final String searchText, final Page page) {
 		return this.search(searchText, page, null, null);
 	}

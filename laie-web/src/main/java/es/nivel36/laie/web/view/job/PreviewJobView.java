@@ -28,7 +28,7 @@ public class PreviewJobView extends AbstractView {
 
 	@PostConstruct
 	public void init() {
-		final String uid = this.getValueFromGetParameters("jobOffer", true);
+		final String uid = this.getValueFromGetParameters("job", true);
 		this.jobOffer = this.jobOfferService.findJobOfferByUid(uid);
 		if (this.jobOffer == null) {
 			throw new IllegalPageStateException();

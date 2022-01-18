@@ -176,7 +176,7 @@
 			FROM JobCandidature j 
 			LEFT JOIN FETCH j.candidate
 			LEFT JOIN FETCH j.jobOffer
-			WHERE j.jobOffer.uid = :jobOfferuid
+			WHERE j.jobOffer.uid = :jobOfferUid
 		]]></query>
 	</named-query>
 	
@@ -201,7 +201,7 @@
 		<query><![CDATA[
 			SELECT j 
 			FROM JobOffer j 
-			WHERE j.uid = :uid
+			WHERE j.uid = :jobOfferUid
 		]]></query>
 	</named-query>
 

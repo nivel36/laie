@@ -26,16 +26,15 @@ import org.hibernate.search.annotations.Store;
 import es.nivel36.laie.ejb.core.model.AbstractIndexedEntity;
 import es.nivel36.laie.ejb.core.model.Address;
 import es.nivel36.laie.ejb.core.model.Erasable;
-import es.nivel36.laie.ejb.core.model.Obfuscable;
 import es.nivel36.laie.ejb.core.model.Ownerable;
 import es.nivel36.laie.ejb.job.offer.JobOffer;
 import es.nivel36.laie.ejb.user.User;
 
 @Entity
 @Indexed
-public class Client extends AbstractIndexedEntity implements Ownerable, Erasable, Obfuscable {
+public class Client extends AbstractIndexedEntity implements Ownerable, Erasable {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 3562472646025185677L;
 
 	@Embedded
 	@IndexedEmbedded
@@ -71,38 +70,6 @@ public class Client extends AbstractIndexedEntity implements Ownerable, Erasable
 
 	private String phoneNumber;
 
-	public void addContact(final Contact contact) {
-		Objects.requireNonNull(contact);
-		contact.setClient(this);
-		this.contacts.add(contact);
-	}
-
-	public void deleteContact(final Contact contact) {
-		Objects.requireNonNull(contact);
-		final boolean delete = this.contacts.remove(contact);
-		if (!delete) {
-			throw new IllegalStateException(String.format("Contact %s doesn't exist", contact));
-		}
-	}
-
-	@Override
-	public boolean equals(final Object obj) {
-		if (obj == null) {
-			return false;
-		}
-		if (this == obj) {
-			return true;
-		}
-		if (!super.equals(obj)) {
-			return false;
-		}
-		if (this.getClass() != obj.getClass()) {
-			return false;
-		}
-		final Client other = (Client) obj;
-		return Objects.equals(this.name, other.name);
-	}
-
 	public Address getAddress() {
 		return this.address;
 	}
@@ -130,11 +97,6 @@ public class Client extends AbstractIndexedEntity implements Ownerable, Erasable
 
 	public String getPhoneNumber() {
 		return this.phoneNumber;
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(this.name);
 	}
 
 	@Override
@@ -174,6 +136,29 @@ public class Client extends AbstractIndexedEntity implements Ownerable, Erasable
 
 	public void setPhoneNumber(final String phoneNumber) {
 		this.phoneNumber = phoneNumber;
+	}
+	
+	@Override
+	public boolean equals(final Object obj) {
+		if (obj == null) {
+			return false;
+		}
+		if (this == obj) {
+			return true;
+		}
+		if (!super.equals(obj)) {
+			return false;
+		}
+		if (this.getClass() != obj.getClass()) {
+			return false;
+		}
+		final Client other = (Client) obj;
+		return Objects.equals(this.name, other.name);
+	}
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(this.name);
 	}
 
 	@Override

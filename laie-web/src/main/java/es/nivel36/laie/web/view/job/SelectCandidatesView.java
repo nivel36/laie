@@ -3,6 +3,7 @@ package es.nivel36.laie.web.view.job;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -37,46 +38,50 @@ public class SelectCandidatesView extends AbstractView {
 	private String searchText;
 
 	private List<CandidateDto> selectedCandidates;
-	
+
 	@Inject
 	private transient CandidateService candidateService;
 
 	@Inject
 	private transient JobCandidatureService jobCandidatureService;
-	
+
 	@Inject
 	private transient JobOfferService jobOfferService;
 
 	@PostConstruct
 	public void init() {
-		final String uid = this.getValueFromGetParameters("jobOffer", true);
+		final String uid = this.getValueFromGetParameters("job", true);
 		this.jobOffer = this.jobOfferService.findJobOfferByUid(uid);
-		if( this.jobOffer == null ) {
+		if (this.jobOffer == null) {
 			throw new IllegalPageStateException();
 		}
-		for (final JobCandidature jobCandidature : this.jobOffer.getJobCandidatures()) {
-			final Candidate candidate = jobCandidature.getCandidate();
-			this.alredySelectedCandidates.put(candidate.getUid(), candidate);
+		final Set<JobCandidature> jobCandidatures = this.jobOffer.getJobCandidatures();
+		if (jobCandidatures != null) {
+			for (final JobCandidature jobCandidature : jobCandidatures) {
+				final Candidate candidate = jobCandidature.getCandidate();
+				this.alredySelectedCandidates.put(candidate.getUid(), candidate);
+			}
 		}
 		this.candidates = new CandidateLazyDataModel(this.candidateService);
 		this.search();
 	}
-	
+
 	public void search() {
 		this.candidates.setSearchText(this.searchText);
 	}
 
-	public boolean isAlredySelected(final Candidate candidate) {
+	public boolean isAlredySelected(final CandidateDto candidate) {
 		return this.alredySelectedCandidates.containsKey(candidate.getUid());
 	}
 
 	public void select() {
-		final String[] candidatesUids = this.selectedCandidates.stream().map(CandidateDto::getTags).toArray(String[]::new);
+		final String[] candidatesUids = this.selectedCandidates.stream().map(CandidateDto::getUid)
+				.toArray(String[]::new);
 		final String jobOfferUid = this.jobOffer.getUid();
 		this.jobCandidatureService.addJobCandidatures(jobOfferUid, candidatesUids);
 		this.navigateTo(ViewJobView.URL + "?job=" + this.jobOffer.getUid());
 	}
-	
+
 	public CandidateLazyDataModel getCandidates() {
 		return this.candidates;
 	}
@@ -100,7 +105,7 @@ public class SelectCandidatesView extends AbstractView {
 	public void setJobOffer(final JobOfferDto jobOffer) {
 		this.jobOffer = jobOffer;
 	}
-	
+
 	public void setSearchText(final String searchText) {
 		this.searchText = searchText;
 	}
@@ -108,7 +113,7 @@ public class SelectCandidatesView extends AbstractView {
 	public void setSelectedCandidates(final List<CandidateDto> selectedCandidates) {
 		this.selectedCandidates = selectedCandidates;
 	}
-	
+
 	public void setCandidateService(final CandidateService candidateService) {
 		Objects.requireNonNull(candidateService);
 		this.candidateService = candidateService;
@@ -118,7 +123,7 @@ public class SelectCandidatesView extends AbstractView {
 		Objects.requireNonNull(jobCandidatureService);
 		this.jobCandidatureService = jobCandidatureService;
 	}
-	
+
 	public void setJobOfferService(final JobOfferService jobOfferService) {
 		Objects.requireNonNull(jobOfferService);
 		this.jobOfferService = jobOfferService;

@@ -47,8 +47,9 @@
 
 								<p:column headerText="#{i18n['job.title']}"
 									sortBy="#{jobOffer.title}">
-									<h:link outcome="/job/view.xhtml">#{jobOffer.title} - ${jobOffer.address.city}
-									<f:param name="id" value="#{jobOffer.uid}" />
+									<h:link outcome="/job/view.xhtml">#{jobOffer.title} <h:outputText
+											value="-" rendered="#{not empty jobOffer.address.city}" /> ${jobOffer.address.city}
+									<f:param name="job" value="#{jobOffer.uid}" />
 									</h:link>
 								</p:column>
 
@@ -56,7 +57,7 @@
 									sortBy="#{jobOffer.client.name}">
 									<h:link value="#{jobOffer.client.name}"
 										outcome="/client/view.xhtml">
-										<f:param name="id" value="#{jobOffer.client.uid}" />
+										<f:param name="client" value="#{jobOffer.client.uid}" />
 									</h:link>
 								</p:column>
 
@@ -68,7 +69,7 @@
 									sortBy="#{user.owner.name}">
 									<h:link value="#{jobOffer.owner.fullName}"
 										outcome="/user/view.xhtml">
-										<f:param name="id" value="#{jobOffer.owner.uid}" />
+										<f:param name="user" value="#{jobOffer.owner.uid}" />
 									</h:link>
 								</p:column>
 

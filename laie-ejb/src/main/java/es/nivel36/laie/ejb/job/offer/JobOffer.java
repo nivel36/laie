@@ -57,8 +57,10 @@ public class JobOffer extends AbstractIndexedEntity implements Ownerable {
 	@SortableField
 	private LocalDate closeDate;
 
+	@NotNull
 	@Field(analyze = Analyze.NO)
 	@SortableField
+	@Column(nullable = false)
 	private LocalDate openDate;
 
 	@Lob
@@ -66,7 +68,7 @@ public class JobOffer extends AbstractIndexedEntity implements Ownerable {
 	private String description;
 
 	@OneToMany(mappedBy = "jobOffer", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-	private Set<JobCandidature> jobCandidatures;
+	private Set<JobCandidature> jobCandidatures = new HashSet<>();
 
 	@NotNull
 	@ManyToOne
@@ -81,7 +83,7 @@ public class JobOffer extends AbstractIndexedEntity implements Ownerable {
 
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "job_user", joinColumns = @JoinColumn(name = "job_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
-	private Set<User> recruiters;
+	private Set<User> recruiters = new HashSet<>();;
 
 	private Integer salary;
 
@@ -95,8 +97,6 @@ public class JobOffer extends AbstractIndexedEntity implements Ownerable {
 	@SortableField(forField = "title")
 	private String title;
 	
-	private String uid;
-
 	@Override
 	public boolean equals(final Object obj) {
 		if (this == obj) {
@@ -160,10 +160,6 @@ public class JobOffer extends AbstractIndexedEntity implements Ownerable {
 
 	public String getTitle() {
 		return this.title;
-	}
-
-	public String getUid() {
-		return uid;
 	}
 
 	public boolean hasCandidatureOf(final Candidate candidate) {
@@ -258,10 +254,6 @@ public class JobOffer extends AbstractIndexedEntity implements Ownerable {
 
 	public void setTitle(final String title) {
 		this.title = title;
-	}
-
-	public void setUid(String uid) {
-		this.uid = uid;
 	}
 
 	@Override

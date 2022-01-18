@@ -47,7 +47,7 @@ public abstract class AbstractDao {
 	@Inject
 	protected EntityManager em;
 	
-	protected <E extends Obfuscable> void setUid(Class<E> type, E entity) {
+	protected <E extends Obfuscable> void setUid(final Class<E> type, final E entity) {
 		String uid;
 		do {
 			uid = UidGenerator.generate(type);

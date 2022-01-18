@@ -22,11 +22,6 @@ public class ContactDao extends AbstractDao {
 		this.em.persist(contact);
 	}
 
-	public void delete(final Contact contact) {
-		Objects.requireNonNull(contact);
-		this.delete(Contact.class, contact);
-	}
-
 	public Contact findContactByUid(final String uid) {
 		Objects.requireNonNull(uid);
 		final String namedQuery = "Contact.findByUid";

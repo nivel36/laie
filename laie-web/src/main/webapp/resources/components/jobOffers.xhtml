@@ -13,7 +13,7 @@
 	</composite:interface>
 
 	<composite:implementation>
-		<div id="#{cc.clientId}" class="card card-w-title jobOffers  #{cc.attrs.styleClass}">
+		<div id="#{cc.clientId}" class="card card-w-title jobOffers #{cc.attrs.styleClass}">
 			<h5>#{cc.attrs.title}</h5>
 
 			<p:dataTable var="jobOffer" value="#{cc.attrs.value}" emptyMessage="#{i18n['job.no_jobs_found']}" reflow="true"
@@ -22,16 +22,16 @@
 
 				<p:column headerText="#{i18n['job.title']}">
 					<h:link value="#{jobOffer.title}" outcome="/job/view.xhtml" styleClass="link">
-						<f:param name="id" value="#{jobOffer.uid}" />
+						<f:param name="job" value="#{jobOffer.uid}" />
 					</h:link>
 				</p:column>
 				<p:column headerText="#{i18n['job.city']}">
-					<span class="job_address">#{jobOffer.address.city} (#{jobOffer.address.region})</span>
+					<span class="job_address">#{jobOffer.address.city} <h:outputText value="(" rendered="#{not empty jobOffer.address.region}"/>#{jobOffer.address.region}<h:outputText value=")" rendered="#{not empty jobOffer.address.region}"/></span>
 				</p:column>
 
 				<p:column headerText="#{i18n['job.client']}">
 					<h:link value="#{jobOffer.client}" outcome="/client/view.xhtml" styleClass="link">
-						<f:param name="id" value="#{jobOffer.client.uid}" />
+						<f:param name="client" value="#{jobOffer.client.uid}" />
 					</h:link>
 				</p:column>
 

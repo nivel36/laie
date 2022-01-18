@@ -7,16 +7,18 @@ public class SimpleCandidateDto implements Serializable {
 
 	private static final long serialVersionUID = 3753490220364619995L;
 
-	private String candidateUid;
+	private String uid;
 
 	private String email;
 
 	private String fullName;
 
-	private String photo;
+	private String avatarUrl;
+	
+	private Integer rating;
 
-	public String getCandidateUid() {
-		return candidateUid;
+	public String getUid() {
+		return uid;
 	}
 
 	public String getEmail() {
@@ -27,12 +29,16 @@ public class SimpleCandidateDto implements Serializable {
 		return fullName;
 	}
 
-	public String getPhoto() {
-		return photo;
+	public String getAvatarUrl() {
+		return avatarUrl;
+	}
+	
+	public Integer getRating() {
+		return rating;
 	}
 
-	void setCandidateUid(String candidateUid) {
-		this.candidateUid = candidateUid;
+	void setUid(String uid) {
+		this.uid = uid;
 	}
 
 	void setEmail(String email) {
@@ -43,8 +49,12 @@ public class SimpleCandidateDto implements Serializable {
 		this.fullName = fullName;
 	}
 
-	void setPhoto(String photo) {
-		this.photo = photo;
+	void setAvatarUrl(String avatarUrl) {
+		this.avatarUrl = avatarUrl;
+	}
+	
+	void setRating(Integer rating) {
+		this.rating = rating;
 	}
 	
 	@Override
