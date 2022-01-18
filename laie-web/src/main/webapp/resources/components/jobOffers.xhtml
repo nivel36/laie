@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:component xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:composite="http://xmlns.jcp.org/jsf/composite"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://nivel.36/laie/ui" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<composite:interface>
+		<composite:attribute name="value" required="true" />
+		<composite:attribute name="styleClass" required="false" default="" />
+		<composite:attribute name="title" required="false" default="#{i18n['job.job_offers']}" />
+		<composite:attribute name="rows" required="false" default="10" />
+	</composite:interface>
+
+	<composite:implementation>
+		<div id="#{cc.clientId}" class="card card-w-title jobOffers #{cc.attrs.styleClass}">
+			<h5>#{cc.attrs.title}</h5>
+
+			<p:dataTable var="jobOffer" value="#{cc.attrs.value}" emptyMessage="#{i18n['job.no_jobs_found']}" reflow="true"
+				paginator="true" paginatorPosition="bottom" rows="#{cc.attrs.rows}" sortBy="#{jobOffer.title}"
+				sortOrder="descending" styleClass="ui-datatable-borderless">
+
+				<p:column headerText="#{i18n['job.title']}">
+					<h:link value="#{jobOffer.title}" outcome="/job/view.xhtml" styleClass="link">
+						<f:param name="job" value="#{jobOffer.uid}" />
+					</h:link>
+				</p:column>
+				<p:column headerText="#{i18n['job.city']}">
+					<span class="job_address">#{jobOffer.address.city} <h:outputText value="(" rendered="#{not empty jobOffer.address.region}"/>#{jobOffer.address.region}<h:outputText value=")" rendered="#{not empty jobOffer.address.region}"/></span>
+				</p:column>
+
+				<p:column headerText="#{i18n['job.client']}">
+					<h:link value="#{jobOffer.client}" outcome="/client/view.xhtml" styleClass="link">
+						<f:param name="client" value="#{jobOffer.client.uid}" />
+					</h:link>
+				</p:column>
+
+				<p:column headerText="#{i18n['job.job_offer_state']}">
+					<cc:jobOfferState value="#{jobOffer.state}" />
+				</p:column>
+			</p:dataTable>
+			<div class="buttons">
+				<composite:insertChildren />
+			</div>
+		</div>
+	</composite:implementation>
+</ui:component>

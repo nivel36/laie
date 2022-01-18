@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" 
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" 
+	xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:g="http://nivel.36/laie/ui" 
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/WEB-INF/templates/dialog.xhtml">
+
+	<ui:define name="title">
+		#{i18n['job.job_offers']}
+	</ui:define>
+
+	<ui:define name="content">
+		<h:form id="jobOfferSearchDialogForm">
+			<div class="grid">
+				<div class="col-12 md-6 lg-4">
+					<div class="inputgroup">
+						<p:input id="searchText" value="#{jobOfferSearchDialogView.searchText}" />
+						<p:commandButton id="cleanSearchTextAction" action="#{jobOfferSearchDialogView.clean}" update="@form" styleClass="btn-gray"
+							icon="fa fa-times" rendered="#{not empty jobOfferSearchDialogView.searchText}" />
+						<p:commandButton id="searchAction" action="#{jobOfferSearchDialogView.search}" update="@form" icon="fa fa-search" />
+					</div>
+				</div>
+
+				<div class="col-12">
+					<p:dataTable var="jobOffer" value="#{jobOfferSearchDialogView.jobOffers}" emptyMessage="#{i18n['job.no_jobs_found']}" reflow="true"
+						paginator="true" rowKey="#{jobOffer.id}" paginatorPosition="bottom" rows="10"
+						selection="#{jobOfferSearchDialogView.selectedJobOffers}" lazy="true">
+
+						<p:column selectionMode="multiple" style="width:16px;text-align:center" />
+
+						<p:column headerText="#{i18n['job.title']}" sortBy="#{jobOffer.title}">
+							<h:link value="#{jobOffer.title}" outcome="/job/view.xhtml">
+								<f:param name="id" value="#{jobOffer.uid}" />
+							</h:link>
+							<span class="job_address">#{jobOffer.address.city} (#{jobOffer.address.region})</span>
+						</p:column>
+
+						<p:column headerText="#{i18n['job.client']}" sortBy="#{jobOffer.client.name}">
+							<h:link value="#{jobOffer.client.name}" outcome="/client/view.xhtml">
+								<f:param name="id" value="#{jobOffer.client.uid}" />
+							</h:link>
+						</p:column>
+
+						<p:column headerText="#{i18n['job.date_opened']}" sortBy="#{jobOffer.dateOpened}">
+							<h:outputText value="#{jobOffer.dateOpened}">
+								<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
+							</h:outputText>
+						</p:column>
+
+						<p:column headerText="#{i18n['job.date_closed']}" sortBy="#{jobOffer.dateClosed}">
+							<h:outputText value="#{jobOffer.dateClosed}">
+								<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
+							</h:outputText>
+						</p:column>
+
+						<p:column headerText="#{i18n['job.places']}">
+							<h:outputText value="#{jobOffer.places}" />
+						</p:column>
+
+						<p:column headerText="#{i18n['user.owner']}" sortBy="#{user.owner.name}">
+							<h:link value="#{jobOffer.owner.fullName}" outcome="/user/view.xhtml">
+								<f:param name="id" value="#{jobOffer.owner.uid}" />
+							</h:link>
+						</p:column>
+					</p:dataTable>
+				</div>
+
+				<div class="col-12">
+					<div class="pull-right">
+						<p:commandButton value="#{i18n['action.cancel']}" actionListener="#{jobOfferSearchDialogView.closeDialog}" process="@this"
+							styleClass="btn-gray" />
+						<p:commandButton value="#{i18n['action.select']}" action="#{jobOfferSearchDialogView.select}" update="@form" />
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,33 @@
+<ui:component xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" 
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	xmlns:composite="http://xmlns.jcp.org/jsf/composite" 
+	xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:g="http://nivel.36/laie/ui" 
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<composite:interface>
+		<composite:attribute name="name" required="true" />
+		<composite:attribute name="description"  />
+		<composite:attribute name="path"  />
+		<composite:attribute name="showDescription" required="false" default="true" type="java.lang.Boolean"/>
+		<composite:attribute name="styleClass" required="false" default="" />
+	</composite:interface>
+
+	<composite:implementation>
+		<div id="#{cc.clientId}" class="person #{cc.attrs.styleClass}">
+			<cc:avatar name="#{cc.attrs.name}" path="#{cc.attrs.path}" />
+			<div class="person-box">
+				<div class="person-name"><span class="person-name-text">#{cc.attrs.name}</span></div>				
+				<h:panelGroup layout="block" styleClass="person-description" rendered="#{not empty cc.attrs.description}"><span class="person-description-text">#{cc.attrs.description}</span></h:panelGroup>
+			</div>
+			<h:panelGroup id="children" styleClass="person-data">
+				<composite:insertChildren />
+			</h:panelGroup>
+		</div>
+	</composite:implementation>
+</ui:component>

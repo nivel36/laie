@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://nivel.36/laie/ui"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets" template="/WEB-INF/templates/template.xhtml">
+
+	<ui:define name="title">
+		#{i18n['calendar.calendar']}
+	</ui:define>
+
+	<ui:param name="selectedMenu" value="meetings" />
+
+	<ui:define name="breadcrumb">
+		<p:breadCrumb>
+			<p:menuitem value="#{i18n['menu.index']}" outcome="/index.xhtml" />
+			<p:menuitem value="#{i18n['meeting.meetings']}" disabled="true" />
+		</p:breadCrumb>
+	</ui:define>
+
+	<ui:define name="content">
+		<h:form>
+			<div class="p-grid">
+				<div class="p-col-12 p-xl-6">
+					<cc:meetings value="#{searchMeetingView.plannedMeetings}" title="#{i18n['meeting.planned_meetings']}"
+						emptyMessage="#{i18n['meeting.no_planned']}">
+					</cc:meetings>
+				</div>
+				<div class="p-col-12 p-xl-6">
+					<cc:meetings value="#{searchMeetingView.conductedMeetings}" title="#{i18n['meeting.conducted_meetings']}"
+						emptyMessage="#{i18n['meeting.no_conducted']}" />
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

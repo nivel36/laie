@@ -1,0 +1,25 @@
+$fontFamily:'Inter UI',sans-serif;
+$fontSize:13px;
+$textColor:#252529;
+$textSecondaryColor:#65656a;
+$borderRadius:2px;
+$transitionDuration:.2s;
+
+$primaryColor: #214B9C !default;
+$primaryLightColor: scale-color($primaryColor, $lightness: 60%) !default;
+$primaryDarkColor: scale-color($primaryColor, $lightness: -10%) !default;
+$primaryDarkerColor: scale-color($primaryColor, $lightness: -20%) !default;
+$primaryTextColor:#ffffff;
+
+$secondaryColor: #14A143 !default;
+$secondaryLightColor: scale-color($secondaryColor, $lightness: 60%) !default;
+$secondaryDarkColor: scale-color($secondaryColor, $lightness: -10%) !default;
+$secondaryDarkerColor: scale-color($secondaryColor, $lightness: -20%) !default;
+$secondaryTextColor:#ffffff;
+
+$thirdColor: #EE4F10 !default;
+$thirdLightColor: scale-color($thirdColor, $lightness: 60%) !default;
+$thirdDarkColor: scale-color($thirdColor, $lightness: -10%) !default;
+$thirdyDarkerColor: scale-color($thirdColor, $lightness: -20%) !default;
+$thirdTextColor:#ffffff;
+

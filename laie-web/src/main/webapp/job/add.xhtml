@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:g="http://nivel.36/laie/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/WEB-INF/templates/template.xhtml">
+
+	<ui:define name="title">
+		#{i18n['job.new_job_offer']}
+	</ui:define>
+
+	<ui:param name="selectedMenu" value="offers" />
+
+	<ui:define name="content">
+		<h:form id="jobOfferForm">
+			<p:remoteCommand name="processForm" />
+			<div class="p-grid">
+				<div class="p-col-12">
+					<div class="card buttons">
+						<p:button value="#{i18n['action.cancel']}"
+							outcome="/job/search.xhtml"
+							styleClass="ui-button-secondary ui-button-outlined" />
+						<p:commandButton value="#{i18n['action.save']}" process="@form"
+							update="@form growl" action="#{addJobView.save}"
+							styleClass="ui-button-success ui-button-outlined" />
+					</div>
+				</div>
+				<div class="p-col-12 p-md-6">
+
+					<div class="card card-w-title ui-fluid">
+						<h5>#{i18n['job.data']}</h5>
+						<div class="p-grid p-formgrid">
+							<div class="p-col-12">
+								<g:input label="#{i18n['job.title']}"
+									value="#{addJobView.jobOffer.title}" required="true" />
+							</div>
+							<div class="p-col-12">
+								<cc:autocomplete id="client" label="#{i18n['job.client']}"
+									value="#{addJobView.client}"
+									completeMethod="#{addJobView.completeClient}" required="true">
+									<p:column>
+										#{var.name}
+									</p:column>
+								</cc:autocomplete>
+							</div>
+							<div class="p-col-12 p-sm-6">
+								<g:input id="salary" label="#{i18n['job.salary']}"
+									value="#{addJobView.jobOffer.salary}" type="money" />
+							</div>
+							<div class="p-col-12 p-sm-6">
+								<g:input id="places" label="#{i18n['job.places']}"
+									value="#{addJobView.jobOffer.places}" type="number" min="0" />
+							</div>
+							<div class="p-col-12 p-sm-6">
+								<g:input id="city" label="#{i18n['job.city']}"
+									value="#{addJobView.jobOffer.address.city}" required="true" />
+							</div>
+							<div class="p-col-12 p-sm-6">
+								<g:input id="state" label="#{i18n['job.state']}"
+									value="#{addJobView.jobOffer.address.region}" required="true" />
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="p-col-12 p-md-6">
+					<div class="card card-w-title ui-fluid">
+						<h5>#{i18n['job.other_data']}</h5>
+						<div class="p-grid  p-formgrid">
+							<div class="p-col-12 p-sm-6">
+								<g:input id="dateOpened" label="#{i18n['job.date_opened']}"
+									value="#{addJobView.jobOffer.openDate}" type="calendar"
+									required="true" />
+							</div>
+							<div class="p-col-12 p-sm-6">
+								<g:input id="dateClosed" label="#{i18n['job.date_closed']}"
+									value="#{addJobView.jobOffer.closeDate}" type="calendar" />
+							</div>
+							<div class="p-col-12 p-sm-6">
+								<cc:autocomplete id="owner" label="#{i18n['job.owner']}"
+									value="#{addJobView.owner}"
+									completeMethod="#{addJobView.queryOwner}"
+									converter="simpleUserConverter">
+									<p:column styleClass="user-select image">
+										<cc:person name="#{var.fullName}" path="#{var.avatarUrl}" />
+									</p:column>
+								</cc:autocomplete>
+							</div>
+							<div class="p-col-12">
+								<cc:inputUsers id="recruiters" label="#{i18n['job.recruiters']}"
+									completeMethod="#{addJobView.queryRecruiter}"
+									value="#{addJobView.recruiters}" />
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="p-col-12">
+					<div class="card card-w-title ui-fluid">
+						<h5>#{i18n['job.description']}</h5>
+						<div class="p-grid p-formgrid">
+							<div class="p-col-12 p-sm-6">
+								<g:input id="publish" label="#{i18n['job.publish']}"
+									value="#{addJobView.publish}" type="inputSwitch" />
+							</div>
+							<div class="p-col-12 p-sm-12">
+								<g:input id="description" label="#{i18n['job.description']}"
+									value="#{addJobView.jobOffer.description}" type="rich" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

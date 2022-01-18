@@ -1,0 +1,64 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>es.nivel36</groupId>
+		<artifactId>laie</artifactId>
+		<version>0.9.4-SNAPSHOT</version>
+		<relativePath>..</relativePath>
+	</parent>
+
+	<artifactId>laie-ear</artifactId>
+	<packaging>ear</packaging>
+
+	<dependencies>
+		<dependency>
+			<groupId>es.nivel36</groupId>
+			<artifactId>laie-web</artifactId>
+			<type>war</type>
+		</dependency>
+		<dependency>
+			<groupId>es.nivel36</groupId>
+			<artifactId>laie-api</artifactId>
+			<type>war</type>
+		</dependency>
+		<dependency>
+			<groupId>es.nivel36</groupId>
+			<artifactId>laie-ejb</artifactId>
+			<type>ejb</type>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<finalName>laie</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-ear-plugin</artifactId>
+				<configuration>
+					<version>7</version>
+					<defaultLibBundleDir>lib</defaultLibBundleDir>
+					<modules>
+						<webModule>
+							<groupId>es.nivel36</groupId>
+							<artifactId>laie-api</artifactId>
+							<contextRoot>/api</contextRoot>
+						</webModule>
+						<webModule>
+							<groupId>es.nivel36</groupId>
+							<artifactId>laie-web</artifactId>
+							<contextRoot>/</contextRoot>
+						</webModule>
+						<ejbModule>
+							<groupId>es.nivel36</groupId>
+							<artifactId>laie-ejb</artifactId>
+						</ejbModule>
+					</modules>
+					<outputFileNameMapping>@{artifactId}@-@{version}@@{dashClassifier?}@.@{extension}@</outputFileNameMapping>
+					<generateApplicationXml>true</generateApplicationXml>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

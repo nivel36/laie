@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config version="2.3" 
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xmlns:xi="http://www.w3.org/2001/XInclude" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee 
+		http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_3.xsd" >
+
+	<component>
+		<component-type>org.primefaces.component.RomaMenu</component-type>
+		<component-class>org.primefaces.roma.component.RomaMenu</component-class>
+	</component>
+
+	<render-kit>
+		<renderer>
+			<component-family>org.primefaces.component</component-family>
+			<renderer-type>org.primefaces.component.RomaMenuRenderer</renderer-type>
+			<renderer-class>org.primefaces.roma.component.RomaMenuRenderer</renderer-class>
+		</renderer>
+	</render-kit>
+
+	<application>
+		<resource-bundle>
+			<base-name>es.nivel36.laie.i18n</base-name>
+			<var>i18n</var>
+		</resource-bundle>
+		<message-bundle>es.nivel36.laie.messages</message-bundle>
+		<locale-config id="es">
+			<default-locale>es_ES</default-locale>
+			<supported-locale>es_ES</supported-locale>
+		</locale-config>
+	</application>
+	<lifecycle>
+		<phase-listener>es.nivel36.laie.web.core.security.UpdateSessionPhaseListener</phase-listener>
+	</lifecycle>
+</faces-config>

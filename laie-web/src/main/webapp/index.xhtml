@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:g="http://nivel.36/laie/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:o="http://omnifaces.org/ui" 
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/WEB-INF/templates/template.xhtml">
+
+	<ui:define name="title">
+		Laie
+	</ui:define>
+
+	<ui:param name="selectedMenu" value="index" />
+
+	<ui:define name="content">
+		<h:form>
+			<div class="p-grid">
+				<div class="p-col-12 p-xl-8">
+					<cc:jobOffers value="#{indexView.jobOffers}" rows="5">
+						<p:button value="#{i18n['job.new_job_offer']}"
+							outcome="/job/add.xhtml"
+							styleClass="ui-button-success ui-button-outlined" />
+					</cc:jobOffers>
+				</div>
+
+				<div class="p-col-12 p-xl-4">
+					<cc:meetings value="#{indexView.meetings}"
+						title="#{i18n['meeting.planned_meetings']}"
+						emptyMessage="#{i18n['meeting.no_planned']}" rows="5">
+						<p:button value="#{i18n['meeting.add_meeting']}"
+							outcome="/meeting/add.xhtml"
+							styleClass="ui-button-success ui-button-outlined" />
+					</cc:meetings>
+				</div>
+
+				<div class="p-col-12 p-xl-8">
+					<cc:candidates value="#{indexView.candidates}"
+						title="#{i18n['candidate.last_candidates']}" rows="5">
+						<p:button value="#{i18n['candidate.new_candidate']}"
+							outcome="/candidate/add.xhtml"
+							styleClass="ui-button-success ui-button-outlined" />
+					</cc:candidates>
+				</div>
+
+				<div class="p-col-12">
+					<cc:events value="#{indexView.events}"
+						title="#{i18n['event.last_events']}" rows="5" />
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

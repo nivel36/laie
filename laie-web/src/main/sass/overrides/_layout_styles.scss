@@ -1,0 +1,347 @@
+.layout-aside {
+	float: left;
+	width: 20%;
+	.layout-aside-content {
+		padding: 16px 0 16px 16px;
+	}
+}
+
+@media all and (max-width: 1200px) {
+	.layout-aside {
+		display:none;
+	}
+}
+
+.layout-wrapper{
+	.layout-topbar{
+		height: $topbarHeight;
+		.topbar-menu > li > ul {
+			top: auto;
+		}
+		.layout-right-panel-button {
+			width: 2rem;
+			height: 2rem;
+			line-height: 2rem;			
+		}
+		.user-profile {
+			.user-image {
+				width: 2.5rem;
+				height: 2.5rem;
+				font-size: 1.25rem;				
+			}
+		}
+	}
+}
+
+@media screen and (min-width: 992px) {
+	.layout-wrapper.layout-horizontal{
+		.layout-menu-container {
+			width: auto;
+			float: left;
+			padding: 0;
+			min-height: 2rem;
+		}
+	}
+}
+
+@media screen and (max-width: 991px) {
+	.layout-wrapper{
+		.layout-main {
+			height: $topbarHeight;
+			padding-top: $topbarHeight + 1rem;
+		}
+	}
+}
+
+.bookmark {
+	display: flex;
+	align-items: center;
+	.bookmark-url{
+		margin-left: 1em;
+	}
+}
+
+.candidate-card {
+	
+	padding: 0;
+
+	.candidate-card-header{
+		height: 9rem;
+		overflow: hidden;
+		background: linear-gradient(30deg, $primaryColor 0%, $primaryLightColor 150%);
+		background-color:$primaryColor;
+		color: $primaryTextColor;
+	}
+
+	.candidate-card-content {
+		
+		.label-container {
+			font-size: 0.9em;
+			padding-bottom: 0.3em;
+		
+			.label {
+				color: $darkMenuBgColor;
+			}	
+		}
+		
+		.text {
+			color: $menuitemTextColor;
+		}
+		
+		.candidate-image {
+			margin: -2.5rem 0 0 3rem;
+			width: 5rem;
+			height: 5rem;
+			
+			img {
+				margin: 0;
+				width: 5rem;
+				height: 5rem;
+			}
+		}
+		
+		.candidate-card-name {
+			font-size: 13px;
+			color: $primaryTextColor;
+			position: relative;
+			top: -4.2rem;
+			margin-left: 9rem;
+			font-weight: 700;
+			white-space: nowrap;
+		}
+		
+		.candidate-card-profile {
+			position: relative;
+			top: -3.8rem;
+			margin-left: 9rem;
+			font-weight: 700;
+			white-space: nowrap;
+		}
+		
+		.candidate-detail {
+			padding: 0 2.5em 2em 2.5em;
+		}
+	}
+}
+
+.card.client-card {
+	padding: 0;
+	.client-card-header{
+		height: 9rem;
+		overflow: hidden;
+		background: linear-gradient(30deg, $primaryColor 0%, $primaryLightColor 150%);
+		background-color: $primaryColor;
+		color: $primaryTextColor;
+	}
+	.client-card-content {
+		.label-container {
+			font-size: 0.9em;
+			padding-bottom: 0.3em;
+			.label {
+				color: $darkMenuBgColor;
+			}	
+		}
+		.text {
+			color: $menuitemTextColor;
+		}
+		.client-card-name {
+			font-size: 2em;
+			color: #ffffff;
+			position: relative;
+			top: -3.5rem;
+			margin-left: 1em;
+			font-weight: 700;
+			white-space: nowrap;
+		}
+		.client-detail {
+			padding: 0 2.5em 2em 2.5em;
+		}
+	}
+}
+.contacts {
+	.ui-dataview-row {
+		border-top: 1px solid #ddd;
+	}
+	.ui-dataview-column {
+		border-bottom: 1px solid #ddd;
+	}
+}
+.contact {
+	position: relative;
+	padding: 1rem;
+	display: flex;
+	justify-content: space-between;
+	&:hover {
+		background-color: #f5f5f5;
+		transition: 0.3s ease;
+	}
+	.contact-box {
+		display:flex;
+		flex-direction: column;
+		line-height: 1.2em;
+		
+		.contact-name {
+			font-size: 1.1rem;
+			font-weight: 800;
+			padding-bottom: 0.2rem;
+		}
+		.contact-position {
+			font-weight: 400;
+			padding-bottom: 0.1rem;
+		}
+		.contact-data {
+			display: flex;
+			flex-direction: column;
+			i {
+				display: inline-block;
+				margin-right: 0.4rem;
+			}
+			.contact-phone {
+				font-size: 0.8rem;
+				font-weight: 400;
+				display: flex;
+				align-items: center;
+			}
+			.contact-email {
+				font-size: 0.8rem;
+				font-weight: 400;
+				display: flex;
+				align-items: center;
+			}
+		}
+	}
+	
+	.buttons{
+		padding: 0;
+		button {
+			background-color: white;
+		}
+	}
+}
+
+.card.job-card {
+	padding: 0;
+	.card-header{
+		height: 80px;
+		overflow: hidden;
+		background: linear-gradient(30deg, $primaryColor 0%, $primaryLightColor 150%);
+		background-color: $primaryColor;
+		color: $primaryTextColor;
+	}
+	.job-card-content {
+		.job-detail{
+		    padding: 0 2.5em 2em 2.5em;
+		}
+		.label-container {
+			font-size: 0.9em;
+			padding-bottom: 0.3em;
+			.label {
+				color: $darkMenuBgColor;
+			}	
+		}
+		.text {
+			color: $menuitemTextColor;
+		}
+		.job-card-name {
+			font-size: 2em;
+			color: #ffffff;
+			position: relative;
+			top: -60px;
+			margin-left: 1.5rem;
+			font-weight: 700;
+			white-space: nowrap;
+		}
+		.job-card-client {
+			font-size: 1em;
+			color: #ffffff;
+			position: relative;
+			top: -60px;
+			margin-left: 1.5rem;
+			font-weight: 400;
+			white-space: nowrap;
+		}
+	}
+}
+
+.buttons {
+	padding: 1rem;
+	text-align: right;
+	.ui-button {
+		margin-left: 1rem;
+	}
+}
+
+.person {
+	.ui-avatar {
+		float:left;
+	}
+	.person-box {
+		float: left;
+		margin: 0.35rem 0 0 1rem;
+		.person-description-text {
+			font-size: 0.9rem;
+		}
+	}
+}
+
+.user-card {
+	padding: 0;
+
+	.user-card-header {
+		height: 9rem;
+		overflow: hidden;
+		background: linear-gradient(30deg, $primaryColor 0%, $primaryLightColor 150%);
+		background-color: $primaryColor;
+		color: $primaryTextColor;
+	}
+	.user-card-content {
+		.label-container {
+			font-size: 0.9em;
+			padding-bottom: 0.3em;
+			.label {
+				color: $darkMenuBgColor;
+			}	
+		}
+		.text {
+			color: $menuitemTextColor;
+		}
+		img {
+			width: 60px;
+			height: 60px;
+			margin: -30px 0 0 24px;
+		}
+		.user-image {
+			width: 60px;
+			height: 60px;
+			margin: -30px 0 0 24px;		
+			.ui-avatar-text {
+				font-size: 2rem;
+			}
+		}
+		.user-detail {
+			padding: 0 2.5em 2em 2.5em;
+		}
+	}
+}
+
+.contacts {
+	.ui-dataview-header {
+		display:none;		
+	}
+	.ui-dataview-row {
+		a {
+			color: $textColor;
+		}
+	}
+}
+
+.users {
+	.ui-dataview-header {
+		display:none;		
+	}
+	.ui-dataview-row {
+		a {
+			color: $textColor;
+		}
+	}
+}

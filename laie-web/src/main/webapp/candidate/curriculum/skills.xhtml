@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://nivel.36/laie/ui" xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets" template="/WEB-INF/templates/template.xhtml">
+
+	<ui:define name="title">
+		#{i18n['skill.skills']}
+	</ui:define>
+
+	<ui:define name="breadcrumb">
+		<p:breadCrumb>
+			<p:menuitem value="#{i18n['menu.index']}" outcome="/index.xhtml" />
+			<p:menuitem value="#{i18n['candidate.candidates']}" outcome="/candidate/search.xhtml" />
+			<p:menuitem value="#{skillsView.curriculum.candidate.fullName}" outcome="/candidate/view.xhtml">
+				<f:param name="id" value="#{skillsView.curriculum.candidate.uid}" />
+			</p:menuitem>
+			<p:menuitem value="#{i18n['curriculum.curriculum']}" outcome="/curriculum/view.xhtml">
+				<f:param name="candidateId" value="#{skillsView.curriculum.candidate.uid}" />
+				<f:param name="id" value="#{skillsView.curriculum.uid}" />
+			</p:menuitem>
+			<p:menuitem value="#{i18n['skill.skills']}" disabled="true" />
+		</p:breadCrumb>
+	</ui:define>
+
+	<ui:define name="buttons">
+		<h:form>
+			<p:button value="#{i18n['action.back']}" outcome="/curriculum/view.xhtml" styleClass="ui-button-secondary ui-button-outlined">
+				<f:param name="candidateId" value="#{skillsView.curriculum.candidate.uid}" />
+				<f:param name="id" value="#{skillsView.curriculum.uid}" />
+			</p:button>
+			<p:commandButton value="#{i18n['action.save']}" onclick="save()" styleClass="ui-button-success ui-button-outlined" />
+		</h:form>
+	</ui:define>
+
+	<ui:define name="content">
+		<h:form>
+			<p:remoteCommand name="save" process="@form" update="growl @form" action="#{skillsView.save}" />
+			<div class="p-grid">
+				<div class="p-col-12 p-xl-6">
+					<div class="card card-w-title ui-fluid">
+						<h1>#{i18n['skill.skills']}</h1>
+						<div class="p-grid">
+							<div class="p-col-12">
+								<p:chips value="#{skillsView.skills}" converter="skillConverter" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

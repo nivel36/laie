@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:g="http://nivel.36/laie/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/WEB-INF/templates/template.xhtml">
+
+	<ui:define name="title">
+		#{i18n['user.edit_user']} - #{editUserView.user.fullName}
+	</ui:define>
+
+	<ui:param name="selectedMenu" value="users" />
+
+	<ui:define name="content">
+		<h:form id="userForm">
+			<div class="p-grid">
+				<div class="p-col-12">
+					<div class="card buttons">
+						<p:button value="#{i18n['action.cancel']}"
+							outcome="/user/view.xhtml"
+							styleClass="ui-button-secondary ui-button-outlined">
+							<f:param name="user" value="#{editUserView.user.uid}" />
+						</p:button>
+						<p:commandButton value="#{i18n['action.save']}"
+							action="#{editUserView.save}"
+							styleClass="ui-button-success ui-button-outlined" update="@form" />
+					</div>
+				</div>
+				<div class="p-col-12 p-md-6">
+					<div class="card card-w-title ui-fluid">
+						<h5>#{i18n['user.personal_information']}</h5>
+						<div class="p-grid p-formgrid">
+							<div class="p-col-12 p-sm-6">
+								<g:input id="name" label="#{i18n['user.name']}"
+									value="#{editUserView.user.name}" required="true" />
+							</div>
+							<div class="p-col-12 p-sm-6">
+								<g:input id="surname" label="#{i18n['user.surname']}"
+									value="#{editUserView.user.surname}" required="true" />
+							</div>
+							<div class="p-col-12 p-sm-6">
+								<g:input id="email" label="#{i18n['user.email']}"
+									value="#{editUserView.user.email}" required="true"
+									validator="#{editUserView.validateEmail}" />
+							</div>
+							<div class="p-col-12 p-sm-6"></div>
+							<div class="p-col-12 p-sm-6">
+								<g:input id="phone_number" label="#{i18n['user.phone_number']}"
+									value="#{editUserView.user.phoneNumber}" />
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="p-col-12 p-md-6">
+					<div class="card card-w-title ui-fluid">
+						<h5>#{i18n['user.professional_information']}</h5>
+						<div class="p-grid p-formgrid">
+							<div class="p-col-12 p-sm-6">
+								<g:input type="selectOneMenu" id="role"
+									value="#{editUserView.user.roleName}"
+									label="#{i18n['user.role']}" required="true">
+									<f:selectItems value="#{roles.list}" var="role"
+										itemValue="#{role}" itemLabel="#{i18n[role]}" />
+									<p:ajax event="change"
+										update=":userForm:role :userForm:managerWrapper"
+										process=":userForm:role"
+										listener="#{editUserView.changeRoleListener}" />
+								</g:input>
+							</div>
+							<div class="p-col-12 p-sm-6">
+								<h:panelGroup id="managerWrapper" class="form-field ui-fluid"
+									layout="block">
+									<cc:autocomplete id="manager" label="#{i18n['user.manager']}"
+										value="#{editUserView.manager}"
+										completeMethod="#{editUserView.queryManager}"
+										converter="simpleUserConverter">
+										<p:column styleClass="user-select">
+											<cc:person name="#{var.fullName}" path="#{var.avatarUrl}"
+												description="#{var.email}" />
+										</p:column>
+									</cc:autocomplete>
+								</h:panelGroup>
+							</div>
+							<div class="p-col-12 p-sm-6">
+								<g:input id="date_of_join" label="#{i18n['user.date_of_join']}"
+									value="#{editUserView.user.dateOfJoin}" type="calendar" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

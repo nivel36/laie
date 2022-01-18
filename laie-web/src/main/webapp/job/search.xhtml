@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:g="http://nivel.36/laie/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/WEB-INF/templates/template.xhtml">
+
+	<ui:define name="title">
+		#{i18n['job.job_offer']}
+	</ui:define>
+
+	<ui:param name="selectedMenu" value="offers" />
+
+	<ui:define name="content">
+		<h:form id="jobOfferSearchform">
+			<div class="p-grid">
+				<div class="p-col-12">
+					<div class="card buttons">
+						<p:button value="#{i18n['job.new_job_offer']}"
+							outcome="/job/add.xhtml"
+							styleClass="ui-button-success ui-button-outlined" />
+						<p:commandButton value="#{i18n['action.export']}"
+							action="#{searchJobView.export}" icon="pi pi-file-excel"
+							styleClass="ui-button-info ui-button-outlined" />
+					</div>
+				</div>
+				<div class="p-col-12">
+					<div class="card">
+						<div class="p-col-12 p-lg-5">
+							<div class="searchBar ui-fluid">
+								<cc:inputSearch searchText="#{searchJobView.searchText}"
+									searchAction="#{searchJobView.search}"
+									update="jobOfferSearchform:jobOffers" />
+							</div>
+						</div>
+						<div class="p-col-12">
+							<p:dataTable id="jobOffers" var="jobOffer"
+								value="#{searchJobView.jobOffers}"
+								emptyMessage="#{i18n['job.no_jobs_found']}" reflow="true"
+								paginator="true" paginatorPosition="bottom" rows="10"
+								sortBy="#{jobOffer.title}" sortOrder="descending" lazy="true">
+
+								<p:column headerText="#{i18n['job.title']}"
+									sortBy="#{jobOffer.title}">
+									<h:link outcome="/job/view.xhtml">#{jobOffer.title} <h:outputText
+											value="-" rendered="#{not empty jobOffer.address.city}" /> ${jobOffer.address.city}
+									<f:param name="job" value="#{jobOffer.uid}" />
+									</h:link>
+								</p:column>
+
+								<p:column headerText="#{i18n['job.client']}"
+									sortBy="#{jobOffer.client.name}">
+									<h:link value="#{jobOffer.client.name}"
+										outcome="/client/view.xhtml">
+										<f:param name="client" value="#{jobOffer.client.uid}" />
+									</h:link>
+								</p:column>
+
+								<p:column headerText="#{i18n['job.places']}">
+									<h:outputText value="#{jobOffer.places}" />
+								</p:column>
+
+								<p:column headerText="#{i18n['user.owner']}"
+									sortBy="#{user.owner.name}">
+									<h:link value="#{jobOffer.owner.fullName}"
+										outcome="/user/view.xhtml">
+										<f:param name="user" value="#{jobOffer.owner.uid}" />
+									</h:link>
+								</p:column>
+
+								<p:column headerText="#{i18n['job.job_offer_state']}">
+									<cc:jobOfferState value="#{jobOffer.state}" />
+								</p:column>
+							</p:dataTable>
+						</div>
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

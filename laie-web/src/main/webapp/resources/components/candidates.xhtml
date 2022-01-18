@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:component xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	xmlns:composite="http://xmlns.jcp.org/jsf/composite" xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://nivel.36/laie/ui" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<composite:interface>
+		<composite:attribute name="value" required="true" />
+		<composite:attribute name="styleClass" required="false" default="" />
+		<composite:attribute name="title" required="false" default="#{i18n['candidate.candidates']}" />
+		<composite:attribute name="rows" required="false" default="10" />
+	</composite:interface>
+
+	<composite:implementation>
+		<div id="#{cc.clientId}" class="card card-w-title candidates #{cc.attrs.styleClass}">
+			<h5>#{cc.attrs.title}</h5>
+
+			<p:dataTable var="candidate" id="candidates" value="#{cc.attrs.value}" emptyMessage="#{i18n['candidate.no_candidates_found']}" reflow="true" paginator="true"
+				paginatorPosition="bottom" rows="#{cc.attrs.rows}" sortBy="#{candidate.name}" sortOrder="ascending" lazy="true" styleClass="ui-datatable-borderless">
+
+				<p:column headerText="#{i18n['candidate.name']}" sortBy="#{candidate.name}">
+					<h:link outcome="/candidate/view">
+						<cc:avatar name="#{candidate.fullName}" path="#{candidate.avatarUrl}" styleClass="p-mr-2" />
+						<h:outputText styleClass="link" value="#{candidate.fullName}" />
+						<f:param name="candidate" value="#{candidate.uid}" />
+					</h:link>
+				</p:column>
+
+				<p:column headerText="#{i18n['candidate.jobProfile']}" sortBy="#{candidate.jobProfile}" priority="5">
+					<h:outputText value="#{candidate.jobProfile}" />
+				</p:column>
+
+				<p:column headerText="#{i18n['candidate.rating']}" sortBy="#{candidate.rating}" priority="4">
+					<p:rating value="#{candidate.rating}" cancel="false" readonly="true" />
+				</p:column>
+			</p:dataTable>
+
+			<div class="buttons">
+				<composite:insertChildren />
+			</div>
+		</div>
+	</composite:implementation>
+</ui:component>

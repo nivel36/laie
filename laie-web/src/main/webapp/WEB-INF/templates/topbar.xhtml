@@ -1,0 +1,40 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:po="http://primefaces.org/roma"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components">
+
+	<div class="layout-topbar">
+		<a class="layout-right-panel-button layout-topbar-icon" href="#">
+			<i class="pi pi-ellipsis-v" />
+		</a> <a class="layout-menu-button layout-topbar-icon" href="#"> <i
+			class="pi pi-bars" />
+		</a>
+
+		<ui:include src="./menu.xhtml" />
+	
+		<ul class="topbar-menu fadeInDown">
+
+			<li class="user-profile"><a href="#"> 
+				<cc:avatar path="#{sessionUser.get().avatarUrl}" name="#{sessionUser.get()}" styleClass="user-image"/>
+					<div class="layout-profile-userinfo">
+						<span class="layout-profile-name">#{sessionUser.get().fullName}</span>
+					</div>
+			</a>
+				<ul>
+					<li><h:link outcome="/user/view.xhtml">
+							<i class="pi pi-user" />
+							<span>#{i18n['menu.profile']}</span>
+							<f:param name="user" value="#{sessionUser.get().uid}" />
+						</h:link> </li>
+					<li><a href="#"> <i class="pi pi-cog"></i> <span>#{i18n['menu.settings']}</span>
+					</a></li>
+					<li><a href="#"> <i class="pi pi-bell"></i> <span>#{i18n['menu.notifications']}</span>
+					</a></li>
+				</ul></li>
+		</ul>
+	</div>
+
+</ui:composition>

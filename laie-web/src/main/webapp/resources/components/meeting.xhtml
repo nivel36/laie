@@ -1,0 +1,33 @@
+<ui:component xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:composite="http://xmlns.jcp.org/jsf/composite"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://nivel.36/laie/ui" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<composite:interface>
+		<composite:attribute name="value" type="es.nivel36.laie.ejb.job.meeting.Meeting" required="true" />
+		<composite:attribute name="styleClass" required="false" default="" />
+		<composite:attribute name="locale" required="false" default="es" />
+	</composite:interface>
+
+	<composite:implementation>
+		<div id="#{cc.clientId}" class="meeting #{cc.attrs.styleClass}">
+			<div class="meeting-date">
+				<h:outputText value="#{cc.attrs.value.datePlanned}">
+					<f:convertDateTime type="localDate" locale="#{cc.attrs.locale}" dateStyle="full" />
+				</h:outputText>
+			</div>
+			<div class="meeting-content">
+				<div class="meeting-time">
+					<h:outputText value="#{cc.attrs.value.datePlanned}">
+						<f:convertDateTime type="localDateTime" pattern="HH:mm" />
+					</h:outputText>
+				</div>
+				<div class="meeting-detail">
+					<div class="meeting-title">#{cc.attrs.value.title}</div>
+					<h:panelGroup layout="block" styleClass="meeting-data" rendered="#{not empty cc.attrs.value.location}"><em class="icon fa fa-map-marker"/>#{cc.attrs.value.location}</h:panelGroup>
+				</div>
+			</div>
+		</div>
+	</composite:implementation>
+</ui:component>

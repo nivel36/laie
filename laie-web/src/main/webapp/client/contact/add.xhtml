@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:g="http://nivel.36/laie/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/WEB-INF/templates/template.xhtml">
+
+	<ui:define name="title">
+		#{i18n['contact.new_contact']}
+	</ui:define>
+
+	<ui:define name="buttons">
+		<h:form>
+
+		</h:form>
+	</ui:define>
+
+	<ui:define name="content">
+
+		<h:form id="contactForm">
+			<div class="p-grid">
+				<div class="p-col-12">
+					<div class="card buttons">
+						<p:button value="#{i18n['action.cancel']}"
+							outcome="/client/view.xhtml"
+							styleClass="ui-button-secondary ui-button-outlined">
+							<f:param name="client" value="#{addContactView.clientUid}" />
+						</p:button>
+						<p:commandButton value="#{i18n['action.save']}"
+							action="#{addContactView.save}"
+							styleClass="ui-button-success ui-button-outlined" />
+					</div>
+				</div>
+				<div class="p-col-12 p-xl-8">
+					<h:panelGroup id="contact" styleClass="card card-w-title ui-fluid"
+						layout="block">
+						<h1>#{i18n['client.client']}</h1>
+						<div class="p-grid">
+							<div class="p-col-12 p-sm-6">
+								<g:input id="name" label="#{i18n['contact.name']}"
+									value="#{addContactView.contact.name}" required="true" />
+							</div>
+							<div class="p-col-12 p-sm-6">
+								<g:input id="surname" label="#{i18n['contact.surname']}"
+									value="#{addContactView.contact.surname}" required="true" />
+							</div>
+							<div class="p-col-12 p-sm-6">
+								<g:input id="position" label="#{i18n['contact.position']}"
+									value="#{addContactView.contact.position}" />
+							</div>
+							<div class="p-col-12 p-sm-6">
+								<g:input id="email" label="#{i18n['contact.email']}"
+									value="#{addContactView.contact.email}" required="true" />
+							</div>
+							<div class="p-col-12 p-sm-6">
+								<g:input id="phone_number"
+									label="#{i18n['contact.phone_number']}"
+									value="#{addContactView.contact.phoneNumber}" />
+							</div>
+						</div>
+					</h:panelGroup>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

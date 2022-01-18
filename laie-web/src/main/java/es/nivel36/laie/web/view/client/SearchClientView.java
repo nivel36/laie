@@ -1,0 +1,62 @@
+package es.nivel36.laie.web.view.client;
+
+import java.util.Objects;
+
+import javax.annotation.PostConstruct;
+import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import es.nivel36.laie.ejb.client.ClientService;
+import es.nivel36.laie.web.core.view.AbstractView;
+
+@Named
+@ViewScoped
+public class SearchClientView extends AbstractView {
+	
+	private static final long serialVersionUID = -8547192185427619599L;
+
+	private static final Logger logger = LoggerFactory.getLogger(SearchClientView.class);
+
+	private ClientLazyDataModel clients;
+	
+	private String searchText;
+
+	@Inject
+	private transient ClientService clientService;
+	
+	@PostConstruct
+	public void init() {
+		logger.debug("Client search init");
+		this.clients = new ClientLazyDataModel(this.clientService);
+	}
+	
+	public void search() {
+		logger.debug("Search clients action performed");
+		this.clients.setSearchText(this.searchText);
+	}
+
+	public void export() {
+		logger.debug("Export clients action performed");
+	}
+
+	public ClientLazyDataModel getClients() {
+		return this.clients;
+	}
+
+	public String getSearchText() {
+		return this.searchText;
+	}
+
+	public void setSearchText(final String searchText) {
+		this.searchText = searchText;
+	}
+	
+	public void setClientService(final ClientService clientService) {
+		Objects.requireNonNull(clientService);
+		this.clientService = clientService;
+	}
+}

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://nivel.36/laie/ui" xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets" template="/WEB-INF/templates/template.xhtml">
+
+	<ui:define name="title">
+		#{i18n['job_experience.job_experience']}
+	</ui:define>
+
+	<ui:define name="breadcrumb">
+		<p:breadCrumb>
+			<p:menuitem value="#{i18n['menu.index']}" outcome="/index.xhtml" />
+			<p:menuitem value="#{i18n['candidate.candidates']}" outcome="/candidate/search.xhtml" />
+			<p:menuitem value="#{jobExperienceView.curriculum.candidate.fullName}" outcome="/candidate/view.xhtml">
+				<f:param name="id" value="#{jobExperienceView.curriculum.candidate.uid}" />
+			</p:menuitem>
+			<p:menuitem value="#{i18n['curriculum.curriculum']}" outcome="/curriculum/view.xhtml">
+				<f:param name="id" value="#{jobExperienceView.curriculum.uid}" />	
+				<f:param name="candidateId" value="#{jobExperienceView.curriculum.candidate.uid}" />
+			</p:menuitem>
+			<p:menuitem value="#{i18n['job_experience.job_experience']}" disabled="true" />
+		</p:breadCrumb>
+	</ui:define>
+
+	<ui:define name="buttons">
+		<h:form>
+			<p:button value="#{i18n['action.cancel']}" outcome="/curriculum/view.xhtml" styleClass="ui-button-secondary ui-button-outlined">
+				<f:param name="id" value="#{jobExperienceView.curriculum.uid}" />	
+				<f:param name="candidateId" value="#{jobExperienceView.curriculum.candidate.uid}" />
+			</p:button>
+			<p:commandButton value="#{i18n['action.delete']}" action="#{jobExperienceView.delete}" process="@this" rendered="#{not jobExperienceView.newJobExperience}"
+				styleClass="danger-button">
+				<p:confirm message="#{i18n['job_experience.message.remove']}" icon="fa fa-exclamation-triangle" />
+			</p:commandButton>
+			<p:commandButton value="#{i18n['action.save']}" onclick="save()" styleClass="ui-button-success ui-button-outlined" />
+		</h:form>
+	</ui:define>
+
+	<ui:define name="content">
+		<h:form id="jobExperience">
+			<p:remoteCommand name="save" action="#{jobExperienceView.save}" process="@form" update="@form" />
+			<div class="p-grid">
+				<div class="p-col-12 p-md-10 p-lg-9 p-xl-8">
+					<div class="card ui-fluid">
+						<div class="p-grid p-formgrid">
+							<div class="p-col-12 p-sm-6">
+								<g:input id="degree" label="#{i18n['job_experience.company_name']}" value="#{jobExperienceView.jobExperience.companyName}" required="true" />
+							</div>
+							<div class="p-col-12 p-sm-6">
+								<g:input id="jobPosition" label="#{i18n['job_experience.job_position']}" value="#{jobExperienceView.jobExperience.jobPosition}" required="true" />
+							</div>
+							<div class="p-col-12 p-sm-4">
+								<cc:inputYearMonth id="fromDate" label="#{i18n['job.from_date']}" value="#{jobExperienceView.fromDate}" required="true" />
+							</div>
+							<div class="p-col-12 p-sm-4">
+								<h:panelGroup layout="block" id="toDateWrapper">
+									<cc:inputYearMonth id="toDate" label="#{i18n['job.to_date']}" value="#{jobExperienceView.toDate}" rendered="#{not jobExperienceView.jobExperience.stillWorking}" />
+								</h:panelGroup>
+							</div>
+							<div class="p-col-12 p-sm-4">
+								<g:input id="still" label="#{i18n['job.still_working']}" value="#{jobExperienceView.jobExperience.stillWorking}" type="checkbox">
+									<f:ajax event="change" render="jobExperience:toDateWrapper" />
+								</g:input>
+							</div>
+							<div class="p-col-12">
+								<g:input id="description" label="#{i18n['job_experience.description']}" value="#{jobExperienceView.jobExperience.description}" type="textarea" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

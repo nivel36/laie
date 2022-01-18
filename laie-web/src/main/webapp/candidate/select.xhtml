@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://nivel.36/laie/ui"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets" template="/WEB-INF/templates/dialog.xhtml">
+
+	<ui:define name="title">
+		#{i18n['candidate.candidates']}
+	</ui:define>
+
+	<ui:define name="content">
+		<h:form id="candidateSelectForm">
+			<div class="card">
+				<div class="p-grid">
+					<div class="p-col-12 p-xl-5">
+						<div class="searchBar ui-fluid">
+							<cc:inputSearch searchText="#{selectCandidateView.searchText}" searchAction="#{selectCandidateView.search}" update="@form" />
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="card">
+				<div class="p-grid">
+					<div class="p-col-12">
+						<p:dataTable var="candidate" id="candidates" value="#{selectCandidateView.candidates}"
+							emptyMessage="#{i18n['candidate.no_candidates_found']}" reflow="true" paginator="true" paginatorPosition="bottom"
+							selection="#{selectCandidateView.selectedCandidates}" disabledSelection="#{selectCandidateView.isAlredySelected(candidate.id)}"
+							rows="10" sortBy="#{candidate.name}" sortOrder="descending" lazy="true">
+
+							<p:column selectionMode="multiple" style="width:16px;text-align:center" />
+
+							<p:column>
+								<cc:avatar name="#{candidate.fullName}" path="#{candidate.avatarUrl}" styleClass="small" />
+							</p:column>
+
+							<p:column headerText="#{i18n['candidate.name']}" sortBy="#{candidate.name}">
+								<h:outputText value="#{candidate.fullName}" />
+							</p:column>
+
+							<p:column headerText="#{i18n['candidate.jobProfile']}" sortBy="#{candidate.jobProfile}">
+								<h:outputText value="#{candidate.jobProfile}" />
+							</p:column>
+
+							<p:column headerText="#{i18n['candidate.email']}">
+								<h:outputText value="#{candidate.email}" />
+							</p:column>
+
+							<p:column headerText="#{i18n['candidate.phone_number']}">
+								<h:outputText value="#{candidate.phoneNumber}" />
+							</p:column>
+
+							<p:column headerText="#{i18n['candidate.rating']}" sortBy="#{candidate.rating}">
+								<p:rating value="#{candidate.rating}" cancel="false" readonly="true" />
+							</p:column>
+						</p:dataTable>
+					</div>
+					<div class="p-col-12">
+						<div class="buttons">
+							<p:commandButton value="#{i18n['action.cancel']}" action="#{selectCandidateView.cancel}" process="@this" styleClass="secondar-button" />
+							<p:commandButton value="#{i18n['action.select']}" action="#{selectCandidateView.select}" update="@form" process="@form"
+								styleClass="ui-button-success ui-button-outlined" />
+						</div>
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

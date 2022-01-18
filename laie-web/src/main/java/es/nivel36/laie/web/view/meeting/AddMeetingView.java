@@ -1,0 +1,221 @@
+package es.nivel36.laie.web.view.meeting;
+
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import javax.annotation.PostConstruct;
+import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
+import javax.security.auth.Subject;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import es.nivel36.laie.ejb.job.meeting.MeetingDto;
+import es.nivel36.laie.ejb.job.meeting.MeetingService;
+import es.nivel36.laie.ejb.job.meeting.MeetingType;
+import es.nivel36.laie.ejb.user.SimpleUserDto;
+import es.nivel36.laie.web.core.view.AbstractView;
+
+@Named
+@ViewScoped
+public class AddMeetingView extends AbstractView {
+
+	private static final long serialVersionUID = 1L;
+
+	private static final Logger logger = LoggerFactory.getLogger(AddMeetingView.class);
+
+	public static final String URL = "/meeting/add.xhtml";
+
+	private String attendee;
+
+	private List<String> attendees;
+
+	private List<String> durations;
+
+	private List<String> hours;
+
+	private MeetingDto meeting;
+
+	private LocalDate meetingDate;
+
+	private String meetingDuration;
+
+	private String meetingHour;
+
+	private List<MeetingType> meetingTypes;
+
+	@Inject
+	private transient MeetingService meetingService;
+
+	@PostConstruct
+	public void init() {
+		this.meeting = this.initMeeting();
+		this.meetingTypes = this.initMeetingTypes();
+		this.attendees = this.initAttendees();
+		this.hours = this.initHours();
+		this.durations = this.initDurations();
+		this.meetingHour = this.initActualMeetingHour();
+	}
+
+	private MeetingDto initMeeting() {
+		final MeetingDto newMeeting = new MeetingDto();
+		final SimpleUserDto currentUser = new SimpleUserDto(this.sessionUser.get());
+		newMeeting.setOwner(currentUser);
+		return newMeeting;
+	}
+
+	private List<MeetingType> initMeetingTypes() {
+		return Arrays.asList(MeetingType.values());
+	}
+
+	private List<String> initAttendees() {
+		final List<String> attendeeList = new ArrayList<>();
+		attendeeList.add(this.sessionUser.get().getEmail());
+		final String attendee = this.getValueFromFlash("attendee");
+		if (attendee != null) {
+			attendeeList.add(attendee);
+		}
+		return attendeeList;
+	}
+
+	private List<String> initHours() {
+		final List<String> hourList = new ArrayList<>();
+		for (int i = 0; i < 24; i++) {
+			hourList.add(i + ":00");
+			hourList.add(i + ":30");
+		}
+		return hourList;
+	}
+
+	private List<String> initDurations() {
+		final List<String> durations = new ArrayList<>();
+		durations.add("0:15");
+		durations.add("0:30");
+		durations.add("0:45");
+		for (int i = 1; i < 3; i++) {
+			durations.add(i + ":00");
+			durations.add(i + ":15");
+			durations.add(i + ":30");
+			durations.add(i + ":45");
+		}
+		return durations;
+	}
+
+	private String initActualMeetingHour() {
+		final int hour = LocalTime.now().getHour();
+		final int minute = LocalTime.now().getMinute();
+		final StringBuilder sb = new StringBuilder();
+		if (minute < 30) {
+			sb.append(hour).append(":30");
+		} else {
+			if (hour < 23) {
+				sb.append(hour + 1).append(":00");
+			} else {
+				sb.append("0:00");
+			}
+		}
+		return sb.toString();
+	}
+
+	public void addAttendee() {
+		if (this.attendee != null) {
+			this.attendees.add(this.attendee);
+		}
+		this.attendee = null;
+	}
+
+	public boolean isAvaliable(final Subject subject) {
+		return true;
+	}
+
+	public void removeAttendee(final String person) {
+		this.attendees.remove(person);
+	}
+
+	public void save() {
+		final LocalTime time = LocalTime.parse(this.meetingHour, DateTimeFormatter.ofPattern("H:mm"));
+		final LocalTime endTime = LocalTime.parse(this.meetingDuration, DateTimeFormatter.ofPattern("H:mm"));
+		final Duration duration = Duration.between(time, endTime);
+		final LocalDateTime meetingDateTime = LocalDateTime.of(this.meetingDate, time);
+		this.meeting.setDatePlanned(meetingDateTime);
+		this.meeting.setDuration(duration);
+		for (final String person : this.attendees) {
+			this.meeting.addAttendee(person);
+		}
+		this.meetingService.createMeeting(this.meeting);
+		this.navigateTo(SearchMeetingView.URL);
+	}
+
+	public List<String> searchPerson(final String query) {
+		logger.trace("Searching for person with the string {}", query);
+		return null;
+	}
+
+	public String getAttendee() {
+		return this.attendee;
+	}
+
+	public List<String> getAttendees() {
+		return this.attendees;
+	}
+
+	public List<String> getDurations() {
+		return this.durations;
+	}
+
+	public List<String> getHours() {
+		return this.hours;
+	}
+
+	public MeetingDto getMeeting() {
+		return this.meeting;
+	}
+
+	public LocalDate getMeetingDate() {
+		return this.meetingDate;
+	}
+
+	public String getMeetingDuration() {
+		return this.meetingDuration;
+	}
+
+	public String getMeetingHour() {
+		return this.meetingHour;
+	}
+
+	public List<MeetingType> getMeetingTypes() {
+		return this.meetingTypes;
+	}
+
+	public void setAttendee(final String attendee) {
+		this.attendee = attendee;
+	}
+
+	public void setAttendees(final List<String> attendees) {
+		this.attendees = attendees;
+	}
+
+	public void setMeeting(final MeetingDto meeting) {
+		this.meeting = meeting;
+	}
+
+	public void setMeetingDate(final LocalDate meetingDate) {
+		this.meetingDate = meetingDate;
+	}
+
+	public void setMeetingDuration(final String meetingDuration) {
+		this.meetingDuration = meetingDuration;
+	}
+
+	public void setMeetingHour(final String meetingHour) {
+		this.meetingHour = meetingHour;
+	}
+}

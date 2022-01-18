@@ -1,0 +1,30 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+                xmlns:h="http://java.sun.com/jsf/html" 
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:po="http://primefaces.org/roma">
+
+    <div class="layout-menu-container">
+        <div class="menu-scroll-content">
+            <h:form id="menuform">
+				 <po:menu widgetVar="RomaMenuWidget">
+					<p:menuitem id="om_candidates" value="#{i18n['menu.candidates']}" icon="pi pi-users" containerStyleClass="#{selectedMenu eq 'candidates' ? 'active-menuitem' : 'menuitem' }"
+						outcome="/candidate/search.xhtml" />
+					<p:menuitem id="om_offers" value="#{i18n['menu.offers']}" icon="pi pi-compass" containerStyleClass="#{selectedMenu eq 'offers' ? 'active-menuitem' : 'menuitem' }"
+						outcome="/job/search.xhtml" />
+					<p:menuitem id="om_clients" value="#{i18n['menu.clients']}" icon="pi pi-briefcase" containerStyleClass="#{selectedMenu eq 'clients' ? 'active-menuitem' : 'menuitem' }"
+						outcome="/client/search.xhtml)" />
+					<p:menuitem id="om_events" value="#{i18n['menu.events']}" icon="pi pi-table" containerStyleClass="#{selectedMenu eq 'events' ? 'active-menuitem' : 'menuitem' }"
+						outcome="/event/search.xhtml" />
+					<p:menuitem id="om_reports" value="#{i18n['menu.reports']}" icon="pi pi-chart-bar" containerStyleClass="#{selectedMenu eq 'reports' ? 'active-menuitem' : 'menuitem' }"
+						outcome="/report/search.xhtml" />
+					<p:menuitem id="om_meetings" value="#{i18n['menu.meetings']}" icon="pi pi-calendar" containerStyleClass="#{selectedMenu eq 'meetings' ? 'active-menuitem' : 'menuitem' }"
+						outcome="/meeting/search.xhtml" />
+					<p:menuitem id="om_users" value="#{i18n['menu.users']}" icon="pi pi-user" containerStyleClass="#{selectedMenu eq 'users' ? 'active-menuitem' : 'menuitem' }"
+						outcome="/user/search.xhtml" />
+				</po:menu>
+			</h:form>
+		</div>
+	</div>
+</ui:composition>
