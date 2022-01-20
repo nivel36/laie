@@ -26,9 +26,11 @@ public class FileService {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
-	private static final FileBucket PRIVATE_BUCKET = new PrivateFileBucket();
+	private static final FileBucket TEMP_BUCKET = TemporalFileBucket.getInstance();
 
-	private static final FileBucket PUBLIC_BUCKET = new PublicFileBucket();
+	private static final FileBucket PRIVATE_BUCKET = PrivateFileBucket.getInstance();
+
+	private static final FileBucket PUBLIC_BUCKET = PublicFileBucket.getInstance();
 
 	@Inject
 	@Repository
@@ -38,43 +40,14 @@ public class FileService {
 	@ConfigurationProperty(value = "file.directory")
 	private String fileDirectory;
 
-	private PhysicalFile buildNewPhysicalFile(final FileBucket fileBucket, final String uuid, final Path absolutePath,
-			final String hash) {
-		final PhysicalFile newPhysicalFile = new PhysicalFile();
-		newPhysicalFile.setUuid(uuid);
-		newPhysicalFile.setContentHash(hash);
-		newPhysicalFile.setAbsolutePath(absolutePath);
-		newPhysicalFile.setCreated(LocalDateTime.now());
-		final Path relativePath = getRelativePath(fileBucket, uuid);
-		newPhysicalFile.setRelativePath(relativePath);
-		return newPhysicalFile;
-	}
-
-	private Path getRelativePath(final FileBucket fileBucket, final String uuid) {
-		return new PathBuilder().buildRelativePath(fileBucket, uuid);
-	}
-
-	private void deleteFileInFileSystem(final Path absolutePath) {
-		try {
-			Files.deleteIfExists(absolutePath);
-		} catch (final IOException e) {
-			throw new FileUploadException(e);
-		}
-	}
-
 	public FileDto findByUid(final String uid) {
 		Objects.requireNonNull(uid);
 		logger.debug("Find file by uid {}", uid);
 		final File file = this.fileDao.findFileByUid(uid);
-		final FileMapper fileMapper = new FileMapper();
-		return fileMapper.map(file);
+		return new FileMapper().map(file);
 	}
 
-	private Path getAbsolutePath(final FileBucket fileBucket, final String uuid) {
-		return new PathBuilder().buildAbsolutePath(this.fileDirectory, fileBucket, uuid);
-	}
-
-	public InputStream getFile(final String uid) {
+	public InputStream downloadFile(final String uid) {
 		Objects.requireNonNull(uid);
 		try {
 			final File file = this.fileDao.findFileByUid(uid);
@@ -84,6 +57,54 @@ public class FileService {
 			throw new UncheckedIOException(e);
 		}
 	}
+	
+	public InputStream downloadTemporalFile(final String path) {
+		Objects.requireNonNull(path);
+		try {
+			final Path absolutePath = Paths.get(this.fileDirectory,path);
+			return new BufferedInputStream(Files.newInputStream(absolutePath));
+		} catch (final IOException e) {
+			throw new UncheckedIOException(e);
+		}
+	}
+
+	public FileDto uploadTemporalFile(final InputStream inputStream) {
+		Objects.requireNonNull(inputStream);
+		final File file = new File();
+		file.setCreated(LocalDateTime.now());
+		file.setPublicAccess(false);
+		final PhysicalFile newPhysicalFile = uploadFileToBucket(TEMP_BUCKET, inputStream);
+		file.setPhysicalFile(newPhysicalFile);
+		file.setName(newPhysicalFile.getUuid());
+		return new FileMapper().map(file);
+	}
+
+	private PhysicalFile uploadFileToBucket(final FileBucket bucket, final InputStream inputStream) {
+		final String uuid = UUID.randomUUID().toString();
+		final Path relativePath = this.getRelativePath(bucket, uuid);
+		final Path absolutePath = this.getAbsolutePath(relativePath);
+		final String hash = this.uploadFileToFilesystem(absolutePath, inputStream);
+		final PhysicalFile newPhysicalFile = new PhysicalFile();
+		newPhysicalFile.setUuid(uuid);
+		newPhysicalFile.setBucket(bucket.getName());
+		newPhysicalFile.setContentHash(hash);
+		newPhysicalFile.setAbsolutePath(absolutePath);
+		newPhysicalFile.setCreated(LocalDateTime.now());
+		newPhysicalFile.setRelativePath(relativePath);
+		return newPhysicalFile;
+	}
+
+	private Path getRelativePath(final FileBucket fileBucket, final String uuid) {
+		return new PathBuilder().buildRelativePath(fileBucket, uuid);
+	}
+
+	private Path getAbsolutePath(final Path relativePath) {
+		return new PathBuilder().buildAbsolutePath(this.fileDirectory, relativePath);
+	}
+
+	private String uploadFileToFilesystem(final Path path, final InputStream inputStream) {
+		return new Sha256DigestedFileWriter().write(path, inputStream);
+	}
 
 	public void removeFile(final String uid) {
 		Objects.requireNonNull(uid);
@@ -92,55 +113,38 @@ public class FileService {
 		final boolean isOrphan = this.fileDao.isOrphanPhysicalFile(physicalFile);
 		this.fileDao.delete(file);
 		if (isOrphan) {
-			this.removePhysicalFile(physicalFile);
-		}
-	}
-
-	private void removePhysicalFile(final PhysicalFile physicalFile) {
-		try {
-			final Path path = Paths.get(physicalFile.getAbsolutePath());
-			Files.deleteIfExists(path);
+			this.deleteFileInFileSystem(physicalFile);
 			this.fileDao.deletePhysicalFile(physicalFile);
-		} catch (final IOException e) {
-			throw new UncheckedIOException(e);
 		}
 	}
 
-	public FileDto uploadTemporalFile(final InputStream inputStream) {
-		Objects.requireNonNull(inputStream);
-		final FileBucket fileBucket = PRIVATE_BUCKET;
-		final String uuid = UUID.randomUUID().toString();
-		final File file = new File("temporal." + uuid);
-		file.setPublicAccess(false);
-		final Path absolutePath = getAbsolutePath(fileBucket, uuid);
-		final String hash = this.uploadFileToFilesystem(absolutePath, inputStream);
-		final PhysicalFile newPhysicalFile = buildNewPhysicalFile(fileBucket, uuid, absolutePath, hash);
-		file.setPhysicalFile(newPhysicalFile);
-		final FileMapper fileMapper = new FileMapper();
-		return fileMapper.map(file);
+	private void deleteFileInFileSystem(final PhysicalFile physicalFile) {
+		final Path path = Paths.get(physicalFile.getAbsolutePath());
+		try {
+			Files.deleteIfExists(path);
+		} catch (final IOException e) {
+			throw new FileUploadException(e);
+		}
 	}
 
 	public FileDto uploadFile(final InputStream inputStream, final String filename, final boolean publicAccess) {
 		Objects.requireNonNull(inputStream);
+		final File file = new File();
 		final FileBucket fileBucket = publicAccess ? PUBLIC_BUCKET : PRIVATE_BUCKET;
-		final File file = new File(filename);
-		file.setPublicAccess(publicAccess);
-		final String uuid = UUID.randomUUID().toString();
-		final Path absolutePath = getAbsolutePath(fileBucket, uuid);
-		final String hash = this.uploadFileToFilesystem(absolutePath, inputStream);
-		final PhysicalFile physicalFile = this.fileDao.findPhysicalFileByHash(hash);
-		if (physicalFile != null) {
-			file.setPhysicalFile(physicalFile);
-			deleteFileInFileSystem(absolutePath);
+		final PhysicalFile physicalFile = uploadFileToBucket(fileBucket, inputStream);
+		final String contentHash = physicalFile.getContentHash();
+		final String bucketName = fileBucket.getName();
+		final PhysicalFile physicalFileInDdbb = this.fileDao.findPhysicalFileByHashAndBucket(contentHash, bucketName);
+		if (physicalFileInDdbb != null) {
+			file.setPhysicalFile(physicalFileInDdbb);
+			deleteFileInFileSystem(physicalFile);
 		} else {
-			final PhysicalFile newPhysicalFile = buildNewPhysicalFile(fileBucket, uuid, absolutePath, hash);
-			file.setPhysicalFile(newPhysicalFile);
+			file.setPhysicalFile(physicalFile);
 		}
+		file.setName(filename);
+		file.setCreated(LocalDateTime.now());
+		file.setPublicAccess(publicAccess);
 		this.fileDao.insert(file);
 		return new FileMapper().map(file);
-	}
-
-	private String uploadFileToFilesystem(final Path path, final InputStream inputStream) {
-		return new Sha256DigestedFileWriter().write(path, inputStream);
 	}
 }

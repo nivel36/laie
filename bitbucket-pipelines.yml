@@ -8,11 +8,3 @@ pipelines:
           - maven
         script: 
           - mvn clean verify
-          
-  branches:
-    master:
-      - step:
-          caches:
-            - maven
-          script:
-            - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar -Dsonar.host.url=https://sonarcloud.io -Dsonar.organization=$SONAR_KEY -Dsonar.login=$SONAR_TOKEN

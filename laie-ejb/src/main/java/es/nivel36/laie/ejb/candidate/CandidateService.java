@@ -28,7 +28,7 @@ import es.nivel36.laie.ejb.user.UserDao;
 @Stateless
 public class CandidateService {
 
-	private static final Logger logger = LoggerFactory.getLogger(Candidate.class);
+	private static final Logger logger = LoggerFactory.getLogger(CandidateService.class);
 
 	@Inject
 	@Repository
@@ -74,7 +74,7 @@ public class CandidateService {
 
 	public void updateCandidate(final CandidateDto candidate) {
 		Objects.requireNonNull(candidate);
-		logger.debug("Update candidate", candidate);
+		logger.debug("Update candidate {}", candidate);
 		final String uid = candidate.getUid();
 		final Candidate entity = this.candidateDao.findByUid(uid);
 		candidateMerger.merge(entity, candidate);
@@ -163,7 +163,7 @@ public class CandidateService {
 		final List<CandidateDto> dtoList = candidateMapper.mapList(resultData);
 		final int count = entities.getCount();
 		final Map<String, List<Facet>> allFacets = entities.getAllFacets();
-		return new SearchResult<CandidateDto>(dtoList, count, allFacets);
+		return new SearchResult<>(dtoList, count, allFacets);
 	}
 
 	public void setCandidateDao(final CandidateDao candidateDao) {

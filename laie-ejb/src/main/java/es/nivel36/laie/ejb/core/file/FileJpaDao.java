@@ -4,6 +4,8 @@ import static es.nivel36.laie.ejb.core.util.Parameters.map;
 
 import java.util.Objects;
 
+import javax.persistence.NoResultException;
+
 import es.nivel36.laie.ejb.core.model.AbstractDao;
 import es.nivel36.laie.ejb.core.model.Repository;
 import es.nivel36.laie.ejb.core.util.Parameters;
@@ -17,10 +19,14 @@ public class FileJpaDao extends AbstractDao {
 		return this.findByQuery(Boolean.class, namedQuery, parameters);
 	}
 
-	public PhysicalFile findPhysicalFileByHash(final String hash) {
-		final String namedQuery = "File.findByHash";
-		final Parameters parameters = map("hash", hash);
-		return this.findByQuery(PhysicalFile.class, namedQuery, parameters);
+	public PhysicalFile findPhysicalFileByHashAndBucket(final String hash, final String bucket) {
+		try {
+			final String namedQuery = "File.findByHashAndBucket";
+			final Parameters parameters = map("hash", hash).and("bucket", bucket);
+			return this.findByQuery(PhysicalFile.class, namedQuery, parameters);
+		} catch (NoResultException e) {
+			return null;
+		}
 	}
 
 	public File findFileByUid(final String uid) {
@@ -39,7 +45,7 @@ public class FileJpaDao extends AbstractDao {
 		this.setUid(File.class, file);
 		this.em.persist(file);
 	}
-	
+
 	public void delete(final File file) {
 		Objects.requireNonNull(file);
 		this.delete(File.class, file);

@@ -3977,6 +3977,14 @@ a {
   margin-left: 1em;
 }
 
+.buttons {
+  padding: 1rem;
+  text-align: right;
+}
+.buttons .ui-button {
+  margin-left: 1rem;
+}
+
 .candidate-card {
   padding: 0;
 }
@@ -4160,12 +4168,29 @@ a {
   white-space: nowrap;
 }
 
-.buttons {
-  padding: 1rem;
-  text-align: right;
+.input-avatar {
+  position: relative;
+  height: 200px;
+  width: 200px;
 }
-.buttons .ui-button {
-  margin-left: 1rem;
+.input-avatar img {
+  cursor: pointer;
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+}
+.input-avatar .camera-button {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+.input-avatar .delete-button {
+  position: absolute;
+  right: 31px;
+  bottom: 0;
+}
+.input-avatar .ui-fileupload {
+  display: none;
 }
 
 .person .ui-avatar {
@@ -4202,7 +4227,7 @@ a {
 .user-card .user-card-content img {
   width: 60px;
   height: 60px;
-  margin: -30px 0 0 24px;
+  margin: 0;
 }
 .user-card .user-card-content .user-image {
   width: 60px;

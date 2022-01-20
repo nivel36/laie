@@ -1,11 +1,12 @@
 package es.nivel36.laie.ejb.core.model;
 
+import java.util.Objects;
+
 public class AddressMerger implements Merger<Address, AddressDto> {
 
-	public void merge(Address entity, AddressDto dto) {
-		if (entity == null && dto != null) {
-			entity = new Address();
-		}
+	public void merge(final Address entity, final AddressDto dto) {
+		Objects.requireNonNull(dto);
+		Objects.requireNonNull(entity);
 		entity.setCity(dto.getCity());
 		entity.setCountry(dto.getCountry());
 		entity.setDoor(dto.getDoor());

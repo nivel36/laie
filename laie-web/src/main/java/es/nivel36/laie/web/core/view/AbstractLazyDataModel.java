@@ -57,9 +57,9 @@ public abstract class AbstractLazyDataModel<T extends Serializable> extends Lazy
 		final Page page = new Page(first, pageSize);
 		SortField sortField = null;
 		if (sorts != null && !sorts.isEmpty()) {
-			for (SortMeta sort : sorts.values()) {
+			for (final SortMeta sort : sorts.values()) {
 				sortField = new SortField(sort.getField(), sort.getOrder().isAscending());
-				break;
+				break; // Only one sortField is allowed
 			}
 		}
 		final SearchResult<T> searchResult = search(this.searchText, page, sortField, this.searchFilter);

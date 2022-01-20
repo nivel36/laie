@@ -107,7 +107,7 @@ public class ViewCandidateView extends AbstractView {
 	}
 
 	public void openFile(final File file) throws IOException {
-		try (final InputStream is = this.fileUploadService.getFile(file.getUid());) {
+		try (final InputStream is = this.fileUploadService.downloadFile(file.getUid());) {
 			Faces.sendFile(is, file.getName(), true);
 		}
 	}

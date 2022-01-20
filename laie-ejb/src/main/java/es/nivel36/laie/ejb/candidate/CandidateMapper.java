@@ -45,7 +45,7 @@ public class CandidateMapper implements Mapper<Candidate, CandidateDto> {
 		dto.setSalary(entity.getSalary());
 		dto.setSkype(entity.getSkype());
 		dto.setSurname(entity.getSurname());
-		final List<JobCandidatureDto> jobCandidaturesDto = mapJobCandidatures(entity, dto);
+		final List<JobCandidatureDto> jobCandidaturesDto = mapJobCandidatures(entity);
 		dto.setJobCandidature(jobCandidaturesDto);
 		dto.setUid(entity.getUid());
 		return dto;
@@ -56,12 +56,12 @@ public class CandidateMapper implements Mapper<Candidate, CandidateDto> {
 		return mapper.map(owner);
 	}
 
-	private List<JobCandidatureDto> mapJobCandidatures(final Candidate entity, final CandidateDto dto) {
+	private List<JobCandidatureDto> mapJobCandidatures(final Candidate entity) {
 		final List<JobCandidature> jobCandidatures = entity.getJobCandidatures();
 		if (jobCandidatures == null) {
-			return null;
+			return new ArrayList<>();
 		}
-		final List<JobCandidatureDto> jobCandidaturesDto = new ArrayList<JobCandidatureDto>(jobCandidatures.size());
+		final List<JobCandidatureDto> jobCandidaturesDto = new ArrayList<>(jobCandidatures.size());
 		final JobCandidatureMapper jobCandidatureMapper = new JobCandidatureMapper();
 		for (final JobCandidature jobCandidature : jobCandidatures) {
 			final JobCandidatureDto jobCandidatureDto = jobCandidatureMapper.map(jobCandidature);

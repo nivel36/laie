@@ -22,14 +22,14 @@
 </h:head>
 
 <h:body styleClass="outlined" onload="document.body.style.opacity='1'">
-	<p:growl id="growl" globalOnly="true"/>
-	
+	<p:growl id="growl" globalOnly="true" />
+
 	<div
 		class="layout-wrapper layout-horizontal layout-menu-dark layout-topbar-dark">
 		<ui:include src="./topbar.xhtml" />
 		<ui:include src="./right-panel.xhtml" />
 		<ui:include src="./aside.xhtml" />
-		
+
 		<div class="layout-main">
 			<div class="layout-content">
 				<ui:insert name="content" />
@@ -49,6 +49,13 @@
 			</f:facet>
 		</p:ajaxStatus>
 	</div>
+	<p:confirmDialog global="true" showEffect="fade" hideEffect="fade"
+		responsive="true" width="350">
+		<p:commandButton value="#{i18n['action.confirm.no']}" type="button"
+			styleClass="ui-confirmdialog-no ui-button-flat" />
+		<p:commandButton value="#{i18n['action.confirm.yes']}" type="button"
+			styleClass="ui-confirmdialog-yes" />
+	</p:confirmDialog>
 
 	<h:outputStylesheet name="css/primeicons.css" library="roma-layout" />
 	<h:outputStylesheet name="css/primeflex.min.css" library="roma-layout" />

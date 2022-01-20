@@ -1,14 +1,15 @@
 package es.nivel36.laie.ejb.user;
 
+import java.util.Objects;
+
 import es.nivel36.laie.ejb.core.model.Merger;
 
 public class UserMerger implements Merger<User, UserDto> {
 
-	public UserMerger() {
-	}
-
 	@Override
-	public void merge(User user, UserDto userDto) {
+	public void merge(final User user, final UserDto userDto) {
+		Objects.requireNonNull(user);
+		Objects.requireNonNull(userDto);
 		user.setDateOfJoin(userDto.getDateOfJoin());
 		user.setEmail(userDto.getEmail());
 		user.setLanguage(userDto.getLanguage());

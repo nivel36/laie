@@ -17,7 +17,7 @@ import es.nivel36.laie.ejb.core.model.Obfuscable;
 @Entity
 public class File extends AbstractEntity implements Obfuscable {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -1314618358332505435L;
 
 	@NotNull
 	@Column(nullable = false)
@@ -36,15 +36,6 @@ public class File extends AbstractEntity implements Obfuscable {
 	private boolean publicAccess;
 
 	private String uid;
-
-	public File() {
-	}
-
-	public File(final String name) {
-		Objects.requireNonNull(name);
-		this.name = name;
-		this.created = LocalDateTime.now();
-	}
 
 	@Override
 	public boolean equals(Object obj) {

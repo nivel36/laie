@@ -13,11 +13,15 @@ import es.nivel36.laie.ejb.core.model.AbstractEntity;
 @Entity
 public class PhysicalFile extends AbstractEntity {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -5784130825846473478L;
 
 	@NotNull
 	@Column(nullable = false)
 	private String absolutePath;
+
+	@NotNull
+	@Column(nullable = false)
+	private String bucket;
 
 	@NotNull
 	@Column(nullable = false, unique = true, updatable = false)
@@ -35,26 +39,12 @@ public class PhysicalFile extends AbstractEntity {
 	@Column(nullable = false, unique = true, updatable = false)
 	private String uuid;
 
-	@Override
-	public boolean equals(final Object obj) {
-		if (obj == null) {
-			return false;
-		}
-		if (this == obj) {
-			return true;
-		}
-		if (!super.equals(obj)) {
-			return false;
-		}
-		if (this.getClass() != obj.getClass()) {
-			return false;
-		}
-		final PhysicalFile other = (PhysicalFile) obj;
-		return Objects.equals(this.uuid, other.uuid);
-	}
-
 	public String getAbsolutePath() {
 		return this.absolutePath;
+	}
+
+	public String getBucket() {
+		return bucket;
 	}
 
 	public String getContentHash() {
@@ -73,17 +63,16 @@ public class PhysicalFile extends AbstractEntity {
 		return this.uuid;
 	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(this.uuid);
-	}
-
 	public void setAbsolutePath(final Path absolutePath) {
 		this.absolutePath = absolutePath.toString();
 	}
 
 	public void setAbsolutePath(final String absolutePath) {
 		this.absolutePath = absolutePath;
+	}
+
+	public final void setBucket(String bucket) {
+		this.bucket = bucket;
 	}
 
 	public void setContentHash(final String contentHash) {
@@ -104,5 +93,30 @@ public class PhysicalFile extends AbstractEntity {
 
 	public void setUuid(final String uuid) {
 		this.uuid = uuid;
+	}
+	
+	@Override
+	public boolean equals(final Object obj) {
+		if (obj == null) {
+			return false;
+		}
+		if (this == obj) {
+			return true;
+		}
+		if (!super.equals(obj) || (this.getClass() != obj.getClass())) {
+			return false;
+		}
+		final PhysicalFile other = (PhysicalFile) obj;
+		return Objects.equals(this.uuid, other.uuid);
+	}
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(this.uuid);
+	}
+	
+	@Override
+	public String toString() {
+		return uuid;
 	}
 }

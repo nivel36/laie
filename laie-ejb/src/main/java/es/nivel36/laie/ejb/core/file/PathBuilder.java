@@ -12,4 +12,8 @@ class PathBuilder {
 	Path buildAbsolutePath(final String root, final FileBucket fileBucket, final String uuid) {
 		return Paths.get(root, this.buildRelativePath(fileBucket, uuid).toString());
 	}
+
+	Path buildAbsolutePath(final String root, final Path relativePath) {
+		return Paths.get(root, relativePath.toString());
+	}
 }

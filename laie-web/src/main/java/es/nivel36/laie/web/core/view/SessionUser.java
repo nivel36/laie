@@ -49,7 +49,7 @@ public class SessionUser implements Serializable {
 	@Inject
 	private LoginService loginService;
 
-	public void load(String username) {
+	public void load(final String username) {
 		Objects.requireNonNull(username);
 		logger.info("User {} has init his/her session", username);
 		this.loadUserData(username);

@@ -151,6 +151,7 @@ public class UserService {
 		if (oldImage != null) {
 			this.fileService.removeFile(oldImage.getUid());
 		}
+		user.setPicture(null);
 	}
 
 	public void changePassword(final String email, final String oldPassword, final String newPassword) {

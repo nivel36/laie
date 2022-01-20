@@ -11,43 +11,35 @@
 	template="/WEB-INF/templates/template.xhtml">
 
 	<ui:define name="title">
-		#{i18n['candidate.candidate_edit']} - #{editCandidateView.candidate.fullName}
+		#{i18n['candidate.candidate_edit']} - #{editCandidateView.candidate}
 	</ui:define>
 
 	<ui:param name="selectedMenu" value="candidates" />
 
-	<ui:define name="breadcrumb">
-		<p:breadCrumb>
-			<p:menuitem value="#{i18n['menu.index']}"
-				outcome="/index.xhtml" />
-			<p:menuitem value="#{i18n['candidate.candidates']}"
-				outcome="/candidate/search.xhtml" />
-			<p:menuitem value="#{editCandidateView.candidate.fullName}"
-				outcome="/candidate/view.xhtml">
-				<f:param name="id" value="#{editCandidateView.candidate.uid}" />
-			</p:menuitem>
-			<p:menuitem value="#{i18n['action.edit']}" disabled="true" />
-		</p:breadCrumb>
-	</ui:define>
-
 	<ui:define name="buttons">
 		<h:form>
-			<p:button value="#{i18n['action.cancel']}"
-				outcome="/candidate/view.xhtml"
-				styleClass="ui-button-secondary ui-button-outlined">
-				<f:param name="id" value="#{editCandidateView.candidate.uid}" />
-			</p:button>
-			<p:commandButton value="#{i18n['action.save']}" onclick="save()"
-				styleClass="ui-button-success ui-button-outlined" />
+
 		</h:form>
 	</ui:define>
 
 	<ui:define name="content">
 
 		<h:form id="candidateForm">
-			<p:remoteCommand name="save" process="@form" update="@form growl"
-				action="#{editCandidateView.save}" />
+
 			<div class="p-grid">
+				<div class="p-col-12">
+					<div class="card buttons">
+						<p:button value="#{i18n['action.cancel']}"
+							outcome="/candidate/view.xhtml"
+							styleClass="ui-button-secondary ui-button-outlined">
+							<f:param name="id" value="#{editCandidateView.candidate.uid}" />
+						</p:button>
+						<p:commandButton value="#{i18n['action.save']}" process="@form"
+							update="@form growl" action="#{editCandidateView.save}"
+							styleClass="ui-button-success ui-button-outlined" />
+					</div>
+				</div>
+
 				<div class="p-col-12 p-xl-6">
 					<div class="card card-w-title ui-fluid">
 						<h5>#{i18n['candidate.personal_information']}</h5>
@@ -71,7 +63,7 @@
 							<div class="p-col-12 p-sm-6">
 								<g:input id="born_date" label="#{i18n['candidate.bornDate']}"
 									value="#{editCandidateView.candidate.bornDate}"
-									yearRange="c-100:c-15" type="calendar" />
+									yearRange="c-65:c-15" type="calendar" />
 							</div>
 						</div>
 					</div>

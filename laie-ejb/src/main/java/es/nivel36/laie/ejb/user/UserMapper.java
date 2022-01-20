@@ -32,6 +32,10 @@ public class UserMapper implements Mapper<User, UserDto> {
 		userDto.setRoleName(user.getRole().name());
 		userDto.setSurname(user.getSurname());
 		userDto.setUid(user.getUid());
+		final File userPicture = user.getPicture();
+		if (userPicture != null) {
+			userDto.setAvatarUrl(userPicture.getPhysicalFile().getRelativePath());
+		}
 		return userDto;
 	}
 }

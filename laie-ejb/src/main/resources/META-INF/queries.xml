@@ -115,11 +115,12 @@
 		]]></query>
 	</named-query>
 
-	<named-query name="File.findByHash">
+	<named-query name="File.findByHashAndBucket">
 		<query><![CDATA[
 			SELECT f 
 			FROM PhysicalFile f 
 			WHERE f.contentHash = :hash
+			AND f.bucket = :bucket
 		]]></query>
 	</named-query>
 	
