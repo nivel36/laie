@@ -75,6 +75,8 @@ public class LoginService {
 	}
 
 	public AuthenticationStatus login(final String username, final String password) {
+		Objects.requireNonNull(username);
+		Objects.requireNonNull(password);
 		final UsernamePasswordCredential credential = new UsernamePasswordCredential(username, password);
 		final AuthenticationParameters parameters = withParams().credential(credential).newAuthentication(true);
 		final AuthenticationStatus authenticationStatus = this.authenticate(parameters);

@@ -19,95 +19,82 @@
 
 	<ui:define name="content">
 		<div class="p-grid">
-			<div class="p-col-12 p-md-7">
-				<div class="card user-card">
-					<div class="user-card-header"></div>
-					<div class="user-card-content">
-						<cc:avatar path="#{viewUserView.user.avatarUrl}"
-							name="#{viewUserView.user.fullName}" styleClass="user-image" />
-
-						<div class="user-card-name">#{viewUserView.user.fullName}</div>
-
-						<div class="user-detail">
-							<div class="p-grid">
-								<div class="p-col-12 p-sm-6">
-									<cc:outputText label="#{i18n['user.email']}"
-										value="#{viewUserView.user.email}" />
-								</div>
-								<div class="p-col-12 p-sm-6">
-									<cc:outputText label="#{i18n['user.phone_number']}"
-										value="#{viewUserView.user.phoneNumber}" />
-								</div>
-								<div class="p-col-12 p-sm-6">
-									<cc:outputText label="#{i18n['user.date_of_join']}"
-										value="#{viewUserView.user.dateOfJoin}"
-										styleClass="data date_of_join">
-										<f:convertDateTime type="localDate" pattern="dd/MM/yyyy"
-											for="text" />
-									</cc:outputText>
-								</div>
-								<div class="p-col-12 p-sm-6">
-									<cc:outputText label="#{i18n['user.last_login']}"
-										value="#{viewUserView.user.lastConnection}"
-										styleClass="data last_login">
-										<f:convertDateTime type="localDateTime"
-											pattern="dd/MM/yyyy HH:mm" for="text" />
-									</cc:outputText>
-								</div>
-								<div class="p-col-12">
-									<div class="data manager">
-										<div class="label-container">
-											<div class="label">#{i18n['user.manager']}</div>
-										</div>
-										<div class="text-container">
-											<h:panelGroup layout="block" styleClass="text"
-												rendered="#{empty viewUserView.user.manager}"> --- </h:panelGroup>
-											<h:panelGroup layout="block" class="text"
-												rendered="#{not empty viewUserView.user.manager}">
-												<p:link outcome="/user/view.xhtml"
-													value="#{viewUserView.user.manager.fullName}">
-													<f:param name="user" value="#{viewUserView.user.manager.uid}" />
-												</p:link>
-											</h:panelGroup>
-										</div>
-									</div>
+			<div class="p-col-12 p-xl-8">
+				<div class="title-card">
+					<h:form>
+						<div class="title-card-content">
+							<cc:avatar styleClass="title-card-content-image"
+								name="#{viewUserView.user.fullName}"
+								path="#{viewUserView.user.avatarUrl}" size="xlarge" />
+							<div class="title-card-content-info">
+								<div class="title">#{viewUserView.user.fullName}</div>
+								<div class="subtitle">#{i18n[viewUserView.user.roleName]}</div>
+								<div class="text">
+									<span class="email"><i class="pi pi-envelope" />
+										#{viewUserView.user.email}</span><span class="phone"><i
+										class="pi pi-phone" />#{viewUserView.user.phoneNumber}</span>
 								</div>
 							</div>
+
+							<p:menuButton styleClass="menu-button" icon="pi pi-ellipsis-v"
+								id="menu-button">
+								<p:menuitem value="#{i18n['action.edit']}" outcome="/user/edit"
+									icon="pi pi-pencil">
+									<f:param name="user" value="#{viewUserView.user.uid}" />
+								</p:menuitem>
+								<p:menuitem value="#{i18n['action.export']}"
+									action="#{viewUserView.export}" />
+							</p:menuButton>
+						</div>
+					</h:form>
+				</div>
+				<cc:jobOffers value="#{viewUserView.jobOffers}" rows="5" />
+			</div>
+			<div class="p-col-12 p-xl-4">
+				<div class="card card-w-title">
+					<h5>Detalles</h5>
+					<cc:outputText label="#{i18n['user.date_of_join']}"
+						value="#{viewUserView.user.dateOfJoin}"
+						styleClass="data date_of_join">
+						<f:convertDateTime type="localDate" pattern="dd/MM/yyyy"
+							for="text" />
+					</cc:outputText>
+
+					<cc:outputText label="#{i18n['user.last_login']}"
+						value="#{viewUserView.user.lastConnection}"
+						styleClass="data last_login">
+						<f:convertDateTime type="localDateTime" pattern="dd/MM/yyyy HH:mm"
+							for="text" />
+					</cc:outputText>
+
+					<div class="data manager">
+						<div class="label-container">
+							<div class="label">#{i18n['user.manager']}</div>
+						</div>
+						<div class="text-container">
+							<h:panelGroup layout="block" styleClass="text"
+								rendered="#{empty viewUserView.user.manager}"> --- </h:panelGroup>
+							<h:panelGroup layout="block" class="text"
+								rendered="#{not empty viewUserView.user.manager}">
+								<p:link outcome="/user/view.xhtml"
+									value="#{viewUserView.user.manager.fullName}">
+									<f:param name="user" value="#{viewUserView.user.manager.uid}" />
+								</p:link>
+							</h:panelGroup>
 						</div>
 					</div>
-					<div class="buttons user-card-buttons">
-						<h:form>
-							<p:button value="#{i18n['action.edit']}" process="@this"
-								outcome="/user/edit" icon="pi pi-pencil"
-								styleClass="ui-button-secondary ui-button-outlined" >
-								<f:param name="user" value="#{viewUserView.user.uid}" />
-							</p:button>
-							<p:commandButton value="#{i18n['action.export']}" process="@this"
-								action="#{viewUserView.export}" icon="pi pi-file-excel"
-								styleClass="ui-button-info ui-button-outlined" />
-						</h:form>
-					</div>
 				</div>
-			</div>
 
-			<div class="p-col-12 p-md-5">
+				<h:form id="jobMeetingsForm">
+					<cc:meetings value="#{viewUserView.meetings}" rows="5" />
+				</h:form>
+
 				<h:form id="userTeamForm">
 					<cc:users value="#{viewUserView.team}" title="#{i18n['user.team']}"
 						rows="3" />
 				</h:form>
 			</div>
-
-			<div class="p-col-12 p-lg-8">
-				<h:form id="jobOffersForm">
-					<cc:jobOffers value="#{viewUserView.jobOffers}" rows="5" />
-				</h:form>
-			</div>
-
-			<div class="p-col-12 p-lg-4">
-				<h:form id="jobMeetingsForm">
-					<cc:meetings value="#{viewUserView.meetings}" rows="5" />
-				</h:form>
-			</div>
 		</div>
+
 	</ui:define>
 </ui:composition>

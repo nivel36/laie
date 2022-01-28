@@ -13,7 +13,7 @@
 	</composite:interface>
 
 	<composite:implementation>
-		<div id="#{cc.clientId}" class="card card-w-title jobOffers #{cc.attrs.styleClass}">
+		<div id="#{cc.clientId}" class="card card-w-title #{cc.attrs.styleClass}">
 			<h5>#{cc.attrs.title}</h5>
 
 			<p:dataTable var="jobOffer" value="#{cc.attrs.value}" emptyMessage="#{i18n['job.no_jobs_found']}" reflow="true"

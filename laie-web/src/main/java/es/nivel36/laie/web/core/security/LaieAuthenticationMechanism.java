@@ -19,9 +19,9 @@ import javax.servlet.http.HttpServletResponse;
 @AutoApplySession
 @RememberMe(cookieSecureOnly = false, // Remove this when login is served over HTTPS.
 		cookieMaxAgeSeconds = 60 * 60 * 24 * 14, isRememberMeExpression = "#{self.isRememberMe(httpMessageContext)}")
-@LoginToContinue(loginPage = GedAuthenticationMechanism.LOGIN_URL, errorPage = "", useForwardToLogin = false)
+@LoginToContinue(loginPage = LaieAuthenticationMechanism.LOGIN_URL, errorPage = "", useForwardToLogin = false)
 @RequestScoped
-public class GedAuthenticationMechanism implements HttpAuthenticationMechanism {
+public class LaieAuthenticationMechanism implements HttpAuthenticationMechanism {
 
 	static final String LOGIN_URL = "/login.xhtml";
 

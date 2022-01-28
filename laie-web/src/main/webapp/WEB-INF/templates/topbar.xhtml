@@ -14,11 +14,13 @@
 		</a>
 
 		<ui:include src="./menu.xhtml" />
-	
+
 		<ul class="topbar-menu fadeInDown">
 
-			<li class="user-profile"><a href="#"> 
-				<cc:avatar path="#{sessionUser.get().avatarUrl}" name="#{sessionUser.get()}" styleClass="user-image" id="userImage"/>
+
+			<li class="user-profile"><a href="#"> <cc:avatar
+						path="#{sessionUser.get().avatarUrl}" name="#{sessionUser.get()}"
+						styleClass="user-image" id="userImage" />
 					<div class="layout-profile-userinfo">
 						<span class="layout-profile-name">#{sessionUser.get().fullName}</span>
 					</div>
@@ -33,8 +35,12 @@
 							<i class="pi pi-cog" />
 							<span>#{i18n['menu.settings']}</span>
 						</h:link></li>
-					<li><a href="#"> <i class="pi pi-bell"></i> <span>#{i18n['menu.notifications']}</span>
-					</a></li>
+					<li><h:form>
+							<h:commandLink action="#{sessionUser.logout}">
+								<i class="pi pi-sign-out" />
+								<span>#{i18n['user.logout']}</span>
+							</h:commandLink>
+						</h:form></li>
 				</ul></li>
 		</ul>
 	</div>

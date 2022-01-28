@@ -52,6 +52,12 @@ body .ui-datatable.ui-datatable-borderless {
 	}
 }
 
+body .ui-datatable.ui-datatable-headerless {
+	thead {
+		display: none;
+	}
+}
+
 body .ui-avatar img {
 	object-fit: cover;
 }

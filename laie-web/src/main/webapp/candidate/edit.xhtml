@@ -16,12 +16,6 @@
 
 	<ui:param name="selectedMenu" value="candidates" />
 
-	<ui:define name="buttons">
-		<h:form>
-
-		</h:form>
-	</ui:define>
-
 	<ui:define name="content">
 
 		<h:form id="candidateForm">
@@ -32,7 +26,7 @@
 						<p:button value="#{i18n['action.cancel']}"
 							outcome="/candidate/view.xhtml"
 							styleClass="ui-button-secondary ui-button-outlined">
-							<f:param name="id" value="#{editCandidateView.candidate.uid}" />
+							<f:param name="candidate" value="#{editCandidateView.candidate.uid}" />
 						</p:button>
 						<p:commandButton value="#{i18n['action.save']}" process="@form"
 							update="@form growl" action="#{editCandidateView.save}"
@@ -76,14 +70,12 @@
 								<g:input id="email" label="#{i18n['candidate.email']}"
 									value="#{editCandidateView.candidate.email}" />
 							</div>
-							<div class="p-col-12 p-sm-6"></div>
 							<div class="p-col-12 p-sm-6">
 								<g:input id="phone_number"
 									label="#{i18n['candidate.phone_number']}"
 									value="#{editCandidateView.candidate.phoneNumber}"
 									styleClass="small" />
 							</div>
-							<div class="p-col-12 p-sm-6"></div>
 							<div class="p-col-12 p-sm-6">
 								<g:input id="linkedin" label="#{i18n['candidate.linkedin']}"
 									value="#{editCandidateView.candidate.linkedinProfileUrl}" />
@@ -99,12 +91,11 @@
 					<div class="card card-w-title ui-fluid">
 						<h5>#{i18n['candidate.job_information']}</h5>
 						<div class="p-formgrid p-grid">
-							<div class="p-col-12 p-sm-6">
+							<div class="p-col-12">
 								<g:input id="jobProfile" label="#{i18n['candidate.jobProfile']}"
 									value="#{editCandidateView.candidate.jobProfile}"
 									required="true" />
 							</div>
-							<div class="p-col-12 p-sm-6"></div>
 							<div class="p-col-12 p-sm-6">
 								<g:input id="salary" label="#{i18n['candidate.salary']}"
 									value="#{editCandidateView.candidate.salary}" type="money" />

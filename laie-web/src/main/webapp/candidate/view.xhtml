@@ -18,146 +18,98 @@
 
 	<ui:define name="content">
 		<div class="p-grid">
-			<div class="p-col-12">
-				<div class="card buttons">
+			<div class="p-col-12 p-xl-8">
+				<div class="title-card">
 					<h:form>
-						<p:button value="#{i18n['action.edit']}" process="@this"
-							outcome="/candidate/edit"
-							styleClass="ui-button-secondary ui-button-outlined">
-							<f:param name="candidate"
-								value="#{viewCandidateView.candidate.uid}" />
-						</p:button>
-						<p:menuButton icon="pi pi-plus">
-							<p:menuitem value="#{i18n['action.export']}" process="@this"
-								action="#{viewCandidateView.export}" icon="pi pi-file-excel" />
-							<p:menuitem value="#{i18n['curriculum.curriculum']}"
-								process="@this" outcome="/candidate/curriculum">
-								<f:param name="candidate"
-									value="#{viewCandidateView.candidate.uid}" />
-								<f:param name="curriculum"
-									value="#{viewCandidateView.curriculum.uid}"
-									disable="#{viewCandidateView.curriculum.uid == null}" />
-							</p:menuitem>
-							<p:menuitem value="#{i18n['curriculum.export_to_pdf']}"
-								process="@this" outcome="/candidate/curriculum/export"
-								icon="pi pi-file-pdf"
-								rendered="#{viewCandidateView.curriculum.uid != null}">
-								<f:param name="candidate"
-									value="#{viewCandidateView.candidate.uid}" />
-								<f:param name="curriculum"
-									value="#{viewCandidateView.curriculum.uid}" />
-							</p:menuitem>
-						</p:menuButton>
-					</h:form>
-				</div>
-			</div>
-			<div class="p-col-12 p-xl-6">
-				<h:form>
-					<div class="card candidate-card">
-						<div class="candidate-card-header"></div>
-						<div class="candidate-card-content">
-							<cc:avatar styleClass="candidate-image"
+						<div class="title-card-content">
+							<cc:avatar styleClass="title-card-content-image"
 								name="#{viewCandidateView.candidate.fullName}"
 								path="#{viewCandidateView.candidate.avatarUrl}" size="xlarge" />
-
-							<div class="candidate-card-name">#{viewCandidateView.candidate.fullName}</div>
-							<div class="candidate-card-profile">#{viewCandidateView.candidate.jobProfile}</div>
-							<div class="candidate-detail ui-fluid">
-								<div class="p-grid">
-									<div class="p-col-12 p-sm-6">
-										<cc:outputText label="#{i18n['candidate.email']}"
-											value="#{viewCandidateView.candidate.email}" />
-									</div>
-									<div class="p-col-12 p-sm-6">
-										<cc:outputText label="#{i18n['candidate.phone_number']}"
-											value="#{viewCandidateView.candidate.phoneNumber}" />
-									</div>
-									<div class="p-col-12 p-sm-6">
-										<cc:outputText label="#{i18n['candidate.skype']}"
-											value="#{viewCandidateView.candidate.skype}" />
-									</div>
-									<div class="p-col-12 p-sm-6">
-										<cc:outputText label="#{i18n['candidate.linkedin']}"
-											value="#{viewCandidateView.candidate.linkedinProfileUrl}" />
-									</div>
-									<div class="p-col-12 p-sm-6">
-										<cc:outputText label="#{i18n['candidate.city']}"
-											value="#{viewCandidateView.candidate.address.city} (#{viewCandidateView.candidate.address.region})" />
-									</div>
-									<div class="p-col-12 p-sm-6">
-										<cc:outputText label="#{i18n['candidate.bornDate']}"
-											value="#{viewCandidateView.candidate.bornDate}">
-											<f:convertDateTime type="localDate" pattern="dd/MM/yyyy"
-												for="text" />
-										</cc:outputText>
-									</div>
-
-									<div class="p-col-12 p-sm-6">
-										<cc:outputText label="#{i18n['candidate.salary']}"
-											value="#{viewCandidateView.candidate.salary}">
-											<f:convertNumber for="text" currencyCode="EUR"
-												maxFractionDigits="0" type="currency" />
-										</cc:outputText>
-									</div>
-
-									<div class="p-col-12 p-sm-6">
-										<cc:outputText label="#{i18n['candidate.expected_salary']}"
-											value="#{viewCandidateView.candidate.expectedSalary}">
-											<f:convertNumber for="text" currencyCode="EUR"
-												maxFractionDigits="0" type="currency" />
-										</cc:outputText>
-									</div>
-
-									<div class="p-col-12 p-sm-6">
-										<cc:outputText label="#{i18n['candidate.origin']}"
-											value="#{i18n[viewCandidateView.candidate.origin]}" />
-									</div>
-
-									<div class="p-col-12 p-sm-6">
-										<div class="data rating">
-											<div class="label-container">
-												<div class="label">#{i18n['candidate.rating']}</div>
-											</div>
-											<div class="text-container">
-												<p:rating value="#{viewCandidateView.candidate.rating}"
-													cancel="false" readonly="true" />
-											</div>
-										</div>
-									</div>
-									<div class="p-col-12">
-										<div class="data tags">
-											<div class="label-container">
-												<div class="label">#{i18n['candidate.tags']}</div>
-											</div>
-											<div class="text-container">
-												<ui:repeat value="#{viewCandidateView.candidate.tags}"
-													var="tag"
-													rendered="#{not empty viewCandidateView.candidate.tags}">
-													<div class="tag">#{tag.label}</div>
-												</ui:repeat>
-												<h:outputText id="emptyText" value="---" styleClass="text"
-													rendered="#{empty viewCandidateView.candidate.tags}" />
-											</div>
-										</div>
-									</div>
+							<div class="title-card-content-info">
+								<div class="title">#{viewCandidateView.candidate.fullName}</div>
+								<div class="subtitle">#{viewCandidateView.candidate.jobProfile}</div>
+								<div class="text">
+									<span class="region"><i class="pi pi-map-marker" />#{viewCandidateView.candidate.address.region}</span>
+									<span class="email"><i class="pi pi-envelope" />
+										#{viewCandidateView.candidate.email}</span><span class="phone"><i
+										class="pi pi-phone" />#{viewCandidateView.candidate.phoneNumber}</span>
 								</div>
 							</div>
+
+							<p:menuButton styleClass="menu-button" icon="pi pi-ellipsis-v"
+								id="menu-button">
+								<p:menuitem value="#{i18n['action.edit']}"
+									outcome="/candidate/edit" icon="pi pi-pencil">
+									<f:param name="candidate"
+										value="#{viewCandidateView.candidate.uid}" />
+								</p:menuitem>
+								<p:menuitem value="#{i18n['bookmark.add_to_bookmarks']}"
+									action="#{viewCandidateView.addToBookmarks}" process="@this"
+									update="menu-button :bookmarks" icon="pi pi-bookmark" />
+								<p:menuitem value="#{i18n['bookmark.remove_from_bookmarks']}"
+									action="#{viewCandidateView.removeFromBookmarks}"
+									process="@this" update="menu-button :bookmarks"
+									icon="pi pi-bookmark" />
+								<p:divider />
+								<p:menuitem value="#{i18n['curriculum.view_curriculum']}"
+									outcome="/candidate/curriculum">
+									<f:param name="candidate"
+										value="#{viewCandidateView.candidate.uid}" />
+								</p:menuitem>
+							</p:menuButton>
+						</div>
+					</h:form>
+				</div>
+				<cc:jobCandidatures value="#{viewCandidateView.jobCandidatures}"
+					showCandidate="false" title="#{i18n['candidate.job_candidatures']}"
+					rows="5" />
+			</div>
+			<div class="p-col-12 p-xl-4">
+				<div class="card card-w-title">
+					<h5>Detalles</h5>
+					<cc:outputText label="#{i18n['candidate.skype']}"
+						value="#{viewCandidateView.candidate.skype}" />
+					<cc:outputText label="#{i18n['candidate.linkedin']}"
+						value="#{viewCandidateView.candidate.linkedinProfileUrl}" />
+					<cc:outputText label="#{i18n['candidate.bornDate']}"
+						value="#{viewCandidateView.candidate.bornDate}">
+						<f:convertDateTime type="localDate" pattern="dd/MM/yyyy"
+							for="text" />
+					</cc:outputText>
+					<cc:outputText label="#{i18n['candidate.salary']}"
+						value="#{viewCandidateView.candidate.salary}">
+						<f:convertNumber for="text" currencyCode="EUR"
+							maxFractionDigits="0" type="currency" />
+					</cc:outputText>
+					<cc:outputText label="#{i18n['candidate.expected_salary']}"
+						value="#{viewCandidateView.candidate.expectedSalary}">
+						<f:convertNumber for="text" currencyCode="EUR"
+							maxFractionDigits="0" type="currency" />
+					</cc:outputText>
+					<cc:outputText label="#{i18n['candidate.origin']}"
+						value="#{i18n[viewCandidateView.candidate.origin]}" />
+					<div class="data rating">
+						<div class="label-container">
+							<div class="label">#{i18n['candidate.rating']}</div>
+						</div>
+						<div class="text-container">
+							<p:rating value="#{viewCandidateView.candidate.rating}"
+								cancel="false" readonly="true" />
 						</div>
 					</div>
-				</h:form>
-			</div>
+				</div>
 
-			<div class="p-col-12 p-xl-6">
-				<h:form id="file_form" enctype="multipart/form-data">
-					<div class="card card-w-title files">
-						<h5>#{i18n['file.files']}</h5>
+				<div class="card card-w-title files">
+					<h5>#{i18n['file.files']}</h5>
+					<h:form id="file_form" enctype="multipart/form-data">
 						<div class="p-grid p-formgrid">
 							<div class="p-col-12">
 								<p:dataTable var="file" id="files"
 									value="#{viewCandidateView.files}"
 									emptyMessage="#{i18n['file.no_files']}" paginator="true"
 									paginatorPosition="bottom" reflow="true" rows="5"
-									rowKey="#{file.id}" styleClass="ui-datatable-borderless">
+									rowKey="#{file.id}"
+									styleClass="ui-datatable-borderless ui-datatable-headerless">
 
 									<p:column>
 										<h:commandLink action="#{viewCandidateView.openFile(file)}">
@@ -184,19 +136,9 @@
 								</div>
 							</div>
 						</div>
-					</div>
-				</h:form>
-			</div>
+					</h:form>
+				</div>
 
-			<div class="p-col-12 p-xl-8">
-				<h:form>
-					<cc:jobCandidatures value="#{viewCandidateView.jobCandidatures}"
-						showCandidate="false"
-						title="#{i18n['candidate.job_candidatures']}" rows="5" />
-				</h:form>
-			</div>
-
-			<div class="p-col-12 p-xl-4">
 				<cc:meetings value="#{viewCandidateView.meetings}" rows="5">
 					<h:form>
 						<p:commandButton value="#{i18n['meeting.add_meeting']}"
@@ -204,6 +146,18 @@
 							styleClass="ui-button-success ui-button-outlined" />
 					</h:form>
 				</cc:meetings>
+
+				<div class="card card-w-title tags">
+					<h5>#{i18n['candidate.tags']}</h5>
+					<div class="text-container">
+						<ui:repeat value="#{viewCandidateView.candidate.tags}" var="tag"
+							rendered="#{not empty viewCandidateView.candidate.tags}">
+							<div class="tag">#{tag.label}</div>
+						</ui:repeat>
+						<h:outputText id="emptyText" value="---" styleClass="text"
+							rendered="#{empty viewCandidateView.candidate.tags}" />
+					</div>
+				</div>
 			</div>
 		</div>
 	</ui:define>

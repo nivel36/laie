@@ -61,46 +61,46 @@
 	}
 }
 
-.buttons {
-	padding: 1rem;
-	text-align: right;
-	.ui-button {
-		margin-left: 1rem;
+.searchBar-buttons {
+	display: flex;
+	padding-bottom: 2rem;
+	.input-search-group {
+		flex: 1;
+	}
+	.buttons {
+		flex: 1;
+		display: flex;
+		padding: 0rem;
+		justify-content: flex-end;
+		margin-left: auto;
+		.ui-button {
+			margin-left: 1rem;
+		}
 	}
 }
 
-.candidate-card {
+.title-card {
+	background: #ffffff;
+	box-sizing: border-box;
+	box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.08);
+	border-radius: 2px;
+	display: flex;
+	flex-direction: column;
 	
-	padding: 0;
-
-	.candidate-card-header{
-		height: 9rem;
-		overflow: hidden;
+	.title-card-content {
+		height: 10rem;
+		padding: 1.5rem;
 		background: linear-gradient(30deg, $primaryColor 0%, $primaryLightColor 150%);
 		background-color:$primaryColor;
 		color: $primaryTextColor;
-	}
-
-	.candidate-card-content {
+		display: flex;
 		
-		.label-container {
-			font-size: 0.9em;
-			padding-bottom: 0.3em;
-		
-			.label {
-				color: $darkMenuBgColor;
-			}	
-		}
-		
-		.text {
-			color: $menuitemTextColor;
-		}
-		
-		.candidate-image {
-			margin: -2.5rem 0 0 3rem;
+		.title-card-content-image {
 			width: 5rem;
 			height: 5rem;
-			
+			order: 2;
+			margin-left: auto;
+			margin-right: 1.5rem;
 			img {
 				margin: 0;
 				width: 5rem;
@@ -108,26 +108,39 @@
 			}
 		}
 		
-		.candidate-card-name {
-			font-size: 13px;
-			color: $primaryTextColor;
-			position: relative;
-			top: -4.2rem;
-			margin-left: 9rem;
-			font-weight: 700;
-			white-space: nowrap;
+		.title-card-content-info {
+			display: flex;
+			flex-direction: column;
+			.title {
+				font-size: 1.5rem;
+				font-weight: 700;
+				white-space: nowrap;
+			}
+		
+			.subtitle {
+				font-size: 1.2rem;
+				font-weight: 500;
+				white-space: nowrap;
+			}
+			
+			.text {
+				font-size: 0.9rem;
+				margin-top: 2.5rem;
+			}
 		}
 		
-		.candidate-card-profile {
-			position: relative;
-			top: -3.8rem;
-			margin-left: 9rem;
-			font-weight: 700;
-			white-space: nowrap;
-		}
-		
-		.candidate-detail {
-			padding: 0 2.5em 2em 2.5em;
+		.menu-button {
+			order: 3;
+			button.ui-button {
+				background-color: transparent;
+				border: 0px;
+				&.ui-state-focus {
+					box-shadow: none;
+				}
+				.ui-icon {
+					font-size: 1.5rem;
+				}
+			}
 		}
 	}
 }
@@ -164,6 +177,40 @@
 		.client-detail {
 			padding: 0 2.5em 2em 2.5em;
 		}
+	}
+}
+
+.phone {
+	margin-right: 1rem;
+	i {
+		margin-right: 0.3rem;
+	}
+}
+
+.email {
+	margin-right: 1rem;
+	i {
+		margin-right: 0.3rem;
+	}
+}
+
+.region {
+	margin-right: 1rem;
+	i {
+		margin-right: 0.3rem;
+	}
+}
+
+.data {
+	display: flex;
+	margin-bottom: 1rem;
+	justify-content: space-between;
+	.label-container {
+		font-weight: 400;
+		margin-right: 1rem;
+	}
+	.text-container {
+		font-weight: 500;	
 	}
 }
 
@@ -226,6 +273,13 @@
 			background-color: white;
 		}
 	}
+}
+
+.jobOffers {
+	display: flex;
+	padding: 1rem;
+	flex-grow: 1;
+	flex-basis: 0;
 }
 
 .card.job-card {

@@ -18,6 +18,8 @@ import org.slf4j.LoggerFactory;
 
 import es.nivel36.laie.ejb.candidate.CandidateDto;
 import es.nivel36.laie.ejb.candidate.CandidateService;
+import es.nivel36.laie.ejb.core.bookmark.BookmarkDto;
+import es.nivel36.laie.ejb.core.bookmark.BookmarkService;
 import es.nivel36.laie.ejb.core.file.File;
 import es.nivel36.laie.ejb.core.file.FileDto;
 import es.nivel36.laie.ejb.core.file.FileService;
@@ -54,6 +56,13 @@ public class ViewCandidateView extends AbstractView {
 	private List<JobCandidatureDto> jobCandidatures;
 
 	private List<MeetingDto> meetings;
+	
+	private boolean bookmarkable;
+
+	private BookmarkDto bookmark;
+	
+	@Inject
+	private transient BookmarkService bookmarkService;
 
 	@Inject
 	private transient CandidateService candidateService;
@@ -87,6 +96,31 @@ public class ViewCandidateView extends AbstractView {
 		this.editable = true;
 		this.meetings = this.initMeetings();
 		this.files = this.findFiles();
+		this.bookmark = this.buildBookmark();
+		this.bookmarkable = !this.sessionUser.getBookmarks().contains(this.bookmark);
+	}
+
+	private BookmarkDto buildBookmark() {
+		final BookmarkDto bookmark = new BookmarkDto();
+		bookmark.setTitle(candidate.getName());
+		bookmark.setUrl(this.candidateUrl());
+		return bookmark;
+	}
+	
+	protected String candidateUrl() {
+		return "/candidate/candidate.xhtml?candidate=" + this.candidate.getUid();
+	}
+	
+	public void addToBookmarks() {
+		this.bookmarkService.addBookmark(this.bookmark, this.candidate.getUid());
+		this.bookmarkable = false;
+		this.sessionUser.refresh();
+	}
+
+	public void removeFromBookmarks() {
+		this.bookmarkService.deleteBookmark(this.bookmark, this.candidate.getUid());
+		this.bookmarkable = true;
+		this.sessionUser.refresh();
 	}
 
 	private List<MeetingDto> initMeetings() {
@@ -137,6 +171,10 @@ public class ViewCandidateView extends AbstractView {
 
 	public boolean isEditable() {
 		return this.editable;
+	}
+	
+	public boolean isBookmarkable() {
+		return this.bookmarkable;
 	}
 
 	public CandidateDto getCandidate() {

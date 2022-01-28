@@ -23,7 +23,7 @@ public class LoginView extends AbstractView {
 	private static final long serialVersionUID = 4112471805164466458L;
 
 	private static final Logger logger = LoggerFactory.getLogger(LoginView.class);
-	
+
 	public static final String URL = "/login.xhtml";
 
 	private Locale locale;
@@ -48,14 +48,21 @@ public class LoginView extends AbstractView {
 
 	public void login() {
 		logger.debug("User {} login", this.username);
+		if (this.username == null || this.password == null) {
+			loginError();
+		}
 		final AuthenticationStatus status = this.loginService.login(this.username, this.password);
-		if (status.equals(AuthenticationStatus.SEND_FAILURE)) {
-			this.addMessage(FacesMessage.SEVERITY_ERROR, "auth.message.error", "auth.message.error");
-			this.facesContext.validationFailed();
+		if (AuthenticationStatus.SEND_FAILURE.equals(status)) {
+			loginError();
 		} else {
 			this.sessionUser.load(this.username);
 			this.gotoIndex();
 		}
+	}
+
+	private void loginError() {
+		this.addMessage(FacesMessage.SEVERITY_ERROR, "auth.message.error", "auth.message.error");
+		this.facesContext.validationFailed();
 	}
 
 	private void gotoIndex() {

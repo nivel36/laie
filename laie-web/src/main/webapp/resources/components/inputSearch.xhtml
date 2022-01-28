@@ -22,7 +22,8 @@
 		<div id="#{cc.clientId}"
 			class="input-group input-search-group #{cc.attrs.styleClass}">
 			<p:defaultCommand target="searchButton" />
-			<div class="ui-inputgroup">
+			<div id="#{cc.clientId}"
+			class="input-search-group #{cc.attrs.styleClass} ui-inputgroup">
 				<p:inputText id="searchText" value="#{cc.attrs.searchText}"
 					placeholder="#{cc.attrs.placeholder}" />
 				<p:commandButton id="cleanSearchButton"

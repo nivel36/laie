@@ -71,7 +71,7 @@ public class PhysicalFile extends AbstractEntity {
 		this.absolutePath = absolutePath;
 	}
 
-	public final void setBucket(String bucket) {
+	public void setBucket(String bucket) {
 		this.bucket = bucket;
 	}
 

@@ -6892,6 +6892,10 @@ body .ui-datatable.ui-datatable-borderless .ui-datatable-data > tr {
   border: 0 none;
 }
 
+body .ui-datatable.ui-datatable-headerless thead {
+  display: none;
+}
+
 body .ui-avatar img {
   object-fit: cover;
 }
