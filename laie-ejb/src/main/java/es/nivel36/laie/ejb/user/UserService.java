@@ -59,7 +59,7 @@ public class UserService {
 		this.userMerger.merge(entity, user);
 		this.userDao.insert(entity);
 		this.changeUsersManager(entity, managerUid);
-		return user;
+		return this.userMapper.map(entity);
 	}
 
 	public void updateUser(final UserDto user) throws DuplicateEmailException {

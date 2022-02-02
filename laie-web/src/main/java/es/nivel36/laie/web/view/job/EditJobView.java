@@ -23,7 +23,7 @@ public class EditJobView extends AbstractJobView {
 
 	@PostConstruct
 	public void init() {
-		final String uid = this.getValueFromGetParameters("jobOfferUid", true);
+		final String uid = this.getValueFromGetParameters("job", true);
 		this.jobOffer = this.jobOfferService.findJobOfferByUid(uid);
 		this.checkNonNullJobOffer();
 		logger.trace("Edit job offer {} init", this.jobOffer);

@@ -12,6 +12,19 @@
 	}
 }
 
+.card-w-title {
+	position: relative;
+	h1,h2,h3,h4,h5 {
+		margin-bottom: 2rem;		
+	}
+	.card-header-buttons {
+		position: absolute;
+		top: 1rem;
+		right: 1rem;
+	}
+	
+}
+
 .layout-wrapper{
 	.layout-topbar{
 		height: $topbarHeight;
@@ -426,6 +439,31 @@
 	.ui-dataview-row {
 		a {
 			color: $textColor;
+		}
+	}
+}
+
+.form-buttons {
+	display: flex;
+	justify-content: right;
+	.ui-button {
+		margin-left: 1rem;
+	}
+}
+
+.ui-tag {
+	&.user-role{
+		text-transform: uppercase;
+		font-weight: 700;
+		font-size: 0.8rem;
+		letter-spacing: 0.3px;
+		&.role-ADMIN{
+			background: #FEEDAF;
+			color: #8A5340;
+		}
+		&.role-USER {
+			background: #C8E6C9;
+			color: #256029;
 		}
 	}
 }

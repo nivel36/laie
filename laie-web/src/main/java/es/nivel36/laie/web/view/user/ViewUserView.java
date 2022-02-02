@@ -83,6 +83,10 @@ public class ViewUserView extends AbstractView {
 		Faces.sendFile(userReport.create(), true);
 	}
 
+	public boolean isLogedUser() {
+		return this.sessionUser.get().equals(this.user);
+	}
+
 	public List<JobOfferDto> getJobOffers() {
 		return this.jobOffers;
 	}

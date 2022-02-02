@@ -114,6 +114,9 @@ public class JobOffer extends AbstractIndexedEntity implements Ownerable {
 	}
 
 	public Address getAddress() {
+		if(this.address == null) {
+			return new Address();
+		}
 		return this.address;
 	}
 

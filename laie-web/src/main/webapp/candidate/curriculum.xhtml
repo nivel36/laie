@@ -57,7 +57,7 @@
 				</div>
 				<div class="p-col-12 p-xl-8">
 					<h:panelGroup styleClass="card card-w-title curriculum" id="jobExperiences" layout="block">
-						<h4>#{i18n['curriculum.job_experiences']}</h4>
+						<h5>#{i18n['curriculum.job_experiences']}</h5>
 						<div class="buttons header-buttons">
 							<p:commandButton action="#{curriculumView.newJobExperience}" process="@this" icon="fa fa-plus" styleClass="ui-button-success ui-button-outlined" />
 						</div>
@@ -100,7 +100,7 @@
 				</div>
 				<div class="p-col-12 p-xl-8">
 					<h:panelGroup class="card card-w-title curriculum" id="educations" layout="block">
-						<h4>#{i18n['curriculum.education']}</h4>
+						<h5>#{i18n['curriculum.education']}</h5>
 						<div class="buttons header-buttons">
 							<p:commandButton action="#{curriculumView.newEducation}" process="@this" icon="fa fa-plus" styleClass="ui-button-success ui-button-outlined" />
 						</div>
@@ -126,7 +126,7 @@
 				</div>
 				<div class="p-col-12 p-xl-8">
 					<h:panelGroup styleClass="card card-w-title curriculum" id="languages" layout="block">
-						<h4>#{i18n['curriculum.languages']}</h4>
+						<h5>#{i18n['curriculum.languages']}</h5>
 						<div class="section">
 							<ui:repeat value="#{curriculumView.languages}" var="language" id="language">
 								<p>
@@ -142,7 +142,7 @@
 				</div>
 				<div class="p-col-12 p-xl-8">
 					<h:panelGroup styleClass="card card-w-title curriculum" id="skills" layout="block">
-						<h4>#{i18n['curriculum.skills']}</h4>
+						<h5>#{i18n['curriculum.skills']}</h5>
 						<div class="section">
 							<ui:repeat var="skill" value="#{curriculumView.curriculum.skills}">
 								<p:tag value="#{skill.name}" />

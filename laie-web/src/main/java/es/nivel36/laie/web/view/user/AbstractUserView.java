@@ -22,17 +22,17 @@ public abstract class AbstractUserView extends AbstractView {
 	private static final long serialVersionUID = 5892896620148492686L;
 
 	private static final Logger logger = LoggerFactory.getLogger(AbstractUserView.class);
-	
+
 	protected UserDto user;
-	
+
 	protected SimpleUserDto manager;
-	
+
 	@Inject
 	protected transient FileService fileUploadService;
 
 	@Inject
 	protected transient UserService userService;
-		
+
 	public void changeRoleListener() {
 		logger.trace("Change role listener triggered");
 		if (this.user.getRoleName().equals(Role.ADMIN.name())) {
@@ -43,26 +43,27 @@ public abstract class AbstractUserView extends AbstractView {
 	public List<SimpleUserDto> queryManager(final String query) {
 		logger.trace("Search manager with the string {}", query);
 		final List<UserDto> resultData = this.userService.search(query, Page.TEN_RESULTS_PER_PAGE).getResultData();
-		final List<SimpleUserDto> managers = resultData.stream().filter(u->!u.equals(user)).map(SimpleUserDto::new).collect(Collectors.toList());
+		final List<SimpleUserDto> managers = resultData.stream().filter(u -> !u.equals(user)).map(SimpleUserDto::new)
+				.collect(Collectors.toList());
 		return managers;
 	}
-	
+
 	protected String userUrl() {
-		return "/user/view?faces-redirect=true&user="+user.getUid();
+		return "/user/view.xhtml?user=" + this.user.getUid();
 	}
-	
+
 	public SimpleUserDto getmanager() {
 		return this.manager;
 	}
-	
+
 	public UserDto getUser() {
 		return this.user;
 	}
-	
+
 	public void setManager(final SimpleUserDto manager) {
 		this.manager = manager;
 	}
-	
+
 	public void setUser(final UserDto user) {
 		this.user = user;
 	}
@@ -71,7 +72,7 @@ public abstract class AbstractUserView extends AbstractView {
 		Objects.requireNonNull(fileUploadService);
 		this.fileUploadService = fileUploadService;
 	}
-	
+
 	public void setUserService(final UserService userService) {
 		Objects.requireNonNull(userService);
 		this.userService = userService;

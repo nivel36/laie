@@ -9,17 +9,6 @@
 
 	<ui:param name="selectedMenu" value="offers" />
 
-	<ui:define name="breadcrumb">
-		<p:breadCrumb>
-			<p:menuitem value="#{i18n['menu.index']}" outcome="/index.xhtml" />
-			<p:menuitem value="#{i18n['job.job_offers']}" outcome="/job/search.xhtml" />
-			<p:menuitem value="#{editJobView.jobOffer}" outcome="/job/view.xhtml">
-				<f:param name="id" value="#{editJobView.jobOffer.uid}" />
-			</p:menuitem>
-			<p:menuitem value="#{i18n['job.edit_job']}" disabled="true" />
-		</p:breadCrumb>
-	</ui:define>
-
 	<ui:define name="buttons">
 		<h:form>
 			<p:button value="#{i18n['action.cancel']}" outcome="/job/view.xhtml" styleClass="ui-button-secondary ui-button-outlined">

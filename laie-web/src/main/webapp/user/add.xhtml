@@ -20,12 +20,12 @@
 		<h:form id="userForm">
 			<div class="p-grid">
 				<div class="p-col-12">
-					<div class="card buttons">
+					<div class="card form-buttons">
 						<p:button value="#{i18n['action.cancel']}"
 							outcome="/user/search.xhtml"
 							styleClass="ui-button-secondary ui-button-outlined" />
 						<p:commandButton value="#{i18n['action.save']}"
-							action="#{addUserView.save}"
+							action="#{addUserView.save}" update="@form"
 							styleClass="ui-button-success ui-button-outlined" />
 					</div>
 				</div>
@@ -78,7 +78,7 @@
 									<cc:autocomplete id="manager" label="#{i18n['user.manager']}"
 										value="#{addUserView.user.manager}"
 										completeMethod="#{addUserView.queryManager}"
-										converter="userConverter">
+										converter="simpleUserConverter">
 										<p:column styleClass="user-select image">
 											<cc:person name="#{var.fullName}" path="#{var.avatarUrl}"
 												description="#{var.email}" />
@@ -91,6 +91,16 @@
 									value="#{addUserView.user.dateOfJoin}" type="calendar" />
 							</div>
 						</div>
+					</div>
+				</div>
+				<div class="p-col-12">
+					<div class="card form-buttons">
+						<p:button value="#{i18n['action.cancel']}"
+							outcome="/user/search.xhtml"
+							styleClass="ui-button-secondary ui-button-outlined" />
+						<p:commandButton value="#{i18n['action.save']}"
+							action="#{addUserView.save}" update="@form"
+							styleClass="ui-button-success ui-button-outlined" />
 					</div>
 				</div>
 			</div>

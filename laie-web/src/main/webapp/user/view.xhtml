@@ -31,8 +31,11 @@
 								<div class="subtitle">#{i18n[viewUserView.user.roleName]}</div>
 								<div class="text">
 									<span class="email"><i class="pi pi-envelope" />
-										#{viewUserView.user.email}</span><span class="phone"><i
-										class="pi pi-phone" />#{viewUserView.user.phoneNumber}</span>
+										#{viewUserView.user.email}</span>
+									<h:panelGroup
+										rendered="#{not empty viewUserView.user.phoneNumber}"
+										styleClass="phone">
+										<i class="pi pi-phone" />#{viewUserView.user.phoneNumber}</h:panelGroup>
 								</div>
 							</div>
 
@@ -43,16 +46,20 @@
 									<f:param name="user" value="#{viewUserView.user.uid}" />
 								</p:menuitem>
 								<p:menuitem value="#{i18n['action.export']}"
-									action="#{viewUserView.export}" />
+									action="#{viewUserView.export}" icon="pi pi-file-excel" />
 							</p:menuButton>
 						</div>
 					</h:form>
 				</div>
-				<cc:jobOffers value="#{viewUserView.jobOffers}" rows="5" />
+				<cc:jobOffers value="#{viewUserView.jobOffers}" rows="5">
+					<p:button icon="pi pi-plus" outcome="/job/add.xhtml"
+						rendered="#{viewUserView.logedUser}"
+						styleClass="ui-button-success ui-button-outlined" />
+				</cc:jobOffers>
 			</div>
 			<div class="p-col-12 p-xl-4">
 				<div class="card card-w-title">
-					<h5>Detalles</h5>
+					<h5>#{i18n['user.details']}</h5>
 					<cc:outputText label="#{i18n['user.date_of_join']}"
 						value="#{viewUserView.user.dateOfJoin}"
 						styleClass="data date_of_join">
@@ -86,7 +93,11 @@
 				</div>
 
 				<h:form id="jobMeetingsForm">
-					<cc:meetings value="#{viewUserView.meetings}" rows="5" />
+					<cc:meetings value="#{viewUserView.meetings}" rows="5">
+						<p:button icon="pi pi-plus" outcome="/meeting/add.xhtml"
+							rendered="#{viewUserView.logedUser}"
+							styleClass="ui-button-success ui-button-outlined" />
+					</cc:meetings>
 				</h:form>
 
 				<h:form id="userTeamForm">

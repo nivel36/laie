@@ -31,8 +31,11 @@
 								<div class="text">
 									<span class="region"><i class="pi pi-map-marker" />#{viewCandidateView.candidate.address.region}</span>
 									<span class="email"><i class="pi pi-envelope" />
-										#{viewCandidateView.candidate.email}</span><span class="phone"><i
-										class="pi pi-phone" />#{viewCandidateView.candidate.phoneNumber}</span>
+										#{viewCandidateView.candidate.email}</span>
+									<h:panelGroup
+										rendered="#{not empty viewCandidateView.candidate.phoneNumber}"
+										styleClass="phone">
+										<i class="pi pi-phone" />#{viewCandidateView.candidate.phoneNumber}</h:panelGroup>
 								</div>
 							</div>
 
@@ -141,7 +144,7 @@
 
 				<cc:meetings value="#{viewCandidateView.meetings}" rows="5">
 					<h:form>
-						<p:commandButton value="#{i18n['meeting.add_meeting']}"
+						<p:commandButton icon="pi pi-plus"
 							action="#{viewCandidateView.newMeeting}"
 							styleClass="ui-button-success ui-button-outlined" />
 					</h:form>

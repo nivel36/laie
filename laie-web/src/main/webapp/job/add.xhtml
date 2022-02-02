@@ -18,10 +18,9 @@
 
 	<ui:define name="content">
 		<h:form id="jobOfferForm">
-			<p:remoteCommand name="processForm" />
 			<div class="p-grid">
 				<div class="p-col-12">
-					<div class="card buttons">
+					<div class="card form-buttons">
 						<p:button value="#{i18n['action.cancel']}"
 							outcome="/job/search.xhtml"
 							styleClass="ui-button-secondary ui-button-outlined" />
@@ -31,7 +30,6 @@
 					</div>
 				</div>
 				<div class="p-col-12 p-md-6">
-
 					<div class="card card-w-title ui-fluid">
 						<h5>#{i18n['job.data']}</h5>
 						<div class="p-grid p-formgrid">

@@ -46,7 +46,8 @@ public class AddUserView extends AbstractUserView {
 	public void save() throws Exception {
 		logger.debug("Create new user action performed");
 		try {
-			this.userService.addUser(this.user, this.manager.getUid());
+			final String managerUid = this.manager == null ? null : this.manager.getUid();
+			this.user = this.userService.addUser(this.user, managerUid);
 			final String userUrl = this.userUrl();
 			Faces.redirect(userUrl);
 		} catch (DuplicateEmailException e) {

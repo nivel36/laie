@@ -20,15 +20,15 @@
 		<h:form id="userForm">
 			<div class="p-grid">
 				<div class="p-col-12">
-					<div class="card buttons">
+					<div class="card form-buttons">
 						<p:button value="#{i18n['action.cancel']}"
 							outcome="/user/view.xhtml"
 							styleClass="ui-button-secondary ui-button-outlined">
 							<f:param name="user" value="#{editUserView.user.uid}" />
 						</p:button>
 						<p:commandButton value="#{i18n['action.save']}"
-							action="#{editUserView.save}"
-							styleClass="ui-button-success ui-button-outlined" update="@form" />
+							action="#{editUserView.save}" update="@form"
+							styleClass="ui-button-success ui-button-outlined" />
 					</div>
 				</div>
 				<div class="p-col-12 p-md-6">
@@ -91,6 +91,18 @@
 									value="#{editUserView.user.dateOfJoin}" type="calendar" />
 							</div>
 						</div>
+					</div>
+				</div>
+				<div class="p-col-12">
+					<div class="card form-buttons">
+						<p:button value="#{i18n['action.cancel']}"
+							outcome="/user/view.xhtml"
+							styleClass="ui-button-secondary ui-button-outlined">
+							<f:param name="user" value="#{editUserView.user.uid}" />
+						</p:button>
+						<p:commandButton value="#{i18n['action.save']}"
+							action="#{editUserView.save}" update="@form"
+							styleClass="ui-button-success ui-button-outlined" />
 					</div>
 				</div>
 			</div>
