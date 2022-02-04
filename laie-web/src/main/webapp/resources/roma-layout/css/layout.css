@@ -4022,6 +4022,7 @@ a {
   background-color: #0f97c7;
   color: #ffffff;
   display: flex;
+  justify-content: space-between;
 }
 .title-card .title-card-content .title-card-content-image {
   width: 5rem;

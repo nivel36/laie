@@ -22,7 +22,6 @@
 		top: 1rem;
 		right: 1rem;
 	}
-	
 }
 
 .layout-wrapper{
@@ -107,6 +106,7 @@
 		background-color:$primaryColor;
 		color: $primaryTextColor;
 		display: flex;
+		justify-content: space-between;
 		
 		.title-card-content-image {
 			width: 5rem;

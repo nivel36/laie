@@ -1,5 +1,7 @@
 # CLI script to enable elytron for the quickstart application in the application server
 
+jboss-cli.bat --connect
+
 # Enable a default JACC policy with WildFly Elytron
 /subsystem=elytron/policy=jacc:add(jacc-policy={})
 

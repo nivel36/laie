@@ -18,9 +18,12 @@
 
 	<ui:define name="content">
 		<h:form id="jobOfferSearchform">
-			<div class="p-grid">
-				<div class="p-col-12">
-					<div class="card buttons">
+			<div class="card">
+				<div class="searchBar-buttons">
+					<cc:inputSearch searchText="#{searchJobView.searchText}"
+						searchAction="#{searchJobView.search}"
+						update="jobOfferSearchform:jobOffers" styleClass="ui-fluid" />
+					<div class="buttons">
 						<p:button value="#{i18n['job.new_job_offer']}"
 							outcome="/job/add.xhtml"
 							styleClass="ui-button-success ui-button-outlined" />
@@ -29,57 +32,45 @@
 							styleClass="ui-button-info ui-button-outlined" />
 					</div>
 				</div>
-				<div class="p-col-12">
-					<div class="card">
-						<div class="p-col-12 p-lg-5">
-							<div class="searchBar ui-fluid">
-								<cc:inputSearch searchText="#{searchJobView.searchText}"
-									searchAction="#{searchJobView.search}"
-									update="jobOfferSearchform:jobOffers" />
-							</div>
-						</div>
-						<div class="p-col-12">
-							<p:dataTable id="jobOffers" var="jobOffer"
-								value="#{searchJobView.jobOffers}"
-								emptyMessage="#{i18n['job.no_jobs_found']}" reflow="true"
-								paginator="true" paginatorPosition="bottom" rows="10"
-								sortBy="#{jobOffer.title}" sortOrder="descending" lazy="true">
 
-								<p:column headerText="#{i18n['job.title']}"
-									sortBy="#{jobOffer.title}">
-									<h:link outcome="/job/view.xhtml">#{jobOffer.title} <h:outputText
-											value="-" rendered="#{not empty jobOffer.address.city}" /> ${jobOffer.address.city}
+				<p:dataTable id="jobOffers" var="jobOffer"
+					value="#{searchJobView.jobOffers}"
+					emptyMessage="#{i18n['job.no_jobs_found']}" reflow="true"
+					paginator="true" paginatorPosition="bottom" rows="10"
+					sortBy="#{jobOffer.title}" sortOrder="descending" lazy="true">
+
+					<p:column headerText="#{i18n['job.title']}"
+						sortBy="#{jobOffer.title}">
+						<h:link outcome="/job/view.xhtml">#{jobOffer.title} <h:outputText
+								value="-" rendered="#{not empty jobOffer.address.city}" /> ${jobOffer.address.city}
 									<f:param name="job" value="#{jobOffer.uid}" />
-									</h:link>
-								</p:column>
+						</h:link>
+					</p:column>
 
-								<p:column headerText="#{i18n['job.client']}"
-									sortBy="#{jobOffer.client.name}">
-									<h:link value="#{jobOffer.client.name}"
-										outcome="/client/view.xhtml">
-										<f:param name="client" value="#{jobOffer.client.uid}" />
-									</h:link>
-								</p:column>
+					<p:column headerText="#{i18n['job.client']}"
+						sortBy="#{jobOffer.client.name}">
+						<h:link value="#{jobOffer.client.name}"
+							outcome="/client/view.xhtml">
+							<f:param name="client" value="#{jobOffer.client.uid}" />
+						</h:link>
+					</p:column>
 
-								<p:column headerText="#{i18n['job.places']}">
-									<h:outputText value="#{jobOffer.places}" />
-								</p:column>
+					<p:column headerText="#{i18n['job.places']}">
+						<h:outputText value="#{jobOffer.places}" />
+					</p:column>
 
-								<p:column headerText="#{i18n['user.owner']}"
-									sortBy="#{user.owner.name}">
-									<h:link value="#{jobOffer.owner.fullName}"
-										outcome="/user/view.xhtml">
-										<f:param name="user" value="#{jobOffer.owner.uid}" />
-									</h:link>
-								</p:column>
+					<p:column headerText="#{i18n['user.owner']}"
+						sortBy="#{user.owner.name}">
+						<h:link value="#{jobOffer.owner.fullName}"
+							outcome="/user/view.xhtml">
+							<f:param name="user" value="#{jobOffer.owner.uid}" />
+						</h:link>
+					</p:column>
 
-								<p:column headerText="#{i18n['job.job_offer_state']}">
-									<cc:jobOfferState value="#{jobOffer.state}" />
-								</p:column>
-							</p:dataTable>
-						</div>
-					</div>
-				</div>
+					<p:column headerText="#{i18n['job.job_offer_state']}">
+						<cc:jobOfferState value="#{jobOffer.state}" />
+					</p:column>
+				</p:dataTable>
 			</div>
 		</h:form>
 	</ui:define>

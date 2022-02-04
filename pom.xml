@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>es.nivel36</groupId>
 	<artifactId>laie</artifactId>
-	<version>0.9.5-SNAPSHOT</version>
+	<version>0.9.6-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>laie</name>
 	<modules>
@@ -32,7 +32,7 @@
 		<html2pdf.version>3.0.5</html2pdf.version>
 
 		<version.mockito>3.11.0</version.mockito>
-		<version.server.bom>25.0.1.Final</version.server.bom>
+		<version.server.bom>26.0.1.Final</version.server.bom>
 		<version.junit.bom>5.7.2</version.junit.bom>
 
 		<maven.ear.plugin.version>3.0.1</maven.ear.plugin.version>
