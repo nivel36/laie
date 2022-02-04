@@ -20,13 +20,12 @@
 		<h:form id="configForm" enctype="multipart/form-data">
 			<div class="p-grid">
 				<div class="p-col-12">
-					<div class="card buttons">
+					<div class="card form-buttons">
 						<p:commandButton value="#{i18n['config.change_password']}"
 							process="@this" action="/changePassword.xhtml"
 							styleClass="ui-button-help ui-button-outlined" />
 						<p:commandButton value="#{i18n['action.save']}"
-							action="#{configView.save}" process="@form"
-							update="@all"
+							action="#{configView.save}" process="@form" update="@all"
 							styleClass="ui-button-success ui-button-outlined" />
 					</div>
 				</div>
@@ -68,16 +67,29 @@
 										listener="#{configView.changeLanguage}" />
 								</g:input>
 							</div>
+							<div class="p-col-12 p-sm-6">
+								<h:panelGroup layout="block" class="input-group p-field">
+									<p:outputLabel id="user-image-label" for="user-image"
+										value="Foto" />
+									<cc:inputAvatar id="user-image" value="#{configView.userImage}"
+										fileUploadListener="#{configView.uploadImage}"
+										allowCamera="true"
+										captureListener="#{configView.captureImage}"
+										deleteImage="#{configView.deleteImage}" />
+								</h:panelGroup>
+							</div>
 						</div>
 					</div>
 				</div>
-				<div class="p-col-12 p-sm-6 p-md-4 p-lg-4 p-xl-3">
-					<div class="card card-w-title">
-						<h5>#{i18n['config.picture']}</h5>
-						<cc:inputAvatar id="user-image" value="#{configView.userImage}"
-							fileUploadListener="#{configView.uploadImage}" allowCamera="true"
-							captureListener="#{configView.captureImage}"
-							deleteImage="#{configView.deleteImage}" />
+
+				<div class="p-col-12">
+					<div class="card form-buttons">
+						<p:commandButton value="#{i18n['config.change_password']}"
+							process="@this" action="/changePassword.xhtml"
+							styleClass="ui-button-help ui-button-outlined" />
+						<p:commandButton value="#{i18n['action.save']}"
+							action="#{configView.save}" process="@form" update="@all"
+							styleClass="ui-button-success ui-button-outlined" />
 					</div>
 				</div>
 			</div>

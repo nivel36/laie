@@ -19,78 +19,50 @@
 
 	<ui:define name="content">
 		<div class="p-grid">
-			<div class="p-col-12">
-				<h:panelGroup layout="block" id="buttons" styleClass="card buttons">
+			<div class="p-col-12 p-xl-8">
+				<div class="title-card">
 					<h:form>
-						<p:button value="#{i18n['action.edit']}"
-							outcome="/client/edit.xhtml"
-							styleClass="ui-button-secondary ui-button-outlined">
-							<f:param name="client" value="#{viewClientView.client.uid}" />
-						</p:button>
-						<p:commandButton value="#{i18n['action.export']}" process="@this"
-							action="#{viewClientView.export}" icon="pi pi-file-excel"
-							styleClass="ui-button-info ui-button-outlined" />
-						<p:commandButton value="#{i18n['bookmark.add_to_bookmarks']}"
-							process="@this" update="buttons :bookmarks"
-							action="#{viewClientView.addToBoorkmarks}" icon="pi pi-bookmark"
-							styleClass="ui-button-info ui-button-outlined"
-							rendered="#{viewClientView.bookmarkable}" />
-						<p:commandButton value="#{i18n['bookmark.remove_from_bookmarks']}"
-							process="@this" update="buttons :bookmarks"
-							action="#{viewClientView.removeFromBoorkmarks}"
-							icon="pi pi-bookmark"
-							styleClass="ui-button-info ui-button-outlined"
-							rendered="#{not viewClientView.bookmarkable}" />
-					</h:form>
-				</h:panelGroup>
-			</div>
-			<div class="p-col-12 p-xl-8 p-col-nogutter">
-				<div class="p-col-12">
-					<div class="card client-card">
-						<div class="client-card-header"></div>
-						<div class="client-card-content">
-							<div class="client-card-name">#{viewClientView.client.name}</div>
-							<div class="client-detail">
-								<div class="p-grid">
-									<div class="p-col">
-										<cc:outputText label="#{i18n['client.cif']}"
-											value="#{viewClientView.client.cif}" />
-									</div>
-									<div class="p-col">
-										<cc:outputText label="#{i18n['client.phone_number']}"
-											value="#{viewClientView.client.phoneNumber}" />
-									</div>
-									<div class="p-col">
-										<cc:outputText label="#{i18n['client.city']}"
-											value="#{viewClientView.client.address.city}" />
-									</div>
-									<div class="p-col">
-										<cc:outputText label="#{i18n['client.state']}"
-											value="#{viewClientView.client.address.region}" />
-									</div>
+						<div class="title-card-content">
+							<div class="title-card-content-info">
+								<div class="title">#{viewClientView.client.name}</div>
+								<div class="subtitle">#{viewClientView.client.cif}</div>
+								<div class="text">
+									<span class="region"><i class="pi pi-map-marker" />#{viewClientView.client.address.region}</span>
+									<h:panelGroup
+										rendered="#{not empty viewClientView.client.phoneNumber}"
+										styleClass="phone">
+										<i class="pi pi-phone" />#{viewClientView.client.phoneNumber}</h:panelGroup>
 								</div>
 							</div>
+
+							<p:menuButton styleClass="menu-button" icon="pi pi-ellipsis-v"
+								id="menu-button">
+								<p:menuitem value="#{i18n['action.edit']}"
+									outcome="/client/edit.xhtml" icon="pi pi-pencil">
+									<f:param name="client" value="#{viewClientView.client.uid}" />
+								</p:menuitem>
+								<p:menuitem value="#{i18n['action.export']}"
+									action="#{viewClientView.export}" icon="pi pi-file-excel" />
+							</p:menuButton>
 						</div>
-					</div>
+					</h:form>
 				</div>
 
-				<div class="p-col-12">
-					<cc:jobOffers id="jobOffers" value="#{viewClientView.jobOffers}"
-						rows="5">
-						<h:form id="jobOffersForm">
-							<p:button value="#{i18n['job.new_job_offer']}"
-								outcome="/job/add.xhtml" process="@this"
-								styleClass="ui-button-success ui-button-outlined">
-								<f:param name="clientId" value="#{viewClientView.client.uid}" />
-							</p:button>
-						</h:form>
-					</cc:jobOffers>
-				</div>
+				<cc:jobOffers id="jobOffers" value="#{viewClientView.jobOffers}"
+					rows="5">
+					<h:form id="jobOffersForm">
+						<p:button icon="pi pi-plus"
+							outcome="/job/add.xhtml" process="@this"
+							styleClass="ui-button-success ui-button-outlined">
+							<f:param name="clientId" value="#{viewClientView.client.uid}" />
+						</p:button>
+					</h:form>
+				</cc:jobOffers>
 			</div>
 
-			<div class="p-col-12 p-sm-8 p-md-6 p-lg-5 p-xl-4">
+			<div class="p-col-12 p-xl-4">
 				<cc:contacts value="#{viewClientView.client.contacts}">
-					<p:button value="#{i18n['contact.new_contact']}"
+					<p:button icon="pi pi-plus"
 						outcome="/client/contact/add.xhtml" process="@this"
 						styleClass="ui-button-success ui-button-outlined">
 						<f:param name="client" value="#{viewClientView.client.uid}" />

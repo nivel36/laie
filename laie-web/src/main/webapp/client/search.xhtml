@@ -18,9 +18,12 @@
 
 	<ui:define name="content">
 		<h:form id="clientSearchForm">
-			<div class="p-grid">
-				<div class="p-col-12">
-					<div class="card buttons">
+			<div class="card">
+				<div class="searchBar-buttons">
+					<cc:inputSearch searchText="#{searchClientView.searchText}"
+						searchAction="#{searchClientView.search}"
+						update="clientSearchForm:clients" styleClass="ui-fluid" />
+					<div class="buttons">
 						<p:button value="#{i18n['client.new_client']}"
 							outcome="/client/add.xhtml"
 							styleClass="ui-button-success ui-button-outlined" />
@@ -29,56 +32,44 @@
 							styleClass="ui-button-info ui-button-outlined" />
 					</div>
 				</div>
-				<div class="p-col-12">
-					<div class="card">
-						<div class="p-col-12 p-lg-5">
-							<div class="searchBar ui-fluid">
-								<cc:inputSearch searchText="#{searchClientView.searchText}"
-									searchAction="#{searchClientView.search}"
-									update="clientSearchForm:clients" />
-							</div>
-						</div>
-						<div class="p-col-12">
-							<p:dataTable var="client" id="clients"
-								value="#{searchClientView.clients}"
-								emptyMessage="#{i18n['client.no_clients_found']}" reflow="true"
-								paginator="true" paginatorPosition="bottom" rows="10"
-								sortBy="#{client.name}" sortOrder="descending" lazy="true">
 
-								<p:column headerText="#{i18n['client.name']}"
-									sortBy="#{client.name}">
-									<h:link value="#{client.name}"
-										outcome="/client/view.xhtml" styleClass="link">
-										<f:param name="client" value="#{client.uid}" />
-									</h:link>
-								</p:column>
+				<p:dataTable var="client" id="clients"
+					value="#{searchClientView.clients}"
+					emptyMessage="#{i18n['client.no_clients_found']}" reflow="true"
+					paginator="true" paginatorPosition="bottom" rows="10"
+					sortBy="#{client.name}" sortOrder="descending" lazy="true">
 
-								<p:column headerText="#{i18n['client.phone_number']}">
-									<h:outputText value="#{client.phoneNumber}" />
-								</p:column>
+					<p:column headerText="#{i18n['client.name']}"
+						sortBy="#{client.name}">
+						<h:link value="#{client.name}" outcome="/client/view.xhtml"
+							styleClass="link">
+							<f:param name="client" value="#{client.uid}" />
+						</h:link>
+					</p:column>
 
-								<p:column headerText="#{i18n['client.cif']}">
-									<h:outputText value="#{client.cif}" />
-								</p:column>
+					<p:column headerText="#{i18n['client.phone_number']}">
+						<h:outputText value="#{client.phoneNumber}" />
+					</p:column>
 
-								<p:column headerText="#{i18n['client.city']}"
-									sortBy="#{client.address.city}">
-									<h:outputText value="#{client.address.city} " />
-									<h:panelGroup rendered="#{not empty client.address.region}">(<h:outputText
-											value="#{client.address.region}" />)</h:panelGroup>
-								</p:column>
+					<p:column headerText="#{i18n['client.cif']}">
+						<h:outputText value="#{client.cif}" />
+					</p:column>
 
-								<p:column headerText="#{i18n['client.owner']}"
-									sortBy="#{client.owner.name}">
-									<h:link value="#{client.owner.fullName}"
-										outcome="/user/view.xhtml">
-										<f:param name="user" value="#{client.owner.uid}" />
-									</h:link>
-								</p:column>
-							</p:dataTable>
-						</div>
-					</div>
-				</div>
+					<p:column headerText="#{i18n['client.city']}"
+						sortBy="#{client.address.city}">
+						<h:outputText value="#{client.address.city} " />
+						<h:panelGroup rendered="#{not empty client.address.region}">(<h:outputText
+								value="#{client.address.region}" />)</h:panelGroup>
+					</p:column>
+
+					<p:column headerText="#{i18n['client.owner']}"
+						sortBy="#{client.owner.name}">
+						<h:link value="#{client.owner.fullName}"
+							outcome="/user/view.xhtml">
+							<f:param name="user" value="#{client.owner.uid}" />
+						</h:link>
+					</p:column>
+				</p:dataTable>
 			</div>
 		</h:form>
 	</ui:define>
