@@ -12,6 +12,25 @@
 	}
 }
 
+.form-card {
+	box-shadow: none;
+	border-radius: 0;
+	padding: 1rem 1rem 0 1rem;
+	border-right: 1px solid #f0f0f0;
+	
+	.form-card-body {
+	  padding: 1rem;
+	}
+	
+	.form-card-title {
+	  margin-bottom: 2rem;
+	}
+		
+	.form-card-content {
+	  padding: 1rem;
+	}
+}
+
 .card-w-title {
 	position: relative;
 	h1,h2,h3,h4,h5 {
@@ -341,13 +360,13 @@
 
 .input-avatar {
 	position: relative;
-	height: 200px;
-	width: 200px;
+	height: 10rem;
+	width: 10rem;
 	
 	img {
 		cursor: pointer;
-		width: 200px;
-		height: 200px;
+		width: 10rem;
+		height: 10rem;
 		object-fit: cover;
 	}
 	
@@ -446,6 +465,8 @@
 .form-buttons {
 	display: flex;
 	justify-content: right;
+	border-top: 1px solid #f0f0f0;
+	padding-top: 1rem;
 	.ui-button {
 		margin-left: 1rem;
 	}

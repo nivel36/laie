@@ -1,14 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:g="http://nivel.36/laie/ui"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	template="/WEB-INF/templates/template.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://nivel.36/laie/ui"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets" template="/WEB-INF/templates/template.xhtml">
 
 	<ui:define name="title">
 		#{i18n['config.config']}
@@ -18,78 +12,54 @@
 
 	<ui:define name="content">
 		<h:form id="configForm" enctype="multipart/form-data">
-			<div class="p-grid">
-				<div class="p-col-12">
-					<div class="card form-buttons">
-						<p:commandButton value="#{i18n['config.change_password']}"
-							process="@this" action="/changePassword.xhtml"
-							styleClass="ui-button-help ui-button-outlined" />
-						<p:commandButton value="#{i18n['action.save']}"
-							action="#{configView.save}" process="@form" update="@all"
-							styleClass="ui-button-success ui-button-outlined" />
-					</div>
-				</div>
-				<div class="p-col-12 p-md-6">
-					<div class="card card-w-title ui-fluid">
-						<h5>#{i18n['config.personal_information']}</h5>
-						<div class="p-grid p-formgrid">
-							<div class="p-col-12 p-sm-6">
-								<g:input id="name" label="#{i18n['config.name']}"
-									value="#{configView.user.name}" required="true" />
+			<div class="card">
+				<div class="p-grid">
+					<div class="p-col-12 p-md-6">
+						<div class="form-card ui-fluid">
+							<div class="p-grid p-justify-center">
+								<div class="p-col-3">
+									<div class="p-field">
+										<cc:inputAvatar id="user-image" value="#{configView.userImage}" fileUploadListener="#{configView.uploadImage}" allowCamera="true"
+											captureListener="#{configView.captureImage}" deleteImage="#{configView.deleteImage}" />
+									</div>
+								</div>
 							</div>
-							<div class="p-col-12 p-sm-6">
-								<g:input id="surname" label="#{i18n['config.surname']}"
-									value="#{configView.user.surname}" required="true" />
-							</div>
-							<div class="p-col-12 p-sm-6">
-								<g:input id="email" label="#{i18n['config.email']}"
-									value="#{configView.user.email}" required="true" />
-							</div>
-							<div class="p-col-12 p-sm-6">
-								<g:input id="phone" label="#{i18n['user.phone_number']}"
-									value="#{configView.user.phoneNumber}" />
+							<div class="p-grid">
+								<div class="p-col-12 p-sm-6">
+									<g:input id="name" label="#{i18n['config.name']}" value="#{configView.user.name}" required="true" />
+								</div>
+								<div class="p-col-12 p-sm-6">
+									<g:input id="surname" label="#{i18n['config.surname']}" value="#{configView.user.surname}" required="true" />
+								</div>
+								<div class="p-col-12 p-sm-6">
+									<g:input id="email" label="#{i18n['config.email']}" value="#{configView.user.email}" required="true" />
+								</div>
+								<div class="p-col-12 p-sm-6">
+									<g:input id="phone" label="#{i18n['user.phone_number']}" value="#{configView.user.phoneNumber}" />
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-				<div class="p-col-12 p-md-6">
-					<div class="card card-w-title ui-fluid">
-						<h5>#{i18n['config.config_data']}</h5>
-						<div class="p-grid p-formgrid">
-							<div class="p-col-12 p-sm-6">
-								<g:input id="locale" label="#{i18n['config.language']}"
-									value="#{configView.user.language}" type="selectOneMenu">
-									<f:selectItems var="language"
-										value="#{applicationView.languages}"
-										itemValue="#{language.code}"
-										itemLabel="#{i18n[language.code]}" />
-									<f:ajax event="change" render="@all"
-										listener="#{configView.changeLanguage}" />
-								</g:input>
-							</div>
-							<div class="p-col-12 p-sm-6">
-								<h:panelGroup layout="block" class="input-group p-field">
-									<p:outputLabel id="user-image-label" for="user-image"
-										value="Foto" />
-									<cc:inputAvatar id="user-image" value="#{configView.userImage}"
-										fileUploadListener="#{configView.uploadImage}"
-										allowCamera="true"
-										captureListener="#{configView.captureImage}"
-										deleteImage="#{configView.deleteImage}" />
-								</h:panelGroup>
+					<div class="p-col-12 p-md-6">
+						<div class="form-card ui-fluid">
+							<div class="p-grid p-formgrid">
+								<div class="p-col-12 p-sm-6">
+									<g:input id="locale" label="#{i18n['config.language']}" value="#{configView.user.language}" type="selectOneMenu">
+										<f:selectItems var="language" value="#{applicationView.languages}" itemValue="#{language.code}" itemLabel="#{i18n[language.code]}" />
+										<f:ajax event="change" render="@all" listener="#{configView.changeLanguage}" />
+									</g:input>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
 
-				<div class="p-col-12">
-					<div class="card form-buttons">
-						<p:commandButton value="#{i18n['config.change_password']}"
-							process="@this" action="/changePassword.xhtml"
-							styleClass="ui-button-help ui-button-outlined" />
-						<p:commandButton value="#{i18n['action.save']}"
-							action="#{configView.save}" process="@form" update="@all"
-							styleClass="ui-button-success ui-button-outlined" />
+					<div class="p-col-12">
+						<div class="form-buttons">
+							<p:commandButton value="#{i18n['config.change_password']}" process="@this" action="/changePassword.xhtml"
+								styleClass="ui-button-help ui-button-outlined" />
+							<p:commandButton value="#{i18n['action.save']}" action="#{configView.save}" process="@form" update="@all"
+								styleClass="ui-button-success ui-button-outlined" />
+						</div>
 					</div>
 				</div>
 			</div>

@@ -6900,4 +6900,30 @@ body .ui-avatar img {
   object-fit: cover;
 }
 
+body .ui-card .ui-card {
+  background: #ffffff;
+  color: #495057;
+  box-shadow: none;
+  border-radius: 0;
+}
+body .ui-card .ui-card .ui-card-body {
+  padding: 1rem;
+}
+body .ui-card .ui-card .ui-card-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+body .ui-card .ui-card .ui-card-subtitle {
+  font-weight: 400;
+  margin-bottom: 0.5rem;
+  color: #6c757d;
+}
+body .ui-card .ui-card .ui-card-content {
+  padding: 1rem 0;
+}
+body .ui-card .ui-card .ui-card-footer {
+  padding: 1rem 0 0 0;
+}
+
 /*# sourceMappingURL=theme.css.map */

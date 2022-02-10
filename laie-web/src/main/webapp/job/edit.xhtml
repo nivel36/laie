@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://nivel.36/laie/ui" xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://nivel.36/laie/ui"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets" template="/WEB-INF/templates/template.xhtml">
 
 	<ui:define name="title">
@@ -11,80 +12,90 @@
 
 	<ui:define name="buttons">
 		<h:form>
-			<p:button value="#{i18n['action.cancel']}" outcome="/job/view.xhtml" styleClass="ui-button-secondary ui-button-outlined">
-				<f:param name="id" value="#{editJobView.jobOffer.uid}" />
-			</p:button>
-			<p:commandButton value="#{i18n['action.save']}" onclick="processForm()" styleClass="ui-button-success ui-button-outlined" />
+
 		</h:form>
 	</ui:define>
 
 	<ui:define name="content">
 		<h:form id="jobOfferForm">
-			<p:remoteCommand name="processForm" process="@form" update="@form growl" action="#{editJobView.save}" />
-			<div class="p-grid">
-				<div class="p-col-12 p-md-6">
-					<div class="card card-w-title ui-fluid">
-						<h5>#{i18n['job.data']}</h5>
-						<div class="p-grid p-formgrid">
-							<div class="p-col-12">
-								<g:input label="#{i18n['job.title']}" value="#{editJobView.jobOffer.title}" required="true" />
-							</div>
-							<div class="p-col-12 p-sm-6">
-								<cc:autocomplete id="client" label="#{i18n['job.client']}" value="#{editJobView.jobOffer.client}" completeMethod="#{editJobView.completeClient}" required="true">
-									<p:column>
+			<div class="card">
+				<div class="p-grid">
+					<div class="p-col-12 p-md-6">
+						<div class="form-card ui-fluid">
+							<h5>#{i18n['job.data']}</h5>
+							<div class="p-grid p-formgrid">
+								<div class="p-col-12">
+									<g:input label="#{i18n['job.title']}" value="#{editJobView.jobOffer.title}" required="true" />
+								</div>
+								<div class="p-col-12 p-sm-6">
+									<cc:autocomplete id="client" label="#{i18n['job.client']}" value="#{editJobView.jobOffer.client}"
+										completeMethod="#{editJobView.completeClient}" required="true">
+										<p:column>
 											#{var.name}
 										</p:column>
-								</cc:autocomplete>
-							</div>
-							<div class="p-col-12 p-sm-6">
-								<g:input id="salary" label="#{i18n['job.salary']}" value="#{editJobView.jobOffer.salary}" type="money" />
-							</div>
-							<div class="p-col-12 p-sm-6">
-								<g:input id="places" label="#{i18n['job.places']}" value="#{editJobView.jobOffer.places}" type="number" min="0" />
-							</div>
-							<div class="p-col-12 p-sm-6"></div>
-							<div class="p-col-12 p-sm-6">
-								<g:input id="city" label="#{i18n['job.city']}" value="#{editJobView.jobOffer.address.city}" required="true" />
-							</div>
-							<div class="p-col-12 p-sm-6">
-								<g:input id="state" label="#{i18n['job.state']}" value="#{editJobView.jobOffer.address.region}" required="true" />
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="p-col-12 p-md-6">
-					<div class="card card-w-title ui-fluid">
-						<h5>#{i18n['job.other_data']}</h5>
-						<div class="p-grid p-formgrid">
-							<div class="p-col-12 p-sm-6">
-								<g:input id="dateOpened" label="#{i18n['job.date_opened']}" value="#{editJobView.jobOffer.dateOpened}" type="calendar" />
-							</div>
-							<div class="p-col-12 p-sm-6">
-								<g:input id="dateClosed" label="#{i18n['job.date_closed']}" value="#{editJobView.jobOffer.dateClosed}" type="calendar" />
-							</div>
-							<div class="p-col-12 p-sm-6">
-								<cc:autocomplete id="owner" label="#{i18n['job.owner']}" value="#{editJobView.jobOffer.owner}" completeMethod="#{editJobView.queryOwner}" converter="userConverter">
-									<p:column styleClass="user-select image">
-										<cc:person name="#{var.fullName}" path="#{var.avatarUrl}" />
-									</p:column>
-								</cc:autocomplete>
-							</div>
-							<div class="p-col-12">
-								<cc:inputUsers id="recruiters" label="#{i18n['job.recruiters']}" completeMethod="#{editJobView.queryRecruiter}" value="#{editJobView.recruiters}" />
+									</cc:autocomplete>
+								</div>
+								<div class="p-col-12 p-sm-6">
+									<g:input id="salary" label="#{i18n['job.salary']}" value="#{editJobView.jobOffer.salary}" type="money" />
+								</div>
+								<div class="p-col-12 p-sm-6">
+									<g:input id="places" label="#{i18n['job.places']}" value="#{editJobView.jobOffer.places}" type="number" min="0" />
+								</div>
+								<div class="p-col-12 p-sm-6"></div>
+								<div class="p-col-12 p-sm-6">
+									<g:input id="city" label="#{i18n['job.city']}" value="#{editJobView.jobOffer.address.city}" required="true" />
+								</div>
+								<div class="p-col-12 p-sm-6">
+									<g:input id="state" label="#{i18n['job.state']}" value="#{editJobView.jobOffer.address.region}" required="true" />
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-				<div class="p-col-12">
-					<div class="card card-w-title ui-fluid">
-						<h5>#{i18n['job.description']}</h5>
-						<div class="p-grid p-formgrid">
-							<div class="p-col-12 p-sm-6">
-								<g:input id="published" label="#{i18n['job.publish']}" value="#{editJobView.jobOffer.published}" type="inputSwitch" />
+					<div class="p-col-12 p-md-6">
+						<div class="form-card ui-fluid">
+							<h5>#{i18n['job.other_data']}</h5>
+							<div class="p-grid p-formgrid">
+								<div class="p-col-12 p-sm-6">
+									<g:input id="dateOpened" label="#{i18n['job.date_opened']}" value="#{editJobView.jobOffer.dateOpened}" type="calendar" />
+								</div>
+								<div class="p-col-12 p-sm-6">
+									<g:input id="dateClosed" label="#{i18n['job.date_closed']}" value="#{editJobView.jobOffer.dateClosed}" type="calendar" />
+								</div>
+								<div class="p-col-12 p-sm-6">
+									<cc:autocomplete id="owner" label="#{i18n['job.owner']}" value="#{editJobView.jobOffer.owner}" completeMethod="#{editJobView.queryOwner}"
+										converter="userConverter">
+										<p:column styleClass="user-select image">
+											<cc:person name="#{var.fullName}" path="#{var.avatarUrl}" />
+										</p:column>
+									</cc:autocomplete>
+								</div>
+								<div class="p-col-12">
+									<cc:inputUsers id="recruiters" label="#{i18n['job.recruiters']}" completeMethod="#{editJobView.queryRecruiter}"
+										value="#{editJobView.recruiters}" />
+								</div>
 							</div>
-							<div class="p-col-12">
-								<g:input id="description" label="#{i18n['job.description']}" value="#{editJobView.jobOffer.description}" type="rich" />
+						</div>
+					</div>
+					<div class="p-col-12">
+						<div class="form-card ui-fluid">
+							<h5>#{i18n['job.description']}</h5>
+							<div class="p-grid p-formgrid">
+								<div class="p-col-12 p-sm-6">
+									<g:input id="published" label="#{i18n['job.publish']}" value="#{editJobView.jobOffer.published}" type="inputSwitch" />
+								</div>
+								<div class="p-col-12">
+									<g:input id="description" label="#{i18n['job.description']}" value="#{editJobView.jobOffer.description}" type="rich" />
+								</div>
 							</div>
+						</div>
+					</div>
+					<div class="p-col-12">
+						<div class="form-buttons">
+							<p:button value="#{i18n['action.cancel']}" outcome="/job/view.xhtml" styleClass="ui-button-secondary ui-button-outlined">
+								<f:param name="id" value="#{editJobView.jobOffer.uid}" />
+							</p:button>
+							<p:commandButton value="#{i18n['action.save']}" process="@form" update="@form growl" action="#{editJobView.save}"
+								styleClass="ui-button-success ui-button-outlined" />
 						</div>
 					</div>
 				</div>

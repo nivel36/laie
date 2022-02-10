@@ -1,23 +1,20 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:po="http://primefaces.org/roma"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui" xmlns:po="http://primefaces.org/roma"
 	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components">
+
 	<div class="layout-aside">
 		<div class="layout-aside-content">
-			<h:panelGroup layout="block" id="bookmarks"
-				styleClass="card card-w-title ui-fluid bookmarks">
+			<h:panelGroup layout="block" id="bookmarks" styleClass="card card-w-title ui-fluid bookmarks">
 				<h5>#{i18n['aside.bookmarks']}</h5>
+				<h:panelGroup layout="block" id="bookmark-button" styleClass="card-header-buttons">
+					<ui:insert name="bookmarkButton" />
+				</h:panelGroup>
 				<div class="bookmark-content">
 					<ui:repeat value="#{sessionUser.bookmarks}" var="bookmark">
 						<div class="bookmark">
 							<div class="bookmark-icon">
-								<p:avatar label="#{bookmark.title}"
-									rendered="#{empty bookmark.imageUrl}" />
-								<p:avatar shape="circle"
-									rendered="#{not empty bookmark.imageUrl}">
+								<p:avatar label="#{bookmark.title}" rendered="#{empty bookmark.imageUrl}" />
+								<p:avatar shape="circle" rendered="#{not empty bookmark.imageUrl}">
 									<p:graphicImage value="/images/#{bookmark.imageUrl}" />
 								</p:avatar>
 							</div>

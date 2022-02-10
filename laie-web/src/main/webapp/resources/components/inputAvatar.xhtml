@@ -15,7 +15,7 @@
 	<composite:implementation>
 		<div id="#{cc.clientId}" class="input-avatar #{cc.attrs.styleClass}">
 			<p:fileUpload id="fileUpload" listener="#{cc.attrs.fileUploadListener}" mode="advanced" dragDropSupport="false" process="@this"
-				update="#{cc.clientId}" auto="true" allowTypes="/(\.|\/)(gif|jpe?g|png|jpg)$/" sizeLimit="100000" />	
+				update="#{cc.clientId}" auto="true" />	
 			<h:outputLabel for="fileUpload_input">
 				<p:graphicImage styleClass="avatar" id="avatar" value="/images/#{cc.attrs.value}" rendered="#{not empty cc.attrs.value}" />
 				<p:graphicImage styleClass="avatar" value="/resources/img/default-avatar.png" rendered="#{empty cc.attrs.value}" />
