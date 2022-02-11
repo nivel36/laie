@@ -36,10 +36,9 @@ public class ClientDto implements Serializable {
 
 	public AddressDto getAddress() {
 		if (this.address != null) {
-			return this.address;
-		} else {
-			return new AddressDto();
+			this.address = new AddressDto();
 		}
+		return this.address;
 	}
 
 	public String getCif() {
@@ -109,7 +108,7 @@ public class ClientDto implements Serializable {
 	void setUid(String uid) {
 		this.uid = uid;
 	}
-	
+
 	@Override
 	public boolean equals(final Object obj) {
 		if (obj == null) {
@@ -127,12 +126,11 @@ public class ClientDto implements Serializable {
 		final ClientDto other = (ClientDto) obj;
 		return Objects.equals(this.name, other.name);
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(this.name);
 	}
-
 
 	@Override
 	public String toString() {

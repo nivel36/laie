@@ -142,6 +142,9 @@ public class Candidate extends AbstractIndexedEntity implements Ownerable {
 	}
 
 	public Address getAddress() {
+		if (this.address == null) {
+			this.address = new Address();
+		}
 		return this.address;
 	}
 

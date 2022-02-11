@@ -10,12 +10,6 @@
 
 	<ui:param name="selectedMenu" value="offers" />
 
-	<ui:define name="buttons">
-		<h:form>
-
-		</h:form>
-	</ui:define>
-
 	<ui:define name="content">
 		<h:form id="jobOfferForm">
 			<div class="card">
@@ -56,14 +50,14 @@
 							<h5>#{i18n['job.other_data']}</h5>
 							<div class="p-grid p-formgrid">
 								<div class="p-col-12 p-sm-6">
-									<g:input id="dateOpened" label="#{i18n['job.date_opened']}" value="#{editJobView.jobOffer.dateOpened}" type="calendar" />
+									<g:input id="dateOpened" label="#{i18n['job.date_opened']}" value="#{editJobView.jobOffer.openDate}" type="calendar" />
 								</div>
 								<div class="p-col-12 p-sm-6">
-									<g:input id="dateClosed" label="#{i18n['job.date_closed']}" value="#{editJobView.jobOffer.dateClosed}" type="calendar" />
+									<g:input id="dateClosed" label="#{i18n['job.date_closed']}" value="#{editJobView.jobOffer.closeDate}" type="calendar" />
 								</div>
 								<div class="p-col-12 p-sm-6">
 									<cc:autocomplete id="owner" label="#{i18n['job.owner']}" value="#{editJobView.jobOffer.owner}" completeMethod="#{editJobView.queryOwner}"
-										converter="userConverter">
+										converter="simpleUserConverter">
 										<p:column styleClass="user-select image">
 											<cc:person name="#{var.fullName}" path="#{var.avatarUrl}" />
 										</p:column>

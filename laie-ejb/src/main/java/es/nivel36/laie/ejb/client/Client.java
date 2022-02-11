@@ -43,7 +43,7 @@ public class Client extends AbstractIndexedEntity implements Ownerable, Erasable
 	@Column(unique = true)
 	@Field(name = "_cif")
 	private String cif;
-	
+
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "client", orphanRemoval = true)
 	private Set<Contact> contacts = new HashSet<>();
 
@@ -71,6 +71,9 @@ public class Client extends AbstractIndexedEntity implements Ownerable, Erasable
 	private String phoneNumber;
 
 	public Address getAddress() {
+		if (this.address == null) {
+			this.address = new Address();
+		}
 		return this.address;
 	}
 
@@ -137,7 +140,7 @@ public class Client extends AbstractIndexedEntity implements Ownerable, Erasable
 	public void setPhoneNumber(final String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
-	
+
 	@Override
 	public boolean equals(final Object obj) {
 		if (obj == null) {
@@ -155,7 +158,7 @@ public class Client extends AbstractIndexedEntity implements Ownerable, Erasable
 		final Client other = (Client) obj;
 		return Objects.equals(this.name, other.name);
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(this.name);

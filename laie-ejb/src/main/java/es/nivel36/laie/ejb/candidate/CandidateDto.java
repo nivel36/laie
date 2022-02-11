@@ -13,7 +13,7 @@ import es.nivel36.laie.ejb.job.candidature.JobCandidatureDto;
 import es.nivel36.laie.ejb.user.SimpleUserDto;
 
 public class CandidateDto implements Serializable {
-	
+
 	private static final long serialVersionUID = 6741561987058204897L;
 
 	private AddressDto address;
@@ -37,7 +37,7 @@ public class CandidateDto implements Serializable {
 	private String name;
 
 	private Origin origin;
-	
+
 	private SimpleUserDto owner;
 
 	private String phoneNumber;
@@ -57,8 +57,8 @@ public class CandidateDto implements Serializable {
 	private String uid;
 
 	public AddressDto getAddress() {
-		if(this.address == null) {
-			return new AddressDto();
+		if (this.address == null) {
+			this.address = new AddressDto();
 		}
 		return this.address;
 	}
@@ -109,7 +109,7 @@ public class CandidateDto implements Serializable {
 	public Origin getOrigin() {
 		return this.origin;
 	}
-	
+
 	public SimpleUserDto getOwner() {
 		return this.owner;
 	}
@@ -189,7 +189,7 @@ public class CandidateDto implements Serializable {
 	public void setOrigin(final Origin origin) {
 		this.origin = origin;
 	}
-	
+
 	void setOwner(final SimpleUserDto owner) {
 		this.owner = owner;
 	}
@@ -233,7 +233,7 @@ public class CandidateDto implements Serializable {
 	void setUid(final String uid) {
 		this.uid = uid;
 	}
-	
+
 	@Override
 	public boolean equals(final Object obj) {
 		if (this == obj) {
@@ -245,7 +245,7 @@ public class CandidateDto implements Serializable {
 		final Candidate other = (Candidate) obj;
 		return Objects.equals(other.email, this.email);
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(this.email);

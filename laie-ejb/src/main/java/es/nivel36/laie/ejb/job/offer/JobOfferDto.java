@@ -46,7 +46,7 @@ public class JobOfferDto implements Serializable {
 
 	public AddressDto getAddress() {
 		if (this.address == null) {
-			return new AddressDto();
+			address = new AddressDto();
 		}
 		return this.address;
 	}
