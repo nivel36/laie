@@ -8,17 +8,17 @@ import java.util.Set;
 import es.nivel36.laie.ejb.candidate.SimpleCandidateDto;
 import es.nivel36.laie.ejb.event.JobCandidatureEvent;
 import es.nivel36.laie.ejb.job.meeting.MeetingDto;
-import es.nivel36.laie.ejb.job.offer.JobOfferDto;
+import es.nivel36.laie.ejb.job.offer.SimpleJobOfferDto;
 
 public class JobCandidatureDto implements Serializable {
 
-	private static final long serialVersionUID = 94627874921747868L;
+	private static final long serialVersionUID = -476860146837641321L;
 
 	private SimpleCandidateDto candidate;
 
 	private Set<JobCandidatureEvent> jobCandidatureEvents = new HashSet<>();
 
-	private JobOfferDto jobOffer;
+	private SimpleJobOfferDto jobOffer;
 
 	private Set<MeetingDto> meetings;
 
@@ -52,7 +52,7 @@ public class JobCandidatureDto implements Serializable {
 		return this.meetings;
 	}
 
-	public JobOfferDto getJobOffer() {
+	public SimpleJobOfferDto getJobOffer() {
 		return this.jobOffer;
 	}
 
@@ -88,7 +88,7 @@ public class JobCandidatureDto implements Serializable {
 		this.meetings = meetings;
 	}
 
-	public void setJobOffer(final JobOfferDto jobOffer) {
+	public void setJobOffer(final SimpleJobOfferDto jobOffer) {
 		this.jobOffer = jobOffer;
 	}
 

@@ -1,14 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:g="http://nivel.36/laie/ui"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	template="/WEB-INF/templates/template.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://nivel.36/laie/ui"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets" template="/WEB-INF/templates/template.xhtml">
 
 	<ui:define name="title">
 		#{i18n['candidate.candidates']}
@@ -20,36 +14,26 @@
 		<h:form id="candidateSearchForm">
 			<div class="card">
 				<div class="searchBar-buttons">
-					<cc:inputSearch searchText="#{searchCandidateView.searchText}"
-						searchAction="#{searchCandidateView.search}"
+					<cc:inputSearch searchText="#{searchCandidateView.searchText}" searchAction="#{searchCandidateView.search}"
 						update="candidateSearchForm:candidates" styleClass="ui-fluid" />
 					<div class="buttons">
-						<p:button value="#{i18n['candidate.new_candidate']}"
-							outcome="/candidate/add.xhtml"
-							styleClass="ui-button-success ui-button-outlined" />
-						<p:commandButton value="#{i18n['action.export']}"
-							action="#{searchCandidateView.export}" icon="pi pi-file-excel"
+						<p:button value="#{i18n['candidate.new_candidate']}" outcome="/candidate/add.xhtml" styleClass="ui-button-success ui-button-outlined" />
+						<p:commandButton value="#{i18n['action.export']}" action="#{searchCandidateView.export}" icon="pi pi-file-excel"
 							styleClass="ui-button-info ui-button-outlined" />
 					</div>
 				</div>
-				<p:dataTable var="candidate" id="candidates"
-					value="#{searchCandidateView.candidates}"
-					emptyMessage="#{i18n['candidate.no_candidates_found']}"
-					reflow="true" paginator="true" paginatorPosition="bottom" rows="10"
-					sortBy="#{candidate.name}" sortOrder="ascending" lazy="true">
+				<p:dataTable var="candidate" id="candidates" value="#{searchCandidateView.candidates}" emptyMessage="#{i18n['candidate.no_candidates_found']}"
+					reflow="true" paginator="true" paginatorPosition="bottom" rows="10" sortBy="#{candidate.name}" sortOrder="ascending" lazy="true">
 
-					<p:column headerText="#{i18n['candidate.name']}"
-						sortBy="#{candidate.name}">
+					<p:column headerText="#{i18n['candidate.name']}" sortBy="#{candidate.name}">
 						<h:link outcome="/candidate/view.xhtml">
-							<cc:avatar name="#{candidate.fullName}"
-								path="#{candidate.avatarUrl}" styleClass="p-mr-2" />
+							<cc:avatar name="#{candidate.fullName}" path="#{candidate.avatarUrl}" styleClass="p-mr-2" />
 							<h:outputText styleClass="link" value="#{candidate.fullName}" />
 							<f:param name="candidate" value="#{candidate.uid}" />
 						</h:link>
 					</p:column>
 
-					<p:column headerText="#{i18n['candidate.jobProfile']}"
-						sortBy="#{candidate.jobProfile}" priority="5">
+					<p:column headerText="#{i18n['candidate.jobProfile']}" sortBy="#{candidate.jobProfile}" priority="5">
 						<h:outputText value="#{candidate.jobProfile}" />
 					</p:column>
 
@@ -57,15 +41,12 @@
 						<h:outputText value="#{candidate.email}" />
 					</p:column>
 
-					<p:column headerText="#{i18n['candidate.phone_number']}"
-						priority="6">
+					<p:column headerText="#{i18n['candidate.phone_number']}" priority="6">
 						<h:outputText value="#{candidate.phoneNumber}" />
 					</p:column>
 
-					<p:column headerText="#{i18n['candidate.rating']}"
-						sortBy="#{candidate.rating}" priority="4">
-						<p:rating value="#{candidate.rating}" cancel="false"
-							readonly="true" />
+					<p:column headerText="#{i18n['candidate.rating']}" sortBy="#{candidate.rating}" priority="4">
+						<p:rating value="#{candidate.rating}" cancel="false" readonly="true" />
 					</p:column>
 				</p:dataTable>
 			</div>

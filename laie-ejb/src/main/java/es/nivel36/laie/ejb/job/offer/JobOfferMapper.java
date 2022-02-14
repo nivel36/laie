@@ -7,6 +7,8 @@ import es.nivel36.laie.ejb.client.SimpleClientMapper;
 import es.nivel36.laie.ejb.core.Mapper;
 import es.nivel36.laie.ejb.core.model.AddressDto;
 import es.nivel36.laie.ejb.core.model.AddressMapper;
+import es.nivel36.laie.ejb.job.candidature.JobCandidatureDto;
+import es.nivel36.laie.ejb.job.candidature.JobCandidatureMapper;
 import es.nivel36.laie.ejb.user.SimpleUserDto;
 import es.nivel36.laie.ejb.user.SimpleUserMapper;
 
@@ -18,10 +20,13 @@ public class JobOfferMapper implements Mapper<JobOffer, JobOfferDto> {
 	
 	private SimpleClientMapper simpleClientMapper;
 	
+	private JobCandidatureMapper jobCandidatureMapper;
+	
 	public JobOfferMapper() {
 		this.addressMapper = new AddressMapper();
 		this.simpleUserMapper = new SimpleUserMapper();
 		this.simpleClientMapper = new SimpleClientMapper();
+		this.jobCandidatureMapper = new JobCandidatureMapper();
 	}
 
 	@Override
@@ -34,7 +39,6 @@ public class JobOfferMapper implements Mapper<JobOffer, JobOfferDto> {
 		dto.setCloseDate(entity.getCloseDate());
 		dto.setOpenDate(entity.getOpenDate());
 		dto.setDescription(entity.getDescription());
-		dto.setJobCandidatures(null);
 		final SimpleUserDto owner = this.simpleUserMapper.map(entity.getOwner());
 		dto.setOwner(owner);
 		dto.setPlaces(entity.getPlaces());
@@ -46,6 +50,8 @@ public class JobOfferMapper implements Mapper<JobOffer, JobOfferDto> {
 		dto.setState(entity.getState());
 		dto.setTitle(entity.getTitle());
 		dto.setUid(entity.getUid());
+		final Set<JobCandidatureDto> jobCandidatures = this.jobCandidatureMapper.mapSet(entity.getJobCandidatures());
+		dto.setJobCandidatures(jobCandidatures);
 		return dto;
 	}
 }

@@ -35,7 +35,7 @@ public class ClientDto implements Serializable {
 	private String uid;
 
 	public AddressDto getAddress() {
-		if (this.address != null) {
+		if (this.address == null) {
 			this.address = new AddressDto();
 		}
 		return this.address;

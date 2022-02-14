@@ -12,10 +12,10 @@ import javax.inject.Named;
 
 import org.apache.commons.collections4.map.HashedMap;
 
-import es.nivel36.laie.ejb.candidate.Candidate;
 import es.nivel36.laie.ejb.candidate.CandidateDto;
 import es.nivel36.laie.ejb.candidate.CandidateService;
-import es.nivel36.laie.ejb.job.candidature.JobCandidature;
+import es.nivel36.laie.ejb.candidate.SimpleCandidateDto;
+import es.nivel36.laie.ejb.job.candidature.JobCandidatureDto;
 import es.nivel36.laie.ejb.job.candidature.JobCandidatureService;
 import es.nivel36.laie.ejb.job.offer.JobOfferDto;
 import es.nivel36.laie.ejb.job.offer.JobOfferService;
@@ -27,9 +27,9 @@ import es.nivel36.laie.web.view.candidate.CandidateLazyDataModel;
 @ViewScoped
 public class SelectCandidatesView extends AbstractView {
 
-	private static final long serialVersionUID = -6058282026562660524L;
+	private static final long serialVersionUID = -4200957281776169451L;
 
-	private final Map<String, Candidate> alredySelectedCandidates = new HashedMap<>();
+	private final Map<String, SimpleCandidateDto> alredySelectedCandidates = new HashedMap<>();
 
 	private CandidateLazyDataModel candidates;
 
@@ -55,10 +55,10 @@ public class SelectCandidatesView extends AbstractView {
 		if (this.jobOffer == null) {
 			throw new IllegalPageStateException();
 		}
-		final Set<JobCandidature> jobCandidatures = this.jobOffer.getJobCandidatures();
+		final Set<JobCandidatureDto> jobCandidatures = this.jobOffer.getJobCandidatures();
 		if (jobCandidatures != null) {
-			for (final JobCandidature jobCandidature : jobCandidatures) {
-				final Candidate candidate = jobCandidature.getCandidate();
+			for (final JobCandidatureDto jobCandidature : jobCandidatures) {
+				final SimpleCandidateDto candidate = jobCandidature.getCandidate();
 				this.alredySelectedCandidates.put(candidate.getUid(), candidate);
 			}
 		}

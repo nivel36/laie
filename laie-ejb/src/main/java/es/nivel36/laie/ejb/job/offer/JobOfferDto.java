@@ -6,15 +6,14 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-import es.nivel36.laie.ejb.candidate.Candidate;
 import es.nivel36.laie.ejb.client.SimpleClientDto;
 import es.nivel36.laie.ejb.core.model.AddressDto;
-import es.nivel36.laie.ejb.job.candidature.JobCandidature;
+import es.nivel36.laie.ejb.job.candidature.JobCandidatureDto;
 import es.nivel36.laie.ejb.user.SimpleUserDto;
 
 public class JobOfferDto implements Serializable {
 
-	private static final long serialVersionUID = -7963973908753316393L;
+	private static final long serialVersionUID = -7028791048538799564L;
 
 	private AddressDto address;
 
@@ -24,7 +23,7 @@ public class JobOfferDto implements Serializable {
 
 	private String description;
 
-	private Set<JobCandidature> jobCandidatures = new HashSet<>();
+	private Set<JobCandidatureDto> jobCandidatures = new HashSet<>();
 
 	private LocalDate openDate;
 
@@ -63,7 +62,7 @@ public class JobOfferDto implements Serializable {
 		return this.description;
 	}
 
-	public Set<JobCandidature> getJobCandidatures() {
+	public Set<JobCandidatureDto> getJobCandidatures() {
 		return this.jobCandidatures;
 	}
 
@@ -99,19 +98,6 @@ public class JobOfferDto implements Serializable {
 		return uid;
 	}
 
-	public boolean hasCandidatureOf(final Candidate candidate) {
-		Objects.requireNonNull(candidate);
-		if (this.jobCandidatures.isEmpty()) {
-			return false;
-		}
-		for (final JobCandidature jobCandidature : this.jobCandidatures) {
-			if (jobCandidature.getCandidate().equals(candidate)) {
-				return true;
-			}
-		}
-		return false;
-	}
-
 	public boolean hasState(final JobOfferState state) {
 		if (this.state == null) {
 			return state == null;
@@ -144,7 +130,7 @@ public class JobOfferDto implements Serializable {
 		this.description = description;
 	}
 
-	void setJobCandidatures(final Set<JobCandidature> jobCandidatures) {
+	void setJobCandidatures(final Set<JobCandidatureDto> jobCandidatures) {
 		this.jobCandidatures = jobCandidatures;
 	}
 

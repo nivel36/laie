@@ -15,7 +15,8 @@
 	<named-query name="Candidate.findByUid">
 		<query><![CDATA[
 			SELECT c 
-			FROM Candidate c 
+			FROM Candidate c
+			LEFT JOIN FETCH c.jobCandidatures
 			WHERE c.uid = :uid
 		]]></query>
 	</named-query>

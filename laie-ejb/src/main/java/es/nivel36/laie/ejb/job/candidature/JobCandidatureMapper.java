@@ -7,21 +7,21 @@ import es.nivel36.laie.ejb.candidate.SimpleCandidateMapper;
 import es.nivel36.laie.ejb.core.Mapper;
 import es.nivel36.laie.ejb.job.meeting.MeetingDto;
 import es.nivel36.laie.ejb.job.meeting.MeetingMapper;
-import es.nivel36.laie.ejb.job.offer.JobOfferDto;
-import es.nivel36.laie.ejb.job.offer.JobOfferMapper;
+import es.nivel36.laie.ejb.job.offer.SimpleJobOfferDto;
+import es.nivel36.laie.ejb.job.offer.SimpleJobOfferMapper;
 
 public class JobCandidatureMapper implements Mapper<JobCandidature, JobCandidatureDto> {
 
 	private SimpleCandidateMapper simpleCandidateMapper;
 	
+	private SimpleJobOfferMapper simpleJobOfferMapper;
+	
 	private MeetingMapper meetingMapper;
 	
-	private JobOfferMapper jobOfferMapper;
-
 	public JobCandidatureMapper() {
-		simpleCandidateMapper = new SimpleCandidateMapper();
-		jobOfferMapper = new JobOfferMapper();
-		meetingMapper = new MeetingMapper();
+		this.simpleCandidateMapper = new SimpleCandidateMapper();
+		this.meetingMapper = new MeetingMapper();
+		this.simpleJobOfferMapper = new SimpleJobOfferMapper();
 	}
 
 	@Override
@@ -32,11 +32,11 @@ public class JobCandidatureMapper implements Mapper<JobCandidature, JobCandidatu
 		final JobCandidatureDto dto = new JobCandidatureDto();
 		final SimpleCandidateDto candidate = simpleCandidateMapper.map(entity.getCandidate());
 		dto.setCandidate(candidate);
-		final JobOfferDto jobOfferDto = jobOfferMapper.map(entity.getJobOffer());
-		dto.setJobOffer(jobOfferDto);
 		final Set<MeetingDto> meetingDtos = meetingMapper.mapSet(entity.getJobMeetings());
 		dto.setJobMeetings(meetingDtos);
 		dto.setState(entity.getState());
+		final SimpleJobOfferDto simpleJobOfferDto = simpleJobOfferMapper.map(entity.getJobOffer());
+		dto.setJobOffer(simpleJobOfferDto);
 		return dto;
 	}
 }
