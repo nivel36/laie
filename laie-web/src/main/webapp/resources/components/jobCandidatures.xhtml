@@ -25,10 +25,10 @@
 					<h:link value="#{jobCandidature.jobOffer.title}" outcome="/job/view.xhtml">
 						<f:param name="job" value="#{jobCandidature.jobOffer.uid}" />
 					</h:link>
-					<span class="job_address">#{jobCandidature.jobOffer.address.city} <h:outputText value="("
-							rendered="#{not empty jobCandidature.jobOffer.address.region}" /> #{jobCandidature.jobOffer.address.region}<h:outputText value=")"
-							rendered="#{not empty jobCandidature.jobOffer.address.region}" />
-					</span>
+				</p:column>
+				<p:column headerText="#{i18n['job_candidature.city']}" rendered="#{cc.attrs.showJobOffer}">
+					#{jobCandidature.jobOffer.address.city} <h:outputText value="(" rendered="#{not empty jobCandidature.jobOffer.address.region}" /> #{jobCandidature.jobOffer.address.region}<h:outputText
+						value=")" rendered="#{not empty jobCandidature.jobOffer.address.region}" />
 				</p:column>
 				<p:column headerText="#{i18n['job_candidature.client']}" rendered="#{cc.attrs.showJobOffer}">
 					<h:link value="#{jobCandidature.jobOffer.client.name}" outcome="/client/view.xhtml">

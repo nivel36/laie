@@ -98,7 +98,7 @@
 							<div class="p-col-12">
 								<div class="card-header-buttons">
 									<p:fileUpload id="uploadFile" listener="#{viewCandidateView.uploadFile}" mode="simple" skinSimple="true" update="@form growl" auto="true"
-										label="" styleClass="ui-button-outlined"/>
+										label="" styleClass="ui-button-outlined" />
 								</div>
 							</div>
 						</div>
@@ -115,7 +115,7 @@
 					<h5>#{i18n['candidate.tags']}</h5>
 					<div class="text-container">
 						<ui:repeat value="#{viewCandidateView.candidate.tags}" var="tag" rendered="#{not empty viewCandidateView.candidate.tags}">
-							<div class="tag">#{tag.label}</div>
+							<p:tag value="#{tag}" />
 						</ui:repeat>
 						<h:outputText id="emptyText" value="---" styleClass="text" rendered="#{empty viewCandidateView.candidate.tags}" />
 					</div>

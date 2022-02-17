@@ -13,10 +13,11 @@ import org.hibernate.search.annotations.Field;
 
 import es.nivel36.laie.ejb.core.EventState;
 import es.nivel36.laie.ejb.core.model.AbstractEntity;
+import es.nivel36.laie.ejb.core.model.Indexable;
 
 @Entity
 @Table(name = "JOB_CANDIDATURE_STATE")
-public class JobCandidatureState extends AbstractEntity implements EventState {
+public class JobCandidatureState extends AbstractEntity implements EventState, Indexable {
 
 	private static final long serialVersionUID = -1530029544557152044L;
 
@@ -67,7 +68,7 @@ public class JobCandidatureState extends AbstractEntity implements EventState {
 	public void setName(final String name) {
 		this.name = name;
 	}
-	
+
 	@Override
 	public boolean equals(final Object obj) {
 		if (this == obj) {

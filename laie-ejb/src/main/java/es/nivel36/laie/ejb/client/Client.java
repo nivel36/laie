@@ -26,13 +26,14 @@ import org.hibernate.search.annotations.Store;
 import es.nivel36.laie.ejb.core.model.AbstractIndexedEntity;
 import es.nivel36.laie.ejb.core.model.Address;
 import es.nivel36.laie.ejb.core.model.Erasable;
+import es.nivel36.laie.ejb.core.model.Indexable;
 import es.nivel36.laie.ejb.core.model.Ownerable;
 import es.nivel36.laie.ejb.job.offer.JobOffer;
 import es.nivel36.laie.ejb.user.User;
 
 @Entity
 @Indexed
-public class Client extends AbstractIndexedEntity implements Ownerable, Erasable {
+public class Client extends AbstractIndexedEntity implements Ownerable, Erasable, Indexable {
 
 	private static final long serialVersionUID = 3562472646025185677L;
 

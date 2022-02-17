@@ -12,7 +12,7 @@ import org.hibernate.search.annotations.SortableField;
 import org.hibernate.search.annotations.Store;
 
 @Embeddable
-public class Address implements Serializable {
+public class Address implements Serializable, Indexable {
 
 	private static final long serialVersionUID = 1L;
 

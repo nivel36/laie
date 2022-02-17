@@ -36,7 +36,7 @@
 					</h:form>
 				</div>
 
-				<cc:jobOffers id="jobOffers" value="#{viewClientView.jobOffers}" rows="5">
+				<cc:jobOffers id="jobOffers" value="#{viewClientView.jobOffers}" rows="5" showClient="false">
 					<h:form id="jobOffersForm">
 						<p:button icon="pi pi-plus" outcome="/job/add.xhtml" process="@this" styleClass="ui-button-success ui-button-outlined">
 							<f:param name="clientId" value="#{viewClientView.client.uid}" />

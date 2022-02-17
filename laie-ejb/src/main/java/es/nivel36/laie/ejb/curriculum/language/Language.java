@@ -12,10 +12,11 @@ import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 
 import es.nivel36.laie.ejb.core.model.AbstractEntity;
+import es.nivel36.laie.ejb.core.model.Indexable;
 
 @Indexed
 @Entity
-public class Language extends AbstractEntity implements Comparable<Language> {
+public class Language extends AbstractEntity implements Comparable<Language>, Indexable {
 
 	private static final long serialVersionUID = -3425255875950769281L;
 

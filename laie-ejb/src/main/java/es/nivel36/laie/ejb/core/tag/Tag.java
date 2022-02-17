@@ -13,13 +13,14 @@ import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.SortableField;
 import org.hibernate.search.annotations.Store;
 
-import es.nivel36.laie.ejb.core.model.AbstractIndexedEntity;
+import es.nivel36.laie.ejb.core.model.AbstractEntity;
+import es.nivel36.laie.ejb.core.model.Indexable;
 
 @Entity
 @Indexed
-public class Tag extends AbstractIndexedEntity {
+public class Tag extends AbstractEntity implements Indexable {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -2070061878397221965L;
 
 	@NotNull
 	@Column(length = 128, nullable = false)
@@ -33,6 +34,14 @@ public class Tag extends AbstractIndexedEntity {
 
 	public Tag(final String label) {
 		Objects.requireNonNull(label);
+		this.label = label;
+	}
+
+	public String getLabel() {
+		return this.label;
+	}
+
+	public void setLabel(final String label) {
 		this.label = label;
 	}
 
@@ -54,17 +63,9 @@ public class Tag extends AbstractIndexedEntity {
 		return Objects.equals(this.label, other.label);
 	}
 
-	public String getLabel() {
-		return this.label;
-	}
-
 	@Override
 	public int hashCode() {
 		return Objects.hash(this.label);
-	}
-
-	public void setLabel(final String label) {
-		this.label = label;
 	}
 
 	@Override

@@ -10,13 +10,14 @@ import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 
 import es.nivel36.laie.ejb.core.model.AbstractEntity;
+import es.nivel36.laie.ejb.core.model.Indexable;
 
 @Entity
 @Indexed
-public class Skill extends AbstractEntity implements Comparable<Skill> {
+public class Skill extends AbstractEntity implements Comparable<Skill>, Indexable {
 
 	private static final long serialVersionUID = 4288106580541111562L;
-	
+
 	@Field
 	@NotNull
 	@Column(nullable = false)

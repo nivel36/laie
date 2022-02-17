@@ -32,6 +32,7 @@ import es.nivel36.laie.ejb.candidate.Candidate;
 import es.nivel36.laie.ejb.client.Client;
 import es.nivel36.laie.ejb.core.model.AbstractIndexedEntity;
 import es.nivel36.laie.ejb.core.model.Address;
+import es.nivel36.laie.ejb.core.model.Indexable;
 import es.nivel36.laie.ejb.core.model.Ownerable;
 import es.nivel36.laie.ejb.job.candidature.JobCandidature;
 import es.nivel36.laie.ejb.user.User;
@@ -39,7 +40,7 @@ import es.nivel36.laie.ejb.user.User;
 @Entity
 @Indexed
 @Table(name = "JOB_OFFER")
-public class JobOffer extends AbstractIndexedEntity implements Ownerable {
+public class JobOffer extends AbstractIndexedEntity implements Ownerable, Indexable {
 
 	private static final long serialVersionUID = 1529439068651089035L;
 
@@ -96,7 +97,7 @@ public class JobOffer extends AbstractIndexedEntity implements Ownerable {
 	@Field(name = "title", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField(forField = "title")
 	private String title;
-	
+
 	@Override
 	public boolean equals(final Object obj) {
 		if (this == obj) {
@@ -114,7 +115,7 @@ public class JobOffer extends AbstractIndexedEntity implements Ownerable {
 	}
 
 	public Address getAddress() {
-		if(this.address == null) {
+		if (this.address == null) {
 			this.address = new Address();
 		}
 		return this.address;

@@ -17,10 +17,11 @@ import org.hibernate.search.annotations.SortableField;
 import org.hibernate.search.annotations.Store;
 
 import es.nivel36.laie.ejb.core.model.AbstractIndexedEntity;
+import es.nivel36.laie.ejb.core.model.Indexable;
 
 @Entity
 @Indexed
-public class Contact extends AbstractIndexedEntity {
+public class Contact extends AbstractIndexedEntity implements Indexable {
 
 	private static final long serialVersionUID = -2403549918176092142L;
 

@@ -12,7 +12,7 @@ public class CandidateMerger implements Merger<Candidate, CandidateDto> {
 	}
 
 	@Override
-	public void merge(Candidate entity, CandidateDto dto) {
+	public void merge(final Candidate entity, final CandidateDto dto) {
 		addressMerger.merge(entity.getAddress(), dto.getAddress());
 		entity.setBornDate(dto.getBornDate());
 		entity.setEmail(dto.getEmail());

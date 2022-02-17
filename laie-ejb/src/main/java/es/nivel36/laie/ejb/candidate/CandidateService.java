@@ -1,9 +1,11 @@
 package es.nivel36.laie.ejb.candidate;
 
 import java.io.InputStream;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -22,6 +24,8 @@ import es.nivel36.laie.ejb.core.model.Repository;
 import es.nivel36.laie.ejb.core.model.search.SearchFacets;
 import es.nivel36.laie.ejb.core.model.search.SearchResult;
 import es.nivel36.laie.ejb.core.model.search.SortField;
+import es.nivel36.laie.ejb.core.tag.Tag;
+import es.nivel36.laie.ejb.core.tag.TagDao;
 import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.ejb.user.UserDao;
 
@@ -39,8 +43,12 @@ public class CandidateService {
 
 	@Inject
 	@Repository
+	private TagDao tagDao;
+
+	@Inject
+	@Repository
 	private FileJpaDao fileDao;
-	
+
 	@Inject
 	@Repository
 	private UserDao userDao;
@@ -66,7 +74,7 @@ public class CandidateService {
 		final Candidate candidate = this.candidateDao.findByUid(candidateUid);
 		this.changeOwner(candidate, ownerUid);
 	}
-	
+
 	private void changeOwner(final Candidate candidate, final String ownerUid) {
 		final User user = this.userDao.findUserByUid(ownerUid);
 		candidate.setOwner(user);
@@ -77,7 +85,35 @@ public class CandidateService {
 		logger.debug("Update candidate {}", candidate);
 		final String uid = candidate.getUid();
 		final Candidate entity = this.candidateDao.findByUid(uid);
+		this.updateTags(candidate.getTags(), entity.getTags());
 		candidateMerger.merge(entity, candidate);
+	}
+
+	private void updateTags(final Set<String> tags, final Set<Tag> entityTags) {
+		final Set<Tag> newTags = new HashSet<>();
+		for (final String tagLabel : tags) {
+			boolean tagExists = false;
+			for (final Tag tag : entityTags) {
+				final String label = tag.getLabel();
+				if (tagLabel.equals(label)) {
+					tagExists = true;
+					break;
+				}
+			}
+			if (tagExists) {
+				continue;
+			}
+			final Tag tagFromDatabase = this.tagDao.findByLabel(tagLabel);
+			if (tagFromDatabase != null) {
+				newTags.add(tagFromDatabase);
+			} else {
+				final Tag newTag = new Tag();
+				newTag.setLabel(tagLabel);
+				newTags.add(newTag);
+			}
+
+		}
+		entityTags.addAll(newTags);
 	}
 
 	public String changeCandidatesImage(final String candidateUid, final InputStream image) {
@@ -164,6 +200,11 @@ public class CandidateService {
 		final int count = entities.getCount();
 		final Map<String, List<Facet>> allFacets = entities.getAllFacets();
 		return new SearchResult<>(dtoList, count, allFacets);
+	}
+
+	public void setTagDao(final TagDao tagDao) {
+		Objects.requireNonNull(tagDao);
+		this.tagDao = tagDao;
 	}
 
 	public void setCandidateDao(final CandidateDao candidateDao) {

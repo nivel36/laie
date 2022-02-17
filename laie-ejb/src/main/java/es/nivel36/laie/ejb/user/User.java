@@ -26,17 +26,18 @@ import org.hibernate.search.annotations.Store;
 import es.nivel36.laie.ejb.core.bookmark.Bookmark;
 import es.nivel36.laie.ejb.core.file.File;
 import es.nivel36.laie.ejb.core.model.AbstractIndexedEntity;
+import es.nivel36.laie.ejb.core.model.Indexable;
 
 @Entity
 @Indexed
-public class User extends AbstractIndexedEntity {
+public class User extends AbstractIndexedEntity implements Indexable {
 
 	private static final long serialVersionUID = -3719561601581901723L;
 
 	@Field(name = "dateOfJoin", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField(forField = "dateOfJoin")
 	private LocalDate dateOfJoin;
-	
+
 	@Field(name = "_email")
 	@Column(length = 128, nullable = false, unique = true)
 	private String email;
@@ -80,7 +81,7 @@ public class User extends AbstractIndexedEntity {
 	@Field(name = "surname", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField(forField = "surname")
 	private String surname;
-	
+
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
 	private Set<Bookmark> bookmarks;
 
@@ -194,7 +195,7 @@ public class User extends AbstractIndexedEntity {
 	public void setSurname(final String surname) {
 		this.surname = surname;
 	}
-	
+
 	public Set<Bookmark> getBookmarks() {
 		return bookmarks;
 	}
@@ -217,7 +218,7 @@ public class User extends AbstractIndexedEntity {
 		final User other = (User) obj;
 		return Objects.equals(other.email, this.email);
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(this.email);
