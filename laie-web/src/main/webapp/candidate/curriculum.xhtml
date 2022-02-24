@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://nivel.36/laie/ui" xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui"
-	xmlns:p="http://primefaces.org/ui" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets"
-	template="/WEB-INF/templates/template.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://nivel.36/laie/ui"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets" template="/WEB-INF/templates/template.xhtml">
 
 	<ui:define name="title">
 		#{i18n['curriculum.curriculum']} - #{curriculumView.candidate.fullName}
@@ -31,12 +31,29 @@
 		<h:form id="form">
 			<div class="p-grid">
 				<div class="p-col-12 p-xl-8">
+					<div class="title-card">
+						<div class="title-card-content">
+							<cc:avatar styleClass="title-card-content-image" name="#{viewCandidateView.candidate.fullName}" path="#{viewCandidateView.candidate.avatarUrl}"
+								size="xlarge" />
+							<div class="title-card-content-info">
+								<div class="title">#{curriculumView.candidate.fullName}</div>
+								<div class="subtitle">#{curriculumView.candidate.jobProfile}</div>
+								<div class="text">
+									<span class="region"><i class="pi pi-map-marker" />#{curriculumView.candidate.address.region}</span> <span class="email"><i
+										class="pi pi-envelope" /> #{curriculumView.candidate.email}</span>
+									<h:panelGroup rendered="#{not empty viewCandidateView.candidate.phoneNumber}" styleClass="phone">
+										<i class="pi pi-phone" />#{curriculumView.candidate.phoneNumber}</h:panelGroup>
+								</div>
+							</div>
+
+							<p:menuButton styleClass="menu-button" icon="pi pi-ellipsis-v" id="menu-button">
+								<p:menuitem value="#{i18n['curriculum.view_curriculum']}" outcome="/candidate/view">
+									<f:param name="candidate" value="#{viewCandidateView.candidate.uid}" />
+								</p:menuitem>
+							</p:menuButton>
+						</div>
+					</div>
 					<div class="card curriculum">
-						<cc:avatar name="#{curriculumView.candidate.fullName}" path="#{curriculumView.candidate.avatarUrl}" />
-
-						<div class="name">#{curriculumView.candidate.fullName}</div>
-
-						<div class="job-profile">#{curriculumView.candidate.jobProfile}</div>
 
 						<h:panelGroup layout="block" styleClass="data skype" rendered="#{not empty curriculumView.candidate.skype}">
 							<div class="icon">
@@ -59,7 +76,8 @@
 					<h:panelGroup styleClass="card card-w-title curriculum" id="jobExperiences" layout="block">
 						<h5>#{i18n['curriculum.job_experiences']}</h5>
 						<div class="buttons header-buttons">
-							<p:commandButton action="#{curriculumView.newJobExperience}" process="@this" icon="fa fa-plus" styleClass="ui-button-success ui-button-outlined" />
+							<p:commandButton action="#{curriculumView.newJobExperience}" process="@this" icon="fa fa-plus"
+								styleClass="ui-button-success ui-button-outlined" />
 						</div>
 
 						<ui:repeat value="#{curriculumView.jobExperiences}" var="jobExperience" id="jobExperience" varStatus="varStatus">
@@ -92,7 +110,8 @@
 								</p>
 
 								<div class="buttons">
-									<p:commandButton action="#{curriculumView.editJobExperience(jobExperience)}" process="@this" icon="fa fa-pencil" styleClass="ui-button-secondary ui-button-outlined" />
+									<p:commandButton action="#{curriculumView.editJobExperience(jobExperience)}" process="@this" icon="fa fa-pencil"
+										styleClass="ui-button-secondary ui-button-outlined" />
 								</div>
 							</div>
 						</ui:repeat>
@@ -118,7 +137,8 @@
 								<h:outputText value="#{education.description}" escape="false" styleClass="educationDescription" />
 
 								<div class="buttons">
-									<p:commandButton action="#{curriculumView.editEducation(education)}" process="@this" icon="fa fa-pencil" styleClass="ui-button-secondary ui-button-outlined" />
+									<p:commandButton action="#{curriculumView.editEducation(education)}" process="@this" icon="fa fa-pencil"
+										styleClass="ui-button-secondary ui-button-outlined" />
 								</div>
 							</div>
 						</ui:repeat>
@@ -134,7 +154,8 @@
 								</p>
 							</ui:repeat>
 							<div class="buttons">
-								<p:commandButton action="#{curriculumView.editLanguages}" process="@this" icon="fa fa-pencil" styleClass="ui-button-secondary ui-button-outlined" />
+								<p:commandButton action="#{curriculumView.editLanguages}" process="@this" icon="fa fa-pencil"
+									styleClass="ui-button-secondary ui-button-outlined" />
 							</div>
 						</div>
 					</h:panelGroup>
@@ -145,7 +166,7 @@
 						<h5>#{i18n['curriculum.skills']}</h5>
 						<div class="section">
 							<ui:repeat var="skill" value="#{curriculumView.curriculum.skills}">
-								<p:tag value="#{skill.name}" />
+								<p:tag value="#{skill}" />
 							</ui:repeat>
 							<div class="buttons">
 								<p:commandButton action="#{curriculumView.editSkills}" process="@this" icon="fa fa-pencil" styleClass="ui-button-secondary ui-button-outlined" />
