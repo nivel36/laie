@@ -11,11 +11,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
-import es.nivel36.laie.ejb.core.model.AbstractEntity;
+import es.nivel36.laie.ejb.core.model.AbstractIndexedEntity;
 import es.nivel36.laie.ejb.core.model.Indexable;
 
 @Entity
-public class File extends AbstractEntity implements Indexable {
+public class File extends AbstractIndexedEntity implements Indexable {
 
 	private static final long serialVersionUID = -2983690237456593632L;
 
@@ -37,19 +37,6 @@ public class File extends AbstractEntity implements Indexable {
 
 	private String uid;
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (!super.equals(obj))
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		File other = (File) obj;
-		return Objects.equals(created, other.created) && Objects.equals(name, other.name)
-				&& publicAccess == other.publicAccess;
-	}
-
 	public LocalDateTime getCreated() {
 		return this.created;
 	}
@@ -68,11 +55,6 @@ public class File extends AbstractEntity implements Indexable {
 
 	public String getUid() {
 		return uid;
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(created, name, publicAccess);
 	}
 
 	public boolean isPublicAccess() {
@@ -101,5 +83,28 @@ public class File extends AbstractEntity implements Indexable {
 
 	public void setUid(String uid) {
 		this.uid = uid;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		File other = (File) obj;
+		return Objects.equals(created, other.created) && Objects.equals(name, other.name)
+				&& publicAccess == other.publicAccess;
+	}
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(created, name, publicAccess);
+	}
+
+	@Override
+	public String toString() {
+		return name;
 	}
 }
