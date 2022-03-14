@@ -30,7 +30,7 @@ import org.hibernate.search.annotations.Store;
 
 import es.nivel36.laie.ejb.candidate.Candidate;
 import es.nivel36.laie.ejb.client.Client;
-import es.nivel36.laie.ejb.core.model.AbstractIndexedEntity;
+import es.nivel36.laie.ejb.core.model.AbstractObfuscableEntity;
 import es.nivel36.laie.ejb.core.model.Address;
 import es.nivel36.laie.ejb.core.model.Indexable;
 import es.nivel36.laie.ejb.core.model.Ownerable;
@@ -40,7 +40,7 @@ import es.nivel36.laie.ejb.user.User;
 @Entity
 @Indexed
 @Table(name = "JOB_OFFER")
-public class JobOffer extends AbstractIndexedEntity implements Ownerable, Indexable {
+public class JobOffer extends AbstractObfuscableEntity implements Ownerable, Indexable {
 
 	private static final long serialVersionUID = 1529439068651089035L;
 

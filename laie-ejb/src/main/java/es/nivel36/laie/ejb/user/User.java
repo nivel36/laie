@@ -25,12 +25,12 @@ import org.hibernate.search.annotations.Store;
 
 import es.nivel36.laie.ejb.core.bookmark.Bookmark;
 import es.nivel36.laie.ejb.core.file.File;
-import es.nivel36.laie.ejb.core.model.AbstractIndexedEntity;
+import es.nivel36.laie.ejb.core.model.AbstractObfuscableEntity;
 import es.nivel36.laie.ejb.core.model.Indexable;
 
 @Entity
 @Indexed
-public class User extends AbstractIndexedEntity implements Indexable {
+public class User extends AbstractObfuscableEntity implements Indexable {
 
 	private static final long serialVersionUID = -3719561601581901723L;
 

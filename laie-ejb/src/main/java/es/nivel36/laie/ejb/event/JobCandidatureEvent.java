@@ -15,14 +15,14 @@ import org.hibernate.search.annotations.SortableField;
 import org.hibernate.search.annotations.Store;
 
 import es.nivel36.laie.ejb.core.Event;
-import es.nivel36.laie.ejb.core.model.AbstractIndexedEntity;
+import es.nivel36.laie.ejb.core.model.AbstractObfuscableEntity;
 import es.nivel36.laie.ejb.job.candidature.JobCandidature;
 import es.nivel36.laie.ejb.job.candidature.JobCandidatureState;
 import es.nivel36.laie.ejb.user.User;
 
 @Entity
 @Indexed
-public class JobCandidatureEvent extends AbstractIndexedEntity implements Event {
+public class JobCandidatureEvent extends AbstractObfuscableEntity implements Event {
 
 	private static final long serialVersionUID = -5724212902774335888L;
 

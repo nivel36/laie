@@ -11,11 +11,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
-import es.nivel36.laie.ejb.core.model.AbstractIndexedEntity;
+import es.nivel36.laie.ejb.core.model.AbstractObfuscableEntity;
 import es.nivel36.laie.ejb.core.model.Indexable;
 
 @Entity
-public class File extends AbstractIndexedEntity implements Indexable {
+public class File extends AbstractObfuscableEntity implements Indexable {
 
 	private static final long serialVersionUID = -2983690237456593632L;
 
@@ -35,8 +35,6 @@ public class File extends AbstractIndexedEntity implements Indexable {
 
 	private boolean publicAccess;
 
-	private String uid;
-
 	public LocalDateTime getCreated() {
 		return this.created;
 	}
@@ -51,10 +49,6 @@ public class File extends AbstractIndexedEntity implements Indexable {
 
 	public PhysicalFile getPhysicalFile() {
 		return this.physicalFile;
-	}
-
-	public String getUid() {
-		return uid;
 	}
 
 	public boolean isPublicAccess() {
@@ -81,10 +75,6 @@ public class File extends AbstractIndexedEntity implements Indexable {
 		this.publicAccess = publicAccess;
 	}
 
-	public void setUid(String uid) {
-		this.uid = uid;
-	}
-	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
