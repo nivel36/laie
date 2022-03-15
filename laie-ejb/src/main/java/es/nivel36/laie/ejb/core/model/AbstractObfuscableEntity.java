@@ -7,7 +7,7 @@ import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotNull;
 
 @MappedSuperclass
-public abstract class AbstractIndexedEntity extends AbstractEntity implements Obfuscable {
+public abstract class AbstractObfuscableEntity extends AbstractEntity implements Obfuscable {
 
 	private static final long serialVersionUID = -2683028217207608647L;
 	
@@ -31,7 +31,7 @@ public abstract class AbstractIndexedEntity extends AbstractEntity implements Ob
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		AbstractIndexedEntity other = (AbstractIndexedEntity) obj;
+		AbstractObfuscableEntity other = (AbstractObfuscableEntity) obj;
 		return Objects.equals(uid, other.uid);
 	}
 

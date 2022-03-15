@@ -23,7 +23,7 @@ import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.SortableField;
 import org.hibernate.search.annotations.Store;
 
-import es.nivel36.laie.ejb.core.model.AbstractIndexedEntity;
+import es.nivel36.laie.ejb.core.model.AbstractObfuscableEntity;
 import es.nivel36.laie.ejb.core.model.Address;
 import es.nivel36.laie.ejb.core.model.Erasable;
 import es.nivel36.laie.ejb.core.model.Indexable;
@@ -33,7 +33,7 @@ import es.nivel36.laie.ejb.user.User;
 
 @Entity
 @Indexed
-public class Client extends AbstractIndexedEntity implements Ownerable, Erasable, Indexable {
+public class Client extends AbstractObfuscableEntity implements Ownerable, Erasable, Indexable {
 
 	private static final long serialVersionUID = 3562472646025185677L;
 
