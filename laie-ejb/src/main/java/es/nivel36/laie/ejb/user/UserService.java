@@ -98,16 +98,16 @@ public class UserService {
 	public String changeUsersImage(final String userUid, final InputStream image) {
 		Objects.requireNonNull(userUid);
 		Objects.requireNonNull(image);
-		final User user = this.userDao.findUserByUid(userUid);
-		logger.debug("Change image to user {}", user);
-		final File oldImage = user.getPicture();
+		logger.debug("Change image to user {}", userUid);
 		final FileDto newImage = this.fileService.uploadFile(image, userUid + "_picture", true);
 		final File file = fileDao.findFileByUid(newImage.getUid());
-		user.setPicture(file);
+		final User user = this.userDao.findUserByUid(userUid);
+		final File oldImage = user.getPicture();
 		if (oldImage != null) {
 			logger.trace("Remove user {} old image", user);
 			this.fileService.removeFile(oldImage.getUid());
 		}
+		user.setPicture(file);
 		return newImage.getPath();
 	}
 

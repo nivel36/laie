@@ -35,8 +35,6 @@ public class File extends AbstractObfuscableEntity implements Indexable {
 
 	private boolean publicAccess;
 
-	private String uid;
-
 	public LocalDateTime getCreated() {
 		return this.created;
 	}
@@ -51,10 +49,6 @@ public class File extends AbstractObfuscableEntity implements Indexable {
 
 	public PhysicalFile getPhysicalFile() {
 		return this.physicalFile;
-	}
-
-	public String getUid() {
-		return uid;
 	}
 
 	public boolean isPublicAccess() {
@@ -81,10 +75,6 @@ public class File extends AbstractObfuscableEntity implements Indexable {
 		this.publicAccess = publicAccess;
 	}
 
-	public void setUid(String uid) {
-		this.uid = uid;
-	}
-	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

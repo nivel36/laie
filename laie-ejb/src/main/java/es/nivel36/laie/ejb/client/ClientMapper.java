@@ -1,6 +1,6 @@
 package es.nivel36.laie.ejb.client;
 
-import java.util.Set;
+import java.util.List;
 
 import es.nivel36.laie.ejb.core.Mapper;
 import es.nivel36.laie.ejb.core.model.Address;
@@ -47,8 +47,8 @@ public class ClientMapper implements Mapper<Client, ClientDto> {
 	}
 
 	private void mapContacts(final Client entity, final ClientDto dto) {
-		final Set<Contact> contacts = entity.getContacts();
-		final Set<ContactDto> contactsDto = contactMapper.mapSet(contacts);
+		final List<Contact> contacts = entity.getContacts();
+		final List<ContactDto> contactsDto = contactMapper.mapList(contacts);
 		dto.setContacts(contactsDto);
 	}
 }

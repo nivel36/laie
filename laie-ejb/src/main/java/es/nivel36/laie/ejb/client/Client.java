@@ -1,8 +1,7 @@
 package es.nivel36.laie.ejb.client;
 
-import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -46,7 +45,7 @@ public class Client extends AbstractObfuscableEntity implements Ownerable, Erasa
 	private String cif;
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "client", orphanRemoval = true)
-	private Set<Contact> contacts = new HashSet<>();
+	private List<Contact> contacts;
 
 	@Column(nullable = false)
 	@Field
@@ -54,7 +53,7 @@ public class Client extends AbstractObfuscableEntity implements Ownerable, Erasa
 
 	@ContainedIn
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "client", orphanRemoval = true)
-	private Set<JobOffer> jobOffers = new HashSet<>();
+	private List<JobOffer> jobOffers;
 
 	@NotNull
 	@Column(unique = true, nullable = false)
@@ -82,11 +81,11 @@ public class Client extends AbstractObfuscableEntity implements Ownerable, Erasa
 		return this.cif;
 	}
 
-	public Set<Contact> getContacts() {
+	public List<Contact> getContacts() {
 		return this.contacts;
 	}
 
-	public Set<JobOffer> getJobOffers() {
+	public List<JobOffer> getJobOffers() {
 		return this.jobOffers;
 	}
 
@@ -116,7 +115,7 @@ public class Client extends AbstractObfuscableEntity implements Ownerable, Erasa
 		this.cif = cif;
 	}
 
-	public void setContacts(final Set<Contact> contacts) {
+	public void setContacts(final List<Contact> contacts) {
 		this.contacts = contacts;
 	}
 
@@ -125,7 +124,7 @@ public class Client extends AbstractObfuscableEntity implements Ownerable, Erasa
 		this.deleted = deleted;
 	}
 
-	public void setJobOffers(final Set<JobOffer> jobOffers) {
+	public void setJobOffers(final List<JobOffer> jobOffers) {
 		this.jobOffers = jobOffers;
 	}
 
