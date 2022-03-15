@@ -30,9 +30,8 @@ import org.hibernate.search.annotations.SortableField;
 import org.hibernate.search.annotations.Store;
 
 import es.nivel36.laie.ejb.core.file.File;
-import es.nivel36.laie.ejb.core.model.AbstractObfuscableEntity;
+import es.nivel36.laie.ejb.core.model.AbstractObfuscableIndexableEntity;
 import es.nivel36.laie.ejb.core.model.Address;
-import es.nivel36.laie.ejb.core.model.Indexable;
 import es.nivel36.laie.ejb.core.model.Ownerable;
 import es.nivel36.laie.ejb.core.tag.Tag;
 import es.nivel36.laie.ejb.curriculum.Curriculum;
@@ -41,7 +40,7 @@ import es.nivel36.laie.ejb.user.User;
 
 @Entity
 @Indexed
-public class Candidate extends AbstractObfuscableEntity implements Ownerable, Indexable {
+public class Candidate extends AbstractObfuscableIndexableEntity implements Ownerable {
 
 	private static final long serialVersionUID = -7470903145789563432L;
 

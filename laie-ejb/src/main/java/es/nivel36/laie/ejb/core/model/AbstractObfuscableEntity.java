@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 public abstract class AbstractObfuscableEntity extends AbstractEntity implements Obfuscable {
 
 	private static final long serialVersionUID = -2683028217207608647L;
-	
+
 	@NotNull
 	@Column(unique = true, nullable = false)
 	private String uid;

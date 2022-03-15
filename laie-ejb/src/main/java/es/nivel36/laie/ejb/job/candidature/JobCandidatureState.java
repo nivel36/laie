@@ -12,12 +12,11 @@ import org.hibernate.search.annotations.FacetEncodingType;
 import org.hibernate.search.annotations.Field;
 
 import es.nivel36.laie.ejb.core.EventState;
-import es.nivel36.laie.ejb.core.model.AbstractEntity;
-import es.nivel36.laie.ejb.core.model.Indexable;
+import es.nivel36.laie.ejb.core.model.AbstractIndexableEntity;
 
 @Entity
 @Table(name = "JOB_CANDIDATURE_STATE")
-public class JobCandidatureState extends AbstractEntity implements EventState, Indexable {
+public class JobCandidatureState extends AbstractIndexableEntity implements EventState {
 
 	private static final long serialVersionUID = -1530029544557152044L;
 

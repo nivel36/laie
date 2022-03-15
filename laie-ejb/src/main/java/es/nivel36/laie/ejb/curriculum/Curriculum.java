@@ -14,14 +14,14 @@ import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
 import es.nivel36.laie.ejb.candidate.Candidate;
-import es.nivel36.laie.ejb.core.model.AbstractObfuscableEntity;
+import es.nivel36.laie.ejb.core.model.AbstractObfuscableIndexableEntity;
 import es.nivel36.laie.ejb.curriculum.education.Education;
 import es.nivel36.laie.ejb.curriculum.jobexperience.JobExperience;
 import es.nivel36.laie.ejb.curriculum.language.Language;
 import es.nivel36.laie.ejb.curriculum.skill.Skill;
 
 @Entity
-public class Curriculum extends AbstractObfuscableEntity {
+public class Curriculum extends AbstractObfuscableIndexableEntity {
 
 	private static final long serialVersionUID = 2258938088135732207L;
 

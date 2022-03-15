@@ -14,14 +14,14 @@ import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
 import es.nivel36.laie.ejb.candidate.Candidate;
-import es.nivel36.laie.ejb.core.model.AbstractObfuscableEntity;
+import es.nivel36.laie.ejb.core.model.AbstractObfuscableIndexableEntity;
 import es.nivel36.laie.ejb.event.JobCandidatureEvent;
 import es.nivel36.laie.ejb.job.meeting.Meeting;
 import es.nivel36.laie.ejb.job.offer.JobOffer;
 
 @Entity
 @Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "jobOfferId", "candidateId" }) })
-public class JobCandidature extends AbstractObfuscableEntity {
+public class JobCandidature extends AbstractObfuscableIndexableEntity {
 
 	private static final long serialVersionUID = 7312289648009726566L;
 
