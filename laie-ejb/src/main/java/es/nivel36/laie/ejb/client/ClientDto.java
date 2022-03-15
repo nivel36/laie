@@ -1,9 +1,8 @@
 package es.nivel36.laie.ejb.client;
 
 import java.io.Serializable;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 import org.hibernate.search.annotations.Indexed;
 
@@ -20,11 +19,11 @@ public class ClientDto implements Serializable {
 
 	private String cif;
 
-	private Set<ContactDto> contacts = new HashSet<>();
+	private List<ContactDto> contacts;
 
 	private boolean deleted;
 
-	private Set<JobOfferDto> jobOffers = new HashSet<>();
+	private List<JobOfferDto> jobOffers	;
 
 	private String name;
 
@@ -45,11 +44,11 @@ public class ClientDto implements Serializable {
 		return this.cif;
 	}
 
-	public Set<ContactDto> getContacts() {
+	public List<ContactDto> getContacts() {
 		return this.contacts;
 	}
 
-	public Set<JobOfferDto> getJobOffers() {
+	public List<JobOfferDto> getJobOffers() {
 		return this.jobOffers;
 	}
 
@@ -81,7 +80,7 @@ public class ClientDto implements Serializable {
 		this.cif = cif;
 	}
 
-	public void setContacts(final Set<ContactDto> contacts) {
+	public void setContacts(final List<ContactDto> contacts) {
 		this.contacts = contacts;
 	}
 
@@ -89,7 +88,7 @@ public class ClientDto implements Serializable {
 		this.deleted = deleted;
 	}
 
-	public void setJobOffers(final Set<JobOfferDto> jobOffers) {
+	public void setJobOffers(final List<JobOfferDto> jobOffers) {
 		this.jobOffers = jobOffers;
 	}
 

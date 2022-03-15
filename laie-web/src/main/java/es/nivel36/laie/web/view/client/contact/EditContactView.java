@@ -49,7 +49,7 @@ public class EditContactView extends AbstractView {
 
 	public void delete() {
 		logger.debug("Contact delete action performed");
-		this.contactService.deleteContact(this.uid);
+		this.contactService.deleteContact(this.uid, this.clientUid);
 		this.navigateTo(ViewClientView.URL + "?client=" + this.clientUid);
 	}
 

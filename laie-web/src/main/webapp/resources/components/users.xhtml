@@ -14,7 +14,7 @@
 
 	<composite:implementation>
 		<div id="#{cc.clientId}" class="card card-w-title users #{cc.attrs.styleClass}">
-			<h4>#{cc.attrs.title}</h4>
+			<h5>#{cc.attrs.title}</h5>
 			<p:dataView var="user" value="#{cc.attrs.value}" gridIcon="pi pi-th-large" listIcon="pi pi-bars" paginator="true"
 				layout="grid" paginatorPosition="bottom" rows="4" emptyMessage="#{i18n['user.no_team']}" lazy="true">
 				<p:dataViewGridItem columns="1">

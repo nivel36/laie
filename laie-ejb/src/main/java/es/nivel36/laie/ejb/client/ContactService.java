@@ -1,6 +1,5 @@
 package es.nivel36.laie.ejb.client;
 
-import java.nio.channels.IllegalSelectorException;
 import java.util.List;
 import java.util.Objects;
 
@@ -38,7 +37,6 @@ public class ContactService {
 		contactMerger.merge(contact, contactDto);
 		final Client client = this.clientDao.findClientByUid(clientUid);
 		contact.setClient(client);
-		// Tenemos que insertar el uuid. Por eso no lo hacemos por casacada
 		contactDao.insert(contact);
 	}
 
@@ -50,16 +48,13 @@ public class ContactService {
 		contactMerger.merge(contact, contactDto);
 	}
 
-	public void deleteContact(final String uid) {
-		Objects.requireNonNull(uid);
-		logger.debug("Delete contact {} ", uid);
-		final Contact contact = contactDao.findContactByUid(uid);
-		final Client client = contact.getClient();
-		boolean removed = client.getContacts().remove(contact);
-		//TODO: No funciona
-		if (!removed) {
-			throw new IllegalSelectorException();
-		}
+	public void deleteContact(final String contactUid, final String clientUid) {
+		Objects.requireNonNull(contactUid);
+		Objects.requireNonNull(clientUid);
+		logger.debug("Delete contact {} from client ", contactUid, clientUid);
+		final Contact contact = contactDao.findContactByUid(contactUid);
+		final Client client = clientDao.findClientByUid(clientUid);
+		client.getContacts().remove(contact);
 	}
 
 	public ContactDto findContactByUid(final String uid) {

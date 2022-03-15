@@ -2,29 +2,21 @@ package es.nivel36.laie.web.view.curriculum;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import es.nivel36.laie.ejb.candidate.Candidate;
 import es.nivel36.laie.ejb.candidate.CandidateDto;
 import es.nivel36.laie.ejb.candidate.CandidateService;
-import es.nivel36.laie.ejb.curriculum.Curriculum;
 import es.nivel36.laie.ejb.curriculum.CurriculumDto;
 import es.nivel36.laie.ejb.curriculum.CurriculumService;
-import es.nivel36.laie.ejb.curriculum.education.Education;
 import es.nivel36.laie.ejb.curriculum.education.EducationDto;
-import es.nivel36.laie.ejb.curriculum.jobexperience.JobExperience;
 import es.nivel36.laie.ejb.curriculum.jobexperience.JobExperienceDto;
-import es.nivel36.laie.ejb.curriculum.language.Language;
 import es.nivel36.laie.ejb.curriculum.language.LanguageDto;
-import es.nivel36.laie.ejb.curriculum.skill.Skill;
 import es.nivel36.laie.web.core.IllegalPageStateException;
 import es.nivel36.laie.web.core.view.AbstractView;
 
