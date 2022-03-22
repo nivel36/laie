@@ -16,12 +16,12 @@ import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.SortableField;
 import org.hibernate.search.annotations.Store;
 
-import es.nivel36.laie.ejb.core.model.AbstractObfuscableIndexableEntity;
+import es.nivel36.laie.ejb.core.model.AbstractObfuscableEntity;
 import es.nivel36.laie.ejb.core.model.Indexable;
 
 @Entity
 @Indexed
-public class Contact extends AbstractObfuscableIndexableEntity implements Indexable {
+public class Contact extends AbstractObfuscableEntity implements Indexable {
 
 	private static final long serialVersionUID = -2403549918176092142L;
 

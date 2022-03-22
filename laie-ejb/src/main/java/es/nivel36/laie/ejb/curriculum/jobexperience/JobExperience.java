@@ -13,11 +13,11 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 
-import es.nivel36.laie.ejb.core.model.AbstractIndexableEntity;
+import es.nivel36.laie.ejb.core.model.AbstractEntity;
 
 @Entity
 @Indexed
-public class JobExperience extends AbstractIndexableEntity implements Comparable<JobExperience> {
+public class JobExperience extends AbstractEntity implements Comparable<JobExperience> {
 
 	private static final long serialVersionUID = 5196582360914455397L;
 
