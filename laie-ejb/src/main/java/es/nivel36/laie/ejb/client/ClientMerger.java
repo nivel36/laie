@@ -1,7 +1,7 @@
 package es.nivel36.laie.ejb.client;
 
-import es.nivel36.laie.ejb.core.model.AddressMerger;
-import es.nivel36.laie.ejb.core.model.Merger;
+import es.nivel36.core.model.Merger;
+import es.nivel36.laie.ejb.AddressMerger;
 
 public class ClientMerger implements Merger<Client, ClientDto> {
 

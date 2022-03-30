@@ -6,8 +6,8 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import es.nivel36.laie.ejb.AddressDto;
 import es.nivel36.laie.ejb.client.SimpleClientDto;
-import es.nivel36.laie.ejb.core.model.AddressDto;
 import es.nivel36.laie.ejb.job.candidature.JobCandidatureDto;
 import es.nivel36.laie.ejb.user.SimpleUserDto;
 

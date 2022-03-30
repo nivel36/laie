@@ -14,6 +14,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
@@ -23,13 +24,14 @@ import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.SortableField;
 import org.hibernate.search.annotations.Store;
 
+import es.nivel36.core.model.AbstractObfuscableEntity;
+import es.nivel36.core.model.Subject;
 import es.nivel36.laie.ejb.core.bookmark.Bookmark;
-import es.nivel36.laie.ejb.core.file.File;
-import es.nivel36.laie.ejb.core.model.AbstractObfuscableEntity;
 
 @Entity
 @Indexed
-public class User extends AbstractObfuscableEntity {
+@Table(name = "USER", indexes = { @javax.persistence.Index(columnList = "uid") })
+public class User extends AbstractObfuscableEntity implements Subject {
 
 	private static final long serialVersionUID = -3719561601581901723L;
 
@@ -62,9 +64,7 @@ public class User extends AbstractObfuscableEntity {
 	@Column(length = 12)
 	private String phoneNumber;
 
-	@ManyToOne
-	@JoinColumn(name = "picture")
-	private File picture;
+	private String pictureUid;
 
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
@@ -119,8 +119,8 @@ public class User extends AbstractObfuscableEntity {
 		return this.phoneNumber;
 	}
 
-	public File getPicture() {
-		return this.picture;
+	public String getPictureUid() {
+		return this.pictureUid;
 	}
 
 	public Role getRole() {
@@ -179,8 +179,8 @@ public class User extends AbstractObfuscableEntity {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public void setPicture(final File picture) {
-		this.picture = picture;
+	public void setPictureUid(final String pictureUid) {
+		this.pictureUid = pictureUid;
 	}
 
 	public void setRole(final Role role) {

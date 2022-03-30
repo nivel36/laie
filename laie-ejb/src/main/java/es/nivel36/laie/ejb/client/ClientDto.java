@@ -6,7 +6,7 @@ import java.util.Objects;
 
 import org.hibernate.search.annotations.Indexed;
 
-import es.nivel36.laie.ejb.core.model.AddressDto;
+import es.nivel36.laie.ejb.AddressDto;
 import es.nivel36.laie.ejb.job.offer.JobOfferDto;
 import es.nivel36.laie.ejb.user.SimpleUserDto;
 

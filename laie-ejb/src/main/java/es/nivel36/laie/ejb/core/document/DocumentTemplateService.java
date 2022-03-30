@@ -19,7 +19,7 @@ import com.itextpdf.html2pdf.ConverterProperties;
 import com.itextpdf.html2pdf.HtmlConverter;
 
 import es.nivel36.laie.ejb.core.Language;
-import es.nivel36.laie.ejb.core.model.Repository;
+import es.nivel36.core.model.Repository;
 
 @Stateless
 public class DocumentTemplateService {

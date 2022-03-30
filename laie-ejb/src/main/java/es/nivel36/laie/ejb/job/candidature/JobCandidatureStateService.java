@@ -6,8 +6,8 @@ import java.util.Objects;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
-import es.nivel36.laie.ejb.core.model.Page;
-import es.nivel36.laie.ejb.core.model.Repository;
+import es.nivel36.core.model.Page;
+import es.nivel36.core.model.Repository;
 
 @Stateless
 public class JobCandidatureStateService {

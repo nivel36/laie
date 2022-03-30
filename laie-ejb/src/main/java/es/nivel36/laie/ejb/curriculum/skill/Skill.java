@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 
-import es.nivel36.laie.ejb.core.model.AbstractEntity;
+import es.nivel36.core.model.AbstractEntity;
 
 @Entity
 @Indexed

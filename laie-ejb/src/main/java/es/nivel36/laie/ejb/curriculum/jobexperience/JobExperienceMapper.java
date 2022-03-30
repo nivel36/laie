@@ -1,6 +1,6 @@
 package es.nivel36.laie.ejb.curriculum.jobexperience;
 
-import es.nivel36.laie.ejb.core.Mapper;
+import es.nivel36.core.model.Mapper;
 
 public class JobExperienceMapper implements Mapper<JobExperience, JobExperienceDto> {
 

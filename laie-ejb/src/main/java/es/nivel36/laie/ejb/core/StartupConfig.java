@@ -12,11 +12,11 @@ import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.inject.Inject;
 
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import es.nivel36.laie.ejb.core.model.Indexer;
-import es.nivel36.laie.ejb.core.util.ConfigurationProperty;
+import es.nivel36.core.model.Indexer;
 
 @Singleton
 @Startup
@@ -28,15 +28,15 @@ public class StartupConfig {
 	private Indexer indexer;
 
 	@Inject
-	@ConfigurationProperty(value = "file.directory")
+	@ConfigProperty(name = "file.directory")
 	private String fileDirectory;
 
 	@Inject
-	@ConfigurationProperty(value = "image.directory")
+	@ConfigProperty(name = "image.directory")
 	private String imageDirectory;
 
 	@Inject
-	@ConfigurationProperty(value = "lucene.directory")
+	@ConfigProperty(name = "lucene.directory")
 	private String luceneDirectory;
 
 	@PostConstruct

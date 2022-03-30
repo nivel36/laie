@@ -1,9 +1,19 @@
 package es.nivel36.laie.ejb.user;
 
-import es.nivel36.laie.ejb.core.Mapper;
-import es.nivel36.laie.ejb.core.file.File;
+import java.util.Objects;
+
+import es.nivel36.core.model.Mapper;
+import es.nivel36.files.FileDto;
+import es.nivel36.files.FileService;
 
 public class UserMapper implements Mapper<User, UserDto> {
+
+	private FileService fileService;
+
+	public UserMapper(final FileService fileService) {
+		Objects.requireNonNull(fileService);
+		this.fileService = fileService;
+	}
 
 	@Override
 	public UserDto map(final User user) {
@@ -21,9 +31,10 @@ public class UserMapper implements Mapper<User, UserDto> {
 			managerDto.setEmail(manager.getEmail());
 			managerDto.setFullName(manager.getFullName());
 			managerDto.setUid(manager.getUid());
-			final File picture = manager.getPicture();
+			final String picture = manager.getPictureUid();
 			if (picture != null) {
-				managerDto.setAvatarUrl(picture.getPhysicalFile().getRelativePath());
+				final FileDto fileDto = this.fileService.findByUid(picture);
+				managerDto.setAvatarUrl(fileDto.getPath());
 			}
 			userDto.setManager(managerDto);
 		}
@@ -32,9 +43,10 @@ public class UserMapper implements Mapper<User, UserDto> {
 		userDto.setRoleName(user.getRole().name());
 		userDto.setSurname(user.getSurname());
 		userDto.setUid(user.getUid());
-		final File userPicture = user.getPicture();
+		final String userPicture = user.getPictureUid();
 		if (userPicture != null) {
-			userDto.setAvatarUrl(userPicture.getPhysicalFile().getRelativePath());
+			final FileDto fileDto = this.fileService.findByUid(userPicture);
+			userDto.setAvatarUrl(fileDto.getPath());
 		}
 		return userDto;
 	}

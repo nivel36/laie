@@ -1,6 +1,6 @@
 package es.nivel36.laie.ejb.job.meeting;
 
-import es.nivel36.laie.ejb.core.Mapper;
+import es.nivel36.core.model.Mapper;
 import es.nivel36.laie.ejb.job.offer.SimpleJobOfferDto;
 import es.nivel36.laie.ejb.job.offer.SimpleJobOfferMapper;
 import es.nivel36.laie.ejb.user.SimpleUserDto;

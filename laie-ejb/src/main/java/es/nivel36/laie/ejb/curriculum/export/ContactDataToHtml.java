@@ -1,16 +1,29 @@
 package es.nivel36.laie.ejb.curriculum.export;
 
+import java.util.Objects;
+
+import es.nivel36.files.FileDto;
+import es.nivel36.files.FileService;
 import es.nivel36.laie.ejb.candidate.Candidate;
 
 public class ContactDataToHtml extends AbstractHtmlPrinter {
+
+	private FileService fileService;
+
+	public ContactDataToHtml(final FileService fileService) {
+		Objects.requireNonNull(fileService);
+		this.fileService = fileService;
+	}
 
 	String print(final Candidate candidate, String imagePath) {
 		final StringBuilder sb = new StringBuilder();
 		sb.append(this.openDiv("name-profile"));
 		sb.append(this.printName(candidate.getFullName()));
 		sb.append(this.printJobProfile(candidate.getJobProfile()));
-		if (candidate.getPicture().getName() != null) {
-			sb.append(printPicture(imagePath + "/" + candidate.getPicture().getName()));
+		final String pictureUid = candidate.getPictureUid();
+		if (pictureUid != null) {
+			final FileDto fileDto = fileService.findByUid(pictureUid);
+			sb.append(printPicture(imagePath + "/" + fileDto.getPath()));
 		}
 		sb.append(closeDiv());
 		sb.append(this.openDiv("contact"));
@@ -38,7 +51,7 @@ public class ContactDataToHtml extends AbstractHtmlPrinter {
 	String printName(final String name) {
 		return this.openDiv("name") + printLabel("Nombre") + name + this.closeDiv();
 	}
-	
+
 	String printJobProfile(final String jobProfile) {
 		return this.openDiv("jobProfile") + printLabel("Perfil") + jobProfile + this.closeDiv();
 	}

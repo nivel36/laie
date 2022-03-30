@@ -4,6 +4,8 @@ import java.lang.invoke.MethodHandles;
 import java.util.List;
 import java.util.Objects;
 
+import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
@@ -11,10 +13,11 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import es.nivel36.core.model.Page;
+import es.nivel36.core.model.Repository;
+import es.nivel36.files.FileService;
 import es.nivel36.laie.ejb.candidate.Candidate;
 import es.nivel36.laie.ejb.candidate.CandidateDao;
-import es.nivel36.laie.ejb.core.model.Page;
-import es.nivel36.laie.ejb.core.model.Repository;
 import es.nivel36.laie.ejb.job.candidature.event.JobCandidatureCompletedEvent;
 import es.nivel36.laie.ejb.job.candidature.event.JobCandidatureCreatedEvent;
 import es.nivel36.laie.ejb.job.candidature.event.JobCandidatureStateChangedEvent;
@@ -53,6 +56,16 @@ public class JobCandidatureService {
 	@Inject
 	private JobCandidatureStateService jobCandidatureStateService;
 
+	@EJB
+	private FileService fileService;
+
+	private JobCandidatureMapper jobCandidatureMapper;
+
+	@PostConstruct
+	public void init() {
+		jobCandidatureMapper = new JobCandidatureMapper(fileService);
+	}
+
 	public void addJobCandidature(final String jobOfferUid, final String candidateUid) {
 		Objects.requireNonNull(jobOfferUid);
 		Objects.requireNonNull(candidateUid);
@@ -81,8 +94,9 @@ public class JobCandidatureService {
 		Objects.requireNonNull(candidateUid);
 		Objects.requireNonNull(jobOfferUid);
 		logger.debug("Find job candidature of the candidate {} in the job offer {}", candidateUid, jobOfferUid);
-		final JobCandidature jobCandidature = this.jobCandidatureDao.findByJobOfferAndCandidate(jobOfferUid, candidateUid);
-		return new JobCandidatureMapper().map(jobCandidature);
+		final JobCandidature jobCandidature = this.jobCandidatureDao.findByJobOfferAndCandidate(jobOfferUid,
+				candidateUid);
+		return jobCandidatureMapper.map(jobCandidature);
 	}
 
 	public List<JobCandidatureDto> findCandidatesJobCandidatures(final String candidateUid, final Page page) {
@@ -91,7 +105,7 @@ public class JobCandidatureService {
 		logger.debug("Find all job candidatures of the candidate {}", candidateUid);
 		final List<JobCandidature> jobCandidatures = this.jobCandidatureDao.findCandidatesJobCandidatures(candidateUid,
 				page);
-		return new JobCandidatureMapper().mapList(jobCandidatures);
+		return jobCandidatureMapper.mapList(jobCandidatures);
 	}
 
 	public List<JobCandidatureDto> findUsersJobCandidatures(final String userUid, final Page page) {
@@ -99,7 +113,7 @@ public class JobCandidatureService {
 		Objects.requireNonNull(page);
 		logger.debug("Find job candidatures regarding user {} ({})", userUid, page);
 		final List<JobCandidature> jobCandidatures = this.jobCandidatureDao.findUsersJobCandidatures(userUid, page);
-		return new JobCandidatureMapper().mapList(jobCandidatures);
+		return jobCandidatureMapper.mapList(jobCandidatures);
 	}
 
 	public List<JobCandidatureDto> findJobOffersJobCanditures(final String jobOfferUid, final Page page) {
@@ -108,7 +122,7 @@ public class JobCandidatureService {
 		logger.debug("Find all job candidatures of the job offer {}", jobOfferUid);
 		final List<JobCandidature> jobCandidatures = this.jobCandidatureDao.findJobOffersJobCanditures(jobOfferUid,
 				page);
-		return new JobCandidatureMapper().mapList(jobCandidatures);
+		return jobCandidatureMapper.mapList(jobCandidatures);
 	}
 
 	public void removeJobCandidature(final String jobOfferUid, final String candidateUid) {
@@ -156,5 +170,15 @@ public class JobCandidatureService {
 	public void setJobCandidatureStateService(final JobCandidatureStateService jobCandidatureStateService) {
 		Objects.requireNonNull(jobCandidatureStateService);
 		this.jobCandidatureStateService = jobCandidatureStateService;
+	}
+
+	public void serFileService(final FileService fileService) {
+		Objects.requireNonNull(fileService);
+		this.fileService = fileService;
+	}
+
+	public final void setJobCandidatureMapper(final JobCandidatureMapper jobCandidatureMapper) {
+		Objects.requireNonNull(jobCandidatureMapper);
+		this.jobCandidatureMapper = jobCandidatureMapper;
 	}
 }

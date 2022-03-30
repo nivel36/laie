@@ -1,18 +1,17 @@
 package es.nivel36.laie.ejb.candidate;
 
-import static es.nivel36.laie.ejb.core.util.Parameters.map;
+import static es.nivel36.core.util.Parameters.map;
 
 import java.util.List;
 import java.util.Objects;
 
-import es.nivel36.laie.ejb.core.file.File;
-import es.nivel36.laie.ejb.core.model.AbstractDao;
-import es.nivel36.laie.ejb.core.model.Page;
-import es.nivel36.laie.ejb.core.model.Repository;
-import es.nivel36.laie.ejb.core.model.search.SearchFacets;
-import es.nivel36.laie.ejb.core.model.search.SearchResult;
-import es.nivel36.laie.ejb.core.model.search.SortField;
-import es.nivel36.laie.ejb.core.util.Parameters;
+import es.nivel36.core.model.AbstractDao;
+import es.nivel36.core.model.Page;
+import es.nivel36.core.model.Repository;
+import es.nivel36.core.model.search.SearchFacets;
+import es.nivel36.core.model.search.SearchResult;
+import es.nivel36.core.model.search.SortField;
+import es.nivel36.core.util.Parameters;
 
 @Repository
 public class CandidateDao extends AbstractDao {
@@ -45,12 +44,12 @@ public class CandidateDao extends AbstractDao {
 		return this.findByQuery(Candidate.class, namedQuery, parameters, page);
 	}
 
-	public List<File> findCandidatesFiles(final String candidateUid, final Page page) {
+	public List<String> findCandidatesFiles(final String candidateUid, final Page page) {
 		Objects.requireNonNull(candidateUid);
 		Objects.requireNonNull(page);
 		final String namedQuery = "Candidate.findFiles";
 		final Parameters parameters = map("uid", candidateUid);
-		return this.findByQuery(File.class, namedQuery, parameters, page);
+		return this.findByQuery(String.class, namedQuery, parameters, page);
 	}
 
 	public Candidate findCandidateWithFiles(final String candidateUid) {

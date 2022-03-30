@@ -10,7 +10,7 @@ import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 
-import es.nivel36.laie.ejb.core.model.AbstractEntity;
+import es.nivel36.core.model.AbstractEntity;
 
 @Entity
 public class Export extends AbstractEntity {

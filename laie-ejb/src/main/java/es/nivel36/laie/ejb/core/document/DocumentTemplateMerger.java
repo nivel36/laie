@@ -1,6 +1,6 @@
 package es.nivel36.laie.ejb.core.document;
 
-import es.nivel36.laie.ejb.core.model.Merger;
+import es.nivel36.core.model.Merger;
 
 public class DocumentTemplateMerger implements Merger<DocumentTemplate, DocumentTemplateDto> {
 

@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>es.nivel36</groupId>
 	<artifactId>laie</artifactId>
-	<version>0.9.6-SNAPSHOT</version>
+	<version>0.10.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>laie</name>
 	<modules>
@@ -12,6 +12,9 @@
 		<module>laie-ejb</module>
 		<module>laie-api</module>
 		<module>laie-web</module>
+		<module>n36-files</module>
+        <module>n36-files-api</module>
+        <module>n36-core</module>
 	</modules>
 
 	<properties>
@@ -118,7 +121,26 @@
 
 			<dependency>
 				<groupId>es.nivel36</groupId>
+				<artifactId>n36-core</artifactId>
+				<version>${laie.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>es.nivel36</groupId>
 				<artifactId>laie-commons-excel</artifactId>
+				<version>${laie.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>es.nivel36</groupId>
+				<artifactId>n36-files</artifactId>
+				<version>${laie.version}</version>
+				<type>ejb</type>
+			</dependency>
+			
+			<dependency>
+				<groupId>es.nivel36</groupId>
+				<artifactId>n36-files-api</artifactId>
 				<version>${laie.version}</version>
 			</dependency>
 

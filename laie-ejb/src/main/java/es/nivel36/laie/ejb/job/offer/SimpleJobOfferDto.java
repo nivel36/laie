@@ -3,8 +3,8 @@ package es.nivel36.laie.ejb.job.offer;
 import java.io.Serializable;
 import java.util.Objects;
 
+import es.nivel36.laie.ejb.AddressDto;
 import es.nivel36.laie.ejb.client.SimpleClientDto;
-import es.nivel36.laie.ejb.core.model.AddressDto;
 
 public class SimpleJobOfferDto implements Serializable {
 

@@ -12,9 +12,9 @@ import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.RateEvent;
 import org.primefaces.model.file.UploadedFile;
 
+import es.nivel36.files.FileService;
 import es.nivel36.laie.ejb.candidate.CandidateDto;
 import es.nivel36.laie.ejb.candidate.CandidateService;
-import es.nivel36.laie.ejb.core.file.FileService;
 import es.nivel36.laie.web.core.view.AbstractView;
 
 public abstract class AbstractCandidateView extends AbstractView {

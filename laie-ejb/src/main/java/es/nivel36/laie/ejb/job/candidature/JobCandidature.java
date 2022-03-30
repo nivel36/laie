@@ -13,8 +13,8 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
+import es.nivel36.core.model.AbstractObfuscableEntity;
 import es.nivel36.laie.ejb.candidate.Candidate;
-import es.nivel36.laie.ejb.core.model.AbstractObfuscableEntity;
 import es.nivel36.laie.ejb.event.JobCandidatureEvent;
 import es.nivel36.laie.ejb.job.meeting.Meeting;
 import es.nivel36.laie.ejb.job.offer.JobOffer;

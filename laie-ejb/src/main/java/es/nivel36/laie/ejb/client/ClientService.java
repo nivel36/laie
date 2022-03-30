@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
@@ -11,11 +13,12 @@ import org.hibernate.search.query.facet.Facet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import es.nivel36.laie.ejb.core.model.Page;
-import es.nivel36.laie.ejb.core.model.Repository;
-import es.nivel36.laie.ejb.core.model.search.SearchFacets;
-import es.nivel36.laie.ejb.core.model.search.SearchResult;
-import es.nivel36.laie.ejb.core.model.search.SortField;
+import es.nivel36.core.model.Page;
+import es.nivel36.core.model.Repository;
+import es.nivel36.core.model.search.SearchFacets;
+import es.nivel36.core.model.search.SearchResult;
+import es.nivel36.core.model.search.SortField;
+import es.nivel36.files.FileService;
 import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.ejb.user.UserDao;
 
@@ -31,11 +34,20 @@ public class ClientService {
 	@Inject
 	@Repository
 	private UserDao userDao;
+	
+	@EJB
+	private FileService fileService;
 
-	private ClientMapper clientMapper = new ClientMapper();
+	private ClientMapper clientMapper;
 
-	private ClientMerger clientMerger = new ClientMerger();
-
+	private ClientMerger clientMerger;
+	
+	@PostConstruct
+	public void init() {
+		clientMapper = new ClientMapper(fileService);
+		clientMerger = new ClientMerger();
+	}
+	
 	public ClientDto addClient(final ClientDto client, final String ownerUid) {
 		Objects.requireNonNull(client);
 		Objects.requireNonNull(ownerUid);
@@ -84,7 +96,7 @@ public class ClientService {
 		Objects.requireNonNull(page);
 		final SearchResult<Client> restul = this.clientDao.search(searchText, page, sortField, searchFacets);
 		final List<Client> resultData = restul.getResultData();
-		final List<ClientDto> mapList = new ClientMapper().mapList(resultData);
+		final List<ClientDto> mapList = clientMapper.mapList(resultData);
 		final Map<String, List<Facet>> allFacets = restul.getAllFacets();
 		final int count = restul.getCount();
 		return new SearchResult<ClientDto>(mapList, count, allFacets);

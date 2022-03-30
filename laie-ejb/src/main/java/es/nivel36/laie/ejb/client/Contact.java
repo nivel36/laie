@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 
@@ -16,12 +17,12 @@ import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.SortableField;
 import org.hibernate.search.annotations.Store;
 
-import es.nivel36.laie.ejb.core.model.AbstractObfuscableEntity;
-import es.nivel36.laie.ejb.core.model.Indexable;
+import es.nivel36.core.model.AbstractObfuscableEntity;
 
 @Entity
 @Indexed
-public class Contact extends AbstractObfuscableEntity implements Indexable {
+@Table(indexes = { @javax.persistence.Index(columnList = "uid") })
+public class Contact extends AbstractObfuscableEntity {
 
 	private static final long serialVersionUID = -2403549918176092142L;
 

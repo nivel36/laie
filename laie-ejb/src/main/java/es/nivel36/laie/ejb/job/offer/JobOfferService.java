@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.enterprise.event.Event;
 import javax.enterprise.event.Observes;
@@ -17,11 +19,12 @@ import org.slf4j.LoggerFactory;
 
 import es.nivel36.laie.ejb.client.Client;
 import es.nivel36.laie.ejb.client.ClientDao;
-import es.nivel36.laie.ejb.core.model.Page;
-import es.nivel36.laie.ejb.core.model.Repository;
-import es.nivel36.laie.ejb.core.model.search.SearchFacets;
-import es.nivel36.laie.ejb.core.model.search.SearchResult;
-import es.nivel36.laie.ejb.core.model.search.SortField;
+import es.nivel36.core.model.Page;
+import es.nivel36.core.model.Repository;
+import es.nivel36.core.model.search.SearchFacets;
+import es.nivel36.core.model.search.SearchResult;
+import es.nivel36.core.model.search.SortField;
+import es.nivel36.files.FileService;
 import es.nivel36.laie.ejb.job.candidature.JobCandidature;
 import es.nivel36.laie.ejb.job.candidature.JobCandidatureDao;
 import es.nivel36.laie.ejb.job.candidature.event.JobCandidatureCompletedEvent;
@@ -68,9 +71,17 @@ public class JobOfferService {
 	@JobOfferStateChangedEvent
 	private Event<JobOffer> stateChangedEvent;
 
-	private JobOfferMapper jobOfferMapper = new JobOfferMapper();
+	@EJB
+	private FileService fileService;
+
+	private JobOfferMapper jobOfferMapper;
 
 	private JobOfferMerger jobOfferMerger = new JobOfferMerger();
+
+	@PostConstruct
+	public void init() {
+		this.jobOfferMapper = new JobOfferMapper(fileService);
+	}
 
 	public JobOfferDto addJobOffer(final String clientUid, final String ownerUid, String[] recruiterUids,
 			final JobOfferDto jobOffer) {
@@ -231,6 +242,21 @@ public class JobOfferService {
 		return jobOffer;
 	}
 
+	public SearchResult<JobOfferDto> search(final String searchText, final Page page) {
+		return this.search(searchText, page, null, null);
+	}
+
+	public SearchResult<JobOfferDto> search(final String searchText, final Page page, final SortField sortField,
+			final SearchFacets searchFacets) {
+		Objects.requireNonNull(page);
+		final SearchResult<JobOffer> restul = this.jobOfferDao.search(searchText, page, sortField, searchFacets);
+		final List<JobOffer> resultData = restul.getResultData();
+		final List<JobOfferDto> mapList = jobOfferMapper.mapList(resultData);
+		final Map<String, List<Facet>> allFacets = restul.getAllFacets();
+		final int count = restul.getCount();
+		return new SearchResult<JobOfferDto>(mapList, count, allFacets);
+	}
+
 	public void setCompletedEvent(final Event<JobOffer> completedEvent) {
 		Objects.requireNonNull(completedEvent);
 		this.completedEvent = completedEvent;
@@ -261,18 +287,8 @@ public class JobOfferService {
 		this.jobOfferStateChangeEventDao = jobOfferStateChangeEventDao;
 	}
 
-	public SearchResult<JobOfferDto> search(final String searchText, final Page page) {
-		return this.search(searchText, page, null, null);
-	}
-
-	public SearchResult<JobOfferDto> search(final String searchText, final Page page, final SortField sortField,
-			final SearchFacets searchFacets) {
-		Objects.requireNonNull(page);
-		final SearchResult<JobOffer> restul = this.jobOfferDao.search(searchText, page, sortField, searchFacets);
-		final List<JobOffer> resultData = restul.getResultData();
-		final List<JobOfferDto> mapList = new JobOfferMapper().mapList(resultData);
-		final Map<String, List<Facet>> allFacets = restul.getAllFacets();
-		final int count = restul.getCount();
-		return new SearchResult<JobOfferDto>(mapList, count, allFacets);
+	public void setFileService(final FileService fileService) {
+		Objects.requireNonNull(fileService);
+		this.fileService = fileService;
 	}
 }

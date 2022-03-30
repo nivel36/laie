@@ -8,7 +8,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import es.nivel36.laie.ejb.core.model.Page;
+import es.nivel36.core.model.Page;
 import es.nivel36.laie.ejb.event.JobCandidatureEventDto;
 import es.nivel36.laie.ejb.event.JobCandidatureEventService;
 import es.nivel36.laie.ejb.job.candidature.JobCandidatureDto;

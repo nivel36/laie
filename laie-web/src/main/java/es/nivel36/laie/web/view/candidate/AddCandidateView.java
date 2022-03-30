@@ -9,8 +9,8 @@ import javax.inject.Named;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import es.nivel36.laie.ejb.AddressDto;
 import es.nivel36.laie.ejb.candidate.CandidateDto;
-import es.nivel36.laie.ejb.core.model.AddressDto;
 
 @Named
 @ViewScoped

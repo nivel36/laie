@@ -13,12 +13,11 @@ import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.SortableField;
 import org.hibernate.search.annotations.Store;
 
-import es.nivel36.laie.ejb.core.model.AbstractEntity;
-import es.nivel36.laie.ejb.core.model.Indexable;
+import es.nivel36.core.model.AbstractEntity;
 
 @Entity
 @Indexed
-public class Tag extends AbstractEntity implements Indexable {
+public class Tag extends AbstractEntity {
 
 	private static final long serialVersionUID = -2070061878397221965L;
 

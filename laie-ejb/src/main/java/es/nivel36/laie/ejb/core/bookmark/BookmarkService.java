@@ -6,7 +6,7 @@ import java.util.Objects;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
-import es.nivel36.laie.ejb.core.model.Repository;
+import es.nivel36.core.model.Repository;
 import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.ejb.user.UserDao;
 

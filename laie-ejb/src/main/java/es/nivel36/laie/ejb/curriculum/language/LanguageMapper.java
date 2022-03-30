@@ -1,6 +1,6 @@
 package es.nivel36.laie.ejb.curriculum.language;
 
-import es.nivel36.laie.ejb.core.Mapper;
+import es.nivel36.core.model.Mapper;
 
 public class LanguageMapper implements Mapper<Language, LanguageDto> {
 

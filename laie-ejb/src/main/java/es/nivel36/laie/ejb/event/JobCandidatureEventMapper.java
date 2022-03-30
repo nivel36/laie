@@ -1,15 +1,16 @@
 package es.nivel36.laie.ejb.event;
 
-import es.nivel36.laie.ejb.core.Mapper;
+import es.nivel36.core.model.Mapper;
+import es.nivel36.files.FileService;
 import es.nivel36.laie.ejb.user.SimpleUserDto;
 import es.nivel36.laie.ejb.user.SimpleUserMapper;
 
 public class JobCandidatureEventMapper implements Mapper<JobCandidatureEvent, JobCandidatureEventDto> {
-	
+
 	private SimpleUserMapper simpleUserMapper;
-	
-	public JobCandidatureEventMapper() {
-		simpleUserMapper = new SimpleUserMapper();
+
+	public JobCandidatureEventMapper(final FileService fileService) {
+		simpleUserMapper = new SimpleUserMapper(fileService);
 	}
 
 	@Override

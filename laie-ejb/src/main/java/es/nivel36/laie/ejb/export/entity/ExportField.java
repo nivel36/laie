@@ -9,7 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
-import es.nivel36.laie.ejb.core.model.AbstractEntity;
+import es.nivel36.core.model.AbstractEntity;
 
 @Entity
 public class ExportField extends AbstractEntity {

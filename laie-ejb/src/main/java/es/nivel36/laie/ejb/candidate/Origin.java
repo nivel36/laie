@@ -4,7 +4,7 @@ import java.util.Objects;
 
 import javax.persistence.Entity;
 
-import es.nivel36.laie.ejb.core.model.AbstractEntity;
+import es.nivel36.core.model.AbstractEntity;
 
 @Entity
 public class Origin extends AbstractEntity {

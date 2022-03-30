@@ -18,9 +18,9 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import es.nivel36.core.model.Page;
+import es.nivel36.core.model.search.SearchResult;
 import es.nivel36.laie.api.v1.AbstractRestController;
-import es.nivel36.laie.ejb.core.model.Page;
-import es.nivel36.laie.ejb.core.model.search.SearchResult;
 import es.nivel36.laie.ejb.user.BadManagerException;
 import es.nivel36.laie.ejb.user.DuplicateEmailException;
 import es.nivel36.laie.ejb.user.UserDto;
@@ -82,7 +82,7 @@ public class UserRestController extends AbstractRestController {
 	@POST
 	@Path("{uid:[0-9a-fA-F]+}/changeImage")
 	public String changeUsersImage(@PathParam("uid") final String userUid, final InputStream image) {
-		return this.userService.changeUsersImage(userUid, image);
+		return this.userService.changeUsersImage(userUid, image).getUid();
 
 	}
 

@@ -14,8 +14,8 @@ import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.SortableField;
 import org.hibernate.search.annotations.Store;
 
+import es.nivel36.core.model.AbstractObfuscableEntity;
 import es.nivel36.laie.ejb.core.Event;
-import es.nivel36.laie.ejb.core.model.AbstractObfuscableEntity;
 import es.nivel36.laie.ejb.job.candidature.JobCandidature;
 import es.nivel36.laie.ejb.job.candidature.JobCandidatureState;
 import es.nivel36.laie.ejb.user.User;

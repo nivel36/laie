@@ -11,6 +11,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.search.annotations.Analyze;
@@ -22,15 +23,17 @@ import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.SortableField;
 import org.hibernate.search.annotations.Store;
 
-import es.nivel36.laie.ejb.core.model.AbstractObfuscableEntity;
-import es.nivel36.laie.ejb.core.model.Address;
-import es.nivel36.laie.ejb.core.model.Erasable;
-import es.nivel36.laie.ejb.core.model.Ownerable;
+import es.nivel36.core.model.AbstractObfuscableEntity;
+import es.nivel36.core.model.Erasable;
+import es.nivel36.core.model.Ownerable;
+import es.nivel36.core.model.Subject;
+import es.nivel36.laie.ejb.Address;
 import es.nivel36.laie.ejb.job.offer.JobOffer;
 import es.nivel36.laie.ejb.user.User;
 
 @Entity
 @Indexed
+@Table(indexes = { @javax.persistence.Index(columnList = "uid") })
 public class Client extends AbstractObfuscableEntity implements Ownerable, Erasable {
 
 	private static final long serialVersionUID = 3562472646025185677L;
@@ -132,8 +135,8 @@ public class Client extends AbstractObfuscableEntity implements Ownerable, Erasa
 	}
 
 	@Override
-	public void setOwner(final User owner) {
-		this.owner = owner;
+	public void setOwner(final Subject owner) {
+		this.owner = (User) owner;
 	}
 
 	public void setPhoneNumber(final String phoneNumber) {

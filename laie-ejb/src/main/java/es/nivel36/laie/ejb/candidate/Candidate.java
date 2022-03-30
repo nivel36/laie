@@ -1,5 +1,6 @@
 package es.nivel36.laie.ejb.candidate;
 
+import java.io.File;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
@@ -17,6 +18,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -29,10 +31,10 @@ import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.SortableField;
 import org.hibernate.search.annotations.Store;
 
-import es.nivel36.laie.ejb.core.file.File;
-import es.nivel36.laie.ejb.core.model.AbstractObfuscableEntity;
-import es.nivel36.laie.ejb.core.model.Address;
-import es.nivel36.laie.ejb.core.model.Ownerable;
+import es.nivel36.core.model.AbstractObfuscableEntity;
+import es.nivel36.core.model.Ownerable;
+import es.nivel36.core.model.Subject;
+import es.nivel36.laie.ejb.Address;
 import es.nivel36.laie.ejb.core.tag.Tag;
 import es.nivel36.laie.ejb.curriculum.Curriculum;
 import es.nivel36.laie.ejb.job.candidature.JobCandidature;
@@ -40,6 +42,7 @@ import es.nivel36.laie.ejb.user.User;
 
 @Entity
 @Indexed
+@Table(name = "CANDIDATE", indexes = { @javax.persistence.Index(columnList = "uid") })
 public class Candidate extends AbstractObfuscableEntity implements Ownerable {
 
 	private static final long serialVersionUID = -7470903145789563432L;
@@ -62,7 +65,7 @@ public class Candidate extends AbstractObfuscableEntity implements Ownerable {
 	private Integer expectedSalary;
 
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private Set<File> files = new HashSet<>();
+	private Set<String> files = new HashSet<>();
 
 	private String infojobsProfileUrl;
 
@@ -95,12 +98,9 @@ public class Candidate extends AbstractObfuscableEntity implements Ownerable {
 	@IndexedEmbedded
 	private User owner;
 
-	@Column(length = 12)
 	protected String phoneNumber;
 
-	@ManyToOne
-	@JoinColumn(name = "picture")
-	protected File picture;
+	protected String pictureUid;
 
 	@Field(analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField
@@ -122,23 +122,8 @@ public class Candidate extends AbstractObfuscableEntity implements Ownerable {
 	@IndexedEmbedded
 	private Set<Tag> tags = new HashSet<>();
 
-	public void addFile(final File file) {
+	public void addFile(final String file) {
 		this.files.add(file);
-	}
-
-	@Override
-	public boolean equals(final Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (!super.equals(obj)) {
-			return false;
-		}
-		if (this.getClass() != obj.getClass()) {
-			return false;
-		}
-		final Candidate other = (Candidate) obj;
-		return Objects.equals(other.email, this.email);
 	}
 
 	public Address getAddress() {
@@ -164,7 +149,7 @@ public class Candidate extends AbstractObfuscableEntity implements Ownerable {
 		return this.expectedSalary;
 	}
 
-	public Set<File> getFiles() {
+	public Set<String> getFiles() {
 		return this.files;
 	}
 
@@ -208,8 +193,8 @@ public class Candidate extends AbstractObfuscableEntity implements Ownerable {
 		return this.phoneNumber;
 	}
 
-	public File getPicture() {
-		return this.picture;
+	public String getPictureUid() {
+		return this.pictureUid;
 	}
 
 	public Integer getRating() {
@@ -232,12 +217,7 @@ public class Candidate extends AbstractObfuscableEntity implements Ownerable {
 		return this.tags;
 	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(this.email);
-	}
-
-	public void removeFile(File file) {
+	public void removeFile(String file) {
 		Objects.requireNonNull(file);
 		if (files == null) {
 			throw new IllegalStateException();
@@ -265,7 +245,7 @@ public class Candidate extends AbstractObfuscableEntity implements Ownerable {
 		this.expectedSalary = expectedSalary;
 	}
 
-	public void setFiles(final Set<File> files) {
+	public void setFiles(final Set<String> files) {
 		this.files = files;
 	}
 
@@ -293,17 +273,16 @@ public class Candidate extends AbstractObfuscableEntity implements Ownerable {
 		this.origin = origin;
 	}
 
-	@Override
-	public void setOwner(final User owner) {
-		this.owner = owner;
+	public void setOwner(final Subject owner) {
+		this.owner = (User) owner;
 	}
 
 	public void setPhoneNumber(final String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public void setPicture(final File picture) {
-		this.picture = picture;
+	public void setPictureUid(final String pictureUid) {
+		this.pictureUid = pictureUid;
 	}
 
 	public void setRating(final Integer rating) {
@@ -332,6 +311,26 @@ public class Candidate extends AbstractObfuscableEntity implements Ownerable {
 
 	public void setTags(final Set<Tag> tags) {
 		this.tags = tags;
+	}
+
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (!super.equals(obj)) {
+			return false;
+		}
+		if (this.getClass() != obj.getClass()) {
+			return false;
+		}
+		final Candidate other = (Candidate) obj;
+		return Objects.equals(other.email, this.email);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(this.email);
 	}
 
 	@Override

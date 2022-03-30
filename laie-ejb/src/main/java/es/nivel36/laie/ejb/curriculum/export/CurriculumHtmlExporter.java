@@ -7,25 +7,31 @@ import java.io.OutputStream;
 import java.io.UncheckedIOException;
 import java.lang.invoke.MethodHandles;
 import java.nio.file.Files;
+import java.util.Objects;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.itextpdf.html2pdf.ConverterProperties;
 import com.itextpdf.html2pdf.HtmlConverter;
 
-import es.nivel36.laie.ejb.core.util.ConfigurationProperty;
+import es.nivel36.files.FileService;
 import es.nivel36.laie.ejb.curriculum.Curriculum;
 import es.nivel36.laie.ejb.curriculum.CurriculumTemplate;
 
 @Stateless
 public class CurriculumHtmlExporter implements CurriculumExporter {
 
+	@EJB
+	private FileService fileService;
+
 	@Inject
-	@ConfigurationProperty("image.directory")
+	@ConfigProperty(name = "image.directory")
 	private String imagePath;
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
@@ -41,7 +47,7 @@ public class CurriculumHtmlExporter implements CurriculumExporter {
 	}
 
 	public File export(final Curriculum curriculum, final CurriculumTemplate template) {
-		final String curriculumHtml = new CurriculumToHtml().print(curriculum, imagePath);
+		final String curriculumHtml = new CurriculumToHtml(fileService).print(curriculum, imagePath);
 		final String css = template.getCss();
 
 		final StringBuilder sb = new StringBuilder();
@@ -63,5 +69,10 @@ public class CurriculumHtmlExporter implements CurriculumExporter {
 
 	public void setImagePath(String imagePath) {
 		this.imagePath = imagePath;
+	}
+
+	public final void setFileService(FileService fileService) {
+		Objects.requireNonNull(fileService);
+		this.fileService = fileService;
 	}
 }

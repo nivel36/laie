@@ -2,11 +2,12 @@ package es.nivel36.laie.ejb.job.offer;
 
 import java.util.Set;
 
+import es.nivel36.core.model.Mapper;
+import es.nivel36.files.FileService;
+import es.nivel36.laie.ejb.AddressDto;
+import es.nivel36.laie.ejb.AddressMapper;
 import es.nivel36.laie.ejb.client.SimpleClientDto;
 import es.nivel36.laie.ejb.client.SimpleClientMapper;
-import es.nivel36.laie.ejb.core.Mapper;
-import es.nivel36.laie.ejb.core.model.AddressDto;
-import es.nivel36.laie.ejb.core.model.AddressMapper;
 import es.nivel36.laie.ejb.job.candidature.JobCandidatureDto;
 import es.nivel36.laie.ejb.job.candidature.JobCandidatureMapper;
 import es.nivel36.laie.ejb.user.SimpleUserDto;
@@ -22,11 +23,11 @@ public class JobOfferMapper implements Mapper<JobOffer, JobOfferDto> {
 	
 	private JobCandidatureMapper jobCandidatureMapper;
 	
-	public JobOfferMapper() {
+	public JobOfferMapper(final FileService fileService) {
 		this.addressMapper = new AddressMapper();
-		this.simpleUserMapper = new SimpleUserMapper();
+		this.simpleUserMapper = new SimpleUserMapper(fileService);
 		this.simpleClientMapper = new SimpleClientMapper();
-		this.jobCandidatureMapper = new JobCandidatureMapper();
+		this.jobCandidatureMapper = new JobCandidatureMapper(fileService);
 	}
 
 	@Override

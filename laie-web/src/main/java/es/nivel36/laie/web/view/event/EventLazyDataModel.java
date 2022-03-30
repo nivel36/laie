@@ -4,10 +4,10 @@ import java.util.Map;
 
 import org.primefaces.model.FilterMeta;
 
-import es.nivel36.laie.ejb.core.model.Page;
-import es.nivel36.laie.ejb.core.model.search.SearchFacets;
-import es.nivel36.laie.ejb.core.model.search.SearchResult;
-import es.nivel36.laie.ejb.core.model.search.SortField;
+import es.nivel36.core.model.Page;
+import es.nivel36.core.model.search.SearchFacets;
+import es.nivel36.core.model.search.SearchResult;
+import es.nivel36.core.model.search.SortField;
 import es.nivel36.laie.ejb.event.JobCandidatureEventDto;
 import es.nivel36.laie.web.core.view.AbstractLazyDataModel;
 

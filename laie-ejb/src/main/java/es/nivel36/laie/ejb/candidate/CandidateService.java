@@ -1,12 +1,14 @@
 package es.nivel36.laie.ejb.candidate;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
@@ -14,16 +16,13 @@ import org.hibernate.search.query.facet.Facet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import es.nivel36.laie.ejb.core.file.File;
-import es.nivel36.laie.ejb.core.file.FileDto;
-import es.nivel36.laie.ejb.core.file.FileJpaDao;
-import es.nivel36.laie.ejb.core.file.FileMapper;
-import es.nivel36.laie.ejb.core.file.FileService;
-import es.nivel36.laie.ejb.core.model.Page;
-import es.nivel36.laie.ejb.core.model.Repository;
-import es.nivel36.laie.ejb.core.model.search.SearchFacets;
-import es.nivel36.laie.ejb.core.model.search.SearchResult;
-import es.nivel36.laie.ejb.core.model.search.SortField;
+import es.nivel36.core.model.Page;
+import es.nivel36.core.model.Repository;
+import es.nivel36.core.model.search.SearchFacets;
+import es.nivel36.core.model.search.SearchResult;
+import es.nivel36.core.model.search.SortField;
+import es.nivel36.files.FileDto;
+import es.nivel36.files.FileService;
 import es.nivel36.laie.ejb.core.tag.Tag;
 import es.nivel36.laie.ejb.core.tag.TagDao;
 import es.nivel36.laie.ejb.user.User;
@@ -38,7 +37,7 @@ public class CandidateService {
 	@Repository
 	private CandidateDao candidateDao;
 
-	@Inject
+	@EJB
 	private FileService fileService;
 
 	@Inject
@@ -47,15 +46,11 @@ public class CandidateService {
 
 	@Inject
 	@Repository
-	private FileJpaDao fileDao;
-
-	@Inject
-	@Repository
 	private UserDao userDao;
 
 	private CandidateMerger candidateMerger = new CandidateMerger();
 
-	private CandidateMapper candidateMapper = new CandidateMapper();
+	private CandidateMapper candidateMapper = new CandidateMapper(fileService);
 
 	public CandidateDto addCandidate(final CandidateDto candidate, final String ownerUid) {
 		Objects.requireNonNull(candidate);
@@ -121,16 +116,14 @@ public class CandidateService {
 		Objects.requireNonNull(image);
 		final Candidate candidate = this.candidateDao.findByUid(candidateUid);
 		logger.debug("Change image to user {}", candidate);
-		final File oldImage = candidate.getPicture();
+		final String oldImage = candidate.getPictureUid();
 		final String filename = candidateUid + "_picture";
 		final FileDto newImage = this.fileService.uploadFile(image, filename, true);
 		final String uid = newImage.getUid();
-		final File file = fileDao.findFileByUid(uid);
-		candidate.setPicture(file);
+		candidate.setPictureUid(uid);
 		if (oldImage != null) {
 			logger.trace("Remove user {} old image", candidate);
-			final String oldImageUid = oldImage.getUid();
-			this.fileService.removeFile(oldImageUid);
+			this.fileService.removeFile(oldImage);
 		}
 		return newImage.getPath();
 	}
@@ -157,9 +150,15 @@ public class CandidateService {
 
 	public List<FileDto> findCandidatesFiles(final String candidateUid, final Page page) {
 		Objects.requireNonNull(candidateUid);
+		Objects.requireNonNull(page);
 		logger.debug("Find files by candidate {}", candidateUid);
-		final List<File> files = this.candidateDao.findCandidatesFiles(candidateUid, page);
-		return new FileMapper().mapList(files);
+		final List<String> files = this.candidateDao.findCandidatesFiles(candidateUid, page);
+		final List<FileDto> fileDtos = new ArrayList<FileDto>(files.size());
+		for (final String file : files) {
+			final FileDto fileDto = this.fileService.findByUid(file);
+			fileDtos.add(fileDto);
+		}
+		return fileDtos;
 	}
 
 	public FileDto addFileToCandidate(final String candidateUid, final InputStream inputStream, String filename) {
@@ -169,9 +168,7 @@ public class CandidateService {
 		logger.debug("Add file {} to candidate {}", filename, candidateUid);
 		final Candidate candidate = candidateDao.findCandidateWithFiles(candidateUid);
 		final FileDto fileDto = fileService.uploadFile(inputStream, filename, false);
-		final String uid = fileDto.getUid();
-		final File file = fileDao.findFileByUid(uid);
-		candidate.addFile(file);
+		candidate.addFile(fileDto.getUid());
 		return fileDto;
 	}
 
@@ -180,10 +177,8 @@ public class CandidateService {
 		Objects.requireNonNull(fileUid);
 		logger.debug("Remove file {} from candidate {}", fileUid, candidateUid);
 		final Candidate candidate = this.candidateDao.findCandidateWithFiles(candidateUid);
-		final File file = this.fileDao.findFileByUid(fileUid);
-		candidate.removeFile(file);
-		final String uid = file.getUid();
-		this.fileService.removeFile(uid);
+		candidate.removeFile(fileUid);
+		this.fileService.removeFile(fileUid);
 	}
 
 	public SearchResult<CandidateDto> search(final String searchText, final Page page) {
@@ -215,11 +210,6 @@ public class CandidateService {
 	public void setFileService(final FileService fileService) {
 		Objects.requireNonNull(fileService);
 		this.fileService = fileService;
-	}
-
-	public void setFileDao(final FileJpaDao fileDao) {
-		Objects.requireNonNull(fileDao);
-		this.fileDao = fileDao;
 	}
 
 	public void setUserDao(final UserDao userDao) {

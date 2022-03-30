@@ -17,7 +17,7 @@ import es.nivel36.laie.ejb.client.ClientDto;
 import es.nivel36.laie.ejb.client.ContactDto;
 import es.nivel36.laie.ejb.core.bookmark.BookmarkDto;
 import es.nivel36.laie.ejb.core.bookmark.BookmarkService;
-import es.nivel36.laie.ejb.core.model.Page;
+import es.nivel36.core.model.Page;
 import es.nivel36.laie.ejb.job.offer.JobOfferDto;
 import es.nivel36.laie.ejb.job.offer.JobOfferService;
 import es.nivel36.laie.web.core.IllegalPageStateException;

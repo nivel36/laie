@@ -1,15 +1,15 @@
 package es.nivel36.laie.ejb.job.meeting;
 
-import static es.nivel36.laie.ejb.core.util.Parameters.map;
+import static es.nivel36.core.util.Parameters.map;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
-import es.nivel36.laie.ejb.core.model.AbstractDao;
-import es.nivel36.laie.ejb.core.model.Page;
-import es.nivel36.laie.ejb.core.model.Repository;
-import es.nivel36.laie.ejb.core.util.Parameters;
+import es.nivel36.core.model.AbstractDao;
+import es.nivel36.core.model.Page;
+import es.nivel36.core.model.Repository;
+import es.nivel36.core.util.Parameters;
 
 @Repository
 public class MeetingDao extends AbstractDao {

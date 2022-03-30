@@ -20,9 +20,9 @@ import org.primefaces.model.file.UploadedFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import es.nivel36.laie.ejb.core.file.FileDto;
-import es.nivel36.laie.ejb.core.file.FileService;
-import es.nivel36.laie.ejb.core.file.FileUploadException;
+import es.nivel36.files.FileDto;
+import es.nivel36.files.FileService;
+import es.nivel36.files.FileUploadException;
 import es.nivel36.laie.ejb.user.DuplicateEmailException;
 import es.nivel36.laie.ejb.user.UserDto;
 import es.nivel36.laie.ejb.user.UserService;
@@ -147,7 +147,7 @@ public class ConfigView extends AbstractView {
 	private void changeUserImage() {
 		try (final InputStream is = this.fileService.downloadTemporalFile(uploadedFile.getPath());
 				final BufferedInputStream bis = new BufferedInputStream(is)) {
-			this.userImage = this.userService.changeUsersImage(this.user.getUid(), is);
+			this.userImage = this.userService.changeUsersImage(this.user.getUid(), is).getUid();
 		} catch (final IOException e) {
 			throw new FileUploadException(e);
 		}

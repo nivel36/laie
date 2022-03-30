@@ -1,6 +1,6 @@
 package es.nivel36.laie.ejb.curriculum.education;
 
-import es.nivel36.laie.ejb.core.Mapper;
+import es.nivel36.core.model.Mapper;
 
 public class EducationMapper implements Mapper<Education, EducationDto> {
 
