@@ -1,7 +1,7 @@
 package es.nivel36.laie.ejb.candidate;
 
-import es.nivel36.core.model.Merger;
-import es.nivel36.laie.ejb.AddressMerger;
+import es.nivel36.laie.ejb.core.model.AddressMerger;
+import es.nivel36.laie.ejb.core.model.Merger;
 
 public class CandidateMerger implements Merger<Candidate, CandidateDto> {
 

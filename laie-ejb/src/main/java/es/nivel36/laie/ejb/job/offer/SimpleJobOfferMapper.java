@@ -1,10 +1,10 @@
 package es.nivel36.laie.ejb.job.offer;
 
-import es.nivel36.laie.ejb.AddressDto;
-import es.nivel36.laie.ejb.AddressMapper;
 import es.nivel36.laie.ejb.client.SimpleClientDto;
 import es.nivel36.laie.ejb.client.SimpleClientMapper;
-import es.nivel36.core.model.Mapper;
+import es.nivel36.laie.ejb.core.Mapper;
+import es.nivel36.laie.ejb.core.model.AddressDto;
+import es.nivel36.laie.ejb.core.model.AddressMapper;
 
 public class SimpleJobOfferMapper implements Mapper<JobOffer, SimpleJobOfferDto> {
 

@@ -9,12 +9,11 @@ import org.primefaces.model.FilterMeta;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortMeta;
 
-import es.nivel36.core.model.Page;
-import es.nivel36.core.model.search.SearchFacet;
-import es.nivel36.core.model.search.SearchFacets;
-import es.nivel36.core.model.search.SearchResult;
-import es.nivel36.core.model.search.SortField;
-
+import es.nivel36.laie.ejb.core.model.Page;
+import es.nivel36.laie.ejb.core.model.search.SearchFacet;
+import es.nivel36.laie.ejb.core.model.search.SearchFacets;
+import es.nivel36.laie.ejb.core.model.search.SearchResult;
+import es.nivel36.laie.ejb.core.model.search.SortField;
 
 public abstract class AbstractLazyDataModel<T extends Serializable> extends LazyDataModel<T> {
 

@@ -5,12 +5,12 @@ import java.util.Objects;
 
 import org.primefaces.model.FilterMeta;
 
-import es.nivel36.core.model.Page;
-import es.nivel36.core.model.search.SearchFacets;
-import es.nivel36.core.model.search.SearchResult;
-import es.nivel36.core.model.search.SortField;
 import es.nivel36.laie.ejb.client.ClientDto;
 import es.nivel36.laie.ejb.client.ClientService;
+import es.nivel36.laie.ejb.core.model.Page;
+import es.nivel36.laie.ejb.core.model.search.SearchFacets;
+import es.nivel36.laie.ejb.core.model.search.SearchResult;
+import es.nivel36.laie.ejb.core.model.search.SortField;
 import es.nivel36.laie.web.core.view.AbstractLazyDataModel;
 
 public class ClientLazyDataModel extends AbstractLazyDataModel<ClientDto> {
@@ -24,6 +24,7 @@ public class ClientLazyDataModel extends AbstractLazyDataModel<ClientDto> {
 		this.clientService = clientService;
 	}
 
+	@Override
 	protected SearchResult<ClientDto> search(String searchText, Page page, SortField sortField,
 			SearchFacets searchFilter) {
 		return clientService.search(searchText, page, sortField, searchFilter);

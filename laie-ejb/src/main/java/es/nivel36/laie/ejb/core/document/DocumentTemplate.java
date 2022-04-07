@@ -9,8 +9,8 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
-import es.nivel36.core.model.AbstractEntity;
-import es.nivel36.core.model.Obfuscable;
+import es.nivel36.laie.ejb.core.model.AbstractEntity;
+import es.nivel36.laie.ejb.core.model.Obfuscable;
 
 @Entity
 @Table(name = "DOCUMENT_TEMPLATE", uniqueConstraints = { @UniqueConstraint(columnNames = { "name", "language" }) })

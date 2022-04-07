@@ -1,6 +1,6 @@
 package es.nivel36.laie.ejb.curriculum.skill;
 
-import es.nivel36.core.model.Mapper;
+import es.nivel36.laie.ejb.core.Mapper;
 
 public class SkillMapper implements Mapper<Skill, String> {
 

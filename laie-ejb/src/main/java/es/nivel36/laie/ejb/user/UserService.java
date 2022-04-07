@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
@@ -14,13 +13,15 @@ import org.hibernate.search.query.facet.Facet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import es.nivel36.core.model.Page;
-import es.nivel36.core.model.Repository;
-import es.nivel36.core.model.search.SearchFacets;
-import es.nivel36.core.model.search.SearchResult;
-import es.nivel36.core.model.search.SortField;
-import es.nivel36.files.FileDto;
-import es.nivel36.files.FileService;
+import es.nivel36.laie.ejb.core.file.File;
+import es.nivel36.laie.ejb.core.file.FileDto;
+import es.nivel36.laie.ejb.core.file.FileJpaDao;
+import es.nivel36.laie.ejb.core.file.FileService;
+import es.nivel36.laie.ejb.core.model.Page;
+import es.nivel36.laie.ejb.core.model.Repository;
+import es.nivel36.laie.ejb.core.model.search.SearchFacets;
+import es.nivel36.laie.ejb.core.model.search.SearchResult;
+import es.nivel36.laie.ejb.core.model.search.SortField;
 
 @Stateless
 public class UserService {
@@ -31,8 +32,12 @@ public class UserService {
 
 	private UserMerger userMerger;
 
-	@EJB
+	@Inject
 	private FileService fileService;
+
+	@Inject
+	@Repository
+	private FileJpaDao fileDao;
 
 	@Inject
 	@Repository
@@ -40,7 +45,7 @@ public class UserService {
 
 	@PostConstruct
 	public void init() {
-		userMapper = new UserMapper(fileService);
+		userMapper = new UserMapper();
 		userMerger = new UserMerger();
 	}
 
@@ -90,19 +95,20 @@ public class UserService {
 		return this.userMapper.map(user);
 	}
 
-	public FileDto changeUsersImage(final String userUid, final InputStream image) {
+	public String changeUsersImage(final String userUid, final InputStream image) {
 		Objects.requireNonNull(userUid);
 		Objects.requireNonNull(image);
 		logger.debug("Change image to user {}", userUid);
 		final FileDto newImage = this.fileService.uploadFile(image, userUid + "_picture", true);
+		final File file = fileDao.findFileByUid(newImage.getUid());
 		final User user = this.userDao.findUserByUid(userUid);
-		final String oldImage = user.getPictureUid();
+		final File oldImage = user.getPicture();
 		if (oldImage != null) {
 			logger.trace("Remove user {} old image", user);
-			this.fileService.removeFile(oldImage);
+			this.fileService.removeFile(oldImage.getUid());
 		}
-		user.setPictureUid(newImage.getUid());
-		return newImage;
+		user.setPicture(file);
+		return newImage.getPath();
 	}
 
 	public void changeUsersManager(final String userUid, final String managerUid) throws BadManagerException {
@@ -141,11 +147,11 @@ public class UserService {
 		Objects.requireNonNull(userUid);
 		final User user = this.userDao.findUserByUid(userUid);
 		logger.debug("Delete user's image of user {}", user);
-		final String oldImage = user.getPictureUid();
+		final File oldImage = user.getPicture();
 		if (oldImage != null) {
-			this.fileService.removeFile(oldImage);
+			this.fileService.removeFile(oldImage.getUid());
 		}
-		user.setPictureUid(null);
+		user.setPicture(null);
 	}
 
 	public void changePassword(final String email, final String oldPassword, final String newPassword) {
@@ -167,7 +173,7 @@ public class UserService {
 		Objects.requireNonNull(userUid);
 		logger.debug("Finding subordinate users of user {}", userUid);
 		final List<User> user = this.userDao.findSubordinateUsers(userUid);
-		return userMapper.mapList(user);
+		return new UserMapper().mapList(user);
 	}
 
 	public boolean isSubordinateUser(final String userUid, final String managerUid) {
@@ -187,7 +193,7 @@ public class UserService {
 		Objects.requireNonNull(page);
 		final SearchResult<User> restul = this.userDao.search(searchText, page, sortField, searchFacets);
 		final List<User> resultData = restul.getResultData();
-		final List<UserDto> mapList = userMapper.mapList(resultData);
+		final List<UserDto> mapList = new UserMapper().mapList(resultData);
 		final Map<String, List<Facet>> allFacets = restul.getAllFacets();
 		final int count = restul.getCount();
 		return new SearchResult<UserDto>(mapList, count, allFacets);

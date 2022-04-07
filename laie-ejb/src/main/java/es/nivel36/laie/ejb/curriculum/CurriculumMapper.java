@@ -2,7 +2,7 @@ package es.nivel36.laie.ejb.curriculum;
 
 import java.util.Set;
 
-import es.nivel36.core.model.Mapper;
+import es.nivel36.laie.ejb.core.Mapper;
 import es.nivel36.laie.ejb.curriculum.education.Education;
 import es.nivel36.laie.ejb.curriculum.education.EducationDto;
 import es.nivel36.laie.ejb.curriculum.education.EducationMapper;

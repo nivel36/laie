@@ -1,6 +1,6 @@
 package es.nivel36.laie.ejb.job.candidature;
 
-import es.nivel36.core.model.Merger;
+import es.nivel36.laie.ejb.core.model.Merger;
 
 public class JobCandidatureStateMerger implements Merger<JobCandidatureState, JobCandidatureStateDto> {
 

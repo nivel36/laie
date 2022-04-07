@@ -1,6 +1,6 @@
 package es.nivel36.laie.ejb.core.document;
 
-import es.nivel36.core.model.Mapper;
+import es.nivel36.laie.ejb.core.Mapper;
 
 public class DocumentTemplateMapper implements Mapper<DocumentTemplate, DocumentTemplateDto> {
 

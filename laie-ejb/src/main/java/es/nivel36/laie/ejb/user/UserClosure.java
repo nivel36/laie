@@ -7,7 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import es.nivel36.core.model.AbstractEntity;
+import es.nivel36.laie.ejb.core.model.AbstractEntity;
 
 @Entity
 public class UserClosure extends AbstractEntity {

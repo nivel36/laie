@@ -11,8 +11,8 @@ import java.util.Set;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
-import es.nivel36.core.model.Page;
-import es.nivel36.core.model.Repository;
+import es.nivel36.laie.ejb.core.model.Page;
+import es.nivel36.laie.ejb.core.model.Repository;
 import es.nivel36.laie.ejb.export.acquirer.ReportInfo;
 import es.nivel36.laie.ejb.export.dao.ExportDao;
 import es.nivel36.laie.ejb.export.dto.ExportFieldsOutputBean;

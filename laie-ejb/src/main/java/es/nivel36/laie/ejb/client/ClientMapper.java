@@ -1,13 +1,11 @@
 package es.nivel36.laie.ejb.client;
 
 import java.util.List;
-import java.util.Objects;
 
-import es.nivel36.laie.ejb.Address;
-import es.nivel36.laie.ejb.AddressDto;
-import es.nivel36.laie.ejb.AddressMapper;
-import es.nivel36.core.model.Mapper;
-import es.nivel36.files.FileService;
+import es.nivel36.laie.ejb.core.Mapper;
+import es.nivel36.laie.ejb.core.model.Address;
+import es.nivel36.laie.ejb.core.model.AddressDto;
+import es.nivel36.laie.ejb.core.model.AddressMapper;
 import es.nivel36.laie.ejb.user.SimpleUserDto;
 import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.ejb.user.UserDto;
@@ -15,18 +13,11 @@ import es.nivel36.laie.ejb.user.UserMapper;
 
 public class ClientMapper implements Mapper<Client, ClientDto> {
 
-	private ContactMapper contactMapper ;
+	private ContactMapper contactMapper = new ContactMapper();
 
-	private UserMapper userMapper;
-
-	private AddressMapper addressMapper;
-
-	public ClientMapper(final FileService fileService) {
-		Objects.requireNonNull(fileService);
-		contactMapper = new ContactMapper();
-		userMapper = new UserMapper(fileService);
-		addressMapper = new AddressMapper();
-	}
+	private UserMapper userMapper = new UserMapper();
+	
+	private AddressMapper addressMapper = new AddressMapper();
 
 	@Override
 	public ClientDto map(final Client entity) {
@@ -41,7 +32,7 @@ public class ClientMapper implements Mapper<Client, ClientDto> {
 		mapAddress(entity, dto);
 		return dto;
 	}
-
+	
 	private void mapAddress(final Client entity, final ClientDto dto) {
 		final Address address = entity.getAddress();
 		final AddressDto addressDto = addressMapper.map(address);

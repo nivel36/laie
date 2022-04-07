@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>es.nivel36</groupId>
 		<artifactId>laie</artifactId>
-		<version>0.10.0-SNAPSHOT</version>
+		<version>0.9.6-SNAPSHOT</version>
 		<relativePath>..</relativePath>
 	</parent>
 
@@ -26,11 +26,6 @@
 		<dependency>
 			<groupId>es.nivel36</groupId>
 			<artifactId>laie-ejb</artifactId>
-			<type>ejb</type>
-		</dependency>
-		<dependency>
-			<groupId>es.nivel36</groupId>
-			<artifactId>n36-files</artifactId>
 			<type>ejb</type>
 		</dependency>
 	</dependencies>
@@ -58,10 +53,6 @@
 						<ejbModule>
 							<groupId>es.nivel36</groupId>
 							<artifactId>laie-ejb</artifactId>
-						</ejbModule>
-						<ejbModule>
-							<groupId>es.nivel36</groupId>
-							<artifactId>n36-files</artifactId>
 						</ejbModule>
 					</modules>
 					<outputFileNameMapping>@{artifactId}@-@{version}@@{dashClassifier?}@.@{extension}@</outputFileNameMapping>

@@ -6,16 +6,17 @@ import javax.inject.Inject;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 
-import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.omnifaces.servlet.FileServlet;
+
+import es.nivel36.laie.ejb.core.util.ConfigurationProperty;
 
 @WebServlet("/images/*")
 public class ImageServlet extends FileServlet {
 
-	private static final long serialVersionUID = 6718165607712556595L;
-	
+	private static final long serialVersionUID = 1L;
+
 	@Inject
-	@ConfigProperty(name = "file.directory")
+	@ConfigurationProperty("file.directory")
 	private String folderPath;
 
 	@Override

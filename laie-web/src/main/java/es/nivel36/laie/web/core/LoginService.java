@@ -25,7 +25,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import es.nivel36.laie.ejb.core.SessionUsers;
-import es.nivel36.core.model.Repository;
+import es.nivel36.laie.ejb.core.model.Repository;
 import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.ejb.user.UserDao;
 

@@ -1,12 +1,10 @@
 package es.nivel36.laie.ejb.job.candidature;
 
-import java.util.Objects;
 import java.util.Set;
 
-import es.nivel36.core.model.Mapper;
-import es.nivel36.files.FileService;
 import es.nivel36.laie.ejb.candidate.SimpleCandidateDto;
 import es.nivel36.laie.ejb.candidate.SimpleCandidateMapper;
+import es.nivel36.laie.ejb.core.Mapper;
 import es.nivel36.laie.ejb.job.meeting.MeetingDto;
 import es.nivel36.laie.ejb.job.meeting.MeetingMapper;
 import es.nivel36.laie.ejb.job.offer.SimpleJobOfferDto;
@@ -15,21 +13,20 @@ import es.nivel36.laie.ejb.job.offer.SimpleJobOfferMapper;
 public class JobCandidatureMapper implements Mapper<JobCandidature, JobCandidatureDto> {
 
 	private SimpleCandidateMapper simpleCandidateMapper;
-
+	
 	private SimpleJobOfferMapper simpleJobOfferMapper;
-
+	
 	private MeetingMapper meetingMapper;
-
-	public JobCandidatureMapper(final FileService fileService) {
-		Objects.requireNonNull(fileService);
-		this.simpleCandidateMapper = new SimpleCandidateMapper(fileService);
+	
+	public JobCandidatureMapper() {
+		this.simpleCandidateMapper = new SimpleCandidateMapper();
 		this.meetingMapper = new MeetingMapper();
 		this.simpleJobOfferMapper = new SimpleJobOfferMapper();
 	}
 
 	@Override
 	public JobCandidatureDto map(final JobCandidature entity) {
-		if (entity == null) {
+		if(entity == null) {
 			return null;
 		}
 		final JobCandidatureDto dto = new JobCandidatureDto();

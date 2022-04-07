@@ -1,6 +1,6 @@
 package es.nivel36.laie.ejb.job.meeting;
 
-import es.nivel36.core.model.Merger;
+import es.nivel36.laie.ejb.core.model.Merger;
 import es.nivel36.laie.ejb.job.offer.JobOffer;
 import es.nivel36.laie.ejb.job.offer.JobOfferDao;
 import es.nivel36.laie.ejb.user.User;

@@ -2,16 +2,14 @@ package es.nivel36.laie.ejb.candidate;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import es.nivel36.core.model.Mapper;
-import es.nivel36.files.FileDto;
-import es.nivel36.files.FileService;
-import es.nivel36.laie.ejb.Address;
-import es.nivel36.laie.ejb.AddressDto;
-import es.nivel36.laie.ejb.AddressMapper;
+import es.nivel36.laie.ejb.core.Mapper;
+import es.nivel36.laie.ejb.core.file.File;
+import es.nivel36.laie.ejb.core.model.Address;
+import es.nivel36.laie.ejb.core.model.AddressDto;
+import es.nivel36.laie.ejb.core.model.AddressMapper;
 import es.nivel36.laie.ejb.core.tag.Tag;
 import es.nivel36.laie.ejb.job.candidature.JobCandidature;
 import es.nivel36.laie.ejb.job.candidature.JobCandidatureDto;
@@ -21,13 +19,6 @@ import es.nivel36.laie.ejb.user.SimpleUserMapper;
 import es.nivel36.laie.ejb.user.User;
 
 public class CandidateMapper implements Mapper<Candidate, CandidateDto> {
-
-	private FileService fileService;
-
-	public CandidateMapper(final FileService fileService) {
-		Objects.requireNonNull(fileService);
-		this.fileService = fileService;
-	}
 
 	@Override
 	public CandidateDto map(final Candidate entity) {
@@ -41,10 +32,9 @@ public class CandidateMapper implements Mapper<Candidate, CandidateDto> {
 		dto.setBornDate(entity.getBornDate());
 		dto.setEmail(entity.getEmail());
 		dto.setExpectedSalary(entity.getExpectedSalary());
-		final String picture = entity.getPictureUid();
-		final FileDto file = this.fileService.findByUid(picture);
-		if (file != null) {
-			dto.setAvatarUrl(file.getPath());
+		final File picture = entity.getPicture();
+		if (picture != null) {
+			dto.setAvatarUrl(picture.getPhysicalFile().getRelativePath());
 		}
 		dto.setInfojobsProfileUrl(entity.getInfojobsProfileUrl());
 		dto.setJobProfile(entity.getJobProfile());
@@ -66,7 +56,7 @@ public class CandidateMapper implements Mapper<Candidate, CandidateDto> {
 	}
 
 	private SimpleUserDto mapOwner(final User owner) {
-		final SimpleUserMapper mapper = new SimpleUserMapper(fileService);
+		final SimpleUserMapper mapper = new SimpleUserMapper();
 		return mapper.map(owner);
 	}
 
@@ -80,7 +70,7 @@ public class CandidateMapper implements Mapper<Candidate, CandidateDto> {
 			return new ArrayList<>();
 		}
 		final List<JobCandidatureDto> jobCandidaturesDto = new ArrayList<>(jobCandidatures.size());
-		final JobCandidatureMapper jobCandidatureMapper = new JobCandidatureMapper(fileService);
+		final JobCandidatureMapper jobCandidatureMapper = new JobCandidatureMapper();
 		for (final JobCandidature jobCandidature : jobCandidatures) {
 			final JobCandidatureDto jobCandidatureDto = jobCandidatureMapper.map(jobCandidature);
 			jobCandidaturesDto.add(jobCandidatureDto);

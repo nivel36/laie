@@ -8,8 +8,8 @@ import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
-import es.nivel36.core.model.Ownerable;
-import es.nivel36.core.model.Repository;
+import es.nivel36.laie.ejb.core.model.Ownerable;
+import es.nivel36.laie.ejb.core.model.Repository;
 import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.ejb.user.UserDao;
 
@@ -26,7 +26,7 @@ public class GedSecurityContext {
 	public boolean canEdit(final Ownerable entity) {
 		Objects.requireNonNull(entity);
 		final String username = this.extractUsernameFromPrincipal();
-		final User entityOwner = (User)entity.getOwner();
+		final User entityOwner = entity.getOwner();
 		if (username.equals(entityOwner.getEmail())) {
 			return true;
 		}

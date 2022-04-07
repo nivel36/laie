@@ -8,7 +8,7 @@ import javax.persistence.Lob;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import es.nivel36.core.model.AbstractEntity;
+import es.nivel36.laie.ejb.core.model.AbstractEntity;
 
 @Entity
 @Table(name = "CURRICULUM_TEMPLATE")

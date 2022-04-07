@@ -2,7 +2,7 @@ package es.nivel36.laie.ejb.curriculum.education;
 
 import java.util.Objects;
 
-import es.nivel36.core.model.Merger;
+import es.nivel36.laie.ejb.core.model.Merger;
 
 public class EducationMerger implements Merger<Education, EducationDto>{
 

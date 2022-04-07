@@ -115,6 +115,31 @@
 			AND d.language = :language
 		]]></query>
 	</named-query>
+
+	<named-query name="File.findByHashAndBucket">
+		<query><![CDATA[
+			SELECT f 
+			FROM PhysicalFile f 
+			WHERE f.contentHash = :hash
+			AND f.bucket = :bucket
+		]]></query>
+	</named-query>
+	
+		<named-query name="File.findByUid">
+		<query><![CDATA[
+			SELECT f 
+			FROM File f 
+			WHERE f.uid = :uid
+		]]></query>
+	</named-query>
+
+	<named-query name="File.isOrphanPhysicalFile">
+		<query><![CDATA[
+			SELECT CASE WHEN (COUNT(f) > 0) THEN TRUE ELSE FALSE END 
+			FROM File f 
+			WHERE f.physicalFile = :physicalFile
+		]]></query>
+	</named-query>
 	
 	<named-query name="JobCandidature.findApprovedByJobOffer">
 		<query><![CDATA[

@@ -11,7 +11,7 @@ import org.primefaces.event.SelectEvent;
 
 import es.nivel36.laie.ejb.client.ClientDto;
 import es.nivel36.laie.ejb.client.ClientService;
-import es.nivel36.core.model.Page;
+import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.job.offer.JobOfferDto;
 import es.nivel36.laie.ejb.job.offer.JobOfferService;
 import es.nivel36.laie.ejb.user.SimpleUserDto;

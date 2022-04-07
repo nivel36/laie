@@ -9,7 +9,7 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import es.nivel36.core.model.Repository;
+import es.nivel36.laie.ejb.core.model.Repository;
 import es.nivel36.laie.ejb.core.security.GedSecurityContext;
 import es.nivel36.laie.ejb.job.offer.JobOffer;
 import es.nivel36.laie.ejb.job.offer.JobOfferDao;

@@ -160,6 +160,7 @@ public class UserDto implements Serializable {
 		result = (prime * result) + (this.email == null ? 0 : this.email.hashCode());
 		return result;
 	}
+
 	
 	@Override
 	public String toString() {

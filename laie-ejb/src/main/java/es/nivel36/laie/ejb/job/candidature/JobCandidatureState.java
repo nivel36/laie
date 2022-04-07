@@ -11,8 +11,8 @@ import org.hibernate.search.annotations.Facet;
 import org.hibernate.search.annotations.FacetEncodingType;
 import org.hibernate.search.annotations.Field;
 
-import es.nivel36.core.model.AbstractEntity;
 import es.nivel36.laie.ejb.core.EventState;
+import es.nivel36.laie.ejb.core.model.AbstractEntity;
 
 @Entity
 @Table(name = "JOB_CANDIDATURE_STATE")

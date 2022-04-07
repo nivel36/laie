@@ -1,17 +1,17 @@
 package es.nivel36.laie.ejb.client;
 
-import static es.nivel36.core.util.Parameters.map;
+import static es.nivel36.laie.ejb.core.util.Parameters.map;
 
 import java.util.List;
 import java.util.Objects;
 
-import es.nivel36.core.model.AbstractDao;
-import es.nivel36.core.model.Page;
-import es.nivel36.core.model.Repository;
-import es.nivel36.core.model.search.SearchFacets;
-import es.nivel36.core.model.search.SearchResult;
-import es.nivel36.core.model.search.SortField;
-import es.nivel36.core.util.Parameters;
+import es.nivel36.laie.ejb.core.model.AbstractDao;
+import es.nivel36.laie.ejb.core.model.Page;
+import es.nivel36.laie.ejb.core.model.Repository;
+import es.nivel36.laie.ejb.core.model.search.SearchFacets;
+import es.nivel36.laie.ejb.core.model.search.SearchResult;
+import es.nivel36.laie.ejb.core.model.search.SortField;
+import es.nivel36.laie.ejb.core.util.Parameters;
 
 @Repository
 public class ContactDao extends AbstractDao {

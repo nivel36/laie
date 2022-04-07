@@ -28,18 +28,17 @@ import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.SortableField;
 import org.hibernate.search.annotations.Store;
 
-import es.nivel36.core.model.AbstractObfuscableEntity;
-import es.nivel36.core.model.Ownerable;
-import es.nivel36.core.model.Subject;
-import es.nivel36.laie.ejb.Address;
 import es.nivel36.laie.ejb.candidate.Candidate;
 import es.nivel36.laie.ejb.client.Client;
+import es.nivel36.laie.ejb.core.model.AbstractObfuscableEntity;
+import es.nivel36.laie.ejb.core.model.Address;
+import es.nivel36.laie.ejb.core.model.Ownerable;
 import es.nivel36.laie.ejb.job.candidature.JobCandidature;
 import es.nivel36.laie.ejb.user.User;
 
 @Entity
 @Indexed
-@Table(name = "JOB_OFFER", indexes = { @javax.persistence.Index(columnList = "uid") })
+@Table(name = "JOB_OFFER")
 public class JobOffer extends AbstractObfuscableEntity implements Ownerable {
 
 	private static final long serialVersionUID = 1529439068651089035L;
@@ -225,8 +224,8 @@ public class JobOffer extends AbstractObfuscableEntity implements Ownerable {
 	}
 
 	@Override
-	public void setOwner(final Subject owner) {
-		this.owner = (User) owner;
+	public void setOwner(final User owner) {
+		this.owner = owner;
 	}
 
 	public void setPlaces(final Integer places) {

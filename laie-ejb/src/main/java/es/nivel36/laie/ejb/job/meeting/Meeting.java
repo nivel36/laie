@@ -18,9 +18,8 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.search.annotations.IndexedEmbedded;
 
-import es.nivel36.core.model.AbstractObfuscableEntity;
-import es.nivel36.core.model.Ownerable;
-import es.nivel36.core.model.Subject;
+import es.nivel36.laie.ejb.core.model.AbstractObfuscableEntity;
+import es.nivel36.laie.ejb.core.model.Ownerable;
 import es.nivel36.laie.ejb.job.offer.JobOffer;
 import es.nivel36.laie.ejb.user.User;
 
@@ -161,8 +160,8 @@ public class Meeting extends AbstractObfuscableEntity implements Ownerable {
 	}
 
 	@Override
-	public void setOwner(final Subject owner) {
-		this.owner = (User) owner;
+	public void setOwner(final User owner) {
+		this.owner = owner;
 	}
 
 	public void setResult(final String result) {

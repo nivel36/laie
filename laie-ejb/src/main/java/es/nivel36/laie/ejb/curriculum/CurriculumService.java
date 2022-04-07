@@ -12,9 +12,9 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import es.nivel36.core.model.Repository;
 import es.nivel36.laie.ejb.candidate.Candidate;
 import es.nivel36.laie.ejb.candidate.CandidateDao;
+import es.nivel36.laie.ejb.core.model.Repository;
 import es.nivel36.laie.ejb.curriculum.education.Education;
 import es.nivel36.laie.ejb.curriculum.education.EducationDto;
 import es.nivel36.laie.ejb.curriculum.education.EducationMerger;

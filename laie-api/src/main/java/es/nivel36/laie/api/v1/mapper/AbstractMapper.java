@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import es.nivel36.laie.api.v1.Dto;
-import es.nivel36.core.model.AbstractEntity;
+import es.nivel36.laie.ejb.core.model.AbstractEntity;
 
 public interface AbstractMapper<E extends AbstractEntity, D extends Dto> {
 
