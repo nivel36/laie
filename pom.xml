@@ -10,7 +10,6 @@
 		<module>laie-commons-excel</module>
 		<module>laie-ear</module>
 		<module>laie-ejb</module>
-		<module>laie-api</module>
 		<module>laie-web</module>
 	</modules>
 

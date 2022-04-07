@@ -20,11 +20,6 @@
 		</dependency>
 		<dependency>
 			<groupId>es.nivel36</groupId>
-			<artifactId>laie-api</artifactId>
-			<type>war</type>
-		</dependency>
-		<dependency>
-			<groupId>es.nivel36</groupId>
 			<artifactId>laie-ejb</artifactId>
 			<type>ejb</type>
 		</dependency>
@@ -40,11 +35,6 @@
 					<version>7</version>
 					<defaultLibBundleDir>lib</defaultLibBundleDir>
 					<modules>
-						<webModule>
-							<groupId>es.nivel36</groupId>
-							<artifactId>laie-api</artifactId>
-							<contextRoot>/api</contextRoot>
-						</webModule>
 						<webModule>
 							<groupId>es.nivel36</groupId>
 							<artifactId>laie-web</artifactId>
