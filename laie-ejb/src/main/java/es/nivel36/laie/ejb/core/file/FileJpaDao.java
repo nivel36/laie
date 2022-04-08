@@ -29,12 +29,6 @@ public class FileJpaDao extends AbstractDao {
 		}
 	}
 
-	public File findFileByUid(final String uid) {
-		final String namedQuery = "File.findByUid";
-		final Parameters parameters = map("uid", uid);
-		return this.findByQuery(File.class, namedQuery, parameters);
-	}
-
 	public void deletePhysicalFile(final PhysicalFile file) {
 		Objects.requireNonNull(file);
 		this.delete(PhysicalFile.class, file);
@@ -42,7 +36,6 @@ public class FileJpaDao extends AbstractDao {
 
 	public void insert(final File file) {
 		Objects.requireNonNull(file);
-		this.setUid(File.class, file);
 		this.em.persist(file);
 	}
 

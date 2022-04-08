@@ -16,24 +16,11 @@ import es.nivel36.laie.ejb.core.util.Parameters;
 @Repository
 public class ContactDao extends AbstractDao {
 
-	public void insert(final Contact contact) {
-		Objects.requireNonNull(contact);
-		this.setUid(Contact.class, contact);
-		this.em.persist(contact);
-	}
-
-	public Contact findContactByUid(final String uid) {
-		Objects.requireNonNull(uid);
-		final String namedQuery = "Contact.findByUid";
-		final Parameters parameters = map("uid", uid);
-		return this.findByQuery(Contact.class, namedQuery, parameters);
-	}
-
-	public List<Contact> findContactsByClient(final String clientUid, final Page page) {
-		Objects.requireNonNull(clientUid);
+	public List<Contact> findContactsByClient(final Client client, final Page page) {
+		Objects.requireNonNull(client);
 		Objects.requireNonNull(page);
 		final String namedQuery = "Contact.findByClient";
-		final Parameters parameters = map("clientUid", clientUid);
+		final Parameters parameters = map("client", client);
 		return this.findByQuery(Contact.class, namedQuery, parameters, page);
 	}
 

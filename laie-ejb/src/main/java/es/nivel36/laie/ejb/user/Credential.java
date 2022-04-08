@@ -19,9 +19,9 @@ import es.nivel36.laie.ejb.core.security.CriptoUtil;
 @Entity
 public class Credential extends AbstractEntity {
 
-	private static final Random RANDOM = new SecureRandom();
+	private static final long serialVersionUID = -8152563037703749834L;
 
-	private static final long serialVersionUID = 1L;
+	private static final Random RANDOM = new SecureRandom();
 
 	@NotNull
 	private LocalDate created;

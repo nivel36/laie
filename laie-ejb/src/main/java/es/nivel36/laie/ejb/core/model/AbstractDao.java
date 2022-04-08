@@ -47,6 +47,30 @@ public abstract class AbstractDao {
 	@Inject
 	protected EntityManager em;
 	
+	public <E extends Identifiable> void insert(E entity) {
+		Objects.requireNonNull(entity);
+		this.em.persist(entity);
+	}
+	
+	public <E extends Identifiable> E update(E entity) {
+		Objects.requireNonNull(entity);
+		return this.em.merge(entity);
+	}
+	
+	public <T extends Identifiable> void delete(final Class<T> type, final T entity) {
+		Objects.requireNonNull(entity);
+		Objects.requireNonNull(type);
+		if (entity.getId() == 0) {
+			throw new IllegalStateException();
+		}
+		logger.debug("Delete entity class {} with id {}", type, entity.getId());
+		if (this.em.contains(entity)) {
+			this.em.remove(entity);
+		} else {
+			this.em.remove(this.em.merge(entity));
+		}
+	}
+	
 	protected <E extends Obfuscable> void setUid(final Class<E> type, final E entity) {
 		String uid;
 		do {
@@ -64,6 +88,13 @@ public abstract class AbstractDao {
 		cq.select(root.get(fieldName));
 		final List<E> elements = this.findByCriteria(cq, new Page(0, 1));
 		return elements.size() > 0;
+	}
+	
+	public <E> E find(final Class<E> type, final Long id) {
+		Objects.requireNonNull(type);
+		Objects.requireNonNull(id);
+		logger.debug("Find entity of class {} with id", type, id);
+		return em.find(null, id);
 	}
 
 	public <E> List<E> findAll(final Class<E> type, final Page page) {
@@ -137,20 +168,6 @@ public abstract class AbstractDao {
 		for (final Map.Entry<String, Object> entry : parameters.entrySet()) {
 			logger.trace("Paramtrize query with key {} value={}", entry.getKey(), entry.getValue());
 			query.setParameter(entry.getKey(), entry.getValue());
-		}
-	}
-
-	protected <T extends Identifiable> void delete(final Class<T> type, final T entity) {
-		Objects.requireNonNull(entity);
-		Objects.requireNonNull(type);
-		if (entity.getId() == 0) {
-			throw new IllegalStateException();
-		}
-		logger.debug("Delete entity class {} with id {}", type, entity.getId());
-		if (this.em.contains(entity)) {
-			this.em.remove(entity);
-		} else {
-			this.em.remove(this.em.merge(entity));
 		}
 	}
 

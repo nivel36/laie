@@ -23,27 +23,23 @@ public class UserDao extends AbstractDao {
 	private static final Logger logger = LoggerFactory.getLogger(UserDao.class);
 
 	public void insert(final User user) {
-		setUid(User.class, user);
+		Objects.requireNonNull(user);
 		this.em.persist(user);
 		if (user.getManager() != null) {
 			this.insertUserClosures(user);
 		}
 	}
 
-	public void update(final User user) {
-		this.updateUserClosures(user);
+	public User update(final User user) {
+		Objects.requireNonNull(user);
+		final User mergedUser = em.merge(user);
+		this.updateUserClosures(mergedUser);
+		return mergedUser;
 	}
 
 	public boolean checkDuplicateEmail(final String email) {
 		Objects.requireNonNull(email);
 		return this.checkDuplicateField(User.class, "email", email);
-	}
-
-	public User findUserByUid(final String uid) {
-		Objects.requireNonNull(uid);
-		final String namedQuery = "User.findByUid";
-		final Parameters parameters = map("uid", uid);
-		return this.findByQuery(User.class, namedQuery, parameters);
 	}
 
 	public Credential findCredential(final String email) {
@@ -53,11 +49,10 @@ public class UserDao extends AbstractDao {
 		return this.findByQuery(Credential.class, namedQuery, parameters);
 	}
 
-	public List<User> findSubordinateUsers(final String userUid) {
-		Objects.requireNonNull(userUid);
-		final User user = this.findUserByUid(userUid);
+	public List<User> findSubordinateUsers(final User user) {
+		Objects.requireNonNull(user);
 		final String namedQuery = "User.findSubordinateUsers";
-		Parameters parameters = map("id", user.getId());
+		Parameters parameters = map("user", user);
 		return this.findByQuery(User.class, namedQuery, parameters, Page.ALL_RESULTS);
 	}
 
@@ -77,10 +72,10 @@ public class UserDao extends AbstractDao {
 	}
 
 	public boolean isSubordinateUser(final User user, final User subordinate) {
-		long userId = user.getId();
-		long subordinateId = subordinate.getId();
+		Objects.requireNonNull(user);
+		Objects.requireNonNull(subordinate);
 		final String namedQuery = "User.isSubordinateUser";
-		final Parameters parameters = map("managerId", userId).and("subordinateId", subordinateId);
+		final Parameters parameters = map("manager", user).and("subordinate", subordinate);
 		return this.findByQuery(Boolean.class, namedQuery, parameters);
 	}
 

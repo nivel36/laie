@@ -13,15 +13,10 @@ import es.nivel36.laie.ejb.core.model.search.SearchFacets;
 import es.nivel36.laie.ejb.core.model.search.SearchResult;
 import es.nivel36.laie.ejb.core.model.search.SortField;
 import es.nivel36.laie.ejb.core.util.Parameters;
+import es.nivel36.laie.ejb.job.offer.JobOffer;
 
 @Repository
 public class CandidateDao extends AbstractDao {
-
-	public void insert(final Candidate candidate) {
-		Objects.requireNonNull(candidate);
-		this.setUid(Candidate.class, candidate);
-		this.em.persist(candidate);
-	}
 
 	public boolean checkDuplicateEmail(final String email) {
 		Objects.requireNonNull(email);
@@ -30,33 +25,26 @@ public class CandidateDao extends AbstractDao {
 		return this.findByQuery(Boolean.class, namedQuery, parameters);
 	}
 
-	public Candidate findByUid(final String uid) {
-		Objects.requireNonNull(uid);
-		final String namedQuery = "Candidate.findByUid";
-		final Parameters parameters = map("uid", uid);
-		return this.findByQuery(Candidate.class, namedQuery, parameters);
-	}
-
-	public List<Candidate> findCandidates(final String jobOfferUid, final Page page) {
-		Objects.requireNonNull(jobOfferUid);
+	public List<Candidate> findCandidates(final JobOffer jobOffer, final Page page) {
+		Objects.requireNonNull(jobOffer);
 		Objects.requireNonNull(page);
 		final String namedQuery = "Candidate.findByJobOffer";
-		final Parameters parameters = map("jobOfferUid", jobOfferUid);
+		final Parameters parameters = map("jobOffer", jobOffer);
 		return this.findByQuery(Candidate.class, namedQuery, parameters, page);
 	}
 
-	public List<File> findCandidatesFiles(final String candidateUid, final Page page) {
-		Objects.requireNonNull(candidateUid);
+	public List<File> findCandidatesFiles(final Candidate candidate, final Page page) {
+		Objects.requireNonNull(candidate);
 		Objects.requireNonNull(page);
 		final String namedQuery = "Candidate.findFiles";
-		final Parameters parameters = map("uid", candidateUid);
+		final Parameters parameters = map("candidateId", candidate);
 		return this.findByQuery(File.class, namedQuery, parameters, page);
 	}
 
-	public Candidate findCandidateWithFiles(final String candidateUid) {
-		Objects.requireNonNull(candidateUid);
+	public Candidate findCandidateWithFiles(final Long candidateId) {
+		Objects.requireNonNull(candidateId);
 		final String namedQuery = "Candidate.findCandidateWithFiles";
-		final Parameters parameters = map("uid", candidateUid);
+		final Parameters parameters = map("candidateId", candidateId);
 		return this.findByQuery(Candidate.class, namedQuery, parameters);
 	}
 

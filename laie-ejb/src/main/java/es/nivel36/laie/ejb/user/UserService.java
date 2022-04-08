@@ -2,19 +2,15 @@ package es.nivel36.laie.ejb.user;
 
 import java.io.InputStream;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
-import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
-import org.hibernate.search.query.facet.Facet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import es.nivel36.laie.ejb.core.file.File;
-import es.nivel36.laie.ejb.core.file.FileDto;
 import es.nivel36.laie.ejb.core.file.FileJpaDao;
 import es.nivel36.laie.ejb.core.file.FileService;
 import es.nivel36.laie.ejb.core.model.Page;
@@ -28,10 +24,6 @@ public class UserService {
 
 	private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
-	private UserMapper userMapper;
-
-	private UserMerger userMerger;
-
 	@Inject
 	private FileService fileService;
 
@@ -43,93 +35,86 @@ public class UserService {
 	@Repository
 	private UserDao userDao;
 
-	@PostConstruct
-	public void init() {
-		userMapper = new UserMapper();
-		userMerger = new UserMerger();
+	public User findUserByEmail(final String email) {
+		Objects.requireNonNull(email);
+		logger.debug("Find user by email {}", email);
+		return this.userDao.findUserByEmail(email);
 	}
 
-	public UserDto addUser(final UserDto user, final String managerUid)
-			throws DuplicateEmailException, BadManagerException {
+	public User findUserById(final Long id) {
+		Objects.requireNonNull(id);
+		logger.debug("Find user by id {}", id);
+		return this.userDao.find(User.class, id);
+	}
+
+	public void addUser(final User user) throws DuplicateEmailException, BadManagerException {
 		Objects.requireNonNull(user);
 		logger.debug("Insert user {}", user);
 		final String email = user.getEmail();
-		this.checkDuplicateEmail(email, null);
-		final User entity = new User();
-		this.userMerger.merge(entity, user);
-		this.userDao.insert(entity);
-		this.changeUsersManager(entity, managerUid);
-		return this.userMapper.map(entity);
+		if (this.userDao.checkDuplicateEmail(email)) {
+			throw new DuplicateEmailException();
+		}
+
+		if (user.getManager() != null) {
+			this.addUsersManager(user);
+		}
+
+		this.userDao.insert(user);
 	}
 
-	public void updateUser(final UserDto user) throws DuplicateEmailException {
+	private void addUsersManager(final User user) throws BadManagerException {
+		final User manager = user.getManager();
+		if (user.equals(manager)) {
+			logger.warn("The user {} can't be his/her manager", user);
+			throw new BadManagerException("User can't be his/her manager");
+		}
+		if (this.userDao.isSubordinateUser(user, manager)) {
+			logger.warn("The user {} is the manager of {}", user, manager);
+			throw new BadManagerException("User is the manager of his/her new manager");
+		}
+	}
+
+	public User updateUser(final User user) throws DuplicateEmailException, BadManagerException {
 		Objects.requireNonNull(user);
 		logger.debug("Update user {}", user);
-		final String userUid = user.getUid();
-		final User entity = this.userDao.findUserByUid(userUid);
-		final String email = user.getEmail();
-		final String entityEmail = entity.getEmail();
-		this.checkDuplicateEmail(email, entityEmail);
-		this.userMerger.merge(entity, user);
+		final User userInDatabase = this.userDao.find(User.class, user.getId());
+
+		// Check if the e-mail has been modified and is being used by another user.
+		final String newEmail = user.getEmail();
+		final String oldEmail = userInDatabase.getEmail();
+		this.checkDuplicateEmail(newEmail, oldEmail);
+
+		// Check if the manager has changed and if he/she meets the requirements to be
+		// the new manager.
+		changeUsersManager(userInDatabase, userInDatabase.getManager(), user.getManager());
+
+		return this.userDao.update(user);
 	}
 
 	private void checkDuplicateEmail(final String newEmail, final String oldEmail) throws DuplicateEmailException {
-		if (oldEmail == null || !newEmail.equals(oldEmail)) {
+		if (!newEmail.equals(oldEmail)) {
 			if (this.userDao.checkDuplicateEmail(newEmail)) {
 				throw new DuplicateEmailException();
 			}
 		}
 	}
 
-	public UserDto findUserByEmail(final String email) {
-		Objects.requireNonNull(email);
-		logger.debug("Find user by email {}", email);
-		final User user = this.userDao.findUserByEmail(email);
-		return this.userMapper.map(user);
-	}
-
-	public UserDto findUserByUid(final String userUid) {
-		Objects.requireNonNull(userUid);
-		logger.debug("Find user by uid {}", userUid);
-		final User user = this.userDao.findUserByUid(userUid);
-		return this.userMapper.map(user);
-	}
-
-	public String changeUsersImage(final String userUid, final InputStream image) {
-		Objects.requireNonNull(userUid);
-		Objects.requireNonNull(image);
-		logger.debug("Change image to user {}", userUid);
-		final FileDto newImage = this.fileService.uploadFile(image, userUid + "_picture", true);
-		final File file = fileDao.findFileByUid(newImage.getUid());
-		final User user = this.userDao.findUserByUid(userUid);
-		final File oldImage = user.getPicture();
-		if (oldImage != null) {
-			logger.trace("Remove user {} old image", user);
-			this.fileService.removeFile(oldImage.getUid());
-		}
-		user.setPicture(file);
-		return newImage.getPath();
-	}
-
-	public void changeUsersManager(final String userUid, final String managerUid) throws BadManagerException {
-		Objects.requireNonNull(userUid);
-		final User user = this.userDao.findUserByUid(userUid);
-		this.changeUsersManager(user, managerUid);
-	}
-
-	private void changeUsersManager(final User user, final String managerUid) throws BadManagerException {
-		if (managerUid == null) {
+	private void changeUsersManager(final User user, final User oldManager, final User newManager)
+			throws BadManagerException {
+		// Deleting manager
+		if (newManager == null && oldManager != null) {
 			logger.debug("Delete manager to user {}", user);
 			user.setManager(null);
 			return;
 		}
-		// Not all users have a manager, so it may be null.
-		final User oldManager = user.getManager();
 
-		final User newManager = this.userDao.findUserByUid(managerUid);
-		if (newManager.equals(oldManager)) {
+		// No changes
+		if ((newManager == null && oldManager == null) || newManager.equals(oldManager)) {
+			logger.debug("Manager not changed");
 			return;
 		}
+
+		// Updating manager
 		logger.debug("Change manager from {} to {} of user {}", oldManager, newManager, user);
 		if (user.equals(newManager)) {
 			logger.warn("The user {} can't be his/her manager", user);
@@ -139,17 +124,31 @@ public class UserService {
 			logger.warn("The user {} is the manager of {}", user, newManager);
 			throw new BadManagerException("User is the manager of his new manager");
 		}
-		user.setManager(newManager);
-		this.userDao.update(user);
 	}
 
-	public void deleteUsersImage(final String userUid) {
-		Objects.requireNonNull(userUid);
-		final User user = this.userDao.findUserByUid(userUid);
+	public String changeUsersImage(final User user, final InputStream image) {
+		Objects.requireNonNull(user);
+		Objects.requireNonNull(image);
+		logger.debug("Change image to user {}", user);
+		final Long userId = user.getId();
+		final File newImage = this.fileService.uploadFile(image, userId + "_picture", true);
+		final File file = fileDao.find(File.class, newImage.getId());
+		final File oldImage = user.getPicture();
+		if (oldImage != null) {
+			logger.trace("Remove user {} old image", user);
+			this.fileService.removeFile(oldImage);
+		}
+		user.setPicture(file);
+		userDao.update(user);
+		return newImage.getPhysicalFile().getRelativePath();
+	}
+
+	public void deleteUsersImage(final User user) {
+		Objects.requireNonNull(user);
 		logger.debug("Delete user's image of user {}", user);
 		final File oldImage = user.getPicture();
 		if (oldImage != null) {
-			this.fileService.removeFile(oldImage.getUid());
+			this.fileService.removeFile(oldImage);
 		}
 		user.setPicture(null);
 	}
@@ -169,34 +168,27 @@ public class UserService {
 		return this.userDao.findCredential(email);
 	}
 
-	public List<UserDto> findSubordinateUsers(final String userUid) {
-		Objects.requireNonNull(userUid);
-		logger.debug("Finding subordinate users of user {}", userUid);
-		final List<User> user = this.userDao.findSubordinateUsers(userUid);
-		return new UserMapper().mapList(user);
+	public List<User> findSubordinateUsers(final User user) {
+		Objects.requireNonNull(user);
+		logger.debug("Finding subordinate users of user {}", user);
+		return this.userDao.findSubordinateUsers(user);
 	}
 
-	public boolean isSubordinateUser(final String userUid, final String managerUid) {
-		Objects.requireNonNull(userUid);
-		logger.debug("Find is user {} is subordinate of {}", userUid, managerUid);
-		final User user = this.userDao.findUserByUid(userUid);
-		final User manager = this.userDao.findUserByUid(managerUid);
+	public boolean isSubordinateUser(final User user, final User manager) {
+		Objects.requireNonNull(user);
+		Objects.requireNonNull(manager);
+		logger.debug("Find is user {} is subordinate of {}", user, manager);
 		return this.userDao.isSubordinateUser(user, manager);
 	}
 
-	public SearchResult<UserDto> search(final String searchText, final Page page) {
+	public SearchResult<User> search(final String searchText, final Page page) {
 		return this.search(searchText, page, null, null);
 	}
 
-	public SearchResult<UserDto> search(final String searchText, final Page page, final SortField sortField,
+	public SearchResult<User> search(final String searchText, final Page page, final SortField sortField,
 			final SearchFacets searchFacets) {
 		Objects.requireNonNull(page);
-		final SearchResult<User> restul = this.userDao.search(searchText, page, sortField, searchFacets);
-		final List<User> resultData = restul.getResultData();
-		final List<UserDto> mapList = new UserMapper().mapList(resultData);
-		final Map<String, List<Facet>> allFacets = restul.getAllFacets();
-		final int count = restul.getCount();
-		return new SearchResult<UserDto>(mapList, count, allFacets);
+		return this.userDao.search(searchText, page, sortField, searchFacets);
 	}
 
 	public void setUserDao(final UserDao userDao) {

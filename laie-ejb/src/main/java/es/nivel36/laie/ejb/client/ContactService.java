@@ -25,51 +25,35 @@ public class ContactService {
 	@Repository
 	private ClientDao clientDao;
 
-	private ContactMapper contactMapper = new ContactMapper();
-
-	private ContactMerger contactMerger = new ContactMerger();
-
-	public void addContact(final String clientUid, final ContactDto contactDto) {
-		Objects.requireNonNull(clientUid);
-		Objects.requireNonNull(contactDto);
-		logger.debug("Add contact {} of client {}", contactDto, clientUid);
-		final Contact contact = new Contact();
-		contactMerger.merge(contact, contactDto);
-		final Client client = this.clientDao.findClientByUid(clientUid);
-		contact.setClient(client);
+	public void addContact(final Contact contact) {
+		logger.debug("Add contact {}", contact);
 		contactDao.insert(contact);
 	}
 
-	public void updateContact(ContactDto contactDto) {
-		Objects.requireNonNull(contactDto);
-		logger.debug("Update contact {}", contactDto);
-		final String uid = contactDto.getUid();
-		final Contact contact = contactDao.findContactByUid(uid);
-		contactMerger.merge(contact, contactDto);
+	public Contact updateContact(final Contact contact) {
+		Objects.requireNonNull(contact);
+		logger.debug("Update contact {}", contact);
+		return this.contactDao.update(contact);
 	}
 
-	public void deleteContact(final String contactUid, final String clientUid) {
-		Objects.requireNonNull(contactUid);
-		Objects.requireNonNull(clientUid);
-		logger.debug("Delete contact {} from client ", contactUid, clientUid);
-		final Contact contact = contactDao.findContactByUid(contactUid);
-		final Client client = clientDao.findClientByUid(clientUid);
-		client.getContacts().remove(contact);
+	public void deleteContact(final Contact contact) {
+		Objects.requireNonNull(contact);
+		logger.debug("Delete contact {}", contact);
+		contact.getClient().getContacts().remove(contact);
+		this.clientDao.update(contact.getClient());
 	}
 
-	public ContactDto findContactByUid(final String uid) {
-		Objects.requireNonNull(uid);
-		logger.debug("Find contact by uid {}", uid);
-		final Contact contact = this.contactDao.findContactByUid(uid);
-		return contactMapper.map(contact);
+	public Contact findContactById(final Long contactId) {
+		Objects.requireNonNull(contactId);
+		logger.debug("Find contact by id {}", contactId);
+		return this.contactDao.find(Contact.class, contactId);
 	}
 
-	public List<ContactDto> findContactsByClient(final String clientUid, final Page page) {
-		Objects.requireNonNull(clientUid);
+	public List<Contact> findContactsByClient(final Client client, final Page page) {
+		Objects.requireNonNull(client);
 		Objects.requireNonNull(page);
-		logger.debug("Find contacts by client {}, offset {} limit of {}", clientUid, page.getOffset(), page.getLimit());
-		final List<Contact> entities = this.contactDao.findContactsByClient(clientUid, page);
-		return contactMapper.mapList(entities);
+		logger.debug("Find contacts by client {}, offset {} limit of {}", client, page.getOffset(), page.getLimit());
+		return this.contactDao.findContactsByClient(client, page);
 	}
 
 	public void setContactDao(final ContactDao contactDao) {
