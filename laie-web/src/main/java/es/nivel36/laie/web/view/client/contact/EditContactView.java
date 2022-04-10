@@ -1,14 +1,17 @@
 package es.nivel36.laie.web.view.client.contact;
 
+import java.util.Objects;
+
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.omnifaces.cdi.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import es.nivel36.laie.ejb.client.ContactDto;
+import es.nivel36.laie.ejb.client.Contact;
 import es.nivel36.laie.ejb.client.ContactService;
 import es.nivel36.laie.web.core.IllegalPageStateException;
 import es.nivel36.laie.web.core.view.AbstractView;
@@ -22,20 +25,14 @@ public class EditContactView extends AbstractView {
 
 	private static final Logger logger = LoggerFactory.getLogger(EditContactView.class);
 
-	private ContactDto contact;
-
-	private String uid;
-
-	private String clientUid;
+	@Param(name = "contact", converter = "contactConverter")
+	private Contact contact;
 
 	@Inject
 	private transient ContactService contactService;
 
 	@PostConstruct
 	public void init() {
-		this.uid = this.getValueFromGetParameters("contact", true);
-		this.clientUid = this.getValueFromGetParameters("client", false);
-		this.contact = this.contactService.findContactByUid(uid);
 		if (this.contact == null) {
 			throw new IllegalPageStateException();
 		}
@@ -44,24 +41,26 @@ public class EditContactView extends AbstractView {
 	public void save() {
 		logger.debug("Contact save action performed");
 		this.contactService.updateContact(this.contact);
-		this.navigateTo(ViewClientView.URL + "?client=" + this.clientUid);
+		this.navigateTo(ViewClientView.URL + "?client=" + this.contact.getClient().getId());
 	}
 
 	public void delete() {
 		logger.debug("Contact delete action performed");
-		this.contactService.deleteContact(this.uid, this.clientUid);
-		this.navigateTo(ViewClientView.URL + "?client=" + this.clientUid);
+		final Long id = this.contact.getClient().getId();
+		this.contactService.deleteContact(this.contact);
+		this.navigateTo(ViewClientView.URL + "?client=" + id);
 	}
 
-	public ContactDto getContact() {
+	public Contact getContact() {
 		return this.contact;
 	}
 
-	public void setContact(final ContactDto contact) {
+	public void setContact(final Contact contact) {
 		this.contact = contact;
 	}
 
 	public void setContactService(final ContactService contactService) {
+		Objects.requireNonNull(contactService);
 		this.contactService = contactService;
 	}
 }

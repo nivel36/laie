@@ -7,6 +7,7 @@ import java.util.Objects;
 
 import javax.persistence.NoResultException;
 
+import es.nivel36.laie.ejb.candidate.Candidate;
 import es.nivel36.laie.ejb.core.model.AbstractDao;
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.core.model.Repository;
@@ -18,28 +19,14 @@ import es.nivel36.laie.ejb.curriculum.skill.Skill;
 @Repository
 public class CurriculumDao extends AbstractDao {
 
-	public void insert(final Curriculum curriculum) {
-		this.setUid(Curriculum.class, curriculum);
-		this.insert(curriculum);
-	}
-
-	public void delete(final Curriculum curriculum) {
-		this.delete(Curriculum.class, curriculum);
-	}
-
-	public Curriculum findByCandidateUid(final String candidateUid) {
-		Objects.requireNonNull(candidateUid);
+	public Curriculum findByCandidate(final Candidate candidate) {
+		Objects.requireNonNull(candidate);
 		try {
-			return this.findByQuery(Curriculum.class, "Curriculum.findByCandidateUid",
-					map("candidateUid", candidateUid));
+			return this.findByQuery(Curriculum.class, "Curriculum.findByCandidate",
+					map("candidate", candidate));
 		} catch (final NoResultException e) {
 			return null;
 		}
-	}
-
-	public Curriculum findByUid(final String uid) {
-		Objects.requireNonNull(uid);
-		return this.findByQuery(Curriculum.class, "Curriculum.findByUid", map("uid", uid));
 	}
 
 	public Skill findSkill(final String name) {

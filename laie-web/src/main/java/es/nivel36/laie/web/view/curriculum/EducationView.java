@@ -11,9 +11,9 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import es.nivel36.laie.ejb.curriculum.CurriculumDto;
+import es.nivel36.laie.ejb.curriculum.Curriculum;
 import es.nivel36.laie.ejb.curriculum.CurriculumService;
-import es.nivel36.laie.ejb.curriculum.education.EducationDto;
+import es.nivel36.laie.ejb.curriculum.education.Education;
 import es.nivel36.laie.web.core.IllegalPageStateException;
 import es.nivel36.laie.web.core.view.AbstractView;
 
@@ -23,34 +23,34 @@ public class EducationView extends AbstractView {
 
 	private static final long serialVersionUID = 7140292965204508410L;
 
-	private CurriculumDto curriculum;
+	private Curriculum curriculum;
 
-	private EducationDto education;
+	private Education education;
 
 	private List<Integer> years;
 	
-	private String candidateUid;
+	private String candidateId;
 
 	@Inject
 	private transient CurriculumService curriculumService;
 
 	@PostConstruct
 	public void init() {
-		final String educationUid = this.getValueFromGetParameters("education");
-		this.candidateUid = this.getValueFromGetParameters("candidate");
-		final String curriculumUid = this.getValueFromGetParameters("curriculum");
-		this.curriculum = this.curriculumService.findCurriculumByUid(curriculumUid);
-		this.education = this.initEducation(educationUid);
+		final String educationId = this.getValueFromGetParameters("education");
+		this.candidateId = this.getValueFromGetParameters("candidate");
+		final String curriculumId = this.getValueFromGetParameters("curriculum");
+		this.curriculum = this.curriculumService.findCurriculumById(curriculumId);
+		this.education = this.initEducation(educationId);
 		this.years = this.initYears();
 	}
 
-	private EducationDto initEducation(final String educationUid) {
-		if (educationUid == null) {
-			return new EducationDto();
+	private Education initEducation(final String educationId) {
+		if (educationId == null) {
+			return new Education();
 		}
 		try {
-			final int item = Integer.parseInt(educationUid);
-			final List<EducationDto> educations = new ArrayList<>(this.curriculum.getEducation());
+			final int item = Integer.parseInt(educationId);
+			final List<Education> educations = new ArrayList<>(this.curriculum.getEducation());
 			if (item >= educations.size()) {
 				throw new IllegalPageStateException();
 			}
@@ -80,11 +80,11 @@ public class EducationView extends AbstractView {
 	}
 
 	public String save() {
-		this.curriculumService.addCurriculum(this.candidateUid, this.curriculum);
+		this.curriculumService.addCurriculum(this.candidateId, this.curriculum);
 		return this.buildCurriculumUrl();
 	}
 
-	public EducationDto getEducation() {
+	public Education getEducation() {
 		return this.education;
 	}
 
@@ -92,7 +92,7 @@ public class EducationView extends AbstractView {
 		return this.years;
 	}
 
-	public void setEducation(final EducationDto education) {
+	public void setEducation(final Education education) {
 		this.education = education;
 	}
 

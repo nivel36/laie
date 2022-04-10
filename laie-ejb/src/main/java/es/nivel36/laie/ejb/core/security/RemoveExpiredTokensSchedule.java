@@ -24,9 +24,9 @@ public class RemoveExpiredTokensSchedule {
 	private LoginTokenDao loginTokenDao;
 
 	@Schedule(persistent = false)
-	public void removeExpiredTokens() {
+	public void removeExpirekens() {
 		logger.info("Removing expired tokens");
-		final List<LoginToken> loginTokens = this.loginTokenDao.findExpiredTokens();
+		final List<LoginToken> loginTokens = this.loginTokenDao.findExpirekens();
 		for (final LoginToken loginToken : loginTokens) {
 			logger.trace("Removing expired token {}", loginToken);
 			this.loginTokenDao.delete(loginToken);

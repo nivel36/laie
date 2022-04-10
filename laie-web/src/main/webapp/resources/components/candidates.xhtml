@@ -21,7 +21,7 @@
 					<h:link outcome="/candidate/view">
 						<cc:avatar name="#{candidate.fullName}" path="#{candidate.avatarUrl}" styleClass="p-mr-2" />
 						<h:outputText styleClass="link" value="#{candidate.fullName}" />
-						<f:param name="candidate" value="#{candidate.uid}" />
+						<f:param name="candidate" value="#{candidate.id}" />
 					</h:link>
 				</p:column>
 

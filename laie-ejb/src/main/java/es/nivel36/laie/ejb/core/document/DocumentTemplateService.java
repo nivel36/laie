@@ -30,14 +30,6 @@ public class DocumentTemplateService {
 	@Repository
 	private DocumentTemplateDao documentTemplateDao;
 
-	public DocumentTemplateDto addDocumentTemplate(final DocumentTemplateDto documentTemplate) {
-		final DocumentTemplateMerger merger = new DocumentTemplateMerger();
-		final DocumentTemplate entity = new DocumentTemplate();
-		merger.merge(entity, documentTemplate);
-		this.documentTemplateDao.insert(entity);
-		return new DocumentTemplateMapper().map(entity);
-	}
-
 	private File createPdf(final String text) {
 		try {
 			final File pdfDest = Files.createTempFile("pdf_converter_", ".pdf").toFile();
@@ -48,7 +40,7 @@ public class DocumentTemplateService {
 		}
 	}
 
-	public File export(final DocumentTemplateDto document, final Set<TemplateTag> parameters) {
+	public File export(final DocumentTemplate document, final Set<TemplateTag> parameters) {
 		Objects.requireNonNull(document);
 		logger.debug("Export document template {}", document);
 		final String documentText = document.getText();
@@ -56,12 +48,11 @@ public class DocumentTemplateService {
 		return this.createPdf(textWithReplacedCustomTextValues);
 	}
 
-	public DocumentTemplateDto findDocumentByNameAndLanguage(final String name, final Language language) {
+	public DocumentTemplate findDocumentByNameAndLanguage(final String name, final Language language) {
 		Objects.requireNonNull(name);
 		Objects.requireNonNull(language);
 		logger.debug("Find document by name {} and langauge {}", name, language);
-		final DocumentTemplate entity = this.documentTemplateDao.findDocumentTemplateByName(name, language);
-		return new DocumentTemplateMapper().map(entity);
+		return this.documentTemplateDao.findDocumentTemplateByName(name, language);
 		
 	}
 

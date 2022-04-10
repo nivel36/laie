@@ -12,7 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import es.nivel36.laie.ejb.user.Credential;
-import es.nivel36.laie.ejb.user.UserDto;
+import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.ejb.user.UserService;
 import es.nivel36.laie.web.core.view.AbstractView;
 
@@ -30,7 +30,7 @@ public class ChangePasswordView extends AbstractView {
 
 	private String repeatPassword;
 
-	private UserDto user;
+	private User user;
 
 	private Credential userCredential;
 

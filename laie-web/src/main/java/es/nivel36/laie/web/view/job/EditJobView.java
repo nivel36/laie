@@ -23,8 +23,8 @@ public class EditJobView extends AbstractJobView {
 
 	@PostConstruct
 	public void init() {
-		final String uid = this.getValueFromGetParameters("job", true);
-		this.jobOffer = this.jobOfferService.findJobOfferByUid(uid);
+		final String Id = this.getValueFromGetParameters("job", true);
+		this.jobOffer = this.jobOfferService.findJobOfferById(Id);
 		this.checkNonNullJobOffer();
 		logger.trace("Edit job offer {} init", this.jobOffer);
 		this.fillRecruiters();
@@ -44,6 +44,6 @@ public class EditJobView extends AbstractJobView {
 	public void save() {
 		logger.debug("Save job offer action performed");
 		this.jobOfferService.updateJobOffer(jobOffer);
-		this.navigateTo(ViewJobView.URL + "?job=" + this.jobOffer.getUid());
+		this.navigateTo(ViewJobView.URL + "?job=" + this.jobOffer.getId());
 	}
 }

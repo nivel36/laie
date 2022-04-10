@@ -16,11 +16,9 @@ import org.omnifaces.util.Faces;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import es.nivel36.laie.ejb.core.bookmark.BookmarkDto;
-import es.nivel36.laie.ejb.core.bookmark.BookmarkService;
+import es.nivel36.laie.ejb.core.bookmark.Bookmark;
 import es.nivel36.laie.ejb.user.Role;
-import es.nivel36.laie.ejb.user.SimpleUserDto;
-import es.nivel36.laie.ejb.user.UserDto;
+import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.ejb.user.UserService;
 import es.nivel36.laie.web.core.LoginService;
 
@@ -34,17 +32,14 @@ public class SessionUser implements Serializable {
 
 	private Locale locale;
 
-	private List<SimpleUserDto> team;
+	private List<User> team;
 
-	private UserDto user;
+	private User user;
 
-	private List<BookmarkDto> bookmarks;
+	private List<Bookmark> bookmarks;
 
 	@Inject
 	private transient UserService userService;
-
-	@Inject
-	private transient BookmarkService bookmarkService;
 
 	@Inject
 	private LoginService loginService;
@@ -59,26 +54,16 @@ public class SessionUser implements Serializable {
 		return this.user != null;
 	}
 
-	public boolean isManagerOf(final String subordinateUid) {
-		Objects.requireNonNull(subordinateUid);
-		for (final SimpleUserDto user : this.team) {
-			if (user.getUid().equals(subordinateUid)) {
-				return true;
-			}
-		}
-		return false;
+	public boolean isManagerOf(final User subordinate) {
+		Objects.requireNonNull(subordinate);
+		return this.team.contains(subordinate);
 	}
 
 	private void loadUserData(final String email) {
 		this.user = this.userService.findUserByEmail(email);
 		this.locale = new Locale(this.user.getLanguage());
-		final String userUid = user.getUid();
-		final List<UserDto> usersTeam = this.userService.findSubordinateUsers(userUid);
-		this.team = new ArrayList<>(usersTeam.size());
-		for (final UserDto user : usersTeam) {
-			this.team.add(new SimpleUserDto(user));
-		}
-		this.bookmarks = this.bookmarkService.findBookmarksByUserUid(userUid);
+		this.team = this.userService.findSubordinateUsers(user);
+		this.bookmarks = new ArrayList<>(this.user.getBookmarks());
 	}
 
 	public void refresh() {
@@ -92,11 +77,11 @@ public class SessionUser implements Serializable {
 		Faces.redirect("/");
 	}
 
-	public UserDto get() {
+	public User get() {
 		return this.user;
 	}
 
-	public UserDto getUser() {
+	public User getUser() {
 		return this.user;
 	}
 
@@ -104,11 +89,11 @@ public class SessionUser implements Serializable {
 		return this.locale;
 	}
 
-	public List<SimpleUserDto> getTeam() {
+	public List<User> getTeam() {
 		return this.team;
 	}
 
-	public List<BookmarkDto> getBookmarks() {
+	public List<Bookmark> getBookmarks() {
 		return bookmarks;
 	}
 
@@ -116,17 +101,12 @@ public class SessionUser implements Serializable {
 		if (!this.isActive()) {
 			return false;
 		}
-		return this.user.getRoleName().equals(Role.ADMIN.name());
+		return this.user.getRole().equals(Role.ADMIN);
 	}
 
 	public void setUserService(final UserService userService) {
 		Objects.requireNonNull(userService);
 		this.userService = userService;
-	}
-
-	public void setBookmarkService(final BookmarkService bookmarkService) {
-		Objects.requireNonNull(bookmarkService);
-		this.bookmarkService = bookmarkService;
 	}
 
 	public void setLoginService(final LoginService loginService) {

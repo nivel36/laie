@@ -10,28 +10,17 @@ import es.nivel36.laie.ejb.core.model.AbstractDao;
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.core.model.Repository;
 import es.nivel36.laie.ejb.core.util.Parameters;
+import es.nivel36.laie.ejb.job.offer.JobOffer;
+import es.nivel36.laie.ejb.user.User;
 
 @Repository
 public class MeetingDao extends AbstractDao {
 
-	public void insert(final Meeting meeting) {
-		Objects.requireNonNull(meeting);
-		this.setUid(Meeting.class, meeting);
-		this.em.persist(meeting);
-	}
-
-	public Meeting findByUid(final String uid) {
-		Objects.requireNonNull(uid);
-		final String namedQuery = "Meeting.findByUid";
-		final Parameters parameters = map("uid", uid);
-		return this.findByQuery(Meeting.class, namedQuery, parameters);
-	}
-
-	public List<Meeting> findMeetingsByJobOffer(final String jobOfferUid, final Page page) {
-		Objects.requireNonNull(jobOfferUid);
+	public List<Meeting> findMeetingsByJobOffer(final JobOffer jobOffer, final Page page) {
+		Objects.requireNonNull(jobOffer);
 		Objects.requireNonNull(page);
 		final String namedQuery = "Meeting.findByJobOffer";
-		final Parameters parameters = map("jobOfferUid", jobOfferUid);
+		final Parameters parameters = map("jobOffer", jobOffer);
 		return this.findByQuery(Meeting.class, namedQuery, parameters, page);
 	}
 
@@ -43,19 +32,19 @@ public class MeetingDao extends AbstractDao {
 		return this.findByQuery(Meeting.class, namedQuery, parameters, page);
 	}
 
-	public List<Meeting> findConductedMeetings(final String ownerUid, final Page page) {
-		Objects.requireNonNull(ownerUid);
+	public List<Meeting> findConductedMeetings(final User owner, final Page page) {
+		Objects.requireNonNull(owner);
 		Objects.requireNonNull(page);
 		final String namedQuery = "Meeting.findConductedByOwner";
-		final Parameters parameters = map("ownerUid", ownerUid).and("now", LocalDateTime.now());
+		final Parameters parameters = map("owner", owner).and("now", LocalDateTime.now());
 		return this.findByQuery(Meeting.class, namedQuery, parameters, page);
 	}
 
-	public List<Meeting> findPlannedMeetings(final String ownerUid, final Page page) {
-		Objects.requireNonNull(ownerUid);
+	public List<Meeting> findPlannedMeetings(final User owner, final Page page) {
+		Objects.requireNonNull(owner);
 		Objects.requireNonNull(page);
 		final String namedQuery = "Meeting.findPlannedByOwner";
-		final Parameters parameters = map("ownerUid", ownerUid).and("now", LocalDateTime.now());
+		final Parameters parameters = map("ownerId", owner).and("now", LocalDateTime.now());
 		return this.findByQuery(Meeting.class, namedQuery, parameters, page);
 	}
 }

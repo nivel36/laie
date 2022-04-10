@@ -12,12 +12,12 @@ import javax.inject.Named;
 
 import org.apache.commons.collections4.map.HashedMap;
 
-import es.nivel36.laie.ejb.candidate.CandidateDto;
+import es.nivel36.laie.ejb.candidate.Candidate;
 import es.nivel36.laie.ejb.candidate.CandidateService;
-import es.nivel36.laie.ejb.candidate.SimpleCandidateDto;
-import es.nivel36.laie.ejb.job.candidature.JobCandidatureDto;
+import es.nivel36.laie.ejb.candidate.SimpleCandidate;
+import es.nivel36.laie.ejb.job.candidature.JobCandidature;
 import es.nivel36.laie.ejb.job.candidature.JobCandidatureService;
-import es.nivel36.laie.ejb.job.offer.JobOfferDto;
+import es.nivel36.laie.ejb.job.offer.JobOffer;
 import es.nivel36.laie.ejb.job.offer.JobOfferService;
 import es.nivel36.laie.web.core.IllegalPageStateException;
 import es.nivel36.laie.web.core.view.AbstractView;
@@ -29,15 +29,15 @@ public class SelectCandidatesView extends AbstractView {
 
 	private static final long serialVersionUID = -4200957281776169451L;
 
-	private final Map<String, SimpleCandidateDto> alredySelectedCandidates = new HashedMap<>();
+	private final Map<String, SimpleCandidate> alredySelectedCandidates = new HashedMap<>();
 
 	private CandidateLazyDataModel candidates;
 
-	private JobOfferDto jobOffer;
+	private JobOffer jobOffer;
 
 	private String searchText;
 
-	private List<CandidateDto> selectedCandidates;
+	private List<Candidate> selectedCandidates;
 
 	@Inject
 	private transient CandidateService candidateService;
@@ -50,16 +50,16 @@ public class SelectCandidatesView extends AbstractView {
 
 	@PostConstruct
 	public void init() {
-		final String uid = this.getValueFromGetParameters("job", true);
-		this.jobOffer = this.jobOfferService.findJobOfferByUid(uid);
+		final String Id = this.getValueFromGetParameters("job", true);
+		this.jobOffer = this.jobOfferService.findJobOfferById(Id);
 		if (this.jobOffer == null) {
 			throw new IllegalPageStateException();
 		}
-		final Set<JobCandidatureDto> jobCandidatures = this.jobOffer.getJobCandidatures();
+		final Set<JobCandidature> jobCandidatures = this.jobOffer.getJobCandidatures();
 		if (jobCandidatures != null) {
-			for (final JobCandidatureDto jobCandidature : jobCandidatures) {
-				final SimpleCandidateDto candidate = jobCandidature.getCandidate();
-				this.alredySelectedCandidates.put(candidate.getUid(), candidate);
+			for (final JobCandidature jobCandidature : jobCandidatures) {
+				final SimpleCandidate candidate = jobCandidature.getCandidate();
+				this.alredySelectedCandidates.put(candidate.getId(), candidate);
 			}
 		}
 		this.candidates = new CandidateLazyDataModel(this.candidateService);
@@ -70,23 +70,23 @@ public class SelectCandidatesView extends AbstractView {
 		this.candidates.setSearchText(this.searchText);
 	}
 
-	public boolean isAlredySelected(final CandidateDto candidate) {
-		return this.alredySelectedCandidates.containsKey(candidate.getUid());
+	public boolean isAlredySelected(final Candidate candidate) {
+		return this.alredySelectedCandidates.containsKey(candidate.getId());
 	}
 
 	public void select() {
-		final String[] candidatesUids = this.selectedCandidates.stream().map(CandidateDto::getUid)
+		final String[] candidatesIds = this.selectedCandidates.stream().map(Candidate::getId)
 				.toArray(String[]::new);
-		final String jobOfferUid = this.jobOffer.getUid();
-		this.jobCandidatureService.addJobCandidatures(jobOfferUid, candidatesUids);
-		this.navigateTo(ViewJobView.URL + "?job=" + this.jobOffer.getUid());
+		final String jobOfferId = this.jobOffer.getId();
+		this.jobCandidatureService.addJobCandidatures(jobOfferId, candidatesIds);
+		this.navigateTo(ViewJobView.URL + "?job=" + this.jobOffer.getId());
 	}
 
 	public CandidateLazyDataModel getCandidates() {
 		return this.candidates;
 	}
 
-	public JobOfferDto getJobOffer() {
+	public JobOffer getJobOffer() {
 		return this.jobOffer;
 	}
 
@@ -94,7 +94,7 @@ public class SelectCandidatesView extends AbstractView {
 		return this.searchText;
 	}
 
-	public List<CandidateDto> getSelectedCandidates() {
+	public List<Candidate> getSelectedCandidates() {
 		return this.selectedCandidates;
 	}
 
@@ -102,7 +102,7 @@ public class SelectCandidatesView extends AbstractView {
 		this.candidates = candidates;
 	}
 
-	public void setJobOffer(final JobOfferDto jobOffer) {
+	public void setJobOffer(final JobOffer jobOffer) {
 		this.jobOffer = jobOffer;
 	}
 
@@ -110,7 +110,7 @@ public class SelectCandidatesView extends AbstractView {
 		this.searchText = searchText;
 	}
 
-	public void setSelectedCandidates(final List<CandidateDto> selectedCandidates) {
+	public void setSelectedCandidates(final List<Candidate> selectedCandidates) {
 		this.selectedCandidates = selectedCandidates;
 	}
 

@@ -35,18 +35,6 @@ public class UserService {
 	@Repository
 	private UserDao userDao;
 
-	public User findUserByEmail(final String email) {
-		Objects.requireNonNull(email);
-		logger.debug("Find user by email {}", email);
-		return this.userDao.findUserByEmail(email);
-	}
-
-	public User findUserById(final Long id) {
-		Objects.requireNonNull(id);
-		logger.debug("Find user by id {}", id);
-		return this.userDao.find(User.class, id);
-	}
-
 	public void addUser(final User user) throws DuplicateEmailException, BadManagerException {
 		Objects.requireNonNull(user);
 		logger.debug("Insert user {}", user);
@@ -60,6 +48,14 @@ public class UserService {
 		}
 
 		this.userDao.insert(user);
+	}
+
+	private void checkDuplicateEmail(final String newEmail, final String oldEmail) throws DuplicateEmailException {
+		if (!newEmail.equals(oldEmail)) {
+			if (this.userDao.checkDuplicateEmail(newEmail)) {
+				throw new DuplicateEmailException();
+			}
+		}
 	}
 
 	private void addUsersManager(final User user) throws BadManagerException {
@@ -88,15 +84,13 @@ public class UserService {
 		// the new manager.
 		changeUsersManager(userInDatabase, userInDatabase.getManager(), user.getManager());
 
-		return this.userDao.update(user);
-	}
-
-	private void checkDuplicateEmail(final String newEmail, final String oldEmail) throws DuplicateEmailException {
-		if (!newEmail.equals(oldEmail)) {
-			if (this.userDao.checkDuplicateEmail(newEmail)) {
-				throw new DuplicateEmailException();
-			}
+		final File picture = user.getPicture();
+		final File pictureInDatabase = userInDatabase.getPicture();
+		if (pictureInDatabase != null && picture == null || !pictureInDatabase.equals(picture)) {
+			this.fileService.removeFile(pictureInDatabase);
 		}
+
+		return this.userDao.update(user);
 	}
 
 	private void changeUsersManager(final User user, final User oldManager, final User newManager)
@@ -143,16 +137,6 @@ public class UserService {
 		return newImage.getPhysicalFile().getRelativePath();
 	}
 
-	public void deleteUsersImage(final User user) {
-		Objects.requireNonNull(user);
-		logger.debug("Delete user's image of user {}", user);
-		final File oldImage = user.getPicture();
-		if (oldImage != null) {
-			this.fileService.removeFile(oldImage);
-		}
-		user.setPicture(null);
-	}
-
 	public void changePassword(final String email, final String oldPassword, final String newPassword) {
 		Objects.requireNonNull(email);
 		Objects.requireNonNull(newPassword);
@@ -160,6 +144,18 @@ public class UserService {
 		// TODO: añadir lógica con el password antiguo
 		final Credential credential = this.userDao.findCredential(email);
 		credential.setPassword(newPassword);
+	}
+
+	public User findUserById(final Long id) {
+		Objects.requireNonNull(id);
+		logger.debug("Find user by id {}", id);
+		return this.userDao.find(User.class, id);
+	}
+
+	public User findUserByEmail(final String email) {
+		Objects.requireNonNull(email);
+		logger.debug("Find user by email {}", email);
+		return this.userDao.findUserByEmail(email);
 	}
 
 	public Credential findCredential(final String email) {

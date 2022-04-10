@@ -18,7 +18,7 @@ import org.omnifaces.util.Faces;
 
 import es.nivel36.laie.ejb.core.Language;
 import es.nivel36.laie.ejb.core.document.DateTag;
-import es.nivel36.laie.ejb.core.document.DocumentTemplateDto;
+import es.nivel36.laie.ejb.core.document.DocumentTemplate;
 import es.nivel36.laie.ejb.core.document.DocumentTemplateService;
 import es.nivel36.laie.ejb.core.document.TemplateTag;
 import es.nivel36.laie.web.core.view.AbstractView;
@@ -29,7 +29,7 @@ public class GdprMaintenanceView extends AbstractView {
 
 	private static final long serialVersionUID = -5171546281152282168L;
 
-	private DocumentTemplateDto document;
+	private DocumentTemplate document;
 
 	@Inject
 	private DocumentTemplateService documentService;
@@ -47,7 +47,7 @@ public class GdprMaintenanceView extends AbstractView {
 		}
 	}
 
-	public DocumentTemplateDto getDocument() {
+	public DocumentTemplate getDocument() {
 		return this.document;
 	}
 
@@ -67,10 +67,10 @@ public class GdprMaintenanceView extends AbstractView {
 	}
 
 	public void searchDocument() {
-		final DocumentTemplateDto documentFromDatabase = this.documentService.findDocumentByNameAndLanguage("gdpr",
+		final DocumentTemplate documentFromDatabase = this.documentService.findDocumentByNameAndLanguage("gdpr",
 				this.language);
 		if (documentFromDatabase == null) {
-			this.document = new DocumentTemplateDto();
+			this.document = new DocumentTemplate();
 			this.document.setName("gdpr");
 			this.document.setLanguage(this.language.getCode());
 		} else {
@@ -78,7 +78,7 @@ public class GdprMaintenanceView extends AbstractView {
 		}
 	}
 
-	public void setDocument(final DocumentTemplateDto document) {
+	public void setDocument(final DocumentTemplate document) {
 		this.document = document;
 	}
 

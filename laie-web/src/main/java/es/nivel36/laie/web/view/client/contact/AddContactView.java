@@ -7,10 +7,12 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.omnifaces.cdi.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import es.nivel36.laie.ejb.client.ContactDto;
+import es.nivel36.laie.ejb.client.Client;
+import es.nivel36.laie.ejb.client.Contact;
 import es.nivel36.laie.ejb.client.ContactService;
 import es.nivel36.laie.web.core.view.AbstractView;
 import es.nivel36.laie.web.view.client.ViewClientView;
@@ -23,9 +25,10 @@ public class AddContactView extends AbstractView {
 
 	private static final Logger logger = LoggerFactory.getLogger(AddContactView.class);
 
-	private String clientUid;
+	@Param(name="client", converter="clientConverter")
+	private Client client;
 
-	private ContactDto contact;
+	private Contact contact;
 
 	@Inject
 	private transient ContactService contactService;
@@ -33,26 +36,26 @@ public class AddContactView extends AbstractView {
 	@PostConstruct
 	public void init() {
 		logger.debug("New contact");
-		this.clientUid = this.getValueFromGetParameters("client", true);
-		this.contact = new ContactDto();
+		this.contact = new Contact();
+		this.contact.setClient(client);
 	}
 
 	public void save() {
 		logger.debug("Contact add action performed");
-		this.contactService.addContact(clientUid, contact);
-		this.navigateTo(ViewClientView.URL + "?client=" + this.clientUid);
+		this.contactService.addContact(contact);
+		this.navigateTo(ViewClientView.URL + "?client=" + this.client.getId());
 	}
 
-	public ContactDto getContact() {
+	public Contact getContact() {
 		return this.contact;
 	}
 
-	public void setContact(final ContactDto contact) {
+	public void setContact(final Contact contact) {
 		this.contact = contact;
 	}
 
-	public String getClientUid() {
-		return clientUid;
+	public Client getClient() {
+		return client;
 	}
 
 	public void setContactService(final ContactService contactService) {

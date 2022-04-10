@@ -9,29 +9,29 @@ import javax.faces.convert.FacesConverter;
 import javax.inject.Inject;
 
 import es.nivel36.laie.ejb.job.offer.JobOffer;
-import es.nivel36.laie.ejb.job.offer.JobOfferDto;
+import es.nivel36.laie.ejb.job.offer.JobOffer;
 import es.nivel36.laie.ejb.job.offer.JobOfferService;
 
 @FacesConverter(managed = true, forClass = JobOffer.class)
-public class JobOfferConverter implements Converter<JobOfferDto> {
+public class JobOfferConverter implements Converter<JobOffer> {
 
 	@Inject
 	private JobOfferService jobOfferService;
 
 	@Override
-	public JobOfferDto getAsObject(final FacesContext context, final UIComponent component, final String value) {
+	public JobOffer getAsObject(final FacesContext context, final UIComponent component, final String value) {
 		if (value == null) {
 			return null;
 		}
-		return this.jobOfferService.findJobOfferByUid(value);
+		return this.jobOfferService.findJobOfferById(value);
 	}
 
 	@Override
-	public String getAsString(final FacesContext context, final UIComponent component, final JobOfferDto value) {
+	public String getAsString(final FacesContext context, final UIComponent component, final JobOffer value) {
 		if (value == null) {
 			return null;
 		}
-		return value.getUid();
+		return value.getId();
 	}
 
 	public void setJobOfferService(final JobOfferService jobOfferService) {

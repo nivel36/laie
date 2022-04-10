@@ -29,7 +29,7 @@
 
 							<p:menuButton styleClass="menu-button" icon="pi pi-ellipsis-v" id="menu-button">
 								<p:menuitem value="#{i18n['action.edit']}" outcome="/user/edit" icon="pi pi-pencil">
-									<f:param name="user" value="#{viewUserView.user.uid}" />
+									<f:param name="user" value="#{viewUserView.user.id}" />
 								</p:menuitem>
 								<p:menuitem value="#{i18n['action.export']}" action="#{viewUserView.export}" icon="pi pi-file-excel" />
 							</p:menuButton>
@@ -59,7 +59,7 @@
 							<h:panelGroup layout="block" styleClass="text" rendered="#{empty viewUserView.user.manager}"> --- </h:panelGroup>
 							<h:panelGroup layout="block" class="text" rendered="#{not empty viewUserView.user.manager}">
 								<p:link outcome="/user/view.xhtml" value="#{viewUserView.user.manager.fullName}">
-									<f:param name="user" value="#{viewUserView.user.manager.uid}" />
+									<f:param name="user" value="#{viewUserView.user.manager.id}" />
 								</p:link>
 							</h:panelGroup>
 						</div>

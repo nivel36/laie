@@ -1,11 +1,8 @@
 package es.nivel36.laie.web.view.client.contact;
 
-import java.util.Map;
 import java.util.Objects;
 
-import org.primefaces.model.FilterMeta;
-
-import es.nivel36.laie.ejb.client.ContactDto;
+import es.nivel36.laie.ejb.client.Contact;
 import es.nivel36.laie.ejb.client.ContactService;
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.core.model.search.SearchFacets;
@@ -13,7 +10,7 @@ import es.nivel36.laie.ejb.core.model.search.SearchResult;
 import es.nivel36.laie.ejb.core.model.search.SortField;
 import es.nivel36.laie.web.core.view.AbstractLazyDataModel;
 
-public class ContactLazyDataModel extends AbstractLazyDataModel<ContactDto> {
+public class ContactLazyDataModel extends AbstractLazyDataModel<Contact> {
 
 	private static final long serialVersionUID = -4218300046788680778L;
 	
@@ -25,23 +22,14 @@ public class ContactLazyDataModel extends AbstractLazyDataModel<ContactDto> {
 	}
 
 	@Override
-	protected SearchResult<ContactDto> search(String searchText, Page page, SortField sortField,
+	protected SearchResult<Contact> search(String searchText, Page page, SortField sortField,
 			SearchFacets searchFilter) {
 		return null;
 	}
 
 	@Override
-	protected ContactDto find(String rowkey) {
-		return contactService.findContactByUid(rowkey);
+	protected Contact find(Long id) {
+		return contactService.findContactById(id);
 	}
 
-	@Override
-	protected String getKey(ContactDto entity) {
-		return entity.getUid();
-	}
-
-	@Override
-	public int count(Map<String, FilterMeta> filterBy) {
-		return 0;
-	}
 }

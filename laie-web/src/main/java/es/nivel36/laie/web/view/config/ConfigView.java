@@ -20,11 +20,12 @@ import org.primefaces.model.file.UploadedFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import es.nivel36.laie.ejb.core.file.FileDto;
+import es.nivel36.laie.ejb.core.file.File;
 import es.nivel36.laie.ejb.core.file.FileService;
 import es.nivel36.laie.ejb.core.file.FileUploadException;
+import es.nivel36.laie.ejb.user.BadManagerException;
 import es.nivel36.laie.ejb.user.DuplicateEmailException;
-import es.nivel36.laie.ejb.user.UserDto;
+import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.ejb.user.UserService;
 import es.nivel36.laie.web.core.view.AbstractView;
 
@@ -40,29 +41,29 @@ public class ConfigView extends AbstractView {
 
 	private boolean imageChanged;
 
-	private UserDto user;
+	private User user;
 
 	private String userImage;
 
-	private FileDto uploadedFile;
+	private File uploadedFile;
 
 	@Inject
-	private FileService fileService;
+	private transient FileService fileService;
 
 	@Inject
 	private transient UserService userService;
 
 	@PostConstruct
 	public void init() {
-		this.user = this.userService.findUserByEmail(this.sessionUser.get().getEmail());
-		this.userImage = this.user.getAvatarUrl();
+		this.user = this.sessionUser.get();
+		this.userImage = this.user.getPicture().getPath();
 		logger.debug("Config user {} init", this.user);
 	}
 
 	private void refreshUser() {
-		this.user = this.userService.findUserByEmail(this.sessionUser.get().getEmail());
+		this.user = this.userService.findUserById(this.sessionUser.get().getId());
 		this.sessionUser.refresh();
-		this.userImage = this.user.getAvatarUrl();
+		this.userImage = this.user.getPicture().getPath();
 	}
 
 	public void captureImage(final CaptureEvent event) {
@@ -112,6 +113,8 @@ public class ConfigView extends AbstractView {
 			this.userService.updateUser(user);
 		} catch (DuplicateEmailException e) {
 			// No puede ocurrir puesto que solo estamos cambiando el idioma.
+		} catch (BadManagerException e) {
+			// No puede ocurrir puesto que solo estamos cambiando el idioma.
 		}
 		this.facesContext.getViewRoot().setLocale(newLocale);
 	}
@@ -125,35 +128,24 @@ public class ConfigView extends AbstractView {
 			this.addMessage(FacesMessage.SEVERITY_INFO, "action.save_action_performed", "action.save_action_performed");
 		} catch (final DuplicateEmailException e) {
 			this.addErrorToField("configForm:email", "user.error.email_exists");
+		} catch (final BadManagerException e) {
+			// No puede ocurrir
 		}
 	}
 
 	private void saveImage() {
 		if (this.imageChanged) {
-			if (this.userImage == null) {
-				logger.trace("Deleting user image");
-				this.deleteUserImage();
-			} else {
-				logger.trace("Changing user image");
-				this.changeUserImage();
+			logger.trace("Changing user image");
+			try (final InputStream is = this.fileService.downloadTemporalFile(uploadedFile.getPath());
+					final BufferedInputStream bis = new BufferedInputStream(is)) {
+				this.userImage = this.userService.changeUsersImage(this.user, is);
+			} catch (final IOException e) {
+				throw new FileUploadException(e);
 			}
 		}
 	}
 
-	private void deleteUserImage() {
-		this.userService.deleteUsersImage(this.user.getUid());
-	}
-
-	private void changeUserImage() {
-		try (final InputStream is = this.fileService.downloadTemporalFile(uploadedFile.getPath());
-				final BufferedInputStream bis = new BufferedInputStream(is)) {
-			this.userImage = this.userService.changeUsersImage(this.user.getUid(), is);
-		} catch (final IOException e) {
-			throw new FileUploadException(e);
-		}
-	}
-
-	public UserDto getUser() {
+	public User getUser() {
 		return this.user;
 	}
 
@@ -161,7 +153,7 @@ public class ConfigView extends AbstractView {
 		return this.userImage;
 	}
 
-	public void setUser(final UserDto user) {
+	public void setUser(final User user) {
 		this.user = user;
 	}
 

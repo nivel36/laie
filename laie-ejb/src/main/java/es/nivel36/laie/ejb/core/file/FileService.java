@@ -33,11 +33,15 @@ public class FileService {
 	@Inject
 	@ConfigurationProperty(value = "file.directory")
 	private String fileDirectory;
-
-	public InputStream downloadFile(final Long id) {
+	
+	public File findById(Long id) {
 		Objects.requireNonNull(id);
+		return fileDao.find(File.class, id);
+	}
+
+	public InputStream downloadFile(final File file) {
+		Objects.requireNonNull(file);
 		try {
-			final File file = this.fileDao.find(File.class, id);
 			final Path path = Paths.get(file.getPhysicalFile().getAbsolutePath());
 			return new BufferedInputStream(Files.newInputStream(path));
 		} catch (final IOException e) {
@@ -62,17 +66,17 @@ public class FileService {
 		file.setPublicAccess(false);
 		final PhysicalFile newPhysicalFile = uploadFileToBucket(TEMP_BUCKET, inputStream);
 		file.setPhysicalFile(newPhysicalFile);
-		file.setName(newPhysicalFile.getUuid());
+		file.setName(newPhysicalFile.getUId());
 		return file;
 	}
 
 	private PhysicalFile uploadFileToBucket(final FileBucket bucket, final InputStream inputStream) {
-		final String uuid = UUID.randomUUID().toString();
-		final Path relativePath = this.getRelativePath(bucket, uuid);
+		final String uId = UUID.randomUUID().toString();
+		final Path relativePath = this.getRelativePath(bucket, uId);
 		final Path absolutePath = this.getAbsolutePath(relativePath);
 		final String hash = this.uploadFileToFilesystem(absolutePath, inputStream);
 		final PhysicalFile newPhysicalFile = new PhysicalFile();
-		newPhysicalFile.setUuid(uuid);
+		newPhysicalFile.setUId(uId);
 		newPhysicalFile.setBucket(bucket.getName());
 		newPhysicalFile.setContentHash(hash);
 		newPhysicalFile.setAbsolutePath(absolutePath);
@@ -81,8 +85,8 @@ public class FileService {
 		return newPhysicalFile;
 	}
 
-	private Path getRelativePath(final FileBucket fileBucket, final String uuid) {
-		return new PathBuilder().buildRelativePath(fileBucket, uuid);
+	private Path getRelativePath(final FileBucket fileBucket, final String uId) {
+		return new PathBuilder().buildRelativePath(fileBucket, uId);
 	}
 
 	private Path getAbsolutePath(final Path relativePath) {

@@ -13,11 +13,11 @@ import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.SortableField;
 import org.hibernate.search.annotations.Store;
 
-import es.nivel36.laie.ejb.core.model.AbstractObfuscableEntity;
+import es.nivel36.laie.ejb.core.model.AbstractEntity;
 import es.nivel36.laie.ejb.user.User;
 
 @Entity
-public class JobOfferStateChangeEvent extends AbstractObfuscableEntity {
+public class JobOfferStateChangeEvent extends AbstractEntity {
 
 	private static final long serialVersionUID = -6400237230027216957L;
 

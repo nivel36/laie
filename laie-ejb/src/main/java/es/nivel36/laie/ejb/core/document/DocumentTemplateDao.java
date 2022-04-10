@@ -12,12 +12,6 @@ import es.nivel36.laie.ejb.core.util.Parameters;
 @Repository
 public class DocumentTemplateDao extends AbstractDao {
 	
-	public void insert(final DocumentTemplate documentTemplate) {
-		Objects.requireNonNull(documentTemplate);
-		this.setUid(DocumentTemplate.class, documentTemplate);
-		this.em.persist(documentTemplate);
-	}
-
 	public DocumentTemplate findDocumentTemplateByName(final String name, final Language language) {
 		Objects.requireNonNull(name);
 		Objects.requireNonNull(language);

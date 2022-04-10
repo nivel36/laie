@@ -18,14 +18,14 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.search.annotations.IndexedEmbedded;
 
-import es.nivel36.laie.ejb.core.model.AbstractObfuscableEntity;
+import es.nivel36.laie.ejb.core.model.AbstractEntity;
 import es.nivel36.laie.ejb.core.model.Ownerable;
 import es.nivel36.laie.ejb.job.offer.JobOffer;
 import es.nivel36.laie.ejb.user.User;
 
 @Entity
 @Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "jobCandidatureId", "datePlanned" }) })
-public class Meeting extends AbstractObfuscableEntity implements Ownerable {
+public class Meeting extends AbstractEntity implements Ownerable {
 
 	private static final long serialVersionUID = -8068167269155086050L;
 

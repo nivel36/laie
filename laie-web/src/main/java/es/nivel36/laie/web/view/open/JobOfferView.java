@@ -7,7 +7,7 @@ import javax.inject.Named;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import es.nivel36.laie.ejb.job.offer.JobOfferDto;
+import es.nivel36.laie.ejb.job.offer.JobOffer;
 import es.nivel36.laie.ejb.job.offer.JobOfferService;
 import es.nivel36.laie.web.core.IllegalPageStateException;
 import es.nivel36.laie.web.core.view.AbstractView;
@@ -20,17 +20,17 @@ public class JobOfferView extends AbstractView {
 
 	private static final Logger logger = LoggerFactory.getLogger(JobOfferView.class);
 
-	private JobOfferDto jobOffer;
+	private JobOffer jobOffer;
 	
 	private transient JobOfferService jobOfferService;
 
 	@PostConstruct
 	public void init() {
-		String uid = this.getValueFromGetParameters("uid");
-		if (uid == null) {
-			throw new IllegalPageStateException("Uid not found");
+		String Id = this.getValueFromGetParameters("Id");
+		if (Id == null) {
+			throw new IllegalPageStateException("Id not found");
 		}
-		this.jobOffer = jobOfferService.findJobOfferByUid(uid);
+		this.jobOffer = jobOfferService.findJobOfferById(Id);
 		if (this.jobOffer == null) {
 			throw new IllegalPageStateException("Job offer not found");
 		}
@@ -40,7 +40,7 @@ public class JobOfferView extends AbstractView {
 		logger.trace("JobOffer {} init", this.jobOffer);
 	}
 
-	public JobOfferDto getJobOffer() {
+	public JobOffer getJobOffer() {
 		return this.jobOffer;
 	}
 }

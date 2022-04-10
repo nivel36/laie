@@ -9,13 +9,13 @@ import javax.inject.Inject;
 
 import org.primefaces.event.SelectEvent;
 
-import es.nivel36.laie.ejb.client.ClientDto;
+import es.nivel36.laie.ejb.client.Client;
 import es.nivel36.laie.ejb.client.ClientService;
 import es.nivel36.laie.ejb.core.model.Page;
-import es.nivel36.laie.ejb.job.offer.JobOfferDto;
+import es.nivel36.laie.ejb.job.offer.JobOffer;
 import es.nivel36.laie.ejb.job.offer.JobOfferService;
-import es.nivel36.laie.ejb.user.SimpleUserDto;
-import es.nivel36.laie.ejb.user.UserDto;
+import es.nivel36.laie.ejb.user.SimpleUser;
+import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.ejb.user.UserService;
 import es.nivel36.laie.web.core.view.AbstractView;
 
@@ -23,9 +23,9 @@ public abstract class AbstractJobView extends AbstractView {
 
 	private static final long serialVersionUID = 3680467978756165892L;
 
-	protected JobOfferDto jobOffer;
+	protected JobOffer jobOffer;
 
-	protected transient List<SimpleUserDto> recruiters = new ArrayList<>();
+	protected transient List<SimpleUser> recruiters = new ArrayList<>();
 
 	@Inject
 	protected transient ClientService clientService;
@@ -36,46 +36,46 @@ public abstract class AbstractJobView extends AbstractView {
 	@Inject
 	protected transient UserService userService;
 
-	public List<ClientDto> completeClient(final String query) {
+	public List<Client> completeClient(final String query) {
 		return this.clientService.search(query, Page.TEN_RESULTS_PER_PAGE).getResultData();
 	}
 
-	public void onOwnerSelect(final SelectEvent<SimpleUserDto> event) {
-		final SimpleUserDto user = event.getObject();
+	public void onOwnerSelect(final SelectEvent<SimpleUser> event) {
+		final SimpleUser user = event.getObject();
 		if (user != null) {
-			this.jobOfferService.changeJobOffersOwner(this.jobOffer.getUid(), user.getUid());
+			this.jobOfferService.changeJobOffersOwner(this.jobOffer.getId(), user.getId());
 		}
 	}
 
-	public List<SimpleUserDto> queryOwner(final String query) {
-		final List<UserDto> resultData = this.userService.search(query, Page.TEN_RESULTS_PER_PAGE).getResultData();
-		final List<SimpleUserDto> users = resultData.stream().map(SimpleUserDto::new).collect(Collectors.toList());
+	public List<SimpleUser> queryOwner(final String query) {
+		final List<User> resultData = this.userService.search(query, Page.TEN_RESULTS_PER_PAGE).getResultData();
+		final List<SimpleUser> users = resultData.stream().map(SimpleUser::new).collect(Collectors.toList());
 		return users;
 	}
 
-	public List<SimpleUserDto> queryRecruiter(final String query) {
-		final List<SimpleUserDto> recruiters = new ArrayList<SimpleUserDto>();
-		final List<UserDto> searchRecruiters = this.userService.search(query, Page.ALL_RESULTS).getResultData();
-		for(final UserDto searchRecruiter:searchRecruiters) {
-			final SimpleUserDto recruiter = new SimpleUserDto(searchRecruiter);
+	public List<SimpleUser> queryRecruiter(final String query) {
+		final List<SimpleUser> recruiters = new ArrayList<SimpleUser>();
+		final List<User> searchRecruiters = this.userService.search(query, Page.ALL_RESULTS).getResultData();
+		for(final User searchRecruiter:searchRecruiters) {
+			final SimpleUser recruiter = new SimpleUser(searchRecruiter);
 			this.recruiters.add(recruiter);
 		}
 		return recruiters;
 	}
 
-	public JobOfferDto getJobOffer() {
+	public JobOffer getJobOffer() {
 		return this.jobOffer;
 	}
 
-	public List<SimpleUserDto> getRecruiters() {
+	public List<SimpleUser> getRecruiters() {
 		return this.recruiters;
 	}
 
-	public void setJobOffer(final JobOfferDto jobOffer) {
+	public void setJobOffer(final JobOffer jobOffer) {
 		this.jobOffer = jobOffer;
 	}
 
-	public void setRecruiters(final List<SimpleUserDto> recruiters) {
+	public void setRecruiters(final List<SimpleUser> recruiters) {
 		this.recruiters = recruiters;
 	}
 

@@ -1,11 +1,8 @@
 package es.nivel36.laie.web.view.client;
 
-import java.util.Map;
 import java.util.Objects;
 
-import org.primefaces.model.FilterMeta;
-
-import es.nivel36.laie.ejb.client.ClientDto;
+import es.nivel36.laie.ejb.client.Client;
 import es.nivel36.laie.ejb.client.ClientService;
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.core.model.search.SearchFacets;
@@ -13,7 +10,7 @@ import es.nivel36.laie.ejb.core.model.search.SearchResult;
 import es.nivel36.laie.ejb.core.model.search.SortField;
 import es.nivel36.laie.web.core.view.AbstractLazyDataModel;
 
-public class ClientLazyDataModel extends AbstractLazyDataModel<ClientDto> {
+public class ClientLazyDataModel extends AbstractLazyDataModel<Client> {
 
 	private static final long serialVersionUID = 4434716428350786274L;
 	
@@ -25,23 +22,14 @@ public class ClientLazyDataModel extends AbstractLazyDataModel<ClientDto> {
 	}
 
 	@Override
-	protected SearchResult<ClientDto> search(String searchText, Page page, SortField sortField,
+	protected SearchResult<Client> search(String searchText, Page page, SortField sortField,
 			SearchFacets searchFilter) {
 		return clientService.search(searchText, page, sortField, searchFilter);
 	}
 
 	@Override
-	protected ClientDto find(String rowkey) {
-		return clientService.findClientByUid(rowkey);
+	protected Client find(Long id) {
+		return clientService.findClientById(id);
 	}
 
-	@Override
-	protected String getKey(ClientDto entity) {
-		return entity.getUid();
-	}
-
-	@Override
-	public int count(Map<String, FilterMeta> filterBy) {
-		return 0;
-	}
 }

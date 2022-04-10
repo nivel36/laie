@@ -15,7 +15,7 @@
 			<p:menuitem value="#{i18n['menu.index']}" outcome="/index.xhtml" />
 			<p:menuitem value="#{i18n['candidate.candidates']}" outcome="/candidate/search.xhtml" />
 			<p:menuitem value="#{curriculumView.candidate.fullName}" outcome="/candidate/view.xhtml">
-				<f:param name="id" value="#{curriculumView.candidate.uid}" />
+				<f:param name="id" value="#{curriculumView.candidate.id}" />
 			</p:menuitem>
 			<p:menuitem value="#{i18n['curriculum.curriculum']}" disabled="true" />
 		</p:breadCrumb>
@@ -23,7 +23,7 @@
 
 	<ui:define name="buttons">
 		<p:button value="#{i18n['action.back']}" outcome="/candidate/view.xhtml" styleClass="ui-button-info ui-button-outlined">
-			<f:param name="id" value="#{curriculumView.candidate.uid}" />
+			<f:param name="id" value="#{curriculumView.candidate.id}" />
 		</p:button>
 	</ui:define>
 
@@ -48,7 +48,7 @@
 
 							<p:menuButton styleClass="menu-button" icon="pi pi-ellipsis-v" id="menu-button">
 								<p:menuitem value="#{i18n['curriculum.view_curriculum']}" outcome="/candidate/view">
-									<f:param name="candidate" value="#{viewCandidateView.candidate.uid}" />
+									<f:param name="candidate" value="#{viewCandidateView.candidate.id}" />
 								</p:menuitem>
 							</p:menuButton>
 						</div>

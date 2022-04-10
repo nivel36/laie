@@ -21,15 +21,13 @@ public class EditCandidateView extends AbstractCandidateView {
 
 	@PostConstruct
 	public void init() {
-		final String uid = this.getValueFromGetParameters("candidate",true );
-		this.candidate = candidateService.findCandidateByUid(uid);
-		if (candidate == null) {
+		if (this.candidate == null) {
 			throw new IllegalPageStateException();
 		}
 		logger.trace("Candidate {} edit init", this.candidate);
 		this.initTags();
 	}
-
+	
 	private void initTags() {
 		if (this.candidate.getTags() == null) {
 			this.tags = new ArrayList<>();

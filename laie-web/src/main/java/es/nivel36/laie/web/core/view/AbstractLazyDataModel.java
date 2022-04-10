@@ -1,6 +1,5 @@
 package es.nivel36.laie.web.core.view;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -9,13 +8,14 @@ import org.primefaces.model.FilterMeta;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortMeta;
 
+import es.nivel36.laie.ejb.core.model.Identifiable;
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.core.model.search.SearchFacet;
 import es.nivel36.laie.ejb.core.model.search.SearchFacets;
 import es.nivel36.laie.ejb.core.model.search.SearchResult;
 import es.nivel36.laie.ejb.core.model.search.SortField;
 
-public abstract class AbstractLazyDataModel<T extends Serializable> extends LazyDataModel<T> {
+public abstract class AbstractLazyDataModel<T extends Identifiable> extends LazyDataModel<T> {
 
 	private static final long serialVersionUID = -7266573501998556478L;
 
@@ -36,7 +36,8 @@ public abstract class AbstractLazyDataModel<T extends Serializable> extends Lazy
 	@Override
 	public T getRowData(final String rowKey) {
 		Objects.requireNonNull(rowKey, "RowKey can't be null");
-		return find(rowKey);
+		final Long id = Long.valueOf(rowKey);
+		return find(id);
 	}
 
 	@Override
@@ -47,9 +48,11 @@ public abstract class AbstractLazyDataModel<T extends Serializable> extends Lazy
 	protected abstract SearchResult<T> search(String searchText, Page page, SortField sortField,
 			SearchFacets searchFilter);
 
-	protected abstract T find(String rowkey);
-	
-	protected abstract String getKey(T entity);
+	protected abstract T find(Long rowkey);
+
+	protected String getKey(T entity) {
+		return String.valueOf(entity.getId());
+	}
 
 	@Override
 	public List<T> load(final int first, final int pageSize, final Map<String, SortMeta> sorts,
@@ -70,5 +73,10 @@ public abstract class AbstractLazyDataModel<T extends Serializable> extends Lazy
 
 	public void setSearchText(final String searchText) {
 		this.searchText = searchText;
+	}
+	
+	@Override
+	public int count(Map<String, FilterMeta> filterBy) {
+		return 0;
 	}
 }

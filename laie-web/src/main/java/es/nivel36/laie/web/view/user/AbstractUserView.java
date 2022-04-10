@@ -2,18 +2,17 @@ package es.nivel36.laie.web.view.user;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
+import org.omnifaces.cdi.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import es.nivel36.laie.ejb.core.file.FileService;
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.user.Role;
-import es.nivel36.laie.ejb.user.SimpleUserDto;
-import es.nivel36.laie.ejb.user.UserDto;
+import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.ejb.user.UserService;
 import es.nivel36.laie.web.core.view.AbstractView;
 
@@ -23,9 +22,8 @@ public abstract class AbstractUserView extends AbstractView {
 
 	private static final Logger logger = LoggerFactory.getLogger(AbstractUserView.class);
 
-	protected UserDto user;
-
-	protected SimpleUserDto manager;
+	@Param(name="user", converter="userConverter")
+	protected User user;
 
 	@Inject
 	protected transient FileService fileUploadService;
@@ -35,36 +33,26 @@ public abstract class AbstractUserView extends AbstractView {
 
 	public void changeRoleListener() {
 		logger.trace("Change role listener triggered");
-		if (this.user.getRoleName().equals(Role.ADMIN.name())) {
+		if (this.user.getRole().equals(Role.ADMIN)) {
+			// Los Adminstradores no tienen managers
 			this.user.setManager(null);
 		}
 	}
 
-	public List<SimpleUserDto> queryManager(final String query) {
+	public List<User> queryManager(final String query) {
 		logger.trace("Search manager with the string {}", query);
-		final List<UserDto> resultData = this.userService.search(query, Page.TEN_RESULTS_PER_PAGE).getResultData();
-		final List<SimpleUserDto> managers = resultData.stream().filter(u -> !u.equals(user)).map(SimpleUserDto::new)
-				.collect(Collectors.toList());
-		return managers;
+		return this.userService.search(query, Page.TEN_RESULTS_PER_PAGE).getResultData();
 	}
 
 	protected String userUrl() {
-		return "/user/view.xhtml?user=" + this.user.getUid();
+		return ViewUserView.URL + "?user=" + this.user.getId();
 	}
 
-	public SimpleUserDto getmanager() {
-		return this.manager;
-	}
-
-	public UserDto getUser() {
+	public User getUser() {
 		return this.user;
 	}
 
-	public void setManager(final SimpleUserDto manager) {
-		this.manager = manager;
-	}
-
-	public void setUser(final UserDto user) {
+	public void setUser(final User user) {
 		this.user = user;
 	}
 

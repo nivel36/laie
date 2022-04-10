@@ -25,14 +25,14 @@ public class JobCandidatureStateService {
 		this.jobCandidatureStateDao = jobCandidatureStateDao;
 	}
 
-	public JobCandidatureStateDto addJobCandidatureState(final String name, final boolean isApproved,
+	public JobCandidatureState addJobCandidatureState(final String name, final boolean isApproved,
 			final boolean isDeclined, final boolean isFirst) {
 		final JobCandidatureState jcs = new JobCandidatureState();
 		jcs.setApproved(isApproved);
 		jcs.setFirst(isFirst);
 		jcs.setDeclined(isDeclined);
 		this.jobCandidatureStateDao.insert(jcs);
-		return new JobCandidatureStateMapper().map(jcs);
+		return jcs;
 	}
 	
 	public List<JobCandidatureState> findAll() {

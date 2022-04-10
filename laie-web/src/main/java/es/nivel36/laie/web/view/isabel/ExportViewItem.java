@@ -2,7 +2,7 @@ package es.nivel36.laie.web.view.isabel;
 
 import java.util.Objects;
 
-import es.nivel36.laie.ejb.export.dto.ExportFieldsOutputBean.ExportFieldItem;
+import es.nivel36.laie.ejb.export..ExportFieldsOutputBean.ExportFieldItem;
 import es.nivel36.laie.web.core.util.Translator;
 
 public final class ExportViewItem implements ExportViewItemI {

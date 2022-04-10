@@ -10,7 +10,7 @@
 
 	<ui:define name="bookmarkButton">
 		<h:form>
-			<p:commandButton action="#{viewCandidateView.addToBookmarks}" process="@this" update="bookmark-button :bookmarks" icon="pi pi-bookmark"
+			<p:commandButton action="#{viewCandidateView.adBookmarks}" process="@this" update="bookmark-button :bookmarks" icon="pi pi-bookmark"
 				rendered="#{viewCandidateView.bookmarkable}" styleClass="ui-button-outlined" />
 		</h:form>
 	</ui:define>
@@ -38,10 +38,10 @@
 
 							<p:menuButton styleClass="menu-button" icon="pi pi-ellipsis-v" id="menu-button">
 								<p:menuitem value="#{i18n['action.edit']}" outcome="/candidate/edit" icon="pi pi-pencil">
-									<f:param name="candidate" value="#{viewCandidateView.candidate.uid}" />
+									<f:param name="candidate" value="#{viewCandidateView.candidate.id}" />
 								</p:menuitem>
 								<p:menuitem value="#{i18n['curriculum.view_curriculum']}" outcome="/candidate/curriculum">
-									<f:param name="candidate" value="#{viewCandidateView.candidate.uid}" />
+									<f:param name="candidate" value="#{viewCandidateView.candidate.id}" />
 								</p:menuitem>
 							</p:menuButton>
 						</div>

@@ -12,9 +12,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import es.nivel36.laie.ejb.core.model.Page;
-import es.nivel36.laie.ejb.job.meeting.MeetingDto;
+import es.nivel36.laie.ejb.job.meeting.Meeting;
 import es.nivel36.laie.ejb.job.meeting.MeetingService;
-import es.nivel36.laie.ejb.user.UserDto;
+import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.web.core.view.AbstractView;
 
 @Named
@@ -27,9 +27,9 @@ public class SearchMeetingView extends AbstractView {
 	
 	public static final String URL = "/meeting/search.xhtml";
 
-	private List<MeetingDto> conductedMeetings;
+	private List<Meeting> conductedMeetings;
 
-	private List<MeetingDto> plannedMeetings;
+	private List<Meeting> plannedMeetings;
 
 	@Inject
 	private transient MeetingService meetingService;
@@ -37,25 +37,25 @@ public class SearchMeetingView extends AbstractView {
 	@PostConstruct
 	public void init() {
 		logger.trace("Init search meeting");
-		final UserDto user = this.sessionUser.get();
-		final String userUid = user.getUid();
-		this.plannedMeetings = this.initPlannedMeetings(userUid);
-		this.conductedMeetings = this.initConductedMeetings(userUid);
+		final User user = this.sessionUser.get();
+		final String userId = user.getId();
+		this.plannedMeetings = this.initPlannedMeetings(userId);
+		this.conductedMeetings = this.initConductedMeetings(userId);
 	}
 
-	private List<MeetingDto> initConductedMeetings(final String userUid) {
-		return this.meetingService.findConductedMeetings(userUid, Page.TEN_RESULTS_PER_PAGE);
+	private List<Meeting> initConductedMeetings(final String userId) {
+		return this.meetingService.findConductedMeetings(userId, Page.TEN_RESULTS_PER_PAGE);
 	}
 
-	private List<MeetingDto> initPlannedMeetings(final String userUid) {
-		return this.meetingService.findPlannedMeetings(userUid, Page.TEN_RESULTS_PER_PAGE);
+	private List<Meeting> initPlannedMeetings(final String userId) {
+		return this.meetingService.findPlannedMeetings(userId, Page.TEN_RESULTS_PER_PAGE);
 	}
 
-	public List<MeetingDto> getConductedMeetings() {
+	public List<Meeting> getConductedMeetings() {
 		return this.conductedMeetings;
 	}
 
-	public List<MeetingDto> getPlannedMeetings() {
+	public List<Meeting> getPlannedMeetings() {
 		return this.plannedMeetings;
 	}
 

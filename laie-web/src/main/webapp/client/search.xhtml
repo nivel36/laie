@@ -22,7 +22,7 @@
 				<div class="searchBar-buttons">
 					<cc:inputSearch searchText="#{searchClientView.searchText}"
 						searchAction="#{searchClientView.search}"
-						update="clientSearchForm:clients" styleClass="ui-fluid" />
+						update="clientSearchForm:clients" styleClass="ui-flId" />
 					<div class="buttons">
 						<p:button value="#{i18n['client.new_client']}"
 							outcome="/client/add.xhtml"
@@ -43,7 +43,7 @@
 						sortBy="#{client.name}">
 						<h:link value="#{client.name}" outcome="/client/view.xhtml"
 							styleClass="link">
-							<f:param name="client" value="#{client.uid}" />
+							<f:param name="client" value="#{client.id}" />
 						</h:link>
 					</p:column>
 
@@ -66,7 +66,7 @@
 						sortBy="#{client.owner.name}">
 						<h:link value="#{client.owner.fullName}"
 							outcome="/user/view.xhtml">
-							<f:param name="user" value="#{client.owner.uid}" />
+							<f:param name="user" value="#{client.owner.id}" />
 						</h:link>
 					</p:column>
 				</p:dataTable>

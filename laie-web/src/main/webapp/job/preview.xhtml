@@ -22,7 +22,7 @@
 			<p:menuitem value="#{i18n['menu.index']}" outcome="/index.xhtml" />
 			<p:menuitem value="#{i18n['job.job_offers']}" outcome="/job/search.xhtml" />
 			<p:menuitem value="#{previewJobView.jobOffer}" outcome="/job/view.xhtml">
-				<f:param name="id" value="#{previewJobView.jobOffer.uid}" />
+				<f:param name="id" value="#{previewJobView.jobOffer.id}" />
 			</p:menuitem>
 			<p:menuitem value="#{i18n['job.preview']}" disabled="true" />
 		</p:breadCrumb>
@@ -31,7 +31,7 @@
 	<ui:define name="buttons">
 		<h:form>
 			<p:button value="#{i18n['action.back']}" outcome="/job/edit.xhtml" styleClass="ui-button-secondary ui-button-outlined">
-				<f:param name="id" value="#{previewJobView.jobOffer.uid}" />
+				<f:param name="id" value="#{previewJobView.jobOffer.id}" />
 			</p:button>
 		</h:form>
 	</ui:define>
@@ -39,7 +39,7 @@
 	<ui:define name="content">
 		<div class="p-grid">
 			<div class="p-col-12 p-xl-6">
-				<div class="card card-w-title ui-fluid">
+				<div class="card card-w-title ui-flId">
 					<h1>#{previewJobView.jobOffer.title}</h1>
 					<h:outputText value="#{previewJobView.jobOffer.description}" escape="false" />
 				</div>

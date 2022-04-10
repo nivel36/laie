@@ -18,10 +18,10 @@ import javax.security.auth.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import es.nivel36.laie.ejb.job.meeting.MeetingDto;
+import es.nivel36.laie.ejb.job.meeting.Meeting;
 import es.nivel36.laie.ejb.job.meeting.MeetingService;
 import es.nivel36.laie.ejb.job.meeting.MeetingType;
-import es.nivel36.laie.ejb.user.SimpleUserDto;
+import es.nivel36.laie.ejb.user.SimpleUser;
 import es.nivel36.laie.web.core.view.AbstractView;
 
 @Named
@@ -42,7 +42,7 @@ public class AddMeetingView extends AbstractView {
 
 	private List<String> hours;
 
-	private MeetingDto meeting;
+	private Meeting meeting;
 
 	private LocalDate meetingDate;
 
@@ -65,9 +65,9 @@ public class AddMeetingView extends AbstractView {
 		this.meetingHour = this.initActualMeetingHour();
 	}
 
-	private MeetingDto initMeeting() {
-		final MeetingDto newMeeting = new MeetingDto();
-		final SimpleUserDto currentUser = new SimpleUserDto(this.sessionUser.get());
+	private Meeting initMeeting() {
+		final Meeting newMeeting = new Meeting();
+		final SimpleUser currentUser = new SimpleUser(this.sessionUser.get());
 		newMeeting.setOwner(currentUser);
 		return newMeeting;
 	}
@@ -175,7 +175,7 @@ public class AddMeetingView extends AbstractView {
 		return this.hours;
 	}
 
-	public MeetingDto getMeeting() {
+	public Meeting getMeeting() {
 		return this.meeting;
 	}
 
@@ -203,7 +203,7 @@ public class AddMeetingView extends AbstractView {
 		this.attendees = attendees;
 	}
 
-	public void setMeeting(final MeetingDto meeting) {
+	public void setMeeting(final Meeting meeting) {
 		this.meeting = meeting;
 	}
 

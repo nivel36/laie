@@ -12,11 +12,11 @@
 			<p:menuitem value="#{i18n['menu.index']}" outcome="/index.xhtml" />
 			<p:menuitem value="#{i18n['candidate.candidates']}" outcome="/candidate/search.xhtml" />
 			<p:menuitem value="#{jobExperienceView.curriculum.candidate.fullName}" outcome="/candidate/view.xhtml">
-				<f:param name="id" value="#{jobExperienceView.curriculum.candidate.uid}" />
+				<f:param name="id" value="#{jobExperienceView.curriculum.candidate.id}" />
 			</p:menuitem>
 			<p:menuitem value="#{i18n['curriculum.curriculum']}" outcome="/curriculum/view.xhtml">
-				<f:param name="id" value="#{jobExperienceView.curriculum.uid}" />	
-				<f:param name="candidateId" value="#{jobExperienceView.curriculum.candidate.uid}" />
+				<f:param name="id" value="#{jobExperienceView.curriculum.id}" />	
+				<f:param name="candidateId" value="#{jobExperienceView.curriculum.candidate.id}" />
 			</p:menuitem>
 			<p:menuitem value="#{i18n['job_experience.job_experience']}" disabled="true" />
 		</p:breadCrumb>
@@ -25,8 +25,8 @@
 	<ui:define name="buttons">
 		<h:form>
 			<p:button value="#{i18n['action.cancel']}" outcome="/curriculum/view.xhtml" styleClass="ui-button-secondary ui-button-outlined">
-				<f:param name="id" value="#{jobExperienceView.curriculum.uid}" />	
-				<f:param name="candidateId" value="#{jobExperienceView.curriculum.candidate.uid}" />
+				<f:param name="id" value="#{jobExperienceView.curriculum.id}" />	
+				<f:param name="candidateId" value="#{jobExperienceView.curriculum.candidate.id}" />
 			</p:button>
 			<p:commandButton value="#{i18n['action.delete']}" action="#{jobExperienceView.delete}" process="@this" rendered="#{not jobExperienceView.newJobExperience}"
 				styleClass="danger-button">
@@ -41,7 +41,7 @@
 			<p:remoteCommand name="save" action="#{jobExperienceView.save}" process="@form" update="@form" />
 			<div class="p-grid">
 				<div class="p-col-12 p-md-10 p-lg-9 p-xl-8">
-					<div class="card ui-fluid">
+					<div class="card ui-flId">
 						<div class="p-grid p-formgrid">
 							<div class="p-col-12 p-sm-6">
 								<g:input id="degree" label="#{i18n['job_experience.company_name']}" value="#{jobExperienceView.jobExperience.companyName}" required="true" />

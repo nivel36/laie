@@ -28,7 +28,7 @@
 
 							<p:menuButton styleClass="menu-button" icon="pi pi-ellipsis-v" id="menu-button">
 								<p:menuitem value="#{i18n['action.edit']}" outcome="/client/edit.xhtml" icon="pi pi-pencil">
-									<f:param name="client" value="#{viewClientView.client.uid}" />
+									<f:param name="client" value="#{viewClientView.client.id}" />
 								</p:menuitem>
 								<p:menuitem value="#{i18n['action.export']}" action="#{viewClientView.export}" icon="pi pi-file-excel" />
 							</p:menuButton>
@@ -39,7 +39,7 @@
 				<cc:jobOffers id="jobOffers" value="#{viewClientView.jobOffers}" rows="5" showClient="false">
 					<h:form id="jobOffersForm">
 						<p:button icon="pi pi-plus" outcome="/job/add.xhtml" process="@this" styleClass="ui-button-success ui-button-outlined">
-							<f:param name="clientId" value="#{viewClientView.client.uid}" />
+							<f:param name="clientId" value="#{viewClientView.client.id}" />
 						</p:button>
 					</h:form>
 				</cc:jobOffers>
@@ -48,7 +48,7 @@
 			<div class="p-col-12 p-xl-4">
 				<cc:contacts value="#{viewClientView.client.contacts}">
 					<p:button icon="pi pi-plus" outcome="/client/contact/add.xhtml" process="@this" styleClass="ui-button-success ui-button-outlined">
-						<f:param name="client" value="#{viewClientView.client.uid}" />
+						<f:param name="client" value="#{viewClientView.client.id}" />
 					</p:button>
 				</cc:contacts>
 			</div>

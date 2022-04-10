@@ -37,7 +37,7 @@ public class PhysicalFile extends AbstractEntity {
 
 	@NotNull
 	@Column(nullable = false, unique = true, updatable = false)
-	private String uuid;
+	private String uId;
 
 	public String getAbsolutePath() {
 		return this.absolutePath;
@@ -59,8 +59,8 @@ public class PhysicalFile extends AbstractEntity {
 		return this.relativePath;
 	}
 
-	public String getUuid() {
-		return this.uuid;
+	public String getUId() {
+		return this.uId;
 	}
 
 	public void setAbsolutePath(final Path absolutePath) {
@@ -91,8 +91,8 @@ public class PhysicalFile extends AbstractEntity {
 		this.relativePath = relativePath;
 	}
 
-	public void setUuid(final String uuid) {
-		this.uuid = uuid;
+	public void setUId(final String uId) {
+		this.uId = uId;
 	}
 	
 	@Override
@@ -107,16 +107,16 @@ public class PhysicalFile extends AbstractEntity {
 			return false;
 		}
 		final PhysicalFile other = (PhysicalFile) obj;
-		return Objects.equals(this.uuid, other.uuid);
+		return Objects.equals(this.uId, other.uId);
 	}
 	
 	@Override
 	public int hashCode() {
-		return Objects.hash(this.uuid);
+		return Objects.hash(this.uId);
 	}
 	
 	@Override
 	public String toString() {
-		return uuid;
+		return uId;
 	}
 }

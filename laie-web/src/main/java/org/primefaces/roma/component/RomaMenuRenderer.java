@@ -256,7 +256,7 @@ public class RomaMenuRenderer extends BaseMenuRenderer {
                     }
                     List<String> idParams = new ArrayList<String>();
                     idParams.add(menuitem.getId());
-                    params.put(menuClientId + "_menuid", idParams);
+                    params.put(menuClientId + "_menId", idParams);
 
                     command = menuitem.isAjax() ? createAjaxRequest(context, menu, (AjaxSource) menuitem, form, params) : buildNonAjaxRequest(context, menu, form, menuClientId, params, true);
                 } 

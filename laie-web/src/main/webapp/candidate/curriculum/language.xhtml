@@ -12,11 +12,11 @@
 			<p:menuitem value="#{i18n['menu.index']}" outcome="/index.xhtml" />
 			<p:menuitem value="#{i18n['candidate.candidates']}" outcome="/candidate/search.xhtml" />
 			<p:menuitem value="#{languageView.curriculum.candidate.fullName}" outcome="/candidate/view.xhtml">
-				<f:param name="id" value="#{languageView.curriculum.candidate.uid}" />
+				<f:param name="id" value="#{languageView.curriculum.candidate.id}" />
 			</p:menuitem>
 			<p:menuitem value="#{i18n['curriculum.curriculum']}" outcome="/curriculum/view.xhtml">
-				<f:param name="id" value="#{languageView.curriculum.uid}" />
-				<f:param name="candidateId" value="#{languageView.curriculum.candidate.uid}" />
+				<f:param name="id" value="#{languageView.curriculum.id}" />
+				<f:param name="candidateId" value="#{languageView.curriculum.candidate.id}" />
 			</p:menuitem>
 			<p:menuitem value="#{i18n['language.language']}" disabled="true" />
 		</p:breadCrumb>
@@ -25,8 +25,8 @@
 	<ui:define name="buttons">
 		<h:form>
 			<p:button value="#{i18n['action.back']}" outcome="/curriculum/view.xhtml" styleClass="ui-button-secondary ui-button-outlined">
-				<f:param name="id" value="#{languageView.curriculum.uid}" />
-				<f:param name="candidateId" value="#{languageView.curriculum.candidate.uid}" />
+				<f:param name="id" value="#{languageView.curriculum.id}" />
+				<f:param name="candidateId" value="#{languageView.curriculum.candidate.id}" />
 			</p:button>
 			<p:commandButton value="#{i18n['action.save']}" onclick="save()" styleClass="susccess-button" />
 		</h:form>
@@ -37,7 +37,7 @@
 			<p:remoteCommand name="save" process="@this language:languages" update="growl language:languages" action="#{languageView.save}" />
 			<div class="p-grid">
 				<div class="p-col-12 p-xl-6">
-					<div class="card ui-fluid">
+					<div class="card ui-flId">
 						<h:panelGroup styleClass="language section" id="languages" layout="block">
 							<ui:repeat var="language" value="#{languageView.languages}">
 								<div class="p-grid">
@@ -62,7 +62,7 @@
 							</ui:repeat>
 						</h:panelGroup>
 						<h:panelGroup styleClass="language section" id="new_language" layout="block">
-							<div class="ui-fluid">
+							<div class="ui-flId">
 								<div class="p-grid">
 									<div class="p-col-5">
 										<g:input id="input-text" value="#{languageView.languageName}" required="true" styleClass="input input-text" />

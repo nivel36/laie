@@ -15,7 +15,7 @@
 			<div class="card">
 				<div class="p-grid">
 					<div class="p-col-12 p-md-6">
-						<div class="form-card ui-fluid">
+						<div class="form-card ui-flId">
 							<h5>#{i18n['user.personal_information']}</h5>
 							<div class="p-grid p-formgrid">
 								<div class="p-col-12 p-sm-6">
@@ -35,7 +35,7 @@
 						</div>
 					</div>
 					<div class="p-col-12 p-md-6">
-						<div class="form-card ui-fluid">
+						<div class="form-card ui-flId">
 							<h5>#{i18n['user.professional_information']}</h5>
 							<div class="p-grid p-formgrid">
 								<div class="p-col-12 p-sm-6">
@@ -47,7 +47,7 @@
 									</g:input>
 								</div>
 								<div class="p-col-12 p-sm-6">
-									<h:panelGroup id="managerWrapper" class="form-field ui-fluid" layout="block">
+									<h:panelGroup id="managerWrapper" class="form-field ui-flId" layout="block">
 										<cc:autocomplete id="manager" label="#{i18n['user.manager']}" value="#{addUserView.user.manager}"
 											completeMethod="#{addUserView.queryManager}" converter="simpleUserConverter">
 											<p:column styleClass="user-select image">

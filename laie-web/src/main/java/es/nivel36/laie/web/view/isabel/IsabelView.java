@@ -11,10 +11,10 @@ import javax.inject.Named;
 import org.primefaces.model.DualListModel;
 
 import es.nivel36.laie.ejb.export.acquirer.ReportInfo;
-import es.nivel36.laie.ejb.export.dto.ExportFieldsOutputBean;
-import es.nivel36.laie.ejb.export.dto.ExportSaveDefinitionInputBean;
-import es.nivel36.laie.ejb.export.dto.ExportFieldsOutputBean.ExportFieldItem;
-import es.nivel36.laie.ejb.export.dto.ExportSaveDefinitionInputBean.SaveDefinitionItem;
+import es.nivel36.laie.ejb.export..ExportFieldsOutputBean;
+import es.nivel36.laie.ejb.export..ExportSaveDefinitionInputBean;
+import es.nivel36.laie.ejb.export..ExportFieldsOutputBean.ExportFieldItem;
+import es.nivel36.laie.ejb.export..ExportSaveDefinitionInputBean.SaveDefinitionItem;
 import es.nivel36.laie.ejb.export.service.ExportDefinitionService;
 import es.nivel36.laie.web.core.util.Translator;
 import es.nivel36.laie.web.core.view.AbstractView;

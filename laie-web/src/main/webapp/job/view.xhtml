@@ -26,7 +26,7 @@
 
 							<p:menuButton styleClass="menu-button" icon="pi pi-ellipsis-v" id="menu-button">
 								<p:menuitem value="#{i18n['action.edit']}" outcome="/job/edit.xhtml" icon="pi pi-pencil">
-									<f:param name="job" value="#{viewJobView.jobOffer.uid}" />
+									<f:param name="job" value="#{viewJobView.jobOffer.id}" />
 								</p:menuitem>
 								<p:menuitem value="#{i18n['action.export']}" action="#{viewJobView.export}" icon="pi pi-file-excel" />
 							</p:menuButton>
@@ -37,7 +37,7 @@
 					<cc:jobCandidatures value="#{viewJobView.jobCandidatures}" showJobOffer="false" rows="5">
 						<p:button outcome="/job/selectCandidates.xhtml" process="@this" rendered="#{viewJobView.jobOffer.open}" icon="pi pi-plus"
 							styleClass="ui-button-success ui-button-outlined">
-							<f:param name="job" value="#{viewJobView.jobOffer.uid}" />
+							<f:param name="job" value="#{viewJobView.jobOffer.id}" />
 						</p:button>
 					</cc:jobCandidatures>
 				</h:form>
@@ -51,14 +51,14 @@
 					</cc:outputText>
 					<cc:outputText label="#{i18n['job.places']}" value="#{viewJobView.jobOffer.places}" />
 					<cc:outputLink label="#{i18n['job.preview']}" value="#{i18n['job.preview']}" outcome="/job/preview.xhtml" target="new">
-						<f:param name="job" value="#{viewJobView.jobOffer.uid}" />
+						<f:param name="job" value="#{viewJobView.jobOffer.id}" />
 					</cc:outputLink>
 					<cc:outputLink label="#{i18n['job.description']}" value="#{applicationView.hostname}/open/jobOffer.xhtml" outcome="/open/jobOffer.xhtml"
 						target="new" rendered="#{viewJobView.jobOffer.published}">
-						<f:param name="job" value="#{viewJobView.jobOffer.uid}" />
+						<f:param name="job" value="#{viewJobView.jobOffer.id}" />
 					</cc:outputLink>
 					<cc:outputLink label="#{i18n['job.owner']}" value="#{viewJobView.jobOffer.owner.fullName}" outcome="/user/view.xhtml">
-						<f:param name="user" value="#{viewJobView.jobOffer.owner.uid}" />
+						<f:param name="user" value="#{viewJobView.jobOffer.owner.id}" />
 					</cc:outputLink>
 					<div class="data">
 						<div class="label-container">
@@ -87,7 +87,7 @@
 						<div class="text-container">
 							<ui:repeat value="#{viewJobView.jobOffer.recruiters}" var="recruiter" varStatus="varStatus">
 								<p:link outcome="/user/view.xhtml">
-									<f:param name="user" value="#{recruiter.uid}" />
+									<f:param name="user" value="#{recruiter.id}" />
 									<h:outputText value="#{recruiter.fullName}" />
 								</p:link>
 								<h:outputText value=", " styleClass="text" rendered="#{not varStatus.last}" />

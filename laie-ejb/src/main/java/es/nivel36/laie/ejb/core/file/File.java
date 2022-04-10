@@ -74,6 +74,13 @@ public class File extends AbstractEntity implements Indexable {
 	public void setPublicAccess(final boolean publicAccess) {
 		this.publicAccess = publicAccess;
 	}
+	
+	public String getPath() {
+		if(physicalFile == null) {
+			return null;
+		}
+		return physicalFile.getRelativePath();
+	}
 
 	@Override
 	public boolean equals(Object obj) {

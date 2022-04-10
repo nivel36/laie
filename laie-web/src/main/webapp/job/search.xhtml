@@ -15,7 +15,7 @@
 			<div class="card">
 				<div class="searchBar-buttons">
 					<cc:inputSearch searchText="#{searchJobView.searchText}" searchAction="#{searchJobView.search}" update="jobOfferSearchform:jobOffers"
-						styleClass="ui-fluid" />
+						styleClass="ui-flId" />
 					<div class="buttons">
 						<p:button value="#{i18n['job.new_job_offer']}" outcome="/job/add.xhtml" styleClass="ui-button-success ui-button-outlined" />
 						<p:commandButton value="#{i18n['action.export']}" action="#{searchJobView.export}" icon="pi pi-file-excel"
@@ -28,13 +28,13 @@
 
 					<p:column headerText="#{i18n['job.title']}" sortBy="#{jobOffer.title}">
 						<h:link outcome="/job/view.xhtml">#{jobOffer.title} <h:outputText value="-" rendered="#{not empty jobOffer.address.city}" /> ${jobOffer.address.city}
-									<f:param name="job" value="#{jobOffer.uid}" />
+									<f:param name="job" value="#{jobOffer.id}" />
 						</h:link>
 					</p:column>
 
 					<p:column headerText="#{i18n['job.client']}" sortBy="#{jobOffer.client.name}">
 						<h:link value="#{jobOffer.client.name}" outcome="/client/view.xhtml">
-							<f:param name="client" value="#{jobOffer.client.uid}" />
+							<f:param name="client" value="#{jobOffer.client.id}" />
 						</h:link>
 					</p:column>
 
@@ -44,7 +44,7 @@
 
 					<p:column headerText="#{i18n['user.owner']}" sortBy="#{user.owner.name}">
 						<h:link value="#{jobOffer.owner.fullName}" outcome="/user/view.xhtml">
-							<f:param name="user" value="#{jobOffer.owner.uid}" />
+							<f:param name="user" value="#{jobOffer.owner.id}" />
 						</h:link>
 					</p:column>
 

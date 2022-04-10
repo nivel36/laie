@@ -6,7 +6,7 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 	<p:link outcome="/user/view.xhtml">
-		<f:param name="userId" value="#{user.uid}" />
+		<f:param name="userId" value="#{user.id}" />
 		<div class="user-minicard">
 			<div class="user-minicard-image">
 				<cc:avatar name="#{user.fullName}" path="#{user.avatarUrl}" />

@@ -2,39 +2,26 @@ package es.nivel36.laie.web.view.client.contact;
 
 import java.util.Objects;
 
-import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
-import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.inject.Inject;
 
-import es.nivel36.laie.ejb.client.ContactDto;
+import es.nivel36.laie.ejb.client.Contact;
 import es.nivel36.laie.ejb.client.ContactService;
+import es.nivel36.laie.web.core.AbstractConverter;
 
-@FacesConverter(managed = true, forClass = ContactDto.class)
-public class ContactConverter implements Converter<ContactDto> {
+@FacesConverter(managed = true, forClass = Contact.class)
+public class ContactConverter extends AbstractConverter<Contact> {
 
 	@Inject
 	private ContactService contactService;
 
-	@Override
-	public ContactDto getAsObject(final FacesContext context, final UIComponent component, final String value) {
-		if (value == null) {
-			return null;
-		}
-		return this.contactService.findContactByUid(value);
-	}
-
-	@Override
-	public String getAsString(final FacesContext context, final UIComponent component, final ContactDto value) {
-		if (value == null) {
-			return null;
-		}
-		return value.getUid();
-	}
-
 	public void setContactService(final ContactService contactService) {
 		Objects.requireNonNull(contactService);
 		this.contactService = contactService;
+	}
+
+	@Override
+	protected Contact getAsObject(Long id) {
+		return contactService.findContactById(id);
 	}
 }

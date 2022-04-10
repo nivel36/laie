@@ -26,7 +26,7 @@
 					</div>
 				</div>
 				<div class="p-col-12">
-					<div class="card ui-fluid">
+					<div class="card ui-flId">
 						<div class="p-col-12 p-xl-5">
 							<p:selectCheckboxMenu id="state"
 								value="#{searchEventView.searchStates}"
@@ -58,7 +58,7 @@
 									<h:link value="#{event.jobCandidature.candidate.fullName}"
 										outcome="/candidate/view.xhtml">
 										<f:param name="id"
-											value="#{event.jobCandidature.candidate.uid}" />
+											value="#{event.jobCandidature.candidate.id}" />
 									</h:link>
 								</p:column>
 
@@ -66,7 +66,7 @@
 									<h:link value="#{event.jobCandidature.jobOffer.title}"
 										outcome="/job/view.xhtml">
 										<f:param name="id"
-											value="#{event.jobCandidature.jobOffer.uid}" />
+											value="#{event.jobCandidature.jobOffer.id}" />
 									</h:link>
 								</p:column>
 
@@ -74,7 +74,7 @@
 									<h:link value="#{event.jobCandidature.jobOffer.client.name}"
 										outcome="/client/view.xhtml">
 										<f:param name="id"
-											value="#{event.jobCandidature.jobOffer.client.uid}" />
+											value="#{event.jobCandidature.jobOffer.client.id}" />
 									</h:link>
 								</p:column>
 
@@ -82,7 +82,7 @@
 									sortBy="#{event.user}" priority="5">
 									<h:link value="#{event.user.fullName}"
 										outcome="/user/view.xhtml">
-										<f:param name="id" value="#{event.user.uid}" />
+										<f:param name="id" value="#{event.user.id}" />
 									</h:link>
 								</p:column>
 

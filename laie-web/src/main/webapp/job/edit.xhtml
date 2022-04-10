@@ -15,7 +15,7 @@
 			<div class="card">
 				<div class="p-grid">
 					<div class="p-col-12 p-md-6">
-						<div class="form-card ui-fluid">
+						<div class="form-card ui-flId">
 							<h5>#{i18n['job.data']}</h5>
 							<div class="p-grid p-formgrid">
 								<div class="p-col-12">
@@ -46,7 +46,7 @@
 						</div>
 					</div>
 					<div class="p-col-12 p-md-6">
-						<div class="form-card ui-fluid">
+						<div class="form-card ui-flId">
 							<h5>#{i18n['job.other_data']}</h5>
 							<div class="p-grid p-formgrid">
 								<div class="p-col-12 p-sm-6">
@@ -71,7 +71,7 @@
 						</div>
 					</div>
 					<div class="p-col-12">
-						<div class="form-card ui-fluid">
+						<div class="form-card ui-flId">
 							<h5>#{i18n['job.description']}</h5>
 							<div class="p-grid p-formgrid">
 								<div class="p-col-12 p-sm-6">
@@ -86,7 +86,7 @@
 					<div class="p-col-12">
 						<div class="form-buttons">
 							<p:button value="#{i18n['action.cancel']}" outcome="/job/view.xhtml" styleClass="ui-button-secondary ui-button-outlined">
-								<f:param name="id" value="#{editJobView.jobOffer.uid}" />
+								<f:param name="id" value="#{editJobView.jobOffer.id}" />
 							</p:button>
 							<p:commandButton value="#{i18n['action.save']}" process="@form" update="@form growl" action="#{editJobView.save}"
 								styleClass="ui-button-success ui-button-outlined" />

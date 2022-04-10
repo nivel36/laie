@@ -1,37 +1,27 @@
 package es.nivel36.laie.web.view.client;
 
-import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
-import javax.faces.convert.Converter;
+import java.util.Objects;
+
 import javax.faces.convert.FacesConverter;
 import javax.inject.Inject;
 
-import es.nivel36.laie.ejb.client.ClientDto;
+import es.nivel36.laie.ejb.client.Client;
 import es.nivel36.laie.ejb.client.ClientService;
+import es.nivel36.laie.web.core.AbstractConverter;
 
-@FacesConverter(managed = true, forClass = ClientDto.class)
-public class ClientConverter implements Converter<ClientDto> {
+@FacesConverter(managed = true, forClass = Client.class)
+public class ClientConverter extends AbstractConverter<Client> {
 
 	@Inject
 	private ClientService clientService;
 
 	@Override
-	public ClientDto getAsObject(final FacesContext context, final UIComponent component, final String value) {
-		if (value == null) {
-			return null;
-		}
-		return this.clientService.findClientByUid(value);
+	protected Client getAsObject(Long id) {	
+		return clientService.findClientById(id);
 	}
-
-	@Override
-	public String getAsString(final FacesContext context, final UIComponent component, final ClientDto value) {
-		if (value == null) {
-			return null;
-		}
-		return value.getUid();
-	}
-
+	
 	public void setClientService(final ClientService clientService) {
+		Objects.requireNonNull(clientService);
 		this.clientService = clientService;
 	}
 }

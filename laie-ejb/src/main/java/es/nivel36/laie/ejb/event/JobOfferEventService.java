@@ -32,12 +32,11 @@ public class JobOfferEventService  {
 	@Repository
 	private JobOfferEventDao jobOfferEventDao;
 
-	public void createEvent(final String jobOfferUid, final JobOfferState jobOfferState, final String notes) {
-		Objects.requireNonNull(jobOfferUid);
+	public JobOfferEvent createEvent(final JobOffer jobOffer, final JobOfferState jobOfferState, final String notes) {
+		Objects.requireNonNull(jobOffer);
 		Objects.requireNonNull(jobOfferState);
-		logger.debug("Create event for job offer {}", jobOfferUid);
+		logger.debug("Create event for job offer {}", jobOffer);
 		final User user = this.gedSecurityContext.getLoggedUser();
-		final JobOffer jobOffer = this.jobOfferDao.findByUid(jobOfferUid);
 		final JobOfferEvent jobOfferEvent = new JobOfferEvent();
 		jobOfferEvent.setDate(LocalDateTime.now());
 		jobOfferEvent.setJobOffer(jobOffer);
@@ -45,11 +44,12 @@ public class JobOfferEventService  {
 		jobOfferEvent.setNotes(notes);
 		jobOfferEvent.setUser(user);
 		this.jobOfferEventDao.insert(jobOfferEvent);
+		return jobOfferEvent;
 	}
 	
-	public void updateNotes(final String jobOfferEventUid, String notes) {
-		Objects.requireNonNull(jobOfferEventUid);
-		final JobOfferEvent jobOfferEvent = this.jobOfferEventDao.findByUid(jobOfferEventUid);
+	public void updateNotes(final String jobOfferEventId, String notes) {
+		Objects.requireNonNull(jobOfferEventId);
+		final JobOfferEvent jobOfferEvent = this.jobOfferEventDao.findById(jobOfferEventId);
 		jobOfferEvent.setNotes(notes);
 	}
 	

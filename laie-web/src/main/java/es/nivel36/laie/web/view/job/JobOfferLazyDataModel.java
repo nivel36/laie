@@ -9,11 +9,11 @@ import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.core.model.search.SearchFacets;
 import es.nivel36.laie.ejb.core.model.search.SearchResult;
 import es.nivel36.laie.ejb.core.model.search.SortField;
-import es.nivel36.laie.ejb.job.offer.JobOfferDto;
+import es.nivel36.laie.ejb.job.offer.JobOffer;
 import es.nivel36.laie.ejb.job.offer.JobOfferService;
 import es.nivel36.laie.web.core.view.AbstractLazyDataModel;
 
-public class JobOfferLazyDataModel extends AbstractLazyDataModel<JobOfferDto> {
+public class JobOfferLazyDataModel extends AbstractLazyDataModel<JobOffer> {
 
 	private static final long serialVersionUID = 6084482828895151751L;
 
@@ -25,19 +25,19 @@ public class JobOfferLazyDataModel extends AbstractLazyDataModel<JobOfferDto> {
 	}
 
 	@Override
-	protected SearchResult<JobOfferDto> search(String searchText, Page page, SortField sortField,
+	protected SearchResult<JobOffer> search(String searchText, Page page, SortField sortField,
 			SearchFacets searchFilter) {
 		return jobOfferService.search(searchText, page, sortField, searchFilter);
 	}
 
 	@Override
-	protected JobOfferDto find(String rowkey) {
-		return jobOfferService.findJobOfferByUid(rowkey);
+	protected JobOffer find(String rowkey) {
+		return jobOfferService.findJobOfferById(rowkey);
 	}
 
 	@Override
-	protected String getKey(JobOfferDto entity) {
-		return entity.getUid();
+	protected String getKey(JobOffer entity) {
+		return entity.getId();
 	}
 
 	@Override

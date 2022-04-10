@@ -9,12 +9,12 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import es.nivel36.laie.ejb.core.model.Page;
-import es.nivel36.laie.ejb.event.JobCandidatureEventDto;
+import es.nivel36.laie.ejb.event.JobCandidatureEvent;
 import es.nivel36.laie.ejb.event.JobCandidatureEventService;
-import es.nivel36.laie.ejb.job.candidature.JobCandidatureDto;
+import es.nivel36.laie.ejb.job.candidature.JobCandidature;
 import es.nivel36.laie.ejb.job.candidature.JobCandidatureService;
-import es.nivel36.laie.ejb.user.SimpleUserDto;
-import es.nivel36.laie.ejb.user.UserDto;
+import es.nivel36.laie.ejb.user.SimpleUser;
+import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.web.core.view.AbstractView;
 
 @Named
@@ -23,32 +23,32 @@ public class AddEventView extends AbstractView {
 
 	private static final long serialVersionUID = 8985623161372187380L;
 
-	private JobCandidatureDto jobCandidature;
+	private JobCandidature jobCandidature;
 
-	private JobCandidatureEventDto jobCandidatureEvent;
+	private JobCandidatureEvent jobCandidatureEvent;
 
 	@Inject
 	private transient JobCandidatureEventService jobCandidatureEventService;
 
-	private List<JobCandidatureDto> jobCandidatures;
+	private List<JobCandidature> jobCandidatures;
 
 	@Inject
 	private transient JobCandidatureService jobCandidatureService;
 
 	@PostConstruct
 	public void init() {
-		final String jobOfferUid = this.getValueFromGetParameters("jobOfferUid");
-		final String clientUid = this.getValueFromGetParameters("clientUid");
-		this.jobCandidature = this.jobCandidatureService.findJobCandidature(jobOfferUid, clientUid);
-		final UserDto user = this.sessionUser.get();
+		final String jobOfferId = this.getValueFromGetParameters("jobOfferId");
+		final String clientId = this.getValueFromGetParameters("clientId");
+		this.jobCandidature = this.jobCandidatureService.findJobCandidature(jobOfferId, clientId);
+		final User user = this.sessionUser.get();
 		this.jobCandidatureEvent = this.initEvent(user);
-		this.jobCandidatures = this.jobCandidatureService.findUsersJobCandidatures(user.getUid(),
+		this.jobCandidatures = this.jobCandidatureService.findUsersJobCandidatures(user.getId(),
 				Page.TEN_RESULTS_PER_PAGE);
 	}
 
-	public JobCandidatureEventDto initEvent(final UserDto user) {
-		final JobCandidatureEventDto event = new JobCandidatureEventDto();
-		event.setUser(new SimpleUserDto(user));
+	public JobCandidatureEvent initEvent(final User user) {
+		final JobCandidatureEvent event = new JobCandidatureEvent();
+		event.setUser(new SimpleUser(user));
 		return event;
 	}
 
@@ -61,15 +61,15 @@ public class AddEventView extends AbstractView {
 		//this.jobCandidatureEvent.setState(this.jobCandidatureEvent.getJobCandidature().getState());
 	}
 	
-	public JobCandidatureEventDto getEvent() {
+	public JobCandidatureEvent getEvent() {
 		return this.jobCandidatureEvent;
 	}
 
-	public List<JobCandidatureDto> getJobCandidatures() {
+	public List<JobCandidature> getJobCandidatures() {
 		return this.jobCandidatures;
 	}
 
-	public void setEvent(final JobCandidatureEventDto jobCandidatureEvent) {
+	public void setEvent(final JobCandidatureEvent jobCandidatureEvent) {
 		this.jobCandidatureEvent = jobCandidatureEvent;
 	}
 

@@ -13,12 +13,12 @@ import javax.inject.Named;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import es.nivel36.laie.ejb.client.ClientDto;
-import es.nivel36.laie.ejb.client.ContactDto;
-import es.nivel36.laie.ejb.core.bookmark.BookmarkDto;
+import es.nivel36.laie.ejb.client.Client;
+import es.nivel36.laie.ejb.client.Contact;
+import es.nivel36.laie.ejb.core.bookmark.Bookmark;
 import es.nivel36.laie.ejb.core.bookmark.BookmarkService;
 import es.nivel36.laie.ejb.core.model.Page;
-import es.nivel36.laie.ejb.job.offer.JobOfferDto;
+import es.nivel36.laie.ejb.job.offer.JobOffer;
 import es.nivel36.laie.ejb.job.offer.JobOfferService;
 import es.nivel36.laie.web.core.IllegalPageStateException;
 
@@ -32,15 +32,15 @@ public class ViewClientView extends AbstractClientView {
 
 	public static final String URL = "/client/view.xhtml";
 
-	private List<ContactDto> contacts;
+	private List<Contact> contacts;
 
 	private boolean editable;
 
 	private boolean bookmarkable;
 
-	private BookmarkDto bookmark;
+	private Bookmark bookmark;
 
-	private List<JobOfferDto> jobOffers;
+	private List<JobOffer> jobOffers;
 
 	@Inject
 	private transient JobOfferService jobOfferService;
@@ -50,24 +50,23 @@ public class ViewClientView extends AbstractClientView {
 
 	@PostConstruct
 	public void init() {
-		String uid = this.getValueFromGetParameters("client", true);
-		this.client = this.clientService.findClientByUid(uid);
 		if (this.client == null) {
 			throw new IllegalPageStateException();
 		}
 		logger.trace("Client {} init", this.client);
 		this.contacts = new ArrayList<>(this.client.getContacts());
-		this.jobOffers = this.jobOfferService.findJobOffersByClient(client.getUid(), Page.ALL_RESULTS);
+		this.jobOffers = this.jobOfferService.findJobOffersByClient(client, Page.ALL_RESULTS);
 		this.checkDeleted();
 		this.editable = true;
 		this.bookmark = this.buildBookmark();
 		this.bookmarkable = !this.sessionUser.getBookmarks().contains(this.bookmark);
 	}
 
-	private BookmarkDto buildBookmark() {
-		final BookmarkDto bookmark = new BookmarkDto();
+	private Bookmark buildBookmark() {
+		final Bookmark bookmark = new Bookmark();
 		bookmark.setTitle(client.getName());
 		bookmark.setUrl(this.clientUrl());
+		bookmark.setUser(sessionUser.get());
 		return bookmark;
 	}
 
@@ -78,31 +77,27 @@ public class ViewClientView extends AbstractClientView {
 		}
 	}
 
-	public void addToBoorkmarks() {
-		this.bookmarkService.addBookmark(this.bookmark, getUserUid());
+	public void adBoorkmarks() {
+		this.bookmarkService.addBookmark(this.bookmark);
 		this.bookmarkable = false;
 		this.sessionUser.refresh();
 	}
 
 	public void removeFromBoorkmarks() {
-		this.bookmarkService.deleteBookmark(this.bookmark, getUserUid());
+		this.bookmarkService.deleteBookmark(this.bookmark);
 		this.bookmarkable = true;
 		this.sessionUser.refresh();
-	}
-
-	private String getUserUid() {
-		return this.sessionUser.get().getUid();
 	}
 
 	public void export() {
 		logger.debug("Export client action performed");
 	}
 
-	public List<ContactDto> getContacts() {
+	public List<Contact> getContacts() {
 		return this.contacts;
 	}
 
-	public List<JobOfferDto> getJobOffers() {
+	public List<JobOffer> getJobOffers() {
 		return this.jobOffers;
 	}
 
@@ -114,7 +109,7 @@ public class ViewClientView extends AbstractClientView {
 		return this.editable;
 	}
 
-	public void setClient(final ClientDto client) {
+	public void setClient(final Client client) {
 		this.client = client;
 	}
 

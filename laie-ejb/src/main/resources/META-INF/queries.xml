@@ -2,31 +2,13 @@
 <entity-mappings xmlns="http://xmlns.jcp.org/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence/orm
         http://xmlns.jcp.org/xml/ns/persistence/orm_2_1.xsd" version="2.1">
-
-	<named-query name="Bookmark.findByUserUid">
-		<query><![CDATA[
-			SELECT b 
-			FROM Bookmark b
-			LEFT JOIN b.user u
-			WHERE u.uid = :userUid
-		]]></query>
-	</named-query>
-        
-	<named-query name="Candidate.findByUid">
-		<query><![CDATA[
-			SELECT c 
-			FROM Candidate c
-			LEFT JOIN FETCH c.jobCandidatures
-			WHERE c.uid = :uid
-		]]></query>
-	</named-query>
 	
 	<named-query name="Candidate.findByJobOffer">
 		<query><![CDATA[
 			SELECT c 
 			FROM Candidate c
 			LEFT JOIN c.jobCandidatures jc
-			WHERE jc.jobOffer.uid = :jobOfferUid
+			WHERE jc.jobOffer = :jobOffer
 		]]></query>
 	</named-query>
 
@@ -35,7 +17,7 @@
 			SELECT c
 			FROM Candidate c
 			LEFT JOIN FETCH c.files
-			WHERE c.uid = :uid
+			WHERE c.id = :candidateId
 		]]></query>
 	</named-query>
 
@@ -44,24 +26,8 @@
 			SELECT f
 			FROM Candidate c
 			LEFT JOIN c.files f
-			WHERE c.uid = :uid
+			WHERE c = :candidate
 			AND f is not null
-		]]></query>
-	</named-query>
-	
-	<named-query name="Client.findByUid">
-		<query><![CDATA[
-			SELECT c 
-			FROM Client c 
-			WHERE c.uid = :uid
-		]]></query>
-	</named-query>
-	
-	<named-query name="Contact.findByUid">
-		<query><![CDATA[
-			SELECT c 
-			FROM Contact c 
-			WHERE c.uid = :uid
 		]]></query>
 	</named-query>
 	
@@ -69,11 +35,11 @@
 		<query><![CDATA[
 			SELECT c 
 			FROM Contact c 
-			WHERE c.client.uid = :clientUid
+			WHERE c.client = :client
 		]]></query>
 	</named-query>
 	
-	<named-query name="Curriculum.findByCandidateUid">
+	<named-query name="Curriculum.findByCandidate">
 		<query><![CDATA[
 			SELECT c 
 			FROM Curriculum c 
@@ -82,20 +48,7 @@
 			LEFT JOIN FETCH c.jobExperiences 
 			LEFT JOIN FETCH c.languages 
 			LEFT JOIN FETCH c.skills 
-			WHERE c.candidate.uid = :candidateUid
-		]]></query>
-	</named-query>
-
-	<named-query name="Curriculum.findByUid">
-		<query><![CDATA[
-			SELECT c 
-			FROM Curriculum c 
-			LEFT JOIN FETCH c.candidate 
-			LEFT JOIN FETCH c.education
-			LEFT JOIN FETCH c.jobExperiences 
-			LEFT JOIN FETCH c.languages 
-			LEFT JOIN FETCH c.skills 
-			WHERE c.uid = :uid
+			WHERE c.candidate = :candidate
 		]]></query>
 	</named-query>
 	
@@ -125,14 +78,6 @@
 		]]></query>
 	</named-query>
 	
-		<named-query name="File.findByUid">
-		<query><![CDATA[
-			SELECT f 
-			FROM File f 
-			WHERE f.uid = :uid
-		]]></query>
-	</named-query>
-
 	<named-query name="File.isOrphanPhysicalFile">
 		<query><![CDATA[
 			SELECT CASE WHEN (COUNT(f) > 0) THEN TRUE ELSE FALSE END 
@@ -147,7 +92,7 @@
 			FROM JobCandidature j 
 			LEFT JOIN FETCH j.candidate
 			LEFT JOIN FETCH j.jobOffer
-			WHERE j.jobOffer.uid = :jobOfferUid
+			WHERE j.jobOffer = :jobOffer
 			AND j.state.approved = TRUE
 		]]></query>
 	</named-query>
@@ -158,8 +103,8 @@
 			FROM JobCandidature j 
 			LEFT JOIN FETCH j.candidate
 			LEFT JOIN FETCH j.jobOffer
-			WHERE j.jobOffer.uid = :jobOfferUid
-			AND j.candidate.uid = :candidateUid
+			WHERE j.jobOffer = :jobOffer
+			AND j.candidate = :candidate
 		]]></query>
 	</named-query>
 	
@@ -167,7 +112,7 @@
 		<query><![CDATA[
 			SELECT j 
 			FROM JobCandidature j 
-			WHERE j.candidate.uid = :candidateUid 
+			WHERE j.candidate = :candidate 
 		]]></query>
 	</named-query>
 	
@@ -178,7 +123,7 @@
 			FROM JobCandidature j 
 			LEFT JOIN FETCH j.candidate
 			LEFT JOIN FETCH j.jobOffer
-			WHERE j.jobOffer.uid = :jobOfferUid
+			WHERE j.jobOffer = :jobOffer
 		]]></query>
 	</named-query>
 	
@@ -187,7 +132,7 @@
 			SELECT j 
 			FROM JobCandidature j 
 			WHERE :user MEMBER OF j.jobOffer.recruiters
-			OR j.jobOffer.owner.uid = :userUid 
+			OR j.jobOffer.owner = :user 
 		]]></query>
 	</named-query>
 
@@ -199,19 +144,12 @@
 		]]></query>
 	</named-query>
 
-	<named-query name="JobOffer.findByUid">
-		<query><![CDATA[
-			SELECT j 
-			FROM JobOffer j 
-			WHERE j.uid = :jobOfferUid
-		]]></query>
-	</named-query>
 
 	<named-query name="JobOffer.findJobOffersByOwner">
 		<query><![CDATA[
 			SELECT j 
 			FROM JobOffer j 
-			WHERE j.owner.uid = :ownerUid
+			WHERE j.owner = :owner
 		]]></query>
 	</named-query>
 
@@ -220,7 +158,7 @@
 			SELECT j
 			FROM JobOffer j
 			INNER JOIN j.jobCandidatures jc 
-			WHERE jc.candidate.uid = :candidateUid
+			WHERE jc.candidate = :candidate
 		]]></query>
 	</named-query>
 
@@ -228,7 +166,7 @@
 		<query><![CDATA[
 			SELECT j 
 			FROM JobOffer j 
-			WHERE j.client.uid = :clientUid
+			WHERE j.client = :client
 		]]></query>
 	</named-query>
 	
@@ -248,19 +186,11 @@
 		]]></query>
 	</named-query>
 
-	<named-query name="Meeting.findByUid">
-		<query><![CDATA[
-			SELECT m 
-			FROM Meeting m 
-			WHERE m.uid = :uid
-		]]></query>
-	</named-query>
-	
 	<named-query name="Meeting.findByJobOffer">
 		<query><![CDATA[
 			SELECT m 
 			FROM Meeting m 
-			WHERE m.jobOffer.uid = :jobOfferUid
+			WHERE m.jobOffer = :jobOffer
 		]]></query>
 	</named-query>
 
@@ -268,7 +198,7 @@
 		<query><![CDATA[
 			SELECT m 
 			FROM Meeting m
-			WHERE m.owner.uid = :ownerUid
+			WHERE m.owner = :owner
 			AND m.datePlanned >= :now
 		]]></query>
 	</named-query>
@@ -277,7 +207,7 @@
 		<query><![CDATA[
 			SELECT m 
 			FROM Meeting m
-			WHERE m.owner.uid = :ownerUid
+			WHERE m.owner = :owner
 			AND m.datePlanned < :now
 		]]></query>
 	</named-query>
@@ -304,14 +234,6 @@
 			FROM Credential c
 			LEFT JOIN FETCH c.user
 			WHERE c.user.email = :email
-		]]></query>
-	</named-query>
-
-	<named-query name="User.findByUid">
-		<query><![CDATA[
-			SELECT u 
-			FROM User u 
-			WHERE u.uid = :uid
 		]]></query>
 	</named-query>
 

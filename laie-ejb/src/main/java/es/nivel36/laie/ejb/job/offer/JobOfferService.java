@@ -3,7 +3,6 @@ package es.nivel36.laie.ejb.job.offer;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 import javax.ejb.Stateless;
@@ -11,7 +10,6 @@ import javax.enterprise.event.Event;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 
-import org.hibernate.search.query.facet.Facet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -137,7 +135,7 @@ public class JobOfferService {
 	}
 
 	private boolean isCompleted(final JobOffer jobOffer) {
-		final List<JobCandidature> jobCandidatures = this.jobCandidatureDao.findApprovedJobCanditures(jobOffer),
+		final List<JobCandidature> jobCandidatures = this.jobCandidatureDao.findApprovedJobCanditures(jobOffer,
 				Page.ALL_RESULTS);
 		final int numberofAprrovedCandidatures = jobCandidatures.size();
 		return jobOffer.getPlaces() == numberofAprrovedCandidatures;

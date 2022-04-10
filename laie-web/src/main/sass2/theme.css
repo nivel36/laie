@@ -1403,7 +1403,7 @@ body .fc .fc-toolbar .fc-button:active, body .fc .fc-toolbar .fc-button.fc-butto
   border-color: #1a3c7d;
   color: #ffffff;
 }
-body .ui-fluid .fc .fc-toolbar .ui-button {
+body .ui-flId .fc .fc-toolbar .ui-button {
   width: auto;
 }
 
@@ -2194,7 +2194,7 @@ body .ui-tree.ui-tree-rtl .ui-tree-container .ui-treenode .ui-treenode-content .
 body .ui-tree-draghelper {
   border: 1px solid #214B9C;
 }
-body .ui-fluid .ui-tree {
+body .ui-flId .ui-tree {
   width: 100%;
 }
 
@@ -2703,13 +2703,13 @@ body .ui-autocomplete-itemtip.ui-state-highlight {
   background: #214B9C;
   color: #ffffff;
 }
-body .ui-fluid .ui-autocomplete .ui-autocomplete-input.ui-autocomplete-dd-input {
+body .ui-flId .ui-autocomplete .ui-autocomplete-input.ui-autocomplete-dd-input {
   width: calc(100% - 2.357rem);
 }
-body .ui-fluid .ui-autocomplete .ui-autocomplete-dropdown.ui-button {
+body .ui-flId .ui-autocomplete .ui-autocomplete-dropdown.ui-button {
   width: 2.357rem;
 }
-body .ui-fluid .ui-autocomplete-multiple-container.ui-autocomplete-dd-multiple-container {
+body .ui-flId .ui-autocomplete-multiple-container.ui-autocomplete-dd-multiple-container {
   width: calc(100% - 2.357rem);
 }
 
@@ -2918,7 +2918,7 @@ body .ui-chips .ui-chips-container .ui-chips-input-token input {
 body .ui-colorpicker .ui-button {
   border-radius: 2px;
 }
-body .ui-fluid .ui-colorpicker .ui-button {
+body .ui-flId .ui-colorpicker .ui-button {
   width: auto;
 }
 
@@ -3240,19 +3240,19 @@ body .ui-calendar.ui-trigger-calendar input.hasDatepicker {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
-body .ui-fluid .ui-trigger-calendar input.hasDatepicker {
+body .ui-flId .ui-trigger-calendar input.hasDatepicker {
   width: calc(100% - 2.357rem);
   padding-right: 0;
 }
-body .ui-fluid .ui-trigger-calendar .ui-datepicker-trigger.ui-button {
+body .ui-flId .ui-trigger-calendar .ui-datepicker-trigger.ui-button {
   position: absolute;
   right: -2.357rem;
   width: 2.357rem;
 }
-body .ui-fluid .ui-trigger-calendar .ui-datepicker-trigger.ui-button .ui-button-text {
+body .ui-flId .ui-trigger-calendar .ui-datepicker-trigger.ui-button .ui-button-text {
   padding: 0.5rem;
 }
-body .ui-fluid .p-datepicker .ui-datepicker-trigger.ui-button {
+body .ui-flId .p-datepicker .ui-datepicker-trigger.ui-button {
   right: 0;
 }
 
@@ -3333,8 +3333,8 @@ body .ui-input-icon-right {
   position: relative;
   display: inline-block;
 }
-body .ui-fluid .ui-input-icon-left,
-body .ui-fluid .ui-input-icon-right {
+body .ui-flId .ui-input-icon-left,
+body .ui-flId .ui-input-icon-right {
   display: block;
 }
 body .ui-input-icon-left > i,
@@ -4133,11 +4133,11 @@ body .ui-selectonemenu.ui-state-focus:not(.ui-state-error) {
 body .ui-selectonemenu.ui-state-error {
   border-color: #f44336;
 }
-body .ui-fluid .ui-selectonemenu-label {
+body .ui-flId .ui-selectonemenu-label {
   width: calc(100% - 2.357rem);
   padding: 0.5rem 0.5rem;
 }
-body .ui-fluid .ui-selectonemenu .ui-selectonemenu-trigger {
+body .ui-flId .ui-selectonemenu .ui-selectonemenu-trigger {
   width: 2.357rem;
   padding: 0;
 }
@@ -4311,7 +4311,7 @@ body .ui-spinner .ui-spinner-button.ui-button.ui-spinner-down .ui-icon {
 body .ui-spinner .ui-spinner-button.ui-button.ui-spinner-down .ui-icon:before {
   content: "";
 }
-body .ui-fluid .ui-spinner .ui-spinner-input {
+body .ui-flId .ui-spinner .ui-spinner-input {
   padding-right: 2.857rem;
 }
 

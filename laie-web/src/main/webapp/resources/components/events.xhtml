@@ -22,25 +22,25 @@
 
 				<p:column headerText="#{i18n['event.candidate']}">
 					<h:link value="#{event.jobCandidature.candidate.fullName}" outcome="/candidate/view.xhtml">
-						<f:param name="id" value="#{event.jobCandidature.candidate.uid}" />
+						<f:param name="id" value="#{event.jobCandidature.candidate.id}" />
 					</h:link>
 				</p:column>
 
 				<p:column headerText="#{i18n['event.job_offer']}">
 					<h:link value="#{event.jobCandidature.jobOffer.title}" outcome="/job/view.xhtml">
-						<f:param name="id" value="#{event.jobCandidature.jobOffer.uid}" />
+						<f:param name="id" value="#{event.jobCandidature.jobOffer.id}" />
 					</h:link>
 				</p:column>
 
 				<p:column headerText="#{i18n['event.client']}" priority="6">
 					<h:link value="#{event.jobCandidature.jobOffer.client.name}" outcome="/client/view.xhtml">
-						<f:param name="id" value="#{event.jobCandidature.jobOffer.client.uid}" />
+						<f:param name="id" value="#{event.jobCandidature.jobOffer.client.id}" />
 					</h:link>
 				</p:column>
 
 				<p:column headerText="#{i18n['event.user']}" sortBy="#{event.user.name}" priority="5">
 					<h:link value="#{event.user.fullName}" outcome="/user/view.xhtml">
-						<f:param name="id" value="#{event.user.uid}" />
+						<f:param name="id" value="#{event.user.id}" />
 					</h:link>
 				</p:column>
 

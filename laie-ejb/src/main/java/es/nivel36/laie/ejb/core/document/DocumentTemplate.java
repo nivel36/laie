@@ -10,16 +10,12 @@ import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
 import es.nivel36.laie.ejb.core.model.AbstractEntity;
-import es.nivel36.laie.ejb.core.model.Obfuscable;
 
 @Entity
 @Table(name = "DOCUMENT_TEMPLATE", uniqueConstraints = { @UniqueConstraint(columnNames = { "name", "language" }) })
-public class DocumentTemplate extends AbstractEntity implements Obfuscable {
+public class DocumentTemplate extends AbstractEntity {
 
 	private static final long serialVersionUID = 5175582851805624309L;
-
-	@NotNull
-	private String uid;
 
 	@NotNull
 	@Column(nullable = false)
@@ -54,10 +50,6 @@ public class DocumentTemplate extends AbstractEntity implements Obfuscable {
 		return this.title;
 	}
 	
-	public String getUid() {
-		return this.uid;
-	}
-
 	public void setLanguage(final String language) {
 		this.language = language;
 	}
@@ -72,10 +64,6 @@ public class DocumentTemplate extends AbstractEntity implements Obfuscable {
 
 	public void setTitle(final String title) {
 		this.title = title;
-	}
-	
-	public void setUid(final String uid) {
-		this.uid = uid;
 	}
 	
 	@Override

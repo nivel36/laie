@@ -12,11 +12,11 @@
 			<p:menuitem value="#{i18n['menu.index']}" outcome="/index.xhtml" />
 			<p:menuitem value="#{i18n['candidate.candidates']}" outcome="/candidate/search.xhtml" />
 			<p:menuitem value="#{skillsView.curriculum.candidate.fullName}" outcome="/candidate/view.xhtml">
-				<f:param name="id" value="#{skillsView.curriculum.candidate.uid}" />
+				<f:param name="id" value="#{skillsView.curriculum.candidate.id}" />
 			</p:menuitem>
 			<p:menuitem value="#{i18n['curriculum.curriculum']}" outcome="/curriculum/view.xhtml">
-				<f:param name="candidateId" value="#{skillsView.curriculum.candidate.uid}" />
-				<f:param name="id" value="#{skillsView.curriculum.uid}" />
+				<f:param name="candidateId" value="#{skillsView.curriculum.candidate.id}" />
+				<f:param name="id" value="#{skillsView.curriculum.id}" />
 			</p:menuitem>
 			<p:menuitem value="#{i18n['skill.skills']}" disabled="true" />
 		</p:breadCrumb>
@@ -25,8 +25,8 @@
 	<ui:define name="buttons">
 		<h:form>
 			<p:button value="#{i18n['action.back']}" outcome="/curriculum/view.xhtml" styleClass="ui-button-secondary ui-button-outlined">
-				<f:param name="candidateId" value="#{skillsView.curriculum.candidate.uid}" />
-				<f:param name="id" value="#{skillsView.curriculum.uid}" />
+				<f:param name="candidateId" value="#{skillsView.curriculum.candidate.id}" />
+				<f:param name="id" value="#{skillsView.curriculum.id}" />
 			</p:button>
 			<p:commandButton value="#{i18n['action.save']}" onclick="save()" styleClass="ui-button-success ui-button-outlined" />
 		</h:form>
@@ -37,7 +37,7 @@
 			<p:remoteCommand name="save" process="@form" update="growl @form" action="#{skillsView.save}" />
 			<div class="p-grid">
 				<div class="p-col-12 p-xl-6">
-					<div class="card card-w-title ui-fluid">
+					<div class="card card-w-title ui-flId">
 						<h1>#{i18n['skill.skills']}</h1>
 						<div class="p-grid">
 							<div class="p-col-12">

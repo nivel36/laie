@@ -9,7 +9,7 @@ import javax.inject.Inject;
 import es.nivel36.laie.ejb.export.acquirer.ExportAcquirerUtil;
 import es.nivel36.laie.ejb.export.acquirer.ExportData;
 import es.nivel36.laie.ejb.export.dto.ExportFieldsOutputBean;
-import es.nivel36.laie.ejb.user.UserDto;
+import es.nivel36.laie.ejb.user.User;
 
 @Stateless
 public class ExportService {
@@ -19,12 +19,12 @@ public class ExportService {
 	@Inject
 	private ExportDefinitionService exportDefinitionService;
 	
-	public ExportData getExportUsersData(final List<UserDto> users) {
+	public ExportData getExportUsersData(final List<User> users) {
 		Objects.requireNonNull(users);
 		final ExportFieldsOutputBean definition = getExportDefinitionService().findDefinitionByExport(EXPORT_USERS_NAME);
 		Objects.requireNonNull(definition);
 		Objects.requireNonNull(definition.getList()); // TODO ivmedina revisar
-		return ExportAcquirerUtil.getExportData(users, definition, UserDto.class);
+		return ExportAcquirerUtil.getExportData(users, definition, User.class);
 	}
 	
 	public ExportDefinitionService getExportDefinitionService() {

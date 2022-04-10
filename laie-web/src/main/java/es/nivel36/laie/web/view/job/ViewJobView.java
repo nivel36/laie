@@ -10,7 +10,7 @@ import javax.inject.Named;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import es.nivel36.laie.ejb.job.candidature.JobCandidatureDto;
+import es.nivel36.laie.ejb.job.candidature.JobCandidature;
 import es.nivel36.laie.web.core.IllegalPageStateException;
 
 @Named
@@ -23,12 +23,12 @@ public class ViewJobView extends AbstractJobView {
 	
 	public static String URL = "/job/view.xhtml";
 
-	private List<JobCandidatureDto> jobCandidatures;
+	private List<JobCandidature> jobCandidatures;
 
 	@PostConstruct
 	public void init() {
-		final String uid = this.getValueFromGetParameters("job", true);
-		this.jobOffer = this.jobOfferService.findJobOfferByUid(uid);
+		final String Id = this.getValueFromGetParameters("job", true);
+		this.jobOffer = this.jobOfferService.findJobOfferById(Id);
 		if (this.jobOffer == null) {
 			throw new IllegalPageStateException();
 		}
@@ -40,7 +40,7 @@ public class ViewJobView extends AbstractJobView {
 		logger.debug("Export job action performed");
 	}
 
-	public List<JobCandidatureDto> getJobCandidatures() {
+	public List<JobCandidature> getJobCandidatures() {
 		return this.jobCandidatures;
 	}
 

@@ -19,12 +19,10 @@ public class Bookmark extends AbstractEntity {
 	private static final long serialVersionUID = -2180672310644250195L;
 
 	@Column(nullable = false)
-	public String title;
+	private String title;
 
 	@Column(nullable = false)
-	public String url;
-
-	public String imageUrl;
+	private String url;
 
 	@ManyToOne
 	@JoinColumn(name = "userId", nullable = false)
@@ -44,14 +42,6 @@ public class Bookmark extends AbstractEntity {
 
 	public void setUrl(String url) {
 		this.url = url;
-	}
-
-	public String getImageUrl() {
-		return imageUrl;
-	}
-
-	public void setImageUrl(final String imageUrl) {
-		this.imageUrl = imageUrl;
 	}
 
 	public User getUser() {

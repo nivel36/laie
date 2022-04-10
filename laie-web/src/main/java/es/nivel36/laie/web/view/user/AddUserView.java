@@ -1,7 +1,5 @@
 package es.nivel36.laie.web.view.user;
 
-import java.time.LocalDate;
-
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
@@ -12,7 +10,6 @@ import org.slf4j.LoggerFactory;
 
 import es.nivel36.laie.ejb.user.BadManagerException;
 import es.nivel36.laie.ejb.user.DuplicateEmailException;
-import es.nivel36.laie.ejb.user.UserDto;
 
 @Named
 @ViewScoped
@@ -26,14 +23,7 @@ public class AddUserView extends AbstractUserView {
 	public void init() {
 		logger.trace("New user init");
 		this.checkAddPermission();
-		this.user = this.buildNewUser();
-	}
-
-	private UserDto buildNewUser() {
-		final UserDto newUser = new UserDto();
-		newUser.setLanguage("ES");
-		newUser.setDateOfJoin(LocalDate.now());
-		return newUser;
+		this.user.setLanguage(Faces.getLocale().getCountry());
 	}
 
 	private void checkAddPermission() {
@@ -43,13 +33,11 @@ public class AddUserView extends AbstractUserView {
 		}
 	}
 
-	public void save() throws Exception {
+	public void save() {
 		logger.debug("Create new user action performed");
 		try {
-			final String managerUid = this.manager == null ? null : this.manager.getUid();
-			this.user = this.userService.addUser(this.user, managerUid);
-			final String userUrl = this.userUrl();
-			Faces.redirect(userUrl);
+			this.userService.addUser(this.user);
+			Faces.redirect(this.userUrl());
 		} catch (DuplicateEmailException e) {
 			this.addErrorToField("userForm:email", "user.error.email_exists");
 		} catch (BadManagerException e) {

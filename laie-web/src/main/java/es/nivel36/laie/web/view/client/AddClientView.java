@@ -8,7 +8,7 @@ import org.omnifaces.util.Faces;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import es.nivel36.laie.ejb.client.ClientDto;
+import es.nivel36.laie.ejb.client.Client;
 
 @Named
 @ViewScoped
@@ -21,14 +21,13 @@ public class AddClientView extends AbstractClientView {
 	@PostConstruct
 	public void init() {
 		logger.trace("New client init");
-		this.client = new ClientDto();
+		this.client = new Client();
+		this.client.setOwner(this.sessionUser.get());
 	}
 
 	public void save() {
 		logger.debug("Add new client action performed");
-		final String ownerUid = this.sessionUser.get().getUid();
-		this.client = this.clientService.addClient(this.client, ownerUid);
-		final String clientUrl = this.clientUrl();
-		Faces.redirect(clientUrl);
+		this.clientService.addClient(this.client);
+		Faces.redirect(this.clientUrl());
 	}
 }

@@ -16,7 +16,7 @@
 			<div class="card">
 				<div class="p-grid">
 					<div class="p-col-12 p-md-6">
-						<div class="form-card ui-fluid">
+						<div class="form-card ui-flId">
 							<div class="p-grid p-justify-center">
 								<div class="p-col-3">
 									<div class="p-field">
@@ -45,7 +45,7 @@
 							</div>
 						</div>
 
-						<div class="form-card ui-fluid">
+						<div class="form-card ui-flId">
 							<h5>#{i18n['candidate.contact_information']}</h5>
 							<div class="p-formgrid p-grid">
 								<div class="p-col-12 p-sm-6">
@@ -64,7 +64,7 @@
 						</div>
 					</div>
 					<div class="p-col-12 p-xl-6">
-						<div class="form-card ui-fluid">
+						<div class="form-card ui-flId">
 							<h5>#{i18n['candidate.job_information']}</h5>
 							<div class="p-formgrid p-grid">
 								<div class="p-col-12">
@@ -79,7 +79,7 @@
 							</div>
 						</div>
 
-						<div class="form-card ui-fluid">
+						<div class="form-card ui-flId">
 							<h5>#{i18n['candidate.other_data']}</h5>
 							<div class="p-formgrid p-grid">
 								<div class="p-col-12 p-sm-6">
@@ -107,7 +107,7 @@
 					<div class="p-col-12">
 						<div class="form-buttons">
 							<p:button value="#{i18n['action.cancel']}" outcome="/candidate/view.xhtml" styleClass="ui-button-secondary ui-button-outlined">
-								<f:param name="candidate" value="#{editCandidateView.candidate.uid}" />
+								<f:param name="candidate" value="#{editCandidateView.candidate.id}" />
 							</p:button>
 							<p:commandButton value="#{i18n['action.save']}" process="@form" update="@form growl" action="#{editCandidateView.save}"
 								styleClass="ui-button-success ui-button-outlined" />

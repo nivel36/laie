@@ -9,8 +9,7 @@ import javax.inject.Named;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import es.nivel36.laie.ejb.candidate.CandidateDto;
-import es.nivel36.laie.ejb.core.model.AddressDto;
+import es.nivel36.laie.ejb.candidate.Candidate;
 
 @Named
 @ViewScoped
@@ -23,22 +22,15 @@ public class AddCandidateView extends AbstractCandidateView {
 	@PostConstruct
 	public void init() {
 		logger.trace("New candidate init");
-		this.candidate = this.initCandidate();
+		this.candidate = new Candidate();
 		this.setTags(new ArrayList<>());
-	}
-
-	private CandidateDto initCandidate() {
-		final CandidateDto newCandidate = new CandidateDto();
-		final AddressDto address = new AddressDto();
-		newCandidate.setAddress(address);
-		return newCandidate;
 	}
 
 	public String save() {
 		logger.debug("Create new candidate action performed");
 		this.candidate.setTags(this.getTags());
-		final String ownerUid = this.sessionUser.get().getUid();
-		this.candidate = this.candidateService.addCandidate(candidate, ownerUid);
+		this.candidate.setOwner(sessionUser.get());
+		this.candidateService.addCandidate(candidate);
 		return this.candidateUrl();
 	}
 }

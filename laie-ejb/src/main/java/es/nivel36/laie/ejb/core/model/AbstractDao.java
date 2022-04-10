@@ -71,14 +71,6 @@ public abstract class AbstractDao {
 		}
 	}
 	
-	protected <E extends Obfuscable> void setUid(final Class<E> type, final E entity) {
-		String uid;
-		do {
-			uid = UidGenerator.generate(type);
-			entity.setUid(uid);
-		} while (this.checkDuplicateField(type, "uid", uid));
-	}
-
 	protected <E extends Identifiable> boolean checkDuplicateField(final Class<E> type, final String fieldName,
 			final Object fieldValue) {
 		final CriteriaBuilder cb = this.em.getCriteriaBuilder();

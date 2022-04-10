@@ -11,7 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import es.nivel36.laie.ejb.event.JobOfferEventService;
-import es.nivel36.laie.ejb.job.offer.JobOfferDto;
+import es.nivel36.laie.ejb.job.offer.JobOffer;
 import es.nivel36.laie.ejb.job.offer.JobOfferService;
 import es.nivel36.laie.ejb.job.offer.JobOfferState;
 import es.nivel36.laie.web.core.IllegalPageStateException;
@@ -25,7 +25,7 @@ public class EditJobStateView extends AbstractView {
 
 	private static final Logger logger = LoggerFactory.getLogger(EditJobStateView.class);
 
-	private JobOfferDto jobOffer;
+	private JobOffer jobOffer;
 
 	private String notes;
 
@@ -39,8 +39,8 @@ public class EditJobStateView extends AbstractView {
 	
 	@PostConstruct
 	public void init() {
-		final String uid = this.getValueFromGetParameters("jobOffer", true);
-		this.jobOffer = this.jobOfferService.findJobOfferByUid(uid);
+		final String Id = this.getValueFromGetParameters("jobOffer", true);
+		this.jobOffer = this.jobOfferService.findJobOfferById(Id);
 		this.checkNonNullJobOffer();
 		logger.trace("Edit job state {} init", this.jobOffer);
 	}
@@ -61,7 +61,7 @@ public class EditJobStateView extends AbstractView {
 		return this.jobUrl();
 	}
 
-	public JobOfferDto getJobOffer() {
+	public JobOffer getJobOffer() {
 		return this.jobOffer;
 	}
 
@@ -73,7 +73,7 @@ public class EditJobStateView extends AbstractView {
 		return this.state;
 	}
 
-	public void setJobOffer(final JobOfferDto jobOffer) {
+	public void setJobOffer(final JobOffer jobOffer) {
 		this.jobOffer = jobOffer;
 	}
 

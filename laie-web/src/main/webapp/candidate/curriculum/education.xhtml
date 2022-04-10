@@ -12,11 +12,11 @@
 			<p:menuitem value="#{i18n['menu.index']}" outcome="/index.xhtml" />
 			<p:menuitem value="#{i18n['candidate.candidates']}" outcome="/candidate/search.xhtml" />
 			<p:menuitem value="#{educationView.curriculum.candidate.fullName}" outcome="/candidate/view.xhtml">
-				<f:param name="id" value="#{educationView.curriculum.candidate.uid}" />
+				<f:param name="id" value="#{educationView.curriculum.candidate.id}" />
 			</p:menuitem>
 			<p:menuitem value="#{i18n['curriculum.curriculum']}" outcome="/curriculum/view.xhtml">
-				<f:param name="candidateId" value="#{educationView.curriculum.candidate.uid}" />
-				<f:param name="id" value="#{educationView.curriculum.uid}" />
+				<f:param name="candidateId" value="#{educationView.curriculum.candidate.id}" />
+				<f:param name="id" value="#{educationView.curriculum.id}" />
 			</p:menuitem>
 			<p:menuitem value="#{i18n['education.education']}" disabled="true" />
 		</p:breadCrumb>
@@ -25,8 +25,8 @@
 	<ui:define name="buttons">
 		<h:form>
 			<p:button value="#{i18n['action.cancel']}" outcome="/curriculum/view.xhtml" styleClass="ui-button-secondary ui-button-outlined">
-				<f:param name="candidateId" value="#{educationView.curriculum.candidate.uid}" />
-				<f:param name="id" value="#{educationView.curriculum.uid}" />
+				<f:param name="candidateId" value="#{educationView.curriculum.candidate.id}" />
+				<f:param name="id" value="#{educationView.curriculum.id}" />
 			</p:button>
 			<p:commandButton value="#{i18n['action.delete']}" action="#{educationView.delete}" process="@this" rendered="#{not educationView.newEducation}" styleClass="danger-button">
 				<p:confirm message="#{i18n['education.message.remove']}" icon="fa fa-exclamation-triangle" />
@@ -40,7 +40,7 @@
 			<p:remoteCommand name="processForm" process="@form" update="@form growl" action="#{educationView.save}" />
 			<div class="p-grid">
 				<div class="p-col-12 p-md-10 p-lg-9 p-xl-8">
-					<div class="card ui-fluid">
+					<div class="card ui-flId">
 						<div class="p-grid p-formgrid">
 							<div class="p-col-12 p-sm-6">
 								<g:input id="degree" label="#{i18n['education.degree']}" value="#{educationView.education.degree}" required="true" />

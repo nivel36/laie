@@ -10,26 +10,23 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.omnifaces.cdi.Param;
 import org.omnifaces.util.Faces;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.file.UploadedFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import es.nivel36.laie.ejb.candidate.CandidateDto;
+import es.nivel36.laie.ejb.candidate.Candidate;
 import es.nivel36.laie.ejb.candidate.CandidateService;
-import es.nivel36.laie.ejb.core.bookmark.BookmarkDto;
+import es.nivel36.laie.ejb.core.bookmark.Bookmark;
 import es.nivel36.laie.ejb.core.bookmark.BookmarkService;
 import es.nivel36.laie.ejb.core.file.File;
-import es.nivel36.laie.ejb.core.file.FileDto;
 import es.nivel36.laie.ejb.core.file.FileService;
-import es.nivel36.laie.ejb.core.model.AddressDto;
 import es.nivel36.laie.ejb.core.model.Page;
-import es.nivel36.laie.ejb.curriculum.CurriculumDto;
-import es.nivel36.laie.ejb.curriculum.CurriculumService;
-import es.nivel36.laie.ejb.job.candidature.JobCandidatureDto;
+import es.nivel36.laie.ejb.job.candidature.JobCandidature;
 import es.nivel36.laie.ejb.job.candidature.JobCandidatureService;
-import es.nivel36.laie.ejb.job.meeting.MeetingDto;
+import es.nivel36.laie.ejb.job.meeting.Meeting;
 import es.nivel36.laie.ejb.job.meeting.MeetingService;
 import es.nivel36.laie.web.core.IllegalPageStateException;
 import es.nivel36.laie.web.core.view.AbstractView;
@@ -43,32 +40,28 @@ public class ViewCandidateView extends AbstractView {
 
 	private static final Logger logger = LoggerFactory.getLogger(ViewCandidateView.class);
 
-	private CandidateDto candidate;
+	public static final String URL = "/candidate/candidate.xhtml";
 
-	private String uid;
-
-	private CurriculumDto curriculum;
+	@Param(name = "candidate", converter = "candidateConverter")
+	private Candidate candidate;
 
 	private boolean editable;
 
-	private List<FileDto> files;
+	private List<File> files;
 
-	private List<JobCandidatureDto> jobCandidatures;
+	private List<JobCandidature> jobCandidatures;
 
-	private List<MeetingDto> meetings;
-	
+	private List<Meeting> meetings;
+
 	private boolean bookmarkable;
 
-	private BookmarkDto bookmark;
-	
+	private Bookmark bookmark;
+
 	@Inject
 	private transient BookmarkService bookmarkService;
 
 	@Inject
 	private transient CandidateService candidateService;
-
-	@Inject
-	private transient CurriculumService curriculumService;
 
 	@Inject
 	private transient FileService fileUploadService;
@@ -81,54 +74,40 @@ public class ViewCandidateView extends AbstractView {
 
 	@PostConstruct
 	public void init() {
-		this.uid = this.getValueFromGetParameters("candidate");
-		if (this.uid == null) {
+		if (this.candidate == null) {
 			throw new IllegalPageStateException();
 		}
-		this.candidate = candidateService.findCandidateByUid(this.uid);
 		logger.trace("Candidate {} init", this.candidate);
-		if (this.candidate.getAddress() == null) {
-			final AddressDto address = new AddressDto();
-			this.candidate.setAddress(address);
-		}
-		this.jobCandidatures = this.jobCandidatureService.findCandidatesJobCandidatures(this.uid, Page.ALL_RESULTS);
-		this.curriculum = this.curriculumService.findCandidatesCurriculum(this.uid);
+		this.jobCandidatures = this.jobCandidatureService.findCandidatesJobCandidatures(this.candidate,
+				Page.ALL_RESULTS);
 		this.editable = true;
-		this.meetings = this.initMeetings();
-		this.files = this.findFiles();
+		this.meetings = this.meetingService.findMeetingsByCandidate(this.candidate, Page.TEN_RESULTS_PER_PAGE);
+		this.files = this.candidateService.findCandidatesFiles(this.candidate, Page.TEN_RESULTS_PER_PAGE);
 		this.bookmark = this.buildBookmark();
 		this.bookmarkable = !this.sessionUser.getBookmarks().contains(this.bookmark);
 	}
 
-	private BookmarkDto buildBookmark() {
-		final BookmarkDto bookmark = new BookmarkDto();
+	private Bookmark buildBookmark() {
+		final Bookmark bookmark = new Bookmark();
 		bookmark.setTitle(candidate.getName());
 		bookmark.setUrl(this.candidateUrl());
 		return bookmark;
 	}
-	
+
 	protected String candidateUrl() {
-		return "/candidate/candidate.xhtml?candidate=" + this.candidate.getUid();
+		return URL + "?candidate=" + this.candidate.getId();
 	}
-	
-	public void addToBookmarks() {
-		this.bookmarkService.addBookmark(this.bookmark, this.candidate.getUid());
+
+	public void addBookmark() {
+		this.bookmarkService.addBookmark(this.bookmark);
 		this.bookmarkable = false;
-		this.sessionUser.refresh();
+		this.sessionUser.getBookmarks().add(bookmark);
 	}
 
 	public void removeFromBookmarks() {
-		this.bookmarkService.deleteBookmark(this.bookmark, this.candidate.getUid());
+		this.bookmarkService.deleteBookmark(this.bookmark);
 		this.bookmarkable = true;
-		this.sessionUser.refresh();
-	}
-
-	private List<MeetingDto> initMeetings() {
-		return this.meetingService.findMeetingsByCandidate(this.uid, Page.TEN_RESULTS_PER_PAGE);
-	}
-
-	private List<FileDto> findFiles() {
-		return this.candidateService.findCandidatesFiles(this.uid, Page.TEN_RESULTS_PER_PAGE);
+		this.sessionUser.getBookmarks().remove(bookmark);
 	}
 
 	public void export() {
@@ -141,13 +120,13 @@ public class ViewCandidateView extends AbstractView {
 	}
 
 	public void openFile(final File file) throws IOException {
-		try (final InputStream is = this.fileUploadService.downloadFile(file.getUid());) {
+		try (final InputStream is = this.fileUploadService.downloadFile(file);) {
 			Faces.sendFile(is, file.getName(), true);
 		}
 	}
 
-	public void removeFile(final FileDto file) {
-		this.candidateService.removeFileFromCandidate(candidate.getUid(), file.getUid());
+	public void removeFile(final File file) {
+		this.candidateService.removeFileFromCandidate(candidate, file);
 		this.files.remove(file);
 	}
 
@@ -159,52 +138,43 @@ public class ViewCandidateView extends AbstractView {
 		}
 		logger.debug("Upload candidate {} image action performed", this.candidate);
 		try (final InputStream inputStream = uploadedFile.getInputStream()) {
-			final FileDto file = this.candidateService.addFileToCandidate(candidate.getUid(), inputStream,
+			final File file = this.candidateService.addFileToCandidate(candidate, inputStream,
 					uploadedFile.getFileName());
 			this.files.add(file);
 		}
 	}
 
-	public void setCandidate(final CandidateDto candidate) {
+	public void setCandidate(final Candidate candidate) {
 		this.candidate = candidate;
 	}
 
 	public boolean isEditable() {
 		return this.editable;
 	}
-	
+
 	public boolean isBookmarkable() {
 		return this.bookmarkable;
 	}
 
-	public CandidateDto getCandidate() {
+	public Candidate getCandidate() {
 		return this.candidate;
 	}
 
-	public CurriculumDto getCurriculum() {
-		return this.curriculum;
-	}
-
-	public List<FileDto> getFiles() {
+	public List<File> getFiles() {
 		return this.files;
 	}
 
-	public List<JobCandidatureDto> getJobCandidatures() {
+	public List<JobCandidature> getJobCandidatures() {
 		return this.jobCandidatures;
 	}
 
-	public List<MeetingDto> getMeetings() {
+	public List<Meeting> getMeetings() {
 		return this.meetings;
 	}
 
 	public void setCandidateService(final CandidateService candidateService) {
 		Objects.requireNonNull(candidateService);
 		this.candidateService = candidateService;
-	}
-
-	public void setCurriculumService(final CurriculumService curriculumService) {
-		Objects.requireNonNull(curriculumService);
-		this.curriculumService = curriculumService;
 	}
 
 	public void setFileUploadService(final FileService fileUploadService) {

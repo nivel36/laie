@@ -32,7 +32,7 @@ public class LoginTokenDao extends AbstractDao {
 		return this.findByQuery(LoginToken.class, namedQuery, parameters);
 	}
 
-	public List<LoginToken> findExpiredTokens() {
+	public List<LoginToken> findExpirekens() {
 		final String namedQuery = "LoginToken.findExpired";
 		return this.findByQuery(LoginToken.class, namedQuery, null, Page.ALL_RESULTS);
 	}

@@ -20,29 +20,17 @@ public class EditClientView extends AbstractClientView {
 
 	public static final String URL = "/client/edit.xhtml";
 
-	private String uid;
-
 	@PostConstruct
 	public void init() {
-		this.uid = this.getValueFromGetParameters("client");
-		if (this.uid == null) {
-			throw new IllegalPageStateException();
-		}
-		this.client = clientService.findClientByUid(uid);
 		if (this.client == null) {
 			throw new IllegalPageStateException();
 		}
 		logger.trace("Client {} edit init", this.client);
 	}
 
-	public void addBookmark() {
-		logger.debug("Add bokmark action performed");
-	}
-
 	public void save() {
 		logger.debug("Save client action performed");
-		this.clientService.updateClient(client);
-		final String clientUrl = this.clientUrl();
-		Faces.redirect(clientUrl);
+		this.client = this.clientService.updateClient(this.client);
+		Faces.redirect(this.clientUrl());
 	}
 }

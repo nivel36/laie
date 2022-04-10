@@ -26,7 +26,7 @@
 				sortOrder="ascending">
 				<p:column headerText="#{i18n['client.name']}" sortBy="#{client.name}">
 					<h:link value="#{client.name}" outcome="/client/view.xhtml">
-						<f:param name="id" value="#{client.uid}" />
+						<f:param name="id" value="#{client.id}" />
 					</h:link>
 				</p:column>
 				<p:column headerText="#{i18n['client.phone_number']}" sortBy="#{client.phoneNumber}">
@@ -40,7 +40,7 @@
 				</p:column>
 				<p:column headerText="#{i18n['client.owner']}" sortBy="#{client.owner.fullName}">
 					<h:link value="#{client.owner.fullName}" outcome="/user/search.xhtml">
-						<f:param name="id" value="#{client.owner.uid}" />
+						<f:param name="id" value="#{client.owner.id}" />
 					</h:link>
 				</p:column>
 			</p:dataTable>

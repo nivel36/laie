@@ -15,7 +15,7 @@
 			<div class="card">
 				<div class="searchBar-buttons">
 					<cc:inputSearch searchText="#{searchCandidateView.searchText}" searchAction="#{searchCandidateView.search}"
-						update="candidateSearchForm:candidates" styleClass="ui-fluid" />
+						update="candidateSearchForm:candidates" styleClass="ui-flId" />
 					<div class="buttons">
 						<p:button value="#{i18n['candidate.new_candidate']}" outcome="/candidate/add.xhtml" styleClass="ui-button-success ui-button-outlined" />
 						<p:commandButton value="#{i18n['action.export']}" action="#{searchCandidateView.export}" icon="pi pi-file-excel"
@@ -29,7 +29,7 @@
 						<h:link outcome="/candidate/view.xhtml">
 							<cc:avatar name="#{candidate.fullName}" path="#{candidate.avatarUrl}" styleClass="p-mr-2" />
 							<h:outputText styleClass="link" value="#{candidate.fullName}" />
-							<f:param name="candidate" value="#{candidate.uid}" />
+							<f:param name="candidate" value="#{candidate.id}" />
 						</h:link>
 					</p:column>
 

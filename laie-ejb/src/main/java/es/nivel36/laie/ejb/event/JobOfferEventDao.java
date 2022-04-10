@@ -16,10 +16,10 @@ public class JobOfferEventDao extends AbstractDao {
 		this.em.persist(jobOfferEvent);
 	}
 
-	public JobOfferEvent findByUid(final String uid) {
-		Objects.requireNonNull(uid);
-		final String namedQuery = "JobOfferEvent.findByUid";
-		final Parameters parameters = map("uid", uid);
+	public JobOfferEvent findById(final String Id) {
+		Objects.requireNonNull(Id);
+		final String namedQuery = "JobOfferEvent.findById";
+		final Parameters parameters = map("Id", Id);
 		return this.findByQuery(JobOfferEvent.class, namedQuery, parameters);
 	}
 }

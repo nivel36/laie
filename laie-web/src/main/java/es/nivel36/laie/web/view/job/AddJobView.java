@@ -12,10 +12,10 @@ import org.primefaces.event.SelectEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import es.nivel36.laie.ejb.client.ClientDto;
-import es.nivel36.laie.ejb.job.offer.JobOfferDto;
-import es.nivel36.laie.ejb.user.SimpleUserDto;
-import es.nivel36.laie.ejb.user.UserDto;
+import es.nivel36.laie.ejb.client.Client;
+import es.nivel36.laie.ejb.job.offer.JobOffer;
+import es.nivel36.laie.ejb.user.SimpleUser;
+import es.nivel36.laie.ejb.user.User;
 
 @Named
 @ViewScoped
@@ -25,61 +25,61 @@ public class AddJobView extends AbstractJobView {
 
 	private static final Logger logger = LoggerFactory.getLogger(AddJobView.class);
 
-	private ClientDto client;
+	private Client client;
 
-	private SimpleUserDto owner;
+	private SimpleUser owner;
 
 	private boolean publish;
 
 	@PostConstruct
 	public void init() {
 		logger.trace("New job offer init");
-		this.jobOffer = new JobOfferDto();
+		this.jobOffer = new JobOffer();
 		this.jobOffer.setOpenDate(LocalDate.now());
-		final UserDto userDto = this.sessionUser.get();
-		this.owner = new SimpleUserDto(userDto);
-		this.fillRecruiters(userDto);
+		final User User = this.sessionUser.get();
+		this.owner = new SimpleUser(User);
+		this.fillRecruiters(User);
 	}
 
-	public void onClientSelect(final SelectEvent<ClientDto> event) {
-		final ClientDto dto = event.getObject();
-		if (dto != null) {
-			this.client = dto;
+	public void onClientSelect(final SelectEvent<Client> event) {
+		final Client  = event.getObject();
+		if ( != null) {
+			this.client = ;
 		}
 	}
 
-	private void fillRecruiters(final UserDto user) {
-		final List<UserDto> subordinateUsers = this.userService.findSubordinateUsers(user.getUid());
-		for (final UserDto subordinate : subordinateUsers) {
-			final SimpleUserDto simpleUserDto = new SimpleUserDto(subordinate);
-			this.recruiters.add(simpleUserDto);
+	private void fillRecruiters(final User user) {
+		final List<User> subordinateUsers = this.userService.findSubordinateUsers(user.getId());
+		for (final User subordinate : subordinateUsers) {
+			final SimpleUser simpleUser = new SimpleUser(subordinate);
+			this.recruiters.add(simpleUser);
 		}
 	}
 
 	public void save() {
 		logger.debug("Create new client action performed");
-		String[] recruitersUid = this.recruiters.stream().map(SimpleUserDto::getUid).toArray(String[]::new);
-		this.jobOffer = this.jobOfferService.addJobOffer(client.getUid(), this.sessionUser.get().getUid(),
-				recruitersUid, jobOffer);
+		String[] recruitersId = this.recruiters.stream().map(SimpleUser::getId).toArray(String[]::new);
+		this.jobOffer = this.jobOfferService.addJobOffer(client.getId(), this.sessionUser.get().getId(),
+				recruitersId, jobOffer);
 		if (publish) {
-			this.jobOfferService.publish(this.jobOffer.getUid());
+			this.jobOfferService.publish(this.jobOffer.getId());
 		}
-		Faces.redirect(ViewJobView.URL + "?job=" + this.jobOffer.getUid());
+		Faces.redirect(ViewJobView.URL + "?job=" + this.jobOffer.getId());
 	}
 
-	public ClientDto getClient() {
+	public Client getClient() {
 		return client;
 	}
 
-	public void setClient(final ClientDto client) {
+	public void setClient(final Client client) {
 		this.client = client;
 	}
 
-	public final SimpleUserDto getOwner() {
+	public final SimpleUser getOwner() {
 		return owner;
 	}
 
-	public final void setOwner(SimpleUserDto owner) {
+	public final void setOwner(SimpleUser owner) {
 		this.owner = owner;
 	}
 
