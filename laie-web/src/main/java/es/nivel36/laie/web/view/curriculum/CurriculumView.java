@@ -10,13 +10,15 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.omnifaces.cdi.Param;
+
 import es.nivel36.laie.ejb.candidate.Candidate;
-import es.nivel36.laie.ejb.candidate.CandidateService;
 import es.nivel36.laie.ejb.curriculum.Curriculum;
 import es.nivel36.laie.ejb.curriculum.CurriculumService;
 import es.nivel36.laie.ejb.curriculum.education.Education;
 import es.nivel36.laie.ejb.curriculum.jobexperience.JobExperience;
 import es.nivel36.laie.ejb.curriculum.language.Language;
+import es.nivel36.laie.ejb.curriculum.skill.Skill;
 import es.nivel36.laie.web.core.IllegalPageStateException;
 import es.nivel36.laie.web.core.view.AbstractView;
 
@@ -26,6 +28,7 @@ public class CurriculumView extends AbstractView {
 
 	private static final long serialVersionUID = -4824952921251852587L;
 
+	@Param(name = "candidate", converter = "candidateConverter")
 	private Candidate candidate;
 
 	private Curriculum curriculum;
@@ -36,27 +39,22 @@ public class CurriculumView extends AbstractView {
 
 	private List<Language> languages;
 
-	private List<String> skills;
-
-	@Inject
-	private CandidateService candidateService;
+	private List<Skill> skills;
 
 	@Inject
 	private CurriculumService cuirriculumService;
 
 	@PostConstruct
 	public void init() {
-		final String candidateId = this.getValueFromGetParameters("candidate", true);
-		this.candidate = this.candidateService.findCandidateById(candidateId);
 		if (this.candidate == null) {
 			throw new IllegalPageStateException();
 		}
-		this.curriculum = this.cuirriculumService.findCandidatesCurriculum(candidateId);
+		this.curriculum = this.cuirriculumService.findCandidatesCurriculum(candidate);
 		if (this.curriculum == null) {
 			this.curriculum = new Curriculum();
 		}
 		if (this.curriculum.getSkills() == null) {
-			this.curriculum.setSkills(new HashSet<String>());
+			this.curriculum.setSkills(new HashSet<Skill>());
 		}
 		if (this.curriculum.getEducation() == null) {
 			this.curriculum.setEducation(new HashSet<Education>());
@@ -67,17 +65,14 @@ public class CurriculumView extends AbstractView {
 		if (this.curriculum.getLanguages() == null) {
 			this.curriculum.setLanguages(new HashSet<Language>());
 		}
-		this.skills = new ArrayList<>();
-		for (final String skill : this.curriculum.getSkills()) {
-			this.skills.add(skill);
-		}
 		this.education = new ArrayList<>(this.curriculum.getEducation());
 		this.jobExperiences = new ArrayList<>(this.curriculum.getJobExperiences());
 		this.languages = new ArrayList<>(this.curriculum.getLanguages());
-		this.orderJobExperiencesByDate();
-		this.orderEducation();
-		this.orderLanguages();
-		this.orderSkills();
+		this.skills = new ArrayList<Skill>(this.curriculum.getSkills());
+		Collections.sort(jobExperiences);
+		Collections.sort(education);
+		Collections.sort(languages);
+		Collections.sort(skills);
 	}
 
 	public Candidate getCandidate() {
@@ -100,23 +95,7 @@ public class CurriculumView extends AbstractView {
 		return this.languages;
 	}
 
-	public List<String> getSkills() {
+	public List<Skill> getSkills() {
 		return this.skills;
-	}
-
-	private void orderEducation() {
-		Collections.sort(education);
-	}
-
-	private void orderLanguages() {
-		Collections.sort(languages);
-	}
-
-	private void orderJobExperiencesByDate() {
-		Collections.sort(jobExperiences);
-	}
-
-	private void orderSkills() {
-		Collections.sort(skills);
 	}
 }

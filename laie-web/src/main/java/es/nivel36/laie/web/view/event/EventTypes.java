@@ -14,7 +14,7 @@ import es.nivel36.laie.ejb.event.JobCandidatureEventType;
 @ApplicationScoped
 public class EventTypes implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 3602467667467065479L;
 
 	private final List<JobCandidatureEventType> listOfEventTypes = new ArrayList<>();
 

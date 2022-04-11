@@ -28,6 +28,11 @@ public class MeetingService {
 	@Inject
 	@Repository
 	private JobOfferDao jobOfferDao;
+	
+	public void addMeeting(final Meeting meeting) {
+		Objects.requireNonNull(meeting);
+		meetingDao.insert(meeting);
+	}
 
 	public List<Meeting> findConductedMeetings(final User owner, final Page page) {
 		Objects.requireNonNull(owner);

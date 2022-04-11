@@ -16,19 +16,20 @@
 package org.primefaces.roma.component;
 
 import javax.faces.component.UIComponent;
-import org.primefaces.component.menu.AbstractMenu;
-import javax.faces.context.FacesContext;
 import javax.faces.component.UINamingContainer;
 import javax.faces.component.UIOutput;
 import javax.faces.component.UIViewRoot;
+import javax.faces.context.FacesContext;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.ComponentSystemEvent;
 import javax.faces.event.ComponentSystemEventListener;
 import javax.faces.event.ListenerFor;
-import javax.faces.event.PostAdViewEvent;
-import org.primefaces.component.api.Widget;
+import javax.faces.event.PostAddToViewEvent;
 
-@ListenerFor(sourceClass = RomaMenu.class, systemEventClass = PostAdViewEvent.class)
+import org.primefaces.component.api.Widget;
+import org.primefaces.component.menu.AbstractMenu;
+
+@ListenerFor(sourceClass = RomaMenu.class, systemEventClass = PostAddToViewEvent.class)
 public class RomaMenu extends AbstractMenu implements Widget,ComponentSystemEventListener {
 
     public static final String COMPONENT_TYPE = "org.primefaces.component.RomaMenu";
@@ -108,7 +109,7 @@ public class RomaMenu extends AbstractMenu implements Widget,ComponentSystemEven
     
     @Override
     public void processEvent(ComponentSystemEvent event) throws AbortProcessingException {
-        if(event instanceof PostAdViewEvent) {
+        if(event instanceof PostAddToViewEvent) {
             FacesContext context = getFacesContext();
             UIViewRoot root = context.getViewRoot();
             

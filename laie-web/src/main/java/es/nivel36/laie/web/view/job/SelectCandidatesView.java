@@ -1,5 +1,6 @@
 package es.nivel36.laie.web.view.job;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -10,15 +11,13 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.apache.commons.collections4.map.HashedMap;
+import org.omnifaces.cdi.Param;
 
 import es.nivel36.laie.ejb.candidate.Candidate;
 import es.nivel36.laie.ejb.candidate.CandidateService;
-import es.nivel36.laie.ejb.candidate.SimpleCandidate;
 import es.nivel36.laie.ejb.job.candidature.JobCandidature;
 import es.nivel36.laie.ejb.job.candidature.JobCandidatureService;
 import es.nivel36.laie.ejb.job.offer.JobOffer;
-import es.nivel36.laie.ejb.job.offer.JobOfferService;
 import es.nivel36.laie.web.core.IllegalPageStateException;
 import es.nivel36.laie.web.core.view.AbstractView;
 import es.nivel36.laie.web.view.candidate.CandidateLazyDataModel;
@@ -29,10 +28,11 @@ public class SelectCandidatesView extends AbstractView {
 
 	private static final long serialVersionUID = -4200957281776169451L;
 
-	private final Map<String, SimpleCandidate> alredySelectedCandidates = new HashedMap<>();
+	private final Map<Long, Candidate> alredySelectedCandidates = new HashMap<>();
 
 	private CandidateLazyDataModel candidates;
 
+	@Param(name = "jobOffer", converter = "jobOfferConverter")
 	private JobOffer jobOffer;
 
 	private String searchText;
@@ -45,20 +45,15 @@ public class SelectCandidatesView extends AbstractView {
 	@Inject
 	private transient JobCandidatureService jobCandidatureService;
 
-	@Inject
-	private transient JobOfferService jobOfferService;
-
 	@PostConstruct
 	public void init() {
-		final String Id = this.getValueFromGetParameters("job", true);
-		this.jobOffer = this.jobOfferService.findJobOfferById(Id);
 		if (this.jobOffer == null) {
 			throw new IllegalPageStateException();
 		}
 		final Set<JobCandidature> jobCandidatures = this.jobOffer.getJobCandidatures();
 		if (jobCandidatures != null) {
 			for (final JobCandidature jobCandidature : jobCandidatures) {
-				final SimpleCandidate candidate = jobCandidature.getCandidate();
+				final Candidate candidate = jobCandidature.getCandidate();
 				this.alredySelectedCandidates.put(candidate.getId(), candidate);
 			}
 		}
@@ -75,10 +70,7 @@ public class SelectCandidatesView extends AbstractView {
 	}
 
 	public void select() {
-		final String[] candidatesIds = this.selectedCandidates.stream().map(Candidate::getId)
-				.toArray(String[]::new);
-		final String jobOfferId = this.jobOffer.getId();
-		this.jobCandidatureService.addJobCandidatures(jobOfferId, candidatesIds);
+		this.jobCandidatureService.addJobCandidatures(jobOffer, this.selectedCandidates);
 		this.navigateTo(ViewJobView.URL + "?job=" + this.jobOffer.getId());
 	}
 
@@ -122,10 +114,5 @@ public class SelectCandidatesView extends AbstractView {
 	public void setJobCandidatureService(final JobCandidatureService jobCandidatureService) {
 		Objects.requireNonNull(jobCandidatureService);
 		this.jobCandidatureService = jobCandidatureService;
-	}
-
-	public void setJobOfferService(final JobOfferService jobOfferService) {
-		Objects.requireNonNull(jobOfferService);
-		this.jobOfferService = jobOfferService;
 	}
 }

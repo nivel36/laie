@@ -1,9 +1,5 @@
 package es.nivel36.laie.web.view.event;
 
-import java.util.Map;
-
-import org.primefaces.model.FilterMeta;
-
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.core.model.search.SearchFacets;
 import es.nivel36.laie.ejb.core.model.search.SearchResult;
@@ -22,17 +18,7 @@ public class EventLazyDataModel extends AbstractLazyDataModel<JobCandidatureEven
 	}
 
 	@Override
-	protected JobCandidatureEvent find(String rowkey) {
+	protected JobCandidatureEvent find(Long rowkey) {
 		return null;
-	}
-
-	@Override
-	protected String getKey(JobCandidatureEvent entity) {
-		return null;
-	}
-
-	@Override
-	public int count(Map<String, FilterMeta> filterBy) {
-		return 0;
 	}
 }

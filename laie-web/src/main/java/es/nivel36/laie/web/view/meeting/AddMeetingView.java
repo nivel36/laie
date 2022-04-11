@@ -67,8 +67,7 @@ public class AddMeetingView extends AbstractView {
 
 	private Meeting initMeeting() {
 		final Meeting newMeeting = new Meeting();
-		final SimpleUser currentUser = new SimpleUser(this.sessionUser.get());
-		newMeeting.setOwner(currentUser);
+		newMeeting.setOwner(this.sessionUser.get());
 		return newMeeting;
 	}
 

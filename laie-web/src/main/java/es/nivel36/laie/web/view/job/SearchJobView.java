@@ -1,7 +1,5 @@
 package es.nivel36.laie.web.view.job;
 
-import java.lang.invoke.MethodHandles;
-
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -17,9 +15,9 @@ import es.nivel36.laie.web.core.view.AbstractView;
 @ViewScoped
 public class SearchJobView extends AbstractView {
 
-	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
+	private static final long serialVersionUID = -6016753467609521106L;
 
-	private static final long serialVersionUID = 1L;
+	private static final Logger logger = LoggerFactory.getLogger(SearchJobView.class);
 
 	private JobOfferLazyDataModel jobOffers;
 

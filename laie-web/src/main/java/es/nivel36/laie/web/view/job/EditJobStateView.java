@@ -7,6 +7,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.omnifaces.cdi.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,6 +26,7 @@ public class EditJobStateView extends AbstractView {
 
 	private static final Logger logger = LoggerFactory.getLogger(EditJobStateView.class);
 
+	@Param(name="jobOffer", converter="jobOfferConverter")
 	private JobOffer jobOffer;
 
 	private String notes;
@@ -39,8 +41,6 @@ public class EditJobStateView extends AbstractView {
 	
 	@PostConstruct
 	public void init() {
-		final String Id = this.getValueFromGetParameters("jobOffer", true);
-		this.jobOffer = this.jobOfferService.findJobOfferById(Id);
 		this.checkNonNullJobOffer();
 		logger.trace("Edit job state {} init", this.jobOffer);
 	}

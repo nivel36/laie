@@ -68,7 +68,7 @@ public class JobCandidatureService {
 		this.jobCandidatureDao.insert(jobCandidature);
 	}
 
-	public void addJobCandidatures(final JobOffer jobOffer, final Candidate[] candidates) {
+	public void addJobCandidatures(final JobOffer jobOffer, final List<Candidate> candidates) {
 		Objects.requireNonNull(jobOffer);
 		Objects.requireNonNull(candidates);
 		for (final Candidate candidate : candidates) {
