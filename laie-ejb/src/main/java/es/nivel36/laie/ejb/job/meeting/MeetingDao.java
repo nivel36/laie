@@ -44,7 +44,7 @@ public class MeetingDao extends AbstractDao {
 		Objects.requireNonNull(owner);
 		Objects.requireNonNull(page);
 		final String namedQuery = "Meeting.findPlannedByOwner";
-		final Parameters parameters = map("ownerId", owner).and("now", LocalDateTime.now());
+		final Parameters parameters = map("owner", owner).and("now", LocalDateTime.now());
 		return this.findByQuery(Meeting.class, namedQuery, parameters, page);
 	}
 }

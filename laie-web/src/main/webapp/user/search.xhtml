@@ -27,14 +27,14 @@
 					paginatorPosition="bottom" rows="10" sortMode="single" lazy="true">
 					<p:column headerText="#{i18n['user.name']}" sortBy="#{user.name}">
 						<h:link outcome="/user/view.xhtml">
-							<cc:avatar name="#{user.fullName}" path="#{user.avatarUrl}" styleClass="p-mr-2" />
+							<cc:avatar name="#{user.fullName}" path="#{user.picture.path}" styleClass="p-mr-2" />
 							<h:outputText value="#{user.fullName}" />
 							<f:param name="user" value="#{user.id}" />
 						</h:link>
 					</p:column>
 
 					<p:column headerText="#{i18n['user.role']}" sortBy="#{user.role}">
-						<p:tag styleClass="user-role role-#{user.roleName}" value="#{i18n[user.roleName]}" />
+						<p:tag styleClass="user-role role-#{user.role}" value="#{i18n[user.role]}" />
 					</p:column>
 
 					<p:column headerText="#{i18n['user.manager']}" sortBy="#{user.manager.name}">

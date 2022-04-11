@@ -43,9 +43,7 @@ public class ConfigView extends AbstractView {
 
 	private User user;
 
-	private String userImage;
-
-	private File uploadedFile;
+	private File userImage;
 
 	@Inject
 	private transient FileService fileService;
@@ -56,14 +54,14 @@ public class ConfigView extends AbstractView {
 	@PostConstruct
 	public void init() {
 		this.user = this.sessionUser.get();
-		this.userImage = this.user.getPicture().getPath();
+		this.userImage = this.user.getPicture();
 		logger.debug("Config user {} init", this.user);
 	}
 
 	private void refreshUser() {
-		this.user = this.userService.findUserById(this.sessionUser.get().getId());
+		this.user = this.userService.findUserByEmail(this.sessionUser.get().getEmail());
 		this.sessionUser.refresh();
-		this.userImage = this.user.getPicture().getPath();
+		this.userImage = this.user.getPicture();
 	}
 
 	public void captureImage(final CaptureEvent event) {
@@ -75,8 +73,7 @@ public class ConfigView extends AbstractView {
 		}
 		logger.debug("Upload camera image for user {} action performed", this.user);
 		try (final InputStream inputStream = new ByteArrayInputStream(data);) {
-			this.uploadedFile = this.fileService.uploadTemporalFile(inputStream);
-			this.userImage = this.uploadedFile.getPath();
+			this.userImage = this.fileService.uploadTemporalFile(inputStream);
 		} catch (final IOException e) {
 			this.imageChanged = false;
 			throw new UncheckedIOException(e);
@@ -92,8 +89,7 @@ public class ConfigView extends AbstractView {
 		}
 		logger.debug("Upload user {} image action performed", this.user);
 		try (final InputStream inputStream = uploadedFile.getInputStream()) {
-			this.uploadedFile = this.fileService.uploadTemporalFile(inputStream);
-			this.userImage = this.uploadedFile.getPath();
+			this.userImage = this.fileService.uploadTemporalFile(inputStream);
 		}
 	}
 
@@ -136,9 +132,9 @@ public class ConfigView extends AbstractView {
 	private void saveImage() {
 		if (this.imageChanged) {
 			logger.trace("Changing user image");
-			try (final InputStream is = this.fileService.downloadTemporalFile(uploadedFile.getPath());
+			try (final InputStream is = this.fileService.downloadFile(userImage);
 					final BufferedInputStream bis = new BufferedInputStream(is)) {
-				this.userImage = this.userService.changeUsersImage(this.user, is);
+				this.userService.changeUsersImage(this.user, is);
 			} catch (final IOException e) {
 				throw new FileUploadException(e);
 			}
@@ -149,7 +145,7 @@ public class ConfigView extends AbstractView {
 		return this.user;
 	}
 
-	public String getUserImage() {
+	public File getUserImage() {
 		return this.userImage;
 	}
 

@@ -14,7 +14,7 @@
 		<f:param name="candidateId" value="#{candidate.id}" />
 		<div class="user-minicard">
 			<div class="user-image">
-				<cc:avatar name="#{candidate.fullName}" path="#{candidate.avatarUrl}"/>
+				<cc:avatar name="#{candidate.fullName}" path="#{candidate.picture.path}"/>
 			</div>
 			<div class="user-info">
 				<div class="name">#{candidate.fullName}</div>

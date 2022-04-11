@@ -48,16 +48,6 @@ public class FileService {
 			throw new UncheckedIOException(e);
 		}
 	}
-	
-	public InputStream downloadTemporalFile(final String path) {
-		Objects.requireNonNull(path);
-		try {
-			final Path absolutePath = Paths.get(this.fileDirectory,path);
-			return new BufferedInputStream(Files.newInputStream(absolutePath));
-		} catch (final IOException e) {
-			throw new UncheckedIOException(e);
-		}
-	}
 
 	public File uploadTemporalFile(final InputStream inputStream) {
 		Objects.requireNonNull(inputStream);

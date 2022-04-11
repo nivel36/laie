@@ -16,10 +16,10 @@
 				<div class="title-card">
 					<h:form>
 						<div class="title-card-content">
-							<cc:avatar styleClass="title-card-content-image" name="#{viewUserView.user.fullName}" path="#{viewUserView.user.avatarUrl}" size="xlarge" />
+							<cc:avatar styleClass="title-card-content-image" name="#{viewUserView.user.fullName}" path="#{viewUserView.user.picture.path}" size="xlarge" />
 							<div class="title-card-content-info">
 								<div class="title">#{viewUserView.user.fullName}</div>
-								<div class="subtitle">#{i18n[viewUserView.user.roleName]}</div>
+								<div class="subtitle">#{i18n[viewUserView.user.role]}</div>
 								<div class="text">
 									<span class="email"><i class="pi pi-envelope" /> #{viewUserView.user.email}</span>
 									<h:panelGroup rendered="#{not empty viewUserView.user.phoneNumber}" styleClass="phone">

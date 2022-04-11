@@ -27,7 +27,7 @@
 
 					<p:column headerText="#{i18n['candidate.name']}" sortBy="#{candidate.name}">
 						<h:link outcome="/candidate/view.xhtml">
-							<cc:avatar name="#{candidate.fullName}" path="#{candidate.avatarUrl}" styleClass="p-mr-2" />
+							<cc:avatar name="#{candidate.fullName}" path="#{candidate.picture.path}" styleClass="p-mr-2" />
 							<h:outputText styleClass="link" value="#{candidate.fullName}" />
 							<f:param name="candidate" value="#{candidate.id}" />
 						</h:link>

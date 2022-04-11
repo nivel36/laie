@@ -44,7 +44,7 @@ public class JobOfferDao extends AbstractDao {
 		Objects.requireNonNull(owner);
 		Objects.requireNonNull(page);
 		final String namedQuery = "JobOffer.findJobOffersByOwner";
-		final Parameters parameters = map("ownerId", owner);
+		final Parameters parameters = map("owner", owner);
 		return this.findByQuery(JobOffer.class, namedQuery, parameters, page);
 	}
 

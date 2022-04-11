@@ -227,7 +227,7 @@
 			WHERE t.label = :label
 		]]></query>
 	</named-query>
-
+	
 	<named-query name="User.findCredential">
 		<query><![CDATA[
 			SELECT c
@@ -252,7 +252,7 @@
 			SELECT CASE WHEN (COUNT(u) > 0) THEN TRUE ELSE FALSE END 
 			FROM UserClosure uc 
 			JOIN uc.descendant u 
-			WHERE uc.antecessor.id = :managerId 
+			WHERE uc.antecessor = :manager 
 			AND u.id= :subordinateId
 		]]></query>
 	</named-query>
@@ -260,7 +260,8 @@
 	<named-query name="User.findByEmail">
 		<query><![CDATA[
 			SELECT u 
-			FROM User u 
+			FROM User u
+			LEFT JOIN FETCH u.bookmarks
 			WHERE u.email = :email
 		]]></query>
 	</named-query>

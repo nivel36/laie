@@ -58,7 +58,7 @@
 									<cc:autocomplete id="owner" label="#{i18n['job.owner']}" value="#{addJobView.owner}" completeMethod="#{addJobView.queryOwner}"
 										converter="simpleUserConverter">
 										<p:column styleClass="user-select image">
-											<cc:person name="#{var.fullName}" path="#{var.avatarUrl}" />
+											<cc:person name="#{var.fullName}" path="#{var.picture.path}" />
 										</p:column>
 									</cc:autocomplete>
 								</div>

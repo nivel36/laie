@@ -86,11 +86,24 @@ public class UserService {
 
 		final File picture = user.getPicture();
 		final File pictureInDatabase = userInDatabase.getPicture();
-		if (pictureInDatabase != null && picture == null || !pictureInDatabase.equals(picture)) {
+		if (pictureHasChanged(picture, pictureInDatabase)) {
 			this.fileService.removeFile(pictureInDatabase);
 		}
 
 		return this.userDao.update(user);
+	}
+
+	private boolean pictureHasChanged(final File picture, final File pictureInDatabase) {
+		if (picture == null && pictureInDatabase != null) {
+			return true;
+		}
+		if (picture != null && pictureInDatabase == null) {
+			return true;
+		}
+		if (picture == null && pictureInDatabase == null) {
+			return false;
+		}
+		return !pictureInDatabase.equals(picture);
 	}
 
 	private void changeUsersManager(final User user, final User oldManager, final User newManager)
@@ -120,7 +133,7 @@ public class UserService {
 		}
 	}
 
-	public String changeUsersImage(final User user, final InputStream image) {
+	public void changeUsersImage(final User user, final InputStream image) {
 		Objects.requireNonNull(user);
 		Objects.requireNonNull(image);
 		logger.debug("Change image to user {}", user);
@@ -134,7 +147,6 @@ public class UserService {
 		}
 		user.setPicture(file);
 		userDao.update(user);
-		return newImage.getPhysicalFile().getRelativePath();
 	}
 
 	public void changePassword(final String email, final String oldPassword, final String newPassword) {

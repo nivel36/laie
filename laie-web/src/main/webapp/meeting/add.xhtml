@@ -72,7 +72,7 @@
 										completeMethod="#{addMeetingView.searchPerson}" forceSelection="true" minQueryLength="3" var="person"
 										itemValue="#{person}" itemLabel="#{person}" converter="personConverter">
 										<p:column styleClass="select-person">
-											<cc:person name="#{person.fullName}" path="#{person.avatarUrl}" description="#{person.email}"/>
+											<cc:person name="#{person.fullName}" path="#{person.picture.path}" description="#{person.email}"/>
 										</p:column>
 										<p:ajax event="itemSelect" listener="#{addMeetingView.addAttendee}" update="@this meetingForm:attendees" />
 									</p:autoComplete>
@@ -85,7 +85,7 @@
 								<h:panelGroup layout="block" id="attendees" styleClass="attendees">
 									<ui:repeat var="person" value="#{addMeetingView.attendees}" varStatus="varStatus">
 										<h:panelGroup layout="block" id="attendee" styleClass="attendee">
-											<cc:person name="#{person.fullName}" path="#{person.avatarUrl}" description="#{person.email}"/>
+											<cc:person name="#{person.fullName}" path="#{person.picture.path}" description="#{person.email}"/>
 												<p:tag styleClass="p-mr-2" icon="pi pi-check" severity="success" rounded="true" value="#{i18n['meeting.available']}" rendered="#{addMeetingView.isAvaliable(person)}" />
 												<p:tag styleClass="p-mr-2" icon="pi pi-times" severity="danger" rounded="true" value="#{i18n['meeting.non_available']}" rendered="#{addMeetingView.isAvaliable(person)}" />
 											</cc:person>

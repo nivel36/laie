@@ -20,7 +20,7 @@
 				<p:dataViewGridItem columns="1">
 					<h:link outcome="/user/view.xhtml">
 						<f:param name="user" value="#{user.id}" />
-						<cc:person name="#{user.fullName}" path="#{user.avatarUrl}" description="#{user.email}"/>
+						<cc:person name="#{user.fullName}" path="#{user.picture.path}" description="#{user.email}"/>
 					</h:link>
 				</p:dataViewGridItem>
 			</p:dataView>

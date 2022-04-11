@@ -38,7 +38,7 @@
 					itemLabel="#{user.fullName}" disabled="#{cc.attrs.disabled}"
 					multiple="true" converter="simpleUserConverter">
 					<p:column styleClass="user-select">
-						<cc:person name="#{user.fullName}" path="#{user.avatarUrl}"
+						<cc:person name="#{user.fullName}" path="#{user.picture.path}"
 							description="#{user.email}" />
 					</p:column>
 					<p:ajax event="itemSelect" update="#{cc.clientId}" process="input" />
