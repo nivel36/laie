@@ -38,17 +38,8 @@ public class SearchMeetingView extends AbstractView {
 	public void init() {
 		logger.trace("Init search meeting");
 		final User user = this.sessionUser.get();
-		final String userId = user.getId();
-		this.plannedMeetings = this.initPlannedMeetings(userId);
-		this.conductedMeetings = this.initConductedMeetings(userId);
-	}
-
-	private List<Meeting> initConductedMeetings(final String userId) {
-		return this.meetingService.findConductedMeetings(userId, Page.TEN_RESULTS_PER_PAGE);
-	}
-
-	private List<Meeting> initPlannedMeetings(final String userId) {
-		return this.meetingService.findPlannedMeetings(userId, Page.TEN_RESULTS_PER_PAGE);
+		this.plannedMeetings = this.meetingService.findPlannedMeetings(user, Page.TEN_RESULTS_PER_PAGE);
+		this.conductedMeetings = this.meetingService.findConductedMeetings(user, Page.TEN_RESULTS_PER_PAGE);
 	}
 
 	public List<Meeting> getConductedMeetings() {

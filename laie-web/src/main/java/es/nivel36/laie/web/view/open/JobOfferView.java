@@ -4,11 +4,11 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 
+import org.omnifaces.cdi.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import es.nivel36.laie.ejb.job.offer.JobOffer;
-import es.nivel36.laie.ejb.job.offer.JobOfferService;
 import es.nivel36.laie.web.core.IllegalPageStateException;
 import es.nivel36.laie.web.core.view.AbstractView;
 
@@ -20,17 +20,11 @@ public class JobOfferView extends AbstractView {
 
 	private static final Logger logger = LoggerFactory.getLogger(JobOfferView.class);
 
+	@Param(name="jobffer", converter="jobOfferConverter")
 	private JobOffer jobOffer;
 	
-	private transient JobOfferService jobOfferService;
-
 	@PostConstruct
 	public void init() {
-		String Id = this.getValueFromGetParameters("Id");
-		if (Id == null) {
-			throw new IllegalPageStateException("Id not found");
-		}
-		this.jobOffer = jobOfferService.findJobOfferById(Id);
 		if (this.jobOffer == null) {
 			throw new IllegalPageStateException("Job offer not found");
 		}

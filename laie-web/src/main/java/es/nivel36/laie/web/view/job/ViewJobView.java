@@ -27,8 +27,6 @@ public class ViewJobView extends AbstractJobView {
 
 	@PostConstruct
 	public void init() {
-		final String Id = this.getValueFromGetParameters("job", true);
-		this.jobOffer = this.jobOfferService.findJobOfferById(Id);
 		if (this.jobOffer == null) {
 			throw new IllegalPageStateException();
 		}

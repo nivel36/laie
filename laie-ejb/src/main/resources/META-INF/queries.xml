@@ -242,7 +242,7 @@
 			SELECT u 
 			FROM UserClosure uc 
 			JOIN uc.descendant u 
-			WHERE uc.antecessor.id = :id 
+			WHERE uc.antecessor = :user 
 			AND uc.pathLength > 0
 		]]></query>
 	</named-query>
@@ -275,19 +275,11 @@
 		]]></query>
 	</named-query>
 
-	<named-query name="UserClosure.findAntecessorsUserClosuresById">
+	<named-query name="UserClosure.findAntecessorsUserClosures">
 		<query><![CDATA[
 			SELECT uc 
 			FROM UserClosure uc 
-			WHERE uc.descendant.id = :id
-		]]></query>
-	</named-query>
-
-	<named-query name="UserClosure.findDescendantsUserClosuresById">
-		<query><![CDATA[
-			SELECT uc 
-			FROM UserClosure uc 
-			WHERE uc.antecessor.id = :id
+			WHERE uc.descendant = :user
 		]]></query>
 	</named-query>
 </entity-mappings>

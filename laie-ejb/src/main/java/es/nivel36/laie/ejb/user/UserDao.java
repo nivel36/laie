@@ -90,8 +90,8 @@ public class UserDao extends AbstractDao {
 	///////////////////////////////////////////////////////////////////////////
 
 	private List<UserClosure> findAntecessorsUserClosures(final User user) {
-		return this.findByQuery(UserClosure.class, "UserClosure.findAntecessorsUserClosuresById",
-				map("id", user.getId()), Page.ALL_RESULTS);
+		return this.findByQuery(UserClosure.class, "UserClosure.findAntecessorsUserClosures", map("user", user),
+				Page.ALL_RESULTS);
 	}
 
 	private void deleteUserClosures(final User user) {
@@ -142,8 +142,8 @@ public class UserDao extends AbstractDao {
 	}
 
 	private void insertUserClosure(final User antecessor, final User descendant, final int pathLength) {
-		logger.trace("Insert in user closure table. Antecessor {}, descendant {}, pathLength {}", antecessor.getEmail(),
-				descendant.getEmail(), pathLength);
+		logger.trace("Insert in user closure table. Antecessor {}, descendant {}, pathLength {}", antecessor,
+				descendant, pathLength);
 		final UserClosure newUserClosure = new UserClosure(antecessor, descendant, pathLength);
 		this.em.persist(newUserClosure);
 	}

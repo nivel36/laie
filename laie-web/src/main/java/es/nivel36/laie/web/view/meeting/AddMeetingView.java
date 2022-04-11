@@ -21,7 +21,6 @@ import org.slf4j.LoggerFactory;
 import es.nivel36.laie.ejb.job.meeting.Meeting;
 import es.nivel36.laie.ejb.job.meeting.MeetingService;
 import es.nivel36.laie.ejb.job.meeting.MeetingType;
-import es.nivel36.laie.ejb.user.SimpleUser;
 import es.nivel36.laie.web.core.view.AbstractView;
 
 @Named
@@ -149,7 +148,7 @@ public class AddMeetingView extends AbstractView {
 		for (final String person : this.attendees) {
 			this.meeting.addAttendee(person);
 		}
-		this.meetingService.createMeeting(this.meeting);
+		this.meetingService.addMeeting(this.meeting);
 		this.navigateTo(SearchMeetingView.URL);
 	}
 
