@@ -25,7 +25,7 @@ public class EditContactView extends AbstractView {
 
 	private static final Logger logger = LoggerFactory.getLogger(EditContactView.class);
 
-	@Param(name = "contact", converter = "contactConverter")
+	@Param
 	private Contact contact;
 
 	@Inject

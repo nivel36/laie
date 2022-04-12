@@ -37,7 +37,7 @@
 			<div class="p-grid">
 				<ui:repeat var="template" value="#{exportCurriculumView.templates}">
 					<div class="p-col-12 p-xl-4">
-						<div class="card card-w-title ui-flId">
+						<div class="card card-w-title ui-fluid">
 							<h1>#{i18n[template.title]}</h1>
 							<p>#{i18n[template.description]}</p>
 							<p:commandButton value="#{i18n['action.export']}" action="#{exportCurriculumView.export(template)}" ajax="false" />

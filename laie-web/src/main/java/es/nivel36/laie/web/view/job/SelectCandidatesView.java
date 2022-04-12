@@ -32,7 +32,7 @@ public class SelectCandidatesView extends AbstractView {
 
 	private CandidateLazyDataModel candidates;
 
-	@Param(name = "jobOffer", converter = "jobOfferConverter")
+	@Param
 	private JobOffer jobOffer;
 
 	private String searchText;

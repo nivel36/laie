@@ -19,7 +19,7 @@
 			<div class="card">
 				<div class="p-grid">
 					<div class="p-col-12 p-xl-6">
-						<div class="form-card ui-flId">
+						<div class="form-card ui-fluid">
 							<h5>#{i18n['contact.data']}</h5>
 							<div class="p-grid p-formgrid">
 								<div class="p-col-12 p-sm-6">
@@ -53,7 +53,7 @@
 							outcome="/client/view.xhtml"
 							styleClass="ui-button-secondary ui-button-outlined">
 							<f:param name="client"
-								value="#{editContactView.contact.clientId}" />
+								value="#{editContactView.contact.client.id}" />
 						</p:button>
 						<p:commandButton value="#{i18n['action.delete']}"
 							action="#{editContactView.delete}"

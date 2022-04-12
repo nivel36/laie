@@ -25,7 +25,7 @@ public class AddContactView extends AbstractView {
 
 	private static final Logger logger = LoggerFactory.getLogger(AddContactView.class);
 
-	@Param(name="client", converter="clientConverter")
+	@Param
 	private Client client;
 
 	private Contact contact;

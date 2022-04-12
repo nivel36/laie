@@ -43,11 +43,10 @@ public class UserService {
 			throw new DuplicateEmailException();
 		}
 
+		this.userDao.insert(user);
 		if (user.getManager() != null) {
 			this.addUsersManager(user);
 		}
-
-		this.userDao.insert(user);
 	}
 
 	private void checkDuplicateEmail(final String newEmail, final String oldEmail) throws DuplicateEmailException {
@@ -94,10 +93,7 @@ public class UserService {
 	}
 
 	private boolean pictureHasChanged(final File picture, final File pictureInDatabase) {
-		if (picture == null && pictureInDatabase != null) {
-			return true;
-		}
-		if (picture != null && pictureInDatabase == null) {
+		if ((picture == null) != (pictureInDatabase == null)) {
 			return true;
 		}
 		if (picture == null && pictureInDatabase == null) {

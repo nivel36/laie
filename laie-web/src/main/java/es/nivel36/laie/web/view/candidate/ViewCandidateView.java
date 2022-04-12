@@ -42,7 +42,7 @@ public class ViewCandidateView extends AbstractView {
 
 	public static final String URL = "/candidate/candidate.xhtml";
 
-	@Param(name = "candidate", converter = "candidateConverter")
+	@Param
 	private Candidate candidate;
 
 	private boolean editable;

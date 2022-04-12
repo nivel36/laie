@@ -28,7 +28,7 @@ public class CurriculumView extends AbstractView {
 
 	private static final long serialVersionUID = -4824952921251852587L;
 
-	@Param(name = "candidate", converter = "candidateConverter")
+	@Param
 	private Candidate candidate;
 
 	private Curriculum curriculum;

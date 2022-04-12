@@ -24,18 +24,12 @@ import es.nivel36.laie.web.core.view.AbstractView;
 @ViewScoped
 public class ExportCurriculumView extends AbstractView {
 
-	private static final String CANDIDATE_ID = "candidateId";
+	private static final long serialVersionUID = -2181956059475714175L;
 
-	private static final String ID = "id";
-
-	private static final long serialVersionUID = 1L;
-
-	@Inject
-	@Param(name = CANDIDATE_ID, required = false)
+	@Param
 	private Candidate candidate;
 
-	@Inject
-	@Param(name = ID, required = false)
+	@Param
 	private Curriculum curriculum;
 
 	@Inject

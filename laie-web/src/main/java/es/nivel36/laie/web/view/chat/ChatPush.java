@@ -74,8 +74,7 @@ public class ChatPush implements Serializable {
 
 	private int i = 0;
 
-	@Inject
-	@Push(channel = "chat")
+	@Inject @Push(channel = "chat")
 	private PushContext push;
 
 	public PushContext getPush() {

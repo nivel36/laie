@@ -20,7 +20,7 @@ public class PreviewJobView extends AbstractView {
 
 	private static final Logger logger = LoggerFactory.getLogger(PreviewJobView.class);
 
-	@Param(name = "jobOffer", converter = "jobOfferConverter")
+	@Param
 	private JobOffer jobOffer;
 
 	@PostConstruct

@@ -22,7 +22,7 @@ public abstract class AbstractJobView extends AbstractView {
 
 	private static final long serialVersionUID = 3680467978756165892L;
 
-	@Param(name = "jobOffer", converter = "jobOfferConverter")
+	@Param
 	protected JobOffer jobOffer;
 
 	protected transient List<User> recruiters = new ArrayList<>();

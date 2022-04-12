@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://nivel.36/laie/ui"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets" template="/WEB-INF/templates/template.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:g="http://nivel.36/laie/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/WEB-INF/templates/template.xhtml">
 
 	<ui:define name="title">
 		#{i18n['user.edit_user']} - #{editUserView.user.fullName}
@@ -16,59 +22,75 @@
 				<div class="p-grid">
 
 					<div class="p-col-12 p-md-6">
-						<div class="form-card ui-flId">
+						<div class="form-card ui-fluid">
 							<h5>#{i18n['user.personal_information']}</h5>
 							<div class="p-grid p-formgrid">
 								<div class="p-col-12 p-sm-6">
-									<g:input id="name" label="#{i18n['user.name']}" value="#{editUserView.user.name}" required="true" />
+									<g:input id="name" label="#{i18n['user.name']}"
+										value="#{editUserView.user.name}" required="true" />
 								</div>
 								<div class="p-col-12 p-sm-6">
-									<g:input id="surname" label="#{i18n['user.surname']}" value="#{editUserView.user.surname}" required="true" />
+									<g:input id="surname" label="#{i18n['user.surname']}"
+										value="#{editUserView.user.surname}" required="true" />
 								</div>
 								<div class="p-col-12 p-sm-6">
-									<g:input id="email" label="#{i18n['user.email']}" value="#{editUserView.user.email}" required="true"
-										validator="#{editUserView.validateEmail}" />
+									<g:input id="email" label="#{i18n['user.email']}"
+										value="#{editUserView.user.email}" required="true" />
 								</div>
 								<div class="p-col-12 p-sm-6"></div>
 								<div class="p-col-12 p-sm-6">
-									<g:input id="phone_number" label="#{i18n['user.phone_number']}" value="#{editUserView.user.phoneNumber}" />
+									<g:input id="phone_number" label="#{i18n['user.phone_number']}"
+										value="#{editUserView.user.phoneNumber}" />
 								</div>
 							</div>
 						</div>
 					</div>
 					<div class="p-col-12 p-md-6">
-						<div class="form-card ui-flId">
+						<div class="form-card ui-fluid">
 							<h5>#{i18n['user.professional_information']}</h5>
 							<div class="p-grid p-formgrid">
 								<div class="p-col-12 p-sm-6">
-									<g:input type="selectOneMenu" id="role" value="#{editUserView.user.role}" label="#{i18n['user.role']}" required="true">
-										<f:selectItems value="#{roles.list}" var="role" itemValue="#{role}" itemLabel="#{i18n[role]}" />
-										<p:ajax event="change" update=":userForm:role :userForm:managerWrapper" process=":userForm:role"
+									<g:input type="selectOneMenu" id="role"
+										value="#{editUserView.user.role}" label="#{i18n['user.role']}"
+										required="true">
+										<f:selectItems value="#{roles.list}" var="role"
+											itemValue="#{role}" itemLabel="#{i18n[role]}" />
+										<p:ajax event="change"
+											update=":userForm:role :userForm:managerWrapper"
+											process=":userForm:role"
 											listener="#{editUserView.changeRoleListener}" />
 									</g:input>
 								</div>
 								<div class="p-col-12 p-sm-6">
-									<h:panelGroup id="managerWrapper" class="form-field ui-flId" layout="block">
-										<cc:autocomplete id="manager" label="#{i18n['user.manager']}" value="#{editUserView.manager}" completeMethod="#{editUserView.queryManager}"
-											converter="simpleUserConverter">
+									<h:panelGroup id="managerWrapper" class="form-field ui-fluid"
+										layout="block">
+										<cc:autocomplete id="manager" label="#{i18n['user.manager']}"
+											value="#{editUserView.user.manager}"
+											completeMethod="#{editUserView.queryManager}">
 											<p:column styleClass="user-select">
-												<cc:person name="#{var.fullName}" path="#{var.picture.path}" description="#{var.email}" />
+												<cc:person name="#{var.fullName}" path="#{var.picture.path}"
+													description="#{var.email}" />
 											</p:column>
 										</cc:autocomplete>
 									</h:panelGroup>
 								</div>
 								<div class="p-col-12 p-sm-6">
-									<g:input id="date_of_join" label="#{i18n['user.date_of_join']}" value="#{editUserView.user.dateOfJoin}" type="calendar" />
+									<g:input id="date_of_join" label="#{i18n['user.date_of_join']}"
+										value="#{editUserView.user.dateOfJoin}" type="calendar" />
 								</div>
 							</div>
 						</div>
 					</div>
 					<div class="p-col-12">
 						<div class="form-buttons">
-							<p:button value="#{i18n['action.cancel']}" outcome="/user/view.xhtml" styleClass="ui-button-secondary ui-button-outlined">
+							<p:button value="#{i18n['action.cancel']}"
+								outcome="/user/view.xhtml"
+								styleClass="ui-button-secondary ui-button-outlined">
 								<f:param name="user" value="#{editUserView.user.id}" />
 							</p:button>
-							<p:commandButton value="#{i18n['action.save']}" action="#{editUserView.save}" update="@form" styleClass="ui-button-success ui-button-outlined" />
+							<p:commandButton value="#{i18n['action.save']}"
+								action="#{editUserView.save}" update="@form"
+								styleClass="ui-button-success ui-button-outlined" />
 						</div>
 					</div>
 				</div>

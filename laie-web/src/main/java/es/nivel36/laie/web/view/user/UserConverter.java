@@ -9,7 +9,7 @@ import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.ejb.user.UserService;
 import es.nivel36.laie.web.core.AbstractConverter;
 
-@FacesConverter(managed = true, value = "userConverter")
+@FacesConverter(managed = true, forClass = User.class)
 public class UserConverter extends AbstractConverter<User> {
 
 	@Inject

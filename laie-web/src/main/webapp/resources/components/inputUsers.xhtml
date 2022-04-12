@@ -36,7 +36,7 @@
 					completeMethod="#{cc.attrs.completeMethod}" forceSelection="true"
 					minQueryLength="3" var="user" itemValue="#{user}"
 					itemLabel="#{user.fullName}" disabled="#{cc.attrs.disabled}"
-					multiple="true" converter="simpleUserConverter">
+					multiple="true" >
 					<p:column styleClass="user-select">
 						<cc:person name="#{user.fullName}" path="#{user.picture.path}"
 							description="#{user.email}" />

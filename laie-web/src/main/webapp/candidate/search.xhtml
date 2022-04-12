@@ -15,7 +15,7 @@
 			<div class="card">
 				<div class="searchBar-buttons">
 					<cc:inputSearch searchText="#{searchCandidateView.searchText}" searchAction="#{searchCandidateView.search}"
-						update="candidateSearchForm:candidates" styleClass="ui-flId" />
+						update="candidateSearchForm:candidates" styleClass="ui-fluid" />
 					<div class="buttons">
 						<p:button value="#{i18n['candidate.new_candidate']}" outcome="/candidate/add.xhtml" styleClass="ui-button-success ui-button-outlined" />
 						<p:commandButton value="#{i18n['action.export']}" action="#{searchCandidateView.export}" icon="pi pi-file-excel"

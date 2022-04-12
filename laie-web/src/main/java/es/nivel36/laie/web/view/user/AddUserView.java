@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import es.nivel36.laie.ejb.user.BadManagerException;
 import es.nivel36.laie.ejb.user.DuplicateEmailException;
+import es.nivel36.laie.ejb.user.User;
 
 @Named
 @ViewScoped
@@ -23,6 +24,7 @@ public class AddUserView extends AbstractUserView {
 	public void init() {
 		logger.trace("New user init");
 		this.checkAddPermission();
+		this.user = new User();
 		this.user.setLanguage(Faces.getLocale().getCountry());
 	}
 

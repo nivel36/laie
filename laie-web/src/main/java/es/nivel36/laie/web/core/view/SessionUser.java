@@ -17,6 +17,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import es.nivel36.laie.ejb.core.bookmark.Bookmark;
+import es.nivel36.laie.ejb.user.BadManagerException;
+import es.nivel36.laie.ejb.user.DuplicateEmailException;
 import es.nivel36.laie.ejb.user.Role;
 import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.ejb.user.UserService;
@@ -112,6 +114,33 @@ public class SessionUser implements Serializable {
 	public void setLoginService(final LoginService loginService) {
 		Objects.requireNonNull(loginService);
 		this.loginService = loginService;
+	}
+	
+	public void addBookmark(final Bookmark bookmark) {
+		Objects.requireNonNull(bookmark);
+		this.bookmarks.add(bookmark);
+		this.user.getBookmarks().add(bookmark);
+		try {
+			this.user = userService.updateUser(user);
+		} catch (DuplicateEmailException | BadManagerException e) {
+			// It can't happen
+		}
+	}
+	
+	public void removeFromBookmarks(final Bookmark bookmark)  {
+		Objects.requireNonNull(bookmark);
+		this.bookmarks.remove(bookmark);
+		this.user.getBookmarks().remove(bookmark);
+		try {
+			this.user = userService.updateUser(user);
+		} catch (DuplicateEmailException | BadManagerException e) {
+			// It can't happen
+		}
+	}
+	
+	public boolean hasBookamrk(final Bookmark bookmark) {
+		Objects.requireNonNull(bookmark);
+		return this.bookmarks.contains(bookmark);
 	}
 
 	@Override

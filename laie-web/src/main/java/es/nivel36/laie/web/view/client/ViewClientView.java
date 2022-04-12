@@ -16,7 +16,6 @@ import org.slf4j.LoggerFactory;
 import es.nivel36.laie.ejb.client.Client;
 import es.nivel36.laie.ejb.client.Contact;
 import es.nivel36.laie.ejb.core.bookmark.Bookmark;
-import es.nivel36.laie.ejb.core.bookmark.BookmarkService;
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.job.offer.JobOffer;
 import es.nivel36.laie.ejb.job.offer.JobOfferService;
@@ -45,9 +44,6 @@ public class ViewClientView extends AbstractClientView {
 	@Inject
 	private transient JobOfferService jobOfferService;
 
-	@Inject
-	private transient BookmarkService bookmarkService;
-
 	@PostConstruct
 	public void init() {
 		if (this.client == null) {
@@ -59,7 +55,11 @@ public class ViewClientView extends AbstractClientView {
 		this.checkDeleted();
 		this.editable = true;
 		this.bookmark = this.buildBookmark();
-		this.bookmarkable = !this.sessionUser.getBookmarks().contains(this.bookmark);
+		this.bookmarkable = !this.sessionUser.hasBookamrk(bookmark);
+	}
+
+	private String clientUrl() {
+		return URL + "?client=" + client.getId();
 	}
 
 	private Bookmark buildBookmark() {
@@ -77,16 +77,14 @@ public class ViewClientView extends AbstractClientView {
 		}
 	}
 
-	public void adBoorkmarks() {
-		this.bookmarkService.addBookmark(this.bookmark);
+	public void addBookmark() {
+		this.sessionUser.addBookmark(bookmark);
 		this.bookmarkable = false;
-		this.sessionUser.refresh();
 	}
 
-	public void removeFromBoorkmarks() {
-		this.bookmarkService.deleteBookmark(this.bookmark);
+	public void removeFromBookmarks() {
+		this.sessionUser.removeFromBookmarks(bookmark);
 		this.bookmarkable = true;
-		this.sessionUser.refresh();
 	}
 
 	public void export() {
@@ -116,10 +114,5 @@ public class ViewClientView extends AbstractClientView {
 	public void setJobOfferService(final JobOfferService jobOfferService) {
 		Objects.requireNonNull(jobOfferService);
 		this.jobOfferService = jobOfferService;
-	}
-
-	public void setBookmarkService(final BookmarkService bookmarkService) {
-		Objects.requireNonNull(bookmarkService);
-		this.bookmarkService = bookmarkService;
 	}
 }

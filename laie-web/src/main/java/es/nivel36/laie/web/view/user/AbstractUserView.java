@@ -22,7 +22,7 @@ public abstract class AbstractUserView extends AbstractView {
 
 	private static final Logger logger = LoggerFactory.getLogger(AbstractUserView.class);
 
-	@Param(name="user", converter="userConverter")
+	@Param
 	protected User user;
 
 	@Inject

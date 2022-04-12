@@ -148,9 +148,6 @@ public class Client extends AbstractEntity implements Ownerable, Erasable {
 		if (this == obj) {
 			return true;
 		}
-		if (!super.equals(obj)) {
-			return false;
-		}
 		if (this.getClass() != obj.getClass()) {
 			return false;
 		}
@@ -160,7 +157,7 @@ public class Client extends AbstractEntity implements Ownerable, Erasable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(this.name);
+		return 31*Objects.hash(this.name);
 	}
 
 	@Override

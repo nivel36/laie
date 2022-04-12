@@ -23,7 +23,7 @@ public abstract class AbstractCandidateView extends AbstractView {
 
 	private static final long serialVersionUID = 6785796173827142302L;
 
-	@Param(name = "candidate", converter = "candidateConverter")
+	@Param
 	protected Candidate candidate;
 
 	protected transient List<Tag> tags;

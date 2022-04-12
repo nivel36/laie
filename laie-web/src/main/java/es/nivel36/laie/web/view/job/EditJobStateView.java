@@ -26,7 +26,7 @@ public class EditJobStateView extends AbstractView {
 
 	private static final Logger logger = LoggerFactory.getLogger(EditJobStateView.class);
 
-	@Param(name="jobOffer", converter="jobOfferConverter")
+	@Param
 	private JobOffer jobOffer;
 
 	private String notes;

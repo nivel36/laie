@@ -7,7 +7,7 @@
 				<p:tab title="#{i18n['chat.contacts']}">
 					<h:panelGroup id="users" layout="block" styleClass="users">
 						<div class="users-search ui-g">
-							<div class="ui-flId ui-g-12">
+							<div class="ui-fluid ui-g-12">
 								<cc:inputSearch id="searchText" searchText="#{chatView.searchText}" searchAction="#{chatView.search}" placeholder="#{i18n['chat.search_an_user']}" update="chat:tabs:users" />
 							</div>
 						</div>
@@ -34,7 +34,7 @@
  						</script>
  					</h:panelGroup>
 					<div class="messages-input ui-g">
-						<div class="ui-flId ui-g-12">
+						<div class="ui-fluid ui-g-12">
 							<p:remoteCommand name="keyPressChatMessageRc" action="#{chatView.updateMessage}" process="@this chatMessage" />
 							<p:remoteCommand name="enterChatMessageRc" action="#{chatView.sendMessage}" process="@this chatMessage" update="chatMessage" />
 							<p:inputText id="chatMessage" placeholder="#{i18n['chat.write_a_message']}" value="#{chatView.currentMessage}" 

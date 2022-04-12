@@ -97,22 +97,6 @@ public class JobOffer extends AbstractEntity implements Ownerable {
 	@SortableField(forField = "title")
 	private String title;
 
-	@Override
-	public boolean equals(final Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (this.getClass() != obj.getClass()) {
-			return false;
-		}
-		final JobOffer other = (JobOffer) obj;
-		return Objects.equals(this.openDate, other.openDate) && Objects.equals(this.title, other.title)
-				&& Objects.equals(this.places, other.places);
-	}
-
 	public Address getAddress() {
 		if (this.address == null) {
 			this.address = new Address();
@@ -176,11 +160,6 @@ public class JobOffer extends AbstractEntity implements Ownerable {
 			}
 		}
 		return false;
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(this.openDate, this.title, this.places);
 	}
 
 	public boolean hasState(final JobOfferState state) {
@@ -257,6 +236,27 @@ public class JobOffer extends AbstractEntity implements Ownerable {
 
 	public void setTitle(final String title) {
 		this.title = title;
+	}
+	
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (this.getClass() != obj.getClass()) {
+			return false;
+		}
+		final JobOffer other = (JobOffer) obj;
+		return Objects.equals(this.openDate, other.openDate) && Objects.equals(this.title, other.title)
+				&& Objects.equals(this.places, other.places);
+	}
+	
+	@Override
+	public int hashCode() {
+		return 31*Objects.hash(this.openDate, this.title, this.places);
 	}
 
 	@Override

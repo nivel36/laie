@@ -81,7 +81,7 @@ public class User extends AbstractEntity {
 	@SortableField(forField = "surname")
 	private String surname;
 
-	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
+	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<Bookmark> bookmarks;
 
 	public LocalDate getDateOfJoin() {
@@ -208,9 +208,6 @@ public class User extends AbstractEntity {
 		if (this == obj) {
 			return true;
 		}
-		if (!super.equals(obj)) {
-			return false;
-		}
 		if (this.getClass() != obj.getClass()) {
 			return false;
 		}
@@ -220,7 +217,7 @@ public class User extends AbstractEntity {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(this.email);
+		return 31 * Objects.hash(this.email);
 	}
 
 	@Override

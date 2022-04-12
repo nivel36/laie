@@ -34,8 +34,8 @@ public class ViewUserView extends AbstractView {
 	private static final Logger logger = LoggerFactory.getLogger(ViewUserView.class);
 
 	public static final String URL = "/user/view.xhtml";
-	
-	@Param(name="user", converter="userConverter")
+
+	@Param
 	private User user;
 
 	private boolean editable;

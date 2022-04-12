@@ -253,7 +253,7 @@
 			FROM UserClosure uc 
 			JOIN uc.descendant u 
 			WHERE uc.antecessor = :manager 
-			AND u.id= :subordinateId
+			AND u = :subordinate
 		]]></query>
 	</named-query>
 

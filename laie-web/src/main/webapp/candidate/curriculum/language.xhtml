@@ -37,7 +37,7 @@
 			<p:remoteCommand name="save" process="@this language:languages" update="growl language:languages" action="#{languageView.save}" />
 			<div class="p-grid">
 				<div class="p-col-12 p-xl-6">
-					<div class="card ui-flId">
+					<div class="card ui-fluid">
 						<h:panelGroup styleClass="language section" id="languages" layout="block">
 							<ui:repeat var="language" value="#{languageView.languages}">
 								<div class="p-grid">
@@ -62,7 +62,7 @@
 							</ui:repeat>
 						</h:panelGroup>
 						<h:panelGroup styleClass="language section" id="new_language" layout="block">
-							<div class="ui-flId">
+							<div class="ui-fluid">
 								<div class="p-grid">
 									<div class="p-col-5">
 										<g:input id="input-text" value="#{languageView.languageName}" required="true" styleClass="input input-text" />

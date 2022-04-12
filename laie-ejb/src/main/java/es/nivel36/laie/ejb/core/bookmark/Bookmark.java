@@ -14,7 +14,8 @@ import es.nivel36.laie.ejb.user.User;
 
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = { "url", "userId" }))
-public class Bookmark extends AbstractEntity {
+public class 
+ extends AbstractEntity {
 
 	private static final long serialVersionUID = -2180672310644250195L;
 
@@ -54,19 +55,16 @@ public class Bookmark extends AbstractEntity {
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result + Objects.hash(url, user);
-		return result;
+		return 31*Objects.hash(url, user);
 	}
 
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (!super.equals(obj) || (getClass() != obj.getClass()))
+		if (getClass() != obj.getClass())
 			return false;
-		Bookmark other = (Bookmark) obj;
+		final Bookmark other = (Bookmark) obj;
 		return Objects.equals(url, other.url) && Objects.equals(user, other.user);
 	}
 

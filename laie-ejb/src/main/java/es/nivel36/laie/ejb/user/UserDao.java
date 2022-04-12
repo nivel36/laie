@@ -32,9 +32,8 @@ public class UserDao extends AbstractDao {
 
 	public User update(final User user) {
 		Objects.requireNonNull(user);
-		final User mergedUser = em.merge(user);
-		this.updateUserClosures(mergedUser);
-		return mergedUser;
+		this.updateUserClosures(user);
+		return em.merge(user);
 	}
 
 	public boolean checkDuplicateEmail(final String email) {
