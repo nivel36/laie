@@ -14,8 +14,7 @@ import es.nivel36.laie.ejb.user.User;
 
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = { "url", "userId" }))
-public class 
- extends AbstractEntity {
+public class Bookmark extends AbstractEntity {
 
 	private static final long serialVersionUID = -2180672310644250195L;
 

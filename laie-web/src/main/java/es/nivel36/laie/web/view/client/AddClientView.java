@@ -15,7 +15,7 @@ import es.nivel36.laie.ejb.client.Client;
 public class AddClientView extends AbstractClientView {
 
 	private static final long serialVersionUID = -5675968370983284897L;
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(AddClientView.class);
 
 	@PostConstruct
@@ -28,6 +28,7 @@ public class AddClientView extends AbstractClientView {
 	public void save() {
 		logger.debug("Add new client action performed");
 		this.clientService.addClient(this.client);
-		Faces.redirect(this.clientUrl());
+		final String url = ViewClientView.URL + "?client=" + this.client.getId();
+		Faces.redirect(url);
 	}
 }

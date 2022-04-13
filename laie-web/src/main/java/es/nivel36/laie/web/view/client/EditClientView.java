@@ -31,6 +31,7 @@ public class EditClientView extends AbstractClientView {
 	public void save() {
 		logger.debug("Save client action performed");
 		this.client = this.clientService.updateClient(this.client);
-		Faces.redirect(this.clientUrl());
+		final String url = ViewClientView.URL + "?client=" + this.client.getId();
+		Faces.redirect(url);
 	}
 }
