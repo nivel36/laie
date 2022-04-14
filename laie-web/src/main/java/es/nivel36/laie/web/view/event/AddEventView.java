@@ -9,5 +9,7 @@ import es.nivel36.laie.web.core.view.AbstractView;
 @ViewScoped
 public class AddEventView extends AbstractView {
 
+	private static final long serialVersionUID = 1204346979477586986L;
+
 
 }

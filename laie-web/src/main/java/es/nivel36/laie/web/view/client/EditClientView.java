@@ -8,6 +8,7 @@ import org.omnifaces.util.Faces;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import es.nivel36.laie.ejb.client.DuplicateCifException;
 import es.nivel36.laie.web.core.IllegalPageStateException;
 
 @Named
@@ -30,8 +31,12 @@ public class EditClientView extends AbstractClientView {
 
 	public void save() {
 		logger.debug("Save client action performed");
-		this.client = this.clientService.updateClient(this.client);
-		final String url = ViewClientView.URL + "?client=" + this.client.getId();
-		Faces.redirect(url);
+		try {
+			this.client = this.clientService.updateClient(this.client);
+			final String url = ViewClientView.URL + "?client=" + this.client.getId();
+			Faces.redirect(url);
+		} catch (final DuplicateCifException e) {
+			this.addErrorToField("clientForm:cif", "client.error.cif_exists");
+		}
 	}
 }

@@ -11,6 +11,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.search.annotations.Analyze;
@@ -29,8 +30,9 @@ import es.nivel36.laie.ejb.core.model.Ownerable;
 import es.nivel36.laie.ejb.job.offer.JobOffer;
 import es.nivel36.laie.ejb.user.User;
 
-@Entity
 @Indexed
+@Entity
+@Table(indexes = { @javax.persistence.Index(name = "UIX_CLIENT_CIF", columnList = "cif", unique = true) })
 public class Client extends AbstractEntity implements Ownerable, Erasable {
 
 	private static final long serialVersionUID = 3562472646025185677L;
@@ -157,7 +159,7 @@ public class Client extends AbstractEntity implements Ownerable, Erasable {
 
 	@Override
 	public int hashCode() {
-		return 31*Objects.hash(this.name);
+		return 31 * Objects.hash(this.name);
 	}
 
 	@Override

@@ -23,15 +23,24 @@ public class ClientService {
 	@Repository
 	private ClientDao clientDao;
 
-	public void addClient(final Client client) {
+	public void addClient(final Client client) throws DuplicateCifException {
 		Objects.requireNonNull(client);
 		logger.debug("Add new client {}", client);
+		if (clientDao.checkDuplicatedCif(client.getCif())) {
+			throw new DuplicateCifException();
+		}
 		this.clientDao.insert(client);
 	}
 
-	public Client updateClient(final Client client) {
+	public Client updateClient(final Client client) throws DuplicateCifException {
 		Objects.requireNonNull(client);
 		logger.debug("Update client {}", client);
+		final Client clientInDatabase = clientDao.find(Client.class, client.getId());
+		if (!clientInDatabase.getCif().equals(client.getCif())) {
+			if (clientDao.checkDuplicatedCif(client.getCif())) {
+				throw new DuplicateCifException();
+			}
+		}
 		return clientDao.update(client);
 	}
 

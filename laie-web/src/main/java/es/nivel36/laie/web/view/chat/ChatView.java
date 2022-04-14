@@ -13,7 +13,6 @@ import javax.inject.Named;
 
 import es.nivel36.laie.ejb.core.chat.ChatService;
 import es.nivel36.laie.ejb.user.User;
-import es.nivel36.laie.ejb.user.UserService;
 import es.nivel36.laie.web.core.view.AbstractView;
 
 @Named
@@ -41,9 +40,6 @@ public class ChatView extends AbstractView {
 	private User selectedUser;
 
 	private List<User> users;
-
-	@Inject
-	private transient UserService userService;
 
 	private void clearSelectedUserMessage() {
 		this.setCurrentMessage(DEFAULT_EMPTY_MESSAGE);
@@ -132,10 +128,6 @@ public class ChatView extends AbstractView {
 
 	public void setSearchText(final String searchText) {
 		this.searchText = searchText;
-	}
-
-	public void setUserService(final UserService userService) {
-		this.userService = userService;
 	}
 
 	public void updateMessage() {
