@@ -42,6 +42,6 @@ public class EditJobView extends AbstractJobView {
 	public void save() {
 		logger.debug("Save job offer action performed");
 		this.jobOfferService.updateJobOffer(jobOffer);
-		this.navigateTo(ViewJobView.URL + "?job=" + this.jobOffer.getId());
+		this.navigateTo(ViewJobView.URL + "?jobOffer=" + this.jobOffer.getId());
 	}
 }

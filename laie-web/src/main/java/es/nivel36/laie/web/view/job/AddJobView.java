@@ -47,7 +47,7 @@ public class AddJobView extends AbstractJobView {
 		if (publish) {
 			this.jobOfferService.publish(this.jobOffer);
 		}
-		Faces.redirect(ViewJobView.URL + "?job=" + this.jobOffer.getId());
+		Faces.redirect(ViewJobView.URL + "?jobOffer=" + this.jobOffer.getId());
 	}
 
 	public Client getClient() {

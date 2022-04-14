@@ -1,52 +1,33 @@
-<ui:component xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
-	xmlns:composite="http://xmlns.jcp.org/jsf/composite"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:g="http://nivel.36/laie/ui"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:component xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:composite="http://xmlns.jcp.org/jsf/composite" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:g="http://nivel.36/laie/ui" xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets">
 
 	<composite:interface componentType="inputUsers">
 		<composite:attribute name="label" />
 		<composite:attribute name="value" required="true" />
-		<composite:attribute name="completeMethod"
-			method-signature="void function(java.lang.String)" required="true" />
-		<composite:attribute name="required" type="java.lang.Boolean"
-			default="false" />
-		<composite:attribute name="disabled" type="java.lang.Boolean"
-			default="false" />
+		<composite:attribute name="completeMethod" method-signature="void function(java.lang.String)" required="true" />
+		<composite:attribute name="required" type="java.lang.Boolean" default="false" />
+		<composite:attribute name="disabled" type="java.lang.Boolean" default="false" />
 		<composite:attribute name="styleClass" required="false" default="" />
-		<composite:attribute name="showIcon" type="java.lang.Boolean"
-			default="true" />
+		<composite:attribute name="showIcon" type="java.lang.Boolean" default="true" />
 		<composite:editableValueHolder name="input" />
 	</composite:interface>
 
 	<composite:implementation>
-		<div id="#{cc.clientId}"
-			class="input-user input-group p-field #{cc.attrs.styleClass}">
-			<p:outputLabel id="label" value="#{cc.attrs.label}" for="input"
-				styleClass="label" />
+		<div id="#{cc.clientId}" class="input-user input-group p-field #{cc.attrs.styleClass}">
+			<p:outputLabel id="label" value="#{cc.attrs.label}" for="input" styleClass="label" />
 			<div class="ui-inputgroup">
-				<p:autoComplete id="input" value="#{cc.attrs.value}"
-					required="#{cc.attrs.required}" binding="#{cc.input}"
-					styleClass="input input-users"
-					completeMethod="#{cc.attrs.completeMethod}" forceSelection="true"
-					minQueryLength="3" var="user" itemValue="#{user}"
-					itemLabel="#{user.fullName}" disabled="#{cc.attrs.disabled}"
-					multiple="true" >
+				<p:autoComplete id="input" value="#{cc.attrs.value}" required="#{cc.attrs.required}" binding="#{cc.input}" styleClass="input input-users"
+					completeMethod="#{cc.attrs.completeMethod}" forceSelection="true" minQueryLength="3" var="user" itemValue="#{user}" itemLabel="#{user}"
+					disabled="#{cc.attrs.disabled}" multiple="true">
 					<p:column styleClass="user-select">
-						<cc:person name="#{user.fullName}" path="#{user.picture.path}"
-							description="#{user.email}" />
+						<cc:person name="#{user.fullName}" path="#{user.picture.path}" description="#{user.email}" />
 					</p:column>
 					<p:ajax event="itemSelect" update="#{cc.clientId}" process="input" />
-					<p:ajax event="itemUnselect" update="#{cc.clientId}"
-						process="input" />
+					<p:ajax event="itemUnselect" update="#{cc.clientId}" process="input" />
 				</p:autoComplete>
-				<h:panelGroup layout="block" styleClass="ui-inputgroup-addon"
-					rendered="#{not empty cc.attrs.showIcon}">
+				<h:panelGroup layout="block" styleClass="ui-inputgroup-addon" rendered="#{not empty cc.attrs.showIcon}">
 					<i class="pi pi-search" aria-hidden="true"></i>
 				</h:panelGroup>
 			</div>
