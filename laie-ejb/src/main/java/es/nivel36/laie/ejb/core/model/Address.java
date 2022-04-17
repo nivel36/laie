@@ -12,9 +12,9 @@ import org.hibernate.search.annotations.SortableField;
 import org.hibernate.search.annotations.Store;
 
 @Embeddable
-public class Address implements Serializable, Indexable {
+public class Address implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -8221733995443213238L;
 
 	@Field(name = "_city")
 	@Field(name = "city", analyze = Analyze.NO, store = Store.NO, index = Index.NO)

@@ -40,6 +40,13 @@ public class UserDao extends AbstractDao {
 		Objects.requireNonNull(email);
 		return this.checkDuplicateField(User.class, "email", email);
 	}
+	
+	public User findAllData(final Long userId) {
+		Objects.requireNonNull(userId);
+		final String namedQuery = "User.findAllData";
+		final Parameters parameters = map("userId", userId);
+		return this.findByQuery(User.class, namedQuery, parameters);
+	}
 
 	public Credential findCredential(final String email) {
 		Objects.requireNonNull(email);

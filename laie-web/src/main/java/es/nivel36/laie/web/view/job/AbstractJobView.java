@@ -7,7 +7,6 @@ import java.util.Objects;
 import javax.inject.Inject;
 
 import org.omnifaces.cdi.Param;
-import org.primefaces.event.SelectEvent;
 
 import es.nivel36.laie.ejb.client.Client;
 import es.nivel36.laie.ejb.client.ClientService;
@@ -38,11 +37,6 @@ public abstract class AbstractJobView extends AbstractView {
 
 	public List<Client> completeClient(final String query) {
 		return this.clientService.search(query, Page.TEN_RESULTS_PER_PAGE).getResultData();
-	}
-
-	public void onOwnerSelect(final SelectEvent<User> event) {
-		final User user = event.getObject();
-		this.jobOffer.setOwner(user);
 	}
 
 	public List<User> queryOwner(final String query) {

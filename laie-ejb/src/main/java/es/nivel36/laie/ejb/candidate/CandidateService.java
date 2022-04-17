@@ -1,8 +1,10 @@
 package es.nivel36.laie.ejb.candidate;
 
 import java.io.InputStream;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -18,6 +20,7 @@ import es.nivel36.laie.ejb.core.model.Repository;
 import es.nivel36.laie.ejb.core.model.search.SearchFacets;
 import es.nivel36.laie.ejb.core.model.search.SearchResult;
 import es.nivel36.laie.ejb.core.model.search.SortField;
+import es.nivel36.laie.ejb.core.tag.Tag;
 import es.nivel36.laie.ejb.core.tag.TagDao;
 import es.nivel36.laie.ejb.job.offer.JobOffer;
 import es.nivel36.laie.ejb.user.UserDao;
@@ -49,13 +52,30 @@ public class CandidateService {
 	public void addCandidate(final Candidate candidate) {
 		Objects.requireNonNull(candidate);
 		logger.debug("Add candidate {}", candidate);
+		this.normalizeTags(candidate);
 		this.candidateDao.insert(candidate);
+	}
+
+	private void normalizeTags(final Candidate candidate) {
+		final Set<Tag> tags = candidate.getTags();
+		final Set<Tag> normalizedTags = new HashSet<Tag>(tags.size());
+		for(final Tag tag: tags) {
+			final Tag tagInDatabase = tagDao.findByLabel(tag.getLabel());
+			if ( tagInDatabase != null) {
+				normalizedTags.add(tagInDatabase);
+			}
+			else {
+				normalizedTags.add(tag);
+			}
+		}
+		candidate.setTags(normalizedTags);
 	}
 
 	public Candidate updateCandidate(final Candidate candidate) {
 		Objects.requireNonNull(candidate);
 		logger.debug("Update candidate {}", candidate);
-		return this.updateCandidate(candidate);
+		this.normalizeTags(candidate);
+		return this.candidateDao.update(candidate);
 	}
 
 	public void changeCandidatesImage(final Candidate candidate, final InputStream image) {
@@ -83,40 +103,38 @@ public class CandidateService {
 		Objects.requireNonNull(jobOffer);
 		Objects.requireNonNull(page);
 		logger.debug("Find candidates by jobOffer {} ", jobOffer);
-		return this.candidateDao.findCandidates(jobOffer, page);
+		return this.candidateDao.findCandidatesByJobOffer(jobOffer, page);
 	}
 
 	public Candidate findCandidateById(final Long id) {
 		Objects.requireNonNull(id);
 		logger.debug("Find candidate by id {}", id);
-		return this.candidateDao.find(Candidate.class,id);
+		return this.candidateDao.find(Candidate.class, id);
 	}
-
-	public List<File> findCandidatesFiles(final Candidate candidate, final Page page) {
-		Objects.requireNonNull(candidate);
-		logger.debug("Find files by candidate {}", candidate);
-		return this.candidateDao.findCandidatesFiles(candidate, page);
+	
+	public Candidate findAllData(final Long candidateId) {
+		Objects.requireNonNull(candidateId);
+		return this.candidateDao.findAllData(candidateId);
 	}
-
-	public File addFileToCandidate(final Candidate candidate, final InputStream inputStream, String filename) {
+	
+	public Candidate addFileToCandidate(final Candidate candidate, final InputStream inputStream, String filename) {
 		Objects.requireNonNull(inputStream);
 		Objects.requireNonNull(candidate);
 		Objects.requireNonNull(filename);
 		logger.debug("Add file {} to candidate {}", filename, candidate);
 		final File file = fileService.uploadFile(inputStream, filename, false);
 		candidate.addFile(file);
-		candidateDao.update(candidate);
-		return file;
+		return candidateDao.update(candidate);
 	}
 
-	public void removeFileFromCandidate(final Candidate candidate, final File file) {
+	public Candidate removeFileFromCandidate(final Candidate candidate, final File file) {
 		Objects.requireNonNull(candidate);
 		Objects.requireNonNull(file);
 		logger.debug("Remove file {} from candidate {}", file, candidate);
-		final Candidate candidateWithFiles = this.candidateDao.findCandidateWithFiles(candidate.getId());
-		candidateWithFiles.removeFile(file);
+		candidate.removeFile(file);
+		final Candidate updatedCandidate = this.candidateDao.update(candidate);
 		this.fileService.removeFile(file);
-		this.candidateDao.update(candidateWithFiles);
+		return updatedCandidate;
 	}
 
 	public SearchResult<Candidate> search(final String searchText, final Page page) {

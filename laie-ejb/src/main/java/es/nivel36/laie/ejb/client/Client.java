@@ -32,7 +32,7 @@ import es.nivel36.laie.ejb.user.User;
 
 @Indexed
 @Entity
-@Table(indexes = { @javax.persistence.Index(name = "UIX_CLIENT_CIF", columnList = "cif", unique = true) })
+@Table(indexes = { @javax.persistence.Index(name = "UX_CLIENT_CIF", columnList = "cif", unique = true) })
 public class Client extends AbstractEntity implements Ownerable, Erasable {
 
 	private static final long serialVersionUID = 3562472646025185677L;

@@ -2,6 +2,7 @@ package es.nivel36.laie.web.view.candidate;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -10,7 +11,6 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.omnifaces.cdi.Param;
 import org.omnifaces.util.Faces;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.file.UploadedFile;
@@ -25,7 +25,6 @@ import es.nivel36.laie.ejb.core.file.File;
 import es.nivel36.laie.ejb.core.file.FileService;
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.job.candidature.JobCandidature;
-import es.nivel36.laie.ejb.job.candidature.JobCandidatureService;
 import es.nivel36.laie.ejb.job.meeting.Meeting;
 import es.nivel36.laie.ejb.job.meeting.MeetingService;
 import es.nivel36.laie.web.core.IllegalPageStateException;
@@ -42,7 +41,6 @@ public class ViewCandidateView extends AbstractView {
 
 	public static final String URL = "/candidate/candidate.xhtml";
 
-	@Param
 	private Candidate candidate;
 
 	private boolean editable;
@@ -65,26 +63,35 @@ public class ViewCandidateView extends AbstractView {
 
 	@Inject
 	private transient FileService fileUploadService;
-
-	@Inject
-	private transient JobCandidatureService jobCandidatureService;
-
+	
 	@Inject
 	private transient MeetingService meetingService;
 
 	@PostConstruct
 	public void init() {
-		if (this.candidate == null) {
-			throw new IllegalPageStateException();
-		}
+		initCandidate();
 		logger.trace("Candidate {} init", this.candidate);
-		this.jobCandidatures = this.jobCandidatureService.findCandidatesJobCandidatures(this.candidate,
-				Page.ALL_RESULTS);
+		this.jobCandidatures = new ArrayList<>(this.candidate.getJobCandidatures());
 		this.editable = true;
 		this.meetings = this.meetingService.findMeetingsByCandidate(this.candidate, Page.TEN_RESULTS_PER_PAGE);
-		this.files = this.candidateService.findCandidatesFiles(this.candidate, Page.TEN_RESULTS_PER_PAGE);
+		this.files = new ArrayList<>(this.candidate.getFiles());
 		this.bookmark = this.buildBookmark();
 		this.bookmarkable = !this.sessionUser.getBookmarks().contains(this.bookmark);
+	}
+
+	private void initCandidate() {
+		final String candidateId = this.getValueFromGetParameters("candidate", true);
+		try {
+			final Long id = Long.parseLong(candidateId);
+			this.candidate = this.candidateService.findAllData(id);
+		} catch (NumberFormatException e) {
+			logger.warn("Bad number" + candidateId);
+			throw new IllegalPageStateException();
+		}
+		if (this.candidate == null) {
+			logger.warn(String.format("Candidate with id %s not found", candidateId));
+			throw new IllegalPageStateException();
+		}
 	}
 
 	private Bookmark buildBookmark() {
@@ -126,8 +133,8 @@ public class ViewCandidateView extends AbstractView {
 	}
 
 	public void removeFile(final File file) {
-		this.candidateService.removeFileFromCandidate(candidate, file);
-		this.files.remove(file);
+		this.candidate = this.candidateService.removeFileFromCandidate(this.candidate, file);
+		this.files = new ArrayList<File>(candidate.getFiles());
 	}
 
 	public void uploadFile(final FileUploadEvent event) throws IOException {
@@ -138,9 +145,9 @@ public class ViewCandidateView extends AbstractView {
 		}
 		logger.debug("Upload candidate {} image action performed", this.candidate);
 		try (final InputStream inputStream = uploadedFile.getInputStream()) {
-			final File file = this.candidateService.addFileToCandidate(candidate, inputStream,
+			this.candidate = this.candidateService.addFileToCandidate(candidate, inputStream,
 					uploadedFile.getFileName());
-			this.files.add(file);
+			this.files = new ArrayList<File>(candidate.getFiles());
 		}
 	}
 
@@ -181,12 +188,7 @@ public class ViewCandidateView extends AbstractView {
 		Objects.requireNonNull(fileUploadService);
 		this.fileUploadService = fileUploadService;
 	}
-
-	public void setJobCandidatureService(final JobCandidatureService jobCandidatureService) {
-		Objects.requireNonNull(jobCandidatureService);
-		this.jobCandidatureService = jobCandidatureService;
-	}
-
+	
 	public void setMeetingService(final MeetingService meetingService) {
 		Objects.requireNonNull(meetingService);
 		this.meetingService = meetingService;

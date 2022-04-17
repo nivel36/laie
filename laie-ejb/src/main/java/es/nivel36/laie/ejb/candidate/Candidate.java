@@ -17,6 +17,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -40,6 +41,7 @@ import es.nivel36.laie.ejb.user.User;
 
 @Entity
 @Indexed
+@Table(indexes = { @javax.persistence.Index(name = "UX_CANDIDATE_EMAIL", columnList = "email", unique = true) })
 public class Candidate extends AbstractEntity implements Ownerable {
 
 	private static final long serialVersionUID = -7470903145789563432L;
@@ -124,6 +126,18 @@ public class Candidate extends AbstractEntity implements Ownerable {
 
 	public void addFile(final File file) {
 		this.files.add(file);
+	}
+
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (this.getClass() != obj.getClass()) {
+			return false;
+		}
+		final Candidate other = (Candidate) obj;
+		return Objects.equals(other.email, this.email);
 	}
 
 	public Address getAddress() {
@@ -217,6 +231,11 @@ public class Candidate extends AbstractEntity implements Ownerable {
 		return this.tags;
 	}
 
+	@Override
+	public int hashCode() {
+		return 31 * Objects.hash(this.email);
+	}
+
 	public void removeFile(File file) {
 		Objects.requireNonNull(file);
 		if (files == null) {
@@ -254,6 +273,10 @@ public class Candidate extends AbstractEntity implements Ownerable {
 	}
 
 	public void setJobCandidature(final List<JobCandidature> jobCandidatures) {
+		this.jobCandidatures = jobCandidatures;
+	}
+
+	public void setJobCandidatures(List<JobCandidature> jobCandidatures) {
 		this.jobCandidatures = jobCandidatures;
 	}
 
@@ -312,23 +335,6 @@ public class Candidate extends AbstractEntity implements Ownerable {
 
 	public void setTags(final Set<Tag> tags) {
 		this.tags = tags;
-	}
-	
-	@Override
-	public boolean equals(final Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (this.getClass() != obj.getClass()) {
-			return false;
-		}
-		final Candidate other = (Candidate) obj;
-		return Objects.equals(other.email, this.email);
-	}
-	
-	@Override
-	public int hashCode() {
-		return 31*Objects.hash(this.email);
 	}
 
 	@Override

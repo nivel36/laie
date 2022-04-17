@@ -2,6 +2,7 @@ package es.nivel36.laie.ejb.user;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -12,8 +13,11 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
@@ -26,12 +30,18 @@ import org.hibernate.search.annotations.Store;
 import es.nivel36.laie.ejb.core.bookmark.Bookmark;
 import es.nivel36.laie.ejb.core.file.File;
 import es.nivel36.laie.ejb.core.model.AbstractEntity;
+import es.nivel36.laie.ejb.job.meeting.Meeting;
+import es.nivel36.laie.ejb.job.offer.JobOffer;
 
 @Entity
 @Indexed
+@Table(indexes = { @javax.persistence.Index(name = "UX_USER_EMAIL", columnList = "email", unique = true) })
 public class User extends AbstractEntity {
 
 	private static final long serialVersionUID = -3719561601581901723L;
+
+	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<Bookmark> bookmarks;
 
 	@Field(name = "dateOfJoin", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField(forField = "dateOfJoin")
@@ -40,6 +50,9 @@ public class User extends AbstractEntity {
 	@Field(name = "_email")
 	@Column(length = 128, nullable = false, unique = true)
 	private String email;
+
+	@OneToMany(mappedBy = "owner", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = false)
+	private Set<JobOffer> jobOffers = new HashSet<>();
 
 	@Column(nullable = false)
 	private String language;
@@ -52,6 +65,10 @@ public class User extends AbstractEntity {
 	@JoinColumn(name = "managerId")
 	@IndexedEmbedded(depth = 1)
 	private User manager;
+
+	@ManyToMany
+	@JoinTable(name = "emails", joinColumns = @JoinColumn(name = "email"), inverseJoinColumns = @JoinColumn(name = "meeting_id"))
+	private Set<Meeting> meetings = new HashSet<>();
 
 	@Column(nullable = false)
 	@Field(name = "_name")
@@ -71,18 +88,31 @@ public class User extends AbstractEntity {
 	@Field(name = "role", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField(forField = "role")
 	private Role role;
-
+	
 	@Column(nullable = false)
 	private Integer rowsPerPage = 10;
-
+	
 	@Column(nullable = false)
 	@Field(name = "_surname")
 	@Field(name = "surname", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField(forField = "surname")
 	private String surname;
 
-	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-	private Set<Bookmark> bookmarks;
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (this.getClass() != obj.getClass()) {
+			return false;
+		}
+		final User other = (User) obj;
+		return Objects.equals(other.email, this.email);
+	}
+
+	public Set<Bookmark> getBookmarks() {
+		return bookmarks;
+	}
 
 	public LocalDate getDateOfJoin() {
 		return this.dateOfJoin;
@@ -99,6 +129,10 @@ public class User extends AbstractEntity {
 		return new StringBuilder(this.name).append(" ").append(this.surname).toString();
 	}
 
+	public Set<JobOffer> getJobOffers() {
+		return jobOffers;
+	}
+
 	public String getLanguage() {
 		return this.language;
 	}
@@ -109,6 +143,10 @@ public class User extends AbstractEntity {
 
 	public User getManager() {
 		return this.manager;
+	}
+
+	public Set<Meeting> getMeetings() {
+		return meetings;
 	}
 
 	public String getName() {
@@ -135,6 +173,11 @@ public class User extends AbstractEntity {
 		return this.surname;
 	}
 
+	@Override
+	public int hashCode() {
+		return 31 * Objects.hash(this.email);
+	}
+
 	public boolean hasRole(final Role role) {
 		Objects.requireNonNull(role);
 		return role.equals(this.role);
@@ -151,12 +194,20 @@ public class User extends AbstractEntity {
 		return this.manager != null;
 	}
 
+	public void setBookmarks(Set<Bookmark> bookmarks) {
+		this.bookmarks = bookmarks;
+	}
+
 	public void setDateOfJoin(final LocalDate dateOfJoin) {
 		this.dateOfJoin = dateOfJoin;
 	}
 
 	public void setEmail(final String email) {
 		this.email = email;
+	}
+
+	public void setJobOffers(Set<JobOffer> jobOffers) {
+		this.jobOffers = jobOffers;
 	}
 
 	public void setLanguage(final String language) {
@@ -169,6 +220,10 @@ public class User extends AbstractEntity {
 
 	public void setManager(final User manager) {
 		this.manager = manager;
+	}
+
+	public void setMeetings(Set<Meeting> meetings) {
+		this.meetings = meetings;
 	}
 
 	public void setName(final String name) {
@@ -193,31 +248,6 @@ public class User extends AbstractEntity {
 
 	public void setSurname(final String surname) {
 		this.surname = surname;
-	}
-
-	public Set<Bookmark> getBookmarks() {
-		return bookmarks;
-	}
-
-	public void setBookmarks(Set<Bookmark> bookmarks) {
-		this.bookmarks = bookmarks;
-	}
-
-	@Override
-	public boolean equals(final Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (this.getClass() != obj.getClass()) {
-			return false;
-		}
-		final User other = (User) obj;
-		return Objects.equals(other.email, this.email);
-	}
-
-	@Override
-	public int hashCode() {
-		return 31 * Objects.hash(this.email);
 	}
 
 	@Override

@@ -149,17 +149,6 @@ public class JobOfferService {
 		}
 	}
 
-	public JobOffer publish(final JobOffer jobOffer) {
-		Objects.requireNonNull(jobOffer);
-		logger.debug("Publish job offer {}", jobOffer);
-		if (jobOffer.isOpen()) {
-			jobOffer.setPublished(true);
-		} else {
-			throw new IllegalStateException(String.format("Job offer %s is not oppen", jobOffer));
-		}
-		return jobOfferDao.update(jobOffer);
-	}
-
 	public JobOffer changeState(final JobOffer jobOffer, final JobOfferState newState) {
 		Objects.requireNonNull(jobOffer);
 		Objects.requireNonNull(newState);
@@ -167,13 +156,15 @@ public class JobOfferService {
 		this.stateChangedEvent.fire(jobOffer);
 		return jobOfferDao.update(jobOffer);
 	}
+	
+	public SearchResult<JobOffer> search(final String searchText, final Page page) {
+		return this.search(searchText, page, null, null);
+	}
 
-	public JobOffer unpublish(final JobOffer jobOffer) {
-		Objects.requireNonNull(jobOffer);
-		if (jobOffer.isPublished()) {
-			jobOffer.setPublished(false);
-		}
-		return jobOfferDao.update(jobOffer);
+	public SearchResult<JobOffer> search(final String searchText, final Page page, final SortField sortField,
+			final SearchFacets searchFacets) {
+		Objects.requireNonNull(page);
+		return this.jobOfferDao.search(searchText, page, sortField, searchFacets);
 	}
 
 	public void setCompletedEvent(final Event<JobOffer> completedEvent) {
@@ -206,13 +197,4 @@ public class JobOfferService {
 		this.jobOfferStateChangeEventDao = jobOfferStateChangeEventDao;
 	}
 
-	public SearchResult<JobOffer> search(final String searchText, final Page page) {
-		return this.search(searchText, page, null, null);
-	}
-
-	public SearchResult<JobOffer> search(final String searchText, final Page page, final SortField sortField,
-			final SearchFacets searchFacets) {
-		Objects.requireNonNull(page);
-		return this.jobOfferDao.search(searchText, page, sortField, searchFacets);
-	}
 }

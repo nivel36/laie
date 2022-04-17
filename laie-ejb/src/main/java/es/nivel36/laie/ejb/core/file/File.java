@@ -12,10 +12,9 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 import es.nivel36.laie.ejb.core.model.AbstractEntity;
-import es.nivel36.laie.ejb.core.model.Indexable;
 
 @Entity
-public class File extends AbstractEntity implements Indexable {
+public class File extends AbstractEntity {
 
 	private static final long serialVersionUID = -2983690237456593632L;
 

@@ -11,23 +11,15 @@
 			WHERE jc.jobOffer = :jobOffer
 		]]></query>
 	</named-query>
-
-	<named-query name="Candidate.findCandidateWithFiles">
+	
+	<named-query name="Candidate.findAllData">
 		<query><![CDATA[
 			SELECT c
 			FROM Candidate c
 			LEFT JOIN FETCH c.files
+			LEFT JOIN FETCH c.tags
+			LEFT JOIN FETCH c.jobCandidatures 
 			WHERE c.id = :candidateId
-		]]></query>
-	</named-query>
-
-	<named-query name="Candidate.findFiles">
-		<query><![CDATA[
-			SELECT f
-			FROM Candidate c
-			LEFT JOIN c.files f
-			WHERE c = :candidate
-			AND f is not null
 		]]></query>
 	</named-query>
 	
@@ -263,6 +255,16 @@
 			FROM User u
 			LEFT JOIN FETCH u.bookmarks
 			WHERE u.email = :email
+		]]></query>
+	</named-query>
+	
+	<named-query name="User.findAllData">
+		<query><![CDATA[
+			SELECT u 
+			FROM User u
+			LEFT JOIN FETCH u.bookmarks
+			LEFT JOIN FETCH u.jobOffers
+			WHERE u.id = :userId
 		]]></query>
 	</named-query>
 

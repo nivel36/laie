@@ -5,7 +5,6 @@ import static es.nivel36.laie.ejb.core.util.Parameters.map;
 import java.util.List;
 import java.util.Objects;
 
-import es.nivel36.laie.ejb.core.file.File;
 import es.nivel36.laie.ejb.core.model.AbstractDao;
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.core.model.Repository;
@@ -20,12 +19,10 @@ public class CandidateDao extends AbstractDao {
 
 	public boolean checkDuplicateEmail(final String email) {
 		Objects.requireNonNull(email);
-		final String namedQuery = "Candidate.checkDuplicateEmail";
-		final Parameters parameters = map("email", email);
-		return this.findByQuery(Boolean.class, namedQuery, parameters);
+		return this.checkDuplicateField(Candidate.class, "email", email);
 	}
 
-	public List<Candidate> findCandidates(final JobOffer jobOffer, final Page page) {
+	public List<Candidate> findCandidatesByJobOffer(final JobOffer jobOffer, final Page page) {
 		Objects.requireNonNull(jobOffer);
 		Objects.requireNonNull(page);
 		final String namedQuery = "Candidate.findByJobOffer";
@@ -33,17 +30,9 @@ public class CandidateDao extends AbstractDao {
 		return this.findByQuery(Candidate.class, namedQuery, parameters, page);
 	}
 
-	public List<File> findCandidatesFiles(final Candidate candidate, final Page page) {
-		Objects.requireNonNull(candidate);
-		Objects.requireNonNull(page);
-		final String namedQuery = "Candidate.findFiles";
-		final Parameters parameters = map("candidateId", candidate);
-		return this.findByQuery(File.class, namedQuery, parameters, page);
-	}
-
-	public Candidate findCandidateWithFiles(final Long candidateId) {
+	public Candidate findAllData(final Long candidateId) {
 		Objects.requireNonNull(candidateId);
-		final String namedQuery = "Candidate.findCandidateWithFiles";
+		final String namedQuery = "Candidate.findAllData";
 		final Parameters parameters = map("candidateId", candidateId);
 		return this.findByQuery(Candidate.class, namedQuery, parameters);
 	}

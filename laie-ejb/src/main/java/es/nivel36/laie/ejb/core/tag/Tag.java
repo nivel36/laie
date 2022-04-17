@@ -4,6 +4,7 @@ import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.search.annotations.Analyze;
@@ -14,16 +15,16 @@ import org.hibernate.search.annotations.SortableField;
 import org.hibernate.search.annotations.Store;
 
 import es.nivel36.laie.ejb.core.model.AbstractEntity;
-import es.nivel36.laie.ejb.core.model.Indexable;
 
 @Entity
 @Indexed
-public class Tag extends AbstractEntity implements Indexable {
+@Table(indexes = { @javax.persistence.Index(name = "UX_TAG_LABEL", columnList = "label", unique = true) })
+public class Tag extends AbstractEntity {
 
 	private static final long serialVersionUID = -2070061878397221965L;
 
 	@NotNull
-	@Column(length = 128, nullable = false)
+	@Column(length = 128, nullable = false, unique = true)
 	@Field(name = "_label")
 	@Field(name = "label", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField(forField = "label")
