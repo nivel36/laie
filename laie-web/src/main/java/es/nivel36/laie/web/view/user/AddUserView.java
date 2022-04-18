@@ -16,9 +16,11 @@ import es.nivel36.laie.ejb.user.User;
 @ViewScoped
 public class AddUserView extends AbstractUserView {
 
-	private static final long serialVersionUID = 2822959833449476143L;
+	private static final long serialVersionUID = -7291274460311553535L;
 
 	private static final Logger logger = LoggerFactory.getLogger(AddUserView.class);
+	
+	private User user;
 
 	@PostConstruct
 	public void init() {
@@ -39,11 +41,20 @@ public class AddUserView extends AbstractUserView {
 		logger.debug("Create new user action performed");
 		try {
 			this.userService.addUser(this.user);
-			Faces.redirect(this.userUrl());
+			Faces.redirect(this.viewUserUrl());
 		} catch (DuplicateEmailException e) {
 			this.addErrorToField("userForm:email", "user.error.email_exists");
 		} catch (BadManagerException e) {
 			this.addErrorToField("userForm:manager", "user.error.manager");
 		}
+	}
+	
+	@Override
+	public User getUser() {
+		return this.user;
+	}
+
+	public void setUser(final User user) {
+		this.user = user;
 	}
 }

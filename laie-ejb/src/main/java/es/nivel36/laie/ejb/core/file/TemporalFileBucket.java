@@ -4,7 +4,7 @@ import java.nio.file.Path;
 
 public class TemporalFileBucket extends AbstractFileBucket {
 	
-	private final static TemporalFileBucket INSTANCE = new TemporalFileBucket();
+	private static final TemporalFileBucket INSTANCE = new TemporalFileBucket();
 
 	private TemporalFileBucket() {
 		super("temp", Path.of("temp"));

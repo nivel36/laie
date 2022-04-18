@@ -8,9 +8,9 @@
 
 	<div class="layout-topbar">
 		<a class="layout-right-panel-button layout-topbar-icon" href="#">
-			<i class="pi pi-ellipsis-v" />
+			<i class="pi pi-ellipsis-v" aria-hidden="true" />
 		</a> <a class="layout-menu-button layout-topbar-icon" href="#"> <i
-			class="pi pi-bars" />
+			class="pi pi-bars" aria-hidden="true" />
 		</a>
 
 		<ui:include src="./menu.xhtml" />
@@ -19,25 +19,26 @@
 
 
 			<li class="user-profile"><a href="#"> <cc:avatar
-						path="#{sessionUser.get().picture.path}" name="#{sessionUser.get().fullName}"
-						styleClass="user-image" id="userImage" />
+						path="#{sessionUser.get().picture.path}"
+						name="#{sessionUser.get().fullName}" styleClass="user-image"
+						id="userImage" />
 					<div class="layout-profile-userinfo">
 						<span class="layout-profile-name">#{sessionUser.get().fullName}</span>
 					</div>
 			</a>
 				<ul>
 					<li><h:link outcome="/user/view.xhtml">
-							<i class="pi pi-user" />
+							<i class="pi pi-user" aria-hidden="true" />
 							<span>#{i18n['menu.profile']}</span>
 							<f:param name="user" value="#{sessionUser.get().id}" />
 						</h:link></li>
 					<li><h:link outcome="/config.xhtml">
-							<i class="pi pi-cog" />
+							<i class="pi pi-cog" aria-hidden="true" />
 							<span>#{i18n['menu.settings']}</span>
 						</h:link></li>
 					<li><h:form>
 							<h:commandLink action="#{sessionUser.logout}">
-								<i class="pi pi-sign-out" />
+								<i class="pi pi-sign-out" aria-hidden="true" />
 								<span>#{i18n['user.logout']}</span>
 							</h:commandLink>
 						</h:form></li>

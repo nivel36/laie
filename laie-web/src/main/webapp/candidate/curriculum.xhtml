@@ -39,10 +39,10 @@
 								<div class="title">#{curriculumView.candidate.fullName}</div>
 								<div class="subtitle">#{curriculumView.candidate.jobProfile}</div>
 								<div class="text">
-									<span class="region"><i class="pi pi-map-marker" />#{curriculumView.candidate.address.region}</span> <span class="email"><i
-										class="pi pi-envelope" /> #{curriculumView.candidate.email}</span>
+									<span class="region"><i class="pi pi-map-marker" aria-hidden="true"/>#{curriculumView.candidate.address.region}</span> <span class="email"><i
+										class="pi pi-envelope" aria-hidden="true"/> #{curriculumView.candidate.email}</span>
 									<h:panelGroup rendered="#{not empty viewCandidateView.candidate.phoneNumber}" styleClass="phone">
-										<i class="pi pi-phone" />#{curriculumView.candidate.phoneNumber}</h:panelGroup>
+										<i class="pi pi-phone" aria-hidden="true"/>#{curriculumView.candidate.phoneNumber}</h:panelGroup>
 								</div>
 							</div>
 

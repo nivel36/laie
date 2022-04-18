@@ -98,18 +98,6 @@ public class User extends AbstractEntity {
 	@SortableField(forField = "surname")
 	private String surname;
 
-	@Override
-	public boolean equals(final Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (this.getClass() != obj.getClass()) {
-			return false;
-		}
-		final User other = (User) obj;
-		return Objects.equals(other.email, this.email);
-	}
-
 	public Set<Bookmark> getBookmarks() {
 		return bookmarks;
 	}
@@ -171,11 +159,6 @@ public class User extends AbstractEntity {
 
 	public String getSurname() {
 		return this.surname;
-	}
-
-	@Override
-	public int hashCode() {
-		return 31 * Objects.hash(this.email);
 	}
 
 	public boolean hasRole(final Role role) {
@@ -248,6 +231,26 @@ public class User extends AbstractEntity {
 
 	public void setSurname(final String surname) {
 		this.surname = surname;
+	}
+	
+	@Override
+	public boolean equals(final Object obj) {
+		if(obj == null) {
+			return false;
+		}
+		if (this == obj) {
+			return true;
+		}
+		if (this.getClass() != obj.getClass()) {
+			return false;
+		}
+		final User other = (User) obj;
+		return Objects.equals(other.email, this.email);
+	}
+	
+	@Override
+	public int hashCode() {
+		return 31 * Objects.hash(this.email);
 	}
 
 	@Override

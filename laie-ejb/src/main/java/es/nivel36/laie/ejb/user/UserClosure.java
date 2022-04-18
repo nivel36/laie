@@ -6,13 +6,17 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import es.nivel36.laie.ejb.core.model.AbstractEntity;
 
 @Entity
+@Table( uniqueConstraints = { @UniqueConstraint(columnNames = { "antecessor", "descendant", "pathLength" })}, 
+		indexes = { @javax.persistence.Index(name = "UX_USERCLOSURE_", columnList = "antecessor, descendant, pathLength", unique = true) })
 public class UserClosure extends AbstractEntity {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 6018390713882649369L;
 
 	@ManyToOne
 	@JoinColumn(name = "antecessor_id", nullable = false)
@@ -35,22 +39,6 @@ public class UserClosure extends AbstractEntity {
 		this.pathLength = pathLength;
 	}
 
-	@Override
-	public boolean equals(final Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (!super.equals(obj)) {
-			return false;
-		}
-		if (this.getClass() != obj.getClass()) {
-			return false;
-		}
-		final UserClosure other = (UserClosure) obj;
-		return Objects.equals(other.antecessor, this.antecessor) && Objects.equals(other.descendant, this.descendant)
-				&& Objects.equals(other.pathLength, this.pathLength);
-	}
-
 	public User getAntecessor() {
 		return this.antecessor;
 	}
@@ -63,11 +51,6 @@ public class UserClosure extends AbstractEntity {
 		return this.pathLength;
 	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(this.antecessor, this.descendant, this.pathLength);
-	}
-
 	public void setAntecessor(final User antecessor) {
 		this.antecessor = antecessor;
 	}
@@ -78,5 +61,32 @@ public class UserClosure extends AbstractEntity {
 
 	public void setPathLength(final Integer pathLength) {
 		this.pathLength = pathLength;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(this.antecessor, this.descendant, this.pathLength);
+	}
+
+	@Override
+	public boolean equals(final Object obj) {
+		if (obj == null) {
+			return false;
+		}
+		if (this == obj) {
+			return true;
+		}
+		if (this.getClass() != obj.getClass()) {
+			return false;
+		}
+		final UserClosure other = (UserClosure) obj;
+		return Objects.equals(other.antecessor, this.antecessor) && Objects.equals(other.descendant, this.descendant)
+				&& Objects.equals(other.pathLength, this.pathLength);
+	}
+
+	@Override
+	public String toString() {
+		return "UserClosure [antecessor=" + antecessor + ", descendant=" + descendant + ", pathLength=" + pathLength
+				+ "]";
 	}
 }

@@ -1,7 +1,7 @@
 package es.nivel36.laie.ejb.client;
 
-import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -45,8 +45,8 @@ public class Client extends AbstractEntity implements Ownerable, Erasable {
 	@Field(name = "_cif")
 	private String cif;
 
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "client", orphanRemoval = true)
-	private List<Contact> contacts;
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "client", orphanRemoval = true)
+	private Set<Contact> contacts;
 
 	@Column(nullable = false)
 	@Field
@@ -54,7 +54,7 @@ public class Client extends AbstractEntity implements Ownerable, Erasable {
 
 	@ContainedIn
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "client", orphanRemoval = true)
-	private List<JobOffer> jobOffers;
+	private Set<JobOffer> jobOffers;
 
 	@NotNull
 	@Column(unique = true, nullable = false)
@@ -82,11 +82,11 @@ public class Client extends AbstractEntity implements Ownerable, Erasable {
 		return this.cif;
 	}
 
-	public List<Contact> getContacts() {
+	public Set<Contact> getContacts() {
 		return this.contacts;
 	}
 
-	public List<JobOffer> getJobOffers() {
+	public Set<JobOffer> getJobOffers() {
 		return this.jobOffers;
 	}
 
@@ -116,7 +116,7 @@ public class Client extends AbstractEntity implements Ownerable, Erasable {
 		this.cif = cif;
 	}
 
-	public void setContacts(final List<Contact> contacts) {
+	public void setContacts(final Set<Contact> contacts) {
 		this.contacts = contacts;
 	}
 
@@ -125,7 +125,7 @@ public class Client extends AbstractEntity implements Ownerable, Erasable {
 		this.deleted = deleted;
 	}
 
-	public void setJobOffers(final List<JobOffer> jobOffers) {
+	public void setJobOffers(final Set<JobOffer> jobOffers) {
 		this.jobOffers = jobOffers;
 	}
 

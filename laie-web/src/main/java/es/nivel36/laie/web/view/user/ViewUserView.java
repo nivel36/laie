@@ -28,7 +28,7 @@ import es.nivel36.laie.web.reports.UserReport;
 @ViewScoped
 public class ViewUserView extends AbstractView {
 
-	private static final long serialVersionUID = 1878119297191882440L;
+	private static final long serialVersionUID = -6450384052805715881L;
 
 	private static final Logger logger = LoggerFactory.getLogger(ViewUserView.class);
 
@@ -43,6 +43,8 @@ public class ViewUserView extends AbstractView {
 	private List<Meeting> meetings;
 
 	private List<User> team;
+	
+	private boolean loggedUser;
 
 	@Inject
 	private transient MeetingService meetingService;
@@ -57,7 +59,8 @@ public class ViewUserView extends AbstractView {
 		this.team = this.userService.findSubordinateUsers(this.user);
 		this.jobOffers = new ArrayList<JobOffer>(user.getJobOffers());
 		this.meetings = this.meetingService.findPlannedMeetings(this.user, Page.TEN_RESULTS_PER_PAGE);
-		this.editable = this.sessionUser.isAdmin() || this.sessionUser.get().equals(this.user);
+		this.loggedUser = this.sessionUser.get().equals(this.user);
+		this.editable = this.sessionUser.isAdmin() || loggedUser;
 	}
 
 	private void initUser() {
@@ -87,7 +90,7 @@ public class ViewUserView extends AbstractView {
 	}
 
 	public boolean isLogedUser() {
-		return this.sessionUser.get().equals(this.user);
+		return loggedUser;
 	}
 
 	public List<JobOffer> getJobOffers() {

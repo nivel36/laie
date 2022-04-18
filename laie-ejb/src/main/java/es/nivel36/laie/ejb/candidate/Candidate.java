@@ -128,18 +128,6 @@ public class Candidate extends AbstractEntity implements Ownerable {
 		this.files.add(file);
 	}
 
-	@Override
-	public boolean equals(final Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (this.getClass() != obj.getClass()) {
-			return false;
-		}
-		final Candidate other = (Candidate) obj;
-		return Objects.equals(other.email, this.email);
-	}
-
 	public Address getAddress() {
 		if (this.address == null) {
 			this.address = new Address();
@@ -230,12 +218,7 @@ public class Candidate extends AbstractEntity implements Ownerable {
 	public Set<Tag> getTags() {
 		return this.tags;
 	}
-
-	@Override
-	public int hashCode() {
-		return 31 * Objects.hash(this.email);
-	}
-
+	
 	public void removeFile(File file) {
 		Objects.requireNonNull(file);
 		if (files == null) {
@@ -335,6 +318,26 @@ public class Candidate extends AbstractEntity implements Ownerable {
 
 	public void setTags(final Set<Tag> tags) {
 		this.tags = tags;
+	}
+	
+	@Override
+	public boolean equals(final Object obj) {
+		if(obj == null) {
+			return false;
+		}
+		if (this == obj) {
+			return true;
+		}
+		if (this.getClass() != obj.getClass()) {
+			return false;
+		}
+		final Candidate other = (Candidate) obj;
+		return Objects.equals(other.email, this.email);
+	}
+	
+	@Override
+	public int hashCode() {
+		return 31 * Objects.hash(this.email);
 	}
 
 	@Override

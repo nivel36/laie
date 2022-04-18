@@ -29,10 +29,10 @@
 								<div class="title">#{viewCandidateView.candidate.fullName}</div>
 								<div class="subtitle">#{viewCandidateView.candidate.jobProfile}</div>
 								<div class="text">
-									<span class="region"><i class="pi pi-map-marker" />#{viewCandidateView.candidate.address.region}</span> <span class="email"><i
-										class="pi pi-envelope" /> #{viewCandidateView.candidate.email}</span>
+									<span class="region"><i class="pi pi-map-marker" aria-hidden="true"/>#{viewCandidateView.candidate.address.region}</span> <span class="email"><i
+										class="pi pi-envelope" aria-hidden="true"/> #{viewCandidateView.candidate.email}</span>
 									<h:panelGroup rendered="#{not empty viewCandidateView.candidate.phoneNumber}" styleClass="phone">
-										<i class="pi pi-phone" />#{viewCandidateView.candidate.phoneNumber}</h:panelGroup>
+										<i class="pi pi-phone" aria-hidden="true"/>#{viewCandidateView.candidate.phoneNumber}</h:panelGroup>
 								</div>
 							</div>
 

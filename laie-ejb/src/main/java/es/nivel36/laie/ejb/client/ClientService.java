@@ -43,6 +43,12 @@ public class ClientService {
 		}
 		return clientDao.update(client);
 	}
+	
+	public Client findAllData(final Long clientId) {
+		Objects.requireNonNull(clientId);
+		logger.debug("Find all client data by id {}", clientId);
+		return this.clientDao.findAllData(clientId);
+	}
 
 	public Client findClientById(final Long clientId) {
 		Objects.requireNonNull(clientId);

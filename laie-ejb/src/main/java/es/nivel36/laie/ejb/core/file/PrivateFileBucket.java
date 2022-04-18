@@ -4,7 +4,7 @@ import java.nio.file.Path;
 
 class PrivateFileBucket extends AbstractFileBucket {
 	
-	private final static PrivateFileBucket INSTANCE = new PrivateFileBucket();
+	private static final PrivateFileBucket INSTANCE = new PrivateFileBucket();
 
 	private PrivateFileBucket() {
 		super("private", Path.of("private"));
