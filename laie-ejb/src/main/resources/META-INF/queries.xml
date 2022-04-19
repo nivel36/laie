@@ -37,6 +37,7 @@
 			FROM Client c
 			LEFT JOIN FETCH c.jobOffers
 			LEFT JOIN FETCH c.contacts
+			LEFT JOIN FETCH c.owner
 			WHERE c.id = :clientId
 		]]></query>
 	</named-query>

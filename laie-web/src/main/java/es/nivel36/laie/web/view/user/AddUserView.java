@@ -20,8 +20,6 @@ public class AddUserView extends AbstractUserView {
 
 	private static final Logger logger = LoggerFactory.getLogger(AddUserView.class);
 	
-	private User user;
-
 	@PostConstruct
 	public void init() {
 		logger.trace("New user init");
@@ -47,14 +45,5 @@ public class AddUserView extends AbstractUserView {
 		} catch (BadManagerException e) {
 			this.addErrorToField("userForm:manager", "user.error.manager");
 		}
-	}
-	
-	@Override
-	public User getUser() {
-		return this.user;
-	}
-
-	public void setUser(final User user) {
-		this.user = user;
 	}
 }

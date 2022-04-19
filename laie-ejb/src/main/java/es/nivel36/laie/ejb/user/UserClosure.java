@@ -12,8 +12,8 @@ import javax.persistence.UniqueConstraint;
 import es.nivel36.laie.ejb.core.model.AbstractEntity;
 
 @Entity
-@Table( uniqueConstraints = { @UniqueConstraint(columnNames = { "antecessor", "descendant", "pathLength" })}, 
-		indexes = { @javax.persistence.Index(name = "UX_USERCLOSURE_", columnList = "antecessor, descendant, pathLength", unique = true) })
+@Table( uniqueConstraints = { @UniqueConstraint(columnNames = { "antecessor_id", "descendant_id", "pathLength" })}, 
+		indexes = { @javax.persistence.Index(name = "UX_USERCLOSURE_", columnList = "antecessor_id, descendant_id, pathLength", unique = true) })
 public class UserClosure extends AbstractEntity {
 
 	private static final long serialVersionUID = 6018390713882649369L;

@@ -5,6 +5,7 @@ import java.util.Objects;
 
 import javax.inject.Inject;
 
+import org.omnifaces.cdi.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,6 +21,9 @@ public abstract class AbstractUserView extends AbstractView {
 	private static final long serialVersionUID = -5806017913115206570L;
 
 	private static final Logger logger = LoggerFactory.getLogger(AbstractUserView.class);
+	
+	@Param
+	protected User user;
 
 	@Inject
 	protected transient FileService fileUploadService;
@@ -27,8 +31,6 @@ public abstract class AbstractUserView extends AbstractView {
 	@Inject
 	protected transient UserService userService;
 	
-	public abstract User getUser();
-
 	public void changeRoleListener() {
 		logger.trace("Change role listener triggered");
 		if (getUser().getRole().equals(Role.ADMIN)) {
@@ -44,6 +46,14 @@ public abstract class AbstractUserView extends AbstractView {
 
 	protected String viewUserUrl() {
 		return ViewUserView.URL + "?user=" + getUser().getId();
+	}
+	
+	public User getUser() {
+		return this.user;
+	}
+
+	public void setUser(final User user) {
+		this.user = user;
 	}
 
 	public void setFileUploadService(final FileService fileUploadService) {
