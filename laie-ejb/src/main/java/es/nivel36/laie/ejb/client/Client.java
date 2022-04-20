@@ -45,7 +45,7 @@ public class Client extends AbstractEntity implements Ownerable, Erasable {
 	@Field(name = "_cif")
 	private String cif;
 
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "client", orphanRemoval = true)
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "client", orphanRemoval = true)
 	private Set<Contact> contacts;
 
 	@Column(nullable = false)

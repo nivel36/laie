@@ -112,11 +112,6 @@ public class CandidateService {
 		return this.candidateDao.find(Candidate.class, id);
 	}
 	
-	public Candidate findAllData(final Long candidateId) {
-		Objects.requireNonNull(candidateId);
-		return this.candidateDao.findAllData(candidateId);
-	}
-	
 	public Candidate addFileToCandidate(final Candidate candidate, final InputStream inputStream, String filename) {
 		Objects.requireNonNull(inputStream);
 		Objects.requireNonNull(candidate);

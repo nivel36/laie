@@ -11,6 +11,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.omnifaces.cdi.Param;
 import org.omnifaces.util.Faces;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.file.UploadedFile;
@@ -20,13 +21,14 @@ import org.slf4j.LoggerFactory;
 import es.nivel36.laie.ejb.candidate.Candidate;
 import es.nivel36.laie.ejb.candidate.CandidateService;
 import es.nivel36.laie.ejb.core.bookmark.Bookmark;
-import es.nivel36.laie.ejb.core.bookmark.BookmarkService;
 import es.nivel36.laie.ejb.core.file.File;
 import es.nivel36.laie.ejb.core.file.FileService;
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.job.candidature.JobCandidature;
+import es.nivel36.laie.ejb.job.candidature.JobCandidatureService;
 import es.nivel36.laie.ejb.job.meeting.Meeting;
 import es.nivel36.laie.ejb.job.meeting.MeetingService;
+import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.web.core.IllegalPageStateException;
 import es.nivel36.laie.web.core.view.AbstractView;
 import es.nivel36.laie.web.view.meeting.AddMeetingView;
@@ -39,8 +41,9 @@ public class ViewCandidateView extends AbstractView {
 
 	private static final Logger logger = LoggerFactory.getLogger(ViewCandidateView.class);
 
-	public static final String URL = "/candidate/candidate.xhtml";
+	public static final String URL = "/candidate/view.xhtml";
 
+	@Param
 	private Candidate candidate;
 
 	private boolean editable;
@@ -56,65 +59,53 @@ public class ViewCandidateView extends AbstractView {
 	private Bookmark bookmark;
 
 	@Inject
-	private transient BookmarkService bookmarkService;
-
-	@Inject
 	private transient CandidateService candidateService;
 
 	@Inject
 	private transient FileService fileUploadService;
-	
+
 	@Inject
 	private transient MeetingService meetingService;
 
+	@Inject
+	private transient JobCandidatureService jobCandidatureService;
+
 	@PostConstruct
 	public void init() {
-		initCandidate();
+		if (this.candidate == null) {
+			logger.warn("Candidate not found");
+			throw new IllegalPageStateException();
+		}
 		logger.trace("Candidate {} init", this.candidate);
-		this.jobCandidatures = new ArrayList<>(this.candidate.getJobCandidatures());
-		this.editable = true;
-		this.meetings = this.meetingService.findMeetingsByCandidate(this.candidate, Page.TEN_RESULTS_PER_PAGE);
+		this.jobCandidatures = jobCandidatureService.findCandidatesJobCandidatures(candidate, Page.ALL_RESULTS);
+		final User user = this.sessionUser.get();
+		this.editable = user.isAdmin() || user.equals(candidate.getOwner());
+		this.meetings = this.meetingService.findMeetingsByCandidate(this.candidate, Page.ALL_RESULTS);
 		this.files = new ArrayList<>(this.candidate.getFiles());
 		this.bookmark = this.buildBookmark();
 		this.bookmarkable = !this.sessionUser.getBookmarks().contains(this.bookmark);
 	}
 
-	private void initCandidate() {
-		final String candidateId = this.getValueFromGetParameters("candidate", true);
-		try {
-			final Long id = Long.parseLong(candidateId);
-			this.candidate = this.candidateService.findAllData(id);
-		} catch (NumberFormatException e) {
-			logger.warn("Bad number" + candidateId);
-			throw new IllegalPageStateException();
-		}
-		if (this.candidate == null) {
-			logger.warn(String.format("Candidate with id %s not found", candidateId));
-			throw new IllegalPageStateException();
-		}
-	}
-
 	private Bookmark buildBookmark() {
 		final Bookmark bookmark = new Bookmark();
-		bookmark.setTitle(candidate.getName());
+		bookmark.setTitle(candidate.getFullName());
 		bookmark.setUrl(this.candidateUrl());
+		bookmark.setUser(this.sessionUser.get());
 		return bookmark;
 	}
 
-	protected String candidateUrl() {
+	private String candidateUrl() {
 		return URL + "?candidate=" + this.candidate.getId();
 	}
 
 	public void addBookmark() {
-		this.bookmarkService.addBookmark(this.bookmark);
+		this.sessionUser.addBookmark(bookmark);
 		this.bookmarkable = false;
-		this.sessionUser.getBookmarks().add(bookmark);
 	}
 
 	public void removeFromBookmarks() {
-		this.bookmarkService.deleteBookmark(this.bookmark);
+		this.sessionUser.removeFromBookmarks(bookmark);
 		this.bookmarkable = true;
-		this.sessionUser.getBookmarks().remove(bookmark);
 	}
 
 	public void export() {
@@ -188,9 +179,14 @@ public class ViewCandidateView extends AbstractView {
 		Objects.requireNonNull(fileUploadService);
 		this.fileUploadService = fileUploadService;
 	}
-	
+
 	public void setMeetingService(final MeetingService meetingService) {
 		Objects.requireNonNull(meetingService);
 		this.meetingService = meetingService;
+	}
+
+	public void setJobCandidatureService(final JobCandidatureService jobCandidatureService) {
+		Objects.requireNonNull(jobCandidatureService);
+		this.jobCandidatureService = jobCandidatureService;
 	}
 }

@@ -8,13 +8,6 @@
 		#{i18n['candidate.candidate']} - #{viewCandidateView.candidate.fullName}
 	</ui:define>
 
-	<ui:define name="bookmarkButton">
-		<h:form>
-			<p:commandButton action="#{viewCandidateView.addBookmark}" process="@this" update="bookmark-button :bookmarks" icon="pi pi-bookmark"
-				rendered="#{viewCandidateView.bookmarkable}" styleClass="ui-button-outlined" />
-		</h:form>
-	</ui:define>
-
 	<ui:param name="selectedMenu" value="candidates" />
 
 	<ui:define name="content">
@@ -40,6 +33,14 @@
 								<p:menuitem value="#{i18n['action.edit']}" outcome="/candidate/edit" icon="pi pi-pencil">
 									<f:param name="candidate" value="#{viewCandidateView.candidate.id}" />
 								</p:menuitem>
+									<p:menuitem value="#{i18n['bookmark.add_to_bookmarks']}"
+									action="#{viewCandidateView.addBookmark}"
+									rendered="#{viewCandidateView.bookmarkable}" process="@this"
+									update="bookmarks menu-button" icon="pi pi-bookmark" />
+								<p:menuitem value="#{i18n['bookmark.remove_from_bookmarks']}"
+									action="#{viewCandidateView.removeFromBookmarks}"
+									rendered="#{not viewCandidateView.bookmarkable}" process="@this"
+									update="bookmarks menu-button" icon="pi pi-bookmark" />
 								<p:menuitem value="#{i18n['curriculum.view_curriculum']}" outcome="/candidate/curriculum">
 									<f:param name="candidate" value="#{viewCandidateView.candidate.id}" />
 								</p:menuitem>

@@ -10,14 +10,17 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.omnifaces.cdi.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import es.nivel36.laie.ejb.client.Client;
-import es.nivel36.laie.ejb.client.ClientService;
 import es.nivel36.laie.ejb.client.Contact;
 import es.nivel36.laie.ejb.core.bookmark.Bookmark;
+import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.job.offer.JobOffer;
+import es.nivel36.laie.ejb.job.offer.JobOfferService;
+import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.web.core.IllegalPageStateException;
 import es.nivel36.laie.web.core.view.AbstractView;
 
@@ -41,50 +44,40 @@ public class ViewClientView extends AbstractView {
 
 	private List<JobOffer> jobOffers;
 
+	@Param
 	protected Client client;
 
 	@Inject
-	protected transient ClientService clientService;
-	
+	protected transient JobOfferService jobOfferService;
+
 	@PostConstruct
 	public void init() {
-		initClient();
+		if (this.client == null) {
+			logger.warn("Client not found");
+			throw new IllegalPageStateException();
+		}
 		logger.trace("Client {} init", this.client);
 		this.contacts = new ArrayList<>(this.client.getContacts());
-		this.jobOffers = new ArrayList<>(this.client.getJobOffers());
+		this.jobOffers = jobOfferService.findJobOffersByClient(client, Page.ALL_RESULTS);
 		this.checkDeleted();
-		this.editable = true;
+		final User user = this.sessionUser.get();
+		this.editable = user.isAdmin() || user.equals(client.getOwner());
 		this.bookmark = this.buildBookmark();
 		this.bookmarkable = !this.sessionUser.hasBookamrk(bookmark);
 	}
 
-	private void initClient() {
-		final String clientId = this.getValueFromGetParameters("client", true);
-		try {
-			final Long id = Long.parseLong(clientId);
-			this.client = this.clientService.findAllData(id);
-		} catch (NumberFormatException e) {
-			logger.warn("Bad number" + clientId);
-			throw new IllegalPageStateException();
-		}
-		if (this.client == null) {
-			logger.warn(String.format("Client with id %s not found", clientId));
-			throw new IllegalPageStateException();
-		}
-	}
-	
 	private void checkDeleted() {
 		if (this.client.isDeleted()) {
 			logger.warn("Client is deleted");
 			this.addMessage(FacesMessage.SEVERITY_WARN, "message.erased_entity", "message.erased_entity");
 		}
 	}
-	
+
 	private Bookmark buildBookmark() {
 		final Bookmark bookmark = new Bookmark();
 		bookmark.setTitle(client.getName());
 		bookmark.setUrl(this.clientUrl());
-		bookmark.setUser(sessionUser.get());
+		bookmark.setUser(this.sessionUser.get());
 		return bookmark;
 	}
 
@@ -92,12 +85,12 @@ public class ViewClientView extends AbstractView {
 		this.sessionUser.addBookmark(bookmark);
 		this.bookmarkable = false;
 	}
-	
+
 	public void removeFromBookmarks() {
 		this.sessionUser.removeFromBookmarks(bookmark);
 		this.bookmarkable = true;
 	}
-	
+
 	public void export() {
 		logger.debug("Export client action performed");
 	}
@@ -105,7 +98,7 @@ public class ViewClientView extends AbstractView {
 	private String clientUrl() {
 		return URL + "?client=" + client.getId();
 	}
-	
+
 	public boolean isBookmarkable() {
 		return this.bookmarkable;
 	}
@@ -113,7 +106,7 @@ public class ViewClientView extends AbstractView {
 	public boolean isEditable() {
 		return this.editable;
 	}
-	
+
 	public Client getClient() {
 		return this.client;
 	}
@@ -126,8 +119,8 @@ public class ViewClientView extends AbstractView {
 		return this.jobOffers;
 	}
 
-	public void setClientService(final ClientService clientService) {
-		Objects.requireNonNull(clientService);
-		this.clientService = clientService;
+	public void setJobOfferService(final JobOfferService jobOfferService) {
+		Objects.requireNonNull(jobOfferService);
+		this.jobOfferService = jobOfferService;
 	}
 }

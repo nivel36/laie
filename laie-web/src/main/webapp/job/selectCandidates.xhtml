@@ -18,7 +18,7 @@
 						update="candidateSearchForm:candidates" styleClass="ui-fluid" />
 					<div class="buttons">
 						<p:button value="#{i18n['action.cancel']}" outcome="/job/view.xhtml" styleClass="ui-button-secondary ui-button-outlined">
-							<f:param name="job" value="#{selectCandidatesView.jobOffer.id}" />
+							<f:param name="jobOffer" value="#{selectCandidatesView.jobOffer.id}" />
 						</p:button>
 						<p:commandButton value="#{i18n['action.select']}" process="@form" update="@form growl" action="#{selectCandidatesView.select}"
 							styleClass="ui-button-success ui-button-outlined" />

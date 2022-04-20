@@ -63,7 +63,7 @@ public class Candidate extends AbstractEntity implements Ownerable {
 	@Min(0)
 	private Integer expectedSalary;
 
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<File> files = new HashSet<>();
 
 	private String infojobsProfileUrl;

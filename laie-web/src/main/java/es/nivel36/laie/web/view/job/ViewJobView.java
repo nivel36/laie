@@ -62,7 +62,7 @@ public class ViewJobView extends AbstractJobView {
 		final Bookmark bookmark = new Bookmark();
 		bookmark.setTitle(jobOffer.getTitle());
 		bookmark.setUrl(ViewJobView.URL + "?jobOffer=" + this.jobOffer.getId());
-		bookmark.setUser(sessionUser.get());
+		bookmark.setUser(this.sessionUser.get());
 		return bookmark;
 	}
 

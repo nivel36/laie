@@ -268,16 +268,6 @@
 			WHERE u.email = :email
 		]]></query>
 	</named-query>
-	
-	<named-query name="User.findAllData">
-		<query><![CDATA[
-			SELECT u 
-			FROM User u
-			LEFT JOIN FETCH u.bookmarks
-			LEFT JOIN FETCH u.jobOffers
-			WHERE u.id = :userId
-		]]></query>
-	</named-query>
 
 	<named-query name="User.findByTokenHashAndType">
 		<query><![CDATA[

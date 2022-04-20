@@ -1,7 +1,6 @@
 package es.nivel36.laie.web.view.user;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -10,6 +9,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.omnifaces.cdi.Param;
 import org.omnifaces.util.Faces;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +18,7 @@ import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.job.meeting.Meeting;
 import es.nivel36.laie.ejb.job.meeting.MeetingService;
 import es.nivel36.laie.ejb.job.offer.JobOffer;
+import es.nivel36.laie.ejb.job.offer.JobOfferService;
 import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.ejb.user.UserService;
 import es.nivel36.laie.web.core.IllegalPageStateException;
@@ -34,6 +35,7 @@ public class ViewUserView extends AbstractView {
 
 	public static final String URL = "/user/view.xhtml";
 
+	@Param
 	private User user;
 
 	private boolean editable;
@@ -51,31 +53,22 @@ public class ViewUserView extends AbstractView {
 
 	@Inject
 	private transient UserService userService;
+	
+	@Inject
+	private transient JobOfferService jobOfferService;
 
 	@PostConstruct
 	public void init() {
-		this.initUser();
+		if (this.user == null) {
+			logger.warn("User not found");
+			throw new IllegalPageStateException();
+		}
 		logger.trace("User {} init", this.user);
 		this.team = this.userService.findSubordinateUsers(this.user);
-		this.jobOffers = new ArrayList<JobOffer>(user.getJobOffers());
-		this.meetings = this.meetingService.findPlannedMeetings(this.user, Page.TEN_RESULTS_PER_PAGE);
+		this.jobOffers = jobOfferService.findJobOffersByOwner(user, Page.ALL_RESULTS);
+		this.meetings = this.meetingService.findPlannedMeetings(this.user, Page.ALL_RESULTS);
 		this.loggedUser = this.sessionUser.get().equals(this.user);
 		this.editable = this.sessionUser.isAdmin() || loggedUser;
-	}
-
-	private void initUser() {
-		final String userId = this.getValueFromGetParameters("user", true);
-		try {
-			final Long id = Long.parseLong(userId);
-			this.user = this.userService.findAllData(id);
-		} catch (NumberFormatException e) {
-			logger.warn("Bad number" + userId);
-			throw new IllegalPageStateException();
-		}
-		if (this.user == null) {
-			logger.warn(String.format("User with id %s not found", userId));
-			throw new IllegalPageStateException();
-		}
 	}
 
 	public void editUser() {
@@ -125,5 +118,10 @@ public class ViewUserView extends AbstractView {
 	public void setUserService(final UserService userService) {
 		Objects.requireNonNull(userService);
 		this.userService = userService;
+	}
+	
+	public void setJobOfferService(final JobOfferService jobOfferService) {
+		Objects.requireNonNull(jobOfferService);
+		this.jobOfferService = jobOfferService;
 	}
 }

@@ -159,12 +159,6 @@ public class UserService {
 		logger.debug("Find user by id {}", id);
 		return this.userDao.find(User.class, id);
 	}
-	
-	public User findAllData(final Long id) {
-		Objects.requireNonNull(id);
-		logger.debug("Find user by id {}", id);
-		return this.userDao.findAllData(id);
-	}
 
 	public User findUserByEmail(final String email) {
 		Objects.requireNonNull(email);

@@ -71,7 +71,7 @@ public class SelectCandidatesView extends AbstractView {
 
 	public void select() {
 		this.jobCandidatureService.addJobCandidatures(jobOffer, this.selectedCandidates);
-		this.navigateTo(ViewJobView.URL + "?job=" + this.jobOffer.getId());
+		this.navigateTo(ViewJobView.URL + "?jobOffer=" + this.jobOffer.getId());
 	}
 
 	public CandidateLazyDataModel getCandidates() {

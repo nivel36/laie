@@ -30,13 +30,6 @@ public class CandidateDao extends AbstractDao {
 		return this.findByQuery(Candidate.class, namedQuery, parameters, page);
 	}
 
-	public Candidate findAllData(final Long candidateId) {
-		Objects.requireNonNull(candidateId);
-		final String namedQuery = "Candidate.findAllData";
-		final Parameters parameters = map("candidateId", candidateId);
-		return this.findByQuery(Candidate.class, namedQuery, parameters);
-	}
-
 	public List<Origin> findAllOrigins() {
 		return this.findAll(Origin.class, Page.ALL_RESULTS);
 	}
