@@ -64,6 +64,6 @@ public class Skill extends AbstractEntity implements Comparable<Skill> {
 
 	@Override
 	public int compareTo(Skill skill) {
-		return this.compareTo(skill);
+		return this.name.compareTo(skill.name);
 	}
 }
