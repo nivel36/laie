@@ -1,0 +1,44 @@
+package es.nivel36.laie.ejb.core.tag;
+
+import java.util.Objects;
+
+import javax.ejb.Stateless;
+import javax.inject.Inject;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import es.nivel36.laie.ejb.core.model.Page;
+import es.nivel36.laie.ejb.core.model.Repository;
+import es.nivel36.laie.ejb.core.model.search.SearchFacets;
+import es.nivel36.laie.ejb.core.model.search.SearchResult;
+import es.nivel36.laie.ejb.core.model.search.SortField;
+
+@Stateless
+public class TagService {
+	
+	private static final Logger logger = LoggerFactory.getLogger(TagService.class);
+	
+	@Inject @Repository
+	private TagDao tagDao;
+	
+	public Tag findByLabel(final String label) {
+		Objects.requireNonNull(label);
+		return tagDao.findByLabel(label);
+	}
+	
+	public SearchResult<Tag> search(final String searchText, final Page page) {
+		return search(searchText, page, null, null);
+	}
+
+	public SearchResult<Tag> search(final String searchText, final Page page, SortField sortOrder,
+			final SearchFacets searchFacets) {
+		Objects.requireNonNull(page);
+		logger.debug("Search {}, offset {} with limit of {}", searchText, page.getOffset(), page.getLimit());
+		return this.tagDao.search(searchText, page, sortOrder, searchFacets);
+	}
+
+	public final void setTagDao(TagDao tagDao) {
+		this.tagDao = tagDao;
+	}
+}

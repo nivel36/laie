@@ -116,7 +116,7 @@
 					<h5>#{i18n['candidate.tags']}</h5>
 					<div class="text-container">
 						<ui:repeat value="#{viewCandidateView.candidate.tags}" var="tag" rendered="#{not empty viewCandidateView.candidate.tags}">
-							<p:tag value="#{tag}" />
+							<p:tag value="#{tag}" styleClass="p-mr-2"/>
 						</ui:repeat>
 						<h:outputText id="emptyText" value="---" styleClass="text" rendered="#{empty viewCandidateView.candidate.tags}" />
 					</div>

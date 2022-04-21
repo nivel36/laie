@@ -1,6 +1,7 @@
 package es.nivel36.laie.web.view.candidate;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -9,6 +10,7 @@ import javax.inject.Named;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import es.nivel36.laie.ejb.core.tag.Tag;
 import es.nivel36.laie.web.core.IllegalPageStateException;
 
 @Named
@@ -27,19 +29,19 @@ public class EditCandidateView extends AbstractCandidateView {
 		logger.trace("Candidate {} edit init", this.candidate);
 		this.initTags();
 	}
-	
+
 	private void initTags() {
 		if (this.candidate.getTags() == null) {
 			this.tags = new ArrayList<>();
 		} else {
-			this.tags = new ArrayList<>(this.candidate.getTags());
+			this.tags = this.candidate.getTags().stream().map(Tag::getLabel).collect(Collectors.toList());
 		}
 	}
 
 	public String save() {
 		logger.debug("Save candidate action performed");
-		this.candidate.setTags(this.getTags());
-		this.candidateService.updateCandidate(candidate);
+		this.candidate.setTags(this.tags.stream().map(Tag::new).collect(Collectors.toSet()));
+		this.candidate = this.candidateService.updateCandidate(candidate);
 		return this.candidateUrl();
 	}
 }

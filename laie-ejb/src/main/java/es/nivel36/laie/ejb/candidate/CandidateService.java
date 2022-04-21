@@ -58,13 +58,12 @@ public class CandidateService {
 
 	private void normalizeTags(final Candidate candidate) {
 		final Set<Tag> tags = candidate.getTags();
-		final Set<Tag> normalizedTags = new HashSet<Tag>(tags.size());
-		for(final Tag tag: tags) {
+		final Set<Tag> normalizedTags = new HashSet<>(tags.size());
+		for (final Tag tag : tags) {
 			final Tag tagInDatabase = tagDao.findByLabel(tag.getLabel());
-			if ( tagInDatabase != null) {
+			if (tagInDatabase != null) {
 				normalizedTags.add(tagInDatabase);
-			}
-			else {
+			} else {
 				normalizedTags.add(tag);
 			}
 		}
@@ -111,7 +110,7 @@ public class CandidateService {
 		logger.debug("Find candidate by id {}", id);
 		return this.candidateDao.find(Candidate.class, id);
 	}
-	
+
 	public Candidate addFileToCandidate(final Candidate candidate, final InputStream inputStream, String filename) {
 		Objects.requireNonNull(inputStream);
 		Objects.requireNonNull(candidate);
