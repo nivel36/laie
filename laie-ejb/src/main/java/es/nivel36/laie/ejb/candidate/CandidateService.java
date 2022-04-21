@@ -77,7 +77,7 @@ public class CandidateService {
 		return this.candidateDao.update(candidate);
 	}
 
-	public void changeCandidatesImage(final Candidate candidate, final InputStream image) {
+	public Candidate changeCandidatesImage(final Candidate candidate, final InputStream image) {
 		Objects.requireNonNull(candidate);
 		Objects.requireNonNull(image);
 		logger.debug("Change image to user {}", candidate);
@@ -90,7 +90,7 @@ public class CandidateService {
 			logger.trace("Remove user {} old image", candidate);
 			this.fileService.removeFile(oldImage);
 		}
-		this.candidateDao.update(candidate);
+		return this.candidateDao.update(candidate);
 	}
 
 	public List<Origin> findCandidateOrigins() {

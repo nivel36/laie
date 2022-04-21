@@ -41,7 +41,7 @@ public class EditCandidateView extends AbstractCandidateView {
 	public String save() {
 		logger.debug("Save candidate action performed");
 		this.candidate.setTags(this.tags.stream().map(Tag::new).collect(Collectors.toSet()));
-		this.candidate = this.candidateService.updateCandidate(candidate);
+		this.candidate = this.candidateService.updateCandidate(this.candidate);
 		return this.candidateUrl();
 	}
 }

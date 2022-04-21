@@ -1,6 +1,7 @@
 package es.nivel36.laie.web.view.candidate;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -10,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import es.nivel36.laie.ejb.candidate.Candidate;
+import es.nivel36.laie.ejb.core.tag.Tag;
 
 @Named
 @ViewScoped
@@ -28,7 +30,7 @@ public class AddCandidateView extends AbstractCandidateView {
 
 	public String save() {
 		logger.debug("Create new candidate action performed");
-		this.candidate.setTags(this.getTags());
+		this.candidate.setTags(this.tags.stream().map(Tag::new).collect(Collectors.toSet()));
 		this.candidate.setOwner(sessionUser.get());
 		this.candidateService.addCandidate(candidate);
 		return this.candidateUrl();

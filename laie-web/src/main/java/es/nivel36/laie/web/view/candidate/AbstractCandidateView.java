@@ -42,9 +42,10 @@ public abstract class AbstractCandidateView extends AbstractView {
 	protected transient TagService tagService;
 
 	public void uploadImage(final FileUploadEvent event) {
+		logger.debug("Update candidate image action performed");
 		final UploadedFile uploadedFile = event.getFile();
 		try (final InputStream inputStream = uploadedFile.getInputStream()) {
-			this.candidateService.changeCandidatesImage(this.candidate, inputStream);
+			this.candidate = this.candidateService.changeCandidatesImage(this.candidate, inputStream);
 		} catch (final IOException e) {
 			throw new UncheckedIOException(e);
 		}
