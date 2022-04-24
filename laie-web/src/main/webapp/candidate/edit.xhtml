@@ -20,7 +20,8 @@
 							<div class="p-grid p-justify-center">
 								<div class="p-col-3">
 									<div class="p-field">
-										<cc:inputAvatar id="candidate_image" value="#{editCandidateView.candidate.picture.path}" fileUploadListener="#{editCandidateView.uploadImage}" />
+										<cc:inputAvatar id="candidate_image" value="#{editCandidateView.candidateImage.path}" fileUploadListener="#{editCandidateView.uploadImage}"
+											deleteImage="#{editCandidateView.deleteImage}" />
 									</div>
 								</div>
 							</div>

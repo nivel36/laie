@@ -1,8 +1,8 @@
 package es.nivel36.laie.web.view.candidate;
 
+import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UncheckedIOException;
 import java.util.List;
 import java.util.Objects;
 
@@ -17,7 +17,9 @@ import org.slf4j.LoggerFactory;
 
 import es.nivel36.laie.ejb.candidate.Candidate;
 import es.nivel36.laie.ejb.candidate.CandidateService;
+import es.nivel36.laie.ejb.core.file.File;
 import es.nivel36.laie.ejb.core.file.FileService;
+import es.nivel36.laie.ejb.core.file.FileUploadException;
 import es.nivel36.laie.ejb.core.tag.TagService;
 import es.nivel36.laie.web.core.view.AbstractView;
 
@@ -32,6 +34,10 @@ public abstract class AbstractCandidateView extends AbstractView {
 
 	protected transient List<String> tags;
 
+	protected boolean imageChanged;
+
+	protected File candidateImage;
+
 	@Inject
 	protected transient CandidateService candidateService;
 
@@ -41,13 +47,38 @@ public abstract class AbstractCandidateView extends AbstractView {
 	@Inject
 	protected transient TagService tagService;
 
-	public void uploadImage(final FileUploadEvent event) {
-		logger.debug("Update candidate image action performed");
-		final UploadedFile uploadedFile = event.getFile();
-		try (final InputStream inputStream = uploadedFile.getInputStream()) {
-			this.candidate = this.candidateService.changeCandidatesImage(this.candidate, inputStream);
+	public void deleteImage() {
+		logger.trace("Delete user image");
+		this.candidateImage = null;
+		this.candidate.setPicture(candidateImage);
+		this.imageChanged = true;
+	}
+
+	protected void saveImage() {
+		if (!this.imageChanged || this.candidateImage == null) {
+			return;
+		}
+		logger.trace("Changing user image");
+		try (final InputStream is = this.fileService.downloadFile(candidateImage);
+				final BufferedInputStream bis = new BufferedInputStream(is)) {
+			this.candidate = this.candidateService.changeCandidatesImage(this.candidate, bis);
 		} catch (final IOException e) {
-			throw new UncheckedIOException(e);
+			throw new FileUploadException(e);
+		}
+	}
+
+	public void uploadImage(final FileUploadEvent event) {
+		Objects.requireNonNull(event);
+		this.imageChanged = true;
+		final UploadedFile uploadedFile = event.getFile();
+		if (uploadedFile == null) {
+			return;
+		}
+		logger.debug("Upload candidate {} image action performed", this.candidate);
+		try (final InputStream inputStream = uploadedFile.getInputStream()) {
+			this.candidateImage = this.fileService.uploadTemporalFile(inputStream);
+		} catch (final IOException e) {
+			throw new FileUploadException(e);
 		}
 	}
 
@@ -74,6 +105,10 @@ public abstract class AbstractCandidateView extends AbstractView {
 
 	public void setTags(final List<String> tags) {
 		this.tags = tags;
+	}
+
+	public File getCandidateImage() {
+		return candidateImage;
 	}
 
 	public void setCandidateService(final CandidateService candidateService) {

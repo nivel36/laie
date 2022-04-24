@@ -30,9 +30,12 @@ public class AddCandidateView extends AbstractCandidateView {
 
 	public String save() {
 		logger.debug("Create new candidate action performed");
-		this.candidate.setTags(this.tags.stream().map(Tag::new).collect(Collectors.toSet()));
+		if (this.tags != null) {
+			this.candidate.setTags(this.tags.stream().map(Tag::new).collect(Collectors.toSet()));
+		}
 		this.candidate.setOwner(sessionUser.get());
 		this.candidateService.addCandidate(candidate);
+		this.saveImage();
 		return this.candidateUrl();
 	}
 }

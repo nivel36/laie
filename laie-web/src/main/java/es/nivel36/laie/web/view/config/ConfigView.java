@@ -4,7 +4,6 @@ import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UncheckedIOException;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -76,7 +75,7 @@ public class ConfigView extends AbstractView {
 			this.userImage = this.fileService.uploadTemporalFile(inputStream);
 		} catch (final IOException e) {
 			this.imageChanged = false;
-			throw new UncheckedIOException(e);
+			throw new FileUploadException(e);
 		}
 	}
 

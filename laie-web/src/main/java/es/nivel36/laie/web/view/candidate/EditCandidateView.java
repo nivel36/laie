@@ -28,6 +28,7 @@ public class EditCandidateView extends AbstractCandidateView {
 		}
 		logger.trace("Candidate {} edit init", this.candidate);
 		this.initTags();
+		this.candidateImage = this.candidate.getPicture();
 	}
 
 	private void initTags() {
@@ -40,7 +41,10 @@ public class EditCandidateView extends AbstractCandidateView {
 
 	public String save() {
 		logger.debug("Save candidate action performed");
-		this.candidate.setTags(this.tags.stream().map(Tag::new).collect(Collectors.toSet()));
+		if (this.tags != null) {
+			this.candidate.setTags(this.tags.stream().map(Tag::new).collect(Collectors.toSet()));
+		}
+		this.saveImage();
 		this.candidate = this.candidateService.updateCandidate(this.candidate);
 		return this.candidateUrl();
 	}
