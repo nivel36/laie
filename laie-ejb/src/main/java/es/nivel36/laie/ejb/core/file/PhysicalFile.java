@@ -3,9 +3,12 @@ package es.nivel36.laie.ejb.core.file;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
 import es.nivel36.laie.ejb.core.model.AbstractEntity;
@@ -31,6 +34,9 @@ public class PhysicalFile extends AbstractEntity {
 	@Column(nullable = false)
 	private LocalDateTime created;
 
+	@OneToMany(fetch = FetchType.LAZY)
+	private Set<File> files;
+
 	@NotNull
 	@Column(nullable = false)
 	private String relativePath;
@@ -53,6 +59,10 @@ public class PhysicalFile extends AbstractEntity {
 
 	public LocalDateTime getCreated() {
 		return this.created;
+	}
+
+	public Set<File> getFiles() {
+		return files;
 	}
 
 	public String getRelativePath() {
@@ -83,6 +93,10 @@ public class PhysicalFile extends AbstractEntity {
 		this.created = created;
 	}
 
+	public void setFiles(Set<File> files) {
+		this.files = files;
+	}
+
 	public void setRelativePath(final Path relativePath) {
 		this.relativePath = relativePath.toString();
 	}
@@ -94,7 +108,7 @@ public class PhysicalFile extends AbstractEntity {
 	public void setUId(final String uId) {
 		this.uId = uId;
 	}
-	
+
 	@Override
 	public boolean equals(final Object obj) {
 		if (obj == null) {
@@ -109,12 +123,12 @@ public class PhysicalFile extends AbstractEntity {
 		final PhysicalFile other = (PhysicalFile) obj;
 		return Objects.equals(this.uId, other.uId);
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(this.uId);
 	}
-	
+
 	@Override
 	public String toString() {
 		return uId;

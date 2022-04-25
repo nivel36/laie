@@ -83,7 +83,7 @@
 	
 	<named-query name="File.isOrphanPhysicalFile">
 		<query><![CDATA[
-			SELECT CASE WHEN (COUNT(f) > 0) THEN TRUE ELSE FALSE END 
+			SELECT CASE WHEN (COUNT(f) > 0) THEN FALSE ELSE TRUE END 
 			FROM File f 
 			WHERE f.physicalFile = :physicalFile
 		]]></query>

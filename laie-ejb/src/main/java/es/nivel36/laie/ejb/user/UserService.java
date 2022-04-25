@@ -129,7 +129,7 @@ public class UserService {
 		}
 	}
 
-	public void changeUsersImage(final User user, final InputStream image) {
+	public User changeUsersImage(final User user, final InputStream image) {
 		Objects.requireNonNull(user);
 		Objects.requireNonNull(image);
 		logger.debug("Change image to user {}", user);
@@ -142,7 +142,7 @@ public class UserService {
 			this.fileService.removeFile(oldImage);
 		}
 		user.setPicture(file);
-		userDao.update(user);
+		return userDao.update(user);
 	}
 
 	public void changePassword(final String email, final String oldPassword, final String newPassword) {

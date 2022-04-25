@@ -55,7 +55,11 @@ public abstract class AbstractCandidateView extends AbstractView {
 	}
 
 	protected void saveImage() {
-		if (!this.imageChanged || this.candidateImage == null) {
+		if (!this.imageChanged) {
+			return;
+		}
+		if (this.imageChanged && this.candidateImage == null) {
+			this.candidate.setPicture(null);
 			return;
 		}
 		logger.trace("Changing user image");

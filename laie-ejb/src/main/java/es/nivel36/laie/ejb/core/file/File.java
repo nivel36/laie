@@ -21,15 +21,15 @@ public class File extends AbstractEntity {
 	@NotNull
 	@Column(nullable = false)
 	private LocalDateTime created;
-	
+
 	private String description;
 
 	@NotNull
 	@Column(nullable = false)
 	private String name;
 
-	@ManyToOne(cascade = { CascadeType.PERSIST}, fetch = FetchType.EAGER, optional = false)
-	@JoinColumn(name = "physicalFileId")
+	@ManyToOne(cascade = { CascadeType.PERSIST }, fetch = FetchType.EAGER, optional = false)
+	@JoinColumn(name = "physicalFileId", nullable = false, updatable = false)
 	private PhysicalFile physicalFile;
 
 	private boolean publicAccess;
@@ -73,9 +73,9 @@ public class File extends AbstractEntity {
 	public void setPublicAccess(final boolean publicAccess) {
 		this.publicAccess = publicAccess;
 	}
-	
+
 	public String getPath() {
-		if(physicalFile == null) {
+		if (physicalFile == null) {
 			return null;
 		}
 		return physicalFile.getRelativePath();
@@ -93,7 +93,7 @@ public class File extends AbstractEntity {
 		return Objects.equals(created, other.created) && Objects.equals(name, other.name)
 				&& publicAccess == other.publicAccess;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(created, name, publicAccess);

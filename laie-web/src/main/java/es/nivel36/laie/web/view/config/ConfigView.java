@@ -117,8 +117,8 @@ public class ConfigView extends AbstractView {
 	public void save() {
 		logger.debug("Save user {} action performed", this.user);
 		try {
-			this.userService.updateUser(user);
 			this.saveImage();
+			this.userService.updateUser(user);
 			this.refreshUser();
 			this.addMessage(FacesMessage.SEVERITY_INFO, "action.save_action_performed", "action.save_action_performed");
 		} catch (final DuplicateEmailException e) {
@@ -129,14 +129,19 @@ public class ConfigView extends AbstractView {
 	}
 
 	private void saveImage() {
-		if (this.imageChanged) {
-			logger.trace("Changing user image");
-			try (final InputStream is = this.fileService.downloadFile(userImage);
-					final BufferedInputStream bis = new BufferedInputStream(is)) {
-				this.userService.changeUsersImage(this.user, is);
-			} catch (final IOException e) {
-				throw new FileUploadException(e);
-			}
+		if (!this.imageChanged) {
+			return;
+		}
+		if (this.imageChanged && this.userImage == null) {
+			this.user.setPicture(null);
+			return;
+		}
+		logger.trace("Changing user image");
+		try (final InputStream is = this.fileService.downloadFile(userImage);
+				final BufferedInputStream bis = new BufferedInputStream(is)) {
+			this.user = this.userService.changeUsersImage(this.user, is);
+		} catch (final IOException e) {
+			throw new FileUploadException(e);
 		}
 	}
 
