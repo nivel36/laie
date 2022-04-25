@@ -12,4 +12,5 @@ buildNumber.properties
 .settings
 .tern-project
 *.pageflow
+.sass-cache
 /build/

@@ -16,27 +16,6 @@
 
 	<ui:param name="selectedMenu" value="candidates" />
 
-	<ui:define name="breadcrumb">
-		<p:breadCrumb>
-			<p:menuitem value="#{i18n['menu.index']}" outcome="/index.xhtml" />
-			<p:menuitem value="#{i18n['candidate.candidates']}"
-				outcome="/candidate/search.xhtml" />
-			<p:menuitem value="#{curriculumView.candidate.fullName}"
-				outcome="/candidate/view.xhtml">
-				<f:param name="id" value="#{curriculumView.candidate.id}" />
-			</p:menuitem>
-			<p:menuitem value="#{i18n['curriculum.curriculum']}" disabled="true" />
-		</p:breadCrumb>
-	</ui:define>
-
-	<ui:define name="buttons">
-		<p:button value="#{i18n['action.back']}"
-			outcome="/candidate/view.xhtml"
-			styleClass="ui-button-info ui-button-outlined">
-			<f:param name="id" value="#{curriculumView.candidate.id}" />
-		</p:button>
-	</ui:define>
-
 	<ui:define name="content">
 		<h:form id="form">
 			<div class="p-grid">
@@ -76,7 +55,7 @@
 						<h:panelGroup layout="block" styleClass="data skype"
 							rendered="#{not empty curriculumView.candidate.skype}">
 							<div class="icon">
-								<em class="fa fa-skype"></em>
+								<em class="pi pi-skype"></em>
 							</div>
 							<div class="text">#{curriculumView.candidate.skype}</div>
 						</h:panelGroup>
@@ -84,7 +63,7 @@
 						<h:panelGroup layout="block" styleClass="data linkedin"
 							rendered="#{not empty curriculumView.candidate.linkedinProfileUrl}">
 							<div class="icon">
-								<em class="fa fa-linkedin"></em>
+								<em class="pi pi-linkedin"></em>
 							</div>
 							<div class="text">
 								<a href="#{curriculumView.candidate.linkedinProfileUrl}"
@@ -93,10 +72,10 @@
 						</h:panelGroup>
 						<div class="card">
 							<h:panelGroup id="jobExperiences" layout="block">
-								<h5>#{i18n['curriculum.job_experiences']}</h5>
+								<h3>#{i18n['curriculum.job_experiences']}</h3>
 								<div class="buttons header-buttons">
 									<p:commandButton action="#{curriculumView.newJobExperience}"
-										process="@this" icon="fa fa-plus"
+										process="@this" icon="pi pi-plus"
 										styleClass="ui-button-success ui-button-outlined" />
 								</div>
 
@@ -144,7 +123,7 @@
 										<div class="buttons">
 											<p:commandButton
 												action="#{curriculumView.editJobExperience(jobExperience)}"
-												process="@this" icon="fa fa-pencil"
+												process="@this" icon="pi pi-pencil"
 												styleClass="ui-button-secondary ui-button-outlined" />
 										</div>
 									</div>
@@ -152,10 +131,10 @@
 							</h:panelGroup>
 
 							<h:panelGroup id="educations" layout="block">
-								<h5>#{i18n['curriculum.education']}</h5>
+								<h3>#{i18n['curriculum.education']}</h3>
 								<div class="buttons header-buttons">
 									<p:commandButton action="#{curriculumView.newEducation}"
-										process="@this" icon="fa fa-plus"
+										process="@this" icon="pi pi-plus"
 										styleClass="ui-button-success ui-button-outlined" />
 								</div>
 
@@ -180,7 +159,7 @@
 										<div class="buttons">
 											<p:commandButton
 												action="#{curriculumView.editEducation(education)}"
-												process="@this" icon="fa fa-pencil"
+												process="@this" icon="pi pi-pencil"
 												styleClass="ui-button-secondary ui-button-outlined" />
 										</div>
 									</div>
@@ -188,7 +167,7 @@
 							</h:panelGroup>
 
 							<h:panelGroup id="languages" layout="block">
-								<h5>#{i18n['curriculum.languages']}</h5>
+								<h3>#{i18n['curriculum.languages']}</h3>
 								<div class="section">
 									<ui:repeat value="#{curriculumView.languages}" var="language"
 										id="language">
@@ -199,14 +178,14 @@
 									</ui:repeat>
 									<div class="buttons">
 										<p:commandButton action="#{curriculumView.editLanguages}"
-											process="@this" icon="fa fa-pencil"
+											process="@this" icon="pi pi-pencil"
 											styleClass="ui-button-secondary ui-button-outlined" />
 									</div>
 								</div>
 							</h:panelGroup>
 
 							<h:panelGroup id="skills" layout="block">
-								<h5>#{i18n['curriculum.skills']}</h5>
+								<h3>#{i18n['curriculum.skills']}</h3>
 								<div class="section">
 									<ui:repeat var="skill"
 										value="#{curriculumView.curriculum.skills}">
@@ -214,7 +193,7 @@
 									</ui:repeat>
 									<div class="buttons">
 										<p:commandButton action="#{curriculumView.editSkills}"
-											process="@this" icon="fa fa-pencil"
+											process="@this" icon="pi pi-pencil"
 											styleClass="ui-button-secondary ui-button-outlined" />
 									</div>
 								</div>
