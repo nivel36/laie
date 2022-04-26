@@ -69,7 +69,7 @@ public class Candidate extends AbstractEntity implements Ownerable {
 	private String infojobsProfileUrl;
 
 	@OneToMany(mappedBy = "candidate", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
-	private List<JobCandidature> jobCandidatures;
+	private Set<JobCandidature> jobCandidatures = new HashSet<>();
 
 	@NotNull
 	@Column(nullable = false)
@@ -166,7 +166,7 @@ public class Candidate extends AbstractEntity implements Ownerable {
 		return this.infojobsProfileUrl;
 	}
 
-	public List<JobCandidature> getJobCandidatures() {
+	public Set<JobCandidature> getJobCandidatures() {
 		return this.jobCandidatures;
 	}
 
@@ -218,7 +218,7 @@ public class Candidate extends AbstractEntity implements Ownerable {
 	public Set<Tag> getTags() {
 		return this.tags;
 	}
-	
+
 	public void removeFile(File file) {
 		Objects.requireNonNull(file);
 		if (files == null) {
@@ -255,11 +255,7 @@ public class Candidate extends AbstractEntity implements Ownerable {
 		this.infojobsProfileUrl = infojobsProfileUrl;
 	}
 
-	public void setJobCandidature(final List<JobCandidature> jobCandidatures) {
-		this.jobCandidatures = jobCandidatures;
-	}
-
-	public void setJobCandidatures(List<JobCandidature> jobCandidatures) {
+	public void setJobCandidature(final Set<JobCandidature> jobCandidatures) {
 		this.jobCandidatures = jobCandidatures;
 	}
 
@@ -319,10 +315,10 @@ public class Candidate extends AbstractEntity implements Ownerable {
 	public void setTags(final Set<Tag> tags) {
 		this.tags = tags;
 	}
-	
+
 	@Override
 	public boolean equals(final Object obj) {
-		if(obj == null) {
+		if (obj == null) {
 			return false;
 		}
 		if (this == obj) {
@@ -334,7 +330,7 @@ public class Candidate extends AbstractEntity implements Ownerable {
 		final Candidate other = (Candidate) obj;
 		return Objects.equals(other.email, this.email);
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return 31 * Objects.hash(this.email);

@@ -23,6 +23,7 @@ import es.nivel36.laie.ejb.core.model.search.SortField;
 import es.nivel36.laie.ejb.core.tag.Tag;
 import es.nivel36.laie.ejb.core.tag.TagDao;
 import es.nivel36.laie.ejb.job.offer.JobOffer;
+import es.nivel36.laie.ejb.user.DuplicateEmailException;
 import es.nivel36.laie.ejb.user.UserDao;
 
 @Stateless
@@ -49,8 +50,12 @@ public class CandidateService {
 	@Repository
 	private UserDao userDao;
 
-	public void addCandidate(final Candidate candidate) {
+	public void addCandidate(final Candidate candidate) throws DuplicateEmailException {
 		Objects.requireNonNull(candidate);
+		final String email = candidate.getEmail();
+		if (this.candidateDao.checkDuplicateEmail(email)) {
+			throw new DuplicateEmailException();
+		}
 		logger.debug("Add candidate {}", candidate);
 		this.normalizeTags(candidate);
 		this.candidateDao.insert(candidate);
@@ -70,9 +75,17 @@ public class CandidateService {
 		candidate.setTags(normalizedTags);
 	}
 
-	public Candidate updateCandidate(final Candidate candidate) {
+	public Candidate updateCandidate(final Candidate candidate) throws DuplicateEmailException {
 		Objects.requireNonNull(candidate);
 		logger.debug("Update candidate {}", candidate);
+
+		final Candidate candidateInDatabase = this.candidateDao.find(Candidate.class, candidate.getId());
+		final String email = candidate.getEmail();
+		if (!candidateInDatabase.getEmail().equals(email)) {
+			if (this.candidateDao.checkDuplicateEmail(email)) {
+				throw new DuplicateEmailException();
+			}
+		}
 		this.normalizeTags(candidate);
 		return this.candidateDao.update(candidate);
 	}

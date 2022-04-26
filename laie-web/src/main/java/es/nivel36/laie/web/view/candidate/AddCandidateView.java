@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import es.nivel36.laie.ejb.candidate.Candidate;
 import es.nivel36.laie.ejb.core.tag.Tag;
+import es.nivel36.laie.ejb.user.DuplicateEmailException;
 
 @Named
 @ViewScoped
@@ -30,12 +31,16 @@ public class AddCandidateView extends AbstractCandidateView {
 
 	public String save() {
 		logger.debug("Create new candidate action performed");
-		if (this.tags != null) {
-			this.candidate.setTags(this.tags.stream().map(Tag::new).collect(Collectors.toSet()));
+		try {
+			if (this.tags != null) {
+				this.candidate.setTags(this.tags.stream().map(Tag::new).collect(Collectors.toSet()));
+			}
+			this.candidate.setOwner(sessionUser.get());
+			this.candidateService.addCandidate(candidate);
+			this.saveImage();
+		} catch (DuplicateEmailException e) {
+			this.addErrorToField("candidateForm:email", "candidate.error.email_exists");
 		}
-		this.candidate.setOwner(sessionUser.get());
-		this.candidateService.addCandidate(candidate);
-		this.saveImage();
 		return this.candidateUrl();
 	}
 }

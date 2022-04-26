@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import es.nivel36.laie.ejb.core.tag.Tag;
+import es.nivel36.laie.ejb.user.DuplicateEmailException;
 import es.nivel36.laie.web.core.IllegalPageStateException;
 
 @Named
@@ -41,11 +42,16 @@ public class EditCandidateView extends AbstractCandidateView {
 
 	public String save() {
 		logger.debug("Save candidate action performed");
-		if (this.tags != null) {
-			this.candidate.setTags(this.tags.stream().map(Tag::new).collect(Collectors.toSet()));
+		try {
+			if (this.tags != null) {
+				this.candidate.setTags(this.tags.stream().map(Tag::new).collect(Collectors.toSet()));
+			}
+			this.saveImage();
+			this.candidate = this.candidateService.updateCandidate(this.candidate);
+
+		} catch (DuplicateEmailException e) {
+			this.addErrorToField("candidateForm:email", "candidate.error.email_exists");
 		}
-		this.saveImage();
-		this.candidate = this.candidateService.updateCandidate(this.candidate);
 		return this.candidateUrl();
 	}
 }
