@@ -41,15 +41,45 @@ public class CurriculumView extends AbstractView {
 
 	private List<Skill> skills;
 
+	private boolean editSkills;
+
 	@Inject
-	private CurriculumService cuirriculumService;
+	private CurriculumService curriculumService;
+
+	public void editSkill() {
+		this.editSkills = true;
+	}
+
+	public Candidate getCandidate() {
+		return this.candidate;
+	}
+
+	public Curriculum getCurriculum() {
+		return this.curriculum;
+	}
+
+	public List<Education> getEducation() {
+		return this.education;
+	}
+
+	public List<JobExperience> getJobExperiences() {
+		return this.jobExperiences;
+	}
+
+	public List<Language> getLanguages() {
+		return this.languages;
+	}
+
+	public List<Skill> getSkills() {
+		return this.skills;
+	}
 
 	@PostConstruct
 	public void init() {
 		if (this.candidate == null) {
 			throw new IllegalPageStateException();
 		}
-		this.curriculum = this.cuirriculumService.findCandidatesCurriculum(candidate);
+		this.curriculum = this.curriculumService.findCandidatesCurriculum(candidate);
 		if (this.curriculum == null) {
 			this.curriculum = new Curriculum();
 		}
@@ -75,27 +105,13 @@ public class CurriculumView extends AbstractView {
 		Collections.sort(skills);
 	}
 
-	public Candidate getCandidate() {
-		return this.candidate;
+	public boolean isEditSkills() {
+		return editSkills;
 	}
 
-	public Curriculum getCurriculum() {
-		return this.curriculum;
-	}
-
-	public List<Education> getEducation() {
-		return this.education;
-	}
-
-	public List<JobExperience> getJobExperiences() {
-		return this.jobExperiences;
-	}
-
-	public List<Language> getLanguages() {
-		return this.languages;
-	}
-
-	public List<Skill> getSkills() {
-		return this.skills;
+	public void save() {
+		this.editSkills = false;
+		this.curriculum.setSkills(skills);
+		curriculumService.updateCurriculum(curriculum);
 	}
 }

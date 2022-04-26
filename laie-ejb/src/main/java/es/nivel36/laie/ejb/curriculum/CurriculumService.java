@@ -1,8 +1,10 @@
 package es.nivel36.laie.ejb.curriculum;
 
 import java.io.File;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -34,19 +36,29 @@ public class CurriculumService {
 
 	public void addCurriculum(Curriculum curriculum) {
 		Objects.requireNonNull(curriculum);
-		for (final Skill skill : curriculum.getSkills()) {
-			Skill skillInDatabase = this.curriculumDao.findSkill(skill.getName());
-			if (skill != null) {
-				curriculum.removeSkill(skill);
-				curriculum.addSkill(skillInDatabase);
-			}
-		}
+		normalizeSkills(curriculum);
 		this.curriculumDao.insert(curriculum);
 	}
 
-	public void updateCurriculum(final Curriculum curriculum) {
+	public Curriculum updateCurriculum(final Curriculum curriculum) {
 		Objects.requireNonNull(curriculum);
-		this.curriculumDao.update(curriculum);
+		normalizeSkills(curriculum);
+		return this.curriculumDao.update(curriculum);
+	}
+
+	private void normalizeSkills(final Curriculum curriculum) {
+		final Set<Skill> skills = curriculum.getSkills();
+		final Set<Skill> normlizedSkill = new HashSet<>(skills.size());
+		for (final Skill skill : skills) {
+			final Skill skillInDatabase = this.curriculumDao.findSkill(skill.getName());
+			if (skillInDatabase != null) {
+				normlizedSkill.add(skillInDatabase);
+			}
+			else {
+				normlizedSkill.add(skill);
+			}
+		}
+		curriculum.setSkills(normlizedSkill);
 	}
 
 	public List<CurriculumTemplate> findCurriculumTemplates() {

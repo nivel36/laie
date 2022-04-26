@@ -170,15 +170,23 @@
 
 							<h:panelGroup id="skills" layout="block">
 								<h3>#{i18n['curriculum.skills']}</h3>
-								<h:panelGroup layout="block" styleClass="section">
+								<h:panelGroup layout="block" styleClass="section" rendered="#{not curriculumView.editSkills}">
 									<ui:repeat var="skill"
 										value="#{curriculumView.curriculum.skills}">
 										<p:tag value="#{skill}" styleClass="p-mr-2" />
 									</ui:repeat>
 
 									<div class="buttons">
-										<p:commandButton action="#{curriculumView.editSkills}"
-											process="@this" icon="pi pi-pencil"
+										<p:commandButton action="#{curriculumView.editSkill}"
+											process="@this" update="@form" icon="pi pi-pencil"
+											styleClass="ui-button-secondary ui-button-outlined" />
+									</div>
+								</h:panelGroup>
+								<h:panelGroup id="editSkill" layout="block" styleClass="section" rendered="#{curriculumView.editSkills}">
+									<p:chips value="#{curriculumView.skills}"/>
+									<div class="buttons">
+										<p:commandButton action="#{curriculumView.save}"
+											process="@this" icon="pi pi-save" update="skills"
 											styleClass="ui-button-secondary ui-button-outlined" />
 									</div>
 								</h:panelGroup>
