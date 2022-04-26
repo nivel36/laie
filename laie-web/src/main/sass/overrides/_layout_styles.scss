@@ -47,6 +47,17 @@
 	.card {
 		.header-buttons {
 			float: right;
+			margin-top: -3em;
+		}
+		.section {
+			margin-right: 5em;
+			position: relative;
+			margin-bottom: 2em;
+			.buttons {
+				position:absolute;
+				right: -5em;
+				bottom: 0px;
+			}
 		}
 	}
 }
@@ -217,6 +228,23 @@
 		.client-detail {
 			padding: 0 2.5em 2em 2.5em;
 		}
+	}
+}
+
+.linkedin {
+	margin-right: 1rem;
+	i {
+		margin-right: 0.3rem;
+	}
+	a {
+		color: $primaryTextColor;
+	}
+}
+
+.skype {
+	margin-right: 1rem;
+	i {
+		margin-right: 0.3rem;
 	}
 }
 

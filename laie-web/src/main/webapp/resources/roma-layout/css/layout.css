@@ -3072,7 +3072,16 @@ a {
     right: 1rem; }
 
 .curriculum .card .header-buttons {
-  float: right; }
+  float: right;
+  margin-top: -3em; }
+.curriculum .card .section {
+  margin-right: 5em;
+  position: relative;
+  margin-bottom: 2em; }
+  .curriculum .card .section .buttons {
+    position: absolute;
+    right: -5em;
+    bottom: 0px; }
 
 .layout-wrapper .layout-topbar {
   height: 4rem; }
@@ -3191,6 +3200,18 @@ a {
     white-space: nowrap; }
   .card.client-card .client-card-content .client-detail {
     padding: 0 2.5em 2em 2.5em; }
+
+.linkedin {
+  margin-right: 1rem; }
+  .linkedin i {
+    margin-right: 0.3rem; }
+  .linkedin a {
+    color: #ffffff; }
+
+.skype {
+  margin-right: 1rem; }
+  .skype i {
+    margin-right: 0.3rem; }
 
 .phone {
   margin-right: 1rem; }
