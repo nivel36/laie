@@ -7,6 +7,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
+import org.omnifaces.util.Faces;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,7 +30,7 @@ public class AddCandidateView extends AbstractCandidateView {
 		this.setTags(new ArrayList<>());
 	}
 
-	public String save() {
+	public void save() {
 		logger.debug("Create new candidate action performed");
 		try {
 			if (this.tags != null) {
@@ -38,9 +39,9 @@ public class AddCandidateView extends AbstractCandidateView {
 			this.candidate.setOwner(sessionUser.get());
 			this.candidateService.addCandidate(candidate);
 			this.saveImage();
+			Faces.redirect(this.candidateUrl());
 		} catch (DuplicateEmailException e) {
 			this.addErrorToField("candidateForm:email", "candidate.error.email_exists");
 		}
-		return this.candidateUrl();
 	}
 }

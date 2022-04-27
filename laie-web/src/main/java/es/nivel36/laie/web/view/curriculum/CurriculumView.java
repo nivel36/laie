@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -39,7 +41,7 @@ public class CurriculumView extends AbstractView {
 
 	private List<Language> languages;
 
-	private List<Skill> skills;
+	private List<String> skills;
 
 	private boolean editSkills;
 
@@ -70,7 +72,7 @@ public class CurriculumView extends AbstractView {
 		return this.languages;
 	}
 
-	public List<Skill> getSkills() {
+	public List<String> getSkills() {
 		return this.skills;
 	}
 
@@ -82,9 +84,14 @@ public class CurriculumView extends AbstractView {
 		this.curriculum = this.curriculumService.findCandidatesCurriculum(candidate);
 		if (this.curriculum == null) {
 			this.curriculum = new Curriculum();
+			this.curriculum.setCandidate(this.candidate);
 		}
 		if (this.curriculum.getSkills() == null) {
 			this.curriculum.setSkills(new HashSet<Skill>());
+			this.skills = new ArrayList<String>();
+		} else {
+			this.skills = mapSkillsToString();
+			Collections.sort(skills);
 		}
 		if (this.curriculum.getEducation() == null) {
 			this.curriculum.setEducation(new HashSet<Education>());
@@ -98,20 +105,34 @@ public class CurriculumView extends AbstractView {
 		this.education = new ArrayList<>(this.curriculum.getEducation());
 		this.jobExperiences = new ArrayList<>(this.curriculum.getJobExperiences());
 		this.languages = new ArrayList<>(this.curriculum.getLanguages());
-		this.skills = new ArrayList<Skill>(this.curriculum.getSkills());
 		Collections.sort(jobExperiences);
 		Collections.sort(education);
 		Collections.sort(languages);
-		Collections.sort(skills);
 	}
 
 	public boolean isEditSkills() {
 		return editSkills;
 	}
 
+	private List<String> mapSkillsToString() {
+		final Set<Skill> skills = this.getCurriculum().getSkills();
+		if (skills == null) {
+			return new ArrayList<>();
+		}
+		return skills.stream().map(Skill::getName).collect(Collectors.toList());
+	}
+
+	private Set<Skill> mapStringToSkills() {
+		return skills.stream().map(Skill::new).collect(Collectors.toSet());
+	}
+
 	public void save() {
 		this.editSkills = false;
-		this.curriculum.setSkills(skills);
+		this.curriculum.setSkills(mapStringToSkills());
 		curriculumService.updateCurriculum(curriculum);
+	}
+
+	public void setSkills(List<String> skills) {
+		this.skills = skills;
 	}
 }

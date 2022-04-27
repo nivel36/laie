@@ -7,6 +7,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
+import org.omnifaces.util.Faces;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,7 +41,7 @@ public class EditCandidateView extends AbstractCandidateView {
 		}
 	}
 
-	public String save() {
+	public void save() {
 		logger.debug("Save candidate action performed");
 		try {
 			if (this.tags != null) {
@@ -48,10 +49,9 @@ public class EditCandidateView extends AbstractCandidateView {
 			}
 			this.saveImage();
 			this.candidate = this.candidateService.updateCandidate(this.candidate);
-
+			Faces.redirect(this.candidateUrl());
 		} catch (DuplicateEmailException e) {
 			this.addErrorToField("candidateForm:email", "candidate.error.email_exists");
 		}
-		return this.candidateUrl();
 	}
 }

@@ -22,8 +22,7 @@ public class CurriculumDao extends AbstractDao {
 	public Curriculum findByCandidate(final Candidate candidate) {
 		Objects.requireNonNull(candidate);
 		try {
-			return this.findByQuery(Curriculum.class, "Curriculum.findByCandidate",
-					map("candidate", candidate));
+			return this.findByQuery(Curriculum.class, "Curriculum.findByCandidate", map("candidate", candidate));
 		} catch (final NoResultException e) {
 			return null;
 		}
@@ -31,7 +30,11 @@ public class CurriculumDao extends AbstractDao {
 
 	public Skill findSkill(final String name) {
 		Objects.requireNonNull(name);
-		return this.findByQuery(Skill.class, "Curriculum.Skill.findByName", map("name", name));
+		try {
+			return this.findByQuery(Skill.class, "Curriculum.Skill.findByName", map("name", name));
+		} catch (final NoResultException e) {
+			return null;
+		}
 	}
 
 	public List<CurriculumTemplate> findCurriculumTemplates() {

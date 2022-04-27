@@ -183,10 +183,10 @@
 									</div>
 								</h:panelGroup>
 								<h:panelGroup id="editSkill" layout="block" styleClass="section" rendered="#{curriculumView.editSkills}">
-									<p:chips value="#{curriculumView.skills}"/>
+									<p:chips id="skill" value="#{curriculumView.skills}"/>
 									<div class="buttons">
 										<p:commandButton action="#{curriculumView.save}"
-											process="@this" icon="pi pi-save" update="skills"
+											process="skill @this" icon="pi pi-save" update="skills"
 											styleClass="ui-button-secondary ui-button-outlined" />
 									</div>
 								</h:panelGroup>

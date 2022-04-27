@@ -92,7 +92,7 @@ public abstract class AbstractCandidateView extends AbstractView {
 	}
 
 	protected String candidateUrl() {
-		return "/candidate/view?faces-redirect=true&candidate=" + this.candidate.getId();
+		return "/candidate/view.xhtml?faces-redirect=true&candidate=" + this.candidate.getId();
 	}
 
 	public Candidate getCandidate() {
