@@ -3071,17 +3071,56 @@ a {
     top: 1rem;
     right: 1rem; }
 
-.curriculum .card .header-buttons {
-  float: right;
-  margin-top: -3em; }
-.curriculum .card .section {
-  margin-right: 5em;
-  position: relative;
-  margin-bottom: 2em; }
-  .curriculum .card .section .buttons {
-    position: absolute;
-    right: -5em;
-    bottom: 0px; }
+.curriculum {
+  display: flex;
+  flex-direction: column;
+  padding: 2em; }
+  .curriculum .header-buttons {
+    justify-content: flex-end;
+    display: flex;
+    margin-top: -3em; }
+  .curriculum .curriculum-section {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1em; }
+  .curriculum .curriculum-subsection {
+    display: flex;
+    flex-direction: column;
+    margin-top: 1em; }
+    .curriculum .curriculum-subsection .jobExperience-section {
+      display: flex;
+      flex-direction: column;
+      border-bottom: 1px solid #ebedef;
+      margin-bottom: 1em;
+      padding-bottom: 1em; }
+      .curriculum .curriculum-subsection .jobExperience-section:last-child {
+        border-bottom: 0;
+        margin-bottom: inherit; }
+    .curriculum .curriculum-subsection .education-section {
+      display: flex;
+      flex-direction: column;
+      border-bottom: 1px solid #ebedef;
+      margin-bottom: 1em;
+      padding-bottom: 1em; }
+      .curriculum .curriculum-subsection .education-section:last-child {
+        border-bottom: 0;
+        margin-bottom: inherit; }
+    .curriculum .curriculum-subsection .language-section {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid #ebedef;
+      margin-bottom: 1em;
+      padding-bottom: 1em; }
+      .curriculum .curriculum-subsection .language-section:last-child {
+        border-bottom: 0;
+        margin-bottom: inherit; }
+      .curriculum .curriculum-subsection .language-section .language-name {
+        font-size: 1.1em;
+        font-weight: 800;
+        padding-bottom: 0.2em; }
+    .curriculum .curriculum-subsection .skill-section {
+      display: flex;
+      justify-content: space-between; }
 
 .layout-wrapper .layout-topbar {
   height: 4rem; }
