@@ -3075,52 +3075,37 @@ a {
   display: flex;
   flex-direction: column;
   padding: 2em; }
-  .curriculum .header-buttons {
+  .curriculum .buttons {
     justify-content: flex-end;
     display: flex;
     margin-top: -3em; }
-  .curriculum .curriculum-section {
+  .curriculum .section {
     display: flex;
-    flex-direction: column;
-    margin-bottom: 1em; }
-  .curriculum .curriculum-subsection {
+    flex-direction: column; }
+    .curriculum .section.skills ul {
+      flex-direction: row; }
+      .curriculum .section.skills ul li {
+        display: flex;
+        border-bottom: 0px; }
+    .curriculum .section .text-content {
+      margin-right: 10em; }
+  .curriculum ul {
     display: flex;
     flex-direction: column;
     margin-top: 1em; }
-    .curriculum .curriculum-subsection .jobExperience-section {
+    .curriculum ul li {
       display: flex;
       flex-direction: column;
       border-bottom: 1px solid #ebedef;
       margin-bottom: 1em;
       padding-bottom: 1em; }
-      .curriculum .curriculum-subsection .jobExperience-section:last-child {
+      .curriculum ul li:last-child {
         border-bottom: 0;
         margin-bottom: inherit; }
-    .curriculum .curriculum-subsection .education-section {
-      display: flex;
-      flex-direction: column;
-      border-bottom: 1px solid #ebedef;
-      margin-bottom: 1em;
-      padding-bottom: 1em; }
-      .curriculum .curriculum-subsection .education-section:last-child {
-        border-bottom: 0;
-        margin-bottom: inherit; }
-    .curriculum .curriculum-subsection .language-section {
-      display: flex;
-      justify-content: space-between;
-      border-bottom: 1px solid #ebedef;
-      margin-bottom: 1em;
-      padding-bottom: 1em; }
-      .curriculum .curriculum-subsection .language-section:last-child {
-        border-bottom: 0;
-        margin-bottom: inherit; }
-      .curriculum .curriculum-subsection .language-section .language-name {
-        font-size: 1.1em;
-        font-weight: 800;
-        padding-bottom: 0.2em; }
-    .curriculum .curriculum-subsection .skill-section {
-      display: flex;
-      justify-content: space-between; }
+  .curriculum .language-name {
+    font-size: 1.1em;
+    font-weight: 800;
+    padding-bottom: 0.2em; }
 
 .layout-wrapper .layout-topbar {
   height: 4rem; }

@@ -48,21 +48,33 @@
 	flex-direction: column;
 	padding: 2em;
 	
-	.header-buttons {
+	.buttons {
 		justify-content: flex-end;
 		display: flex;
 		margin-top: -3em;
 	}
-	.curriculum-section {
+	
+	.section {
 		display:flex;
 		flex-direction: column;
-		margin-bottom: 1em;
+		&.skills {
+			ul {
+				flex-direction: row;
+				li {
+					display:flex;
+					border-bottom: 0px
+				}
+			}
+		}
+		.text-content {
+			margin-right: 10em;
+		}
 	}
-	.curriculum-subsection {
+	ul {
 		display:flex;
 		flex-direction: column;
 		margin-top: 1em;
-		.jobExperience-section {
+		li {
 			display:flex;
 			flex-direction: column;
 			border-bottom: 1px solid $dividerColor;
@@ -73,37 +85,12 @@
    				 margin-bottom: inherit;
 			}
 		}
-		.education-section {
-			display:flex;
-			flex-direction: column;
-			border-bottom: 1px solid $dividerColor;
-			margin-bottom: 1em;
-			padding-bottom: 1em;
-			 &:last-child {
-   				 border-bottom: 0;
-   				 margin-bottom: inherit;
-			}
-		}
-		.language-section {
-			display:flex;
-			justify-content: space-between;
-			border-bottom: 1px solid $dividerColor;
-			margin-bottom: 1em;
-			padding-bottom: 1em;
-			 &:last-child {
-   				 border-bottom: 0;
-   				 margin-bottom: inherit;
-			}
-			.language-name {
-				font-size: 1.1em;
-				font-weight: 800;			
-				padding-bottom: 0.2em;
-			}
-		}
-		.skill-section {
-			display: flex;
-			justify-content: space-between;
-		}
+	}
+		
+	.language-name {
+		font-size: 1.1em;
+		font-weight: 800;			
+		padding-bottom: 0.2em;
 	}
 }
 

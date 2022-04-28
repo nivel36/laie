@@ -20,6 +20,7 @@ import es.nivel36.laie.ejb.curriculum.CurriculumService;
 import es.nivel36.laie.ejb.curriculum.education.Education;
 import es.nivel36.laie.ejb.curriculum.jobexperience.JobExperience;
 import es.nivel36.laie.ejb.curriculum.language.Language;
+import es.nivel36.laie.ejb.curriculum.language.LanguageLevel;
 import es.nivel36.laie.ejb.curriculum.skill.Skill;
 import es.nivel36.laie.web.core.IllegalPageStateException;
 import es.nivel36.laie.web.core.view.AbstractView;
@@ -43,10 +44,23 @@ public class CurriculumView extends AbstractView {
 
 	private List<String> skills;
 
+	private List<String> languageLevels;
+
+	private Integer editLanguageIndex;
+
 	private boolean editSkills;
 
 	@Inject
 	private CurriculumService curriculumService;
+
+	public void deleteLanguage(final Language language) {
+		this.curriculum.getLanguages().remove(language);
+		this.curriculum = this.curriculumService.updateCurriculum(curriculum);
+	}
+
+	public void editLanguage(final int index) {
+		editLanguageIndex = Integer.valueOf(index);
+	}
 
 	public void editSkill() {
 		this.editSkills = true;
@@ -60,12 +74,20 @@ public class CurriculumView extends AbstractView {
 		return this.curriculum;
 	}
 
+	public Integer getEditLanguageIndex() {
+		return editLanguageIndex;
+	}
+
 	public List<Education> getEducation() {
 		return this.education;
 	}
 
 	public List<JobExperience> getJobExperiences() {
 		return this.jobExperiences;
+	}
+
+	public List<String> getLanguageLevels() {
+		return languageLevels;
 	}
 
 	public List<Language> getLanguages() {
@@ -88,7 +110,7 @@ public class CurriculumView extends AbstractView {
 		}
 		if (this.curriculum.getSkills() == null) {
 			this.curriculum.setSkills(new HashSet<Skill>());
-			this.skills = new ArrayList<String>();
+			this.skills = new ArrayList<>();
 		} else {
 			this.skills = mapSkillsToString();
 			Collections.sort(skills);
@@ -105,9 +127,17 @@ public class CurriculumView extends AbstractView {
 		this.education = new ArrayList<>(this.curriculum.getEducation());
 		this.jobExperiences = new ArrayList<>(this.curriculum.getJobExperiences());
 		this.languages = new ArrayList<>(this.curriculum.getLanguages());
+		this.languageLevels = new ArrayList<String>();
+		for (LanguageLevel languageLevel : LanguageLevel.values()) {
+			this.languageLevels.add(languageLevel.name());
+		}
 		Collections.sort(jobExperiences);
 		Collections.sort(education);
 		Collections.sort(languages);
+	}
+	
+	public void addLanguage() {
+		this.languages.add(new Language());
 	}
 
 	public boolean isEditSkills() {
@@ -126,13 +156,17 @@ public class CurriculumView extends AbstractView {
 		return skills.stream().map(Skill::new).collect(Collectors.toSet());
 	}
 
-	public void save() {
-		this.editSkills = false;
+	public void updateSkills() {
 		this.curriculum.setSkills(mapStringToSkills());
-		curriculumService.updateCurriculum(curriculum);
+		this.curriculumService.updateCurriculum(curriculum);
 	}
 
 	public void setSkills(List<String> skills) {
 		this.skills = skills;
+	}
+
+	public void updateLanguage(final Language language) {
+		this.curriculum = this.curriculumService.updateCurriculum(curriculum);
+		this.editLanguageIndex = null;
 	}
 }
