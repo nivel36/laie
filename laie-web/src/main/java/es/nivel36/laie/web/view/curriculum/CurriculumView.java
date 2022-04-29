@@ -47,58 +47,16 @@ public class CurriculumView extends AbstractView {
 	private List<String> languageLevels;
 
 	private Integer editLanguageIndex;
+	
+	private Integer editEducationIndex;
+	
+	private Integer editJobExperienceIndex;
 
 	private boolean editSkills;
 
 	@Inject
 	private CurriculumService curriculumService;
-
-	public void deleteLanguage(final Language language) {
-		this.languages.remove(language);
-		this.curriculum.getLanguages().remove(language);
-		this.curriculum = this.curriculumService.updateCurriculum(curriculum);
-	}
-
-	public void editLanguage(final int index) {
-		editLanguageIndex = Integer.valueOf(index);
-	}
-
-	public void editSkill() {
-		this.editSkills = true;
-	}
-
-	public Candidate getCandidate() {
-		return this.candidate;
-	}
-
-	public Curriculum getCurriculum() {
-		return this.curriculum;
-	}
-
-	public Integer getEditLanguageIndex() {
-		return editLanguageIndex;
-	}
-
-	public List<Education> getEducation() {
-		return this.education;
-	}
-
-	public List<JobExperience> getJobExperiences() {
-		return this.jobExperiences;
-	}
-
-	public List<String> getLanguageLevels() {
-		return languageLevels;
-	}
-
-	public List<Language> getLanguages() {
-		return this.languages;
-	}
-
-	public List<String> getSkills() {
-		return this.skills;
-	}
-
+	
 	@PostConstruct
 	public void init() {
 		if (this.candidate == null) {
@@ -136,16 +94,109 @@ public class CurriculumView extends AbstractView {
 		Collections.sort(education);
 		Collections.sort(languages);
 	}
+	
+	public Candidate getCandidate() {
+		return this.candidate;
+	}
 
+	public Curriculum getCurriculum() {
+		return this.curriculum;
+	}
+	
+	///////////////////////////////////////////////////////////////////////////
+	// JOB EXPERIENCES
+	///////////////////////////////////////////////////////////////////////////
+	
+	public void addJobExperience() {
+		this.jobExperiences.add(new JobExperience());
+		this.editJobExperienceIndex = this.jobExperiences.size()-1;
+	}
+	
+	public void editJobExperience(final int index) {
+		this.editJobExperienceIndex = Integer.valueOf(index);
+	}
+
+	public void deleteJobExperience(final JobExperience jobExperience) {
+		this.jobExperiences.remove(jobExperience);
+		this.curriculum.getJobExperiences().remove(jobExperience);
+		this.curriculum = this.curriculumService.updateCurriculum(curriculum);
+	}
+
+	public List<JobExperience> getJobExperiences() {
+		return this.jobExperiences;
+	}
+
+	public Integer getEditJobExperienceIndex() {
+		return editJobExperienceIndex;
+	}
+	
+	///////////////////////////////////////////////////////////////////////////
+	// EDUCATION
+	///////////////////////////////////////////////////////////////////////////
+	
+	public void addEducation() {
+		this.education.add(new Education());
+		this.editEducationIndex = this.education.size()-1;
+	}
+	
+	public void editEducation(final int index) {
+		this.editEducationIndex = Integer.valueOf(index);
+	}
+
+	public void deleteEducation(final Education education) {
+		this.education.remove(education);
+		this.curriculum.getEducation().remove(education);
+		this.curriculum = this.curriculumService.updateCurriculum(curriculum);
+	}
+	
+	public Integer getEditEducationIndex() {
+		return editEducationIndex;
+	}
+	
+	public List<Education> getEducation() {
+		return this.education;
+	}
+	
+	///////////////////////////////////////////////////////////////////////////
+	// LANGUAGE
+	///////////////////////////////////////////////////////////////////////////
+	
 	public void addLanguage() {
 		this.languages.add(new Language());
 		this.editLanguageIndex = this.languages.size()-1;
 	}
-
-	public boolean isEditSkills() {
-		return editSkills;
+	
+	public void editLanguage(final int index) {
+		this.editLanguageIndex = Integer.valueOf(index);
 	}
 
+	public void deleteLanguage(final Language language) {
+		this.languages.remove(language);
+		this.curriculum.getLanguages().remove(language);
+		this.curriculum = this.curriculumService.updateCurriculum(curriculum);
+	}
+	
+	public Integer getEditLanguageIndex() {
+		return editLanguageIndex;
+	}
+	
+	public List<String> getLanguageLevels() {
+		return languageLevels;
+	}
+
+	public List<Language> getLanguages() {
+		return this.languages;
+	}
+	
+	///////////////////////////////////////////////////////////////////////////
+	// SKILLS
+	///////////////////////////////////////////////////////////////////////////
+	
+	public void updateSkills() {
+		this.curriculum.setSkills(mapStringToSkills());
+		this.curriculumService.updateCurriculum(curriculum);
+	}
+	
 	private List<String> mapSkillsToString() {
 		final Set<Skill> skills = this.getCurriculum().getSkills();
 		if (skills == null) {
@@ -153,22 +204,24 @@ public class CurriculumView extends AbstractView {
 		}
 		return skills.stream().map(Skill::getName).collect(Collectors.toList());
 	}
-
+	
 	private Set<Skill> mapStringToSkills() {
 		return skills.stream().map(Skill::new).collect(Collectors.toSet());
 	}
 
-	public void updateSkills() {
-		this.curriculum.setSkills(mapStringToSkills());
-		this.curriculumService.updateCurriculum(curriculum);
+	public void editSkill() {
+		this.editSkills = true;
+	}
+	
+	public boolean isEditSkills() {
+		return editSkills;
+	}
+	
+	public List<String> getSkills() {
+		return this.skills;
 	}
 
 	public void setSkills(List<String> skills) {
 		this.skills = skills;
-	}
-
-	public void updateLanguage(final Language language) {
-		this.curriculum = this.curriculumService.updateCurriculum(curriculum);
-		this.editLanguageIndex = null;
 	}
 }
