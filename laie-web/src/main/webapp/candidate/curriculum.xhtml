@@ -116,12 +116,11 @@
 							<h:panelGroup id="languages" layout="block" styleClass="languages section">
 								<h3>#{i18n['curriculum.languages']}</h3>
 								<div class="buttons header-buttons">
-									<p:commandButton action="#{curriculumView.addLanguage}" process="@this" icon="pi pi-plus" styleClass="ui-button-success ui-button-outlined" />
+									<p:commandButton action="#{curriculumView.addLanguage}" process="form:languages" update="form:languages" icon="pi pi-plus" styleClass="ui-button-success ui-button-outlined" />
 								</div>
 								<ul>
 									<ui:repeat value="#{curriculumView.languages}" var="language" id="language" varStatus="status">
-										<li>
-											<h:panelGroup layout="block"
+										<li><h:panelGroup layout="block"
 												rendered="#{empty curriculumView.editLanguageIndex or !(curriculumView.editLanguageIndex eq status.index)}">
 												<div class="language">
 													<div class="language-name">#{language.name}</div>
@@ -131,8 +130,7 @@
 													<p:commandButton action="#{curriculumView.editLanguage(status.index)}" process="@this" update="form:languages" icon="pi pi-pencil"
 														styleClass="ui-button-secondary ui-button-outlined" />
 												</div>
-											</h:panelGroup> 
-											<h:panelGroup layout="block" rendered="#{curriculumView.editLanguageIndex eq status.index}">
+											</h:panelGroup> <h:panelGroup layout="block" rendered="#{curriculumView.editLanguageIndex eq status.index}">
 												<div class="p-grid p-formgrid">
 													<div class="p-col-12 p-sm-6">
 														<g:input id="laguage-name" value="#{language.name}" required="true" />
@@ -146,13 +144,14 @@
 													</div>
 												</div>
 												<div class="buttons">
-													<p:commandButton action="#{curriculumView.deleteLanguage(language)}" process="form:languages @this" icon="pi pi-trash" update="form:languages"
-														styleClass="ui-button-secondary ui-button-outlined" />
-													<p:commandButton action="#{curriculumView.updateLanguage(language)}" process="form:languages @this" icon="pi pi-save" update="form:languages"
-														styleClass="ui-button-secondary ui-button-outlined" />
+													<p:commandButton action="#{curriculumView.deleteLanguage(language)}" process="@this" icon="pi pi-trash" update="form:languages"
+														styleClass="ui-button-secondary ui-button-outlined">
+														<p:confirm message="#{i18n['language.message.remove']}" icon="pi pi-exclamation-triangle" />
+													</p:commandButton>
+													<p:commandButton action="#{curriculumView.updateLanguage(language)}" process="form:languages" icon="pi pi-save"
+														update="form:languages" styleClass="ui-button-secondary ui-button-outlined" />
 												</div>
-											</h:panelGroup>
-										</li>
+											</h:panelGroup></li>
 									</ui:repeat>
 								</ul>
 							</h:panelGroup>

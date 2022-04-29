@@ -54,6 +54,7 @@ public class CurriculumView extends AbstractView {
 	private CurriculumService curriculumService;
 
 	public void deleteLanguage(final Language language) {
+		this.languages.remove(language);
 		this.curriculum.getLanguages().remove(language);
 		this.curriculum = this.curriculumService.updateCurriculum(curriculum);
 	}
@@ -135,9 +136,10 @@ public class CurriculumView extends AbstractView {
 		Collections.sort(education);
 		Collections.sort(languages);
 	}
-	
+
 	public void addLanguage() {
 		this.languages.add(new Language());
+		this.editLanguageIndex = this.languages.size()-1;
 	}
 
 	public boolean isEditSkills() {
