@@ -1,5 +1,6 @@
 package es.nivel36.laie.web.view.curriculum;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -47,16 +48,18 @@ public class CurriculumView extends AbstractView {
 	private List<String> languageLevels;
 
 	private Integer editLanguageIndex;
-	
+
 	private Integer editEducationIndex;
-	
+
 	private Integer editJobExperienceIndex;
 
 	private boolean editSkills;
 
+	private List<Integer> years;
+
 	@Inject
 	private CurriculumService curriculumService;
-	
+
 	@PostConstruct
 	public void init() {
 		if (this.candidate == null) {
@@ -93,8 +96,18 @@ public class CurriculumView extends AbstractView {
 		Collections.sort(jobExperiences);
 		Collections.sort(education);
 		Collections.sort(languages);
+		initYears();
 	}
-	
+
+	private void initYears() {
+		this.years = new ArrayList<>();
+		final int endYear = LocalDateTime.now().getYear();
+		final int startYear = endYear - 50;
+		for (int i = startYear; i < endYear; i++) {
+			years.add(Integer.valueOf(i));
+		}
+	}
+
 	public Candidate getCandidate() {
 		return this.candidate;
 	}
@@ -102,24 +115,35 @@ public class CurriculumView extends AbstractView {
 	public Curriculum getCurriculum() {
 		return this.curriculum;
 	}
-	
+
+	public List<Integer> getYears() {
+		return this.years;
+	}
+
 	///////////////////////////////////////////////////////////////////////////
 	// JOB EXPERIENCES
 	///////////////////////////////////////////////////////////////////////////
-	
+
 	public void addJobExperience() {
-		this.jobExperiences.add(new JobExperience());
-		this.editJobExperienceIndex = this.jobExperiences.size()-1;
+		final JobExperience jobExperience = new JobExperience();
+		this.curriculum.addJobExperience(jobExperience);
+		this.jobExperiences.add(jobExperience);
+		this.editJobExperienceIndex = this.jobExperiences.size() - 1;
 	}
-	
-	public void editJobExperience(final int index) {
-		this.editJobExperienceIndex = Integer.valueOf(index);
+
+	public void updateJobExperience() {
+		this.curriculum = this.curriculumService.updateCurriculum(curriculum);
+		this.editEducationIndex = null;
 	}
 
 	public void deleteJobExperience(final JobExperience jobExperience) {
 		this.jobExperiences.remove(jobExperience);
 		this.curriculum.getJobExperiences().remove(jobExperience);
 		this.curriculum = this.curriculumService.updateCurriculum(curriculum);
+	}
+
+	public void editJobExperience(final int index) {
+		this.editJobExperienceIndex = Integer.valueOf(index);
 	}
 
 	public List<JobExperience> getJobExperiences() {
@@ -129,45 +153,56 @@ public class CurriculumView extends AbstractView {
 	public Integer getEditJobExperienceIndex() {
 		return editJobExperienceIndex;
 	}
-	
+
 	///////////////////////////////////////////////////////////////////////////
 	// EDUCATION
 	///////////////////////////////////////////////////////////////////////////
-	
+
 	public void addEducation() {
-		this.education.add(new Education());
-		this.editEducationIndex = this.education.size()-1;
+		final Education education = new Education();
+		this.curriculum.addEducation(education);
+		this.education.add(education);
+		this.editEducationIndex = this.education.size() - 1;
 	}
-	
-	public void editEducation(final int index) {
-		this.editEducationIndex = Integer.valueOf(index);
+
+	public void updateEducation() {
+		this.curriculum = this.curriculumService.updateCurriculum(curriculum);
+		this.editEducationIndex = null;
 	}
 
 	public void deleteEducation(final Education education) {
 		this.education.remove(education);
 		this.curriculum.getEducation().remove(education);
 		this.curriculum = this.curriculumService.updateCurriculum(curriculum);
+		this.editEducationIndex = null;
 	}
-	
+
+	public void editEducation(final int index) {
+		this.editEducationIndex = Integer.valueOf(index);
+	}
+
 	public Integer getEditEducationIndex() {
 		return editEducationIndex;
 	}
-	
+
 	public List<Education> getEducation() {
 		return this.education;
 	}
-	
+
 	///////////////////////////////////////////////////////////////////////////
 	// LANGUAGE
 	///////////////////////////////////////////////////////////////////////////
-	
+
 	public void addLanguage() {
-		this.languages.add(new Language());
-		this.editLanguageIndex = this.languages.size()-1;
+		final Language language = new Language();
+		this.curriculum.addLanguage(language);
+		this.languages.add(language);
+		this.editLanguageIndex = this.languages.size() - 1;
 	}
-	
-	public void editLanguage(final int index) {
-		this.editLanguageIndex = Integer.valueOf(index);
+
+	public void updateLanguage() {
+		this.curriculum = this.curriculumService.updateCurriculum(curriculum);
+		this.editLanguageIndex = null;
 	}
 
 	public void deleteLanguage(final Language language) {
@@ -175,11 +210,15 @@ public class CurriculumView extends AbstractView {
 		this.curriculum.getLanguages().remove(language);
 		this.curriculum = this.curriculumService.updateCurriculum(curriculum);
 	}
-	
+
+	public void editLanguage(final int index) {
+		this.editLanguageIndex = Integer.valueOf(index);
+	}
+
 	public Integer getEditLanguageIndex() {
 		return editLanguageIndex;
 	}
-	
+
 	public List<String> getLanguageLevels() {
 		return languageLevels;
 	}
@@ -187,16 +226,17 @@ public class CurriculumView extends AbstractView {
 	public List<Language> getLanguages() {
 		return this.languages;
 	}
-	
+
 	///////////////////////////////////////////////////////////////////////////
 	// SKILLS
 	///////////////////////////////////////////////////////////////////////////
-	
+
 	public void updateSkills() {
 		this.curriculum.setSkills(mapStringToSkills());
-		this.curriculumService.updateCurriculum(curriculum);
+		this.curriculum = this.curriculumService.updateCurriculum(curriculum);
+		this.editSkills = false;
 	}
-	
+
 	private List<String> mapSkillsToString() {
 		final Set<Skill> skills = this.getCurriculum().getSkills();
 		if (skills == null) {
@@ -204,7 +244,7 @@ public class CurriculumView extends AbstractView {
 		}
 		return skills.stream().map(Skill::getName).collect(Collectors.toList());
 	}
-	
+
 	private Set<Skill> mapStringToSkills() {
 		return skills.stream().map(Skill::new).collect(Collectors.toSet());
 	}
@@ -212,11 +252,11 @@ public class CurriculumView extends AbstractView {
 	public void editSkill() {
 		this.editSkills = true;
 	}
-	
+
 	public boolean isEditSkills() {
 		return editSkills;
 	}
-	
+
 	public List<String> getSkills() {
 		return this.skills;
 	}

@@ -43,7 +43,8 @@ public class JobExperiencesToHtml extends AbstractHtmlPrinter {
 
 	String printJobExperience(final JobExperience jobExperience) {
 		return this.openDiv("jobExperience") + this.printJobPosition(jobExperience.getJobPosition())
-				+ this.printDate(jobExperience.getStartDate(), jobExperience.getEndDate(),
+				+ this.printDate(YearMonth.of(jobExperience.getStartYear(), jobExperience.getStartMonth()),
+						YearMonth.of(jobExperience.getEndYear(), jobExperience.getEndMonth()),
 						jobExperience.isStillWorking())
 				+ this.printCompanyName(jobExperience.getCompanyName())
 				+ this.printDescription(jobExperience.getDescription()) + this.closeDiv();

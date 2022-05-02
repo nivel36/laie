@@ -18,18 +18,17 @@ public class Education extends AbstractEntity implements Comparable<Education>{
 	private static final long serialVersionUID = 7831977505416700653L;
 
 	@NotNull
-	@Column(length = 128, nullable = false)
+	@Column(nullable = false)
 	private String degree;
 
 	@Field
-	@Column(length = 512)
 	private String description;
 
-	private Integer endYear;
-
 	@NotNull
-	@Column(length = 128, nullable = false)
+	@Column(nullable = false)
 	private String school;
+	
+	private Integer endYear;
 
 	private Integer startYear;
 
@@ -109,26 +108,26 @@ public class Education extends AbstractEntity implements Comparable<Education>{
 	}
 	
 	@Override
-	public int compareTo(Education education) {
+	public int compareTo(final Education education) {
+		if(this.startYear == null) {
+			return 1;
+		}
+		if(education.startYear == null) {
+			return -1;
+		}
 		final int startYearCompareTo = this.startYear.compareTo(education.startYear);
 		if (startYearCompareTo != 0) {
 			return -startYearCompareTo;
 		}
+		if(this.endYear == null) {
+			return 1;
+		}
+		if(education.endYear == null) {
+			return -1;
+		}
 		final int endYearCompareTo = this.endYear.compareTo(education.endYear);
 		if (endYearCompareTo != 0) {
 			return -endYearCompareTo;
-		}
-		final int schoolCompareTo = this.school.compareTo(education.school);
-		if (schoolCompareTo != 0) {
-			return schoolCompareTo;
-		}
-		final int degreeCompareTo = this.degree.compareTo(education.degree);
-		if (degreeCompareTo != 0) {
-			return degreeCompareTo;
-		}
-		final int descriptionCompareTo = this.description.compareTo(education.description);
-		if (descriptionCompareTo != 0) {
-			return descriptionCompareTo;
 		}
 		return 0;
 	}

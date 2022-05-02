@@ -6,15 +6,7 @@ import java.util.Objects;
 
 public class YearMonthDto implements Serializable {
 
-	private static final long serialVersionUID = 1L;
-
-	public static YearMonthDto of(final YearMonth yearMonth) {
-		Objects.requireNonNull(yearMonth);
-		final YearMonthDto dto = new YearMonthDto();
-		dto.month = Integer.valueOf(yearMonth.getMonthValue());
-		dto.year = Integer.valueOf(yearMonth.getYear());
-		return dto;
-	}
+	private static final long serialVersionUID = 891164550120061798L;
 
 	private Integer month;
 
@@ -42,5 +34,13 @@ public class YearMonthDto implements Serializable {
 
 	public void setYear(final Integer year) {
 		this.year = year;
+	}
+	
+	public static YearMonthDto of(final YearMonth yearMonth) {
+		Objects.requireNonNull(yearMonth);
+		final YearMonthDto dto = new YearMonthDto();
+		dto.month = Integer.valueOf(yearMonth.getMonthValue());
+		dto.year = Integer.valueOf(yearMonth.getYear());
+		return dto;
 	}
 }
