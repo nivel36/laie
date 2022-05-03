@@ -2,6 +2,7 @@ package es.nivel36.laie.web.core.view.component;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -11,8 +12,6 @@ import javax.faces.component.UIInput;
 import javax.faces.component.UINamingContainer;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
-
-import es.nivel36.laie.web.core.YearMonthDto;
 
 @FacesComponent(value = "inputYearMonth")
 public class InputYearMonth extends UIInput implements NamingContainer {
@@ -90,6 +89,11 @@ public class InputYearMonth extends UIInput implements NamingContainer {
 		final int minYear = (int) this.getAttributes().get("minusYear");
 		this.setMonths(this.buildMonthsCombo());
 		this.setYears(this.buildYearsCombo(minYear, maxYear));
+		final YearMonth yearMonth = (YearMonth) this.getAttributes().get("value");
+		if (yearMonth != null) {
+			year = yearMonth.getYear();
+			month = yearMonth.getMonthValue();
+		}
 		super.encodeBegin(context);
 	}
 
@@ -115,7 +119,13 @@ public class InputYearMonth extends UIInput implements NamingContainer {
 
 	@Override
 	public Object getSubmittedValue() {
-		return new YearMonthDto(month, year);
+		if (year != null) {
+			if (month == null) {
+				month = 1;
+			}
+			return YearMonth.of(year, month);
+		}
+		return null;
 	}
 
 	private ResourceBundle getResourceBundle(final String filename) {

@@ -19,56 +19,27 @@ import es.nivel36.laie.ejb.core.model.AbstractEntity;
 @Indexed
 public class JobExperience extends AbstractEntity implements Comparable<JobExperience> {
 
-	private static final long serialVersionUID = 7016429624624068218L;
+	private static final long serialVersionUID = 5196582360914455397L;
 
 	@Field
 	@NotNull
-	@Column(nullable = false)
+	@Column(length = 128, nullable = false)
 	private String companyName;
 
 	@Field
 	@Lob
 	private String description;
 
-	private Integer endMonth;
-
-	private Integer endYear;
+	private YearMonth endDate;
 
 	@NotNull
 	@Field
-	@Column(nullable = false)
+	@Column(length = 256, nullable = false)
 	private String jobPosition;
 
-	private Integer startMonth;
-
-	private Integer startYear;
+	private YearMonth startDate;
 
 	private boolean stillWorking;
-
-	@Override
-	public int compareTo(final JobExperience jobExperience) {
-		if (this.startYear == null) {
-			return 1;
-		}
-		if (jobExperience.startYear == null) {
-			return -1;
-		}
-		final int startYearCompareTo = this.startYear.compareTo(jobExperience.startYear);
-		if (startYearCompareTo != 0) {
-			return -startYearCompareTo;
-		}
-		if (this.endYear == null) {
-			return 1;
-		}
-		if (jobExperience.endYear == null) {
-			return -1;
-		}
-		final int endYearCompareTo = this.endYear.compareTo(jobExperience.endYear);
-		if (endYearCompareTo != 0) {
-			return -endYearCompareTo;
-		}
-		return 0;
-	}
 
 	@Override
 	public boolean equals(final Object obj) {
@@ -84,9 +55,9 @@ public class JobExperience extends AbstractEntity implements Comparable<JobExper
 		final JobExperience other = (JobExperience) obj;
 		return Objects.equals(this.companyName, other.companyName)
 				&& Objects.equals(this.description, other.description)
+				&& Objects.equals(this.startDate, other.startDate)
 				&& Objects.equals(this.jobPosition, other.jobPosition)
-				&& Objects.equals(this.stillWorking, other.stillWorking) && Objects.equals(this.endYear, other.endYear)
-				&& Objects.equals(this.startYear, other.startYear);
+				&& Objects.equals(this.stillWorking, other.stillWorking) && Objects.equals(this.endDate, other.endDate);
 	}
 
 	public String getCompanyName() {
@@ -97,12 +68,8 @@ public class JobExperience extends AbstractEntity implements Comparable<JobExper
 		return this.description;
 	}
 
-	public Integer getEndMonth() {
-		return endMonth;
-	}
-
-	public Integer getEndYear() {
-		return endYear;
+	public YearMonth getEndDate() {
+		return this.endDate;
 	}
 
 	public String getJobPosition() {
@@ -110,27 +77,25 @@ public class JobExperience extends AbstractEntity implements Comparable<JobExper
 	}
 
 	public Long getMonthsWorked() {
-		final YearMonth startDate = YearMonth.of(startYear, startMonth);
+		Objects.requireNonNull(this.startDate);
+		if ((!this.stillWorking) && (this.endDate == null)) {
+			throw new IllegalStateException();
+		}
 		if (this.stillWorking) {
-			return ChronoUnit.MONTHS.between(startDate, LocalDate.now());
+			return ChronoUnit.MONTHS.between(this.startDate, LocalDate.now());
 		} else {
-			final YearMonth endDate = YearMonth.of(endYear, endMonth);
-			return ChronoUnit.MONTHS.between(startDate, endDate);
+			return ChronoUnit.MONTHS.between(this.startDate, this.endDate);
 		}
 	}
 
-	public Integer getStartMonth() {
-		return startMonth;
-	}
-
-	public Integer getStartYear() {
-		return startYear;
+	public YearMonth getStartDate() {
+		return this.startDate;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(this.companyName, this.description, this.startYear, this.startMonth, this.jobPosition,
-				this.stillWorking, this.endYear, this.endMonth);
+		return Objects.hash(this.companyName, this.description, this.startDate, this.jobPosition, this.stillWorking,
+				this.endDate);
 	}
 
 	public boolean isStillWorking() {
@@ -145,27 +110,44 @@ public class JobExperience extends AbstractEntity implements Comparable<JobExper
 		this.description = description;
 	}
 
-	public void setEndMonth(Integer endMonth) {
-		this.endMonth = endMonth;
-	}
-
-	public void setEndYear(Integer endYear) {
-		this.endYear = endYear;
+	public void setEndDate(final YearMonth endDate) {
+		this.endDate = endDate;
 	}
 
 	public void setJobPosition(final String jobPosition) {
 		this.jobPosition = jobPosition;
 	}
 
-	public void setStartMonth(Integer startMonth) {
-		this.startMonth = startMonth;
-	}
-
-	public void setStartYear(Integer startYear) {
-		this.startYear = startYear;
+	public void setStartDate(final YearMonth startDate) {
+		this.startDate = startDate;
 	}
 
 	public void setStillWorking(final boolean stillWorking) {
 		this.stillWorking = stillWorking;
+	}
+
+	@Override
+	public int compareTo(JobExperience jobExperience) {
+		final int startDateCompareTo = this.startDate.compareTo(jobExperience.startDate);
+		if (startDateCompareTo != 0) {
+			return -startDateCompareTo;
+		}
+		final int endDateCompareTo = this.endDate.compareTo(jobExperience.endDate);
+		if (endDateCompareTo != 0) {
+			return -endDateCompareTo;
+		}
+		final int comapanyNameCompareTo = this.companyName.compareTo(jobExperience.companyName);
+		if (comapanyNameCompareTo != 0) {
+			return comapanyNameCompareTo;
+		}
+		final int jobPositionCompareTo = this.jobPosition.compareTo(jobExperience.jobPosition);
+		if (jobPositionCompareTo != 0) {
+			return jobPositionCompareTo;
+		}
+		final int descriptionCompareTo = this.description.compareTo(jobExperience.description);
+		if (descriptionCompareTo != 0) {
+			return descriptionCompareTo;
+		}
+		return 0;
 	}
 }

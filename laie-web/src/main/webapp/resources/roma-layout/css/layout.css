@@ -3097,8 +3097,8 @@ a {
       display: flex;
       flex-direction: column;
       border-bottom: 1px solid #ebedef;
-      margin-bottom: 1em;
-      padding-bottom: 1em; }
+      margin-bottom: 2em;
+      padding-bottom: 2em; }
       .curriculum ul li:last-child {
         border-bottom: 0;
         margin-bottom: inherit; }

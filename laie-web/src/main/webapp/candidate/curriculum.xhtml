@@ -71,38 +71,39 @@
 																<h:outputText value=" #{jobExperience.monthsWorked%12 gt 1 ? i18n['date.months'] : i18n['date.month']}" />
 															</h:panelGroup> <h:outputText value=" #{i18n['date.days']} "
 																rendered="#{jobExperience.monthsWorked%12 eq 0 and (jobExperience.monthsWorked - jobExperience.monthsWorked%12)/12 eq 0}" /> <h:outputText
-																value=" ) " /> </span>
+																value=" ) " /></span>
 													</p>
 													<p>
 														<h:outputText value="#{jobExperience.description}" escape="false" styleClass="job-description" />
 													</p>
 												</div>
 												<div class="buttons">
-													<p:commandButton action="#{curriculumView.editJobExperience(jobExperience)}" process="@this" icon="pi pi-pencil"
-														styleClass="ui-button-secondary ui-button-outlined" />
+													<p:commandButton action="#{curriculumView.editJobExperience(status.index)}" process="@this" update="form:jobExperiences"
+														icon="pi pi-pencil" styleClass="ui-button-secondary ui-button-outlined" />
 												</div>
 											</h:panelGroup> <h:panelGroup layout="block" rendered="#{curriculumView.editJobExperienceIndex eq status.index}">
 												<div class="p-grid p-formgrid ui-fluid">
-													<div class="p-col-12 p-sm-6">
+													<div class="p-col-10 p-sm-5">
 														<g:input id="degree" label="#{i18n['job_experience.company_name']}" value="#{jobExperience.companyName}" required="true" />
 													</div>
-													<div class="p-col-12 p-sm-6">
+													<div class="p-col-10 p-sm-5">
 														<g:input id="jobPosition" label="#{i18n['job_experience.job_position']}" value="#{jobExperience.jobPosition}" required="true" />
 													</div>
-													<div class="p-col-12 p-sm-4">
+													<div class="p-col-10 p-sm-4">
 														<cc:inputYearMonth id="fromDate" label="#{i18n['job.from_date']}" value="#{jobExperience.startDate}" required="true" />
 													</div>
-													<div class="p-col-12 p-sm-4">
+													<div class="p-col-10 p-sm-4">
 														<h:panelGroup layout="block" id="toDateWrapper">
-															<cc:inputYearMonth id="toDate" label="#{i18n['job.to_date']}" value="#{jobExperience.endDate}" rendered="#{not jobExperience.stillWorking}" />
+															<cc:inputYearMonth id="toDate" label="#{i18n['job.to_date']}" value="#{jobExperience.endDate}"
+																rendered="#{not jobExperience.stillWorking}" />
 														</h:panelGroup>
 													</div>
-													<div class="p-col-12 p-sm-4">
+													<div class="p-col-10 p-sm-2">
 														<g:input id="still" label="#{i18n['job.still_working']}" value="#{jobExperience.stillWorking}" type="checkbox">
 															<f:ajax event="change" render="jobExperience:toDateWrapper" />
 														</g:input>
 													</div>
-													<div class="p-col-12">
+													<div class="p-col-10">
 														<g:input id="description" label="#{i18n['job_experience.description']}" value="#{jobExperience.description}" type="textarea" />
 													</div>
 												</div>

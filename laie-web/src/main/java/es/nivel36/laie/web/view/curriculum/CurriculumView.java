@@ -133,7 +133,7 @@ public class CurriculumView extends AbstractView {
 
 	public void updateJobExperience() {
 		this.curriculum = this.curriculumService.updateCurriculum(curriculum);
-		this.editEducationIndex = null;
+		this.editJobExperienceIndex = null;
 	}
 
 	public void deleteJobExperience(final JobExperience jobExperience) {
