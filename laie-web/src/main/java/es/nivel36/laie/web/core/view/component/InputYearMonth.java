@@ -1,6 +1,7 @@
 package es.nivel36.laie.web.core.view.component;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.Locale;
@@ -14,27 +15,9 @@ import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 
 @FacesComponent(value = "inputYearMonth")
-public class InputYearMonth extends UIInput implements NamingContainer {
-
-	private Integer year;
-
-	private Integer month;
-
-	public Integer getYear() {
-		return year;
-	}
-
-	public void setYear(Integer year) {
-		this.year = year;
-	}
-
-	public Integer getMonth() {
-		return month;
-	}
-
-	public void setMonth(Integer month) {
-		this.month = month;
-	}
+public class InputYearMonth extends UIInput implements NamingContainer, Serializable {
+	
+	private static final long serialVersionUID = 2350336342844865020L;
 
 	public static class Month {
 
@@ -60,6 +43,10 @@ public class InputYearMonth extends UIInput implements NamingContainer {
 	}
 
 	private static final String FILE_NAME = "es.nivel36.laie.i18n";
+
+	private UIInput month;
+
+	private UIInput year;
 
 	private Month[] buildMonthsCombo() {
 		final Month[] months = new Month[12];
@@ -89,12 +76,30 @@ public class InputYearMonth extends UIInput implements NamingContainer {
 		final int minYear = (int) this.getAttributes().get("minusYear");
 		this.setMonths(this.buildMonthsCombo());
 		this.setYears(this.buildYearsCombo(minYear, maxYear));
-		final YearMonth yearMonth = (YearMonth) this.getAttributes().get("value");
+		final YearMonth yearMonth = (YearMonth) getValue();
 		if (yearMonth != null) {
-			year = yearMonth.getYear();
-			month = yearMonth.getMonthValue();
+			year.setValue(yearMonth.getYear());
+			month.setValue(yearMonth.getMonthValue());
 		}
 		super.encodeBegin(context);
+	}
+
+	@Override
+	public void encodeEnd(final FacesContext context) throws IOException {
+		super.encodeEnd(context);
+	}
+
+	@Override
+	protected Object getConvertedValue(FacesContext context, Object submittedValue) {
+		if (year != null) {
+			final String yearValue = (String) year.getSubmittedValue();
+			if (month == null) {
+				return YearMonth.of(Integer.valueOf(yearValue), 1);
+			}
+			final String monthValue = (String) month.getSubmittedValue();
+			return YearMonth.of(Integer.valueOf(yearValue), Integer.valueOf(monthValue));
+		}
+		return null;
 	}
 
 	@Override
@@ -113,24 +118,34 @@ public class InputYearMonth extends UIInput implements NamingContainer {
 		return locale;
 	}
 
-	public Month[] getMonths() {
-		return (Month[]) this.getStateHelper().get("months");
+	public UIInput getMonth() {
+		return month;
 	}
 
-	@Override
-	public Object getSubmittedValue() {
-		if (year != null) {
-			if (month == null) {
-				month = 1;
-			}
-			return YearMonth.of(year, month);
-		}
-		return null;
+	public Month[] getMonths() {
+		return (Month[]) this.getStateHelper().get("months");
 	}
 
 	private ResourceBundle getResourceBundle(final String filename) {
 		final Locale locale = this.getLocale();
 		return ResourceBundle.getBundle(filename, locale);
+	}
+
+	@Override
+	public Object getSubmittedValue() {
+		final String yearValue = (String) year.getSubmittedValue();
+		final String monthValue = (String) month.getSubmittedValue();
+		if (yearValue == null) {
+			return "";
+		}
+		if (monthValue == null) {
+			return yearValue + "-" + monthValue;
+		}
+		return yearValue + "-" + monthValue;
+	}
+
+	public UIInput getYear() {
+		return year;
 	}
 
 	public Integer[] getYears() {
@@ -142,8 +157,16 @@ public class InputYearMonth extends UIInput implements NamingContainer {
 		return bundle.getString(message);
 	}
 
+	public void setMonth(UIInput month) {
+		this.month = month;
+	}
+
 	public void setMonths(final Month[] months) {
 		this.getStateHelper().put("months", months);
+	}
+
+	public void setYear(UIInput year) {
+		this.year = year;
 	}
 
 	public void setYears(final Integer[] years) {
