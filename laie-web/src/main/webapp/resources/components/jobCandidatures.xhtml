@@ -23,7 +23,7 @@
 
 				<p:column headerText="#{i18n['job_candidature.job_offer']}" rendered="#{cc.attrs.showJobOffer}">
 					<h:link value="#{jobCandidature.jobOffer.title}" outcome="/job/view.xhtml">
-						<f:param name="job" value="#{jobCandidature.jobOffer.id}" />
+						<f:param name="jobOffer" value="#{jobCandidature.jobOffer.id}" />
 					</h:link>
 				</p:column>
 				<p:column headerText="#{i18n['job_candidature.city']}" rendered="#{cc.attrs.showJobOffer}">
