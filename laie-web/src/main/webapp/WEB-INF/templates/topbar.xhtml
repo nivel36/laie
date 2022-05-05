@@ -1,16 +1,10 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:po="http://primefaces.org/roma"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui" xmlns:po="http://primefaces.org/roma"
 	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components">
 
 	<div class="layout-topbar">
-		<a class="layout-right-panel-button layout-topbar-icon" href="#">
-			<i class="pi pi-ellipsis-v" aria-hidden="true" />
-		</a> <a class="layout-menu-button layout-topbar-icon" href="#"> <i
-			class="pi pi-bars" aria-hidden="true" />
+		<a class="layout-right-panel-button layout-topbar-icon" href="#"> <i class="pi pi-ellipsis-v" aria-hidden="true" />
+		</a> <a class="layout-menu-button layout-topbar-icon" href="#"> <i class="pi pi-bars" aria-hidden="true" />
 		</a>
 
 		<ui:include src="./menu.xhtml" />
@@ -18,10 +12,8 @@
 		<ul class="topbar-menu fadeInDown">
 
 
-			<li class="user-profile"><a href="#"> <cc:avatar
-						path="#{sessionUser.get().picture.path}"
-						name="#{sessionUser.get().fullName}" styleClass="user-image"
-						id="userImage" />
+			<li class="user-profile"><a href="#"> <cc:avatar path="#{sessionUser.get().picture.path}" name="#{sessionUser.get().fullName}"
+						styleClass="user-image" id="userImage" />
 					<div class="layout-profile-userinfo">
 						<span class="layout-profile-name">#{sessionUser.get().fullName}</span>
 					</div>
@@ -31,6 +23,10 @@
 							<i class="pi pi-user" aria-hidden="true" />
 							<span>#{i18n['menu.profile']}</span>
 							<f:param name="user" value="#{sessionUser.get().id}" />
+						</h:link></li>
+					<li><h:link outcome="/meeting/search.xhtml">
+							<i class="pi pi-calendar" aria-hidden="true" />
+							<span>#{i18n['menu.meetings']}</span>
 						</h:link></li>
 					<li><h:link outcome="/config.xhtml">
 							<i class="pi pi-cog" aria-hidden="true" />
