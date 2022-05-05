@@ -66,7 +66,7 @@ insert into SKILL( id, version, curriculum_id, name ) values( 809, 0, 801, 'Hibe
 insert into SKILL( id, version, curriculum_id, name ) values( 810, 0, 801, 'JSF');
 insert into SKILL( id, version, curriculum_id, name ) values( 811, 0, 801, 'JEE');
 
-insert into JOBEXPERIENCE( id, version, curriculum_id, companyName, description, startDate, jobPosition, stillWorking, endDate) values (812, 0, 801, 'Alten', 'Desarrollo de la herramienta para Gas Natural Fenosa con el que se dará cobertura a todas las actividades asociadas al proceso de expansión de la red y provisión de servicio en todos los ámbitos geográficos donde el grupo Gas Natural Fenosa (GNF) desarrolla sus negocios de distribución de gas natural y electricidad. Puesto de Arquitecto JEE desarrollando las siguientes tareas:', CAST('aced00057372000d6a6176612e74696d652e536572955d84ba1b2248b20c0000787077060c000007da0378' AS VARBINARY(255)), 'Arquitecto JAVA', true, null );
+insert into JOBEXPERIENCE( id, version, curriculum_id, companyName, description, startYear, startMonth, jobPosition, stillWorking, endYear, endMonth) values (812, 0, 801, 'Alten', 'Desarrollo de la herramienta para Gas Natural Fenosa con el que se dará cobertura a todas las actividades asociadas al proceso de expansión de la red y provisión de servicio en todos los ámbitos geográficos donde el grupo Gas Natural Fenosa (GNF) desarrolla sus negocios de distribución de gas natural y electricidad. Puesto de Arquitecto JEE desarrollando las siguientes tareas:', 2002, 12, 'Arquitecto JAVA', true, null, null );
 
 insert into CLIENT( id, version, name, cif, ownerId, phoneNumber, city, region, deleted) values (1000, 0, 'F.C. Barcelona', 'A0000000', 500, '935551414', 'Barcelona', 'Barcelona', false);
 

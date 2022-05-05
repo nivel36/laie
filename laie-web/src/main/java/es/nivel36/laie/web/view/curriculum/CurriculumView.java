@@ -1,14 +1,18 @@
 package es.nivel36.laie.web.view.curriculum;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
+import javax.faces.component.UIViewRoot;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -57,6 +61,8 @@ public class CurriculumView extends AbstractView {
 
 	private List<Integer> years;
 
+	private List<Month> months;
+
 	@Inject
 	private CurriculumService curriculumService;
 
@@ -96,16 +102,9 @@ public class CurriculumView extends AbstractView {
 		Collections.sort(jobExperiences);
 		Collections.sort(education);
 		Collections.sort(languages);
-		initYears();
-	}
 
-	private void initYears() {
-		this.years = new ArrayList<>();
-		final int endYear = LocalDateTime.now().getYear();
-		final int startYear = endYear - 50;
-		for (int i = startYear; i < endYear; i++) {
-			years.add(Integer.valueOf(i));
-		}
+		this.months = this.buildMonthsCombo();
+		this.years = this.buildYearsCombo(50, 0);
 	}
 
 	public Candidate getCandidate() {
@@ -120,6 +119,10 @@ public class CurriculumView extends AbstractView {
 		return this.years;
 	}
 
+	public List<Month> getMonths() {
+		return this.months;
+	}
+
 	///////////////////////////////////////////////////////////////////////////
 	// JOB EXPERIENCES
 	///////////////////////////////////////////////////////////////////////////
@@ -127,19 +130,23 @@ public class CurriculumView extends AbstractView {
 	public void addJobExperience() {
 		final JobExperience jobExperience = new JobExperience();
 		this.curriculum.addJobExperience(jobExperience);
-		this.jobExperiences.add(jobExperience);
-		this.editJobExperienceIndex = this.jobExperiences.size() - 1;
+		this.jobExperiences.add(0, jobExperience);
+		this.editJobExperienceIndex = 0;
 	}
 
 	public void updateJobExperience() {
 		this.curriculum = this.curriculumService.updateCurriculum(curriculum);
+		Collections.sort(jobExperiences);
 		this.editJobExperienceIndex = null;
 	}
 
 	public void deleteJobExperience(final JobExperience jobExperience) {
 		this.jobExperiences.remove(jobExperience);
 		this.curriculum.getJobExperiences().remove(jobExperience);
-		this.curriculum = this.curriculumService.updateCurriculum(curriculum);
+		if (!jobExperience.isNew()) {
+			this.curriculum = this.curriculumService.updateCurriculum(curriculum);
+		}
+		this.editJobExperienceIndex = null;
 	}
 
 	public void editJobExperience(final int index) {
@@ -161,19 +168,22 @@ public class CurriculumView extends AbstractView {
 	public void addEducation() {
 		final Education education = new Education();
 		this.curriculum.addEducation(education);
-		this.education.add(education);
-		this.editEducationIndex = this.education.size() - 1;
+		this.education.add(0, education);
+		this.editEducationIndex = 0;
 	}
 
 	public void updateEducation() {
 		this.curriculum = this.curriculumService.updateCurriculum(curriculum);
+		Collections.sort(this.education);
 		this.editEducationIndex = null;
 	}
 
 	public void deleteEducation(final Education education) {
 		this.education.remove(education);
 		this.curriculum.getEducation().remove(education);
-		this.curriculum = this.curriculumService.updateCurriculum(curriculum);
+		if (!education.isNew()) {
+			this.curriculum = this.curriculumService.updateCurriculum(curriculum);
+		}
 		this.editEducationIndex = null;
 	}
 
@@ -196,8 +206,8 @@ public class CurriculumView extends AbstractView {
 	public void addLanguage() {
 		final Language language = new Language();
 		this.curriculum.addLanguage(language);
-		this.languages.add(language);
-		this.editLanguageIndex = this.languages.size() - 1;
+		this.languages.add(0, language);
+		this.editLanguageIndex = 0;
 	}
 
 	public void updateLanguage() {
@@ -208,7 +218,10 @@ public class CurriculumView extends AbstractView {
 	public void deleteLanguage(final Language language) {
 		this.languages.remove(language);
 		this.curriculum.getLanguages().remove(language);
-		this.curriculum = this.curriculumService.updateCurriculum(curriculum);
+		if (!language.isNew()) {
+			this.curriculum = this.curriculumService.updateCurriculum(curriculum);
+		}
+		this.editLanguageIndex = null;
 	}
 
 	public void editLanguage(final int index) {
@@ -263,5 +276,77 @@ public class CurriculumView extends AbstractView {
 
 	public void setSkills(List<String> skills) {
 		this.skills = skills;
+	}
+
+	///////////////////////////////////////////////////////////////////////////
+	// COMBOS
+	///////////////////////////////////////////////////////////////////////////
+
+	public static class Month {
+
+		private String monthName;
+
+		private Integer monthNumber;
+
+		public String getMonthName() {
+			return this.monthName;
+		}
+
+		public Integer getMonthNumber() {
+			return this.monthNumber;
+		}
+
+		public void setMonthName(final String monthName) {
+			this.monthName = monthName;
+		}
+
+		public void setMonthNumber(final Integer monthNumber) {
+			this.monthNumber = monthNumber;
+		}
+	}
+
+	private static final String FILE_NAME = "es.nivel36.laie.i18n";
+
+	private List<Month> buildMonthsCombo() {
+		final List<Month> months = new ArrayList<>(12);
+		for (int i = 1; i < 13; i++) {
+			final Month newMonth = new Month();
+			newMonth.setMonthName(this.message("date.month." + i));
+			newMonth.setMonthNumber(i);
+			months.add(newMonth);
+		}
+		return months;
+	}
+
+	private List<Integer> buildYearsCombo(final int minusYear, final int plusYear) {
+		final int presentYear = LocalDate.now().getYear();
+		final int range = (plusYear + minusYear);
+		final int maxYear = presentYear + plusYear;
+		final List<Integer> years = new ArrayList<>();
+		for (int i = 0; i < range; i++) {
+			years.add(maxYear - i);
+		}
+		return years;
+	}
+
+	private Locale getLocale() {
+		final UIViewRoot uIViewRoot = FacesContext.getCurrentInstance().getViewRoot();
+		final Locale locale;
+		if (uIViewRoot != null) {
+			locale = uIViewRoot.getLocale();
+		} else {
+			locale = Locale.ENGLISH;
+		}
+		return locale;
+	}
+
+	private ResourceBundle getResourceBundle(final String filename) {
+		final Locale locale = this.getLocale();
+		return ResourceBundle.getBundle(filename, locale);
+	}
+
+	private String message(final String message) {
+		final ResourceBundle bundle = this.getResourceBundle(FILE_NAME);
+		return bundle.getString(message);
 	}
 }
