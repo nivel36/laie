@@ -5,11 +5,14 @@ import static es.nivel36.laie.ejb.core.util.Parameters.map;
 import java.util.List;
 import java.util.Objects;
 
+import javax.inject.Inject;
+
 import es.nivel36.laie.ejb.candidate.Candidate;
 import es.nivel36.laie.ejb.client.Client;
 import es.nivel36.laie.ejb.core.model.AbstractDao;
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.core.model.Repository;
+import es.nivel36.laie.ejb.core.model.SearchFacade;
 import es.nivel36.laie.ejb.core.model.search.SearchFacets;
 import es.nivel36.laie.ejb.core.model.search.SearchResult;
 import es.nivel36.laie.ejb.core.model.search.SortField;
@@ -18,6 +21,9 @@ import es.nivel36.laie.ejb.user.User;
 
 @Repository
 public class JobOfferDao extends AbstractDao {
+	
+	@Inject
+	private SearchFacade searchFacade;
 
 	public JobOfferState findFirstJobOfferState() {
 		final String namedQuery = "JobOfferState.findFirst";
@@ -51,6 +57,6 @@ public class JobOfferDao extends AbstractDao {
 	public SearchResult<JobOffer> search(final String searchText, final Page page, SortField sortOrder,
 			final SearchFacets searchFacets) {
 		final String[] searchFields = new String[] { "_title", "_client.name" };
-		return this.search(JobOffer.class, page, sortOrder, searchFacets, searchText, searchFields);
+		return searchFacade.search(JobOffer.class, page, sortOrder, searchFacets, searchText, searchFields);
 	}
 }

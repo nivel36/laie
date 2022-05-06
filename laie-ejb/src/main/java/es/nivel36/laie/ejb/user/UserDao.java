@@ -5,12 +5,15 @@ import static es.nivel36.laie.ejb.core.util.Parameters.map;
 import java.util.List;
 import java.util.Objects;
 
+import javax.inject.Inject;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import es.nivel36.laie.ejb.core.model.AbstractDao;
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.core.model.Repository;
+import es.nivel36.laie.ejb.core.model.SearchFacade;
 import es.nivel36.laie.ejb.core.model.search.SearchFacets;
 import es.nivel36.laie.ejb.core.model.search.SearchResult;
 import es.nivel36.laie.ejb.core.model.search.SortField;
@@ -21,6 +24,9 @@ import es.nivel36.laie.ejb.core.util.Parameters;
 public class UserDao extends AbstractDao {
 
 	private static final Logger logger = LoggerFactory.getLogger(UserDao.class);
+	
+	@Inject
+	private SearchFacade searchFacade;
 
 	public void insert(final User user) {
 		Objects.requireNonNull(user);
@@ -81,7 +87,7 @@ public class UserDao extends AbstractDao {
 	public SearchResult<User> search(final String searchText, final Page page, SortField sortOrder,
 			final SearchFacets searchFacets) {
 		final String[] searchFields = new String[] { "_name", "_surname", "_email" };
-		return this.search(User.class, page, sortOrder, searchFacets, searchText, searchFields);
+		return searchFacade.search(User.class, page, sortOrder, searchFacets, searchText, searchFields);
 	}
 
 	///////////////////////////////////////////////////////////////////////////

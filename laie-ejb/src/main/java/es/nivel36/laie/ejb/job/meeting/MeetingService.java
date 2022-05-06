@@ -10,11 +10,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import es.nivel36.laie.ejb.candidate.Candidate;
+import es.nivel36.laie.ejb.candidate.CandidateDao;
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.core.model.Repository;
 import es.nivel36.laie.ejb.job.offer.JobOffer;
 import es.nivel36.laie.ejb.job.offer.JobOfferDao;
 import es.nivel36.laie.ejb.user.User;
+import es.nivel36.laie.ejb.user.UserDao;
 
 @Stateless
 public class MeetingService {
@@ -24,6 +26,14 @@ public class MeetingService {
 	@Inject
 	@Repository
 	private MeetingDao meetingDao;
+
+	@Inject
+	@Repository
+	private UserDao userDao;
+	
+	@Inject
+	@Repository
+	private CandidateDao candidateDao;
 
 	@Inject
 	@Repository
@@ -56,6 +66,10 @@ public class MeetingService {
 		Objects.requireNonNull(owner);
 		logger.debug("Find planned meetings by owner {}", owner);
 		return this.meetingDao.findPlannedMeetings(owner, page);
+	}
+	
+	public void searchPerson(String query) {
+		candidateDao.searchByName(query, Page.FIRST_TEN_RESULTS, null, null);
 	}
 
 	public void setJobMeetingDao(final MeetingDao meetingDao) {
