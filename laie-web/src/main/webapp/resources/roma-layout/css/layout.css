@@ -3433,4 +3433,15 @@ a {
     background: #C8E6C9;
     color: #256029; }
 
+.files .ui-fileupload-simple .ui-fileupload-filename {
+  display: none; }
+.files .ui-fileupload-simple .ui-button {
+  background-color: transparent;
+  color: #689F38;
+  border: 1px solid; }
+  .files .ui-fileupload-simple .ui-button.ui-button-text-icon-left .ui-button-text {
+    padding: 0.5rem 1rem 0.5rem 1rem; }
+  .files .ui-fileupload-simple .ui-button.ui-button-text-icon-left .ui-icon {
+    left: 0.65rem; }
+
 /*# sourceMappingURL=layout.css.map */

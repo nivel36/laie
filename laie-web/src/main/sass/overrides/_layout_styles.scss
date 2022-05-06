@@ -557,3 +557,24 @@
 		}
 	}
 }
+
+.files {
+	.ui-fileupload-simple {
+		.ui-fileupload-filename {
+			display:none;
+		}
+		.ui-button  {
+			background-color: transparent;
+			color: #689F38;
+			border: 1px solid;
+			&.ui-button-text-icon-left{
+				 .ui-button-text {
+					padding: 0.5rem 1rem 0.5rem 1rem;				
+				}
+				.ui-icon {
+					left: 0.65rem
+				}
+			}
+		}
+	}
+}
