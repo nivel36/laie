@@ -20,7 +20,7 @@
 								<div class="title">#{viewJobView.jobOffer.title}</div>
 								<div class="subtitle">#{viewJobView.jobOffer.client.name}</div>
 								<div class="text">
-									<span class="region"><i class="pi pi-map-marker" aria-hidden="true"/>#{viewJobView.jobOffer.address.city}</span>
+									<span class="region"><i class="pi pi-map-marker" aria-hidden="true" />#{viewJobView.jobOffer.address.city}</span>
 								</div>
 							</div>
 
@@ -28,14 +28,10 @@
 								<p:menuitem value="#{i18n['action.edit']}" outcome="/job/edit.xhtml" icon="pi pi-pencil" rendered="#{viewJobView.editable}">
 									<f:param name="jobOffer" value="#{viewJobView.jobOffer.id}" />
 								</p:menuitem>
-								<p:menuitem value="#{i18n['bookmark.add_to_bookmarks']}"
-									action="#{viewJobView.addBookmark}"
-									rendered="#{viewJobView.bookmarkable}" process="@this"
-									update="bookmarks menu-button" icon="pi pi-bookmark" />
-								<p:menuitem value="#{i18n['bookmark.remove_from_bookmarks']}"
-									action="#{viewJobView.removeFromBookmarks}"
-									rendered="#{not viewJobView.bookmarkable}" process="@this"
-									update="bookmarks menu-button" icon="pi pi-bookmark" />
+								<p:menuitem value="#{i18n['bookmark.add_to_bookmarks']}" action="#{viewJobView.addBookmark}" rendered="#{viewJobView.bookmarkable}"
+									process="@this" update="bookmarks menu-button" icon="pi pi-bookmark" />
+								<p:menuitem value="#{i18n['bookmark.remove_from_bookmarks']}" action="#{viewJobView.removeFromBookmarks}"
+									rendered="#{not viewJobView.bookmarkable}" process="@this" update="bookmarks menu-button" icon="pi pi-bookmark" />
 								<p:menuitem value="#{i18n['action.export']}" action="#{viewJobView.export}" icon="pi pi-file-excel" />
 							</p:menuButton>
 						</div>
@@ -59,7 +55,7 @@
 					</cc:outputText>
 					<cc:outputText label="#{i18n['job.places']}" value="#{viewJobView.jobOffer.places}" />
 					<cc:outputLink label="#{i18n['job.preview']}" value="#{i18n['job.preview']}" outcome="/job/preview.xhtml" target="new">
-						<f:param name="job" value="#{viewJobView.jobOffer.id}" />
+						<f:param name="jobOffer" value="#{viewJobView.jobOffer.id}" />
 					</cc:outputLink>
 					<cc:outputLink label="#{i18n['job.description']}" value="#{applicationView.hostname}/open/jobOffer.xhtml" outcome="/open/jobOffer.xhtml"
 						target="new" rendered="#{viewJobView.jobOffer.published}">
