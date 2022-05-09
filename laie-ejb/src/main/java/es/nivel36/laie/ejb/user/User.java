@@ -27,6 +27,7 @@ import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.SortableField;
 import org.hibernate.search.annotations.Store;
 
+import es.nivel36.laie.ejb.core.EmailContact;
 import es.nivel36.laie.ejb.core.bookmark.Bookmark;
 import es.nivel36.laie.ejb.core.file.File;
 import es.nivel36.laie.ejb.core.model.AbstractEntity;
@@ -36,12 +37,12 @@ import es.nivel36.laie.ejb.job.offer.JobOffer;
 @Entity
 @Indexed
 @Table(indexes = { @javax.persistence.Index(name = "UX_USER_EMAIL", columnList = "email", unique = true) })
-public class User extends AbstractEntity {
+public class User extends AbstractEntity implements EmailContact {
 
 	private static final long serialVersionUID = -3719561601581901723L;
 
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-	private Set<Bookmark> bookmarks;
+	private Set<Bookmark> bookmarks = new HashSet<>();
 
 	@Field(name = "dateOfJoin", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField(forField = "dateOfJoin")
@@ -66,8 +67,7 @@ public class User extends AbstractEntity {
 	@IndexedEmbedded(depth = 1)
 	private User manager;
 
-	@ManyToMany
-	@JoinTable(name = "emails", joinColumns = @JoinColumn(name = "email"), inverseJoinColumns = @JoinColumn(name = "meeting_id"))
+	@ManyToMany(fetch = FetchType.LAZY)
 	private Set<Meeting> meetings = new HashSet<>();
 
 	@Column(nullable = false)
@@ -97,7 +97,17 @@ public class User extends AbstractEntity {
 	@Field(name = "surname", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField(forField = "surname")
 	private String surname;
-
+	
+	public void addMeeting(final Meeting meeting) {
+		Objects.requireNonNull(meeting);
+		this.meetings.add(meeting);
+	}
+	
+	public void removeMeeting(final Meeting meeting) {
+		Objects.requireNonNull(meeting);
+		this.meetings.remove(meeting);
+	}
+	
 	public Set<Bookmark> getBookmarks() {
 		return bookmarks;
 	}
@@ -224,15 +234,15 @@ public class User extends AbstractEntity {
 	public void setRole(final Role role) {
 		this.role = role;
 	}
-
+	
 	public void setRowsPerPage(final Integer rowsPerPage) {
 		this.rowsPerPage = rowsPerPage;
 	}
-
+	
 	public void setSurname(final String surname) {
 		this.surname = surname;
 	}
-	
+
 	@Override
 	public boolean equals(final Object obj) {
 		if(obj == null) {

@@ -1,10 +1,14 @@
 package es.nivel36.laie.ejb.client;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
@@ -16,11 +20,13 @@ import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.SortableField;
 import org.hibernate.search.annotations.Store;
 
+import es.nivel36.laie.ejb.core.EmailContact;
 import es.nivel36.laie.ejb.core.model.AbstractEntity;
+import es.nivel36.laie.ejb.job.meeting.Meeting;
 
 @Entity
 @Indexed
-public class Contact extends AbstractEntity {
+public class Contact extends AbstractEntity implements EmailContact {
 
 	private static final long serialVersionUID = -2403549918176092142L;
 
@@ -28,7 +34,7 @@ public class Contact extends AbstractEntity {
 	@ManyToOne
 	@JoinColumn(name = "clientId", nullable = false)
 	private Client client;
-
+	
 	@Email
 	@NotNull
 	@Column(length = 128, nullable = false, unique = true)
@@ -38,6 +44,9 @@ public class Contact extends AbstractEntity {
 
 	@Column(length = 2)
 	private String language;
+
+	@ManyToMany(fetch = FetchType.LAZY)
+	private Set<Meeting> meetings = new HashSet<>();
 
 	@NotNull
 	@Column(nullable = false)
@@ -58,6 +67,28 @@ public class Contact extends AbstractEntity {
 	@Field(name = "surname", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField(forField = "surname")
 	protected String surname;
+	
+	public void addMeeting(final Meeting meeting) {
+		Objects.requireNonNull(meeting);
+		this.meetings.add(meeting);
+	}
+	
+	public void removeMeeting(final Meeting meeting) {
+		Objects.requireNonNull(meeting);
+		this.meetings.remove(meeting);
+	}
+
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		final Contact other = (Contact) obj;
+		return Objects.equals(email, other.email);
+	}
 
 	public Client getClient() {
 		return this.client;
@@ -78,6 +109,10 @@ public class Contact extends AbstractEntity {
 		return this.language;
 	}
 
+	public Set<Meeting> getMeetings() {
+		return meetings;
+	}
+
 	public String getName() {
 		return this.name;
 	}
@@ -94,6 +129,13 @@ public class Contact extends AbstractEntity {
 		return this.surname;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = prime * Objects.hash(email);
+		return result;
+	}
+
 	public void setClient(final Client client) {
 		this.client = client;
 	}
@@ -104,6 +146,10 @@ public class Contact extends AbstractEntity {
 
 	public void setLanguage(final String language) {
 		this.language = language;
+	}
+
+	public void setMeetings(Set<Meeting> meetings) {
+		this.meetings = meetings;
 	}
 
 	public void setName(final String name) {
@@ -120,25 +166,6 @@ public class Contact extends AbstractEntity {
 
 	public void setSurname(final String surname) {
 		this.surname = surname;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = prime * Objects.hash(email);
-		return result;
-	}
-
-	@Override
-	public boolean equals(final Object obj) {
-		if (this == obj)
-			return true;
-		if (!super.equals(obj))
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		final Contact other = (Contact) obj;
-		return Objects.equals(email, other.email);
 	}
 
 	@Override

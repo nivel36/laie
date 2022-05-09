@@ -29,6 +29,13 @@ public class ContactDao extends AbstractDao {
 		final Parameters parameters = map("client", client);
 		return this.findByQuery(Contact.class, namedQuery, parameters, page);
 	}
+	
+	public Contact findContactByEmail(final String email) {
+		Objects.requireNonNull(email);
+		final String namedQuery = "Contact.findByEmail";
+		final Parameters parameters = map("email", email);
+		return this.findByQuery(Contact.class, namedQuery, parameters);
+	}
 
 	public SearchResult<Contact> search(final String searchText, final Page page, SortField sortOrder,
 			final SearchFacets searchFacets) {

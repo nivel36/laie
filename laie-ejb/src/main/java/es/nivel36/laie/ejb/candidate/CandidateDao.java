@@ -35,6 +35,13 @@ public class CandidateDao extends AbstractDao {
 		final Parameters parameters = map("jobOffer", jobOffer);
 		return this.findByQuery(Candidate.class, namedQuery, parameters, page);
 	}
+	
+	public Candidate findCandidateByEmail(String email) {
+		Objects.requireNonNull(email);
+		final String namedQuery = "Candidate.findByEmail";
+		final Parameters parameters = map("email", email);
+		return this.findByQuery(Candidate.class, namedQuery, parameters);
+	}
 
 	public List<Origin> findAllOrigins() {
 		return this.findAll(Origin.class, Page.ALL_RESULTS);

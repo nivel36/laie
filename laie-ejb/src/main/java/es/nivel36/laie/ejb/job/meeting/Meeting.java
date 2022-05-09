@@ -32,7 +32,7 @@ public class Meeting extends AbstractEntity implements Ownerable {
 	@ElementCollection
 	@CollectionTable(name = "emails", joinColumns = @JoinColumn(name = "meeting_id"))
 	@Column(name = "email")
-	private Set<String> attendeesEmails = new HashSet<>();
+	private Set<String> attendeesEmails;
 
 	@NotNull
 	@Column(nullable = false)

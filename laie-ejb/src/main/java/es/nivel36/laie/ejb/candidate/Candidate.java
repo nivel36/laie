@@ -30,6 +30,7 @@ import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.SortableField;
 import org.hibernate.search.annotations.Store;
 
+import es.nivel36.laie.ejb.core.EmailContact;
 import es.nivel36.laie.ejb.core.file.File;
 import es.nivel36.laie.ejb.core.model.AbstractEntity;
 import es.nivel36.laie.ejb.core.model.Address;
@@ -37,12 +38,13 @@ import es.nivel36.laie.ejb.core.model.Ownerable;
 import es.nivel36.laie.ejb.core.tag.Tag;
 import es.nivel36.laie.ejb.curriculum.Curriculum;
 import es.nivel36.laie.ejb.job.candidature.JobCandidature;
+import es.nivel36.laie.ejb.job.meeting.Meeting;
 import es.nivel36.laie.ejb.user.User;
 
 @Entity
 @Indexed
 @Table(indexes = { @javax.persistence.Index(name = "UX_CANDIDATE_EMAIL", columnList = "email", unique = true) })
-public class Candidate extends AbstractEntity implements Ownerable {
+public class Candidate extends AbstractEntity implements Ownerable, EmailContact {
 
 	private static final long serialVersionUID = -7470903145789563432L;
 
@@ -57,7 +59,8 @@ public class Candidate extends AbstractEntity implements Ownerable {
 	@Email
 	@NotNull
 	@Column(length = 128, nullable = false, unique = true)
-	@Field
+	@Field(name = "_email")
+	@Field(name = "email", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	protected String email;
 
 	@Min(0)
@@ -79,6 +82,9 @@ public class Candidate extends AbstractEntity implements Ownerable {
 	private String jobProfile;
 
 	private String linkedinProfileUrl;
+	
+	@ManyToMany(fetch = FetchType.LAZY)
+	private Set<Meeting> meetings = new HashSet<>();
 
 	@NotNull
 	@Column(nullable = false)
@@ -125,7 +131,38 @@ public class Candidate extends AbstractEntity implements Ownerable {
 	private Set<Tag> tags = new HashSet<>();
 
 	public void addFile(final File file) {
+		Objects.requireNonNull(file);
 		this.files.add(file);
+	}
+	
+	public void removeFile(final File file) {
+		Objects.requireNonNull(file);
+		this.files.remove(file);
+	}
+	
+	public void addMeeting(final Meeting meeting) {
+		Objects.requireNonNull(meeting);
+		this.meetings.add(meeting);
+	}
+	
+	public void removeMeeting(final Meeting meeting) {
+		Objects.requireNonNull(meeting);
+		this.meetings.remove(meeting);
+	}
+
+	@Override
+	public boolean equals(final Object obj) {
+		if (obj == null) {
+			return false;
+		}
+		if (this == obj) {
+			return true;
+		}
+		if (this.getClass() != obj.getClass()) {
+			return false;
+		}
+		final Candidate other = (Candidate) obj;
+		return Objects.equals(other.email, this.email);
 	}
 
 	public Address getAddress() {
@@ -178,6 +215,10 @@ public class Candidate extends AbstractEntity implements Ownerable {
 		return this.linkedinProfileUrl;
 	}
 
+	public Set<Meeting> getMeetings() {
+		return meetings;
+	}
+
 	public String getName() {
 		return this.name;
 	}
@@ -219,14 +260,11 @@ public class Candidate extends AbstractEntity implements Ownerable {
 		return this.tags;
 	}
 
-	public void removeFile(File file) {
-		Objects.requireNonNull(file);
-		if (files == null) {
-			throw new IllegalStateException();
-		}
-		this.files.remove(file);
+	@Override
+	public int hashCode() {
+		return 31 * Objects.hash(this.email);
 	}
-
+	
 	public void setAddress(final Address address) {
 		this.address = address;
 	}
@@ -259,12 +297,20 @@ public class Candidate extends AbstractEntity implements Ownerable {
 		this.jobCandidatures = jobCandidatures;
 	}
 
+	public void setJobCandidatures(Set<JobCandidature> jobCandidatures) {
+		this.jobCandidatures = jobCandidatures;
+	}
+
 	public void setJobProfile(final String jobProfile) {
 		this.jobProfile = jobProfile;
 	}
 
 	public void setLinkedinProfileUrl(final String linkedinProfileUrl) {
 		this.linkedinProfileUrl = linkedinProfileUrl;
+	}
+
+	public void setMeetings(Set<Meeting> meetings) {
+		this.meetings = meetings;
 	}
 
 	public void setName(final String name) {
@@ -314,26 +360,6 @@ public class Candidate extends AbstractEntity implements Ownerable {
 
 	public void setTags(final Set<Tag> tags) {
 		this.tags = tags;
-	}
-
-	@Override
-	public boolean equals(final Object obj) {
-		if (obj == null) {
-			return false;
-		}
-		if (this == obj) {
-			return true;
-		}
-		if (this.getClass() != obj.getClass()) {
-			return false;
-		}
-		final Candidate other = (Candidate) obj;
-		return Objects.equals(other.email, this.email);
-	}
-
-	@Override
-	public int hashCode() {
-		return 31 * Objects.hash(this.email);
 	}
 
 	@Override

@@ -35,6 +35,18 @@ public class SearchFacade {
 	protected EntityManager em;
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public <T extends Identifiable> List<T> search(final Class<T> type, final Page page,
+			final SortField sortField, final String searchText, final String... fields) {
+		final FullTextEntityManager fullTextEM = Search.getFullTextEntityManager(this.em);
+		final QueryBuilder qb = fullTextEM.getSearchFactory().buildQueryBuilder().forEntity(type).get();
+		final BooleanJunction<BooleanJunction> bj = this.createPredicate(qb, searchText, fields);
+		final FullTextQuery fullTextQuery = fullTextEM.createFullTextQuery(this.createLuceneQuery(qb, bj), type);
+		this.paginate(page, fullTextQuery);
+		this.sortQuery(sortField, qb, fullTextQuery);
+		return fullTextQuery.getResultList();
+	}
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public <T extends Identifiable> SearchResult<T> search(final Class<T> type, final Page page,
 			final SortField sortField, final SearchFacets searchFacets, final String searchText,
 			final String... fields) {
@@ -44,9 +56,9 @@ public class SearchFacade {
 		final FullTextQuery fullTextQuery = fullTextEM.createFullTextQuery(this.createLuceneQuery(qb, bj), type);
 		this.paginate(page, fullTextQuery);
 		this.sortQuery(sortField, qb, fullTextQuery);
-		this.enableFaceting(searchFacets, qb, fullTextQuery);
-		final Map<String, List<Facet>> allFacets = this.selectFacets(searchFacets, fullTextQuery);
-		if ((searchFacets != null) && !searchFacets.isEmpty()) {
+		if (searchFacets != null && !searchFacets.isEmpty()) {
+			this.enableFaceting(searchFacets, qb, fullTextQuery);
+			final Map<String, List<Facet>> allFacets = this.selectFacets(searchFacets, fullTextQuery);
 			boolean hasFacet = false;
 			for (final Entry<String, List<Facet>> entry : allFacets.entrySet()) {
 				if (hasFacet) {
@@ -61,28 +73,24 @@ public class SearchFacade {
 			}
 			if (!hasFacet) {
 				return this.buildSearchResult(new ArrayList<>(), 0, allFacets);
+			} else {
+				this.buildSearchResult(fullTextQuery.getResultList(), fullTextQuery.getResultSize(), allFacets);
 			}
 		}
-		return this.buildSearchResult(fullTextQuery.getResultList(), fullTextQuery.getResultSize(), allFacets);
+		return this.buildSearchResult(fullTextQuery.getResultList(), fullTextQuery.getResultSize(), new HashMap<>());
 	}
 
 	@SuppressWarnings("rawtypes")
 	private Query createLuceneQuery(final QueryBuilder qb, final BooleanJunction<BooleanJunction> bj) {
-		Query luceneQuery;
 		if (bj.isEmpty()) {
-			luceneQuery = qb.all().createQuery();
+			return qb.all().createQuery();
 		} else {
-			luceneQuery = bj.createQuery();
+			return bj.createQuery();
 		}
-		return luceneQuery;
 	}
 
 	private void enableFaceting(final SearchFacets searchFacets, final QueryBuilder qb,
 			final FullTextQuery fullTextQuery) {
-		if (searchFacets == null) {
-			return;
-		}
-
 		final FacetManager facetManager = fullTextQuery.getFacetManager();
 		for (final SearchFacet searchFacet : searchFacets) {
 			final String facetName = searchFacet.getName();
@@ -122,11 +130,7 @@ public class SearchFacade {
 	}
 
 	private Map<String, List<Facet>> selectFacets(final SearchFacets searchFacets, final FullTextQuery fullTextQuery) {
-		if (searchFacets == null) {
-			return new HashMap<>();
-		}
 		final Map<String, List<Facet>> allFacets = new HashMap<>();
-
 		final FacetManager facetManager = fullTextQuery.getFacetManager();
 		for (final SearchFacet searchFacet : searchFacets) {
 			final String facetName = searchFacet.getName();
@@ -141,17 +145,16 @@ public class SearchFacade {
 	private void selectFacet(final FacetManager facetManager, final SearchFacet searchFacet, final String facetName) {
 		final FacetSelection facetSelection = facetManager.getFacetGroup(facetName);
 		final List<Facet> facets = facetManager.getFacets(facetName);
-		final int facetsLength = searchFacet.getSelectedFactes().length;
 		final List<Facet> facetList = new ArrayList<>();
-		for (int i = 0; i < facetsLength; i++) {
-			for (final String selectedFacet : searchFacet.getSelectedFactes()) {
-				for (final Facet facet : facets) {
-					if (facet.getValue().equals(selectedFacet)) {
-						facetList.add(facet);
-					}
+
+		for (final String selectedFacet : searchFacet.getSelectedFactes()) {
+			for (final Facet facet : facets) {
+				if (facet.getValue().equals(selectedFacet)) {
+					facetList.add(facet);
 				}
 			}
 		}
+
 		final Facet[] selectedMatchedFacets = facetList.toArray(new Facet[0]);
 		facetSelection.selectFacets(FacetCombine.OR, selectedMatchedFacets);
 	}

@@ -1,5 +1,6 @@
 package es.nivel36.laie.ejb.job.meeting;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -11,6 +12,9 @@ import org.slf4j.LoggerFactory;
 
 import es.nivel36.laie.ejb.candidate.Candidate;
 import es.nivel36.laie.ejb.candidate.CandidateDao;
+import es.nivel36.laie.ejb.client.Contact;
+import es.nivel36.laie.ejb.client.ContactDao;
+import es.nivel36.laie.ejb.core.EmailContact;
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.core.model.Repository;
 import es.nivel36.laie.ejb.job.offer.JobOffer;
@@ -30,18 +34,41 @@ public class MeetingService {
 	@Inject
 	@Repository
 	private UserDao userDao;
-	
+
 	@Inject
 	@Repository
 	private CandidateDao candidateDao;
 
 	@Inject
 	@Repository
+	private ContactDao contactDao;
+
+	@Inject
+	@Repository
 	private JobOfferDao jobOfferDao;
-	
+
 	public void addMeeting(final Meeting meeting) {
 		Objects.requireNonNull(meeting);
 		meetingDao.insert(meeting);
+		for (final String email : meeting.getAttendeesEmails()) {
+			final User user = userDao.findUserByEmail(email);
+			if (user != null) {
+				user.addMeeting(meeting);
+				continue;
+			}
+
+			final Candidate candidate = candidateDao.findCandidateByEmail(email);
+			if (candidate != null) {
+				candidate.addMeeting(meeting);
+				continue;
+			}
+
+			final Contact contact = contactDao.findContactByEmail(email);
+			if (contact != null) {
+				contact.addMeeting(meeting);
+				continue;
+			}
+		}
 	}
 
 	public List<Meeting> findConductedMeetings(final User owner, final Page page) {
@@ -67,9 +94,13 @@ public class MeetingService {
 		logger.debug("Find planned meetings by owner {}", owner);
 		return this.meetingDao.findPlannedMeetings(owner, page);
 	}
-	
-	public void searchPerson(String query) {
-		candidateDao.searchByName(query, Page.FIRST_TEN_RESULTS, null, null);
+
+	public List<EmailContact> searchPerson(final String query) {
+		Objects.requireNonNull(query);
+		if (query.length() < 3) {
+			return new ArrayList<>();
+		}
+		return meetingDao.searchAteendees(query);
 	}
 
 	public void setJobMeetingDao(final MeetingDao meetingDao) {
