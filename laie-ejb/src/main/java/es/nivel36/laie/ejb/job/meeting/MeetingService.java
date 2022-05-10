@@ -14,7 +14,7 @@ import es.nivel36.laie.ejb.candidate.Candidate;
 import es.nivel36.laie.ejb.candidate.CandidateDao;
 import es.nivel36.laie.ejb.client.Contact;
 import es.nivel36.laie.ejb.client.ContactDao;
-import es.nivel36.laie.ejb.core.EmailContact;
+import es.nivel36.laie.ejb.core.Subject;
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.core.model.Repository;
 import es.nivel36.laie.ejb.job.offer.JobOffer;
@@ -95,7 +95,7 @@ public class MeetingService {
 		return this.meetingDao.findPlannedMeetings(owner, page);
 	}
 
-	public List<EmailContact> searchPerson(final String query) {
+	public List<Subject> searchPerson(final String query) {
 		Objects.requireNonNull(query);
 		if (query.length() < 3) {
 			return new ArrayList<>();

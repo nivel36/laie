@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Objects;
 
 import javax.inject.Inject;
+import javax.persistence.NoResultException;
 
 import es.nivel36.laie.ejb.core.model.AbstractDao;
 import es.nivel36.laie.ejb.core.model.Page;
@@ -19,7 +20,7 @@ import es.nivel36.laie.ejb.job.offer.JobOffer;
 
 @Repository
 public class CandidateDao extends AbstractDao {
-	
+
 	@Inject
 	private SearchFacade searchFacade;
 
@@ -35,12 +36,16 @@ public class CandidateDao extends AbstractDao {
 		final Parameters parameters = map("jobOffer", jobOffer);
 		return this.findByQuery(Candidate.class, namedQuery, parameters, page);
 	}
-	
+
 	public Candidate findCandidateByEmail(String email) {
 		Objects.requireNonNull(email);
-		final String namedQuery = "Candidate.findByEmail";
-		final Parameters parameters = map("email", email);
-		return this.findByQuery(Candidate.class, namedQuery, parameters);
+		try {
+			final String namedQuery = "Candidate.findByEmail";
+			final Parameters parameters = map("email", email);
+			return this.findByQuery(Candidate.class, namedQuery, parameters);
+		} catch (final NoResultException e) {
+			return null;
+		}
 	}
 
 	public List<Origin> findAllOrigins() {
@@ -52,7 +57,7 @@ public class CandidateDao extends AbstractDao {
 		final String[] searchFields = new String[] { "_name", "_surname", "_jobProfile", "tags._label" };
 		return searchFacade.search(Candidate.class, page, sortOrder, searchFacets, searchText, searchFields);
 	}
-	
+
 	public SearchResult<Candidate> searchByName(final String searchText, final Page page, SortField sortOrder,
 			final SearchFacets searchFacets) {
 		final String[] searchFields = new String[] { "_name", "_surname", "_email" };

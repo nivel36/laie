@@ -11,7 +11,7 @@ import javax.inject.Inject;
 
 import es.nivel36.laie.ejb.candidate.Candidate;
 import es.nivel36.laie.ejb.client.Contact;
-import es.nivel36.laie.ejb.core.EmailContact;
+import es.nivel36.laie.ejb.core.Subject;
 import es.nivel36.laie.ejb.core.model.AbstractDao;
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.core.model.Repository;
@@ -58,14 +58,14 @@ public class MeetingDao extends AbstractDao {
 		return this.findByQuery(Meeting.class, namedQuery, parameters, page);
 	}
 
-	public List<EmailContact> searchAteendees(final String query) {
+	public List<Subject> searchAteendees(final String query) {
 		final List<User> users = searchFacade.search(User.class, Page.of(0, 3), null, query, "_email", "_name",
 				"_surname");
 		final List<Candidate> candidates = searchFacade.search(Candidate.class, Page.of(0, 3), null, query, "_email",
 				"_name", "_surname");
 		final List<Contact> contacts = searchFacade.search(Contact.class, Page.of(0, 3), null, query, "_email", "_name",
 				"_surname");
-		final List<EmailContact> atendees = new ArrayList<EmailContact>(users);
+		final List<Subject> atendees = new ArrayList<Subject>(users);
 		atendees.addAll(candidates);
 		atendees.addAll(contacts);
 		return atendees;

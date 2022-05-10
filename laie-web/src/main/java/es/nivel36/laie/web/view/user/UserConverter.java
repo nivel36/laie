@@ -16,7 +16,7 @@ public class UserConverter extends AbstractConverter<User> {
 	private UserService userService;
 
 	@Override
-	protected User getAsObject(Long id) {	
+	protected User getAsObject(Long id) {
 		return userService.findUserById(id);
 	}
 

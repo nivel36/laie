@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Objects;
 
 import javax.inject.Inject;
+import javax.persistence.NoResultException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +25,7 @@ import es.nivel36.laie.ejb.core.util.Parameters;
 public class UserDao extends AbstractDao {
 
 	private static final Logger logger = LoggerFactory.getLogger(UserDao.class);
-	
+
 	@Inject
 	private SearchFacade searchFacade;
 
@@ -63,9 +64,13 @@ public class UserDao extends AbstractDao {
 
 	public User findUserByEmail(final String email) {
 		Objects.requireNonNull(email);
-		final String namedQuery = "User.findByEmail";
-		final Parameters parameters = map("email", email);
-		return this.findByQuery(User.class, namedQuery, parameters);
+		try {
+			final String namedQuery = "User.findByEmail";
+			final Parameters parameters = map("email", email);
+			return this.findByQuery(User.class, namedQuery, parameters);
+		} catch (final NoResultException e) {
+			return null;
+		}
 	}
 
 	public User findUserByTokenHashAndType(final byte[] tokenHash, final TokenType type) {

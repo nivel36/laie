@@ -27,7 +27,7 @@ import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.SortableField;
 import org.hibernate.search.annotations.Store;
 
-import es.nivel36.laie.ejb.core.EmailContact;
+import es.nivel36.laie.ejb.core.Subject;
 import es.nivel36.laie.ejb.core.bookmark.Bookmark;
 import es.nivel36.laie.ejb.core.file.File;
 import es.nivel36.laie.ejb.core.model.AbstractEntity;
@@ -37,7 +37,7 @@ import es.nivel36.laie.ejb.job.offer.JobOffer;
 @Entity
 @Indexed
 @Table(indexes = { @javax.persistence.Index(name = "UX_USER_EMAIL", columnList = "email", unique = true) })
-public class User extends AbstractEntity implements EmailContact {
+public class User extends AbstractEntity implements Subject {
 
 	private static final long serialVersionUID = -3719561601581901723L;
 

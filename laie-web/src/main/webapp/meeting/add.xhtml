@@ -51,19 +51,12 @@
 						<h5>#{i18n['meeting.header.attendees']}</h5>
 						<div class="p-grid p-formgrid">
 							<div class="p-col-12">
-								<div class="ui-inputgroup">
-									<p:autoComplete id="input" value="#{addMeetingView.attendee}" inputStyleClass="input autocomplete"
-										completeMethod="#{addMeetingView.searchPerson}" forceSelection="true" minQueryLength="3" var="person" itemValue="#{person}"
-										itemLabel="#{person.email}">
-										<p:column styleClass="select-person">
-											<cc:person name="#{person.fullName}" description="#{person.email}" />
-										</p:column>
-										<p:ajax event="itemSelect" listener="#{addMeetingView.addAttendee}" update="@this meetingForm:attendees" />
-									</p:autoComplete>
-									<h:panelGroup layout="block" styleClass="ui-inputgroup-addon">
-										<em class="pi pi-search" aria-hidden="true" />
-									</h:panelGroup>
-								</div>
+								<cc:autocomplete id="attendee" value="#{addMeetingView.attendee}" completeMethod="#{addMeetingView.searchPerson}"
+									itemSelectEvent="#{addMeetingView.addAttendee}" update="@form">
+									<p:column styleClass="user-select image">
+										<cc:person name="#{var.fullName}" description="#{var.email}" />
+									</p:column>
+								</cc:autocomplete>
 							</div>
 							<div class="p-col-12">
 								<h:panelGroup layout="block" id="attendees" styleClass="attendees">
@@ -75,8 +68,10 @@
 												<p:tag styleClass="p-mr-2" icon="pi pi-times" severity="danger" rounded="true" value="#{i18n['meeting.non_available']}"
 													rendered="#{not addMeetingView.isAvaliable(person)}" />
 											</cc:person>
-											<p:commandButton icon="fa fa-times" styleClass="ui-button-outlined" action="#{addMeetingView.removeAttendee(person)}" process="@this"
-												update="meetingForm:attendees" />
+											<div class="buttons">
+												<p:commandButton icon="pi pi-times" styleClass="ui-button-outlined" action="#{addMeetingView.removeAttendee(person)}" process="@this"
+													update="meetingForm:attendees" />
+											</div>
 										</h:panelGroup>
 									</ui:repeat>
 								</h:panelGroup>

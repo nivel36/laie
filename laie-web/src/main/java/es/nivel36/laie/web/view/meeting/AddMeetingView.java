@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
 
 import es.nivel36.laie.ejb.candidate.Candidate;
 import es.nivel36.laie.ejb.client.Contact;
-import es.nivel36.laie.ejb.core.EmailContact;
+import es.nivel36.laie.ejb.core.Subject;
 import es.nivel36.laie.ejb.job.meeting.Meeting;
 import es.nivel36.laie.ejb.job.meeting.MeetingService;
 import es.nivel36.laie.ejb.job.meeting.MeetingType;
@@ -36,9 +36,9 @@ public class AddMeetingView extends AbstractView {
 
 	public static final String URL = "/meeting/add.xhtml";
 
-	private EmailContact attendee;
+	private Subject attendee;
 
-	private List<EmailContact> attendees;
+	private List<Subject> attendees;
 
 	private List<String> durations;
 
@@ -77,10 +77,10 @@ public class AddMeetingView extends AbstractView {
 		return Arrays.asList(MeetingType.values());
 	}
 
-	private List<EmailContact> initAttendees() {
-		final List<EmailContact> attendeeList = new ArrayList<>();
+	private List<Subject> initAttendees() {
+		final List<Subject> attendeeList = new ArrayList<>();
 		attendeeList.add(this.sessionUser.get());
-		final EmailContact attendee = this.getValueFromFlash("attendee");
+		final Subject attendee = this.getValueFromFlash("attendee");
 		if (attendee != null) {
 			attendeeList.add(attendee);
 		}
@@ -145,7 +145,7 @@ public class AddMeetingView extends AbstractView {
 		return true;
 	}
 
-	public void removeAttendee(final EmailContact person) {
+	public void removeAttendee(final Subject person) {
 		this.attendees.remove(person);
 	}
 
@@ -156,23 +156,23 @@ public class AddMeetingView extends AbstractView {
 		final LocalDateTime meetingDateTime = LocalDateTime.of(this.meetingDate, time);
 		this.meeting.setDatePlanned(meetingDateTime);
 		this.meeting.setDuration(duration);
-		for (final EmailContact person : this.attendees) {
+		for (final Subject person : this.attendees) {
 			this.meeting.addAttendee(person.getEmail());
 		}
 		this.meetingService.addMeeting(this.meeting);
 		this.navigateTo(SearchMeetingView.URL);
 	}
 
-	public List<EmailContact> searchPerson(final String query) {
+	public List<Subject> searchPerson(final String query) {
 		logger.trace("Searching for person with the string {}", query);
 		return meetingService.searchPerson(query);
 	}
 
-	public EmailContact getAttendee() {
+	public Subject getAttendee() {
 		return this.attendee;
 	}
 
-	public List<EmailContact> getAttendees() {
+	public List<Subject> getAttendees() {
 		return this.attendees;
 	}
 
@@ -204,11 +204,11 @@ public class AddMeetingView extends AbstractView {
 		return this.meetingTypes;
 	}
 
-	public void setAttendee(final EmailContact attendee) {
+	public void setAttendee(final Subject attendee) {
 		this.attendee = attendee;
 	}
 
-	public void setAttendees(final List<EmailContact> attendees) {
+	public void setAttendees(final List<Subject> attendees) {
 		this.attendees = attendees;
 	}
 

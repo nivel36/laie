@@ -1,8 +1,7 @@
 <ui:component xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:composite="http://xmlns.jcp.org/jsf/composite"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://nivel.36/laie/ui" xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:composite="http://xmlns.jcp.org/jsf/composite" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:g="http://nivel.36/laie/ui" xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets">
 
 	<composite:interface componentType="autocomplete">
 
@@ -12,9 +11,9 @@
 		<composite:attribute name="iconPosition" default="left" />
 
 		<composite:attribute name="value" required="true" />
+		<composite:attribute name="update" required="false" />
 		<composite:attribute name="completeMethod" method-signature="void function(java.lang.String)" required="true" />
-		<composite:attribute name="itemSelectEvent" method-signature="void function(java.lang.String)" required="false" />
-		<composite:attribute name="changeEvent" method-signature="void function(java.lang.String)" required="false" />
+		<composite:attribute name="itemSelectEvent" method-signature="void function()" required="false" />
 		<composite:attribute name="required" type="java.lang.Boolean" default="false" />
 		<composite:attribute name="disabled" type="java.lang.Boolean" default="false" />
 
@@ -36,30 +35,33 @@
 				rendered="#{not empty cc.attrs.label}" />
 
 			<div class="ui-inputgroup">
-				<h:panelGroup layout="block" rendered="#{not empty icon and iconPosition eq 'left'}"
-					styleClass="ui-inputgroup-addon">
+				<h:panelGroup layout="block" rendered="#{not empty icon and iconPosition eq 'left'}" styleClass="ui-inputgroup-addon">
 					<em class="fa #{icon}" />
 				</h:panelGroup>
-
 				<p:autoComplete id="input" value="#{cc.attrs.value}" required="#{cc.attrs.required}" binding="#{cc.input}"
-					inputStyleClass="input autocomplete #{cc.attrs.inputStyleClass}" completeMethod="#{cc.attrs.completeMethod}"
-					forceSelection="true" minQueryLength="3" var="var" itemValue="#{var}" itemLabel="#{var}"
-					disabled="#{cc.attrs.disabled}">
+					inputStyleClass="input autocomplete #{cc.attrs.inputStyleClass}" completeMethod="#{cc.attrs.completeMethod}" forceSelection="true"
+					minQueryLength="3" var="var" itemValue="#{var}" itemLabel="#{var}" disabled="#{cc.attrs.disabled}">
 					<c:if test="#{not empty cc.attrs.converter}">
 						<f:attribute name="converter" value="#{cc.attrs.converter}" />
 					</c:if>
 					<composite:insertChildren />
-					<p:ajax event="itemSelect" update="#{cc.clientId}" process="input" />
+					<c:choose>
+						<c:when test="#{not empty cc.getValueExpression('itemSelectEvent')}">
+							<p:ajax event="itemSelect" update="#{cc.clientId} #{cc.attrs.update}" process="input" listener="#{cc.attrs.itemSelectEvent}" />
+						</c:when>
+						<c:otherwise>
+							<p:ajax event="itemSelect" update="#{cc.clientId} #{cc.attrs.update}" process="input" />
+						</c:otherwise>
+					</c:choose>
 					<p:ajax event="itemUnselect" update="#{cc.clientId}" process="input" />
 				</p:autoComplete>
-				<p:commandButton id="cleanButton" process="@this" update="#{cc.clientId}" action="#{cc.clean}"
-					styleClass="ui-button-secondary ui-button-outlined" icon="pi pi-times" binding="#{cc.cleanButton}">
+				<p:commandButton id="cleanButton" process="@this" update="#{cc.clientId}" action="#{cc.clean}" styleClass="ui-button-secondary ui-button-outlined"
+					icon="pi pi-times" binding="#{cc.cleanButton}">
 				</p:commandButton>
 				<h:panelGroup layout="block" rendered="#{not empty cc.attrs.showIcon}" styleClass="ui-inputgroup-addon">
 					<em class="pi pi-search" aria-hidden="true" />
 				</h:panelGroup>
-				<h:panelGroup layout="block" rendered="#{not empty icon and iconPosition eq 'right'}"
-					styleClass="ui-inputgroup-addon">
+				<h:panelGroup layout="block" rendered="#{not empty icon and iconPosition eq 'right'}" styleClass="ui-inputgroup-addon">
 					<em class="fa #{icon}" />
 				</h:panelGroup>
 			</div>

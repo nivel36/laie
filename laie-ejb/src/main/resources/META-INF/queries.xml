@@ -1,8 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<entity-mappings xmlns="http://xmlns.jcp.org/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<entity-mappings
+	xmlns="http://xmlns.jcp.org/xml/ns/persistence/orm"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence/orm
-        http://xmlns.jcp.org/xml/ns/persistence/orm_2_1.xsd" version="2.1">
-	
+        http://xmlns.jcp.org/xml/ns/persistence/orm_2_1.xsd"
+	version="2.1">
+
+	<named-query name="Candidate.findByEmail">
+		<query><![CDATA[
+			SELECT c 
+			FROM Candidate c
+			WHERE c.email = :email
+		]]></query>
+	</named-query>
+
 	<named-query name="Candidate.findByJobOffer">
 		<query><![CDATA[
 			SELECT c 
@@ -11,7 +22,7 @@
 			WHERE jc.jobOffer = :jobOffer
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="Candidate.findAllData">
 		<query><![CDATA[
 			SELECT c
@@ -22,7 +33,15 @@
 			WHERE c.id = :candidateId
 		]]></query>
 	</named-query>
-	
+
+	<named-query name="Contact.findByEmail">
+		<query><![CDATA[
+			SELECT c 
+			FROM Contact c 
+			WHERE c.email = :email
+		]]></query>
+	</named-query>
+
 	<named-query name="Contact.findByClient">
 		<query><![CDATA[
 			SELECT c 
@@ -30,7 +49,7 @@
 			WHERE c.client = :client
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="Client.findAllData">
 		<query><![CDATA[
 			SELECT c
@@ -41,7 +60,7 @@
 			WHERE c.id = :clientId
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="Curriculum.findByCandidate">
 		<query><![CDATA[
 			SELECT c 
@@ -53,7 +72,7 @@
 			WHERE c.candidate = :candidate
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="Curriculum.Skill.findByName">
 		<query><![CDATA[
 			SELECT s 
@@ -79,7 +98,7 @@
 			AND f.bucket = :bucket
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="File.isOrphanPhysicalFile">
 		<query><![CDATA[
 			SELECT CASE WHEN (COUNT(f) > 0) THEN FALSE ELSE TRUE END 
@@ -87,7 +106,7 @@
 			WHERE f.physicalFile = :physicalFile
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="JobCandidature.findApprovedByJobOffer">
 		<query><![CDATA[
 			SELECT j 
@@ -99,7 +118,8 @@
 		]]></query>
 	</named-query>
 
-	<named-query name="JobCandidature.findByJobOfferAndCandidate">
+	<named-query
+		name="JobCandidature.findByJobOfferAndCandidate">
 		<query><![CDATA[
 			SELECT j 
 			FROM JobCandidature j 
@@ -109,7 +129,7 @@
 			AND j.candidate = :candidate
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="JobCandidature.findByCandidate">
 		<query><![CDATA[
 			SELECT j 
@@ -117,7 +137,7 @@
 			WHERE j.candidate = :candidate 
 		]]></query>
 	</named-query>
-	
+
 
 	<named-query name="JobCandidature.findByJobOffer">
 		<query><![CDATA[
@@ -128,7 +148,7 @@
 			WHERE j.jobOffer = :jobOffer
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="JobCandidature.findByUser">
 		<query><![CDATA[
 			SELECT j 
@@ -138,7 +158,8 @@
 		]]></query>
 	</named-query>
 
-	<named-query name="JobCandidatureState.findFirstJobCandidatureState">
+	<named-query
+		name="JobCandidatureState.findFirstJobCandidatureState">
 		<query><![CDATA[
 			SELECT j 
 			FROM JobCandidatureState j 
@@ -171,7 +192,7 @@
 			WHERE j.client = :client
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="LoginToken.findExpired">
 		<query><![CDATA[
 			SELECT l 
@@ -229,7 +250,7 @@
 			WHERE t.label = :label
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="User.findCredential">
 		<query><![CDATA[
 			SELECT c
@@ -248,7 +269,7 @@
 			AND uc.pathLength > 0
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="User.isSubordinateUser">
 		<query><![CDATA[
 			SELECT CASE WHEN (COUNT(u) > 0) THEN TRUE ELSE FALSE END 

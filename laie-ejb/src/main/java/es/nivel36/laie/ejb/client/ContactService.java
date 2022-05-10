@@ -42,6 +42,12 @@ public class ContactService {
 		contact.getClient().getContacts().remove(contact);
 		this.clientDao.update(contact.getClient());
 	}
+	
+	public Contact findContactByEmail(final String email) {
+		Objects.requireNonNull(email);
+		logger.debug("Find contact by email {}", email);
+		return this.contactDao.findContactByEmail(email);
+	}
 
 	public Contact findContactById(final Long contactId) {
 		Objects.requireNonNull(contactId);

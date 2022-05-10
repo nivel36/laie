@@ -117,6 +117,12 @@ public class CandidateService {
 		logger.debug("Find candidates by jobOffer {} ", jobOffer);
 		return this.candidateDao.findCandidatesByJobOffer(jobOffer, page);
 	}
+	
+	public Candidate findCandidateByEmail(final String email) {
+		Objects.requireNonNull(email);
+		logger.debug("Find candidate by email {} ", email);
+		return this.candidateDao.findCandidateByEmail(email);
+	}
 
 	public Candidate findCandidateById(final Long id) {
 		Objects.requireNonNull(id);

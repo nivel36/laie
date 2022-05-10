@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Objects;
 
 import javax.inject.Inject;
+import javax.persistence.NoResultException;
 
 import es.nivel36.laie.ejb.core.model.AbstractDao;
 import es.nivel36.laie.ejb.core.model.Page;
@@ -18,7 +19,7 @@ import es.nivel36.laie.ejb.core.util.Parameters;
 
 @Repository
 public class ContactDao extends AbstractDao {
-	
+
 	@Inject
 	private SearchFacade searchFacade;
 
@@ -29,12 +30,16 @@ public class ContactDao extends AbstractDao {
 		final Parameters parameters = map("client", client);
 		return this.findByQuery(Contact.class, namedQuery, parameters, page);
 	}
-	
+
 	public Contact findContactByEmail(final String email) {
 		Objects.requireNonNull(email);
-		final String namedQuery = "Contact.findByEmail";
-		final Parameters parameters = map("email", email);
-		return this.findByQuery(Contact.class, namedQuery, parameters);
+		try {
+			final String namedQuery = "Contact.findByEmail";
+			final Parameters parameters = map("email", email);
+			return this.findByQuery(Contact.class, namedQuery, parameters);
+		} catch (final NoResultException e) {
+			return null;
+		}
 	}
 
 	public SearchResult<Contact> search(final String searchText, final Page page, SortField sortOrder,

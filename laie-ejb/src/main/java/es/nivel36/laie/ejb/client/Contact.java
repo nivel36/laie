@@ -20,13 +20,13 @@ import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.SortableField;
 import org.hibernate.search.annotations.Store;
 
-import es.nivel36.laie.ejb.core.EmailContact;
+import es.nivel36.laie.ejb.core.Subject;
 import es.nivel36.laie.ejb.core.model.AbstractEntity;
 import es.nivel36.laie.ejb.job.meeting.Meeting;
 
 @Entity
 @Indexed
-public class Contact extends AbstractEntity implements EmailContact {
+public class Contact extends AbstractEntity implements Subject {
 
 	private static final long serialVersionUID = -2403549918176092142L;
 

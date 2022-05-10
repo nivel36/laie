@@ -3041,6 +3041,14 @@ a {
   font-weight: 700;
   src: url("#{resource['roma-layout:fonts/Inter-UI-Bold.otf']}") format("opentype"), url("#{resource['roma-layout:fonts/Inter-UI-Bold.woff2']}") format("woff2"), url("#{resource['roma-layout:fonts/Inter-UI-Bold.woff']}") format("woff"), url("#{resource['roma-layout:fonts/Inter-UI-Bold.ttf']}") format("truetype");
   /* Safari, Android, iOS */ }
+.attendee {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2em; }
+  .attendee .person-data {
+    margin-left: 1em;
+    margin-top: 1em; }
+
 .layout-aside {
   float: left;
   width: 20%; }

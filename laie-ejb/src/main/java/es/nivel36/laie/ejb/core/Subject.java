@@ -1,6 +1,6 @@
 package es.nivel36.laie.ejb.core;
 
-public interface EmailContact {
+public interface Subject {
 
 	String getEmail();
 
