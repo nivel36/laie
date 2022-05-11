@@ -2,10 +2,6 @@
 	display: flex;
 	justify-content: space-between;
 	margin-bottom: 2em;
-	.person-data {
-		margin-left:1em;
-		margin-top: 1em;
-	}
 }
 
 .layout-aside {
@@ -467,15 +463,19 @@
 }
 
 .person {
+	display:flex;
+	align-items: center;
 	.ui-avatar {
-		float:left;
+		margin-right: 1rem;
 	}
 	.person-box {
-		float: left;
-		margin: 0.35rem 0 0 1rem;
+
 		.person-description-text {
 			font-size: 0.9rem;
 		}
+	}
+	.person-data {
+		margin-left:1rem;
 	}
 }
 

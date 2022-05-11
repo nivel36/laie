@@ -3045,9 +3045,6 @@ a {
   display: flex;
   justify-content: space-between;
   margin-bottom: 2em; }
-  .attendee .person-data {
-    margin-left: 1em;
-    margin-top: 1em; }
 
 .layout-aside {
   float: left;
@@ -3375,13 +3372,15 @@ a {
   .input-avatar .ui-fileupload {
     display: none; }
 
-.person .ui-avatar {
-  float: left; }
-.person .person-box {
-  float: left;
-  margin: 0.35rem 0 0 1rem; }
+.person {
+  display: flex;
+  align-items: center; }
+  .person .ui-avatar {
+    margin-right: 1rem; }
   .person .person-box .person-description-text {
     font-size: 0.9rem; }
+  .person .person-data {
+    margin-left: 1rem; }
 
 .user-card {
   padding: 0; }
