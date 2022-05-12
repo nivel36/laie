@@ -81,7 +81,6 @@ public class ViewClientView extends AbstractView {
 		final Bookmark bookmark = new Bookmark();
 		bookmark.setTitle(client.getName());
 		bookmark.setUrl(this.clientUrl());
-		bookmark.setUser(this.sessionUser.get());
 		return bookmark;
 	}
 

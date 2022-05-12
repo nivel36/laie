@@ -40,7 +40,7 @@ public class User extends AbstractEntity implements Subject {
 
 	private static final long serialVersionUID = -3719561601581901723L;
 
-	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Set<Bookmark> bookmarks = new HashSet<>();
 
 	@Field(name = "dateOfJoin", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
@@ -87,26 +87,26 @@ public class User extends AbstractEntity implements Subject {
 	@Field(name = "role", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField(forField = "role")
 	private Role role;
-	
+
 	@Column(nullable = false)
 	private Integer rowsPerPage = 10;
-	
+
 	@Column(nullable = false)
 	@Field(name = "_surname")
 	@Field(name = "surname", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField(forField = "surname")
 	private String surname;
-	
+
 	public void addMeeting(final Meeting meeting) {
 		Objects.requireNonNull(meeting);
 		this.meetings.add(meeting);
 	}
-	
+
 	public void removeMeeting(final Meeting meeting) {
 		Objects.requireNonNull(meeting);
 		this.meetings.remove(meeting);
 	}
-	
+
 	public Set<Bookmark> getBookmarks() {
 		return bookmarks;
 	}
@@ -233,18 +233,18 @@ public class User extends AbstractEntity implements Subject {
 	public void setRole(final Role role) {
 		this.role = role;
 	}
-	
+
 	public void setRowsPerPage(final Integer rowsPerPage) {
 		this.rowsPerPage = rowsPerPage;
 	}
-	
+
 	public void setSurname(final String surname) {
 		this.surname = surname;
 	}
 
 	@Override
 	public boolean equals(final Object obj) {
-		if(obj == null) {
+		if (obj == null) {
 			return false;
 		}
 		if (this == obj) {
@@ -256,7 +256,7 @@ public class User extends AbstractEntity implements Subject {
 		final User other = (User) obj;
 		return Objects.equals(other.email, this.email);
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return 31 * Objects.hash(this.email);

@@ -17,8 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import es.nivel36.laie.ejb.core.bookmark.Bookmark;
-import es.nivel36.laie.ejb.user.BadManagerException;
-import es.nivel36.laie.ejb.user.DuplicateEmailException;
+import es.nivel36.laie.ejb.core.bookmark.BookmarkService;
 import es.nivel36.laie.ejb.user.Role;
 import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.ejb.user.UserService;
@@ -39,12 +38,15 @@ public class SessionUser implements Serializable {
 	private User user;
 
 	private List<Bookmark> bookmarks;
+	
+	@Inject
+	private transient BookmarkService bookmarkService;
 
 	@Inject
 	private transient UserService userService;
 
 	@Inject
-	private LoginService loginService;
+	private transient LoginService loginService;
 
 	public void load(final String username) {
 		Objects.requireNonNull(username);
@@ -105,37 +107,17 @@ public class SessionUser implements Serializable {
 		}
 		return this.user.getRole().equals(Role.ADMIN);
 	}
-
-	public void setUserService(final UserService userService) {
-		Objects.requireNonNull(userService);
-		this.userService = userService;
-	}
-
-	public void setLoginService(final LoginService loginService) {
-		Objects.requireNonNull(loginService);
-		this.loginService = loginService;
-	}
 	
 	public void addBookmark(final Bookmark bookmark) {
 		Objects.requireNonNull(bookmark);
+		this.user = this.bookmarkService.addBookmark(bookmark, user);
 		this.bookmarks.add(bookmark);
-		this.user.getBookmarks().add(bookmark);
-		try {
-			this.user = userService.updateUser(user);
-		} catch (DuplicateEmailException | BadManagerException e) {
-			// It can't happen
-		}
 	}
 	
 	public void removeFromBookmarks(final Bookmark bookmark)  {
 		Objects.requireNonNull(bookmark);
+		this.user = this.bookmarkService.deleteBookmark(bookmark, user);
 		this.bookmarks.remove(bookmark);
-		this.user.getBookmarks().remove(bookmark);
-		try {
-			this.user = userService.updateUser(user);
-		} catch (DuplicateEmailException | BadManagerException e) {
-			// It can't happen
-		}
 	}
 	
 	public boolean hasBookamrk(final Bookmark bookmark) {
@@ -149,5 +131,20 @@ public class SessionUser implements Serializable {
 			return "";
 		}
 		return this.user.toString();
+	}
+	
+	public void setUserService(final UserService userService) {
+		Objects.requireNonNull(userService);
+		this.userService = userService;
+	}
+
+	public void setLoginService(final LoginService loginService) {
+		Objects.requireNonNull(loginService);
+		this.loginService = loginService;
+	}
+	
+	public void setBookmarkService(final BookmarkService bookmarkService) {
+		Objects.requireNonNull(bookmarkService);
+		this.bookmarkService = bookmarkService;
 	}
 }

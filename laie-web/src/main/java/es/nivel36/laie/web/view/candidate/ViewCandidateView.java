@@ -94,7 +94,6 @@ public class ViewCandidateView extends AbstractView {
 		final Bookmark bookmark = new Bookmark();
 		bookmark.setTitle(candidate.getFullName());
 		bookmark.setUrl(this.candidateUrl());
-		bookmark.setUser(this.sessionUser.get());
 		return bookmark;
 	}
 

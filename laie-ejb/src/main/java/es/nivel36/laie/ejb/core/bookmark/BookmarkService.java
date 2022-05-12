@@ -16,22 +16,30 @@ public class BookmarkService {
 	@Repository
 	private UserDao userDao;
 
-	public void addBookmark(final Bookmark bookmark) {
+	@Inject
+	@Repository
+	private BookmarkDao bookmarkDao;
+
+	public User addBookmark(final Bookmark bookmark, final User user) {
 		Objects.requireNonNull(bookmark);
-		final User user = bookmark.getUser();
-		for (final Bookmark entityBookmark : user.getBookmarks()) {
-			if (entityBookmark.getUrl().equals(bookmark.getUrl())) {
-				return;
+		for (final Bookmark userBookmark : user.getBookmarks()) {
+			if (userBookmark.getUrl().equals(bookmark.getUrl())) {
+				return user;
 			}
 		}
-		userDao.update(user);
+		final Bookmark entity = bookmarkDao.findBookmarkByUrl(bookmark.getUrl());
+		if (entity != null) {
+			user.getBookmarks().add(entity);
+		} else {
+			user.getBookmarks().add(bookmark);
+		}
+		return userDao.update(user);
 	}
 
-	public void deleteBookmark(final Bookmark bookmark) {
+	public User deleteBookmark(final Bookmark bookmark, final User user) {
 		Objects.requireNonNull(bookmark);
-		final User user = bookmark.getUser();
 		user.getBookmarks().remove(bookmark);
-		userDao.update(user);
+		return userDao.update(user);
 	}
 
 	public void setUserDao(final UserDao userDao) {

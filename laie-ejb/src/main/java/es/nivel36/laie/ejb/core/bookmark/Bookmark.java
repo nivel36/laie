@@ -1,19 +1,19 @@
 package es.nivel36.laie.ejb.core.bookmark;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 
 import es.nivel36.laie.ejb.core.model.AbstractEntity;
 import es.nivel36.laie.ejb.user.User;
 
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = { "url", "userId" }))
+@Table(indexes = { @javax.persistence.Index(name = "UX_BOOKMARK_URL", columnList = "url", unique = true) })
 public class Bookmark extends AbstractEntity {
 
 	private static final long serialVersionUID = -2180672310644250195L;
@@ -21,18 +21,17 @@ public class Bookmark extends AbstractEntity {
 	@Column(nullable = false)
 	private String title;
 
-	@Column(nullable = false)
+	@Column(nullable = false, unique = true)
 	private String url;
 
-	@ManyToOne
-	@JoinColumn(name = "userId", nullable = false)
-	private User user;
+	@ManyToMany
+	private Set<User> users = new HashSet<>();
 
 	public String getTitle() {
 		return title;
 	}
 
-	public void setTitle(String title) {
+	public void setTitle(final String title) {
 		this.title = title;
 	}
 
@@ -40,25 +39,25 @@ public class Bookmark extends AbstractEntity {
 		return url;
 	}
 
-	public void setUrl(String url) {
+	public void setUrl(final String url) {
 		this.url = url;
 	}
 
-	public User getUser() {
-		return user;
+	public Set<User> getUsers() {
+		return users;
 	}
 
-	public void setUser(final User user) {
-		this.user = user;
+	public void setUser(final Set<User> users) {
+		this.users = users;
 	}
 
 	@Override
 	public int hashCode() {
-		return 31*Objects.hash(url, user);
+		return 31*Objects.hash(url);
 	}
 
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(final Object obj) {
 		if(obj == null) {
 			return false;
 		}
@@ -67,7 +66,7 @@ public class Bookmark extends AbstractEntity {
 		if (getClass() != obj.getClass())
 			return false;
 		final Bookmark other = (Bookmark) obj;
-		return Objects.equals(url, other.url) && Objects.equals(user, other.user);
+		return Objects.equals(url, other.url);
 	}
 
 	@Override
