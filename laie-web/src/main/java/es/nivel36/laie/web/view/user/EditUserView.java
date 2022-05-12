@@ -37,6 +37,10 @@ public class EditUserView extends AbstractUserView {
 			throw new SecurityException();
 		}
 	}
+	
+	public static String getUrl(long userId) {
+		return URL + "?userId=" + userId;
+	}
 
 	public void save() {
 		logger.debug("Save user action performed");

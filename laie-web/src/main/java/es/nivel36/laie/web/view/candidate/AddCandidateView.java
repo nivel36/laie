@@ -27,20 +27,22 @@ public class AddCandidateView extends AbstractCandidateView {
 	public void init() {
 		logger.trace("New candidate init");
 		this.candidate = new Candidate();
-		this.setTags(new ArrayList<>());
+		this.tags = new ArrayList<>();
 	}
 
 	public void save() {
 		logger.debug("Create new candidate action performed");
 		try {
 			if (this.tags != null) {
+				// Los tags pueden ser nulos a pesar de haberse inicializados ya que JSF
+				// interpreta colecciones vacias como null
 				this.candidate.setTags(this.tags.stream().map(Tag::new).collect(Collectors.toSet()));
 			}
 			this.candidate.setOwner(sessionUser.get());
 			this.candidateService.addCandidate(candidate);
 			this.saveImage();
 			Faces.redirect(this.candidateUrl());
-		} catch (DuplicateEmailException e) {
+		} catch (final DuplicateEmailException e) {
 			this.addErrorToField("candidateForm:email", "candidate.error.email_exists");
 		}
 	}

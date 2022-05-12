@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.omnifaces.cdi.Param;
+import org.omnifaces.util.Faces;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,14 +42,15 @@ public class EditContactView extends AbstractView {
 	public void save() {
 		logger.debug("Contact save action performed");
 		this.contactService.updateContact(this.contact);
-		this.navigateTo(ViewClientView.URL + "?client=" + this.contact.getClient().getId());
+		final Long clientId = this.contact.getClient().getId();
+		Faces.redirect(ViewClientView.getUrl(clientId));
 	}
 
 	public void delete() {
 		logger.debug("Contact delete action performed");
-		final Long id = this.contact.getClient().getId();
+		final Long clientId = this.contact.getClient().getId();
 		this.contactService.deleteContact(this.contact);
-		this.navigateTo(ViewClientView.URL + "?client=" + id);
+		Faces.redirect(ViewClientView.getUrl(clientId));
 	}
 
 	public Contact getContact() {

@@ -45,12 +45,14 @@ public class EditCandidateView extends AbstractCandidateView {
 		logger.debug("Save candidate action performed");
 		try {
 			if (this.tags != null) {
+				// Los tags pueden ser nulos a pesar de haberse inicializados ya que JSF
+				// interpreta colecciones vacias como null
 				this.candidate.setTags(this.tags.stream().map(Tag::new).collect(Collectors.toSet()));
 			}
 			this.saveImage();
 			this.candidate = this.candidateService.updateCandidate(this.candidate);
 			Faces.redirect(this.candidateUrl());
-		} catch (DuplicateEmailException e) {
+		} catch (final DuplicateEmailException e) {
 			this.addErrorToField("candidateForm:email", "candidate.error.email_exists");
 		}
 	}

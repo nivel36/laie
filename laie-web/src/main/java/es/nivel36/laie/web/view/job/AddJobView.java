@@ -1,6 +1,7 @@
 package es.nivel36.laie.web.view.job;
 
 import java.time.LocalDate;
+import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -13,6 +14,7 @@ import org.slf4j.LoggerFactory;
 
 import es.nivel36.laie.ejb.client.Client;
 import es.nivel36.laie.ejb.job.offer.JobOffer;
+import es.nivel36.laie.ejb.user.User;
 
 @Named
 @ViewScoped
@@ -32,13 +34,14 @@ public class AddJobView extends AbstractJobView {
 		this.jobOffer.setClient(client);
 		this.jobOffer.setOpenDate(LocalDate.now());
 		this.jobOffer.setOwner(this.sessionUser.get());
-		this.recruiters = this.sessionUser.getTeam();
+		this.recruiters = this.sessionUser.getTeam().stream().map(User::getEmail).collect(Collectors.toList());
 	}
 
 	public void save() {
 		logger.debug("Create new client action performed");
-		this.jobOfferService.addJobOffer(jobOffer);
-		Faces.redirect(ViewJobView.URL + "?jobOffer=" + this.jobOffer.getId());
+		this.convertRecruiters();
+		this.jobOfferService.addJobOffer(this.jobOffer);
+		Faces.redirect(ViewJobView.getUrl(this.jobOffer.getId()));
 	}
 
 	public void setClient(final Client client) {

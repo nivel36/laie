@@ -21,7 +21,6 @@ import es.nivel36.laie.ejb.job.offer.JobOffer;
 import es.nivel36.laie.ejb.job.offer.JobOfferService;
 import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.ejb.user.UserService;
-import es.nivel36.laie.web.core.IllegalPageStateException;
 import es.nivel36.laie.web.core.view.AbstractView;
 import es.nivel36.laie.web.reports.UserReport;
 
@@ -33,9 +32,9 @@ public class ViewUserView extends AbstractView {
 
 	private static final Logger logger = LoggerFactory.getLogger(ViewUserView.class);
 
-	public static final String URL = "/user/view.xhtml";
+	private static final String URL = "/user/view.xhtml";
 
-	@Param
+	@Param(required = true)
 	private User user;
 
 	private boolean editable;
@@ -45,7 +44,7 @@ public class ViewUserView extends AbstractView {
 	private List<Meeting> meetings;
 
 	private List<User> team;
-	
+
 	private boolean loggedUser;
 
 	@Inject
@@ -53,33 +52,28 @@ public class ViewUserView extends AbstractView {
 
 	@Inject
 	private transient UserService userService;
-	
+
 	@Inject
 	private transient JobOfferService jobOfferService;
 
 	@PostConstruct
 	public void init() {
-		if (this.user == null) {
-			logger.warn("User not found");
-			throw new IllegalPageStateException();
-		}
 		logger.trace("User {} init", this.user);
 		this.team = this.userService.findSubordinateUsers(this.user);
-		this.jobOffers = jobOfferService.findJobOffersByOwner(user, Page.ALL_RESULTS);
+		this.jobOffers = jobOfferService.findJobOffersByOwnerOrRecruiter(user, Page.ALL_RESULTS);
 		this.meetings = this.meetingService.findPlannedMeetings(this.user, Page.ALL_RESULTS);
 		this.loggedUser = this.sessionUser.get().equals(this.user);
 		this.editable = this.sessionUser.isAdmin() || loggedUser;
-	}
-
-	public void editUser() {
-		logger.debug("Edit user action performed");
-		this.navigateTo(EditUserView.URL + "?user=" + this.user.getId());
 	}
 
 	public void export() throws IOException {
 		logger.debug("Export user action performed");
 		final UserReport userReport = new UserReport(this.user, this.jobOffers);
 		Faces.sendFile(userReport.create(), true);
+	}
+
+	public static String getUrl(long userId) {
+		return URL + "?userId=" + userId;
 	}
 
 	public boolean isLogedUser() {
@@ -119,7 +113,7 @@ public class ViewUserView extends AbstractView {
 		Objects.requireNonNull(userService);
 		this.userService = userService;
 	}
-	
+
 	public void setJobOfferService(final JobOfferService jobOfferService) {
 		Objects.requireNonNull(jobOfferService);
 		this.jobOfferService = jobOfferService;

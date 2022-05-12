@@ -122,11 +122,11 @@ public class JobOfferService {
 		return this.jobOfferDao.findJobOffersByClient(client, page);
 	}
 
-	public List<JobOffer> findJobOffersByOwner(final User owner, final Page page) {
-		Objects.requireNonNull(owner);
+	public List<JobOffer> findJobOffersByOwnerOrRecruiter(final User user, final Page page) {
+		Objects.requireNonNull(user);
 		Objects.requireNonNull(page);
-		logger.debug("Find all job offers of the owner {}", owner);
-		return this.jobOfferDao.findJobOffersByOwner(owner, page);
+		logger.debug("Find all job offers of the owner or recruiter {}", user);
+		return this.jobOfferDao.findJobOffersByOwnerOrRecruiter(user, page);
 	}
 
 	public List<JobOfferState> findJobOfferStates() {

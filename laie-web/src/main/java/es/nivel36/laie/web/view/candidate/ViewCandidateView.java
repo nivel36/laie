@@ -41,7 +41,7 @@ public class ViewCandidateView extends AbstractView {
 
 	private static final Logger logger = LoggerFactory.getLogger(ViewCandidateView.class);
 
-	public static final String URL = "/candidate/view.xhtml";
+	private static final String URL = "/candidate/view.xhtml";
 
 	@Param
 	private Candidate candidate;
@@ -85,6 +85,10 @@ public class ViewCandidateView extends AbstractView {
 		this.bookmark = this.buildBookmark();
 		this.bookmarkable = !this.sessionUser.getBookmarks().contains(this.bookmark);
 	}
+	
+	public static String getUrl(long candidateId) {
+		return URL + "?candidate=" + candidateId;
+	}
 
 	private Bookmark buildBookmark() {
 		final Bookmark bookmark = new Bookmark();
@@ -114,7 +118,7 @@ public class ViewCandidateView extends AbstractView {
 
 	public void newMeeting() {
 		this.putValueToFlash("attendee", this.candidate);
-		this.navigateTo(AddMeetingView.URL);
+		Faces.redirect(AddMeetingView.URL);
 	}
 
 	public void openFile(final File file) throws IOException {

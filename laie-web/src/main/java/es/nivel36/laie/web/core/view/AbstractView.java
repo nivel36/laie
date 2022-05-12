@@ -13,8 +13,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
 import javax.inject.Inject;
 
-import org.omnifaces.util.Faces;
-
 import es.nivel36.laie.web.core.IllegalPageStateException;
 import es.nivel36.laie.web.core.util.Translator;
 
@@ -93,7 +91,7 @@ public abstract class AbstractView implements Serializable {
 			this.addInfoMessage("warning.max_results_reached", maxResults);
 		}
 	}
-
+	
 	protected boolean flashContainsKey(final String key) {
 		return this.flash.containsKey(key);
 	}
@@ -129,10 +127,6 @@ public abstract class AbstractView implements Serializable {
 
 	public void setFlash(final Flash flash) {
 		this.flash = flash;
-	}
-
-	protected void navigateTo(final String url) {
-		Faces.redirect(url);
 	}
 
 	public void setSessionUser(final SessionUser sessionUser) {

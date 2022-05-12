@@ -58,6 +58,7 @@ public class EditJobStateView extends AbstractView {
 
 	public String save() {
 		logger.debug("Save job offer action performed");
+		this.jobOfferService.updateJobOffer(this.jobOffer);
 		return this.jobUrl();
 	}
 

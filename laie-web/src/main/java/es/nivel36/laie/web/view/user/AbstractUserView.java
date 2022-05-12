@@ -34,7 +34,7 @@ public abstract class AbstractUserView extends AbstractView {
 	public void changeRoleListener() {
 		logger.trace("Change role listener triggered");
 		if (getUser().getRole().equals(Role.ADMIN)) {
-			// Los Adminstradores no tienen managers
+			// Los Administradores no tienen managers
 			getUser().setManager(null);
 		}
 	}
@@ -45,7 +45,7 @@ public abstract class AbstractUserView extends AbstractView {
 	}
 
 	protected String viewUserUrl() {
-		return ViewUserView.URL + "?user=" + getUser().getId();
+		return ViewUserView.getUrl(this.user.getId());
 	}
 	
 	public User getUser() {

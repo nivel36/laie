@@ -14,6 +14,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.omnifaces.util.Faces;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -160,7 +161,7 @@ public class AddMeetingView extends AbstractView {
 			this.meeting.addAttendee(person.getEmail());
 		}
 		this.meetingService.addMeeting(this.meeting);
-		this.navigateTo(SearchMeetingView.URL);
+		Faces.redirect(SearchMeetingView.URL);
 	}
 
 	public List<Subject> searchPerson(final String query) {

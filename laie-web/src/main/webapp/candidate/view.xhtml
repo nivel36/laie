@@ -16,16 +16,16 @@
 				<div class="title-card">
 					<h:form>
 						<div class="title-card-content">
-							<cc:avatar styleClass="title-card-content-image" name="#{viewCandidateView.candidate.fullName}" path="#{viewCandidateView.candidate.picture.path}"
-								size="xlarge" />
+							<cc:avatar styleClass="title-card-content-image" name="#{viewCandidateView.candidate.fullName}"
+								path="#{viewCandidateView.candidate.picture.path}" size="xlarge" />
 							<div class="title-card-content-info">
 								<div class="title">#{viewCandidateView.candidate.fullName}</div>
 								<div class="subtitle">#{viewCandidateView.candidate.jobProfile}</div>
 								<div class="text">
-									<span class="region"><i class="pi pi-map-marker" aria-hidden="true"/>#{viewCandidateView.candidate.address.region}</span> <span class="email"><i
-										class="pi pi-envelope" aria-hidden="true"/> #{viewCandidateView.candidate.email}</span>
+									<span class="region"><i class="pi pi-map-marker" aria-hidden="true" />#{viewCandidateView.candidate.address.region}</span> <span
+										class="email"><i class="pi pi-envelope" aria-hidden="true" /> #{viewCandidateView.candidate.email}</span>
 									<h:panelGroup rendered="#{not empty viewCandidateView.candidate.phoneNumber}" styleClass="phone">
-										<i class="pi pi-phone" aria-hidden="true"/>#{viewCandidateView.candidate.phoneNumber}</h:panelGroup>
+										<i class="pi pi-phone" aria-hidden="true" />#{viewCandidateView.candidate.phoneNumber}</h:panelGroup>
 								</div>
 							</div>
 
@@ -33,15 +33,11 @@
 								<p:menuitem value="#{i18n['action.edit']}" outcome="/candidate/edit" icon="pi pi-pencil">
 									<f:param name="candidate" value="#{viewCandidateView.candidate.id}" />
 								</p:menuitem>
-									<p:menuitem value="#{i18n['bookmark.add_to_bookmarks']}"
-									action="#{viewCandidateView.addBookmark}"
-									rendered="#{viewCandidateView.bookmarkable}" process="@this"
-									update="bookmarks menu-button" icon="pi pi-bookmark" />
-								<p:menuitem value="#{i18n['bookmark.remove_from_bookmarks']}"
-									action="#{viewCandidateView.removeFromBookmarks}"
-									rendered="#{not viewCandidateView.bookmarkable}" process="@this"
-									update="bookmarks menu-button" icon="pi pi-bookmark" />
-								<p:menuitem value="#{i18n['curriculum.view_curriculum']}" outcome="/candidate/curriculum">
+								<p:menuitem value="#{i18n['bookmark.add_to_bookmarks']}" action="#{viewCandidateView.addBookmark}"
+									rendered="#{viewCandidateView.bookmarkable}" process="@this" update="bookmarks menu-button" icon="pi pi-bookmark" />
+								<p:menuitem value="#{i18n['bookmark.remove_from_bookmarks']}" action="#{viewCandidateView.removeFromBookmarks}"
+									rendered="#{not viewCandidateView.bookmarkable}" process="@this" update="bookmarks menu-button" icon="pi pi-bookmark" />
+								<p:menuitem value="#{i18n['curriculum.view_curriculum']}" outcome="/candidate/curriculum" icon="pi pi-file">
 									<f:param name="candidate" value="#{viewCandidateView.candidate.id}" />
 								</p:menuitem>
 							</p:menuButton>
@@ -98,8 +94,8 @@
 							</div>
 							<div class="p-col-12">
 								<div class="card-header-buttons">
-									<p:fileUpload id="uploadFile" listener="#{viewCandidateView.uploadFile}" mode="simple" skinSimple="true" update="@form growl" auto="true" 
-										styleClass="ui-button-outlined" label=""/>
+									<p:fileUpload id="uploadFile" listener="#{viewCandidateView.uploadFile}" mode="simple" skinSimple="true" update="@form growl" auto="true"
+										styleClass="ui-button-outlined" label="" />
 								</div>
 							</div>
 						</div>
@@ -116,7 +112,7 @@
 					<h5>#{i18n['candidate.tags']}</h5>
 					<div class="text-container">
 						<ui:repeat value="#{viewCandidateView.candidate.tags}" var="tag" rendered="#{not empty viewCandidateView.candidate.tags}">
-							<p:tag value="#{tag}" styleClass="p-mr-2"/>
+							<p:tag value="#{tag}" styleClass="p-mr-2" />
 						</ui:repeat>
 						<h:outputText id="emptyText" value="---" styleClass="text" rendered="#{empty viewCandidateView.candidate.tags}" />
 					</div>

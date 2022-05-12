@@ -1,14 +1,16 @@
 package es.nivel36.laie.web.view.job;
 
-import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
+import org.omnifaces.util.Faces;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.web.core.IllegalPageStateException;
 
 @Named
@@ -19,29 +21,24 @@ public class EditJobView extends AbstractJobView {
 
 	private static final Logger logger = LoggerFactory.getLogger(EditJobView.class);
 
-	public static String URL = "/job/edit.xhtml";
-
 	@PostConstruct
 	public void init() {
-		this.checkNonNullJobOffer();
-		logger.trace("Edit job offer {} init", this.jobOffer);
-		this.fillRecruiters();
-	}
-
-	private void checkNonNullJobOffer() {
 		if (this.jobOffer == null) {
 			logger.error("Trying to edit a job offer but job is null");
 			throw new IllegalPageStateException();
 		}
+		logger.trace("Edit job offer {} init", this.jobOffer);
+		this.fillRecruiters();
 	}
 
 	private void fillRecruiters() {
-		this.recruiters = new ArrayList<>(this.jobOffer.getRecruiters());
+		this.recruiters = this.jobOffer.getRecruiters().stream().map(User::getEmail).collect(Collectors.toList());
 	}
 
 	public void save() {
 		logger.debug("Save job offer action performed");
+		this.convertRecruiters();
 		this.jobOfferService.updateJobOffer(jobOffer);
-		this.navigateTo(ViewJobView.URL + "?jobOffer=" + this.jobOffer.getId());
+		Faces.redirect(ViewJobView.getUrl(this.jobOffer.getId()));
 	}
 }

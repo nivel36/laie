@@ -12,6 +12,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.omnifaces.cdi.Param;
+import org.omnifaces.util.Faces;
 
 import es.nivel36.laie.ejb.candidate.Candidate;
 import es.nivel36.laie.ejb.candidate.CandidateService;
@@ -71,7 +72,7 @@ public class SelectCandidatesView extends AbstractView {
 
 	public void select() {
 		this.jobCandidatureService.addJobCandidatures(jobOffer, this.selectedCandidates);
-		this.navigateTo(ViewJobView.URL + "?jobOffer=" + this.jobOffer.getId());
+		Faces.redirect(ViewJobView.getUrl(this.jobOffer.getId()));
 	}
 
 	public CandidateLazyDataModel getCandidates() {

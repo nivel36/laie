@@ -46,11 +46,11 @@ public class JobOfferDao extends AbstractDao {
 		return this.findByQuery(JobOffer.class, namedQuery, parameters, page);
 	}
 
-	public List<JobOffer> findJobOffersByOwner(final User owner, final Page page) {
-		Objects.requireNonNull(owner);
+	public List<JobOffer> findJobOffersByOwnerOrRecruiter(final User user, final Page page) {
+		Objects.requireNonNull(user);
 		Objects.requireNonNull(page);
-		final String namedQuery = "JobOffer.findJobOffersByOwner";
-		final Parameters parameters = map("owner", owner);
+		final String namedQuery = "JobOffer.findJobOffersByOwnerOrRecruiter";
+		final Parameters parameters = map("user", user);
 		return this.findByQuery(JobOffer.class, namedQuery, parameters, page);
 	}
 

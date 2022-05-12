@@ -10,6 +10,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.security.enterprise.AuthenticationStatus;
 
+import org.omnifaces.util.Faces;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -66,7 +67,7 @@ public class LoginView extends AbstractView {
 	}
 
 	private void gotoIndex() {
-		this.navigateTo(IndexView.URL);
+		Faces.redirect(IndexView.URL);
 	}
 
 	private void setDefaultLocale() {

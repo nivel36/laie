@@ -167,12 +167,12 @@
 		]]></query>
 	</named-query>
 
-
-	<named-query name="JobOffer.findJobOffersByOwner">
+	<named-query name="JobOffer.findJobOffersByOwnerOrRecruiter">
 		<query><![CDATA[
 			SELECT j 
 			FROM JobOffer j 
-			WHERE j.owner = :owner
+			WHERE :user MEMBER OF j.recruiters
+			OR j.owner = :user
 		]]></query>
 	</named-query>
 

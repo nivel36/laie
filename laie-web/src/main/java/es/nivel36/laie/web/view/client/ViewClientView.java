@@ -32,7 +32,7 @@ public class ViewClientView extends AbstractView {
 
 	private static final Logger logger = LoggerFactory.getLogger(ViewClientView.class);
 
-	public static final String URL = "/client/view.xhtml";
+	private static final String URL = "/client/view.xhtml";
 
 	private List<Contact> contacts;
 
@@ -71,6 +71,10 @@ public class ViewClientView extends AbstractView {
 			logger.warn("Client is deleted");
 			this.addMessage(FacesMessage.SEVERITY_WARN, "message.erased_entity", "message.erased_entity");
 		}
+	}
+	
+	public static String getUrl(long clientId) {
+		return URL + "?client=" + clientId;
 	}
 
 	private Bookmark buildBookmark() {

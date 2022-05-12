@@ -8,6 +8,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.omnifaces.util.Faces;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -52,7 +53,7 @@ public class ChangePasswordView extends AbstractView {
 		}
 		this.userService.changePassword(this.user.getEmail(), this.newPassword, null);
 		this.sessionUser.refresh();
-		this.navigateTo(ConfigView.URL);
+		Faces.redirect(ConfigView.URL);
 	}
 
 	public String getNewPassword() {

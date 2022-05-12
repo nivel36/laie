@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.omnifaces.cdi.Param;
+import org.omnifaces.util.Faces;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,7 +44,7 @@ public class AddContactView extends AbstractView {
 	public void save() {
 		logger.debug("Contact add action performed");
 		this.contactService.addContact(contact);
-		this.navigateTo(ViewClientView.URL + "?client=" + this.client.getId());
+		Faces.redirect(ViewClientView.getUrl(this.client.getId()));
 	}
 
 	public Contact getContact() {
