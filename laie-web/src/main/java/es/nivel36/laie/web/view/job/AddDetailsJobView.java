@@ -1,7 +1,5 @@
 package es.nivel36.laie.web.view.job;
 
-import java.util.stream.Collectors;
-
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
@@ -10,16 +8,15 @@ import org.omnifaces.util.Faces;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.web.core.IllegalPageStateException;
 
 @Named
 @ViewScoped
-public class EditJobView extends AbstractJobView {
+public class AddDetailsJobView extends AbstractJobView {
 
-	private static final long serialVersionUID = 7356542779288827753L;
-
-	private static final Logger logger = LoggerFactory.getLogger(EditJobView.class);
+	private static final long serialVersionUID = -7323264602495428654L;
+	
+	private static final Logger logger = LoggerFactory.getLogger(AddDetailsJobView.class);
 
 	@PostConstruct
 	public void init() {
@@ -28,22 +25,11 @@ public class EditJobView extends AbstractJobView {
 			throw new IllegalPageStateException();
 		}
 		logger.trace("Edit job offer {} init", this.jobOffer);
-		this.fillRecruiters();
-	}
-
-	private void fillRecruiters() {
-		this.recruiters = this.jobOffer.getRecruiters().stream().map(User::getEmail).collect(Collectors.toList());
 	}
 
 	public void save() {
 		logger.debug("Save job offer action performed");
 		this.jobOfferService.updateJobOffer(jobOffer);
 		Faces.redirect(ViewJobView.getUrl(this.jobOffer.getId()));
-	}
-
-	public void next() {
-		this.convertRecruiters();
-		this.jobOffer = this.jobOfferService.updateJobOffer(jobOffer);
-		Faces.redirect("/job/editDetails.xhtml?jobOffer=" + this.jobOffer.getId());
 	}
 }

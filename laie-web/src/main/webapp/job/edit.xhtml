@@ -70,24 +70,13 @@
 						</div>
 					</div>
 					<div class="p-col-12">
-						<div class="form-card ui-fluid">
-							<h5>#{i18n['job.description']}</h5>
-							<div class="p-grid p-formgrid">
-								<div class="p-col-12 p-sm-6">
-									<g:input id="published" label="#{i18n['job.publish']}" value="#{editJobView.jobOffer.published}" type="inputSwitch" />
-								</div>
-								<div class="p-col-12">
-									<g:input id="description" label="#{i18n['job.description']}" value="#{editJobView.jobOffer.description}" type="rich" />
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="p-col-12">
 						<div class="form-buttons">
 							<p:button value="#{i18n['action.cancel']}" outcome="/job/view.xhtml" styleClass="ui-button-secondary ui-button-outlined">
-								<f:param name="id" value="#{editJobView.jobOffer.id}" />
+								<f:param name="jobOffer" value="#{editJobView.jobOffer.id}" />
 							</p:button>
-							<p:commandButton value="#{i18n['action.save']}" process="@form" update="@form growl" action="#{editJobView.save}"
+							<p:commandButton value="#{i18n['action.save_and_next']}" process="@form" update="@form growl" action="#{editJobView.next}"
+								styleClass="ui-button-success ui-button-outlined" />
+							<p:commandButton value="#{i18n['action.save_and_close']}" process="@form" update="@form growl" action="#{editJobView.save}"
 								styleClass="ui-button-success ui-button-outlined" />
 						</div>
 					</div>

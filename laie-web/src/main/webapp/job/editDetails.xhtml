@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://nivel.36/laie/ui"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets" template="/WEB-INF/templates/template.xhtml">
+
+	<ui:define name="title">
+		#{i18n['job.edit_job']} - #{editJobView.jobOffer.title}
+	</ui:define>
+
+	<ui:param name="selectedMenu" value="offers" />
+
+	<ui:define name="content">
+		<h:form id="jobOfferForm">
+			<div class="card">
+				<div class="p-grid">		
+					<div class="p-col-12">
+						<div class="form-card ui-fluid">
+							<h5>#{i18n['job.description']}</h5>
+							<div class="p-grid p-formgrid">
+								<div class="p-col-12 p-sm-6">
+									<g:input id="published" label="#{i18n['job.publish']}" value="#{editJobView.jobOffer.published}" type="inputSwitch" />
+								</div>
+								<div class="p-col-12">
+									<g:input id="description" label="#{i18n['job.description']}" value="#{editJobView.jobOffer.description}" type="rich" />
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="p-col-12">
+						<div class="form-buttons">
+							<p:button value="#{i18n['action.cancel']}" outcome="/job/view.xhtml" styleClass="ui-button-secondary ui-button-outlined">
+								<f:param name="jobOffer" value="#{editJobView.jobOffer.id}" />
+							</p:button>
+							<p:commandButton value="#{i18n['action.save']}" process="@form" update="@form growl" action="#{editJobView.save}"
+								styleClass="ui-button-success ui-button-outlined" />
+						</div>
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

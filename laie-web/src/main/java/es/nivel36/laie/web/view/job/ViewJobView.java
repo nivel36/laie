@@ -47,7 +47,7 @@ public class ViewJobView extends AbstractView {
 		final User user = this.sessionUser.get();
 		this.editable = jobOffer.getRecruiters().contains(user) || jobOffer.getOwner().equals(user);
 	}
-
+	
 	public void export() {
 		logger.debug("Export job action performed");
 	}
