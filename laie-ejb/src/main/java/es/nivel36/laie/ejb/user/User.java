@@ -42,7 +42,7 @@ public class User extends AbstractEntity implements Subject {
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Set<Bookmark> bookmarks = new HashSet<>();
-
+	
 	@Field(name = "dateOfJoin", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField(forField = "dateOfJoin")
 	private LocalDate dateOfJoin;

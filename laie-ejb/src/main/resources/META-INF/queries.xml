@@ -5,6 +5,14 @@
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence/orm
         http://xmlns.jcp.org/xml/ns/persistence/orm_2_1.xsd"
 	version="2.1">
+		
+	<named-query name="Action.findByUser">
+		<query><![CDATA[
+			SELECT a 
+			FROM Action a
+			WHERE a.user = :user
+		]]></query>
+	</named-query>
 	
 	<named-query name="Bookmark.findByUrl">
 		<query><![CDATA[

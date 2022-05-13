@@ -23,6 +23,7 @@ import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.SortableField;
 import org.hibernate.search.annotations.Store;
 
+import es.nivel36.laie.ejb.core.action.Auditable;
 import es.nivel36.laie.ejb.core.model.AbstractEntity;
 import es.nivel36.laie.ejb.core.model.Address;
 import es.nivel36.laie.ejb.core.model.Erasable;
@@ -33,9 +34,11 @@ import es.nivel36.laie.ejb.user.User;
 @Indexed
 @Entity
 @Table(indexes = { @javax.persistence.Index(name = "UX_CLIENT_CIF", columnList = "cif", unique = true) })
-public class Client extends AbstractEntity implements Ownerable, Erasable {
+public class Client extends AbstractEntity implements Ownerable, Erasable, Auditable {
 
 	private static final long serialVersionUID = 3562472646025185677L;
+	
+	private static final String ENTITY_NAME = "CLIENT";
 
 	@Embedded
 	@IndexedEmbedded
@@ -165,5 +168,15 @@ public class Client extends AbstractEntity implements Ownerable, Erasable {
 	@Override
 	public String toString() {
 		return this.name;
+	}
+
+	@Override
+	public String getEntityTitle() {
+		return this.name;
+	}
+	
+	@Override
+	public String getEntityName() {
+		return ENTITY_NAME;
 	}
 }

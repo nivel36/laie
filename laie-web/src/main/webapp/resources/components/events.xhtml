@@ -17,25 +17,15 @@
 				rows="#{cc.attrs.rows}" sortBy="#{event.date}" sortOrder="ascending" lazy="true" styleClass="ui-datatable-borderless">
 
 				<p:column headerText="#{i18n['event.type']}">
-					<h:outputText value="#{i18n[event.type.name]}" />
+					<h:outputText value="#{i18n[event.type]}" />
 				</p:column>
 
-				<p:column headerText="#{i18n['event.candidate']}">
-					<h:link value="#{event.jobCandidature.candidate.fullName}" outcome="/candidate/view.xhtml">
-						<f:param name="id" value="#{event.jobCandidature.candidate.id}" />
-					</h:link>
+				<p:column headerText="">
+					<h:outputText value="#{i18n[event.entityName]}" />
 				</p:column>
-
-				<p:column headerText="#{i18n['event.job_offer']}">
-					<h:link value="#{event.jobCandidature.jobOffer.title}" outcome="/job/view.xhtml">
-						<f:param name="id" value="#{event.jobCandidature.jobOffer.id}" />
-					</h:link>
-				</p:column>
-
-				<p:column headerText="#{i18n['event.client']}" priority="6">
-					<h:link value="#{event.jobCandidature.jobOffer.client.name}" outcome="/client/view.xhtml">
-						<f:param name="id" value="#{event.jobCandidature.jobOffer.client.id}" />
-					</h:link>
+				
+				<p:column headerText="">
+					<h:outputText value="#{i18n[event.entityTitle]}" />
 				</p:column>
 
 				<p:column headerText="#{i18n['event.user']}" sortBy="#{event.user.name}" priority="5">
@@ -50,9 +40,6 @@
 					</h:outputText>
 				</p:column>
 
-				<p:column headerText="#{i18n['event.state']}">
-					<div class="tag #{event.state.color}">#{i18n[event.state.name]}</div>
-				</p:column>
 			</p:dataTable>
 			<h:panelGroup id="children" styleClass="buttons">
 				<composite:insertChildren />

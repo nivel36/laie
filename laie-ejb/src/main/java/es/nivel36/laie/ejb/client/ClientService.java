@@ -8,6 +8,8 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import es.nivel36.laie.ejb.core.action.ActionType;
+import es.nivel36.laie.ejb.core.action.Audited;
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.core.model.Repository;
 import es.nivel36.laie.ejb.core.model.search.SearchFacets;
@@ -23,6 +25,7 @@ public class ClientService {
 	@Repository
 	private ClientDao clientDao;
 
+	@Audited(action = ActionType.CREATE)
 	public void addClient(final Client client) throws DuplicateCifException {
 		Objects.requireNonNull(client);
 		logger.debug("Add new client {}", client);
@@ -31,7 +34,8 @@ public class ClientService {
 		}
 		this.clientDao.insert(client);
 	}
-
+	
+	@Audited(action = ActionType.UPDATE)
 	public Client updateClient(final Client client) throws DuplicateCifException {
 		Objects.requireNonNull(client);
 		logger.debug("Update client {}", client);

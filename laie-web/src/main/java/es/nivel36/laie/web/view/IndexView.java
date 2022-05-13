@@ -18,6 +18,7 @@ import es.nivel36.laie.ejb.job.meeting.MeetingService;
 import es.nivel36.laie.ejb.job.offer.JobOfferService;
 import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.web.core.view.AbstractView;
+import es.nivel36.laie.web.core.view.UserActionsLazyDataModel;
 import es.nivel36.laie.web.view.candidate.CandidateLazyDataModel;
 import es.nivel36.laie.web.view.event.EventLazyDataModel;
 import es.nivel36.laie.web.view.job.JobOfferLazyDataModel;
@@ -26,16 +27,19 @@ import es.nivel36.laie.web.view.job.JobOfferLazyDataModel;
 @ViewScoped
 public class IndexView extends AbstractView {
 
-	private static final long serialVersionUID = 469723251635970418L;
-
 	private static final Logger logger = LoggerFactory.getLogger(IndexView.class);
+
+	private static final long serialVersionUID = 469723251635970418L;
 
 	public static final String URL = "/index.xhtml";
 
 	@Inject
-	private transient CandidateService candidateService;
+	private UserActionsLazyDataModel actions;
 	
 	private CandidateLazyDataModel candidates;
+	
+	@Inject
+	private transient CandidateService candidateService;
 
 	private EventLazyDataModel events;
 
@@ -48,17 +52,11 @@ public class IndexView extends AbstractView {
 
 	@Inject
 	private transient MeetingService meetingService;
-	
-	@PostConstruct
-	public void init() {
-		logger.trace("Index init");
-		final User user = this.sessionUser.get();
-		this.candidates = new CandidateLazyDataModel(this.candidateService);
-		this.jobOffers = new JobOfferLazyDataModel(jobService);
-		this.meetings = this.meetingService.findPlannedMeetings(user, Page.FIRST_TEN_RESULTS);
-		this.events = null;
-	}
 
+	public UserActionsLazyDataModel getActions() {
+		return actions;
+	}
+	
 	public CandidateLazyDataModel getCandidates() {
 		return this.candidates;
 	}
@@ -73,6 +71,16 @@ public class IndexView extends AbstractView {
 
 	public List<Meeting> getMeetings() {
 		return this.meetings;
+	}
+
+	@PostConstruct
+	public void init() {
+		logger.trace("Index init");
+		final User user = this.sessionUser.get();
+		this.candidates = new CandidateLazyDataModel(this.candidateService);
+		this.jobOffers = new JobOfferLazyDataModel(jobService);
+		this.meetings = this.meetingService.findPlannedMeetings(user, Page.FIRST_TEN_RESULTS);
+		this.events = null;
 	}
 
 	public void setJobService(final JobOfferService jobService) {
